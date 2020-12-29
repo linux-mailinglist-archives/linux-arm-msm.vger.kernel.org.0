@@ -2,58 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E3C62E6F06
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 09:39:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C566A2E6F05
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 09:39:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726148AbgL2Iht (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Dec 2020 03:37:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60734 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726144AbgL2Ihs (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S1726129AbgL2Ihs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Tue, 29 Dec 2020 03:37:48 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00E74C06179C
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60736 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726148AbgL2Ihr (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 29 Dec 2020 03:37:47 -0500
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD450C06179E
         for <linux-arm-msm@vger.kernel.org>; Tue, 29 Dec 2020 00:36:32 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id q22so17269759eja.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Dec 2020 00:36:31 -0800 (PST)
+Received: by mail-ej1-x633.google.com with SMTP id 6so17221974ejz.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Dec 2020 00:36:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=LFcOLpi81oSUdisHEF+x7OxdMm5UlH9qgt1oY8gs1Nc=;
-        b=nag8WqhpdK2Kh32JnmQ5Qb1fAL3yKWQa+N0BlBFnB9vZYX017gUpuLlQTEJfywVVOr
-         dBYkoKRN1RhaFSl70KRJB1IyE28GgmNj1LRgeZQAYFirfQpQjWe8gEwFtHsXfh+kBO1G
-         jNd5TF7hIheEfjM7RGyd0m2hFsEhawdKsC4zgnTmAqylG1Y/W7CYkgIXoaLrIxn0A8og
-         OmmvQLTaZOxEuUv02jSg3SrJ5VJ3LEEgkgUEBq1BIeDgFExW9p/uyzBKsYGauVpCXG2l
-         Ns6mYGTMwg5DUkE1xYvoRAOJx78Wb55Zji7JtWaLqSsj5EwLlIxg+my2CAJOJscAmruw
-         M2EA==
+        bh=HRI/zQl0AztAy0cvfEZ3YruuvCxYV1sLSbd5prZLqRg=;
+        b=kIjp+hniPCKZ44zRL0Vx18QRUVIzMaVsZA57pEfDai8h15VI4yo0X6CFHvY+si8l2I
+         gSwqr1UV3QD0l+MRrReqScthidY58WrYvttMtrw2Xjygr/DgLe3WQeHbKMHdyGO89Sbx
+         MWpYYfNtk9yepxleziZGE892T4xps+lIxqaxiUtWSXgcXNjmulAQcJ/swJ4ZQBzSmQSf
+         ka7R9b80qg0QzuPida/d/LbiZ0+a04pk8rU5Hq3tZNZolsWW2/b46O0aUhYExZfuqrGX
+         M+H6RIDFckZU8UycrY3+O63ni/6acoOOT1qELuZxgqiFQR91yQGqEhddk9xvlTNmxg8v
+         TyIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=LFcOLpi81oSUdisHEF+x7OxdMm5UlH9qgt1oY8gs1Nc=;
-        b=ffENfIHbuVPZ7OA4T86wTvMBXG1mz+QVvQhQJcmbS43OFDWHe4L6Hj01rEuKJ/8sIp
-         zpoXqp9sFNpt0jZq7GAQTSYz/wbe4d/gqbqVbqzS2FoqQNMc7RQY3GaImo9EESshnqg7
-         MbegrLN3Khlz9z8vrjRnYNvz4ghmcyeAjXHtfCkDOtnPjOs5SqEwIv2XjbNXt85ZTgcs
-         LxejUWW1D5EOFiW+n6hM+wx/IR5J8gxlRY0n6ZxUHcIrnFyjAoVRYSB05ypFqV+bLgHH
-         JjrqYptuX6suMjP3xy9huC1MVS1Y4f3WXC+IaCTfGWMN9BUvQ2xkCYxJlZIrbXmHFFTK
-         AMgQ==
-X-Gm-Message-State: AOAM531RS9y3SR+LY0TebT603YIVLnnpKBd4xAoPok1hYDuuvJ+ktO7Q
-        KFdUkAwmVRyf40E8B5OKEsfkLg==
-X-Google-Smtp-Source: ABdhPJyJYmYVIY3Rtk8+/uWSgkJ2rfq8SnvySN48bMSU6vwV3S+tPxm4FDSsfK/AJsP0cQgg+pLdmA==
-X-Received: by 2002:a17:906:f9d7:: with SMTP id lj23mr45839530ejb.266.1609230990739;
-        Tue, 29 Dec 2020 00:36:30 -0800 (PST)
+        bh=HRI/zQl0AztAy0cvfEZ3YruuvCxYV1sLSbd5prZLqRg=;
+        b=msXJ7Kryd7W533AasSPH7UIg5UdE8M19nMdYBWLw5MOYu67+kWc5lEi68cFZXz/rNp
+         Z5Z1svOV5hLHE/T5kUuXo9lAWwRorI8uzemHTv627UylH3onAWpIcsFrhy+d33NuVyE4
+         N628wfq0wxHFhBP1NjGn+zJXsLKK1IvDNPZk6mD34ydQHLVHD3Ehs5G0JUB1e0eW2Gfk
+         DxZcszc4Knv8pUEH0Y82bEgG9VOD855Zrg7uXLI5eM5MVSe48Izp2ynT1ZH84YyMmpd2
+         Z0tWbnpBUqb4xdcUaYMrc8L3Co7HzkGgXg1YfXc6fkCy1LnnpDFdVHVJQNnXG8+UXfaL
+         HYiw==
+X-Gm-Message-State: AOAM530kKZl0xZNTGu1qykc3sbbTrG+rQ3MkHYNUQM5jqSg/bRGu2+Yo
+        aurN7YOeAcO9FQnUkjonAf784A==
+X-Google-Smtp-Source: ABdhPJwcIoDXnavQm8vjgJsu8R+UYQZfJNREr+td8YXevYkr84HOwWC99oYvvzMLvVdzyZM12r9Obg==
+X-Received: by 2002:a17:907:da7:: with SMTP id go39mr46177746ejc.58.1609230991596;
+        Tue, 29 Dec 2020 00:36:31 -0800 (PST)
 Received: from localhost.localdomain ([2a01:e0a:490:8730:6f69:290a:2b46:b9])
         by smtp.gmail.com with ESMTPSA id c23sm37265143eds.88.2020.12.29.00.36.30
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 29 Dec 2020 00:36:30 -0800 (PST)
+        Tue, 29 Dec 2020 00:36:31 -0800 (PST)
 From:   Loic Poulain <loic.poulain@linaro.org>
 To:     manivannan.sadhasivam@linaro.org
 Cc:     linux-arm-msm@vger.kernel.org, bbhatt@codeaurora.org,
         hemantk@codeaurora.org, Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH v6 06/10] mhi: pci_generic: Add suspend/resume/recovery procedure
-Date:   Tue, 29 Dec 2020 09:43:47 +0100
-Message-Id: <1609231431-10048-7-git-send-email-loic.poulain@linaro.org>
+Subject: [PATCH v6 07/10] mhi: pci_generic: Add PCI error handlers
+Date:   Tue, 29 Dec 2020 09:43:48 +0100
+Message-Id: <1609231431-10048-8-git-send-email-loic.poulain@linaro.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1609231431-10048-1-git-send-email-loic.poulain@linaro.org>
 References: <1609231431-10048-1-git-send-email-loic.poulain@linaro.org>
@@ -61,176 +61,94 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for system wide suspend/resume. During suspend, MHI
-device controller must be put in M3 state and PCI bus in D3 state.
+In AER capable root complex, errors are reported to the host which
+can then act accordingly and perform PCI recovering procedure.
 
-Add a recovery procedure allowing to reinitialize the device in case
-of error during resume steps, which can happen if device loses power
-(and so its context) while system suspend.
+This patch enables error reporting and implements error_detected,
+slot_reset and resume callbacks.
 
 Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 Reviewed-by Hemant Kumar <hemantk@codeaurora.org>
 ---
- drivers/bus/mhi/pci_generic.c | 105 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 105 insertions(+)
+ drivers/bus/mhi/pci_generic.c | 50 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 50 insertions(+)
 
 diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-index 2521cd4..3297d95 100644
+index 3297d95..9fe1e30 100644
 --- a/drivers/bus/mhi/pci_generic.c
 +++ b/drivers/bus/mhi/pci_generic.c
-@@ -13,6 +13,7 @@
+@@ -8,6 +8,7 @@
+  * Copyright (C) 2020 Linaro Ltd <loic.poulain@linaro.org>
+  */
+ 
++#include <linux/aer.h>
+ #include <linux/delay.h>
+ #include <linux/device.h>
  #include <linux/mhi.h>
- #include <linux/module.h>
- #include <linux/pci.h>
-+#include <linux/workqueue.h>
+@@ -405,6 +406,8 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	pci_save_state(pdev);
+ 	mhi_pdev->pci_state = pci_store_saved_state(pdev);
  
- #define MHI_PCI_DEFAULT_BAR_NUM 0
- 
-@@ -186,6 +187,7 @@ enum mhi_pci_device_status {
- struct mhi_pci_device {
- 	struct mhi_controller mhi_cntrl;
- 	struct pci_saved_state *pci_state;
-+	struct work_struct recovery_work;
- 	unsigned long status;
- };
- 
-@@ -313,6 +315,50 @@ static void mhi_pci_runtime_put(struct mhi_controller *mhi_cntrl)
- 	/* no PM for now */
++	pci_enable_pcie_error_reporting(pdev);
++
+ 	err = mhi_register_controller(mhi_cntrl, mhi_cntrl_config);
+ 	if (err)
+ 		return err;
+@@ -501,7 +504,54 @@ static void mhi_pci_reset_done(struct pci_dev *pdev)
+ 	set_bit(MHI_PCI_DEV_STARTED, &mhi_pdev->status);
  }
  
-+static void mhi_pci_recovery_work(struct work_struct *work)
++static pci_ers_result_t mhi_pci_error_detected(struct pci_dev *pdev,
++					       pci_channel_state_t state)
 +{
-+	struct mhi_pci_device *mhi_pdev = container_of(work, struct mhi_pci_device,
-+						       recovery_work);
++	struct mhi_pci_device *mhi_pdev = pci_get_drvdata(pdev);
 +	struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
-+	struct pci_dev *pdev = to_pci_dev(mhi_cntrl->cntrl_dev);
-+	int err;
 +
-+	dev_warn(&pdev->dev, "device recovery started\n");
++	dev_err(&pdev->dev, "PCI error detected, state = %u\n", state);
++
++	if (state == pci_channel_io_perm_failure)
++		return PCI_ERS_RESULT_DISCONNECT;
 +
 +	/* Clean up MHI state */
 +	if (test_and_clear_bit(MHI_PCI_DEV_STARTED, &mhi_pdev->status)) {
 +		mhi_power_down(mhi_cntrl, false);
 +		mhi_unprepare_after_power_down(mhi_cntrl);
++	} else {
++		/* Nothing to do */
++		return PCI_ERS_RESULT_RECOVERED;
 +	}
 +
-+	/* Check if we can recover without full reset */
-+	pci_set_power_state(pdev, PCI_D0);
-+	pci_load_saved_state(pdev, mhi_pdev->pci_state);
-+	pci_restore_state(pdev);
++	pci_disable_device(pdev);
 +
-+	if (!mhi_pci_is_alive(mhi_cntrl))
-+		goto err_try_reset;
-+
-+	err = mhi_prepare_for_power_up(mhi_cntrl);
-+	if (err)
-+		goto err_try_reset;
-+
-+	err = mhi_sync_power_up(mhi_cntrl);
-+	if (err)
-+		goto err_unprepare;
-+
-+	dev_dbg(&pdev->dev, "Recovery completed\n");
-+
-+	set_bit(MHI_PCI_DEV_STARTED, &mhi_pdev->status);
-+	return;
-+
-+err_unprepare:
-+	mhi_unprepare_after_power_down(mhi_cntrl);
-+err_try_reset:
-+	if (pci_reset_function(pdev))
-+		dev_err(&pdev->dev, "Recovery failed\n");
++	return PCI_ERS_RESULT_NEED_RESET;
 +}
 +
- static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- {
- 	const struct mhi_pci_dev_info *info = (struct mhi_pci_dev_info *) id->driver_data;
-@@ -327,6 +373,8 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	if (!mhi_pdev)
- 		return -ENOMEM;
- 
-+	INIT_WORK(&mhi_pdev->recovery_work, mhi_pci_recovery_work);
++static pci_ers_result_t mhi_pci_slot_reset(struct pci_dev *pdev)
++{
++	if (pci_enable_device(pdev)) {
++		dev_err(&pdev->dev, "Cannot re-enable PCI device after reset.\n");
++		return PCI_ERS_RESULT_DISCONNECT;
++	}
 +
- 	mhi_cntrl_config = info->config;
- 	mhi_cntrl = &mhi_pdev->mhi_cntrl;
- 
-@@ -391,6 +439,8 @@ static void mhi_pci_remove(struct pci_dev *pdev)
- 	struct mhi_pci_device *mhi_pdev = pci_get_drvdata(pdev);
- 	struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
- 
-+	cancel_work_sync(&mhi_pdev->recovery_work);
++	return PCI_ERS_RESULT_RECOVERED;
++}
 +
- 	if (test_and_clear_bit(MHI_PCI_DEV_STARTED, &mhi_pdev->status)) {
- 		mhi_power_down(mhi_cntrl, true);
- 		mhi_unprepare_after_power_down(mhi_cntrl);
-@@ -456,12 +506,67 @@ static const struct pci_error_handlers mhi_pci_err_handler = {
++static void mhi_pci_io_resume(struct pci_dev *pdev)
++{
++	struct mhi_pci_device *mhi_pdev = pci_get_drvdata(pdev);
++
++	dev_err(&pdev->dev, "PCI slot reset done\n");
++
++	queue_work(system_long_wq, &mhi_pdev->recovery_work);
++}
++
+ static const struct pci_error_handlers mhi_pci_err_handler = {
++	.error_detected = mhi_pci_error_detected,
++	.slot_reset = mhi_pci_slot_reset,
++	.resume = mhi_pci_io_resume,
+ 	.reset_prepare = mhi_pci_reset_prepare,
  	.reset_done = mhi_pci_reset_done,
  };
- 
-+static int  __maybe_unused mhi_pci_suspend(struct device *dev)
-+{
-+	struct pci_dev *pdev = to_pci_dev(dev);
-+	struct mhi_pci_device *mhi_pdev = dev_get_drvdata(dev);
-+	struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
-+
-+	cancel_work_sync(&mhi_pdev->recovery_work);
-+
-+	/* Transition to M3 state */
-+	mhi_pm_suspend(mhi_cntrl);
-+
-+	pci_save_state(pdev);
-+	pci_disable_device(pdev);
-+	pci_wake_from_d3(pdev, true);
-+	pci_set_power_state(pdev, PCI_D3hot);
-+
-+	return 0;
-+}
-+
-+static int __maybe_unused mhi_pci_resume(struct device *dev)
-+{
-+	struct pci_dev *pdev = to_pci_dev(dev);
-+	struct mhi_pci_device *mhi_pdev = dev_get_drvdata(dev);
-+	struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
-+	int err;
-+
-+	pci_set_power_state(pdev, PCI_D0);
-+	pci_restore_state(pdev);
-+	pci_set_master(pdev);
-+
-+	err = pci_enable_device(pdev);
-+	if (err)
-+		goto err_recovery;
-+
-+	/* Exit M3, transition to M0 state */
-+	err = mhi_pm_resume(mhi_cntrl);
-+	if (err) {
-+		dev_err(&pdev->dev, "failed to resume device: %d\n", err);
-+		goto err_recovery;
-+	}
-+
-+	return 0;
-+
-+err_recovery:
-+	/* The device may have loose power or crashed, try recovering it */
-+	queue_work(system_long_wq, &mhi_pdev->recovery_work);
-+
-+	return err;
-+}
-+
-+static const struct dev_pm_ops mhi_pci_pm_ops = {
-+	SET_SYSTEM_SLEEP_PM_OPS(mhi_pci_suspend, mhi_pci_resume)
-+};
-+
- static struct pci_driver mhi_pci_driver = {
- 	.name		= "mhi-pci-generic",
- 	.id_table	= mhi_pci_id_table,
- 	.probe		= mhi_pci_probe,
- 	.remove		= mhi_pci_remove,
- 	.err_handler	= &mhi_pci_err_handler,
-+	.driver.pm	= &mhi_pci_pm_ops
- };
- module_pci_driver(mhi_pci_driver);
- 
 -- 
 2.7.4
 
