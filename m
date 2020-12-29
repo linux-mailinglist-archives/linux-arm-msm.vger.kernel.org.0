@@ -2,40 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 395BF2E73D5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:19:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DA0C82E73D2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:19:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726583AbgL2USj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Dec 2020 15:18:39 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60244 "EHLO mail.kernel.org"
+        id S1726571AbgL2USi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Dec 2020 15:18:38 -0500
+Received: from mail.kernel.org ([198.145.29.99]:60232 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726586AbgL2USh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S1726579AbgL2USh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 29 Dec 2020 15:18:37 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id E491C22E01;
+Received: by mail.kernel.org (Postfix) with ESMTPS id BD69822DCC;
         Tue, 29 Dec 2020 20:15:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1609272935;
-        bh=0M+NmELun8LmlNpkpQyhiLlCzpUSeZK+DZ8ny9lpnGo=;
+        bh=NhfSUJa4dLB7woZ5bLd6GE6WwcIJ01ruS+UtT+2ngd0=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=Q6VeIRcd6yfGw3MeWCJVnpIaS1kkVv3o9YJ1/FyimYg4ml+1gOYlmxLCXcZDO5gLF
-         4Yd0Ogw3JFfB0Cj9ehsbRzXZvKoDf5UAwrfpzB6Sk+b2WgqHWKeCiogxNnMQhgv/uJ
-         fTIVKj/fQM95j0qETIs5bMXUjLv5yXkcJiT7b2eDSglxNNjvzPmsfBsQttcGp/pfHy
-         jbdUKhD/WWXs+PWVPjLEr2JrMFcfdvWUrkS/ZfcBfu5rLfT56GyVZYeRDgNw2PE+4L
-         p4YslCRKs5evIlv68zcg2Drk2HdvIkygQxK/1fv+CAZWrkGn52mLvCGVNgLrtSis53
-         YcCEZq6HnqHHA==
+        b=YW7eeQq62C6Q4WTsOdvtpUyhwiPTjtGTQfmv2D3Q5JH9Xqbp2O5owyz8mq2YgN0rH
+         aRnMkaJULxoaNHbH613c4aJvVH0rgnjyW7azRFXQpOFLrgB6QVnWaWcH7G1ahoG50L
+         pM1eKEjWTNSxuvDN5eYZbbBByvnMz66QGSk3CjP7eZSuIIdVAe/spuMPNwy2ZrKMKl
+         /v4nvA9rwrdJAsZ9VphfDd1DQL4v1oCHUIox5i/50VvV8LX60ta12b71f1tzHmoozJ
+         tq0em7sGZs9xvNm6SuXLLtpDPYPMrh2J0Pz88nUFhV0xhipFp0bDm8z+4PkKCi0VHt
+         0MKFwCnY29yyg==
 Received: from pdx-korg-docbuild-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id E046C604D7;
+        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id B86DA60591;
         Tue, 29 Dec 2020 20:15:35 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] remoteproc: sysmon: fix shutdown_acked state
+Subject: Re: [PATCH] slimbus: qcom-ngd-ctrl: Avoid sending power requests without
+ QMI
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <160927293591.13751.4235218848958063380.git-patchwork-notify@kernel.org>
+Message-Id: <160927293575.13751.14604066478494704968.git-patchwork-notify@kernel.org>
 Date:   Tue, 29 Dec 2020 20:15:35 +0000
-References: <20201204193740.3162065-1-arnd@kernel.org>
-In-Reply-To: <20201204193740.3162065-1-arnd@kernel.org>
-To:     Arnd Bergmann <arnd@kernel.org>
+References: <20201125054255.137067-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20201125054255.137067-1-bjorn.andersson@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -45,25 +46,20 @@ Hello:
 
 This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Fri,  4 Dec 2020 20:37:35 +0100 you wrote:
-> From: Arnd Bergmann <arnd@arndb.de>
+On Tue, 24 Nov 2020 21:42:55 -0800 you wrote:
+> Attempting to send a power request during PM operations, when the QMI
+> handle isn't initialized results in a NULL pointer dereference. So check
+> if the QMI handle has been initialized before attempting to post the
+> power requests.
 > 
-> The latest version of sysmon_stop() starts by initializing
-> the sysmon->shutdown_acked variable, but then overwrites it
-> with an uninitialized variable later:
-> 
-> drivers/remoteproc/qcom_sysmon.c:551:11: error: variable 'acked' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
->         else if (sysmon->ept)
->                  ^~~~~~~~~~~
-> drivers/remoteproc/qcom_sysmon.c:554:27: note: uninitialized use occurs here
->         sysmon->shutdown_acked = acked;
->                                  ^~~~~
+> Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > 
 > [...]
 
 Here is the summary with links:
-  - remoteproc: sysmon: fix shutdown_acked state
-    https://git.kernel.org/qcom/c/9d7b4a40387d
+  - slimbus: qcom-ngd-ctrl: Avoid sending power requests without QMI
+    https://git.kernel.org/qcom/c/39014ce6d602
 
 You are awesome, thank you!
 --
