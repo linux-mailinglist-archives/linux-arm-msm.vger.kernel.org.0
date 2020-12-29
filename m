@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 303F82E739B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:18:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B71912E739A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:18:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726472AbgL2URu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1726462AbgL2URu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Tue, 29 Dec 2020 15:17:50 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60244 "EHLO mail.kernel.org"
+Received: from mail.kernel.org ([198.145.29.99]:60240 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726475AbgL2URs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S1726472AbgL2URs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 29 Dec 2020 15:17:48 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id 35A2722B51;
+Received: by mail.kernel.org (Postfix) with ESMTPS id 2445922B4E;
         Tue, 29 Dec 2020 20:15:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1609272933;
-        bh=LtOBBbb4ahMCYWUm+QgBP3DS8jZFCIsSMiWaxNTClww=;
+        bh=SVF5FrhUOlJuMTOOQtCykwx2cUX2RXIgZI493vJkC2g=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=GJnsHw/q1kGfqz1tgEYgO9Uhs385VhAZp78d8s1u4GqKa1dUK9UVE6IdP3tU7PpC3
-         z919cHJEM2mw+7XSvT5mRHjwvwy4/Z7zX/no9SMrun8w2a0iD2f3dh1QnTxPNoUlz/
-         Mh6WaNEW4IC+zw7GHcL2OMUUwa35lLU6GVrHPUPgJRQAuJISlLK1/Mdt1Voo/KpZdd
-         wg8ywFbyxbmxIqs6zg1GgF+AAF01RP2/BHSo/NGmSm58DVAgJ0UE07drkTedS00arc
-         WjgwKerSy/PpP+pMU5u4eTQ8ev6c32sBhS61rXCKqn6ajjosvVPJ7OyI+Gkq+5Opq6
-         VAHEWUOZhmsng==
+        b=bGLnGL3mPW4CHIggTEuHMGKSSyAlnXp7dc2ksI3zKRDdGaTomDAAWPt7pSnYo3jA0
+         YBc4kwgsNIs5bOHjHWVKgqH1SBG1DbDqukCEEA7tymJvCnFRb6lv8HsSECy+kZiFOL
+         31SaeB6VFikGxZLqYbNADeiu+pmbZ6lzYQwhItgBjtOaFleXXN81hBs+AfFsDEoVb4
+         JHZy/EzG4lfYabQ4x0fLLSNFiELsR4reC1w3JqTK+1nKuqfE/TSH6KVymEpCdOgFXe
+         iEgGDoxyP4Q+wHbOk/+i447yMp91VHf0fj5uQYPq7V4hIy5sYIzdJEwWeTQ8He1hm3
+         koAp6UxS9GvQA==
 Received: from pdx-korg-docbuild-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id 2DF5660591;
+        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id 1FBC9600D9;
         Tue, 29 Dec 2020 20:15:33 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v5 1/2] clk: qcom: lpasscc-sc7810: Use devm in probe
+Subject: Re: [PATCH] drm/msm/dp: remove duplicate include statement
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <160927293318.13751.2640014970125902687.git-patchwork-notify@kernel.org>
+Message-Id: <160927293312.13751.16338240831736686830.git-patchwork-notify@kernel.org>
 Date:   Tue, 29 Dec 2020 20:15:33 +0000
-References: <20201019154857.v5.1.I4567b5e7e17bbb15ef063d447cb83fd43746cb18@changeid>
-In-Reply-To: <20201019154857.v5.1.I4567b5e7e17bbb15ef063d447cb83fd43746cb18@changeid>
-To:     Douglas Anderson <dianders@chromium.org>
+References: <1605081476-27098-1-git-send-email-tiantao6@hisilicon.com>
+In-Reply-To: <1605081476-27098-1-git-send-email-tiantao6@hisilicon.com>
+To:     Tian Tao <tiantao6@hisilicon.com>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -43,23 +43,20 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hello:
 
-This series was applied to qcom/linux.git (refs/heads/for-next):
+This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Mon, 19 Oct 2020 15:49:34 -0700 you wrote:
-> Let's convert the lpass clock control driver to use devm.  This is a
-> few more lines of code, but it will be useful in a later patch which
-> disentangles the two devices handled by this driver.
+On Wed, 11 Nov 2020 15:57:56 +0800 you wrote:
+> linux/rational.h is included more than once, Remove the one that isn't
+> necessary.
 > 
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: Tian Tao <tiantao6@hisilicon.com>
 > ---
-> 
-> [...]
+>  drivers/gpu/drm/msm/dp/dp_catalog.c | 1 -
+>  1 file changed, 1 deletion(-)
 
 Here is the summary with links:
-  - [v5,1/2] clk: qcom: lpasscc-sc7810: Use devm in probe
-    https://git.kernel.org/qcom/c/7635622b77b5
-  - [v5,2/2] clk: qcom: lpass-sc7180: Disentangle the two clock devices
-    https://git.kernel.org/qcom/c/4ee9fe3e292b
+  - drm/msm/dp: remove duplicate include statement
+    https://git.kernel.org/qcom/c/64aec620b7f2
 
 You are awesome, thank you!
 --
