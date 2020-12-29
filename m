@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 10D922E7394
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:18:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C0AA2E73A0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:18:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726480AbgL2URs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Dec 2020 15:17:48 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60230 "EHLO mail.kernel.org"
+        id S1726419AbgL2URy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Dec 2020 15:17:54 -0500
+Received: from mail.kernel.org ([198.145.29.99]:60050 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726419AbgL2URs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Dec 2020 15:17:48 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id D5D4922B43;
-        Tue, 29 Dec 2020 20:15:32 +0000 (UTC)
+        id S1726488AbgL2URy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 29 Dec 2020 15:17:54 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id 721AC22BF3;
+        Tue, 29 Dec 2020 20:15:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1609272932;
-        bh=KzC0Vd6FmNdmk5FIi6x4bg2ZOFxvm3FYZK60DavNQE8=;
+        s=k20201202; t=1609272933;
+        bh=W+JA1Kybg80Xuw+VXccEm08eIdBtNQm8iV873JsIbHE=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=Fmne01xWU/dHA5w6ZRqpFa492UC0Dtr9ZWllGj58dFS78G2rdDoIb3Tij3OAjiQvl
-         AdmkQiqLJ0FxL1o1C52cXPRk9xoQ7fHEcAKbtcxGhNHpvOgYBtV94R2QTd16+ZvsT5
-         UoUfw7PZPKj13If+BkDfBAjg6ZZF3SPH2SUFqLI+rQyHWdA9RSgkxhN8+UzDZ3DiLv
-         5+4aX94iYJjHbyaPZWifPlSqMuhzapx+Exrgx9VubNK5YaerdRjnF9WIdo5ihZu/bh
-         zxyN7SzX5xCdSqmLr9C6ijnf7HeQPUE8IRnbt73FF+L9Kn+5GAhweVKZhaMdMAb+IA
-         63SOH4mcVBwPA==
+        b=TOGz+OC6efEVFL8UMjKF76dzTKBhYltaeSarl4xAFM4ziczpI4n4148jElT1b3Ie2
+         bhkxYEXlYYxPOka2ykzJgCFKyeZ29BEVo3+rsGnrtcy16TWuytC3Y/iq4wMrKP8BGk
+         v+8Q5idLjSq1YaQ2O5uxh0qRVoexB43iJBZC9sGEbbPqlQgctrvINXTL5DgQpjKy+K
+         O7RA/Nk/w8Bl1NMvdSbfj48VE7wdX6ICh9AnZ3kOhxBnf0OmambF+oeEsDhbg8Xqma
+         eYO54s9MCvvMvMhPHHRriGIF0Lecky/BWJ939jr8N7zC1wTChEJdknvQ1KcpiP5jMY
+         JapOmW2ppx0yA==
 Received: from pdx-korg-docbuild-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id D259860591;
-        Tue, 29 Dec 2020 20:15:32 +0000 (UTC)
+        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id 6E957604D7;
+        Tue, 29 Dec 2020 20:15:33 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 0/2] cherry-pick miised DP related patches
+Subject: Re: [PATCH v2 0/2] Support SC7180 sound card variation without headset
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <160927293285.13751.1543824625465709740.git-patchwork-notify@kernel.org>
-Date:   Tue, 29 Dec 2020 20:15:32 +0000
-References: <20201103225336.17141-1-khsieh@codeaurora.org>
-In-Reply-To: <20201103225336.17141-1-khsieh@codeaurora.org>
-To:     Kuogee Hsieh <khsieh@codeaurora.org>
+Message-Id: <160927293344.13751.11493096625716812294.git-patchwork-notify@kernel.org>
+Date:   Tue, 29 Dec 2020 20:15:33 +0000
+References: <20201112014328.695232-1-xuyuqing@huaqin.corp-partner.google.com>
+In-Reply-To: <20201112014328.695232-1-xuyuqing@huaqin.corp-partner.google.com>
+To:     xuyuqing <xuyuqing@huaqin.corp-partner.google.com>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -45,21 +45,21 @@ Hello:
 
 This series was applied to qcom/linux.git (refs/heads/for-next):
 
-On Tue,  3 Nov 2020 14:53:34 -0800 you wrote:
-> Cherry-pick two missed drm/msm/dp related patches to msm-next-staging
+On Thu, 12 Nov 2020 09:43:26 +0800 you wrote:
+> Use compatible string to let machine driver handle the case
+> where ALC5682 headset codec is replaced with ADAU7002 dmic codec
 > 
-> Kuogee Hsieh (2):
->   drm/msm/dp: return correct connection status after suspend
->   drm/msm/dp: fixes wrong connection state caused by failure of link
->     train
+> xuyuqing (2):
+>   ASoC: google: dt-bindings: add new compatible for sc7180-coachz
+>   ASoC: qcom: sc7180: Add machine driver for sound card
 > 
 > [...]
 
 Here is the summary with links:
-  - [v2,1/2] drm/msm/dp: return correct connection status after suspend
-    https://git.kernel.org/qcom/c/19e52bcb27c2
-  - [v2,2/2] drm/msm/dp: fixes wrong connection state caused by failure of link train
-    https://git.kernel.org/qcom/c/62671d2ef24b
+  - [v2,1/2] ASoC: google: dt-bindings: add new compatible for sc7180-coachz
+    https://git.kernel.org/qcom/c/80e2b1208d87
+  - [v2,2/2] ASoC: qcom: sc7180: Modify machine driver for sound card
+    https://git.kernel.org/qcom/c/e936619b7ce7
 
 You are awesome, thank you!
 --
