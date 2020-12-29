@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C853C2E738F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:18:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CEEED2E7376
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:18:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726422AbgL2URj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Dec 2020 15:17:39 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60052 "EHLO mail.kernel.org"
+        id S1726290AbgL2URX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Dec 2020 15:17:23 -0500
+Received: from mail.kernel.org ([198.145.29.99]:60048 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726428AbgL2URi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Dec 2020 15:17:38 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id B521322B3A;
+        id S1726307AbgL2URW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 29 Dec 2020 15:17:22 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id 1C32922573;
         Tue, 29 Dec 2020 20:15:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1609272932;
-        bh=5BH0sNG9NHI9oConmv5MQbz4qweVi+wcx5+qU05FZGA=;
+        bh=3fYVYS2Ei2br1O+RSm/7GiTTxp96zmRZ+e5beh2eUfo=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=Gs0bJ2uQq9X7yvkpF+qExUa7HiHUs4vEu5LQd0NIeeOxXmf/b4XU57JeiY9MO3WDH
-         aK8U5nTO85qiGfeRQOu7h9/5auKTyHZGghoKF/1UpUvWraA3bVFjFTL2Pc28GWg+Qz
-         ek+QRzkyUda6Fx9jOAOeWk1HSjcYjgA6vjoq2cmjURgLPzIQMb/vMTjtqQP9HgWrCE
-         8QLtNl/jrXhKmAyUmdbKoHCapa8YcnovDFhsMz62QTsmb9f87CBoOSJki74yA7Id4K
-         0EIbs+xNVaiiP49VF4mw8WhbnXib0X8jIOcl39iYwRSmYHyUq/a8fM6SJQ5EjQ02m3
-         y90BJbrt1VNdA==
+        b=d47vU9y4xJe0nbxXLPANenRiI0xnbFnBzGifEhEm1RhG9NAHFbh51wK7NXf0rfrHZ
+         fAYaS46sUZ5tFOlUw+k5bkO4afhOiOsfK+2ifmnesDga7XFS3zba5cG/w6rMFMVHiq
+         zi6Y/d6NyovvFTk/FimyKSSib/4mEPtpqC7goZmY7q+1kMIzb1uWOQYyGiAsnweB7P
+         01DUPpLGmD2ZnEtwKZuwwbfHDgvsvyMS1MtVWhAPiK6NlY/x4jyRIE4nOUbPHMDiVh
+         LGdN8dtkw2UazurZEPhWBsen/+9NdCKBbcK05ElcSYefcQC5lG9F7RGEk/RIrEfcEK
+         jI976USqH6lWQ==
 Received: from pdx-korg-docbuild-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id B199260591;
+        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id 15FF3604D7;
         Tue, 29 Dec 2020 20:15:32 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] Fixes kernel crash generating from bam_dma_irq()
+Subject: Re: [PATCH] drm/msm/dp: DisplayPort PHY compliance tests fixup
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <160927293272.13751.18241433445311574612.git-patchwork-notify@kernel.org>
+Message-Id: <160927293208.13751.17350376903713649948.git-patchwork-notify@kernel.org>
 Date:   Tue, 29 Dec 2020 20:15:32 +0000
-References: <1607250094-21571-1-git-send-email-sparth1292@gmail.com>
-In-Reply-To: <1607250094-21571-1-git-send-email-sparth1292@gmail.com>
-To:     Parth Y Shah <sparth1292@gmail.com>
+References: <20200926045048.16175-1-tanmay@codeaurora.org>
+In-Reply-To: <20200926045048.16175-1-tanmay@codeaurora.org>
+To:     Tanmay Shah <tanmay@codeaurora.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -45,20 +45,20 @@ Hello:
 
 This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Sun,  6 Dec 2020 15:51:34 +0530 you wrote:
-> While performing suspend/resume, we were getting below kernel crash.
+On Fri, 25 Sep 2020 21:50:48 -0700 you wrote:
+> Bandwidth code was being used as test link rate. Fix this by converting
+> bandwidth code to test link rate
 > 
-> [   54.541672] [FTS][Info]gesture suspend...
-> [   54.605256] [FTS][Error][GESTURE]Enter into gesture(suspend) failed!
-> [   54.605256]
-> [   58.345850] irq event 10: bogus return value fffffff3
-> ......
+> Do not reset voltage and pre-emphasis level during IRQ HPD attention
+> interrupt. Also fix pre-emphasis parsing during test link status process
+> 
+> Signed-off-by: Tanmay Shah <tanmay@codeaurora.org>
 > 
 > [...]
 
 Here is the summary with links:
-  - Fixes kernel crash generating from bam_dma_irq()
-    https://git.kernel.org/qcom/c/4421fe533296
+  - drm/msm/dp: DisplayPort PHY compliance tests fixup
+    https://git.kernel.org/qcom/c/6625e2637d93
 
 You are awesome, thank you!
 --
