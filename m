@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 63F042E73AB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:18:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EA8472E73AA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:18:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726509AbgL2USE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1726508AbgL2USE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Tue, 29 Dec 2020 15:18:04 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60232 "EHLO mail.kernel.org"
+Received: from mail.kernel.org ([198.145.29.99]:60228 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726503AbgL2USD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S1726509AbgL2USD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 29 Dec 2020 15:18:03 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id D333522CA0;
+Received: by mail.kernel.org (Postfix) with ESMTPS id EE97D22C9E;
         Tue, 29 Dec 2020 20:15:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1609272933;
-        bh=shL+DxFC44e/yWz65f5d2sDj0kbVlP3Tr3LHO5/UnGA=;
+        s=k20201202; t=1609272934;
+        bh=OnT5SCi+kEDdeKiCoksc1SADBmKMXuM5jbHiKYZS9SM=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=WOKFew3XNYE/aUwX3bIsrRzXSpSjAp+8U/PCZ7C0zF9dpOvNRPQ0cLSO61GHxUqwY
-         uySWNwhDB9HVSTaMOM4pXr8FofPaJjEJS/jTZCvwFybfX3kgutgNXBQbOvyxvtirru
-         GzLUfsiPpauV4lrAnIauoutpKQlIh/hu7goOy8Fmyrk727pZFpgDeo8/oluh6ssG/Y
-         VwUgE4o8VijxIoTgBWlokrlNhD+NgDPOR8dE8hcn1lQf51ZnDanlb3PbHk2WFN4m3K
-         JKj2rJUTzrSg3HAam+if++L2iTCCKFWuxWps4CmgMhYc+S91lv5LAbHsenPKJFUE+q
-         iM/irjsfASPOw==
+        b=D9URonmQj7H/y5tbSE4nSMWPDwwdVFOJD2RvwVA+Ey2Urc/127uepk0xtJwyi55r/
+         nQVKS9h5GIIhnElpJFHy5BN6PGKYuAc7AQJqs6e2kvcn3DZa69mskV/MWJQAYHwJ2b
+         +NwL2s8hpgS85wynJX6w2dPG37aTSEjSz8j1J2RzhmzXI0jBpzr40z12TZzFYu4s3i
+         45aCFeKibamvdp7cyKP5mL8r6ZCzcY6qDnCD6awQoU8AoSJxseJv+AxtWZnvw8kYb7
+         LTkAaG6AoviaTrSgedAZlOmmX74uwIqskduV0YdrqY7oivUAgY6xrmeSZlqFaxv7vX
+         3ee4F7qEPRE2A==
 Received: from pdx-korg-docbuild-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id CEC6B60626;
+        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id E7AFC60591;
         Tue, 29 Dec 2020 20:15:33 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] interconnect: qcom: sdm845: Enable keepalive for the MM1 BCM
+Subject: Re: [PATCH 1/2] regulator: dt-bindings: Add PM8350x compatibles
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <160927293384.13751.16493935239304119933.git-patchwork-notify@kernel.org>
+Message-Id: <160927293394.13751.251175149859625197.git-patchwork-notify@kernel.org>
 Date:   Tue, 29 Dec 2020 20:15:33 +0000
-References: <20201012194034.26944-1-georgi.djakov@linaro.org>
-In-Reply-To: <20201012194034.26944-1-georgi.djakov@linaro.org>
-To:     Georgi Djakov <georgi.djakov@linaro.org>
+References: <20201203071244.2652297-1-vkoul@kernel.org>
+In-Reply-To: <20201203071244.2652297-1-vkoul@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -43,24 +43,22 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hello:
 
-This patch was applied to qcom/linux.git (refs/heads/for-next):
+This series was applied to qcom/linux.git (refs/heads/for-next):
 
-On Mon, 12 Oct 2020 22:40:34 +0300 you wrote:
-> After enabling interconect scaling for display on the db845c board,
-> in certain configurations the board hangs, while the following errors
-> are observed on the console:
+On Thu,  3 Dec 2020 12:42:43 +0530 you wrote:
+> Add PM8350 and PM8350C compatibles for these PMICs found in some
+> Qualcomm platforms.
 > 
->   Error sending AMC RPMH requests (-110)
->   qcom_rpmh TCS Busy, retrying RPMH message send: addr=0x50000
->   qcom_rpmh TCS Busy, retrying RPMH message send: addr=0x50000
->   qcom_rpmh TCS Busy, retrying RPMH message send: addr=0x50000
->   ...
-> 
-> [...]
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>  .../devicetree/bindings/regulator/qcom,rpmh-regulator.txt     | 4 ++++
+>  1 file changed, 4 insertions(+)
 
 Here is the summary with links:
-  - interconnect: qcom: sdm845: Enable keepalive for the MM1 BCM
-    https://git.kernel.org/qcom/c/5be1805dc396
+  - [1/2] regulator: dt-bindings: Add PM8350x compatibles
+    https://git.kernel.org/qcom/c/ff7f380d21d0
+  - [2/2] regulator: qcom-rpmh: Add support for PM8350/PM8350c
+    https://git.kernel.org/qcom/c/bebb2c6d5ca2
 
 You are awesome, thank you!
 --
