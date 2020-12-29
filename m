@@ -2,40 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B31292E73C2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:18:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 530122E73D3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:19:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726547AbgL2USY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Dec 2020 15:18:24 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60242 "EHLO mail.kernel.org"
+        id S1726579AbgL2USi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Dec 2020 15:18:38 -0500
+Received: from mail.kernel.org ([198.145.29.99]:60238 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726550AbgL2UST (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Dec 2020 15:18:19 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id 1C21122D37;
+        id S1726575AbgL2USh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 29 Dec 2020 15:18:37 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id C8AEC22DD3;
         Tue, 29 Dec 2020 20:15:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1609272935;
-        bh=s3/pj2Hd/v7iGfwSU8H8YAY8d3P+6HzGkq4/1TiKUp4=;
+        bh=7fPMMONCQwv6nBa2MKTiV7pfD49nnCQQy52AUsLM/04=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=mgjvB1m/eHTnkc3dJu/38BOxSDqir1hhKH89mdHX5YFdGNTZpKvFnzidYvWbfI7ow
-         YfQBwMUH/jhJbv3rdanVDltQTiyf+bYphmUEUiR9tQabAcCvBaum3540LLtWxpJt9q
-         /0JiAiM2z1yisuK56ngDaI4agTeuQ58sIutvN4tJfUYlrM48l+4RgRR8EiPmEjP38P
-         F+C1zSBcm+FIhCcsAks6XzLQQ0yuCMmUO8AEUhjvW/BrvRloaerMHEHK1CVSZ+EIR0
-         czCvx1cOwXdKA7ukx1OGsuXC+CYkLbK+soaSgRjla5wHobo3MawXpcXJuQs3lZv9aG
-         MAMwFSHQJd5AQ==
+        b=RMrqQxJ9v23Z+/cXqdOY0+qT2tf25boE6wk9mf11Ai70duQftjV/xlQFwlh5XOdoI
+         fymcHHTD1SQmb8YGaJeHD775Ni7ed+Jy1iuM9YVhj5knxojAYQpFY3CrwmULFsOM7j
+         IzL2W3gTCAbE1k/cXAA/S5hH257b3279sXWgADZOv03MlUHJS59o4OBzzlt5idpKRX
+         e3ln7IojhjBB9aS2lAlXyu6kkREq0aIb1cGaHfT1ZeafJ8Vxar21gSj48Nfg8iun8p
+         h4rHmWP+L3yShdtCbeFTYUgOURpff+0qZxFL+Ed+wfZrI8TDiltMn1mkJ6166fSmIP
+         K8cUSwx52jZ+Q==
 Received: from pdx-korg-docbuild-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id 13CDB60626;
+        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id C47FF60626;
         Tue, 29 Dec 2020 20:15:35 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] remoteproc: qcom: fix reference leak in adsp_start
+Subject: Re: [PATCH] remoteproc: qcom: Fix potential NULL dereference in
+ adsp_init_mmio()
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <160927293507.13751.2212030497012313056.git-patchwork-notify@kernel.org>
+Message-Id: <160927293580.13751.10380042713825620008.git-patchwork-notify@kernel.org>
 Date:   Tue, 29 Dec 2020 20:15:35 +0000
-References: <20201102143534.144484-1-zhangqilong3@huawei.com>
-In-Reply-To: <20201102143534.144484-1-zhangqilong3@huawei.com>
-To:     Zhang Qilong <zhangqilong3@huawei.com>
+References: <1607392460-20516-1-git-send-email-zhangchangzhong@huawei.com>
+In-Reply-To: <1607392460-20516-1-git-send-email-zhangchangzhong@huawei.com>
+To:     Zhang Changzhong <zhangchangzhong@huawei.com>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -45,19 +46,20 @@ Hello:
 
 This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Mon, 2 Nov 2020 22:35:34 +0800 you wrote:
-> pm_runtime_get_sync will increment pm usage counter even it
-> failed. Forgetting to pm_runtime_put_noidle will result in
-> reference leak in adsp_start, so we should fix it.
+On Tue, 8 Dec 2020 09:54:20 +0800 you wrote:
+> platform_get_resource() may fail and in this case a NULL dereference
+> will occur.
 > 
-> Fixes: dc160e4491222 ("remoteproc: qcom: Introduce Non-PAS ADSP PIL driver")
-> Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
+> Fix it to use devm_platform_ioremap_resource() instead of calling
+> platform_get_resource() and devm_ioremap().
+> 
+> This is detected by Coccinelle semantic patch.
 > 
 > [...]
 
 Here is the summary with links:
-  - remoteproc: qcom: fix reference leak in adsp_start
-    https://git.kernel.org/qcom/c/aa37448f597c
+  - remoteproc: qcom: Fix potential NULL dereference in adsp_init_mmio()
+    https://git.kernel.org/qcom/c/c3d4e5b12672
 
 You are awesome, thank you!
 --
