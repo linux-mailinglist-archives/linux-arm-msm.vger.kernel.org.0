@@ -2,96 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6EB682E6EF7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 09:37:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C93672E6EFA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 09:37:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726281AbgL2Iex (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Dec 2020 03:34:53 -0500
-Received: from so254-31.mailgun.net ([198.61.254.31]:47865 "EHLO
-        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726008AbgL2Iex (ORCPT
+        id S1726072AbgL2IhH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Dec 2020 03:37:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60612 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726114AbgL2IhH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Dec 2020 03:34:53 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1609230867; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=/xH+QM/cA6wZt3vjwXZX4/z9l+hds6utzd84arUehbs=; b=pXJXlDIdYVAjmdSM+vTj1KxjCiT17XpMeowjGhHqyVQ/PF3w+esEZzY8mm3FsoJij5A2tuY2
- ckHgJCyONW/15udogz6A916GYQprw8WUd2CDhN6IDilaoa0Qp+oaQOBW5Vzg/9CADYpO/0ay
- WbWas7aG3CkDGyE5iY4Dgczwpls=
-X-Mailgun-Sending-Ip: 198.61.254.31
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n08.prod.us-east-1.postgun.com with SMTP id
- 5feae9e77bc801dc4fc2547b (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 29 Dec 2020 08:33:43
- GMT
-Sender: mkshah=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 05BD2C433C6; Tue, 29 Dec 2020 08:33:43 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from mkshah-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8EE21C433CA;
-        Tue, 29 Dec 2020 08:33:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8EE21C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=mkshah@codeaurora.org
-From:   Maulik Shah <mkshah@codeaurora.org>
-To:     bjorn.andersson@linaro.org, agross@kernel.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dianders@chromium.org, ilina@codeaurora.org, lsrao@codeaurora.org,
-        Maulik Shah <mkshah@codeaurora.org>
-Subject: [PATCH v2] drivers: qcom: rpmh-rsc: Do not read back the register write on trigger
-Date:   Tue, 29 Dec 2020 14:03:21 +0530
-Message-Id: <1609230801-31721-1-git-send-email-mkshah@codeaurora.org>
+        Tue, 29 Dec 2020 03:37:07 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7E81C0613D6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Dec 2020 00:36:26 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id w1so17175361ejf.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Dec 2020 00:36:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=0FVrlToZfsZ61Drh2hRXUvUvU2vtuAAba+hrCuwj5WY=;
+        b=omZw1mJQb49zHRy/CLbtcRcFj66iyH6Cu4bZYzGQ0jHUVmvzcwe3deBlMLQAmsQvUQ
+         EJEkRzPvD2mTO19ypAGwwdsQm8lSWUaAulL04i77Hpd5vcZip48omlfBgbeQF2ySIIRi
+         wzfb2adJ21xqgR7wm1TM/TiPlEXmUIOVCGo8XimfMuviUW3QTblPiAxvH0ERXUUnozpg
+         NhjSP4vSrCRhDpVRCr95xfeldRwE0JrkvEQ5DnAbGPixNHZfQX/Vh8IjNALAn4RA9nVV
+         QO0kIXlMqAzVoVPwBPhNZhj84Li4jhNJSiciaYk0RJHrTfvDOiIE2uJOktZLcsUFqK93
+         c1XQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=0FVrlToZfsZ61Drh2hRXUvUvU2vtuAAba+hrCuwj5WY=;
+        b=cnSUOrrAATJdA51SqsLSM8hV6MgR4+UtLra+86A/4KBBO2cI0HNEE2yRXy1Bl2R0kJ
+         l/QtQzpgekiQAUX2QJJtcNvuoQKGInew7rXEM4k74Zrer6qCmB7BBWKHwXbuH1M2CUhu
+         /w0iA92E4QhEfbnuDBc0cvFHjuP8H6BfaOPa09ISU2hKZFQTFym+ab6INj5LCh/xUwqi
+         PidFIA6XXJhlk6i0PThh3EqUClxZxMxutRfXRDXT2SMst1yEFwmu9AYJJZx2zf3cvWUs
+         A4Foa7mQdJgTppVsIsxpIN3iKD475sulIij7kdf5IXuO111panmu4Vno/i+59WgIAHhZ
+         BTjg==
+X-Gm-Message-State: AOAM5307HFpOF3g25Ph31faCoSNajavTLmnWzILwsObrKntaU5OEjbr5
+        0vmhHZqiRMcXT3JcbtdhR7H+6Q==
+X-Google-Smtp-Source: ABdhPJwD19M6TWPMoOWMeYsDJiLxKtnKIkmXTfsreu1Vw4DE3ir1sxP8f3Uf9zBJVssA4YrfdOYxtw==
+X-Received: by 2002:a17:906:6449:: with SMTP id l9mr40472060ejn.320.1609230985280;
+        Tue, 29 Dec 2020 00:36:25 -0800 (PST)
+Received: from localhost.localdomain ([2a01:e0a:490:8730:6f69:290a:2b46:b9])
+        by smtp.gmail.com with ESMTPSA id c23sm37265143eds.88.2020.12.29.00.36.24
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 29 Dec 2020 00:36:24 -0800 (PST)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, bbhatt@codeaurora.org,
+        hemantk@codeaurora.org, Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH v6 00/10] mhi: pci_generic: Misc improvements
+Date:   Tue, 29 Dec 2020 09:43:41 +0100
+Message-Id: <1609231431-10048-1-git-send-email-loic.poulain@linaro.org>
 X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Lina Iyer <ilina@codeaurora.org>
+This series adjust some configuration values to ensure stability and
+robustness of mhi pci devices (timeout, number of events, burst mode).
 
-When triggering a TCS to send its contents, reading back the trigger
-value may return an incorrect value. That is because, writing the
-trigger may raise an interrupt which could be handled immediately and
-the trigger value could be reset in the interrupt handler.
+It also includes support for system sleep as well as a recovery procedure
+that can be triggered when a PCI error is reported, either by PCI AER or by
+the new health-check mechanism.
 
-A write_tcs_reg_sync() would read back the value that is written and try
-to match it to the value written to ensure that the value is written,
-but if that value is different, we may see false error for same.
+All these changes have been tested with Telit FN980m module
 
-Fixes: 658628e7ef78 ("drivers: qcom: rpmh-rsc: add RPMH controller for QCOM SoCs")
-Signed-off-by: Lina Iyer <ilina@codeaurora.org>
-Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
----
-Changes in v2:
-- Add Fixes tag
-- Add Reviewed-by tag
----
- drivers/soc/qcom/rpmh-rsc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+v2:
+  - Cancel recovery work on suspend
+v3:
+  - enable doorbell_mode_switch for burst channel (HW)
+  - Add mhi_initialize_controller helper patch
+v4:
+  - Delete hard reset on module unload, MHI reset is enough (Jeffrey)
+  - Move soc reset support in MHI core (Jeffrey)
+  - burst mode: enable doorbell_mode_switch for HW channels (Bhaumik)
+  - Add diag channels
+v5:
+  - Remove useless call to mhi_initialize_controller in alloc_controller (hemant)
+  - Add define for post reset timeout (hemant)
+  - Fix static misses (hemant)
+v6:
+  - Add debug print in case of recovery success (Mani)
+  - Return error code in case of resume failure (Mani)
 
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index 37969dc..0b082ec 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -364,7 +364,7 @@ static void __tcs_set_trigger(struct rsc_drv *drv, int tcs_id, bool trigger)
- 		enable = TCS_AMC_MODE_ENABLE;
- 		write_tcs_reg_sync(drv, RSC_DRV_CONTROL, tcs_id, enable);
- 		enable |= TCS_AMC_MODE_TRIGGER;
--		write_tcs_reg_sync(drv, RSC_DRV_CONTROL, tcs_id, enable);
-+		write_tcs_reg(drv, RSC_DRV_CONTROL, tcs_id, enable);
- 	}
- }
- 
+Loic Poulain (10):
+  mhi: Add mhi_controller_initialize helper
+  bus: mhi: core: Add device hardware reset support
+  mhi: pci-generic: Increase number of hardware events
+  mhi: pci_generic: Enable burst mode for hardware channels
+  mhi: pci_generic: Add support for reset
+  mhi: pci_generic: Add suspend/resume/recovery procedure
+  mhi: pci_generic: Add PCI error handlers
+  mhi: pci_generic: Add health-check
+  mhi: pci_generic: Increase controller timeout value
+  mhi: pci_generic: Add diag channels
+
+ drivers/bus/mhi/core/init.c   |   6 +
+ drivers/bus/mhi/core/main.c   |   7 +
+ drivers/bus/mhi/pci_generic.c | 357 +++++++++++++++++++++++++++++++++++++++---
+ include/linux/mhi.h           |  13 ++
+ 4 files changed, 364 insertions(+), 19 deletions(-)
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.7.4
 
