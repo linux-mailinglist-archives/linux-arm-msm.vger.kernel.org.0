@@ -2,40 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 076FA2E7366
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:17:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 97BFA2E7361
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:17:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726261AbgL2UQw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1726158AbgL2UQw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Tue, 29 Dec 2020 15:16:52 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60052 "EHLO mail.kernel.org"
+Received: from mail.kernel.org ([198.145.29.99]:60048 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726263AbgL2UQv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S1726260AbgL2UQv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 29 Dec 2020 15:16:51 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id D8FFE2229C;
+Received: by mail.kernel.org (Postfix) with ESMTPS id C70E72226A;
         Tue, 29 Dec 2020 20:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1609272930;
-        bh=oLNF8ZIV4sjvCHdq/CZyfv5HOjIpLFzFpH7bPtkv7oI=;
+        bh=tUWu5DwJVp1T1MrAn+LdN0/b0JzaXhOyBOTdOXxxg64=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=m24G+quzssnh0rFCNTLBpYkoBUu7cHB7JTESF2LVCssFMetS0KgA4qN2zsv9W+L5u
-         wKXuXe6gfp4pMJBmRYq3rGP1ShUnhIm1eOg0b5ofcLDpzrWOpz4rBRQxgmHnwF8d1r
-         UTXpUQ+FEX0U2VBKlLWmq4wjVXqwLpn+sQ8j11YUYRE094gxb8KtWeXAg+Hpkt0j2n
-         AQG17tHuUN3ovvdl2WFIaPkS4WwfjdrVIZRWq0Yzxl7VQZtKA8CAkBYQObO5ywGDHA
-         5X7/au1AGXwJLLxSWnYaoTQtU9xuBcjiTXFOlJipFo6jflAr1C9l6O6HYFD6qP8vP7
-         KzVHvWGejxwFw==
+        b=ECajFSM19NTem1mWluroofaSWT0vl22KBLYhHPSk7TxeQXox6ddwoe3U1tmejl6AR
+         HwMwBG9eG71hA8lsx4Uumh8iaXG/j4wedEOIb8a5QPivx5ARnJ6GcKSvzWpLUwECBx
+         2HTf+e2PXEE3ycZjFUnMCnmkWiU9DMe9sn4gtk+J21SlCkRknWTQhyg1WHIIFE964O
+         nPvZHQZOLfzsgPlSkST8p28j6Ndz0jNw0QzhBkCxT1jt6nlzYZBagsED5k718n/SeK
+         Xsg6rfllStjaJRWwOkv0uCcNiyNnKzAV2KYDhu27py9dGlcUT9QvaaGoUy7FvJQ41n
+         mrIzc/KM8fpsQ==
 Received: from pdx-korg-docbuild-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id D2EBC60626;
+        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id BD6EF600D9;
         Tue, 29 Dec 2020 20:15:30 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] Asoc: qcom: lpass-platform: Fix memory leak
+Subject: Re: [PATCH v12 0/2] Add documentation and machine driver for SC7180 sound
+ card
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <160927293085.13751.15216901353993654350.git-patchwork-notify@kernel.org>
+Message-Id: <160927293077.13751.9908044789725229445.git-patchwork-notify@kernel.org>
 Date:   Tue, 29 Dec 2020 20:15:30 +0000
-References: <1605416210-14530-1-git-send-email-srivasam@codeaurora.org>
-In-Reply-To: <1605416210-14530-1-git-send-email-srivasam@codeaurora.org>
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+References: <20201027032234.1705835-1-cychiang@chromium.org>
+In-Reply-To: <20201027032234.1705835-1-cychiang@chromium.org>
+To:     Cheng-Yi Chiang <cychiang@chromium.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -43,23 +44,23 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hello:
 
-This patch was applied to qcom/linux.git (refs/heads/for-next):
+This series was applied to qcom/linux.git (refs/heads/for-next):
 
-On Sun, 15 Nov 2020 10:26:50 +0530 you wrote:
-> lpass_pcm_data is not freed in error paths. Free it in
-> error paths to avoid memory leak.
-> 
-> Fixes: 022d00ee0b55 ("ASoC: lpass-platform: Fix broken pcm data usage")
-> 
-> Signed-off-by: Pavel Machek <pavel@ucw.cz>
-> Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+On Tue, 27 Oct 2020 11:22:32 +0800 you wrote:
+> Note:
+> - The machine driver patch is made by the collaboration of
+>   Cheng-Yi Chiang <cychiang@chromium.org>
+>   Rohit kumar <rohitkr@codeaurora.org>
+>   Ajit Pandey <ajitp@codeaurora.org>
+>   But Ajit has left codeaurora.
 > 
 > [...]
 
 Here is the summary with links:
-  - Asoc: qcom: lpass-platform: Fix memory leak
-    https://git.kernel.org/qcom/c/bd6327fda2f3
+  - [v12,1/2] ASoC: google: dt-bindings: Add sc7180-trogdor machine bindings
+    https://git.kernel.org/qcom/c/e158d2d83cab
+  - [v12,2/2] ASoC: qcom: sc7180: Add machine driver for sound card registration
+    https://git.kernel.org/qcom/c/9e3ecb5b1681
 
 You are awesome, thank you!
 --
