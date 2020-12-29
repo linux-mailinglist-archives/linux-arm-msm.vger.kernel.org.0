@@ -2,41 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DBE072E73A1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:18:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A92432E73A5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:18:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726491AbgL2URz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1726502AbgL2URz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Tue, 29 Dec 2020 15:17:55 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60054 "EHLO mail.kernel.org"
+Received: from mail.kernel.org ([198.145.29.99]:60046 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726497AbgL2URy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S1726500AbgL2URy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 29 Dec 2020 15:17:54 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id 8891C22BF5;
+Received: by mail.kernel.org (Postfix) with ESMTPS id 9CAB722C7C;
         Tue, 29 Dec 2020 20:15:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1609272933;
-        bh=qhoE2mHFvE9/rj7mzhPeE1Cjv5oaFgr8f6bVq7ORLto=;
+        bh=po7kVUM28bpitjMoeqwuZsWoub5126qTf76W/8EvOvU=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=SIvTI2HqgaUMju6IHo1QADvcGOIwUhDokM03t6hXa4QAgUQIkTIVsto24DYRDFDhV
-         iCjb4FV4nn3yMff1h6dWvhDYu/A9EA/ypa7Afot5aGgXyWvVHCz0LuKSvDGLrxHKtD
-         WAd7xTI2KMpKdTI//eKEhtATR1iVgYmi+i64pwE21lri6BadaXAouZEqzdExNrboFp
-         TQWby1K6xV8yrhXbmMfDMeKyzwZxhLUE7VuV+/A2C0KkbLxhqP94ievEPidQqTOo/3
-         mF5FHx36h/XwH3yDpsLr5YEQ59t6uQOkTP4J+sQInJIHuHB8XnHO3Wv8ve2SYkIUVE
-         mBMI5fN4f2UMA==
+        b=RTl4mrrb4pjcPCUh7STEv2fBF9G5KEOcHq9kcPMHHw1FfYVZwpzh4Z3VN2Zv8Hqru
+         aIRG78fQX01/TdacnduJSpuFBbxY0nNn9O/2lIm5aqrFTbzJAr+kQd2K1Orh3dYKkC
+         gZdHmrB0hjBVLR41xZh8cmNX93O1iHRY3ncflLHsGWkGw0TlMDkmdqDK72vYxTVcql
+         0um1CkckdejTjtEzlHTHTq75S23//da4g6MSAH0adF3e+lgsoriAoKUsx0PPoHSCuV
+         LG5M+EhfbGUQOquC096S7siJfS9OEB/Xak5nE4aqooITXfY2QFMVJLgP2xkaxEil4b
+         EeYlnJa0sdirQ==
 Received: from pdx-korg-docbuild-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id 8406F60626;
+        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id 9944460591;
         Tue, 29 Dec 2020 20:15:33 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] bus: mhi: core: Remove double locking from
- mhi_driver_remove()
+Subject: Re: [Resend v1] Bluetooth: hci_qca: Enhance retry logic in qca_setup
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <160927293353.13751.16470415321455244115.git-patchwork-notify@kernel.org>
+Message-Id: <160927293362.13751.15134803305865926064.git-patchwork-notify@kernel.org>
 Date:   Tue, 29 Dec 2020 20:15:33 +0000
-References: <1602787671-9497-1-git-send-email-bbhatt@codeaurora.org>
-In-Reply-To: <1602787671-9497-1-git-send-email-bbhatt@codeaurora.org>
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
+References: <1605071653-5088-1-git-send-email-bgodavar@codeaurora.org>
+In-Reply-To: <1605071653-5088-1-git-send-email-bgodavar@codeaurora.org>
+To:     Balakrishna Godavarthi <bgodavar@codeaurora.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -46,22 +45,21 @@ Hello:
 
 This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Thu, 15 Oct 2020 11:47:51 -0700 you wrote:
-> There is double acquisition of the pm_lock from mhi_driver_remove()
-> function. Remove the read_lock_bh/read_unlock_bh calls for pm_lock
-> taken during a call to mhi_device_put() as the lock is acquired
-> within the function already. This will help avoid a potential
-> kernel panic.
+On Wed, 11 Nov 2020 10:44:13 +0530 you wrote:
+> Currently driver only retries to download FW if FW downloading
+> is failed. Sometimes observed command timeout for version request
+> command, if this happen on some platforms during boot time, then
+> a reboot is needed to turn ON BT. Instead to avoid a reboot, now
+> extended retry logic for version request command too.
 > 
-> Fixes: 189ff97cca53 ("bus: mhi: core: Add support for data transfer")
-> Reported-by: Shuah Khan <skhan@linuxfoundation.org>
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
+> Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
 > 
 > [...]
 
 Here is the summary with links:
-  - bus: mhi: core: Remove double locking from mhi_driver_remove()
-    https://git.kernel.org/qcom/c/9b627c25e708
+  - [Resend,v1] Bluetooth: hci_qca: Enhance retry logic in qca_setup
+    https://git.kernel.org/qcom/c/9e80587aba4c
 
 You are awesome, thank you!
 --
