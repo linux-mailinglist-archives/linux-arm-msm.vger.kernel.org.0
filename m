@@ -2,41 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7EF6F2E736D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:17:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C35662E7382
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:18:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726302AbgL2URH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Dec 2020 15:17:07 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60042 "EHLO mail.kernel.org"
+        id S1726314AbgL2URe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Dec 2020 15:17:34 -0500
+Received: from mail.kernel.org ([198.145.29.99]:60234 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726278AbgL2URH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Dec 2020 15:17:07 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id 1FA13223E0;
+        id S1726328AbgL2URc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 29 Dec 2020 15:17:32 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id 5D64822475;
         Tue, 29 Dec 2020 20:15:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1609272931;
-        bh=kWWI3V0TPsNn/KrhM7beMTEoGMMnGpkGjkaYh80BpUY=;
+        bh=cf/skaA9YEfv5YJ+ab4XugYkR8oPfPsHkSEGVr2pAQU=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=LcNU5rrQaBpUAOYNQYVrFagpF5NO5zzeIrSkIVYHmQH9ei5ZVoKPw2OsD7IratJm2
-         wtm/gxW4NuHsh9DhgR6xR2gw2OuGl3yusLcEAqXU564J2Jci6TjkPDEl7RUDWCXDqL
-         Hzo6DV/yxUnl3tIyvWGqElxQkyni0fjYCvd59g+cBPNJR+q7rYhH8IWNbII9igdZAi
-         8e+JhQNGmIRf9+tST9O+RoiJ8KTLgsTw6kV8M99ptJeAsgVPGWPmJ3E88oXOpbj5Hc
-         CU/1+ngmoMNJL8f82wepe7zYWx8x7hQ1klBl1vZasMYYaiAvSHN5XrXjk/o6FzDXXq
-         KAUl2PkNXcHGA==
+        b=LIBymhYajdlyS4bFsPylP3BI1jm9EDpO9/keQpbDQ2kjOH6R8quatA9G648HvlkuN
+         GdkgkP33mWnnKPjLTuGeuGbwgbSlyfGaQzPz8oYq6qJiFwg5br/3nL6nOJJH1Xc6qY
+         5wdFq24VBKnFjFm6GIgsCkcDh/AQo12JbMm2CGf2PKOB7W4yQWBelPnSF34e4SSToO
+         JYiwv9M3zRvEHyUa3cHGeV7oGP3+30UR1zXpzlTR7rVhszI32dGaTP2z923Ov0yWYF
+         Xs/Q6m5ux9KUL6Z5JGhV12t5WAVkEMDwWVGUf836pofexs9Z5KOaeU5ZH9riZK/3qN
+         r90PVj19HI/0A==
 Received: from pdx-korg-docbuild-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id 17DBD604D7;
+        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id 59AAE60591;
         Tue, 29 Dec 2020 20:15:31 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v6 1/3] pinctrl: qcom: Kconfig: Rework PINCTRL_MSM to be a
- depenency rather then a selected config
+Subject: Re: [PATCH] remoteproc: q6v5-mss: fix error handling in q6v5_pds_enable
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <160927293109.13751.538044877321880477.git-patchwork-notify@kernel.org>
+Message-Id: <160927293136.13751.8824875801895770472.git-patchwork-notify@kernel.org>
 Date:   Tue, 29 Dec 2020 20:15:31 +0000
-References: <20201106042710.55979-1-john.stultz@linaro.org>
-In-Reply-To: <20201106042710.55979-1-john.stultz@linaro.org>
-To:     John Stultz <john.stultz@linaro.org>
+References: <20201102143433.143996-1-zhangqilong3@huawei.com>
+In-Reply-To: <20201102143433.143996-1-zhangqilong3@huawei.com>
+To:     Zhang Qilong <zhangqilong3@huawei.com>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -44,29 +43,22 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hello:
 
-This series was applied to qcom/linux.git (refs/heads/for-next):
+This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Fri,  6 Nov 2020 04:27:08 +0000 you wrote:
-> This patch reworks PINCTRL_MSM to be a visible option, and
-> instead of having the various SoC specific drivers select
-> PINCTRL_MSM, this switches those configs to depend on
-> PINCTRL_MSM.
+On Mon, 2 Nov 2020 22:34:33 +0800 you wrote:
+> If the pm_runtime_get_sync failed in q6v5_pds_enable when
+> loop (i), The unroll_pd_votes will start from (i - 1), and
+> it will resulted in following problems:
 > 
-> This is useful, as it will be needed in order to cleanly support
-> having the qcom-scm driver, which pinctrl-msm calls into,
-> configured as a module. Without this change, we would eventually
-> have to add dependency lines to every config that selects
-> PINCTRL_MSM, and that would becomes a maintenance headache.
+>   1) pm_runtime_get_sync will increment pm usage counter even it
+>      failed. Forgetting to pm_runtime_put_noidle will result in
+>      reference leak.
 > 
 > [...]
 
 Here is the summary with links:
-  - [v6,1/3] pinctrl: qcom: Kconfig: Rework PINCTRL_MSM to be a depenency rather then a selected config
-    https://git.kernel.org/qcom/c/be117ca32261
-  - [v6,2/3] pinctrl: qcom: Allow pinctrl-msm code to be loadable as a module
-    https://git.kernel.org/qcom/c/38e86f5c2645
-  - [v6,3/3] firmware: QCOM_SCM: Allow qcom_scm driver to be loadable as a permenent module
-    https://git.kernel.org/qcom/c/d0511b5496c0
+  - remoteproc: q6v5-mss: fix error handling in q6v5_pds_enable
+    https://git.kernel.org/qcom/c/a24723050037
 
 You are awesome, thank you!
 --
