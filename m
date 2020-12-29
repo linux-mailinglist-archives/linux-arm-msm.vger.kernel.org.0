@@ -2,40 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 38DF72E73B8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:18:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C44D2E73C3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:18:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726525AbgL2USL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Dec 2020 15:18:11 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60052 "EHLO mail.kernel.org"
+        id S1726549AbgL2USY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Dec 2020 15:18:24 -0500
+Received: from mail.kernel.org ([198.145.29.99]:60244 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726529AbgL2USJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Dec 2020 15:18:09 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id 78B5F22D00;
-        Tue, 29 Dec 2020 20:15:34 +0000 (UTC)
+        id S1726548AbgL2UST (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 29 Dec 2020 15:18:19 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id 02B4D22D03;
+        Tue, 29 Dec 2020 20:15:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1609272934;
-        bh=ArVweN8hL5oievFrwoM8MUhWpKt43tWTzUNk0YK63UU=;
+        s=k20201202; t=1609272935;
+        bh=tbuO1nsTe07AaTmhQk3RMO3fnm5Mmt+GwveJfzrXT5s=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=RBPEUxRxSVuOYjJzxcu52KXB1BhRpaMskuz4p5WdDoWzTUdLuKtWe2osXgN1hYbvJ
-         AhBQh8q4916oWBTUKR4cY0H4eLl4kLIFUULJv+9toxj1YAjk9/3GdsTxRdD1WP0lxv
-         RHOZWzkfC0otr2MRKJQ8Z+9Yg2E5iMc7AQnLITWc9YCoEfCxQOaQ1/2Y97uHDGG1zJ
-         rd3GSPkZNkraQM5FFvTz2oqFBaL9vfTkJH1S7hWtsd2xtyl6huECPaNoowK9NAmyU+
-         nZ2NUk3cS75to3BXhVtpHKUxJUOelwS3qz6Uw3mtYOeco9MsbQggnRWsbSH3UHWtCX
-         QiRLrZSv4/vfg==
+        b=lwC8WvPzbJKw/wB/H3okjOtEDhxRApw32oA/OHJa6gLDg35vNdmQtr4gSsPwxUNGO
+         1YLy4gXH09bmqdfq4QiivsK2ptqVjAOLiUPNyTV1VtLwDpgPJGEjBA9rYa/RTSiKxh
+         FxJuMYzSmngSoB6fbw+fVVqcb9YhIc3CDlEAGLQngSAKGCVZyOMdO6x3Kn/p9VCT9z
+         DxEt2Za45HvydUwfM9f/KDiug7gZ0gbhduBm1csiG12C+FTZBiAvJQYb6Lt2kOIq/E
+         LY3nsU9Qh6rBmfyyTYDmDUfBkRiuK7trEEIGexx1NO/UC1tzMVUjc86KNFXLqYhWfP
+         Alm1CY7wD1Grw==
 Received: from pdx-korg-docbuild-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id 74A38600D9;
+        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id F2DCE60591;
         Tue, 29 Dec 2020 20:15:34 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v4] dt-bindings: soc: qcom: convert qcom,smem bindings to yaml
+Subject: Re: [PATCH] Asoc: qcom: lpass-sc7180: Add 32 bit format support for
+ capture
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <160927293447.13751.380004291390696388.git-patchwork-notify@kernel.org>
+Message-Id: <160927293499.13751.3521963795853171566.git-patchwork-notify@kernel.org>
 Date:   Tue, 29 Dec 2020 20:15:34 +0000
-References: <20201215104537.768914-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20201215104537.768914-1-dmitry.baryshkov@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <1605512955-7017-1-git-send-email-srivasam@codeaurora.org>
+In-Reply-To: <1605512955-7017-1-git-send-email-srivasam@codeaurora.org>
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -45,20 +46,21 @@ Hello:
 
 This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Tue, 15 Dec 2020 13:45:37 +0300 you wrote:
-> Convert soc/qcom/qcom,smem.txt bindings to YAML format.
+On Mon, 16 Nov 2020 13:19:15 +0530 you wrote:
+> From: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../bindings/soc/qcom/qcom,smem.txt           | 57 ---------------
->  .../bindings/soc/qcom/qcom,smem.yaml          | 72 +++++++++++++++++++
->  2 files changed, 72 insertions(+), 57 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smem.txt
->  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
+> Add 32 bit format support for capture in lpass-sc7180
+> snd_soc_dai_driver capabilities. Need to add contstraints
+> in machine driver so that only specific format allowed.
+> 
+> Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+> Signed-off-by: Srinivasa Rao Manidadapu <srivasam@codeaurora.org>
+> 
+> [...]
 
 Here is the summary with links:
-  - [v4] dt-bindings: soc: qcom: convert qcom,smem bindings to yaml
-    https://git.kernel.org/qcom/c/e2b0330c5a20
+  - Asoc: qcom: lpass-sc7180: Add 32 bit format support for capture
+    https://git.kernel.org/qcom/c/313ebec48ded
 
 You are awesome, thank you!
 --
