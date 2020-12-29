@@ -2,41 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 061C22E73BC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:18:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BA882E73B4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:18:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726551AbgL2USW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Dec 2020 15:18:22 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60234 "EHLO mail.kernel.org"
+        id S1726528AbgL2USK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Dec 2020 15:18:10 -0500
+Received: from mail.kernel.org ([198.145.29.99]:60042 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726537AbgL2UST (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Dec 2020 15:18:19 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id B7A5422D05;
+        id S1726524AbgL2USJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 29 Dec 2020 15:18:09 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id 3FB9E22CE3;
         Tue, 29 Dec 2020 20:15:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1609272934;
-        bh=f7+WjyJfa/yhQNDOrDOx4KEKkOk6IG691JH9GXlZSRs=;
+        bh=iCeE1rgxpsnAnop5ev5ofM4mkncpdK8S9i5uCVAUqyI=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=X0cGEvG6ltZ2Vz9d2iYM0HSH9dL3vJfGOlmwuCP+AYEbfvQq6HyrfmKFQgSW4WN1/
-         YxtwFlh9/y7HM6R8tmUuxeCeiXJmeprSsz5E2jnbQ8h7Wx0UXrjmr0fO0YY30OR13U
-         SAz6a8VGjIvIJRDVLc1ZtPuVLY6eFlVEqgvdItHQfieKVX4nhOSZ4MwtZrD3vngcMW
-         gExtnstoGVfdvR/6UnvxLAhPvpBJphYRL7+DyE3OtGyzefrSF0F2q5jLD8sX98FyeU
-         BX+OJpcTlR9eu0/CgaWx+mljEPoneA0/BnBDxbElsB7MAZkIFFsz5dmSUFzGXVOFjh
-         jEPpKJcQhpDvA==
+        b=Uyg4skcR8Jm9/RznKowI0ZVyEWq3hAYdj0mGC0BmDATCAtpBfth/2+uLMnZxjDq1b
+         dkAjlf5kA/pU/nP8IE91Pw71RyhiZg8SLM8pqu7VsRB4+MIEEg7m7QHATtfbEO4OTB
+         /3tUPqMjGfr3xigNFXxcYt9f3smltgLGimfmoqj6eA2yrsJUfKvezb+o6sy860Ow+y
+         711R1etU4BoMkLVF+Y90pEP0IJRwRo2yNx2LHKkpXvt+DuvranNQgd/Wxv/fqupe7h
+         3+mvc+pxjB9Hh5I5oj0gtqK4ZJrQVTNyUYujBhTY0yGp+d/rthmZ1hxcgS3y+NLp8X
+         F9bMWM+XSv3dg==
 Received: from pdx-korg-docbuild-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id B417E60626;
+        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id 3C541600D9;
         Tue, 29 Dec 2020 20:15:34 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] interconnect: qcom: msm8916: Remove rpm-ids from non-RPM
- nodes
+Subject: Re: [PATCH] Asoc: qcom: sc7180: Register shutdown handler for lpass
+ platform
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <160927293473.13751.12370600723190761291.git-patchwork-notify@kernel.org>
+Message-Id: <160927293424.13751.15030810246928417463.git-patchwork-notify@kernel.org>
 Date:   Tue, 29 Dec 2020 20:15:34 +0000
-References: <20201112105140.10092-1-georgi.djakov@linaro.org>
-In-Reply-To: <20201112105140.10092-1-georgi.djakov@linaro.org>
-To:     Georgi Djakov <georgi.djakov@linaro.org>
+References: <1605292702-25046-1-git-send-email-srivasam@codeaurora.org>
+In-Reply-To: <1605292702-25046-1-git-send-email-srivasam@codeaurora.org>
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -46,20 +46,20 @@ Hello:
 
 This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Thu, 12 Nov 2020 12:51:40 +0200 you wrote:
-> Some nodes are incorrectly marked as RPM-controlled (they have RPM
-> master and slave ids assigned), but are actually controlled by the
-> application CPU instead. The RPM complains when we send requests for
-> resources that it can't control. Let's fix this by replacing the IDs,
-> with the default "-1" in which case no requests are sent.
+On Sat, 14 Nov 2020 00:08:22 +0530 you wrote:
+> From: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
 > 
-> Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+> Register shutdown handler to stop sc7180 lpass platform driver
+> and to disable audio clocks.
+> 
+> Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
 > 
 > [...]
 
 Here is the summary with links:
-  - interconnect: qcom: msm8916: Remove rpm-ids from non-RPM nodes
-    https://git.kernel.org/qcom/c/c497f9322af9
+  - Asoc: qcom: sc7180: Register shutdown handler for lpass platform
+    https://git.kernel.org/qcom/c/60a973862f3c
 
 You are awesome, thank you!
 --
