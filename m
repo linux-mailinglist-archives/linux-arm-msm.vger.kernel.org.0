@@ -2,40 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DCDD2E7395
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:18:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D690F2E738B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:18:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726485AbgL2URs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Dec 2020 15:17:48 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60236 "EHLO mail.kernel.org"
+        id S1726423AbgL2URi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Dec 2020 15:17:38 -0500
+Received: from mail.kernel.org ([198.145.29.99]:60040 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726465AbgL2URs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Dec 2020 15:17:48 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id 02E9822B48;
-        Tue, 29 Dec 2020 20:15:33 +0000 (UTC)
+        id S1726348AbgL2URi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 29 Dec 2020 15:17:38 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id 6A66622A83;
+        Tue, 29 Dec 2020 20:15:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1609272933;
-        bh=JSjNRw6U8w7CRA0VHh2m+lpMoc4NjdQNIGzmab1EOq0=;
+        s=k20201202; t=1609272932;
+        bh=+tWsJ60ab9ylkuW7sPBFSDfAp1HGnVQsWNYZb+Lrrms=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=h4Gn6SjS9bG+J6OOVLi4/VIM7m0/ZfAj+XAWDtrPtAthyL3sJLKwcrk5jawSRpQ4z
-         SLT/2Wt+40iXD1lvabd9/Nev2xKg38jQHE/YHo8npP4s6kyeaN5WmN/rixVBDk8NaN
-         +z4+iE7GVtCgv8N6VhWwZ6WZvXi0j2Wt4JANaylP/dDT09i07raykCNJm26vsmNL4H
-         ZcgOw7fOm9zkwKrR8RPsy0PJftZXa0GPhzCsgmn8Rwx3jQqOOEG1uvkRxei6ZDpPK6
-         stCluokGxhiJ1ZPHMqylnILVAYQuzb+IYnYcg3VZzcvwZlyss78ABQqwUUX7ctWByK
-         +0xZnUpsz5nDQ==
+        b=bB24KBm+7bA2v42PP5Nk2qCr0ZAFK/Tk4jM9sBvVBMG96UdqqWHKjofwKFF1Zf64C
+         gkle9LnYjRh4NoTd2UtIUfyIDqeNDngTbHo1HzCDzuinzh3g05ASioSISZAP4IeY9j
+         hsh8fZfLNxZ/R9seyaJMEOeTRSgn0e2wIQ5n63w4lsSZXMvpuueCGzW+a8Q6wX8UEB
+         vLOUdjC5xqj1roFiRFhVG5tZ0I3cibeFxLSs47xkFE4cLQrNiTfdBnrH4rGE2+yscC
+         F7Liwf+0HSDqmhrSNnlqKEEtYl2vfsAPZNtSw1GXvME/4BjKjFtiuvvNGWKluj6JTi
+         +GghArG427RDw==
 Received: from pdx-korg-docbuild-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id F2E40604D7;
+        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id 6544760591;
         Tue, 29 Dec 2020 20:15:32 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] MAINTAINERS: Mark SPMI as maintained
+Subject: Re: [PATCH] bus: mhi: core: fix potential operator-precedence with BHI
+ macros
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <160927293299.13751.13165566872008827061.git-patchwork-notify@kernel.org>
+Message-Id: <160927293240.13751.2774417764045355856.git-patchwork-notify@kernel.org>
 Date:   Tue, 29 Dec 2020 20:15:32 +0000
-References: <20201207214204.1284946-1-sboyd@kernel.org>
-In-Reply-To: <20201207214204.1284946-1-sboyd@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>
+References: <1603225785-21368-1-git-send-email-jhugo@codeaurora.org>
+In-Reply-To: <1603225785-21368-1-git-send-email-jhugo@codeaurora.org>
+To:     Jeffrey Hugo <jhugo@codeaurora.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -45,22 +46,20 @@ Hello:
 
 This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Mon,  7 Dec 2020 13:42:04 -0800 you wrote:
-> I can do more than just review patches here. The plan is to pick up
-> patches from the list and shuttle them up to gregkh. The korg tree will
-> be used to hold the pending patches. Move the list away from
-> linux-arm-msm to just be linux-kernel as SPMI isn't msm specific
-> anymore.
+On Tue, 20 Oct 2020 14:29:45 -0600 you wrote:
+> The BHI_MSMHWID and BHI_OEMPKHASH macros take a value 'n' which is
+> a BHI register index. If 'n' is an expression rather than a simple
+> value, there can be an operator precedence issue which can result
+> in the incorrect calculation of the register offset. Adding
+> parentheses around the macro parameter can prevent such issues.
 > 
-> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Cc: <linux-arm-msm@vger.kernel.org>
-> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
 > 
 > [...]
 
 Here is the summary with links:
-  - MAINTAINERS: Mark SPMI as maintained
-    https://git.kernel.org/qcom/c/aec273a3191e
+  - bus: mhi: core: fix potential operator-precedence with BHI macros
+    https://git.kernel.org/qcom/c/8ff3f7bdde45
 
 You are awesome, thank you!
 --
