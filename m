@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CEEED2E7376
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:18:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B3902E738E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:18:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726290AbgL2URX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Dec 2020 15:17:23 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60048 "EHLO mail.kernel.org"
+        id S1726420AbgL2URj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Dec 2020 15:17:39 -0500
+Received: from mail.kernel.org ([198.145.29.99]:60054 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726307AbgL2URW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Dec 2020 15:17:22 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id 1C32922573;
+        id S1726422AbgL2URi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 29 Dec 2020 15:17:38 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id 9F0FB22B2C;
         Tue, 29 Dec 2020 20:15:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1609272932;
-        bh=3fYVYS2Ei2br1O+RSm/7GiTTxp96zmRZ+e5beh2eUfo=;
+        bh=1h/kVpWPKrCgdbnewR+LVogha1Wgvgg9VEAr4ceRuP8=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=d47vU9y4xJe0nbxXLPANenRiI0xnbFnBzGifEhEm1RhG9NAHFbh51wK7NXf0rfrHZ
-         fAYaS46sUZ5tFOlUw+k5bkO4afhOiOsfK+2ifmnesDga7XFS3zba5cG/w6rMFMVHiq
-         zi6Y/d6NyovvFTk/FimyKSSib/4mEPtpqC7goZmY7q+1kMIzb1uWOQYyGiAsnweB7P
-         01DUPpLGmD2ZnEtwKZuwwbfHDgvsvyMS1MtVWhAPiK6NlY/x4jyRIE4nOUbPHMDiVh
-         LGdN8dtkw2UazurZEPhWBsen/+9NdCKBbcK05ElcSYefcQC5lG9F7RGEk/RIrEfcEK
-         jI976USqH6lWQ==
+        b=WhaSTuKq35Q1gbJdzaVgGC5Vj4nCQvx3eCqXaRwD40Cp7W0TAX4W8femp5AAi54b0
+         ClGNs0Ky7HEWdkCJlpp9JxFfkrEMWfeJoz2cpp19go9cpS3Fq3k+Xd7ELU95xXvoVl
+         H8lSjfB+JLOrf0c46xGBqo36mm3gNUDQjlLAygjzys0O0Eba2ZY+HHqwje1a6R7Cvs
+         DosbIjkoI7ssI7n6jWApJ5AJun7GmEViY0IV6JKdeVJMG13pBxXb7Jj6lDaxLz8SFd
+         tJzEF5y7a+Fv/nksffX9r81Hsasj5Iov+e78s1a1qR56VbvQ0JAM+E3AhCnXc3FhVf
+         /g3P/+dcP+H6Q==
 Received: from pdx-korg-docbuild-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id 15FF3604D7;
+        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id 9B28E60626;
         Tue, 29 Dec 2020 20:15:32 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] drm/msm/dp: DisplayPort PHY compliance tests fixup
+Subject: Re: [PATCH 0/3] spi: spi-geni-qcom: Use gpio descriptors for CS
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <160927293208.13751.17350376903713649948.git-patchwork-notify@kernel.org>
+Message-Id: <160927293263.13751.4533589272062670504.git-patchwork-notify@kernel.org>
 Date:   Tue, 29 Dec 2020 20:15:32 +0000
-References: <20200926045048.16175-1-tanmay@codeaurora.org>
-In-Reply-To: <20200926045048.16175-1-tanmay@codeaurora.org>
-To:     Tanmay Shah <tanmay@codeaurora.org>
+References: <20201204193540.3047030-1-swboyd@chromium.org>
+In-Reply-To: <20201204193540.3047030-1-swboyd@chromium.org>
+To:     Stephen Boyd <swboyd@chromium.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -43,22 +43,30 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hello:
 
-This patch was applied to qcom/linux.git (refs/heads/for-next):
+This series was applied to qcom/linux.git (refs/heads/for-next):
 
-On Fri, 25 Sep 2020 21:50:48 -0700 you wrote:
-> Bandwidth code was being used as test link rate. Fix this by converting
-> bandwidth code to test link rate
+On Fri,  4 Dec 2020 11:35:37 -0800 you wrote:
+> Collected patches from the two series below and associated tags so they
+> can be merged in one pile through the spi tree. Merry December!
 > 
-> Do not reset voltage and pre-emphasis level during IRQ HPD attention
-> interrupt. Also fix pre-emphasis parsing during test link status process
+> SPI: https://lore.kernel.org/r/20201202214935.1114381-1-swboyd@chromium.org
+> cros-ec: https://lore.kernel.org/r/20201203011649.1405292-1-swboyd@chromium.org
 > 
-> Signed-off-by: Tanmay Shah <tanmay@codeaurora.org>
+> Cc: Akash Asthana <akashast@codeaurora.org>
+> Cc: Simon Glass <sjg@chromium.org>
+> Cc: Gwendal Grignou <gwendal@chromium.org>
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Cc: Alexandru M Stan <amstan@chromium.org>
 > 
 > [...]
 
 Here is the summary with links:
-  - drm/msm/dp: DisplayPort PHY compliance tests fixup
-    https://git.kernel.org/qcom/c/6625e2637d93
+  - [1/3] platform/chrome: cros_ec_spi: Don't overwrite spi::mode
+    https://git.kernel.org/qcom/c/74639cbf51d7
+  - [2/3] platform/chrome: cros_ec_spi: Drop bits_per_word assignment
+    https://git.kernel.org/qcom/c/7a5172b7990d
+  - [3/3] spi: spi-geni-qcom: Use the new method of gpio CS control
+    https://git.kernel.org/qcom/c/3b25f337929e
 
 You are awesome, thank you!
 --
