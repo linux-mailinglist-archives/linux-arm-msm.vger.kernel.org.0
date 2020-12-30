@@ -2,87 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5EA8F2E776A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Dec 2020 10:29:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E6CE2E783F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Dec 2020 12:55:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726363AbgL3J1i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Dec 2020 04:27:38 -0500
-Received: from m43-15.mailgun.net ([69.72.43.15]:50579 "EHLO
-        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726302AbgL3J1i (ORCPT
+        id S1726400AbgL3LzB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Dec 2020 06:55:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57816 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726203AbgL3LzA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Dec 2020 04:27:38 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1609320433; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=o2qY+P/k6nZKXIz5IQeQrJGLD6mxXbjgeSDUUhW3E34=; b=XUSe5+165tCPud/ixethR7p4Mcb1xQ/AR2s9L7MMkJ+XAlZfvXUZP+UsOWvJRPAsJOCuTJIb
- OkTXIi7a8lJEQyC+ZNNjuGJT2LoEORdetpblPI8/9mwuqLn9BHOgq87C8yco9uimvLTA2Lfo
- iXg4yX0VQSSvQe7GiyN6U9cLEuI=
-X-Mailgun-Sending-Ip: 69.72.43.15
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n09.prod.us-west-2.postgun.com with SMTP id
- 5fec47efda47198188aadaad (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 30 Dec 2020 09:27:11
- GMT
-Sender: akashast=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 32704C433ED; Wed, 30 Dec 2020 09:27:11 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-6.3 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.43.89] (unknown [106.205.1.36])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A24E3C433C6;
-        Wed, 30 Dec 2020 09:27:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A24E3C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH V7 2/2] i2c: i2c-qcom-geni: Add shutdown callback for i2c
-To:     Roja Rani Yarubandi <rojay@codeaurora.org>, wsa@kernel.org
-Cc:     swboyd@chromium.org, dianders@chromium.org,
-        saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
-        mka@chromium.org, msavaliy@qti.qualcomm.com, skakit@codeaurora.org,
-        pyarlaga@codeaurora.org, rnayak@codeaurora.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sumit.semwal@linaro.org, linux-media@vger.kernel.org
-References: <20201221123801.26643-1-rojay@codeaurora.org>
- <20201221123801.26643-3-rojay@codeaurora.org>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <f70837e3-2289-5320-df2e-c5a09e03d1c1@codeaurora.org>
-Date:   Wed, 30 Dec 2020 14:56:57 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.0
+        Wed, 30 Dec 2020 06:55:00 -0500
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1565CC06179B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Dec 2020 03:54:20 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id h205so37086597lfd.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Dec 2020 03:54:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2M74RCQrYC+dpBxVDixZ0cQDqu+PvVCAE1oG9CjXluo=;
+        b=LMw8E7f7FjvTcek+eO5GVOC5uYr3vdcvFQjxCvqyYoTSDH/crDvMrN+mzoui6Tz7S6
+         hsty1VV2pgHUqvhbYdkgv0teHhVtNPLzkPaNrb3n9uL6lp9ZVCtj89E/TnyA3t16w2/K
+         D6qMz3IaCLwa0GwrbU6EG0Fh/4W0HsVRH8JsgbfZgG82KIA40iAMYtiTMTJquO6teNXd
+         Kx/M/RAsFH5nDawMBJwgOGZvl2wKZkVEDdUdkcfnuyBaXeFoaGXBAq64b4jRoTlx8JLp
+         daxoA4hx3ah/DxKyTjLUQasMU2KB+Wj/eYT6xOP1fpYpk2J+ruMuSfAuQx3KtX3nlHNx
+         Jv7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2M74RCQrYC+dpBxVDixZ0cQDqu+PvVCAE1oG9CjXluo=;
+        b=ZKn4VNpNoULct3Qeuayp8L8gWjVArgEdOd8XKOOdreZenEkLl6sV5GTF375L7N7wLg
+         8QxfjM4yDdXrINBu7n7h6fPNE6xbFBlBZ9/9eSpUAGNhDWsm7hayoZixRoEcWIlnWhCi
+         PD/slDp9jHmNUlxENjEMosUpg719CIDVbXqST33HJ4+3BTJDYFvoFXFVlsnuPczWzHA5
+         Gpg2RJSUIwEf6NH+gTB0hoFKTU8qEWmTeUpYM0i679/aZE4edgiD9Urn0N5+oXV1lk2u
+         fggRNOBwRRpug0q2PcLfSQptkjzV36mrzJs/II9WZNm9D5z5fWEI26j9GHmvJs3W+fX5
+         JB6w==
+X-Gm-Message-State: AOAM532GkvwztXy27yvrc8Frxnlrt7RCA9itAeFtQ0MFHCOG3JGKwB9N
+        El1TfFS7KniY+OUNlkkE+Mh+w1MdOL055w==
+X-Google-Smtp-Source: ABdhPJxJXqgR94n1R3aaiCnA1NOyx0br2pDNfd74d/4i+1N0pW07r/C8oMvg6OzkiqgXMqkTct5zEA==
+X-Received: by 2002:a2e:b058:: with SMTP id d24mr27740723ljl.296.1609329258166;
+        Wed, 30 Dec 2020 03:54:18 -0800 (PST)
+Received: from eriador.lumag.spb.ru ([94.25.228.115])
+        by smtp.gmail.com with ESMTPSA id a8sm5931484lfo.206.2020.12.30.03.54.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Dec 2020 03:54:17 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        linux-pci@vger.kernel.org
+Subject: [PATCH v2 0/2] PCI: qcom: fixup PCIe support on sm8250
+Date:   Wed, 30 Dec 2020 14:54:06 +0300
+Message-Id: <20201230115408.492565-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-In-Reply-To: <20201221123801.26643-3-rojay@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+SM8250 SoC requires another clock to be up to power up the translation
+unit. Add necessary bindings and driver support.
 
-On 12/21/2020 6:08 PM, Roja Rani Yarubandi wrote:
-> If the hardware is still accessing memory after SMMU translation
-> is disabled (as part of smmu shutdown callback), then the
-> IOVAs (I/O virtual address) which it was using will go on the bus
-> as the physical addresses which will result in unknown crashes
-> like NoC/interconnect errors.
->
-> So, implement shutdown callback to i2c driver to stop on-going transfer
-> and unmap DMA mappings during system "reboot" or "shutdown".
->
-> Fixes: 37692de5d523 ("i2c: i2c-qcom-geni: Add bus driver for the Qualcomm GENI I2C controller")
-> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
-Reviewed-by: Akash Asthana <akashast@codeaurora.org>
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
 
