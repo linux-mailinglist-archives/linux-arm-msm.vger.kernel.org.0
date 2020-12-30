@@ -2,113 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 61BF82E7844
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Dec 2020 12:55:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C131B2E784D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Dec 2020 12:57:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726486AbgL3Lzl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Dec 2020 06:55:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57924 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725853AbgL3Lzl (ORCPT
+        id S1726552AbgL3L5c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Dec 2020 06:57:32 -0500
+Received: from m43-15.mailgun.net ([69.72.43.15]:25903 "EHLO
+        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725853AbgL3L5c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Dec 2020 06:55:41 -0500
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AAFEC0617A0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Dec 2020 03:54:22 -0800 (PST)
-Received: by mail-lf1-x134.google.com with SMTP id h22so37178259lfu.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Dec 2020 03:54:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=0yfX279OZuzXxQVuic47RMVyz6BvZPSwD6cWzb7e40Q=;
-        b=Elm2G+Qc7tvWtPKiXfS0up+j5Qf+Y6sAmNGjsmbQbDCMV4PSshvEGABrpt/VYIB6c8
-         2zZGKwVwEXt29o7KNSV6m86mPigw43+CgcBJQ+mRQAghcRo2VtRmO46OCYUYoTYCWm8z
-         dthGtkrcCmkDobmFo8zZX7Lw7ewULYYA3OAA18OY1Xd16ZZoBADkaBaInPsc+n9042FZ
-         /PskxrawIg8I9AZpKDntky9MkCWH6gSUsjyWJsusOw+pJZDgE+LAw3eAzXBG1nUq/FJl
-         Jc6kSq+Ga3qjiLuk+GSKozpvIZp2aj6Tr0CK29vsmarpQ58fip9p2/u7mRJ+4oOJj0Mm
-         D5jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=0yfX279OZuzXxQVuic47RMVyz6BvZPSwD6cWzb7e40Q=;
-        b=LcloEMl336fyCvep2lnU9pLJfs4VJF5EqGjab2z+oxkKGBs7c4e4tK12i61ed/LPff
-         dG23kyU6uNs9TI2sHvElrSf5k2KCydg6VmsTbGPlz0+EW6t8RhNsDm+ocfqCeZzjgRC9
-         eYMzQlw8vE8MUOphbmFfX3w1KN1Ro00zI/Rz72sOq/E5Zgsvw7oZoO1XYdcMdiW5k9oE
-         Dsbj674CjJR++Uy5YSuK1bAji09/ATEK/1CwQEKVLnQGtMx9NndTcutTQeCx4ZITT5AC
-         nmnV4ytp/dcWADoSUpeiLlI3nPeckpqRvX4vRpd65rpDfBgPzeBGQaid0AnZdVEJGT93
-         PaCA==
-X-Gm-Message-State: AOAM533lIi3rPFfwnhdmg3YbCplANZ4QumDQYWdHzYVm2khnpEhqsEpI
-        PGGZppZEoUmTfqqADKjU6RMwPw==
-X-Google-Smtp-Source: ABdhPJyanAgqPG5+ohgUBfm+HvqGe/2uXjUXdvhLry6GamZB+JKQnuW944rARjo3vDMhOMdpAfBABA==
-X-Received: by 2002:a2e:9b47:: with SMTP id o7mr25430139ljj.99.1609329261019;
-        Wed, 30 Dec 2020 03:54:21 -0800 (PST)
-Received: from eriador.lumag.spb.ru ([94.25.228.115])
-        by smtp.gmail.com with ESMTPSA id a8sm5931484lfo.206.2020.12.30.03.54.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Dec 2020 03:54:20 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-pci@vger.kernel.org
-Subject: [PATCH v2 2/2] PCI: qcom: add support for ddrss_sf_tbu clock
-Date:   Wed, 30 Dec 2020 14:54:08 +0300
-Message-Id: <20201230115408.492565-3-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20201230115408.492565-1-dmitry.baryshkov@linaro.org>
-References: <20201230115408.492565-1-dmitry.baryshkov@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Wed, 30 Dec 2020 06:57:32 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1609329426; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=5SYiNSA29c+d0VrAWCxH75bdMehsRh7C5NQKV7jevHw=; b=RQ8GMGGRFSFLPmCD9I3vushQ7pnHUHp4/BN9FZ/V6+rSd7NHjGgxx0xDtV1whcnt0x6cF6+B
+ avuROKjt+IXUNXB70Ag+6ALIhdvbPuSHGQFo9JLqW3ePBaKuxii9ZHfQv20uv659k8tRkLXQ
+ 9w03YKeNjTP/c4YgReK/OQsBwPI=
+X-Mailgun-Sending-Ip: 69.72.43.15
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 5fec6af8d3eb3c36b4125c67 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 30 Dec 2020 11:56:40
+ GMT
+Sender: kgunda=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 20326C43462; Wed, 30 Dec 2020 11:56:40 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from kgunda-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: kgunda)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 16AD2C433CA;
+        Wed, 30 Dec 2020 11:56:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 16AD2C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kgunda@codeaurora.org
+From:   Kiran Gunda <kgunda@codeaurora.org>
+To:     swboyd@chromium.org, lee.jones@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robh@kernel.org,
+        mark.rutland@arm.com, linux-arm-msm-owner@vger.kernel.org
+Cc:     Kiran Gunda <kgunda@codeaurora.org>
+Subject: [PATCH V5 0/2] Convert qcom,spmi-pmic bindings from .txt to .yaml
+Date:   Wed, 30 Dec 2020 17:26:21 +0530
+Message-Id: <1609329384-15534-1-git-send-email-kgunda@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On SM8250 additional clock is required for PCIe devices to access NOC.
-Update PCIe controller driver to control this clock.
+This patch series does the following:
+ - converts the qcom,spmi-pmic bindings from .txt to .yaml format
+ - Sorted the compatible strings
+ - Adds PM6150 and PM6150L subtypes.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Fixes: e1dd639e374a ("PCI: qcom: Add SM8250 SoC support")
----
- drivers/pci/controller/dwc/pcie-qcom.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+Changes from V1:
+ - Sorted the compatible strings as per Stephen Boyd's comments.
+ - Added a patch to convert the qcom,spmi-pmic from .txt to .yaml format.
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index affa2713bf80..658d007a764c 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -159,8 +159,9 @@ struct qcom_pcie_resources_2_3_3 {
- 	struct reset_control *rst[7];
- };
- 
-+#define QCOM_PCIE_2_7_0_MAX_CLOCKS	6
- struct qcom_pcie_resources_2_7_0 {
--	struct clk_bulk_data clks[6];
-+	struct clk_bulk_data clks[QCOM_PCIE_2_7_0_MAX_CLOCKS + 1]; /* + 1 for sf_tbu */
- 	struct regulator_bulk_data supplies[2];
- 	struct reset_control *pci_reset;
- 	struct clk *pipe_clk;
-@@ -1153,10 +1154,15 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
- 	res->clks[4].id = "slave_q2a";
- 	res->clks[5].id = "tbu";
- 
--	ret = devm_clk_bulk_get(dev, ARRAY_SIZE(res->clks), res->clks);
-+	ret = devm_clk_bulk_get(dev, QCOM_PCIE_2_7_0_MAX_CLOCKS, res->clks);
- 	if (ret < 0)
- 		return ret;
- 
-+	/* Optional clock for SM8250 */
-+	res->clks[6].clk = devm_clk_get_optional(dev, "ddrss_sf_tbu");
-+	if (IS_ERR(res->clks[6].clk))
-+		return PTR_ERR(res->clks[6].clk);
-+
- 	res->pipe_clk = devm_clk_get(dev, "pipe");
- 	return PTR_ERR_OR_ZERO(res->pipe_clk);
- }
+Changes from V2:
+ - Addressed Stephen Boyd and Rob Herring comments.
+
+Changes from V3:
+ - Fixed compilation error in .yaml file.
+
+Changes from V4:
+ - Addressed Stephen Boyd comments on .yaml conversion patch
+ - Added "Reviewed-by" tag from Stephen Boyd
+ - Added "Acked-for-MFD-by" tag from Lee Jones
+
+Kiran Gunda (2):
+  mfd: qcom-spmi-pmic: Convert bindings to .yaml format
+  mfd: qcom-spmi-pmic: Add support for pm6150 and pm6150l
+
+ .../devicetree/bindings/mfd/qcom,spmi-pmic.txt     |  80 --------------
+ .../devicetree/bindings/mfd/qcom,spmi-pmic.yaml    | 119 +++++++++++++++++++++
+ drivers/mfd/qcom-spmi-pmic.c                       |   4 +
+ 3 files changed, 123 insertions(+), 80 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
+ create mode 100644 Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+
 -- 
-2.29.2
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+ a Linux Foundation Collaborative Project
 
