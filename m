@@ -2,190 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ED6992E78AE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Dec 2020 13:50:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1279C2E78BE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Dec 2020 13:59:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726799AbgL3MuT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Dec 2020 07:50:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38052 "EHLO
+        id S1726718AbgL3M6q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Dec 2020 07:58:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726749AbgL3MuS (ORCPT
+        with ESMTP id S1726650AbgL3M6q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Dec 2020 07:50:18 -0500
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 716FCC06179B
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Dec 2020 04:49:38 -0800 (PST)
-Received: by mail-pg1-x536.google.com with SMTP id w5so11332338pgj.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Dec 2020 04:49:38 -0800 (PST)
+        Wed, 30 Dec 2020 07:58:46 -0500
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3471C06179B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Dec 2020 04:58:05 -0800 (PST)
+Received: by mail-ot1-x333.google.com with SMTP id b24so15334483otj.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Dec 2020 04:58:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=4QXq92NoxzM0UANAe9MUt462GjUbA9XMONuk/bFybLc=;
-        b=cnVQVgC45+Tj3uiAF7C26Ozxd0h/X32CMKWZE7b9n50LfvRYvAoU0rOUIZwtaB72Qv
-         MTkkzbNqYenXME4PkEXK9oYnoVPBZ22Z3yQVtdDc8TfLw2kmsSivFTgX4fKdth7l56b7
-         DSuCOhnAwh9UYnmVcblEV0GhGMFIqardbKomWthV4DamA1eaio6L1VrbJTQYfMXazrWT
-         00CbYY3pP9O8dvU1JLekLDC80Y0oKDORethpTlRQo8mKyeVpYfJgNqct8rafmoJzhEmb
-         17zgXHESj3OJvSgZZrg7WIlKf0c3ohmv06rEdiswKdHEIyl6t5RQT4dUfrS5HEFLXvLJ
-         l1Ww==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=9DwicrMgPfKg6HN+ki4qoc6QI9bh3B7VrtKVBAmLaho=;
+        b=LIUOaasssp8Rty1Aal/JnRfDpctaEKMvLC7fbWBqnlb0Q5Qf6YOu4WyG7VMcAVst9l
+         z2Gn3v99XKMEwPHyqA+hiHkoXZ8x7iL/aTYPZAPrPpa+QRE8+GYmsPEzCYiLAwJp03Ok
+         P9qWz/06rDRCNE3Im3L1gyLTNNuTs+DrRgcYJndC3YOCo66anrgAbFfCe3rCIrUUz5MV
+         oz6hKTQWCjFAgRZkHb7cLnuV7e1BjtvwMydTm++wMRXyKXFL2NLDV6fr58eRdVLLevvb
+         q8slwaXijLPbktuxolycdEEyssMSa+fjWBBMvOrZIcSmEg/4D/Ql/8xTeCaqVTRiEupJ
+         m2ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=4QXq92NoxzM0UANAe9MUt462GjUbA9XMONuk/bFybLc=;
-        b=NrggRgBhwVXE+JqguMjk86aRayPkOLlNzIGPbB/fX2szTiYRj3w5Np2trPUYTIYCca
-         J0VUSlP3jKaE1AzvvaEFot/IxlGw24dy+exd5iLQZ32SG0MqsIqnlMNV9IiBc9U7aRkD
-         md21ekDZdY1qEknNj6x8xR87oHQk3snVtb3lOIzCvGenw5lGz/y1eCgHZPTSDruVK/mj
-         9ELuIrr1Z5OVSQ6j8AEBaEEu1Bn2KCc5iUgdOa9bOy9ag0ZtvN51SE79hVdD3CT8PC9B
-         1k/RlIYCAXFiprjn+8OmBVNMqhii6l9y99w77AG56dgS3aQIJiZ9LMUNe3HTcbMaj0nV
-         z2Dg==
-X-Gm-Message-State: AOAM531KCdnbXJt6004Fx8pRF07e9CK262IiOIq8kN4idyjPFOh9wnQE
-        rdmkb01+y4CVS4GaXaeyoGzpuA==
-X-Google-Smtp-Source: ABdhPJy61iC8qyu9q2zvYZdgfUZqmdmTicB3HaaO8g61Vw3urgo/4UUC5WRuJUEM6eWdXkGfwCH2Dw==
-X-Received: by 2002:a65:458d:: with SMTP id o13mr13919547pgq.450.1609332577967;
-        Wed, 30 Dec 2020 04:49:37 -0800 (PST)
-Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id c18sm41265922pfj.200.2020.12.30.04.49.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Dec 2020 04:49:37 -0800 (PST)
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        Shawn Guo <shawn.guo@linaro.org>
-Subject: [PATCH] usb: dwc3: qcom: add URS Host support for sdm845 ACPI boot
-Date:   Wed, 30 Dec 2020 20:49:25 +0800
-Message-Id: <20201230124925.19260-1-shawn.guo@linaro.org>
-X-Mailer: git-send-email 2.17.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=9DwicrMgPfKg6HN+ki4qoc6QI9bh3B7VrtKVBAmLaho=;
+        b=GLOUXLRlw2To+0oUfBi63YnaoeLDh6WPezxTsK9FqQKWyKmCYL9U29bMAGJHpvRz58
+         3dNjvXRqQ6DQvxP39A/Klkt32OSS1hvW3KV8hNPRKIiUjdNZ97sp/VH4D6Rc3U/9ipN3
+         V+ombGo4NqGO9kx40PF+KqX6g8gFQm784DB6U1m3Q48VWd9rOD2Dy9/wHqwMbZn0ur9x
+         WlIXkjGZf821jA0mRvluXJMPdmjVLK5c7LOfhaPu7+pqpcAdTjeUwSZ597RlkdhT8Zhs
+         UWVhXdIETiK5PiANFrqFTxDwrAZveXP4OLi/yaAmyi1Vzt5+LexkMpWhkm2AIDp1IdCN
+         NLZQ==
+X-Gm-Message-State: AOAM531xwCOTq+X5LD8hdmuJpHlVXICqRyvCbsfr1J8NzTNUj9jqguf8
+        evWfqnyUuqN4hsJ7n9ixOuVG1t1e+3//jwEZRohApA==
+X-Google-Smtp-Source: ABdhPJzJFfQTvx3M92iXRoMCAl1vevOv9X2nZka9nC4IY9hjmsI2P5QbmvdOWE62Two91i6IEYuDp5c7YbSxMpBgy70=
+X-Received: by 2002:a9d:3d06:: with SMTP id a6mr37320479otc.368.1609333085291;
+ Wed, 30 Dec 2020 04:58:05 -0800 (PST)
+MIME-Version: 1.0
+References: <20201230115408.492565-1-dmitry.baryshkov@linaro.org>
+ <20201230123542.GA5679@thinkpad> <CAA8EJppWi7POSXsHnBJ__TGDBQezU1YHcvSKk9=7wpoAfREh4Q@mail.gmail.com>
+ <20201230124641.GC5679@thinkpad>
+In-Reply-To: <20201230124641.GC5679@thinkpad>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 30 Dec 2020 15:57:54 +0300
+Message-ID: <CAA8EJppeD-Vq643VuKrOXvHr1h6gW_U5XYKqGPcxdwGybkLv1Q@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] PCI: qcom: fixup PCIe support on sm8250
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>, linux-pci@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-For sdm845 ACPI boot, the URS (USB Role Switch) node in ACPI DSDT table
-holds the memory resource, while interrupt resources reside in the child
-nodes USB0 and UFN0.  It adds USB0 host support by probing URS node,
-creating platform device for USB0 node, and then retrieve interrupt
-resources from USB0 platform device.
+On Wed, 30 Dec 2020 at 15:46, Manivannan Sadhasivam
+<manivannan.sadhasivam@linaro.org> wrote:
+>
+> On Wed, Dec 30, 2020 at 03:38:12PM +0300, Dmitry Baryshkov wrote:
+> > Hi Mani,
+> >
+> > On Wed, 30 Dec 2020 at 15:35, Manivannan Sadhasivam
+> > <manivannan.sadhasivam@linaro.org> wrote:
+> > >
+> > > On Wed, Dec 30, 2020 at 02:54:06PM +0300, Dmitry Baryshkov wrote:
+> > > > SM8250 SoC requires another clock to be up to power up the translation
+> > > > unit. Add necessary bindings and driver support.
+> > > >
+> > >
+> > > So what is the exact issue you're facing?
+> >
+> > IOMMU timeouts for PCIe0 device (WiFi)
+> >
+>
+> Strange. I never observed this issue while testing with onboard QCA6390. Is it
+> only happening on v5.11?
 
-Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
----
- drivers/usb/dwc3/dwc3-qcom.c | 50 +++++++++++++++++++++++++++++++++---
- 1 file changed, 47 insertions(+), 3 deletions(-)
+No, I've faced it with 5.10 also. Don't remember about 5.9. Downstream
+4.19 also has this patch.
+It well might be that on your board the firmware enables this clock.
+However to be on a safe side I think we should enable it too.
 
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index c703d552bbcf..5b70d34e75ab 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -60,12 +60,14 @@ struct dwc3_acpi_pdata {
- 	int			dp_hs_phy_irq_index;
- 	int			dm_hs_phy_irq_index;
- 	int			ss_phy_irq_index;
-+	bool			is_urs;
- };
- 
- struct dwc3_qcom {
- 	struct device		*dev;
- 	void __iomem		*qscratch_base;
- 	struct platform_device	*dwc3;
-+	struct platform_device	*urs_usb;
- 	struct clk		**clks;
- 	int			num_clocks;
- 	struct reset_control	*resets;
-@@ -429,13 +431,15 @@ static void dwc3_qcom_select_utmi_clk(struct dwc3_qcom *qcom)
- static int dwc3_qcom_get_irq(struct platform_device *pdev,
- 			     const char *name, int num)
- {
-+	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
-+	struct platform_device *pdev_irq = qcom->urs_usb ? qcom->urs_usb : pdev;
- 	struct device_node *np = pdev->dev.of_node;
- 	int ret;
- 
- 	if (np)
--		ret = platform_get_irq_byname(pdev, name);
-+		ret = platform_get_irq_byname(pdev_irq, name);
- 	else
--		ret = platform_get_irq(pdev, num);
-+		ret = platform_get_irq(pdev_irq, num);
- 
- 	return ret;
- }
-@@ -568,6 +572,8 @@ static int dwc3_qcom_acpi_register_core(struct platform_device *pdev)
- 	struct dwc3_qcom	*qcom = platform_get_drvdata(pdev);
- 	struct device		*dev = &pdev->dev;
- 	struct resource		*res, *child_res = NULL;
-+	struct platform_device	*pdev_irq = qcom->urs_usb ? qcom->urs_usb :
-+							    pdev;
- 	int			irq;
- 	int			ret;
- 
-@@ -597,7 +603,7 @@ static int dwc3_qcom_acpi_register_core(struct platform_device *pdev)
- 	child_res[0].end = child_res[0].start +
- 		qcom->acpi_pdata->dwc3_core_base_size;
- 
--	irq = platform_get_irq(pdev, 0);
-+	irq = platform_get_irq(pdev_irq, 0);
- 	child_res[1].flags = IORESOURCE_IRQ;
- 	child_res[1].start = child_res[1].end = irq;
- 
-@@ -651,6 +657,24 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
- 	return 0;
- }
- 
-+static struct platform_device *
-+dwc3_qcom_create_urs_usb_platdev(struct device *dev)
-+{
-+	struct fwnode_handle *fwh;
-+	struct acpi_device *adev;
-+
-+	/* Find the first child of URS node */
-+	fwh = fwnode_call_ptr_op(dev->fwnode, get_next_child_node, NULL);
-+	if (!fwh)
-+		return NULL;
-+
-+	adev = to_acpi_device_node(fwh);
-+	if (!adev)
-+		return NULL;
-+
-+	return acpi_create_platform_device(adev, NULL);
-+}
-+
- static int dwc3_qcom_probe(struct platform_device *pdev)
- {
- 	struct device_node	*np = pdev->dev.of_node;
-@@ -715,6 +739,14 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- 			qcom->acpi_pdata->qscratch_base_offset;
- 		parent_res->end = parent_res->start +
- 			qcom->acpi_pdata->qscratch_base_size;
-+
-+		if (qcom->acpi_pdata->is_urs) {
-+			qcom->urs_usb = dwc3_qcom_create_urs_usb_platdev(dev);
-+			if (!qcom->urs_usb) {
-+				dev_err(dev, "failed to create URS USB platdev\n");
-+				return -ENODEV;
-+			}
-+		}
- 	}
- 
- 	qcom->qscratch_base = devm_ioremap_resource(dev, parent_res);
-@@ -877,8 +909,20 @@ static const struct dwc3_acpi_pdata sdm845_acpi_pdata = {
- 	.ss_phy_irq_index = 2
- };
- 
-+static const struct dwc3_acpi_pdata sdm845_acpi_urs_pdata = {
-+	.qscratch_base_offset = SDM845_QSCRATCH_BASE_OFFSET,
-+	.qscratch_base_size = SDM845_QSCRATCH_SIZE,
-+	.dwc3_core_base_size = SDM845_DWC3_CORE_SIZE,
-+	.hs_phy_irq_index = 1,
-+	.dp_hs_phy_irq_index = 4,
-+	.dm_hs_phy_irq_index = 3,
-+	.ss_phy_irq_index = 2,
-+	.is_urs = true,
-+};
-+
- static const struct acpi_device_id dwc3_qcom_acpi_match[] = {
- 	{ "QCOM2430", (unsigned long)&sdm845_acpi_pdata },
-+	{ "QCOM0304", (unsigned long)&sdm845_acpi_urs_pdata },
- 	{ },
- };
- MODULE_DEVICE_TABLE(acpi, dwc3_qcom_acpi_match);
 -- 
-2.17.1
-
+With best wishes
+Dmitry
