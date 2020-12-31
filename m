@@ -2,179 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D51802E827F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Dec 2020 23:51:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E98842E8287
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Dec 2020 23:53:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727156AbgLaWuv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Dec 2020 17:50:51 -0500
-Received: from mail-il1-f180.google.com ([209.85.166.180]:42978 "EHLO
-        mail-il1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726738AbgLaWuu (ORCPT
+        id S1727047AbgLaWxM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Dec 2020 17:53:12 -0500
+Received: from mail-il1-f179.google.com ([209.85.166.179]:46947 "EHLO
+        mail-il1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727036AbgLaWxM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Dec 2020 17:50:50 -0500
-Received: by mail-il1-f180.google.com with SMTP id 2so18351388ilg.9;
-        Thu, 31 Dec 2020 14:50:35 -0800 (PST)
+        Thu, 31 Dec 2020 17:53:12 -0500
+Received: by mail-il1-f179.google.com with SMTP id 75so18312359ilv.13;
+        Thu, 31 Dec 2020 14:52:56 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=FTT5mZwVbwzaG7eO2xhxJL9MrI/0IncmuTso7WylOvo=;
-        b=haMRRLmPOabqolVfEVXMbg18A8Y8PWOt7Aa8eIVfHIAeqJ69gJnWkOpL6RroLU6MSZ
-         8zUxjUSw/31Z8aIPhAgXAaqtZQ2FE/8/rnsOacczMBEILpbDSZj6DqV54UyNc25DhwgZ
-         QT2BaZdEmgMhK/m3CQYkiodKdisP21JBvjgJBqLAvZmmNorPmG/qXhAMN1V3TzJhbZT9
-         8C8tLVRJkazyz423I6gYBHNhr1lvPrnjJveVFtN/N5Meyd1zn0q+CYrPKGtsC802V0ao
-         7rpaIyn9pm+prCkUyFbQHAyYe9sg8sMPA0DESJjryqMn+SsBOakME1k7LveRdOCk+Y9v
-         AkAg==
-X-Gm-Message-State: AOAM530J1UYAWBpA0jJKAkLzH3yBs9xWWPp5CEHZlCj8OEh3etJjkCOz
-        2sONdDhrStPB1pkKE6PDlA==
-X-Google-Smtp-Source: ABdhPJw4L54UvX4krlopSQzP2+D/VHZquWlRvbZQA/BfJqKquzIV83uxJJiBOxlonPiOcykAWZFvmw==
-X-Received: by 2002:a92:d8d1:: with SMTP id l17mr56264705ilo.99.1609455009632;
-        Thu, 31 Dec 2020 14:50:09 -0800 (PST)
+        bh=L4txl6LRDbqOrOyEdipPParuXeNvW/63+6eovKarF9E=;
+        b=jzMCe9nMe6AdP2vmP9FPR4mZBokNqQYJwB1Z1ziNfwj1ZThBTy/nzaUoaVyr57nZva
+         vCrnbDKD61aq3SJJJN27c6Q/3D1Iq+JXblikeRxHCsV4z8jGRUx2I2u+f1tM3QyIQTYM
+         p/b/LsFSfzOMrx5vtarFw2CQpDZ085riEExbr2GhPrz608Ye8E4pNLRUz6QxNPaBhaqH
+         Dxrhatb4BOmw1HFdjCMJP2VQZBtZdlZgk7xNrC1xHrkHbnMQHVH6A0GlinSeucQzxTaB
+         rKfjQYkh1UtAZ6MlQPSIrZLWJ4U81RZfMKZHRvOuG2U3dZYm57OClCzIRexFQ125ad7K
+         GISA==
+X-Gm-Message-State: AOAM532U0D2tZaByZHAlK/E0VW4QkVYsV+BayMjchV4qF+S3nI0bivg5
+        a7gA9BkU+HpeFcq7FPBpKQ==
+X-Google-Smtp-Source: ABdhPJyHEen9pZnXKWB7GlbIjG+UYI1AH7B4Ety3xrmuVFh9HKqSuIwzsEvmrxOBUvW1RvP5S5AO3Q==
+X-Received: by 2002:a05:6e02:1a8e:: with SMTP id k14mr59027590ilv.275.1609455151554;
+        Thu, 31 Dec 2020 14:52:31 -0800 (PST)
 Received: from robh.at.kernel.org ([64.188.179.253])
-        by smtp.gmail.com with ESMTPSA id o7sm36357973iop.51.2020.12.31.14.50.08
+        by smtp.gmail.com with ESMTPSA id h2sm31686399ili.56.2020.12.31.14.52.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Dec 2020 14:50:08 -0800 (PST)
-Received: (nullmailer pid 2522805 invoked by uid 1000);
-        Thu, 31 Dec 2020 22:50:07 -0000
-Date:   Thu, 31 Dec 2020 15:50:07 -0700
+        Thu, 31 Dec 2020 14:52:30 -0800 (PST)
+Received: (nullmailer pid 2526430 invoked by uid 1000);
+        Thu, 31 Dec 2020 22:52:28 -0000
+Date:   Thu, 31 Dec 2020 15:52:28 -0700
 From:   Rob Herring <robh@kernel.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+Cc:     Lee Jones <lee.jones@linaro.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/4] dt-bindings: mfd: qcom,qca639x: add binding for
- QCA639x defvice
-Message-ID: <20201231225007.GA2509172@robh.at.kernel.org>
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 2/4] mfd: qca639x: add support for QCA639x powerup
+ sequence
+Message-ID: <20201231225228.GA2522971@robh.at.kernel.org>
 References: <20201220165845.3712599-1-dmitry.baryshkov@linaro.org>
- <20201220165845.3712599-2-dmitry.baryshkov@linaro.org>
+ <20201220165845.3712599-3-dmitry.baryshkov@linaro.org>
+ <20201221090244.GA53991@dell>
+ <CAA8EJpo7oHVdDWjhnoknt0vAPYHL0LsZsT8q6MpQs20a+OiCAQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201220165845.3712599-2-dmitry.baryshkov@linaro.org>
+In-Reply-To: <CAA8EJpo7oHVdDWjhnoknt0vAPYHL0LsZsT8q6MpQs20a+OiCAQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Dec 20, 2020 at 07:58:42PM +0300, Dmitry Baryshkov wrote:
-> Qualcomm QCA639x is a family of WiFi + Bluetooth SoCs, with BT part
-> being controlled through the UART and WiFi being present on PCIe bus.
-> Both blocks share common power sources. Add binding to describe power
-> sequencing required to power up this device.
+On Mon, Dec 21, 2020 at 05:08:44PM +0300, Dmitry Baryshkov wrote:
+> Hello,
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../devicetree/bindings/mfd/qcom,qca639x.yaml | 84 +++++++++++++++++++
->  1 file changed, 84 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/mfd/qcom,qca639x.yaml
+> On Mon, 21 Dec 2020 at 12:02, Lee Jones <lee.jones@linaro.org> wrote:
+> >
+> > On Sun, 20 Dec 2020, Dmitry Baryshkov wrote:
+> >
+> > > Qualcomm QCA639x is a family of WiFi + Bluetooth SoCs, with BT part
+> > > being controlled through the UART and WiFi being present on PCIe
+> > > bus. Both blocks share common power sources. So add mfd device driver
+> > > handling power sequencing of QCA6390/1.
+> > >
+> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > ---
+> > >  drivers/mfd/Kconfig        |  12 +++
+> > >  drivers/mfd/Makefile       |   1 +
+> > >  drivers/mfd/qcom-qca639x.c | 168 +++++++++++++++++++++++++++++++++++++
+> > >  3 files changed, 181 insertions(+)
+> > >  create mode 100644 drivers/mfd/qcom-qca639x.c
+> >
+> > This is not an MFD, since it utilised neither the MFD API nor
+> > of_platform_populate() to register child devices.
 > 
-> diff --git a/Documentation/devicetree/bindings/mfd/qcom,qca639x.yaml b/Documentation/devicetree/bindings/mfd/qcom,qca639x.yaml
-> new file mode 100644
-> index 000000000000..d43c75da136f
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/mfd/qcom,qca639x.yaml
-> @@ -0,0 +1,84 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: "http://devicetree.org/schemas/mfd/qcom,qca639x.yaml#"
-> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-> +
-> +title: Qualcomm QCA639x WiFi + Bluetoot SoC bindings
-> +
-> +maintainers:
-> +  - Andy Gross <agross@kernel.org>
-> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
-> +
-> +description: |
-> +  This binding describes thes Qualcomm QCA6390 or QCA6391 power supplies and
-> +  enablement pins.
+> It would use them if the WiFi part was not on a discoverable bus.
 
-Humm, this should really be for the whole device. For BT/WiFi chips 
-we've gotten away with 2 nodes for each interface. If that doesn't work 
-here, then I think this needs to be 1 node for all, not 3 as it seems 
-you are doing.
+PCI nodes have been supported in DT for forever. If you have 
+non-discoverable additions to a PCI device, then the PCI device should 
+be in DT.
 
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,qca639x
-
-List each device, we don't do wildcards in compatible strings. 
-
-> +
-> +  '#power-domain-cells':
-> +    const: 0
-> +
-> +  pinctrl-0: true
-> +  pinctrl-1: true
-> +
-> +  pinctrl-names:
-> +    items:
-> +      - const: default
-> +      - const: active
-> +
-> +  vddaon-supply:
-> +    description:
-> +      0.95V always-on LDO power input
-> +
-> +  vddpmu-supply:
-> +    description:
-> +      0.95V LDO power input to PMU
-> +
-> +  vddrfa1-supply:
-> +    description:
-> +      0.95V LDO power input to RFA
-> +
-> +  vddrfa2-supply:
-> +    description:
-> +      1.25V LDO power input to RFA
-> +
-> +  vddrfa3-supply:
-> +    description:
-> +      2V LDO power input to RFA
-> +
-> +  vddpcie1-supply:
-> +    description:
-> +      1.25V LDO power input to PCIe part
-> +
-> +  vddpcie2-supply:
-> +    description:
-> +      2V LDO power input to PCIe part
-
-Do the PCIe supplies have to be on if only the BT part is used?
-
-Supplies are refcounted, so I'd suggest just duplicating the supplies in 
-both the BT and PCIe nodes.
-
-> +
-> +  vddio-supply:
-> +    description:
-> +      1.8V VIO input
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    qca639x: qca639x {
-> +      compatible = "qcom,qca639x";
-> +      #power-domain-cells = <0>;
-> +
-> +      vddaon-supply = <&vreg_s6a_0p95>;
-> +      vddpmu-supply = <&vreg_s2f_0p95>;
-> +      vddrfa1-supply = <&vreg_s2f_0p95>;
-> +      vddrfa2-supply = <&vreg_s8c_1p3>;
-> +      vddrfa3-supply = <&vreg_s5a_1p9>;
-> +      vddpcie1-supply = <&vreg_s8c_1p3>;
-> +      vddpcie2-supply = <&vreg_s5a_1p9>;
-> +      vddio-supply = <&vreg_s4a_1p8>;
-> +      pinctrl-names = "default", "active";
-> +      pinctrl-0 = <&wlan_default_state &bt_default_state>;
-> +      pinctrl-1 = <&wlan_active_state &bt_active_state>;
-> +    };
-> +...
-> -- 
-> 2.29.2
-> 
+Rob
