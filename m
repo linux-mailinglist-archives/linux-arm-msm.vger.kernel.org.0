@@ -2,128 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5103E2E7F9B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Dec 2020 12:15:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E1212E7FDF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Dec 2020 13:24:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726218AbgLaLPY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Dec 2020 06:15:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46390 "EHLO
+        id S1726597AbgLaMYf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Dec 2020 07:24:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726155AbgLaLPX (ORCPT
+        with ESMTP id S1726071AbgLaMYe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Dec 2020 06:15:23 -0500
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F9CAC061573
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Dec 2020 03:14:43 -0800 (PST)
-Received: by mail-pl1-x62c.google.com with SMTP id x12so9909385plr.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Dec 2020 03:14:43 -0800 (PST)
+        Thu, 31 Dec 2020 07:24:34 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A401C061573
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Dec 2020 04:23:54 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id b26so43753104lff.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Dec 2020 04:23:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Md1bC9DvWCS0Jox1mIfzpEc+NiHyWTkysUV9ixac2zg=;
-        b=yf0agF5e22T1dsNUadBgghAFWZ1gYwhHBYz6BCBVUPbElkmJtVVj2kJgrwMXSapEZU
-         Q38IUZ9ROXrd+o2OrNAEAJgR4NC7xnwoyjuu4lUi3mf1Hek3tivqISGnX8FBWEl3JGvM
-         VupfjS5xih0aqZ83rydkWDQnKF4sm+xqPohBmeN47/7xMT8kE9OzceFPh3IT+UO0ApBZ
-         7ZzXp/MvBOTkCY6vyfD0XrCFhjYGqG0kltHts9USeFrdPT9rFe7h/6vpSBcWj3glRPH3
-         VME8s+c9FC5WvSz1N7EDROjPtYC9U5N5MFhBhr8gkP3v46/6eS5imzgvCpcajnBoMvYg
-         FQ/Q==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=qZB1AtrBu43JL4Z0ztKUFuHbHEpLk42ePJCa9AP7fR4=;
+        b=xR+Hv0rGtfukXZKNZNGVJmQbfDpd+i53Z+xDXjNSkFcONyqjqNBxn3P1ULr2jTqSLa
+         YE0fmfUdRNbPHUSTCZJufctzRfPv0gPH/9ycM5OoxX5YqZvP4wsW99tKqvserzJJsMO2
+         OGw71AAtnnCygOP9oizhSgukJBJ0uXcQGoiou+dKPc04zmvJikEkbDw6nKJha51AlAp7
+         wdLMhz8+PG5MwCwsCpWads/kQaBI2WdEckHR1Kk071fyFcEJo9HAXaG06gqSbryvXj+t
+         3AB3BVIT68GH6soSJaFs1kEBhVYwCSC/mX3qDZs5+NtL2m5kIU1x8YCrlD6HANBuLZWv
+         qYVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Md1bC9DvWCS0Jox1mIfzpEc+NiHyWTkysUV9ixac2zg=;
-        b=Tj2eq4qdBVgbWawPEEV/Op1RPt1ecZqJcyiKVN6D4Uusc3tiufKEtQ8ZET5J0seW7b
-         zTFos8bc3MfsIZNio6SYzwcAFCOsCV42JQ139hg12fusBcNgcbGAEFklm7UC7WtJqY/4
-         QV3lVYjaWvioZKdMXd/bAf43Ppmu1SJc0UrMUxWD6K57lwD3RrIUjSIQRBsLkdg7XrFG
-         YN2znA9QXP4aWoLEsHWUS6cOXw8O+gsbVQpNf7xHq9lOwTP6CW0lzxDA0Lv25VUzzzm0
-         Ql9l+bVCRtCkK8LhV/KQgjrxMtawNGdPywWc02I14lObYbEZFvvmk7P1GpwWve7ExFDH
-         P8Lg==
-X-Gm-Message-State: AOAM532W2c67+2w+L4VwkA2BVnite48jqzJTYdzrPuLURdJXDIurzYBW
-        lglRWBCbGb2TG4P7upF+3Si3ztB0kQAm
-X-Google-Smtp-Source: ABdhPJyBIaBxawSo/C82VTdmhWdcFbNxAQ3OgwS4omK+1zDE3jh5Sy97SM1KfJF6ebB+Cedp3UXjmA==
-X-Received: by 2002:a17:90a:bf05:: with SMTP id c5mr12644421pjs.95.1609413282176;
-        Thu, 31 Dec 2020 03:14:42 -0800 (PST)
-Received: from thinkpad ([2409:4072:6d1f:be3b:71a9:d2bf:a32d:897d])
-        by smtp.gmail.com with ESMTPSA id gz5sm10474111pjb.15.2020.12.31.03.14.38
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=qZB1AtrBu43JL4Z0ztKUFuHbHEpLk42ePJCa9AP7fR4=;
+        b=TL029QA2jFzZdkDObuPvMaaUZWki/e6TXzKLVaUFJlWVQROe25PZ5xugVroWk1R4sQ
+         FVSzLdB0s6Wtn3RcPrpx+N3bYW97Q+eYi0Nt3Ysp0/b9IcFXq+iojdy5XdvwY4tl2or5
+         VRU0uRrRQJSTMfRADIdGpiFM6pSvkCDfwmLgBv3JU7HarUMA77wthVggVCRDKFr24czr
+         wKFHQwAvSGwA14asHrhmSSUFCn1rzTSfs1BE3IIXooUUiKHDf/ryQGEWb6MGWJyOieCF
+         JlMXeXweRkenb0a5Qm2jNMu14gS14QPAXQcdVudEYvHy9DiAjpPVDoQl1yJot42kaBkj
+         CtkA==
+X-Gm-Message-State: AOAM530G4IioEoGf6pv8xepwh97xIpyrqcVajos16Gfx/tBN1T4vuyWM
+        HxYudGYC7Y5KQwVOMw/xwxOqJQ==
+X-Google-Smtp-Source: ABdhPJzmxh3GiL2fCyqYuw7BSqAsk1cvtLafNZwjdu7WZkIaqueJSqbdif9gGfaaTx/DQ4GcAWdjhw==
+X-Received: by 2002:ac2:5a50:: with SMTP id r16mr26188243lfn.195.1609417432846;
+        Thu, 31 Dec 2020 04:23:52 -0800 (PST)
+Received: from eriador.lumag.spb.ru ([94.25.228.115])
+        by smtp.gmail.com with ESMTPSA id n10sm428569lji.99.2020.12.31.04.23.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Dec 2020 03:14:41 -0800 (PST)
-Date:   Thu, 31 Dec 2020 16:44:34 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        Hemant Kumar <hemantk@codeaurora.org>
-Subject: Re: [PATCH v6 07/10] mhi: pci_generic: Add PCI error handlers
-Message-ID: <20201231111434.GJ7345@thinkpad>
-References: <1609231431-10048-1-git-send-email-loic.poulain@linaro.org>
- <1609231431-10048-8-git-send-email-loic.poulain@linaro.org>
- <20201231071816.GB7345@thinkpad>
- <CAMZdPi8+qFPbkiQz8rnC=2X6Z6fTfY=4e1HsBbXk9DJfi-AU3g@mail.gmail.com>
+        Thu, 31 Dec 2020 04:23:52 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>
+Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 0/4] regulator: fix pm8009 bindings on sm8250
+Date:   Thu, 31 Dec 2020 15:23:44 +0300
+Message-Id: <20201231122348.637917-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMZdPi8+qFPbkiQz8rnC=2X6Z6fTfY=4e1HsBbXk9DJfi-AU3g@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 31, 2020 at 10:27:01AM +0100, Loic Poulain wrote:
-> Hi Mani,
-> 
-> On Thu, 31 Dec 2020 at 08:18, Manivannan Sadhasivam
-> <manivannan.sadhasivam@linaro.org> wrote:
-> >
-> > On Tue, Dec 29, 2020 at 09:43:48AM +0100, Loic Poulain wrote:
-> > > In AER capable root complex, errors are reported to the host which
-> > > can then act accordingly and perform PCI recovering procedure.
-> > >
-> > > This patch enables error reporting and implements error_detected,
-> > > slot_reset and resume callbacks.
-> > >
-> > > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> > > Reviewed-by Hemant Kumar <hemantk@codeaurora.org>
-> > > ---
-> > >  drivers/bus/mhi/pci_generic.c | 50 +++++++++++++++++++++++++++++++++++++++++++
-> > >  1 file changed, 50 insertions(+)
-> 
-> > > +static pci_ers_result_t mhi_pci_slot_reset(struct pci_dev *pdev)
-> > > +{
-> > > +     if (pci_enable_device(pdev)) {
-> > > +             dev_err(&pdev->dev, "Cannot re-enable PCI device after reset.\n");
-> > > +             return PCI_ERS_RESULT_DISCONNECT;
-> > > +     }
-> > > +
-> >
-> > This callback will be called after PCI slot reset, so we should also be resetting
-> > the device after enabling it.
-> 
-> Yes, but that is done in mhi_pci_io_resume.
-> 
-> From the PCI error recovery documentation, "drivers should not restart
-> normal I/O processing operations at this point (in slot_reset) If all
-> device drivers report success on this callback, the platform will call
-> resume() to complete the sequence, and let the driver restart normal
-> I/O processing."
-> The actual MHI PCI/recovery is then done in resume (mhi_pci_io_resume).
-> 
 
-If you read one paragraph above,
+PM8009 has special revision (P=1), which is to be used for sm8250
+platform. The major difference is the S2 regulator which supplies 0.95 V
+instead of 2.848V. Declare regulators data to be used for this chip
+revision. The datasheet calls the chip just pm8009-1, so use the same
+name.
 
-"This call gives drivers the chance to re-initialize the hardware
-(re-download firmware, etc.).  At this point, the driver may assume
-that the card is in a fresh state and is fully functional. The slot
-is unfrozen and the driver has full access to PCI config space,
-memory mapped I/O space and DMA."
-
-So at the end of this call, the device is assumed to be functional (then only
-PCI_ERS_RESULT_RECOVERED makes sense).
-
-IMO, you should call mhi_pci_reset_prepare() in this callback and
-mhi_pci_reset_done() in resume(). No need to schedule the recovery work.
-
-Thanks,
-Mani
-
-> Regards,
-> Loic
