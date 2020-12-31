@@ -2,159 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 22D112E7E94
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Dec 2020 08:25:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A9B5F2E7EEB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Dec 2020 10:20:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726232AbgLaHYw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Dec 2020 02:24:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39360 "EHLO
+        id S1726139AbgLaJUv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Dec 2020 04:20:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726155AbgLaHYv (ORCPT
+        with ESMTP id S1726130AbgLaJUu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Dec 2020 02:24:51 -0500
-Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4ED2C061575
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Dec 2020 23:24:11 -0800 (PST)
-Received: by mail-pg1-x52a.google.com with SMTP id n10so12675919pgl.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Dec 2020 23:24:11 -0800 (PST)
+        Thu, 31 Dec 2020 04:20:50 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F724C061573
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Dec 2020 01:20:10 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id w1so24716322ejf.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Dec 2020 01:20:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=59Y9lLu7gKLA6PBo+Rc/MQHtWZJv/8/MoV+hD4xt+3U=;
-        b=atsO3HYk9RIzqk8lrfu3fkNFFnAf7WDnApVjEQXtzGeV5l09/FU1arRk8JsJgMWPJ2
-         n3sUerQzGu2/R0yY6mssYhacZRfSCQ0X7tRSaRBiMzfnuE5mYY/6Oe/MbXUjHbygu1Bw
-         4P8m5l/Jy8hdli+4kRHqf0hlV8wQ3DNOi/2W1XmYK5JuImxyy/uvcaQDHevU+kKB1GEl
-         6iZV2bukZOjI/FreHO/8kWRGT4/BmrVI1QPgmfBNRkoR7T/VvBcordQ3OW4myXaquSRW
-         0Jcr16pqEfosYZpdN3l3DLmqmcpLfKeZODLFdXbgDEazp3D/ARlv1zmerp1FCpj8BSF+
-         doSg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=nlTHiczV7NuGnvzVmGOv5ENuKj8IkDS9XyUW739lICo=;
+        b=Ou/NBsAekCfNn+CGKvZEjH9hgM9kGLaF+wOJlD9tUu+YFoq49SYUtZhO9cDdpaIWBg
+         1up3VJmb3H0fRIdM552JRcjoSwjgO3zuuNrdnldDZsZ2cyWM0tFixzwVHinIappIefbL
+         fFVpTdESOUBTZWD5NsBIyth7gzey5JXb87SJzuTl3P3IxD9t5lVysuJ1S4IM6S+KXUFh
+         fejKyL+7ObdqXdjWmxuJ2hyjlUPs4lgms0pACNAErPHhlBA6uZvGvgk9QWCC7naieBTd
+         wVjx97CrnpQj/JJ5F+MBy8yvz6ShX3jNZ1S8PfrETYPu3G8o0SSLiRADFrpoyhG1LCxf
+         /ZFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=59Y9lLu7gKLA6PBo+Rc/MQHtWZJv/8/MoV+hD4xt+3U=;
-        b=DKdjWyWmPAcojkLwBq8ZHE8sU/PsPIFsKtlamZMxMdYvuNSgVuqzmLvZbvV6zjeNFn
-         xirmW5Uac/dRnUiIiONg84kfK8eaTN7vZVxSl6smujs6csMMRD5i9wTEmzTlCGhjqJ5i
-         OWkUi03vzPsd90SvLRdwlG884LfQkxGrRm1PJtUYy62mxZ2QsjrmsnaBSju6f1cWf1s3
-         drtYSqqtjTPyM46sGLp9N9Rco46YXF6CraPQOfJXQhSX9B2HvVGN9pF/oHVgqPeTu54F
-         K1lSamn0E4FPfISA636FUZkkInK4xR99cQnUNg20kwAAzoXFzUHMcRaw0mhYGQiJ1F+N
-         xGNQ==
-X-Gm-Message-State: AOAM531pPnEID1KjK4UbdjBi+kbWb5QYb001Dq+DPcvqBvSG3cD6IaSO
-        fPCL1n7klRaXu3gxaOrTamW0
-X-Google-Smtp-Source: ABdhPJzPh9/5Dzj2H8zgXe2mVdWGiMZgpYGXX/bIf3qnJ7fMOTe1H8yA0aiAvu4907EpfBEwso5LIg==
-X-Received: by 2002:a63:eb0c:: with SMTP id t12mr771240pgh.7.1609399451132;
-        Wed, 30 Dec 2020 23:24:11 -0800 (PST)
-Received: from thinkpad ([2409:4072:6d1f:be3b:71a9:d2bf:a32d:897d])
-        by smtp.gmail.com with ESMTPSA id cq15sm9274573pjb.27.2020.12.30.23.24.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Dec 2020 23:24:10 -0800 (PST)
-Date:   Thu, 31 Dec 2020 12:54:04 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Carl Huang <cjhuang@codeaurora.org>
-Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ath11k@lists.infradead.org
-Subject: Re: [PATCH v2] mhi: use irq_flags if client driver configures it
-Message-ID: <20201231072404.GE7345@thinkpad>
-References: <20201229070551.3129-1-cjhuang@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=nlTHiczV7NuGnvzVmGOv5ENuKj8IkDS9XyUW739lICo=;
+        b=O0svJB9PsmcVvWecIzqGdloYCIVblfoaVUW6oLYg5FMHQkY0qA7IKKjIHN2KRtW3AQ
+         96McUMLsLn+wC+94h8uxPfEcPcsV5GU0dFMn5i8n9jJBzf9yfBEWeM/wEpdxpcH4NEqA
+         /50l8t5CuCBdw41wyjQSKjKf6zX4kofn9+Yv+7HToNyJt3x3tarUJk+7EMlB4Wp8cwUU
+         p7f/BRUoX6a0NzuetFIqIYKE1k59+7Sv7sfiouXmvV65xBSBuJ54mxbuoUmFoyw+Vu9p
+         Y3AOib0tPOC6n192rORWsin97HYZ9VbPwG+ecbenAyUeUK9kN3LGk8OELPiVLXRJVG5o
+         DOng==
+X-Gm-Message-State: AOAM533XoIugrbyP3HIz8ljNAZ9M/5UFKwCGustqNZ5aLFLs2ebe3NTA
+        HFQBRhJIMo8lZvqtoyZHHMO9sQUgxhofKthMCPddag==
+X-Google-Smtp-Source: ABdhPJy/ck8ndpVvHLNkI0RPwqfZ7PtZviglrfH0U0p+xmKwdMypmJkvefU493iJ1l8OsrqqTPAcR2Qe0bBoRv1Iiak=
+X-Received: by 2002:a17:906:8151:: with SMTP id z17mr53314513ejw.48.1609406409032;
+ Thu, 31 Dec 2020 01:20:09 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201229070551.3129-1-cjhuang@codeaurora.org>
+References: <1609231431-10048-1-git-send-email-loic.poulain@linaro.org>
+ <1609231431-10048-8-git-send-email-loic.poulain@linaro.org> <20201231071816.GB7345@thinkpad>
+In-Reply-To: <20201231071816.GB7345@thinkpad>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Thu, 31 Dec 2020 10:27:01 +0100
+Message-ID: <CAMZdPi8+qFPbkiQz8rnC=2X6Z6fTfY=4e1HsBbXk9DJfi-AU3g@mail.gmail.com>
+Subject: Re: [PATCH v6 07/10] mhi: pci_generic: Add PCI error handlers
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>,
+        Hemant Kumar <hemantk@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Dec 29, 2020 at 02:05:51AM -0500, Carl Huang wrote:
-> If client driver has specified the irq_flags, mhi uses this specified
-> irq_flags. Otherwise, mhi uses default irq_flags.
-> 
-> The purpose of this change is to support one MSI vector for QCA6390.
-> MHI will use one same MSI vector too in this scenario.
-> 
-> In case of one MSI vector, IRQ_NO_BALANCING is needed when irq handler
-> is requested. The reason is if irq migration happens, the msi_data may
-> change too. However, the msi_data is already programmed to QCA6390
-> hardware during initialization phase. This msi_data inconsistence will
-> result in crash in kernel.
-> 
-> Another issue is in case of one MSI vector, IRQF_NO_SUSPEND will trigger
-> WARNINGS because QCA6390 wants to disable the IRQ during the suspend.
-> 
-> To avoid above two issues, QCA6390 driver specifies the irq_flags in case
-> of one MSI vector when mhi_register_controller is called.
-> 
-> Signed-off-by: Carl Huang <cjhuang@codeaurora.org>
+Hi Mani,
 
-Small nitpick below, with that addressed,
+On Thu, 31 Dec 2020 at 08:18, Manivannan Sadhasivam
+<manivannan.sadhasivam@linaro.org> wrote:
+>
+> On Tue, Dec 29, 2020 at 09:43:48AM +0100, Loic Poulain wrote:
+> > In AER capable root complex, errors are reported to the host which
+> > can then act accordingly and perform PCI recovering procedure.
+> >
+> > This patch enables error reporting and implements error_detected,
+> > slot_reset and resume callbacks.
+> >
+> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> > Reviewed-by Hemant Kumar <hemantk@codeaurora.org>
+> > ---
+> >  drivers/bus/mhi/pci_generic.c | 50 +++++++++++++++++++++++++++++++++++++++++++
+> >  1 file changed, 50 insertions(+)
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > +static pci_ers_result_t mhi_pci_slot_reset(struct pci_dev *pdev)
+> > +{
+> > +     if (pci_enable_device(pdev)) {
+> > +             dev_err(&pdev->dev, "Cannot re-enable PCI device after reset.\n");
+> > +             return PCI_ERS_RESULT_DISCONNECT;
+> > +     }
+> > +
+>
+> This callback will be called after PCI slot reset, so we should also be resetting
+> the device after enabling it.
 
-> ---
-> v2:
-> - document irq_flags added to mhi_controller
-> 
->  drivers/bus/mhi/core/init.c | 9 +++++++--
->  include/linux/mhi.h         | 2 ++
->  2 files changed, 9 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-> index 0ffdebd..5f74e1e 100644
-> --- a/drivers/bus/mhi/core/init.c
-> +++ b/drivers/bus/mhi/core/init.c
-> @@ -148,12 +148,17 @@ int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
->  {
->  	struct mhi_event *mhi_event = mhi_cntrl->mhi_event;
->  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-> +	unsigned long irq_flags = IRQF_SHARED | IRQF_NO_SUSPEND;
->  	int i, ret;
->  
-> +	/* if client driver has set irq_flags, use it */
+Yes, but that is done in mhi_pci_io_resume.
 
-s/client driver/controller driver
+From the PCI error recovery documentation, "drivers should not restart
+normal I/O processing operations at this point (in slot_reset) If all
+device drivers report success on this callback, the platform will call
+resume() to complete the sequence, and let the driver restart normal
+I/O processing."
+The actual MHI PCI/recovery is then done in resume (mhi_pci_io_resume).
 
-Thanks,
-Mani
-
-> +	if (mhi_cntrl->irq_flags)
-> +		irq_flags = mhi_cntrl->irq_flags;
-> +
->  	/* Setup BHI_INTVEC IRQ */
->  	ret = request_threaded_irq(mhi_cntrl->irq[0], mhi_intvec_handler,
->  				   mhi_intvec_threaded_handler,
-> -				   IRQF_SHARED | IRQF_NO_SUSPEND,
-> +				   irq_flags,
->  				   "bhi", mhi_cntrl);
->  	if (ret)
->  		return ret;
-> @@ -171,7 +176,7 @@ int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
->  
->  		ret = request_irq(mhi_cntrl->irq[mhi_event->irq],
->  				  mhi_irq_handler,
-> -				  IRQF_SHARED | IRQF_NO_SUSPEND,
-> +				  irq_flags,
->  				  "mhi", mhi_event);
->  		if (ret) {
->  			dev_err(dev, "Error requesting irq:%d for ev:%d\n",
-> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index d4841e5..918cf6a 100644
-> --- a/include/linux/mhi.h
-> +++ b/include/linux/mhi.h
-> @@ -353,6 +353,7 @@ struct mhi_controller_config {
->   * @fbc_download: MHI host needs to do complete image transfer (optional)
->   * @pre_init: MHI host needs to do pre-initialization before power up
->   * @wake_set: Device wakeup set flag
-> + * @irq_flags: irq flags passed to request_irq (optional)
->   *
->   * Fields marked as (required) need to be populated by the controller driver
->   * before calling mhi_register_controller(). For the fields marked as (optional)
-> @@ -442,6 +443,7 @@ struct mhi_controller {
->  	bool fbc_download;
->  	bool pre_init;
->  	bool wake_set;
-> +	unsigned long irq_flags;
->  };
->  
->  /**
-> -- 
-> 2.7.4
-> 
+Regards,
+Loic
