@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E1212E7FDF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Dec 2020 13:24:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A7FCB2E7FE4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Dec 2020 13:26:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726597AbgLaMYf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Dec 2020 07:24:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56944 "EHLO
+        id S1726661AbgLaMZP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Dec 2020 07:25:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726071AbgLaMYe (ORCPT
+        with ESMTP id S1726596AbgLaMZP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Dec 2020 07:24:34 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A401C061573
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Dec 2020 04:23:54 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id b26so43753104lff.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Dec 2020 04:23:54 -0800 (PST)
+        Thu, 31 Dec 2020 07:25:15 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38524C06179E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Dec 2020 04:24:04 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id l11so43832994lfg.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Dec 2020 04:24:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=qZB1AtrBu43JL4Z0ztKUFuHbHEpLk42ePJCa9AP7fR4=;
-        b=xR+Hv0rGtfukXZKNZNGVJmQbfDpd+i53Z+xDXjNSkFcONyqjqNBxn3P1ULr2jTqSLa
-         YE0fmfUdRNbPHUSTCZJufctzRfPv0gPH/9ycM5OoxX5YqZvP4wsW99tKqvserzJJsMO2
-         OGw71AAtnnCygOP9oizhSgukJBJ0uXcQGoiou+dKPc04zmvJikEkbDw6nKJha51AlAp7
-         wdLMhz8+PG5MwCwsCpWads/kQaBI2WdEckHR1Kk071fyFcEJo9HAXaG06gqSbryvXj+t
-         3AB3BVIT68GH6soSJaFs1kEBhVYwCSC/mX3qDZs5+NtL2m5kIU1x8YCrlD6HANBuLZWv
-         qYVg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=50YWbAm2z8JFqRwTF3PvDhtM81i1dEM3p4jr1MtmPig=;
+        b=PXVKzo0T7Mph11Zl83nrk6DA/kopMT898iZtYT9ONiZdgROQcq+HD3DjLiQyxaX0Ab
+         z0Q6e2yUTUfEe0fIQlC2DSDaLXYrMoroHGEkyLfyjvDvfBDqQprBTQZ6SZT69DQkMUup
+         f2pIpsxAfNfiGjaucfZfgHzVEs/DCSYY6ygivFMtaGBEp54gmcRTI1EsCHmy8auX2EjQ
+         lFr0itxVAfJ61NvJlkJ4fR1svLtIZ6YTSvxr+IcV0n96eDtOzIPNxOrKzDee3OYa/KON
+         omiN8DcH0Z5Wx5uIK7a+II4CU9qjvVB+0GMUyNCgX7tspMrvWTcIupV29XdHiSzzU31l
+         5PxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=qZB1AtrBu43JL4Z0ztKUFuHbHEpLk42ePJCa9AP7fR4=;
-        b=TL029QA2jFzZdkDObuPvMaaUZWki/e6TXzKLVaUFJlWVQROe25PZ5xugVroWk1R4sQ
-         FVSzLdB0s6Wtn3RcPrpx+N3bYW97Q+eYi0Nt3Ysp0/b9IcFXq+iojdy5XdvwY4tl2or5
-         VRU0uRrRQJSTMfRADIdGpiFM6pSvkCDfwmLgBv3JU7HarUMA77wthVggVCRDKFr24czr
-         wKFHQwAvSGwA14asHrhmSSUFCn1rzTSfs1BE3IIXooUUiKHDf/ryQGEWb6MGWJyOieCF
-         JlMXeXweRkenb0a5Qm2jNMu14gS14QPAXQcdVudEYvHy9DiAjpPVDoQl1yJot42kaBkj
-         CtkA==
-X-Gm-Message-State: AOAM530G4IioEoGf6pv8xepwh97xIpyrqcVajos16Gfx/tBN1T4vuyWM
-        HxYudGYC7Y5KQwVOMw/xwxOqJQ==
-X-Google-Smtp-Source: ABdhPJzmxh3GiL2fCyqYuw7BSqAsk1cvtLafNZwjdu7WZkIaqueJSqbdif9gGfaaTx/DQ4GcAWdjhw==
-X-Received: by 2002:ac2:5a50:: with SMTP id r16mr26188243lfn.195.1609417432846;
-        Thu, 31 Dec 2020 04:23:52 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=50YWbAm2z8JFqRwTF3PvDhtM81i1dEM3p4jr1MtmPig=;
+        b=A4JHwzjyAt8aqJwLuqc/FJrxNdhA0B7vmWTI1BFv0qOqGt56xw5sORkRUsfnGbhpKA
+         3ly9rErpUEmtIKZgtHQ/104F63j4u2oT4BFwrQFL7CpgIl1xEIWXqo8UCdJ7BoictVMc
+         DmlCrUR1t4+IwtyeEK7UIoFLPCPqrqmu3NQKjKA1Iz47eIkh8RpWhZ9QRQhdZOkvWulV
+         b18qN1iL1O2frnUpj8TideKlQOXjsA4HwW8YCGLxsQigJ+6LQAscgUBqQL3jwjOyBfTF
+         fxY5sFymPycqT5/afkOEQqtP5XRg00UXW10NDQiUzkMHyScvojWEMFkfBpcsJuXHzFKU
+         IKJQ==
+X-Gm-Message-State: AOAM532J1GvbPSarn5L3dtMX8iYdcvbSBnh7YUGt+I4VI1o0a5zf0ZEG
+        0Perka/ytu8/VYjl8j1cjnlCgA==
+X-Google-Smtp-Source: ABdhPJx+TfN1rUj02in1TY0rQeJUD3WgK3bc6epu5SG0UmQyibtkyH/S1P0de8c54obgdUylFsLJnw==
+X-Received: by 2002:a19:797:: with SMTP id 145mr23778136lfh.651.1609417442743;
+        Thu, 31 Dec 2020 04:24:02 -0800 (PST)
 Received: from eriador.lumag.spb.ru ([94.25.228.115])
-        by smtp.gmail.com with ESMTPSA id n10sm428569lji.99.2020.12.31.04.23.51
+        by smtp.gmail.com with ESMTPSA id n10sm428569lji.99.2020.12.31.04.23.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Dec 2020 04:23:52 -0800 (PST)
+        Thu, 31 Dec 2020 04:24:02 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -56,20 +56,40 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 0/4] regulator: fix pm8009 bindings on sm8250
-Date:   Thu, 31 Dec 2020 15:23:44 +0300
-Message-Id: <20201231122348.637917-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 1/4] dt-bindings: regulator: qcom,rpmh-regulator: add pm8009 revision
+Date:   Thu, 31 Dec 2020 15:23:45 +0300
+Message-Id: <20201231122348.637917-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.29.2
+In-Reply-To: <20201231122348.637917-1-dmitry.baryshkov@linaro.org>
+References: <20201231122348.637917-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+PMIC pm8009 has special revision (P=1) made for sm8250 platform. The
+major difference is the S2 regulator which supplies 0.95 V instead of
+2.848V. Add special compatibility string for this chip revision.
+The datasheet calls the chip just pm8009-1, so use the same name.
 
-PM8009 has special revision (P=1), which is to be used for sm8250
-platform. The major difference is the S2 regulator which supplies 0.95 V
-instead of 2.848V. Declare regulators data to be used for this chip
-revision. The datasheet calls the chip just pm8009-1, so use the same
-name.
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ .../devicetree/bindings/regulator/qcom,rpmh-regulator.txt        | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt
+index b8f0b7809c02..7d462b899473 100644
+--- a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt
++++ b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt
+@@ -44,6 +44,7 @@ First Level Nodes - PMIC
+ 	Definition: Must be one of below:
+ 		    "qcom,pm8005-rpmh-regulators"
+ 		    "qcom,pm8009-rpmh-regulators"
++		    "qcom,pm8009-1-rpmh-regulators"
+ 		    "qcom,pm8150-rpmh-regulators"
+ 		    "qcom,pm8150l-rpmh-regulators"
+ 		    "qcom,pm8350-rpmh-regulators"
+-- 
+2.29.2
 
