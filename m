@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A7FCB2E7FE4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Dec 2020 13:26:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9035E2E7FE6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Dec 2020 13:26:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726661AbgLaMZP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Dec 2020 07:25:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57054 "EHLO
+        id S1726652AbgLaMZQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Dec 2020 07:25:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726596AbgLaMZP (ORCPT
+        with ESMTP id S1726655AbgLaMZP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 31 Dec 2020 07:25:15 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38524C06179E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Dec 2020 04:24:04 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id l11so43832994lfg.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Dec 2020 04:24:04 -0800 (PST)
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF2F3C0617A0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Dec 2020 04:24:05 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id a12so43764798lfl.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Dec 2020 04:24:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=50YWbAm2z8JFqRwTF3PvDhtM81i1dEM3p4jr1MtmPig=;
-        b=PXVKzo0T7Mph11Zl83nrk6DA/kopMT898iZtYT9ONiZdgROQcq+HD3DjLiQyxaX0Ab
-         z0Q6e2yUTUfEe0fIQlC2DSDaLXYrMoroHGEkyLfyjvDvfBDqQprBTQZ6SZT69DQkMUup
-         f2pIpsxAfNfiGjaucfZfgHzVEs/DCSYY6ygivFMtaGBEp54gmcRTI1EsCHmy8auX2EjQ
-         lFr0itxVAfJ61NvJlkJ4fR1svLtIZ6YTSvxr+IcV0n96eDtOzIPNxOrKzDee3OYa/KON
-         omiN8DcH0Z5Wx5uIK7a+II4CU9qjvVB+0GMUyNCgX7tspMrvWTcIupV29XdHiSzzU31l
-         5PxA==
+        bh=fGf2ahi2sgrHaBtMmkREQruq4NpxKNnRfvbqorI/OxE=;
+        b=u8fZxiezK/0h6//xx5V1NScR5SXb6Q4bzm0JHG4z63gvm32xLSskGmtkHyW+LFgkqi
+         tonjpyMtVkSv1WMMejuuhcIMPTnkywaAfvVdrey+YtGD+jwrH6e8A9Q2Y2jRWaDO2tUP
+         Zsxm6QcvYDwJ4B27HwZWkzaHKTWnimLsF7SBU/VTUHSjJnaMnAn0B2uZl5iJesIN5yfc
+         52S0eu4Xz9X6TK8Pab/nCwUMbZ1Yc4Igi3EZr7jxWWQYQ5K6K7d3niEAR8wOAisKBF8l
+         re+XODoLj97FanVOFiRlewTCnr3UqYRIazF8oibmLAqD+JYFGHOKpM3b8ARmbQzjQIuA
+         NVww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=50YWbAm2z8JFqRwTF3PvDhtM81i1dEM3p4jr1MtmPig=;
-        b=A4JHwzjyAt8aqJwLuqc/FJrxNdhA0B7vmWTI1BFv0qOqGt56xw5sORkRUsfnGbhpKA
-         3ly9rErpUEmtIKZgtHQ/104F63j4u2oT4BFwrQFL7CpgIl1xEIWXqo8UCdJ7BoictVMc
-         DmlCrUR1t4+IwtyeEK7UIoFLPCPqrqmu3NQKjKA1Iz47eIkh8RpWhZ9QRQhdZOkvWulV
-         b18qN1iL1O2frnUpj8TideKlQOXjsA4HwW8YCGLxsQigJ+6LQAscgUBqQL3jwjOyBfTF
-         fxY5sFymPycqT5/afkOEQqtP5XRg00UXW10NDQiUzkMHyScvojWEMFkfBpcsJuXHzFKU
-         IKJQ==
-X-Gm-Message-State: AOAM532J1GvbPSarn5L3dtMX8iYdcvbSBnh7YUGt+I4VI1o0a5zf0ZEG
-        0Perka/ytu8/VYjl8j1cjnlCgA==
-X-Google-Smtp-Source: ABdhPJx+TfN1rUj02in1TY0rQeJUD3WgK3bc6epu5SG0UmQyibtkyH/S1P0de8c54obgdUylFsLJnw==
-X-Received: by 2002:a19:797:: with SMTP id 145mr23778136lfh.651.1609417442743;
-        Thu, 31 Dec 2020 04:24:02 -0800 (PST)
+        bh=fGf2ahi2sgrHaBtMmkREQruq4NpxKNnRfvbqorI/OxE=;
+        b=nfC6Iafp5mPZWVVnTtpINFWO+2nSkeezANs3wmZVSjLo5A7NTKOhW81w5Mt5K4fmUG
+         rKUd1YG3kU5NhL53gRr5Uym5cpxXSbFd2IQ1MTNtt5E9uzj3bXAY1aCVioQi21QKyeN2
+         PKBLppUvkIP0hb8+ZCtbsh8auzn/5iPtJSHqH/iCc69m/NEGnyzFPyBxrWZlDb/2OZje
+         0p11tQIlxyFOnOlpCjPebS1dmnmkV8K+gFFgtmQiPQhqFTiBum5xRSqV4/sjYxSQriF0
+         e1RwOLJRQzzcOUMKjgZB3Gr/OIXNtEZnV3Vtq1aADtJoJo5VaLH+0FyugNap4TF5crU3
+         qGRA==
+X-Gm-Message-State: AOAM532G9spcTSQWs46sQuKOHcmlEUn3XpV5ckJCp0r0k9jAXHvaNklW
+        R/CWg+t/lVFxM6Qs3EWj54SxSg==
+X-Google-Smtp-Source: ABdhPJy3ycIrM+bzS+G2caXxlkst0VjlSTFqGJXzVJI624FQ3xvaODeqlrpYyhcrsV7SV6Hj2urd3g==
+X-Received: by 2002:a2e:7806:: with SMTP id t6mr30456348ljc.298.1609417444335;
+        Thu, 31 Dec 2020 04:24:04 -0800 (PST)
 Received: from eriador.lumag.spb.ru ([94.25.228.115])
-        by smtp.gmail.com with ESMTPSA id n10sm428569lji.99.2020.12.31.04.23.52
+        by smtp.gmail.com with ESMTPSA id n10sm428569lji.99.2020.12.31.04.24.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Dec 2020 04:24:02 -0800 (PST)
+        Thu, 31 Dec 2020 04:24:03 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -56,9 +56,9 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 1/4] dt-bindings: regulator: qcom,rpmh-regulator: add pm8009 revision
-Date:   Thu, 31 Dec 2020 15:23:45 +0300
-Message-Id: <20201231122348.637917-2-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 2/4] regulator: qcom-rpmh-regulator: correct hfsmps515 definition
+Date:   Thu, 31 Dec 2020 15:23:46 +0300
+Message-Id: <20201231122348.637917-3-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20201231122348.637917-1-dmitry.baryshkov@linaro.org>
 References: <20201231122348.637917-1-dmitry.baryshkov@linaro.org>
@@ -68,28 +68,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-PMIC pm8009 has special revision (P=1) made for sm8250 platform. The
-major difference is the S2 regulator which supplies 0.95 V instead of
-2.848V. Add special compatibility string for this chip revision.
-The datasheet calls the chip just pm8009-1, so use the same name.
+According to the datasheet pm8009's HFS515 regulators have 16mV
+resolution rather than declared 1.6 mV. Correct the resolution.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 06369bcc15a1 ("regulator: qcom-rpmh: Add support for SM8150")
 ---
- .../devicetree/bindings/regulator/qcom,rpmh-regulator.txt        | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/regulator/qcom-rpmh-regulator.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt
-index b8f0b7809c02..7d462b899473 100644
---- a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt
-+++ b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt
-@@ -44,6 +44,7 @@ First Level Nodes - PMIC
- 	Definition: Must be one of below:
- 		    "qcom,pm8005-rpmh-regulators"
- 		    "qcom,pm8009-rpmh-regulators"
-+		    "qcom,pm8009-1-rpmh-regulators"
- 		    "qcom,pm8150-rpmh-regulators"
- 		    "qcom,pm8150l-rpmh-regulators"
- 		    "qcom,pm8350-rpmh-regulators"
+diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
+index fe030ec4b7db..c395a8dda6f7 100644
+--- a/drivers/regulator/qcom-rpmh-regulator.c
++++ b/drivers/regulator/qcom-rpmh-regulator.c
+@@ -726,7 +726,7 @@ static const struct rpmh_vreg_hw_data pmic5_ftsmps510 = {
+ static const struct rpmh_vreg_hw_data pmic5_hfsmps515 = {
+ 	.regulator_type = VRM,
+ 	.ops = &rpmh_regulator_vrm_ops,
+-	.voltage_range = REGULATOR_LINEAR_RANGE(2800000, 0, 4, 1600),
++	.voltage_range = REGULATOR_LINEAR_RANGE(2800000, 0, 4, 16000),
+ 	.n_voltages = 5,
+ 	.pmic_mode_map = pmic_mode_map_pmic5_smps,
+ 	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
 -- 
 2.29.2
 
