@@ -2,65 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BBBB2E8713
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Jan 2021 12:30:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BD6F92E887B
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Jan 2021 21:27:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726579AbhABLai (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 2 Jan 2021 06:30:38 -0500
-Received: from msg-1.mailo.com ([213.182.54.11]:34514 "EHLO msg-1.mailo.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726575AbhABLah (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 2 Jan 2021 06:30:37 -0500
-X-Greylist: delayed 1297 seconds by postgrey-1.27 at vger.kernel.org; Sat, 02 Jan 2021 06:30:36 EST
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=mailoo.org; s=mailo;
-        t=1609585697; bh=dnO06Q1YUB2j63IjXJb8lVTTTn2kGvxLE2YGhM0ooUU=;
-        h=X-EA-Auth:Message-ID:Subject:From:To:Cc:Date:In-Reply-To:
-         References:Content-Type:MIME-Version:Content-Transfer-Encoding;
-        b=E2qVLbHUjAc6hC6sD68iM7MsADPbITCSJa8QdM8Fj81wHe/qvyR+YwktoHnrZ7b9b
-         nZofTneJu9SoMx3x/9mWGy5Mg3J7r0DO9MRSao7H1OTS5A1+ysEzYab1RdWKhGFkRv
-         mloamntuTCNEu/eccouxQLg+vZXywcFg9egcWCYc=
-Received: by b-3.in.mailobj.net [192.168.90.13] with ESMTP
-        via proxy.mailoo.org [213.182.55.207]
-        Sat,  2 Jan 2021 12:08:17 +0100 (CET)
-X-EA-Auth: xJKG8fU4u25lkcevkZOWNO9XTjJltI6jXZpd8ZQShBqjxnNONToa9RDmKkGc7SvnuNzw7RpOrpGageGwMwRON9XkDjBBgAaUEkI3Hwwf7SQ=
-Message-ID: <d869ea94b3b1c73800a5c3b855cb6f280be6c185.camel@mailoo.org>
-Subject: Re: [PATCH v2 5/5] interconnect: qcom: Add MSM8939 interconnect
- provider driver
-From:   Vincent Knecht <vincent.knecht@mailoo.org>
-To:     Jun Nie <jun.nie@linaro.org>, devicetree@vger.kernel.org,
-        georgi.djakov@linaro.org, bjorn.andersson@linaro.org,
-        agross@kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        robh@kernel.org
-Cc:     shawn.guo@linaro.org
-Date:   Sat, 02 Jan 2021 12:08:16 +0100
-In-Reply-To: <20201204075345.5161-6-jun.nie@linaro.org>
-References: <20201204075345.5161-1-jun.nie@linaro.org>
-         <20201204075345.5161-6-jun.nie@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.38.2 (3.38.2-1.fc33) 
+        id S1726659AbhABU0z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 2 Jan 2021 15:26:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39986 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726627AbhABU0y (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 2 Jan 2021 15:26:54 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D335C061573;
+        Sat,  2 Jan 2021 12:26:14 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id 91so27026055wrj.7;
+        Sat, 02 Jan 2021 12:26:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=uuaswafA4TQVvz1UZDdvhjuiKY9mruy0RJy3iy5N0mA=;
+        b=p3yCOhnYofMOj78YUL7K29Ms+2FxrUzvnsAF11Neo6tRCNTVQGMZd7lvKJrc/mCIfs
+         /ften1O0U3MrV614/ggLyDGT8TqlzR23qZi7nsUg80nRFZeTh3qH3SYvkx+gwpSnFb11
+         Dui+1C/tbdkTBs1XZJUBAEgm0417BZtl5SmNSd3I1LrOxI2iGoGiIiVSYrfUzWi+AJPx
+         RxcZVtsrHxg78ZUuObilVVx/egGgkF5jp3jcwXKZqx9ImXMt3UdJ5a3sFsgRtQcOGqG4
+         Jmb/XrZQlpdpQLGNfXeBy3ZVqZEhVTwnO43NaT+bUbLMnxPqHEnb+h6+Rpc+vI6DS9iY
+         WXDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=uuaswafA4TQVvz1UZDdvhjuiKY9mruy0RJy3iy5N0mA=;
+        b=j7l3Pgi7A7wiiDWbQHlALKrrGTPBsmLFA/QkitTRUmFwc3KIpDb39k9SNHBxDjmYoj
+         bwwsqbxWH10saJEQ2SxFqdf0VMGtFNue85pdmojBNpCLA8Xwt+aHvuvqJzqhPK7NDZsd
+         IiRAlzBgXstA+8NOrpuifDvQvZcHztARgBQ8sfFqZ6goxVDGK+RBXgjgLiWvBTiDvmao
+         KfjIEVlK7DC6tt8fB7jnM1RKkdFHQZNyXoThM3ocbu7zENkt+6kDGincXS3CqocwcQ8d
+         +xAvrTJhhbp0kl9lpY66hsLDRxMKM/HUYiUYfDtErzXB2I+vHsXV5ql7qi4+l6IeQkQz
+         2kpA==
+X-Gm-Message-State: AOAM531vLlPUPwHxES+ZvR8hzKihp0UgOdSDvuhUPzLzIb9iSqlhcjOS
+        YSk7ZbAu2vrmU1YxALqTERk=
+X-Google-Smtp-Source: ABdhPJyiDyyRt4hq1SXo4hGhsh+SBiY6KZ/2itqNLIp8w4wvHWusI0T9nN/nQQqg2i2ag1jf1MPGJQ==
+X-Received: by 2002:a5d:4f10:: with SMTP id c16mr72164660wru.398.1609619173035;
+        Sat, 02 Jan 2021 12:26:13 -0800 (PST)
+Received: from localhost (178-169-161-196.razgrad.ddns.bulsat.com. [178.169.161.196])
+        by smtp.gmail.com with ESMTPSA id s25sm90902853wrs.49.2021.01.02.12.26.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 02 Jan 2021 12:26:12 -0800 (PST)
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        Iskren Chernev <iskren.chernev@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/msm: Fix MSM_INFO_GET_IOVA with carveout
+Date:   Sat,  2 Jan 2021 22:24:37 +0200
+Message-Id: <20210102202437.1630365-1-iskren.chernev@gmail.com>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Le vendredi 04 d=C3=A9cembre 2020 =C3=A0 15:53 +0800, Jun Nie a =C3=A9crit=
-=C2=A0:
-> Add driver for the Qualcomm interconnect buses found in MSM8939 based
-> platforms. The topology consists of four NoCs that are controlled by
-> a remote processor that collects the aggregated bandwidth for each
-> master-slave pairs.
->=20
-> Signed-off-by: Jun Nie <jun.nie@linaro.org>
+The msm_gem_get_iova should be guarded with gpu != NULL and not aspace
+!= NULL, because aspace is NULL when using vram carveout.
 
-Shouldn't some rpm ids be changed like they were for msm8916 in the followi=
-ng patch ?
-c497f9322af9 ("interconnect: qcom: msm8916: Remove rpm-ids from non-RPM nod=
-es")
-https://patchwork.kernel.org/project/linux-arm-msm/patch/20201112105140.100=
-92-1-georgi.djakov@linaro.org/
+Fixes: 933415e24bd0d ("drm/msm: Add support for private address space instances")
 
+Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
+---
+ drivers/gpu/drm/msm/msm_drv.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index c5e61cb3356df..c1953fb079133 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -775,9 +775,10 @@ static int msm_ioctl_gem_info_iova(struct drm_device *dev,
+ 		struct drm_file *file, struct drm_gem_object *obj,
+ 		uint64_t *iova)
+ {
++	struct msm_drm_private *priv = dev->dev_private;
+ 	struct msm_file_private *ctx = file->driver_priv;
+ 
+-	if (!ctx->aspace)
++	if (!priv->gpu)
+ 		return -EINVAL;
+ 
+ 	/*
+-- 
+2.29.2
 
