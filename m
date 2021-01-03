@@ -2,38 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B71F2E8C66
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Jan 2021 14:58:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B9C92E8C6C
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Jan 2021 15:00:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726688AbhACN5N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 3 Jan 2021 08:57:13 -0500
-Received: from mail.kernel.org ([198.145.29.99]:35096 "EHLO mail.kernel.org"
+        id S1726969AbhACN6X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 3 Jan 2021 08:58:23 -0500
+Received: from mail.kernel.org ([198.145.29.99]:35262 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726163AbhACN5N (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 3 Jan 2021 08:57:13 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id CB7E9208C7;
-        Sun,  3 Jan 2021 13:56:30 +0000 (UTC)
+        id S1726129AbhACN6X (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 3 Jan 2021 08:58:23 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 632DE208C7;
+        Sun,  3 Jan 2021 13:57:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1609682192;
-        bh=/ukaI8TKo+cDOQeZ82bimBKorxyRnnfYUNmKR5e2BRw=;
+        s=k20201202; t=1609682262;
+        bh=w6s5kcebAimhgTVacPtTiUtHsUatLmTZP8NLc4JsnK4=;
         h=From:To:Cc:Subject:Date:From;
-        b=Ps595AIpuc4iWk4cw5FK1zOO8MgStHLU1lL3uDXmXmf8RmzDX1cARZU0cBVLORyNG
-         gLzb8uGC5NJOL0oBbghHW8TQwBTUl+cvF8pKJb9vmrXII3p7ie/Mp2WfpVyyTHwEAA
-         ouxdfn9LH7NZYKOHx1EJrGSW1YboAUy4cWbb4T4i2CztIMZpwibOd7PgH1h87j5rPv
-         +gRUNZizOXALFIlDMrXUlTxC8btcrWeYLvbZlu9XDjr7CYRQwNjCXdsjKKNfkIb79x
-         QHFol/jd2ut0EA8+TyRjqqF51VwCGlYhyZBEYb/lUoXaDw9OYC0F2Ko1N5cIx0y9+O
-         4yE5Yxgrr2wyQ==
+        b=OJjp4WMn408IY0DKvguUQR/l+RzDopHMYgkO326QJjAwxCrvQcSEMEbN5lVDulUqy
+         qqLYkxW6kHrhJbdrkDpQr/VwVH1sdnXBZNXVs+34m2ccbRtVOZa362iV/v+i3FLQUh
+         YTJArNRhdXBW0G4PSHssB1Uk7lRrCiHA/EPSdfK5kWESbtv1eX+o1wQB6aalORtbVx
+         PAyPQtFhCIupKKirFvSW1L4Wpj+x+8zJHzFTlUWhGOmBYOcbY/NZVUQXTDPfxpceQN
+         MSTK8dZz/AkvmX5/mV3KtblrTYnlnM6RxXsgBrV0fxwpIZiYbdL0RgclXxhK+hNLjS
+         VQYGxV8y4LHKg==
 From:   Arnd Bergmann <arnd@kernel.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
         Vinod Koul <vkoul@kernel.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] remoteproc: qcom: pil_info: avoid 64-bit division
-Date:   Sun,  3 Jan 2021 14:56:12 +0100
-Message-Id: <20210103135628.3702427-1-arnd@kernel.org>
+Cc:     Arnd Bergmann <arnd@arndb.de>,
+        Dan Williams <dan.j.williams@intel.com>,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] dmaengine: qcom: fix gpi undefined behavior
+Date:   Sun,  3 Jan 2021 14:57:29 +0100
+Message-Id: <20210103135738.3741123-1-arnd@kernel.org>
 X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -43,34 +43,38 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Arnd Bergmann <arnd@arndb.de>
 
-On 32-bit machines with 64-bit resource_size_t, the driver causes
-a link failure because of the 64-bit division:
+gcc points out an incorrect error handling loop:
 
-arm-linux-gnueabi-ld: drivers/remoteproc/qcom_pil_info.o: in function `qcom_pil_info_store':
-qcom_pil_info.c:(.text+0x1ec): undefined reference to `__aeabi_uldivmod'
+drivers/dma/qcom/gpi.c: In function 'gpi_ch_init':
+drivers/dma/qcom/gpi.c:1254:15: error: iteration 2 invokes undefined behavior [-Werror=aggressive-loop-optimizations]
+ 1254 |  struct gpii *gpii = gchan->gpii;
+      |               ^~~~
+drivers/dma/qcom/gpi.c:1951:2: note: within this loop
+ 1951 |  for (i = i - 1; i >= 0; i++) {
+      |  ^~~
 
-Add a cast to an u32 to avoid this. If the resource exceeds 4GB,
-there are bigger problems.
+Change the loop to correctly walk backwards through the
+initialized fields rather than off into the woods.
 
-Fixes: 549b67da660d ("remoteproc: qcom: Introduce helper to store pil info in IMEM")
+Fixes: 5d0c3533a19f ("dmaengine: qcom: Add GPI dma driver")
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 ---
- drivers/remoteproc/qcom_pil_info.c | 2 +-
+ drivers/dma/qcom/gpi.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/remoteproc/qcom_pil_info.c b/drivers/remoteproc/qcom_pil_info.c
-index 5521c4437ffa..7c007dd7b200 100644
---- a/drivers/remoteproc/qcom_pil_info.c
-+++ b/drivers/remoteproc/qcom_pil_info.c
-@@ -56,7 +56,7 @@ static int qcom_pil_info_init(void)
- 	memset_io(base, 0, resource_size(&imem));
+diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+index 8d39d3e24686..9c211104ddbf 100644
+--- a/drivers/dma/qcom/gpi.c
++++ b/drivers/dma/qcom/gpi.c
+@@ -1948,7 +1948,7 @@ static int gpi_ch_init(struct gchan *gchan)
+ 	return ret;
  
- 	_reloc.base = base;
--	_reloc.num_entries = resource_size(&imem) / PIL_RELOC_ENTRY_SIZE;
-+	_reloc.num_entries = (u32)resource_size(&imem) / PIL_RELOC_ENTRY_SIZE;
- 
- 	return 0;
- }
+ error_start_chan:
+-	for (i = i - 1; i >= 0; i++) {
++	for (i = i - 1; i >= 0; i--) {
+ 		gpi_stop_chan(&gpii->gchan[i]);
+ 		gpi_send_cmd(gpii, gchan, GPI_CH_CMD_RESET);
+ 	}
 -- 
 2.29.2
 
