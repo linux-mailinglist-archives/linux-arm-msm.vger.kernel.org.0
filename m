@@ -2,139 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B9312E8FEB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jan 2021 06:11:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D4A022E903A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jan 2021 06:43:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727570AbhADFLF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jan 2021 00:11:05 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:7178 "EHLO
+        id S1727816AbhADFm4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jan 2021 00:42:56 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:50004 "EHLO
         alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725830AbhADFLE (ORCPT
+        with ESMTP id S1725830AbhADFm4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jan 2021 00:11:04 -0500
+        Mon, 4 Jan 2021 00:42:56 -0500
 Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 03 Jan 2021 21:09:55 -0800
+  by alexa-out.qualcomm.com with ESMTP; 03 Jan 2021 21:42:15 -0800
 X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 03 Jan 2021 21:09:54 -0800
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 03 Jan 2021 21:42:13 -0800
 X-QCInternal: smtphost
 Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 04 Jan 2021 10:39:38 +0530
+  by ironmsg01-blr.qualcomm.com with ESMTP; 04 Jan 2021 11:11:57 +0530
 Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
-        id C7BB7214AA; Mon,  4 Jan 2021 10:39:38 +0530 (IST)
+        id AF06F214AD; Mon,  4 Jan 2021 11:11:56 +0530 (IST)
 From:   Dikshita Agarwal <dikshita@codeaurora.org>
 To:     linux-media@vger.kernel.org, hverkuil-cisco@xs4all.nl,
         stanimir.varbanov@linaro.org
 Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         vgarodia@codeaurora.org, Dikshita Agarwal <dikshita@codeaurora.org>
-Subject: [PATCH v5 2/2] venus: venc: Add support for Long Term Reference (LTR) controls
-Date:   Mon,  4 Jan 2021 10:39:31 +0530
-Message-Id: <1609736971-14454-3-git-send-email-dikshita@codeaurora.org>
+Subject: [PATCH v4 0/2] Add base layer priority id control
+Date:   Mon,  4 Jan 2021 11:11:52 +0530
+Message-Id: <1609738914-22769-1-git-send-email-dikshita@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1609736971-14454-1-git-send-email-dikshita@codeaurora.org>
-References: <1609736971-14454-1-git-send-email-dikshita@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for below LTR controls in encoder:
-- V4L2_CID_MPEG_VIDEO_LTR_COUNT
-- V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX
-- V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES
+This series adds base layer priority id control for encoder
+and support for the same in venus driver.
 
-Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
----
- drivers/media/platform/qcom/venus/venc_ctrls.c | 49 +++++++++++++++++++++++++-
- 1 file changed, 48 insertions(+), 1 deletion(-)
+Changes since v3:
+- Rebased the changes on latest media tree.
+- Addressed the comments.
+- Added driver side implementation for new control.
 
-diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
-index 496ad4d..7d010d8 100644
---- a/drivers/media/platform/qcom/venus/venc_ctrls.c
-+++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
-@@ -20,6 +20,7 @@
- #define INTRA_REFRESH_MBS_MAX	300
- #define AT_SLICE_BOUNDARY	\
- 	V4L2_MPEG_VIDEO_H264_LOOP_FILTER_MODE_DISABLED_AT_SLICE_BOUNDARY
-+#define MAX_LTR_FRAME_COUNT 4
- 
- static int venc_calc_bpframes(u32 gop_size, u32 conseq_b, u32 *bf, u32 *pf)
- {
-@@ -72,6 +73,9 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
- 	struct venc_controls *ctr = &inst->controls.enc;
- 	struct hfi_enable en = { .enable = 1 };
- 	struct hfi_bitrate brate;
-+	struct hfi_ltr_use ltr_use;
-+	struct hfi_ltr_mark ltr_mark;
-+	struct hfi_ltr_mode ltr_mode;
- 	u32 bframes;
- 	u32 ptype;
- 	int ret;
-@@ -259,6 +263,37 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
- 	case V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE:
- 		ctr->frame_skip_mode = ctrl->val;
- 		break;
-+	case V4L2_CID_MPEG_VIDEO_LTR_COUNT:
-+		ptype = HFI_PROPERTY_PARAM_VENC_LTRMODE;
-+		ltr_mode.ltr_count = ctrl->val;
-+		ltr_mode.ltr_mode = HFI_LTR_MODE_MANUAL;
-+		ltr_mode.trust_mode = 1;
-+		ret = hfi_session_set_property(inst, ptype, &ltr_mode);
-+		if (ret) {
-+			mutex_unlock(&inst->lock);
-+			return ret;
-+		}
-+		break;
-+	case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:
-+		ptype = HFI_PROPERTY_CONFIG_VENC_MARKLTRFRAME;
-+		ltr_mark.mark_frame = ctrl->val;
-+		ret = hfi_session_set_property(inst, ptype, &ltr_mark);
-+		if (ret) {
-+			mutex_unlock(&inst->lock);
-+			return ret;
-+		}
-+		break;
-+	case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES:
-+		ptype = HFI_PROPERTY_CONFIG_VENC_USELTRFRAME;
-+		ltr_use.ref_ltr = ctrl->val;
-+		ltr_use.use_constrnt = true;
-+		ltr_use.frames = 0;
-+		ret = hfi_session_set_property(inst, ptype, &ltr_use);
-+		if (ret) {
-+			mutex_unlock(&inst->lock);
-+			return ret;
-+		}
-+		break;
- 	default:
- 		return -EINVAL;
- 	}
-@@ -274,7 +309,7 @@ int venc_ctrl_init(struct venus_inst *inst)
- {
- 	int ret;
- 
--	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 50);
-+	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 53);
- 	if (ret)
- 		return ret;
- 
-@@ -476,6 +511,18 @@ int venc_ctrl_init(struct venus_inst *inst)
- 			       (1 << V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_BUF_LIMIT)),
- 			       V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_DISABLED);
- 
-+	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
-+			  V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES, 0,
-+			  (MAX_LTR_FRAME_COUNT - 1), 1, 0);
-+
-+	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
-+			  V4L2_CID_MPEG_VIDEO_LTR_COUNT, 0,
-+			  MAX_LTR_FRAME_COUNT, 1, 0);
-+
-+	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
-+			  V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX, 0,
-+			  (MAX_LTR_FRAME_COUNT - 1), 1, 0);
-+
- 	ret = inst->ctrl_handler.error;
- 	if (ret)
- 		goto err;
+Dikshita Agarwal (2):
+  media: v4l2-ctrl: Add base layer priority id control.
+  venus: venc : Add support for priority ID control.
+
+ Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst | 9 +++++++++
+ drivers/media/platform/qcom/venus/core.h                  | 2 ++
+ drivers/media/platform/qcom/venus/venc_ctrls.c            | 9 ++++++++-
+ drivers/media/v4l2-core/v4l2-ctrls.c                      | 1 +
+ include/uapi/linux/v4l2-controls.h                        | 1 +
+ 5 files changed, 21 insertions(+), 1 deletion(-)
+
 -- 
 2.7.4
 
