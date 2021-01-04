@@ -2,110 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E847E2E9631
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jan 2021 14:43:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5DAD92E9634
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jan 2021 14:43:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726657AbhADNmu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jan 2021 08:42:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52430 "EHLO
+        id S1726640AbhADNmv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jan 2021 08:42:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726640AbhADNmt (ORCPT
+        with ESMTP id S1726637AbhADNmv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jan 2021 08:42:49 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32AF8C061793
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jan 2021 05:42:09 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id d26so32152941wrb.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jan 2021 05:42:09 -0800 (PST)
+        Mon, 4 Jan 2021 08:42:51 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6A85C061794
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jan 2021 05:42:10 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id k10so18503705wmi.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jan 2021 05:42:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=TsXzaolPG+4/DxFQ+wNyy6vTkUtk6EMcg+O9G8FFv24=;
-        b=j+O67jSY2wQccURwFAp0tJ7XhBcsjGoFICS7S15QHlBE0C+n7bPIh+wTkljj18+yhK
-         lTas3DfDAiKkV8TXncLmGyJfXcDAiMCaBjltuZ0YShLWugJV4fyhDqd7FmdcqMfwsUsK
-         N/250VRZNs8+QTOd5J608QCp3ywAlA8G8BoPvHixsNejBKNZnxjNRnAF6gE4wp6FObGJ
-         06NuBKgpU7HJFETxZQHPnFTaidm6ZilvVgKGUYVeE7+F0Oqv/kv6oTKAxrWNE+7uUXAy
-         y/zbHqBIlROst8jXxE0XGGuj+Ymxm8RCCAApaCTnD+CgMTdiLGtpci+NtPvqrnOMgO3j
-         zm7Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=07rDU/OuVJvk6JF93jkdN2tmY83mHUDzBU2a1fn2P0w=;
+        b=l/0aQMuTQBAkPOZSm08RmdSm1kqoPxvPBl8+byeCXJuumKsmV7g/OKSTYLCtnQUxDO
+         17JxJiiI8zweDO/K+6s9g83X/5T3A/CaoqIjmFJd/AY3eerFXN2aHu60wcKMHgFxwRIu
+         zHouXN+yMPWIHfWMELCP/J8Ec4OL8QowQMY/mCBGWOJXZNecyJLWMZa2/BPCXAs4Mpud
+         qPYphRh/LEBs+PIEn0OV6Uis7aIVMRE/Y8swRHVYKi/2Tw6aBIEH3Uzi4Glz1F6D3V0G
+         O6Opz+5jDwpWbZbPqYcUZFHOeynzYJGLSQydnl4YMsQVk8N737R72TFy4q55BHMlBDPk
+         d/eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=TsXzaolPG+4/DxFQ+wNyy6vTkUtk6EMcg+O9G8FFv24=;
-        b=ELSnp/Y8Feg40UnW4nHMaE7DJJ1s3k5PCU6ceAAntgfDLG/xeJh1iYQANBZM9R/61d
-         hU4neJYIKzS0LqUteaBw+u6/6/IR80zJgtHt+pAMA7I/axUYWYSFRtVh3sR3dIS/J4CX
-         DYU/KaWbQ5YQS4Vw3RXwlWaXe0VMQSA1pa7D1KbojdM79E/XrmR8P9fh3KHtUWUMZcQN
-         apAkaKkCpu9/acH7gqSJXnD2+tgbvM4eoWhmOKGSd5qcCzPcmQTr5NCh9fYfeoux0Lck
-         J04IsG4ltXHaNRSGlBdpamB5aGJjAe0T1urYEBltkiVhJeecoMboDsHMzxPRz0NhnRc3
-         rR2g==
-X-Gm-Message-State: AOAM531Ze6o/tP8hiwoVfoxO6tR6amR6GoWwbgkRrbY4GpPwt9VK+xql
-        2GcjYUFoUbd7bn09VBUdQHnhXe3/cHsB5UPd
-X-Google-Smtp-Source: ABdhPJy23s6mjSzpI2fiMl7wjzi6Y5FCg4ZaetuHGw4VUxFWq1oX8rF2BGDL7YXI4WSk/oBC71WSqQ==
-X-Received: by 2002:adf:fd0c:: with SMTP id e12mr80067717wrr.61.1609767727917;
-        Mon, 04 Jan 2021 05:42:07 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=07rDU/OuVJvk6JF93jkdN2tmY83mHUDzBU2a1fn2P0w=;
+        b=awWkFCPSQtTyIFZaEwo2+hFsh4TWaLb3ibZUaQrT2XcMiq7BPnMH0ELzoll5Osehaa
+         dqs7nMaCEyNaZsOud9FrBKey1rLAuZZZ7HJlZ6Dy10+qGWdEnmltnThqojUKauB4uVAx
+         sbQCgO82TibqHkvzCoDMFb7zcuOlRNL18U5sYkfy5p74Ogb/BmJtEuij/GZCEUe7Hg4e
+         HVicjHdvPIbgXolAyAm2ndpNNVSgXCTLgIZrjk8zv/tYEQEVV5+C2xnRj3AuSb5tdKpd
+         Os2eMjti8/A2wSor4zwNpUAygWMWOWm/+73oBYpBqNDTt3O8sURVzBpdBNcsn11uWilq
+         a84w==
+X-Gm-Message-State: AOAM531+MTSoWR61XBq6LFecHa4d5CsSzIQ73AyZqnUiA713VCiomo36
+        eNx0GwOhKTwFa8QNkHPW8sRjGQ==
+X-Google-Smtp-Source: ABdhPJxJUbxFiH7898YMOyBHTL+yE72qpn0TdvoHqC+Vw0DghViP3JDBmbeyLPL+cbV12GuSLlOsQw==
+X-Received: by 2002:a1c:9ac6:: with SMTP id c189mr27075961wme.137.1609767729368;
+        Mon, 04 Jan 2021 05:42:09 -0800 (PST)
 Received: from localhost.localdomain ([2a01:e0a:490:8730:41b:e085:fa9a:9c53])
-        by smtp.gmail.com with ESMTPSA id w4sm34042968wmc.13.2021.01.04.05.42.07
+        by smtp.gmail.com with ESMTPSA id w4sm34042968wmc.13.2021.01.04.05.42.08
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 04 Jan 2021 05:42:07 -0800 (PST)
+        Mon, 04 Jan 2021 05:42:08 -0800 (PST)
 From:   Loic Poulain <loic.poulain@linaro.org>
 To:     manivannan.sadhasivam@linaro.org
 Cc:     linux-arm-msm@vger.kernel.org, bbhatt@codeaurora.org,
         hemantk@codeaurora.org, Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH v7 00/10] mhi: pci_generic: Misc improvements
-Date:   Mon,  4 Jan 2021 14:49:29 +0100
-Message-Id: <1609768179-10132-1-git-send-email-loic.poulain@linaro.org>
+Subject: [PATCH v7 01/10] bus: mhi: core: Add device hardware reset support
+Date:   Mon,  4 Jan 2021 14:49:30 +0100
+Message-Id: <1609768179-10132-2-git-send-email-loic.poulain@linaro.org>
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1609768179-10132-1-git-send-email-loic.poulain@linaro.org>
+References: <1609768179-10132-1-git-send-email-loic.poulain@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series adjust some configuration values to ensure stability and
-robustness of mhi pci devices (timeout, number of events, burst mode).
+The MHI specification allows to perform a hard reset of the device
+when writing to the SOC_RESET register. It can be used to completely
+restart the device (e.g. in case of unrecoverable MHI error).
 
-It also includes support for system sleep as well as a recovery procedure
-that can be triggered when a PCI error is reported, either by PCI AER or by
-the new health-check mechanism.
+This is up to the MHI controller driver to determine when this hard
+reset should be used, and in case of MHI errors, should be used as
+a reset of last resort (after standard MHI stack reset).
 
-All these changes have been tested with Telit FN980m module
+This function is a stateless function, the MHI layer do nothing except
+triggering the reset by writing into the right register(s), this is up
+to the caller to ensure right mhi_controller state (e.g. unregister the
+controller if necessary).
 
-v2:
-  - Cancel recovery work on suspend
-v3:
-  - enable doorbell_mode_switch for burst channel (HW)
-  - Add mhi_initialize_controller helper patch
-v4:
-  - Delete hard reset on module unload, MHI reset is enough (Jeffrey)
-  - Move soc reset support in MHI core (Jeffrey)
-  - burst mode: enable doorbell_mode_switch for HW channels (Bhaumik)
-  - Add diag channels
-v5:
-  - Remove useless call to mhi_initialize_controller in alloc_controller (hemant)
-  - Add define for post reset timeout (hemant)
-  - Fix static misses (hemant)
-v6:
-  - Add debug print in case of recovery success (Mani)
-  - Return error code in case of resume failure (Mani)
-v7:
-  - Removed mhi_initialize_controller API (Mani)
-  - Added controller specific reset callback (Mani)
-  - Reworked error handling using reset_prepare/done (Mani)
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+---
+ drivers/bus/mhi/core/main.c | 13 +++++++++++++
+ include/linux/mhi.h         |  9 +++++++++
+ 2 files changed, 22 insertions(+)
 
-Loic Poulain (10):
-  bus: mhi: core: Add device hardware reset support
-  mhi: pci-generic: Increase number of hardware events
-  mhi: pci_generic: Enable burst mode for hardware channels
-  mhi: pci_generic: Add support for reset
-  mhi: pci_generic: Add suspend/resume/recovery procedure
-  mhi: pci_generic: Add PCI error handlers
-  mhi: pci_generic: Add health-check
-  mhi: pci_generic: Increase controller timeout value
-  mhi: pci_generic: Add diag channels
-  mhi: pci_generic: Set irq moderation value to 1ms for hw channels
-
- drivers/bus/mhi/core/main.c   |  13 ++
- drivers/bus/mhi/pci_generic.c | 359 +++++++++++++++++++++++++++++++++++++++---
- include/linux/mhi.h           |   9 ++
- 3 files changed, 361 insertions(+), 20 deletions(-)
-
+diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+index a353d1e..c181a85 100644
+--- a/drivers/bus/mhi/core/main.c
++++ b/drivers/bus/mhi/core/main.c
+@@ -142,6 +142,19 @@ enum mhi_state mhi_get_mhi_state(struct mhi_controller *mhi_cntrl)
+ }
+ EXPORT_SYMBOL_GPL(mhi_get_mhi_state);
+ 
++void mhi_soc_reset(struct mhi_controller *mhi_cntrl)
++{
++	if (mhi_cntrl->reset) {
++		mhi_cntrl->reset(mhi_cntrl);
++		return;
++	}
++
++	/* Generic MHI SoC reset */
++	mhi_write_reg(mhi_cntrl, mhi_cntrl->regs, MHI_SOC_RESET_REQ_OFFSET,
++		      MHI_SOC_RESET_REQ);
++}
++EXPORT_SYMBOL_GPL(mhi_soc_reset);
++
+ int mhi_map_single_no_bb(struct mhi_controller *mhi_cntrl,
+ 			 struct mhi_buf_info *buf_info)
+ {
+diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+index 04cf7f3..7ddbcd7 100644
+--- a/include/linux/mhi.h
++++ b/include/linux/mhi.h
+@@ -355,6 +355,7 @@ struct mhi_controller_config {
+  * @unmap_single: CB function to destroy TRE buffer
+  * @read_reg: Read a MHI register via the physical link (required)
+  * @write_reg: Write a MHI register via the physical link (required)
++ * @reset: Controller specific reset function (optional)
+  * @buffer_len: Bounce buffer length
+  * @index: Index of the MHI controller instance
+  * @bounce_buf: Use of bounce buffer
+@@ -445,6 +446,7 @@ struct mhi_controller {
+ 			u32 *out);
+ 	void (*write_reg)(struct mhi_controller *mhi_cntrl, void __iomem *addr,
+ 			  u32 val);
++	void (*reset)(struct mhi_controller *mhi_cntrl);
+ 
+ 	size_t buffer_len;
+ 	int index;
+@@ -681,6 +683,13 @@ enum mhi_ee_type mhi_get_exec_env(struct mhi_controller *mhi_cntrl);
+ enum mhi_state mhi_get_mhi_state(struct mhi_controller *mhi_cntrl);
+ 
+ /**
++ * mhi_soc_reset - Trigger a device reset. This can be used as a last resort
++ *		   to reset and recover a device.
++ * @mhi_cntrl: MHI controller
++ */
++void mhi_soc_reset(struct mhi_controller *mhi_cntrl);
++
++/**
+  * mhi_device_get - Disable device low power mode
+  * @mhi_dev: Device associated with the channel
+  */
 -- 
 2.7.4
 
