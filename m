@@ -2,58 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CC8EF2E9633
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jan 2021 14:43:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 530BA2E9636
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jan 2021 14:43:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726663AbhADNmx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jan 2021 08:42:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52446 "EHLO
+        id S1726612AbhADNn3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jan 2021 08:43:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726637AbhADNmw (ORCPT
+        with ESMTP id S1726579AbhADNn3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jan 2021 08:42:52 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65DEFC061796
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jan 2021 05:42:12 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id q75so19358200wme.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jan 2021 05:42:12 -0800 (PST)
+        Mon, 4 Jan 2021 08:43:29 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5665CC061798
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jan 2021 05:42:13 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id c5so32197182wrp.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jan 2021 05:42:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=b6KTirZejd3sDDi2THGHxOo7aZHrY3+M9Y8zIKfmv2E=;
-        b=Ij9S+uxCQOB8AB3yESR3oc43wm/FoqRTkJXriq4dF1yk/BLFqfvlm1jHCaQnNyz1Aj
-         od5JJMa9vFwX0+ZpgDDv/f0iJN20OjYMo3GmdsVdJJEPHiTYzOQeasUmvfxNZ+rVnbG/
-         TZ/e/X9/7qh6Up6nBWfKRR1lT3pv/v5Z/8PMNSrvdLEC8ZSTlzBDgaAoHy1t2MX+k92T
-         1jj0EXvagGel6P/PMAkLnH78nVq8HGYxFrF7DsVFqNEb/4NfCB9IsQ+6fgTSJkHF8pe5
-         h7TYRu69Ko0Nrw+QXoGysqnF3zJHFISAgEuqxKhCwTFAHvr7jYfyfUOZJifIWKAf9Q3Q
-         oeTg==
+        bh=Y1bhk4d70RfYK4KKcQ1GGp2yJkWrRsB8ydpZfDNXHKI=;
+        b=ucu6PEIe7FFcdMoabuH/mrCv1QWDVy8L7bfkCC36VbWO6wI+/S8UZQc/4xBm9diXfc
+         h7SPqPl9Np5xjMxnqvlDnUHjrauuSnPdnL5/8rzCrwnAo5eSHmb6x8wkcBKlx7gUfd6X
+         dCm7scWP/CFnRy0C5C9kHqVaPAvaMXAfr++yjYEzXNV+9ziJIHFC8rE8ZkwurPztadt5
+         vIA7nJ211ayEGfn4oyqRa5umsgNhWntby2sfr349ho9Y4eg2Uw3mHHwWxVw5ds0msCC/
+         xfi8RE18+HtdtfLuvE3X5xJ24//oesIF9z6vtUgTdvCovJlIXBik7m2w+ld+QZ2RKaEp
+         2R7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=b6KTirZejd3sDDi2THGHxOo7aZHrY3+M9Y8zIKfmv2E=;
-        b=AStMVZVNL8ZO1uK8CcQwuC0ll9akSvE9k5V8JF5rWZdPHO2kwrZb/ODrqnA40wMG8z
-         YyCql9kgiWSVvC687yx2rY7dGRhTeIPRTdR0ZyGEKnuSCQNDxFRlOmFC8myzy/BRQJPf
-         lekoxSgRfvMrxYVily2NCGqsU/nU9uoDqlj9nyBz55+lNy09UmExYlfUTEapNrDcH9oH
-         q9WZYkeAFiM6fGbVYP1qZsbdKHNQRFGy9K6u+8iWJq119jJlwbbyi2Mrj4WSn4+sxDhu
-         DQvDMeFaGTFcUSegIdIbENdjSgTz9Jt3PMex6UlcZJwxTk1bTguR3Z0LsIBLqNJOWfll
-         Qpxw==
-X-Gm-Message-State: AOAM531/4H7cxFGfPK8cZAtl/4u0laAKTvbs7fIX9Iw+TflK+qPBc17d
-        GQcHCUztMoYaIFB5hNesSWL+wIFNyNTYQy/Q
-X-Google-Smtp-Source: ABdhPJxbMVscVe9dL24uVM53NmJKFRIQewadi9EkiPL6Q0Zzsq2ds5FT8pCpsuztxD4Hs7ACoKid9g==
-X-Received: by 2002:a1c:1dd4:: with SMTP id d203mr27331101wmd.118.1609767731127;
-        Mon, 04 Jan 2021 05:42:11 -0800 (PST)
+        bh=Y1bhk4d70RfYK4KKcQ1GGp2yJkWrRsB8ydpZfDNXHKI=;
+        b=ApnxwYbj05lCSOMEdyTLxdEPzNGP5rBXnK/52Y70hWLTZN3VCv28xlSP37t/DyHqAs
+         0VeS90ljZDUKP0PbtjGs1WLH50Z6UxoMHciX6RWaPbePaslrijtw8ttuYFnakiv7JAfd
+         FvMecdk5fS7qXyGf1fKDfGvxFNCIlhGYHbWWz9KKSz0fcTAU5f64h989MlgQ+lrBiwiI
+         Gv9SfXocRqALvY7g18lbvcSpunA9Svp/Br1BTYBBaLUidBPpP7q4NeOsXnK4vhovpg0e
+         /7mnw+2GIFE4pa9IFGssdPnieecAfzUh6j3eFMJiMzdiMHcAB0LAyxudb2Ek9/X2s7KC
+         dVog==
+X-Gm-Message-State: AOAM531N3s1HskQ6CS+G9oVKTzRaHso02sHJUTOsHVJd2pttSUK+wlrd
+        xZIvyEdR880IF96ih3AOFQEttw==
+X-Google-Smtp-Source: ABdhPJwv5KtI+AzSAl9Ozyqzf5KCB1U0c4mGlwXPuNHDU1mQhrxQdNQjE7D+l98gcb/sPC+IXTbocw==
+X-Received: by 2002:adf:d082:: with SMTP id y2mr81328295wrh.301.1609767732085;
+        Mon, 04 Jan 2021 05:42:12 -0800 (PST)
 Received: from localhost.localdomain ([2a01:e0a:490:8730:41b:e085:fa9a:9c53])
-        by smtp.gmail.com with ESMTPSA id w4sm34042968wmc.13.2021.01.04.05.42.10
+        by smtp.gmail.com with ESMTPSA id w4sm34042968wmc.13.2021.01.04.05.42.11
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 04 Jan 2021 05:42:10 -0800 (PST)
+        Mon, 04 Jan 2021 05:42:11 -0800 (PST)
 From:   Loic Poulain <loic.poulain@linaro.org>
 To:     manivannan.sadhasivam@linaro.org
 Cc:     linux-arm-msm@vger.kernel.org, bbhatt@codeaurora.org,
         hemantk@codeaurora.org, Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH v7 03/10] mhi: pci_generic: Enable burst mode for hardware channels
-Date:   Mon,  4 Jan 2021 14:49:32 +0100
-Message-Id: <1609768179-10132-4-git-send-email-loic.poulain@linaro.org>
+Subject: [PATCH v7 04/10] mhi: pci_generic: Add support for reset
+Date:   Mon,  4 Jan 2021 14:49:33 +0100
+Message-Id: <1609768179-10132-5-git-send-email-loic.poulain@linaro.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1609768179-10132-1-git-send-email-loic.poulain@linaro.org>
 References: <1609768179-10132-1-git-send-email-loic.poulain@linaro.org>
@@ -61,72 +61,223 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hardware channels have a feature called burst mode that allows to
-queue transfer ring element(s) (TRE) to a channel without ringing
-the device doorbell. In that mode, the device is polling the channel
-context for new elements. This reduces the frequency of host initiated
-doorbells and increase throughput.
-
-Create a new dedicated macro for hardware channels with burst enabled.
+Add support for resetting the device, reset can be triggered in case
+of error or manually via sysfs (/sys/bus/pci/devices/*/reset).
 
 Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/bus/mhi/pci_generic.c | 34 ++++++++++++++++++++++++++++++++--
- 1 file changed, 32 insertions(+), 2 deletions(-)
+ drivers/bus/mhi/pci_generic.c | 121 +++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 108 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-index 13a7e4f..077595c 100644
+index 077595c..b2307e7 100644
 --- a/drivers/bus/mhi/pci_generic.c
 +++ b/drivers/bus/mhi/pci_generic.c
-@@ -76,6 +76,36 @@ struct mhi_pci_dev_info {
- 		.offload_channel = false,	\
+@@ -8,6 +8,7 @@
+  * Copyright (C) 2020 Linaro Ltd <loic.poulain@linaro.org>
+  */
+ 
++#include <linux/delay.h>
+ #include <linux/device.h>
+ #include <linux/mhi.h>
+ #include <linux/module.h>
+@@ -15,6 +16,7 @@
+ 
+ #define MHI_PCI_DEFAULT_BAR_NUM 0
+ 
++#define MHI_POST_RESET_DELAY_MS 500
+ /**
+  * struct mhi_pci_dev_info - MHI PCI device specific information
+  * @config: MHI controller configuration
+@@ -177,6 +179,16 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+ };
+ MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
+ 
++enum mhi_pci_device_status {
++	MHI_PCI_DEV_STARTED,
++};
++
++struct mhi_pci_device {
++	struct mhi_controller mhi_cntrl;
++	struct pci_saved_state *pci_state;
++	unsigned long status;
++};
++
+ static int mhi_pci_read_reg(struct mhi_controller *mhi_cntrl,
+ 			    void __iomem *addr, u32 *out)
+ {
+@@ -196,6 +208,20 @@ static void mhi_pci_status_cb(struct mhi_controller *mhi_cntrl,
+ 	/* Nothing to do for now */
+ }
+ 
++static bool mhi_pci_is_alive(struct mhi_controller *mhi_cntrl)
++{
++	struct pci_dev *pdev = to_pci_dev(mhi_cntrl->cntrl_dev);
++	u16 vendor = 0;
++
++	if (pci_read_config_word(pdev, PCI_VENDOR_ID, &vendor))
++		return false;
++
++	if (vendor == (u16) ~0 || vendor == 0)
++		return false;
++
++	return true;
++}
++
+ static int mhi_pci_claim(struct mhi_controller *mhi_cntrl,
+ 			 unsigned int bar_num, u64 dma_mask)
+ {
+@@ -291,16 +317,20 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ {
+ 	const struct mhi_pci_dev_info *info = (struct mhi_pci_dev_info *) id->driver_data;
+ 	const struct mhi_controller_config *mhi_cntrl_config;
++	struct mhi_pci_device *mhi_pdev;
+ 	struct mhi_controller *mhi_cntrl;
+ 	int err;
+ 
+ 	dev_dbg(&pdev->dev, "MHI PCI device found: %s\n", info->name);
+ 
+-	mhi_cntrl = mhi_alloc_controller();
+-	if (!mhi_cntrl)
++	/* mhi_pdev.mhi_cntrl must be zero-initialized */
++	mhi_pdev = devm_kzalloc(&pdev->dev, sizeof(*mhi_pdev), GFP_KERNEL);
++	if (!mhi_pdev)
+ 		return -ENOMEM;
+ 
+ 	mhi_cntrl_config = info->config;
++	mhi_cntrl = &mhi_pdev->mhi_cntrl;
++
+ 	mhi_cntrl->cntrl_dev = &pdev->dev;
+ 	mhi_cntrl->iova_start = 0;
+ 	mhi_cntrl->iova_stop = DMA_BIT_MASK(info->dma_data_width);
+@@ -315,17 +345,21 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 
+ 	err = mhi_pci_claim(mhi_cntrl, info->bar_num, DMA_BIT_MASK(info->dma_data_width));
+ 	if (err)
+-		goto err_release;
++		return err;
+ 
+ 	err = mhi_pci_get_irqs(mhi_cntrl, mhi_cntrl_config);
+ 	if (err)
+-		goto err_release;
++		return err;
++
++	pci_set_drvdata(pdev, mhi_pdev);
+ 
+-	pci_set_drvdata(pdev, mhi_cntrl);
++	/* Have stored pci confspace at hand for restore in sudden PCI error */
++	pci_save_state(pdev);
++	mhi_pdev->pci_state = pci_store_saved_state(pdev);
+ 
+ 	err = mhi_register_controller(mhi_cntrl, mhi_cntrl_config);
+ 	if (err)
+-		goto err_release;
++		return err;
+ 
+ 	/* MHI bus does not power up the controller by default */
+ 	err = mhi_prepare_for_power_up(mhi_cntrl);
+@@ -340,33 +374,94 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 		goto err_unprepare;
  	}
  
-+#define MHI_CHANNEL_CONFIG_HW_UL(ch_num, ch_name, el_count, ev_ring) \
-+	{						\
-+		.num = ch_num,				\
-+		.name = ch_name,			\
-+		.num_elements = el_count,		\
-+		.event_ring = ev_ring,			\
-+		.dir = DMA_TO_DEVICE,			\
-+		.ee_mask = BIT(MHI_EE_AMSS),		\
-+		.pollcfg = 0,				\
-+		.doorbell = MHI_DB_BRST_ENABLE,	\
-+		.lpm_notify = false,			\
-+		.offload_channel = false,		\
-+		.doorbell_mode_switch = true,		\
-+	}						\
++	set_bit(MHI_PCI_DEV_STARTED, &mhi_pdev->status);
 +
-+#define MHI_CHANNEL_CONFIG_HW_DL(ch_num, ch_name, el_count, ev_ring) \
-+	{						\
-+		.num = ch_num,				\
-+		.name = ch_name,			\
-+		.num_elements = el_count,		\
-+		.event_ring = ev_ring,			\
-+		.dir = DMA_FROM_DEVICE,			\
-+		.ee_mask = BIT(MHI_EE_AMSS),		\
-+		.pollcfg = 0,				\
-+		.doorbell = MHI_DB_BRST_ENABLE,	\
-+		.lpm_notify = false,			\
-+		.offload_channel = false,		\
-+		.doorbell_mode_switch = true,		\
+ 	return 0;
+ 
+ err_unprepare:
+ 	mhi_unprepare_after_power_down(mhi_cntrl);
+ err_unregister:
+ 	mhi_unregister_controller(mhi_cntrl);
+-err_release:
+-	mhi_free_controller(mhi_cntrl);
+ 
+ 	return err;
+ }
+ 
+ static void mhi_pci_remove(struct pci_dev *pdev)
+ {
+-	struct mhi_controller *mhi_cntrl = pci_get_drvdata(pdev);
++	struct mhi_pci_device *mhi_pdev = pci_get_drvdata(pdev);
++	struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
++
++	if (test_and_clear_bit(MHI_PCI_DEV_STARTED, &mhi_pdev->status)) {
++		mhi_power_down(mhi_cntrl, true);
++		mhi_unprepare_after_power_down(mhi_cntrl);
++	}
+ 
+-	mhi_power_down(mhi_cntrl, true);
+-	mhi_unprepare_after_power_down(mhi_cntrl);
+ 	mhi_unregister_controller(mhi_cntrl);
+-	mhi_free_controller(mhi_cntrl);
+ }
+ 
++static void mhi_pci_reset_prepare(struct pci_dev *pdev)
++{
++	struct mhi_pci_device *mhi_pdev = pci_get_drvdata(pdev);
++	struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
++
++	dev_info(&pdev->dev, "reset\n");
++
++	/* Clean up MHI state */
++	if (test_and_clear_bit(MHI_PCI_DEV_STARTED, &mhi_pdev->status)) {
++		mhi_power_down(mhi_cntrl, false);
++		mhi_unprepare_after_power_down(mhi_cntrl);
 +	}
 +
- #define MHI_EVENT_CONFIG_DATA(ev_ring)		\
- 	{					\
- 		.num_elements = 128,		\
-@@ -110,8 +140,8 @@ static const struct mhi_channel_config modem_qcom_v1_mhi_channels[] = {
- 	MHI_CHANNEL_CONFIG_DL(15, "QMI", 4, 0),
- 	MHI_CHANNEL_CONFIG_UL(20, "IPCR", 8, 0),
- 	MHI_CHANNEL_CONFIG_DL(21, "IPCR", 8, 0),
--	MHI_CHANNEL_CONFIG_UL(100, "IP_HW0", 128, 1),
--	MHI_CHANNEL_CONFIG_DL(101, "IP_HW0", 128, 2),
-+	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0", 128, 1),
-+	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 128, 2),
++	/* cause internal device reset */
++	mhi_soc_reset(mhi_cntrl);
++
++	/* Be sure device reset has been executed */
++	msleep(MHI_POST_RESET_DELAY_MS);
++}
++
++static void mhi_pci_reset_done(struct pci_dev *pdev)
++{
++	struct mhi_pci_device *mhi_pdev = pci_get_drvdata(pdev);
++	struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
++	int err;
++
++	/* Restore initial known working PCI state */
++	pci_load_saved_state(pdev, mhi_pdev->pci_state);
++	pci_restore_state(pdev);
++
++	/* Is device status available ? */
++	if (!mhi_pci_is_alive(mhi_cntrl)) {
++		dev_err(&pdev->dev, "reset failed\n");
++		return;
++	}
++
++	err = mhi_prepare_for_power_up(mhi_cntrl);
++	if (err) {
++		dev_err(&pdev->dev, "failed to prepare MHI controller\n");
++		return;
++	}
++
++	err = mhi_sync_power_up(mhi_cntrl);
++	if (err) {
++		dev_err(&pdev->dev, "failed to power up MHI controller\n");
++		mhi_unprepare_after_power_down(mhi_cntrl);
++		return;
++	}
++
++	set_bit(MHI_PCI_DEV_STARTED, &mhi_pdev->status);
++}
++
++static const struct pci_error_handlers mhi_pci_err_handler = {
++	.reset_prepare = mhi_pci_reset_prepare,
++	.reset_done = mhi_pci_reset_done,
++};
++
+ static struct pci_driver mhi_pci_driver = {
+ 	.name		= "mhi-pci-generic",
+ 	.id_table	= mhi_pci_id_table,
+ 	.probe		= mhi_pci_probe,
+-	.remove		= mhi_pci_remove
++	.remove		= mhi_pci_remove,
++	.err_handler	= &mhi_pci_err_handler,
  };
+ module_pci_driver(mhi_pci_driver);
  
- static const struct mhi_event_config modem_qcom_v1_mhi_events[] = {
 -- 
 2.7.4
 
