@@ -2,114 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E3E062E9E37
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jan 2021 20:33:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F36142E9F01
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jan 2021 21:47:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726606AbhADTch (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jan 2021 14:32:37 -0500
-Received: from relay02.th.seeweb.it ([5.144.164.163]:57805 "EHLO
-        relay02.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726246AbhADTcg (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jan 2021 14:32:36 -0500
-Received: from localhost.localdomain (abaf53.neoplus.adsl.tpnet.pl [83.6.169.53])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 1BCEA20014;
-        Mon,  4 Jan 2021 20:31:48 +0100 (CET)
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-To:     phone-devel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
+        id S1726098AbhADUrJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jan 2021 15:47:09 -0500
+Received: from mail.kernel.org ([198.145.29.99]:36350 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726074AbhADUrJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 4 Jan 2021 15:47:09 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id C4D02216C4;
+        Mon,  4 Jan 2021 20:46:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1609793188;
+        bh=YqIdopmOGx1e+VJgMk2OWtmHGztHh2JIO7mbqBw+ZvA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ojDlygvzJm6AJYbApbRtXGu5fn8IHOoEsnavSY9e/5GqTUkwKASrHQkAOWGGsuHaL
+         zPgCMvdZ1mG3pkjWKWmrOOcA2HAwQSUkq5PhQULpdHrln3mUhFkSCJz5T58RlfH5Dl
+         L4Q+q3hmaW57vJiBmLD1Dza0h6gGx3lBp8r5OM2a3ojps/sWAjZRobLN9lKOLofN5G
+         +7Hq0Mz/qS5C9Ipd2xsUOIN0ibiZQ2tdvl7Jx9Pa00tWw4hMEJq4pgUwW3UG2sN+kU
+         ogb1tXgieCNFnX/hQ9+mQe5eNv3hiUe6+lOIPFf0BWAw+a91yMokFHel7RisgsH8ft
+         pH0Ia0dcFLlug==
+Date:   Mon, 4 Jan 2021 12:46:26 -0800
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>, linux-fscrypt@vger.kernel.org,
+        Satya Tangirala <satyat@google.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Dave Airlie <airlied@redhat.com>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] drm/msm: Only enable A6xx LLCC code on A6xx
-Date:   Mon,  4 Jan 2021 20:30:41 +0100
-Message-Id: <20210104193044.80591-1-konrad.dybcio@somainline.org>
-X-Mailer: git-send-email 2.29.2
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Ritesh Harjani <riteshh@codeaurora.org>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Neeraj Soni <neersoni@codeaurora.org>,
+        Barani Muthukumaran <bmuthuku@codeaurora.org>,
+        Peng Zhou <peng.zhou@mediatek.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Konrad Dybcio <konradybcio@gmail.com>
+Subject: Re: [PATCH 0/8] eMMC inline encryption support
+Message-ID: <X/N+ouEtmMPYT0Qa@sol.localdomain>
+References: <20201112194011.103774-1-ebiggers@kernel.org>
+ <X7gQ9Y44iIgkiM64@sol.localdomain>
+ <CAPDyKFrXtqqj3RXJ4m666e_danpp2neRD_M+FCaMWPC+Ow2jsA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPDyKFrXtqqj3RXJ4m666e_danpp2neRD_M+FCaMWPC+Ow2jsA@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Using this code on A5xx (and probably older too) causes a
-smmu bug.
+On Wed, Nov 25, 2020 at 10:56:42AM +0100, Ulf Hansson wrote:
+> On Fri, 20 Nov 2020 at 19:54, Eric Biggers <ebiggers@kernel.org> wrote:
+> >
+> > On Thu, Nov 12, 2020 at 11:40:03AM -0800, Eric Biggers wrote:
+> > > Hello,
+> > >
+> > > This patchset adds support for eMMC inline encryption, as specified by
+> > > the upcoming version of the eMMC specification and as already
+> > > implemented and used on many devices.  Building on that, it then adds
+> > > Qualcomm ICE support and wires it up for the Snapdragon 630 SoC.
+> > >
+> > > Inline encryption hardware improves the performance of storage
+> > > encryption and reduces power usage.  See
+> > > Documentation/block/inline-encryption.rst for more information about
+> > > inline encryption and the blk-crypto framework (upstreamed in v5.8)
+> > > which supports it.  Most mobile devices already use UFS or eMMC inline
+> > > encryption hardware; UFS support was already upstreamed in v5.9.
+> > >
+> > > Patches 1-3 add support for the standard eMMC inline encryption.
+> > >
+> > > However, as with UFS, host controller-specific patches are needed on top
+> > > of the standard support.  Therefore, patches 4-8 add Qualcomm ICE
+> > > (Inline Crypto Engine) support and wire it up on the Snapdragon 630 SoC.
+> > >
+> > > To test this I took advantage of the recently upstreamed support for the
+> > > Snapdragon 630 SoC, plus work-in-progress patches from the SoMainline
+> > > project (https://github.com/SoMainline/linux/tree/konrad/v5.10-rc3).  In
+> > > particular, I was able to run the fscrypt xfstests for ext4 and f2fs in
+> > > a Debian chroot.  Among other things, these tests verified that the
+> > > correct ciphertext is written to disk (the same as software encryption).
+> > >
+> > > It will also be possible to add support for Mediatek eMMC inline
+> > > encryption hardware in mtk-sd, and it should be easier than the Qualcomm
+> > > hardware since the Mediatek hardware follows the standard more closely.
+> > > I.e., patches 1-3 should be almost enough for the Mediatek hardware.
+> > > However, I don't have the hardware to do this yet.
+> > >
+> > > This patchset is based on v5.10-rc3, and it can also be retrieved from
+> > > tag "mmc-crypto-v1" of
+> > > https://git.kernel.org/pub/scm/linux/kernel/git/ebiggers/linux.git
+> > >
+> > > Note: the fscrypt inline encryption support is partially broken in
+> > > v5.10-rc3, so for testing a fscrypt fix needs to be applied too:
+> > > https://lkml.kernel.org/r/20201111015224.303073-1-ebiggers@kernel.org
+> > >
+> > > Eric Biggers (8):
+> > >   mmc: add basic support for inline encryption
+> > >   mmc: cqhci: rename cqhci.c to cqhci-core.c
+> > >   mmc: cqhci: add support for inline encryption
+> > >   mmc: cqhci: add cqhci_host_ops::program_key
+> > >   firmware: qcom_scm: update comment for ICE-related functions
+> > >   dt-bindings: mmc: sdhci-msm: add ICE registers and clock
+> > >   arm64: dts: qcom: sdm630: add ICE registers and clocks
+> > >   mmc: sdhci-msm: add Inline Crypto Engine support
+> >
+> > Any comments on this patchset?
+> 
+> I have been busy, but just wanted to let you know that I am moving to
+> start reviewing this series shortly.
+> 
+> I also need to catch up on the eMMC spec a bit, before I can provide
+> you with comments.
+> 
+> Kind regards
+> Uffe
 
-Fixes: 474dadb8b0d5 ("drm/msm/a6xx: Add support for using system cache(LLC)")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-Tested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
----
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 21 ++++++++++++---------
- drivers/gpu/drm/msm/adreno/adreno_gpu.h |  5 +++++
- 2 files changed, 17 insertions(+), 9 deletions(-)
+Ulf, are you still planning to review this patchset?  I just sent out v4 of this
+patchset based on v5.11-rc2, but not a lot has changed from previous versions,
+since people have generally seemed happy with it.  Any chance that you will
+apply it for 5.12?  Thanks!
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index 6cf9975e951e..f09175698827 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -191,8 +191,6 @@ adreno_iommu_create_address_space(struct msm_gpu *gpu,
- 		struct platform_device *pdev)
- {
- 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
--	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
--	struct io_pgtable_domain_attr pgtbl_cfg;
- 	struct iommu_domain *iommu;
- 	struct msm_mmu *mmu;
- 	struct msm_gem_address_space *aspace;
-@@ -202,13 +200,18 @@ adreno_iommu_create_address_space(struct msm_gpu *gpu,
- 	if (!iommu)
- 		return NULL;
- 
--	/*
--	 * This allows GPU to set the bus attributes required to use system
--	 * cache on behalf of the iommu page table walker.
--	 */
--	if (!IS_ERR(a6xx_gpu->htw_llc_slice)) {
--		pgtbl_cfg.quirks = IO_PGTABLE_QUIRK_ARM_OUTER_WBWA;
--		iommu_domain_set_attr(iommu, DOMAIN_ATTR_IO_PGTABLE_CFG, &pgtbl_cfg);
-+
-+	if (adreno_is_a6xx(adreno_gpu)) {
-+		struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
-+		struct io_pgtable_domain_attr pgtbl_cfg;
-+		/*
-+		* This allows GPU to set the bus attributes required to use system
-+		* cache on behalf of the iommu page table walker.
-+		*/
-+		if (!IS_ERR(a6xx_gpu->htw_llc_slice)) {
-+			pgtbl_cfg.quirks = IO_PGTABLE_QUIRK_ARM_OUTER_WBWA;
-+			iommu_domain_set_attr(iommu, DOMAIN_ATTR_IO_PGTABLE_CFG, &pgtbl_cfg);
-+		}
- 	}
- 
- 	mmu = msm_iommu_new(&pdev->dev, iommu);
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-index 4574d85c5680..08421fa54a50 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -226,6 +226,11 @@ static inline int adreno_is_a540(struct adreno_gpu *gpu)
- 	return gpu->revn == 540;
- }
- 
-+static inline bool adreno_is_a6xx(struct adreno_gpu *gpu)
-+{
-+	return ((gpu->revn < 700 && gpu->revn > 599));
-+}
-+
- static inline int adreno_is_a618(struct adreno_gpu *gpu)
- {
-        return gpu->revn == 618;
--- 
-2.29.2
-
+- Eric
