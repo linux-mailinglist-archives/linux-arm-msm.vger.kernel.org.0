@@ -2,104 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C1A742E96C0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jan 2021 15:06:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 49AA32E9844
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jan 2021 16:19:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727132AbhADOGO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jan 2021 09:06:14 -0500
-Received: from mail.kernel.org ([198.145.29.99]:42728 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726762AbhADOGO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jan 2021 09:06:14 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id E752D207BC;
-        Mon,  4 Jan 2021 14:05:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1609769132;
-        bh=79TsA1bA8DKt3n7SY5XnXtm3knysfw0cfWKMLdkrzAc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=iHN9zNRZrzzhE+ofXqwGY3v8yznfietvgJMSpIw+/Hb+3GY0GuhJL7mLLW9bt9kcZ
-         PxcqgpZD5FhAKNG8I5jGEXGBvLQpBmco8xGjMnaIc4EebNiLVje0BlJWOj45JL0/PB
-         vxtEJY5OhIuVTA6E/Lui4XNWCjztT9yf7D3//WPmqcmmDQBgRTjNFYUHE+LDDdYS2G
-         vDbXQowhqqzHV+4MYe0UswMc695n3mCySu0MBMSim5Ss3EsWmxmlkITnnS4eNLG3ZK
-         qcONCWIJbRc577IYCOT74XxUKKbK+estp/16xd1zq3Gyj1t5BuDxRAMQebZh9HQ2Px
-         ydgmSJ/nP9dUA==
-Date:   Mon, 4 Jan 2021 14:05:06 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Yangtao Li <tiny.windzz@gmail.com>
-Cc:     myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
-        cw00.choi@samsung.com, krzk@kernel.org, shawnguo@kernel.org,
-        s.hauer@pengutronix.de, kernel@pengutronix.de, festevam@gmail.com,
-        linux-imx@nxp.com, digetx@gmail.com, thierry.reding@gmail.com,
-        jonathanh@nvidia.com, yuq825@gmail.com, airlied@linux.ie,
-        daniel@ffwll.ch, robdclark@gmail.com, sean@poorly.run,
-        robh@kernel.org, tomeu.vizoso@collabora.com, steven.price@arm.com,
-        alyssa.rosenzweig@collabora.com, stanimir.varbanov@linaro.org,
-        agross@kernel.org, bjorn.andersson@linaro.org, mchehab@kernel.org,
-        lukasz.luba@arm.com, adrian.hunter@intel.com,
-        ulf.hansson@linaro.org, vireshk@kernel.org, nm@ti.com,
-        sboyd@kernel.org, gregkh@linuxfoundation.org, jirislaby@kernel.org,
-        rjw@rjwysocki.net, jcrouse@codeaurora.org, hoegsberg@google.com,
-        eric@anholt.net, tzimmermann@suse.de,
-        marijn.suijten@somainline.org, gustavoars@kernel.org,
-        emil.velikov@collabora.com, jonathan@marek.ca,
-        akhilpo@codeaurora.org, smasetty@codeaurora.org,
-        airlied@redhat.com, masneyb@onstation.org, kalyan_t@codeaurora.org,
-        tanmay@codeaurora.org, ddavenport@chromium.org,
-        jsanka@codeaurora.org, rnayak@codeaurora.org,
-        tongtiangen@huawei.com, miaoqinglang@huawei.com,
-        khsieh@codeaurora.org, abhinavk@codeaurora.org,
-        chandanu@codeaurora.org, groeck@chromium.org, varar@codeaurora.org,
-        mka@chromium.org, harigovi@codeaurora.org,
-        rikard.falkeborn@gmail.com, natechancellor@gmail.com,
-        georgi.djakov@linaro.org, akashast@codeaurora.org,
-        parashar@codeaurora.org, dianders@chromium.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, lima@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-media@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-spi@vger.kernel.org, linux-serial@vger.kernel.org
-Subject: Re: [PATCH 14/31] spi: spi-qcom-qspi: convert to use devm_pm_opp_*
- API
-Message-ID: <20210104140506.GF5645@sirena.org.uk>
-References: <20210101165507.19486-1-tiny.windzz@gmail.com>
- <20210101165507.19486-15-tiny.windzz@gmail.com>
+        id S1727219AbhADPRc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jan 2021 10:17:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39062 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727287AbhADPRc (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 4 Jan 2021 10:17:32 -0500
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20A3DC061794
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jan 2021 07:16:52 -0800 (PST)
+Received: by mail-pf1-x42f.google.com with SMTP id t8so16612924pfg.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jan 2021 07:16:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=NqVHYrq5zKtTiE7pornKTX0w6UJqMq0DYY+6pQ71lEc=;
+        b=t+gUl4thSB7I8esbB+fYtPlH7NSq4bfMmVOe+IfnbQpKW8cQj6HJjaIEtOhXYbDlfF
+         96cxRkCcojlApjWm2ca/4ZASbywuCsZ1rNbENrgEkRHmwp8+beQRMuZn1qWsj0uJ9S6r
+         I5oswTnDGBOjeguWlewPX0EgBFVr2RbNhsLFOjbzJXdh6ZFJCGQpBw8mqdK6HN8/OJZl
+         JIYZxfvD+cLJ/qL2e1DvWMv+kahm6OHJXskc/BZWIsehTapjKtqdKBILfI4KXeEimHr+
+         6tIb8OhHgWSBQxcr+QgWBAlC9j8E/CONpCQawQPZl/FEbXaYX2fkLJLAPwsrNkz8j1Qe
+         XKsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=NqVHYrq5zKtTiE7pornKTX0w6UJqMq0DYY+6pQ71lEc=;
+        b=Pf3AG2tPffmAnClI8YBtridfV+sqFoAp60jcnVQKJZ7GHiqEWLTvc+TfnSnhLeCVVY
+         mvEkUzaVP3umzBV4soMUo5YIbL6mVhy20116Y6ljUHwnXVl0MSps5qjCDMlpIKcZssDm
+         YoKB7xw8cIvVcVmvF8zYahaqdN4oHX01oFFybEcoMw9JcHTNx7czw3UDbHlv8RUEYlhP
+         JHiyla8JBvegRQVEfJehMNtnGIiuUwT7KGqXqW7R+kPHeUyrPsaB5Der3X7cyYs0gSPC
+         KVVbplqNsiY/KHEmjPLFCrCwxbxz8573FRFvr2rbp19nnkELd/ZPEszHe/XhF45gf/tW
+         xzUQ==
+X-Gm-Message-State: AOAM530QjdqmSB7hTyzCjO8HzbJHo5WUuouY4jjJak46hwuvVuleNRxC
+        xOX4yRSph9ISE/JiYpExDbRV
+X-Google-Smtp-Source: ABdhPJx45sNy58KLGLoUJ+H7IV38L8x9b8kBL0Xmm55wPO4to1EbMboygEQiIbvuFb84khIxeak26g==
+X-Received: by 2002:a63:d650:: with SMTP id d16mr71183196pgj.277.1609773411436;
+        Mon, 04 Jan 2021 07:16:51 -0800 (PST)
+Received: from work ([103.77.37.129])
+        by smtp.gmail.com with ESMTPSA id k18sm21016449pjz.26.2021.01.04.07.16.49
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 04 Jan 2021 07:16:50 -0800 (PST)
+Date:   Mon, 4 Jan 2021 20:46:47 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, bbhatt@codeaurora.org,
+        hemantk@codeaurora.org
+Subject: Re: [PATCH v7 01/10] bus: mhi: core: Add device hardware reset
+ support
+Message-ID: <20210104151647.GA2256@work>
+References: <1609768179-10132-1-git-send-email-loic.poulain@linaro.org>
+ <1609768179-10132-2-git-send-email-loic.poulain@linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="4VrXvz3cwkc87Wze"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210101165507.19486-15-tiny.windzz@gmail.com>
-X-Cookie: Stupidity is its own reward.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <1609768179-10132-2-git-send-email-loic.poulain@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Jan 04, 2021 at 02:49:30PM +0100, Loic Poulain wrote:
+> The MHI specification allows to perform a hard reset of the device
+> when writing to the SOC_RESET register. It can be used to completely
+> restart the device (e.g. in case of unrecoverable MHI error).
+> 
+> This is up to the MHI controller driver to determine when this hard
+> reset should be used, and in case of MHI errors, should be used as
+> a reset of last resort (after standard MHI stack reset).
+> 
+> This function is a stateless function, the MHI layer do nothing except
+> triggering the reset by writing into the right register(s), this is up
+> to the caller to ensure right mhi_controller state (e.g. unregister the
+> controller if necessary).
+> 
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 
---4VrXvz3cwkc87Wze
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-On Fri, Jan 01, 2021 at 04:54:50PM +0000, Yangtao Li wrote:
-> Use devm_pm_opp_* API to simplify code, and remove opp_table
-> from qcom_qspi.
+Thanks,
+Mani
 
-Acked-by: Mark Brown <broonie@kernel.org>
-
---4VrXvz3cwkc87Wze
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl/zIJEACgkQJNaLcl1U
-h9DFeQf+IHePH8ftvRUXVVunMDt5ucIZpHjc+KGKU8AM3jyZ+Xyy7jpftefB54+O
-D0zp7MZ5qmBT4HlKD4cibZcvesuW18PPYrUMXVV3H8MuTBZMfvl+XDsWm0NvMjE+
-mG+w8bSqPUM9Mjo5wa7UN8bbEjHzNtPZt0lUNfN+k0NGXJ3XhN5WtH3eGXQAPaIn
-o5aKfPOue5R/hIy2XhK9W7VLqa8NwnhL7tCfYme/Eto/F4ygM/JVeTwdMOeKe3Gi
-SeDV7n7fe5oPecANOGYXE6gdO2c7oAcJl36gxh2rjpz/yGyCykjmHBxU/YdSV3Jk
-T8oGZSZjqmlT+HfPp7aRXPMXmf3ncQ==
-=ApdX
------END PGP SIGNATURE-----
-
---4VrXvz3cwkc87Wze--
+> ---
+>  drivers/bus/mhi/core/main.c | 13 +++++++++++++
+>  include/linux/mhi.h         |  9 +++++++++
+>  2 files changed, 22 insertions(+)
+> 
+> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> index a353d1e..c181a85 100644
+> --- a/drivers/bus/mhi/core/main.c
+> +++ b/drivers/bus/mhi/core/main.c
+> @@ -142,6 +142,19 @@ enum mhi_state mhi_get_mhi_state(struct mhi_controller *mhi_cntrl)
+>  }
+>  EXPORT_SYMBOL_GPL(mhi_get_mhi_state);
+>  
+> +void mhi_soc_reset(struct mhi_controller *mhi_cntrl)
+> +{
+> +	if (mhi_cntrl->reset) {
+> +		mhi_cntrl->reset(mhi_cntrl);
+> +		return;
+> +	}
+> +
+> +	/* Generic MHI SoC reset */
+> +	mhi_write_reg(mhi_cntrl, mhi_cntrl->regs, MHI_SOC_RESET_REQ_OFFSET,
+> +		      MHI_SOC_RESET_REQ);
+> +}
+> +EXPORT_SYMBOL_GPL(mhi_soc_reset);
+> +
+>  int mhi_map_single_no_bb(struct mhi_controller *mhi_cntrl,
+>  			 struct mhi_buf_info *buf_info)
+>  {
+> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> index 04cf7f3..7ddbcd7 100644
+> --- a/include/linux/mhi.h
+> +++ b/include/linux/mhi.h
+> @@ -355,6 +355,7 @@ struct mhi_controller_config {
+>   * @unmap_single: CB function to destroy TRE buffer
+>   * @read_reg: Read a MHI register via the physical link (required)
+>   * @write_reg: Write a MHI register via the physical link (required)
+> + * @reset: Controller specific reset function (optional)
+>   * @buffer_len: Bounce buffer length
+>   * @index: Index of the MHI controller instance
+>   * @bounce_buf: Use of bounce buffer
+> @@ -445,6 +446,7 @@ struct mhi_controller {
+>  			u32 *out);
+>  	void (*write_reg)(struct mhi_controller *mhi_cntrl, void __iomem *addr,
+>  			  u32 val);
+> +	void (*reset)(struct mhi_controller *mhi_cntrl);
+>  
+>  	size_t buffer_len;
+>  	int index;
+> @@ -681,6 +683,13 @@ enum mhi_ee_type mhi_get_exec_env(struct mhi_controller *mhi_cntrl);
+>  enum mhi_state mhi_get_mhi_state(struct mhi_controller *mhi_cntrl);
+>  
+>  /**
+> + * mhi_soc_reset - Trigger a device reset. This can be used as a last resort
+> + *		   to reset and recover a device.
+> + * @mhi_cntrl: MHI controller
+> + */
+> +void mhi_soc_reset(struct mhi_controller *mhi_cntrl);
+> +
+> +/**
+>   * mhi_device_get - Disable device low power mode
+>   * @mhi_dev: Device associated with the channel
+>   */
+> -- 
+> 2.7.4
+> 
