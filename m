@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F1B5A2E8FD5
+	by mail.lfdr.de (Postfix) with ESMTP id 7F4592E8FD3
 	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jan 2021 05:41:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726733AbhADEkr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1727053AbhADEkr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Sun, 3 Jan 2021 23:40:47 -0500
-Received: from mail.kernel.org ([198.145.29.99]:39340 "EHLO mail.kernel.org"
+Received: from mail.kernel.org ([198.145.29.99]:39334 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727044AbhADEkr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S1726008AbhADEkr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Sun, 3 Jan 2021 23:40:47 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id D6D0B21D7F;
+Received: by mail.kernel.org (Postfix) with ESMTPS id C74CE21D79;
         Mon,  4 Jan 2021 04:40:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1609735206;
-        bh=I+mPsaLOeN9VGYtrLJm6Jd8jK2R8bqhNsjUj5iQl0kw=;
+        bh=hcEgeijTgzpS5Q667V/cAF6GtgCcERZEu9kvB/PMu/E=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=ed4GPLBTubhhYl9quKDeqgpGSIV5Ma8Mf10nGjFOu5RguiNjeQPXhm/iPtlAM57Dy
-         Qdr93F7Xk9/FAnXxUQdK2pjJoIZ0d9DByZ7DbHmKg/UMJA87AebWs9S05Fyx8E7lzy
-         ZRhelMTuIpEnYfdRrSUIo6fDejz6kwHLq+w1EmPVFiim64HJPJy61EMVqNYB+PC2ol
-         NqYNIh9gZEIjkeHq8vZOYE06/rnLvZVJ/yrAZGJGeFQZUWKi1G0LGv+sE73zGxcAHy
-         ntadGadpiFNsXGg8b2KjgQY8GbqRMUN/eOiun2VQXS45Qyi+8kHtvk4h8Z4IMV9JwN
-         wVl/oa//X3HiQ==
+        b=dMCRTV4bLO9WKtHe+9v25JWDdYMhaWwNlsad3lMQIhzXDOl1Rr4cZE5glHMBAMANZ
+         CIsTWZ7xXf7N0mPOfcT4i4d7f/kTazXQjcf0piwjOaK6y0btyA6KJ1+SW2P7N2z6XE
+         vyy7b8Bbk63UQud9put0S/7k7ZZbZR83k/bY+aNc3VDJdtxMYguzg/jmJQF3Iuwyc7
+         MUDln2pDgoAFOnCTpSP6665V+Xdl4AEdFyfTAmOiMQCKwuTOkLLRyEx+sn9EK2WSL6
+         5pxmaE43Ayy+lHG4K1QqrD29wblpXMNNu/LgCwXiKwjMg4KS33ZSXh3IrIjnRyQ8m1
+         7U57OYtaqm/UQ==
 Received: from pdx-korg-docbuild-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id C9C60604B5;
+        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id B9B37604FC;
         Mon,  4 Jan 2021 04:40:06 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] arm64: defconfig: Make INTERCONNECT_QCOM_SDM845 builtin
+Subject: Re: [PATCH v1] soc: qcom: smem: use %*ph to print small buffer
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <160973520682.9031.14643114470900704635.git-patchwork-notify@kernel.org>
+Message-Id: <160973520675.9031.3064017828869812877.git-patchwork-notify@kernel.org>
 Date:   Mon, 04 Jan 2021 04:40:06 +0000
-References: <20201222043745.3420447-1-bjorn.andersson@linaro.org>
-In-Reply-To: <20201222043745.3420447-1-bjorn.andersson@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+References: <20200730153220.39466-1-andriy.shevchenko@linux.intel.com>
+In-Reply-To: <20200730153220.39466-1-andriy.shevchenko@linux.intel.com>
+To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -45,19 +45,17 @@ Hello:
 
 This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Mon, 21 Dec 2020 20:37:45 -0800 you wrote:
-> As of v5.11-rc1 the QUP nodes of SDM845 has got their interconnect
-> properties specified, this means that the relevant interconnect provider
-> needs to be builtin for the UART device to probe and the console to be
-> registered before userspace needs to access it.
+On Thu, 30 Jul 2020 18:32:20 +0300 you wrote:
+> Use %*ph format to print small buffer as hex string.
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> 
-> [...]
+> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> ---
+>  drivers/soc/qcom/smem.c | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
 
 Here is the summary with links:
-  - arm64: defconfig: Make INTERCONNECT_QCOM_SDM845 builtin
-    https://git.kernel.org/qcom/c/5b5465dd947c
+  - [v1] soc: qcom: smem: use %*ph to print small buffer
+    https://git.kernel.org/qcom/c/1b3df368914b
 
 You are awesome, thank you!
 --
