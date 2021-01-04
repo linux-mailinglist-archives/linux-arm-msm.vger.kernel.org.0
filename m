@@ -2,78 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BC322E94D2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jan 2021 13:27:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2146B2E9507
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jan 2021 13:39:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726475AbhADM0p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jan 2021 07:26:45 -0500
-Received: from mo4-p01-ob.smtp.rzone.de ([81.169.146.166]:33507 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726465AbhADM0p (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jan 2021 07:26:45 -0500
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j+IczGa4o="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-        by smtp.strato.de (RZmta 47.10.7 DYNA|AUTH)
-        with ESMTPSA id e09c6dx04CNkaER
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-        Mon, 4 Jan 2021 13:23:46 +0100 (CET)
-Date:   Mon, 4 Jan 2021 13:23:41 +0100
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Andy Gross <agross@kernel.org>,
+        id S1726434AbhADMje (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jan 2021 07:39:34 -0500
+Received: from mail.kernel.org ([198.145.29.99]:58962 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726303AbhADMjd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 4 Jan 2021 07:39:33 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 6173220770;
+        Mon,  4 Jan 2021 12:38:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1609763933;
+        bh=f9vH4s6nGLOCyjCDAv3bQ9hxb7whPAr9ymDwtadt9rk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=LQm8a3HrUId/o2cW49pQ6VhM2Vk4dbE7iycJPorBcaU1uIVWjaXrF9uHz5lIVuOja
+         0tm6U0LY1x/t4uyU7ciw1XYnT/h4/1NKfxysumdHRKPAR+nPUtBg9qShp6bwZakhzs
+         ULwD79jWVD8ogl/HOVnysperkJLaZovi9fslEyd+ODPrNDhqhrOlyFgAPXXL7hRXQk
+         PT2nq6OjJiCU5RyLf5qxMFNCY0Lng/tJ03rl4DuVEWE/cFNSqS2OsizOxtPkrkYx6H
+         fhVkDgmXwAO5EB5b63WOoC7zJRMpenhEYmgnnlIGMzm9bz9UnPzDSffoKvP/z0v079
+         9RdF8b3o5dI3g==
+Date:   Mon, 4 Jan 2021 18:08:48 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Arnd Bergmann <arnd@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        Arnd Bergmann <arnd@arndb.de>,
+        Dan Williams <dan.j.williams@intel.com>,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC] remoteproc: qcom: wcnss: Adjust voltage requirements
- for Pronto v2
-Message-ID: <X/MIzTkKZ4jb3iVY@gerhold.net>
-References: <20201226141100.90147-1-konrad.dybcio@somainline.org>
+Subject: Re: [PATCH] dmaengine: qcom: fix gpi undefined behavior
+Message-ID: <20210104123848.GG120946@vkoul-mobl>
+References: <20210103135738.3741123-1-arnd@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201226141100.90147-1-konrad.dybcio@somainline.org>
+In-Reply-To: <20210103135738.3741123-1-arnd@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Konrad,
-
-On Sat, Dec 26, 2020 at 03:11:00PM +0100, Konrad Dybcio wrote:
-> This is required for MSM8974 devices that cannot afford to push
-> the regulators further.
+On 03-01-21, 14:57, Arnd Bergmann wrote:
+> From: Arnd Bergmann <arnd@arndb.de>
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> ---
->  drivers/remoteproc/qcom_wcnss.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> gcc points out an incorrect error handling loop:
 > 
-> diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
-> index e2573f79a137..71480be545e4 100644
-> --- a/drivers/remoteproc/qcom_wcnss.c
-> +++ b/drivers/remoteproc/qcom_wcnss.c
-> @@ -124,7 +124,7 @@ static const struct wcnss_data pronto_v2_data = {
->  	.spare_offset = 0x1088,
->  
->  	.vregs = (struct wcnss_vreg_info[]) {
-> -		{ "vddmx", 1287500, 1287500, 0 },
-> +		{ "vddmx", 950000, 1150000, 0 },
->  		{ "vddcx", .super_turbo = true },
->  		{ "vddpx", 1800000, 1800000, 0 },
->  	},
+> drivers/dma/qcom/gpi.c: In function 'gpi_ch_init':
+> drivers/dma/qcom/gpi.c:1254:15: error: iteration 2 invokes undefined behavior [-Werror=aggressive-loop-optimizations]
+>  1254 |  struct gpii *gpii = gchan->gpii;
+>       |               ^~~~
+> drivers/dma/qcom/gpi.c:1951:2: note: within this loop
+>  1951 |  for (i = i - 1; i >= 0; i++) {
+>       |  ^~~
+> 
+> Change the loop to correctly walk backwards through the
+> initialized fields rather than off into the woods.
 
-Correct me if I'm wrong but with this change pronto_v2_data looks
-exactly like pronto_v1_data (qcom,pronto-v1-pil).
-Can you just change the compatible in qcom-msm8974.dtsi?
+Applied, thanks
 
-Also, if possible MSM8974 should be also moved to corner votes via rpmpd,
-like in https://lore.kernel.org/linux-arm-msm/20200916104135.25085-1-stephan@gerhold.net/
-Then the actual voltages don't matter anymore (all we need to do here is
-to temporarily scale the power domain to maximum so WCNSS can boot up).
-
-Thanks,
-Stephan
+-- 
+~Vinod
