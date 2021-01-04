@@ -2,84 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 29C212E9C41
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jan 2021 18:42:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CCA5F2E9C9A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jan 2021 19:05:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727897AbhADRlz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jan 2021 12:41:55 -0500
-Received: from mail.kernel.org ([198.145.29.99]:36614 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727341AbhADRlz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jan 2021 12:41:55 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id CE7772068D;
-        Mon,  4 Jan 2021 17:41:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1609782074;
-        bh=k5ju6+jk760rADcHCAbaKDDu3K01ibNwMCfTBSegebw=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=UEeEs2fTzuJEQCK9xvUncUjHa/XX7mUxS8/FFMMzOrEBgWI1sXZjfoEp8+6gr6A0o
-         zkwTFnvcO+Dvax87DLmZuxC+foGtidfmPDJDDisyUVc4rFUtlR3f7DSui3TAfSSTER
-         9LgUHbvRdF0k3N60eplPVPhtVJcAbq/f+Dzk5u2RBPnaGjeW51hqtb1emZXcYjciOY
-         OUvFxLatMRLDRQpQJo7U0TVNWtiWmrnjzMWOlvxX0daaL5zr36vOscoqj7jK6QUbrX
-         l6+wYIcHtRC+/h/lw1H6iQ0Ka5pjEROtFXPKh8sKA7N3hsgYo6eIc3Hqaun4uGykq6
-         zrcJrezT9jbfg==
-From:   Mark Brown <broonie@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        devicetree@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20201231122348.637917-1-dmitry.baryshkov@linaro.org>
-References: <20201231122348.637917-1-dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH 0/4] regulator: fix pm8009 bindings on sm8250
-Message-Id: <160978203769.14485.17360727494427661134.b4-ty@kernel.org>
-Date:   Mon, 04 Jan 2021 17:40:37 +0000
+        id S1726253AbhADSEa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jan 2021 13:04:30 -0500
+Received: from mail-wr1-f51.google.com ([209.85.221.51]:33517 "EHLO
+        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727749AbhADSEa (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 4 Jan 2021 13:04:30 -0500
+Received: by mail-wr1-f51.google.com with SMTP id t30so33120348wrb.0;
+        Mon, 04 Jan 2021 10:04:13 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=h59iCiKuH4MXgrWgjRBSHuWSpOxsm5xD8Y4CubrF3xU=;
+        b=O9Z7vxMRaKMI5t4T35bv5YGBkatCDU5eq6r98qh3QvpeHWzlSAfvYP2gdGrDnTdeX+
+         9lFgK7c3VNoEmv3n0ooUqk/U/D//wbRrsJXgu/8hTYxbBT6jMKF2yD7oRNOYkIrred+Q
+         A36TcezbQKk4ldEN+dINQfU1JnD8ruELUrhvrFMbrHBc7derBdzkFgqYLmy3BtozESqV
+         FrYJR/DbD1nUP5Ci0TkvjufeoMcmg11E5E4KZqE8kJguHszQEotflCChxM97xswkECSV
+         E+gqqo2wMwSHM0FkvYPrWsR+Qc9N6IKAUY5odPzhSPLQuiFFn0ECjTZW7KfMPAGot3Jg
+         IJ6w==
+X-Gm-Message-State: AOAM530djHhjb46cspfzZL3CaJe+iYSF6jgIPNXImY1JNTtHRPCpTaS1
+        44cf+ZLNZ7z9omWXlgNTfzM=
+X-Google-Smtp-Source: ABdhPJxrRN4zoC9ySCl3+E0igqJkr5f1LUevrs1pugc92rcCWGC8YwtDgiDHvDzkbPEnhGyP6UumfQ==
+X-Received: by 2002:a5d:58fb:: with SMTP id f27mr71674294wrd.22.1609783427686;
+        Mon, 04 Jan 2021 10:03:47 -0800 (PST)
+Received: from kozik-lap (adsl-84-226-167-205.adslplus.ch. [84.226.167.205])
+        by smtp.googlemail.com with ESMTPSA id w8sm92329342wrl.91.2021.01.04.10.03.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Jan 2021 10:03:46 -0800 (PST)
+Date:   Mon, 4 Jan 2021 19:03:43 +0100
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Yangtao Li <tiny.windzz@gmail.com>
+Cc:     myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
+        cw00.choi@samsung.com, shawnguo@kernel.org, s.hauer@pengutronix.de,
+        kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
+        digetx@gmail.com, thierry.reding@gmail.com, jonathanh@nvidia.com,
+        yuq825@gmail.com, airlied@linux.ie, daniel@ffwll.ch,
+        robdclark@gmail.com, sean@poorly.run, robh@kernel.org,
+        tomeu.vizoso@collabora.com, steven.price@arm.com,
+        alyssa.rosenzweig@collabora.com, stanimir.varbanov@linaro.org,
+        agross@kernel.org, bjorn.andersson@linaro.org, mchehab@kernel.org,
+        lukasz.luba@arm.com, adrian.hunter@intel.com,
+        ulf.hansson@linaro.org, vireshk@kernel.org, nm@ti.com,
+        sboyd@kernel.org, broonie@kernel.org, gregkh@linuxfoundation.org,
+        jirislaby@kernel.org, rjw@rjwysocki.net, jcrouse@codeaurora.org,
+        hoegsberg@google.com, eric@anholt.net, tzimmermann@suse.de,
+        marijn.suijten@somainline.org, gustavoars@kernel.org,
+        emil.velikov@collabora.com, jonathan@marek.ca,
+        akhilpo@codeaurora.org, smasetty@codeaurora.org,
+        airlied@redhat.com, masneyb@onstation.org, kalyan_t@codeaurora.org,
+        tanmay@codeaurora.org, ddavenport@chromium.org,
+        jsanka@codeaurora.org, rnayak@codeaurora.org,
+        tongtiangen@huawei.com, miaoqinglang@huawei.com,
+        khsieh@codeaurora.org, abhinavk@codeaurora.org,
+        chandanu@codeaurora.org, groeck@chromium.org, varar@codeaurora.org,
+        mka@chromium.org, harigovi@codeaurora.org,
+        rikard.falkeborn@gmail.com, natechancellor@gmail.com,
+        georgi.djakov@linaro.org, akashast@codeaurora.org,
+        parashar@codeaurora.org, dianders@chromium.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, lima@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        linux-media@vger.kernel.org, linux-mmc@vger.kernel.org,
+        linux-spi@vger.kernel.org, linux-serial@vger.kernel.org
+Subject: Re: [PATCH 22/31] memory: samsung: exynos5422-dmc: fix return error
+ in exynos5_init_freq_table
+Message-ID: <20210104180343.GA26189@kozik-lap>
+References: <20210101165507.19486-1-tiny.windzz@gmail.com>
+ <20210101165507.19486-23-tiny.windzz@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20210101165507.19486-23-tiny.windzz@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 31 Dec 2020 15:23:44 +0300, Dmitry Baryshkov wrote:
-> PM8009 has special revision (P=1), which is to be used for sm8250
-> platform. The major difference is the S2 regulator which supplies 0.95 V
-> instead of 2.848V. Declare regulators data to be used for this chip
-> revision. The datasheet calls the chip just pm8009-1, so use the same
-> name.
+On Fri, Jan 01, 2021 at 04:54:58PM +0000, Yangtao Li wrote:
+> We can't always return -EINVAL, let's fix it.
+> 
+> Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
+> ---
+>  drivers/memory/samsung/exynos5422-dmc.c | 10 +++++++---
+>  1 file changed, 7 insertions(+), 3 deletions(-)
 
-Applied to
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+I see that the next patch depends on it so feel free to take it via PM
+tree. Otherwise let me know.
 
-Thanks!
-
-[1/4] dt-bindings: regulator: qcom,rpmh-regulator: add pm8009 revision
-      commit: 2bf3a72b08e7f6356a2db9e1571ca65f683510bb
-[2/4] regulator: qcom-rpmh-regulator: correct hfsmps515 definition
-      commit: df6b92fa40050e59ea89784294bf6d04c0c47705
-[3/4] regulator: qcom-rpmh-regulator: add pm8009-1 chip revision
-      commit: 951384cabc5dfb09251d440dbc26058eba86f97e
-[4/4] arm64: dts: qcom: qrb5165-rb5: fix pm8009 regulators
-      commit: c3da02421230639bf6ee5462b70b58f5b7f3b7c6
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+Best regards,
+Krzysztof
