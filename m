@@ -2,101 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F3FC2E8FBF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jan 2021 05:15:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D0D802E8FD4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jan 2021 05:41:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726026AbhADENV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 3 Jan 2021 23:13:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48752 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727641AbhADENL (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 3 Jan 2021 23:13:11 -0500
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 046A2C0617A5
-        for <linux-arm-msm@vger.kernel.org>; Sun,  3 Jan 2021 20:12:04 -0800 (PST)
-Received: by mail-pl1-x635.google.com with SMTP id 4so13824766plk.5
-        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Jan 2021 20:12:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=wneBaSsM0xu86yHRW+fmULQ20sTukJwsm41Qy3J+Umg=;
-        b=kUog3bVTIvYUWWUzjYQiRQyzxAlie5iBaP/m/YoCMjhOoCsT5F3U3JzXz4OfLihcw1
-         1Jfz8lCNkbUcL5zpmLYT36af6+u9c30idejRXIJnXxpoWV1itGu7GtGC+EeNuWsl9txK
-         vsWQKMoxfakSo0jp85msmiCUaKTYvpvbXOcCcnjofk2XnHJxOk6ncEMs+sVEt3LhN4Ck
-         SnN2gH1CzJhgK7MG4/RjaLccO4G+1/BNgtpUW7IeHVEYx1EIGFM8BeL+Hs2HSngLT2Ng
-         si/ivAd11a85yLlElbr6ZR4yQSLZ8SrYFtGdOjBTClmTc4GfgJt7S2xED02PsfxuT/SR
-         tkWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=wneBaSsM0xu86yHRW+fmULQ20sTukJwsm41Qy3J+Umg=;
-        b=RvLkg7L8EZafXh71cLFGRNkQJSaeOLOpljntKNSw8WmvJg2Aup9u7Eo7FTLFHkFFRN
-         7IaReCq/evMRuO/TKmg8HNPugpiyNSCxuHrDiAyggwwt9YYZEEhTTY5ALLlOeYYdJTTL
-         v96we2lCO59X3nGbfirb+wAOKmHjp8aft1aC1nTR1To6x7k+bTbzd1rKcVpG4Tu062bc
-         vB99W2wpcUJqDaOtk3dtsvwr37Rm+5Oog4JCrngJhUnJ9nu0Psydt31qYCpaBbTC8kaB
-         h4ANe5vnIAi++LnnUQ+eh67CgB/mjRzBsbj2f5YGEpkh1dvvHRPz9CvqeuWqvY7lCJ2J
-         xUlQ==
-X-Gm-Message-State: AOAM531UJiIjxV22lNq8iCi8yYgJp3i7twzdhzJluFDiA4/PfLunYCzA
-        z5M5XsRWA29XPHVSYF8e9DJF
-X-Google-Smtp-Source: ABdhPJwp6G0zMQLd1gP3mxWQZWOQI5+R61JLxuOhu+0q+EumPWeHC8XjNAYRaBZ+3gNLo4XqYkOh7w==
-X-Received: by 2002:a17:902:8d97:b029:dc:313:ee70 with SMTP id v23-20020a1709028d97b02900dc0313ee70mr70807129plo.82.1609733523386;
-        Sun, 03 Jan 2021 20:12:03 -0800 (PST)
-Received: from localhost.localdomain ([103.77.37.160])
-        by smtp.gmail.com with ESMTPSA id x22sm54899930pfc.19.2021.01.03.20.11.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Jan 2021 20:12:02 -0800 (PST)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
-        robh+dt@kernel.org
-Cc:     bjorn.andersson@linaro.org, linux-mtd@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH v4 4/4] mtd: parsers: afs: Fix freeing the part name memory in failure
-Date:   Mon,  4 Jan 2021 09:41:37 +0530
-Message-Id: <20210104041137.113075-5-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210104041137.113075-1-manivannan.sadhasivam@linaro.org>
-References: <20210104041137.113075-1-manivannan.sadhasivam@linaro.org>
+        id S1726008AbhADEkr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 3 Jan 2021 23:40:47 -0500
+Received: from mail.kernel.org ([198.145.29.99]:39332 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726733AbhADEkr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 3 Jan 2021 23:40:47 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id BBF032151B;
+        Mon,  4 Jan 2021 04:40:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1609735206;
+        bh=DRIBzN2duNXJUkPNEgLDJ9RWcElDK/s5MWRmS4aFprM=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=WEs+6blc9XMX7/Ef7Y0pWVkjd1LlsrmCmzMk56F9i9woAlz2URnyQ073zLEi0Q/Eb
+         Wu2fP9n/8DLAPb+sdLKlF3KLz87H6xhzqlb29QDLFevMZTNeIMKOISLO3FDnvAq8dB
+         ckEDJVA6+fAMOZO6z1Lek3Dkgy3f86rdAEb1JHKynKt6cUJpNk2RX9U9ksoqrztWYr
+         JNZfkA7OYdFmcM5UD5K3clwYTWRfdOwg0jzv+D/T9sXjV2Hs1jnvLOJD3P2Aeg8ZIY
+         6V2Er5dCw79KLXi5SzhFXE9tZ20WNxIzuaBvzfDWUxOJueHqTyEpCTpdg7VMC1zbCK
+         PCLk7nEUgIAGQ==
+Received: from pdx-korg-docbuild-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id AD237603F8;
+        Mon,  4 Jan 2021 04:40:06 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v2] arm64: dts: qcom: c630: keep both touchpad devices enabled
+From:   patchwork-bot+linux-arm-msm@kernel.org
+Message-Id: <160973520670.9031.11240020607790894878.git-patchwork-notify@kernel.org>
+Date:   Mon, 04 Jan 2021 04:40:06 +0000
+References: <20210102045940.26874-1-shawn.guo@linaro.org>
+In-Reply-To: <20210102045940.26874-1-shawn.guo@linaro.org>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In the case of failure while parsing the partitions, the iterator should
-be pre decremented by one before starting to free the memory allocated
-by kstrdup(). Because in the failure case, kstrdup() will not succeed
-and thus no memory will be allocated for the current iteration.
+Hello:
 
-Fixes: 1fca1f6abb38 ("mtd: afs: simplify partition parsing")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Cc: Linus Walleij <linus.walleij@linaro.org>
----
- drivers/mtd/parsers/afs.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-diff --git a/drivers/mtd/parsers/afs.c b/drivers/mtd/parsers/afs.c
-index 980e332bdac4..26116694c821 100644
---- a/drivers/mtd/parsers/afs.c
-+++ b/drivers/mtd/parsers/afs.c
-@@ -370,10 +370,8 @@ static int parse_afs_partitions(struct mtd_info *mtd,
- 	return i;
- 
- out_free_parts:
--	while (i >= 0) {
-+	while (--i >= 0)
- 		kfree(parts[i].name);
--		i--;
--	}
- 	kfree(parts);
- 	*pparts = NULL;
- 	return ret;
--- 
-2.25.1
+On Sat,  2 Jan 2021 12:59:40 +0800 you wrote:
+> Indicated by AML code in ACPI table, the touchpad in-use could be found
+> on two possible slave addresses on &i2c3, i.e. hid@15 and hid@2c.  And
+> which one is in-use can be determined by reading another address on the
+> I2C bus.  Unfortunately, for DT boot, there is currently no support in
+> firmware to make this check and patch DT accordingly.  This results in
+> a non-functional touchpad on those C630 devices with hid@2c.
+> 
+> [...]
+
+Here is the summary with links:
+  - [v2] arm64: dts: qcom: c630: keep both touchpad devices enabled
+    https://git.kernel.org/qcom/c/a9164910c5ce
+
+You are awesome, thank you!
+--
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
