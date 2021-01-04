@@ -2,126 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E2122E9BAF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jan 2021 18:05:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 29C212E9C41
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jan 2021 18:42:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727745AbhADRFM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jan 2021 12:05:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55868 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727720AbhADRFL (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jan 2021 12:05:11 -0500
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B510C061793
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jan 2021 09:04:31 -0800 (PST)
-Received: by mail-pj1-x1032.google.com with SMTP id lj6so10461969pjb.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jan 2021 09:04:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=T7UOVsn/Scp7OYLtcdt5J/Qc1XlbIMBrPyEA+SYoN4Q=;
-        b=WEKu18zXHBZcOloih3SeVznUTcIyL3DXMq3URRn9lNk1e0KCyZmOq9cLaq5JXE+Z04
-         jbOF0mESG2FBTWazjIS7tFkb2P4SsJMviCuOZwehgKhM8FpakPCFG/IBcEsJwbx7Zhxd
-         XYfNVc96Qf6YgLHc69XGtVhghHP9FcmuFzrO5jZVWDEWdLKeSSOs8qXcAkK+Mq5Y26L/
-         XJeo9tbWuaFH1UHN0vOIuIkLACXvNdJ1nRVAqMl39QFOqvZkhiXWp+dxY/ewKQK/erOi
-         vbjoAJl57DkHkXd9+LVq5vtcCJJwePGkQYlG0k/KNtJYtYnrdzeIJfdzfLo/Je/Ly78N
-         lU0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=T7UOVsn/Scp7OYLtcdt5J/Qc1XlbIMBrPyEA+SYoN4Q=;
-        b=mVfkSH6Xdqea3xpmjaUMYvc6Namr7oeb2f1vTgWI6fDW7WmrB/OO+KFRUpIez2M0tN
-         4JB/YlD0cEDQrAaPUZgqbn5sEJ3U3cYDalsgDh4bODcuR4LVHH5E0gfurDlsr0Wc2Izp
-         YMj44dyjJKJ7VBDz/1oLvEVKoVI8tWeRAjCE/Q8UQvDyEkRxb23TjXqTLfoetC3lfSMv
-         JrSfbLVSuu3GrHINp/S8qFYenxn65uu5a80Wrij4HzmConItemwM7bzkkx5kQSAteHcY
-         9qTWgV8H7zJWKJcHN0uAmX8Ecqe8AMKcmyTAQTdmxlx4K12Fen94ELML8krc6MJyxSo6
-         RCcg==
-X-Gm-Message-State: AOAM532e5P8y58AyPPLnVqLFL/2sp93NGsMeDauMHXvIH+H5sk/VpMuE
-        0cVX3q0w/kr/aBLqloCitV31YIcWo+H2
-X-Google-Smtp-Source: ABdhPJxKr7M9myoHEBeI1FSAxfRPdIcY71gKuYEL+HXoPBJF8yuPR1qLQrh9cwjw6+Ujad/u9TlxYQ==
-X-Received: by 2002:a17:90a:4a85:: with SMTP id f5mr30489537pjh.117.1609779870982;
-        Mon, 04 Jan 2021 09:04:30 -0800 (PST)
-Received: from work ([103.77.37.129])
-        by smtp.gmail.com with ESMTPSA id mj5sm22416752pjb.20.2021.01.04.09.04.28
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 04 Jan 2021 09:04:30 -0800 (PST)
-Date:   Mon, 4 Jan 2021 22:34:27 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, bbhatt@codeaurora.org,
-        hemantk@codeaurora.org
-Subject: Re: [PATCH v8 00/10] mhi: pci_generic: Misc improvements
-Message-ID: <20210104170427.GF2256@work>
-References: <1609776899-30664-1-git-send-email-loic.poulain@linaro.org>
+        id S1727897AbhADRlz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jan 2021 12:41:55 -0500
+Received: from mail.kernel.org ([198.145.29.99]:36614 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727341AbhADRlz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 4 Jan 2021 12:41:55 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id CE7772068D;
+        Mon,  4 Jan 2021 17:41:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1609782074;
+        bh=k5ju6+jk760rADcHCAbaKDDu3K01ibNwMCfTBSegebw=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=UEeEs2fTzuJEQCK9xvUncUjHa/XX7mUxS8/FFMMzOrEBgWI1sXZjfoEp8+6gr6A0o
+         zkwTFnvcO+Dvax87DLmZuxC+foGtidfmPDJDDisyUVc4rFUtlR3f7DSui3TAfSSTER
+         9LgUHbvRdF0k3N60eplPVPhtVJcAbq/f+Dzk5u2RBPnaGjeW51hqtb1emZXcYjciOY
+         OUvFxLatMRLDRQpQJo7U0TVNWtiWmrnjzMWOlvxX0daaL5zr36vOscoqj7jK6QUbrX
+         l6+wYIcHtRC+/h/lw1H6iQ0Ka5pjEROtFXPKh8sKA7N3hsgYo6eIc3Hqaun4uGykq6
+         zrcJrezT9jbfg==
+From:   Mark Brown <broonie@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        devicetree@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20201231122348.637917-1-dmitry.baryshkov@linaro.org>
+References: <20201231122348.637917-1-dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH 0/4] regulator: fix pm8009 bindings on sm8250
+Message-Id: <160978203769.14485.17360727494427661134.b4-ty@kernel.org>
+Date:   Mon, 04 Jan 2021 17:40:37 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1609776899-30664-1-git-send-email-loic.poulain@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 04, 2021 at 05:14:49PM +0100, Loic Poulain wrote:
-> This series adjust some configuration values to ensure stability and
-> robustness of mhi pci devices (timeout, number of events, burst mode).
-> 
-> It also includes support for system sleep as well as a recovery procedure
-> that can be triggered when a PCI error is reported, either by PCI AER or by
-> the new health-check mechanism.
-> 
-> All these changes have been tested with Telit FN980m module
-> 
+On Thu, 31 Dec 2020 15:23:44 +0300, Dmitry Baryshkov wrote:
+> PM8009 has special revision (P=1), which is to be used for sm8250
+> platform. The major difference is the S2 regulator which supplies 0.95 V
+> instead of 2.848V. Declare regulators data to be used for this chip
+> revision. The datasheet calls the chip just pm8009-1, so use the same
+> name.
 
-Series applied to mhi-next!
+Applied to
+
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+
+Thanks!
+
+[1/4] dt-bindings: regulator: qcom,rpmh-regulator: add pm8009 revision
+      commit: 2bf3a72b08e7f6356a2db9e1571ca65f683510bb
+[2/4] regulator: qcom-rpmh-regulator: correct hfsmps515 definition
+      commit: df6b92fa40050e59ea89784294bf6d04c0c47705
+[3/4] regulator: qcom-rpmh-regulator: add pm8009-1 chip revision
+      commit: 951384cabc5dfb09251d440dbc26058eba86f97e
+[4/4] arm64: dts: qcom: qrb5165-rb5: fix pm8009 regulators
+      commit: c3da02421230639bf6ee5462b70b58f5b7f3b7c6
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
 
 Thanks,
-Mani
-
-> v2:
->   - Cancel recovery work on suspend
-> v3:
->   - enable doorbell_mode_switch for burst channel (HW)
->   - Add mhi_initialize_controller helper patch
-> v4:
->   - Delete hard reset on module unload, MHI reset is enough (Jeffrey)
->   - Move soc reset support in MHI core (Jeffrey)
->   - burst mode: enable doorbell_mode_switch for HW channels (Bhaumik)
->   - Add diag channels
-> v5:
->   - Remove useless call to mhi_initialize_controller in alloc_controller (hemant)
->   - Add define for post reset timeout (hemant)
->   - Fix static misses (hemant)
-> v6:
->   - Add debug print in case of recovery success (Mani)
->   - Return error code in case of resume failure (Mani)
-> v7:
->   - Removed mhi_initialize_controller API (Mani)
->   - Added controller specific reset callback (Mani)
->   - Reworked error handling using reset_prepare/done (Mani)
-> v8:
->   - Rebased on v5.11-rc1
-> 
-> Loic Poulain (10):
->   bus: mhi: core: Add device hardware reset support
->   mhi: pci-generic: Increase number of hardware events
->   mhi: pci_generic: Enable burst mode for hardware channels
->   mhi: pci_generic: Add support for reset
->   mhi: pci_generic: Add suspend/resume/recovery procedure
->   mhi: pci_generic: Add PCI error handlers
->   mhi: pci_generic: Add health-check
->   mhi: pci_generic: Increase controller timeout value
->   mhi: pci_generic: Add diag channels
->   mhi: pci_generic: Set irq moderation value to 1ms for hw channels
-> 
->  drivers/bus/mhi/core/main.c   |  13 ++
->  drivers/bus/mhi/pci_generic.c | 359 +++++++++++++++++++++++++++++++++++++++---
->  include/linux/mhi.h           |   9 ++
->  3 files changed, 361 insertions(+), 20 deletions(-)
-> 
-> -- 
-> 2.7.4
-> 
+Mark
