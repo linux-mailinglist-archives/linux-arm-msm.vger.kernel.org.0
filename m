@@ -2,160 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6856E2E9BAD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jan 2021 18:05:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E2122E9BAF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jan 2021 18:05:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727767AbhADREp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jan 2021 12:04:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55794 "EHLO
+        id S1727745AbhADRFM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jan 2021 12:05:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727756AbhADREo (ORCPT
+        with ESMTP id S1727720AbhADRFL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jan 2021 12:04:44 -0500
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7A07C061796
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jan 2021 09:04:03 -0800 (PST)
-Received: by mail-pl1-x630.google.com with SMTP id j1so14868236pld.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jan 2021 09:04:03 -0800 (PST)
+        Mon, 4 Jan 2021 12:05:11 -0500
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B510C061793
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jan 2021 09:04:31 -0800 (PST)
+Received: by mail-pj1-x1032.google.com with SMTP id lj6so10461969pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jan 2021 09:04:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=IQcm30joQ1MOZvDbTDrRnopca1uhY1ndGDE9lkwCZAc=;
-        b=BCIixdhQz0ExCp0AmsUIvPZ18AUH+wiojlGbwoXezAz15MaThplttNDQc+MfKl32hG
-         poMMlEoNBcVwoo2GLpyhRxx+QcayT9nI80+Fxm0EQ4x3zlBoy4x5ELTyGx436AIvX7e7
-         KlCloSXe6Oz17jHhw4OHjPaiRUMUMBkGM09A7xe4dOJVXbKX4z91exkrSx2BfpDQhWl8
-         KVPZ8S3oZjRgI2GLlrPPQ9pjp8qFuzHr/YkvF/INPPsJfjIxV3g8L2rZCvZf5ZzacELL
-         4kVNGfLlsq7Drh3FHCDiG3C2pkZgynI97jj8wIrn6I9Hj/rmtSTl1dIK3rzXEijlsdwj
-         v4ng==
+        bh=T7UOVsn/Scp7OYLtcdt5J/Qc1XlbIMBrPyEA+SYoN4Q=;
+        b=WEKu18zXHBZcOloih3SeVznUTcIyL3DXMq3URRn9lNk1e0KCyZmOq9cLaq5JXE+Z04
+         jbOF0mESG2FBTWazjIS7tFkb2P4SsJMviCuOZwehgKhM8FpakPCFG/IBcEsJwbx7Zhxd
+         XYfNVc96Qf6YgLHc69XGtVhghHP9FcmuFzrO5jZVWDEWdLKeSSOs8qXcAkK+Mq5Y26L/
+         XJeo9tbWuaFH1UHN0vOIuIkLACXvNdJ1nRVAqMl39QFOqvZkhiXWp+dxY/ewKQK/erOi
+         vbjoAJl57DkHkXd9+LVq5vtcCJJwePGkQYlG0k/KNtJYtYnrdzeIJfdzfLo/Je/Ly78N
+         lU0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=IQcm30joQ1MOZvDbTDrRnopca1uhY1ndGDE9lkwCZAc=;
-        b=BX6PhpysJoWCU2MZ93hEJpnFmUuX0sqxNpIZ0CAKdGMBXJBQP13vMvOvYtc6wU6kQk
-         i8Q7Al3+27w1z8fBH/dLqg68NSG40f9uCKKbHO2I9cFfUjEqBdEGuGtIvbqUMH7/sb6k
-         yvKbCKQal9i+uYBtuyzmsWzaDHSh4kZOuF7/bK82CAVPuCakLHKN/0UpKHS6OygnUw7g
-         uJZfTIWD5Mn+J7LojZOD+z5vCXH8XXzxc4QD/6O868NLWdUBMQP4+ZtzqRX42b6jEmda
-         sWPxyj9rsCbxWnxH1WIpLW/fF4qom8tACNVstt+L52+xguAtHw69PM1p/r0YI7+Fwvow
-         905Q==
-X-Gm-Message-State: AOAM533heF2V82xbZxykBMBJCxid+UCplk0mB9wzFMukNfZlYMaAKFce
-        YAMjZPhX5d/g11sj09NPiSp6
-X-Google-Smtp-Source: ABdhPJzstLU9i3O9N1V2w9aLZIwS7/jD4AeG4EenR1Mw3gYn+u7BY34odJUrymKTvSm7jCXshIi1LQ==
-X-Received: by 2002:a17:90a:454e:: with SMTP id r14mr31112408pjm.194.1609779843170;
-        Mon, 04 Jan 2021 09:04:03 -0800 (PST)
+        bh=T7UOVsn/Scp7OYLtcdt5J/Qc1XlbIMBrPyEA+SYoN4Q=;
+        b=mVfkSH6Xdqea3xpmjaUMYvc6Namr7oeb2f1vTgWI6fDW7WmrB/OO+KFRUpIez2M0tN
+         4JB/YlD0cEDQrAaPUZgqbn5sEJ3U3cYDalsgDh4bODcuR4LVHH5E0gfurDlsr0Wc2Izp
+         YMj44dyjJKJ7VBDz/1oLvEVKoVI8tWeRAjCE/Q8UQvDyEkRxb23TjXqTLfoetC3lfSMv
+         JrSfbLVSuu3GrHINp/S8qFYenxn65uu5a80Wrij4HzmConItemwM7bzkkx5kQSAteHcY
+         9qTWgV8H7zJWKJcHN0uAmX8Ecqe8AMKcmyTAQTdmxlx4K12Fen94ELML8krc6MJyxSo6
+         RCcg==
+X-Gm-Message-State: AOAM532e5P8y58AyPPLnVqLFL/2sp93NGsMeDauMHXvIH+H5sk/VpMuE
+        0cVX3q0w/kr/aBLqloCitV31YIcWo+H2
+X-Google-Smtp-Source: ABdhPJxKr7M9myoHEBeI1FSAxfRPdIcY71gKuYEL+HXoPBJF8yuPR1qLQrh9cwjw6+Ujad/u9TlxYQ==
+X-Received: by 2002:a17:90a:4a85:: with SMTP id f5mr30489537pjh.117.1609779870982;
+        Mon, 04 Jan 2021 09:04:30 -0800 (PST)
 Received: from work ([103.77.37.129])
-        by smtp.gmail.com with ESMTPSA id w63sm55114714pfc.20.2021.01.04.09.04.00
+        by smtp.gmail.com with ESMTPSA id mj5sm22416752pjb.20.2021.01.04.09.04.28
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 04 Jan 2021 09:04:02 -0800 (PST)
-Date:   Mon, 4 Jan 2021 22:33:59 +0530
+        Mon, 04 Jan 2021 09:04:30 -0800 (PST)
+Date:   Mon, 4 Jan 2021 22:34:27 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Carl Huang <cjhuang@codeaurora.org>
-Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ath11k@lists.infradead.org
-Subject: Re: [PATCH v3] mhi: use irq_flags if controller driver configures it
-Message-ID: <20210104170359.GE2256@work>
-References: <20210104101128.8217-1-cjhuang@codeaurora.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, bbhatt@codeaurora.org,
+        hemantk@codeaurora.org
+Subject: Re: [PATCH v8 00/10] mhi: pci_generic: Misc improvements
+Message-ID: <20210104170427.GF2256@work>
+References: <1609776899-30664-1-git-send-email-loic.poulain@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210104101128.8217-1-cjhuang@codeaurora.org>
+In-Reply-To: <1609776899-30664-1-git-send-email-loic.poulain@linaro.org>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 04, 2021 at 06:11:28PM +0800, Carl Huang wrote:
-> If controller driver has specified the irq_flags, mhi uses this specified
-> irq_flags. Otherwise, mhi uses default irq_flags.
+On Mon, Jan 04, 2021 at 05:14:49PM +0100, Loic Poulain wrote:
+> This series adjust some configuration values to ensure stability and
+> robustness of mhi pci devices (timeout, number of events, burst mode).
 > 
-> The purpose of this change is to support one MSI vector for QCA6390.
-> MHI will use one same MSI vector too in this scenario.
+> It also includes support for system sleep as well as a recovery procedure
+> that can be triggered when a PCI error is reported, either by PCI AER or by
+> the new health-check mechanism.
 > 
-> In case of one MSI vector, IRQ_NO_BALANCING is needed when irq handler
-> is requested. The reason is if irq migration happens, the msi_data may
-> change too. However, the msi_data is already programmed to QCA6390
-> hardware during initialization phase. This msi_data inconsistence will
-> result in crash in kernel.
+> All these changes have been tested with Telit FN980m module
 > 
-> Another issue is in case of one MSI vector, IRQF_NO_SUSPEND will trigger
-> WARNINGS because QCA6390 wants to disable the IRQ during the suspend.
-> 
-> To avoid above two issues, QCA6390 driver specifies the irq_flags in case
-> of one MSI vector when mhi_register_controller is called.
-> 
-> Signed-off-by: Carl Huang <cjhuang@codeaurora.org>
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Applied to mhi-next!
+Series applied to mhi-next!
 
 Thanks,
 Mani
 
-> ---
-> v3:
-> - replace "client driver" with "controller driver"
-> - add Reviewed-by: Manivannan Sadhasivam 
-> 
 > v2:
-> - document irq_flags added to mhi_controller
+>   - Cancel recovery work on suspend
+> v3:
+>   - enable doorbell_mode_switch for burst channel (HW)
+>   - Add mhi_initialize_controller helper patch
+> v4:
+>   - Delete hard reset on module unload, MHI reset is enough (Jeffrey)
+>   - Move soc reset support in MHI core (Jeffrey)
+>   - burst mode: enable doorbell_mode_switch for HW channels (Bhaumik)
+>   - Add diag channels
+> v5:
+>   - Remove useless call to mhi_initialize_controller in alloc_controller (hemant)
+>   - Add define for post reset timeout (hemant)
+>   - Fix static misses (hemant)
+> v6:
+>   - Add debug print in case of recovery success (Mani)
+>   - Return error code in case of resume failure (Mani)
+> v7:
+>   - Removed mhi_initialize_controller API (Mani)
+>   - Added controller specific reset callback (Mani)
+>   - Reworked error handling using reset_prepare/done (Mani)
+> v8:
+>   - Rebased on v5.11-rc1
 > 
->  drivers/bus/mhi/core/init.c | 9 +++++++--
->  include/linux/mhi.h         | 2 ++
->  2 files changed, 9 insertions(+), 2 deletions(-)
+> Loic Poulain (10):
+>   bus: mhi: core: Add device hardware reset support
+>   mhi: pci-generic: Increase number of hardware events
+>   mhi: pci_generic: Enable burst mode for hardware channels
+>   mhi: pci_generic: Add support for reset
+>   mhi: pci_generic: Add suspend/resume/recovery procedure
+>   mhi: pci_generic: Add PCI error handlers
+>   mhi: pci_generic: Add health-check
+>   mhi: pci_generic: Increase controller timeout value
+>   mhi: pci_generic: Add diag channels
+>   mhi: pci_generic: Set irq moderation value to 1ms for hw channels
 > 
-> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-> index 381fdea..37903a8 100644
-> --- a/drivers/bus/mhi/core/init.c
-> +++ b/drivers/bus/mhi/core/init.c
-> @@ -148,12 +148,17 @@ int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
->  {
->  	struct mhi_event *mhi_event = mhi_cntrl->mhi_event;
->  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-> +	unsigned long irq_flags = IRQF_SHARED | IRQF_NO_SUSPEND;
->  	int i, ret;
->  
-> +	/* if controller driver has set irq_flags, use it */
-> +	if (mhi_cntrl->irq_flags)
-> +		irq_flags = mhi_cntrl->irq_flags;
-> +
->  	/* Setup BHI_INTVEC IRQ */
->  	ret = request_threaded_irq(mhi_cntrl->irq[0], mhi_intvec_handler,
->  				   mhi_intvec_threaded_handler,
-> -				   IRQF_SHARED | IRQF_NO_SUSPEND,
-> +				   irq_flags,
->  				   "bhi", mhi_cntrl);
->  	if (ret)
->  		return ret;
-> @@ -171,7 +176,7 @@ int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
->  
->  		ret = request_irq(mhi_cntrl->irq[mhi_event->irq],
->  				  mhi_irq_handler,
-> -				  IRQF_SHARED | IRQF_NO_SUSPEND,
-> +				  irq_flags,
->  				  "mhi", mhi_event);
->  		if (ret) {
->  			dev_err(dev, "Error requesting irq:%d for ev:%d\n",
-> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index cb7cd54..77f1e3f 100644
-> --- a/include/linux/mhi.h
-> +++ b/include/linux/mhi.h
-> @@ -351,6 +351,7 @@ struct mhi_controller_config {
->   * @fbc_download: MHI host needs to do complete image transfer (optional)
->   * @pre_init: MHI host needs to do pre-initialization before power up
->   * @wake_set: Device wakeup set flag
-> + * @irq_flags: irq flags passed to request_irq (optional)
->   *
->   * Fields marked as (required) need to be populated by the controller driver
->   * before calling mhi_register_controller(). For the fields marked as (optional)
-> @@ -440,6 +441,7 @@ struct mhi_controller {
->  	bool fbc_download;
->  	bool pre_init;
->  	bool wake_set;
-> +	unsigned long irq_flags;
->  };
->  
->  /**
+>  drivers/bus/mhi/core/main.c   |  13 ++
+>  drivers/bus/mhi/pci_generic.c | 359 +++++++++++++++++++++++++++++++++++++++---
+>  include/linux/mhi.h           |   9 ++
+>  3 files changed, 361 insertions(+), 20 deletions(-)
+> 
 > -- 
 > 2.7.4
 > 
