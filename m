@@ -2,197 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 254D32E90DB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jan 2021 08:20:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D1BCB2E90E2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jan 2021 08:23:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727369AbhADHUf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jan 2021 02:20:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49200 "EHLO
+        id S1727561AbhADHXV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jan 2021 02:23:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726962AbhADHUe (ORCPT
+        with ESMTP id S1726163AbhADHXU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jan 2021 02:20:34 -0500
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1138AC06179F
-        for <linux-arm-msm@vger.kernel.org>; Sun,  3 Jan 2021 23:19:14 -0800 (PST)
-Received: by mail-pj1-x102e.google.com with SMTP id n3so4867116pjm.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Jan 2021 23:19:14 -0800 (PST)
+        Mon, 4 Jan 2021 02:23:20 -0500
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 953C5C061794
+        for <linux-arm-msm@vger.kernel.org>; Sun,  3 Jan 2021 23:22:40 -0800 (PST)
+Received: by mail-pg1-x536.google.com with SMTP id n7so18537452pgg.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Jan 2021 23:22:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=vXX8xe2A/FeRiUPzOKt0JcPzE3KP7HXla4w8NsLDWnc=;
-        b=YuGFCAwzc6s0ZWTmT9gJ9dm8xm/iUjFtuUFJRPZZY/029s2KACTxdL3ZqUZrKeogJd
-         Ck/BTqRIjMB5kEpsoEnDNSlIu8hBVdh25KA2kWlSOtZFYtONWP6o3CVkb5qpfF4QvDQs
-         2KANTHMNVLyC/f2JaJ5cZrDJAWRoXsbRxpH9aBuvbWlZ29OSySy90D7abge4FuootsRW
-         WO3nv55h3wwq+1JvIQSL/NTB6Pq5v++NLIQBDpBwCAxWyT9uh0p0tan5aq359RYmBvW9
-         H4ZJZnDoyu8st82avvR/1WjDPqeisur7dfMRBYvklu+jNS3TNFshPHX/wRWrZGdhzEtL
-         hdCQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pXFP/mDtbX6rOKoKmCzMOZbkWkRy48BUP7gekqphCDg=;
+        b=brRLnzPM+VCNZQWtez6ENRPD5HNQEo3PCZwVieBiA/8lJWMIzQwXuVEHn8mV1qWFwT
+         RchZ0s9ml91okYiuwbNypm5R81tyH0IJvHjcDtf/A2n9yUnoXXbI2idHRh5AkIYu5xcU
+         6lnm//V+Xw2TZj6UeCN+mfzJoiMeLwkOTY4z3j94WyvkrbQaqNVhWe0WIGlMxHTGosCM
+         NJA8cUZkRfE1/GswcVV3MQH1/J9XSqFKfVEgkEdu6o5Z+gI+lRgbrClPNhahrLNH9v6N
+         tgO5AQ1svI4ULETEhCPyBWanET8p5m1hf8vFWM7I1nxh/Le58jZJsId/ZzhS60diHzy3
+         429g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=vXX8xe2A/FeRiUPzOKt0JcPzE3KP7HXla4w8NsLDWnc=;
-        b=aKrKh/3RFDj5KFKUExO6VY9gzSJJvNSJkRxfZYkNegiu5HQpDN2n38J65vgQzcKG6C
-         uIXHDq/Kr8FaG7MW5JIREBIqYMqEqRBkVEltd+eTWuxuJQbasskRZvsheuyaI/vVYW8b
-         E/AqFzevnabx9hnrPR9oFEYtOLbMo5fUclI/r38NDQS+Oz1OEPWGuvMVFbHzQF631rs7
-         m/RSGc7aPDjY8mP6Tl6xIkv8J2gKwq+s8aMPZk4QASw+gtC8vcy23VbS91UAtlLMJpAm
-         L1VqCUJivdwz4mIGeQuKB0QGO4NUDjGAp57DYI3mJnkLwUt7n6oEdB0hs9vyrPLbQEAQ
-         UcYQ==
-X-Gm-Message-State: AOAM532WRFDVZSf8lOcfueD56opKzFJPBOEAvxwmScebUTBW8rCtSU81
-        mrpluSrrdmMP4eys4VM/v2TgYQ==
-X-Google-Smtp-Source: ABdhPJwvlRfdZmhb4sgIhlIMCp7GSIzc4CGLSDAZCiWizmME24cJXa5sePE9JLIPSO8GE4a2CzO61w==
-X-Received: by 2002:a17:902:9f88:b029:dc:292d:37c5 with SMTP id g8-20020a1709029f88b02900dc292d37c5mr46034848plq.26.1609744753253;
-        Sun, 03 Jan 2021 23:19:13 -0800 (PST)
-Received: from localhost ([122.172.20.109])
-        by smtp.gmail.com with ESMTPSA id h12sm45986820pgk.70.2021.01.03.23.19.12
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 03 Jan 2021 23:19:12 -0800 (PST)
-Date:   Mon, 4 Jan 2021 12:49:10 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Yangtao Li <tiny.windzz@gmail.com>
-Cc:     myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
-        cw00.choi@samsung.com, krzk@kernel.org, shawnguo@kernel.org,
-        s.hauer@pengutronix.de, kernel@pengutronix.de, festevam@gmail.com,
-        linux-imx@nxp.com, digetx@gmail.com, thierry.reding@gmail.com,
-        jonathanh@nvidia.com, yuq825@gmail.com, airlied@linux.ie,
-        daniel@ffwll.ch, robdclark@gmail.com, sean@poorly.run,
-        robh@kernel.org, tomeu.vizoso@collabora.com, steven.price@arm.com,
-        alyssa.rosenzweig@collabora.com, stanimir.varbanov@linaro.org,
-        agross@kernel.org, bjorn.andersson@linaro.org, mchehab@kernel.org,
-        lukasz.luba@arm.com, adrian.hunter@intel.com,
-        ulf.hansson@linaro.org, vireshk@kernel.org, nm@ti.com,
-        sboyd@kernel.org, broonie@kernel.org, gregkh@linuxfoundation.org,
-        jirislaby@kernel.org, rjw@rjwysocki.net, jcrouse@codeaurora.org,
-        hoegsberg@google.com, eric@anholt.net, tzimmermann@suse.de,
-        marijn.suijten@somainline.org, gustavoars@kernel.org,
-        emil.velikov@collabora.com, jonathan@marek.ca,
-        akhilpo@codeaurora.org, smasetty@codeaurora.org,
-        airlied@redhat.com, masneyb@onstation.org, kalyan_t@codeaurora.org,
-        tanmay@codeaurora.org, ddavenport@chromium.org,
-        jsanka@codeaurora.org, rnayak@codeaurora.org,
-        tongtiangen@huawei.com, miaoqinglang@huawei.com,
-        khsieh@codeaurora.org, abhinavk@codeaurora.org,
-        chandanu@codeaurora.org, groeck@chromium.org, varar@codeaurora.org,
-        mka@chromium.org, harigovi@codeaurora.org,
-        rikard.falkeborn@gmail.com, natechancellor@gmail.com,
-        georgi.djakov@linaro.org, akashast@codeaurora.org,
-        parashar@codeaurora.org, dianders@chromium.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, lima@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-media@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-spi@vger.kernel.org, linux-serial@vger.kernel.org
-Subject: Re: [PATCH 07/31] serial: qcom_geni_serial: convert to use
- devm_pm_opp_* API
-Message-ID: <20210104071910.2a2otwxyniu7c22z@vireshk-i7>
-References: <20210101165507.19486-1-tiny.windzz@gmail.com>
- <20210101165507.19486-8-tiny.windzz@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pXFP/mDtbX6rOKoKmCzMOZbkWkRy48BUP7gekqphCDg=;
+        b=PtInjjmnSOEEfbaN7h03+fxtdblAArLlbWQRTxqVUKhL6DWwUPNy8nehHdTNehCeFa
+         c8EY1PptgA31B5EY2Q0P4tZaejpIqWUx1NM6UfFAcMX8tPQYvMb6nx4uE+xSo+ugOASX
+         CPADhO5D3YsC8xxSoXhnOudNzTNC/69/t35ZG25SacGypbGHnlO86gE9PVOy8TV20/dY
+         lLMawEimjPymSSCB6XAzUOYkU8Lm9Gr53LGLIu50rdnrgespLL53Hw7TrwuLP/BZS2/S
+         /CCAAIC8Tnq0Eizj+GT45/kKskopmC0u96iuqISaa3v9rAMbwBnkajS5K4g4tomyS4ez
+         qgHg==
+X-Gm-Message-State: AOAM5322M4hpITk2GsKXYYGYEMur6nsY13q7CeDaMfV+g6zhsvvXS8RQ
+        Sf85Nw579czmOcV/ILegA5X9
+X-Google-Smtp-Source: ABdhPJz5zeJcaEXihwL5Z4D5OXRnNcKttdAONkI46PsJpNlLkxQ/qEihV7OsTSAl7yWZ+bxGIJfdSg==
+X-Received: by 2002:a63:1214:: with SMTP id h20mr46514167pgl.379.1609744960015;
+        Sun, 03 Jan 2021 23:22:40 -0800 (PST)
+Received: from localhost.localdomain ([103.77.37.160])
+        by smtp.gmail.com with ESMTPSA id h7sm56676668pfr.210.2021.01.03.23.22.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 03 Jan 2021 23:22:39 -0800 (PST)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     kishon@ti.com, vkoul@kernel.org, robh+dt@kernel.org
+Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 0/2] Add support for USB3 PHY on SDX55
+Date:   Mon,  4 Jan 2021 12:52:10 +0530
+Message-Id: <20210104072212.144960-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210101165507.19486-8-tiny.windzz@gmail.com>
-User-Agent: NeoMutt/20180716-391-311a52
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01-01-21, 16:54, Yangtao Li wrote:
-> Use devm_pm_opp_* API to simplify code, and we don't need
-> to make opp_table glabal.
-> 
-> Let's remove opp_table from geni_se later.
-> 
-> Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
-> ---
->  drivers/tty/serial/qcom_geni_serial.c | 23 +++++++++--------------
->  1 file changed, 9 insertions(+), 14 deletions(-)
-> 
-> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-> index 5aada7ebae35..36a92df8ec11 100644
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> @@ -1352,6 +1352,7 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
->  	int irq;
->  	bool console = false;
->  	struct uart_driver *drv;
-> +	struct opp_table *opp_table;
->  
->  	if (of_device_is_compatible(pdev->dev.of_node, "qcom,geni-debug-uart"))
->  		console = true;
-> @@ -1433,13 +1434,13 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
->  	if (of_property_read_bool(pdev->dev.of_node, "cts-rts-swap"))
->  		port->cts_rts_swap = true;
->  
-> -	port->se.opp_table = dev_pm_opp_set_clkname(&pdev->dev, "se");
-> -	if (IS_ERR(port->se.opp_table))
-> -		return PTR_ERR(port->se.opp_table);
-> +	opp_table = devm_pm_opp_set_clkname(&pdev->dev, "se");
-> +	if (IS_ERR(opp_table))
-> +		return PTR_ERR(opp_table);
->  	/* OPP table is optional */
-> -	ret = dev_pm_opp_of_add_table(&pdev->dev);
-> +	ret = devm_pm_opp_of_add_table(&pdev->dev);
->  	if (ret) {
-> -		dev_pm_opp_put_clkname(port->se.opp_table);
-> +		devm_pm_opp_put_clkname(&pdev->dev, opp_table);
+Hello,
 
-We shouldn't be doing this here, i.e. put_clkname. Even when the OPP
-table isn't present, this driver calls dev_pm_opp_set_rate() which
-behaves like clk_set_rate() in this case and so the clk name is still
-required by the OPP core.
+This series adds USB3 PHY support for SDX55 platform. The USB3 PHY is of
+type QMP and revision 4.0.0. In this revision, "com_aux" clock is not
+utilized.
 
->  		if (ret != -ENODEV) {
->  			dev_err(&pdev->dev, "invalid OPP table in device tree\n");
->  			return ret;
-> @@ -1453,7 +1454,7 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
->  
->  	ret = uart_add_one_port(drv, uport);
->  	if (ret)
-> -		goto err;
-> +		return ret;
->  
->  	irq_set_status_flags(uport->irq, IRQ_NOAUTOEN);
->  	ret = devm_request_irq(uport->dev, uport->irq, qcom_geni_serial_isr,
-> @@ -1461,7 +1462,7 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
->  	if (ret) {
->  		dev_err(uport->dev, "Failed to get IRQ ret %d\n", ret);
->  		uart_remove_one_port(drv, uport);
-> -		goto err;
-> +		return ret;
->  	}
->  
->  	/*
-> @@ -1478,15 +1479,11 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
->  		if (ret) {
->  			device_init_wakeup(&pdev->dev, false);
->  			uart_remove_one_port(drv, uport);
-> -			goto err;
-> +			return ret;
->  		}
->  	}
->  
->  	return 0;
-> -err:
-> -	dev_pm_opp_of_remove_table(&pdev->dev);
-> -	dev_pm_opp_put_clkname(port->se.opp_table);
-> -	return ret;
->  }
->  
->  static int qcom_geni_serial_remove(struct platform_device *pdev)
-> @@ -1494,8 +1491,6 @@ static int qcom_geni_serial_remove(struct platform_device *pdev)
->  	struct qcom_geni_serial_port *port = platform_get_drvdata(pdev);
->  	struct uart_driver *drv = port->private_data.drv;
->  
-> -	dev_pm_opp_of_remove_table(&pdev->dev);
-> -	dev_pm_opp_put_clkname(port->se.opp_table);
->  	dev_pm_clear_wake_irq(&pdev->dev);
->  	device_init_wakeup(&pdev->dev, false);
->  	uart_remove_one_port(drv, &port->uport);
-> -- 
-> 2.25.1
+This series has been tested on SDX55-MTP along with the relevant DT node.
+
+Thanks,
+Mani
+
+Manivannan Sadhasivam (2):
+  dt-bindings: phy: qcom,qmp: Add SDX55 USB PHY binding
+  phy: qcom-qmp: Add support for SDX55 QMP PHY
+
+ .../devicetree/bindings/phy/qcom,qmp-phy.yaml |  2 +
+ drivers/phy/qualcomm/phy-qcom-qmp.c           | 83 +++++++++++++++++++
+ 2 files changed, 85 insertions(+)
 
 -- 
-viresh
+2.25.1
+
