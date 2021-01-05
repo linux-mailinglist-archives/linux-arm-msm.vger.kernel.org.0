@@ -2,276 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E15D2EAAD2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 13:30:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 924592EAC67
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 14:56:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730274AbhAEM25 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jan 2021 07:28:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37790 "EHLO
+        id S1729081AbhAENyp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jan 2021 08:54:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730259AbhAEM24 (ORCPT
+        with ESMTP id S1729000AbhAENyo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jan 2021 07:28:56 -0500
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FFEBC06138D
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jan 2021 04:27:56 -0800 (PST)
-Received: by mail-pl1-x62e.google.com with SMTP id s15so16277332plr.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jan 2021 04:27:56 -0800 (PST)
+        Tue, 5 Jan 2021 08:54:44 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88117C061796
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jan 2021 05:54:04 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id t30so36289932wrb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jan 2021 05:54:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=HMhTJmm/aJAOoL9aJNkUA9BuiVKtKAPPcxXpVi5YN0I=;
-        b=IQCnViu6Gscw70F3M40CJz7CWKD+hMrlxpGVlQ4Y/o/Z5LQPcPVPvQUfoyrE+5M5sB
-         5qsyfMFezh/8aYezZD/+eIqWVjLC9d7PWJjjcRfQhEOkkbekZv9HXdrRk1qvJCcEbRal
-         5S1A2KMpknVZ2g+zyrFFgEkcAZ/bqL5F0a13nkR7sBm1w1VUAUsVbAHat/lzQY1YfN6P
-         6se9CnfOY+vlmp9AJDgzRM12GBpMSY8y4YHVX3agSgrePdgifzrPFDzgvkud4m/1+Ut3
-         HdmS0a23US4esyzFsQnY7EOkEUZnOi4rZ2AtJrFpyQGUTJjGNYXf4s7xOiZ/fV/bcg2J
-         ACrQ==
+        h=to:cc:references:from:subject:message-id:date:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=WeMaF7TAVDOEIygomZnq05mZMvBNk5xAGXnGkwP4VxM=;
+        b=ye5X2VuG3ou5wXNFk5tCMRRCWTPYTJ0gR4UGwUrMrOUE9rOMVq1fn7BEQ7Qv9ZUe0f
+         T52GJNGyEMCs4wOPnymnhwaZita24pCfV2GaE7K76S5eLmBdmPeZI9XHx5xmXsxKp3Kd
+         p9uVsXsss0OXMxuo0BC/GGdWySBMsv5SEQGte5AK5UFq7oREC1oS4GO6Q1yG1KFQwRnq
+         LEDpFxRk5r5JCTI20JAIPALpeI2upYM+47VQVhMKoBNj/nUY8Sgdo353APdpf3WtF9sU
+         A56HDIiyET1lXVEKGyaEQRD+R8KKgfEwuFA3tZZD88P19IWECm1EovZhOlHJ8IXlg/mo
+         K6Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=HMhTJmm/aJAOoL9aJNkUA9BuiVKtKAPPcxXpVi5YN0I=;
-        b=JMjnrzDyFeCsJLk4ZOsoJpg9RaK/hvjBL6heM9TCYUyfhhngmjwCRONi5QWLZyztGz
-         TOgDSqoEeEbDY2aZxy4zCRw6BG6wWjdOONKgseBPRQrNxaMj19CksD2G/qV2uoauJiZB
-         CAZSwj71JackVV3g39iS7Vk2PSwtOg1GNhFUXdxBsNw3ItZttIgFFf0DCd7HZuLPH0BV
-         tJIaspOsxamOj5GwF5dRig6dh1Af9mgwY31rO9tL4Z5lfSW9hGAVOaL0i7Tl5v3K8bSO
-         OEWyHbUMyQ50g5Na//PrZLNMQ0FLb64LgX7/Oj0sotBI/rL6I6hzLZiSpofhmSgAjzDD
-         rchQ==
-X-Gm-Message-State: AOAM532uVTuhi4l2M3El9M3AN3J26mFoQvKrUBzRjjjWWnXTTk+PQUtA
-        opOok7NyhYVsoqR1Nvdmgv4J
-X-Google-Smtp-Source: ABdhPJynMcTi+qPSgTqiFxHAuFVh6C/rwoaelZubZHfobNX+jtdW+qrsv8rlTZ3w9HTCPttnvnuUFQ==
-X-Received: by 2002:a17:90a:a012:: with SMTP id q18mr3745238pjp.223.1609849675759;
-        Tue, 05 Jan 2021 04:27:55 -0800 (PST)
-Received: from localhost.localdomain ([103.77.37.191])
-        by smtp.gmail.com with ESMTPSA id t22sm64745402pgm.18.2021.01.05.04.27.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Jan 2021 04:27:55 -0800 (PST)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Vinod Koul <vkoul@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v2 18/18] ARM: dts: qcom: sdx55-mtp: Add regulator nodes
-Date:   Tue,  5 Jan 2021 17:56:49 +0530
-Message-Id: <20210105122649.13581-19-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210105122649.13581-1-manivannan.sadhasivam@linaro.org>
-References: <20210105122649.13581-1-manivannan.sadhasivam@linaro.org>
+        h=x-gm-message-state:to:cc:references:from:subject:message-id:date
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=WeMaF7TAVDOEIygomZnq05mZMvBNk5xAGXnGkwP4VxM=;
+        b=jF44vT8HZmSgI7XEsHTLw7y7Mj3w200Siyd7upmzLdjvtzNgnIf1e4JUDkWLlFzV3w
+         w9aG5kaT9nSYRrqt+7tRZVbhb3rAZ/5QKhsH2ICNdIqJm4J6S3IPoW/9Qa9liZtET6hy
+         Q//LeoQXM24/4l7cmzaEZKhme7NoSH4xfnqb++LbaRbWTtS/tSZs4ZFVopDkWFxy5k+j
+         7cQo02H+Id+k5uRtG/DFXmN6CA8L6yliOjwldPKPdJYs7zx22MCdM/S8NDphxgziFrNa
+         wIDntokUw1f4lzxZ2WCHICB4MmljlpWQcY2teOXtT17s6z1cbPin8mReNOT+y5gj/G8E
+         ICfA==
+X-Gm-Message-State: AOAM532TazVewr6VhjHXOFeXr+nIIivIhr6XBPK34QgrmtDfjUdpwzHe
+        S8cQzsNJpdUTisl7yIalGkZRDQ==
+X-Google-Smtp-Source: ABdhPJyD5a1x18fxXMG+4Mcx13Pev1iFYLAfK9YgIqd+kZ7o7mQ6A/yXNqdPNWouLSe9UlACDrP1xQ==
+X-Received: by 2002:adf:dd09:: with SMTP id a9mr84076235wrm.90.1609854843150;
+        Tue, 05 Jan 2021 05:54:03 -0800 (PST)
+Received: from [10.44.66.8] ([212.45.67.2])
+        by smtp.googlemail.com with ESMTPSA id i11sm4154410wmd.47.2021.01.05.05.54.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Jan 2021 05:54:02 -0800 (PST)
+To:     Vincent Knecht <vincent.knecht@mailoo.org>,
+        Jun Nie <jun.nie@linaro.org>, devicetree@vger.kernel.org,
+        bjorn.andersson@linaro.org, agross@kernel.org,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robh@kernel.org
+Cc:     shawn.guo@linaro.org
+References: <20201204075345.5161-1-jun.nie@linaro.org>
+ <20201204075345.5161-6-jun.nie@linaro.org>
+ <d869ea94b3b1c73800a5c3b855cb6f280be6c185.camel@mailoo.org>
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+Subject: Re: [PATCH v2 5/5] interconnect: qcom: Add MSM8939 interconnect
+ provider driver
+Message-ID: <a88b39dd-1c50-8aff-f85e-27086db9b040@linaro.org>
+Date:   Tue, 5 Jan 2021 15:54:04 +0200
 MIME-Version: 1.0
+In-Reply-To: <d869ea94b3b1c73800a5c3b855cb6f280be6c185.camel@mailoo.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Vinod Koul <vkoul@kernel.org>
+On 1/2/21 13:08, Vincent Knecht wrote:
+> Le vendredi 04 décembre 2020 à 15:53 +0800, Jun Nie a écrit :
+>> Add driver for the Qualcomm interconnect buses found in MSM8939 based
+>> platforms. The topology consists of four NoCs that are controlled by
+>> a remote processor that collects the aggregated bandwidth for each
+>> master-slave pairs.
+>>
+>> Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> 
+> Shouldn't some rpm ids be changed like they were for msm8916 in the following patch ?
+> c497f9322af9 ("interconnect: qcom: msm8916: Remove rpm-ids from non-RPM nodes")
+> https://patchwork.kernel.org/project/linux-arm-msm/patch/20201112105140.10092-1-georgi.djakov@linaro.org/
 
-This adds the regulators found on SDX55 MTP.
+Maybe they should. I don't have the hardware to try it, but the test will be
+to just add the NoC DT nodes, enable the driver and inspect the boot log for
+messages like:
+[    2.926647] qcom_icc_rpm_smd_send mas X error -6
 
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- arch/arm/boot/dts/qcom-sdx55-mtp.dts | 179 +++++++++++++++++++++++++++
- 1 file changed, 179 insertions(+)
-
-diff --git a/arch/arm/boot/dts/qcom-sdx55-mtp.dts b/arch/arm/boot/dts/qcom-sdx55-mtp.dts
-index 825cc7d0ba18..61e7d5d4bd48 100644
---- a/arch/arm/boot/dts/qcom-sdx55-mtp.dts
-+++ b/arch/arm/boot/dts/qcom-sdx55-mtp.dts
-@@ -6,6 +6,7 @@
- 
- /dts-v1/;
- 
-+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include "qcom-sdx55.dtsi"
- #include <arm64/qcom/pm8150b.dtsi>
- #include "qcom-pmx55.dtsi"
-@@ -22,6 +23,184 @@ aliases {
- 	chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
-+
-+	vph_pwr: vph-pwr-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph_pwr";
-+		regulator-min-microvolt = <3700000>;
-+		regulator-max-microvolt = <3700000>;
-+	};
-+
-+	vreg_bob_3p3: pmx55-bob {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vreg_bob_3p3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+
-+		vin-supply = <&vph_pwr>;
-+	};
-+
-+	vreg_s7e_mx_0p752: pmx55-s7e {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vreg_s7e_mx_0p752";
-+		regulator-min-microvolt = <752000>;
-+		regulator-max-microvolt = <752000>;
-+
-+		vin-supply = <&vph_pwr>;
-+	};
-+
-+	vreg_vddpx_2: vddpx-2 {
-+		compatible = "regulator-gpio";
-+		regulator-name = "vreg_vddpx_2";
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <2850000>;
-+		enable-gpios = <&tlmm 98 GPIO_ACTIVE_HIGH>;
-+		gpios = <&tlmm 100 GPIO_ACTIVE_HIGH>;
-+		states = <1800000 0>, <2850000 1>;
-+		startup-delay-us = <200000>;
-+		enable-active-high;
-+		regulator-boot-on;
-+
-+		vin-supply = <&vph_pwr>;
-+	};
-+};
-+
-+&apps_rsc {
-+	pmx55-rpmh-regulators {
-+		compatible = "qcom,pmx55-rpmh-regulators";
-+		qcom,pmic-id = "e";
-+
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s2-supply = <&vph_pwr>;
-+		vdd-s3-supply = <&vph_pwr>;
-+		vdd-s4-supply = <&vph_pwr>;
-+		vdd-s5-supply = <&vph_pwr>;
-+		vdd-s6-supply = <&vph_pwr>;
-+		vdd-s7-supply = <&vph_pwr>;
-+		vdd-l1-l2-supply = <&vreg_s2e_1p224>;
-+		vdd-l3-l9-supply = <&vreg_s3e_0p824>;
-+		vdd-l4-l12-supply = <&vreg_s4e_1p904>;
-+		vdd-l5-l6-supply = <&vreg_s4e_1p904>;
-+		vdd-l7-l8-supply = <&vreg_s3e_0p824>;
-+		vdd-l10-l11-l13-supply = <&vreg_bob_3p3>;
-+		vdd-l14-supply = <&vreg_s7e_mx_0p752>;
-+		vdd-l15-supply = <&vreg_s2e_1p224>;
-+		vdd-l16-supply = <&vreg_s4e_1p904>;
-+
-+		vreg_s2e_1p224: smps2 {
-+			regulator-min-microvolt = <1280000>;
-+			regulator-max-microvolt = <1400000>;
-+		};
-+
-+		vreg_s3e_0p824: smps3 {
-+			regulator-min-microvolt = <800000>;
-+			regulator-max-microvolt = <1000000>;
-+		};
-+
-+		vreg_s4e_1p904: smps4 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1960000>;
-+		};
-+
-+		ldo1 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		ldo2 {
-+			regulator-min-microvolt = <1128000>;
-+			regulator-max-microvolt = <1128000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		ldo3 {
-+			regulator-min-microvolt = <800000>;
-+			regulator-max-microvolt = <800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		ldo4 {
-+			regulator-min-microvolt = <872000>;
-+			regulator-max-microvolt = <872000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		ldo5 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <1900000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		ldo6 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		ldo7 {
-+			regulator-min-microvolt = <480000>;
-+			regulator-max-microvolt = <900000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		ldo8 {
-+			regulator-min-microvolt = <480000>;
-+			regulator-max-microvolt = <900000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		ldo9 {
-+			regulator-min-microvolt = <800000>;
-+			regulator-max-microvolt = <800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		ldo10 {
-+			regulator-min-microvolt = <3088000>;
-+			regulator-max-microvolt = <3088000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		ldo11 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <2928000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		ldo12 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		ldo13 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <2928000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		ldo14 {
-+			regulator-min-microvolt = <600000>;
-+			regulator-max-microvolt = <800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		ldo15 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+
-+		ldo16 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <1904000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+		};
-+	};
- };
- 
- &blsp1_uart3 {
--- 
-2.25.1
-
+Thanks,
+Georgi
