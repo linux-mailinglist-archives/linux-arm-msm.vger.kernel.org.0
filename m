@@ -2,182 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 335352EB02A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 17:35:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 11EF92EB038
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 17:37:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727209AbhAEQef (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jan 2021 11:34:35 -0500
-Received: from foss.arm.com ([217.140.110.172]:57076 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726132AbhAEQee (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jan 2021 11:34:34 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 83C64113E;
-        Tue,  5 Jan 2021 08:33:48 -0800 (PST)
-Received: from [192.168.1.179] (unknown [172.31.20.19])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 647673F70D;
-        Tue,  5 Jan 2021 08:33:37 -0800 (PST)
-Subject: Re: [PATCH 19/31] drm/panfrost: convert to use devm_pm_opp_* API
-To:     Yangtao Li <tiny.windzz@gmail.com>, myungjoo.ham@samsung.com,
-        kyungmin.park@samsung.com, cw00.choi@samsung.com, krzk@kernel.org,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
-        festevam@gmail.com, linux-imx@nxp.com, digetx@gmail.com,
-        thierry.reding@gmail.com, jonathanh@nvidia.com, yuq825@gmail.com,
-        airlied@linux.ie, daniel@ffwll.ch, robdclark@gmail.com,
-        sean@poorly.run, robh@kernel.org, tomeu.vizoso@collabora.com,
-        alyssa.rosenzweig@collabora.com, stanimir.varbanov@linaro.org,
-        agross@kernel.org, bjorn.andersson@linaro.org, mchehab@kernel.org,
-        lukasz.luba@arm.com, adrian.hunter@intel.com,
-        ulf.hansson@linaro.org, vireshk@kernel.org, nm@ti.com,
-        sboyd@kernel.org, broonie@kernel.org, gregkh@linuxfoundation.org,
-        jirislaby@kernel.org, rjw@rjwysocki.net, jcrouse@codeaurora.org,
-        hoegsberg@google.com, eric@anholt.net, tzimmermann@suse.de,
-        marijn.suijten@somainline.org, gustavoars@kernel.org,
-        emil.velikov@collabora.com, jonathan@marek.ca,
-        akhilpo@codeaurora.org, smasetty@codeaurora.org,
-        airlied@redhat.com, masneyb@onstation.org, kalyan_t@codeaurora.org,
-        tanmay@codeaurora.org, ddavenport@chromium.org,
-        jsanka@codeaurora.org, rnayak@codeaurora.org,
-        tongtiangen@huawei.com, miaoqinglang@huawei.com,
-        khsieh@codeaurora.org, abhinavk@codeaurora.org,
-        chandanu@codeaurora.org, groeck@chromium.org, varar@codeaurora.org,
-        mka@chromium.org, harigovi@codeaurora.org,
-        rikard.falkeborn@gmail.com, natechancellor@gmail.com,
-        georgi.djakov@linaro.org, akashast@codeaurora.org,
-        parashar@codeaurora.org, dianders@chromium.org
-Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, lima@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-media@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-spi@vger.kernel.org, linux-serial@vger.kernel.org
-References: <20210101165507.19486-1-tiny.windzz@gmail.com>
- <20210101165507.19486-20-tiny.windzz@gmail.com>
-From:   Steven Price <steven.price@arm.com>
-Message-ID: <63e5e2ae-0baf-cbd1-b2eb-43fac89acb7c@arm.com>
-Date:   Tue, 5 Jan 2021 16:33:32 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
-MIME-Version: 1.0
-In-Reply-To: <20210101165507.19486-20-tiny.windzz@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+        id S1727497AbhAEQho (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jan 2021 11:37:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48336 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725880AbhAEQho (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 5 Jan 2021 11:37:44 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE2BEC061574
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jan 2021 08:37:03 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id a12so36764348wrv.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jan 2021 08:37:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=PF1M4i3eJFGcGpF9DAdDv9Yckj7pk60Uyo8Jps0a91k=;
+        b=t5hLj9Q3vakjnqhN0dIRJCwGv99R8ueJ9gfr4/1Xn2lC0XTg12i/qfqHkJfUr2w0r3
+         3iUJ677Is6kyGLBAXH5mg73obdc5EiQscsQCBwelq6cCEWZx3E8xHxW8dKJriVCFPen5
+         wqKROvQH6t0OIc2q8Eea+qa+zhO7SMpogHkc1GMnZckLoTNy8br6LqOvkzgMLt8WFAnH
+         AsVw4Bx08B0xA5BScAepV7pYxjQec5VrDIFKo6y9pBDDse+rsdDyoSgU0loUVdS+1SQQ
+         90tTzMBo47h+s78PyTXP2Mf0sDy3CSrjY+o9T4F2pU2P3JiNy3C8MaMfpsK7VaWSUwZZ
+         zIfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=PF1M4i3eJFGcGpF9DAdDv9Yckj7pk60Uyo8Jps0a91k=;
+        b=OFe6tRPU9h21WApGwfJhCWL393U8rZmkgVzEHB5lpsYyWgv5jxLcr1lsDMXL979UTX
+         2akpTsTD9CjweuX14pXw4MRhQwZP0d9FPLJ4VVmzGoQ+SQb+4OwZmb4azQJ1xsNmVfT0
+         K43QUpXWUW7XZ+68Yi6dZpEXzuAuqBl4/3ZyTAZOCTqvYH2cuT51DAmNPGVuMj+CCb1a
+         2DzGls8wf0OMh/CkrQ93zKDFhFPWoJYkazW9DFXtIX0xhuPYSMZqw69aEWglFyXxj6VU
+         NbkTCeMzq8nqVLq1mShv30DTAjVZs0XMDTOHANJFbzZ4o3bExZ2oHNbS+R15aH9qFfNl
+         aUkQ==
+X-Gm-Message-State: AOAM531naYwyvAiNA33jVShJF5siypS9MpnKcjvJEz5m6J7ZFKnS29k4
+        IBgru+y6y95URJjUTFT7GB0PTeQ/HcsY0g==
+X-Google-Smtp-Source: ABdhPJyAXaBzui4zVRyZHL3txVEkuqwC55Lmpj8o33P5jsu2BCuc/FOUCXqekhd6tPoDU72gEaJ4fw==
+X-Received: by 2002:adf:e74a:: with SMTP id c10mr447223wrn.122.1609864622553;
+        Tue, 05 Jan 2021 08:37:02 -0800 (PST)
+Received: from localhost.localdomain ([2a01:e0a:490:8730:2285:e92f:1a49:4891])
+        by smtp.gmail.com with ESMTPSA id z3sm475801wrn.59.2021.01.05.08.37.01
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 05 Jan 2021 08:37:02 -0800 (PST)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH v2 1/2] mhi: unconstify mhi_event_config
+Date:   Tue,  5 Jan 2021 17:44:35 +0100
+Message-Id: <1609865076-13890-1-git-send-email-loic.poulain@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/01/2021 16:54, Yangtao Li wrote:
-> Use devm_pm_opp_* API to simplify code, and remove opp_table
-> from panfrost_devfreq.
-> 
-> Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
+Some parameters may have to be determined at runtime.
+It is the case for the event ring MSI vector.
 
-Reviewed-by: Steven Price <steven.price@arm.com>
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ v2: no change
 
-> ---
->   drivers/gpu/drm/panfrost/panfrost_devfreq.c | 34 ++++++---------------
->   drivers/gpu/drm/panfrost/panfrost_devfreq.h |  1 -
->   2 files changed, 10 insertions(+), 25 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/panfrost/panfrost_devfreq.c b/drivers/gpu/drm/panfrost/panfrost_devfreq.c
-> index f44d28fad085..c42fa9eb43b1 100644
-> --- a/drivers/gpu/drm/panfrost/panfrost_devfreq.c
-> +++ b/drivers/gpu/drm/panfrost/panfrost_devfreq.c
-> @@ -92,25 +92,26 @@ int panfrost_devfreq_init(struct panfrost_device *pfdev)
->   	struct thermal_cooling_device *cooling;
->   	struct panfrost_devfreq *pfdevfreq = &pfdev->pfdevfreq;
->   
-> -	opp_table = dev_pm_opp_set_regulators(dev, pfdev->comp->supply_names,
-> +	opp_table = devm_pm_opp_set_regulators(dev, pfdev->comp->supply_names,
->   					      pfdev->comp->num_supplies);
->   	if (IS_ERR(opp_table)) {
->   		ret = PTR_ERR(opp_table);
->   		/* Continue if the optional regulator is missing */
->   		if (ret != -ENODEV) {
->   			DRM_DEV_ERROR(dev, "Couldn't set OPP regulators\n");
-> -			goto err_fini;
-> +			return ret;
->   		}
-> -	} else {
-> -		pfdevfreq->regulators_opp_table = opp_table;
->   	}
->   
-> -	ret = dev_pm_opp_of_add_table(dev);
-> +	ret = devm_pm_opp_of_add_table(dev);
->   	if (ret) {
-> +		if (!IS_ERR(opp_table))
-> +			devm_pm_opp_put_regulators(dev, opp_table);
-> +
->   		/* Optional, continue without devfreq */
->   		if (ret == -ENODEV)
->   			ret = 0;
-> -		goto err_fini;
-> +		return ret;
->   	}
->   	pfdevfreq->opp_of_table_added = true;
->   
-> @@ -121,10 +122,8 @@ int panfrost_devfreq_init(struct panfrost_device *pfdev)
->   	cur_freq = clk_get_rate(pfdev->clock);
->   
->   	opp = devfreq_recommended_opp(dev, &cur_freq, 0);
-> -	if (IS_ERR(opp)) {
-> -		ret = PTR_ERR(opp);
-> -		goto err_fini;
-> -	}
-> +	if (IS_ERR(opp))
-> +		return PTR_ERR(opp);
->   
->   	panfrost_devfreq_profile.initial_freq = cur_freq;
->   	dev_pm_opp_put(opp);
-> @@ -133,8 +132,7 @@ int panfrost_devfreq_init(struct panfrost_device *pfdev)
->   					  DEVFREQ_GOV_SIMPLE_ONDEMAND, NULL);
->   	if (IS_ERR(devfreq)) {
->   		DRM_DEV_ERROR(dev, "Couldn't initialize GPU devfreq\n");
-> -		ret = PTR_ERR(devfreq);
-> -		goto err_fini;
-> +		return PTR_ERR(devfreq);
->   	}
->   	pfdevfreq->devfreq = devfreq;
->   
-> @@ -145,10 +143,6 @@ int panfrost_devfreq_init(struct panfrost_device *pfdev)
->   		pfdevfreq->cooling = cooling;
->   
->   	return 0;
-> -
-> -err_fini:
-> -	panfrost_devfreq_fini(pfdev);
-> -	return ret;
->   }
->   
->   void panfrost_devfreq_fini(struct panfrost_device *pfdev)
-> @@ -159,14 +153,6 @@ void panfrost_devfreq_fini(struct panfrost_device *pfdev)
->   		devfreq_cooling_unregister(pfdevfreq->cooling);
->   		pfdevfreq->cooling = NULL;
->   	}
-> -
-> -	if (pfdevfreq->opp_of_table_added) {
-> -		dev_pm_opp_of_remove_table(&pfdev->pdev->dev);
-> -		pfdevfreq->opp_of_table_added = false;
-> -	}
-> -
-> -	dev_pm_opp_put_regulators(pfdevfreq->regulators_opp_table);
-> -	pfdevfreq->regulators_opp_table = NULL;
->   }
->   
->   void panfrost_devfreq_resume(struct panfrost_device *pfdev)
-> diff --git a/drivers/gpu/drm/panfrost/panfrost_devfreq.h b/drivers/gpu/drm/panfrost/panfrost_devfreq.h
-> index db6ea48e21f9..a51854cc8c06 100644
-> --- a/drivers/gpu/drm/panfrost/panfrost_devfreq.h
-> +++ b/drivers/gpu/drm/panfrost/panfrost_devfreq.h
-> @@ -15,7 +15,6 @@ struct panfrost_device;
->   
->   struct panfrost_devfreq {
->   	struct devfreq *devfreq;
-> -	struct opp_table *regulators_opp_table;
->   	struct thermal_cooling_device *cooling;
->   	bool opp_of_table_added;
->   
-> 
+ include/linux/mhi.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+index 62da830..48b1b2a 100644
+--- a/include/linux/mhi.h
++++ b/include/linux/mhi.h
+@@ -290,7 +290,7 @@ struct mhi_controller_config {
+ 	u32 num_channels;
+ 	const struct mhi_channel_config *ch_cfg;
+ 	u32 num_events;
+-	const struct mhi_event_config *event_cfg;
++	struct mhi_event_config *event_cfg;
+ 	bool use_bounce_buf;
+ 	bool m2_no_db;
+ };
+-- 
+2.7.4
 
