@@ -2,78 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B425B2EAF7A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 16:55:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D0C562EAF81
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 16:56:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727895AbhAEPyf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jan 2021 10:54:35 -0500
-Received: from mail.kernel.org ([198.145.29.99]:36050 "EHLO mail.kernel.org"
+        id S1727680AbhAEP4c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jan 2021 10:56:32 -0500
+Received: from mail.kernel.org ([198.145.29.99]:36404 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726132AbhAEPyf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jan 2021 10:54:35 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id AD6302229C;
-        Tue,  5 Jan 2021 15:53:53 +0000 (UTC)
+        id S1726957AbhAEP4b (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 5 Jan 2021 10:56:31 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 4F1D92229C;
+        Tue,  5 Jan 2021 15:55:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1609862034;
-        bh=qesOvb2T0LmmS8+xTZ6enKDKGL3uHz/gVHtZR92G63k=;
+        s=k20201202; t=1609862151;
+        bh=Tdr2seup28Wp8XeV4gbdnasIDJIS7gY6N54U8vA1UN8=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=k2UeYGkk3pJwY4k3NrF2PiX2vxXxy5n7ZQ/rYmvh8OdlLBHvBq0P/cK5RU+8+6Ct7
-         ZCJOJIUpH33aIW5iam3TsAzbyQisCDIp5Of6D56ZEKrpCASspuKZjatwcl1iMEjs3H
-         AkDew95dcdLMeT3x51Xcuqc7wRSeUqM5iH8/z8NQZgILUvmK1Y8La6JP2ddfhnifU0
-         ZpFLM3n1OyShf1aXXfaxROxMcwtIKry8QQ0pcSulo8/KwTUvU6u7EqcV1OSLNoo5nD
-         nZrgetIihyqa2jej+vOxFV6oLH4oUGCpZ2qAfmZ22Hjm1SwTuWbtMYV+WP6a+xvpMS
-         NeHUVv4rj1m1Q==
-Date:   Tue, 5 Jan 2021 21:23:50 +0530
+        b=JyqhN7o1rAh5WY1shRSUx+GJYCYb4ONa/TlvaYaBlCJLviA1MM/jOqIFZNVnklc+L
+         izPJsdkE7FR35dFg4Bco99nP76rL8GeXzYWNvMJO6+bcaf8U/6sQkVsPfjQvIlkyDl
+         DoPxYdHFlSCG55VYpGvbjiaRzGZzd27uDJCyjE2Coq9kJQJVAdMnv/n/CbJMMSx/Nb
+         OTtUENYzW8aYn2Rb9fYtEaQ3kKPf1PLWfSkEAavgfGujZMPSqwKTB8aDQT5+mGOkcl
+         L6Lp/2zsA3Qt8D9mpvjcatNl1DFYfX8Jz7+cuFVxv7PU7a1jNDKdz9QHeLswmxtYEp
+         KFZpSAsYdeiDQ==
+Date:   Tue, 5 Jan 2021 21:25:47 +0530
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 03/18] dt-bindings: mmc: sdhci-msm: Document the SDX55
- compatible
-Message-ID: <20210105155350.GJ2771@vkoul-mobl>
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 09/18] ARM: dts: qcom: sdx55: Add QPIC BAM support
+Message-ID: <20210105155547.GK2771@vkoul-mobl>
 References: <20210105122649.13581-1-manivannan.sadhasivam@linaro.org>
- <20210105122649.13581-4-manivannan.sadhasivam@linaro.org>
+ <20210105122649.13581-10-manivannan.sadhasivam@linaro.org>
+ <20210105155009.GC2771@vkoul-mobl>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210105122649.13581-4-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20210105155009.GC2771@vkoul-mobl>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05-01-21, 17:56, Manivannan Sadhasivam wrote:
-> The SDHCI controller on SDX55 is based on MSM SDHCI v5 IP. Hence,
-> document the compatible with "qcom,sdhci-msm-v5" as the fallback.
+Hi Mani,
+
+On 05-01-21, 21:20, Vinod Koul wrote:
+> On 05-01-21, 17:56, Manivannan Sadhasivam wrote:
+> > Add qpic_bam node to support QPIC BAM DMA controller on SDX55 platform.
 > 
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: devicetree@vger.kernel.org
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  Documentation/devicetree/bindings/mmc/sdhci-msm.txt | 1 +
->  1 file changed, 1 insertion(+)
+> Reviewed-by: Vinod Koul <vkoul@kernel.org>
 > 
-> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-> index 3b602fd6180b..31f4a5628595 100644
-> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-> @@ -21,6 +21,7 @@ Required properties:
->  		"qcom,sdm845-sdhci", "qcom,sdhci-msm-v5"
->  		"qcom,qcs404-sdhci", "qcom,sdhci-msm-v5"
->  		"qcom,sc7180-sdhci", "qcom,sdhci-msm-v5";
-> +		"qcom,sdx55-sdhci", "qcom,sdhci-msm-v5";
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  arch/arm/boot/dts/qcom-sdx55.dtsi | 12 ++++++++++++
+> >  1 file changed, 12 insertions(+)
+> > 
+> > diff --git a/arch/arm/boot/dts/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom-sdx55.dtsi
+> > index 622a63b0058f..1b9b990ad0a2 100644
+> > --- a/arch/arm/boot/dts/qcom-sdx55.dtsi
+> > +++ b/arch/arm/boot/dts/qcom-sdx55.dtsi
+> > @@ -166,6 +166,18 @@ sdhc_1: sdhci@8804000 {
+> >  			status = "disabled";
+> >  		};
+> >  
+> > +		qpic_bam: dma@1b04000 {
 
-Keep this sorted?
+This should be dma-controller@
 
-With that:
+Also, please run dtbs_check on these patches
 
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
-
->  	NOTE that some old device tree files may be floating around that only
->  	have the string "qcom,sdhci-msm-v4" without the SoC compatible string
->  	but doing that should be considered a deprecated practice.
+> > +			compatible = "qcom,bam-v1.7.0";
+> > +			reg = <0x01b04000 0x1c000>;
+> > +			interrupts = <GIC_SPI 135 IRQ_TYPE_LEVEL_HIGH>;
+> > +			clocks = <&rpmhcc RPMH_QPIC_CLK>;
+> > +			clock-names = "bam_clk";
+> > +			#dma-cells = <1>;
+> > +			qcom,ee = <0>;
+> > +			qcom,controlled-remotely;
+> > +			status = "disabled";
+> > +		};
+> > +
+> >  		tcsr_mutex_block: syscon@1f40000 {
+> >  			compatible = "syscon";
+> >  			reg = <0x1f40000 0x20000>;
+> > -- 
+> > 2.25.1
+> 
 > -- 
-> 2.25.1
+> ~Vinod
 
 -- 
 ~Vinod
