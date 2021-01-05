@@ -2,251 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A2FEA2EB16A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 18:31:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 610BA2EB208
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 19:07:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729419AbhAERam (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jan 2021 12:30:42 -0500
-Received: from mx07-00178001.pphosted.com ([185.132.182.106]:48210 "EHLO
-        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729852AbhAERam (ORCPT
+        id S1730682AbhAESGd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jan 2021 13:06:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34586 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730681AbhAESGd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jan 2021 12:30:42 -0500
-Received: from pps.filterd (m0241204.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id 105HR6Wa003376;
-        Tue, 5 Jan 2021 18:29:55 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=subject : to : cc :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=selector1;
- bh=XxJ4tcrOqw2tQ6cGm87BWxIq75W6xiExwShxwxetxdE=;
- b=l7qDSHTQ3v7OKRHoviw5REILRzMDfCUf0IhDdYzXDNA8jTNuJSSP9kw5SCsIgfnedsoD
- nAl1RI5zTVl7VGfXjq/lLuJSACiU5Mf1HfZkNc7NOryCMswLnIM9i13NMqwz1pN5ujaX
- whLh+E5bcsZkjjl6F7K3uXo0g0cS/UdDV4Pa+oAEJBJuuE5Z5Qc3Gqghd1CAP7beLK6d
- F81CGJNXpeHz8hlVTRg8pmYpQE5rHwFN3TEWEs12cOIhzFRDPES2Pgr/buc1HV6hU/kZ
- Q6QNXE/0XcpnHeMO98XNf7gAiBGqZy+N6IkAtTPbMwyigJDyLVPlD8yI39SIDDjRXW6Q 4Q== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com with ESMTP id 35th25p1dx-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 05 Jan 2021 18:29:55 +0100
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id A5B77100034;
-        Tue,  5 Jan 2021 18:29:54 +0100 (CET)
-Received: from Webmail-eu.st.com (sfhdag2node3.st.com [10.75.127.6])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 9146525D03F;
-        Tue,  5 Jan 2021 18:29:54 +0100 (CET)
-Received: from lmecxl0889.lme.st.com (10.75.127.49) by SFHDAG2NODE3.st.com
- (10.75.127.6) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Tue, 5 Jan
- 2021 18:29:53 +0100
-Subject: Re: [PATCH v2 14/16] rpmsg: glink: add create and release rpmsg
- channel ops
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-CC:     Ohad Ben-Cohen <ohad@wizery.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20201222105726.16906-1-arnaud.pouliquen@foss.st.com>
- <20201222105726.16906-15-arnaud.pouliquen@foss.st.com>
- <X/O8EdzYBPXRel8d@builder.lan>
-From:   Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
-Message-ID: <b9edcad2-100d-c62f-6821-58628061d4d4@foss.st.com>
-Date:   Tue, 5 Jan 2021 18:29:53 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Tue, 5 Jan 2021 13:06:33 -0500
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76524C061798
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jan 2021 10:05:52 -0800 (PST)
+Received: by mail-ot1-x32f.google.com with SMTP id d8so528636otq.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jan 2021 10:05:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=a7FQj9WS23NBhN1GnkQfwD+Xu2FEJgNqtA1ZOAmMQY4=;
+        b=a5oX8hdv6rwQ7Wqo9PZcfRXmoebmWEHJv5/aaQBe6XEoByrlC8/F2Onf9n1kiu7bjW
+         YNt/b19/uphxkMEqz8gAQdJNWP30cRIfBY/tb94qlq8AG8PJUDxp+O3Q7iRRgYQ83G2v
+         X01sLioOD4YMhwgOos0t71B7Na9v3vA7hTN2CPxblLMeNe+HN43tzfIjE9IQvnewig7Y
+         LE1YhfEV2b2ABojD0b0qMmK21jtozaTKIrJo9tPhbJYjJRjHXgxhZ6Ojd5F709Al2FKI
+         z0MjEjUeICLuxggSatwFKieroi7TOmIQDejpVtfvMvkcT5VYS35LeVB2EG24r1iOeHgl
+         SHyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=a7FQj9WS23NBhN1GnkQfwD+Xu2FEJgNqtA1ZOAmMQY4=;
+        b=hcv3uJSj2QS/i8mK3TCy7WnQb0N5U9gIkqYDaizOCrSru/CcMBMKovphvwq63jumOv
+         obioOuxnm02AfnGElc9vZW+V7oeyzY2XMIdCvReT4qbOn+OueyePCdmISCkju+sCTwdE
+         qzoVGDQyKzKdTsjWDTa7Af6nK8Jwl0nDEJ84u8+AiUFrZXq0KMRuYlQyxtGkQGd5lY85
+         PwbdoeYGen4fAqwT8aOthlTjpffA8F9bgXGn5tC/TgqOdxumIy2AZn8/nAsion6IMyDf
+         d7C0PyPSUK9o2a120e2qxWm1TQ/NwlfUNgY/gHAelxYsDmOlRJ15G0OuymKNF306XvwQ
+         kGPw==
+X-Gm-Message-State: AOAM532HqP6FCuxH0Yg1BdnrSg653bGGdP8PgHhcz6ZtWorfR1nU08so
+        Cw9G0KiRvtxaiPGomEYgbou1nw==
+X-Google-Smtp-Source: ABdhPJwK/F2DvUCmB9E522VTyRot7CVADz7B3tEHis6xdZUsS9N9RoSHvkyfcCqs5sJyAaGoCg+BtA==
+X-Received: by 2002:a9d:27e9:: with SMTP id c96mr484863otb.15.1609869951840;
+        Tue, 05 Jan 2021 10:05:51 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id s17sm62187otg.16.2021.01.05.10.05.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Jan 2021 10:05:51 -0800 (PST)
+Date:   Tue, 5 Jan 2021 12:05:49 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Vinod Koul <vkoul@kernel.org>
+Subject: Re: [PATCH v2 02/18] ARM: dts: qcom: sdx55: Add reserved memory nodes
+Message-ID: <X/Sqfeonlthrys/O@builder.lan>
+References: <20210105122649.13581-1-manivannan.sadhasivam@linaro.org>
+ <20210105122649.13581-3-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <X/O8EdzYBPXRel8d@builder.lan>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.75.127.49]
-X-ClientProxiedBy: SFHDAG4NODE3.st.com (10.75.127.12) To SFHDAG2NODE3.st.com
- (10.75.127.6)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.343,18.0.737
- definitions=2021-01-05_05:2021-01-05,2021-01-05 signatures=0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210105122649.13581-3-manivannan.sadhasivam@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue 05 Jan 06:26 CST 2021, Manivannan Sadhasivam wrote:
 
+> From: Vinod Koul <vkoul@kernel.org>
+> 
+> This adds reserved memory nodes to the SDX55 dtsi as defined by v8 of
+> the memory map
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  arch/arm/boot/dts/qcom-sdx55.dtsi | 67 +++++++++++++++++++++++++++++++
+>  1 file changed, 67 insertions(+)
+> 
+> diff --git a/arch/arm/boot/dts/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom-sdx55.dtsi
+> index 08b4a40338fa..eeb6bf392f93 100644
+> --- a/arch/arm/boot/dts/qcom-sdx55.dtsi
+> +++ b/arch/arm/boot/dts/qcom-sdx55.dtsi
+> @@ -60,6 +60,73 @@ psci {
+>  		method = "smc";
+>  	};
+>  
+> +	reserved-memory {
+> +		#address-cells = <1>;
+> +		#size-cells = <1>;
+> +		ranges;
+> +
+> +		mpss_debug_mem: memory@8ef00000 {
+> +			no-map;
+> +			reg = <0x8ef00000 0x800000>;
+> +		};
+> +
+> +		hyp_mem: memory@8fc00000 {
+> +			no-map;
+> +			reg = <0x8fc00000 0x80000>;
+> +		};
+> +
+> +		ac_db_mem: memory@8fc80000 {
+> +			no-map;
+> +			reg = <0x8fc80000 0x40000>;
+> +		};
+> +
+> +		secdata_mem: memory@8fcfd000 {
+> +			no-map;
+> +			reg = <0x8fcfd000 0x1000>;
+> +		};
+> +
+> +		ipa_fw_mem: memory@8fced000 {
+> +			no-map;
+> +			reg = <0x8fced000 0x10000>;
+> +		};
+> +
+> +		sbl_mem: memory@8fd00000 {
+> +			no-map;
+> +			reg = <0x8fd00000 0x100000>;
+> +		};
+> +
+> +		aop_image: memory@8fe00000 {
+> +			no-map;
+> +			reg = <0x8fe00000 0x20000>;
+> +		};
+> +
+> +		aop_cmd_db: memory@8fe20000 {
+> +			compatible = "qcom,cmd-db";
+> +			reg = <0x8fe20000 0x20000>;
+> +			no-map;
+> +		};
+> +
+> +		smem_mem: memory@8fe40000 {
+> +			no-map;
+> +			reg = <0x8fe40000 0xc0000>;
+> +		};
+> +
+> +		tz_mem: memory@8ff00000 {
+> +			no-map;
+> +			reg = <0x8ff00000 0x100000>;
+> +		};
+> +
+> +		tz_apps_mem: memory@0x90000000 {
+> +			no-map;
+> +			reg = <0x90000000 0x500000>;
+> +		};
+> +
+> +		mpss_adsp_mem: memory@90800000 {
+> +			no-map;
+> +			reg = <0x90800000 0xf800000>;
 
-On 1/5/21 2:08 AM, Bjorn Andersson wrote:
-> On Tue 22 Dec 04:57 CST 2020, Arnaud Pouliquen wrote:
-> 
->> Add the new ops introduced by the rpmsg_ns series and used
->> by the rpmsg_ctrl driver to instantiate a new rpmsg channel.
->>
-> 
-> This is nice for completeness sake, but I don't think it makes sense for
-> transports that has the nameserver "builtin" to the transport itself.
-> 
-> I.e. if we have the NS sitting on top of GLINK and the remote firmware
-> sends a "create channel" message, then this code would cause Linux to
-> send a in-transport "create channel" message back to the remote side in
-> hope that it would be willing to talk on that channel - but that would
-> imply that the remote side needs to have registered a rpmsg device
-> related to that service name - in which case it already sent a
-> in-transport "create channel" message.
-
-That was one of my main concerns about this series. I'm not familiar enough with
-these drivers to make sure my proposal was 100% compatible...
-How is the mapping between between the local and remote endpoints when the DST
-address is not specified by the Linux application?
+Didn't you say this moved to 0x9c000000?
 
 Regards,
-Arnaud
+Bjorn
 
+> +		};
+> +	};
+> +
+>  	soc: soc {
+>  		#address-cells = <1>;
+>  		#size-cells = <1>;
+> -- 
+> 2.25.1
 > 
-> Regards,
-> Bjorn
-> 
->> Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
->> ---
->>  drivers/rpmsg/qcom_glink_native.c | 94 ++++++++++++++++++++++++-------
->>  1 file changed, 75 insertions(+), 19 deletions(-)
->>
->> diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
->> index 27a05167c18c..d74c338de077 100644
->> --- a/drivers/rpmsg/qcom_glink_native.c
->> +++ b/drivers/rpmsg/qcom_glink_native.c
->> @@ -205,6 +205,9 @@ static const struct rpmsg_endpoint_ops glink_endpoint_ops;
->>  #define GLINK_FEATURE_INTENTLESS	BIT(1)
->>  
->>  static void qcom_glink_rx_done_work(struct work_struct *work);
->> +static struct rpmsg_device *
->> +qcom_glink_create_rpdev(struct qcom_glink *glink,
->> +			struct rpmsg_channel_info *chinfo);
->>  
->>  static struct glink_channel *qcom_glink_alloc_channel(struct qcom_glink *glink,
->>  						      const char *name)
->> @@ -1203,6 +1206,37 @@ static int qcom_glink_announce_create(struct rpmsg_device *rpdev)
->>  	return 0;
->>  }
->>  
->> +static struct rpmsg_device *
->> +qcom_glink_create_channel(struct rpmsg_device *rp_parent,
->> +			  struct rpmsg_channel_info *chinfo)
->> +{
->> +	struct glink_channel *channel = to_glink_channel(rp_parent->ept);
->> +	struct qcom_glink *glink = channel->glink;
->> +	struct rpmsg_device *rpdev;
->> +	const char *name = chinfo->name;
->> +
->> +	channel = qcom_glink_alloc_channel(glink, name);
->> +	if (IS_ERR(channel))
->> +		return ERR_PTR(PTR_ERR(channel));
->> +
->> +	rpdev = qcom_glink_create_rpdev(glink, chinfo);
->> +	if (!IS_ERR(rpdev)) {
->> +		rpdev->ept = &channel->ept;
->> +		channel->rpdev = rpdev;
->> +	}
->> +
->> +	return rpdev;
->> +}
->> +
->> +static int qcom_glink_release_channel(struct rpmsg_device *rpdev,
->> +				      struct rpmsg_channel_info *chinfo)
->> +{
->> +	struct glink_channel *channel = to_glink_channel(rpdev->ept);
->> +	struct qcom_glink *glink = channel->glink;
->> +
->> +	return rpmsg_unregister_device(glink->dev, chinfo);
->> +}
->> +
->>  static void qcom_glink_destroy_ept(struct rpmsg_endpoint *ept)
->>  {
->>  	struct glink_channel *channel = to_glink_channel(ept);
->> @@ -1359,6 +1393,8 @@ static struct device_node *qcom_glink_match_channel(struct device_node *node,
->>  static const struct rpmsg_device_ops glink_device_ops = {
->>  	.create_ept = qcom_glink_create_ept,
->>  	.announce_create = qcom_glink_announce_create,
->> +	.create_channel = qcom_glink_create_channel,
->> +	.release_channel = qcom_glink_release_channel,
->>  };
->>  
->>  static const struct rpmsg_endpoint_ops glink_endpoint_ops = {
->> @@ -1376,13 +1412,45 @@ static void qcom_glink_rpdev_release(struct device *dev)
->>  	kfree(rpdev);
->>  }
->>  
->> +static struct rpmsg_device *
->> +qcom_glink_create_rpdev(struct qcom_glink *glink,
->> +			struct rpmsg_channel_info *chinfo)
->> +{
->> +	struct rpmsg_device *rpdev;
->> +	struct device_node *node;
->> +	int ret;
->> +
->> +	rpdev = kzalloc(sizeof(*rpdev), GFP_KERNEL);
->> +	if (!rpdev)
->> +		return ERR_PTR(-ENOMEM);
->> +
->> +	strncpy(rpdev->id.name, chinfo->name, RPMSG_NAME_SIZE);
->> +	rpdev->src = chinfo->src;
->> +	rpdev->dst = chinfo->dst;
->> +	rpdev->ops = &glink_device_ops;
->> +
->> +	node = qcom_glink_match_channel(glink->dev->of_node, chinfo->name);
->> +	rpdev->dev.of_node = node;
->> +	rpdev->dev.parent = glink->dev;
->> +	rpdev->dev.release = qcom_glink_rpdev_release;
->> +	rpdev->driver_override = (char *)chinfo->driver_override;
->> +
->> +	ret = rpmsg_register_device(rpdev);
->> +	if (ret) {
->> +		kfree(rpdev);
->> +		return ERR_PTR(ret);
->> +	}
->> +
->> +	return rpdev;
->> +}
->> +
->>  static int qcom_glink_rx_open(struct qcom_glink *glink, unsigned int rcid,
->>  			      char *name)
->>  {
->>  	struct glink_channel *channel;
->>  	struct rpmsg_device *rpdev;
->>  	bool create_device = false;
->> -	struct device_node *node;
->> +	struct rpmsg_channel_info chinfo;
->>  	int lcid;
->>  	int ret;
->>  	unsigned long flags;
->> @@ -1416,27 +1484,15 @@ static int qcom_glink_rx_open(struct qcom_glink *glink, unsigned int rcid,
->>  	complete_all(&channel->open_req);
->>  
->>  	if (create_device) {
->> -		rpdev = kzalloc(sizeof(*rpdev), GFP_KERNEL);
->> -		if (!rpdev) {
->> -			ret = -ENOMEM;
->> +		strncpy(chinfo.name, channel->name, sizeof(chinfo.name));
->> +		chinfo.src = RPMSG_ADDR_ANY;
->> +		chinfo.dst = RPMSG_ADDR_ANY;
->> +		rpdev = qcom_glink_create_rpdev(glink, &chinfo);
->> +		if (IS_ERR(rpdev)) {
->> +			ret = PTR_ERR(rpdev);
->>  			goto rcid_remove;
->>  		}
->> -
->>  		rpdev->ept = &channel->ept;
->> -		strncpy(rpdev->id.name, name, RPMSG_NAME_SIZE);
->> -		rpdev->src = RPMSG_ADDR_ANY;
->> -		rpdev->dst = RPMSG_ADDR_ANY;
->> -		rpdev->ops = &glink_device_ops;
->> -
->> -		node = qcom_glink_match_channel(glink->dev->of_node, name);
->> -		rpdev->dev.of_node = node;
->> -		rpdev->dev.parent = glink->dev;
->> -		rpdev->dev.release = qcom_glink_rpdev_release;
->> -
->> -		ret = rpmsg_register_device(rpdev);
->> -		if (ret)
->> -			goto rcid_remove;
->> -
->>  		channel->rpdev = rpdev;
->>  	}
->>  
->> -- 
->> 2.17.1
->>
