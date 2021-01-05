@@ -2,74 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6EAAE2EA557
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 07:17:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B4C212EA5CC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 08:18:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728179AbhAEGPB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jan 2021 01:15:01 -0500
-Received: from mail.kernel.org ([198.145.29.99]:55218 "EHLO mail.kernel.org"
+        id S1726329AbhAEHR7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jan 2021 02:17:59 -0500
+Received: from mga09.intel.com ([134.134.136.24]:40879 "EHLO mga09.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725862AbhAEGPB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jan 2021 01:15:01 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 75B16227C3;
-        Tue,  5 Jan 2021 06:14:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1609827260;
-        bh=CWbfPoQL9q63I1jQit0eAhiT55H+f8NCydgTEbCorC0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=OJgt1iQ1EFlkrjdQPvqF6GMxBwbKTHcwGnsx5y1cr2I2yVgRzFEczkafsr9Xhhixb
-         gk+Iv714iiQ3lPzuXMUhOGVddNxTPUm+dkzY+mDLe4PwwUemHpKRgGtEj7lz+g8g0l
-         vrSpTwF74FgjLqFILStpOrTbvZKfGIxI2n2WFA8tfgU2M45js51zm/2D+3XdafXtlu
-         mk2hw6bPaXbafJ3VHYBYrS7Ho49s5QNrq8yiQ9NoFZzSfznrH//xsHTDvGcGlxcZSO
-         JKN+QZE7HPO4NxSEQXKSZVAO1gXbIm9sZVd5nJVn9PNVu+SMVeZ5TfHn5iG/sjNDPU
-         11O6szPkYDEGw==
-Date:   Tue, 5 Jan 2021 11:44:15 +0530
-From:   Vinod Koul <vkoul@kernel.org>
+        id S1725939AbhAEHR6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 5 Jan 2021 02:17:58 -0500
+IronPort-SDR: rxbnynCdOMmcaghjfo9jMnTK4yHs8tIgvhwssnyrVBWqzfR58AqWa8sBxgVnNIeRZGnSg2W65D
+ lb/oRUYoCZBw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9854"; a="177217348"
+X-IronPort-AV: E=Sophos;i="5.78,476,1599548400"; 
+   d="scan'208";a="177217348"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jan 2021 23:17:17 -0800
+IronPort-SDR: HLSXPmG/ebpymc5Cm5QUhu0Wx8yLFzlA89q0sMQI7czP2tHmZe4zZ//NvWy5o34vKgqefzg161
+ uinHppj4AHOA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.78,476,1599548400"; 
+   d="scan'208";a="462210163"
+Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.94]) ([10.237.72.94])
+  by fmsmga001.fm.intel.com with ESMTP; 04 Jan 2021 23:17:09 -0800
+Subject: Re: [PATCH RFC v4 1/1] scsi: ufs: Fix ufs power down/on specs
+ violation
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Herring <robh@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] dt-bindings: pinctrl: qcom: Add SM8350 pinctrl
- bindings
-Message-ID: <20210105061415.GA2771@vkoul-mobl>
-References: <20201208085748.3684670-1-vkoul@kernel.org>
- <20201210135253.GA2405508@robh.at.kernel.org>
- <X/NgUp/pm9T0JlTw@builder.lan>
+Cc:     Ziqi Chen <ziqichen@codeaurora.org>, asutoshd@codeaurora.org,
+        nguyenb@codeaurora.org, cang@codeaurora.org,
+        hongwus@codeaurora.org, rnayak@codeaurora.org,
+        vinholikatti@gmail.com, jejb@linux.vnet.ibm.com,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
+        kernel-team@android.com, saravanak@google.com, salyzyn@google.com,
+        kwmad.kim@samsung.com, stanley.chu@mediatek.com,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Andy Gross <agross@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Satya Tangirala <satyat@google.com>,
+        "moderated list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
+        <linux-mediatek@lists.infradead.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        "moderated list:ARM/Mediatek SoC support" 
+        <linux-arm-kernel@lists.infradead.org>
+References: <1608644981-46267-1-git-send-email-ziqichen@codeaurora.org>
+ <e8980753-fa48-7862-e5ce-0d756d5d97a6@intel.com>
+ <X/NkktFnWI48XNcp@builder.lan>
+From:   Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+Message-ID: <b82dd5f1-179c-6834-9d8f-88005b74ce51@intel.com>
+Date:   Tue, 5 Jan 2021 09:16:54 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <X/NgUp/pm9T0JlTw@builder.lan>
+In-Reply-To: <X/NkktFnWI48XNcp@builder.lan>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04-01-21, 12:37, Bjorn Andersson wrote:
-
-> > > +properties:
-> > > +  compatible:
-> > > +    const: qcom,sm8350-pinctrl
-> > 
-> > If this block is called TLMM, then I'd expect that to be in the 
-> > compatible string. But I guess this is consistent with the others.
-> > 
+On 4/01/21 8:55 pm, Bjorn Andersson wrote:
+> On Mon 04 Jan 03:15 CST 2021, Adrian Hunter wrote:
 > 
-> This is my mistake 7 years ago and it bothers me every time we write a
-> new one of these - in particular since we now support a few different
-> "Qualcomm pinctrl" blocks.
+>> On 22/12/20 3:49 pm, Ziqi Chen wrote:
+>>> As per specs, e.g, JESD220E chapter 7.2, while powering
+>>> off/on the ufs device, RST_N signal and REF_CLK signal
+>>> should be between VSS(Ground) and VCCQ/VCCQ2.
+>>>
+>>> To flexibly control device reset line, refactor the function
+>>> ufschd_vops_device_reset(sturct ufs_hba *hba) to ufshcd_
+>>> vops_device_reset(sturct ufs_hba *hba, bool asserted). The
+>>> new parameter "bool asserted" is used to separate device reset
+>>> line pulling down from pulling up.
+>>
+>> This patch assumes the power is controlled by voltage regulators, but for us
+>> it is controlled by firmware (ACPI), so it is not correct to change RST_n
+>> for all host controllers as you are doing.
+>>
+>> Also we might need to use a firmware interface for device reset, in which
+>> case the 'asserted' value doe not make sense.
+>>
 > 
-> It would be ugly for a while, but I'm in favor of naming these
-> "qcom,<platform>-tlmm" going forward.
+> Are you saying that the entire flip-flop-the-reset is a single firmware
+> operation in your case?
+
+Yes
+
+>                         If you look at the Mediatek driver, the
+> implementation of ufs_mtk_device_reset_ctrl() is a jump to firmware.
 > 
-> PS. And we can solve the ugliness by introducing the "proper" naming
-> (and keeping the old one for backwards compatibility) as we migrate the
-> binding documents to yaml.
+> 
+> But perhaps "asserted" isn't the appropriate English word for saying
+> "the reset is in the resetting state"?
+> 
+> I just wanted to avoid the use of "high"/"lo" as if you look at the
+> Mediatek code they pass the expected line-level to the firmware, while
+> in the Qualcomm code we pass the logical state to the GPIO code which is
+> setup up as "active low" and thereby flip the meaning before hitting the
+> pad.
+> 
+>> Can we leave the device reset callback alone, and instead introduce a new
+>> variant operation for setting RST_n to match voltage regulator power changes?
+> 
+> Wouldn't this new function just have to look like the proposed patches?
+> In which case for existing platforms we'd have both?
+> 
+> How would you implement this, or would you simply skip implementing
+> this?
 
-Okay I will update this one to qcom,sm8350-tlmm. Also we use
-sm8350_pinctrl few places in the driver, will update that to sm8350_tlmm
-as well
+Functionally, doing a device reset is not the same as adjusting signal
+levels to meet power up/off ramp requirements.  However, the issue is that
+we do not use regulators, so the power is not necessarily being changed at
+those points, and we definitely do not want to reset instead of entering
+DeepSleep for example.
 
-Thanks
--- 
-~Vinod
+Off the top of my head, I imagine something like a callback called
+ufshcd_vops_prepare_power_ramp(hba, bool on) which is called only if
+hba->vreg_info->vcc is not NULL.
