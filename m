@@ -2,92 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 924592EAC67
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 14:56:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DF2B2EAD83
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 15:43:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729081AbhAENyp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jan 2021 08:54:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51282 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729000AbhAENyo (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jan 2021 08:54:44 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88117C061796
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jan 2021 05:54:04 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id t30so36289932wrb.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jan 2021 05:54:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=to:cc:references:from:subject:message-id:date:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=WeMaF7TAVDOEIygomZnq05mZMvBNk5xAGXnGkwP4VxM=;
-        b=ye5X2VuG3ou5wXNFk5tCMRRCWTPYTJ0gR4UGwUrMrOUE9rOMVq1fn7BEQ7Qv9ZUe0f
-         T52GJNGyEMCs4wOPnymnhwaZita24pCfV2GaE7K76S5eLmBdmPeZI9XHx5xmXsxKp3Kd
-         p9uVsXsss0OXMxuo0BC/GGdWySBMsv5SEQGte5AK5UFq7oREC1oS4GO6Q1yG1KFQwRnq
-         LEDpFxRk5r5JCTI20JAIPALpeI2upYM+47VQVhMKoBNj/nUY8Sgdo353APdpf3WtF9sU
-         A56HDIiyET1lXVEKGyaEQRD+R8KKgfEwuFA3tZZD88P19IWECm1EovZhOlHJ8IXlg/mo
-         K6Rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:cc:references:from:subject:message-id:date
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=WeMaF7TAVDOEIygomZnq05mZMvBNk5xAGXnGkwP4VxM=;
-        b=jF44vT8HZmSgI7XEsHTLw7y7Mj3w200Siyd7upmzLdjvtzNgnIf1e4JUDkWLlFzV3w
-         w9aG5kaT9nSYRrqt+7tRZVbhb3rAZ/5QKhsH2ICNdIqJm4J6S3IPoW/9Qa9liZtET6hy
-         Q//LeoQXM24/4l7cmzaEZKhme7NoSH4xfnqb++LbaRbWTtS/tSZs4ZFVopDkWFxy5k+j
-         7cQo02H+Id+k5uRtG/DFXmN6CA8L6yliOjwldPKPdJYs7zx22MCdM/S8NDphxgziFrNa
-         wIDntokUw1f4lzxZ2WCHICB4MmljlpWQcY2teOXtT17s6z1cbPin8mReNOT+y5gj/G8E
-         ICfA==
-X-Gm-Message-State: AOAM532TazVewr6VhjHXOFeXr+nIIivIhr6XBPK34QgrmtDfjUdpwzHe
-        S8cQzsNJpdUTisl7yIalGkZRDQ==
-X-Google-Smtp-Source: ABdhPJyD5a1x18fxXMG+4Mcx13Pev1iFYLAfK9YgIqd+kZ7o7mQ6A/yXNqdPNWouLSe9UlACDrP1xQ==
-X-Received: by 2002:adf:dd09:: with SMTP id a9mr84076235wrm.90.1609854843150;
-        Tue, 05 Jan 2021 05:54:03 -0800 (PST)
-Received: from [10.44.66.8] ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id i11sm4154410wmd.47.2021.01.05.05.54.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Jan 2021 05:54:02 -0800 (PST)
-To:     Vincent Knecht <vincent.knecht@mailoo.org>,
-        Jun Nie <jun.nie@linaro.org>, devicetree@vger.kernel.org,
-        bjorn.andersson@linaro.org, agross@kernel.org,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, robh@kernel.org
-Cc:     shawn.guo@linaro.org
-References: <20201204075345.5161-1-jun.nie@linaro.org>
- <20201204075345.5161-6-jun.nie@linaro.org>
- <d869ea94b3b1c73800a5c3b855cb6f280be6c185.camel@mailoo.org>
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-Subject: Re: [PATCH v2 5/5] interconnect: qcom: Add MSM8939 interconnect
- provider driver
-Message-ID: <a88b39dd-1c50-8aff-f85e-27086db9b040@linaro.org>
-Date:   Tue, 5 Jan 2021 15:54:04 +0200
+        id S1727912AbhAEOky (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jan 2021 09:40:54 -0500
+Received: from mga18.intel.com ([134.134.136.126]:62478 "EHLO mga18.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726076AbhAEOky (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 5 Jan 2021 09:40:54 -0500
+IronPort-SDR: Gj7OrIdug6cxk3lHQMx8sgC6FkUpkjlQyp9F+EGZMwCuX2ZHCelc2X8p3nCfqSTXxQcAGUO/yN
+ ubRVF9P3fVBw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9854"; a="164815713"
+X-IronPort-AV: E=Sophos;i="5.78,477,1599548400"; 
+   d="scan'208";a="164815713"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jan 2021 06:40:13 -0800
+IronPort-SDR: Kn8QwbefPJ5XPqoFYBUW0nTKHtZc67lODwp+8nmVmRmipfxboBe8IfmOHqRUN2MzAbi1yMv67Z
+ w9tVX5gP9Fvw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.78,477,1599548400"; 
+   d="scan'208";a="421794901"
+Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.94]) ([10.237.72.94])
+  by orsmga001.jf.intel.com with ESMTP; 05 Jan 2021 06:40:11 -0800
+Subject: Re: [PATCH] mmc: sdhci-msm: Fix possible NULL pointer exception
+To:     Md Sadre Alam <mdalam@codeaurora.org>, bjorn.andersson@linaro.org,
+        ulf.hansson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     sricharan@codeaurora.org
+References: <1608626913-16675-1-git-send-email-mdalam@codeaurora.org>
+From:   Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+Message-ID: <a6210bb5-6f12-20a3-b404-f21081685b46@intel.com>
+Date:   Tue, 5 Jan 2021 16:39:56 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-In-Reply-To: <d869ea94b3b1c73800a5c3b855cb6f280be6c185.camel@mailoo.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <1608626913-16675-1-git-send-email-mdalam@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 1/2/21 13:08, Vincent Knecht wrote:
-> Le vendredi 04 décembre 2020 à 15:53 +0800, Jun Nie a écrit :
->> Add driver for the Qualcomm interconnect buses found in MSM8939 based
->> platforms. The topology consists of four NoCs that are controlled by
->> a remote processor that collects the aggregated bandwidth for each
->> master-slave pairs.
->>
->> Signed-off-by: Jun Nie <jun.nie@linaro.org>
+On 22/12/20 10:48 am, Md Sadre Alam wrote:
+> of_device_get_match_data returns NULL when no match.
+> So add the NULL pointer check to avoid dereference.
 > 
-> Shouldn't some rpm ids be changed like they were for msm8916 in the following patch ?
-> c497f9322af9 ("interconnect: qcom: msm8916: Remove rpm-ids from non-RPM nodes")
-> https://patchwork.kernel.org/project/linux-arm-msm/patch/20201112105140.10092-1-georgi.djakov@linaro.org/
+> Signed-off-by: Md Sadre Alam <mdalam@codeaurora.org>
+> ---
+>  drivers/mmc/host/sdhci-msm.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index 9c7927b..f20e424 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -2235,6 +2235,8 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+>  	 * the data associated with the version info.
+>  	 */
+>  	var_info = of_device_get_match_data(&pdev->dev);
+> +	if (!var_info)
 
-Maybe they should. I don't have the hardware to try it, but the test will be
-to just add the NoC DT nodes, enable the driver and inspect the boot log for
-messages like:
-[    2.926647] qcom_icc_rpm_smd_send mas X error -6
+Shouldn't you set ret to -ENODEV here?
 
-Thanks,
-Georgi
+> +		goto pltfm_free;
+>  
+>  	msm_host->mci_removed = var_info->mci_removed;
+>  	msm_host->restore_dll_config = var_info->restore_dll_config;
+> 
+
