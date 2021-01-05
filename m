@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E0FB2EAAD9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 13:30:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E942D2EAAC9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 13:30:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728804AbhAEM3M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jan 2021 07:29:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37922 "EHLO
+        id S1730221AbhAEM2i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jan 2021 07:28:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730312AbhAEM3I (ORCPT
+        with ESMTP id S1730218AbhAEM2h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jan 2021 07:29:08 -0500
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1080CC0617BE
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jan 2021 04:27:30 -0800 (PST)
-Received: by mail-pj1-x102f.google.com with SMTP id b5so1614731pjl.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jan 2021 04:27:30 -0800 (PST)
+        Tue, 5 Jan 2021 07:28:37 -0500
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A0A9C061384
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jan 2021 04:27:33 -0800 (PST)
+Received: by mail-pf1-x42f.google.com with SMTP id h10so17341808pfo.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jan 2021 04:27:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=eKU2p5aR/XepehIlp9fHVnluEudBDhLBR2ItYfLDnIA=;
-        b=QyjNAFDT17rOjldZ5jNIIxBQkpsJ/aIFtmaGrTx6N8u+utONVWy3WjoBqy4e7GzqKq
-         i5iiRIC/0l4L+r+tfG+3kWOotfuj8BnUPFsFOQkJSV/RYhjI6IrRrqRtMVufEyyWlChl
-         gkY4SfVZ16khTniyyFcBMP/VYsPWhX9ozhODkhvddfds+eHnZ9EgA2eFYHjRLEu7tRwz
-         B3na4kwm2DcqBQgL5VsSUQvDMMmwHtw0IXjthfD3X05mXrl9xYNQkgfLDAE0CkcU3ch+
-         CnA+jt/uU0Z3VdyHiOJDZsp4jU7UYkQewSqf7WUHkq/CyqDZqOu6n92dPl4/k+si0DJP
-         W80w==
+        bh=HxQ9bQtIikQWDcNYhJoOP9WcMBp1b/WtsV26IjiPkCU=;
+        b=UhugPWEIBZUPPw2cCeZde9yuLdlhdeiopaaoFSSVHqObHCAv59LydmJN/FBAHc6Cqc
+         b2H5+wIi0zzJ4jf0R9DO4x3oO3go+DZCsFZ4f3Im2IZ/iMlVBVa9lRLM/p0DZOvv3I17
+         UFcAHXkHO1mqvZRzAcZSk2D2cHaL8JR1cW2m/8AH6i0Fgr/oztfTdQa6Im0ujslaunid
+         E/s9Xnb4prNaw73XgqM6SXIxkt6600t+j9V/eFos01DKqxH6zBvLe+xoOHjn3pgjMLpQ
+         PpLGpGDsfCXoeiJpIH3GQDeirlwCpo/R/gG8cjKx/JDd6VDF+i19LXmXbEi0YfdPiQ5f
+         tCkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=eKU2p5aR/XepehIlp9fHVnluEudBDhLBR2ItYfLDnIA=;
-        b=DttWuK7kKY6Ey+9K7TTHyssH+0+pw0j3uUiFwkETMjO4N16CQKXFPMyotvHy58L6Z5
-         HBBMdgxZou3dyAP8nSU3wYI6DMS31P2/Kj2kiEoUFMixC4vruKD7Qmp2UQPpqqtmInFw
-         LAWjcJXEFnoHoJnr6RUcjayccfNZZaPTWixi6XplmoAUXR9NnvF1ZXiQqrURiwxDscY3
-         AMpGwnalT73fz3e1Qc+DBGMvaEDTPYriMEPbeSdiTxdirtHgvZXlC3pY2BtBAieecz87
-         vu3qflRppTOQT1NnRcuhmUcgQF9kCrV6r1wgxT9nA1TZJn2suBmTEuXh8+lw7co375fG
-         YFqQ==
-X-Gm-Message-State: AOAM530HRGwMYR7+DD9vitxfwIQ1PHlxConAtY7ZfMLdnzYAD2Wy2gKz
-        +4ltxQKJaAxUs0f1Jy/D+BQ4
-X-Google-Smtp-Source: ABdhPJz9d9LPihcIuIhAkRbhC+pcKnsprYg0A9RQQgN6KXpgxWUq6Rq91/NPPGatCVt3T1rmYURZ4Q==
-X-Received: by 2002:a17:902:7d84:b029:db:feae:425e with SMTP id a4-20020a1709027d84b02900dbfeae425emr76429983plm.43.1609849649592;
-        Tue, 05 Jan 2021 04:27:29 -0800 (PST)
+        bh=HxQ9bQtIikQWDcNYhJoOP9WcMBp1b/WtsV26IjiPkCU=;
+        b=Mz3KmBUbr1QwUtEM8tx8R4gtOWZeGqgzNCHVFIJfYp46rraoV8JleZp8PtaIGY6HKw
+         5ibdVOpUu/IjlqPVOBvRxO1XnGVN8+A3u5GcIj9LRvx7bnxefqgK8K8PzZtr2ZssFHNf
+         9tXe8EAolqRYExna73R6jGp6GwNpWlI7s1qvvi6mFTTgQwvPFPktWpd4UXf1Vq9rf3sz
+         4M54aOxz55KfZdtq2mm3efpCGiaXgb3jRPMRfV1YmYGfyxuevMZsxQGXntSoiTjUiJ+Q
+         0JopXt8nCKm/xE0MSlHCv2zSkOwPT62cuDYTurngDVKeJOiwGEh1GFz3Jv8yomQwe6wW
+         Nd5w==
+X-Gm-Message-State: AOAM530KKsHvQJweSALSK37JGM0mr2h2ZCYK8bMCYW6ljmQ5ooSxXI0y
+        uSWElrrSNbJq0rRq9B7JSR5y
+X-Google-Smtp-Source: ABdhPJxBvHdXkX2j2SBnLoEJr0jLt1fBDvQ7PW2bOUln5256Uk2sqPMUjyvtNlpybwJhBmgnHxvfUA==
+X-Received: by 2002:a63:f608:: with SMTP id m8mr11036249pgh.11.1609849652601;
+        Tue, 05 Jan 2021 04:27:32 -0800 (PST)
 Received: from localhost.localdomain ([103.77.37.191])
-        by smtp.gmail.com with ESMTPSA id t22sm64745402pgm.18.2021.01.05.04.27.27
+        by smtp.gmail.com with ESMTPSA id t22sm64745402pgm.18.2021.01.05.04.27.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Jan 2021 04:27:29 -0800 (PST)
+        Tue, 05 Jan 2021 04:27:31 -0800 (PST)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     agross@kernel.org, bjorn.andersson@linaro.org
 Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v2 10/18] ARM: dts: qcom: sdx55: Add QPIC NAND support
-Date:   Tue,  5 Jan 2021 17:56:41 +0530
-Message-Id: <20210105122649.13581-11-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v2 11/18] ARM: dts: qcom: sdx55-mtp: Enable BAM DMA
+Date:   Tue,  5 Jan 2021 17:56:42 +0530
+Message-Id: <20210105122649.13581-12-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20210105122649.13581-1-manivannan.sadhasivam@linaro.org>
 References: <20210105122649.13581-1-manivannan.sadhasivam@linaro.org>
@@ -64,54 +64,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add qpic_nand node to support QPIC NAND controller on SDX55 platform.
-Since there is no "aon" clock in SDX55, a dummy clock is provided.
+Enable BAM DMA on SDX55-MTP board.
 
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- arch/arm/boot/dts/qcom-sdx55.dtsi | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ arch/arm/boot/dts/qcom-sdx55-mtp.dts | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm/boot/dts/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom-sdx55.dtsi
-index 1b9b990ad0a2..1a6947753972 100644
---- a/arch/arm/boot/dts/qcom-sdx55.dtsi
-+++ b/arch/arm/boot/dts/qcom-sdx55.dtsi
-@@ -41,6 +41,12 @@ pll_test_clk: pll-test-clk {
- 			#clock-cells = <0>;
- 			clock-frequency = <400000000>;
- 		};
+diff --git a/arch/arm/boot/dts/qcom-sdx55-mtp.dts b/arch/arm/boot/dts/qcom-sdx55-mtp.dts
+index 262660e6dd11..74ea6f425c77 100644
+--- a/arch/arm/boot/dts/qcom-sdx55-mtp.dts
++++ b/arch/arm/boot/dts/qcom-sdx55-mtp.dts
+@@ -25,3 +25,7 @@ chosen {
+ &blsp1_uart3 {
+ 	status = "ok";
+ };
 +
-+		nand_clk_dummy: nand-clk-dummy {
-+			compatible = "fixed-clock";
-+			#clock-cells = <0>;
-+			clock-frequency = <32000>;
-+		};
- 	};
- 
- 	cpus {
-@@ -178,6 +184,22 @@ qpic_bam: dma@1b04000 {
- 			status = "disabled";
- 		};
- 
-+		qpic_nand: nand@1b30000 {
-+			compatible = "qcom,sdx55-nand";
-+			reg = <0x01b30000 0x10000>;
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			clocks = <&rpmhcc RPMH_QPIC_CLK>,
-+				 <&nand_clk_dummy>;
-+			clock-names = "core", "aon";
-+
-+			dmas = <&qpic_bam 0>,
-+			       <&qpic_bam 1>,
-+			       <&qpic_bam 2>;
-+			dma-names = "tx", "rx", "cmd";
-+			status = "disabled";
-+		};
-+
- 		tcsr_mutex_block: syscon@1f40000 {
- 			compatible = "syscon";
- 			reg = <0x1f40000 0x20000>;
++&qpic_bam {
++	status = "ok";
++};
 -- 
 2.25.1
 
