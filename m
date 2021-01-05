@@ -2,75 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DF2B2EAD83
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 15:43:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A27F42EADF7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 16:13:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727912AbhAEOky (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jan 2021 09:40:54 -0500
-Received: from mga18.intel.com ([134.134.136.126]:62478 "EHLO mga18.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726076AbhAEOky (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jan 2021 09:40:54 -0500
-IronPort-SDR: Gj7OrIdug6cxk3lHQMx8sgC6FkUpkjlQyp9F+EGZMwCuX2ZHCelc2X8p3nCfqSTXxQcAGUO/yN
- ubRVF9P3fVBw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9854"; a="164815713"
-X-IronPort-AV: E=Sophos;i="5.78,477,1599548400"; 
-   d="scan'208";a="164815713"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jan 2021 06:40:13 -0800
-IronPort-SDR: Kn8QwbefPJ5XPqoFYBUW0nTKHtZc67lODwp+8nmVmRmipfxboBe8IfmOHqRUN2MzAbi1yMv67Z
- w9tVX5gP9Fvw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.78,477,1599548400"; 
-   d="scan'208";a="421794901"
-Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.94]) ([10.237.72.94])
-  by orsmga001.jf.intel.com with ESMTP; 05 Jan 2021 06:40:11 -0800
-Subject: Re: [PATCH] mmc: sdhci-msm: Fix possible NULL pointer exception
-To:     Md Sadre Alam <mdalam@codeaurora.org>, bjorn.andersson@linaro.org,
-        ulf.hansson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     sricharan@codeaurora.org
-References: <1608626913-16675-1-git-send-email-mdalam@codeaurora.org>
-From:   Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
- Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-Message-ID: <a6210bb5-6f12-20a3-b404-f21081685b46@intel.com>
-Date:   Tue, 5 Jan 2021 16:39:56 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        id S1727089AbhAEPKy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jan 2021 10:10:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34858 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726499AbhAEPKx (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 5 Jan 2021 10:10:53 -0500
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5815BC06179A
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jan 2021 07:10:00 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id y19so73127655lfa.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jan 2021 07:10:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Hpiie2eScIu2s/uuXEyv9UhVbNMVnQLt+9qP9Zzdslg=;
+        b=SNXGbPp2no06aMPooUZfjhBv2yx8ZCRuuzOVgMeXO747C//2P3yIp3cZGMWM+h340l
+         7V+UCfmLDjwfv/uPVx1mloSd6IjRQf1kwRE3dEImVTGiDO8aiAAtV6zxa75B5k6rp2Wo
+         tGq3SchCZJ4KkTLse10V+yp6Sv/I0aO/iLhSiiNGC2HzUq9PALGqJK9/w0g39IdstPw/
+         KvWbVRujx/bbX6a7yC6bmNE5cKgbS16lH+F9vv72taKgtvHbXpSSwrGyDf1F/Vf2kT10
+         eyv/DElect6IgOyBhwK989ccFDKsFR519M8b0qk58ZEBZmZ3M2Vz6DwvsI0u5dndwWYb
+         ieBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Hpiie2eScIu2s/uuXEyv9UhVbNMVnQLt+9qP9Zzdslg=;
+        b=HILRtSB6c89y/cXvKvtqI2xFWmYuci/vkMmBfTfP2gyXQyi9WfgGKV1pEreQAFh1Ib
+         V1JD4F6RfKnzGOk9HFZ42dHIISCXXnfXAjrMV0ucqKHjrvJADvgzx6EqvBHHSgS+OOIs
+         0clF0LTk7grSVxxmKf0JySwd3CI4iXhiOJV/SEWP8V0WK+Uu0bct6v4SlK8z7sRazuJh
+         TZqp/OFh9Sw9l1ucZnRr0IvGSXGPDaEY+34WeplQYRu4eBcGaIes1i8qDE3sKYKd1CCD
+         RYTWQlyh1Vi5lrwEG3mVRKM+4X9Oxs7cfGo2EGqHa4QCc+lgYSDdafurUm27ACC5OWPW
+         I/jw==
+X-Gm-Message-State: AOAM531T5F9L2tmnBy61Ws6vm6F1ayX1n45JBSTIqu6omLYGOdmBYJY0
+        HSZ0pcoeog5lRTeMRcVdh5omNAJ+YlQZNkw7K2iHig==
+X-Google-Smtp-Source: ABdhPJyGva5zXeaOmIEQqoYoJer37k5jmHl9i/j6Dhp6JIYx4Yofcosj36VXFcf+6bmITwznEOHzyR4VGrfsU18QvDc=
+X-Received: by 2002:a19:495d:: with SMTP id l29mr33226699lfj.465.1609859397331;
+ Tue, 05 Jan 2021 07:09:57 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <1608626913-16675-1-git-send-email-mdalam@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <X98NP6NFK1Afzrgd@manjaro>
+In-Reply-To: <X98NP6NFK1Afzrgd@manjaro>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Tue, 5 Jan 2021 16:09:46 +0100
+Message-ID: <CACRpkdbLtcPY++DZv2LLkGrW=T83ByqeB+fx3Li0E=TJMYfLCA@mail.gmail.com>
+Subject: Re: [PATCH v3] pinctrl: remove empty lines in pinctrl subsystem
+To:     Zhaoyu Liu <zackary.liu.pro@gmail.com>
+Cc:     =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Dong Aisheng <aisheng.dong@nxp.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Stefan Agner <stefan@agner.ch>,
+        Sascha Hauer <kernel@pengutronix.de>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Ludovic Desroches <ludovic.desroches@microchip.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Patrice CHOTARD <patrice.chotard@st.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/12/20 10:48 am, Md Sadre Alam wrote:
-> of_device_get_match_data returns NULL when no match.
-> So add the NULL pointer check to avoid dereference.
-> 
-> Signed-off-by: Md Sadre Alam <mdalam@codeaurora.org>
-> ---
->  drivers/mmc/host/sdhci-msm.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index 9c7927b..f20e424 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -2235,6 +2235,8 @@ static int sdhci_msm_probe(struct platform_device *pdev)
->  	 * the data associated with the version info.
->  	 */
->  	var_info = of_device_get_match_data(&pdev->dev);
-> +	if (!var_info)
+On Sun, Dec 20, 2020 at 9:37 AM Zhaoyu Liu <zackary.liu.pro@gmail.com> wrote:
 
-Shouldn't you set ret to -ENODEV here?
+> Remove all empty lines at the end of functions in pinctrl subsystem,
+> and make the code neat.
+>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+> Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+> Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+> Signed-off-by: Zhaoyu Liu <zackaryliu@yeah.net>
 
-> +		goto pltfm_free;
->  
->  	msm_host->mci_removed = var_info->mci_removed;
->  	msm_host->restore_dll_config = var_info->restore_dll_config;
-> 
+Patch applied.
 
+Yours,
+Linus Walleij
