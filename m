@@ -2,92 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DB6462EAE2A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 16:25:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E9612EAE39
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 16:27:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725838AbhAEPXn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jan 2021 10:23:43 -0500
-Received: from mail.kernel.org ([198.145.29.99]:59086 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725792AbhAEPXm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jan 2021 10:23:42 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id B5F1622B49;
-        Tue,  5 Jan 2021 15:23:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1609860182;
-        bh=26Lu8Y1KwcsryytQMRnbB2efHh103hoNJOBRXR3UfEs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=WhsjtFoaxgZCJPGLvcnfpQXhT2MvWT3p74jUOTuh7yI5zjv0LmkGmTpcXOANcFXep
-         s51y//vLkbN7Ky9ss2IAwHV8ogPkv5fiqNwbkkhgZ6tOZfDYyswzzJpSRYo5IgZXML
-         +JCaoWgd3IkuXSzx2mDuDGOGpV2O0h90L23A/IdF2UhU+AoZpK+zWe4NnnmPMGSd2k
-         5gbB6oWIcPg5if7wyx62FV2jzkgJ0iLs21MBoX4wbmK6CPZFx1Pv78/EpTO8P/0vW3
-         CtZTWid0SSLKTJeO5OZziFRUbH3S2fo6rV+0SFwGxeueNJ5TjPn6iOtCZnWOIStJGY
-         grIG+2wxlUXKw==
-Date:   Tue, 5 Jan 2021 16:22:52 +0100
-From:   Wolfram Sang <wsa@kernel.org>
-To:     Roja Rani Yarubandi <rojay@codeaurora.org>
-Cc:     swboyd@chromium.org, dianders@chromium.org,
-        saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
-        mka@chromium.org, akashast@codeaurora.org,
-        msavaliy@qti.qualcomm.com, skakit@codeaurora.org,
-        pyarlaga@codeaurora.org, rnayak@codeaurora.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sumit.semwal@linaro.org, linux-media@vger.kernel.org
-Subject: Re: [PATCH V7 1/2] i2c: i2c-qcom-geni: Store DMA mapping data in
- geni_i2c_dev struct
-Message-ID: <20210105152252.GA1842@ninjato>
-References: <20201221123801.26643-1-rojay@codeaurora.org>
- <20201221123801.26643-2-rojay@codeaurora.org>
+        id S1727716AbhAEP1G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jan 2021 10:27:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37334 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727634AbhAEP1F (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 5 Jan 2021 10:27:05 -0500
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D98AC061574
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jan 2021 07:26:25 -0800 (PST)
+Received: by mail-pg1-x52c.google.com with SMTP id z21so59304pgj.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jan 2021 07:26:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=2IfTh+7P30cnAb9hMGVmci8Ic43r8KpVRp+A5H8J4iU=;
+        b=S0LEjAkku+YyUL1G7akra9KxevmkELjODiE4jRbbTqHjXj/FmiY59ctnhsQU51PeTu
+         mreoQLgG5yRaF2QzZtv/46tfV78xUjCJ/1UjBvPk/LvgJoq1WDBUttIeKenE7VbmF7/r
+         5qwFOdL9Fup7F57EmWuv+DPYeu0Yalfv8oDrmjfPcv2Wfkp+yos9iHhFf7t8q+5aBrbH
+         WmzTzX1XCOOPRIYbKdD4O9tSXqtuWwTmLe7km5Nds4G2e1hpebv6Eb/3/qKCsad53RFC
+         SZu1MJw8TcEofhWvDlz4R+w9631gpCdbHIiiuWKdrhEcT5wh5yCslgn1RtRC059uUuIR
+         KSqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=2IfTh+7P30cnAb9hMGVmci8Ic43r8KpVRp+A5H8J4iU=;
+        b=NuHcXksqbycaevuAZPML9+j/4btGA6GdW2NXPWB981VI+EYRkh7VwHCojg2F/SZ5Do
+         Xr1f8CK7TEqkZlitLttqrvZCjJVzhvPtFgB0lEML0l8exmcZFPqV8F/03wck8zvB+Z6+
+         96T8g/JoA9+GLwQHvoW54XVTNGdW+juRVQiwVFrS9dWG7fbHJzt9A2fQYS/aDi/T8tFX
+         b+lpRCh48tShLZ0QesOF3G0/9cS8HE/FFpqPyMkqlG0qaxNrm7nHOwspNdoByrJNowK8
+         BNygS7Ajdjw0ieA4dKR1Odvw4eqf5CGGLrc/d1wf/zO1EK0wLc6EOqQtP4jsU0FcOl9s
+         cIJQ==
+X-Gm-Message-State: AOAM530G1ssEaUExurKnlX25il+7DrPAtVKZNMd1htnasIrVPNHxJ/ss
+        rfiWC3wEjdFwmKIqgM7l1DoCxVynGhLa
+X-Google-Smtp-Source: ABdhPJzgNCXLpcd+jHudTrmjH76P/B29WFjENBjne62uDn9CXh2/SalV0ggWrQqfrLa201fVg69zFg==
+X-Received: by 2002:a63:308:: with SMTP id 8mr75816485pgd.15.1609860384825;
+        Tue, 05 Jan 2021 07:26:24 -0800 (PST)
+Received: from thinkpad ([103.77.37.191])
+        by smtp.gmail.com with ESMTPSA id n15sm172564pgl.31.2021.01.05.07.26.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Jan 2021 07:26:24 -0800 (PST)
+Date:   Tue, 5 Jan 2021 20:56:20 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/2] mhi: unconstify mhi_event_config
+Message-ID: <20210105152620.GA14794@thinkpad>
+References: <1609836975-5758-1-git-send-email-loic.poulain@linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="17pEHd4RhPHOinZp"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201221123801.26643-2-rojay@codeaurora.org>
+In-Reply-To: <1609836975-5758-1-git-send-email-loic.poulain@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, Jan 05, 2021 at 09:56:14AM +0100, Loic Poulain wrote:
+> Some parameters may have to be determined at runtime.
+> It is the case for the event ring MSI vector.
+> 
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 
---17pEHd4RhPHOinZp
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-On Mon, Dec 21, 2020 at 06:08:00PM +0530, Roja Rani Yarubandi wrote:
-> Store DMA mapping data in geni_i2c_dev struct to enhance DMA mapping
-> data scope. For example during shutdown callback to unmap DMA mapping,
-> this stored DMA mapping data can be used to call geni_se_tx_dma_unprep
-> and geni_se_rx_dma_unprep functions.
->=20
-> Add two helper functions geni_i2c_rx_msg_cleanup and
-> geni_i2c_tx_msg_cleanup to unwrap the things after rx/tx FIFO/DMA
-> transfers, so that the same can be used in geni_i2c_stop_xfer()
-> function during shutdown callback.
->=20
-> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
+Thanks,
+Mani
 
-Applied to for-next, thanks!
-
-
---17pEHd4RhPHOinZp
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl/0hEgACgkQFA3kzBSg
-KbZAIxAAr6ON6sRM0AIDU6gtWzCUU8IbeiOr5solqqptjvfZxSab7xG5idCpkI0z
-lkzBA17KicyFJ9IdpIMXc0PtWC0qNlE/kUSKkEXAbGMFyY3vXQvaw8XPAncuwrqt
-c1yGASBJmU7+lB3DbjAQjHz8i0g4q022fH6H6wAreogpnlo4mSRBt3Lccm7Mo9Bp
-cECCM3SHjSkRExT/OBzCAaK1ZP1zMwnwdd75M5VyTZE5XgONzVMgtQ/O+POXYZRl
-T/d23YAPAti5eIUqM0brJgCT9/AmADmn3O7V1aP66bSmqvZmdLHMuWevAgbuY94K
-o8ox9BJjTZiWZL8ftp2Sh8ZpVLN0nd0wCGghWPfsIxHIHrzEueTsKC27XGkahgS+
-gnHy981lU0hP9RDVCqjsgZDj5F4Rvp5asGcaAOhdOym8beY8U978eiOPtFzhtbxE
-7gaDb7Q9/qikyGABT0tEQwVHOEXiB3F4keDCBUc0saH5T1HHKJ73779DoPw3wXgV
-1D98KfVceZc1EvVTNxn6Bq69hwu91sE9sSEg/o9QiInUDv1pKbSS7KxnDqVi1Fto
-T4YOah5GSvb7PoivBU+YZy0JZ9xjZvubeyjyEFlQk0WvvmtVD/XiL0TZEgGbfQ8m
-zmitcnRtofrgOsxHfAuNtWgldCOkPtFeA/6y0fz2BR5MxpGrY68=
-=h+QZ
------END PGP SIGNATURE-----
-
---17pEHd4RhPHOinZp--
+> ---
+>  include/linux/mhi.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> index 62da830..48b1b2a 100644
+> --- a/include/linux/mhi.h
+> +++ b/include/linux/mhi.h
+> @@ -290,7 +290,7 @@ struct mhi_controller_config {
+>  	u32 num_channels;
+>  	const struct mhi_channel_config *ch_cfg;
+>  	u32 num_events;
+> -	const struct mhi_event_config *event_cfg;
+> +	struct mhi_event_config *event_cfg;
+>  	bool use_bounce_buf;
+>  	bool m2_no_db;
+>  };
+> -- 
+> 2.7.4
+> 
