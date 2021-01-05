@@ -2,26 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BAFE92EA893
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 11:26:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C977F2EA89A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 11:27:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727768AbhAEKYY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jan 2021 05:24:24 -0500
-Received: from mail.kernel.org ([198.145.29.99]:59584 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726545AbhAEKYX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jan 2021 05:24:23 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id ECA4B22288;
-        Tue,  5 Jan 2021 10:23:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1609842222;
-        bh=3UZhCwvxtpnJZv3Ji9J69OUyarMEqDN6MZ+wVfD9uLo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=EghY6YLZsoSglEO37DoFTsnEH+k6h0JgtL/wOfWMFMRI+85RRpvfpSrrkd0BUmaJT
-         njq4zZqmTlE7nEDpSPrvNCdpyycP/sBFpeXT8yOUiYUEvWywZeqtGCUU5lEZxT3Ewc
-         H7AuWJeb8d5EIVxWZezHIDuhbW85HAOOJhL2wHnw=
-Date:   Tue, 5 Jan 2021 11:25:06 +0100
-From:   Greg KH <gregkh@linuxfoundation.org>
+        id S1728928AbhAEK0x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jan 2021 05:26:53 -0500
+Received: from wnew2-smtp.messagingengine.com ([64.147.123.27]:50733 "EHLO
+        wnew2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728012AbhAEK0x (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 5 Jan 2021 05:26:53 -0500
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailnew.west.internal (Postfix) with ESMTP id CAFD17EA;
+        Tue,  5 Jan 2021 05:25:45 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute4.internal (MEProxy); Tue, 05 Jan 2021 05:25:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
+        date:from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm2; bh=ubUqM9i9NxTd2MW29CzycCTtGoQ
+        nFRTNu4DW5sQ9V8A=; b=OCFhiGu5aW97oVEbzS8aV8mAAzlb/BNdtdj49bBheMg
+        awlpDSfq1nfENTTwj2lxU9tNvz7lbWZMhLW+k0Vz3HsWIvMm7oc7fJQrxY9hqylZ
+        Ek6hFu6k89RwdXWF94DG3ZLwrKaNoVMy/Ac0G/jFM1Cu6xgSsD1fbVxjNu5xM+w5
+        NhDvxvesHs782bzIOy9tGi2Blbjbtmw+z7Ms6u6JSyMWaJMORvZzTU9cYhha0a57
+        ALc6OvMJxfVCrZfVLNOSoO2DJZ7HDb5OPCtMVECYNPBTZvgHi8ermGcnhRiIH571
+        d1hbznT7pnNUFrMx1JI7Um/xbNI7/g1wq8+ThabAFAg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=ubUqM9
+        i9NxTd2MW29CzycCTtGoQnFRTNu4DW5sQ9V8A=; b=MUdo9PJFX2nLiJifQkGr+z
+        jjPHkYbzoyTsSIUKVo5VtPmGAw0RVOSArAoNa61jrxC5PfchEPZ0Gw0d14oox7fd
+        SQt56NEFdsGpoWTrmnH2h40x0vO9X8DIkg4q+KAryT3foCLKS5mdsBFPVudD11F7
+        17SqMOp6yU41iNyToPgqiLI2u7A3OL+ti6OJWQdgYqfLfnT0g4H77ED7rJc4QJoS
+        RCaij++jejvqpWQWe+1yeI2Jj7bLlLQVKO84eGwRY9PvKTuRDm8vOImjW2D5GEzh
+        57eD1RBzNiJk8tb5Jx4DLd0pD0rsJAZ4p2dT006QgEq/k+5qugAz+fTLiemZw5BQ
+        ==
+X-ME-Sender: <xms:qD70X4kmLYpX0d6tWU4glr3OCffBkGENjOcQzjUp6Nv0p4jWDTAoHw>
+    <xme:qD70X32aGgL1HHM5424EAj4h7x9IIrkQ6wcoL_flzVjAbdbIi6eMM5e63fsG3UH2n
+    LMLJd4Q_uNeOQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrvdefhedgudegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefirhgvghcu
+    mffjuceoghhrvghgsehkrhhorghhrdgtohhmqeenucggtffrrghtthgvrhhnpeevueehje
+    fgfffgiedvudekvdektdelleelgefhleejieeugeegveeuuddukedvteenucfkphepkeef
+    rdekiedrjeegrdeigeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpehgrhgvgheskhhrohgrhhdrtghomh
+X-ME-Proxy: <xmx:qD70X2ptvJQyydMcSwu696vvOhcnIoIXOe5-f0vkRgs_Q0LuGeQcAw>
+    <xmx:qD70X0k-I60T6E4rixSvjVMJ04uuWY0pJrsy4dIkMSPvfh9kxY-T9Q>
+    <xmx:qD70X23fhleG0yiGoBaxaTIcdRk2avJ6cphFsaxoYAGOP-41SFa2ag>
+    <xmx:qT70XwNfGMLgfSnj6QF--Gt0yIOKlxdDc-zV4hdntxNU5AtY9ynY-oegUPQ>
+Received: from localhost (83-86-74-64.cable.dynamic.v4.ziggo.nl [83.86.74.64])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 99ACA24005C;
+        Tue,  5 Jan 2021 05:25:43 -0500 (EST)
+Date:   Tue, 5 Jan 2021 11:27:08 +0100
+From:   Greg KH <greg@kroah.com>
 To:     Can Guo <cang@codeaurora.org>
 Cc:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
         hongwus@codeaurora.org, rnayak@codeaurora.org,
@@ -37,7 +72,7 @@ Cc:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
         open list <linux-kernel@vger.kernel.org>
 Subject: Re: [PATCH 2/2] scsi: ufs-qcom: Add one sysfs node to monitor
  performance
-Message-ID: <X/Q+gm2BEhuwjCJi@kroah.com>
+Message-ID: <X/Q+/MSk1d2SW3lA@kroah.com>
 References: <1609816552-16442-1-git-send-email-cang@codeaurora.org>
  <1609816552-16442-3-git-send-email-cang@codeaurora.org>
 MIME-Version: 1.0
@@ -48,132 +83,9 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Oops, forgot the big problem that I noticed:
+
 On Mon, Jan 04, 2021 at 07:15:51PM -0800, Can Guo wrote:
-> Add one sysfs node to monitor driver layer performance data. One can
-> manipulate it to get performance related statistics during runtime.
-> 
-> Signed-off-by: Can Guo <cang@codeaurora.org>
-
-You did not create a Documentation/ABI/ update for this, explaining how
-this file works, so there's no way to properly review this :(
-
-
-> 
-> diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-> index 2206b1e..5303ce9 100644
-> --- a/drivers/scsi/ufs/ufs-qcom.c
-> +++ b/drivers/scsi/ufs/ufs-qcom.c
-> @@ -42,6 +42,7 @@ static struct ufs_qcom_host *ufs_qcom_hosts[MAX_UFS_QCOM_HOSTS];
->  static void ufs_qcom_get_default_testbus_cfg(struct ufs_qcom_host *host);
->  static int ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(struct ufs_hba *hba,
->  						       u32 clk_cycles);
-> +static int ufs_qcom_init_sysfs(struct ufs_hba *hba);
->  
->  static struct ufs_qcom_host *rcdev_to_ufs_host(struct reset_controller_dev *rcd)
->  {
-> @@ -1088,6 +1089,8 @@ static int ufs_qcom_init(struct ufs_hba *hba)
->  		err = 0;
->  	}
->  
-> +	ufs_qcom_init_sysfs(hba);
-> +
->  	goto out;
->  
->  out_variant_clear:
-> @@ -1453,6 +1456,85 @@ static void ufs_qcom_config_scaling_param(struct ufs_hba *hba,
->  }
->  #endif
->  
-> +static inline int ufs_qcom_opcode_rw_dir(u8 opcode)
-> +{
-> +	if (opcode == READ_6 || opcode == READ_10 || opcode == READ_16)
-> +		return READ;
-> +	else if (opcode == WRITE_6 || opcode == WRITE_10 || opcode == WRITE_16)
-> +		return WRITE;
-> +	else
-> +		return -EINVAL;
-> +}
-> +
-> +static inline bool ufs_qcom_should_start_monitor(struct ufs_qcom_host *host,
-> +						 struct ufshcd_lrb *lrbp)
-> +{
-> +	return (host->monitor.enabled && lrbp && lrbp->cmd &&
-> +		ktime_before(host->monitor.enabled_ts, lrbp->issue_time_stamp));
-> +}
-> +
-> +static void ufs_qcom_monitor_start_busy(struct ufs_hba *hba, int tag)
-> +{
-> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-> +	struct ufshcd_lrb *lrbp;
-> +	int dir;
-> +
-> +	lrbp = &hba->lrb[tag];
-> +	if (ufs_qcom_should_start_monitor(host, lrbp)) {
-> +		dir = ufs_qcom_opcode_rw_dir(*lrbp->cmd->cmnd);
-> +		if (dir >= 0 && host->monitor.nr_queued[dir]++ == 0)
-> +			host->monitor.busy_start_ts[dir] =
-> +						lrbp->issue_time_stamp;
-> +	}
-> +}
-> +
-> +static void ufs_qcom_update_monitor(struct ufs_hba *hba, int tag)
-> +{
-> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-> +	struct ufshcd_lrb *lrbp;
-> +	int dir;
-> +
-> +	lrbp = &hba->lrb[tag];
-> +	if (ufs_qcom_should_start_monitor(host, lrbp)) {
-> +		dir = ufs_qcom_opcode_rw_dir(*lrbp->cmd->cmnd);
-> +		if (dir >= 0 && host->monitor.nr_queued[dir] > 0) {
-> +			struct request *req;
-> +			struct ufs_qcom_perf_monitor *mon;
-> +			ktime_t now, inc, lat;
-> +
-> +			mon = &host->monitor;
-> +			req = lrbp->cmd->request;
-> +			mon->nr_sec_rw[dir] += blk_rq_sectors(req);
-> +			now = ktime_get();
-> +			inc = ktime_sub(now, mon->busy_start_ts[dir]);
-> +			mon->total_busy[dir] =
-> +				ktime_add(mon->total_busy[dir], inc);
-> +			/* push forward the busy start of monitor */
-> +			mon->busy_start_ts[dir] = now;
-> +			mon->nr_queued[dir]--;
-> +
-> +			/* update latencies */
-> +			mon->nr_req[dir]++;
-> +			lat = ktime_sub(now, lrbp->issue_time_stamp);
-> +			mon->lat_sum[dir] += lat;
-> +			if (mon->lat_max[dir] < lat || !mon->lat_max[dir])
-> +				mon->lat_max[dir] = lat;
-> +			if (mon->lat_min[dir] > lat || !mon->lat_min[dir])
-> +				mon->lat_min[dir] = lat;
-> +		}
-> +	}
-> +}
-> +
-> +static void ufs_qcom_setup_xfer_req(struct ufs_hba *hba, int tag, bool is_scsi_cmd)
-> +{
-> +	ufs_qcom_monitor_start_busy(hba, tag);
-> +}
-> +
-> +static void ufs_qcom_compl_xfer_req(struct ufs_hba *hba, int tag, bool is_scsi_cmd)
-> +{
-> +	ufs_qcom_update_monitor(hba, tag);
-> +}
-> +
->  /*
->   * struct ufs_hba_qcom_vops - UFS QCOM specific variant operations
->   *
-> @@ -1476,8 +1558,112 @@ static const struct ufs_hba_variant_ops ufs_hba_qcom_vops = {
->  	.device_reset		= ufs_qcom_device_reset,
->  	.config_scaling_param = ufs_qcom_config_scaling_param,
->  	.program_key		= ufs_qcom_ice_program_key,
-> +	.setup_xfer_req         = ufs_qcom_setup_xfer_req,
-> +	.compl_xfer_req         = ufs_qcom_compl_xfer_req,
->  };
->  
 > +static ssize_t monitor_show(struct device *dev, struct device_attribute *attr,
 > +			    char *buf)
 > +{
@@ -218,40 +130,14 @@ this file works, so there's no way to properly review this :(
 > +		 nr_sec_wr, "sectors (in 512 bytes) in ", busy_us_wr,
 > +		 nr_req_wr, "write reqs completed, latencies in us: ",
 > +		 lat_max_wr, lat_min_wr, lat_avg_wr, lat_sum_wr);
-> +
-> +print_usage:
-> +	return scnprintf(buf, PAGE_SIZE, "%s\n%s",
-> +			 "To start monitoring, echo 1 > monitor, cat monitor.",
-> +			 "To stop monitoring, echo 0 > monitor.");
 
-We do not have "help" files in sysfs output, sorry.
+sysfs is one-value-per-file, not
+throw-everything-in-one-file-and-hope-userspace-can-parse-it.
 
-> +static struct attribute *ufs_qcom_sysfs_attrs[] = {
-> +	&dev_attr_monitor.attr,
-> +	NULL
-> +};
-> +
-> +static const struct attribute_group ufs_qcom_sysfs_group = {
-> +	.name = "qcom",
+This is not acceptable at all.  Why not just use debugfs for stats like
+this?
 
-Why do you need a subdirectory?
-
-> +	.attrs = ufs_qcom_sysfs_attrs,
-> +};
-> +
-> +static int ufs_qcom_init_sysfs(struct ufs_hba *hba)
-> +{
-> +	int ret;
-> +
-> +	ret = sysfs_create_group(&hba->dev->kobj, &ufs_qcom_sysfs_group);
-
-When you find yourself in a driver calling a sysfs_* function, something
-is wrong.  Use the proper apis for having the file automatically added
-when your driver binds to the device, the driver core will do this for
-you.
-
-Also, even if you did want to do this "manually", you forgot to remove
-the files when the device is removed :(
+Also, use sysfs_emit() for any new sysfs files please.
 
 thanks,
 
