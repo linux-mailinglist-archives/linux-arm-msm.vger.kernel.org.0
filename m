@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B587D2EAF4A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 16:49:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3853C2EAF4B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 16:49:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728421AbhAEPri (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jan 2021 10:47:38 -0500
-Received: from mail.kernel.org ([198.145.29.99]:34566 "EHLO mail.kernel.org"
+        id S1728574AbhAEPrm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jan 2021 10:47:42 -0500
+Received: from mail.kernel.org ([198.145.29.99]:34586 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728307AbhAEPrh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jan 2021 10:47:37 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 4342122BF3;
-        Tue,  5 Jan 2021 15:46:52 +0000 (UTC)
+        id S1728307AbhAEPrm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 5 Jan 2021 10:47:42 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id AA4B422C7C;
+        Tue,  5 Jan 2021 15:46:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1609861617;
-        bh=QM0PNbL6zQp9vWGkUHxqfDJNae8+Wq35ku+Qa+rO3mQ=;
-        h=From:To:Cc:Subject:Date:From;
-        b=WBnhjteXRzovuldguMqi3552P5uZOIAcYDES3fRjzd5dAWHhfxXq64w5YOENhCWbq
-         Rx64h1KDogDyI+A+E3O5D2qTePZenSr72X1oSZaTERJn7MeVs2974FRk1nRreG1Gdp
-         FbiBzGjwQufEZ84CwaG/cZCe5ISFjirmGIH1hEQialmaV0k/b13ipxUpJPxyyAG7/Q
-         50K8geXjMyjO0KPPfzUgRiDjztoiZeoMS5vXC0mfRU6AutFMbBZ94JgKFR9nob6BKe
-         hGMJUWZRc5lRuKnAnMYw+ljB/syLtyo2UKZQEtFo7YQEcPuTaSR8W6zqHRZiBBGPms
-         rBKCLU7f2DslA==
+        s=k20201202; t=1609861621;
+        bh=6z7J0nXcSYPrbRD9ikeD2XiTuiVWtgpwGcxMh9Zj5v4=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=tRB13fIpS10pZLQfVcCXA7HjSg4EogCRrN7tPfPq9sDBJxSKxtq8eOo3ssr2SR4SX
+         JqfxysHGoisknBLnQ3+RbE0PhWxRMQFSh5rUhMcRHwKpdccJxdeNw0qc3n7BGD16+1
+         DPfacV/UjIg3AruS1kg+4WkEMrG5NZW2z7PmZUYtxttQJ1UWIX6likneeUEW9Rq02O
+         ybak7JVTxQnBciGIy3dNk36o3+F2T7XuEJ9bUCP03VO1sDeN5eqlsaeb+rCtUSyMA4
+         CtAspaaZe6CCS2RQS5PtNegNCCvf/ZORMxOSolEUlnYivQZod5K9HxBEqEcL13NtWf
+         LrXVS5bPNjCkg==
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Stephen Boyd <sboyd@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org,
@@ -32,55 +32,87 @@ Cc:     linux-arm-msm@vger.kernel.org,
         Rob Herring <robh+dt@kernel.org>,
         Taniya Das <tdas@codeaurora.org>, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 0/4]  Add clock drivers for SM8350
-Date:   Tue,  5 Jan 2021 21:16:41 +0530
-Message-Id: <20210105154645.217998-1-vkoul@kernel.org>
+Subject: [PATCH 1/4] clk: qcom: clk-alpha-pll: replace regval with val
+Date:   Tue,  5 Jan 2021 21:16:42 +0530
+Message-Id: <20210105154645.217998-2-vkoul@kernel.org>
 X-Mailer: git-send-email 2.26.2
+In-Reply-To: <20210105154645.217998-1-vkoul@kernel.org>
+References: <20210105154645.217998-1-vkoul@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This adds gcc clock controller drivers for the controller found
-in SM8350 SoC
+Driver uses regval variable for holding register values, replace with a
+shorter one val
 
-Changes in v3:
- - Drop rpmh clk patches applied
- - Add a new patch to replace regval with val as suggested by Stephen
- - Fix comments for new Lucid 5LPE PLL: sort new defines by BIT numbers, fix
-   comments, use alpha_pll_check_rate_margin(), rework
-   clk_lucid_5lpe_pll_postdiv_set_rate() logic
- - Add power domains and optional clocks in bindings
- - Fix comments for gcc sm8350 driver: clean includes used, use only
-   .fw_name for clocks defined in DT, use floor ops for sdcc clocks, remove
-   critical clocks and enable them in probe, add comments for clks using
-   BRANCH_HALT_SKIP and BRANCH_HALT_DELAY
+Suggested-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+---
+ drivers/clk/qcom/clk-alpha-pll.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-Changes in v2:
- - Add r-b from Bjorn
- - Add the gcc_qupv3_wrap_1_{m|s}_ahb_clk and gcc_qupv3_wrap1_s5_clk
-
-Vinod Koul (2):
-  clk: qcom: clk-alpha-pll: replace regval with val
-  dt-bindings: clock: Add SM8350 GCC clock bindings
-
-Vivek Aknurwar (2):
-  clk: qcom: clk-alpha-pll: Add support for Lucid 5LPE PLL
-  clk: qcom: gcc: Add clock driver for SM8350
-
- .../bindings/clock/qcom,gcc-sm8350.yaml       |   96 +
- drivers/clk/qcom/Kconfig                      |    8 +
- drivers/clk/qcom/Makefile                     |    1 +
- drivers/clk/qcom/clk-alpha-pll.c              |  237 +-
- drivers/clk/qcom/clk-alpha-pll.h              |    4 +
- drivers/clk/qcom/gcc-sm8350.c                 | 3790 +++++++++++++++++
- include/dt-bindings/clock/qcom,gcc-sm8350.h   |  261 ++
- 7 files changed, 4387 insertions(+), 10 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sm8350.yaml
- create mode 100644 drivers/clk/qcom/gcc-sm8350.c
- create mode 100644 include/dt-bindings/clock/qcom,gcc-sm8350.h
-
+diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+index 21c357c26ec4..f7721088494c 100644
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -777,15 +777,15 @@ static long alpha_pll_huayra_round_rate(struct clk_hw *hw, unsigned long rate,
+ static int trion_pll_is_enabled(struct clk_alpha_pll *pll,
+ 				struct regmap *regmap)
+ {
+-	u32 mode_regval, opmode_regval;
++	u32 mode_val, opmode_val;
+ 	int ret;
+ 
+-	ret = regmap_read(regmap, PLL_MODE(pll), &mode_regval);
+-	ret |= regmap_read(regmap, PLL_OPMODE(pll), &opmode_regval);
++	ret = regmap_read(regmap, PLL_MODE(pll), &mode_val);
++	ret |= regmap_read(regmap, PLL_OPMODE(pll), &opmode_val);
+ 	if (ret)
+ 		return 0;
+ 
+-	return ((opmode_regval & PLL_RUN) && (mode_regval & PLL_OUTCTRL));
++	return ((opmode_val & PLL_RUN) && (mode_val & PLL_OUTCTRL));
+ }
+ 
+ static int clk_trion_pll_is_enabled(struct clk_hw *hw)
+@@ -1445,12 +1445,12 @@ EXPORT_SYMBOL_GPL(clk_trion_pll_configure);
+ static int __alpha_pll_trion_prepare(struct clk_hw *hw, u32 pcal_done)
+ {
+ 	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
+-	u32 regval;
++	u32 val;
+ 	int ret;
+ 
+ 	/* Return early if calibration is not needed. */
+-	regmap_read(pll->clkr.regmap, PLL_STATUS(pll), &regval);
+-	if (regval & pcal_done)
++	regmap_read(pll->clkr.regmap, PLL_STATUS(pll), &val);
++	if (val & pcal_done)
+ 		return 0;
+ 
+ 	/* On/off to calibrate */
+@@ -1476,7 +1476,7 @@ static int alpha_pll_trion_set_rate(struct clk_hw *hw, unsigned long rate,
+ {
+ 	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
+ 	unsigned long rrate;
+-	u32 regval, l, alpha_width = pll_alpha_width(pll);
++	u32 val, l, alpha_width = pll_alpha_width(pll);
+ 	u64 a;
+ 	int ret;
+ 
+@@ -1497,8 +1497,8 @@ static int alpha_pll_trion_set_rate(struct clk_hw *hw, unsigned long rate,
+ 
+ 	/* Wait for 2 reference cycles before checking the ACK bit. */
+ 	udelay(1);
+-	regmap_read(pll->clkr.regmap, PLL_MODE(pll), &regval);
+-	if (!(regval & ALPHA_PLL_ACK_LATCH)) {
++	regmap_read(pll->clkr.regmap, PLL_MODE(pll), &val);
++	if (!(val & ALPHA_PLL_ACK_LATCH)) {
+ 		pr_err("Lucid PLL latch failed. Output may be unstable!\n");
+ 		return -EINVAL;
+ 	}
 -- 
 2.26.2
 
