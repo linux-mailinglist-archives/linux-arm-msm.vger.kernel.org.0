@@ -2,200 +2,287 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BB48D2EB3CF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 21:01:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5379D2EB3EE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 21:12:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730956AbhAEUAX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jan 2021 15:00:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52500 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728383AbhAEUAW (ORCPT
+        id S1726594AbhAEUL2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jan 2021 15:11:28 -0500
+Received: from wout1-smtp.messagingengine.com ([64.147.123.24]:56129 "EHLO
+        wout1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725800AbhAEULX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jan 2021 15:00:22 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 395B7C061793;
-        Tue,  5 Jan 2021 11:59:42 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id l11so1395884lfg.0;
-        Tue, 05 Jan 2021 11:59:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
-         :subject:to:cc;
-        bh=w3y172ugq1A8+DfHjAatLK3oOwXsMQTLgHeUXaHnUCU=;
-        b=tBCWlgeIGyCHy0ayfKSb2hKeKiEoFzcgiAtzEEfHQ70m4TqSwGsZqX3Xnx4VJJnvbt
-         n0OP+1QygM+MIfVv5A7Ue/siY9qUR3JrwvKGHP2W3QTyiHhYMLJ6zdE5Ged8pj1n+RjK
-         Bb3lYAmgD2urDHD+97GcmaR9/cYTYUc3lvg36iKQWZkukTkf+xsDRudzvwcq2WaBpdlE
-         x0mE68kMXoFvZrIZWNkF8AnSu3p+LzNJVWTcYgez90NbFkWXHh7/NpKY2fPkuOEA7ZKB
-         w1aIj7VtjxtrBSQz6IaOTRs86szJNL8Gutp0tvolPIaAjingl3R6BlglT66Kk2USW+JA
-         gNew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
-         :from:date:message-id:subject:to:cc;
-        bh=w3y172ugq1A8+DfHjAatLK3oOwXsMQTLgHeUXaHnUCU=;
-        b=Uf/I3Ff5O/z44dopGdFH8VxMEy+ps1lg2RbF8K2iK1xaV9636T3q/i+iYVyUz8Zyni
-         MsWVVGYV317Br2hWF051LgKpCrQQHDELvspCXtbGdThQCYNy+XtsQDRrPIJHCE5g2CUn
-         EagliKp6DMlD8opHoL7k/2bqsP9vcJr1BCDiroubtkJJaVmWaBeRsHN0Jm3ieCOWOift
-         6nSBgguqmLI1KVE3C4wzsqu/PCVOGNE41U6sbkHn1ZVoa1V25290yMCYinIrSgxKAUHF
-         zqz0xqumSuZ+BLm4+C5wp2VZPA+3fhGmqSIl5xmiwImFBlPW7nSMEWmyg0JG3x92wW04
-         LYaQ==
-X-Gm-Message-State: AOAM531POKnTvTZAfrh/y7+Go/Vz1dUBRj/f9Vi+j6ruoHUjl8lYn95s
-        mLb00hDHWBa72lE/jSkb+1QGupnzOYrpw4F6szU=
-X-Google-Smtp-Source: ABdhPJxefm71gCAP6d5oS17blFAwFnEd9spoEWiCV79bTaAMdk7JG8QCTPTs9zQB67DoNESWvQ4nEkOaTe/eEP/zqxs=
-X-Received: by 2002:a2e:8156:: with SMTP id t22mr509678ljg.263.1609876780665;
- Tue, 05 Jan 2021 11:59:40 -0800 (PST)
+        Tue, 5 Jan 2021 15:11:23 -0500
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+        by mailout.west.internal (Postfix) with ESMTP id 6E1E71180;
+        Tue,  5 Jan 2021 15:10:32 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Tue, 05 Jan 2021 15:10:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kdrag0n.dev; h=
+        from:to:cc:subject:date:message-id:mime-version
+        :content-transfer-encoding; s=fm3; bh=4Py02Jvhjsmn1sAsdBHXTHu4Y7
+        pEH/8tMwuJWcwaspA=; b=TgjQqa3ZqRGa8haN3VtJRClkbsSoW+/jHP/Jz0DIx0
+        hxz+3eRfEdorQj78R9uAhC4H5OuXEVGoUZ0BJzcN6wTM4ibdvECe5dkXBkI/0ga9
+        d7M+qExnf7trxNwUAyPBFvOATEDDU6Iex+oN786aaejyH2obX+rahSC6k05pRPm2
+        wX88wNwIFFdIOTKAviPuZGEWX6BjYBNzlHwknqZTSIRK6Z8FYVrsV0IV8/rh51Y9
+        hwiodNWSe3dloYqznt4X5CPbrkYS/o+Axdcjob4Thkab54UH7TOiGZKB6AMh9M5s
+        PZmEJecQ1HH4YQXrU/tNvYNa1ju4Uie4esGBViGkfWvA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:date:from
+        :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=4Py02Jvhjsmn1sAsd
+        BHXTHu4Y7pEH/8tMwuJWcwaspA=; b=g6Sn0Oa8CukWVQH3UPwMbBSZBx+IJRpgz
+        pBG6fnKWgHLiO1SycuQoKgv/rJOcb2fEzsSEUuXP5t9GiZd4G8nObXgeP+lK4vYI
+        W1gQVuwLBeNJBMNj5ANMOoZLUAKB873ddn6be7V/WZ5tW9iPHyyWRzK3neCD4rE0
+        AW3EbD43UI/ia5mM/InBnzoR8l1wimnb6A3NbgZTMTGXj216Ih9VhF1S6E1Wg0wB
+        yc+1ll3djWiegSL+sZmhONmFhiJa/lzMv2qYW/3RjhpZ1m4XD77dWyd+5b+zyPOt
+        QLqbeh4U/XwQ7lnIHp7lr17FDgC3hK0Wsrb8/VRvPNH4RV3P0Uc/A==
+X-ME-Sender: <xms:t8f0X3KvWmbjThekF8G8GqI6-7RH37C3FUcHQSMplSheXhSfmDUVgA>
+    <xme:t8f0X7I7S-95oESyQwlEN62jswZFXTjiQGMktPle3wh0ly-mipyJ2aKG81PC-EjwF
+    XtWphlbwmBA2iJ36ho>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrvdefjedgleekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    hmihhsshhinhhgucfvqfcufhhivghlugculdeftddmnegoteeftdduqddtudculdduhedm
+    necujfgurhephffvufffkffoggfgsedtkeertdertddtnecuhfhrohhmpeffrghnnhihuc
+    fnihhnuceouggrnhhnhieskhgurhgrghdtnhdruggvvheqnecuggftrfgrthhtvghrnhep
+    hfeihffglefgudefvdduledvfedvfefgieeuueefgeetffdukeeghfevtdeifeetnecukf
+    hppedutdegrddvtddtrdduvdelrddvuddvnecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepuggrnhhnhieskhgurhgrghdtnhdruggvvh
+X-ME-Proxy: <xmx:t8f0X_uuItY2sa5KsxD482KokjNk4xOV0mTxyrsXEIE8V8bS4QDc1Q>
+    <xmx:t8f0XwZvQZTyOjrxkqqULTWd9mNJLoQ_R9uXa8mQ2uaHjuQQwdDu-g>
+    <xmx:t8f0X-ZtZ7OFzBlRiVHNEG1ZuxEkMNOKLSoBz7w07lYLH02CGM8BtA>
+    <xmx:uMf0X1XduTEkdIy_yWnN7ulexWQl7aVZXv1gBJK0o0fx_wJQcwqEZg>
+Received: from pinwheel.localdomain (unknown [104.200.129.212])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 1EDFE108005B;
+        Tue,  5 Jan 2021 15:10:31 -0500 (EST)
+From:   Danny Lin <danny@kdrag0n.dev>
+Cc:     Danny Lin <danny@kdrag0n.dev>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sm8150: Add support for deep CPU cluster idle
+Date:   Tue,  5 Jan 2021 12:10:00 -0800
+Message-Id: <20210105201000.913183-1-danny@kdrag0n.dev>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-References: <20210103035540.23886-1-tiny.windzz@gmail.com> <CAGTfZH37=e4RgdR4xg-3s9-pRjqunHi2jfPQqQgVWkxW94GwOA@mail.gmail.com>
-In-Reply-To: <CAGTfZH37=e4RgdR4xg-3s9-pRjqunHi2jfPQqQgVWkxW94GwOA@mail.gmail.com>
-Reply-To: cwchoi00@gmail.com
-From:   Chanwoo Choi <cwchoi00@gmail.com>
-Date:   Wed, 6 Jan 2021 04:59:04 +0900
-Message-ID: <CAGTfZH0kg=-MLrvEb+oHkaAuS3mV+o+Oia=wUCf=n2v7s1oXMg@mail.gmail.com>
-Subject: Re: [PATCH 28/31] PM / devfreq: imx8m-ddrc: convert to use
- devm_pm_opp_* API
-To:     Yangtao Li <tiny.windzz@gmail.com>
-Cc:     MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Shawn Guo <shawnguo@kernel.org>, s.hauer@pengutronix.de,
-        kernel@pengutronix.de, festevam@gmail.com,
-        dl-linux-imx <linux-imx@nxp.com>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>, yuq825@gmail.com,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, robdclark@gmail.com,
-        sean@poorly.run, Rob Herring <robh@kernel.org>,
-        tomeu.vizoso@collabora.com, steven.price@arm.com,
-        alyssa.rosenzweig@collabora.com,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        agross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
-        mchehab@kernel.org, Lukasz Luba <lukasz.luba@arm.com>,
-        adrian.hunter@intel.com, Ulf Hansson <ulf.hansson@linaro.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        Greg KH <gregkh@linuxfoundation.org>, jirislaby@kernel.org,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>, jcrouse@codeaurora.org,
-        hoegsberg@google.com, eric@anholt.net, tzimmermann@suse.de,
-        marijn.suijten@somainline.org, gustavoars@kernel.org,
-        emil.velikov@collabora.com, Jonathan Marek <jonathan@marek.ca>,
-        akhilpo@codeaurora.org, smasetty@codeaurora.org,
-        airlied@redhat.com, masneyb@onstation.org, kalyan_t@codeaurora.org,
-        tanmay@codeaurora.org, ddavenport@chromium.org,
-        jsanka@codeaurora.org, rnayak@codeaurora.org,
-        tongtiangen@huawei.com, miaoqinglang@huawei.com,
-        khsieh@codeaurora.org, abhinavk@codeaurora.org,
-        chandanu@codeaurora.org, Guenter Roeck <groeck@chromium.org>,
-        varar@codeaurora.org, Matthias Kaehlcke <mka@chromium.org>,
-        harigovi@codeaurora.org, rikard.falkeborn@gmail.com,
-        natechancellor@gmail.com, Georgi Djakov <georgi.djakov@linaro.org>,
-        akashast@codeaurora.org, parashar@codeaurora.org,
-        Doug Anderson <dianders@chromium.org>,
-        Linux PM list <linux-pm@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        linux-tegra@vger.kernel.org,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        lima@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-media@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-spi@vger.kernel.org,
-        linux-serial@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Yangtao,
+This commit adds support for deep idling of the entire unified DynamIQ
+CPU cluster on sm8150. In this idle state, the LLCC (Last-Level Cache
+Controller) is powered off and the AOP (Always-On Processor) enters a
+low-power sleep state.
 
-On Tue, Jan 5, 2021 at 1:13 PM Chanwoo Choi <cwchoi00@gmail.com> wrote:
->
-> On Sun, Jan 3, 2021 at 12:58 PM Yangtao Li <tiny.windzz@gmail.com> wrote:
-> >
-> > Use devm_pm_opp_* API to simplify code.
-> >
-> > Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
-> > ---
-> >  drivers/devfreq/imx8m-ddrc.c | 15 ++-------------
-> >  1 file changed, 2 insertions(+), 13 deletions(-)
-> >
-> > diff --git a/drivers/devfreq/imx8m-ddrc.c b/drivers/devfreq/imx8m-ddrc.c
-> > index bc82d3653bff..9383d6e5538b 100644
-> > --- a/drivers/devfreq/imx8m-ddrc.c
-> > +++ b/drivers/devfreq/imx8m-ddrc.c
-> > @@ -370,11 +370,6 @@ static int imx8m_ddrc_check_opps(struct device *dev)
-> >         return 0;
-> >  }
-> >
-> > -static void imx8m_ddrc_exit(struct device *dev)
-> > -{
-> > -       dev_pm_opp_of_remove_table(dev);
-> > -}
-> > -
-> >  static int imx8m_ddrc_probe(struct platform_device *pdev)
-> >  {
-> >         struct device *dev = &pdev->dev;
-> > @@ -419,7 +414,7 @@ static int imx8m_ddrc_probe(struct platform_device *pdev)
-> >                 return ret;
-> >         }
-> >
-> > -       ret = dev_pm_opp_of_add_table(dev);
-> > +       ret = devm_pm_opp_of_add_table(dev);
-> >         if (ret < 0) {
-> >                 dev_err(dev, "failed to get OPP table\n");
-> >                 return ret;
-> > @@ -427,12 +422,11 @@ static int imx8m_ddrc_probe(struct platform_device *pdev)
-> >
-> >         ret = imx8m_ddrc_check_opps(dev);
-> >         if (ret < 0)
-> > -               goto err;
-> > +               return ret;
-> >
-> >         priv->profile.polling_ms = 1000;
-> >         priv->profile.target = imx8m_ddrc_target;
-> >         priv->profile.get_dev_status = imx8m_ddrc_get_dev_status;
-> > -       priv->profile.exit = imx8m_ddrc_exit;
-> >         priv->profile.get_cur_freq = imx8m_ddrc_get_cur_freq;
-> >         priv->profile.initial_freq = clk_get_rate(priv->dram_core);
-> >
-> > @@ -441,13 +435,8 @@ static int imx8m_ddrc_probe(struct platform_device *pdev)
-> >         if (IS_ERR(priv->devfreq)) {
-> >                 ret = PTR_ERR(priv->devfreq);
-> >                 dev_err(dev, "failed to add devfreq device: %d\n", ret);
-> > -               goto err;
-> >         }
-> >
-> > -       return 0;
-> > -
-> > -err:
-> > -       dev_pm_opp_of_remove_table(dev);
-> >         return ret;
->
-> devm_devfreq_add_device() doesn't return any integer value.
-> Even if devm_devfreq_add_device() returns the right devfreq instance,
-> the 'ret' value  is not the return value of  devm_devfreq_add_device().
->
-> On this patch, 'ret' value of 'return ret' is from imx8m_ddrc_check_opps().
-> Surely, it is well working with this modification. But, it is not code
-> for exception handling.
-> So, we need to remain the following codes:
->
->     return 0;
-> err:
->     return ret;
->
+I'm not sure what the per-CPU 0x400000f4 idle state previously
+contributed by Qualcomm as the "cluster sleep" state is, but the
+downstream kernel has no such state. The real deep cluster idle state
+is 0x41000c244, composed of:
 
-'err' is not necessary. You better to edit it as following:
+    Cluster idle state: (0xc24) << 4 = 0xc240
+    Is reset state: 1 << 30 = 0x40000000
+    Affinity level: 1 << 24 = 0x1000000
+    CPU idle state: 0x4 (power collapse)
 
-if (IS_ERR(priv->devfreq)) {
-    dev_err(dev, "failed to add devfreq device: %d\n", ret);
-    return PTR_ERR(priv->devfreq);
-}
+This setup can be replicated with the PSCI power domain cpuidle driver,
+which utilizes OSI to enter cluster idle when the last active CPU
+enters idle.
 
-return 0;
+The cluster idle state cannot be used as a plain cpuidle state because
+it requires that all CPUs in the cluster are idling.
 
+Signed-off-by: Danny Lin <danny@kdrag0n.dev>
+---
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 91 ++++++++++++++++++++++------
+ 1 file changed, 73 insertions(+), 18 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index 309e00b6fa44..8956c6986744 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -52,10 +52,10 @@ CPU0: cpu@0 {
+ 			enable-method = "psci";
+ 			capacity-dmips-mhz = <488>;
+ 			dynamic-power-coefficient = <232>;
+-			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+-					   &CLUSTER_SLEEP_0>;
+ 			next-level-cache = <&L2_0>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
++			power-domains = <&CPU_PD0>;
++			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			L2_0: l2-cache {
+ 				compatible = "cache";
+@@ -73,10 +73,10 @@ CPU1: cpu@100 {
+ 			enable-method = "psci";
+ 			capacity-dmips-mhz = <488>;
+ 			dynamic-power-coefficient = <232>;
+-			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+-					   &CLUSTER_SLEEP_0>;
+ 			next-level-cache = <&L2_100>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
++			power-domains = <&CPU_PD1>;
++			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			L2_100: l2-cache {
+ 				compatible = "cache";
+@@ -92,10 +92,10 @@ CPU2: cpu@200 {
+ 			enable-method = "psci";
+ 			capacity-dmips-mhz = <488>;
+ 			dynamic-power-coefficient = <232>;
+-			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+-					   &CLUSTER_SLEEP_0>;
+ 			next-level-cache = <&L2_200>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
++			power-domains = <&CPU_PD2>;
++			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			L2_200: l2-cache {
+ 				compatible = "cache";
+@@ -110,10 +110,10 @@ CPU3: cpu@300 {
+ 			enable-method = "psci";
+ 			capacity-dmips-mhz = <488>;
+ 			dynamic-power-coefficient = <232>;
+-			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+-					   &CLUSTER_SLEEP_0>;
+ 			next-level-cache = <&L2_300>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
++			power-domains = <&CPU_PD3>;
++			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			L2_300: l2-cache {
+ 				compatible = "cache";
+@@ -128,10 +128,10 @@ CPU4: cpu@400 {
+ 			enable-method = "psci";
+ 			capacity-dmips-mhz = <1024>;
+ 			dynamic-power-coefficient = <369>;
+-			cpu-idle-states = <&BIG_CPU_SLEEP_0
+-					   &CLUSTER_SLEEP_0>;
+ 			next-level-cache = <&L2_400>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
++			power-domains = <&CPU_PD4>;
++			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			L2_400: l2-cache {
+ 				compatible = "cache";
+@@ -146,10 +146,10 @@ CPU5: cpu@500 {
+ 			enable-method = "psci";
+ 			capacity-dmips-mhz = <1024>;
+ 			dynamic-power-coefficient = <369>;
+-			cpu-idle-states = <&BIG_CPU_SLEEP_0
+-					   &CLUSTER_SLEEP_0>;
+ 			next-level-cache = <&L2_500>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
++			power-domains = <&CPU_PD5>;
++			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			L2_500: l2-cache {
+ 				compatible = "cache";
+@@ -164,10 +164,10 @@ CPU6: cpu@600 {
+ 			enable-method = "psci";
+ 			capacity-dmips-mhz = <1024>;
+ 			dynamic-power-coefficient = <369>;
+-			cpu-idle-states = <&BIG_CPU_SLEEP_0
+-					   &CLUSTER_SLEEP_0>;
+ 			next-level-cache = <&L2_600>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
++			power-domains = <&CPU_PD6>;
++			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			L2_600: l2-cache {
+ 				compatible = "cache";
+@@ -182,10 +182,10 @@ CPU7: cpu@700 {
+ 			enable-method = "psci";
+ 			capacity-dmips-mhz = <1024>;
+ 			dynamic-power-coefficient = <421>;
+-			cpu-idle-states = <&BIG_CPU_SLEEP_0
+-					   &CLUSTER_SLEEP_0>;
+ 			next-level-cache = <&L2_700>;
+ 			qcom,freq-domain = <&cpufreq_hw 2>;
++			power-domains = <&CPU_PD7>;
++			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			L2_700: l2-cache {
+ 				compatible = "cache";
+@@ -251,11 +251,13 @@ BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
+ 				min-residency-us = <4488>;
+ 				local-timer-stop;
+ 			};
++		};
+ 
++		domain-idle-states {
+ 			CLUSTER_SLEEP_0: cluster-sleep-0 {
+-				compatible = "arm,idle-state";
++				compatible = "domain-idle-state";
+ 				idle-state-name = "cluster-power-collapse";
+-				arm,psci-suspend-param = <0x400000F4>;
++				arm,psci-suspend-param = <0x4100c244>;
+ 				entry-latency-us = <3263>;
+ 				exit-latency-us = <6562>;
+ 				min-residency-us = <9987>;
+@@ -291,6 +293,59 @@ pmu {
+ 	psci {
+ 		compatible = "arm,psci-1.0";
+ 		method = "smc";
++
++		CPU_PD0: cpu0 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
++		};
++
++		CPU_PD1: cpu1 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
++		};
++
++		CPU_PD2: cpu2 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
++		};
++
++		CPU_PD3: cpu3 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
++		};
++
++		CPU_PD4: cpu4 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&BIG_CPU_SLEEP_0>;
++		};
++
++		CPU_PD5: cpu5 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&BIG_CPU_SLEEP_0>;
++		};
++
++		CPU_PD6: cpu6 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&BIG_CPU_SLEEP_0>;
++		};
++
++		CPU_PD7: cpu7 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&BIG_CPU_SLEEP_0>;
++		};
++
++		CLUSTER_PD: cpu-cluster0 {
++			#power-domain-cells = <0>;
++			domain-idle-states = <&CLUSTER_SLEEP_0>;
++		};
+ 	};
+ 
+ 	reserved-memory {
 -- 
-Best Regards,
-Chanwoo Choi
+2.29.2
+
