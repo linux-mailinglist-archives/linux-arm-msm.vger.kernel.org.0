@@ -2,92 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D0C562EAF81
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 16:56:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 335352EB02A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 17:35:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727680AbhAEP4c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jan 2021 10:56:32 -0500
-Received: from mail.kernel.org ([198.145.29.99]:36404 "EHLO mail.kernel.org"
+        id S1727209AbhAEQef (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jan 2021 11:34:35 -0500
+Received: from foss.arm.com ([217.140.110.172]:57076 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726957AbhAEP4b (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jan 2021 10:56:31 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 4F1D92229C;
-        Tue,  5 Jan 2021 15:55:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1609862151;
-        bh=Tdr2seup28Wp8XeV4gbdnasIDJIS7gY6N54U8vA1UN8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=JyqhN7o1rAh5WY1shRSUx+GJYCYb4ONa/TlvaYaBlCJLviA1MM/jOqIFZNVnklc+L
-         izPJsdkE7FR35dFg4Bco99nP76rL8GeXzYWNvMJO6+bcaf8U/6sQkVsPfjQvIlkyDl
-         DoPxYdHFlSCG55VYpGvbjiaRzGZzd27uDJCyjE2Coq9kJQJVAdMnv/n/CbJMMSx/Nb
-         OTtUENYzW8aYn2Rb9fYtEaQ3kKPf1PLWfSkEAavgfGujZMPSqwKTB8aDQT5+mGOkcl
-         L6Lp/2zsA3Qt8D9mpvjcatNl1DFYfX8Jz7+cuFVxv7PU7a1jNDKdz9QHeLswmxtYEp
-         KFZpSAsYdeiDQ==
-Date:   Tue, 5 Jan 2021 21:25:47 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 09/18] ARM: dts: qcom: sdx55: Add QPIC BAM support
-Message-ID: <20210105155547.GK2771@vkoul-mobl>
-References: <20210105122649.13581-1-manivannan.sadhasivam@linaro.org>
- <20210105122649.13581-10-manivannan.sadhasivam@linaro.org>
- <20210105155009.GC2771@vkoul-mobl>
+        id S1726132AbhAEQee (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 5 Jan 2021 11:34:34 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 83C64113E;
+        Tue,  5 Jan 2021 08:33:48 -0800 (PST)
+Received: from [192.168.1.179] (unknown [172.31.20.19])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 647673F70D;
+        Tue,  5 Jan 2021 08:33:37 -0800 (PST)
+Subject: Re: [PATCH 19/31] drm/panfrost: convert to use devm_pm_opp_* API
+To:     Yangtao Li <tiny.windzz@gmail.com>, myungjoo.ham@samsung.com,
+        kyungmin.park@samsung.com, cw00.choi@samsung.com, krzk@kernel.org,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
+        festevam@gmail.com, linux-imx@nxp.com, digetx@gmail.com,
+        thierry.reding@gmail.com, jonathanh@nvidia.com, yuq825@gmail.com,
+        airlied@linux.ie, daniel@ffwll.ch, robdclark@gmail.com,
+        sean@poorly.run, robh@kernel.org, tomeu.vizoso@collabora.com,
+        alyssa.rosenzweig@collabora.com, stanimir.varbanov@linaro.org,
+        agross@kernel.org, bjorn.andersson@linaro.org, mchehab@kernel.org,
+        lukasz.luba@arm.com, adrian.hunter@intel.com,
+        ulf.hansson@linaro.org, vireshk@kernel.org, nm@ti.com,
+        sboyd@kernel.org, broonie@kernel.org, gregkh@linuxfoundation.org,
+        jirislaby@kernel.org, rjw@rjwysocki.net, jcrouse@codeaurora.org,
+        hoegsberg@google.com, eric@anholt.net, tzimmermann@suse.de,
+        marijn.suijten@somainline.org, gustavoars@kernel.org,
+        emil.velikov@collabora.com, jonathan@marek.ca,
+        akhilpo@codeaurora.org, smasetty@codeaurora.org,
+        airlied@redhat.com, masneyb@onstation.org, kalyan_t@codeaurora.org,
+        tanmay@codeaurora.org, ddavenport@chromium.org,
+        jsanka@codeaurora.org, rnayak@codeaurora.org,
+        tongtiangen@huawei.com, miaoqinglang@huawei.com,
+        khsieh@codeaurora.org, abhinavk@codeaurora.org,
+        chandanu@codeaurora.org, groeck@chromium.org, varar@codeaurora.org,
+        mka@chromium.org, harigovi@codeaurora.org,
+        rikard.falkeborn@gmail.com, natechancellor@gmail.com,
+        georgi.djakov@linaro.org, akashast@codeaurora.org,
+        parashar@codeaurora.org, dianders@chromium.org
+Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, lima@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        linux-media@vger.kernel.org, linux-mmc@vger.kernel.org,
+        linux-spi@vger.kernel.org, linux-serial@vger.kernel.org
+References: <20210101165507.19486-1-tiny.windzz@gmail.com>
+ <20210101165507.19486-20-tiny.windzz@gmail.com>
+From:   Steven Price <steven.price@arm.com>
+Message-ID: <63e5e2ae-0baf-cbd1-b2eb-43fac89acb7c@arm.com>
+Date:   Tue, 5 Jan 2021 16:33:32 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210105155009.GC2771@vkoul-mobl>
+In-Reply-To: <20210101165507.19486-20-tiny.windzz@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mani,
-
-On 05-01-21, 21:20, Vinod Koul wrote:
-> On 05-01-21, 17:56, Manivannan Sadhasivam wrote:
-> > Add qpic_bam node to support QPIC BAM DMA controller on SDX55 platform.
+On 01/01/2021 16:54, Yangtao Li wrote:
+> Use devm_pm_opp_* API to simplify code, and remove opp_table
+> from panfrost_devfreq.
 > 
-> Reviewed-by: Vinod Koul <vkoul@kernel.org>
+> Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
+
+Reviewed-by: Steven Price <steven.price@arm.com>
+
+> ---
+>   drivers/gpu/drm/panfrost/panfrost_devfreq.c | 34 ++++++---------------
+>   drivers/gpu/drm/panfrost/panfrost_devfreq.h |  1 -
+>   2 files changed, 10 insertions(+), 25 deletions(-)
 > 
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  arch/arm/boot/dts/qcom-sdx55.dtsi | 12 ++++++++++++
-> >  1 file changed, 12 insertions(+)
-> > 
-> > diff --git a/arch/arm/boot/dts/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom-sdx55.dtsi
-> > index 622a63b0058f..1b9b990ad0a2 100644
-> > --- a/arch/arm/boot/dts/qcom-sdx55.dtsi
-> > +++ b/arch/arm/boot/dts/qcom-sdx55.dtsi
-> > @@ -166,6 +166,18 @@ sdhc_1: sdhci@8804000 {
-> >  			status = "disabled";
-> >  		};
-> >  
-> > +		qpic_bam: dma@1b04000 {
-
-This should be dma-controller@
-
-Also, please run dtbs_check on these patches
-
-> > +			compatible = "qcom,bam-v1.7.0";
-> > +			reg = <0x01b04000 0x1c000>;
-> > +			interrupts = <GIC_SPI 135 IRQ_TYPE_LEVEL_HIGH>;
-> > +			clocks = <&rpmhcc RPMH_QPIC_CLK>;
-> > +			clock-names = "bam_clk";
-> > +			#dma-cells = <1>;
-> > +			qcom,ee = <0>;
-> > +			qcom,controlled-remotely;
-> > +			status = "disabled";
-> > +		};
-> > +
-> >  		tcsr_mutex_block: syscon@1f40000 {
-> >  			compatible = "syscon";
-> >  			reg = <0x1f40000 0x20000>;
-> > -- 
-> > 2.25.1
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_devfreq.c b/drivers/gpu/drm/panfrost/panfrost_devfreq.c
+> index f44d28fad085..c42fa9eb43b1 100644
+> --- a/drivers/gpu/drm/panfrost/panfrost_devfreq.c
+> +++ b/drivers/gpu/drm/panfrost/panfrost_devfreq.c
+> @@ -92,25 +92,26 @@ int panfrost_devfreq_init(struct panfrost_device *pfdev)
+>   	struct thermal_cooling_device *cooling;
+>   	struct panfrost_devfreq *pfdevfreq = &pfdev->pfdevfreq;
+>   
+> -	opp_table = dev_pm_opp_set_regulators(dev, pfdev->comp->supply_names,
+> +	opp_table = devm_pm_opp_set_regulators(dev, pfdev->comp->supply_names,
+>   					      pfdev->comp->num_supplies);
+>   	if (IS_ERR(opp_table)) {
+>   		ret = PTR_ERR(opp_table);
+>   		/* Continue if the optional regulator is missing */
+>   		if (ret != -ENODEV) {
+>   			DRM_DEV_ERROR(dev, "Couldn't set OPP regulators\n");
+> -			goto err_fini;
+> +			return ret;
+>   		}
+> -	} else {
+> -		pfdevfreq->regulators_opp_table = opp_table;
+>   	}
+>   
+> -	ret = dev_pm_opp_of_add_table(dev);
+> +	ret = devm_pm_opp_of_add_table(dev);
+>   	if (ret) {
+> +		if (!IS_ERR(opp_table))
+> +			devm_pm_opp_put_regulators(dev, opp_table);
+> +
+>   		/* Optional, continue without devfreq */
+>   		if (ret == -ENODEV)
+>   			ret = 0;
+> -		goto err_fini;
+> +		return ret;
+>   	}
+>   	pfdevfreq->opp_of_table_added = true;
+>   
+> @@ -121,10 +122,8 @@ int panfrost_devfreq_init(struct panfrost_device *pfdev)
+>   	cur_freq = clk_get_rate(pfdev->clock);
+>   
+>   	opp = devfreq_recommended_opp(dev, &cur_freq, 0);
+> -	if (IS_ERR(opp)) {
+> -		ret = PTR_ERR(opp);
+> -		goto err_fini;
+> -	}
+> +	if (IS_ERR(opp))
+> +		return PTR_ERR(opp);
+>   
+>   	panfrost_devfreq_profile.initial_freq = cur_freq;
+>   	dev_pm_opp_put(opp);
+> @@ -133,8 +132,7 @@ int panfrost_devfreq_init(struct panfrost_device *pfdev)
+>   					  DEVFREQ_GOV_SIMPLE_ONDEMAND, NULL);
+>   	if (IS_ERR(devfreq)) {
+>   		DRM_DEV_ERROR(dev, "Couldn't initialize GPU devfreq\n");
+> -		ret = PTR_ERR(devfreq);
+> -		goto err_fini;
+> +		return PTR_ERR(devfreq);
+>   	}
+>   	pfdevfreq->devfreq = devfreq;
+>   
+> @@ -145,10 +143,6 @@ int panfrost_devfreq_init(struct panfrost_device *pfdev)
+>   		pfdevfreq->cooling = cooling;
+>   
+>   	return 0;
+> -
+> -err_fini:
+> -	panfrost_devfreq_fini(pfdev);
+> -	return ret;
+>   }
+>   
+>   void panfrost_devfreq_fini(struct panfrost_device *pfdev)
+> @@ -159,14 +153,6 @@ void panfrost_devfreq_fini(struct panfrost_device *pfdev)
+>   		devfreq_cooling_unregister(pfdevfreq->cooling);
+>   		pfdevfreq->cooling = NULL;
+>   	}
+> -
+> -	if (pfdevfreq->opp_of_table_added) {
+> -		dev_pm_opp_of_remove_table(&pfdev->pdev->dev);
+> -		pfdevfreq->opp_of_table_added = false;
+> -	}
+> -
+> -	dev_pm_opp_put_regulators(pfdevfreq->regulators_opp_table);
+> -	pfdevfreq->regulators_opp_table = NULL;
+>   }
+>   
+>   void panfrost_devfreq_resume(struct panfrost_device *pfdev)
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_devfreq.h b/drivers/gpu/drm/panfrost/panfrost_devfreq.h
+> index db6ea48e21f9..a51854cc8c06 100644
+> --- a/drivers/gpu/drm/panfrost/panfrost_devfreq.h
+> +++ b/drivers/gpu/drm/panfrost/panfrost_devfreq.h
+> @@ -15,7 +15,6 @@ struct panfrost_device;
+>   
+>   struct panfrost_devfreq {
+>   	struct devfreq *devfreq;
+> -	struct opp_table *regulators_opp_table;
+>   	struct thermal_cooling_device *cooling;
+>   	bool opp_of_table_added;
+>   
 > 
-> -- 
-> ~Vinod
 
--- 
-~Vinod
