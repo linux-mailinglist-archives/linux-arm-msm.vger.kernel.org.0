@@ -2,151 +2,316 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 917A02EA32A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 03:04:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B2E5A2EA3E0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 04:24:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726643AbhAECEd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jan 2021 21:04:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54288 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726168AbhAECEc (ORCPT
+        id S1726168AbhAEDYh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jan 2021 22:24:37 -0500
+Received: from labrats.qualcomm.com ([199.106.110.90]:35354 "EHLO
+        labrats.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726163AbhAEDYh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jan 2021 21:04:32 -0500
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FABEC061794
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jan 2021 18:03:52 -0800 (PST)
-Received: by mail-oi1-x22f.google.com with SMTP id l207so34416336oib.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jan 2021 18:03:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=bAvFCM+Nwif6O5rB2lkK+etNk69rgmZatie3udkuWWk=;
-        b=JEQGcbrEExUn23fbUObkvAsqFSmvjavNCW95udNjzmDUw+ZxJ3fnGwrfLxoKLcykHz
-         OuKMNKC+aiZguWeo9jvT/aFaEoQ8j+w9iShHE5NFu5Hl6tVkGGPKvxQjmlphH80X9Ctl
-         iUpSMGvZh8PVguEGHBTSnQPRj1YI59ZGUpP/51FfMIaYJpWyDghBuYrjD/M1DJVG2KkA
-         +G9Z+GwZ4fXsQeWrqZMg2PYk5cbGMvDUJWUcuou5x+WwnNBuYXvJyvyR1iJ6v2QOSzpW
-         upKtGURRTl/DboW6NK0xlQLn0eTLbZwWz6Nyb1ZoDqk0g9WH6+Zqt0PYrg69LufKneau
-         RXLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=bAvFCM+Nwif6O5rB2lkK+etNk69rgmZatie3udkuWWk=;
-        b=d6Rzg6nV1HDc1V+LQ3or5GmXCrQHYtURCodaTUZln0YNAvp6kM6jZASNg1dnZf82PN
-         9Qqw0Ft6O7F6T0y8F2e8J0O7YWEj0WoF5qHLNxGTExMqxFBN0BhM4DQwGSSdyxGElcVk
-         g4f4f23WOTtfV2QAXiOXU+ZbP8lu4nbwcT4UN9ZePfULlMeJ3cz2MD7g1ACAj2Iqj6YW
-         HUy++X5z6iU4mcYjOITqQ6PhsioB0AH3kqSef9bK4fuNMWGAM4tLEmnxBBJiRyc8ZcbF
-         4hSVVIXdHts+cpxuEPI8Hi9GGvBnk0rnxEa1BOpaVPc0oGUTublIFKUYjeOFoNnR+3nI
-         Foig==
-X-Gm-Message-State: AOAM5323yBgvynMYhwrYpUf7ENLWk8j4MPKP8Cs2a4/+xzvtLy/xQCqf
-        5h4GEn8PhUgYNiEmPfruBoML1/UejN1uV1kahKQdqw==
-X-Google-Smtp-Source: ABdhPJwdorJTBMpB8iLRhXColNJZKPg+WmJhZQkbynEQO5a3WJG4d8wVpu0P7MWethLJaacAsXrMP+lj0wfEWFjIUFw=
-X-Received: by 2002:a05:6808:64d:: with SMTP id z13mr1233982oih.177.1609812231819;
- Mon, 04 Jan 2021 18:03:51 -0800 (PST)
-MIME-Version: 1.0
-References: <20201204025509.1075506-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20201204025509.1075506-1-dmitry.baryshkov@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 5 Jan 2021 05:03:38 +0300
-Message-ID: <CAA8EJpqvBs-cwSHqUTeL_YUGsacTKGBiM=tkKsGM82rF4Q9Qww@mail.gmail.com>
-Subject: Re: [PATCH v10 00/15] qcom: pm8150: add support for thermal monitoring
-To:     Andy Gross <agross@kernel.org>,
+        Mon, 4 Jan 2021 22:24:37 -0500
+X-Greylist: delayed 444 seconds by postgrey-1.27 at vger.kernel.org; Mon, 04 Jan 2021 22:24:36 EST
+IronPort-SDR: AhtnQ7Xvm5KUQEloCh418sowHolS6f/H+MggmN/W9Cb7w7aDXzHIZdUABr9EP9P2Po7XvzvA1a
+ D8ReidcUSlH2XWfRy7pO2LkG27JKL+ss/62Ae96nARrCYi4ecvLYPeeeFtNZ5qxbkw+N1+lI7X
+ lDkp8aMwfbrHlNrZKzEkgDTu+Wovxbr39bjsxl3wLyKWcE5+ZPEwQWAlbupjXJ5V+noEUsZ1Qr
+ LlfdZY7Oh4dbhcHw6U/dJTJgzPoA66v+FP7f3R8kfTP7A3McdyZ2MrnOtJOmvhr+Jqv6WdGxoS
+ Kao=
+X-IronPort-AV: E=Sophos;i="5.78,475,1599548400"; 
+   d="scan'208";a="29488174"
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by labrats.qualcomm.com with ESMTP; 04 Jan 2021 19:16:08 -0800
+X-QCInternal: smtphost
+Received: from wsp769891wss.qualcomm.com (HELO stor-presley.qualcomm.com) ([192.168.140.85])
+  by ironmsg03-sd.qualcomm.com with ESMTP; 04 Jan 2021 19:16:06 -0800
+Received: by stor-presley.qualcomm.com (Postfix, from userid 359480)
+        id 7C7582184B; Mon,  4 Jan 2021 19:16:06 -0800 (PST)
+From:   Can Guo <cang@codeaurora.org>
+To:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
+        hongwus@codeaurora.org, rnayak@codeaurora.org,
+        linux-scsi@vger.kernel.org, kernel-team@android.com,
+        saravanak@google.com, salyzyn@google.com, cang@codeaurora.org
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>
-Cc:     "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>, linux-pm@vger.kernel.org,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, linux-iio@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Jishnu Prakash <jprakash@qti.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH 2/2] scsi: ufs-qcom: Add one sysfs node to monitor performance
+Date:   Mon,  4 Jan 2021 19:15:51 -0800
+Message-Id: <1609816552-16442-3-git-send-email-cang@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1609816552-16442-1-git-send-email-cang@codeaurora.org>
+References: <1609816552-16442-1-git-send-email-cang@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Colleagues,
+Add one sysfs node to monitor driver layer performance data. One can
+manipulate it to get performance related statistics during runtime.
 
+Signed-off-by: Can Guo <cang@codeaurora.org>
 
-On Fri, 4 Dec 2020 at 05:55, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> This patch serie adds support for thermal monitoring block on Qualcomm's
-> PMIC5 chips. PM8150{,b,l} and sm8250-mtp board device trees are extended
-> to support thermal zones provided by this thermal monitoring block.
-> Unlike the rest of PMIC thermal senses, these thermal zones describe
-> particular thermistors, which differ between from board to board.
->
-> Changes since v9:
->  - In patch 12 add comments to the code as requested by Daniel Lezcano.
->  - Change copyright comment in qcom-spmi-adc-tm5.c to clearly note
->    driver history.
+diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+index 2206b1e..5303ce9 100644
+--- a/drivers/scsi/ufs/ufs-qcom.c
++++ b/drivers/scsi/ufs/ufs-qcom.c
+@@ -42,6 +42,7 @@ static struct ufs_qcom_host *ufs_qcom_hosts[MAX_UFS_QCOM_HOSTS];
+ static void ufs_qcom_get_default_testbus_cfg(struct ufs_qcom_host *host);
+ static int ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(struct ufs_hba *hba,
+ 						       u32 clk_cycles);
++static int ufs_qcom_init_sysfs(struct ufs_hba *hba);
+ 
+ static struct ufs_qcom_host *rcdev_to_ufs_host(struct reset_controller_dev *rcd)
+ {
+@@ -1088,6 +1089,8 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+ 		err = 0;
+ 	}
+ 
++	ufs_qcom_init_sysfs(hba);
++
+ 	goto out;
+ 
+ out_variant_clear:
+@@ -1453,6 +1456,85 @@ static void ufs_qcom_config_scaling_param(struct ufs_hba *hba,
+ }
+ #endif
+ 
++static inline int ufs_qcom_opcode_rw_dir(u8 opcode)
++{
++	if (opcode == READ_6 || opcode == READ_10 || opcode == READ_16)
++		return READ;
++	else if (opcode == WRITE_6 || opcode == WRITE_10 || opcode == WRITE_16)
++		return WRITE;
++	else
++		return -EINVAL;
++}
++
++static inline bool ufs_qcom_should_start_monitor(struct ufs_qcom_host *host,
++						 struct ufshcd_lrb *lrbp)
++{
++	return (host->monitor.enabled && lrbp && lrbp->cmd &&
++		ktime_before(host->monitor.enabled_ts, lrbp->issue_time_stamp));
++}
++
++static void ufs_qcom_monitor_start_busy(struct ufs_hba *hba, int tag)
++{
++	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
++	struct ufshcd_lrb *lrbp;
++	int dir;
++
++	lrbp = &hba->lrb[tag];
++	if (ufs_qcom_should_start_monitor(host, lrbp)) {
++		dir = ufs_qcom_opcode_rw_dir(*lrbp->cmd->cmnd);
++		if (dir >= 0 && host->monitor.nr_queued[dir]++ == 0)
++			host->monitor.busy_start_ts[dir] =
++						lrbp->issue_time_stamp;
++	}
++}
++
++static void ufs_qcom_update_monitor(struct ufs_hba *hba, int tag)
++{
++	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
++	struct ufshcd_lrb *lrbp;
++	int dir;
++
++	lrbp = &hba->lrb[tag];
++	if (ufs_qcom_should_start_monitor(host, lrbp)) {
++		dir = ufs_qcom_opcode_rw_dir(*lrbp->cmd->cmnd);
++		if (dir >= 0 && host->monitor.nr_queued[dir] > 0) {
++			struct request *req;
++			struct ufs_qcom_perf_monitor *mon;
++			ktime_t now, inc, lat;
++
++			mon = &host->monitor;
++			req = lrbp->cmd->request;
++			mon->nr_sec_rw[dir] += blk_rq_sectors(req);
++			now = ktime_get();
++			inc = ktime_sub(now, mon->busy_start_ts[dir]);
++			mon->total_busy[dir] =
++				ktime_add(mon->total_busy[dir], inc);
++			/* push forward the busy start of monitor */
++			mon->busy_start_ts[dir] = now;
++			mon->nr_queued[dir]--;
++
++			/* update latencies */
++			mon->nr_req[dir]++;
++			lat = ktime_sub(now, lrbp->issue_time_stamp);
++			mon->lat_sum[dir] += lat;
++			if (mon->lat_max[dir] < lat || !mon->lat_max[dir])
++				mon->lat_max[dir] = lat;
++			if (mon->lat_min[dir] > lat || !mon->lat_min[dir])
++				mon->lat_min[dir] = lat;
++		}
++	}
++}
++
++static void ufs_qcom_setup_xfer_req(struct ufs_hba *hba, int tag, bool is_scsi_cmd)
++{
++	ufs_qcom_monitor_start_busy(hba, tag);
++}
++
++static void ufs_qcom_compl_xfer_req(struct ufs_hba *hba, int tag, bool is_scsi_cmd)
++{
++	ufs_qcom_update_monitor(hba, tag);
++}
++
+ /*
+  * struct ufs_hba_qcom_vops - UFS QCOM specific variant operations
+  *
+@@ -1476,8 +1558,112 @@ static const struct ufs_hba_variant_ops ufs_hba_qcom_vops = {
+ 	.device_reset		= ufs_qcom_device_reset,
+ 	.config_scaling_param = ufs_qcom_config_scaling_param,
+ 	.program_key		= ufs_qcom_ice_program_key,
++	.setup_xfer_req         = ufs_qcom_setup_xfer_req,
++	.compl_xfer_req         = ufs_qcom_compl_xfer_req,
+ };
+ 
++static ssize_t monitor_show(struct device *dev, struct device_attribute *attr,
++			    char *buf)
++{
++	struct ufs_hba *hba = dev_get_drvdata(dev);
++	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
++	struct ufs_qcom_perf_monitor *mon = &host->monitor;
++	unsigned long nr_sec_rd, nr_sec_wr, busy_us_rd, busy_us_wr;
++	unsigned long lat_max_rd, lat_min_rd, lat_sum_rd, lat_avg_rd, nr_req_rd;
++	unsigned long lat_max_wr, lat_min_wr, lat_sum_wr, lat_avg_wr, nr_req_wr;
++	bool is_enabled;
++
++	/*
++	 * Don't lock the host lock since user needs to cat the entry very
++	 * frequently during performance test, otherwise it may impact the
++	 * performance.
++	 */
++	is_enabled = mon->enabled;
++	if (!is_enabled)
++		goto print_usage;
++
++	nr_sec_rd = mon->nr_sec_rw[READ];
++	nr_sec_wr = mon->nr_sec_rw[WRITE];
++	busy_us_rd = ktime_to_us(mon->total_busy[READ]);
++	busy_us_wr = ktime_to_us(mon->total_busy[WRITE]);
++
++	nr_req_rd = mon->nr_req[READ];
++	lat_max_rd = ktime_to_us(mon->lat_max[READ]);
++	lat_min_rd = ktime_to_us(mon->lat_min[READ]);
++	lat_sum_rd = ktime_to_us(mon->lat_sum[READ]);
++	lat_avg_rd = lat_sum_rd / nr_req_rd;
++
++	nr_req_wr = mon->nr_req[WRITE];
++	lat_max_wr = ktime_to_us(mon->lat_max[WRITE]);
++	lat_min_wr = ktime_to_us(mon->lat_min[WRITE]);
++	lat_sum_wr = ktime_to_us(mon->lat_sum[WRITE]);
++	lat_avg_wr = lat_sum_wr / nr_req_wr;
++
++	return scnprintf(buf, PAGE_SIZE, "Read %lu %s %lu us, %lu %s max %lu | min %lu | avg %lu | sum %lu\nWrite %lu %s %lu us, %lu %s max %lu | min %lu | avg %lu | sum %lu\n",
++		 nr_sec_rd, "sectors (in 512 bytes) in ", busy_us_rd,
++		 nr_req_rd, "read reqs completed, latencies in us: ",
++		 lat_max_rd, lat_min_rd, lat_avg_rd, lat_sum_rd,
++		 nr_sec_wr, "sectors (in 512 bytes) in ", busy_us_wr,
++		 nr_req_wr, "write reqs completed, latencies in us: ",
++		 lat_max_wr, lat_min_wr, lat_avg_wr, lat_sum_wr);
++
++print_usage:
++	return scnprintf(buf, PAGE_SIZE, "%s\n%s",
++			 "To start monitoring, echo 1 > monitor, cat monitor.",
++			 "To stop monitoring, echo 0 > monitor.");
++}
++
++static ssize_t monitor_store(struct device *dev, struct device_attribute *attr,
++			     const char *buf, size_t count)
++{
++	struct ufs_hba *hba = dev_get_drvdata(dev);
++	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
++	unsigned long value, flags;
++
++	if (kstrtoul(buf, 0, &value))
++		return -EINVAL;
++
++	value = !!value;
++	spin_lock_irqsave(hba->host->host_lock, flags);
++	if (value == host->monitor.enabled)
++		goto out_unlock;
++
++	if (!value) {
++		memset(&host->monitor, 0, sizeof(host->monitor));
++	} else {
++		host->monitor.enabled = true;
++		host->monitor.enabled_ts = ktime_get();
++	}
++
++out_unlock:
++	spin_unlock_irqrestore(hba->host->host_lock, flags);
++	return count;
++}
++
++static DEVICE_ATTR_RW(monitor);
++
++static struct attribute *ufs_qcom_sysfs_attrs[] = {
++	&dev_attr_monitor.attr,
++	NULL
++};
++
++static const struct attribute_group ufs_qcom_sysfs_group = {
++	.name = "qcom",
++	.attrs = ufs_qcom_sysfs_attrs,
++};
++
++static int ufs_qcom_init_sysfs(struct ufs_hba *hba)
++{
++	int ret;
++
++	ret = sysfs_create_group(&hba->dev->kobj, &ufs_qcom_sysfs_group);
++	if (ret)
++		dev_err(hba->dev, "%s: Failed to create qcom sysfs group (err = %d)\n",
++			__func__, ret);
++
++	return ret;
++}
++
+ /**
+  * ufs_qcom_probe - probe routine of the driver
+  * @pdev: pointer to Platform device handle
+diff --git a/drivers/scsi/ufs/ufs-qcom.h b/drivers/scsi/ufs/ufs-qcom.h
+index 8208e3a..4c7e8ac 100644
+--- a/drivers/scsi/ufs/ufs-qcom.h
++++ b/drivers/scsi/ufs/ufs-qcom.h
+@@ -177,6 +177,23 @@ struct ufs_qcom_testbus {
+ 
+ struct gpio_desc;
+ 
++/* Host performance monitor */
++struct ufs_qcom_perf_monitor {
++	/* latencies*/
++	ktime_t lat_sum[2];
++	ktime_t lat_max[2];
++	ktime_t lat_min[2];
++	unsigned long nr_req[2];
++	unsigned long nr_sec_rw[2];
++
++	u32 nr_queued[2];
++	ktime_t busy_start_ts[2];
++	ktime_t total_busy[2];
++
++	ktime_t enabled_ts;
++	bool enabled;
++};
++
+ struct ufs_qcom_host {
+ 	/*
+ 	 * Set this capability if host controller supports the QUniPro mode
+@@ -220,6 +237,8 @@ struct ufs_qcom_host {
+ 	struct reset_controller_dev rcdev;
+ 
+ 	struct gpio_desc *device_reset;
++
++	struct ufs_qcom_perf_monitor monitor;
+ };
+ 
+ static inline u32
+-- 
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
-Gracious ping for this patch series. Daniel, do you have any comments?
-
->
-> Changes since v8:
->  - Simplified qcom_vadc_map_voltage_temp() code by removing ascending
->    tables support
->  - Simplified qcom-vadc-common volt/temp mapping code
->  - Implement suggestions by Matthias Kaehlcke: message formatting,
->    rewrite comments, remove unused variable initialization.
->
-> Changes since v7:
->  - Move qcom-vadc-common.h header to include/linux/iio/adc/ dir.
->  - Use explicit sizeof(var) instead of hand-coding 1 when accessing
->    adc-tm registers.
->  - Remove buffer read from adc_tm5_init().
->  - Remove extra on-stack var from adc_tm5_get_temp().
->  - Minor formatting changes as suggested Daniel.
->
-> Changes since v6:
->  - Added include <linux/bitfield.h> as noted by Jishnu Prakash.
->
-> Changes since v5:
->  - Reworked DT bindings:
->    * Removed qcom,adc-channel, instead it is parsed from io-channels
->    * Renamed qcom,hw-settle-time to include -us suffix
->  - Re-added monitor enabling which got lost during refactored. Noted by
->    Jishnu Prakash.
->  - Use threaded IRQ handler as susggested by Jishnu.
->
-> Changes since v4:
->  - Added kernel-doc comments to ADC-TM structures
->  - Used several sizeof(buf) instead of hand-conding register size
->
-> Changes since v3:
->  - Fix DT description to spell "thermal monitoring" instead of just TM
->  - Fix warnings in DT example
->  - Add EXPORT_SYMBOL_GPL(of_iio_channel_get_by_name)
->  - Fixed whitespace chanes in qcom-vadc-common.c
->  - Removed error message if IIO chanel get returns -EPROBE_DEFER
->
-> Changes since v2:
->  - IIO: export of_iio_channel_get_by_name() function
->  - dt-bindings: move individual io-channels to each thermal monitoring
->    channel rather than listing them all in device node
->  - added fallback defaults to of_device_get_match_data calls in
->    qcom-spmi-adc5 and qcom-spmi-adc-tm5 drivers
->  - minor typo fixes
->
-> Changes since v1:
->  - Introduce fixp_linear_interpolate() by Craig Tatlor
->  - Lots of syntax/whitespace changes
->  - Cleaned up register definitions per Jonathan's suggestion
->  - Implemented most of the suggestions from Bjorn's and Jonathan's
->    review
->
->
-
-
---
-With best wishes
-Dmitry
