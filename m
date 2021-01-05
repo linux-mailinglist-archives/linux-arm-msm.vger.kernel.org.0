@@ -2,86 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C13B82EA6C4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 09:57:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DEC52EA6BB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 09:49:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726143AbhAEI4T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jan 2021 03:56:19 -0500
-Received: from m43-15.mailgun.net ([69.72.43.15]:27435 "EHLO
-        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725978AbhAEI4S (ORCPT
+        id S1726195AbhAEIt0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jan 2021 03:49:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60336 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726063AbhAEIt0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jan 2021 03:56:18 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1609836960; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=KuJNnND9gNxn87Ys5RVKbNSQ/froZkWCUykAcB4+ZmA=; b=VER/6SgbdPFc27ziWZG0Y+lhqq+POXSd9hy6e5iXCs6C+ZitNp1X1jikHmW0B2RGwJJOtxE6
- EG/8DML409zmNCyXq1Ry5LEDpO4Mw4X6QlxGcBvmfOeWYQAxtoCbxQZGtCDvTwUu1srVAjf8
- infUuQdSKP9RzoGTg+bzjB2q2/4=
-X-Mailgun-Sending-Ip: 69.72.43.15
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n08.prod.us-west-2.postgun.com with SMTP id
- 5ff42980b73be0303d4c5427 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 05 Jan 2021 08:55:28
- GMT
-Sender: varada=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 37917C43464; Tue,  5 Jan 2021 08:55:28 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from codeaurora.org (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: varada)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4A7D5C433C6;
-        Tue,  5 Jan 2021 08:55:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4A7D5C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=varada@codeaurora.org
-Date:   Tue, 5 Jan 2021 14:25:16 +0530
-From:   Varadarajan Narayanan <varada@codeaurora.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        linus.walleij@linaro.org, catalin.marinas@arm.com, will@kernel.org,
-        p.zabel@pengutronix.de, nsekar@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        sricharan@codeaurora.org
-Subject: Re: [PATCH 1/7] clk: qcom: clk-alpha-pll: Add support for Stromer
- PLLs
-Message-ID: <20210105085515.GA30147@codeaurora.org>
-References: <1601270140-4306-1-git-send-email-varada@codeaurora.org>
- <1601270140-4306-2-git-send-email-varada@codeaurora.org>
- <51544129-a04e-16a2-64e5-e004ea19bf8c@somainline.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <51544129-a04e-16a2-64e5-e004ea19bf8c@somainline.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+        Tue, 5 Jan 2021 03:49:26 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD087C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jan 2021 00:48:45 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id c133so2263766wme.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jan 2021 00:48:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=h9pO3KJbNjtBLOlj/22/l2ns9qMIkoStSdfqobGqOEo=;
+        b=skBuExQ3rfLYSvofGqYugbd/iJ8xfVw9NY32iH//1IbS+XAzl3LUS3U9h9O2XsL3Jk
+         O3ESxmdUqN6auITuw+riHtV5VDom2TYcGYERe7lqmyx9abTaKbkBso4CVQKgpsQQWTSt
+         a8hrsVGcVSFM2zgB2UWOspli0Av0pCPhTBSc/tctUbT6YM9R5X+8abUjBoBzisBLs47H
+         ofmSkLqzzLW/8vPmxJBZAmFSMrYOjwub+E53uCUGlF55QqshGzMuQxK78vqxE90WKooa
+         GsKddkinIt8m3uia5OoNrnAb5Ckuv3MGWGO85/Hj6cWxwW6Pr+2cZOVt/hF0e1qsHjPW
+         +thA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=h9pO3KJbNjtBLOlj/22/l2ns9qMIkoStSdfqobGqOEo=;
+        b=l5qqJgeCH1FFICLMpxCm8REMOjZoZn1Ij0mMNnI1W5rp2VgGgzAyP/9CAsVnvZmVQo
+         PVHfqeIBvvJPEsybZAI/7k+t7wwUBHpU97xy/pd0wWeWxkM47VXPWjltBOVUsCibcYyY
+         kGV8EIbaXEXMFMkvU/1LrDH84Miyab0nrXl0N53+H/8jb0l3lyOLrp2GEFFgQPwD1WDh
+         ONBf4FGSinzvZhauBc1FOrC/91om5rLtiJJ+ESZhkcdlidz5rv+9hj7gdyxvRUd+Bn2+
+         0civng+EADP86sWvZDVLX+pp3mimb29RLHzagMBWbvhTpYj6RNHTv5sdbQr6ixeoDps0
+         CyWQ==
+X-Gm-Message-State: AOAM530MNNYpyk33qGLvfFSl4Wxl3sbq+bhMnGA79MwrdqyYqOIRLqSG
+        7rsO0UlQdIrAWFzr+HeADzj32g==
+X-Google-Smtp-Source: ABdhPJzUj92xv3GbS6ZrlAnsgxuH+dNWzkHd6LcsCAbs8pJTjp+bDMqQyDJW6krjxPJTtM7h8FhVjA==
+X-Received: by 2002:a7b:ce17:: with SMTP id m23mr2456604wmc.117.1609836524453;
+        Tue, 05 Jan 2021 00:48:44 -0800 (PST)
+Received: from localhost.localdomain ([2a01:e0a:490:8730:2285:e92f:1a49:4891])
+        by smtp.gmail.com with ESMTPSA id q73sm3162673wme.44.2021.01.05.00.48.43
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 05 Jan 2021 00:48:43 -0800 (PST)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH 1/2] mhi: unconstify mhi_event_config
+Date:   Tue,  5 Jan 2021 09:56:14 +0100
+Message-Id: <1609836975-5758-1-git-send-email-loic.poulain@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Dec 26, 2020 at 01:51:28AM +0100, Konrad Dybcio wrote:
+Some parameters may have to be determined at runtime.
+It is the case for the event ring MSI vector.
 
-Konrad,
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+---
+ include/linux/mhi.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> Hi, are you going to resubmit this patch? Looks like
-> MDM9607 uses Stromer PLL for its CPU clocks and could
-> benefit from it.
+diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+index 62da830..48b1b2a 100644
+--- a/include/linux/mhi.h
++++ b/include/linux/mhi.h
+@@ -290,7 +290,7 @@ struct mhi_controller_config {
+ 	u32 num_channels;
+ 	const struct mhi_channel_config *ch_cfg;
+ 	u32 num_events;
+-	const struct mhi_event_config *event_cfg;
++	struct mhi_event_config *event_cfg;
+ 	bool use_bounce_buf;
+ 	bool m2_no_db;
+ };
+-- 
+2.7.4
 
-Yes. But will take some time since we are held up with
-additional activities.
-
-Thanks
-Varada
-
---
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
