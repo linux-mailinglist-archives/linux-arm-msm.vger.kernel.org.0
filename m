@@ -2,97 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A27F42EADF7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 16:13:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DB6462EAE2A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jan 2021 16:25:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727089AbhAEPKy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jan 2021 10:10:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34858 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726499AbhAEPKx (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jan 2021 10:10:53 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5815BC06179A
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jan 2021 07:10:00 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id y19so73127655lfa.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jan 2021 07:10:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Hpiie2eScIu2s/uuXEyv9UhVbNMVnQLt+9qP9Zzdslg=;
-        b=SNXGbPp2no06aMPooUZfjhBv2yx8ZCRuuzOVgMeXO747C//2P3yIp3cZGMWM+h340l
-         7V+UCfmLDjwfv/uPVx1mloSd6IjRQf1kwRE3dEImVTGiDO8aiAAtV6zxa75B5k6rp2Wo
-         tGq3SchCZJ4KkTLse10V+yp6Sv/I0aO/iLhSiiNGC2HzUq9PALGqJK9/w0g39IdstPw/
-         KvWbVRujx/bbX6a7yC6bmNE5cKgbS16lH+F9vv72taKgtvHbXpSSwrGyDf1F/Vf2kT10
-         eyv/DElect6IgOyBhwK989ccFDKsFR519M8b0qk58ZEBZmZ3M2Vz6DwvsI0u5dndwWYb
-         ieBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Hpiie2eScIu2s/uuXEyv9UhVbNMVnQLt+9qP9Zzdslg=;
-        b=HILRtSB6c89y/cXvKvtqI2xFWmYuci/vkMmBfTfP2gyXQyi9WfgGKV1pEreQAFh1Ib
-         V1JD4F6RfKnzGOk9HFZ42dHIISCXXnfXAjrMV0ucqKHjrvJADvgzx6EqvBHHSgS+OOIs
-         0clF0LTk7grSVxxmKf0JySwd3CI4iXhiOJV/SEWP8V0WK+Uu0bct6v4SlK8z7sRazuJh
-         TZqp/OFh9Sw9l1ucZnRr0IvGSXGPDaEY+34WeplQYRu4eBcGaIes1i8qDE3sKYKd1CCD
-         RYTWQlyh1Vi5lrwEG3mVRKM+4X9Oxs7cfGo2EGqHa4QCc+lgYSDdafurUm27ACC5OWPW
-         I/jw==
-X-Gm-Message-State: AOAM531T5F9L2tmnBy61Ws6vm6F1ayX1n45JBSTIqu6omLYGOdmBYJY0
-        HSZ0pcoeog5lRTeMRcVdh5omNAJ+YlQZNkw7K2iHig==
-X-Google-Smtp-Source: ABdhPJyGva5zXeaOmIEQqoYoJer37k5jmHl9i/j6Dhp6JIYx4Yofcosj36VXFcf+6bmITwznEOHzyR4VGrfsU18QvDc=
-X-Received: by 2002:a19:495d:: with SMTP id l29mr33226699lfj.465.1609859397331;
- Tue, 05 Jan 2021 07:09:57 -0800 (PST)
+        id S1725838AbhAEPXn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jan 2021 10:23:43 -0500
+Received: from mail.kernel.org ([198.145.29.99]:59086 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725792AbhAEPXm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 5 Jan 2021 10:23:42 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id B5F1622B49;
+        Tue,  5 Jan 2021 15:23:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1609860182;
+        bh=26Lu8Y1KwcsryytQMRnbB2efHh103hoNJOBRXR3UfEs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=WhsjtFoaxgZCJPGLvcnfpQXhT2MvWT3p74jUOTuh7yI5zjv0LmkGmTpcXOANcFXep
+         s51y//vLkbN7Ky9ss2IAwHV8ogPkv5fiqNwbkkhgZ6tOZfDYyswzzJpSRYo5IgZXML
+         +JCaoWgd3IkuXSzx2mDuDGOGpV2O0h90L23A/IdF2UhU+AoZpK+zWe4NnnmPMGSd2k
+         5gbB6oWIcPg5if7wyx62FV2jzkgJ0iLs21MBoX4wbmK6CPZFx1Pv78/EpTO8P/0vW3
+         CtZTWid0SSLKTJeO5OZziFRUbH3S2fo6rV+0SFwGxeueNJ5TjPn6iOtCZnWOIStJGY
+         grIG+2wxlUXKw==
+Date:   Tue, 5 Jan 2021 16:22:52 +0100
+From:   Wolfram Sang <wsa@kernel.org>
+To:     Roja Rani Yarubandi <rojay@codeaurora.org>
+Cc:     swboyd@chromium.org, dianders@chromium.org,
+        saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
+        mka@chromium.org, akashast@codeaurora.org,
+        msavaliy@qti.qualcomm.com, skakit@codeaurora.org,
+        pyarlaga@codeaurora.org, rnayak@codeaurora.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+        sumit.semwal@linaro.org, linux-media@vger.kernel.org
+Subject: Re: [PATCH V7 1/2] i2c: i2c-qcom-geni: Store DMA mapping data in
+ geni_i2c_dev struct
+Message-ID: <20210105152252.GA1842@ninjato>
+References: <20201221123801.26643-1-rojay@codeaurora.org>
+ <20201221123801.26643-2-rojay@codeaurora.org>
 MIME-Version: 1.0
-References: <X98NP6NFK1Afzrgd@manjaro>
-In-Reply-To: <X98NP6NFK1Afzrgd@manjaro>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Tue, 5 Jan 2021 16:09:46 +0100
-Message-ID: <CACRpkdbLtcPY++DZv2LLkGrW=T83ByqeB+fx3Li0E=TJMYfLCA@mail.gmail.com>
-Subject: Re: [PATCH v3] pinctrl: remove empty lines in pinctrl subsystem
-To:     Zhaoyu Liu <zackary.liu.pro@gmail.com>
-Cc:     =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Dong Aisheng <aisheng.dong@nxp.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Stefan Agner <stefan@agner.ch>,
-        Sascha Hauer <kernel@pengutronix.de>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Patrice CHOTARD <patrice.chotard@st.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="17pEHd4RhPHOinZp"
+Content-Disposition: inline
+In-Reply-To: <20201221123801.26643-2-rojay@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Dec 20, 2020 at 9:37 AM Zhaoyu Liu <zackary.liu.pro@gmail.com> wrote:
 
-> Remove all empty lines at the end of functions in pinctrl subsystem,
-> and make the code neat.
->
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-> Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-> Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-> Signed-off-by: Zhaoyu Liu <zackaryliu@yeah.net>
+--17pEHd4RhPHOinZp
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Patch applied.
+On Mon, Dec 21, 2020 at 06:08:00PM +0530, Roja Rani Yarubandi wrote:
+> Store DMA mapping data in geni_i2c_dev struct to enhance DMA mapping
+> data scope. For example during shutdown callback to unmap DMA mapping,
+> this stored DMA mapping data can be used to call geni_se_tx_dma_unprep
+> and geni_se_rx_dma_unprep functions.
+>=20
+> Add two helper functions geni_i2c_rx_msg_cleanup and
+> geni_i2c_tx_msg_cleanup to unwrap the things after rx/tx FIFO/DMA
+> transfers, so that the same can be used in geni_i2c_stop_xfer()
+> function during shutdown callback.
+>=20
+> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
 
-Yours,
-Linus Walleij
+Applied to for-next, thanks!
+
+
+--17pEHd4RhPHOinZp
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl/0hEgACgkQFA3kzBSg
+KbZAIxAAr6ON6sRM0AIDU6gtWzCUU8IbeiOr5solqqptjvfZxSab7xG5idCpkI0z
+lkzBA17KicyFJ9IdpIMXc0PtWC0qNlE/kUSKkEXAbGMFyY3vXQvaw8XPAncuwrqt
+c1yGASBJmU7+lB3DbjAQjHz8i0g4q022fH6H6wAreogpnlo4mSRBt3Lccm7Mo9Bp
+cECCM3SHjSkRExT/OBzCAaK1ZP1zMwnwdd75M5VyTZE5XgONzVMgtQ/O+POXYZRl
+T/d23YAPAti5eIUqM0brJgCT9/AmADmn3O7V1aP66bSmqvZmdLHMuWevAgbuY94K
+o8ox9BJjTZiWZL8ftp2Sh8ZpVLN0nd0wCGghWPfsIxHIHrzEueTsKC27XGkahgS+
+gnHy981lU0hP9RDVCqjsgZDj5F4Rvp5asGcaAOhdOym8beY8U978eiOPtFzhtbxE
+7gaDb7Q9/qikyGABT0tEQwVHOEXiB3F4keDCBUc0saH5T1HHKJ73779DoPw3wXgV
+1D98KfVceZc1EvVTNxn6Bq69hwu91sE9sSEg/o9QiInUDv1pKbSS7KxnDqVi1Fto
+T4YOah5GSvb7PoivBU+YZy0JZ9xjZvubeyjyEFlQk0WvvmtVD/XiL0TZEgGbfQ8m
+zmitcnRtofrgOsxHfAuNtWgldCOkPtFeA/6y0fz2BR5MxpGrY68=
+=h+QZ
+-----END PGP SIGNATURE-----
+
+--17pEHd4RhPHOinZp--
