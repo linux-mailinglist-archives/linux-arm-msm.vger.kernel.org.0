@@ -2,195 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F1CAC2EBEC4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jan 2021 14:37:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F29C22EC16A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jan 2021 17:49:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726528AbhAFNhE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jan 2021 08:37:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48700 "EHLO
+        id S1727688AbhAFQsv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jan 2021 11:48:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726509AbhAFNhD (ORCPT
+        with ESMTP id S1727684AbhAFQsv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jan 2021 08:37:03 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75A53C06134C
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jan 2021 05:36:11 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id g25so3155224wmh.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jan 2021 05:36:11 -0800 (PST)
+        Wed, 6 Jan 2021 11:48:51 -0500
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0B49C06134D
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jan 2021 08:48:08 -0800 (PST)
+Received: by mail-oi1-x22b.google.com with SMTP id q25so4056707oij.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jan 2021 08:48:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=OK96pus8qdQrBS5M0oL3AvAxP5CiljhlnQLMNRvrKmw=;
-        b=ME2v7jsF54uVq1epB2enC1dNOwAROFfIoEXp3fHa9h9z87VUluLEh9TLIZEJD7zkCz
-         r1zyeo3teckysoQ5Gz4vWE5Fmw17nZQYJC1Rw0kijr0D25IWtL1+JqBWNocbkn8o+I0z
-         XmXHN0HUVASCJ7qXgEwDQh9Hmb5ZO8HXpGzobB8ly0FL1hN3y+mIzmTrcx8lQa9AgJ0D
-         EjsnYSxe5EBnjYX7ltM4pA42B0VP6Lnp7H6b/CbyF+9wAqx/YkRkF0tq28zFze5VLS0G
-         I69DJWXu/SX2Mv4hvnxPXFDh8hMdiMVFXTiFOGD4vXXQC/K23Tw0Ty3+EyQeNNqZVj7J
-         JE1w==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=ul3z+zPYyErER25sLdRQyHxYuVeArqXgOYoH6Iif2tA=;
+        b=xnr9R7Osri/fA96VspyfVZmLyshJO2Rq5Q8oYcbT9/pOILj5EE6ugUcpCetuytQ65R
+         ZdqURe6AQD5HSXQfp2p3t/XMeZaUoY9X0j9EmoUbGlWsDacuW0JztS4dVpg+lS7SsoLN
+         tfA7IOcuHKvOFfxp/i45x2+HCHvnExX42mdAWAR+2raJR6GBw8vJoEabelrMcQlYt1s+
+         oZJkd3aSwGJNguTNfTTzWKn/+03gWx7jFZflnBsPoFyGkUpPKZREc8Cmw9opt+uYHCPs
+         LTdfWkc99o3c1zQp1qIVDDRW9+fjrPt2Y75YubIPdrrnlgTLUdbiOVrKhYCxTPUSOHpx
+         8XZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=OK96pus8qdQrBS5M0oL3AvAxP5CiljhlnQLMNRvrKmw=;
-        b=iObM75QVEzRb1SzHVU/cLTU13WY+o/L0V/SOF+k7rOR2zQH6aB8J1STc0Ozdn/hPPy
-         sCPzwv/8fgR+c9aIKdRcubs1ORwgt3DSFEL5xlak33ZbWJRMr8P5SCgV3y9DYAym0BEQ
-         pcZUcCVVLxYNbnMSnorNm/JdRyo6dUc70lw7YmF5/f34Mi0PGr3uan6ORjxI2omDxH/z
-         Q4jpIdIrd7SLGVUEnxHJzR4l1xfOBWQBAgswckWo+6HiX2j2qfPZT42NnepzDr+L9292
-         QT99asZHjrUDFqEJOxSbZjhKfZh5Nu1sUXUkwmfKuVRCCKvho8WfqPTAzxCFBbA8BheH
-         Yisg==
-X-Gm-Message-State: AOAM531o1Q1QITHux0eGFIGUKfNHIl3T6Pvz4TGSmqoxJ4ahTYoLhBjf
-        k8xnKOxct4ARd8U6PqV4N63DfQ==
-X-Google-Smtp-Source: ABdhPJySeYJ9qFzqYlDz9hQ/oh6EiKZDfOpBYHZQ8TNC37LfHRCxPSg1KyOfaLHpEpPJbtJQYaIVCw==
-X-Received: by 2002:a1c:1c1:: with SMTP id 184mr3724909wmb.112.1609940170132;
-        Wed, 06 Jan 2021 05:36:10 -0800 (PST)
-Received: from localhost.localdomain ([2a01:e0a:490:8730:32c9:a713:9d05:bd74])
-        by smtp.gmail.com with ESMTPSA id r82sm3183618wma.18.2021.01.06.05.36.09
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Jan 2021 05:36:09 -0800 (PST)
-From:   Loic Poulain <loic.poulain@linaro.org>
-To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org, kuba@kernel.org,
-        davem@davemloft.net, netdev@vger.kernel.org,
-        Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH] bus: mhi: Add inbound buffers allocation flag
-Date:   Wed,  6 Jan 2021 14:43:43 +0100
-Message-Id: <1609940623-8864-1-git-send-email-loic.poulain@linaro.org>
-X-Mailer: git-send-email 2.7.4
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ul3z+zPYyErER25sLdRQyHxYuVeArqXgOYoH6Iif2tA=;
+        b=AkNv2d7P/5CDR3NeERZ3BCabnv93MVe9FOMRjePObHrTHaASDAf7RkT+i5COcn94i6
+         Tz+3ZcMEfbOq9Udvfd2nvWkJVN+GcIehKy8GdgzyYDpaf5U+/ZSf2t7azTZb5JJ22zM2
+         jQ6fBVMPNKRogCHrkDgRutNHj8bXfYOfGUU9Ndfu3tFEKmEgf0yUg4xzbRdAlwPp7xuF
+         wGkpgVw2Ar7u1wqIbE6xek7ZkwigagzyEEAcOLRouRGGKMkFnHZcXxlccUqQ4GTVRGFB
+         tB56R8TCipzDdMCg8SkAZ0sTnOXGqv3sgM12vNKQh6Vna1scl6ogAyOFq5FgLwsrUoWQ
+         v0ew==
+X-Gm-Message-State: AOAM532HpyXA1ePRhlEfQgG4VsYiKyrSPlOsr1IngMVRR5m0k3PtVBdz
+        UHdDJ2Lx7RE7OTnsBEXINeRA2Q==
+X-Google-Smtp-Source: ABdhPJxxRuCnYDf8FtFTNwcplgFnRhX6u7tlycCQ/ZVJNpGJXKzwRPzUivQBtqh6G5FQclk39qXrJw==
+X-Received: by 2002:aca:6146:: with SMTP id v67mr3702322oib.102.1609951688292;
+        Wed, 06 Jan 2021 08:48:08 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id o135sm597707ooo.38.2021.01.06.08.48.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Jan 2021 08:48:07 -0800 (PST)
+Date:   Wed, 6 Jan 2021 10:48:05 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 00/18] Devicetree update for SDX55 platform
+Message-ID: <X/Xpxecneh5RHdzx@builder.lan>
+References: <20210106125322.61840-1-manivannan.sadhasivam@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210106125322.61840-1-manivannan.sadhasivam@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently, the MHI controller driver defines which channels should
-have their inbound buffers allocated and queued. But ideally, this is
-something that should be decided by the MHI device driver instead,
-which actually deals with that buffers.
+On Wed 06 Jan 06:53 CST 2021, Manivannan Sadhasivam wrote:
 
-Add a flag parameter to mhi_prepare_for_transfer allowing to specify
-if buffers have to be allocated and queued by the MHI stack.
+> Hi Bjorn,
+> 
+> This series updates devicetree for the SDX55 platform and the MTP board.
+> Most of the SDX55 specific driver codes are already merged and some of
+> existing driver support got reused.
+> 
+> Thanks,
+> Mani
+> 
 
-Keep auto_queue flag for now, but should be removed at some point.
+Thanks Mani, I've applied the DTS changes. Please resend the dt-bindings
+to the appropriate maintainers.
 
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
----
- drivers/bus/mhi/core/internal.h |  2 +-
- drivers/bus/mhi/core/main.c     | 11 ++++++++---
- drivers/net/mhi_net.c           |  2 +-
- include/linux/mhi.h             | 12 +++++++++++-
- net/qrtr/mhi.c                  |  2 +-
- 5 files changed, 22 insertions(+), 7 deletions(-)
+Regards,
+Bjorn
 
-diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
-index 6f80ec3..7512602 100644
---- a/drivers/bus/mhi/core/internal.h
-+++ b/drivers/bus/mhi/core/internal.h
-@@ -664,7 +664,7 @@ void mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
- 		      struct image_info *img_info);
- void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl);
- int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
--			struct mhi_chan *mhi_chan);
-+			struct mhi_chan *mhi_chan, enum mhi_chan_flags flags);
- int mhi_init_chan_ctxt(struct mhi_controller *mhi_cntrl,
- 		       struct mhi_chan *mhi_chan);
- void mhi_deinit_chan_ctxt(struct mhi_controller *mhi_cntrl,
-diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-index 9b42540..6b6ad6b 100644
---- a/drivers/bus/mhi/core/main.c
-+++ b/drivers/bus/mhi/core/main.c
-@@ -1292,7 +1292,8 @@ static void __mhi_unprepare_channel(struct mhi_controller *mhi_cntrl,
- }
- 
- int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
--			struct mhi_chan *mhi_chan)
-+			struct mhi_chan *mhi_chan,
-+			enum mhi_chan_flags flags)
- {
- 	int ret = 0;
- 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-@@ -1352,6 +1353,9 @@ int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
- 	mhi_chan->ch_state = MHI_CH_STATE_ENABLED;
- 	write_unlock_irq(&mhi_chan->lock);
- 
-+	if (mhi_chan->dir == DMA_FROM_DEVICE)
-+		mhi_chan->pre_alloc = !!(flags & MHI_CH_INBOUND_ALLOC_BUFS);
-+
- 	/* Pre-allocate buffer for xfer ring */
- 	if (mhi_chan->pre_alloc) {
- 		int nr_el = get_nr_avail_ring_elements(mhi_cntrl,
-@@ -1498,7 +1502,8 @@ void mhi_reset_chan(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan)
- }
- 
- /* Move channel to start state */
--int mhi_prepare_for_transfer(struct mhi_device *mhi_dev)
-+int mhi_prepare_for_transfer(struct mhi_device *mhi_dev,
-+			     enum mhi_chan_flags flags)
- {
- 	int ret, dir;
- 	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-@@ -1509,7 +1514,7 @@ int mhi_prepare_for_transfer(struct mhi_device *mhi_dev)
- 		if (!mhi_chan)
- 			continue;
- 
--		ret = mhi_prepare_channel(mhi_cntrl, mhi_chan);
-+		ret = mhi_prepare_channel(mhi_cntrl, mhi_chan, flags);
- 		if (ret)
- 			goto error_open_chan;
- 	}
-diff --git a/drivers/net/mhi_net.c b/drivers/net/mhi_net.c
-index fa41d8c..b7f7f2e 100644
---- a/drivers/net/mhi_net.c
-+++ b/drivers/net/mhi_net.c
-@@ -265,7 +265,7 @@ static int mhi_net_probe(struct mhi_device *mhi_dev,
- 	u64_stats_init(&mhi_netdev->stats.tx_syncp);
- 
- 	/* Start MHI channels */
--	err = mhi_prepare_for_transfer(mhi_dev);
-+	err = mhi_prepare_for_transfer(mhi_dev, 0);
- 	if (err)
- 		goto out_err;
- 
-diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-index 209b335..6723339 100644
---- a/include/linux/mhi.h
-+++ b/include/linux/mhi.h
-@@ -60,6 +60,14 @@ enum mhi_flags {
- };
- 
- /**
-+ * enum mhi_chan_flags - MHI channel flags
-+ * @MHI_CH_INBOUND_ALLOC_BUFS: Automatically allocate and queue inbound buffers
-+ */
-+enum mhi_chan_flags {
-+	MHI_CH_INBOUND_ALLOC_BUFS = BIT(0),
-+};
-+
-+/**
-  * enum mhi_device_type - Device types
-  * @MHI_DEVICE_XFER: Handles data transfer
-  * @MHI_DEVICE_CONTROLLER: Control device
-@@ -705,8 +713,10 @@ void mhi_device_put(struct mhi_device *mhi_dev);
- /**
-  * mhi_prepare_for_transfer - Setup channel for data transfer
-  * @mhi_dev: Device associated with the channels
-+ * @flags: MHI channel flags
-  */
--int mhi_prepare_for_transfer(struct mhi_device *mhi_dev);
-+int mhi_prepare_for_transfer(struct mhi_device *mhi_dev,
-+			     enum mhi_chan_flags flags);
- 
- /**
-  * mhi_unprepare_from_transfer - Unprepare the channels
-diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
-index 2bf2b19..47afded 100644
---- a/net/qrtr/mhi.c
-+++ b/net/qrtr/mhi.c
-@@ -77,7 +77,7 @@ static int qcom_mhi_qrtr_probe(struct mhi_device *mhi_dev,
- 	int rc;
- 
- 	/* start channels */
--	rc = mhi_prepare_for_transfer(mhi_dev);
-+	rc = mhi_prepare_for_transfer(mhi_dev, MHI_CH_INBOUND_ALLOC_BUFS);
- 	if (rc)
- 		return rc;
- 
--- 
-2.7.4
-
+> Changes in v3:
+> 
+> * Dropped interrupts property in spmi-gpio node
+> * Used dma-controller node name
+> * Reworked tcsr mutex node
+> * Sorted binding compatibles
+> * Collected reviews from Vinod
+> 
+> Changes in v2:
+> 
+> * Changed "SoC" to "platform" and modified FIXME in commit message
+> 
+> Bjorn Andersson (1):
+>   ARM: dts: qcom: sdx55: Enable ARM SMMU
+> 
+> Manivannan Sadhasivam (9):
+>   dt-bindings: mmc: sdhci-msm: Document the SDX55 compatible
+>   ARM: dts: qcom: sdx55: Add support for SDHCI controller
+>   dt-bindings: arm-smmu: Add binding for Qcom SDX55 SMMU
+>   ARM: dts: qcom: sdx55: Add support for TCSR Mutex
+>   ARM: dts: qcom: sdx55: Add Shared memory manager support
+>   ARM: dts: qcom: sdx55: Add QPIC BAM support
+>   ARM: dts: qcom: sdx55: Add QPIC NAND support
+>   ARM: dts: qcom: sdx55-mtp: Enable BAM DMA
+>   ARM: dts: qcom: sdx55-mtp: Enable QPIC NAND
+> 
+> Vinod Koul (8):
+>   ARM: dts: qcom: sdx55: Add pincontrol node
+>   ARM: dts: qcom: sdx55: Add reserved memory nodes
+>   ARM: dts: qcom: sdx55: Add spmi node
+>   ARM: dts: qcom: sdx55-mtp: Add pm8150b pmic
+>   ARM: dts: qcom: sdx55-mtp: Add pmx55 pmic
+>   ARM: dts: qcom: sdx55: Add rpmpd node
+>   ARM: dts: qcom: Add PMIC pmx55 dts
+>   ARM: dts: qcom: sdx55-mtp: Add regulator nodes
+> 
+>  .../devicetree/bindings/iommu/arm,smmu.yaml   |   1 +
+>  .../devicetree/bindings/mmc/sdhci-msm.txt     |   5 +-
+>  arch/arm/boot/dts/qcom-pmx55.dtsi             |  84 +++++++
+>  arch/arm/boot/dts/qcom-sdx55-mtp.dts          | 203 +++++++++++++++++
+>  arch/arm/boot/dts/qcom-sdx55.dtsi             | 214 ++++++++++++++++++
+>  5 files changed, 505 insertions(+), 2 deletions(-)
+>  create mode 100644 arch/arm/boot/dts/qcom-pmx55.dtsi
+> 
+> -- 
+> 2.25.1
+> 
