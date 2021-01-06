@@ -2,32 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AC1D52EBC5E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jan 2021 11:30:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DFD932EBC61
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jan 2021 11:30:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726076AbhAFKak (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1726063AbhAFKak (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Wed, 6 Jan 2021 05:30:40 -0500
-Received: from mo4-p02-ob.smtp.rzone.de ([85.215.255.82]:8403 "EHLO
+Received: from mo4-p02-ob.smtp.rzone.de ([85.215.255.82]:13304 "EHLO
         mo4-p02-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726063AbhAFKaj (ORCPT
+        with ESMTP id S1725828AbhAFKaj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 6 Jan 2021 05:30:39 -0500
+X-Greylist: delayed 359 seconds by postgrey-1.27 at vger.kernel.org; Wed, 06 Jan 2021 05:30:37 EST
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1609928866;
         s=strato-dkim-0002; d=gerhold.net;
         h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:From:
         Subject:Sender;
-        bh=HPdrK9zrtiXehwRFe7QN+8x/BpSYvHuDnRLTpzJG4m8=;
-        b=W064oqAHUrp/mF/7gacybGt9s6CuunjSuMOrswu3m1NG2dwBHLZzWjyeA2PNsEj/Ys
-        gt2zaxKNvjB56rQVXAQO8MyxoJVZW3ScPfLybASoEensFes2VMxs7ZZrIiRGICB2Hofn
-        Cp6VvAbgGLzLtcAzhn/eS0VgQhvAdCDdTgTM8B+lju4bTs99RwJKOK69exDTF7FkUpGx
-        gwIcq2E4ZqBcXyI/90+dNEvBtDRe1ETeq0d/4vvSfJkYu+igh4+Hw6fSvwGp05USBTqK
-        9yUh1+BAgm/2Sa3+F/ZBYEIYr1ATNR7gkVTB/opuHHDqPLZXoOZheJj5QDuQ8GEQmWXD
-        57hA==
+        bh=iCgbCcUCqZ8Rna642B7gMEjsV+oY32yfLcAxBMiSiGQ=;
+        b=GJDV0HbANJJX3860KznYQ/ZLZdwX8R01Yb+2Hvy9jLXBpNrmyo5jA+TAA4AXEHrmXB
+        z4VRw8/UldUKHxOerNmKRFEifQ0xzBCrHuT3Ebdoi+GraN2ca+/uQNOiFRX2mgW8JnQF
+        DT4PDy0CIbrbwX+/796cbSSMwFwgBxnuyWNEZeTVox1IL6cC3BE3gQ/xSxV5y23SR7SA
+        9szxi1rM95fCrXJ/C8oyhCUK5td5bQFIqdOj6C11x9H1wnF+1ExSQNvw2bUisH3I+qQI
+        WOG1HOnLJUR/dM7n1MBjo2qa6n04yd8THmKRyLdy7rQU4f5pmcO7dgWJockSxDBTBd3F
+        u1yg==
 X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXS7IYBkLahKxB5G6JlrU="
 X-RZG-CLASS-ID: mo00
 Received: from droid..
         by smtp.strato.de (RZmta 47.10.7 DYNA|AUTH)
-        with ESMTPSA id e09c6dx06ALk5DY
+        with ESMTPSA id e09c6dx06ALk5DZ
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
         (Client did not present a certificate);
         Wed, 6 Jan 2021 11:21:46 +0100 (CET)
@@ -38,9 +39,9 @@ Cc:     Ohad Ben-Cohen <ohad@wizery.com>, linux-arm-msm@vger.kernel.org,
         linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
         phone-devel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
         Stephan Gerhold <stephan@gerhold.net>
-Subject: [PATCH 2/3] remoteproc: qcom_wcnss_iris: Add qcom,wcn3660b compatible
-Date:   Wed,  6 Jan 2021 11:21:33 +0100
-Message-Id: <20210106102134.59801-3-stephan@gerhold.net>
+Subject: [PATCH 3/3] arm64: dts: qcom: msm8916-samsung-a5u: Fix iris compatible
+Date:   Wed,  6 Jan 2021 11:21:34 +0100
+Message-Id: <20210106102134.59801-4-stephan@gerhold.net>
 X-Mailer: git-send-email 2.30.0
 In-Reply-To: <20210106102134.59801-1-stephan@gerhold.net>
 References: <20210106102134.59801-1-stephan@gerhold.net>
@@ -50,32 +51,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-WCN3660B is a variant of WCN3660, but with the same regulator
-requirements as WCN3620/WCN3680. As far as qcom_wcnss_iris is
-concerned we can just use qcom,wcn3680 (wcn3680_data).
+Unlike most MSM8916 boards, samsung-a5u uses WCN3660B instead of
+WCN3620 to support the 5 GHz band additionally.
 
-However, a separate compatible is needed for WCN3660B because
-the wcn36xx driver uses it to enable chip-specific functionality.
-In particular, it enables 802.11ac for qcom,wcn3680 which is not
-supported by WCN3660B.
+WCN3660B has similar requirements as WCN3620, but it needs the XO
+clock to run at 48 MHz instead of 19.2 MHz. So far it was possible
+to describe that configuration using the qcom,wcn3680 compatible.
 
+However, as of commit 8490987bdb9a ("wcn36xx: Hook and identify RF_IRIS_WCN3680"),
+the wcn36xx driver will now use the qcom,wcn3680 compatible
+to enable functionality specific to WCN3680. In particular,
+WCN3680 supports 802.11ac, which is not available in WCN3660B.
+
+Use the new qcom,wcn3660b compatible to describe the chip properly.
+
+Fixes: 0d7051999175 ("arm64: dts: msm8916-samsung-a5u: Override iris compatible")
 Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 ---
- drivers/remoteproc/qcom_wcnss_iris.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/remoteproc/qcom_wcnss_iris.c b/drivers/remoteproc/qcom_wcnss_iris.c
-index 0e0ae1e764ea..169acd305ae3 100644
---- a/drivers/remoteproc/qcom_wcnss_iris.c
-+++ b/drivers/remoteproc/qcom_wcnss_iris.c
-@@ -160,6 +160,7 @@ static int qcom_iris_remove(struct platform_device *pdev)
- static const struct of_device_id iris_of_match[] = {
- 	{ .compatible = "qcom,wcn3620", .data = &wcn3620_data },
- 	{ .compatible = "qcom,wcn3660", .data = &wcn3660_data },
-+	{ .compatible = "qcom,wcn3660b", .data = &wcn3680_data },
- 	{ .compatible = "qcom,wcn3680", .data = &wcn3680_data },
- 	{}
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dts b/arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dts
+index e39c04d977c2..dd35c3344358 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dts
+@@ -38,7 +38,7 @@ touchscreen@48 {
+ 
+ &pronto {
+ 	iris {
+-		compatible = "qcom,wcn3680";
++		compatible = "qcom,wcn3660b";
+ 	};
  };
+ 
 -- 
 2.30.0
 
