@@ -2,146 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 131F42EC41C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jan 2021 20:44:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E6BA22EC5A9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jan 2021 22:24:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725822AbhAFToR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jan 2021 14:44:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49950 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726090AbhAFToQ (ORCPT
+        id S1726882AbhAFVYn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jan 2021 16:24:43 -0500
+Received: from m43-15.mailgun.net ([69.72.43.15]:52864 "EHLO
+        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726688AbhAFVYl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jan 2021 14:44:16 -0500
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CBA5C06134C
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jan 2021 11:43:36 -0800 (PST)
-Received: by mail-io1-xd36.google.com with SMTP id o6so3801227iob.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jan 2021 11:43:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=524gIBiBelpD0qVg3o3Q7JLZEZj0p1hawMdE5gf7waw=;
-        b=eP8b0H3VGQgO/CbJSqyjNpvLjYHWsGT0OgHv8bwe0QWInLdZWPy+zGTmpaFNrW9NK/
-         WlrFdhbOXdL9mLcBqg7+bZuvRlRWmpMD4wrBPyqpAdjcdEITT0sHWov7Vidc481cCzu1
-         Yg7JJYMCa0/ViEed1YgqR/9lGEg150XH8PKQhVdUGUyPm9Ox4LUKRu4AJTDqgf55jWKy
-         p5dsWmkIYMKgbfFpZRiUhHIbgYoin0qPYeZikb+QZAH5Ir9ZjOFPYNeE2L3BTp6JRDDw
-         7tFHfboyli2aeRSNeAjQOD6oSzxXa+TG6RXeBGvGOyztWkpb0ZXjf1j5oR5nd8mJh7Ox
-         3T0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=524gIBiBelpD0qVg3o3Q7JLZEZj0p1hawMdE5gf7waw=;
-        b=YnYX0b/CIX2V2CMrpOclBpdsws5rxXPjatJRLsFAKznM0rFvvejoktaLKwXF4UQQNz
-         3bvqVQ3d1EG8amlmSJpG6vDeZr7JRHR9MTO3XT9MmD32o/u8K54ifUcUhNSpncOxqjP7
-         YEVaLpiUblZD+NBkWyI5g2W3QX/EA6/7i4HG3ACKBPWEjgwQrydfuGAqGr7oTbF5V7zD
-         GO87V7FBdCSD9LKS6bE2KIZIdbDZNp67k3iD26rjblNN+4Dhv/poD1jso0+TIqSZfMTc
-         TQRx/QGd8anNXla4m/V7IU0AZ8PK0eVJiwN0nbQ0O/xI9GfSQl2opBHnJbxsJZiNLXUV
-         LVzw==
-X-Gm-Message-State: AOAM531TWLK8O6T7r3vrnIo5Wl/hVdMc5887BvP2oz5TRZECVvf8WlDZ
-        FCbSt1rBalEO/SNKOXu1s2JFs3DgwcAhmw==
-X-Google-Smtp-Source: ABdhPJytrFAlmLACDe11EIEFbqIGPudN3OKMfauAq8qSvwF16irVTIPHrkJQgKKkl+56cEaJDRyIew==
-X-Received: by 2002:a05:6602:13c5:: with SMTP id o5mr4053115iov.46.1609962215326;
-        Wed, 06 Jan 2021 11:43:35 -0800 (PST)
-Received: from [172.22.22.26] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.googlemail.com with ESMTPSA id 8sm2286400ill.13.2021.01.06.11.43.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Jan 2021 11:43:34 -0800 (PST)
-Subject: Re: [PATCH net-next 3/3] net: ipa: support COMPILE_TEST
-To:     kernel test robot <lkp@intel.com>, davem@davemloft.net,
-        kuba@kernel.org
-Cc:     kbuild-all@lists.01.org, bjorn.andersson@linaro.org,
-        agross@kernel.org, ohad@wizery.com, evgreen@chromium.org,
-        cpratapa@codeaurora.org, subashab@codeaurora.org,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20210106023812.2542-4-elder@linaro.org>
- <202101061555.DTUUlbsx-lkp@intel.com>
-From:   Alex Elder <elder@linaro.org>
-Message-ID: <d2f55352-b774-8ce2-0693-3d7eb39ac43c@linaro.org>
-Date:   Wed, 6 Jan 2021 13:43:33 -0600
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.0
-MIME-Version: 1.0
-In-Reply-To: <202101061555.DTUUlbsx-lkp@intel.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        Wed, 6 Jan 2021 16:24:41 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1609968257; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=xCv3iRqpoeNg7/+ZVkHfzJbBo5DoGpht24M2Wxts2vQ=; b=p4AUmgxqox4RJi+xUneoJC1TlrP0HiOe5psfPcSC9TSmrzhRZTIxe+E5HOVtzYvGqgPCp86B
+ kjpPThfuSCij462ukuILSFYDBs7cUb5/KIlsxDpPrBhOZ/lt+olV/YJL6MpadHWE1xVPFLDx
+ 7rKb4iZOjOMQLY16TEhqAqqdGfU=
+X-Mailgun-Sending-Ip: 69.72.43.15
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 5ff62a61a1d2634b3fc08b66 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 06 Jan 2021 21:23:45
+ GMT
+Sender: sidgup=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 27561C43463; Wed,  6 Jan 2021 21:23:45 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from sidgup-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sidgup)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 17FE4C433ED;
+        Wed,  6 Jan 2021 21:23:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 17FE4C433ED
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sidgup@codeaurora.org
+From:   Siddharth Gupta <sidgup@codeaurora.org>
+To:     bjorn.andersson@linaro.org, agross@kernel.org, ohad@wizery.com,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Siddharth Gupta <sidgup@codeaurora.org>, psodagud@codeaurora.org,
+        rishabhb@codeaurora.org
+Subject: [PATCH 0/3] soc: qcom: mdt_loader: General improvements
+Date:   Wed,  6 Jan 2021 13:23:28 -0800
+Message-Id: <1609968211-7579-1-git-send-email-sidgup@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 1/6/21 1:34 AM, kernel test robot wrote:
-> Hi Alex,
-> 
-> I love your patch! Perhaps something to improve:
-> 
-> [auto build test WARNING on net-next/master]
+This series of patches improves general functionality for the mdt loader.
 
-I think I just need to define at the top of "gsi_trans.h":
-    struct page;
+Patch 1 adds the ability to dynamically detect hash segment location.
+Patch 2 updates the logic used to identify whether the firmware is split or not.
+Patch 3 updates the way the metadata is read and generated.
 
-I'll submit v2 of this series, with this one change
-(assuming it's the correct fix).  I will incorporate
-Bjorn's review tags on the first two patches.
+Siddharth Gupta (3):
+  soc: qcom: mdt_loader: Allow hash at any phdr
+  soc: qcom: mdt_loader: Handle split bins correctly
+  soc: qcom: mdt_loader: Read hash from firmware blob
 
-					-Alex
+ drivers/remoteproc/qcom_q6v5_mss.c  |   4 +-
+ drivers/soc/qcom/mdt_loader.c       | 110 ++++++++++++++++++++++++------------
+ include/linux/soc/qcom/mdt_loader.h |   3 +-
+ 3 files changed, 79 insertions(+), 38 deletions(-)
 
-> url:    https://github.com/0day-ci/linux/commits/Alex-Elder/net-ipa-support-COMPILE_TEST/20210106-104149
-> base:   https://git.kernel.org/pub/scm/linux/kernel/git/davem/net-next.git 3db1a3fa98808aa90f95ec3e0fa2fc7abf28f5c9
-> config: alpha-allyesconfig (attached as .config)
-> compiler: alpha-linux-gcc (GCC) 9.3.0
-> reproduce (this is a W=1 build):
->         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
->         chmod +x ~/bin/make.cross
->         # https://github.com/0day-ci/linux/commit/7ab1759d9336e95f4de013bb171246b66f94e2f4
->         git remote add linux-review https://github.com/0day-ci/linux
->         git fetch --no-tags linux-review Alex-Elder/net-ipa-support-COMPILE_TEST/20210106-104149
->         git checkout 7ab1759d9336e95f4de013bb171246b66f94e2f4
->         # save the attached .config to linux build tree
->         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-9.3.0 make.cross ARCH=alpha 
-> 
-> If you fix the issue, kindly add following tag as appropriate
-> Reported-by: kernel test robot <lkp@intel.com>
-> 
-> All warnings (new ones prefixed by >>):
-> 
->    In file included from drivers/net/ipa/ipa_gsi.c:10:
->>> drivers/net/ipa/gsi_trans.h:170:56: warning: 'struct page' declared inside parameter list will not be visible outside of this definition or declaration
->      170 | int gsi_trans_page_add(struct gsi_trans *trans, struct page *page, u32 size,
->          |                                                        ^~~~
-> 
-> 
-> vim +170 drivers/net/ipa/gsi_trans.h
-> 
-> 9dd441e4ed5755c Alex Elder 2020-03-05  149  
-> 9dd441e4ed5755c Alex Elder 2020-03-05  150  /**
-> 9dd441e4ed5755c Alex Elder 2020-03-05  151   * gsi_trans_cmd_add() - Add an immediate command to a transaction
-> 9dd441e4ed5755c Alex Elder 2020-03-05  152   * @trans:	Transaction
-> 9dd441e4ed5755c Alex Elder 2020-03-05  153   * @buf:	Buffer pointer for command payload
-> 9dd441e4ed5755c Alex Elder 2020-03-05  154   * @size:	Number of bytes in buffer
-> 9dd441e4ed5755c Alex Elder 2020-03-05  155   * @addr:	DMA address for payload
-> 9dd441e4ed5755c Alex Elder 2020-03-05  156   * @direction:	Direction of DMA transfer (or DMA_NONE if none required)
-> 9dd441e4ed5755c Alex Elder 2020-03-05  157   * @opcode:	IPA immediate command opcode
-> 9dd441e4ed5755c Alex Elder 2020-03-05  158   */
-> 9dd441e4ed5755c Alex Elder 2020-03-05  159  void gsi_trans_cmd_add(struct gsi_trans *trans, void *buf, u32 size,
-> 9dd441e4ed5755c Alex Elder 2020-03-05  160  		       dma_addr_t addr, enum dma_data_direction direction,
-> 9dd441e4ed5755c Alex Elder 2020-03-05  161  		       enum ipa_cmd_opcode opcode);
-> 9dd441e4ed5755c Alex Elder 2020-03-05  162  
-> 9dd441e4ed5755c Alex Elder 2020-03-05  163  /**
-> 9dd441e4ed5755c Alex Elder 2020-03-05  164   * gsi_trans_page_add() - Add a page transfer to a transaction
-> 9dd441e4ed5755c Alex Elder 2020-03-05  165   * @trans:	Transaction
-> 9dd441e4ed5755c Alex Elder 2020-03-05  166   * @page:	Page pointer
-> 9dd441e4ed5755c Alex Elder 2020-03-05  167   * @size:	Number of bytes (starting at offset) to transfer
-> 9dd441e4ed5755c Alex Elder 2020-03-05  168   * @offset:	Offset within page for start of transfer
-> 9dd441e4ed5755c Alex Elder 2020-03-05  169   */
-> 9dd441e4ed5755c Alex Elder 2020-03-05 @170  int gsi_trans_page_add(struct gsi_trans *trans, struct page *page, u32 size,
-> 9dd441e4ed5755c Alex Elder 2020-03-05  171  		       u32 offset);
-> 9dd441e4ed5755c Alex Elder 2020-03-05  172  
-> 
-> ---
-> 0-DAY CI Kernel Test Service, Intel Corporation
-> https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
-> 
+-- 
+Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
