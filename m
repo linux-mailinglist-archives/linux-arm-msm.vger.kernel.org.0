@@ -2,121 +2,206 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C666C2EC318
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jan 2021 19:18:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B886D2EC35C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jan 2021 19:46:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726558AbhAFSS3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jan 2021 13:18:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36192 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725789AbhAFSS2 (ORCPT
+        id S1726600AbhAFSpS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jan 2021 13:45:18 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:58704 "EHLO
+        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726375AbhAFSpR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jan 2021 13:18:28 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EDC1C061575;
-        Wed,  6 Jan 2021 10:17:48 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id b26so8604119lff.9;
-        Wed, 06 Jan 2021 10:17:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=HYWLWTmJNILkmHihZoZqMnAVOHO5Z+JPD1TRn5rR9L8=;
-        b=GYiaiaGEtT4BPqTlK0KXvA/lu341yArrXOfwIqhkoVUJgJS2obaAQT2iqcnRMLlEj2
-         86dYKLxag/6o7FFGTh1Vt5TIkPdSdG+zPtevOxa7j54gud87De0pnPPNNbmeyzFcKIe1
-         4YIh5yiiCYo2x6drTLogG5BS1FtgZ7nId5Q/AwMgojxtj5XPEyq3STR1fkLiu+XesnUc
-         QU5ia5w8dG/71l1Z55HnJQmRQInADBb1sNl7x6aeuUT/y6q1BPYSDCvgpmBhWeM+Z+mh
-         AXVxDGWhMUV9j3VOAFcsUFiIntWY+dOOFoXQpYyyfUUEdyjbQguMaGGbtpj5p1vrw984
-         ODXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=HYWLWTmJNILkmHihZoZqMnAVOHO5Z+JPD1TRn5rR9L8=;
-        b=gUHBZ8U2efQmGA2O1aY6esLBhZl22SEnXW8Fg6IvFjlC6YPcI6t4svX7qrsllTpKY2
-         qnqBhZHo9dzi7Ik0Na8bh5zb9ngAq7jr9blVbuTAFs/XjqypBbdvPyMehnhMrUvuYjc2
-         7w+AKcDQhk69mFYiwD7Eixso8A68MAROJ4XwUC99aO7jA1eApLZOGYODtcvsU6grjkUX
-         H5gfZmIvNCgFu7rq9TL2ay0hnjzMQ+M/idp4lEwYrYwlpAuUe6Y1zpD312uSDwdQWg2p
-         VZnSUJUCEgj+QJCly0ojIyZeywW5CFSp29LVpDN6Rg6fKmmHf3tSGqcRl0ePd8BhhuQ6
-         eiyg==
-X-Gm-Message-State: AOAM531UAHmQL5aOHOBQbGkx5C0zo0uWUwMB5HTWi2i0fvlFY/fbiVkB
-        NqZO05oBgz0pc6OV8rZGinuEvNvNm+A=
-X-Google-Smtp-Source: ABdhPJyPxFIsokqex0tU1bZCyssoNhQcXmbMg7xmBfVSnpJHRzc1xaOuhg1qqDeBQDzHj7VlWoc+4Q==
-X-Received: by 2002:a19:2358:: with SMTP id j85mr2490159lfj.264.1609957066448;
-        Wed, 06 Jan 2021 10:17:46 -0800 (PST)
-Received: from [192.168.2.145] (109-252-192-57.dynamic.spd-mgts.ru. [109.252.192.57])
-        by smtp.googlemail.com with ESMTPSA id q7sm556364ljp.77.2021.01.06.10.17.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Jan 2021 10:17:45 -0800 (PST)
-Subject: Re: [PATCH 26/31] PM / devfreq: tegra30: convert to use devm_pm_opp_*
- API
-To:     cwchoi00@gmail.com, Yangtao Li <tiny.windzz@gmail.com>
-Cc:     MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Shawn Guo <shawnguo@kernel.org>, s.hauer@pengutronix.de,
-        kernel@pengutronix.de, festevam@gmail.com,
-        dl-linux-imx <linux-imx@nxp.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>, yuq825@gmail.com,
-        David Airlie <airlied@linux.ie>, daniel@ffwll.ch,
-        robdclark@gmail.com, sean@poorly.run,
-        Rob Herring <robh@kernel.org>, tomeu.vizoso@collabora.com,
-        steven.price@arm.com, alyssa.rosenzweig@collabora.com,
-        stanimir.varbanov@linaro.org, agross@kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        mchehab@kernel.org, Lukasz Luba <lukasz.luba@arm.com>,
-        adrian.hunter@intel.com, Ulf Hansson <ulf.hansson@linaro.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        Greg KH <gregkh@linuxfoundation.org>, jirislaby@kernel.org,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>, jcrouse@codeaurora.org,
-        hoegsberg@google.com, eric@anholt.net, tzimmermann@suse.de,
-        marijn.suijten@somainline.org, gustavoars@kernel.org,
-        emil.velikov@collabora.com, jonathan@marek.ca,
-        akhilpo@codeaurora.org, smasetty@codeaurora.org,
-        airlied@redhat.com, masneyb@onstation.org, kalyan_t@codeaurora.org,
-        tanmay@codeaurora.org, ddavenport@chromium.org,
-        jsanka@codeaurora.org, rnayak@codeaurora.org,
-        tongtiangen@huawei.com, miaoqinglang@huawei.com,
-        khsieh@codeaurora.org, abhinavk@codeaurora.org,
-        chandanu@codeaurora.org, Guenter Roeck <groeck@chromium.org>,
-        varar@codeaurora.org, Matthias Kaehlcke <mka@chromium.org>,
-        harigovi@codeaurora.org, rikard.falkeborn@gmail.com,
-        natechancellor@gmail.com, Georgi Djakov <georgi.djakov@linaro.org>,
-        akashast@codeaurora.org, parashar@codeaurora.org,
-        Doug Anderson <dianders@chromium.org>,
-        Linux PM list <linux-pm@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        linux-tegra@vger.kernel.org,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        lima@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-media@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-spi@vger.kernel.org,
-        linux-serial@vger.kernel.org
-References: <20210103035445.23696-1-tiny.windzz@gmail.com>
- <CAGTfZH0sLh=8XhBVOzUr9qO2w_=jp-OuWoh5vgNpnmXq6EzYHA@mail.gmail.com>
-From:   Dmitry Osipenko <digetx@gmail.com>
-Message-ID: <e49d60f3-f753-6679-7148-f7ea72973197@gmail.com>
-Date:   Wed, 6 Jan 2021 21:17:42 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.2
-MIME-Version: 1.0
-In-Reply-To: <CAGTfZH0sLh=8XhBVOzUr9qO2w_=jp-OuWoh5vgNpnmXq6EzYHA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+        Wed, 6 Jan 2021 13:45:17 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1609958702; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=NfxP2iN6+mR1BtbHHZH1aW6pKXZ9sZ5J/tBqXn8D7SE=; b=tEaCA6e1lVSkR7eRDyGVnUyzKq03Pj4Ug6xebpTLFMDuctIOUyfs4YOWzWJ4H5Zh5sRJC/J4
+ MAU/yasgs9ZNgFfUFU1Aes/95AQCzHABz+nVECU0cXC6Lh7r2WWVIoaFR9TFtAc0Uhu8rwSq
+ +5FgqYv/xpi7o84lv+Jr87hU5II=
+X-Mailgun-Sending-Ip: 198.61.254.31
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 5ff6050a661021aa2897e4f2 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 06 Jan 2021 18:44:26
+ GMT
+Sender: hemantk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 0039EC43467; Wed,  6 Jan 2021 18:44:25 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 405C6C433CA;
+        Wed,  6 Jan 2021 18:44:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 405C6C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
+From:   Hemant Kumar <hemantk@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jhugo@codeaurora.org, bbhatt@codeaurora.org,
+        loic.poulain@linaro.org, netdev@vger.kernel.org,
+        Hemant Kumar <hemantk@codeaurora.org>
+Subject: [RESEND PATCH v18 0/3] userspace MHI client interface driver
+Date:   Wed,  6 Jan 2021 10:44:13 -0800
+Message-Id: <1609958656-15064-1-git-send-email-hemantk@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-05.01.2021 06:47, Chanwoo Choi пишет:
-> You might remove the 'devm_pm_opp_remove_all_dynamic(&pdev->dev)
-> under ' remove_opp' goto statement.kkkk
+This patch series adds support for UCI driver. UCI driver enables userspace
+clients to communicate to external MHI devices like modem. UCI driver probe
+creates standard character device file nodes for userspace clients to
+perform open, read, write, poll and release file operations. These file
+operations call MHI core layer APIs to perform data transfer using MHI bus
+to communicate with MHI device. 
 
-Good catch, thank you.
+This interface allows exposing modem control channel(s) such as QMI, MBIM,
+or AT commands to userspace which can be used to configure the modem using
+tools such as libqmi, ModemManager, minicom (for AT), etc over MHI. This is
+required as there are no kernel APIs to access modem control path for device
+configuration. Data path transporting the network payload (IP), however, is
+routed to the Linux network via the mhi-net driver. Currently driver supports
+QMI channel. libqmi is userspace MHI client which communicates to a QMI
+service using QMI channel. Please refer to
+https://www.freedesktop.org/wiki/Software/libqmi/ for additional information
+on libqmi.
+
+Patch is tested using arm64 and x86 based platform.
+
+V18:
+- Updated commit text for UCI to clarify why this driver is required for QMI
+  over MHI. Also updated cover letter with same information.
+
+v17:
+- Updated commit text for UCI driver by mentioning about libqmi open-source
+  userspace program that will be talking to this UCI kernel driver.
+- UCI driver depends upon patch "bus: mhi: core: Add helper API to return number
+  of free TREs".
+
+v16:
+- Removed reference of WLAN as an external MHI device in documentation and
+  cover letter.
+
+v15:
+- Updated documentation related to poll and release operations.
+
+V14:
+- Fixed device file node format to /dev/<mhi_dev_name> instead of
+  /dev/mhi_<mhi_dev_name> because "mhi" is already part of mhi device name.
+  For example old format: /dev/mhi_mhi0_QMI new format: /dev/mhi0_QMI.
+- Updated MHI documentation to reflect index mhi controller name in
+  QMI usage example.
+
+V13:
+- Removed LOOPBACK channel from mhi_device_id table from this patch series.
+  Pushing a new patch series to add support for LOOPBACK channel and the user
+  space test application. Also removed the description from kernel documentation.
+- Added QMI channel to mhi_device_id table. QMI channel has existing libqmi
+  support from user space.
+- Updated kernel Documentation for QMI channel and provided external reference
+  for libqmi.
+- Updated device file node name by appending mhi device name only, which already
+  includes mhi controller device name.
+
+V12:
+- Added loopback test driver under selftest/drivers/mhi. Updated kernel
+  documentation for the usage of the loopback test application.
+- Addressed review comments for renaming variable names, updated inline
+  comments and removed two redundant dev_dbg.
+
+V11:
+- Fixed review comments for UCI documentation by expanding TLAs and rewording
+  some sentences.
+
+V10:
+- Replaced mutex_lock with mutex_lock_interruptible in read() and write() file
+  ops call back.
+
+V9:
+- Renamed dl_lock to dl_pending _lock and pending list to dl_pending for
+  clarity.
+- Used read lock to protect cur_buf.
+- Change transfer status check logic and only consider 0 and -EOVERFLOW as
+  only success.
+- Added __int to module init function.
+- Print channel name instead of minor number upon successful probe.
+
+V8:
+- Fixed kernel test robot compilation error by changing %lu to %zu for
+  size_t.
+- Replaced uci with UCI in Kconfig, commit text, and comments in driver
+  code.
+- Fixed minor style related comments.
+
+V7:
+- Decoupled uci device and uci channel objects. uci device is
+  associated with device file node. uci channel is associated
+  with MHI channels. uci device refers to uci channel to perform
+  MHI channel operations for device file operations like read()
+  and write(). uci device increments its reference count for
+  every open(). uci device calls mhi_uci_dev_start_chan() to start
+  the MHI channel. uci channel object is tracking number of times
+  MHI channel is referred. This allows to keep the MHI channel in
+  start state until last release() is called. After that uci channel
+  reference count goes to 0 and uci channel clean up is performed
+  which stops the MHI channel. After the last call to release() if
+  driver is removed uci reference count becomes 0 and uci object is
+  cleaned up.
+- Use separate uci channel read and write lock to fine grain locking
+  between reader and writer.
+- Use uci device lock to synchronize open, release and driver remove.
+- Optimize for downlink only or uplink only UCI device.
+
+V6:
+- Moved uci.c to mhi directory.
+- Updated Kconfig to add module information.
+- Updated Makefile to rename uci object file name as mhi_uci
+- Removed kref for open count
+
+V5:
+- Removed mhi_uci_drv structure.
+- Used idr instead of creating global list of uci devices.
+- Used kref instead of local ref counting for uci device and
+  open count.
+- Removed unlikely macro.
+
+V4:
+- Fix locking to protect proper struct members.
+- Updated documentation describing uci client driver use cases.
+- Fixed uci ref counting in mhi_uci_open for error case.
+- Addressed style related review comments.
+
+V3: Added documentation for MHI UCI driver.
+
+V2:
+- Added mutex lock to prevent multiple readers to access same
+- mhi buffer which can result into use after free.
+
+Hemant Kumar (3):
+  bus: mhi: core: Move MHI_MAX_MTU to external header file
+  docs: Add documentation for userspace client interface
+  bus: mhi: Add userspace client interface driver
+
+ Documentation/mhi/index.rst     |   1 +
+ Documentation/mhi/uci.rst       |  95 ++++++
+ drivers/bus/mhi/Kconfig         |  13 +
+ drivers/bus/mhi/Makefile        |   3 +
+ drivers/bus/mhi/core/internal.h |   1 -
+ drivers/bus/mhi/uci.c           | 664 ++++++++++++++++++++++++++++++++++++++++
+ include/linux/mhi.h             |   3 +
+ 7 files changed, 779 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/mhi/uci.rst
+ create mode 100644 drivers/bus/mhi/uci.c
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
