@@ -2,99 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 664E42EBD5D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jan 2021 12:57:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 87A5D2EBDE3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jan 2021 13:54:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726006AbhAFL5F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jan 2021 06:57:05 -0500
-Received: from mail.kernel.org ([198.145.29.99]:55266 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725788AbhAFL5F (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jan 2021 06:57:05 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id E2EA323110;
-        Wed,  6 Jan 2021 11:56:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1609934184;
-        bh=HZYnJAIuD9MMbAMSmu3ejZVLAS6WiLfiiShHiiBv4YU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ZRA5wz6FMI5xfUbwYHZUwrrupsOg72i/wc8QiogubLx3JKzJGP+x4AsDTPYMRWZm9
-         woKVVXY4n/oWYpj8n7NKPHpTUxnlXvkLQLUuRoRi52QQ1FLkYRj3IoRieZqvEDtAGy
-         OPYJeQIPGPrcb4y+QFkbiBkvBPr4xyckxiic5aBMz3Dd3f1Uv6JSRX2iMbVDS9KXS3
-         kqoWF/ZGIdVVu1X3nl+gk6qqKYSHvYcOYJixCW1leh3g4Sch3qFhbSuIgcQ7nKjd1r
-         m48UxmDVDgIXhwMksWwKlLA+eudExTiJYZs7wTkcBUSfCE09RRZQ2g79ipJ1gGsLWi
-         JdBBXRm8J1S4g==
-Date:   Wed, 6 Jan 2021 11:56:16 +0000
-From:   Will Deacon <will@kernel.org>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Akhil P Oommen <akhilpo@codeaurora.org>
-Subject: Re: [PATCH] iommu/io-pgtable-arm: Allow non-coherent masters to use
- system cache
-Message-ID: <20210106115615.GA1763@willie-the-truck>
-References: <20201224064007.2339-1-saiprakash.ranjan@codeaurora.org>
+        id S1726059AbhAFMyV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jan 2021 07:54:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42068 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726006AbhAFMyU (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 6 Jan 2021 07:54:20 -0500
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80C7FC06134D
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jan 2021 04:53:40 -0800 (PST)
+Received: by mail-pj1-x1032.google.com with SMTP id l23so1543287pjg.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jan 2021 04:53:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3PyWDubPE7bDQlqfk8UIpEmsm+9VUy6BtD0d93J0jbw=;
+        b=BvqeiOejm5t74mEbD1T9szJiGG8swq3q9dD28NmWlaz2gG0PmLihFTn+0cv5+ilm3f
+         pGjos2fnfT/p32UFiwVey47V7pW2o8XRvBUWZdYZXzK+ft407LvHJxAzRPn/qSMY1w2N
+         degyLQKFZ6y59ZjkLHg06mBBeiEeyzFxMCeKuul2Vvq0Zd4LTN7kM7y1DXsRqocusLMC
+         3H6pfgtd3+tMTKhMSXfunZgbMKgdwG6zqIaL9MdfvUJjAsj9z20wyCcgX1vRtNJZ1JB/
+         pze5M0l3qqNnIMcWYzUmJIniSJApPZjMaD83YApFDkyFvaFF1EaY9gXSqMOyrGGGRkjy
+         Azcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3PyWDubPE7bDQlqfk8UIpEmsm+9VUy6BtD0d93J0jbw=;
+        b=HIx4pwdknZF8orQM64LrAnXgDR/kMV/VKN1UuTFHVjU/KRtJWpWIb/gs6cbvwyuTJP
+         MVQJEv18eUgwDWckjr5TegeXW3p+xHXnZlwjC7qTHGlcV6uWK+LRy6DlV/AJ4vPdSO+0
+         Gk5XCD5HntlUVz3wSeSUmNW98YL0bExjqNc7nn0BaaII6/ntMbf/f6ka9NrvH0DwK7v1
+         rj/ZNoGd0POggSld5dMAWdjdDk/Mx7KolvnfLuhd2fMiJTnYHqKOw1+vC+mWv2S7Eu4A
+         FA5tOk/acXsKajlScb9TVPbGgE2vHiVQeMCMwQmZ1q2WcyMm8FodHpdtu5CrQlNpBxnD
+         tZ3A==
+X-Gm-Message-State: AOAM530kGVyvtQeeRTfd9j0D3U3IpvfQOUK0PBOMNSHBi+w84fiICbpe
+        7u4pEmwgc4WK0VJ+zbcljQP9mBs1UZMl
+X-Google-Smtp-Source: ABdhPJymo2jDyvADA7s7nqxyY5xoaHg7KOPIVHqvqVbSkCnFWOXBCRPM2Yi6MqJZ/9eHq/107S2UJg==
+X-Received: by 2002:a17:90a:d18c:: with SMTP id fu12mr4246121pjb.50.1609937619732;
+        Wed, 06 Jan 2021 04:53:39 -0800 (PST)
+Received: from localhost.localdomain ([2409:4072:6102:e7a2:51f0:bf72:bf80:ec88])
+        by smtp.gmail.com with ESMTPSA id n128sm2918182pga.55.2021.01.06.04.53.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Jan 2021 04:53:38 -0800 (PST)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v3 00/18] Devicetree update for SDX55 platform
+Date:   Wed,  6 Jan 2021 18:23:04 +0530
+Message-Id: <20210106125322.61840-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201224064007.2339-1-saiprakash.ranjan@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 24, 2020 at 12:10:07PM +0530, Sai Prakash Ranjan wrote:
-> commit ecd7274fb4cd ("iommu: Remove unused IOMMU_SYS_CACHE_ONLY flag")
-> removed unused IOMMU_SYS_CACHE_ONLY prot flag and along with it went
-> the memory type setting required for the non-coherent masters to use
-> system cache. Now that system cache support for GPU is added, we will
-> need to mark the memory as normal sys-cached for GPU to use system cache.
-> Without this, the system cache lines are not allocated for GPU. We use
-> the IO_PGTABLE_QUIRK_ARM_OUTER_WBWA quirk instead of a page protection
-> flag as the flag cannot be exposed via DMA api because of no in-tree
-> users.
-> 
-> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> ---
->  drivers/iommu/io-pgtable-arm.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
-> index 7c9ea9d7874a..3fb7de8304a2 100644
-> --- a/drivers/iommu/io-pgtable-arm.c
-> +++ b/drivers/iommu/io-pgtable-arm.c
-> @@ -415,6 +415,9 @@ static arm_lpae_iopte arm_lpae_prot_to_pte(struct arm_lpae_io_pgtable *data,
->  		else if (prot & IOMMU_CACHE)
->  			pte |= (ARM_LPAE_MAIR_ATTR_IDX_CACHE
->  				<< ARM_LPAE_PTE_ATTRINDX_SHIFT);
-> +		else if (data->iop.cfg.quirks & IO_PGTABLE_QUIRK_ARM_OUTER_WBWA)
-> +			pte |= (ARM_LPAE_MAIR_ATTR_IDX_INC_OCACHE
-> +				<< ARM_LPAE_PTE_ATTRINDX_SHIFT);
->  	}
+Hi Bjorn,
 
-drivers/iommu/io-pgtable.c currently documents this quirk as applying only
-to the page-table walker. Given that we only have one user at the moment,
-I think it's ok to change that, but please update the comment.
+This series updates devicetree for the SDX55 platform and the MTP board.
+Most of the SDX55 specific driver codes are already merged and some of
+existing driver support got reused.
 
-We also need to decide on whether we want to allow the quirk to be passed
-if the coherency of the page-table walker differs from the DMA device, since
-we have these combinations:
+Thanks,
+Mani
 
-	Coherent walker?	IOMMU_CACHE	IO_PGTABLE_QUIRK_ARM_OUTER_WBWA
-0:	N			0		0
-1:	N			0		1
-2:	N			1		0
-3:	N			1		1
-4:	Y			0		0
-5:	Y			0		1
-6:	Y			1		0
-7:	Y			1		1
+Changes in v3:
 
-Some of them are obviously bogus, such as (7), but I don't know what to
-do about cases such as (3) and (5).
+* Dropped interrupts property in spmi-gpio node
+* Used dma-controller node name
+* Reworked tcsr mutex node
+* Sorted binding compatibles
+* Collected reviews from Vinod
 
-Will
+Changes in v2:
+
+* Changed "SoC" to "platform" and modified FIXME in commit message
+
+Bjorn Andersson (1):
+  ARM: dts: qcom: sdx55: Enable ARM SMMU
+
+Manivannan Sadhasivam (9):
+  dt-bindings: mmc: sdhci-msm: Document the SDX55 compatible
+  ARM: dts: qcom: sdx55: Add support for SDHCI controller
+  dt-bindings: arm-smmu: Add binding for Qcom SDX55 SMMU
+  ARM: dts: qcom: sdx55: Add support for TCSR Mutex
+  ARM: dts: qcom: sdx55: Add Shared memory manager support
+  ARM: dts: qcom: sdx55: Add QPIC BAM support
+  ARM: dts: qcom: sdx55: Add QPIC NAND support
+  ARM: dts: qcom: sdx55-mtp: Enable BAM DMA
+  ARM: dts: qcom: sdx55-mtp: Enable QPIC NAND
+
+Vinod Koul (8):
+  ARM: dts: qcom: sdx55: Add pincontrol node
+  ARM: dts: qcom: sdx55: Add reserved memory nodes
+  ARM: dts: qcom: sdx55: Add spmi node
+  ARM: dts: qcom: sdx55-mtp: Add pm8150b pmic
+  ARM: dts: qcom: sdx55-mtp: Add pmx55 pmic
+  ARM: dts: qcom: sdx55: Add rpmpd node
+  ARM: dts: qcom: Add PMIC pmx55 dts
+  ARM: dts: qcom: sdx55-mtp: Add regulator nodes
+
+ .../devicetree/bindings/iommu/arm,smmu.yaml   |   1 +
+ .../devicetree/bindings/mmc/sdhci-msm.txt     |   5 +-
+ arch/arm/boot/dts/qcom-pmx55.dtsi             |  84 +++++++
+ arch/arm/boot/dts/qcom-sdx55-mtp.dts          | 203 +++++++++++++++++
+ arch/arm/boot/dts/qcom-sdx55.dtsi             | 214 ++++++++++++++++++
+ 5 files changed, 505 insertions(+), 2 deletions(-)
+ create mode 100644 arch/arm/boot/dts/qcom-pmx55.dtsi
+
+-- 
+2.25.1
+
