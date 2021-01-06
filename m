@@ -2,123 +2,195 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 681482EBE8D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jan 2021 14:23:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F1CAC2EBEC4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jan 2021 14:37:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726521AbhAFNVk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jan 2021 08:21:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46314 "EHLO
+        id S1726528AbhAFNhE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jan 2021 08:37:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726238AbhAFNVj (ORCPT
+        with ESMTP id S1726509AbhAFNhD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jan 2021 08:21:39 -0500
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAE22C06134D
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jan 2021 05:20:58 -0800 (PST)
-Received: by mail-pg1-x534.google.com with SMTP id i7so2213611pgc.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jan 2021 05:20:58 -0800 (PST)
+        Wed, 6 Jan 2021 08:37:03 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75A53C06134C
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jan 2021 05:36:11 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id g25so3155224wmh.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jan 2021 05:36:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=msN5beST2gM1x6b/nNxKoYhQKO4QOMO63tKVWJ18BhQ=;
-        b=G6y0oGQ3Ob3m4SW+kJevLihH3FNldAP11XObvHFJU8kUyGZOBUuRVEOTDjnAp/Aqvm
-         mhgFAZyO0DOWIyR4UTxEmKbcSRgR5zeVBh5QCwL7/Bh6p+hHzbgogEZ+uoi/Qbk11CkK
-         xah0KEaABd7bq1M+qie1IJouMJ+korACNiF/ctfGc9ZzbXunddQA0C3Z/ppsrMC6651P
-         6JIDvgMEy2ucFrCFojozdGgjc+CsZ3GtUV4t1U5Y9ibZFY681z+yph0kVYycvPzXQpce
-         KQAZWCutKZr0KNqS3AvY8TNZRtQsxlaiF6BnrZDhuO4U9O3NdO6TuxieF88YpX6+3DIH
-         JV3A==
+        h=from:to:cc:subject:date:message-id;
+        bh=OK96pus8qdQrBS5M0oL3AvAxP5CiljhlnQLMNRvrKmw=;
+        b=ME2v7jsF54uVq1epB2enC1dNOwAROFfIoEXp3fHa9h9z87VUluLEh9TLIZEJD7zkCz
+         r1zyeo3teckysoQ5Gz4vWE5Fmw17nZQYJC1Rw0kijr0D25IWtL1+JqBWNocbkn8o+I0z
+         XmXHN0HUVASCJ7qXgEwDQh9Hmb5ZO8HXpGzobB8ly0FL1hN3y+mIzmTrcx8lQa9AgJ0D
+         EjsnYSxe5EBnjYX7ltM4pA42B0VP6Lnp7H6b/CbyF+9wAqx/YkRkF0tq28zFze5VLS0G
+         I69DJWXu/SX2Mv4hvnxPXFDh8hMdiMVFXTiFOGD4vXXQC/K23Tw0Ty3+EyQeNNqZVj7J
+         JE1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=msN5beST2gM1x6b/nNxKoYhQKO4QOMO63tKVWJ18BhQ=;
-        b=O3oW7WGcLlqDYVWK75EdZ3Gmq1vabX1MtBzwa72z3nQhZp3enP1FmSECEHvo540RFr
-         L5T0nAjn5wl398sbm983xR4U/q0XJo8QHDujMsg6t7jQdnl78WfnRrBWKRIZRaUJ8k+i
-         GDjVlukPMkva4RnHITRzrMJFn3768mqrlRFXy5f1kV1PIlzCMyENxJHvsLQfnHK8lACV
-         dn7XIzi9AjLlQ/v4YuzxO4uAaFD0xrC+p30S2I1b7o1fxjyiM07uIBbi/MkZbPus5nq1
-         MB7Acz6xkugTYHeYheqqgx+vXMQwKYoBK/cdtSMiwNukXDQIX3Jy4Z7Bi+5lHDcR3vjW
-         T/rw==
-X-Gm-Message-State: AOAM533OVkqE3MbqkT0HHessHRs+pma/0KcUiQgLYkMPF6w8L1n2dipW
-        +pOCTwKAt1EWIu8JdaQ5GTp/AUqp3kB7
-X-Google-Smtp-Source: ABdhPJwJuKikkKMkXq/FI6fzkUrbfv10v/4loF/Fs9EPOAL/fHKiOG/B+1ILPo0RW2S6iOcCvKySww==
-X-Received: by 2002:a62:4e95:0:b029:1a3:a372:8b3c with SMTP id c143-20020a624e950000b02901a3a3728b3cmr3891746pfb.28.1609939258400;
-        Wed, 06 Jan 2021 05:20:58 -0800 (PST)
-Received: from thinkpad ([2409:4072:6102:e7a2:51f0:bf72:bf80:ec88])
-        by smtp.gmail.com with ESMTPSA id 197sm2984470pgd.69.2021.01.06.05.20.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Jan 2021 05:20:57 -0800 (PST)
-Date:   Wed, 6 Jan 2021 18:50:52 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] mhi: pci_generic: Fix shared MSI vector support
-Message-ID: <20210106132052.GI3131@thinkpad>
-References: <1609865076-13890-1-git-send-email-loic.poulain@linaro.org>
- <1609865076-13890-2-git-send-email-loic.poulain@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1609865076-13890-2-git-send-email-loic.poulain@linaro.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=OK96pus8qdQrBS5M0oL3AvAxP5CiljhlnQLMNRvrKmw=;
+        b=iObM75QVEzRb1SzHVU/cLTU13WY+o/L0V/SOF+k7rOR2zQH6aB8J1STc0Ozdn/hPPy
+         sCPzwv/8fgR+c9aIKdRcubs1ORwgt3DSFEL5xlak33ZbWJRMr8P5SCgV3y9DYAym0BEQ
+         pcZUcCVVLxYNbnMSnorNm/JdRyo6dUc70lw7YmF5/f34Mi0PGr3uan6ORjxI2omDxH/z
+         Q4jpIdIrd7SLGVUEnxHJzR4l1xfOBWQBAgswckWo+6HiX2j2qfPZT42NnepzDr+L9292
+         QT99asZHjrUDFqEJOxSbZjhKfZh5Nu1sUXUkwmfKuVRCCKvho8WfqPTAzxCFBbA8BheH
+         Yisg==
+X-Gm-Message-State: AOAM531o1Q1QITHux0eGFIGUKfNHIl3T6Pvz4TGSmqoxJ4ahTYoLhBjf
+        k8xnKOxct4ARd8U6PqV4N63DfQ==
+X-Google-Smtp-Source: ABdhPJySeYJ9qFzqYlDz9hQ/oh6EiKZDfOpBYHZQ8TNC37LfHRCxPSg1KyOfaLHpEpPJbtJQYaIVCw==
+X-Received: by 2002:a1c:1c1:: with SMTP id 184mr3724909wmb.112.1609940170132;
+        Wed, 06 Jan 2021 05:36:10 -0800 (PST)
+Received: from localhost.localdomain ([2a01:e0a:490:8730:32c9:a713:9d05:bd74])
+        by smtp.gmail.com with ESMTPSA id r82sm3183618wma.18.2021.01.06.05.36.09
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 06 Jan 2021 05:36:09 -0800 (PST)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, kuba@kernel.org,
+        davem@davemloft.net, netdev@vger.kernel.org,
+        Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH] bus: mhi: Add inbound buffers allocation flag
+Date:   Wed,  6 Jan 2021 14:43:43 +0100
+Message-Id: <1609940623-8864-1-git-send-email-loic.poulain@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jan 05, 2021 at 05:44:36PM +0100, Loic Poulain wrote:
-> When a shared MSI vector must be used (e.g. when VTd is disabled on
-> x86_64), each event MSI vector must be set to the shared vector idx.
-> 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Currently, the MHI controller driver defines which channels should
+have their inbound buffers allocated and queued. But ideally, this is
+something that should be decided by the MHI device driver instead,
+which actually deals with that buffers.
 
-Applied to mhi-next!
+Add a flag parameter to mhi_prepare_for_transfer allowing to specify
+if buffers have to be allocated and queued by the MHI stack.
 
-Thanks,
-Mani
+Keep auto_queue flag for now, but should be removed at some point.
 
-> ---
->  v2: reword MSI warning
-> 
->  drivers/bus/mhi/pci_generic.c | 12 ++++++++----
->  1 file changed, 8 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-> index 86ff0c3..5b3a23a4 100644
-> --- a/drivers/bus/mhi/pci_generic.c
-> +++ b/drivers/bus/mhi/pci_generic.c
-> @@ -154,7 +154,7 @@ static const struct mhi_channel_config modem_qcom_v1_mhi_channels[] = {
->  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 128, 3),
->  };
->  
-> -static const struct mhi_event_config modem_qcom_v1_mhi_events[] = {
-> +static struct mhi_event_config modem_qcom_v1_mhi_events[] = {
->  	/* first ring is control+data ring */
->  	MHI_EVENT_CONFIG_CTRL(0),
->  	/* DIAG dedicated event ring */
-> @@ -164,7 +164,7 @@ static const struct mhi_event_config modem_qcom_v1_mhi_events[] = {
->  	MHI_EVENT_CONFIG_HW_DATA(3, 101)
->  };
->  
-> -static const struct mhi_controller_config modem_qcom_v1_mhiv_config = {
-> +static struct mhi_controller_config modem_qcom_v1_mhiv_config = {
->  	.max_channels = 128,
->  	.timeout_ms = 8000,
->  	.num_channels = ARRAY_SIZE(modem_qcom_v1_mhi_channels),
-> @@ -295,8 +295,12 @@ static int mhi_pci_get_irqs(struct mhi_controller *mhi_cntrl,
->  	}
->  
->  	if (nr_vectors < mhi_cntrl->nr_irqs) {
-> -		dev_warn(&pdev->dev, "Not enough MSI vectors (%d/%d), use shared MSI\n",
-> -			 nr_vectors, mhi_cntrl_config->num_events);
-> +		dev_warn(&pdev->dev, "using shared MSI\n");
-> +
-> +		/* Patch msi vectors, use only one (shared) */
-> +		for (i = 0; i < mhi_cntrl_config->num_events; i++)
-> +			mhi_cntrl_config->event_cfg[i].irq = 0;
-> +		mhi_cntrl->nr_irqs = 1;
->  	}
->  
->  	irq = devm_kcalloc(&pdev->dev, mhi_cntrl->nr_irqs, sizeof(int), GFP_KERNEL);
-> -- 
-> 2.7.4
-> 
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+---
+ drivers/bus/mhi/core/internal.h |  2 +-
+ drivers/bus/mhi/core/main.c     | 11 ++++++++---
+ drivers/net/mhi_net.c           |  2 +-
+ include/linux/mhi.h             | 12 +++++++++++-
+ net/qrtr/mhi.c                  |  2 +-
+ 5 files changed, 22 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
+index 6f80ec3..7512602 100644
+--- a/drivers/bus/mhi/core/internal.h
++++ b/drivers/bus/mhi/core/internal.h
+@@ -664,7 +664,7 @@ void mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
+ 		      struct image_info *img_info);
+ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl);
+ int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
+-			struct mhi_chan *mhi_chan);
++			struct mhi_chan *mhi_chan, enum mhi_chan_flags flags);
+ int mhi_init_chan_ctxt(struct mhi_controller *mhi_cntrl,
+ 		       struct mhi_chan *mhi_chan);
+ void mhi_deinit_chan_ctxt(struct mhi_controller *mhi_cntrl,
+diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+index 9b42540..6b6ad6b 100644
+--- a/drivers/bus/mhi/core/main.c
++++ b/drivers/bus/mhi/core/main.c
+@@ -1292,7 +1292,8 @@ static void __mhi_unprepare_channel(struct mhi_controller *mhi_cntrl,
+ }
+ 
+ int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
+-			struct mhi_chan *mhi_chan)
++			struct mhi_chan *mhi_chan,
++			enum mhi_chan_flags flags)
+ {
+ 	int ret = 0;
+ 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+@@ -1352,6 +1353,9 @@ int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
+ 	mhi_chan->ch_state = MHI_CH_STATE_ENABLED;
+ 	write_unlock_irq(&mhi_chan->lock);
+ 
++	if (mhi_chan->dir == DMA_FROM_DEVICE)
++		mhi_chan->pre_alloc = !!(flags & MHI_CH_INBOUND_ALLOC_BUFS);
++
+ 	/* Pre-allocate buffer for xfer ring */
+ 	if (mhi_chan->pre_alloc) {
+ 		int nr_el = get_nr_avail_ring_elements(mhi_cntrl,
+@@ -1498,7 +1502,8 @@ void mhi_reset_chan(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan)
+ }
+ 
+ /* Move channel to start state */
+-int mhi_prepare_for_transfer(struct mhi_device *mhi_dev)
++int mhi_prepare_for_transfer(struct mhi_device *mhi_dev,
++			     enum mhi_chan_flags flags)
+ {
+ 	int ret, dir;
+ 	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
+@@ -1509,7 +1514,7 @@ int mhi_prepare_for_transfer(struct mhi_device *mhi_dev)
+ 		if (!mhi_chan)
+ 			continue;
+ 
+-		ret = mhi_prepare_channel(mhi_cntrl, mhi_chan);
++		ret = mhi_prepare_channel(mhi_cntrl, mhi_chan, flags);
+ 		if (ret)
+ 			goto error_open_chan;
+ 	}
+diff --git a/drivers/net/mhi_net.c b/drivers/net/mhi_net.c
+index fa41d8c..b7f7f2e 100644
+--- a/drivers/net/mhi_net.c
++++ b/drivers/net/mhi_net.c
+@@ -265,7 +265,7 @@ static int mhi_net_probe(struct mhi_device *mhi_dev,
+ 	u64_stats_init(&mhi_netdev->stats.tx_syncp);
+ 
+ 	/* Start MHI channels */
+-	err = mhi_prepare_for_transfer(mhi_dev);
++	err = mhi_prepare_for_transfer(mhi_dev, 0);
+ 	if (err)
+ 		goto out_err;
+ 
+diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+index 209b335..6723339 100644
+--- a/include/linux/mhi.h
++++ b/include/linux/mhi.h
+@@ -60,6 +60,14 @@ enum mhi_flags {
+ };
+ 
+ /**
++ * enum mhi_chan_flags - MHI channel flags
++ * @MHI_CH_INBOUND_ALLOC_BUFS: Automatically allocate and queue inbound buffers
++ */
++enum mhi_chan_flags {
++	MHI_CH_INBOUND_ALLOC_BUFS = BIT(0),
++};
++
++/**
+  * enum mhi_device_type - Device types
+  * @MHI_DEVICE_XFER: Handles data transfer
+  * @MHI_DEVICE_CONTROLLER: Control device
+@@ -705,8 +713,10 @@ void mhi_device_put(struct mhi_device *mhi_dev);
+ /**
+  * mhi_prepare_for_transfer - Setup channel for data transfer
+  * @mhi_dev: Device associated with the channels
++ * @flags: MHI channel flags
+  */
+-int mhi_prepare_for_transfer(struct mhi_device *mhi_dev);
++int mhi_prepare_for_transfer(struct mhi_device *mhi_dev,
++			     enum mhi_chan_flags flags);
+ 
+ /**
+  * mhi_unprepare_from_transfer - Unprepare the channels
+diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
+index 2bf2b19..47afded 100644
+--- a/net/qrtr/mhi.c
++++ b/net/qrtr/mhi.c
+@@ -77,7 +77,7 @@ static int qcom_mhi_qrtr_probe(struct mhi_device *mhi_dev,
+ 	int rc;
+ 
+ 	/* start channels */
+-	rc = mhi_prepare_for_transfer(mhi_dev);
++	rc = mhi_prepare_for_transfer(mhi_dev, MHI_CH_INBOUND_ALLOC_BUFS);
+ 	if (rc)
+ 		return rc;
+ 
+-- 
+2.7.4
+
