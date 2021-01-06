@@ -2,145 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B291B2EC374
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jan 2021 19:50:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 131F42EC41C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jan 2021 20:44:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726638AbhAFSs1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jan 2021 13:48:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41204 "EHLO
+        id S1725822AbhAFToR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jan 2021 14:44:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726698AbhAFSs1 (ORCPT
+        with ESMTP id S1726090AbhAFToQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jan 2021 13:48:27 -0500
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E42B3C061359
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jan 2021 10:47:46 -0800 (PST)
-Received: by mail-ot1-x32d.google.com with SMTP id w3so3877873otp.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jan 2021 10:47:46 -0800 (PST)
+        Wed, 6 Jan 2021 14:44:16 -0500
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CBA5C06134C
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jan 2021 11:43:36 -0800 (PST)
+Received: by mail-io1-xd36.google.com with SMTP id o6so3801227iob.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jan 2021 11:43:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=J0CKR6Kvio5VLoFKyFYozSwJdmAW6MNkG97LTeNyQO4=;
-        b=x6ZtD3djxA3EXsoZpK5TZ+kc00ltci4hhEOW+Qm8RiGoDpGdXgYKaBiGQf0bqdlpbK
-         /Gim9u2G9fgMa1d7p2dh4I/c6WYS/CdSXiiuLCxIiFop2eCT68Kis+3bmRsr38KmgBX9
-         gyT5vKfZa+OTfdP/DsMFUgcJb9YELqdc6vppwxfubmcG4TbOs/uBZthCBeXtJgnrDAbG
-         /dTym/N7szfEWbh+khzEFJmXYFoO/D+81+77Utbl+6E7Dw0HY1zirbP9gLf/V8aZ0BI+
-         PwDx2P1i+KBzjByczxnU9pdpbKbA6zCFZv+5tgNFDrdbtrw5Khp28Xg1WWL1qDAzm5v/
-         dHeg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=524gIBiBelpD0qVg3o3Q7JLZEZj0p1hawMdE5gf7waw=;
+        b=eP8b0H3VGQgO/CbJSqyjNpvLjYHWsGT0OgHv8bwe0QWInLdZWPy+zGTmpaFNrW9NK/
+         WlrFdhbOXdL9mLcBqg7+bZuvRlRWmpMD4wrBPyqpAdjcdEITT0sHWov7Vidc481cCzu1
+         Yg7JJYMCa0/ViEed1YgqR/9lGEg150XH8PKQhVdUGUyPm9Ox4LUKRu4AJTDqgf55jWKy
+         p5dsWmkIYMKgbfFpZRiUhHIbgYoin0qPYeZikb+QZAH5Ir9ZjOFPYNeE2L3BTp6JRDDw
+         7tFHfboyli2aeRSNeAjQOD6oSzxXa+TG6RXeBGvGOyztWkpb0ZXjf1j5oR5nd8mJh7Ox
+         3T0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=J0CKR6Kvio5VLoFKyFYozSwJdmAW6MNkG97LTeNyQO4=;
-        b=Lo9IseBa167UZT6u4A0FtPrd+qUEsdgJhPZiR8AJKs+rQtYk2hAYsy2/m23KUWO0VN
-         f3HxhMsT1WvVoXFcA+ymbvvFXx/VLvncl5FK6bnfRywtmJauHwf5sTfD0VQGWeu6qUdW
-         BvkRL/1jG3T2mxIoRpML++QBnis4aRGagoXhINeWvipjBeBUvwGbTzhZSliao/5haF1w
-         3dbapqbt6j1kBGj8KpXWb6X+cgTTnWfocgFShGe2u0ta3551RSgofs2SYNxvibthc8p+
-         SyEH2hovMjGOZKSwq+yVBxpBdTy3TYRt5yvPC/VOkcFut/GOcrJuiOp7BKLMkQ3xQPG9
-         tNJA==
-X-Gm-Message-State: AOAM5328WQDUR41kjbni5MzJ9zTrHFkt20Xlss0lFwX7kQe7PI/5/qlo
-        qizGEHvJ4m4B/M+cvVq/rjC/LQ==
-X-Google-Smtp-Source: ABdhPJx1RKYVVyX0rPMoRSLuDstfkFwfSI1CmVBfV/H5xwF4Pl9d36cFHlDBFyLG7qY8igqtQCicOw==
-X-Received: by 2002:a05:6830:19da:: with SMTP id p26mr4102160otp.80.1609958866345;
-        Wed, 06 Jan 2021 10:47:46 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id r13sm662109oti.49.2021.01.06.10.47.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Jan 2021 10:47:45 -0800 (PST)
-Date:   Wed, 6 Jan 2021 12:47:43 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Alex Elder <elder@linaro.org>
-Cc:     agross@kernel.org, davem@davemloft.net, kuba@kernel.org,
-        ohad@wizery.com, evgreen@chromium.org, cpratapa@codeaurora.org,
-        subashab@codeaurora.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next 2/3] soc: qcom: mdt_loader: define stubs for
- COMPILE_TEST
-Message-ID: <X/YFzz1FCWUJn8lN@builder.lan>
-References: <20210106023812.2542-1-elder@linaro.org>
- <20210106023812.2542-3-elder@linaro.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=524gIBiBelpD0qVg3o3Q7JLZEZj0p1hawMdE5gf7waw=;
+        b=YnYX0b/CIX2V2CMrpOclBpdsws5rxXPjatJRLsFAKznM0rFvvejoktaLKwXF4UQQNz
+         3bvqVQ3d1EG8amlmSJpG6vDeZr7JRHR9MTO3XT9MmD32o/u8K54ifUcUhNSpncOxqjP7
+         YEVaLpiUblZD+NBkWyI5g2W3QX/EA6/7i4HG3ACKBPWEjgwQrydfuGAqGr7oTbF5V7zD
+         GO87V7FBdCSD9LKS6bE2KIZIdbDZNp67k3iD26rjblNN+4Dhv/poD1jso0+TIqSZfMTc
+         TQRx/QGd8anNXla4m/V7IU0AZ8PK0eVJiwN0nbQ0O/xI9GfSQl2opBHnJbxsJZiNLXUV
+         LVzw==
+X-Gm-Message-State: AOAM531TWLK8O6T7r3vrnIo5Wl/hVdMc5887BvP2oz5TRZECVvf8WlDZ
+        FCbSt1rBalEO/SNKOXu1s2JFs3DgwcAhmw==
+X-Google-Smtp-Source: ABdhPJytrFAlmLACDe11EIEFbqIGPudN3OKMfauAq8qSvwF16irVTIPHrkJQgKKkl+56cEaJDRyIew==
+X-Received: by 2002:a05:6602:13c5:: with SMTP id o5mr4053115iov.46.1609962215326;
+        Wed, 06 Jan 2021 11:43:35 -0800 (PST)
+Received: from [172.22.22.26] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.googlemail.com with ESMTPSA id 8sm2286400ill.13.2021.01.06.11.43.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 Jan 2021 11:43:34 -0800 (PST)
+Subject: Re: [PATCH net-next 3/3] net: ipa: support COMPILE_TEST
+To:     kernel test robot <lkp@intel.com>, davem@davemloft.net,
+        kuba@kernel.org
+Cc:     kbuild-all@lists.01.org, bjorn.andersson@linaro.org,
+        agross@kernel.org, ohad@wizery.com, evgreen@chromium.org,
+        cpratapa@codeaurora.org, subashab@codeaurora.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20210106023812.2542-4-elder@linaro.org>
+ <202101061555.DTUUlbsx-lkp@intel.com>
+From:   Alex Elder <elder@linaro.org>
+Message-ID: <d2f55352-b774-8ce2-0693-3d7eb39ac43c@linaro.org>
+Date:   Wed, 6 Jan 2021 13:43:33 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210106023812.2542-3-elder@linaro.org>
+In-Reply-To: <202101061555.DTUUlbsx-lkp@intel.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 05 Jan 20:38 CST 2021, Alex Elder wrote:
-
-> Define stub functions for the exposed MDT functions in case
-> QCOM_MDT_LOADER is not configured.  This allows users of these
-> functions to link correctly for COMPILE_TEST builds without
-> QCOM_SCM enabled.
+On 1/6/21 1:34 AM, kernel test robot wrote:
+> Hi Alex,
 > 
+> I love your patch! Perhaps something to improve:
+> 
+> [auto build test WARNING on net-next/master]
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+I think I just need to define at the top of "gsi_trans.h":
+    struct page;
 
-@Jakub, @Dave, as with patch 1, please take this through your tree as
-well.
+I'll submit v2 of this series, with this one change
+(assuming it's the correct fix).  I will incorporate
+Bjorn's review tags on the first two patches.
 
-Regards,
-Bjorn
+					-Alex
 
-> Signed-off-by: Alex Elder <elder@linaro.org>
+> url:    https://github.com/0day-ci/linux/commits/Alex-Elder/net-ipa-support-COMPILE_TEST/20210106-104149
+> base:   https://git.kernel.org/pub/scm/linux/kernel/git/davem/net-next.git 3db1a3fa98808aa90f95ec3e0fa2fc7abf28f5c9
+> config: alpha-allyesconfig (attached as .config)
+> compiler: alpha-linux-gcc (GCC) 9.3.0
+> reproduce (this is a W=1 build):
+>         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+>         chmod +x ~/bin/make.cross
+>         # https://github.com/0day-ci/linux/commit/7ab1759d9336e95f4de013bb171246b66f94e2f4
+>         git remote add linux-review https://github.com/0day-ci/linux
+>         git fetch --no-tags linux-review Alex-Elder/net-ipa-support-COMPILE_TEST/20210106-104149
+>         git checkout 7ab1759d9336e95f4de013bb171246b66f94e2f4
+>         # save the attached .config to linux build tree
+>         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-9.3.0 make.cross ARCH=alpha 
+> 
+> If you fix the issue, kindly add following tag as appropriate
+> Reported-by: kernel test robot <lkp@intel.com>
+> 
+> All warnings (new ones prefixed by >>):
+> 
+>    In file included from drivers/net/ipa/ipa_gsi.c:10:
+>>> drivers/net/ipa/gsi_trans.h:170:56: warning: 'struct page' declared inside parameter list will not be visible outside of this definition or declaration
+>      170 | int gsi_trans_page_add(struct gsi_trans *trans, struct page *page, u32 size,
+>          |                                                        ^~~~
+> 
+> 
+> vim +170 drivers/net/ipa/gsi_trans.h
+> 
+> 9dd441e4ed5755c Alex Elder 2020-03-05  149  
+> 9dd441e4ed5755c Alex Elder 2020-03-05  150  /**
+> 9dd441e4ed5755c Alex Elder 2020-03-05  151   * gsi_trans_cmd_add() - Add an immediate command to a transaction
+> 9dd441e4ed5755c Alex Elder 2020-03-05  152   * @trans:	Transaction
+> 9dd441e4ed5755c Alex Elder 2020-03-05  153   * @buf:	Buffer pointer for command payload
+> 9dd441e4ed5755c Alex Elder 2020-03-05  154   * @size:	Number of bytes in buffer
+> 9dd441e4ed5755c Alex Elder 2020-03-05  155   * @addr:	DMA address for payload
+> 9dd441e4ed5755c Alex Elder 2020-03-05  156   * @direction:	Direction of DMA transfer (or DMA_NONE if none required)
+> 9dd441e4ed5755c Alex Elder 2020-03-05  157   * @opcode:	IPA immediate command opcode
+> 9dd441e4ed5755c Alex Elder 2020-03-05  158   */
+> 9dd441e4ed5755c Alex Elder 2020-03-05  159  void gsi_trans_cmd_add(struct gsi_trans *trans, void *buf, u32 size,
+> 9dd441e4ed5755c Alex Elder 2020-03-05  160  		       dma_addr_t addr, enum dma_data_direction direction,
+> 9dd441e4ed5755c Alex Elder 2020-03-05  161  		       enum ipa_cmd_opcode opcode);
+> 9dd441e4ed5755c Alex Elder 2020-03-05  162  
+> 9dd441e4ed5755c Alex Elder 2020-03-05  163  /**
+> 9dd441e4ed5755c Alex Elder 2020-03-05  164   * gsi_trans_page_add() - Add a page transfer to a transaction
+> 9dd441e4ed5755c Alex Elder 2020-03-05  165   * @trans:	Transaction
+> 9dd441e4ed5755c Alex Elder 2020-03-05  166   * @page:	Page pointer
+> 9dd441e4ed5755c Alex Elder 2020-03-05  167   * @size:	Number of bytes (starting at offset) to transfer
+> 9dd441e4ed5755c Alex Elder 2020-03-05  168   * @offset:	Offset within page for start of transfer
+> 9dd441e4ed5755c Alex Elder 2020-03-05  169   */
+> 9dd441e4ed5755c Alex Elder 2020-03-05 @170  int gsi_trans_page_add(struct gsi_trans *trans, struct page *page, u32 size,
+> 9dd441e4ed5755c Alex Elder 2020-03-05  171  		       u32 offset);
+> 9dd441e4ed5755c Alex Elder 2020-03-05  172  
+> 
 > ---
->  include/linux/soc/qcom/mdt_loader.h | 35 +++++++++++++++++++++++++++++
->  1 file changed, 35 insertions(+)
+> 0-DAY CI Kernel Test Service, Intel Corporation
+> https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
 > 
-> diff --git a/include/linux/soc/qcom/mdt_loader.h b/include/linux/soc/qcom/mdt_loader.h
-> index e600baec68253..afd47217996b0 100644
-> --- a/include/linux/soc/qcom/mdt_loader.h
-> +++ b/include/linux/soc/qcom/mdt_loader.h
-> @@ -11,6 +11,8 @@
->  struct device;
->  struct firmware;
->  
-> +#if IS_ENABLED(CONFIG_QCOM_MDT_LOADER)
-> +
->  ssize_t qcom_mdt_get_size(const struct firmware *fw);
->  int qcom_mdt_load(struct device *dev, const struct firmware *fw,
->  		  const char *fw_name, int pas_id, void *mem_region,
-> @@ -23,4 +25,37 @@ int qcom_mdt_load_no_init(struct device *dev, const struct firmware *fw,
->  			  phys_addr_t *reloc_base);
->  void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len);
->  
-> +#else /* !IS_ENABLED(CONFIG_QCOM_MDT_LOADER) */
-> +
-> +static inline ssize_t qcom_mdt_get_size(const struct firmware *fw)
-> +{
-> +	return -ENODEV;
-> +}
-> +
-> +static inline int qcom_mdt_load(struct device *dev, const struct firmware *fw,
-> +				const char *fw_name, int pas_id,
-> +				void *mem_region, phys_addr_t mem_phys,
-> +				size_t mem_size, phys_addr_t *reloc_base)
-> +{
-> +	return -ENODEV;
-> +}
-> +
-> +static inline int qcom_mdt_load_no_init(struct device *dev,
-> +					const struct firmware *fw,
-> +					const char *fw_name, int pas_id,
-> +					void *mem_region, phys_addr_t mem_phys,
-> +					size_t mem_size,
-> +					phys_addr_t *reloc_base)
-> +{
-> +	return -ENODEV;
-> +}
-> +
-> +static inline void *qcom_mdt_read_metadata(const struct firmware *fw,
-> +					   size_t *data_len)
-> +{
-> +	return ERR_PTR(-ENODEV);
-> +}
-> +
-> +#endif /* !IS_ENABLED(CONFIG_QCOM_MDT_LOADER) */
-> +
->  #endif
-> -- 
-> 2.20.1
-> 
+
