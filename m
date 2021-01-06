@@ -2,99 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 160322EB714
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jan 2021 01:52:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E322E2EB71D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jan 2021 01:53:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726699AbhAFAuy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jan 2021 19:50:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41476 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727019AbhAFAuy (ORCPT
+        id S1725789AbhAFAwg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jan 2021 19:52:36 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:23913 "EHLO
+        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725766AbhAFAwg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jan 2021 19:50:54 -0500
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C90BBC061793
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jan 2021 16:50:13 -0800 (PST)
-Received: by mail-oi1-x22f.google.com with SMTP id s2so1729540oij.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jan 2021 16:50:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=MY//pdNJ1jtx+davhWjroAABUbia63fV6QVASGfH/ZU=;
-        b=oCpQ9J6sRS9tagdGMQk9s4DATKdJwjlk3DmHZJHRC2a9b+/fhHiRhB5hmVEJbQizWJ
-         pxRfpXLINKc/hGkmByZrBqVos+6zwTeuBY7c6ecAAYm5CPUavshOp9L3w4Jo2hR6Txq4
-         kDyIGcPOBMdN7xlskaWqP6rfY0399nyWZnKY6s1MRSOaLbqY4jl3N8utB215yXpeQWFs
-         atXjAIlecflorgcH03w5L3c9Mdc4dJhxomxcQr6Q79ow0pfYVJYlZiNQpoQuAOFvcuzj
-         D4V23muW+fGVoTGgsHpC2yBP8rothR8pA9NFgm+SXHAdHx5VHv5TCvT8kMgnpCrOQ8GM
-         7rJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=MY//pdNJ1jtx+davhWjroAABUbia63fV6QVASGfH/ZU=;
-        b=S6fDgbcMSeJ4a7aZIh+9wsQtjr1HLjiiFfbQj0ddSnTR+MGOQnCUzUyTwBbvgSboMg
-         jXL1yHY+pr5Xar5ds3dhmAMD4PpqWIhVX49sF7l6m0PDZ2UgFiX+xqUW2uTn2BDiUm9J
-         1XN1jMF5up0uQnyldLJ/tOvtl3L0OhIotUkE8GnYA0ubjui/VU8S29vufQwIFLKcushC
-         MEQwEdImCSVsPZuT4YtOx7GqnsUZPi1bFdDC7aItUimTQktVlyg5maHokVODwdZVaQEf
-         UNkYzKf4RJXTWGCInMtVJfvd0ogfk4wiw6agsVMemlsfezjIswZPrnGhRIB6nTjypGCK
-         rrLw==
-X-Gm-Message-State: AOAM53143rf4Cb2T9GrhdA6mp20dxOTW21bv1uA4JxdDPkakre9W8hOS
-        7cdJDSgScwxZcsWElEAQarqrHg==
-X-Google-Smtp-Source: ABdhPJyeUxdYzySoOkACZH8a2ASpyGaDSsM6cIg1pK6baaLSMrtCAMOXh3ocIVAnZbnhcBBeInXHSg==
-X-Received: by 2002:aca:d506:: with SMTP id m6mr1570736oig.113.1609894213201;
-        Tue, 05 Jan 2021 16:50:13 -0800 (PST)
-Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id t24sm222562oou.4.2021.01.05.16.50.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Jan 2021 16:50:12 -0800 (PST)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>
-Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH] iommu/arm-smmu-qcom: Initialize SCTLR of the bypass context
-Date:   Tue,  5 Jan 2021 16:50:38 -0800
-Message-Id: <20210106005038.4152731-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.29.2
+        Tue, 5 Jan 2021 19:52:36 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1609894335; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=PZc2NcG7uuh+6im8cfLwXFTleXn53JDpJ97p6N/GsAg=;
+ b=TInKWTM3L4Yt+qOny0+fxdgQk4K6dWFQ8UuBNniCzajxoZD1bbCtAml8UKlwn1BqkPulWGDK
+ C9rFKBs8c+4/5qe6uL7PGv6u42+8qqKy84yh++dh2q2eR/hNWiZooGoUkZmh+4QOnz8rZIzE
+ MXKf/odJr2Xn+canLxeOGbFngSg=
+X-Mailgun-Sending-Ip: 198.61.254.31
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 5ff509a2d3eb3c36b4c3cc6b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 06 Jan 2021 00:51:46
+ GMT
+Sender: cang=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E8BD4C4346A; Wed,  6 Jan 2021 00:51:45 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: cang)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 007A9C433CA;
+        Wed,  6 Jan 2021 00:51:42 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 06 Jan 2021 08:51:42 +0800
+From:   Can Guo <cang@codeaurora.org>
+To:     Greg KH <greg@kroah.com>
+Cc:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
+        hongwus@codeaurora.org, rnayak@codeaurora.org,
+        linux-scsi@vger.kernel.org, kernel-team@android.com,
+        saravanak@google.com, salyzyn@google.com,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 2/2] scsi: ufs-qcom: Add one sysfs node to monitor
+ performance
+In-Reply-To: <X/Q+/MSk1d2SW3lA@kroah.com>
+References: <1609816552-16442-1-git-send-email-cang@codeaurora.org>
+ <1609816552-16442-3-git-send-email-cang@codeaurora.org>
+ <X/Q+/MSk1d2SW3lA@kroah.com>
+Message-ID: <684aabf8070279e380e03ec7b891330d@codeaurora.org>
+X-Sender: cang@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On SM8150 it's occasionally observed that the boot hangs in between the
-writing of SMEs and context banks in arm_smmu_device_reset().
+On 2021-01-05 18:27, Greg KH wrote:
+> Oops, forgot the big problem that I noticed:
+> 
+> On Mon, Jan 04, 2021 at 07:15:51PM -0800, Can Guo wrote:
+>> +static ssize_t monitor_show(struct device *dev, struct 
+>> device_attribute *attr,
+>> +			    char *buf)
+>> +{
+>> +	struct ufs_hba *hba = dev_get_drvdata(dev);
+>> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+>> +	struct ufs_qcom_perf_monitor *mon = &host->monitor;
+>> +	unsigned long nr_sec_rd, nr_sec_wr, busy_us_rd, busy_us_wr;
+>> +	unsigned long lat_max_rd, lat_min_rd, lat_sum_rd, lat_avg_rd, 
+>> nr_req_rd;
+>> +	unsigned long lat_max_wr, lat_min_wr, lat_sum_wr, lat_avg_wr, 
+>> nr_req_wr;
+>> +	bool is_enabled;
+>> +
+>> +	/*
+>> +	 * Don't lock the host lock since user needs to cat the entry very
+>> +	 * frequently during performance test, otherwise it may impact the
+>> +	 * performance.
+>> +	 */
+>> +	is_enabled = mon->enabled;
+>> +	if (!is_enabled)
+>> +		goto print_usage;
+>> +
+>> +	nr_sec_rd = mon->nr_sec_rw[READ];
+>> +	nr_sec_wr = mon->nr_sec_rw[WRITE];
+>> +	busy_us_rd = ktime_to_us(mon->total_busy[READ]);
+>> +	busy_us_wr = ktime_to_us(mon->total_busy[WRITE]);
+>> +
+>> +	nr_req_rd = mon->nr_req[READ];
+>> +	lat_max_rd = ktime_to_us(mon->lat_max[READ]);
+>> +	lat_min_rd = ktime_to_us(mon->lat_min[READ]);
+>> +	lat_sum_rd = ktime_to_us(mon->lat_sum[READ]);
+>> +	lat_avg_rd = lat_sum_rd / nr_req_rd;
+>> +
+>> +	nr_req_wr = mon->nr_req[WRITE];
+>> +	lat_max_wr = ktime_to_us(mon->lat_max[WRITE]);
+>> +	lat_min_wr = ktime_to_us(mon->lat_min[WRITE]);
+>> +	lat_sum_wr = ktime_to_us(mon->lat_sum[WRITE]);
+>> +	lat_avg_wr = lat_sum_wr / nr_req_wr;
+>> +
+>> +	return scnprintf(buf, PAGE_SIZE, "Read %lu %s %lu us, %lu %s max %lu 
+>> | min %lu | avg %lu | sum %lu\nWrite %lu %s %lu us, %lu %s max %lu | 
+>> min %lu | avg %lu | sum %lu\n",
+>> +		 nr_sec_rd, "sectors (in 512 bytes) in ", busy_us_rd,
+>> +		 nr_req_rd, "read reqs completed, latencies in us: ",
+>> +		 lat_max_rd, lat_min_rd, lat_avg_rd, lat_sum_rd,
+>> +		 nr_sec_wr, "sectors (in 512 bytes) in ", busy_us_wr,
+>> +		 nr_req_wr, "write reqs completed, latencies in us: ",
+>> +		 lat_max_wr, lat_min_wr, lat_avg_wr, lat_sum_wr);
+> 
+> sysfs is one-value-per-file, not
+> throw-everything-in-one-file-and-hope-userspace-can-parse-it.
+> 
+> This is not acceptable at all.  Why not just use debugfs for stats like
+> this?
+> 
+> Also, use sysfs_emit() for any new sysfs files please.
+> 
+> thanks,
+> 
+> greg k-h
 
-The problem seems to coincide with a display refresh happening after
-updating the stream mapping, but before clearing - and there by
-disabling translation - the context bank picked to emulate translation
-bypass.
+Hi Greg,
 
-Resolve this by explicitly disabling the bypass context already in
-cfg_probe.
+Thanks for the comments, I will rework the change to make it right.
 
-Fixes: f9081b8ff593 ("iommu/arm-smmu-qcom: Implement S2CR quirk")
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index 5dff7ffbef11..1b83d140742f 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -196,6 +196,8 @@ static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
- 
- 		set_bit(qsmmu->bypass_cbndx, smmu->context_map);
- 
-+		arm_smmu_cb_write(smmu, qsmmu->bypass_cbndx, ARM_SMMU_CB_SCTLR, 0);
-+
- 		reg = FIELD_PREP(ARM_SMMU_CBAR_TYPE, CBAR_TYPE_S1_TRANS_S2_BYPASS);
- 		arm_smmu_gr1_write(smmu, ARM_SMMU_GR1_CBAR(qsmmu->bypass_cbndx), reg);
- 	}
--- 
-2.29.2
-
+Regards,
+Can Guo.
