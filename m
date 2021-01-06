@@ -2,61 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BE4F62EB6B9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jan 2021 01:10:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 160322EB714
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jan 2021 01:52:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726597AbhAFAKU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jan 2021 19:10:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35170 "EHLO
+        id S1726699AbhAFAuy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jan 2021 19:50:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726579AbhAFAKU (ORCPT
+        with ESMTP id S1727019AbhAFAuy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jan 2021 19:10:20 -0500
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF38CC061793
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jan 2021 16:09:39 -0800 (PST)
-Received: by mail-ot1-x331.google.com with SMTP id w3so1437102otp.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jan 2021 16:09:39 -0800 (PST)
+        Tue, 5 Jan 2021 19:50:54 -0500
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C90BBC061793
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jan 2021 16:50:13 -0800 (PST)
+Received: by mail-oi1-x22f.google.com with SMTP id s2so1729540oij.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jan 2021 16:50:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=0sebCEl9B+1vF2yNLdSc5aas6+RNJIDePFeyjVwhIkc=;
-        b=FXIQ4wyktkC89NxE5TyQnE6QAiy/+IznOsvGMq2EEpJg3rz7T6syIUHsrR0qhPJ2WW
-         fxlzyLUXK5h/Q3hOaVQa3Jx2Do/i+8k1ww0kXaMrzc/R70Ofl+q8VtYl60W4PG68rwYv
-         +fiWbKYCBjO2E+RtOLxUU346aOdE6FmC7s/8Q15pJ/gpK6f3Vbx7Biuc9j4dxpYn1a/G
-         km0Awe+tAxECPEqs9MmCP7IRb34TuCt8+HnOaOLA+8DQDc0i8A7jcDB08txdN+o2ZLP4
-         JEUh/OF7iCxZhLiJCw4yQB+f1D5SyI+xp9+FYdzhq7kluPvQtSi8/iRHRBsjx3+XulAN
-         EV8w==
+        bh=MY//pdNJ1jtx+davhWjroAABUbia63fV6QVASGfH/ZU=;
+        b=oCpQ9J6sRS9tagdGMQk9s4DATKdJwjlk3DmHZJHRC2a9b+/fhHiRhB5hmVEJbQizWJ
+         pxRfpXLINKc/hGkmByZrBqVos+6zwTeuBY7c6ecAAYm5CPUavshOp9L3w4Jo2hR6Txq4
+         kDyIGcPOBMdN7xlskaWqP6rfY0399nyWZnKY6s1MRSOaLbqY4jl3N8utB215yXpeQWFs
+         atXjAIlecflorgcH03w5L3c9Mdc4dJhxomxcQr6Q79ow0pfYVJYlZiNQpoQuAOFvcuzj
+         D4V23muW+fGVoTGgsHpC2yBP8rothR8pA9NFgm+SXHAdHx5VHv5TCvT8kMgnpCrOQ8GM
+         7rJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=0sebCEl9B+1vF2yNLdSc5aas6+RNJIDePFeyjVwhIkc=;
-        b=C0/UPCvv5s7Ofnl/XH9MmM/CenWhxV4mJobF/bH2ukhruS+F4ykpoLdfEF8wAqid0v
-         b6Lwy91Pv1tyI9F4TtW39KFW75A/Or7tSMr+r8X6Yfs7aypJipUb07uPENold6udTXSt
-         0FMw6r3Qj/8Fkw31gULaus06XeZ9WwyeoDajFzdjKEf+IX/a+dP4wLTjz1qG8Z+ByJBp
-         4yLeFE7oSIuEnj7lc0RmfNDflHxPSQsHXwbazwVTq05LVgi7Xn4jpdPIJSL5EB4Qg4MC
-         +/5OQKP4z7UvXpWz485TQzWio8NJmV7uum6upfgR1TD307BXQvOM17y1kFuXR/EWEkZg
-         BBvg==
-X-Gm-Message-State: AOAM531Y3FMBVNxk+DuZ5rWA+nXOl3kM46pFDKzbb25n6fKeXcmyp7Rz
-        DS2vzgLmulx1SmkoZmxo+TqM0A==
-X-Google-Smtp-Source: ABdhPJwRt4+uVYYhD+y4+bwbJdVCoOa5cM+flzBsWN+ECdW8I4kFJrQmHfGbW7dfMKlz012IVnn6Qw==
-X-Received: by 2002:a9d:7ac1:: with SMTP id m1mr1514106otn.186.1609891779140;
-        Tue, 05 Jan 2021 16:09:39 -0800 (PST)
+        bh=MY//pdNJ1jtx+davhWjroAABUbia63fV6QVASGfH/ZU=;
+        b=S6fDgbcMSeJ4a7aZIh+9wsQtjr1HLjiiFfbQj0ddSnTR+MGOQnCUzUyTwBbvgSboMg
+         jXL1yHY+pr5Xar5ds3dhmAMD4PpqWIhVX49sF7l6m0PDZ2UgFiX+xqUW2uTn2BDiUm9J
+         1XN1jMF5up0uQnyldLJ/tOvtl3L0OhIotUkE8GnYA0ubjui/VU8S29vufQwIFLKcushC
+         MEQwEdImCSVsPZuT4YtOx7GqnsUZPi1bFdDC7aItUimTQktVlyg5maHokVODwdZVaQEf
+         UNkYzKf4RJXTWGCInMtVJfvd0ogfk4wiw6agsVMemlsfezjIswZPrnGhRIB6nTjypGCK
+         rrLw==
+X-Gm-Message-State: AOAM53143rf4Cb2T9GrhdA6mp20dxOTW21bv1uA4JxdDPkakre9W8hOS
+        7cdJDSgScwxZcsWElEAQarqrHg==
+X-Google-Smtp-Source: ABdhPJyeUxdYzySoOkACZH8a2ASpyGaDSsM6cIg1pK6baaLSMrtCAMOXh3ocIVAnZbnhcBBeInXHSg==
+X-Received: by 2002:aca:d506:: with SMTP id m6mr1570736oig.113.1609894213201;
+        Tue, 05 Jan 2021 16:50:13 -0800 (PST)
 Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id b71sm246694oii.5.2021.01.05.16.09.38
+        by smtp.gmail.com with ESMTPSA id t24sm222562oou.4.2021.01.05.16.50.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Jan 2021 16:09:38 -0800 (PST)
+        Tue, 05 Jan 2021 16:50:12 -0800 (PST)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dmitry.baryshkov@linaro.org
-Subject: [PATCH] arm64: dts: qcom: pm8150: Enable RTC
-Date:   Tue,  5 Jan 2021 16:10:04 -0800
-Message-Id: <20210106001004.4081508-1-bjorn.andersson@linaro.org>
+To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>
+Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        linux-arm-kernel@lists.infradead.org,
+        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH] iommu/arm-smmu-qcom: Initialize SCTLR of the bypass context
+Date:   Tue,  5 Jan 2021 16:50:38 -0800
+Message-Id: <20210106005038.4152731-1-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -64,67 +65,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The PM8150 comes with everything the RTC needs, so let's just leave it
-enabled instead of having to explicitly enable it for all boards.
-In effect this patch enables the RTC on the SM8150 MTP and the SM8250
-HDK.
+On SM8150 it's occasionally observed that the boot hangs in between the
+writing of SMEs and context banks in arm_smmu_device_reset().
 
+The problem seems to coincide with a display refresh happening after
+updating the stream mapping, but before clearing - and there by
+disabling translation - the context bank picked to emulate translation
+bypass.
+
+Resolve this by explicitly disabling the bypass context already in
+cfg_probe.
+
+Fixes: f9081b8ff593 ("iommu/arm-smmu-qcom: Implement S2CR quirk")
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/pm8150.dtsi     | 4 +---
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 4 ----
- arch/arm64/boot/dts/qcom/sm8250-mtp.dts  | 4 ----
- 3 files changed, 1 insertion(+), 11 deletions(-)
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/pm8150.dtsi b/arch/arm64/boot/dts/qcom/pm8150.dtsi
-index a53eccf2b695..027f55d53584 100644
---- a/arch/arm64/boot/dts/qcom/pm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm8150.dtsi
-@@ -97,13 +97,11 @@ die-temp@6 {
- 			};
- 		};
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+index 5dff7ffbef11..1b83d140742f 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -196,6 +196,8 @@ static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
  
--		pm8150_rtc: rtc@6000 {
-+		rtc@6000 {
- 			compatible = "qcom,pm8941-rtc";
- 			reg = <0x6000>;
- 			reg-names = "rtc", "alarm";
- 			interrupts = <0x0 0x61 0x1 IRQ_TYPE_NONE>;
--
--			status = "disabled";
- 		};
+ 		set_bit(qsmmu->bypass_cbndx, smmu->context_map);
  
- 		pm8150_gpios: gpio@c000 {
-diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-index d7799a6fb489..546b7fb9cf55 100644
---- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-@@ -609,10 +609,6 @@ lt9611_rst_pin: lt9611-rst-pin {
- 	};
- };
- 
--&pm8150_rtc {
--	status = "okay";
--};
--
- &qupv3_id_0 {
- 	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-index 767a2e446248..c291422fa096 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-@@ -392,10 +392,6 @@ &i2c15 {
- 	/* rtc6226 @ 64 */
- };
- 
--&pm8150_rtc {
--	status = "okay";
--};
--
- &qupv3_id_0 {
- 	status = "okay";
- };
++		arm_smmu_cb_write(smmu, qsmmu->bypass_cbndx, ARM_SMMU_CB_SCTLR, 0);
++
+ 		reg = FIELD_PREP(ARM_SMMU_CBAR_TYPE, CBAR_TYPE_S1_TRANS_S2_BYPASS);
+ 		arm_smmu_gr1_write(smmu, ARM_SMMU_GR1_CBAR(qsmmu->bypass_cbndx), reg);
+ 	}
 -- 
 2.29.2
 
