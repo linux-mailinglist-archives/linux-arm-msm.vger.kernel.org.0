@@ -2,61 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A43E2EBDEE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jan 2021 13:57:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 26D8B2EBDF0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jan 2021 13:57:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726508AbhAFMzC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jan 2021 07:55:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42180 "EHLO
+        id S1726603AbhAFMzF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jan 2021 07:55:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726503AbhAFMzB (ORCPT
+        with ESMTP id S1726581AbhAFMzE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jan 2021 07:55:01 -0500
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEAD3C06135C
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jan 2021 04:53:51 -0800 (PST)
-Received: by mail-pg1-x532.google.com with SMTP id 30so2170386pgr.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jan 2021 04:53:51 -0800 (PST)
+        Wed, 6 Jan 2021 07:55:04 -0500
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F1F3C06135F
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jan 2021 04:53:56 -0800 (PST)
+Received: by mail-pj1-x1029.google.com with SMTP id v1so1501329pjr.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jan 2021 04:53:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=M1QQZy4nTcMZS1H/pSqUElj03pASMBM/FVGxS1OW0tM=;
-        b=VUT/BPY5z5FqK3BG7CFZ4T9G+vHVjC18NtWumnYMps5nmN73Am9+QSe5fxVGBpk0Ne
-         uBykCEjmbtiqLQ9Cowme6LK0QkGbFAbROVU/yRgRgY39zv+Ayh5M6qI7rdhpxdBhdQrF
-         2b3lSXZh8iGvpSPpG7pGqkzeD31qNj/T6mqcwZX+eLF0VZSNVx+jZVXt+d4nm3atuiw1
-         UefhmcjG32RTfPnCcSYxJm/IiJ7ciHxzYT/bUzCUSOzeYdOWCaidslwP6xDaIAN5i9/2
-         IJ3D1dSB0xaBs54nTjd7wESoWdGnT2vhoAx2CRQbBymgMsn5EipFK0/LN6zh6sW0JA6o
-         RCzA==
+        bh=4f6Doc0dS1yZ2IXHgqMpKz/2VTxor/Phil/0B11oX0Y=;
+        b=IPnRw5+xkAOsx/g01cDapsdINozu5g4jMhVdyzsKZct4elXMJIYLpIX4cjIJ4xws4v
+         ho4dhjtKaFsbmjjmPShlAfPBIOcF3/5kC7BkuME62WXLd72wjl0B5cg2/UoFmw/vtGdz
+         CLdRjiMoAuEUyWzNkejG1XO6uLUFLEPFxVP96zXaBrvmQrW01gAX8T6puoj+ItYDCPgv
+         ddNRjCe5wjr92/I52OA2E9Km2NFqH35ua3RM40KZKIbqVIs/krpd1/NHrQXrC26pPzzM
+         UQQSAqMZDrf+KOVZRtYnppJhTWBKS8e0uGiR7HotghvPb14Jo2CjFHzLbqZeu2qSzY6e
+         UkUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=M1QQZy4nTcMZS1H/pSqUElj03pASMBM/FVGxS1OW0tM=;
-        b=qy3wuSn87ylxeTCWo+jBFub0BFzSdjmosE6Gk2tHxmPWS3Ic7U7VE3HsUTVaswDTej
-         LbN1TVoXDp1XsVGtMs0k/s9Iyj7wMjdSbWO0tJO1jcvZk2OakU7iYYmi+W7jD5+WzzSn
-         CugFgkhJBOF4B4kyS+e/jEdk9TroXwany66K6S3XqeiqkKvcmPLrfRM6u5trJPWz3mnM
-         1ZCncGM8C3qu1UTRp4LCVCH4dnupuhT5zV71O42+/QSuwK7IdMf/e5DUHZr5A2rjYSL0
-         HzgUqZgKpuL7N+Hsgw1ErHz8oB9IpTGuU6gMGr9/5H8ipJKlaNcJeM0LIwSTfPsebvI2
-         7OYQ==
-X-Gm-Message-State: AOAM531+Kw0vtEaUrHZ0xpe6KpOc3F3GXjoa/DvUCkt6eTm1PIppbreT
-        rAv21MtqJqSZi0VkhTWx3lxU
-X-Google-Smtp-Source: ABdhPJzVadhU9fuvWw/FXRD8koVE9iZfw42dms6L9j95M2lI8vyqCU8PECwigSbABL6F1VjoXc8e7w==
-X-Received: by 2002:a62:820d:0:b029:1ad:d810:6805 with SMTP id w13-20020a62820d0000b02901add8106805mr4008232pfd.63.1609937631165;
-        Wed, 06 Jan 2021 04:53:51 -0800 (PST)
+        bh=4f6Doc0dS1yZ2IXHgqMpKz/2VTxor/Phil/0B11oX0Y=;
+        b=WDwL6AuXlqwbewckqaReL0FIZo4idCwt1RW/KvI89qrcF74TQ86V/62xNw2KZRMy+H
+         P2+nwgaTRqh62OVgowVKAY/aCFLe262veBPTJoaLQNOk8sc01pcsqgYNP3Gb2PhbYp3f
+         UnIU9UPkVVc7DKJiYLWvttwtyZrtA78HfAZdumRPsBBDFphhATQ4PuWbISJm0opfzFk+
+         x9ZKxGxrGLZUoZ8lGw/ozsfhVVVStlGmk6yqHDicUP5xlGECPqZ2lUDKTPFty6bSuHA+
+         yDhk1Pn8dNJtbjIwo9+hWYpmetr9puZtjKZ/i9N97NaQ+te62O0cABmUJZ5Bg9TU8irH
+         VO/w==
+X-Gm-Message-State: AOAM531aPTK7x/1JrCqhMmpokSQO1S82aB/MEjIHOT3Un/JqGfEOGFoP
+        ajD4jr4C1C813mdqjU9onBYIiaTAEa/X
+X-Google-Smtp-Source: ABdhPJyA4ZkYo24CYbsSb6qaA4OoCqoFwuBn5LIFRriPQvm2Tlg780GJPG2TcOPUZVhtQy1EAoKXvA==
+X-Received: by 2002:a17:90a:8c87:: with SMTP id b7mr4289488pjo.158.1609937635598;
+        Wed, 06 Jan 2021 04:53:55 -0800 (PST)
 Received: from localhost.localdomain ([2409:4072:6102:e7a2:51f0:bf72:bf80:ec88])
-        by smtp.gmail.com with ESMTPSA id n128sm2918182pga.55.2021.01.06.04.53.47
+        by smtp.gmail.com with ESMTPSA id n128sm2918182pga.55.2021.01.06.04.53.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Jan 2021 04:53:50 -0800 (PST)
+        Wed, 06 Jan 2021 04:53:55 -0800 (PST)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     agross@kernel.org, bjorn.andersson@linaro.org
 Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH v3 03/18] dt-bindings: mmc: sdhci-msm: Document the SDX55 compatible
-Date:   Wed,  6 Jan 2021 18:23:07 +0530
-Message-Id: <20210106125322.61840-4-manivannan.sadhasivam@linaro.org>
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v3 04/18] ARM: dts: qcom: sdx55: Add support for SDHCI controller
+Date:   Wed,  6 Jan 2021 18:23:08 +0530
+Message-Id: <20210106125322.61840-5-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20210106125322.61840-1-manivannan.sadhasivam@linaro.org>
 References: <20210106125322.61840-1-manivannan.sadhasivam@linaro.org>
@@ -66,36 +64,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SDHCI controller on SDX55 is based on MSM SDHCI v5 IP. Hence,
-document the compatible with "qcom,sdhci-msm-v5" as the fallback.
-While at it, let's also sort the compatibles in ascending order.
+Add devicetree support for SDHCI controller found in Qualcomm SDX55
+platform. The SDHCI controller is based on the MSM SDHCI v5 IP.
+Hence, the support is added by reusing the existing sdhci driver with
+"qcom,sdhci-msm-v5" as the fallback.
 
-Cc: Rob Herring <robh+dt@kernel.org>
-Cc: devicetree@vger.kernel.org
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
 ---
- Documentation/devicetree/bindings/mmc/sdhci-msm.txt | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/qcom-sdx55.dtsi | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-index 3b602fd6180b..9fa8a24fbc97 100644
---- a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-+++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-@@ -17,10 +17,11 @@ Required properties:
- 		"qcom,msm8916-sdhci", "qcom,sdhci-msm-v4"
- 		"qcom,msm8992-sdhci", "qcom,sdhci-msm-v4"
- 		"qcom,msm8996-sdhci", "qcom,sdhci-msm-v4"
--		"qcom,sm8250-sdhci", "qcom,sdhci-msm-v5"
--		"qcom,sdm845-sdhci", "qcom,sdhci-msm-v5"
- 		"qcom,qcs404-sdhci", "qcom,sdhci-msm-v5"
- 		"qcom,sc7180-sdhci", "qcom,sdhci-msm-v5";
-+		"qcom,sdm845-sdhci", "qcom,sdhci-msm-v5"
-+		"qcom,sdx55-sdhci", "qcom,sdhci-msm-v5";
-+		"qcom,sm8250-sdhci", "qcom,sdhci-msm-v5"
- 	NOTE that some old device tree files may be floating around that only
- 	have the string "qcom,sdhci-msm-v4" without the SoC compatible string
- 	but doing that should be considered a deprecated practice.
+diff --git a/arch/arm/boot/dts/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom-sdx55.dtsi
+index 194936064884..8b71f476e5b1 100644
+--- a/arch/arm/boot/dts/qcom-sdx55.dtsi
++++ b/arch/arm/boot/dts/qcom-sdx55.dtsi
+@@ -139,6 +139,18 @@ blsp1_uart3: serial@831000 {
+ 			status = "disabled";
+ 		};
+ 
++		sdhc_1: sdhci@8804000 {
++			compatible = "qcom,sdx55-sdhci", "qcom,sdhci-msm-v5";
++			reg = <0x08804000 0x1000>;
++			interrupts = <GIC_SPI 210 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 227 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "hc_irq", "pwr_irq";
++			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
++				 <&gcc GCC_SDCC1_APPS_CLK>;
++			clock-names = "iface", "core";
++			status = "disabled";
++		};
++
+ 		pdc: interrupt-controller@b210000 {
+ 			compatible = "qcom,sdx55-pdc", "qcom,pdc";
+ 			reg = <0x0b210000 0x30000>;
 -- 
 2.25.1
 
