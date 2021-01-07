@@ -2,156 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A9AE2ECD9E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jan 2021 11:16:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 547F52ECEB6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jan 2021 12:26:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727327AbhAGKQv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jan 2021 05:16:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45134 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726925AbhAGKQu (ORCPT
+        id S1726894AbhAGL0w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jan 2021 06:26:52 -0500
+Received: from m43-15.mailgun.net ([69.72.43.15]:44051 "EHLO
+        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726362AbhAGL0w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jan 2021 05:16:50 -0500
-Received: from mail-ua1-x92a.google.com (mail-ua1-x92a.google.com [IPv6:2607:f8b0:4864:20::92a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4857C0612F8
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Jan 2021 02:16:04 -0800 (PST)
-Received: by mail-ua1-x92a.google.com with SMTP id y21so2091295uag.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Jan 2021 02:16:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nN6dQuyXA1cgqaEtX0AA7VlQcXxY7DKXUbiyQ5ub41M=;
-        b=xxwLJ3IPnOXtSUDE2Gdlx0SJdkSqovTBp91M9E5FKZrmUHw7dCEQpFQ98RF8o+WrNH
-         knhaOrLGzOD18xACwcCw3gdpBpZPNfYkIONNySlqOmnSvz7fovgFMKGIPGEsQYFQnhaI
-         TtXkgMJCLQU51RNodvDwQij/Fvv2ynhYSkqKL1b6JTczfv1/EJfPH2MxEpD5u/JR4jyG
-         OxjGKGtcsRuVnyq5PIrLySxYaoOFSVYUd1PlUvQci7rFzjWQcubgc8kH6ei0IZ8h9AWj
-         DS5Dckqu4klEKtI1eU/AsegRJViuVjJfseycLxpMvEUTJZtpdUVWzWvRbV5EvtCEI03K
-         Yl+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nN6dQuyXA1cgqaEtX0AA7VlQcXxY7DKXUbiyQ5ub41M=;
-        b=GrTMiva74cAFA4d3Rz0EAFOmvaxSXUl+4BgDgGSytnkB6/JeeR4FapR2esOvr0pB64
-         ViSZhe5xnU2D3xxHy/FNSNLs3qC7+V9VhHxnEQoc2HjCAcLOcLHNiVLtT/9zRhpWsOwG
-         anz+P6/JFZTxXq4sLn13pVVtMPlRzI7NlHxy+iG/WRWXB4uF+Kv6+p8/7wJHJ+z0BN38
-         FdQCawH7c/lil0fThtBJcM4ahesfIu+BEVfn03t021ZdrfbUfeSoAI4k8afi8EcwVnlr
-         oQhGNQw92DwfaDJcAMxddhF9wmpDmLTpCpd4NYE8RsGvz6N+epPUT2Z9GBWCcy+jDWJe
-         Qvpw==
-X-Gm-Message-State: AOAM531n9XCF3ykqr26hZhNKa55tOdWk6Y2Fi9oP6dxcuHp5lTMi96ue
-        RmUrJzgmDDoVIZiWicO6p9k24WcG8iScFiTWEFo45A==
-X-Google-Smtp-Source: ABdhPJxu0lBxj9SXRgJDA/FBzEbFglx8xUdGm7WcmhHVlZDFqUon4K67vqgtMxOm7nKooSMq+yMOs6LAlI1VBW6Nbt8=
-X-Received: by 2002:ab0:78d:: with SMTP id c13mr6731978uaf.129.1610014563793;
- Thu, 07 Jan 2021 02:16:03 -0800 (PST)
+        Thu, 7 Jan 2021 06:26:52 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1610018790; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=SVp3EE48Z37VWqjMxRrDG8VYW88ikDNyzR8RzMIITUQ=; b=FK9yQ7pxgeErk7rcmisJOLelQ6wqOwRPL2/7Oqazs/2zC9MfOLS0b+fvnjJPDCzBABUUcqcl
+ NtLKKyYZlgQHbaoKuoy6n6u7UD3M2koxqGaWxCZICSXPx/WMbB1bgg1596MZVqqtNLdPLCPY
+ u/ygXewFi0c7TagOX/YhITzFUbM=
+X-Mailgun-Sending-Ip: 69.72.43.15
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 5ff6efcb661021aa28898a65 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 07 Jan 2021 11:26:03
+ GMT
+Sender: mkshah=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id BAF1FC43463; Thu,  7 Jan 2021 11:26:03 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.2 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [192.168.29.129] (unknown [49.36.65.173])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 67142C433CA;
+        Thu,  7 Jan 2021 11:25:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 67142C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=mkshah@codeaurora.org
+Subject: Re: [PATCH 3/3] soc: qcom: rpmh: Conditionally check
+ lockdep_assert_irqs_disabled()
+To:     Stephen Boyd <sboyd@kernel.org>, andy.gross@linaro.org,
+        bjorn.andersson@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        tkjos@google.com, dianders@chromium.org, ilina@codeaurora.org,
+        lsrao@codeaurora.org
+References: <1606385898-8609-1-git-send-email-mkshah@codeaurora.org>
+ <1606385898-8609-4-git-send-email-mkshah@codeaurora.org>
+ <160697890733.2717324.809961029114008005@swboyd.mtv.corp.google.com>
+From:   Maulik Shah <mkshah@codeaurora.org>
+Message-ID: <3a04025d-db94-4dfc-b056-b586c9136ca9@codeaurora.org>
+Date:   Thu, 7 Jan 2021 16:55:56 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-References: <20201112194011.103774-1-ebiggers@kernel.org> <X7gQ9Y44iIgkiM64@sol.localdomain>
- <CAPDyKFrXtqqj3RXJ4m666e_danpp2neRD_M+FCaMWPC+Ow2jsA@mail.gmail.com> <X/N+ouEtmMPYT0Qa@sol.localdomain>
-In-Reply-To: <X/N+ouEtmMPYT0Qa@sol.localdomain>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 7 Jan 2021 11:15:26 +0100
-Message-ID: <CAPDyKFpjwen156VyR8HTLb579Npr=ocT8RGBcZb-i82bfi1gwQ@mail.gmail.com>
-Subject: Re: [PATCH 0/8] eMMC inline encryption support
-To:     Eric Biggers <ebiggers@kernel.org>
-Cc:     "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>, linux-fscrypt@vger.kernel.org,
-        Satya Tangirala <satyat@google.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Ritesh Harjani <riteshh@codeaurora.org>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Neeraj Soni <neersoni@codeaurora.org>,
-        Barani Muthukumaran <bmuthuku@codeaurora.org>,
-        Peng Zhou <peng.zhou@mediatek.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Konrad Dybcio <konradybcio@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <160697890733.2717324.809961029114008005@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 4 Jan 2021 at 21:46, Eric Biggers <ebiggers@kernel.org> wrote:
+Hi Stephen,
+
+On 12/3/2020 12:31 PM, Stephen Boyd wrote:
+> Quoting Maulik Shah (2020-11-26 02:18:18)
+>> lockdep_assert_irqs_disabled() was added to check rpmh_flush()
+>> can only be invoked when irqs are disabled, this is true for
+>> APPS RSC as the last CPU going to deepest low power mode is
+>> writing sleep and wake TCSes.
+>>
+>> However for RSCs that support solver mode, drivers can invoke
+>> rpmh_write_sleep_and_wake() to immediately write cached sleep
+>> and wake sets to TCSes from any CPU. Conditionally check if RSC
+>> controller supports 'HW solver' mode then do not check for irqs
+>> disabled as such RSCs can write sleepand wake TCSes at any point.
+>>
+>> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+>> ---
+>>   drivers/soc/qcom/rpmh-internal.h |  5 +++++
+>>   drivers/soc/qcom/rpmh-rsc.c      |  3 +++
+>>   drivers/soc/qcom/rpmh.c          | 26 ++++++++++++++++++++++----
+>>   3 files changed, 30 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/soc/qcom/rpmh-internal.h b/drivers/soc/qcom/rpmh-internal.h
+>> index 79486d6..39fa3c5 100644
+>> --- a/drivers/soc/qcom/rpmh-internal.h
+>> +++ b/drivers/soc/qcom/rpmh-internal.h
+>> @@ -17,6 +17,9 @@
+>>   #define MAX_TCS_NR                     (MAX_TCS_PER_TYPE * TCS_TYPE_NR)
+>>   #define MAX_TCS_SLOTS                  (MAX_CMDS_PER_TCS * MAX_TCS_PER_TYPE)
+>>   
+>> +/* CTRLR specific flags */
+>> +#define SOLVER_PRESENT                 1
+>> +
+>>   struct rsc_drv;
+>>   
+>>   /**
+>> @@ -78,6 +81,7 @@ struct rpmh_request {
+>>    * @cache_lock: synchronize access to the cache data
+>>    * @dirty: was the cache updated since flush
+>>    * @in_solver_mode: Controller is busy in solver mode
+>> + * @flags: Controller specific flags
+>>    * @batch_cache: Cache sleep and wake requests sent as batch
+>>    */
+>>   struct rpmh_ctrlr {
+>> @@ -85,6 +89,7 @@ struct rpmh_ctrlr {
+>>          spinlock_t cache_lock;
+>>          bool dirty;
+>>          bool in_solver_mode;
+>> +       u32 flags;
+> Maybe unsigned long is more appropriate? Do we rely on 32-bits vs.
+> 64-bits?
+We don't rely on 32-bits vs. 64-bits, u32 should be fine.
 >
-> On Wed, Nov 25, 2020 at 10:56:42AM +0100, Ulf Hansson wrote:
-> > On Fri, 20 Nov 2020 at 19:54, Eric Biggers <ebiggers@kernel.org> wrote:
-> > >
-> > > On Thu, Nov 12, 2020 at 11:40:03AM -0800, Eric Biggers wrote:
-> > > > Hello,
-> > > >
-> > > > This patchset adds support for eMMC inline encryption, as specified by
-> > > > the upcoming version of the eMMC specification and as already
-> > > > implemented and used on many devices.  Building on that, it then adds
-> > > > Qualcomm ICE support and wires it up for the Snapdragon 630 SoC.
-> > > >
-> > > > Inline encryption hardware improves the performance of storage
-> > > > encryption and reduces power usage.  See
-> > > > Documentation/block/inline-encryption.rst for more information about
-> > > > inline encryption and the blk-crypto framework (upstreamed in v5.8)
-> > > > which supports it.  Most mobile devices already use UFS or eMMC inline
-> > > > encryption hardware; UFS support was already upstreamed in v5.9.
-> > > >
-> > > > Patches 1-3 add support for the standard eMMC inline encryption.
-> > > >
-> > > > However, as with UFS, host controller-specific patches are needed on top
-> > > > of the standard support.  Therefore, patches 4-8 add Qualcomm ICE
-> > > > (Inline Crypto Engine) support and wire it up on the Snapdragon 630 SoC.
-> > > >
-> > > > To test this I took advantage of the recently upstreamed support for the
-> > > > Snapdragon 630 SoC, plus work-in-progress patches from the SoMainline
-> > > > project (https://github.com/SoMainline/linux/tree/konrad/v5.10-rc3).  In
-> > > > particular, I was able to run the fscrypt xfstests for ext4 and f2fs in
-> > > > a Debian chroot.  Among other things, these tests verified that the
-> > > > correct ciphertext is written to disk (the same as software encryption).
-> > > >
-> > > > It will also be possible to add support for Mediatek eMMC inline
-> > > > encryption hardware in mtk-sd, and it should be easier than the Qualcomm
-> > > > hardware since the Mediatek hardware follows the standard more closely.
-> > > > I.e., patches 1-3 should be almost enough for the Mediatek hardware.
-> > > > However, I don't have the hardware to do this yet.
-> > > >
-> > > > This patchset is based on v5.10-rc3, and it can also be retrieved from
-> > > > tag "mmc-crypto-v1" of
-> > > > https://git.kernel.org/pub/scm/linux/kernel/git/ebiggers/linux.git
-> > > >
-> > > > Note: the fscrypt inline encryption support is partially broken in
-> > > > v5.10-rc3, so for testing a fscrypt fix needs to be applied too:
-> > > > https://lkml.kernel.org/r/20201111015224.303073-1-ebiggers@kernel.org
-> > > >
-> > > > Eric Biggers (8):
-> > > >   mmc: add basic support for inline encryption
-> > > >   mmc: cqhci: rename cqhci.c to cqhci-core.c
-> > > >   mmc: cqhci: add support for inline encryption
-> > > >   mmc: cqhci: add cqhci_host_ops::program_key
-> > > >   firmware: qcom_scm: update comment for ICE-related functions
-> > > >   dt-bindings: mmc: sdhci-msm: add ICE registers and clock
-> > > >   arm64: dts: qcom: sdm630: add ICE registers and clocks
-> > > >   mmc: sdhci-msm: add Inline Crypto Engine support
-> > >
-> > > Any comments on this patchset?
-> >
-> > I have been busy, but just wanted to let you know that I am moving to
-> > start reviewing this series shortly.
-> >
-> > I also need to catch up on the eMMC spec a bit, before I can provide
-> > you with comments.
-> >
-> > Kind regards
-> > Uffe
+>>          struct list_head batch_cache;
+>>   };
+>>   
+>> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+>> index ffb4ca7..4caaddf 100644
+>> --- a/drivers/soc/qcom/rpmh-rsc.c
+>> +++ b/drivers/soc/qcom/rpmh-rsc.c
+>> @@ -1031,6 +1031,9 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
+>>          if (!solver_config) {
+>>                  drv->rsc_pm.notifier_call = rpmh_rsc_cpu_pm_callback;
+>>                  cpu_pm_register_notifier(&drv->rsc_pm);
+>> +               drv->client.flags &= ~SOLVER_PRESENT;
+>> +       } else {
+>> +               drv->client.flags |= SOLVER_PRESENT;
+> It looks like this could be tested by checking for
+> drv->rsc_pm.notifier_call being non-NULL?
+It may for now, but going forward we may have different flags to 
+indicate various functions supported by RSC.
 >
-> Ulf, are you still planning to review this patchset?  I just sent out v4 of this
-> patchset based on v5.11-rc2, but not a lot has changed from previous versions,
-> since people have generally seemed happy with it.  Any chance that you will
-> apply it for 5.12?  Thanks!
+>>          }
+>>   
+>>          /* Enable the active TCS to send requests immediately */
+>> diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
+>> index 725b8f0..604d511 100644
+>> --- a/drivers/soc/qcom/rpmh.c
+>> +++ b/drivers/soc/qcom/rpmh.c
+>> @@ -83,6 +83,9 @@ static int check_ctrlr_state(struct rpmh_ctrlr *ctrlr, enum rpmh_state state)
+>>          if (state != RPMH_ACTIVE_ONLY_STATE)
+>>                  return ret;
+>>   
+>> +       if (!(ctrlr->flags & SOLVER_PRESENT))
+>> +               return ret;
+>> +
+>>          /* Do not allow sending active votes when in solver mode */
+>>          spin_lock(&ctrlr->cache_lock);
+>>          if (ctrlr->in_solver_mode)
+>> @@ -468,12 +471,24 @@ int rpmh_flush(struct rpmh_ctrlr *ctrlr)
+>>          struct cache_req *p;
+>>          int ret = 0;
+>>   
+>> -       lockdep_assert_irqs_disabled();
+>> +       /*
+>> +        * For RSC that don't have solver mode,
+>> +        * rpmh_flush() is only called when we think we're running
+>> +        * on the last CPU with irqs_disabled.
+>> +        *
+>> +        * For RSC that have solver mode,
+>> +        * rpmh_flush() can be invoked with irqs enabled by any CPU.
+>> +        *
+>> +        * Conditionally check for irqs_disabled only when solver mode
+>> +        * is not available.
+>> +        */
+>> +
+>> +       if (!(ctrlr->flags & SOLVER_PRESENT))
+>> +               lockdep_assert_irqs_disabled();
+> Can we have a different function that is called for the case where
+> solver mode is present and where solver mode isn't present? It would be
+> good to clearly show that rpmh_flush() thinks it is being called from
+> the last CPU vs. from some other random place because the code is
+> assuming solver vs. non-solver enabled state. It would be clearer from
+> the call site too.
+Hmm, we can. Patch 2 of this series already added different function 
+which will be called where solver is present.
+Let me modify this to indicate whether called from last cpu or not.
 
-My apologies for the delay. I certainly appreciate the review that's
-been done by people and I intend to have a look myself within the
-coming week.
+Thanks,
+Maulik
 
-I definitely think it should be possible to get this queued for v5.12,
-unless I find some very weird things, which I doubt.
+>
+>>   
+>>          /*
+>> -        * Currently rpmh_flush() is only called when we think we're running
+>> -        * on the last processor.  If the lock is busy it means another
+>> -        * processor is up and it's better to abort than spin.
+>> +        * If the lock is busy it means another transaction is on going,
+>> +        * in such case it's better to abort than spin.
+>>           */
+>>          if (!spin_trylock(&ctrlr->cache_lock))
+>>                  return -EBUSY;
 
-Kind regards
-Uffe
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+
