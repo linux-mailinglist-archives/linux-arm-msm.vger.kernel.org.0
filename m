@@ -2,118 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 29BBE2EC84C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jan 2021 03:48:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DD7932EC99B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jan 2021 05:51:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726735AbhAGCqL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jan 2021 21:46:11 -0500
-Received: from m43-15.mailgun.net ([69.72.43.15]:39457 "EHLO
-        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726293AbhAGCqL (ORCPT
+        id S1726742AbhAGEvQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jan 2021 23:51:16 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:20713 "EHLO
+        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726705AbhAGEvQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jan 2021 21:46:11 -0500
+        Wed, 6 Jan 2021 23:51:16 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1609987552; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=iYm4bQqq8yAWThmxKgok8rq1h6/g/rQwkJSBuc3fKWw=; b=Fg6mbz6Nm7BxqrIg0lOHQMh4yct5r42W8vLMWKpNTh9d3McOmst+VQtz2igSMSkdyxNWM5NQ
- YddBFkKc0cREpk5NXm2PBJo7kmDycmVw+9sqt1eOXRA4Wzn+2PqASFTl9KVk2fC2SDs7nsZq
- cKlYU5f8Hi05Bn9bRIOo6T2/t1k=
-X-Mailgun-Sending-Ip: 69.72.43.15
+ s=smtp; t=1609995051; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=/idK/qn/qYwK24YxIeFblcenK6sv0rtJO1umkF2y1L0=;
+ b=riUeGWZC5LG1kx/v5tS7vc/BIfLgKldeaKWBOm+FHaeIf9VPgBeLG4/jWUg85Wh88OC6Zv6h
+ nisz2YSakgc3tPEhq+UwtC1z2oc62e+7iJ5lxNu6OVjCc2jB6E0EBdXjCNIDSkyj67Wv4+Tu
+ mTP+6q8sZWp04F87+SISwUuKh5w=
+X-Mailgun-Sending-Ip: 198.61.254.31
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n10.prod.us-west-2.postgun.com with SMTP id
- 5ff675bbb00f200123764c88 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 07 Jan 2021 02:45:15
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 5ff69308661021aa28e06231 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 07 Jan 2021 04:50:16
  GMT
-Sender: hemantk=codeaurora.org@mg.codeaurora.org
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1D8E3C433CA; Thu,  7 Jan 2021 02:45:15 +0000 (UTC)
+        id 7FD9DC43468; Thu,  7 Jan 2021 04:50:16 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.1 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6F308C43462;
-        Thu,  7 Jan 2021 02:45:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6F308C43462
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
-Subject: Re: [PATCH] mhi: core: Factorize mhi queuing
-To:     Loic Poulain <loic.poulain@linaro.org>,
-        manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org
-References: <1607599892-6229-1-git-send-email-loic.poulain@linaro.org>
-From:   Hemant Kumar <hemantk@codeaurora.org>
-Message-ID: <a6f80ba7-928c-1577-ddbf-9ec58241d77e@codeaurora.org>
-Date:   Wed, 6 Jan 2021 18:45:13 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 12866C433CA;
+        Thu,  7 Jan 2021 04:50:14 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <1607599892-6229-1-git-send-email-loic.poulain@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Thu, 07 Jan 2021 10:20:14 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Dave Airlie <airlied@redhat.com>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm: Only enable A6xx LLCC code on A6xx
+In-Reply-To: <20210104193044.80591-1-konrad.dybcio@somainline.org>
+References: <20210104193044.80591-1-konrad.dybcio@somainline.org>
+Message-ID: <8847b190c9d03afd731881689d9b28d3@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Loic,
-
-On 12/10/20 3:31 AM, Loic Poulain wrote:
-> Instead of duplicating queuing procedure in mhi_queue_dma(),
-> mhi_queue_buf() and mhi_queue_skb(), add a new generic mhi_queue()
-> as common helper.
+On 2021-01-05 01:00, Konrad Dybcio wrote:
+> Using this code on A5xx (and probably older too) causes a
+> smmu bug.
 > 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> Fixes: 474dadb8b0d5 ("drm/msm/a6xx: Add support for using system 
+> cache(LLC)")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> Tested-by: AngeloGioacchino Del Regno 
+> <angelogioacchino.delregno@somainline.org>
 > ---
->   drivers/bus/mhi/core/main.c | 160 +++++++++++---------------------------------
->   1 file changed, 38 insertions(+), 122 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> index 3871ef0..4fa4c88 100644
-> --- a/drivers/bus/mhi/core/main.c
-> +++ b/drivers/bus/mhi/core/main.c
-> @@ -963,118 +963,78 @@ static bool mhi_is_ring_full(struct mhi_controller *mhi_cntrl,
->   	return (tmp == ring->rp);
->   }
->   
-> -int mhi_queue_skb(struct mhi_device *mhi_dev, enum dma_data_direction dir,
-> -		  struct sk_buff *skb, size_t len, enum mhi_flags mflags)
-> +static int mhi_queue(struct mhi_device *mhi_dev, struct mhi_buf_info *buf_info,
-> +		     enum dma_data_direction dir, enum mhi_flags mflags)
->   {
->   	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
->   	struct mhi_chan *mhi_chan = (dir == DMA_TO_DEVICE) ? mhi_dev->ul_chan :
->   							     mhi_dev->dl_chan;
->   	struct mhi_ring *tre_ring = &mhi_chan->tre_ring;
-> -	struct mhi_buf_info buf_info = { };
-> +	unsigned long flags;
->   	int ret;
->   
-> -	/* If MHI host pre-allocates buffers then client drivers cannot queue */
-> -	if (mhi_chan->pre_alloc)
-Are we getting rid of auto_queue ?
-> -		return -EINVAL;
-> +	if (unlikely(MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)))
-> +		return -EIO;
->   
-> -	if (mhi_is_ring_full(mhi_cntrl, tre_ring))
-> -		return -ENOMEM;
-> +	read_lock_irqsave(&mhi_cntrl->pm_lock, flags);
-This is something used in mhi_queue_buf and rest of the (_skb, _dma) 
-used read_lock_bh. I see that now you are making it a re-interant as you
-identified before :) So irq ver is disabling irq on the core this code 
-is running and disabling preemption, where as bh ver is preemptiable. Is 
-that the reason you chose irq instead of bh ?
-[..]
 
-Thanks,
-Hemant
+Reviewed-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 21 ++++++++++++---------
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h |  5 +++++
+>  2 files changed, 17 insertions(+), 9 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> index 6cf9975e951e..f09175698827 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> @@ -191,8 +191,6 @@ adreno_iommu_create_address_space(struct msm_gpu 
+> *gpu,
+>  		struct platform_device *pdev)
+>  {
+>  	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+> -	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+> -	struct io_pgtable_domain_attr pgtbl_cfg;
+>  	struct iommu_domain *iommu;
+>  	struct msm_mmu *mmu;
+>  	struct msm_gem_address_space *aspace;
+> @@ -202,13 +200,18 @@ adreno_iommu_create_address_space(struct msm_gpu 
+> *gpu,
+>  	if (!iommu)
+>  		return NULL;
+> 
+> -	/*
+> -	 * This allows GPU to set the bus attributes required to use system
+> -	 * cache on behalf of the iommu page table walker.
+> -	 */
+> -	if (!IS_ERR(a6xx_gpu->htw_llc_slice)) {
+> -		pgtbl_cfg.quirks = IO_PGTABLE_QUIRK_ARM_OUTER_WBWA;
+> -		iommu_domain_set_attr(iommu, DOMAIN_ATTR_IO_PGTABLE_CFG, 
+> &pgtbl_cfg);
+> +
+> +	if (adreno_is_a6xx(adreno_gpu)) {
+> +		struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+> +		struct io_pgtable_domain_attr pgtbl_cfg;
+> +		/*
+> +		* This allows GPU to set the bus attributes required to use system
+> +		* cache on behalf of the iommu page table walker.
+> +		*/
+> +		if (!IS_ERR(a6xx_gpu->htw_llc_slice)) {
+> +			pgtbl_cfg.quirks = IO_PGTABLE_QUIRK_ARM_OUTER_WBWA;
+> +			iommu_domain_set_attr(iommu, DOMAIN_ATTR_IO_PGTABLE_CFG, 
+> &pgtbl_cfg);
+> +		}
+>  	}
+> 
+>  	mmu = msm_iommu_new(&pdev->dev, iommu);
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> index 4574d85c5680..08421fa54a50 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> @@ -226,6 +226,11 @@ static inline int adreno_is_a540(struct adreno_gpu 
+> *gpu)
+>  	return gpu->revn == 540;
+>  }
+> 
+> +static inline bool adreno_is_a6xx(struct adreno_gpu *gpu)
+> +{
+> +	return ((gpu->revn < 700 && gpu->revn > 599));
+> +}
+> +
+>  static inline int adreno_is_a618(struct adreno_gpu *gpu)
+>  {
+>         return gpu->revn == 618;
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
