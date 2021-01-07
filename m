@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 267BB2EE9B7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 00:26:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 628B22EE9C3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 00:33:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728416AbhAGXZp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jan 2021 18:25:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55780 "EHLO
+        id S1727939AbhAGXbi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jan 2021 18:31:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727669AbhAGXZp (ORCPT
+        with ESMTP id S1727669AbhAGXbi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jan 2021 18:25:45 -0500
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC19AC0612F4
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Jan 2021 15:25:04 -0800 (PST)
-Received: by mail-oi1-x22a.google.com with SMTP id 15so9343982oix.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Jan 2021 15:25:04 -0800 (PST)
+        Thu, 7 Jan 2021 18:31:38 -0500
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C2EDC0612F4
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Jan 2021 15:30:58 -0800 (PST)
+Received: by mail-ot1-x32a.google.com with SMTP id d8so8022183otq.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Jan 2021 15:30:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=RmUdLzxmBg4D1mwGM7vnFOB690lMNeSwn4LSD0odzp4=;
-        b=u+W01yvGhDD172Y2qwGyv/tjdI8yPhKDNyownkKPjoqaM0jVqd2JmuoTJdTzirGDfc
-         peK7Dv1eHLmsql4lu3BxkQ8pG1s3Go/Ns4PlyQjR7nL8ua5f2QinaORu3wVdgtebOpOa
-         w0n/njIz9+BqWxs+En+aOGtfDdlTxU89aMRBzb9kbSdeuzlS4eP33RSFi51B7KgGbSV+
-         1wd6eHRpLjt/CPrMlcmEU1XgrYAbrXb1PsS21MxhH4FUUPnaOKRrFTTFUBY/amQHo7aI
-         yU3RVhg2pyKjw/AzWG5//3C3m65NcBLxESU6u73M9/m0Ku9PoAmkSBx9sU8u0QuNg4gl
-         1ocA==
+        bh=KsP/yoJjwDCMt7N2rFKs08bZNh7p5m4IePfBuVMv1Fs=;
+        b=JMHZY2LmE3U+Oohdp9zbT3pJlzo/L+Gjx1fUWP5xcs9Ot+CCkqKZplP26oMXqVqxzx
+         zy4fTwkzEjfVpNHZZ74GnSJfUDBgdz2cvvuQTTW6pm7UPI9bUAyS2bY9BkSkkcXZDAL+
+         p1tMDufQEy17xMcRWIMGmvFr7ePDIBrWZKpIXXl72tr7xu0fsdL5Ek/DnRKoYf2GhkjC
+         qLmEDKI9rxLz13W0WQiP2XeCtb4rrUyEz08If4T1wCYd7pTLkKFVPQwSj34BSqQ3XJpf
+         r1CPwZMRevWiOKu89FAUnu/tkWazEbmt2hlzLI+ZAjQbgVW5Cf19RMdwNz2LBvi8PssG
+         U5Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=RmUdLzxmBg4D1mwGM7vnFOB690lMNeSwn4LSD0odzp4=;
-        b=jPgvxXXSvEM5nqbbR8sTs89hmkvoS//yvfdv7IUdIKVqNFizqMCMg3JXw7io+H4e6v
-         WyCIX4Ewl4pYb9EaLfEidxwIqg8lgn0vhHpC8QzU63Orq1tQVGUKKI19X2bL1pxhwyeE
-         j/T2+87ivEwayGuIT8xtkCNJEdafECCTMoxVuzcb75tHqi19F+BwDMHWvZdSpFj7DtHs
-         5E6kPPtpnHcOg4ydRZaxGHRZd5TwjKWhwuDgg3DPhMIYzaQ+Eopvcnx3+WUTxCD6d9Ti
-         Z+XeYkyS+SMUByWSHgmgkoy8ZiVf7TMtM8coXsAA9Mn0jPMLOwJmbj6XjDNDFL1eh66/
-         ft2Q==
-X-Gm-Message-State: AOAM531zGOENPL9nktoKVOfG+vSNM3n20CVTQ+s4HA+A2d2qYEz0wbjo
-        HTW9LrJyn6B2fxA8qfikG6pbXw==
-X-Google-Smtp-Source: ABdhPJxthYbGUuE7fBxZhHvfSlR36ln95ZMgaKKKJiu/HRQooSm17t8kbBC4uHLIQplvnLyixudKsw==
-X-Received: by 2002:aca:fd0d:: with SMTP id b13mr610040oii.27.1610061904161;
-        Thu, 07 Jan 2021 15:25:04 -0800 (PST)
+        bh=KsP/yoJjwDCMt7N2rFKs08bZNh7p5m4IePfBuVMv1Fs=;
+        b=Z8Q4Xh7G9Wqpr09yys6HDj179kkAYODopTBShGbhFVgQKbrtqx0wQqJSeAcG3mrQmk
+         5N0StQ9I5ryFhq1PWqq4HrvazEZJQUQzuVGcT0frZLHwql5frnXpALItSHE7QuEEJ7eY
+         GXfZdpMipuJYY6+6MhPClejhj4wLeH3Wvpt2Mwi7wfhfom8Z1jE2z3zBe++JdwFhmMCV
+         BWYBPyvB45e9IhnL2mh3XfNVUfrPw9V7Nyzm1yErcC5j2QRhPJ1ggYt4+3a77NLheZvS
+         E5VchXJtZlur/Mt8o0rkfg92JV77/kPvOXs61F7koiedYIkxkDcMbcaQK4jAfXD4tgOE
+         x5Cw==
+X-Gm-Message-State: AOAM533ZudftAE8QpKrFoh9PvaCOhQ6F1dn+90Nr9TwaeIFdXXImd+Gf
+        rkP9Q18UHXS7WTo22g/GVJdJew==
+X-Google-Smtp-Source: ABdhPJyLfV5VsSmmOLGSgMJjrcfxNNsl0wmiMIgY4VzYX2JpE2QDBEj+cGZZN+a/m4o8u/ID2cr3NA==
+X-Received: by 2002:a9d:208a:: with SMTP id x10mr656889ota.260.1610062257343;
+        Thu, 07 Jan 2021 15:30:57 -0800 (PST)
 Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id a22sm1408284otr.75.2021.01.07.15.25.03
+        by smtp.gmail.com with ESMTPSA id t24sm1425945oou.4.2021.01.07.15.30.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Jan 2021 15:25:03 -0800 (PST)
+        Thu, 07 Jan 2021 15:30:56 -0800 (PST)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Siddharth Gupta <sidgup@codeaurora.org>
 Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] soc: qcom: mdt_loader: Detect truncated read of segments
-Date:   Thu,  7 Jan 2021 15:25:26 -0800
-Message-Id: <20210107232526.716989-1-bjorn.andersson@linaro.org>
+Subject: [PATCH] soc: qcom: mdt_loader: Validate that p_filesz < p_memsz
+Date:   Thu,  7 Jan 2021 15:31:19 -0800
+Message-Id: <20210107233119.717173-1-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -63,38 +63,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Given that no validation of how much data the firmware loader read in
-for a given segment truncated segment files would best case result in a
-hash verification failure, without any indication of what went wrong.
+The code validates that segments of p_memsz bytes of a segment will fit
+in the provided memory region, but does not validate that p_filesz bytes
+will, which means that an incorrectly crafted ELF header might write
+beyond the provided memory region.
 
-Improve this by validating that the firmware loader did return the
-amount of data requested.
-
-Fixes: 445c2410a449 ("soc: qcom: mdt_loader: Use request_firmware_into_buf()")
+Fixes: 051fb70fd4ea ("remoteproc: qcom: Driver for the self-authenticating Hexagon v5")
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
  drivers/soc/qcom/mdt_loader.c | 8 ++++++++
  1 file changed, 8 insertions(+)
 
 diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
-index 24cd193dec55..e01d18e9ad2b 100644
+index e01d18e9ad2b..5180b5996830 100644
 --- a/drivers/soc/qcom/mdt_loader.c
 +++ b/drivers/soc/qcom/mdt_loader.c
-@@ -253,6 +253,14 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
- 				break;
- 			}
- 
-+			if (seg_fw->size != phdr->p_filesz) {
-+				dev_err(dev,
-+					"failed to load segment %d from truncated file %s\n",
-+					i, fw_name);
-+				ret = -EINVAL;
-+				break;
-+			}
-+
- 			release_firmware(seg_fw);
+@@ -230,6 +230,14 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
+ 			break;
  		}
  
++		if (phdr->p_filesz > phdr->p_memsz) {
++			dev_err(dev,
++				"refusing to load segment %d with p_filesz > p_memsz\n",
++				i);
++			ret = -EINVAL;
++			break;
++		}
++
+ 		ptr = mem_region + offset;
+ 
+ 		if (phdr->p_filesz && phdr->p_offset < fw->size) {
 -- 
 2.29.2
 
