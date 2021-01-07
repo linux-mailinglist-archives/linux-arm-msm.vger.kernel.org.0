@@ -2,34 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DD7932EC99B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jan 2021 05:51:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 285112ECA89
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jan 2021 07:36:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726742AbhAGEvQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jan 2021 23:51:16 -0500
-Received: from so254-31.mailgun.net ([198.61.254.31]:20713 "EHLO
-        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726705AbhAGEvQ (ORCPT
+        id S1725821AbhAGGgK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jan 2021 01:36:10 -0500
+Received: from m43-15.mailgun.net ([69.72.43.15]:63624 "EHLO
+        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725306AbhAGGgI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jan 2021 23:51:16 -0500
+        Thu, 7 Jan 2021 01:36:08 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1609995051; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1610001344; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=/idK/qn/qYwK24YxIeFblcenK6sv0rtJO1umkF2y1L0=;
- b=riUeGWZC5LG1kx/v5tS7vc/BIfLgKldeaKWBOm+FHaeIf9VPgBeLG4/jWUg85Wh88OC6Zv6h
- nisz2YSakgc3tPEhq+UwtC1z2oc62e+7iJ5lxNu6OVjCc2jB6E0EBdXjCNIDSkyj67Wv4+Tu
- mTP+6q8sZWp04F87+SISwUuKh5w=
-X-Mailgun-Sending-Ip: 198.61.254.31
+ MIME-Version: Sender; bh=zaE4+TJQvH3SFoKXVDoAMLGGx6TuByIHlqy6fvPhicY=;
+ b=b2JKhaTVOoxe/JkgZe44wlPESIckT3clBXamHz/JZrXfIG0sDXpQhKfCZ6CjqqKZYoqmab3t
+ Uj8/xpK4NjpjXjHZBawGiJJLWGmdAj1GLGQGmsCkux3bfBlVjrL/5QLnC4s8mydLL0g85qUM
+ 8VKc1rF4hZpUYvhzx+rrIp0IPnQ=
+X-Mailgun-Sending-Ip: 69.72.43.15
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 5ff69308661021aa28e06231 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 07 Jan 2021 04:50:16
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 5ff6aba5fc3778927efec518 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 07 Jan 2021 06:35:17
  GMT
 Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7FD9DC43468; Thu,  7 Jan 2021 04:50:16 +0000 (UTC)
+        id D0492C43464; Thu,  7 Jan 2021 06:35:16 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -39,119 +39,122 @@ Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 12866C433CA;
-        Thu,  7 Jan 2021 04:50:14 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CEEB5C433C6;
+        Thu,  7 Jan 2021 06:35:15 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Thu, 07 Jan 2021 10:20:14 +0530
+Date:   Thu, 07 Jan 2021 12:05:15 +0530
 From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
+To:     Will Deacon <will@kernel.org>
+Cc:     Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
         Jordan Crouse <jcrouse@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Dave Airlie <airlied@redhat.com>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm: Only enable A6xx LLCC code on A6xx
-In-Reply-To: <20210104193044.80591-1-konrad.dybcio@somainline.org>
-References: <20210104193044.80591-1-konrad.dybcio@somainline.org>
-Message-ID: <8847b190c9d03afd731881689d9b28d3@codeaurora.org>
+        Rob Clark <robdclark@gmail.com>,
+        Akhil P Oommen <akhilpo@codeaurora.org>
+Subject: Re: [PATCH] iommu/io-pgtable-arm: Allow non-coherent masters to use
+ system cache
+In-Reply-To: <20210106115615.GA1763@willie-the-truck>
+References: <20201224064007.2339-1-saiprakash.ranjan@codeaurora.org>
+ <20210106115615.GA1763@willie-the-truck>
+Message-ID: <ce8981988c84ccb015ea04fc439e8949@codeaurora.org>
 X-Sender: saiprakash.ranjan@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-01-05 01:00, Konrad Dybcio wrote:
-> Using this code on A5xx (and probably older too) causes a
-> smmu bug.
-> 
-> Fixes: 474dadb8b0d5 ("drm/msm/a6xx: Add support for using system 
-> cache(LLC)")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> Tested-by: AngeloGioacchino Del Regno 
-> <angelogioacchino.delregno@somainline.org>
-> ---
+Hi Will,
 
-Reviewed-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+On 2021-01-06 17:26, Will Deacon wrote:
+> On Thu, Dec 24, 2020 at 12:10:07PM +0530, Sai Prakash Ranjan wrote:
+>> commit ecd7274fb4cd ("iommu: Remove unused IOMMU_SYS_CACHE_ONLY flag")
+>> removed unused IOMMU_SYS_CACHE_ONLY prot flag and along with it went
+>> the memory type setting required for the non-coherent masters to use
+>> system cache. Now that system cache support for GPU is added, we will
+>> need to mark the memory as normal sys-cached for GPU to use system 
+>> cache.
+>> Without this, the system cache lines are not allocated for GPU. We use
+>> the IO_PGTABLE_QUIRK_ARM_OUTER_WBWA quirk instead of a page protection
+>> flag as the flag cannot be exposed via DMA api because of no in-tree
+>> users.
+>> 
+>> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+>> ---
+>>  drivers/iommu/io-pgtable-arm.c | 3 +++
+>>  1 file changed, 3 insertions(+)
+>> 
+>> diff --git a/drivers/iommu/io-pgtable-arm.c 
+>> b/drivers/iommu/io-pgtable-arm.c
+>> index 7c9ea9d7874a..3fb7de8304a2 100644
+>> --- a/drivers/iommu/io-pgtable-arm.c
+>> +++ b/drivers/iommu/io-pgtable-arm.c
+>> @@ -415,6 +415,9 @@ static arm_lpae_iopte arm_lpae_prot_to_pte(struct 
+>> arm_lpae_io_pgtable *data,
+>>  		else if (prot & IOMMU_CACHE)
+>>  			pte |= (ARM_LPAE_MAIR_ATTR_IDX_CACHE
+>>  				<< ARM_LPAE_PTE_ATTRINDX_SHIFT);
+>> +		else if (data->iop.cfg.quirks & IO_PGTABLE_QUIRK_ARM_OUTER_WBWA)
+>> +			pte |= (ARM_LPAE_MAIR_ATTR_IDX_INC_OCACHE
+>> +				<< ARM_LPAE_PTE_ATTRINDX_SHIFT);
+>>  	}
+> 
+> drivers/iommu/io-pgtable.c currently documents this quirk as applying 
+> only
+> to the page-table walker. Given that we only have one user at the 
+> moment,
+> I think it's ok to change that, but please update the comment.
+> 
 
->  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 21 ++++++++++++---------
->  drivers/gpu/drm/msm/adreno/adreno_gpu.h |  5 +++++
->  2 files changed, 17 insertions(+), 9 deletions(-)
+Sure, how about this change in comment:
+
+          * IO_PGTABLE_QUIRK_ARM_OUTER_WBWA: Override the 
+outer-cacheability
+-        *      attributes set in the TCR for a non-coherent page-table 
+walker.
++        *      attributes set in the TCR for a non-coherent page-table 
+walker
++        *      and also to set the correct cacheability attributes to 
+use an
++        *      outer level of cache for non-coherent masters.
+
+> We also need to decide on whether we want to allow the quirk to be 
+> passed
+> if the coherency of the page-table walker differs from the DMA device, 
+> since
+> we have these combinations:
 > 
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> index 6cf9975e951e..f09175698827 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> @@ -191,8 +191,6 @@ adreno_iommu_create_address_space(struct msm_gpu 
-> *gpu,
->  		struct platform_device *pdev)
->  {
->  	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-> -	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
-> -	struct io_pgtable_domain_attr pgtbl_cfg;
->  	struct iommu_domain *iommu;
->  	struct msm_mmu *mmu;
->  	struct msm_gem_address_space *aspace;
-> @@ -202,13 +200,18 @@ adreno_iommu_create_address_space(struct msm_gpu 
-> *gpu,
->  	if (!iommu)
->  		return NULL;
+> 	Coherent walker?	IOMMU_CACHE	IO_PGTABLE_QUIRK_ARM_OUTER_WBWA
+> 0:	N			0		0
+> 1:	N			0		1
+> 2:	N			1		0
+> 3:	N			1		1
+> 4:	Y			0		0
+> 5:	Y			0		1
+> 6:	Y			1		0
+> 7:	Y			1		1
 > 
-> -	/*
-> -	 * This allows GPU to set the bus attributes required to use system
-> -	 * cache on behalf of the iommu page table walker.
-> -	 */
-> -	if (!IS_ERR(a6xx_gpu->htw_llc_slice)) {
-> -		pgtbl_cfg.quirks = IO_PGTABLE_QUIRK_ARM_OUTER_WBWA;
-> -		iommu_domain_set_attr(iommu, DOMAIN_ATTR_IO_PGTABLE_CFG, 
-> &pgtbl_cfg);
-> +
-> +	if (adreno_is_a6xx(adreno_gpu)) {
-> +		struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
-> +		struct io_pgtable_domain_attr pgtbl_cfg;
-> +		/*
-> +		* This allows GPU to set the bus attributes required to use system
-> +		* cache on behalf of the iommu page table walker.
-> +		*/
-> +		if (!IS_ERR(a6xx_gpu->htw_llc_slice)) {
-> +			pgtbl_cfg.quirks = IO_PGTABLE_QUIRK_ARM_OUTER_WBWA;
-> +			iommu_domain_set_attr(iommu, DOMAIN_ATTR_IO_PGTABLE_CFG, 
-> &pgtbl_cfg);
-> +		}
->  	}
+> Some of them are obviously bogus, such as (7), but I don't know what to
+> do about cases such as (3) and (5).
 > 
->  	mmu = msm_iommu_new(&pdev->dev, iommu);
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> index 4574d85c5680..08421fa54a50 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> @@ -226,6 +226,11 @@ static inline int adreno_is_a540(struct adreno_gpu 
-> *gpu)
->  	return gpu->revn == 540;
->  }
-> 
-> +static inline bool adreno_is_a6xx(struct adreno_gpu *gpu)
-> +{
-> +	return ((gpu->revn < 700 && gpu->revn > 599));
-> +}
-> +
->  static inline int adreno_is_a618(struct adreno_gpu *gpu)
->  {
->         return gpu->revn == 618;
+
+I thought this was already decided when IOMMU_SYS_CACHE_ONLY prot flag 
+was
+added in this same location [1]. dma-coherent masters can use the normal
+cached memory type to use the system cache and non dma-coherent masters
+willing to use system cache should use normal sys-cached memory type 
+with
+this quirk.
+
+[1] 
+https://lore.kernel.org/linux-arm-msm/20190516093020.18028-1-vivek.gautam@codeaurora.org/
+
+Thanks,
+Sai
 
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
