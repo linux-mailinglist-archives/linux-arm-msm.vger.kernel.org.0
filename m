@@ -2,136 +2,200 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D56E82ECBCC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jan 2021 09:39:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 931732ECBD1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jan 2021 09:40:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726915AbhAGIi5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jan 2021 03:38:57 -0500
-Received: from m43-15.mailgun.net ([69.72.43.15]:53031 "EHLO
+        id S1726328AbhAGIkH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jan 2021 03:40:07 -0500
+Received: from m43-15.mailgun.net ([69.72.43.15]:48923 "EHLO
         m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726338AbhAGIi5 (ORCPT
+        with ESMTP id S1725983AbhAGIkH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jan 2021 03:38:57 -0500
+        Thu, 7 Jan 2021 03:40:07 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1610008718; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=DbRjArTSerMJL/6H69dAmMZAuylzmFnWCTAs/XAJGxM=; b=EqSs6go8x97KMb3wNmxCYWn+QAOaDiJvexy3K21/HYgmLHgWfa79It3abWKkEVB2FnFAsKqs
- 3fBBiF7tt6OWdK5x1P4r3kUkAYoNgj5ieKWPkhRw+A74ryEQnvMFu6dWuSRruOVAOXGAKEf7
- kllynTMtYawzUgUEElyO4U/RY3w=
+ s=smtp; t=1610008788; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=M+DZKmWOcp/tK7UNIV9RyjG33sSlYT+F+w78LXNH5s8=; b=wB7JYwtNs1jMy/gCMMiRkabgwUp3nCNNB/64qLguvSq7T3pNspzq495MwVnj6Kb4azOks55Q
+ ve6HRZYuZ2cWbsL/RDrXPdLetIj1i+L+BnPWznHmG+55NED57tREA9hsGzeHTcmizkEluoKG
+ McMGcwZ8VS79Ldn1GNkh9wFfgtQ=
 X-Mailgun-Sending-Ip: 69.72.43.15
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n08.prod.us-east-1.postgun.com with SMTP id
- 5ff6c86826530504c40a6289 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 07 Jan 2021 08:38:00
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 5ff6c8cfa1d2634b3f10eed0 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 07 Jan 2021 08:39:43
  GMT
 Sender: mkshah=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7C422C433C6; Thu,  7 Jan 2021 08:37:59 +0000 (UTC)
+        id 161AFC433ED; Thu,  7 Jan 2021 08:39:43 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.2 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.29.129] (unknown [49.36.65.173])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from mkshah-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A3070C433CA;
-        Thu,  7 Jan 2021 08:37:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A3070C433CA
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E78D6C433C6;
+        Thu,  7 Jan 2021 08:39:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E78D6C433C6
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=mkshah@codeaurora.org
-Subject: Re: [PATCH v2] soc: qcom: rpmh: Remove serialization of TCS commands
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Srinivas Rao L <lsrao@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>
-References: <1606203086-31218-1-git-send-email-mkshah@codeaurora.org>
- <CAD=FV=V60zVYkFGQvAu6qfpumBL6+fm_9ziRCSiN7Um7+ra6zw@mail.gmail.com>
 From:   Maulik Shah <mkshah@codeaurora.org>
-Message-ID: <e74ed5ba-8b5f-638a-62f5-19eb2501ce1a@codeaurora.org>
-Date:   Thu, 7 Jan 2021 14:07:52 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.0
-MIME-Version: 1.0
-In-Reply-To: <CAD=FV=V60zVYkFGQvAu6qfpumBL6+fm_9ziRCSiN7Um7+ra6zw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+To:     bjorn.andersson@linaro.org, agross@kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dianders@chromium.org, ilina@codeaurora.org, lsrao@codeaurora.org,
+        Maulik Shah <mkshah@codeaurora.org>
+Subject: [PATCH v3] soc: qcom: rpmh: Remove serialization of TCS commands
+Date:   Thu,  7 Jan 2021 14:09:30 +0530
+Message-Id: <1610008770-13891-1-git-send-email-mkshah@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Doug,
+From: Lina Iyer <ilina@codeaurora.org>
 
-On 12/4/2020 3:14 AM, Doug Anderson wrote:
-> Hi,
->
-> On Mon, Nov 23, 2020 at 11:32 PM Maulik Shah <mkshah@codeaurora.org> wrote:
->> @@ -423,8 +422,7 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
->>                          cmd = &req->cmds[j];
->>                          sts = read_tcs_cmd(drv, RSC_DRV_CMD_STATUS, i, j);
->>                          if (!(sts & CMD_STATUS_ISSUED) ||
->> -                          ((req->wait_for_compl || cmd->wait) &&
->> -                          !(sts & CMD_STATUS_COMPL))) {
->> +                          (cmd->wait && !(sts & CMD_STATUS_COMPL))) {
->>                                  pr_err("Incomplete request: %s: addr=%#x data=%#x",
->>                                         drv->name, cmd->addr, cmd->data);
->>                                  err = -EIO;
-> In my review of v1 all those months ago, the way we left things was
-> that I disagreed with this part of the patch, and I still do.  I think
-> you should leave things the way they were in tcs_tx_done().  Copying
-> my un-responded-to comments from v1 here for you:
->
-> In your patch in __tcs_buffer_write(), if "wait_for_compl" is set then
-> "CMD_MSGID_RESP_REQ" will be added for every message in the request,
-> right?  That's because you have this bit of code:
->
-> /* Convert all commands to RR when the request has wait_for_compl set */
-> cmd_msgid |= msg->wait_for_compl ? CMD_MSGID_RESP_REQ : 0;
->
-> That means that if _either_ "cmd->wait" or "req->wait_for_compl" is
-> set then you expect the "sts" to have "CMD_STATUS_COMPL", right?
-> That's exactly the code that used to be there.
->
-> Said another way, if "req->wait_for_compl" was set then it's an error
-> if any of our commands are missing the "CMD_STATUS_COMPL" bit, right?
->
->
->> @@ -30,7 +30,7 @@ enum rpmh_state {
->>    *
->>    * @addr: the address of the resource slv_id:18:16 | offset:0:15
->>    * @data: the resource state request
->> - * @wait: wait for this request to be complete before sending the next
->> + * @wait: ensure that this command is complete before returning
-> In my response to v1 I suggested that a comment would be nice here.
-> Something akin to:
->
-> Setting "wait" here only makes sense in the batch case for active-only
-> transfers.
->
-> This is because:
-> * rpmh_write_async() - There's no callback and rpmh_write_async()
-> doesn't set the "completion" to anything so there's nobody that cares
-> at all
->
-> * DEFINE_RPMH_MSG_ONSTACK - always sets wait_for_compl.
->
-> -Doug
+Requests sent to RPMH can be sent as fire-n-forget or response required,
+with the latter ensuring the command has been completed by the hardware
+accelerator. Commands in a request with tcs_cmd::wait set, would ensure
+that those select commands are sent as response required, even though
+the actual TCS request may be fire-n-forget.
 
-Addressed both comments and sent v3.
+Also, commands with .wait flag were also guaranteed to be complete
+before the following command in the TCS is sent. This means that the
+next command of the same request blocked until the current request is
+completed. This could mean waiting for a voltage to settle or series of
+NOCs be configured before the next command is sent. But drivers using
+this feature have never cared about the serialization aspect. By not
+enforcing the serialization we can allow the hardware to run in parallel
+improving the performance.
 
-Thanks,
-Maulik
+Let's clarify the usage of this member in the tcs_cmd structure to mean
+only completion and not serialization. This should also improve the
+performance of bus requests where changes could happen in parallel.
+Also, CPU resume from deep idle may see benefits from certain wake
+requests.
 
+Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+---
+Changes in v3:
+- Update the comment in include/soc/qcom/tcs.h
+- Update to keep req->wait_for_compl as is irq handler
+
+Changes in v2:
+- Add SoB of self
+- Fix typo in comment
+- Update comment as Doug suggested
+- Remove write to RSC_DRV_CMD_WAIT_FOR_CMPL in tcs_write() and
+  tcs_invalidate()
+---
+ drivers/soc/qcom/rpmh-rsc.c | 22 +++++++++-------------
+ include/soc/qcom/tcs.h      |  9 ++++++++-
+ 2 files changed, 17 insertions(+), 14 deletions(-)
+
+diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+index 0b082ec..a84ab0d 100644
+--- a/drivers/soc/qcom/rpmh-rsc.c
++++ b/drivers/soc/qcom/rpmh-rsc.c
+@@ -231,10 +231,9 @@ static void tcs_invalidate(struct rsc_drv *drv, int type)
+ 	if (bitmap_empty(tcs->slots, MAX_TCS_SLOTS))
+ 		return;
+ 
+-	for (m = tcs->offset; m < tcs->offset + tcs->num_tcs; m++) {
++	for (m = tcs->offset; m < tcs->offset + tcs->num_tcs; m++)
+ 		write_tcs_reg_sync(drv, RSC_DRV_CMD_ENABLE, m, 0);
+-		write_tcs_reg_sync(drv, RSC_DRV_CMD_WAIT_FOR_CMPL, m, 0);
+-	}
++
+ 	bitmap_zero(tcs->slots, MAX_TCS_SLOTS);
+ }
+ 
+@@ -443,7 +442,6 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
+ skip:
+ 		/* Reclaim the TCS */
+ 		write_tcs_reg(drv, RSC_DRV_CMD_ENABLE, i, 0);
+-		write_tcs_reg(drv, RSC_DRV_CMD_WAIT_FOR_CMPL, i, 0);
+ 		writel_relaxed(BIT(i), drv->tcs_base + RSC_DRV_IRQ_CLEAR);
+ 		spin_lock(&drv->lock);
+ 		clear_bit(i, drv->tcs_in_use);
+@@ -476,23 +474,23 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
+ static void __tcs_buffer_write(struct rsc_drv *drv, int tcs_id, int cmd_id,
+ 			       const struct tcs_request *msg)
+ {
+-	u32 msgid, cmd_msgid;
++	u32 msgid;
++	u32 cmd_msgid = CMD_MSGID_LEN | CMD_MSGID_WRITE;
+ 	u32 cmd_enable = 0;
+-	u32 cmd_complete;
+ 	struct tcs_cmd *cmd;
+ 	int i, j;
+ 
+-	cmd_msgid = CMD_MSGID_LEN;
++	/* Convert all commands to RR when the request has wait_for_compl set */
+ 	cmd_msgid |= msg->wait_for_compl ? CMD_MSGID_RESP_REQ : 0;
+-	cmd_msgid |= CMD_MSGID_WRITE;
+-
+-	cmd_complete = read_tcs_reg(drv, RSC_DRV_CMD_WAIT_FOR_CMPL, tcs_id);
+ 
+ 	for (i = 0, j = cmd_id; i < msg->num_cmds; i++, j++) {
+ 		cmd = &msg->cmds[i];
+ 		cmd_enable |= BIT(j);
+-		cmd_complete |= cmd->wait << j;
+ 		msgid = cmd_msgid;
++		/*
++		 * Additionally, if the cmd->wait is set, make the command
++		 * response reqd even if the overall request was fire-n-forget.
++		 */
+ 		msgid |= cmd->wait ? CMD_MSGID_RESP_REQ : 0;
+ 
+ 		write_tcs_cmd(drv, RSC_DRV_CMD_MSGID, tcs_id, j, msgid);
+@@ -501,7 +499,6 @@ static void __tcs_buffer_write(struct rsc_drv *drv, int tcs_id, int cmd_id,
+ 		trace_rpmh_send_msg(drv, tcs_id, j, msgid, cmd);
+ 	}
+ 
+-	write_tcs_reg(drv, RSC_DRV_CMD_WAIT_FOR_CMPL, tcs_id, cmd_complete);
+ 	cmd_enable |= read_tcs_reg(drv, RSC_DRV_CMD_ENABLE, tcs_id);
+ 	write_tcs_reg(drv, RSC_DRV_CMD_ENABLE, tcs_id, cmd_enable);
+ }
+@@ -652,7 +649,6 @@ int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg)
+ 		 * cleaned from rpmh_flush() by invoking rpmh_rsc_invalidate()
+ 		 */
+ 		write_tcs_reg_sync(drv, RSC_DRV_CMD_ENABLE, tcs_id, 0);
+-		write_tcs_reg_sync(drv, RSC_DRV_CMD_WAIT_FOR_CMPL, tcs_id, 0);
+ 		enable_tcs_irq(drv, tcs_id, true);
+ 	}
+ 	spin_unlock_irqrestore(&drv->lock, flags);
+diff --git a/include/soc/qcom/tcs.h b/include/soc/qcom/tcs.h
+index 7a2a055..3acca06 100644
+--- a/include/soc/qcom/tcs.h
++++ b/include/soc/qcom/tcs.h
+@@ -30,7 +30,13 @@ enum rpmh_state {
+  *
+  * @addr: the address of the resource slv_id:18:16 | offset:0:15
+  * @data: the resource state request
+- * @wait: wait for this request to be complete before sending the next
++ * @wait: ensure that this command is complete before returning.
++ *        Setting "wait" here only makes sense during rpmh_write_batch() for
++ *        active-only transfers, this is because:
++ *        rpmh_write() - Always waits.
++ *                       (DEFINE_RPMH_MSG_ONSTACK will set .wait_for_compl)
++ *        rpmh_write_async() - Never waits.
++ *                       (There's no request completion callback)
+  */
+ struct tcs_cmd {
+ 	u32 addr;
+@@ -43,6 +49,7 @@ struct tcs_cmd {
+  *
+  * @state:          state for the request.
+  * @wait_for_compl: wait until we get a response from the h/w accelerator
++ *                  (same as setting cmd->wait for all commands in the request)
+  * @num_cmds:       the number of @cmds in this request
+  * @cmds:           an array of tcs_cmds
+  */
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
