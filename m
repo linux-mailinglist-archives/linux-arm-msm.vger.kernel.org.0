@@ -2,336 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 83FC02ECD8C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jan 2021 11:11:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A9AE2ECD9E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jan 2021 11:16:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727359AbhAGKKl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jan 2021 05:10:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44154 "EHLO
+        id S1727327AbhAGKQv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jan 2021 05:16:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726338AbhAGKKl (ORCPT
+        with ESMTP id S1726925AbhAGKQu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jan 2021 05:10:41 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97A08C0612F5
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Jan 2021 02:10:00 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id 190so4684997wmz.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Jan 2021 02:10:00 -0800 (PST)
+        Thu, 7 Jan 2021 05:16:50 -0500
+Received: from mail-ua1-x92a.google.com (mail-ua1-x92a.google.com [IPv6:2607:f8b0:4864:20::92a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4857C0612F8
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Jan 2021 02:16:04 -0800 (PST)
+Received: by mail-ua1-x92a.google.com with SMTP id y21so2091295uag.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Jan 2021 02:16:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=3qGibaxmUvozTUg5l5LOwP6FkKyVfhpoDpVtAsIvhlQ=;
-        b=ND1QVgnOp9W+Hgk1OuvGInbtkOL34kLhTnZ6kQI5Sbk6yeJ3ohqkks6VQPZWSij2uO
-         3w7/gUYgDTbmlvNfAvi5pIWmsiM/Iw6FbKsM9/BeV6pyn8aOimxRI8pb7UdszUnH81Is
-         YTLfQRKJtq/3UjYq6FrI4TfuCPfBHnpAWJQOr0I6akYLP3eUDnO/dzwAEVi80ulmdPKl
-         wHsUk4ktzIq45t5R5PeEiEmh2AL6SphgVbqLeHTikOCEvsNB24wIHT9tyWeuVl6yu3gZ
-         BUae6V6IgDFC6++LS1Dps4/kYUDkMizxxBsGKaA3qZXaF7IordT3MX9konTb9rzHKuNg
-         Mk/A==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=nN6dQuyXA1cgqaEtX0AA7VlQcXxY7DKXUbiyQ5ub41M=;
+        b=xxwLJ3IPnOXtSUDE2Gdlx0SJdkSqovTBp91M9E5FKZrmUHw7dCEQpFQ98RF8o+WrNH
+         knhaOrLGzOD18xACwcCw3gdpBpZPNfYkIONNySlqOmnSvz7fovgFMKGIPGEsQYFQnhaI
+         TtXkgMJCLQU51RNodvDwQij/Fvv2ynhYSkqKL1b6JTczfv1/EJfPH2MxEpD5u/JR4jyG
+         OxjGKGtcsRuVnyq5PIrLySxYaoOFSVYUd1PlUvQci7rFzjWQcubgc8kH6ei0IZ8h9AWj
+         DS5Dckqu4klEKtI1eU/AsegRJViuVjJfseycLxpMvEUTJZtpdUVWzWvRbV5EvtCEI03K
+         Yl+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=3qGibaxmUvozTUg5l5LOwP6FkKyVfhpoDpVtAsIvhlQ=;
-        b=geSY4iME/CiFVVeNtk2xDnyKSaCo5cvpIUqPkIAB7UNo/wCu4flMdZXGSSQFqT3D/O
-         vmJP0Y9siRZ1osPbqh4vg7SzRb8/O/bobKqxwx3LcvfL/saoSjG7ncgk9PAVfRDQXklu
-         nFJi5lYCwMRQxOy+DIowC0hqXTyOwS7ZFOl9DNo/4AOzDoIXR/l4rXU90cqh0ciYPtLF
-         BtM0OQF0M9DQSBH4RgXJpl4UpRQRahSJeNlYgo/zeC8NMfzLmlt5d3ASqoDH3oy0d3zd
-         ri9t2vgFwhY0TGBYEzshvFhBCrA8SWJ3NsUmhB0etsAXHSvooGwe1ETSxWXr/BKzYk8c
-         dvNA==
-X-Gm-Message-State: AOAM533UjkRF69d35kA5rttddL4O3NZ4qTEQ7WlHC1FwniN6NJE7SjOB
-        bGNVvZWwv0JEDjsWPt+e2QmO6g==
-X-Google-Smtp-Source: ABdhPJxSL4deVMWAkPfLRW/+Obk7VYER9LX/IqJjWI8HeVTKKnwKPBWpQhORCX6ARakBUJSJVjh3sw==
-X-Received: by 2002:a05:600c:1552:: with SMTP id f18mr7366017wmg.125.1610014199213;
-        Thu, 07 Jan 2021 02:09:59 -0800 (PST)
-Received: from [192.168.0.2] (hst-221-29.medicom.bg. [84.238.221.29])
-        by smtp.googlemail.com with ESMTPSA id l11sm7249798wrt.23.2021.01.07.02.09.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Jan 2021 02:09:58 -0800 (PST)
-Subject: Re: [PATCH v2 7/8] venus: venc: Handle reset encoder state
-To:     Fritz Koenig <frkoenig@chromium.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     Linux Media Mailing List <linux-media@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
-        Vikash Garodia <vgarodia@codeaurora.org>,
-        Alexandre Courbot <acourbot@chromium.org>
-References: <20201111143755.24541-1-stanimir.varbanov@linaro.org>
- <20201111143755.24541-8-stanimir.varbanov@linaro.org>
- <CAMfZQbzxBdND1VxRJ_P+V7X6f5noZ7bdAjOJHjLfVmQHbBQoLg@mail.gmail.com>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <8dcfc966-5081-66f2-0561-b6e75be57417@linaro.org>
-Date:   Thu, 7 Jan 2021 12:09:57 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=nN6dQuyXA1cgqaEtX0AA7VlQcXxY7DKXUbiyQ5ub41M=;
+        b=GrTMiva74cAFA4d3Rz0EAFOmvaxSXUl+4BgDgGSytnkB6/JeeR4FapR2esOvr0pB64
+         ViSZhe5xnU2D3xxHy/FNSNLs3qC7+V9VhHxnEQoc2HjCAcLOcLHNiVLtT/9zRhpWsOwG
+         anz+P6/JFZTxXq4sLn13pVVtMPlRzI7NlHxy+iG/WRWXB4uF+Kv6+p8/7wJHJ+z0BN38
+         FdQCawH7c/lil0fThtBJcM4ahesfIu+BEVfn03t021ZdrfbUfeSoAI4k8afi8EcwVnlr
+         oQhGNQw92DwfaDJcAMxddhF9wmpDmLTpCpd4NYE8RsGvz6N+epPUT2Z9GBWCcy+jDWJe
+         Qvpw==
+X-Gm-Message-State: AOAM531n9XCF3ykqr26hZhNKa55tOdWk6Y2Fi9oP6dxcuHp5lTMi96ue
+        RmUrJzgmDDoVIZiWicO6p9k24WcG8iScFiTWEFo45A==
+X-Google-Smtp-Source: ABdhPJxu0lBxj9SXRgJDA/FBzEbFglx8xUdGm7WcmhHVlZDFqUon4K67vqgtMxOm7nKooSMq+yMOs6LAlI1VBW6Nbt8=
+X-Received: by 2002:ab0:78d:: with SMTP id c13mr6731978uaf.129.1610014563793;
+ Thu, 07 Jan 2021 02:16:03 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAMfZQbzxBdND1VxRJ_P+V7X6f5noZ7bdAjOJHjLfVmQHbBQoLg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20201112194011.103774-1-ebiggers@kernel.org> <X7gQ9Y44iIgkiM64@sol.localdomain>
+ <CAPDyKFrXtqqj3RXJ4m666e_danpp2neRD_M+FCaMWPC+Ow2jsA@mail.gmail.com> <X/N+ouEtmMPYT0Qa@sol.localdomain>
+In-Reply-To: <X/N+ouEtmMPYT0Qa@sol.localdomain>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Thu, 7 Jan 2021 11:15:26 +0100
+Message-ID: <CAPDyKFpjwen156VyR8HTLb579Npr=ocT8RGBcZb-i82bfi1gwQ@mail.gmail.com>
+Subject: Re: [PATCH 0/8] eMMC inline encryption support
+To:     Eric Biggers <ebiggers@kernel.org>
+Cc:     "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>, linux-fscrypt@vger.kernel.org,
+        Satya Tangirala <satyat@google.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Ritesh Harjani <riteshh@codeaurora.org>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Neeraj Soni <neersoni@codeaurora.org>,
+        Barani Muthukumaran <bmuthuku@codeaurora.org>,
+        Peng Zhou <peng.zhou@mediatek.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Konrad Dybcio <konradybcio@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Fritz,
+On Mon, 4 Jan 2021 at 21:46, Eric Biggers <ebiggers@kernel.org> wrote:
+>
+> On Wed, Nov 25, 2020 at 10:56:42AM +0100, Ulf Hansson wrote:
+> > On Fri, 20 Nov 2020 at 19:54, Eric Biggers <ebiggers@kernel.org> wrote:
+> > >
+> > > On Thu, Nov 12, 2020 at 11:40:03AM -0800, Eric Biggers wrote:
+> > > > Hello,
+> > > >
+> > > > This patchset adds support for eMMC inline encryption, as specified by
+> > > > the upcoming version of the eMMC specification and as already
+> > > > implemented and used on many devices.  Building on that, it then adds
+> > > > Qualcomm ICE support and wires it up for the Snapdragon 630 SoC.
+> > > >
+> > > > Inline encryption hardware improves the performance of storage
+> > > > encryption and reduces power usage.  See
+> > > > Documentation/block/inline-encryption.rst for more information about
+> > > > inline encryption and the blk-crypto framework (upstreamed in v5.8)
+> > > > which supports it.  Most mobile devices already use UFS or eMMC inline
+> > > > encryption hardware; UFS support was already upstreamed in v5.9.
+> > > >
+> > > > Patches 1-3 add support for the standard eMMC inline encryption.
+> > > >
+> > > > However, as with UFS, host controller-specific patches are needed on top
+> > > > of the standard support.  Therefore, patches 4-8 add Qualcomm ICE
+> > > > (Inline Crypto Engine) support and wire it up on the Snapdragon 630 SoC.
+> > > >
+> > > > To test this I took advantage of the recently upstreamed support for the
+> > > > Snapdragon 630 SoC, plus work-in-progress patches from the SoMainline
+> > > > project (https://github.com/SoMainline/linux/tree/konrad/v5.10-rc3).  In
+> > > > particular, I was able to run the fscrypt xfstests for ext4 and f2fs in
+> > > > a Debian chroot.  Among other things, these tests verified that the
+> > > > correct ciphertext is written to disk (the same as software encryption).
+> > > >
+> > > > It will also be possible to add support for Mediatek eMMC inline
+> > > > encryption hardware in mtk-sd, and it should be easier than the Qualcomm
+> > > > hardware since the Mediatek hardware follows the standard more closely.
+> > > > I.e., patches 1-3 should be almost enough for the Mediatek hardware.
+> > > > However, I don't have the hardware to do this yet.
+> > > >
+> > > > This patchset is based on v5.10-rc3, and it can also be retrieved from
+> > > > tag "mmc-crypto-v1" of
+> > > > https://git.kernel.org/pub/scm/linux/kernel/git/ebiggers/linux.git
+> > > >
+> > > > Note: the fscrypt inline encryption support is partially broken in
+> > > > v5.10-rc3, so for testing a fscrypt fix needs to be applied too:
+> > > > https://lkml.kernel.org/r/20201111015224.303073-1-ebiggers@kernel.org
+> > > >
+> > > > Eric Biggers (8):
+> > > >   mmc: add basic support for inline encryption
+> > > >   mmc: cqhci: rename cqhci.c to cqhci-core.c
+> > > >   mmc: cqhci: add support for inline encryption
+> > > >   mmc: cqhci: add cqhci_host_ops::program_key
+> > > >   firmware: qcom_scm: update comment for ICE-related functions
+> > > >   dt-bindings: mmc: sdhci-msm: add ICE registers and clock
+> > > >   arm64: dts: qcom: sdm630: add ICE registers and clocks
+> > > >   mmc: sdhci-msm: add Inline Crypto Engine support
+> > >
+> > > Any comments on this patchset?
+> >
+> > I have been busy, but just wanted to let you know that I am moving to
+> > start reviewing this series shortly.
+> >
+> > I also need to catch up on the eMMC spec a bit, before I can provide
+> > you with comments.
+> >
+> > Kind regards
+> > Uffe
+>
+> Ulf, are you still planning to review this patchset?  I just sent out v4 of this
+> patchset based on v5.11-rc2, but not a lot has changed from previous versions,
+> since people have generally seemed happy with it.  Any chance that you will
+> apply it for 5.12?  Thanks!
 
-On 1/2/21 2:13 AM, Fritz Koenig wrote:
-> How should we resolve this patch in relation to the "venus: venc: Init
-> the session only once in queue_setup" [1] patch?
+My apologies for the delay. I certainly appreciate the review that's
+been done by people and I intend to have a look myself within the
+coming week.
 
-I plan to make a pull request including 4/8 and 5/8 patches from this
-series which are infact fixes.
+I definitely think it should be possible to get this queued for v5.12,
+unless I find some very weird things, which I doubt.
 
-After that I will send v2 on top of this pull-request. Unfortunately  I
-have to postpone this series because I see issues when execute in a row
-my tests for drain and reset encoder states.
-
-> 
-> "venus: venc: Init the session only once in queue_setup" comes after
-> and reworks |venc_start_streaming| substantially.  This patch
-> implements |venc_stop_streaming|, but maybe that is not needed with
-> the newer patch?  Can this one just be dropped, or does it need
-> rework?
-> 
-> -Fritz
-> 
-> [1]: https://lore.kernel.org/patchwork/patch/1349416/
-> 
-> On Wed, Nov 11, 2020 at 6:38 AM Stanimir Varbanov
-> <stanimir.varbanov@linaro.org> wrote:
->>
->> Redesign the encoder driver to be compliant with stateful encoder
->> spec - specifically adds handling of Reset state.
->>
->> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
->> ---
->>  drivers/media/platform/qcom/venus/venc.c | 155 ++++++++++++++++++-----
->>  1 file changed, 122 insertions(+), 33 deletions(-)
->>
->> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
->> index 7512e4a16270..f1ae89d45a54 100644
->> --- a/drivers/media/platform/qcom/venus/venc.c
->> +++ b/drivers/media/platform/qcom/venus/venc.c
->> @@ -907,6 +907,54 @@ static int venc_queue_setup(struct vb2_queue *q,
->>         return ret;
->>  }
->>
->> +static void venc_release_session(struct venus_inst *inst)
->> +{
->> +       int ret, abort = 0;
->> +
->> +       mutex_lock(&inst->lock);
->> +
->> +       ret = hfi_session_deinit(inst);
->> +       abort = (ret && ret != -EINVAL) ? 1 : 0;
->> +
->> +       if (inst->session_error)
->> +               abort = 1;
->> +
->> +       if (abort)
->> +               hfi_session_abort(inst);
->> +
->> +       venus_pm_load_scale(inst);
->> +       INIT_LIST_HEAD(&inst->registeredbufs);
->> +       mutex_unlock(&inst->lock);
->> +
->> +       venus_pm_release_core(inst);
->> +}
->> +
->> +static int venc_buf_init(struct vb2_buffer *vb)
->> +{
->> +       struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
->> +
->> +       inst->buf_count++;
->> +
->> +       return venus_helper_vb2_buf_init(vb);
->> +}
->> +
->> +static void venc_buf_cleanup(struct vb2_buffer *vb)
->> +{
->> +       struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
->> +       struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
->> +       struct venus_buffer *buf = to_venus_buffer(vbuf);
->> +
->> +       mutex_lock(&inst->lock);
->> +       if (vb->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE)
->> +               if (!list_empty(&inst->registeredbufs))
->> +                       list_del_init(&buf->reg_list);
->> +       mutex_unlock(&inst->lock);
->> +
->> +       inst->buf_count--;
->> +       if (!inst->buf_count)
->> +               venc_release_session(inst);
->> +}
->> +
->>  static int venc_verify_conf(struct venus_inst *inst)
->>  {
->>         enum hfi_version ver = inst->core->res->hfi_version;
->> @@ -938,49 +986,57 @@ static int venc_verify_conf(struct venus_inst *inst)
->>  static int venc_start_streaming(struct vb2_queue *q, unsigned int count)
->>  {
->>         struct venus_inst *inst = vb2_get_drv_priv(q);
->> +       struct v4l2_m2m_ctx *m2m_ctx = inst->m2m_ctx;
->>         int ret;
->>
->>         mutex_lock(&inst->lock);
->>
->> -       if (q->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
->> +       v4l2_m2m_update_start_streaming_state(m2m_ctx, q);
->> +
->> +       if (V4L2_TYPE_IS_OUTPUT(q->type))
->>                 inst->streamon_out = 1;
->>         else
->>                 inst->streamon_cap = 1;
->>
->> -       if (!(inst->streamon_out & inst->streamon_cap)) {
->> -               mutex_unlock(&inst->lock);
->> -               return 0;
->> -       }
->> +       if (inst->streamon_out && inst->streamon_cap &&
->> +           inst->state == INST_UNINIT) {
->> +               venus_helper_init_instance(inst);
->>
->> -       venus_helper_init_instance(inst);
->> +               inst->sequence_cap = 0;
->> +               inst->sequence_out = 0;
->>
->> -       inst->sequence_cap = 0;
->> -       inst->sequence_out = 0;
->> +               ret = venc_init_session(inst);
->> +               if (ret)
->> +                       goto bufs_done;
->>
->> -       ret = venc_init_session(inst);
->> -       if (ret)
->> -               goto bufs_done;
->> +               ret = venus_pm_acquire_core(inst);
->> +               if (ret)
->> +                       goto deinit_sess;
->>
->> -       ret = venus_pm_acquire_core(inst);
->> -       if (ret)
->> -               goto deinit_sess;
->> +               ret = venc_verify_conf(inst);
->> +               if (ret)
->> +                       goto deinit_sess;
->>
->> -       ret = venc_set_properties(inst);
->> -       if (ret)
->> -               goto deinit_sess;
->> +               ret = venus_helper_set_num_bufs(inst, inst->num_input_bufs,
->> +                                               inst->num_output_bufs, 0);
->> +               if (ret)
->> +                       goto deinit_sess;
->>
->> -       ret = venc_verify_conf(inst);
->> -       if (ret)
->> -               goto deinit_sess;
->> +               ret = venus_helper_vb2_start_streaming(inst);
->> +               if (ret)
->> +                       goto deinit_sess;
->>
->> -       ret = venus_helper_set_num_bufs(inst, inst->num_input_bufs,
->> -                                       inst->num_output_bufs, 0);
->> -       if (ret)
->> -               goto deinit_sess;
->> +               venus_helper_process_initial_out_bufs(inst);
->> +               venus_helper_process_initial_cap_bufs(inst);
->> +       } else if (V4L2_TYPE_IS_CAPTURE(q->type) && inst->streamon_cap &&
->> +                  inst->streamon_out) {
->> +               ret = venus_helper_vb2_start_streaming(inst);
->> +               if (ret)
->> +                       goto bufs_done;
->>
->> -       ret = venus_helper_vb2_start_streaming(inst);
->> -       if (ret)
->> -               goto deinit_sess;
->> +               venus_helper_process_initial_out_bufs(inst);
->> +               venus_helper_process_initial_cap_bufs(inst);
->> +       }
->>
->>         mutex_unlock(&inst->lock);
->>
->> @@ -990,15 +1046,43 @@ static int venc_start_streaming(struct vb2_queue *q, unsigned int count)
->>         hfi_session_deinit(inst);
->>  bufs_done:
->>         venus_helper_buffers_done(inst, q->type, VB2_BUF_STATE_QUEUED);
->> -       if (q->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
->> +       if (V4L2_TYPE_IS_OUTPUT(q->type))
->>                 inst->streamon_out = 0;
->>         else
->>                 inst->streamon_cap = 0;
->> +
->>         mutex_unlock(&inst->lock);
->>         return ret;
->>  }
->>
->> -static void venc_vb2_buf_queue(struct vb2_buffer *vb)
->> +static void venc_stop_streaming(struct vb2_queue *q)
->> +{
->> +       struct venus_inst *inst = vb2_get_drv_priv(q);
->> +       struct v4l2_m2m_ctx *m2m_ctx = inst->m2m_ctx;
->> +       int ret = -EINVAL;
->> +
->> +       mutex_lock(&inst->lock);
->> +
->> +       v4l2_m2m_clear_state(m2m_ctx);
->> +
->> +       if (V4L2_TYPE_IS_CAPTURE(q->type)) {
->> +               ret = hfi_session_stop(inst);
->> +               ret |= hfi_session_unload_res(inst);
->> +               ret |= venus_helper_unregister_bufs(inst);
->> +               ret |= venus_helper_intbufs_free(inst);
->> +       }
->> +
->> +       venus_helper_buffers_done(inst, q->type, VB2_BUF_STATE_ERROR);
->> +
->> +       if (V4L2_TYPE_IS_OUTPUT(q->type))
->> +               inst->streamon_out = 0;
->> +       else
->> +               inst->streamon_cap = 0;
->> +
->> +       mutex_unlock(&inst->lock);
->> +}
->> +
->> +static void venc_buf_queue(struct vb2_buffer *vb)
->>  {
->>         struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
->>         struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
->> @@ -1022,11 +1106,12 @@ static void venc_vb2_buf_queue(struct vb2_buffer *vb)
->>
->>  static const struct vb2_ops venc_vb2_ops = {
->>         .queue_setup = venc_queue_setup,
->> -       .buf_init = venus_helper_vb2_buf_init,
->> +       .buf_init = venc_buf_init,
->> +       .buf_cleanup = venc_buf_cleanup,
->>         .buf_prepare = venus_helper_vb2_buf_prepare,
->>         .start_streaming = venc_start_streaming,
->> -       .stop_streaming = venus_helper_vb2_stop_streaming,
->> -       .buf_queue = venc_vb2_buf_queue,
->> +       .stop_streaming = venc_stop_streaming,
->> +       .buf_queue = venc_buf_queue,
->>  };
->>
->>  static void venc_buf_done(struct venus_inst *inst, unsigned int buf_type,
->> @@ -1084,8 +1169,12 @@ static const struct hfi_inst_ops venc_hfi_ops = {
->>         .event_notify = venc_event_notify,
->>  };
->>
->> +static void venc_m2m_device_run(void *priv)
->> +{
->> +}
->> +
->>  static const struct v4l2_m2m_ops venc_m2m_ops = {
->> -       .device_run = venus_helper_m2m_device_run,
->> +       .device_run = venc_m2m_device_run,
->>         .job_abort = venus_helper_m2m_job_abort,
->>  };
->>
->> --
->> 2.17.1
->>
-
--- 
-regards,
-Stan
+Kind regards
+Uffe
