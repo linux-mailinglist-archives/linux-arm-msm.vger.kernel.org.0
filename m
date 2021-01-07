@@ -2,105 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E7AA2EE7FC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jan 2021 22:53:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EA2132EE8C9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jan 2021 23:35:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727725AbhAGVxW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jan 2021 16:53:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41256 "EHLO
+        id S1726666AbhAGWfC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jan 2021 17:35:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727446AbhAGVxW (ORCPT
+        with ESMTP id S1726326AbhAGWfC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jan 2021 16:53:22 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 989C3C0612F4
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Jan 2021 13:52:41 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id t16so7081981wra.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Jan 2021 13:52:41 -0800 (PST)
+        Thu, 7 Jan 2021 17:35:02 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33D9AC0612F6;
+        Thu,  7 Jan 2021 14:34:22 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id g25so5696410wmh.1;
+        Thu, 07 Jan 2021 14:34:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=jBwDEco46WJrZ4/CdIGCsb6+UYHdqspvbvO5PyUFa+8=;
-        b=qf9+wJXVL0hedizSsg83AjGvVuKjH/bAq226wJ8sK+mhwN4xirQytTbCmwECupbprn
-         7eJvY57EbEoUI8wRBH51hBKdBlaK6Klqs2D7ye188Yy1NuzppB7zVhjrN8sPiNNTVoxf
-         Scg775uxaWZf2kqC066zboogy6sYyWwH5Fbcq/CjD3GVtNVNsy1aJZeXL4/VwOOq8DEo
-         1L+Tic5n5I/+GjolhPj3ta7vs20LIZ7Bh1Ij+FVUnMZLOor6S/L/DPnV+3fFVL+x/LV4
-         tGHHsngOh4Z6H+63O44u0d/impVrn6fEPsh6VspkVuuXlU1O64uWBjYYI0ppmfcDx7z9
-         eXOQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=5h5f4k/7Y5BLMbqGtHy+4oMGbAtdYGA2ZXVid79BVKY=;
+        b=HUpwWq10RcjyHZqCnGb/EYqKvCcD1qS3cbr4FJNM0745wJxF6syd2xwl6YfqaWqQWs
+         voCVfb4ixVXzxDBgiRqv2BdrPH7mTqu/fR09+0njGyp65jh610zIVR4yhLddFGRg6kFc
+         /Ff0akoVNdCi2B8xb+IWYW3OvrkW3t7Aocy7u3hE8rds4Cn/uj8xo3qFpHAqBgdFFEIp
+         qIc9NT6J9W5ZM8S6WwtaB4USBKj8DFxFLIcbmggGoSAtxpHm6CjTnK8FW6Zr1jDA+f+w
+         Hy3ctJCapL6ich5EJwaZMR1LHs+6xCDZ4Bla73V2qtyLzb63vUy6p5lWMXYkL22za69i
+         XI1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=jBwDEco46WJrZ4/CdIGCsb6+UYHdqspvbvO5PyUFa+8=;
-        b=FWg87g2HFDZNLo/pgySV7aBNzaNMTph5d77/6nZA/fPuKCb84N7jo60Uj8FiTGPMYl
-         wNc/BdVOAdIWTecawsc3LbgX9E8p3UsmqCrfjiQC9vCY+lSVzL2eQHDhRq7SOuYSqUEA
-         orZhwp8z0gpdhLumdd4T8izllbIaggQjOkQP362/cJ/rH8mbwhQDB9ShdninpYBUKsJh
-         AYpPQzbCAZtGzwpgPNVcZnZpLa08bEBXv9y+j0NxV/Rx0avbkgiaws7npO4qY1Cmnhyb
-         GkXhEY5K2HK1xNCXyzLBFODZNE6UdOcvXDUFL5m5sJ2Vs1ONS44M+frPuJbJ0Y7rHSUh
-         OYmg==
-X-Gm-Message-State: AOAM533sWy+//w50HQGjAAIU8vBUJdY0zimXQpjuiGK/gzqCYkaaAQM7
-        8bOu44w+Z98C30l9NqFkHyWERqLeBN2n1Kq+6jo=
-X-Google-Smtp-Source: ABdhPJwYcBtCcsJ3K5mBMg+ivUv+S2pcnin4WMfDGyw3yeGfJ0Xm1I2+hC7pXlosZuqWI4YgOt53wRrPA/Z7D5oJhLE=
-X-Received: by 2002:adf:a3c1:: with SMTP id m1mr641279wrb.28.1610056360377;
- Thu, 07 Jan 2021 13:52:40 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=5h5f4k/7Y5BLMbqGtHy+4oMGbAtdYGA2ZXVid79BVKY=;
+        b=imvh74RfAPyEQD9ZEicJKvFN5zs3kxS69GjStH9EUBGlBCd+BJOJ1ppkuwENrxEjBV
+         oQ2sepPNxTKhXrFKVKTraDbijcAwvCgKynvBnqLdu8QS2dyi4MsffD4QZaBdjQBLYdiu
+         6v3JUUzmI6zRQf9sdKsw3Tl06keXKoJYtqTOIGoFPJlIb7MB+aDoAkzQpkO83/HBvu2i
+         qeNXI4B++QCitePKcyGzyqdVn+fTw85XioSesjUQaf0QsG2cy1W/NbCh/DA/ToZmz3po
+         9mHrV/oX7Fi3MkCsHWE3zjANvxxulN3/xlvRSI2bqRtfDW4UheRa02UqsqR6SeIuZySK
+         yAMw==
+X-Gm-Message-State: AOAM533JISnL6zCK7+k5xHtYu9tfk6Gb3LDLkFuSyeHLPRpFQeFNRRTk
+        OpLPnOIxGLvTU0Xvb7gAs9NMxMjOSVMrntMKwv4=
+X-Google-Smtp-Source: ABdhPJzwN3w3vxCtrqqaHbyIihZjgDGzLQJ1TNyS3Ov2G46nAQoIMjcS8+RXA6CBbUmFUz24Egqu/WF+rdrw1SslT4E=
+X-Received: by 2002:a1c:1d85:: with SMTP id d127mr537631wmd.49.1610058860895;
+ Thu, 07 Jan 2021 14:34:20 -0800 (PST)
 MIME-Version: 1.0
+References: <20210102202437.1630365-1-iskren.chernev@gmail.com> <CAF6AEGt868msEPdZwJTB3YQppwNLaavSsDm1mGznCu1jsSPxCQ@mail.gmail.com>
+In-Reply-To: <CAF6AEGt868msEPdZwJTB3YQppwNLaavSsDm1mGznCu1jsSPxCQ@mail.gmail.com>
 From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 7 Jan 2021 13:54:59 -0800
-Message-ID: <CAF6AEGtWMhzyD6kejmViZeZ+zfJxRvfq-R2t_zA+DcDiTxsYRQ@mail.gmail.com>
-Subject: [pull] drm/msm: drm-msm-fixes-2021-01-07
-To:     Dave Airlie <airlied@gmail.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>,
+Date:   Thu, 7 Jan 2021 14:36:39 -0800
+Message-ID: <CAF6AEGvoG4DUSrsEBpsZV-gc42XnhvgqPWXvwa1SMMk1JoF15w@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: Fix MSM_INFO_GET_IOVA with carveout
+To:     Iskren Chernev <iskren.chernev@gmail.com>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Jordan Crouse <jcrouse@codeaurora.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dave,
+On Thu, Jan 7, 2021 at 9:20 AM Rob Clark <robdclark@gmail.com> wrote:
+>
+> On Sat, Jan 2, 2021 at 12:26 PM Iskren Chernev <iskren.chernev@gmail.com> wrote:
+> >
+> > The msm_gem_get_iova should be guarded with gpu != NULL and not aspace
+> > != NULL, because aspace is NULL when using vram carveout.
+> >
+> > Fixes: 933415e24bd0d ("drm/msm: Add support for private address space instances")
+> >
+> > Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
+> > ---
+> >  drivers/gpu/drm/msm/msm_drv.c | 3 ++-
+> >  1 file changed, 2 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> > index c5e61cb3356df..c1953fb079133 100644
+> > --- a/drivers/gpu/drm/msm/msm_drv.c
+> > +++ b/drivers/gpu/drm/msm/msm_drv.c
+> > @@ -775,9 +775,10 @@ static int msm_ioctl_gem_info_iova(struct drm_device *dev,
+> >                 struct drm_file *file, struct drm_gem_object *obj,
+> >                 uint64_t *iova)
+> >  {
+> > +       struct msm_drm_private *priv = dev->dev_private;
+> >         struct msm_file_private *ctx = file->driver_priv;
+> >
+> > -       if (!ctx->aspace)
+> > +       if (!priv->gpu)
+> >                 return -EINVAL;
+>
+> Does this actually work?  It seems like you would hit a null ptr deref
+> in msm_gem_init_vma().. and in general I think a lot of code paths
+> would be surprised by a null address space, so this seems like a risky
+> idea.
 
-A few misc fixes
+oh, actually, I suppose it is ok, since in the vram carveout case we
+create the vma up front when the gem obj is created..
 
-The following changes since commit e319a1b956f785f618611857cd946dca2bb68542:
+(still, it does seem a bit fragile.. and easy for folks testing on
+devices not using vram carvout to break.. hmm..)
 
-  drm/msm: add IOMMU_SUPPORT dependency (2020-12-05 08:25:52 -0800)
+BR,
+-R
 
-are available in the Git repository at:
-
-  https://gitlab.freedesktop.org/drm/msm.git drm-msm-fixes-2021-01-07
-
-for you to fetch changes up to 00fd44a1a4700718d5d962432b55c09820f7e709:
-
-  drm/msm: Only enable A6xx LLCC code on A6xx (2021-01-07 09:23:05 -0800)
-
-----------------------------------------------------------------
-Craig Tatlor (1):
-      drm/msm: Call msm_init_vram before binding the gpu
-
-Iskren Chernev (3):
-      drm/msm: Fix null dereference in _msm_gem_new
-      drm/msm: Ensure get_pages is called when locked
-      drm/msm: Add modparam to allow vram carveout
-
-Konrad Dybcio (1):
-      drm/msm: Only enable A6xx LLCC code on A6xx
-
-Kuogee Hsieh (1):
-      drm/msm/dp: postpone irq_hpd event during connection pending state
-
-Rob Clark (1):
-      drm/msm: Fix WARN_ON() splat in _free_object()
-
- drivers/gpu/drm/msm/adreno/a2xx_gpu.c      |  6 ++++--
- drivers/gpu/drm/msm/adreno/a3xx_gpu.c      |  6 ++++--
- drivers/gpu/drm/msm/adreno/a4xx_gpu.c      |  6 ++++--
- drivers/gpu/drm/msm/adreno/adreno_device.c |  4 ++++
- drivers/gpu/drm/msm/adreno/adreno_gpu.c    | 21 ++++++++++++---------
- drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  6 ++++++
- drivers/gpu/drm/msm/dp/dp_display.c        |  7 +++++++
- drivers/gpu/drm/msm/dp/dp_panel.c          | 12 +++++++++---
- drivers/gpu/drm/msm/msm_drv.c              |  8 ++++----
- drivers/gpu/drm/msm/msm_gem.c              | 13 +++++++++----
- 10 files changed, 63 insertions(+), 26 deletions(-)
+> Maybe instead we should be creating an address space for the vram carveout?
+>
+> BR,
+> -R
+>
+>
+> >         /*
+> > --
+> > 2.29.2
+> >
