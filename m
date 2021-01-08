@@ -2,107 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E69AC2EF09F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 11:23:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C776A2EF102
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 12:01:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727047AbhAHKXo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jan 2021 05:23:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44900 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726763AbhAHKXo (ORCPT
+        id S1727159AbhAHLAE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jan 2021 06:00:04 -0500
+Received: from alexa-out-tai-02.qualcomm.com ([103.229.16.227]:55682 "EHLO
+        alexa-out-tai-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726520AbhAHLAE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jan 2021 05:23:44 -0500
-Received: from mail-vs1-xe29.google.com (mail-vs1-xe29.google.com [IPv6:2607:f8b0:4864:20::e29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4BEEC0612F5
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jan 2021 02:23:03 -0800 (PST)
-Received: by mail-vs1-xe29.google.com with SMTP id x26so5283002vsq.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jan 2021 02:23:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=aOuT3Oi+vPve6YqCYUYuw/dI03+W04u5ZGoPFLj22Y0=;
-        b=NKZLZMIvdtJLJFN88ujdmELsO2ixYwJXQzvCnS4q68kR2B9rFKwVlSXSaAXiIIloCe
-         ++ouK4EEpLVj2OKsVtg+PoFZH/yH0Pfr1l4vc1EiDUBPK62Pe15zY5Kw0Z3w1o9xrOJ6
-         FXUwy0cuZlN9SFGyP073qWD6RPjZKUMzVIIFkNUmaEJo4kVuVZpMkPF6VsmwN+hlTP7N
-         TGXcm3zMgObi7g2Hl+0WA7kC3iq92PGQiVpishWb3RxtauoKBIaSuGXcHYP/wzKeJU3y
-         6u0U1YbeiBse5+dRG3+99Pk41LgY6A2IfAPclHWvfNbD0dteNxL0zdq9fb0QysHw7Hkt
-         IYMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=aOuT3Oi+vPve6YqCYUYuw/dI03+W04u5ZGoPFLj22Y0=;
-        b=bdfX0dBITSrjUfDs1UCIigrzidTPN+FSUYJQHYhBKrZ0kBNkavYg99RHgSrLweoQI1
-         Mp1RqYSDerVwlnFb7hjmFkqTE5GRqFtfAjO/nM7YRjDbPeNal1bwwzueNBWMAucuDTUp
-         snWn2kdrPEMvOpk/Bj+I2RryB7OJLJkcCwAC0XeQSL7hAb9KE2+4tE62zU4IRR4WwZeG
-         ZwMF+YpGPjha2obYv+E/2qMs1cTyt19w6THLAaJuDx67aBAsNtV50Z/I/5onjiYPDyz2
-         VGZsypnjVHiPSace+e0bvOzgwV5EgiCJco06h3wnQao4mz+jm6XG9gvQS8oFNls3r7Wa
-         bQDQ==
-X-Gm-Message-State: AOAM530RWBL96ZlbLV7ISfzLHHAzcacwgJ+jZKiqOxDmaZsk3dnk8zTt
-        FcejtanvQJs2jJnks8/7maih56DJpFre0t25Xuy+ee2rswUIRQ==
-X-Google-Smtp-Source: ABdhPJyew8MgUznUgu9YOJy4A4Lv01S16RtMRDENnkPfo5u3LUHyRLBb6TIWlsHJpeAqlQEOIgaq986in3WuB39kDa0=
-X-Received: by 2002:a67:e286:: with SMTP id g6mr2036107vsf.42.1610101382204;
- Fri, 08 Jan 2021 02:23:02 -0800 (PST)
-MIME-Version: 1.0
-References: <20201216175056.19554-1-ilina@codeaurora.org> <CAPDyKFrdZTd0mWHYhk13uyNWoxqjkO_iSni_TC5uir-PpgxSpw@mail.gmail.com>
- <X+VBBKZXZ2JW3ZDL@codeaurora.org> <CAPDyKFrAV5Af8WVTy==u1-Ak7zrwC+X7bWSRCc_RrwHoTKfVGw@mail.gmail.com>
- <X+lDTxDqTS9ik9TR@codeaurora.org>
-In-Reply-To: <X+lDTxDqTS9ik9TR@codeaurora.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Fri, 8 Jan 2021 11:22:25 +0100
-Message-ID: <CAPDyKFr-C4V+oaD53+ACT02UBqKggRqSqCsm76k7OS8QNx7iCg@mail.gmail.com>
-Subject: Re: [PATCH] PM / Domains: allow domain idle states to be disabled
-To:     Lina Iyer <ilina@codeaurora.org>
-Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Fri, 8 Jan 2021 06:00:04 -0500
+Received: from ironmsg03-tai.qualcomm.com ([10.249.140.8])
+  by alexa-out-tai-02.qualcomm.com with ESMTP; 08 Jan 2021 18:59:21 +0800
+X-QCInternal: smtphost
+Received: from cbsp-sh-gv.ap.qualcomm.com (HELO cbsp-sh-gv.qualcomm.com) ([10.231.249.68])
+  by ironmsg03-tai.qualcomm.com with ESMTP; 08 Jan 2021 18:58:57 +0800
+Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 393357)
+        id 593A729ED; Fri,  8 Jan 2021 18:58:56 +0800 (CST)
+From:   Ziqi Chen <ziqichen@codeaurora.org>
+To:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
+        cang@codeaurora.org, hongwus@codeaurora.org, rnayak@codeaurora.org,
+        vinholikatti@gmail.com, jejb@linux.vnet.ibm.com,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
+        kernel-team@android.com, saravanak@google.com, salyzyn@google.com,
+        ziqichen@codeaurora.org, kwmad.kim@samsung.com,
+        stanley.chu@mediatek.com
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v6 2/2] scsi: ufs-qcom: Fix ufs RST_n specs violation
+Date:   Fri,  8 Jan 2021 18:56:25 +0800
+Message-Id: <1610103385-45755-3-git-send-email-ziqichen@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1610103385-45755-1-git-send-email-ziqichen@codeaurora.org>
+References: <1610103385-45755-1-git-send-email-ziqichen@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 28 Dec 2020 at 03:30, Lina Iyer <ilina@codeaurora.org> wrote:
->
-> On Sat, Dec 26 2020 at 05:33 -0700, Ulf Hansson wrote:
-> >On Fri, 25 Dec 2020 at 02:31, Lina Iyer <ilina@codeaurora.org> wrote:
-> >>
-> >> On Tue, Dec 22 2020 at 03:16 -0700, Ulf Hansson wrote:
-> >> >On Wed, 16 Dec 2020 at 18:51, Lina Iyer <ilina@codeaurora.org> wrote:
-> >> >>
-> >> >> In order to debug critical domain and device power issues, it may be
-> >> >> necessary to disallow certain idle states at runtime. Let the device
-> >> >> disallow a domain idle state before suspending.The domain governor shall
-> >> >> check for the 'disabled' flag while determining the domain idle state.
-> >> >
-> >> >For debug purposes, you might as well just set a dev PM Qos latency
-> >> >request that corresponds to the state you want to disable. This will
-> >> >then prevent the genpd governor from selecting the state.
-> >> >
-> >> True, but it will also disable idle states deeper as well. Would like to
-> >> avoid that.
-> >
-> >I see. In any case, I am not so excited about adding an exported genpd
-> >interface for this that drivers can call, for example.
-> >
-> >Then I would rather see a proper debugfs interface, where userspace
-> >can both see the available states and choose which one to
-> >disable/enable. Would that work?
-> >
-> Sure, that would work. Any recommendations for existing debugfs node
-> that we can add this to or something new?
+As per specs, e.g, JESD220E chapter 7.2, while powering
+off/on the ufs device, RST_n signal should be between
+VSS(Ground) and VCCQ/VCCQ2.
 
-I think there are two options:
-1. A specific "enabled-states" node containing an array of values, one
-value for each available state. Like "on off on", if there are three
-states available, for example.
-2. Convert into having a per idle state subnode/directory and then add
-a "enabled" node for each state.
+Signed-off-by: Ziqi Chen <ziqichen@codeaurora.org>
+---
+ drivers/scsi/ufs/ufs-qcom.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-I guess the second option is more straightforward and easier for user
-space to deal with, but I have no strong opinions.
+diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+index 2206b1e..f97d7b0 100644
+--- a/drivers/scsi/ufs/ufs-qcom.c
++++ b/drivers/scsi/ufs/ufs-qcom.c
+@@ -568,6 +568,17 @@ static int ufs_qcom_link_startup_notify(struct ufs_hba *hba,
+ 	return err;
+ }
+ 
++static void ufs_qcom_device_reset_ctrl(struct ufs_hba *hba, bool asserted)
++{
++	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
++
++	/* reset gpio is optional */
++	if (!host->device_reset)
++		return;
++
++	gpiod_set_value_cansleep(host->device_reset, asserted);
++}
++
+ static int ufs_qcom_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ {
+ 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+@@ -582,6 +593,9 @@ static int ufs_qcom_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ 		ufs_qcom_disable_lane_clks(host);
+ 		phy_power_off(phy);
+ 
++		/* reset the connected UFS device during power down */
++		ufs_qcom_device_reset_ctrl(hba, true);
++
+ 	} else if (!ufs_qcom_is_link_active(hba)) {
+ 		ufs_qcom_disable_lane_clks(host);
+ 	}
+@@ -1421,10 +1435,10 @@ static int ufs_qcom_device_reset(struct ufs_hba *hba)
+ 	 * The UFS device shall detect reset pulses of 1us, sleep for 10us to
+ 	 * be on the safe side.
+ 	 */
+-	gpiod_set_value_cansleep(host->device_reset, 1);
++	ufs_qcom_device_reset_ctrl(hba, true);
+ 	usleep_range(10, 15);
+ 
+-	gpiod_set_value_cansleep(host->device_reset, 0);
++	ufs_qcom_device_reset_ctrl(hba, false);
+ 	usleep_range(10, 15);
+ 
+ 	return 0;
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-Perhaps there is a third option as well?
-
-Kind regards
-Uffe
