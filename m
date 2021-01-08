@@ -2,113 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2776C2EEE66
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 09:16:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AF1142EEEE1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 09:55:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726241AbhAHIQD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jan 2021 03:16:03 -0500
-Received: from so254-31.mailgun.net ([198.61.254.31]:37335 "EHLO
-        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725791AbhAHIQC (ORCPT
+        id S1727896AbhAHIzY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jan 2021 03:55:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59416 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727816AbhAHIzQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jan 2021 03:16:02 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1610093742; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=b6AodYinfxqgN5rmyfBtR5RJOs+mkE0k1+xFJsU25VQ=;
- b=GmSOFEqH7dBYBsZp8v6YPepwshWkPYiW+2rINizrr1+EImexg1pPnhTOq0Ao3WB2q4MVHWU0
- JaLaR9/632T1UI5laSE/YSnUf5DR/gJOj6SXBgl7zSY+d1ps34+Lqsh9nWGPDfn455B7h7vw
- xs0R7jgN5aBubSyoosoB5iR3yKM=
-X-Mailgun-Sending-Ip: 198.61.254.31
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 5ff81491b95fc593262f9a20 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 08 Jan 2021 08:15:13
- GMT
-Sender: ziqichen=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 65DF1C43467; Fri,  8 Jan 2021 08:15:12 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: ziqichen)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 80F07C433C6;
-        Fri,  8 Jan 2021 08:15:11 +0000 (UTC)
+        Fri, 8 Jan 2021 03:55:16 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C478DC0612F5
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jan 2021 00:54:35 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id r3so8221851wrt.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jan 2021 00:54:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=QuR+JC6c/wr5a0vkmt1t5u+qCj+GkMz9/HxZNyt+DCY=;
+        b=KEf3i2omZZwrv0pr+7ro9gc/I89DER1jlACD56wRz+nifPEPj/IDE1iVZjK6PfEWRp
+         T2Yp7xx77cl1Rkn9p9GNx3ycylyqogHS2bd3s7GAyh3B47HzMJgsYbdhoQ3oO83UK6oy
+         t0Dh4CL5Im4j98rEF4M9bSpgiysANPmfWfh6E=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=QuR+JC6c/wr5a0vkmt1t5u+qCj+GkMz9/HxZNyt+DCY=;
+        b=ZQfkKOd3zuwPBhmoimh2QaxHAv6IR04JUeNx2Jzc3VChm2yG0ae2LQHUgnqTXfJ0TS
+         sV08fJ4IxMnhRO3Ranjt+m6NPxe85lpORQtb0Ee5WJf6v+5xgTvv6D65RR/aMEDxarWM
+         wl1Zr1Sn/8ZA1GfVHkvHYDphTHgYz2HseMXh+zwD7rRgXFKGqoTe4/wnLFXamfFXkPPD
+         EWKDUO7XxyivYlZV3C/SXKhjls/H4pH3jJ08PRVAMi6jRZ78/M1peHAXAyvf41d4YuDV
+         yxcbUSImoijE0auBeSfnVpsADpggk446S90oohjV40YAJST8xlfjyawGfDsRBgLaZ45c
+         tTfQ==
+X-Gm-Message-State: AOAM5319kIFAGrtH6HVsx41HtEq3Ok8uXeyiRPpe8XyNOfVihrvyRFjy
+        4XDvIIF04tdmL6BMc219iW7q4w==
+X-Google-Smtp-Source: ABdhPJyNbFAVIbTd+XR5DzXliuhYX2RzBzptCc19XAuMuO9iVGMPScn3uS27BR0GrpdpehHcfqNU7Q==
+X-Received: by 2002:adf:f58a:: with SMTP id f10mr2697031wro.338.1610096074512;
+        Fri, 08 Jan 2021 00:54:34 -0800 (PST)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id l11sm12317188wrt.23.2021.01.08.00.54.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Jan 2021 00:54:33 -0800 (PST)
+Date:   Fri, 8 Jan 2021 09:54:31 +0100
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Dave Airlie <airlied@gmail.com>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Sean Paul <sean@poorly.run>
+Subject: Re: [pull] drm/msm: drm-msm-fixes-2021-01-07
+Message-ID: <X/gdxzT+o8BcsoY9@phenom.ffwll.local>
+References: <CAF6AEGtWMhzyD6kejmViZeZ+zfJxRvfq-R2t_zA+DcDiTxsYRQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 08 Jan 2021 16:15:11 +0800
-From:   ziqichen@codeaurora.org
-To:     Can Guo <cang@codeaurora.org>
-Cc:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
-        hongwus@codeaurora.org, rnayak@codeaurora.org,
-        vinholikatti@gmail.com, jejb@linux.vnet.ibm.com,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
-        kernel-team@android.com, saravanak@google.com, salyzyn@google.com,
-        kwmad.kim@samsung.com, stanley.chu@mediatek.com,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 2/2] scsi: ufs-qcom: Fix ufs RST_n specs violation
-In-Reply-To: <d7e6a5ed6da3b18be7440e7590f6ef14@codeaurora.org>
-References: <1610090885-50099-1-git-send-email-ziqichen@codeaurora.org>
- <1610090885-50099-3-git-send-email-ziqichen@codeaurora.org>
- <d7e6a5ed6da3b18be7440e7590f6ef14@codeaurora.org>
-Message-ID: <7ba4d02c624ca973257a40e95e04ae69@codeaurora.org>
-X-Sender: ziqichen@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAF6AEGtWMhzyD6kejmViZeZ+zfJxRvfq-R2t_zA+DcDiTxsYRQ@mail.gmail.com>
+X-Operating-System: Linux phenom 5.7.0-1-amd64 
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-01-08 16:05, Can Guo wrote:
-> On 2021-01-08 15:28, Ziqi Chen wrote:
->> As per specs, e.g, JESD220E chapter 7.2, while powering
->> off/on the ufs device, RST_n signal should be between
->> VSS(Ground) and VCCQ/VCCQ2.
->> 
->> Signed-off-by: Ziqi Chen <ziqichen@codeaurora.org>
->> ---
->>  drivers/scsi/ufs/ufs-qcom.c | 4 ++++
->>  1 file changed, 4 insertions(+)
->> 
->> diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
->> index 2206b1e..d8b896c 100644
->> --- a/drivers/scsi/ufs/ufs-qcom.c
->> +++ b/drivers/scsi/ufs/ufs-qcom.c
->> @@ -582,6 +582,10 @@ static int ufs_qcom_suspend(struct ufs_hba *hba,
->> enum ufs_pm_op pm_op)
->>  		ufs_qcom_disable_lane_clks(host);
->>  		phy_power_off(phy);
->> 
->> +		/* reset the connected UFS device during power down */
->> +		if (host->device_reset)
->> +			gpiod_set_value_cansleep(host->device_reset, 1);
->> +
+On Thu, Jan 07, 2021 at 01:54:59PM -0800, Rob Clark wrote:
+> Hi Dave,
 > 
-> Instead of calling gpiod_set_value(1/0) directly,
-> can we have a wrapper func for it?
+> A few misc fixes
 > 
-> Thanks,
-> Can Guo.
+> The following changes since commit e319a1b956f785f618611857cd946dca2bb68542:
+> 
+>   drm/msm: add IOMMU_SUPPORT dependency (2020-12-05 08:25:52 -0800)
+> 
+> are available in the Git repository at:
+> 
+>   https://gitlab.freedesktop.org/drm/msm.git drm-msm-fixes-2021-01-07
 
-Sure, it'll be better that way.
-
-Best Regards,
-Ziqi
+Applied, thanks.
+-Daniel
 
 > 
->>  	} else if (!ufs_qcom_is_link_active(hba)) {
->>  		ufs_qcom_disable_lane_clks(host);
->>  	}
+> for you to fetch changes up to 00fd44a1a4700718d5d962432b55c09820f7e709:
+> 
+>   drm/msm: Only enable A6xx LLCC code on A6xx (2021-01-07 09:23:05 -0800)
+> 
+> ----------------------------------------------------------------
+> Craig Tatlor (1):
+>       drm/msm: Call msm_init_vram before binding the gpu
+> 
+> Iskren Chernev (3):
+>       drm/msm: Fix null dereference in _msm_gem_new
+>       drm/msm: Ensure get_pages is called when locked
+>       drm/msm: Add modparam to allow vram carveout
+> 
+> Konrad Dybcio (1):
+>       drm/msm: Only enable A6xx LLCC code on A6xx
+> 
+> Kuogee Hsieh (1):
+>       drm/msm/dp: postpone irq_hpd event during connection pending state
+> 
+> Rob Clark (1):
+>       drm/msm: Fix WARN_ON() splat in _free_object()
+> 
+>  drivers/gpu/drm/msm/adreno/a2xx_gpu.c      |  6 ++++--
+>  drivers/gpu/drm/msm/adreno/a3xx_gpu.c      |  6 ++++--
+>  drivers/gpu/drm/msm/adreno/a4xx_gpu.c      |  6 ++++--
+>  drivers/gpu/drm/msm/adreno/adreno_device.c |  4 ++++
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.c    | 21 ++++++++++++---------
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  6 ++++++
+>  drivers/gpu/drm/msm/dp/dp_display.c        |  7 +++++++
+>  drivers/gpu/drm/msm/dp/dp_panel.c          | 12 +++++++++---
+>  drivers/gpu/drm/msm/msm_drv.c              |  8 ++++----
+>  drivers/gpu/drm/msm/msm_gem.c              | 13 +++++++++----
+>  10 files changed, 63 insertions(+), 26 deletions(-)
+> _______________________________________________
+> dri-devel mailing list
+> dri-devel@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/dri-devel
+
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
