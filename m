@@ -2,112 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 57A652EF8C1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 21:16:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B4E462EF97B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 21:42:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729048AbhAHUQF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jan 2021 15:16:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52428 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728871AbhAHUQF (ORCPT
+        id S1729201AbhAHUk4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jan 2021 15:40:56 -0500
+Received: from m43-15.mailgun.net ([69.72.43.15]:31258 "EHLO
+        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726535AbhAHUkz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jan 2021 15:16:05 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 163B7C0612FF
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jan 2021 12:15:10 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id w5so10107911wrm.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jan 2021 12:15:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=O/JKS4Z9qKDOKy5sO9nbCc5XSxxopAD1h4qHJfgSdqg=;
-        b=wBSjRd6hUt3BDerrolAnKVhQ503TF7vDvG8dtbt/o8U9vNcsSGQEhFuSmNBOZGNp10
-         PIzT2j7v23x8tNl3mkHGXOcF+GrbyDeTlpsSGDgKmSEcKYq0dab/m2KdmmOB57EVyCpI
-         r/A8Jpxw89BpPtpwDjyN5aPAuMZ6s/KjgVgcsFPBXl9ioick3mKTDMbOEZOEwxasDz6g
-         kl+0YEl+Xa46pYow7bex/TCbi1vZ4ecASb12ivzYiyc1CtI38PubzyDvHvhdXqR3IFIm
-         7hlsKs/zBlnsTrpiIEgwVdlZk1DB0zjTg9F3/sQC5vQghrwIso0dr5KcEZBs+6wROCj1
-         YPSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=O/JKS4Z9qKDOKy5sO9nbCc5XSxxopAD1h4qHJfgSdqg=;
-        b=gCcw6n89azzxgYKYe1Woh0hbuFc3p5Iz3h0apLvCNMnpTS/nrEMa0TVoYw19zu+gEQ
-         Sh+WYgZQO9lBqsq9gmvctSDUxRMrq2TZLH9MsHF+CYC11/Vfi/2q0kcRokQBQmiHRrgh
-         pEREiC04AYmm4sBpnqzHkUqRlanUOzlbtmgWjKHOtIUOwiyZNcK0NIwEKRzPnrmTsgOy
-         k9XAFuSo86HzZH54VK7IZByvN1/RLKgj5TiKKsEm0mF46oSTjsW+ExrZ1SnhmDaLlxbj
-         dZl6h6ElfzhIP8X0pujTmymKOBn8hKBKKRq6qStkrGXucLADAEAmf3OMw0GpOtwfe0M6
-         1MyQ==
-X-Gm-Message-State: AOAM533u3By0D06DsE9B4YsXr1DjBhUTZ0bewDAmKECkqGUkGIdlMrSp
-        DJ9sXOLv/2WH0ji2KooMu7lc3g==
-X-Google-Smtp-Source: ABdhPJxbhB+24hC60aHyeAnKIacOXED/VpuqohB/XOtKWtR3SUXj9zKBQgJMyNVeGBh14t7z/3fisA==
-X-Received: by 2002:adf:ee10:: with SMTP id y16mr5306753wrn.296.1610136908812;
-        Fri, 08 Jan 2021 12:15:08 -0800 (PST)
-Received: from dell.default ([91.110.221.229])
-        by smtp.gmail.com with ESMTPSA id l8sm15598671wrb.73.2021.01.08.12.15.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Jan 2021 12:15:08 -0800 (PST)
-From:   Lee Jones <lee.jones@linaro.org>
-To:     lee.jones@linaro.org
-Cc:     linux-kernel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Kuogee Hsieh <khsieh@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH 03/40] drm/msm/dp/dp_display: Remove unused variable 'hpd'
-Date:   Fri,  8 Jan 2021 20:14:20 +0000
-Message-Id: <20210108201457.3078600-4-lee.jones@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210108201457.3078600-1-lee.jones@linaro.org>
-References: <20210108201457.3078600-1-lee.jones@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        Fri, 8 Jan 2021 15:40:55 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1610138435; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=qLA3LpoWylWR06vLJtM3NiGDbgNo/hzbOnZhqJLxv1Y=; b=E0mmgiRS3Kqj8qf6UTXsoAYxtzqVPIRCFR9S4FOHAfRDRraEaRy8yrx/6CPH4pf7SFquPo37
+ MiWn4h4NvjHjoDkYgDH/KdbLzmQk2TREAbUu5htHHyhCWqE6M2DHaQQWu4W0aQ88BiSilLl+
+ E6gI7iwytU3zsEVJAAOSMRRy3bk=
+X-Mailgun-Sending-Ip: 69.72.43.15
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 5ff8c3264104d9478d2c2a25 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 08 Jan 2021 20:40:06
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A6F58C43462; Fri,  8 Jan 2021 20:40:05 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6E726C433CA;
+        Fri,  8 Jan 2021 20:40:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6E726C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
+        loic.poulain@linaro.org, Bhaumik Bhatt <bbhatt@codeaurora.org>
+Subject: [RESEND PATCH v4 0/8] Updates to MHI channel handling
+Date:   Fri,  8 Jan 2021 12:39:48 -0800
+Message-Id: <1610138396-25811-1-git-send-email-bbhatt@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fixes the following W=1 kernel build warning(s):
+MHI specification shows a state machine with support for STOP channel command
+and the validity of certain state transitions. MHI host currently does not
+provide any mechanism to stop a channel and restart it without resetting it.
+There are also times when the device moves on to a different execution
+environment while client drivers on the host are unaware of it and still
+attempt to reset the channels facing unnecessary timeouts.
 
- drivers/gpu/drm/msm/dp/dp_display.c: In function ‘dp_display_usbpd_attention_cb’:
- drivers/gpu/drm/msm/dp/dp_display.c:496:19: warning: variable ‘hpd’ set but not used [-Wunused-but-set-variable]
+This series addresses the above areas to provide support for stopping an MHI
+channel, resuming it back, improved documentation and improving upon channel
+state machine handling in general.
 
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Sean Paul <sean@poorly.run>
-Cc: David Airlie <airlied@linux.ie>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: Kuogee Hsieh <khsieh@codeaurora.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org
-Signed-off-by: Lee Jones <lee.jones@linaro.org>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 3 ---
- 1 file changed, 3 deletions(-)
+This set of patches was tested on arm64 architecture.
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 6e971d552911f..637a5585c2fd8 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -493,7 +493,6 @@ static int dp_display_usbpd_attention_cb(struct device *dev)
- 	int rc = 0;
- 	u32 sink_request;
- 	struct dp_display_private *dp;
--	struct dp_usbpd *hpd;
- 
- 	if (!dev) {
- 		DRM_ERROR("invalid dev\n");
-@@ -507,8 +506,6 @@ static int dp_display_usbpd_attention_cb(struct device *dev)
- 		return -ENODEV;
- 	}
- 
--	hpd = dp->usbpd;
--
- 	/* check for any test request issued by sink */
- 	rc = dp_link_process_request(dp->link);
- 	if (!rc) {
+v4:
+-Updated commit text/descriptions and addressed checkpatch checks
+-Added context validity check before starting/stopping channels from new API
+-Added patch to clear channel context configuration after reset/unprepare
+
+v3:
+-Updated documentation for channel transfer APIs to highlight differences
+-Create separate patch for "allowing channel to be disabled from stopped state"
+
+v2:
+-Renamed the newly introduced APIs to mhi_start_transfer() / mhi_stop_transfer()
+-Added improved documentation to avoid confusion with the new APIs
+-Removed the __ prefix from mhi_unprepare_channel() API for consistency.
+
+Bhaumik Bhatt (8):
+  bus: mhi: core: Allow sending the STOP channel command
+  bus: mhi: core: Allow channel to be disabled from stopped state
+  bus: mhi: core: Improvements to the channel handling state machine
+  bus: mhi: core: Clear configuration from channel context during reset
+  bus: mhi: core: Add support to stop or start channel data transfers
+  bus: mhi: core: Check channel execution environment before issuing
+    reset
+  bus: mhi: core: Remove __ prefix for MHI channel unprepare function
+  bus: mhi: Improve documentation on channel transfer setup APIs
+
+ drivers/bus/mhi/core/init.c     |  22 +++-
+ drivers/bus/mhi/core/internal.h |  12 ++
+ drivers/bus/mhi/core/main.c     | 238 ++++++++++++++++++++++++++++------------
+ include/linux/mhi.h             |  45 +++++++-
+ 4 files changed, 242 insertions(+), 75 deletions(-)
+
 -- 
-2.25.1
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
