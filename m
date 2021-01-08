@@ -2,303 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A7E372EF20A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 13:08:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A21F2EF288
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 13:27:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728075AbhAHMIH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jan 2021 07:08:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32924 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728073AbhAHMIG (ORCPT
+        id S1727502AbhAHM1P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jan 2021 07:27:15 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:45293 "EHLO
+        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727451AbhAHM1P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jan 2021 07:08:06 -0500
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD476C0612F4
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jan 2021 04:07:26 -0800 (PST)
-Received: by mail-pf1-x42e.google.com with SMTP id h186so6136571pfe.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jan 2021 04:07:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=7+wPI5svthzXhBsVs1eF0k617JV5P3gfJFvuVAYuIh4=;
-        b=f5qxioedjdsegiKHuqNvMq7xOQ1qCERasw/UMqypMUpopfRoUrvSoQxP+SJUHZ2afk
-         rewLlim8KSwC3PRudOBcyWBjm9mbI6k73LBM+OnYVhUKE3L/36DazII/vzkEvbqWeYXl
-         cWoBbYFqU1SE+cht6rGq+iarIgM8Ks5BWBP5ERK7RZjSctlC8lHyHycBpCPjOk5cVsb3
-         tEGnukWGi0wyPJW7yD4/oxOZCnr0XHwGxnoymGdqiaEYo02yDE+BxkhOBPmLlw8LLqVm
-         W9dW6URSbRG2VmObxHaXYNy+EUa4OU2uWFyYBcGL7Alf5IUN5Dpox3YYvvpo/0PvQQbG
-         nibg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=7+wPI5svthzXhBsVs1eF0k617JV5P3gfJFvuVAYuIh4=;
-        b=aVaEZ+i1OhR6RVbzkf2qp5TL5UhReF41G2lxHGDF4HrllnmXXYU9Zm60hyQMqFnLfy
-         LMoaLppoeyCVksZ+okBfk7NxXiOXq/Bk/cU0INkdaf5hRyAeQhLgeOSo/eYXqYHAZW5w
-         vaTGhZjoycB9MxuE+PbxLIQvCq/KaNikbSd1JH6WZcKSvFQGYZMFCfzp8599vX9Zf0DQ
-         DsYZMIJvZhxyERkZUuEUaYqkhhJtmt/r2aGF4vNwpz7FfM8K1zopd61TNVNFbaPZBXNI
-         ki6QDACqvOd3MRJJBrhmcRjiVmX0fUImZg1AXFazRhKzcOaqG0Y2TdDC/y7hOYbXGEta
-         bEMw==
-X-Gm-Message-State: AOAM530HNA8R0IePUwe6LPWD+nzTK5Jl1OK2mIc6w1E0rhVUkNas8p1F
-        MHgrHMdvESEd9UqqwmC/i1Zs
-X-Google-Smtp-Source: ABdhPJwxIaobs2Xruh/yJ6LxzIZZL73AxCSCMooTow/H10+qQA3ocxeqxbYyLT/IH6ey253tGJxRLw==
-X-Received: by 2002:a63:5304:: with SMTP id h4mr6703027pgb.199.1610107646094;
-        Fri, 08 Jan 2021 04:07:26 -0800 (PST)
-Received: from thinkpad ([103.77.37.188])
-        by smtp.gmail.com with ESMTPSA id cl23sm7700862pjb.23.2021.01.08.04.07.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Jan 2021 04:07:25 -0800 (PST)
-Date:   Fri, 8 Jan 2021 17:37:22 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] mhi: core: Factorize mhi queuing
-Message-ID: <20210108120722.GC74017@thinkpad>
-References: <1607599892-6229-1-git-send-email-loic.poulain@linaro.org>
+        Fri, 8 Jan 2021 07:27:15 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1610108808; h=Content-Transfer-Encoding: MIME-Version:
+ References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=ltITCVK+GHt+cI16gwWol0Uz6E4S5jii+UYNG7fhJxc=; b=Wt+tHeoWs7XQNhU26dW57UocRuQr4UAAg3IxOwqHxiWQpwzxCAWVKc37QF3biWCL6kMR9M9j
+ gMTIhykw7EegK0fLMLvTPisAFslfIFfaGHvyuRQeIzj8/4p+SO/5F2485s+ayXl4bgT+fmMv
+ 7nFzwt7IavT5Lnvvu6bZ6EBA9Gs=
+X-Mailgun-Sending-Ip: 198.61.254.31
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n09.prod.us-west-2.postgun.com with SMTP id
+ 5ff84f6c0699456d21090121 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 08 Jan 2021 12:26:20
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 253ADC433CA; Fri,  8 Jan 2021 12:26:20 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4A4DCC43462;
+        Fri,  8 Jan 2021 12:26:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4A4DCC43462
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     robdclark@gmail.com
+Cc:     airlied@linux.ie, airlied@redhat.com, akhilpo@codeaurora.org,
+        angelogioacchino.delregno@somainline.org,
+        bjorn.andersson@linaro.org, daniel@ffwll.ch,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        jcrouse@codeaurora.org, jonathan@marek.ca,
+        konrad.dybcio@somainline.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, marijn.suijten@somainline.org,
+        martin.botka@somainline.org, phone-devel@vger.kernel.org,
+        saiprakash.ranjan@codeaurora.org, sean@poorly.run,
+        shawn.guo@linaro.org, smasetty@codeaurora.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH] drm/msm: Only enable A6xx LLCC code on A6xx
+Date:   Fri,  8 Jan 2021 17:56:01 +0530
+Message-Id: <20210108122601.14993-1-saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.29.0
+In-Reply-To: <CAF6AEGu0Sv6nYNDn0z61pXRjNyFLpLw5S4_O3opmrQ-UVNR_MA@mail.gmail.com>
+References: <CAF6AEGu0Sv6nYNDn0z61pXRjNyFLpLw5S4_O3opmrQ-UVNR_MA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1607599892-6229-1-git-send-email-loic.poulain@linaro.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 10, 2020 at 12:31:32PM +0100, Loic Poulain wrote:
-> Instead of duplicating queuing procedure in mhi_queue_dma(),
-> mhi_queue_buf() and mhi_queue_skb(), add a new generic mhi_queue()
-> as common helper.
-> 
+Hi Rob, Konrad,
 
-While doing the factoring, please don't make any additional changes. If you want
-to do, then use incremental patches.
+On 2021-01-07 22:56, Rob Clark wrote:
+> On Wed, Jan 6, 2021 at 8:50 PM Sai Prakash Ranjan
+> <saiprakash.ranjan@codeaurora.org> wrote:
+>>
+>> On 2021-01-05 01:00, Konrad Dybcio wrote:
+>> > Using this code on A5xx (and probably older too) causes a
+>> > smmu bug.
+>> >
+>> > Fixes: 474dadb8b0d5 ("drm/msm/a6xx: Add support for using system
+>> > cache(LLC)")
+>> > Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+>> > Tested-by: AngeloGioacchino Del Regno
+>> > <angelogioacchino.delregno@somainline.org>
+>> > ---
+>>
+>> Reviewed-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+>>
+>> >  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 21 ++++++++++++---------
+>> >  drivers/gpu/drm/msm/adreno/adreno_gpu.h |  5 +++++
+>> >  2 files changed, 17 insertions(+), 9 deletions(-)
+>> >
+>> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+>> > b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+>> > index 6cf9975e951e..f09175698827 100644
+>> > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+>> > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+>> > @@ -191,8 +191,6 @@ adreno_iommu_create_address_space(struct msm_gpu
+>> > *gpu,
+>> >               struct platform_device *pdev)
+>> >  {
+>> >       struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+>> > -     struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+>> > -     struct io_pgtable_domain_attr pgtbl_cfg;
+>> >       struct iommu_domain *iommu;
+>> >       struct msm_mmu *mmu;
+> >       struct msm_gem_address_space *aspace;
+>> > @@ -202,13 +200,18 @@ adreno_iommu_create_address_space(struct msm_gpu
+>> > *gpu,
+>> >       if (!iommu)
+>> >               return NULL;
+>> >
+>> > -     /*
+>> > -      * This allows GPU to set the bus attributes required to use system
+>> > -      * cache on behalf of the iommu page table walker.
+>> > -      */
+>> > -     if (!IS_ERR(a6xx_gpu->htw_llc_slice)) {
+>> > -             pgtbl_cfg.quirks = IO_PGTABLE_QUIRK_ARM_OUTER_WBWA;
+>> > -             iommu_domain_set_attr(iommu, DOMAIN_ATTR_IO_PGTABLE_CFG,
+>> > &pgtbl_cfg);
+>> > +
+>> > +     if (adreno_is_a6xx(adreno_gpu)) {
+>> > +             struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+>> > +             struct io_pgtable_domain_attr pgtbl_cfg;
+>> > +             /*
+>> > +             * This allows GPU to set the bus attributes required to use system
+>> > +             * cache on behalf of the iommu page table walker.
+>> > +             */
+>> > +             if (!IS_ERR(a6xx_gpu->htw_llc_slice)) {
+>> > +                     pgtbl_cfg.quirks = IO_PGTABLE_QUIRK_ARM_OUTER_WBWA;
+>> > +                     iommu_domain_set_attr(iommu, DOMAIN_ATTR_IO_PGTABLE_CFG,
+>> > &pgtbl_cfg);
+>> > +             }
+>
+> I'm applying for -fixes as this is an obvious problem..  But kinda
+> thinking that we should try to move it into an a6xx specific
+> create_address_space() (or wrapper for the generic fxn)
+>
+> Sai/Jordan, could I talk one of you into trying to clean this up
+> better for next cycle?
+>
+
+Looking more closely(sorry I should have before), the quirk setting
+is already guarded by htw_llc_slice check but what is happening here is
+that check is not proper when LLCC is disabled i.e., CONFIG_QCOM_LLCC=n.
+When LLCC is disabled, htw_llc_slice is set to NULL and the !IS_ERR
+check passes because it doesn't take care of NULL and quirk is
+set causing bugs. So the proper fix would be to use IS_ERR_OR_NULL for
+the check.
+
+Konrad, can you please test this below change without your change?
+
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 130661898546..3b798e883f82 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1117,7 +1117,7 @@ static void a6xx_llc_slices_init(struct platform_device *pdev,
+        a6xx_gpu->llc_slice = llcc_slice_getd(LLCC_GPU);
+        a6xx_gpu->htw_llc_slice = llcc_slice_getd(LLCC_GPUHTW);
+
+-       if (IS_ERR(a6xx_gpu->llc_slice) && IS_ERR(a6xx_gpu->htw_llc_slice))
++       if (IS_ERR_OR_NULL(a6xx_gpu->llc_slice) && IS_ERR_OR_NULL(a6xx_gpu->htw_llc_slice))
+                a6xx_gpu->llc_mmio = ERR_PTR(-EINVAL);
+ }
+
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index 6cf9975e951e..dbd5cacddb9c 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -206,7 +206,7 @@ adreno_iommu_create_address_space(struct msm_gpu *gpu,
+         * This allows GPU to set the bus attributes required to use system
+         * cache on behalf of the iommu page table walker.
+         */
+-       if (!IS_ERR(a6xx_gpu->htw_llc_slice)) {
++       if (!IS_ERR_OR_NULL(a6xx_gpu->htw_llc_slice)) {
+                pgtbl_cfg.quirks = IO_PGTABLE_QUIRK_ARM_OUTER_WBWA;
+                iommu_domain_set_attr(iommu, DOMAIN_ATTR_IO_PGTABLE_CFG, &pgtbl_cfg);
+        }
+
 
 Thanks,
-Mani
+Sai
 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> ---
->  drivers/bus/mhi/core/main.c | 160 +++++++++++---------------------------------
->  1 file changed, 38 insertions(+), 122 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> index 3871ef0..4fa4c88 100644
-> --- a/drivers/bus/mhi/core/main.c
-> +++ b/drivers/bus/mhi/core/main.c
-> @@ -963,118 +963,78 @@ static bool mhi_is_ring_full(struct mhi_controller *mhi_cntrl,
->  	return (tmp == ring->rp);
->  }
->  
-> -int mhi_queue_skb(struct mhi_device *mhi_dev, enum dma_data_direction dir,
-> -		  struct sk_buff *skb, size_t len, enum mhi_flags mflags)
-> +static int mhi_queue(struct mhi_device *mhi_dev, struct mhi_buf_info *buf_info,
-> +		     enum dma_data_direction dir, enum mhi_flags mflags)
->  {
->  	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
->  	struct mhi_chan *mhi_chan = (dir == DMA_TO_DEVICE) ? mhi_dev->ul_chan :
->  							     mhi_dev->dl_chan;
->  	struct mhi_ring *tre_ring = &mhi_chan->tre_ring;
-> -	struct mhi_buf_info buf_info = { };
-> +	unsigned long flags;
->  	int ret;
->  
-> -	/* If MHI host pre-allocates buffers then client drivers cannot queue */
-> -	if (mhi_chan->pre_alloc)
-> -		return -EINVAL;
-> +	if (unlikely(MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)))
-> +		return -EIO;
->  
-> -	if (mhi_is_ring_full(mhi_cntrl, tre_ring))
-> -		return -ENOMEM;
-> +	read_lock_irqsave(&mhi_cntrl->pm_lock, flags);
->  
-> -	read_lock_bh(&mhi_cntrl->pm_lock);
-> -	if (unlikely(MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state))) {
-> -		read_unlock_bh(&mhi_cntrl->pm_lock);
-> -		return -EIO;
-> +	ret = mhi_is_ring_full(mhi_cntrl, tre_ring);
-> +	if (unlikely(ret)) {
-> +		ret = -ENOMEM;
-> +		goto exit_unlock;
->  	}
->  
-> -	/* we're in M3 or transitioning to M3 */
-> +	ret = mhi_gen_tre(mhi_cntrl, mhi_chan, buf_info, mflags);
-> +	if (unlikely(ret))
-> +		goto exit_unlock;
-> +
-> +	/* trigger M3 exit if necessary */
->  	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state))
->  		mhi_trigger_resume(mhi_cntrl);
->  
-> -	/* Toggle wake to exit out of M2 */
-> +	/* Assert dev_wake (to exit/prevent M1/M2)*/
->  	mhi_cntrl->wake_toggle(mhi_cntrl);
->  
-> -	buf_info.v_addr = skb->data;
-> -	buf_info.cb_buf = skb;
-> -	buf_info.len = len;
-> -
-> -	ret = mhi_gen_tre(mhi_cntrl, mhi_chan, &buf_info, mflags);
-> -	if (unlikely(ret)) {
-> -		read_unlock_bh(&mhi_cntrl->pm_lock);
-> -		return ret;
-> -	}
-> -
->  	if (mhi_chan->dir == DMA_TO_DEVICE)
->  		atomic_inc(&mhi_cntrl->pending_pkts);
->  
-> -	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl))) {
-> -		read_lock_bh(&mhi_chan->lock);
-> -		mhi_ring_chan_db(mhi_cntrl, mhi_chan);
-> -		read_unlock_bh(&mhi_chan->lock);
-> +	if (unlikely(!MHI_DB_ACCESS_VALID(mhi_cntrl))) {
-> +		ret = -EIO;
-> +		goto exit_unlock;
->  	}
->  
-> -	read_unlock_bh(&mhi_cntrl->pm_lock);
-> +	mhi_ring_chan_db(mhi_cntrl, mhi_chan);
->  
-> -	return 0;
-> +exit_unlock:
-> +	read_unlock_irqrestore(&mhi_cntrl->pm_lock, flags);
-> +
-> +	return ret;
->  }
-> -EXPORT_SYMBOL_GPL(mhi_queue_skb);
->  
-> -int mhi_queue_dma(struct mhi_device *mhi_dev, enum dma_data_direction dir,
-> -		  struct mhi_buf *mhi_buf, size_t len, enum mhi_flags mflags)
-> +int mhi_queue_skb(struct mhi_device *mhi_dev, enum dma_data_direction dir,
-> +		  struct sk_buff *skb, size_t len, enum mhi_flags mflags)
->  {
-> -	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-> -	struct mhi_chan *mhi_chan = (dir == DMA_TO_DEVICE) ? mhi_dev->ul_chan :
-> -							     mhi_dev->dl_chan;
-> -	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-> -	struct mhi_ring *tre_ring = &mhi_chan->tre_ring;
->  	struct mhi_buf_info buf_info = { };
-> -	int ret;
->  
-> -	/* If MHI host pre-allocates buffers then client drivers cannot queue */
-> -	if (mhi_chan->pre_alloc)
-> -		return -EINVAL;
-> -
-> -	if (mhi_is_ring_full(mhi_cntrl, tre_ring))
-> -		return -ENOMEM;
-> -
-> -	read_lock_bh(&mhi_cntrl->pm_lock);
-> -	if (unlikely(MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state))) {
-> -		dev_err(dev, "MHI is not in activate state, PM state: %s\n",
-> -			to_mhi_pm_state_str(mhi_cntrl->pm_state));
-> -		read_unlock_bh(&mhi_cntrl->pm_lock);
-> -
-> -		return -EIO;
-> -	}
-> +	buf_info.v_addr = skb->data;
-> +	buf_info.cb_buf = skb;
-> +	buf_info.len = len;
->  
-> -	/* we're in M3 or transitioning to M3 */
-> -	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state))
-> -		mhi_trigger_resume(mhi_cntrl);
-> +	return mhi_queue(mhi_dev, &buf_info, dir, mflags);
-> +}
-> +EXPORT_SYMBOL_GPL(mhi_queue_skb);
->  
-> -	/* Toggle wake to exit out of M2 */
-> -	mhi_cntrl->wake_toggle(mhi_cntrl);
-> +int mhi_queue_dma(struct mhi_device *mhi_dev, enum dma_data_direction dir,
-> +		  struct mhi_buf *mhi_buf, size_t len, enum mhi_flags mflags)
-> +{
-> +	struct mhi_buf_info buf_info = { };
->  
->  	buf_info.p_addr = mhi_buf->dma_addr;
->  	buf_info.cb_buf = mhi_buf;
->  	buf_info.pre_mapped = true;
->  	buf_info.len = len;
->  
-> -	ret = mhi_gen_tre(mhi_cntrl, mhi_chan, &buf_info, mflags);
-> -	if (unlikely(ret)) {
-> -		read_unlock_bh(&mhi_cntrl->pm_lock);
-> -		return ret;
-> -	}
-> -
-> -	if (mhi_chan->dir == DMA_TO_DEVICE)
-> -		atomic_inc(&mhi_cntrl->pending_pkts);
-> -
-> -	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl))) {
-> -		read_lock_bh(&mhi_chan->lock);
-> -		mhi_ring_chan_db(mhi_cntrl, mhi_chan);
-> -		read_unlock_bh(&mhi_chan->lock);
-> -	}
-> -
-> -	read_unlock_bh(&mhi_cntrl->pm_lock);
-> -
-> -	return 0;
-> +	return mhi_queue(mhi_dev, &buf_info, dir, mflags);
->  }
->  EXPORT_SYMBOL_GPL(mhi_queue_dma);
->  
-> @@ -1128,57 +1088,13 @@ int mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
->  int mhi_queue_buf(struct mhi_device *mhi_dev, enum dma_data_direction dir,
->  		  void *buf, size_t len, enum mhi_flags mflags)
->  {
-> -	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-> -	struct mhi_chan *mhi_chan = (dir == DMA_TO_DEVICE) ? mhi_dev->ul_chan :
-> -							     mhi_dev->dl_chan;
-> -	struct mhi_ring *tre_ring;
->  	struct mhi_buf_info buf_info = { };
-> -	unsigned long flags;
-> -	int ret;
-> -
-> -	/*
-> -	 * this check here only as a guard, it's always
-> -	 * possible mhi can enter error while executing rest of function,
-> -	 * which is not fatal so we do not need to hold pm_lock
-> -	 */
-> -	if (unlikely(MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)))
-> -		return -EIO;
-> -
-> -	tre_ring = &mhi_chan->tre_ring;
-> -	if (mhi_is_ring_full(mhi_cntrl, tre_ring))
-> -		return -ENOMEM;
->  
->  	buf_info.v_addr = buf;
->  	buf_info.cb_buf = buf;
->  	buf_info.len = len;
->  
-> -	ret = mhi_gen_tre(mhi_cntrl, mhi_chan, &buf_info, mflags);
-> -	if (unlikely(ret))
-> -		return ret;
-> -
-> -	read_lock_irqsave(&mhi_cntrl->pm_lock, flags);
-> -
-> -	/* we're in M3 or transitioning to M3 */
-> -	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state))
-> -		mhi_trigger_resume(mhi_cntrl);
-> -
-> -	/* Toggle wake to exit out of M2 */
-> -	mhi_cntrl->wake_toggle(mhi_cntrl);
-> -
-> -	if (mhi_chan->dir == DMA_TO_DEVICE)
-> -		atomic_inc(&mhi_cntrl->pending_pkts);
-> -
-> -	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl))) {
-> -		unsigned long flags;
-> -
-> -		read_lock_irqsave(&mhi_chan->lock, flags);
-> -		mhi_ring_chan_db(mhi_cntrl, mhi_chan);
-> -		read_unlock_irqrestore(&mhi_chan->lock, flags);
-> -	}
-> -
-> -	read_unlock_irqrestore(&mhi_cntrl->pm_lock, flags);
-> -
-> -	return 0;
-> +	return mhi_queue(mhi_dev, &buf_info, dir, mflags);
->  }
->  EXPORT_SYMBOL_GPL(mhi_queue_buf);
->  
-> -- 
-> 2.7.4
-> 
+--
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
