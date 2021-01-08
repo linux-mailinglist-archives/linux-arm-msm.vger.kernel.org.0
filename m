@@ -2,176 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AC5B22EFAF9
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 23:17:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 30AC62EFB06
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 23:21:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726481AbhAHWRt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jan 2021 17:17:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43148 "EHLO
+        id S1725813AbhAHWVU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jan 2021 17:21:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726475AbhAHWRt (ORCPT
+        with ESMTP id S1725792AbhAHWVT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jan 2021 17:17:49 -0500
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDB67C061786
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jan 2021 14:17:08 -0800 (PST)
-Received: by mail-pj1-x102c.google.com with SMTP id b5so6983066pjl.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jan 2021 14:17:08 -0800 (PST)
+        Fri, 8 Jan 2021 17:21:19 -0500
+Received: from mail-vs1-xe2a.google.com (mail-vs1-xe2a.google.com [IPv6:2607:f8b0:4864:20::e2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D55EC061574
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jan 2021 14:20:39 -0800 (PST)
+Received: by mail-vs1-xe2a.google.com with SMTP id s85so6421529vsc.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jan 2021 14:20:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=bjEIPfAVcs3gvKNx7qo/y+ZN6/GFQFUSelSnLMyBbKM=;
-        b=AHOfCa3KDAvwViNbxGSDxxAEgeRhouqgX/PnG194y1JB8/hlqJT2sBVOkexcvvxXHg
-         lWVfTKnaqBo0JKM6AUisnmPsB76AQd1mL/M849kfaiaVxapEYrmszE10dsJ+TbIeAH6U
-         QWjU8qubuFuC2qmfuuCWEFNykB1U9PzNWOM44=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=+28rernzc3C0mjkmB3xMJvm5PiyDyFYwes4MhAeT590=;
+        b=miY99HtjMOqHsXPkemocimuS3wuxQX+VapsXPQMV4KxnP8YjfU5ngb/avj8ZdrErJd
+         5ECUo9eLuD54ehNvBzHxwTqRQ9/GABakXuA81do99rbJqsKVLS8w6hBIGgz75eeVap9B
+         tdylz0rZ0+h7lHAFNkDFeH6OutxCiexkTkXPg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=bjEIPfAVcs3gvKNx7qo/y+ZN6/GFQFUSelSnLMyBbKM=;
-        b=pavqTGyHE0PVhhlgtW6GYbUZw3J+JJVFH0ASd8AwSyrCNRhzU92zvwT1OhoKx2WyAs
-         Jlqrn5F/6y8YqJjYFlrYkQMBWLQY/pEdzGm7OMxgPyEIwfGDBYUM6r3VbGjKdGaBa5an
-         TduZOD5qQq5oowoWAPmEL8i/JbOpt6XbhDrrcM2LdX3Pgw9R9kJkSD9JrQ3tJVobBFuh
-         KBW+zRi5HkcqUyGh9K8tJRZBikAXcUWxGqRikiSHqWQVORAhe/fvn8hH0oWedKEXMeTt
-         qV6zubekWjLHk9ddKyq5D8FjuTC0F59qY/TAB9H4Jq51V/+e79LcYEw+zxIog20pluQa
-         LQIA==
-X-Gm-Message-State: AOAM531RkrmTc5std2PFXDyIktiCNBUN+jGMfjQDG9iwK4/t2g6Tnj8/
-        m7xk2mm5tFEnQG+09zpeWdWmJA==
-X-Google-Smtp-Source: ABdhPJzAHLjnmF4GvlVRhrnonjX1EETvvJY+osxKXojwVbp7pymJ+bXYDRr8La8qPkZy8RzFscLVDw==
-X-Received: by 2002:a17:90b:11d7:: with SMTP id gv23mr5978542pjb.2.1610144228367;
-        Fri, 08 Jan 2021 14:17:08 -0800 (PST)
-Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
-        by smtp.gmail.com with ESMTPSA id k7sm9638595pfh.201.2021.01.08.14.17.07
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+28rernzc3C0mjkmB3xMJvm5PiyDyFYwes4MhAeT590=;
+        b=WoFOgDyAZ3N4fYHM+yZNOOMA0HZHuhK7V1r8xTnWlh8IpwcwSgLHM1YEOkSj5xa38b
+         yEMMB7r0eBmhkstXgFOw+ZAHyrsxf8r9yv3YbKdHn8l5/nNcWz4FKyaM8DAxaToGJ1P+
+         7P+uwrG20tLL5H6t1HdzM+djtuCI5X8+tvfIyLrpDA7Vvpu3eFNiQr7fiuBzFbprGcx6
+         pF5ezQVwePTMKDZalkYJzFFTeFD4gA7V6xY7mODOE6gcAssOeC+nvURzxzCz+56G478h
+         HRf31drXiaGTMFmLrcMLfx4eXn0JXwaI737foq8W2Rxx87FeL7QHzZmcQOpHFVq8H35p
+         JIYQ==
+X-Gm-Message-State: AOAM530LvS9qR95euOMgy6161UsSzLeP7BfSqQyldd10G+UYNUdD52gK
+        tEfrEoT4Grhi8gh7NIFpfHnZTNnxtQaZ/w==
+X-Google-Smtp-Source: ABdhPJypcdJOHjkEGPl5fbYHg62M30WCeR7dKuGEZxs5Esest6VQGSoTQrdvrVCdFdYfRHkQXcuUQQ==
+X-Received: by 2002:a67:6044:: with SMTP id u65mr4687417vsb.31.1610144438397;
+        Fri, 08 Jan 2021 14:20:38 -0800 (PST)
+Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com. [209.85.217.51])
+        by smtp.gmail.com with ESMTPSA id x18sm1395718uan.17.2021.01.08.14.20.37
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 08 Jan 2021 14:17:07 -0800 (PST)
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
+        Fri, 08 Jan 2021 14:20:37 -0800 (PST)
+Received: by mail-vs1-f51.google.com with SMTP id z16so6398031vsp.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jan 2021 14:20:37 -0800 (PST)
+X-Received: by 2002:a67:32c5:: with SMTP id y188mr4644914vsy.4.1610144436974;
+ Fri, 08 Jan 2021 14:20:36 -0800 (PST)
+MIME-Version: 1.0
+References: <20210108141648.1.Ia8019b8b303ca31a06752ed6ceb5c3ac50bd1d48@changeid>
+In-Reply-To: <20210108141648.1.Ia8019b8b303ca31a06752ed6ceb5c3ac50bd1d48@changeid>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 8 Jan 2021 14:20:25 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=Wn3rqgu5fLYuJRQFU1s221VNvsk6voSY=_ye24HbMH4w@mail.gmail.com>
+Message-ID: <CAD=FV=Wn3rqgu5fLYuJRQFU1s221VNvsk6voSY=_ye24HbMH4w@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Add labels for cpuN-thermal nodes
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Matthias Kaehlcke <mka@chromium.org>
-Subject: [PATCH] arm64: dts: qcom: sc7180: Add labels for cpuN-thermal nodes
-Date:   Fri,  8 Jan 2021 14:16:50 -0800
-Message-Id: <20210108141648.1.Ia8019b8b303ca31a06752ed6ceb5c3ac50bd1d48@changeid>
-X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7-goog
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add labels to the cpuN-thermal nodes to allow board files to use
-a phandle instead replicating the node hierarchy when adjusting
-certain properties.
+Hi,
 
-Due to the 'sustainable-power' property CPU thermal zones are
-more likely to need property updates than other SC7180 zones,
-hence only labels for CPU zones are added for now.
+On Fri, Jan 8, 2021 at 2:17 PM Matthias Kaehlcke <mka@chromium.org> wrote:
+>
+> Add labels to the cpuN-thermal nodes to allow board files to use
+> a phandle instead replicating the node hierarchy when adjusting
+> certain properties.
+>
+> Due to the 'sustainable-power' property CPU thermal zones are
+> more likely to need property updates than other SC7180 zones,
+> hence only labels for CPU zones are added for now.
+>
+> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> ---
+>
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 20 ++++++++++----------
+>  1 file changed, 10 insertions(+), 10 deletions(-)
 
-Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
----
-
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 22b832fc62e3..b5c0eead935d 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -3596,7 +3596,7 @@ lpass_hm: clock-controller@63000000 {
- 	};
- 
- 	thermal-zones {
--		cpu0-thermal {
-+		cpu0_thermal: cpu0-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <0>;
- 
-@@ -3645,7 +3645,7 @@ map1 {
- 			};
- 		};
- 
--		cpu1-thermal {
-+		cpu1_thermal: cpu1-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <0>;
- 
-@@ -3694,7 +3694,7 @@ map1 {
- 			};
- 		};
- 
--		cpu2-thermal {
-+		cpu2_thermal: cpu2-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <0>;
- 
-@@ -3743,7 +3743,7 @@ map1 {
- 			};
- 		};
- 
--		cpu3-thermal {
-+		cpu3_thermal: cpu3-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <0>;
- 
-@@ -3792,7 +3792,7 @@ map1 {
- 			};
- 		};
- 
--		cpu4-thermal {
-+		cpu4_thermal: cpu4-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <0>;
- 
-@@ -3841,7 +3841,7 @@ map1 {
- 			};
- 		};
- 
--		cpu5-thermal {
-+		cpu5_thermal: cpu5-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <0>;
- 
-@@ -3890,7 +3890,7 @@ map1 {
- 			};
- 		};
- 
--		cpu6-thermal {
-+		cpu6_thermal: cpu6-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <0>;
- 
-@@ -3931,7 +3931,7 @@ map1 {
- 			};
- 		};
- 
--		cpu7-thermal {
-+		cpu7_thermal: cpu7-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <0>;
- 
-@@ -3972,7 +3972,7 @@ map1 {
- 			};
- 		};
- 
--		cpu8-thermal {
-+		cpu8_thermal: cpu8-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <0>;
- 
-@@ -4013,7 +4013,7 @@ map1 {
- 			};
- 		};
- 
--		cpu9-thermal {
-+		cpu9_thermal: cpu9-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <0>;
- 
--- 
-2.30.0.284.gd98b1dd5eaa7-goog
-
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
