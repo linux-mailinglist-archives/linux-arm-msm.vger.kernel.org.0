@@ -2,118 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 86DDE2EEDD0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 08:25:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 56D672EEDE0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 08:30:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725791AbhAHHYq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jan 2021 02:24:46 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:13994 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725308AbhAHHYq (ORCPT
+        id S1727176AbhAHH3w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jan 2021 02:29:52 -0500
+Received: from alexa-out-tai-02.qualcomm.com ([103.229.16.227]:56074 "EHLO
+        alexa-out-tai-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727159AbhAHH3w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jan 2021 02:24:46 -0500
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 07 Jan 2021 23:24:06 -0800
+        Fri, 8 Jan 2021 02:29:52 -0500
+Received: from ironmsg01-tai.qualcomm.com ([10.249.140.6])
+  by alexa-out-tai-02.qualcomm.com with ESMTP; 08 Jan 2021 15:28:58 +0800
 X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 07 Jan 2021 23:24:04 -0800
-X-QCInternal: smtphost
-Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 08 Jan 2021 12:53:51 +0530
-Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
-        id EC40E2149A; Fri,  8 Jan 2021 12:53:49 +0530 (IST)
-From:   Dikshita Agarwal <dikshita@codeaurora.org>
-To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, Dikshita Agarwal <dikshita@codeaurora.org>
-Subject: [PATCH RESEND v3] venus: venc: set inband mode property to FW.
-Date:   Fri,  8 Jan 2021 12:53:37 +0530
-Message-Id: <1610090618-30070-1-git-send-email-dikshita@codeaurora.org>
+Received: from cbsp-sh-gv.ap.qualcomm.com (HELO cbsp-sh-gv.qualcomm.com) ([10.231.249.68])
+  by ironmsg01-tai.qualcomm.com with ESMTP; 08 Jan 2021 15:28:54 +0800
+Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 393357)
+        id 28C3D26B7; Fri,  8 Jan 2021 15:28:53 +0800 (CST)
+From:   Ziqi Chen <ziqichen@codeaurora.org>
+To:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
+        cang@codeaurora.org, hongwus@codeaurora.org, rnayak@codeaurora.org,
+        vinholikatti@gmail.com, jejb@linux.vnet.ibm.com,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
+        kernel-team@android.com, saravanak@google.com, salyzyn@google.com,
+        ziqichen@codeaurora.org, kwmad.kim@samsung.com,
+        stanley.chu@mediatek.com
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v5 2/2] scsi: ufs-qcom: Fix ufs RST_n specs violation
+Date:   Fri,  8 Jan 2021 15:28:04 +0800
+Message-Id: <1610090885-50099-3-git-send-email-ziqichen@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1610090885-50099-1-git-send-email-ziqichen@codeaurora.org>
+References: <1610090885-50099-1-git-send-email-ziqichen@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-set HFI_PROPERTY_CONFIG_VENC_SYNC_FRAME_SEQUENCE_HEADER to FW
-to support inband sequence header mode.
+As per specs, e.g, JESD220E chapter 7.2, while powering
+off/on the ufs device, RST_n signal should be between
+VSS(Ground) and VCCQ/VCCQ2.
 
-Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
-
-Changes since v2:
-- fixed Null pointer dereference (Stanimir, Fritz)
-- added set property call at correct place.
+Signed-off-by: Ziqi Chen <ziqichen@codeaurora.org>
 ---
- drivers/media/platform/qcom/venus/venc.c       | 14 ++++++++++++++
- drivers/media/platform/qcom/venus/venc_ctrls.c | 17 ++++++++++++++++-
- 2 files changed, 30 insertions(+), 1 deletion(-)
+ drivers/scsi/ufs/ufs-qcom.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index 3a2e449..ae21a7c 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -536,6 +536,7 @@ static int venc_set_properties(struct venus_inst *inst)
- 	struct hfi_idr_period idrp;
- 	struct hfi_quantization quant;
- 	struct hfi_quantization_range quant_range;
-+	struct hfi_enable en;
- 	u32 ptype, rate_control, bitrate;
- 	u32 profile, level;
- 	int ret;
-@@ -655,6 +656,19 @@ static int venc_set_properties(struct venus_inst *inst)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+index 2206b1e..d8b896c 100644
+--- a/drivers/scsi/ufs/ufs-qcom.c
++++ b/drivers/scsi/ufs/ufs-qcom.c
+@@ -582,6 +582,10 @@ static int ufs_qcom_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ 		ufs_qcom_disable_lane_clks(host);
+ 		phy_power_off(phy);
  
-+	if (inst->fmt_cap->pixfmt == V4L2_PIX_FMT_H264 ||
-+	    inst->fmt_cap->pixfmt == V4L2_PIX_FMT_HEVC) {
-+		ptype = HFI_PROPERTY_CONFIG_VENC_SYNC_FRAME_SEQUENCE_HEADER;
-+		if (ctr->header_mode == V4L2_MPEG_VIDEO_HEADER_MODE_SEPARATE)
-+			en.enable = 0;
-+		else
-+			en.enable = 1;
++		/* reset the connected UFS device during power down */
++		if (host->device_reset)
++			gpiod_set_value_cansleep(host->device_reset, 1);
 +
-+		ret = hfi_session_set_property(inst, ptype, &en);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	if (!ctr->bitrate_peak)
- 		bitrate *= 2;
- 	else
-diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
-index cf860e6..3ce02ad 100644
---- a/drivers/media/platform/qcom/venus/venc_ctrls.c
-+++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
-@@ -158,6 +158,20 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
- 		break;
- 	case V4L2_CID_MPEG_VIDEO_HEADER_MODE:
- 		ctr->header_mode = ctrl->val;
-+		mutex_lock(&inst->lock);
-+		if (inst->streamon_out && inst->streamon_cap) {
-+			if (ctrl->val == V4L2_MPEG_VIDEO_HEADER_MODE_SEPARATE)
-+				en.enable = 0;
-+			else
-+				en.enable = 1;
-+			ptype = HFI_PROPERTY_CONFIG_VENC_SYNC_FRAME_SEQUENCE_HEADER;
-+			ret = hfi_session_set_property(inst, ptype, &en);
-+			if (ret) {
-+				mutex_unlock(&inst->lock);
-+				return ret;
-+			}
-+		}
-+		mutex_unlock(&inst->lock);
- 		break;
- 	case V4L2_CID_MPEG_VIDEO_CYCLIC_INTRA_REFRESH_MB:
- 		break;
-@@ -289,7 +303,8 @@ int venc_ctrl_init(struct venus_inst *inst)
- 	v4l2_ctrl_new_std_menu(&inst->ctrl_handler, &venc_ctrl_ops,
- 		V4L2_CID_MPEG_VIDEO_HEADER_MODE,
- 		V4L2_MPEG_VIDEO_HEADER_MODE_JOINED_WITH_1ST_FRAME,
--		1 << V4L2_MPEG_VIDEO_HEADER_MODE_JOINED_WITH_1ST_FRAME,
-+		~((1 << V4L2_MPEG_VIDEO_HEADER_MODE_SEPARATE) |
-+		(1 << V4L2_MPEG_VIDEO_HEADER_MODE_JOINED_WITH_1ST_FRAME)),
- 		V4L2_MPEG_VIDEO_HEADER_MODE_SEPARATE);
- 
- 	v4l2_ctrl_new_std_menu(&inst->ctrl_handler, &venc_ctrl_ops,
+ 	} else if (!ufs_qcom_is_link_active(hba)) {
+ 		ufs_qcom_disable_lane_clks(host);
+ 	}
 -- 
-2.7.4
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
