@@ -2,164 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 468BE2EF35B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 14:45:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 37CD52EF387
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 14:58:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727198AbhAHNpO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jan 2021 08:45:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47928 "EHLO
+        id S1726270AbhAHN5V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jan 2021 08:57:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726754AbhAHNpK (ORCPT
+        with ESMTP id S1726189AbhAHN5U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jan 2021 08:45:10 -0500
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45A9EC0612F5
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jan 2021 05:44:30 -0800 (PST)
-Received: by mail-pj1-x102a.google.com with SMTP id b5so6179911pjk.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jan 2021 05:44:30 -0800 (PST)
+        Fri, 8 Jan 2021 08:57:20 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 181E7C0612F4;
+        Fri,  8 Jan 2021 05:56:40 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id m5so9077772wrx.9;
+        Fri, 08 Jan 2021 05:56:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=3LJwbGSUKx0vqi7yWXymiWI3aMHuCCgGigS5uJDYNGg=;
-        b=bt0HgdVOAIKvJsoGY7vkBtdtd4yy6x7bBH2KAI9KtH5e1w34Q7r6pvdKUq5QDL3DI6
-         Swy5596o4bgDG2TJVUzf1SODFkaWzLpUaAFg0WTQPwf1Gqt0O0mazgGXhSRMs20VBaeI
-         gCsp7tnsFb8xUrSQf6MRrYFwrFBN141E3c/OhNx4R6kttBPycZ7Lqydo3JtrkV2R1E66
-         8isL5/bRj7dASkPtda7vzSwFoWXZiczgCwzYk9CbKcuZw2eDgE9rR+8YZweVIDmAK88D
-         i0+n3+/aoSLZloiWnu5yNuNP4JDwpyKRkwn2j6X8CXCXEQmIbyODETjdcZCxDajGDGYP
-         vd7w==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Q91uhwFRfmIKcWPttNsrBoB66RrXUH9oGtyQnvttSXI=;
+        b=DQXxUVb6TciWFgP7OcgXU45ci44YnDtH3mBxAimjk67e+oonwcPLS3fiWqg2MX48TZ
+         c7TTeAzKDudMuKa3R6Flqfdmsi6qyMd0TJsq4RJ4i0E+tgLxRAlz/WiW9wo/RfcqnW/R
+         3sYx7mAWg34mTpqM62WXbEipKhnqNlzV/QEq1QIiMHuTqV+R0GWcV04OGlyDzCb0yXKH
+         Rdp8aGDCKwBpgfZHx2Y3/uOYwE6WSUpQXM+Mt3aXpQ8EjetfkfkfVlZFTcwzG6YilRzU
+         lzgW5KF2Vqk6OEQOSn51UUYldBKmXcBdFrywOjIGc94/yA47Zl0VIzwRDJMiG4HEy9O1
+         +qRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=3LJwbGSUKx0vqi7yWXymiWI3aMHuCCgGigS5uJDYNGg=;
-        b=TEVSwXLXaDDFExDU+PSmM4RwP3MPo5mII3dlhdYphHGFFCABIV7XYvR9G1mTRDZTev
-         1AGz0DH5L6AT58Ll+e1UQ2l4FtNSkxlMNA61yoQ24HnsSL3ibyo/pLfObn+j+XrEMqZk
-         Uh+6TyFLLiXlDGCRYSM/6fkE3kTJfs1is8VgCW1G0DejBC4ZmCxbgi46f6do+UzibNID
-         v2+1hAzBW3105qzbEE0bxygppfwEP/EKL1564SwnzOw6HqfQVWt5PScDwdZTZjMYDaa6
-         L1k5U2EvyugmKowq01Q10LRPhLW6WqidBStWNx9/zoVLfJm6suDBiXqexv/IUffuqe3c
-         44pA==
-X-Gm-Message-State: AOAM532RnUXDIvyJrl93UbYNhVl0eEdOctMrq9deS0JugRQygefw54eB
-        wRjZujRmvu/Au6xL4LEhs9Br
-X-Google-Smtp-Source: ABdhPJwV8WpbeeMrGKSQZEebTAiEWVY7MwArPrPpHaLLgfEFQWY4tU0QAdfRe2RzIINb0C6s+/Bb1g==
-X-Received: by 2002:a17:90a:f48b:: with SMTP id bx11mr3802985pjb.48.1610113469621;
-        Fri, 08 Jan 2021 05:44:29 -0800 (PST)
-Received: from work ([103.77.37.188])
-        by smtp.gmail.com with ESMTPSA id 22sm8925081pfn.190.2021.01.08.05.44.27
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 08 Jan 2021 05:44:28 -0800 (PST)
-Date:   Fri, 8 Jan 2021 19:14:25 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        kuba@kernel.org, davem@davemloft.net, netdev@vger.kernel.org
-Subject: Re: [PATCH] bus: mhi: Add inbound buffers allocation flag
-Message-ID: <20210108134425.GA32678@work>
-References: <1609940623-8864-1-git-send-email-loic.poulain@linaro.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Q91uhwFRfmIKcWPttNsrBoB66RrXUH9oGtyQnvttSXI=;
+        b=Yk6M3Zlm9qDpiWmljFc7r+iPsu1LnC5ojShjewJh2ZKLscHTBvSgZtUG2lzq/w41Rn
+         rgY5BWXBAjW+/sOpJSjtzBOzAj7DgDERGc+NAx7buhF4FgX8YT9BgfP2MaE+mdI8Qijo
+         2DyX8un2dVQs5VCP0djuCm/u1Ttxm9NRdBSqT0sO2lNrk+ZAAwzlha7dbY+mg4EPCnqy
+         cKIZ7HsKTmY4pgDVYmBkrlHimL3ICg/GVHj29lUxF2sBIpkjzGUwRbm4ICD2Wct7liBb
+         R95FRjPEBDo8eEaLOUyvmdllEcDyoyccD9QeIhwEUZL/n0K24k8jWod6nUuByfnCNhiu
+         WrUw==
+X-Gm-Message-State: AOAM533WVwDwig8OiQWaKlIEH43ttIwCsJEuy0KNUKGJRWv5hZ4B1SHN
+        cg/NzyuQUPOSFOZy8TZRD3VnVQGEOwXOGIR/
+X-Google-Smtp-Source: ABdhPJxVIIWUzakNhcBupPxQs6OS0tuLZs/ngkNh+3oV53GXiM+8RXAWH8x5kYYjsuYns8LiBt6ktA==
+X-Received: by 2002:adf:df06:: with SMTP id y6mr3804923wrl.241.1610114198890;
+        Fri, 08 Jan 2021 05:56:38 -0800 (PST)
+Received: from [192.168.74.106] (178-169-161-196.razgrad.ddns.bulsat.com. [178.169.161.196])
+        by smtp.gmail.com with ESMTPSA id o124sm12646637wmb.5.2021.01.08.05.56.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 08 Jan 2021 05:56:37 -0800 (PST)
+Subject: Re: [PATCH] drm/msm: Fix MSM_INFO_GET_IOVA with carveout
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+References: <20210102202437.1630365-1-iskren.chernev@gmail.com>
+ <CAF6AEGt868msEPdZwJTB3YQppwNLaavSsDm1mGznCu1jsSPxCQ@mail.gmail.com>
+ <CAF6AEGvoG4DUSrsEBpsZV-gc42XnhvgqPWXvwa1SMMk1JoF15w@mail.gmail.com>
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+Message-ID: <a9479d08-e9db-dfa7-c2f5-a8de5a0a28c4@gmail.com>
+Date:   Fri, 8 Jan 2021 15:56:36 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1609940623-8864-1-git-send-email-loic.poulain@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <CAF6AEGvoG4DUSrsEBpsZV-gc42XnhvgqPWXvwa1SMMk1JoF15w@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 06, 2021 at 02:43:43PM +0100, Loic Poulain wrote:
-> Currently, the MHI controller driver defines which channels should
-> have their inbound buffers allocated and queued. But ideally, this is
-> something that should be decided by the MHI device driver instead,
 
-We call them, "MHI client drivers"
 
-> which actually deals with that buffers.
-> 
-> Add a flag parameter to mhi_prepare_for_transfer allowing to specify
-> if buffers have to be allocated and queued by the MHI stack.
-> 
-> Keep auto_queue flag for now, but should be removed at some point.
-> 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> ---
->  drivers/bus/mhi/core/internal.h |  2 +-
->  drivers/bus/mhi/core/main.c     | 11 ++++++++---
->  drivers/net/mhi_net.c           |  2 +-
->  include/linux/mhi.h             | 12 +++++++++++-
->  net/qrtr/mhi.c                  |  2 +-
->  5 files changed, 22 insertions(+), 7 deletions(-)
-> 
+On 1/8/21 12:36 AM, Rob Clark wrote:
+> On Thu, Jan 7, 2021 at 9:20 AM Rob Clark <robdclark@gmail.com> wrote:
+>>
+>> On Sat, Jan 2, 2021 at 12:26 PM Iskren Chernev <iskren.chernev@gmail.com> wrote:
+>>>
+>>> The msm_gem_get_iova should be guarded with gpu != NULL and not aspace
+>>> != NULL, because aspace is NULL when using vram carveout.
+>>>
+>>> Fixes: 933415e24bd0d ("drm/msm: Add support for private address space instances")
+>>>
+>>> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
+>>> ---
+>>>  drivers/gpu/drm/msm/msm_drv.c | 3 ++-
+>>>  1 file changed, 2 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+>>> index c5e61cb3356df..c1953fb079133 100644
+>>> --- a/drivers/gpu/drm/msm/msm_drv.c
+>>> +++ b/drivers/gpu/drm/msm/msm_drv.c
+>>> @@ -775,9 +775,10 @@ static int msm_ioctl_gem_info_iova(struct drm_device *dev,
+>>>                 struct drm_file *file, struct drm_gem_object *obj,
+>>>                 uint64_t *iova)
+>>>  {
+>>> +       struct msm_drm_private *priv = dev->dev_private;
+>>>         struct msm_file_private *ctx = file->driver_priv;
+>>>
+>>> -       if (!ctx->aspace)
+>>> +       if (!priv->gpu)
+>>>                 return -EINVAL;
+>>
+>> Does this actually work?  It seems like you would hit a null ptr deref
+>> in msm_gem_init_vma().. and in general I think a lot of code paths
+>> would be surprised by a null address space, so this seems like a risky
+>> idea.
+>
+> oh, actually, I suppose it is ok, since in the vram carveout case we
+> create the vma up front when the gem obj is created..
+>
+> (still, it does seem a bit fragile.. and easy for folks testing on
+> devices not using vram carvout to break.. hmm..)
 
-[...]
+In _msm_gem_new add_vma is called with NULL, so consequently lookup_vma
+finds it when aspace is NULL.
 
-> diff --git a/drivers/net/mhi_net.c b/drivers/net/mhi_net.c
-> index fa41d8c..b7f7f2e 100644
-> --- a/drivers/net/mhi_net.c
-> +++ b/drivers/net/mhi_net.c
-> @@ -265,7 +265,7 @@ static int mhi_net_probe(struct mhi_device *mhi_dev,
->  	u64_stats_init(&mhi_netdev->stats.tx_syncp);
->  
->  	/* Start MHI channels */
-> -	err = mhi_prepare_for_transfer(mhi_dev);
-> +	err = mhi_prepare_for_transfer(mhi_dev, 0);
+Also, this is how the code was before the "breaking" change, so it should
+not be worse.
 
-Eventhough I'd like Hemant to comment on this patch, AFAIU this looks to
-me a controller dependent behaviour. The controller should have the
-information whether a particular channel can auto queue or not then the
-client driver can be agnostic.
+I'll be happy to work on refactoring this a bit, but some some
+documentation about the different gpu/mdp pieces and how they fit together
+won't hurt.
 
->  	if (err)
->  		goto out_err;
->  
-> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index 209b335..6723339 100644
-> --- a/include/linux/mhi.h
-> +++ b/include/linux/mhi.h
-> @@ -60,6 +60,14 @@ enum mhi_flags {
->  };
->  
->  /**
-> + * enum mhi_chan_flags - MHI channel flags
-> + * @MHI_CH_INBOUND_ALLOC_BUFS: Automatically allocate and queue inbound buffers
-> + */
-> +enum mhi_chan_flags {
-> +	MHI_CH_INBOUND_ALLOC_BUFS = BIT(0),
-> +};
-> +
-> +/**
->   * enum mhi_device_type - Device types
->   * @MHI_DEVICE_XFER: Handles data transfer
->   * @MHI_DEVICE_CONTROLLER: Control device
-> @@ -705,8 +713,10 @@ void mhi_device_put(struct mhi_device *mhi_dev);
->  /**
->   * mhi_prepare_for_transfer - Setup channel for data transfer
->   * @mhi_dev: Device associated with the channels
-> + * @flags: MHI channel flags
->   */
-> -int mhi_prepare_for_transfer(struct mhi_device *mhi_dev);
-> +int mhi_prepare_for_transfer(struct mhi_device *mhi_dev,
-> +			     enum mhi_chan_flags flags);
->  
->  /**
->   * mhi_unprepare_from_transfer - Unprepare the channels
-> diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
-> index 2bf2b19..47afded 100644
-> --- a/net/qrtr/mhi.c
-> +++ b/net/qrtr/mhi.c
-> @@ -77,7 +77,7 @@ static int qcom_mhi_qrtr_probe(struct mhi_device *mhi_dev,
->  	int rc;
->  
->  	/* start channels */
-> -	rc = mhi_prepare_for_transfer(mhi_dev);
-> +	rc = mhi_prepare_for_transfer(mhi_dev, MHI_CH_INBOUND_ALLOC_BUFS);
+Regards,
+Iskren
 
-Are you sure it requires auto queued channel?
-
-Thanks,
-Mani
-
->  	if (rc)
->  		return rc;
->  
-> -- 
-> 2.7.4
-> 
+> BR,
+> -R
+>
+>> Maybe instead we should be creating an address space for the vram carveout?
+>>
+>> BR,
+>> -R
+>>
+>>
+>>>         /*
+>>> --
+>>> 2.29.2
+>>>
