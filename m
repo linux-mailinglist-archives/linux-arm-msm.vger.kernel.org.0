@@ -2,248 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B24F2EF695
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 18:38:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CAB892EF708
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 19:10:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728442AbhAHRig (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jan 2021 12:38:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56038 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726992AbhAHRif (ORCPT
+        id S1727909AbhAHSJ7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jan 2021 13:09:59 -0500
+Received: from m43-15.mailgun.net ([69.72.43.15]:44865 "EHLO
+        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726312AbhAHSJ7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jan 2021 12:38:35 -0500
-Received: from mail-vs1-xe36.google.com (mail-vs1-xe36.google.com [IPv6:2607:f8b0:4864:20::e36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83666C061381
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jan 2021 09:37:55 -0800 (PST)
-Received: by mail-vs1-xe36.google.com with SMTP id r24so5940191vsg.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jan 2021 09:37:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=zNxooFoPT/SbsRyhcMe6NUax3q2to1RFoVAxRniKpG0=;
-        b=WM2aNAVpG4gGin7GprdICL5bytbIZNL88yE2mwarMEQ/XW/n/jOUBRlqNnS5lZSlmt
-         UrdO94020ymMxkNkVVnqrqQs4Owo/gEntFiokWZgAmKrOfeidBR7MA+A73lul+cN2GLb
-         z96dMHb/v98nRgogIpkKBkeitSYIbS5LxBVYY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=zNxooFoPT/SbsRyhcMe6NUax3q2to1RFoVAxRniKpG0=;
-        b=dPFlaeBF3tFFqalI0C8OL5VIphIMcWpJQwOLuOSuB5P4zhIZ8tXP6VHpH722qHRmuE
-         w+syVE6PvtFfiKKEOW7cwsgm9D1yNsrc25CfLR1qAzrYhgEzVqJdcVTIuYpFW35IrocR
-         Odc2WcJw2FJHWdJIbWS9NIteZ1+/1i96+G6FaDVpqhx/EIb+mBnGtODpHmE2utBA4ql7
-         ANr96mtB4lClkM9Tvnjrp9CkPpYV8GqzdFu6OasCMKWiY71sIbTOcJsPFYvC15Mi51Lz
-         Z1nMVk36xRwR3JaUFa5cOjbvNeyQaFX3VsEcsaRtXivFwy/LG4HpfW6QFX14GfcR1eVw
-         KhwA==
-X-Gm-Message-State: AOAM532DvMHqFW7KZO5EmRPTSR+rItcuKnYhHoeqooF/zs4ZTYEf+Oql
-        Briw89BITZ9jZdKFY3xwpy3cK4Sa5eciUQ==
-X-Google-Smtp-Source: ABdhPJzdAgnRQ1MbPnOH06PNn4ckw18WayTnDZFHSxGrnc5dwR1NV9thByiNc9ogx8G4w05GpPz4Mw==
-X-Received: by 2002:a67:cd9a:: with SMTP id r26mr4094069vsl.52.1610127474699;
-        Fri, 08 Jan 2021 09:37:54 -0800 (PST)
-Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com. [209.85.217.48])
-        by smtp.gmail.com with ESMTPSA id j192sm380006vkc.17.2021.01.08.09.37.54
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 08 Jan 2021 09:37:54 -0800 (PST)
-Received: by mail-vs1-f48.google.com with SMTP id b23so5932895vsp.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jan 2021 09:37:54 -0800 (PST)
-X-Received: by 2002:a05:6102:21c4:: with SMTP id r4mr3929051vsg.37.1610127473926;
- Fri, 08 Jan 2021 09:37:53 -0800 (PST)
+        Fri, 8 Jan 2021 13:09:59 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1610129378; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=0i7L7jWu8aynDM0LkuyTLjoMUIf8WxyfzKh7T7CAFJI=;
+ b=XhcN2sQSQXp88dyhNFcFHfT4PuwB/DCLTt3LTkBd7r5LGsQyuwSmyp9fdyXTeojfW/Yl4L4e
+ J4o5zvrDibAEgEsH04QbUDaW16yqCY9gyZPa9M299+Ayh9tgEzOqDs6NSbW+LA/MPLTK9AYI
+ 1L9cd5XL5h8HNVP/32FutdmqKms=
+X-Mailgun-Sending-Ip: 69.72.43.15
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 5ff89fc89ee5cdb92c93912b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 08 Jan 2021 18:09:12
+ GMT
+Sender: isaacm=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D5291C43461; Fri,  8 Jan 2021 18:09:11 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: isaacm)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D454EC433C6;
+        Fri,  8 Jan 2021 18:09:10 +0000 (UTC)
 MIME-Version: 1.0
-References: <20201211141514.v4.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid>
- <20201211141514.v4.3.I7cf3019783720feb57b958c95c2b684940264cd1@changeid> <c0dc57ad-a087-6d98-cb7f-74044c556f83@codeaurora.org>
-In-Reply-To: <c0dc57ad-a087-6d98-cb7f-74044c556f83@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 8 Jan 2021 09:37:42 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=WNp06dE3J1KcNZBBW9_07tz_vAzoutEupb74cwae+W=w@mail.gmail.com>
-Message-ID: <CAD=FV=WNp06dE3J1KcNZBBW9_07tz_vAzoutEupb74cwae+W=w@mail.gmail.com>
-Subject: Re: [PATCH v4 3/4] pinctrl: qcom: Don't clear pending interrupts when enabling
-To:     Maulik Shah <mkshah@codeaurora.org>
-Cc:     Marc Zyngier <maz@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Srinivas Ramana <sramana@codeaurora.org>,
-        Neeraj Upadhyay <neeraju@codeaurora.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 08 Jan 2021 10:09:10 -0800
+From:   isaacm@codeaurora.org
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Will Deacon <will@kernel.org>, Rob Clark <robdclark@gmail.com>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, Joerg Roedel <joro@8bytes.org>,
+        linux-kernel@vger.kernel.org,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        iommu@lists.linux-foundation.org,
+        Robin Murphy <robin.murphy@arm.com>,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH] iommu/io-pgtable-arm: Allow non-coherent masters to use
+ system cache
+In-Reply-To: <8cfefbff135a5287d177b6ab2ccc3304@codeaurora.org>
+References: <20201224064007.2339-1-saiprakash.ranjan@codeaurora.org>
+ <20210106115615.GA1763@willie-the-truck>
+ <cfced52002337025088a64aa159760b2@codeaurora.org>
+ <8cfefbff135a5287d177b6ab2ccc3304@codeaurora.org>
+Message-ID: <84ff10c38e99635bc222ca2dd29be2b5@codeaurora.org>
+X-Sender: isaacm@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 2021-01-07 21:47, Sai Prakash Ranjan wrote:
+> On 2021-01-07 22:27, isaacm@codeaurora.org wrote:
+>> On 2021-01-06 03:56, Will Deacon wrote:
+>>> On Thu, Dec 24, 2020 at 12:10:07PM +0530, Sai Prakash Ranjan wrote:
+>>>> commit ecd7274fb4cd ("iommu: Remove unused IOMMU_SYS_CACHE_ONLY 
+>>>> flag")
+>>>> removed unused IOMMU_SYS_CACHE_ONLY prot flag and along with it went
+>>>> the memory type setting required for the non-coherent masters to use
+>>>> system cache. Now that system cache support for GPU is added, we 
+>>>> will
+>>>> need to mark the memory as normal sys-cached for GPU to use system 
+>>>> cache.
+>>>> Without this, the system cache lines are not allocated for GPU. We 
+>>>> use
+>>>> the IO_PGTABLE_QUIRK_ARM_OUTER_WBWA quirk instead of a page 
+>>>> protection
+>>>> flag as the flag cannot be exposed via DMA api because of no in-tree
+>>>> users.
+>>>> 
+>>>> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+>>>> ---
+>>>>  drivers/iommu/io-pgtable-arm.c | 3 +++
+>>>>  1 file changed, 3 insertions(+)
+>>>> 
+>>>> diff --git a/drivers/iommu/io-pgtable-arm.c 
+>>>> b/drivers/iommu/io-pgtable-arm.c
+>>>> index 7c9ea9d7874a..3fb7de8304a2 100644
+>>>> --- a/drivers/iommu/io-pgtable-arm.c
+>>>> +++ b/drivers/iommu/io-pgtable-arm.c
+>>>> @@ -415,6 +415,9 @@ static arm_lpae_iopte 
+>>>> arm_lpae_prot_to_pte(struct arm_lpae_io_pgtable *data,
+>>>>  		else if (prot & IOMMU_CACHE)
+>>>>  			pte |= (ARM_LPAE_MAIR_ATTR_IDX_CACHE
+>>>>  				<< ARM_LPAE_PTE_ATTRINDX_SHIFT);
+>>>> +		else if (data->iop.cfg.quirks & IO_PGTABLE_QUIRK_ARM_OUTER_WBWA)
+>>>> +			pte |= (ARM_LPAE_MAIR_ATTR_IDX_INC_OCACHE
+>>>> +				<< ARM_LPAE_PTE_ATTRINDX_SHIFT);
+>>>>  	}
+>>> 
+>> While this approach of enabling system cache globally for both page
+>> tables and other buffers
+>> works for the GPU usecase, this isn't ideal for other clients that use
+>> system cache. For example,
+>> video clients only want to cache a subset of their buffers in the
+>> system cache, due to the sizing constraint
+>> imposed by how much of the system cache they can use. So, it would be
+>> ideal to have
+>> a way of expressing the desire to use the system cache on a per-buffer
+>> basis. Additionally,
+>> our video clients use the DMA layer, and since the requirement is for
+>> caching in the system cache
+>> to be a per buffer attribute, it seems like we would have to have a
+>> DMA attribute to express
+>> this on a per-buffer basis.
+>> 
+> 
+> I did bring this up initially [1], also where is this video client
+> in upstream? AFAIK, only system cache user in upstream is GPU.
+> We cannot add any DMA attribute unless there is any user upstream
+Right, there wouldn't be an upstream user, which would be problematic,
+but I was thinking of having it so that when video or any of our other
+clients that use this attribute on a per buffer basis upstreams their
+code, it's not too much of a stretch to add the support.
+> as per [2], so when the support for such a client is added, wouldn't
+> ((data->iop.cfg.quirks & IO_PGTABLE_QUIRK_ARM_OUTER_WBWA) || PROT_FLAG)
+> work?
+I don't think that will work, because we currently have clients who use 
+the
+system cache as follows:
+-cache only page tables in the system cache
+-cache only data buffers in the system cache
+-cache both page tables and all buffers in the system cache
+-cache both page tables and some buffers in the system cache
 
-On Mon, Dec 21, 2020 at 8:01 AM Maulik Shah <mkshah@codeaurora.org> wrote:
->
-> Hi Doug,
->
-> On 12/12/2020 3:45 AM, Douglas Anderson wrote:
-> > In Linux, if a driver does disable_irq() and later does enable_irq()
-> > on its interrupt, I believe it's expecting these properties:
-> > * If an interrupt was pending when the driver disabled then it will
-> >    still be pending after the driver re-enables.
-> > * If an edge-triggered interrupt comes in while an interrupt is
-> >    disabled it should assert when the interrupt is re-enabled.
-> >
-> > If you think that the above sounds a lot like the disable_irq() and
-> > enable_irq() are supposed to be masking/unmasking the interrupt
-> > instead of disabling/enabling it then you've made an astute
-> > observation.  Specifically when talking about interrupts, "mask"
-> > usually means to stop posting interrupts but keep tracking them and
-> > "disable" means to fully shut off interrupt detection.  It's
-> > unfortunate that this is so confusing, but presumably this is all the
-> > way it is for historical reasons.
-> >
-> > Perhaps more confusing than the above is that, even though clients of
-> > IRQs themselves don't have a way to request mask/unmask
-> > vs. disable/enable calls, IRQ chips themselves can implement both.
-> > ...and yet more confusing is that if an IRQ chip implements
-> > disable/enable then they will be called when a client driver calls
-> > disable_irq() / enable_irq().
-> >
-> > It does feel like some of the above could be cleared up.  However,
-> > without any other core interrupt changes it should be clear that when
-> > an IRQ chip gets a request to "disable" an IRQ that it has to treat it
-> > like a mask of that IRQ.
-> >
-> > In any case, after that long interlude you can see that the "unmask
-> > and clear" can break things.  Maulik tried to fix it so that we no
-> > longer did "unmask and clear" in commit 71266d9d3936 ("pinctrl: qcom:
-> > Move clearing pending IRQ to .irq_request_resources callback"), but it
-> > only handled the PDC case (it also had problems, but that's the
-> > subject of another patch).  Let's fix this for the non-PDC case.
-> >
-> >  From my understanding the source of the phantom interrupt in the
-> > non-PDC case was the one that could have been introduced in
-> > msm_gpio_irq_set_type().  Let's handle that one and then get rid of
-> > the clear.
-> >
-> > Fixes: 4b7618fdc7e6 ("pinctrl: qcom: Add irq_enable callback for msm gpio")
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > ---
-> > I don't have lots of good test cases here, so hopefully someone from
-> > Qualcomm can confirm that this works well for them and there isn't
-> > some other phantom interrupt source that I'm not aware of.
-> >
-> > Changes in v4:
-> > - ("pinctrl: qcom: Don't clear pending interrupts when enabling") split for v4.
-> >
-> >   drivers/pinctrl/qcom/pinctrl-msm.c | 32 +++++++++++++-----------------
-> >   1 file changed, 14 insertions(+), 18 deletions(-)
-> >
-> > diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-> > index 588df91274e2..f785646d1df7 100644
-> > --- a/drivers/pinctrl/qcom/pinctrl-msm.c
-> > +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-> > @@ -774,7 +774,7 @@ static void msm_gpio_irq_mask(struct irq_data *d)
-> >       raw_spin_unlock_irqrestore(&pctrl->lock, flags);
-> >   }
-> >
-> > -static void msm_gpio_irq_clear_unmask(struct irq_data *d, bool status_clear)
-> > +static void msm_gpio_irq_unmask(struct irq_data *d)
-> >   {
-> >       struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
-> >       struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
-> > @@ -792,17 +792,6 @@ static void msm_gpio_irq_clear_unmask(struct irq_data *d, bool status_clear)
-> >
-> >       raw_spin_lock_irqsave(&pctrl->lock, flags);
-> >
-> > -     if (status_clear) {
-> > -             /*
-> > -              * clear the interrupt status bit before unmask to avoid
-> > -              * any erroneous interrupts that would have got latched
-> > -              * when the interrupt is not in use.
-> > -              */
-> > -             val = msm_readl_intr_status(pctrl, g);
-> > -             val &= ~BIT(g->intr_status_bit);
-> > -             msm_writel_intr_status(val, pctrl, g);
-> > -     }
-> > -
-> Removing above does not cover the case where GPIO IRQ do not have parent
-> PDC.
->
-> Specifically, for edge IRQs during masking we donot clear
-> intr_raw_status_bit.
-> see below at msm_gpio_irq_mask()
->
->          if (irqd_get_trigger_type(d) & IRQ_TYPE_LEVEL_MASK)
->                  val &= ~BIT(g->intr_raw_status_bit);
->
-> we have to keep the bit set anyway so that edges are latched while the
-> line is masked.
->
-> The problem is even when GPIO is set to some other function like
-> "mi2s_2" it can still sense the line at make
-> interrupt pending depending on the line toggle if intr_raw_status_bit is
-> left set.
+The approach you're suggesting doesn't allow for the last case, as 
+caching the
+page tables in the system cache involves setting 
+IO_PGTABLE_QUIRK_ARM_OUTER_WBWA,
+so we will end up losing the flexibility to cache some data buffers in 
+the system cache.
 
-Ah, so it's the same problem as we have with the PDC.  Makes sense.
+Ideally, the page table quirk would drive the settings for the TCR, and 
+the prot flag
+drives the PTE for the mapping, as is done with the page table walker 
+being dma-coherent,
+while buffers are mapped as cacheable based on IOMMU_CACHE. Thoughts?
 
-
-> I have thought of solution to this,
->
-> 1) During msm_gpio_irq_mask() we keep intr_raw_status_bit set already in
-> today's code
-> This will make edges to latch when the line is masked.
-> so no change required for this.
->
-> 2) During msm_pinmux_set_mux() if we set GPIO to anyother function than
-> GPIO interrupt mode,
-> we clear intr_raw_status_bit, so the interrupt cannot latch when GPIO is
-> used in other function.
-> Below snippet can be inserted in msm_pinmux_set_mux()
->
->          val |= i << g->mux_bit;
->          msm_writel_ctl(val, pctrl, g);
->
-> +        if (i != gpio_func) {
-> +                val = msm_readl_intr_cfg(pctrl, g);
-> +                val &= ~BIT(g->intr_raw_status_bit);
-> +                msm_writel_intr_cfg(val, pctrl, g);
-> +        }
-> +
->          raw_spin_unlock_irqrestore(&pctrl->lock, flags);
->
-> 3) During msm_gpio_irq_unmask(), if the intr_raw_status_bit is not set,
-> then clear the pending IRQ.
-> specifically setting this bit itself can cause the error IRQ, so clear
-> it when setting this.
->
-> for edge IRQ, intr_raw_status_bit can only be cleared in
-> msm_pinmux_set_mux() so clearing pending
-> IRQ should not loose any edges since we know GPIO was used in other
-> function mode like mi2s_2 for
-> which we do not need to latch IRQs.
-> Below snippet can be inserted in msm_gpio_irq_unmask()
->
-> +       was_enabled = val & BIT(g->intr_raw_status_bit);
->          val |= BIT(g->intr_raw_status_bit);
->          val |= BIT(g->intr_enable_bit);
->          msm_writel_intr_cfg(val, pctrl, g);
->
-> +       if (!was_enabled) {
-> +               val = msm_readl_intr_status(pctrl, g);
-> +               val &= ~BIT(g->intr_status_bit);
-> +               msm_writel_intr_status(val, pctrl, g);
-> +       }
-> +
->          set_bit(d->hwirq, pctrl->enabled_irqs);
->
-> This can cover the cases for which the GPIO do not have parent.
-
-I think your solution can be made to work, but I think also we can
-just use the exact same solution that I already came up with in patch
-#4.  We can leave the "raw" bit alone and just mask the interrupt when
-we switch the mux, then clear the interrupt when we switch back.
-
-I've now combined the PDC/non-PDC cases and it actually turned out
-fairly clean I think.  See what you think about v5.
-
--Doug
+Thanks,
+Isaac
+> 
+> [1]
+> https://lore.kernel.org/dri-devel/ecfda7ca80f6d7b4ff3d89b8758f4dc9@codeaurora.org/
+> [2] 
+> https://lore.kernel.org/linux-iommu/20191026053026.GA14545@lst.de/T/
+> 
+> Thanks,
+> Sai
