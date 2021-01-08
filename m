@@ -2,197 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E207A2EF4DA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 16:32:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EC7CE2EF558
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 17:01:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727175AbhAHPbS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jan 2021 10:31:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36196 "EHLO
+        id S1727518AbhAHQBh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jan 2021 11:01:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726430AbhAHPbR (ORCPT
+        with ESMTP id S1726989AbhAHQBg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jan 2021 10:31:17 -0500
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDDFDC061381
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jan 2021 07:30:37 -0800 (PST)
-Received: by mail-pf1-x429.google.com with SMTP id m6so6447212pfm.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jan 2021 07:30:37 -0800 (PST)
+        Fri, 8 Jan 2021 11:01:36 -0500
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 886CBC0612FD
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jan 2021 08:00:56 -0800 (PST)
+Received: by mail-qk1-x72e.google.com with SMTP id p14so8808519qke.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jan 2021 08:00:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=pcg+os/0yOWjldKVf73QhxWFDRz+4DGy+42r9RW0+WI=;
-        b=uTH6OgcwMLNKvUsZyvbs+lgzQjAGx9EVs+pn5bwWRhBiyS8jUw0lUzvZKLepfNYors
-         8IJYYukSc9u4Lpqm/OrM9KIh4elVXvV+r1+Oi8KaZKgUI2yo6+PXx02g5DRcyDK20S6X
-         RzFQEDHef/czmlQUPkarNQicOZT9Zil1l9ChNsVFE7+fgaq5CAVsmwER1JsmTkwW2btn
-         iHh5tCmr5KgzQPye2rbmG6eZU0DcbdFCRLbgcFUhkQoRgDgY6zBsBRAXh0VjnCp3zHTc
-         PLBUQvLGdaI1iTGZi5lgM6T+EiY8YVJCR/6wObnqvcrXHucDf4jqo0jLzvhmkL33kVPf
-         ae+A==
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=ik6B+6lkNc+iFrIPLOlH6nyfA0JsJ4cRGzVhof+Ll8w=;
+        b=VpA/rpQ5qi0dFR7Mowe5aGCpF9u7a1VmQn5q9ZZuQCrdDN5tZn6sXwU9XTDBXmdfYo
+         GHrqoepeF5HsPEyz7s83Q2FgcvfAPgYumhvcRGiBVC2GK+C5XV14Ui++lS3so5pA2/iT
+         1rfJS9pZ3rxyDmU9J33KM0ODd0VovMdrCXj4PDHLrX+mNc/gXoaOQ9JB4dQ8+Pi+t3Y5
+         owDd0dhEIxx5inTgS9uv9USD9ua3iUgbE7ZeBpPZmm3e8Mr6fY26xd3tbIKjFdXg+Z5e
+         HzKpZOj3j3xkWAI+2U0PJ6WCaJvaJp4eQ7JPK2DyyOLy9Is9PPJi0kyYoCvOmtdELPp9
+         eESw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=pcg+os/0yOWjldKVf73QhxWFDRz+4DGy+42r9RW0+WI=;
-        b=XUlxd56u/Alt3MEcK8xZilfA5WwKgjW8inGjadojFaIaYDArWDnMyKnMuq7ktcow7c
-         0ryRrgpTTf9YLEHF8ivTi7L/27OH03/witWXNzyfJhNuxhhBhXrINQ+pEQEXw4SSdJH/
-         gQiK0lDAUhMIsRy435vwSAnlrp7z5Jobq9ctDn7MArua2E+vMoRf9I7UrianU/S6Poi3
-         LMNn6n1TRObV5lXd7/HSXcTR7qgGuWjJoL6jjGLgxS0kp4dwYlWQ3iZxMlWexXGhsiZ5
-         0LFSVIEfc4fZM4fDAwGzTnzRyEnxejTydk9JQQDbwB950RC2/jYGp6F0OvbpV8l1yNbZ
-         ikBg==
-X-Gm-Message-State: AOAM532mPKN5SGM9aLVw+iP8OCaAXcSW22xTZG+j1GC68Bb5CHulCRA5
-        ZFjNjBtBdNQ2f7WDm+J1xG8m
-X-Google-Smtp-Source: ABdhPJzR+qzldELt5Cc+Y9Y6HqLOJ7nCdnuwWtx5uzPnQDbxv2TXKpxOJ9BIUTSRUgCF/zN1Lpoh7A==
-X-Received: by 2002:a63:dc53:: with SMTP id f19mr7450745pgj.443.1610119836817;
-        Fri, 08 Jan 2021 07:30:36 -0800 (PST)
-Received: from work ([103.77.37.188])
-        by smtp.gmail.com with ESMTPSA id c14sm9603840pfp.167.2021.01.08.07.30.34
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 08 Jan 2021 07:30:35 -0800 (PST)
-Date:   Fri, 8 Jan 2021 21:00:32 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     Hemant Kumar <hemantk@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Jakub Kicinski <kuba@kernel.org>,
-        David Miller <davem@davemloft.net>,
-        Network Development <netdev@vger.kernel.org>
-Subject: Re: [PATCH] bus: mhi: Add inbound buffers allocation flag
-Message-ID: <20210108153032.GC32678@work>
-References: <1609940623-8864-1-git-send-email-loic.poulain@linaro.org>
- <20210108134425.GA32678@work>
- <CAMZdPi9tUUzf0hLwLUBqB=+eGQS-eNP8NtnMF-iS1ZqUfautuw@mail.gmail.com>
+        h=x-gm-message-state:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:content-transfer-encoding;
+        bh=ik6B+6lkNc+iFrIPLOlH6nyfA0JsJ4cRGzVhof+Ll8w=;
+        b=M5C6R3kapNAgyCXGGeiT5iNmwCDgPIMHF3OpnvJ5S6ybOg5PDjiLi5wr09amtkJ1i+
+         VdNvs49XytbanJ7ErQFWSMDJ+ES7Xmn+hxuxCR4JZ4v/nXhxi3cpWzS/uyE7s1hiTv6/
+         nrw5NPNuN96Ogl0xbdK1X8ISKWwHgyl3i3Mjk9lxzPpSjcivVKdh3QMDipK8nvvhV0Fh
+         l0TjMPhLCLNHaZtcBLPL0VBW3/N+poY/7OzCDGiPw54dxEotaNcg9pB+vM7h3AeQzv+M
+         tYOgIDGUq78bhggixB39GcTGG6kGopTsiQpjZjZpQl2fBazzR/R/sv7Xp8yqe2bu6M0e
+         SRZQ==
+X-Gm-Message-State: AOAM532KrpE976yxFA82iieeyZ3RM66Gfw/4uFtmXklFKjke6YmoxG3n
+        khG233AjQePL9kRpSgOpcPaePAZ8hPlUFS+b8NI=
+X-Google-Smtp-Source: ABdhPJy5DcDb2tpoN6hwwNxbrQ4+6iS7cEF5BYexkcUy5+hBuogz8U9cM9vP/oN0NUHGYqGpdQYDJc3bSIrriX19zaw=
+X-Received: by 2002:a37:9f14:: with SMTP id i20mr4583418qke.321.1610121655742;
+ Fri, 08 Jan 2021 08:00:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMZdPi9tUUzf0hLwLUBqB=+eGQS-eNP8NtnMF-iS1ZqUfautuw@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Received: by 2002:a05:6214:148d:0:0:0:0 with HTTP; Fri, 8 Jan 2021 08:00:55
+ -0800 (PST)
+Reply-To: camillejackson021@gmail.com
+In-Reply-To: <CAGCmbMQupVT-1ZX2--N7Bjf2eW4VuUQ4dE_hzd1qAGQuE_JBEQ@mail.gmail.com>
+References: <CAGCmbMQupVT-1ZX2--N7Bjf2eW4VuUQ4dE_hzd1qAGQuE_JBEQ@mail.gmail.com>
+From:   camille jackson <adamraouf78@gmail.com>
+Date:   Fri, 8 Jan 2021 16:00:55 +0000
+Message-ID: <CAGCmbMR9p4PyoggcTsQ1z8w+PCmEh+pd463ifnbWZyKw1o3FtQ@mail.gmail.com>
+Subject: =?UTF-8?B?0JfQtNGA0LDQstGB0YLQstGD0LnRgtC1LA==?=
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 08, 2021 at 03:01:59PM +0100, Loic Poulain wrote:
-> Hi Mani,
-> 
-> On Fri, 8 Jan 2021 at 14:44, Manivannan Sadhasivam <
-> manivannan.sadhasivam@linaro.org> wrote:
-> 
-> > On Wed, Jan 06, 2021 at 02:43:43PM +0100, Loic Poulain wrote:
-> > > Currently, the MHI controller driver defines which channels should
-> > > have their inbound buffers allocated and queued. But ideally, this is
-> > > something that should be decided by the MHI device driver instead,
-> >
-> > We call them, "MHI client drivers"
-> >
-> 
-> I'll fix that.
-> 
-> 
-> > > which actually deals with that buffers.
-> > >
-> > > Add a flag parameter to mhi_prepare_for_transfer allowing to specify
-> > > if buffers have to be allocated and queued by the MHI stack.
-> > >
-> > > Keep auto_queue flag for now, but should be removed at some point.
-> > >
-> > > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> > > ---
-> > >  drivers/bus/mhi/core/internal.h |  2 +-
-> > >  drivers/bus/mhi/core/main.c     | 11 ++++++++---
-> > >  drivers/net/mhi_net.c           |  2 +-
-> > >  include/linux/mhi.h             | 12 +++++++++++-
-> > >  net/qrtr/mhi.c                  |  2 +-
-> > >  5 files changed, 22 insertions(+), 7 deletions(-)
-> > >
-> >
-> > [...]
-> >
-> > > diff --git a/drivers/net/mhi_net.c b/drivers/net/mhi_net.c
-> > > index fa41d8c..b7f7f2e 100644
-> > > --- a/drivers/net/mhi_net.c
-> > > +++ b/drivers/net/mhi_net.c
-> > > @@ -265,7 +265,7 @@ static int mhi_net_probe(struct mhi_device *mhi_dev,
-> > >       u64_stats_init(&mhi_netdev->stats.tx_syncp);
-> > >
-> > >       /* Start MHI channels */
-> > > -     err = mhi_prepare_for_transfer(mhi_dev);
-> > > +     err = mhi_prepare_for_transfer(mhi_dev, 0);
-> >
-> > Eventhough I'd like Hemant to comment on this patch, AFAIU this looks to
-> > me a controller dependent behaviour. The controller should have the
-> > information whether a particular channel can auto queue or not then the
-> > client driver can be agnostic.
-> >
-> 
-> The client driver can not be agnostic if this information is defined on the
-> controller side. In one case client driver needs to allocate (and queue)
-> its own buffers and in the other case it uses the pre-allocated ones.
-> Moreover, that will break compatibility if we have one controller (e.g. a
-> Wifi MHI controller) that e.g. defines IPCR channels as pre-allocated and
-> another one that defines IPCR channels as non-pre-allocated. Having
-> pre-allocated channels is not something related to the MHI device but to
-> how the host (client driver) wants to manage buffers. It would then make
-> sense to let this choice to the client driver.
-> 
-> 
-> >
-> > >       if (err)
-> > >               goto out_err;
-> > >
-> > > diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> > > index 209b335..6723339 100644
-> > > --- a/include/linux/mhi.h
-> > > +++ b/include/linux/mhi.h
-> > > @@ -60,6 +60,14 @@ enum mhi_flags {
-> > >  };
-> > >
-> > >  /**
-> > > + * enum mhi_chan_flags - MHI channel flags
-> > > + * @MHI_CH_INBOUND_ALLOC_BUFS: Automatically allocate and queue inbound
-> > buffers
-> > > + */
-> > > +enum mhi_chan_flags {
-> > > +     MHI_CH_INBOUND_ALLOC_BUFS = BIT(0),
-> > > +};
-> > > +
-> > > +/**
-> > >   * enum mhi_device_type - Device types
-> > >   * @MHI_DEVICE_XFER: Handles data transfer
-> > >   * @MHI_DEVICE_CONTROLLER: Control device
-> > > @@ -705,8 +713,10 @@ void mhi_device_put(struct mhi_device *mhi_dev);
-> > >  /**
-> > >   * mhi_prepare_for_transfer - Setup channel for data transfer
-> > >   * @mhi_dev: Device associated with the channels
-> > > + * @flags: MHI channel flags
-> > >   */
-> > > -int mhi_prepare_for_transfer(struct mhi_device *mhi_dev);
-> > > +int mhi_prepare_for_transfer(struct mhi_device *mhi_dev,
-> > > +                          enum mhi_chan_flags flags);
-> > >
-> > >  /**
-> > >   * mhi_unprepare_from_transfer - Unprepare the channels
-> > > diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
-> > > index 2bf2b19..47afded 100644
-> > > --- a/net/qrtr/mhi.c
-> > > +++ b/net/qrtr/mhi.c
-> > > @@ -77,7 +77,7 @@ static int qcom_mhi_qrtr_probe(struct mhi_device
-> > *mhi_dev,
-> > >       int rc;
-> > >
-> > >       /* start channels */
-> > > -     rc = mhi_prepare_for_transfer(mhi_dev);
-> > > +     rc = mhi_prepare_for_transfer(mhi_dev, MHI_CH_INBOUND_ALLOC_BUFS);
-> >
-> > Are you sure it requires auto queued channel?
-> >
-> 
-> This is how mhi-qrtr has been implemented, yes.
-> 
-
-skb is allocated in qrtr_endpoint_post(). Then how the host can pre
-allocate the buffer here? Am I missing something?
-
-Thanks,
-Mani
-
-> Regards,
-> Loic
+0J/RgNC40LLQtdGC0YHRgtCy0YPRjiDRgtC10LHRjywg0LzQvtC5INC00YDRg9CzLCDQvdCw0LTQ
+tdGO0YHRjCwg0YLRiyDQsiDQv9C+0YDRj9C00LrQtSwg0L/QvtC20LDQu9GD0LnRgdGC0LAsINC+
+0YLQstC10YLRjCDQvNC90LUNCtCx0LvQsNCz0L7QtNCw0YDRjywNCg==
