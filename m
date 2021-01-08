@@ -2,99 +2,230 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A9D02EF06A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 11:07:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1ACEA2EF071
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 11:09:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726593AbhAHKHO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jan 2021 05:07:14 -0500
-Received: from mail.kernel.org ([198.145.29.99]:57350 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726120AbhAHKHO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jan 2021 05:07:14 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 0A008235FA;
-        Fri,  8 Jan 2021 10:06:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1610100393;
-        bh=0seG1qL20nPxGrYmWcmVzd36Vq7VdNi0HGCeEa/IXx8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ugUrqP8e3xpsSeS41GNHnQitoUH1xd+2b3XfGcvpvtTlYBVLUQ35ZZed6g81SOXqk
-         WAcWhX4i7DuClqJrpksigj0/TnCyWhSkVaAqIpfzvp2IxsxjUf7x3W+yQC9BtaMfuR
-         S1JUL+acrLSjoYhdfpRp8wSEszOOkZhpznkUFvZEh1aPcaDVHR21RKmESmGEoeCmGN
-         Fhui58VwJuH7enKjDbppKcUoy9VtMARgW5VfGQzp8obdOQcreMkvZDSMuwj0w22M+I
-         F/IUSOI/gcxbuwmXgQXg215+ry8MCutM4cmVXUHcatPjcdIQVZ8R1vdX6tP2LuG9Mk
-         dVQsVlaQnHGdA==
-Date:   Fri, 8 Jan 2021 11:06:30 +0100
-From:   Wolfram Sang <wsa@kernel.org>
-To:     rojay@codeaurora.org
-Cc:     swboyd@chromium.org, dianders@chromium.org,
-        saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
-        mka@chromium.org, akashast@codeaurora.org,
-        msavaliy@qti.qualcomm.com, skakit@codeaurora.org,
-        pyarlaga@codeaurora.org, rnayak@codeaurora.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sumit.semwal@linaro.org, linux-media@vger.kernel.org
-Subject: Re: [PATCH V7 2/2] i2c: i2c-qcom-geni: Add shutdown callback for i2c
-Message-ID: <20210108100630.GC1223@kunai>
-Mail-Followup-To: Wolfram Sang <wsa@kernel.org>, rojay@codeaurora.org,
-        swboyd@chromium.org, dianders@chromium.org,
-        saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
-        mka@chromium.org, akashast@codeaurora.org,
-        msavaliy@qti.qualcomm.com, skakit@codeaurora.org,
-        pyarlaga@codeaurora.org, rnayak@codeaurora.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sumit.semwal@linaro.org, linux-media@vger.kernel.org
-References: <20201221123801.26643-1-rojay@codeaurora.org>
- <20201221123801.26643-3-rojay@codeaurora.org>
- <20210105152747.GB1842@ninjato>
- <d3e53aabf39e888d8184faa2981f7837@codeaurora.org>
+        id S1726795AbhAHKI7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jan 2021 05:08:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42618 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727118AbhAHKI7 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 8 Jan 2021 05:08:59 -0500
+Received: from mail-vk1-xa30.google.com (mail-vk1-xa30.google.com [IPv6:2607:f8b0:4864:20::a30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AB93C0612F5
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jan 2021 02:08:19 -0800 (PST)
+Received: by mail-vk1-xa30.google.com with SMTP id d6so2318027vkb.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jan 2021 02:08:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ls70z+SC9u40tzz8LEEvCPh2NSBEEkVviLNQ96+yhBY=;
+        b=UAaeUqyYlxch2Jm78HwGKCcXGFW7kR3YVS5YA8Xy8WN1X/yYBjeQt+Fg5vx/4JbR1g
+         nXbonJP9oYdaeFsrQs5aw0LQm/UYRDAs6cVSyGUMY+1KO1zi6mCSB3oTjF9w9LcnM7J9
+         AyJ9DQ0cJNoxde+qkWFf1TkXPfHIYhx4QcBujoA5saExwCLwKXTtJi562BF+ioU9vnJv
+         4eL/btBNEjhZoXS2dnVq5zkoWKwwsGWhrsplvM41DGQ4fjEcZyus1hE6mdC78PhYnB7X
+         oWTjtnT9Jc2QvTFBemqA+R4Q88xl1sWdfAwLMYLPrg3TI0sjiCgwO3GUCwR9J5N/n/Qc
+         aY5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ls70z+SC9u40tzz8LEEvCPh2NSBEEkVviLNQ96+yhBY=;
+        b=kdp9KeUgktqbGPQQxp2Jf3UdV5ricpoBFS/uNWPalcZ+HJE0Jyjc92W0QZR8SKaJ0W
+         szTbsMv+OCy60cKBnJMNQH3343gPoxNlfALI5uzs45uXSFpa+yXd8M6WCFV0COWis+nw
+         5Skcth/A6037AzB24iF276vdS/+dOCthTmsI7sMjWhjYSZ22YY8yjcD8qsvR5GRXEyam
+         kUHLUYa5NsBKx77EpeqKTsKmDnFC+emi3T2Y7Dp5qsvNrAx1Xo36rljCsXqD9BrHiQnS
+         t8rKRIpR79mYSf919d1uaYPp9AJO03T0MNJWdL5N5zNMCXKg0A5ZjjFJEU3QXIJhDsbo
+         IVAA==
+X-Gm-Message-State: AOAM532tjEHi6f6jqEAnSDiD1z0Ed8UBx1xc9uzw1qm6ghDFvUukB1Xy
+        0qVmVnEiWoJa/oAH9fGIBrAUrp5TaWuLX0vRPOdn/Q==
+X-Google-Smtp-Source: ABdhPJwfeCWb0ImNqT7tH1HSo0C2RQtzudREswquhI4rOLSGKPGBuwyfObkNvfH4IcyRtW+rraGPeFIZNHG+GWdu0k0=
+X-Received: by 2002:a1f:4582:: with SMTP id s124mr2128334vka.7.1610100498123;
+ Fri, 08 Jan 2021 02:08:18 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="96YOpH+ONegL0A3E"
-Content-Disposition: inline
-In-Reply-To: <d3e53aabf39e888d8184faa2981f7837@codeaurora.org>
+References: <20201130225039.15981-1-ilina@codeaurora.org> <20201130225039.15981-3-ilina@codeaurora.org>
+ <CAPDyKFphczBOyDmSQBh3PE7YaUBYy4Y5uoozrv4QOf4pEbk-yg@mail.gmail.com> <X/M3oB292GCO4vl9@codeaurora.org>
+In-Reply-To: <X/M3oB292GCO4vl9@codeaurora.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Fri, 8 Jan 2021 11:07:41 +0100
+Message-ID: <CAPDyKFoXVjebqbWo=JoK6A2snWOKAnifQ9Cra1VzqjP_14vfYA@mail.gmail.com>
+Subject: Re: [PATCH v6 2/3] PM / domains: inform PM domain of a device's next wakeup
+To:     Lina Iyer <ilina@codeaurora.org>
+Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, 4 Jan 2021 at 16:44, Lina Iyer <ilina@codeaurora.org> wrote:
+>
+> On Tue, Dec 22 2020 at 06:10 -0700, Ulf Hansson wrote:
+> >On Mon, 30 Nov 2020 at 23:51, Lina Iyer <ilina@codeaurora.org> wrote:
+> >>
+> >> Some devices may have a predictable interrupt pattern while executing
+> >> usecases. An example would be the VSYNC interrupt associated with
+> >> display devices. A 60 Hz display could cause a interrupt every 16 ms. If
+> >> the device were in a PM domain, the domain would need to be powered up
+> >> for device to resume and handle the interrupt.
+> >>
+> >> Entering a domain idle state saves power, only if the residency of the
+> >> idle state is met. Without knowing the idle duration of the domain, the
+> >> governor would just choose the deepest idle state that matches the QoS
+> >> requirements. The domain might be powered off just as the device is
+> >> expecting to wake up. If devices could inform PM frameworks of their
+> >> next event, the parent PM domain's idle duration can be determined.
+> >>
+> >> So let's add the dev_pm_genpd_set_next_wakeup() API for the device to
+> >> inform PM domains of the impending wakeup. This information will be the
+> >> domain governor to determine the best idle state given the wakeup.
+> >>
+> >> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+> >> ---
+> >> Changes in v6:
+> >>         - Update documentation
+> >> Changes in v5:
+> >>         - Fix commit text as pointed by Ulf
+> >>         - Use -EOPNOTSUPP
+> >> Changes in v4:
+> >>         - Use PM domain data to store next_wakeup
+> >>         - Drop runtime PM documentation
+> >> Changes in v3:
+> >>         - Fix unwanted change
+> >> Changes in v2:
+> >>         - Update documentation
+> >>         - Remove runtime PM enabled check
+> >>         - Update commit text
+> >> ---
+> >>  drivers/base/power/domain.c | 41 +++++++++++++++++++++++++++++++++++++
+> >>  include/linux/pm_domain.h   |  8 ++++++++
+> >>  2 files changed, 49 insertions(+)
+> >>
+> >> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+> >> index 1e6c0bf1c945..191539a8e06d 100644
+> >> --- a/drivers/base/power/domain.c
+> >> +++ b/drivers/base/power/domain.c
+> >> @@ -408,6 +408,46 @@ int dev_pm_genpd_set_performance_state(struct device *dev, unsigned int state)
+> >>  }
+> >>  EXPORT_SYMBOL_GPL(dev_pm_genpd_set_performance_state);
+> >>
+> >> +/**
+> >> + * dev_pm_genpd_set_next_wakeup - Notify PM framework of an impending wakeup.
+> >> + *
+> >> + * @dev: Device to handle
+> >> + * @next: impending interrupt/wakeup for the device
+> >> + *
+> >> + * Allow devices to inform of the next wakeup. But, if the domain were already
+> >> + * powered off, we will not wakeup the domain to recompute it's idle duration.
+> >
+> >How about clarifying this as:
+> >
+> >"It's assumed that the users guarantee that the genpd wouldn't be
+> >detached while this routine is getting called. Additionally, it's also
+> >assumed that @dev isn't runtime suspended (RPM_SUSPENDED).
+> >
+> Sure.
+>
+> >> + * Although devices are expected to update the next_wakeup after the end of
+> >> + * their usecase as well, it is possible the devices themselves may not know
+> >> + * about that. Stale @next will be ignored when powering off the domain.
+> >> + */
+> >> +int dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next)
+> >> +{
+> >> +       struct generic_pm_domain *genpd;
+> >> +       struct generic_pm_domain_data *gpd_data;
+> >> +       int ret = -EINVAL;
+> >> +
+> >> +       genpd = dev_to_genpd_safe(dev);
+> >> +       if (!genpd)
+> >> +               return -ENODEV;
+> >> +
+> >> +       if (WARN_ON(!dev->power.subsys_data ||
+> >> +                   !dev->power.subsys_data->domain_data))
+> >> +               return ret;
+> >> +
+> >> +       genpd_lock(genpd);
+> >> +       gpd_data = to_gpd_data(dev->power.subsys_data->domain_data);
+> >> +       if (ktime_before(ktime_get(), next)) {
+> >> +               gpd_data->next_wakeup = next;
+> >> +               genpd->flags |= GENPD_FLAG_GOV_NEXT_WAKEUP;
+> >
+> >I don't think we should set this here, but instead leave this to be
+> >set by the genpd provider at initialization.
+> >
+> But, we don't want it to be enabled by default. It is possible that
+> domains may have multiple idle states but none of the devices in the
+> domain have the need for next wakeup. We could optimize out the next
+> wakeup for those cases.
 
---96YOpH+ONegL0A3E
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Yes, I understand, but at this point I don't think it's needed.
 
+My main concern was to allow us to avoid the path for the
+"pm_domain_cpu_gov" type for some genpds. Thus I think it's good
+enough to set a new flag per genpd at initialization time.
 
-> > The use of 'goto' is not needed here IMHO. I think:
-...
-> In context to the previous comment [1], I have implemented this way.
-> But, yeah anything is fine for me.
+> Or, the domain needs to call genpd_enable_next_wakeup() (patch #1) to
+> allow this feature. Is that acceptable?
 
-Thanks, I really think it is better.
+The problem is that we would need a reference counting mechanism, as
+to also understand when to also turn off the flag. In other words, we
+would need some kind of locking. I suggest we simply skip this for now
+and see how this plays. What do you think?
 
-> In geni_i2c_abort_xfer() function gi2c->cur will be made NULL, so copying it
-> before to "cur" is needed here.
+>
+> >> +               ret = 0;
+> >> +       }
+> >> +       genpd_unlock(genpd);
+> >
+> >I would suggest to simplify the above into:
+> >
+> >gpd_data = to_gpd_data(dev->power.subsys_data->domain_data);
+> >gpd_data->next_wakeup = next;
+> >
+> >Then there is no need for locks because:
+> >*) We assume the device remains attached to the genpd.
+> >**) The device isn't runtime suspended, hence its corresponding genpd
+> >is powered on and thus the genpd governor can't be looking at
+> >"gpd_data->next_wakeup" simulantfsfulsy.
+> >
+> :)
+> >Moreover, as we agreed to ignore stale values for "next", there is no
+> >reason to validate it against the current ktime, so let's just skip
+> >it.
+> >
+> Okay.
+>
+> >> +
+> >> +       return ret;
+> >> +}
+> >> +EXPORT_SYMBOL_GPL(dev_pm_genpd_set_next_wakeup);
+> >> +
+> >> +
+> >>  static int _genpd_power_on(struct generic_pm_domain *genpd, bool timed)
+> >>  {
+> >>         unsigned int state_idx = genpd->state_idx;
+> >> @@ -1450,6 +1490,7 @@ static struct generic_pm_domain_data *genpd_alloc_dev_data(struct device *dev)
+> >>         gpd_data->td.constraint_changed = true;
+> >>         gpd_data->td.effective_constraint_ns = PM_QOS_RESUME_LATENCY_NO_CONSTRAINT_NS;
+> >>         gpd_data->nb.notifier_call = genpd_dev_pm_qos_notifier;
+> >> +       gpd_data->next_wakeup = KTIME_MAX;
+> >
+> >When looking at patch3, I wonder if it perhaps could be easier to use
+> >"zero" as the default value? What do you think, just an idea?
+> >
+> Hmm.. Let me think it over.
+>
+> Thanks,
+> Lina
+>
+> >>
+> >>         spin_lock_irq(&dev->power.lock);
+> >>
 
-Okay then, thanks for the heads up!
+[...]
 
-
---96YOpH+ONegL0A3E
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl/4LqYACgkQFA3kzBSg
-Kbbwag/6A5M3A+2Q2jivtmmhNGGh4pVc1ok5Joih+D1lZqAQVbSKjqPPZNyAeuOu
-0a2ouMt6rjzDrKgZ8rWDcuH6PTbFwtSKcwK1vyLK10ehhP8/lr2uVK5MqWJ8ydXS
-PcTBZI1NXLdK+cf6fIpfhcCYZG7mBf6Pc+riFDPNIgRv2Gs8sXz7/qNKrOE98XAv
-mqGuAbKTu6GqvfkFA5aRrT2hK/+p5XGzzAMX1zW7Gei+XyicABSko+aY1UExv/Bn
-uZrBYlG4xwW89gKNeqBDibZcXd1vPVhhqA8FVRGarwoJAQ09x9LN5G9iHnrZn1AW
-ID5BIu243HenHQkMDlOCVutNxEIFB7FohEK3UYY1uPR88VXunnMsaIcQWt1uoAHg
-IiS8AxZ+cEnePxzJC1HP1IjnisT3SP37KXSZyXzLpRhWk8P2rUOWIClEsVslSC6y
-uVLUpDiSc93lgQ1zmPYp8RUYrOeYq+tEmNnuSTC5JydlmjiaH0gVrl5769Kar8SK
-RdNB4LYPOG5+BtatssGfLzsMLN0vBiOV2GUxSWktCR3Xx179VNkd0ftyqJvUK4XE
-e8SeeqqvQJLAbSlE3UC5EurheaKN6dOXhvnjfh9zVDNh3swfQ0fYl4dbINnGaORr
-Sywbt3JRJ41iEaOvTy0QJ6kcEuV6qh6oXPjMgrsUednm8zpmJdQ=
-=3G2X
------END PGP SIGNATURE-----
-
---96YOpH+ONegL0A3E--
+Kind regards
+Uffe
