@@ -2,200 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 513102EEAD3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 02:18:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 85DB92EED44
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 06:48:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729570AbhAHBRT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jan 2021 20:17:19 -0500
-Received: from so254-31.mailgun.net ([198.61.254.31]:13337 "EHLO
+        id S1727176AbhAHFsO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jan 2021 00:48:14 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:32062 "EHLO
         so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729564AbhAHBRT (ORCPT
+        with ESMTP id S1726120AbhAHFsO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jan 2021 20:17:19 -0500
+        Fri, 8 Jan 2021 00:48:14 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1610068615; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=cqNjlNBBgadimuvCOQhJCtKlZ2t+VTKBlMiwNFmVwME=; b=RC2++GCK2xT4BNUPfd651A4h0ezSHkj97HNN/cU45sCZ03mDUMKd3azt0Hgsot5t6ft8EZBQ
- BU0aiHhgcX/mMO9f6aoA66Vlt/qzhSO1g1KIhlq1TLj8wweJkukz35rheuSXm+JzllfG3pmN
- KcN5RJvd7YeGsqg9xdQn8DyRYwc=
+ s=smtp; t=1610084875; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=b3qHEdqVQIrYl8B+o2/ETyJYY6e+1aZCCdqjvRVd45k=;
+ b=toZAYelZulBpQopBkzUisShamHuC0f3Rl0YXjHUtJhCXietfYPt6ZQAUFxi8ZscnJj5JQWWv
+ 4FLVAeA3WYVcK7j4KtcuzvyecvXVOE7TCvsFOthyys2UrES5sbkC58eSYTpFJql9O9376RV0
+ 2u5xelXnoMLzGU2rMdgCGqFs/+A=
 X-Mailgun-Sending-Ip: 198.61.254.31
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n08.prod.us-west-2.postgun.com with SMTP id
- 5ff7b25bb95fc593268fd051 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 08 Jan 2021 01:16:11
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 5ff7f1eefc3778927e4b3a59 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 08 Jan 2021 05:47:26
  GMT
-Sender: collinsd=codeaurora.org@mg.codeaurora.org
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E09F8C433C6; Fri,  8 Jan 2021 01:16:10 +0000 (UTC)
+        id A5872C433CA; Fri,  8 Jan 2021 05:47:26 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: collinsd)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B061AC433CA;
-        Fri,  8 Jan 2021 01:16:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B061AC433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=collinsd@codeaurora.org
-From:   David Collins <collinsd@codeaurora.org>
-To:     Mark Brown <broonie@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>
-Cc:     David Collins <collinsd@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] regulator: core: avoid regulator_resolve_supply() race condition
-Date:   Thu,  7 Jan 2021 17:16:02 -0800
-Message-Id: <1610068562-4410-1-git-send-email-collinsd@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6AA3FC433C6;
+        Fri,  8 Jan 2021 05:47:25 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 08 Jan 2021 11:17:25 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     isaacm@codeaurora.org
+Cc:     Will Deacon <will@kernel.org>, Rob Clark <robdclark@gmail.com>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, Joerg Roedel <joro@8bytes.org>,
+        linux-kernel@vger.kernel.org,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        iommu@lists.linux-foundation.org,
+        Robin Murphy <robin.murphy@arm.com>,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH] iommu/io-pgtable-arm: Allow non-coherent masters to use
+ system cache
+In-Reply-To: <cfced52002337025088a64aa159760b2@codeaurora.org>
+References: <20201224064007.2339-1-saiprakash.ranjan@codeaurora.org>
+ <20210106115615.GA1763@willie-the-truck>
+ <cfced52002337025088a64aa159760b2@codeaurora.org>
+Message-ID: <8cfefbff135a5287d177b6ab2ccc3304@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The final step in regulator_register() is to call
-regulator_resolve_supply() for each registered regulator
-(including the one in the process of being registered).  The
-regulator_resolve_supply() function first checks if rdev->supply
-is NULL, then it performs various steps to try to find the supply.
-If successful, rdev->supply is set inside of set_supply().
+On 2021-01-07 22:27, isaacm@codeaurora.org wrote:
+> On 2021-01-06 03:56, Will Deacon wrote:
+>> On Thu, Dec 24, 2020 at 12:10:07PM +0530, Sai Prakash Ranjan wrote:
+>>> commit ecd7274fb4cd ("iommu: Remove unused IOMMU_SYS_CACHE_ONLY 
+>>> flag")
+>>> removed unused IOMMU_SYS_CACHE_ONLY prot flag and along with it went
+>>> the memory type setting required for the non-coherent masters to use
+>>> system cache. Now that system cache support for GPU is added, we will
+>>> need to mark the memory as normal sys-cached for GPU to use system 
+>>> cache.
+>>> Without this, the system cache lines are not allocated for GPU. We 
+>>> use
+>>> the IO_PGTABLE_QUIRK_ARM_OUTER_WBWA quirk instead of a page 
+>>> protection
+>>> flag as the flag cannot be exposed via DMA api because of no in-tree
+>>> users.
+>>> 
+>>> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+>>> ---
+>>>  drivers/iommu/io-pgtable-arm.c | 3 +++
+>>>  1 file changed, 3 insertions(+)
+>>> 
+>>> diff --git a/drivers/iommu/io-pgtable-arm.c 
+>>> b/drivers/iommu/io-pgtable-arm.c
+>>> index 7c9ea9d7874a..3fb7de8304a2 100644
+>>> --- a/drivers/iommu/io-pgtable-arm.c
+>>> +++ b/drivers/iommu/io-pgtable-arm.c
+>>> @@ -415,6 +415,9 @@ static arm_lpae_iopte arm_lpae_prot_to_pte(struct 
+>>> arm_lpae_io_pgtable *data,
+>>>  		else if (prot & IOMMU_CACHE)
+>>>  			pte |= (ARM_LPAE_MAIR_ATTR_IDX_CACHE
+>>>  				<< ARM_LPAE_PTE_ATTRINDX_SHIFT);
+>>> +		else if (data->iop.cfg.quirks & IO_PGTABLE_QUIRK_ARM_OUTER_WBWA)
+>>> +			pte |= (ARM_LPAE_MAIR_ATTR_IDX_INC_OCACHE
+>>> +				<< ARM_LPAE_PTE_ATTRINDX_SHIFT);
+>>>  	}
+>> 
+> While this approach of enabling system cache globally for both page
+> tables and other buffers
+> works for the GPU usecase, this isn't ideal for other clients that use
+> system cache. For example,
+> video clients only want to cache a subset of their buffers in the
+> system cache, due to the sizing constraint
+> imposed by how much of the system cache they can use. So, it would be
+> ideal to have
+> a way of expressing the desire to use the system cache on a per-buffer
+> basis. Additionally,
+> our video clients use the DMA layer, and since the requirement is for
+> caching in the system cache
+> to be a per buffer attribute, it seems like we would have to have a
+> DMA attribute to express
+> this on a per-buffer basis.
+> 
 
-This procedure can encounter a race condition if two concurrent
-tasks call regulator_register() near to each other on separate CPUs
-and one of the regulators has rdev->supply_name specified.  There
-is currently nothing guaranteeing atomicity between the rdev->supply
-check and set steps.  Thus, both tasks can observe rdev->supply==NULL
-in their regulator_resolve_supply() calls.  This then results in
-both creating a struct regulator for the supply.  One ends up
-actually stored in rdev->supply and the other is lost (though still
-present in the supply's consumer_list).
+I did bring this up initially [1], also where is this video client
+in upstream? AFAIK, only system cache user in upstream is GPU.
+We cannot add any DMA attribute unless there is any user upstream
+as per [2], so when the support for such a client is added, wouldn't
+((data->iop.cfg.quirks & IO_PGTABLE_QUIRK_ARM_OUTER_WBWA) || PROT_FLAG)
+work?
 
-Here is a kernel log snippet showing the issue:
+[1] 
+https://lore.kernel.org/dri-devel/ecfda7ca80f6d7b4ff3d89b8758f4dc9@codeaurora.org/
+[2] https://lore.kernel.org/linux-iommu/20191026053026.GA14545@lst.de/T/
 
-[   12.421768] gpu_cc_gx_gdsc: supplied by pm8350_s5_level
-[   12.425854] gpu_cc_gx_gdsc: supplied by pm8350_s5_level
-[   12.429064] debugfs: Directory 'regulator.4-SUPPLY' with parent
-               '17a00000.rsc:rpmh-regulator-gfxlvl-pm8350_s5_level'
-               already present!
+Thanks,
+Sai
 
-Avoid this race condition by holding the rdev->mutex lock inside
-of regulator_resolve_supply() while checking and setting
-rdev->supply.
-
-Signed-off-by: David Collins <collinsd@codeaurora.org>
----
- drivers/regulator/core.c | 39 ++++++++++++++++++++++++++++-----------
- 1 file changed, 28 insertions(+), 11 deletions(-)
-
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index fee9241..3ae5ccd 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -1813,23 +1813,34 @@ static int regulator_resolve_supply(struct regulator_dev *rdev)
- {
- 	struct regulator_dev *r;
- 	struct device *dev = rdev->dev.parent;
--	int ret;
-+	int ret = 0;
- 
- 	/* No supply to resolve? */
- 	if (!rdev->supply_name)
- 		return 0;
- 
--	/* Supply already resolved? */
-+	/* Supply already resolved? (fast-path without locking contention) */
- 	if (rdev->supply)
- 		return 0;
- 
-+	/*
-+	 * Recheck rdev->supply with rdev->mutex lock held to avoid a race
-+	 * between rdev->supply null check and setting rdev->supply in
-+	 * set_supply() from concurrent tasks.
-+	 */
-+	regulator_lock(rdev);
-+
-+	/* Supply just resolved by a concurrent task? */
-+	if (rdev->supply)
-+		goto out;
-+
- 	r = regulator_dev_lookup(dev, rdev->supply_name);
- 	if (IS_ERR(r)) {
- 		ret = PTR_ERR(r);
- 
- 		/* Did the lookup explicitly defer for us? */
- 		if (ret == -EPROBE_DEFER)
--			return ret;
-+			goto out;
- 
- 		if (have_full_constraints()) {
- 			r = dummy_regulator_rdev;
-@@ -1837,15 +1848,18 @@ static int regulator_resolve_supply(struct regulator_dev *rdev)
- 		} else {
- 			dev_err(dev, "Failed to resolve %s-supply for %s\n",
- 				rdev->supply_name, rdev->desc->name);
--			return -EPROBE_DEFER;
-+			ret = -EPROBE_DEFER;
-+			goto out;
- 		}
- 	}
- 
- 	if (r == rdev) {
- 		dev_err(dev, "Supply for %s (%s) resolved to itself\n",
- 			rdev->desc->name, rdev->supply_name);
--		if (!have_full_constraints())
--			return -EINVAL;
-+		if (!have_full_constraints()) {
-+			ret = -EINVAL;
-+			goto out;
-+		}
- 		r = dummy_regulator_rdev;
- 		get_device(&r->dev);
- 	}
-@@ -1859,7 +1873,8 @@ static int regulator_resolve_supply(struct regulator_dev *rdev)
- 	if (r->dev.parent && r->dev.parent != rdev->dev.parent) {
- 		if (!device_is_bound(r->dev.parent)) {
- 			put_device(&r->dev);
--			return -EPROBE_DEFER;
-+			ret = -EPROBE_DEFER;
-+			goto out;
- 		}
- 	}
- 
-@@ -1867,13 +1882,13 @@ static int regulator_resolve_supply(struct regulator_dev *rdev)
- 	ret = regulator_resolve_supply(r);
- 	if (ret < 0) {
- 		put_device(&r->dev);
--		return ret;
-+		goto out;
- 	}
- 
- 	ret = set_supply(rdev, r);
- 	if (ret < 0) {
- 		put_device(&r->dev);
--		return ret;
-+		goto out;
- 	}
- 
- 	/*
-@@ -1886,11 +1901,13 @@ static int regulator_resolve_supply(struct regulator_dev *rdev)
- 		if (ret < 0) {
- 			_regulator_put(rdev->supply);
- 			rdev->supply = NULL;
--			return ret;
-+			goto out;
- 		}
- 	}
- 
--	return 0;
-+out:
-+	regulator_unlock(rdev);
-+	return ret;
- }
- 
- /* Internal regulator request function */
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
