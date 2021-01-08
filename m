@@ -2,86 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E9B8F2EF9A9
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 21:57:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B54D2EFA4D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 22:22:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729454AbhAHU4J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jan 2021 15:56:09 -0500
-Received: from so254-31.mailgun.net ([198.61.254.31]:58103 "EHLO
-        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729450AbhAHU4I (ORCPT
+        id S1727845AbhAHVV4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jan 2021 16:21:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34546 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726227AbhAHVV4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jan 2021 15:56:08 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1610139344; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=sb4JboOCbIRVBnLMPm4NgRt8Ej733eEY/fDPzx6N7Ws=; b=hBGGgTCLICP2Lptb8+BlheF8SoEY7apzVzLEscO9LiZ31RbE+A9MtwEAR7w4NhRo6O6m/eI8
- dpXmw8XcwADGmPCl+8DJUgc14E5SDI1BbmcnlJOUxfZtEdvGcuJCe2wP5dCn3UL2bhgVBIRe
- cL+YNtrJ6jEdiU35XBaY3AGgkQw=
-X-Mailgun-Sending-Ip: 198.61.254.31
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 5ff8c6ad4104d9478d323143 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 08 Jan 2021 20:55:09
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A313AC43461; Fri,  8 Jan 2021 20:55:09 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EE737C43464;
-        Fri,  8 Jan 2021 20:55:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EE737C43464
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        loic.poulain@linaro.org, Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: [PATCH v5 9/9] bus: mhi: core: Do not clear channel context more than once
-Date:   Fri,  8 Jan 2021 12:54:57 -0800
-Message-Id: <1610139297-36435-10-git-send-email-bbhatt@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1610139297-36435-1-git-send-email-bbhatt@codeaurora.org>
-References: <1610139297-36435-1-git-send-email-bbhatt@codeaurora.org>
+        Fri, 8 Jan 2021 16:21:56 -0500
+Received: from mail-vk1-xa2e.google.com (mail-vk1-xa2e.google.com [IPv6:2607:f8b0:4864:20::a2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BC6CC061574
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jan 2021 13:21:15 -0800 (PST)
+Received: by mail-vk1-xa2e.google.com with SMTP id u67so2808232vkb.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jan 2021 13:21:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=XR8VpqhNvfyeOSjiVGS0Gw6y6Ox46JoGQ/emSYjsvjk=;
+        b=AjRH6z5bgTXQmT6C30AB861Wlw5FHUKheGMZVGD8gYjod0dQ3o5VfJLtZeFhJuvoJ5
+         WavBV44odXXue/TjtQTruTB7I3vowZx0iO1kXKgc8Tk0Y1GTU8H6UNmVXbPbcRBssPNa
+         47U1Y10tNMnEC6216t1LAMqhVBEg4IpxVSqqE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=XR8VpqhNvfyeOSjiVGS0Gw6y6Ox46JoGQ/emSYjsvjk=;
+        b=sfx93cIT4NtmuAWfmDx7zwnE/wjeWxVmOue7xSdD0e654TYkvoKFAJJxy9o4bW2H0X
+         X0AineEePavSinPBXLeFRpBLOlhkE6iaXEBsNBc1em0jOEv8f6kuiyvRan+ivW/QBa1A
+         E6Zft4CizrdWdYIt6FOIYLQXC1y0DVHMe/wBB1E9OIjsly4jftCOe7Mk+WkEuRQxwd5g
+         qHqQ3RRPPeBCeiVRuhwXygAySJEzTtvX0MePQDD842BgAAMouSe7K0YgXm2+pEaGzbIo
+         sJIE96tZ2HZzX2IHZD/8lpcH5Z5TN3v0IkFC3qM+m2CehOHbLrb2BFY7fQohEDzWJYFs
+         Q+9A==
+X-Gm-Message-State: AOAM532wheFH0vzNLRWMF4onllBkribz0NI/L775W6inTC50VfTSpzo3
+        +Bur/d/aewRw4vVbjNooOehkK5bzoXIDiw==
+X-Google-Smtp-Source: ABdhPJx2VswUVXl0W5lJABSKVepDDNb/ZLu+cyqXvFhQErLUk9a4hcjK7yKFupKtfMIUwSLqjLNFfQ==
+X-Received: by 2002:a1f:a796:: with SMTP id q144mr5073064vke.19.1610140874590;
+        Fri, 08 Jan 2021 13:21:14 -0800 (PST)
+Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com. [209.85.222.47])
+        by smtp.gmail.com with ESMTPSA id s5sm389955vsr.16.2021.01.08.13.21.12
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 08 Jan 2021 13:21:12 -0800 (PST)
+Received: by mail-ua1-f47.google.com with SMTP id p2so3899182uac.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jan 2021 13:21:12 -0800 (PST)
+X-Received: by 2002:ab0:2e99:: with SMTP id f25mr4896052uaa.104.1610140872334;
+ Fri, 08 Jan 2021 13:21:12 -0800 (PST)
+MIME-Version: 1.0
+References: <20201214092048.v5.1.Iec3430c7d3c2a29262695edef7b82a14aaa567e5@changeid>
+In-Reply-To: <20201214092048.v5.1.Iec3430c7d3c2a29262695edef7b82a14aaa567e5@changeid>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 8 Jan 2021 13:21:00 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=Xt0O7WOe-hsiqJ7Jqhgs7TQ_c-_BtyAuj0D2Yxi-TqEg@mail.gmail.com>
+Message-ID: <CAD=FV=Xt0O7WOe-hsiqJ7Jqhgs7TQ_c-_BtyAuj0D2Yxi-TqEg@mail.gmail.com>
+Subject: Re: [PATCH v5 1/2] mmc: sdhci-msm: Warn about overclocking SD/MMC
+To:     Ulf Hansson <ulf.hansson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>
+Cc:     Taniya Das <tdas@codeaurora.org>,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Linux MMC List <linux-mmc@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When clearing the channel context, calling mhi_free_coherent()
-more than once can result in kernel warnings such as "trying to
-free invalid coherent area". Prevent extra work by adding a check
-to skip calling mhi_deinit_chan_ctxt() if the client driver has
-already disabled the channels.
+Ulf,
 
-Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
----
- drivers/bus/mhi/core/init.c | 1 +
- 1 file changed, 1 insertion(+)
+On Mon, Dec 14, 2020 at 9:23 AM Douglas Anderson <dianders@chromium.org> wrote:
+>
+> As talked about in commit 5e4b7e82d497 ("clk: qcom: gcc-sdm845: Use
+> floor ops for sdcc clks"), most clocks handled by the Qualcomm clock
+> drivers are rounded _up_ by default instead of down.  We should make
+> sure SD/MMC clocks are always rounded down in the clock drivers.
+> Let's add a warning in the Qualcomm SDHCI driver to help catch the
+> problem.
+>
+> This would have saved a bunch of time [1].
+>
+> NOTE: this doesn't actually fix any problems, it just makes it obvious
+> to devs that there is a problem and that should be an indication to
+> fix the clock driver.
+>
+> [1] http://lore.kernel.org/r/20201210102234.1.I096779f219625148900fc984dd0084ed1ba87c7f@changeid
+>
+> Suggested-by: Stephen Boyd <swboyd@chromium.org>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>
+> (no changes since v4)
+>
+> Changes in v4:
+> - Emphasize in the commit message that this itself doesn't fix anything.
+>
+> Changes in v3:
+> - Proper printf format code.
+>
+> Changes in v2:
+> - Store rate in unsigned long, not unsigned int.
+> - Reuse the clk_get_rate() in the later print.
+>
+>  drivers/mmc/host/sdhci-msm.c | 15 +++++++++++++--
+>  1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-index 30eef19..272f350 100644
---- a/drivers/bus/mhi/core/init.c
-+++ b/drivers/bus/mhi/core/init.c
-@@ -1314,6 +1314,7 @@ static int mhi_driver_remove(struct device *dev)
- 
- 		if ((ch_state[dir] == MHI_CH_STATE_ENABLED ||
- 		     ch_state[dir] == MHI_CH_STATE_STOP) &&
-+		    mhi_chan->ch_state != MHI_CH_STATE_DISABLED &&
- 		    !mhi_chan->offload_ch)
- 			mhi_deinit_chan_ctxt(mhi_cntrl, mhi_chan);
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Is there anything you need me to do for this patch and the next one?
+They are both reviewed / Acked and hopefully have sat around long
+enough that folks who took a long holiday break had a chance to shout
+if they were going to, so I think they could land.  ;-)  Please yell
+if there's something you need me to do, or feel free to tell me to sit
+quietly and be patient.
 
+Thanks!
+
+-Doug
