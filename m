@@ -2,250 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F6662EF796
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 19:41:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 409B92EF7B3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 19:52:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728405AbhAHSln (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jan 2021 13:41:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37740 "EHLO
+        id S1728755AbhAHSwC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jan 2021 13:52:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727856AbhAHSlm (ORCPT
+        with ESMTP id S1728746AbhAHSwB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jan 2021 13:41:42 -0500
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C425C0612EA
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jan 2021 10:41:02 -0800 (PST)
-Received: by mail-oi1-x22f.google.com with SMTP id l200so12372650oig.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jan 2021 10:41:02 -0800 (PST)
+        Fri, 8 Jan 2021 13:52:01 -0500
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7846BC0612FD
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jan 2021 10:51:21 -0800 (PST)
+Received: by mail-oi1-x235.google.com with SMTP id s2so12460391oij.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jan 2021 10:51:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=AaJsOT+2dXsrzbmSUBlolWUy7wnqag5xMcaj6pqD4EU=;
-        b=q7O2eNwAg2X76k8sIS8g+BFeEIPJrVjsQ7AuInxl/sdsTrtgXwiCVQtdkkK6SMyuWS
-         9QmfA4AD56gDVyj3PJzXDEJM1cRYmtcBmUaDirFS7hI8BL+mWPyS6bEQ+x0Vm51JZRWU
-         bIdN5tvWEyUILKU9ReLpYPn7ZquSYhXv3dG4Hb7oTT9Gibgyu7EGLtFfPiwhlr6ohBwl
-         sVCUE3vHj7qKsiD7xIjZ5LdLezBQZeqeCXxIbqRS2qEDsdzsvFRio/0PharhbZwdMGW6
-         26+ruqNr6415J5cOeXdzj5dO6q9ISuTYQhpnBQ77VWkFN/RznSQaLa5EgV0o8QBNvISt
-         5Huw==
+        bh=yw5HNg0k9iL0QHuBnpeVEeXpmsT4zEnK0I09kWNg4VE=;
+        b=spizBsCeh+YYB8W/IjGWwKrI/pXPx7LjOWGRXUcobQCpcJMuzvvYSXwo/EUa60JsKT
+         xqqpQg4cjhZTH3RiJqykwYB5TPKMG3wEe0UkatR6OMwlSzLhFhWQ7C5dtU48nbJrSKuA
+         i12Iez9VdRCHBrGjzjmgpQVRFfYvRqKSjMbLJJ0VzJpMcDzFPeXDsaOveDGSICugouUo
+         Z+sIbi1pyYQzxa8XJBt2RvP06WF+GlIikHxSNNWOfi2IN9S8N9GIYZsKyBs/rk+OLHrS
+         OWaqkXnzAY57hM6ps5KH9eaPJDojhSVPE7TJduuFCQ8KoUOUFfaqlRYYdoJZaO+x0q4B
+         NzXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=AaJsOT+2dXsrzbmSUBlolWUy7wnqag5xMcaj6pqD4EU=;
-        b=t6RX3jdCOwoAF/toCeD829jscuUfsdUGXdRlkMiNYDuafV0ap7AsPKSbpdRMvAuNg4
-         SvIh8V3JA1o1dbLu1o5JYlxpufXg5on1r1HOF3gEkcgoHCFAnaVfiKMD8xu+pkHXDf68
-         MjraP2c5jw2h2A7lOhou4sYndjocwE61ZLRI4uBE+AlBuVe4m07O0AaZdkw7KmYa5/W2
-         tlTYl6JzkP1Zex/d0ER0A9k1CGBhl4UrQK43EQ/nMFmKtgBe41YZiU98JU5lQbfeV5d4
-         me1pQvqi8kj8R57IGtE65ZaaX0qxQ4eTwf2AyYbJgntcHXo3C8ISY6w+m9AxPpyZTcWx
-         7mcg==
-X-Gm-Message-State: AOAM532BYivEzgdBJfWio07/EsO84RR2WCE4WaC3cfhp05438kdsAakk
-        wzB7lIxSx40Ta1kXW+pz5zu4wA==
-X-Google-Smtp-Source: ABdhPJwO6dayENaSus7KzZYfY/3OGpzNKmjKOSdXNbTiEYGBrKRj8PITuE0yRxMzTc7eaC9LeelgTA==
-X-Received: by 2002:aca:c756:: with SMTP id x83mr3029963oif.62.1610131261676;
-        Fri, 08 Jan 2021 10:41:01 -0800 (PST)
+        bh=yw5HNg0k9iL0QHuBnpeVEeXpmsT4zEnK0I09kWNg4VE=;
+        b=fNhyAyD9RjZXwRCxlqg9226SuylbyhQfeo2hYbhP/CoKN3HK8/Z9s11UEV51g+dFWo
+         7YmWenEGd1QskRGwZ33ojaE2VP8g1YMzusOSaUcbPZEmMQB5jeTvtvOJrqLv08LgNq8U
+         uDohGHbme/4I1dcqqriE1g7DQLoy263TdaARMApn1zywob7UAdqJ686v9nMTrmQV4xL7
+         AupwPXKOssFxo027NxOz3U9V7kEX53m65WdZ5hhMizJjLaJvFl+hfnhHK6sYOMe+5zzr
+         ifN2qDLsl5ESw7LqFBKAK8TgizDQcUYkxsa+xafnv/cIlguxQoF9iDDb3qnz5LMrEngV
+         d0DQ==
+X-Gm-Message-State: AOAM533gt4pnWeLDrgKd6NgPuQPYP6FOs7bb8PCXtxP7Yn0DDyZdnxFt
+        7maPzrTuIXYtgvhSm8x1n90UfQ==
+X-Google-Smtp-Source: ABdhPJxR70l+gieQE6A1jIIhmWfNLp4ron556Hy+l+ahoezA8S0Np6gHH+AXBp6x7HPJr+JKligh/g==
+X-Received: by 2002:aca:b657:: with SMTP id g84mr3289190oif.86.1610131880733;
+        Fri, 08 Jan 2021 10:51:20 -0800 (PST)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id s66sm1862772ooa.37.2021.01.08.10.41.00
+        by smtp.gmail.com with ESMTPSA id h11sm1907017ooj.36.2021.01.08.10.51.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Jan 2021 10:41:01 -0800 (PST)
-Date:   Fri, 8 Jan 2021 12:40:59 -0600
+        Fri, 08 Jan 2021 10:51:19 -0800 (PST)
+Date:   Fri, 8 Jan 2021 12:51:18 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 1/2] dt-bindings: pinctrl: qcom: Add SM8350 pinctrl
- bindings
-Message-ID: <X/inO3hecPJTaKi+@builder.lan>
-References: <20210106054950.303244-1-vkoul@kernel.org>
- <20210106054950.303244-2-vkoul@kernel.org>
- <X/dCIuUR/El8Gxaa@builder.lan>
- <20210108075746.GV2771@vkoul-mobl>
+To:     Robert Foss <robert.foss@linaro.org>
+Cc:     agross@kernel.org, todor.too@gmail.com, mchehab@kernel.org,
+        robh+dt@kernel.org, catalin.marinas@arm.com, will@kernel.org,
+        shawnguo@kernel.org, leoyang.li@nxp.com, geert+renesas@glider.be,
+        arnd@arndb.de, Anson.Huang@nxp.com, michael@walle.cc,
+        agx@sigxcpu.org, max.oss.09@gmail.com,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Andrey Konovalov <andrey.konovalov@linaro.org>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
+        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Subject: Re: [PATCH v1 01/17] media: camss: Fix comment using wrong function
+ name
+Message-ID: <X/ippoemGT9d28Sd@builder.lan>
+References: <20210108120429.895046-1-robert.foss@linaro.org>
+ <20210108120429.895046-2-robert.foss@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210108075746.GV2771@vkoul-mobl>
+In-Reply-To: <20210108120429.895046-2-robert.foss@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 08 Jan 01:57 CST 2021, Vinod Koul wrote:
+On Fri 08 Jan 06:04 CST 2021, Robert Foss wrote:
 
-> Hi Bjorn,
+> Function name is comment is wrong, and was changed to be
+> the same as the actual function name.
 > 
-> On 07-01-21, 11:17, Bjorn Andersson wrote:
-> > On Tue 05 Jan 23:49 CST 2021, Vinod Koul wrote:
-> > > +#PIN CONFIGURATION NODES
-> > > +patternProperties:
-> > > +  '-pinmux$':
-> > 
-> > I believe that what Rob was asking for was the matter of describing the
-> > mux and config subnodes under this one. But I don't know really how to
-> > express this, because the following are all valid:
+> Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> ---
+>  drivers/media/platform/qcom/camss/camss-vfe.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> I looked at the pinmux-node.yaml which describes subnodes with function
-> and groups, this is a generic description and should be in
-> pinmux-node.yaml not in every device description.. said that I am not
-> sure why else should we add here :)
-> 
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+> index fae2b513b2f9..478be4f0cab5 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+> @@ -1077,7 +1077,7 @@ static void vfe_isr_wm_done(struct vfe_device *vfe, u8 wm)
+>  }
+>  
+>  /*
+> - * vfe_isr_wm_done - Process composite image done interrupt
+> + * vfe_isr_comp_done - Process composite image done interrupt
 
-Unfortunately I don't think I understand how the pinmux-node.yaml
-applies to the two possible levels of nodes.
+It's a function, so it should be "vfe_isr_comp_done()", but unless the
+comment is denoted kerneldoc by starting with '/' followed by two '*' it
+"doesn't matter".
 
-Also the description of our state nodes would have to be a mix of
-pinmux-node.yaml, pincfg-node.yaml and then the properties/constraints
-described here, plus something indicating that many of the common
-properties are not valid ones for this binding.
+As a matter of fact, none of the kerneldoc in this file has the proper
+'/**' start, so this file is "undocumented".
 
-
-Regardless of how to describe that though, I would like the
-patternProperties to be "-state$" :)
+So please add another '*' and some () throughout the file.
 
 Regards,
 Bjorn
 
-> > 
-> > default_state: default-state {
-> > 	pins = "gpio1";
-> > 	bias-disable;
-> > };
-> > 
-> > default_state: default-state {
-> > 	rx {
-> > 		pins = "gpio1";
-> > 		function = "gpio";
-> > 		bias-disable;
-> > 	};
-> > };
-> > 
-> > default_state: default-state {
-> > 	pinmux {
-> > 		pins = "gpio1";
-> > 		function = "gpio";
-> > 	};
-> > 
-> > 	pinconf {
-> > 		pins = "gpio1";
-> > 		bias-disable;
-> > 	};
-> > };
-> > 
-> > I.e. the properties described here applies either to this node directly,
-> > or any subnodes (1 level) down.
-> > 
-> > 
-> > Also we've been using different "patternProperties" for this node since
-> > the introduction of the binding 7 years ago. But to be "-state$" seems
-> > to best represent what the node actually describes.
-> > 
-> > Regards,
-> > Bjorn
-> > 
-> > > +    type: object
-> > > +    description:
-> > > +      Pinctrl node's client devices use subnodes for desired pin configuration.
-> > > +      Client device subnodes use below standard properties.
-> > > +    $ref: "/schemas/pinctrl/pincfg-node.yaml"
-> > > +
-> > > +    properties:
-> > > +      pins:
-> > > +        description:
-> > > +          List of gpio pins affected by the properties specified in this subnode.
-> > > +        items:
-> > > +          oneOf:
-> > > +            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-9][0-9]|20[0-3])$"
-> > > +            - enum: [ sdc1_clk, sdc1_cmd, sdc1_data, sdc2_clk, sdc2_cmd, sdc2_data ]
-> > > +        minItems: 1
-> > > +        maxItems: 36
-> > > +
-> > > +      function:
-> > > +        description:
-> > > +          Specify the alternative function to be configured for the specified
-> > > +          pins. Functions are only valid for gpio pins.
-> > > +        enum: [ atest_char, atest_usb, audio_ref, cam_mclk, cci_async,
-> > > +                cci_i2c, cci_timer, cmu_rng, coex_uart1, coex_uart2, cri_trng,
-> > > +                cri_trng0, cri_trng1, dbg_out, ddr_bist, ddr_pxi0, ddr_pxi1,
-> > > +                ddr_pxi2, ddr_pxi3, dp_hot, dp_lcd, gcc_gp1, gcc_gp2, gcc_gp3,
-> > > +                gpio, ibi_i3c, jitter_bist, lpass_slimbus, mdp_vsync, mdp_vsync0,
-> > > +                mdp_vsync1, mdp_vsync2, mdp_vsync3, mi2s0_data0, mi2s0_data1,
-> > > +                mi2s0_sck, mi2s0_ws, mi2s1_data0, mi2s1_data1, mi2s1_sck,
-> > > +                mi2s1_ws, mi2s2_data0, mi2s2_data1, mi2s2_sck, mi2s2_ws,
-> > > +                mss_grfc0, mss_grfc1, mss_grfc10, mss_grfc11, mss_grfc12,
-> > > +                mss_grfc2, mss_grfc3, mss_grfc4, mss_grfc5, mss_grfc6,
-> > > +                mss_grfc7, mss_grfc8, mss_grfc9, nav_gpio, pa_indicator,
-> > > +                pcie0_clkreqn, pcie1_clkreqn, phase_flag, pll_bist, pll_clk,
-> > > +                pri_mi2s, prng_rosc, qdss_cti, qdss_gpio, qlink0_enable,
-> > > +                qlink0_request, qlink0_wmss, qlink1_enable, qlink1_request,
-> > > +                qlink1_wmss, qlink2_enable, qlink2_request, qlink2_wmss, qspi0,
-> > > +                qspi1, qspi2, qspi3, qspi_clk, qspi_cs, qup0, qup1, qup10,
-> > > +                qup11, qup12, qup13, qup14, qup15, qup16, qup17, qup18, qup19,
-> > > +                qup2, qup3, qup4, qup5, qup6, qup7, qup8, qup9, qup_l4, qup_l5,
-> > > +                qup_l6, sd_write, sdc40, sdc41, sdc42, sdc43, sdc4_clk,
-> > > +                sdc4_cmd, sec_mi2s, tb_trig, tgu_ch0, tgu_ch1, tgu_ch2,
-> > > +                tgu_ch3, tsense_pwm1, tsense_pwm2, uim0_clk, uim0_data,
-> > > +                uim0_present, uim0_reset, uim1_clk, uim1_data, uim1_present,
-> > > +                uim1_reset, usb2phy_ac, usb_phy, vfr_0, vfr_1, vsense_trigger ]
-> > > +
-> > > +
-> > > +      drive-strength:
-> > > +        enum: [2, 4, 6, 8, 10, 12, 14, 16]
-> > > +        default: 2
-> > > +        description:
-> > > +          Selects the drive strength for the specified pins, in mA.
-> > > +
-> > > +      bias-pull-down: true
-> > > +
-> > > +      bias-pull-up: true
-> > > +
-> > > +      bias-disable: true
-> > > +
-> > > +      output-high: true
-> > > +
-> > > +      output-low: true
-> > > +
-> > > +    required:
-> > > +      - pins
-> > > +      - function
-> > > +
-> > > +    additionalProperties: false
-> > > +
-> > > +required:
-> > > +  - compatible
-> > > +  - reg
-> > > +  - interrupts
-> > > +  - interrupt-controller
-> > > +  - '#interrupt-cells'
-> > > +  - gpio-controller
-> > > +  - '#gpio-cells'
-> > > +  - gpio-ranges
-> > > +
-> > > +additionalProperties: false
-> > > +
-> > > +examples:
-> > > +  - |
-> > > +        #include <dt-bindings/interrupt-controller/arm-gic.h>
-> > > +        tlmm: pinctrl@f000000 {
-> > > +          compatible = "qcom,sm8350-tlmm";
-> > > +          reg = <0x0f100000 0x300000>;
-> > > +          interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
-> > > +          gpio-controller;
-> > > +          #gpio-cells = <2>;
-> > > +          interrupt-controller;
-> > > +          #interrupt-cells = <2>;
-> > > +          gpio-ranges = <&tlmm 0 0 203>;
-> > > +          serial-pinmux {
-> > > +            pins = "gpio18", "gpio19";
-> > > +            function = "qup3";
-> > > +            drive-strength = <8>;
-> > > +            bias-disable;
-> > > +          };
-> > > +        };
-> > > +
-> > > +...
-> > > -- 
-> > > 2.26.2
-> > > 
-> 
+>   * @vfe: VFE Device
+>   * @comp: Composite image id
+>   */
 > -- 
-> ~Vinod
+> 2.27.0
+> 
