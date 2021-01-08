@@ -2,162 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6381D2EF7E0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 20:08:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 577F92EF866
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 20:52:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728647AbhAHTIC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jan 2021 14:08:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41832 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728530AbhAHTIB (ORCPT
+        id S1728877AbhAHTvU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jan 2021 14:51:20 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:51405 "EHLO
+        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727376AbhAHTvU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jan 2021 14:08:01 -0500
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE5DFC0612EA
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jan 2021 11:07:21 -0800 (PST)
-Received: by mail-ot1-x332.google.com with SMTP id j20so10686281otq.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jan 2021 11:07:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ZUAethWNhH5AHx5KYoc6HZtfXoHcLGcf1uweSJlTtuQ=;
-        b=HIYSnkY6Q7NycBEnnzZTwlknao8S/k+ofvs35eTg12dgKAGFrf4QPFQxMY6E1SIgnx
-         v4QZHpNSykgXpIWURlxkqeUK+hK5WQe6/LeKsJ03BpDbXhaO4a17+4ebdvVbKCiei8+m
-         JRobCWgFbKwMMrEso6/h1ZN86HrDAtZk0ChgT/gJ2CuWElTkCZXLfIclf20+pmdTLNZb
-         DwrZOyqNMlzbEEcyV+DKY27yQ31lDOQ6h0BSDNM0/OBmo5kVHt/ka4zs2MaXzl4PjhW6
-         +vhP23PRPuv2xZvwZTpuEeKehk58fssuGFnMH6UurAqg/Aa2T10znWt0sirPaDukiYHv
-         V5Vg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ZUAethWNhH5AHx5KYoc6HZtfXoHcLGcf1uweSJlTtuQ=;
-        b=HCnTnRyAYt86QZW8+nYZ9zJBJ2TnSBlODE4vgoiZpwydJjHRRzQ1o6Ku5WAOvL/HiA
-         Dbrjl9qJYGEwe8sMyTCj7RMIRF1lbttYiybEqwIftDL5z7X+xUfLlVTrN77xl0Z6sHn1
-         b7KKBh1lb8cKXbBDxT4I4GyxQx6jWcAvp6YsGbG06CUGvTy1oNLveFCOu9PPKlxfSb7Y
-         aRRUbufH20H8Pk2vRKqAH4kQk5cQ1prIJ4ODql0U71jIaFXwVN/QJ2NSBDFgIXAWThLZ
-         qfUKuERTdKlQEZnCq6k1jz97Qs5WRD5Uy/W8tBGkoWx+MZVWAnW0U6W4SIOk7jVc+Bx3
-         fmGA==
-X-Gm-Message-State: AOAM533t0SBdAP9y/vC0KJ88hUPLz4M+Yo3jZnwQMmnO2PDDPN+Li4dL
-        Mic44sT/RX4o4/+gfJxOd7taYw==
-X-Google-Smtp-Source: ABdhPJwN6edFPoEXuLXbsc15EfSSsy2/6NGLVvzgZzPWVaB9Jywig4wbVCFey3P93N2p9vvNRyHHTg==
-X-Received: by 2002:a9d:d6b:: with SMTP id 98mr3578384oti.227.1610132840865;
-        Fri, 08 Jan 2021 11:07:20 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id q18sm1890780ood.35.2021.01.08.11.07.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Jan 2021 11:07:19 -0800 (PST)
-Date:   Fri, 8 Jan 2021 13:07:17 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Robert Foss <robert.foss@linaro.org>
-Cc:     agross@kernel.org, todor.too@gmail.com, mchehab@kernel.org,
-        robh+dt@kernel.org, catalin.marinas@arm.com, will@kernel.org,
-        shawnguo@kernel.org, leoyang.li@nxp.com, geert+renesas@glider.be,
-        arnd@arndb.de, Anson.Huang@nxp.com, michael@walle.cc,
-        agx@sigxcpu.org, max.oss.09@gmail.com,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Andrey Konovalov <andrey.konovalov@linaro.org>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
-        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Subject: Re: [PATCH v1 04/17] media: camss: Make ISPIF subdevice optional
-Message-ID: <X/itZVFeM0XeV9Sx@builder.lan>
-References: <20210108120429.895046-1-robert.foss@linaro.org>
- <20210108120429.895046-5-robert.foss@linaro.org>
+        Fri, 8 Jan 2021 14:51:20 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1610135454; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=T2uh9AeFM10VoIKSVHPj8L+vw1fuCcA0NuLk11mz8yo=;
+ b=ug47ZmQaIFCbdd3bO7a36PuAFekeLl4hAtVsfxwrRtk4+X8VKLCbrWo4zMiErCiXHoVwHwYP
+ qffU5sVtSDU8uSAEGUyJHivPqhgv1JaSM3iinJMTn/8/M85bYd3Rx3TxnkRDVAzmdbd7a03G
+ ShmywAk6rEewYoFB9ihH6QgCLms=
+X-Mailgun-Sending-Ip: 198.61.254.31
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 5ff8b780c88af061071c1bea (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 08 Jan 2021 19:50:24
+ GMT
+Sender: isaacm=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E6189C433C6; Fri,  8 Jan 2021 19:50:23 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: isaacm)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 13A61C433CA;
+        Fri,  8 Jan 2021 19:50:22 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210108120429.895046-5-robert.foss@linaro.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 08 Jan 2021 11:50:21 -0800
+From:   isaacm@codeaurora.org
+To:     Will Deacon <will@kernel.org>
+Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, Joerg Roedel <joro@8bytes.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH] iommu/io-pgtable-arm: Allow non-coherent masters to use
+ system cache
+In-Reply-To: <20210108181830.GA5457@willie-the-truck>
+References: <20201224064007.2339-1-saiprakash.ranjan@codeaurora.org>
+ <20210106115615.GA1763@willie-the-truck>
+ <cfced52002337025088a64aa159760b2@codeaurora.org>
+ <8cfefbff135a5287d177b6ab2ccc3304@codeaurora.org>
+ <20210108181830.GA5457@willie-the-truck>
+Message-ID: <ed15cd8000795dc5effbce48e49e1f26@codeaurora.org>
+X-Sender: isaacm@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 08 Jan 06:04 CST 2021, Robert Foss wrote:
-
-> This driver supports multiple architecture versions of the Qualcomm ISP.
-> The CAMSS architecure which this driver is name after, and with the
-> introduction of this series, the Titan architecture.
+On 2021-01-08 10:18, Will Deacon wrote:
+> On Fri, Jan 08, 2021 at 11:17:25AM +0530, Sai Prakash Ranjan wrote:
+>> On 2021-01-07 22:27, isaacm@codeaurora.org wrote:
+>> > On 2021-01-06 03:56, Will Deacon wrote:
+>> > > On Thu, Dec 24, 2020 at 12:10:07PM +0530, Sai Prakash Ranjan wrote:
+>> > > > commit ecd7274fb4cd ("iommu: Remove unused IOMMU_SYS_CACHE_ONLY
+>> > > > flag")
+>> > > > removed unused IOMMU_SYS_CACHE_ONLY prot flag and along with it went
+>> > > > the memory type setting required for the non-coherent masters to use
+>> > > > system cache. Now that system cache support for GPU is added, we will
+>> > > > need to mark the memory as normal sys-cached for GPU to use
+>> > > > system cache.
+>> > > > Without this, the system cache lines are not allocated for GPU.
+>> > > > We use
+>> > > > the IO_PGTABLE_QUIRK_ARM_OUTER_WBWA quirk instead of a page
+>> > > > protection
+>> > > > flag as the flag cannot be exposed via DMA api because of no in-tree
+>> > > > users.
+>> > > >
+>> > > > Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+>> > > > ---
+>> > > >  drivers/iommu/io-pgtable-arm.c | 3 +++
+>> > > >  1 file changed, 3 insertions(+)
+>> > > >
+>> > > > diff --git a/drivers/iommu/io-pgtable-arm.c
+>> > > > b/drivers/iommu/io-pgtable-arm.c
+>> > > > index 7c9ea9d7874a..3fb7de8304a2 100644
+>> > > > --- a/drivers/iommu/io-pgtable-arm.c
+>> > > > +++ b/drivers/iommu/io-pgtable-arm.c
+>> > > > @@ -415,6 +415,9 @@ static arm_lpae_iopte
+>> > > > arm_lpae_prot_to_pte(struct arm_lpae_io_pgtable *data,
+>> > > >  		else if (prot & IOMMU_CACHE)
+>> > > >  			pte |= (ARM_LPAE_MAIR_ATTR_IDX_CACHE
+>> > > >  				<< ARM_LPAE_PTE_ATTRINDX_SHIFT);
+>> > > > +		else if (data->iop.cfg.quirks & IO_PGTABLE_QUIRK_ARM_OUTER_WBWA)
+>> > > > +			pte |= (ARM_LPAE_MAIR_ATTR_IDX_INC_OCACHE
+>> > > > +				<< ARM_LPAE_PTE_ATTRINDX_SHIFT);
+>> > > >  	}
+>> > >
+>> > While this approach of enabling system cache globally for both page
+>> > tables and other buffers
+>> > works for the GPU usecase, this isn't ideal for other clients that use
+>> > system cache. For example,
+>> > video clients only want to cache a subset of their buffers in the
+>> > system cache, due to the sizing constraint
+>> > imposed by how much of the system cache they can use. So, it would be
+>> > ideal to have
+>> > a way of expressing the desire to use the system cache on a per-buffer
+>> > basis. Additionally,
+>> > our video clients use the DMA layer, and since the requirement is for
+>> > caching in the system cache
+>> > to be a per buffer attribute, it seems like we would have to have a
+>> > DMA attribute to express
+>> > this on a per-buffer basis.
+>> >
+>> 
+>> I did bring this up initially [1], also where is this video client
+>> in upstream? AFAIK, only system cache user in upstream is GPU.
+>> We cannot add any DMA attribute unless there is any user upstream
+>> as per [2], so when the support for such a client is added, wouldn't
+>> ((data->iop.cfg.quirks & IO_PGTABLE_QUIRK_ARM_OUTER_WBWA) || 
+>> PROT_FLAG)
+>> work?
 > 
-> The ISPIF is IP-block that is only present in the CAMSS architecture.
-
-"is an IP-block"
-
-> In order to support the Titan architecture, make the ISPIF an optional
-> subdevice.
+> Hmm, I think this is another case where we need to separate out the
+> page-table walker attributes from the access attributes. Currently,
+> IO_PGTABLE_QUIRK_ARM_OUTER_WBWA applies _only_ to the page-table walker
+> and I don't think it makes any sense for that to be per-buffer (how 
+> would
+> you even manage that?). However, if we want to extend this to data 
+> accesses
+> and we know that there are valid use-cases where this should be 
+> per-buffer,
+> then shoe-horning it in with the walker quirk does not feel like the 
+> best
+> thing to do.
+Right, I agree that this seems something that merits the same level of 
+separation
+that exists for the page table walker attributes with respect to 
+coherency, and
+data buffer attributes with respect to coherency (i.e page table walker 
+coherency
+does not imply data buffer coherency--that is driven through 
+IOMMU_CACHE).
 > 
-> Signed-off-by: Robert Foss <robert.foss@linaro.org>
-> ---
->  .../media/platform/qcom/camss/camss-ispif.c   | 144 ++++++++++--------
->  .../media/platform/qcom/camss/camss-ispif.h   |   3 +-
->  drivers/media/platform/qcom/camss/camss.c     | 113 +++++++++-----
->  drivers/media/platform/qcom/camss/camss.h     |   2 +-
->  4 files changed, 160 insertions(+), 102 deletions(-)
+> As a starting point, we could:
 > 
-> diff --git a/drivers/media/platform/qcom/camss/camss-ispif.c b/drivers/media/platform/qcom/camss/camss-ispif.c
-[..]
-> -int msm_ispif_subdev_init(struct ispif_device *ispif,
-> +int msm_ispif_subdev_init(struct camss *camss,
->  			  const struct resources_ispif *res)
->  {
-> -	struct device *dev = to_device(ispif);
-> -	struct platform_device *pdev = to_platform_device(dev);
-> +	struct ispif_device *ispif = camss->ispif;
-> +	struct platform_device *pdev = to_platform_device(camss->dev);
+>   1. Rename IO_PGTABLE_QUIRK_ARM_OUTER_WBWA to IO_PGTABLE_QUIRK_PTW_LLC
+>   2. Add a new prot flag IOMMU_LLC
+>   3. Have the GPU pass the new prot for its buffer mappings
+> 
+> Does that work? One thing I'm not sure about is whether IOMMU_CACHE 
+> should
+Yes, that should work, as that'll leave the door open for there to be a 
+DMA attribute
+that can be wired up to IOMMU_LLC.
+> imply IOMMU_LLC, or whether there is a use-case for inner-cacheable, 
+> outer
+> non-cacheable mappings for a coherent device. Have you ever seen that 
+> sort
+I'm not aware of such a usecase, but I believe that a coherent device 
+will
+have their buffers cached in the system cache anyway, as well as the CPU 
+caches.
 
-It seems like several of the changes in this function is replacing
-dev with camss->dev. If you retained a struct device *dev = camss->dev;
-you would avoid this.
-
->  	struct resource *r;
->  	int i;
->  	int ret;
->  
-> +	if (res == NULL && ispif == NULL)
-
-Afaict this function is called conditional on camss->ispif != NULL, and
-I don't see anything that would cause res to becomes NULL if is hasn't
-been before this change.
-
-So I think this check is unnecessary?
-
-> +		return 0;
-> +
-> +	ispif->camss = camss;
-> +
->  	/* Number of ISPIF lines - same as number of CSID hardware modules */
-> -	if (to_camss(ispif)->version == CAMSS_8x16)
-> +	if (camss->version == CAMSS_8x16)
->  		ispif->line_num = 2;
-> -	else if (to_camss(ispif)->version == CAMSS_8x96 ||
-> -		 to_camss(ispif)->version == CAMSS_660)
-> +	else if (camss->version == CAMSS_8x96 ||
-> +		 camss->version == CAMSS_660)
->  		ispif->line_num = 4;
->  	else
->  		return -EINVAL;
->  
-> -	ispif->line = devm_kcalloc(dev, ispif->line_num, sizeof(*ispif->line),
-> -				   GFP_KERNEL);
-> +	ispif->line = devm_kcalloc(camss->dev, ispif->line_num,
-> +			sizeof(*ispif->line), GFP_KERNEL);
->  	if (!ispif->line)
->  		return -ENOMEM;
->  
-[..]
-> @@ -1393,6 +1410,9 @@ void msm_ispif_unregister_entities(struct ispif_device *ispif)
->  {
->  	int i;
->  
-> +	if (!ispif)
-> +		return;
-
-I like this, but later in the patch you make the calls to this function
-conditional on ispif != NULL. You should only need one of the checks.
-
-Regards,
-Bjorn
+--Isaac
+> of thing before?
+> 
+> Will
+> 
+> _______________________________________________
+> linux-arm-kernel mailing list
+> linux-arm-kernel@lists.infradead.org
+> http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
