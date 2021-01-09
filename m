@@ -2,109 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C7822EFCD5
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jan 2021 02:48:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 029482EFDC1
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jan 2021 05:38:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726352AbhAIBs2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jan 2021 20:48:28 -0500
-Received: from perceval.ideasonboard.com ([213.167.242.64]:46040 "EHLO
-        perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725836AbhAIBs2 (ORCPT
+        id S1726490AbhAIEiO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jan 2021 23:38:14 -0500
+Received: from m43-15.mailgun.net ([69.72.43.15]:10295 "EHLO
+        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726463AbhAIEiO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jan 2021 20:48:28 -0500
-Received: from pendragon.ideasonboard.com (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 91E4A878;
-        Sat,  9 Jan 2021 02:47:45 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1610156865;
-        bh=95zOMPXu02VDLC3VMMhJ0HQxsSOz+U9XLN+9JPdGx+0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=aV+3dPprm9lrkuuSjHbqky0xjg60b6D+am2+DcSjoOU2ZRpqNOGNelorW7HI0hS2s
-         Gb6bLHnY7jgPxGuid5Qw8VPPqZQPW4ElipQVnAyIFnBg2vpAQf7ZgPzFSHQ89aodiD
-         +2pWpkdxQKXLxNvAEFdnBKp7l+V35zrpgIx0B1Fw=
-Date:   Sat, 9 Jan 2021 03:47:32 +0200
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Robert Foss <robert.foss@linaro.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, todor.too@gmail.com,
-        mchehab@kernel.org, robh+dt@kernel.org, catalin.marinas@arm.com,
-        will@kernel.org, shawnguo@kernel.org, leoyang.li@nxp.com,
-        geert+renesas@glider.be, arnd@arndb.de, Anson.Huang@nxp.com,
-        michael@walle.cc, agx@sigxcpu.org, max.oss.09@gmail.com,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Andrey Konovalov <andrey.konovalov@linaro.org>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
-        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>
-Subject: Re: [PATCH v1 16/17] arm64: dts: sdm845-db845c: Add CAMSS ISP node
-Message-ID: <X/kLNCOjvTmANYbr@pendragon.ideasonboard.com>
-References: <20210108120429.895046-1-robert.foss@linaro.org>
- <20210108120429.895046-17-robert.foss@linaro.org>
+        Fri, 8 Jan 2021 23:38:14 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1610167068; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=fVMhHfukr4MbW/iGJeYB9CwktC1bSUBCY7Ede2q6IGQ=; b=rA1J7H354o2rNnzk3VCLXEnZYQbT6qUsXHtyInnQdHOEOmzfEs1gqTwDbmWDYfVE6lk8kYF6
+ /NSk29q7Ul484VX+6un2WNfIA5hc4k3Em5fSk3ERbfDRAA+m+cGUA6kg1hC1CoZp/snaqjPa
+ okd8HmslZ1Eldceeo+0siDdKLe8=
+X-Mailgun-Sending-Ip: 69.72.43.15
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n09.prod.us-east-1.postgun.com with SMTP id
+ 5ff933038fb3cda82fcbab5b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 09 Jan 2021 04:37:23
+ GMT
+Sender: hemantk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3AB1DC433C6; Sat,  9 Jan 2021 04:37:22 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.1 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1DCF8C433CA;
+        Sat,  9 Jan 2021 04:37:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1DCF8C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
+Subject: Re: [PATCH] bus: mhi: Add inbound buffers allocation flag
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Jakub Kicinski <kuba@kernel.org>,
+        David Miller <davem@davemloft.net>,
+        Network Development <netdev@vger.kernel.org>
+References: <1609940623-8864-1-git-send-email-loic.poulain@linaro.org>
+ <20210108134425.GA32678@work>
+ <CAMZdPi9tUUzf0hLwLUBqB=+eGQS-eNP8NtnMF-iS1ZqUfautuw@mail.gmail.com>
+ <20210108153032.GC32678@work>
+From:   Hemant Kumar <hemantk@codeaurora.org>
+Message-ID: <6e812726-d7e2-412a-940c-53cdd361c5aa@codeaurora.org>
+Date:   Fri, 8 Jan 2021 20:37:20 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20210108120429.895046-17-robert.foss@linaro.org>
+In-Reply-To: <20210108153032.GC32678@work>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
 
-Thank you for the patch.
 
-The subject line doesn't match the patch.
+On 1/8/21 7:30 AM, Manivannan Sadhasivam wrote:
+> On Fri, Jan 08, 2021 at 03:01:59PM +0100, Loic Poulain wrote:
+>> Hi Mani,
+>>
+>> On Fri, 8 Jan 2021 at 14:44, Manivannan Sadhasivam <
+>> manivannan.sadhasivam@linaro.org> wrote:
+>>
+>>> On Wed, Jan 06, 2021 at 02:43:43PM +0100, Loic Poulain wrote:
+>>>> Currently, the MHI controller driver defines which channels should
+>>>> have their inbound buffers allocated and queued. But ideally, this is
+>>>> something that should be decided by the MHI device driver instead,
+>>>
+>>> We call them, "MHI client drivers"
+>>>
+>>
+>> I'll fix that.
+>>
+>>
+>>>> which actually deals with that buffers.
+>>>>
+>>>> Add a flag parameter to mhi_prepare_for_transfer allowing to specify
+>>>> if buffers have to be allocated and queued by the MHI stack.
+>>>>
+>>>> Keep auto_queue flag for now, but should be removed at some point.
+>>>>
+>>>> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+>>>> ---
+>>>>   drivers/bus/mhi/core/internal.h |  2 +-
+>>>>   drivers/bus/mhi/core/main.c     | 11 ++++++++---
+>>>>   drivers/net/mhi_net.c           |  2 +-
+>>>>   include/linux/mhi.h             | 12 +++++++++++-
+>>>>   net/qrtr/mhi.c                  |  2 +-
+>>>>   5 files changed, 22 insertions(+), 7 deletions(-)
+>>>>
+>>>
+>>> [...]
+>>>
+>>>> diff --git a/drivers/net/mhi_net.c b/drivers/net/mhi_net.c
+>>>> index fa41d8c..b7f7f2e 100644
+>>>> --- a/drivers/net/mhi_net.c
+>>>> +++ b/drivers/net/mhi_net.c
+>>>> @@ -265,7 +265,7 @@ static int mhi_net_probe(struct mhi_device *mhi_dev,
+>>>>        u64_stats_init(&mhi_netdev->stats.tx_syncp);
+>>>>
+>>>>        /* Start MHI channels */
+>>>> -     err = mhi_prepare_for_transfer(mhi_dev);
+>>>> +     err = mhi_prepare_for_transfer(mhi_dev, 0);
+>>>
+>>> Eventhough I'd like Hemant to comment on this patch, AFAIU this looks to
+>>> me a controller dependent behaviour. The controller should have the
+>>> information whether a particular channel can auto queue or not then the
+>>> client driver can be agnostic.
 
-On Fri, Jan 08, 2021 at 01:04:28PM +0100, Robert Foss wrote:
-> Add regulators and camss DT node.
-> 
-> Signed-off-by: Robert Foss <robert.foss@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> index a943b3f353ce..7bad0515345e 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> @@ -294,6 +294,9 @@ vreg_s7a_1p025: smps7 {
->  			regulator-max-microvolt = <1028000>;
->  		};
->  
-> +		vdda_mipi_csi0_0p9:
-> +		vdda_mipi_csi1_0p9:
-> +		vdda_mipi_csi2_0p9:
+I am fine with his change, and agree that MHI client driver should be 
+able to make the decision.
+Having said that, can we merge this on top of UCI :).
+[..]
 
-No need for new labels, you can simply use vreg_l1a_0p875 below.
-
->  		vreg_l1a_0p875: ldo1 {
->  			regulator-min-microvolt = <880000>;
->  			regulator-max-microvolt = <880000>;
-> @@ -1106,6 +1109,15 @@ &cci {
->  	status = "okay";
->  };
->  
-> +&camss {
-> +	vdda-csi0-supply = <&vdda_mipi_csi0_0p9>;
-> +	vdda-csi1-supply = <&vdda_mipi_csi1_0p9>;
-> +	vdda-csi2-supply = <&vdda_mipi_csi2_0p9>;
-> +
-> +	status = "disabled";
-
-This isn't needed.
-
-> +
-
-Extra blank line.
-
-> +};
-> +
->  &cci_i2c0 {
->  	camera@10 {
->  		compatible = "ovti,ov8856";
-
+Thanks,
+Hemant
 -- 
-Regards,
-
-Laurent Pinchart
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
