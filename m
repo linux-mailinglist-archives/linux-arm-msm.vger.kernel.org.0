@@ -2,97 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 563BE2EFDC7
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jan 2021 05:40:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 882662EFE40
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jan 2021 08:22:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726216AbhAIEkE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jan 2021 23:40:04 -0500
-Received: from m43-15.mailgun.net ([69.72.43.15]:30702 "EHLO
-        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726133AbhAIEkE (ORCPT
+        id S1726443AbhAIHWX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 9 Jan 2021 02:22:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38946 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725847AbhAIHWX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jan 2021 23:40:04 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1610167179; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=O+QhOiNIC/Dq1QKKQeNovSKlpJ3BhzyWEsHIH/kiUJY=; b=t02f4JkRP1CVvPqWP09QjieENgxTRAujdFDM9Ngegcsx/b1mERtDBOlqHLFDPmGoelVj+e8f
- gQ9kaD4x990WKjWZCKUNwaiFlHY/yHJGPL9am3XjrMEXX3doWHLPUr70udNgolRGCc2Nh/MX
- HUnYMcIvFBSjvi4DOU+cx+UYVuA=
-X-Mailgun-Sending-Ip: 69.72.43.15
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 5ff93386415a6293c50df475 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 09 Jan 2021 04:39:34
- GMT
-Sender: hemantk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5D7C1C433ED; Sat,  9 Jan 2021 04:39:34 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.1 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6EE0CC433C6;
-        Sat,  9 Jan 2021 04:39:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6EE0CC433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
-Subject: Re: [PATCH v5 9/9] bus: mhi: core: Do not clear channel context more
- than once
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, jhugo@codeaurora.org,
-        linux-kernel@vger.kernel.org, loic.poulain@linaro.org
-References: <1610139297-36435-1-git-send-email-bbhatt@codeaurora.org>
- <1610139297-36435-10-git-send-email-bbhatt@codeaurora.org>
-From:   Hemant Kumar <hemantk@codeaurora.org>
-Message-ID: <d8c09f6a-52ef-e5b9-b3df-fb56ad78386b@codeaurora.org>
-Date:   Fri, 8 Jan 2021 20:39:33 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
-MIME-Version: 1.0
-In-Reply-To: <1610139297-36435-10-git-send-email-bbhatt@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        Sat, 9 Jan 2021 02:22:23 -0500
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E9D0C061573
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jan 2021 23:21:42 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id ce23so17562261ejb.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jan 2021 23:21:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=oMPxP8SoOc9C3ojU0+ecvXLMtYQCURVMW/VkKHiEGY4=;
+        b=D3oeU1IUw5BxYChFH5RBM7HmjqemG9yIWB6lQNXUDu/LEVX4AYOn0CEz0Tu+JlpRKA
+         H2YAjUNChY8MYNUtmRJ3iNQNoGYFLTA1oI4P1Znwk5PIfAUwcn/H51JwaINe0B+zZS3z
+         VAEsmp2RAzZfoQH/+gM/qON1rQpIeMC3sfaJZPnV27dlWalgGfs0uQl1CUR9XAU8Bhoz
+         fLt+e1HtXqiCaZSL8CUSnbh+5gPucZo0y5O5pWPsJVvDpV6XyttfKg4VXC6b/hliS5lb
+         m11Ov8r5+GXtZpkXW1gUHvLsodMSodEhFEq558uu3OBjw+XMYAkvzu++gJBS+otcXEVI
+         AbZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=oMPxP8SoOc9C3ojU0+ecvXLMtYQCURVMW/VkKHiEGY4=;
+        b=WvRQZgrQYOhDIF5b+lB5tGdQkknXX9pnI8GLoae+5CO36yECHf6JQIK8eWlmOdt0XW
+         igOUfLCNI0s0yBrtZP49s5/TUcgQeS7yQbHD2w3lylqKm2dCyUOy9MeEWZzalLRibn3M
+         sdBK7hhVgVKC5g3mZaYR4LRX6/Fl9lt1kTkdMLdRGH6a11eCEdMnTzWAlx9kN/wFLSSI
+         QrgdiVcLeW9YV+YlOACbJ741UIzoOe9kQdSL19yKlKvXgNDhrXaT9TMSuRhaXpc8Futd
+         tAG/Y7Nod/jybb3jygk9rymQmdKrSqMFuOfyo/EvbJinWGKB+miXhTdOaBa0RUFqB6c1
+         gRRQ==
+X-Gm-Message-State: AOAM533Rm5jcmeyrI+Kd1+CcEpWj31G20mYDVfXrLuuQwchd5hmnf/4o
+        lmg04rEJDYOGdvwZ8WhuMuWhTw==
+X-Google-Smtp-Source: ABdhPJz50lAAVKVmI5+jnQY8Ve3Q6+tO4q+i/rMfqHyZ23xEsIImRCgLUhd+SAECxRJoVR4JSWfl7g==
+X-Received: by 2002:a17:906:b309:: with SMTP id n9mr4905950ejz.365.1610176901271;
+        Fri, 08 Jan 2021 23:21:41 -0800 (PST)
+Received: from localhost.localdomain (hst-221-28.medicom.bg. [84.238.221.28])
+        by smtp.gmail.com with ESMTPSA id o10sm4293997eju.89.2021.01.08.23.21.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Jan 2021 23:21:40 -0800 (PST)
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+To:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Vikash Garodia <vgarodia@codeaurora.org>,
+        Dikshita Agarwal <dikshita@codeaurora.org>,
+        Mansur Alisha Shaik <mansur@codeaurora.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Subject: [PATCH] venus: pm_helpers: Control core power domain manually
+Date:   Sat,  9 Jan 2021 09:21:30 +0200
+Message-Id: <20210109072130.784-1-stanimir.varbanov@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Presently we use device_link to control core power domain. But this
+leads to issues because the genpd doesn't guarantee synchronous on/off
+for supplier devices. Switch to manually control by pmruntime calls.
 
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+---
+ drivers/media/platform/qcom/venus/core.h      |  1 -
+ .../media/platform/qcom/venus/pm_helpers.c    | 36 ++++++++++---------
+ 2 files changed, 19 insertions(+), 18 deletions(-)
 
-On 1/8/21 12:54 PM, Bhaumik Bhatt wrote:
-> When clearing the channel context, calling mhi_free_coherent()
-> more than once can result in kernel warnings such as "trying to
-> free invalid coherent area". Prevent extra work by adding a check
-> to skip calling mhi_deinit_chan_ctxt() if the client driver has
-> already disabled the channels.
-> 
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> ---
->   drivers/bus/mhi/core/init.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-> index 30eef19..272f350 100644
-> --- a/drivers/bus/mhi/core/init.c
-> +++ b/drivers/bus/mhi/core/init.c
-> @@ -1314,6 +1314,7 @@ static int mhi_driver_remove(struct device *dev)
->   
->   		if ((ch_state[dir] == MHI_CH_STATE_ENABLED ||
->   		     ch_state[dir] == MHI_CH_STATE_STOP) &&
-> +		    mhi_chan->ch_state != MHI_CH_STATE_DISABLED &&
->   		    !mhi_chan->offload_ch)
->   			mhi_deinit_chan_ctxt(mhi_cntrl, mhi_chan);
->   
-> 
-Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+index dfc13b2f371f..74d9fd3d51cc 100644
+--- a/drivers/media/platform/qcom/venus/core.h
++++ b/drivers/media/platform/qcom/venus/core.h
+@@ -128,7 +128,6 @@ struct venus_core {
+ 	struct icc_path *cpucfg_path;
+ 	struct opp_table *opp_table;
+ 	bool has_opp_table;
+-	struct device_link *pd_dl_venus;
+ 	struct device *pmdomains[VIDC_PMDOMAINS_NUM_MAX];
+ 	struct device_link *opp_dl_venus;
+ 	struct device *opp_pmdomain;
+diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+index 94219a3093cb..e0338932a720 100644
+--- a/drivers/media/platform/qcom/venus/pm_helpers.c
++++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+@@ -774,13 +774,6 @@ static int vcodec_domains_get(struct device *dev)
+ 		core->pmdomains[i] = pd;
+ 	}
+ 
+-	core->pd_dl_venus = device_link_add(dev, core->pmdomains[0],
+-					    DL_FLAG_PM_RUNTIME |
+-					    DL_FLAG_STATELESS |
+-					    DL_FLAG_RPM_ACTIVE);
+-	if (!core->pd_dl_venus)
+-		return -ENODEV;
+-
+ skip_pmdomains:
+ 	if (!core->has_opp_table)
+ 		return 0;
+@@ -807,14 +800,12 @@ static int vcodec_domains_get(struct device *dev)
+ opp_dl_add_err:
+ 	dev_pm_opp_detach_genpd(core->opp_table);
+ opp_attach_err:
+-	if (core->pd_dl_venus) {
+-		device_link_del(core->pd_dl_venus);
+-		for (i = 0; i < res->vcodec_pmdomains_num; i++) {
+-			if (IS_ERR_OR_NULL(core->pmdomains[i]))
+-				continue;
+-			dev_pm_domain_detach(core->pmdomains[i], true);
+-		}
++	for (i = 0; i < res->vcodec_pmdomains_num; i++) {
++		if (IS_ERR_OR_NULL(core->pmdomains[i]))
++			continue;
++		dev_pm_domain_detach(core->pmdomains[i], true);
+ 	}
++
+ 	return ret;
+ }
+ 
+@@ -827,9 +818,6 @@ static void vcodec_domains_put(struct device *dev)
+ 	if (!res->vcodec_pmdomains_num)
+ 		goto skip_pmdomains;
+ 
+-	if (core->pd_dl_venus)
+-		device_link_del(core->pd_dl_venus);
+-
+ 	for (i = 0; i < res->vcodec_pmdomains_num; i++) {
+ 		if (IS_ERR_OR_NULL(core->pmdomains[i]))
+ 			continue;
+@@ -917,16 +905,30 @@ static void core_put_v4(struct device *dev)
+ static int core_power_v4(struct device *dev, int on)
+ {
+ 	struct venus_core *core = dev_get_drvdata(dev);
++	struct device *pmctrl = core->pmdomains[0];
+ 	int ret = 0;
+ 
+ 	if (on == POWER_ON) {
++		if (pmctrl) {
++			ret = pm_runtime_get_sync(pmctrl);
++			if (ret < 0) {
++				pm_runtime_put_noidle(pmctrl);
++				return ret;
++			}
++		}
++
+ 		ret = core_clks_enable(core);
++		if (ret < 0 && pmctrl)
++			pm_runtime_put_sync(pmctrl);
+ 	} else {
+ 		/* Drop the performance state vote */
+ 		if (core->opp_pmdomain)
+ 			dev_pm_opp_set_rate(dev, 0);
+ 
+ 		core_clks_disable(core);
++
++		if (pmctrl)
++			pm_runtime_put_sync(pmctrl);
+ 	}
+ 
+ 	return ret;
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.17.1
+
