@@ -2,91 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 763592EFFE2
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jan 2021 14:32:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 65BB32EFFF9
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jan 2021 14:38:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725937AbhAINbN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 9 Jan 2021 08:31:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60994 "EHLO
+        id S1726370AbhAINih (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 9 Jan 2021 08:38:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726510AbhAINbM (ORCPT
+        with ESMTP id S1726364AbhAINig (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 9 Jan 2021 08:31:12 -0500
-Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24DAEC0617A9;
-        Sat,  9 Jan 2021 05:29:52 -0800 (PST)
+        Sat, 9 Jan 2021 08:38:36 -0500
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F21BDC061786
+        for <linux-arm-msm@vger.kernel.org>; Sat,  9 Jan 2021 05:37:40 -0800 (PST)
 Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 2AFB91F571;
-        Sat,  9 Jan 2021 14:29:46 +0100 (CET)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 673623EEB9;
+        Sat,  9 Jan 2021 14:37:38 +0100 (CET)
 From:   AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>
 To:     linux-arm-msm@vger.kernel.org
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, sumit.semwal@linaro.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        phone-devel@vger.kernel.org, konrad.dybcio@somainline.org,
-        marijn.suijten@somainline.org, martin.botka@somainline.org,
+Cc:     konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
+        martin.botka@somainline.org, phone-devel@vger.kernel.org,
+        robdclark@gmail.com, sean@poorly.run,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>
-Subject: [PATCH 7/7] arm64: dts: pmi8998: Add the right interrupts for LAB/IBB SCP and OCP
-Date:   Sat,  9 Jan 2021 14:29:21 +0100
-Message-Id: <20210109132921.140932-8-angelogioacchino.delregno@somainline.org>
+Subject: [PATCH 0/9] Qualcomm DRM DPU fixes
+Date:   Sat,  9 Jan 2021 14:37:27 +0100
+Message-Id: <20210109133736.143469-1-angelogioacchino.delregno@somainline.org>
 X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210109132921.140932-1-angelogioacchino.delregno@somainline.org>
-References: <20210109132921.140932-1-angelogioacchino.delregno@somainline.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In commit 208921bae696 ("arm64: dts: qcom: pmi8998: Add nodes for
-LAB and IBB regulators") bindings for the lab/ibb regulators were
-added to the pmi8998 dt, but the original committer has never
-specified what the interrupts were for.
-LAB and IBB regulators provide two interrupts, SC-ERR (short
-circuit error) and VREG-OK but, in that commit, the regulators
-were provided with two different types of interrupts;
-specifically, IBB had the SC-ERR interrupt, while LAB had the
-VREG-OK one, none of which were (luckily) used, since the driver
-didn't actually use these at all.
-Assuming that the original intention was to have the SC IRQ in
-both LAB and IBB, as per the names appearing in documentation,
-fix the SCP interrupt.
+This patch series brings some fixes to the Qualcomm DPU driver, aim is
+to get it prepared for "legacy" SoCs (like MSM8998, SDM630/660) and to
+finally get command-mode displays working on this driver.
 
-While at it, also add the OCP interrupt in order to be able to
-enable the Over-Current Protection feature, if requested.
+The series was tested against MSM8998 (the commit that introduces it to
+the hw-catalog is not included in this series, as it needs to be cleaned
+up a little more) and specifically on:
+- Sony Xperia XZ Premium (MSM8998), 4K dual-dsi LCD display, command-mode
+- F(x)Tec Pro1 (MSM8998), single-dsi OLED display, video-mode
 
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
----
- arch/arm64/boot/dts/qcom/pmi8998.dtsi | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+... And it obviously worked just perfect!
 
-diff --git a/arch/arm64/boot/dts/qcom/pmi8998.dtsi b/arch/arm64/boot/dts/qcom/pmi8998.dtsi
-index c8e21713cb9f..5742163d49b3 100644
---- a/arch/arm64/boot/dts/qcom/pmi8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pmi8998.dtsi
-@@ -30,11 +30,15 @@ labibb {
- 			compatible = "qcom,pmi8998-lab-ibb";
- 
- 			ibb: ibb {
--				interrupts = <0x3 0xdc 0x2 IRQ_TYPE_EDGE_RISING>;
-+				interrupts = <0x3 0xdc 0x2 IRQ_TYPE_EDGE_RISING>,
-+					     <0x3 0xdc 0x0 IRQ_TYPE_LEVEL_HIGH>;
-+				interrupt-names = "sc-err", "ocp";
- 			};
- 
- 			lab: lab {
--				interrupts = <0x3 0xde 0x0 IRQ_TYPE_EDGE_RISING>;
-+				interrupts = <0x3 0xde 0x1 IRQ_TYPE_EDGE_RISING>,
-+					     <0x3 0xde 0x0 IRQ_TYPE_LEVEL_LOW>;
-+				interrupt-names = "sc-err", "ocp";
- 			};
- 		};
- 
+AngeloGioacchino Del Regno (9):
+  drm/msm/dpu: Fix VBIF_XINL_QOS_LVL_REMAP_000 register offset
+  drm/msm/dpu1: Move DPU_SSPP_QOS_8LVL bit to SDM845 and SC7180 masks
+  drm/msm/dpu1: Add prog_fetch_lines_worst_case to INTF_BLK macro
+  drm/msm/dpu1: Allow specifying features and sblk in DSPP_BLK macro
+  drm/msm/dpu: Disable autorefresh in command mode
+  drm/msm/dpu: Correctly configure vsync tearcheck for command mode
+  drm/msm/dpu: Remove unused call in wait_for_commit_done
+  drm/msm/dpu: Add a function to retrieve the current CTL status
+  drm/msm/dpu: Fix timeout issues on command mode panels
+
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 91 ++++++++++++++++---
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 39 ++++----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c    |  6 ++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h    |  7 ++
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   | 26 ++++++
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h   | 14 +++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.c   |  9 +-
+ 7 files changed, 155 insertions(+), 37 deletions(-)
+
 -- 
 2.29.2
 
