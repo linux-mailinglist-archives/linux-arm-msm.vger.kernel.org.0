@@ -2,38 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 322152F000D
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jan 2021 14:42:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BAAAA2F0023
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jan 2021 14:47:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725826AbhAINls (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 9 Jan 2021 08:41:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34990 "EHLO
+        id S1725892AbhAINrC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 9 Jan 2021 08:47:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726454AbhAINlo (ORCPT
+        with ESMTP id S1725872AbhAINrC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 9 Jan 2021 08:41:44 -0500
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24D7CC061786
-        for <linux-arm-msm@vger.kernel.org>; Sat,  9 Jan 2021 05:40:49 -0800 (PST)
+        Sat, 9 Jan 2021 08:47:02 -0500
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADF6DC061786;
+        Sat,  9 Jan 2021 05:46:21 -0800 (PST)
 Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 74CEC3F0A3;
-        Sat,  9 Jan 2021 14:40:47 +0100 (CET)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id E18C23EEB9;
+        Sat,  9 Jan 2021 14:46:19 +0100 (CET)
 From:   AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
         martin.botka@somainline.org, phone-devel@vger.kernel.org,
-        robdclark@gmail.com, sean@poorly.run, jcrouse@codeaurora.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org,
+        linux-kernel@vger.kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, robh+dt@kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>
-Subject: [PATCH] drm/msm/a5xx: Allow all patchid for A540 chip
-Date:   Sat,  9 Jan 2021 14:40:44 +0100
-Message-Id: <20210109134044.144458-1-angelogioacchino.delregno@somainline.org>
+Subject: [PATCH 0/9] Clock fixes for MSM8998 GCC, MMCC, GPUCC
+Date:   Sat,  9 Jan 2021 14:46:08 +0100
+Message-Id: <20210109134617.146275-1-angelogioacchino.delregno@somainline.org>
 X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -41,35 +42,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On at least MSM8998 it's possible to find Adreno 540.0 and 540.1
-but I have never found any 540.2. In any case, the patchids 0-1
-for A540 are completely supported by this driver and there is no
-reason to disallow probing them (as they also share the same
-firmware names).
+This patch series fixes some issues with the MSM8998 clocks and, in
+particular, brings a very important fix to the GCC PLLs.
 
-Besides that, the patchid number is also used in the a5xx_power.c
-function a540_lm_setup to disable the battery current limiter,
-which makes faking the Adreno patchid to .2 (which would anyway
-be sad) useless and even producing breakages.
+These fixes are enhancing this SoC's stability and also makes it
+possible to eventually enable the Adreno GPU (with proper clock
+scaling) and other components.
 
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
----
- drivers/gpu/drm/msm/adreno/adreno_device.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+This patch series was tested on:
+- Sony Xperia XZ Premium (MSM8998)
+- F(x)Tec Pro1 (MSM8998)
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index 76a89a8175f8..133e3c15a1b7 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -216,7 +216,7 @@ static const struct adreno_info gpulist[] = {
- 		.init = a5xx_gpu_init,
- 		.zapfw = "a530_zap.mdt",
- 	}, {
--		.rev = ADRENO_REV(5, 4, 0, 2),
-+		.rev = ADRENO_REV(5, 4, 0, ANY_ID),
- 		.revn = 540,
- 		.name = "A540",
- 		.fw = {
+AngeloGioacchino Del Regno (9):
+  clk: qcom: gcc-msm8998: Wire up gcc_mmss_gpll0 clock
+  clk: qcom: gcc-msm8998: Add missing hmss_gpll0_clk_src clock
+  clk: qcom: gcc-msm8998: Mark gpu_cfg_ahb_clk as critical
+  clk: qcom: gcc-msm8998: Fix Alpha PLL type for all GPLLs
+  clk: qcom: mmcc-msm8998: Set CLK_GET_RATE_NOCACHE to pixel/byte clks
+  clk: qcom: mmcc-msm8998: Add hardware clockgating registers to some
+    clks
+  clk: qcom: mmcc-msm8998: Set bimc_smmu_gdsc always on
+  clk: qcom: gpucc-msm8998: Add resets, cxc, fix flags on gpu_gx_gdsc
+  clk: qcom: gpucc-msm8998: Allow fabia gpupll0 rate setting
+
+ drivers/clk/qcom/gcc-msm8998.c               | 143 ++++++++++++-------
+ drivers/clk/qcom/gpucc-msm8998.c             |  18 ++-
+ drivers/clk/qcom/mmcc-msm8998.c              |  20 ++-
+ include/dt-bindings/clock/qcom,gcc-msm8998.h |   2 +
+ 4 files changed, 125 insertions(+), 58 deletions(-)
+
 -- 
 2.29.2
 
