@@ -2,92 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 30AC62EFB06
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jan 2021 23:21:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 61A5C2EFC2C
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jan 2021 01:32:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725813AbhAHWVU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jan 2021 17:21:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43708 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725792AbhAHWVT (ORCPT
+        id S1725306AbhAIAae (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jan 2021 19:30:34 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:16484 "EHLO
+        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726300AbhAIAae (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jan 2021 17:21:19 -0500
-Received: from mail-vs1-xe2a.google.com (mail-vs1-xe2a.google.com [IPv6:2607:f8b0:4864:20::e2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D55EC061574
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jan 2021 14:20:39 -0800 (PST)
-Received: by mail-vs1-xe2a.google.com with SMTP id s85so6421529vsc.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jan 2021 14:20:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+28rernzc3C0mjkmB3xMJvm5PiyDyFYwes4MhAeT590=;
-        b=miY99HtjMOqHsXPkemocimuS3wuxQX+VapsXPQMV4KxnP8YjfU5ngb/avj8ZdrErJd
-         5ECUo9eLuD54ehNvBzHxwTqRQ9/GABakXuA81do99rbJqsKVLS8w6hBIGgz75eeVap9B
-         tdylz0rZ0+h7lHAFNkDFeH6OutxCiexkTkXPg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+28rernzc3C0mjkmB3xMJvm5PiyDyFYwes4MhAeT590=;
-        b=WoFOgDyAZ3N4fYHM+yZNOOMA0HZHuhK7V1r8xTnWlh8IpwcwSgLHM1YEOkSj5xa38b
-         yEMMB7r0eBmhkstXgFOw+ZAHyrsxf8r9yv3YbKdHn8l5/nNcWz4FKyaM8DAxaToGJ1P+
-         7P+uwrG20tLL5H6t1HdzM+djtuCI5X8+tvfIyLrpDA7Vvpu3eFNiQr7fiuBzFbprGcx6
-         pF5ezQVwePTMKDZalkYJzFFTeFD4gA7V6xY7mODOE6gcAssOeC+nvURzxzCz+56G478h
-         HRf31drXiaGTMFmLrcMLfx4eXn0JXwaI737foq8W2Rxx87FeL7QHzZmcQOpHFVq8H35p
-         JIYQ==
-X-Gm-Message-State: AOAM530LvS9qR95euOMgy6161UsSzLeP7BfSqQyldd10G+UYNUdD52gK
-        tEfrEoT4Grhi8gh7NIFpfHnZTNnxtQaZ/w==
-X-Google-Smtp-Source: ABdhPJypcdJOHjkEGPl5fbYHg62M30WCeR7dKuGEZxs5Esest6VQGSoTQrdvrVCdFdYfRHkQXcuUQQ==
-X-Received: by 2002:a67:6044:: with SMTP id u65mr4687417vsb.31.1610144438397;
-        Fri, 08 Jan 2021 14:20:38 -0800 (PST)
-Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com. [209.85.217.51])
-        by smtp.gmail.com with ESMTPSA id x18sm1395718uan.17.2021.01.08.14.20.37
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 08 Jan 2021 14:20:37 -0800 (PST)
-Received: by mail-vs1-f51.google.com with SMTP id z16so6398031vsp.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jan 2021 14:20:37 -0800 (PST)
-X-Received: by 2002:a67:32c5:: with SMTP id y188mr4644914vsy.4.1610144436974;
- Fri, 08 Jan 2021 14:20:36 -0800 (PST)
-MIME-Version: 1.0
-References: <20210108141648.1.Ia8019b8b303ca31a06752ed6ceb5c3ac50bd1d48@changeid>
-In-Reply-To: <20210108141648.1.Ia8019b8b303ca31a06752ed6ceb5c3ac50bd1d48@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 8 Jan 2021 14:20:25 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=Wn3rqgu5fLYuJRQFU1s221VNvsk6voSY=_ye24HbMH4w@mail.gmail.com>
-Message-ID: <CAD=FV=Wn3rqgu5fLYuJRQFU1s221VNvsk6voSY=_ye24HbMH4w@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Add labels for cpuN-thermal nodes
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Fri, 8 Jan 2021 19:30:34 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1610152210; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=3dGnbAVtyB6gyWXMowpwoOXTGcorXVWtWCxmc7pIxOw=; b=rkaqjxC6KUsU5SPrAxa3fJj0TzbmMft3vbBcRkwSjCrfJWQsiAm7/EI75fMP3dQ7LvVhgwYG
+ hPWEM+BMSWG+9lUtMbYlar6AeWnMIZ9uFBFfebMULk+Tt8O3TfNQTSpMsgTT0fVnxQlvO+kB
+ lcsHAhVwq1WGhE6vv5v5WLMujJ8=
+X-Mailgun-Sending-Ip: 198.61.254.31
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n10.prod.us-east-1.postgun.com with SMTP id
+ 5ff8f8f2f1be2d22c4ea7d8e (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 09 Jan 2021 00:29:38
+ GMT
+Sender: sramana=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 5AC2DC43462; Sat,  9 Jan 2021 00:29:37 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from sramana-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sramana)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4B1BCC433C6;
+        Sat,  9 Jan 2021 00:29:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4B1BCC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sramana@codeaurora.org
+From:   Srinivas Ramana <sramana@codeaurora.org>
+To:     catalin.marinas@arm.com, will@kernel.org, pajay@qti.qualcomm.com
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Srinivas Ramana <sramana@codeaurora.org>
+Subject: [PATCH 0/3] arm64: cpufeature: Add filter function to control
+Date:   Fri,  8 Jan 2021 16:29:20 -0800
+Message-Id: <1610152163-16554-1-git-send-email-sramana@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+This patchset adds a control function for cpufeature framework
+so that the feature can be controlled at runtime.
 
-On Fri, Jan 8, 2021 at 2:17 PM Matthias Kaehlcke <mka@chromium.org> wrote:
->
-> Add labels to the cpuN-thermal nodes to allow board files to use
-> a phandle instead replicating the node hierarchy when adjusting
-> certain properties.
->
-> Due to the 'sustainable-power' property CPU thermal zones are
-> more likely to need property updates than other SC7180 zones,
-> hence only labels for CPU zones are added for now.
->
-> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> ---
->
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 20 ++++++++++----------
->  1 file changed, 10 insertions(+), 10 deletions(-)
+Defer PAC on boot core and use the filter function added to disable
+PAC from command line. This will help toggling the feature on systems
+that do not support PAC or where PAC needs to be disabled at runtime,
+without modifying the core kernel.
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+The idea of adding the filter function for cpufeature is taken from
+https://lore.kernel.org/linux-arm-kernel/20200515171612.1020-25-catalin.marinas@arm.com/
+https://lore.kernel.org/linux-arm-kernel/20200515171612.1020-24-catalin.marinas@arm.com/
+
+Srinivas Ramana (3):
+  arm64: Defer enabling pointer authentication on boot core
+  arm64: cpufeature: Add a filter function to cpufeature
+  arm64: Enable control of pointer authentication using early param
+
+ Documentation/admin-guide/kernel-parameters.txt |  6 +++
+ arch/arm64/include/asm/cpufeature.h             |  8 +++-
+ arch/arm64/include/asm/pointer_auth.h           | 10 +++++
+ arch/arm64/include/asm/stackprotector.h         |  1 +
+ arch/arm64/kernel/cpufeature.c                  | 53 +++++++++++++++++++------
+ arch/arm64/kernel/head.S                        |  4 --
+ 6 files changed, 64 insertions(+), 18 deletions(-)
+
+-- 
+2.7.4
+
