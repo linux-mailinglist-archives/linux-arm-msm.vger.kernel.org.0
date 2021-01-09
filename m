@@ -2,166 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 882662EFE40
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jan 2021 08:22:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EA3FA2EFF8B
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jan 2021 13:45:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726443AbhAIHWX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 9 Jan 2021 02:22:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38946 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725847AbhAIHWX (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 9 Jan 2021 02:22:23 -0500
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E9D0C061573
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jan 2021 23:21:42 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id ce23so17562261ejb.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jan 2021 23:21:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=oMPxP8SoOc9C3ojU0+ecvXLMtYQCURVMW/VkKHiEGY4=;
-        b=D3oeU1IUw5BxYChFH5RBM7HmjqemG9yIWB6lQNXUDu/LEVX4AYOn0CEz0Tu+JlpRKA
-         H2YAjUNChY8MYNUtmRJ3iNQNoGYFLTA1oI4P1Znwk5PIfAUwcn/H51JwaINe0B+zZS3z
-         VAEsmp2RAzZfoQH/+gM/qON1rQpIeMC3sfaJZPnV27dlWalgGfs0uQl1CUR9XAU8Bhoz
-         fLt+e1HtXqiCaZSL8CUSnbh+5gPucZo0y5O5pWPsJVvDpV6XyttfKg4VXC6b/hliS5lb
-         m11Ov8r5+GXtZpkXW1gUHvLsodMSodEhFEq558uu3OBjw+XMYAkvzu++gJBS+otcXEVI
-         AbZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=oMPxP8SoOc9C3ojU0+ecvXLMtYQCURVMW/VkKHiEGY4=;
-        b=WvRQZgrQYOhDIF5b+lB5tGdQkknXX9pnI8GLoae+5CO36yECHf6JQIK8eWlmOdt0XW
-         igOUfLCNI0s0yBrtZP49s5/TUcgQeS7yQbHD2w3lylqKm2dCyUOy9MeEWZzalLRibn3M
-         sdBK7hhVgVKC5g3mZaYR4LRX6/Fl9lt1kTkdMLdRGH6a11eCEdMnTzWAlx9kN/wFLSSI
-         QrgdiVcLeW9YV+YlOACbJ741UIzoOe9kQdSL19yKlKvXgNDhrXaT9TMSuRhaXpc8Futd
-         tAG/Y7Nod/jybb3jygk9rymQmdKrSqMFuOfyo/EvbJinWGKB+miXhTdOaBa0RUFqB6c1
-         gRRQ==
-X-Gm-Message-State: AOAM533Rm5jcmeyrI+Kd1+CcEpWj31G20mYDVfXrLuuQwchd5hmnf/4o
-        lmg04rEJDYOGdvwZ8WhuMuWhTw==
-X-Google-Smtp-Source: ABdhPJz50lAAVKVmI5+jnQY8Ve3Q6+tO4q+i/rMfqHyZ23xEsIImRCgLUhd+SAECxRJoVR4JSWfl7g==
-X-Received: by 2002:a17:906:b309:: with SMTP id n9mr4905950ejz.365.1610176901271;
-        Fri, 08 Jan 2021 23:21:41 -0800 (PST)
-Received: from localhost.localdomain (hst-221-28.medicom.bg. [84.238.221.28])
-        by smtp.gmail.com with ESMTPSA id o10sm4293997eju.89.2021.01.08.23.21.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Jan 2021 23:21:40 -0800 (PST)
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Vikash Garodia <vgarodia@codeaurora.org>,
-        Dikshita Agarwal <dikshita@codeaurora.org>,
-        Mansur Alisha Shaik <mansur@codeaurora.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH] venus: pm_helpers: Control core power domain manually
-Date:   Sat,  9 Jan 2021 09:21:30 +0200
-Message-Id: <20210109072130.784-1-stanimir.varbanov@linaro.org>
-X-Mailer: git-send-email 2.17.1
+        id S1725890AbhAIMoL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 9 Jan 2021 07:44:11 -0500
+Received: from www.zeus03.de ([194.117.254.33]:50282 "EHLO mail.zeus03.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726390AbhAIMoL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 9 Jan 2021 07:44:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple; d=sang-engineering.com; h=
+        from:to:cc:subject:date:message-id:mime-version
+        :content-transfer-encoding; s=k1; bh=zD9cPRZyEaGEmq3k0za/7gpfIJU
+        vc5uCoXoOde/5/F4=; b=e2VeYFuS0iXUn9uQpg26v+5ScyE7HsCtvjVv2rqjCgc
+        ERgSCZBLj9PGIPt2NLFgBvaLT9c9oxpYpr60CVtZWmbwalZU2I+8TpwvoDJ0lsFS
+        pPWdjHtjX8BVKLgcb9opPYW+hBdgfmWUnnVROyb20JiqL5r3qmldnPyrZNyB7aT0
+        =
+Received: (qmail 1724998 invoked from network); 9 Jan 2021 13:43:28 +0100
+Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 9 Jan 2021 13:43:28 +0100
+X-UD-Smtp-Session: l3s3148p1@EOH5BHe4RpYgAwDPXyBeAD+yeC5KBZLe
+From:   Wolfram Sang <wsa+renesas@sang-engineering.com>
+To:     linux-i2c@vger.kernel.org
+Cc:     linux-renesas-soc@vger.kernel.org,
+        Wolfram Sang <wsa+renesas@sang-engineering.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org
+Subject: [PATCH 0/8] i2c: improve RECV_LEN documentation & usage
+Date:   Sat,  9 Jan 2021 13:43:04 +0100
+Message-Id: <20210109124314.27466-1-wsa+renesas@sang-engineering.com>
+X-Mailer: git-send-email 2.29.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Presently we use device_link to control core power domain. But this
-leads to issues because the genpd doesn't guarantee synchronous on/off
-for supplier devices. Switch to manually control by pmruntime calls.
+Because I want to clarify I2C_M_RECV len usage, this series updates the
+documentation and some of its users. Patch 1 refactors the whole
+documentation of 'i2c_msg', so all usage of I2C_M_* flags and their
+conditions hopefully become clearer. Patch 2+3 remove some obvious
+boilerplate in the UAPI headers while here. Patch 4 is a driver fix I
+found while working on this series. Patch 5 introduces a new convenience
+macro to enable SMBus transfers which need I2C_M_RECV_LEN. Then, some
+drivers use the new macro, sometimes to remove boilerplate, sometimes
+because these SMBus transfers have been forgotten before.
 
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
----
- drivers/media/platform/qcom/venus/core.h      |  1 -
- .../media/platform/qcom/venus/pm_helpers.c    | 36 ++++++++++---------
- 2 files changed, 19 insertions(+), 18 deletions(-)
+This series is the first part of a larger work to extend I2C_M_RECV_LEN
+to allow larger transfer sizes (as specified in the SMBus 3.0 standard)
+and to enable this on Renesas R-Car hardware.
 
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index dfc13b2f371f..74d9fd3d51cc 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -128,7 +128,6 @@ struct venus_core {
- 	struct icc_path *cpucfg_path;
- 	struct opp_table *opp_table;
- 	bool has_opp_table;
--	struct device_link *pd_dl_venus;
- 	struct device *pmdomains[VIDC_PMDOMAINS_NUM_MAX];
- 	struct device_link *opp_dl_venus;
- 	struct device *opp_pmdomain;
-diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-index 94219a3093cb..e0338932a720 100644
---- a/drivers/media/platform/qcom/venus/pm_helpers.c
-+++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-@@ -774,13 +774,6 @@ static int vcodec_domains_get(struct device *dev)
- 		core->pmdomains[i] = pd;
- 	}
- 
--	core->pd_dl_venus = device_link_add(dev, core->pmdomains[0],
--					    DL_FLAG_PM_RUNTIME |
--					    DL_FLAG_STATELESS |
--					    DL_FLAG_RPM_ACTIVE);
--	if (!core->pd_dl_venus)
--		return -ENODEV;
--
- skip_pmdomains:
- 	if (!core->has_opp_table)
- 		return 0;
-@@ -807,14 +800,12 @@ static int vcodec_domains_get(struct device *dev)
- opp_dl_add_err:
- 	dev_pm_opp_detach_genpd(core->opp_table);
- opp_attach_err:
--	if (core->pd_dl_venus) {
--		device_link_del(core->pd_dl_venus);
--		for (i = 0; i < res->vcodec_pmdomains_num; i++) {
--			if (IS_ERR_OR_NULL(core->pmdomains[i]))
--				continue;
--			dev_pm_domain_detach(core->pmdomains[i], true);
--		}
-+	for (i = 0; i < res->vcodec_pmdomains_num; i++) {
-+		if (IS_ERR_OR_NULL(core->pmdomains[i]))
-+			continue;
-+		dev_pm_domain_detach(core->pmdomains[i], true);
- 	}
-+
- 	return ret;
- }
- 
-@@ -827,9 +818,6 @@ static void vcodec_domains_put(struct device *dev)
- 	if (!res->vcodec_pmdomains_num)
- 		goto skip_pmdomains;
- 
--	if (core->pd_dl_venus)
--		device_link_del(core->pd_dl_venus);
--
- 	for (i = 0; i < res->vcodec_pmdomains_num; i++) {
- 		if (IS_ERR_OR_NULL(core->pmdomains[i]))
- 			continue;
-@@ -917,16 +905,30 @@ static void core_put_v4(struct device *dev)
- static int core_power_v4(struct device *dev, int on)
- {
- 	struct venus_core *core = dev_get_drvdata(dev);
-+	struct device *pmctrl = core->pmdomains[0];
- 	int ret = 0;
- 
- 	if (on == POWER_ON) {
-+		if (pmctrl) {
-+			ret = pm_runtime_get_sync(pmctrl);
-+			if (ret < 0) {
-+				pm_runtime_put_noidle(pmctrl);
-+				return ret;
-+			}
-+		}
-+
- 		ret = core_clks_enable(core);
-+		if (ret < 0 && pmctrl)
-+			pm_runtime_put_sync(pmctrl);
- 	} else {
- 		/* Drop the performance state vote */
- 		if (core->opp_pmdomain)
- 			dev_pm_opp_set_rate(dev, 0);
- 
- 		core_clks_disable(core);
-+
-+		if (pmctrl)
-+			pm_runtime_put_sync(pmctrl);
- 	}
- 
- 	return ret;
+Looking forward to comments and/or reviews; the driver patches are only
+build-tested.
+
+Happy hacking,
+
+   Wolfram
+
+
+Wolfram Sang (8):
+  i2c: refactor documentation of struct i2c_msg
+  i2c: remove licence boilerplate from main UAPI header
+  i2c: remove licence boilerplate from i2c-dev UAPI header
+  i2c: octeon: check correct size of maximum RECV_LEN packet
+  i2c: uapi: add macro to describe support for all SMBus transfers
+  i2c: algo: bit: use new macro to specifiy capabilities
+  i2c: qup: advertise SMBus transfers using RECV_LEN
+  i2c: s3c2410: advertise SMBus transfers using RECV_LEN
+
+ drivers/i2c/algos/i2c-algo-bit.c     |   4 +-
+ drivers/i2c/busses/i2c-octeon-core.c |   2 +-
+ drivers/i2c/busses/i2c-qup.c         |   2 +-
+ drivers/i2c/busses/i2c-s3c2410.c     |   2 +-
+ include/uapi/linux/i2c-dev.h         |  25 ++----
+ include/uapi/linux/i2c.h             | 128 ++++++++++++++-------------
+ 6 files changed, 76 insertions(+), 87 deletions(-)
+
 -- 
-2.17.1
+2.29.2
 
