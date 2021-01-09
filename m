@@ -2,93 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B55CF2EFC41
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jan 2021 01:38:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C41242EFCA3
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jan 2021 02:13:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726346AbhAIAhU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jan 2021 19:37:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37530 "EHLO
+        id S1725905AbhAIBNg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jan 2021 20:13:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725926AbhAIAhU (ORCPT
+        with ESMTP id S1725844AbhAIBNg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jan 2021 19:37:20 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EF49C061573
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jan 2021 16:36:39 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id o13so27212201lfr.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jan 2021 16:36:39 -0800 (PST)
+        Fri, 8 Jan 2021 20:13:36 -0500
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A581FC061573
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jan 2021 17:12:55 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id o10so16366369lfl.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jan 2021 17:12:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=LPpBJ/fMnI8yZebGm9hJTyLbUyow2Z4x72tEei+91U4=;
-        b=fwx1XaV/wTLLLznyxTbRB9fBBtCC7ZerKopuVgRnrNv4UjYn9rGgPIok1KWef3q7/9
-         HhFEOfPfad4MD8CunVXnEMYb02XvnxhA+6scxi0a295u7B67Sjmh43ECuKBphmcj7aLc
-         YkjQGjFOO9GHmf9RWRwsrgh5wfb8Z7obFBZyQJPcd3g4sq5Me9jJ0jz6N74wFyEuTaWS
-         Oh+1J24YFbH2T4t5FlrG0t3MuJ6lzVWZAIof7515hWwxMcA0tmZB2BesKHXAAySLjTWA
-         FZlrQZ6Kc73GO6RNjSsfBMpbhxwiAEFZceLAGnQp1t2fZzRw35oBh/efLpwWtOywgbhJ
-         JMTg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=l6IfDL+FdSZVW/krD2mf0b3nGqhKOFzpy//5bHWZryk=;
+        b=tESxkqAUvsgKqmXTQZzNMHnwaX5Lj+jjvH0clyYu/QPy38XcviXc4XpKiR8EKQ2MWI
+         A6CUgJ0NYGqC69LzDim2W0DJ2XOW3ArIRMg6Y+3StFKfC9IJPadqyAcdOexEZqpSzJ20
+         cKPDxZS59HUnkqr4ohCDZPPs3rPEBWA+JbEmbGasznuFHT5nqk4eWOP/D3lDYNyi5FPm
+         YL7PsokSQj42JSla+Ikk5IhoxhHye140yzcnkORQCD94tDsdR1pSipDT9NiEn0Hikzy8
+         lA38zNFxmANADLj62ToyuqI2wUQG45GMqi26xwxGt6sFSjGLlQl2yWAvKW23v4Fd7g5d
+         N+Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=LPpBJ/fMnI8yZebGm9hJTyLbUyow2Z4x72tEei+91U4=;
-        b=Q7UxCOKLxStX5OwRA7DEVBXoAsp2Mi7k38Uo8aLConK8lI5M/CwJTsTe+fumPpqWOR
-         rfQHuiGmiwYzUxiR8cf1MpHkwwb3PFBSbvpNwn7G5ks+XRHY9HLUf6WpjeROthpqRIsH
-         x8Ej2gZNwSCZNntixj+JduxUS0HPIukE1xBlWYSx0nDb7rLsIloHqG52Gtz4qwu1BqSq
-         /JDVdqM7uEcsJIGraYIrtYPouepU3R8tOjyhp4dko8aSbo+DOEKke5WzkRIzFvI67NCt
-         4w45JEHZwCwl4DSMpVe8G+Zv8nnULMnakNf+PgUn1v17CNLIWXQ3gKYg5ZCv1sfToZPu
-         fr2Q==
-X-Gm-Message-State: AOAM531QdAeF9o3fyOoSUQY0v2YjyL5fb9Bb+5nDHJEg5WYytUZwPbBO
-        XO5oI9KpK1mxgT+qxjKfYtLdLKYjQ7Az3Ah6VI508g==
-X-Google-Smtp-Source: ABdhPJyKfgFd0+N91BmEQfByY+TlvnwSS1jTQHDidO8kM302MgTNIM49BLxDjOg2R89x5e7GBMfkIxBEso6+Wcw/nXo=
-X-Received: by 2002:a2e:85d1:: with SMTP id h17mr2413376ljj.438.1610152598070;
- Fri, 08 Jan 2021 16:36:38 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=l6IfDL+FdSZVW/krD2mf0b3nGqhKOFzpy//5bHWZryk=;
+        b=E7QhgJIkD3kdUR7lc/rXWyrXX3mIryTipLaNAj7P/KVXCjJ/Vze39B2p0oUSgfeMYZ
+         +l8YR+SiIlmPBl9QZuPAKJeNzZnoXCk92JCWBiyOGwwGj9Yzhcxk/bs8F82W2y3zTM6L
+         PQWjTwhRVGAhU9R8lMaOueqJc7KFj2hThqvgi9XrUpyHylsRcWWvTMTn8sMQ3/rI9KG1
+         G9lTXABtwSgI3ic+Wxg7obe1QajBXp1vad9EByWYtlX8U5V65fZYJImb5EU6Zk6WnByH
+         Dn4YRX5lHBWRWywHk0eKXnR0y18XnkmNlGlBUrKK8YGuL4vK601h8lPRbRt9wfxn9yBe
+         U50Q==
+X-Gm-Message-State: AOAM532+y5d34aXU5KVVGWclB57ulsuFQU2+Yw5iQditLT+mROR8dY4q
+        IUu6sUtbE5y0ACeCV7k57KpYAPe3/j88tg==
+X-Google-Smtp-Source: ABdhPJyzvy/mISijXhP6fEFz5Fq7Hu6orcgI7zHRjYA2B/nnsKcA2ATZjQSc0BfDOIt1PSh5mc+SBg==
+X-Received: by 2002:a19:4856:: with SMTP id v83mr2520004lfa.583.1610154774227;
+        Fri, 08 Jan 2021 17:12:54 -0800 (PST)
+Received: from eriador.lumag.spb.ru ([94.25.228.99])
+        by smtp.gmail.com with ESMTPSA id r14sm2378270ljn.118.2021.01.08.17.12.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Jan 2021 17:12:53 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sm8250: correct sdhc_2 xo clk
+Date:   Sat,  9 Jan 2021 04:12:52 +0300
+Message-Id: <20210109011252.3436533-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-References: <20210108093339.v5.1.I3ad184e3423d8e479bc3e86f5b393abb1704a1d1@changeid>
- <20210108093339.v5.4.I7cf3019783720feb57b958c95c2b684940264cd1@changeid>
-In-Reply-To: <20210108093339.v5.4.I7cf3019783720feb57b958c95c2b684940264cd1@changeid>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Sat, 9 Jan 2021 01:36:27 +0100
-Message-ID: <CACRpkdZJR142en_=rge5Gp7-MH6SzxjHmkCh_rUx=8j6SVZYSQ@mail.gmail.com>
-Subject: Re: [PATCH v5 4/4] pinctrl: qcom: Don't clear pending interrupts when enabling
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Marc Zyngier <maz@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Neeraj Upadhyay <neeraju@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Srinivas Ramana <sramana@codeaurora.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Doug,
+sdhc_2 uses 19200000 Hz clock rather than wrongly specified xo_board
+(39400000 Hz). Specify correct clock to fix DLL setup for SDR104 mode.
 
-this is an impressive patch.
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: c4cf0300be84 ("arm64: dts: qcom: sm8250: Add support for SDC2")
+---
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-We definitely need to touch base with Bjorn on this, preferably also
-Sboyd.
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index 951056056b41..3cb65b85f4a6 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -2125,7 +2125,7 @@ sdhc_2: sdhci@8804000 {
+ 
+ 			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
+ 				 <&gcc GCC_SDCC2_APPS_CLK>,
+-				 <&xo_board>;
++				 <&rpmhcc RPMH_CXO_CLK>;
+ 			clock-names = "iface", "core", "xo";
+ 			iommus = <&apps_smmu 0x4a0 0x0>;
+ 			qcom,dll-config = <0x0007642c>;
+-- 
+2.29.2
 
-On Fri, Jan 8, 2021 at 6:35 PM Douglas Anderson <dianders@chromium.org> wrote:
-
-> Fixes: 4b7618fdc7e6 ("pinctrl: qcom: Add irq_enable callback for msm gpio")
-> Fixes: 71266d9d3936 ("pinctrl: qcom: Move clearing pending IRQ to .irq_request_resources callback")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-
-Some mechanics:
-1. Does this need to go into stable? Or is current (non-urgent) fine? Or fixes
-   for v5.10? I.e. required destination.
-2. If it does, should patches 1-3 also go into stable? And are they
-prerequisites?
-
-Yours,
-Linus Walleij
