@@ -2,187 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A9442F2265
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jan 2021 23:06:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C3A222F23DB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jan 2021 01:33:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730805AbhAKWGH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jan 2021 17:06:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51502 "EHLO
+        id S2391808AbhALA0D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jan 2021 19:26:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727380AbhAKWGG (ORCPT
+        with ESMTP id S2404108AbhAKX1l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jan 2021 17:06:06 -0500
-Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BA17C061786
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jan 2021 14:05:26 -0800 (PST)
-Received: by mail-qv1-xf30.google.com with SMTP id az16so124839qvb.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jan 2021 14:05:26 -0800 (PST)
+        Mon, 11 Jan 2021 18:27:41 -0500
+Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AF8AC061786
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jan 2021 15:27:01 -0800 (PST)
+Received: by mail-oo1-xc2d.google.com with SMTP id k7so175060ooa.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jan 2021 15:27:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4vVoFe3ab/Wam+wi8u1O6FD/EPWPv+oi1jIlO88avgU=;
-        b=Ulw33JYYiiazGRtSxRzagNgcW4YuP1s6T/H7RMPzhm3wA1ZRu0uCqM/bdeUgGNqu2M
-         e1BJeTCJKThLKIBruqpbKOlPF+5exWtFOwrQqgw//0bmV8gaabwvvI9tMncTLXdYmG8D
-         2H8lvUW/WzrWTDgu9ddvQ64iEVwvXHTg1B5Zc=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=tB2rgSrZ0/TN4TUmobV6789IGZfS+D3eOVRdkbfIw4A=;
+        b=gLmdMP3rM3QqdYNwjCiq7RPeQJQwO1RTUW+XGOknX/BO81E17X9dd/cwFCFK0IFJz6
+         BHupfxdBF6V+FBN7l9b+BbxOjrF9mXKxOv4tK99+6n2YGXNiCeltKdD9D3Jnopar7bfR
+         3+4PqIVuTG+NTS/oBPnmqKVTxr2Hw5cui7BQn6wCzuC4e3Tx1eGAww3zGXdXtWIQ72ON
+         9+xC9HjEN3oo+0td5z1O1XM6b1b605Mv5slYsI/I40YM7ImUH0V93aSgTqIG7HWgYJxC
+         Cs7wnkiOGQKmVFEo54gNpH5bLF/AxjHxWDKne+v2WH8E2Qn+mq6YvyYTOq72Ib8m0qOq
+         4gfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4vVoFe3ab/Wam+wi8u1O6FD/EPWPv+oi1jIlO88avgU=;
-        b=TESUb+8XAnZIWffY1xqAiYbcJe60VgK2Bh8pIpOk6PQ/tKr70oxkty86nM48nsG92F
-         zCFaNeVBVQjFg7az5kZOwVyGREHiFHNzo+rF4A9FJB40XDzF1SqEBJgIIHGyoV9Fz2Q2
-         Hs5aaXFjiJBs/c35HveHUIsUGjprT53izYbMnzF0Xu98meyl4cY+tIxoOZCFzFZC70uA
-         qp9mKF1jm2SB+3a0ag+UzPYbePzdu1uM9o3XrFyhqJbQUyf0nK/SBmtJwvUYSELRhkq3
-         XBP/IRvRL8yR8/F5JJAErMdY3FOBS6yRSn5TXFhq7MZuyMWm4MlmfwFRpE/qyk/lv+pI
-         ANSQ==
-X-Gm-Message-State: AOAM530B2xzem37x3G/MJV5BtkptKqfNEwPSbsfLrlvhHErkutSLpqVW
-        hrdlWYwIeht2POLTt1vqXrFtnCZYXB87/A==
-X-Google-Smtp-Source: ABdhPJxY6rlQ1RPbgpuh1V+wb/oTk8hTXhvjkrcs1jR5IkX4LbJVY5Qks9gU0nlNl4DCYkkPUwIlbw==
-X-Received: by 2002:a0c:edab:: with SMTP id h11mr1772000qvr.23.1610402725336;
-        Mon, 11 Jan 2021 14:05:25 -0800 (PST)
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com. [209.85.219.178])
-        by smtp.gmail.com with ESMTPSA id i18sm614571qkg.66.2021.01.11.14.05.24
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Jan 2021 14:05:24 -0800 (PST)
-Received: by mail-yb1-f178.google.com with SMTP id v67so291513ybi.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jan 2021 14:05:24 -0800 (PST)
-X-Received: by 2002:a25:7a44:: with SMTP id v65mr2923320ybc.0.1610402723434;
- Mon, 11 Jan 2021 14:05:23 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=tB2rgSrZ0/TN4TUmobV6789IGZfS+D3eOVRdkbfIw4A=;
+        b=ZCwFxzL/nnmkMTlcrSRB9aCHqKhJeX+IGsgg8fif81+ZDM120MtZSjO7k/OU7kdLAc
+         +mtlzOEJRwNFiXamwVjqxvtQ20P84JozVxpZsp/kQB4e5Ta23W0x5rkqmfjCO8+Zly2K
+         5lw90BIHCc7k6HZfCLj47vrulBNKvGtYHz1uDIv+34dZCGkONUmaAx7ZHVnNxvsLZSM8
+         reTAe/i1bH8qSb+sd56r97xJEwwFRPUn3esYw7C+E9fEcplng6VUg+ZnUM/nuFs/GRly
+         /GuMqTcsJgVXGloTxkSfMi8jx+lnabMLwzaKZThg9a9zk1Ktyas9KqkKF1BWVSZMoSo0
+         DFOw==
+X-Gm-Message-State: AOAM532zhrl1+f5iQqZfX7hYDY5uOvyznUJYCYCQGwFmjiX57Z2sT5Ik
+        FF10nykcpOganN+OerLWM4J5Fg==
+X-Google-Smtp-Source: ABdhPJw1CpfHZNtMFEYLL3Yz46P5y3QE+7nQ4Mgndu1jaANrtE4iVOkerk7U1IzWBdwjv2vGuBzR/A==
+X-Received: by 2002:a4a:ddd2:: with SMTP id i18mr1065136oov.10.1610407620599;
+        Mon, 11 Jan 2021 15:27:00 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id v23sm262849otj.68.2021.01.11.15.26.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Jan 2021 15:26:59 -0800 (PST)
+Date:   Mon, 11 Jan 2021 17:26:57 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Matthias Kaehlcke <mka@chromium.org>,
+        Kiran Gunda <kgunda@codeaurora.org>,
+        Alexandru M Stan <amstan@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: Clean up sc7180-trogdor voltage rails
+Message-ID: <X/zewUR8Dc2Jf/MM@builder.lan>
+References: <20201207143255.1.Ib92ec35163682dec4b2fbb4bde0785cb6e6dde27@changeid>
+ <CAD=FV=VWEEP7xsD5-wBjtToB+Ke69vFXzvPoAoocWPyREdjjhw@mail.gmail.com>
 MIME-Version: 1.0
-References: <20210109072130.784-1-stanimir.varbanov@linaro.org>
-In-Reply-To: <20210109072130.784-1-stanimir.varbanov@linaro.org>
-From:   Fritz Koenig <frkoenig@chromium.org>
-Date:   Mon, 11 Jan 2021 14:05:12 -0800
-X-Gmail-Original-Message-ID: <CAMfZQbwmSCXVZN_9N=CrWsX9P-4xj029NoDsENBhUdX9pjkjZg@mail.gmail.com>
-Message-ID: <CAMfZQbwmSCXVZN_9N=CrWsX9P-4xj029NoDsENBhUdX9pjkjZg@mail.gmail.com>
-Subject: Re: [PATCH] venus: pm_helpers: Control core power domain manually
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     Linux Media Mailing List <linux-media@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
-        Vikash Garodia <vgarodia@codeaurora.org>,
-        Dikshita Agarwal <dikshita@codeaurora.org>,
-        Mansur Alisha Shaik <mansur@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAD=FV=VWEEP7xsD5-wBjtToB+Ke69vFXzvPoAoocWPyREdjjhw@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 8, 2021 at 11:23 PM Stanimir Varbanov
-<stanimir.varbanov@linaro.org> wrote:
->
-> Presently we use device_link to control core power domain. But this
-> leads to issues because the genpd doesn't guarantee synchronous on/off
-> for supplier devices. Switch to manually control by pmruntime calls.
->
-> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> ---
->  drivers/media/platform/qcom/venus/core.h      |  1 -
->  .../media/platform/qcom/venus/pm_helpers.c    | 36 ++++++++++---------
->  2 files changed, 19 insertions(+), 18 deletions(-)
->
-> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-> index dfc13b2f371f..74d9fd3d51cc 100644
-> --- a/drivers/media/platform/qcom/venus/core.h
-> +++ b/drivers/media/platform/qcom/venus/core.h
-> @@ -128,7 +128,6 @@ struct venus_core {
->         struct icc_path *cpucfg_path;
->         struct opp_table *opp_table;
->         bool has_opp_table;
-> -       struct device_link *pd_dl_venus;
+On Mon 11 Jan 15:48 CST 2021, Doug Anderson wrote:
 
-remove from comment at start of struct as well.
- * @pd_dl_venus: pmdomain device-link for venus domain
+> Hi Bjorn,
+> 
+> On Mon, Dec 7, 2020 at 2:33 PM Douglas Anderson <dianders@chromium.org> wrote:
+> >
+> > For a bunch of rails we really don't do anything with them in Linux.
+> > These are things like modem voltage rails that the modem manages these
+> > itself and core rails (like IO rails) that are setup to just
+> > automagically do the right thing by the firmware.
+> >
+> > Let's stop even listing those rails in our device tree.
+> >
+> > The net result of this is that some of these rails might be able to go
+> > down to a lower voltage or perhaps transition to LPM (low power mode)
+> > sometimes.
+> >
+> > Here's a list of what we're doing and why:
+> >
+> > * L1A - only goes to SoC and doesn't seem associated with any
+> >   particular peripheral. Kernel isn't doing anything with
+> >   this. Removing from dts. NET IMPACT: rail might drop from 1.2V to
+> >   1.178V and switch to LPM in some cases depending on firmware.
+> > * L2A - only goes to SoC and doesn't seem associated with any
+> >   particular peripheral. Kernel isn't doing anything with
+> >   this. Removing from dts. NET IMPACT: rail might switch to LPM in
+> >   some cases depending on firmware.
+> > * L3A - only goes to SoC and doesn't seem associated with any
+> >   particular peripheral. Kernel isn't doing anything with
+> >   this. Removing from dts. NET IMPACT: rail might switch to LPM in
+> >   some cases depending on firmware.
+> > * L5A - seems to be totally unused as far as I can tell and doesn't
+> >   even come off QSIP. Removing from dts.
+> > * L6A - only goes to SoC and doesn't seem associated with any
+> >   particular peripheral (I think?). Kernel isn't doing anything with
+> >   this. Removing from dts. NET IMPACT: rail might switch to LPM in
+> >   some cases depending on firmware.
+> > * L16A - Looks like this is only used for internal RF stuff. Removing
+> >   from dts. NET IMPACT: rail might switch to LPM in some cases
+> >   depending on firmware.
+> > * L1C - Just goes to WiFi / Bluetooth. Trust how IDP has this set and
+> >   put this back at 1.616V min.
+> > * L4C - This goes out to the eSIM among other places. This looks like
+> >   it's intended to be for SIM card and modem manages. NET IMPACT:
+> >   rail might switch to LPM in some cases depending on firmware.
+> > * L5C - This goes to the physical SIM.  This looks like it's intended
+> >   to be for SIM card and modem manages. NET IMPACT: rail might drop
+> >   from 1.8V to 1.648V and switch to LPM in some cases depending on
+> >   firmware.
+> >
+> > NOTE: in general for anything which is supposed to be managed by Linux
+> > I still left it all forced to HPM since I'm not 100% sure that all the
+> > needed calls to regulator_set_load() are in place and HPM is safer.
+> > Switching more things to LPM can happen in a future patch.
+> >
+> > ALSO NOTE: Power measurements showed no measurable difference after
+> > applying this patch, so perhaps it should be viewed more as a cleanup
+> > than any power savings.
+> >
+> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > ---
+> >
+> >  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 82 ++------------------
+> >  1 file changed, 7 insertions(+), 75 deletions(-)
+> 
+> We've been running with this in the downstream tree since December 8th
+> and nobody has yelled.  You can see <https://crrev.com/c/2573506>.  Is
+> it a good time for it to land upstream?
+> 
 
-The patch gives huge improvements in encoder stability!
+Sure thing, I will pick it up. Thanks for the ping!
 
-Tested-by: Fritz Koenig <frkoenig@chromium.org>
-
-
-
->         struct device *pmdomains[VIDC_PMDOMAINS_NUM_MAX];
->         struct device_link *opp_dl_venus;
->         struct device *opp_pmdomain;
-> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-> index 94219a3093cb..e0338932a720 100644
-> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
-> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-> @@ -774,13 +774,6 @@ static int vcodec_domains_get(struct device *dev)
->                 core->pmdomains[i] = pd;
->         }
->
-> -       core->pd_dl_venus = device_link_add(dev, core->pmdomains[0],
-> -                                           DL_FLAG_PM_RUNTIME |
-> -                                           DL_FLAG_STATELESS |
-> -                                           DL_FLAG_RPM_ACTIVE);
-> -       if (!core->pd_dl_venus)
-> -               return -ENODEV;
-> -
->  skip_pmdomains:
->         if (!core->has_opp_table)
->                 return 0;
-> @@ -807,14 +800,12 @@ static int vcodec_domains_get(struct device *dev)
->  opp_dl_add_err:
->         dev_pm_opp_detach_genpd(core->opp_table);
->  opp_attach_err:
-> -       if (core->pd_dl_venus) {
-> -               device_link_del(core->pd_dl_venus);
-> -               for (i = 0; i < res->vcodec_pmdomains_num; i++) {
-> -                       if (IS_ERR_OR_NULL(core->pmdomains[i]))
-> -                               continue;
-> -                       dev_pm_domain_detach(core->pmdomains[i], true);
-> -               }
-> +       for (i = 0; i < res->vcodec_pmdomains_num; i++) {
-> +               if (IS_ERR_OR_NULL(core->pmdomains[i]))
-> +                       continue;
-> +               dev_pm_domain_detach(core->pmdomains[i], true);
->         }
-> +
->         return ret;
->  }
->
-> @@ -827,9 +818,6 @@ static void vcodec_domains_put(struct device *dev)
->         if (!res->vcodec_pmdomains_num)
->                 goto skip_pmdomains;
->
-> -       if (core->pd_dl_venus)
-> -               device_link_del(core->pd_dl_venus);
-> -
->         for (i = 0; i < res->vcodec_pmdomains_num; i++) {
->                 if (IS_ERR_OR_NULL(core->pmdomains[i]))
->                         continue;
-> @@ -917,16 +905,30 @@ static void core_put_v4(struct device *dev)
->  static int core_power_v4(struct device *dev, int on)
->  {
->         struct venus_core *core = dev_get_drvdata(dev);
-> +       struct device *pmctrl = core->pmdomains[0];
->         int ret = 0;
->
->         if (on == POWER_ON) {
-> +               if (pmctrl) {
-> +                       ret = pm_runtime_get_sync(pmctrl);
-> +                       if (ret < 0) {
-> +                               pm_runtime_put_noidle(pmctrl);
-> +                               return ret;
-> +                       }
-> +               }
-> +
->                 ret = core_clks_enable(core);
-> +               if (ret < 0 && pmctrl)
-> +                       pm_runtime_put_sync(pmctrl);
->         } else {
->                 /* Drop the performance state vote */
->                 if (core->opp_pmdomain)
->                         dev_pm_opp_set_rate(dev, 0);
->
->                 core_clks_disable(core);
-> +
-> +               if (pmctrl)
-> +                       pm_runtime_put_sync(pmctrl);
->         }
->
->         return ret;
-> --
-> 2.17.1
->
+Regards,
+Bjorn
