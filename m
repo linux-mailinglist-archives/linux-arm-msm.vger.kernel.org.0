@@ -2,205 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E37F92F19DF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jan 2021 16:41:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D09782F1A47
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jan 2021 16:58:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728392AbhAKPlj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jan 2021 10:41:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53058 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727824AbhAKPlj (ORCPT
+        id S2388023AbhAKP5c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jan 2021 10:57:32 -0500
+Received: from m43-15.mailgun.net ([69.72.43.15]:22661 "EHLO
+        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387995AbhAKP5c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jan 2021 10:41:39 -0500
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDD17C06179F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jan 2021 07:40:58 -0800 (PST)
-Received: by mail-oi1-x235.google.com with SMTP id q205so20459641oig.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jan 2021 07:40:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=2NFLJAEhP/pWZ/3KNdvaDfsdnuyk831kAKh+5k94dVg=;
-        b=S5iwiv4PKXL8ewzh/rll9Sa3j2vexkhQ/+IVuul0kcR2xH5vr2wAtbeMWCArZyEinj
-         LUl8PD7TmeENRc7BQmmCfXY6h1NmTM4ROO8+K4aE2RslM7xJJU5XK69VEbbVOtxdbOMw
-         MJ2p+S+CWndN0O39bPTXy19+vOrobbMszcPJ6XZerhoWrpMMihWrSZ6qMJFi3LhY6/RF
-         r8dBPBBdP/H3dwsnsiRx7fExy1cr7otlHSsvePHK3VbCQcGwLZWKVSG4Fy0XA9qds9xW
-         SjBK/FClUenpamX4LugF2rKGKQlgkpwQIUg5b/I4uOJYz4Ce+UlNdy0joo1W5Mx8WuQt
-         QR1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=2NFLJAEhP/pWZ/3KNdvaDfsdnuyk831kAKh+5k94dVg=;
-        b=da7IuP1MMDUkEXhlJ/z2oyFZr+QT54cJAOwYlTqEshn/zqnVhGAutIljE7WHRhqVCb
-         ++e6vRtRq6OIuzmnqpC6LHs/dRbxvTA4w9xHvwr62m6tX4mphodCNfF/DfePuVv907KF
-         OFOnhnJHHVLcEAIWUUWGeT43rd08gZvlhSi7/J/8TIj3B18L8DbeH9HILGJ/Ebf01S+L
-         aq8tpc41qGe7Wm3e9Z4ZEzMU+mcgbVBLakYXkbQWysd1rydK/hyqBYLsQ9m3hH/yP3n9
-         E3kBdZthv95bUTpl+hdmZNg5pwaHuoNBKCx3Inb5CoAhAOSqXH4qK4eRR2pOBkniXkk+
-         SgGg==
-X-Gm-Message-State: AOAM532LnfzlSSGNY3SeMlUODRpyOD6RglWGqkj/x7T+JIZzkDSAYFsz
-        JYadCKlrTt8GHwPamlKehW9/3Q==
-X-Google-Smtp-Source: ABdhPJzK7vYdXsN45YWQD0Il+kWkHfKqU7Inc4xU498GSQrcdRJIekYCAqeyYbE2EHzJ/jT10Cwp4w==
-X-Received: by 2002:aca:f594:: with SMTP id t142mr10185380oih.162.1610379658167;
-        Mon, 11 Jan 2021 07:40:58 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id o17sm22785otp.30.2021.01.11.07.40.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Jan 2021 07:40:57 -0800 (PST)
-Date:   Mon, 11 Jan 2021 09:40:55 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Mark Brown <broonie@kernel.org>, Wolfram Sang <wsa@kernel.org>,
+        Mon, 11 Jan 2021 10:57:32 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1610380628; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=rpUhQsbkZqOoeekzL8PjncrrfDvQYa9XwRlpvRyebcY=; b=F+pQzTl5mvy7vddLAWQ8ewrrDdaz42IrDgL3v609Vqg8hScR/KCs+6ut7fFwRxzPd+smWA99
+ EFixKFcN2Ezj/Obq9xEFtFPuvQvA26NtW+fua80b7w4bqlVJZBysFUB1iI7QGLL8dnr8fp7P
+ yFDey8us2l4DDhY2moNz0/Fr4HA=
+X-Mailgun-Sending-Ip: 69.72.43.15
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n09.prod.us-east-1.postgun.com with SMTP id
+ 5ffc75318fb3cda82f37df60 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 11 Jan 2021 15:56:33
+ GMT
+Sender: mkshah=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 15C47C433CA; Mon, 11 Jan 2021 15:56:32 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.29.129] (unknown [49.36.75.31])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4671AC433C6;
+        Mon, 11 Jan 2021 15:56:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4671AC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=mkshah@codeaurora.org
+Subject: Re: [PATCH v5 1/4] pinctrl: qcom: Allow SoCs to specify a GPIO
+ function that's not 0
+To:     Douglas Anderson <dianders@chromium.org>,
+        Marc Zyngier <maz@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Linus Walleij <linus.walleij@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Neeraj Upadhyay <neeraju@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>, linux-gpio@vger.kernel.org,
+        Srinivas Ramana <sramana@codeaurora.org>,
         linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        linux-spi@vger.kernel.org, linux-i2c@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/7] soc: qcom: geni: Add support for gpi dma
-Message-ID: <X/xxh8ejwY6cHdC1@builder.lan>
-References: <20210111151651.1616813-1-vkoul@kernel.org>
- <20210111151651.1616813-4-vkoul@kernel.org>
+References: <20210108093339.v5.1.I3ad184e3423d8e479bc3e86f5b393abb1704a1d1@changeid>
+From:   Maulik Shah <mkshah@codeaurora.org>
+Message-ID: <3aaf589e-ece1-1b9c-52fd-f7e8274b4938@codeaurora.org>
+Date:   Mon, 11 Jan 2021 21:26:23 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210111151651.1616813-4-vkoul@kernel.org>
+In-Reply-To: <20210108093339.v5.1.I3ad184e3423d8e479bc3e86f5b393abb1704a1d1@changeid>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 11 Jan 09:16 CST 2021, Vinod Koul wrote:
+Hi Doug,
 
-> GPI DMA is one of the DMA modes supported on geni, this adds support to
-> enable that mode
-> 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Reviewed-by: Maulik Shah <mkshah@codeaurora.org>
+Tested-by: Maulik Shah <mkshah@codeaurora.org>
+
+Thanks,
+Maulik
+
+On 1/8/2021 11:05 PM, Douglas Anderson wrote:
+> There's currently a comment in the code saying function 0 is GPIO.
+> Instead of hardcoding it, let's add a member where an SoC can specify
+> it.  No known SoCs use a number other than 0, but this just makes the
+> code clearer.  NOTE: no SoC code needs to be updated since we can rely
+> on zero-initialization.
+>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 > ---
->  drivers/soc/qcom/qcom-geni-se.c | 39 ++++++++++++++++++++++++++++++++-
->  include/linux/qcom-geni-se.h    |  4 ++++
->  2 files changed, 42 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-> index a3868228ea05..db44dc32e049 100644
-> --- a/drivers/soc/qcom/qcom-geni-se.c
-> +++ b/drivers/soc/qcom/qcom-geni-se.c
-> @@ -310,6 +310,39 @@ static void geni_se_select_dma_mode(struct geni_se *se)
->  		writel_relaxed(val, se->base + SE_GENI_DMA_MODE_EN);
->  }
->  
-> +static int geni_se_select_gpi_mode(struct geni_se *se)
+>
+> (no changes since v1)
+>
+>   drivers/pinctrl/qcom/pinctrl-msm.c | 4 ++--
+>   drivers/pinctrl/qcom/pinctrl-msm.h | 2 ++
+>   2 files changed, 4 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+> index e051aecf95c4..1d2a78452c2d 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+> @@ -210,8 +210,8 @@ static int msm_pinmux_request_gpio(struct pinctrl_dev *pctldev,
+>   	if (!g->nfuncs)
+>   		return 0;
+>   
+> -	/* For now assume function 0 is GPIO because it always is */
+> -	return msm_pinmux_set_mux(pctldev, g->funcs[0], offset);
+> +	return msm_pinmux_set_mux(pctldev,
+> +				  g->funcs[pctrl->soc->gpio_func], offset);
+>   }
+>   
+>   static const struct pinmux_ops msm_pinmux_ops = {
+> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.h b/drivers/pinctrl/qcom/pinctrl-msm.h
+> index 333f99243c43..e31a5167c91e 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-msm.h
+> +++ b/drivers/pinctrl/qcom/pinctrl-msm.h
+> @@ -118,6 +118,7 @@ struct msm_gpio_wakeirq_map {
+>    * @wakeirq_dual_edge_errata: If true then GPIOs using the wakeirq_map need
+>    *                            to be aware that their parent can't handle dual
+>    *                            edge interrupts.
+> + * @gpio_func: Which function number is GPIO (usually 0).
+>    */
+>   struct msm_pinctrl_soc_data {
+>   	const struct pinctrl_pin_desc *pins;
+> @@ -134,6 +135,7 @@ struct msm_pinctrl_soc_data {
+>   	const struct msm_gpio_wakeirq_map *wakeirq_map;
+>   	unsigned int nwakeirq_map;
+>   	bool wakeirq_dual_edge_errata;
+> +	unsigned int gpio_func;
+>   };
+>   
+>   extern const struct dev_pm_ops msm_pinctrl_dev_pm_ops;
 
-This doesn't return any information and the return value isn't looked
-at, please make it void.
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
 
-> +{
-> +	unsigned int geni_dma_mode = 0;
-> +	unsigned int gpi_event_en = 0;
-> +	unsigned int common_geni_m_irq_en = 0;
-> +	unsigned int common_geni_s_irq_en = 0;
-
-These could certainly be given a shorter name.
-
-None of them needs to be initialized, first access in all cases are
-assignments.
-
-> +
-> +	common_geni_m_irq_en = readl_relaxed(se->base + SE_GENI_M_IRQ_EN);
-> +	common_geni_s_irq_en = readl_relaxed(se->base + SE_GENI_S_IRQ_EN);
-> +	common_geni_m_irq_en &=
-> +			~(M_CMD_DONE_EN | M_TX_FIFO_WATERMARK_EN |
-> +			M_RX_FIFO_WATERMARK_EN | M_RX_FIFO_LAST_EN);
-> +	common_geni_s_irq_en &= ~S_CMD_DONE_EN;
-> +	geni_dma_mode = readl_relaxed(se->base + SE_GENI_DMA_MODE_EN);
-> +	gpi_event_en = readl_relaxed(se->base + SE_GSI_EVENT_EN);
-> +
-> +	geni_dma_mode |= GENI_DMA_MODE_EN;
-> +	gpi_event_en |= (DMA_RX_EVENT_EN | DMA_TX_EVENT_EN |
-> +				GENI_M_EVENT_EN | GENI_S_EVENT_EN);
-
-Please reorder these so that you do
-	readl(m)
-	mask out bits of m
-
-	readl(s)
-	mask out bits of s
-
-	...
-
-> +
-> +	writel_relaxed(0, se->base + SE_IRQ_EN);
-> +	writel_relaxed(common_geni_s_irq_en, se->base + SE_GENI_S_IRQ_EN);
-> +	writel_relaxed(common_geni_m_irq_en, se->base + SE_GENI_M_IRQ_EN);
-> +	writel_relaxed(0xFFFFFFFF, se->base + SE_GENI_M_IRQ_CLEAR);
-
-Lowercase hex digits please.
-
-> +	writel_relaxed(0xFFFFFFFF, se->base + SE_GENI_S_IRQ_CLEAR);
-> +	writel_relaxed(0xFFFFFFFF, se->base + SE_DMA_TX_IRQ_CLR);
-> +	writel_relaxed(0xFFFFFFFF, se->base + SE_DMA_RX_IRQ_CLR);
-> +	writel_relaxed(geni_dma_mode, se->base + SE_GENI_DMA_MODE_EN);
-> +	writel_relaxed(gpi_event_en, se->base + SE_GSI_EVENT_EN);
-
-Why is this driver using _relaxed accessors exclusively? Why are you
-using _relaxed versions?
-
-And wouldn't it be suitable to have a wmb() before the "dma mode enable"
-and "event enable" at least? (I.e. use writel() instead)
-
-Regards,
-Bjorn
-
-> +
-> +	return 0;
-> +}
-> +
->  /**
->   * geni_se_select_mode() - Select the serial engine transfer mode
->   * @se:		Pointer to the concerned serial engine.
-> @@ -317,7 +350,8 @@ static void geni_se_select_dma_mode(struct geni_se *se)
->   */
->  void geni_se_select_mode(struct geni_se *se, enum geni_se_xfer_mode mode)
->  {
-> -	WARN_ON(mode != GENI_SE_FIFO && mode != GENI_SE_DMA);
-> +	WARN_ON(mode != GENI_SE_FIFO && mode != GENI_SE_DMA &&
-> +		mode != GENI_GPI_DMA);
->  
->  	switch (mode) {
->  	case GENI_SE_FIFO:
-> @@ -326,6 +360,9 @@ void geni_se_select_mode(struct geni_se *se, enum geni_se_xfer_mode mode)
->  	case GENI_SE_DMA:
->  		geni_se_select_dma_mode(se);
->  		break;
-> +	case GENI_GPI_DMA:
-> +		geni_se_select_gpi_mode(se);
-> +		break;
->  	case GENI_SE_INVALID:
->  	default:
->  		break;
-> diff --git a/include/linux/qcom-geni-se.h b/include/linux/qcom-geni-se.h
-> index cb4e40908f9f..12003a6cb133 100644
-> --- a/include/linux/qcom-geni-se.h
-> +++ b/include/linux/qcom-geni-se.h
-> @@ -12,6 +12,7 @@
->  enum geni_se_xfer_mode {
->  	GENI_SE_INVALID,
->  	GENI_SE_FIFO,
-> +	GENI_GPI_DMA,
->  	GENI_SE_DMA,
->  };
->  
-> @@ -123,6 +124,9 @@ struct geni_se {
->  #define CLK_DIV_MSK			GENMASK(15, 4)
->  #define CLK_DIV_SHFT			4
->  
-> +/* GENI_IF_DISABLE_RO fields */
-> +#define FIFO_IF_DISABLE			(BIT(0))
-> +
->  /* GENI_FW_REVISION_RO fields */
->  #define FW_REV_PROTOCOL_MSK		GENMASK(15, 8)
->  #define FW_REV_PROTOCOL_SHFT		8
-> -- 
-> 2.26.2
-> 
