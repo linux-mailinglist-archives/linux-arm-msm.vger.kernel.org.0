@@ -2,110 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E5572F1E49
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jan 2021 19:52:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D33E2F1EC1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jan 2021 20:15:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390491AbhAKSwV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jan 2021 13:52:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37824 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390481AbhAKSwU (ORCPT
+        id S2388051AbhAKTPH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jan 2021 14:15:07 -0500
+Received: from relay08.th.seeweb.it ([5.144.164.169]:57425 "EHLO
+        relay08.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732725AbhAKTPG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jan 2021 13:52:20 -0500
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A5EFC06179F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jan 2021 10:51:40 -0800 (PST)
-Received: by mail-ot1-x333.google.com with SMTP id r9so646917otk.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jan 2021 10:51:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=KVj6BnsPKy8SIQbULpp08lDUGf3xvM9pSNxXwuEntqU=;
-        b=DSRYzE6gg2fWi8taP0AAwnHeXUX6VhBeyaw1JlTmLumDHIAXhg12uBb4eQ6C5daeIa
-         GEEgAYkALwnVO1Sn7hVautHZ/TO5oVk5GfWQdkFj2Wdkv5o3NFhwJcniA7xj73wJOzup
-         pe9WQWoC0DM6jqJrxM/wRhhs8gNCqKpky2chUE13TcoTLylJijKjiNmtehZ02WXnFT9F
-         kNJzcTzhOCNwR+jLTe+wXRoCdaiUvTzaStOUdoUiZgyXwZACGyplD2u8qbjjxe9Q0e+Y
-         +F2GtWnVJe6XWpdI44wEoRoxbpIr4nhRDoIo+paIxmnVmg1zBIXd8wJa5s6N8miS1Sfq
-         EzPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=KVj6BnsPKy8SIQbULpp08lDUGf3xvM9pSNxXwuEntqU=;
-        b=Uz488hSgbCIITMP4b9tYv5cCSHuLUSfSViaondMkgNl4uT8ffxZMbRZ2hpvZFWaK9Y
-         V2qi1w4oXZgJrPwoSdF/DWjgF6tly0mow1/GgLj/LYfQDj75IIXrSUhjrDbwBXy7JfWk
-         jteQincqzFiai5NMTI7rl+a7gW7n/X7CPj4GFeDAS5Z30Gxe33SvKtmaER1NLFgEB/kQ
-         SVLftQYGeZH2Son1/4sBwbYmzrC1xR5CwT6xzOCp2cgFuq50pPRjVeLdX0e5JYaoy8YM
-         tMfiNf8DKfs0/5qWyVxXk2SI9rvD87dCC9TQ6T8d04dqNBSsiPLTNmGmjZ047WZBVHoQ
-         KQeQ==
-X-Gm-Message-State: AOAM530NTJMxWDOOGC0/W//MduVo7qfy9RwoSEO58f+pBgpURkdpTaIR
-        iOsipyxw6T/GDjU068rz3Vda+w==
-X-Google-Smtp-Source: ABdhPJyrDydloeIe9rSHIcI2/i7IlBIQCuS+Qo3pA5HAo2Ec/TC8ivXka89YkCeNxz9whh/82LnTFw==
-X-Received: by 2002:a9d:7419:: with SMTP id n25mr404582otk.280.1610391099557;
-        Mon, 11 Jan 2021 10:51:39 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id p18sm64347ood.48.2021.01.11.10.51.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Jan 2021 10:51:38 -0800 (PST)
-Date:   Mon, 11 Jan 2021 12:51:37 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Mark Brown <broonie@kernel.org>, Wolfram Sang <wsa@kernel.org>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        linux-spi@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/7] soc: qcom: geni: move struct geni_wrapper to header
-Message-ID: <X/yeOZoML/yhlg4T@builder.lan>
-References: <20210111151651.1616813-1-vkoul@kernel.org>
- <20210111151651.1616813-3-vkoul@kernel.org>
- <X/xwHeRAs4Cl/efj@builder.lan>
- <20210111174342.GB2771@vkoul-mobl>
+        Mon, 11 Jan 2021 14:15:06 -0500
+Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id E47963E8B4;
+        Mon, 11 Jan 2021 20:14:08 +0100 (CET)
+Subject: Re: [PATCH 5/7] regulator: qcom-labibb: Implement short-circuit and
+ over-current IRQs
+To:     Mark Brown <broonie@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        robh+dt@kernel.org, sumit.semwal@linaro.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        phone-devel@vger.kernel.org, konrad.dybcio@somainline.org,
+        marijn.suijten@somainline.org, martin.botka@somainline.org
+References: <20210109132921.140932-1-angelogioacchino.delregno@somainline.org>
+ <20210109132921.140932-6-angelogioacchino.delregno@somainline.org>
+ <20210111135745.GC4728@sirena.org.uk>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Message-ID: <6dee36e4-fc78-c21b-daf8-120ee44535a3@somainline.org>
+Date:   Mon, 11 Jan 2021 20:14:08 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210111174342.GB2771@vkoul-mobl>
+In-Reply-To: <20210111135745.GC4728@sirena.org.uk>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 11 Jan 11:43 CST 2021, Vinod Koul wrote:
+Il 11/01/21 14:57, Mark Brown ha scritto:
+> On Sat, Jan 09, 2021 at 02:29:19PM +0100, AngeloGioacchino Del Regno wrote:
+> 
+>> +	/* If the regulator is not enabled, this is a fake event */
+>> +	if (!ops->is_enabled(vreg->rdev))
+>> +		return 0;
+> 
+> Or handling the interrupt raced with a disable initiated from elsewhere.
+> Does the hardware actually have a problem with reporting spurious errors?
+> 
+>> +	return ret ? IRQ_NONE : IRQ_HANDLED;
+> 
+> Here and elsewhere please write normal conditional statements to improve
+> legibility.
+> 
+No problem. Will do.
 
-> On 11-01-21, 09:34, Bjorn Andersson wrote:
-> > On Mon 11 Jan 09:16 CST 2021, Vinod Koul wrote:
-> > 
-> > > I2C geni driver needs to access struct geni_wrapper, so move it to
-> > > header.
-> > > 
-> > 
-> > Please tell me more!
-> > 
-> > Glanced through the other patches and the only user I can find it in
-> > patch 5 where you use this to get the struct device * of the wrapper.
+>> +	/* This function should be called only once, anyway. */
+>> +	if (unlikely(vreg->ocp_irq_requested))
+>> +		return 0;
 > 
-> That is correct. The dma mapping needs to be done with SE device.
+> If this is not a fast path it doesn't need an unlikely() annotation;
+> indeed it sounds more like there should be a warning printed if this
+> isn't supposed to be called multiple times.
 > 
-> > At least in the DT case this would be [SE]->dev->parent, perhaps we
-> > can't rely on this due to ACPI?
+That was extra-paranoid safety, looking at this one again, that should 
+be totally unnecessary.
+I think that removing this check entirely would be just fine also 
+because.. anyway.. writing to these registers more than once won't do 
+any harm, nor break functionality: I mean, even if it happens for 
+whatever reason, there's *no real need* to avoid it from the hw perspective.
+
+>> +	/* IRQ polarities - LAB: trigger-low, IBB: trigger-high */
+>> +	if (vreg->type == QCOM_LAB_TYPE) {
+>> +		irq_flags |= IRQF_TRIGGER_LOW;
+>> +		irq_trig_low = 1;
+>> +	} else {
+>> +		irq_flags |= IRQF_TRIGGER_HIGH;
+>> +		irq_trig_low = 0;
+>> +	}
 > 
-> I would have missed that then, but I somehow recall trying that.. Though
-> I have not looked into ACPI..
+> This would be more clearly written as a switch statement.
 > 
-> Given that we would need to worry about ACPI, do you recommend using
-> parent or keeping this
+A switch statement looked like being a bit "too much" for just two cases 
+where vreg->type cannot be anything else but QCOM_LAB_TYPE or 
+QCOM_IBB_TYPE... but okay, let's write a switch statement in place of that.
+
+>> +	return devm_request_threaded_irq(vreg->dev, vreg->ocp_irq, NULL,
+>> +					 qcom_labibb_ocp_isr, irq_flags,
+>> +					 ocp_irq_name, vreg);
+> 
+> Are you *sure* that devm_ is appropriate here and the interrupt handler
+> won't attempt to use things that will be deallocated before devm gets
+> round to freeing the interrupt?
+> 
+Yeah, I'm definitely sure.
+
+>> +		if (!!(val & LABIBB_CONTROL_ENABLE)) {
+> 
+> The !! is redundant here and makes things less clear.
+> 
+My bad, I forgot to clean this one up before sending.
+
+>> @@ -166,8 +560,37 @@ static int qcom_labibb_of_parse_cb(struct device_node *np,
+>>   				   struct regulator_config *config)
+>>   {
+>>   	struct labibb_regulator *vreg = config->driver_data;
+>> +	char *sc_irq_name;
+> 
+> I really, really wouldn't expect to see interrupts being requested in
+> the DT parsing callback - apart from anything else the device is going
+> to have the physical interrupts with or without DT binding information.
+> These callbacks are for regulator specific properties, not basic probing.
+> Just request the interrupts in the main probe function, this also means
+> you can avoid using all the DT specific APIs which are generally a
+> warning sign.
 > 
 
-We get the wrapper by the means of dev_drv_getdata(dev->parent),
-so afaict we need to figure out how to get hold of the wrapper for ACPI
-to work either way.
-
-We then need to lug around the wrapper's device for your uses and
-exposing the wrapper struct solves this for us. So I'm okay with your
-proposal.
-
-Regards,
-Bjorn
+...And I even wrote a comment saying "The Short Circuit interrupt is 
+critical: fail if not found"!!! Whoa! That was bad.
+Yeah, I'm definitely moving that to the appropriate place.
