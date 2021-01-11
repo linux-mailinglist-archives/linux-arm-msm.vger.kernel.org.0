@@ -2,81 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 572532F145B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jan 2021 14:24:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A052C2F1585
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jan 2021 14:41:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730664AbhAKNXk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jan 2021 08:23:40 -0500
-Received: from mail.kernel.org ([198.145.29.99]:35444 "EHLO mail.kernel.org"
+        id S1733247AbhAKNle (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jan 2021 08:41:34 -0500
+Received: from mail.kernel.org ([198.145.29.99]:47962 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732514AbhAKNRb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jan 2021 08:17:31 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 014282229C;
-        Mon, 11 Jan 2021 13:17:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1610371035;
-        bh=CmkRPkyW+CATZH9bzTVu39t6lVrMI3J3IbU932DutAk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=TzJh0gBf47sx2RbCpMXf+TfAdv1Flwn9Ae44A9KJf+tM498ABXQvqgLhyH1zYE3cu
-         ZWVAf4NyLBmPLkFViDyXAtfqtdkd67K7A8vsMUt63JaA/mYr/rlGj+yM/usbcG2hAw
-         qIpAe4lQ+GkuDAmEVRQSB9g+KBywqaFB9oKjx1RhcRBcqX4DzZJaelEgwYX8j9kcAT
-         rr0FE7yWyXXZKyziKsETzzyvZBtfS8sFsREndoZDpvbuRkCCBkqkamIF8hRzsyajWa
-         MdiNPzek4HrZ5LOo7hxb62asOoJfY2VNR+9rUIPbZTDE/gTSHpvN5LpVB1bYuLUn3a
-         ApW4/7FbJuZOQ==
-Date:   Mon, 11 Jan 2021 13:16:42 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        robh+dt@kernel.org, sumit.semwal@linaro.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        phone-devel@vger.kernel.org, konrad.dybcio@somainline.org,
-        marijn.suijten@somainline.org, martin.botka@somainline.org
-Subject: Re: [PATCH 1/7] regulator: qcom-labibb: Implement voltage selector
- ops
-Message-ID: <20210111131642.GB4728@sirena.org.uk>
-References: <20210109132921.140932-1-angelogioacchino.delregno@somainline.org>
- <20210109132921.140932-2-angelogioacchino.delregno@somainline.org>
+        id S1733235AbhAKNlb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 11 Jan 2021 08:41:31 -0500
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org [51.254.78.96])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 9137D221FD;
+        Mon, 11 Jan 2021 13:40:50 +0000 (UTC)
+Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
+        by disco-boy.misterjones.org with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.94)
+        (envelope-from <maz@kernel.org>)
+        id 1kyxRA-006gvt-Gn; Mon, 11 Jan 2021 13:40:48 +0000
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="St7VIuEGZ6dlpu13"
-Content-Disposition: inline
-In-Reply-To: <20210109132921.140932-2-angelogioacchino.delregno@somainline.org>
-X-Cookie: Too much is not enough.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 11 Jan 2021 13:40:48 +0000
+From:   Marc Zyngier <maz@kernel.org>
+To:     Srinivas Ramana <sramana@codeaurora.org>
+Cc:     catalin.marinas@arm.com, will@kernel.org, pajay@qti.qualcomm.com,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 0/3] arm64: cpufeature: Add filter function to control
+In-Reply-To: <1610152163-16554-1-git-send-email-sramana@codeaurora.org>
+References: <1610152163-16554-1-git-send-email-sramana@codeaurora.org>
+User-Agent: Roundcube Webmail/1.4.9
+Message-ID: <6dfdf691b5ed57df81c4c61422949af5@misterjones.org>
+X-Sender: maz@kernel.org
+X-SA-Exim-Connect-IP: 51.254.78.96
+X-SA-Exim-Rcpt-To: sramana@codeaurora.org, catalin.marinas@arm.com, will@kernel.org, pajay@qti.qualcomm.com, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Srinivas,
 
---St7VIuEGZ6dlpu13
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On 2021-01-09 00:29, Srinivas Ramana wrote:
+> This patchset adds a control function for cpufeature framework
+> so that the feature can be controlled at runtime.
+> 
+> Defer PAC on boot core and use the filter function added to disable
+> PAC from command line. This will help toggling the feature on systems
+> that do not support PAC or where PAC needs to be disabled at runtime,
+> without modifying the core kernel.
+> 
+> The idea of adding the filter function for cpufeature is taken from
+> https://lore.kernel.org/linux-arm-kernel/20200515171612.1020-25-catalin.marinas@arm.com/
+> https://lore.kernel.org/linux-arm-kernel/20200515171612.1020-24-catalin.marinas@arm.com/
+> 
+> Srinivas Ramana (3):
+>   arm64: Defer enabling pointer authentication on boot core
+>   arm64: cpufeature: Add a filter function to cpufeature
+>   arm64: Enable control of pointer authentication using early param
+> 
+>  Documentation/admin-guide/kernel-parameters.txt |  6 +++
+>  arch/arm64/include/asm/cpufeature.h             |  8 +++-
+>  arch/arm64/include/asm/pointer_auth.h           | 10 +++++
+>  arch/arm64/include/asm/stackprotector.h         |  1 +
+>  arch/arm64/kernel/cpufeature.c                  | 53 
+> +++++++++++++++++++------
+>  arch/arm64/kernel/head.S                        |  4 --
+>  6 files changed, 64 insertions(+), 18 deletions(-)
 
-On Sat, Jan 09, 2021 at 02:29:15PM +0100, AngeloGioacchino Del Regno wrote:
+I've been working for some time on a similar series to allow a feature
+set to be disabled during the early boot phase, initially to prevent
+booting a kernel with VHE, but the mechanism is generic enough to
+deal with most architectural features.
 
-> +	.linear_ranges		= (struct linear_range[]) {
-> +		REGULATOR_LINEAR_RANGE(4600000, 0, 15, 100000),
-> +	},
-> +	.n_linear_ranges	= 1,
+I took the liberty to lift your first patch and to add it to my 
+series[1],
+further allowing PAuth to be disabled at boot time on top of BTI and 
+VHE.
 
-If there's a single range that's just a simple linear mapping and should
-use regulator_map_voltage_linear().
+I'd appreciate your comments on this.
 
---St7VIuEGZ6dlpu13
-Content-Type: application/pgp-signature; name="signature.asc"
+Thanks,
 
------BEGIN PGP SIGNATURE-----
+         M.
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl/8T7oACgkQJNaLcl1U
-h9AkPAf+MAVILl2ffHOGp2fVUT5aN8gdBqK8rfxbiQEm6bDV5yFx+sLu7vuCGki5
-PjBq8BF088Hj2i6TY9OCaYPhtoSMiQ21gcZTdFWt7zZ5dFk1oCWKxkEhVSMdsjOp
-mHxAhQb1Eek8AA2R0+hMpp1D8+44DFEHE3gQnph+N8mHxXPXi23bdoUSZRF1nZeB
-bAx9ojeQ5+sv1un7mNIUMl2auDlGtjJOO2m62VJovgP0CIDfP9KNCoBDgXEPf8Qb
-4A5bN1oFeqkk3k9LP0LyRyzYsvnP/tn4KawgJI1kbVi/4xLdLGJTk08w0jluwN/N
-q1Obh6BUqc3IRbHqDSrlITHYI9Ovtw==
-=/6OF
------END PGP SIGNATURE-----
-
---St7VIuEGZ6dlpu13--
+[1] https://lore.kernel.org/r/20210111132811.2455113-1-maz@kernel.org
+-- 
+Jazz is not dead. It just smells funny...
