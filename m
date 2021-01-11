@@ -2,200 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 27F352F1D92
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jan 2021 19:09:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 71F152F1D4D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jan 2021 19:01:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390251AbhAKSIL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jan 2021 13:08:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56518 "EHLO
+        id S2389665AbhAKSAs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jan 2021 13:00:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390236AbhAKSIK (ORCPT
+        with ESMTP id S2389620AbhAKSAr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jan 2021 13:08:10 -0500
-Received: from mail-vs1-xe33.google.com (mail-vs1-xe33.google.com [IPv6:2607:f8b0:4864:20::e33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59287C061382
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jan 2021 10:07:11 -0800 (PST)
-Received: by mail-vs1-xe33.google.com with SMTP id z16so4716vsp.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jan 2021 10:07:11 -0800 (PST)
+        Mon, 11 Jan 2021 13:00:47 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5199DC061786
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jan 2021 10:00:07 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id r7so708058wrc.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jan 2021 10:00:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=fp1ONf4QArPbxZI1vhdw6hOF0tsfuNvhAr7FVEUu824=;
-        b=vNKdZYGkiv3WMCTOIJA/PNn7ufn0uRUrC4bhsSbPN0hV6zaaWvopeMIf48dVjJ+RDs
-         gRS06gjzlkIzIIqFIWK5imHWlYS0BAoSfXuhZOBZ2skrSggEpSMNmdmD18d20uR2WtOH
-         fjrYWnu3bAy/ItpwJeqzf6VqCUgrYh5X9dh9nZ1qFAlymw4uLC2ly5KfdS4o2j0TE0Fu
-         HtNKw0G+hWnXi/KQDv4zOI2j6PD9HTLB+LwCUoWYWzSW9afmXTqcNd6GM1UbnE1aSWeQ
-         dXycwgqpHPuFVwCderbKFfX+Sr76E+fNhLecnJgCvXB/7DkY6CK/W2yuydbXSOUxcq/v
-         DIRA==
+        h=from:to:cc:subject:date:message-id;
+        bh=i5vkZMIp6m8L5GT9AIEfOu/P1P8j2pgSz4aGREmv2dc=;
+        b=I/AKHGG3HMoRNy9lYcu3nJW8P7K50NkFE3b0sIJR4X1p8WYUTccsLtiyI0q81OljfG
+         /Ejv1bmW1NNaPlUdEzB5SS4Xz0th4TlfipWApn2JyVw0ppDEmVpVAFyk3n3/6CjK96If
+         cpgLvyCfMcQSGUUgQLqZKZjC00no64RfBbpdPs2Os/bNpB3M+HwF2hb6xEz/lrZQjytg
+         Ryg5pOBQZ4cXDp2Vo7+M3qpVIO6HjpUWebrG9MR0meOhjcgFpCGB7jO+jot1bqfIgVuF
+         ebXeYOhdRHmKN7mucpPo2msHkd95Hd38u5js9ulbMtmjSq4JgPZNE4pOu1P1LOfWXK/1
+         gWLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=fp1ONf4QArPbxZI1vhdw6hOF0tsfuNvhAr7FVEUu824=;
-        b=E3G0D6IYzB+p70zJYN7fRCl2IdI4K2Dv42GDov7w6KrRyEU80ogpPBnJNgIqR4Hvae
-         M2gpsazRwtYybe0DToK38KULBjiMSNHnsL+qKSo/hUP4PvNqq16NesK68MJnD4EbhQ+B
-         wUs6b7bktTHyMByRVo2HfpSW9z91mE8c3aybYn5P1jR3dxzARDElJOXTje65sk0xe7kE
-         kkgucyfREGexWFD8aS2Wjy0oJ2z0MEV0iw7r/bKO2PCq/KjgrneJnmguG4+hYjXPyymN
-         MilU54ivSdfGD+X+ABkTgi00wY50fjD16sBjpE7Jo3S9R7OkrA179oSXv+C4+Bu4kSwh
-         cY4A==
-X-Gm-Message-State: AOAM533zpcbLiveuLl8kWElaJnPrMgEsuGciMrjRX5YTFyV0mqZ/e30h
-        FfrSxdrfl/4pET7926NdS1kmvmWk5IAp+6l2lCb/Zw==
-X-Google-Smtp-Source: ABdhPJyaQOm5HWNk7sC/NrdkhA37LoQBNZMiKVA0PT2X3cAnwyuwYzecECYQL9sV7E4yw4QHUW4GgKfZMYSoah+yX0k=
-X-Received: by 2002:a67:e286:: with SMTP id g6mr875424vsf.42.1610388430511;
- Mon, 11 Jan 2021 10:07:10 -0800 (PST)
-MIME-Version: 1.0
-References: <20201214092048.v5.1.Iec3430c7d3c2a29262695edef7b82a14aaa567e5@changeid>
- <20201214092048.v5.2.I7564620993acd4baa63fa0e3925ca879a86d3ee3@changeid>
-In-Reply-To: <20201214092048.v5.2.I7564620993acd4baa63fa0e3925ca879a86d3ee3@changeid>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Mon, 11 Jan 2021 19:06:31 +0100
-Message-ID: <CAPDyKFqMARrkX2R=f=dzAh9BjVHUgc9QQZpd1YVWX-Pz5C=Y9A@mail.gmail.com>
-Subject: Re: [PATCH v5 2/2] mmc: sdhci-msm: Actually set the actual clock
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Adrian Hunter <adrian.hunter@intel.com>,
-        Taniya Das <tdas@codeaurora.org>,
-        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=i5vkZMIp6m8L5GT9AIEfOu/P1P8j2pgSz4aGREmv2dc=;
+        b=bgRuoywSaJyZKWfTQZ2i+mDSHWg+Axv/S64vcWRBZUM7wC6FdIO9Mr1WOtllPeculY
+         zhdp+w3wcfRtV0QXldE6vDf83O4jziK6oUBgOtVsG8GHaU50v6Tlnw+vMAPqPUsSLUll
+         LYBIIfAOWrdo3k0wd+Pl3PUFivitTzv473nzEv0ed/cyaRqw6lFMYdYEaJen8n6Afu80
+         h9E1JOFuXVTIWPQRRI8BE4AWbjJR/nSkCbpHn9ltCUksznvvycezVmyekwK9/v5IKR0k
+         Yoz/KNOSCqRzJUs5GM+ffByM6u9VThsscNgZmHL8H1Y4ap96FqRcyA79QU4wsj8HLvVD
+         /b5g==
+X-Gm-Message-State: AOAM531kHVH9ImlREDzv4dnKKAM7Pp8nkg6Q1YEkz3Jp5us/dVT0uMbJ
+        Tf0LoVOU1BNXf1G96DEMZ+DeHw==
+X-Google-Smtp-Source: ABdhPJyJUY4VchB207CwJz2pmCVJkJfTUIdTxaXswHaiiPtGVLt3mk/Nn2cUZ2JDTVWPpNyeMkyrvw==
+X-Received: by 2002:adf:d085:: with SMTP id y5mr317551wrh.41.1610388006052;
+        Mon, 11 Jan 2021 10:00:06 -0800 (PST)
+Received: from localhost.localdomain ([88.122.66.28])
+        by smtp.gmail.com with ESMTPSA id s12sm77662wmh.29.2021.01.11.10.00.05
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 11 Jan 2021 10:00:05 -0800 (PST)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     kuba@kernel.org, davem@davemloft.net
+Cc:     netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        manivannan.sadhasivam@linaro.org,
+        Hemant Kumar <hemantk@codeaurora.org>
+Subject: [PATCH net-next 1/3] bus: mhi: core: Add helper API to return number of free TREs
+Date:   Mon, 11 Jan 2021 19:07:40 +0100
+Message-Id: <1610388462-16322-1-git-send-email-loic.poulain@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 14 Dec 2020 at 18:23, Douglas Anderson <dianders@chromium.org> wrote:
->
-> The MSM SDHCI driver always set the "actual_clock" field to 0.  It had
-> a comment about it not being needed because we weren't using the
-> standard SDHCI divider mechanism and we'd just fallback to
-> "host->clock".  However, it's still better to provide the actual
-> clock.  Why?
->
-> 1. It will make timeout calculations slightly better.  On one system I
->    have, the eMMC requets 200 MHz (for HS400-ES) but actually gets 192
->    MHz.  These are close, but why not get the more accurate one.
->
-> 2. If things are seriously off in the clock driver and it's missing
->    rates or picking the wrong rate (maybe it's rounding up instead of
->    down), this will make it much more obvious what's going on.
->
-> NOTE: we have to be a little careful here because the "actual_clock"
-> field shouldn't include the multiplier that sdhci-msm needs
-> internally.
->
-> Suggested-by: Adrian Hunter <adrian.hunter@intel.com>
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+From: Hemant Kumar <hemantk@codeaurora.org>
 
-Applied for next, thanks!
+Introduce mhi_get_free_desc_count() API to return number
+of TREs available to queue buffer. MHI clients can use this
+API to know before hand if ring is full without calling queue
+API.
 
-Kind regards
-Uffe
+Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
+Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ drivers/bus/mhi/core/main.c | 12 ++++++++++++
+ include/linux/mhi.h         |  9 +++++++++
+ 2 files changed, 21 insertions(+)
 
+diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+index 3db1108..4e31f4f 100644
+--- a/drivers/bus/mhi/core/main.c
++++ b/drivers/bus/mhi/core/main.c
+@@ -309,6 +309,18 @@ int mhi_destroy_device(struct device *dev, void *data)
+ 	return 0;
+ }
+ 
++int mhi_get_free_desc_count(struct mhi_device *mhi_dev,
++				enum dma_data_direction dir)
++{
++	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
++	struct mhi_chan *mhi_chan = (dir == DMA_TO_DEVICE) ?
++		mhi_dev->ul_chan : mhi_dev->dl_chan;
++	struct mhi_ring *tre_ring = &mhi_chan->tre_ring;
++
++	return get_nr_avail_ring_elements(mhi_cntrl, tre_ring);
++}
++EXPORT_SYMBOL_GPL(mhi_get_free_desc_count);
++
+ void mhi_notify(struct mhi_device *mhi_dev, enum mhi_callback cb_reason)
+ {
+ 	struct mhi_driver *mhi_drv;
+diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+index cd571ad..62da830 100644
+--- a/include/linux/mhi.h
++++ b/include/linux/mhi.h
+@@ -614,6 +614,15 @@ void mhi_set_mhi_state(struct mhi_controller *mhi_cntrl,
+ void mhi_notify(struct mhi_device *mhi_dev, enum mhi_callback cb_reason);
+ 
+ /**
++ * mhi_get_free_desc_count - Get transfer ring length
++ * Get # of TD available to queue buffers
++ * @mhi_dev: Device associated with the channels
++ * @dir: Direction of the channel
++ */
++int mhi_get_free_desc_count(struct mhi_device *mhi_dev,
++				enum dma_data_direction dir);
++
++/**
+  * mhi_prepare_for_power_up - Do pre-initialization before power up.
+  *                            This is optional, call this before power up if
+  *                            the controller does not want bus framework to
+-- 
+2.7.4
 
-> ---
->
-> Changes in v5:
-> - Remove unused clock parameter.
-> - Add a comment that we're stashing the requested rate.
->
-> Changes in v4:
-> - ("mmc: sdhci-msm: Actually set the actual clock") new for v4.
->
->  drivers/mmc/host/sdhci-msm.c | 35 ++++++++++++++++-------------------
->  1 file changed, 16 insertions(+), 19 deletions(-)
->
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index 50beb407dbe9..f5669dc858d0 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -328,8 +328,7 @@ static void sdhci_msm_v5_variant_writel_relaxed(u32 val,
->         writel_relaxed(val, host->ioaddr + offset);
->  }
->
-> -static unsigned int msm_get_clock_rate_for_bus_mode(struct sdhci_host *host,
-> -                                                   unsigned int clock)
-> +static unsigned int msm_get_clock_mult_for_bus_mode(struct sdhci_host *host)
->  {
->         struct mmc_ios ios = host->mmc->ios;
->         /*
-> @@ -342,8 +341,8 @@ static unsigned int msm_get_clock_rate_for_bus_mode(struct sdhci_host *host,
->             ios.timing == MMC_TIMING_MMC_DDR52 ||
->             ios.timing == MMC_TIMING_MMC_HS400 ||
->             host->flags & SDHCI_HS400_TUNING)
-> -               clock *= 2;
-> -       return clock;
-> +               return 2;
-> +       return 1;
->  }
->
->  static void msm_set_clock_rate_for_bus_mode(struct sdhci_host *host,
-> @@ -354,14 +353,16 @@ static void msm_set_clock_rate_for_bus_mode(struct sdhci_host *host,
->         struct mmc_ios curr_ios = host->mmc->ios;
->         struct clk *core_clk = msm_host->bulk_clks[0].clk;
->         unsigned long achieved_rate;
-> +       unsigned int desired_rate;
-> +       unsigned int mult;
->         int rc;
->
-> -       clock = msm_get_clock_rate_for_bus_mode(host, clock);
-> -       rc = dev_pm_opp_set_rate(mmc_dev(host->mmc), clock);
-> +       mult = msm_get_clock_mult_for_bus_mode(host);
-> +       desired_rate = clock * mult;
-> +       rc = dev_pm_opp_set_rate(mmc_dev(host->mmc), desired_rate);
->         if (rc) {
->                 pr_err("%s: Failed to set clock at rate %u at timing %d\n",
-> -                      mmc_hostname(host->mmc), clock,
-> -                      curr_ios.timing);
-> +                      mmc_hostname(host->mmc), desired_rate, curr_ios.timing);
->                 return;
->         }
->
-> @@ -371,11 +372,14 @@ static void msm_set_clock_rate_for_bus_mode(struct sdhci_host *host,
->          * encounter it.
->          */
->         achieved_rate = clk_get_rate(core_clk);
-> -       if (achieved_rate > clock)
-> +       if (achieved_rate > desired_rate)
->                 pr_warn("%s: Card appears overclocked; req %u Hz, actual %lu Hz\n",
-> -                       mmc_hostname(host->mmc), clock, achieved_rate);
-> +                       mmc_hostname(host->mmc), desired_rate, achieved_rate);
-> +       host->mmc->actual_clock = achieved_rate / mult;
-> +
-> +       /* Stash the rate we requested to use in sdhci_msm_runtime_resume() */
-> +       msm_host->clk_rate = desired_rate;
->
-> -       msm_host->clk_rate = clock;
->         pr_debug("%s: Setting clock at rate %lu at timing %d\n",
->                  mmc_hostname(host->mmc), achieved_rate, curr_ios.timing);
->  }
-> @@ -1756,13 +1760,6 @@ static unsigned int sdhci_msm_get_min_clock(struct sdhci_host *host)
->  static void __sdhci_msm_set_clock(struct sdhci_host *host, unsigned int clock)
->  {
->         u16 clk;
-> -       /*
-> -        * Keep actual_clock as zero -
-> -        * - since there is no divider used so no need of having actual_clock.
-> -        * - MSM controller uses SDCLK for data timeout calculation. If
-> -        *   actual_clock is zero, host->clock is taken for calculation.
-> -        */
-> -       host->mmc->actual_clock = 0;
->
->         sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
->
-> @@ -1785,7 +1782,7 @@ static void sdhci_msm_set_clock(struct sdhci_host *host, unsigned int clock)
->         struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
->
->         if (!clock) {
-> -               msm_host->clk_rate = clock;
-> +               host->mmc->actual_clock = msm_host->clk_rate = 0;
->                 goto out;
->         }
->
-> --
-> 2.29.2.576.ga3fc446d84-goog
->
