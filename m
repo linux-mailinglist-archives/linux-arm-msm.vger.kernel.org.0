@@ -2,149 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B21D2F1F3A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jan 2021 20:25:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0805C2F201C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jan 2021 20:55:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390882AbhAKTYI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jan 2021 14:24:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44648 "EHLO
+        id S2391318AbhAKTyp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jan 2021 14:54:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390796AbhAKTYG (ORCPT
+        with ESMTP id S2391077AbhAKTyo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jan 2021 14:24:06 -0500
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D8ADC061786;
-        Mon, 11 Jan 2021 11:23:10 -0800 (PST)
-Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 416893E859;
-        Mon, 11 Jan 2021 20:23:09 +0100 (CET)
-Subject: Re: [PATCH 5/7] regulator: qcom-labibb: Implement short-circuit and
- over-current IRQs
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        robh+dt@kernel.org, sumit.semwal@linaro.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        phone-devel@vger.kernel.org, konrad.dybcio@somainline.org,
-        marijn.suijten@somainline.org, martin.botka@somainline.org
-References: <20210109132921.140932-1-angelogioacchino.delregno@somainline.org>
- <20210109132921.140932-6-angelogioacchino.delregno@somainline.org>
- <20210111135745.GC4728@sirena.org.uk>
- <6dee36e4-fc78-c21b-daf8-120ee44535a3@somainline.org>
-Message-ID: <8115a574-ad43-d3c6-70d4-28c8a2f4a5f6@somainline.org>
-Date:   Mon, 11 Jan 2021 20:23:09 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.0
+        Mon, 11 Jan 2021 14:54:44 -0500
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CF09C0617A2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jan 2021 11:54:04 -0800 (PST)
+Received: by mail-pg1-x530.google.com with SMTP id n7so368094pgg.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jan 2021 11:54:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=Vxk2nV7tt4HCztmmcM/p9PpvV3AZqTIQaGCtnRxgY5o=;
+        b=PYTOCCGpovAEIhp6SDc7oo7y6LDK0BrdmH5Bo6LK5wdMJMxJPgEfd+o4Ygb8Zm1W6N
+         WT12d307T0ug2fNJrkoAHMKl/62zRSABiCuI41DTLqQTmWvAKerQmPYf8hZZ6PZ4IkQg
+         8XXC0t3qPdfh8ztVgYLAPMtyOlQzV4bAnFIN4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=Vxk2nV7tt4HCztmmcM/p9PpvV3AZqTIQaGCtnRxgY5o=;
+        b=tmfo5kgG24LryMgYkTC1ss2W6Tq/Y1chqrwEYJlDElE1GvE7AhIQytlYld+iwF/Fyj
+         w5Yr0glyV5Zq/qqkPADlpGBspxG2WvpN4KCh0ZaCRDOlzv213vw3iSD/7bDt47inuFdk
+         IPwT2eLMaCodmD1C3++HJx3GRV4ygfhLF1XQNveYPK2i3kuI0kdJpfjqUHTkr9ShsvuL
+         oDCXbOPKsJWcv2T30wECrq9xYEBAQI7UGwsrWeGrt7XgD7g92jqMxv4mydHZzIFH3yLX
+         sh/T0W9EQ8S5NfepdTamia6hbxjBLj3mUzttkPmm5KhpIE5D+2rmAZ+XFtF/CflRA+DR
+         SVfQ==
+X-Gm-Message-State: AOAM530z0TfUPLHQa4FwN5wJjL6X6QnBtOzzMH4Fa03D5O3XOD2Fk4lP
+        q1GHDUgupMHzkxHhz54EpH4JGQ==
+X-Google-Smtp-Source: ABdhPJxKRGtGDIO3VfXdh7jxqm6nRjvFkD4HG/tJC8VlSrZjMO2GjMyC/nt1FZND08abv6HToCiIrg==
+X-Received: by 2002:a65:494f:: with SMTP id q15mr1092942pgs.367.1610394844028;
+        Mon, 11 Jan 2021 11:54:04 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:201:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id 5sm419116pff.125.2021.01.11.11.54.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Jan 2021 11:54:03 -0800 (PST)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <6dee36e4-fc78-c21b-daf8-120ee44535a3@somainline.org>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1610051425-20632-3-git-send-email-khsieh@codeaurora.org>
+References: <y> <1610051425-20632-1-git-send-email-khsieh@codeaurora.org> <1610051425-20632-3-git-send-email-khsieh@codeaurora.org>
+Subject: Re: [PATCH 2/2] drm/msm/dp: unplug interrupt missed after irq_hpd handler
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     Kuogee Hsieh <khsieh@codeaurora.org>, tanmay@codeaurora.org,
+        abhinavk@codeaurora.org, aravindh@codeaurora.org, airlied@linux.ie,
+        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+To:     Kuogee Hsieh <khsieh@codeaurora.org>,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run
+Date:   Mon, 11 Jan 2021 11:54:01 -0800
+Message-ID: <161039484176.3661239.14240346276437866761@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 11/01/21 20:14, AngeloGioacchino Del Regno ha scritto:
-> Il 11/01/21 14:57, Mark Brown ha scritto:
->> On Sat, Jan 09, 2021 at 02:29:19PM +0100, AngeloGioacchino Del Regno 
->> wrote:
->>
->>> +    /* If the regulator is not enabled, this is a fake event */
->>> +    if (!ops->is_enabled(vreg->rdev))
->>> +        return 0;
->>
->> Or handling the interrupt raced with a disable initiated from elsewhere.
->> Does the hardware actually have a problem with reporting spurious errors?
->>
-Sorry, I forgot to answer to this one in the previous email.
+Quoting Kuogee Hsieh (2021-01-07 12:30:25)
+> There is HPD unplug interrupts missed at scenario of an irq_hpd
+> followed by unplug interrupts with around 10 ms in between.
+> Since both AUX_SW_RESET and DP_SW_RESET clear pending HPD interrupts,
+> irq_hpd handler should not issues either aux or sw reset to avoid
+> following unplug interrupt be cleared accidentally.
 
-Yes, apparently the hardware has this issue: when the current draw is 
-very high and you disable the regulator while the attached device is 
-still drawing a lot of current (like on the Xperia XZ2 smartphone, but I 
-don't want to comment on that phone's HW quirks...) then the OCP 
-interrupt fires *after* disabling the LAB/IBB regulators.
+So the problem is that we're resetting the DP aux phy in the middle of
+the HPD state machine transitioning states?
 
-This doesn't seem to happen if the current draw is low in the exact 
-moment the regulator gets disabled, but that's not always possible since 
-it depends on external HW design / board design sometimes...
+>=20
+> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+> ---
+> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp=
+/dp_catalog.c
+> index 44f0c57..9c0ce98 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> @@ -190,6 +190,18 @@ int dp_catalog_aux_clear_hw_interrupts(struct dp_cat=
+alog *dp_catalog)
+>         return 0;
+>  }
+> =20
+> +/**
+> + * dp_catalog_aux_reset() - reset AUX controller
+> + *
+> + * @aux: DP catalog structure
+> + *
+> + * return: void
+> + *
+> + * This function reset AUX controller
+> + *
+> + * NOTE: reset AUX controller will also clear any pending HPD related in=
+terrupts
+> + *=20
+> + */
+>  void dp_catalog_aux_reset(struct dp_catalog *dp_catalog)
+>  {
+>         u32 aux_ctrl;
+> @@ -483,6 +495,18 @@ int dp_catalog_ctrl_set_pattern(struct dp_catalog *d=
+p_catalog,
+>         return 0;
+>  }
+> =20
+> +/**
+> + * dp_catalog_ctrl_reset() - reset DP controller
+> + *
+> + * @aux: DP catalog structure
 
+It's called dp_catalog though.
 
->>> +    return ret ? IRQ_NONE : IRQ_HANDLED;
->>
->> Here and elsewhere please write normal conditional statements to improve
->> legibility.
->>
-> No problem. Will do.
-> 
->>> +    /* This function should be called only once, anyway. */
->>> +    if (unlikely(vreg->ocp_irq_requested))
->>> +        return 0;
->>
->> If this is not a fast path it doesn't need an unlikely() annotation;
->> indeed it sounds more like there should be a warning printed if this
->> isn't supposed to be called multiple times.
->>
-> That was extra-paranoid safety, looking at this one again, that should 
-> be totally unnecessary.
-> I think that removing this check entirely would be just fine also 
-> because.. anyway.. writing to these registers more than once won't do 
-> any harm, nor break functionality: I mean, even if it happens for 
-> whatever reason, there's *no real need* to avoid it from the hw 
-> perspective.
-> 
->>> +    /* IRQ polarities - LAB: trigger-low, IBB: trigger-high */
->>> +    if (vreg->type == QCOM_LAB_TYPE) {
->>> +        irq_flags |= IRQF_TRIGGER_LOW;
->>> +        irq_trig_low = 1;
->>> +    } else {
->>> +        irq_flags |= IRQF_TRIGGER_HIGH;
->>> +        irq_trig_low = 0;
->>> +    }
->>
->> This would be more clearly written as a switch statement.
->>
-> A switch statement looked like being a bit "too much" for just two cases 
-> where vreg->type cannot be anything else but QCOM_LAB_TYPE or 
-> QCOM_IBB_TYPE... but okay, let's write a switch statement in place of that.
-> 
->>> +    return devm_request_threaded_irq(vreg->dev, vreg->ocp_irq, NULL,
->>> +                     qcom_labibb_ocp_isr, irq_flags,
->>> +                     ocp_irq_name, vreg);
->>
->> Are you *sure* that devm_ is appropriate here and the interrupt handler
->> won't attempt to use things that will be deallocated before devm gets
->> round to freeing the interrupt?
->>
-> Yeah, I'm definitely sure.
-> 
->>> +        if (!!(val & LABIBB_CONTROL_ENABLE)) {
->>
->> The !! is redundant here and makes things less clear.
->>
-> My bad, I forgot to clean this one up before sending.
-> 
->>> @@ -166,8 +560,37 @@ static int qcom_labibb_of_parse_cb(struct 
->>> device_node *np,
->>>                      struct regulator_config *config)
->>>   {
->>>       struct labibb_regulator *vreg = config->driver_data;
->>> +    char *sc_irq_name;
->>
->> I really, really wouldn't expect to see interrupts being requested in
->> the DT parsing callback - apart from anything else the device is going
->> to have the physical interrupts with or without DT binding information.
->> These callbacks are for regulator specific properties, not basic probing.
->> Just request the interrupts in the main probe function, this also means
->> you can avoid using all the DT specific APIs which are generally a
->> warning sign.
->>
-> 
-> ...And I even wrote a comment saying "The Short Circuit interrupt is 
-> critical: fail if not found"!!! Whoa! That was bad.
-> Yeah, I'm definitely moving that to the appropriate place.
+> + *
+> + * return: void
+> + *
+> + * This function reset DP controller
 
+resets the
+
+> + *
+> + * NOTE: reset DP controller will also clear any pending HPD related int=
+errupts
+> + *=20
+> + */
+>  void dp_catalog_ctrl_reset(struct dp_catalog *dp_catalog)
+>  {
+>         u32 sw_reset;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp=
+_ctrl.c
+> index e3462f5..f96c415 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> @@ -1296,7 +1296,8 @@ static int dp_ctrl_setup_main_link(struct dp_ctrl_p=
+rivate *ctrl,
+>          * transitioned to PUSH_IDLE. In order to start transmitting
+>          * a link training pattern, we have to first do soft reset.
+>          */
+> -       dp_catalog_ctrl_reset(ctrl->catalog);
+> +       if (*training_step !=3D DP_TRAINING_NONE)
+
+Can we check for the positive value instead? i.e.
+DP_TRAINING_1/DP_TRAINING_2
+
+> +               dp_catalog_ctrl_reset(ctrl->catalog);
+> =20
+>         ret =3D dp_ctrl_link_train(ctrl, cr, training_step);
+>
