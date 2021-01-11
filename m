@@ -2,199 +2,224 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E8C682F2186
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jan 2021 22:08:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D25E32F2204
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jan 2021 22:43:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731502AbhAKVHQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jan 2021 16:07:16 -0500
-Received: from relay07.th.seeweb.it ([5.144.164.168]:48413 "EHLO
-        relay07.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730488AbhAKVHQ (ORCPT
+        id S1727484AbhAKVmo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jan 2021 16:42:44 -0500
+Received: from mail-oi1-f169.google.com ([209.85.167.169]:44958 "EHLO
+        mail-oi1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731102AbhAKVmo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jan 2021 16:07:16 -0500
-Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id E39D03E8CF;
-        Mon, 11 Jan 2021 22:06:18 +0100 (CET)
-Subject: Re: [PATCH 5/7] regulator: qcom-labibb: Implement short-circuit and
- over-current IRQs
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        robh+dt@kernel.org, sumit.semwal@linaro.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        phone-devel@vger.kernel.org, konrad.dybcio@somainline.org,
-        marijn.suijten@somainline.org, martin.botka@somainline.org
-References: <20210109132921.140932-1-angelogioacchino.delregno@somainline.org>
- <20210109132921.140932-6-angelogioacchino.delregno@somainline.org>
- <20210111135745.GC4728@sirena.org.uk>
- <6dee36e4-fc78-c21b-daf8-120ee44535a3@somainline.org>
- <8115a574-ad43-d3c6-70d4-28c8a2f4a5f6@somainline.org>
-Message-ID: <09d70d24-5d0d-f1cd-d99e-5c213c8ea98c@somainline.org>
-Date:   Mon, 11 Jan 2021 22:06:18 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.0
+        Mon, 11 Jan 2021 16:42:44 -0500
+Received: by mail-oi1-f169.google.com with SMTP id d189so131029oig.11;
+        Mon, 11 Jan 2021 13:42:27 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=PICJ1Bc4OaHxE0/WepcU1dqeCBwn7MPOx0XJxeGAj3s=;
+        b=lvjAmQbKivGkD8DzU8a/hi3EwkqTzWemZkV+4sCw+cypAavESbpDuDKg82rhk1C9pj
+         /YT7PjpoALegyod5Ud5UwBfEtBrY6bsDbjQwv2l5gqvYS5bZlUpKgUNdEzAfaQ1ToKJm
+         QWv7Muujtsh5m3IR9/WGIvnB2PMSB74f+iUTZoIhFltrn+SlFgDX1ojkUx3mEqSx9NEP
+         +WtpR4KN+Zxl5BU1Zyvp4D0rX9R2OwqbswlTwSuFiN7EK4364gYvtKF373I+/pqY/Qva
+         38pZcpGU92dLbqYvcNe/ovBZtl3gPZlnt25+jen/SZjYfmxv2G3w/QoyhBG7Xc1LJuom
+         btMw==
+X-Gm-Message-State: AOAM532F9sjrIRNimxW5YUBhhV3O87EnoAQkfKehEn3dkvLLayhfhNBf
+        U24femCsZr0/PtivqwMOJQ==
+X-Google-Smtp-Source: ABdhPJzPpyejpxb0c8wgEECfmZ4orbtw8yI1tVr/edxfpdSakuh7rpELhDYcO2M1ATryStcdexkFFg==
+X-Received: by 2002:aca:3cc5:: with SMTP id j188mr520506oia.54.1610401322401;
+        Mon, 11 Jan 2021 13:42:02 -0800 (PST)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id v4sm211918otk.50.2021.01.11.13.42.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Jan 2021 13:42:01 -0800 (PST)
+Received: (nullmailer pid 3109374 invoked by uid 1000);
+        Mon, 11 Jan 2021 21:42:00 -0000
+Date:   Mon, 11 Jan 2021 15:42:00 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Kiran Gunda <kgunda@codeaurora.org>
+Cc:     swboyd@chromium.org, lee.jones@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mark.rutland@arm.com, linux-arm-msm-owner@vger.kernel.org,
+        Stephen Boyd <sboyd@kernel.org>
+Subject: Re: [PATCH V5 1/2] mfd: qcom-spmi-pmic: Convert bindings to .yaml
+ format
+Message-ID: <20210111214200.GA3094286@robh.at.kernel.org>
+References: <1609329384-15534-1-git-send-email-kgunda@codeaurora.org>
+ <1609329384-15534-2-git-send-email-kgunda@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <8115a574-ad43-d3c6-70d4-28c8a2f4a5f6@somainline.org>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1609329384-15534-2-git-send-email-kgunda@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 11/01/21 20:23, AngeloGioacchino Del Regno ha scritto:
-> Il 11/01/21 20:14, AngeloGioacchino Del Regno ha scritto:
->> Il 11/01/21 14:57, Mark Brown ha scritto:
->>> On Sat, Jan 09, 2021 at 02:29:19PM +0100, AngeloGioacchino Del Regno 
->>> wrote:
->>>
->>>> +    /* If the regulator is not enabled, this is a fake event */
->>>> +    if (!ops->is_enabled(vreg->rdev))
->>>> +        return 0;
->>>
->>> Or handling the interrupt raced with a disable initiated from elsewhere.
->>> Does the hardware actually have a problem with reporting spurious 
->>> errors?
->>>
-> Sorry, I forgot to answer to this one in the previous email.
+On Wed, Dec 30, 2020 at 05:26:22PM +0530, Kiran Gunda wrote:
+> Convert the bindings from .txt to .yaml format.
 > 
-> Yes, apparently the hardware has this issue: when the current draw is 
-> very high and you disable the regulator while the attached device is 
-> still drawing a lot of current (like on the Xperia XZ2 smartphone, but I 
-> don't want to comment on that phone's HW quirks...) then the OCP 
-> interrupt fires *after* disabling the LAB/IBB regulators.
+> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
+> ---
+>  .../devicetree/bindings/mfd/qcom,spmi-pmic.txt     |  80 --------------
+>  .../devicetree/bindings/mfd/qcom,spmi-pmic.yaml    | 117 +++++++++++++++++++++
+>  2 files changed, 117 insertions(+), 80 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
+>  create mode 100644 Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+
+> diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> new file mode 100644
+> index 0000000..b753bdb
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> @@ -0,0 +1,117 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm SPMI PMICs multi-function device bindings
+> +
+> +maintainers:
+> +  - Stephen Boyd <sboyd@kernel.org>
+> +  - Kiran Gunda <kgunda@codeaurora.org>
+> +
+> +description: |
+> +  The Qualcomm SPMI PMICs use a QPNP scheme through SPMI interface.
+> +  QPNP is effectively a partitioning scheme for dividing the SPMI extended
+> +  register space up into logical pieces, and set of fixed register
+> +  locations/definitions within these regions, with some of these regions
+> +  specifically used for interrupt handling.
+> +
+> +  The QPNP PMICs are used with the Qualcomm Snapdragon series SoCs, and are
+> +  interfaced to the chip via the SPMI (System Power Management Interface) bus.
+> +  Support for multiple independent functions are implemented by splitting the
+> +  16-bit SPMI slave address space into 256 smaller fixed-size regions, 256 bytes
+> +  each. A function can consume one or more of these fixed-size register regions.
+> +
+> +properties:
+> +  spmi_bus:
+> +    type: object
+> +    description: SPMI bus node
+
+This is outside the scope of this binding.
+
+> +
+> +patternProperties:
+> +  "^pmic@[0-9]$":
+> +    description: Child PMIC nodes
+> +    type: object
+
+You've defined spmi_bus and pmic@... as siblings. I assume you meant 
+parent/child instead. You'd need to indent all this 4 more spaces. 
+
+However, this is also outside the scope of the binding and should be 
+removed.
+
+> +
+> +    properties:
+> +      compatible:
+
+So this needs to be at the top level. 'compatible' is also how we decide 
+to apply a schema to a node. What you did here will never be applied. 
+Introduce an error to the example and see.
+
+> +        items:
+> +          - enum:
+> +              # Sorted based on subtype ID the device reports
+> +              - qcom,pm8941
+> +              - qcom,pm8841
+> +              - qcom,pma8084
+> +              - qcom,pm8019
+> +              - qcom,pm8226
+> +              - qcom,pm8110
+> +              - qcom,pma8084
+> +              - qcom,pmi8962
+> +              - qcom,pmd9635
+> +              - qcom,pm8994
+> +              - qcom,pmi8994
+> +              - qcom,pm8916
+> +              - qcom,pm8004
+> +              - qcom,pm8909
+> +              - qcom,pm8950
+> +              - qcom,pmi8950
+> +              - qcom,pm8998
+> +              - qcom,pmi8998
+> +              - qcom,pm8005
+> +              - qcom,pm660l
+> +              - qcom,pm660
+> +
+> +          - enum:
+> +              - qcom,spmi-pmic
+
+You can use 'const' here instead of enum.
+
+> +
+> +      reg:
+> +        maxItems: 1
+> +        description:
+> +          Specifies the SPMI USID slave address for this device.
+> +          For more information see bindings/spmi/spmi.txt
+> +
+> +    patternProperties:
+> +      "^[a-zA-Z0-9]$":
+> +        description:
+> +          Each child node of SPMI slave id represents a function of the PMIC.
+> +          In the example below the rtc device node represents a peripheral of
+> +          pm8941 SID = 0. The regulator device node represents a peripheral of
+> +          pm8941 SID = 1.
+> +        type: object
+
+No, you need to define all the child nodes. This may mean you need to 
+split to several schemas if each PMIC has different sub devices.
+
+> +
+> +    required:
+> +      - compatible
+> +      - reg
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/spmi/spmi.h>
+> +
+> +    spmi_bus {
+> +        compatible = "qcom,spmi-pmic-arb";
+> +        #address-cells = <2>;
+> +        #size-cells = <0>;
+> +
+> +        pmic@0 {
+> +         compatible = "qcom,pm8941";
+> +         reg = <0x0 SPMI_USID>;
+> +
+> +         rtc {
+> +           compatible = "qcom,rtc";
+
+Not documented nor used anywhere.
+
+> +           interrupts = <0x0 0x61 0x1 0x1>;
+> +           interrupt-names = "alarm";
+> +          };
+> +        };
+> +
+> +        pmic@1 {
+> +         compatible = "qcom,pm8941";
+> +         reg = <0x1 SPMI_USID>;
+> +
+> +         regulator {
+> +           compatible = "qcom,regulator";
+
+Same here.
+
+> +           regulator-name = "8941_boost";
+> +           };
+> +          };
+> +        };
+> +...
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+>  a Linux Foundation Collaborative Project
 > 
-> This doesn't seem to happen if the current draw is low in the exact 
-> moment the regulator gets disabled, but that's not always possible since 
-> it depends on external HW design / board design sometimes...
-> 
-> 
->>>> +    return ret ? IRQ_NONE : IRQ_HANDLED;
->>>
->>> Here and elsewhere please write normal conditional statements to improve
->>> legibility.
->>>
->> No problem. Will do.
->>
->>>> +    /* This function should be called only once, anyway. */
->>>> +    if (unlikely(vreg->ocp_irq_requested))
->>>> +        return 0;
->>>
->>> If this is not a fast path it doesn't need an unlikely() annotation;
->>> indeed it sounds more like there should be a warning printed if this
->>> isn't supposed to be called multiple times.
->>>
->> That was extra-paranoid safety, looking at this one again, that should 
->> be totally unnecessary.
->> I think that removing this check entirely would be just fine also 
->> because.. anyway.. writing to these registers more than once won't do 
->> any harm, nor break functionality: I mean, even if it happens for 
->> whatever reason, there's *no real need* to avoid it from the hw 
->> perspective.
->>
->>>> +    /* IRQ polarities - LAB: trigger-low, IBB: trigger-high */
->>>> +    if (vreg->type == QCOM_LAB_TYPE) {
->>>> +        irq_flags |= IRQF_TRIGGER_LOW;
->>>> +        irq_trig_low = 1;
->>>> +    } else {
->>>> +        irq_flags |= IRQF_TRIGGER_HIGH;
->>>> +        irq_trig_low = 0;
->>>> +    }
->>>
->>> This would be more clearly written as a switch statement.
->>>
->> A switch statement looked like being a bit "too much" for just two 
->> cases where vreg->type cannot be anything else but QCOM_LAB_TYPE or 
->> QCOM_IBB_TYPE... but okay, let's write a switch statement in place of 
->> that.
->>
->>>> +    return devm_request_threaded_irq(vreg->dev, vreg->ocp_irq, NULL,
->>>> +                     qcom_labibb_ocp_isr, irq_flags,
->>>> +                     ocp_irq_name, vreg);
->>>
->>> Are you *sure* that devm_ is appropriate here and the interrupt handler
->>> won't attempt to use things that will be deallocated before devm gets
->>> round to freeing the interrupt?
->>>
->> Yeah, I'm definitely sure.
->>
->>>> +        if (!!(val & LABIBB_CONTROL_ENABLE)) {
->>>
->>> The !! is redundant here and makes things less clear.
->>>
->> My bad, I forgot to clean this one up before sending.
->>
->>>> @@ -166,8 +560,37 @@ static int qcom_labibb_of_parse_cb(struct 
->>>> device_node *np,
->>>>                      struct regulator_config *config)
->>>>   {
->>>>       struct labibb_regulator *vreg = config->driver_data;
->>>> +    char *sc_irq_name;
->>>
->>> I really, really wouldn't expect to see interrupts being requested in
->>> the DT parsing callback - apart from anything else the device is going
->>> to have the physical interrupts with or without DT binding information.
->>> These callbacks are for regulator specific properties, not basic 
->>> probing.
->>> Just request the interrupts in the main probe function, this also means
->>> you can avoid using all the DT specific APIs which are generally a
->>> warning sign.
->>>
->>
->> ...And I even wrote a comment saying "The Short Circuit interrupt is 
->> critical: fail if not found"!!! Whoa! That was bad.
->> Yeah, I'm definitely moving that to the appropriate place.
-> 
-
-I'm sorry for the triple e-mail... but I've just acknowledged that using 
-platform_get_irq is actually impossible with the current schema.
-As you can see in the dt-bindings documentation, the driver is supposed 
-to be declared in DT as
-
-		labibb {
-
-			compatible = "qcom,pmi8998-lab-ibb";
-
-
-
-			ibb: ibb {
-
-				interrupts = <0x3 0xdc 0x2 IRQ_TYPE_EDGE_RISING>,
-
-					     <0x3 0xdc 0x0 IRQ_TYPE_LEVEL_HIGH>;
-
-				interrupt-names = "sc-err", "ocp";
-
-			};
-
-
-
-			lab: lab {
-
-				interrupts = <0x3 0xde 0x1 IRQ_TYPE_EDGE_RISING>,
-
-					     <0x3 0xde 0x0 IRQ_TYPE_LEVEL_LOW>;
-
-				interrupt-names = "sc-err", "ocp";
-
-			};
-
-		};
-
-...which was already a requirement before I touched it.
-Now, this leaves two options here:
-1. Keep the of_get_irq way, or
-2. Move the interrupts, change the documentation (currently, only 
-pmi8998.dtsi) and also fix pmi8998.dtsi to reflect the new changes.
-
-I am asking before proceeding because I know that changing a schema that 
-is already set sometimes gets "negated".
-
-How should I proceed?
-
--- Angelo
