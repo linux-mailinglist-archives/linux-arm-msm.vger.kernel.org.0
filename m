@@ -2,34 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 947EC2F0BC6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jan 2021 05:25:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DC062F0BD9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jan 2021 05:40:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726049AbhAKEZO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 10 Jan 2021 23:25:14 -0500
-Received: from so254-31.mailgun.net ([198.61.254.31]:31920 "EHLO
-        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725831AbhAKEZO (ORCPT
+        id S1726472AbhAKEjO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 10 Jan 2021 23:39:14 -0500
+Received: from m43-15.mailgun.net ([69.72.43.15]:52083 "EHLO
+        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725797AbhAKEjN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 10 Jan 2021 23:25:14 -0500
+        Sun, 10 Jan 2021 23:39:13 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1610339090; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1610339931; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=YjLVjY//RNNWhBt038pBhnPhk7W2XO47G1a0lqsYg4I=;
- b=U0Nrt72BxfhFKJYwnAZ4JQ7hIQ1Er04eYgXfu8m5M4TdSd2uQWJM5yO0C4DboBNgh2kLWqpr
- EJv4ILoofN2iQWmSo16+oPcQXSwzZ1CJiZE55QgXHinbgy+8oEULBseIWolpqtTIpHMse1tB
- 6sSk1VDtyY5BJU/icAFQL5tiXLE=
-X-Mailgun-Sending-Ip: 198.61.254.31
+ MIME-Version: Sender; bh=PEGSH/aIZYUszxE+cliw+QdalqdBswRdWn1gj8ZjzE4=;
+ b=A4K3XuzPcHGu1Nn8e617tvhncqSM4wWD4eOWhQtKxL6xk1qgY6aW1DwE8UtHyMAcRok/2zRl
+ g3p15Oq9oLzFXgOyafdqsEc8+ouDgR848gfa4D8ziWXRL2rqaJD1HRDyc5wXy7/7SpscVMEk
+ AgooajAL6cRkbeZXItda3x0f/mE=
+X-Mailgun-Sending-Ip: 69.72.43.15
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 5ffbd2eec88af06107b8d303 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 11 Jan 2021 04:24:14
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 5ffbd632c88af06107bcea53 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 11 Jan 2021 04:38:10
  GMT
 Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id DDC15C433CA; Mon, 11 Jan 2021 04:24:13 +0000 (UTC)
+        id 0F16DC43464; Mon, 11 Jan 2021 04:38:10 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -39,118 +39,145 @@ Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A8D5CC433C6;
-        Mon, 11 Jan 2021 04:24:12 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 05BF3C433CA;
+        Mon, 11 Jan 2021 04:38:08 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Mon, 11 Jan 2021 09:54:12 +0530
+Date:   Mon, 11 Jan 2021 10:08:08 +0530
 From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Sean Paul <sean@poorly.run>,
+To:     isaacm@codeaurora.org
+Cc:     Will Deacon <will@kernel.org>, Rob Clark <robdclark@gmail.com>,
         Jordan Crouse <jcrouse@codeaurora.org>,
-        Jonathan <jonathan@marek.ca>, David Airlie <airlied@linux.ie>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        martin.botka@somainline.org,
+        linux-arm-msm@vger.kernel.org, Joerg Roedel <joro@8bytes.org>,
+        linux-kernel@vger.kernel.org,
         Akhil P Oommen <akhilpo@codeaurora.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        marijn.suijten@somainline.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Daniel Vetter <daniel@ffwll.ch>,
-        angelogioacchino.delregno@somainline.org,
-        Dave Airlie <airlied@redhat.com>, phone-devel@vger.kernel.org,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [Freedreno] [PATCH] drm/msm: Only enable A6xx LLCC code on A6xx
-In-Reply-To: <CAF6AEGsd5B0R7H1noO+=LByx4zkdVvu1LALZWnevGbMRj76m2w@mail.gmail.com>
-References: <CAF6AEGu0Sv6nYNDn0z61pXRjNyFLpLw5S4_O3opmrQ-UVNR_MA@mail.gmail.com>
- <20210108122601.14993-1-saiprakash.ranjan@codeaurora.org>
- <fa091855-8096-6377-e173-ce1cd02f74ec@somainline.org>
- <43c8779bc5f03be2e8072c6484dfcabb@codeaurora.org>
- <CAF6AEGsd5B0R7H1noO+=LByx4zkdVvu1LALZWnevGbMRj76m2w@mail.gmail.com>
-Message-ID: <73609df52188588bf7d023e16a706a7a@codeaurora.org>
+        iommu@lists.linux-foundation.org,
+        Robin Murphy <robin.murphy@arm.com>,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH] iommu/io-pgtable-arm: Allow non-coherent masters to use
+ system cache
+In-Reply-To: <84ff10c38e99635bc222ca2dd29be2b5@codeaurora.org>
+References: <20201224064007.2339-1-saiprakash.ranjan@codeaurora.org>
+ <20210106115615.GA1763@willie-the-truck>
+ <cfced52002337025088a64aa159760b2@codeaurora.org>
+ <8cfefbff135a5287d177b6ab2ccc3304@codeaurora.org>
+ <84ff10c38e99635bc222ca2dd29be2b5@codeaurora.org>
+Message-ID: <73b1957d0898a937e5e88c1a469352ea@codeaurora.org>
 X-Sender: saiprakash.ranjan@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+On 2021-01-08 23:39, isaacm@codeaurora.org wrote:
+> On 2021-01-07 21:47, Sai Prakash Ranjan wrote:
+>> On 2021-01-07 22:27, isaacm@codeaurora.org wrote:
+>>> On 2021-01-06 03:56, Will Deacon wrote:
+>>>> On Thu, Dec 24, 2020 at 12:10:07PM +0530, Sai Prakash Ranjan wrote:
+>>>>> commit ecd7274fb4cd ("iommu: Remove unused IOMMU_SYS_CACHE_ONLY 
+>>>>> flag")
+>>>>> removed unused IOMMU_SYS_CACHE_ONLY prot flag and along with it 
+>>>>> went
+>>>>> the memory type setting required for the non-coherent masters to 
+>>>>> use
+>>>>> system cache. Now that system cache support for GPU is added, we 
+>>>>> will
+>>>>> need to mark the memory as normal sys-cached for GPU to use system 
+>>>>> cache.
+>>>>> Without this, the system cache lines are not allocated for GPU. We 
+>>>>> use
+>>>>> the IO_PGTABLE_QUIRK_ARM_OUTER_WBWA quirk instead of a page 
+>>>>> protection
+>>>>> flag as the flag cannot be exposed via DMA api because of no 
+>>>>> in-tree
+>>>>> users.
+>>>>> 
+>>>>> Signed-off-by: Sai Prakash Ranjan 
+>>>>> <saiprakash.ranjan@codeaurora.org>
+>>>>> ---
+>>>>>  drivers/iommu/io-pgtable-arm.c | 3 +++
+>>>>>  1 file changed, 3 insertions(+)
+>>>>> 
+>>>>> diff --git a/drivers/iommu/io-pgtable-arm.c 
+>>>>> b/drivers/iommu/io-pgtable-arm.c
+>>>>> index 7c9ea9d7874a..3fb7de8304a2 100644
+>>>>> --- a/drivers/iommu/io-pgtable-arm.c
+>>>>> +++ b/drivers/iommu/io-pgtable-arm.c
+>>>>> @@ -415,6 +415,9 @@ static arm_lpae_iopte 
+>>>>> arm_lpae_prot_to_pte(struct arm_lpae_io_pgtable *data,
+>>>>>  		else if (prot & IOMMU_CACHE)
+>>>>>  			pte |= (ARM_LPAE_MAIR_ATTR_IDX_CACHE
+>>>>>  				<< ARM_LPAE_PTE_ATTRINDX_SHIFT);
+>>>>> +		else if (data->iop.cfg.quirks & IO_PGTABLE_QUIRK_ARM_OUTER_WBWA)
+>>>>> +			pte |= (ARM_LPAE_MAIR_ATTR_IDX_INC_OCACHE
+>>>>> +				<< ARM_LPAE_PTE_ATTRINDX_SHIFT);
+>>>>>  	}
+>>>> 
+>>> While this approach of enabling system cache globally for both page
+>>> tables and other buffers
+>>> works for the GPU usecase, this isn't ideal for other clients that 
+>>> use
+>>> system cache. For example,
+>>> video clients only want to cache a subset of their buffers in the
+>>> system cache, due to the sizing constraint
+>>> imposed by how much of the system cache they can use. So, it would be
+>>> ideal to have
+>>> a way of expressing the desire to use the system cache on a 
+>>> per-buffer
+>>> basis. Additionally,
+>>> our video clients use the DMA layer, and since the requirement is for
+>>> caching in the system cache
+>>> to be a per buffer attribute, it seems like we would have to have a
+>>> DMA attribute to express
+>>> this on a per-buffer basis.
+>>> 
+>> 
+>> I did bring this up initially [1], also where is this video client
+>> in upstream? AFAIK, only system cache user in upstream is GPU.
+>> We cannot add any DMA attribute unless there is any user upstream
+> Right, there wouldn't be an upstream user, which would be problematic,
+> but I was thinking of having it so that when video or any of our other
+> clients that use this attribute on a per buffer basis upstreams their
+> code, it's not too much of a stretch to add the support.
 
-On 2021-01-08 22:16, Rob Clark wrote:
-> On Fri, Jan 8, 2021 at 6:05 AM Sai Prakash Ranjan
-> <saiprakash.ranjan@codeaurora.org> wrote:
->> 
->> On 2021-01-08 19:09, Konrad Dybcio wrote:
->> >> Konrad, can you please test this below change without your change?
->> >
->> > This brings no difference, a BUG still happens. We're still calling
->> > to_a6xx_gpu on ANY device that's probed! Too bad it won't turn my A330
->> > into an A640..
->> >
->> > Also, relying on disabling LLCC in the config is out of question as it
->> > makes the arm32 kernel not compile with DRM/MSM and it just removes
->> > the functionality on devices with a6xx.. (unless somebody removes the
->> > dependency on it, which in my opinion is even worse and will cause
->> > more problems for developers!).
->> >
->> 
->> Disabling LLCC is not the suggestion, I was under the impression that
->> was the cause here for the smmu bug. Anyways, the check for llc slice
->> in case llcc is disabled is not correct as well. I will send a patch 
->> for
->> that as well.
->> 
->> > The bigger question is how and why did that piece of code ever make it
->> > to adreno_gpu.c and not a6xx_gpu.c?
->> >
->> 
->> My mistake, I will move it.
+Agreed.
+
+>> as per [2], so when the support for such a client is added, wouldn't
+>> ((data->iop.cfg.quirks & IO_PGTABLE_QUIRK_ARM_OUTER_WBWA) || 
+>> PROT_FLAG)
+>> work?
+> I don't think that will work, because we currently have clients who use 
+> the
+> system cache as follows:
+> -cache only page tables in the system cache
+> -cache only data buffers in the system cache
+> -cache both page tables and all buffers in the system cache
+> -cache both page tables and some buffers in the system cache
 > 
-> Thanks, since we don't have kernel-CI coverage for gpu, and there
-> probably isn't one person who has all the different devices supported
-> (or enough hours in the day to test them all), it is probably
-> better/safer to keep things in the backend code that is specific to a
-> given generation.
+> The approach you're suggesting doesn't allow for the last case, as 
+> caching the
+> page tables in the system cache involves setting
+> IO_PGTABLE_QUIRK_ARM_OUTER_WBWA,
+> so we will end up losing the flexibility to cache some data buffers in
+> the system cache.
 > 
 
-Agreed, I will post this change soon and will introduce some feature
-check as well because we will need it for iommu prot flag as per 
-discussion
-here - 
-https://lore.kernel.org/lkml/20210108181830.GA5457@willie-the-truck/
+Ah yes, you are right, I believe Jordan mentioned the same [1].
 
->> > To solve it in a cleaner way I propose to move it to an a6xx-specific
->> > file, or if it's going to be used with next-gen GPUs, perhaps manage
->> > calling of this code via an adreno quirk/feature in adreno_device.c.
->> > Now that I think about it, A5xx GPMU en/disable could probably managed
->> > like that, instead of using tons of if-statements for each GPU model
->> > that has it..
->> >
->> > While we're at it, do ALL (and I truly do mean ALL, including the
->> > low-end ones, this will be important later on) A6xx GPUs make use of
->> > that feature?
->> >
->> 
->> I do not have a list of all A6XX GPUs with me currently, but from what
->> I know, A618, A630, A640, A650 has the support.
->> 
-> 
-> From the PoV of bringing up new a6xx, we should probably consider that
-> some of them may not *yet* have LLCC enabled.  I have an 8cx laptop
-> and once I find time to get the display working, the next step would
-> be bringing up a680.. and I'd probably like to start without LLCC..
+[1] 
+https://lore.kernel.org/lkml/20200709161352.GC21059@jcrouse1-lnx.qualcomm.com/
+
+> Ideally, the page table quirk would drive the settings for the TCR,
+> and the prot flag
+> drives the PTE for the mapping, as is done with the page table walker
+> being dma-coherent,
+> while buffers are mapped as cacheable based on IOMMU_CACHE. Thoughts?
 > 
 
-Right, once I move the LLCC code to a6xx specific address space 
-creation,
-without LLCC slices for GPU specified in qcom llcc driver, we will not
-be using it.
+Right, mixing the two is not correct. Will's suggestion for a new prot
+flag sounds good to me, I will work on that.
 
 Thanks,
 Sai
