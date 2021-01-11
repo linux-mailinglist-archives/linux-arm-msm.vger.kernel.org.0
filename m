@@ -2,58 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B0F02F1B67
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jan 2021 17:49:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A240F2F1B66
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jan 2021 17:49:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727826AbhAKQt2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jan 2021 11:49:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39378 "EHLO
+        id S1727722AbhAKQtQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jan 2021 11:49:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725858AbhAKQt1 (ORCPT
+        with ESMTP id S1726997AbhAKQtQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jan 2021 11:49:27 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 660BBC0617A3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jan 2021 08:48:47 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id y23so520649wmi.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jan 2021 08:48:47 -0800 (PST)
+        Mon, 11 Jan 2021 11:49:16 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B290C0617A4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jan 2021 08:49:00 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id d26so415056wrb.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jan 2021 08:49:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id;
         bh=H+jpU/kYrpZxBzklslDk/5E68fREmq5Qy6N54AxxeAE=;
-        b=inc/GRB5Yo7vy6VsiibtvItuCdiw7rKsmWNH448FnKuiUz1FaJkhsZSvsJ6EJI8Lou
-         Dt0YVZs1yAzt+1mroxDnz5ALTPKr1TgxWtj8WdtbgOXKyEVi5mXhQgGXxE6wVLuG+u5V
-         HCFrN72ZT1upBEizZ9mUG30+l2A/3C3q8MtUZVMW9xkopje2wj76b0X5rI5diCaSV3eP
-         6z7IUyF10gQX+1lLOBcnQ3pcJPCiu0dQHcCmmybm3qAZD1D6o41O7jFSouynSneYEXsT
-         DO+atCArzI+Bokd/iwqqhAy1I10IlyuA8oO97du3KF3OO0HsRMtEt3Ob+mOvmd2KuqKb
-         bRsg==
+        b=KmDKNoEYj2lyAcdLsN8xUMWkdtVLwsg6b3RW99pEtyZI+CwUp5jR42eo9LpdtU1CLn
+         YVVqdT/ImbKAPAsM+O4UbdrzKB8N1w3zi+XX6+NFXG55p2tCchb/8ylJoQBoDFy4wMaZ
+         s4KpkwZ7n1xoR7tVANASomJaCWeMc0/DWovjzpnFTjNRuAh7wNvMsC8q1dhTlQydLDRX
+         xFI2tMZbtmJfDxoWy358P3UzNxIxoEwBPYWvMF12jqx074NoqPhkYYOae1TgQit0OzTU
+         SXu74JNEVlkbhMuBXBLR9ojzj4RKrgM5JShQYUwu/vj04uz+j0aId6AzZlzpoOoc4yt/
+         H/wQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id;
         bh=H+jpU/kYrpZxBzklslDk/5E68fREmq5Qy6N54AxxeAE=;
-        b=TqHd2+Vnju2xmpDVxzTUuuV4y+fvF2S/e+CHo1br2d4CVCQySphTlPNcm11BP5R9R/
-         Eyn7WvxBuLTm94KTiFoiyijmcJPPWpE0B3zgB6m73ABBkn5URzr8hV2H0bX2Y/a3Y3q5
-         94+axY5OsJNIBcDi0HQW/XVzoStWKFRnmgCGtdzDBCgriDMbA+J2zg/oNwxXIVJ3IvYO
-         QGOjvfXEqzSS/dwe9u9tI0zIR9NDB7JKRaaqSVOaj+GxbueRcn4GLeJ7wuqspAE2O6RK
-         b2PioL/7hK5uaWyp+0adbQRuv2FL1SPJuWCWSUPzNeVTO0kedceWLG/keHXQlW3LxULl
-         JHjw==
-X-Gm-Message-State: AOAM533ikvo4zfRvHGCEKW0JQMg4N9FDMrJay3VIeZ66/KPPkg3Nxns9
-        ZcdTNU7lyXU2e0aqIHLeIsMAikrDbXa+XA==
-X-Google-Smtp-Source: ABdhPJz/4DYCGJ8vGq3u7V8mz9bzYvJwUuu3PX3cgfGmr9yuWnzxgk1Xq055h477gg3aqk+BlawnJw==
-X-Received: by 2002:a1c:7c03:: with SMTP id x3mr530767wmc.17.1610383725666;
-        Mon, 11 Jan 2021 08:48:45 -0800 (PST)
+        b=P7CWZSX7Hg/N6IfMydwRqbItxjvylm0s1C96L8yTSONUziljnwvaTCek1GeuzAnBDA
+         B4r29oyMILWrbM90brkJG//6Dxlj9T0EgpaQo+jrIsr/bNMyBEpr9vFV+BuIKosSMfGU
+         1yuhyTH69sQ5IU8VqirB/B6y3LlmxXL4HeQUhrOJKx6sZ4p69/kI+/K/DZkiG4A+NDkL
+         97xNIZQ/ii44x5eDm+Zh+0OasLzV1MjiRKfIzy5iiVSMfBdFwRoZdyvyR4QnudMdJRk/
+         53MxFrULlijVlcYBVFG93QJ0+3mT5MWdlqPctN2XiQeuY7UDzVFTXLLRGURL9a2XiIB2
+         dJcg==
+X-Gm-Message-State: AOAM5312Bxa3SxhlsCOisHugUfS0p/A7kJaAOTFZtcFieqrWwnCh/I5w
+        0SRVYKvjWG07Y933RuNrIybUgw==
+X-Google-Smtp-Source: ABdhPJz/SnHcvcoFko9O6JtDk72WMbhwrtgNcXBmXzAaBIFcKnbH6Zy9Nh3besR2GZmawWTgmCltfw==
+X-Received: by 2002:adf:9546:: with SMTP id 64mr2226wrs.343.1610383738938;
+        Mon, 11 Jan 2021 08:48:58 -0800 (PST)
 Received: from localhost.localdomain ([88.122.66.28])
-        by smtp.gmail.com with ESMTPSA id c4sm225789wrw.72.2021.01.11.08.48.44
+        by smtp.gmail.com with ESMTPSA id u10sm349720wmd.43.2021.01.11.08.48.58
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 11 Jan 2021 08:48:45 -0800 (PST)
+        Mon, 11 Jan 2021 08:48:58 -0800 (PST)
 From:   Loic Poulain <loic.poulain@linaro.org>
+To:     manivannan.sadhasivam@linaro.org
 Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
         Loic Poulain <loic.poulain@linaro.org>
 Subject: [PATCH v3] mhi: core: Factorize mhi queuing
-Date:   Mon, 11 Jan 2021 17:56:21 +0100
-Message-Id: <1610384181-14162-1-git-send-email-loic.poulain@linaro.org>
+Date:   Mon, 11 Jan 2021 17:56:35 +0100
+Message-Id: <1610384195-14211-1-git-send-email-loic.poulain@linaro.org>
 X-Mailer: git-send-email 2.7.4
-To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
