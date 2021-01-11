@@ -2,94 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A052C2F1585
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jan 2021 14:41:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 90FDB2F16E7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jan 2021 14:59:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733247AbhAKNle (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jan 2021 08:41:34 -0500
-Received: from mail.kernel.org ([198.145.29.99]:47962 "EHLO mail.kernel.org"
+        id S2388139AbhAKN67 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jan 2021 08:58:59 -0500
+Received: from mail.kernel.org ([198.145.29.99]:55962 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1733235AbhAKNlb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jan 2021 08:41:31 -0500
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org [51.254.78.96])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9137D221FD;
-        Mon, 11 Jan 2021 13:40:50 +0000 (UTC)
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
-        by disco-boy.misterjones.org with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.94)
-        (envelope-from <maz@kernel.org>)
-        id 1kyxRA-006gvt-Gn; Mon, 11 Jan 2021 13:40:48 +0000
+        id S2387908AbhAKN66 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 11 Jan 2021 08:58:58 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id BCB2D223E8;
+        Mon, 11 Jan 2021 13:58:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1610373497;
+        bh=W82HKcWU3D5Ryo3ShBlAvfn9wpslSYr5mBG/7GxjaAU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=WlLfwHBpSpB4mRqjRwzR1ZZJ6UjYn92nALj2E2l4ufIyxobFQHpKfebEL5RVPgxxF
+         0okCBq6a6vNghxuWenmsE5aoIQzw+y7KYsiTTti553FUIkOASme2Weg4XKOP+bzCp+
+         MSe9WjqLVrAwS4ViIXSPwIabSJKNLf+YLiU5JNyoXrXgSg2ucRTbmi+8hU+HAdWT8j
+         pW97PMcNChh+IF7MflkvgipRpFiGvsZsfZ8f7wbH9I6MZJ2WothkT3TJJKi94QmU5/
+         Nyhk36sQrn3l1Z3RrE9C5LphK8+PS2dw3iPaMkakMLp4/vhTCYxdsi/B7ZOkTi2mGW
+         qSXfwR0sdH4SQ==
+Date:   Mon, 11 Jan 2021 13:57:45 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        robh+dt@kernel.org, sumit.semwal@linaro.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        phone-devel@vger.kernel.org, konrad.dybcio@somainline.org,
+        marijn.suijten@somainline.org, martin.botka@somainline.org
+Subject: Re: [PATCH 5/7] regulator: qcom-labibb: Implement short-circuit and
+ over-current IRQs
+Message-ID: <20210111135745.GC4728@sirena.org.uk>
+References: <20210109132921.140932-1-angelogioacchino.delregno@somainline.org>
+ <20210109132921.140932-6-angelogioacchino.delregno@somainline.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 11 Jan 2021 13:40:48 +0000
-From:   Marc Zyngier <maz@kernel.org>
-To:     Srinivas Ramana <sramana@codeaurora.org>
-Cc:     catalin.marinas@arm.com, will@kernel.org, pajay@qti.qualcomm.com,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 0/3] arm64: cpufeature: Add filter function to control
-In-Reply-To: <1610152163-16554-1-git-send-email-sramana@codeaurora.org>
-References: <1610152163-16554-1-git-send-email-sramana@codeaurora.org>
-User-Agent: Roundcube Webmail/1.4.9
-Message-ID: <6dfdf691b5ed57df81c4c61422949af5@misterjones.org>
-X-Sender: maz@kernel.org
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: sramana@codeaurora.org, catalin.marinas@arm.com, will@kernel.org, pajay@qti.qualcomm.com, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="qtZFehHsKgwS5rPz"
+Content-Disposition: inline
+In-Reply-To: <20210109132921.140932-6-angelogioacchino.delregno@somainline.org>
+X-Cookie: Too much is not enough.
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Srinivas,
 
-On 2021-01-09 00:29, Srinivas Ramana wrote:
-> This patchset adds a control function for cpufeature framework
-> so that the feature can be controlled at runtime.
-> 
-> Defer PAC on boot core and use the filter function added to disable
-> PAC from command line. This will help toggling the feature on systems
-> that do not support PAC or where PAC needs to be disabled at runtime,
-> without modifying the core kernel.
-> 
-> The idea of adding the filter function for cpufeature is taken from
-> https://lore.kernel.org/linux-arm-kernel/20200515171612.1020-25-catalin.marinas@arm.com/
-> https://lore.kernel.org/linux-arm-kernel/20200515171612.1020-24-catalin.marinas@arm.com/
-> 
-> Srinivas Ramana (3):
->   arm64: Defer enabling pointer authentication on boot core
->   arm64: cpufeature: Add a filter function to cpufeature
->   arm64: Enable control of pointer authentication using early param
-> 
->  Documentation/admin-guide/kernel-parameters.txt |  6 +++
->  arch/arm64/include/asm/cpufeature.h             |  8 +++-
->  arch/arm64/include/asm/pointer_auth.h           | 10 +++++
->  arch/arm64/include/asm/stackprotector.h         |  1 +
->  arch/arm64/kernel/cpufeature.c                  | 53 
-> +++++++++++++++++++------
->  arch/arm64/kernel/head.S                        |  4 --
->  6 files changed, 64 insertions(+), 18 deletions(-)
+--qtZFehHsKgwS5rPz
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-I've been working for some time on a similar series to allow a feature
-set to be disabled during the early boot phase, initially to prevent
-booting a kernel with VHE, but the mechanism is generic enough to
-deal with most architectural features.
+On Sat, Jan 09, 2021 at 02:29:19PM +0100, AngeloGioacchino Del Regno wrote:
 
-I took the liberty to lift your first patch and to add it to my 
-series[1],
-further allowing PAuth to be disabled at boot time on top of BTI and 
-VHE.
+> +	/* If the regulator is not enabled, this is a fake event */
+> +	if (!ops->is_enabled(vreg->rdev))
+> +		return 0;
 
-I'd appreciate your comments on this.
+Or handling the interrupt raced with a disable initiated from elsewhere.
+Does the hardware actually have a problem with reporting spurious errors?
 
-Thanks,
+> +	return ret ? IRQ_NONE : IRQ_HANDLED;
 
-         M.
+Here and elsewhere please write normal conditional statements to improve
+legibility.
 
-[1] https://lore.kernel.org/r/20210111132811.2455113-1-maz@kernel.org
--- 
-Jazz is not dead. It just smells funny...
+> +	/* This function should be called only once, anyway. */
+> +	if (unlikely(vreg->ocp_irq_requested))
+> +		return 0;
+
+If this is not a fast path it doesn't need an unlikely() annotation;
+indeed it sounds more like there should be a warning printed if this
+isn't supposed to be called multiple times.
+
+> +	/* IRQ polarities - LAB: trigger-low, IBB: trigger-high */
+> +	if (vreg->type == QCOM_LAB_TYPE) {
+> +		irq_flags |= IRQF_TRIGGER_LOW;
+> +		irq_trig_low = 1;
+> +	} else {
+> +		irq_flags |= IRQF_TRIGGER_HIGH;
+> +		irq_trig_low = 0;
+> +	}
+
+This would be more clearly written as a switch statement.
+
+> +	return devm_request_threaded_irq(vreg->dev, vreg->ocp_irq, NULL,
+> +					 qcom_labibb_ocp_isr, irq_flags,
+> +					 ocp_irq_name, vreg);
+
+Are you *sure* that devm_ is appropriate here and the interrupt handler
+won't attempt to use things that will be deallocated before devm gets
+round to freeing the interrupt?
+
+> +		if (!!(val & LABIBB_CONTROL_ENABLE)) {
+
+The !! is redundant here and makes things less clear.
+
+> @@ -166,8 +560,37 @@ static int qcom_labibb_of_parse_cb(struct device_node *np,
+>  				   struct regulator_config *config)
+>  {
+>  	struct labibb_regulator *vreg = config->driver_data;
+> +	char *sc_irq_name;
+
+I really, really wouldn't expect to see interrupts being requested in
+the DT parsing callback - apart from anything else the device is going
+to have the physical interrupts with or without DT binding information.
+These callbacks are for regulator specific properties, not basic probing.
+Just request the interrupts in the main probe function, this also means
+you can avoid using all the DT specific APIs which are generally a
+warning sign.
+
+--qtZFehHsKgwS5rPz
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl/8WVgACgkQJNaLcl1U
+h9BUYAf/TRPb+bKAijDciE8hEa+oPUUE1PWOxG2ZLTi57IfR8ggOxbhy4sbegUBQ
+PRK1JWlxq+cGBBOqjnUxknfHdNVrooqk2X0nm0X7r10qxrbK2gdNr1JKEcUnskAo
+hv4H1yMVLwj49CBUxRckZXELgCg3szojgvbRChICSlZR+/4kXukrdId8DtPWwP0V
+UJoMRVhUqJ84mRDzpKfdaNSSWavsNGJRpSDpJzjAMOrthb9n/2viTi7J7rzEi3zS
+3E7RkEueq8xfVfmlPDFHQijeAVsd5KropNTrl5GJtppnYTOGGgLIreUyepAfLLN6
+8R4Xka5ROuNUm3qKNlIOwzPb9iLgcA==
+=bBx5
+-----END PGP SIGNATURE-----
+
+--qtZFehHsKgwS5rPz--
