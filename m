@@ -2,68 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A0C172F2EB8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jan 2021 13:11:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 86E9B2F2EE8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jan 2021 13:20:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732528AbhALMJz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jan 2021 07:09:55 -0500
-Received: from mail.kernel.org ([198.145.29.99]:42206 "EHLO mail.kernel.org"
+        id S1732736AbhALMT4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jan 2021 07:19:56 -0500
+Received: from foss.arm.com ([217.140.110.172]:45106 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732067AbhALMJz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jan 2021 07:09:55 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 109EC22EBE;
-        Tue, 12 Jan 2021 12:09:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1610453354;
-        bh=BjPws1i1weYzP92AP8zwRfwAds6wuNY30VQS9MCx2Sg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=SFiozoZly4P1DLQ20Kg5/Yo8rJohFinrFI8e2GqVhtlcq7MG1JmbQ/dPPzza0S09O
-         L1L7W6/u4Cgag7CZX/leu14RPULl+LGQQ4k73kGAPNSD9kK0+kPekAXFE0GlcyDNLs
-         zupW9oRwhlslFzZw43VJe3sMq5QXU++81mJin6fU=
-Date:   Tue, 12 Jan 2021 13:10:23 +0100
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Pintu Agarwal <pintu.ping@gmail.com>
-Cc:     open list <linux-kernel@vger.kernel.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>, landy.gross@linaro.org,
-        David Brown <david.brown@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        indranilghsh428@gmail.com
-Subject: Re: [BUG]: Kernel 4.9: Kernel crash at fs/sysfs/file.c :
- sysfs_kf_seq_show
-Message-ID: <X/2Rr5LDNbxGz456@kroah.com>
-References: <CAOuPNLiUBhJdsgw9bjQxxhkeBHQFoE_vN_Na6kw3ksr89r+HOg@mail.gmail.com>
+        id S1732618AbhALMTz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 12 Jan 2021 07:19:55 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D06D31042;
+        Tue, 12 Jan 2021 04:19:09 -0800 (PST)
+Received: from localhost (unknown [10.1.198.32])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 71ADC3F66E;
+        Tue, 12 Jan 2021 04:19:09 -0800 (PST)
+Date:   Tue, 12 Jan 2021 12:19:08 +0000
+From:   Ionela Voinescu <ionela.voinescu@arm.com>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
+        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] cpufreq: qcom-hw: add missing devm_release_mem_region()
+ call
+Message-ID: <20210112121859.GA25733@arm.com>
+References: <20210112095236.20515-1-shawn.guo@linaro.org>
+ <20210112101449.cmkjaegukxut3tym@vireshk-i7>
+ <20210112111928.GB2479@dragon>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOuPNLiUBhJdsgw9bjQxxhkeBHQFoE_vN_Na6kw3ksr89r+HOg@mail.gmail.com>
+In-Reply-To: <20210112111928.GB2479@dragon>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jan 12, 2021 at 05:31:54PM +0530, Pintu Agarwal wrote:
-> Hi,
-> 
-> I am using Kernel: 4.9.217 for one of the ARM32 boards for Qualcomm SOC.
-> https://github.com/android-linux-stable/msm-4.9
-> 
-> But I think this is a general bug applicable to :Kernel 4.9 under
-> fs/sysfs/file.c
-> So, I wanted to quickly check here if others are familiar with this
-> issue and if it is fixed already.
-> Note, this issue does not occur in 4.14 Kernel.
-> 
-> When I execute below command, the Kernel is crashing.
-> I tried to add few debug prints to find more details. I see that the
-> ops->show pointer is not valid (seems corrupted).
-> So I wanted to understand how this can happen only for this particular node.
-> Other sysfs entries are working fine.
-> 
-> # cat /sys/power/rpmh_stats/master_stats
+Hi guys,
 
-Also note that this file is not in the upstream kernel tree, so there's
-not much we can do about this either...
+On Tuesday 12 Jan 2021 at 19:19:29 (+0800), Shawn Guo wrote:
+> On Tue, Jan 12, 2021 at 03:44:49PM +0530, Viresh Kumar wrote:
+> > On 12-01-21, 17:52, Shawn Guo wrote:
+> > > On SDM845/850, running the following commands to put all cores in
+> > > freq-domain1 offline and then get one core back online, there will be
+> > > a request region error seen from qcom-hw driver.
+> > > 
+> > > $ echo 0 > /sys/devices/system/cpu/cpu4/online
+> > > $ echo 0 > /sys/devices/system/cpu/cpu5/online
+> > > $ echo 0 > /sys/devices/system/cpu/cpu6/online
+> > > $ echo 0 > /sys/devices/system/cpu/cpu7/online
+> > > $ echo 1 > /sys/devices/system/cpu/cpu4/online
+> > > 
+> > > [ 3395.915416] CPU4: shutdown
+> > > [ 3395.938185] psci: CPU4 killed (polled 0 ms)
+> > > [ 3399.071424] CPU5: shutdown
+> > > [ 3399.094316] psci: CPU5 killed (polled 0 ms)
+> > > [ 3402.139358] CPU6: shutdown
+> > > [ 3402.161705] psci: CPU6 killed (polled 0 ms)
+> > > [ 3404.742939] CPU7: shutdown
+> > > [ 3404.765592] psci: CPU7 killed (polled 0 ms)
+> > > [ 3411.492274] Detected VIPT I-cache on CPU4
+> > > [ 3411.492337] GICv3: CPU4: found redistributor 400 region 0:0x0000000017ae0000
+> > > [ 3411.492448] CPU4: Booted secondary processor 0x0000000400 [0x516f802d]
+> > > [ 3411.503654] qcom-cpufreq-hw 17d43000.cpufreq: can't request region for resource [mem 0x17d45800-0x17d46bff]
+> > > 
+> > > The cause is that the memory region requested in .init hook doesn't get
+> > > released in .exit hook, and the subsequent call to .init will always fail
+> > > on this error.  Let's break down the devm_platform_ioremap_resource()
+> > > call a bit, so that we can have the resource pointer to release memory
+> > > region from .exit hook.
+> > > 
+> > > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> > > ---
+> > >  drivers/cpufreq/qcom-cpufreq-hw.c | 8 +++++++-
+> > >  1 file changed, 7 insertions(+), 1 deletion(-)
+> > 
+> > FWIW, Ionela also sent a fix though I like this one better for the
+> > obvious reasons.
+> > 
+> > https://lore.kernel.org/lkml/20210108151406.23595-1-ionela.voinescu@arm.com/
+> 
+> Ha, thanks for the pointer.  So the original code was tricky and skipped
+> the region request call intentionally.
+> 
 
-good luck!
+As long as the problem is fixed, I'm happy :).
+For this patch:
+Tested-by: Ionela Voinescu <ionela.voinescu@arm.com>
 
-greg k-h
+The patch probably deserves:
+Fixes: f17b3e44320b ("cpufreq: qcom-hw: Use devm_platform_ioremap_resource() to simplify code")
+
+Thanks,
+Ionela.
+
+> Shawn
