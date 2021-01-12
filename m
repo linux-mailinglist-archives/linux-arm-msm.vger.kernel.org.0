@@ -2,164 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C74BA2F2ABE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jan 2021 10:06:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DA89D2F2AC4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jan 2021 10:06:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388567AbhALJFV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jan 2021 04:05:21 -0500
-Received: from lb3-smtp-cloud9.xs4all.net ([194.109.24.30]:60527 "EHLO
-        lb3-smtp-cloud9.xs4all.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2388856AbhALJFS (ORCPT
+        id S2388237AbhALJGE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jan 2021 04:06:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51872 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389430AbhALJF7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jan 2021 04:05:18 -0500
-Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
-        by smtp-cloud9.xs4all.net with ESMTPA
-        id zFbIkDFNAVfyLzFbLkopWg; Tue, 12 Jan 2021 10:04:31 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s2;
-        t=1610442271; bh=w+eQNhQZnKJAllfIzv3g8UL7ixvpbCSLuEatvY5u/XI=;
-        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
-         Subject;
-        b=KBbY/P7mJw0U7W6AdLzOqfUcXsIvbj3VuzH2QfSeFCuPeFlsDUbPo321JOY711RVQ
-         jkVL714w1GHgf3zdqlU+8jjm3z/wPele3KaPgZrrFDvGJszmpnG/y4OdOCdl3Q2BBL
-         6KubodHq54gb5Wc+vBOb8RPTdVq1cHDrliCD58s/V7mcf+UwSQOPR7fAD8R3pZdWAG
-         BZE9VkyCXq70RoctikkJA+MnS0PxLBklpoH3t6CL0gH3iHqVBaSMjrwCzXc9XAOwLr
-         rnSh57fRdo4Z/3D0kS+LNrC1X4FA2NUP3aWSsL5GJyxDYPxsUr3fq2E/n0qvLKGc6N
-         +Bi48mk0NsNpA==
-Subject: Re: [PATCH v5 2/2] venus: venc: Add support for Long Term Reference
- (LTR) controls
-To:     Dikshita Agarwal <dikshita@codeaurora.org>,
-        linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org
-References: <1609736971-14454-1-git-send-email-dikshita@codeaurora.org>
- <1609736971-14454-3-git-send-email-dikshita@codeaurora.org>
-From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Message-ID: <e11a4e78-8e41-c7f4-4947-76d27f0fa2ed@xs4all.nl>
-Date:   Tue, 12 Jan 2021 10:04:28 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.0
+        Tue, 12 Jan 2021 04:05:59 -0500
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5A1CC061795
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jan 2021 01:05:18 -0800 (PST)
+Received: by mail-pl1-x62e.google.com with SMTP id d4so248218plh.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jan 2021 01:05:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Rc1myaDL5WFW+REXHt226CAPQ0iOGXEkXmasJfyDK0Q=;
+        b=zqbaYbq58L4E34SllLAdMubr1tyjZEmZJQAuBkexTNyrEMmlE1OjZizL6k3V+KxC1R
+         D/6gK1xcZfrnszUww+ys/qJzJ79o8NPZ7so/+u7cVjsu3om1pUaYnWJ5qn00sjyLhBnq
+         RppCcEWcXzTeCdxF4za7TxABUXRTf0LMO+PITrdyX3QshKS3DCcDqlyo1GyElVJEkuAQ
+         3VgJ6ZSxqBJhJNyW/FmNKJvEs0687rzePxjhBQrEmIAEDkjFa0xkC+ZcA0N05xQHJjUE
+         gZksKWKmgz9954Tql3rc3ysM3fvwlKdK0BsRjnOgAwc3wbki8wNaA6/MApuF7RpIjXji
+         rlTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Rc1myaDL5WFW+REXHt226CAPQ0iOGXEkXmasJfyDK0Q=;
+        b=lfMqn86fUg6bO+w/Uw73TfFEJkejg1OwpemJQClrpasRKyGWyPwqhpCbUJCm583B30
+         ZHRFQ/q9qvP+zewA6RP6ruV9onAcQAN5JV7fsDNt1uE4mDUd9MH/UpvoPL3n//WNv4Cq
+         LfgWJYoKHEbPHS7EGoMX613EhflFSSFVlnEAWNG02ycI63MAfP2lEOTqqbWkQZHB/op9
+         NO/GSjr2YRxJcw9Czb+5D/pzDtuggn2XS7ilgW08ay96t5hVNiShs2MJbLTBfMw5swGM
+         DA4Qh2x/kgnzcqgeh2QBz8P6/7cEQLkGRG1im5mplO1edTEwLHHqfF6+FkSfS53X0Hks
+         Vbkg==
+X-Gm-Message-State: AOAM530GzNcSeUlrmc/V976GO2w+XjJVn2RAUrD2cbJbl/9DYZN3mc3z
+        RCFrzOnQfrPJJAnRb6JV6bUeoA==
+X-Google-Smtp-Source: ABdhPJzQaofo66Ea8RXJ9ZwIj6GIOhVVRtOq9FtDHcBI2gqx9J6rjZq0AMRIWZvYTMhDNcTP21F6kg==
+X-Received: by 2002:a17:90b:ece:: with SMTP id gz14mr3704581pjb.158.1610442318165;
+        Tue, 12 Jan 2021 01:05:18 -0800 (PST)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id x10sm2161006pff.214.2021.01.12.01.05.15
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 12 Jan 2021 01:05:17 -0800 (PST)
+Date:   Tue, 12 Jan 2021 17:05:12 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Steev Klimaszewski <steev@kali.org>
+Subject: Re: [PATCH] arm64: dts: sdm850: Add OPP tables for 2.84 and 2.96GHz
+Message-ID: <20210112090455.GA2479@dragon>
+References: <20210112090140.19867-1-shawn.guo@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <1609736971-14454-3-git-send-email-dikshita@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfNfNVDt7xI9xuvE28pakTe/RciRNCg7GGlZTvFiXs8nhuSsM/ARLZqkNolvXYjUWI8q6xAPEXTm2qTPk6C+KMppHZhHyxC90OftYJ9yerdRsdF9oqWS3
- cnhrppwA5Tyqp9piHy0BO39n0rDMTTwJpHnjX+8VLuWA8W6+XxcTPbGZTzySN0FD29Y8BqVsCPDMBtn1U+Zc9pdr/iKbZAscijqEPHsBI8gFzOJJqZGC+1QD
- YOv8U9x+XdRYDX/aE7WMhaFPd7xrtrkI2lrdbasAIL1hLn5U6aEdTqzFEyirJAWY29nnGnCZpjvHJ4BjdFB2nJRcWPwzaeC47fb2nxTvqmPpmjDp77JGbzJS
- E1AcqhLtfOJjLWXky8GiDXcF8QutnMX7n4fbCntvmVGw2YQleis=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210112090140.19867-1-shawn.guo@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/01/2021 06:09, Dikshita Agarwal wrote:
-> Add support for below LTR controls in encoder:
-> - V4L2_CID_MPEG_VIDEO_LTR_COUNT
-> - V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX
-> - V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES
-
-This patch does not add any Request API support to the venus driver,
-so it makes no sense to merge this series. It's incomplete.
-
-The other two series (priority ID and QP and layer bitrate) look good
-to be merged.
-
-Regards,
-
-	Hans
-
+On Tue, Jan 12, 2021 at 05:01:40PM +0800, Shawn Guo wrote:
+> From: Steev Klimaszewski <steev@kali.org>
 > 
-> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
-> ---
->  drivers/media/platform/qcom/venus/venc_ctrls.c | 49 +++++++++++++++++++++++++-
->  1 file changed, 48 insertions(+), 1 deletion(-)
+> Running cpufreq-hw driver on Lenovo Yoga C630 laptop, the following
+> warning messages will be seen.
 > 
-> diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
-> index 496ad4d..7d010d8 100644
-> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
-> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
-> @@ -20,6 +20,7 @@
->  #define INTRA_REFRESH_MBS_MAX	300
->  #define AT_SLICE_BOUNDARY	\
->  	V4L2_MPEG_VIDEO_H264_LOOP_FILTER_MODE_DISABLED_AT_SLICE_BOUNDARY
-> +#define MAX_LTR_FRAME_COUNT 4
->  
->  static int venc_calc_bpframes(u32 gop_size, u32 conseq_b, u32 *bf, u32 *pf)
->  {
-> @@ -72,6 +73,9 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
->  	struct venc_controls *ctr = &inst->controls.enc;
->  	struct hfi_enable en = { .enable = 1 };
->  	struct hfi_bitrate brate;
-> +	struct hfi_ltr_use ltr_use;
-> +	struct hfi_ltr_mark ltr_mark;
-> +	struct hfi_ltr_mode ltr_mode;
->  	u32 bframes;
->  	u32 ptype;
->  	int ret;
-> @@ -259,6 +263,37 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
->  	case V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE:
->  		ctr->frame_skip_mode = ctrl->val;
->  		break;
-> +	case V4L2_CID_MPEG_VIDEO_LTR_COUNT:
-> +		ptype = HFI_PROPERTY_PARAM_VENC_LTRMODE;
-> +		ltr_mode.ltr_count = ctrl->val;
-> +		ltr_mode.ltr_mode = HFI_LTR_MODE_MANUAL;
-> +		ltr_mode.trust_mode = 1;
-> +		ret = hfi_session_set_property(inst, ptype, &ltr_mode);
-> +		if (ret) {
-> +			mutex_unlock(&inst->lock);
-> +			return ret;
-> +		}
-> +		break;
-> +	case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:
-> +		ptype = HFI_PROPERTY_CONFIG_VENC_MARKLTRFRAME;
-> +		ltr_mark.mark_frame = ctrl->val;
-> +		ret = hfi_session_set_property(inst, ptype, &ltr_mark);
-> +		if (ret) {
-> +			mutex_unlock(&inst->lock);
-> +			return ret;
-> +		}
-> +		break;
-> +	case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES:
-> +		ptype = HFI_PROPERTY_CONFIG_VENC_USELTRFRAME;
-> +		ltr_use.ref_ltr = ctrl->val;
-> +		ltr_use.use_constrnt = true;
-> +		ltr_use.frames = 0;
-> +		ret = hfi_session_set_property(inst, ptype, &ltr_use);
-> +		if (ret) {
-> +			mutex_unlock(&inst->lock);
-> +			return ret;
-> +		}
-> +		break;
->  	default:
->  		return -EINVAL;
->  	}
-> @@ -274,7 +309,7 @@ int venc_ctrl_init(struct venus_inst *inst)
->  {
->  	int ret;
->  
-> -	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 50);
-> +	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 53);
->  	if (ret)
->  		return ret;
->  
-> @@ -476,6 +511,18 @@ int venc_ctrl_init(struct venus_inst *inst)
->  			       (1 << V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_BUF_LIMIT)),
->  			       V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_DISABLED);
->  
-> +	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
-> +			  V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES, 0,
-> +			  (MAX_LTR_FRAME_COUNT - 1), 1, 0);
-> +
-> +	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
-> +			  V4L2_CID_MPEG_VIDEO_LTR_COUNT, 0,
-> +			  MAX_LTR_FRAME_COUNT, 1, 0);
-> +
-> +	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
-> +			  V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX, 0,
-> +			  (MAX_LTR_FRAME_COUNT - 1), 1, 0);
-> +
->  	ret = inst->ctrl_handler.error;
->  	if (ret)
->  		goto err;
+> [    3.415340] cpu cpu4: Voltage update failed freq=2841600
+> [    3.418755] cpu cpu4: failed to update OPP for freq=2841600
+> [    3.422949] cpu cpu4: Voltage update failed freq=2956800
+> [    3.427086] cpu cpu4: failed to update OPP for freq=2956800
 > 
+> This is because the cpufreq-hw lookup table of SDM850 provides these two
+> set-points, but they are missing from OPP table in DT.  Let's create
+> sdm850.dtsi to add the OPP for them, so that the warning will be gone.
+> 
+> Signed-off-by: Steev Klimaszewski <steev@kali.org>
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
 
+Ignore this one.  Some needed changes got lost.
+
+Shawn
