@@ -2,21 +2,24 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D8C4B2F3881
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jan 2021 19:22:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B3E6F2F3897
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jan 2021 19:22:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406194AbhALSV5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jan 2021 13:21:57 -0500
-Received: from relay06.th.seeweb.it ([5.144.164.167]:57783 "EHLO
-        relay06.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2406146AbhALSV5 (ORCPT
+        id S2390994AbhALSW2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jan 2021 13:22:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59100 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2392032AbhALSWX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jan 2021 13:21:57 -0500
+        Tue, 12 Jan 2021 13:22:23 -0500
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BECBC0617A5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jan 2021 10:21:01 -0800 (PST)
 Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id A17FD3EBE2;
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 007ED3EBA3;
         Tue, 12 Jan 2021 19:20:59 +0100 (CET)
 From:   AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>
@@ -30,9 +33,9 @@ Cc:     konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
         devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>
-Subject: [PATCH v3 04/15] cpufreq: blacklist SDM630/636/660 in cpufreq-dt-platdev
-Date:   Tue, 12 Jan 2021 19:20:41 +0100
-Message-Id: <20210112182052.481888-5-angelogioacchino.delregno@somainline.org>
+Subject: [PATCH v3 05/15] cpufreq: blacklist MSM8998 in cpufreq-dt-platdev
+Date:   Tue, 12 Jan 2021 19:20:42 +0100
+Message-Id: <20210112182052.481888-6-angelogioacchino.delregno@somainline.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210112182052.481888-1-angelogioacchino.delregno@somainline.org>
 References: <20210112182052.481888-1-angelogioacchino.delregno@somainline.org>
@@ -42,28 +45,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the SDM630, SDM636 and SDM660 to the blacklist since the CPU
-scaling is handled out of this.
+Add the MSM8998 to the blacklist since the CPU scaling is handled
+out of this.
 
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 ---
- drivers/cpufreq/cpufreq-dt-platdev.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/cpufreq/cpufreq-dt-platdev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c b/drivers/cpufreq/cpufreq-dt-platdev.c
-index bd2db0188cbb..f82f4ec17ff2 100644
+index f82f4ec17ff2..061de3031787 100644
 --- a/drivers/cpufreq/cpufreq-dt-platdev.c
 +++ b/drivers/cpufreq/cpufreq-dt-platdev.c
-@@ -135,6 +135,9 @@ static const struct of_device_id blacklist[] __initconst = {
+@@ -133,6 +133,7 @@ static const struct of_device_id blacklist[] __initconst = {
+ 
+ 	{ .compatible = "qcom,apq8096", },
  	{ .compatible = "qcom,msm8996", },
++	{ .compatible = "qcom,msm8998", },
  	{ .compatible = "qcom,qcs404", },
  	{ .compatible = "qcom,sc7180", },
-+	{ .compatible = "qcom,sdm630", },
-+	{ .compatible = "qcom,sdm636", },
-+	{ .compatible = "qcom,sdm660", },
- 	{ .compatible = "qcom,sdm845", },
- 
- 	{ .compatible = "st,stih407", },
+ 	{ .compatible = "qcom,sdm630", },
 -- 
 2.29.2
 
