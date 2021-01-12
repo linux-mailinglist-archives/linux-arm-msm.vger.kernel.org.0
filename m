@@ -2,106 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 45C562F2C59
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jan 2021 11:12:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FE712F2C69
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jan 2021 11:16:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390336AbhALKLn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jan 2021 05:11:43 -0500
-Received: from mail.kernel.org ([198.145.29.99]:46918 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389927AbhALKLn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jan 2021 05:11:43 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id C3EF022CBE;
-        Tue, 12 Jan 2021 10:11:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1610446262;
-        bh=SJdJsLW3E8Nwahw4Ky16T74RFBuZ491EnoseBaUMOIU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=pqy1p9OhYmPgyJKboHZC2ehmLQo/7Rdm9ZtwZJUJJh1Capla4PRjxfOAXx8uxpOD6
-         6pcFdlWXd8HXcxBJparAK4h9EhrRU7bZLGqn3M8cI5Mq7x7JKHiPa9TlxG1R4pwyGK
-         t7JX9IpHQpMTAkJhaFelUI7pqcvTqaqM/dQUMDutwBvq5I+2od8uBiEgoA+nUi69qC
-         3WxsGyy5foUF6MFAvu8fH47zbxKwwYBd2gJ6HZ1q9tGxW9x/4KC2jCG1yrWM7JXhwg
-         GFmcZvUAhEF7kMPIwuAyrtaHDSg5aPckswS6DMfSIjwaidJL9d3Jun0jDOHZg8QjKF
-         8OF1U9zLGvCwQ==
-Date:   Tue, 12 Jan 2021 15:40:56 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     mdalam@codeaurora.org
-Cc:     corbet@lwn.net, agross@kernel.org, bjorn.andersson@linaro.org,
-        dan.j.williams@intel.com, dmaengine@vger.kernel.org,
-        linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, sricharan@codeaurora.org,
-        mdalam=codeaurora.org@codeaurora.org
-Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Add LOCK and UNLOCK flag bit
- support
-Message-ID: <20210112101056.GI2771@vkoul-mobl>
-References: <1608215842-15381-1-git-send-email-mdalam@codeaurora.org>
- <20201221092355.GA3323@vkoul-mobl>
- <efcc74bbdf36b4ddbf764eb6b4ed99f2@codeaurora.org>
- <f7de0117c8ff2e61c09f58acdea0e5b0@codeaurora.org>
+        id S2404592AbhALKPg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jan 2021 05:15:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38636 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404578AbhALKPf (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 12 Jan 2021 05:15:35 -0500
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF307C061786
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jan 2021 02:14:52 -0800 (PST)
+Received: by mail-pl1-x633.google.com with SMTP id b8so1171744plx.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jan 2021 02:14:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=5iSTFwNPbYkUnV4St2XcKkbysvK454B2BvcX9uDXsfw=;
+        b=oouQoSvU8qtTR+cxxuakvs/nYUTQCUegBjPTuGBI1i69HXiPnBf3DeUaSHboNZcmun
+         2dQHrp3eDdhBmvvUzkgjJw/cswyBeEOmLSSDe3oa5cQ0nMLRyfmThyFKLqpjfaAQrUhY
+         tRTD3aLx1tcTE+nSJkBR7lFlkDl0Q7hiuAWlOOJZG3GsXlBAIQ0ylGqpjTlphHQ3W11W
+         GReV35vi4xD8cwpLvHq2oQHiu8lHculO0ZPbL1bp4okEpjs0QzCqbfyOHtXULXtJ1LV1
+         rV7ZJV+7rR2NLQMD/IHGISk/SEJYT4Pw8/1I/cBBhc/iJDHnvgDFcvXKJPpCuH+Ndpr4
+         DgGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=5iSTFwNPbYkUnV4St2XcKkbysvK454B2BvcX9uDXsfw=;
+        b=ddHypqbQGPwG99+JhAQ0XxLH5/x7OQBSP/ci6tgDbPi/OOmJRlB7xUH/8TvcQ2V2vw
+         KFdymUfmeP78/VSWzB5dFTzO7/LhqbizFWvG+myDhCELIw/qZzXDUGq7LbXufgNye70u
+         S9m3xhpg0Pl0UlJMqPwNEWkZvVBqoLKB0lBuax7BVFwAQIp0wXUCbxURv5L4xt79ate+
+         H73dHx+8WWP6UzdCZspMWG+PhJi4agcKhd3A2+UQrLrBDm0nMEzSN00onO4SJl99oIMJ
+         ah7awoBvHau2y6ZQgBiD+YElIcyMD1cddqfbmK8X+idLLerU49fj7rF4sJbzQUGjfJjx
+         mn7w==
+X-Gm-Message-State: AOAM531vcdFSyDbfQ0sJ0FGPlrjAfO0iOSHIHxNy/nsrVlF2ho52Saai
+        s9RzSYWNmaQuMJiebyz4+vo3Dg==
+X-Google-Smtp-Source: ABdhPJz45mPmZrjIh58BTQhk3Ojtq9FJXPW1JRAhOrIAQDCiSXj1NtJW8hUbl7YAsIre6FiY4Wt10A==
+X-Received: by 2002:a17:90a:a44:: with SMTP id o62mr2374505pjo.209.1610446492151;
+        Tue, 12 Jan 2021 02:14:52 -0800 (PST)
+Received: from localhost ([122.172.85.111])
+        by smtp.gmail.com with ESMTPSA id e65sm2655129pfh.175.2021.01.12.02.14.51
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 12 Jan 2021 02:14:51 -0800 (PST)
+Date:   Tue, 12 Jan 2021 15:44:49 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Shawn Guo <shawn.guo@linaro.org>,
+        Ionela Voinescu <ionela.voinescu@arm.com>
+Cc:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] cpufreq: qcom-hw: add missing devm_release_mem_region()
+ call
+Message-ID: <20210112101449.cmkjaegukxut3tym@vireshk-i7>
+References: <20210112095236.20515-1-shawn.guo@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f7de0117c8ff2e61c09f58acdea0e5b0@codeaurora.org>
+In-Reply-To: <20210112095236.20515-1-shawn.guo@linaro.org>
+User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12-01-21, 15:01, mdalam@codeaurora.org wrote:
-> On 2020-12-21 23:03, mdalam@codeaurora.org wrote:
-> > On 2020-12-21 14:53, Vinod Koul wrote:
-> > > Hello,
-> > > 
-> > > On 17-12-20, 20:07, Md Sadre Alam wrote:
-> > > > This change will add support for LOCK & UNLOCK flag bit support
-> > > > on CMD descriptor.
-> > > > 
-> > > > If DMA_PREP_LOCK flag passed in prep_slave_sg then requester of this
-> > > > transaction wanted to lock the DMA controller for this transaction so
-> > > > BAM driver should set LOCK bit for the HW descriptor.
-> > > > 
-> > > > If DMA_PREP_UNLOCK flag passed in prep_slave_sg then requester
-> > > > of this
-> > > > transaction wanted to unlock the DMA controller.so BAM driver
-> > > > should set
-> > > > UNLOCK bit for the HW descriptor.
-> > > 
-> > > Can you explain why would we need to first lock and then unlock..? How
-> > > would this be used in real world.
-> > > 
-> > > I have read a bit of documentation but is unclear to me. Also should
-> > > this be exposed as an API to users, sounds like internal to driver..?
-> > > 
-> > 
-> > IPQ5018 SoC having only one Crypto Hardware Engine. This Crypto Hardware
-> > Engine
-> > will be shared between A53 core & ubi32 core. There is two separate
-> > driver dedicated
-> > to A53 core and ubi32 core. So to use Crypto Hardware Engine
-> > parallelly for encryption/description
-> > we need bam locking mechanism. if one driver will submit the request
-> > for encryption/description
-> > to Crypto then first it has to set LOCK flag bit on command descriptor
-> > so that other pipes will
-> > get locked.
-> > 
-> > The Pipe Locking/Unlocking will be only on command-descriptor. Upon
-> > encountering a command descriptor
+On 12-01-21, 17:52, Shawn Guo wrote:
+> On SDM845/850, running the following commands to put all cores in
+> freq-domain1 offline and then get one core back online, there will be
+> a request region error seen from qcom-hw driver.
+> 
+> $ echo 0 > /sys/devices/system/cpu/cpu4/online
+> $ echo 0 > /sys/devices/system/cpu/cpu5/online
+> $ echo 0 > /sys/devices/system/cpu/cpu6/online
+> $ echo 0 > /sys/devices/system/cpu/cpu7/online
+> $ echo 1 > /sys/devices/system/cpu/cpu4/online
+> 
+> [ 3395.915416] CPU4: shutdown
+> [ 3395.938185] psci: CPU4 killed (polled 0 ms)
+> [ 3399.071424] CPU5: shutdown
+> [ 3399.094316] psci: CPU5 killed (polled 0 ms)
+> [ 3402.139358] CPU6: shutdown
+> [ 3402.161705] psci: CPU6 killed (polled 0 ms)
+> [ 3404.742939] CPU7: shutdown
+> [ 3404.765592] psci: CPU7 killed (polled 0 ms)
+> [ 3411.492274] Detected VIPT I-cache on CPU4
+> [ 3411.492337] GICv3: CPU4: found redistributor 400 region 0:0x0000000017ae0000
+> [ 3411.492448] CPU4: Booted secondary processor 0x0000000400 [0x516f802d]
+> [ 3411.503654] qcom-cpufreq-hw 17d43000.cpufreq: can't request region for resource [mem 0x17d45800-0x17d46bff]
+> 
+> The cause is that the memory region requested in .init hook doesn't get
+> released in .exit hook, and the subsequent call to .init will always fail
+> on this error.  Let's break down the devm_platform_ioremap_resource()
+> call a bit, so that we can have the resource pointer to release memory
+> region from .exit hook.
+> 
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> ---
+>  drivers/cpufreq/qcom-cpufreq-hw.c | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
 
-Can you explain what is a cmd descriptor?
+FWIW, Ionela also sent a fix though I like this one better for the
+obvious reasons.
 
-> > with LOCK bit set, The BAM will lock all other pipes not related to
-> > the current pipe group, and keep
-> > handling the current pipe only until it sees the UNLOCK set then it
-> > will release all locked pipes.
-> > locked pipe will not fetch new descriptors even if it got event/events
-> > adding more descriptors for
-> > this pipe (locked pipe).
-> > 
-> > No need to expose as an API to user because its internal to driver, so
-> > while preparing command descriptor
-> > just we have to update the LOCK/UNLOCK flag.
+https://lore.kernel.org/lkml/20210108151406.23595-1-ionela.voinescu@arm.com/
 
-So IIUC, no api right? it would be internal to driver..?
+> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+> index 9ed5341dc515..315ee987d2d3 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+> @@ -32,6 +32,7 @@ struct qcom_cpufreq_soc_data {
+>  
+>  struct qcom_cpufreq_data {
+>  	void __iomem *base;
+> +	struct resource *res;
+>  	const struct qcom_cpufreq_soc_data *soc_data;
+>  };
+>  
+> @@ -280,6 +281,7 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
+>  	struct of_phandle_args args;
+>  	struct device_node *cpu_np;
+>  	struct device *cpu_dev;
+> +	struct resource *res;
+>  	void __iomem *base;
+>  	struct qcom_cpufreq_data *data;
+>  	int ret, index;
+> @@ -303,7 +305,8 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
+>  
+>  	index = args.args[0];
+>  
+> -	base = devm_platform_ioremap_resource(pdev, index);
+> +	res = platform_get_resource(pdev, IORESOURCE_MEM, index);
+> +	base = devm_ioremap_resource(dev, res);
+>  	if (IS_ERR(base))
+>  		return PTR_ERR(base);
+>  
+> @@ -315,6 +318,7 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
+>  
+>  	data->soc_data = of_device_get_match_data(&pdev->dev);
+>  	data->base = base;
+> +	data->res = res;
+>  
+>  	/* HW should be in enabled state to proceed */
+>  	if (!(readl_relaxed(base + data->soc_data->reg_enable) & 0x1)) {
+> @@ -358,11 +362,13 @@ static int qcom_cpufreq_hw_cpu_exit(struct cpufreq_policy *policy)
+>  	struct device *cpu_dev = get_cpu_device(policy->cpu);
+>  	struct qcom_cpufreq_data *data = policy->driver_data;
+>  	struct platform_device *pdev = cpufreq_get_driver_data();
+> +	struct resource *res = data->res;
+>  
+>  	dev_pm_opp_remove_all_dynamic(cpu_dev);
+>  	dev_pm_opp_of_cpumask_remove_table(policy->related_cpus);
+>  	kfree(policy->freq_table);
+>  	devm_iounmap(&pdev->dev, data->base);
+> +	devm_release_mem_region(&pdev->dev, res->start, resource_size(res));
+>  
+>  	return 0;
+>  }
+> -- 
+> 2.17.1
 
 -- 
-~Vinod
+viresh
