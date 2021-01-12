@@ -2,108 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7292B2F39C1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jan 2021 20:14:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 90CBD2F3A43
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jan 2021 20:29:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728965AbhALTNS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jan 2021 14:13:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41874 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726664AbhALTNS (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jan 2021 14:13:18 -0500
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB024C061575;
-        Tue, 12 Jan 2021 11:12:37 -0800 (PST)
-Received: by mail-qk1-x72e.google.com with SMTP id 22so2895199qkf.9;
-        Tue, 12 Jan 2021 11:12:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Q26h93gSS0y9iR+Qm0MkHYb24X55fLtSwxVQagnZbx8=;
-        b=cpxV9/KULU/QTHufkILmQ5sNOh25AE7CPuNpwLyyEONMdKty6a6etdY25354NNYe9Y
-         fMnwt0fXnXouOqMn8LhEwmbSg2K5ccTi7+tLRZH2bkzApX+2coDyIgWyLm7s/uAVG7kr
-         BRsTt5tFdUv4f198LQxZ8KvqLn62KVGfkhOTLGXZesf/kyEbnr7lUkB5vnAGjD6cOoBv
-         OkP4DshKIUhtJx4dI1W3724iqSoMAyNtiU9wil+YMxqSloNo5iLUSA52w9YSpv5Bf6gz
-         c/dvsMkB2992CAVkuH5ak0GFGxeag2KmMWCht6DBiIhS8WhO87e2WpuTCv/OEEb/+axK
-         aYZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Q26h93gSS0y9iR+Qm0MkHYb24X55fLtSwxVQagnZbx8=;
-        b=M+vUKnGhqhWA4L9ZDQ8coyLVplWI58eXvb3dFgbr9fhcBvSMMuFedpVureYklLfXN1
-         MXGps8l5eSg7kagqtg1bQnGgj4yf9IOHXHWyeyBqr3pv0+Y4PPVeaUAdTKZ7NM1OKg9r
-         cU5teAMjYYBswF0EmVXUBTT+NmKLh0GBLAOHnEUiB2p41XA3jhR6w2GX7QfmhCKA6lK6
-         j50hAPnn7ZdpHWZuIPrJJvrcI0BnJVAlkwUNyRCGkv1EevU4iZXdQGNHfkiMGd9z7sT7
-         LG8QM7TNBfYVNmkeuq911Ca6/g6E2WlhM1eGTTD1Nv8wcG3wEFE4/VUyLocAkipf2meJ
-         zF9g==
-X-Gm-Message-State: AOAM532chSHoGTcsMWsM5zo9m/PiFO7GTgavSgnhSMe4hfRgu9Btydg7
-        RUh90AwIAaZr4IhlLV/Sspg=
-X-Google-Smtp-Source: ABdhPJzltk2bVl0P/Jw4bElA4gsCXcb3W8L4e7Evd9K3CYkp7UT8AjEXsDMdfDM370Ssk8naPBZYVw==
-X-Received: by 2002:ae9:de45:: with SMTP id s66mr866170qkf.197.1610478756993;
-        Tue, 12 Jan 2021 11:12:36 -0800 (PST)
-Received: from localhost.localdomain ([2604:1380:45f1:1d00::1])
-        by smtp.gmail.com with ESMTPSA id u5sm1861674qka.86.2021.01.12.11.12.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Jan 2021 11:12:36 -0800 (PST)
-From:   Nathan Chancellor <natechancellor@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     Dan Williams <dan.j.williams@intel.com>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org, clang-built-linux@googlegroups.com,
-        Nathan Chancellor <natechancellor@gmail.com>
-Subject: [PATCH] dmaengine: qcom: Always inline gpi_update_reg
-Date:   Tue, 12 Jan 2021 12:12:14 -0700
-Message-Id: <20210112191214.1264793-1-natechancellor@gmail.com>
-X-Mailer: git-send-email 2.30.0
+        id S2393174AbhALT0R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jan 2021 14:26:17 -0500
+Received: from mail.kernel.org ([198.145.29.99]:47798 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2393169AbhALT0Q (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 12 Jan 2021 14:26:16 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id DC9C220720;
+        Tue, 12 Jan 2021 19:25:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1610479536;
+        bh=y8uaxQHnYfsM3nBRr3dot9+f4CYuLx5jujwQw4U0xW8=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=TI4XoOcdWtycRsjfs0jho4C+n4T4yAxhAIch9gvwqBNVlpYg53Ld+/V2/kCovEaGw
+         vFobpWyg4r8sUAtkqjnkfRjfUhgPs3K09xTW74WgK7Rp1YNc5FSBn5o+lbKcxp2xct
+         hfqSPcVTdabduFNXSPWkhuyHY5lke19X6TntZ2WrUnnZjJo5y0ar+OyYXGHvweUE9u
+         ldcGbRfA7JbuaBxSmHzVx6k0J1yeW3o5CFqADIUdsTdVp5va6viO0wGGZx83/pWtCJ
+         XEdo/mgjlBr7/bJNiEO2EPdkV2N9DcaWxJlvP5vpdAWyFuTveiVngjshL0UoKy2C77
+         3pFTYifq/c1rA==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-X-Patchwork-Bot: notify
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1608573816-1465-1-git-send-email-tdas@codeaurora.org>
+References: <1608573816-1465-1-git-send-email-tdas@codeaurora.org>
+Subject: Re: [PATCH v1] clk: qcom: gcc-sc7180: Mark the camera abh clock always ON
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+To:     Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>
+Date:   Tue, 12 Jan 2021 11:25:34 -0800
+Message-ID: <161047953458.3661239.9839634954560476328@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When building with CONFIG_UBSAN_UNSIGNED_OVERFLOW, clang decides not to
-inline gpi_update_reg, which causes a linkage failure around __bad_mask:
+Quoting Taniya Das (2020-12-21 10:03:36)
+> The camera clock controller requires the AHB clock, the driver when
+> moved to use the pm_runtime_get() API, the camera ahb clock failed turn
+> on before access, thus mark it as always ON.
+>=20
+> Reported-by: Stephen Boyd <sboyd@kernel.org>
+> Fixes: 8d4025943e13 ("clk: qcom: camcc-sc7180: Use runtime PM ops instead=
+ of clk ones")
+> Signed-off-by: Taniya Das <tdas@codeaurora.org>
+> ---
 
-ld.lld: error: undefined symbol: __bad_mask
->>> referenced by bitfield.h:119 (include/linux/bitfield.h:119)
->>>               dma/qcom/gpi.o:(gpi_update_reg) in archive drivers/built-in.a
->>> referenced by bitfield.h:119 (include/linux/bitfield.h:119)
->>>               dma/qcom/gpi.o:(gpi_update_reg) in archive drivers/built-in.a
-
-If gpi_update_reg is not inlined, the mask value will not be known at
-compile time so the check in field_multiplier stays in the final
-object file, causing the above linkage failure. Always inline
-gpi_update_reg so that this check can never fail.
-
-Fixes: 5d0c3533a19f ("dmaengine: qcom: Add GPI dma driver")
-Link: https://github.com/ClangBuiltLinux/linux/issues/1243
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
----
- drivers/dma/qcom/gpi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-index 1a0bf6b0567a..e48eb397f433 100644
---- a/drivers/dma/qcom/gpi.c
-+++ b/drivers/dma/qcom/gpi.c
-@@ -584,7 +584,7 @@ static inline void gpi_write_reg_field(struct gpii *gpii, void __iomem *addr,
- 	gpi_write_reg(gpii, addr, val);
- }
- 
--static inline void
-+static __always_inline void
- gpi_update_reg(struct gpii *gpii, u32 offset, u32 mask, u32 val)
- {
- 	void __iomem *addr = gpii->regs + offset;
-
-base-commit: 7c53f6b671f4aba70ff15e1b05148b10d58c2837
--- 
-2.30.0
-
+Applied to clk-fixes
