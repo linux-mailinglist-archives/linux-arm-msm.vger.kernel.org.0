@@ -2,151 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D10C2F37A0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jan 2021 18:51:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 74E822F37E0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jan 2021 19:05:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727219AbhALRui (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jan 2021 12:50:38 -0500
-Received: from relay02.th.seeweb.it ([5.144.164.163]:51053 "EHLO
-        relay02.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726387AbhALRui (ORCPT
+        id S1732012AbhALSD6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jan 2021 13:03:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55008 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404215AbhALSD6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jan 2021 12:50:38 -0500
+        Tue, 12 Jan 2021 13:03:58 -0500
+Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77843C061575
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jan 2021 10:03:02 -0800 (PST)
 Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
         (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 5D1791F9F3;
-        Tue, 12 Jan 2021 18:49:54 +0100 (CET)
-Subject: Re: [PATCH 5/7] regulator: qcom-labibb: Implement short-circuit and
- over-current IRQs
-To:     Mark Brown <broonie@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        robh+dt@kernel.org, sumit.semwal@linaro.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        phone-devel@vger.kernel.org, konrad.dybcio@somainline.org,
-        marijn.suijten@somainline.org, martin.botka@somainline.org
-References: <20210109132921.140932-1-angelogioacchino.delregno@somainline.org>
- <20210109132921.140932-6-angelogioacchino.delregno@somainline.org>
- <20210111135745.GC4728@sirena.org.uk>
- <6dee36e4-fc78-c21b-daf8-120ee44535a3@somainline.org>
- <8115a574-ad43-d3c6-70d4-28c8a2f4a5f6@somainline.org>
- <09d70d24-5d0d-f1cd-d99e-5c213c8ea98c@somainline.org>
- <20210112172919.GD4646@sirena.org.uk>
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 489341F665;
+        Tue, 12 Jan 2021 19:02:55 +0100 (CET)
+Subject: Re: [PATCH 9/9] drm/msm/dpu: Fix timeout issues on command mode
+ panels
+To:     linux-arm-msm@vger.kernel.org
+Cc:     konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
+        martin.botka@somainline.org, phone-devel@vger.kernel.org,
+        robdclark@gmail.com, sean@poorly.run,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+References: <20210109133736.143469-1-angelogioacchino.delregno@somainline.org>
+ <20210109133736.143469-10-angelogioacchino.delregno@somainline.org>
 From:   AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>
-Message-ID: <e872bc39-a941-d552-5145-49f40d6fa657@somainline.org>
-Date:   Tue, 12 Jan 2021 18:49:53 +0100
+Message-ID: <bdc67afc-3736-5497-c43f-5165c55e0354@somainline.org>
+Date:   Tue, 12 Jan 2021 19:02:54 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.5.0
 MIME-Version: 1.0
-In-Reply-To: <20210112172919.GD4646@sirena.org.uk>
-Content-Type: text/plain; charset=windows-1252; format=flowed
+In-Reply-To: <20210109133736.143469-10-angelogioacchino.delregno@somainline.org>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 12/01/21 18:29, Mark Brown ha scritto:
-> On Mon, Jan 11, 2021 at 10:06:18PM +0100, AngeloGioacchino Del Regno wrote:
+Il 09/01/21 14:37, AngeloGioacchino Del Regno ha scritto:
+> In function dpu_encoder_phys_cmd_wait_for_commit_done we are always
+> checking if the relative CTL is started by waiting for an interrupt
+> to fire: it is fine to do that, but then sometimes we call this
+> function while the CTL is up and has never been put down, but that
+> interrupt gets raised only when the CTL gets a state change from
+> 0 to 1 (disabled to enabled), so we're going to wait for something
+> that will never happen on its own.
 > 
->> ...which was already a requirement before I touched it.
->> Now, this leaves two options here:
->> 1. Keep the of_get_irq way, or
->> 2. Move the interrupts, change the documentation (currently, only
->> pmi8998.dtsi) and also fix pmi8998.dtsi to reflect the new changes.
+> Solving this while avoiding to restart the CTL is actually possible
+> and can be done by just checking if it is already up and running
+> when the wait_for_commit_done function is called: in this case, so,
+> if the CTL was already running, we can say that the commit is done
+> if the command transmission is complete (in other terms, if the
+> interface has been flushed).
 > 
->> I am asking before proceeding because I know that changing a schema that is
->> already set sometimes gets "negated".
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 3 +++
+>   1 file changed, 3 insertions(+)
 > 
-> Well, if the binding isn't actually used changing it is a possibility.
-> If we keep the current binding you can still continue to use
-> of_get_irq() even from within the probe function, you know the name of
-> the node it's supposed to be in so you don't need to iterate or anything
-> to get it so not really any reason to use the callback.
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> index 2311e98480b9..0624864da343 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> @@ -695,6 +695,9 @@ static int dpu_encoder_phys_cmd_wait_for_commit_done(
+>   	if (!dpu_encoder_phys_cmd_is_master(phys_enc))
+>   		return 0;
+>   
+> +	if (phys_enc->hw_ctl->ops.is_started)
+> +		return dpu_encoder_phys_cmd_wait_for_tx_complete(phys_enc);
+> +
+>   	return _dpu_encoder_phys_cmd_wait_for_ctl_start(phys_enc);
+>   }
+>   
 > 
 
-I had understood that you didn't want to see of_* functions used in the 
-driver, that's why I was hesitant about the first one.
-
-I would be more for keeping the binding (that, by the way, is not really 
-used, the interrupts weren't implemented at all in the driver before me 
-doing that) for just one reason, which I'm going to explain with "sort 
-of" pseudocode (just to be shorter):
-
-EXAMPLE 1:
-labibb {
-     interrupts = <0 0>, <1 0>, <2 0>, <3 0>;
-     interrupt-names = "lab-sc", "lab-ocp", "ibb-sc", "ibb-ocp";
-     lab { };
-     ibb { };
-};
-
-for (i = 0; i < max_vregs; i++) {
-     short_circuit = platform_get_irq(pdev, i * 2);
-     overcurrent = platform_get_irq(pdev, ((i * 2) + 1));
-}
-
-EXAMPLE 2:
-
-snprintf strings for {lab,ibb}_{shortcircuit,overcurrent}, use 
-platform_get_irq_byname
-(pdev, blah);
-
-EXAMPLE 3:
-labibb {
-
-     lab {
-       interrupts = <0 0>, <1 0>;
-
-
-       interrupt-names = "sc", "ocp";
-
-     };
-
-     ibb {
-
-       interrupts = <2 0>, <3 0>;
-
-
-       interrupt-names = "sc", "ocp";
-
-
-     };
-
-};
-
-
-
-for (i = 0; i < max_vregs; i++) {
-
-     short_circuit = of_irq_get_byname(node, "sc");
-
-     overcurrent = of_irq_get_byname(node, "ocp");
-
-}
-
-
-First of all, in the *EXAMPLE 1*, we may be declaring interrupts for 
-both LAB and IBB, but actually disabling one of the two regulators: in 
-this specific case (I have no idea why anyone would want to do that, but 
-evaluating all the cases anyway) the human readability would be way 
-lower, in my opinion, as that'd add a possible layer of confusion.
-Also, I don't really like having to preallocate an array of chars and 
-snprintf names here and there (EXAMPLE 2) on the fly: in my eyes, it 
-looks a bit of a mess, but that's a highly personal opinion, many may 
-disagree.
-
-In *EXAMPLE 3* everything looks more human readable and, in some way, 
-less error-prone, as we can just use two fixed strings and that's it, 
-without multiplying this and adding that.
-
-
-I would go for keeping the current binding for the aforementioned 
-reasons. Before I go on sending a V2, I would like to know your opinion.
-Do you agree?
-
-Thanks,
--- Angelo
+Sorry, this patch is obviously faulty, Took it from the wrong local 
+tree. I will send a V2.
