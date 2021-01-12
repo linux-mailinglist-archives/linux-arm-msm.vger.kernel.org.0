@@ -2,183 +2,226 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DA5B92F3324
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jan 2021 15:45:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9BB6C2F3377
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jan 2021 16:00:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728355AbhALOpS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jan 2021 09:45:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40192 "EHLO
+        id S1732693AbhALO7m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jan 2021 09:59:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726241AbhALOpS (ORCPT
+        with ESMTP id S1732490AbhALO7l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jan 2021 09:45:18 -0500
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 919F9C061786
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jan 2021 06:44:37 -0800 (PST)
-Received: by mail-oi1-x22e.google.com with SMTP id x13so2553143oic.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jan 2021 06:44:37 -0800 (PST)
+        Tue, 12 Jan 2021 09:59:41 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C35AC061575;
+        Tue, 12 Jan 2021 06:59:01 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id o17so3817013lfg.4;
+        Tue, 12 Jan 2021 06:59:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=OZ6H+36o3j6qUM3JrVIORPFXFSr49vf4C5tKrsAYiiM=;
-        b=FeBHS8B6BOxj68A691cxsLmz37r8DC4we2hHRftBP1QB9qZEhSLVY2U/hDCY6/Pfzn
-         9PiWKf1AV6EWtYb5HNjMFoWxr5+2URqRFC1E/qURLmL166XIBfuAx+WVbUumdwSO3g0i
-         DynyCxz/02wJIy8ZLoduO3711/lgVJSumTAqji//gAkigj3fbq41cKG4Q+oNBATPEYtl
-         2sGOOPyGJGrqEvNo156RCxH/5re/kYnk79C6h8irtJ7LUUx9NK8MQgQQPPuHyjrUXfdZ
-         df9J3fTmgudCkm5Ct27du4leah5ahUidExO+8u+hRc65W2ujO5SFHNPgfRR5meyCZLDI
-         nKug==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=A+S9SR1UiAMJcykGGWw+EuDqjBvD6gWtwewF85tPhZ0=;
+        b=PYaLcVRKniBLz/5IOBDRe7Svt9PKdtHT8j++jvrKTiPTVoMs+cyOBRMDfX4Cr9ghMp
+         Jte9UTubJ7CC/hRLxaAwBH6xQsGSXXh0MqQ3Req6rN9hpcxvA5xP17bwSryY9K+jE2mQ
+         DzY6yQlRfuJgtobVmXWj7tOsAjI9wZWZT+dTNk3VuPDjPCkbMrdaxtCjJFk/LVsKRDW1
+         B6bgZFwgHNk2i8ztyOEM/PkpG3UEtgGeEkqWxV37klIWH/l190U6MKx4kurn1BK2pHFw
+         UaDlkoMA/QuF8Zrk02ec40/4vAqTiaUpfyEKZSFVK68xC6GSKfKo5v0awcU4i2oL9iHV
+         2fkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=OZ6H+36o3j6qUM3JrVIORPFXFSr49vf4C5tKrsAYiiM=;
-        b=DLCWXcFEl2SOK7v/XtsyJD0JykLEP+Tm/G9jo4IBoZjJteDkCenkby2UAqg9Kw5jLl
-         fV/fqiRnEGlOCsXj6squyge69zTk6SZk0CPMHF6wn8oHBbKLDqJY0bfAcP/LitNYIwbC
-         pF4z9iGXgIC3ScqBWTmNWdF4e7aT+sV61qxFwO7eZxcW2EsQ5S1IlBh/kwjlhL5Hf31W
-         HawRnsvMI1p3hhSG0FfbR9gnC8hPL7QPfovSywm9Viuq60Vpnwmdyix1ir96fW8y8RdU
-         zdIiwHntQIWQ3/XlZ4Wr4t72GgrhJWYErKWzYiPjoZcwncQzdPgwIZYfQrxv9WUeWxk8
-         P1jA==
-X-Gm-Message-State: AOAM53355Jctx+9VDMRLbdOPP34OBprExagRCGDrxVjybLI+dXfjl0Un
-        aNy0wRD/N3FSCxH+CGLva5VMgQ==
-X-Google-Smtp-Source: ABdhPJyvHdAobTbF2pWi0eBIKcmPfeIXmG1pEhK8BsDtzUwLLRMGldUEPBmguIk/fpyHj6yFY2OKuw==
-X-Received: by 2002:aca:909:: with SMTP id 9mr2451714oij.69.1610462676808;
-        Tue, 12 Jan 2021 06:44:36 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id w4sm659828otj.3.2021.01.12.06.44.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Jan 2021 06:44:36 -0800 (PST)
-Date:   Tue, 12 Jan 2021 08:44:34 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] cpufreq: qcom-hw: add missing devm_release_mem_region()
- call
-Message-ID: <X/210llTiuNt3haG@builder.lan>
-References: <20210112095236.20515-1-shawn.guo@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=A+S9SR1UiAMJcykGGWw+EuDqjBvD6gWtwewF85tPhZ0=;
+        b=XOjblR4MW/CaP1XiXaL8YzeON8yAkSVkhaMkAO+d1cPZUVrEWYluh72vsdfNJdx2ZH
+         OhisK/tRCCTxWeZueGsu+rtooVIfCRNuyrhb//AzP56ORu978xOeffc3tHSWPNSmpqe1
+         moZEDaOSS/C3KcPl8F1YR83R8yql+Lw7Cv8SMFTF5oqSVAeJmTdfj4EMQiTm55CgbaOO
+         SajDZjS2Kp0fc0U2FzM2dWOQxxxY/DzmDEOczoKOwJtF0BsGaazZzdi8PojwTsqjkLTj
+         3s3WI6AZaIMNyFf/8pvYMzz5XotxVp3vkQbRWxS0R0/MOO+MP49LuP7+yYPJqV69uSPK
+         +3Bw==
+X-Gm-Message-State: AOAM533F2cY4rDo6OCk2c+GtZ3OE6xbm4eG02X0XCeybRwcYS4abPjK0
+        B+KFkvpfO8WyE0UEhfXJOP5jRj8r4XqzPLm1oY2BEPhssHwZ3g==
+X-Google-Smtp-Source: ABdhPJyJlZ0sG2KzLq+bGutLMwC+6IY4fuutYzt3KgBZNOs/7hv9jHTZ4RQ22fyAgIDXjhmDDz4chmeon+NKaPSvKRs=
+X-Received: by 2002:ac2:5450:: with SMTP id d16mr2405138lfn.309.1610463539810;
+ Tue, 12 Jan 2021 06:58:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210112095236.20515-1-shawn.guo@linaro.org>
+References: <20210112013127.414277-1-danny@kdrag0n.dev>
+In-Reply-To: <20210112013127.414277-1-danny@kdrag0n.dev>
+From:   Alexey Minnekhanov <alexey.min@gmail.com>
+Date:   Tue, 12 Jan 2021 17:59:47 +0300
+Message-ID: <CANi4RBQCpWiyVLyBcevGcmRr=toPxVF2TrxFmM3vHHnYgaQVHg@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sdm660: Fix CPU capacities
+To:     Danny Lin <danny@kdrag0n.dev>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Alexey Minekhanov <alexeymin@postmarketos.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 12 Jan 03:52 CST 2021, Shawn Guo wrote:
+Hi!
+I always had a feeling something is not right in those cpu
+definitions, so cpus with reg 100-103 are little cores, and 0-3 big
+ones?
+But downstream sdm660.dtsi has a property "efficiency" [1] with values
+which are larger for cores 100-103 than for 0-3 cores (1638 > 1024),
+I'm confused...
 
-> On SDM845/850, running the following commands to put all cores in
-> freq-domain1 offline and then get one core back online, there will be
-> a request region error seen from qcom-hw driver.
-> 
-> $ echo 0 > /sys/devices/system/cpu/cpu4/online
-> $ echo 0 > /sys/devices/system/cpu/cpu5/online
-> $ echo 0 > /sys/devices/system/cpu/cpu6/online
-> $ echo 0 > /sys/devices/system/cpu/cpu7/online
-> $ echo 1 > /sys/devices/system/cpu/cpu4/online
-> 
-> [ 3395.915416] CPU4: shutdown
-> [ 3395.938185] psci: CPU4 killed (polled 0 ms)
-> [ 3399.071424] CPU5: shutdown
-> [ 3399.094316] psci: CPU5 killed (polled 0 ms)
-> [ 3402.139358] CPU6: shutdown
-> [ 3402.161705] psci: CPU6 killed (polled 0 ms)
-> [ 3404.742939] CPU7: shutdown
-> [ 3404.765592] psci: CPU7 killed (polled 0 ms)
-> [ 3411.492274] Detected VIPT I-cache on CPU4
-> [ 3411.492337] GICv3: CPU4: found redistributor 400 region 0:0x0000000017ae0000
-> [ 3411.492448] CPU4: Booted secondary processor 0x0000000400 [0x516f802d]
-> [ 3411.503654] qcom-cpufreq-hw 17d43000.cpufreq: can't request region for resource [mem 0x17d45800-0x17d46bff]
-> 
-> The cause is that the memory region requested in .init hook doesn't get
-> released in .exit hook, and the subsequent call to .init will always fail
-> on this error.  Let's break down the devm_platform_ioremap_resource()
-> call a bit, so that we can have the resource pointer to release memory
-> region from .exit hook.
-> 
-> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+Property "efficiency" is described in the same tree in [2].
+
+[1] https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/arch/arm/boot=
+/dts/qcom/sdm660.dtsi?h=3DLA.UM.7.2.c25#n155
+[2] https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/Documentation=
+/devicetree/bindings/arm/cpus.txt?h=3DLA.UM.7.2.c25#n216
+
+=D0=B2=D1=82, 12 =D1=8F=D0=BD=D0=B2. 2021 =D0=B3. =D0=B2 13:51, Danny Lin <=
+danny@kdrag0n.dev>:
+>
+> sdm660 has a big.LITTLE 4+4 CPU setup with CPUs 0-3 being little cores
+> and CPUs 4-7 being big cores. The big cores have higher IPC, so they
+> should have the higher capacity-dmips-mhz, not the other way around as
+> the device tree currently describes it. Fix the incorrect CPU map to
+> improve EAS scheduling behavior.
+>
+> While we're at it, let's replace the old DMIPS/MHz values with new
+> measurements that reflect the exact IPC of the CPUs as reported by
+> CoreMark.
+>
+> Performance measurements were made using my freqbench [1]
+> benchmark coordinator, which isolates, offlines, and disables the timer
+> tick on test CPUs to maximize accuracy. It uses EEMBC CoreMark [2] as
+> the workload and measures power usage using the PM660 PMIC's fuel
+> gauge.
+>
+> Normalized DMIPS/MHz capacity scale values for each CPU were calculated
+> from CoreMarks/MHz (CoreMark iterations per second per MHz), which
+> serves the same purpose. For each CPU, the final capacity-dmips-mhz
+> value is the C/MHz value of its maximum frequency normalized to
+> SCHED_CAPACITY_SCALE (1024) for the fastest CPU in the system.
+>
+> A Xiaomi Redmi Note 7 device running a downstream Qualcomm 4.4 kernel
+> was used for benchmarking to ensure proper frequency scaling and other
+> low-level controls.
+>
+> Raw benchmark results can be found in the freqbench repository [3].
+> Below is a human-readable summary:
+>
+> Frequency domains: cpu1 cpu4
+> Offline CPUs: cpu1 cpu2 cpu3 cpu4 cpu5 cpu6 cpu7
+> Baseline power usage: 1130 mW
+>
+> =3D=3D=3D=3D=3D CPU 1 =3D=3D=3D=3D=3D
+> Frequencies: 633 902 1113 1401 1536 1747 1843
+>
+>  633:  2058     3.2 C/MHz     48 mW    5.9 J   42.6 I/mJ   121.5 s
+>  902:  2930     3.2 C/MHz     72 mW    6.2 J   40.6 I/mJ    85.3 s
+> 1113:  3616     3.2 C/MHz     79 mW    5.4 J   46.0 I/mJ    69.1 s
+> 1401:  4551     3.2 C/MHz    125 mW    6.9 J   36.3 I/mJ    54.9 s
+> 1536:  4988     3.2 C/MHz    134 mW    6.7 J   37.1 I/mJ    50.1 s
+> 1747:  5674     3.2 C/MHz    179 mW    7.9 J   31.7 I/mJ    44.1 s
+> 1843:  5986     3.2 C/MHz    228 mW    9.5 J   26.3 I/mJ    41.8 s
+>
+> =3D=3D=3D=3D=3D CPU 4 =3D=3D=3D=3D=3D
+> Frequencies: 1113 1401 1747 1958 2150 2208
+>
+> 1113:  5825     5.2 C/MHz    220 mW    9.4 J   26.5 I/mJ    42.9 s
+> 1401:  7324     5.2 C/MHz    317 mW   10.8 J   23.1 I/mJ    34.1 s
+> 1747:  9135     5.2 C/MHz    474 mW   13.0 J   19.2 I/mJ    27.4 s
+> 1958: 10247     5.2 C/MHz    578 mW   14.1 J   17.7 I/mJ    24.4 s
+> 2150: 11246     5.2 C/MHz    694 mW   15.4 J   16.2 I/mJ    22.2 s
+> 2208: 11551     5.2 C/MHz    736 mW   15.9 J   15.7 I/mJ    21.7 s
+>
+> [1] https://github.com/kdrag0n/freqbench
+> [2] https://www.eembc.org/coremark/
+> [3] https://github.com/kdrag0n/freqbench/tree/master/results/sdm660/main
+>
+> Signed-off-by: Danny Lin <danny@kdrag0n.dev>
 > ---
->  drivers/cpufreq/qcom-cpufreq-hw.c | 8 +++++++-
->  1 file changed, 7 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-> index 9ed5341dc515..315ee987d2d3 100644
-> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
-> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-> @@ -32,6 +32,7 @@ struct qcom_cpufreq_soc_data {
->  
->  struct qcom_cpufreq_data {
->  	void __iomem *base;
-> +	struct resource *res;
->  	const struct qcom_cpufreq_soc_data *soc_data;
->  };
->  
-> @@ -280,6 +281,7 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
->  	struct of_phandle_args args;
->  	struct device_node *cpu_np;
->  	struct device *cpu_dev;
-> +	struct resource *res;
->  	void __iomem *base;
->  	struct qcom_cpufreq_data *data;
->  	int ret, index;
-> @@ -303,7 +305,8 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
->  
->  	index = args.args[0];
->  
-> -	base = devm_platform_ioremap_resource(pdev, index);
-> +	res = platform_get_resource(pdev, IORESOURCE_MEM, index);
-> +	base = devm_ioremap_resource(dev, res);
->  	if (IS_ERR(base))
->  		return PTR_ERR(base);
->  
-> @@ -315,6 +318,7 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
->  
->  	data->soc_data = of_device_get_match_data(&pdev->dev);
->  	data->base = base;
-> +	data->res = res;
->  
->  	/* HW should be in enabled state to proceed */
->  	if (!(readl_relaxed(base + data->soc_data->reg_enable) & 0x1)) {
-> @@ -358,11 +362,13 @@ static int qcom_cpufreq_hw_cpu_exit(struct cpufreq_policy *policy)
->  	struct device *cpu_dev = get_cpu_device(policy->cpu);
->  	struct qcom_cpufreq_data *data = policy->driver_data;
->  	struct platform_device *pdev = cpufreq_get_driver_data();
-> +	struct resource *res = data->res;
->  
->  	dev_pm_opp_remove_all_dynamic(cpu_dev);
->  	dev_pm_opp_of_cpumask_remove_table(policy->related_cpus);
->  	kfree(policy->freq_table);
->  	devm_iounmap(&pdev->dev, data->base);
-> +	devm_release_mem_region(&pdev->dev, res->start, resource_size(res));
-
-Intuitively I feel that resources allocated in cpufreq_driver->init()
-should be explicitly freed in cpufreq_driver->exit() and should thereby
-not use devm to track the allocations.
-
-Further more, the fact that one needs to explicitly perform the
-release_mem_region explicitly is a good sign that one shouldn't manually
-unmap things that was mapped by devm_ioremap_resource().
-
-
-
-But afaict when qcom_cpufreq_hw_driver_remove() calls
-cpufreq_unregister_driver() to end up in cpufreq_remove_dev() it will
-only call cpufreq_driver->exit() iff cpufreq_driver->offline() is
-implemented - which it isn't in our case. So without using devm to track
-this we would leak the memory - which also implies that we're leaking
-the "freq_table" when this happens.
-
-But isn't that simply a typo in cpufreq_remove_dev()? And can't we just
-use ioremap()/iounmap() here instead?
-
-Regards,
-Bjorn
-
->  
->  	return 0;
->  }
-> -- 
-> 2.17.1
-> 
+>  arch/arm64/boot/dts/qcom/sdm660.dtsi | 16 ++++++++--------
+>  1 file changed, 8 insertions(+), 8 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sdm660.dtsi b/arch/arm64/boot/dts/q=
+com/sdm660.dtsi
+> index 4abbdd03d1e7..ca985c5429db 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm660.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm660.dtsi
+> @@ -40,7 +40,7 @@ CPU0: cpu@100 {
+>                         compatible =3D "qcom,kryo260";
+>                         reg =3D <0x0 0x100>;
+>                         enable-method =3D "psci";
+> -                       capacity-dmips-mhz =3D <1024>;
+> +                       capacity-dmips-mhz =3D <636>;
+>                         next-level-cache =3D <&L2_1>;
+>                         L2_1: l2-cache {
+>                                 compatible =3D "cache";
+> @@ -59,7 +59,7 @@ CPU1: cpu@101 {
+>                         compatible =3D "qcom,kryo260";
+>                         reg =3D <0x0 0x101>;
+>                         enable-method =3D "psci";
+> -                       capacity-dmips-mhz =3D <1024>;
+> +                       capacity-dmips-mhz =3D <636>;
+>                         next-level-cache =3D <&L2_1>;
+>                         L1_I_101: l1-icache {
+>                                 compatible =3D "cache";
+> @@ -74,7 +74,7 @@ CPU2: cpu@102 {
+>                         compatible =3D "qcom,kryo260";
+>                         reg =3D <0x0 0x102>;
+>                         enable-method =3D "psci";
+> -                       capacity-dmips-mhz =3D <1024>;
+> +                       capacity-dmips-mhz =3D <636>;
+>                         next-level-cache =3D <&L2_1>;
+>                         L1_I_102: l1-icache {
+>                                 compatible =3D "cache";
+> @@ -89,7 +89,7 @@ CPU3: cpu@103 {
+>                         compatible =3D "qcom,kryo260";
+>                         reg =3D <0x0 0x103>;
+>                         enable-method =3D "psci";
+> -                       capacity-dmips-mhz =3D <1024>;
+> +                       capacity-dmips-mhz =3D <636>;
+>                         next-level-cache =3D <&L2_1>;
+>                         L1_I_103: l1-icache {
+>                                 compatible =3D "cache";
+> @@ -104,7 +104,7 @@ CPU4: cpu@0 {
+>                         compatible =3D "qcom,kryo260";
+>                         reg =3D <0x0 0x0>;
+>                         enable-method =3D "psci";
+> -                       capacity-dmips-mhz =3D <640>;
+> +                       capacity-dmips-mhz =3D <1024>;
+>                         next-level-cache =3D <&L2_0>;
+>                         L2_0: l2-cache {
+>                                 compatible =3D "cache";
+> @@ -123,7 +123,7 @@ CPU5: cpu@1 {
+>                         compatible =3D "qcom,kryo260";
+>                         reg =3D <0x0 0x1>;
+>                         enable-method =3D "psci";
+> -                       capacity-dmips-mhz =3D <640>;
+> +                       capacity-dmips-mhz =3D <1024>;
+>                         next-level-cache =3D <&L2_0>;
+>                         L1_I_1: l1-icache {
+>                                 compatible =3D "cache";
+> @@ -138,7 +138,7 @@ CPU6: cpu@2 {
+>                         compatible =3D "qcom,kryo260";
+>                         reg =3D <0x0 0x2>;
+>                         enable-method =3D "psci";
+> -                       capacity-dmips-mhz =3D <640>;
+> +                       capacity-dmips-mhz =3D <1024>;
+>                         next-level-cache =3D <&L2_0>;
+>                         L1_I_2: l1-icache {
+>                                 compatible =3D "cache";
+> @@ -153,7 +153,7 @@ CPU7: cpu@3 {
+>                         compatible =3D "qcom,kryo260";
+>                         reg =3D <0x0 0x3>;
+>                         enable-method =3D "psci";
+> -                       capacity-dmips-mhz =3D <640>;
+> +                       capacity-dmips-mhz =3D <1024>;
+>                         next-level-cache =3D <&L2_0>;
+>                         L1_I_3: l1-icache {
+>                                 compatible =3D "cache";
+> --
+> 2.29.2
+>
