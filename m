@@ -2,167 +2,299 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3FE712F2C69
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jan 2021 11:16:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E09D2F2C7B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jan 2021 11:20:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404592AbhALKPg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jan 2021 05:15:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38636 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404578AbhALKPf (ORCPT
+        id S2404320AbhALKSU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jan 2021 05:18:20 -0500
+Received: from lb2-smtp-cloud9.xs4all.net ([194.109.24.26]:39803 "EHLO
+        lb2-smtp-cloud9.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727053AbhALKST (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jan 2021 05:15:35 -0500
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF307C061786
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jan 2021 02:14:52 -0800 (PST)
-Received: by mail-pl1-x633.google.com with SMTP id b8so1171744plx.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jan 2021 02:14:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=5iSTFwNPbYkUnV4St2XcKkbysvK454B2BvcX9uDXsfw=;
-        b=oouQoSvU8qtTR+cxxuakvs/nYUTQCUegBjPTuGBI1i69HXiPnBf3DeUaSHboNZcmun
-         2dQHrp3eDdhBmvvUzkgjJw/cswyBeEOmLSSDe3oa5cQ0nMLRyfmThyFKLqpjfaAQrUhY
-         tRTD3aLx1tcTE+nSJkBR7lFlkDl0Q7hiuAWlOOJZG3GsXlBAIQ0ylGqpjTlphHQ3W11W
-         GReV35vi4xD8cwpLvHq2oQHiu8lHculO0ZPbL1bp4okEpjs0QzCqbfyOHtXULXtJ1LV1
-         rV7ZJV+7rR2NLQMD/IHGISk/SEJYT4Pw8/1I/cBBhc/iJDHnvgDFcvXKJPpCuH+Ndpr4
-         DgGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5iSTFwNPbYkUnV4St2XcKkbysvK454B2BvcX9uDXsfw=;
-        b=ddHypqbQGPwG99+JhAQ0XxLH5/x7OQBSP/ci6tgDbPi/OOmJRlB7xUH/8TvcQ2V2vw
-         KFdymUfmeP78/VSWzB5dFTzO7/LhqbizFWvG+myDhCELIw/qZzXDUGq7LbXufgNye70u
-         S9m3xhpg0Pl0UlJMqPwNEWkZvVBqoLKB0lBuax7BVFwAQIp0wXUCbxURv5L4xt79ate+
-         H73dHx+8WWP6UzdCZspMWG+PhJi4agcKhd3A2+UQrLrBDm0nMEzSN00onO4SJl99oIMJ
-         ah7awoBvHau2y6ZQgBiD+YElIcyMD1cddqfbmK8X+idLLerU49fj7rF4sJbzQUGjfJjx
-         mn7w==
-X-Gm-Message-State: AOAM531vcdFSyDbfQ0sJ0FGPlrjAfO0iOSHIHxNy/nsrVlF2ho52Saai
-        s9RzSYWNmaQuMJiebyz4+vo3Dg==
-X-Google-Smtp-Source: ABdhPJz45mPmZrjIh58BTQhk3Ojtq9FJXPW1JRAhOrIAQDCiSXj1NtJW8hUbl7YAsIre6FiY4Wt10A==
-X-Received: by 2002:a17:90a:a44:: with SMTP id o62mr2374505pjo.209.1610446492151;
-        Tue, 12 Jan 2021 02:14:52 -0800 (PST)
-Received: from localhost ([122.172.85.111])
-        by smtp.gmail.com with ESMTPSA id e65sm2655129pfh.175.2021.01.12.02.14.51
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 12 Jan 2021 02:14:51 -0800 (PST)
-Date:   Tue, 12 Jan 2021 15:44:49 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Shawn Guo <shawn.guo@linaro.org>,
-        Ionela Voinescu <ionela.voinescu@arm.com>
-Cc:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-pm@vger.kernel.org,
+        Tue, 12 Jan 2021 05:18:19 -0500
+Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
+        by smtp-cloud9.xs4all.net with ESMTPA
+        id zGk0kDf9FVfyLzGk3kp6Bd; Tue, 12 Jan 2021 11:17:35 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s2;
+        t=1610446655; bh=BvimkMfLcHGMoc07KAwPIZpzvCmAEbR/EJ40smYhPZM=;
+        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
+         Subject;
+        b=lZzAXJE7rDGnwQrfaWzl8tssRj8GyE/D80oq08tX/QYPPOUPULmY1QyrFdIDULHyS
+         ojapb5vXkx2ohon8c2e8z0M99B0HvHLEC2mWAzuvSFljCNOOSntGbEH1c94O5EW+Lp
+         mN+U2xGhb9JM4B1wfX76CkZa5FTZnMtgyXmYBxtm9uJvOrWdahVlps/9i2ygue7Cfu
+         XzBBWU+wKza9nAl/lt28txmFBl0xKs2onoJ42XAi108pZoDIN950WqbxWBtl/Lv/s/
+         okqhqW2tV4JiyA4PRMzwwNsNNC63zUOg0f/zyjOCgblCT45XdTD0KtvkUFT7FOAOVU
+         SWSDqBoTc1tKg==
+Subject: Re: [PATCH v3 1/3] v4l: Add HDR10 static metadata controls
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] cpufreq: qcom-hw: add missing devm_release_mem_region()
- call
-Message-ID: <20210112101449.cmkjaegukxut3tym@vireshk-i7>
-References: <20210112095236.20515-1-shawn.guo@linaro.org>
+Cc:     Ezequiel Garcia <ezequiel@collabora.com>,
+        Nicolas Dufresne <nicolas.dufresne@collabora.com>
+References: <20201208145931.6187-1-stanimir.varbanov@linaro.org>
+ <20201208145931.6187-2-stanimir.varbanov@linaro.org>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Message-ID: <dcfafee3-9ac8-3f00-3f1d-82fa916abf1a@xs4all.nl>
+Date:   Tue, 12 Jan 2021 11:17:32 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210112095236.20515-1-shawn.guo@linaro.org>
-User-Agent: NeoMutt/20180716-391-311a52
+In-Reply-To: <20201208145931.6187-2-stanimir.varbanov@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfDFxN3iFfB16jOihL7StkkuHV4WdOhi9w6ZbaqhBNhtrHorRMPPrmHyOMrjzpPjvhSdpHbAUF8grmtZ8CnzAOsctc8ZMvcKBkIpAxYSG3q4Ugb+Q1j51
+ Tqg5NdCYwEzu/tTOqX/WPRvci0WgEZsY2gM470l4JPlDQWSTvJxmQO3V4Lpifjt279w7wgV5uUxyabYj8tC838/tpDIj94zuiA2cAs+Keha9paEzDFLnHhCB
+ BtVxZtuA9Qd4TfAKgKJIgUVAncP++8fR7TaO81FCPShSfE9ax/TCsK5rFUqcTxoBayJ8XHptEpMo1ISPhTi92X6U1ra1B6sv5wn8461TK/ri1bf89I2uDZ8h
+ 1ikRYZjcVfKDffd6TKk6Hi7hkvjhSWWozK1V1KCrPkO64sAIvOyGfeytwKiVN7Z/ia2+5t5t
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12-01-21, 17:52, Shawn Guo wrote:
-> On SDM845/850, running the following commands to put all cores in
-> freq-domain1 offline and then get one core back online, there will be
-> a request region error seen from qcom-hw driver.
+On 08/12/2020 15:59, Stanimir Varbanov wrote:
+> Here we introduce a new Colorimetry control class and add
+> Content light level and Mastering display colour volume v4l2
+> compound controls, relevant payload structures and validation.
 > 
-> $ echo 0 > /sys/devices/system/cpu/cpu4/online
-> $ echo 0 > /sys/devices/system/cpu/cpu5/online
-> $ echo 0 > /sys/devices/system/cpu/cpu6/online
-> $ echo 0 > /sys/devices/system/cpu/cpu7/online
-> $ echo 1 > /sys/devices/system/cpu/cpu4/online
-> 
-> [ 3395.915416] CPU4: shutdown
-> [ 3395.938185] psci: CPU4 killed (polled 0 ms)
-> [ 3399.071424] CPU5: shutdown
-> [ 3399.094316] psci: CPU5 killed (polled 0 ms)
-> [ 3402.139358] CPU6: shutdown
-> [ 3402.161705] psci: CPU6 killed (polled 0 ms)
-> [ 3404.742939] CPU7: shutdown
-> [ 3404.765592] psci: CPU7 killed (polled 0 ms)
-> [ 3411.492274] Detected VIPT I-cache on CPU4
-> [ 3411.492337] GICv3: CPU4: found redistributor 400 region 0:0x0000000017ae0000
-> [ 3411.492448] CPU4: Booted secondary processor 0x0000000400 [0x516f802d]
-> [ 3411.503654] qcom-cpufreq-hw 17d43000.cpufreq: can't request region for resource [mem 0x17d45800-0x17d46bff]
-> 
-> The cause is that the memory region requested in .init hook doesn't get
-> released in .exit hook, and the subsequent call to .init will always fail
-> on this error.  Let's break down the devm_platform_ioremap_resource()
-> call a bit, so that we can have the resource pointer to release memory
-> region from .exit hook.
-> 
-> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 > ---
->  drivers/cpufreq/qcom-cpufreq-hw.c | 8 +++++++-
->  1 file changed, 7 insertions(+), 1 deletion(-)
-
-FWIW, Ionela also sent a fix though I like this one better for the
-obvious reasons.
-
-https://lore.kernel.org/lkml/20210108151406.23595-1-ionela.voinescu@arm.com/
-
-> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-> index 9ed5341dc515..315ee987d2d3 100644
-> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
-> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-> @@ -32,6 +32,7 @@ struct qcom_cpufreq_soc_data {
+>  .../media/videodev2.h.rst.exceptions          |  2 +
+>  drivers/media/v4l2-core/v4l2-ctrls.c          | 68 +++++++++++++++++++
+>  include/media/v4l2-ctrls.h                    |  4 ++
+>  include/uapi/linux/v4l2-controls.h            | 35 ++++++++++
+>  include/uapi/linux/videodev2.h                |  2 +
+>  5 files changed, 111 insertions(+)
+> 
+> diff --git a/Documentation/userspace-api/media/videodev2.h.rst.exceptions b/Documentation/userspace-api/media/videodev2.h.rst.exceptions
+> index 0ed170c6e720..af4b8b87c5d7 100644
+> --- a/Documentation/userspace-api/media/videodev2.h.rst.exceptions
+> +++ b/Documentation/userspace-api/media/videodev2.h.rst.exceptions
+> @@ -147,6 +147,8 @@ replace symbol V4L2_CTRL_TYPE_HEVC_PPS :c:type:`v4l2_ctrl_type`
+>  replace symbol V4L2_CTRL_TYPE_HEVC_SLICE_PARAMS :c:type:`v4l2_ctrl_type`
+>  replace symbol V4L2_CTRL_TYPE_AREA :c:type:`v4l2_ctrl_type`
+>  replace symbol V4L2_CTRL_TYPE_FWHT_PARAMS :c:type:`v4l2_ctrl_type`
+> +replace symbol V4L2_CTRL_TYPE_HDR10_CLL_INFO :c:type:`v4l2_ctrl_hdr10_cll_info`
+> +replace symbol V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY :c:type:`v4l2_ctrl_hdr10_mastering_display`
 >  
->  struct qcom_cpufreq_data {
->  	void __iomem *base;
-> +	struct resource *res;
->  	const struct qcom_cpufreq_soc_data *soc_data;
+>  # V4L2 capability defines
+>  replace define V4L2_CAP_VIDEO_CAPTURE device-capabilities
+> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
+> index 5cbe0ffbf501..7bd6c3098f30 100644
+> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
+> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
+> @@ -1015,6 +1015,9 @@ const char *v4l2_ctrl_get_name(u32 id)
+>  	case V4L2_CID_MPEG_VIDEO_HEVC_DECODE_MODE:		return "HEVC Decode Mode";
+>  	case V4L2_CID_MPEG_VIDEO_HEVC_START_CODE:		return "HEVC Start Code";
+>  
+> +	case V4L2_CID_COLORIMETRY_HDR10_CLL_INFO:		return "HDR10 Content Light Info";
+> +	case V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY:	return "HDR10 Mastering Display";
+> +
+>  	/* CAMERA controls */
+>  	/* Keep the order of the 'case's the same as in v4l2-controls.h! */
+>  	case V4L2_CID_CAMERA_CLASS:		return "Camera Controls";
+> @@ -1466,6 +1469,12 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
+>  	case V4L2_CID_MPEG_VIDEO_HEVC_SLICE_PARAMS:
+>  		*type = V4L2_CTRL_TYPE_HEVC_SLICE_PARAMS;
+>  		break;
+> +	case V4L2_CID_COLORIMETRY_HDR10_CLL_INFO:
+> +		*type = V4L2_CTRL_TYPE_HDR10_CLL_INFO;
+> +		break;
+> +	case V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY:
+> +		*type = V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY;
+> +		break;
+>  	case V4L2_CID_UNIT_CELL_SIZE:
+>  		*type = V4L2_CTRL_TYPE_AREA;
+>  		*flags |= V4L2_CTRL_FLAG_READ_ONLY;
+> @@ -1765,6 +1774,12 @@ static void std_log(const struct v4l2_ctrl *ctrl)
+>  	case V4L2_CTRL_TYPE_FWHT_PARAMS:
+>  		pr_cont("FWHT_PARAMS");
+>  		break;
+> +	case V4L2_CTRL_TYPE_HDR10_CLL_INFO:
+> +		pr_cont("HDR10_CLL_INFO");
+> +		break;
+> +	case V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY:
+> +		pr_cont("HDR10_MASTERING_DISPLAY");
+> +		break;
+>  	default:
+>  		pr_cont("unknown type %d", ctrl->type);
+>  		break;
+
+I'm missing support for the new V4L2_CID_COLORIMETRY_CLASS here.
+
+Please split up this patch in two parts: the first adds the new class, the
+second adds the new controls in that class.
+
+Ditto for the documentation. I recommend that you do a grep for e.g.
+V4L2_CID_DETECT_CLASS to see all the places where you need to add something
+for this new class.
+
+> @@ -1817,6 +1832,7 @@ static int std_validate_compound(const struct v4l2_ctrl *ctrl, u32 idx,
+>  	struct v4l2_ctrl_hevc_sps *p_hevc_sps;
+>  	struct v4l2_ctrl_hevc_pps *p_hevc_pps;
+>  	struct v4l2_ctrl_hevc_slice_params *p_hevc_slice_params;
+> +	struct v4l2_ctrl_hdr10_mastering_display *p_hdr10_mastering;
+>  	struct v4l2_area *area;
+>  	void *p = ptr.p + idx * ctrl->elem_size;
+>  	unsigned int i;
+> @@ -2112,6 +2128,52 @@ static int std_validate_compound(const struct v4l2_ctrl *ctrl, u32 idx,
+>  		zero_padding(*p_hevc_slice_params);
+>  		break;
+>  
+> +	case V4L2_CTRL_TYPE_HDR10_CLL_INFO:
+> +		break;
+> +
+> +	case V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY:
+> +		p_hdr10_mastering = p;
+> +
+> +		for (i = 0; i < 3; ++i) {
+> +			if (p_hdr10_mastering->display_primaries_x[i] <
+> +				V4L2_HDR10_MASTERING_PRIMARIES_X_LOW ||
+> +			    p_hdr10_mastering->display_primaries_x[i] >
+> +				V4L2_HDR10_MASTERING_PRIMARIES_X_HIGH ||
+> +			    p_hdr10_mastering->display_primaries_y[i] <
+> +				V4L2_HDR10_MASTERING_PRIMARIES_Y_LOW ||
+> +			    p_hdr10_mastering->display_primaries_y[i] >
+> +				V4L2_HDR10_MASTERING_PRIMARIES_Y_HIGH)
+> +				return -EINVAL;
+> +		}
+> +
+> +		if (p_hdr10_mastering->white_point_x <
+> +			V4L2_HDR10_MASTERING_WHITE_POINT_X_LOW ||
+> +		    p_hdr10_mastering->white_point_x >
+> +			V4L2_HDR10_MASTERING_WHITE_POINT_X_HIGH ||
+> +		    p_hdr10_mastering->white_point_y <
+> +			V4L2_HDR10_MASTERING_WHITE_POINT_Y_LOW ||
+> +		    p_hdr10_mastering->white_point_y >
+> +			V4L2_HDR10_MASTERING_WHITE_POINT_Y_HIGH)
+> +			return -EINVAL;
+> +
+> +		if (p_hdr10_mastering->max_display_mastering_luminance <
+> +			V4L2_HDR10_MASTERING_MAX_LUMA_LOW ||
+> +		    p_hdr10_mastering->max_display_mastering_luminance >
+> +			V4L2_HDR10_MASTERING_MAX_LUMA_HIGH ||
+> +		    p_hdr10_mastering->min_display_mastering_luminance <
+> +			V4L2_HDR10_MASTERING_MIN_LUMA_LOW ||
+> +		    p_hdr10_mastering->min_display_mastering_luminance >
+> +			V4L2_HDR10_MASTERING_MIN_LUMA_HIGH)
+> +			return -EINVAL;
+> +
+> +		if (p_hdr10_mastering->max_display_mastering_luminance ==
+> +			V4L2_HDR10_MASTERING_MAX_LUMA_LOW &&
+> +		    p_hdr10_mastering->min_display_mastering_luminance ==
+> +			V4L2_HDR10_MASTERING_MIN_LUMA_HIGH)
+> +			return -EINVAL;
+> +
+> +		break;
+> +
+>  	case V4L2_CTRL_TYPE_AREA:
+>  		area = p;
+>  		if (!area->width || !area->height)
+> @@ -2804,6 +2866,12 @@ static struct v4l2_ctrl *v4l2_ctrl_new(struct v4l2_ctrl_handler *hdl,
+>  	case V4L2_CTRL_TYPE_HEVC_SLICE_PARAMS:
+>  		elem_size = sizeof(struct v4l2_ctrl_hevc_slice_params);
+>  		break;
+> +	case V4L2_CTRL_TYPE_HDR10_CLL_INFO:
+> +		elem_size = sizeof(struct v4l2_ctrl_hdr10_cll_info);
+> +		break;
+> +	case V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY:
+> +		elem_size = sizeof(struct v4l2_ctrl_hdr10_mastering_display);
+> +		break;
+>  	case V4L2_CTRL_TYPE_AREA:
+>  		elem_size = sizeof(struct v4l2_area);
+>  		break;
+> diff --git a/include/media/v4l2-ctrls.h b/include/media/v4l2-ctrls.h
+> index 167ca8c8424f..8308acc89b11 100644
+> --- a/include/media/v4l2-ctrls.h
+> +++ b/include/media/v4l2-ctrls.h
+> @@ -54,6 +54,8 @@ struct video_device;
+>   * @p_hevc_sps:			Pointer to an HEVC sequence parameter set structure.
+>   * @p_hevc_pps:			Pointer to an HEVC picture parameter set structure.
+>   * @p_hevc_slice_params:	Pointer to an HEVC slice parameters structure.
+> + * @p_hdr10_cll:		Pointer to an HDR10 Content Light Level structure.
+> + * @p_hdr10_mastering	:	Pointer to an HDR10 Mastering Display structure.
+>   * @p_area:			Pointer to an area.
+>   * @p:				Pointer to a compound value.
+>   * @p_const:			Pointer to a constant compound value.
+> @@ -78,6 +80,8 @@ union v4l2_ctrl_ptr {
+>  	struct v4l2_ctrl_hevc_sps *p_hevc_sps;
+>  	struct v4l2_ctrl_hevc_pps *p_hevc_pps;
+>  	struct v4l2_ctrl_hevc_slice_params *p_hevc_slice_params;
+> +	struct v4l2_ctrl_hdr10_cll_info *p_hdr10_cll;
+> +	struct v4l2_ctrl_hdr10_mastering_display *p_hdr10_mastering;
+>  	struct v4l2_area *p_area;
+>  	void *p;
+>  	const void *p_const;
+> diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
+> index 823b214aac0c..8563f789cbe2 100644
+> --- a/include/uapi/linux/v4l2-controls.h
+> +++ b/include/uapi/linux/v4l2-controls.h
+> @@ -66,6 +66,7 @@
+>  #define V4L2_CTRL_CLASS_RF_TUNER	0x00a20000	/* RF tuner controls */
+>  #define V4L2_CTRL_CLASS_DETECT		0x00a30000	/* Detection controls */
+>  #define V4L2_CTRL_CLASS_CODEC_STATELESS 0x00a40000	/* Stateless codecs controls */
+> +#define V4L2_CTRL_CLASS_COLORIMETRY	0x00a50000	/* Colorimetry controls */
+>  
+>  /* User-class control IDs */
+>  
+> @@ -1635,6 +1636,40 @@ struct v4l2_ctrl_fwht_params {
+>  	__u32 quantization;
 >  };
 >  
-> @@ -280,6 +281,7 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
->  	struct of_phandle_args args;
->  	struct device_node *cpu_np;
->  	struct device *cpu_dev;
-> +	struct resource *res;
->  	void __iomem *base;
->  	struct qcom_cpufreq_data *data;
->  	int ret, index;
-> @@ -303,7 +305,8 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
+> +#define V4L2_CID_COLORIMETRY_BASE	(V4L2_CTRL_CLASS_COLORIMETRY | 0x900)
+> +#define V4L2_CID_COLORIMETRY_CLASS	(V4L2_CTRL_CLASS_COLORIMETRY | 1)
+> +
+> +#define V4L2_CID_COLORIMETRY_HDR10_CLL_INFO	(V4L2_CID_COLORIMETRY_BASE + 0)
+> +
+> +struct v4l2_ctrl_hdr10_cll_info {
+> +	__u16 max_content_light_level;
+> +	__u16 max_pic_average_light_level;
+> +};
+> +
+> +#define V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY	(V4L2_CID_COLORIMETRY_BASE + 1)
+> +
+> +#define V4L2_HDR10_MASTERING_PRIMARIES_X_LOW	5
+> +#define V4L2_HDR10_MASTERING_PRIMARIES_X_HIGH	37000
+> +#define V4L2_HDR10_MASTERING_PRIMARIES_Y_LOW	5
+> +#define V4L2_HDR10_MASTERING_PRIMARIES_Y_HIGH	42000
+> +#define V4L2_HDR10_MASTERING_WHITE_POINT_X_LOW	5
+> +#define V4L2_HDR10_MASTERING_WHITE_POINT_X_HIGH	37000
+> +#define V4L2_HDR10_MASTERING_WHITE_POINT_Y_LOW	5
+> +#define V4L2_HDR10_MASTERING_WHITE_POINT_Y_HIGH	42000
+> +#define V4L2_HDR10_MASTERING_MAX_LUMA_LOW	50000
+> +#define V4L2_HDR10_MASTERING_MAX_LUMA_HIGH	100000000
+> +#define V4L2_HDR10_MASTERING_MIN_LUMA_LOW	1
+> +#define V4L2_HDR10_MASTERING_MIN_LUMA_HIGH	50000
+> +
+> +struct v4l2_ctrl_hdr10_mastering_display {
+> +	__u16 display_primaries_x[3];
+> +	__u16 display_primaries_y[3];
+> +	__u16 white_point_x;
+> +	__u16 white_point_y;
+> +	__u32 max_display_mastering_luminance;
+> +	__u32 min_display_mastering_luminance;
+> +};
+> +
+>  /* MPEG-compression definitions kept for backwards compatibility */
+>  #ifndef __KERNEL__
+>  #define V4L2_CTRL_CLASS_MPEG            V4L2_CTRL_CLASS_CODEC
+> diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
+> index 79dbde3bcf8d..1bde498e36a0 100644
+> --- a/include/uapi/linux/videodev2.h
+> +++ b/include/uapi/linux/videodev2.h
+> @@ -1792,6 +1792,8 @@ enum v4l2_ctrl_type {
+>  	V4L2_CTRL_TYPE_H264_PRED_WEIGHTS    = 0x0205,
 >  
->  	index = args.args[0];
->  
-> -	base = devm_platform_ioremap_resource(pdev, index);
-> +	res = platform_get_resource(pdev, IORESOURCE_MEM, index);
-> +	base = devm_ioremap_resource(dev, res);
->  	if (IS_ERR(base))
->  		return PTR_ERR(base);
->  
-> @@ -315,6 +318,7 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
->  
->  	data->soc_data = of_device_get_match_data(&pdev->dev);
->  	data->base = base;
-> +	data->res = res;
->  
->  	/* HW should be in enabled state to proceed */
->  	if (!(readl_relaxed(base + data->soc_data->reg_enable) & 0x1)) {
-> @@ -358,11 +362,13 @@ static int qcom_cpufreq_hw_cpu_exit(struct cpufreq_policy *policy)
->  	struct device *cpu_dev = get_cpu_device(policy->cpu);
->  	struct qcom_cpufreq_data *data = policy->driver_data;
->  	struct platform_device *pdev = cpufreq_get_driver_data();
-> +	struct resource *res = data->res;
->  
->  	dev_pm_opp_remove_all_dynamic(cpu_dev);
->  	dev_pm_opp_of_cpumask_remove_table(policy->related_cpus);
->  	kfree(policy->freq_table);
->  	devm_iounmap(&pdev->dev, data->base);
-> +	devm_release_mem_region(&pdev->dev, res->start, resource_size(res));
->  
->  	return 0;
->  }
-> -- 
-> 2.17.1
+>  	V4L2_CTRL_TYPE_FWHT_PARAMS	    = 0x0220,
+> +	V4L2_CTRL_TYPE_HDR10_CLL_INFO		= 0x0221,
 
--- 
-viresh
+I'd change this to 0x0110 and move it up to after V4L2_CTRL_TYPE_AREA.
+
+> +	V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY	= 0x0222,
+>  };
+>  
+>  /*  Used in the VIDIOC_QUERYCTRL ioctl for querying controls */
+> 
+
+Regards,
+
+	Hans
