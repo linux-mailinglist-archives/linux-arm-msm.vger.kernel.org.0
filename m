@@ -2,150 +2,259 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D2DF52F2BD6
+	by mail.lfdr.de (Postfix) with ESMTP id 40E4B2F2BD5
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jan 2021 10:55:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392797AbhALJxg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jan 2021 04:53:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33914 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392796AbhALJxf (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S1732434AbhALJxf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Tue, 12 Jan 2021 04:53:35 -0500
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E426C061794
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jan 2021 01:52:55 -0800 (PST)
-Received: by mail-pg1-x52d.google.com with SMTP id g15so1084738pgu.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jan 2021 01:52:55 -0800 (PST)
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33902 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2392782AbhALJxe (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 12 Jan 2021 04:53:34 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3ED9C061575
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jan 2021 01:52:53 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id r3so1806578wrt.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jan 2021 01:52:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id;
-        bh=srYJmug92j0OsKq39q/OswiRd1JmfW8IEDQEUNljHnU=;
-        b=v6QHWUWmXwSiWv4vsGTQ7GLUJJSixC5ZJAFb0Ut+X0+S5gVu2soDHqYqyZSm9NdZ06
-         TsQlgU5yqykIXGSkOMbu7FfpwdPG6VtkbbjfsDhA54xrd/RqXRr+2N5FD8JWLKpoYveJ
-         mm9jkMf5XDGphd7fswb2vlhv5MFmordwqOBnBIQtwOQVtxtq+TIsNc9whBv2p+xTJ8EY
-         kfcZigdbZs1g2f5PSev6nA9/cCnMKeqZEGXPK56wyRaLl8/ev5tx5qbHV2bCqSthIOk0
-         xJ6Gnb4rz8lk6BGwViTNBqqT1ie/UZyl/D4KojcKuf3rSeOgFzSwxo6Kesv71i0D5VhQ
-         AcvA==
+        bh=pABd35WyxYMbryPSfkKAlGUAMDlbfqD1F+YHyIoLTX4=;
+        b=MDUeyFO5k83Stcm3D6zlB7i8jGSsYG+NDFGJ1beLffF1ZbuWR2n4IQeOAaJnMuqsGi
+         2QEe5VtMVZqEaoju3v8+Q+cbJMr5vW7YIHZnTmaeVWqjA5YzKwbK2lGg8ASwgRiG05sw
+         8cNWBnWrA9oAL8ZD31ZbeXuvS2UV9X3tKT8FSxnYX/MFUuMTcKTzFbGT6ta9P6j5+hcP
+         N/Ay7/YqcV/KapvmkdV4B4YctG6mtK7rpvUPR6yLb8t9F4fYyuM78aBzZFbhPtqbPkjC
+         r1VPrUvBGYFIUFxVOP67XWsSCmBxYwzF5CaJIqQwGeKnNYWA24MN7yegWmhCYhMov4Ow
+         k4uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=srYJmug92j0OsKq39q/OswiRd1JmfW8IEDQEUNljHnU=;
-        b=lVJFw75eN16sadAGbgl6P506nxGfllIR+njYzWJ7/u9KbnavZ9gsvzrV5DKKSeASzQ
-         sDJQLs+lZDj24RInJBypei5lOCrtmahhD3KbDRJsWdVQIPQp122LIjT+EU0xcbJEMpzw
-         V0k8bKeoAU85suH5oWoWLdAASwoghfy5qkYR2Duyot7WZj/fbvWqijsc/HB/Y4dO1BCo
-         BkRFMcLLLKg2P5TgGeOnpkuRgOzEM4KX0CGRKEQYPX7gLXPaOWDP5JCot0Txn59VRl51
-         d345HUparHxQzLTgbAUKD5dyxWoRX4ChvZQBEHfUa//SyxH8BMofXaiS0FIt9/M/C/W3
-         6jeQ==
-X-Gm-Message-State: AOAM532MLiuGLrPf3MEzSIRdiHdoJ7uWIrVKdadEwkJVMq8vIwZ4kqZO
-        lNePcdH1uHIM6qwNT30zSk3orA==
-X-Google-Smtp-Source: ABdhPJwf6MAMibH7JkcYDhg522v1k8fc/WJIF0jy8Bi1ICycl/pYNANP29CdGpsl8dhddqc01bzmyw==
-X-Received: by 2002:a62:64d2:0:b029:19e:662e:5e99 with SMTP id y201-20020a6264d20000b029019e662e5e99mr3845537pfb.17.1610445173548;
-        Tue, 12 Jan 2021 01:52:53 -0800 (PST)
-Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id b6sm2464174pfd.43.2021.01.12.01.52.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=pABd35WyxYMbryPSfkKAlGUAMDlbfqD1F+YHyIoLTX4=;
+        b=tsyobzpnZMnZAVm5wVFhQsCBW/HC1Ewr6QRJoReciDxC8bRkc9LnFBLqPEdR49sy2/
+         HAD79zwIHZAlUOH3MtBgV2q7wkp2XRPskwXo+boKAv7epvcQKNZFoRAW84mAT2L8MLya
+         sL5gwIwXALnirWKL13QTb0KZfGqExZ0Ya2XY//BF9JpnnRcky30NwrQCpDF2p4cWw53C
+         jFG7MBPlUmmofbrdAnqNWoH8i7F9X8b6Qjvb4IVKrrxm3Vblu3Az8cLS4tWgdlFE+9jK
+         pl48+1o4xR7doIdsgv+1zf5ilThI3i4UWrx+27Utb+yxuNlHoiL4OA1RwetuuFw7glmy
+         Ex0A==
+X-Gm-Message-State: AOAM530SFIduHbYHkfQrrmV1LtMrrpzxrYFlOfInbhqAUog97OvZA+Gx
+        StXzRqvdI3zyJFRcj28l6z15ww==
+X-Google-Smtp-Source: ABdhPJz/Cr3aOZxGLBBvH9wY9yPr4c8tEYHvAoT2EDmA5ynDhyhj88uUNFMBBFIH44Aw5hDysvTrog==
+X-Received: by 2002:adf:c6c4:: with SMTP id c4mr3473868wrh.348.1610445172486;
         Tue, 12 Jan 2021 01:52:52 -0800 (PST)
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>
-Subject: [PATCH] cpufreq: qcom-hw: add missing devm_release_mem_region() call
-Date:   Tue, 12 Jan 2021 17:52:36 +0800
-Message-Id: <20210112095236.20515-1-shawn.guo@linaro.org>
-X-Mailer: git-send-email 2.17.1
+Received: from localhost.localdomain ([88.122.66.28])
+        by smtp.gmail.com with ESMTPSA id a25sm3008286wmb.25.2021.01.12.01.52.51
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 12 Jan 2021 01:52:52 -0800 (PST)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, rostedt@goodmis.org,
+        Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH] mhi: Add tracepoints
+Date:   Tue, 12 Jan 2021 11:00:28 +0100
+Message-Id: <1610445628-29799-1-git-send-email-loic.poulain@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On SDM845/850, running the following commands to put all cores in
-freq-domain1 offline and then get one core back online, there will be
-a request region error seen from qcom-hw driver.
+Add a set of tracepoints for reporting MHI events such as
+MHI transfers, events, doorbell, etc...
 
-$ echo 0 > /sys/devices/system/cpu/cpu4/online
-$ echo 0 > /sys/devices/system/cpu/cpu5/online
-$ echo 0 > /sys/devices/system/cpu/cpu6/online
-$ echo 0 > /sys/devices/system/cpu/cpu7/online
-$ echo 1 > /sys/devices/system/cpu/cpu4/online
+This can be used for debugging purpose.
 
-[ 3395.915416] CPU4: shutdown
-[ 3395.938185] psci: CPU4 killed (polled 0 ms)
-[ 3399.071424] CPU5: shutdown
-[ 3399.094316] psci: CPU5 killed (polled 0 ms)
-[ 3402.139358] CPU6: shutdown
-[ 3402.161705] psci: CPU6 killed (polled 0 ms)
-[ 3404.742939] CPU7: shutdown
-[ 3404.765592] psci: CPU7 killed (polled 0 ms)
-[ 3411.492274] Detected VIPT I-cache on CPU4
-[ 3411.492337] GICv3: CPU4: found redistributor 400 region 0:0x0000000017ae0000
-[ 3411.492448] CPU4: Booted secondary processor 0x0000000400 [0x516f802d]
-[ 3411.503654] qcom-cpufreq-hw 17d43000.cpufreq: can't request region for resource [mem 0x17d45800-0x17d46bff]
-
-The cause is that the memory region requested in .init hook doesn't get
-released in .exit hook, and the subsequent call to .init will always fail
-on this error.  Let's break down the devm_platform_ioremap_resource()
-call a bit, so that we can have the resource pointer to release memory
-region from .exit hook.
-
-Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 ---
- drivers/cpufreq/qcom-cpufreq-hw.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/bus/mhi/core/main.c |  12 +++++
+ include/trace/events/mhi.h  | 121 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 133 insertions(+)
+ create mode 100644 include/trace/events/mhi.h
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-index 9ed5341dc515..315ee987d2d3 100644
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -32,6 +32,7 @@ struct qcom_cpufreq_soc_data {
+diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+index c1eb43d..312e4db 100644
+--- a/drivers/bus/mhi/core/main.c
++++ b/drivers/bus/mhi/core/main.c
+@@ -15,6 +15,9 @@
+ #include <linux/slab.h>
+ #include "internal.h"
  
- struct qcom_cpufreq_data {
- 	void __iomem *base;
-+	struct resource *res;
- 	const struct qcom_cpufreq_soc_data *soc_data;
- };
++#define CREATE_TRACE_POINTS
++#include <trace/events/mhi.h>
++
+ int __must_check mhi_read_reg(struct mhi_controller *mhi_cntrl,
+ 			      void __iomem *base, u32 offset, u32 *out)
+ {
+@@ -61,6 +64,8 @@ void mhi_write_reg_field(struct mhi_controller *mhi_cntrl, void __iomem *base,
+ void mhi_write_db(struct mhi_controller *mhi_cntrl, void __iomem *db_addr,
+ 		  dma_addr_t db_val)
+ {
++	trace_mhi_ring_doorbell(db_addr, db_val, mhi_cntrl);
++
+ 	mhi_write_reg(mhi_cntrl, db_addr, 4, upper_32_bits(db_val));
+ 	mhi_write_reg(mhi_cntrl, db_addr, 0, lower_32_bits(db_val));
+ }
+@@ -118,6 +123,7 @@ void mhi_ring_chan_db(struct mhi_controller *mhi_cntrl,
+ 	 */
+ 	dma_wmb();
+ 	*ring->ctxt_wp = db;
++	trace_mhi_update_ring_wp(ring, mhi_cntrl);
  
-@@ -280,6 +281,7 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
- 	struct of_phandle_args args;
- 	struct device_node *cpu_np;
- 	struct device *cpu_dev;
-+	struct resource *res;
- 	void __iomem *base;
- 	struct qcom_cpufreq_data *data;
- 	int ret, index;
-@@ -303,7 +305,8 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
+ 	mhi_chan->db_cfg.process_db(mhi_cntrl, &mhi_chan->db_cfg,
+ 				    ring->db_addr, db);
+@@ -724,6 +730,8 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
+ 	while (dev_rp != local_rp) {
+ 		enum mhi_pkt_type type = MHI_TRE_GET_EV_TYPE(local_rp);
  
- 	index = args.args[0];
++		trace_mhi_event(local_rp, mhi_cntrl);
++
+ 		switch (type) {
+ 		case MHI_PKT_TYPE_BW_REQ_EVENT:
+ 		{
+@@ -872,6 +880,8 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
  
--	base = devm_platform_ioremap_resource(pdev, index);
-+	res = platform_get_resource(pdev, IORESOURCE_MEM, index);
-+	base = devm_ioremap_resource(dev, res);
- 	if (IS_ERR(base))
- 		return PTR_ERR(base);
+ 		WARN_ON(chan >= mhi_cntrl->max_chan);
  
-@@ -315,6 +318,7 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
++		trace_mhi_event(local_rp, mhi_cntrl);
++
+ 		/*
+ 		 * Only process the event ring elements whose channel
+ 		 * ID is within the maximum supported range.
+@@ -1098,6 +1108,8 @@ int mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
+ 	mhi_add_ring_element(mhi_cntrl, tre_ring);
+ 	mhi_add_ring_element(mhi_cntrl, buf_ring);
  
- 	data->soc_data = of_device_get_match_data(&pdev->dev);
- 	data->base = base;
-+	data->res = res;
- 
- 	/* HW should be in enabled state to proceed */
- 	if (!(readl_relaxed(base + data->soc_data->reg_enable) & 0x1)) {
-@@ -358,11 +362,13 @@ static int qcom_cpufreq_hw_cpu_exit(struct cpufreq_policy *policy)
- 	struct device *cpu_dev = get_cpu_device(policy->cpu);
- 	struct qcom_cpufreq_data *data = policy->driver_data;
- 	struct platform_device *pdev = cpufreq_get_driver_data();
-+	struct resource *res = data->res;
- 
- 	dev_pm_opp_remove_all_dynamic(cpu_dev);
- 	dev_pm_opp_of_cpumask_remove_table(policy->related_cpus);
- 	kfree(policy->freq_table);
- 	devm_iounmap(&pdev->dev, data->base);
-+	devm_release_mem_region(&pdev->dev, res->start, resource_size(res));
- 
++	trace_mhi_transfer(mhi_tre, mhi_cntrl, mhi_chan->chan);
++
  	return 0;
  }
+ 
+diff --git a/include/trace/events/mhi.h b/include/trace/events/mhi.h
+new file mode 100644
+index 0000000..903fdd4
+--- /dev/null
++++ b/include/trace/events/mhi.h
+@@ -0,0 +1,121 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#undef TRACE_SYSTEM
++#define TRACE_SYSTEM mhi
++
++#if !defined(_TRACE_MHI_H) || defined(TRACE_HEADER_MULTI_READ)
++#define _TRACE_MHI_H
++
++#include <linux/mhi.h>
++#include <linux/tracepoint.h>
++
++#include "../../drivers/bus/mhi/core/internal.h"
++
++TRACE_EVENT(mhi_transfer,
++
++	TP_PROTO(struct mhi_tre *tre, struct mhi_controller *cntrl, u32 chan),
++
++	TP_ARGS(tre, cntrl, chan),
++
++	TP_STRUCT__entry(
++		__field(int,	cntrl_index)
++		__field(u32,	channel)
++		__field(void *,	treaddr)
++		__field(u64,	treptr)
++		__field(u32,	tredword0)
++		__field(u32,	tredword1)
++	),
++
++	TP_fast_assign(
++		__entry->cntrl_index = cntrl->index;
++		__entry->channel = chan;
++		__entry->treaddr = tre;
++		__entry->treptr = tre->ptr;
++		__entry->tredword0 = tre->dword[0];
++		__entry->tredword1 = tre->dword[1];
++	),
++
++	TP_printk("mhi%d.%u treaddr=%p treptr=%llx tredword0=%08x tredword1=%08x",
++		  __entry->cntrl_index, __entry->channel, __entry->treaddr,
++		  __entry->treptr, __entry->tredword0, __entry->tredword1)
++);
++
++TRACE_EVENT(mhi_update_ring_wp,
++
++	TP_PROTO(struct mhi_ring *ring, struct mhi_controller *cntrl),
++
++	TP_ARGS(ring, cntrl),
++
++	TP_STRUCT__entry(
++		__field(int,	cntrl_index)
++		__field(void *,	ring)
++		__field(void *,	wp_host)
++		__field(u64,	wp_device)
++	),
++
++	TP_fast_assign(
++		__entry->cntrl_index = cntrl->index;
++		__entry->ring = ring;
++		__entry->wp_host = ring->wp;
++		__entry->wp_device = *ring->ctxt_wp;
++	),
++
++	TP_printk("mhi%d ringaddr=%p wp_host=%p wp_device=%llx",
++		  __entry->cntrl_index, __entry->ring, __entry->wp_host,
++		  __entry->wp_device)
++);
++
++TRACE_EVENT(mhi_ring_doorbell,
++
++	TP_PROTO(void __iomem *db_addr, dma_addr_t db_val, struct mhi_controller *cntrl),
++
++	TP_ARGS(db_addr, db_val, cntrl),
++
++	TP_STRUCT__entry(
++		__field(int,		cntrl_index)
++		__field(void *,		dbaddr)
++		__field(dma_addr_t,	dbval)
++	),
++
++	TP_fast_assign(
++		__entry->cntrl_index = cntrl->index;
++		__entry->dbaddr = db_addr;
++		__entry->dbval = db_val;
++	),
++
++	TP_printk("mhi%d dbaddr=%p dbval=%llx", __entry->cntrl_index,
++		  __entry->dbaddr, __entry->dbval)
++);
++
++TRACE_EVENT(mhi_event,
++
++	TP_PROTO(struct mhi_tre *tre, struct mhi_controller *cntrl),
++
++	TP_ARGS(tre, cntrl),
++
++	TP_STRUCT__entry(
++		__field(int,		cntrl_index)
++		__field(u32,		channel)
++		__field(unsigned int,	type)
++		__field(u64,		treptr)
++		__field(u32,		tredword0)
++		__field(u32,		tredword1)
++	),
++
++	TP_fast_assign(
++		__entry->cntrl_index = cntrl->index;
++		__entry->channel = MHI_TRE_GET_EV_CHID(tre);
++		__entry->type = MHI_TRE_GET_EV_TYPE(tre);
++		__entry->treptr = tre->ptr;
++		__entry->tredword0 = tre->dword[0];
++		__entry->tredword1 = tre->dword[1];
++	),
++
++	TP_printk("mhi%d.%u type=%u treptr=%llx tredword0=%08x tredword1=%08x",
++		  __entry->cntrl_index, __entry->channel, __entry->type,
++		  __entry->treptr, __entry->tredword0, __entry->tredword1)
++);
++
++#endif /* _TRACE_MHI_H */
++
++/* This part must be outside protection */
++#include <trace/define_trace.h>
 -- 
-2.17.1
+2.7.4
 
