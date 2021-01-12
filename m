@@ -2,213 +2,217 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 574DC2F38DE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jan 2021 19:29:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B7A92F39A3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jan 2021 20:06:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392380AbhALS26 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jan 2021 13:28:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60538 "EHLO
+        id S2406670AbhALTFg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jan 2021 14:05:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728425AbhALS26 (ORCPT
+        with ESMTP id S2406667AbhALTFf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jan 2021 13:28:58 -0500
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28AE0C061575
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jan 2021 10:28:18 -0800 (PST)
-Received: by mail-pl1-x62b.google.com with SMTP id y8so1847883plp.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jan 2021 10:28:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to;
-        bh=Gy0Z0PSEdh9IDe9aHIwEMn7mNk9MNBjfvaTIlyzrOI0=;
-        b=PDLQiaYgl2Roh3GeL+qEFXQkrwix8pdBKlHgS0r5AVVnBX8fmU1iXRGEEPILMoy11E
-         5D7L+tbyjmriQZn1Qmys8T4QAwIBL0KwqqIFjrJVK4WDRPLR56K/1PmT0S5xF1l7zlXa
-         KTpf0gbg8E2hlUV2/v1/EIj7N/mCMfrmm6hdk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to;
-        bh=Gy0Z0PSEdh9IDe9aHIwEMn7mNk9MNBjfvaTIlyzrOI0=;
-        b=B/HrZq/74GLInYAQu1RTgRLWseWroXc06MR8Mj5rx6JCqeqRuwqXVZCt6SVF9e0mq0
-         AL/9B9rYELetpadUvseTkKWTWSb+hfDS9Sc2IzohXzd9a3aQZxt4MYB085A4KJgcOnjv
-         XNQ+dUfTceoUmuOnkdn7fs0WiWU6UrrMm08boKipVxT/LkmqPV1fMy3fdeFHRZDH2haG
-         8Z6WHrk5w8WoOQmNd/j231XtSeHly0Xa3b2ob8Lu6JAgqyrxuN/II4yG9fqZI8FzG7GC
-         04a1UNWBIcHylvk+7d8PahD2aC23gVl+aqko+/hIcJ94HpgkYze/6k4sj81iBOqKHY2y
-         0bFw==
-X-Gm-Message-State: AOAM530u/yK7iCdhY0TbrpcjrvPj0OjvJ2QmitVriXNfBfIbonOLx37Q
-        Y3liWinhIC24H2OznTYY9u2Rcg==
-X-Google-Smtp-Source: ABdhPJzOYWFNzF04eCSj8+ciQZIAHyyqDq49g/OBlf/3N4Rm6XXoWEv0P58OitE3+vs6ln7VJW9Beg==
-X-Received: by 2002:a17:902:b717:b029:dc:3e69:6dd5 with SMTP id d23-20020a170902b717b02900dc3e696dd5mr270587pls.70.1610476097238;
-        Tue, 12 Jan 2021 10:28:17 -0800 (PST)
-Received: from rj-aorus.ric.broadcom.com ([192.19.228.250])
-        by smtp.gmail.com with ESMTPSA id gx21sm3795082pjb.31.2021.01.12.10.28.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Jan 2021 10:28:16 -0800 (PST)
-Subject: Re: [PATCH v2 1/2] arm64: dts: broadcom: clear the warnings caused by
- empty dma-ranges
-To:     Arnd Bergmann <arnd@kernel.org>,
-        Florian Fainelli <f.fainelli@gmail.com>
-Cc:     Bharat Gooty <bharat.gooty@broadcom.com>,
-        devicetree <devicetree@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Scott Branden <sbranden@broadcom.com>,
-        Ray Jui <rjui@broadcom.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        Tue, 12 Jan 2021 14:05:35 -0500
+Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13150C061575;
+        Tue, 12 Jan 2021 11:04:55 -0800 (PST)
+Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 6BE821F8BE;
+        Tue, 12 Jan 2021 20:04:53 +0100 (CET)
+Subject: Re: [PATCH] arm64: dts: qcom: sdm660: Fix CPU capacities
+To:     Alexey Minnekhanov <alexey.min@gmail.com>,
+        Danny Lin <danny@kdrag0n.dev>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        bcm-kernel-feedback-list <bcm-kernel-feedback-list@broadcom.com>,
-        Zhen Lei <thunder.leizhen@huawei.com>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
-References: <20201016090833.1892-1-thunder.leizhen@huawei.com>
- <20201016090833.1892-2-thunder.leizhen@huawei.com>
- <20201128045328.2411772-1-f.fainelli@gmail.com>
- <CAK8P3a1_5RgcPz+bgo1bbUBk8NTJd=1-Y5-=CsQYkFgLfTE3_A@mail.gmail.com>
- <9c6c6b7e-8c39-8c49-5c87-9b560c027841@broadcom.com>
- <CAK8P3a2XYk8D80XARrpUSBHk1yye3KHXOdaQge4HNSZZOC=xKw@mail.gmail.com>
- <CACvutz9v+TBUbrCo3X-u5ebbs04nR0y0yQN3qWfSAyZVy9RM2g@mail.gmail.com>
- <c38cf11a-ed1d-d150-52fb-e3b4a0a30712@gmail.com>
- <CAK8P3a1TViQopQNFE4+Dtac0v2CneGiy22WYu5BuYv8HX2r8Lg@mail.gmail.com>
-From:   Ray Jui <ray.jui@broadcom.com>
-Message-ID: <18112862-a42e-95b1-39a3-2e414667f39b@broadcom.com>
-Date:   Tue, 12 Jan 2021 10:28:13 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Alexey Minekhanov <alexeymin@postmarketos.org>
+References: <20210112013127.414277-1-danny@kdrag0n.dev>
+ <CANi4RBQCpWiyVLyBcevGcmRr=toPxVF2TrxFmM3vHHnYgaQVHg@mail.gmail.com>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Message-ID: <c6ecc6c0-3a95-0a4e-6a4d-d753dfaa2748@somainline.org>
+Date:   Tue, 12 Jan 2021 20:04:53 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
-In-Reply-To: <CAK8P3a1TViQopQNFE4+Dtac0v2CneGiy22WYu5BuYv8HX2r8Lg@mail.gmail.com>
-Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-        boundary="000000000000bb4ae005b8b82f45"
+In-Reply-To: <CANi4RBQCpWiyVLyBcevGcmRr=toPxVF2TrxFmM3vHHnYgaQVHg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---000000000000bb4ae005b8b82f45
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Il 12/01/21 15:59, Alexey Minnekhanov ha scritto:
+> Hi!
+> I always had a feeling something is not right in those cpu
+> definitions, so cpus with reg 100-103 are little cores, and 0-3 big
+> ones?
+> But downstream sdm660.dtsi has a property "efficiency" [1] with values
+> which are larger for cores 100-103 than for 0-3 cores (1638 > 1024),
+> I'm confused...
+All the SDM630, SDM636 and SDM660 smartphones I ever saw are booting off 
+of the BIG cluster (and that's why cpu@100 is CPU0), and at 0x100 you 
+find the first BIG CPU.
 
-Hi Arnd,
-
-On 2020-12-15 7:49 a.m., Arnd Bergmann wrote:
-> On Tue, Dec 15, 2020 at 4:41 PM Florian Fainelli <f.fainelli@gmail.com> wrote:
->>
->> On 12/15/2020 5:19 AM, Bharat Gooty wrote:
->>> Since the IOMMU is disabled and DMA engine is on 32-bit bus, We can not
->>> give the complete DDR for the USB DMA.
->>> So restricting the usable DAM size to 4GB.
->>
->> Thanks, can you make this a proper patch submission along with a Fixes:
->> tag that is:
->>
->> Fixes: 2013a4b684b6 ("arm64: dts: broadcom: clear the warnings caused by
->> empty dma-ranges")
 > 
-> Yes, that would be helpful, though I would appreciate a better description
-> that explains what is actually going on: is it the device or the bus that
-> has the 32-bit limitation, and if it is indeed a bug in the device, why do
-> you pretend that this is a 64-bit device on a 32-bit bus instead (this
-> could also use a comment in the dts file)?
+> Property "efficiency" is described in the same tree in [2].
 > 
->         Arnd
+> [1] https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/arch/arm/boot/dts/qcom/sdm660.dtsi?h=LA.UM.7.2.c25#n155
+> [2] https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/Documentation/devicetree/bindings/arm/cpus.txt?h=LA.UM.7.2.c25#n216
+> 
+> вт, 12 янв. 2021 г. в 13:51, Danny Lin <danny@kdrag0n.dev>:
+>>
+>> sdm660 has a big.LITTLE 4+4 CPU setup with CPUs 0-3 being little cores
+>> and CPUs 4-7 being big cores. The big cores have higher IPC, so they
+>> should have the higher capacity-dmips-mhz, not the other way around as
+>> the device tree currently describes it. Fix the incorrect CPU map to
+>> improve EAS scheduling behavior.
+>>
+>> While we're at it, let's replace the old DMIPS/MHz values with new
+>> measurements that reflect the exact IPC of the CPUs as reported by
+>> CoreMark.
+>>
+>> Performance measurements were made using my freqbench [1]
+>> benchmark coordinator, which isolates, offlines, and disables the timer
+>> tick on test CPUs to maximize accuracy. It uses EEMBC CoreMark [2] as
+>> the workload and measures power usage using the PM660 PMIC's fuel
+>> gauge.
+>>
+>> Normalized DMIPS/MHz capacity scale values for each CPU were calculated
+>> from CoreMarks/MHz (CoreMark iterations per second per MHz), which
+>> serves the same purpose. For each CPU, the final capacity-dmips-mhz
+>> value is the C/MHz value of its maximum frequency normalized to
+>> SCHED_CAPACITY_SCALE (1024) for the fastest CPU in the system.
+>>
+>> A Xiaomi Redmi Note 7 device running a downstream Qualcomm 4.4 kernel
+>> was used for benchmarking to ensure proper frequency scaling and other
+>> low-level controls.
+>>
+This is wrong, the downstream kernel may be doing "magic" to switch 
+clusters the other way around, and this is likely... Please, run your 
+benchmark on a upstream kernel: there may be differences.
+
+>> Raw benchmark results can be found in the freqbench repository [3].
+>> Below is a human-readable summary:
+>>
+>> Frequency domains: cpu1 cpu4
+>> Offline CPUs: cpu1 cpu2 cpu3 cpu4 cpu5 cpu6 cpu7
+>> Baseline power usage: 1130 mW
+>>
+>> ===== CPU 1 =====
+>> Frequencies: 633 902 1113 1401 1536 1747 1843
+>>
+>>   633:  2058     3.2 C/MHz     48 mW    5.9 J   42.6 I/mJ   121.5 s
+>>   902:  2930     3.2 C/MHz     72 mW    6.2 J   40.6 I/mJ    85.3 s
+>> 1113:  3616     3.2 C/MHz     79 mW    5.4 J   46.0 I/mJ    69.1 s
+>> 1401:  4551     3.2 C/MHz    125 mW    6.9 J   36.3 I/mJ    54.9 s
+>> 1536:  4988     3.2 C/MHz    134 mW    6.7 J   37.1 I/mJ    50.1 s
+>> 1747:  5674     3.2 C/MHz    179 mW    7.9 J   31.7 I/mJ    44.1 s
+>> 1843:  5986     3.2 C/MHz    228 mW    9.5 J   26.3 I/mJ    41.8 s
+>>
+>> ===== CPU 4 =====
+>> Frequencies: 1113 1401 1747 1958 2150 2208
+>>
+>> 1113:  5825     5.2 C/MHz    220 mW    9.4 J   26.5 I/mJ    42.9 s
+>> 1401:  7324     5.2 C/MHz    317 mW   10.8 J   23.1 I/mJ    34.1 s
+>> 1747:  9135     5.2 C/MHz    474 mW   13.0 J   19.2 I/mJ    27.4 s
+>> 1958: 10247     5.2 C/MHz    578 mW   14.1 J   17.7 I/mJ    24.4 s
+>> 2150: 11246     5.2 C/MHz    694 mW   15.4 J   16.2 I/mJ    22.2 s
+>> 2208: 11551     5.2 C/MHz    736 mW   15.9 J   15.7 I/mJ    21.7 s
+>>
+>> [1] https://github.com/kdrag0n/freqbench
+>> [2] https://www.eembc.org/coremark/
+>> [3] https://github.com/kdrag0n/freqbench/tree/master/results/sdm660/main
+>>
+>> Signed-off-by: Danny Lin <danny@kdrag0n.dev>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sdm660.dtsi | 16 ++++++++--------
+>>   1 file changed, 8 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sdm660.dtsi b/arch/arm64/boot/dts/qcom/sdm660.dtsi
+>> index 4abbdd03d1e7..ca985c5429db 100644
+>> --- a/arch/arm64/boot/dts/qcom/sdm660.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sdm660.dtsi
+>> @@ -40,7 +40,7 @@ CPU0: cpu@100 {
+>>                          compatible = "qcom,kryo260";
+>>                          reg = <0x0 0x100>;
+>>                          enable-method = "psci";
+>> -                       capacity-dmips-mhz = <1024>;
+>> +                       capacity-dmips-mhz = <636>;
+>>                          next-level-cache = <&L2_1>;
+>>                          L2_1: l2-cache {
+>>                                  compatible = "cache";
+>> @@ -59,7 +59,7 @@ CPU1: cpu@101 {
+>>                          compatible = "qcom,kryo260";
+>>                          reg = <0x0 0x101>;
+>>                          enable-method = "psci";
+>> -                       capacity-dmips-mhz = <1024>;
+>> +                       capacity-dmips-mhz = <636>;
+>>                          next-level-cache = <&L2_1>;
+>>                          L1_I_101: l1-icache {
+>>                                  compatible = "cache";
+>> @@ -74,7 +74,7 @@ CPU2: cpu@102 {
+>>                          compatible = "qcom,kryo260";
+>>                          reg = <0x0 0x102>;
+>>                          enable-method = "psci";
+>> -                       capacity-dmips-mhz = <1024>;
+>> +                       capacity-dmips-mhz = <636>;
+>>                          next-level-cache = <&L2_1>;
+>>                          L1_I_102: l1-icache {
+>>                                  compatible = "cache";
+>> @@ -89,7 +89,7 @@ CPU3: cpu@103 {
+>>                          compatible = "qcom,kryo260";
+>>                          reg = <0x0 0x103>;
+>>                          enable-method = "psci";
+>> -                       capacity-dmips-mhz = <1024>;
+>> +                       capacity-dmips-mhz = <636>;
+>>                          next-level-cache = <&L2_1>;
+>>                          L1_I_103: l1-icache {
+>>                                  compatible = "cache";
+>> @@ -104,7 +104,7 @@ CPU4: cpu@0 {
+>>                          compatible = "qcom,kryo260";
+>>                          reg = <0x0 0x0>;
+>>                          enable-method = "psci";
+>> -                       capacity-dmips-mhz = <640>;
+>> +                       capacity-dmips-mhz = <1024>;
+>>                          next-level-cache = <&L2_0>;
+>>                          L2_0: l2-cache {
+>>                                  compatible = "cache";
+>> @@ -123,7 +123,7 @@ CPU5: cpu@1 {
+>>                          compatible = "qcom,kryo260";
+>>                          reg = <0x0 0x1>;
+>>                          enable-method = "psci";
+>> -                       capacity-dmips-mhz = <640>;
+>> +                       capacity-dmips-mhz = <1024>;
+>>                          next-level-cache = <&L2_0>;
+>>                          L1_I_1: l1-icache {
+>>                                  compatible = "cache";
+>> @@ -138,7 +138,7 @@ CPU6: cpu@2 {
+>>                          compatible = "qcom,kryo260";
+>>                          reg = <0x0 0x2>;
+>>                          enable-method = "psci";
+>> -                       capacity-dmips-mhz = <640>;
+>> +                       capacity-dmips-mhz = <1024>;
+>>                          next-level-cache = <&L2_0>;
+>>                          L1_I_2: l1-icache {
+>>                                  compatible = "cache";
+>> @@ -153,7 +153,7 @@ CPU7: cpu@3 {
+>>                          compatible = "qcom,kryo260";
+>>                          reg = <0x0 0x3>;
+>>                          enable-method = "psci";
+>> -                       capacity-dmips-mhz = <640>;
+>> +                       capacity-dmips-mhz = <1024>;
+>>                          next-level-cache = <&L2_0>;
+>>                          L1_I_3: l1-icache {
+>>                                  compatible = "cache";
+>> --
+>> 2.29.2
+>>
+> 
 > 
 
-Sorry for the delay in reply. Bharat finally got time to do some 
-investigation to confirm the following:
-
-These USB controllers indeed can address 64-bit. However, on the bus 
-internally, only 40-bits are connected to the interconnect of CCN. As a 
-result, the 'dma-ranges' should be modified to address 40-bit in size.
-
-We also have a somewhat related question, is it true that since v5.10, 
-defining of 'dma-ranges' on the bus node where its child device node has 
-implication of IOMMU usage (through 'iommus' or 'iommu-map') is now 
-mandatory? My understanding is that the 'dma-ranges' in this scheme will 
-define the IOVA address to system address mapping required by all 
-devices on that bus. Please help to confirm if my understanding is correct.
-
-Thanks,
-
-Ray
-
---000000000000bb4ae005b8b82f45
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
-
-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
-Gp3tsmw0Vz7IMJs6DQIm7T8CfIzeId1IIHcH02MbpO7m1Btzyz625FoBWF8CAwEAAaOCAcswggHH
-MA4GA1UdDwEB/wQEAwIFoDCBngYIKwYBBQUHAQEEgZEwgY4wTQYIKwYBBQUHMAKGQWh0dHA6Ly9z
-ZWN1cmUuZ2xvYmFsc2lnbi5jb20vY2FjZXJ0L2dzcGVyc29uYWxzaWduMnNoYTJnM29jc3AuY3J0
-MD0GCCsGAQUFBzABhjFodHRwOi8vb2NzcDIuZ2xvYmFsc2lnbi5jb20vZ3NwZXJzb25hbHNpZ24y
-c2hhMmczME0GA1UdIARGMEQwQgYKKwYBBAGgMgEoCjA0MDIGCCsGAQUFBwIBFiZodHRwczovL3d3
-dy5nbG9iYWxzaWduLmNvbS9yZXBvc2l0b3J5LzAJBgNVHRMEAjAAMEQGA1UdHwQ9MDswOaA3oDWG
-M2h0dHA6Ly9jcmwuZ2xvYmFsc2lnbi5jb20vZ3NwZXJzb25hbHNpZ24yc2hhMmczLmNybDAfBgNV
-HREEGDAWgRRyYXkuanVpQGJyb2FkY29tLmNvbTATBgNVHSUEDDAKBggrBgEFBQcDBDAfBgNVHSME
-GDAWgBRpcoJiMWeVRIV3kYDEBDZJnXsLYTAdBgNVHQ4EFgQUvUTLkCwFvnpejW/KGvdaDA31b+sw
-DQYJKoZIhvcNAQELBQADggEBACMny/9Y1OPK7qwiBKBMt478eBgXnTlJ0J0HNebYcxN/l7fKIKMb
-/eX/AQKIDsHeshmV2ekPU4yY/04veXx3QTgmE1bb4ksKEFEbU0LXlVPrnlgNn8M75cPymegn/2yU
-r1+htd2eve3obmKc5Lrl0GP+4m72XxAOL687Aw5vRa4Lf294s+x4d+VRwUjoFTj9zyLhexWQuJv/
-yX1HjSkrlIsRwi6DN0/ieL04O9aD1UNPlCC6akGnv4tgwlESh51M564qhonlfSW6La+L/aTIuQc0
-88lq8s/VMBBGdc7176/v5TbNwEC/c5QYbp2n76rAmKKjhjwWmBk64yLT7CoIxk0xggJvMIICawIB
-ATBtMF0xCzAJBgNVBAYTAkJFMRkwFwYDVQQKExBHbG9iYWxTaWduIG52LXNhMTMwMQYDVQQDEypH
-bG9iYWxTaWduIFBlcnNvbmFsU2lnbiAyIENBIC0gU0hBMjU2IC0gRzMCDCUMagLNLily51ao1jAN
-BglghkgBZQMEAgEFAKCB1DAvBgkqhkiG9w0BCQQxIgQgr+wGq1qsOC6FNDHnHX6UlfGvTe3Ihel7
-ZzbtrF3TVmEwGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMjEwMTEy
-MTgyODE3WjBpBgkqhkiG9w0BCQ8xXDBaMAsGCWCGSAFlAwQBKjALBglghkgBZQMEARYwCwYJYIZI
-AWUDBAECMAoGCCqGSIb3DQMHMAsGCSqGSIb3DQEBCjALBgkqhkiG9w0BAQcwCwYJYIZIAWUDBAIB
-MA0GCSqGSIb3DQEBAQUABIIBAFGaQVqpbBzx6bxDBVQs5sgYs8vPJfpUgnYPVhsjDKYJ44lH2UfG
-Z9dGhjrhmH/dGNw3nE2FgQ0K3HzKJcZbqxYUnvfZTgKgp6MEBhXet7aEKUSZFIuBe/d9ciQPVKY7
-Xf/FVyI2ic3XlX1L57u9dwq6ICdqFGXhcXha++L/oWxH5tgN1SHqRmTybrUXvToX42FztyHhY0b7
-LzrtPeeqqnwO5J+jsivKavxXzRUbIpr7EP60V3AcxiBJ/CEhc6aoZ7bmIr4vJKjbj5rYL2kTrUtr
-9+gkrKGDMmje6aHMyzDDgAF5Z9vbGD3XIbdHwI4ZkOOkmyFk26TmJReol/OIQUw=
---000000000000bb4ae005b8b82f45--
