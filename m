@@ -2,33 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2AB012F3D4B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jan 2021 01:43:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B2F212F3D49
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jan 2021 01:43:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393300AbhALVgO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S2393301AbhALVgO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Tue, 12 Jan 2021 16:36:14 -0500
-Received: from mail.kernel.org ([198.145.29.99]:33254 "EHLO mail.kernel.org"
+Received: from mail.kernel.org ([198.145.29.99]:33476 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2436603AbhALUFY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jan 2021 15:05:24 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 9B16E22202;
-        Tue, 12 Jan 2021 20:04:42 +0000 (UTC)
+        id S2436645AbhALUG4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 12 Jan 2021 15:06:56 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id A514F22202;
+        Tue, 12 Jan 2021 20:06:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1610481882;
-        bh=1o0zWRYsMorIJrlcWqTCOm9k7CjaC5powyIbGNDUSIc=;
+        s=k20201202; t=1610481975;
+        bh=R+BCcR/MhTRR2NIT8E6o0tV4cFGyb+NeUAwC/5Db1G0=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=AnopuI6J0LhWnmI8L1bEZ8ia+Vw3oUmaBznZXvhyfhSdtV/illGVxvcbfbO/kVOgo
-         +RcjCCvUvwIR6FB7QIDXbLzcq0NhSjk1oWj18FDYYqaucHmEEhG3TiJTBXaYYffvn7
-         AhThGRDDw35XMKzaTLdDYEd+8XJOiJuoJPKX3XgOr6po3ZKMIHFYosD8wwPAo1p6xk
-         Y8o5SwxOWvj7GUtYrJm3X0wdLbHzJ1EEnwFk+MxiPhiXUYx6ricL8n1zle8Qivz+p9
-         QN6qdpgPNThI/vaHSjIvm+knus3qOCHuRrKM/y5WXMKWp+IIbrbG+VPoDz3LpzrKIS
-         hQELyJbH1UI6g==
+        b=OXhkcmnTMOIvFLE9z0buC5FPpYL2xv2ml8Fakg+DacUYTxSLbXKyenyZduopjiXyS
+         uaoYqRkym9u+DfdHam7knTDRZNwmMxhTu7ip2HOXwQC5ap2KKBe135sAphKAlvY0BZ
+         Hl/LRH93XXEHS4+4USHQEKAdLnpWej45tRUb7zndk6wiqfKgAavMMAoLL6djHa6XZ+
+         ysF6IZXwW/5OzMmJn99CNmw9Ji5FoavD1s9UPbAZrvhLF12zVuP9uJnQ+YAspjsKRQ
+         tF1Vx0ntBWLQZNo01+rLVUofXV8plxKFf3LEMwsdeQYmjJRSUzTKMwuFnRT6tf927P
+         KJLwiqzg4qcYw==
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1608058114-29025-3-git-send-email-tdas@codeaurora.org>
-References: <1608058114-29025-1-git-send-email-tdas@codeaurora.org> <1608058114-29025-3-git-send-email-tdas@codeaurora.org>
-Subject: Re: [PATCH v1 2/2] clk: qcom: Add Global Clock controller (GCC) driver for SC7280
+In-Reply-To: <1608058114-29025-2-git-send-email-tdas@codeaurora.org>
+References: <1608058114-29025-1-git-send-email-tdas@codeaurora.org> <1608058114-29025-2-git-send-email-tdas@codeaurora.org>
+Subject: Re: [PATCH v1 1/2] dt-bindings: clock: Add SC7280 GCC clock binding
 From:   Stephen Boyd <sboyd@kernel.org>
 Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
         linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
@@ -37,176 +37,112 @@ Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
         Taniya Das <tdas@codeaurora.org>
 To:     Michael Turquette <mturquette@baylibre.com>,
         Taniya Das <tdas@codeaurora.org>
-Date:   Tue, 12 Jan 2021 12:04:41 -0800
-Message-ID: <161048188125.3661239.13161942092910464158@swboyd.mtv.corp.google.com>
+Date:   Tue, 12 Jan 2021 12:06:14 -0800
+Message-ID: <161048197433.3661239.10431667618674179787@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Taniya Das (2020-12-15 10:48:34)
-> diff --git a/drivers/clk/qcom/gcc-sc7280.c b/drivers/clk/qcom/gcc-sc7280.c
+Quoting Taniya Das (2020-12-15 10:48:33)
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-sc7280.yaml=
+ b/Documentation/devicetree/bindings/clock/qcom,gcc-sc7280.yaml
 > new file mode 100644
-> index 0000000..74a3151
+> index 0000000..79c64d8
 > --- /dev/null
-> +++ b/drivers/clk/qcom/gcc-sc7280.c
-> @@ -0,0 +1,3361 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
-> + */
+> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-sc7280.yaml
+> @@ -0,0 +1,85 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,gcc-sc7280.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +#include <linux/clk-provider.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/of_device.h>
-> +#include <linux/of.h>
-> +#include <linux/regmap.h>
+> +title: Qualcomm Global Clock & Reset Controller Binding for SC7280
 > +
-> +#include <dt-bindings/clock/qcom,gcc-sc7280.h>
+> +maintainers:
+> +  - Taniya Das <tdas@codeaurora.org>
 > +
-> +#include "clk-alpha-pll.h"
-> +#include "clk-branch.h"
-> +#include "clk-rcg.h"
-> +#include "clk-regmap-divider.h"
-> +#include "clk-regmap-mux.h"
-> +#include "common.h"
-> +#include "gdsc.h"
-> +#include "reset.h"
+> +description: |
+> +  Qualcomm global clock control module which supports the clocks, resets=
+ and
+> +  power domains on SC7280.
 > +
-[...]
-> +static const struct freq_tbl ftbl_gcc_sdcc1_apps_clk_src[] =3D {
-> +       F(144000, P_BI_TCXO, 16, 3, 25),
-> +       F(400000, P_BI_TCXO, 12, 1, 4),
-> +       F(20000000, P_GCC_GPLL0_OUT_EVEN, 5, 1, 3),
-> +       F(25000000, P_GCC_GPLL0_OUT_EVEN, 12, 0, 0),
-> +       F(50000000, P_GCC_GPLL0_OUT_EVEN, 6, 0, 0),
-> +       F(100000000, P_GCC_GPLL0_OUT_EVEN, 3, 0, 0),
-> +       F(192000000, P_GCC_GPLL10_OUT_MAIN, 2, 0, 0),
-> +       F(384000000, P_GCC_GPLL10_OUT_MAIN, 1, 0, 0),
-> +       { }
-> +};
+> +  See also:
+> +  - dt-bindings/clock/qcom,gcc-sc7280.h
 > +
-> +static struct clk_rcg2 gcc_sdcc1_apps_clk_src =3D {
-> +       .cmd_rcgr =3D 0x7500c,
-> +       .mnd_width =3D 8,
-> +       .hid_width =3D 5,
-> +       .parent_map =3D gcc_parent_map_8,
-> +       .freq_tbl =3D ftbl_gcc_sdcc1_apps_clk_src,
-> +       .clkr.hw.init =3D &(struct clk_init_data){
-> +               .name =3D "gcc_sdcc1_apps_clk_src",
-> +               .parent_data =3D gcc_parent_data_8,
-> +               .num_parents =3D ARRAY_SIZE(gcc_parent_data_8),
-> +               .flags =3D CLK_SET_RATE_PARENT,
-> +               .ops =3D &clk_rcg2_ops,
+> +properties:
+> +  compatible:
+> +    const: qcom,gcc-sc7280
+> +
+> +  clocks:
+> +    items:
+> +      - description: Board XO source
+> +      - description: Board active XO source
+> +      - description: Sleep clock source
+> +      - description: PCIE-0 pipe clock source
+> +      - description: PCIE-1 pipe clock source
+> +      - description: USB30 phy wrapper pipe clock source
+> +
+> +  clock-names:
+> +    items:
+> +      - const: bi_tcxo
+> +      - const: bi_tcxo_ao
+> +      - const: sleep_clk
+> +      - const: pcie_0_pipe_clk
+> +      - const: pcie_1_pipe_clk
+> +      - const: usb3_phy_wrapper_gcc_usb30_pipe_clk
 
-This needs to use floor clk ops?
+Don't ufs phy clks also go into gcc?
 
-> +       },
-> +};
 > +
-> +static const struct freq_tbl ftbl_gcc_sdcc1_ice_core_clk_src[] =3D {
-> +       F(100000000, P_GCC_GPLL0_OUT_EVEN, 3, 0, 0),
-> +       F(150000000, P_GCC_GPLL0_OUT_EVEN, 2, 0, 0),
-> +       F(300000000, P_GCC_GPLL0_OUT_EVEN, 1, 0, 0),
-> +       { }
-> +};
+> +  '#clock-cells':
+> +    const: 1
 > +
-> +static struct clk_rcg2 gcc_sdcc1_ice_core_clk_src =3D {
-> +       .cmd_rcgr =3D 0x7502c,
-> +       .mnd_width =3D 0,
-> +       .hid_width =3D 5,
-> +       .parent_map =3D gcc_parent_map_1,
-> +       .freq_tbl =3D ftbl_gcc_sdcc1_ice_core_clk_src,
-> +       .clkr.hw.init =3D &(struct clk_init_data){
-> +               .name =3D "gcc_sdcc1_ice_core_clk_src",
-> +               .parent_data =3D gcc_parent_data_1,
-> +               .num_parents =3D ARRAY_SIZE(gcc_parent_data_1),
-> +               .flags =3D CLK_SET_RATE_PARENT,
-> +               .ops =3D &clk_rcg2_ops,
-
-Same.
-
-> +       },
-> +};
+> +  '#reset-cells':
+> +    const: 1
 > +
-> +static const struct freq_tbl ftbl_gcc_sdcc2_apps_clk_src[] =3D {
-> +       F(400000, P_BI_TCXO, 12, 1, 4),
-> +       F(19200000, P_BI_TCXO, 1, 0, 0),
-> +       F(25000000, P_GCC_GPLL0_OUT_EVEN, 12, 0, 0),
-> +       F(50000000, P_GCC_GPLL0_OUT_EVEN, 6, 0, 0),
-> +       F(100000000, P_GCC_GPLL0_OUT_EVEN, 3, 0, 0),
-> +       F(202000000, P_GCC_GPLL9_OUT_MAIN, 4, 0, 0),
-> +       { }
-> +};
+> +  '#power-domain-cells':
+> +    const: 1
 > +
-> +static struct clk_rcg2 gcc_sdcc2_apps_clk_src =3D {
-> +       .cmd_rcgr =3D 0x1400c,
-> +       .mnd_width =3D 8,
-> +       .hid_width =3D 5,
-> +       .parent_map =3D gcc_parent_map_9,
-> +       .freq_tbl =3D ftbl_gcc_sdcc2_apps_clk_src,
-> +       .clkr.hw.init =3D &(struct clk_init_data){
-> +               .name =3D "gcc_sdcc2_apps_clk_src",
-> +               .parent_data =3D gcc_parent_data_9,
-> +               .num_parents =3D ARRAY_SIZE(gcc_parent_data_9),
-> +               .flags =3D CLK_SET_RATE_PARENT,
-> +               .ops =3D &clk_rcg2_ops,
-
-Same.
-
-> +       },
-> +};
+> +  reg:
+> +    maxItems: 1
 > +
-> +static const struct freq_tbl ftbl_gcc_sdcc4_apps_clk_src[] =3D {
-> +       F(400000, P_BI_TCXO, 12, 1, 4),
-> +       F(19200000, P_BI_TCXO, 1, 0, 0),
-> +       F(25000000, P_GCC_GPLL0_OUT_EVEN, 12, 0, 0),
-> +       F(50000000, P_GCC_GPLL0_OUT_EVEN, 6, 0, 0),
-> +       F(100000000, P_GCC_GPLL0_OUT_EVEN, 3, 0, 0),
-> +       { }
-> +};
+> +  protected-clocks:
+> +    description:
+> +      Protected clock specifier list as per common clock binding.
+
+I suppose this is fine.
+
 > +
-> +static struct clk_rcg2 gcc_sdcc4_apps_clk_src =3D {
-> +       .cmd_rcgr =3D 0x1600c,
-> +       .mnd_width =3D 8,
-> +       .hid_width =3D 5,
-> +       .parent_map =3D gcc_parent_map_1,
-> +       .freq_tbl =3D ftbl_gcc_sdcc4_apps_clk_src,
-> +       .clkr.hw.init =3D &(struct clk_init_data){
-> +               .name =3D "gcc_sdcc4_apps_clk_src",
-> +               .parent_data =3D gcc_parent_data_1,
-> +               .num_parents =3D ARRAY_SIZE(gcc_parent_data_1),
-> +               .flags =3D CLK_SET_RATE_PARENT,
-> +               .ops =3D &clk_rcg2_ops,
-
-Same.
-
-> +       },
-> +};
+> +required:
+> +  - compatible
+> +  - clocks
+> +  - clock-names
+> +  - reg
+> +  - '#clock-cells'
+> +  - '#reset-cells'
+> +  - '#power-domain-cells'
 > +
-[...]
-> +static struct clk_branch gcc_cpuss_ahb_clk =3D {
-> +       .halt_reg =3D 0x48000,
-> +       .halt_check =3D BRANCH_HALT_VOTED,
-> +       .hwcg_reg =3D 0x48000,
-> +       .hwcg_bit =3D 1,
-> +       .clkr =3D {
-> +               .enable_reg =3D 0x52000,
-> +               .enable_mask =3D BIT(21),
-> +               .hw.init =3D &(struct clk_init_data){
-> +                       .name =3D "gcc_cpuss_ahb_clk",
-> +                       .parent_data =3D &(const struct clk_parent_data){
-> +                               .hw =3D &gcc_cpuss_ahb_postdiv_clk_src.cl=
-kr.hw,
-> +                       },
-> +                       .num_parents =3D 1,
-> +                       .flags =3D CLK_IS_CRITICAL | CLK_SET_RATE_PARENT,
-
-Why is it critical? Please add a comment like sc7180.
-
-> +                       .ops =3D &clk_branch2_ops,
-> +               },
-> +       },
-> +};
+> +additionalProperties: false
 > +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,rpmh.h>
+> +    clock-controller@100000 {
+> +      compatible =3D "qcom,gcc-sc7280";
+> +      reg =3D <0x00100000 0x1f0000>;
+> +      clocks =3D <&rpmhcc RPMH_CXO_CLK>,
+> +               <&rpmhcc RPMH_CXO_CLK_A>,
+> +               <&sleep_clk>,
+> +               <&pcie_0_pipe_clk>, <&pcie_1_pipe_clk>,
+> +               <&usb3_phy_wrapper_gcc_usb30_pipe_clk>;
+> +      clock-names =3D "bi_tcxo", "bi_tcxo_ao", "sleep_clk", "pcie_0_pipe=
+_clk",
+> +                     "pcie_1_pipe_clk", "usb3_phy_wrapper_gcc_usb30_pipe=
+_clk";
+> +      #clock-cells =3D <1>;
+> +      #reset-cells =3D <1>;
+> +      #power-domain-cells =3D <1>;
+> +    };
+> +...
