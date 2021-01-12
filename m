@@ -2,72 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D783C2F23D9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jan 2021 01:33:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 864CB2F23E0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jan 2021 01:34:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403770AbhALA0D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jan 2021 19:26:03 -0500
-Received: from mail-ot1-f44.google.com ([209.85.210.44]:44415 "EHLO
-        mail-ot1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404137AbhAKXib (ORCPT
+        id S2403793AbhALA0E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jan 2021 19:26:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50546 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404241AbhALANo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jan 2021 18:38:31 -0500
-Received: by mail-ot1-f44.google.com with SMTP id r9so553291otk.11;
-        Mon, 11 Jan 2021 15:38:15 -0800 (PST)
+        Mon, 11 Jan 2021 19:13:44 -0500
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFC49C061786
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jan 2021 16:13:03 -0800 (PST)
+Received: by mail-pf1-x42e.google.com with SMTP id h10so277090pfo.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jan 2021 16:13:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=O0LU5ZswwTCJKm0ifYQA74K9PKuPMTkTpEKcptV47c8=;
+        b=fTRWWqx9e8Az3Is+SwJeweEueiHH1K6iIJWo+y6HcsWR7NYRY0e7X0OW88ialGbn6r
+         SRw3Vokb/9Ic/nebzngGm0cOV9lR5mereHanT53ruvCPacYpLG67oRMsffthEXUQYuak
+         bOoad+2qkXMXFNtiLJZg/D/dVy0X5tXAfvQfM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=9s5Q5x35iMmb8mRRkeqa901ka66QlLDIEbKbIA8D9iQ=;
-        b=FLvOtbe5yX0OkeJ+Uv+kuKSgByrojEM18jEC5uKLMV+csmilOslrZMBfGAyY2d2ona
-         YaC2gTxHXZfotWtOIhaMw23umw6Tmtb06NfAMGR1h2JDQ7+hnJ9Wsp7B2ykxnBjhX2pu
-         k4/XFJ4PVM2bykrDNsShJUfV8VYFG+pqWWY5hgpv/MOQ6JNOBl+VuCMyThF+Vi0oBpeu
-         UKr4TxxJOEBJ1Eoobo8qSoLfMn9zDA//E1yWoQ9LPl8dUWl3dTdZyi2uKYBAFYMigtWq
-         AZOlrMu8pXGjou9ra6T48NWBc/pzRBLz+KpmnCxzGcYcyCJgY6KLof4r7gJxSgdz9jA0
-         V9XQ==
-X-Gm-Message-State: AOAM532gRjmj6ADxwMewjHmEvEJctMHDeqRWUjgdHGVHRxS7YfWTNACQ
-        8HlGPtHNv8FPhPBeseoL9g==
-X-Google-Smtp-Source: ABdhPJyQMGlXniemdA078EsVaBrrRNlRHILOkRlvB83XJYriNIGEICcAlXfBbgOLBk1iv0TFKYN0Vw==
-X-Received: by 2002:a9d:e91:: with SMTP id 17mr976906otj.237.1610408270503;
-        Mon, 11 Jan 2021 15:37:50 -0800 (PST)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id n5sm295459oif.27.2021.01.11.15.37.49
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=O0LU5ZswwTCJKm0ifYQA74K9PKuPMTkTpEKcptV47c8=;
+        b=tlIRuApbS+FpProcuuJGEdKOQ88ctX+dCkUvXnm3MUYmKFfJffrZvdzP46MKzPRBUG
+         D4aPSJH+eteieoy4G/Wg0mygrkXB7m/R+VzYdD4J34VdhM0R2g8rnHxHaF5CYZLq0cOS
+         GpFSi5NE5/6CQ/fVTCKgDJscl/Ak2XDaSqUKR8q/WsxBa+Te6H+LBglMBSEohf79MLxF
+         RWrzV4vyrVCGHJFCxBtj7U0fcmSo35BAhDDbNHO15+m+BEyUKe0yKWQUThWab7lMeG/a
+         rL5yGjgN/if65fYUe3Rh5/zAph9w6Y+chgqAX8h6RaSU9ZiR18ds3o0qD+5VxNAS4JHi
+         itBA==
+X-Gm-Message-State: AOAM532RAmCMAdR4GebdSsVE/FkObE1UBjRPUqqvp076+mS+V2c6iIm8
+        RWO/mACxACZKKs2KUiOmJy31FQ==
+X-Google-Smtp-Source: ABdhPJzl19kwY6GZo/KlpQ5s+4aLpeSkGxR+LgQ4X8j2U29ON0ID5doeXzjRwTwK6v8H4uBA9iAh4A==
+X-Received: by 2002:aa7:8708:0:b029:19e:924:345a with SMTP id b8-20020aa787080000b029019e0924345amr1867834pfo.54.1610410383239;
+        Mon, 11 Jan 2021 16:13:03 -0800 (PST)
+Received: from smtp.gmail.com ([2620:15c:202:201:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id a131sm820570pfd.171.2021.01.11.16.13.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Jan 2021 15:37:49 -0800 (PST)
-Received: (nullmailer pid 3267061 invoked by uid 1000);
-        Mon, 11 Jan 2021 23:37:48 -0000
-Date:   Mon, 11 Jan 2021 17:37:48 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
-        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>
-Subject: Re: [PATCH 3/4] dt-bindings: clock: Add SM8350 GCC clock bindings
-Message-ID: <20210111233748.GA3267006@robh.at.kernel.org>
-References: <20210105154645.217998-1-vkoul@kernel.org>
- <20210105154645.217998-4-vkoul@kernel.org>
+        Mon, 11 Jan 2021 16:13:02 -0800 (PST)
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Mark Brown <broonie@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Mukesh Kumar Savaliya <msavaliy@codeaurora.org>,
+        Akash Asthana <akashast@codeaurora.org>
+Subject: [PATCH v2] spi: spi-qcom-qspi: Use irq trigger flags from firmware
+Date:   Mon, 11 Jan 2021 16:13:01 -0800
+Message-Id: <20210112001301.687628-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210105154645.217998-4-vkoul@kernel.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 05 Jan 2021 21:16:44 +0530, Vinod Koul wrote:
-> Add device tree bindings for global clock controller on SM8350 SoCs.
-> 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  .../bindings/clock/qcom,gcc-sm8350.yaml       |  96 +++++++
->  include/dt-bindings/clock/qcom,gcc-sm8350.h   | 261 ++++++++++++++++++
->  2 files changed, 357 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sm8350.yaml
->  create mode 100644 include/dt-bindings/clock/qcom,gcc-sm8350.h
-> 
+We don't need to force this to be trigger high here, as the firmware
+properly configures the irq flags already. Drop it to save a line.
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Cc: Douglas Anderson <dianders@chromium.org>
+Cc: Rajendra Nayak <rnayak@codeaurora.org>
+Cc: Mukesh Kumar Savaliya <msavaliy@codeaurora.org>
+Cc: Akash Asthana <akashast@codeaurora.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+
+Changes from v1:
+ * Rebased onto v5.11-rc1
+
+ drivers/spi/spi-qcom-qspi.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/drivers/spi/spi-qcom-qspi.c b/drivers/spi/spi-qcom-qspi.c
+index 8863be370884..1dbcc410cd35 100644
+--- a/drivers/spi/spi-qcom-qspi.c
++++ b/drivers/spi/spi-qcom-qspi.c
+@@ -511,8 +511,7 @@ static int qcom_qspi_probe(struct platform_device *pdev)
+ 	ret = platform_get_irq(pdev, 0);
+ 	if (ret < 0)
+ 		return ret;
+-	ret = devm_request_irq(dev, ret, qcom_qspi_irq,
+-			IRQF_TRIGGER_HIGH, dev_name(dev), ctrl);
++	ret = devm_request_irq(dev, ret, qcom_qspi_irq, 0, dev_name(dev), ctrl);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to request irq %d\n", ret);
+ 		return ret;
+
+base-commit: 5c8fe583cce542aa0b84adc939ce85293de36e5e
+-- 
+https://chromeos.dev
+
