@@ -2,91 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4051B2F5394
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jan 2021 20:47:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D4D22F53AC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jan 2021 20:53:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728900AbhAMToe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Jan 2021 14:44:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48878 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728732AbhAMToe (ORCPT
+        id S1728786AbhAMTvW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Jan 2021 14:51:22 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:42754 "EHLO
+        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728779AbhAMTvW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Jan 2021 14:44:34 -0500
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63423C0617BA
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jan 2021 11:42:20 -0800 (PST)
-Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        Wed, 13 Jan 2021 14:51:22 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1610567462; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=fmdHGVbp+4tw2+s9vPjb3eiPfcBMojAKFWUgjBhw8hU=;
+ b=b0vtV8l+zp+TrqOF6EXc7xOCDp5BiCVj1u42OerFAsRXlFy7VscTz9NkWR5jJotS36gHizGc
+ E1PHSrfgOF8P8c0tO31GH5jp967W3/8U7Be3My6c0U1TKpFh1z6uCjPMHb7imCoz0qTPRyji
+ iwzpK2ZrO9GtQXzhKQzQuPBf3Aw=
+X-Mailgun-Sending-Ip: 198.61.254.31
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 5fff4f05d84bad3547491a75 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 13 Jan 2021 19:50:29
+ GMT
+Sender: mdalam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 5F7C3C43461; Wed, 13 Jan 2021 19:50:29 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id BFBC11FFC1;
-        Wed, 13 Jan 2021 20:42:18 +0100 (CET)
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, sumit.semwal@linaro.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        phone-devel@vger.kernel.org, konrad.dybcio@somainline.org,
-        marijn.suijten@somainline.org, martin.botka@somainline.org,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Subject: [PATCH v2 7/7] arm64: dts: pmi8998: Add the right interrupts for LAB/IBB SCP and OCP
-Date:   Wed, 13 Jan 2021 20:42:14 +0100
-Message-Id: <20210113194214.522238-8-angelogioacchino.delregno@somainline.org>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210113194214.522238-1-angelogioacchino.delregno@somainline.org>
-References: <20210113194214.522238-1-angelogioacchino.delregno@somainline.org>
+        (Authenticated sender: mdalam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6FA37C433CA;
+        Wed, 13 Jan 2021 19:50:28 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 14 Jan 2021 01:20:28 +0530
+From:   mdalam@codeaurora.org
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     corbet@lwn.net, agross@kernel.org, bjorn.andersson@linaro.org,
+        dan.j.williams@intel.com, dmaengine@vger.kernel.org,
+        linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, sricharan@codeaurora.org,
+        mdalam=codeaurora.org@codeaurora.org
+Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Add LOCK and UNLOCK flag bit
+ support
+In-Reply-To: <20210112101056.GI2771@vkoul-mobl>
+References: <1608215842-15381-1-git-send-email-mdalam@codeaurora.org>
+ <20201221092355.GA3323@vkoul-mobl>
+ <efcc74bbdf36b4ddbf764eb6b4ed99f2@codeaurora.org>
+ <f7de0117c8ff2e61c09f58acdea0e5b0@codeaurora.org>
+ <20210112101056.GI2771@vkoul-mobl>
+Message-ID: <e3cf7c4fc02c54d17fd2fd213f39005b@codeaurora.org>
+X-Sender: mdalam@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In commit 208921bae696 ("arm64: dts: qcom: pmi8998: Add nodes for
-LAB and IBB regulators") bindings for the lab/ibb regulators were
-added to the pmi8998 dt, but the original committer has never
-specified what the interrupts were for.
-LAB and IBB regulators provide two interrupts, SC-ERR (short
-circuit error) and VREG-OK but, in that commit, the regulators
-were provided with two different types of interrupts;
-specifically, IBB had the SC-ERR interrupt, while LAB had the
-VREG-OK one, none of which were (luckily) used, since the driver
-didn't actually use these at all.
-Assuming that the original intention was to have the SC IRQ in
-both LAB and IBB, as per the names appearing in documentation,
-fix the SCP interrupt.
+On 2021-01-12 15:40, Vinod Koul wrote:
+> On 12-01-21, 15:01, mdalam@codeaurora.org wrote:
+>> On 2020-12-21 23:03, mdalam@codeaurora.org wrote:
+>> > On 2020-12-21 14:53, Vinod Koul wrote:
+>> > > Hello,
+>> > >
+>> > > On 17-12-20, 20:07, Md Sadre Alam wrote:
+>> > > > This change will add support for LOCK & UNLOCK flag bit support
+>> > > > on CMD descriptor.
+>> > > >
+>> > > > If DMA_PREP_LOCK flag passed in prep_slave_sg then requester of this
+>> > > > transaction wanted to lock the DMA controller for this transaction so
+>> > > > BAM driver should set LOCK bit for the HW descriptor.
+>> > > >
+>> > > > If DMA_PREP_UNLOCK flag passed in prep_slave_sg then requester
+>> > > > of this
+>> > > > transaction wanted to unlock the DMA controller.so BAM driver
+>> > > > should set
+>> > > > UNLOCK bit for the HW descriptor.
+>> > >
+>> > > Can you explain why would we need to first lock and then unlock..? How
+>> > > would this be used in real world.
+>> > >
+>> > > I have read a bit of documentation but is unclear to me. Also should
+>> > > this be exposed as an API to users, sounds like internal to driver..?
+>> > >
+>> >
+>> > IPQ5018 SoC having only one Crypto Hardware Engine. This Crypto Hardware
+>> > Engine
+>> > will be shared between A53 core & ubi32 core. There is two separate
+>> > driver dedicated
+>> > to A53 core and ubi32 core. So to use Crypto Hardware Engine
+>> > parallelly for encryption/description
+>> > we need bam locking mechanism. if one driver will submit the request
+>> > for encryption/description
+>> > to Crypto then first it has to set LOCK flag bit on command descriptor
+>> > so that other pipes will
+>> > get locked.
+>> >
+>> > The Pipe Locking/Unlocking will be only on command-descriptor. Upon
+>> > encountering a command descriptor
+> 
+> Can you explain what is a cmd descriptor?
 
-While at it, also add the OCP interrupt in order to be able to
-enable the Over-Current Protection feature, if requested.
+   In BAM pipe descriptor structure there is a field called CMD (Command 
+descriptor).
+   CMD allows the SW to create descriptors of type Command which does not 
+generate any data transmissions
+   but configures registers in the Peripheral (write operations, and read 
+registers operations ).
+   Using command descriptor enables the SW to queue new configurations 
+between data transfers in advance.
 
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
----
- arch/arm64/boot/dts/qcom/pmi8998.dtsi | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+> 
+>> > with LOCK bit set, The BAM will lock all other pipes not related to
+>> > the current pipe group, and keep
+>> > handling the current pipe only until it sees the UNLOCK set then it
+>> > will release all locked pipes.
+>> > locked pipe will not fetch new descriptors even if it got event/events
+>> > adding more descriptors for
+>> > this pipe (locked pipe).
+>> >
+>> > No need to expose as an API to user because its internal to driver, so
+>> > while preparing command descriptor
+>> > just we have to update the LOCK/UNLOCK flag.
+> 
+> So IIUC, no api right? it would be internal to driver..?
 
-diff --git a/arch/arm64/boot/dts/qcom/pmi8998.dtsi b/arch/arm64/boot/dts/qcom/pmi8998.dtsi
-index d016b12967eb..d230c510d4b7 100644
---- a/arch/arm64/boot/dts/qcom/pmi8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pmi8998.dtsi
-@@ -30,11 +30,15 @@ labibb {
- 			compatible = "qcom,pmi8998-lab-ibb";
- 
- 			ibb: ibb {
--				interrupts = <0x3 0xdc 0x2 IRQ_TYPE_EDGE_RISING>;
-+				interrupts = <0x3 0xdc 0x2 IRQ_TYPE_EDGE_RISING>,
-+					     <0x3 0xdc 0x0 IRQ_TYPE_LEVEL_HIGH>;
-+				interrupt-names = "sc-err", "ocp";
- 			};
- 
- 			lab: lab {
--				interrupts = <0x3 0xde 0x0 IRQ_TYPE_EDGE_RISING>;
-+				interrupts = <0x3 0xde 0x1 IRQ_TYPE_EDGE_RISING>,
-+					     <0x3 0xde 0x0 IRQ_TYPE_LEVEL_LOW>;
-+				interrupt-names = "sc-err", "ocp";
- 			};
- 		};
- 	};
--- 
-2.29.2
-
+   Yes its totally internal to deriver.
