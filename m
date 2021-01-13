@@ -2,278 +2,310 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 48FC32F4655
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jan 2021 09:24:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DA4BC2F4682
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jan 2021 09:30:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726355AbhAMIXX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Jan 2021 03:23:23 -0500
-Received: from m-r2.th.seeweb.it ([5.144.164.171]:35033 "EHLO
-        m-r2.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725809AbhAMIXW (ORCPT
+        id S1726714AbhAMIaG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Jan 2021 03:30:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44290 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726661AbhAMIaF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Jan 2021 03:23:22 -0500
-Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id F16563ED4C;
-        Wed, 13 Jan 2021 09:22:36 +0100 (CET)
-Subject: Re: [PATCH] arm64: dts: qcom: sdm660: Fix CPU capacities
-To:     Danny Lin <danny@kdrag0n.dev>
-Cc:     Alexey Minnekhanov <alexey.min@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Alexey Minekhanov <alexeymin@postmarketos.org>
-References: <20210112013127.414277-1-danny@kdrag0n.dev>
- <CANi4RBQCpWiyVLyBcevGcmRr=toPxVF2TrxFmM3vHHnYgaQVHg@mail.gmail.com>
- <c6ecc6c0-3a95-0a4e-6a4d-d753dfaa2748@somainline.org>
- <AJVUMQ.VZV51GZZZD7I2@kdrag0n.dev>
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Message-ID: <3398b6af-1a3f-0e1d-eeac-cd4159d2f037@somainline.org>
-Date:   Wed, 13 Jan 2021 09:22:36 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.0
+        Wed, 13 Jan 2021 03:30:05 -0500
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7C9EC061786
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jan 2021 00:29:25 -0800 (PST)
+Received: by mail-pg1-x52d.google.com with SMTP id 15so1029031pgx.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jan 2021 00:29:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=l1GKa3x7ZNgVpRkmStUdrHjbkYZ9SQFyhIcPJwTf7mQ=;
+        b=mkqpTDKsvFlyxfobrl3O59d7IIHahU3PS8A71e5YzOZlHDWbI3MZUbGb7SzszcCOyu
+         ra2rQP1FSmDItU3qJfiNzVtBotM4pk1nDOdIWiocpHRFBWI+S0aBNwxNh1RwdCZZ+Rwp
+         vJpkXqohwYvayJKj2IWCmXCkacrtPqGcL2BHppSgchlP96jHviCQysvI7Xz+pku+moTs
+         atreTPYdyRmAfTwx9WIMJwNvu78nuz7zE27UOtTVp2scjPLS4OWyMWhXb7c69SVWsYrO
+         U2xkipy3HDuKbaGqqSaXPSGjU5KWEkqeeEva2ELwpPdqkTgVnAk9wEOkVC+9SXeY8dWj
+         nQsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=l1GKa3x7ZNgVpRkmStUdrHjbkYZ9SQFyhIcPJwTf7mQ=;
+        b=MEmItTZSq2JJGsQdBJWCXfqrhojjdx2yVGGnhE7w64VT0II4szvJpxNa17jb91ZdnX
+         Gopzp4gIK+4A+tf7+q3jGqJvBxxNcL0Gdv03if7xsZSulpF6yNH/FeBX+nR9lQzrHHcg
+         +7bYAuWoBcV1XK6ZW4nbvc0/bhjt1VJ+zuP0c7DUnwD/sOGJKV4IIvgHWlcnHdHlLj50
+         LU7H43jAW4wDt6qATXuFIP+fc9iR9dOQj1sTq/Ijyf7A94LF1o2huj2s1UgHheD4bKsr
+         NDCGr8qPYqBMx98DZoEWj9SApGpzsVf9ortYj795Jpq4/swAr3iBcQ7yX/fiiRYn1WDS
+         eHPg==
+X-Gm-Message-State: AOAM5305UbC4OQ4q2voNLfAMbfYodfZkjfZ2KZorzmPX5F1FXXhOT8j1
+        fY9BzXCoZosovhiDMNQj0hN1hwQ6CdRG
+X-Google-Smtp-Source: ABdhPJzhbChFX7E4odlTkqAVRn4oQYVX+m5ZecCHfZJcCca/kNL2kle2MNutGtYW7mRpy6pztpTV/w==
+X-Received: by 2002:a63:ef14:: with SMTP id u20mr1076416pgh.93.1610526565041;
+        Wed, 13 Jan 2021 00:29:25 -0800 (PST)
+Received: from thinkpad ([2409:4072:6199:4cc7:6c7e:de01:2568:5545])
+        by smtp.gmail.com with ESMTPSA id p15sm1705977pgl.19.2021.01.13.00.29.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Jan 2021 00:29:24 -0800 (PST)
+Date:   Wed, 13 Jan 2021 13:59:15 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     jassisinghbrar@gmail.com, mturquette@baylibre.com,
+        robh+dt@kernel.org, viresh.kumar@linaro.org,
+        ulf.hansson@linaro.org, bjorn.andersson@linaro.org,
+        agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 5/5] clk: qcom: Add SDX55 APCS clock controller support
+Message-ID: <20210113082915.GB3763@thinkpad>
+References: <20210108113233.75418-1-manivannan.sadhasivam@linaro.org>
+ <20210108113233.75418-6-manivannan.sadhasivam@linaro.org>
+ <161052342416.3661239.16154742996506371048@swboyd.mtv.corp.google.com>
 MIME-Version: 1.0
-In-Reply-To: <AJVUMQ.VZV51GZZZD7I2@kdrag0n.dev>
-Content-Type: text/plain; charset=iso-8859-5; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <161052342416.3661239.16154742996506371048@swboyd.mtv.corp.google.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 13/01/21 05:37, Danny Lin ha scritto:
+On Tue, Jan 12, 2021 at 11:37:04PM -0800, Stephen Boyd wrote:
+> Quoting Manivannan Sadhasivam (2021-01-08 03:32:33)
+> > Add a driver for the SDX55 APCS clock controller. It is part of the APCS
+> > hardware block, which among other things implements also a combined mux
+> > and half integer divider functionality. The APCS clock controller has 3
+> > parent clocks:
+> > 
+> > 1. Board XO
+> > 2. Fixed rate GPLL0
+> > 3. A7 PLL
+> > 
+> > The source and the divider can be set both at the same time.
 > 
-> On Tue, Jan 12, 2021 at 8:04 pm, AngeloGioacchino Del Regno 
-> <angelogioacchino.delregno@somainline.org> wrote:
->> Il 12/01/21 15:59, Alexey Minnekhanov ha scritto:
->>> Hi!
->>> I always had a feeling something is not right in those cpu
->>> definitions, so cpus with reg 100-103 are little cores, and 0-3 big
->>> ones?
->>> But downstream sdm660.dtsi has a property "efficiency" [1] with values
->>> which are larger for cores 100-103 than for 0-3 cores (1638 > 1024),
->>> I'm confused...
->>
-> 
-> It appears that in downstream, logical CPUs 0-3 are mapped to the little 
-> CPUs (physical IDs 0x100-0x103) and logical CPUs 4-7 are mapped to the 
-> big CPUs (physical IDs 0x0-0x3), while mainline has it reversed unlike 
-> most other Qualcomm platforms. Thanks for catching the discrepancy, I 
-> wasn't aware that the CPU reg values actually mattered before this.
-> 
->> All the SDM630, SDM636 and SDM660 smartphones I ever saw are booting 
->> off of the BIG cluster (and that's why cpu@100 is CPU0), and at 0x100 
->> you find the first BIG CPU.
-> 
-> It looks like the mainline logical CPU map for SDM660 was originally 
-> copied from SDM630 and was not updated to match the conventional layout 
-> for SDM660. I'm not familiar with SDM630, but on the SDM660 devices I've 
-> seen, the boot CPU is CPU 0 on the little cluster (boot log is from 
-> downstream but logical CPU numbers are not relevant here) as indicated 
-> by the cpuid:
-> 
-> [††† 0.000000] Boot CPU: AArch64 Processor [51af8014]
-> [††† 0.029322] CPU1: Booted secondary processor [51af8014]
-> [††† 0.034276] CPU2: Booted secondary processor [51af8014]
-> [††† 0.039177] CPU3: Booted secondary processor [51af8014]
-> [††† 0.044637] CPU4: Booted secondary processor [51af8002]
-> [††† 0.049645] CPU5: Booted secondary processor [51af8002]
-> [††† 0.054926] CPU6: Booted secondary processor [51af8002]
-> [††† 0.059934] CPU7: Booted secondary processor [51af8002]
-> 
-> See downstream device trees for SDM630 [1] and SDM660 [2] - the cluster 
-> order is different and only SDM630 matches the behavior you describe.
-> 
-> In either case, it works as long as the capacities are assigned to the 
-> correct logical CPUs, so please disregard this patch if the current CPU 
-> map is retained.
-> 
-> [1] 
-> https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/arch/arm/boot/dts/qcom/sdm630.dtsi?h=LA.UM.6.2.c27-03100-sdm660.0#n49 
-> 
-> [2] 
-> https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/arch/arm/boot/dts/qcom/sdm660.dtsi?h=LA.UM.6.2.c27-03100-sdm660.0#n49 
-> 
-> 
-Hah! That's a nice catch.
-Apparently, the SDM630 configuration is confusing literally too many people.
-
-Your proposed patch is still wrong though, because you're lowering the 
-DMIPS/MHz for BIG...
-At this point, I can only agree about the CPU ordering being wrong 
-upstream: in this case, the fix would be to just move the nodes around 
-without changing the DMIPS/MHz values (your 636 vs 640 is something 
-within margin of error).
-
->>
->>>
->>> Property "efficiency" is described in the same tree in [2].
->>>
->>> [1] 
->>> https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/arch/arm/boot/dts/qcom/sdm660.dtsi?h=LA.UM.7.2.c25#n155 
->>>
->>> [2] 
->>> https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/Documentation/devicetree/bindings/arm/cpus.txt?h=LA.UM.7.2.c25#n216 
->>>
->>>
->>> “‚, 12 Ô›“. 2021 ”. “ 13:51, Danny Lin <danny@kdrag0n.dev>:
->>>>
->>>> sdm660 has a big.LITTLE 4+4 CPU setup with CPUs 0-3 being little cores
->>>> and CPUs 4-7 being big cores. The big cores have higher IPC, so they
->>>> should have the higher capacity-dmips-mhz, not the other way around as
->>>> the device tree currently describes it. Fix the incorrect CPU map to
->>>> improve EAS scheduling behavior.
->>>>
->>>> While we're at it, let's replace the old DMIPS/MHz values with new
->>>> measurements that reflect the exact IPC of the CPUs as reported by
->>>> CoreMark.
->>>>
->>>> Performance measurements were made using my freqbench [1]
->>>> benchmark coordinator, which isolates, offlines, and disables the timer
->>>> tick on test CPUs to maximize accuracy. It uses EEMBC CoreMark [2] as
->>>> the workload and measures power usage using the PM660 PMIC's fuel
->>>> gauge.
->>>>
->>>> Normalized DMIPS/MHz capacity scale values for each CPU were calculated
->>>> from CoreMarks/MHz (CoreMark iterations per second per MHz), which
->>>> serves the same purpose. For each CPU, the final capacity-dmips-mhz
->>>> value is the C/MHz value of its maximum frequency normalized to
->>>> SCHED_CAPACITY_SCALE (1024) for the fastest CPU in the system.
->>>>
->>>> A Xiaomi Redmi Note 7 device running a downstream Qualcomm 4.4 kernel
->>>> was used for benchmarking to ensure proper frequency scaling and other
->>>> low-level controls.
->>>>
->> This is wrong, the downstream kernel may be doing "magic" to switch 
->> clusters the other way around, and this is likely... Please, run your 
->> benchmark on a upstream kernel: there may be differences.
->>
->>>> Raw benchmark results can be found in the freqbench repository [3].
->>>> Below is a human-readable summary:
->>>>
->>>> Frequency domains: cpu1 cpu4
->>>> Offline CPUs: cpu1 cpu2 cpu3 cpu4 cpu5 cpu6 cpu7
->>>> Baseline power usage: 1130 mW
->>>>
->>>> ===== CPU 1 =====
->>>> Frequencies: 633 902 1113 1401 1536 1747 1843
->>>>
->>>> † 633:† 2058†††† 3.2 C/MHz†††† 48 mW††† 5.9 J†† 42.6 I/mJ†† 121.5 s
->>>> † 902:† 2930†††† 3.2 C/MHz†††† 72 mW††† 6.2 J†† 40.6 I/mJ††† 85.3 s
->>>> 1113:† 3616†††† 3.2 C/MHz†††† 79 mW††† 5.4 J†† 46.0 I/mJ††† 69.1 s
->>>> 1401:† 4551†††† 3.2 C/MHz††† 125 mW††† 6.9 J†† 36.3 I/mJ††† 54.9 s
->>>> 1536:† 4988†††† 3.2 C/MHz††† 134 mW††† 6.7 J†† 37.1 I/mJ††† 50.1 s
->>>> 1747:† 5674†††† 3.2 C/MHz††† 179 mW††† 7.9 J†† 31.7 I/mJ††† 44.1 s
->>>> 1843:† 5986†††† 3.2 C/MHz††† 228 mW††† 9.5 J†† 26.3 I/mJ††† 41.8 s
->>>>
->>>> ===== CPU 4 =====
->>>> Frequencies: 1113 1401 1747 1958 2150 2208
->>>>
->>>> 1113:† 5825†††† 5.2 C/MHz††† 220 mW††† 9.4 J†† 26.5 I/mJ††† 42.9 s
->>>> 1401:† 7324†††† 5.2 C/MHz††† 317 mW†† 10.8 J†† 23.1 I/mJ††† 34.1 s
->>>> 1747:† 9135†††† 5.2 C/MHz††† 474 mW†† 13.0 J†† 19.2 I/mJ††† 27.4 s
->>>> 1958: 10247†††† 5.2 C/MHz††† 578 mW†† 14.1 J†† 17.7 I/mJ††† 24.4 s
->>>> 2150: 11246†††† 5.2 C/MHz††† 694 mW†† 15.4 J†† 16.2 I/mJ††† 22.2 s
->>>> 2208: 11551†††† 5.2 C/MHz††† 736 mW†† 15.9 J†† 15.7 I/mJ††† 21.7 s
->>>>
->>>> [1] https://github.com/kdrag0n/freqbench
->>>> [2] https://www.eembc.org/coremark/
->>>> [3] 
->>>> https://github.com/kdrag0n/freqbench/tree/master/results/sdm660/main
->>>>
->>>> Signed-off-by: Danny Lin <danny@kdrag0n.dev>
->>>> ---
->>>> † arch/arm64/boot/dts/qcom/sdm660.dtsi | 16 ++++++++--------
->>>> † 1 file changed, 8 insertions(+), 8 deletions(-)
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/sdm660.dtsi 
->>>> b/arch/arm64/boot/dts/qcom/sdm660.dtsi
->>>> index 4abbdd03d1e7..ca985c5429db 100644
->>>> --- a/arch/arm64/boot/dts/qcom/sdm660.dtsi
->>>> +++ b/arch/arm64/boot/dts/qcom/sdm660.dtsi
->>>> @@ -40,7 +40,7 @@ CPU0: cpu@100 {
->>>> †††††††††††††††††††††††† compatible = "qcom,kryo260";
->>>> †††††††††††††††††††††††† reg = <0x0 0x100>;
->>>> †††††††††††††††††††††††† enable-method = "psci";
->>>> -†††††††††††††††††††††† capacity-dmips-mhz = <1024>;
->>>> +†††††††††††††††††††††† capacity-dmips-mhz = <636>;
->>>> †††††††††††††††††††††††† next-level-cache = <&L2_1>;
->>>> †††††††††††††††††††††††† L2_1: l2-cache {
->>>> †††††††††††††††††††††††††††††††† compatible = "cache";
->>>> @@ -59,7 +59,7 @@ CPU1: cpu@101 {
->>>> †††††††††††††††††††††††† compatible = "qcom,kryo260";
->>>> †††††††††††††††††††††††† reg = <0x0 0x101>;
->>>> †††††††††††††††††††††††† enable-method = "psci";
->>>> -†††††††††††††††††††††† capacity-dmips-mhz = <1024>;
->>>> +†††††††††††††††††††††† capacity-dmips-mhz = <636>;
->>>> †††††††††††††††††††††††† next-level-cache = <&L2_1>;
->>>> †††††††††††††††††††††††† L1_I_101: l1-icache {
->>>> †††††††††††††††††††††††††††††††† compatible = "cache";
->>>> @@ -74,7 +74,7 @@ CPU2: cpu@102 {
->>>> †††††††††††††††††††††††† compatible = "qcom,kryo260";
->>>> †††††††††††††††††††††††† reg = <0x0 0x102>;
->>>> †††††††††††††††††††††††† enable-method = "psci";
->>>> -†††††††††††††††††††††† capacity-dmips-mhz = <1024>;
->>>> +†††††††††††††††††††††† capacity-dmips-mhz = <636>;
->>>> †††††††††††††††††††††††† next-level-cache = <&L2_1>;
->>>> †††††††††††††††††††††††† L1_I_102: l1-icache {
->>>> †††††††††††††††††††††††††††††††† compatible = "cache";
->>>> @@ -89,7 +89,7 @@ CPU3: cpu@103 {
->>>> †††††††††††††††††††††††† compatible = "qcom,kryo260";
->>>> †††††††††††††††††††††††† reg = <0x0 0x103>;
->>>> †††††††††††††††††††††††† enable-method = "psci";
->>>> -†††††††††††††††††††††† capacity-dmips-mhz = <1024>;
->>>> +†††††††††††††††††††††† capacity-dmips-mhz = <636>;
->>>> †††††††††††††††††††††††† next-level-cache = <&L2_1>;
->>>> †††††††††††††††††††††††† L1_I_103: l1-icache {
->>>> †††††††††††††††††††††††††††††††† compatible = "cache";
->>>> @@ -104,7 +104,7 @@ CPU4: cpu@0 {
->>>> †††††††††††††††††††††††† compatible = "qcom,kryo260";
->>>> †††††††††††††††††††††††† reg = <0x0 0x0>;
->>>> †††††††††††††††††††††††† enable-method = "psci";
->>>> -†††††††††††††††††††††† capacity-dmips-mhz = <640>;
->>>> +†††††††††††††††††††††† capacity-dmips-mhz = <1024>;
->>>> †††††††††††††††††††††††† next-level-cache = <&L2_0>;
->>>> †††††††††††††††††††††††† L2_0: l2-cache {
->>>> †††††††††††††††††††††††††††††††† compatible = "cache";
->>>> @@ -123,7 +123,7 @@ CPU5: cpu@1 {
->>>> †††††††††††††††††††††††† compatible = "qcom,kryo260";
->>>> †††††††††††††††††††††††† reg = <0x0 0x1>;
->>>> †††††††††††††††††††††††† enable-method = "psci";
->>>> -†††††††††††††††††††††† capacity-dmips-mhz = <640>;
->>>> +†††††††††††††††††††††† capacity-dmips-mhz = <1024>;
->>>> †††††††††††††††††††††††† next-level-cache = <&L2_0>;
->>>> †††††††††††††††††††††††† L1_I_1: l1-icache {
->>>> †††††††††††††††††††††††††††††††† compatible = "cache";
->>>> @@ -138,7 +138,7 @@ CPU6: cpu@2 {
->>>> †††††††††††††††††††††††† compatible = "qcom,kryo260";
->>>> †††††††††††††††††††††††† reg = <0x0 0x2>;
->>>> †††††††††††††††††††††††† enable-method = "psci";
->>>> -†††††††††††††††††††††† capacity-dmips-mhz = <640>;
->>>> +†††††††††††††††††††††† capacity-dmips-mhz = <1024>;
->>>> †††††††††††††††††††††††† next-level-cache = <&L2_0>;
->>>> †††††††††††††††††††††††† L1_I_2: l1-icache {
->>>> †††††††††††††††††††††††††††††††† compatible = "cache";
->>>> @@ -153,7 +153,7 @@ CPU7: cpu@3 {
->>>> †††††††††††††††††††††††† compatible = "qcom,kryo260";
->>>> †††††††††††††††††††††††† reg = <0x0 0x3>;
->>>> †††††††††††††††††††††††† enable-method = "psci";
->>>> -†††††††††††††††††††††† capacity-dmips-mhz = <640>;
->>>> +†††††††††††††††††††††† capacity-dmips-mhz = <1024>;
->>>> †††††††††††††††††††††††† next-level-cache = <&L2_0>;
->>>> †††††††††††††††††††††††† L1_I_3: l1-icache {
->>>> †††††††††††††††††††††††††††††††† compatible = "cache";
->>>> -- 
->>>> 2.29.2
->>>>
->>>
->>>
->>
-> 
+> I don't understand what that means. Presumably it's a mux/divider
+> combined?
 > 
 
+Yeah, will make it clear.
+
+> > 
+> > This is required for enabling CPU frequency scaling on SDX55-based
+> > platforms.
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  drivers/clk/qcom/Kconfig      |   9 ++
+> >  drivers/clk/qcom/Makefile     |   1 +
+> >  drivers/clk/qcom/apcs-sdx55.c | 149 ++++++++++++++++++++++++++++++++++
+> >  3 files changed, 159 insertions(+)
+> >  create mode 100644 drivers/clk/qcom/apcs-sdx55.c
+> > 
+> > diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+> > index d6f4aee4427a..2c67fdfae913 100644
+> > --- a/drivers/clk/qcom/Kconfig
+> > +++ b/drivers/clk/qcom/Kconfig
+> > @@ -45,6 +45,15 @@ config QCOM_CLK_APCS_MSM8916
+> >           Say Y if you want to support CPU frequency scaling on devices
+> >           such as msm8916.
+> >  
+> > +config QCOM_CLK_APCS_SDX55
+> 
+> APCC comes before APCS
+> 
+
+Okay
+
+> > +       tristate "SDX55 APCS Clock Controller"
+> > +       depends on QCOM_APCS_IPC || COMPILE_TEST
+> > +       help
+> > +         Support for the APCS Clock Controller on SDX55 platform. The
+> > +         APCS is managing the mux and divider which feeds the CPUs.
+> > +         Say Y if you want to support CPU frequency scaling on devices
+> > +         such as SDX55.
+> > +
+> >  config QCOM_CLK_APCC_MSM8996
+> >         tristate "MSM8996 CPU Clock Controller"
+> >         select QCOM_KRYO_L2_ACCESSORS
+> > diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
+> > index e7e0ac382176..a9271f40916c 100644
+> > --- a/drivers/clk/qcom/Makefile
+> > +++ b/drivers/clk/qcom/Makefile
+> > @@ -46,6 +46,7 @@ obj-$(CONFIG_MSM_MMCC_8998) += mmcc-msm8998.o
+> >  obj-$(CONFIG_QCOM_A53PLL) += a53-pll.o
+> >  obj-$(CONFIG_QCOM_A7PLL) += a7-pll.o
+> >  obj-$(CONFIG_QCOM_CLK_APCS_MSM8916) += apcs-msm8916.o
+> > +obj-$(CONFIG_QCOM_CLK_APCS_SDX55) += apcs-sdx55.o
+> >  obj-$(CONFIG_QCOM_CLK_APCC_MSM8996) += clk-cpu-8996.o
+> >  obj-$(CONFIG_QCOM_CLK_RPM) += clk-rpm.o
+> >  obj-$(CONFIG_QCOM_CLK_RPMH) += clk-rpmh.o
+> > diff --git a/drivers/clk/qcom/apcs-sdx55.c b/drivers/clk/qcom/apcs-sdx55.c
+> > new file mode 100644
+> > index 000000000000..14413c957d83
+> > --- /dev/null
+> > +++ b/drivers/clk/qcom/apcs-sdx55.c
+> > @@ -0,0 +1,149 @@
+> > +// SPDX-License-Identifier: GPL-2.0
+> > +/*
+> > + * Qualcomm SDX55 APCS clock controller driver
+> > + *
+> > + * Copyright (c) 2020, Linaro Limited
+> > + * Author: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > + */
+> > +
+> > +#include <linux/clk.h>
+> > +#include <linux/clk-provider.h>
+> > +#include <linux/cpu.h>
+> > +#include <linux/kernel.h>
+> > +#include <linux/module.h>
+> > +#include <linux/platform_device.h>
+> > +#include <linux/pm_domain.h>
+> > +#include <linux/regmap.h>
+> > +#include <linux/slab.h>
+> > +
+> > +#include "clk-regmap.h"
+> > +#include "clk-regmap-mux-div.h"
+> > +#include "common.h"
+> 
+> Curious what common is needed for?
+> 
+
+Not needed, will remove.
+
+> > +
+> > +static const u32 apcs_mux_clk_parent_map[] = { 0, 1, 5 };
+> > +
+> > +static const struct clk_parent_data pdata[] = {
+> > +       { .fw_name = "ref", .name = "bi_tcxo", },
+> > +       { .fw_name = "aux", .name = "gpll0", },
+> > +       { .fw_name = "pll", .name = "a7pll", },
+> 
+> Please remove name from here. It shouldn't be necessary if the DT
+> describes things properly. Or there isn't DT for this device?
+> 
+
+Will remove.
+
+> > +};
+> > +
+> > +/*
+> > + * We use the notifier function for switching to a temporary safe configuration
+> > + * (mux and divider), while the A7 PLL is reconfigured.
+> > + */
+> > +static int a7cc_notifier_cb(struct notifier_block *nb, unsigned long event,
+> > +                           void *data)
+> > +{
+> > +       int ret = 0;
+> > +       struct clk_regmap_mux_div *md = container_of(nb,
+> > +                                                    struct clk_regmap_mux_div,
+> > +                                                    clk_nb);
+> > +       if (event == PRE_RATE_CHANGE)
+> > +               /* set the mux and divider to safe frequency (400mhz) */
+> > +               ret = mux_div_set_src_div(md, 1, 2);
+> > +
+> > +       return notifier_from_errno(ret);
+> > +}
+> > +
+> > +static int qcom_apcs_sdx55_clk_probe(struct platform_device *pdev)
+> > +{
+> > +       struct device *dev = &pdev->dev;
+> > +       struct device *parent = dev->parent;
+> > +       struct device *cpu_dev;
+> > +       struct clk_regmap_mux_div *a7cc;
+> > +       struct regmap *regmap;
+> > +       struct clk_init_data init = { };
+> > +       int ret = -ENODEV;
+> 
+> Drop assignement..
+> 
+> > +
+> > +       regmap = dev_get_regmap(parent, NULL);
+> > +       if (!regmap) {
+> > +               dev_err(dev, "Failed to get parent regmap: %d\n", ret);
+> > +               return ret;
+> 
+> .. and Just return -ENODEV?
+> 
+> > +       }
+> > +
+> > +       a7cc = devm_kzalloc(dev, sizeof(*a7cc), GFP_KERNEL);
+> > +       if (!a7cc)
+> > +               return -ENOMEM;
+> > +
+> > +       init.name = "a7mux";
+> > +       init.parent_data = pdata;
+> > +       init.num_parents = ARRAY_SIZE(pdata);
+> > +       init.ops = &clk_regmap_mux_div_ops;
+> > +
+> > +       a7cc->clkr.hw.init = &init;
+> > +       a7cc->clkr.regmap = regmap;
+> > +       a7cc->reg_offset = 0x8;
+> > +       a7cc->hid_width = 5;
+> > +       a7cc->hid_shift = 0;
+> > +       a7cc->src_width = 3;
+> > +       a7cc->src_shift = 8;
+> > +       a7cc->parent_map = apcs_mux_clk_parent_map;
+> > +
+> > +       a7cc->pclk = devm_clk_get(parent, "pll");
+> > +       if (IS_ERR(a7cc->pclk)) {
+> > +               ret = PTR_ERR(a7cc->pclk);
+> > +               if (ret != -EPROBE_DEFER)
+> > +                       dev_err(dev, "Failed to get PLL clk: %d\n", ret);
+> 
+> Use dev_err_probe() please.
+> 
+> > +               return ret;
+> > +       }
+> > +
+> > +       a7cc->clk_nb.notifier_call = a7cc_notifier_cb;
+> > +       ret = clk_notifier_register(a7cc->pclk, &a7cc->clk_nb);
+> > +       if (ret) {
+> > +               dev_err(dev, "Failed to register clock notifier: %d\n", ret);
+> > +               return ret;
+> > +       }
+> > +
+> > +       ret = devm_clk_register_regmap(dev, &a7cc->clkr);
+> > +       if (ret) {
+> > +               dev_err(dev, "Failed to register regmap clock: %d\n", ret);
+> > +               goto err;
+> > +       }
+> > +
+> > +       ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get,
+> > +                                         &a7cc->clkr.hw);
+> > +       if (ret) {
+> > +               dev_err(dev, "Failed to add clock provider: %d\n", ret);
+> > +               goto err;
+> > +       }
+> > +
+> > +       platform_set_drvdata(pdev, a7cc);
+> > +
+> > +       /*
+> > +        * Attach the power domain to cpudev. There seems to be no better place
+> > +        * to do this, so do it here.
+> > +        */
+> > +       cpu_dev = get_cpu_device(0);
+> > +       dev_pm_domain_attach(cpu_dev, true);
+> 
+> I guess this works given that we don't have CPU drivers. The comment
+> says what the code is doing but doesn't say why it's doing it. Adding
+> why may help understand in the future and would be a better comment.
+> Why can't cpufreq-dt attach a power domain from DT for a cpu device? Is
+> that a bad idea?
+> 
+
+Yeah, I talked with Viresh about using cpufreq-dt for attaching the power
+domain but he said it isn't the appropriate place. Hence, I decided to use
+this driver.
+
+Will make the comment more elaborate.
+
+Thanks,
+Mani
+
+> > +
+> > +       return 0;
+> > +
+> > +err:
+> > +       clk_notifier_unregister(a7cc->pclk, &a7cc->clk_nb);
+> > +       return ret;
+> > +}
