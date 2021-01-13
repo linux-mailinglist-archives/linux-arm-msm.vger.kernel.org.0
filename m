@@ -2,75 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 846192F4EC0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jan 2021 16:32:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 92A302F4F2A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jan 2021 16:50:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726896AbhAMPaB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Jan 2021 10:30:01 -0500
-Received: from mail.kernel.org ([198.145.29.99]:34066 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726779AbhAMPaA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Jan 2021 10:30:00 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id A6CBF23437;
-        Wed, 13 Jan 2021 15:29:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1610551760;
-        bh=nGEiIrAwYDk5cc5c0NbgmPR1wJr88iE3TYoINs3MD0M=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=SO9mYsO0CWGdgXgH1F3G8lkMK+h2voo/zRGmBXunTY/OYQiYa97ZTKKFjBqyXjrF7
-         0P8LgRK5NsvYMG+UXyrcCTl9mMf3V4QWHIQtjz9F3VgOm4w5tqzCBuIAutAGDr9JSA
-         LRJORWVqhwUAC7n0ITsjFF1hI5BoiCiM1WHkdUpiH6Z8yOcFApk6fOHgKQ0qc3yMHE
-         Kt+jdLSwFX3Uq6vK8FV5w3tBvP4o93KdvBJdtXfHSrfXECSdwmbQiOLrBoKWHY9gkV
-         oxZGCt9/Y2+QwL2pSadjwSB6Ic/qJoaDHmHryMYV2h0wmdWj5eoABQadaMMEgje5Xk
-         0ZBePyxXhQQfQ==
-From:   Mark Brown <broonie@kernel.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Mukesh Kumar Savaliya <msavaliy@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Akash Asthana <akashast@codeaurora.org>
-In-Reply-To: <20210112001301.687628-1-swboyd@chromium.org>
-References: <20210112001301.687628-1-swboyd@chromium.org>
-Subject: Re: [PATCH v2] spi: spi-qcom-qspi: Use irq trigger flags from firmware
-Message-Id: <161055171028.21847.10972334360743536171.b4-ty@kernel.org>
-Date:   Wed, 13 Jan 2021 15:28:30 +0000
+        id S1725858AbhAMPuV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Jan 2021 10:50:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54378 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725846AbhAMPuV (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 13 Jan 2021 10:50:21 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E92FC061794
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jan 2021 07:49:40 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id a12so3449731lfl.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jan 2021 07:49:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=zDTL5TzhGClCytQgAVu79B4jFSXGtM5TTt8tFLgLuvo=;
+        b=KsJaPTsHB4u1lpF3B+jyYr+aaVzWmWhC+SL2SiOtpIg+/yPXKkQZKM5wvwUiG791bK
+         RAVeCq8Gv0qeaTO7pw6ZNoTszl+kmLdTJza9H/HpyPC5LXjixtCOaVzM6acY81lUqS3t
+         o6FdAp99JbiGBBabDEyIj7HYuXDlF94+R8zu+b/+AJDdwPlm5IUw4Yzkk2lq5ahZ/Agc
+         lIQwHvyP//Aey+cGb62EMuj3U5pYz7pD/vHks5iUlDenl/jPEmHvwvTRr6s6lQVdkrAR
+         ogIURMrxu5SsyYQoxqNkO4YJWHrbQM2WdDgRa9hs1Z87ewfTbZHAvu/eFKzhoW0T+jk/
+         M8fQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=zDTL5TzhGClCytQgAVu79B4jFSXGtM5TTt8tFLgLuvo=;
+        b=f6Q/9WXMX5/REDM3/3utDQ2gg3SKb/RPQu4rN3l56M5YoJeQi+XX0y010yZemjM/H0
+         Km1kQMfwB5WXCuMcM/CQcxbz7NugPcziC8Cu+8lTfJ6qOTDCbGFO0u6ETz+Pb0V0von6
+         iuftzwUfa3jpNotX97qjI+zqtFXYj4MCreQyLuVFLbRHR9ggZQCUbi4ks66g3CtjG7VD
+         nP1Al2Wo6UMcUuwpEhYAna6EKscJlwW8BLLX7GDQjP9vfZNBK8T4AEJB7cTCLOVZi/CR
+         EXUdwRxL+00JnvR/MSg0f9yhrTpfRyMjSXEyuT8l2N+bOTyyxpA2K4orxs1oXs2A4FOc
+         61qQ==
+X-Gm-Message-State: AOAM531GUw3Ipk8XD7sRhAEMnJ0cG9qDcQNUb6XJID6XSLov/iJD9ZiC
+        jMuYxLDxrfhcBraRt/HAENsTSQ==
+X-Google-Smtp-Source: ABdhPJz8d1TohZuhCehF3ORyrlJkEX7V2ZRf/hZ/I/6CNbj5JC8ddotDDKWkcAzkJUxlwkwDlgPbKw==
+X-Received: by 2002:a05:6512:324a:: with SMTP id c10mr1067029lfr.452.1610552978993;
+        Wed, 13 Jan 2021 07:49:38 -0800 (PST)
+Received: from eriador.lumag.spb.ru ([94.25.228.189])
+        by smtp.gmail.com with ESMTPSA id g13sm246828lfb.43.2021.01.13.07.49.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Jan 2021 07:49:38 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        linux-pci@vger.kernel.org
+Subject: [PATCH v4 0/2] PCI: qcom: fix PCIe support on sm8250
+Date:   Wed, 13 Jan 2021 18:49:33 +0300
+Message-Id: <20210113154935.3972869-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 11 Jan 2021 16:13:01 -0800, Stephen Boyd wrote:
-> We don't need to force this to be trigger high here, as the firmware
-> properly configures the irq flags already. Drop it to save a line.
+SM8250 platform requires additional clock to be enabled for PCIe to
+function. In case it is disabled, PCIe access will result in IOMMU
+timeouts. Add device tree binding and driver support for this clock.
 
-Applied to
+Changes since v3:
+ - Merge clock handling back into qcom_pcie_get_resources_2_7_0().
+   Define res->num_clks to the amount of clocks used for this particular
+   platform.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+Changes since v2:
+ - Split this clock handling from qcom_pcie_get_resources_2_7_0()
+ - Change comment to point that the clock is required rather than
+   optional
 
-Thanks!
+Changes since v1:
+ - Added Fixes: tags, as respective patches have hit the upstream Linux
+   tree.
 
-[1/1] spi: spi-qcom-qspi: Use irq trigger flags from firmware
-      commit: eaecba8767835783bdd2f4e72406668cda7d8d54
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
