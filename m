@@ -2,128 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0487A2F4851
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jan 2021 11:09:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 676AB2F48B4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jan 2021 11:32:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727378AbhAMKGj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Jan 2021 05:06:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36918 "EHLO
+        id S1726995AbhAMKaL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Jan 2021 05:30:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725924AbhAMKGi (ORCPT
+        with ESMTP id S1726803AbhAMKaL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Jan 2021 05:06:38 -0500
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C244FC0617A2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jan 2021 02:05:51 -0800 (PST)
-Received: by mail-pj1-x102f.google.com with SMTP id b5so868372pjk.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jan 2021 02:05:51 -0800 (PST)
+        Wed, 13 Jan 2021 05:30:11 -0500
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0844C061786
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jan 2021 02:29:30 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id ga15so2328629ejb.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jan 2021 02:29:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=NqSp1CS/tG0K0LycFdJLkNTqrqqEN/+/ECtWrdgLYVw=;
-        b=JtFYECy6FCsgaTEjjunXpOdA9jNdAI44H1uhMIZZlfofaRtiw9MDGEqdcADlmAlUHS
-         2jUII2HZYKKI1pCUuwKR9rYbVTlj412io9rO6/heet4HF7iBaoCGlg0yNLavvqKnFDPA
-         awm8/iiUnvvomkq6X0EN1Lpi+WrDUMVzTwFMJWQ3/m8B2j/qB0wJQHe5DT8VfnsWYZLV
-         +cwqqWC0fCGB+0mgnVnO0lufn9PI4XXTpkJsGf0h3sGvX+5y6aR7NFP+hcM/216nkl81
-         SUVQGLAuDdoHPl+kQKa5+u1PZOYa9dsIAaIW55I2n1eTQK8yC5MmOW6EhWqV6bm6Mxau
-         BxKQ==
+        h=from:to:cc:subject:date:message-id;
+        bh=O1ISGW1RaU0XNG0J5lpJPahfmekjOSoZHUoUK6eXzeY=;
+        b=tpSYzA/7Owm4gVFs36ogemVFjXeDYR+jzWi4Cp4UMcA7mHlFrB0cpVoAAfLcJR6kET
+         Q6CT4ymmP+DRgWCQVXkiHK3BKdzJgWcpWWRokCgPIGP3vBHT8iVYqaKy/vBq494I0G3O
+         Y5SkiVY7r51r4dU6H779DFjkUJ10nGvUIuv3lNYF7UVMQSi9hxmnZTB5lDVH5Kt2wym0
+         Tv1OARpOnqnjQObG16qloUrd8XMdBsraAmWCwfwDpsJx6WWtBFGPiDKgCsgmRXisNNGl
+         1nkuMIK2jPkcOLTed9cRLlwkRmPVpWtgMKlJPASVIIf3Nhp7uLKkCFw3cec+DUQkWCL/
+         U3GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=NqSp1CS/tG0K0LycFdJLkNTqrqqEN/+/ECtWrdgLYVw=;
-        b=h+jyuqv9aavr60QQZqR2Zn+QpKUIdnM6ewQHi8vi5kZUBXOyQLmutT6z7qb6KC5NJC
-         DcxJl/lhiPOtd4JRNmCP3eLvrBuqONOxEVQ0xPkG5NqDGy4To+738Yc/8QpTn9e5HKGT
-         LwWlHjYpET1t3UUna7/SYNgoMJVq4cFOgrYrgil3l1D5p53Bs1OEE71MLl98G9/hkgJL
-         /krR5WFvC19bCXXGTml7aq6j/nH9WqKOW95pHWTFQshE36CTcR7f5Q9WlPdtVscoTs3w
-         MhfKDCvQmJRDXeRhwnVwNqnx0T67sy4FQWZ5G4TqmjVp8v7YJ9DdsZRFmghNGFRCFGqC
-         eG8g==
-X-Gm-Message-State: AOAM533oAQ53Izeue4IOF9F3sF/MeJd9qbzY++0Ca1EuuprjD1ZhV4h3
-        RHaZfGEZDSTf/PgYFnlzCoggRUbjooiH7uKlQccpDg==
-X-Google-Smtp-Source: ABdhPJy30/24xh0ZjTuGG9Ozw/mTLYWg+XGxVN/wykYvTg2cIoVBMd6aMXveyvl+2yBjWVbOXsuhppIny0pJJAb6XCY=
-X-Received: by 2002:a17:90a:e604:: with SMTP id j4mr1548690pjy.19.1610532351366;
- Wed, 13 Jan 2021 02:05:51 -0800 (PST)
-MIME-Version: 1.0
-References: <20210108120429.895046-1-robert.foss@linaro.org>
- <20210108120429.895046-3-robert.foss@linaro.org> <X/ipyY7o+Grx+lkL@builder.lan>
-In-Reply-To: <X/ipyY7o+Grx+lkL@builder.lan>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Wed, 13 Jan 2021 11:04:45 +0100
-Message-ID: <CAG3jFyt8VdNZFMfM+Ugjo-6v=hVvRdm0LGvzV1ACGTq78aj11Q@mail.gmail.com>
-Subject: Re: [PATCH v1 02/17] media: camss: Fix vfe_isr comment typo
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Todor Tomov <todor.too@gmail.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, catalin.marinas@arm.com,
-        will@kernel.org, shawnguo@kernel.org, leoyang.li@nxp.com,
-        geert+renesas@glider.be, arnd@arndb.de, Anson.Huang@nxp.com,
-        michael@walle.cc, agx@sigxcpu.org, max.oss.09@gmail.com,
-        linux-arm-msm@vger.kernel.org,
-        linux-media <linux-media@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Andrey Konovalov <andrey.konovalov@linaro.org>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
-        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=O1ISGW1RaU0XNG0J5lpJPahfmekjOSoZHUoUK6eXzeY=;
+        b=Q3F9fK5lhtAhvXPproG0j/mL5S1Y7YtT7npPk5VqgM2LVetzR3ITa7MVlLIuQkHi6P
+         b5gTNw1PzIWwybPFEp3GQTlA0KReKzDEYTVipTRv40+ATz7rlUa6aK101mriVS/vd9mv
+         HAUK5gvhjTrJYK25E3UbmKeYOkDpbnbCyGGmqhbYxyYYugFaoCFa5/FC84CjnXXpPiI+
+         YURW/WVv2fOhFfHkfuKmrPV96JH5Gjywrai63Nba1PeRKwn1j7CxPk1+iRTeWqYI4E7G
+         39FVaeBrwBGH4zlXbjMdtFeVroZ+FB6LT8cLWHy0ijRJi32QC4n8upfE57sxTT0BVtfX
+         FmpQ==
+X-Gm-Message-State: AOAM532UAOEzpKpN3SR6ch9M9ZoidnKlmCeZttjs2zoCtPCskbu7dsX4
+        wY7El66smYISWBqCkCb0eVPdvA==
+X-Google-Smtp-Source: ABdhPJxmf863ISkG6HUSgsuXyuhC9GiBpmDhAY8DCknXAyR9TX9tYt7SyZfcMin1m25CvnWirp2FMQ==
+X-Received: by 2002:a17:906:1288:: with SMTP id k8mr1063584ejb.206.1610533769627;
+        Wed, 13 Jan 2021 02:29:29 -0800 (PST)
+Received: from localhost.localdomain (hst-221-90.medicom.bg. [84.238.221.90])
+        by smtp.gmail.com with ESMTPSA id h12sm551253ejx.81.2021.01.13.02.29.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Jan 2021 02:29:28 -0800 (PST)
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+To:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Subject: [PATCH] venus: hfi_plat: Fix warning for missing function prototype
+Date:   Wed, 13 Jan 2021 12:29:20 +0200
+Message-Id: <20210113102920.12841-1-stanimir.varbanov@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks!
+The bufreq_enc function should be static.
 
-On Fri, 8 Jan 2021 at 19:51, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
->
-> On Fri 08 Jan 06:04 CST 2021, Robert Foss wrote:
->
-> > Comment refers to ISPIF, but this is incorrect. Only
-> > the VFE interrupts are handled by this function.
-> >
-> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
->
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->
-> Regards,
-> Bjorn
->
-> > ---
-> >  drivers/media/platform/qcom/camss/camss-vfe-4-1.c | 2 +-
-> >  drivers/media/platform/qcom/camss/camss-vfe-4-7.c | 2 +-
-> >  2 files changed, 2 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
-> > index 174a36be6f5d..a1b56b89130d 100644
-> > --- a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
-> > +++ b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
-> > @@ -922,7 +922,7 @@ static void vfe_violation_read(struct vfe_device *vfe)
-> >  }
-> >
-> >  /*
-> > - * vfe_isr - ISPIF module interrupt handler
-> > + * vfe_isr - VFE module interrupt handler
-> >   * @irq: Interrupt line
-> >   * @dev: VFE device
-> >   *
-> > diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
-> > index b5704a2f119b..84c33b8f9fe3 100644
-> > --- a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
-> > +++ b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
-> > @@ -1055,7 +1055,7 @@ static void vfe_violation_read(struct vfe_device *vfe)
-> >  }
-> >
-> >  /*
-> > - * vfe_isr - ISPIF module interrupt handler
-> > + * vfe_isr - VFE module interrupt handler
-> >   * @irq: Interrupt line
-> >   * @dev: VFE device
-> >   *
-> > --
-> > 2.27.0
-> >
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+---
+ drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c b/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
+index 072e349dd46c..d43d1a53e72d 100644
+--- a/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
++++ b/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
+@@ -1239,8 +1239,8 @@ static int bufreq_dec(struct hfi_plat_buffers_params *params, u32 buftype,
+ 	return 0;
+ }
+ 
+-int bufreq_enc(struct hfi_plat_buffers_params *params, u32 buftype,
+-	       struct hfi_buffer_requirements *bufreq)
++static int bufreq_enc(struct hfi_plat_buffers_params *params, u32 buftype,
++		      struct hfi_buffer_requirements *bufreq)
+ {
+ 	enum hfi_version version = params->version;
+ 	struct enc_bufsize_ops *enc_ops;
+-- 
+2.17.1
+
