@@ -2,310 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DA4BC2F4682
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jan 2021 09:30:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D61112F46A8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jan 2021 09:42:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726714AbhAMIaG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Jan 2021 03:30:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44290 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726661AbhAMIaF (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Jan 2021 03:30:05 -0500
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7C9EC061786
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jan 2021 00:29:25 -0800 (PST)
-Received: by mail-pg1-x52d.google.com with SMTP id 15so1029031pgx.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jan 2021 00:29:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=l1GKa3x7ZNgVpRkmStUdrHjbkYZ9SQFyhIcPJwTf7mQ=;
-        b=mkqpTDKsvFlyxfobrl3O59d7IIHahU3PS8A71e5YzOZlHDWbI3MZUbGb7SzszcCOyu
-         ra2rQP1FSmDItU3qJfiNzVtBotM4pk1nDOdIWiocpHRFBWI+S0aBNwxNh1RwdCZZ+Rwp
-         vJpkXqohwYvayJKj2IWCmXCkacrtPqGcL2BHppSgchlP96jHviCQysvI7Xz+pku+moTs
-         atreTPYdyRmAfTwx9WIMJwNvu78nuz7zE27UOtTVp2scjPLS4OWyMWhXb7c69SVWsYrO
-         U2xkipy3HDuKbaGqqSaXPSGjU5KWEkqeeEva2ELwpPdqkTgVnAk9wEOkVC+9SXeY8dWj
-         nQsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=l1GKa3x7ZNgVpRkmStUdrHjbkYZ9SQFyhIcPJwTf7mQ=;
-        b=MEmItTZSq2JJGsQdBJWCXfqrhojjdx2yVGGnhE7w64VT0II4szvJpxNa17jb91ZdnX
-         Gopzp4gIK+4A+tf7+q3jGqJvBxxNcL0Gdv03if7xsZSulpF6yNH/FeBX+nR9lQzrHHcg
-         +7bYAuWoBcV1XK6ZW4nbvc0/bhjt1VJ+zuP0c7DUnwD/sOGJKV4IIvgHWlcnHdHlLj50
-         LU7H43jAW4wDt6qATXuFIP+fc9iR9dOQj1sTq/Ijyf7A94LF1o2huj2s1UgHheD4bKsr
-         NDCGr8qPYqBMx98DZoEWj9SApGpzsVf9ortYj795Jpq4/swAr3iBcQ7yX/fiiRYn1WDS
-         eHPg==
-X-Gm-Message-State: AOAM5305UbC4OQ4q2voNLfAMbfYodfZkjfZ2KZorzmPX5F1FXXhOT8j1
-        fY9BzXCoZosovhiDMNQj0hN1hwQ6CdRG
-X-Google-Smtp-Source: ABdhPJzhbChFX7E4odlTkqAVRn4oQYVX+m5ZecCHfZJcCca/kNL2kle2MNutGtYW7mRpy6pztpTV/w==
-X-Received: by 2002:a63:ef14:: with SMTP id u20mr1076416pgh.93.1610526565041;
-        Wed, 13 Jan 2021 00:29:25 -0800 (PST)
-Received: from thinkpad ([2409:4072:6199:4cc7:6c7e:de01:2568:5545])
-        by smtp.gmail.com with ESMTPSA id p15sm1705977pgl.19.2021.01.13.00.29.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Jan 2021 00:29:24 -0800 (PST)
-Date:   Wed, 13 Jan 2021 13:59:15 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     jassisinghbrar@gmail.com, mturquette@baylibre.com,
-        robh+dt@kernel.org, viresh.kumar@linaro.org,
-        ulf.hansson@linaro.org, bjorn.andersson@linaro.org,
-        agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 5/5] clk: qcom: Add SDX55 APCS clock controller support
-Message-ID: <20210113082915.GB3763@thinkpad>
-References: <20210108113233.75418-1-manivannan.sadhasivam@linaro.org>
- <20210108113233.75418-6-manivannan.sadhasivam@linaro.org>
- <161052342416.3661239.16154742996506371048@swboyd.mtv.corp.google.com>
+        id S1725871AbhAMIkx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Jan 2021 03:40:53 -0500
+Received: from mail.kernel.org ([198.145.29.99]:41016 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725843AbhAMIkx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 13 Jan 2021 03:40:53 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id D762320719;
+        Wed, 13 Jan 2021 08:40:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1610527210;
+        bh=XcCuiJ1t9jecR1iasm+dpOPuMUTkNlkATUZZmTYh84g=;
+        h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+        b=ekx8KlMCJEAWd+0dWZ0WIKrXa+c64OSvb5Tv2VlMAuLsRt5Jumc6weGYU1aKFk3Vn
+         prdt4vtbYHdLsmw7GS86SQHK6ad5EDzz56KnDeB0O2ri5XxyGoAjg5YmkEA1Hsz9OD
+         On/PeioiHN/6m7c2/HG4uUqdepC0o+9P4k67DdonziiQdPS7CRlg34wuEV7vX03DuT
+         5+CdNSpwLAwZouKCwpXo5EYe/3NdzL3LrVl+tfl9A5tr2V9rI+cyxz2wezjxxshm3N
+         Rlji+Kg6+XhkZl4pQj2bKcLC7Unkj4HKbdaRC6MktwaYsjJpymRH/+Yh6DKWq7hMZ2
+         uVof5MKJFMr3A==
+From:   Felipe Balbi <balbi@kernel.org>
+To:     Sandeep Maheswaram <sanm@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>
+Subject: Re: [PATCH] usb: dwc3: qcom: Add shutdown callback for dwc3
+In-Reply-To: <1605162619-10064-1-git-send-email-sanm@codeaurora.org>
+References: <1605162619-10064-1-git-send-email-sanm@codeaurora.org>
+Date:   Wed, 13 Jan 2021 10:40:01 +0200
+Message-ID: <87sg7544da.fsf@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <161052342416.3661239.16154742996506371048@swboyd.mtv.corp.google.com>
+Content-Type: multipart/signed; boundary="=-=-=";
+        micalg=pgp-sha256; protocol="application/pgp-signature"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jan 12, 2021 at 11:37:04PM -0800, Stephen Boyd wrote:
-> Quoting Manivannan Sadhasivam (2021-01-08 03:32:33)
-> > Add a driver for the SDX55 APCS clock controller. It is part of the APCS
-> > hardware block, which among other things implements also a combined mux
-> > and half integer divider functionality. The APCS clock controller has 3
-> > parent clocks:
-> > 
-> > 1. Board XO
-> > 2. Fixed rate GPLL0
-> > 3. A7 PLL
-> > 
-> > The source and the divider can be set both at the same time.
-> 
-> I don't understand what that means. Presumably it's a mux/divider
-> combined?
-> 
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-Yeah, will make it clear.
 
-> > 
-> > This is required for enabling CPU frequency scaling on SDX55-based
-> > platforms.
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  drivers/clk/qcom/Kconfig      |   9 ++
-> >  drivers/clk/qcom/Makefile     |   1 +
-> >  drivers/clk/qcom/apcs-sdx55.c | 149 ++++++++++++++++++++++++++++++++++
-> >  3 files changed, 159 insertions(+)
-> >  create mode 100644 drivers/clk/qcom/apcs-sdx55.c
-> > 
-> > diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-> > index d6f4aee4427a..2c67fdfae913 100644
-> > --- a/drivers/clk/qcom/Kconfig
-> > +++ b/drivers/clk/qcom/Kconfig
-> > @@ -45,6 +45,15 @@ config QCOM_CLK_APCS_MSM8916
-> >           Say Y if you want to support CPU frequency scaling on devices
-> >           such as msm8916.
-> >  
-> > +config QCOM_CLK_APCS_SDX55
-> 
-> APCC comes before APCS
-> 
+Hi,
 
-Okay
+Sandeep Maheswaram <sanm@codeaurora.org> writes:
+> This patch adds a shutdown callback to USB DWC QCOM driver to ensure that
+> it is properly shutdown in reboot/shutdown path. This is required
+> where SMMU address translation is enabled like on SC7180
+> SoC and few others. If the hardware is still accessing memory after
+> SMMU translation is disabled as part of SMMU shutdown callback in
+> system reboot or shutdown path, then IOVAs(I/O virtual address)
+> which it was using will go on the bus as the physical addresses which
+> might result in unknown crashes (NoC/interconnect errors).
+>
+> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
 
-> > +       tristate "SDX55 APCS Clock Controller"
-> > +       depends on QCOM_APCS_IPC || COMPILE_TEST
-> > +       help
-> > +         Support for the APCS Clock Controller on SDX55 platform. The
-> > +         APCS is managing the mux and divider which feeds the CPUs.
-> > +         Say Y if you want to support CPU frequency scaling on devices
-> > +         such as SDX55.
-> > +
-> >  config QCOM_CLK_APCC_MSM8996
-> >         tristate "MSM8996 CPU Clock Controller"
-> >         select QCOM_KRYO_L2_ACCESSORS
-> > diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-> > index e7e0ac382176..a9271f40916c 100644
-> > --- a/drivers/clk/qcom/Makefile
-> > +++ b/drivers/clk/qcom/Makefile
-> > @@ -46,6 +46,7 @@ obj-$(CONFIG_MSM_MMCC_8998) += mmcc-msm8998.o
-> >  obj-$(CONFIG_QCOM_A53PLL) += a53-pll.o
-> >  obj-$(CONFIG_QCOM_A7PLL) += a7-pll.o
-> >  obj-$(CONFIG_QCOM_CLK_APCS_MSM8916) += apcs-msm8916.o
-> > +obj-$(CONFIG_QCOM_CLK_APCS_SDX55) += apcs-sdx55.o
-> >  obj-$(CONFIG_QCOM_CLK_APCC_MSM8996) += clk-cpu-8996.o
-> >  obj-$(CONFIG_QCOM_CLK_RPM) += clk-rpm.o
-> >  obj-$(CONFIG_QCOM_CLK_RPMH) += clk-rpmh.o
-> > diff --git a/drivers/clk/qcom/apcs-sdx55.c b/drivers/clk/qcom/apcs-sdx55.c
-> > new file mode 100644
-> > index 000000000000..14413c957d83
-> > --- /dev/null
-> > +++ b/drivers/clk/qcom/apcs-sdx55.c
-> > @@ -0,0 +1,149 @@
-> > +// SPDX-License-Identifier: GPL-2.0
-> > +/*
-> > + * Qualcomm SDX55 APCS clock controller driver
-> > + *
-> > + * Copyright (c) 2020, Linaro Limited
-> > + * Author: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > + */
-> > +
-> > +#include <linux/clk.h>
-> > +#include <linux/clk-provider.h>
-> > +#include <linux/cpu.h>
-> > +#include <linux/kernel.h>
-> > +#include <linux/module.h>
-> > +#include <linux/platform_device.h>
-> > +#include <linux/pm_domain.h>
-> > +#include <linux/regmap.h>
-> > +#include <linux/slab.h>
-> > +
-> > +#include "clk-regmap.h"
-> > +#include "clk-regmap-mux-div.h"
-> > +#include "common.h"
-> 
-> Curious what common is needed for?
-> 
+sounds like this is fixing a bug. Do you have a Fixes tag for it? Should
+this go to stable?
 
-Not needed, will remove.
+> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> index c703d55..a930e06 100644
+> --- a/drivers/usb/dwc3/dwc3-qcom.c
+> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> @@ -790,13 +790,11 @@ static int dwc3_qcom_probe(struct platform_device *=
+pdev)
+>  	return ret;
+>  }
+>=20=20
+> -static int dwc3_qcom_remove(struct platform_device *pdev)
+> +static void __dwc3_qcom_teardown(struct dwc3_qcom *qcom)
+>  {
+> -	struct dwc3_qcom *qcom =3D platform_get_drvdata(pdev);
+> -	struct device *dev =3D &pdev->dev;
+>  	int i;
+>=20=20
+> -	of_platform_depopulate(dev);
+> +	of_platform_depopulate(qcom->dev);
+>=20=20
+>  	for (i =3D qcom->num_clocks - 1; i >=3D 0; i--) {
+>  		clk_disable_unprepare(qcom->clks[i]);
+> @@ -807,12 +805,27 @@ static int dwc3_qcom_remove(struct platform_device =
+*pdev)
+>  	dwc3_qcom_interconnect_exit(qcom);
+>  	reset_control_assert(qcom->resets);
+>=20=20
+> -	pm_runtime_allow(dev);
+> -	pm_runtime_disable(dev);
+> +	pm_runtime_allow(qcom->dev);
+> +	pm_runtime_disable(qcom->dev);
+> +}
 
-> > +
-> > +static const u32 apcs_mux_clk_parent_map[] = { 0, 1, 5 };
-> > +
-> > +static const struct clk_parent_data pdata[] = {
-> > +       { .fw_name = "ref", .name = "bi_tcxo", },
-> > +       { .fw_name = "aux", .name = "gpll0", },
-> > +       { .fw_name = "pll", .name = "a7pll", },
-> 
-> Please remove name from here. It shouldn't be necessary if the DT
-> describes things properly. Or there isn't DT for this device?
-> 
+you can make the changes smaller by adding:
 
-Will remove.
+	struct device *dev =3D qcom->dev;
 
-> > +};
-> > +
-> > +/*
-> > + * We use the notifier function for switching to a temporary safe configuration
-> > + * (mux and divider), while the A7 PLL is reconfigured.
-> > + */
-> > +static int a7cc_notifier_cb(struct notifier_block *nb, unsigned long event,
-> > +                           void *data)
-> > +{
-> > +       int ret = 0;
-> > +       struct clk_regmap_mux_div *md = container_of(nb,
-> > +                                                    struct clk_regmap_mux_div,
-> > +                                                    clk_nb);
-> > +       if (event == PRE_RATE_CHANGE)
-> > +               /* set the mux and divider to safe frequency (400mhz) */
-> > +               ret = mux_div_set_src_div(md, 1, 2);
-> > +
-> > +       return notifier_from_errno(ret);
-> > +}
-> > +
-> > +static int qcom_apcs_sdx55_clk_probe(struct platform_device *pdev)
-> > +{
-> > +       struct device *dev = &pdev->dev;
-> > +       struct device *parent = dev->parent;
-> > +       struct device *cpu_dev;
-> > +       struct clk_regmap_mux_div *a7cc;
-> > +       struct regmap *regmap;
-> > +       struct clk_init_data init = { };
-> > +       int ret = -ENODEV;
-> 
-> Drop assignement..
-> 
-> > +
-> > +       regmap = dev_get_regmap(parent, NULL);
-> > +       if (!regmap) {
-> > +               dev_err(dev, "Failed to get parent regmap: %d\n", ret);
-> > +               return ret;
-> 
-> .. and Just return -ENODEV?
-> 
-> > +       }
-> > +
-> > +       a7cc = devm_kzalloc(dev, sizeof(*a7cc), GFP_KERNEL);
-> > +       if (!a7cc)
-> > +               return -ENOMEM;
-> > +
-> > +       init.name = "a7mux";
-> > +       init.parent_data = pdata;
-> > +       init.num_parents = ARRAY_SIZE(pdata);
-> > +       init.ops = &clk_regmap_mux_div_ops;
-> > +
-> > +       a7cc->clkr.hw.init = &init;
-> > +       a7cc->clkr.regmap = regmap;
-> > +       a7cc->reg_offset = 0x8;
-> > +       a7cc->hid_width = 5;
-> > +       a7cc->hid_shift = 0;
-> > +       a7cc->src_width = 3;
-> > +       a7cc->src_shift = 8;
-> > +       a7cc->parent_map = apcs_mux_clk_parent_map;
-> > +
-> > +       a7cc->pclk = devm_clk_get(parent, "pll");
-> > +       if (IS_ERR(a7cc->pclk)) {
-> > +               ret = PTR_ERR(a7cc->pclk);
-> > +               if (ret != -EPROBE_DEFER)
-> > +                       dev_err(dev, "Failed to get PLL clk: %d\n", ret);
-> 
-> Use dev_err_probe() please.
-> 
-> > +               return ret;
-> > +       }
-> > +
-> > +       a7cc->clk_nb.notifier_call = a7cc_notifier_cb;
-> > +       ret = clk_notifier_register(a7cc->pclk, &a7cc->clk_nb);
-> > +       if (ret) {
-> > +               dev_err(dev, "Failed to register clock notifier: %d\n", ret);
-> > +               return ret;
-> > +       }
-> > +
-> > +       ret = devm_clk_register_regmap(dev, &a7cc->clkr);
-> > +       if (ret) {
-> > +               dev_err(dev, "Failed to register regmap clock: %d\n", ret);
-> > +               goto err;
-> > +       }
-> > +
-> > +       ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get,
-> > +                                         &a7cc->clkr.hw);
-> > +       if (ret) {
-> > +               dev_err(dev, "Failed to add clock provider: %d\n", ret);
-> > +               goto err;
-> > +       }
-> > +
-> > +       platform_set_drvdata(pdev, a7cc);
-> > +
-> > +       /*
-> > +        * Attach the power domain to cpudev. There seems to be no better place
-> > +        * to do this, so do it here.
-> > +        */
-> > +       cpu_dev = get_cpu_device(0);
-> > +       dev_pm_domain_attach(cpu_dev, true);
-> 
-> I guess this works given that we don't have CPU drivers. The comment
-> says what the code is doing but doesn't say why it's doing it. Adding
-> why may help understand in the future and would be a better comment.
-> Why can't cpufreq-dt attach a power domain from DT for a cpu device? Is
-> that a bad idea?
-> 
+The nothing else needs to change in this function ;-)
 
-Yeah, I talked with Viresh about using cpufreq-dt for attaching the power
-domain but he said it isn't the appropriate place. Hence, I decided to use
-this driver.
+=2D-=20
+balbi
 
-Will make the comment more elaborate.
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Thanks,
-Mani
+-----BEGIN PGP SIGNATURE-----
 
-> > +
-> > +       return 0;
-> > +
-> > +err:
-> > +       clk_notifier_unregister(a7cc->pclk, &a7cc->clk_nb);
-> > +       return ret;
-> > +}
+iQJFBAEBCAAvFiEElLzh7wn96CXwjh2IzL64meEamQYFAl/+seERHGJhbGJpQGtl
+cm5lbC5vcmcACgkQzL64meEamQaHDw//VzCLAhbS2V8Dlea71pWG0Y3mHVJ7c8Iw
+D0UNsS4VetXQGi45dmY3O1aIjCpCvL9JANBpDk891MCzlrL0MHkrEmvLPJ3F4X/K
+VDWPVSISoX1m3SnAiI36PBQCMKMgxkyn7czKCur0moWKflzjgStfdYKccIZE0U+g
+6mSxUmmm1sl3cCMa9hcQ1SrwcuORP9bbZ5AlGk+M6xgbJoyKsrGUrPf4HV/PapKr
+FMcuDcpMv0UKghEeHg5qRy0u8+ox0rAViT9dV2vpkgNarePaLh9DM0W8oDDlQnWs
+Y0sNePKnFFab1zugfXAemrA+kotIq83WCejY4m0VTiilmuY6j0FBK0JGqGVNJ32j
+3+Hyr0XiSwEEFj0EOLqZdr5tWLvUve44rsHDhTFGYPLam01AuGqa9Q/fzm5cJgAj
+9LieeFX/ESST61egkrqGnP58NbhJM7rp4Pri6z2+mcZ+GX2TgskpYnLg2YCqfoLf
+dYxPfSzWAZGJz3xqNM2kL0tM23FWdqGyaUGsUvga/Wi2hwp8LtVrheF9RLOaeLwP
+fXdgFh73lsRbdaXWSF87nQHuYEqN+3nYsqo8TyAudOyzq6+hOy2I0lb86/iz/JpK
+az5Ao0QAFuywtWcnyjc4fuFuNEeFxekVHfE9tur19yP5uEpdoPpoo3FJXr1lMpse
+Klo+fcPmwB8=
+=7Ebv
+-----END PGP SIGNATURE-----
+--=-=-=--
