@@ -2,89 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CD1A2F4381
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jan 2021 06:10:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 450682F4411
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jan 2021 06:45:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725868AbhAMFHg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Jan 2021 00:07:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57458 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725857AbhAMFHg (ORCPT
+        id S1725781AbhAMFp1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Jan 2021 00:45:27 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:39162 "EHLO
+        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725747AbhAMFp1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Jan 2021 00:07:36 -0500
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C722DC061794
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jan 2021 21:06:55 -0800 (PST)
-Received: by mail-pl1-x631.google.com with SMTP id b8so419947plx.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jan 2021 21:06:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=gyKIFw+IPWRbdD3u9S0/inpqqBfelQFBDgUhalF3D4o=;
-        b=oC/8+wx9OS5TrvncTk9uKUJsoDN0GpZ9jAPR1pJ2adPYtYkJ7zr99b/qpQEK0+7sMK
-         cT5C7uRDk3hruPnRjbcMprurgOT4b/GY5NusBKRi/ofm9GUX2OhsByV1D2smhmVlEKkk
-         MWd0/3kALZDn+M31ANta1DBXq4Q8xsXx/sDGIPSL9kRCSjh8Em7qWkL5IyCni7FggMZt
-         dX1rfKnSHQRqbNRkhrL9k/R1d53g3bWFl9mIYp5Y7mE0BoymmY90G6DePNLYMJUUG8Y5
-         HPX5OP0535cj2LMM/i4O4hBra6lcp4Ckc0mWFqJZfQo6ONj/MVqOocGfLwN+hz7N4ytG
-         ZGBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=gyKIFw+IPWRbdD3u9S0/inpqqBfelQFBDgUhalF3D4o=;
-        b=O/MnRrgaCmH21y4z6G+Y6wox8Sc1nHkxx3hxIdZmEMGx+o4kTfM7gZ/pXGgaxSdfY4
-         SHs8fVHFkt6mF9/Iig0iIqR4naIflV7+8LrLC4OV/TLWGILnz5YUmIM1WmegqdCQYulh
-         OxYWl3z3k9QwFxDryvCPg7yINUHk0cnQYY10IdM7RgL0k8A1KekuPyDo0HdlwX8Odh47
-         LoYc47kApxBGp2XfCY3j5vxF6/ZiY18E0DNkiQPTytNut9hqrLC4HMER8qhrQTazNboe
-         duBemNvV26NVzZf4cPYd99FwlKpHz4i5Zhy/9bziF9SWgESib90lSnqsZAQkGdf9IQDT
-         FmbQ==
-X-Gm-Message-State: AOAM532uOc691EAFDLUFKdDRqgW6qMud4SVCLVZFJZ1wWL8205BZQTge
-        KYxi3IoUyeyF5Zwr24NCExnGBQ==
-X-Google-Smtp-Source: ABdhPJzP3V6xcb8suT8nqzb7MmeBAtJDFAETD/WxvXgCPy6ZwHQdClJgivOX5JPkGy5gX2UvLvn1ug==
-X-Received: by 2002:a17:90a:b296:: with SMTP id c22mr308880pjr.91.1610514415205;
-        Tue, 12 Jan 2021 21:06:55 -0800 (PST)
-Received: from localhost ([122.172.85.111])
-        by smtp.gmail.com with ESMTPSA id j15sm857607pfn.180.2021.01.12.21.06.53
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 12 Jan 2021 21:06:53 -0800 (PST)
-Date:   Wed, 13 Jan 2021 10:36:51 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ionela Voinescu <ionela.voinescu@arm.com>
-Cc:     Shawn Guo <shawn.guo@linaro.org>,
-        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Andy Gross <agross@kernel.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] cpufreq: qcom-hw: add missing devm_release_mem_region()
- call
-Message-ID: <20210113050651.q2txref3d6bifrf3@vireshk-i7>
-References: <20210112095236.20515-1-shawn.guo@linaro.org>
- <X/210llTiuNt3haG@builder.lan>
- <20210113043143.y45mmnw3e2kjkxnl@vireshk-i7>
- <X/5+GbueKg66DoEE@builder.lan>
+        Wed, 13 Jan 2021 00:45:27 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1610516702; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=hFAIRvzSlkyR1XtFS2t0dRLU8b5o3JTm4z6bVI4XCEY=;
+ b=T4Q62e6bNNMI0V0dt825MzQrQsD0IahB+7hhpGQSLilHCBJV6x47+4aJNLNZZE4E5ZdL2CKX
+ 47xsntkUIBFt1TMGoWg0Zx4NQHu2HosGlQqbauKeMRltP3zqWvoGF4Ajv7+mbAAL/GPTyhpf
+ eGzPGZTrSKHegSNqUcPjFyMPSyo=
+X-Mailgun-Sending-Ip: 198.61.254.31
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 5ffe88c4415a6293c5531347 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 13 Jan 2021 05:44:36
+ GMT
+Sender: sanm=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 32643C43462; Wed, 13 Jan 2021 05:44:36 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: sanm)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5B8C8C433C6;
+        Wed, 13 Jan 2021 05:44:35 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <X/5+GbueKg66DoEE@builder.lan>
-User-Agent: NeoMutt/20180716-391-311a52
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 13 Jan 2021 11:14:35 +0530
+From:   sanm@codeaurora.org
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manu Gautam <mgautam@codeaurora.org>
+Subject: Re: [PATCH] usb: dwc3: qcom: Add shutdown callback for dwc3
+In-Reply-To: <1605162619-10064-1-git-send-email-sanm@codeaurora.org>
+References: <1605162619-10064-1-git-send-email-sanm@codeaurora.org>
+Message-ID: <d39144b6495db2d23466e76e509be0ed@codeaurora.org>
+X-Sender: sanm@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12-01-21, 22:59, Bjorn Andersson wrote:
-> But that said, why are the ioremap done at init and not at probe time?
+On 2020-11-12 12:00, Sandeep Maheswaram wrote:
+> This patch adds a shutdown callback to USB DWC QCOM driver to ensure 
+> that
+> it is properly shutdown in reboot/shutdown path. This is required
+> where SMMU address translation is enabled like on SC7180
+> SoC and few others. If the hardware is still accessing memory after
+> SMMU translation is disabled as part of SMMU shutdown callback in
+> system reboot or shutdown path, then IOVAs(I/O virtual address)
+> which it was using will go on the bus as the physical addresses which
+> might result in unknown crashes (NoC/interconnect errors).
+> 
+> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+> ---
+>  drivers/usb/dwc3/dwc3-qcom.c | 26 ++++++++++++++++++++------
+>  1 file changed, 20 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/usb/dwc3/dwc3-qcom.c 
+> b/drivers/usb/dwc3/dwc3-qcom.c
+> index c703d55..a930e06 100644
+> --- a/drivers/usb/dwc3/dwc3-qcom.c
+> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> @@ -790,13 +790,11 @@ static int dwc3_qcom_probe(struct platform_device 
+> *pdev)
+>  	return ret;
+>  }
+> 
+> -static int dwc3_qcom_remove(struct platform_device *pdev)
+> +static void __dwc3_qcom_teardown(struct dwc3_qcom *qcom)
+>  {
+> -	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
+> -	struct device *dev = &pdev->dev;
+>  	int i;
+> 
+> -	of_platform_depopulate(dev);
+> +	of_platform_depopulate(qcom->dev);
+> 
+>  	for (i = qcom->num_clocks - 1; i >= 0; i--) {
+>  		clk_disable_unprepare(qcom->clks[i]);
+> @@ -807,12 +805,27 @@ static int dwc3_qcom_remove(struct 
+> platform_device *pdev)
+>  	dwc3_qcom_interconnect_exit(qcom);
+>  	reset_control_assert(qcom->resets);
+> 
+> -	pm_runtime_allow(dev);
+> -	pm_runtime_disable(dev);
+> +	pm_runtime_allow(qcom->dev);
+> +	pm_runtime_disable(qcom->dev);
+> +}
+> +
+> +static int dwc3_qcom_remove(struct platform_device *pdev)
+> +{
+> +	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
+> +
+> +	__dwc3_qcom_teardown(qcom);
+> 
+>  	return 0;
+>  }
+> 
+> +static void dwc3_qcom_shutdown(struct platform_device *pdev)
+> +{
+> +	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
+> +
+> +	__dwc3_qcom_teardown(qcom);
+> +
+> +}
+> +
+>  static int __maybe_unused dwc3_qcom_pm_suspend(struct device *dev)
+>  {
+>  	struct dwc3_qcom *qcom = dev_get_drvdata(dev);
+> @@ -887,6 +900,7 @@ MODULE_DEVICE_TABLE(acpi, dwc3_qcom_acpi_match);
+>  static struct platform_driver dwc3_qcom_driver = {
+>  	.probe		= dwc3_qcom_probe,
+>  	.remove		= dwc3_qcom_remove,
+> +	.shutdown	= dwc3_qcom_shutdown,
+>  	.driver		= {
+>  		.name	= "dwc3-qcom",
+>  		.pm	= &dwc3_qcom_dev_pm_ops,
 
-These are some hardware registers per cpufreq policy I believe, and so
-they did it from policy init instead.
+Hi Felipe,
 
-And yes I agree that we shouldn't use devm_ from init() for the cases
-where we need to put the resources in exit() as well. But things like
-devm_kzalloc() are fine there.
+Can you please review this patch.
 
-Ionela, since you were the first one to post a patch about this, can
-you send a fix for this by dropping the devm_ thing altogether for the
-ioremap thing ? Mark it suggested by Bjorn. Thanks.
-
--- 
-viresh
+Regards
+Sandeep
