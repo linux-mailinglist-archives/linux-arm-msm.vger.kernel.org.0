@@ -2,179 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E4512F421F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jan 2021 03:57:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B20F72F423A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jan 2021 04:05:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728737AbhAMC5K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jan 2021 21:57:10 -0500
-Received: from mail-ot1-f43.google.com ([209.85.210.43]:37692 "EHLO
-        mail-ot1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726840AbhAMC5K (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jan 2021 21:57:10 -0500
-Received: by mail-ot1-f43.google.com with SMTP id o11so593822ote.4;
-        Tue, 12 Jan 2021 18:56:54 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=wxopvxGze0KrwrLh4CQC5oDamBjQANLUapKIcQO/MXE=;
-        b=k6zmwDG6uO4PvbyJeGNB4MAlXlTB72tL5tUnbUwI/WS+aZ+Fkjt1Yjd5DTUfl3IyKL
-         7GzEHkOrfnrmSAoPnAo7jTb2Ke3uyou6T9wl6AKK1l0kyI/8lqpMyEIWW27VDs1u7ndw
-         l9Y4nTD5flNzGMWUFzsnmB75Ah02L+dQjL8RJG7ORE1o+5SrXwqgXpOAsQTQK06h7M0k
-         b6Qrg+Hu5DCTwTYcaMP1KzTLRRdu1J9WeBNHxQ2JysqFQwN1zbLbwkOksPEinYvY8jEJ
-         dRHgCPYiwzTOxcAvZJRxoeccAPhm2vVclnQIPhn5Bs7E9vG4PcJbElEa9lv0mNC1pu3z
-         XVuw==
-X-Gm-Message-State: AOAM530uO+6ANV/EOEgx+v0jWvNSIr/U7dPg05cqFwtrBehqGbdk/1kY
-        5Vzmi7Ys4fjvp0hoQ7h2XA==
-X-Google-Smtp-Source: ABdhPJy3qIbJsSo8ZClFtqTOMi0u7CL9lXJnDxywdybq3O1RzBXWkRgzCxuBOC2FJyqihdK8Cbb3kA==
-X-Received: by 2002:a05:6830:784:: with SMTP id w4mr1602255ots.53.1610506589186;
-        Tue, 12 Jan 2021 18:56:29 -0800 (PST)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id h11sm146837ooj.36.2021.01.12.18.56.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Jan 2021 18:56:28 -0800 (PST)
-Received: (nullmailer pid 1430607 invoked by uid 1000);
-        Wed, 13 Jan 2021 02:56:27 -0000
-Date:   Tue, 12 Jan 2021 20:56:27 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 1/2] dt-bindings: pinctrl: qcom: Add SM8350 pinctrl
- bindings
-Message-ID: <20210113025627.GA1414436@robh.at.kernel.org>
-References: <20210106054950.303244-1-vkoul@kernel.org>
- <20210106054950.303244-2-vkoul@kernel.org>
- <X/dCIuUR/El8Gxaa@builder.lan>
+        id S1728800AbhAMDEU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jan 2021 22:04:20 -0500
+Received: from mail.kernel.org ([198.145.29.99]:43928 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728722AbhAMDET (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 12 Jan 2021 22:04:19 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id E022923132;
+        Wed, 13 Jan 2021 03:03:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1610507019;
+        bh=Lb24rQrKobyTU7A/TU/jdr6OZKSzLpDca0GkNO8kDnI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=jPTmRs+lvTvzIyhdI94vZd+ttqxTP5Jz129r0rQnL/9e6DyGCnqjJgOitPc+9ImbU
+         6h82quHxRePvuryNqcC4SXZjhdjDD6q8OI/aPtvGDOPOGb4lf8RuJ1SBcwwaLOon4a
+         pwSAq8m6YfyuprW6Qf8K8xdMNupn3xX8FpEmzegnxmKo69FE0JK1lRrHayX2DW/OyR
+         c/EWEDRGxtAeOH5cI4zy4hUmsDjdi6NovCgQ/q3B0lwmz+Vyc+HxZ5u77f0RgIW6N9
+         WWflhDvfUkTnfRteSgw63pdXjDnbrD1xpGmke2M699RVJv7a899G2Wx8VDlCzJujsW
+         fu9gpKF5dkLjw==
+Date:   Wed, 13 Jan 2021 08:33:33 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mark Brown <broonie@kernel.org>, Wolfram Sang <wsa@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        linux-spi <linux-spi@vger.kernel.org>, linux-i2c@vger.kernel.org,
+        LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 0/7] Add and enable GPI DMA users
+Message-ID: <20210113030333.GV2771@vkoul-mobl>
+References: <20210111151651.1616813-1-vkoul@kernel.org>
+ <CAD=FV=XvgP5j3ikCnr2zDptFbWPRQhGGQotqyFGmN7NWNP8knA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <X/dCIuUR/El8Gxaa@builder.lan>
+In-Reply-To: <CAD=FV=XvgP5j3ikCnr2zDptFbWPRQhGGQotqyFGmN7NWNP8knA@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 07, 2021 at 11:17:22AM -0600, Bjorn Andersson wrote:
-> On Tue 05 Jan 23:49 CST 2021, Vinod Koul wrote:
-> 
-> > Add device tree binding Documentation details for Qualcomm SM8350
-> > pinctrl driver.
-> > 
-> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > ---
-> >  .../bindings/pinctrl/qcom,sm8350-tlmm.yaml    | 149 ++++++++++++++++++
-> >  1 file changed, 149 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm8350-tlmm.yaml
-> > 
-> > diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm8350-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm8350-tlmm.yaml
-> > new file mode 100644
-> > index 000000000000..abdafd25bfc2
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm8350-tlmm.yaml
-> > @@ -0,0 +1,149 @@
-> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/pinctrl/qcom,sm8350-tlmm.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Qualcomm Technologies, Inc. SM8350 TLMM block
-> > +
-> > +maintainers:
-> > +  - Vinod Koul <vkoul@kernel.org>
-> > +
-> > +description: |
-> > +  This binding describes the Top Level Mode Multiplexer block found in the
-> > +  SM8350 platform.
-> > +
-> > +properties:
-> > +  compatible:
-> > +    const: qcom,sm8350-tlmm
-> > +
-> > +  reg:
-> > +    maxItems: 1
-> > +
-> > +  interrupts:
-> > +    maxItems: 1
-> > +
-> > +  interrupt-controller: true
-> > +
-> > +  '#interrupt-cells':
-> > +    description: Specifies the PIN numbers and Flags, as defined in
-> > +      include/dt-bindings/interrupt-controller/irq.h
-> > +    const: 2
-> > +
-> > +  gpio-controller: true
-> > +
-> > +  '#gpio-cells':
-> > +    description: Specifying the pin number and flags, as defined in
-> > +      include/dt-bindings/gpio/gpio.h
-> > +    const: 2
-> > +
-> > +  gpio-ranges:
-> > +    maxItems: 1
-> > +
-> > +  gpio-reserved-ranges:
-> > +    maxItems: 1
-> > +
-> > +#PIN CONFIGURATION NODES
-> > +patternProperties:
-> > +  '-pinmux$':
-> 
-> I believe that what Rob was asking for was the matter of describing the
-> mux and config subnodes under this one. But I don't know really how to
-> express this, because the following are all valid:
-> 
-> default_state: default-state {
-> 	pins = "gpio1";
-> 	bias-disable;
-> };
-> 
-> default_state: default-state {
-> 	rx {
-> 		pins = "gpio1";
-> 		function = "gpio";
-> 		bias-disable;
-> 	};
-> };
-> 
-> default_state: default-state {
-> 	pinmux {
-> 		pins = "gpio1";
-> 		function = "gpio";
-> 	};
-> 
-> 	pinconf {
-> 		pins = "gpio1";
-> 		bias-disable;
-> 	};
-> };
-> 
-> I.e. the properties described here applies either to this node directly,
-> or any subnodes (1 level) down.
+Hello Doug,
 
-Why!?
+On 12-01-21, 16:01, Doug Anderson wrote:
+> Hi,
+> 
+> On Mon, Jan 11, 2021 at 7:17 AM Vinod Koul <vkoul@kernel.org> wrote:
+> >
+> > Hello,
+> >
+> > This series add the GPI DMA in qcom geni spi and i2c drivers. For this we
+> > first need to move GENI_IF_DISABLE_RO and struct geni_wrapper to common
+> > headers and then add support for gpi dma in geni driver.
+> >
+> > Then we add spi and i2c geni driver changes to support this DMA.
+> >
+> > Lastly, add the GPI dma nodes and enable dma for spi found in Rb3 board.
+> >
+> > To merge this, we could merge all thru qcom tree with ack on spi/i2c.
+> 
+> It'd be super great if somewhere (ideally in the commit message and
+> maybe somewhere in the code) you could talk more about the different
+> modes.  Maybe something like this (if it's correct):
+> 
+> GPI Mode (confusingly, also known as "GSI" mode in some places): In
+> this mode something else running on the SoC is sharing access to the
+> geni instance.  This mode allows sharing the device between the Linux
+> kernel and other users including handling the fact that other users
+> might be running the geni port at a different clock rate.  GPI mode
+> limits what you can do with a port.  For instance, direct control of
+> chip select is not allowed.  NOTE: if firmware has configured a geni
+> instance for GPI then FIFO and SE_DMA usage is not allowed.
+> Conversely, if firmware has not configured a geni instance for GPI
+> then only FIFO and SE_DMA usage is allowed.
+> 
+> SE DMA Mode: Data transfers happen over DMA.
+> 
+> SE FIFO Mode: Data is manually transferred into the FIFO by the CPU.
 
-You can create a definition and reuse it. Something like this:
+I think it is a good feedback, there is indeed bunch of confusion wrt
+QUP DMA and i think we should add above to qcom geni driver and not just
+in cover letter. FWIW for all practical purposes GSI and GPI can be used
+interchangeably. There are some nuisances involved like firmware and a
+microcontroller but for the sake of simplicity we can skip that :)
 
-$defs:
-  pin-node:
-    type: object
-    properties:
-      ...
-
-patternProperties:
-  '-state$':
-    oneOf:
-      - $ref: #/$defs/pin-node
-
-      - patternProperties:
-          '.*':
-            $ref: #/$defs/pin-node
-
-
-Rob
+Thanks
+-- 
+~Vinod
