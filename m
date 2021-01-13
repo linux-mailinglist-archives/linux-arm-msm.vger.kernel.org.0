@@ -2,91 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BB65F2F40CE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jan 2021 01:57:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E4512F421F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jan 2021 03:57:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393714AbhAMAnI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jan 2021 19:43:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53536 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392360AbhAMA1F (ORCPT
+        id S1728737AbhAMC5K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jan 2021 21:57:10 -0500
+Received: from mail-ot1-f43.google.com ([209.85.210.43]:37692 "EHLO
+        mail-ot1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726840AbhAMC5K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jan 2021 19:27:05 -0500
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52A55C061786
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jan 2021 16:26:25 -0800 (PST)
-Received: by mail-pf1-x431.google.com with SMTP id x126so124288pfc.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jan 2021 16:26:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=P5cep6q7xr6t9kLaivrV7idzLK5AQ7vlZX4sAVxDVuo=;
-        b=fD2bqF0VHgRb3wN28oaLJ2r6nRVEHcID7ozo+dKpSqImokp7jo1Dnks9lAwMp1OU2e
-         LKDvKcQkPpkRqksrGprFTd9tf/s1aBw4CYL5/mMRv6crxJePDqW1d2bOs97Zn2GKBW0Q
-         qZh7DnUEyWkliISDzQEVJp4YJEpDuSsx3R2/0=
+        Tue, 12 Jan 2021 21:57:10 -0500
+Received: by mail-ot1-f43.google.com with SMTP id o11so593822ote.4;
+        Tue, 12 Jan 2021 18:56:54 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=P5cep6q7xr6t9kLaivrV7idzLK5AQ7vlZX4sAVxDVuo=;
-        b=O0bbso4WS3/1Ra8TRHSlVPyVZnBmDzSG/4SsWIo8haNeHB0WxqMOY5g8zuf6v44Bad
-         HeqI9Bs/av+5IazwDmaPN931M7qf5drwUrDgI+Q60olmTU+F3DCxDJUEsQHAs+Vax0++
-         piMLHYLGoRoH+Dxu4savwPTCw7uSQiIhqw5/0gTiPaDQXPJ4aLbZSJnS5RmnNwwYzK/3
-         RO8mmi06mccIZcQtUXrlLqG6v1sseaKazc3wtyterbJfR0J76KMzaWRsu5LgfgqlW8cX
-         XZxB3CjistKiELI+cps7NONEx/QPE+D32V7LAcBPqelK2xBg4d33LCYP9BuclvSuHSDG
-         9BEg==
-X-Gm-Message-State: AOAM533y8l/qGsIdIcAuVfrFG8KiSk0t/lOuA3wIBL7xH/Tg3D4Kpx/K
-        zUT7z72zdoYZ9XF2H3iWNXHkGQ==
-X-Google-Smtp-Source: ABdhPJyD+hXJ2C6UE9S3spN4vWkdQDn/M2cSB0mVGVds2IGeT6BY0kPf2x1dFVfgMUuecjbhznXfjQ==
-X-Received: by 2002:a63:31ce:: with SMTP id x197mr1637187pgx.262.1610497584553;
-        Tue, 12 Jan 2021 16:26:24 -0800 (PST)
-Received: from localhost (136.247.83.34.bc.googleusercontent.com. [34.83.247.136])
-        by smtp.gmail.com with ESMTPSA id h17sm270397pfc.119.2021.01.12.16.26.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Jan 2021 16:26:23 -0800 (PST)
-From:   Fritz Koenig <frkoenig@chromium.org>
-To:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stanimir.varbanov@linaro.org,
-        vgarodia@codeaurora.org, dikshita@codeaurora.org,
-        acourbot@chromium.org
-Cc:     Fritz Koenig <frkoenig@chromium.org>
-Subject: [PATCH] venus: Check for valid device instance
-Date:   Wed, 13 Jan 2021 00:26:16 +0000
-Message-Id: <20210113002616.1501493-1-frkoenig@chromium.org>
-X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7-goog
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=wxopvxGze0KrwrLh4CQC5oDamBjQANLUapKIcQO/MXE=;
+        b=k6zmwDG6uO4PvbyJeGNB4MAlXlTB72tL5tUnbUwI/WS+aZ+Fkjt1Yjd5DTUfl3IyKL
+         7GzEHkOrfnrmSAoPnAo7jTb2Ke3uyou6T9wl6AKK1l0kyI/8lqpMyEIWW27VDs1u7ndw
+         l9Y4nTD5flNzGMWUFzsnmB75Ah02L+dQjL8RJG7ORE1o+5SrXwqgXpOAsQTQK06h7M0k
+         b6Qrg+Hu5DCTwTYcaMP1KzTLRRdu1J9WeBNHxQ2JysqFQwN1zbLbwkOksPEinYvY8jEJ
+         dRHgCPYiwzTOxcAvZJRxoeccAPhm2vVclnQIPhn5Bs7E9vG4PcJbElEa9lv0mNC1pu3z
+         XVuw==
+X-Gm-Message-State: AOAM530uO+6ANV/EOEgx+v0jWvNSIr/U7dPg05cqFwtrBehqGbdk/1kY
+        5Vzmi7Ys4fjvp0hoQ7h2XA==
+X-Google-Smtp-Source: ABdhPJy3qIbJsSo8ZClFtqTOMi0u7CL9lXJnDxywdybq3O1RzBXWkRgzCxuBOC2FJyqihdK8Cbb3kA==
+X-Received: by 2002:a05:6830:784:: with SMTP id w4mr1602255ots.53.1610506589186;
+        Tue, 12 Jan 2021 18:56:29 -0800 (PST)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id h11sm146837ooj.36.2021.01.12.18.56.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Jan 2021 18:56:28 -0800 (PST)
+Received: (nullmailer pid 1430607 invoked by uid 1000);
+        Wed, 13 Jan 2021 02:56:27 -0000
+Date:   Tue, 12 Jan 2021 20:56:27 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 1/2] dt-bindings: pinctrl: qcom: Add SM8350 pinctrl
+ bindings
+Message-ID: <20210113025627.GA1414436@robh.at.kernel.org>
+References: <20210106054950.303244-1-vkoul@kernel.org>
+ <20210106054950.303244-2-vkoul@kernel.org>
+ <X/dCIuUR/El8Gxaa@builder.lan>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <X/dCIuUR/El8Gxaa@builder.lan>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-core->dev_dec and core-dev->enc are set up
-by the corresponding vdec_probe and venc_probe.
-If the probe fails, they will not be set
-and so could be null when venus_sys_error_handler
-is called.
+On Thu, Jan 07, 2021 at 11:17:22AM -0600, Bjorn Andersson wrote:
+> On Tue 05 Jan 23:49 CST 2021, Vinod Koul wrote:
+> 
+> > Add device tree binding Documentation details for Qualcomm SM8350
+> > pinctrl driver.
+> > 
+> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> > ---
+> >  .../bindings/pinctrl/qcom,sm8350-tlmm.yaml    | 149 ++++++++++++++++++
+> >  1 file changed, 149 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm8350-tlmm.yaml
+> > 
+> > diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm8350-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm8350-tlmm.yaml
+> > new file mode 100644
+> > index 000000000000..abdafd25bfc2
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm8350-tlmm.yaml
+> > @@ -0,0 +1,149 @@
+> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/pinctrl/qcom,sm8350-tlmm.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Qualcomm Technologies, Inc. SM8350 TLMM block
+> > +
+> > +maintainers:
+> > +  - Vinod Koul <vkoul@kernel.org>
+> > +
+> > +description: |
+> > +  This binding describes the Top Level Mode Multiplexer block found in the
+> > +  SM8350 platform.
+> > +
+> > +properties:
+> > +  compatible:
+> > +    const: qcom,sm8350-tlmm
+> > +
+> > +  reg:
+> > +    maxItems: 1
+> > +
+> > +  interrupts:
+> > +    maxItems: 1
+> > +
+> > +  interrupt-controller: true
+> > +
+> > +  '#interrupt-cells':
+> > +    description: Specifies the PIN numbers and Flags, as defined in
+> > +      include/dt-bindings/interrupt-controller/irq.h
+> > +    const: 2
+> > +
+> > +  gpio-controller: true
+> > +
+> > +  '#gpio-cells':
+> > +    description: Specifying the pin number and flags, as defined in
+> > +      include/dt-bindings/gpio/gpio.h
+> > +    const: 2
+> > +
+> > +  gpio-ranges:
+> > +    maxItems: 1
+> > +
+> > +  gpio-reserved-ranges:
+> > +    maxItems: 1
+> > +
+> > +#PIN CONFIGURATION NODES
+> > +patternProperties:
+> > +  '-pinmux$':
+> 
+> I believe that what Rob was asking for was the matter of describing the
+> mux and config subnodes under this one. But I don't know really how to
+> express this, because the following are all valid:
+> 
+> default_state: default-state {
+> 	pins = "gpio1";
+> 	bias-disable;
+> };
+> 
+> default_state: default-state {
+> 	rx {
+> 		pins = "gpio1";
+> 		function = "gpio";
+> 		bias-disable;
+> 	};
+> };
+> 
+> default_state: default-state {
+> 	pinmux {
+> 		pins = "gpio1";
+> 		function = "gpio";
+> 	};
+> 
+> 	pinconf {
+> 		pins = "gpio1";
+> 		bias-disable;
+> 	};
+> };
+> 
+> I.e. the properties described here applies either to this node directly,
+> or any subnodes (1 level) down.
 
-Fixes: 43e221e485e5 ("media: venus: Rework recovery mechanism")
-Signed-off by: Fritz Koenig <frkoenig@chromium.org>
----
- drivers/media/platform/qcom/venus/core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Why!?
 
-diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index bdd293faaad0..979fcada4d3b 100644
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -62,7 +62,8 @@ static void venus_sys_error_handler(struct work_struct *work)
- 
- 	mutex_lock(&core->lock);
- 
--	while (pm_runtime_active(core->dev_dec) || pm_runtime_active(core->dev_enc))
-+	while ((core->dev_dec && pm_runtime_active(core->dev_dec)) ||
-+			(core->dev_enc && pm_runtime_active(core->dev_enc)))
- 		msleep(10);
- 
- 	venus_shutdown(core);
--- 
-2.30.0.284.gd98b1dd5eaa7-goog
+You can create a definition and reuse it. Something like this:
 
+$defs:
+  pin-node:
+    type: object
+    properties:
+      ...
+
+patternProperties:
+  '-state$':
+    oneOf:
+      - $ref: #/$defs/pin-node
+
+      - patternProperties:
+          '.*':
+            $ref: #/$defs/pin-node
+
+
+Rob
