@@ -2,95 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B20F72F423A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jan 2021 04:05:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 252382F423D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jan 2021 04:05:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728800AbhAMDEU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jan 2021 22:04:20 -0500
-Received: from mail.kernel.org ([198.145.29.99]:43928 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728722AbhAMDET (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jan 2021 22:04:19 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id E022923132;
-        Wed, 13 Jan 2021 03:03:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1610507019;
-        bh=Lb24rQrKobyTU7A/TU/jdr6OZKSzLpDca0GkNO8kDnI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=jPTmRs+lvTvzIyhdI94vZd+ttqxTP5Jz129r0rQnL/9e6DyGCnqjJgOitPc+9ImbU
-         6h82quHxRePvuryNqcC4SXZjhdjDD6q8OI/aPtvGDOPOGb4lf8RuJ1SBcwwaLOon4a
-         pwSAq8m6YfyuprW6Qf8K8xdMNupn3xX8FpEmzegnxmKo69FE0JK1lRrHayX2DW/OyR
-         c/EWEDRGxtAeOH5cI4zy4hUmsDjdi6NovCgQ/q3B0lwmz+Vyc+HxZ5u77f0RgIW6N9
-         WWflhDvfUkTnfRteSgw63pdXjDnbrD1xpGmke2M699RVJv7a899G2Wx8VDlCzJujsW
-         fu9gpKF5dkLjw==
-Date:   Wed, 13 Jan 2021 08:33:33 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mark Brown <broonie@kernel.org>, Wolfram Sang <wsa@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        linux-spi <linux-spi@vger.kernel.org>, linux-i2c@vger.kernel.org,
-        LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 0/7] Add and enable GPI DMA users
-Message-ID: <20210113030333.GV2771@vkoul-mobl>
-References: <20210111151651.1616813-1-vkoul@kernel.org>
- <CAD=FV=XvgP5j3ikCnr2zDptFbWPRQhGGQotqyFGmN7NWNP8knA@mail.gmail.com>
+        id S1728827AbhAMDEx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jan 2021 22:04:53 -0500
+Received: from mail-oi1-f176.google.com ([209.85.167.176]:38275 "EHLO
+        mail-oi1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728722AbhAMDEx (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 12 Jan 2021 22:04:53 -0500
+Received: by mail-oi1-f176.google.com with SMTP id x13so644328oic.5;
+        Tue, 12 Jan 2021 19:04:38 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=cpiu9m+TCpQtSztTuCtXfLfCd/yaMGYzPysLOSNolt8=;
+        b=eap0R17hifdSw7lsvliLVoWVLO4YAK6AhgKeBUjc5c1gzIFfaOL8ZiBkzTfcivYIfz
+         418FIZSP8TUx7z5DdjVPepj4ViV/8or0vKay06LTL2+oeXt2Ma4peQhyFDNsLSTbUrTl
+         WT57VPcLE08XJzU4Iy8nwCNRwJP8mgj2NKGJNEjvNgmKbgAzZWBYVt/lMZhx3Flh5h9J
+         TSeUCKGqowNOoJK/YyhnoW42jSdsxsRjpQeuiYQ0grjGElJeKCVNIjr4VyUeLouWYpXG
+         l3OmeO+b1YST4SIUa20flcHON7d1O20r6Kp+XfjFXrN2O4hfRPS5NL52inRKAdS1v3Bo
+         h7aQ==
+X-Gm-Message-State: AOAM532WEXJ5Csf3PiWRN8GE1xGrEawEdUQ3fdqHcpMlJUI3zQecYBkv
+        JbLhuIg2+g3FCED2WEEMzA==
+X-Google-Smtp-Source: ABdhPJzpdekEcJU1YI4ImheDxEdc0Sl/eS68G0A6S2+Xtc2sC7L8KRd/lYjqVMZqw4+h0+RlwJMYow==
+X-Received: by 2002:aca:bac3:: with SMTP id k186mr75699oif.93.1610507052892;
+        Tue, 12 Jan 2021 19:04:12 -0800 (PST)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id g200sm164542oib.19.2021.01.12.19.04.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Jan 2021 19:04:12 -0800 (PST)
+Received: (nullmailer pid 1442971 invoked by uid 1000);
+        Wed, 13 Jan 2021 03:04:10 -0000
+Date:   Tue, 12 Jan 2021 21:04:10 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        phone-devel@vger.kernel.org, Ohad Ben-Cohen <ohad@wizery.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org
+Subject: Re: [PATCH 1/3] dt-bindings: remoteproc: qcom,wcnss-pil: Add
+ qcom,wcn3660b compatible
+Message-ID: <20210113030410.GA1442924@robh.at.kernel.org>
+References: <20210106102134.59801-1-stephan@gerhold.net>
+ <20210106102134.59801-2-stephan@gerhold.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAD=FV=XvgP5j3ikCnr2zDptFbWPRQhGGQotqyFGmN7NWNP8knA@mail.gmail.com>
+In-Reply-To: <20210106102134.59801-2-stephan@gerhold.net>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Doug,
+On Wed, 06 Jan 2021 11:21:32 +0100, Stephan Gerhold wrote:
+> WCN3660B is a variant of WCN3660, but with the same regulator
+> requirements as WCN3620/WCN3680. Add a new qcom,wcn3660b compatible
+> to describe it from device trees.
+> 
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> ---
+>  Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.txt | 1 +
+>  1 file changed, 1 insertion(+)
+> 
 
-On 12-01-21, 16:01, Doug Anderson wrote:
-> Hi,
-> 
-> On Mon, Jan 11, 2021 at 7:17 AM Vinod Koul <vkoul@kernel.org> wrote:
-> >
-> > Hello,
-> >
-> > This series add the GPI DMA in qcom geni spi and i2c drivers. For this we
-> > first need to move GENI_IF_DISABLE_RO and struct geni_wrapper to common
-> > headers and then add support for gpi dma in geni driver.
-> >
-> > Then we add spi and i2c geni driver changes to support this DMA.
-> >
-> > Lastly, add the GPI dma nodes and enable dma for spi found in Rb3 board.
-> >
-> > To merge this, we could merge all thru qcom tree with ack on spi/i2c.
-> 
-> It'd be super great if somewhere (ideally in the commit message and
-> maybe somewhere in the code) you could talk more about the different
-> modes.  Maybe something like this (if it's correct):
-> 
-> GPI Mode (confusingly, also known as "GSI" mode in some places): In
-> this mode something else running on the SoC is sharing access to the
-> geni instance.  This mode allows sharing the device between the Linux
-> kernel and other users including handling the fact that other users
-> might be running the geni port at a different clock rate.  GPI mode
-> limits what you can do with a port.  For instance, direct control of
-> chip select is not allowed.  NOTE: if firmware has configured a geni
-> instance for GPI then FIFO and SE_DMA usage is not allowed.
-> Conversely, if firmware has not configured a geni instance for GPI
-> then only FIFO and SE_DMA usage is allowed.
-> 
-> SE DMA Mode: Data transfers happen over DMA.
-> 
-> SE FIFO Mode: Data is manually transferred into the FIFO by the CPU.
-
-I think it is a good feedback, there is indeed bunch of confusion wrt
-QUP DMA and i think we should add above to qcom geni driver and not just
-in cover letter. FWIW for all practical purposes GSI and GPI can be used
-interchangeably. There are some nuisances involved like firmware and a
-microcontroller but for the sake of simplicity we can skip that :)
-
-Thanks
--- 
-~Vinod
+Acked-by: Rob Herring <robh@kernel.org>
