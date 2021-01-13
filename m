@@ -2,154 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 450682F4411
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jan 2021 06:45:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DD78F2F44B4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jan 2021 07:55:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725781AbhAMFp1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Jan 2021 00:45:27 -0500
-Received: from so254-31.mailgun.net ([198.61.254.31]:39162 "EHLO
-        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725747AbhAMFp1 (ORCPT
+        id S1725681AbhAMGyF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Jan 2021 01:54:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51960 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725887AbhAMGyC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Jan 2021 00:45:27 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1610516702; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=hFAIRvzSlkyR1XtFS2t0dRLU8b5o3JTm4z6bVI4XCEY=;
- b=T4Q62e6bNNMI0V0dt825MzQrQsD0IahB+7hhpGQSLilHCBJV6x47+4aJNLNZZE4E5ZdL2CKX
- 47xsntkUIBFt1TMGoWg0Zx4NQHu2HosGlQqbauKeMRltP3zqWvoGF4Ajv7+mbAAL/GPTyhpf
- eGzPGZTrSKHegSNqUcPjFyMPSyo=
-X-Mailgun-Sending-Ip: 198.61.254.31
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 5ffe88c4415a6293c5531347 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 13 Jan 2021 05:44:36
- GMT
-Sender: sanm=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 32643C43462; Wed, 13 Jan 2021 05:44:36 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sanm)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5B8C8C433C6;
-        Wed, 13 Jan 2021 05:44:35 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 13 Jan 2021 11:14:35 +0530
-From:   sanm@codeaurora.org
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manu Gautam <mgautam@codeaurora.org>
-Subject: Re: [PATCH] usb: dwc3: qcom: Add shutdown callback for dwc3
-In-Reply-To: <1605162619-10064-1-git-send-email-sanm@codeaurora.org>
-References: <1605162619-10064-1-git-send-email-sanm@codeaurora.org>
-Message-ID: <d39144b6495db2d23466e76e509be0ed@codeaurora.org>
-X-Sender: sanm@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        Wed, 13 Jan 2021 01:54:02 -0500
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59BAEC061786
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jan 2021 22:53:22 -0800 (PST)
+Received: by mail-pf1-x42e.google.com with SMTP id 11so653848pfu.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jan 2021 22:53:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=7tnhSr/TgWVw/GPv3kc5UsoWGWtqZNElqDlp8y6EGT0=;
+        b=uNXha/oB+9R/2OP/sVAbuMv72bhyOwU5pGmElrqqNkn/gYhwdTC4Pji0m0RQDSac64
+         9a25gAf0ESz7IdZdlxmVwMS5cnLppbhoC5aZa+t2GdaquRCJ9DXxkAKtTD0jOVJTIt7b
+         4+9gSkY1CPwJesKEMelvKiHU6vZTc4nt9xgFQVCe8aI9gOEb0SSOnEzSSvFxe34XoMVs
+         /A+Dzck3SNZNIi7SyzxxNba9IVVDMnnSweNHGdmqmxpEd1PLxf5ZiaRUK8MgxpRu1Sw7
+         uZ9Dg4fcTNpU5NMLsZmYjJ+koOfn6dckSDccSFBTBSt+NY94Z1zskYfrxL8kH9hnBmUK
+         magg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=7tnhSr/TgWVw/GPv3kc5UsoWGWtqZNElqDlp8y6EGT0=;
+        b=NVITtKMG0KIv8KnjaHpDZPJUa0VgK/7bsQdITzoQ+JMLsLS1FAi8iJUfQ2KHniZuOV
+         jLvi+rBcT/zUVxeEY8JwLuY6pGfdeROPEp41aZa2X+cZOBuX/tx8AExMh4Leoj39JhI5
+         elHVPTC/Ex9kx454tjE20V6bKEfq7eCVPswEIbeC8kGwMopDcSQYdBa55EdHWb+wDgtA
+         s1D61mLsS3F4LVFkDC2Ztmxrnmh3MaS5E38PVDG7sgz/RO11CdxLs9AzS1qC7FWIQh3w
+         iykuMJfoOs1QaWVuPEyfjS9eXwVa/ZCddr9vDRxN8vZhhNdZDAShsTBpRSyoUtgWKE8g
+         N+Tw==
+X-Gm-Message-State: AOAM5311+P196Z44OOSxQktC5HugiC9vFpy0i4KrjTC36VNXyNKQVoBo
+        kkl1AIGcmqIAGuCbssx0N5vE7/OyRHLz6w==
+X-Google-Smtp-Source: ABdhPJzytLgbSbUEwpCYlqfbnPKHFilahzfk6Ge9TtH1yvtXBfdXiZ7sMFpMP/cyyVBwlukxYgud5A==
+X-Received: by 2002:a62:528c:0:b029:19e:4a39:d9ea with SMTP id g134-20020a62528c0000b029019e4a39d9eamr807735pfb.20.1610520801918;
+        Tue, 12 Jan 2021 22:53:21 -0800 (PST)
+Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id b6sm1217532pfd.43.2021.01.12.22.53.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Jan 2021 22:53:21 -0800 (PST)
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Steev Klimaszewski <steev@kali.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>
+Subject: [PATCH] cpufreq: qcom-hw: enable boost support
+Date:   Wed, 13 Jan 2021 14:52:41 +0800
+Message-Id: <20210113065241.23829-1-shawn.guo@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-11-12 12:00, Sandeep Maheswaram wrote:
-> This patch adds a shutdown callback to USB DWC QCOM driver to ensure 
-> that
-> it is properly shutdown in reboot/shutdown path. This is required
-> where SMMU address translation is enabled like on SC7180
-> SoC and few others. If the hardware is still accessing memory after
-> SMMU translation is disabled as part of SMMU shutdown callback in
-> system reboot or shutdown path, then IOVAs(I/O virtual address)
-> which it was using will go on the bus as the physical addresses which
-> might result in unknown crashes (NoC/interconnect errors).
-> 
-> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
-> ---
->  drivers/usb/dwc3/dwc3-qcom.c | 26 ++++++++++++++++++++------
->  1 file changed, 20 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c 
-> b/drivers/usb/dwc3/dwc3-qcom.c
-> index c703d55..a930e06 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -790,13 +790,11 @@ static int dwc3_qcom_probe(struct platform_device 
-> *pdev)
->  	return ret;
->  }
-> 
-> -static int dwc3_qcom_remove(struct platform_device *pdev)
-> +static void __dwc3_qcom_teardown(struct dwc3_qcom *qcom)
->  {
-> -	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
-> -	struct device *dev = &pdev->dev;
->  	int i;
-> 
-> -	of_platform_depopulate(dev);
-> +	of_platform_depopulate(qcom->dev);
-> 
->  	for (i = qcom->num_clocks - 1; i >= 0; i--) {
->  		clk_disable_unprepare(qcom->clks[i]);
-> @@ -807,12 +805,27 @@ static int dwc3_qcom_remove(struct 
-> platform_device *pdev)
->  	dwc3_qcom_interconnect_exit(qcom);
->  	reset_control_assert(qcom->resets);
-> 
-> -	pm_runtime_allow(dev);
-> -	pm_runtime_disable(dev);
-> +	pm_runtime_allow(qcom->dev);
-> +	pm_runtime_disable(qcom->dev);
-> +}
-> +
-> +static int dwc3_qcom_remove(struct platform_device *pdev)
-> +{
-> +	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
-> +
-> +	__dwc3_qcom_teardown(qcom);
-> 
->  	return 0;
->  }
-> 
-> +static void dwc3_qcom_shutdown(struct platform_device *pdev)
-> +{
-> +	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
-> +
-> +	__dwc3_qcom_teardown(qcom);
-> +
-> +}
-> +
->  static int __maybe_unused dwc3_qcom_pm_suspend(struct device *dev)
->  {
->  	struct dwc3_qcom *qcom = dev_get_drvdata(dev);
-> @@ -887,6 +900,7 @@ MODULE_DEVICE_TABLE(acpi, dwc3_qcom_acpi_match);
->  static struct platform_driver dwc3_qcom_driver = {
->  	.probe		= dwc3_qcom_probe,
->  	.remove		= dwc3_qcom_remove,
-> +	.shutdown	= dwc3_qcom_shutdown,
->  	.driver		= {
->  		.name	= "dwc3-qcom",
->  		.pm	= &dwc3_qcom_dev_pm_ops,
+At least on sdm850, the 2956800 khz is detected as a boost frequency in
+function qcom_cpufreq_hw_read_lut().  Let's enable boost support by
+calling cpufreq_enable_boost_support(), so that we can get the boost
+frequency by switching it on via 'boost' sysfs entry like below.
 
-Hi Felipe,
+ $ echo 1 > /sys/devices/system/cpu/cpufreq/boost
 
-Can you please review this patch.
+Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+---
+ drivers/cpufreq/qcom-cpufreq-hw.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Regards
-Sandeep
+diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+index 315ee987d2d3..6eb88463a24e 100644
+--- a/drivers/cpufreq/qcom-cpufreq-hw.c
++++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+@@ -351,6 +351,12 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
+ 
+ 	dev_pm_opp_of_register_em(cpu_dev, policy->cpus);
+ 
++	if (policy_has_boost_freq(policy)) {
++		ret = cpufreq_enable_boost_support();
++		if (ret)
++			dev_warn(cpu_dev, "failed to enable boost: %d\n", ret);
++	}
++
+ 	return 0;
+ error:
+ 	devm_iounmap(dev, base);
+-- 
+2.17.1
+
