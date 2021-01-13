@@ -2,189 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 99C872F431C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jan 2021 05:29:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C7C492F432F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jan 2021 05:33:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725842AbhAME30 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jan 2021 23:29:26 -0500
-Received: from so254-31.mailgun.net ([198.61.254.31]:60051 "EHLO
-        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725601AbhAME30 (ORCPT
+        id S1726238AbhAMEc2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jan 2021 23:32:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49934 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725868AbhAMEc1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jan 2021 23:29:26 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1610512140; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=66p2zu4LuO1Krs2pvfhwJZAiz8SDa/CWM02xUQZyH+k=;
- b=SIidTF2q9lBpfuNw0pQU64v0X5D2xkbcv2cAksZ0u/VIy/hESnPN7E24Q+zMtcPqiGhfcUNZ
- fbNFXYP8uA3X1vl7/8ftMnFKn3EYumsvFrydKCIibB4eGlMBVzsIdoOxpekUo4aUwrHWHjJV
- sHRDzCK893uH/m+8/4f1zxx2OqE=
-X-Mailgun-Sending-Ip: 198.61.254.31
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 5ffe76e38fb3cda82f113fa1 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 13 Jan 2021 04:28:19
- GMT
-Sender: dikshita=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 219B4C433CA; Wed, 13 Jan 2021 04:28:19 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: dikshita)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 407FEC433C6;
-        Wed, 13 Jan 2021 04:28:18 +0000 (UTC)
+        Tue, 12 Jan 2021 23:32:27 -0500
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3524C061786
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jan 2021 20:31:47 -0800 (PST)
+Received: by mail-pj1-x1032.google.com with SMTP id b5so377155pjl.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jan 2021 20:31:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=0Be3aF7gmnbdczr08jTEc4qtrLE0DnSFP2kFU+SRBd8=;
+        b=ubXI8E2Ds2qLPunhYDLxCHZJISXH+WHIsGWsngoPSJyq62RJ1w54sKvLHguwp3+47r
+         oGH5jOyr6CMycje8lOLjlG0STf98npqWEp5712O6Ey+o77HjQxKqlNu+DxgylfkVnXTg
+         mZjm2bOY+S1y33z90ufKO5w8+MGXYQVrPM3HiQxy4VfUV7DAx5uUq0C6WkBQ2+OSvWZ1
+         aW4ISTvLNzUIiNUy2vsS7gv6/Gx/cJJpAI9cTajM7xkCwjQop1XSoa3iZazlzK9tvggc
+         c8UFPAaBGTjLWc5GB/iQSPkMo6fMTQZiT/wyARh88J5Hj88OTxa912OR78Mmmz0NlJ9O
+         lrlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=0Be3aF7gmnbdczr08jTEc4qtrLE0DnSFP2kFU+SRBd8=;
+        b=qEIB8eaK5Kl0XLkTU20WovyrGLcSL3/Otam7G66P3vbg7RnUtF03ilon1z/7UBATo5
+         9ciEAjNDjMMDTIML+YKk+yhk+AgAU+IY98Jiz4R3ql8qUE+jU4vV2a20FyE/U4+Ttd6n
+         PoiYolS+3fBcIfTNfVLwyrbsUieSZhX1Ikhmr8Ie6YPhOlzAPH8A6K1ayy2u9Nj0Gxeg
+         b90rGpdATu4uOn8SsLaZ+KrEF5LyP5Q66iWUBbIMggmopFhmHnnKVEkvSDrYNpwx4C2g
+         g1+QmH0kMvmy4UEr4yW5UkkVNi2klkVQsrRavv5/0vAdFwx2Xw/e4FClyXXncZYZQfhn
+         Kgvg==
+X-Gm-Message-State: AOAM530Buccs5z68i0XZ5+zLhLGenE5YewECX+EN/JUJGKlwiXp9WMAn
+        +2FYy/T7x/GObRn7Qq3iRpSmxQ==
+X-Google-Smtp-Source: ABdhPJyN8yeqQGueEd90usI4ITMZlRFcf09U5midtckT2qIOs8rC7ME1AIX3188ZbHX+bfqR3urBfQ==
+X-Received: by 2002:a17:902:6b02:b029:da:c6c0:d650 with SMTP id o2-20020a1709026b02b02900dac6c0d650mr244313plk.74.1610512307215;
+        Tue, 12 Jan 2021 20:31:47 -0800 (PST)
+Received: from localhost ([122.172.85.111])
+        by smtp.gmail.com with ESMTPSA id s23sm642239pgj.29.2021.01.12.20.31.45
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 12 Jan 2021 20:31:46 -0800 (PST)
+Date:   Wed, 13 Jan 2021 10:01:43 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Shawn Guo <shawn.guo@linaro.org>,
+        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Andy Gross <agross@kernel.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] cpufreq: qcom-hw: add missing devm_release_mem_region()
+ call
+Message-ID: <20210113043143.y45mmnw3e2kjkxnl@vireshk-i7>
+References: <20210112095236.20515-1-shawn.guo@linaro.org>
+ <X/210llTiuNt3haG@builder.lan>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 13 Jan 2021 09:58:18 +0530
-From:   dikshita@codeaurora.org
-To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Cc:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org
-Subject: Re: [PATCH v5 2/2] venus: venc: Add support for Long Term Reference
- (LTR) controls
-In-Reply-To: <e11a4e78-8e41-c7f4-4947-76d27f0fa2ed@xs4all.nl>
-References: <1609736971-14454-1-git-send-email-dikshita@codeaurora.org>
- <1609736971-14454-3-git-send-email-dikshita@codeaurora.org>
- <e11a4e78-8e41-c7f4-4947-76d27f0fa2ed@xs4all.nl>
-Message-ID: <cf29047907ef104a233316a47c313d21@codeaurora.org>
-X-Sender: dikshita@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <X/210llTiuNt3haG@builder.lan>
+User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Hans,
+On 12-01-21, 08:44, Bjorn Andersson wrote:
+> Intuitively I feel that resources allocated in cpufreq_driver->init()
+> should be explicitly freed in cpufreq_driver->exit() and should thereby
+> not use devm to track the allocations.
 
-On 2021-01-12 14:34, Hans Verkuil wrote:
-> On 04/01/2021 06:09, Dikshita Agarwal wrote:
->> Add support for below LTR controls in encoder:
->> - V4L2_CID_MPEG_VIDEO_LTR_COUNT
->> - V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX
->> - V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES
-> 
-> This patch does not add any Request API support to the venus driver,
-> so it makes no sense to merge this series. It's incomplete.
-> 
+I agree.
 
-It Is not mandatory to use request API for LTR controls.
-LTR controls can be exercised either in frame synchronized manner or
-in the non-frame synchronized way as well.
+> But afaict when qcom_cpufreq_hw_driver_remove() calls
+> cpufreq_unregister_driver() to end up in cpufreq_remove_dev() it will
+> only call cpufreq_driver->exit() iff cpufreq_driver->offline() is
+> implemented - which it isn't in our case.
 
-Thanks,
-Dikshita
-> The other two series (priority ID and QP and layer bitrate) look good
-> to be merged.
+cpufreq_offline() calls exit() in your case. So no memory leak here.
+
+> So without using devm to track
+> this we would leak the memory - which also implies that we're leaking
+> the "freq_table" when this happens.
 > 
-> Regards,
-> 
-> 	Hans
-> 
->> 
->> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
->> ---
->>  drivers/media/platform/qcom/venus/venc_ctrls.c | 49 
->> +++++++++++++++++++++++++-
->>  1 file changed, 48 insertions(+), 1 deletion(-)
->> 
->> diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c 
->> b/drivers/media/platform/qcom/venus/venc_ctrls.c
->> index 496ad4d..7d010d8 100644
->> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
->> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
->> @@ -20,6 +20,7 @@
->>  #define INTRA_REFRESH_MBS_MAX	300
->>  #define AT_SLICE_BOUNDARY	\
->>  	V4L2_MPEG_VIDEO_H264_LOOP_FILTER_MODE_DISABLED_AT_SLICE_BOUNDARY
->> +#define MAX_LTR_FRAME_COUNT 4
->> 
->>  static int venc_calc_bpframes(u32 gop_size, u32 conseq_b, u32 *bf, 
->> u32 *pf)
->>  {
->> @@ -72,6 +73,9 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
->>  	struct venc_controls *ctr = &inst->controls.enc;
->>  	struct hfi_enable en = { .enable = 1 };
->>  	struct hfi_bitrate brate;
->> +	struct hfi_ltr_use ltr_use;
->> +	struct hfi_ltr_mark ltr_mark;
->> +	struct hfi_ltr_mode ltr_mode;
->>  	u32 bframes;
->>  	u32 ptype;
->>  	int ret;
->> @@ -259,6 +263,37 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
->>  	case V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE:
->>  		ctr->frame_skip_mode = ctrl->val;
->>  		break;
->> +	case V4L2_CID_MPEG_VIDEO_LTR_COUNT:
->> +		ptype = HFI_PROPERTY_PARAM_VENC_LTRMODE;
->> +		ltr_mode.ltr_count = ctrl->val;
->> +		ltr_mode.ltr_mode = HFI_LTR_MODE_MANUAL;
->> +		ltr_mode.trust_mode = 1;
->> +		ret = hfi_session_set_property(inst, ptype, &ltr_mode);
->> +		if (ret) {
->> +			mutex_unlock(&inst->lock);
->> +			return ret;
->> +		}
->> +		break;
->> +	case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:
->> +		ptype = HFI_PROPERTY_CONFIG_VENC_MARKLTRFRAME;
->> +		ltr_mark.mark_frame = ctrl->val;
->> +		ret = hfi_session_set_property(inst, ptype, &ltr_mark);
->> +		if (ret) {
->> +			mutex_unlock(&inst->lock);
->> +			return ret;
->> +		}
->> +		break;
->> +	case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES:
->> +		ptype = HFI_PROPERTY_CONFIG_VENC_USELTRFRAME;
->> +		ltr_use.ref_ltr = ctrl->val;
->> +		ltr_use.use_constrnt = true;
->> +		ltr_use.frames = 0;
->> +		ret = hfi_session_set_property(inst, ptype, &ltr_use);
->> +		if (ret) {
->> +			mutex_unlock(&inst->lock);
->> +			return ret;
->> +		}
->> +		break;
->>  	default:
->>  		return -EINVAL;
->>  	}
->> @@ -274,7 +309,7 @@ int venc_ctrl_init(struct venus_inst *inst)
->>  {
->>  	int ret;
->> 
->> -	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 50);
->> +	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 53);
->>  	if (ret)
->>  		return ret;
->> 
->> @@ -476,6 +511,18 @@ int venc_ctrl_init(struct venus_inst *inst)
->>  			       (1 << V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_BUF_LIMIT)),
->>  			       V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_DISABLED);
->> 
->> +	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
->> +			  V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES, 0,
->> +			  (MAX_LTR_FRAME_COUNT - 1), 1, 0);
->> +
->> +	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
->> +			  V4L2_CID_MPEG_VIDEO_LTR_COUNT, 0,
->> +			  MAX_LTR_FRAME_COUNT, 1, 0);
->> +
->> +	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
->> +			  V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX, 0,
->> +			  (MAX_LTR_FRAME_COUNT - 1), 1, 0);
->> +
->>  	ret = inst->ctrl_handler.error;
->>  	if (ret)
->>  		goto err;
->> 
+> But isn't that simply a typo in cpufreq_remove_dev()? And can't we just
+> use ioremap()/iounmap() here instead?
+
+-- 
+viresh
