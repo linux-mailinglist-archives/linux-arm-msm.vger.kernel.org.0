@@ -2,139 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 550592F527B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jan 2021 19:43:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C492A2F52F3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jan 2021 20:02:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728163AbhAMSjw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Jan 2021 13:39:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35002 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728543AbhAMSjw (ORCPT
+        id S1728434AbhAMTBs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Jan 2021 14:01:48 -0500
+Received: from m43-15.mailgun.net ([69.72.43.15]:59691 "EHLO
+        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728413AbhAMTBr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Jan 2021 13:39:52 -0500
-Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4796DC061794;
-        Wed, 13 Jan 2021 10:39:12 -0800 (PST)
-Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        Wed, 13 Jan 2021 14:01:47 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1610564490; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=v+t5ZjZHmOvSSICCDPJB44KGvtnlC42GelECNsheDPI=; b=HKAxBIssaaFpaAruyoaGNJ/+6c2TX1CRLFHwXgqbkge7XKpFtR+CwVIr0ecQf/oKJhrtTYWL
+ jGDcCn++YsoTQ0Rg6Ils+3ii4RFhWHzZlCp7HPBHTHyLNCQlr33v9d4c4LwEZF7deTqV9ZN9
+ qQDZnRbAib44A+GTzSAyTmI+bT8=
+X-Mailgun-Sending-Ip: 69.72.43.15
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n08.prod.us-east-1.postgun.com with SMTP id
+ 5fff434c46a6c7cde7dbb9cf (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 13 Jan 2021 19:00:28
+ GMT
+Sender: khsieh=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3AB56C433ED; Wed, 13 Jan 2021 19:00:27 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 1060D2007F;
-        Wed, 13 Jan 2021 19:38:22 +0100 (CET)
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-To:     agross@kernel.org
-Cc:     bjorn.andersson@linaro.org, mturquette@baylibre.com,
-        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
-        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
-        martin.botka@somainline.org,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Subject: [PATCH v2 9/9] dt-bindings: clock: Add QCOM SDM630 and SDM660 graphics clock bindings
-Date:   Wed, 13 Jan 2021 19:38:17 +0100
-Message-Id: <20210113183817.447866-10-angelogioacchino.delregno@somainline.org>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210113183817.447866-1-angelogioacchino.delregno@somainline.org>
-References: <20210113183817.447866-1-angelogioacchino.delregno@somainline.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        (Authenticated sender: khsieh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E9D9FC433CA;
+        Wed, 13 Jan 2021 19:00:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E9D9FC433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=khsieh@codeaurora.org
+From:   Kuogee Hsieh <khsieh@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org
+Cc:     Kuogee Hsieh <khsieh@codeaurora.org>, tanmay@codeaurora.org,
+        abhinavk@codeaurora.org, aravindh@codeaurora.org, airlied@linux.ie,
+        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/2]  fix missing unplug interrupt problem
+Date:   Wed, 13 Jan 2021 10:59:58 -0800
+Message-Id: <1610564400-29788-1-git-send-email-khsieh@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device tree bindings for graphics clock controller for
-Qualcomm Technology Inc's SDM630 and SDM660 SoCs.
+Both AUX_SW_RESET and DP_SW_RESET clear pending HPD interrupts.
+Therefore irq_hpd handler should not issues either aux or sw reset
+to avoid following unplug interrupt be cleared accidentally.
 
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
----
- .../bindings/clock/qcom,gpucc-sdm660.yaml     | 76 +++++++++++++++++++
- 1 file changed, 76 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/clock/qcom,gpucc-sdm660.yaml
+Kuogee Hsieh (2):
+  drm/msm/dp: return fail when both link lane and rate are 0 at dpcd
+    read
+  drm/msm/dp: unplug interrupt missed after irq_hpd handler
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,gpucc-sdm660.yaml b/Documentation/devicetree/bindings/clock/qcom,gpucc-sdm660.yaml
-new file mode 100644
-index 000000000000..6631f25d7699
---- /dev/null
-+++ b/Documentation/devicetree/bindings/clock/qcom,gpucc-sdm660.yaml
-@@ -0,0 +1,76 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/clock/qcom,gpucc-sdm660.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm Graphics Clock & Reset Controller Binding for SDM630 and SDM660
-+
-+maintainers:
-+  - AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-+
-+description: |
-+  Qualcomm graphics clock control module which supports the clocks, resets and
-+  power domains on SDM630 and SDM660.
-+
-+  See also dt-bindings/clock/qcom,gpucc-sdm660.h.
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,gpucc-sdm630
-+      - qcom,gpucc-sdm660
-+
-+  clocks:
-+    items:
-+      - description: Board XO source
-+      - description: GPLL0 main gpu branch
-+      - description: GPLL0 divider gpu branch
-+
-+  clock-names:
-+    items:
-+      - const: xo
-+      - const: gcc_gpu_gpll0_clk
-+      - const: gcc_gpu_gpll0_div_clk
-+
-+  '#clock-cells':
-+    const: 1
-+
-+  '#reset-cells':
-+    const: 1
-+
-+  '#power-domain-cells':
-+    const: 1
-+
-+  reg:
-+    maxItems: 1
-+
-+required:
-+  - compatible
-+  - reg
-+  - clocks
-+  - clock-names
-+  - '#clock-cells'
-+  - '#reset-cells'
-+  - '#power-domain-cells'
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,gcc-sdm660.h>
-+    #include <dt-bindings/clock/qcom,rpmcc.h>
-+
-+    clock-controller@5065000 {
-+      compatible = "qcom,gpucc-sdm660";
-+      reg = <0x05065000 0x9038>;
-+      clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
-+               <&gcc GCC_GPU_GPLL0_CLK>,
-+               <&gcc GCC_GPU_GPLL0_DIV_CLK>;
-+      clock-names = "xo", "gcc_gpu_gpll0_clk",
-+                    "gcc_gpu_gpll0_div_clk";
-+      #clock-cells = <1>;
-+      #power-domain-cells = <1>;
-+      #reset-cells = <1>;
-+    };
-+...
+ drivers/gpu/drm/msm/dp/dp_aux.c     |  7 -------
+ drivers/gpu/drm/msm/dp/dp_catalog.c | 24 ++++++++++++++++++++++++
+ drivers/gpu/drm/msm/dp/dp_ctrl.c    | 15 ++++++++++-----
+ drivers/gpu/drm/msm/dp/dp_display.c |  7 +++++++
+ drivers/gpu/drm/msm/dp/dp_panel.c   | 12 +++++++++---
+ 5 files changed, 50 insertions(+), 15 deletions(-)
+
 -- 
-2.29.2
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
