@@ -2,21 +2,24 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 84FD62F6DCC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jan 2021 23:12:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 52BC92F6DEB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jan 2021 23:16:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730533AbhANWMN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Jan 2021 17:12:13 -0500
-Received: from relay06.th.seeweb.it ([5.144.164.167]:53247 "EHLO
-        relay06.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730485AbhANWMI (ORCPT
+        id S1730663AbhANWNT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Jan 2021 17:13:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52060 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730657AbhANWNP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Jan 2021 17:12:08 -0500
+        Thu, 14 Jan 2021 17:13:15 -0500
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D344AC0617A2;
+        Thu, 14 Jan 2021 14:11:12 -0800 (PST)
 Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 737283F1EA;
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id B910E3F1EB;
         Thu, 14 Jan 2021 23:11:10 +0100 (CET)
 From:   AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>
@@ -29,9 +32,9 @@ Cc:     konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
         devicetree@vger.kernel.org,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>
-Subject: [PATCH v2 10/11] clk: qcom: gpucc-msm8998: Add resets, cxc, fix flags on gpu_gx_gdsc
-Date:   Thu, 14 Jan 2021 23:10:58 +0100
-Message-Id: <20210114221059.483390-11-angelogioacchino.delregno@somainline.org>
+Subject: [PATCH v2 11/11] clk: qcom: gpucc-msm8998: Allow fabia gpupll0 rate setting
+Date:   Thu, 14 Jan 2021 23:10:59 +0100
+Message-Id: <20210114221059.483390-12-angelogioacchino.delregno@somainline.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210114221059.483390-1-angelogioacchino.delregno@somainline.org>
 References: <20210114221059.483390-1-angelogioacchino.delregno@somainline.org>
@@ -41,45 +44,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The GPU GX GDSC has GPU_GX_BCR reset and gfx3d_clk CXC, as stated
-on downstream kernels (and as verified upstream, because otherwise
-random lockups happen).
-Also, add PWRSTS_RET and NO_RET_PERIPH: also as found downstream,
-and also as verified here, to avoid GPU related lockups it is
-necessary to force retain mem, but *not* peripheral when enabling
-this GDSC (and, of course, the inverse on disablement).
+The GPU PLL0 is not a fixed PLL and the rate can be set on it:
+this is necessary especially on boards which bootloader is setting
+a very low rate on this PLL before booting Linux, which would be
+unsuitable for postdividing to reach the maximum allowed Adreno GPU
+frequency of 710MHz (or, actually, even 670MHz..) on this SoC.
 
-With this change, the GPU finally works flawlessly on my four
-different MSM8998 devices from two different manufacturers.
+To allow setting rates on the GPU PLL0, also define VCO boundaries
+and set the CLK_SET_RATE_PARENT flag to the GPU PLL0 postdivider.
+
+With this change, the Adreno GPU is now able to scale through all
+the available frequencies.
 
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 ---
- drivers/clk/qcom/gpucc-msm8998.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/gpucc-msm8998.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/clk/qcom/gpucc-msm8998.c b/drivers/clk/qcom/gpucc-msm8998.c
-index 9b3923af02a1..1a518c4915b4 100644
+index 1a518c4915b4..fedfffaf0a8d 100644
 --- a/drivers/clk/qcom/gpucc-msm8998.c
 +++ b/drivers/clk/qcom/gpucc-msm8998.c
-@@ -253,12 +253,16 @@ static struct gdsc gpu_cx_gdsc = {
- static struct gdsc gpu_gx_gdsc = {
- 	.gdscr = 0x1094,
- 	.clamp_io_ctrl = 0x130,
-+	.resets = (unsigned int []){ GPU_GX_BCR },
-+	.reset_count = 1,
-+	.cxcs = (unsigned int []){ 0x1098 },
-+	.cxc_count = 1,
- 	.pd = {
- 		.name = "gpu_gx",
+@@ -50,6 +50,11 @@ static struct clk_branch gpucc_cxo_clk = {
  	},
- 	.parent = &gpu_cx_gdsc.pd,
--	.pwrsts = PWRSTS_OFF_ON,
--	.flags = CLAMP_IO | AON_RESET,
-+	.pwrsts = PWRSTS_OFF_ON | PWRSTS_RET,
-+	.flags = CLAMP_IO | SW_RESET | AON_RESET | NO_RET_PERIPH,
  };
  
- static struct clk_regmap *gpucc_msm8998_clocks[] = {
++static struct pll_vco fabia_vco[] = {
++	{ 249600000, 2000000000, 0 },
++	{ 125000000, 1000000000, 1 },
++};
++
+ static const struct clk_div_table post_div_table_fabia_even[] = {
+ 	{ 0x0, 1 },
+ 	{ 0x1, 2 },
+@@ -61,11 +66,13 @@ static const struct clk_div_table post_div_table_fabia_even[] = {
+ static struct clk_alpha_pll gpupll0 = {
+ 	.offset = 0x0,
+ 	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_FABIA],
++	.vco_table = fabia_vco,
++	.num_vco = ARRAY_SIZE(fabia_vco),
+ 	.clkr.hw.init = &(struct clk_init_data){
+ 		.name = "gpupll0",
+ 		.parent_hws = (const struct clk_hw *[]){ &gpucc_cxo_clk.clkr.hw },
+ 		.num_parents = 1,
+-		.ops = &clk_alpha_pll_fixed_fabia_ops,
++		.ops = &clk_alpha_pll_fabia_ops,
+ 	},
+ };
+ 
+@@ -80,6 +87,7 @@ static struct clk_alpha_pll_postdiv gpupll0_out_even = {
+ 		.name = "gpupll0_out_even",
+ 		.parent_hws = (const struct clk_hw *[]){ &gpupll0.clkr.hw },
+ 		.num_parents = 1,
++		.flags = CLK_SET_RATE_PARENT,
+ 		.ops = &clk_alpha_pll_postdiv_fabia_ops,
+ 	},
+ };
 -- 
 2.29.2
 
