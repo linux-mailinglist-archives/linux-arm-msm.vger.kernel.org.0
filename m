@@ -2,189 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 795E62F5B1D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jan 2021 08:15:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F75F2F5B24
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jan 2021 08:18:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726266AbhANHP2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Jan 2021 02:15:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56194 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726199AbhANHP1 (ORCPT
+        id S1726089AbhANHQf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Jan 2021 02:16:35 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:14169 "EHLO
+        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725989AbhANHQf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Jan 2021 02:15:27 -0500
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EDC9C061794
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jan 2021 23:14:47 -0800 (PST)
-Received: by mail-pf1-x430.google.com with SMTP id w2so2800980pfc.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jan 2021 23:14:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=OwRfqD0YnqmsUnmWg+j8CrMA8g6zFsMROmDWudFkMws=;
-        b=D40JTh/WlJbBPmXf9TRmQxsAF37NVHwxgW6GQmhs2RZcMJQE7JMCeP6QlcbZwhSKrn
-         lUBu8F/G0ajDoxVKkovPBbyYKAwdkW/s17EGwF3Li+iho+0WWlBwURfGrCBPnDOeSuWB
-         aPR7+sWByCv3HqqoAqbVlMAgNZGWW08RiQ9mo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=OwRfqD0YnqmsUnmWg+j8CrMA8g6zFsMROmDWudFkMws=;
-        b=I6mCY7xB9VmvzZ2TkOuHZ0ZuG8B9yb1vWe9vU1D0cm82DIUQvfWQv/ndOu7ATa7CDu
-         61ZSXKYjrawnpYeq3K2z65a8fl1ssebMnWeXGZ5PWcib/eBalxPo0XV6koB8mGL0odZm
-         uwJxSVwIrSYE0F4zsJ4sA2RJTWxzpGFOAGUe0lGHp0f5sRx09qhYN0NS5b5IErduzsbA
-         EafbvJesDKfKr2Ubcmb20yXJ8rGkDO+u0pVhqUqPeCeGg7cfXvu2NBHB9FtbrcQwha9O
-         GfS1nrLtEP1kxTO5bD/z5Df1IZza6kDK476o6IJIEsn5M5oyGbuA5bOM5Rn/4vOWaG81
-         vfuw==
-X-Gm-Message-State: AOAM530uWMVt58wr76dKzAzMkIPugJRZnnBW1U0QwaPnRLg2L5PtL12r
-        QGnecueTxzZzcQiW0CPblea9QA==
-X-Google-Smtp-Source: ABdhPJwUdidcdCjUhSkb43ssf1w2quZyKuKdGDjB6nCiqwidUNHmerShXUdelhOi7sgkHtMW/fXydg==
-X-Received: by 2002:aa7:979d:0:b029:1a4:3b76:a559 with SMTP id o29-20020aa7979d0000b02901a43b76a559mr6122076pfp.49.1610608486387;
-        Wed, 13 Jan 2021 23:14:46 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:201:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id n1sm4329919pfu.28.2021.01.13.23.14.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Jan 2021 23:14:45 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
+        Thu, 14 Jan 2021 02:16:35 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1610608577; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=FN3E/oAA1UAVugKo11WqqqWS0f5OjU9KG4IozIMrmA8=; b=lKD8HGwemigh9DviuS0a1/hizm4i4UWzJcq6bgcZbQyAHVW2FC03zTOArYB5e7u1PUE9r2vn
+ 9Jm0zmYD4Cj5aRAleReYHeDi1py2uoGF6wghEUz+SA80CNPRVz7ncERc0m9WE73JzD62LxLx
+ uKPvngJrC5IgRaUAUndqy2wGSks=
+X-Mailgun-Sending-Ip: 198.61.254.31
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n09.prod.us-west-2.postgun.com with SMTP id
+ 5fffefa5d84bad3547c4b634 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 14 Jan 2021 07:15:49
+ GMT
+Sender: sramana=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id F3C48C43464; Thu, 14 Jan 2021 07:15:48 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.1 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [192.168.1.11] (cpe-70-95-74-122.san.res.rr.com [70.95.74.122])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sramana)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BDD78C433C6;
+        Thu, 14 Jan 2021 07:15:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BDD78C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sramana@codeaurora.org
+Subject: Re: [PATCH 0/3] arm64: cpufeature: Add filter function to control
+To:     Marc Zyngier <maz@kernel.org>
+Cc:     catalin.marinas@arm.com, will@kernel.org, pajay@qti.qualcomm.com,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <1610152163-16554-1-git-send-email-sramana@codeaurora.org>
+ <6dfdf691b5ed57df81c4c61422949af5@misterjones.org>
+From:   Srinivas Ramana <sramana@codeaurora.org>
+Message-ID: <c028d65d-27c3-826a-b16c-407e9cf48aac@codeaurora.org>
+Date:   Wed, 13 Jan 2021 23:15:47 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20210108093339.v5.4.I7cf3019783720feb57b958c95c2b684940264cd1@changeid>
-References: <20210108093339.v5.1.I3ad184e3423d8e479bc3e86f5b393abb1704a1d1@changeid> <20210108093339.v5.4.I7cf3019783720feb57b958c95c2b684940264cd1@changeid>
-Subject: Re: [PATCH v5 4/4] pinctrl: qcom: Don't clear pending interrupts when enabling
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Neeraj Upadhyay <neeraju@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        linux-gpio@vger.kernel.org,
-        Srinivas Ramana <sramana@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org
-To:     Douglas Anderson <dianders@chromium.org>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Marc Zyngier <maz@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>
-Date:   Wed, 13 Jan 2021 23:14:44 -0800
-Message-ID: <161060848425.3661239.17417977666663714149@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+In-Reply-To: <6dfdf691b5ed57df81c4c61422949af5@misterjones.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2021-01-08 09:35:16)
-> Let's deal with the problem like this:
-> * When we mux away, we'll mask our interrupt.  This isn't necessary in
->   the above case since the client already masked us, but it's a good
->   idea in general.
-> * When we mux back will clear any interrupts and unmask.
+Hi Marc,
 
-I'm on board!
+On 1/11/2021 5:40 AM, Marc Zyngier wrote:
+> Hi Srinivas,
+>
+> On 2021-01-09 00:29, Srinivas Ramana wrote:
+>> This patchset adds a control function for cpufeature framework
+>> so that the feature can be controlled at runtime.
+>>
+>> Defer PAC on boot core and use the filter function added to disable
+>> PAC from command line. This will help toggling the feature on systems
+>> that do not support PAC or where PAC needs to be disabled at runtime,
+>> without modifying the core kernel.
+>>
+>> The idea of adding the filter function for cpufeature is taken from
+>> https://lore.kernel.org/linux-arm-kernel/20200515171612.1020-25-catalin.marinas@arm.com/ 
+>>
+>> https://lore.kernel.org/linux-arm-kernel/20200515171612.1020-24-catalin.marinas@arm.com/ 
+>>
+>>
+>> Srinivas Ramana (3):
+>>   arm64: Defer enabling pointer authentication on boot core
+>>   arm64: cpufeature: Add a filter function to cpufeature
+>>   arm64: Enable control of pointer authentication using early param
+>>
+>>  Documentation/admin-guide/kernel-parameters.txt |  6 +++
+>>  arch/arm64/include/asm/cpufeature.h             |  8 +++-
+>>  arch/arm64/include/asm/pointer_auth.h           | 10 +++++
+>>  arch/arm64/include/asm/stackprotector.h         |  1 +
+>>  arch/arm64/kernel/cpufeature.c                  | 53 
+>> +++++++++++++++++++------
+>>  arch/arm64/kernel/head.S                        |  4 --
+>>  6 files changed, 64 insertions(+), 18 deletions(-)
+>
+> I've been working for some time on a similar series to allow a feature
+> set to be disabled during the early boot phase, initially to prevent
+> booting a kernel with VHE, but the mechanism is generic enough to
+> deal with most architectural features.
+>
+> I took the liberty to lift your first patch and to add it to my 
+> series[1],
+> further allowing PAuth to be disabled at boot time on top of BTI and VHE.
+>
+> I'd appreciate your comments on this.
+Thanks for sending this series. It seems to be more flexible compared 
+you what we did.
+Following your discussion on allowing EXACT ftr_reg values.
 
->=20
-> Fixes: 4b7618fdc7e6 ("pinctrl: qcom: Add irq_enable callback for msm gpio=
-")
-> Fixes: 71266d9d3936 ("pinctrl: qcom: Move clearing pending IRQ to .irq_re=
-quest_resources callback")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
-> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pi=
-nctrl-msm.c
-> index a6b0c17e2f78..d5d1f3430c6c 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-> @@ -51,6 +51,7 @@
->   * @dual_edge_irqs: Bitmap of irqs that need sw emulated dual edge
->   *                  detection.
->   * @skip_wake_irqs: Skip IRQs that are handled by wakeup interrupt contr=
-oller
-> + * @disabled_for_mux: These IRQs were disabled because we muxed away.
->   * @soc:            Reference to soc_data of platform specific data.
->   * @regs:           Base addresses for the TLMM tiles.
->   * @phys_base:      Physical base address
-> @@ -72,6 +73,7 @@ struct msm_pinctrl {
->         DECLARE_BITMAP(dual_edge_irqs, MAX_NR_GPIO);
->         DECLARE_BITMAP(enabled_irqs, MAX_NR_GPIO);
->         DECLARE_BITMAP(skip_wake_irqs, MAX_NR_GPIO);
-> +       DECLARE_BITMAP(disabled_for_mux, MAX_NR_GPIO);
-> =20
->         const struct msm_pinctrl_soc_data *soc;
->         void __iomem *regs[MAX_NR_TILES];
-> @@ -179,6 +181,10 @@ static int msm_pinmux_set_mux(struct pinctrl_dev *pc=
-tldev,
->                               unsigned group)
->  {
->         struct msm_pinctrl *pctrl =3D pinctrl_dev_get_drvdata(pctldev);
-> +       struct gpio_chip *gc =3D &pctrl->chip;
-> +       unsigned int irq =3D irq_find_mapping(gc->irq.domain, group);
-> +       struct irq_data *d =3D irq_get_irq_data(irq);
-> +       unsigned int gpio_func =3D pctrl->soc->gpio_func;
->         const struct msm_pingroup *g;
->         unsigned long flags;
->         u32 val, mask;
-> @@ -195,6 +201,20 @@ static int msm_pinmux_set_mux(struct pinctrl_dev *pc=
-tldev,
->         if (WARN_ON(i =3D=3D g->nfuncs))
->                 return -EINVAL;
-> =20
-> +       /*
-> +        * If an GPIO interrupt is setup on this pin then we need special
-> +        * handling.  Specifically interrupt detection logic will still s=
-ee
-> +        * the pin twiddle even when we're muxed away.
-> +        *
-> +        * When we see a pin with an interrupt setup on it then we'll dis=
-able
-> +        * (mask) interrupts on it when we mux away until we mux back.  N=
-ote
-> +        * that disable_irq() refcounts and interrupts are disabled as lo=
-ng as
-> +        * at least one disable_irq() has been called.
-> +        */
-> +       if (d && i !=3D gpio_func &&
-> +           !test_and_set_bit(d->hwirq, pctrl->disabled_for_mux))
-> +               disable_irq(irq);
 
-Does it need to be forced non-lazy so that it is actually disabled at
-the GIC? I'm trying to understand how the lazy irq disabling plays into
-this. I think it's a don't care situation because if the line twiddles
-and triggers an irq then we'll actually disable it at the GIC in the
-genirq core and mark it pending for resend. I wonder if we wouldn't have
-to undo the pending state if we actually ignored it at the GIC
-forcefully. And I also worry that it may cause a random wakeup if the
-line twiddles, becomes pending at GIC and thus blocks the CPU from
-running a WFI but it isn't an irq that Linux cares about because it's
-muxed to UART, and then lazy handling runs and shuts it down. Is that
-possible?
+Btw, do you have plan to add MTE in similar lines to control the feature?
+We may be needing this on some systems.
+>
+> Thanks,
+>
+>         M.
+>
+> [1] https://lore.kernel.org/r/20210111132811.2455113-1-maz@kernel.org
 
-> +
->         raw_spin_lock_irqsave(&pctrl->lock, flags);
-> =20
->         val =3D msm_readl_ctl(pctrl, g);
-> @@ -204,6 +224,20 @@ static int msm_pinmux_set_mux(struct pinctrl_dev *pc=
-tldev,
-> =20
->         raw_spin_unlock_irqrestore(&pctrl->lock, flags);
-> =20
-> +       if (d && i =3D=3D gpio_func &&
-> +           test_and_clear_bit(d->hwirq, pctrl->disabled_for_mux)) {
-> +               /*
-> +                * Clear interrupts detected while not GPIO since we only
-> +                * masked things.
-> +                */
-> +               if (d->parent_data && test_bit(d->hwirq, pctrl->skip_wake=
-_irqs))
-> +                       irq_chip_set_parent_state(d, IRQCHIP_STATE_PENDIN=
-G, false);
 
-So if not lazy this could go away? Although I think this is to clear out
-the pending state in the GIC and not the PDC which is the parent.
+Thanks,
 
-> +               else
-> +                       msm_ack_intr_status(pctrl, g);
-> +
-> +               enable_irq(irq);
-> +       }
-> +
+-- Srinivas R
+
