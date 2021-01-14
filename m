@@ -2,80 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D0392F6ECA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 00:09:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CAC5E2F6F0B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 00:41:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730938AbhANXG1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Jan 2021 18:06:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35420 "EHLO
+        id S1731043AbhANXlb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Jan 2021 18:41:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730936AbhANXG1 (ORCPT
+        with ESMTP id S1731015AbhANXlb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Jan 2021 18:06:27 -0500
-Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C09DC061757;
-        Thu, 14 Jan 2021 15:05:47 -0800 (PST)
-Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 801033F0AF;
-        Fri, 15 Jan 2021 00:05:45 +0100 (CET)
-Subject: Re: [PATCH v2 05/11] clk: qcom: gcc-msm8998: Mark gpu_cfg_ahb_clk as
- critical
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     MSM <linux-arm-msm@vger.kernel.org>, konrad.dybcio@somainline.org,
-        marijn.suijten@somainline.org, martin.botka@somainline.org,
-        phone-devel@vger.kernel.org, lkml <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        Thu, 14 Jan 2021 18:41:31 -0500
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6F5AC0613C1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jan 2021 15:40:50 -0800 (PST)
+Received: by mail-pl1-x632.google.com with SMTP id b8so3750229plx.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jan 2021 15:40:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KwOjwyg6i4iA1UJ1S2Hj9B446AoSw0O4Qio8BG/OuQM=;
+        b=Yo6HU+GsLdc4Gahgl+nfm4NocqQdafahxS/Vy3BfbRYl3bgPmcG6TSygnYPzXrNXeu
+         CRDUVqqTqJvsei4ONiyztLN9CEtAv3hcZZktGya9ZbG3dQBAj4BGykJtAztwLAeIwN/n
+         VrfRce4jDw7P8biviuBPvVBlVU7wfOHpmAdKE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KwOjwyg6i4iA1UJ1S2Hj9B446AoSw0O4Qio8BG/OuQM=;
+        b=Zlnk7RTeRQt3EjNK8gkJiSpaKOoAoJzH3Wt3VVAadeBU0XQWFFVpuTHZymvOTKPcr+
+         lYBE2lbo9vyGQ96YkP/yXN6WsOVKXV7vJSxTo1n8Yq7vb6eJZbH++jF1mS9bv3zrzHKi
+         mFliEytowI6F/2UQnTbXSMymAeWMhARQ6Buep4BJ5zOMwUzRP9bCEmK3VYxwsx8r70vJ
+         XucHV5Y+24nOXCP+F+Cce11dKGcrPX0zihq6qfzGmEwfotXrx6Gm7rGfUUzEuSE7xl/p
+         J8PzsH410hoi1lqQgwDViN041YyGgjMRArrROUGX2Bx0FS4TFteGq1ZtFyr6kcJeo7+0
+         NkXQ==
+X-Gm-Message-State: AOAM530BQXeBUiIZIkWhKjrgvtEL3RDFOHLMMWUfsOmzDuT9u3Ao6qFQ
+        5UGwVBkeo+U1jBUUxBSeyk2tbQ==
+X-Google-Smtp-Source: ABdhPJyK2hTjgJqcjghcPAjC14/kP/FnaiRkzCCIPV1ht4vchLlBt1rWXpO8h+VZXa4U0HFKpDBIuw==
+X-Received: by 2002:a17:902:7007:b029:dc:e89:50f1 with SMTP id y7-20020a1709027007b02900dc0e8950f1mr9940803plk.72.1610667650223;
+        Thu, 14 Jan 2021 15:40:50 -0800 (PST)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
+        by smtp.gmail.com with ESMTPSA id x1sm6498804pfj.95.2021.01.14.15.40.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Jan 2021 15:40:49 -0800 (PST)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Marc Zyngier <maz@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Linus Walleij <linus.walleij@linaro.org>
+Cc:     Neeraj Upadhyay <neeraju@codeaurora.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-clk@vger.kernel.org,
-        DTML <devicetree@vger.kernel.org>
-References: <20210114221059.483390-1-angelogioacchino.delregno@somainline.org>
- <20210114221059.483390-6-angelogioacchino.delregno@somainline.org>
- <CAOCk7NoVts21FjhhLtZp-0Xdw6-BnrKio_-tuZBRsgapsUdwfw@mail.gmail.com>
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Message-ID: <25d40e7d-fbd6-697f-7d4d-a7233aeb652c@somainline.org>
-Date:   Fri, 15 Jan 2021 00:05:45 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.0
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Srinivas Ramana <sramana@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        linux-gpio@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org
+Subject: [PATCH v6 1/4] pinctrl: qcom: Allow SoCs to specify a GPIO function that's not 0
+Date:   Thu, 14 Jan 2021 15:40:24 -0800
+Message-Id: <20210114154004.v6.1.I3ad184e3423d8e479bc3e86f5b393abb1704a1d1@changeid>
+X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7-goog
 MIME-Version: 1.0
-In-Reply-To: <CAOCk7NoVts21FjhhLtZp-0Xdw6-BnrKio_-tuZBRsgapsUdwfw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 14/01/21 23:37, Jeffrey Hugo ha scritto:
-> On Thu, Jan 14, 2021 at 3:13 PM AngeloGioacchino Del Regno
-> <angelogioacchino.delregno@somainline.org> wrote:
->>
->> The GPU IOMMU depends on this clock and the hypervisor will crash
->> the SoC if this clock gets disabled because the secure contexts
->> that have been set on this IOMMU by the bootloader will become
->> unaccessible (or they get reset).
->> Mark this clock as critical to avoid this issue when the Adreno
->> GPU is enabled.
->>
-> 
-> You should go review the last attempt to do this -
-> https://lkml.org/lkml/2019/12/17/881
-> 
+There's currently a comment in the code saying function 0 is GPIO.
+Instead of hardcoding it, let's add a member where an SoC can specify
+it.  No known SoCs use a number other than 0, but this just makes the
+code clearer.  NOTE: no SoC code needs to be updated since we can rely
+on zero-initialization.
 
-Thanks for the tip, but unfortunately this isn't possible on the 
-gpu_cfg_ahb_clk, as it is also needed for the Adreno IOMMU, which has 
-secure contexts that are set up from one of the bootloader stages and if 
-you reset/"mess up" one of them (by - in this case - un-clocking the 
-MMU), then the hypervisor will kick in and generate a fault, rebooting 
-the SoC.
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Maulik Shah <mkshah@codeaurora.org>
+Tested-by: Maulik Shah <mkshah@codeaurora.org>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
 
-Of course, this scenario is for the case in which you want to boot the 
-device without any gpucc nor any runtime pm user of that.. and the 
-aforementioned issue makes that solution not really usable.
+Changes in v6:
+- Don't wrap line; bust through 80 columns!
 
-Again, unfortunately.
+ drivers/pinctrl/qcom/pinctrl-msm.c | 3 +--
+ drivers/pinctrl/qcom/pinctrl-msm.h | 2 ++
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+index e051aecf95c4..d1261188fb6e 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -210,8 +210,7 @@ static int msm_pinmux_request_gpio(struct pinctrl_dev *pctldev,
+ 	if (!g->nfuncs)
+ 		return 0;
+ 
+-	/* For now assume function 0 is GPIO because it always is */
+-	return msm_pinmux_set_mux(pctldev, g->funcs[0], offset);
++	return msm_pinmux_set_mux(pctldev, g->funcs[pctrl->soc->gpio_func], offset);
+ }
+ 
+ static const struct pinmux_ops msm_pinmux_ops = {
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.h b/drivers/pinctrl/qcom/pinctrl-msm.h
+index 333f99243c43..e31a5167c91e 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.h
++++ b/drivers/pinctrl/qcom/pinctrl-msm.h
+@@ -118,6 +118,7 @@ struct msm_gpio_wakeirq_map {
+  * @wakeirq_dual_edge_errata: If true then GPIOs using the wakeirq_map need
+  *                            to be aware that their parent can't handle dual
+  *                            edge interrupts.
++ * @gpio_func: Which function number is GPIO (usually 0).
+  */
+ struct msm_pinctrl_soc_data {
+ 	const struct pinctrl_pin_desc *pins;
+@@ -134,6 +135,7 @@ struct msm_pinctrl_soc_data {
+ 	const struct msm_gpio_wakeirq_map *wakeirq_map;
+ 	unsigned int nwakeirq_map;
+ 	bool wakeirq_dual_edge_errata;
++	unsigned int gpio_func;
+ };
+ 
+ extern const struct dev_pm_ops msm_pinctrl_dev_pm_ops;
+-- 
+2.30.0.284.gd98b1dd5eaa7-goog
+
