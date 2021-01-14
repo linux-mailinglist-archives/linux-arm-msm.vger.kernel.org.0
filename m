@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 76BF82F6608
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jan 2021 17:35:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C7AB2F660E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jan 2021 17:36:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726382AbhANQeI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Jan 2021 11:34:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35386 "EHLO
+        id S1726551AbhANQfg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Jan 2021 11:35:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726278AbhANQeH (ORCPT
+        with ESMTP id S1725957AbhANQfg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Jan 2021 11:34:07 -0500
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77C58C061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jan 2021 08:33:27 -0800 (PST)
-Received: by mail-oi1-x22a.google.com with SMTP id f132so6458778oib.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jan 2021 08:33:27 -0800 (PST)
+        Thu, 14 Jan 2021 11:35:36 -0500
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B1B7C061757
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jan 2021 08:34:50 -0800 (PST)
+Received: by mail-ot1-x32d.google.com with SMTP id a109so5745010otc.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jan 2021 08:34:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=wdfGHaLMmvGeKZR+Q52L5VCEAR0Xq0lYTJy3reN0RWc=;
-        b=xz8/G6/x6/sFJixEahTaLsigMU8aO/sgNYuJ9G3b7O/mxCmT1mtKfMXZaN2KqDhNJ+
-         ZYx338jiLzmB9hRTVhGMRS/xdpWhW9plLdA5vPF2bmiXxmL3R94OY/ajQf0gm0IIxpK/
-         OwtZKoaOGYU7Qg2PHuPq1QkA+s+u0Lkv4VITjQ/A6yAoODn/moHa7VPiENab2M45eDSw
-         xsZEKV4anWYnYO6CTMxhKDIDLaLIi6DFxTNpWVi13Aimhh3T67QJOoW6YlnQx1ISXow9
-         sBqfIr3oH9Dho/COrZ/FQVBirRLDr9DsRZlY1Q3F2k4C9VDOy8UDJnq+6Brkc2ItbF+v
-         hRGA==
+        bh=OIpd+GXflkSZOzCqCi1q1iLDHd4kC//VfI93wd8QIPA=;
+        b=owDQjefsdPO8pEnzfVMv73Nc6hdCKHcrby4gnyVd1zN8zXcGiQ7p6OnE+IfNhR/gxJ
+         FKwJDCw1ZY5FWByfTfof9wzJbNntFSkjOC0OAYEHPVmxlPamOguRnhhC0ReQLriMdi8L
+         /zMm9Ek2WK6ScFGre5k82FDigHwAur5iQJyAjyUFgH9XUfiqTv1jVCqsSVoC4lR1FYXz
+         t5Obn7M4gaXQ9L1k7kW5stesH++/4zeBywno+CQsD87Gjon72GhnbfzEZg/5fL6ZncJl
+         inonofalG9E7fdQ8KFWzK+tYGLgpfGUIX8F8R7MbY1HR82KVO1+VpEC72uePY4WtULGv
+         EHmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=wdfGHaLMmvGeKZR+Q52L5VCEAR0Xq0lYTJy3reN0RWc=;
-        b=S9xAHk+olUJ3aLAr/OHb7Txfb0y3HgBYHrsSHfPOACK5X793fkDIH4MYrYkzEkKCQr
-         6zIFZxrEjvKp8OB44FknUawb6aaFlUmGpoyCo54p7W3k4WB2N/7bix4enjcwWv7QfiCp
-         47ayeagpL0Z6rZF9KuAx/Jx84Uf5Vc8ITbXYR8QhJEn+T1g+i435UQNiUor6R92OHdZf
-         SAqthgMcoklPX20KDry1JZ82tOKHpbrLEiurWZGgXtQpOP5F2YGsZslvr3BnKPWt+QV4
-         0Eu7SFlhFQibSOMrWxwM/goGwqppvYBAPT0eI1vkY2c3XDVmcQF2iRRo0onn4+1gaucL
-         +fDg==
-X-Gm-Message-State: AOAM533xkhXbd4+FgnIDIKfEQBZnqf8Ghcrp5jWPBYNSZmMsHlHtE4f5
-        +HrVIkQs6xhbXU58a3n2alnYsQ==
-X-Google-Smtp-Source: ABdhPJzx9HXkyQFolo8kyKKH+IvZy4gOusrB4m3kDTJv59KO4OACHdTLFF2O12FaEyUYuBNpfFi0/g==
-X-Received: by 2002:aca:c592:: with SMTP id v140mr3045719oif.10.1610642006813;
-        Thu, 14 Jan 2021 08:33:26 -0800 (PST)
+        bh=OIpd+GXflkSZOzCqCi1q1iLDHd4kC//VfI93wd8QIPA=;
+        b=eIBlVqGWuw4WNd1GezwK6CNNQd7/WcQijPg+lTj+PuXqkSfVBk5n16YVevWqoHCi3o
+         b5uHLX+Ir6RdxQ2DCYsvXCXl907SOXbzyPDz7Rm/p7i/+uOvJxMgXjyzKdqCiYnwE4i+
+         nxJZYO5OMWP45f8lAAOLTSl9ndK75lDKfT5pJYul+qWZ2vp8eHHx0KSg3+TydfjWAS+v
+         i07Hv1n9hR6QAPCMoha3BT8Xvyxszps8TU9zjjr5OPfXnzkTuYoPcyOn9DX6gyP3c6YV
+         v0ta7BX1lUgip6pOKILKAPDjCTrOfAEdUW+S8fU4FvlLvsuUpP2wnPemSiyDBh7gp65F
+         CpeA==
+X-Gm-Message-State: AOAM533tZW8XlppzbFuxoZTKdWq9jYRjzWS/mqVcjuCFKu2CtiMJtTye
+        RbGlVx0lGYnUiudMcuEyEwjY9w==
+X-Google-Smtp-Source: ABdhPJxkf/IHke46xeEdKyBJpOPkNzr63CrLo19UHT+BuLAgMQaJQa4p2mM52rMBqmddd3nPenUTqA==
+X-Received: by 2002:a9d:650f:: with SMTP id i15mr4805042otl.347.1610642089822;
+        Thu, 14 Jan 2021 08:34:49 -0800 (PST)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id n16sm1201193oop.9.2021.01.14.08.33.25
+        by smtp.gmail.com with ESMTPSA id r13sm1170189oti.49.2021.01.14.08.34.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Jan 2021 08:33:26 -0800 (PST)
-Date:   Thu, 14 Jan 2021 10:33:24 -0600
+        Thu, 14 Jan 2021 08:34:49 -0800 (PST)
+Date:   Thu, 14 Jan 2021 10:34:47 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Douglas Anderson <dianders@chromium.org>
 Cc:     Marc Zyngier <maz@kernel.org>,
@@ -63,106 +63,100 @@ Cc:     Marc Zyngier <maz@kernel.org>,
         Srinivas Ramana <sramana@codeaurora.org>,
         linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 2/4] pinctrl: qcom: No need to read-modify-write the
- interrupt status
-Message-ID: <YAByVOwhDU1W21RM@builder.lan>
+Subject: Re: [PATCH v5 3/4] pinctrl: qcom: Properly clear "intr_ack_high"
+ interrupts when unmasking
+Message-ID: <YAByp5pL7vg9ZUT9@builder.lan>
 References: <20210108093339.v5.1.I3ad184e3423d8e479bc3e86f5b393abb1704a1d1@changeid>
- <20210108093339.v5.2.I3635de080604e1feda770591c5563bd6e63dd39d@changeid>
+ <20210108093339.v5.3.I32d0f4e174d45363b49ab611a13c3da8f1e87d0f@changeid>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210108093339.v5.2.I3635de080604e1feda770591c5563bd6e63dd39d@changeid>
+In-Reply-To: <20210108093339.v5.3.I32d0f4e174d45363b49ab611a13c3da8f1e87d0f@changeid>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Fri 08 Jan 11:35 CST 2021, Douglas Anderson wrote:
 
-> When the Qualcomm pinctrl driver wants to Ack an interrupt, it does a
-> read-modify-write on the interrupt status register.  On some SoCs it
-> makes sure that the status bit is 1 to "Ack" and on others it makes
-> sure that the bit is 0 to "Ack".  Presumably the first type of
-> interrupt controller is a "write 1 to clear" type register and the
-> second just let you directly set the interrupt status register.
+> In commit 4b7618fdc7e6 ("pinctrl: qcom: Add irq_enable callback for
+> msm gpio") we tried to Ack interrupts during unmask.  However, that
+> patch forgot to check "intr_ack_high" so, presumably, it only worked
+> for a certain subset of SoCs.
 > 
-> As far as I can tell from scanning structure definitions, the
-> interrupt status bit is always in a register by itself.  Thus with
-> both types of interrupt controllers it is safe to "Ack" interrupts
-> without doing a read-modify-write.  We can do a simple write.
+> Let's add a small accessor so we don't need to open-code the logic in
+> both places.
 > 
-> It should be noted that if the interrupt status bit _was_ ever in a
-> register with other things (like maybe status bits for other GPIOs):
-> a) For "write 1 clear" type controllers then read-modify-write would
->    be totally wrong because we'd accidentally end up clearing
->    interrupts we weren't looking at.
-> b) For "direct set" type controllers then read-modify-write would also
->    be wrong because someone setting one of the other bits in the
->    register might accidentally clear (or set) our interrupt.
-> I say this simply to show that the current read-modify-write doesn't
-> provide any sort of "future proofing" of the code.  In fact (for
-> "write 1 clear" controllers) the new code is slightly more "future
-> proof" since it would allow more than one interrupt status bits to
-> share a register.
+> This was found by code inspection.  I don't have any access to the
+> hardware in question nor software that needs the Ack during unmask.
 > 
-> NOTE: this code fixes no bugs--it simply avoids an extra register
-> read.
-> 
+> Fixes: 4b7618fdc7e6 ("pinctrl: qcom: Add irq_enable callback for msm gpio")
 > Signed-off-by: Douglas Anderson <dianders@chromium.org>
 
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+And I agree with Stephen's comment about the unnecessary parenthesis
+around g->intr_ack_high.
 
 Regards,
 Bjorn
 
 > ---
+> It should be noted that this code will be moved in the next patch.  In
+> theory this could be squashed into the next patch but it seems more
+> documenting to have this as a separate patch.
 > 
 > Changes in v5:
-> - ("pinctrl: qcom: No need to read-modify-write the ...") new for v5.
+> - ("pinctrl: qcom: Properly clear "intr_ack_high" interrupts...") new for v5.
 > 
->  drivers/pinctrl/qcom/pinctrl-msm.c | 23 ++++++++---------------
->  1 file changed, 8 insertions(+), 15 deletions(-)
+>  drivers/pinctrl/qcom/pinctrl-msm.c | 14 ++++++++++----
+>  1 file changed, 10 insertions(+), 4 deletions(-)
 > 
 > diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-> index 1d2a78452c2d..1787ada6bfab 100644
+> index 1787ada6bfab..a6b0c17e2f78 100644
 > --- a/drivers/pinctrl/qcom/pinctrl-msm.c
 > +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-> @@ -792,16 +792,13 @@ static void msm_gpio_irq_clear_unmask(struct irq_data *d, bool status_clear)
+> @@ -96,6 +96,14 @@ MSM_ACCESSOR(intr_cfg)
+>  MSM_ACCESSOR(intr_status)
+>  MSM_ACCESSOR(intr_target)
 >  
->  	raw_spin_lock_irqsave(&pctrl->lock, flags);
->  
-> -	if (status_clear) {
-> -		/*
-> -		 * clear the interrupt status bit before unmask to avoid
-> -		 * any erroneous interrupts that would have got latched
-> -		 * when the interrupt is not in use.
-> -		 */
-> -		val = msm_readl_intr_status(pctrl, g);
-> -		val &= ~BIT(g->intr_status_bit);
-> -		msm_writel_intr_status(val, pctrl, g);
-> -	}
-> +	/*
-> +	 * clear the interrupt status bit before unmask to avoid
-> +	 * any erroneous interrupts that would have got latched
-> +	 * when the interrupt is not in use.
-> +	 */
-> +	if (status_clear)
-> +		msm_writel_intr_status(0, pctrl, g);
+> +static void msm_ack_intr_status(struct msm_pinctrl *pctrl,
+> +				const struct msm_pingroup *g)
+> +{
+> +	u32 val = (g->intr_ack_high) ? BIT(g->intr_status_bit) : 0;
+> +
+> +	msm_writel_intr_status(val, pctrl, g);
+> +}
+> +
+>  static int msm_get_groups_count(struct pinctrl_dev *pctldev)
+>  {
+>  	struct msm_pinctrl *pctrl = pinctrl_dev_get_drvdata(pctldev);
+> @@ -798,7 +806,7 @@ static void msm_gpio_irq_clear_unmask(struct irq_data *d, bool status_clear)
+>  	 * when the interrupt is not in use.
+>  	 */
+>  	if (status_clear)
+> -		msm_writel_intr_status(0, pctrl, g);
+> +		msm_ack_intr_status(pctrl, g);
 >  
 >  	val = msm_readl_intr_cfg(pctrl, g);
 >  	val |= BIT(g->intr_raw_status_bit);
-> @@ -906,11 +903,7 @@ static void msm_gpio_irq_ack(struct irq_data *d)
+> @@ -891,7 +899,6 @@ static void msm_gpio_irq_ack(struct irq_data *d)
+>  	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
+>  	const struct msm_pingroup *g;
+>  	unsigned long flags;
+> -	u32 val;
+>  
+>  	if (test_bit(d->hwirq, pctrl->skip_wake_irqs)) {
+>  		if (test_bit(d->hwirq, pctrl->dual_edge_irqs))
+> @@ -903,8 +910,7 @@ static void msm_gpio_irq_ack(struct irq_data *d)
 >  
 >  	raw_spin_lock_irqsave(&pctrl->lock, flags);
 >  
-> -	val = msm_readl_intr_status(pctrl, g);
-> -	if (g->intr_ack_high)
-> -		val |= BIT(g->intr_status_bit);
-> -	else
-> -		val &= ~BIT(g->intr_status_bit);
-> +	val = (g->intr_ack_high) ? BIT(g->intr_status_bit) : 0;
->  	msm_writel_intr_status(val, pctrl, g);
+> -	val = (g->intr_ack_high) ? BIT(g->intr_status_bit) : 0;
+> -	msm_writel_intr_status(val, pctrl, g);
+> +	msm_ack_intr_status(pctrl, g);
 >  
 >  	if (test_bit(d->hwirq, pctrl->dual_edge_irqs))
+>  		msm_gpio_update_dual_edge_pos(pctrl, g, d);
 > -- 
 > 2.29.2.729.g45daf8777d-goog
 > 
