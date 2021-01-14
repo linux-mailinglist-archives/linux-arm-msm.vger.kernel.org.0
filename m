@@ -2,148 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2465B2F59D2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jan 2021 05:14:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E792C2F5A1A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jan 2021 06:00:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725846AbhANENk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Jan 2021 23:13:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45546 "EHLO
+        id S1726725AbhANE7J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Jan 2021 23:59:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725773AbhANENk (ORCPT
+        with ESMTP id S1725943AbhANE7I (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Jan 2021 23:13:40 -0500
-Received: from mail-oo1-xc30.google.com (mail-oo1-xc30.google.com [IPv6:2607:f8b0:4864:20::c30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D686C061786
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jan 2021 20:12:54 -0800 (PST)
-Received: by mail-oo1-xc30.google.com with SMTP id y14so1085630oom.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jan 2021 20:12:54 -0800 (PST)
+        Wed, 13 Jan 2021 23:59:08 -0500
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81316C061795
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jan 2021 20:58:22 -0800 (PST)
+Received: by mail-pf1-x431.google.com with SMTP id h10so2646798pfo.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jan 2021 20:58:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=c73p4iFi0Q4U6X5NbGGn9k41F/L4Lk8wfqm/4PninLU=;
-        b=INTuPcVHDsUWuflSn5Z0i6gGnCcj6jTNyKM4RhhyIfbRrMNo6p8zXsBcj1glWYgOcw
-         gDTq0L0gqQCBQqFElQx8LP97F6yOOrZKPdIgBnhNRVeyYOq8BceczVKRm2sChWThHJ4j
-         C95zVjOXhBkHkpJG04sNXSnv1FtVjY57iw9rKvFCPVg4igtjqODj6bdulQR6T/cKNb5W
-         pCxSaXG4fnHkLMhrV42/wNN1Jo7ASLE+rpk7YD+jakPCUKSvwDH4MHbUt0L3e4K9Gh0S
-         aBePRNKG+T1bcgQoS27bsZu8gOTnXMonXEOKPmMj93v3kgQcXB9ux85+hppvCBX78sn6
-         FKng==
+         :content-disposition:in-reply-to:user-agent;
+        bh=pj7+cBEgJXtMaQZzh3Z5M/qdd4smvWQjfRymnLpNJDE=;
+        b=OTqEl53tlZIfTcY6c6ogIn6A/A5YR8Y1PMMhxyNO6pYF+mFBSkEX2+xbZRn040Dnha
+         YZMStQBY1cay6decowTVBFjzhaa4nNnFmONpXeJ3Ip7ncrbp7LqbM3jeyHjIQVBcCURH
+         OTqIIKehZ/Ivd8qs8NHFXrH54BP6+waVyWJ6kn9A7lTofRaC9zUg/HSUgmGOr1dYyHlb
+         NreRWe8fjyutBWpLl3WcJNXPRvY6XF/afU4c27IJ1nTmnZFKMfTu7Eza4xYhqPAxRpwQ
+         gsepjva9wc78cBOzpEb5yVFypgb6hze0/4zqD3QxWWlJLTs3l7WgDGLfKuxa+LnN3I/q
+         72xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=c73p4iFi0Q4U6X5NbGGn9k41F/L4Lk8wfqm/4PninLU=;
-        b=VdZmNDST34qscbOgKXmqDPEavbmTFwpEbkFCDLR4SHzM7ofvmc5Zsu1FoFj5+aS3gp
-         gw9LhtU+2hZAv9YkRvn/6hBcs7LUSFhByvHU1vWMtxwUn8JcScHtENx0Rm+idtutfG+4
-         65NlEZSGHxoR+x8fI+3hx1K0TsfchxpZlX1Ve7ErHbFWAeEZNalPdpTyyxZ2HSF41ms4
-         FZsBvFGf5Zhnhfgj2S9mRGHJRBM0fUwgqlIwgMBvJYgLllqulyefDx/SYKoIJfmwQuXw
-         tY21lamaha94Q9uAKJIKZGYSOzuFQ5QRlPHlnLzbfZCP+UjPgP04tGYxa+96+/kWxHY7
-         beag==
-X-Gm-Message-State: AOAM5303098UUhoRA/QJmH1CYLnBxhWHdS4TUAPvGW7yMhf3XEMj3m9a
-        4JT2aRywJQ5FW7bNgmAkSQc3v6WUKZRXsg==
-X-Google-Smtp-Source: ABdhPJyWaqSmUExzgj1VXGHKe8YoRl2GN66reGihgmJtgpFfMzwZkhqpUitHsF3EqStTldzT4ENfNQ==
-X-Received: by 2002:a05:6820:30e:: with SMTP id l14mr3492445ooe.38.1610597573822;
-        Wed, 13 Jan 2021 20:12:53 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id m22sm844424otr.79.2021.01.13.20.12.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Jan 2021 20:12:53 -0800 (PST)
-Date:   Wed, 13 Jan 2021 22:12:51 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Akash Asthana <akashast@codeaurora.org>,
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=pj7+cBEgJXtMaQZzh3Z5M/qdd4smvWQjfRymnLpNJDE=;
+        b=XV5Ijcy+RyB6Jtym9jLxxSXIZ+qM8EFImOK+LCL0QbW/dSl0bEdWAJ8eyXZZL3Z4dq
+         FB8tP7HQekAK9VksIZW47OG2nBmNyT42ax4Cq+0fcgRR1H7PFV7ByaNEKwik7R6iy2EC
+         l0RMrK+VHimnCVg7Pdhn58hQ8yB30N/GBfwTtyzPtj5dnLwvAtjr9O6OTsbKTAHy5NmQ
+         f9HxUizcnRUZ+oKYdwqm6vi8FPIBXLXEKmeEFPV2lk10cRvG/GAZWteqV6WwhnOxa67d
+         Bet/3X776XBFipNvI2o5W5hFIl4FDw4GoQuw0olnBaN5lu3gtroo4ToMlg/jXuYyhnfh
+         pJDw==
+X-Gm-Message-State: AOAM532v8Y1zXAdqmcMojgvsWGiqmLZZYHwy9Hrh9xhkCxaY47WPc2Bo
+        CVLY+spt7rm1cY8V8qekB7O/iA==
+X-Google-Smtp-Source: ABdhPJwCm/dwbUIScsf1C9L4ZGYnnv2zRUj6lm0DFn9Y/Pv2L3hwsFwVrHcrgxReyH107F0pQ3jFTQ==
+X-Received: by 2002:a63:c501:: with SMTP id f1mr5563244pgd.1.1610600301891;
+        Wed, 13 Jan 2021 20:58:21 -0800 (PST)
+Received: from localhost ([122.172.85.111])
+        by smtp.gmail.com with ESMTPSA id f24sm4109293pjj.5.2021.01.13.20.58.20
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 13 Jan 2021 20:58:20 -0800 (PST)
+Date:   Thu, 14 Jan 2021 10:28:18 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ionela Voinescu <ionela.voinescu@arm.com>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Andy Gross <agross@kernel.org>, linux-pm@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] soc: qcom: geni: shield ICC calls for ACPI boot
-Message-ID: <X//Ew1EvY47UgTf9@builder.lan>
-References: <20201228135625.4971-1-shawn.guo@linaro.org>
+Subject: Re: [PATCH] cpufreq: qcom-hw: add missing devm_release_mem_region()
+ call
+Message-ID: <20210114045818.d3qu6jpekjol7ch2@vireshk-i7>
+References: <20210112095236.20515-1-shawn.guo@linaro.org>
+ <X/210llTiuNt3haG@builder.lan>
+ <20210113043143.y45mmnw3e2kjkxnl@vireshk-i7>
+ <X/5+GbueKg66DoEE@builder.lan>
+ <20210113050651.q2txref3d6bifrf3@vireshk-i7>
+ <cbd4fb28-24b8-9aa7-fe5f-24571ef6258d@somainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201228135625.4971-1-shawn.guo@linaro.org>
+In-Reply-To: <cbd4fb28-24b8-9aa7-fe5f-24571ef6258d@somainline.org>
+User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 28 Dec 07:56 CST 2020, Shawn Guo wrote:
-
-> Currently, GENI devices like i2c-qcom-geni fails to probe in ACPI boot,
-> if interconnect support is enabled.  That's because interconnect driver
-> only supports DT right now.  As interconnect is not necessarily required
-> for basic function of GENI devices, let's shield those ICC calls to get
-> GENI devices probe for ACPI boot.
+On 13-01-21, 23:12, AngeloGioacchino Del Regno wrote:
+> Sorry, are you sure that the eventual fix shouldn't be rebased on top of my
+> change (12014503) [1] that is enabling CPU scaling for all of the platforms
+> that aren't getting the OSM set-up entirely by the TZ/bootloader?
+> It's a pretty big series, that I've rebased 3 times already...
 > 
-> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-> ---
->  drivers/soc/qcom/qcom-geni-se.c | 15 +++++++++++++++
->  1 file changed, 15 insertions(+)
-> 
-> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-> index f42954e2c98e..9feb1d78a5df 100644
-> --- a/drivers/soc/qcom/qcom-geni-se.c
-> +++ b/drivers/soc/qcom/qcom-geni-se.c
-> @@ -760,6 +760,9 @@ int geni_icc_get(struct geni_se *se, const char *icc_ddr)
->  	int i, err;
->  	const char *icc_names[] = {"qup-core", "qup-config", icc_ddr};
->  
-> +	if (has_acpi_companion(se->dev))
-> +		return 0;
-> +
->  	for (i = 0; i < ARRAY_SIZE(se->icc_paths); i++) {
->  		if (!icc_names[i])
->  			continue;
-> @@ -785,6 +788,9 @@ int geni_icc_set_bw(struct geni_se *se)
->  {
->  	int i, ret;
->  
-> +	if (has_acpi_companion(se->dev))
+> [1]: https://patchwork.kernel.org/project/linux-arm-msm/patch/20210112182052.481888-15-angelogioacchino.delregno@somainline.org/
 
-Can't we simply rely on the fact that icc_set_bw(), icc_enable() and
-icc_disable() all return successfully when passed a path of NULL?
+I am waiting for someone from Qcom background to review the stuff, perhaps Bjorn
+or someone else as it is a big change.
 
-That would reduce this patch to only modifying geni_icc_get(), which
-presumably would be the place the modify once there is a mechanism to
-acquire paths in ACPI (if that ends up look anything like the of-based
-case).
+Second, the fixes never get rebased on new stuff as they also need to make it to
+stable kernels and current Linux release instead of the next one.
 
-Regards,
-Bjorn
+So, this fix will go first irrespective of the timeframe when it was posted.
 
-> +		return 0;
-> +
->  	for (i = 0; i < ARRAY_SIZE(se->icc_paths); i++) {
->  		ret = icc_set_bw(se->icc_paths[i].path,
->  			se->icc_paths[i].avg_bw, se->icc_paths[i].avg_bw);
-> @@ -803,6 +809,9 @@ void geni_icc_set_tag(struct geni_se *se, u32 tag)
->  {
->  	int i;
->  
-> +	if (has_acpi_companion(se->dev))
-> +		return;
-> +
->  	for (i = 0; i < ARRAY_SIZE(se->icc_paths); i++)
->  		icc_set_tag(se->icc_paths[i].path, tag);
->  }
-> @@ -813,6 +822,9 @@ int geni_icc_enable(struct geni_se *se)
->  {
->  	int i, ret;
->  
-> +	if (has_acpi_companion(se->dev))
-> +		return 0;
-> +
->  	for (i = 0; i < ARRAY_SIZE(se->icc_paths); i++) {
->  		ret = icc_enable(se->icc_paths[i].path);
->  		if (ret) {
-> @@ -830,6 +842,9 @@ int geni_icc_disable(struct geni_se *se)
->  {
->  	int i, ret;
->  
-> +	if (has_acpi_companion(se->dev))
-> +		return 0;
-> +
->  	for (i = 0; i < ARRAY_SIZE(se->icc_paths); i++) {
->  		ret = icc_disable(se->icc_paths[i].path);
->  		if (ret) {
-> -- 
-> 2.17.1
-> 
+Thanks Angelo.
+
+-- 
+viresh
