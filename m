@@ -2,77 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 754022F6DE5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jan 2021 23:16:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 39CBF2F6DED
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jan 2021 23:16:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730609AbhANWNC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Jan 2021 17:13:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52134 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730613AbhANWNA (ORCPT
+        id S1730654AbhANWNZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Jan 2021 17:13:25 -0500
+Received: from relay06.th.seeweb.it ([5.144.164.167]:40803 "EHLO
+        relay06.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730613AbhANWNY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Jan 2021 17:13:00 -0500
-Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E9FAC0613CF;
-        Thu, 14 Jan 2021 14:12:15 -0800 (PST)
-Received: by mail-io1-xd2a.google.com with SMTP id y19so14441575iov.2;
-        Thu, 14 Jan 2021 14:12:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=n0eEtOJf3DuTltNNg0E2LGjviIdDUwv2RhU3h48SMLE=;
-        b=WqUKpyiHsfcwHBtvQbwdCeC4JeGV65LI01A/TCT0FHOA2ZRgz9mF0ZdkohwCTE2siM
-         Igw3Z54jWvHjNlWyBjpMlU3DyEgH8KZhuXVK77Z55ntaG8hO/A1p57jNx5xE/XEVKpCE
-         layn3JT8yIN9X7mP/lWKES29vOdcajkmaBspLAYAajdVdJxwSGaLQJN16xJWHuxC2OMd
-         ryxH5otfV+REhC9JjZ8fH+/Yn6xduo6Nxo/cF/EtZdMJ7hKO6hjXjlrH//rJrXrr/7JU
-         EwTU/Y1E16v6mIfmv/airDLqw/nSi9BHG/x6lZ4NTsxw+6DeFNdXKJVxKbRdV32cNGJu
-         7lbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=n0eEtOJf3DuTltNNg0E2LGjviIdDUwv2RhU3h48SMLE=;
-        b=QGkuWVDa4QrSLrkCsgqBGx8ZmqdyPVmU8NPAGaUUbSuYzGrRAZbCVKdcV8Iokm3W55
-         YhkUkq51FhJMD/XjhFiYE4ZWEwkD6G3WCL/IO3+8wTQ3WiWuGtcqxMCyy5fSuIbB/u4o
-         oBkheEGZLSHBvhDSl9K/8l/7ZLCxsdHKfUmJpMPWOfLZCDUS/FxIusTSc1IevI83rp5m
-         pvos5MZpwYrUi2+VycADHjBWpcthD2x1JXAMsLUxSmiu9f1kN80cQSh6zaizII4NiMAE
-         lJ75TBpeZeKFvB817tP+XKm9mCoC4bUDpjehnXrsAZ6mcXOeR0yq/TuB1WoEewtt0Or0
-         nO+g==
-X-Gm-Message-State: AOAM532td0cY50wO8IE4HQa5uCUWagcA06YflvbDBfVznPj/YwwirmSM
-        nNIT9VYQnC504CK4vOS7ly+6gzX2oIoBLe1Gb4OMJaZC
-X-Google-Smtp-Source: ABdhPJw+ZvLMWbpW9dueEEwcs4nX1wlCOUNiMZEPp3z5ItbnX/0L8tJcl0PADX8/3ekrzuG5e/YLkJ+1dJO6oRsfL1o=
-X-Received: by 2002:a6b:6f17:: with SMTP id k23mr6815806ioc.147.1610662334949;
- Thu, 14 Jan 2021 14:12:14 -0800 (PST)
-MIME-Version: 1.0
-References: <20210109134617.146275-1-angelogioacchino.delregno@somainline.org> <20210109134617.146275-2-angelogioacchino.delregno@somainline.org>
-In-Reply-To: <20210109134617.146275-2-angelogioacchino.delregno@somainline.org>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Thu, 14 Jan 2021 15:12:03 -0700
-Message-ID: <CAOCk7NqUpa0DqW=han49MtwUqNkNsQC3OPpO7B-872bvNukDJw@mail.gmail.com>
-Subject: Re: [PATCH 1/9] clk: qcom: gcc-msm8998: Wire up gcc_mmss_gpll0 clock
-To:     AngeloGioacchino Del Regno 
+        Thu, 14 Jan 2021 17:13:24 -0500
+Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 9BF613EBE2;
+        Thu, 14 Jan 2021 23:12:40 +0100 (CET)
+Subject: Re: [PATCH v2 00/11] Clock fixes for MSM8998 GCC, MMCC, GPUCC
+To:     linux-arm-msm@vger.kernel.org
+Cc:     konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
+        martin.botka@somainline.org, phone-devel@vger.kernel.org,
+        linux-kernel@vger.kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, robh+dt@kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20210114221059.483390-1-angelogioacchino.delregno@somainline.org>
+From:   AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>
-Cc:     MSM <linux-arm-msm@vger.kernel.org>, konrad.dybcio@somainline.org,
-        marijn.suijten@somainline.org, martin.botka@somainline.org,
-        phone-devel@vger.kernel.org, lkml <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-clk@vger.kernel.org,
-        DTML <devicetree@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <b85658a1-be8a-c950-185e-efc772134a07@somainline.org>
+Date:   Thu, 14 Jan 2021 23:12:40 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
+MIME-Version: 1.0
+In-Reply-To: <20210114221059.483390-1-angelogioacchino.delregno@somainline.org>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Jan 9, 2021 at 6:47 AM AngeloGioacchino Del Regno
-<angelogioacchino.delregno@somainline.org> wrote:
->
-> This clock enables the GPLL0 output to the multimedia subsystem
-> clock controller.
->
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+Il 14/01/21 23:10, AngeloGioacchino Del Regno ha scritto:
+> This patch series fixes some issues with the MSM8998 clocks and, in
+> particular, brings a very important fix to the GCC PLLs.
+> 
+> These fixes are enhancing this SoC's stability and also makes it
+> possible to eventually enable the Adreno GPU (with proper clock
+> scaling) and other components.
+> 
+> This patch series was tested on:
+> - Sony Xperia XZ Premium (MSM8998)
+> - F(x)Tec Pro1 (MSM8998)
+> 
 
-Any reason why you are not also adding the div_clk?
+Forgot to write this part, so adding as a reply to myself...
+
+Changes in v2:
+  - Separated dt-bindings headers definitions additions from
+    actual code, as per Rob Herring's review
+
+> AngeloGioacchino Del Regno (11):
+>    dt-bindings: clocks: gcc-msm8998: Add GCC_MMSS_GPLL0_CLK definition
+>    clk: qcom: gcc-msm8998: Wire up gcc_mmss_gpll0 clock
+>    dt-bindings: clock: gcc-msm8998: Add HMSS_GPLL0_CLK_SRC definition
+>    clk: qcom: gcc-msm8998: Add missing hmss_gpll0_clk_src clock
+>    clk: qcom: gcc-msm8998: Mark gpu_cfg_ahb_clk as critical
+>    clk: qcom: gcc-msm8998: Fix Alpha PLL type for all GPLLs
+>    clk: qcom: mmcc-msm8998: Set CLK_GET_RATE_NOCACHE to pixel/byte clks
+>    clk: qcom: mmcc-msm8998: Add hardware clockgating registers to some
+>      clks
+>    clk: qcom: mmcc-msm8998: Set bimc_smmu_gdsc always on
+>    clk: qcom: gpucc-msm8998: Add resets, cxc, fix flags on gpu_gx_gdsc
+>    clk: qcom: gpucc-msm8998: Allow fabia gpupll0 rate setting
+> 
+>   drivers/clk/qcom/gcc-msm8998.c               | 143 ++++++++++++-------
+>   drivers/clk/qcom/gpucc-msm8998.c             |  18 ++-
+>   drivers/clk/qcom/mmcc-msm8998.c              |  20 ++-
+>   include/dt-bindings/clock/qcom,gcc-msm8998.h |   2 +
+>   4 files changed, 125 insertions(+), 58 deletions(-)
+> 
+
