@@ -2,124 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3AF762F6ACC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jan 2021 20:24:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 076862F6AF5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jan 2021 20:30:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729704AbhANTUA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Jan 2021 14:20:00 -0500
-Received: from relay07.th.seeweb.it ([5.144.164.168]:42715 "EHLO
-        relay07.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727477AbhANTUA (ORCPT
+        id S1726509AbhANTak (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Jan 2021 14:30:40 -0500
+Received: from mail-oo1-f50.google.com ([209.85.161.50]:38035 "EHLO
+        mail-oo1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725781AbhANTak (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Jan 2021 14:20:00 -0500
-Received: from [192.168.1.101] (abaf224.neoplus.adsl.tpnet.pl [83.6.169.224])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 555BE3EB7A;
-        Thu, 14 Jan 2021 20:19:02 +0100 (CET)
-Subject: Re: [PATCH v3 1/2] arm64: dts: sdm845: add oneplus6/6t devices
-To:     Caleb Connolly <caleb@connolly.tech>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20210114185227.25265-1-caleb@connolly.tech>
- <20210114185227.25265-2-caleb@connolly.tech>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-Message-ID: <17d49d19-7672-520c-12d3-c6ed8c12ae47@somainline.org>
-Date:   Thu, 14 Jan 2021 20:19:01 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.0
+        Thu, 14 Jan 2021 14:30:40 -0500
+Received: by mail-oo1-f50.google.com with SMTP id i18so1640928ooh.5;
+        Thu, 14 Jan 2021 11:30:24 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=b5khkTttCRV6xEewwgfTa+OQE8BKGtgueu8OCH3Y+jA=;
+        b=tKuIsm2mS8zydZhl9s2yl2mJVT+Naesnq48abrF5+kk3rNnnIg556Ui6Els/KpMu81
+         8K6+MRtjYQpw/X3iaDMgpHKtpjHAO8O9FXJWugEjHihgOtcZIZ1/RrknC6dTiVUVg6eq
+         4RydMIpZdcDjN9MsgjztQxn+UOSFK0reClQcbZqiIVobthaVK7oFkFvyqM8lsiU79zL3
+         UQz4VDAG8iIdeGXSwcNxWFZGVOK7OODnZTOyVNhjFiX9epEfVDqVUjYGz/ede0hDlUfk
+         zPWNp6j4Alp/KA7d1S6UnVoxi+GIv1R6nAJMxW/slUjhbhW+oX776lfu6JSeDLJRa1q1
+         edMg==
+X-Gm-Message-State: AOAM533bx25fjQXcv8lx23Wf9MTumYws/gHwyWeT9uABPrkn7BGrogRL
+        cLK7WGyJNAeHatdcXfmYpA==
+X-Google-Smtp-Source: ABdhPJxXVazhZPUDi17HAz3tpnncSgDcMQkO/K+v3aY6Da9JAFj2JsJi3qaXFb8RRO/uevm+oSYm6A==
+X-Received: by 2002:a4a:e687:: with SMTP id u7mr5723042oot.20.1610652599444;
+        Thu, 14 Jan 2021 11:29:59 -0800 (PST)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id i126sm1212612oif.22.2021.01.14.11.29.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Jan 2021 11:29:58 -0800 (PST)
+Received: (nullmailer pid 3430148 invoked by uid 1000);
+        Thu, 14 Jan 2021 19:29:57 -0000
+Date:   Thu, 14 Jan 2021 13:29:57 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     vkoul@kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, robh+dt@kernel.org,
+        agross@kernel.org, kishon@ti.com, bjorn.andersson@linaro.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] dt-bindings: phy: qcom,qmp: Add SDX55 USB PHY
+ binding
+Message-ID: <20210114192957.GA3430087@robh.at.kernel.org>
+References: <20210111113010.32056-1-manivannan.sadhasivam@linaro.org>
+ <20210111113010.32056-2-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <20210114185227.25265-2-caleb@connolly.tech>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210111113010.32056-2-manivannan.sadhasivam@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi!
+On Mon, 11 Jan 2021 17:00:09 +0530, Manivannan Sadhasivam wrote:
+> Add devicetree YAML binding for Qualcomm QMP Super Speed (SS) PHY found
+> in SDX55.
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  .../devicetree/bindings/phy/qcom,qmp-phy.yaml | 27 +++++++++++++++++++
+>  1 file changed, 27 insertions(+)
+> 
 
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-mtp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-beryllium.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-oneplus-enchilada.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-oneplus-fajita.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
-
-Please sort.
-
-> +/ {
-> +
-Redundant newline.
-> +	gpio-keys {
-> +		compatible = "gpio-keys";
-> +		label = "Volume keys";
-> +		autorepeat;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&volume_down_gpio &volume_up_gpio>;
-> +
-> +		vol-down {
-> +			label = "Volume down";
-> +			linux,code = <KEY_VOLUMEDOWN>;
-> +			gpios = <&pm8998_gpio 5 GPIO_ACTIVE_LOW>;
-> +			debounce-interval = <15>;
-> +		};
-> +
-> +		vol-up {
-> +			label = "Volume up";
-> +			linux,code = <KEY_VOLUMEUP>;
-> +			gpios = <&pm8998_gpio 6 GPIO_ACTIVE_LOW>;
-> +			debounce-interval = <15>;
-> +		};
-> +	};
-Perhaps gpio-keys could come before the fixed regulators to keep it a bit more sane/sorted?
-> +&adsp_pas {
-This should come before apps_rsc alphabetically.
-> +// Prevent garbage data on bluetooth UART lines
-Please use C-style comments (/* thing */).
-> +&usb_1 {
-> +	status = "okay";
-> +
-> +	/*
-> +	 * disable USB3 clock requirement as the device only supports
-> +	 * USB2.
-> +	 */
-> +	qcom,select-utmi-as-pipe-clk;
-> +};
-> +
-> +&usb_1_dwc3 {
-> +	/*
-> +	 * We don't have the capability to switch modes yet.
-> +	 */
-> +	dr_mode = "peripheral";
-> +
-> +	/* fastest mode for USB 2 */
-> +	maximum-speed = "high-speed";
-> +
-> +	/* Remove USB3 phy as it's unused on this device. */
-> +	phys = <&usb_1_hsphy>;
-> +	phy-names = "usb2-phy";
-> +};
-
-Are you sure you can't get USB3 in host mode? Perhaps it's not worth discarding it upfront, as some boards can do that, definitely do check!
-
-> \ No newline at end of file
-
-Please add a newline.
-
-
-The DTS files look correct, but don't you need at least one of msm-id, board-id, pmic-id? I'm not exactly sure what OnePlus does, but I can imagine they would require such properties..
-
-
-Konrad
-
+Reviewed-by: Rob Herring <robh@kernel.org>
