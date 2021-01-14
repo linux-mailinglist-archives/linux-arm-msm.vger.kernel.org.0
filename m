@@ -2,159 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 44B372F6889
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jan 2021 19:01:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 65F932F689C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jan 2021 19:01:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727481AbhANR6J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Jan 2021 12:58:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53610 "EHLO
+        id S1727278AbhANR7H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Jan 2021 12:59:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726428AbhANR6J (ORCPT
+        with ESMTP id S1726147AbhANR7H (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Jan 2021 12:58:09 -0500
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5900EC0613C1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jan 2021 09:57:29 -0800 (PST)
-Received: by mail-ot1-x332.google.com with SMTP id o11so5996601ote.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jan 2021 09:57:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=QFPvrxij+GioCFvfCkXO9xrU7Tgj4zJb5jbfcOgiV+8=;
-        b=aN9r2QtqgIrFifEGKa8DUuX+2uCAfDdbwKotgaPsUmlpqn1s3865BKVWFfRy50l4vX
-         HRJUElnp7aGSUW/Juy+Y/foiBEAPsOf0BPsT5ObFnQH8N4Swh4E6laKFNqECOnuQgww/
-         x4NsSfZRrFWyf3KqgbWI9whTZNUrI743Y/j/ov5LhMwjV/IX5lEojCmkYU8d2UTTp62h
-         9e2t+asTTptiHbxzmd/u5a4SgZMUlnglf44XFjkNJCUT9F9s3l0muZgWGuxe9Qs5rsw8
-         FAYkhORQbP68mFHE/2C9T/90W1ysDgmiKxAFxjpgzb7XPG3OyxRvuJ3DflitfyPc/xxb
-         oxaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=QFPvrxij+GioCFvfCkXO9xrU7Tgj4zJb5jbfcOgiV+8=;
-        b=aTkmPI6/xOr1AK4HbvJGz50Yv5mUZ5bsgKxO+B5yWe67vdL5+X/E4JGLTJ8JzAu64T
-         2YykYKYBzuvzNrirshKGQ8aHVP2vptoOzbswWK0bkhC7Pgn5Utn51LjsVCLoCY7oZzpY
-         bsYFwA0cVcS0MOvhOQQrj9BV+mnb4e0Jso3nOeAep1K9iZpLj5PdyrAQJgH71UKUvFaE
-         aVkaX9PH4HzAemAeiv0YIVuoEpq8DsNOOe7uBY32iTBCc/rX6NPBV0LZP+Y92Oq395AE
-         UfIBRYGOVAYw6pettZNjRsRw/CYPGKNN2oGh7FxJiLK7YXp1aLd4peYqJ7X+oYw3ZCVc
-         gdtQ==
-X-Gm-Message-State: AOAM532hmJ7bqghTOpGNIyK+qYHldxyf+lkKIa5m0+nsjVWIuHxJHjxG
-        Zj/QM9yEdUtXfhk8C+Xl4uh8Iw==
-X-Google-Smtp-Source: ABdhPJzXcwgwbspDBloCZD4UhhQnroMwVPNwyjjjGJNUSqIWrOWEzVgJyuhYHj7k9fcdO4GuJRoP4w==
-X-Received: by 2002:a05:6830:2413:: with SMTP id j19mr5573145ots.251.1610647048752;
-        Thu, 14 Jan 2021 09:57:28 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id q18sm1183378ood.35.2021.01.14.09.57.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Jan 2021 09:57:28 -0800 (PST)
-Date:   Thu, 14 Jan 2021 11:57:26 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     AngeloGioacchino Del Regno 
+        Thu, 14 Jan 2021 12:59:07 -0500
+Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E9B8C061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jan 2021 09:57:47 -0800 (PST)
+Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 1958C1F534;
+        Thu, 14 Jan 2021 18:57:45 +0100 (CET)
+Subject: Re: [PATCH 1/3] phy: qcom-qusb2: Allow specifying default clock
+ scheme
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     agross@kernel.org, kishon@ti.com, vkoul@kernel.org,
+        robh+dt@kernel.org, mgautam@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, konrad.dybcio@somainline.org,
+        martin.botka@somainline.org, marijn.suijten@somainline.org,
+        phone-devel@vger.kernel.org
+References: <20210114174718.398638-1-angelogioacchino.delregno@somainline.org>
+ <YACE+uWidV6xzAwC@builder.lan>
+From:   AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>
-Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
-        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
-        martin.botka@somainline.org, robh+dt@kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, phone-devel@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] i2c: qup: Introduce SCL/SDA noise rejection
-Message-ID: <YACGBnAbHllCdGNw@builder.lan>
-References: <20210114174909.399284-1-angelogioacchino.delregno@somainline.org>
- <20210114174909.399284-3-angelogioacchino.delregno@somainline.org>
+Message-ID: <28bb9e1e-909a-1559-af62-bc99b6e960ec@somainline.org>
+Date:   Thu, 14 Jan 2021 18:57:44 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210114174909.399284-3-angelogioacchino.delregno@somainline.org>
+In-Reply-To: <YACE+uWidV6xzAwC@builder.lan>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 14 Jan 11:49 CST 2021, AngeloGioacchino Del Regno wrote:
-
-> Some I2C devices may be glitchy due to electrical noise coming
-> from the device itself or because of possible board design issues.
-> To overcome this issue, the QUP's I2C in Qualcomm SoCs supports
-> a noise rejection setting for both SCL and SDA lines.
+Il 14/01/21 18:52, Bjorn Andersson ha scritto:
+> On Thu 14 Jan 11:47 CST 2021, AngeloGioacchino Del Regno wrote:
 > 
-> Introduce a setting for noise rejection through device properties,
-> "qcom,noise-reject-sda" and "qcom,noise-reject-scl", which will
-> be used to set the level of noise rejection sensitivity.
-> If the properties are not specified, noise rejection will not be
-> enabled.
+>> The TCSR's PHY_CLK_SCHEME register is not available on all SoC
+>> models, but some may still use a differential reference clock.
+>>
+>> In preparation for these SoCs, add a se_clk_scheme_default
+>> configuration entry and declare it to true for all currently
+>> supported SoCs (retaining the previous defaults.
+>>
+>> This patch brings no functional changes.
+>>
+> 
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > 
 
-This looks reasonable, just some small nits below.
+Thanks!! :)
 
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> ---
->  drivers/i2c/busses/i2c-qup.c | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
-> 
-> diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
-> index 5a47915869ae..af51234a60ba 100644
-> --- a/drivers/i2c/busses/i2c-qup.c
-> +++ b/drivers/i2c/busses/i2c-qup.c
-> @@ -8,6 +8,7 @@
->  #include <linux/acpi.h>
->  #include <linux/atomic.h>
->  #include <linux/clk.h>
-> +#include <linux/bitfield.h>
+>> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+>> ---
+>>   drivers/phy/qualcomm/phy-qcom-qusb2.c | 15 +++++++++++++--
+>>   1 file changed, 13 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/phy/qualcomm/phy-qcom-qusb2.c b/drivers/phy/qualcomm/phy-qcom-qusb2.c
+>> index 109792203baf..8fcfea2a8f1f 100644
+>> --- a/drivers/phy/qualcomm/phy-qcom-qusb2.c
+>> +++ b/drivers/phy/qualcomm/phy-qcom-qusb2.c
+>> @@ -245,6 +245,9 @@ struct qusb2_phy_cfg {
+>>   
+>>   	/* true if PHY has PLL_CORE_INPUT_OVERRIDE register to reset PLL */
+>>   	bool has_pll_override;
+>> +
+>> +	/* true if PHY default clk scheme is single-ended */
+>> +	bool se_clk_scheme_default;
+>>   };
+>>   
+>>   static const struct qusb2_phy_cfg msm8996_phy_cfg = {
+>> @@ -253,6 +256,7 @@ static const struct qusb2_phy_cfg msm8996_phy_cfg = {
+>>   	.regs		= msm8996_regs_layout,
+>>   
+>>   	.has_pll_test	= true,
+>> +	.se_clk_scheme_default = true,
+>>   	.disable_ctrl	= (CLAMP_N_EN | FREEZIO_N | POWER_DOWN),
+>>   	.mask_core_ready = PLL_LOCKED,
+>>   	.autoresume_en	 = BIT(3),
+>> @@ -266,6 +270,7 @@ static const struct qusb2_phy_cfg msm8998_phy_cfg = {
+>>   	.disable_ctrl   = POWER_DOWN,
+>>   	.mask_core_ready = CORE_READY_STATUS,
+>>   	.has_pll_override = true,
+>> +	.se_clk_scheme_default = true,
+>>   	.autoresume_en   = BIT(0),
+>>   	.update_tune1_with_efuse = true,
+>>   };
+>> @@ -279,6 +284,7 @@ static const struct qusb2_phy_cfg qusb2_v2_phy_cfg = {
+>>   			   POWER_DOWN),
+>>   	.mask_core_ready = CORE_READY_STATUS,
+>>   	.has_pll_override = true,
+>> +	.se_clk_scheme_default = true,
+>>   	.autoresume_en	  = BIT(0),
+>>   	.update_tune1_with_efuse = true,
+>>   };
+>> @@ -701,8 +707,13 @@ static int qusb2_phy_init(struct phy *phy)
+>>   	/* Required to get phy pll lock successfully */
+>>   	usleep_range(150, 160);
+>>   
+>> -	/* Default is single-ended clock on msm8996 */
+>> -	qphy->has_se_clk_scheme = true;
+>> +	/*
+>> +	 * Not all the SoCs have got a readable TCSR_PHY_CLK_SCHEME
+>> +	 * register in the TCSR so, if there's none, use the default
+>> +	 * value hardcoded in the configuration.
+>> +	 */
+>> +	qphy->has_se_clk_scheme = cfg->se_clk_scheme_default;
+>> +
+>>   	/*
+>>   	 * read TCSR_PHY_CLK_SCHEME register to check if single-ended
+>>   	 * clock scheme is selected. If yes, then disable differential
+>> -- 
+>> 2.29.2
+>>
 
-If you move this one step up you'll maintain the sort order.
-
->  #include <linux/delay.h>
->  #include <linux/dmaengine.h>
->  #include <linux/dmapool.h>
-> @@ -39,6 +40,8 @@
->  #define QUP_MX_READ_CNT		0x208
->  #define QUP_IN_FIFO_BASE	0x218
->  #define QUP_I2C_CLK_CTL		0x400
-> +#define  QUP_I2C_CLK_CTL_SDA_NR	GENMASK(27, 26)
-> +#define  QUP_I2C_CLK_CTL_SCL_NR	GENMASK(25, 24)
->  #define QUP_I2C_STATUS		0x404
->  #define QUP_I2C_MASTER_GEN	0x408
->  
-> @@ -1663,6 +1666,7 @@ static int qup_i2c_probe(struct platform_device *pdev)
->  	int ret, fs_div, hs_div;
->  	u32 src_clk_freq = DEFAULT_SRC_CLK;
->  	u32 clk_freq = DEFAULT_CLK_FREQ;
-> +	u32 noise_reject_scl = 0, noise_reject_sda = 0;
-
-You shouldn't need to initialize these, device_property_read_u32() won't
-return 0 without updating them.
-
->  	int blocks;
->  	bool is_qup_v1;
->  
-> @@ -1860,6 +1864,19 @@ static int qup_i2c_probe(struct platform_device *pdev)
->  		qup->clk_ctl = ((fs_div / 2) << 16) | (hs_div << 8) | (fs_div & 0xff);
->  	}
->  
-> +	/* SCL/SDA Noise rejection (optional) */
-> +	ret = device_property_read_u32(qup->dev, "qcom,noise-reject-scl",
-> +				      &noise_reject_scl);
-> +	if (ret == 0)
-> +		qup->clk_ctl |= FIELD_PREP(QUP_I2C_CLK_CTL_SCL_NR,
-> +					   noise_reject_scl);
-
-I would prefer if you didn't break this line.
-
-> +
-> +	ret = device_property_read_u32(qup->dev, "qcom,noise-reject-sda",
-> +				      &noise_reject_sda);
-> +	if (ret == 0)
-> +		qup->clk_ctl |= FIELD_PREP(QUP_I2C_CLK_CTL_SDA_NR,
-> +					   noise_reject_sda);
-
-Ditto.
-
-Regards,
-Bjorn
-
-> +
->  	/*
->  	 * Time it takes for a byte to be clocked out on the bus.
->  	 * Each byte takes 9 clock cycles (8 bits + 1 ack).
-> -- 
-> 2.29.2
-> 
