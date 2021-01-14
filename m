@@ -2,68 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BF472F59C0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jan 2021 05:04:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2465B2F59D2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jan 2021 05:14:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726460AbhANED2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Jan 2021 23:03:28 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60150 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725871AbhANED2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Jan 2021 23:03:28 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 9FEBD238E2;
-        Thu, 14 Jan 2021 04:02:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1610596967;
-        bh=rLDlZhE4clh7wpTKiQtra2JxDSb5P8nhufyun18HY1A=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=sBtNq1UtW/zDFFv0IgHKKher6fmVdWMrn32l9PDpOJTl5Ph1DOCexoWjt3NqD5x1d
-         4BzAeCUvqyeIrBPFXoUFriTRVMuooV9C4ieedi4FNiZT4wv9IYEnam6lnzpWBNHdum
-         V/CDST98IeTcyvFVmLIqRDwfACfidDTDM+UfIGmfERstlVfbdVC6f6VCUoOJLApqRf
-         Dkxv5xKW+oKqbIBQb7QqFOpf7+3dF+4CAILe7rxjxAjYAqYjqKvcMe7k4405XCNLMC
-         yf4sLMmd/sq9HHTvUVbGjdCwMJyye2ftoigPYgyCTDYe+IpmgwD0k3w8z+29UPWtZC
-         bDFH+7Wmhd2gA==
-Date:   Wed, 13 Jan 2021 20:02:46 -0800
-From:   Jakub Kicinski <kuba@kernel.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        davem@davemloft.net, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Hemant Kumar <hemantk@codeaurora.org>
-Subject: Re: [PATCH net-next 1/3] bus: mhi: core: Add helper API to return
- number of free TREs
-Message-ID: <20210113200246.526d4dc0@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-In-Reply-To: <20210114035749.GA4607@work>
-References: <1610388462-16322-1-git-send-email-loic.poulain@linaro.org>
-        <20210113193301.2a9b7ae7@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-        <20210114035749.GA4607@work>
+        id S1725846AbhANENk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Jan 2021 23:13:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45546 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725773AbhANENk (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 13 Jan 2021 23:13:40 -0500
+Received: from mail-oo1-xc30.google.com (mail-oo1-xc30.google.com [IPv6:2607:f8b0:4864:20::c30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D686C061786
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jan 2021 20:12:54 -0800 (PST)
+Received: by mail-oo1-xc30.google.com with SMTP id y14so1085630oom.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jan 2021 20:12:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=c73p4iFi0Q4U6X5NbGGn9k41F/L4Lk8wfqm/4PninLU=;
+        b=INTuPcVHDsUWuflSn5Z0i6gGnCcj6jTNyKM4RhhyIfbRrMNo6p8zXsBcj1glWYgOcw
+         gDTq0L0gqQCBQqFElQx8LP97F6yOOrZKPdIgBnhNRVeyYOq8BceczVKRm2sChWThHJ4j
+         C95zVjOXhBkHkpJG04sNXSnv1FtVjY57iw9rKvFCPVg4igtjqODj6bdulQR6T/cKNb5W
+         pCxSaXG4fnHkLMhrV42/wNN1Jo7ASLE+rpk7YD+jakPCUKSvwDH4MHbUt0L3e4K9Gh0S
+         aBePRNKG+T1bcgQoS27bsZu8gOTnXMonXEOKPmMj93v3kgQcXB9ux85+hppvCBX78sn6
+         FKng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=c73p4iFi0Q4U6X5NbGGn9k41F/L4Lk8wfqm/4PninLU=;
+        b=VdZmNDST34qscbOgKXmqDPEavbmTFwpEbkFCDLR4SHzM7ofvmc5Zsu1FoFj5+aS3gp
+         gw9LhtU+2hZAv9YkRvn/6hBcs7LUSFhByvHU1vWMtxwUn8JcScHtENx0Rm+idtutfG+4
+         65NlEZSGHxoR+x8fI+3hx1K0TsfchxpZlX1Ve7ErHbFWAeEZNalPdpTyyxZ2HSF41ms4
+         FZsBvFGf5Zhnhfgj2S9mRGHJRBM0fUwgqlIwgMBvJYgLllqulyefDx/SYKoIJfmwQuXw
+         tY21lamaha94Q9uAKJIKZGYSOzuFQ5QRlPHlnLzbfZCP+UjPgP04tGYxa+96+/kWxHY7
+         beag==
+X-Gm-Message-State: AOAM5303098UUhoRA/QJmH1CYLnBxhWHdS4TUAPvGW7yMhf3XEMj3m9a
+        4JT2aRywJQ5FW7bNgmAkSQc3v6WUKZRXsg==
+X-Google-Smtp-Source: ABdhPJyWaqSmUExzgj1VXGHKe8YoRl2GN66reGihgmJtgpFfMzwZkhqpUitHsF3EqStTldzT4ENfNQ==
+X-Received: by 2002:a05:6820:30e:: with SMTP id l14mr3492445ooe.38.1610597573822;
+        Wed, 13 Jan 2021 20:12:53 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id m22sm844424otr.79.2021.01.13.20.12.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Jan 2021 20:12:53 -0800 (PST)
+Date:   Wed, 13 Jan 2021 22:12:51 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Akash Asthana <akashast@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: geni: shield ICC calls for ACPI boot
+Message-ID: <X//Ew1EvY47UgTf9@builder.lan>
+References: <20201228135625.4971-1-shawn.guo@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201228135625.4971-1-shawn.guo@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 14 Jan 2021 09:27:49 +0530 Manivannan Sadhasivam wrote:
-> On Wed, Jan 13, 2021 at 07:33:01PM -0800, Jakub Kicinski wrote:
-> > On Mon, 11 Jan 2021 19:07:40 +0100 Loic Poulain wrote:  
-> > > From: Hemant Kumar <hemantk@codeaurora.org>
-> > > 
-> > > Introduce mhi_get_free_desc_count() API to return number
-> > > of TREs available to queue buffer. MHI clients can use this
-> > > API to know before hand if ring is full without calling queue
-> > > API.
-> > > 
-> > > Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
-> > > Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
-> > > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>  
-> > 
-> > Can we apply these to net-next or does it need to be on a stable branch
-> > that will also get pulled into mhi-next?  
+On Mon 28 Dec 07:56 CST 2020, Shawn Guo wrote:
+
+> Currently, GENI devices like i2c-qcom-geni fails to probe in ACPI boot,
+> if interconnect support is enabled.  That's because interconnect driver
+> only supports DT right now.  As interconnect is not necessarily required
+> for basic function of GENI devices, let's shield those ICC calls to get
+> GENI devices probe for ACPI boot.
 > 
-> We should use the immutable branch for this so that I can pull into
-> mhi-next.
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> ---
+>  drivers/soc/qcom/qcom-geni-se.c | 15 +++++++++++++++
+>  1 file changed, 15 insertions(+)
+> 
+> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+> index f42954e2c98e..9feb1d78a5df 100644
+> --- a/drivers/soc/qcom/qcom-geni-se.c
+> +++ b/drivers/soc/qcom/qcom-geni-se.c
+> @@ -760,6 +760,9 @@ int geni_icc_get(struct geni_se *se, const char *icc_ddr)
+>  	int i, err;
+>  	const char *icc_names[] = {"qup-core", "qup-config", icc_ddr};
+>  
+> +	if (has_acpi_companion(se->dev))
+> +		return 0;
+> +
+>  	for (i = 0; i < ARRAY_SIZE(se->icc_paths); i++) {
+>  		if (!icc_names[i])
+>  			continue;
+> @@ -785,6 +788,9 @@ int geni_icc_set_bw(struct geni_se *se)
+>  {
+>  	int i, ret;
+>  
+> +	if (has_acpi_companion(se->dev))
 
-Thanks for a quire reply!
+Can't we simply rely on the fact that icc_set_bw(), icc_enable() and
+icc_disable() all return successfully when passed a path of NULL?
 
-Loic, FWIW git merge-base is your friend.
+That would reduce this patch to only modifying geni_icc_get(), which
+presumably would be the place the modify once there is a mechanism to
+acquire paths in ACPI (if that ends up look anything like the of-based
+case).
+
+Regards,
+Bjorn
+
+> +		return 0;
+> +
+>  	for (i = 0; i < ARRAY_SIZE(se->icc_paths); i++) {
+>  		ret = icc_set_bw(se->icc_paths[i].path,
+>  			se->icc_paths[i].avg_bw, se->icc_paths[i].avg_bw);
+> @@ -803,6 +809,9 @@ void geni_icc_set_tag(struct geni_se *se, u32 tag)
+>  {
+>  	int i;
+>  
+> +	if (has_acpi_companion(se->dev))
+> +		return;
+> +
+>  	for (i = 0; i < ARRAY_SIZE(se->icc_paths); i++)
+>  		icc_set_tag(se->icc_paths[i].path, tag);
+>  }
+> @@ -813,6 +822,9 @@ int geni_icc_enable(struct geni_se *se)
+>  {
+>  	int i, ret;
+>  
+> +	if (has_acpi_companion(se->dev))
+> +		return 0;
+> +
+>  	for (i = 0; i < ARRAY_SIZE(se->icc_paths); i++) {
+>  		ret = icc_enable(se->icc_paths[i].path);
+>  		if (ret) {
+> @@ -830,6 +842,9 @@ int geni_icc_disable(struct geni_se *se)
+>  {
+>  	int i, ret;
+>  
+> +	if (has_acpi_companion(se->dev))
+> +		return 0;
+> +
+>  	for (i = 0; i < ARRAY_SIZE(se->icc_paths); i++) {
+>  		ret = icc_disable(se->icc_paths[i].path);
+>  		if (ret) {
+> -- 
+> 2.17.1
+> 
