@@ -2,110 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 43B662F831E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 18:57:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 04AC22F83FF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 19:21:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728163AbhAOR44 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jan 2021 12:56:56 -0500
-Received: from mail.kernel.org ([198.145.29.99]:35720 "EHLO mail.kernel.org"
+        id S2388237AbhAOSUN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jan 2021 13:20:13 -0500
+Received: from mail.kernel.org ([198.145.29.99]:42778 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727443AbhAOR44 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jan 2021 12:56:56 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id EA79F22262;
-        Fri, 15 Jan 2021 17:56:14 +0000 (UTC)
+        id S2388063AbhAOSUM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 15 Jan 2021 13:20:12 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 16925222B3;
+        Fri, 15 Jan 2021 18:19:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1610733375;
-        bh=vj26FR8f+iU2PtcYdkiiX4Rofrx/+1bCKnemSD3ZlAQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=JBsK2t1VzsBu7KmHfRB8fFQdKPeEXnjNV8szW2jRZ4QDkGhXgm0jdcVxgilxe9p4n
-         3rr27iUbtfupeVQ9dSztg52vZ+fqiF5Ttg75ixVu2Lvbu50jVCt8kYGzkOhia4psYj
-         uOvJvb3YOwdvG7agAGkKP6W2DfqhlHuM+a0NRLQFu+Y4mRQR2ck9zbXfOyG53Yu0TO
-         R8OBrPn6JClmTKnHxfX7MInKY5GFT6fNowCH7A5VjTF9kPc3k2FDlCzVg5UYjyx/Pk
-         tq0rw2Dzn10iP4FC6v4i6FDJ+0+5VgTyrUJz3OsrN8AIVDGK5sc9H+SYtmRF59xAD6
-         SUv6kieT6g8lw==
-Date:   Fri, 15 Jan 2021 09:56:13 -0800
-From:   Eric Biggers <ebiggers@kernel.org>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>, linux-fscrypt@vger.kernel.org,
-        Satya Tangirala <satyat@google.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Neeraj Soni <neersoni@codeaurora.org>,
-        Barani Muthukumaran <bmuthuku@codeaurora.org>,
-        Peng Zhou <peng.zhou@mediatek.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Konrad Dybcio <konradybcio@gmail.com>
-Subject: Re: [PATCH v4 1/9] mmc: add basic support for inline encryption
-Message-ID: <YAHXPREJaKjK/z7+@sol.localdomain>
-References: <20210104184542.4616-1-ebiggers@kernel.org>
- <20210104184542.4616-2-ebiggers@kernel.org>
- <CAPDyKFq717teu2HPZLCn9QVxLOwZHdi_iS+Ji69S0kYX1o52PQ@mail.gmail.com>
+        s=k20201202; t=1610734771;
+        bh=3rRDT+rU1u3GZvGDwrSbAniCXS09VSj6vZ/alOvP+cQ=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=luOgCmD3g2dKfofk01BU11o3YgKeJEe3zxEpjOWvZE6xhZ2FNIp6iDzXBui8Ddpkr
+         FTLKNceUkIIn1qaztis+xvtvdPg28RuRE4MNtn4YHszzRMJrJZroQ/ZOS5G8iqAQzk
+         e0xICRheUSWsmLwKu6crP6LKCy6InUrnn37H69KQAXpor429zGr5ExC7WdTppkykhI
+         X+kGcc3GOzhT1YWzszmzZVJ6vpRt+6T0IiLrKjn1jveDn1gAZ4YgfFJjrbrVGlzuqk
+         yae8KH7K8lFIGxY2M46zqR1j7aI/nc8vXDrBRp+nbzcB6Qin0OOLwHEq8JzZVw7UsY
+         vrIAZCrtmXJCw==
+From:   Mark Brown <broonie@kernel.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Cheng-Yi Chiang <cychiang@chromium.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org,
+        V Sujith Kumar Reddy <vsujithk@codeaurora.org>,
+        Srinivasa Rao <srivasam@codeaurora.org>
+In-Reply-To: <20210115034327.617223-1-swboyd@chromium.org>
+References: <20210115034327.617223-1-swboyd@chromium.org>
+Subject: Re: [PATCH 0/4] ASoC: qcom: Minor code cleanups for lpass-cpu
+Message-Id: <161073473698.12268.9934599691128446500.b4-ty@kernel.org>
+Date:   Fri, 15 Jan 2021 18:18:56 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPDyKFq717teu2HPZLCn9QVxLOwZHdi_iS+Ji69S0kYX1o52PQ@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 15, 2021 at 10:22:03AM +0100, Ulf Hansson wrote:
-> On Mon, 4 Jan 2021 at 19:48, Eric Biggers <ebiggers@kernel.org> wrote:
-> >
-> > From: Eric Biggers <ebiggers@google.com>
-> >
-> > In preparation for adding CQHCI crypto engine (inline encryption)
-> > support, add the code required to make mmc_core and mmc_block aware of
-> > inline encryption.  Specifically:
-> >
-> > - Add a capability flag MMC_CAP2_CRYPTO to struct mmc_host.  Drivers
-> >   will set this if the host and driver support inline encryption.
-> >
-> > - Embed a blk_keyslot_manager in struct mmc_host.  Drivers will
-> >   initialize this if the host and driver support inline encryption.
-> >   mmc_block registers this keyslot manager with the request_queue of any
-> >   MMC card attached to the host.  mmc_core destroys this keyslot manager
-> >   when freeing the mmc_host.
-> >
-> > - Make mmc_block copy the crypto keyslot and crypto data unit number
-> >   from struct request to struct mmc_request, so that drivers will have
-> >   access to them.
-> >
-> > - If the MMC host is reset, reprogram all the keyslots to ensure that
-> >   the software state stays in sync with the hardware state.
-> >
-> > Co-developed-by: Satya Tangirala <satyat@google.com>
-> > Signed-off-by: Satya Tangirala <satyat@google.com>
-> > Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-> > Reviewed-by: Satya Tangirala <satyat@google.com>
-> > Reviewed-and-tested-by: Peng Zhou <peng.zhou@mediatek.com>
-> > Signed-off-by: Eric Biggers <ebiggers@google.com>
+On Thu, 14 Jan 2021 19:43:23 -0800, Stephen Boyd wrote:
+> Here's some minor code cleanups for the lpass-cpu driver. I noticed that
+> it casts away const from the driver data from DT. That's not great but
+> fixing it is a little more involved. I'll get to it later. There's also
+> some questionable clk_get() usage that should probably be
+> clk_get_optional(). For now this should help a little.
 > 
-> Eric, again, my apologies for the delay. Overall, I think this looks good.
+> Cc: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+> Cc: Srinivasa Rao <srivasam@codeaurora.org>
+> Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> Cc: Cheng-Yi Chiang <cychiang@chromium.org>
 > 
-> My only hesitation to merge this as is, is that I want to make sure
-> you have thought of the life cycle issues for the struct
-> blk_keyslot_manager ksm. It's being used both from the mmc core/block
-> device driver and the mmc host driver. I am looking at this right now
-> and will get back to you very soon, if I find some issues with it.
-> 
-> If you have some time, feel free to elaborate around how this is
-> intended to work.
-> 
-> Kind regards
-> Uffe
+> [...]
 
-The blk_keyslot_manager is initialized early on when the other host structures
-(struct mmc_host, struct cqhci_host, struct sdhci_host, struct sdhci_msm_host)
-are initialized, prior to mmc_add_host().
+Applied to
 
-It is destroyed when the struct mmc_host is freed by mmc_free_host().
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
-So it should just work; it's the same lifecycle as the existing host structures.
-Is there something you think I'm overlooking?
+Thanks!
 
-- Eric
+[1/4] ASoC: qcom: Remove useless debug print
+      commit: 16117beb16f01a470d40339960ffae1e287c03be
+[2/4] ASoC: qcom: Add some names to regmap configs
+      commit: 03b49bf9a92b18bbfcc3b5eb206cca8447e9f2cb
+[3/4] ASoC: qcom: Stop casting away __iomem for error pointers
+      commit: e697df66876c182927899950971c3b4888df3e6e
+[4/4] ASoC: qcom: Remove duplicate error messages on ioremap
+      commit: 4e15f5060d34dd28591cf3af43d3086a4b76c965
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
