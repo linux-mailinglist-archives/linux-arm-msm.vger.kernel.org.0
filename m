@@ -2,186 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 73C792F7720
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 12:03:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EBC6D2F7745
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 12:13:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726727AbhAOLDR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jan 2021 06:03:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47852 "EHLO
+        id S1726184AbhAOLN1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jan 2021 06:13:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726045AbhAOLDQ (ORCPT
+        with ESMTP id S1726105AbhAOLN0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jan 2021 06:03:16 -0500
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BF6FC061793
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jan 2021 03:02:36 -0800 (PST)
-Received: by mail-lj1-x231.google.com with SMTP id u11so9882022ljo.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jan 2021 03:02:35 -0800 (PST)
+        Fri, 15 Jan 2021 06:13:26 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11CF1C061757
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jan 2021 03:12:46 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id u14so3064601wmq.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jan 2021 03:12:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=bVcjRs+Ok7w3SNArmcDX5s4jqseIUriYsAY++usO/v4=;
-        b=fIxlssTjF9bpwqr0geCcR+J3tdYEWhq7wPNyJHJbQiSukYyUEqXPwA9D0TkaDkzxMA
-         zG4lXbdrCx5FT9VSkj2NGhulPDcPyq8fUrXdmTi4VkmvR7UHnuj3rklnQsZE7YYlH6zS
-         cSGJZhD72bBP1DXw12/+s1gAJMnHBdUMme0fyiQG+f3iYu+BPZar4Okhl172YtCc/sFy
-         iczY+MN9pFkpLtNSojxEmFzTIyu46LfHwNLEszbKsNjqIrIyoE0LP/PjItp0vsJ+VC5T
-         GVWib6T2i+uqQacta7ngU6eXf3W2uas4ZXMzy0dC2p4TMs7PlC0evbUip1FWLVqSWn6U
-         CA8g==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=8hOPqiKxYh57wkKCGDlQE85ouMI8Pjq2OXu/MBK/GBo=;
+        b=ETWqj32EUC/lVfGcEnrERegA0IfyyyfTQBugipiNDz9oezr2FUyXSgNjERTQhyzitT
+         5zXV13jV2QfbErvJHqnJXkiPYsBMkih9apQHrrKK5OK+P2cn+nFP+Ujs56tF/3J76dwn
+         keVommed8cXFUXxwKiyD162/yJ7T2BFhSzJjfZe3D2cGa/KQRowm71sEduN6Iv7WOasG
+         YTMzC/kSxrOXgZqq9HUGrcg/gKygcFJ5m/Qoig8NtSgjLnr+xtM+RSMJwkjBGdQK5Bzn
+         cCOQaIHk6N7aTrEH9W75pdoX+e69sE1IfFRjCJiB2kaTalfRhTLmS02MsZN+F2WBV+C5
+         Hndw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=bVcjRs+Ok7w3SNArmcDX5s4jqseIUriYsAY++usO/v4=;
-        b=ZVgboNuRCEA4bqEL9uXJ7eCxIsSuvFMSvpM9RTi03z6+s2IMnFHyswg31yVPdEQB2l
-         K9bFpaE7ttzSvVAbDypbUDkFH39khFduGLisLdnVqzi/Oriyr/M4sCqOw08/p3XD3gfB
-         Aj25AaQnctUwpA1hQYtSPAg+emVfzJqMR5cEJ/on47YSBky/mBu1ZqScdO33rWWvVA63
-         cogze8tCvbfj1qYi19kjdGIMR1HtLyNk1ICOfYreo7inJ5MyaTbECqMoDGOmCHBJdCPn
-         vM12gLUYq5dXn6qibgOJ3kxsT4tjjFSrzW7ng6CCfXw7zjbHI1k/lBiC3nAkDVE9+MkS
-         8Z8Q==
-X-Gm-Message-State: AOAM5320ZjJH86BLrXNQwi8fdh9NurzAHo9Sk8yTLcB8GHRbd9FoIIeg
-        tDSnzyx4az662Ipyn/k991V2mQ==
-X-Google-Smtp-Source: ABdhPJx+vSidLuf7CEXA+qiT7NNvlmkvI2jBc+mmViJfgFuO4vTXlBlMitK8hF/Is63y7O0BETr0SQ==
-X-Received: by 2002:a05:651c:228:: with SMTP id z8mr5408367ljn.310.1610708554557;
-        Fri, 15 Jan 2021 03:02:34 -0800 (PST)
-Received: from eriador.lumag.spb.ru ([188.162.64.106])
-        by smtp.gmail.com with ESMTPSA id s8sm862020lfi.21.2021.01.15.03.02.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Jan 2021 03:02:33 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
-Cc:     Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@linux.ie>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Vinod Koul <vkoul@kernel.org>, Sam Ravnborg <sam@ravnborg.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: [PATCH v2 3/3] drm/bridge/lontium-lt9611uxc: move HPD notification out of IRQ handler
-Date:   Fri, 15 Jan 2021 14:02:25 +0300
-Message-Id: <20210115110225.127075-4-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210115110225.127075-1-dmitry.baryshkov@linaro.org>
-References: <20210115110225.127075-1-dmitry.baryshkov@linaro.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=8hOPqiKxYh57wkKCGDlQE85ouMI8Pjq2OXu/MBK/GBo=;
+        b=SHl9V09Op+08QYqwGsZx8EQYtCTV+J1SemuqRmTHmqmklrO3vU7PeonOoWQu9mBYWa
+         ecuea0AfpfkhZ20AH9+LNOdu52vPswQM0ufsZdb9PbquQRqD5o0KASDCaYAQX65dvPxP
+         MaafforoyCCNAD31kg8zRvwZ/RfcXSTJgntAErWNnccuzaeA/Wzimta9V2M0FwnkWiov
+         qqa60jr2iyT3wXP6pzDZ5wSk8onE/ke7ELbS0O9taAGD2fL6l/vWjgKDy4SufZ/oThP/
+         RBzFn8epdl+laSOWAsJ9N6ltm8EYqasJn3l5nIkOB200Vy2xCIHQNF1umqrUbrrUNc7U
+         q+sQ==
+X-Gm-Message-State: AOAM532Fb5nhyw1II0NIYLgRCmKb133LnGyasCRUWTZKNGEB1AX96kLg
+        BIhdd4z4qUr8Yg4urJCivjk2eg==
+X-Google-Smtp-Source: ABdhPJxZxPpbEPACV3JGhyB3zfkvu0YT51nxUVRM08/3jMLDRr4l2mATYKPVXAsaURWiMAg+h9NBGQ==
+X-Received: by 2002:a1c:9ad5:: with SMTP id c204mr5322138wme.65.1610709164628;
+        Fri, 15 Jan 2021 03:12:44 -0800 (PST)
+Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
+        by smtp.googlemail.com with ESMTPSA id f68sm1305763wmf.6.2021.01.15.03.12.43
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 15 Jan 2021 03:12:43 -0800 (PST)
+Subject: Re: [PATCH 0/4] ASoC: qcom: Minor code cleanups for lpass-cpu
+To:     Stephen Boyd <swboyd@chromium.org>, Mark Brown <broonie@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, Patrick Lai <plai@codeaurora.org>,
+        alsa-devel@alsa-project.org,
+        V Sujith Kumar Reddy <vsujithk@codeaurora.org>,
+        Srinivasa Rao <srivasam@codeaurora.org>,
+        Cheng-Yi Chiang <cychiang@chromium.org>
+References: <20210115034327.617223-1-swboyd@chromium.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <f60d2cf1-7952-3e85-e988-53e6b91ae75a@linaro.org>
+Date:   Fri, 15 Jan 2021 11:12:42 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210115034327.617223-1-swboyd@chromium.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-drm hotplug handling code (drm_client_dev_hotplug()) can wait on mutex,
-thus delaying further lt9611uxc IRQ events processing.  It was observed
-occasionally during bootups, when drm_client_modeset_probe() was waiting
-for EDID ready event, which was delayed because IRQ handler was stuck
-trying to deliver hotplug event.
-Move hotplug notifications from IRQ handler to separate work to be able
-to process IRQ events without delays.
+Thanks Stephen for the cleanup patches.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Fixes: 0cbbd5b1a012 ("drm: bridge: add support for lontium LT9611UXC bridge")
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/gpu/drm/bridge/lontium-lt9611uxc.c | 30 +++++++++++++++++-----
- 1 file changed, 24 insertions(+), 6 deletions(-)
+All of them look good to me!
 
-diff --git a/drivers/gpu/drm/bridge/lontium-lt9611uxc.c b/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-index b708700e182d..88630bc2921f 100644
---- a/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-+++ b/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-@@ -14,6 +14,7 @@
- #include <linux/regmap.h>
- #include <linux/regulator/consumer.h>
- #include <linux/wait.h>
-+#include <linux/workqueue.h>
- 
- #include <sound/hdmi-codec.h>
- 
-@@ -36,6 +37,7 @@ struct lt9611uxc {
- 	struct mutex ocm_lock;
- 
- 	struct wait_queue_head wq;
-+	struct work_struct work;
- 
- 	struct device_node *dsi0_node;
- 	struct device_node *dsi1_node;
-@@ -52,6 +54,7 @@ struct lt9611uxc {
- 
- 	bool hpd_supported;
- 	bool edid_read;
-+	bool hdmi_connected;
- 	uint8_t fw_version;
- };
- 
-@@ -151,15 +154,26 @@ static irqreturn_t lt9611uxc_irq_thread_handler(int irq, void *dev_id)
- 	}
- 
- 	if (irq_status & BIT(1)) {
--		if (lt9611uxc->connector.dev)
--			drm_kms_helper_hotplug_event(lt9611uxc->connector.dev);
--		else
--			drm_bridge_hpd_notify(&lt9611uxc->bridge, !!(hpd_status & BIT(1)));
-+		lt9611uxc->hdmi_connected = !!(hpd_status & BIT(1));
-+		schedule_work(&lt9611uxc->work);
- 	}
- 
- 	return IRQ_HANDLED;
- }
- 
-+void lt9611uxc_hpd_work(struct work_struct *work)
-+{
-+	struct lt9611uxc *lt9611uxc = container_of(work, struct lt9611uxc, work);
-+
-+	if (lt9611uxc->connector.dev)
-+		drm_kms_helper_hotplug_event(lt9611uxc->connector.dev);
-+	else
-+		drm_bridge_hpd_notify(&lt9611uxc->bridge,
-+				      lt9611uxc->hdmi_connected ?
-+				      connector_status_connected :
-+				      connector_status_disconnected);
-+}
-+
- static void lt9611uxc_reset(struct lt9611uxc *lt9611uxc)
- {
- 	gpiod_set_value_cansleep(lt9611uxc->reset_gpio, 1);
-@@ -447,7 +461,7 @@ static enum drm_connector_status lt9611uxc_bridge_detect(struct drm_bridge *brid
- 	struct lt9611uxc *lt9611uxc = bridge_to_lt9611uxc(bridge);
- 	unsigned int reg_val = 0;
- 	int ret;
--	int connected = 1;
-+	bool connected = true;
- 
- 	if (lt9611uxc->hpd_supported) {
- 		lt9611uxc_lock(lt9611uxc);
-@@ -457,8 +471,9 @@ static enum drm_connector_status lt9611uxc_bridge_detect(struct drm_bridge *brid
- 		if (ret)
- 			dev_err(lt9611uxc->dev, "failed to read hpd status: %d\n", ret);
- 		else
--			connected  = reg_val & BIT(1);
-+			connected  = !!(reg_val & BIT(1));
- 	}
-+	lt9611uxc->hdmi_connected = connected;
- 
- 	return connected ?  connector_status_connected :
- 				connector_status_disconnected;
-@@ -931,6 +946,8 @@ static int lt9611uxc_probe(struct i2c_client *client,
- 	lt9611uxc->fw_version = ret;
- 
- 	init_waitqueue_head(&lt9611uxc->wq);
-+	INIT_WORK(&lt9611uxc->work, lt9611uxc_hpd_work);
-+
- 	ret = devm_request_threaded_irq(dev, client->irq, NULL,
- 					lt9611uxc_irq_thread_handler,
- 					IRQF_ONESHOT, "lt9611uxc", lt9611uxc);
-@@ -967,6 +984,7 @@ static int lt9611uxc_remove(struct i2c_client *client)
- 	struct lt9611uxc *lt9611uxc = i2c_get_clientdata(client);
- 
- 	disable_irq(client->irq);
-+	flush_scheduled_work();
- 	lt9611uxc_audio_exit(lt9611uxc);
- 	drm_bridge_remove(&lt9611uxc->bridge);
- 
--- 
-2.29.2
+On 15/01/2021 03:43, Stephen Boyd wrote:
+> Here's some minor code cleanups for the lpass-cpu driver. I noticed that
+> it casts away const from the driver data from DT. That's not great but
+> fixing it is a little more involved. I'll get to it later. There's also
+> some questionable clk_get() usage that should probably be
+> clk_get_optional(). For now this should help a little.
+> 
+> Cc: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+> Cc: Srinivasa Rao <srivasam@codeaurora.org>
+> Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> Cc: Cheng-Yi Chiang <cychiang@chromium.org>
+> 
+> Stephen Boyd (4):
+>    ASoC: qcom: Remove useless debug print
+>    ASoC: qcom: Add some names to regmap configs
+>    ASoC: qcom: Stop casting away __iomem for error pointers
+>    ASoC: qcom: Remove duplicate error messages on ioremap
+> 
+>   sound/soc/qcom/lpass-cpu.c | 17 ++++++-----------
+>   1 file changed, 6 insertions(+), 11 deletions(-)
+> 
 
+
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+
+> 
