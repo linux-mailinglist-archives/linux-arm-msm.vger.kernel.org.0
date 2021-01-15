@@ -2,102 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EC4A2F755A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 10:28:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DB4A92F762B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 11:03:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728173AbhAOJ2P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jan 2021 04:28:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55500 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730375AbhAOJ1s (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jan 2021 04:27:48 -0500
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAB71C06179F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jan 2021 01:26:29 -0800 (PST)
-Received: by mail-ed1-x529.google.com with SMTP id b2so8777155edm.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jan 2021 01:26:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=NPpTp6a6u7fOZ3GfoVMqP0h5qwWkDaaqGx3MQZmmFIU=;
-        b=uMAA8EshSzFzDykdzTxOtz+DOjd9oB+lBVytXRmkeZbkPOvJcWqiycin0jTas0XdPR
-         Abx7o0jv/ZFIpGgUyOdpdwufLQpzCbgh7khYlSroxcprt0ZC//THezzvYBxX15pVrEB0
-         oC8YMc7jYOYu/9FwnfbCmkgKNocSg3QNnWYKeJBOm1gzE3nYTxNh5snzdRiAgtqFqpZ/
-         6NSEnUyZfGsg6A3YXrCXYTcfAFNoGFyCFv4j8EdpzBDAGYkTt6QyNt5RLBS3F2/PtKN8
-         GTqDetFFpRmSBx2LI3hHvRC4CiBSOnSeRf0L5mu9mJWs94RFTHiAWQ0rVKfea4WUcTdD
-         Y35A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=NPpTp6a6u7fOZ3GfoVMqP0h5qwWkDaaqGx3MQZmmFIU=;
-        b=Es+Jv91tDIMajaxHTGsEEjSQAaFAf+w5VRGIOceyb/WwrIIaYDRT6XLUSYEO8hIxxe
-         d0CpLhMTGOggglAHJZJ6z2emfXQPQ5I9a5AusisF5fTfY22cP0Q6AwvDLd+t6tZuWXg3
-         MaS1uwS2bjLfokp74UHjBHAEaZpBQ/T3gxQTTRSIAA5WVPFU/j2bGMk3Pz4wHF7tll3/
-         krVJ9gk9ifo8vZVSg5fqTy7YiVV5CE/7fA5LUqXhcqBCLcQuE447lO7Wm/PfgVWtvcqg
-         hXsts0zw0sKRNVobiYH7i3NnX7xfRaCDrJSs9J96KVIVYptOtcHr2Fmpefl86Ufc1Ezu
-         BlEA==
-X-Gm-Message-State: AOAM531x2XDtJkSKgD4x6DDPwPFqxzhN/Ea/wPYrnMn08dK2rHWA3sQ6
-        BNdZ1RAlwFOxHVgmg2XqqYzuDg==
-X-Google-Smtp-Source: ABdhPJw84zuV4cS7/a+LJQv0YdUKaq2TAeJk8mtppmG+PidICGNdaA6qBwFXKRGGNfr0Lj30tSEqiA==
-X-Received: by 2002:a05:6402:5206:: with SMTP id s6mr7291383edd.92.1610702788407;
-        Fri, 15 Jan 2021 01:26:28 -0800 (PST)
-Received: from localhost.localdomain (hst-221-63.medicom.bg. [84.238.221.63])
-        by smtp.gmail.com with ESMTPSA id u24sm3004140eje.71.2021.01.15.01.26.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Jan 2021 01:26:27 -0800 (PST)
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Cc:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH v2 4/4] docs: Deprecate mfc display delay controls
-Date:   Fri, 15 Jan 2021 11:26:07 +0200
-Message-Id: <20210115092607.29849-5-stanimir.varbanov@linaro.org>
+        id S1731441AbhAOKBh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jan 2021 05:01:37 -0500
+Received: from smtp25.cstnet.cn ([159.226.251.25]:53784 "EHLO cstnet.cn"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1731351AbhAOKBg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 15 Jan 2021 05:01:36 -0500
+Received: from localhost.localdomain (unknown [124.16.141.241])
+        by APP-05 (Coremail) with SMTP id zQCowACHUuPLZwFgY8pSAA--.13705S2;
+        Fri, 15 Jan 2021 18:00:43 +0800 (CST)
+From:   Xu Wang <vulab@iscas.ac.cn>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, vkoul@kernel.org,
+        dan.j.williams@intel.com
+Cc:     linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] dmaengine: qcom: gpi: Remove unneeded semicolon
+Date:   Fri, 15 Jan 2021 10:00:40 +0000
+Message-Id: <20210115100040.33364-1-vulab@iscas.ac.cn>
 X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20210115092607.29849-1-stanimir.varbanov@linaro.org>
-References: <20210115092607.29849-1-stanimir.varbanov@linaro.org>
+X-CM-TRANSID: zQCowACHUuPLZwFgY8pSAA--.13705S2
+X-Coremail-Antispam: 1UD129KBjvdXoW7Gw4fXw1DKF1xuw4rCw1fXrb_yoW3GFbEkF
+        4UZryxXr4YkF1q9rnxCrZrAryqv3WUur1ruF4vqrZxtws8Xr90q39rXr1vyw18urZrGFnI
+        kryUXr48JF4SkjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+        9fnUUIcSsGvfJTRUUUb2xYjsxI4VW3JwAYFVCjjxCrM7AC8VAFwI0_Gr0_Xr1l1xkIjI8I
+        6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
+        8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0
+        cI8IcVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4
+        A2jsIEc7CjxVAFwI0_Cr1j6rxdM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI
+        64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AKxVWxJVW8Jr
+        1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JMxkIecxEwVAFwVW8twCF04k2
+        0xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI
+        8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41l
+        IxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIx
+        AIcVCF04k26cxKx2IYs7xG6Fyj6rWUJwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E
+        87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxU75l1DUUUU
+X-Originating-IP: [124.16.141.241]
+X-CM-SenderInfo: pyxotu46lvutnvoduhdfq/1tbiCQcCA102Z3uUPQAAsR
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Deprecate mfc private display delay and display enable controls for
-new clients and use the standard controls instead.
+fix semicolon.cocci warning:
+drivers/dma/qcom/gpi.c:1703:2-3: Unneeded semicolon
 
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Signed-off-by: Xu Wang <vulab@iscas.ac.cn>
 ---
- .../userspace-api/media/v4l/ext-ctrls-codec.rst        | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/dma/qcom/gpi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-index 5d7c47837035..815c6eb4a0d0 100644
---- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-+++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-@@ -2111,6 +2111,11 @@ MFC 5.1 Control IDs
-     feature can be used for example for generating thumbnails of videos.
-     Applicable to the H264 decoder.
+diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+index 1a0bf6b0567a..f20b5573fc67 100644
+--- a/drivers/dma/qcom/gpi.c
++++ b/drivers/dma/qcom/gpi.c
+@@ -1700,7 +1700,7 @@ static int gpi_create_i2c_tre(struct gchan *chan, struct gpi_desc *desc,
  
-+    .. note::
-+
-+       This control is deprecated. Use the standard
-+       ``V4L2_CID_MPEG_VIDEO_DEC_DISPLAY_DELAY_ENABLE`` control instead.
-+
- ``V4L2_CID_MPEG_MFC51_VIDEO_DECODER_H264_DISPLAY_DELAY (integer)``
-     Display delay value for H264 decoder. The decoder is forced to
-     return a decoded frame after the set 'display delay' number of
-@@ -2118,6 +2123,11 @@ MFC 5.1 Control IDs
-     of display order, in addition the hardware may still be using the
-     returned buffer as a reference picture for subsequent frames.
+ 		tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
+ 		tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOT);
+-	};
++	}
  
-+    .. note::
-+
-+       This control is deprecated. Use the standard
-+       ``V4L2_CID_MPEG_VIDEO_DEC_DISPLAY_DELAY`` control instead.
-+
- ``V4L2_CID_MPEG_MFC51_VIDEO_H264_NUM_REF_PIC_FOR_P (integer)``
-     The number of reference pictures used for encoding a P picture.
-     Applicable to the H264 encoder.
+ 	for (i = 0; i < tre_idx; i++)
+ 		dev_dbg(dev, "TRE:%d %x:%x:%x:%x\n", i, desc->tre[i].dword[0],
 -- 
 2.17.1
 
