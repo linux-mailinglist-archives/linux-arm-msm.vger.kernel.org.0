@@ -2,43 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 04AC22F83FF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 19:21:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 832152F842E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 19:23:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388237AbhAOSUN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jan 2021 13:20:13 -0500
-Received: from mail.kernel.org ([198.145.29.99]:42778 "EHLO mail.kernel.org"
+        id S2388716AbhAOSVM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jan 2021 13:21:12 -0500
+Received: from mail.kernel.org ([198.145.29.99]:43792 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388063AbhAOSUM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jan 2021 13:20:12 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 16925222B3;
-        Fri, 15 Jan 2021 18:19:30 +0000 (UTC)
+        id S1733119AbhAOSVL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 15 Jan 2021 13:21:11 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id BD0CE23AFC;
+        Fri, 15 Jan 2021 18:20:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1610734771;
-        bh=3rRDT+rU1u3GZvGDwrSbAniCXS09VSj6vZ/alOvP+cQ=;
+        s=k20201202; t=1610734831;
+        bh=Rzl9zISM7Y5XM+HBsSUTizk0jJUUmy+FRaBFRx/4l6k=;
         h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=luOgCmD3g2dKfofk01BU11o3YgKeJEe3zxEpjOWvZE6xhZ2FNIp6iDzXBui8Ddpkr
-         FTLKNceUkIIn1qaztis+xvtvdPg28RuRE4MNtn4YHszzRMJrJZroQ/ZOS5G8iqAQzk
-         e0xICRheUSWsmLwKu6crP6LKCy6InUrnn37H69KQAXpor429zGr5ExC7WdTppkykhI
-         X+kGcc3GOzhT1YWzszmzZVJ6vpRt+6T0IiLrKjn1jveDn1gAZ4YgfFJjrbrVGlzuqk
-         yae8KH7K8lFIGxY2M46zqR1j7aI/nc8vXDrBRp+nbzcB6Qin0OOLwHEq8JzZVw7UsY
-         vrIAZCrtmXJCw==
+        b=WauPeOggsiDQYj0OYxsMCCfd4Qi5EIRi4zXd5ufHqyld595ou5xlTPNnupVLBKImw
+         umdSQZn7wRsIHf1W7FoQ5VxIbQi/2Fw9lcO+3JuRlyDZyG+vwriyr7yxAHRmHezdFY
+         0JbZccCcEXcnOnWNlLZ5XeFjbgjecPoDef8TiEn1Fw03dbA5q4bZ3r87BBDMNut3gF
+         Q6ypZWdMaSIChCuP6QCpxiemsZ7lu0mWjZuAoraDm/woIi/+b2B2Xw2fBwUtZhz7Lx
+         Qy7JMzAaVWvaUQlL5h5q5P497kY/DCdCW4eAcmJegvJbAb3hrAvzTDJyMCm0qL1NMK
+         VCcPW+azH7DUA==
 From:   Mark Brown <broonie@kernel.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Cheng-Yi Chiang <cychiang@chromium.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-msm@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org,
-        V Sujith Kumar Reddy <vsujithk@codeaurora.org>,
-        Srinivasa Rao <srivasam@codeaurora.org>
-In-Reply-To: <20210115034327.617223-1-swboyd@chromium.org>
-References: <20210115034327.617223-1-swboyd@chromium.org>
-Subject: Re: [PATCH 0/4] ASoC: qcom: Minor code cleanups for lpass-cpu
-Message-Id: <161073473698.12268.9934599691128446500.b4-ty@kernel.org>
-Date:   Fri, 15 Jan 2021 18:18:56 +0000
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        linux-arm-msm@vger.kernel.org
+Cc:     bjorn.andersson@linaro.org, sumit.semwal@linaro.org,
+        martin.botka@somainline.org, robh+dt@kernel.org, agross@kernel.org,
+        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
+        phone-devel@vger.kernel.org, marijn.suijten@somainline.org,
+        devicetree@vger.kernel.org, lgirdwood@gmail.com
+In-Reply-To: <20210113194214.522238-1-angelogioacchino.delregno@somainline.org>
+References: <20210113194214.522238-1-angelogioacchino.delregno@somainline.org>
+Subject: Re: (subset) [PATCH v2 0/7] Really implement Qualcomm LAB/IBB regulators
+Message-Id: <161073479108.12431.17135576809621290489.b4-ty@kernel.org>
+Date:   Fri, 15 Jan 2021 18:19:51 +0000
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -46,34 +44,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 14 Jan 2021 19:43:23 -0800, Stephen Boyd wrote:
-> Here's some minor code cleanups for the lpass-cpu driver. I noticed that
-> it casts away const from the driver data from DT. That's not great but
-> fixing it is a little more involved. I'll get to it later. There's also
-> some questionable clk_get() usage that should probably be
-> clk_get_optional(). For now this should help a little.
-> 
-> Cc: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-> Cc: Srinivasa Rao <srivasam@codeaurora.org>
-> Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> Cc: Cheng-Yi Chiang <cychiang@chromium.org>
+On Wed, 13 Jan 2021 20:42:07 +0100, AngeloGioacchino Del Regno wrote:
+> Okay, the title may be a little "aggressive"? However, the qcom-labibb
+> driver wasn't really .. doing much.
+> The current form of this driver is only taking care of enabling or
+> disabling the regulators, which is pretty useless if they were not
+> pre-set from the bootloader, which sets them only if continuous
+> splash is enabled.
+> Moreover, some bootloaders are setting a higher voltage and/or a higher
+> current limit compared to what's actually required by the attached
+> hardware (which is, in 99.9% of the cases, a display) and this produces
+> a higher power consumption, higher heat output and a risk of actually
+> burning the display if kept up for a very long time: for example, this
+> is true on at least some Sony Xperia MSM8998 (Yoshino platform) and
+> especially on some Sony Xperia SDM845 (Tama platform) smartphones.
 > 
 > [...]
 
 Applied to
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
 
 Thanks!
 
-[1/4] ASoC: qcom: Remove useless debug print
-      commit: 16117beb16f01a470d40339960ffae1e287c03be
-[2/4] ASoC: qcom: Add some names to regmap configs
-      commit: 03b49bf9a92b18bbfcc3b5eb206cca8447e9f2cb
-[3/4] ASoC: qcom: Stop casting away __iomem for error pointers
-      commit: e697df66876c182927899950971c3b4888df3e6e
-[4/4] ASoC: qcom: Remove duplicate error messages on ioremap
-      commit: 4e15f5060d34dd28591cf3af43d3086a4b76c965
+[1/7] regulator: qcom-labibb: Implement voltage selector ops
+      commit: dd582369c6c1f39ec475af6191a934f3e57fda35
 
 All being well this means that it will be integrated into the linux-next
 tree (usually sometime in the next 24 hours) and sent to Linus during
