@@ -2,127 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B5682F7246
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 06:39:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C0E62F728F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 06:49:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733022AbhAOFie (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jan 2021 00:38:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34646 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732864AbhAOFi2 (ORCPT
+        id S1730392AbhAOFr2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jan 2021 00:47:28 -0500
+Received: from m43-15.mailgun.net ([69.72.43.15]:52485 "EHLO
+        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728452AbhAOFr1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jan 2021 00:38:28 -0500
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45259C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jan 2021 21:37:48 -0800 (PST)
-Received: by mail-ot1-x32e.google.com with SMTP id x13so7512927oto.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jan 2021 21:37:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=HoK0L94tAvaQsC8IbUSCSznvz7aY6ZUAuuiO3QdSeTo=;
-        b=qL1N45lPrp9WXaKR7CLMyFVlaUtrQs71X2pYQnQ6zL5m07fj2CHGPdAXOBy4Oc3+fF
-         b59G5XHPLIjDH0oKAJozjVrnCmqq0iz/f1WKWQL7koPZ0UIroSuYGU3tyRL58o63o5es
-         3VoQaB4eUSukDECwOHkSkSSeOynLQiWSzCZyEn6vpwdv3DpvbV+FUOqszb/nCjePLOsp
-         +wE3QnjvZ46aHej8J/j/fvP8xWuxti/S/NDJ4jCol1ITySOVPCIRGQIxOrq4M60TDM8l
-         NJo/6fMzZNV52ewBpjlcZyhWV1wamWksumAi+M31igqQWfZCYskvNnfbNWWsFDUDzgXx
-         qIMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=HoK0L94tAvaQsC8IbUSCSznvz7aY6ZUAuuiO3QdSeTo=;
-        b=J0oOVNxahH/e4g7xSTSEtlVliDWUYYvqqRGLANrAdUHn6dhAsgILh8n6QJOclJPCEo
-         WNdBH69yLZwVGO6mjA/WuksekstjrBx2Kj5KLw2qlG8pZlkt6Fd0Hpc8IarH67j7mdco
-         PtUSVd+02fJd989x8a8hT2nkjoSb+SnpMwcW+Alr95DqRPAWbR9uqt/J6pm4lMT8aTnS
-         lxkspzajHUTLsuuVUkNI5bRdPdtX4/Y6MfU9JWo6jhpjOZKn85QsbP9opwelwlOmHmcS
-         9xZ0UvOX3pe1wGg+tyeW0NaEKGWMDRUtM+aFnOtUJzj5lWsfUQ2OVyisVuNqXsBs//3F
-         RLaQ==
-X-Gm-Message-State: AOAM530DIF6arrJ++Hv34oHAt7RnUWh56g301H2Z9/ztggx8FP2ND54U
-        x7QtbzBuaKGCiJh/933bi5sU1RiD3jLmig==
-X-Google-Smtp-Source: ABdhPJzMl0myBJ7Bn9w2oT979MZhSkUQEZbpeYNzD4GeDLRYtKbq7kLuPVeDXaFMYZFwW7IImwf8IA==
-X-Received: by 2002:a05:6830:1587:: with SMTP id i7mr6975631otr.301.1610689067662;
-        Thu, 14 Jan 2021 21:37:47 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id t13sm1503195oih.26.2021.01.14.21.37.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Jan 2021 21:37:46 -0800 (PST)
-Date:   Thu, 14 Jan 2021 23:37:45 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        lgirdwood@gmail.com, broonie@kernel.org, robh+dt@kernel.org,
-        sumit.semwal@linaro.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
-        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
-        martin.botka@somainline.org
-Subject: Re: [PATCH v2 7/7] arm64: dts: pmi8998: Add the right interrupts for
- LAB/IBB SCP and OCP
-Message-ID: <YAEqKZknkKT8/KSJ@builder.lan>
-References: <20210113194214.522238-1-angelogioacchino.delregno@somainline.org>
- <20210113194214.522238-8-angelogioacchino.delregno@somainline.org>
+        Fri, 15 Jan 2021 00:47:27 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1610689627; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=uKd60FvtWU74hmbEb+xSaAfRXFvIDWXHtourTMrbpIg=;
+ b=Qub5SiFrK91He6a55DbzZfxC8QpBU2oQhsV8e3e+NgPhsrmtZz//a+k6ZwGuhS49lHENDD9q
+ /YLbxOrA7Ilgqnz8xTsUF9VMOtHJFFapkFzT88vF4HedYEGck7jeoDqQ+gYimEUnfBFV3wCZ
+ Hh1O1iUhk0Y1pZw+saH6KjKA/zM=
+X-Mailgun-Sending-Ip: 69.72.43.15
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n10.prod.us-west-2.postgun.com with SMTP id
+ 60012c323b6dceb1329ae0de (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 15 Jan 2021 05:46:26
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id ADD34C43461; Fri, 15 Jan 2021 05:46:25 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 17304C433CA;
+        Fri, 15 Jan 2021 05:46:25 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210113194214.522238-8-angelogioacchino.delregno@somainline.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 15 Jan 2021 11:16:24 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>
+Cc:     Mike Leach <mike.leach@linaro.org>, coresight@lists.linaro.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Denis Nikitin <denik@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, Al Grant <al.grant@arm.com>,
+        leo.yan@linaro.org, mnissler@google.com
+Subject: Re: [PATCH] coresight: etm4x: Add config to exclude kernel mode
+ tracing
+In-Reply-To: <20201015160257.GA1450102@xps15>
+References: <20201015124522.1876-1-saiprakash.ranjan@codeaurora.org>
+ <20201015160257.GA1450102@xps15>
+Message-ID: <dd400fd7017a5d92b55880cf28378267@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 13 Jan 13:42 CST 2021, AngeloGioacchino Del Regno wrote:
+Hello Mathieu, Suzuki
 
-> In commit 208921bae696 ("arm64: dts: qcom: pmi8998: Add nodes for
-> LAB and IBB regulators") bindings for the lab/ibb regulators were
-> added to the pmi8998 dt, but the original committer has never
-> specified what the interrupts were for.
-> LAB and IBB regulators provide two interrupts, SC-ERR (short
-> circuit error) and VREG-OK but, in that commit, the regulators
-> were provided with two different types of interrupts;
-> specifically, IBB had the SC-ERR interrupt, while LAB had the
-> VREG-OK one, none of which were (luckily) used, since the driver
-> didn't actually use these at all.
-> Assuming that the original intention was to have the SC IRQ in
-> both LAB and IBB, as per the names appearing in documentation,
-> fix the SCP interrupt.
+On 2020-10-15 21:32, Mathieu Poirier wrote:
+> On Thu, Oct 15, 2020 at 06:15:22PM +0530, Sai Prakash Ranjan wrote:
+>> On production systems with ETMs enabled, it is preferred to
+>> exclude kernel mode(NS EL1) tracing for security concerns and
+>> support only userspace(NS EL0) tracing. So provide an option
+>> via kconfig to exclude kernel mode tracing if it is required.
+>> This config is disabled by default and would not affect the
+>> current configuration which has both kernel and userspace
+>> tracing enabled by default.
+>> 
 > 
-> While at it, also add the OCP interrupt in order to be able to
-> enable the Over-Current Protection feature, if requested.
+> One requires root access (or be part of a special trace group) to be 
+> able to use
+> the cs_etm PMU.  With this kind of elevated access restricting tracing 
+> at EL1
+> provides little in terms of security.
 > 
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Apart from the VM usecase discussed, I am told there are other
+security concerns here regarding need to exclude kernel mode tracing
+even for the privileged users/root. One such case being the ability
+to analyze cryptographic code execution since ETMs can record all
+branch instructions including timestamps in the kernel and there may
+be other cases as well which I may not be aware of and hence have
+added Denis and Mattias. Please let us know if you have any questions
+further regarding this not being a security concern.
 
-Regards,
-Bjorn
+After this discussion, I would like to post a v2 based on Suzuki's
+feedback earlier. @Suzuki, I have a common config for ETM3 and ETM4
+but couldn't get much idea on how to implement it for Intel PTs, if
+you have any suggestions there, please do share or we can have this
+only for Coresight ETMs.
 
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> ---
->  arch/arm64/boot/dts/qcom/pmi8998.dtsi | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/pmi8998.dtsi b/arch/arm64/boot/dts/qcom/pmi8998.dtsi
-> index d016b12967eb..d230c510d4b7 100644
-> --- a/arch/arm64/boot/dts/qcom/pmi8998.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pmi8998.dtsi
-> @@ -30,11 +30,15 @@ labibb {
->  			compatible = "qcom,pmi8998-lab-ibb";
->  
->  			ibb: ibb {
-> -				interrupts = <0x3 0xdc 0x2 IRQ_TYPE_EDGE_RISING>;
-> +				interrupts = <0x3 0xdc 0x2 IRQ_TYPE_EDGE_RISING>,
-> +					     <0x3 0xdc 0x0 IRQ_TYPE_LEVEL_HIGH>;
-> +				interrupt-names = "sc-err", "ocp";
->  			};
->  
->  			lab: lab {
-> -				interrupts = <0x3 0xde 0x0 IRQ_TYPE_EDGE_RISING>;
-> +				interrupts = <0x3 0xde 0x1 IRQ_TYPE_EDGE_RISING>,
-> +					     <0x3 0xde 0x0 IRQ_TYPE_LEVEL_LOW>;
-> +				interrupt-names = "sc-err", "ocp";
->  			};
->  		};
->  	};
-> -- 
-> 2.29.2
-> 
+Thanks,
+Sai
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
