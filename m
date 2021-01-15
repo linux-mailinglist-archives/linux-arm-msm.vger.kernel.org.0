@@ -2,95 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 34F442F81B1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 18:10:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E223B2F81D3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 18:13:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728176AbhAORKK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jan 2021 12:10:10 -0500
-Received: from so254-31.mailgun.net ([198.61.254.31]:31662 "EHLO
-        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726626AbhAORKJ (ORCPT
+        id S2387537AbhAORMR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jan 2021 12:12:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42988 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727639AbhAORMO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jan 2021 12:10:09 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1610730584; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=aiKLgWl9D/qmUkm2ChFG0sCHujSYfskh5yLKLQlSwFY=; b=BxNG5Eblw+QVD6RK3FDLr2kvqhWsJf4X5qnOLhoQEWZomVI5jPKAwK1vSEEO5IFODnCmwohC
- //o/bBLDTMlOTlHEj3QDpxRuWciNBQn1/hNz526MN60bQ4w/+cbEZcUQYiCndyJHem8TMnDk
- iaalwzYUNQgzEDP+rtlvntkgiIA=
-X-Mailgun-Sending-Ip: 198.61.254.31
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 6001cc37859d74370ddbd08e (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 15 Jan 2021 17:09:11
- GMT
-Sender: jackp=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4965FC43468; Fri, 15 Jan 2021 17:09:10 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from jackp-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: jackp)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 590D7C43464;
-        Fri, 15 Jan 2021 17:09:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 590D7C43464
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jackp@codeaurora.org
-Date:   Fri, 15 Jan 2021 09:09:06 -0800
-From:   Jack Pham <jackp@codeaurora.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
+        Fri, 15 Jan 2021 12:12:14 -0500
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6695CC061793
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jan 2021 09:11:34 -0800 (PST)
+Received: from localhost.localdomain (abaf224.neoplus.adsl.tpnet.pl [83.6.169.224])
+        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 270D53E9B5;
+        Fri, 15 Jan 2021 18:11:32 +0100 (CET)
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+To:     phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Wesley Cheng <wcheng@codeaurora.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 1/4] phy: qcom-qmp: Add SM8350 USB QMP PHYs
-Message-ID: <20210115170906.GB5063@jackp-linux.qualcomm.com>
-References: <20210115104047.3460-1-jackp@codeaurora.org>
- <20210115104047.3460-2-jackp@codeaurora.org>
- <2c5481fe-f5be-5d6a-f62f-c93d04b9210e@somainline.org>
- <20210115124736.GF2771@vkoul-mobl>
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] pinctrl: qcom-pmic-gpio: Add support for pm8019
+Date:   Fri, 15 Jan 2021 18:11:13 +0100
+Message-Id: <20210115171115.123155-1-konrad.dybcio@somainline.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210115124736.GF2771@vkoul-mobl>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Vinod,
+PM8019 provides 6 GPIOs. Add a compatible to support that.
 
-On Fri, Jan 15, 2021 at 06:17:36PM +0530, Vinod Koul wrote:
-> On 15-01-21, 12:54, Konrad Dybcio wrote:
-> > I might be wrong but it looks as if you forgot to add a compatible
-> > for the "sm8350_usb3_uniphy_cfg" configuration.
+Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+---
+ Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt | 1 +
+ drivers/pinctrl/qcom/pinctrl-spmi-gpio.c                     | 1 +
+ 2 files changed, 2 insertions(+)
 
-I believe Konrad was referring to the driver in which I had neglected to
-add the compatible to the qcom_qmp_phy_of_match_table. My mistake.
-
-> It seems to be documented in patch 2, ideally we should have the
-> bindings patches first and this as patch 3...
-
-Ok. I think driver change would be patch 2 rather, with the bindings in
-patch 1? Patch 3 and 4 are dt-bindings updates to the SNPS Femto PHY and
-DWC3 QCOM docs respectively.
-
-Will send v2, thanks.
-
-Jack
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
+index 7648ab00f4e2..c4de3be1d7be 100644
+--- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
+@@ -9,6 +9,7 @@ PMIC's from Qualcomm.
+ 	Definition: must be one of:
+ 		    "qcom,pm8005-gpio"
+ 		    "qcom,pm8018-gpio"
++		    "qcom,pm8019-gpio"
+ 		    "qcom,pm8038-gpio"
+ 		    "qcom,pm8058-gpio"
+ 		    "qcom,pm8916-gpio"
+diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+index 9801c717e311..4018c64011f8 100644
+--- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
++++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+@@ -1105,6 +1105,7 @@ static int pmic_gpio_remove(struct platform_device *pdev)
+ 
+ static const struct of_device_id pmic_gpio_of_match[] = {
+ 	{ .compatible = "qcom,pm8005-gpio", .data = (void *) 4 },
++	{ .compatible = "qcom,pm8019-gpio", .data = (void *) 6 },
+ 	{ .compatible = "qcom,pm8916-gpio", .data = (void *) 4 },
+ 	{ .compatible = "qcom,pm8941-gpio", .data = (void *) 36 },
+ 	/* pm8950 has 8 GPIOs with holes on 3 */
 -- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.29.2
+
