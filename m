@@ -2,70 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DB4A92F762B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 11:03:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D0FD32F7655
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 11:13:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731441AbhAOKBh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jan 2021 05:01:37 -0500
-Received: from smtp25.cstnet.cn ([159.226.251.25]:53784 "EHLO cstnet.cn"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1731351AbhAOKBg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jan 2021 05:01:36 -0500
-Received: from localhost.localdomain (unknown [124.16.141.241])
-        by APP-05 (Coremail) with SMTP id zQCowACHUuPLZwFgY8pSAA--.13705S2;
-        Fri, 15 Jan 2021 18:00:43 +0800 (CST)
-From:   Xu Wang <vulab@iscas.ac.cn>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, vkoul@kernel.org,
-        dan.j.williams@intel.com
-Cc:     linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] dmaengine: qcom: gpi: Remove unneeded semicolon
-Date:   Fri, 15 Jan 2021 10:00:40 +0000
-Message-Id: <20210115100040.33364-1-vulab@iscas.ac.cn>
-X-Mailer: git-send-email 2.17.1
-X-CM-TRANSID: zQCowACHUuPLZwFgY8pSAA--.13705S2
-X-Coremail-Antispam: 1UD129KBjvdXoW7Gw4fXw1DKF1xuw4rCw1fXrb_yoW3GFbEkF
-        4UZryxXr4YkF1q9rnxCrZrAryqv3WUur1ruF4vqrZxtws8Xr90q39rXr1vyw18urZrGFnI
-        kryUXr48JF4SkjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-        9fnUUIcSsGvfJTRUUUb2xYjsxI4VW3JwAYFVCjjxCrM7AC8VAFwI0_Gr0_Xr1l1xkIjI8I
-        6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
-        8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0
-        cI8IcVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4
-        A2jsIEc7CjxVAFwI0_Cr1j6rxdM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI
-        64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AKxVWxJVW8Jr
-        1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JMxkIecxEwVAFwVW8twCF04k2
-        0xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI
-        8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41l
-        IxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIx
-        AIcVCF04k26cxKx2IYs7xG6Fyj6rWUJwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E
-        87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxU75l1DUUUU
-X-Originating-IP: [124.16.141.241]
-X-CM-SenderInfo: pyxotu46lvutnvoduhdfq/1tbiCQcCA102Z3uUPQAAsR
+        id S1726375AbhAOKMJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jan 2021 05:12:09 -0500
+Received: from youngberry.canonical.com ([91.189.89.112]:36679 "EHLO
+        youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726045AbhAOKMI (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 15 Jan 2021 05:12:08 -0500
+Received: from 1.general.cking.uk.vpn ([10.172.193.212] helo=localhost)
+        by youngberry.canonical.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        (Exim 4.86_2)
+        (envelope-from <colin.king@canonical.com>)
+        id 1l0M4k-0001qH-O4; Fri, 15 Jan 2021 10:11:26 +0000
+From:   Colin King <colin.king@canonical.com>
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH][next] media: venus: Fix uninitialized variable count being checked for zero
+Date:   Fri, 15 Jan 2021 10:11:26 +0000
+Message-Id: <20210115101126.9668-1-colin.king@canonical.com>
+X-Mailer: git-send-email 2.29.2
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-fix semicolon.cocci warning:
-drivers/dma/qcom/gpi.c:1703:2-3: Unneeded semicolon
+From: Colin Ian King <colin.king@canonical.com>
 
-Signed-off-by: Xu Wang <vulab@iscas.ac.cn>
+In the case where plat->codecs is NULL the variable count is uninitialized
+but is being checked to see if it is 0. Fix this by initializing
+count to 0.
+
+Addresses-Coverity: ("Uninitialized scalar variable")
+Fixes: e29929266be1 ("media: venus: Get codecs and capabilities from hfi platform")
+Signed-off-by: Colin Ian King <colin.king@canonical.com>
 ---
- drivers/dma/qcom/gpi.c | 2 +-
+ drivers/media/platform/qcom/venus/hfi_parser.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-index 1a0bf6b0567a..f20b5573fc67 100644
---- a/drivers/dma/qcom/gpi.c
-+++ b/drivers/dma/qcom/gpi.c
-@@ -1700,7 +1700,7 @@ static int gpi_create_i2c_tre(struct gchan *chan, struct gpi_desc *desc,
+diff --git a/drivers/media/platform/qcom/venus/hfi_parser.c b/drivers/media/platform/qcom/venus/hfi_parser.c
+index 2c63988cb321..7263c0c32695 100644
+--- a/drivers/media/platform/qcom/venus/hfi_parser.c
++++ b/drivers/media/platform/qcom/venus/hfi_parser.c
+@@ -232,7 +232,7 @@ static int hfi_platform_parser(struct venus_core *core, struct venus_inst *inst)
+ {
+ 	const struct hfi_platform *plat;
+ 	const struct hfi_plat_caps *caps = NULL;
+-	u32 enc_codecs, dec_codecs, count;
++	u32 enc_codecs, dec_codecs, count = 0;
+ 	unsigned int entries;
  
- 		tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
- 		tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOT);
--	};
-+	}
- 
- 	for (i = 0; i < tre_idx; i++)
- 		dev_dbg(dev, "TRE:%d %x:%x:%x:%x\n", i, desc->tre[i].dword[0],
+ 	if (inst)
 -- 
-2.17.1
+2.29.2
 
