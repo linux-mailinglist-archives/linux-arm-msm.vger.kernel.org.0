@@ -2,110 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C0E62F728F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 06:49:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B9BCA2F72A4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 06:59:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730392AbhAOFr2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jan 2021 00:47:28 -0500
-Received: from m43-15.mailgun.net ([69.72.43.15]:52485 "EHLO
-        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728452AbhAOFr1 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jan 2021 00:47:27 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1610689627; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=uKd60FvtWU74hmbEb+xSaAfRXFvIDWXHtourTMrbpIg=;
- b=Qub5SiFrK91He6a55DbzZfxC8QpBU2oQhsV8e3e+NgPhsrmtZz//a+k6ZwGuhS49lHENDD9q
- /YLbxOrA7Ilgqnz8xTsUF9VMOtHJFFapkFzT88vF4HedYEGck7jeoDqQ+gYimEUnfBFV3wCZ
- Hh1O1iUhk0Y1pZw+saH6KjKA/zM=
-X-Mailgun-Sending-Ip: 69.72.43.15
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n10.prod.us-west-2.postgun.com with SMTP id
- 60012c323b6dceb1329ae0de (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 15 Jan 2021 05:46:26
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id ADD34C43461; Fri, 15 Jan 2021 05:46:25 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 17304C433CA;
-        Fri, 15 Jan 2021 05:46:25 +0000 (UTC)
+        id S1728230AbhAOF6v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jan 2021 00:58:51 -0500
+Received: from mail.kernel.org ([198.145.29.99]:49936 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726019AbhAOF6u (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 15 Jan 2021 00:58:50 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 66736239EF;
+        Fri, 15 Jan 2021 05:58:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1610690290;
+        bh=A2xQvZI3cYjFP3+C40z6oPKeq/38VezRg4M7YK6TvpI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ibY2R7ceYe8BqE2hj3mA8qlr2b7m8kLBYZN94Gn+IyG1ykTEfHq32oi7J3Hv7lrOc
+         1PuWhBRo9FLeuYe5eoX40NDoJvHMIVBNgH9cJ+1rQHwvkMk1/6pjNisMlHVLBPowp1
+         H54rJcRkH44Wwp1kEtO7qae8Q/HYEGhCdoYStdStZHF/cCDRZmvSMifAhAZMU6YJie
+         E+S5SkCCfwa40egM9HuwiQz5y+YBc8/z79BxZFTplR45BukmDpJns7WyqxHpFhWN9O
+         Q48TNyn+4wIijVkyGSwc+e6asL3nIINHvbhk+MSOoTs62AuaKwTBsD4srhbTmi9Y/M
+         9iL3BwSb7XH0w==
+Date:   Fri, 15 Jan 2021 11:28:06 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     mdalam@codeaurora.org
+Cc:     corbet@lwn.net, agross@kernel.org, bjorn.andersson@linaro.org,
+        dan.j.williams@intel.com, dmaengine@vger.kernel.org,
+        linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, sricharan@codeaurora.org,
+        mdalam=codeaurora.org@codeaurora.org
+Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Add LOCK and UNLOCK flag bit
+ support
+Message-ID: <20210115055806.GE2771@vkoul-mobl>
+References: <1608215842-15381-1-git-send-email-mdalam@codeaurora.org>
+ <20201221092355.GA3323@vkoul-mobl>
+ <efcc74bbdf36b4ddbf764eb6b4ed99f2@codeaurora.org>
+ <f7de0117c8ff2e61c09f58acdea0e5b0@codeaurora.org>
+ <20210112101056.GI2771@vkoul-mobl>
+ <e3cf7c4fc02c54d17fd2fd213f39005b@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 15 Jan 2021 11:16:24 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>
-Cc:     Mike Leach <mike.leach@linaro.org>, coresight@lists.linaro.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Denis Nikitin <denik@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, Al Grant <al.grant@arm.com>,
-        leo.yan@linaro.org, mnissler@google.com
-Subject: Re: [PATCH] coresight: etm4x: Add config to exclude kernel mode
- tracing
-In-Reply-To: <20201015160257.GA1450102@xps15>
-References: <20201015124522.1876-1-saiprakash.ranjan@codeaurora.org>
- <20201015160257.GA1450102@xps15>
-Message-ID: <dd400fd7017a5d92b55880cf28378267@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e3cf7c4fc02c54d17fd2fd213f39005b@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Mathieu, Suzuki
-
-On 2020-10-15 21:32, Mathieu Poirier wrote:
-> On Thu, Oct 15, 2020 at 06:15:22PM +0530, Sai Prakash Ranjan wrote:
->> On production systems with ETMs enabled, it is preferred to
->> exclude kernel mode(NS EL1) tracing for security concerns and
->> support only userspace(NS EL0) tracing. So provide an option
->> via kconfig to exclude kernel mode tracing if it is required.
->> This config is disabled by default and would not affect the
->> current configuration which has both kernel and userspace
->> tracing enabled by default.
->> 
+On 14-01-21, 01:20, mdalam@codeaurora.org wrote:
+> On 2021-01-12 15:40, Vinod Koul wrote:
+> > On 12-01-21, 15:01, mdalam@codeaurora.org wrote:
+> > > On 2020-12-21 23:03, mdalam@codeaurora.org wrote:
+> > > > On 2020-12-21 14:53, Vinod Koul wrote:
+> > > > > Hello,
+> > > > >
+> > > > > On 17-12-20, 20:07, Md Sadre Alam wrote:
+> > > > > > This change will add support for LOCK & UNLOCK flag bit support
+> > > > > > on CMD descriptor.
+> > > > > >
+> > > > > > If DMA_PREP_LOCK flag passed in prep_slave_sg then requester of this
+> > > > > > transaction wanted to lock the DMA controller for this transaction so
+> > > > > > BAM driver should set LOCK bit for the HW descriptor.
+> > > > > >
+> > > > > > If DMA_PREP_UNLOCK flag passed in prep_slave_sg then requester
+> > > > > > of this
+> > > > > > transaction wanted to unlock the DMA controller.so BAM driver
+> > > > > > should set
+> > > > > > UNLOCK bit for the HW descriptor.
+> > > > >
+> > > > > Can you explain why would we need to first lock and then unlock..? How
+> > > > > would this be used in real world.
+> > > > >
+> > > > > I have read a bit of documentation but is unclear to me. Also should
+> > > > > this be exposed as an API to users, sounds like internal to driver..?
+> > > > >
+> > > >
+> > > > IPQ5018 SoC having only one Crypto Hardware Engine. This Crypto Hardware
+> > > > Engine
+> > > > will be shared between A53 core & ubi32 core. There is two separate
+> > > > driver dedicated
+> > > > to A53 core and ubi32 core. So to use Crypto Hardware Engine
+> > > > parallelly for encryption/description
+> > > > we need bam locking mechanism. if one driver will submit the request
+> > > > for encryption/description
+> > > > to Crypto then first it has to set LOCK flag bit on command descriptor
+> > > > so that other pipes will
+> > > > get locked.
+> > > >
+> > > > The Pipe Locking/Unlocking will be only on command-descriptor. Upon
+> > > > encountering a command descriptor
+> > 
+> > Can you explain what is a cmd descriptor?
 > 
-> One requires root access (or be part of a special trace group) to be 
-> able to use
-> the cs_etm PMU.  With this kind of elevated access restricting tracing 
-> at EL1
-> provides little in terms of security.
+>   In BAM pipe descriptor structure there is a field called CMD (Command
+> descriptor).
+>   CMD allows the SW to create descriptors of type Command which does not
+> generate any data transmissions
+>   but configures registers in the Peripheral (write operations, and read
+> registers operations ).
+>   Using command descriptor enables the SW to queue new configurations
+> between data transfers in advance.
+
+What and when is the CMD descriptor used for..?
+
+> > 
+> > > > with LOCK bit set, The BAM will lock all other pipes not related to
+> > > > the current pipe group, and keep
+> > > > handling the current pipe only until it sees the UNLOCK set then it
+> > > > will release all locked pipes.
+> > > > locked pipe will not fetch new descriptors even if it got event/events
+> > > > adding more descriptors for
+> > > > this pipe (locked pipe).
+> > > >
+> > > > No need to expose as an API to user because its internal to driver, so
+> > > > while preparing command descriptor
+> > > > just we have to update the LOCK/UNLOCK flag.
+> > 
+> > So IIUC, no api right? it would be internal to driver..?
 > 
+>   Yes its totally internal to deriver.
 
-Apart from the VM usecase discussed, I am told there are other
-security concerns here regarding need to exclude kernel mode tracing
-even for the privileged users/root. One such case being the ability
-to analyze cryptographic code execution since ETMs can record all
-branch instructions including timestamps in the kernel and there may
-be other cases as well which I may not be aware of and hence have
-added Denis and Mattias. Please let us know if you have any questions
-further regarding this not being a security concern.
-
-After this discussion, I would like to post a v2 based on Suzuki's
-feedback earlier. @Suzuki, I have a common config for ETM3 and ETM4
-but couldn't get much idea on how to implement it for Intel PTs, if
-you have any suggestions there, please do share or we can have this
-only for Coresight ETMs.
-
-Thanks,
-Sai
+So no need for this patch then, right?
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+~Vinod
