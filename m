@@ -2,71 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DCCAE2F74DE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 10:04:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F3E692F74F0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 10:11:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727885AbhAOJE1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jan 2021 04:04:27 -0500
-Received: from mail.kernel.org ([198.145.29.99]:34372 "EHLO mail.kernel.org"
+        id S1726375AbhAOJKg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jan 2021 04:10:36 -0500
+Received: from mail.kernel.org ([198.145.29.99]:35596 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726494AbhAOJE0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jan 2021 04:04:26 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 339302339D;
-        Fri, 15 Jan 2021 09:03:40 +0000 (UTC)
+        id S1725797AbhAOJKf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 15 Jan 2021 04:10:35 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 63C0D2339D;
+        Fri, 15 Jan 2021 09:09:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1610701425;
-        bh=7la6AOF22duM8nJdUP2TkacYvkWl00x0WTDSlkJJ08Y=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ilM8UPVTtCs0av85SpQYZFCxrPLSFrVCyYJJsEyhSzUncpZAXQkyzYW6Ku8KfCB+b
-         zfS0Ky5uGtAsxu6ufVQZILJwqRHc94+QfSejF0URKcVZbVbvWMuwkYXPE1F+IAY0R5
-         YfZucUpv2mEJyszNkt9TwNZrIOL3zOcMaP1jz2aJpNX4rP+yXW9Spy+pjhtBa6UqGv
-         WUrLRZ7rB6WIKe9eMiET+QTH1V/zlRL1FrpwAuCKfznd4pb7IEEGgnvXtBlelI0Poq
-         wxPZY63YZjsRD3tIPYGsUNGC3b0+DQrApSN09tEa8v9aZThBNcVQ7JXLdb6X7VH7oL
-         z/les4wrPZugQ==
+        s=k20201202; t=1610701794;
+        bh=2LsRbyy+Do/aO21gdeD8r6ksKU/aBqs/cH54QcFN0M0=;
+        h=From:To:Cc:Subject:Date:From;
+        b=kwOsFVdhMhd4G8E6EBIJ2M/mJv4XJCk+e8/OQeGt/4LYAoIrshRd2769DjDHuWzBj
+         GZO6pwHE8IbceZTwBaiXxctaiYSN9rqw88arE1llWuN3kQnMxLIzr3LMVBtu31rz/3
+         5t/L0ASDCxW4UWXJHWCzFFhsyEnd+XzLmGE7zmS9ZirGtW2GiQPyHY1kxA60lFIVCU
+         ElCS9j261nDAJHNne33jWdbnMrnrSCuIctlE0ygISU629eUCS+c02SH0n0Y1Pqxv/z
+         2r1WuqbHDk9SnUtGveRtfTGtehN+EXesKRX1p4WsuPvkGJfOWKOjK37KBBpm/Gzk14
+         GbCZ4qcgnDGRA==
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Will Deacon <will@kernel.org>
+To:     Marc Zyngier <maz@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux-foundation.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] iommu: arm-smmu-impl: Add SM8350 qcom iommu implementation
-Date:   Fri, 15 Jan 2021 14:33:22 +0530
-Message-Id: <20210115090322.2287538-2-vkoul@kernel.org>
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Rob Herring <robh@kernel.org>
+Subject: [PATCH 1/2] [REPOST] dt-bindings: qcom,pdc: Add compatible for SM8250
+Date:   Fri, 15 Jan 2021 14:39:40 +0530
+Message-Id: <20210115090941.2289416-1-vkoul@kernel.org>
 X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20210115090322.2287538-1-vkoul@kernel.org>
-References: <20210115090322.2287538-1-vkoul@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add SM8350 qcom iommu implementation to the table of
-qcom_smmu_impl_of_match table which brings in iommu support for SM8350
-SoC
+Add the compatible string for SM8250 SoC from Qualcomm. This compatible
+is used already in DTS files but not documented yet
 
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Acked-by: Rob Herring <robh@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 1 +
+Reposting this with acks collected
+
+ .../devicetree/bindings/interrupt-controller/qcom,pdc.txt        | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index 5dff7ffbef11..8044a9bfca66 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -327,6 +327,7 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
- 	{ .compatible = "qcom,sdm845-smmu-500" },
- 	{ .compatible = "qcom,sm8150-smmu-500" },
- 	{ .compatible = "qcom,sm8250-smmu-500" },
-+	{ .compatible = "qcom,sm8350-smmu-500" },
- 	{ }
- };
+diff --git a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.txt b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.txt
+index 1df293953327..9c1a046e6fd9 100644
+--- a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.txt
++++ b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.txt
+@@ -20,6 +20,7 @@ Properties:
+ 	Definition: Should contain "qcom,<soc>-pdc" and "qcom,pdc"
+ 		    - "qcom,sc7180-pdc": For SC7180
+ 		    - "qcom,sdm845-pdc": For SDM845
++		    - "qcom,sdm8250-pdc": For SM8250
  
+ - reg:
+ 	Usage: required
 -- 
 2.26.2
 
