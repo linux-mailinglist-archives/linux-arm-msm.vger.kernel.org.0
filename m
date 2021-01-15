@@ -2,284 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 01B9D2F86B2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 21:30:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 73BF72F86C2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 21:34:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388047AbhAOUaP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jan 2021 15:30:15 -0500
-Received: from perceval.ideasonboard.com ([213.167.242.64]:50256 "EHLO
-        perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732164AbhAOUaB (ORCPT
+        id S1729914AbhAOUeN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jan 2021 15:34:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58388 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727798AbhAOUeL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jan 2021 15:30:01 -0500
-Received: from pendragon.ideasonboard.com (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 0E61358B;
-        Fri, 15 Jan 2021 21:29:16 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1610742556;
-        bh=8R5qOZgwIXX9QIBlCIV/R54viYQ+tS8st/8kK+PspT4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=rXfe/Bd4sxDcopxrQyulKr6sWDtZgNWVEUmMmsnebMU4/0jVNn/8hLQVXHqwR4Iqy
-         dmLamgDdsuehH2QKJU5DVGWdiVNzsC5Rqtv2JHOZ59k4V2CtY3G/tqo9iglvRf5/6q
-         dndbBomFsfYf9WqlpJf3+ozL6ojiJBE1hiTgHRnI=
-Date:   Fri, 15 Jan 2021 22:28:59 +0200
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Maxime Ripard <maxime@cerno.tech>
-Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        David Airlie <airlied@linux.ie>,
-        dri-devel@lists.freedesktop.org,
-        Harry Wentland <harry.wentland@amd.com>,
-        Leo Li <sunpeng.li@amd.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        "James (Qian) Wang" <james.qian.wang@arm.com>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        Mihail Atanassov <mihail.atanassov@arm.com>,
-        Brian Starkey <brian.starkey@arm.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Dave Airlie <airlied@redhat.com>,
-        Inki Dae <inki.dae@samsung.com>,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Stefan Agner <stefan@agner.ch>,
-        Alison Wang <alison.wang@nxp.com>,
-        Xinliang Liu <xinliang.liu@linaro.org>,
-        Tian Tao <tiantao6@hisilicon.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
-        Chen Feng <puck.chen@hisilicon.com>,
-        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Anitha Chrisanthus <anitha.chrisanthus@intel.com>,
-        Edmund Dea <edmund.j.dea@intel.com>,
-        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Ben Skeggs <bskeggs@redhat.com>,
-        Tomi Valkeinen <tomba@kernel.org>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-        Sandy Huang <hjc@rock-chips.com>,
-        Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>,
-        Benjamin Gaignard <benjamin.gaignard@linaro.org>,
-        Vincent Abriou <vincent.abriou@st.com>,
-        Yannick Fertre <yannick.fertre@st.com>,
-        Philippe Cornu <philippe.cornu@st.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@st.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jyri Sarha <jyri.sarha@iki.fi>, Eric Anholt <eric@anholt.net>,
-        Rodrigo Siqueira <rodrigosiqueiramelo@gmail.com>,
-        Melissa Wen <melissa.srw@gmail.com>,
-        Haneen Mohammed <hamohammed.sa@gmail.com>,
-        VMware Graphics <linux-graphics-maintainer@vmware.com>,
-        Roland Scheidegger <sroland@vmware.com>,
-        Hyun Kwon <hyun.kwon@xilinx.com>,
-        Michal Simek <michal.simek@xilinx.com>,
-        amd-gfx@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
-        virtualization@lists.linux-foundation.org,
-        spice-devel@lists.freedesktop.org,
-        linux-renesas-soc@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-tegra@vger.kernel.org
-Subject: Re: [PATCH 02/10] drm: Rename plane atomic_check state names
-Message-ID: <YAH7C0EOsisHhqvR@pendragon.ideasonboard.com>
-References: <20210115125703.1315064-1-maxime@cerno.tech>
- <20210115125703.1315064-2-maxime@cerno.tech>
+        Fri, 15 Jan 2021 15:34:11 -0500
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6EBAC0613D3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jan 2021 12:33:31 -0800 (PST)
+Received: by mail-pg1-x533.google.com with SMTP id p18so6726160pgm.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jan 2021 12:33:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GqxD38wi1JJRohChaeBwsmR53dcukE+p/w7TwS0FSts=;
+        b=CkwT6bjJqkLOsXTdw/T8MBbBtFDvEtMYBtJbQHRCcu1oFaZU20/hQuwPMmUbhXCA5x
+         DGqYdBxENIvj2W384heUTqHw2ndr8+jiEVq+nLkFL4G0ylyNuyX83gOvkz36L4brAKyQ
+         JL1QCBF5kaKH+KvcnscSbweVk//0796J3XF54=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GqxD38wi1JJRohChaeBwsmR53dcukE+p/w7TwS0FSts=;
+        b=QNzETEZv4uVPXjAoP44cNzdptJ7xKNDHucuOQZYjMDz6wBlfP8qWoWSxeeoJiQpGXF
+         1ITtDU3JL/4D9Lk6yxHa/cAEBBb3DcNwIRWiZKD1fYQoaR3pu8JrLYqcFAZJ3qxo09Bt
+         LuOWYVweMB2ya1XyXcVCoHhXdSUpeexkE63M/alCqpy0cdnH/GZEmkagCGwiIN2U/WW5
+         HDCDP/GvWsKNJ3PSVlM/A3g/kT5zCQvz5V1yYMHplxPWhPAlibwfjUu7QJCzaKdHcqBK
+         3OcH6kdWd+Bse0VaR71JQYrSmRL22txm+vSKqOF4oT+hFE3yDhdn1nVz1W8+l4x3E82h
+         5v5g==
+X-Gm-Message-State: AOAM530VqpacUzHZUzfRvJKu0CDgroK2dpLib4JWiCg6C1FA7Isq4NlL
+        Yjk1YSiHyOo/u3ncralzjeMklQ==
+X-Google-Smtp-Source: ABdhPJzcSsMqa5rUofBB9lqWBS521VzYpKtt5TOM4l6thXDZOMMZP6qxBPxeyQUKgFM8w/civbgnjA==
+X-Received: by 2002:a63:e14a:: with SMTP id h10mr14560054pgk.297.1610742811065;
+        Fri, 15 Jan 2021 12:33:31 -0800 (PST)
+Received: from smtp.gmail.com ([2620:15c:202:201:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id r14sm9214808pgi.27.2021.01.15.12.33.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Jan 2021 12:33:30 -0800 (PST)
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Mark Brown <broonie@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, Patrick Lai <plai@codeaurora.org>,
+        alsa-devel@alsa-project.org,
+        V Sujith Kumar Reddy <vsujithk@codeaurora.org>,
+        Srinivasa Rao <srivasam@codeaurora.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Cheng-Yi Chiang <cychiang@chromium.org>
+Subject: [PATCH] ASoC: qcom: Fix number of HDMI RDMA channels on sc7180
+Date:   Fri, 15 Jan 2021 12:33:29 -0800
+Message-Id: <20210115203329.846824-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20210115125703.1315064-2-maxime@cerno.tech>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Maxime,
+Suspending/resuming with an HDMI dongle attached leads to crashes from
+an audio regmap.
 
-Thank you for the patch.
+ Unable to handle kernel paging request at virtual address ffffffc018068000
+ Mem abort info:
+   ESR = 0x96000047
+   EC = 0x25: DABT (current EL), IL = 32 bits
+   SET = 0, FnV = 0
+   EA = 0, S1PTW = 0
+ Data abort info:
+   ISV = 0, ISS = 0x00000047
+   CM = 0, WnR = 1
+ swapper pgtable: 4k pages, 39-bit VAs, pgdp=0000000081b12000
+ [ffffffc018068000] pgd=0000000275d14003, pud=0000000275d14003, pmd=000000026365d003, pte=0000000000000000
+ Internal error: Oops: 96000047 [#1] PREEMPT SMP
+ Call trace:
+  regmap_mmio_write32le+0x2c/0x40
+  regmap_mmio_write+0x48/0x6c
+  _regmap_bus_reg_write+0x34/0x44
+  _regmap_write+0x100/0x150
+  regcache_default_sync+0xc0/0x138
+  regcache_sync+0x188/0x26c
+  lpass_platform_pcmops_resume+0x48/0x54 [snd_soc_lpass_platform]
+  snd_soc_component_resume+0x28/0x40
+  soc_resume_deferred+0x6c/0x178
+  process_one_work+0x208/0x3c8
+  worker_thread+0x23c/0x3e8
+  kthread+0x144/0x178
+  ret_from_fork+0x10/0x18
+ Code: d503201f d50332bf f94002a8 8b344108 (b9000113)
 
-On Fri, Jan 15, 2021 at 01:56:54PM +0100, Maxime Ripard wrote:
-> Most drivers call the argument to the plane atomic_check hook simply
-> state, which is going to conflict with the global atomic state in a
-> later rework. Let's rename it to new_plane_state (or new_state depending
-> on the convention used in the driver).
-> 
-> This was done using the coccinelle script below, and built tested:
-> 
-> @ plane_atomic_func @
-> identifier helpers;
-> identifier func;
-> @@
-> 
->  static const struct drm_plane_helper_funcs helpers = {
->  	.atomic_check = func,
->  };
-> 
-> @ has_old_state @
-> identifier plane_atomic_func.func;
-> identifier plane;
-> expression e;
-> symbol old_state;
-> symbol state;
-> @@
-> 
->  func(struct drm_plane *plane, struct drm_plane_state *state)
->  {
->  	...
->  	struct drm_plane_state *old_state = e;
->  	...
->  }
-> 
-> @ depends on has_old_state @
-> identifier plane_atomic_func.func;
-> identifier plane;
-> symbol old_state;
-> @@
-> 
->  func(struct drm_plane *plane,
-> -	struct drm_plane_state *state
-> +	struct drm_plane_state *new_state
->      )
->  {
->  	<+...
-> -	state
-> +	new_state
-> 	...+>
->  }
-> 
-> @ has_state @
-> identifier plane_atomic_func.func;
-> identifier plane;
-> symbol state;
-> @@
-> 
->  func(struct drm_plane *plane, struct drm_plane_state *state)
->  {
->  	...
->  }
-> 
-> @ depends on has_state @
-> identifier plane_atomic_func.func;
-> identifier plane;
-> symbol old_state;
-> @@
-> 
->  func(struct drm_plane *plane,
-> -	struct drm_plane_state *state
-> +	struct drm_plane_state *new_plane_state
->      )
->  {
->  	<+...
-> -	state
-> +	new_plane_state
-> 	...+>
->  }
-> 
-> Signed-off-by: Maxime Ripard <maxime@cerno.tech>
-> ---
+I can reliably reproduce this problem by running 'tail' on the registers
+file in debugfs for the hdmi regmap.
 
-[...]
+ # tail /sys/kernel/debug/regmap/62d87000.lpass-lpass_hdmi/registers
+ [   84.658733] Unable to handle kernel paging request at virtual address ffffffd0128e800c
 
->  drivers/gpu/drm/omapdrm/omap_plane.c          | 19 +++++----
->  drivers/gpu/drm/rcar-du/rcar_du_plane.c       |  7 ++--
->  drivers/gpu/drm/rcar-du/rcar_du_vsp.c         |  7 ++--
->  drivers/gpu/drm/xlnx/zynqmp_disp.c            | 10 +++--
+This crash happens because we're trying to read registers from the
+regmap beyond the length of the mapping created by ioremap().
 
-For these, with the comment below addressed,
+The number of hdmi_rdma_channels determines the size of the regmap via
+this code in sound/soc/qcom/lpass-cpu.c:
 
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+  lpass_hdmi_regmap_config.max_register = LPAIF_HDMI_RDMAPER_REG(variant, variant->hdmi_rdma_channels);
 
->  41 files changed, 402 insertions(+), 357 deletions(-)
+According to debugfs the size of the regmap is 0x68010 but according to
+the DTS file posted in [1] the size is only 0x68000 (see the first reg
+property of the lpass_cpu node). Let's change the number of channels to
+be 3 instead of 4 so the math works out to have a max register of
+0x67010, nicely fitting inside of the region size of 0x68000.
 
-[snip]
+Note: I tried to bump up the size of the register region to the next
+page to include the 0x68010 register but then the tail command caused
+SErrors with an async abort, implying that the register region doesn't
+exist or it isn't clocked because the bus is telling us that the
+register read failed. I reduce the number of channels and played audio
+through the HDMI channel and it kept working so I think this is correct.
 
-> diff --git a/drivers/gpu/drm/omapdrm/omap_plane.c b/drivers/gpu/drm/omapdrm/omap_plane.c
-> index 51dc24acea73..78d0eb1fd69d 100644
-> --- a/drivers/gpu/drm/omapdrm/omap_plane.c
-> +++ b/drivers/gpu/drm/omapdrm/omap_plane.c
-> @@ -99,18 +99,19 @@ static void omap_plane_atomic_disable(struct drm_plane *plane,
->  }
->  
->  static int omap_plane_atomic_check(struct drm_plane *plane,
-> -				   struct drm_plane_state *state)
-> +				   struct drm_plane_state *new_plane_state)
->  {
->  	struct drm_crtc_state *crtc_state;
->  
-> -	if (!state->fb)
-> +	if (!new_plane_state->fb)
->  		return 0;
->  
->  	/* crtc should only be NULL when disabling (i.e., !state->fb) */
+Fixes: 2ad63dc8df6b ("ASoC: qcom: sc7180: Add support for audio over DP")
+Link: https://lore.kernel.org/r/1601448168-18396-2-git-send-email-srivasam@codeaurora.org [1]
+Cc: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+Cc: Srinivasa Rao <srivasam@codeaurora.org>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: Cheng-Yi Chiang <cychiang@chromium.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ sound/soc/qcom/lpass-sc7180.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-s/state/new_plane_state/ here too ?
+diff --git a/sound/soc/qcom/lpass-sc7180.c b/sound/soc/qcom/lpass-sc7180.c
+index 85db650c2169..3127b6022ea3 100644
+--- a/sound/soc/qcom/lpass-sc7180.c
++++ b/sound/soc/qcom/lpass-sc7180.c
+@@ -174,7 +174,7 @@ static struct lpass_variant sc7180_data = {
+ 	.rdma_channels		= 5,
+ 	.hdmi_rdma_reg_base		= 0x64000,
+ 	.hdmi_rdma_reg_stride	= 0x1000,
+-	.hdmi_rdma_channels		= 4,
++	.hdmi_rdma_channels		= 3,
+ 	.dmactl_audif_start	= 1,
+ 	.wrdma_reg_base		= 0x18000,
+ 	.wrdma_reg_stride	= 0x1000,
 
-> -	if (WARN_ON(!state->crtc))
-> +	if (WARN_ON(!new_plane_state->crtc))
->  		return 0;
->  
-> -	crtc_state = drm_atomic_get_existing_crtc_state(state->state, state->crtc);
-> +	crtc_state = drm_atomic_get_existing_crtc_state(new_plane_state->state,
-> +							new_plane_state->crtc);
->  	/* we should have a crtc state if the plane is attached to a crtc */
->  	if (WARN_ON(!crtc_state))
->  		return 0;
-> @@ -118,17 +119,17 @@ static int omap_plane_atomic_check(struct drm_plane *plane,
->  	if (!crtc_state->enable)
->  		return 0;
->  
-> -	if (state->crtc_x < 0 || state->crtc_y < 0)
-> +	if (new_plane_state->crtc_x < 0 || new_plane_state->crtc_y < 0)
->  		return -EINVAL;
->  
-> -	if (state->crtc_x + state->crtc_w > crtc_state->adjusted_mode.hdisplay)
-> +	if (new_plane_state->crtc_x + new_plane_state->crtc_w > crtc_state->adjusted_mode.hdisplay)
-
-I can't help thinking we're using too long variable names... :-(
-
->  		return -EINVAL;
->  
-> -	if (state->crtc_y + state->crtc_h > crtc_state->adjusted_mode.vdisplay)
-> +	if (new_plane_state->crtc_y + new_plane_state->crtc_h > crtc_state->adjusted_mode.vdisplay)
->  		return -EINVAL;
->  
-> -	if (state->rotation != DRM_MODE_ROTATE_0 &&
-> -	    !omap_framebuffer_supports_rotation(state->fb))
-> +	if (new_plane_state->rotation != DRM_MODE_ROTATE_0 &&
-> +	    !omap_framebuffer_supports_rotation(new_plane_state->fb))
->  		return -EINVAL;
->  
->  	return 0;
-
-[...]
-
+base-commit: 5c8fe583cce542aa0b84adc939ce85293de36e5e
 -- 
-Regards,
+https://chromeos.dev
 
-Laurent Pinchart
