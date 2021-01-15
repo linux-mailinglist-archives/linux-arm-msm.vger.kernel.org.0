@@ -2,219 +2,268 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 84E8E2F715B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 05:04:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E20142F719E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 05:38:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732845AbhAOEDH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Jan 2021 23:03:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42536 "EHLO
+        id S1728290AbhAOEi1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Jan 2021 23:38:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729761AbhAOEDG (ORCPT
+        with ESMTP id S1726720AbhAOEi0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Jan 2021 23:03:06 -0500
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5395EC061575
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jan 2021 20:02:26 -0800 (PST)
-Received: by mail-ot1-x32c.google.com with SMTP id n42so7344512ota.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jan 2021 20:02:26 -0800 (PST)
+        Thu, 14 Jan 2021 23:38:26 -0500
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EE19C061575
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jan 2021 20:37:46 -0800 (PST)
+Received: by mail-oi1-x22c.google.com with SMTP id w124so8370551oia.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jan 2021 20:37:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=ldAmvmnxMD0Jw6zPOH3cGSkkAH8B3sX/EQd75/G60fg=;
-        b=ra6iegm7u9dRGUFWV5n6V9ET5zprjEfL37odcKV4QWJc39+eFR3F6F/AntZdnUb6ow
-         1Z8GEu1BhGf/K6Ko+zYpLYBjpAAeNPPALPSoQ4XxK5/bs3CVisXC1I9QVW5ga64mW93W
-         oQ2eX88xQYHcaJRo8IxN+fT5eLkVhYe8ai+wfBbtlGOHjGVLIm2o6MoaIbBzSGFJu3/8
-         0jSFfm8iLESuyrKZEFZGm91bC9+HBXvfjhYCeQOkO7/Vt70Q1iWxRrskMW1OpJLhd0qH
-         o9w5mDMg/0mQ7M5+Zl/ALpY0IkT1L8hHPw2VrnAY4y7GciZ0uSJWwJ8dJ6GMQiIZwDG7
-         PzJw==
+        bh=ti1+XvEBYKD5HOAz+seG/0Q1jqCmkgMfWBdD27RtC3s=;
+        b=HkFhV6luuv28KUrB+IaMXo6skoARgmkkSsCjOkJ10D6fXQv0ZeFH0Ah12rgajzFPz5
+         Zk7QPYWYpJKDHE3xGhpXkl07L2PaCHYkrO3UvwZeJZMdzGD7s9inIIyXfGwV7cnkAn57
+         DCXJufTfGUcV4ugr4DAT+J30+wcqPJqnf3Bhm4abjRZspUc72gvrpTw727LwNcgMZcmd
+         7qVGCK+M4R66O68qyFdTDQKGwqQWTJBp0zvO+sektIl2vUxYfKWTlCrAdIYnSSOPzfWI
+         L51Ku3FonkMhNJKtMNKT/N8si+CkV89H9YPWSpbWl3IUrffaxno/v5GBBcJ02esCiEvp
+         4PQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=ldAmvmnxMD0Jw6zPOH3cGSkkAH8B3sX/EQd75/G60fg=;
-        b=n2VWKasEk+eys8Qv/vi8J0LtdWwtElvYZSlp93tLCRrpHyaRCnGSppMbIryKCKwRCC
-         +Hoh2g9CmYL3vGSbkh6UeP+y6kSNWgnOwTQ2fFajbkYTEcDhTtOPh+E+nBAhe2jrf4kE
-         bMZ4cFkN5/s6uEBAMYXR/zE8X8Z5GsBSx6kacaKnNcEOBR87j857VjXEj6VcM6Zk/DAV
-         ptqKd/fqUMnBqhWbl42xZN2sUglhuv5OcUBlmM6DdIjHZDVQ7l1BpiUduUMiSl/vWza4
-         Rs+m6h+B9qXvlhrEqUQLyaAIoLZFV3LqpZakBmCE/Pt+J+BoacAlu/PFjxhneXudvw0Z
-         br7w==
-X-Gm-Message-State: AOAM531WybLpoAg8qo9+93WSXKl/+M1dscJ87mBLf6YMKNTbHTePUqgZ
-        F9t8L08uT8vnh15Zy7phRvDfHA==
-X-Google-Smtp-Source: ABdhPJw+w4rUfErAnomXQxHBz0L6vzp+Y0xrfWQ29SiFiruXgjbSRkb0tTya/YRt+6tz+gM6Ix/BYA==
-X-Received: by 2002:a9d:6c8:: with SMTP id 66mr7128776otx.257.1610683345736;
-        Thu, 14 Jan 2021 20:02:25 -0800 (PST)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id p28sm1545789ota.14.2021.01.14.20.02.24
+        bh=ti1+XvEBYKD5HOAz+seG/0Q1jqCmkgMfWBdD27RtC3s=;
+        b=AN/+ZwAdrCkfGun7/1naMX+zl4bJGv3y0RBaAcrMvGEE0VIb5CnnW4S86TPvnDGrXy
+         LMLFoQqEOh4IISonvxFRZXpTpIWXlXyDQvqFELH/MkvV22CTLdD/cy141ZbG8i5qCVMG
+         rLEFU/cyx3eFTK2Ku1A2xMoHCq/6SEpY5/4nOO2zJ3TdCHXd+7DjKAOGq3JYgkrQV7jH
+         69t5dVc6mcYx/lou/KzQ4hFrrWRkeNnhnShDrc8PXJN/CjZuUGlWE8osbmycJQ/aObHf
+         BCFvi17dNbQKyAZ7WZdcPC3IC+WEVIrCVJ6w8mnRi9Qco3LEvKBmnB66CsJK9quRYdrB
+         HdHA==
+X-Gm-Message-State: AOAM531H/FTztvR8wQ6CPZK4Y/NMxDYiLx8bPhbRRJAgGhY6xhgfViWv
+        BzBz5MUieSJx9bZdNBZZG4smDA==
+X-Google-Smtp-Source: ABdhPJw1JGad8B0HVG837iICWPtWpxbdpANl/YpXYfYNZ4kKT/wjH+bJT4vl2jEturLid5vW0tx92A==
+X-Received: by 2002:aca:3784:: with SMTP id e126mr4603833oia.170.1610685465274;
+        Thu, 14 Jan 2021 20:37:45 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id m22sm1549156otr.79.2021.01.14.20.37.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Jan 2021 20:02:25 -0800 (PST)
-Date:   Thu, 14 Jan 2021 22:02:23 -0600
+        Thu, 14 Jan 2021 20:37:44 -0800 (PST)
+Date:   Thu, 14 Jan 2021 22:37:42 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Felipe Balbi <balbi@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org
-Subject: Re: [PATCH v2] usb: dwc3: qcom: add URS Host support for sdm845 ACPI
- boot
-Message-ID: <20210115040223.GA1241218@yoga>
-References: <20210115035057.10994-1-shawn.guo@linaro.org>
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        lgirdwood@gmail.com, broonie@kernel.org, robh+dt@kernel.org,
+        sumit.semwal@linaro.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
+        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
+        martin.botka@somainline.org
+Subject: Re: [PATCH v2 2/7] regulator: qcom-labibb: Implement current limiting
+Message-ID: <YAEcFhFFsYIumI2e@builder.lan>
+References: <20210113194214.522238-1-angelogioacchino.delregno@somainline.org>
+ <20210113194214.522238-3-angelogioacchino.delregno@somainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210115035057.10994-1-shawn.guo@linaro.org>
+In-Reply-To: <20210113194214.522238-3-angelogioacchino.delregno@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 14 Jan 21:50 CST 2021, Shawn Guo wrote:
+On Wed 13 Jan 13:42 CST 2021, AngeloGioacchino Del Regno wrote:
 
-> For sdm845 ACPI boot, the URS (USB Role Switch) node in ACPI DSDT table
-> holds the memory resource, while interrupt resources reside in the child
-> nodes USB0 and UFN0.  It adds USB0 host support by probing URS node,
-> creating platform device for USB0 node, and then retrieve interrupt
-> resources from USB0 platform device.
+> LAB and IBB regulators can be current-limited by setting the
+> appropriate registers, but this operation is granted only after
+> sending an unlock code for secure access.
 > 
+> Besides the secure access, it would be possible to use the
+> regmap helper for get_current_limit, as there is no security
+> blocking reads, but I chose not to as to avoid having a very
+> big array containing current limits, especially for IBB.
+> 
+> That said, these regulators support current limiting for:
+> - LAB (pos): 200-1600mA, with 200mA per step (8 steps),
+> - IBB (neg):   0-1550mA, with  50mA per step (32 steps).
+> 
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> ---
+>  drivers/regulator/qcom-labibb-regulator.c | 92 +++++++++++++++++++++++
+>  1 file changed, 92 insertions(+)
+> 
+> diff --git a/drivers/regulator/qcom-labibb-regulator.c b/drivers/regulator/qcom-labibb-regulator.c
+> index 9f51c96f16fb..d364f54ad294 100644
+> --- a/drivers/regulator/qcom-labibb-regulator.c
+> +++ b/drivers/regulator/qcom-labibb-regulator.c
+> @@ -29,6 +29,15 @@
+>  #define LABIBB_STATUS1_VREG_OK_BIT	BIT(7)
+>  #define LABIBB_CONTROL_ENABLE		BIT(7)
+>  
+> +#define REG_LABIBB_CURRENT_LIMIT	0x4b
+> + #define LAB_CURRENT_LIMIT_MASK		GENMASK(2, 0)
+> + #define IBB_CURRENT_LIMIT_MASK		GENMASK(4, 0)
+> + #define LAB_CURRENT_LIMIT_OVERRIDE_EN	BIT(3)
+> + #define LABIBB_CURRENT_LIMIT_EN	BIT(7)
+> +
+> +#define REG_LABIBB_SEC_ACCESS		0xd0
+> + #define LABIBB_SEC_UNLOCK_CODE		0xa5
+> +
+>  #define LAB_ENABLE_CTL_MASK		BIT(7)
+>  #define IBB_ENABLE_CTL_MASK		(BIT(7) | BIT(6))
+>  
+> @@ -37,11 +46,18 @@
+>  #define IBB_ENABLE_TIME			(LABIBB_OFF_ON_DELAY * 10)
+>  #define LABIBB_POLL_ENABLED_TIME	1000
+>  
+> +struct labibb_current_limits {
+> +	u32				uA_min;
+> +	u32				uA_step;
+> +	u8				ovr_val;
+> +};
+> +
+>  struct labibb_regulator {
+>  	struct regulator_desc		desc;
+>  	struct device			*dev;
+>  	struct regmap			*regmap;
+>  	struct regulator_dev		*rdev;
+> +	struct labibb_current_limits	uA_limits;
+>  	u16				base;
+>  	u8				type;
+>  };
+> @@ -53,6 +69,57 @@ struct labibb_regulator_data {
+>  	const struct regulator_desc	*desc;
+>  };
+>  
+> +static int qcom_labibb_set_current_limit(struct regulator_dev *rdev,
+> +					 int min_uA, int max_uA)
 
-This looks reasonable, thanks for updating the search.
+I was under the impression that a regulator driver should either
+implement set_voltage_* or set_current_limit, depending on which type of
+regulator it is - i.e. this API isn't supposed to be setting the current
+limit. Perhaps I'm wrong though?
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> +{
+> +	struct labibb_regulator *vreg = rdev_get_drvdata(rdev);
+> +	struct regulator_desc *desc = &vreg->desc;
+> +	struct labibb_current_limits *lim = &vreg->uA_limits;
+> +	u32 mask, val;
+> +	int i, ret, sel = -1;
+> +
+> +	if (min_uA < lim->uA_min || max_uA < lim->uA_min)
+> +		return -EINVAL;
+> +
+> +	for (i = 0; i < desc->n_current_limits; i++) {
+> +		int uA_limit = (lim->uA_step * i) + lim->uA_min;
+> +
+> +		if (max_uA >= uA_limit && min_uA <= uA_limit)
+
+I presume here you rely on the client passing something like min_uA = 0
+and max_uA 500? Because if the client where to
+regulator_set_current_limit(475, 475) you will pass through this loop
+without finding a match, but 450 would probably be a really good
+pick...
+
+But what does it even mean to pass min/max uA for a current limit?
+
+That said, I think this loop would be better expressed as a single
+subtract uA_min and then divide by uA_step.
+
+
+Apart from that, this patch looks good to me.
 
 Regards,
 Bjorn
 
-> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-> ---
-> Changes for v2:
-> - Instead of assuming that USB0 is always the first child of URS0, find
->   the child using node name.
-> 
->  drivers/usb/dwc3/dwc3-qcom.c | 59 ++++++++++++++++++++++++++++++++++--
->  1 file changed, 56 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index c703d552bbcf..d803ee98c628 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -60,12 +60,14 @@ struct dwc3_acpi_pdata {
->  	int			dp_hs_phy_irq_index;
->  	int			dm_hs_phy_irq_index;
->  	int			ss_phy_irq_index;
-> +	bool			is_urs;
->  };
->  
->  struct dwc3_qcom {
->  	struct device		*dev;
->  	void __iomem		*qscratch_base;
->  	struct platform_device	*dwc3;
-> +	struct platform_device	*urs_usb;
->  	struct clk		**clks;
->  	int			num_clocks;
->  	struct reset_control	*resets;
-> @@ -429,13 +431,15 @@ static void dwc3_qcom_select_utmi_clk(struct dwc3_qcom *qcom)
->  static int dwc3_qcom_get_irq(struct platform_device *pdev,
->  			     const char *name, int num)
->  {
-> +	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
-> +	struct platform_device *pdev_irq = qcom->urs_usb ? qcom->urs_usb : pdev;
->  	struct device_node *np = pdev->dev.of_node;
->  	int ret;
->  
->  	if (np)
-> -		ret = platform_get_irq_byname(pdev, name);
-> +		ret = platform_get_irq_byname(pdev_irq, name);
->  	else
-> -		ret = platform_get_irq(pdev, num);
-> +		ret = platform_get_irq(pdev_irq, num);
->  
->  	return ret;
->  }
-> @@ -568,6 +572,8 @@ static int dwc3_qcom_acpi_register_core(struct platform_device *pdev)
->  	struct dwc3_qcom	*qcom = platform_get_drvdata(pdev);
->  	struct device		*dev = &pdev->dev;
->  	struct resource		*res, *child_res = NULL;
-> +	struct platform_device	*pdev_irq = qcom->urs_usb ? qcom->urs_usb :
-> +							    pdev;
->  	int			irq;
->  	int			ret;
->  
-> @@ -597,7 +603,7 @@ static int dwc3_qcom_acpi_register_core(struct platform_device *pdev)
->  	child_res[0].end = child_res[0].start +
->  		qcom->acpi_pdata->dwc3_core_base_size;
->  
-> -	irq = platform_get_irq(pdev, 0);
-> +	irq = platform_get_irq(pdev_irq, 0);
->  	child_res[1].flags = IORESOURCE_IRQ;
->  	child_res[1].start = child_res[1].end = irq;
->  
-> @@ -651,6 +657,33 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
->  	return 0;
->  }
->  
-> +static struct platform_device *
-> +dwc3_qcom_create_urs_usb_platdev(struct device *dev)
-> +{
-> +	struct fwnode_handle *fwh;
-> +	struct acpi_device *adev;
-> +	char name[8];
-> +	int ret;
-> +	int id;
+> +			sel = i;
+> +	}
+> +	if (sel < 0)
+> +		return -EINVAL;
 > +
-> +	/* Figure out device id */
-> +	ret = sscanf(fwnode_get_name(dev->fwnode), "URS%d", &id);
-> +	if (!ret)
-> +		return NULL;
+> +	/* Current limit setting needs secure access */
+> +	ret = regmap_write(vreg->regmap, vreg->base + REG_LABIBB_SEC_ACCESS,
+> +			   LABIBB_SEC_UNLOCK_CODE);
+> +	if (ret)
+> +		return ret;
 > +
-> +	/* Find the child using name */
-> +	snprintf(name, sizeof(name), "USB%d", id);
-> +	fwh = fwnode_get_named_child_node(dev->fwnode, name);
-> +	if (!fwh)
-> +		return NULL;
+> +	mask = desc->csel_mask | lim->ovr_val;
+> +	mask |= LABIBB_CURRENT_LIMIT_EN;
+> +	val = (u32)sel | lim->ovr_val;
+> +	val |= LABIBB_CURRENT_LIMIT_EN;
 > +
-> +	adev = to_acpi_device_node(fwh);
-> +	if (!adev)
-> +		return NULL;
-> +
-> +	return acpi_create_platform_device(adev, NULL);
+> +	return regmap_update_bits(vreg->regmap, desc->csel_reg, mask, val);
 > +}
 > +
->  static int dwc3_qcom_probe(struct platform_device *pdev)
->  {
->  	struct device_node	*np = pdev->dev.of_node;
-> @@ -715,6 +748,14 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
->  			qcom->acpi_pdata->qscratch_base_offset;
->  		parent_res->end = parent_res->start +
->  			qcom->acpi_pdata->qscratch_base_size;
+> +static int qcom_labibb_get_current_limit(struct regulator_dev *rdev)
+> +{
+> +	struct labibb_regulator *vreg = rdev_get_drvdata(rdev);
+> +	struct regulator_desc *desc = &vreg->desc;
+> +	struct labibb_current_limits *lim = &vreg->uA_limits;
+> +	unsigned int cur_step;
+> +	int ret;
 > +
-> +		if (qcom->acpi_pdata->is_urs) {
-> +			qcom->urs_usb = dwc3_qcom_create_urs_usb_platdev(dev);
-> +			if (!qcom->urs_usb) {
-> +				dev_err(dev, "failed to create URS USB platdev\n");
-> +				return -ENODEV;
-> +			}
+> +	ret = regmap_read(vreg->regmap, desc->csel_reg, &cur_step);
+> +	if (ret)
+> +		return ret;
+> +	cur_step &= desc->csel_mask;
+> +
+> +	return (cur_step * lim->uA_step) + lim->uA_min;
+> +}
+> +
+>  static const struct regulator_ops qcom_labibb_ops = {
+>  	.enable			= regulator_enable_regmap,
+>  	.disable		= regulator_disable_regmap,
+> @@ -61,6 +128,8 @@ static const struct regulator_ops qcom_labibb_ops = {
+>  	.get_voltage_sel	= regulator_get_voltage_sel_regmap,
+>  	.list_voltage		= regulator_list_voltage_linear_range,
+>  	.map_voltage		= regulator_map_voltage_linear_range,
+> +	.set_current_limit	= qcom_labibb_set_current_limit,
+> +	.get_current_limit	= qcom_labibb_get_current_limit,
+>  };
+>  
+>  static const struct regulator_desc pmi8998_lab_desc = {
+> @@ -73,6 +142,9 @@ static const struct regulator_desc pmi8998_lab_desc = {
+>  	.vsel_mask		= LAB_VOLTAGE_SET_MASK,
+>  	.apply_reg		= (PMI8998_LAB_REG_BASE + REG_LABIBB_VOLTAGE),
+>  	.apply_bit		= LABIBB_VOLTAGE_OVERRIDE_EN,
+> +	.csel_reg		= (PMI8998_LAB_REG_BASE + REG_LABIBB_CURRENT_LIMIT),
+> +	.csel_mask		= LAB_CURRENT_LIMIT_MASK,
+> +	.n_current_limits	= 8,
+>  	.off_on_delay		= LABIBB_OFF_ON_DELAY,
+>  	.owner			= THIS_MODULE,
+>  	.type			= REGULATOR_VOLTAGE,
+> @@ -94,6 +166,9 @@ static const struct regulator_desc pmi8998_ibb_desc = {
+>  	.vsel_mask		= IBB_VOLTAGE_SET_MASK,
+>  	.apply_reg		= (PMI8998_IBB_REG_BASE + REG_LABIBB_VOLTAGE),
+>  	.apply_bit		= LABIBB_VOLTAGE_OVERRIDE_EN,
+> +	.csel_reg		= (PMI8998_IBB_REG_BASE + REG_LABIBB_CURRENT_LIMIT),
+> +	.csel_mask		= IBB_CURRENT_LIMIT_MASK,
+> +	.n_current_limits	= 32,
+>  	.off_on_delay		= LABIBB_OFF_ON_DELAY,
+>  	.owner			= THIS_MODULE,
+>  	.type			= REGULATOR_VOLTAGE,
+> @@ -167,6 +242,23 @@ static int qcom_labibb_regulator_probe(struct platform_device *pdev)
+>  		vreg->base = reg_data->base;
+>  		vreg->type = reg_data->type;
+>  
+> +		switch (vreg->type) {
+> +		case QCOM_LAB_TYPE:
+> +			/* LAB Limits: 200-1600mA */
+> +			vreg->uA_limits.uA_min  = 200000;
+> +			vreg->uA_limits.uA_step = 200000;
+> +			vreg->uA_limits.ovr_val = LAB_CURRENT_LIMIT_OVERRIDE_EN;
+> +			break;
+> +		case QCOM_IBB_TYPE:
+> +			/* IBB Limits: 0-1550mA */
+> +			vreg->uA_limits.uA_min  = 0;
+> +			vreg->uA_limits.uA_step = 50000;
+> +			vreg->uA_limits.ovr_val = 0; /* No override bit */
+> +			break;
+> +		default:
+> +			return -EINVAL;
 > +		}
->  	}
->  
->  	qcom->qscratch_base = devm_ioremap_resource(dev, parent_res);
-> @@ -877,8 +918,20 @@ static const struct dwc3_acpi_pdata sdm845_acpi_pdata = {
->  	.ss_phy_irq_index = 2
->  };
->  
-> +static const struct dwc3_acpi_pdata sdm845_acpi_urs_pdata = {
-> +	.qscratch_base_offset = SDM845_QSCRATCH_BASE_OFFSET,
-> +	.qscratch_base_size = SDM845_QSCRATCH_SIZE,
-> +	.dwc3_core_base_size = SDM845_DWC3_CORE_SIZE,
-> +	.hs_phy_irq_index = 1,
-> +	.dp_hs_phy_irq_index = 4,
-> +	.dm_hs_phy_irq_index = 3,
-> +	.ss_phy_irq_index = 2,
-> +	.is_urs = true,
-> +};
 > +
->  static const struct acpi_device_id dwc3_qcom_acpi_match[] = {
->  	{ "QCOM2430", (unsigned long)&sdm845_acpi_pdata },
-> +	{ "QCOM0304", (unsigned long)&sdm845_acpi_urs_pdata },
->  	{ },
->  };
->  MODULE_DEVICE_TABLE(acpi, dwc3_qcom_acpi_match);
+>  		memcpy(&vreg->desc, reg_data->desc, sizeof(vreg->desc));
+>  		vreg->desc.of_match = reg_data->name;
+>  		vreg->desc.name = reg_data->name;
 > -- 
-> 2.17.1
+> 2.29.2
 > 
