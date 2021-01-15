@@ -2,96 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 378CD2F82DC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 18:49:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 43B662F831E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 18:57:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732973AbhAORsh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jan 2021 12:48:37 -0500
-Received: from so254-31.mailgun.net ([198.61.254.31]:19214 "EHLO
-        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733069AbhAORsh (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jan 2021 12:48:37 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1610732898; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=tl2cpBi4QtB0FYMLpeVjas/HGR4Q2xP3gVdgJcJblqQ=; b=w5B55rIrthaKFRnOfxdNHQlvP0G805+jMjhnyvkyKYFN/jGejnZxPHQMZTAJZx6rVw91KDfd
- TqGl27JJMxIIVzHqEx+PSDf3ZorzrLuNNIcyPeRb08bD866Stwv6sotu4vET4wau8yJGUSeV
- C/t3ABzt5S8tvyCaX4wNZ5Pg8rg=
-X-Mailgun-Sending-Ip: 198.61.254.31
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 6001d5451e3bf9b6690d186c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 15 Jan 2021 17:47:49
- GMT
-Sender: jackp=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 36D7BC43461; Fri, 15 Jan 2021 17:47:49 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from jackp-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jackp)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 53E89C433CA;
-        Fri, 15 Jan 2021 17:47:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 53E89C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jackp@codeaurora.org
-From:   Jack Pham <jackp@codeaurora.org>
-To:     Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        id S1728163AbhAOR44 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jan 2021 12:56:56 -0500
+Received: from mail.kernel.org ([198.145.29.99]:35720 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727443AbhAOR44 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 15 Jan 2021 12:56:56 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id EA79F22262;
+        Fri, 15 Jan 2021 17:56:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1610733375;
+        bh=vj26FR8f+iU2PtcYdkiiX4Rofrx/+1bCKnemSD3ZlAQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=JBsK2t1VzsBu7KmHfRB8fFQdKPeEXnjNV8szW2jRZ4QDkGhXgm0jdcVxgilxe9p4n
+         3rr27iUbtfupeVQ9dSztg52vZ+fqiF5Ttg75ixVu2Lvbu50jVCt8kYGzkOhia4psYj
+         uOvJvb3YOwdvG7agAGkKP6W2DfqhlHuM+a0NRLQFu+Y4mRQR2ck9zbXfOyG53Yu0TO
+         R8OBrPn6JClmTKnHxfX7MInKY5GFT6fNowCH7A5VjTF9kPc3k2FDlCzVg5UYjyx/Pk
+         tq0rw2Dzn10iP4FC6v4i6FDJ+0+5VgTyrUJz3OsrN8AIVDGK5sc9H+SYtmRF59xAD6
+         SUv6kieT6g8lw==
+Date:   Fri, 15 Jan 2021 09:56:13 -0800
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>, linux-fscrypt@vger.kernel.org,
+        Satya Tangirala <satyat@google.com>,
         Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     Wesley Cheng <wcheng@codeaurora.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Jack Pham <jackp@codeaurora.org>
-Subject: [PATCH v2 4/4] dt-bindings: usb: qcom,dwc3: Add bindings for SM8150, SM8250, SM8350
-Date:   Fri, 15 Jan 2021 09:47:23 -0800
-Message-Id: <20210115174723.7424-5-jackp@codeaurora.org>
-X-Mailer: git-send-email 2.24.0
-In-Reply-To: <20210115174723.7424-1-jackp@codeaurora.org>
-References: <20210115174723.7424-1-jackp@codeaurora.org>
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Neeraj Soni <neersoni@codeaurora.org>,
+        Barani Muthukumaran <bmuthuku@codeaurora.org>,
+        Peng Zhou <peng.zhou@mediatek.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Konrad Dybcio <konradybcio@gmail.com>
+Subject: Re: [PATCH v4 1/9] mmc: add basic support for inline encryption
+Message-ID: <YAHXPREJaKjK/z7+@sol.localdomain>
+References: <20210104184542.4616-1-ebiggers@kernel.org>
+ <20210104184542.4616-2-ebiggers@kernel.org>
+ <CAPDyKFq717teu2HPZLCn9QVxLOwZHdi_iS+Ji69S0kYX1o52PQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPDyKFq717teu2HPZLCn9QVxLOwZHdi_iS+Ji69S0kYX1o52PQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add compatible strings for the USB DWC3 controller on QCOM SM8150,
-SM8250 and SM8350 SoCs.
+On Fri, Jan 15, 2021 at 10:22:03AM +0100, Ulf Hansson wrote:
+> On Mon, 4 Jan 2021 at 19:48, Eric Biggers <ebiggers@kernel.org> wrote:
+> >
+> > From: Eric Biggers <ebiggers@google.com>
+> >
+> > In preparation for adding CQHCI crypto engine (inline encryption)
+> > support, add the code required to make mmc_core and mmc_block aware of
+> > inline encryption.  Specifically:
+> >
+> > - Add a capability flag MMC_CAP2_CRYPTO to struct mmc_host.  Drivers
+> >   will set this if the host and driver support inline encryption.
+> >
+> > - Embed a blk_keyslot_manager in struct mmc_host.  Drivers will
+> >   initialize this if the host and driver support inline encryption.
+> >   mmc_block registers this keyslot manager with the request_queue of any
+> >   MMC card attached to the host.  mmc_core destroys this keyslot manager
+> >   when freeing the mmc_host.
+> >
+> > - Make mmc_block copy the crypto keyslot and crypto data unit number
+> >   from struct request to struct mmc_request, so that drivers will have
+> >   access to them.
+> >
+> > - If the MMC host is reset, reprogram all the keyslots to ensure that
+> >   the software state stays in sync with the hardware state.
+> >
+> > Co-developed-by: Satya Tangirala <satyat@google.com>
+> > Signed-off-by: Satya Tangirala <satyat@google.com>
+> > Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+> > Reviewed-by: Satya Tangirala <satyat@google.com>
+> > Reviewed-and-tested-by: Peng Zhou <peng.zhou@mediatek.com>
+> > Signed-off-by: Eric Biggers <ebiggers@google.com>
+> 
+> Eric, again, my apologies for the delay. Overall, I think this looks good.
+> 
+> My only hesitation to merge this as is, is that I want to make sure
+> you have thought of the life cycle issues for the struct
+> blk_keyslot_manager ksm. It's being used both from the mmc core/block
+> device driver and the mmc host driver. I am looking at this right now
+> and will get back to you very soon, if I find some issues with it.
+> 
+> If you have some time, feel free to elaborate around how this is
+> intended to work.
+> 
+> Kind regards
+> Uffe
 
-Note the SM8150 & SM8250 compatibles are already being used in the
-dts but was missing from the documentation.
+The blk_keyslot_manager is initialized early on when the other host structures
+(struct mmc_host, struct cqhci_host, struct sdhci_host, struct sdhci_msm_host)
+are initialized, prior to mmc_add_host().
 
-Signed-off-by: Jack Pham <jackp@codeaurora.org>
----
- Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 3 +++
- 1 file changed, 3 insertions(+)
+It is destroyed when the struct mmc_host is freed by mmc_free_host().
 
-diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-index 2cf525d21e05..da47f43d6b04 100644
---- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-+++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-@@ -17,6 +17,9 @@ properties:
-           - qcom,msm8998-dwc3
-           - qcom,sc7180-dwc3
-           - qcom,sdm845-dwc3
-+          - qcom,sm8150-dwc3
-+          - qcom,sm8250-dwc3
-+          - qcom,sm8350-dwc3
-       - const: qcom,dwc3
- 
-   reg:
--- 
-2.24.0
+So it should just work; it's the same lifecycle as the existing host structures.
+Is there something you think I'm overlooking?
 
+- Eric
