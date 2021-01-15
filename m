@@ -2,129 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 42A512F80D4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 17:32:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 451BB2F8139
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 17:51:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730506AbhAOQbi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jan 2021 11:31:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34178 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730782AbhAOQbd (ORCPT
+        id S1727869AbhAOQvG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jan 2021 11:51:06 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:49738 "EHLO
+        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727856AbhAOQvG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jan 2021 11:31:33 -0500
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DBA3C061794
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jan 2021 08:30:53 -0800 (PST)
-Received: by mail-ot1-x334.google.com with SMTP id b24so9094844otj.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jan 2021 08:30:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=3zlhE1VQoC0YQoOVBpqCppA99bsDhHzDe1MR/nnPda8=;
-        b=BbV4E43/1M1Vmn39MFeDNpZOcyiOIdxjYFAJXjgk6V9LN7JUmebkYjQqv9L4c9bk0B
-         Jh6LnqqDExgti8XlbpAURUR/LcR23gs+qC4qPzQRLSvIiJyc7XPoulVYQRQBPZhjWUmx
-         xojSbm70qMh7UW7LsrICI8aJtgl7u4vzHWlr4yZdP0zj7DYI2K6jH+WsWn1oTZqufRz4
-         boV+VXwlAnE3Qf+5C4AumEbZelr8GwHUEtN7vXDjaPdTYE0j6Dmx3pYySjbEKoXNONAe
-         1Hi2CPLC8sTzsgwtRiEyQ0QeplfkrlSZ14exg4Qi2XUxMV4q+8vSACZLU/eeIqxRijfy
-         pc4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=3zlhE1VQoC0YQoOVBpqCppA99bsDhHzDe1MR/nnPda8=;
-        b=V8bLAq5i0EwuZplHxOge0RagGhO7gUN6pyLEA0fT4qBCr6fTky5xOvW0QvUNPHypJw
-         nVpA/Fh/2zV0GC/VFLNJjP/ww+9J3XsNsPvlZ6XpgP7Xo+QsW8I2FPHpluKE1g1adeew
-         Lf6enCQhU9rKh5ms361BX2OR6zeRcveZWyxXOqhGzo7o8ReK7O//dVAdXMJa+pUU+uN+
-         aayDAnz0PcivVFwkTaVWS6CBRRo4IG6cu1LNA5Qrk0IS1DPzEqy8qNx8fRtfqW3m8ac+
-         4jxOlPLpefqXpuwx+R9H/f6+ZxoLAwZbT5IH4VJMTEFiV3J65OoQNLp2k9suFXsNhNMX
-         ZRuw==
-X-Gm-Message-State: AOAM530vu/LyeEoy3vR+Sljx4ZcrQCTetl98aYUf41eHiPNDawNH9m3D
-        qWFiE000tZK6TC3Nya+7yecWxA==
-X-Google-Smtp-Source: ABdhPJw9QuYGlWtxZKlmSYDACbI1/xs++9fTUIQlKrR2IpKC1dLXb4iCeDvN8vx4NykIIQRb44fzIQ==
-X-Received: by 2002:a9d:19cb:: with SMTP id k69mr8999620otk.75.1610728252325;
-        Fri, 15 Jan 2021 08:30:52 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id w10sm1749903oic.44.2021.01.15.08.30.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Jan 2021 08:30:51 -0800 (PST)
-Date:   Fri, 15 Jan 2021 10:30:49 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Jonathan Albrieux <jonathan.albrieux@gmail.com>
-Cc:     linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Andy Gross <agross@kernel.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org
-Subject: Re: [PATCH 1/2] iio:adc:qcom-spmi-vadc: add default scale to
- LR_MUX2_BAT_ID channel
-Message-ID: <YAHDOaZoSSGZexFa@builder.lan>
-References: <20210113151808.4628-1-jonathan.albrieux@gmail.com>
- <20210113151808.4628-2-jonathan.albrieux@gmail.com>
+        Fri, 15 Jan 2021 11:51:06 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1610729442; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=oRsbGD85VFdqNmXWCaIHuIfIYUy6x11YI9HzstD8NGA=; b=O3E0wWve47dZJNkGhu8pQ2v8iUTVu0jbzuNCjZi0hSEpbd/HhS9nBonglZwDJrE2E+KgciHo
+ N8tZosd31h3UtZfMG0J1TFGBwNbhfxn3ELzhDGyj6+LvKQlTWZ8MAQVuwR3sX/iTwfyQGJiy
+ u2c5yA8ZROrfWWHA3DZ3EfuXqtM=
+X-Mailgun-Sending-Ip: 198.61.254.31
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 6001c7c275e5c01cbafbff05 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 15 Jan 2021 16:50:10
+ GMT
+Sender: ilina=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3B71AC43463; Fri, 15 Jan 2021 16:50:10 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: ilina)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9EB2DC433C6;
+        Fri, 15 Jan 2021 16:50:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9EB2DC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
+From:   Lina Iyer <ilina@codeaurora.org>
+To:     ulf.hansson@linaro.org, rjw@rjwysocki.net
+Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Lina Iyer <ilina@codeaurora.org>
+Subject: [PATCH v8 0/2] Better domain idle from device wakeup patterns
+Date:   Fri, 15 Jan 2021 09:50:02 -0700
+Message-Id: <20210115165004.22385-1-ilina@codeaurora.org>
+X-Mailer: git-send-email 2.30.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210113151808.4628-2-jonathan.albrieux@gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 13 Jan 09:18 CST 2021, Jonathan Albrieux wrote:
+Changes since v7 [7]:
+- Whitespace and comment fixes
+- Add Reviewed-by tags
 
-> Checking at both msm8909-pm8916.dtsi and msm8916.dtsi from downstream
-> it is indicated that "batt_id" channel has to be scaled with the default
-> function:
-> 
-> 	chan@31 {
-> 		label = "batt_id";
-> 		reg = <0x31>;
-> 		qcom,decimation = <0>;
-> 		qcom,pre-div-channel-scaling = <0>;
-> 		qcom,calibration-type = "ratiometric";
-> 		qcom,scale-function = <0>;
-> 		qcom,hw-settle-time = <0xb>;
-> 		qcom,fast-avg-setup = <0>;
-> 	};
-> 
-> Change LR_MUX2_BAT_ID scaling accordingly.
-> 
+Changes since v6 [6];
+- Based on discussions on [6], this update simplifies the next wakeup
+  of domains based on genpd flag GENPD_FLAG_MIN_RESIDENCY specified at
+  init.
+- Assume next wakeup will be set by devices when the domain is not
+  powered down. This could avoid locking requirements.
+- Update commit text.
 
-Acked-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Changes since v5 [5]:
+- It was pointed out that we don't want to run through the unnecessary
+  work for domains that do not need or support next-wakeup. So, patch #1
+  in this version, now uses a flag to detemine if the domain would
+  support next-wakeup.
+- Other review comments addressed in patches #2, #3
 
-Not entirely sure, but looking at the history I think this used to work
-- but it's obvious that no one has read this channel for a while...
+Changes since v4 [4]:
+- Address review comments
 
-But I think below is a regression and should be mentioned:
+Changes since v3 [3]:
+- Move the next_wakeup info of the device deeper into the device's
+  domain data. This should avoid overhead for devices that do not have a
+  predictable wakeup pattern.
 
-Fixes: 7c271eea7b8a ("iio: adc: spmi-vadc: Changes to support different scaling")
+Changes since v2:
+- Fix unwanted change
 
-> Signed-off-by: Jonathan Albrieux <jonathan.albrieux@gmail.com>
+Changes since v1 [2]:
+- Update documentation and commit text
+- Remove check for runtime PM when setting next_event
+- Fix kernel-test robot reported issue
 
-Jonathan Cameron, if you merge this through your tree I can take the dts
-addition through the Qualcomm tree.
+Changes since RFC [1]:
+- Organized the code to make it cleaner
+- Fixed some issues with idle state determination
+- Add documentation and update commit text
 
-Regards,
-Bjorn
+Hello,
 
-> ---
->  drivers/iio/adc/qcom-spmi-vadc.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/iio/adc/qcom-spmi-vadc.c b/drivers/iio/adc/qcom-spmi-vadc.c
-> index b0388f8a69f4..7e7d408452ec 100644
-> --- a/drivers/iio/adc/qcom-spmi-vadc.c
-> +++ b/drivers/iio/adc/qcom-spmi-vadc.c
-> @@ -598,7 +598,7 @@ static const struct vadc_channels vadc_chans[] = {
->  	VADC_CHAN_NO_SCALE(P_MUX16_1_3, 1)
->  
->  	VADC_CHAN_NO_SCALE(LR_MUX1_BAT_THERM, 0)
-> -	VADC_CHAN_NO_SCALE(LR_MUX2_BAT_ID, 0)
-> +	VADC_CHAN_VOLT(LR_MUX2_BAT_ID, 0, SCALE_DEFAULT)
->  	VADC_CHAN_NO_SCALE(LR_MUX3_XO_THERM, 0)
->  	VADC_CHAN_NO_SCALE(LR_MUX4_AMUX_THM1, 0)
->  	VADC_CHAN_NO_SCALE(LR_MUX5_AMUX_THM2, 0)
-> -- 
-> 2.17.1
-> 
+I was looking for an option to do better power management for some
+domains where the devices enter runtime PM in a predictable fashion. For
+example a display device that sends a vsync interrupt every 16 ms for a
+60 Hz panel. These interrupts are not timer interrupts but tend to
+interrupt periodically to service the workflow and the devices and
+domains may go back to idle soon after. Two domains are affected by this
+- the device's PM domain and the CPU PM domain.
+
+As a first step, I am looking to solve for the device's PM domain idle
+state (and hopefully solve for the CPU PM domains subsequently). The PM
+domain could have multiple idle states and/or the enter/exit latencies
+could be high. In either case, it may not always be beneficial to power
+off the domain, only to turn it back on before satisfying the idle state
+residency. When the wakeup is known for the device, we could use that to
+determine the worthiness of entering a domain idle state. Only the
+device can tell us when the future event would be and that could change
+as the usecase changes. Like, when the panel refresh rate increases to
+120 Hz. If this information was made available to runtime PM, we could
+use that in the domain governor to determine a suitable idle state. This
+is the idea behind these patches.
+
+Would appreciate your thoughts on this.
+
+Thanks,
+Lina
+
+[1].
+https://lore.kernel.org/linux-pm/010101746eccb270-05beb27f-e1e4-40eb-92da-ad1bb48feb41-000000@us-west-2.amazonses.com/T
+/
+[2]. https://lore.kernel.org/linux-pm/20201012223400.23609-3-ilina@codeaurora.org/T/#u
+[3]. https://lore.kernel.org/linux-pm/20201015193807.17423-1-ilina@codeaurora.org/
+[4]. https://www.spinics.net/lists/linux-arm-msm/msg74322.html
+[5]. https://lore.kernel.org/linux-pm/20201106164811.3698-1-ilina@codeaurora.org/T/#t
+[6]. https://lore.kernel.org/linux-pm/20201130225039.15981-1-ilina@codeaurora.org/T/#t
+[7]. https://lore.kernel.org/linux-pm/20210113201601.14874-1-ilina@codeaurora.org/T/#t
+
+Lina Iyer (2):
+  PM / domains: inform PM domain of a device's next wakeup
+  PM / Domains: use device's next wakeup to determine domain idle state
+
+ drivers/base/power/domain.c          |  25 +++++++
+ drivers/base/power/domain_governor.c | 102 ++++++++++++++++++++++++---
+ include/linux/pm_domain.h            |  12 ++++
+ 3 files changed, 130 insertions(+), 9 deletions(-)
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
