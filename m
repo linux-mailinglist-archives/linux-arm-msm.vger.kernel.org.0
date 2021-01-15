@@ -2,104 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EBC6D2F7745
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 12:13:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D8C12F781A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 12:56:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726184AbhAOLN1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jan 2021 06:13:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49998 "EHLO
+        id S1726045AbhAOLzb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jan 2021 06:55:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726105AbhAOLN0 (ORCPT
+        with ESMTP id S1726046AbhAOLza (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jan 2021 06:13:26 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11CF1C061757
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jan 2021 03:12:46 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id u14so3064601wmq.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jan 2021 03:12:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=8hOPqiKxYh57wkKCGDlQE85ouMI8Pjq2OXu/MBK/GBo=;
-        b=ETWqj32EUC/lVfGcEnrERegA0IfyyyfTQBugipiNDz9oezr2FUyXSgNjERTQhyzitT
-         5zXV13jV2QfbErvJHqnJXkiPYsBMkih9apQHrrKK5OK+P2cn+nFP+Ujs56tF/3J76dwn
-         keVommed8cXFUXxwKiyD162/yJ7T2BFhSzJjfZe3D2cGa/KQRowm71sEduN6Iv7WOasG
-         YTMzC/kSxrOXgZqq9HUGrcg/gKygcFJ5m/Qoig8NtSgjLnr+xtM+RSMJwkjBGdQK5Bzn
-         cCOQaIHk6N7aTrEH9W75pdoX+e69sE1IfFRjCJiB2kaTalfRhTLmS02MsZN+F2WBV+C5
-         Hndw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=8hOPqiKxYh57wkKCGDlQE85ouMI8Pjq2OXu/MBK/GBo=;
-        b=SHl9V09Op+08QYqwGsZx8EQYtCTV+J1SemuqRmTHmqmklrO3vU7PeonOoWQu9mBYWa
-         ecuea0AfpfkhZ20AH9+LNOdu52vPswQM0ufsZdb9PbquQRqD5o0KASDCaYAQX65dvPxP
-         MaafforoyCCNAD31kg8zRvwZ/RfcXSTJgntAErWNnccuzaeA/Wzimta9V2M0FwnkWiov
-         qqa60jr2iyT3wXP6pzDZ5wSk8onE/ke7ELbS0O9taAGD2fL6l/vWjgKDy4SufZ/oThP/
-         RBzFn8epdl+laSOWAsJ9N6ltm8EYqasJn3l5nIkOB200Vy2xCIHQNF1umqrUbrrUNc7U
-         q+sQ==
-X-Gm-Message-State: AOAM532Fb5nhyw1II0NIYLgRCmKb133LnGyasCRUWTZKNGEB1AX96kLg
-        BIhdd4z4qUr8Yg4urJCivjk2eg==
-X-Google-Smtp-Source: ABdhPJxZxPpbEPACV3JGhyB3zfkvu0YT51nxUVRM08/3jMLDRr4l2mATYKPVXAsaURWiMAg+h9NBGQ==
-X-Received: by 2002:a1c:9ad5:: with SMTP id c204mr5322138wme.65.1610709164628;
-        Fri, 15 Jan 2021 03:12:44 -0800 (PST)
-Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.googlemail.com with ESMTPSA id f68sm1305763wmf.6.2021.01.15.03.12.43
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 15 Jan 2021 03:12:43 -0800 (PST)
-Subject: Re: [PATCH 0/4] ASoC: qcom: Minor code cleanups for lpass-cpu
-To:     Stephen Boyd <swboyd@chromium.org>, Mark Brown <broonie@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, Patrick Lai <plai@codeaurora.org>,
-        alsa-devel@alsa-project.org,
-        V Sujith Kumar Reddy <vsujithk@codeaurora.org>,
-        Srinivasa Rao <srivasam@codeaurora.org>,
-        Cheng-Yi Chiang <cychiang@chromium.org>
-References: <20210115034327.617223-1-swboyd@chromium.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <f60d2cf1-7952-3e85-e988-53e6b91ae75a@linaro.org>
-Date:   Fri, 15 Jan 2021 11:12:42 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        Fri, 15 Jan 2021 06:55:30 -0500
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB94EC061757;
+        Fri, 15 Jan 2021 03:54:34 -0800 (PST)
+Received: from [192.168.1.101] (abaf224.neoplus.adsl.tpnet.pl [83.6.169.224])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 362E33EBB7;
+        Fri, 15 Jan 2021 12:54:28 +0100 (CET)
+Subject: Re: [PATCH 1/4] phy: qcom-qmp: Add SM8350 USB QMP PHYs
+To:     Jack Pham <jackp@codeaurora.org>, Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     Wesley Cheng <wcheng@codeaurora.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20210115104047.3460-1-jackp@codeaurora.org>
+ <20210115104047.3460-2-jackp@codeaurora.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+Message-ID: <2c5481fe-f5be-5d6a-f62f-c93d04b9210e@somainline.org>
+Date:   Fri, 15 Jan 2021 12:54:26 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-In-Reply-To: <20210115034327.617223-1-swboyd@chromium.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+In-Reply-To: <20210115104047.3460-2-jackp@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks Stephen for the cleanup patches.
-
-All of them look good to me!
-
-On 15/01/2021 03:43, Stephen Boyd wrote:
-> Here's some minor code cleanups for the lpass-cpu driver. I noticed that
-> it casts away const from the driver data from DT. That's not great but
-> fixing it is a little more involved. I'll get to it later. There's also
-> some questionable clk_get() usage that should probably be
-> clk_get_optional(). For now this should help a little.
-> 
-> Cc: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-> Cc: Srinivasa Rao <srivasam@codeaurora.org>
-> Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> Cc: Cheng-Yi Chiang <cychiang@chromium.org>
-> 
-> Stephen Boyd (4):
->    ASoC: qcom: Remove useless debug print
->    ASoC: qcom: Add some names to regmap configs
->    ASoC: qcom: Stop casting away __iomem for error pointers
->    ASoC: qcom: Remove duplicate error messages on ioremap
-> 
->   sound/soc/qcom/lpass-cpu.c | 17 ++++++-----------
->   1 file changed, 6 insertions(+), 11 deletions(-)
-> 
+Hi,
 
 
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+I might be wrong but it looks as if you forgot to add a compatible for the "sm8350_usb3_uniphy_cfg" configuration.
 
-> 
+
+Konrad
+
