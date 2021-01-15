@@ -2,304 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B9712F8133
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 17:51:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D8A5C2F8196
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 18:06:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727443AbhAOQu7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jan 2021 11:50:59 -0500
-Received: from so254-31.mailgun.net ([198.61.254.31]:24309 "EHLO
+        id S1729489AbhAORGb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jan 2021 12:06:31 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:59000 "EHLO
         so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726404AbhAOQu7 (ORCPT
+        with ESMTP id S1729333AbhAORGa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jan 2021 11:50:59 -0500
+        Fri, 15 Jan 2021 12:06:30 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1610729447; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=NG9fDeY93ODQKafxEh1R8JEN4EU6HLFIbUcGNtjDTRg=; b=OtG6VPG1Gh0GR8O6/TLAgUt815CPjke33BsZ9V0PI13kfF80txkuA7FIt9k2OLQq/W5GUr1v
- 8ISmPMHDz+sT2F5A1e05lN27gk9bUXBbHQ9DF7MFYi2MmfBPoxiXxs9QYaZdJmvo1waP1YoY
- 2mUHRvlrDL8eicHVn5Js3++jNek=
+ s=smtp; t=1610730373; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=wjgIsm5r+W+QCFqaE40wKTkYfo5MCRy14S3C/mBWwqs=; b=e+S0aCpSVZnBx4Gf/F4kA9VWz4/CZ+t6BPs0XArrjhxsplxrnZpyQhC1apxTQc4J+0UOO0qx
+ lr6F7biH0cNQwXx53iYCdaVv6NrmPU+ImXrAK1bUAtzTSw6lostbW/1c09ENZ/NI7mTYJ9Ma
+ We9/O+NpRG3UcoJpZL9b51d9T3w=
 X-Mailgun-Sending-Ip: 198.61.254.31
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 6001c7c402b2f1cb1ab7b9de (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 15 Jan 2021 16:50:12
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 6001cb6175e5c01cba1308c5 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 15 Jan 2021 17:05:37
  GMT
-Sender: ilina=codeaurora.org@mg.codeaurora.org
+Sender: jackp=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B3B51C43462; Fri, 15 Jan 2021 16:50:11 +0000 (UTC)
+        id C1D84C43469; Fri, 15 Jan 2021 17:05:36 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from jackp-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: ilina)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6DBF9C433C6;
-        Fri, 15 Jan 2021 16:50:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6DBF9C433C6
+        (Authenticated sender: jackp)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B06CAC43466;
+        Fri, 15 Jan 2021 17:05:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B06CAC43466
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     ulf.hansson@linaro.org, rjw@rjwysocki.net
-Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Lina Iyer <ilina@codeaurora.org>
-Subject: [PATCH v8 2/2] PM / Domains: use device's next wakeup to determine domain idle state
-Date:   Fri, 15 Jan 2021 09:50:04 -0700
-Message-Id: <20210115165004.22385-3-ilina@codeaurora.org>
-X-Mailer: git-send-email 2.30.0
-In-Reply-To: <20210115165004.22385-1-ilina@codeaurora.org>
-References: <20210115165004.22385-1-ilina@codeaurora.org>
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jackp@codeaurora.org
+Date:   Fri, 15 Jan 2021 09:05:29 -0800
+From:   Jack Pham <jackp@codeaurora.org>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Wesley Cheng <wcheng@codeaurora.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 1/4] phy: qcom-qmp: Add SM8350 USB QMP PHYs
+Message-ID: <20210115170529.GA5063@jackp-linux.qualcomm.com>
+References: <20210115104047.3460-1-jackp@codeaurora.org>
+ <20210115104047.3460-2-jackp@codeaurora.org>
+ <2c5481fe-f5be-5d6a-f62f-c93d04b9210e@somainline.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2c5481fe-f5be-5d6a-f62f-c93d04b9210e@somainline.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently, a PM domain's idle state is determined based on whether the
-QoS requirements are met. However, even entering an idle state may waste
-power if the minimum residency requirements aren't fulfilled.
+On Fri, Jan 15, 2021 at 12:54:26PM +0100, Konrad Dybcio wrote:
+> I might be wrong but it looks as if you forgot to add a compatible for
+> the "sm8350_usb3_uniphy_cfg" configuration.
 
-CPU PM domains use the next timer wakeup for the CPUs in the domain to
-determine the sleep duration of the domain. This is compared with the
-idle state residencies to determine the optimal idle state. For other PM
-domains, determining the sleep length is not that straight forward. But
-if the device's next_event is available, we can use that to determine
-the sleep duration of the PM domain.
+Not wrong at all! My mistake, will add it in v2.
 
-Let's update the domain governor logic to check for idle state residency
-based on the next wakeup of devices as well as QoS constraints. But
-since, not all domains may contain devices capable of specifying the
-next wakeup, let's enable this additional check only if specified by the
-domain's flags when initializing the domain.
-
-Signed-off-by: Lina Iyer <ilina@codeaurora.org>
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
----
-Changes in v8:
-	- Whitespace fixes and added reviewed-by tag
-Changes in v7:
-	- Define GENPD_FLAG_MIN_RESIDENCY and check for min residency
-	  only if the flag is set.
-	- Update commit text.
-Changes in v6:
-	- Do not include power_on_latency_ns for next_wakeup
-	  determination.
-	- Re-organize code to avoid multiple ktime_get() reads.
-	- Check genpd flag if next_wakeup is useful for the domain.
-	- Document why we ignore stale data
-Changes in v5:
-	- Minor code changes suggested by Rafel
-Changes in v4:
-	- Update to use next_wakeup from struct generic_pm_domain_data.
-Changes in v3:
-	- None
-Changes in v2:
-	- Fix state_idx type to hold negative value.
-	- Update commit text.
----
- drivers/base/power/domain_governor.c | 102 ++++++++++++++++++++++++---
- include/linux/pm_domain.h            |   6 ++
- 2 files changed, 99 insertions(+), 9 deletions(-)
-
-diff --git a/drivers/base/power/domain_governor.c b/drivers/base/power/domain_governor.c
-index 490ed7deb99a..c6c218758f0b 100644
---- a/drivers/base/power/domain_governor.c
-+++ b/drivers/base/power/domain_governor.c
-@@ -117,6 +117,55 @@ static bool default_suspend_ok(struct device *dev)
- 	return td->cached_suspend_ok;
- }
- 
-+static void update_domain_next_wakeup(struct generic_pm_domain *genpd, ktime_t now)
-+{
-+	ktime_t domain_wakeup = KTIME_MAX;
-+	ktime_t next_wakeup;
-+	struct pm_domain_data *pdd;
-+	struct gpd_link *link;
-+
-+	if (!(genpd->flags & GENPD_FLAG_MIN_RESIDENCY))
-+		return;
-+
-+	/*
-+	 * Devices that have a predictable wakeup pattern, may specify
-+	 * their next wakeup. Let's find the next wakeup from all the
-+	 * devices attached to this domain and from all the sub-domains.
-+	 * It is possible that component's a next wakeup may have become
-+	 * stale when we read that here. We will ignore to ensure the domain
-+	 * is able to enter its optimal idle state.
-+	 */
-+	list_for_each_entry(pdd, &genpd->dev_list, list_node) {
-+		next_wakeup = to_gpd_data(pdd)->next_wakeup;
-+		if (next_wakeup != KTIME_MAX && !ktime_before(next_wakeup, now))
-+			if (ktime_before(next_wakeup, domain_wakeup))
-+				domain_wakeup = next_wakeup;
-+	}
-+
-+	list_for_each_entry(link, &genpd->parent_links, parent_node) {
-+		next_wakeup = link->child->next_wakeup;
-+		if (next_wakeup != KTIME_MAX && !ktime_before(next_wakeup, now))
-+			if (ktime_before(next_wakeup, domain_wakeup))
-+				domain_wakeup = next_wakeup;
-+	}
-+
-+	genpd->next_wakeup = domain_wakeup;
-+}
-+
-+static bool next_wakeup_allows_state(struct generic_pm_domain *genpd,
-+				     unsigned int state, ktime_t now)
-+{
-+	ktime_t domain_wakeup = genpd->next_wakeup;
-+	s64 idle_time_ns, min_sleep_ns;
-+
-+	min_sleep_ns = genpd->states[state].power_off_latency_ns +
-+		       genpd->states[state].residency_ns;
-+
-+	idle_time_ns = ktime_to_ns(ktime_sub(domain_wakeup, now));
-+
-+	return idle_time_ns >= min_sleep_ns;
-+}
-+
- static bool __default_power_down_ok(struct dev_pm_domain *pd,
- 				     unsigned int state)
- {
-@@ -201,16 +250,41 @@ static bool __default_power_down_ok(struct dev_pm_domain *pd,
- }
- 
- /**
-- * default_power_down_ok - Default generic PM domain power off governor routine.
-+ * _default_power_down_ok - Default generic PM domain power off governor routine.
-  * @pd: PM domain to check.
-  *
-  * This routine must be executed under the PM domain's lock.
-  */
--static bool default_power_down_ok(struct dev_pm_domain *pd)
-+static bool _default_power_down_ok(struct dev_pm_domain *pd, ktime_t now)
- {
- 	struct generic_pm_domain *genpd = pd_to_genpd(pd);
-+	int state_idx = genpd->state_count - 1;
- 	struct gpd_link *link;
- 
-+	/*
-+	 * Find the next wakeup from devices that can determine their own wakeup
-+	 * to find when the domain would wakeup and do it for every device down
-+	 * the hierarchy. It is not worth while to sleep if the state's residency
-+	 * cannot be met.
-+	 */
-+	update_domain_next_wakeup(genpd, now);
-+	if ((genpd->flags & GENPD_FLAG_MIN_RESIDENCY) && (genpd->next_wakeup != KTIME_MAX)) {
-+		/* Let's find out the deepest domain idle state, the devices prefer */
-+		while (state_idx >= 0) {
-+			if (next_wakeup_allows_state(genpd, state_idx, now)) {
-+				genpd->max_off_time_changed = true;
-+				break;
-+			}
-+			state_idx--;
-+		}
-+
-+		if (state_idx < 0) {
-+			state_idx = 0;
-+			genpd->cached_power_down_ok = false;
-+			goto done;
-+		}
-+	}
-+
- 	if (!genpd->max_off_time_changed) {
- 		genpd->state_idx = genpd->cached_power_down_state_idx;
- 		return genpd->cached_power_down_ok;
-@@ -228,21 +302,30 @@ static bool default_power_down_ok(struct dev_pm_domain *pd)
- 	genpd->max_off_time_ns = -1;
- 	genpd->max_off_time_changed = false;
- 	genpd->cached_power_down_ok = true;
--	genpd->state_idx = genpd->state_count - 1;
- 
--	/* Find a state to power down to, starting from the deepest. */
--	while (!__default_power_down_ok(pd, genpd->state_idx)) {
--		if (genpd->state_idx == 0) {
-+	/*
-+	 * Find a state to power down to, starting from the state
-+	 * determined by the next wakeup.
-+	 */
-+	while (!__default_power_down_ok(pd, state_idx)) {
-+		if (state_idx == 0) {
- 			genpd->cached_power_down_ok = false;
- 			break;
- 		}
--		genpd->state_idx--;
-+		state_idx--;
- 	}
- 
-+done:
-+	genpd->state_idx = state_idx;
- 	genpd->cached_power_down_state_idx = genpd->state_idx;
- 	return genpd->cached_power_down_ok;
- }
- 
-+static bool default_power_down_ok(struct dev_pm_domain *pd)
-+{
-+	return _default_power_down_ok(pd, ktime_get());
-+}
-+
- static bool always_on_power_down_ok(struct dev_pm_domain *domain)
- {
- 	return false;
-@@ -254,11 +337,12 @@ static bool cpu_power_down_ok(struct dev_pm_domain *pd)
- 	struct generic_pm_domain *genpd = pd_to_genpd(pd);
- 	struct cpuidle_device *dev;
- 	ktime_t domain_wakeup, next_hrtimer;
-+	ktime_t now = ktime_get();
- 	s64 idle_duration_ns;
- 	int cpu, i;
- 
- 	/* Validate dev PM QoS constraints. */
--	if (!default_power_down_ok(pd))
-+	if (!_default_power_down_ok(pd, now))
- 		return false;
- 
- 	if (!(genpd->flags & GENPD_FLAG_CPU_DOMAIN))
-@@ -280,7 +364,7 @@ static bool cpu_power_down_ok(struct dev_pm_domain *pd)
- 	}
- 
- 	/* The minimum idle duration is from now - until the next wakeup. */
--	idle_duration_ns = ktime_to_ns(ktime_sub(domain_wakeup, ktime_get()));
-+	idle_duration_ns = ktime_to_ns(ktime_sub(domain_wakeup, now));
- 	if (idle_duration_ns <= 0)
- 		return false;
- 
-diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
-index 735583c0bc6d..dfcfbcecc34b 100644
---- a/include/linux/pm_domain.h
-+++ b/include/linux/pm_domain.h
-@@ -56,6 +56,10 @@
-  *
-  * GENPD_FLAG_RPM_ALWAYS_ON:	Instructs genpd to always keep the PM domain
-  *				powered on except for system suspend.
-+ *
-+ * GENPD_FLAG_MIN_RESIDENCY:	Enable the genpd governor to consider its
-+ *				components' next wakeup when determining the
-+ *				optimal idle state.
-  */
- #define GENPD_FLAG_PM_CLK	 (1U << 0)
- #define GENPD_FLAG_IRQ_SAFE	 (1U << 1)
-@@ -63,6 +67,7 @@
- #define GENPD_FLAG_ACTIVE_WAKEUP (1U << 3)
- #define GENPD_FLAG_CPU_DOMAIN	 (1U << 4)
- #define GENPD_FLAG_RPM_ALWAYS_ON (1U << 5)
-+#define GENPD_FLAG_MIN_RESIDENCY (1U << 6)
- 
- enum gpd_status {
- 	GENPD_STATE_ON = 0,	/* PM domain is on */
-@@ -130,6 +135,7 @@ struct generic_pm_domain {
- 				     unsigned int state);
- 	struct gpd_dev_ops dev_ops;
- 	s64 max_off_time_ns;	/* Maximum allowed "suspended" time. */
-+	ktime_t next_wakeup;	/* Maintained by the domain governor */
- 	bool max_off_time_changed;
- 	bool cached_power_down_ok;
- 	bool cached_power_down_state_idx;
+Thanks,
+Jack
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
 a Linux Foundation Collaborative Project
-
