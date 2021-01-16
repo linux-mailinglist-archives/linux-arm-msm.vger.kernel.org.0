@@ -2,65 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A0CC92F8E6C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Jan 2021 18:45:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 20CA22F8E71
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Jan 2021 18:48:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727228AbhAPRpG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Jan 2021 12:45:06 -0500
-Received: from mail.kernel.org ([198.145.29.99]:36040 "EHLO mail.kernel.org"
+        id S1727379AbhAPRsU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Jan 2021 12:48:20 -0500
+Received: from mail.kernel.org ([198.145.29.99]:36772 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726906AbhAPRpF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Jan 2021 12:45:05 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id 49667229C4;
-        Sat, 16 Jan 2021 15:50:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1610812208;
-        bh=grg8ayiVRmUz/32WJyq5jr2aCHXxERLvYWNEjQ8CPsU=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=fyoTBtw96QE9+Z94Qy+j4AELySGrnqdj+An9OV2OZbeb27oc58FiWJ4DML+ptFVg3
-         ZnsyJjQI5Lf+OKvxh/dXionKp6tk9bOkXLSX/iUqXZDY3+1A4pG/X0+QZ0kf6Csv3Q
-         LDQ0X3Jfn8jrhCY7fQX6QUbdplSd6hwKil4TLum/gMqG333mvSxY6y9toOEuGGrLM6
-         SgyfJn26B5qiPysXGP8udDZuuplgAsnV09QBgK1pQslnDoa2Y2ZuRXGzRzTUl6RGlN
-         iOJZ2TIkjeODl1fgocRZAsurUdHChrTLAkqT2J8cMBGqVgGz8ER06XQvZmxtMbN98+
-         HlOjcI+fjToyw==
-Received: from pdx-korg-docbuild-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id 3EDA960593;
-        Sat, 16 Jan 2021 15:50:08 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        id S1726114AbhAPRsT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 16 Jan 2021 12:48:19 -0500
+Received: from archlinux (cpc108967-cmbg20-2-0-cust86.5-4.cable.virginm.net [81.101.6.87])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 8D666223E8;
+        Sat, 16 Jan 2021 17:47:38 +0000 (UTC)
+Date:   Sat, 16 Jan 2021 17:47:35 +0000
+From:   Jonathan Cameron <jic23@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Jonathan Albrieux <jonathan.albrieux@gmail.com>,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Andy Gross <agross@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org
+Subject: Re: [PATCH 1/2] iio:adc:qcom-spmi-vadc: add default scale to
+ LR_MUX2_BAT_ID channel
+Message-ID: <20210116174735.05d0fc75@archlinux>
+In-Reply-To: <YAHDOaZoSSGZexFa@builder.lan>
+References: <20210113151808.4628-1-jonathan.albrieux@gmail.com>
+        <20210113151808.4628-2-jonathan.albrieux@gmail.com>
+        <YAHDOaZoSSGZexFa@builder.lan>
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] arm64: dts: qcom: qrb5165-rb5: sort nodes alphabetically
-From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <161081220825.10852.2427635591741732178.git-patchwork-notify@kernel.org>
-Date:   Sat, 16 Jan 2021 15:50:08 +0000
-References: <20210116002346.422479-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20210116002346.422479-1-dmitry.baryshkov@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
+On Fri, 15 Jan 2021 10:30:49 -0600
+Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
 
-This patch was applied to qcom/linux.git (refs/heads/for-next):
-
-On Sat, 16 Jan 2021 03:23:46 +0300 you wrote:
-> Move swr0 device node to keep alphabetical sorting order of device tree
-> nodes.
+> On Wed 13 Jan 09:18 CST 2021, Jonathan Albrieux wrote:
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 40 ++++++++++++------------
->  1 file changed, 20 insertions(+), 20 deletions(-)
+> > Checking at both msm8909-pm8916.dtsi and msm8916.dtsi from downstream
+> > it is indicated that "batt_id" channel has to be scaled with the default
+> > function:
+> > 
+> > 	chan@31 {
+> > 		label = "batt_id";
+> > 		reg = <0x31>;
+> > 		qcom,decimation = <0>;
+> > 		qcom,pre-div-channel-scaling = <0>;
+> > 		qcom,calibration-type = "ratiometric";
+> > 		qcom,scale-function = <0>;
+> > 		qcom,hw-settle-time = <0xb>;
+> > 		qcom,fast-avg-setup = <0>;
+> > 	};
+> > 
+> > Change LR_MUX2_BAT_ID scaling accordingly.
+> >   
+> 
+> Acked-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> 
+> Not entirely sure, but looking at the history I think this used to work
+> - but it's obvious that no one has read this channel for a while...
+> 
+> But I think below is a regression and should be mentioned:
+> 
+> Fixes: 7c271eea7b8a ("iio: adc: spmi-vadc: Changes to support different scaling")
+> 
 
-Here is the summary with links:
-  - arm64: dts: qcom: qrb5165-rb5: sort nodes alphabetically
-    https://git.kernel.org/qcom/c/0fb56bf95c76
+Yikes that was a while ago :)
 
-You are awesome, thank you!
---
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+> > Signed-off-by: Jonathan Albrieux <jonathan.albrieux@gmail.com>  
+> 
+> Jonathan Cameron, if you merge this through your tree I can take the dts
+> addition through the Qualcomm tree.
 
+Applied to the fixes-togreg branch of iio.git and marked for stable.
+
+I'm not going to rush this one given age of the bug, but if I happen to
+have anything else going it'll make it before the end of this cycle.
+
+Thanks,
+
+Jonathan
+
+> 
+> Regards,
+> Bjorn
+> 
+> > ---
+> >  drivers/iio/adc/qcom-spmi-vadc.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/drivers/iio/adc/qcom-spmi-vadc.c b/drivers/iio/adc/qcom-spmi-vadc.c
+> > index b0388f8a69f4..7e7d408452ec 100644
+> > --- a/drivers/iio/adc/qcom-spmi-vadc.c
+> > +++ b/drivers/iio/adc/qcom-spmi-vadc.c
+> > @@ -598,7 +598,7 @@ static const struct vadc_channels vadc_chans[] = {
+> >  	VADC_CHAN_NO_SCALE(P_MUX16_1_3, 1)
+> >  
+> >  	VADC_CHAN_NO_SCALE(LR_MUX1_BAT_THERM, 0)
+> > -	VADC_CHAN_NO_SCALE(LR_MUX2_BAT_ID, 0)
+> > +	VADC_CHAN_VOLT(LR_MUX2_BAT_ID, 0, SCALE_DEFAULT)
+> >  	VADC_CHAN_NO_SCALE(LR_MUX3_XO_THERM, 0)
+> >  	VADC_CHAN_NO_SCALE(LR_MUX4_AMUX_THM1, 0)
+> >  	VADC_CHAN_NO_SCALE(LR_MUX5_AMUX_THM2, 0)
+> > -- 
+> > 2.17.1
+> >   
 
