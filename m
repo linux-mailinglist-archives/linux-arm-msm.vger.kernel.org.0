@@ -2,132 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E40E02F89E4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Jan 2021 01:24:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5DBD52F8A1F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Jan 2021 01:59:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725854AbhAPAYa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jan 2021 19:24:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51406 "EHLO
+        id S1725601AbhAPA62 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jan 2021 19:58:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725833AbhAPAYa (ORCPT
+        with ESMTP id S1726661AbhAPA60 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jan 2021 19:24:30 -0500
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C293C0613D3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jan 2021 16:23:49 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id 23so15722012lfg.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jan 2021 16:23:49 -0800 (PST)
+        Fri, 15 Jan 2021 19:58:26 -0500
+Received: from mail-vs1-xe29.google.com (mail-vs1-xe29.google.com [IPv6:2607:f8b0:4864:20::e29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4542CC0613D3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jan 2021 16:57:46 -0800 (PST)
+Received: by mail-vs1-xe29.google.com with SMTP id x26so6042417vsq.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jan 2021 16:57:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=TvLCs8sLMAUpdnN+6kzCgxJCo3Pys1RW0I649Aw4wwM=;
-        b=Kjo1yhXFU7U1p1nJ5sxo1afiYdbroqieR9NeQk/+ssqvcol75z4ueSbfwlBjsDEg1E
-         nYGNGZCmddX2gKj9lgjTwg3AT6wZWC9uLgUbKvnxuiuxh6feUSJPHRFRohrbfm3ihsON
-         P9d5+7xXRGc4XZ8QIkJm0IBIkcLXFsDuV9M0x6zlRPstjEBet5Qebl+QCqBJWl47H0sf
-         KnS91Z93D3Kc5/NYNuinETH1E6R0b+VM21vwWMewdmVAnBp/I6a9SyXlHRRoBx2c+zzk
-         XWJbSgYclwPD5mf4agMbn14cdC9KI2DpYuo3Kbjlu4jWHgokdHw1x0/Vc0dom3bixXZH
-         FPew==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=cuO5xo5F20WS2U3YFOHP5hzwzCcypzAVBEVyMj1tuRs=;
+        b=OB+wZUB9YCSSH8DkArXCN8GMeoKn9Ss4CIXEwJEz/SZ1dyA/ZpeQox+8u1nKtY+EKN
+         IjzOkD69Egtm6f+ow9+DVBsJXUwIe6AFicqRZY41ChVfu06/rWn8lNBrsCSpSPB9dOMz
+         RBbIGXAhO3E6WzR6Eat8ofB3SBNrJfJ2d20Hg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=TvLCs8sLMAUpdnN+6kzCgxJCo3Pys1RW0I649Aw4wwM=;
-        b=Q1Mw+wL9Ejex3cJ7TGpTtJKuMi+1F46brxJ9pTR/IRRyVjg5ZNgq42FjZe9azDQ9J6
-         dRE5AHd1Xkt1m3t9rhYF5g893WtGNq39ta9FyJR1M7mfg6p2VTH8fqNor2pz8pZAypV6
-         vHAHsJPRpBvvqIv0/3o8RauqXAoHHYsirMVHDc+Xa1e1e7byu3BDoTmOuBHSLvnJASzx
-         5DTnsj0m2Mxx9fvI4Yw83IJ/v9MYYa7vBOA2Ah2GhULqKYdGWf9gpjoItfUuUf4mPmJg
-         PsKGQY+rHOq5vKqvqd8nTz9He1YLCBe1MNfLJ/KbVhJOCPaURCKjyE34DToaI7S/nzIp
-         ZuJA==
-X-Gm-Message-State: AOAM532RZ7lSsNmI6U4TjTkbL7YtFsWpi+m0rJCcSeQUcTyy1UZdxt9Z
-        MD9W1kTxX08xNmQGM/nO8C8U61QFySQ1EotC3bA=
-X-Google-Smtp-Source: ABdhPJxa3a13E5So0CqpKS+4um6HLpxbRfkXyOIOxRhz46Brintd5qzpc0t567ON8L8nhVAkiasqVg==
-X-Received: by 2002:a19:848f:: with SMTP id g137mr6448864lfd.622.1610756628019;
-        Fri, 15 Jan 2021 16:23:48 -0800 (PST)
-Received: from eriador.lumag.spb.ru ([94.25.229.245])
-        by smtp.gmail.com with ESMTPSA id l21sm941633lja.35.2021.01.15.16.23.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Jan 2021 16:23:47 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: qrb5165-rb5: sort nodes alphabetically
-Date:   Sat, 16 Jan 2021 03:23:46 +0300
-Message-Id: <20210116002346.422479-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.29.2
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=cuO5xo5F20WS2U3YFOHP5hzwzCcypzAVBEVyMj1tuRs=;
+        b=Zg5dVfI3uF5xxa72schW1N+JjmII4f3NZ8eii5EtEDu3B4Jv/TbCAMisfUUChELKv7
+         BtFv9JC9WFdejzR4y9nCnYV0AP98Tuz2LDGOijYacsRYQXV2W4AgLwLbarWckBiKAqPP
+         WkKQHnGIDj6WFJuKN9+KbuU0A1r3ha+5tmN7ESLR73aX8K9RRyRimDI0SQV6UbV3NJbD
+         PvT3li2K2PIebPryOLimbsD/Dpxhz94PfmFkp1ljHv2r8qtVEvLUvzk+rpg0JXPr+mIf
+         nN2oDGRb4EcljqszMV4l3gA/HIKipyVm4Vux9hAzfZOH1/LggHl/9T/93rqt9PJ0zKct
+         ccLA==
+X-Gm-Message-State: AOAM533l1cEHsIZogW1vYCyUSCwfv7nO6OrSkOAbJWRw8Qb/+ysdbHUO
+        cJFpJRPHrmwx2n6bANU3FyjIcz607HtPTg==
+X-Google-Smtp-Source: ABdhPJw4RZdULQAGFiiQOjeZAaO+1fWaTDR+zESi45AHvjbWC2abmJyKqyNT2e08HM/6Z5X0lWJtwA==
+X-Received: by 2002:a67:7d01:: with SMTP id y1mr13606657vsc.18.1610758664942;
+        Fri, 15 Jan 2021 16:57:44 -0800 (PST)
+Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com. [209.85.222.41])
+        by smtp.gmail.com with ESMTPSA id v12sm1140510vsp.3.2021.01.15.16.57.44
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 Jan 2021 16:57:44 -0800 (PST)
+Received: by mail-ua1-f41.google.com with SMTP id u27so44841uaa.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jan 2021 16:57:44 -0800 (PST)
+X-Received: by 2002:ab0:2e99:: with SMTP id f25mr12091635uaa.104.1610758663654;
+ Fri, 15 Jan 2021 16:57:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20210115203951.850873-1-swboyd@chromium.org>
+In-Reply-To: <20210115203951.850873-1-swboyd@chromium.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 15 Jan 2021 16:57:31 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=XGajtxTo1wNk1iDj_17F0Ris1A5fdwtJkYRUSjMkXb7A@mail.gmail.com>
+Message-ID: <CAD=FV=XGajtxTo1wNk1iDj_17F0Ris1A5fdwtJkYRUSjMkXb7A@mail.gmail.com>
+Subject: Re: [PATCH] soc: qcom: socinfo: Don't print anything if nothing found
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Move swr0 device node to keep alphabetical sorting order of device tree
-nodes.
+Hi,
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 40 ++++++++++++------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+On Fri, Jan 15, 2021 at 12:39 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Let's skip printing anything if there's nothing to see. This makes it so
+> the file length is 0 instead of 1, for the newline, and helps scripts
+> figure out if there's anything to see in these files.
+>
+> Cc: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  drivers/soc/qcom/socinfo.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-index 4a0c3edf87e1..a424595da8b0 100644
---- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-@@ -664,26 +664,6 @@ &sdhc_2 {
- 	no-emmc;
- };
- 
--&swr0 {
--	left_spkr: wsa8810-left{
--		compatible = "sdw10217211000";
--		reg = <0 3>;
--		powerdown-gpios = <&tlmm 130 GPIO_ACTIVE_HIGH>;
--		#thermal-sensor-cells = <0>;
--		sound-name-prefix = "SpkrLeft";
--		#sound-dai-cells = <0>;
--	};
--
--	right_spkr: wsa8810-right{
--		compatible = "sdw10217211000";
--		reg = <0 4>;
--		powerdown-gpios = <&tlmm 130 GPIO_ACTIVE_HIGH>;
--		#thermal-sensor-cells = <0>;
--		sound-name-prefix = "SpkrRight";
--		#sound-dai-cells = <0>;
--	};
--};
--
- &sound {
- 	compatible = "qcom,qrb5165-rb5-sndcard";
- 	pinctrl-0 = <&tert_mi2s_active>;
-@@ -780,6 +760,26 @@ can@0 {
- 	};
- };
- 
-+&swr0 {
-+	left_spkr: wsa8810-left{
-+		compatible = "sdw10217211000";
-+		reg = <0 3>;
-+		powerdown-gpios = <&tlmm 130 GPIO_ACTIVE_HIGH>;
-+		#thermal-sensor-cells = <0>;
-+		sound-name-prefix = "SpkrLeft";
-+		#sound-dai-cells = <0>;
-+	};
-+
-+	right_spkr: wsa8810-right{
-+		compatible = "sdw10217211000";
-+		reg = <0 4>;
-+		powerdown-gpios = <&tlmm 130 GPIO_ACTIVE_HIGH>;
-+		#thermal-sensor-cells = <0>;
-+		sound-name-prefix = "SpkrRight";
-+		#sound-dai-cells = <0>;
-+	};
-+};
-+
- &tlmm {
- 	gpio-reserved-ranges = <40 4>;
- 	gpio-line-names =
--- 
-2.29.2
-
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
