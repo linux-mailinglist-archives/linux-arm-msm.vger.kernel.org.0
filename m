@@ -2,240 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 64EA82F8796
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jan 2021 22:23:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E40E02F89E4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Jan 2021 01:24:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726476AbhAOVVY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jan 2021 16:21:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40386 "EHLO
+        id S1725854AbhAPAYa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jan 2021 19:24:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726382AbhAOVVV (ORCPT
+        with ESMTP id S1725833AbhAPAYa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jan 2021 16:21:21 -0500
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E76B3C061757;
-        Fri, 15 Jan 2021 13:20:40 -0800 (PST)
-Received: from pendragon.ideasonboard.com (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 6241F58B;
-        Fri, 15 Jan 2021 22:20:38 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1610745638;
-        bh=gBrtw5MNkdCbuPvi2cTqhl5za5Pqp/q6zVdWl/a94uc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=DpGlh+3zv26rFKiVKPMFcYE9SIJo78wTzt+f/qWBARm/BpkTmg6EAErEFPBPbbPhX
-         fh5IdmlIWmtQSiBr7ktLcqDESDp5TwoTZAovDL33H8Kodwu6i7gIW5IBgS4KdC5rwv
-         RKLhIq/ekLRDmOepJkHy4FhmHBsfknCCplWClCys=
-Date:   Fri, 15 Jan 2021 23:20:21 +0200
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Maxime Ripard <maxime@cerno.tech>
-Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        David Airlie <airlied@linux.ie>,
-        dri-devel@lists.freedesktop.org,
-        Alexey Brodkin <abrodkin@synopsys.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        Brian Starkey <brian.starkey@arm.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Dave Airlie <airlied@redhat.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Boris Brezillon <bbrezillon@kernel.org>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Inki Dae <inki.dae@samsung.com>,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Stefan Agner <stefan@agner.ch>,
-        Alison Wang <alison.wang@nxp.com>,
-        Xinliang Liu <xinliang.liu@linaro.org>,
-        Tian Tao <tiantao6@hisilicon.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
-        Chen Feng <puck.chen@hisilicon.com>,
-        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Anitha Chrisanthus <anitha.chrisanthus@intel.com>,
-        Edmund Dea <edmund.j.dea@intel.com>,
-        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marek Vasut <marex@denx.de>, Tomi Valkeinen <tomba@kernel.org>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-        Sandy Huang <hjc@rock-chips.com>,
-        Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>,
-        Benjamin Gaignard <benjamin.gaignard@linaro.org>,
-        Vincent Abriou <vincent.abriou@st.com>,
-        Yannick Fertre <yannick.fertre@st.com>,
-        Philippe Cornu <philippe.cornu@st.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@st.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jyri Sarha <jyri.sarha@iki.fi>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Rodrigo Siqueira <rodrigosiqueiramelo@gmail.com>,
-        Melissa Wen <melissa.srw@gmail.com>,
-        Haneen Mohammed <hamohammed.sa@gmail.com>,
-        VMware Graphics <linux-graphics-maintainer@vmware.com>,
-        Roland Scheidegger <sroland@vmware.com>,
-        Hyun Kwon <hyun.kwon@xilinx.com>,
-        Michal Simek <michal.simek@xilinx.com>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org,
-        virtualization@lists.linux-foundation.org,
-        spice-devel@lists.freedesktop.org,
-        linux-renesas-soc@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-tegra@vger.kernel.org
-Subject: Re: [PATCH 10/10] drm: Use state helper instead of the plane state
- pointer
-Message-ID: <YAIHFTYiry6ebUsY@pendragon.ideasonboard.com>
-References: <20210115125703.1315064-1-maxime@cerno.tech>
- <20210115125703.1315064-10-maxime@cerno.tech>
+        Fri, 15 Jan 2021 19:24:30 -0500
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C293C0613D3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jan 2021 16:23:49 -0800 (PST)
+Received: by mail-lf1-x129.google.com with SMTP id 23so15722012lfg.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jan 2021 16:23:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TvLCs8sLMAUpdnN+6kzCgxJCo3Pys1RW0I649Aw4wwM=;
+        b=Kjo1yhXFU7U1p1nJ5sxo1afiYdbroqieR9NeQk/+ssqvcol75z4ueSbfwlBjsDEg1E
+         nYGNGZCmddX2gKj9lgjTwg3AT6wZWC9uLgUbKvnxuiuxh6feUSJPHRFRohrbfm3ihsON
+         P9d5+7xXRGc4XZ8QIkJm0IBIkcLXFsDuV9M0x6zlRPstjEBet5Qebl+QCqBJWl47H0sf
+         KnS91Z93D3Kc5/NYNuinETH1E6R0b+VM21vwWMewdmVAnBp/I6a9SyXlHRRoBx2c+zzk
+         XWJbSgYclwPD5mf4agMbn14cdC9KI2DpYuo3Kbjlu4jWHgokdHw1x0/Vc0dom3bixXZH
+         FPew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TvLCs8sLMAUpdnN+6kzCgxJCo3Pys1RW0I649Aw4wwM=;
+        b=Q1Mw+wL9Ejex3cJ7TGpTtJKuMi+1F46brxJ9pTR/IRRyVjg5ZNgq42FjZe9azDQ9J6
+         dRE5AHd1Xkt1m3t9rhYF5g893WtGNq39ta9FyJR1M7mfg6p2VTH8fqNor2pz8pZAypV6
+         vHAHsJPRpBvvqIv0/3o8RauqXAoHHYsirMVHDc+Xa1e1e7byu3BDoTmOuBHSLvnJASzx
+         5DTnsj0m2Mxx9fvI4Yw83IJ/v9MYYa7vBOA2Ah2GhULqKYdGWf9gpjoItfUuUf4mPmJg
+         PsKGQY+rHOq5vKqvqd8nTz9He1YLCBe1MNfLJ/KbVhJOCPaURCKjyE34DToaI7S/nzIp
+         ZuJA==
+X-Gm-Message-State: AOAM532RZ7lSsNmI6U4TjTkbL7YtFsWpi+m0rJCcSeQUcTyy1UZdxt9Z
+        MD9W1kTxX08xNmQGM/nO8C8U61QFySQ1EotC3bA=
+X-Google-Smtp-Source: ABdhPJxa3a13E5So0CqpKS+4um6HLpxbRfkXyOIOxRhz46Brintd5qzpc0t567ON8L8nhVAkiasqVg==
+X-Received: by 2002:a19:848f:: with SMTP id g137mr6448864lfd.622.1610756628019;
+        Fri, 15 Jan 2021 16:23:48 -0800 (PST)
+Received: from eriador.lumag.spb.ru ([94.25.229.245])
+        by smtp.gmail.com with ESMTPSA id l21sm941633lja.35.2021.01.15.16.23.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Jan 2021 16:23:47 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: qrb5165-rb5: sort nodes alphabetically
+Date:   Sat, 16 Jan 2021 03:23:46 +0300
+Message-Id: <20210116002346.422479-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20210115125703.1315064-10-maxime@cerno.tech>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Maxime,
+Move swr0 device node to keep alphabetical sorting order of device tree
+nodes.
 
-Thank you for the patch.
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 40 ++++++++++++------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
 
-On Fri, Jan 15, 2021 at 01:57:02PM +0100, Maxime Ripard wrote:
-> Many drivers reference the plane->state pointer in order to get the
-> current plane state in their atomic_update or atomic_disable hooks,
-
-Please don't use the word "current", it's ambiguous. Do you mean old
-state or new state ?
-
-> which would be the new plane state in the global atomic state since
-> _swap_state happened when those hooks are run.
-
-Is this relevant ? drm_atomic_helper_swap_state() doesn't change the
-old_state and new_state pointers in drm_atomic_state as far as I can
-tell.
-
-> Use the drm_atomic_get_new_plane_state helper to get that state to make it
-> more obvious.
-> 
-> This was made using the coccinelle script below:
-> 
-> @ plane_atomic_func @
-> identifier helpers;
-> identifier func;
-> @@
-> 
-> (
->  static const struct drm_plane_helper_funcs helpers = {
->  	...,
->  	.atomic_disable = func,
-> 	...,
->  };
-> |
->  static const struct drm_plane_helper_funcs helpers = {
->  	...,
->  	.atomic_update = func,
-> 	...,
->  };
-> )
-> 
-> @ adds_new_state @
-> identifier plane_atomic_func.func;
-> identifier plane, state;
-> identifier new_state;
-> @@
-> 
->  func(struct drm_plane *plane, struct drm_atomic_state *state)
->  {
->  	...
-> -	struct drm_plane_state *new_state = plane->state;
-> +	struct drm_plane_state *new_state = drm_atomic_get_new_plane_state(state, plane);
-> 	...
->  }
-> 
-> @ include depends on adds_new_state @
-> @@
-> 
->  #include <drm/drm_atomic.h>
-> 
-> @ no_include depends on !include && adds_new_state @
-> @@
-> 
-> + #include <drm/drm_atomic.h>
->   #include <drm/...>
-> 
-> Signed-off-by: Maxime Ripard <maxime@cerno.tech>
-> ---
-
-[snip]
-
->  drivers/gpu/drm/omapdrm/omap_plane.c            | 6 ++++--
->  drivers/gpu/drm/rcar-du/rcar_du_plane.c         | 3 ++-
->  drivers/gpu/drm/rcar-du/rcar_du_vsp.c           | 3 ++-
->  drivers/gpu/drm/xlnx/zynqmp_disp.c              | 3 ++-
-
-[snip]
-
-> diff --git a/drivers/gpu/drm/omapdrm/omap_plane.c b/drivers/gpu/drm/omapdrm/omap_plane.c
-> index cd8cf7c786b5..021a94de84a1 100644
-> --- a/drivers/gpu/drm/omapdrm/omap_plane.c
-> +++ b/drivers/gpu/drm/omapdrm/omap_plane.c
-> @@ -44,7 +44,8 @@ static void omap_plane_atomic_update(struct drm_plane *plane,
->  {
->  	struct omap_drm_private *priv = plane->dev->dev_private;
->  	struct omap_plane *omap_plane = to_omap_plane(plane);
-> -	struct drm_plane_state *new_state = plane->state;
-
-This seems to imply that you're interested in the new state.
-
-> +	struct drm_plane_state *new_state = drm_atomic_get_new_plane_state(state,
-> +									   plane);
-
-Does this really make things more obvious ?
-
->  	struct omap_overlay_info info;
->  	int ret;
->  
-> @@ -89,7 +90,8 @@ static void omap_plane_atomic_update(struct drm_plane *plane,
->  static void omap_plane_atomic_disable(struct drm_plane *plane,
->  				      struct drm_atomic_state *state)
->  {
-> -	struct drm_plane_state *new_state = plane->state;
-> +	struct drm_plane_state *new_state = drm_atomic_get_new_plane_state(state,
-> +									   plane);
->  	struct omap_drm_private *priv = plane->dev->dev_private;
->  	struct omap_plane *omap_plane = to_omap_plane(plane);
->  
-
-[snip]
-
+diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+index 4a0c3edf87e1..a424595da8b0 100644
+--- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
++++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+@@ -664,26 +664,6 @@ &sdhc_2 {
+ 	no-emmc;
+ };
+ 
+-&swr0 {
+-	left_spkr: wsa8810-left{
+-		compatible = "sdw10217211000";
+-		reg = <0 3>;
+-		powerdown-gpios = <&tlmm 130 GPIO_ACTIVE_HIGH>;
+-		#thermal-sensor-cells = <0>;
+-		sound-name-prefix = "SpkrLeft";
+-		#sound-dai-cells = <0>;
+-	};
+-
+-	right_spkr: wsa8810-right{
+-		compatible = "sdw10217211000";
+-		reg = <0 4>;
+-		powerdown-gpios = <&tlmm 130 GPIO_ACTIVE_HIGH>;
+-		#thermal-sensor-cells = <0>;
+-		sound-name-prefix = "SpkrRight";
+-		#sound-dai-cells = <0>;
+-	};
+-};
+-
+ &sound {
+ 	compatible = "qcom,qrb5165-rb5-sndcard";
+ 	pinctrl-0 = <&tert_mi2s_active>;
+@@ -780,6 +760,26 @@ can@0 {
+ 	};
+ };
+ 
++&swr0 {
++	left_spkr: wsa8810-left{
++		compatible = "sdw10217211000";
++		reg = <0 3>;
++		powerdown-gpios = <&tlmm 130 GPIO_ACTIVE_HIGH>;
++		#thermal-sensor-cells = <0>;
++		sound-name-prefix = "SpkrLeft";
++		#sound-dai-cells = <0>;
++	};
++
++	right_spkr: wsa8810-right{
++		compatible = "sdw10217211000";
++		reg = <0 4>;
++		powerdown-gpios = <&tlmm 130 GPIO_ACTIVE_HIGH>;
++		#thermal-sensor-cells = <0>;
++		sound-name-prefix = "SpkrRight";
++		#sound-dai-cells = <0>;
++	};
++};
++
+ &tlmm {
+ 	gpio-reserved-ranges = <40 4>;
+ 	gpio-line-names =
 -- 
-Regards,
+2.29.2
 
-Laurent Pinchart
