@@ -2,106 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 345ED2F9582
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Jan 2021 22:31:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 48F962F958B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Jan 2021 22:33:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730246AbhAQV3i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 17 Jan 2021 16:29:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33030 "EHLO
+        id S1729485AbhAQVaw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 17 Jan 2021 16:30:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730228AbhAQV3d (ORCPT
+        with ESMTP id S1730231AbhAQV3d (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Sun, 17 Jan 2021 16:29:33 -0500
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F41EC061574;
-        Sun, 17 Jan 2021 13:28:52 -0800 (PST)
-Received: by mail-lj1-x229.google.com with SMTP id y22so16179125ljn.9;
-        Sun, 17 Jan 2021 13:28:52 -0800 (PST)
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CE7EC061575;
+        Sun, 17 Jan 2021 13:28:53 -0800 (PST)
+Received: by mail-lj1-x233.google.com with SMTP id u21so16247407lja.0;
+        Sun, 17 Jan 2021 13:28:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=JHN448ie4lfoHdGU7Kihh3TQ8isAnLB0leDLe4VpFls=;
-        b=i5lWv6gwm3PGlcuLhc9DzYxVC9hU4FjAXY8q3GwdQ/x9JMJXRH8A/iU/1esfYBAoIK
-         QGC1yGPjitZHGUInJB7BUpJ2s/Pu8bE17W1JCZv37Tf/zY0jkHzO4Sz9LXnENz3L55QG
-         R8MK31jght6Ot6uXi4rC3JfAKp5fFS2GrxtLcpceKDae7v5HH4W4vVwPeDLouwDqvqbP
-         YT+09mlhqvheMPoPOnevHP1V5zH/u3Jjen6nZe1XIg+itz/eSgwJ5wF68TS0EreK7huj
-         dWf3P1aNIwcuYbRRNHJ20z2i8dM/DhNudBNtHxiO4bluWkliUan3yJ4kEVUhDMMWTzAf
-         lPBA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=pGnYP5b1bDIsYHya/pAq0V9WLLrl1QJY4UrDAmDKPYg=;
+        b=nx0SYB/NbD9w9zFZz3U1CvgF3CDr1YdMqMlKZwWnsNpILFdt3vJxJaG1r0q4ezBiTD
+         frNFmGge87M8DY87lZTm8VudMB22VrCoMExUgem4OZAg/4SRrtZBN0VyoSNe+8eZrpxb
+         ROhUvtuAGnPUO5isMD8LJQ/2sNP6MtMpgrmU2IaTFr3T1tYQAQKw8dBvHb6b3iQkFVR/
+         rqEYyPChZuckA7n4LqVIy3AP9J5kCtMzvT3GIRAaxrJVrs4qQCWq+36vC4fBsFeL8Eh/
+         ik1JHjrcHolpqNcnvQl8o2EQMiPLTFHH3QKyOMEiCebAkL4i9PKdgLJR/s9pox3svinh
+         7D6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=JHN448ie4lfoHdGU7Kihh3TQ8isAnLB0leDLe4VpFls=;
-        b=Bw6+ak/oUxNsu3MX5Q3kzJmy32YJMyUueMf6w+LKyoNW3X+9+OdkFaKh1O0+DrwKaQ
-         3DAJjAbB19VTgXa7CxaFHT3XYE8yw3BX5mm+Sd3m6iuKC+qXvWxbx5sxgO7Nmc4r8ow4
-         rVswz0tPPugPTpADNd1H+AFfB+6D9ArUt90tiVRAWN37yVIDnPb/+358Hj4Ns2ZUGD5q
-         nyZo0CeqmcUkZfktXAwvtogjPgJNUWWm8p/YdOZWlzxpR9HYq4W7F348ti1pFNP8uJ+l
-         ODKrQJ9xfw37kzPvcK74DjtwHN85LwWxGE0mIAz424fXQZDJMq4qQ6QPlCJm+0li5jy6
-         PUcQ==
-X-Gm-Message-State: AOAM5301ip4Ahc9BjXWQI9Rj4X5NZdaD6f4i8uTJ2yenoIv9OeKoRCY5
-        6Xm7Ws19YoGFI6tzUJjjUTw=
-X-Google-Smtp-Source: ABdhPJyzI/2DMWJbg/+GIOI1ETZcCKHQW4Jo8YNBwC6yEfSWqY8Yb4qm04yi12TgD0eZsSkFbZgJkg==
-X-Received: by 2002:a05:651c:204f:: with SMTP id t15mr9840691ljo.161.1610918930702;
-        Sun, 17 Jan 2021 13:28:50 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=pGnYP5b1bDIsYHya/pAq0V9WLLrl1QJY4UrDAmDKPYg=;
+        b=gw+8iGuWGnXuiVVpw3JfObsiCcK1/Oez+THqlqoZ0Mr9DcmBilo+UFxwyUw2rlay3x
+         cRBHhkGH0kJ3pxrEZbdMToJaC/2L9nLlf1TlXUwLBQvn4aLajAMIX4QoXp0rHOYYdJTa
+         hnaHDS23BYmGZMCQuAVMfKNNuvrVqj9Nf0NI5VNtiBJ9oUx+u+DIZ77/yWXjeFFwyKBh
+         6Eq727wAFmcs4gwQH5Ec+xfb6fh8q9tr+I5eBmEvkdOiGi7vpIf4oN/lXPnClTjuYGsL
+         vNc+CQqEdvPZVEn8tL9zPcLBiSbz1qjrzQFm2mkuNYi+yJv8/3Ynkef3cMlA4DpXQP4e
+         t94A==
+X-Gm-Message-State: AOAM531JG4Dj60kLOPVlELH2ytrTTvPXL7/hoyTSfjCPIRCCOT9IZH3z
+        zdn9D6pA4tsIlxEZPBsSuwk=
+X-Google-Smtp-Source: ABdhPJyk/IlGV1zlFVOkeqim8MjcwEqd6MBGP3CyNxLvQv4Xmyzv22A20JbND8Mok2BDSpnqWWJ34g==
+X-Received: by 2002:a2e:2f16:: with SMTP id v22mr9029676ljv.198.1610918931755;
+        Sun, 17 Jan 2021 13:28:51 -0800 (PST)
 Received: from localhost.localdomain (h-158-174-22-164.NA.cust.bahnhof.se. [158.174.22.164])
-        by smtp.gmail.com with ESMTPSA id s19sm1678858lfc.41.2021.01.17.13.28.49
+        by smtp.gmail.com with ESMTPSA id s19sm1678858lfc.41.2021.01.17.13.28.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 Jan 2021 13:28:50 -0800 (PST)
+        Sun, 17 Jan 2021 13:28:51 -0800 (PST)
 From:   Rikard Falkeborn <rikard.falkeborn@gmail.com>
-To:     Will Deacon <will@kernel.org>, Mark Rutland <mark.rutland@arm.com>
+To:     Will Deacon <will@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>
 Cc:     Frank Li <Frank.li@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
         Sascha Hauer <s.hauer@pengutronix.de>,
         Pengutronix Kernel Team <kernel@pengutronix.de>,
         Fabio Estevam <festevam@gmail.com>,
         NXP Linux Team <linux-imx@nxp.com>,
         Shaokun Zhang <zhangshaokun@hisilicon.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org,
         Rikard Falkeborn <rikard.falkeborn@gmail.com>
-Subject: [PATCH 0/4] drivers/perf: Constify static struct attribute_group
-Date:   Sun, 17 Jan 2021 22:28:43 +0100
-Message-Id: <20210117212847.21319-1-rikard.falkeborn@gmail.com>
+Subject: [PATCH 1/4] perf: qcom: Constify static struct attribute_group
+Date:   Sun, 17 Jan 2021 22:28:44 +0100
+Message-Id: <20210117212847.21319-2-rikard.falkeborn@gmail.com>
 X-Mailer: git-send-email 2.30.0
+In-Reply-To: <20210117212847.21319-1-rikard.falkeborn@gmail.com>
+References: <20210117212847.21319-1-rikard.falkeborn@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thie series makes a number of static struct attribute_group const. The
-only usage of the structs is to put their address in an array of pointers
-to const struct * attribute_group. With this series applied, all but two
-static struct attribute_group in drivers/perf are const (and the two
-remaining are modified at runtime and can't be const).
+The only usage is to put their addresses in an array of pointers to
+const struct attribute group. Make them const to allow the compiler
+to put them in read-only memory.
 
-Patches are independent and split based on output from get_maintainers.pl.
-I can of course split differently if that's desired.
+Signed-off-by: Rikard Falkeborn <rikard.falkeborn@gmail.com>
+---
+ drivers/perf/qcom_l2_pmu.c | 6 +++---
+ drivers/perf/qcom_l3_pmu.c | 6 +++---
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-Done with the help of coccinelle.
-
-Rikard Falkeborn (4):
-  perf: qcom: Constify static struct attribute_group
-  perf/imx_ddr: Constify static struct attribute_group
-  perf: hisi: Constify static struct attribute_group
-  perf: Constify static struct attribute_group
-
- drivers/perf/arm-cci.c                        |  2 +-
- drivers/perf/arm-cmn.c                        |  2 +-
- drivers/perf/arm_dmc620_pmu.c                 |  4 ++--
- drivers/perf/arm_pmu.c                        |  2 +-
- drivers/perf/arm_smmuv3_pmu.c                 |  8 ++++----
- drivers/perf/arm_spe_pmu.c                    |  6 +++---
- drivers/perf/fsl_imx8_ddr_perf.c              | 10 +++++-----
- drivers/perf/hisilicon/hisi_uncore_ddrc_pmu.c |  2 +-
- drivers/perf/hisilicon/hisi_uncore_hha_pmu.c  |  2 +-
- drivers/perf/hisilicon/hisi_uncore_l3c_pmu.c  |  2 +-
- drivers/perf/qcom_l2_pmu.c                    |  6 +++---
- drivers/perf/qcom_l3_pmu.c                    |  6 +++---
- 12 files changed, 26 insertions(+), 26 deletions(-)
-
+diff --git a/drivers/perf/qcom_l2_pmu.c b/drivers/perf/qcom_l2_pmu.c
+index 23a0e008dafa..8883af955a2a 100644
+--- a/drivers/perf/qcom_l2_pmu.c
++++ b/drivers/perf/qcom_l2_pmu.c
+@@ -649,7 +649,7 @@ static struct attribute *l2_cache_pmu_cpumask_attrs[] = {
+ 	NULL,
+ };
+ 
+-static struct attribute_group l2_cache_pmu_cpumask_group = {
++static const struct attribute_group l2_cache_pmu_cpumask_group = {
+ 	.attrs = l2_cache_pmu_cpumask_attrs,
+ };
+ 
+@@ -665,7 +665,7 @@ static struct attribute *l2_cache_pmu_formats[] = {
+ 	NULL,
+ };
+ 
+-static struct attribute_group l2_cache_pmu_format_group = {
++static const struct attribute_group l2_cache_pmu_format_group = {
+ 	.name = "format",
+ 	.attrs = l2_cache_pmu_formats,
+ };
+@@ -700,7 +700,7 @@ static struct attribute *l2_cache_pmu_events[] = {
+ 	NULL
+ };
+ 
+-static struct attribute_group l2_cache_pmu_events_group = {
++static const struct attribute_group l2_cache_pmu_events_group = {
+ 	.name = "events",
+ 	.attrs = l2_cache_pmu_events,
+ };
+diff --git a/drivers/perf/qcom_l3_pmu.c b/drivers/perf/qcom_l3_pmu.c
+index 9ddb577c542b..fb34b87b9471 100644
+--- a/drivers/perf/qcom_l3_pmu.c
++++ b/drivers/perf/qcom_l3_pmu.c
+@@ -630,7 +630,7 @@ static struct attribute *qcom_l3_cache_pmu_formats[] = {
+ 	NULL,
+ };
+ 
+-static struct attribute_group qcom_l3_cache_pmu_format_group = {
++static const struct attribute_group qcom_l3_cache_pmu_format_group = {
+ 	.name = "format",
+ 	.attrs = qcom_l3_cache_pmu_formats,
+ };
+@@ -663,7 +663,7 @@ static struct attribute *qcom_l3_cache_pmu_events[] = {
+ 	NULL
+ };
+ 
+-static struct attribute_group qcom_l3_cache_pmu_events_group = {
++static const struct attribute_group qcom_l3_cache_pmu_events_group = {
+ 	.name = "events",
+ 	.attrs = qcom_l3_cache_pmu_events,
+ };
+@@ -685,7 +685,7 @@ static struct attribute *qcom_l3_cache_pmu_cpumask_attrs[] = {
+ 	NULL,
+ };
+ 
+-static struct attribute_group qcom_l3_cache_pmu_cpumask_attr_group = {
++static const struct attribute_group qcom_l3_cache_pmu_cpumask_attr_group = {
+ 	.attrs = qcom_l3_cache_pmu_cpumask_attrs,
+ };
+ 
 -- 
 2.30.0
 
