@@ -2,171 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CE59C2FA2DD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jan 2021 15:23:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CCF9D2FA390
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jan 2021 15:51:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404839AbhAROWo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Jan 2021 09:22:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52278 "EHLO
+        id S2404825AbhAROte (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Jan 2021 09:49:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392840AbhAROWZ (ORCPT
+        with ESMTP id S2405178AbhAROsQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Jan 2021 09:22:25 -0500
-Received: from mail-vs1-xe30.google.com (mail-vs1-xe30.google.com [IPv6:2607:f8b0:4864:20::e30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0FD6C061757
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jan 2021 06:21:39 -0800 (PST)
-Received: by mail-vs1-xe30.google.com with SMTP id o125so7970547vsc.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jan 2021 06:21:39 -0800 (PST)
+        Mon, 18 Jan 2021 09:48:16 -0500
+Received: from mail-ua1-x936.google.com (mail-ua1-x936.google.com [IPv6:2607:f8b0:4864:20::936])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 809BAC061757
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jan 2021 06:47:36 -0800 (PST)
+Received: by mail-ua1-x936.google.com with SMTP id 43so3063789uag.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jan 2021 06:47:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=8Vm6t4j1UkDFvwn0ow87G236Agmhfjw2bgz8G0c2yDI=;
-        b=YXqE56R8iZgWt/xrgnWS0ADg7SYiBItKyNtuwN2h7t8q8wy0w5JqyNKlBWWFXshlUJ
-         CXagI21LIShLrGMg/Fe+mnuli1luaaTSzLB/NMpARZXTfROfsDQ/iYpdulrKRaH44omv
-         S3dWkuVPoYR3IwAGyg2u+a7pE2le0xJ5aSX6UQ02k2X7P8OC5oRR/2mBDYU/RO97xmR/
-         ue7BsAGWAwxc8eN2KmJVGqjUnBQuKE1bW5qwFvFfZ9cFLuc1KyfyJOPJVDZ+37g+WL2K
-         0rvDzQ7f2IYdc6wYIYYbseljKuikW3Le4bFcVJON3qyVmain2Bxgg3VOyYtwlTCcLffH
-         Uw4w==
+        bh=tYITA3Yxe+LNUEBbIjMhLMDLo8Pr6qOWRiVR9QOc69o=;
+        b=WBp4BQ4iS/nMuJHj2dRCYS1FOe1q70UMadKm9plqyvTpqfBAye6UbGn+Szu9OK2C9t
+         /sL8U2B/SyzKpzYyfD/PA0RseoBzXrBcf12M4EFyJMxQXw3jeGXo1UhmVOCddHRiGoax
+         Xyfns6tQ10yiERfST33vIWqybEqEXPJWFcPbE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=8Vm6t4j1UkDFvwn0ow87G236Agmhfjw2bgz8G0c2yDI=;
-        b=uLxpm2tfHWYanptyhmnevjWb6AhnF4T5xm0YYkG4xn5bxUu+DrYJgZV0mKRTavya6P
-         8waDQ7iDMZbFpWajcxDFw5ui63nEAmgwbIiAQWU/ocv3t0OfqKMfP/ihXsScql3WGeTX
-         Z262IE2wGbLIBtcFXCiJgfAYBQVa0j08T8IoO6oxS2g09E2Ou/mUrdevCD7x15v5fHUQ
-         LZpufg8KErjDwdnT4/nxRfeO7k2pLh/cdm3xeFzbrY9LX/jdUt6FCO4bhNjcfBJKYynX
-         LwHZ0mDDC1N7Ug81F7aQxjKSk1APVModC7eZJywwCf63UxlOsqNoAUCUWpxeV3QMMK5b
-         GSvw==
-X-Gm-Message-State: AOAM533M2IrrbKx5W48PfYa2n9LWEKqx5Yn7qnfKeEZvmw9VbnI7R0l0
-        twT6jctZKsyekdxCFChIZy9uQtXNszROxV0U9Gc9lA==
-X-Google-Smtp-Source: ABdhPJz90QZK3nqwzH2xdCIh6J4iWnuKhWdk04HEQs0XckljNnog8h9RjU13Vc2Neznz6h0kc0sFbd9aNjuBi9ia6Z0=
-X-Received: by 2002:a67:7f41:: with SMTP id a62mr17276352vsd.55.1610979698621;
- Mon, 18 Jan 2021 06:21:38 -0800 (PST)
+        bh=tYITA3Yxe+LNUEBbIjMhLMDLo8Pr6qOWRiVR9QOc69o=;
+        b=A3euVKg7+s0Fm/Gc78wiP+X57ju2vjZMUSjFcRC+glVUBcsQuicZxY9jxZPzY/+Hms
+         6J9lwwOcjih6/hNfc9RqeQ0Ymm1fDhvoe41/R9Nd+YMflDl2aKg3ClQYzIsTUcpiz/5I
+         Am7aTx4Y/SbJjeeV2SpBexM7lEWkQCIBFhUMZCMmDoXLf2hJ3/uiekWze0L9gVfbEn9w
+         r9nIAfa8ko0TT+HXJ4z4RougnXrCi1VdhTudGAGQzr3QYKT8Cgc4FqRHD1ReOTEyDdcf
+         NRh7G9axTlSluRQwZPeOEFKXVp4Ww6C1UaKHP7HV71MYzRmORgSDKOX8D77SbUg//8/l
+         wRbg==
+X-Gm-Message-State: AOAM530WZf0X1d5LoRkiirt1X/k0aRdkbwfnjhyrt6TUC07MhWtBHZEb
+        GGD6r3H9IoDUkyMEjxK36K08QhBeUkjJtkDPXy9eKA==
+X-Google-Smtp-Source: ABdhPJwMOdZBQVMFI+wOY4prWcda+5x/AEFNDfgLueyLCfRiRaIBomu6uUxWpvmwEP1qgrXX6LiK2JHjkjI2sbTLjFs=
+X-Received: by 2002:ab0:7193:: with SMTP id l19mr2785323uao.84.1610981255465;
+ Mon, 18 Jan 2021 06:47:35 -0800 (PST)
 MIME-Version: 1.0
-References: <20210104184542.4616-1-ebiggers@kernel.org> <20210104184542.4616-2-ebiggers@kernel.org>
- <CAPDyKFq717teu2HPZLCn9QVxLOwZHdi_iS+Ji69S0kYX1o52PQ@mail.gmail.com> <YAHXPREJaKjK/z7+@sol.localdomain>
-In-Reply-To: <YAHXPREJaKjK/z7+@sol.localdomain>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Mon, 18 Jan 2021 15:21:01 +0100
-Message-ID: <CAPDyKFopKy6dwENJ6YQQ0KRPQdT25R_zmhrNH7jyu=+p6bKpNA@mail.gmail.com>
-Subject: Re: [PATCH v4 1/9] mmc: add basic support for inline encryption
-To:     Eric Biggers <ebiggers@kernel.org>
-Cc:     "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>, linux-fscrypt@vger.kernel.org,
-        Satya Tangirala <satyat@google.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Neeraj Soni <neersoni@codeaurora.org>,
-        Barani Muthukumaran <bmuthuku@codeaurora.org>,
-        Peng Zhou <peng.zhou@mediatek.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Konrad Dybcio <konradybcio@gmail.com>
+References: <20201015124522.1876-1-saiprakash.ranjan@codeaurora.org>
+ <20201015160257.GA1450102@xps15> <dd400fd7017a5d92b55880cf28378267@codeaurora.org>
+In-Reply-To: <dd400fd7017a5d92b55880cf28378267@codeaurora.org>
+From:   Mattias Nissler <mnissler@chromium.org>
+Date:   Mon, 18 Jan 2021 15:47:23 +0100
+Message-ID: <CAKUbbx+ZC9cLvcaJnrDYYsrUhfO3dOXJGoLswL30nRzChjwn-w@mail.gmail.com>
+Subject: Re: [PATCH] coresight: etm4x: Add config to exclude kernel mode tracing
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>, coresight@lists.linaro.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Denis Nikitin <denik@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, Al Grant <al.grant@arm.com>,
+        leo.yan@linaro.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 15 Jan 2021 at 18:56, Eric Biggers <ebiggers@kernel.org> wrote:
+On Fri, Jan 15, 2021 at 6:46 AM Sai Prakash Ranjan
+<saiprakash.ranjan@codeaurora.org> wrote:
 >
-> On Fri, Jan 15, 2021 at 10:22:03AM +0100, Ulf Hansson wrote:
-> > On Mon, 4 Jan 2021 at 19:48, Eric Biggers <ebiggers@kernel.org> wrote:
-> > >
-> > > From: Eric Biggers <ebiggers@google.com>
-> > >
-> > > In preparation for adding CQHCI crypto engine (inline encryption)
-> > > support, add the code required to make mmc_core and mmc_block aware of
-> > > inline encryption.  Specifically:
-> > >
-> > > - Add a capability flag MMC_CAP2_CRYPTO to struct mmc_host.  Drivers
-> > >   will set this if the host and driver support inline encryption.
-> > >
-> > > - Embed a blk_keyslot_manager in struct mmc_host.  Drivers will
-> > >   initialize this if the host and driver support inline encryption.
-> > >   mmc_block registers this keyslot manager with the request_queue of any
-> > >   MMC card attached to the host.  mmc_core destroys this keyslot manager
-> > >   when freeing the mmc_host.
-> > >
-> > > - Make mmc_block copy the crypto keyslot and crypto data unit number
-> > >   from struct request to struct mmc_request, so that drivers will have
-> > >   access to them.
-> > >
-> > > - If the MMC host is reset, reprogram all the keyslots to ensure that
-> > >   the software state stays in sync with the hardware state.
-> > >
-> > > Co-developed-by: Satya Tangirala <satyat@google.com>
-> > > Signed-off-by: Satya Tangirala <satyat@google.com>
-> > > Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-> > > Reviewed-by: Satya Tangirala <satyat@google.com>
-> > > Reviewed-and-tested-by: Peng Zhou <peng.zhou@mediatek.com>
-> > > Signed-off-by: Eric Biggers <ebiggers@google.com>
-> >
-> > Eric, again, my apologies for the delay. Overall, I think this looks good.
-> >
-> > My only hesitation to merge this as is, is that I want to make sure
-> > you have thought of the life cycle issues for the struct
-> > blk_keyslot_manager ksm. It's being used both from the mmc core/block
-> > device driver and the mmc host driver. I am looking at this right now
-> > and will get back to you very soon, if I find some issues with it.
-> >
-> > If you have some time, feel free to elaborate around how this is
-> > intended to work.
-> >
-> > Kind regards
-> > Uffe
+> Hello Mathieu, Suzuki
 >
-> The blk_keyslot_manager is initialized early on when the other host structures
-> (struct mmc_host, struct cqhci_host, struct sdhci_host, struct sdhci_msm_host)
-> are initialized, prior to mmc_add_host().
+> On 2020-10-15 21:32, Mathieu Poirier wrote:
+> > On Thu, Oct 15, 2020 at 06:15:22PM +0530, Sai Prakash Ranjan wrote:
+> >> On production systems with ETMs enabled, it is preferred to
+> >> exclude kernel mode(NS EL1) tracing for security concerns and
+> >> support only userspace(NS EL0) tracing. So provide an option
+> >> via kconfig to exclude kernel mode tracing if it is required.
+> >> This config is disabled by default and would not affect the
+> >> current configuration which has both kernel and userspace
+> >> tracing enabled by default.
+> >>
+> >
+> > One requires root access (or be part of a special trace group) to be
+> > able to use
+> > the cs_etm PMU.  With this kind of elevated access restricting tracing
+> > at EL1
+> > provides little in terms of security.
+> >
 >
-> It is destroyed when the struct mmc_host is freed by mmc_free_host().
+> Apart from the VM usecase discussed, I am told there are other
+> security concerns here regarding need to exclude kernel mode tracing
+> even for the privileged users/root. One such case being the ability
+> to analyze cryptographic code execution since ETMs can record all
+> branch instructions including timestamps in the kernel and there may
+> be other cases as well which I may not be aware of and hence have
+> added Denis and Mattias. Please let us know if you have any questions
+> further regarding this not being a security concern.
+
+Well, the idea that root privileges != full control over the kernel
+isn't new and at the very least since lockdown became part of mainline
+[1] no longer an esoteric edge case. Regarding the use case Sai hints
+at (namely protection of secrets in the kernel), Matthew Garret
+actually has some more thoughts about confidentiality mode for
+lockdown for secret protection [2]. And thus, unless someone can make
+a compelling case that instruction-level tracing will not leak secrets
+held by the kernel, I think an option for the kernel to prevent itself
+from being traced (even by root) is valuable.
+
+Finally, to sketch a practical use case scenario: Consider a system
+where disk contents are encrypted and the encryption key is set up by
+the user when mounting the file system. From that point on the
+encryption key resides in the kernel. It seems reasonable to expect
+that the disk encryption key be protected from exfiltration even if
+the system later suffers a root compromise (or even against insiders
+that have root access), at least as long as the attacker doesn't
+manage to compromise the kernel.
+
+[1] https://lwn.net/Articles/796866/
+[2] https://mjg59.dreamwidth.org/55105.html
+
 >
-> So it should just work; it's the same lifecycle as the existing host structures.
-> Is there something you think I'm overlooking?
-
-I think so, but let me elaborate a bit.
-
-As I understand it, to initialize the data structures, blk_ksm_init()
-is getting called and via cqhci_init().
-
-To hook up the block request queue, blk_ksm_register() is called via
-mmc_setup_queue(), which means this happens when the mmc block device
-driver is probed.
-
-To free up the data structures, blk_ksm_destroy() is called from
-mmc_free_host().
-
-To me, this can be made more consistent. For example, it looks like
-blk_ksm_destroy() could be called, even if blk_ksm_init() hasn't been
-called (depending on the probe error path of the mmc host).
-
-There are a couple of options to better deal with this.
-1) Extend the blk_ksm interface with a devm_blk_ksm_init() function
-(thus let it deal with lifecycle problems for us) and simply drop the
-call to blk_ksm_destroy().
-2) Extend the cqhci interface with a cleanup function (perhaps
-"cqhci_deinit") and let it call blk_ksm_destroy().
-3) Convert to let blk_ksm_init() to be called from mmc_add_host() and
-blk_ksm_destroy() from mmc_remove_host().
-
-Moreover, even if there seems to be no real need to call
-blk_ksm_unregister() for the mmc block device driver, perhaps we
-should still do it to be consistent with blk_ksm_register()?
-
-Then a final concern. It looks like the mmc core relies on checking
-"host->caps2 & MMC_CAP2_CRYPTO", when it calls blk_ksm_register() and
-blk_ksm_reprogram_all_keys(), for example. Normally, host->caps2 bits
-are considered as static configurations and set during the host driver
-probe path, which may not be a good match for this case. Instead, it
-seems like we should set a new separate flag, to indicate for the mmc
-core that blk_ksm_init has been enabled. Otherwise it looks like we
-could end up calling blk_ksm_reprogram_all_keys(), even if
-blk_ksm_init() hasn't been called.
-
-Kind regards
-Uffe
+> After this discussion, I would like to post a v2 based on Suzuki's
+> feedback earlier. @Suzuki, I have a common config for ETM3 and ETM4
+> but couldn't get much idea on how to implement it for Intel PTs, if
+> you have any suggestions there, please do share or we can have this
+> only for Coresight ETMs.
+>
+> Thanks,
+> Sai
+>
+> --
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a
+> member
+> of Code Aurora Forum, hosted by The Linux Foundation
