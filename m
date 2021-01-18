@@ -2,160 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C9402F990C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jan 2021 06:12:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D6BC42F9952
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jan 2021 06:37:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731615AbhARFMY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Jan 2021 00:12:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47266 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731602AbhARFMQ (ORCPT
+        id S1731746AbhARFhe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Jan 2021 00:37:34 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:18045 "EHLO
+        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731213AbhARFhd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Jan 2021 00:12:16 -0500
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A899CC06179C
-        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Jan 2021 21:10:36 -0800 (PST)
-Received: by mail-pj1-x1033.google.com with SMTP id y12so8708864pji.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Jan 2021 21:10:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=7TWfVrulFNjPq0+eVRHAHEYkcTTWPCyteYKVSR9fpvE=;
-        b=FwQd1dQ4UbJoQQmyF80j5kbsGRMQs/Tl7r3CabDhQmgc1tksFomt/9p1ap9x2m4g35
-         eKNWXxxLlXUZNs6FKy6npp55tqahDf5I+OceAm4xGHwanFf47G76hJbeqUcJTzGvPhJB
-         qEJXm0/PmXt18M9ug28NcilAOydaootmEIMT/oLcxbxaw3xExf4PzBKzQGWrQf20CoZk
-         88P7bmRbp+IdTSQ/s4+WragPJ+BbNXXiD6bmROICHXU/1wIrPGL258U3KOTGDJd+/UAw
-         i6OhgcznZdQW0CdpVnlGBoY+Tm7RBAsz5bx4PYtbg3ubPMIC/RDTxiiU4B0v+jkL8Yup
-         Rrhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=7TWfVrulFNjPq0+eVRHAHEYkcTTWPCyteYKVSR9fpvE=;
-        b=CR8JLIbfmON1OVqFfdq06BGkQTPUmIFhLJFH5GuaU868b9vw0bN9/405XPWLu/Ab8a
-         PTkvsmq245OCdDIj3M5f5J0v+O3y8eUq5VQ0m5aQ6izbX+6zHrm3n0GJBXENpQ/7j7Fm
-         0Ydb4FHbggsBTwn0GEUaOZRx1X9+RULa0YTY7+vTssQSqbqWvj3rBCPe/NXmOGBoGGST
-         4lJZMDCeQh8MJ38VxV8lHNyq/f38H9GwvHecTaA3OqlcCFHPDwInwt8Kw9YGMfb+Ob/C
-         2IeQy38OL15sEUoensuGZOtCzZSHKmMgeCdIs61BhSvju0byWBUUHnUsdFLtnse+ELLC
-         e6Tg==
-X-Gm-Message-State: AOAM532cs1QX98H+MWgWG6EE2drGAwcG9wiPf0UOTij6NR466d2KkcUq
-        iX9IGA0rPEGgt55/Io80mhiz
-X-Google-Smtp-Source: ABdhPJw2LsEyCS4A/SY5Ouw1aNL4Pql1CpiE4uSpvf48A+FHywYDY9U+uWdTmPLkjUbiREju5JWqMQ==
-X-Received: by 2002:a17:902:9304:b029:da:fa20:b86a with SMTP id bc4-20020a1709029304b02900dafa20b86amr25180829plb.36.1610946636197;
-        Sun, 17 Jan 2021 21:10:36 -0800 (PST)
-Received: from localhost.localdomain ([103.77.37.182])
-        by smtp.gmail.com with ESMTPSA id j3sm14703571pjs.50.2021.01.17.21.10.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 Jan 2021 21:10:35 -0800 (PST)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 7/7] arm64: dts: qcom: Add missing "-thermal" suffix for thermal zones
-Date:   Mon, 18 Jan 2021 10:40:05 +0530
-Message-Id: <20210118051005.55958-8-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210118051005.55958-1-manivannan.sadhasivam@linaro.org>
-References: <20210118051005.55958-1-manivannan.sadhasivam@linaro.org>
+        Mon, 18 Jan 2021 00:37:33 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1610948227; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=TjYdGssVsPJFHu21J0UDvrX/gV9OIWsRXIPK5jhOiOg=; b=Ba+iJkvRTtFCQsGypOZ+OJPKmTmB0r+XBTIk9apoYnLYc3b0hmuI8Cg6uqw5uEeQLuimmrWc
+ fENOLjHWejAaq//KCyMpPRiNaGKUYIyKEBIJksmE8Eo3byNNMlvFNqBr76qg2TcV+KxBrB4m
+ vr+VPSjLHRnGxB9cdR64lDdIZ/0=
+X-Mailgun-Sending-Ip: 198.61.254.31
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n10.prod.us-east-1.postgun.com with SMTP id
+ 60051e59e23dedcc3a9bf134 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 18 Jan 2021 05:36:25
+ GMT
+Sender: rnayak=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 11DDDC43465; Mon, 18 Jan 2021 05:36:25 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.1 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [192.168.0.120] (unknown [49.207.201.202])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E82BDC433C6;
+        Mon, 18 Jan 2021 05:36:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E82BDC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH 3/3] i2c: i2c-qcom-geni: Add support for
+ 'assigned-performance-states'
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Roja Rani Yarubandi <rojay@codeaurora.org>,
+        ulf.hansson@linaro.org, viresh.kumar@linaro.org
+Cc:     robh+dt@kernel.org, wsa@kernel.org, swboyd@chromium.org,
+        dianders@chromium.org, saiprakash.ranjan@codeaurora.org,
+        mka@chromium.org, akashast@codeaurora.org,
+        msavaliy@qti.qualcomm.com, parashar@codeaurora.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, linux-i2c@vger.kernel.org
+References: <20201224111210.1214-1-rojay@codeaurora.org>
+ <20201224111210.1214-4-rojay@codeaurora.org> <YAGqKfDfB7EEuZVn@builder.lan>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <6bfec3e6-3d26-7ade-d836-032273856ce2@codeaurora.org>
+Date:   Mon, 18 Jan 2021 11:06:10 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <YAGqKfDfB7EEuZVn@builder.lan>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The thermal devicetree binding requires the "-thermal" suffix for all
-thermal zones. Hence, add the missing suffix for PMIC based thermal
-zones.
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- arch/arm64/boot/dts/qcom/pm8150.dtsi  | 2 +-
- arch/arm64/boot/dts/qcom/pm8150b.dtsi | 2 +-
- arch/arm64/boot/dts/qcom/pm8150l.dtsi | 2 +-
- arch/arm64/boot/dts/qcom/pm8994.dtsi  | 2 +-
- arch/arm64/boot/dts/qcom/pm8998.dtsi  | 2 +-
- arch/arm64/boot/dts/qcom/pms405.dtsi  | 2 +-
- 6 files changed, 6 insertions(+), 6 deletions(-)
+On 1/15/2021 8:13 PM, Bjorn Andersson wrote:
+> On Thu 24 Dec 05:12 CST 2020, Roja Rani Yarubandi wrote:
+> 
+>> @@ -629,6 +658,16 @@ static int __maybe_unused geni_i2c_runtime_suspend(struct device *dev)
+>>   	struct geni_i2c_dev *gi2c = dev_get_drvdata(dev);
+>>   
+>>   	disable_irq(gi2c->irq);
+>> +
+>> +	/* Drop the assigned performance state */
+>> +	if (gi2c->assigned_pstate) {
+>> +		ret = dev_pm_genpd_set_performance_state(dev, 0);
+>> +		if (ret) {
+>> +			dev_err(dev, "Failed to set performance state\n");
+>> +			return ret;
+>> +		}
+>> +	}
+>> +
+> 
+> Ulf, Viresh, I think we discussed this at the time of introducing the
+> performance states.
+> 
+> The client's state does not affect if its performance_state should
+> be included in the calculation of the aggregated performance_state, so
+> each driver that needs to keep some minimum performance state needs to
+> have these two snippets.
+> 
+> Would it not make sense to on enable/disable re-evaluate the
+> performance_state and potentially reconfigure the hardware
+> automatically?
 
-diff --git a/arch/arm64/boot/dts/qcom/pm8150.dtsi b/arch/arm64/boot/dts/qcom/pm8150.dtsi
-index a53eccf2b695..f5874223082e 100644
---- a/arch/arm64/boot/dts/qcom/pm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm8150.dtsi
-@@ -11,7 +11,7 @@
- 
- / {
- 	thermal-zones {
--		pm8150 {
-+		pm8150-thermal {
- 			polling-delay-passive = <100>;
- 			polling-delay = <0>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/pm8150b.dtsi b/arch/arm64/boot/dts/qcom/pm8150b.dtsi
-index e112e8876db6..ba85b2151ee9 100644
---- a/arch/arm64/boot/dts/qcom/pm8150b.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm8150b.dtsi
-@@ -10,7 +10,7 @@
- 
- / {
- 	thermal-zones {
--		pm8150b {
-+		pm8150b-thermal {
- 			polling-delay-passive = <100>;
- 			polling-delay = <0>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/pm8150l.dtsi b/arch/arm64/boot/dts/qcom/pm8150l.dtsi
-index 62139538b7d9..0ab9c364e7f1 100644
---- a/arch/arm64/boot/dts/qcom/pm8150l.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm8150l.dtsi
-@@ -10,7 +10,7 @@
- 
- / {
- 	thermal-zones {
--		pm8150l {
-+		pm8150l-thermal {
- 			polling-delay-passive = <100>;
- 			polling-delay = <0>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/pm8994.dtsi b/arch/arm64/boot/dts/qcom/pm8994.dtsi
-index 5ffdf37d8e31..91fff1f209e0 100644
---- a/arch/arm64/boot/dts/qcom/pm8994.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm8994.dtsi
-@@ -6,7 +6,7 @@
- 
- / {
- 	thermal-zones {
--		pm8994 {
-+		pm8994-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/pm8998.dtsi b/arch/arm64/boot/dts/qcom/pm8998.dtsi
-index 67283d60e2ac..6f5bb6b37ec2 100644
---- a/arch/arm64/boot/dts/qcom/pm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm8998.dtsi
-@@ -9,7 +9,7 @@
- 
- / {
- 	thermal-zones {
--		pm8998 {
-+		pm8998-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/pms405.dtsi b/arch/arm64/boot/dts/qcom/pms405.dtsi
-index ff4005186895..172be177fc8f 100644
---- a/arch/arm64/boot/dts/qcom/pms405.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pms405.dtsi
-@@ -8,7 +8,7 @@
- 
- / {
- 	thermal-zones {
--		pms405 {
-+		pms405-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
+I agree, this will be repeated across multiple drivers which would
+need some minimal vote while they are active, handling this during
+genpd enable/disable in genpd core makes sense.
+
+> 
+> Regards,
+> Bjorn
+> 
+>>   	ret = geni_se_resources_off(&gi2c->se);
+>>   	if (ret) {
+>>   		enable_irq(gi2c->irq);
+>> @@ -654,6 +693,16 @@ static int __maybe_unused geni_i2c_runtime_resume(struct device *dev)
+>>   	if (ret)
+>>   		return ret;
+>>   
+>> +	/* Set the assigned performance state */
+>> +	if (gi2c->assigned_pstate) {
+>> +		ret = dev_pm_genpd_set_performance_state(dev,
+>> +							 gi2c->assigned_pstate);
+>> +		if (ret) {
+>> +			dev_err(dev, "Failed to set performance state\n");
+>> +			return ret;
+>> +		}
+>> +	}
+>> +
+>>   	enable_irq(gi2c->irq);
+>>   	gi2c->suspended = 0;
+>>   	return 0;
+>> -- 
+>> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+>> of Code Aurora Forum, hosted by The Linux Foundation
+>>
+
 -- 
-2.25.1
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
