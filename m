@@ -2,139 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D6BC42F9952
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jan 2021 06:37:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 163632F9959
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jan 2021 06:41:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731746AbhARFhe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Jan 2021 00:37:34 -0500
-Received: from so254-31.mailgun.net ([198.61.254.31]:18045 "EHLO
-        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731213AbhARFhd (ORCPT
+        id S1731799AbhARFjp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Jan 2021 00:39:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53108 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731791AbhARFjn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Jan 2021 00:37:33 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1610948227; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=TjYdGssVsPJFHu21J0UDvrX/gV9OIWsRXIPK5jhOiOg=; b=Ba+iJkvRTtFCQsGypOZ+OJPKmTmB0r+XBTIk9apoYnLYc3b0hmuI8Cg6uqw5uEeQLuimmrWc
- fENOLjHWejAaq//KCyMpPRiNaGKUYIyKEBIJksmE8Eo3byNNMlvFNqBr76qg2TcV+KxBrB4m
- vr+VPSjLHRnGxB9cdR64lDdIZ/0=
-X-Mailgun-Sending-Ip: 198.61.254.31
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n10.prod.us-east-1.postgun.com with SMTP id
- 60051e59e23dedcc3a9bf134 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 18 Jan 2021 05:36:25
- GMT
-Sender: rnayak=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 11DDDC43465; Mon, 18 Jan 2021 05:36:25 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.1 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [192.168.0.120] (unknown [49.207.201.202])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E82BDC433C6;
-        Mon, 18 Jan 2021 05:36:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E82BDC433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH 3/3] i2c: i2c-qcom-geni: Add support for
- 'assigned-performance-states'
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Roja Rani Yarubandi <rojay@codeaurora.org>,
-        ulf.hansson@linaro.org, viresh.kumar@linaro.org
-Cc:     robh+dt@kernel.org, wsa@kernel.org, swboyd@chromium.org,
-        dianders@chromium.org, saiprakash.ranjan@codeaurora.org,
-        mka@chromium.org, akashast@codeaurora.org,
-        msavaliy@qti.qualcomm.com, parashar@codeaurora.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org, linux-i2c@vger.kernel.org
-References: <20201224111210.1214-1-rojay@codeaurora.org>
- <20201224111210.1214-4-rojay@codeaurora.org> <YAGqKfDfB7EEuZVn@builder.lan>
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <6bfec3e6-3d26-7ade-d836-032273856ce2@codeaurora.org>
-Date:   Mon, 18 Jan 2021 11:06:10 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.1
+        Mon, 18 Jan 2021 00:39:43 -0500
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31474C061757
+        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Jan 2021 21:39:03 -0800 (PST)
+Received: by mail-pg1-x52c.google.com with SMTP id p18so10224399pgm.11
+        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Jan 2021 21:39:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fnAVmej2rq/H3tO0qvpZKrc8RVH8NPdida0HcjaCWTI=;
+        b=zCoHx7Hik/oTFNnKHu1TlVCeF2vqQ77oFXhmP25gQsF7lwX3a9Y2kei1javBYBNRO5
+         woYBCO7iQkQw/OJbmxWEDUiCkz3BPghdQw3n9qDrb4JRIYZLky98zYrFsTZS5xhh3lXe
+         vL2IpcgDvuVDkbB6sMcEMyyOQC2/VAXDLYIsUZgrrdBpnu9bM7Stc/7E/7Bzfd9R6yGz
+         N9Brcik82QCdzx/ewtXe+3DEYvC9yQpTK6uS6rsEVqSLW693i7WulFfDOiep/yU5VDML
+         rm1/FyoP/RjBr69Ii/5zNttJgxPbUFj+sks91RbIn5wEA5rTFSGADaZ53hfOnvsY9YcX
+         huEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fnAVmej2rq/H3tO0qvpZKrc8RVH8NPdida0HcjaCWTI=;
+        b=eXNoEtfMNSkMjzYl9xv8m7AvK35u77I6TRCq7/iiGDJwD5iDLc4VLiVtxN97vNG2Xd
+         ZKPq1yt99riu+uGuoVtqgH+tmr1t0qMEHVpdVOC2CBLfLSNKe+urSMfGEwA5dM2UE88T
+         dPIBZJ/GnQDd7O3kI2QP+ydY7680zUTCHpknHgaBye3Wz9gFkppCf+YrBTKPFGNOPAfN
+         cv6qbgP0uV9NLcsq7K8vtB2erAslK7r4W5p34wu0/KhWnyDR3IA9wKnOAZYVGhpna2Y9
+         YNSSFwkej75hwWRPI/wu6k2QZasVqYFkksb5SHfBh+PFeJ7wP3Gtams6/TBHO57XzEDe
+         yKVA==
+X-Gm-Message-State: AOAM530ZRd983nM0bcpJwhDEv6c/C2W7IlCxGfN2iCK4vAzi2pHkrM9B
+        qxvAtXj5uNifsh/DQuO9m/sQUHKeKvwR
+X-Google-Smtp-Source: ABdhPJy9zwu+ruspsVAz+q+DEjAOgQi9zq9l5T+ALrNi+glr56SUj10k7FGYVORYGAixkmauo+lC5A==
+X-Received: by 2002:aa7:9486:0:b029:1b2:686d:38c5 with SMTP id z6-20020aa794860000b02901b2686d38c5mr19881146pfk.0.1610948342625;
+        Sun, 17 Jan 2021 21:39:02 -0800 (PST)
+Received: from localhost.localdomain ([103.77.37.182])
+        by smtp.gmail.com with ESMTPSA id z6sm14627271pfj.22.2021.01.17.21.38.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 17 Jan 2021 21:39:02 -0800 (PST)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 00/13] SDX55 defconfig updates
+Date:   Mon, 18 Jan 2021 11:08:40 +0530
+Message-Id: <20210118053853.56224-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-In-Reply-To: <YAGqKfDfB7EEuZVn@builder.lan>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hello Bjorn,
 
-On 1/15/2021 8:13 PM, Bjorn Andersson wrote:
-> On Thu 24 Dec 05:12 CST 2020, Roja Rani Yarubandi wrote:
-> 
->> @@ -629,6 +658,16 @@ static int __maybe_unused geni_i2c_runtime_suspend(struct device *dev)
->>   	struct geni_i2c_dev *gi2c = dev_get_drvdata(dev);
->>   
->>   	disable_irq(gi2c->irq);
->> +
->> +	/* Drop the assigned performance state */
->> +	if (gi2c->assigned_pstate) {
->> +		ret = dev_pm_genpd_set_performance_state(dev, 0);
->> +		if (ret) {
->> +			dev_err(dev, "Failed to set performance state\n");
->> +			return ret;
->> +		}
->> +	}
->> +
-> 
-> Ulf, Viresh, I think we discussed this at the time of introducing the
-> performance states.
-> 
-> The client's state does not affect if its performance_state should
-> be included in the calculation of the aggregated performance_state, so
-> each driver that needs to keep some minimum performance state needs to
-> have these two snippets.
-> 
-> Would it not make sense to on enable/disable re-evaluate the
-> performance_state and potentially reconfigure the hardware
-> automatically?
+Here is the defconfig updates for related to the SDX55 platform. All of the
+drivers enabled are part of v5.11-rc1.
 
-I agree, this will be repeated across multiple drivers which would
-need some minimal vote while they are active, handling this during
-genpd enable/disable in genpd core makes sense.
+There is no specific order I could figure out for adding the entries, so did
+them in a kind of random manner based on the previous ones.
 
-> 
-> Regards,
-> Bjorn
-> 
->>   	ret = geni_se_resources_off(&gi2c->se);
->>   	if (ret) {
->>   		enable_irq(gi2c->irq);
->> @@ -654,6 +693,16 @@ static int __maybe_unused geni_i2c_runtime_resume(struct device *dev)
->>   	if (ret)
->>   		return ret;
->>   
->> +	/* Set the assigned performance state */
->> +	if (gi2c->assigned_pstate) {
->> +		ret = dev_pm_genpd_set_performance_state(dev,
->> +							 gi2c->assigned_pstate);
->> +		if (ret) {
->> +			dev_err(dev, "Failed to set performance state\n");
->> +			return ret;
->> +		}
->> +	}
->> +
->>   	enable_irq(gi2c->irq);
->>   	gi2c->suspended = 0;
->>   	return 0;
->> -- 
->> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
->> of Code Aurora Forum, hosted by The Linux Foundation
->>
+Please consider merging!
+
+Thanks,
+Mani
+
+Manivannan Sadhasivam (13):
+  ARM: configs: qcom_defconfig: Enable RPMh drivers
+  ARM: configs: qcom_defconfig: Enable SDX55 pinctrl driver
+  ARM: configs: qcom_defconfig: Enable SDX55 GCC driver
+  ARM: configs: qcom_defconfig: Enable SMEM partition parser
+  ARM: configs: qcom_defconfig: Enable MTD UBI driver
+  ARM: configs: qcom_defconfig: Enable UBI file system
+  ARM: configs: qcom_defconfig: Enable DWC3 controller and PHYs
+  ARM: configs: qcom_defconfig: Enable ARM SMMU
+  ARM: configs: qcom_defconfig: Enable RPMh regulator
+  ARM: configs: qcom_defconfig: Enable watchdog driver
+  ARM: configs: qcom_defconfig: Enable ARM PSCI support
+  ARM: configs: qcom_defconfig: Enable RPMh power domain driver
+  ARM: configs: qcom_defconfig: Enable Command DB driver
+
+ arch/arm/configs/qcom_defconfig | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.25.1
+
