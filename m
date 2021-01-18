@@ -2,150 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 31CE22FA258
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jan 2021 15:01:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CE59C2FA2DD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jan 2021 15:23:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391589AbhARNbw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Jan 2021 08:31:52 -0500
-Received: from mail.kernel.org ([198.145.29.99]:35152 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2392245AbhARN3o (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Jan 2021 08:29:44 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 52E2622D3E;
-        Mon, 18 Jan 2021 13:28:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1610976499;
-        bh=ER44iK7yD08nTVE0Gmc9J0iq1NcY3wonsHp6uZKbQG8=;
-        h=From:To:Cc:Subject:Date:From;
-        b=DYUg0oEuvGPRdLbKChKcbWun+yfepbQfHp5228jiVrb/6wdrBk8zNApGezf143EvL
-         gRy/ANNBcS0zCTqtIQdZisweYUC3YnBK+z2L1VUMLrlgNpWmnK9tKuTy2VC4TjBs3P
-         QPu/fZ8G7i4UMKdAjqp49HA+vkc6k9lfYRLYs50oTWu6kjOrmDz/T7wpcTnqkhvMJw
-         CDDqluhSMY+ovBz2tzu9NMrrlNhvnolTGu+dBke8DdMOv7FpuLfpIf+Phu5+ryJCv7
-         lZ+/sZ2oNaWTFTYKk5kOH8Pe9TnmnV+nCPw49IoFQvijj5Xt79pt7GfxGqPvHPoVAU
-         lnT5IaUJ4IQsw==
-Received: by mail.kernel.org with local (Exim 4.94)
-        (envelope-from <mchehab@kernel.org>)
-        id 1l1UZs-000Vkc-9x; Mon, 18 Jan 2021 14:28:16 +0100
-From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Colin Ian King <colin.king@canonical.com>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mayulong <mayulong1@huawei.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>, Wei Xu <xuwei5@hisilicon.com>,
-        YueHaibing <yuehaibing@huawei.com>, devel@driverdev.osuosl.org,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 00/13] Move Hisilicon 6421v600 SPMI driver set out of staging
-Date:   Mon, 18 Jan 2021 14:28:01 +0100
-Message-Id: <cover.1610975633.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.29.2
+        id S2404839AbhAROWo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Jan 2021 09:22:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52278 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2392840AbhAROWZ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 18 Jan 2021 09:22:25 -0500
+Received: from mail-vs1-xe30.google.com (mail-vs1-xe30.google.com [IPv6:2607:f8b0:4864:20::e30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0FD6C061757
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jan 2021 06:21:39 -0800 (PST)
+Received: by mail-vs1-xe30.google.com with SMTP id o125so7970547vsc.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jan 2021 06:21:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=8Vm6t4j1UkDFvwn0ow87G236Agmhfjw2bgz8G0c2yDI=;
+        b=YXqE56R8iZgWt/xrgnWS0ADg7SYiBItKyNtuwN2h7t8q8wy0w5JqyNKlBWWFXshlUJ
+         CXagI21LIShLrGMg/Fe+mnuli1luaaTSzLB/NMpARZXTfROfsDQ/iYpdulrKRaH44omv
+         S3dWkuVPoYR3IwAGyg2u+a7pE2le0xJ5aSX6UQ02k2X7P8OC5oRR/2mBDYU/RO97xmR/
+         ue7BsAGWAwxc8eN2KmJVGqjUnBQuKE1bW5qwFvFfZ9cFLuc1KyfyJOPJVDZ+37g+WL2K
+         0rvDzQ7f2IYdc6wYIYYbseljKuikW3Le4bFcVJON3qyVmain2Bxgg3VOyYtwlTCcLffH
+         Uw4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8Vm6t4j1UkDFvwn0ow87G236Agmhfjw2bgz8G0c2yDI=;
+        b=uLxpm2tfHWYanptyhmnevjWb6AhnF4T5xm0YYkG4xn5bxUu+DrYJgZV0mKRTavya6P
+         8waDQ7iDMZbFpWajcxDFw5ui63nEAmgwbIiAQWU/ocv3t0OfqKMfP/ihXsScql3WGeTX
+         Z262IE2wGbLIBtcFXCiJgfAYBQVa0j08T8IoO6oxS2g09E2Ou/mUrdevCD7x15v5fHUQ
+         LZpufg8KErjDwdnT4/nxRfeO7k2pLh/cdm3xeFzbrY9LX/jdUt6FCO4bhNjcfBJKYynX
+         LwHZ0mDDC1N7Ug81F7aQxjKSk1APVModC7eZJywwCf63UxlOsqNoAUCUWpxeV3QMMK5b
+         GSvw==
+X-Gm-Message-State: AOAM533M2IrrbKx5W48PfYa2n9LWEKqx5Yn7qnfKeEZvmw9VbnI7R0l0
+        twT6jctZKsyekdxCFChIZy9uQtXNszROxV0U9Gc9lA==
+X-Google-Smtp-Source: ABdhPJz90QZK3nqwzH2xdCIh6J4iWnuKhWdk04HEQs0XckljNnog8h9RjU13Vc2Neznz6h0kc0sFbd9aNjuBi9ia6Z0=
+X-Received: by 2002:a67:7f41:: with SMTP id a62mr17276352vsd.55.1610979698621;
+ Mon, 18 Jan 2021 06:21:38 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Sender: Mauro Carvalho Chehab <mchehab@kernel.org>
+References: <20210104184542.4616-1-ebiggers@kernel.org> <20210104184542.4616-2-ebiggers@kernel.org>
+ <CAPDyKFq717teu2HPZLCn9QVxLOwZHdi_iS+Ji69S0kYX1o52PQ@mail.gmail.com> <YAHXPREJaKjK/z7+@sol.localdomain>
+In-Reply-To: <YAHXPREJaKjK/z7+@sol.localdomain>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Mon, 18 Jan 2021 15:21:01 +0100
+Message-ID: <CAPDyKFopKy6dwENJ6YQQ0KRPQdT25R_zmhrNH7jyu=+p6bKpNA@mail.gmail.com>
+Subject: Re: [PATCH v4 1/9] mmc: add basic support for inline encryption
+To:     Eric Biggers <ebiggers@kernel.org>
+Cc:     "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>, linux-fscrypt@vger.kernel.org,
+        Satya Tangirala <satyat@google.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Neeraj Soni <neersoni@codeaurora.org>,
+        Barani Muthukumaran <bmuthuku@codeaurora.org>,
+        Peng Zhou <peng.zhou@mediatek.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Konrad Dybcio <konradybcio@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mark,
+On Fri, 15 Jan 2021 at 18:56, Eric Biggers <ebiggers@kernel.org> wrote:
+>
+> On Fri, Jan 15, 2021 at 10:22:03AM +0100, Ulf Hansson wrote:
+> > On Mon, 4 Jan 2021 at 19:48, Eric Biggers <ebiggers@kernel.org> wrote:
+> > >
+> > > From: Eric Biggers <ebiggers@google.com>
+> > >
+> > > In preparation for adding CQHCI crypto engine (inline encryption)
+> > > support, add the code required to make mmc_core and mmc_block aware of
+> > > inline encryption.  Specifically:
+> > >
+> > > - Add a capability flag MMC_CAP2_CRYPTO to struct mmc_host.  Drivers
+> > >   will set this if the host and driver support inline encryption.
+> > >
+> > > - Embed a blk_keyslot_manager in struct mmc_host.  Drivers will
+> > >   initialize this if the host and driver support inline encryption.
+> > >   mmc_block registers this keyslot manager with the request_queue of any
+> > >   MMC card attached to the host.  mmc_core destroys this keyslot manager
+> > >   when freeing the mmc_host.
+> > >
+> > > - Make mmc_block copy the crypto keyslot and crypto data unit number
+> > >   from struct request to struct mmc_request, so that drivers will have
+> > >   access to them.
+> > >
+> > > - If the MMC host is reset, reprogram all the keyslots to ensure that
+> > >   the software state stays in sync with the hardware state.
+> > >
+> > > Co-developed-by: Satya Tangirala <satyat@google.com>
+> > > Signed-off-by: Satya Tangirala <satyat@google.com>
+> > > Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+> > > Reviewed-by: Satya Tangirala <satyat@google.com>
+> > > Reviewed-and-tested-by: Peng Zhou <peng.zhou@mediatek.com>
+> > > Signed-off-by: Eric Biggers <ebiggers@google.com>
+> >
+> > Eric, again, my apologies for the delay. Overall, I think this looks good.
+> >
+> > My only hesitation to merge this as is, is that I want to make sure
+> > you have thought of the life cycle issues for the struct
+> > blk_keyslot_manager ksm. It's being used both from the mmc core/block
+> > device driver and the mmc host driver. I am looking at this right now
+> > and will get back to you very soon, if I find some issues with it.
+> >
+> > If you have some time, feel free to elaborate around how this is
+> > intended to work.
+> >
+> > Kind regards
+> > Uffe
+>
+> The blk_keyslot_manager is initialized early on when the other host structures
+> (struct mmc_host, struct cqhci_host, struct sdhci_host, struct sdhci_msm_host)
+> are initialized, prior to mmc_add_host().
+>
+> It is destroyed when the struct mmc_host is freed by mmc_free_host().
+>
+> So it should just work; it's the same lifecycle as the existing host structures.
+> Is there something you think I'm overlooking?
 
-This patch series finish addressing support for Hikey 970
-SPMI controller, PMIC and regulators.
+I think so, but let me elaborate a bit.
 
-I removed some unrelated DT patches from this series,
-plus the Hikey 970 PHY USB3 code from it, in order to avoid
-mixing different stuff on this series[1].
+As I understand it, to initialize the data structures, blk_ksm_init()
+is getting called and via cqhci_init().
 
-[1] Those unrelated patches were submitted last week on
-separate series.
+To hook up the block request queue, blk_ksm_register() is called via
+mmc_setup_queue(), which means this happens when the mmc block device
+driver is probed.
 
-The entire patchset is on this branch:
+To free up the data structures, blk_ksm_destroy() is called from
+mmc_free_host().
 
-	https://git.linuxtv.org/mchehab/experimental.git/log/?h=devel/destage-usb
+To me, this can be made more consistent. For example, it looks like
+blk_ksm_destroy() could be called, even if blk_ksm_init() hasn't been
+called (depending on the probe error path of the mmc host).
 
-In order to make easier for review, this series was generated
-with --no-merges. So, you don't need to take a look at the
-staging patches, as the entire code will be there on patches 9-11.
+There are a couple of options to better deal with this.
+1) Extend the blk_ksm interface with a devm_blk_ksm_init() function
+(thus let it deal with lifecycle problems for us) and simply drop the
+call to blk_ksm_destroy().
+2) Extend the cqhci interface with a cleanup function (perhaps
+"cqhci_deinit") and let it call blk_ksm_destroy().
+3) Convert to let blk_ksm_init() to be called from mmc_add_host() and
+blk_ksm_destroy() from mmc_remove_host().
 
-Patches 12 and 13 on this series will require that the other
-patch series to get merged first. It probably makes sense to be
-merged via DT tree. I opted to add them here just because,
-on the last submission, you asked to see the DT patches. 
+Moreover, even if there seems to be no real need to call
+blk_ksm_unregister() for the mmc block device driver, perhaps we
+should still do it to be consistent with blk_ksm_register()?
 
-On this version 2, I addressed almost all issues you pointed during
-your review:
+Then a final concern. It looks like the mmc core relies on checking
+"host->caps2 & MMC_CAP2_CRYPTO", when it calls blk_ksm_register() and
+blk_ksm_reprogram_all_keys(), for example. Normally, host->caps2 bits
+are considered as static configurations and set during the host driver
+probe path, which may not be a good match for this case. Instead, it
+seems like we should set a new separate flag, to indicate for the mmc
+core that blk_ksm_init has been enabled. Otherwise it looks like we
+could end up calling blk_ksm_reprogram_all_keys(), even if
+blk_ksm_init() hasn't been called.
 
-- this driver's probe routine is very similar to the one at the non-SPMI
-  variant of Hisilicon 6421;
-- The register/voltage data were moved from DT into the driver itself;
-- It doesn't have anymore any static data;
-- All debug messages got removed;
-- Addressed a few be32 warnings from sparse.
-
-Regards,
-Mauro
-
-Mauro Carvalho Chehab (13):
-  staging: hikey9xx: hisilicon,hisi-spmi-controller.yaml fix bindings
-  staging: hikey9xx: hisi-spmi-controller: clean sparse warnings
-  staging: hikey9xx: hi6421v600-regulator: do some cleanups
-  staging: hikey9xx: hi6421v600-regulator: move LDO config from DT
-  staging: hikey9xx: hi6421v600-regulator: cleanup debug msgs
-  staging: hikey9xx: hisilicon,hi6421-spmi-pmic.yaml: simplify props
-  staging: hikey970: get rid of an static data
-  staging: hikey9xx: hi6421v600-regulator: do some cleanups
-  spmi: hi6421-spmi-pmic: move driver from staging
-  mfd: hi6421-spmi-pmic: move driver from staging
-  regulator: hi6421v600-regulator: move it from staging
-  dts: hisilicon: add support for USB3 on Hikey 970
-  dts: hisilicon: add support for the PMIC found on Hikey 970
-
- .../mfd/hisilicon,hi6421-spmi-pmic.yaml       | 135 +++++
- .../spmi/hisilicon,hisi-spmi-controller.yaml  |  75 +++
- MAINTAINERS                                   |  15 +-
- .../boot/dts/hisilicon/hi3670-hikey970.dts    | 124 ++++-
- arch/arm64/boot/dts/hisilicon/hi3670.dtsi     |  58 +++
- .../boot/dts/hisilicon/hikey970-pmic.dtsi     |  87 ++++
- drivers/mfd/Kconfig                           |  15 +
- drivers/mfd/Makefile                          |   1 +
- drivers/mfd/hi6421-spmi-pmic.c                | 342 +++++++++++++
- drivers/regulator/Kconfig                     |   8 +
- drivers/regulator/Makefile                    |   1 +
- drivers/regulator/hi6421v600-regulator.c      | 347 +++++++++++++
- drivers/spmi/Kconfig                          |   9 +
- drivers/spmi/Makefile                         |   1 +
- drivers/spmi/hisi-spmi-controller.c           | 358 +++++++++++++
- drivers/staging/Kconfig                       |   2 -
- drivers/staging/Makefile                      |   1 -
- drivers/staging/hikey9xx/Kconfig              |  38 --
- drivers/staging/hikey9xx/Makefile             |   5 -
- drivers/staging/hikey9xx/TODO                 |   5 -
- drivers/staging/hikey9xx/hi6421-spmi-pmic.c   | 342 -------------
- .../staging/hikey9xx/hi6421v600-regulator.c   | 478 ------------------
- .../staging/hikey9xx/hisi-spmi-controller.c   | 358 -------------
- .../hikey9xx/hisilicon,hi6421-spmi-pmic.yaml  | 159 ------
- .../hisilicon,hisi-spmi-controller.yaml       |  62 ---
- 25 files changed, 1554 insertions(+), 1472 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/mfd/hisilicon,hi6421-spmi-pmic.yaml
- create mode 100644 Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.yaml
- create mode 100644 arch/arm64/boot/dts/hisilicon/hikey970-pmic.dtsi
- create mode 100644 drivers/mfd/hi6421-spmi-pmic.c
- create mode 100644 drivers/regulator/hi6421v600-regulator.c
- create mode 100644 drivers/spmi/hisi-spmi-controller.c
- delete mode 100644 drivers/staging/hikey9xx/Kconfig
- delete mode 100644 drivers/staging/hikey9xx/Makefile
- delete mode 100644 drivers/staging/hikey9xx/TODO
- delete mode 100644 drivers/staging/hikey9xx/hi6421-spmi-pmic.c
- delete mode 100644 drivers/staging/hikey9xx/hi6421v600-regulator.c
- delete mode 100644 drivers/staging/hikey9xx/hisi-spmi-controller.c
- delete mode 100644 drivers/staging/hikey9xx/hisilicon,hi6421-spmi-pmic.yaml
- delete mode 100644 drivers/staging/hikey9xx/hisilicon,hisi-spmi-controller.yaml
-
--- 
-2.29.2
-
-
+Kind regards
+Uffe
