@@ -2,93 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CE5772FA48D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jan 2021 16:25:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A99542FA4D5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jan 2021 16:34:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393406AbhARPYE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Jan 2021 10:24:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37284 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2393380AbhARPXT (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Jan 2021 10:23:19 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42C7DC061573
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jan 2021 07:22:39 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id v67so24619391lfa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jan 2021 07:22:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=UDbFBKM+NToZkfKZaMXOQfZrWXoa1JGZS1Y+JAg8jIs=;
-        b=qkbl34IqTAeq41jPqeJFN4AXm2OXs6lGFEc2NKYkLVuRvIgHPAo8E0f53CdFowRkZ/
-         WkfZrRxtt/B8+Q6nIsHfzhAuWG4ed78Yt7D5O/CH5Oh832WJQMtv2ICJsjPg7xpmFcoc
-         6rNLO71N+E7+pM/IEZ5om9Rs87HIWc4SPcjLb96bNvz/DPklAlE3UN/y/thC/yWQXMXr
-         3qcGNbVF1OY5TPxhDuKDLF1PgybWzAuLiHP/h1HpgzDf7JEgKft4vZSxpNF5nWXOrrEY
-         StOKhG5oQGYxfdeo2OpZwaxz2WzEsvLS+kqIDYeWfViK+w5tzknpd8PhW86xmnZmSSG0
-         l2Gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=UDbFBKM+NToZkfKZaMXOQfZrWXoa1JGZS1Y+JAg8jIs=;
-        b=kML8nz0lczAGM5725av05pGLRJyU24eP93YvSYU3gVdkswmFkr3UvF/2JGIrEsllWw
-         a+kYC9jnOKek8wXjv4rlhEbiaEtZaJkFrv0pzfilsrO4gbMB6nvPpvZDkv1W2Auzm9qv
-         uhU9Z869m24L14NiTd5MozLefQmePEkekZDfyJ9fNXIAk/w4WX0kz8h8PXvv1BOrDUVf
-         FL846/zDPyHomPurnsBfCwBPoclPscKoUIbLoSCLzJa8blvr6Tgf1OilCZ2w5pTJsOXt
-         9QTDOWmA24XAZrS5umQnLg1xG6dJTHruGImICv+i/ZWLAHI3T0je7RpWT+63W2Z+9Sx8
-         cIHQ==
-X-Gm-Message-State: AOAM532YcdeAKYogy/NdwX5kv3eU47+EXWiN0uPPgPVcaAqolYT/WW45
-        4Vu7Y7cSxo4R+r7XDnbj0VBRxlrfTebgeQsA
-X-Google-Smtp-Source: ABdhPJwoCfCnjXo5vg4da49JfvqipaWz0vctWLv/V/JXH2hCCX12DCJHXUPyoLnwHIIGgOx+HE21VQ==
-X-Received: by 2002:ac2:5d43:: with SMTP id w3mr11958863lfd.49.1610983357843;
-        Mon, 18 Jan 2021 07:22:37 -0800 (PST)
-Received: from eriador.lumag.spb.ru ([188.162.64.4])
-        by smtp.gmail.com with ESMTPSA id b15sm1541400lfj.306.2021.01.18.07.22.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Jan 2021 07:22:37 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org
-Subject: [PATCH] soc: qcom: socinfo: fix two sparse warnings
-Date:   Mon, 18 Jan 2021 18:22:36 +0300
-Message-Id: <20210118152236.514776-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.29.2
+        id S2405961AbhARPcu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Jan 2021 10:32:50 -0500
+Received: from ns.mm-sol.com ([37.157.136.199]:51156 "EHLO extserv.mm-sol.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2405872AbhARPck (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 18 Jan 2021 10:32:40 -0500
+X-Greylist: delayed 577 seconds by postgrey-1.27 at vger.kernel.org; Mon, 18 Jan 2021 10:32:21 EST
+Received: from [192.168.0.3] (hst-221-43.medicom.bg [84.238.221.43])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (Client did not present a certificate)
+        (Authenticated sender: svarbanov@mm-sol.com)
+        by extserv.mm-sol.com (Postfix) with ESMTPSA id 38932D0D4;
+        Mon, 18 Jan 2021 17:21:52 +0200 (EET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mm-sol.com; s=201706;
+        t=1610983312; bh=i1NrteZMyUtusFI3Xa7Z0Tm0f2R0KAmp9SC0wkfqI+k=;
+        h=Subject:To:Cc:From:Date:From;
+        b=e0gXbSZYkyGUQv2NjAFBHk/sC8+vcq0dubLoTlMl1/MY/c4uq7IT08BAiiFwRCmHA
+         FCuo3+zJGq3LLhzKGDMpoZKph60fkKEKhq2PebGVQ09p6CKjFq+bUDdAbXPqUpEamR
+         IKOa+K/7/CJjkyXL0UlkCjz6YTh++8N3syKNVt1ED7ax85sg2y8wnDdGCnNjAw8ZXP
+         KzDZkjonjclgAjt2v3n4T8AH9K/69yOV5C1+1rgtvGunQv4bVuTX0n1xRGXaYTLn7c
+         AczEMs1EfG8UC6Xv9mtWEg2K/j0EIe+CzQn0vpHSGcBmYTmZKyCKiROJoYLYLAZqiw
+         zkJu3JLyJ9ysA==
+Subject: Re: [RESEND PATCH] PCI: qcom: use PHY_REFCLK_USE_PAD only for ipq8064
+To:     Ansuel Smith <ansuelsmth@gmail.com>, lorenzo.pieralisi@arm.com
+Cc:     Ilia Mirkin <imirkin@alum.mit.edu>, stable@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Sham Muthayyan <smuthayy@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20201019165555.8269-1-ansuelsmth@gmail.com>
+From:   Stanimir Varbanov <svarbanov@mm-sol.com>
+Message-ID: <b01f8aba-69cf-0809-0909-0d7adc9af4c0@mm-sol.com>
+Date:   Mon, 18 Jan 2021 17:21:49 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20201019165555.8269-1-ansuelsmth@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Remove extra le32_to_cpu() conversion, data is already converted from
-le32 to cpu endianness. This fixes two following warnings:
 
-drivers/soc/qcom/socinfo.c:322:36: sparse: sparse: cast to restricted __le32
-drivers/soc/qcom/socinfo.c:323:36: sparse: sparse: cast to restricted __le32
+Thanks for the patch!
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Fixes: 734c78e7febf ("soc: qcom: socinfo: add info from PMIC models array")
----
- drivers/soc/qcom/socinfo.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+On 10/19/20 7:55 PM, Ansuel Smith wrote:
+> The use of PHY_REFCLK_USE_PAD introduced a regression for apq8064
+> devices. It was tested that while apq doesn't require the padding, ipq
+> SoC must use it or the kernel hangs on boot.
+> 
+> Fixes: de3c4bf6489 ("PCI: qcom: Add support for tx term offset for rev 2.1.0")
+> Reported-by: Ilia Mirkin <imirkin@alum.mit.edu>
+> Signed-off-by: Ilia Mirkin <imirkin@alum.mit.edu>
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> Cc: stable@vger.kernel.org # v4.19+
 
-diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-index a985ed064669..bfb68dc370b5 100644
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -334,8 +334,8 @@ static int qcom_show_pmic_model_array(struct seq_file *seq, void *p)
- 
- 		if (model <= ARRAY_SIZE(pmic_models) && pmic_models[model])
- 			seq_printf(seq, "%s %u.%u\n", pmic_models[model],
--				   SOCINFO_MAJOR(le32_to_cpu(die_rev)),
--				   SOCINFO_MINOR(le32_to_cpu(die_rev)));
-+				   SOCINFO_MAJOR(die_rev),
-+				   SOCINFO_MINOR(die_rev));
- 		else
- 			seq_printf(seq, "unknown (%d)\n", model);
- 	}
+Acked-by: Stanimir Varbanov <svarbanov@mm-sol.com>
+
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 3aac77a295ba..dad6e9ce66ba 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -387,7 +387,9 @@ static int qcom_pcie_init_2_1_0(struct qcom_pcie *pcie)
+>  
+>  	/* enable external reference clock */
+>  	val = readl(pcie->parf + PCIE20_PARF_PHY_REFCLK);
+> -	val &= ~PHY_REFCLK_USE_PAD;
+> +	/* USE_PAD is required only for ipq806x */
+> +	if (!of_device_is_compatible(node, "qcom,pcie-apq8064"))
+> +		val &= ~PHY_REFCLK_USE_PAD;
+>  	val |= PHY_REFCLK_SSP_EN;
+>  	writel(val, pcie->parf + PCIE20_PARF_PHY_REFCLK);
+>  
+> 
+
 -- 
-2.29.2
-
+regards,
+Stan
