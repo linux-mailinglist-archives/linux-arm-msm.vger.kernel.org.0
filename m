@@ -2,82 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C65B22F9F22
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jan 2021 13:08:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 57CDC2F9F55
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jan 2021 13:18:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391343AbhARMHs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Jan 2021 07:07:48 -0500
-Received: from mail.kernel.org ([198.145.29.99]:45028 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2403958AbhARMGM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Jan 2021 07:06:12 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id C810B222BB;
-        Mon, 18 Jan 2021 12:05:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1610971531;
-        bh=Lzm0BRSPRh6hdv3HRtMexM0LcDTwJy2kZUXSLb2saBw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=psaRCDOFpGvW4U/D19GI5blrsYUQ3xjIhj8we01ZTwpt0nYzBUxMPdwrpxz56ySU/
-         wHTGJIwabtWA0oinSG6V3xhuG0pXGqJLxE6Cdxoh/0/wYFD/t3gDgjhfWuVdOKInWl
-         ABWAJy13NIrp4i+y3tW3jtalxIt5kH/BFrHxr5WqJDzfEPTtmW6vIWXsKYr9dwAMRg
-         D+a48KLDsJKyHnsJD117XDUzu1F0cWmY9HWmiM70iNi7tqQ089V8BPNcoisOSiatAW
-         fnMKMtF4GqM1B69HYjBSyvu/CRg9gH9palkwuVHyLiDgZRwn1pM/FSnf78lWTFTyAT
-         73qzfRXGR+Pxw==
-Date:   Mon, 18 Jan 2021 12:04:54 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        robh+dt@kernel.org, sumit.semwal@linaro.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        phone-devel@vger.kernel.org, konrad.dybcio@somainline.org,
-        marijn.suijten@somainline.org, martin.botka@somainline.org
-Subject: Re: [PATCH v3 1/7] regulator: qcom-labibb: Implement voltage
- selector ops
-Message-ID: <20210118120453.GC4455@sirena.org.uk>
-References: <20210117220830.150948-1-angelogioacchino.delregno@somainline.org>
- <20210117220830.150948-2-angelogioacchino.delregno@somainline.org>
+        id S2391068AbhARMSF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Jan 2021 07:18:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53818 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391038AbhARMR6 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 18 Jan 2021 07:17:58 -0500
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CC52C061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jan 2021 04:17:18 -0800 (PST)
+Received: by mail-pf1-x42e.google.com with SMTP id i63so3019028pfg.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jan 2021 04:17:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=OK+wvAIWz97i5pOfUTWYOoqWSq+gjxb55ZgsDBZNEUA=;
+        b=yP3q5bnE215jn1E384+68S8WpKkBR1Z6hlcrJqXtxx8EHVNXszY6x4n99kbsq00dNs
+         ZDoXaqHWgtr16JKaOWXEb30q2lD5phUJ1rBOui0xdAku0cjXD31r7CL1Bji2cS7yYjKe
+         PUE7oqytiB3A09eJGiRfHs5ongISYeEOHN88oukQQNATlYSEqgKwHVLuZN6oxqK55uiz
+         zqAM525e/wZWS8dItT1IJz5+6J/kuafKxBS84bJDt4SMVfVHI9CgXIp6YwFmeFhBQbet
+         dyzJbN2LhMi9DOryAyj3WQho0pcKtkdcrDhCqYgj7gLR4OgbMV66K6HzEgBjeXxK2EPm
+         x/KA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=OK+wvAIWz97i5pOfUTWYOoqWSq+gjxb55ZgsDBZNEUA=;
+        b=XGUYM0311Rpmzr8YYOZ/NYTSJ4rMs4xxzLDbX6fy52KEbiKty0+P2lra9O4VUBAHiQ
+         5/cYP9ldkChXAXLbk1/hhcjBqF6OlJBGtqVYOVcR/XXUo2vYoCnDCug+vijwCtgoRKnP
+         8NetdiwMy3RZhtq7T9DvuhNFsUIquTNQIAsGVoWCQPL4eeC7f8RgcT2HyxnR7sryCC35
+         ctyjIaQ4uP5zQYGfZVYDiRypJTg9X4OD7VeMOrYEOJVOpmVl9AYD/M8anXlIYuPecwch
+         79I2Mm0lip+JYBAnwOQaGMcs60My1SoR2LNnuRAZ8LF1XYUXvw4adsOyMoCZWlRuoXOJ
+         Rq0w==
+X-Gm-Message-State: AOAM531vu0mTzJ7l8kNuoYsykLQIhrhRgsZROpSYhSREWAmzDtVtfdg6
+        qpwZiWF0Dc0cw9PehhHlNnX9PA==
+X-Google-Smtp-Source: ABdhPJxUQwXWTzfvNpzdBvric1JiErYgJn0SBmCP6LDT8gJyn3YgSuMpY+a93LQfpzjCCVyGWeT34Q==
+X-Received: by 2002:a63:c64:: with SMTP id 36mr25822687pgm.255.1610972237714;
+        Mon, 18 Jan 2021 04:17:17 -0800 (PST)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id b6sm15178100pfd.43.2021.01.18.04.17.15
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 18 Jan 2021 04:17:17 -0800 (PST)
+Date:   Mon, 18 Jan 2021 20:17:12 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ionela Voinescu <ionela.voinescu@arm.com>,
+        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Andy Gross <agross@kernel.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] cpufreq: qcom-hw: add missing devm_release_mem_region()
+ call
+Message-ID: <20210118121710.GD2479@dragon>
+References: <20210112095236.20515-1-shawn.guo@linaro.org>
+ <X/210llTiuNt3haG@builder.lan>
+ <20210113043143.y45mmnw3e2kjkxnl@vireshk-i7>
+ <X/5+GbueKg66DoEE@builder.lan>
+ <20210113050651.q2txref3d6bifrf3@vireshk-i7>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="DIOMP1UsTsWJauNi"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210117220830.150948-2-angelogioacchino.delregno@somainline.org>
-X-Cookie: Huh?
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20210113050651.q2txref3d6bifrf3@vireshk-i7>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Jan 13, 2021 at 10:36:51AM +0530, Viresh Kumar wrote:
+> On 12-01-21, 22:59, Bjorn Andersson wrote:
+> > But that said, why are the ioremap done at init and not at probe time?
+> 
+> These are some hardware registers per cpufreq policy I believe, and so
+> they did it from policy init instead.
+> 
+> And yes I agree that we shouldn't use devm_ from init() for the cases
+> where we need to put the resources in exit() as well. But things like
+> devm_kzalloc() are fine there.
 
---DIOMP1UsTsWJauNi
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+I'm not sure why devm_kzalloc() is fine there.  IIUIC, the memory
+allocated by devm_kzalloc() in init() is not freed up from exit(), as
+&pdev->dev is alive across init/exit cycles and will not trigger devres
+auto free-up.
 
-On Sun, Jan 17, 2021 at 11:08:24PM +0100, AngeloGioacchino Del Regno wrote:
-> Implement {get,set}_voltage_sel, list_voltage, map_voltage with
-> the useful regulator regmap helpers in order to be able to manage
-> the voltage of LAB (positive) and IBB (negative) regulators.
-
-Please do not submit new versions of already applied patches, please
-submit incremental updates to the existing code.  Modifying existing
-commits creates problems for other users building on top of those
-commits so it's best practice to only change pubished git commits if
-absolutely essential.
-
---DIOMP1UsTsWJauNi
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmAFeWUACgkQJNaLcl1U
-h9ChhQf+I84AxaUISvCxfDx9zsu0Oy+N1I0gO7//RG7oyTwhUfw8jWyp6jVqXapv
-iL+DD+h/sdD5p2k/gli9USjGQryOhhNmhSYTL9KDIs9Q7tLDb0np/vDPrJ1tsvpT
-nlAT0Tw2Vg/gozbfVbI9bp3iKH1aTIAYBD0dLoc+mx/IN8XZK8Sfh1RKq4dGDy67
-3ibSJ7yMxAZGm7JB9lHhq+X5ZYjhQ4JbT9pTkNzX+RqkzGQDkK96oFJv+6P88qNX
-Jg9qgdwml9Yj4LBkXnDXr38y2TqD6ERPpPbs9AmyliM//zSLNQEr99g9XLhaQsCd
-oBD1Huu6CQJ8H90pum4sL4c0cRs+bg==
-=y1H8
------END PGP SIGNATURE-----
-
---DIOMP1UsTsWJauNi--
+Shawn
