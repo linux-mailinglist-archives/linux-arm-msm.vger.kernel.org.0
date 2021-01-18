@@ -2,83 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 12ABF2FA5AD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jan 2021 17:11:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DD2D92FA5DB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jan 2021 17:17:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406351AbhARQKA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Jan 2021 11:10:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47154 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2406245AbhARQIu (ORCPT
+        id S2406422AbhARQQ7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Jan 2021 11:16:59 -0500
+Received: from m-r1.th.seeweb.it ([5.144.164.170]:48895 "EHLO
+        m-r1.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2406578AbhARQQC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Jan 2021 11:08:50 -0500
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [IPv6:2001:4d48:ad52:32c8:5054:ff:fe00:142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8895C061575;
-        Mon, 18 Jan 2021 08:08:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=8pa+bASY5k8H5/EkY2EjdUZWWNJFn5FZ30mTBXRcFDU=; b=XuWXYKzG2kDe+Sd8Pjy62BzFK
-        dSOZKfmyhq1VJVpd6v1Z3BcmS4J2UmKWXUQUmhUN22pgbPvvvKnszPapyQ6KMrUOKe0CLFD2kHrve
-        +Yl1qah9DoCDd3XvtTyVx4ybXlygy0vOSjJJz5uC4+l0xr5laTxTEgqqRCV/2H74xQFq73miQZq1Z
-        Ly9YmqAZtFgxbdhKE7ySdNyIN8nl7mMjOO8kkESwvFwOtaHAyV4zgPHe7MVvjW9/mF28AX/mAU6cJ
-        IBzBQet2Jlx9ebuq5kTSOxBMQdIfLdVlZGgmOg6j+5XuiqNn/zrPYbwtA6QyqUgqshe6EmGISmcRD
-        i1EdsxS4Q==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:49608)
-        by pandora.armlinux.org.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <linux@armlinux.org.uk>)
-        id 1l1X4a-0006ew-7i; Mon, 18 Jan 2021 16:08:08 +0000
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.92)
-        (envelope-from <linux@shell.armlinux.org.uk>)
-        id 1l1X4Z-00047y-OZ; Mon, 18 Jan 2021 16:08:07 +0000
-Date:   Mon, 18 Jan 2021 16:08:07 +0000
-From:   Russell King - ARM Linux admin <linux@armlinux.org.uk>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     will@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        bjorn.andersson@linaro.org
-Subject: Re: [PATCH] ARM: kernel: Fix interrupted SMC calls
-Message-ID: <20210118160807.GF1551@shell.armlinux.org.uk>
-References: <20210118155153.21520-1-manivannan.sadhasivam@linaro.org>
+        Mon, 18 Jan 2021 11:16:02 -0500
+Received: from localhost.localdomain (abaf224.neoplus.adsl.tpnet.pl [83.6.169.224])
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id E1BC41F524;
+        Mon, 18 Jan 2021 17:15:02 +0100 (CET)
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+To:     phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Brown <broonie@kernel.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH] clk: qcom: smd: Add missing RPM clocks for msm8992/4
+Date:   Mon, 18 Jan 2021 17:14:41 +0100
+Message-Id: <20210118161442.104660-1-konrad.dybcio@somainline.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210118155153.21520-1-manivannan.sadhasivam@linaro.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Sender: Russell King - ARM Linux admin <linux@armlinux.org.uk>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 18, 2021 at 09:21:53PM +0530, Manivannan Sadhasivam wrote:
-> @@ -27,10 +29,18 @@ UNWIND(	.fnstart)
->  UNWIND(	.save	{r4-r7})
->  	ldm	r12, {r4-r7}
->  	\instr
-> +	mov	r9, r6			// Copy r6 before popping from stack
->  	pop	{r4-r7}
->  	ldr	r12, [sp, #(4 * 4)]
->  	stm	r12, {r0-r3}
-> -	bx	lr
-> +	ldr	r10, [sp, #20]
-> +	cmp	r10, #0
-> +	beq	1f			// No quirk structure
-> +	ldr     r11, [r10, #ARM_SMCCC_QUIRK_ID_OFFS]
-> +	cmp     r11, #ARM_SMCCC_QUIRK_QCOM_A6
-> +	bne	1f			// No quirk present
-> +	str	r9, [r10, #ARM_SMCCC_QUIRK_STATE_OFFS]
-> +1:	bx	lr
+This was omitted when first adding the clocks for these SoCs.
 
-NAK. This patch shows little regard for the C ABI. You are corrupting
-registers that must be preserved. Please find out about the C ABIs
-that are used on ARM.
+Fixes: b4297844995 ("clk: qcom: smd: Add support for MSM8992/4 rpm clocks")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+---
+ drivers/clk/qcom/clk-smd-rpm.c         | 16 ++++++++++++++++
+ include/dt-bindings/clock/qcom,rpmcc.h |  2 ++
+ include/linux/soc/qcom/smd-rpm.h       |  1 +
+ 3 files changed, 19 insertions(+)
 
-Thanks.
-
+diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
+index 0e1dfa89489e..91d610042a5d 100644
+--- a/drivers/clk/qcom/clk-smd-rpm.c
++++ b/drivers/clk/qcom/clk-smd-rpm.c
+@@ -624,6 +624,8 @@ static const struct rpm_smd_clk_desc rpm_clk_msm8976 = {
+ };
+ 
+ /* msm8992 */
++DEFINE_CLK_SMD_RPM_BRANCH(msm8992, bi_tcxo, bi_tcxo_a, QCOM_SMD_RPM_MISC_CLK, 0,
++								19200000);
+ DEFINE_CLK_SMD_RPM(msm8992, pnoc_clk, pnoc_a_clk, QCOM_SMD_RPM_BUS_CLK, 0);
+ DEFINE_CLK_SMD_RPM(msm8992, ocmemgx_clk, ocmemgx_a_clk, QCOM_SMD_RPM_MEM_CLK, 2);
+ DEFINE_CLK_SMD_RPM(msm8992, bimc_clk, bimc_a_clk, QCOM_SMD_RPM_MEM_CLK, 0);
+@@ -642,6 +644,8 @@ DEFINE_CLK_SMD_RPM(msm8992, ipa_clk, ipa_a_clk, QCOM_SMD_RPM_IPA_CLK, 0);
+ DEFINE_CLK_SMD_RPM_XO_BUFFER(msm8992, ln_bb_clk, ln_bb_a_clk, 8);
+ DEFINE_CLK_SMD_RPM(msm8992, mmssnoc_ahb_clk, mmssnoc_ahb_a_clk,
+ 		   QCOM_SMD_RPM_BUS_CLK, 3);
++DEFINE_CLK_SMD_RPM_BRANCH(msm8992, mss_cfg_ahb_clk, mss_cfg_ahb_a_clk,
++			QCOM_SMD_RPM_MFFG_CLK, 0, 19200000);
+ DEFINE_CLK_SMD_RPM_QDSS(msm8992, qdss_clk, qdss_a_clk,
+ 			QCOM_SMD_RPM_MISC_CLK, 1);
+ DEFINE_CLK_SMD_RPM_XO_BUFFER(msm8992, rf_clk1, rf_clk1_a, 4);
+@@ -653,6 +657,8 @@ DEFINE_CLK_SMD_RPM(msm8992, ce1_clk, ce1_a_clk, QCOM_SMD_RPM_CE_CLK, 0);
+ DEFINE_CLK_SMD_RPM(msm8992, ce2_clk, ce2_a_clk, QCOM_SMD_RPM_CE_CLK, 1);
+ 
+ static struct clk_smd_rpm *msm8992_clks[] = {
++	[RPM_SMD_XO_CLK_SRC] = &msm8992_bi_tcxo,
++	[RPM_SMD_XO_A_CLK_SRC] = &msm8992_bi_tcxo_a,
+ 	[RPM_SMD_PNOC_CLK] = &msm8992_pnoc_clk,
+ 	[RPM_SMD_PNOC_A_CLK] = &msm8992_pnoc_a_clk,
+ 	[RPM_SMD_OCMEMGX_CLK] = &msm8992_ocmemgx_clk,
+@@ -685,6 +691,8 @@ static struct clk_smd_rpm *msm8992_clks[] = {
+ 	[RPM_SMD_LN_BB_A_CLK] = &msm8992_ln_bb_a_clk,
+ 	[RPM_SMD_MMSSNOC_AHB_CLK] = &msm8992_mmssnoc_ahb_clk,
+ 	[RPM_SMD_MMSSNOC_AHB_A_CLK] = &msm8992_mmssnoc_ahb_a_clk,
++	[RPM_SMD_MSS_CFG_AHB_CLK] = &msm8992_mss_cfg_ahb_clk,
++	[RPM_SMD_MSS_CFG_AHB_A_CLK] = &msm8992_mss_cfg_ahb_a_clk,
+ 	[RPM_SMD_QDSS_CLK] = &msm8992_qdss_clk,
+ 	[RPM_SMD_QDSS_A_CLK] = &msm8992_qdss_a_clk,
+ 	[RPM_SMD_RF_CLK1] = &msm8992_rf_clk1,
+@@ -707,6 +715,8 @@ static const struct rpm_smd_clk_desc rpm_clk_msm8992 = {
+ };
+ 
+ /* msm8994 */
++DEFINE_CLK_SMD_RPM_BRANCH(msm8994, bi_tcxo, bi_tcxo_a, QCOM_SMD_RPM_MISC_CLK, 0,
++								19200000);
+ DEFINE_CLK_SMD_RPM(msm8994, pnoc_clk, pnoc_a_clk, QCOM_SMD_RPM_BUS_CLK, 0);
+ DEFINE_CLK_SMD_RPM(msm8994, ocmemgx_clk, ocmemgx_a_clk, QCOM_SMD_RPM_MEM_CLK, 2);
+ DEFINE_CLK_SMD_RPM(msm8994, bimc_clk, bimc_a_clk, QCOM_SMD_RPM_MEM_CLK, 0);
+@@ -725,6 +735,8 @@ DEFINE_CLK_SMD_RPM(msm8994, ipa_clk, ipa_a_clk, QCOM_SMD_RPM_IPA_CLK, 0);
+ DEFINE_CLK_SMD_RPM_XO_BUFFER(msm8994, ln_bb_clk, ln_bb_a_clk, 8);
+ DEFINE_CLK_SMD_RPM(msm8994, mmssnoc_ahb_clk, mmssnoc_ahb_a_clk,
+ 		   QCOM_SMD_RPM_BUS_CLK, 3);
++DEFINE_CLK_SMD_RPM_BRANCH(msm8994, mss_cfg_ahb_clk, mss_cfg_ahb_a_clk,
++			QCOM_SMD_RPM_MFFG_CLK, 0, 19200000);
+ DEFINE_CLK_SMD_RPM_QDSS(msm8994, qdss_clk, qdss_a_clk,
+ 			QCOM_SMD_RPM_MISC_CLK, 1);
+ DEFINE_CLK_SMD_RPM_XO_BUFFER(msm8994, rf_clk1, rf_clk1_a, 4);
+@@ -737,6 +749,8 @@ DEFINE_CLK_SMD_RPM(msm8994, ce2_clk, ce2_a_clk, QCOM_SMD_RPM_CE_CLK, 1);
+ DEFINE_CLK_SMD_RPM(msm8994, ce3_clk, ce3_a_clk, QCOM_SMD_RPM_CE_CLK, 2);
+ 
+ static struct clk_smd_rpm *msm8994_clks[] = {
++	[RPM_SMD_XO_CLK_SRC] = &msm8994_bi_tcxo,
++	[RPM_SMD_XO_A_CLK_SRC] = &msm8994_bi_tcxo_a,
+ 	[RPM_SMD_PNOC_CLK] = &msm8994_pnoc_clk,
+ 	[RPM_SMD_PNOC_A_CLK] = &msm8994_pnoc_a_clk,
+ 	[RPM_SMD_OCMEMGX_CLK] = &msm8994_ocmemgx_clk,
+@@ -769,6 +783,8 @@ static struct clk_smd_rpm *msm8994_clks[] = {
+ 	[RPM_SMD_LN_BB_A_CLK] = &msm8994_ln_bb_a_clk,
+ 	[RPM_SMD_MMSSNOC_AHB_CLK] = &msm8994_mmssnoc_ahb_clk,
+ 	[RPM_SMD_MMSSNOC_AHB_A_CLK] = &msm8994_mmssnoc_ahb_a_clk,
++	[RPM_SMD_MSS_CFG_AHB_CLK] = &msm8994_mss_cfg_ahb_clk,
++	[RPM_SMD_MSS_CFG_AHB_A_CLK] = &msm8994_mss_cfg_ahb_a_clk,
+ 	[RPM_SMD_QDSS_CLK] = &msm8994_qdss_clk,
+ 	[RPM_SMD_QDSS_A_CLK] = &msm8994_qdss_a_clk,
+ 	[RPM_SMD_RF_CLK1] = &msm8994_rf_clk1,
+diff --git a/include/dt-bindings/clock/qcom,rpmcc.h b/include/dt-bindings/clock/qcom,rpmcc.h
+index 8aaba7cd9589..e8e256dbcc8a 100644
+--- a/include/dt-bindings/clock/qcom,rpmcc.h
++++ b/include/dt-bindings/clock/qcom,rpmcc.h
+@@ -149,5 +149,7 @@
+ #define RPM_SMD_CE2_A_CLK			103
+ #define RPM_SMD_CE3_CLK				104
+ #define RPM_SMD_CE3_A_CLK			105
++#define RPM_SMD_MSS_CFG_AHB_CLK			106
++#define RPM_SMD_MSS_CFG_AHB_A_CLK		107
+ 
+ #endif
+diff --git a/include/linux/soc/qcom/smd-rpm.h b/include/linux/soc/qcom/smd-rpm.h
+index f2645ec52520..ce51b18f7128 100644
+--- a/include/linux/soc/qcom/smd-rpm.h
++++ b/include/linux/soc/qcom/smd-rpm.h
+@@ -37,6 +37,7 @@ struct qcom_smd_rpm;
+ #define QCOM_SMD_RPM_IPA_CLK	0x617069
+ #define QCOM_SMD_RPM_CE_CLK	0x6563
+ #define QCOM_SMD_RPM_AGGR_CLK	0x72676761
++#define QCOM_SMD_RPM_MFFG_CLK	0x6766636d
+ 
+ int qcom_rpm_smd_write(struct qcom_smd_rpm *rpm,
+ 		       int state,
 -- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 40Mbps down 10Mbps up. Decent connectivity at last!
+2.29.2
+
