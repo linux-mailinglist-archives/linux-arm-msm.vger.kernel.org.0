@@ -2,42 +2,45 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 462B82F98C4
+	by mail.lfdr.de (Postfix) with ESMTP id B31802F98C5
 	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jan 2021 05:45:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730652AbhAREok (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 17 Jan 2021 23:44:40 -0500
-Received: from mail.kernel.org ([198.145.29.99]:56830 "EHLO mail.kernel.org"
+        id S1731245AbhAREoo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 17 Jan 2021 23:44:44 -0500
+Received: from mail.kernel.org ([198.145.29.99]:56852 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731039AbhAREog (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 17 Jan 2021 23:44:36 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id DF64A224B8;
-        Mon, 18 Jan 2021 04:43:51 +0000 (UTC)
+        id S1731139AbhAREon (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 17 Jan 2021 23:44:43 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id E444F22513;
+        Mon, 18 Jan 2021 04:43:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1610945036;
-        bh=ujekwcrP8/ZvXDo6NAzxT624d7YlfKOIsh1MNlzQXL8=;
+        s=k20201202; t=1610945042;
+        bh=ZeoeQRZluUpfUTzdColqsD0FJk5rDN19ZksfzGRLdxQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=HU7jygmakiUs7elE/rEdfOsgxh+dqEtdpy7Rx57OM7tc9IJOmxvMy7Wn67vUf3Y6n
-         sw5frbfK34dMU5lPFectduXcGK/V7leInaGVL58RKWyd9SF9BV/Slm34gGac432/PD
-         G6iNcBG9F6HuPRsRMpjtKMRp0zV9Fv+hrBvyW/b8OoyDToHq4DntUTUuuTwprks4sE
-         A0KPXXUuo31rZW2iWXbjsDYXy0EaXSxYYl/p5/B/j/s8BedJMiPKWkjA3Qay5pKcXt
-         jSdf74Scb8ZJjd6cIlV2X7VdlDUZzNe7x1jkm+ms11FphfpUVD1OVO4vk8NG+AHdEv
-         GhNkJYCvGBZeg==
+        b=JxCF5/Lw81Ae63NqRWBmbtAsMViWsZOO8Vrx3H4WHacCm3TsnfTKG/oPbCpXHZes1
+         mPosl4lRar2mLlX4agLpqe7rIK8R797zdKcBVyc6nQQoVLJaQQ+NOrAJ58i/3rgYxd
+         4iKKWzAYK1yVJWrElbEFrin0cS1tjr7iV46yfvekh5hdRSRps5KpHHeQvojWMawkCC
+         T5OBPwaptgLOsu9T6gF+8U4jQSygFjxCMmsWuruzt4/5wHgJf2qb/tSx9U057haTYA
+         i3TUE63ZTitgdp/erPK7AQHpy/cg4FjBvhj3903MGgd3W3kR6CxSgimHug+dLcMrT0
+         zGA6cq9CDZfJQ==
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Stephen Boyd <sboyd@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Vivek Aknurwar <viveka@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
         Rob Herring <robh+dt@kernel.org>,
         Taniya Das <tdas@codeaurora.org>,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>,
         linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v4 2/5] clk: qcom: clk-alpha-pll: modularize alpha_pll_trion_set_rate()
-Date:   Mon, 18 Jan 2021 10:13:18 +0530
-Message-Id: <20210118044321.2571775-3-vkoul@kernel.org>
+        linux-kernel@vger.kernel.org,
+        Jeevan Shriram <jshriram@codeaurora.org>,
+        Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH v4 3/5] clk: qcom: clk-alpha-pll: Add support for Lucid 5LPE PLL
+Date:   Mon, 18 Jan 2021 10:13:19 +0530
+Message-Id: <20210118044321.2571775-4-vkoul@kernel.org>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20210118044321.2571775-1-vkoul@kernel.org>
 References: <20210118044321.2571775-1-vkoul@kernel.org>
@@ -47,70 +50,223 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Trion 5LPE set rate uses code similar to alpha_pll_trion_set_rate() but
-with different registers. Modularize these by moving out latch and latch
-ack bits so that we can reuse the function.
+From: Vivek Aknurwar <viveka@codeaurora.org>
 
-Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+Lucid 5LPE is a slightly different Lucid PLL with different offsets and
+porgramming sequence so add support for these
+
+Signed-off-by: Vivek Aknurwar <viveka@codeaurora.org>
+Signed-off-by: Jeevan Shriram <jshriram@codeaurora.org>
+[vkoul: rebase and tidy up for upstream]
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 ---
- drivers/clk/qcom/clk-alpha-pll.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/clk/qcom/clk-alpha-pll.c | 173 +++++++++++++++++++++++++++++++
+ drivers/clk/qcom/clk-alpha-pll.h |   4 +
+ 2 files changed, 177 insertions(+)
 
 diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-index f7721088494c..a30ea7b09224 100644
+index a30ea7b09224..f9c48da21bd1 100644
 --- a/drivers/clk/qcom/clk-alpha-pll.c
 +++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -1471,8 +1471,8 @@ static int alpha_pll_lucid_prepare(struct clk_hw *hw)
- 	return __alpha_pll_trion_prepare(hw, LUCID_PCAL_DONE);
- }
+@@ -156,6 +156,12 @@ EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
+ /* LUCID PLL specific settings and offsets */
+ #define LUCID_PCAL_DONE		BIT(27)
  
--static int alpha_pll_trion_set_rate(struct clk_hw *hw, unsigned long rate,
--				    unsigned long prate)
-+static int __alpha_pll_trion_set_rate(struct clk_hw *hw, unsigned long rate,
-+				      unsigned long prate, u32 latch_bit, u32 latch_ack)
- {
- 	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
- 	unsigned long rrate;
-@@ -1490,22 +1490,20 @@ static int alpha_pll_trion_set_rate(struct clk_hw *hw, unsigned long rate,
- 	regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL(pll), a);
- 
- 	/* Latch the PLL input */
--	ret = regmap_update_bits(pll->clkr.regmap, PLL_MODE(pll),
--				 PLL_UPDATE, PLL_UPDATE);
-+	ret = regmap_update_bits(pll->clkr.regmap, PLL_MODE(pll), latch_bit, latch_bit);
- 	if (ret)
- 		return ret;
- 
- 	/* Wait for 2 reference cycles before checking the ACK bit. */
- 	udelay(1);
- 	regmap_read(pll->clkr.regmap, PLL_MODE(pll), &val);
--	if (!(val & ALPHA_PLL_ACK_LATCH)) {
-+	if (!(val & latch_ack)) {
- 		pr_err("Lucid PLL latch failed. Output may be unstable!\n");
- 		return -EINVAL;
- 	}
- 
- 	/* Return the latch input to 0 */
--	ret = regmap_update_bits(pll->clkr.regmap, PLL_MODE(pll),
--				 PLL_UPDATE, 0);
-+	ret = regmap_update_bits(pll->clkr.regmap, PLL_MODE(pll), latch_bit, 0);
- 	if (ret)
- 		return ret;
- 
-@@ -1520,6 +1518,12 @@ static int alpha_pll_trion_set_rate(struct clk_hw *hw, unsigned long rate,
- 	return 0;
- }
- 
-+static int alpha_pll_trion_set_rate(struct clk_hw *hw, unsigned long rate,
-+				    unsigned long prate)
++/* LUCID 5LPE PLL specific settings and offsets */
++#define LUCID_5LPE_PCAL_DONE		BIT(11)
++#define LUCID_5LPE_ALPHA_PLL_ACK_LATCH	BIT(13)
++#define LUCID_5LPE_PLL_LATCH_INPUT	BIT(14)
++#define LUCID_5LPE_ENABLE_VOTE_RUN	BIT(21)
++
+ #define pll_alpha_width(p)					\
+ 		((PLL_ALPHA_VAL_U(p) - PLL_ALPHA_VAL(p) == 4) ?	\
+ 				 ALPHA_REG_BITWIDTH : ALPHA_REG_16BIT_WIDTH)
+@@ -1604,3 +1610,170 @@ const struct clk_ops clk_alpha_pll_agera_ops = {
+ 	.set_rate = clk_alpha_pll_agera_set_rate,
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_agera_ops);
++
++static int alpha_pll_lucid_5lpe_enable(struct clk_hw *hw)
 +{
-+	return __alpha_pll_trion_set_rate(hw, rate, prate, PLL_UPDATE, ALPHA_PLL_ACK_LATCH);
++	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
++	u32 val;
++	int ret;
++
++	ret = regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &val);
++	if (ret)
++		return ret;
++
++	/* If in FSM mode, just vote for it */
++	if (val & LUCID_5LPE_ENABLE_VOTE_RUN) {
++		ret = clk_enable_regmap(hw);
++		if (ret)
++			return ret;
++		return wait_for_pll_enable_lock(pll);
++	}
++
++	/* Check if PLL is already enabled, return if enabled */
++	ret = trion_pll_is_enabled(pll, pll->clkr.regmap);
++	if (ret < 0)
++		return ret;
++
++	ret = regmap_update_bits(pll->clkr.regmap, PLL_MODE(pll), PLL_RESET_N, PLL_RESET_N);
++	if (ret)
++		return ret;
++
++	regmap_write(pll->clkr.regmap, PLL_OPMODE(pll), PLL_RUN);
++
++	ret = wait_for_pll_enable_lock(pll);
++	if (ret)
++		return ret;
++
++	/* Enable the PLL outputs */
++	ret = regmap_update_bits(pll->clkr.regmap, PLL_USER_CTL(pll), PLL_OUT_MASK, PLL_OUT_MASK);
++	if (ret)
++		return ret;
++
++	/* Enable the global PLL outputs */
++	return regmap_update_bits(pll->clkr.regmap, PLL_MODE(pll), PLL_OUTCTRL, PLL_OUTCTRL);
 +}
 +
- const struct clk_ops clk_alpha_pll_trion_ops = {
- 	.prepare = alpha_pll_trion_prepare,
- 	.enable = clk_trion_pll_enable,
++static void alpha_pll_lucid_5lpe_disable(struct clk_hw *hw)
++{
++	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
++	u32 val;
++	int ret;
++
++	ret = regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &val);
++	if (ret)
++		return;
++
++	/* If in FSM mode, just unvote it */
++	if (val & LUCID_5LPE_ENABLE_VOTE_RUN) {
++		clk_disable_regmap(hw);
++		return;
++	}
++
++	/* Disable the global PLL output */
++	ret = regmap_update_bits(pll->clkr.regmap, PLL_MODE(pll), PLL_OUTCTRL, 0);
++	if (ret)
++		return;
++
++	/* Disable the PLL outputs */
++	ret = regmap_update_bits(pll->clkr.regmap, PLL_USER_CTL(pll), PLL_OUT_MASK, 0);
++	if (ret)
++		return;
++
++	/* Place the PLL mode in STANDBY */
++	regmap_write(pll->clkr.regmap, PLL_OPMODE(pll), PLL_STANDBY);
++}
++
++/*
++ * The Lucid 5LPE PLL requires a power-on self-calibration which happens
++ * when the PLL comes out of reset. Calibrate in case it is not completed.
++ */
++static int alpha_pll_lucid_5lpe_prepare(struct clk_hw *hw)
++{
++	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
++	struct clk_hw *p;
++	u32 val;
++	int ret;
++
++	/* Return early if calibration is not needed. */
++	regmap_read(pll->clkr.regmap, PLL_MODE(pll), &val);
++	if (val & LUCID_5LPE_PCAL_DONE)
++		return 0;
++
++	p = clk_hw_get_parent(hw);
++	if (!p)
++		return -EINVAL;
++
++	ret = alpha_pll_lucid_5lpe_enable(hw);
++	if (ret)
++		return ret;
++
++	alpha_pll_lucid_5lpe_disable(hw);
++
++	return 0;
++}
++
++static int alpha_pll_lucid_5lpe_set_rate(struct clk_hw *hw, unsigned long rate,
++					 unsigned long prate)
++{
++	return __alpha_pll_trion_set_rate(hw, rate, prate,
++					  LUCID_5LPE_PLL_LATCH_INPUT,
++					  LUCID_5LPE_ALPHA_PLL_ACK_LATCH);
++}
++
++static int clk_lucid_5lpe_pll_postdiv_set_rate(struct clk_hw *hw, unsigned long rate,
++					       unsigned long parent_rate)
++{
++	struct clk_alpha_pll_postdiv *pll = to_clk_alpha_pll_postdiv(hw);
++	int i, val = 0, div, ret;
++	u32 mask;
++
++	/*
++	 * If the PLL is in FSM mode, then treat set_rate callback as a
++	 * no-operation.
++	 */
++	ret = regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &val);
++	if (ret)
++		return ret;
++
++	if (val & LUCID_5LPE_ENABLE_VOTE_RUN)
++		return 0;
++
++	div = DIV_ROUND_UP_ULL((u64)parent_rate, rate);
++	for (i = 0; i < pll->num_post_div; i++) {
++		if (pll->post_div_table[i].div == div) {
++			val = pll->post_div_table[i].val;
++			break;
++		}
++	}
++
++	mask = GENMASK(pll->width + pll->post_div_shift - 1, pll->post_div_shift);
++	return regmap_update_bits(pll->clkr.regmap, PLL_USER_CTL(pll),
++				  mask, val << pll->post_div_shift);
++}
++
++const struct clk_ops clk_alpha_pll_lucid_5lpe_ops = {
++	.prepare = alpha_pll_lucid_5lpe_prepare,
++	.enable = alpha_pll_lucid_5lpe_enable,
++	.disable = alpha_pll_lucid_5lpe_disable,
++	.is_enabled = clk_trion_pll_is_enabled,
++	.recalc_rate = clk_trion_pll_recalc_rate,
++	.round_rate = clk_alpha_pll_round_rate,
++	.set_rate = alpha_pll_lucid_5lpe_set_rate,
++};
++EXPORT_SYMBOL(clk_alpha_pll_lucid_5lpe_ops);
++
++const struct clk_ops clk_alpha_pll_fixed_lucid_5lpe_ops = {
++	.enable = alpha_pll_lucid_5lpe_enable,
++	.disable = alpha_pll_lucid_5lpe_disable,
++	.is_enabled = clk_trion_pll_is_enabled,
++	.recalc_rate = clk_trion_pll_recalc_rate,
++	.round_rate = clk_alpha_pll_round_rate,
++};
++EXPORT_SYMBOL(clk_alpha_pll_fixed_lucid_5lpe_ops);
++
++const struct clk_ops clk_alpha_pll_postdiv_lucid_5lpe_ops = {
++	.recalc_rate = clk_alpha_pll_postdiv_fabia_recalc_rate,
++	.round_rate = clk_alpha_pll_postdiv_fabia_round_rate,
++	.set_rate = clk_lucid_5lpe_pll_postdiv_set_rate,
++};
++EXPORT_SYMBOL(clk_alpha_pll_postdiv_lucid_5lpe_ops);
+diff --git a/drivers/clk/qcom/clk-alpha-pll.h b/drivers/clk/qcom/clk-alpha-pll.h
+index 0ea30d2f3da1..6943e933be0f 100644
+--- a/drivers/clk/qcom/clk-alpha-pll.h
++++ b/drivers/clk/qcom/clk-alpha-pll.h
+@@ -144,6 +144,10 @@ extern const struct clk_ops clk_alpha_pll_lucid_ops;
+ extern const struct clk_ops clk_alpha_pll_postdiv_lucid_ops;
+ extern const struct clk_ops clk_alpha_pll_agera_ops;
+ 
++extern const struct clk_ops clk_alpha_pll_lucid_5lpe_ops;
++extern const struct clk_ops clk_alpha_pll_fixed_lucid_5lpe_ops;
++extern const struct clk_ops clk_alpha_pll_postdiv_lucid_5lpe_ops;
++
+ void clk_alpha_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+ 			     const struct alpha_pll_config *config);
+ void clk_fabia_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
 -- 
 2.26.2
 
