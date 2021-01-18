@@ -2,88 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D8D892F9968
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jan 2021 06:41:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F3B832F9966
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jan 2021 06:41:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732104AbhARFlK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Jan 2021 00:41:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53432 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732091AbhARFlF (ORCPT
+        id S1732019AbhARFlH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Jan 2021 00:41:07 -0500
+Received: from m43-15.mailgun.net ([69.72.43.15]:39601 "EHLO
+        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732010AbhARFkm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Jan 2021 00:41:05 -0500
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59BF8C0617A6
-        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Jan 2021 21:39:43 -0800 (PST)
-Received: by mail-pj1-x1036.google.com with SMTP id md11so8748229pjb.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Jan 2021 21:39:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=wkTU0ChPwkkZXA2VY3wkaRtyf5UmV+JhF05KqFJd61o=;
-        b=Id/C+6buXwOp3s1tdsoTHbFJnS/bToKMZz7Nv5eFH8Waf5yGT8H90COB67focLIAnJ
-         Fk32jA/QOtsaeNTyrCtpyh4agp/1y0ly70CgimEoSxrGBgeqpxf01avCNA+ak4a9kH9X
-         BORYcaE8rMVnqu/z53WGXe4lI2otp1oy2U5lmtf5o0kBNxaKamW9X4qWWZN/gg/jjL6s
-         TQ2U0qMUCCZku6a0QJiYX9jHh6z2QfzIVq8cWglHGvZi6hmcNDrSU2eqjzCgLDiGtSJ+
-         LbURlmPwx3xS03IRX2OJNelQgMlT/FyffzcXEWdtq7Oaegr3aYx9zs3eQbLignslusDp
-         kNaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=wkTU0ChPwkkZXA2VY3wkaRtyf5UmV+JhF05KqFJd61o=;
-        b=ZAQCkWyWfwwwv1NQDyZYzs2TdgfM8Gr+SmDCqNBP4izbX1DpVP619n8S4kFAa/G8G9
-         Z0mlk84em3spigrnVet6i6CoIcWB4LwdZZzdus7s4XCtrlvYzHhwfVtQLfCwXb90ICSw
-         FczkzRR1qUrQ0mItagTXXNNuJgOuXcP7V/6DGTqGKCdCPUXETRnP12uhXUN293yDhs++
-         m2a3f9+MHzjP/+PQzzszC1yNHpN+8a7uBZX8XFw59bsZWhSJ7dOO9oRjt8Wz9hquILLR
-         ite2QL1vtGkZ5g1A+WjYGmj8zmQ0uRp/jEpWtP6IXxvQjnre3JUXbPHHj2DWitX6Sun2
-         WQcg==
-X-Gm-Message-State: AOAM531oZlcXeTBrbYqexamBhnE2NfoQPuhGGJS9OW/o6gtNjbm6mINi
-        lCghkfYnjZlEFJUAz2Xm7eH9
-X-Google-Smtp-Source: ABdhPJz2+GkRv65E5JGWhJxP0kmLa5kOkWTtCG0yVnpkd7zTgmrXi8e5DtlkxNwQ5e73jSyPPig4xA==
-X-Received: by 2002:a17:90a:4306:: with SMTP id q6mr24919910pjg.231.1610948382749;
-        Sun, 17 Jan 2021 21:39:42 -0800 (PST)
-Received: from localhost.localdomain ([103.77.37.182])
-        by smtp.gmail.com with ESMTPSA id z6sm14627271pfj.22.2021.01.17.21.39.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 Jan 2021 21:39:42 -0800 (PST)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 13/13] ARM: configs: qcom_defconfig: Enable Command DB driver
-Date:   Mon, 18 Jan 2021 11:08:53 +0530
-Message-Id: <20210118053853.56224-14-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210118053853.56224-1-manivannan.sadhasivam@linaro.org>
-References: <20210118053853.56224-1-manivannan.sadhasivam@linaro.org>
+        Mon, 18 Jan 2021 00:40:42 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1610948421; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=uHzxGrf8G3zeYX2HaPoNqsgtQtnnIbLvf2LA8dS+iTk=; b=H4YvkaBJPTMx0eGkJl4bU/glSAQpnw6JvpsoqZUbEGnlFJE+yLdELkQlejJbU3xmxpzMDxAT
+ jj2U+acPhux4fgpiYPzU/3zVD9IQV30Y9r9/5WvsovDWI8gcnwR7UDPT9s1KoL+tUApGAXt/
+ EJ5rYPlxuGbM2wOT/NYPt2+an6M=
+X-Mailgun-Sending-Ip: 69.72.43.15
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n08.prod.us-east-1.postgun.com with SMTP id
+ 60051f28fd7e724dd3dca9f3 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 18 Jan 2021 05:39:52
+ GMT
+Sender: rnayak=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 059CAC43461; Mon, 18 Jan 2021 05:39:52 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.1 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.0.120] (unknown [49.207.201.202])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 68450C433C6;
+        Mon, 18 Jan 2021 05:39:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 68450C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH 1/3] dt-bindings: power: Introduce
+ 'assigned-performance-states' property
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Roja Rani Yarubandi <rojay@codeaurora.org>
+Cc:     ulf.hansson@linaro.org, robh+dt@kernel.org, wsa@kernel.org,
+        swboyd@chromium.org, dianders@chromium.org,
+        saiprakash.ranjan@codeaurora.org, mka@chromium.org,
+        akashast@codeaurora.org, msavaliy@qti.qualcomm.com,
+        parashar@codeaurora.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        linux-i2c@vger.kernel.org
+References: <20201224111210.1214-1-rojay@codeaurora.org>
+ <20201224111210.1214-2-rojay@codeaurora.org> <YAG/pNXQOS+C2zLr@builder.lan>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <c7824b62-98bb-8327-1769-3fdb99b361a3@codeaurora.org>
+Date:   Mon, 18 Jan 2021 11:09:40 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <YAG/pNXQOS+C2zLr@builder.lan>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable Command DB driver to query the shared system resources on
-platforms using RPMh such as SDX55.
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- arch/arm/configs/qcom_defconfig | 1 +
- 1 file changed, 1 insertion(+)
+On 1/15/2021 9:45 PM, Bjorn Andersson wrote:
+> On Thu 24 Dec 05:12 CST 2020, Roja Rani Yarubandi wrote:
+> 
+>> While most devices within power-domains which support performance states,
+>> scale the performance state dynamically, some devices might want to
+>> set a static/default performance state while the device is active.
+>> These devices typically would also run off a fixed clock and not support
+>> dynamically scaling the device's performance, also known as DVFS
+>> techniques.
+>>
+>> Add a property 'assigned-performance-states' which client devices can
+>> use to set this default performance state on their power-domains.
+>>
+>> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
+>> ---
+>>   .../bindings/power/power-domain.yaml          | 49 +++++++++++++++++++
+>>   1 file changed, 49 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/power/power-domain.yaml b/Documentation/devicetree/bindings/power/power-domain.yaml
+>> index aed51e9dcb11..a42977a82d06 100644
+>> --- a/Documentation/devicetree/bindings/power/power-domain.yaml
+>> +++ b/Documentation/devicetree/bindings/power/power-domain.yaml
+>> @@ -66,6 +66,18 @@ properties:
+>>         by the given provider should be subdomains of the domain specified
+>>         by this binding.
+>>   
+>> +  assigned-performance-states:
+>> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+>> +    description:
+>> +       Some devices might need to configure their power domains in a default
+>> +       performance state while the device is active. These devices typcially
+>> +       would also run off a fixed clock and not support dynamically scaling
+>> +       the device's performance, also known as DVFS techniques. Each cell in
+>> +       performance state value corresponds to one power domain specified as
+>> +       part of the power-domains property. Performance state value can be an
+>> +       opp-level inside an OPP table of the power-domain and need not match
+>> +       with any OPP table performance state.
+>> +
+>>   required:
+>>     - "#power-domain-cells"
+>>   
+>> @@ -131,3 +143,40 @@ examples:
+>>               min-residency-us = <7000>;
+>>           };
+>>       };
+>> +
+>> +  - |
+>> +    parent4: power-controller@12340000 {
+>> +        compatible = "foo,power-controller";
+>> +        reg = <0x12340000 0x1000>;
+>> +        #power-domain-cells = <0>;
+>> +    };
+>> +
+>> +    parent5: power-controller@43210000 {
+>> +        compatible = "foo,power-controller";
+>> +        reg = <0x43210000 0x1000>;
+>> +        #power-domain-cells = <0>;
+>> +        operating-points-v2 = <&power_opp_table>;
+>> +
+>> +        power_opp_table: opp-table {
+>> +            compatible = "operating-points-v2";
+>> +
+>> +            power_opp_low: opp1 {
+>> +                opp-level = <16>;
+>> +            };
+>> +
+>> +            rpmpd_opp_ret: opp2 {
+>> +                opp-level = <64>;
+>> +            };
+>> +
+>> +            rpmpd_opp_svs: opp3 {
+>> +                opp-level = <256>;
+>> +            };
+>> +        };
+>> +    };
+>> +
+>> +    child4: consumer@12341000 {
+>> +        compatible = "foo,consumer";
+>> +        reg = <0x12341000 0x1000>;
+>> +        power-domains = <&parent4>, <&parent5>;
+>> +        assigned-performance-states = <0>, <256>;
+> 
+> May I ask how this is different from saying something like:
+> 
+> 	required-opps = <&??>, <&rpmpd_opp_svs>:
 
-diff --git a/arch/arm/configs/qcom_defconfig b/arch/arm/configs/qcom_defconfig
-index 32f3988631bf..19d03ea09405 100644
---- a/arch/arm/configs/qcom_defconfig
-+++ b/arch/arm/configs/qcom_defconfig
-@@ -239,6 +239,7 @@ CONFIG_QCOM_Q6V5_PIL=y
- CONFIG_QCOM_WCNSS_PIL=y
- CONFIG_RPMSG_CHAR=y
- CONFIG_RPMSG_QCOM_SMD=y
-+CONFIG_QCOM_COMMAND_DB=y
- CONFIG_QCOM_GSBI=y
- CONFIG_QCOM_OCMEM=y
- CONFIG_QCOM_PM=y
+I think its potentially the same. We just don't have any code to handle this
+binding in kernel yet (when this property is part of the device/consumer node)
+
 -- 
-2.25.1
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
