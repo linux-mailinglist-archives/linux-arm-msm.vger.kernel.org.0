@@ -2,147 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FDD62FA63A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jan 2021 17:31:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 940A42FA762
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jan 2021 18:22:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404255AbhARQ3w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Jan 2021 11:29:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50760 "EHLO
+        id S2436506AbhARRV4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Jan 2021 12:21:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2406659AbhARQZl (ORCPT
+        with ESMTP id S2407155AbhARRVs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Jan 2021 11:25:41 -0500
-Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78EB8C061757;
-        Mon, 18 Jan 2021 08:24:57 -0800 (PST)
-Received: from localhost.localdomain (abaf224.neoplus.adsl.tpnet.pl [83.6.169.224])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 7104C1FC8F;
-        Mon, 18 Jan 2021 17:24:55 +0100 (CET)
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-To:     phone-devel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 02/11] arm64: dts: qcom: msm8992-bullhead: Update regulator config
-Date:   Mon, 18 Jan 2021 17:24:22 +0100
-Message-Id: <20210118162432.107275-2-konrad.dybcio@somainline.org>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210118162432.107275-1-konrad.dybcio@somainline.org>
-References: <20210118162432.107275-1-konrad.dybcio@somainline.org>
+        Mon, 18 Jan 2021 12:21:48 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70D4DC061573
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jan 2021 09:21:06 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id g12so24744591ejf.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jan 2021 09:21:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ruKXD8bGqkoghUlX4mzLfQbwoSM0QEpIg9OIDZO9Mdo=;
+        b=f5a2tENvm/u4bFMrMFNXAaNES+GmCodM6qlXaeJTCIca4bsDMi6F94bqs0oWhStzK6
+         SrQzF6iWuNKVoum76255DMFHCK4NhHbFWoIiV43nAhKldc2KxNWh2P7G24pm3jh/EIkP
+         lezu2qBQsTqdlIl0iknd9Ljr5+M3UOsUBBuuUMIyIvTkBMXjXl5zgHsXoFAQRxemkznY
+         XXER8lOWJb81Pu95woHfz53uj48UmE+Ua/6EHF6WXciyKNVi5/Do3WJxd4CITxjFH9L8
+         lAjwPcop4tjfxAuqzn768qghPphHAz0+VjxOQCWcezaSXkHOucUF9mjLMkO5EtXTM2qB
+         1MJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ruKXD8bGqkoghUlX4mzLfQbwoSM0QEpIg9OIDZO9Mdo=;
+        b=YHRLGdZnFESUF16iHlXnQIOO9KtG8ybC5lvsRO0TU6ReMjV+tAXs30xWp1mIRo0EJv
+         QKDz4M393lIiZEjhm562nvqGo9sQnkPmG/PoJ+HZgz57g7uP7U9JbG5tprUB5tzt/vCY
+         nC321sJwDnISba1gjw+WoZXKnwX0spY4+eQvP6mNn0/1oWThNCWZanARN17q/1m7CSJd
+         lDxzwLWU7sFleNxx7G8jiY3sewXmjAlC938DDpstF5qEg+yvaJ27vje3PMA6Ek+V7sEd
+         8z+orEM8cF7TY7CuvKgjPA43SnWQ7XaLj9x/Wo/QZ2H3VNS0MIihcc774BZFnXXrarce
+         5/+A==
+X-Gm-Message-State: AOAM533Pu6mrNmurkys5oXcH70y4trVFnr9Zyzx6hU1SJKichA8vhhG6
+        qE6CidUtEbN8ncVBlpbYq4Ejmg==
+X-Google-Smtp-Source: ABdhPJwdgFF5BqmP+9q7+iU/tK8YvN5uva5O2cPfysLnAR8lqJ2SGsX7RryocyV2Q8pOax/ERzd8Iw==
+X-Received: by 2002:a17:906:97c5:: with SMTP id ef5mr460921ejb.347.1610990465193;
+        Mon, 18 Jan 2021 09:21:05 -0800 (PST)
+Received: from [192.168.0.3] ([84.238.208.220])
+        by smtp.googlemail.com with ESMTPSA id c7sm6401239edv.70.2021.01.18.09.21.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 Jan 2021 09:21:04 -0800 (PST)
+Subject: Re: [PATCH 1/2] media: venus: core: Add sdm660 DT compatible and
+ resource struct
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        stanimir.varbanov@linaro.org
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, mchehab@kernel.org,
+        robh+dt@kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
+        marijn.suijten@somainline.org, phone-devel@vger.kernel.org
+References: <20210115185252.333562-1-angelogioacchino.delregno@somainline.org>
+ <20210115185252.333562-2-angelogioacchino.delregno@somainline.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <2dc8a95f-110f-526f-18a8-6393e508c3a6@linaro.org>
+Date:   Mon, 18 Jan 2021 19:21:03 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210115185252.333562-2-angelogioacchino.delregno@somainline.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-* Include pm(i)8994 dtsi
-* Add PMI8994 RPM regulators
-* Add comments concerning "missing" regulators
+Hi Angelo,
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
----
- .../dts/qcom/msm8992-bullhead-rev-101.dts     | 39 +++++++++++++------
- 1 file changed, 27 insertions(+), 12 deletions(-)
+Thanks for the patch!
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts
-index 5969b5cfdc85..cacbfdbd69e3 100644
---- a/arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts
-@@ -6,6 +6,8 @@
- /dts-v1/;
- 
- #include "msm8992.dtsi"
-+#include "pm8994.dtsi"
-+#include "pmi8994.dtsi"
- 
- / {
- 	model = "LG Nexus 5X";
-@@ -44,7 +46,7 @@ &blsp1_uart2 {
- };
- 
- &rpm_requests {
--	pm8994-regulators {
-+	pm8994_regulators: pm8994-regulators {
- 		compatible = "qcom,rpm-pm8994-regulators";
- 
- 		vdd_l1-supply = <&pm8994_s1>;
-@@ -53,15 +55,17 @@ pm8994-regulators {
- 		vdd_l4_27_31-supply = <&pm8994_s3>;
- 		vdd_l5_7-supply = <&pm8994_s3>;
- 		vdd_l6_12_32-supply = <&pm8994_s5>;
--		vdd_l8_16_30-supply = <&vreg_vph_pwr>;
--		vdd_l9_10_18_22-supply = <&vreg_vph_pwr>;
--		vdd_l13_19_23_24-supply = <&vreg_vph_pwr>;
-+		vdd_l8_16_30-supply = <&vph_pwr>;
-+		vdd_l9_10_18_22-supply = <&vph_pwr>;
-+		vdd_l13_19_23_24-supply = <&vph_pwr>;
- 		vdd_l14_15-supply = <&pm8994_s5>;
--		vdd_l17_29-supply = <&vreg_vph_pwr>;
--		vdd_l20_21-supply = <&vreg_vph_pwr>;
-+		vdd_l17_29-supply = <&vph_pwr>;
-+		vdd_l20_21-supply = <&vph_pwr>;
- 		vdd_l25-supply = <&pm8994_s5>;
- 		vdd_lvs1_2 = <&pm8994_s4>;
- 
-+		/* S1, S2, S6 and S12 are managed by RPMPD */
-+
- 		pm8994_s1: s1 {
- 			regulator-min-microvolt = <800000>;
- 			regulator-max-microvolt = <800000>;
-@@ -93,6 +97,8 @@ pm8994_s7: s7 {
- 			regulator-max-microvolt = <1000000>;
- 		};
- 
-+		/* S8, S9, S10 and S11 - SPMI-managed VDD_APC */
-+
- 		pm8994_l1: l1 {
- 			regulator-min-microvolt = <1000000>;
- 			regulator-max-microvolt = <1000000>;
-@@ -113,18 +119,14 @@ pm8994_l4: l4 {
- 			regulator-max-microvolt = <1225000>;
- 		};
- 
--		pm8994_l5: l5 {
--			/* TODO */
--		};
-+		/* L5 is inaccessible from RPM */
- 
- 		pm8994_l6: l6 {
- 			regulator-min-microvolt = <1800000>;
- 			regulator-max-microvolt = <1800000>;
- 		};
- 
--		pm8994_l7: l7 {
--			/* TODO */
--		};
-+		/* L7 is inaccessible from RPM */
- 
- 		pm8994_l8: l8 {
- 			regulator-min-microvolt = <1800000>;
-@@ -266,6 +268,19 @@ pm8994_l32: l32 {
- 			*/
- 		};
- 	};
-+
-+	pmi8994_regulators: pmi8994-regulators {
-+		compatible = "qcom,rpm-pmi8994-regulators";
-+
-+		vdd_s1-supply = <&vph_pwr>;
-+		vdd_bst_byp-supply = <&vph_pwr>;
-+
-+		pmi8994_s1: s1 {};
-+
-+		/* S2 & S3 - VDD_GFX */
-+
-+		pmi8994_bby: boost-bypass {};
-+	};
- };
- 
- &sdhc_1 {
+On 1/15/21 8:52 PM, AngeloGioacchino Del Regno wrote:
+> Add the SDM660 DT compatible and its resource structure, also
+> including support for the Venus pmdomains, in order to support
+> the Venus block in SDM630, SDM636, SDM660 and SDA variants.
+> 
+> This SoC features Venus 4.4 (HFI3XX), with one vcodec used for
+> both encoding and decoding, switched on through two GDSCs.
+> The core clock for this Venus chip is powered by the RPM VDD_CX
+> power domain.
+> 
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> ---
+>  drivers/media/platform/qcom/venus/core.c | 66 ++++++++++++++++++++++++
+>  1 file changed, 66 insertions(+)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+> index bdd293faaad0..83ca86a63241 100644
+> --- a/drivers/media/platform/qcom/venus/core.c
+> +++ b/drivers/media/platform/qcom/venus/core.c
+> @@ -565,6 +565,71 @@ static const struct venus_resources sdm845_res_v2 = {
+>  	.fwname = "qcom/venus-5.2/venus.mdt",
+>  };
+>  
+> +static const struct freq_tbl sdm660_freq_table[] = {
+> +	{ 0, 518400000 },
+> +	{ 0, 441600000 },
+> +	{ 0, 404000000 },
+> +	{ 0, 320000000 },
+> +	{ 0, 269330000 },
+> +	{ 0, 133330000 },
+> +};
+> +
+> +static const struct reg_val sdm660_reg_preset[] = {
+> +	{ 0x80010, 0x001f001f },
+> +	{ 0x80018, 0x00000156 },
+> +	{ 0x8001C, 0x00000156 },
+> +};
+> +
+> +static const struct bw_tbl sdm660_bw_table_enc[] = {
+> +	{  979200,  1044000, 0, 2446336, 0 },	/* 4k UHD @ 30 */
+> +	{  864000,   887000, 0, 2108416, 0 },	/* 720p @ 240 */
+> +	{  489600,   666000, 0, 1207296, 0 },	/* 1080p @ 60 */
+> +	{  432000,   578000, 0, 1058816, 0 },	/* 720p @ 120 */
+> +	{  244800,   346000, 0,  616448, 0 },	/* 1080p @ 30 */
+> +	{  216000,   293000, 0,  534528, 0 },	/* 720p @ 60 */
+> +	{  108000,   151000, 0,  271360, 0 },	/* 720p @ 30 */
+> +};
+> +
+> +static const struct bw_tbl sdm660_bw_table_dec[] = {
+> +	{  979200,  2365000, 0, 1892000, 0 },	/* 4k UHD @ 30 */
+> +	{  864000,  1978000, 0, 1554000, 0 },	/* 720p @ 240 */
+> +	{  489600,  1133000, 0,  895000, 0 },	/* 1080p @ 60 */
+> +	{  432000,   994000, 0,  781000, 0 },	/* 720p @ 120 */
+> +	{  244800,   580000, 0,  460000, 0 },	/* 1080p @ 30 */
+> +	{  216000,   501000, 0,  301000, 0 },	/* 720p @ 60 */
+> +	{  108000,   255000, 0,  202000, 0 },	/* 720p @ 30 */
+> +};
+> +
+> +static const struct venus_resources sdm660_res = {
+> +	.freq_tbl = sdm660_freq_table,
+> +	.freq_tbl_size = ARRAY_SIZE(sdm660_freq_table),
+> +	.reg_tbl = sdm660_reg_preset,
+> +	.reg_tbl_size = ARRAY_SIZE(sdm660_reg_preset),
+> +	.bw_tbl_enc = sdm660_bw_table_enc,
+> +	.bw_tbl_enc_size = ARRAY_SIZE(sdm660_bw_table_enc),
+> +	.bw_tbl_dec = sdm660_bw_table_dec,
+> +	.bw_tbl_dec_size = ARRAY_SIZE(sdm660_bw_table_dec),
+> +	.clks = {"core", "iface", "bus_throttle", "bus" },
+> +	.clks_num = 4,
+> +	.vcodec0_clks = { "vcodec0_core" },
+> +	.vcodec_clks_num = 1,
+> +	.vcodec_pmdomains = { "venus", "vcodec0" },
+> +	.vcodec_pmdomains_num = 2,
+> +	.opp_pmdomain = (const char *[]) { "cx", NULL },
+> +	.vcodec_num = 1,
+> +	.max_load = 1036800,
+> +	.hfi_version = HFI_VERSION_3XX,
+> +	.vmem_id = VIDC_RESOURCE_NONE,
+> +	.vmem_size = 0,
+> +	.vmem_addr = 0,
+> +	.cp_start = 0,
+> +	.cp_size = 0x79000000,
+> +	.cp_nonpixel_start = 0x1000000,
+> +	.cp_nonpixel_size = 0x28000000,
+> +	.dma_mask = 0xd9000000 - 1,
+> +	.fwname = "qcom/venus-4.4/venus.mdt",
+
+Did you try venus-4.2 firmware from linux-firmware tree [1] ?
+
+> +};
+> +
+>  static const struct freq_tbl sc7180_freq_table[] = {
+>  	{  0, 500000000 },
+>  	{  0, 434000000 },
+> @@ -613,6 +678,7 @@ static const struct venus_resources sc7180_res = {
+>  static const struct of_device_id venus_dt_match[] = {
+>  	{ .compatible = "qcom,msm8916-venus", .data = &msm8916_res, },
+>  	{ .compatible = "qcom,msm8996-venus", .data = &msm8996_res, },
+> +	{ .compatible = "qcom,sdm660-venus", .data = &sdm660_res, },
+>  	{ .compatible = "qcom,sdm845-venus", .data = &sdm845_res, },
+>  	{ .compatible = "qcom,sdm845-venus-v2", .data = &sdm845_res_v2, },
+>  	{ .compatible = "qcom,sc7180-venus", .data = &sc7180_res, },
+> 
+
+Reviewed-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+
 -- 
-2.29.2
+regards,
+Stan
 
+[1]
+https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree/qcom/venus-4.2
