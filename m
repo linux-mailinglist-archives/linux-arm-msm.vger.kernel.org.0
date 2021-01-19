@@ -2,178 +2,203 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9CCAF2FBA23
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jan 2021 15:55:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8719F2FBA27
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jan 2021 15:55:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387763AbhASOo2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Jan 2021 09:44:28 -0500
-Received: from m42-8.mailgun.net ([69.72.42.8]:64826 "EHLO m42-8.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389158AbhASJwS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Jan 2021 04:52:18 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1611049909; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=IqeHm+djSYXGS6nhOsGbWQeydkemPXwx6MDMvUpsZlU=;
- b=eJHB+RGJVWF7fEJlrhCgnl/4CRBU1qCrT2u39Im8/5zJbDTk0r2yKXy0x8nyr/gwG3fxBDU3
- DC+6M5IpOn5xnGlo4H5hXz1IU6NnKzhu/jQeSg8hSDiCfRmxNQ5rvWwpWnmWGMj4GeIMJc4I
- Lr9guuBMNWJcfynZi2Frxtn3bnA=
-X-Mailgun-Sending-Ip: 69.72.42.8
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 6006ab9721210999ed6440ba (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 19 Jan 2021 09:51:19
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E0DACC433C6; Tue, 19 Jan 2021 09:51:18 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C7113C433CA;
-        Tue, 19 Jan 2021 09:51:17 +0000 (UTC)
+        id S2389158AbhASOos (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Jan 2021 09:44:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51662 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389266AbhASKCZ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 19 Jan 2021 05:02:25 -0500
+Received: from mail-vs1-xe2f.google.com (mail-vs1-xe2f.google.com [IPv6:2607:f8b0:4864:20::e2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 330C2C061757
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jan 2021 02:01:27 -0800 (PST)
+Received: by mail-vs1-xe2f.google.com with SMTP id e15so10755970vsa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jan 2021 02:01:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ZFiICJwniMc0Mg91xgmY2/SkSt2U98JxqZWHMzErHqI=;
+        b=EJRJbsr3k7ZHbk8Tfyu4r3RFd7m7/nXBSpmTxaHZ1j6GYoE3PHBScLqAWa0H1U+VXq
+         24pDFQT09sOrdWpptqcrUJt89G0GBdQoHexg9QHOjqLyqD1c6lH3B9zfEJBjmaX6wgg3
+         5eOOPxFTyAs17E+U4GWXMLgn5jC9xvbCY5LBV5gDTi0pQf4eGOGX6YwUXWN0opi55hFF
+         ZpepDAm2dyDyds6SJp9u6VSkRYwFL8lq8FfayCw8xs3a7SEVaBFi/0XWHRNDt9Fufo3J
+         r20PFRCQOBbitGw81vBlUkwyzw2j1SvkwiIubHo3QRPYAlBqubrwQJQm959qigD67a4f
+         BYnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ZFiICJwniMc0Mg91xgmY2/SkSt2U98JxqZWHMzErHqI=;
+        b=TmzHr6qMACNKd5ei94ZRWNvNqC/frDb6cUSkCUK6vAwm4ZWjgvjzrMxzPpczHesfrj
+         84MhlMhHSyNYPYbDwjw/gGzzkwOeJKM7OSdexlN3LWgOIn51q8e2JDwgUeR/Qd0rlC5u
+         JweFCxrgnju6Zm+f/b35uEDDlydgfgjL/YejM7Is87MHYn31HJKD0NY4rwBeUcbicQfk
+         y4SbboPOJG4oYI/rPHwqdesGNV3+kWmAiTaMI41c3SLB7YQnrpqVma/AFOr5jjxpvIVJ
+         ExR0a7Oolu41i4pThf9HdqqFB/dMmiuBkA5LD0ti8Z6tGdVoCWF5cmzMvQ5GWXB5rQfa
+         LJTA==
+X-Gm-Message-State: AOAM531zAhEEirsL/M6Fnp3KurJJgwd8Ow3qYq195HWf6FGVubJsAfKE
+        tt1BBc4cG1gRr568nFE2jozBFIGM++ANreYM7khF1Q==
+X-Google-Smtp-Source: ABdhPJy2RQAuq0B7Krbdn+Ul9WJ02t79YLdw2ym10tsq+ZsL8PYYwZCm7Zo1EGHSq8lvwMbikXefekKPz4bpkUaUzKY=
+X-Received: by 2002:a67:c787:: with SMTP id t7mr2238076vsk.48.1611050486284;
+ Tue, 19 Jan 2021 02:01:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 19 Jan 2021 15:21:17 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Al Grant <Al.Grant@arm.com>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki Poulose <Suzuki.Poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>, coresight@lists.linaro.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Denis Nikitin <denik@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, leo.yan@linaro.org,
-        mnissler@google.com
-Subject: Re: [PATCH] coresight: etm4x: Add config to exclude kernel mode
- tracing
-In-Reply-To: <DB7PR08MB3355E85C72492D4766F0BEFC86A30@DB7PR08MB3355.eurprd08.prod.outlook.com>
-References: <20201015124522.1876-1-saiprakash.ranjan@codeaurora.org>
- <20201015160257.GA1450102@xps15>
- <dd400fd7017a5d92b55880cf28378267@codeaurora.org>
- <20210118202354.GC464579@xps15>
- <32216e9fa5c9ffb9df1123792d40eafb@codeaurora.org>
- <DB7PR08MB3355E85C72492D4766F0BEFC86A30@DB7PR08MB3355.eurprd08.prod.outlook.com>
-Message-ID: <03b893801841f732a25072b4e62f8e0b@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <20210115165004.22385-1-ilina@codeaurora.org> <20210115165004.22385-2-ilina@codeaurora.org>
+In-Reply-To: <20210115165004.22385-2-ilina@codeaurora.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 19 Jan 2021 11:00:50 +0100
+Message-ID: <CAPDyKFqcPsr-aLP0zRgj2F4h_j0Vj7kSy5-aiH5qyH47dM6oYA@mail.gmail.com>
+Subject: Re: [PATCH v8 1/2] PM / domains: inform PM domain of a device's next wakeup
+To:     Lina Iyer <ilina@codeaurora.org>
+Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Al,
+On Fri, 15 Jan 2021 at 17:50, Lina Iyer <ilina@codeaurora.org> wrote:
+>
+> Some devices may have a predictable interrupt pattern while executing
+> usecases. An example would be the VSYNC interrupt associated with
+> display devices. A 60 Hz display could cause a interrupt every 16 ms. If
+> the device were in a PM domain, the domain would need to be powered up
+> for device to resume and handle the interrupt.
+>
+> Entering a domain idle state saves power, only if the residency of the
+> idle state is met. Without knowing the idle duration of the domain, the
+> governor would just choose the deepest idle state that matches the QoS
+> requirements. The domain might be powered off just as the device is
+> expecting to wake up. If devices could inform PM frameworks of their
+> next event, the parent PM domain's idle duration can be determined.
+>
+> So let's add the dev_pm_genpd_set_next_wakeup() API for the device to
+> inform PM domains of the impending wakeup. This information will be the
+> domain governor to determine the best idle state given the wakeup.
+>
+> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+> Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+> ---
+> Changes in v8:
+>         - Update documentation. Add Reviewed-by tag.
+> Changes in v7:
+>         - Simplify and set next-wakeup locklessly
+> Changes in v6:
+>         - Update documentation
+> Changes in v5:
+>         - Fix commit text as pointed by Ulf
+>         - Use -EOPNOTSUPP
+> Changes in v4:
+>         - Use PM domain data to store next_wakeup
+>         - Drop runtime PM documentation
+> Changes in v3:
+>         - Fix unwanted change
+> Changes in v2:
+>         - Update documentation
+>         - Remove runtime PM enabled check
+>         - Update commit text
+> ---
+>  drivers/base/power/domain.c | 25 +++++++++++++++++++++++++
+>  include/linux/pm_domain.h   |  6 ++++++
+>  2 files changed, 31 insertions(+)
+>
+> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+> index 9a14eedacb92..10a960bd3204 100644
+> --- a/drivers/base/power/domain.c
+> +++ b/drivers/base/power/domain.c
+> @@ -423,6 +423,30 @@ int dev_pm_genpd_set_performance_state(struct device *dev, unsigned int state)
+>  }
+>  EXPORT_SYMBOL_GPL(dev_pm_genpd_set_performance_state);
+>
+> +/**
+> + * dev_pm_genpd_set_next_wakeup - Notify PM framework of an impending wakeup.
+> + *
+> + * @dev: Device to handle
+> + * @next: impending interrupt/wakeup for the device
+> + *
+> + *
+> + * Allow devices to inform of the next wakeup. It's assumed that the users
+> + * guarantee that the genpd wouldn't be detached while this routine is getting
+> + * called. Additionally, it's also assumed that @dev isn't runtime suspended
+> + * (RPM_SUSPENDED)."
+> + * Although devices are expected to update the next_wakeup after the end of
+> + * their usecase as well, it is possible the devices themselves may not know
+> + * about that, so stale @next will be ignored when powering off the domain.
+> + */
+> +void dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next)
+> +{
+> +       struct generic_pm_domain_data *gpd_data;
 
-On 2021-01-19 14:06, Al Grant wrote:
-> Hi Sai,
-> 
->> From: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
->> Hi Mathieu,
->> 
->> On 2021-01-19 01:53, Mathieu Poirier wrote:
->> > On Fri, Jan 15, 2021 at 11:16:24AM +0530, Sai Prakash Ranjan wrote:
->> >> Hello Mathieu, Suzuki
->> >>
->> >> On 2020-10-15 21:32, Mathieu Poirier wrote:
->> >> > On Thu, Oct 15, 2020 at 06:15:22PM +0530, Sai Prakash Ranjan wrote:
->> >> > > On production systems with ETMs enabled, it is preferred to
->> >> > > exclude kernel mode(NS EL1) tracing for security concerns and
->> >> > > support only userspace(NS EL0) tracing. So provide an option via
->> >> > > kconfig to exclude kernel mode tracing if it is required.
->> >> > > This config is disabled by default and would not affect the
->> >> > > current configuration which has both kernel and userspace tracing
->> >> > > enabled by default.
->> >> > >
->> >> >
->> >> > One requires root access (or be part of a special trace group) to
->> >> > be able to use the cs_etm PMU.  With this kind of elevated access
->> >> > restricting tracing at EL1 provides little in terms of security.
->> >> >
->> >>
->> >> Apart from the VM usecase discussed, I am told there are other
->> >> security concerns here regarding need to exclude kernel mode tracing
->> >> even for the privileged users/root. One such case being the ability
->> >> to analyze cryptographic code execution since ETMs can record all
->> >> branch instructions including timestamps in the kernel and there may
->> >> be other cases as well which I may not be aware of and hence have
->> >> added Denis and Mattias. Please let us know if you have any questions
->> >> further regarding this not being a security concern.
->> >
->> > Even if we were to apply this patch there are many ways to compromise
->> > a system or get the kernel to reveal important information using the
->> > perf subsystem.  I would perfer to tackle the problem at that level
->> > rather than concentrating on coresight.
->> >
->> 
->> Sorry but I did not understand your point. We are talking about the 
->> capabilities
->> of coresight etm tracing which has the instruction level tracing and a 
->> lot more.
->> Perf subsystem is just the framework used for it.
->> In other words, its not the perf subsystem which does instruction 
->> level tracing,
->> its the coresight etm. Why the perf subsystem should be modified to 
->> lockdown
->> kernel mode? If we were to let perf handle all the trace filtering for 
->> different
->> exception levels, then why do we need the register settings in 
->> coresight etm
->> driver to filter out NS EL* tracing? And more importantly, how do you 
->> suppose
->> we handle sysfs mode of coresight tracing with perf subsystem?
-> 
-> You both have good points. Mathieu is right that this is not a 
-> CoreSight
-> issue specifically, it is a matter of kernel security policy, and other 
-> hardware
-> tracing mechanisms ought to be within its scope. There should be a 
-> general
-> "anti kernel exfiltration" config that applies to all mechanisms within
-> its scope, and we'd definitely expect that to include Intel PT as well 
-> as ETM.
-> 
+Looks like you have dropped one of the needed sanity checks, to make
+sure the device is attached to a genpd. My apologies if I missed that
+in the previous version. So you need something like this:
 
-I agree with this part where there should be a generic config for all
-hardware tracing families(atleast for Intel PT and ARM Coresight),
-Suzuki suggested that as well. I am under the impression that Mathieu
-didn't like adding such a config and wanted perf subsystem to handle
-it since initial discussion was around whether root compromise meant
-everything is lost already and such a kconfig would not help, but
-Mattias already gave some good examples where that is not true.
+genpd = dev_to_genpd_safe(dev);
+if (!genpd)
+    return;
 
-> A kernel config that forced exclude_kernel on all perf events would 
-> deal with
-> ETM and PT in one place, but miss the sysfs interface to ETM.
-> 
-> On the other hand, doing it in the ETM drivers would cover the perf and 
-> sysfs
-> interfaces to ETM, but would miss Intel PT.
-> 
-> So I think what is needed is a general config option that is both 
-> implemented
-> in perf (excluding all kernel tracing events) and by any drivers that 
-> provide
-> an alternative interface to hardware tracing events.
-> 
+> +
+> +       gpd_data = to_gpd_data(dev->power.subsys_data->domain_data);
+> +       gpd_data->next_wakeup = next;
+> +}
+> +EXPORT_SYMBOL_GPL(dev_pm_genpd_set_next_wakeup);
+> +
+>  static int _genpd_power_on(struct generic_pm_domain *genpd, bool timed)
+>  {
+>         unsigned int state_idx = genpd->state_idx;
+> @@ -1465,6 +1489,7 @@ static struct generic_pm_domain_data *genpd_alloc_dev_data(struct device *dev)
+>         gpd_data->td.constraint_changed = true;
+>         gpd_data->td.effective_constraint_ns = PM_QOS_RESUME_LATENCY_NO_CONSTRAINT_NS;
+>         gpd_data->nb.notifier_call = genpd_dev_pm_qos_notifier;
+> +       gpd_data->next_wakeup = KTIME_MAX;
+>
+>         spin_lock_irq(&dev->power.lock);
+>
+> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
+> index 2ca919ae8d36..735583c0bc6d 100644
+> --- a/include/linux/pm_domain.h
+> +++ b/include/linux/pm_domain.h
+> @@ -9,6 +9,7 @@
+>  #define _LINUX_PM_DOMAIN_H
+>
+>  #include <linux/device.h>
+> +#include <linux/ktime.h>
+>  #include <linux/mutex.h>
+>  #include <linux/pm.h>
+>  #include <linux/err.h>
+> @@ -191,6 +192,7 @@ struct generic_pm_domain_data {
+>         struct notifier_block *power_nb;
+>         int cpu;
+>         unsigned int performance_state;
+> +       ktime_t next_wakeup;
+>         void *data;
+>  };
+>
+> @@ -217,6 +219,7 @@ int pm_genpd_remove(struct generic_pm_domain *genpd);
+>  int dev_pm_genpd_set_performance_state(struct device *dev, unsigned int state);
+>  int dev_pm_genpd_add_notifier(struct device *dev, struct notifier_block *nb);
+>  int dev_pm_genpd_remove_notifier(struct device *dev);
+> +void dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next);
+>
+>  extern struct dev_power_governor simple_qos_governor;
+>  extern struct dev_power_governor pm_domain_always_on_gov;
+> @@ -275,6 +278,9 @@ static inline int dev_pm_genpd_remove_notifier(struct device *dev)
+>         return -EOPNOTSUPP;
+>  }
+>
+> +static inline void dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next)
+> +{ }
+> +
+>  #define simple_qos_governor            (*(struct dev_power_governor *)(NULL))
+>  #define pm_domain_always_on_gov                (*(struct dev_power_governor *)(NULL))
+>  #endif
+> --
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+>
 
-I am good with this approach, once Mathieu confirms, I can add a kernel
-wide kconfig as Suzuki suggested earlier and make ETM{3,4}x as the
-initial users. Someone more familiar with Intel PTs can then make use
-of this kconfig.
-
-Thanks,
-Sai
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+Kind regards
+Uffe
