@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B4702FB140
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jan 2021 07:25:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8876A2FB143
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jan 2021 07:25:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727677AbhASGXC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Jan 2021 01:23:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53836 "EHLO
+        id S1728538AbhASGXI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Jan 2021 01:23:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391317AbhASFth (ORCPT
+        with ESMTP id S2404025AbhASFuw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Jan 2021 00:49:37 -0500
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 946ECC0613C1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jan 2021 21:48:56 -0800 (PST)
-Received: by mail-lj1-x22c.google.com with SMTP id u21so20615890lja.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jan 2021 21:48:56 -0800 (PST)
+        Tue, 19 Jan 2021 00:50:52 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23A7EC061798
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jan 2021 21:49:01 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id v24so20761677lfr.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jan 2021 21:49:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=c6jITeAQsweg+hEb7KjyODoZa852s4oIvjjf4EuuYDM=;
-        b=R+jLep6zm2Hfh/NUDz9yAHVvg3pBOWNSWOG6oCg3j0vIECH284uKpjA1szYLVt5YLD
-         nMscayV8SOT6KMYd0M8OyVIDNrtp4o1K+HHg3Z0i0ZcxcCZz0LHeUqRmQ3E+s/60nJ+B
-         mSRe9RGYPInPQSI9d4HOSGUnXLkVn36ws0n5fXljB+28XlrHvHdJgGRRzeDIFYHcMydX
-         I/AQdA59FnpMRJ4iNWk6RSODfAPFYSqekYgYbFhufQtFMiexZE+Gd87suEBDJuOQd++q
-         daridGB25KMUqGKGQMNsEhiZTUL1DtBt/jwII6lSCxd1bjt7ax7VC27I9dycuweHMqAK
-         3rRg==
+        bh=twtRf4xOH0E0x9VRPwiTE28bCNXEVhaTsRzwx7xbrKw=;
+        b=kl5i1oWzQb1oVX0NEE5kM2wUR+B6FGp2MwfQWdQ6K1e8IIwjEV/Tj7dxCqY1+Z3s6H
+         mBthhV5TVJGClr9lGYt6QcPTxLqai2dqF7mrR5mI9z2aEwAz4x98gLQKwTtON3+TrieS
+         bPS5FRK3nUjpnuBCfc+LPptyQadBKwOtx7UB7l+BKqQUd4429fd3nj0bFkFnhtHHnkct
+         FCYDPJF1Urn7Ti7l/KWLHe5EXDt8rGKdPoZv9Q9qX4IkHILJxU0t0DYSjnS+0B4zoVr4
+         s3G3LcPhS84WQjLGocNXdd0A4+TJ6eM039QYqTpK+6Vc5I64eyjXmKOqSzK2vNA1/PZ/
+         Y1vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=c6jITeAQsweg+hEb7KjyODoZa852s4oIvjjf4EuuYDM=;
-        b=tH6PE/SugazEdCXCH0nv7SOVqx+IOj2UA8LTyJSAiP3TqvNzzTJj37t8H4fSyd/mO9
-         XGR7r4q9C+lQ99pQGiLah5y9I1bT3eiJVl0hPWiVtEEB9n7Qtl/Io0+f30C/DGMmBJOt
-         z1pdfkodHs1YoWAx2j0JzlcPWC4/moi6/WnLv9PEH5+/6jPVQ0BFXtKHELH7AU+wiV2z
-         fnrmMFaJ039QBGtd3MRFNYSDK9umJSenQjqFzI/BfgrtwWPX5Bja1EPfC4xrwUxm7vph
-         TzzIW74DnVqgqfIYHu1yV2KirlEs6aNUHoPk4n9dakab4fQAz4yIOM7KTyZtfXrHZeqI
-         e1Kg==
-X-Gm-Message-State: AOAM531lZ0fGWZtBqGvKb6guvxMDiML8eas5jlWsPU+NiTW5x549rdav
-        eLLL4wEkqLvO121MEHh5M44c7A==
-X-Google-Smtp-Source: ABdhPJw6f6kgqF3FjzXDtpECgxdqlro1NM/wkjP7gfHv2x+xWbQdeSjAOUngNQ+2rYSWTzeFNYZ51A==
-X-Received: by 2002:a2e:9f13:: with SMTP id u19mr1201181ljk.69.1611035335117;
-        Mon, 18 Jan 2021 21:48:55 -0800 (PST)
+        bh=twtRf4xOH0E0x9VRPwiTE28bCNXEVhaTsRzwx7xbrKw=;
+        b=Emnc0qklmPIVjEIlomE1dbBG2sGk9qrnagT1P9w9Y71HltoFKlqik5oqD48FH1oTuJ
+         wUIXyAY5AcRC7RTYpyCvFsFNoTEv03pFkVqw0oWu2F0vRF5WYqUBFljohy57zL61bEik
+         hSG9rJtvyEwATp2Llci6+uVQI7pelXZq5ewov15vKJsLvoiIw4s2VxT2H/Z5qiLCb56e
+         tujnUL1aL/6YfoTR16f05pQzjrR3ia1H9JS7eihpdM6vcuJKV6612m1cYnk6qeuB2tuk
+         xYuWgBqyw1oX9r++BhE8Ok84guDGBZyAY/HtFSuR3QZf+iqGxBsYui1bRCuJteKElTOR
+         nlNA==
+X-Gm-Message-State: AOAM532fjbTnOuzxainyIv5eWpiLDzcG9w841V+81TNm5VEQ7PltIpew
+        /kHl+/RwmKdJPwB/GqYsj2M6JQ==
+X-Google-Smtp-Source: ABdhPJx1o1V6LvDaw5bCXIvS0bOow4piD7QhGSZt72JSqC16lG+Q//A8pXZnUuWZwpgADTVlDv6L8A==
+X-Received: by 2002:ac2:4d8c:: with SMTP id g12mr1074045lfe.619.1611035339708;
+        Mon, 18 Jan 2021 21:48:59 -0800 (PST)
 Received: from eriador.lumag.spb.ru ([188.162.65.64])
-        by smtp.gmail.com with ESMTPSA id j3sm2168207lfb.29.2021.01.18.21.48.52
+        by smtp.gmail.com with ESMTPSA id j3sm2168207lfb.29.2021.01.18.21.48.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Jan 2021 21:48:54 -0800 (PST)
+        Mon, 18 Jan 2021 21:48:59 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -62,11 +62,10 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-iio@vger.kernel.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Jishnu Prakash <jprakash@qti.qualcomm.com>,
-        Rob Herring <robh@kernel.org>
-Subject: [PATCH v12 1/5] dt-bindings: thermal: qcom: add adc-thermal monitor bindings
-Date:   Tue, 19 Jan 2021 08:48:44 +0300
-Message-Id: <20210119054848.592329-2-dmitry.baryshkov@linaro.org>
+        Jishnu Prakash <jprakash@qti.qualcomm.com>
+Subject: [PATCH v12 3/5] arm64: dts: qcom: pm8150x: add definitions for adc-tm5 part
+Date:   Tue, 19 Jan 2021 08:48:46 +0300
+Message-Id: <20210119054848.592329-4-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210119054848.592329-1-dmitry.baryshkov@linaro.org>
 References: <20210119054848.592329-1-dmitry.baryshkov@linaro.org>
@@ -76,175 +75,80 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add bindings for thermal monitor, part of Qualcomm PMIC5 chips. It is a
-close counterpart of VADC part of those PMICs.
+Define adc-tm5 thermal monitoring part. Individual channes and thermal
+zones are to be configured in per-device dts files.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Rob Herring <robh@kernel.org>
+Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- .../bindings/thermal/qcom-spmi-adc-tm5.yaml   | 153 ++++++++++++++++++
- 1 file changed, 153 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
+ arch/arm64/boot/dts/qcom/pm8150.dtsi  | 10 ++++++++++
+ arch/arm64/boot/dts/qcom/pm8150b.dtsi | 10 ++++++++++
+ arch/arm64/boot/dts/qcom/pm8150l.dtsi | 10 ++++++++++
+ 3 files changed, 30 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml b/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
-new file mode 100644
-index 000000000000..7cd364430573
---- /dev/null
-+++ b/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
-@@ -0,0 +1,153 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/thermal/qcom-spmi-adc-tm5.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
+diff --git a/arch/arm64/boot/dts/qcom/pm8150.dtsi b/arch/arm64/boot/dts/qcom/pm8150.dtsi
+index a53eccf2b695..15e87153a194 100644
+--- a/arch/arm64/boot/dts/qcom/pm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm8150.dtsi
+@@ -97,6 +97,16 @@ die-temp@6 {
+ 			};
+ 		};
+ 
++		pm8150_adc_tm: adc-tm@3500 {
++			compatible = "qcom,spmi-adc-tm5";
++			reg = <0x3500>;
++			interrupts = <0x0 0x35 0x0 IRQ_TYPE_EDGE_RISING>;
++			#thermal-sensor-cells = <1>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			status = "disabled";
++		};
 +
-+title: Qualcomm's SPMI PMIC ADC Thermal Monitoring
-+maintainers:
-+  - Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+ 		pm8150_rtc: rtc@6000 {
+ 			compatible = "qcom,pm8941-rtc";
+ 			reg = <0x6000>;
+diff --git a/arch/arm64/boot/dts/qcom/pm8150b.dtsi b/arch/arm64/boot/dts/qcom/pm8150b.dtsi
+index e112e8876db6..8e2f3250c914 100644
+--- a/arch/arm64/boot/dts/qcom/pm8150b.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm8150b.dtsi
+@@ -95,6 +95,16 @@ chg-temp@9 {
+ 			};
+ 		};
+ 
++		pm8150b_adc_tm: adc-tm@3500 {
++			compatible = "qcom,spmi-adc-tm5";
++			reg = <0x3500>;
++			interrupts = <0x2 0x35 0x0 IRQ_TYPE_EDGE_RISING>;
++			#thermal-sensor-cells = <1>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			status = "disabled";
++		};
 +
-+properties:
-+  compatible:
-+    const: qcom,spmi-adc-tm5
+ 		pm8150b_gpios: gpio@c000 {
+ 			compatible = "qcom,pm8150b-gpio";
+ 			reg = <0xc000>;
+diff --git a/arch/arm64/boot/dts/qcom/pm8150l.dtsi b/arch/arm64/boot/dts/qcom/pm8150l.dtsi
+index 62139538b7d9..9f214ceec2b7 100644
+--- a/arch/arm64/boot/dts/qcom/pm8150l.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm8150l.dtsi
+@@ -89,6 +89,16 @@ die-temp@6 {
+ 			};
+ 		};
+ 
++		pm8150l_adc_tm: adc-tm@3500 {
++			compatible = "qcom,spmi-adc-tm5";
++			reg = <0x3500>;
++			interrupts = <0x4 0x35 0x0 IRQ_TYPE_EDGE_RISING>;
++			#thermal-sensor-cells = <1>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			status = "disabled";
++		};
 +
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  "#thermal-sensor-cells":
-+    const: 1
-+    description:
-+      Number of cells required to uniquely identify the thermal sensors. Since
-+      we have multiple sensors this is set to 1
-+
-+  "#address-cells":
-+    const: 1
-+
-+  "#size-cells":
-+    const: 0
-+
-+  qcom,avg-samples:
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    description: Number of samples to be used for measurement.
-+    enum:
-+      - 1
-+      - 2
-+      - 4
-+      - 8
-+      - 16
-+    default: 1
-+
-+  qcom,decimation:
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    description: This parameter is used to decrease ADC sampling rate.
-+            Quicker measurements can be made by reducing decimation ratio.
-+    enum:
-+      - 250
-+      - 420
-+      - 840
-+    default: 840
-+
-+patternProperties:
-+  "^([-a-z0-9]*)@[0-7]$":
-+    type: object
-+    description:
-+      Represent one thermal sensor.
-+
-+    properties:
-+      reg:
-+        $ref: /schemas/types.yaml#/definitions/uint32
-+        description: Specify the sensor channel. There are 8 channels in PMIC5's ADC TM
-+        minimum: 0
-+        maximum: 7
-+
-+      io-channels:
-+        description:
-+          From common IIO binding. Used to pipe PMIC ADC channel to thermal monitor
-+
-+      qcom,ratiometric:
-+        $ref: /schemas/types.yaml#/definitions/flag
-+        description:
-+          Channel calibration type.
-+          If this property is specified VADC will use the VDD reference
-+          (1.875V) and GND for channel calibration. If property is not found,
-+          channel will be calibrated with 0V and 1.25V reference channels,
-+          also known as absolute calibration.
-+
-+      qcom,hw-settle-time-us:
-+        $ref: /schemas/types.yaml#/definitions/uint32
-+        description: Time between AMUX getting configured and the ADC starting conversion.
-+        enum: [15, 100, 200, 300, 400, 500, 600, 700, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000]
-+
-+      qcom,pre-scaling:
-+        $ref: /schemas/types.yaml#/definitions/uint32-array
-+        description: Used for scaling the channel input signal before the
-+          signal is fed to VADC. The configuration for this node is to know the
-+          pre-determined ratio and use it for post scaling. It is a pair of
-+          integers, denoting the numerator and denominator of the fraction by
-+          which input signal is multiplied. For example, <1 3> indicates the
-+          signal is scaled down to 1/3 of its value before ADC measurement.  If
-+          property is not found default value depending on chip will be used.
-+        items:
-+          - const: 1
-+          - enum: [ 1, 3, 4, 6, 20, 8, 10 ]
-+
-+    required:
-+      - reg
-+      - io-channels
-+
-+    additionalProperties:
-+      false
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - "#address-cells"
-+  - "#size-cells"
-+  - "#thermal-sensor-cells"
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/iio/qcom,spmi-vadc.h>
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+    spmi_bus {
-+        #address-cells = <1>;
-+        #size-cells = <0>;
-+        pm8150b_adc: adc@3100 {
-+            reg = <0x3100>;
-+            compatible = "qcom,spmi-adc5";
-+            #address-cells = <1>;
-+            #size-cells = <0>;
-+            #io-channel-cells = <1>;
-+
-+            /* Other propreties are omitted */
-+            conn-therm@4f {
-+                reg = <ADC5_AMUX_THM3_100K_PU>;
-+                qcom,ratiometric;
-+                qcom,hw-settle-time = <200>;
-+            };
-+        };
-+
-+        pm8150b_adc_tm: adc-tm@3500 {
-+            compatible = "qcom,spmi-adc-tm5";
-+            reg = <0x3500>;
-+            interrupts = <0x2 0x35 0x0 IRQ_TYPE_EDGE_RISING>;
-+            #thermal-sensor-cells = <1>;
-+            #address-cells = <1>;
-+            #size-cells = <0>;
-+
-+            conn-therm@0 {
-+                reg = <0>;
-+                io-channels = <&pm8150b_adc ADC5_AMUX_THM3_100K_PU>;
-+                qcom,ratiometric;
-+                qcom,hw-settle-time-us = <200>;
-+            };
-+        };
-+    };
-+...
+ 		pm8150l_gpios: gpio@c000 {
+ 			compatible = "qcom,pm8150l-gpio";
+ 			reg = <0xc000>;
 -- 
 2.29.2
 
