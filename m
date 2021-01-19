@@ -2,38 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 272F02FBF6C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jan 2021 19:52:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AF8ED2FBF6B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jan 2021 19:52:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729052AbhASSsl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Jan 2021 13:48:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40648 "EHLO
+        id S1730806AbhASSsV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Jan 2021 13:48:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732443AbhASR4i (ORCPT
+        with ESMTP id S2392118AbhASR4G (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Jan 2021 12:56:38 -0500
-Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9DFCC061574
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jan 2021 09:45:00 -0800 (PST)
+        Tue, 19 Jan 2021 12:56:06 -0500
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8985C0612A9;
+        Tue, 19 Jan 2021 09:49:47 -0800 (PST)
 Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id B06BA1F549;
-        Tue, 19 Jan 2021 18:44:58 +0100 (CET)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id D2A8A3F1E4;
+        Tue, 19 Jan 2021 18:45:45 +0100 (CET)
 From:   AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>
 To:     bjorn.andersson@linaro.org
-Cc:     agross@kernel.org, daniel.lezcano@linaro.org, rjw@rjwysocki.net,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
-        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
-        martin.botka@somainline.org, jeffrey.l.hugo@gmail.com,
+Cc:     agross@kernel.org, robh+dt@kernel.org, lgirdwood@gmail.com,
+        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        phone-devel@vger.kernel.org, konrad.dybcio@somainline.org,
+        marijn.suijten@somainline.org, martin.botka@somainline.org,
+        jeffrey.l.hugo@gmail.com,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>
-Subject: [PATCH v4 0/3] cpufreq-qcom-hw: Implement full OSM programming
-Date:   Tue, 19 Jan 2021 18:44:51 +0100
-Message-Id: <20210119174454.226808-1-angelogioacchino.delregno@somainline.org>
+Subject: [PATCH v4 0/3] Driver for Core Power Reduction v3, v4 and Hardened
+Date:   Tue, 19 Jan 2021 18:45:41 +0100
+Message-Id: <20210119174544.227202-1-angelogioacchino.delregno@somainline.org>
 X-Mailer: git-send-email 2.30.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -53,10 +54,28 @@ Changes in v4:
   as suggested by Bjorn
 
 Changes in v3:
-- Rebased (no changes - was in previous series' v3)
+- Fixed YAML doc issues
+- Removed unused variables and redundant if branch
 
 Changes in v2:
-- Fixed MSM8998 SAW parameters on SPM driver
+- Implemented dynamic Memory Accelerator corners support, needed
+  by MSM8998
+- Added MSM8998 Silver/Gold parameters
+
+This commit introduces a new driver, based on the one for cpr v1,
+to enable support for the newer Qualcomm Core Power Reduction
+hardware, known downstream as CPR3, CPR4 and CPRh, and support
+for MSM8998 and SDM630 CPU power reduction.
+
+In these new versions of the hardware, support for various new
+features was introduced, including voltage reduction for the GPU,
+security hardening and a new way of controlling CPU DVFS,
+consisting in internal communication between microcontrollers,
+specifically the CPR-Hardened and the Operating State Manager.
+
+The CPR v3, v4 and CPRh are present in a broad range of SoCs,
+from the mid-range to the high end ones including, but not limited
+to, MSM8953/8996/8998, SDM630/636/660/845.
 
 Tested on the following smartphones:
 - Sony Xperia XA2        (SDM630)
@@ -65,35 +84,21 @@ Tested on the following smartphones:
 - Sony Xperia XZ Premium (MSM8998)
 - F(x)Tec Pro 1          (MSM8998)
 
-This is a component that we can find on very old
-chips, like MSM8974; there, it has been used to actually do the
-power scaling basically "on its own" - sending the cores in a specific
-sleep mode to save power.
-On the newer ones, including MSM8998, SDM630, 660 and others, it is still
-present! Though, this time, it's being used for the cluster caches and it
-has a different firmware (and maybe it's also slightly different HW),
-implementing the SAWv4.1 set and getting controlled *not by the OS* but
-by other controllers in the SoC (like the OSM).
-
-Contrary from MSM8974 and the like, this new version of the SPM just
-requires us to set the initial parameters for AVS and *nothing else*, as
-its states will be totally managed internally.
-
-
 AngeloGioacchino Del Regno (3):
-  cpuidle: qcom_spm: Detach state machine from main SPM handling
-  soc: qcom: spm: Implement support for SAWv4.1, SDM630/660 L2 AVS
-  soc: qcom: spm: Add compatible for MSM8998 SAWv4.1 L2
+  soc: qcom: Add support for Core Power Reduction v3, v4 and Hardened
+  MAINTAINERS: Add entry for Qualcomm CPRv3/v4/Hardened driver
+  dt-bindings: soc: qcom: cpr3: Add bindings for CPR3 driver
 
- drivers/cpuidle/Kconfig.arm        |   1 +
- drivers/cpuidle/cpuidle-qcom-spm.c | 294 ++++++-----------------------
- drivers/soc/qcom/Kconfig           |   9 +
- drivers/soc/qcom/Makefile          |   1 +
- drivers/soc/qcom/spm.c             | 240 +++++++++++++++++++++++
- include/soc/qcom/spm.h             |  45 +++++
- 6 files changed, 354 insertions(+), 236 deletions(-)
- create mode 100644 drivers/soc/qcom/spm.c
- create mode 100644 include/soc/qcom/spm.h
+ .../bindings/soc/qcom/qcom,cpr3.yaml          |  241 ++
+ MAINTAINERS                                   |    6 +
+ drivers/soc/qcom/Kconfig                      |   17 +
+ drivers/soc/qcom/Makefile                     |    1 +
+ drivers/soc/qcom/cpr-common.c                 |   35 +-
+ drivers/soc/qcom/cpr-common.h                 |    4 +
+ drivers/soc/qcom/cpr3.c                       | 2894 +++++++++++++++++
+ 7 files changed, 3192 insertions(+), 6 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml
+ create mode 100644 drivers/soc/qcom/cpr3.c
 
 -- 
 2.30.0
