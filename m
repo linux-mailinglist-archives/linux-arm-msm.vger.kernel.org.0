@@ -2,93 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1DD972FBA34
+	by mail.lfdr.de (Postfix) with ESMTP id 8A9FC2FBA35
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jan 2021 15:56:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390977AbhASOqJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Jan 2021 09:46:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37088 "EHLO
+        id S2391021AbhASOqM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Jan 2021 09:46:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405166AbhASLGH (ORCPT
+        with ESMTP id S1731968AbhASLls (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Jan 2021 06:06:07 -0500
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1198C061574
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jan 2021 03:05:20 -0800 (PST)
-Received: by mail-pf1-x431.google.com with SMTP id m6so12027454pfk.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jan 2021 03:05:20 -0800 (PST)
+        Tue, 19 Jan 2021 06:41:48 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57BB9C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jan 2021 03:39:32 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id c128so1675630wme.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jan 2021 03:39:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=4TOzYyZIin/yiRGi1ie9o6/CbIyjNQOy95/3SVEBU9A=;
-        b=uExiI/2TzOCWPI0pjBTK0TdMIUfxRWt8KPMbORnS5c9XO68eyPvKDWJwxuopER796L
-         vURhfaHxKLDrdEPMFkOr9D58bDFAGeSBZqyZoZFnV8Ds7wkLh1pLnTtIRfKzC3SNrIG8
-         4yP6GQFO22QzekfpAs4U1eCA1618km+cf6i7I1xDcH3U66TWqpFoSnJURTiEhgICz/DU
-         PNnFj2qdBYVwZw3IYfwhM3DmNJJsRyPbxgsnldEdXpXHVPwmlxWQ3gmqbfaoayhgLuzv
-         3XIncpgMG7FADLMlh68SnARce4hUuVnnPuu2JPftCXyp7Mk01bVkT2woy+Zvbj/1lR5b
-         eoIQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=qA6i77Zlz4mMSdNqaeglUYnAY+zKEB2RYdwGdqj1Hu8=;
+        b=kTkmB779suE0zVUtNy89lKEksOACmWYww8w/nXhzz5gL3GkmhNcmT0K2196fgCSK15
+         jIGk/fIp1Y4LM/kcwH5ygTdj3UA7fRmjryBNAjwRkCCx6pwr4BfmvPx//SJvyzlrydnR
+         DIoiQYkeXn+j7vdpact8ln2/+BXSIEu1kQq4ZtTEsyOUB3eHDAlLcpmNzTD52+xux9PP
+         PSiuFiOQh8LNgG56RFho91KyamTbtwMnVs4tN2OYCC1KfjWiEK8l8PLNciyaURbtmc8z
+         Hmi+CQPuQgSloUqQtOoQUta1cFNe5I5PtlnlByVlvISQwKE7irqY1QxJLXg4Pf7lxzXr
+         6uqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=4TOzYyZIin/yiRGi1ie9o6/CbIyjNQOy95/3SVEBU9A=;
-        b=NxLFxrmfXBIFfDuTHQfZx8gBVzZ96xXnWelszyBzXXtq21nLpyRf74YshGxoba2AOY
-         IBNIXTdJmjWclZ7QEh4FkeqNR7PzilnWD7Fs5RehI/Pg+dhG60idzysJcO5Zxk8g39MX
-         /axRQPhKsDG399pO/THApBOnbhTKPep13F2I4krY30iws3xbQmNUE6MhH9Ua4KoHxHoM
-         PEqqODPtW209ynxLzrz0FbyD9+hb6Z1CztMydm/g18dirhYaq8KL9Sd17qCGwqOMDLjO
-         UfSyfj0aMNxJsquMQmEVa9ZKy6LTzU5ArWkiwlf9PiDSq5uimP/MJF4FIA/bJw7dnvu3
-         88eg==
-X-Gm-Message-State: AOAM533L2Pa+yQ8PWAM7slpANU+l7B1MaU+Fz50KGhaC8Adk/Z8s6klj
-        AD/S+lU1exjSHQio5txzGXrdfA==
-X-Google-Smtp-Source: ABdhPJypZ7g85maNn/Fq9wWXClDnT5wovR1kfqNu7P4AWwxVkN+tY7vWNWWbv+l/0xEltuRgBAxuTA==
-X-Received: by 2002:a62:a508:0:b029:1ba:621:ff29 with SMTP id v8-20020a62a5080000b02901ba0621ff29mr707798pfm.44.1611054320340;
-        Tue, 19 Jan 2021 03:05:20 -0800 (PST)
-Received: from localhost ([122.172.59.240])
-        by smtp.gmail.com with ESMTPSA id a5sm18186189pgl.41.2021.01.19.03.05.18
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 19 Jan 2021 03:05:18 -0800 (PST)
-Date:   Tue, 19 Jan 2021 16:35:16 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Roja Rani Yarubandi <rojay@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Wolfram Sang <wsa@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Matthias Kaehlcke <mka@chromium.org>, akashast@codeaurora.org,
-        msavaliy@qti.qualcomm.com, parashar@codeaurora.org,
-        Linux PM <linux-pm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>, linux-i2c@vger.kernel.org
-Subject: Re: [PATCH 3/3] i2c: i2c-qcom-geni: Add support for
- 'assigned-performance-states'
-Message-ID: <20210119110516.fgbbllyg7lxwwfdz@vireshk-i7>
-References: <20201224111210.1214-1-rojay@codeaurora.org>
- <20201224111210.1214-4-rojay@codeaurora.org>
- <YAGqKfDfB7EEuZVn@builder.lan>
- <6bfec3e6-3d26-7ade-d836-032273856ce2@codeaurora.org>
- <CAPDyKFqF0NE3QRAEfiqj5QOXXH2om4CpyyeudeqoovANfvjsaQ@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=qA6i77Zlz4mMSdNqaeglUYnAY+zKEB2RYdwGdqj1Hu8=;
+        b=je2O6RBLU/8FxHDQ1tChNKwh0VBaNGlKkV5k208uzI8aDOkUg/TS6Tn3LEREdMYrOr
+         uR5fSHCWFdtoc6To2xRris/ji9zHl8vUO5FVp9Rk8LIanTaR/TXiDyfXSNVQxX10L3WI
+         tpbkI4eYAbunifvIysESMdOrbkolOwz2zg1I/WLZAblxGXHK4Y+ElH159OBLYVL3kjGo
+         Z9fQk8IonyRxOt9QPIz3ZahKnBIF6guJBLzYV+gMli1Lu1cZ116Z3vYnNQb0W4bjcsYg
+         +9q9MP5095C1i+o+9Qd4lLTQ5MVDq40zPmjKqvktE9c2pHxrJudhUcCbP8MtaORBzG67
+         xKxw==
+X-Gm-Message-State: AOAM530Ilj2Seh1JVMqDfiZ7EU74+errs5NtKRImGvtwmoAVtpvMNslf
+        x2uuNFRWHKcY7XqvfMBz4FPKow==
+X-Google-Smtp-Source: ABdhPJxQpSmKO6gL4URxiQemGdBj51cfDFusBapseewlYboYRHMLywsPzMsuvuYMJeYcBq780DdVFg==
+X-Received: by 2002:a7b:c41a:: with SMTP id k26mr3705989wmi.1.1611056370810;
+        Tue, 19 Jan 2021 03:39:30 -0800 (PST)
+Received: from srini-hackbox.lan (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
+        by smtp.gmail.com with ESMTPSA id g192sm4450237wmg.18.2021.01.19.03.39.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Jan 2021 03:39:30 -0800 (PST)
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To:     sboyd@kernel.org
+Cc:     mturquette@baylibre.com, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH] clk: qcom: gfm-mux: fix clk mask
+Date:   Tue, 19 Jan 2021 11:38:51 +0000
+Message-Id: <20210119113851.18946-1-srinivas.kandagatla@linaro.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPDyKFqF0NE3QRAEfiqj5QOXXH2om4CpyyeudeqoovANfvjsaQ@mail.gmail.com>
-User-Agent: NeoMutt/20180716-391-311a52
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19-01-21, 12:02, Ulf Hansson wrote:
-> As a matter of fact this was quite recently discussed [1], which also
-> pointed out some issues when using the "required-opps" in combination,
-> but perhaps that got resolved? Viresh?
+For some reason global GFM_MASK ended up with bit 1 instead of bit 0.
+Remove the global GFM_MASK and reuse mux_mask field.
 
-Perhaps we never did anything there ..
+Fixes: a2d8f507803e ("clk: qcom: Add support to LPASS AUDIO_CC Glitch Free Mux clocks")
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+---
+ drivers/clk/qcom/lpass-gfm-sm8250.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
+diff --git a/drivers/clk/qcom/lpass-gfm-sm8250.c b/drivers/clk/qcom/lpass-gfm-sm8250.c
+index d366c7c2abc7..f5e31e692b9b 100644
+--- a/drivers/clk/qcom/lpass-gfm-sm8250.c
++++ b/drivers/clk/qcom/lpass-gfm-sm8250.c
+@@ -33,14 +33,13 @@ struct clk_gfm {
+ 	void __iomem *gfm_mux;
+ };
+ 
+-#define GFM_MASK	BIT(1)
+ #define to_clk_gfm(_hw) container_of(_hw, struct clk_gfm, hw)
+ 
+ static u8 clk_gfm_get_parent(struct clk_hw *hw)
+ {
+ 	struct clk_gfm *clk = to_clk_gfm(hw);
+ 
+-	return readl(clk->gfm_mux) & GFM_MASK;
++	return readl(clk->gfm_mux) & clk->mux_mask;
+ }
+ 
+ static int clk_gfm_set_parent(struct clk_hw *hw, u8 index)
+@@ -51,9 +50,10 @@ static int clk_gfm_set_parent(struct clk_hw *hw, u8 index)
+ 	val = readl(clk->gfm_mux);
+ 
+ 	if (index)
+-		val |= GFM_MASK;
++		val |= clk->mux_mask;
+ 	else
+-		val &= ~GFM_MASK;
++		val &= ~clk->mux_mask;
++
+ 
+ 	writel(val, clk->gfm_mux);
+ 
 -- 
-viresh
+2.21.0
+
