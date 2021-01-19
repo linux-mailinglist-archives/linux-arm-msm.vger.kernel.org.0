@@ -2,94 +2,253 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F24532FC4B3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jan 2021 00:23:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DC3EA2FC4AA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jan 2021 00:23:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729737AbhASXVc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Jan 2021 18:21:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54142 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730327AbhASXRy (ORCPT
+        id S1729578AbhASXSO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Jan 2021 18:18:14 -0500
+Received: from mail-oo1-f52.google.com ([209.85.161.52]:41334 "EHLO
+        mail-oo1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729209AbhASXRy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 19 Jan 2021 18:17:54 -0500
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38141C0613D6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jan 2021 15:17:14 -0800 (PST)
-Received: by mail-qk1-x729.google.com with SMTP id v126so23653937qkd.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jan 2021 15:17:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=dB7F3Mtlu9hzcaH0arXRlX+sy8rlfc5xRtRuFS9rvVg=;
-        b=SibYt1GVdrviyGqBHiuRdkDJ212F7mKHeGAGTB3L6VdvZ2tX3F1XaE6kRQ89HeDHwg
-         ctZ9o3Y7tlLWqVfF7LjJMXmKGSrNa7VSowWHy5QAb8k8NxgbCOgJC1zipjomGEe3iJea
-         5TUZlIHbOQHHZiG4nXdh4SABgjHW6NYYLnatBHGCtcOa1VU0mfaYrkyObMYi3FoyzCIS
-         u9No6XJWWpJnuT3Yd0j9glu45Q1AoZ59LbenJHRMpv6VgZ3urxG+tii+h03WPMXVJeF0
-         oYBrTIqMJDQYiiWTHVH+nvfZqnu+QcedayPLqgxAsYcqY9Mg7ssCkwU2X4lXf6mmRWne
-         Q9Ww==
+Received: by mail-oo1-f52.google.com with SMTP id q6so5348035ooo.8;
+        Tue, 19 Jan 2021 15:17:37 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=dB7F3Mtlu9hzcaH0arXRlX+sy8rlfc5xRtRuFS9rvVg=;
-        b=RrbWdfK/BoxR3M4hVY+Y4xcgCjVGfAJJU8IiALXmeBuVJfrsQNsDuLwicCWu3UfT8L
-         JNnjqJ84QGKsjnEJE0J3f5efNepQhbfhwwRdhzEVErVlVmIXdQr4LcnJBSvZcccJw2gV
-         Q8aW1WALDZgT+/QmZqe/3TQQveDeZlq+4I9Or94coDcwIKzIZRuuPDIuzlLKl8ttWYyx
-         ERuq8TnQHCFTOfWy99ZQOPD028CUWi4L8DRU6uIr9jGARn35zhnbBG+ep2xHkfmcMe/0
-         M7/gUrbDfk8m0WKW09OWiOlTnDojLLR9EuRuLEhjR8s1Xi3MUHMWq4jWZfIVwf4yHKFY
-         1DCQ==
-X-Gm-Message-State: AOAM532UoU0o3wKdAj+Oz/gU96dBdv27vchPxJ6xLGwFM7O7wEIgRQGm
-        +HDKXcSkBintjlDw0KzAKKKmAx9bo85QlkA3FJqu3Q==
-X-Google-Smtp-Source: ABdhPJyGeUyg+YiDKqtN0x6dVvip4U9xb9aSUrHVlWP6pb2DIhbKAAN/SFc8tehaF+Bmf26mv1wmQWdcJ5xXSunbNtM=
-X-Received: by 2002:a37:be84:: with SMTP id o126mr3005803qkf.138.1611098233468;
- Tue, 19 Jan 2021 15:17:13 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ZdAUfULu81mG/InBc8v1Wa0Tsn2ZfzsveD5C7xYRCrY=;
+        b=H7MjOtreTKrpZId6z1RLQTfL0yYqhE0AXQjIiAbjyGwPKYjyuUUqVPp1/BGOdD3Iyy
+         QEarKIPYsIJplA7SGU1iN1tWp4sSB1DOJMteY5JH/lKLyaMl5/28KAReB1fgc2CYAtE8
+         r1UvIiz7iFKRoR2sDGGT88LMrnZjS4EOH81eX+3qMeyHLmFh0Jktrn9/4Q9XAz6IKB9m
+         KvenVfhVgUP4djMsCqD6QkXTBluJHPweaW8TpIG5YtmeaX/qsCTO7ljIVyEiBy05uOkv
+         OgbaOp+eQfSsC1JHOKWPOAybb7ayWqyTqSofNFmPE/udRfk2pBSZw0/LLuW98QUyCDV2
+         w07Q==
+X-Gm-Message-State: AOAM533KJcc8iRKZE5uLCmQhiYu017/c4MbMLFq07MQw402khGG2qs6P
+        tF2r+KI95LICd3SBgzeLSw==
+X-Google-Smtp-Source: ABdhPJwcq7ejQIzs65t9YC69ricWFQhQN37yXNDpg1krIIw2+TapDBjVRAdW5EHKAfuIv0TxLe2kFg==
+X-Received: by 2002:a4a:98e7:: with SMTP id b36mr4403875ooj.3.1611098231965;
+        Tue, 19 Jan 2021 15:17:11 -0800 (PST)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id i16sm20355otc.61.2021.01.19.15.17.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Jan 2021 15:17:11 -0800 (PST)
+Received: (nullmailer pid 2784084 invoked by uid 1000);
+        Tue, 19 Jan 2021 23:17:09 -0000
+Date:   Tue, 19 Jan 2021 17:17:09 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Cc:     stanimir.varbanov@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, mchehab@kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
+        phone-devel@vger.kernel.org
+Subject: Re: [PATCH 2/2] media: dt-bindings: media: venus: Add sdm660 DT
+ schema
+Message-ID: <20210119231709.GA2775697@robh.at.kernel.org>
+References: <20210115185252.333562-1-angelogioacchino.delregno@somainline.org>
+ <20210115185252.333562-3-angelogioacchino.delregno@somainline.org>
 MIME-Version: 1.0
-References: <20210119054848.592329-1-dmitry.baryshkov@linaro.org> <078a7025-ce5c-a252-f8f4-694c56153b3a@linaro.org>
-In-Reply-To: <078a7025-ce5c-a252-f8f4-694c56153b3a@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 20 Jan 2021 02:17:02 +0300
-Message-ID: <CAA8EJpr2bubGBtUGf=4+d4ZVT1nReTBzT25scGehdwKy2EepmQ@mail.gmail.com>
-Subject: Re: [PATCH v12 0/5] qcom: pm8150: add support for thermal monitoring
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Amit Kucheria <amitk@kernel.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>, linux-pm@vger.kernel.org,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, linux-iio@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Jishnu Prakash <jprakash@qti.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210115185252.333562-3-angelogioacchino.delregno@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 19 Jan 2021 at 23:58, Daniel Lezcano <daniel.lezcano@linaro.org> wrote:
->
-> On 19/01/2021 06:48, Dmitry Baryshkov wrote:
-> > This patch serie adds support for thermal monitoring block on Qualcomm's
-> > PMIC5 chips. PM8150{,b,l}, qrb5165-rb5 board and sm8250-mtp board device
-> > trees are extended to support thermal zones provided by this thermal
-> > monitoring block.  Unlike the rest of PMIC thermal senses, these thermal
-> > zones describe particular thermistors, which differ between from board
-> > to board.
-> >
-> > Dependencies: https://git.kernel.org/pub/scm/linux/kernel/git/jic23/iio.git/log/?h=ib-iio-thermal-5.11-rc1
->
-> Shall I pick 3,4,5 also ?
+On Fri, Jan 15, 2021 at 07:52:52PM +0100, AngeloGioacchino Del Regno wrote:
+> Add new qcom,sdm660-venus DT binding schema.
+> 
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> ---
+>  .../bindings/media/qcom,sdm660-venus.yaml     | 164 ++++++++++++++++++
+>  1 file changed, 164 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/media/qcom,sdm660-venus.yaml
+> 
+> base-commit: 012bd807cf654b992cdc4db7eab85c1e95f9d571
+> prerequisite-patch-id: 734bdefdb043a8f91a48916246cc9a36fb5966e5
+> prerequisite-patch-id: 999517c02973237996492a41ed5bfc2990083932
+> prerequisite-patch-id: a48910425fac61948a7a26bec4d40d63e3368569
+> prerequisite-patch-id: b1a1a4216eed0d04dd16e6e8e1053dee185d06d8
+> prerequisite-patch-id: dff12be2631cc21ef1c3c930fba49d979f5055fe
+> 
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm660-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sdm660-venus.yaml
+> new file mode 100644
+> index 000000000000..e7568d4007af
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/media/qcom,sdm660-venus.yaml
+> @@ -0,0 +1,164 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +
+> +%YAML 1.2
+> +---
+> +$id: "http://devicetree.org/schemas/media/qcom,sdm660-venus.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +
+> +title: Qualcomm Venus video encode and decode accelerators
+> +
+> +maintainers:
+> +  - Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> +
+> +description: |
+> +  The Venus IP is a video encode and decode accelerator present
+> +  on Qualcomm platforms
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sdm660-venus
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    maxItems: 5
+> +
+> +  clock-names:
+> +    items:
+> +      - const: core
+> +      - const: iface
+> +      - const: bus
+> +      - const: bus_throttle
+> +      - const: vcodec0_core
+> +
+> +  interconnects:
+> +    maxItems: 2
+> +
+> +  interconnect-names:
+> +    items:
+> +      - const: video-mem
+> +      - const: cpu-cfg
+> +
+> +  iommus:
+> +    maxItems: 20
 
-I have no strong preference on this topic. It might be easier to get
-3,4,5 through lk-qcom so that we won't face possible conflicts. Bjorn?
+Perhaps some explanation as to what all these are. Looks like it is just 
+1 iommu, but lots of ids?
 
-
--- 
-With best wishes
-Dmitry
+> +
+> +  memory-region:
+> +    maxItems: 1
+> +
+> +  power-domains:
+> +    minItems: 3
+> +
+> +  power-domain-names:
+> +    items:
+> +      - const: cx
+> +      - const: vcodec0
+> +      - const: venus
+> +
+> +  video-decoder:
+> +    type: object
+> +
+> +    properties:
+> +      compatible:
+> +        const: venus-decoder
+> +
+> +    required:
+> +      - compatible
+> +
+> +    additionalProperties: false
+> +
+> +  video-encoder:
+> +    type: object
+> +
+> +    properties:
+> +      compatible:
+> +        const: venus-encoder
+> +
+> +    required:
+> +      - compatible
+> +
+> +    additionalProperties: false
+> +
+> +  video-firmware:
+> +    type: object
+> +
+> +    description: |
+> +      Firmware subnode is needed when the platform does not
+> +      have TrustZone.
+> +
+> +    properties:
+> +      iommus:
+> +        maxItems: 2
+> +
+> +    required:
+> +      - iommus
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - power-domains
+> +  - power-domain-names
+> +  - clocks
+> +  - clock-names
+> +  - iommus
+> +  - memory-region
+> +  - video-decoder
+> +  - video-encoder
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +        #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +        #include <dt-bindings/clock/qcom,mmcc-sdm660.h>
+> +        #include <dt-bindings/power/qcom-rpmpd.h>
+> +
+> +        video-codec@cc00000 {
+> +                compatible = "qcom,sdm660-venus";
+> +                reg = <0x0cc00000 0xff000>;
+> +                interrupts = <GIC_SPI 287 IRQ_TYPE_LEVEL_HIGH>;
+> +                power-domains = <&rpmpd SDM660_VDDCX>,
+> +                                <&mmcc VENUS_CORE0_GDSC>,
+> +                                <&mmcc VENUS_GDSC>;
+> +                power-domain-names = "cx", "vcodec0", "venus";
+> +                clocks = <&mmcc VIDEO_CORE_CLK>,
+> +                         <&mmcc VIDEO_AHB_CLK>,
+> +                         <&mmcc VIDEO_AXI_CLK>,
+> +                         <&mmcc THROTTLE_VIDEO_AXI_CLK>,
+> +                         <&mmcc VIDEO_SUBCORE0_CLK>;
+> +                clock-names = "core", "iface", "bus", "bus_throttle",
+> +                              "vcodec0_core";
+> +                iommus = <&mmss_smmu 0x400>,
+> +                         <&mmss_smmu 0x401>,
+> +                         <&mmss_smmu 0x40a>,
+> +                         <&mmss_smmu 0x407>,
+> +                         <&mmss_smmu 0x40e>,
+> +                         <&mmss_smmu 0x40f>,
+> +                         <&mmss_smmu 0x408>,
+> +                         <&mmss_smmu 0x409>,
+> +                         <&mmss_smmu 0x40b>,
+> +                         <&mmss_smmu 0x40c>,
+> +                         <&mmss_smmu 0x40d>,
+> +                         <&mmss_smmu 0x410>,
+> +                         <&mmss_smmu 0x421>,
+> +                         <&mmss_smmu 0x428>,
+> +                         <&mmss_smmu 0x429>,
+> +                         <&mmss_smmu 0x42b>,
+> +                         <&mmss_smmu 0x42c>,
+> +                         <&mmss_smmu 0x42d>,
+> +                         <&mmss_smmu 0x411>,
+> +                         <&mmss_smmu 0x431>;
+> +                memory-region = <&venus_region>;
+> +
+> +                video-decoder {
+> +                        compatible = "venus-decoder";
+> +                };
+> +
+> +                video-encoder {
+> +                        compatible = "venus-encoder";
+> +                };
+> +        };
+> -- 
+> 2.29.2
+> 
