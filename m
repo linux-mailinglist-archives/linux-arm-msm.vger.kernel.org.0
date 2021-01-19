@@ -2,199 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E2BC2FAEDB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jan 2021 03:41:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DA2932FAF29
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jan 2021 04:37:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728349AbhASCkZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Jan 2021 21:40:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41436 "EHLO
+        id S1728196AbhASDhC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Jan 2021 22:37:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728366AbhASCkV (ORCPT
+        with ESMTP id S1728639AbhASDg4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Jan 2021 21:40:21 -0500
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9904C061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jan 2021 18:39:39 -0800 (PST)
-Received: by mail-pj1-x1031.google.com with SMTP id x20so5764362pjh.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jan 2021 18:39:39 -0800 (PST)
+        Mon, 18 Jan 2021 22:36:56 -0500
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0F73C061575
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jan 2021 19:36:16 -0800 (PST)
+Received: by mail-pj1-x1036.google.com with SMTP id y12so10863384pji.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jan 2021 19:36:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=2oB1hGunho6pX4DnLSBTnX8ePB+qmflG8rlxu9u4DUc=;
-        b=Hn3mAounDTAqYGm/fLxPMbzdCUrisv8OARJb77iPI7I4awe6vyE7l29JsbImTXARpm
-         DcDc0xCqiSb7t3OAhh2ZxnxuBBL/stIUxZDiP+Z9hfq6nx0aonDfK8RPQHz2nRldE2Vv
-         WPmd4UCp6aM5ZnYG/YXc7rligHJw0N5yPZ0wzlpfSBMqFDm5fG1wwp1aAwSThV4LXcwv
-         VdZoRdW8R67tEFRJ4YjV5+6l7E7/HTFMw1LIjM/Nq0diAZ5Mc9toPd2oezw0jen10cZ2
-         yHZ6iu91s6QISc2PV6xdn8bc/2LLTACmdTs2zdqiqn8yYx9tBuvdY2Y6u+h5hUrGZrts
-         IdjQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=O8ACAv1aWfbK9Rs7Y+aAuUGuGcosOM4J9jZOjP5M3U8=;
+        b=om6gGSHHrxaXSPUAL/3eO3VZyhvnGl1a6yD1JC13co3Z9hzMI6573z4S94kFxmvUFr
+         QUGWYkr3i1z5TpSQHUK7jAjqBEo1iT+HkBkwg2hYasb8t/1W0xNvCnlh/3MxEEke91qE
+         jzzOYahqdpxOJS9OcEY4+WzpD95SpQidOA2uhjC4fcCE+H+ruVnMuk4WGr7x+OcyCPKE
+         047ielDqgs5rq8bDu986mE6Kj9jTJ1zBjE6fm7q+C9mKnaMp2tNu7fup4+T/n3bcGtrG
+         lie2JP3e8V/GGE/J899LdIRxmhFc9uUZJBYky/7y1oRuj8nDy1SFGMhwRjHhYnXt/36m
+         YlKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=2oB1hGunho6pX4DnLSBTnX8ePB+qmflG8rlxu9u4DUc=;
-        b=lFC4svRn/+JyBTiQzD9qBRTnUUaQuBi2OeaxekSFNFWWJU/AmogZjQDvALNhj/g3Xh
-         TTiR7/sh4g8b5UWCHjlEhNXsDPmzpzTrmfkru2RFgs5YBQVwr0RQt9NJUl5ci7Yta/Mc
-         4ntj58u8hIBTTfTgBvqOs15d9zEuipmPj06rs/KMCDsNxD8ZU8R3gzivOQJD5Uyblmtx
-         uI57wHgJ5UO46qQzNTIo/MWYIJ+E8T3JopRPxSwMl+3z1bjYMtYerH3Q14q+/jLGwfA6
-         5t3ggYtDOrlGb6iPlOI2ShnhpBnZLP1ZDa1w+KMM8ObymU1qGaKtRmRHBQ1vv1Ne2YHI
-         5Eaw==
-X-Gm-Message-State: AOAM532/QkWJHS8gP3O6eL9Y5FXYZ6lOwqFr7BaC7yoEblwrtWkyq5tb
-        6AOq6ENAZk0RaOQZOn9r1V8P2Q==
-X-Google-Smtp-Source: ABdhPJz4OEiZXq4GnstBNfMgyYP21Tab4RCuB7wGWZHDwtseTlJv7Ad511Sf6NnSNDXOgc0CsbHUpQ==
-X-Received: by 2002:a17:902:123:b029:dc:27b:3c62 with SMTP id 32-20020a1709020123b02900dc027b3c62mr2456953plb.16.1611023979186;
-        Mon, 18 Jan 2021 18:39:39 -0800 (PST)
-Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id i10sm17263504pgt.85.2021.01.18.18.39.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Jan 2021 18:39:38 -0800 (PST)
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Ionela Voinescu <ionela.voinescu@arm.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Steev Klimaszewski <steev@kali.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>
-Subject: [PATCH v2] cpufreq: qcom-hw: drop devm_xxx() calls from init/exit hooks
-Date:   Tue, 19 Jan 2021 10:39:25 +0800
-Message-Id: <20210119023925.22724-1-shawn.guo@linaro.org>
-X-Mailer: git-send-email 2.17.1
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=O8ACAv1aWfbK9Rs7Y+aAuUGuGcosOM4J9jZOjP5M3U8=;
+        b=ZrkGFTyvhJ9hhdyTQq51+Kd07DfJIueKox0SFiHUeQujOj7T3XRChnYZNGYvqe+WYy
+         3C15/yVDgl/idxntuNgEPH6T95JFHNy2VCdjprPyGT+GT2uNiPUJJWz1i6B8q+GInNFn
+         fMYPk9V02EusMPJPeynItHKa1YyxuLkZSRM9G670FzmCGgD6tDEGILePgavQGcf+2m5A
+         1QmMiLYXai0Ucqy5r0ab2gifElWF039HM4IgASLg1I+CB3k2TGNZwMNT996IqguFtT7H
+         j/EKgNfXs19oTmGRJbUgyATW1Oh847zaLN998/h/vw5EMYFyfOtyFbKAvWABrJ47YWov
+         xt3Q==
+X-Gm-Message-State: AOAM531oqtGREcfx78RcO1yHVpsPibkS5PyGq7QQ8hH62PwPgOc22DzZ
+        Q9nzkL2Eyo7zxo8OiF3L1qOh5g==
+X-Google-Smtp-Source: ABdhPJxcgsegIDhpobB7OQjtVQotwMPh4m6cTsQpTfNlqDP+A7OvQpYCGDGnG6oWDQOnzGH8JHe/jQ==
+X-Received: by 2002:a17:902:9f86:b029:de:2919:a6ac with SMTP id g6-20020a1709029f86b02900de2919a6acmr2392297plq.41.1611027376177;
+        Mon, 18 Jan 2021 19:36:16 -0800 (PST)
+Received: from localhost ([122.172.59.240])
+        by smtp.gmail.com with ESMTPSA id 123sm7140597pfg.139.2021.01.18.19.36.14
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 18 Jan 2021 19:36:15 -0800 (PST)
+Date:   Tue, 19 Jan 2021 09:06:12 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ionela Voinescu <ionela.voinescu@arm.com>,
+        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Andy Gross <agross@kernel.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] cpufreq: qcom-hw: add missing devm_release_mem_region()
+ call
+Message-ID: <20210119033612.2inqiq77dioqisq6@vireshk-i7>
+References: <20210112095236.20515-1-shawn.guo@linaro.org>
+ <X/210llTiuNt3haG@builder.lan>
+ <20210113043143.y45mmnw3e2kjkxnl@vireshk-i7>
+ <X/5+GbueKg66DoEE@builder.lan>
+ <20210113050651.q2txref3d6bifrf3@vireshk-i7>
+ <20210118121710.GD2479@dragon>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210118121710.GD2479@dragon>
+User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Commit f17b3e44320b ("cpufreq: qcom-hw: Use
-devm_platform_ioremap_resource() to simplify code") introduces
-a regression on platforms using the driver, by failing to initialise
-a policy, when one is created post hotplug.
+On 18-01-21, 20:17, Shawn Guo wrote:
+> On Wed, Jan 13, 2021 at 10:36:51AM +0530, Viresh Kumar wrote:
+> > On 12-01-21, 22:59, Bjorn Andersson wrote:
+> > > But that said, why are the ioremap done at init and not at probe time?
+> > 
+> > These are some hardware registers per cpufreq policy I believe, and so
+> > they did it from policy init instead.
+> > 
+> > And yes I agree that we shouldn't use devm_ from init() for the cases
+> > where we need to put the resources in exit() as well. But things like
+> > devm_kzalloc() are fine there.
+> 
+> I'm not sure why devm_kzalloc() is fine there.  IIUIC, the memory
+> allocated by devm_kzalloc() in init() is not freed up from exit(), as
+> &pdev->dev is alive across init/exit cycles and will not trigger devres
+> auto free-up.
 
-When all the CPUs of a policy are hoptplugged out, the call to .exit()
-and later to devm_iounmap() does not release the memory region that was
-requested during devm_platform_ioremap_resource().  Therefore,
-a subsequent call to .init() will result in the following error, which
-will prevent a new policy to be initialised:
+Yes, but reallocating it again if ->init() get called again isn't a bug and will
+only block a part of memory for sometime, i.e. until the time driver isn't
+removed.
 
-[ 3395.915416] CPU4: shutdown
-[ 3395.938185] psci: CPU4 killed (polled 0 ms)
-[ 3399.071424] CPU5: shutdown
-[ 3399.094316] psci: CPU5 killed (polled 0 ms)
-[ 3402.139358] CPU6: shutdown
-[ 3402.161705] psci: CPU6 killed (polled 0 ms)
-[ 3404.742939] CPU7: shutdown
-[ 3404.765592] psci: CPU7 killed (polled 0 ms)
-[ 3411.492274] Detected VIPT I-cache on CPU4
-[ 3411.492337] GICv3: CPU4: found redistributor 400 region 0:0x0000000017ae0000
-[ 3411.492448] CPU4: Booted secondary processor 0x0000000400 [0x516f802d]
-[ 3411.503654] qcom-cpufreq-hw 17d43000.cpufreq: can't request region for resource [mem 0x17d45800-0x17d46bff]
+Though it is better I think to get rid of it as well.
 
-With that being said, the original code was tricky and skipping memory
-region request intentionally to hide this issue.  The true cause is that
-those devm_xxx() device managed functions shouldn't be used for cpufreq
-init/exit hooks, because &pdev->dev is alive across the hooks and will
-not trigger auto resource free-up.  Let's drop the use of device managed
-functions and manually allocate/free resources, so that the issue can be
-fixed properly.
-
-Fixes: f17b3e44320b ("cpufreq: qcom-hw: Use devm_platform_ioremap_resource() to simplify code")
-Suggested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
----
-Changes for v2:
-- Move kzalloc() around to respect the original sequence which makes
-  the local variables use reasonable.
-
- drivers/cpufreq/qcom-cpufreq-hw.c | 40 ++++++++++++++++++++++++-------
- 1 file changed, 32 insertions(+), 8 deletions(-)
-
-diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-index 9ed5341dc515..2726e77c9e5a 100644
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -32,6 +32,7 @@ struct qcom_cpufreq_soc_data {
- 
- struct qcom_cpufreq_data {
- 	void __iomem *base;
-+	struct resource *res;
- 	const struct qcom_cpufreq_soc_data *soc_data;
- };
- 
-@@ -280,6 +281,7 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
- 	struct of_phandle_args args;
- 	struct device_node *cpu_np;
- 	struct device *cpu_dev;
-+	struct resource *res;
- 	void __iomem *base;
- 	struct qcom_cpufreq_data *data;
- 	int ret, index;
-@@ -303,18 +305,33 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
- 
- 	index = args.args[0];
- 
--	base = devm_platform_ioremap_resource(pdev, index);
--	if (IS_ERR(base))
--		return PTR_ERR(base);
-+	res = platform_get_resource(pdev, IORESOURCE_MEM, index);
-+	if (!res) {
-+		dev_err(dev, "failed to get mem resource %d\n", index);
-+		return -ENODEV;
-+	}
-+
-+	if (!request_mem_region(res->start, resource_size(res), res->name)) {
-+		dev_err(dev, "failed to request resource %pR\n", res);
-+		return -EBUSY;
-+	}
- 
--	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
-+	base = ioremap(res->start, resource_size(res));
-+	if (IS_ERR(base)) {
-+		dev_err(dev, "failed to map resource %pR\n", res);
-+		ret = PTR_ERR(base);
-+		goto release_region;
-+	}
-+
-+	data = kzalloc(sizeof(*data), GFP_KERNEL);
- 	if (!data) {
- 		ret = -ENOMEM;
--		goto error;
-+		goto unmap_base;
- 	}
- 
- 	data->soc_data = of_device_get_match_data(&pdev->dev);
- 	data->base = base;
-+	data->res = res;
- 
- 	/* HW should be in enabled state to proceed */
- 	if (!(readl_relaxed(base + data->soc_data->reg_enable) & 0x1)) {
-@@ -349,7 +366,11 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
- 
- 	return 0;
- error:
--	devm_iounmap(dev, base);
-+	kfree(data);
-+unmap_base:
-+	iounmap(data->base);
-+release_region:
-+	release_mem_region(res->start, resource_size(res));
- 	return ret;
- }
- 
-@@ -357,12 +378,15 @@ static int qcom_cpufreq_hw_cpu_exit(struct cpufreq_policy *policy)
- {
- 	struct device *cpu_dev = get_cpu_device(policy->cpu);
- 	struct qcom_cpufreq_data *data = policy->driver_data;
--	struct platform_device *pdev = cpufreq_get_driver_data();
-+	struct resource *res = data->res;
-+	void __iomem *base = data->base;
- 
- 	dev_pm_opp_remove_all_dynamic(cpu_dev);
- 	dev_pm_opp_of_cpumask_remove_table(policy->related_cpus);
- 	kfree(policy->freq_table);
--	devm_iounmap(&pdev->dev, data->base);
-+	kfree(data);
-+	iounmap(base);
-+	release_mem_region(res->start, resource_size(res));
- 
- 	return 0;
- }
 -- 
-2.17.1
-
+viresh
