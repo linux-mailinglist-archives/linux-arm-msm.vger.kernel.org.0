@@ -2,150 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B6972FBA32
+	by mail.lfdr.de (Postfix) with ESMTP id A6BCE2FBA33
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jan 2021 15:55:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390836AbhASOqE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Jan 2021 09:46:04 -0500
-Received: from foss.arm.com ([217.140.110.172]:49554 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2404298AbhASKet (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Jan 2021 05:34:49 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3F3381042;
-        Tue, 19 Jan 2021 02:34:03 -0800 (PST)
-Received: from [10.57.40.145] (unknown [10.57.40.145])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id F05033F66E;
-        Tue, 19 Jan 2021 02:33:59 -0800 (PST)
-Subject: Re: [PATCH] coresight: etm4x: Add config to exclude kernel mode
- tracing
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Al Grant <Al.Grant@arm.com>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Mike Leach <mike.leach@linaro.org>, coresight@lists.linaro.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Denis Nikitin <denik@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, leo.yan@linaro.org,
-        mnissler@google.com, Peter Zijlstra <peterz@infradead.org>,
-        Ingo Molnar <mingo@redhat.com>, Will Deacon <will@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>
-References: <20201015124522.1876-1-saiprakash.ranjan@codeaurora.org>
- <20201015160257.GA1450102@xps15>
- <dd400fd7017a5d92b55880cf28378267@codeaurora.org>
- <20210118202354.GC464579@xps15>
- <32216e9fa5c9ffb9df1123792d40eafb@codeaurora.org>
- <DB7PR08MB3355E85C72492D4766F0BEFC86A30@DB7PR08MB3355.eurprd08.prod.outlook.com>
- <03b893801841f732a25072b4e62f8e0b@codeaurora.org>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-Message-ID: <de2487eb-ddb9-589a-8093-fae31235c884@arm.com>
-Date:   Tue, 19 Jan 2021 10:33:52 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.1
+        id S2390969AbhASOqG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Jan 2021 09:46:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36506 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405087AbhASLDT (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 19 Jan 2021 06:03:19 -0500
+Received: from mail-vs1-xe33.google.com (mail-vs1-xe33.google.com [IPv6:2607:f8b0:4864:20::e33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18C30C0613D3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jan 2021 03:02:38 -0800 (PST)
+Received: by mail-vs1-xe33.google.com with SMTP id o186so3031151vso.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jan 2021 03:02:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=51aRHVM9MtmiP0LM6KVSBIfypf8NCoJI3/kkLCUIyQc=;
+        b=cO9pngCqzzQU5+wYm76QgcPi+sSh5wfMsbcSm2rfew1o6UU+XMprqcdkv8Tat7a3sj
+         dZ1uP2iZAQeaaPqA9q3x/D9TRd5FTzLxx9Ujcm/4TCxNZHTRKgnZEYSqRfUV/idaFtUI
+         oLzD/IohWXy5i90tTRAvvJl1rLywYJhSrRpjC91JF1wtZyouUt/RdQE4rGgESI8mp19Z
+         XuETWBfpczg9ESTyyyrb1l0HWs/4hVK8iNjlxaoFSpzUhxUnp5o2zuCyqcmVLs4IdQSG
+         fp73BBTKRzw62HJLaxJ9z/8c5RwdpNy+ViRHrZHpkxe2g1y5yS4VXmvvGLyFRM7UrbEi
+         w3kQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=51aRHVM9MtmiP0LM6KVSBIfypf8NCoJI3/kkLCUIyQc=;
+        b=T6+DmuwoxFu1eYygUeZBCF9qfI8y0exdJf1MTa9Pc8ue3LA/BL4so4THBUFtphGGfk
+         N3k3u3ZF3EfcMIhxsaCeCR4MNb0c50G2lzw/wxaJit9HfU6uwRbYpYDUXFIBPEAePBbm
+         6fo+gB5bjvniQrMOGoVeLz5LgLSh5pxQtSctkva3+fewPfTANxO6hsXhdIOIDZUfPF7c
+         PpoLkVmiOtTl9wklV5drxGOGOTErJslqcA1bveVGYFh0LhAwiZY5HmGePAwRMmHDVRFi
+         da3x6OsGiuxqUDxF0qbLq4k14KwziXfyouinawqfP0xSOyWneBk9gfQBG7WuHKdvR113
+         UfEg==
+X-Gm-Message-State: AOAM530e9EYrn2WcQkcDkPx/to3jpzxdrScjJ6yFboPnWSSQLCdkqVXs
+        XLNJZSyXbW4J/sj4lCp1PjzQ+eLgBPqCN1XESYe8Ig==
+X-Google-Smtp-Source: ABdhPJzmHhIQqV/usHrcyHk3rDz6//q3bjjAW5H2CFufPw2AHrOrqfaIxGqrbhGDRrsQtReKyxV9CP3hwLdfWdsh4uM=
+X-Received: by 2002:a67:7f41:: with SMTP id a62mr2178224vsd.55.1611054157249;
+ Tue, 19 Jan 2021 03:02:37 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <03b893801841f732a25072b4e62f8e0b@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
+References: <20201224111210.1214-1-rojay@codeaurora.org> <20201224111210.1214-4-rojay@codeaurora.org>
+ <YAGqKfDfB7EEuZVn@builder.lan> <6bfec3e6-3d26-7ade-d836-032273856ce2@codeaurora.org>
+In-Reply-To: <6bfec3e6-3d26-7ade-d836-032273856ce2@codeaurora.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 19 Jan 2021 12:02:01 +0100
+Message-ID: <CAPDyKFqF0NE3QRAEfiqj5QOXXH2om4CpyyeudeqoovANfvjsaQ@mail.gmail.com>
+Subject: Re: [PATCH 3/3] i2c: i2c-qcom-geni: Add support for 'assigned-performance-states'
+To:     Rajendra Nayak <rnayak@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     Roja Rani Yarubandi <rojay@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Wolfram Sang <wsa@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>, akashast@codeaurora.org,
+        msavaliy@qti.qualcomm.com, parashar@codeaurora.org,
+        Linux PM <linux-pm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-i2c@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 1/19/21 9:51 AM, Sai Prakash Ranjan wrote:
-> Hi Al,
-> 
-> On 2021-01-19 14:06, Al Grant wrote:
->> Hi Sai,
->>
->>> From: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
->>> Hi Mathieu,
->>>
->>> On 2021-01-19 01:53, Mathieu Poirier wrote:
->>> > On Fri, Jan 15, 2021 at 11:16:24AM +0530, Sai Prakash Ranjan wrote:
->>> >> Hello Mathieu, Suzuki
->>> >>
->>> >> On 2020-10-15 21:32, Mathieu Poirier wrote:
->>> >> > On Thu, Oct 15, 2020 at 06:15:22PM +0530, Sai Prakash Ranjan wrote:
->>> >> > > On production systems with ETMs enabled, it is preferred to
->>> >> > > exclude kernel mode(NS EL1) tracing for security concerns and
->>> >> > > support only userspace(NS EL0) tracing. So provide an option via
->>> >> > > kconfig to exclude kernel mode tracing if it is required.
->>> >> > > This config is disabled by default and would not affect the
->>> >> > > current configuration which has both kernel and userspace tracing
->>> >> > > enabled by default.
->>> >> > >
->>> >> >
->>> >> > One requires root access (or be part of a special trace group) to
->>> >> > be able to use the cs_etm PMU.  With this kind of elevated access
->>> >> > restricting tracing at EL1 provides little in terms of security.
->>> >> >
->>> >>
->>> >> Apart from the VM usecase discussed, I am told there are other
->>> >> security concerns here regarding need to exclude kernel mode tracing
->>> >> even for the privileged users/root. One such case being the ability
->>> >> to analyze cryptographic code execution since ETMs can record all
->>> >> branch instructions including timestamps in the kernel and there may
->>> >> be other cases as well which I may not be aware of and hence have
->>> >> added Denis and Mattias. Please let us know if you have any questions
->>> >> further regarding this not being a security concern.
->>> >
->>> > Even if we were to apply this patch there are many ways to compromise
->>> > a system or get the kernel to reveal important information using the
->>> > perf subsystem.  I would perfer to tackle the problem at that level
->>> > rather than concentrating on coresight.
->>> >
->>>
->>> Sorry but I did not understand your point. We are talking about the capabilities
->>> of coresight etm tracing which has the instruction level tracing and a lot more.
->>> Perf subsystem is just the framework used for it.
->>> In other words, its not the perf subsystem which does instruction level tracing,
->>> its the coresight etm. Why the perf subsystem should be modified to lockdown
->>> kernel mode? If we were to let perf handle all the trace filtering for different
->>> exception levels, then why do we need the register settings in coresight etm
->>> driver to filter out NS EL* tracing? And more importantly, how do you suppose
->>> we handle sysfs mode of coresight tracing with perf subsystem?
->>
->> You both have good points. Mathieu is right that this is not a CoreSight
->> issue specifically, it is a matter of kernel security policy, and other hardware
->> tracing mechanisms ought to be within its scope. There should be a general
->> "anti kernel exfiltration" config that applies to all mechanisms within
->> its scope, and we'd definitely expect that to include Intel PT as well as ETM.
->>
-> 
-> I agree with this part where there should be a generic config for all
-> hardware tracing families(atleast for Intel PT and ARM Coresight),
-> Suzuki suggested that as well. I am under the impression that Mathieu
-> didn't like adding such a config and wanted perf subsystem to handle
-> it since initial discussion was around whether root compromise meant
-> everything is lost already and such a kconfig would not help, but
-> Mattias already gave some good examples where that is not true.
-> 
->> A kernel config that forced exclude_kernel on all perf events would deal with
->> ETM and PT in one place, but miss the sysfs interface to ETM.
->>
->> On the other hand, doing it in the ETM drivers would cover the perf and sysfs
->> interfaces to ETM, but would miss Intel PT.
->>
->> So I think what is needed is a general config option that is both implemented
->> in perf (excluding all kernel tracing events) and by any drivers that provide
->> an alternative interface to hardware tracing events.
->>
-> 
-> I am good with this approach, once Mathieu confirms, I can add a kernel
-> wide kconfig as Suzuki suggested earlier and make ETM{3,4}x as the
-> initial users. Someone more familiar with Intel PTs can then make use
-> of this kconfig.
+On Mon, 18 Jan 2021 at 06:36, Rajendra Nayak <rnayak@codeaurora.org> wrote:
+>
+>
+> On 1/15/2021 8:13 PM, Bjorn Andersson wrote:
+> > On Thu 24 Dec 05:12 CST 2020, Roja Rani Yarubandi wrote:
+> >
+> >> @@ -629,6 +658,16 @@ static int __maybe_unused geni_i2c_runtime_suspend(struct device *dev)
+> >>      struct geni_i2c_dev *gi2c = dev_get_drvdata(dev);
+> >>
+> >>      disable_irq(gi2c->irq);
+> >> +
+> >> +    /* Drop the assigned performance state */
+> >> +    if (gi2c->assigned_pstate) {
+> >> +            ret = dev_pm_genpd_set_performance_state(dev, 0);
+> >> +            if (ret) {
+> >> +                    dev_err(dev, "Failed to set performance state\n");
+> >> +                    return ret;
+> >> +            }
+> >> +    }
+> >> +
+> >
+> > Ulf, Viresh, I think we discussed this at the time of introducing the
+> > performance states.
+> >
+> > The client's state does not affect if its performance_state should
+> > be included in the calculation of the aggregated performance_state, so
+> > each driver that needs to keep some minimum performance state needs to
+> > have these two snippets.
+> >
+> > Would it not make sense to on enable/disable re-evaluate the
+> > performance_state and potentially reconfigure the hardware
+> > automatically?
+>
+> I agree, this will be repeated across multiple drivers which would
+> need some minimal vote while they are active, handling this during
+> genpd enable/disable in genpd core makes sense.
 
-Instead of adding the support for individual drivers, you could handle this
-in the generic perf layer. e.g, Fail perf_event create with an attribute
-which allows kernel tracing ?
+Initially that's what we tried out, but we realized that it was
+difficult to deal with this internally in genpd, but more importantly
+it also removed some flexibility from consumers and providers. See
+commit 68de2fe57a8f ("PM / Domains: Make genpd performance states
+orthogonal to the idlestates").
 
-if (!attr.exclude_kernel)
-	return -EINVAL;
+As a matter of fact this was quite recently discussed [1], which also
+pointed out some issues when using the "required-opps" in combination,
+but perhaps that got resolved? Viresh?
 
-Or even exclude the kernel silently always.
+My concern is, if we would make this kind of change to the internals
+of genpd, it would lead to the following limitation: A consumer driver
+can no longer make its vote for its device to stick around, when the
+device becomes runtime suspended - and how do we know that we never
+need to support such a case?
 
-This could also be limited to PMUs with PERF_PMU_CAP_ITRACE, if you
-want to limit this to PMUs that instruction level tracing.
+>
+> >
+> > Regards,
+> > Bjorn
+> >
+> >>      ret = geni_se_resources_off(&gi2c->se);
+> >>      if (ret) {
+> >>              enable_irq(gi2c->irq);
+> >> @@ -654,6 +693,16 @@ static int __maybe_unused geni_i2c_runtime_resume(struct device *dev)
+> >>      if (ret)
+> >>              return ret;
+> >>
+> >> +    /* Set the assigned performance state */
+> >> +    if (gi2c->assigned_pstate) {
+> >> +            ret = dev_pm_genpd_set_performance_state(dev,
+> >> +                                                     gi2c->assigned_pstate);
+> >> +            if (ret) {
+> >> +                    dev_err(dev, "Failed to set performance state\n");
+> >> +                    return ret;
+> >> +            }
+> >> +    }
+> >> +
+> >>      enable_irq(gi2c->irq);
+> >>      gi2c->suspended = 0;
+> >>      return 0;
 
-Suzuki
+Kind regards
+Uffe
+
+[1]
+https://lkml.org/lkml/2020/9/11/230
