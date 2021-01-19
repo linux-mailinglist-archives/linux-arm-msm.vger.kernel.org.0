@@ -2,237 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BA3342FBA21
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jan 2021 15:55:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CCAF2FBA23
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jan 2021 15:55:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387440AbhASOnz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Jan 2021 09:43:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47702 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387763AbhASJnj (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Jan 2021 04:43:39 -0500
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D92CC061573
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jan 2021 01:42:59 -0800 (PST)
-Received: by mail-pf1-x432.google.com with SMTP id f63so4088713pfa.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jan 2021 01:42:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=7S8BJ9E71QGUjoMsbM7R7bFNhP0M0RCDUnqEIz/LTU0=;
-        b=T2ce0h1aKxfGTD188B5ysB78EIoD51SKYr0QCy8rEGw/Ql1p7kleii6O4YpAyLfVic
-         3/XDjFGFb71eGl/XbHFuWk3pBtkRy6DwSNLM+Db9t0sqDsjDYWedwIFd+L1IlCBw+Igx
-         2kg69atc6+rxyws7N2uHwYgC7SZ3MyKfG4/6ysitEp4l6umN0z3dKJA7H2H+uAICDDjC
-         TlwHVrz+4OQA2sjobVj+I9I23P/fQq31roZNKPr6a/MSfIkiXqUYNTfuCdeG6+Iqh97S
-         fArC7BVz+lMAH6aEYAGuYPx0Tm1FyvtTIZl34QFkCEkRP9kWta7yNllwb3ogMgY18jy3
-         0wsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=7S8BJ9E71QGUjoMsbM7R7bFNhP0M0RCDUnqEIz/LTU0=;
-        b=KN0c9CxlUsw2BrngrYQUwG3orioi+QxALJlPn4BzCT1/7ukDt59Tj4AWdgYSa+miWw
-         APf1K/kQOiPwd1YdefvHyFXJ1zqUhyPLIUtOtpeaYihb7tWeiZXGyfC0uJ96y8Mbmigt
-         5JGQ+BaReAzvOdYdcGx7ZzFep1raWkyYp6L1ldLINbXTkx3ZrDzAombTwOjQ+hS8qZgC
-         mvCxxXhjflDjBmp0vKl58fN5k9JTZXyHcfBksi3lhoN85vOWVsuw8kjDgNod7J2d/4Nw
-         WytMMCc9+qMLNkvbznkkdfZ+RLBmeQFoZyokMPc7TmFJsEA0b3fOR8x/QGNSQXK0poca
-         kl1Q==
-X-Gm-Message-State: AOAM531HHyPNLcme3ew7kuIL19Mpu6WD5sDKDxEu8MjkN7xdjOgvjh3n
-        pj9mvnc/F78pYa5kdT2kuQw3
-X-Google-Smtp-Source: ABdhPJx8r0csAja55qm2L6GcuO7UQsGh3beyaY11fvbj47zO9Gc36MNLXZcfp01U/y8QYXGLrlllHA==
-X-Received: by 2002:a62:1981:0:b029:1b7:ec14:e2d9 with SMTP id 123-20020a6219810000b02901b7ec14e2d9mr3308769pfz.54.1611049378518;
-        Tue, 19 Jan 2021 01:42:58 -0800 (PST)
-Received: from thinkpad ([2409:4072:6c8e:9a14:351c:5713:cb9a:6935])
-        by smtp.gmail.com with ESMTPSA id y6sm1269136pfn.123.2021.01.19.01.42.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jan 2021 01:42:57 -0800 (PST)
-Date:   Tue, 19 Jan 2021 15:12:50 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     gregkh@linuxfoundation.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        jhugo@codeaurora.org, bbhatt@codeaurora.org,
-        loic.poulain@linaro.org, netdev@vger.kernel.org,
-        hemantk@codeaurora.org
-Subject: Re: [RESEND PATCH v18 0/3] userspace MHI client interface driver
-Message-ID: <20210119094250.GA20682@thinkpad>
-References: <1609958656-15064-1-git-send-email-hemantk@codeaurora.org>
- <20210113152625.GB30246@work>
+        id S2387763AbhASOo2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Jan 2021 09:44:28 -0500
+Received: from m42-8.mailgun.net ([69.72.42.8]:64826 "EHLO m42-8.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2389158AbhASJwS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 19 Jan 2021 04:52:18 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1611049909; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=IqeHm+djSYXGS6nhOsGbWQeydkemPXwx6MDMvUpsZlU=;
+ b=eJHB+RGJVWF7fEJlrhCgnl/4CRBU1qCrT2u39Im8/5zJbDTk0r2yKXy0x8nyr/gwG3fxBDU3
+ DC+6M5IpOn5xnGlo4H5hXz1IU6NnKzhu/jQeSg8hSDiCfRmxNQ5rvWwpWnmWGMj4GeIMJc4I
+ Lr9guuBMNWJcfynZi2Frxtn3bnA=
+X-Mailgun-Sending-Ip: 69.72.42.8
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 6006ab9721210999ed6440ba (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 19 Jan 2021 09:51:19
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E0DACC433C6; Tue, 19 Jan 2021 09:51:18 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C7113C433CA;
+        Tue, 19 Jan 2021 09:51:17 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210113152625.GB30246@work>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 19 Jan 2021 15:21:17 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Al Grant <Al.Grant@arm.com>
+Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki Poulose <Suzuki.Poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>, coresight@lists.linaro.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Denis Nikitin <denik@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, leo.yan@linaro.org,
+        mnissler@google.com
+Subject: Re: [PATCH] coresight: etm4x: Add config to exclude kernel mode
+ tracing
+In-Reply-To: <DB7PR08MB3355E85C72492D4766F0BEFC86A30@DB7PR08MB3355.eurprd08.prod.outlook.com>
+References: <20201015124522.1876-1-saiprakash.ranjan@codeaurora.org>
+ <20201015160257.GA1450102@xps15>
+ <dd400fd7017a5d92b55880cf28378267@codeaurora.org>
+ <20210118202354.GC464579@xps15>
+ <32216e9fa5c9ffb9df1123792d40eafb@codeaurora.org>
+ <DB7PR08MB3355E85C72492D4766F0BEFC86A30@DB7PR08MB3355.eurprd08.prod.outlook.com>
+Message-ID: <03b893801841f732a25072b4e62f8e0b@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Greg,
+Hi Al,
 
-On Wed, Jan 13, 2021 at 08:56:25PM +0530, Manivannan Sadhasivam wrote:
-> Hi Greg,
+On 2021-01-19 14:06, Al Grant wrote:
+> Hi Sai,
 > 
-> On Wed, Jan 06, 2021 at 10:44:13AM -0800, Hemant Kumar wrote:
-> > This patch series adds support for UCI driver. UCI driver enables userspace
-> > clients to communicate to external MHI devices like modem. UCI driver probe
-> > creates standard character device file nodes for userspace clients to
-> > perform open, read, write, poll and release file operations. These file
-> > operations call MHI core layer APIs to perform data transfer using MHI bus
-> > to communicate with MHI device. 
-> > 
-> > This interface allows exposing modem control channel(s) such as QMI, MBIM,
-> > or AT commands to userspace which can be used to configure the modem using
-> > tools such as libqmi, ModemManager, minicom (for AT), etc over MHI. This is
-> > required as there are no kernel APIs to access modem control path for device
-> > configuration. Data path transporting the network payload (IP), however, is
-> > routed to the Linux network via the mhi-net driver. Currently driver supports
-> > QMI channel. libqmi is userspace MHI client which communicates to a QMI
-> > service using QMI channel. Please refer to
-> > https://www.freedesktop.org/wiki/Software/libqmi/ for additional information
-> > on libqmi.
-> > 
-> > Patch is tested using arm64 and x86 based platform.
-> > 
+>> From: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+>> Hi Mathieu,
+>> 
+>> On 2021-01-19 01:53, Mathieu Poirier wrote:
+>> > On Fri, Jan 15, 2021 at 11:16:24AM +0530, Sai Prakash Ranjan wrote:
+>> >> Hello Mathieu, Suzuki
+>> >>
+>> >> On 2020-10-15 21:32, Mathieu Poirier wrote:
+>> >> > On Thu, Oct 15, 2020 at 06:15:22PM +0530, Sai Prakash Ranjan wrote:
+>> >> > > On production systems with ETMs enabled, it is preferred to
+>> >> > > exclude kernel mode(NS EL1) tracing for security concerns and
+>> >> > > support only userspace(NS EL0) tracing. So provide an option via
+>> >> > > kconfig to exclude kernel mode tracing if it is required.
+>> >> > > This config is disabled by default and would not affect the
+>> >> > > current configuration which has both kernel and userspace tracing
+>> >> > > enabled by default.
+>> >> > >
+>> >> >
+>> >> > One requires root access (or be part of a special trace group) to
+>> >> > be able to use the cs_etm PMU.  With this kind of elevated access
+>> >> > restricting tracing at EL1 provides little in terms of security.
+>> >> >
+>> >>
+>> >> Apart from the VM usecase discussed, I am told there are other
+>> >> security concerns here regarding need to exclude kernel mode tracing
+>> >> even for the privileged users/root. One such case being the ability
+>> >> to analyze cryptographic code execution since ETMs can record all
+>> >> branch instructions including timestamps in the kernel and there may
+>> >> be other cases as well which I may not be aware of and hence have
+>> >> added Denis and Mattias. Please let us know if you have any questions
+>> >> further regarding this not being a security concern.
+>> >
+>> > Even if we were to apply this patch there are many ways to compromise
+>> > a system or get the kernel to reveal important information using the
+>> > perf subsystem.  I would perfer to tackle the problem at that level
+>> > rather than concentrating on coresight.
+>> >
+>> 
+>> Sorry but I did not understand your point. We are talking about the 
+>> capabilities
+>> of coresight etm tracing which has the instruction level tracing and a 
+>> lot more.
+>> Perf subsystem is just the framework used for it.
+>> In other words, its not the perf subsystem which does instruction 
+>> level tracing,
+>> its the coresight etm. Why the perf subsystem should be modified to 
+>> lockdown
+>> kernel mode? If we were to let perf handle all the trace filtering for 
+>> different
+>> exception levels, then why do we need the register settings in 
+>> coresight etm
+>> driver to filter out NS EL* tracing? And more importantly, how do you 
+>> suppose
+>> we handle sysfs mode of coresight tracing with perf subsystem?
 > 
-> This series looks good to me and I'd like to merge it into mhi-next. You
-> shared your reviews on the previous revisions, so I'd like to get your
-> opinion first.
+> You both have good points. Mathieu is right that this is not a 
+> CoreSight
+> issue specifically, it is a matter of kernel security policy, and other 
+> hardware
+> tracing mechanisms ought to be within its scope. There should be a 
+> general
+> "anti kernel exfiltration" config that applies to all mechanisms within
+> its scope, and we'd definitely expect that to include Intel PT as well 
+> as ETM.
 > 
 
-Ping!
+I agree with this part where there should be a generic config for all
+hardware tracing families(atleast for Intel PT and ARM Coresight),
+Suzuki suggested that as well. I am under the impression that Mathieu
+didn't like adding such a config and wanted perf subsystem to handle
+it since initial discussion was around whether root compromise meant
+everything is lost already and such a kconfig would not help, but
+Mattias already gave some good examples where that is not true.
+
+> A kernel config that forced exclude_kernel on all perf events would 
+> deal with
+> ETM and PT in one place, but miss the sysfs interface to ETM.
+> 
+> On the other hand, doing it in the ETM drivers would cover the perf and 
+> sysfs
+> interfaces to ETM, but would miss Intel PT.
+> 
+> So I think what is needed is a general config option that is both 
+> implemented
+> in perf (excluding all kernel tracing events) and by any drivers that 
+> provide
+> an alternative interface to hardware tracing events.
+> 
+
+I am good with this approach, once Mathieu confirms, I can add a kernel
+wide kconfig as Suzuki suggested earlier and make ETM{3,4}x as the
+initial users. Someone more familiar with Intel PTs can then make use
+of this kconfig.
 
 Thanks,
-Mani
+Sai
 
-> Thanks,
-> Mani
-> 
-> > V18:
-> > - Updated commit text for UCI to clarify why this driver is required for QMI
-> >   over MHI. Also updated cover letter with same information.
-> > 
-> > v17:
-> > - Updated commit text for UCI driver by mentioning about libqmi open-source
-> >   userspace program that will be talking to this UCI kernel driver.
-> > - UCI driver depends upon patch "bus: mhi: core: Add helper API to return number
-> >   of free TREs".
-> > 
-> > v16:
-> > - Removed reference of WLAN as an external MHI device in documentation and
-> >   cover letter.
-> > 
-> > v15:
-> > - Updated documentation related to poll and release operations.
-> > 
-> > V14:
-> > - Fixed device file node format to /dev/<mhi_dev_name> instead of
-> >   /dev/mhi_<mhi_dev_name> because "mhi" is already part of mhi device name.
-> >   For example old format: /dev/mhi_mhi0_QMI new format: /dev/mhi0_QMI.
-> > - Updated MHI documentation to reflect index mhi controller name in
-> >   QMI usage example.
-> > 
-> > V13:
-> > - Removed LOOPBACK channel from mhi_device_id table from this patch series.
-> >   Pushing a new patch series to add support for LOOPBACK channel and the user
-> >   space test application. Also removed the description from kernel documentation.
-> > - Added QMI channel to mhi_device_id table. QMI channel has existing libqmi
-> >   support from user space.
-> > - Updated kernel Documentation for QMI channel and provided external reference
-> >   for libqmi.
-> > - Updated device file node name by appending mhi device name only, which already
-> >   includes mhi controller device name.
-> > 
-> > V12:
-> > - Added loopback test driver under selftest/drivers/mhi. Updated kernel
-> >   documentation for the usage of the loopback test application.
-> > - Addressed review comments for renaming variable names, updated inline
-> >   comments and removed two redundant dev_dbg.
-> > 
-> > V11:
-> > - Fixed review comments for UCI documentation by expanding TLAs and rewording
-> >   some sentences.
-> > 
-> > V10:
-> > - Replaced mutex_lock with mutex_lock_interruptible in read() and write() file
-> >   ops call back.
-> > 
-> > V9:
-> > - Renamed dl_lock to dl_pending _lock and pending list to dl_pending for
-> >   clarity.
-> > - Used read lock to protect cur_buf.
-> > - Change transfer status check logic and only consider 0 and -EOVERFLOW as
-> >   only success.
-> > - Added __int to module init function.
-> > - Print channel name instead of minor number upon successful probe.
-> > 
-> > V8:
-> > - Fixed kernel test robot compilation error by changing %lu to %zu for
-> >   size_t.
-> > - Replaced uci with UCI in Kconfig, commit text, and comments in driver
-> >   code.
-> > - Fixed minor style related comments.
-> > 
-> > V7:
-> > - Decoupled uci device and uci channel objects. uci device is
-> >   associated with device file node. uci channel is associated
-> >   with MHI channels. uci device refers to uci channel to perform
-> >   MHI channel operations for device file operations like read()
-> >   and write(). uci device increments its reference count for
-> >   every open(). uci device calls mhi_uci_dev_start_chan() to start
-> >   the MHI channel. uci channel object is tracking number of times
-> >   MHI channel is referred. This allows to keep the MHI channel in
-> >   start state until last release() is called. After that uci channel
-> >   reference count goes to 0 and uci channel clean up is performed
-> >   which stops the MHI channel. After the last call to release() if
-> >   driver is removed uci reference count becomes 0 and uci object is
-> >   cleaned up.
-> > - Use separate uci channel read and write lock to fine grain locking
-> >   between reader and writer.
-> > - Use uci device lock to synchronize open, release and driver remove.
-> > - Optimize for downlink only or uplink only UCI device.
-> > 
-> > V6:
-> > - Moved uci.c to mhi directory.
-> > - Updated Kconfig to add module information.
-> > - Updated Makefile to rename uci object file name as mhi_uci
-> > - Removed kref for open count
-> > 
-> > V5:
-> > - Removed mhi_uci_drv structure.
-> > - Used idr instead of creating global list of uci devices.
-> > - Used kref instead of local ref counting for uci device and
-> >   open count.
-> > - Removed unlikely macro.
-> > 
-> > V4:
-> > - Fix locking to protect proper struct members.
-> > - Updated documentation describing uci client driver use cases.
-> > - Fixed uci ref counting in mhi_uci_open for error case.
-> > - Addressed style related review comments.
-> > 
-> > V3: Added documentation for MHI UCI driver.
-> > 
-> > V2:
-> > - Added mutex lock to prevent multiple readers to access same
-> > - mhi buffer which can result into use after free.
-> > 
-> > Hemant Kumar (3):
-> >   bus: mhi: core: Move MHI_MAX_MTU to external header file
-> >   docs: Add documentation for userspace client interface
-> >   bus: mhi: Add userspace client interface driver
-> > 
-> >  Documentation/mhi/index.rst     |   1 +
-> >  Documentation/mhi/uci.rst       |  95 ++++++
-> >  drivers/bus/mhi/Kconfig         |  13 +
-> >  drivers/bus/mhi/Makefile        |   3 +
-> >  drivers/bus/mhi/core/internal.h |   1 -
-> >  drivers/bus/mhi/uci.c           | 664 ++++++++++++++++++++++++++++++++++++++++
-> >  include/linux/mhi.h             |   3 +
-> >  7 files changed, 779 insertions(+), 1 deletion(-)
-> >  create mode 100644 Documentation/mhi/uci.rst
-> >  create mode 100644 drivers/bus/mhi/uci.c
-> > 
-> > -- 
-> > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> > a Linux Foundation Collaborative Project
-> > 
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
