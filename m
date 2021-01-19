@@ -2,104 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AF8ED2FBF6B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jan 2021 19:52:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 39D3C2FC1A4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jan 2021 21:54:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730806AbhASSsV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Jan 2021 13:48:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40042 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392118AbhASR4G (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Jan 2021 12:56:06 -0500
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8985C0612A9;
-        Tue, 19 Jan 2021 09:49:47 -0800 (PST)
-Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id D2A8A3F1E4;
-        Tue, 19 Jan 2021 18:45:45 +0100 (CET)
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-To:     bjorn.andersson@linaro.org
-Cc:     agross@kernel.org, robh+dt@kernel.org, lgirdwood@gmail.com,
-        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        phone-devel@vger.kernel.org, konrad.dybcio@somainline.org,
-        marijn.suijten@somainline.org, martin.botka@somainline.org,
-        jeffrey.l.hugo@gmail.com,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Subject: [PATCH v4 0/3] Driver for Core Power Reduction v3, v4 and Hardened
-Date:   Tue, 19 Jan 2021 18:45:41 +0100
-Message-Id: <20210119174544.227202-1-angelogioacchino.delregno@somainline.org>
-X-Mailer: git-send-email 2.30.0
+        id S1731769AbhASUww (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Jan 2021 15:52:52 -0500
+Received: from mail.kernel.org ([198.145.29.99]:37162 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730250AbhASUwm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 19 Jan 2021 15:52:42 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 44D72206EC;
+        Tue, 19 Jan 2021 20:52:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1611089520;
+        bh=djekidYjWvjMH8tnXNd3fJu3gvlpUyA2n41tvRbo6M0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=jO3hOngn1UoYu0GIbbF4eh/bIy/NyhHX5dJ/WxEQAxsGr6/h/wYLkMGDTywBo53lD
+         V8pDMwPa4NLzx1LwlcDQ8vPPzjwUzGW8AXpLyQR/8Gnyr/hz1HTOSxoy4yO/MYAfwm
+         JXYRKtGFgkVkU8oq0LE1qIxFg2n4pNqaY8OmDLw4Rb5SfxB8C4nOzWeKlIM7g3ZX21
+         tM0wPucHX6GMWHXBztxBD1FN3L9XTLuR8P+m8OAMRb4I4lft3gEPB0DXr5uAAJRB78
+         nU0QT/N5ofF+ri7rMQ1IOCBKW/fp2fzsR/JCMD1buNHHq/FBIB1HOFKVAaJVFKKmev
+         LllxjvlKAYacw==
+Date:   Tue, 19 Jan 2021 12:51:58 -0800
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>, linux-fscrypt@vger.kernel.org,
+        Satya Tangirala <satyat@google.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Neeraj Soni <neersoni@codeaurora.org>,
+        Barani Muthukumaran <bmuthuku@codeaurora.org>,
+        Peng Zhou <peng.zhou@mediatek.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Konrad Dybcio <konradybcio@gmail.com>
+Subject: Re: [PATCH v4 1/9] mmc: add basic support for inline encryption
+Message-ID: <YAdGbqU12cbJr78K@sol.localdomain>
+References: <20210104184542.4616-1-ebiggers@kernel.org>
+ <20210104184542.4616-2-ebiggers@kernel.org>
+ <CAPDyKFq717teu2HPZLCn9QVxLOwZHdi_iS+Ji69S0kYX1o52PQ@mail.gmail.com>
+ <YAHXPREJaKjK/z7+@sol.localdomain>
+ <CAPDyKFopKy6dwENJ6YQQ0KRPQdT25R_zmhrNH7jyu=+p6bKpNA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPDyKFopKy6dwENJ6YQQ0KRPQdT25R_zmhrNH7jyu=+p6bKpNA@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-  **
-  ** NOTE: To "view the full picture", please look at the following
-  ** patch series:
-  ** https://patchwork.kernel.org/project/linux-arm-msm/list/?series=413355
-  **              This is a subset of that series.
-  **
+On Mon, Jan 18, 2021 at 03:21:01PM +0100, Ulf Hansson wrote:
+> > > Eric, again, my apologies for the delay. Overall, I think this looks good.
+> > >
+> > > My only hesitation to merge this as is, is that I want to make sure
+> > > you have thought of the life cycle issues for the struct
+> > > blk_keyslot_manager ksm. It's being used both from the mmc core/block
+> > > device driver and the mmc host driver. I am looking at this right now
+> > > and will get back to you very soon, if I find some issues with it.
+> > >
+> > > If you have some time, feel free to elaborate around how this is
+> > > intended to work.
+> > >
+> > > Kind regards
+> > > Uffe
+> >
+> > The blk_keyslot_manager is initialized early on when the other host structures
+> > (struct mmc_host, struct cqhci_host, struct sdhci_host, struct sdhci_msm_host)
+> > are initialized, prior to mmc_add_host().
+> >
+> > It is destroyed when the struct mmc_host is freed by mmc_free_host().
+> >
+> > So it should just work; it's the same lifecycle as the existing host structures.
+> > Is there something you think I'm overlooking?
+> 
+> I think so, but let me elaborate a bit.
+> 
+> As I understand it, to initialize the data structures, blk_ksm_init()
+> is getting called and via cqhci_init().
+> 
+> To hook up the block request queue, blk_ksm_register() is called via
+> mmc_setup_queue(), which means this happens when the mmc block device
+> driver is probed.
 
-Changes in v4:
-- Huge patch series has been split for better reviewability,
-  as suggested by Bjorn
+Well, the call to blk_ksm_register() happens in mmc_crypto_setup_queue(), when
+allocating the request_queue for a particular mmc_card.  As far as I can tell,
+the mmc_host has already been initialized and added then, so we don't have to
+worry about cases where the mmc_host has only been partially initialized.
+And in particular, MMC_CAP2_CRYPTO will have its final value.
 
-Changes in v3:
-- Fixed YAML doc issues
-- Removed unused variables and redundant if branch
+> 
+> To free up the data structures, blk_ksm_destroy() is called from
+> mmc_free_host().
+> 
+> To me, this can be made more consistent. For example, it looks like
+> blk_ksm_destroy() could be called, even if blk_ksm_init() hasn't been
+> called (depending on the probe error path of the mmc host).
 
-Changes in v2:
-- Implemented dynamic Memory Accelerator corners support, needed
-  by MSM8998
-- Added MSM8998 Silver/Gold parameters
+blk_ksm_destroy() is a no-op on an all-zeroed struct, so it's fine to call it
+unnecessarily.  We could call it unconditionally, if that would be clearer.
 
-This commit introduces a new driver, based on the one for cpr v1,
-to enable support for the newer Qualcomm Core Power Reduction
-hardware, known downstream as CPR3, CPR4 and CPRh, and support
-for MSM8998 and SDM630 CPU power reduction.
+> There are a couple of options to better deal with this.
+> 1) Extend the blk_ksm interface with a devm_blk_ksm_init() function
+> (thus let it deal with lifecycle problems for us) and simply drop the
+> call to blk_ksm_destroy().
 
-In these new versions of the hardware, support for various new
-features was introduced, including voltage reduction for the GPU,
-security hardening and a new way of controlling CPU DVFS,
-consisting in internal communication between microcontrollers,
-specifically the CPR-Hardened and the Operating State Manager.
+This would require adding APIs to devm to support zeroing buffers on free and to
+use kvmalloc() instead of kmalloc().  It looks like these new APIs wouldn't be
+useful for many drivers (since almost everyone else just wants regular kmalloc
+with no special behavior on free), so they don't seem worth adding yet.
 
-The CPR v3, v4 and CPRh are present in a broad range of SoCs,
-from the mid-range to the high end ones including, but not limited
-to, MSM8953/8996/8998, SDM630/636/660/845.
+> 2) Extend the cqhci interface with a cleanup function (perhaps
+> "cqhci_deinit") and let it call blk_ksm_destroy().
 
-Tested on the following smartphones:
-- Sony Xperia XA2        (SDM630)
-- Sony Xperia XA2 Ultra  (SDM630)
-- Sony Xperia 10         (SDM630)
-- Sony Xperia XZ Premium (MSM8998)
-- F(x)Tec Pro 1          (MSM8998)
+The blk_keyslot_manager is part of struct mmc_host, so it makes more sense for
+mmc_core to be responsible for freeing it.
 
-AngeloGioacchino Del Regno (3):
-  soc: qcom: Add support for Core Power Reduction v3, v4 and Hardened
-  MAINTAINERS: Add entry for Qualcomm CPRv3/v4/Hardened driver
-  dt-bindings: soc: qcom: cpr3: Add bindings for CPR3 driver
+We could move it to cqhci_host, but that would require adding multiple new
+function pointers to mmc_cqe_ops for use by mmc_crypto_set_initial_state(),
+mmc_crypto_free_host(), and mmc_crypto_setup_queue(), as these all currently
+need access to the blk_keyslot_manager.
 
- .../bindings/soc/qcom/qcom,cpr3.yaml          |  241 ++
- MAINTAINERS                                   |    6 +
- drivers/soc/qcom/Kconfig                      |   17 +
- drivers/soc/qcom/Makefile                     |    1 +
- drivers/soc/qcom/cpr-common.c                 |   35 +-
- drivers/soc/qcom/cpr-common.h                 |    4 +
- drivers/soc/qcom/cpr3.c                       | 2894 +++++++++++++++++
- 7 files changed, 3192 insertions(+), 6 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml
- create mode 100644 drivers/soc/qcom/cpr3.c
+I think that making mmc_core directly aware of the blk_keyslot_manager is the
+right call, as it avoids excessive callbacks, and it avoids tying the inline
+encryption support too closely to CQHCI.  (Keep in mind that in the future, MMC
+hosts could support inline encryption using other interfaces besides CQHCI.)
 
--- 
-2.30.0
+> 3) Convert to let blk_ksm_init() to be called from mmc_add_host() and
+> blk_ksm_destroy() from mmc_remove_host().
 
+That won't work because the driver has to fill in the crypto capabilities in the
+blk_keyslot_manager after calling blk_ksm_init().  mmc_add_host() is too late to
+do that.  mmc_add_host() happens after the driver has already initialized the
+host structures and is finally registering them with the driver model.
+
+> 
+> Moreover, even if there seems to be no real need to call
+> blk_ksm_unregister() for the mmc block device driver, perhaps we
+> should still do it to be consistent with blk_ksm_register()?
+
+blk_ksm_unregister() isn't exported to modules.  Its only purpose is for the
+block layer to disable inline encryption support on a disk if blk-integrity
+support is registered on the same disk.  So it shouldn't (and can't) be called
+by drivers.
+
+We probably should just remove blk_ksm_unregister() and make
+blk_integrity_register() set the ->ksm pointer to NULL directly.  Also maybe
+blk_ksm_register() should be renamed to something like
+"queue_set_keyslot_manager()" to avoid implying that "unregister" is needed.
+
+However those would be block layer changes, not related to this patchset.
+
+> 
+> Then a final concern. It looks like the mmc core relies on checking
+> "host->caps2 & MMC_CAP2_CRYPTO", when it calls blk_ksm_register() and
+> blk_ksm_reprogram_all_keys(), for example. Normally, host->caps2 bits
+> are considered as static configurations and set during the host driver
+> probe path, which may not be a good match for this case. Instead, it
+> seems like we should set a new separate flag, to indicate for the mmc
+> core that blk_ksm_init has been enabled. Otherwise it looks like we
+> could end up calling blk_ksm_reprogram_all_keys(), even if
+> blk_ksm_init() hasn't been called.
+
+MMC_CAP2_CRYPTO *is* a static configuration that is set during the host driver
+probe path.  So I don't understand your concern here.
+
+It's true that during the host driver probe path, MMC_CAP2_CRYPTO initially
+means "the hardware might support crypto", and then cqhci_crypto_init() clears
+it if it decides that the hardware doesn't support crypto after all, after which
+the bit really does mean "the hardware supports crypto".
+
+That seems fine because this all happens while the host structures are being
+initialized, before they are registered with the driver model and MMC cards are
+detected.  So AFAICS there can't be any concurrent calls to
+mmc_crypto_set_initial_state() or mmc_crypto_setup_queue().  Do you think
+otherwise?
+
+- Eric
