@@ -2,137 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B4E42FB100
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jan 2021 06:43:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CD3262FB13D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jan 2021 07:25:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726296AbhASFmd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Jan 2021 00:42:33 -0500
-Received: from m42-8.mailgun.net ([69.72.42.8]:47816 "EHLO m42-8.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727038AbhASFUJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Jan 2021 00:20:09 -0500
-X-Greylist: delayed 379 seconds by postgrey-1.27 at vger.kernel.org; Tue, 19 Jan 2021 00:20:08 EST
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1611033559; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=TsmWni2lFqo/KCTp9v2otaejvUeB6CXmbavuS8alcYo=;
- b=woFebKjz7KF6RrZbQG3azA1oWAdwF0g+zB48t9v5lsZnuBocHXblATo4Mled//EaxZ3CGwjo
- hkQSVtPIYDeoL2rZAA5JSZqmPAqvJcw7NCz4y4++GTBCFNOKr+9xlyLJc4YdcozAv+7YTeDP
- eV5PTpb8zBt3Oxx9JKIPoLOOeq4=
-X-Mailgun-Sending-Ip: 69.72.42.8
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 60066a51ba7f868506e7285c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 19 Jan 2021 05:12:49
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 82D11C43463; Tue, 19 Jan 2021 05:12:48 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 84544C433C6;
-        Tue, 19 Jan 2021 05:12:47 +0000 (UTC)
+        id S1726515AbhASGW1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Jan 2021 01:22:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53826 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391316AbhASFtf (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 19 Jan 2021 00:49:35 -0500
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA5A9C061575
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jan 2021 21:48:54 -0800 (PST)
+Received: by mail-lj1-x232.google.com with SMTP id n11so20586738lji.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jan 2021 21:48:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=BaDAnz5PWlBb3FvhcqwZjvy+ViqKXKxtEUXuyfVUfG0=;
+        b=qGROhCgSdGzhZsNXSPaDyyoY6c8nRMnGYynnd1NPmCMGf8MWrc9+z7jJRYietSod5v
+         Snkh4Nf8Z9dt/m5G2oPEQr6AwPgKR7AVgv0VbTKRTvBuvlcbXdi/qNJVGBmU0TgpOKIM
+         COWa+4zGLbkNGGo+htqIpH8jr9dxUk20sIgO41FsyHjUzVfvjhieK5qLmI1PSL/ElNMF
+         a/Uukm4BmE1VTSJuD5PxkxJ0hRDoOLUTDalZI2ew5VHX3AQc/1UY61vyDk+hGQs1JFg/
+         O3DoPdlPpciL7SJD6/7wkyl4R0o5O+UkvNNFGnvEnB1Sp6b6ScuH1g8hKnuGL/99m3ng
+         EkSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=BaDAnz5PWlBb3FvhcqwZjvy+ViqKXKxtEUXuyfVUfG0=;
+        b=E4QGrq4Vm028v1BLKebA0Ucgj7pZ1mOIyQlClIEgjjf0GGjYGk/ya2+QtqUgGkQwTY
+         +svGeh0ypUYEAq8drXGpWPSyxXfAvUDPjfeDLJ5yudrTVPzov7mTnBjpoaLhGCG8C4d+
+         fIJT4RNR6ix1wLC+XDqspfadX9A5C7S3RpBCHWLWafI7WIyeVoKij+teLK1jzgdjPZ7r
+         iQCerXqgVpIBedKR35hLAnOrgXEdd/lsvuYHJJ58AOA+QKDJZ041hQq0fvJRTzBzqv8P
+         57+265HZ5QxgHw3uEJPd1lxieHoDslqYObiEpaKCqyFklSQjSAvNuFrPcEsNw9nW/AoF
+         /Cvw==
+X-Gm-Message-State: AOAM533cvTT8SmA54StOnI9pu3B/eKCphJ70i25u6oMb19e43j4nomUM
+        Q2z59IiBLHNbi4y+NLNG4+nZfddeZUgm5za0
+X-Google-Smtp-Source: ABdhPJxr60rrFyHyqXKzidTuEJ8xN9YnUb2PM6mzzejfg9XkbpQ173bQfYl83EyRrbi0sghCKO6bMA==
+X-Received: by 2002:a2e:8691:: with SMTP id l17mr572169lji.408.1611035332781;
+        Mon, 18 Jan 2021 21:48:52 -0800 (PST)
+Received: from eriador.lumag.spb.ru ([188.162.65.64])
+        by smtp.gmail.com with ESMTPSA id j3sm2168207lfb.29.2021.01.18.21.48.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Jan 2021 21:48:52 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-iio@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Jishnu Prakash <jprakash@qti.qualcomm.com>
+Subject: [PATCH v12 0/5] qcom: pm8150: add support for thermal monitoring
+Date:   Tue, 19 Jan 2021 08:48:43 +0300
+Message-Id: <20210119054848.592329-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 19 Jan 2021 10:42:47 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Mattias Nissler <mnissler@chromium.org>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>, coresight@lists.linaro.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Denis Nikitin <denik@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, Al Grant <al.grant@arm.com>,
-        leo.yan@linaro.org
-Subject: Re: [PATCH] coresight: etm4x: Add config to exclude kernel mode
- tracing
-In-Reply-To: <CAKUbbx+ZC9cLvcaJnrDYYsrUhfO3dOXJGoLswL30nRzChjwn-w@mail.gmail.com>
-References: <20201015124522.1876-1-saiprakash.ranjan@codeaurora.org>
- <20201015160257.GA1450102@xps15>
- <dd400fd7017a5d92b55880cf28378267@codeaurora.org>
- <CAKUbbx+ZC9cLvcaJnrDYYsrUhfO3dOXJGoLswL30nRzChjwn-w@mail.gmail.com>
-Message-ID: <6a3a876e9877322cb46c246a86312fbe@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-01-18 20:17, Mattias Nissler wrote:
-> On Fri, Jan 15, 2021 at 6:46 AM Sai Prakash Ranjan
-> <saiprakash.ranjan@codeaurora.org> wrote:
->> 
->> Hello Mathieu, Suzuki
->> 
->> On 2020-10-15 21:32, Mathieu Poirier wrote:
->> > On Thu, Oct 15, 2020 at 06:15:22PM +0530, Sai Prakash Ranjan wrote:
->> >> On production systems with ETMs enabled, it is preferred to
->> >> exclude kernel mode(NS EL1) tracing for security concerns and
->> >> support only userspace(NS EL0) tracing. So provide an option
->> >> via kconfig to exclude kernel mode tracing if it is required.
->> >> This config is disabled by default and would not affect the
->> >> current configuration which has both kernel and userspace
->> >> tracing enabled by default.
->> >>
->> >
->> > One requires root access (or be part of a special trace group) to be
->> > able to use
->> > the cs_etm PMU.  With this kind of elevated access restricting tracing
->> > at EL1
->> > provides little in terms of security.
->> >
->> 
->> Apart from the VM usecase discussed, I am told there are other
->> security concerns here regarding need to exclude kernel mode tracing
->> even for the privileged users/root. One such case being the ability
->> to analyze cryptographic code execution since ETMs can record all
->> branch instructions including timestamps in the kernel and there may
->> be other cases as well which I may not be aware of and hence have
->> added Denis and Mattias. Please let us know if you have any questions
->> further regarding this not being a security concern.
-> 
-> Well, the idea that root privileges != full control over the kernel
-> isn't new and at the very least since lockdown became part of mainline
-> [1] no longer an esoteric edge case. Regarding the use case Sai hints
-> at (namely protection of secrets in the kernel), Matthew Garret
-> actually has some more thoughts about confidentiality mode for
-> lockdown for secret protection [2]. And thus, unless someone can make
-> a compelling case that instruction-level tracing will not leak secrets
-> held by the kernel, I think an option for the kernel to prevent itself
-> from being traced (even by root) is valuable.
-> 
-> Finally, to sketch a practical use case scenario: Consider a system
-> where disk contents are encrypted and the encryption key is set up by
-> the user when mounting the file system. From that point on the
-> encryption key resides in the kernel. It seems reasonable to expect
-> that the disk encryption key be protected from exfiltration even if
-> the system later suffers a root compromise (or even against insiders
-> that have root access), at least as long as the attacker doesn't
-> manage to compromise the kernel.
-> 
-> [1] https://lwn.net/Articles/796866/
-> [2] https://mjg59.dreamwidth.org/55105.html
-> 
+This patch serie adds support for thermal monitoring block on Qualcomm's
+PMIC5 chips. PM8150{,b,l}, qrb5165-rb5 board and sm8250-mtp board device
+trees are extended to support thermal zones provided by this thermal
+monitoring block.  Unlike the rest of PMIC thermal senses, these thermal
+zones describe particular thermistors, which differ between from board
+to board.
 
-Thanks for the detailed description, it is way better put than my crude
-explanation.
+Dependencies: https://git.kernel.org/pub/scm/linux/kernel/git/jic23/iio.git/log/?h=ib-iio-thermal-5.11-rc1
 
-Thanks,
-Sai
+Changes since v11:
+ - Drop io-channel-ranges from dts example.
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+Changes since v10:
+ - Rebased on top of ib-iio-thermal-5.11-rc1 immutable branch, with
+   IIO-related patches picked up by Jonathan.
+ - Changed thermal zone device tree nodes to use -thermal suffix
+   following the schema.
+ - Reordered device tree nodes to keep the alphanumeric sorting order.
+
+Changes since v9:
+ - In patch 12 add comments to the code as requested by Daniel Lezcano.
+ - Change copyright comment in qcom-spmi-adc-tm5.c to clearly note
+   driver history.
+
+Changes since v8:
+ - Simplified qcom_vadc_map_voltage_temp() code by removing ascending
+   tables support
+ - Simplified qcom-vadc-common volt/temp mapping code
+ - Implement suggestions by Matthias Kaehlcke: message formatting,
+   rewrite comments, remove unused variable initialization.
+
+Changes since v7:
+ - Move qcom-vadc-common.h header to include/linux/iio/adc/ dir.
+ - Use explicit sizeof(var) instead of hand-coding 1 when accessing
+   adc-tm registers.
+ - Remove buffer read from adc_tm5_init().
+ - Remove extra on-stack var from adc_tm5_get_temp().
+ - Minor formatting changes as suggested Daniel.
+
+Changes since v6:
+ - Added include <linux/bitfield.h> as noted by Jishnu Prakash.
+
+Changes since v5:
+ - Reworked DT bindings:
+   * Removed qcom,adc-channel, instead it is parsed from io-channels
+   * Renamed qcom,hw-settle-time to include -us suffix
+ - Re-added monitor enabling which got lost during refactored. Noted by
+   Jishnu Prakash.
+ - Use threaded IRQ handler as susggested by Jishnu.
+
+Changes since v4:
+ - Added kernel-doc comments to ADC-TM structures
+ - Used several sizeof(buf) instead of hand-conding register size
+
+Changes since v3:
+ - Fix DT description to spell "thermal monitoring" instead of just TM
+ - Fix warnings in DT example
+ - Add EXPORT_SYMBOL_GPL(of_iio_channel_get_by_name)
+ - Fixed whitespace chanes in qcom-vadc-common.c
+ - Removed error message if IIO chanel get returns -EPROBE_DEFER
+
+Changes since v2:
+ - IIO: export of_iio_channel_get_by_name() function
+ - dt-bindings: move individual io-channels to each thermal monitoring
+   channel rather than listing them all in device node
+ - added fallback defaults to of_device_get_match_data calls in
+   qcom-spmi-adc5 and qcom-spmi-adc-tm5 drivers
+ - minor typo fixes
+
+Changes since v1:
+ - Introduce fixp_linear_interpolate() by Craig Tatlor
+ - Lots of syntax/whitespace changes
+ - Cleaned up register definitions per Jonathan's suggestion
+ - Implemented most of the suggestions from Bjorn's and Jonathan's
+   review
+
+
