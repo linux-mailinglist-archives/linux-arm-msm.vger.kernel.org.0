@@ -2,93 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EED862FB3F5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jan 2021 09:25:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CFC462FB458
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jan 2021 09:40:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728549AbhASIXn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Jan 2021 03:23:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58600 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730917AbhASIXV (ORCPT
+        id S1726583AbhASIkC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Jan 2021 03:40:02 -0500
+Received: from a1.mail.mailgun.net ([198.61.254.60]:11633 "EHLO
+        a1.mail.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387681AbhASFW1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Jan 2021 03:23:21 -0500
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68129C061573
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jan 2021 00:22:36 -0800 (PST)
-Received: by mail-pl1-x62b.google.com with SMTP id x12so10049893plr.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jan 2021 00:22:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=NWqB/GoVkdljpMDCGL3FVT5zZbqPZEOnVZhu+cjokqA=;
-        b=pVXBoUg0EM0/gtnwyxcJZc6u2KLdurCxF5teoMEf/ZP9Xk4o6Luw09oLCWinIQ1m7w
-         48bP0e1rpkg5PE6dzyyKa2ajONBarWT+3WQh1j8VseGWSqzScxZVd55T+73gdz4XFmHr
-         aaLRqaENQ66rHSJJTc0CzBnZYxI4nl0ceDyib9Lo1Jv80KQVNe7mBTOkOtoFj99sfpDt
-         tTb+bmPnyuo8U/5Vr0ARuCw7Txxq3ovfZTcwWwmHr5L1eFJgv7GVOdGk3qvN1ZiYCT6n
-         Txj8DMfGx8E9zjOYev6DyWkh0B72kMGoukk2/JUVuvM89e1poI0ZnQwHJuJWhJtTaIdv
-         qGBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=NWqB/GoVkdljpMDCGL3FVT5zZbqPZEOnVZhu+cjokqA=;
-        b=k5Y4DTV9KmUWReLFss4ykJSLpKPFEQvazv2kXFYKFHV1MlNNq2omALwxC4JnP0se55
-         zWiIeMbZyhV8R61oDSWtzM38y6GbAT1szkY96rHoJax2WLwh6MtsDtzhv8T37h08UDA7
-         TQ/lvlMusgauKoajVAqB7LunOcYR1vpEoqWeBi4w+pIbwJnEo3yCR56e4x9oEVQUI900
-         ZxNCGQ6eINl3y0g+zLULccpu+LIP+nb9mLv3QX3bgvKu7tuEjPM7kPpprQqw1Grvp0xH
-         KXvJzWCOFyeJ5JwC7DUfS+AL8VIjfJsJIBNo30Y29KR9CfVeHmCUA12oD8zg9VsYxnda
-         12oA==
-X-Gm-Message-State: AOAM531CAHWIaoLa3TfgF+YPG3VMkk/xgdSbcr0/eNiMAjGiNtfWKLNg
-        olzckIb0ZAVY8eaq9A04LO0fiA==
-X-Google-Smtp-Source: ABdhPJxXowidB3QV6SfYuccQQERZU3/i23rKOz8wxL9hyQZP9P1g8KIW9bxPHRaRu72azEIyZ4VllQ==
-X-Received: by 2002:a17:90b:1a86:: with SMTP id ng6mr4002698pjb.113.1611044555937;
-        Tue, 19 Jan 2021 00:22:35 -0800 (PST)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id g5sm9206465pfb.194.2021.01.19.00.22.22
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 19 Jan 2021 00:22:35 -0800 (PST)
-Date:   Tue, 19 Jan 2021 16:22:11 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        vgarodia@codeaurora.org,
-        Mansur Alisha Shaik <mansur@codeaurora.org>
-Subject: Re: [PATCH] venus: core: Fix platform driver shutdown
-Message-ID: <20210119082210.GC17701@dragon>
-References: <20201221095820.27192-1-stanimir.varbanov@linaro.org>
- <20210119074044.GB17701@dragon>
- <72d85c1b-ec0b-3cf1-dbbc-6c4924e4beec@linaro.org>
+        Tue, 19 Jan 2021 00:22:27 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1611033702; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=owAz9SChLf2AQ/0SsPcDtcQ+DGoWx6RjBqzLaNzFg1M=;
+ b=iBa/+hXoa7E94qtbbKDHYPBUsEiamcJTgP7XEh0e3zbs+L6C7uWJkod2s4y9MP/50/0AhHIW
+ JmBBvwjd615BOcfhAEJgj5Ubg+WgINCj+NQh18tNI2eB6KY06WsPpSNgShwmlJ7cGnTBg+aL
+ LbeU4hilQ8EvrT0TLgDVeap0doE=
+X-Mailgun-Sending-Ip: 198.61.254.60
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 60066c49ba7f868506ea07b9 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 19 Jan 2021 05:21:13
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 602E9C43463; Tue, 19 Jan 2021 05:21:12 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C3A71C433ED;
+        Tue, 19 Jan 2021 05:21:11 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <72d85c1b-ec0b-3cf1-dbbc-6c4924e4beec@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 19 Jan 2021 10:51:11 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>, coresight@lists.linaro.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Denis Nikitin <denik@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, Al Grant <al.grant@arm.com>,
+        leo.yan@linaro.org, mnissler@google.com
+Subject: Re: [PATCH] coresight: etm4x: Add config to exclude kernel mode
+ tracing
+In-Reply-To: <20210118202354.GC464579@xps15>
+References: <20201015124522.1876-1-saiprakash.ranjan@codeaurora.org>
+ <20201015160257.GA1450102@xps15>
+ <dd400fd7017a5d92b55880cf28378267@codeaurora.org>
+ <20210118202354.GC464579@xps15>
+Message-ID: <32216e9fa5c9ffb9df1123792d40eafb@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jan 19, 2021 at 09:59:41AM +0200, Stanimir Varbanov wrote:
-> On 1/19/21 9:40 AM, Shawn Guo wrote:
-> > On Mon, Dec 21, 2020 at 11:58:20AM +0200, Stanimir Varbanov wrote:
-> >> With TZ system reboot cannot finish successfully. To fix that
-> >> enable core clocks by runtime pm before TZ calls and disable
-> >> clocks after that.
-> >>
-> >> Fixes: 7399139be6b2 ("media: venus: core: add shutdown callback for venus")
-> >> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> > 
-> > Hi Mauro,
-> > 
-> > Could you help pick this fix up?
+Hi Mathieu,
+
+On 2021-01-19 01:53, Mathieu Poirier wrote:
+> On Fri, Jan 15, 2021 at 11:16:24AM +0530, Sai Prakash Ranjan wrote:
+>> Hello Mathieu, Suzuki
+>> 
+>> On 2020-10-15 21:32, Mathieu Poirier wrote:
+>> > On Thu, Oct 15, 2020 at 06:15:22PM +0530, Sai Prakash Ranjan wrote:
+>> > > On production systems with ETMs enabled, it is preferred to
+>> > > exclude kernel mode(NS EL1) tracing for security concerns and
+>> > > support only userspace(NS EL0) tracing. So provide an option
+>> > > via kconfig to exclude kernel mode tracing if it is required.
+>> > > This config is disabled by default and would not affect the
+>> > > current configuration which has both kernel and userspace
+>> > > tracing enabled by default.
+>> > >
+>> >
+>> > One requires root access (or be part of a special trace group) to be
+>> > able to use
+>> > the cs_etm PMU.  With this kind of elevated access restricting tracing
+>> > at EL1
+>> > provides little in terms of security.
+>> >
+>> 
+>> Apart from the VM usecase discussed, I am told there are other
+>> security concerns here regarding need to exclude kernel mode tracing
+>> even for the privileged users/root. One such case being the ability
+>> to analyze cryptographic code execution since ETMs can record all
+>> branch instructions including timestamps in the kernel and there may
+>> be other cases as well which I may not be aware of and hence have
+>> added Denis and Mattias. Please let us know if you have any questions
+>> further regarding this not being a security concern.
 > 
-> Shawn, it is part of linux-next already.
+> Even if we were to apply this patch there are many ways to compromise a 
+> system
+> or get the kernel to reveal important information using the perf 
+> subsystem.  I
+> would perfer to tackle the problem at that level rather than 
+> concentrating on
+> coresight.
+> 
 
-Ha, sorry, I did not check linux-next.  I sent the message because
-I see this fix is still missing after I rebase my Yoga C630 branch
-to 5.11-rc4.  We will get this fix into 5.11, right?
+Sorry but I did not understand your point. We are talking about the
+capabilities of coresight etm tracing which has the instruction level
+tracing and a lot more. Perf subsystem is just the framework used for 
+it.
+In other words, its not the perf subsystem which does instruction level
+tracing, its the coresight etm. Why the perf subsystem should be
+modified to lockdown kernel mode? If we were to let perf handle all the
+trace filtering for different exception levels, then why do we need
+the register settings in coresight etm driver to filter out NS EL*
+tracing? And more importantly, how do you suppose we handle sysfs mode
+of coresight tracing with perf subsystem?
 
-Shawn
+Thanks,
+Sai
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
