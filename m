@@ -2,104 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ED4E12FC2D4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jan 2021 22:57:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 80F462FC2E0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jan 2021 23:00:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727163AbhASVyb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Jan 2021 16:54:31 -0500
-Received: from m-r2.th.seeweb.it ([5.144.164.171]:33487 "EHLO
-        m-r2.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728522AbhASRre (ORCPT
+        id S1727505AbhASV5D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Jan 2021 16:57:03 -0500
+Received: from m-r1.th.seeweb.it ([5.144.164.170]:37849 "EHLO
+        m-r1.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729142AbhASRrM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Jan 2021 12:47:34 -0500
+        Tue, 19 Jan 2021 12:47:12 -0500
 Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 1C5913F116;
-        Tue, 19 Jan 2021 18:44:25 +0100 (CET)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id BECAC1F6A2;
+        Tue, 19 Jan 2021 18:44:59 +0100 (CET)
 From:   AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, sumit.semwal@linaro.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        phone-devel@vger.kernel.org, konrad.dybcio@somainline.org,
-        marijn.suijten@somainline.org, martin.botka@somainline.org,
+To:     bjorn.andersson@linaro.org
+Cc:     agross@kernel.org, daniel.lezcano@linaro.org, rjw@rjwysocki.net,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
+        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
+        martin.botka@somainline.org, jeffrey.l.hugo@gmail.com,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>
-Subject: [PATCH v4 6/7] dt-bindings: regulator: qcom-labibb: Document SCP/OCP interrupts
-Date:   Tue, 19 Jan 2021 18:44:20 +0100
-Message-Id: <20210119174421.226541-7-angelogioacchino.delregno@somainline.org>
+Subject: [PATCH v4 3/3] soc: qcom: spm: Add compatible for MSM8998 SAWv4.1 L2
+Date:   Tue, 19 Jan 2021 18:44:54 +0100
+Message-Id: <20210119174454.226808-4-angelogioacchino.delregno@somainline.org>
 X-Mailer: git-send-email 2.30.0
-In-Reply-To: <20210119174421.226541-1-angelogioacchino.delregno@somainline.org>
-References: <20210119174421.226541-1-angelogioacchino.delregno@somainline.org>
+In-Reply-To: <20210119174454.226808-1-angelogioacchino.delregno@somainline.org>
+References: <20210119174454.226808-1-angelogioacchino.delregno@somainline.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Short-Circuit Protection (SCP) and Over-Current Protection (OCP) are
-now implemented in the driver: document the interrupts.
-This also fixes wrong documentation about the SCP interrupt for LAB.
+Add the SAWv4.1 parameters for MSM8998's Gold and Silver clusters.
 
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- .../regulator/qcom-labibb-regulator.yaml      | 20 +++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ drivers/soc/qcom/spm.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml
-index 7a507692f1ba..cf784bd1f5e5 100644
---- a/Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml
-+++ b/Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml
-@@ -29,9 +29,10 @@ properties:
-         default: 200
+diff --git a/drivers/soc/qcom/spm.c b/drivers/soc/qcom/spm.c
+index 843732d12c54..2e6312663293 100644
+--- a/drivers/soc/qcom/spm.c
++++ b/drivers/soc/qcom/spm.c
+@@ -54,6 +54,18 @@ static const struct spm_reg_data spm_reg_660_silver_l2  = {
+ 	.avs_limit = 0x4580458,
+ };
  
-       interrupts:
--        maxItems: 1
-+        minItems: 1
-+        maxItems: 2
-         description:
--          Short-circuit interrupt for lab.
-+          Short-circuit and over-current interrupts for lab.
- 
-     required:
-       - interrupts
-@@ -47,9 +48,10 @@ properties:
-         default: 300
- 
-       interrupts:
--        maxItems: 1
-+        minItems: 1
-+        maxItems: 2
-         description:
--          Short-circuit interrupt for lab.
-+          Short-circuit and over-current interrupts for ibb.
- 
-     required:
-       - interrupts
-@@ -67,13 +69,15 @@ examples:
-       compatible = "qcom,pmi8998-lab-ibb";
- 
-       lab {
--        interrupts = <0x3 0x0 IRQ_TYPE_EDGE_RISING>;
--        interrupt-names = "sc-err";
-+        interrupts = <0x3 0xde 0x1 IRQ_TYPE_EDGE_RISING>,
-+                     <0x3 0xde 0x0 IRQ_TYPE_LEVEL_LOW>;
-+        interrupt-names = "sc-err", "ocp";
-       };
- 
-       ibb {
--        interrupts = <0x3 0x2 IRQ_TYPE_EDGE_RISING>;
--        interrupt-names = "sc-err";
-+        interrupts = <0x3 0xdc 0x2 IRQ_TYPE_EDGE_RISING>,
-+                     <0x3 0xdc 0x0 IRQ_TYPE_LEVEL_LOW>;
-+        interrupt-names = "sc-err", "ocp";
-       };
-     };
- 
++static const struct spm_reg_data spm_reg_8998_gold_l2  = {
++	.reg_offset = spm_reg_offset_v4_1,
++	.avs_ctl = 0x1010031,
++	.avs_limit = 0x4700470,
++};
++
++static const struct spm_reg_data spm_reg_8998_silver_l2  = {
++	.reg_offset = spm_reg_offset_v4_1,
++	.avs_ctl = 0x1010031,
++	.avs_limit = 0x4200420,
++};
++
+ static const u16 spm_reg_offset_v2_1[SPM_REG_NR] = {
+ 	[SPM_REG_CFG]		= 0x08,
+ 	[SPM_REG_SPM_CTL]	= 0x30,
+@@ -149,6 +161,10 @@ static const struct of_device_id spm_match_table[] = {
+ 	  .data = &spm_reg_660_gold_l2 },
+ 	{ .compatible = "qcom,sdm660-silver-saw2-v4.1-l2",
+ 	  .data = &spm_reg_660_silver_l2 },
++	{ .compatible = "qcom,msm8998-gold-saw2-v4.1-l2",
++	  .data = &spm_reg_8998_gold_l2 },
++	{ .compatible = "qcom,msm8998-silver-saw2-v4.1-l2",
++	  .data = &spm_reg_8998_silver_l2 },
+ 	{ .compatible = "qcom,msm8974-saw2-v2.1-cpu",
+ 	  .data = &spm_reg_8974_8084_cpu },
+ 	{ .compatible = "qcom,apq8084-saw2-v2.1-cpu",
 -- 
 2.30.0
 
