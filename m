@@ -2,212 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 092E22FBBF2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jan 2021 17:08:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C4782FBC25
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jan 2021 17:14:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391784AbhASQGe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Jan 2021 11:06:34 -0500
-Received: from m42-8.mailgun.net ([69.72.42.8]:28222 "EHLO m42-8.mailgun.net"
+        id S1728534AbhASQMJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Jan 2021 11:12:09 -0500
+Received: from mail.kernel.org ([198.145.29.99]:35162 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2391788AbhASQGS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Jan 2021 11:06:18 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1611072351; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=AtbnlRvAS8yN8UKf7OYvL9rmN50YvFPDLcQ5jq6qWlk=; b=C0fW+3zbKSYtL6WKeB8RgSWqAz4cusYPoXu/4pD30aX94yVHWjzx7sPNteHA/Q+fXrtSlAi/
- CvZzRTHRqVR0oCSy+1asPj6HR2/ijsiFyrm9TsnGjfIwJGaGE3kR7PeWG1T1utuIdyu0aLhQ
- 9tOhMWA4/8A4MzxmG664y8kOByw=
-X-Mailgun-Sending-Ip: 69.72.42.8
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 6007034321210999ed44ba34 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 19 Jan 2021 16:05:23
- GMT
-Sender: ilina=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0DEA5C43464; Tue, 19 Jan 2021 16:05:23 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8F9B1C43461;
-        Tue, 19 Jan 2021 16:05:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8F9B1C43461
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
-Date:   Tue, 19 Jan 2021 09:05:20 -0700
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH v8 1/2] PM / domains: inform PM domain of a device's next
- wakeup
-Message-ID: <YAcDQHkKZoQ4YWO8@codeaurora.org>
-References: <20210115165004.22385-1-ilina@codeaurora.org>
- <20210115165004.22385-2-ilina@codeaurora.org>
- <CAPDyKFqcPsr-aLP0zRgj2F4h_j0Vj7kSy5-aiH5qyH47dM6oYA@mail.gmail.com>
+        id S2392020AbhASQLc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 19 Jan 2021 11:11:32 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 3EFBA2311C;
+        Tue, 19 Jan 2021 16:10:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1611072651;
+        bh=m+FSqXlvV3JjPMmUcXvwZL6Fu9L0fgTghhQI30bmy2k=;
+        h=From:To:Cc:Subject:Date:From;
+        b=Scv8LoYDdqSEF/O9EjJoFkntp6r0fkQ3IRKXeELmMo38FnVPXRiIS39TVlZDRohld
+         srTYmPQI3Ztdp3A5LP34We/EhbtQvyIDDjF+jQx3+GwEJ3GyQPUIfKKnhP227bRNFR
+         H0wirINUXiOaG6GVfOuRxmBfb7qvrmI5rg+lmzv5CKG86sdUFsFAYouZCrrT4GQ3Yi
+         2VvKfb4rqW0c8UY6FfAORXMpD3WSutS8cYRo/p7R7U+IMVMkz1CNj90xag5/cNLJFn
+         1yzWXcUgi8f83MC3BO3onXOSwRw3q6Rv5SGi9BqMX+S8s8iMNTPGHCUeTAgCrAbGhF
+         WHQxdyDwBqyAA==
+Received: by mail.kernel.org with local (Exim 4.94)
+        (envelope-from <mchehab@kernel.org>)
+        id 1l1tai-0012bT-Nj; Tue, 19 Jan 2021 17:10:48 +0100
+From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To:     Mark Brown <broonie@kernel.org>, Lee Jones <lee.jones@linaro.org>
+Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        Colin Ian King <colin.king@canonical.com>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mayulong <mayulong1@huawei.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>, Wei Xu <xuwei5@hisilicon.com>,
+        YueHaibing <yuehaibing@huawei.com>, devel@driverdev.osuosl.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v4 00/21] Move Hisilicon 6421v600 SPMI driver set out of staging
+Date:   Tue, 19 Jan 2021 17:10:26 +0100
+Message-Id: <cover.1611072387.git.mchehab+huawei@kernel.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <CAPDyKFqcPsr-aLP0zRgj2F4h_j0Vj7kSy5-aiH5qyH47dM6oYA@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+Sender: Mauro Carvalho Chehab <mchehab@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jan 19 2021 at 03:01 -0700, Ulf Hansson wrote:
->On Fri, 15 Jan 2021 at 17:50, Lina Iyer <ilina@codeaurora.org> wrote:
->>
->> Some devices may have a predictable interrupt pattern while executing
->> usecases. An example would be the VSYNC interrupt associated with
->> display devices. A 60 Hz display could cause a interrupt every 16 ms. If
->> the device were in a PM domain, the domain would need to be powered up
->> for device to resume and handle the interrupt.
->>
->> Entering a domain idle state saves power, only if the residency of the
->> idle state is met. Without knowing the idle duration of the domain, the
->> governor would just choose the deepest idle state that matches the QoS
->> requirements. The domain might be powered off just as the device is
->> expecting to wake up. If devices could inform PM frameworks of their
->> next event, the parent PM domain's idle duration can be determined.
->>
->> So let's add the dev_pm_genpd_set_next_wakeup() API for the device to
->> inform PM domains of the impending wakeup. This information will be the
->> domain governor to determine the best idle state given the wakeup.
->>
->> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
->> Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
->> ---
->> Changes in v8:
->>         - Update documentation. Add Reviewed-by tag.
->> Changes in v7:
->>         - Simplify and set next-wakeup locklessly
->> Changes in v6:
->>         - Update documentation
->> Changes in v5:
->>         - Fix commit text as pointed by Ulf
->>         - Use -EOPNOTSUPP
->> Changes in v4:
->>         - Use PM domain data to store next_wakeup
->>         - Drop runtime PM documentation
->> Changes in v3:
->>         - Fix unwanted change
->> Changes in v2:
->>         - Update documentation
->>         - Remove runtime PM enabled check
->>         - Update commit text
->> ---
->>  drivers/base/power/domain.c | 25 +++++++++++++++++++++++++
->>  include/linux/pm_domain.h   |  6 ++++++
->>  2 files changed, 31 insertions(+)
->>
->> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
->> index 9a14eedacb92..10a960bd3204 100644
->> --- a/drivers/base/power/domain.c
->> +++ b/drivers/base/power/domain.c
->> @@ -423,6 +423,30 @@ int dev_pm_genpd_set_performance_state(struct device *dev, unsigned int state)
->>  }
->>  EXPORT_SYMBOL_GPL(dev_pm_genpd_set_performance_state);
->>
->> +/**
->> + * dev_pm_genpd_set_next_wakeup - Notify PM framework of an impending wakeup.
->> + *
->> + * @dev: Device to handle
->> + * @next: impending interrupt/wakeup for the device
->> + *
->> + *
->> + * Allow devices to inform of the next wakeup. It's assumed that the users
->> + * guarantee that the genpd wouldn't be detached while this routine is getting
->> + * called. Additionally, it's also assumed that @dev isn't runtime suspended
->> + * (RPM_SUSPENDED)."
->> + * Although devices are expected to update the next_wakeup after the end of
->> + * their usecase as well, it is possible the devices themselves may not know
->> + * about that, so stale @next will be ignored when powering off the domain.
->> + */
->> +void dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next)
->> +{
->> +       struct generic_pm_domain_data *gpd_data;
->
->Looks like you have dropped one of the needed sanity checks, to make
->sure the device is attached to a genpd. My apologies if I missed that
->in the previous version. So you need something like this:
->
-Oops. I assumed that we leave that to the driver to ensure that
-requirement. I will send another version with this. Thanks for catching
-this and the review.
+Hi Mark/Lee,
 
---Lina
+This patch series finish addressing support for Hikey 970
+SPMI controller, PMIC and regulators.
 
->genpd = dev_to_genpd_safe(dev);
->if (!genpd)
->    return;
->
->> +
->> +       gpd_data = to_gpd_data(dev->power.subsys_data->domain_data);
->> +       gpd_data->next_wakeup = next;
->> +}
->> +EXPORT_SYMBOL_GPL(dev_pm_genpd_set_next_wakeup);
->> +
->>  static int _genpd_power_on(struct generic_pm_domain *genpd, bool timed)
->>  {
->>         unsigned int state_idx = genpd->state_idx;
->> @@ -1465,6 +1489,7 @@ static struct generic_pm_domain_data *genpd_alloc_dev_data(struct device *dev)
->>         gpd_data->td.constraint_changed = true;
->>         gpd_data->td.effective_constraint_ns = PM_QOS_RESUME_LATENCY_NO_CONSTRAINT_NS;
->>         gpd_data->nb.notifier_call = genpd_dev_pm_qos_notifier;
->> +       gpd_data->next_wakeup = KTIME_MAX;
->>
->>         spin_lock_irq(&dev->power.lock);
->>
->> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
->> index 2ca919ae8d36..735583c0bc6d 100644
->> --- a/include/linux/pm_domain.h
->> +++ b/include/linux/pm_domain.h
->> @@ -9,6 +9,7 @@
->>  #define _LINUX_PM_DOMAIN_H
->>
->>  #include <linux/device.h>
->> +#include <linux/ktime.h>
->>  #include <linux/mutex.h>
->>  #include <linux/pm.h>
->>  #include <linux/err.h>
->> @@ -191,6 +192,7 @@ struct generic_pm_domain_data {
->>         struct notifier_block *power_nb;
->>         int cpu;
->>         unsigned int performance_state;
->> +       ktime_t next_wakeup;
->>         void *data;
->>  };
->>
->> @@ -217,6 +219,7 @@ int pm_genpd_remove(struct generic_pm_domain *genpd);
->>  int dev_pm_genpd_set_performance_state(struct device *dev, unsigned int state);
->>  int dev_pm_genpd_add_notifier(struct device *dev, struct notifier_block *nb);
->>  int dev_pm_genpd_remove_notifier(struct device *dev);
->> +void dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next);
->>
->>  extern struct dev_power_governor simple_qos_governor;
->>  extern struct dev_power_governor pm_domain_always_on_gov;
->> @@ -275,6 +278,9 @@ static inline int dev_pm_genpd_remove_notifier(struct device *dev)
->>         return -EOPNOTSUPP;
->>  }
->>
->> +static inline void dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next)
->> +{ }
->> +
->>  #define simple_qos_governor            (*(struct dev_power_governor *)(NULL))
->>  #define pm_domain_always_on_gov                (*(struct dev_power_governor *)(NULL))
->>  #endif
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
->> a Linux Foundation Collaborative Project
->>
->
->Kind regards
->Uffe
+I removed some unrelated DT patches from this series,
+plus the Hikey 970 PHY USB3 code from it, in order to avoid
+mixing different stuff on this series[1].
+
+[1] Those unrelated patches were submitted last week on
+separate series.
+
+The entire patchset is on this branch:
+
+	https://git.linuxtv.org/mchehab/experimental.git/log/?h=hikey970-destage-usb
+
+In order to make easier for review, this series was generated
+with --no-renames. So, you don't need to take a look at the
+staging patches, as the entire code will be there on patches 9-11.
+
+The last two patches on this series will likely require that other
+patch series to get merged first. It probably makes sense to be
+merged via DT tree. 
+
+Regards,
+Mauro
+
+v4:
+- use regmap for mfd and spmi drivers;
+- a few minor cleanups at the mfd driver.
+
+v3:
+- fixed a bug with eco-mode at get_optimum_mode;
+- changed the sleep logic when enabling/disabling a power line;
+- additional cleanups, as requested by Mark.
+
+v2:
+
+- this driver's probe routine is very similar to the one at the non-SPMI
+  variant of Hisilicon 6421;
+- The register/voltage data were moved from DT into the driver itself;
+- It doesn't have anymore any static data;
+- All debug messages got removed;
+- Addressed a few be32 warnings from sparse.
+
+
+
+
+Mauro Carvalho Chehab (21):
+  staging: hikey9xx: hisilicon,hisi-spmi-controller.yaml fix bindings
+  staging: hikey9xx: hisilicon,hi6421-spmi-pmic.yaml: simplify props
+  staging: hikey9xx: hisi-spmi-controller: clean sparse warnings
+  staging: hikey9xx: hi6421v600-regulator: do some cleanups
+  staging: hikey9xx: hi6421v600-regulator: move LDO config from DT
+  staging: hikey9xx: hi6421v600-regulator: cleanup debug msgs
+  staging: hikey9xx: hi6421v600-regulator: get rid of an static data
+  staging: hikey9xx: hi6421v600-regulator: do some cleanups
+  staging: hikey9xx: hi6421v600-regulator: update copyright
+  staging: hikey9xx: hi6421v600-regulator: fix delay logic
+  staging: hikey9xx: hi6421v600-regulator: cleanup comments
+  staging: hikey9xx: hi6421v600-regulator: fix get_optimum_mode
+  staging: hikey9xx: hisilicon,hi6421-spmi-pmic.yaml: cleanup a warning
+  staging: hikey9xx: spmi driver: convert to regmap
+  staging: hikey9xx: hi6421-spmi-pmic: update copyright
+  staging: hikey9xx: simplify includes
+  spmi: hisi-spmi-controller: move driver from staging
+  mfd: hi6421-spmi-pmic: move driver from staging
+  regulator: hi6421v600-regulator: move it from staging
+  dts: hisilicon: add support for USB3 on Hikey 970
+  dts: hisilicon: add support for the PMIC found on Hikey 970
+
+ .../mfd/hisilicon,hi6421-spmi-pmic.yaml       | 135 +++++
+ .../spmi/hisilicon,hisi-spmi-controller.yaml  |  75 +++
+ MAINTAINERS                                   |  15 +-
+ .../boot/dts/hisilicon/hi3670-hikey970.dts    | 124 ++++-
+ arch/arm64/boot/dts/hisilicon/hi3670.dtsi     |  58 +++
+ .../boot/dts/hisilicon/hikey970-pmic.dtsi     |  87 ++++
+ drivers/mfd/Kconfig                           |  15 +
+ drivers/mfd/Makefile                          |   1 +
+ drivers/mfd/hi6421-spmi-pmic.c                | 281 ++++++++++
+ drivers/regulator/Kconfig                     |   8 +
+ drivers/regulator/Makefile                    |   1 +
+ drivers/regulator/hi6421v600-regulator.c      | 338 +++++++++++++
+ drivers/spmi/Kconfig                          |   9 +
+ drivers/spmi/Makefile                         |   1 +
+ drivers/spmi/hisi-spmi-controller.c           | 358 +++++++++++++
+ drivers/staging/Kconfig                       |   2 -
+ drivers/staging/Makefile                      |   1 -
+ drivers/staging/hikey9xx/Kconfig              |  38 --
+ drivers/staging/hikey9xx/Makefile             |   5 -
+ drivers/staging/hikey9xx/TODO                 |   5 -
+ drivers/staging/hikey9xx/hi6421-spmi-pmic.c   | 342 -------------
+ .../staging/hikey9xx/hi6421v600-regulator.c   | 478 ------------------
+ .../staging/hikey9xx/hisi-spmi-controller.c   | 358 -------------
+ .../hikey9xx/hisilicon,hi6421-spmi-pmic.yaml  | 159 ------
+ .../hisilicon,hisi-spmi-controller.yaml       |  62 ---
+ include/linux/mfd/hi6421-spmi-pmic.h          |   8 +-
+ 26 files changed, 1486 insertions(+), 1478 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/mfd/hisilicon,hi6421-spmi-pmic.yaml
+ create mode 100644 Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.yaml
+ create mode 100644 arch/arm64/boot/dts/hisilicon/hikey970-pmic.dtsi
+ create mode 100644 drivers/mfd/hi6421-spmi-pmic.c
+ create mode 100644 drivers/regulator/hi6421v600-regulator.c
+ create mode 100644 drivers/spmi/hisi-spmi-controller.c
+ delete mode 100644 drivers/staging/hikey9xx/Kconfig
+ delete mode 100644 drivers/staging/hikey9xx/Makefile
+ delete mode 100644 drivers/staging/hikey9xx/TODO
+ delete mode 100644 drivers/staging/hikey9xx/hi6421-spmi-pmic.c
+ delete mode 100644 drivers/staging/hikey9xx/hi6421v600-regulator.c
+ delete mode 100644 drivers/staging/hikey9xx/hisi-spmi-controller.c
+ delete mode 100644 drivers/staging/hikey9xx/hisilicon,hi6421-spmi-pmic.yaml
+ delete mode 100644 drivers/staging/hikey9xx/hisilicon,hisi-spmi-controller.yaml
+
+-- 
+2.29.2
+
+
