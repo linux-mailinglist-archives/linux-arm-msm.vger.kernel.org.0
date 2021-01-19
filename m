@@ -2,97 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D2FC32FBE1F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jan 2021 18:45:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ECC352FBE64
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jan 2021 19:00:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389746AbhASRj7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Jan 2021 12:39:59 -0500
-Received: from m42-8.mailgun.net ([69.72.42.8]:10341 "EHLO m42-8.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389766AbhASRjt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Jan 2021 12:39:49 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1611077968; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=L0vFdFdhSXmndQrwYXuvFainDV9NH9XIG05iM/Zdhg8=; b=mNvyi6itB4D8cvVOJB9B91poWdy808aDZyk5jxQ1flLTyGq1SfnQR1UWiJ2GV2u7dd5SF6sz
- Fa56MljXQyOaCkTSQgosz4eTWO+b0MwQ5u644jNLN4JSeRVPLEdZwN7591AUmrnjKUnv90by
- fwPvfAPVRw0NAefrJoXy4gzI2y8=
-X-Mailgun-Sending-Ip: 69.72.42.8
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 6007193502b2f1cb1a797d56 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 19 Jan 2021 17:39:01
- GMT
-Sender: jackp=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B2471C43462; Tue, 19 Jan 2021 17:39:00 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from jackp-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S2389698AbhASR5V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Jan 2021 12:57:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40036 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731968AbhASR4y (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 19 Jan 2021 12:56:54 -0500
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E26DC06179C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jan 2021 09:44:28 -0800 (PST)
+Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        (Authenticated sender: jackp)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5B93EC433C6;
-        Tue, 19 Jan 2021 17:38:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5B93EC433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jackp@codeaurora.org
-From:   Jack Pham <jackp@codeaurora.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Wesley Cheng <wcheng@codeaurora.org>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 805123F114;
+        Tue, 19 Jan 2021 18:44:25 +0100 (CET)
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, sumit.semwal@linaro.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Jack Pham <jackp@codeaurora.org>,
-        Felipe Balbi <balbi@kernel.org>
-Subject: [PATCH v3] dt-bindings: usb: qcom,dwc3: Add bindings for SM8150, SM8250, SM8350
-Date:   Tue, 19 Jan 2021 09:37:48 -0800
-Message-Id: <20210119173748.6729-1-jackp@codeaurora.org>
-X-Mailer: git-send-email 2.24.0
+        phone-devel@vger.kernel.org, konrad.dybcio@somainline.org,
+        marijn.suijten@somainline.org, martin.botka@somainline.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Subject: [PATCH v4 7/7] arm64: dts: pmi8998: Add the right interrupts for LAB/IBB SCP and OCP
+Date:   Tue, 19 Jan 2021 18:44:21 +0100
+Message-Id: <20210119174421.226541-8-angelogioacchino.delregno@somainline.org>
+X-Mailer: git-send-email 2.30.0
+In-Reply-To: <20210119174421.226541-1-angelogioacchino.delregno@somainline.org>
+References: <20210119174421.226541-1-angelogioacchino.delregno@somainline.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add compatible strings for the USB DWC3 controller on QCOM SM8150,
-SM8250 and SM8350 SoCs.
+In commit 208921bae696 ("arm64: dts: qcom: pmi8998: Add nodes for
+LAB and IBB regulators") bindings for the lab/ibb regulators were
+added to the pmi8998 dt, but the original committer has never
+specified what the interrupts were for.
+LAB and IBB regulators provide two interrupts, SC-ERR (short
+circuit error) and VREG-OK but, in that commit, the regulators
+were provided with two different types of interrupts;
+specifically, IBB had the SC-ERR interrupt, while LAB had the
+VREG-OK one, none of which were (luckily) used, since the driver
+didn't actually use these at all.
+Assuming that the original intention was to have the SC IRQ in
+both LAB and IBB, as per the names appearing in documentation,
+fix the SCP interrupt.
 
-Note the SM8150 & SM8250 compatibles are already being used in the
-dts but was missing from the documentation.
+While at it, also add the OCP interrupt in order to be able to
+enable the Over-Current Protection feature, if requested.
 
-Acked-by: Felipe Balbi <balbi@kernel.org>
-Signed-off-by: Jack Pham <jackp@codeaurora.org>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
-v3: Resend of #4/4 of https://lore.kernel.org/linux-usb/20210115174723.7424-1-jackp@codeaurora.org
-    added Felipe's Ack & rebased on gregkh/usb-testing
+ arch/arm64/boot/dts/qcom/pmi8998.dtsi | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
- Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-index dd1d8bcd9254..c3cbd1fa9944 100644
---- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-+++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-@@ -18,6 +18,9 @@ properties:
-           - qcom,sc7180-dwc3
-           - qcom,sdm845-dwc3
-           - qcom,sdx55-dwc3
-+          - qcom,sm8150-dwc3
-+          - qcom,sm8250-dwc3
-+          - qcom,sm8350-dwc3
-       - const: qcom,dwc3
+diff --git a/arch/arm64/boot/dts/qcom/pmi8998.dtsi b/arch/arm64/boot/dts/qcom/pmi8998.dtsi
+index d016b12967eb..d230c510d4b7 100644
+--- a/arch/arm64/boot/dts/qcom/pmi8998.dtsi
++++ b/arch/arm64/boot/dts/qcom/pmi8998.dtsi
+@@ -30,11 +30,15 @@ labibb {
+ 			compatible = "qcom,pmi8998-lab-ibb";
  
-   reg:
+ 			ibb: ibb {
+-				interrupts = <0x3 0xdc 0x2 IRQ_TYPE_EDGE_RISING>;
++				interrupts = <0x3 0xdc 0x2 IRQ_TYPE_EDGE_RISING>,
++					     <0x3 0xdc 0x0 IRQ_TYPE_LEVEL_HIGH>;
++				interrupt-names = "sc-err", "ocp";
+ 			};
+ 
+ 			lab: lab {
+-				interrupts = <0x3 0xde 0x0 IRQ_TYPE_EDGE_RISING>;
++				interrupts = <0x3 0xde 0x1 IRQ_TYPE_EDGE_RISING>,
++					     <0x3 0xde 0x0 IRQ_TYPE_LEVEL_LOW>;
++				interrupt-names = "sc-err", "ocp";
+ 			};
+ 		};
+ 	};
 -- 
-2.24.0
+2.30.0
 
