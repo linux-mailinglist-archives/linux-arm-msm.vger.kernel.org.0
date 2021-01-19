@@ -2,99 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 767242FC1B7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jan 2021 21:59:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C0962FC1F9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jan 2021 22:11:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729731AbhASU65 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Jan 2021 15:58:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52184 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729904AbhASU6w (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Jan 2021 15:58:52 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35C02C061757
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jan 2021 12:58:04 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id m2so1025391wmm.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jan 2021 12:58:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=of/pRXfYf8KADmbm/k7eAlaIB9piSSwAWZ8glb4h2lk=;
-        b=ccFf+1ObrkxxiKN/zv8a7jjbmKQyeEBznWyroAQD9yAVMaTnl+JtmHf5fIQ6Rp+Rob
-         yF6h+EoyFK6Nz8ldK6DIOj3AlTamfWWRGssGaVrp0pH3oJyLLVbDPqFujsScurwkRcWl
-         W5s3zsXqXedGuTW5KIVCMkdQMRm8U5j6auWhsAC7XoBgP/6bNtGTGQq2dheNWz4C+hQm
-         03s+pcyRBjTWifFxRg0eOAj3uT1X5kZtY43JsBlyIx0DaudguLPTC/wtCvNhziENpMaK
-         s24C/rJOhJfvsmE6w/eGa2e3KP5nCwFcaWp3A/+ugQQn4g/rmnPvx4dpPeaHRHZBHFCO
-         jhEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=of/pRXfYf8KADmbm/k7eAlaIB9piSSwAWZ8glb4h2lk=;
-        b=WiE4dMpVnMegALjtrc1JPv4Yvt7/k3QlX6vr18goTzdFCUOQvhgxmIXyPYBv5Oa1AD
-         rjks6QF0Qh5w6mK3Aqf27J6bTmfT3Ap8sF3PmAUBiZBb22iID4Vy3z5BgVjOG1hJDl3B
-         3uHZmFAnPFwK1KoufzEjKA65KEIhCJNwqfom0I9T+272mggknY3cToJflWJljC963N18
-         wjArNVnY6CxPJtfCoNxYm9YZEdz45/OZu0ZPr3UGBYR4WZuOy6JHzgi1Xtn4F9AyNzxu
-         XWK95T93ICTfXmO2Rt5wKhmqed4YfV81cbji/Pv9W4Or/UqiQFI8hj9vyau3vKkByIVA
-         q4Xg==
-X-Gm-Message-State: AOAM5315RzkdL3EmvEhZezohEylm7rLBnyCvg704aF90Myqve6ey3UDl
-        9VLFm22tfpozPUpGdMaGM2jolA==
-X-Google-Smtp-Source: ABdhPJwwlkl7tUgr70Wbh1Oql8bMdbNpHNrfJ1G+pno8wXk6Ry+lDe8WS36QVLc2VM7Vg8xp0m5a8w==
-X-Received: by 2002:a1c:6089:: with SMTP id u131mr1230059wmb.187.1611089882759;
-        Tue, 19 Jan 2021 12:58:02 -0800 (PST)
-Received: from ?IPv6:2a01:e34:ed2f:f020:c8a3:239a:c6eb:c10b? ([2a01:e34:ed2f:f020:c8a3:239a:c6eb:c10b])
-        by smtp.googlemail.com with ESMTPSA id a62sm6592680wmf.7.2021.01.19.12.58.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Jan 2021 12:58:02 -0800 (PST)
-Subject: Re: [PATCH v12 0/5] qcom: pm8150: add support for thermal monitoring
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Amit Kucheria <amitk@kernel.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-iio@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Jishnu Prakash <jprakash@qti.qualcomm.com>
-References: <20210119054848.592329-1-dmitry.baryshkov@linaro.org>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-Message-ID: <078a7025-ce5c-a252-f8f4-694c56153b3a@linaro.org>
-Date:   Tue, 19 Jan 2021 21:57:59 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S1731892AbhASSss (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Jan 2021 13:48:48 -0500
+Received: from mail.kernel.org ([198.145.29.99]:49914 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730161AbhASS23 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 19 Jan 2021 13:28:29 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id A584A2339E;
+        Tue, 19 Jan 2021 16:45:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1611074720;
+        bh=hsbY9jVVjxPkTDo+83FR143J+Trhf5rfoVu0rt8eaRU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Hm2fl8vSTHyel68vvy54BFEYGnKKKObPD/GYX2P3MobIpRoPpKvqSzY1QvCiSboxN
+         Atbr+nOgyM5E6Ak1Tn2YDiYEwZQ1elcqJ3vKfj87oTm5IWkPVZHivOHUyi0op2Ui3+
+         rFv882mtsvqOkDXby9VRaoxXU+TPenjGAGlc+jwnQMbZ9nDbAfaAfIdBVXXiXgA8dm
+         sEePE7usRv/pyhTYuqzHx8zbAPl3d0MNbnzq+l6MhwwjtK9C1DcZmf07jLgG/EOfbn
+         IkNUlVH7H0QQrjmUZKLGXaB5LDyJXd3Fju03xRLM+dpaS4uxVMKMkNj5cqyqOrsRcy
+         z/j89Bn7TZGxg==
+Date:   Tue, 19 Jan 2021 22:15:11 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     mdalam@codeaurora.org
+Cc:     corbet@lwn.net, agross@kernel.org, bjorn.andersson@linaro.org,
+        dan.j.williams@intel.com, dmaengine@vger.kernel.org,
+        linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, sricharan@codeaurora.org,
+        mdalam=codeaurora.org@codeaurora.org
+Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Add LOCK and UNLOCK flag bit
+ support
+Message-ID: <20210119164511.GE2771@vkoul-mobl>
+References: <1608215842-15381-1-git-send-email-mdalam@codeaurora.org>
+ <20201221092355.GA3323@vkoul-mobl>
+ <efcc74bbdf36b4ddbf764eb6b4ed99f2@codeaurora.org>
+ <f7de0117c8ff2e61c09f58acdea0e5b0@codeaurora.org>
+ <20210112101056.GI2771@vkoul-mobl>
+ <e3cf7c4fc02c54d17fd2fd213f39005b@codeaurora.org>
+ <20210115055806.GE2771@vkoul-mobl>
+ <97ce29b230164a5848a38f6448d1be60@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20210119054848.592329-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <97ce29b230164a5848a38f6448d1be60@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/01/2021 06:48, Dmitry Baryshkov wrote:
-> This patch serie adds support for thermal monitoring block on Qualcomm's
-> PMIC5 chips. PM8150{,b,l}, qrb5165-rb5 board and sm8250-mtp board device
-> trees are extended to support thermal zones provided by this thermal
-> monitoring block.  Unlike the rest of PMIC thermal senses, these thermal
-> zones describe particular thermistors, which differ between from board
-> to board.
+On 18-01-21, 09:21, mdalam@codeaurora.org wrote:
+> On 2021-01-15 11:28, Vinod Koul wrote:
+> > On 14-01-21, 01:20, mdalam@codeaurora.org wrote:
+> > > On 2021-01-12 15:40, Vinod Koul wrote:
+> > > > On 12-01-21, 15:01, mdalam@codeaurora.org wrote:
+> > > > > On 2020-12-21 23:03, mdalam@codeaurora.org wrote:
+> > > > > > On 2020-12-21 14:53, Vinod Koul wrote:
+> > > > > > > Hello,
+> > > > > > >
+> > > > > > > On 17-12-20, 20:07, Md Sadre Alam wrote:
+> > > > > > > > This change will add support for LOCK & UNLOCK flag bit support
+> > > > > > > > on CMD descriptor.
+> > > > > > > >
+> > > > > > > > If DMA_PREP_LOCK flag passed in prep_slave_sg then requester of this
+> > > > > > > > transaction wanted to lock the DMA controller for this transaction so
+> > > > > > > > BAM driver should set LOCK bit for the HW descriptor.
+> > > > > > > >
+> > > > > > > > If DMA_PREP_UNLOCK flag passed in prep_slave_sg then requester
+> > > > > > > > of this
+> > > > > > > > transaction wanted to unlock the DMA controller.so BAM driver
+> > > > > > > > should set
+> > > > > > > > UNLOCK bit for the HW descriptor.
+> > > > > > >
+> > > > > > > Can you explain why would we need to first lock and then unlock..? How
+> > > > > > > would this be used in real world.
+> > > > > > >
+> > > > > > > I have read a bit of documentation but is unclear to me. Also should
+> > > > > > > this be exposed as an API to users, sounds like internal to driver..?
+> > > > > > >
+> > > > > >
+> > > > > > IPQ5018 SoC having only one Crypto Hardware Engine. This Crypto Hardware
+> > > > > > Engine
+> > > > > > will be shared between A53 core & ubi32 core. There is two separate
+> > > > > > driver dedicated
+> > > > > > to A53 core and ubi32 core. So to use Crypto Hardware Engine
+> > > > > > parallelly for encryption/description
+> > > > > > we need bam locking mechanism. if one driver will submit the request
+> > > > > > for encryption/description
+> > > > > > to Crypto then first it has to set LOCK flag bit on command descriptor
+> > > > > > so that other pipes will
+> > > > > > get locked.
+> > > > > >
+> > > > > > The Pipe Locking/Unlocking will be only on command-descriptor. Upon
+> > > > > > encountering a command descriptor
+> > > >
+> > > > Can you explain what is a cmd descriptor?
+> > > 
+> > >   In BAM pipe descriptor structure there is a field called CMD
+> > > (Command
+> > > descriptor).
+> > >   CMD allows the SW to create descriptors of type Command which does
+> > > not
+> > > generate any data transmissions
+> > >   but configures registers in the Peripheral (write operations, and
+> > > read
+> > > registers operations ).
+> > >   Using command descriptor enables the SW to queue new configurations
+> > > between data transfers in advance.
+> > 
+> > What and when is the CMD descriptor used for..?
 > 
-> Dependencies: https://git.kernel.org/pub/scm/linux/kernel/git/jic23/iio.git/log/?h=ib-iio-thermal-5.11-rc1
+>   CMD descriptor is mainly used for configuring controller register.
+>   We can read/write controller register via BAM using CMD descriptor only.
+>   CMD descriptor use command pipe for the transaction.
 
-Shall I pick 3,4,5 also ?
+In which use cases would you need to issue cmd descriptors..?
 
+> > 
+> > > >
+> > > > > > with LOCK bit set, The BAM will lock all other pipes not related to
+> > > > > > the current pipe group, and keep
+> > > > > > handling the current pipe only until it sees the UNLOCK set then it
+> > > > > > will release all locked pipes.
+> > > > > > locked pipe will not fetch new descriptors even if it got event/events
+> > > > > > adding more descriptors for
+> > > > > > this pipe (locked pipe).
+> > > > > >
+> > > > > > No need to expose as an API to user because its internal to driver, so
+> > > > > > while preparing command descriptor
+> > > > > > just we have to update the LOCK/UNLOCK flag.
+> > > >
+> > > > So IIUC, no api right? it would be internal to driver..?
+> > > 
+> > >   Yes its totally internal to deriver.
+> > 
+> > So no need for this patch then, right?
+> 
+>   This patch is needed , because if some hardware will shared between
+>   multiple core like A53 and ubi32 for example. In IPQ5018 there is
+>   only one crypto engine and this will be shared between A53 core and
+>   ubi32 core and in A53 core & ubi32 core there are different drivers
+>   is getting used. So if encryption/decryption request come at same
+>   time from both the driver then things will get messed up. So here we
+>   need LOCKING mechanism.  If first request is from A53 core driver
+>   then this driver should lock all the pipes other than pipe dedicated
+>   to A53 core. So while preparing CMD descriptor driver should used
+>   this flag "DMA_PREP_LOCK", Since LOCK and UNLOCK flag bit we can set
+>   only on CMD descriptor. Once request processed then driver will set
+>   UNLOCK flag on CMD descriptor. Driver should use this flag
+>   "DMA_PREP_UNLOCK" while preparing CMD descriptor. Same logic will be
+>   apply for ubi32 core driver as well.
 
+Why cant this be applied at driver level, based on txn being issued it
+can lock issue the txn and then unlock when done. I am not convinced yet
+that this needs to be exported to users and can be managed by dmaengine
+driver.
+
+Thanks
 -- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+~Vinod
