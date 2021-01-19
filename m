@@ -2,161 +2,725 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C0962FC1F9
+	by mail.lfdr.de (Postfix) with ESMTP id A7F962FC1FA
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jan 2021 22:11:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731892AbhASSss (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Jan 2021 13:48:48 -0500
-Received: from mail.kernel.org ([198.145.29.99]:49914 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730161AbhASS23 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Jan 2021 13:28:29 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id A584A2339E;
-        Tue, 19 Jan 2021 16:45:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1611074720;
-        bh=hsbY9jVVjxPkTDo+83FR143J+Trhf5rfoVu0rt8eaRU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Hm2fl8vSTHyel68vvy54BFEYGnKKKObPD/GYX2P3MobIpRoPpKvqSzY1QvCiSboxN
-         Atbr+nOgyM5E6Ak1Tn2YDiYEwZQ1elcqJ3vKfj87oTm5IWkPVZHivOHUyi0op2Ui3+
-         rFv882mtsvqOkDXby9VRaoxXU+TPenjGAGlc+jwnQMbZ9nDbAfaAfIdBVXXiXgA8dm
-         sEePE7usRv/pyhTYuqzHx8zbAPl3d0MNbnzq+l6MhwwjtK9C1DcZmf07jLgG/EOfbn
-         IkNUlVH7H0QQrjmUZKLGXaB5LDyJXd3Fju03xRLM+dpaS4uxVMKMkNj5cqyqOrsRcy
-         z/j89Bn7TZGxg==
-Date:   Tue, 19 Jan 2021 22:15:11 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     mdalam@codeaurora.org
-Cc:     corbet@lwn.net, agross@kernel.org, bjorn.andersson@linaro.org,
-        dan.j.williams@intel.com, dmaengine@vger.kernel.org,
-        linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, sricharan@codeaurora.org,
-        mdalam=codeaurora.org@codeaurora.org
-Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Add LOCK and UNLOCK flag bit
- support
-Message-ID: <20210119164511.GE2771@vkoul-mobl>
-References: <1608215842-15381-1-git-send-email-mdalam@codeaurora.org>
- <20201221092355.GA3323@vkoul-mobl>
- <efcc74bbdf36b4ddbf764eb6b4ed99f2@codeaurora.org>
- <f7de0117c8ff2e61c09f58acdea0e5b0@codeaurora.org>
- <20210112101056.GI2771@vkoul-mobl>
- <e3cf7c4fc02c54d17fd2fd213f39005b@codeaurora.org>
- <20210115055806.GE2771@vkoul-mobl>
- <97ce29b230164a5848a38f6448d1be60@codeaurora.org>
+        id S1731704AbhASSsp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Jan 2021 13:48:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41826 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2392112AbhASSBJ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 19 Jan 2021 13:01:09 -0500
+Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65891C0617A2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jan 2021 09:45:01 -0800 (PST)
+Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 129271F895;
+        Tue, 19 Jan 2021 18:44:59 +0100 (CET)
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+To:     bjorn.andersson@linaro.org
+Cc:     agross@kernel.org, daniel.lezcano@linaro.org, rjw@rjwysocki.net,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
+        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
+        martin.botka@somainline.org, jeffrey.l.hugo@gmail.com,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Subject: [PATCH v4 1/3] cpuidle: qcom_spm: Detach state machine from main SPM handling
+Date:   Tue, 19 Jan 2021 18:44:52 +0100
+Message-Id: <20210119174454.226808-2-angelogioacchino.delregno@somainline.org>
+X-Mailer: git-send-email 2.30.0
+In-Reply-To: <20210119174454.226808-1-angelogioacchino.delregno@somainline.org>
+References: <20210119174454.226808-1-angelogioacchino.delregno@somainline.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <97ce29b230164a5848a38f6448d1be60@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18-01-21, 09:21, mdalam@codeaurora.org wrote:
-> On 2021-01-15 11:28, Vinod Koul wrote:
-> > On 14-01-21, 01:20, mdalam@codeaurora.org wrote:
-> > > On 2021-01-12 15:40, Vinod Koul wrote:
-> > > > On 12-01-21, 15:01, mdalam@codeaurora.org wrote:
-> > > > > On 2020-12-21 23:03, mdalam@codeaurora.org wrote:
-> > > > > > On 2020-12-21 14:53, Vinod Koul wrote:
-> > > > > > > Hello,
-> > > > > > >
-> > > > > > > On 17-12-20, 20:07, Md Sadre Alam wrote:
-> > > > > > > > This change will add support for LOCK & UNLOCK flag bit support
-> > > > > > > > on CMD descriptor.
-> > > > > > > >
-> > > > > > > > If DMA_PREP_LOCK flag passed in prep_slave_sg then requester of this
-> > > > > > > > transaction wanted to lock the DMA controller for this transaction so
-> > > > > > > > BAM driver should set LOCK bit for the HW descriptor.
-> > > > > > > >
-> > > > > > > > If DMA_PREP_UNLOCK flag passed in prep_slave_sg then requester
-> > > > > > > > of this
-> > > > > > > > transaction wanted to unlock the DMA controller.so BAM driver
-> > > > > > > > should set
-> > > > > > > > UNLOCK bit for the HW descriptor.
-> > > > > > >
-> > > > > > > Can you explain why would we need to first lock and then unlock..? How
-> > > > > > > would this be used in real world.
-> > > > > > >
-> > > > > > > I have read a bit of documentation but is unclear to me. Also should
-> > > > > > > this be exposed as an API to users, sounds like internal to driver..?
-> > > > > > >
-> > > > > >
-> > > > > > IPQ5018 SoC having only one Crypto Hardware Engine. This Crypto Hardware
-> > > > > > Engine
-> > > > > > will be shared between A53 core & ubi32 core. There is two separate
-> > > > > > driver dedicated
-> > > > > > to A53 core and ubi32 core. So to use Crypto Hardware Engine
-> > > > > > parallelly for encryption/description
-> > > > > > we need bam locking mechanism. if one driver will submit the request
-> > > > > > for encryption/description
-> > > > > > to Crypto then first it has to set LOCK flag bit on command descriptor
-> > > > > > so that other pipes will
-> > > > > > get locked.
-> > > > > >
-> > > > > > The Pipe Locking/Unlocking will be only on command-descriptor. Upon
-> > > > > > encountering a command descriptor
-> > > >
-> > > > Can you explain what is a cmd descriptor?
-> > > 
-> > >   In BAM pipe descriptor structure there is a field called CMD
-> > > (Command
-> > > descriptor).
-> > >   CMD allows the SW to create descriptors of type Command which does
-> > > not
-> > > generate any data transmissions
-> > >   but configures registers in the Peripheral (write operations, and
-> > > read
-> > > registers operations ).
-> > >   Using command descriptor enables the SW to queue new configurations
-> > > between data transfers in advance.
-> > 
-> > What and when is the CMD descriptor used for..?
-> 
->   CMD descriptor is mainly used for configuring controller register.
->   We can read/write controller register via BAM using CMD descriptor only.
->   CMD descriptor use command pipe for the transaction.
+In commit a871be6b8eee ("cpuidle: Convert Qualcomm SPM driver to a generic
+CPUidle driver") the SPM driver has been converted to a
+generic CPUidle driver: that was mainly made to simplify the
+driver and that was a great accomplishment;
+Though, it was ignored that the SPM driver is not used only
+on the ARM architecture.
 
-In which use cases would you need to issue cmd descriptors..?
+In preparation for the enablement of SPM features on AArch64/ARM64,
+split the cpuidle-qcom-spm driver in two: the CPUIdle related
+state machine (currently used only on ARM SoCs) stays there, while
+the SPM communication handling lands back in soc/qcom/spm.c and
+also making sure to not discard the simplifications that were
+introduced in the aforementioned commit.
 
-> > 
-> > > >
-> > > > > > with LOCK bit set, The BAM will lock all other pipes not related to
-> > > > > > the current pipe group, and keep
-> > > > > > handling the current pipe only until it sees the UNLOCK set then it
-> > > > > > will release all locked pipes.
-> > > > > > locked pipe will not fetch new descriptors even if it got event/events
-> > > > > > adding more descriptors for
-> > > > > > this pipe (locked pipe).
-> > > > > >
-> > > > > > No need to expose as an API to user because its internal to driver, so
-> > > > > > while preparing command descriptor
-> > > > > > just we have to update the LOCK/UNLOCK flag.
-> > > >
-> > > > So IIUC, no api right? it would be internal to driver..?
-> > > 
-> > >   Yes its totally internal to deriver.
-> > 
-> > So no need for this patch then, right?
-> 
->   This patch is needed , because if some hardware will shared between
->   multiple core like A53 and ubi32 for example. In IPQ5018 there is
->   only one crypto engine and this will be shared between A53 core and
->   ubi32 core and in A53 core & ubi32 core there are different drivers
->   is getting used. So if encryption/decryption request come at same
->   time from both the driver then things will get messed up. So here we
->   need LOCKING mechanism.  If first request is from A53 core driver
->   then this driver should lock all the pipes other than pipe dedicated
->   to A53 core. So while preparing CMD descriptor driver should used
->   this flag "DMA_PREP_LOCK", Since LOCK and UNLOCK flag bit we can set
->   only on CMD descriptor. Once request processed then driver will set
->   UNLOCK flag on CMD descriptor. Driver should use this flag
->   "DMA_PREP_UNLOCK" while preparing CMD descriptor. Same logic will be
->   apply for ubi32 core driver as well.
+Since now the "two drivers" are split, the SCM dependency in the
+main SPM handling is gone and for this reason it was also possible
+to move the SPM initialization early: this will also make sure that
+whenever the SAW CPUIdle driver is getting initialized, the SPM
+driver will be ready to do the job.
 
-Why cant this be applied at driver level, based on txn being issued it
-can lock issue the txn and then unlock when done. I am not convinced yet
-that this needs to be exported to users and can be managed by dmaengine
-driver.
+Please note that the anticipation of the SPM initialization was
+also done to optimize the boot times on platforms that have their
+CPU/L2 idle states managed by other means (such as PSCI), while
+needing SAW initialization for other purposes, like AVS control.
 
-Thanks
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+---
+ drivers/cpuidle/Kconfig.arm        |   1 +
+ drivers/cpuidle/cpuidle-qcom-spm.c | 294 ++++++-----------------------
+ drivers/soc/qcom/Kconfig           |   9 +
+ drivers/soc/qcom/Makefile          |   1 +
+ drivers/soc/qcom/spm.c             | 198 +++++++++++++++++++
+ include/soc/qcom/spm.h             |  45 +++++
+ 6 files changed, 312 insertions(+), 236 deletions(-)
+ create mode 100644 drivers/soc/qcom/spm.c
+ create mode 100644 include/soc/qcom/spm.h
+
+diff --git a/drivers/cpuidle/Kconfig.arm b/drivers/cpuidle/Kconfig.arm
+index 0844fadc4be8..c5e2f4d0df04 100644
+--- a/drivers/cpuidle/Kconfig.arm
++++ b/drivers/cpuidle/Kconfig.arm
+@@ -112,6 +112,7 @@ config ARM_QCOM_SPM_CPUIDLE
+ 	select CPU_IDLE_MULTIPLE_DRIVERS
+ 	select DT_IDLE_STATES
+ 	select QCOM_SCM
++	select QCOM_SPM
+ 	help
+ 	  Select this to enable cpuidle for Qualcomm processors.
+ 	  The Subsystem Power Manager (SPM) controls low power modes for the
+diff --git a/drivers/cpuidle/cpuidle-qcom-spm.c b/drivers/cpuidle/cpuidle-qcom-spm.c
+index adf91a6e4d7d..3dd7bb10b82d 100644
+--- a/drivers/cpuidle/cpuidle-qcom-spm.c
++++ b/drivers/cpuidle/cpuidle-qcom-spm.c
+@@ -18,146 +18,13 @@
+ #include <linux/cpuidle.h>
+ #include <linux/cpu_pm.h>
+ #include <linux/qcom_scm.h>
++#include <soc/qcom/spm.h>
+ 
+ #include <asm/proc-fns.h>
+ #include <asm/suspend.h>
+ 
+ #include "dt_idle_states.h"
+ 
+-#define MAX_PMIC_DATA		2
+-#define MAX_SEQ_DATA		64
+-#define SPM_CTL_INDEX		0x7f
+-#define SPM_CTL_INDEX_SHIFT	4
+-#define SPM_CTL_EN		BIT(0)
+-
+-enum pm_sleep_mode {
+-	PM_SLEEP_MODE_STBY,
+-	PM_SLEEP_MODE_RET,
+-	PM_SLEEP_MODE_SPC,
+-	PM_SLEEP_MODE_PC,
+-	PM_SLEEP_MODE_NR,
+-};
+-
+-enum spm_reg {
+-	SPM_REG_CFG,
+-	SPM_REG_SPM_CTL,
+-	SPM_REG_DLY,
+-	SPM_REG_PMIC_DLY,
+-	SPM_REG_PMIC_DATA_0,
+-	SPM_REG_PMIC_DATA_1,
+-	SPM_REG_VCTL,
+-	SPM_REG_SEQ_ENTRY,
+-	SPM_REG_SPM_STS,
+-	SPM_REG_PMIC_STS,
+-	SPM_REG_NR,
+-};
+-
+-struct spm_reg_data {
+-	const u8 *reg_offset;
+-	u32 spm_cfg;
+-	u32 spm_dly;
+-	u32 pmic_dly;
+-	u32 pmic_data[MAX_PMIC_DATA];
+-	u8 seq[MAX_SEQ_DATA];
+-	u8 start_index[PM_SLEEP_MODE_NR];
+-};
+-
+-struct spm_driver_data {
+-	struct cpuidle_driver cpuidle_driver;
+-	void __iomem *reg_base;
+-	const struct spm_reg_data *reg_data;
+-};
+-
+-static const u8 spm_reg_offset_v2_1[SPM_REG_NR] = {
+-	[SPM_REG_CFG]		= 0x08,
+-	[SPM_REG_SPM_CTL]	= 0x30,
+-	[SPM_REG_DLY]		= 0x34,
+-	[SPM_REG_SEQ_ENTRY]	= 0x80,
+-};
+-
+-/* SPM register data for 8974, 8084 */
+-static const struct spm_reg_data spm_reg_8974_8084_cpu  = {
+-	.reg_offset = spm_reg_offset_v2_1,
+-	.spm_cfg = 0x1,
+-	.spm_dly = 0x3C102800,
+-	.seq = { 0x03, 0x0B, 0x0F, 0x00, 0x20, 0x80, 0x10, 0xE8, 0x5B, 0x03,
+-		0x3B, 0xE8, 0x5B, 0x82, 0x10, 0x0B, 0x30, 0x06, 0x26, 0x30,
+-		0x0F },
+-	.start_index[PM_SLEEP_MODE_STBY] = 0,
+-	.start_index[PM_SLEEP_MODE_SPC] = 3,
+-};
+-
+-static const u8 spm_reg_offset_v1_1[SPM_REG_NR] = {
+-	[SPM_REG_CFG]		= 0x08,
+-	[SPM_REG_SPM_CTL]	= 0x20,
+-	[SPM_REG_PMIC_DLY]	= 0x24,
+-	[SPM_REG_PMIC_DATA_0]	= 0x28,
+-	[SPM_REG_PMIC_DATA_1]	= 0x2C,
+-	[SPM_REG_SEQ_ENTRY]	= 0x80,
+-};
+-
+-/* SPM register data for 8064 */
+-static const struct spm_reg_data spm_reg_8064_cpu = {
+-	.reg_offset = spm_reg_offset_v1_1,
+-	.spm_cfg = 0x1F,
+-	.pmic_dly = 0x02020004,
+-	.pmic_data[0] = 0x0084009C,
+-	.pmic_data[1] = 0x00A4001C,
+-	.seq = { 0x03, 0x0F, 0x00, 0x24, 0x54, 0x10, 0x09, 0x03, 0x01,
+-		0x10, 0x54, 0x30, 0x0C, 0x24, 0x30, 0x0F },
+-	.start_index[PM_SLEEP_MODE_STBY] = 0,
+-	.start_index[PM_SLEEP_MODE_SPC] = 2,
+-};
+-
+-static inline void spm_register_write(struct spm_driver_data *drv,
+-					enum spm_reg reg, u32 val)
+-{
+-	if (drv->reg_data->reg_offset[reg])
+-		writel_relaxed(val, drv->reg_base +
+-				drv->reg_data->reg_offset[reg]);
+-}
+-
+-/* Ensure a guaranteed write, before return */
+-static inline void spm_register_write_sync(struct spm_driver_data *drv,
+-					enum spm_reg reg, u32 val)
+-{
+-	u32 ret;
+-
+-	if (!drv->reg_data->reg_offset[reg])
+-		return;
+-
+-	do {
+-		writel_relaxed(val, drv->reg_base +
+-				drv->reg_data->reg_offset[reg]);
+-		ret = readl_relaxed(drv->reg_base +
+-				drv->reg_data->reg_offset[reg]);
+-		if (ret == val)
+-			break;
+-		cpu_relax();
+-	} while (1);
+-}
+-
+-static inline u32 spm_register_read(struct spm_driver_data *drv,
+-					enum spm_reg reg)
+-{
+-	return readl_relaxed(drv->reg_base + drv->reg_data->reg_offset[reg]);
+-}
+-
+-static void spm_set_low_power_mode(struct spm_driver_data *drv,
+-					enum pm_sleep_mode mode)
+-{
+-	u32 start_index;
+-	u32 ctl_val;
+-
+-	start_index = drv->reg_data->start_index[mode];
+-
+-	ctl_val = spm_register_read(drv, SPM_REG_SPM_CTL);
+-	ctl_val &= ~(SPM_CTL_INDEX << SPM_CTL_INDEX_SHIFT);
+-	ctl_val |= start_index << SPM_CTL_INDEX_SHIFT;
+-	ctl_val |= SPM_CTL_EN;
+-	spm_register_write_sync(drv, SPM_REG_SPM_CTL, ctl_val);
+-}
+-
+ static int qcom_pm_collapse(unsigned long int unused)
+ {
+ 	qcom_scm_cpu_power_down(QCOM_SCM_CPU_PWR_DOWN_L2_ON);
+@@ -213,132 +80,87 @@ static const struct of_device_id qcom_idle_state_match[] = {
+ 	{ },
+ };
+ 
+-static int spm_cpuidle_init(struct cpuidle_driver *drv, int cpu)
++static int spm_cpuidle_register(int cpu)
+ {
++	struct platform_device *pdev = NULL;
++	struct spm_driver_data *spm = NULL;
++	struct device_node *cpu_node, *saw_node;
+ 	int ret;
+ 
+-	memcpy(drv, &qcom_spm_idle_driver, sizeof(*drv));
+-	drv->cpumask = (struct cpumask *)cpumask_of(cpu);
++	cpu_node = of_cpu_device_node_get(cpu);
++	if (!cpu_node)
++		return -ENODEV;
+ 
+-	/* Parse idle states from device tree */
+-	ret = dt_init_idle_driver(drv, qcom_idle_state_match, 1);
+-	if (ret <= 0)
+-		return ret ? : -ENODEV;
++	saw_node = of_parse_phandle(cpu_node, "qcom,saw", 0);
++	if (!saw_node)
++		return -ENODEV;
+ 
+-	/* We have atleast one power down mode */
+-	return qcom_scm_set_warm_boot_addr(cpu_resume_arm, drv->cpumask);
+-}
++	pdev = of_find_device_by_node(saw_node);
++	of_node_put(saw_node);
++	of_node_put(cpu_node);
++	if (!pdev)
++		return -ENODEV;
+ 
+-static struct spm_driver_data *spm_get_drv(struct platform_device *pdev,
+-		int *spm_cpu)
+-{
+-	struct spm_driver_data *drv = NULL;
+-	struct device_node *cpu_node, *saw_node;
+-	int cpu;
+-	bool found = 0;
++	spm = dev_get_drvdata(&pdev->dev);
++	if (!spm)
++		return -EINVAL;
+ 
+-	for_each_possible_cpu(cpu) {
+-		cpu_node = of_cpu_device_node_get(cpu);
+-		if (!cpu_node)
+-			continue;
+-		saw_node = of_parse_phandle(cpu_node, "qcom,saw", 0);
+-		found = (saw_node == pdev->dev.of_node);
+-		of_node_put(saw_node);
+-		of_node_put(cpu_node);
+-		if (found)
+-			break;
+-	}
++	spm->cpuidle_driver = qcom_spm_idle_driver;
+ 
+-	if (found) {
+-		drv = devm_kzalloc(&pdev->dev, sizeof(*drv), GFP_KERNEL);
+-		if (drv)
+-			*spm_cpu = cpu;
+-	}
++	ret = dt_init_idle_driver(&spm->cpuidle_driver,
++				  qcom_idle_state_match, 1);
++	if (ret <= 0)
++		return ret ? : -ENODEV;
+ 
+-	return drv;
+-}
++	ret = qcom_scm_set_warm_boot_addr(cpu_resume_arm, cpumask_of(cpu));
++	if (ret)
++		return ret;
+ 
+-static const struct of_device_id spm_match_table[] = {
+-	{ .compatible = "qcom,msm8974-saw2-v2.1-cpu",
+-	  .data = &spm_reg_8974_8084_cpu },
+-	{ .compatible = "qcom,apq8084-saw2-v2.1-cpu",
+-	  .data = &spm_reg_8974_8084_cpu },
+-	{ .compatible = "qcom,apq8064-saw2-v1.1-cpu",
+-	  .data = &spm_reg_8064_cpu },
+-	{ },
+-};
++	return cpuidle_register(&spm->cpuidle_driver, NULL);
++}
+ 
+-static int spm_dev_probe(struct platform_device *pdev)
++static int spm_cpuidle_drv_probe(struct platform_device *pdev)
+ {
+-	struct spm_driver_data *drv;
+-	struct resource *res;
+-	const struct of_device_id *match_id;
+-	void __iomem *addr;
+ 	int cpu, ret;
+ 
+ 	if (!qcom_scm_is_available())
+ 		return -EPROBE_DEFER;
+ 
+-	drv = spm_get_drv(pdev, &cpu);
+-	if (!drv)
+-		return -EINVAL;
+-	platform_set_drvdata(pdev, drv);
++	for_each_possible_cpu(cpu) {
++		ret = spm_cpuidle_register(cpu);
++		if (ret != -ENODEV) {
++			dev_err(&pdev->dev,
++				"Cannot register for CPU%d: %d\n", cpu, ret);
++			break;
++		}
++	}
+ 
+-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+-	drv->reg_base = devm_ioremap_resource(&pdev->dev, res);
+-	if (IS_ERR(drv->reg_base))
+-		return PTR_ERR(drv->reg_base);
++	return ret;
++}
+ 
+-	match_id = of_match_node(spm_match_table, pdev->dev.of_node);
+-	if (!match_id)
+-		return -ENODEV;
++static struct platform_driver spm_cpuidle_driver = {
++	.probe = spm_cpuidle_drv_probe,
++	.driver = {
++		.name = "qcom-spm-cpuidle",
++	},
++};
+ 
+-	drv->reg_data = match_id->data;
++static int __init qcom_spm_cpuidle_init(void)
++{
++	struct platform_device *pdev;
++	int ret;
+ 
+-	ret = spm_cpuidle_init(&drv->cpuidle_driver, cpu);
++	ret = platform_driver_register(&spm_cpuidle_driver);
+ 	if (ret)
+ 		return ret;
+ 
+-	/* Write the SPM sequences first.. */
+-	addr = drv->reg_base + drv->reg_data->reg_offset[SPM_REG_SEQ_ENTRY];
+-	__iowrite32_copy(addr, drv->reg_data->seq,
+-			ARRAY_SIZE(drv->reg_data->seq) / 4);
+-
+-	/*
+-	 * ..and then the control registers.
+-	 * On some SoC if the control registers are written first and if the
+-	 * CPU was held in reset, the reset signal could trigger the SPM state
+-	 * machine, before the sequences are completely written.
+-	 */
+-	spm_register_write(drv, SPM_REG_CFG, drv->reg_data->spm_cfg);
+-	spm_register_write(drv, SPM_REG_DLY, drv->reg_data->spm_dly);
+-	spm_register_write(drv, SPM_REG_PMIC_DLY, drv->reg_data->pmic_dly);
+-	spm_register_write(drv, SPM_REG_PMIC_DATA_0,
+-				drv->reg_data->pmic_data[0]);
+-	spm_register_write(drv, SPM_REG_PMIC_DATA_1,
+-				drv->reg_data->pmic_data[1]);
+-
+-	/* Set up Standby as the default low power mode */
+-	spm_set_low_power_mode(drv, PM_SLEEP_MODE_STBY);
+-
+-	return cpuidle_register(&drv->cpuidle_driver, NULL);
+-}
+-
+-static int spm_dev_remove(struct platform_device *pdev)
+-{
+-	struct spm_driver_data *drv = platform_get_drvdata(pdev);
++	pdev = platform_device_register_simple("qcom-spm-cpuidle",
++					       -1, NULL, 0);
++	if (IS_ERR(pdev)) {
++		platform_driver_unregister(&spm_cpuidle_driver);
++		return PTR_ERR(pdev);
++	}
+ 
+-	cpuidle_unregister(&drv->cpuidle_driver);
+ 	return 0;
+ }
+-
+-static struct platform_driver spm_driver = {
+-	.probe = spm_dev_probe,
+-	.remove = spm_dev_remove,
+-	.driver = {
+-		.name = "saw",
+-		.of_match_table = spm_match_table,
+-	},
+-};
+-
+-builtin_platform_driver(spm_driver);
++device_initcall(qcom_spm_cpuidle_init);
+diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+index 79b568f82a1c..fe3c486ae32d 100644
+--- a/drivers/soc/qcom/Kconfig
++++ b/drivers/soc/qcom/Kconfig
+@@ -190,6 +190,15 @@ config QCOM_SOCINFO
+ 	 Say yes here to support the Qualcomm socinfo driver, providing
+ 	 information about the SoC to user space.
+ 
++config QCOM_SPM
++	tristate "Qualcomm Subsystem Power Manager (SPM)"
++	depends on ARCH_QCOM
++	select QCOM_SCM
++	help
++	  Enable the support for the Qualcomm Subsystem Power Manager, used
++	  to manage cores, L2 low power modes and to configure the internal
++	  Adaptive Voltage Scaler parameters, where supported.
++
+ config QCOM_WCNSS_CTRL
+ 	tristate "Qualcomm WCNSS control driver"
+ 	depends on ARCH_QCOM || COMPILE_TEST
+diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+index ad675a6593d0..24514c722832 100644
+--- a/drivers/soc/qcom/Makefile
++++ b/drivers/soc/qcom/Makefile
+@@ -20,6 +20,7 @@ obj-$(CONFIG_QCOM_SMEM_STATE) += smem_state.o
+ obj-$(CONFIG_QCOM_SMP2P)	+= smp2p.o
+ obj-$(CONFIG_QCOM_SMSM)	+= smsm.o
+ obj-$(CONFIG_QCOM_SOCINFO)	+= socinfo.o
++obj-$(CONFIG_QCOM_SPM)		+= spm.o
+ obj-$(CONFIG_QCOM_WCNSS_CTRL) += wcnss_ctrl.o
+ obj-$(CONFIG_QCOM_APR) += apr.o
+ obj-$(CONFIG_QCOM_LLCC) += llcc-qcom.o
+diff --git a/drivers/soc/qcom/spm.c b/drivers/soc/qcom/spm.c
+new file mode 100644
+index 000000000000..0c8aa9240c41
+--- /dev/null
++++ b/drivers/soc/qcom/spm.c
+@@ -0,0 +1,198 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Copyright (c) 2011-2014, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2014,2015, Linaro Ltd.
++ *
++ * SAW power controller driver
++ */
++
++#include <linux/kernel.h>
++#include <linux/init.h>
++#include <linux/io.h>
++#include <linux/slab.h>
++#include <linux/of.h>
++#include <linux/of_address.h>
++#include <linux/of_device.h>
++#include <linux/err.h>
++#include <linux/platform_device.h>
++#include <soc/qcom/spm.h>
++
++#define SPM_CTL_INDEX		0x7f
++#define SPM_CTL_INDEX_SHIFT	4
++#define SPM_CTL_EN		BIT(0)
++
++enum spm_reg {
++	SPM_REG_CFG,
++	SPM_REG_SPM_CTL,
++	SPM_REG_DLY,
++	SPM_REG_PMIC_DLY,
++	SPM_REG_PMIC_DATA_0,
++	SPM_REG_PMIC_DATA_1,
++	SPM_REG_VCTL,
++	SPM_REG_SEQ_ENTRY,
++	SPM_REG_SPM_STS,
++	SPM_REG_PMIC_STS,
++	SPM_REG_NR,
++};
++
++static const u16 spm_reg_offset_v2_1[SPM_REG_NR] = {
++	[SPM_REG_CFG]		= 0x08,
++	[SPM_REG_SPM_CTL]	= 0x30,
++	[SPM_REG_DLY]		= 0x34,
++	[SPM_REG_SEQ_ENTRY]	= 0x80,
++};
++
++/* SPM register data for 8974, 8084 */
++static const struct spm_reg_data spm_reg_8974_8084_cpu  = {
++	.reg_offset = spm_reg_offset_v2_1,
++	.spm_cfg = 0x1,
++	.spm_dly = 0x3C102800,
++	.seq = { 0x03, 0x0B, 0x0F, 0x00, 0x20, 0x80, 0x10, 0xE8, 0x5B, 0x03,
++		0x3B, 0xE8, 0x5B, 0x82, 0x10, 0x0B, 0x30, 0x06, 0x26, 0x30,
++		0x0F },
++	.start_index[PM_SLEEP_MODE_STBY] = 0,
++	.start_index[PM_SLEEP_MODE_SPC] = 3,
++};
++
++static const u16 spm_reg_offset_v1_1[SPM_REG_NR] = {
++	[SPM_REG_CFG]		= 0x08,
++	[SPM_REG_SPM_CTL]	= 0x20,
++	[SPM_REG_PMIC_DLY]	= 0x24,
++	[SPM_REG_PMIC_DATA_0]	= 0x28,
++	[SPM_REG_PMIC_DATA_1]	= 0x2C,
++	[SPM_REG_SEQ_ENTRY]	= 0x80,
++};
++
++/* SPM register data for 8064 */
++static const struct spm_reg_data spm_reg_8064_cpu = {
++	.reg_offset = spm_reg_offset_v1_1,
++	.spm_cfg = 0x1F,
++	.pmic_dly = 0x02020004,
++	.pmic_data[0] = 0x0084009C,
++	.pmic_data[1] = 0x00A4001C,
++	.seq = { 0x03, 0x0F, 0x00, 0x24, 0x54, 0x10, 0x09, 0x03, 0x01,
++		0x10, 0x54, 0x30, 0x0C, 0x24, 0x30, 0x0F },
++	.start_index[PM_SLEEP_MODE_STBY] = 0,
++	.start_index[PM_SLEEP_MODE_SPC] = 2,
++};
++
++static inline void spm_register_write(struct spm_driver_data *drv,
++					enum spm_reg reg, u32 val)
++{
++	if (drv->reg_data->reg_offset[reg])
++		writel_relaxed(val, drv->reg_base +
++				drv->reg_data->reg_offset[reg]);
++}
++
++/* Ensure a guaranteed write, before return */
++static inline void spm_register_write_sync(struct spm_driver_data *drv,
++					enum spm_reg reg, u32 val)
++{
++	u32 ret;
++
++	if (!drv->reg_data->reg_offset[reg])
++		return;
++
++	do {
++		writel_relaxed(val, drv->reg_base +
++				drv->reg_data->reg_offset[reg]);
++		ret = readl_relaxed(drv->reg_base +
++				drv->reg_data->reg_offset[reg]);
++		if (ret == val)
++			break;
++		cpu_relax();
++	} while (1);
++}
++
++static inline u32 spm_register_read(struct spm_driver_data *drv,
++					enum spm_reg reg)
++{
++	return readl_relaxed(drv->reg_base + drv->reg_data->reg_offset[reg]);
++}
++
++void spm_set_low_power_mode(struct spm_driver_data *drv,
++					enum pm_sleep_mode mode)
++{
++	u32 start_index;
++	u32 ctl_val;
++
++	start_index = drv->reg_data->start_index[mode];
++
++	ctl_val = spm_register_read(drv, SPM_REG_SPM_CTL);
++	ctl_val &= ~(SPM_CTL_INDEX << SPM_CTL_INDEX_SHIFT);
++	ctl_val |= start_index << SPM_CTL_INDEX_SHIFT;
++	ctl_val |= SPM_CTL_EN;
++	spm_register_write_sync(drv, SPM_REG_SPM_CTL, ctl_val);
++}
++
++static const struct of_device_id spm_match_table[] = {
++	{ .compatible = "qcom,msm8974-saw2-v2.1-cpu",
++	  .data = &spm_reg_8974_8084_cpu },
++	{ .compatible = "qcom,apq8084-saw2-v2.1-cpu",
++	  .data = &spm_reg_8974_8084_cpu },
++	{ .compatible = "qcom,apq8064-saw2-v1.1-cpu",
++	  .data = &spm_reg_8064_cpu },
++	{ },
++};
++
++static int spm_dev_probe(struct platform_device *pdev)
++{
++	const struct of_device_id *match_id;
++	struct spm_driver_data *drv;
++	struct resource *res;
++	void __iomem *addr;
++
++	drv = devm_kzalloc(&pdev->dev, sizeof(*drv), GFP_KERNEL);
++	if (!drv)
++		return -ENOMEM;
++
++	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++	drv->reg_base = devm_ioremap_resource(&pdev->dev, res);
++	if (IS_ERR(drv->reg_base))
++		return PTR_ERR(drv->reg_base);
++
++	match_id = of_match_node(spm_match_table, pdev->dev.of_node);
++	if (!match_id)
++		return -ENODEV;
++
++	drv->reg_data = match_id->data;
++	platform_set_drvdata(pdev, drv);
++
++	/* Write the SPM sequences first.. */
++	addr = drv->reg_base + drv->reg_data->reg_offset[SPM_REG_SEQ_ENTRY];
++	__iowrite32_copy(addr, drv->reg_data->seq,
++			ARRAY_SIZE(drv->reg_data->seq) / 4);
++
++	/*
++	 * ..and then the control registers.
++	 * On some SoC if the control registers are written first and if the
++	 * CPU was held in reset, the reset signal could trigger the SPM state
++	 * machine, before the sequences are completely written.
++	 */
++	spm_register_write(drv, SPM_REG_CFG, drv->reg_data->spm_cfg);
++	spm_register_write(drv, SPM_REG_DLY, drv->reg_data->spm_dly);
++	spm_register_write(drv, SPM_REG_PMIC_DLY, drv->reg_data->pmic_dly);
++	spm_register_write(drv, SPM_REG_PMIC_DATA_0,
++				drv->reg_data->pmic_data[0]);
++	spm_register_write(drv, SPM_REG_PMIC_DATA_1,
++				drv->reg_data->pmic_data[1]);
++
++	/* Set up Standby as the default low power mode */
++	spm_set_low_power_mode(drv, PM_SLEEP_MODE_STBY);
++
++	return 0;
++}
++
++static struct platform_driver spm_driver = {
++	.probe = spm_dev_probe,
++	.driver = {
++		.name = "qcom_spm",
++		.of_match_table = spm_match_table,
++	},
++};
++
++static int __init qcom_spm_init(void)
++{
++	return platform_driver_register(&spm_driver);
++}
++arch_initcall(qcom_spm_init);
+diff --git a/include/soc/qcom/spm.h b/include/soc/qcom/spm.h
+new file mode 100644
+index 000000000000..604eca2c4d4a
+--- /dev/null
++++ b/include/soc/qcom/spm.h
+@@ -0,0 +1,45 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/*
++ * Copyright (c) 2011-2014, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2014,2015, Linaro Ltd.
++ * Copyright (C) 2020, AngeloGioacchino Del Regno <kholk11@gmail.com>
++ */
++
++#ifndef __SPM_H__
++#define __SPM_H__
++
++#include <linux/cpuidle.h>
++
++#define MAX_PMIC_DATA		2
++#define MAX_SEQ_DATA		64
++
++enum pm_sleep_mode {
++	PM_SLEEP_MODE_STBY,
++	PM_SLEEP_MODE_RET,
++	PM_SLEEP_MODE_SPC,
++	PM_SLEEP_MODE_PC,
++	PM_SLEEP_MODE_NR,
++};
++
++struct spm_reg_data {
++	const u16 *reg_offset;
++	u32 spm_cfg;
++	u32 spm_dly;
++	u32 pmic_dly;
++	u32 pmic_data[MAX_PMIC_DATA];
++	u32 avs_ctl;
++	u32 avs_limit;
++	u8 seq[MAX_SEQ_DATA];
++	u8 start_index[PM_SLEEP_MODE_NR];
++};
++
++struct spm_driver_data {
++	struct cpuidle_driver cpuidle_driver;
++	void __iomem *reg_base;
++	const struct spm_reg_data *reg_data;
++};
++
++void spm_set_low_power_mode(struct spm_driver_data *drv,
++					enum pm_sleep_mode mode);
++
++#endif /* __SPM_H__ */
 -- 
-~Vinod
+2.30.0
+
