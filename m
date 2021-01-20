@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BF96E2FCE96
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jan 2021 12:01:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DDA0F2FCE90
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jan 2021 12:01:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727742AbhATKaa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jan 2021 05:30:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44530 "EHLO
+        id S1731325AbhATKby (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jan 2021 05:31:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731284AbhATJ1O (ORCPT
+        with ESMTP id S1731290AbhATJ1P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Jan 2021 04:27:14 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18B8BC0613D3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 01:26:32 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id g1so24242244edu.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 01:26:32 -0800 (PST)
+        Wed, 20 Jan 2021 04:27:15 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B26FBC061793
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 01:26:33 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id d22so13889295edy.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 01:26:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=tTT0+SqKfrfhaHcnRFvnvU9qDTr8hatpLylY1+aK+yQ=;
-        b=S+8/ubQWgNSY0+aeQAy708NPaa9yQucZWs8A74w5rv9PjdxLXxpUU4BiMq+RljwggJ
-         vT1IdBTbqBdf0oqf8H+EX/XVrrNHU0kPPVKSkC6OmSDHgw1PO5r5nPwv6lA0mFK8Lar2
-         /ebuzzLZWUT8TEPRpzvymqDnBiYMci7Tmf1mxBVnjJ3pzf1l5e/FYsnaHiZg4b488IUb
-         KWwSaZXetc+EpBt65C635eV0463cyZpTIN++PC7RWhYzIAEBXbnvMOxrs9bAaYQxMjXF
-         MhIL8OrGY98++7sSJY+a/g1fOjWZozfAuH/DuMh97vqUugp2cgnUzg00Zirr95T4yMo/
-         kSig==
+        bh=cNEG6Wf0FIfViBspVuOimQ9Ufn7OM3gR5b0lBFKYH9s=;
+        b=w3DM53GoY3/BqPTYQ9HHe9jPcIQOY2KZRFnfsde2B3+gHng6/IM0kq0P8g0UzqN8cF
+         AZu6liGhdskAPOJgSe6zuqHppseXAIpB9Klj35tQ41kMActjknJkWK+ITLF0jd3vDxoE
+         UjtjFZW6qw3FwFPa/dSK42r2tqZ/WLZbVy6pvSmpEts2XpAPL28dR88/NwtVQHVglIrW
+         wkgRSjJKcCmtXEpItONAplJNSwWzU2zIcafuN5lg4ko7fFkV0uhKrkKK4S+A8uH6CaWn
+         YFndia741VRzTF6tJreMEy0Ctpi4JjW6I6IU5dPhXqtTFxyYfds/+Ps8USSRzaOOXPz/
+         XJYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=tTT0+SqKfrfhaHcnRFvnvU9qDTr8hatpLylY1+aK+yQ=;
-        b=AZUeMQkbcQeeGRUNtJnUJAbMqFVJLv3MflaFllzgKQUeXLcCWVfG3BgJIwxogBVYpH
-         hQCzQHejYT2liubLScIdoBWpeKsvPvg/+l5TOz61g6GPNe4kXqUeZprlQmtv4bO+fALa
-         fNPZU0YYuIpHReWk0ls935ac6ZcJACUqHdoQ5vsEXlbYIVvFpNoVsD47gMaaMJ8hu0eH
-         rV2aUjwXwYadGaDeoUOec9JHHSISYAjqbrcmi7tGykpm1RlqiuHA1ix4KOiAD27KgmRN
-         ImEvAh+KeLLUM4esZ55ZQSay0Z8zRwmR8tRm279jEMKIGus0gtFT1o+/7d7TiwVHRdGr
-         FU2A==
-X-Gm-Message-State: AOAM532hrv3WhNA/5Wvj6vuSNI1GUt9ZAl2atH0nGcehp+PWH2lWvLz7
-        ov5AzYgpbvn0/BgJw1Yx6koDGg==
-X-Google-Smtp-Source: ABdhPJzbVr9bKOhKB5w1vpD4zCZzXTS5MKV1IETe1k/SjINiPVdYfqHXxuithV9Nk9EU7ka/IRtheQ==
-X-Received: by 2002:a05:6402:614:: with SMTP id n20mr6592595edv.358.1611134790882;
-        Wed, 20 Jan 2021 01:26:30 -0800 (PST)
+        bh=cNEG6Wf0FIfViBspVuOimQ9Ufn7OM3gR5b0lBFKYH9s=;
+        b=DoXnoEIUeHgzhUrny2QESK6pZ6IXwx1ujZW+TIJkTsO2vd/w9FDZO+8eNmWIzLqGju
+         Vo4ssFKnZe9M2jlzZ5xM1D8PEkxLsfXByxVFmxwEYOi2i6C/zb4hZXaXpmfpHb00JlGn
+         cZ0AY8F+WiF6p4YxsMMtdnGiazu2NYic0ye1MPD9/OCbdp33BIMKDPL6rQ/rWMWkrOJO
+         93h6GZdMccK2BliAQRehE0OZQWy3AQaVvHi6ic5wHdlZhzZVPgJBeUmh7fOXsFdvox1q
+         I5fAhphJTrWNozKX2k6z80CdV8g+FzO6OmTKihuQHGoNOvw3GFN9+ouKNkkcg4Y/qcRq
+         /bkw==
+X-Gm-Message-State: AOAM530AQ6hBDyKLntiKUjTRnOhVcOXkSCTRunooAu/watM25ItasBmL
+        YsQW7jF/p5XgMx7sbK8+wEIIyg==
+X-Google-Smtp-Source: ABdhPJyMFxPjSTe5/tLrPdZGq7xwIVcnOlU+Efz0xBj30QCTOuprpWQzAyY0hgsAA+dr6x/u+Gmpjw==
+X-Received: by 2002:aa7:cd4c:: with SMTP id v12mr6641709edw.17.1611134792447;
+        Wed, 20 Jan 2021 01:26:32 -0800 (PST)
 Received: from localhost.localdomain (hst-221-66.medicom.bg. [84.238.221.66])
-        by smtp.gmail.com with ESMTPSA id k16sm619392ejd.78.2021.01.20.01.26.30
+        by smtp.gmail.com with ESMTPSA id k16sm619392ejd.78.2021.01.20.01.26.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jan 2021 01:26:30 -0800 (PST)
+        Wed, 20 Jan 2021 01:26:32 -0800 (PST)
 From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
 To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
         Ezequiel Garcia <ezequiel@collabora.com>,
         Nicolas Dufresne <nicolas.dufresne@collabora.com>,
         Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH v4 1/5] v4l: Add new Colorimetry Class
-Date:   Wed, 20 Jan 2021 11:26:02 +0200
-Message-Id: <20210120092606.3987207-2-stanimir.varbanov@linaro.org>
+Subject: [PATCH v4 2/5] docs: Document colorimetry class
+Date:   Wed, 20 Jan 2021 11:26:03 +0200
+Message-Id: <20210120092606.3987207-3-stanimir.varbanov@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20210120092606.3987207-1-stanimir.varbanov@linaro.org>
 References: <20210120092606.3987207-1-stanimir.varbanov@linaro.org>
@@ -67,59 +67,68 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add Colorimetry control class for colorimetry controls
+Add a document for ext control colorimetry class.
 
 Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 ---
- drivers/media/v4l2-core/v4l2-ctrls.c | 5 +++++
- include/uapi/linux/v4l2-controls.h   | 4 ++++
- 2 files changed, 9 insertions(+)
+ .../userspace-api/media/v4l/common.rst        |  1 +
+ .../media/v4l/ext-ctrls-colorimetry.rst       | 19 +++++++++++++++++++
+ .../media/v4l/vidioc-g-ext-ctrls.rst          |  4 ++++
+ 3 files changed, 24 insertions(+)
+ create mode 100644 Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst
 
-diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
-index f7b310240af2..a5137a867411 100644
---- a/drivers/media/v4l2-core/v4l2-ctrls.c
-+++ b/drivers/media/v4l2-core/v4l2-ctrls.c
-@@ -1201,6 +1201,10 @@ const char *v4l2_ctrl_get_name(u32 id)
- 	case V4L2_CID_STATELESS_H264_SLICE_PARAMS:		return "H264 Slice Parameters";
- 	case V4L2_CID_STATELESS_H264_DECODE_PARAMS:		return "H264 Decode Parameters";
- 	case V4L2_CID_STATELESS_FWHT_PARAMS:			return "FWHT Stateless Parameters";
+diff --git a/Documentation/userspace-api/media/v4l/common.rst b/Documentation/userspace-api/media/v4l/common.rst
+index 8c263c5a85d8..ea0435182e44 100644
+--- a/Documentation/userspace-api/media/v4l/common.rst
++++ b/Documentation/userspace-api/media/v4l/common.rst
+@@ -51,6 +51,7 @@ applicable to all devices.
+     ext-ctrls-fm-tx
+     ext-ctrls-fm-rx
+     ext-ctrls-detect
++    ext-ctrls-colorimetry
+     fourcc
+     format
+     planar-apis
+diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst
+new file mode 100644
+index 000000000000..6b0cd2054e84
+--- /dev/null
++++ b/Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst
+@@ -0,0 +1,19 @@
++.. SPDX-License-Identifier: GFDL-1.1-no-invariants-or-later
 +
-+	/* Colorimetry controls */
-+	/* Keep the order of the 'case's the same as in v4l2-controls.h! */
-+	case V4L2_CID_COLORIMETRY_CLASS:	return "Colorimetry Controls";
- 	default:
- 		return NULL;
- 	}
-@@ -1389,6 +1393,7 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
- 	case V4L2_CID_RF_TUNER_CLASS:
- 	case V4L2_CID_DETECT_CLASS:
- 	case V4L2_CID_CODEC_STATELESS_CLASS:
-+	case V4L2_CID_COLORIMETRY_CLASS:
- 		*type = V4L2_CTRL_TYPE_CTRL_CLASS;
- 		/* You can neither read not write these */
- 		*flags |= V4L2_CTRL_FLAG_READ_ONLY | V4L2_CTRL_FLAG_WRITE_ONLY;
-diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
-index 039c0d7add1b..a41039559193 100644
---- a/include/uapi/linux/v4l2-controls.h
-+++ b/include/uapi/linux/v4l2-controls.h
-@@ -66,6 +66,7 @@
- #define V4L2_CTRL_CLASS_RF_TUNER	0x00a20000	/* RF tuner controls */
- #define V4L2_CTRL_CLASS_DETECT		0x00a30000	/* Detection controls */
- #define V4L2_CTRL_CLASS_CODEC_STATELESS 0x00a40000	/* Stateless codecs controls */
-+#define V4L2_CTRL_CLASS_COLORIMETRY	0x00a50000	/* Colorimetry controls */
- 
- /* User-class control IDs */
- 
-@@ -1657,6 +1658,9 @@ struct v4l2_ctrl_fwht_params {
- 	__u32 quantization;
- };
- 
-+#define V4L2_CID_COLORIMETRY_CLASS_BASE	(V4L2_CTRL_CLASS_COLORIMETRY | 0x900)
-+#define V4L2_CID_COLORIMETRY_CLASS	(V4L2_CTRL_CLASS_COLORIMETRY | 1)
++.. _colorimetry-controls:
 +
- /* MPEG-compression definitions kept for backwards compatibility */
- #ifndef __KERNEL__
- #define V4L2_CTRL_CLASS_MPEG            V4L2_CTRL_CLASS_CODEC
++*****************************
++Colorimetry Control Reference
++*****************************
++
++Below are controls within the Colorimetry control class.
++
++Colorimetry Control IDs
++-----------------------
++
++.. _colorimetry-control-id:
++
++``V4L2_CID_COLORIMETRY_CLASS (class)``
++    The Colorimetry class descriptor. Calling
++    :ref:`VIDIOC_QUERYCTRL` for this control will
++    return a description of this control class.
+diff --git a/Documentation/userspace-api/media/v4l/vidioc-g-ext-ctrls.rst b/Documentation/userspace-api/media/v4l/vidioc-g-ext-ctrls.rst
+index b9c62affbb5a..8a95ebdd499a 100644
+--- a/Documentation/userspace-api/media/v4l/vidioc-g-ext-ctrls.rst
++++ b/Documentation/userspace-api/media/v4l/vidioc-g-ext-ctrls.rst
+@@ -394,6 +394,10 @@ still cause this situation.
+       - 0xa40000
+       - The class containing stateless codec controls. These controls are
+ 	described in :ref:`codec-stateless-controls`.
++    * - ``V4L2_CTRL_CLASS_COLORIMETRY``
++      - 0xa50000
++      - The class containing colorimetry controls. These controls are
++	described in :ref:`colorimetry-controls`.
+ 
+ Return Value
+ ============
 -- 
 2.25.1
 
