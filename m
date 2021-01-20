@@ -2,189 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F28A2FCE51
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jan 2021 11:54:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D7232FCE53
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jan 2021 11:54:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727123AbhATKZI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jan 2021 05:25:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42356 "EHLO
+        id S1731689AbhATKcg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jan 2021 05:32:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731025AbhATJRD (ORCPT
+        with ESMTP id S1731311AbhATJ2Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Jan 2021 04:17:03 -0500
-Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2820C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 01:16:22 -0800 (PST)
-Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 919761F63C;
-        Wed, 20 Jan 2021 10:16:17 +0100 (CET)
-Subject: Re: [PATCH V1] clk: qcom: gcc-sc7180: Mark the MM XO clocks to be
- always ON
-To:     Taniya Das <tdas@codeaurora.org>, Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1611128871-5898-1-git-send-email-tdas@codeaurora.org>
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Message-ID: <e6843147-514b-8901-a04c-b1d6e3ebf1c2@somainline.org>
-Date:   Wed, 20 Jan 2021 10:16:17 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.0
+        Wed, 20 Jan 2021 04:28:16 -0500
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2655C061799
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 01:26:36 -0800 (PST)
+Received: by mail-ej1-x62c.google.com with SMTP id ke15so24856157ejc.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 01:26:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=iOLteU0y/E6exJE5YL/l2x0USlJDB217kK70I6Kv1VE=;
+        b=MddKoXzskkXvWo93r04q+Opa483XZHht2VNNMubr45P9407hBYjlYEw0jNazZadnKt
+         o5Qj75aL1fnNK4ZJhbnR9lJK239X6zzR/m3Jf94hmekS/ZHzYq3TopWIFQ1wME8hccNi
+         86VAFjFhaPlqHDch0Qu03nt96We4EyMarAtoTpKDWfMNPKGtIJD9WBut4F4VlYXQ0jmF
+         vvFoCzBwlmpqvVgwR3kiVK5LRzCGskiac/zgX02izhZ6C1+OTerqyBDwLfqXtOfJCKik
+         UdEDnGpz842JWWkS/NDK+fSr6UenIZAeT+JPfGq55msUDNZrnCB6cYd4ezU9oc53Ty2q
+         nOUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=iOLteU0y/E6exJE5YL/l2x0USlJDB217kK70I6Kv1VE=;
+        b=DfYIm60pbJ8XzJaLCL25axMjnuG1ynPdUtXZ/AY1sCgkvVY+TZ9FulCqiHvpK23vWy
+         G7mv2oX0EBoRO5D3BZyefC2miKEAd0JsYWrn+u0n6iA2TVPWMYHWcpVLh47YLjBXubiQ
+         Qe09WIA4198hqjZxz2mhcBfdqkFnfMNnvALmEnw11M+pg5s74SrFIPJALyx28qDICi5g
+         oYfN4iBuwyRo2tAuKnSqRxvtBsawfhgU2ty19bG/VaSw+y9lMuu25h5PoYEEa0WOJnp6
+         e7TX8wPpqXaCJPAW3nO6wl9F0fuvXOd8XZ5Qps4dAt8XJRsJ59y4FzqaE+iMSazm9+UL
+         qyHA==
+X-Gm-Message-State: AOAM532oJqDNWvOBC2TJop6/h/rBofqBlsl2vQpw1GkeHODBb6ihgCIO
+        gE8MkL/T6ivu2U0YgFynokSf2A==
+X-Google-Smtp-Source: ABdhPJzAPhI3KgBmfKmfQLJQF8mt67kcPhSiGlpSf1ZqglTSXI6Pgc5n+gjcnbMVwZQQM02E9IdQ/w==
+X-Received: by 2002:a17:906:d98:: with SMTP id m24mr5388335eji.428.1611134795728;
+        Wed, 20 Jan 2021 01:26:35 -0800 (PST)
+Received: from localhost.localdomain (hst-221-66.medicom.bg. [84.238.221.66])
+        by smtp.gmail.com with ESMTPSA id k16sm619392ejd.78.2021.01.20.01.26.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Jan 2021 01:26:35 -0800 (PST)
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        Ezequiel Garcia <ezequiel@collabora.com>,
+        Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Subject: [PATCH v4 4/5] docs: Document CLL and Mastering display colorimetry controls
+Date:   Wed, 20 Jan 2021 11:26:05 +0200
+Message-Id: <20210120092606.3987207-5-stanimir.varbanov@linaro.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20210120092606.3987207-1-stanimir.varbanov@linaro.org>
+References: <20210120092606.3987207-1-stanimir.varbanov@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <1611128871-5898-1-git-send-email-tdas@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 20/01/21 08:47, Taniya Das ha scritto:
-> There are intermittent GDSC power-up failures observed for titan top
-> gdsc, which requires the XO clock. Thus mark all the MM XO clocks always
-> enabled from probe.
-> 
+Document Content Light Level and Mastering Display v4l2 colorimetry
+controls.
 
-Hello Tanya,
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+---
+ .../media/v4l/ext-ctrls-colorimetry.rst       | 71 +++++++++++++++++++
+ .../media/videodev2.h.rst.exceptions          |  2 +
+ 2 files changed, 73 insertions(+)
 
-> Fixes: 8d4025943e13 ("clk: qcom: camcc-sc7180: Use runtime PM ops instead of clk ones")
-> Signed-off-by: Taniya Das <tdas@codeaurora.org>
-> ---
->   drivers/clk/qcom/gcc-sc7180.c | 47 ++++---------------------------------------
->   1 file changed, 4 insertions(+), 43 deletions(-)
-> 
-> --
-> Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
-> of the Code Aurora Forum, hosted by the  Linux Foundation.
-> 
-> diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-sc7180.c
-> index b05901b..88e896a 100644
-> --- a/drivers/clk/qcom/gcc-sc7180.c
-> +++ b/drivers/clk/qcom/gcc-sc7180.c
-> @@ -1,6 +1,6 @@
->   // SPDX-License-Identifier: GPL-2.0-only
->   /*
-> - * Copyright (c) 2019-2020, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2019-2021, The Linux Foundation. All rights reserved.
->    */
-> 
->   #include <linux/clk-provider.h>
-> @@ -919,19 +919,6 @@ static struct clk_branch gcc_camera_throttle_hf_axi_clk = {
->   	},
->   };
-> 
-> -static struct clk_branch gcc_camera_xo_clk = {
-> -	.halt_reg = 0xb02c,
-> -	.halt_check = BRANCH_HALT,
-> -	.clkr = {
-> -		.enable_reg = 0xb02c,
-> -		.enable_mask = BIT(0),
-> -		.hw.init = &(struct clk_init_data){
-> -			.name = "gcc_camera_xo_clk",
-> -			.ops = &clk_branch2_ops,
-> -		},
-> -	},
-> -};
-> -
-
-Why are you avoiding to register these clocks entirely?
-If this is needed by the Titan GDSC, this clock "does indeed exist".
-
-If these clocks shall never be turned off, then you should add the
-CLK_IS_CRITICAL flag and perhaps add a comment explaining why.
-
->   static struct clk_branch gcc_ce1_ahb_clk = {
->   	.halt_reg = 0x4100c,
->   	.halt_check = BRANCH_HALT_VOTED,
-> @@ -1096,19 +1083,6 @@ static struct clk_branch gcc_disp_throttle_hf_axi_clk = {
->   	},
->   };
-> 
-> -static struct clk_branch gcc_disp_xo_clk = {
-> -	.halt_reg = 0xb030,
-> -	.halt_check = BRANCH_HALT,
-> -	.clkr = {
-> -		.enable_reg = 0xb030,
-> -		.enable_mask = BIT(0),
-> -		.hw.init = &(struct clk_init_data){
-> -			.name = "gcc_disp_xo_clk",
-> -			.ops = &clk_branch2_ops,
-> -		},
-> -	},
-> -};
-> -
-
-Same here.
-
->   static struct clk_branch gcc_gp1_clk = {
->   	.halt_reg = 0x64000,
->   	.halt_check = BRANCH_HALT,
-> @@ -2159,19 +2133,6 @@ static struct clk_branch gcc_video_throttle_axi_clk = {
->   	},
->   };
-> 
-> -static struct clk_branch gcc_video_xo_clk = {
-> -	.halt_reg = 0xb028,
-> -	.halt_check = BRANCH_HALT,
-> -	.clkr = {
-> -		.enable_reg = 0xb028,
-> -		.enable_mask = BIT(0),
-> -		.hw.init = &(struct clk_init_data){
-> -			.name = "gcc_video_xo_clk",
-> -			.ops = &clk_branch2_ops,
-> -		},
-> -	},
-> -};
-> -
-
-...and here.
-
->   static struct clk_branch gcc_mss_cfg_ahb_clk = {
->   	.halt_reg = 0x8a000,
->   	.halt_check = BRANCH_HALT,
-> @@ -2304,7 +2265,6 @@ static struct clk_regmap *gcc_sc7180_clocks[] = {
->   	[GCC_BOOT_ROM_AHB_CLK] = &gcc_boot_rom_ahb_clk.clkr,
->   	[GCC_CAMERA_HF_AXI_CLK] = &gcc_camera_hf_axi_clk.clkr,
->   	[GCC_CAMERA_THROTTLE_HF_AXI_CLK] = &gcc_camera_throttle_hf_axi_clk.clkr,
-> -	[GCC_CAMERA_XO_CLK] = &gcc_camera_xo_clk.clkr,
->   	[GCC_CE1_AHB_CLK] = &gcc_ce1_ahb_clk.clkr,
->   	[GCC_CE1_AXI_CLK] = &gcc_ce1_axi_clk.clkr,
->   	[GCC_CE1_CLK] = &gcc_ce1_clk.clkr,
-> @@ -2317,7 +2277,6 @@ static struct clk_regmap *gcc_sc7180_clocks[] = {
->   	[GCC_DISP_GPLL0_DIV_CLK_SRC] = &gcc_disp_gpll0_div_clk_src.clkr,
->   	[GCC_DISP_HF_AXI_CLK] = &gcc_disp_hf_axi_clk.clkr,
->   	[GCC_DISP_THROTTLE_HF_AXI_CLK] = &gcc_disp_throttle_hf_axi_clk.clkr,
-> -	[GCC_DISP_XO_CLK] = &gcc_disp_xo_clk.clkr,
->   	[GCC_GP1_CLK] = &gcc_gp1_clk.clkr,
->   	[GCC_GP1_CLK_SRC] = &gcc_gp1_clk_src.clkr,
->   	[GCC_GP2_CLK] = &gcc_gp2_clk.clkr,
-> @@ -2413,7 +2372,6 @@ static struct clk_regmap *gcc_sc7180_clocks[] = {
->   	[GCC_VIDEO_AXI_CLK] = &gcc_video_axi_clk.clkr,
->   	[GCC_VIDEO_GPLL0_DIV_CLK_SRC] = &gcc_video_gpll0_div_clk_src.clkr,
->   	[GCC_VIDEO_THROTTLE_AXI_CLK] = &gcc_video_throttle_axi_clk.clkr,
-> -	[GCC_VIDEO_XO_CLK] = &gcc_video_xo_clk.clkr,
->   	[GPLL0] = &gpll0.clkr,
->   	[GPLL0_OUT_EVEN] = &gpll0_out_even.clkr,
->   	[GPLL6] = &gpll6.clkr,
-> @@ -2510,6 +2468,9 @@ static int gcc_sc7180_probe(struct platform_device *pdev)
->   	regmap_update_bits(regmap, 0x0b004, BIT(0), BIT(0));
->   	regmap_update_bits(regmap, 0x0b008, BIT(0), BIT(0));
->   	regmap_update_bits(regmap, 0x0b00c, BIT(0), BIT(0));
-> +	regmap_update_bits(regmap, 0x0b02c, BIT(0), BIT(0));
-> +	regmap_update_bits(regmap, 0x0b028, BIT(0), BIT(0));
-> +	regmap_update_bits(regmap, 0x0b030, BIT(0), BIT(0));
-
-IMO, "Magic" regmap writes like these ones, even if documented, should
-be avoided in this specific case, since the clocks framework accounts
-for clocks that should be always-on, if provided with the right flags.
-
->   	regmap_update_bits(regmap, 0x71004, BIT(0), BIT(0));
-> 
->   	ret = qcom_cc_register_rcg_dfs(regmap, gcc_dfs_clocks,
-> 
+diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst
+index 6b0cd2054e84..e7e55323651f 100644
+--- a/Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst
++++ b/Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst
+@@ -17,3 +17,74 @@ Colorimetry Control IDs
+     The Colorimetry class descriptor. Calling
+     :ref:`VIDIOC_QUERYCTRL` for this control will
+     return a description of this control class.
++
++``V4L2_CID_COLORIMETRY_HDR10_CLL_INFO (struct)``
++    The Content Light Level defines upper bounds for the nominal target
++    brightness light level of the pictures.
++
++.. c:type:: v4l2_ctrl_hdr10_cll_info
++
++.. cssclass:: longtable
++
++.. flat-table:: struct v4l2_ctrl_hdr10_cll_info
++    :header-rows:  0
++    :stub-columns: 0
++    :widths:       1 1 2
++
++    * - __u16
++      - ``max_content_light_level``
++      - The upper bound for the maximum light level among all individual
++        samples for the pictures of a coded video sequence, cd/m2. When
++        equal to 0 no such upper bound is present.
++    * - __u16
++      - ``max_pic_average_light_level``
++      - The upper bound for the maximum average light level among the
++        samples for any individual picture of a coded video sequence, cd/m2.
++        When equal to 0 no such upper bound is present.
++
++``V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY (struct)``
++    The mastering display defines the colour volume (the colour primaries,
++    white point and luminance range) of a display considered to be the
++    mastering display for the current video content.
++
++.. c:type:: v4l2_ctrl_hdr10_mastering_display
++
++.. cssclass:: longtable
++
++.. flat-table:: struct v4l2_ctrl_hdr10_mastering_display
++    :header-rows:  0
++    :stub-columns: 0
++    :widths:       1 1 2
++
++    * - __u16
++      - ``display_primaries_x[3]``
++      - Specifies the normalized x chromaticity coordinate of the colour
++        primary component c of the mastering display in increments of 0.00002.
++        For describing the mastering display that uses Red, Green and Blue
++        colour primaries, index value c equal to 0 corresponds to the Green
++        primary, c equal to 1 corresponds to Blue primary and c equal to 2
++        corresponds to the Red colour primary.
++    * - __u16
++      - ``display_primaries_y[3]``
++      - Specifies the normalized y chromaticity coordinate of the colour
++        primary component c of the mastering display in increments of 0.00002.
++        For describing the mastering display that uses Red, Green and Blue
++        colour primaries, index value c equal to 0 corresponds to the Green
++        primary, c equal to 1 corresponds to Blue primary and c equal to 2
++        corresponds to Red colour primary.
++    * - __u16
++      - ``white_point_x``
++      - Specifies the normalized x chromaticity coordinate of the white
++        point of the mastering display in increments of 0.00002.
++    * - __u16
++      - ``white_point_y``
++      - Specifies the normalized y chromaticity coordinate of the white
++        point of the mastering display in increments of 0.00002.
++    * - __u32
++      - ``max_luminance``
++      - Specifies the nominal maximum display luminance of the mastering
++        display in units of 0.0001 cd/m2.
++    * - __u32
++      - ``min_luminance``
++      - specifies the nominal minimum display luminance of the mastering
++        display in units of 0.0001 cd/m2.
+diff --git a/Documentation/userspace-api/media/videodev2.h.rst.exceptions b/Documentation/userspace-api/media/videodev2.h.rst.exceptions
+index 0ed170c6e720..af4b8b87c5d7 100644
+--- a/Documentation/userspace-api/media/videodev2.h.rst.exceptions
++++ b/Documentation/userspace-api/media/videodev2.h.rst.exceptions
+@@ -147,6 +147,8 @@ replace symbol V4L2_CTRL_TYPE_HEVC_PPS :c:type:`v4l2_ctrl_type`
+ replace symbol V4L2_CTRL_TYPE_HEVC_SLICE_PARAMS :c:type:`v4l2_ctrl_type`
+ replace symbol V4L2_CTRL_TYPE_AREA :c:type:`v4l2_ctrl_type`
+ replace symbol V4L2_CTRL_TYPE_FWHT_PARAMS :c:type:`v4l2_ctrl_type`
++replace symbol V4L2_CTRL_TYPE_HDR10_CLL_INFO :c:type:`v4l2_ctrl_hdr10_cll_info`
++replace symbol V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY :c:type:`v4l2_ctrl_hdr10_mastering_display`
+ 
+ # V4L2 capability defines
+ replace define V4L2_CAP_VIDEO_CAPTURE device-capabilities
+-- 
+2.25.1
 
