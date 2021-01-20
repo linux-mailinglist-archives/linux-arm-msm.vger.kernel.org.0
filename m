@@ -2,80 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3291A2FCC2F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jan 2021 08:57:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B3EE72FCC61
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jan 2021 09:09:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729029AbhATH5V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jan 2021 02:57:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53384 "EHLO
+        id S1726931AbhATIJc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jan 2021 03:09:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730323AbhATH5D (ORCPT
+        with ESMTP id S1730895AbhATIHW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Jan 2021 02:57:03 -0500
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78FF4C061575
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jan 2021 23:56:23 -0800 (PST)
-Received: by mail-pl1-x631.google.com with SMTP id x12so12061091plr.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jan 2021 23:56:23 -0800 (PST)
+        Wed, 20 Jan 2021 03:07:22 -0500
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01D75C061575
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 00:06:42 -0800 (PST)
+Received: by mail-pg1-x52b.google.com with SMTP id n25so14708711pgb.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 00:06:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=uD3doS0EVCu1WoiDmQKvRQ7GKx+7H2pBnCgA8Mq4TGY=;
-        b=Ik2EQFIOdWoF83W0IFY4s5vJcg5khkzq8iuElxJp2W/hCn54d74jRJlfYqzAFYeaE/
-         SCwZ7o4QaSmoCOaLOdCXLvHwC0SwazOJG7I5ZpRXrz/CniD9lcjd8IImxM59SSJEnpNp
-         +Un7zsbGbIec4DskaXWM6tUOldf3p/66yeNL4=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AOs3HzRR3mAFpw46cKXmvSbeM84R4INByCK26V8xTI8=;
+        b=b2oNX+bT43fFEBKDnEG9zQ6OcyDDVc4GNtq5N7Rm7SnbaJU2dx/BT9GiMBtvtSXQIX
+         ADvaEIEU+4RhYOjFDWQwcqJvxTo491/vjLjeq7mRelmHk/+dZQLxPGPuDG7VJllfNN8k
+         Zgtyuo9iM4i2gjcdev3qU+e4E8rCkp7krxKkt1ETLQL7wR7jD5PTBv0x629eMnzccMOr
+         KwokXh2cQ7ATdxZkZop7U1duPsO0zb2vplGCwbAa1n2IOi9mVChQ7vB9vL75BhBb7P6j
+         0JpSf6cQqQq5FXOjXVYAoU8yHofdZzz9+4siO6xXLnQq0aURjUPpEWDKQ9oAcu4aASCi
+         O0pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=uD3doS0EVCu1WoiDmQKvRQ7GKx+7H2pBnCgA8Mq4TGY=;
-        b=B2mwQMS75PpQ164lud0QcbauP3i/jnghdzsGA5ZQLoGEpSI8fyLkcPRM2N+CXIB7Uy
-         WCOWg+offeXvoJUVM1HeoCt2XbRREi48WFhJqOmOnWp8fnm04tXNvseWMgHJ/Mt40Gwm
-         HtHZG7KJp4U5gcqffLJBHxF3k9F7H0Kk1/zESjFiIwb2enZBfplsDnW/3bVAzwQ26bz1
-         0FdwVaoQCixBm+x08S1t+KRbov/K4JsmHmNM8DMEXXuJwvqDkEFsf4nEYGNWrlLHGs6z
-         YRJxSj/Hi1qzULjLzQBipXj43Ep9owURiyuGgc4PsBB16bbFFrEjuvx2+tqyPofxZwyJ
-         HvTA==
-X-Gm-Message-State: AOAM532WbklGtr1hmfkKyZVu58QlKN11lboCHry2KQot5M+DDf6NvAgO
-        0P78eRfAy49QRYtQrYEXxjDz/g==
-X-Google-Smtp-Source: ABdhPJy0JUQmrhyJ+jBmDeADXQqctK0klVJV0/Qjm9JoxIHblf4rrb/sYMmsksqvU2HE6wOKugM29g==
-X-Received: by 2002:a17:90a:eacf:: with SMTP id ev15mr4364491pjb.209.1611129383013;
-        Tue, 19 Jan 2021 23:56:23 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:201:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id a188sm1362494pfb.108.2021.01.19.23.56.21
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AOs3HzRR3mAFpw46cKXmvSbeM84R4INByCK26V8xTI8=;
+        b=t5drqTKn3zBWLaRIuQ+WZRCcjL9CWIofgaOxqkwWGmRlB5UU2YOLzGdKfav0asK8lI
+         iRH2bzaS8K6gvn+u2rzz/7A9hM2sM9omZ5mqX0QarUVPBF5mENCcIUnsyIaE/FdaklPg
+         pt0oZlZPKdyuDCfl6wd9qHqvXe+zF3xDJywmAh/7DOwprohPLnqXSapbMEi5Jy9CHnpN
+         CQ2AqX97DrRDrart2Q1Nj+oqHDqQBYaAUPqBkYYATpjX0yeLXEhtJ730W0Z97CARn+xq
+         4kMn6exuBuHehQSiEaXporokFJFujuzxcW5pCb92E6uuB/qbmbY+ENpPySUjfj4Q9eZN
+         MInQ==
+X-Gm-Message-State: AOAM532H6hqz/xZqtpfVelqUGeldXRHwcY0j+b3s000S5jzI6YVfUsoU
+        6gkGOicNVx2dY7F5FRe7ox3A
+X-Google-Smtp-Source: ABdhPJxoiq5/2zDrA3lE7ESI22QLiB2iZq8nx7yhoZ4gEunSxznOx0Cxw/w1cx3JBu+HXtydjfrgFg==
+X-Received: by 2002:aa7:9625:0:b029:1a4:3b48:a19c with SMTP id r5-20020aa796250000b02901a43b48a19cmr8150583pfg.13.1611130001378;
+        Wed, 20 Jan 2021 00:06:41 -0800 (PST)
+Received: from localhost.localdomain ([2409:4072:6d85:48cc:b166:aab7:ff85:2769])
+        by smtp.gmail.com with ESMTPSA id y1sm1324040pff.17.2021.01.20.00.06.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jan 2021 23:56:22 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
+        Wed, 20 Jan 2021 00:06:40 -0800 (PST)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     georgi.djakov@linaro.org, robh+dt@kernel.org
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        okukatla@codeaurora.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 0/2] Add interconnect driver for SDX55
+Date:   Wed, 20 Jan 2021 13:36:25 +0530
+Message-Id: <20210120080627.20784-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1608055716-14796-1-git-send-email-dikshita@codeaurora.org>
-References: <1608055716-14796-1-git-send-email-dikshita@codeaurora.org>
-Subject: Re: [PATCH v5] venus: core: add support to dump FW region
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, Dikshita Agarwal <dikshita@codeaurora.org>
-To:     Dikshita Agarwal <dikshita@codeaurora.org>,
-        linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Date:   Tue, 19 Jan 2021 23:56:20 -0800
-Message-ID: <161112938062.3661239.3637358377915949789@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dikshita Agarwal (2020-12-15 10:08:36)
-> Add support to dump video FW region during FW crash
-> using devcoredump helpers.
->=20
-> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> Reviewed-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
->=20
-> Major changes since v1:
-> - update the name of function (Stephen)
-> - store start address and size in resource structure during
->   probe and reuse while dumping (Stephen, Stanimir)
-> ---
+Hello Georgi,
 
-Can this be picked up for the next merge window?
+This small series adds interconnect driver support for SDX55 platform for
+scaling the bandwidth requirements over RPMh. The driver has been tested
+on SDX55-MTP and gives below DDR metrics using mbw [1] tool:
+
+Src port: SDX55_MASTER_AMPSS_M0
+Dest port: SDX55_SLAVE_EBI_CH0
+
+Command: mbw 100
+
+With bandwidth 500000:
+AVG	Method: MEMCPY	Elapsed: 0.59058	MiB: 100.00000	Copy: 169.324 MiB/s
+With bandwidth 700000:
+AVG	Method: MEMCPY	Elapsed: 0.29267	MiB: 100.00000	Copy: 341.678 MiB/s
+With bandwidth 900000:
+AVG	Method: MEMCPY	Elapsed: 0.19608	MiB: 100.00000	Copy: 510.005 MiB/s
+
+The copy speed seems to be the same for all bandwidth less than 500000 and
+greater than 900000.
+
+Note: The CPUFreq governer needs to be set to something other than schedutil to
+see the difference. Otherwise the speed seems to be the same for all bandwidth.
+
+Thanks,
+Mani
+
+Manivannan Sadhasivam (2):
+  dt-bindings: interconnect: Add Qualcomm SDX55 DT bindings
+  interconnect: qcom: Add SDX55 interconnect provider driver
+
+ .../bindings/interconnect/qcom,rpmh.yaml      |   4 +
+ drivers/interconnect/qcom/Kconfig             |  10 +
+ drivers/interconnect/qcom/Makefile            |   2 +
+ drivers/interconnect/qcom/sdx55.c             | 356 ++++++++++++++++++
+ drivers/interconnect/qcom/sdx55.h             |  70 ++++
+ include/dt-bindings/interconnect/qcom,sdx55.h |  76 ++++
+ 6 files changed, 518 insertions(+)
+ create mode 100644 drivers/interconnect/qcom/sdx55.c
+ create mode 100644 drivers/interconnect/qcom/sdx55.h
+ create mode 100644 include/dt-bindings/interconnect/qcom,sdx55.h
+
+-- 
+2.25.1
+
