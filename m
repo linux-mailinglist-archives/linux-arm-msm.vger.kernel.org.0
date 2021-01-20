@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 743482FDB88
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jan 2021 22:26:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3CAE52FDB8B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jan 2021 22:26:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732339AbhATU4I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jan 2021 15:56:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44602 "EHLO
+        id S1732474AbhATU4P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jan 2021 15:56:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388941AbhATNu7 (ORCPT
+        with ESMTP id S2389107AbhATNu7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 20 Jan 2021 08:50:59 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64532C061342
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 05:44:54 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id a12so23129595wrv.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 05:44:54 -0800 (PST)
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 462C6C061345
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 05:44:56 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id y187so2892665wmd.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 05:44:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=H8THZGlSlSDtEvgRsLNltBDQqY7eROszvbFqzIm7p3c=;
-        b=GGlCskYn158Zt8+g6Vvygukv5Jq+n5qwIXVmEltfRVT160z/dGlPo9qAJPg8URpcze
-         mB0zjBFGbka7lWIY883nQ4jihFI8Sfbfg2ElmGMZdBePAs2dvHk6FnniO5CD23DrjPwm
-         YRE05FogwagsOJSXs+TsEThMgE0aw0J5aUM5mJFc72c1zKCCcHiAKRoMtPv034wNIZtq
-         F4Qpn4FD+jlEyW3RoCjbN00DlQmzSk+QvpQPFRiEoU5xvYv9U5DQVq43RVgFMoSz9duq
-         8Q9lapsO0ErYZS2vrStkUDIw99Af/TLay1bNehNWZOlM4aMf3yaulHB8nF8EyvZ67qOl
-         tr/g==
+        bh=vS5JLIQay/clNfSj2FK4KXRcBfzzM4LSmVbECav54Fs=;
+        b=qbhM2UzZ/+IuV/zP8Kubj/k0sjCkya+rt42hZpJhKoxKK2McG3NNS1bSzP+8vCKa9d
+         SsYxsfGjZzFYo5fTrKgppuYMZgTMgl535Z7SddcAaxKEHFJe+VNRXRbmPMhzXGT8Ysip
+         Wwm9excv3T4gi0swGr+EL9ZrnkTcCmXnsHGftyMC32Vgo65TFuWeFHqkjQYGnpRnu8xB
+         u24c4YmCTVgceK+Om9ermyM++zrL7jJmJp+ptigatyvTL4/7GV3sFZpamrQQwOTueJO7
+         uoPNjNQWOZ2DJ5IlYnY0J7SLcXyB7D4nI1MaMywWGT7ePyVlUKSBkkJgaf473qf+jdZP
+         DA8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=H8THZGlSlSDtEvgRsLNltBDQqY7eROszvbFqzIm7p3c=;
-        b=hs9VgedIozpsUHyTynVIoU7MBcGr5LubUgPeTvHNTbZkqzf1GkGkD43gXPUYyvRTB8
-         gCal46vKMOl9gUJmlhTvTlTlC6RzVPT1xCICyIGCde/MWPY1/skrDtntspL1AH4KYXb/
-         ge0/T1vExw33wASpmYuRqQ5/rdGKYwuTSMPAFLW0gEc0nJG3Z/NjSltrDsNNq86wU14l
-         sOHB5cdw7TPycOh2e3GmWtdNLdB/wdZfQBeux1Fk0oCDQXF4Klw6MaoFDItcHoqiea7R
-         RhflU28Mctw9m8X7rA5WsrffgcIVj+Zg7XzC6b8ObvLoBLIQAuKCV+325kqZ9hM2llJW
-         gGrg==
-X-Gm-Message-State: AOAM533DeMCneEIKHlg/YdZckgVVCC/sziM7IMIICatrfT/7Bn01vMAB
-        x785ahEfzrKwjdK/5+S1d61M2w==
-X-Google-Smtp-Source: ABdhPJw8BUxkA8o7OM0fmdCbO8qCsbtlXvSF3jtfnnxsoGNjwxoiJtQpQLdgRsYSXFp9Qj6jO+vwAw==
-X-Received: by 2002:a5d:58d7:: with SMTP id o23mr9598863wrf.288.1611150293130;
-        Wed, 20 Jan 2021 05:44:53 -0800 (PST)
+        bh=vS5JLIQay/clNfSj2FK4KXRcBfzzM4LSmVbECav54Fs=;
+        b=iA9Z8/IHPxw4DgVQ8it8nK1V9JBrc5j6nJZkZXCMoVPga3AvaG0VkkRfgyUsxcoPD4
+         o3DaMskN83XuaLn8ZvHB8CWBla1qMDs3ZALorpgbdIs0f7KnkRBKxrKG794G2R0Ft81w
+         EHGX08S88GvTpSLyadhUqYDsQGx1T4OY2P4jg9r2D/nhHkPONT9TOw9ENmmhcCB9p7ZI
+         DDHnXEi1Sh4XG43e3WHoRFL8z+NK2cUoOO/18wg7PGTTOMuimyEkgT8xR9kOuDL+0SEl
+         om+noyn5nNUhfOfITnZMDAtgPCAesfVVso79oW54aJvE8cHRPLK3BI0P0FzsZqTHKOMV
+         IrGw==
+X-Gm-Message-State: AOAM530xF8ZPWvP7iZwgFYvKq9xvo8D5WKna1qJEbXRpfd13n1Yugs7u
+        JV9EnZskdLHAJicl6knHx511TJYr7atjFw==
+X-Google-Smtp-Source: ABdhPJyfIzOErsdmM+CIXJIn9n5Ply5Pmm555hvnXCO/Xn1C1gx9pAzezbk1BsH6VWS+46p/cwxx3Q==
+X-Received: by 2002:a1c:a501:: with SMTP id o1mr4480684wme.21.1611150295019;
+        Wed, 20 Jan 2021 05:44:55 -0800 (PST)
 Received: from localhost.localdomain ([2a02:2450:102f:d6a:93b3:1f80:ae7b:a5c6])
-        by smtp.gmail.com with ESMTPSA id t67sm4224075wmt.28.2021.01.20.05.44.51
+        by smtp.gmail.com with ESMTPSA id t67sm4224075wmt.28.2021.01.20.05.44.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jan 2021 05:44:52 -0800 (PST)
+        Wed, 20 Jan 2021 05:44:54 -0800 (PST)
 From:   Robert Foss <robert.foss@linaro.org>
 To:     agross@kernel.org, bjorn.andersson@linaro.org,
         robert.foss@linaro.org, todor.too@gmail.com, mchehab@kernel.org,
@@ -65,9 +65,9 @@ Cc:     Tomasz Figa <tfiga@chromium.org>,
         Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
         Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
         Jonathan Marek <jonathan@marek.ca>
-Subject: [PATCH v2 14/22] dt-bindings: media: camss: Add qcom,msm8996-camss binding
-Date:   Wed, 20 Jan 2021 14:43:49 +0100
-Message-Id: <20210120134357.1522254-14-robert.foss@linaro.org>
+Subject: [PATCH v2 15/22] dt-bindings: media: camss: Add qcom,sdm660-camss binding
+Date:   Wed, 20 Jan 2021 14:43:50 +0100
+Message-Id: <20210120134357.1522254-15-robert.foss@linaro.org>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20210120134357.1522254-1-robert.foss@linaro.org>
 References: <20210120134357.1522254-1-robert.foss@linaro.org>
@@ -77,8 +77,8 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add bindings for qcom,msm8996-camss in order to support the camera
-subsystem on MSM8996.
+Add bindings for qcom,sdm660-camss in order to support the camera
+subsystem on SDM630/660 and SDA variants.
 
 Signed-off-by: Robert Foss <robert.foss@linaro.org>
 ---
@@ -87,21 +87,21 @@ Changes since v1:
  - Laurent: Reworked driver to use dtschema
 
 
- .../bindings/media/qcom,msm8996-camss.yaml    | 418 ++++++++++++++++++
- 1 file changed, 418 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
+ .../bindings/media/qcom,sdm660-camss.yaml     | 416 ++++++++++++++++++
+ 1 file changed, 416 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
 
-diff --git a/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml b/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
+diff --git a/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
 new file mode 100644
-index 000000000000..5ca0be8892ab
+index 000000000000..105ce84f9b71
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
-@@ -0,0 +1,418 @@
++++ b/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
+@@ -0,0 +1,416 @@
 +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
 +
 +%YAML 1.2
 +---
-+$id: "http://devicetree.org/schemas/media/qcom,msm8996-camss.yaml#"
++$id: "http://devicetree.org/schemas/media/qcom,sdm660-camss.yaml#"
 +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
 +
 +title: Qualcomm CAMSS ISP
@@ -115,23 +115,23 @@ index 000000000000..5ca0be8892ab
 +
 +properties:
 +  compatible:
-+    const: qcom,msm8996-camss
++    const: qcom,sdm660-camss
 +
 +  clocks:
 +    description:
 +      Input clocks for the hardware block.
-+    minItems: 36
-+    maxItems: 36
++    minItems: 42
++    maxItems: 42
 +
 +  clock-names:
 +    description:
 +      Names of input clocks for the hardware block.
 +    items:
-+      - const: top_ahb
-+      - const: ispif_ahb
-+      - const: csiphy0_timer
-+      - const: csiphy1_timer
-+      - const: csiphy2_timer
++      - const: ahb
++      - const: cphy_csid0
++      - const: cphy_csid1
++      - const: cphy_csid2
++      - const: cphy_csid3
 +      - const: csi0_ahb
 +      - const: csi0
 +      - const: csi0_phy
@@ -152,14 +152,20 @@ index 000000000000..5ca0be8892ab
 +      - const: csi3_phy
 +      - const: csi3_pix
 +      - const: csi3_rdi
-+      - const: ahb
-+      - const: vfe0
++      - const: csiphy0_timer
++      - const: csiphy1_timer
++      - const: csiphy2_timer
++      - const: csiphy_ahb2crif
 +      - const: csi_vfe0
-+      - const: vfe0_ahb
-+      - const: vfe0_stream
-+      - const: vfe1
 +      - const: csi_vfe1
++      - const: ispif_ahb
++      - const: throttle_axi
++      - const: top_ahb
++      - const: vfe0_ahb
++      - const: vfe0
++      - const: vfe0_stream
 +      - const: vfe1_ahb
++      - const: vfe1
 +      - const: vfe1_stream
 +      - const: vfe_ahb
 +      - const: vfe_axi
@@ -174,13 +180,13 @@ index 000000000000..5ca0be8892ab
 +    description:
 +      Names of IRQs for the hardware block.
 +    items:
-+      - const: csiphy0
-+      - const: csiphy1
-+      - const: csiphy2
 +      - const: csid0
 +      - const: csid1
 +      - const: csid2
 +      - const: csid3
++      - const: csiphy0
++      - const: csiphy1
++      - const: csiphy2
 +      - const: ispif
 +      - const: vfe0
 +      - const: vfe1
@@ -208,19 +214,14 @@ index 000000000000..5ca0be8892ab
 +            properties:
 +              clock-lanes:
 +                description: |-
-+                  The physical clock lane index. The value must
-+                  always be <7> as the hardware supports D-PHY
-+                  and C-PHY, indexes are in a common set and
-+                  D-PHY physical clock lane is labeled as 7.
++                  The physical clock lane index.
 +
 +              data-lanes:
 +                description: |-
 +                  An array of physical data lanes indexes.
 +                  Position of an entry determines the logical
 +                  lane number, while the value of an entry
-+                  indicates physical lane index. Lane swapping
-+                  is supported. Physical lane indexes are:
-+                  0, 1, 2, 3
++                  indicates physical lane index.
 +
 +            required:
 +              - clock-lanes
@@ -240,19 +241,14 @@ index 000000000000..5ca0be8892ab
 +            properties:
 +              clock-lanes:
 +                description: |-
-+                  The physical clock lane index. The value must
-+                  always be <7> as the hardware supports D-PHY
-+                  and C-PHY, indexes are in a common set and
-+                  D-PHY physical clock lane is labeled as 7.
++                  The physical clock lane index.
 +
 +              data-lanes:
 +                description: |-
 +                  An array of physical data lanes indexes.
 +                  Position of an entry determines the logical
 +                  lane number, while the value of an entry
-+                  indicates physical lane index. Lane swapping
-+                  is supported. Physical lane indexes are:
-+                  0, 1, 2, 3
++                  indicates physical lane index.
 +
 +            required:
 +              - clock-lanes
@@ -272,19 +268,14 @@ index 000000000000..5ca0be8892ab
 +            properties:
 +              clock-lanes:
 +                description: |-
-+                  The physical clock lane index. The value must
-+                  always be <7> as the hardware supports D-PHY
-+                  and C-PHY, indexes are in a common set and
-+                  D-PHY physical clock lane is labeled as 7.
++                  The physical clock lane index.
 +
 +              data-lanes:
 +                description: |-
 +                  An array of physical data lanes indexes.
 +                  Position of an entry determines the logical
 +                  lane number, while the value of an entry
-+                  indicates physical lane index. Lane swapping
-+                  is supported. Physical lane indexes are:
-+                  0, 1, 2, 3
++                  indicates physical lane index.
 +
 +            required:
 +              - clock-lanes
@@ -304,19 +295,14 @@ index 000000000000..5ca0be8892ab
 +            properties:
 +              clock-lanes:
 +                description: |-
-+                  The physical clock lane index. The value must
-+                  always be <7> as the hardware supports D-PHY
-+                  and C-PHY, indexes are in a common set and
-+                  D-PHY physical clock lane is labeled as 7.
++                  The physical clock lane index.
 +
 +              data-lanes:
 +                description: |-
 +                  An array of physical data lanes indexes.
 +                  Position of an entry determines the logical
 +                  lane number, while the value of an entry
-+                  indicates physical lane index. Lane swapping
-+                  is supported. Physical lane indexes are:
-+                  0, 1, 2, 3
++                  indicates physical lane index.
 +
 +            required:
 +              - clock-lanes
@@ -332,18 +318,18 @@ index 000000000000..5ca0be8892ab
 +
 +  reg-names:
 +    items:
++      - const: csi_clk_mux
++      - const: csid0
++      - const: csid1
++      - const: csid2
++      - const: csid3
 +      - const: csiphy0
 +      - const: csiphy0_clk_mux
 +      - const: csiphy1
 +      - const: csiphy1_clk_mux
 +      - const: csiphy2
 +      - const: csiphy2_clk_mux
-+      - const: csid0
-+      - const: csid1
-+      - const: csid2
-+      - const: csid3
 +      - const: ispif
-+      - const: csi_clk_mux
 +      - const: vfe0
 +      - const: vfe1
 +
@@ -368,54 +354,60 @@ index 000000000000..5ca0be8892ab
 +examples:
 +  - |
 +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/clock/qcom,gcc-msm8996.h>
-+    #include <dt-bindings/clock/qcom,mmcc-msm8996.h>
++    #include <dt-bindings/clock/qcom,gcc-sdm660.h>
++    #include <dt-bindings/clock/qcom,mmcc-sdm660.h>
 +
-+    camss: camss@a00000 {
-+      compatible = "qcom,msm8996-camss";
++    camss: camss@ca00000 {
++      compatible = "qcom,sdm660-camss";
 +
-+      clocks = <&mmcc CAMSS_TOP_AHB_CLK>,
-+        <&mmcc CAMSS_ISPIF_AHB_CLK>,
-+        <&mmcc CAMSS_CSI0PHYTIMER_CLK>,
-+        <&mmcc CAMSS_CSI1PHYTIMER_CLK>,
-+        <&mmcc CAMSS_CSI2PHYTIMER_CLK>,
++      clocks = <&mmcc CAMSS_AHB_CLK>,
++        <&mmcc CAMSS_CPHY_CSID0_CLK>,
++        <&mmcc CAMSS_CPHY_CSID1_CLK>,
++        <&mmcc CAMSS_CPHY_CSID2_CLK>,
++        <&mmcc CAMSS_CPHY_CSID3_CLK>,
 +        <&mmcc CAMSS_CSI0_AHB_CLK>,
 +        <&mmcc CAMSS_CSI0_CLK>,
-+        <&mmcc CAMSS_CSI0PHY_CLK>,
++        <&mmcc CAMSS_CPHY_CSID0_CLK>,
 +        <&mmcc CAMSS_CSI0PIX_CLK>,
 +        <&mmcc CAMSS_CSI0RDI_CLK>,
 +        <&mmcc CAMSS_CSI1_AHB_CLK>,
 +        <&mmcc CAMSS_CSI1_CLK>,
-+        <&mmcc CAMSS_CSI1PHY_CLK>,
++        <&mmcc CAMSS_CPHY_CSID1_CLK>,
 +        <&mmcc CAMSS_CSI1PIX_CLK>,
 +        <&mmcc CAMSS_CSI1RDI_CLK>,
 +        <&mmcc CAMSS_CSI2_AHB_CLK>,
 +        <&mmcc CAMSS_CSI2_CLK>,
-+        <&mmcc CAMSS_CSI2PHY_CLK>,
++        <&mmcc CAMSS_CPHY_CSID2_CLK>,
 +        <&mmcc CAMSS_CSI2PIX_CLK>,
 +        <&mmcc CAMSS_CSI2RDI_CLK>,
 +        <&mmcc CAMSS_CSI3_AHB_CLK>,
 +        <&mmcc CAMSS_CSI3_CLK>,
-+        <&mmcc CAMSS_CSI3PHY_CLK>,
++        <&mmcc CAMSS_CPHY_CSID3_CLK>,
 +        <&mmcc CAMSS_CSI3PIX_CLK>,
 +        <&mmcc CAMSS_CSI3RDI_CLK>,
-+        <&mmcc CAMSS_AHB_CLK>,
-+        <&mmcc CAMSS_VFE0_CLK>,
++        <&mmcc CAMSS_CSI0PHYTIMER_CLK>,
++        <&mmcc CAMSS_CSI1PHYTIMER_CLK>,
++        <&mmcc CAMSS_CSI2PHYTIMER_CLK>,
++        <&mmcc CSIPHY_AHB2CRIF_CLK>,
 +        <&mmcc CAMSS_CSI_VFE0_CLK>,
-+        <&mmcc CAMSS_VFE0_AHB_CLK>,
-+        <&mmcc CAMSS_VFE0_STREAM_CLK>,
-+        <&mmcc CAMSS_VFE1_CLK>,
 +        <&mmcc CAMSS_CSI_VFE1_CLK>,
++        <&mmcc CAMSS_ISPIF_AHB_CLK>,
++        <&mmcc THROTTLE_CAMSS_AXI_CLK>,
++        <&mmcc CAMSS_TOP_AHB_CLK>,
++        <&mmcc CAMSS_VFE0_AHB_CLK>,
++        <&mmcc CAMSS_VFE0_CLK>,
++        <&mmcc CAMSS_VFE0_STREAM_CLK>,
 +        <&mmcc CAMSS_VFE1_AHB_CLK>,
++        <&mmcc CAMSS_VFE1_CLK>,
 +        <&mmcc CAMSS_VFE1_STREAM_CLK>,
-+        <&mmcc CAMSS_VFE_AHB_CLK>,
-+        <&mmcc CAMSS_VFE_AXI_CLK>;
++        <&mmcc CAMSS_VFE_VBIF_AHB_CLK>,
++        <&mmcc CAMSS_VFE_VBIF_AXI_CLK>;
 +
-+      clock-names = "top_ahb",
-+        "ispif_ahb",
-+        "csiphy0_timer",
-+        "csiphy1_timer",
-+        "csiphy2_timer",
++      clock-names = "ahb",
++        "cphy_csid0",
++        "cphy_csid1",
++        "cphy_csid2",
++        "cphy_csid3",
 +        "csi0_ahb",
 +        "csi0",
 +        "csi0_phy",
@@ -436,75 +428,81 @@ index 000000000000..5ca0be8892ab
 +        "csi3_phy",
 +        "csi3_pix",
 +        "csi3_rdi",
-+        "ahb",
-+        "vfe0",
++        "csiphy0_timer",
++        "csiphy1_timer",
++        "csiphy2_timer",
++        "csiphy_ahb2crif",
 +        "csi_vfe0",
-+        "vfe0_ahb",
-+        "vfe0_stream",
-+        "vfe1",
 +        "csi_vfe1",
++        "ispif_ahb",
++        "throttle_axi",
++        "top_ahb",
++        "vfe0_ahb",
++        "vfe0",
++        "vfe0_stream",
 +        "vfe1_ahb",
++        "vfe1",
 +        "vfe1_stream",
 +        "vfe_ahb",
 +        "vfe_axi";
 +
-+      interrupts = <GIC_SPI 78 IRQ_TYPE_EDGE_RISING>,
-+        <GIC_SPI 79 IRQ_TYPE_EDGE_RISING>,
-+        <GIC_SPI 80 IRQ_TYPE_EDGE_RISING>,
-+        <GIC_SPI 296 IRQ_TYPE_EDGE_RISING>,
++      interrupts = <GIC_SPI 296 IRQ_TYPE_EDGE_RISING>,
 +        <GIC_SPI 297 IRQ_TYPE_EDGE_RISING>,
 +        <GIC_SPI 298 IRQ_TYPE_EDGE_RISING>,
 +        <GIC_SPI 299 IRQ_TYPE_EDGE_RISING>,
++        <GIC_SPI 78 IRQ_TYPE_EDGE_RISING>,
++        <GIC_SPI 79 IRQ_TYPE_EDGE_RISING>,
++        <GIC_SPI 80 IRQ_TYPE_EDGE_RISING>,
 +        <GIC_SPI 309 IRQ_TYPE_EDGE_RISING>,
 +        <GIC_SPI 314 IRQ_TYPE_EDGE_RISING>,
 +        <GIC_SPI 315 IRQ_TYPE_EDGE_RISING>;
 +
-+      interrupt-names = "csiphy0",
-+        "csiphy1",
-+        "csiphy2",
-+        "csid0",
++      interrupt-names = "csid0",
 +        "csid1",
 +        "csid2",
 +        "csid3",
++        "csiphy0",
++        "csiphy1",
++        "csiphy2",
 +        "ispif",
 +        "vfe0",
 +        "vfe1";
 +
-+      iommus = <&vfe_smmu 0>,
-+         <&vfe_smmu 1>,
-+         <&vfe_smmu 2>,
-+         <&vfe_smmu 3>;
++      iommus = <&mmss_smmu 0xc00>,
++        <&mmss_smmu 0xc01>,
++        <&mmss_smmu 0xc02>,
++        <&mmss_smmu 0xc03>;
 +
-+      power-domains = <&mmcc VFE0_GDSC>,
-+        <&mmcc VFE1_GDSC>;
++      power-domains = <&mmcc CAMSS_VFE0_GDSC>,
++        <&mmcc CAMSS_VFE1_GDSC>;
 +
-+      reg = <0x00a34000 0x1000>,
-+        <0x00a00030 0x4>,
-+        <0x00a35000 0x1000>,
-+        <0x00a00038 0x4>,
-+        <0x00a36000 0x1000>,
-+        <0x00a00040 0x4>,
-+        <0x00a30000 0x100>,
-+        <0x00a30400 0x100>,
-+        <0x00a30800 0x100>,
-+        <0x00a30c00 0x100>,
-+        <0x00a31000 0x500>,
-+        <0x00a00020 0x10>,
-+        <0x00a10000 0x1000>,
-+        <0x00a14000 0x1000>;
++      reg = <0x0ca00020 0x10>,
++        <0x0ca30000 0x100>,
++        <0x0ca30400 0x100>,
++        <0x0ca30800 0x100>,
++        <0x0ca30c00 0x100>,
++        <0x0c824000 0x1000>,
++        <0x0ca00120 0x4>,
++        <0x0c825000 0x1000>,
++        <0x0ca00124 0x4>,
++        <0x0c826000 0x1000>,
++        <0x0ca00128 0x4>,
++        <0x0ca31000 0x500>,
++        <0x0ca10000 0x1000>,
++        <0x0ca14000 0x1000>;
 +
-+      reg-names = "csiphy0",
++      reg-names = "csi_clk_mux",
++        "csid0",
++        "csid1",
++        "csid2",
++        "csid3",
++        "csiphy0",
 +        "csiphy0_clk_mux",
 +        "csiphy1",
 +        "csiphy1_clk_mux",
 +        "csiphy2",
 +        "csiphy2_clk_mux",
-+        "csid0",
-+        "csid1",
-+        "csid2",
-+        "csid3",
 +        "ispif",
-+        "csi_clk_mux",
 +        "vfe0",
 +        "vfe1";
 +
@@ -515,7 +513,6 @@ index 000000000000..5ca0be8892ab
 +        #size-cells = <0>;
 +      };
 +    };
-\ No newline at end of file
 -- 
 2.27.0
 
