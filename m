@@ -2,172 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D7232FCE53
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jan 2021 11:54:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C22C2FCE54
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jan 2021 11:54:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731689AbhATKcg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jan 2021 05:32:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44518 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731311AbhATJ2Q (ORCPT
+        id S1733018AbhATKdg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jan 2021 05:33:36 -0500
+Received: from aserp2130.oracle.com ([141.146.126.79]:40058 "EHLO
+        aserp2130.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726634AbhATJ64 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Jan 2021 04:28:16 -0500
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2655C061799
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 01:26:36 -0800 (PST)
-Received: by mail-ej1-x62c.google.com with SMTP id ke15so24856157ejc.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 01:26:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=iOLteU0y/E6exJE5YL/l2x0USlJDB217kK70I6Kv1VE=;
-        b=MddKoXzskkXvWo93r04q+Opa483XZHht2VNNMubr45P9407hBYjlYEw0jNazZadnKt
-         o5Qj75aL1fnNK4ZJhbnR9lJK239X6zzR/m3Jf94hmekS/ZHzYq3TopWIFQ1wME8hccNi
-         86VAFjFhaPlqHDch0Qu03nt96We4EyMarAtoTpKDWfMNPKGtIJD9WBut4F4VlYXQ0jmF
-         vvFoCzBwlmpqvVgwR3kiVK5LRzCGskiac/zgX02izhZ6C1+OTerqyBDwLfqXtOfJCKik
-         UdEDnGpz842JWWkS/NDK+fSr6UenIZAeT+JPfGq55msUDNZrnCB6cYd4ezU9oc53Ty2q
-         nOUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=iOLteU0y/E6exJE5YL/l2x0USlJDB217kK70I6Kv1VE=;
-        b=DfYIm60pbJ8XzJaLCL25axMjnuG1ynPdUtXZ/AY1sCgkvVY+TZ9FulCqiHvpK23vWy
-         G7mv2oX0EBoRO5D3BZyefC2miKEAd0JsYWrn+u0n6iA2TVPWMYHWcpVLh47YLjBXubiQ
-         Qe09WIA4198hqjZxz2mhcBfdqkFnfMNnvALmEnw11M+pg5s74SrFIPJALyx28qDICi5g
-         oYfN4iBuwyRo2tAuKnSqRxvtBsawfhgU2ty19bG/VaSw+y9lMuu25h5PoYEEa0WOJnp6
-         e7TX8wPpqXaCJPAW3nO6wl9F0fuvXOd8XZ5Qps4dAt8XJRsJ59y4FzqaE+iMSazm9+UL
-         qyHA==
-X-Gm-Message-State: AOAM532oJqDNWvOBC2TJop6/h/rBofqBlsl2vQpw1GkeHODBb6ihgCIO
-        gE8MkL/T6ivu2U0YgFynokSf2A==
-X-Google-Smtp-Source: ABdhPJzAPhI3KgBmfKmfQLJQF8mt67kcPhSiGlpSf1ZqglTSXI6Pgc5n+gjcnbMVwZQQM02E9IdQ/w==
-X-Received: by 2002:a17:906:d98:: with SMTP id m24mr5388335eji.428.1611134795728;
-        Wed, 20 Jan 2021 01:26:35 -0800 (PST)
-Received: from localhost.localdomain (hst-221-66.medicom.bg. [84.238.221.66])
-        by smtp.gmail.com with ESMTPSA id k16sm619392ejd.78.2021.01.20.01.26.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jan 2021 01:26:35 -0800 (PST)
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Ezequiel Garcia <ezequiel@collabora.com>,
-        Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH v4 4/5] docs: Document CLL and Mastering display colorimetry controls
-Date:   Wed, 20 Jan 2021 11:26:05 +0200
-Message-Id: <20210120092606.3987207-5-stanimir.varbanov@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210120092606.3987207-1-stanimir.varbanov@linaro.org>
-References: <20210120092606.3987207-1-stanimir.varbanov@linaro.org>
+        Wed, 20 Jan 2021 04:58:56 -0500
+Received: from pps.filterd (aserp2130.oracle.com [127.0.0.1])
+        by aserp2130.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 10K9mWD3191390;
+        Wed, 20 Jan 2021 09:58:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
+ : subject : message-id : mime-version : content-type : in-reply-to;
+ s=corp-2020-01-29; bh=5uRrrgWyIgytuqolSTvGY83GZ1TKvBn02elPXkSu0ZY=;
+ b=T4OuFbTdmt7dThjjIReLVYcxAC9iWS7Q8JVpLQwbrx5lbgI1zGSstFzYw1hhPV7ZDBd5
+ wn/JdKw7POBb/sNblU4MH8FUTvYf5iFBuL6MbS9aiFJxkTrJdpCbX/iFpplABLbYiI/r
+ BvBSuR0O3U8CQGZID1QJj33LXSNU5/JEQ97N6LhTC4VKNSGPy6Cv+LGucglRdttAYn1O
+ /bRu1cWAueNhrctBQKmMIvmbWAiDQO1OUBaHwTSiA9d8I83vEH+w8aaX1INHZEJdVrey
+ 8gBkwgRjgG6H6OErB5+MtVGwus22CBlBUw9wT5cBY2nVkqXPZZXB8zInslr5bH/cFBKt uA== 
+Received: from aserp3030.oracle.com (aserp3030.oracle.com [141.146.126.71])
+        by aserp2130.oracle.com with ESMTP id 3668qr9q62-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Wed, 20 Jan 2021 09:58:07 +0000
+Received: from pps.filterd (aserp3030.oracle.com [127.0.0.1])
+        by aserp3030.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 10K9sceA125867;
+        Wed, 20 Jan 2021 09:58:06 GMT
+Received: from userv0121.oracle.com (userv0121.oracle.com [156.151.31.72])
+        by aserp3030.oracle.com with ESMTP id 3668quxvxr-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Wed, 20 Jan 2021 09:58:06 +0000
+Received: from abhmp0014.oracle.com (abhmp0014.oracle.com [141.146.116.20])
+        by userv0121.oracle.com (8.14.4/8.13.8) with ESMTP id 10K9w4BD019202;
+        Wed, 20 Jan 2021 09:58:04 GMT
+Received: from mwanda (/10.175.34.136)
+        by default (Oracle Beehive Gateway v4.0)
+        with ESMTP ; Wed, 20 Jan 2021 01:58:03 -0800
+Date:   Wed, 20 Jan 2021 12:57:55 +0300
+From:   Dan Carpenter <dan.carpenter@oracle.com>
+To:     Andy Gross <agross@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kernel-janitors@vger.kernel.org
+Subject: [PATCH] soc: qcom: socinfo: Fix an off by one in
+ qcom_show_pmic_model()
+Message-ID: <YAf+o85Z9lgkq3Nw@mwanda>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210118113651.71955-1-colin.king@canonical.com>
+X-Mailer: git-send-email haha only kidding
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9869 signatures=668683
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 phishscore=0 bulkscore=0
+ mlxlogscore=999 spamscore=0 suspectscore=0 malwarescore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
+ definitions=main-2101200056
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9869 signatures=668683
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999 mlxscore=0
+ suspectscore=0 lowpriorityscore=0 bulkscore=0 adultscore=0 spamscore=0
+ phishscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2101200055
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document Content Light Level and Mastering Display v4l2 colorimetry
-controls.
+These need to be < ARRAY_SIZE() instead of <= ARRAY_SIZE() to prevent
+accessing one element beyond the end of the array.
 
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Fixes: e9247e2ce577 ("soc: qcom: socinfo: fix printing of pmic_model")
+Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
 ---
- .../media/v4l/ext-ctrls-colorimetry.rst       | 71 +++++++++++++++++++
- .../media/videodev2.h.rst.exceptions          |  2 +
- 2 files changed, 73 insertions(+)
+ drivers/soc/qcom/socinfo.c | 2 +-
+ 1 file changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst
-index 6b0cd2054e84..e7e55323651f 100644
---- a/Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst
-+++ b/Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst
-@@ -17,3 +17,74 @@ Colorimetry Control IDs
-     The Colorimetry class descriptor. Calling
-     :ref:`VIDIOC_QUERYCTRL` for this control will
-     return a description of this control class.
-+
-+``V4L2_CID_COLORIMETRY_HDR10_CLL_INFO (struct)``
-+    The Content Light Level defines upper bounds for the nominal target
-+    brightness light level of the pictures.
-+
-+.. c:type:: v4l2_ctrl_hdr10_cll_info
-+
-+.. cssclass:: longtable
-+
-+.. flat-table:: struct v4l2_ctrl_hdr10_cll_info
-+    :header-rows:  0
-+    :stub-columns: 0
-+    :widths:       1 1 2
-+
-+    * - __u16
-+      - ``max_content_light_level``
-+      - The upper bound for the maximum light level among all individual
-+        samples for the pictures of a coded video sequence, cd/m2. When
-+        equal to 0 no such upper bound is present.
-+    * - __u16
-+      - ``max_pic_average_light_level``
-+      - The upper bound for the maximum average light level among the
-+        samples for any individual picture of a coded video sequence, cd/m2.
-+        When equal to 0 no such upper bound is present.
-+
-+``V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY (struct)``
-+    The mastering display defines the colour volume (the colour primaries,
-+    white point and luminance range) of a display considered to be the
-+    mastering display for the current video content.
-+
-+.. c:type:: v4l2_ctrl_hdr10_mastering_display
-+
-+.. cssclass:: longtable
-+
-+.. flat-table:: struct v4l2_ctrl_hdr10_mastering_display
-+    :header-rows:  0
-+    :stub-columns: 0
-+    :widths:       1 1 2
-+
-+    * - __u16
-+      - ``display_primaries_x[3]``
-+      - Specifies the normalized x chromaticity coordinate of the colour
-+        primary component c of the mastering display in increments of 0.00002.
-+        For describing the mastering display that uses Red, Green and Blue
-+        colour primaries, index value c equal to 0 corresponds to the Green
-+        primary, c equal to 1 corresponds to Blue primary and c equal to 2
-+        corresponds to the Red colour primary.
-+    * - __u16
-+      - ``display_primaries_y[3]``
-+      - Specifies the normalized y chromaticity coordinate of the colour
-+        primary component c of the mastering display in increments of 0.00002.
-+        For describing the mastering display that uses Red, Green and Blue
-+        colour primaries, index value c equal to 0 corresponds to the Green
-+        primary, c equal to 1 corresponds to Blue primary and c equal to 2
-+        corresponds to Red colour primary.
-+    * - __u16
-+      - ``white_point_x``
-+      - Specifies the normalized x chromaticity coordinate of the white
-+        point of the mastering display in increments of 0.00002.
-+    * - __u16
-+      - ``white_point_y``
-+      - Specifies the normalized y chromaticity coordinate of the white
-+        point of the mastering display in increments of 0.00002.
-+    * - __u32
-+      - ``max_luminance``
-+      - Specifies the nominal maximum display luminance of the mastering
-+        display in units of 0.0001 cd/m2.
-+    * - __u32
-+      - ``min_luminance``
-+      - specifies the nominal minimum display luminance of the mastering
-+        display in units of 0.0001 cd/m2.
-diff --git a/Documentation/userspace-api/media/videodev2.h.rst.exceptions b/Documentation/userspace-api/media/videodev2.h.rst.exceptions
-index 0ed170c6e720..af4b8b87c5d7 100644
---- a/Documentation/userspace-api/media/videodev2.h.rst.exceptions
-+++ b/Documentation/userspace-api/media/videodev2.h.rst.exceptions
-@@ -147,6 +147,8 @@ replace symbol V4L2_CTRL_TYPE_HEVC_PPS :c:type:`v4l2_ctrl_type`
- replace symbol V4L2_CTRL_TYPE_HEVC_SLICE_PARAMS :c:type:`v4l2_ctrl_type`
- replace symbol V4L2_CTRL_TYPE_AREA :c:type:`v4l2_ctrl_type`
- replace symbol V4L2_CTRL_TYPE_FWHT_PARAMS :c:type:`v4l2_ctrl_type`
-+replace symbol V4L2_CTRL_TYPE_HDR10_CLL_INFO :c:type:`v4l2_ctrl_hdr10_cll_info`
-+replace symbol V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY :c:type:`v4l2_ctrl_hdr10_mastering_display`
+diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+index a985ed064669..5b4ad24a022b 100644
+--- a/drivers/soc/qcom/socinfo.c
++++ b/drivers/soc/qcom/socinfo.c
+@@ -309,7 +309,7 @@ static int qcom_show_pmic_model(struct seq_file *seq, void *p)
+ 	if (model < 0)
+ 		return -EINVAL;
  
- # V4L2 capability defines
- replace define V4L2_CAP_VIDEO_CAPTURE device-capabilities
+-	if (model <= ARRAY_SIZE(pmic_models) && pmic_models[model])
++	if (model < ARRAY_SIZE(pmic_models) && pmic_models[model])
+ 		seq_printf(seq, "%s\n", pmic_models[model]);
+ 	else
+ 		seq_printf(seq, "unknown (%d)\n", model);
 -- 
-2.25.1
+2.29.2
 
