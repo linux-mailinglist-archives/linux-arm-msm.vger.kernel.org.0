@@ -2,111 +2,528 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E7A42FD4E1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jan 2021 17:08:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 40DEF2FD556
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jan 2021 17:22:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391137AbhATQC3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jan 2021 11:02:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44738 "EHLO
+        id S2391453AbhATQSj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jan 2021 11:18:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730476AbhATQCH (ORCPT
+        with ESMTP id S1729113AbhATQSh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Jan 2021 11:02:07 -0500
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DB3BC061575;
-        Wed, 20 Jan 2021 08:01:26 -0800 (PST)
-Received: by mail-lj1-x232.google.com with SMTP id j3so6978679ljb.9;
-        Wed, 20 Jan 2021 08:01:26 -0800 (PST)
+        Wed, 20 Jan 2021 11:18:37 -0500
+Received: from mail-ua1-x930.google.com (mail-ua1-x930.google.com [IPv6:2607:f8b0:4864:20::930])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D76C7C0613CF;
+        Wed, 20 Jan 2021 08:17:56 -0800 (PST)
+Received: by mail-ua1-x930.google.com with SMTP id d3so5543401uap.4;
+        Wed, 20 Jan 2021 08:17:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=3vLouel+HcUHHsPlMzqt3dQ9xZtrUWZy628SJkSoWOA=;
-        b=So3BD8K3remfQXHH4nf3lm2QXaIQO4LrSFWPfSDvDdczajiT1zZjM+X6Pyp7oVzACX
-         DQUhSNJKGaVBpUrEqB2a/mHhoP+IRYbbfm6S1exUM7PYOdO46swf9U2vYc08fUMud/Om
-         KNU09pGDtuJ5Vrzf8SK12hTxQWfkm/uNAwh3DapnBcYJxtZFkfX9+19cfAiUdqMhHp16
-         Qh5kUbWPdBWb+x6KeA5VyA2mjFhWlxuF9ELdk4uBa2909R4NP4kq2b6Y9+Ktn17HGRJk
-         Pd0gmvlCI6tzooR9HKEBx0LTif4oRiwF3FqvYNnvRW5pmoLQjfOeSrfixFQbqTUF4UZU
-         rZxA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=yXY6XJ/yr1uxDqOl3Hug5UlUQ2GVsN80G0JuIFhZphM=;
+        b=gokr3nT0If+J2hz6ncJ06IUn2uIuHbefyU4rbuNrePHVwUn6vXYixvPNN9BE43LwDg
+         tKoKg5WvZQtIzVUVHjzUJJ3MCjGLI6MRzXGK5NhhS7J3ZPeOVsHiiaIih1LSLQlx5Lu8
+         MSvhR/b7zVt7eh55Z4RH/Wn7OwTlaRgBs2qwBQ+ot5aHKqPxU7SjK93v44jl72h7pmz2
+         ntD4SGgJwlhtib6Le9y0ZEn0MwTia1gFrctPWJmkI4qZM+Lfi/JN9adTqm4JVOp79zzX
+         E2OMzr/c0VRdPor6qt74MzRzzX/zNuJljAzjnsNViQtyKSuYst+enHmdVUJOkYmSQS24
+         sZJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=3vLouel+HcUHHsPlMzqt3dQ9xZtrUWZy628SJkSoWOA=;
-        b=UTOeU5qYDz3R35LRrEBADg1p+452zxxkoAt4eGs1YhpPj762W8Hm+q8hTWwVwtV/ew
-         r+QjyGc2e2mLbJeVP08doYs6hCrYmRaBR+ADw7OwTHpZ6ePij++pw/25cBSX7JGe5Hpd
-         Kppmdy2Ldf3iFiaBNH+xpjqeCRbcOfJ9/SkcEbOEyNxgUVLTCtV91hgvTAN3vzh+UYrz
-         7M4PgIa8KvK0ln+RMGDZlEUP+KDehr2sx1ikBpwedrd7GJjBiKZB0ws+3kiIkGxlb6Wo
-         Ha757KxulQ8VEQRt2fE+lJPjoj1FNr9gAqtCzLrEf9a5KS4vTgqQKs8B6z1Y4D+ErAgQ
-         wu+w==
-X-Gm-Message-State: AOAM531tHcXA1f0pohs9aErPwznhhlvpz6cg8/TJtyKIerPY47QzHNQH
-        aPk7mxrZWzPapOnM+NWwRxMli8ei9yE=
-X-Google-Smtp-Source: ABdhPJxufcMcdT1icHlQjBl7jPyg+FoY9nCNToNRuMAX2IYS0ZUuPjE9ss2lk3IaPlt5ucol79aNfw==
-X-Received: by 2002:a2e:a310:: with SMTP id l16mr4849551lje.142.1611158484855;
-        Wed, 20 Jan 2021 08:01:24 -0800 (PST)
-Received: from [192.168.2.145] (109-252-192-57.dynamic.spd-mgts.ru. [109.252.192.57])
-        by smtp.googlemail.com with ESMTPSA id i14sm234976lfo.189.2021.01.20.08.01.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Jan 2021 08:01:24 -0800 (PST)
-Subject: Re: [PATCH 00/31] Introduce devm_pm_opp_* API
-To:     Yangtao Li <tiny.windzz@gmail.com>, myungjoo.ham@samsung.com,
-        kyungmin.park@samsung.com, cw00.choi@samsung.com, krzk@kernel.org,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
-        festevam@gmail.com, linux-imx@nxp.com, thierry.reding@gmail.com,
-        jonathanh@nvidia.com, yuq825@gmail.com, airlied@linux.ie,
-        daniel@ffwll.ch, robdclark@gmail.com, sean@poorly.run,
-        robh@kernel.org, tomeu.vizoso@collabora.com, steven.price@arm.com,
-        alyssa.rosenzweig@collabora.com, stanimir.varbanov@linaro.org,
-        agross@kernel.org, bjorn.andersson@linaro.org, mchehab@kernel.org,
-        lukasz.luba@arm.com, adrian.hunter@intel.com,
-        ulf.hansson@linaro.org, vireshk@kernel.org, nm@ti.com,
-        sboyd@kernel.org, broonie@kernel.org, gregkh@linuxfoundation.org,
-        jirislaby@kernel.org, rjw@rjwysocki.net, jcrouse@codeaurora.org,
-        hoegsberg@google.com, eric@anholt.net, tzimmermann@suse.de,
-        marijn.suijten@somainline.org, gustavoars@kernel.org,
-        emil.velikov@collabora.com, jonathan@marek.ca,
-        akhilpo@codeaurora.org, smasetty@codeaurora.org,
-        airlied@redhat.com, masneyb@onstation.org, kalyan_t@codeaurora.org,
-        tanmay@codeaurora.org, ddavenport@chromium.org,
-        jsanka@codeaurora.org, rnayak@codeaurora.org,
-        tongtiangen@huawei.com, miaoqinglang@huawei.com,
-        khsieh@codeaurora.org, abhinavk@codeaurora.org,
-        chandanu@codeaurora.org, groeck@chromium.org, varar@codeaurora.org,
-        mka@chromium.org, harigovi@codeaurora.org,
-        rikard.falkeborn@gmail.com, natechancellor@gmail.com,
-        georgi.djakov@linaro.org, akashast@codeaurora.org,
-        parashar@codeaurora.org, dianders@chromium.org
-Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, lima@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-media@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-spi@vger.kernel.org, linux-serial@vger.kernel.org
-References: <20210101165507.19486-1-tiny.windzz@gmail.com>
-From:   Dmitry Osipenko <digetx@gmail.com>
-Message-ID: <6bd6730c-6f4e-df93-65cd-93fa4785a8d8@gmail.com>
-Date:   Wed, 20 Jan 2021 19:01:21 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.2
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=yXY6XJ/yr1uxDqOl3Hug5UlUQ2GVsN80G0JuIFhZphM=;
+        b=GjQ/czv+LElixLhm0w2yIH2OgbGzw7gfGU5CEZOp/mEu7twOPyN5fc3H7x1R4R4jz5
+         UAYW9mLFpFHcTjxjvOXOEGCbYkfy1vc/XMco4U+GGe1QKTb+hjtk5xz3BtOiEJW9J9J1
+         JAbvWSlkqNzhta8DZtWPKK0+/XdE94X9HqsU89IDb8AbFWlePvhYiQuLyYGb851w5b9q
+         hZF8sWnXhsenMWJFzlG9PqV3bIgwep68FmzM5tSfFIFbPN52zcSVJXbl9+rD6d8nqizo
+         l7RZNSNeSJZHI6CebE8mN7kNPhHraR3gOlcuPVsaZdsw+crx+lI4cpigip4TZCTsnAAW
+         LNbQ==
+X-Gm-Message-State: AOAM532hKgYfFMw8Hn89WvJtfr2y9f4ABpE8Z/MekLpygZgQkINSxby6
+        Xc0UidhMCziUzpEXIQgnrtLHWx7nKeQcP9CQcos=
+X-Google-Smtp-Source: ABdhPJyFm2RraKYys3JlScwYGB9YGgzVY0AVFztXpMhMAM9fA9j/GVs1OtnDzgxs8LW1vv+b/WEJn4X1rL3dCBkGsAg=
+X-Received: by 2002:ab0:6f97:: with SMTP id f23mr6380433uav.5.1611159475845;
+ Wed, 20 Jan 2021 08:17:55 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20210101165507.19486-1-tiny.windzz@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <20210120134357.1522254-1-robert.foss@linaro.org> <20210120134357.1522254-15-robert.foss@linaro.org>
+In-Reply-To: <20210120134357.1522254-15-robert.foss@linaro.org>
+From:   AngeloGioacchino Del Regno <kholk11@gmail.com>
+Date:   Wed, 20 Jan 2021 17:17:44 +0100
+Message-ID: <CAK7fi1ZZhpJqs9oEA=h+7msZ7VzkvOwF4y6p9E2ykrYxb8=0CA@mail.gmail.com>
+Subject: Re: [PATCH v2 15/22] dt-bindings: media: camss: Add qcom,sdm660-camss binding
+To:     Robert Foss <robert.foss@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Todor Tomov <todor.too@gmail.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>, will@kernel.org,
+        shawnguo@kernel.org, leoyang.li@nxp.com, geert+renesas@glider.be,
+        vkoul@kernel.org, Anson.Huang@nxp.com, michael@walle.cc,
+        agx@sigxcpu.org, max.oss.09@gmail.com,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        linux-media <linux-media@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Andrey Konovalov <andrey.konovalov@linaro.org>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
+        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
+        Jonathan Marek <jonathan@marek.ca>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-01.01.2021 19:54, Yangtao Li пишет:
-> Hi,
-> 
-> This patchset add devm_pm_opp_set_clkname, devm_pm_opp_put_clkname,
-> devm_pm_opp_set_regulators, devm_pm_opp_put_regulators,
-> devm_pm_opp_set_supported_hw, devm_pm_opp_of_add_table and
-> devm_pm_opp_register_notifier.
+Il giorno mer 20 gen 2021 alle ore 14:44 Robert Foss
+<robert.foss@linaro.org> ha scritto:
+>
+> Add bindings for qcom,sdm660-camss in order to support the camera
+> subsystem on SDM630/660 and SDA variants.
+>
+> Signed-off-by: Robert Foss <robert.foss@linaro.org>
 
-Hello Yangtao,
+Hey Robert!
 
-Thank you for your effort, looking forward to v2!
+> ---
+>
+> Changes since v1:
+>  - Laurent: Reworked driver to use dtschema
+>
+>
+>  .../bindings/media/qcom,sdm660-camss.yaml     | 416 ++++++++++++++++++
+>  1 file changed, 416 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
+>
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
+> new file mode 100644
+> index 000000000000..105ce84f9b71
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
+> @@ -0,0 +1,416 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +
+> +%YAML 1.2
+> +---
+> +$id: "http://devicetree.org/schemas/media/qcom,sdm660-camss.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +
+> +title: Qualcomm CAMSS ISP
+> +
+> +maintainers:
+
+If you want, feel free to add me to the maintainers list for SDM660 CAMSS
+- AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+
+> +  - Robert Foss <robert.foss@linaro.org>
+> +  - Todor Tomov <todor.too@gmail.com>
+> +
+> +description: |
+> +  The CAMSS IP is a CSI decoder and ISP present on Qualcomm platforms
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sdm660-camss
+> +
+> +  clocks:
+> +    description:
+> +      Input clocks for the hardware block.
+> +    minItems: 42
+> +    maxItems: 42
+> +
+> +  clock-names:
+> +    description:
+> +      Names of input clocks for the hardware block.
+> +    items:
+> +      - const: ahb
+> +      - const: cphy_csid0
+> +      - const: cphy_csid1
+> +      - const: cphy_csid2
+> +      - const: cphy_csid3
+> +      - const: csi0_ahb
+> +      - const: csi0
+> +      - const: csi0_phy
+> +      - const: csi0_pix
+> +      - const: csi0_rdi
+> +      - const: csi1_ahb
+> +      - const: csi1
+> +      - const: csi1_phy
+> +      - const: csi1_pix
+> +      - const: csi1_rdi
+> +      - const: csi2_ahb
+> +      - const: csi2
+> +      - const: csi2_phy
+> +      - const: csi2_pix
+> +      - const: csi2_rdi
+> +      - const: csi3_ahb
+> +      - const: csi3
+> +      - const: csi3_phy
+> +      - const: csi3_pix
+> +      - const: csi3_rdi
+> +      - const: csiphy0_timer
+> +      - const: csiphy1_timer
+> +      - const: csiphy2_timer
+> +      - const: csiphy_ahb2crif
+> +      - const: csi_vfe0
+> +      - const: csi_vfe1
+> +      - const: ispif_ahb
+> +      - const: throttle_axi
+> +      - const: top_ahb
+> +      - const: vfe0_ahb
+> +      - const: vfe0
+> +      - const: vfe0_stream
+> +      - const: vfe1_ahb
+> +      - const: vfe1
+> +      - const: vfe1_stream
+> +      - const: vfe_ahb
+> +      - const: vfe_axi
+> +
+> +  interrupts:
+> +    description:
+> +      IRQs for the hardware block.
+> +    minItems: 10
+> +    maxItems: 10
+> +
+> +  interrupt-names:
+> +    description:
+> +      Names of IRQs for the hardware block.
+> +    items:
+> +      - const: csid0
+> +      - const: csid1
+> +      - const: csid2
+> +      - const: csid3
+> +      - const: csiphy0
+> +      - const: csiphy1
+> +      - const: csiphy2
+> +      - const: ispif
+> +      - const: vfe0
+> +      - const: vfe1
+> +
+> +  iommus:
+> +    maxItems: 4
+> +
+> +  power-domains:
+> +    maxItems: 2
+> +
+> +  ports:
+> +    description:
+> +      The CSI data input ports.
+> +
+> +    type: object
+> +
+> +    properties:
+> +      port@0:
+> +        type: object
+> +        description: Input node for receiving CSI data.
+> +        properties:
+> +          endpoint:
+> +            type: object
+> +
+> +            properties:
+> +              clock-lanes:
+> +                description: |-
+> +                  The physical clock lane index.
+> +
+> +              data-lanes:
+> +                description: |-
+> +                  An array of physical data lanes indexes.
+> +                  Position of an entry determines the logical
+> +                  lane number, while the value of an entry
+> +                  indicates physical lane index.
+> +
+> +            required:
+> +              - clock-lanes
+> +              - data-lanes
+> +
+> +        required:
+> +          - endpoint
+> +          - reg
+> +
+> +      port@1:
+> +        type: object
+> +        description: Input node for receiving CSI data.
+> +        properties:
+> +          endpoint:
+> +            type: object
+> +
+> +            properties:
+> +              clock-lanes:
+> +                description: |-
+> +                  The physical clock lane index.
+> +
+> +              data-lanes:
+> +                description: |-
+> +                  An array of physical data lanes indexes.
+> +                  Position of an entry determines the logical
+> +                  lane number, while the value of an entry
+> +                  indicates physical lane index.
+> +
+> +            required:
+> +              - clock-lanes
+> +              - data-lanes
+> +
+> +        required:
+> +          - endpoint
+> +          - reg
+> +
+> +      port@2:
+> +        type: object
+> +        description: Input node for receiving CSI data.
+> +        properties:
+> +          endpoint:
+> +            type: object
+> +
+> +            properties:
+> +              clock-lanes:
+> +                description: |-
+> +                  The physical clock lane index.
+> +
+> +              data-lanes:
+> +                description: |-
+> +                  An array of physical data lanes indexes.
+> +                  Position of an entry determines the logical
+> +                  lane number, while the value of an entry
+> +                  indicates physical lane index.
+> +
+> +            required:
+> +              - clock-lanes
+> +              - data-lanes
+> +
+> +        required:
+> +          - endpoint
+> +          - reg
+> +
+> +      port@3:
+> +        type: object
+> +        description: Input node for receiving CSI data.
+> +        properties:
+> +          endpoint:
+> +            type: object
+> +
+> +            properties:
+> +              clock-lanes:
+> +                description: |-
+> +                  The physical clock lane index.
+> +
+> +              data-lanes:
+> +                description: |-
+> +                  An array of physical data lanes indexes.
+> +                  Position of an entry determines the logical
+> +                  lane number, while the value of an entry
+> +                  indicates physical lane index.
+> +
+> +            required:
+> +              - clock-lanes
+> +              - data-lanes
+> +
+> +        required:
+> +          - endpoint
+> +          - reg
+> +
+> +  reg:
+> +    minItems: 14
+> +    maxItems: 14
+> +
+> +  reg-names:
+> +    items:
+> +      - const: csi_clk_mux
+> +      - const: csid0
+> +      - const: csid1
+> +      - const: csid2
+> +      - const: csid3
+> +      - const: csiphy0
+> +      - const: csiphy0_clk_mux
+> +      - const: csiphy1
+> +      - const: csiphy1_clk_mux
+> +      - const: csiphy2
+> +      - const: csiphy2_clk_mux
+> +      - const: ispif
+> +      - const: vfe0
+> +      - const: vfe1
+> +
+> +  vdda-supply:
+> +    description:
+> +      Definition of the regulator used as analog power supply.
+> +
+> +required:
+> +  - clock-names
+> +  - clocks
+> +  - compatible
+> +  - interrupt-names
+> +  - interrupts
+> +  - iommus
+> +  - power-domains
+> +  - reg
+> +  - reg-names
+> +  - vdda-supply
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/clock/qcom,gcc-sdm660.h>
+> +    #include <dt-bindings/clock/qcom,mmcc-sdm660.h>
+> +
+> +    camss: camss@ca00000 {
+> +      compatible = "qcom,sdm660-camss";
+> +
+> +      clocks = <&mmcc CAMSS_AHB_CLK>,
+> +        <&mmcc CAMSS_CPHY_CSID0_CLK>,
+> +        <&mmcc CAMSS_CPHY_CSID1_CLK>,
+> +        <&mmcc CAMSS_CPHY_CSID2_CLK>,
+> +        <&mmcc CAMSS_CPHY_CSID3_CLK>,
+> +        <&mmcc CAMSS_CSI0_AHB_CLK>,
+> +        <&mmcc CAMSS_CSI0_CLK>,
+> +        <&mmcc CAMSS_CPHY_CSID0_CLK>,
+> +        <&mmcc CAMSS_CSI0PIX_CLK>,
+> +        <&mmcc CAMSS_CSI0RDI_CLK>,
+> +        <&mmcc CAMSS_CSI1_AHB_CLK>,
+> +        <&mmcc CAMSS_CSI1_CLK>,
+> +        <&mmcc CAMSS_CPHY_CSID1_CLK>,
+> +        <&mmcc CAMSS_CSI1PIX_CLK>,
+> +        <&mmcc CAMSS_CSI1RDI_CLK>,
+> +        <&mmcc CAMSS_CSI2_AHB_CLK>,
+> +        <&mmcc CAMSS_CSI2_CLK>,
+> +        <&mmcc CAMSS_CPHY_CSID2_CLK>,
+> +        <&mmcc CAMSS_CSI2PIX_CLK>,
+> +        <&mmcc CAMSS_CSI2RDI_CLK>,
+> +        <&mmcc CAMSS_CSI3_AHB_CLK>,
+> +        <&mmcc CAMSS_CSI3_CLK>,
+> +        <&mmcc CAMSS_CPHY_CSID3_CLK>,
+> +        <&mmcc CAMSS_CSI3PIX_CLK>,
+> +        <&mmcc CAMSS_CSI3RDI_CLK>,
+> +        <&mmcc CAMSS_CSI0PHYTIMER_CLK>,
+> +        <&mmcc CAMSS_CSI1PHYTIMER_CLK>,
+> +        <&mmcc CAMSS_CSI2PHYTIMER_CLK>,
+> +        <&mmcc CSIPHY_AHB2CRIF_CLK>,
+> +        <&mmcc CAMSS_CSI_VFE0_CLK>,
+> +        <&mmcc CAMSS_CSI_VFE1_CLK>,
+> +        <&mmcc CAMSS_ISPIF_AHB_CLK>,
+> +        <&mmcc THROTTLE_CAMSS_AXI_CLK>,
+> +        <&mmcc CAMSS_TOP_AHB_CLK>,
+> +        <&mmcc CAMSS_VFE0_AHB_CLK>,
+> +        <&mmcc CAMSS_VFE0_CLK>,
+> +        <&mmcc CAMSS_VFE0_STREAM_CLK>,
+> +        <&mmcc CAMSS_VFE1_AHB_CLK>,
+> +        <&mmcc CAMSS_VFE1_CLK>,
+> +        <&mmcc CAMSS_VFE1_STREAM_CLK>,
+> +        <&mmcc CAMSS_VFE_VBIF_AHB_CLK>,
+> +        <&mmcc CAMSS_VFE_VBIF_AXI_CLK>;
+> +
+> +      clock-names = "ahb",
+> +        "cphy_csid0",
+> +        "cphy_csid1",
+> +        "cphy_csid2",
+> +        "cphy_csid3",
+> +        "csi0_ahb",
+> +        "csi0",
+> +        "csi0_phy",
+> +        "csi0_pix",
+> +        "csi0_rdi",
+> +        "csi1_ahb",
+> +        "csi1",
+> +        "csi1_phy",
+> +        "csi1_pix",
+> +        "csi1_rdi",
+> +        "csi2_ahb",
+> +        "csi2",
+> +        "csi2_phy",
+> +        "csi2_pix",
+> +        "csi2_rdi",
+> +        "csi3_ahb",
+> +        "csi3",
+> +        "csi3_phy",
+> +        "csi3_pix",
+> +        "csi3_rdi",
+> +        "csiphy0_timer",
+> +        "csiphy1_timer",
+> +        "csiphy2_timer",
+> +        "csiphy_ahb2crif",
+> +        "csi_vfe0",
+> +        "csi_vfe1",
+> +        "ispif_ahb",
+> +        "throttle_axi",
+> +        "top_ahb",
+> +        "vfe0_ahb",
+> +        "vfe0",
+> +        "vfe0_stream",
+> +        "vfe1_ahb",
+> +        "vfe1",
+> +        "vfe1_stream",
+> +        "vfe_ahb",
+> +        "vfe_axi";
+> +
+> +      interrupts = <GIC_SPI 296 IRQ_TYPE_EDGE_RISING>,
+> +        <GIC_SPI 297 IRQ_TYPE_EDGE_RISING>,
+> +        <GIC_SPI 298 IRQ_TYPE_EDGE_RISING>,
+> +        <GIC_SPI 299 IRQ_TYPE_EDGE_RISING>,
+> +        <GIC_SPI 78 IRQ_TYPE_EDGE_RISING>,
+> +        <GIC_SPI 79 IRQ_TYPE_EDGE_RISING>,
+> +        <GIC_SPI 80 IRQ_TYPE_EDGE_RISING>,
+> +        <GIC_SPI 309 IRQ_TYPE_EDGE_RISING>,
+> +        <GIC_SPI 314 IRQ_TYPE_EDGE_RISING>,
+> +        <GIC_SPI 315 IRQ_TYPE_EDGE_RISING>;
+> +
+> +      interrupt-names = "csid0",
+> +        "csid1",
+> +        "csid2",
+> +        "csid3",
+> +        "csiphy0",
+> +        "csiphy1",
+> +        "csiphy2",
+> +        "ispif",
+> +        "vfe0",
+> +        "vfe1";
+> +
+> +      iommus = <&mmss_smmu 0xc00>,
+> +        <&mmss_smmu 0xc01>,
+> +        <&mmss_smmu 0xc02>,
+> +        <&mmss_smmu 0xc03>;
+> +
+> +      power-domains = <&mmcc CAMSS_VFE0_GDSC>,
+> +        <&mmcc CAMSS_VFE1_GDSC>;
+> +
+> +      reg = <0x0ca00020 0x10>,
+> +        <0x0ca30000 0x100>,
+> +        <0x0ca30400 0x100>,
+> +        <0x0ca30800 0x100>,
+> +        <0x0ca30c00 0x100>,
+> +        <0x0c824000 0x1000>,
+> +        <0x0ca00120 0x4>,
+> +        <0x0c825000 0x1000>,
+> +        <0x0ca00124 0x4>,
+> +        <0x0c826000 0x1000>,
+> +        <0x0ca00128 0x4>,
+> +        <0x0ca31000 0x500>,
+> +        <0x0ca10000 0x1000>,
+> +        <0x0ca14000 0x1000>;
+> +
+> +      reg-names = "csi_clk_mux",
+> +        "csid0",
+> +        "csid1",
+> +        "csid2",
+> +        "csid3",
+> +        "csiphy0",
+> +        "csiphy0_clk_mux",
+> +        "csiphy1",
+> +        "csiphy1_clk_mux",
+> +        "csiphy2",
+> +        "csiphy2_clk_mux",
+> +        "ispif",
+> +        "vfe0",
+> +        "vfe1";
+> +
+> +      vdda-supply = <&reg_2v8>;
+> +
+> +      ports {
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +      };
+> +    };
+> --
+> 2.27.0
+>
