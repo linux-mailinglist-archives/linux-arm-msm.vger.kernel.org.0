@@ -2,129 +2,200 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BACBF2FDE0E
+	by mail.lfdr.de (Postfix) with ESMTP id 7FB582FDE0D
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 01:37:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403774AbhAUAa4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jan 2021 19:30:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54808 "EHLO
+        id S1728384AbhAUAbB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jan 2021 19:31:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2403965AbhATXV5 (ORCPT
+        with ESMTP id S2403942AbhATXV5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 20 Jan 2021 18:21:57 -0500
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06A4FC0617A0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 14:37:35 -0800 (PST)
-Received: by mail-ot1-x333.google.com with SMTP id 63so2526702oty.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 14:37:35 -0800 (PST)
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0340AC0617A9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 14:40:43 -0800 (PST)
+Received: by mail-ot1-x336.google.com with SMTP id a109so25034138otc.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 14:40:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=6dk3qEQlAxZmfI82OkyXmz2gwMMTg8wFXIlLMCIVZCs=;
-        b=D54trIQyKNCQBtrdVoW8dxM3SpF4NsCBDQTflV5Ceg4ElKwbkYO74DJxzFvEhwdZR3
-         UB3hYh+IPwfJhSLHqa6aIqOYb/gLyCQ2NegN2tsVPs92+gnFV94Gt6hU9GB3HE48hYgU
-         M8AO0DnOEkYBrgNaw4bkfZGUCFgP56swCIH6zqt8hOa9XBT+Es5oHtQTtTkWGsvE2PKw
-         RMkYzz5mYqgiwKW7+sQ9/iZ2JoKsDLumfa05+Q05Afe+tJVlvHVARF4k0+QTg1M1NZUa
-         QYpX+A11Qnuxjnw7F+XInftjpF5hiXCyshTMvkmPpUMA2MnVrxvMhMH4ItLB0Hr4CEZF
-         FdxA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=N0ikIRODAHgwzg5TM1HT6ZnRLm2FIQf9CYmGIK25T6w=;
+        b=KQ1jsn/I1essLHW70M6MBpsmFwLFQqgLosGVhpaT0uLA7nnt4bFyYsMBk1OD4xgO5b
+         SRRqFj69QI/ZFyhj67466muPotunnkZyun6hz6ZKTGDcmgq6VvpVY2men6KmNHAohxYI
+         N+BYsRt5LoEdcfOjz6uEqyRaX+QSwdpMbqXCxuzahixkY1w7J/3R+d9Qt2s53G7Wxsmx
+         w920G2Krt8tW3DyiJynyoiVVLdoilo/d1AqDM4qmm2iwel3M7tLYpV0ajN+dlgBK/LCL
+         VHRtDpCof7DIPofChpCJ76N2z9Gq3JxzXixLND72mulltdMeLgWqsiFKdPVeUWom0c59
+         FJVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=6dk3qEQlAxZmfI82OkyXmz2gwMMTg8wFXIlLMCIVZCs=;
-        b=bStF0sO2MlfqCCWgTArTUGrp5b6DFSkUdzOauqH/DTEnKFU30yGaSd7tB4xcTVzaPo
-         2i+dlaYXOlD1g40cSyp2AZeuPwZBIxwEstpPKfGYdKRLjAORfspvOUYZAR7EWRbGu6dt
-         /MirNDnd8SqUFsazgC043eeCEDKPIOGMnXu1QFZStq+k7Gx5D/WkQdep7pLEw6iQTxlp
-         r91UMi7EDvn6sVBZ6p3972AYRfTa/8cldHCJS6Vq/yvAE4XBKBvWLVwtUMXtV3BA81fG
-         OaIc7C1GXsLaz3jmhZ3swFGZXVyLp9Ww3JCUN9vlxAfP5ttYN+692YTWMrtDSSn3nW01
-         nWFA==
-X-Gm-Message-State: AOAM533OgRw0SJqFWyj0mZBbfFQqTJLgoonlvBdlpNGsJTKCnGPX6d+I
-        6XlvfGvGAwnfDJC98jQpS47Q3g==
-X-Google-Smtp-Source: ABdhPJzTj+jVlL6gEbqCpPhh5IQwO3ePGGnx/6S5K8uwgZeKw4aGYU4mpGn0M82xs6Emw12s/LRugA==
-X-Received: by 2002:a9d:65:: with SMTP id 92mr8393081ota.207.1611182254456;
-        Wed, 20 Jan 2021 14:37:34 -0800 (PST)
-Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id j9sm614894ooq.1.2021.01.20.14.37.33
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=N0ikIRODAHgwzg5TM1HT6ZnRLm2FIQf9CYmGIK25T6w=;
+        b=ew2JCp9uvQZaDEouCKv4uYZwCIrFxf0ActOL87V546wl3r9Rvgvb2qATm+Y0pfiML0
+         AOXWJ0TMo/f9HsrR1rpJNSOQ6Z1+wlIXBZuAwZ5KugeSypeNZ3UzA/weor+UpzU4dBML
+         l3TakIKkreuHC8bZBlv6Cb+W87B38vXwX2DHZWw00jnlz5sXs3Jg2oVBPcmwHqlqAdxw
+         liH0kW+Q40pXLzHKjeabZMlRyyN8pDl6MZkmu7Y2c0P4qsFdEEs1eYpGC5w0rRgzU3Jm
+         sbk1wg+DLksh6GbfdT6oOYGdKuyOzDWKwFQOo2KlYB03r/0v2XjuQvF6JcjdVXt58XnQ
+         0/aA==
+X-Gm-Message-State: AOAM533aG6V/jMEe4SOYeHExmuaPK9Bd2kNjiiGqzcduq770IC6AuWc6
+        Ir5PsrPc2bsZcqM4xM9+9etbaw==
+X-Google-Smtp-Source: ABdhPJwsr2cgr0QT6mIy0RJN43jymeoZ6Wl/xM4K83iEZuDe4nI45HO3piUIMase3XvmXirjIqH5Dg==
+X-Received: by 2002:a9d:7304:: with SMTP id e4mr8490305otk.228.1611182443270;
+        Wed, 20 Jan 2021 14:40:43 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id n11sm681000oij.37.2021.01.20.14.40.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jan 2021 14:37:33 -0800 (PST)
+        Wed, 20 Jan 2021 14:40:42 -0800 (PST)
+Date:   Wed, 20 Jan 2021 16:40:40 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] clk: qcom: rpmhcc: Add sc8180x rpmh clocks
-Date:   Wed, 20 Jan 2021 14:37:41 -0800
-Message-Id: <20210120223741.1610344-2-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210120223741.1610344-1-bjorn.andersson@linaro.org>
-References: <20210120223741.1610344-1-bjorn.andersson@linaro.org>
+To:     Taniya Das <tdas@codeaurora.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette ? <mturquette@baylibre.com>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH V1] clk: qcom: gcc-sc7180: Mark the MM XO clocks to be
+ always ON
+Message-ID: <YAixaN6fta27XDnO@builder.lan>
+References: <1611128871-5898-1-git-send-email-tdas@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1611128871-5898-1-git-send-email-tdas@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add clocks provides by RPMH in the Qualcomm SC8180x platform.
+On Wed 20 Jan 01:47 CST 2021, Taniya Das wrote:
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/clk/qcom/clk-rpmh.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+> There are intermittent GDSC power-up failures observed for titan top
+> gdsc, which requires the XO clock. Thus mark all the MM XO clocks always
+> enabled from probe.
+> 
 
-diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-index 6a2a13c5058e..e356291f3ce7 100644
---- a/drivers/clk/qcom/clk-rpmh.c
-+++ b/drivers/clk/qcom/clk-rpmh.c
-@@ -348,6 +348,10 @@ DEFINE_CLK_RPMH_VRM(sdm845, rf_clk1, rf_clk1_ao, "rfclka1", 1);
- DEFINE_CLK_RPMH_VRM(sdm845, rf_clk2, rf_clk2_ao, "rfclka2", 1);
- DEFINE_CLK_RPMH_VRM(sdm845, rf_clk3, rf_clk3_ao, "rfclka3", 1);
- DEFINE_CLK_RPMH_VRM(sm8150, rf_clk3, rf_clk3_ao, "rfclka3", 1);
-+DEFINE_CLK_RPMH_VRM(sc8180x, rf_clk1, rf_clk1_ao, "rfclkd1", 1);
-+DEFINE_CLK_RPMH_VRM(sc8180x, rf_clk2, rf_clk2_ao, "rfclkd2", 1);
-+DEFINE_CLK_RPMH_VRM(sc8180x, rf_clk3, rf_clk3_ao, "rfclkd3", 1);
-+DEFINE_CLK_RPMH_VRM(sc8180x, rf_clk4, rf_clk4_ao, "rfclkd4", 1);
- DEFINE_CLK_RPMH_BCM(sdm845, ipa, "IP0");
- DEFINE_CLK_RPMH_BCM(sdm845, ce, "CE0");
- 
-@@ -431,6 +435,26 @@ static const struct clk_rpmh_desc clk_rpmh_sc7180 = {
- 	.num_clks = ARRAY_SIZE(sc7180_rpmh_clocks),
- };
- 
-+static struct clk_hw *sc8180x_rpmh_clocks[] = {
-+	[RPMH_CXO_CLK]		= &sdm845_bi_tcxo.hw,
-+	[RPMH_CXO_CLK_A]	= &sdm845_bi_tcxo_ao.hw,
-+	[RPMH_LN_BB_CLK2]	= &sdm845_ln_bb_clk2.hw,
-+	[RPMH_LN_BB_CLK2_A]	= &sdm845_ln_bb_clk2_ao.hw,
-+	[RPMH_LN_BB_CLK3]	= &sdm845_ln_bb_clk3.hw,
-+	[RPMH_LN_BB_CLK3_A]	= &sdm845_ln_bb_clk3_ao.hw,
-+	[RPMH_RF_CLK1]		= &sc8180x_rf_clk1.hw,
-+	[RPMH_RF_CLK1_A]	= &sc8180x_rf_clk1_ao.hw,
-+	[RPMH_RF_CLK2]		= &sc8180x_rf_clk2.hw,
-+	[RPMH_RF_CLK2_A]	= &sc8180x_rf_clk2_ao.hw,
-+	[RPMH_RF_CLK3]		= &sc8180x_rf_clk3.hw,
-+	[RPMH_RF_CLK3_A]	= &sc8180x_rf_clk3_ao.hw,
-+};
-+
-+static const struct clk_rpmh_desc clk_rpmh_sc8180x = {
-+	.clks = sc8180x_rpmh_clocks,
-+	.num_clks = ARRAY_SIZE(sc8180x_rpmh_clocks),
-+};
-+
- DEFINE_CLK_RPMH_VRM(sm8250, ln_bb_clk1, ln_bb_clk1_ao, "lnbclka1", 2);
- 
- static struct clk_hw *sm8250_rpmh_clocks[] = {
-@@ -570,6 +594,7 @@ static int clk_rpmh_probe(struct platform_device *pdev)
- 
- static const struct of_device_id clk_rpmh_match_table[] = {
- 	{ .compatible = "qcom,sc7180-rpmh-clk", .data = &clk_rpmh_sc7180},
-+	{ .compatible = "qcom,sc8180x-rpmh-clk", .data = &clk_rpmh_sc8180x},
- 	{ .compatible = "qcom,sdm845-rpmh-clk", .data = &clk_rpmh_sdm845},
- 	{ .compatible = "qcom,sdx55-rpmh-clk",  .data = &clk_rpmh_sdx55},
- 	{ .compatible = "qcom,sm8150-rpmh-clk", .data = &clk_rpmh_sm8150},
--- 
-2.29.2
+But if this is the reason for keeping all these {ahb,xo}_clks critical
+(or upstream just a bunch of hard coded regmap_update_bits()) why don't
+we properly describe them as dependencies for the clock controller/gdsc?
+I.e. by the use of pm_clk_add()?
 
+Regards,
+Bjorn
+
+> Fixes: 8d4025943e13 ("clk: qcom: camcc-sc7180: Use runtime PM ops instead of clk ones")
+> Signed-off-by: Taniya Das <tdas@codeaurora.org>
+> ---
+>  drivers/clk/qcom/gcc-sc7180.c | 47 ++++---------------------------------------
+>  1 file changed, 4 insertions(+), 43 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-sc7180.c
+> index b05901b..88e896a 100644
+> --- a/drivers/clk/qcom/gcc-sc7180.c
+> +++ b/drivers/clk/qcom/gcc-sc7180.c
+> @@ -1,6 +1,6 @@
+>  // SPDX-License-Identifier: GPL-2.0-only
+>  /*
+> - * Copyright (c) 2019-2020, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2019-2021, The Linux Foundation. All rights reserved.
+>   */
+> 
+>  #include <linux/clk-provider.h>
+> @@ -919,19 +919,6 @@ static struct clk_branch gcc_camera_throttle_hf_axi_clk = {
+>  	},
+>  };
+> 
+> -static struct clk_branch gcc_camera_xo_clk = {
+> -	.halt_reg = 0xb02c,
+> -	.halt_check = BRANCH_HALT,
+> -	.clkr = {
+> -		.enable_reg = 0xb02c,
+> -		.enable_mask = BIT(0),
+> -		.hw.init = &(struct clk_init_data){
+> -			.name = "gcc_camera_xo_clk",
+> -			.ops = &clk_branch2_ops,
+> -		},
+> -	},
+> -};
+> -
+>  static struct clk_branch gcc_ce1_ahb_clk = {
+>  	.halt_reg = 0x4100c,
+>  	.halt_check = BRANCH_HALT_VOTED,
+> @@ -1096,19 +1083,6 @@ static struct clk_branch gcc_disp_throttle_hf_axi_clk = {
+>  	},
+>  };
+> 
+> -static struct clk_branch gcc_disp_xo_clk = {
+> -	.halt_reg = 0xb030,
+> -	.halt_check = BRANCH_HALT,
+> -	.clkr = {
+> -		.enable_reg = 0xb030,
+> -		.enable_mask = BIT(0),
+> -		.hw.init = &(struct clk_init_data){
+> -			.name = "gcc_disp_xo_clk",
+> -			.ops = &clk_branch2_ops,
+> -		},
+> -	},
+> -};
+> -
+>  static struct clk_branch gcc_gp1_clk = {
+>  	.halt_reg = 0x64000,
+>  	.halt_check = BRANCH_HALT,
+> @@ -2159,19 +2133,6 @@ static struct clk_branch gcc_video_throttle_axi_clk = {
+>  	},
+>  };
+> 
+> -static struct clk_branch gcc_video_xo_clk = {
+> -	.halt_reg = 0xb028,
+> -	.halt_check = BRANCH_HALT,
+> -	.clkr = {
+> -		.enable_reg = 0xb028,
+> -		.enable_mask = BIT(0),
+> -		.hw.init = &(struct clk_init_data){
+> -			.name = "gcc_video_xo_clk",
+> -			.ops = &clk_branch2_ops,
+> -		},
+> -	},
+> -};
+> -
+>  static struct clk_branch gcc_mss_cfg_ahb_clk = {
+>  	.halt_reg = 0x8a000,
+>  	.halt_check = BRANCH_HALT,
+> @@ -2304,7 +2265,6 @@ static struct clk_regmap *gcc_sc7180_clocks[] = {
+>  	[GCC_BOOT_ROM_AHB_CLK] = &gcc_boot_rom_ahb_clk.clkr,
+>  	[GCC_CAMERA_HF_AXI_CLK] = &gcc_camera_hf_axi_clk.clkr,
+>  	[GCC_CAMERA_THROTTLE_HF_AXI_CLK] = &gcc_camera_throttle_hf_axi_clk.clkr,
+> -	[GCC_CAMERA_XO_CLK] = &gcc_camera_xo_clk.clkr,
+>  	[GCC_CE1_AHB_CLK] = &gcc_ce1_ahb_clk.clkr,
+>  	[GCC_CE1_AXI_CLK] = &gcc_ce1_axi_clk.clkr,
+>  	[GCC_CE1_CLK] = &gcc_ce1_clk.clkr,
+> @@ -2317,7 +2277,6 @@ static struct clk_regmap *gcc_sc7180_clocks[] = {
+>  	[GCC_DISP_GPLL0_DIV_CLK_SRC] = &gcc_disp_gpll0_div_clk_src.clkr,
+>  	[GCC_DISP_HF_AXI_CLK] = &gcc_disp_hf_axi_clk.clkr,
+>  	[GCC_DISP_THROTTLE_HF_AXI_CLK] = &gcc_disp_throttle_hf_axi_clk.clkr,
+> -	[GCC_DISP_XO_CLK] = &gcc_disp_xo_clk.clkr,
+>  	[GCC_GP1_CLK] = &gcc_gp1_clk.clkr,
+>  	[GCC_GP1_CLK_SRC] = &gcc_gp1_clk_src.clkr,
+>  	[GCC_GP2_CLK] = &gcc_gp2_clk.clkr,
+> @@ -2413,7 +2372,6 @@ static struct clk_regmap *gcc_sc7180_clocks[] = {
+>  	[GCC_VIDEO_AXI_CLK] = &gcc_video_axi_clk.clkr,
+>  	[GCC_VIDEO_GPLL0_DIV_CLK_SRC] = &gcc_video_gpll0_div_clk_src.clkr,
+>  	[GCC_VIDEO_THROTTLE_AXI_CLK] = &gcc_video_throttle_axi_clk.clkr,
+> -	[GCC_VIDEO_XO_CLK] = &gcc_video_xo_clk.clkr,
+>  	[GPLL0] = &gpll0.clkr,
+>  	[GPLL0_OUT_EVEN] = &gpll0_out_even.clkr,
+>  	[GPLL6] = &gpll6.clkr,
+> @@ -2510,6 +2468,9 @@ static int gcc_sc7180_probe(struct platform_device *pdev)
+>  	regmap_update_bits(regmap, 0x0b004, BIT(0), BIT(0));
+>  	regmap_update_bits(regmap, 0x0b008, BIT(0), BIT(0));
+>  	regmap_update_bits(regmap, 0x0b00c, BIT(0), BIT(0));
+> +	regmap_update_bits(regmap, 0x0b02c, BIT(0), BIT(0));
+> +	regmap_update_bits(regmap, 0x0b028, BIT(0), BIT(0));
+> +	regmap_update_bits(regmap, 0x0b030, BIT(0), BIT(0));
+>  	regmap_update_bits(regmap, 0x71004, BIT(0), BIT(0));
+> 
+>  	ret = qcom_cc_register_rcg_dfs(regmap, gcc_dfs_clocks,
+> --
+> Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+> of the Code Aurora Forum, hosted by the  Linux Foundation.
+> 
