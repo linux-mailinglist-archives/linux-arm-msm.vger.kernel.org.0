@@ -2,234 +2,250 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 04DBC2FCE8C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jan 2021 12:01:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B08F12FD059
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jan 2021 13:58:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732998AbhATKdJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jan 2021 05:33:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44866 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731327AbhATJ2n (ORCPT
+        id S2388579AbhATMiL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jan 2021 07:38:11 -0500
+Received: from relay01.th.seeweb.it ([5.144.164.162]:47413 "EHLO
+        relay01.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388802AbhATLFQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Jan 2021 04:28:43 -0500
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FFA9C06179C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 01:26:39 -0800 (PST)
-Received: by mail-ej1-x62a.google.com with SMTP id ox12so8232978ejb.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 01:26:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=6MiTsU3N2AEa1ZXLRORW5cxTPfFrxekkDKqSBZREPFg=;
-        b=lfSJbpRhrQiT4g6I14nJUgeGqQvOqM29Xz7/bAZ/PIuZedSRZDj2QPpgqc+5DjCVqF
-         lOnL4vlKTAycvbcio8+ic8jhyhLYaxkIdZS4Hr6iQBplw0djoG+w7DScLglfdQPIk0XF
-         adhYwqWjeOVvU/BOXbJ/LqkUAUpN4TnunYjcZMt9bv+UZ7qET00ViAC6JW6rsm4UUPQP
-         3SPV3tFrQBxAGXqT1OQammYCPTTKULP7i9sXLWD2QlixUyqwvqvENUH88VuswxHp7IDU
-         ZGUvG43e3FTaJh/76t7sD8061BtoxC8a6RGnRCogUx1DFTcx9ARZLXA8712IywvvYG+y
-         S7FQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=6MiTsU3N2AEa1ZXLRORW5cxTPfFrxekkDKqSBZREPFg=;
-        b=SdRle8tvmQYaVQieDN9zPixjoxcsr75SavNtEgH9ktDMee8Gjgf3lxhCGMK5ZKjR/K
-         RhxGwZdDwPiVEbozGUrf/Rwe8fvxiDY4oY1n5w8hG+FDR5ruLraaB8fCtrdkUlBqoS/D
-         G97WzMl2iIe7qfP0KdcoHn2Pw37CXe3jQPPUGW15EYNLEkdCUFRL+HPZJbZl3M9BmSHA
-         NO591EKvXnaf31tDG0hgXyLMzq1apQw0lcXVM+9Gw2sYgbCVrAh+mAtiZeoNEkJsI0mB
-         jWBofkjM3GEf1lYbSKd8PESmLNKY4Qu+NT0g3W0TeqdTq13rfSbgD7iT0h1y5e7eKSod
-         A7Pw==
-X-Gm-Message-State: AOAM532kZYq3SFsD0jg8j6GFlaSoDJeXBUOt5DbjqqfGdW3Ih7idEeF1
-        hlwQswftxgKlNR50hTW0kVBMOQ==
-X-Google-Smtp-Source: ABdhPJxsNboXYbktxzCo02+KzjeSp1vEtkL2iqpIjcagAeMCx8imVxhxBKaMz12lWM5cHjpPfx6sGQ==
-X-Received: by 2002:a17:906:ae9b:: with SMTP id md27mr5819629ejb.357.1611134797966;
-        Wed, 20 Jan 2021 01:26:37 -0800 (PST)
-Received: from localhost.localdomain (hst-221-66.medicom.bg. [84.238.221.66])
-        by smtp.gmail.com with ESMTPSA id k16sm619392ejd.78.2021.01.20.01.26.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jan 2021 01:26:37 -0800 (PST)
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Ezequiel Garcia <ezequiel@collabora.com>,
-        Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH v4 5/5] venus: venc: Add support for CLL and Mastering display controls
-Date:   Wed, 20 Jan 2021 11:26:06 +0200
-Message-Id: <20210120092606.3987207-6-stanimir.varbanov@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210120092606.3987207-1-stanimir.varbanov@linaro.org>
-References: <20210120092606.3987207-1-stanimir.varbanov@linaro.org>
+        Wed, 20 Jan 2021 06:05:16 -0500
+Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id B0A541F648;
+        Wed, 20 Jan 2021 12:04:17 +0100 (CET)
+Subject: Re: [PATCH 2/2] drm/msm/a6xx: Create an A6XX GPU specific address
+ space
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-kernel@vger.kernel.org,
+        Kristian H Kristensen <hoegsberg@google.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>
+References: <cover.1610366113.git.saiprakash.ranjan@codeaurora.org>
+ <c5848b1c15765c8d6db7de2305baac856e818f12.1610366113.git.saiprakash.ranjan@codeaurora.org>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Message-ID: <1120efd2-151b-4643-9a57-c15c46ab6e16@somainline.org>
+Date:   Wed, 20 Jan 2021 12:04:17 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <c5848b1c15765c8d6db7de2305baac856e818f12.1610366113.git.saiprakash.ranjan@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Create CLL and Mastering display colour volume v4l2 controls for
-encoder, add handling of HDR10 PQ SEI packet payloads for v4.
+Il 11/01/21 13:04, Sai Prakash Ranjan ha scritto:
+> A6XX GPUs have support for last level cache(LLC) also known
+> as system cache and need to set the bus attributes to
+> use it. Currently we use a generic adreno iommu address space
+> implementation which are also used by older GPU generations
+> which do not have LLC and might introduce issues accidentally
+> and is not clean in a way that anymore additions of GPUs
+> supporting LLC would have to be guarded under ifdefs. So keep
+> the generic code separate and make the address space creation
+> A6XX specific. We also have a helper to set the llc attributes
+> so that if the newer GPU generations do support them, we can
+> use it instead of open coding domain attribute setting for each
+> GPU.
+> 
 
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
----
- drivers/media/platform/qcom/venus/core.h      |  2 ++
- drivers/media/platform/qcom/venus/hfi_cmds.c  |  8 +++++
- .../media/platform/qcom/venus/hfi_helper.h    | 20 +++++++++++++
- drivers/media/platform/qcom/venus/venc.c      | 29 +++++++++++++++++++
- .../media/platform/qcom/venus/venc_ctrls.c    | 16 +++++++++-
- 5 files changed, 74 insertions(+), 1 deletion(-)
+Hello!
 
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index b984d508ed71..d2776a18217f 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -238,6 +238,8 @@ struct venc_controls {
- 	} level;
- 
- 	u32 base_priority_id;
-+	struct v4l2_ctrl_hdr10_cll_info cll;
-+	struct v4l2_ctrl_hdr10_mastering_display mastering;
- };
- 
- struct venus_buffer {
-diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
-index 7022368c1e63..081e5a816bca 100644
---- a/drivers/media/platform/qcom/venus/hfi_cmds.c
-+++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
-@@ -1205,6 +1205,14 @@ pkt_session_set_property_4xx(struct hfi_session_set_property_pkt *pkt,
- 		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*cu);
- 		break;
- 	}
-+	case HFI_PROPERTY_PARAM_VENC_HDR10_PQ_SEI: {
-+		struct hfi_hdr10_pq_sei *in = pdata, *hdr10 = prop_data;
-+
-+		memcpy(hdr10, in, sizeof(*hdr10));
-+		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*hdr10);
-+		break;
-+	}
-+
- 	case HFI_PROPERTY_CONFIG_VENC_MAX_BITRATE:
- 	case HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER:
- 	case HFI_PROPERTY_PARAM_BUFFER_ALLOC_MODE:
-diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
-index 1f1c3faa4631..ecbe05a5cee1 100644
---- a/drivers/media/platform/qcom/venus/hfi_helper.h
-+++ b/drivers/media/platform/qcom/venus/hfi_helper.h
-@@ -513,6 +513,7 @@
- #define HFI_PROPERTY_PARAM_VENC_VPX_ERROR_RESILIENCE_MODE	0x2005029
- #define HFI_PROPERTY_PARAM_VENC_HIER_B_MAX_NUM_ENH_LAYER	0x200502c
- #define HFI_PROPERTY_PARAM_VENC_HIER_P_HYBRID_MODE		0x200502f
-+#define HFI_PROPERTY_PARAM_VENC_HDR10_PQ_SEI			0x2005036
- 
- /*
-  * HFI_PROPERTY_CONFIG_VENC_COMMON_START
-@@ -809,6 +810,25 @@ struct hfi_ltr_mark {
- 	u32 mark_frame;
- };
- 
-+struct hfi_mastering_display_colour_sei_payload {
-+	u32 display_primaries_x[3];
-+	u32 display_primaries_y[3];
-+	u32 white_point_x;
-+	u32 white_point_y;
-+	u32 max_display_mastering_luminance;
-+	u32 min_display_mastering_luminance;
-+};
-+
-+struct hfi_content_light_level_sei_payload {
-+	u32 max_content_light;
-+	u32 max_pic_average_light;
-+};
-+
-+struct hfi_hdr10_pq_sei {
-+	struct hfi_mastering_display_colour_sei_payload mastering;
-+	struct hfi_content_light_level_sei_payload cll;
-+};
-+
- struct hfi_framesize {
- 	u32 buffer_type;
- 	u32 width;
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index e4775ec97a87..464027c88499 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -588,6 +588,35 @@ static int venc_set_properties(struct venus_inst *inst)
- 			return ret;
- 	}
- 
-+	if (inst->fmt_cap->pixfmt == V4L2_PIX_FMT_HEVC) {
-+		struct hfi_hdr10_pq_sei hdr10;
-+		unsigned int c;
-+
-+		ptype = HFI_PROPERTY_PARAM_VENC_HDR10_PQ_SEI;
-+
-+		for (c = 0; c < 3; c++) {
-+			hdr10.mastering.display_primaries_x[c] =
-+				ctr->mastering.display_primaries_x[c];
-+			hdr10.mastering.display_primaries_y[c] =
-+				ctr->mastering.display_primaries_y[c];
-+		}
-+
-+		hdr10.mastering.white_point_x = ctr->mastering.white_point_x;
-+		hdr10.mastering.white_point_y = ctr->mastering.white_point_y;
-+		hdr10.mastering.max_display_mastering_luminance =
-+			ctr->mastering.max_display_mastering_luminance;
-+		hdr10.mastering.min_display_mastering_luminance =
-+			ctr->mastering.min_display_mastering_luminance;
-+
-+		hdr10.cll.max_content_light = ctr->cll.max_content_light_level;
-+		hdr10.cll.max_pic_average_light =
-+			ctr->cll.max_pic_average_light_level;
-+
-+		ret = hfi_session_set_property(inst, ptype, &hdr10);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	/* IDR periodicity, n:
- 	 * n = 0 - only the first I-frame is IDR frame
- 	 * n = 1 - all I-frames will be IDR frames
-diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
-index 9fbe8388a938..5a18330b82b8 100644
---- a/drivers/media/platform/qcom/venus/venc_ctrls.c
-+++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
-@@ -262,6 +262,12 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
- 	case V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITY_ID:
- 		ctr->base_priority_id = ctrl->val;
- 		break;
-+	case V4L2_CID_COLORIMETRY_HDR10_CLL_INFO:
-+		ctr->cll = *ctrl->p_new.p_hdr10_cll;
-+		break;
-+	case V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY:
-+		ctr->mastering = *ctrl->p_new.p_hdr10_mastering;
-+		break;
- 	default:
- 		return -EINVAL;
- 	}
-@@ -277,7 +283,7 @@ int venc_ctrl_init(struct venus_inst *inst)
- {
- 	int ret;
- 
--	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 51);
-+	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 53);
- 	if (ret)
- 		return ret;
- 
-@@ -483,6 +489,14 @@ int venc_ctrl_init(struct venus_inst *inst)
- 			  V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITY_ID, 0,
- 			  6, 1, 0);
- 
-+	v4l2_ctrl_new_std_compound(&inst->ctrl_handler, &venc_ctrl_ops,
-+				   V4L2_CID_COLORIMETRY_HDR10_CLL_INFO,
-+				   v4l2_ctrl_ptr_create(NULL));
-+
-+	v4l2_ctrl_new_std_compound(&inst->ctrl_handler, &venc_ctrl_ops,
-+				   V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY,
-+				   v4l2_ctrl_ptr_create(NULL));
-+
- 	ret = inst->ctrl_handler.error;
- 	if (ret)
- 		goto err;
--- 
-2.25.1
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> ---
+>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c   | 46 ++++++++++++++++++++++++-
+>   drivers/gpu/drm/msm/adreno/adreno_gpu.c | 23 +++++--------
+>   drivers/gpu/drm/msm/adreno/adreno_gpu.h |  7 ++--
+>   3 files changed, 55 insertions(+), 21 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 3b798e883f82..3c7ad51732bb 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -1239,6 +1239,50 @@ static unsigned long a6xx_gpu_busy(struct msm_gpu *gpu)
+>   	return (unsigned long)busy_time;
+>   }
+>   
+> +static struct msm_gem_address_space *
+> +a6xx_create_address_space(struct msm_gpu *gpu, struct platform_device *pdev)
+> +{
+> +	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+> +	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+> +	struct iommu_domain *iommu;
+> +	struct msm_mmu *mmu;
+> +	struct msm_gem_address_space *aspace;
+> +	u64 start, size;
+> +
+> +	iommu = iommu_domain_alloc(&platform_bus_type);
+> +	if (!iommu)
+> +		return NULL;
+> +
+> +	/*
+> +	 * This allows GPU to set the bus attributes required to use system
+> +	 * cache on behalf of the iommu page table walker.
+> +	 */
+> +	if (!IS_ERR_OR_NULL(a6xx_gpu->htw_llc_slice))
+> +		adreno_set_llc_attributes(iommu);
+> +
+> +	mmu = msm_iommu_new(&pdev->dev, iommu);
+> +	if (IS_ERR(mmu)) {
+> +		iommu_domain_free(iommu);
+> +		return ERR_CAST(mmu);
+> +	}
+> +
+> +	/*
+> +	 * Use the aperture start or SZ_16M, whichever is greater. This will
+> +	 * ensure that we align with the allocated pagetable range while still
+> +	 * allowing room in the lower 32 bits for GMEM and whatnot
+> +	 */
+> +	start = max_t(u64, SZ_16M, iommu->geometry.aperture_start);
+> +	size = iommu->geometry.aperture_end - start + 1;
+> +
+> +	aspace = msm_gem_address_space_create(mmu, "gpu",
+> +		start & GENMASK_ULL(48, 0), size);
+> +
+> +	if (IS_ERR(aspace) && !IS_ERR(mmu))
+> +		mmu->funcs->destroy(mmu);
+> +
+> +	return aspace;
+> +}
+> +
 
+I get what you're trying to do - yes the intentions are good, however...
+you are effectively duplicating code 1:1, as this *is* the same as
+function adreno_iommu_create_address_space.
+
+I don't see adding two lines to a function as a valid justification to
+duplicate all the rest: perhaps, you may want to find another way to do
+this;
+
+Here's one of the many ideas, perhaps you could:
+1. Introduce a "generic feature" to signal LLCC support (perhaps in
+    struct adreno_info ?)
+2. If LLCC is supported, and LLCC slices are initialized, set the LLCC
+    attributes on the IOMMU. Of course this would mean passing the init
+    state of the slices (maybe just a bool would be fine) back to the
+    generic adreno_gpu.c
+
+This, unless you tell me that the entire function is going to be a6xx
+specific, but that doesn't seem to be the case at all.
+
+Concerns are that when an hypotetical Adreno A7XX comes and perhaps also
+uses the LLCC slices, this function will be duplicated yet another time.
+
+>   static struct msm_gem_address_space *
+>   a6xx_create_private_address_space(struct msm_gpu *gpu)
+>   {
+> @@ -1285,7 +1329,7 @@ static const struct adreno_gpu_funcs funcs = {
+>   		.gpu_state_get = a6xx_gpu_state_get,
+>   		.gpu_state_put = a6xx_gpu_state_put,
+>   #endif
+> -		.create_address_space = adreno_iommu_create_address_space,
+> +		.create_address_space = a6xx_create_address_space,
+>   		.create_private_address_space = a6xx_create_private_address_space,
+>   		.get_rptr = a6xx_get_rptr,
+>   	},
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> index b35914de1b27..0f184c3dd9d9 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> @@ -186,11 +186,18 @@ int adreno_zap_shader_load(struct msm_gpu *gpu, u32 pasid)
+>   	return zap_shader_load_mdt(gpu, adreno_gpu->info->zapfw, pasid);
+>   }
+>   
+> +void adreno_set_llc_attributes(struct iommu_domain *iommu)
+
+Since this function is relative to the iommu part of this driver, I
+think that it would be appropriate to give it the same prefix as all
+the other functions that are "working in this context".
+Hint: adreno_iommu_set_llc_attributes
+Alternatively, this two lines function may just be a static inline in
+the header....
+
+
+But then, what are we talking about, here?
+Since you should stop code duplication and bring everything back in
+here (in a generic way!!!), then this helper would be of no use, at all,
+because then you would be just "throwing" these two lines back in the
+function adreno_iommu_create_address_space....
+
+
+> +{
+> +	struct io_pgtable_domain_attr pgtbl_cfg;
+> +
+> +	pgtbl_cfg.quirks = IO_PGTABLE_QUIRK_ARM_OUTER_WBWA;
+> +	iommu_domain_set_attr(iommu, DOMAIN_ATTR_IO_PGTABLE_CFG, &pgtbl_cfg);
+> +}
+> +
+>   struct msm_gem_address_space *
+>   adreno_iommu_create_address_space(struct msm_gpu *gpu,
+>   		struct platform_device *pdev)
+>   {
+> -	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+>   	struct iommu_domain *iommu;
+>   	struct msm_mmu *mmu;
+>   	struct msm_gem_address_space *aspace;
+> @@ -200,20 +207,6 @@ adreno_iommu_create_address_space(struct msm_gpu *gpu,
+>   	if (!iommu)
+>   		return NULL;
+>   
+> -	if (adreno_is_a6xx(adreno_gpu)) {
+> -		struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+> -		struct io_pgtable_domain_attr pgtbl_cfg;
+> -
+> -		/*
+> -		 * This allows GPU to set the bus attributes required to use system
+> -		 * cache on behalf of the iommu page table walker.
+> -		 */
+> -		if (!IS_ERR_OR_NULL(a6xx_gpu->htw_llc_slice)) {
+> -			pgtbl_cfg.quirks = IO_PGTABLE_QUIRK_ARM_OUTER_WBWA;
+> -			iommu_domain_set_attr(iommu, DOMAIN_ATTR_IO_PGTABLE_CFG, &pgtbl_cfg);
+> -		}
+> -	}
+> -
+>   	mmu = msm_iommu_new(&pdev->dev, iommu);
+>   	if (IS_ERR(mmu)) {
+>   		iommu_domain_free(iommu);
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> index b3d9a333591b..2a3d049b46b5 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> @@ -212,11 +212,6 @@ static inline int adreno_is_a540(struct adreno_gpu *gpu)
+>   	return gpu->revn == 540;
+>   }
+>   
+> -static inline bool adreno_is_a6xx(struct adreno_gpu *gpu)
+> -{
+> -	return ((gpu->revn < 700 && gpu->revn > 599));
+> -}
+> -
+>   static inline int adreno_is_a618(struct adreno_gpu *gpu)
+>   {
+>          return gpu->revn == 618;
+> @@ -278,6 +273,8 @@ struct msm_gem_address_space *
+>   adreno_iommu_create_address_space(struct msm_gpu *gpu,
+>   		struct platform_device *pdev);
+>   
+> +void adreno_set_llc_attributes(struct iommu_domain *iommu);
+> +
+>   /*
+>    * For a5xx and a6xx targets load the zap shader that is used to pull the GPU
+>    * out of secure mode
+> 
+
+Regards,
+- Angelo
