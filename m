@@ -2,81 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1821F2FD796
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jan 2021 18:58:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C2662FD813
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jan 2021 19:17:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726699AbhATR4q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jan 2021 12:56:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41176 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390729AbhATR4b (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Jan 2021 12:56:31 -0500
-Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15BD2C0613D3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 09:55:50 -0800 (PST)
-Received: by mail-qt1-x834.google.com with SMTP id d15so11452158qtw.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 09:55:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=H362xI0GtWa0hOIoSQ+pekpVy6ezMEffCM7UWNAOymc=;
-        b=veCH8tNEKxgqYEzpRP8IcBFLfAMCml/hf44I9sYxqhnjOr10ZOvNISY7A4IJZsawvV
-         HCiGOVH7W4/slNrK9mSPMBLcbjWs0yms/XICtsTlYdco9/qMS/xjAeTirOzLycM98iI9
-         TBFSqPw2DOSeal6gVNnc01qD1b3MsVPVPrt8NwsU6qV3qr0NT2QQMFTsnO9aeU61kfhn
-         Bb77vE/Z9/wQcZzI6/eMit/LVrAx72FIydTRTqcUfkM7Fz+2TAhm2sB/MqsY7OKvVKjp
-         WcLwj2cRGgh7/bWbDH6P/Sa7qeY1EOordXmuJcxCTbR09DQKgFG47JO7JyMerl8Hj24v
-         Ksxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=H362xI0GtWa0hOIoSQ+pekpVy6ezMEffCM7UWNAOymc=;
-        b=di8rl/iK+5dY06R5mk/CPb5Jtv/i3zSN7Mth0BIY0/ImP+tsRqxJIcIGJlzABb8K5R
-         JYZDGQD+LTD8/Z1SwC4Qspg3iYL0rsTK0HHqfQ+oRjdEpmuvhAIDNLZFFZLdMfly23zS
-         vyUUkcJD4+b1EYq01f5qMCFRB4SUozpG6YwmydXNfrioD5uhDrOrcR0n54/bv7ndDXnt
-         tbD93D04cX1E3TNwUR7ZC9++FmKENYrRafqTw0u0TE6AWNB/AFIpYhjgvRiUcqOruWGA
-         4uo0zC7I8tGO6GEPzG5YuF9uuyNdzhIc50LKygMKNxn8yyVIXWyNYR3tuS0K3BYDKJJ/
-         TPjQ==
-X-Gm-Message-State: AOAM532udOP/KaoF/SUZZEtxboJfFy3G/shlt3ihka3URlaNpO9bHdnb
-        Yy5rFinKDj1o3QzzUtO5J8Uy6v0eQ7gGc1oJU3cfzg==
-X-Google-Smtp-Source: ABdhPJyom6O/x/vLdy+hF+kS63EhbC6UqvXwgbwn32Nmb+M6GlijwFxjc32b1qOPGGxqZxd8k9NXhzZfiTIKcBYsx5A=
-X-Received: by 2002:a05:622a:14e:: with SMTP id v14mr10088141qtw.298.1611165349302;
- Wed, 20 Jan 2021 09:55:49 -0800 (PST)
-MIME-Version: 1.0
-References: <20210118113651.71955-1-colin.king@canonical.com> <YAf+o85Z9lgkq3Nw@mwanda>
-In-Reply-To: <YAf+o85Z9lgkq3Nw@mwanda>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 20 Jan 2021 20:55:38 +0300
-Message-ID: <CAA8EJprP4xm=15Ss540uf0VW1-oXA0Sjr6pmTv_deXvjOqL4tg@mail.gmail.com>
-Subject: Re: [PATCH] soc: qcom: socinfo: Fix an off by one in qcom_show_pmic_model()
-To:     Dan Carpenter <dan.carpenter@oracle.com>
-Cc:     Andy Gross <agross@kernel.org>,
+        id S1733030AbhATSRL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jan 2021 13:17:11 -0500
+Received: from mail.kernel.org ([198.145.29.99]:46576 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2391876AbhATSN4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 20 Jan 2021 13:13:56 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id BAEAE233FC;
+        Wed, 20 Jan 2021 18:13:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1611166395;
+        bh=GkIGC0eYFqTOa1KlwKlvqCvxCPd0d/Y25LhcGHqFRYk=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=FK2+cIg3U0xtOVrEC+v2eqL9wZVARGbQVXLBmmxjDqRbVl5W11yUAJNRwyKNZEbY0
+         jlYqS4NKaZNYeKIbQ6xjsTbGJHVDHkRK/1DKkJGWXNnmcDiNvK0R+2jmDCaqzjNogG
+         uOeKItO+ZG+dMNwwdlNcAIhCS/OwlOah4lNB2oGH4Ath9LOuNN8lOA27nQ0dEUURSo
+         PxxE4viUdYakpsuUQsCGqJHjR6fgnrK5/jZoR6CosnJ+878VOXPzjDFcFzTs/3OT/i
+         ATn7gNHrjGaQ6y1x8rYk5N9yZg2fbm+wgq3vO2uFiGLsKwTq/aZieVyp3lCzS/7Nef
+         Ed9P8juEmbt8g==
+From:   Will Deacon <will@kernel.org>
+To:     Rikard Falkeborn <rikard.falkeborn@gmail.com>,
+        Mark Rutland <mark.rutland@arm.com>
+Cc:     catalin.marinas@arm.com, kernel-team@android.com,
+        Will Deacon <will@kernel.org>,
+        Shaokun Zhang <zhangshaokun@hisilicon.com>,
+        Shawn Guo <shawnguo@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        kernel-janitors@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Frank Li <Frank.li@nxp.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        linux-kernel@vger.kernel.org, NXP Linux Team <linux-imx@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Fabio Estevam <festevam@gmail.com>
+Subject: Re: [PATCH 0/4] drivers/perf: Constify static struct attribute_group
+Date:   Wed, 20 Jan 2021 18:13:01 +0000
+Message-Id: <161116508323.2646977.9881871665706289493.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20210117212847.21319-1-rikard.falkeborn@gmail.com>
+References: <20210117212847.21319-1-rikard.falkeborn@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 20 Jan 2021 at 12:58, Dan Carpenter <dan.carpenter@oracle.com> wrote:
->
-> These need to be < ARRAY_SIZE() instead of <= ARRAY_SIZE() to prevent
-> accessing one element beyond the end of the array.
->
-> Fixes: e9247e2ce577 ("soc: qcom: socinfo: fix printing of pmic_model")
-> Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+On Sun, 17 Jan 2021 22:28:43 +0100, Rikard Falkeborn wrote:
+> Thie series makes a number of static struct attribute_group const. The
+> only usage of the structs is to put their address in an array of pointers
+> to const struct * attribute_group. With this series applied, all but two
+> static struct attribute_group in drivers/perf are const (and the two
+> remaining are modified at runtime and can't be const).
+> 
+> Patches are independent and split based on output from get_maintainers.pl.
+> I can of course split differently if that's desired.
+> 
+> [...]
 
-Acked-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Applied to will (for-next/perf), thanks!
 
+[1/4] perf: qcom: Constify static struct attribute_group
+      https://git.kernel.org/will/c/30b34c4833ea
+[2/4] perf/imx_ddr: Constify static struct attribute_group
+      https://git.kernel.org/will/c/3cb7d2da183f
+[3/4] perf: hisi: Constify static struct attribute_group
+      https://git.kernel.org/will/c/c2c4d5c051b2
+[4/4] perf: Constify static struct attribute_group
+      https://git.kernel.org/will/c/f0c140481d1b
 
+Cheers,
 -- 
-With best wishes
-Dmitry
+Will
+
+https://fixes.arm64.dev
+https://next.arm64.dev
+https://will.arm64.dev
