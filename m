@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DDA0F2FCE90
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jan 2021 12:01:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E14FA2FCE8F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jan 2021 12:01:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731325AbhATKby (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jan 2021 05:31:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44546 "EHLO
+        id S1731471AbhATKcJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jan 2021 05:32:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731290AbhATJ1P (ORCPT
+        with ESMTP id S1731295AbhATJ1e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Jan 2021 04:27:15 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B26FBC061793
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 01:26:33 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id d22so13889295edy.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 01:26:33 -0800 (PST)
+        Wed, 20 Jan 2021 04:27:34 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A1F4C061795
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 01:26:35 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id d22so13889387edy.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 01:26:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=cNEG6Wf0FIfViBspVuOimQ9Ufn7OM3gR5b0lBFKYH9s=;
-        b=w3DM53GoY3/BqPTYQ9HHe9jPcIQOY2KZRFnfsde2B3+gHng6/IM0kq0P8g0UzqN8cF
-         AZu6liGhdskAPOJgSe6zuqHppseXAIpB9Klj35tQ41kMActjknJkWK+ITLF0jd3vDxoE
-         UjtjFZW6qw3FwFPa/dSK42r2tqZ/WLZbVy6pvSmpEts2XpAPL28dR88/NwtVQHVglIrW
-         wkgRSjJKcCmtXEpItONAplJNSwWzU2zIcafuN5lg4ko7fFkV0uhKrkKK4S+A8uH6CaWn
-         YFndia741VRzTF6tJreMEy0Ctpi4JjW6I6IU5dPhXqtTFxyYfds/+Ps8USSRzaOOXPz/
-         XJYA==
+        bh=za1noRgNNhtCmeY9qHAQSodv1zv6L5e1srPXJ+3dmLk=;
+        b=FxR0TJ0zkZ7RY98BrkSE0XS9a3+b3ZCdCW2cy8YY1HhGvvpYHE3BaktXRUgQ+AH7/N
+         xmydpSWLV82uwYo7VVSO39rb0pQcncQyGsei4cWn/tiS3Hm9GHM6r41+1WR2Mxut05ju
+         t3PjSymPhhJYp13uR+OsQDxpMmxHpo4ne0eHOwuDdgSlYLybQz6uEUPXCkYEvtMdvwW3
+         4LsAok/KC62n+YFPJiMsEUy0qikFpXmDPsGpWp+zFL6Y1FB6Q2mjZ2pzSc+wxU3b0vKt
+         zejoDsPPumMX/yA1SNvND75h0OCSmnpozoHca7FTqhJfKCedbSMhRKjQOaEdIuxzaAps
+         jJKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=cNEG6Wf0FIfViBspVuOimQ9Ufn7OM3gR5b0lBFKYH9s=;
-        b=DoXnoEIUeHgzhUrny2QESK6pZ6IXwx1ujZW+TIJkTsO2vd/w9FDZO+8eNmWIzLqGju
-         Vo4ssFKnZe9M2jlzZ5xM1D8PEkxLsfXByxVFmxwEYOi2i6C/zb4hZXaXpmfpHb00JlGn
-         cZ0AY8F+WiF6p4YxsMMtdnGiazu2NYic0ye1MPD9/OCbdp33BIMKDPL6rQ/rWMWkrOJO
-         93h6GZdMccK2BliAQRehE0OZQWy3AQaVvHi6ic5wHdlZhzZVPgJBeUmh7fOXsFdvox1q
-         I5fAhphJTrWNozKX2k6z80CdV8g+FzO6OmTKihuQHGoNOvw3GFN9+ouKNkkcg4Y/qcRq
-         /bkw==
-X-Gm-Message-State: AOAM530AQ6hBDyKLntiKUjTRnOhVcOXkSCTRunooAu/watM25ItasBmL
-        YsQW7jF/p5XgMx7sbK8+wEIIyg==
-X-Google-Smtp-Source: ABdhPJyMFxPjSTe5/tLrPdZGq7xwIVcnOlU+Efz0xBj30QCTOuprpWQzAyY0hgsAA+dr6x/u+Gmpjw==
-X-Received: by 2002:aa7:cd4c:: with SMTP id v12mr6641709edw.17.1611134792447;
-        Wed, 20 Jan 2021 01:26:32 -0800 (PST)
+        bh=za1noRgNNhtCmeY9qHAQSodv1zv6L5e1srPXJ+3dmLk=;
+        b=pryg7EBO8VetYR+V8gXstTq/RFeklXtsMJpdzYWsgVrUZNzm5wNIms6R0wWVeh+yiE
+         fZ1kwnb89nqatW+1AY1FD+oeWmfijUV0c5eTL1aSWWm9UwQxLiclPXbgbncGk+UthLvh
+         u6Y1VlfdpnlBA5RxXzEFyc7fQSeyWVfX+PrGYuc4F9aHtg3TKJUANOqOARLZxv+PFHzT
+         UoicIz4YCHMJj3dAjdZ8SP5VdvtnBn4pprrElS6kqDTs7zSrPm3vTUy8T2cXVZzdZuzz
+         HpLKNj0ue16MRlZqUg/8iaJp0hUgDeXTZS1sx0qHk/ZWhIBdQzI95H1nFJ8tb9X3P+YR
+         leZw==
+X-Gm-Message-State: AOAM531wOZqkQHW9gLAUbVS01PQivOggNbkM7xL09H8Etaa/+MBktt3f
+        Zl0I4PIs6gLyjvwjPz+CanfxBA==
+X-Google-Smtp-Source: ABdhPJycyJzToy4sl4jt2g5F7g/OorB6yaUHvYNuSBYzTCBtuq8ZRObH/x2CU8az8GaccvCIMyDlIw==
+X-Received: by 2002:a50:fc18:: with SMTP id i24mr6964296edr.308.1611134794061;
+        Wed, 20 Jan 2021 01:26:34 -0800 (PST)
 Received: from localhost.localdomain (hst-221-66.medicom.bg. [84.238.221.66])
-        by smtp.gmail.com with ESMTPSA id k16sm619392ejd.78.2021.01.20.01.26.31
+        by smtp.gmail.com with ESMTPSA id k16sm619392ejd.78.2021.01.20.01.26.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jan 2021 01:26:32 -0800 (PST)
+        Wed, 20 Jan 2021 01:26:33 -0800 (PST)
 From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
 To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
         Ezequiel Garcia <ezequiel@collabora.com>,
         Nicolas Dufresne <nicolas.dufresne@collabora.com>,
         Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH v4 2/5] docs: Document colorimetry class
-Date:   Wed, 20 Jan 2021 11:26:03 +0200
-Message-Id: <20210120092606.3987207-3-stanimir.varbanov@linaro.org>
+Subject: [PATCH v4 3/5] v4l: Add HDR10 static metadata controls
+Date:   Wed, 20 Jan 2021 11:26:04 +0200
+Message-Id: <20210120092606.3987207-4-stanimir.varbanov@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20210120092606.3987207-1-stanimir.varbanov@linaro.org>
 References: <20210120092606.3987207-1-stanimir.varbanov@linaro.org>
@@ -67,68 +67,209 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a document for ext control colorimetry class.
+Introduce Content light level and Mastering display colour
+volume Colorimetry compound controls with relevant payload
+structures and validation.
 
 Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 ---
- .../userspace-api/media/v4l/common.rst        |  1 +
- .../media/v4l/ext-ctrls-colorimetry.rst       | 19 +++++++++++++++++++
- .../media/v4l/vidioc-g-ext-ctrls.rst          |  4 ++++
- 3 files changed, 24 insertions(+)
- create mode 100644 Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst
+ drivers/media/v4l2-core/v4l2-ctrls.c | 67 ++++++++++++++++++++++++++++
+ include/media/v4l2-ctrls.h           |  4 ++
+ include/uapi/linux/v4l2-controls.h   | 31 +++++++++++++
+ include/uapi/linux/videodev2.h       |  3 ++
+ 4 files changed, 105 insertions(+)
 
-diff --git a/Documentation/userspace-api/media/v4l/common.rst b/Documentation/userspace-api/media/v4l/common.rst
-index 8c263c5a85d8..ea0435182e44 100644
---- a/Documentation/userspace-api/media/v4l/common.rst
-+++ b/Documentation/userspace-api/media/v4l/common.rst
-@@ -51,6 +51,7 @@ applicable to all devices.
-     ext-ctrls-fm-tx
-     ext-ctrls-fm-rx
-     ext-ctrls-detect
-+    ext-ctrls-colorimetry
-     fourcc
-     format
-     planar-apis
-diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst
-new file mode 100644
-index 000000000000..6b0cd2054e84
---- /dev/null
-+++ b/Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst
-@@ -0,0 +1,19 @@
-+.. SPDX-License-Identifier: GFDL-1.1-no-invariants-or-later
-+
-+.. _colorimetry-controls:
-+
-+*****************************
-+Colorimetry Control Reference
-+*****************************
-+
-+Below are controls within the Colorimetry control class.
-+
-+Colorimetry Control IDs
-+-----------------------
-+
-+.. _colorimetry-control-id:
-+
-+``V4L2_CID_COLORIMETRY_CLASS (class)``
-+    The Colorimetry class descriptor. Calling
-+    :ref:`VIDIOC_QUERYCTRL` for this control will
-+    return a description of this control class.
-diff --git a/Documentation/userspace-api/media/v4l/vidioc-g-ext-ctrls.rst b/Documentation/userspace-api/media/v4l/vidioc-g-ext-ctrls.rst
-index b9c62affbb5a..8a95ebdd499a 100644
---- a/Documentation/userspace-api/media/v4l/vidioc-g-ext-ctrls.rst
-+++ b/Documentation/userspace-api/media/v4l/vidioc-g-ext-ctrls.rst
-@@ -394,6 +394,10 @@ still cause this situation.
-       - 0xa40000
-       - The class containing stateless codec controls. These controls are
- 	described in :ref:`codec-stateless-controls`.
-+    * - ``V4L2_CTRL_CLASS_COLORIMETRY``
-+      - 0xa50000
-+      - The class containing colorimetry controls. These controls are
-+	described in :ref:`colorimetry-controls`.
+diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
+index a5137a867411..089f5e215940 100644
+--- a/drivers/media/v4l2-core/v4l2-ctrls.c
++++ b/drivers/media/v4l2-core/v4l2-ctrls.c
+@@ -1205,6 +1205,8 @@ const char *v4l2_ctrl_get_name(u32 id)
+ 	/* Colorimetry controls */
+ 	/* Keep the order of the 'case's the same as in v4l2-controls.h! */
+ 	case V4L2_CID_COLORIMETRY_CLASS:	return "Colorimetry Controls";
++	case V4L2_CID_COLORIMETRY_HDR10_CLL_INFO:		return "HDR10 Content Light Info";
++	case V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY:	return "HDR10 Mastering Display";
+ 	default:
+ 		return NULL;
+ 	}
+@@ -1491,6 +1493,12 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
+ 		*type = V4L2_CTRL_TYPE_AREA;
+ 		*flags |= V4L2_CTRL_FLAG_READ_ONLY;
+ 		break;
++	case V4L2_CID_COLORIMETRY_HDR10_CLL_INFO:
++		*type = V4L2_CTRL_TYPE_HDR10_CLL_INFO;
++		break;
++	case V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY:
++		*type = V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY;
++		break;
+ 	default:
+ 		*type = V4L2_CTRL_TYPE_INTEGER;
+ 		break;
+@@ -1786,6 +1794,12 @@ static void std_log(const struct v4l2_ctrl *ctrl)
+ 	case V4L2_CTRL_TYPE_FWHT_PARAMS:
+ 		pr_cont("FWHT_PARAMS");
+ 		break;
++	case V4L2_CTRL_TYPE_HDR10_CLL_INFO:
++		pr_cont("HDR10_CLL_INFO");
++		break;
++	case V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY:
++		pr_cont("HDR10_MASTERING_DISPLAY");
++		break;
+ 	default:
+ 		pr_cont("unknown type %d", ctrl->type);
+ 		break;
+@@ -1838,6 +1852,7 @@ static int std_validate_compound(const struct v4l2_ctrl *ctrl, u32 idx,
+ 	struct v4l2_ctrl_hevc_sps *p_hevc_sps;
+ 	struct v4l2_ctrl_hevc_pps *p_hevc_pps;
+ 	struct v4l2_ctrl_hevc_slice_params *p_hevc_slice_params;
++	struct v4l2_ctrl_hdr10_mastering_display *p_hdr10_mastering;
+ 	struct v4l2_area *area;
+ 	void *p = ptr.p + idx * ctrl->elem_size;
+ 	unsigned int i;
+@@ -2133,6 +2148,52 @@ static int std_validate_compound(const struct v4l2_ctrl *ctrl, u32 idx,
+ 		zero_padding(*p_hevc_slice_params);
+ 		break;
  
- Return Value
- ============
++	case V4L2_CTRL_TYPE_HDR10_CLL_INFO:
++		break;
++
++	case V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY:
++		p_hdr10_mastering = p;
++
++		for (i = 0; i < 3; ++i) {
++			if (p_hdr10_mastering->display_primaries_x[i] <
++				V4L2_HDR10_MASTERING_PRIMARIES_X_LOW ||
++			    p_hdr10_mastering->display_primaries_x[i] >
++				V4L2_HDR10_MASTERING_PRIMARIES_X_HIGH ||
++			    p_hdr10_mastering->display_primaries_y[i] <
++				V4L2_HDR10_MASTERING_PRIMARIES_Y_LOW ||
++			    p_hdr10_mastering->display_primaries_y[i] >
++				V4L2_HDR10_MASTERING_PRIMARIES_Y_HIGH)
++				return -EINVAL;
++		}
++
++		if (p_hdr10_mastering->white_point_x <
++			V4L2_HDR10_MASTERING_WHITE_POINT_X_LOW ||
++		    p_hdr10_mastering->white_point_x >
++			V4L2_HDR10_MASTERING_WHITE_POINT_X_HIGH ||
++		    p_hdr10_mastering->white_point_y <
++			V4L2_HDR10_MASTERING_WHITE_POINT_Y_LOW ||
++		    p_hdr10_mastering->white_point_y >
++			V4L2_HDR10_MASTERING_WHITE_POINT_Y_HIGH)
++			return -EINVAL;
++
++		if (p_hdr10_mastering->max_display_mastering_luminance <
++			V4L2_HDR10_MASTERING_MAX_LUMA_LOW ||
++		    p_hdr10_mastering->max_display_mastering_luminance >
++			V4L2_HDR10_MASTERING_MAX_LUMA_HIGH ||
++		    p_hdr10_mastering->min_display_mastering_luminance <
++			V4L2_HDR10_MASTERING_MIN_LUMA_LOW ||
++		    p_hdr10_mastering->min_display_mastering_luminance >
++			V4L2_HDR10_MASTERING_MIN_LUMA_HIGH)
++			return -EINVAL;
++
++		if (p_hdr10_mastering->max_display_mastering_luminance ==
++			V4L2_HDR10_MASTERING_MAX_LUMA_LOW &&
++		    p_hdr10_mastering->min_display_mastering_luminance ==
++			V4L2_HDR10_MASTERING_MIN_LUMA_HIGH)
++			return -EINVAL;
++
++		break;
++
+ 	case V4L2_CTRL_TYPE_AREA:
+ 		area = p;
+ 		if (!area->width || !area->height)
+@@ -2825,6 +2886,12 @@ static struct v4l2_ctrl *v4l2_ctrl_new(struct v4l2_ctrl_handler *hdl,
+ 	case V4L2_CTRL_TYPE_HEVC_SLICE_PARAMS:
+ 		elem_size = sizeof(struct v4l2_ctrl_hevc_slice_params);
+ 		break;
++	case V4L2_CTRL_TYPE_HDR10_CLL_INFO:
++		elem_size = sizeof(struct v4l2_ctrl_hdr10_cll_info);
++		break;
++	case V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY:
++		elem_size = sizeof(struct v4l2_ctrl_hdr10_mastering_display);
++		break;
+ 	case V4L2_CTRL_TYPE_AREA:
+ 		elem_size = sizeof(struct v4l2_area);
+ 		break;
+diff --git a/include/media/v4l2-ctrls.h b/include/media/v4l2-ctrls.h
+index 167ca8c8424f..9c3ddbf3d099 100644
+--- a/include/media/v4l2-ctrls.h
++++ b/include/media/v4l2-ctrls.h
+@@ -54,6 +54,8 @@ struct video_device;
+  * @p_hevc_sps:			Pointer to an HEVC sequence parameter set structure.
+  * @p_hevc_pps:			Pointer to an HEVC picture parameter set structure.
+  * @p_hevc_slice_params:	Pointer to an HEVC slice parameters structure.
++ * @p_hdr10_cll:		Pointer to an HDR10 Content Light Level structure.
++ * @p_hdr10_mastering:		Pointer to an HDR10 Mastering Display structure.
+  * @p_area:			Pointer to an area.
+  * @p:				Pointer to a compound value.
+  * @p_const:			Pointer to a constant compound value.
+@@ -78,6 +80,8 @@ union v4l2_ctrl_ptr {
+ 	struct v4l2_ctrl_hevc_sps *p_hevc_sps;
+ 	struct v4l2_ctrl_hevc_pps *p_hevc_pps;
+ 	struct v4l2_ctrl_hevc_slice_params *p_hevc_slice_params;
++	struct v4l2_ctrl_hdr10_cll_info *p_hdr10_cll;
++	struct v4l2_ctrl_hdr10_mastering_display *p_hdr10_mastering;
+ 	struct v4l2_area *p_area;
+ 	void *p;
+ 	const void *p_const;
+diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
+index a41039559193..349e86b18af7 100644
+--- a/include/uapi/linux/v4l2-controls.h
++++ b/include/uapi/linux/v4l2-controls.h
+@@ -1661,6 +1661,37 @@ struct v4l2_ctrl_fwht_params {
+ #define V4L2_CID_COLORIMETRY_CLASS_BASE	(V4L2_CTRL_CLASS_COLORIMETRY | 0x900)
+ #define V4L2_CID_COLORIMETRY_CLASS	(V4L2_CTRL_CLASS_COLORIMETRY | 1)
+ 
++#define V4L2_CID_COLORIMETRY_HDR10_CLL_INFO	(V4L2_CID_COLORIMETRY_CLASS_BASE + 0)
++
++struct v4l2_ctrl_hdr10_cll_info {
++	__u16 max_content_light_level;
++	__u16 max_pic_average_light_level;
++};
++
++#define V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY	(V4L2_CID_COLORIMETRY_CLASS_BASE + 1)
++
++#define V4L2_HDR10_MASTERING_PRIMARIES_X_LOW	5
++#define V4L2_HDR10_MASTERING_PRIMARIES_X_HIGH	37000
++#define V4L2_HDR10_MASTERING_PRIMARIES_Y_LOW	5
++#define V4L2_HDR10_MASTERING_PRIMARIES_Y_HIGH	42000
++#define V4L2_HDR10_MASTERING_WHITE_POINT_X_LOW	5
++#define V4L2_HDR10_MASTERING_WHITE_POINT_X_HIGH	37000
++#define V4L2_HDR10_MASTERING_WHITE_POINT_Y_LOW	5
++#define V4L2_HDR10_MASTERING_WHITE_POINT_Y_HIGH	42000
++#define V4L2_HDR10_MASTERING_MAX_LUMA_LOW	50000
++#define V4L2_HDR10_MASTERING_MAX_LUMA_HIGH	100000000
++#define V4L2_HDR10_MASTERING_MIN_LUMA_LOW	1
++#define V4L2_HDR10_MASTERING_MIN_LUMA_HIGH	50000
++
++struct v4l2_ctrl_hdr10_mastering_display {
++	__u16 display_primaries_x[3];
++	__u16 display_primaries_y[3];
++	__u16 white_point_x;
++	__u16 white_point_y;
++	__u32 max_display_mastering_luminance;
++	__u32 min_display_mastering_luminance;
++};
++
+ /* MPEG-compression definitions kept for backwards compatibility */
+ #ifndef __KERNEL__
+ #define V4L2_CTRL_CLASS_MPEG            V4L2_CTRL_CLASS_CODEC
+diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
+index 79dbde3bcf8d..f5f971407b66 100644
+--- a/include/uapi/linux/videodev2.h
++++ b/include/uapi/linux/videodev2.h
+@@ -1784,6 +1784,9 @@ enum v4l2_ctrl_type {
+ 	V4L2_CTRL_TYPE_U32	     = 0x0102,
+ 	V4L2_CTRL_TYPE_AREA          = 0x0106,
+ 
++	V4L2_CTRL_TYPE_HDR10_CLL_INFO		= 0x0110,
++	V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY	= 0x0111,
++
+ 	V4L2_CTRL_TYPE_H264_SPS             = 0x0200,
+ 	V4L2_CTRL_TYPE_H264_PPS		    = 0x0201,
+ 	V4L2_CTRL_TYPE_H264_SCALING_MATRIX  = 0x0202,
 -- 
 2.25.1
 
