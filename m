@@ -2,92 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2EAF52FE023
+	by mail.lfdr.de (Postfix) with ESMTP id 9CC482FE024
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 04:52:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727080AbhAUDvM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jan 2021 22:51:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56658 "EHLO
+        id S1727216AbhAUDvQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jan 2021 22:51:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732424AbhAUBmO (ORCPT
+        with ESMTP id S1730720AbhAUBob (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Jan 2021 20:42:14 -0500
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE552C061793
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 17:41:24 -0800 (PST)
-Received: by mail-ot1-x333.google.com with SMTP id n42so148510ota.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 17:41:24 -0800 (PST)
+        Wed, 20 Jan 2021 20:44:31 -0500
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EF68C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 17:43:33 -0800 (PST)
+Received: by mail-oi1-x22a.google.com with SMTP id 15so499861oix.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 17:43:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=T6SA6gdnUjtyY5Zv0yL6Xt+78Naajel2rVhAxGjJuuo=;
-        b=WgCejbGRwJ1n8zON3pWi5icc7olJ8a8OxlnTpHba/FXshGGN4/Vxr7SXfmMaAMAJdo
-         +dcap0newUCjuYaHOx/UUarPqNXqcycenKdEDBrPQZz9ZluY3xCFn1Wq06plq9r4HokL
-         0OKWh+qe70P0vEB3+vv/KNDKMC2iC0CULXo7xYlU6VA6PcTbNf1mmTPo/ElAZCiCA/OF
-         Icv/8buPj0wZAIqEEnMrCUGT0R9gSlw2PL4lGsiyScp21LIUpDB+/LZKhw0xPMkKw2VB
-         RnJmKZrxsbY9lr0LmkS9dcnzWTdW/J/qVRGB2EYhnFAbzSNBRm4ovY6IA6F0Kr7xk82j
-         ZjjA==
+        bh=35YOuN4RoCdV/aCbpWrFTknzRYidSYBqsWYqor+LJ3s=;
+        b=dZFoUf5G3RQMVXyG+vD0SRCEqlRhwLQZeEQ77RS4EBjqLeUFlMoE/1a4bZtzJP9jRF
+         E2TsrWJtve5xHd7+GIItkFhcoD/qH67nPKMucZ2Q3DN3v54R/JRcLndmLmo+ioji5kFL
+         x8mfLYTsnuLCBdx0/R1C1UfVMww2HG7FbDDZjxJwUOrljDcdi09GKkiQXej1aFGX+u50
+         JU1OP4CsUS7mYNOrT933CMExhtReK+WdYq+SVZe8CZBf0ikMzYMNv6XSNfzBMwbAKoTJ
+         lApAM/dgHOiOvFe5TpZz+cVTZcKduJfZzhu/wt0dZsJRjdV9PpNzfB+UIsndROV6OjKb
+         Xcdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=T6SA6gdnUjtyY5Zv0yL6Xt+78Naajel2rVhAxGjJuuo=;
-        b=TFNhGsK79Ft2IGgYPkS9IkmNorEYH4mO1AnEfQBp/13Htm++gbPJl0mxPWVAYAwZKa
-         bZOyBXbWbiNVQiy9qxQ6sy+2GsDNx4JVeTUcxjxNGj4WRyi2O+7yZIf6NTiUy5cxZWE8
-         G9HwnLgYQpijVFT21hMkDuUOUubg1EvhKkByRPKhwMxtwxYQ3Edud8UGrcp4v79b98T0
-         fSBpzGQ0f+XIkH2iaMj1vF8SscJ+7d02q2DUePZbuAwBnUWI+d9TCdAz5JXGq7Pow0xe
-         chFKJMRbUepBHSz1cNyqmui72IUUrU6EMmNlzFIsyCQghs2p0pYv1RDLxyinXyAhax38
-         IGTQ==
-X-Gm-Message-State: AOAM530PjI0XCJBoK3/eG6VbpwKrRjnWUo0feqob+vQ6u510W/JNGMAD
-        vKAGOZMRn91gQioZ94D8ymR9EA==
-X-Google-Smtp-Source: ABdhPJzLlveQKXJeQ/6OsYkptr2HAdOcJdSXQaePas35ZQiVIZcTNrzgI9zTWmB9637MyL8w2zmiNg==
-X-Received: by 2002:a9d:2c43:: with SMTP id f61mr8618446otb.329.1611193284132;
-        Wed, 20 Jan 2021 17:41:24 -0800 (PST)
+        bh=35YOuN4RoCdV/aCbpWrFTknzRYidSYBqsWYqor+LJ3s=;
+        b=Or9DkkJEs3WLV8aAYW+ize5S0mJs700XYGP1dngN0r8XDH/2qBbcxFf8RZOEHrp+Wm
+         pDyVS63LQJhMGd8whoQXAoMNFKk8dVElzzK2RpX0SGbyKHzuXpRYZSCulL91/y+mVAlw
+         SYtbHfKmglntkSgF0WAqLe0fAjjBorY8ItDz1wm9EZmviviFjVgSXfDXUbFNZOXyzoAM
+         3RRpy4JzfJk1HQy/zAqxu3xZoJ1C1NFq9yxSKPadl+bM40jIvBS+P/gyD5mOra9dX0E+
+         VbOs6cBNo/OBgIuK2XFDd7D4/MxN5WCS3UB1e2JJc4SGla+EINeDvWFLDne20HUff7gl
+         Px/g==
+X-Gm-Message-State: AOAM5325ZPHEkyt98FfhFmuXvkjjJTO+dg43Abx20pDge7vYG+oOg2gX
+        T6ZgqwjWuBPQzaILWo4Eae0H8A==
+X-Google-Smtp-Source: ABdhPJxI8cfCPFjZAnqYCflbPb1t26VJ8O/yV+uMDRe6QnktW+qu7OjHwM91bsFKWtU9taxYV2UvnA==
+X-Received: by 2002:aca:58d6:: with SMTP id m205mr4584837oib.121.1611193412495;
+        Wed, 20 Jan 2021 17:43:32 -0800 (PST)
 Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id j1sm766978oiw.50.2021.01.20.17.41.23
+        by smtp.gmail.com with ESMTPSA id s69sm779032oih.38.2021.01.20.17.43.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jan 2021 17:41:23 -0800 (PST)
+        Wed, 20 Jan 2021 17:43:31 -0800 (PST)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Sivaprakash Murugesan <sivaprak@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] mailbox: qcom: Add SC8180X apcs compatible
-Date:   Wed, 20 Jan 2021 17:41:30 -0800
-Message-Id: <20210121014130.1612454-2-bjorn.andersson@linaro.org>
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Manu Gautam <mgautam@codeaurora.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH 2/2] phy: qcom-qmp: Add SC8180X USB phy
+Date:   Wed, 20 Jan 2021 17:43:39 -0800
+Message-Id: <20210121014339.1612525-2-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210121014130.1612454-1-bjorn.andersson@linaro.org>
-References: <20210121014130.1612454-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20210121014339.1612525-1-bjorn.andersson@linaro.org>
+References: <20210121014339.1612525-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Qualcomm SC8180X platform has a APSS block exposing the usual IPC
-bits, add a compatible for this.
+The Qualcomm SC8180X has two QMP phys used for SuperSpeed USB, which are
+either the same or very similar to the same found in SM8150. Add a
+compatible for this, reusing the existing SM8150 USB phy config.
 
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- drivers/mailbox/qcom-apcs-ipc-mailbox.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/phy/qualcomm/phy-qcom-qmp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-index 077e5c6a9ef7..0fb0ab028b62 100644
---- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-+++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-@@ -159,6 +159,7 @@ static const struct of_device_id qcom_apcs_ipc_of_match[] = {
- 	{ .compatible = "qcom,msm8998-apcs-hmss-global", .data = &msm8998_apcs_data },
- 	{ .compatible = "qcom,qcs404-apcs-apps-global", .data = &msm8916_apcs_data },
- 	{ .compatible = "qcom,sc7180-apss-shared", .data = &apps_shared_apcs_data },
-+	{ .compatible = "qcom,sc8180x-apss-shared", .data = &apps_shared_apcs_data },
- 	{ .compatible = "qcom,sdm660-apcs-hmss-global", .data = &sdm660_apcs_data },
- 	{ .compatible = "qcom,sdm845-apss-shared", .data = &apps_shared_apcs_data },
- 	{ .compatible = "qcom,sm8150-apss-shared", .data = &apps_shared_apcs_data },
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
+index a1ea911856fb..8a63148a6df6 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+@@ -4211,6 +4211,9 @@ static const struct of_device_id qcom_qmp_phy_of_match_table[] = {
+ 	}, {
+ 		.compatible = "qcom,sc8180x-qmp-ufs-phy",
+ 		.data = &sm8150_ufsphy_cfg,
++	}, {
++		.compatible = "qcom,sc8180x-qmp-usb3-phy",
++		.data = &sm8150_usb3phy_cfg,
+ 	}, {
+ 		.compatible = "qcom,sdm845-qhp-pcie-phy",
+ 		.data = &sdm845_qhp_pciephy_cfg,
 -- 
 2.29.2
 
