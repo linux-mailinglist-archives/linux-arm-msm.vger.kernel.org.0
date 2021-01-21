@@ -2,100 +2,315 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C6DBD2FF60E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 21:39:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D2C372FF8B3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jan 2021 00:24:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726082AbhAUUiv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jan 2021 15:38:51 -0500
-Received: from mail.kernel.org ([198.145.29.99]:56484 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727367AbhAUUiQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jan 2021 15:38:16 -0500
-Received: from gandalf.local.home (cpe-66-24-58-225.stny.res.rr.com [66.24.58.225])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 872282389B;
-        Thu, 21 Jan 2021 20:37:34 +0000 (UTC)
-Date:   Thu, 21 Jan 2021 15:37:32 -0500
-From:   Steven Rostedt <rostedt@goodmis.org>
-To:     Denis Efremov <efremov@linux.com>
-Cc:     Gaurav Kohli <gkohli@codeaurora.org>, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, stable@vger.kernel.org,
-        Julia Lawall <julia.lawall@inria.fr>
-Subject: Re: [PATCH v1] trace: Fix race in trace_open and buffer resize call
-Message-ID: <20210121153732.43d7b96b@gandalf.local.home>
-In-Reply-To: <021b1b38-47ce-bc8b-3867-99160cc85523@linux.com>
-References: <1601976833-24377-1-git-send-email-gkohli@codeaurora.org>
-        <f06efd7b-c7b5-85c9-1a0e-6bb865111ede@linux.com>
-        <20210121140951.2a554a5e@gandalf.local.home>
-        <021b1b38-47ce-bc8b-3867-99160cc85523@linux.com>
-X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+        id S1726278AbhAUXXj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jan 2021 18:23:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50964 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726291AbhAUXGm (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 21 Jan 2021 18:06:42 -0500
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A71ECC061A2A;
+        Thu, 21 Jan 2021 15:04:03 -0800 (PST)
+Received: from pendragon.ideasonboard.com (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 2451050E;
+        Fri, 22 Jan 2021 00:04:01 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1611270241;
+        bh=T5NVDr46xcwrXL27T8VCCkqqocibkcaVgjkVgGiO8ZY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Y8cyClLX8kCaKU5wMc7DQBaagAtpgNWmTZ3+p386BcnpRP0PMgaNeQ9iuSFglc0Sw
+         yxD8mSPCVAnyIXOWj5xsNFm7Htaoj3caG3DKUBN0MGRlEjztlQ48iKJbFja/DHFBKL
+         ztANltlmDf+im+ixzdUmFqsBKC+TOLRQSVr+juDg=
+Date:   Fri, 22 Jan 2021 01:03:42 +0200
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To:     Maxime Ripard <maxime@cerno.tech>
+Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        David Airlie <airlied@linux.ie>,
+        dri-devel@lists.freedesktop.org,
+        Alexey Brodkin <abrodkin@synopsys.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        "James (Qian) Wang" <james.qian.wang@arm.com>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Mihail Atanassov <mihail.atanassov@arm.com>,
+        Brian Starkey <brian.starkey@arm.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Dave Airlie <airlied@redhat.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Boris Brezillon <bbrezillon@kernel.org>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Ludovic Desroches <ludovic.desroches@microchip.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Inki Dae <inki.dae@samsung.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Stefan Agner <stefan@agner.ch>,
+        Alison Wang <alison.wang@nxp.com>,
+        Xinliang Liu <xinliang.liu@linaro.org>,
+        Tian Tao <tiantao6@hisilicon.com>,
+        John Stultz <john.stultz@linaro.org>,
+        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+        Chen Feng <puck.chen@hisilicon.com>,
+        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Anitha Chrisanthus <anitha.chrisanthus@intel.com>,
+        Edmund Dea <edmund.j.dea@intel.com>,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marek Vasut <marex@denx.de>, Tomi Valkeinen <tomba@kernel.org>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+        Sandy Huang <hjc@rock-chips.com>,
+        Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>,
+        Benjamin Gaignard <benjamin.gaignard@linaro.org>,
+        Vincent Abriou <vincent.abriou@st.com>,
+        Yannick Fertre <yannick.fertre@st.com>,
+        Philippe Cornu <philippe.cornu@st.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@st.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jyri Sarha <jyri.sarha@iki.fi>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Eric Anholt <eric@anholt.net>,
+        Rodrigo Siqueira <rodrigosiqueiramelo@gmail.com>,
+        Melissa Wen <melissa.srw@gmail.com>,
+        Haneen Mohammed <hamohammed.sa@gmail.com>,
+        VMware Graphics <linux-graphics-maintainer@vmware.com>,
+        Roland Scheidegger <sroland@vmware.com>,
+        Zack Rusin <zackr@vmware.com>,
+        Hyun Kwon <hyun.kwon@xilinx.com>,
+        Michal Simek <michal.simek@xilinx.com>,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-mips@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        virtualization@lists.linux-foundation.org,
+        spice-devel@lists.freedesktop.org,
+        linux-renesas-soc@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-tegra@vger.kernel.org
+Subject: Re: [PATCH v2 09/11] drm/atomic: Pass the full state to planes
+ atomic disable and update
+Message-ID: <YAoITqHbG1UeiAHV@pendragon.ideasonboard.com>
+References: <20210121163537.1466118-1-maxime@cerno.tech>
+ <20210121163537.1466118-9-maxime@cerno.tech>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20210121163537.1466118-9-maxime@cerno.tech>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 21 Jan 2021 23:15:22 +0300
-Denis Efremov <efremov@linux.com> wrote:
+Hi Maxime,
 
-> On 1/21/21 10:09 PM, Steven Rostedt wrote:
-> > On Thu, 21 Jan 2021 17:30:40 +0300
-> > Denis Efremov <efremov@linux.com> wrote:
-> >   
-> >> Hi,
-> >>
-> >> This patch (CVE-2020-27825) was tagged with
-> >> Fixes: b23d7a5f4a07a ("ring-buffer: speed up buffer resets by avoiding synchronize_rcu for each CPU")
-> >>
-> >> I'm not an expert here but it seems like b23d7a5f4a07a only refactored
-> >> ring_buffer_reset_cpu() by introducing reset_disabled_cpu_buffer() without
-> >> significant changes. Hence, mutex_lock(&buffer->mutex)/mutex_unlock(&buffer->mutex)
-> >> can be backported further than b23d7a5f4a07a~ and to all LTS kernels. Is
-> >> b23d7a5f4a07a the actual cause of the bug?
-> >>  
-> > 
-> > Ug, that looks to be a mistake. Looking back at the thread about this:
-> > 
-> >   https://lore.kernel.org/linux-arm-msm/20200915141304.41fa7c30@gandalf.local.home/  
+Thank you for the patch.
+
+On Thu, Jan 21, 2021 at 05:35:34PM +0100, Maxime Ripard wrote:
+> The current atomic helpers have either their object state being passed as
+> an argument or the full atomic state.
 > 
-> I see from the link that it was planned to backport the patch to LTS kernels:
+> The former is the pattern that was done at first, before switching to the
+> latter for new hooks or when it was needed.
 > 
-> > Actually we are seeing issue in older kernel like 4.19/4.14/5.4 and there below patch was not 
-> > present in stable branches:
-> > Commit b23d7a5f4a07 ("ring-buffer: speed up buffer resets by avoiding synchronize_rcu for each CPU")  
+> Let's convert the remaining helpers to provide a consistent interface,
+> this time with the planes atomic_update and atomic_disable.
 > 
-> The point is that it's not backported yet. Maybe because of Fixes tag. I've discovered
-> this while trying to formalize CVE-2020-27825 bug in cvehound
-> https://github.com/evdenis/cvehound/blob/master/cvehound/cve/CVE-2020-27825.cocci
+> The conversion was done using the coccinelle script below, built tested on
+> all the drivers.
 > 
-> I think that the backport to the 4.4+ should be something like:
+> @@
+> identifier plane, plane_state;
+> symbol state;
+> @@
 > 
-> diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-> index 547a3a5ac57b..2171b377bbc1 100644
-> --- a/kernel/trace/ring_buffer.c
-> +++ b/kernel/trace/ring_buffer.c
-> @@ -4295,6 +4295,8 @@ void ring_buffer_reset_cpu(struct ring_buffer *buffer, int cpu)
->  	if (!cpumask_test_cpu(cpu, buffer->cpumask))
->  		return;
->  
-> +	mutex_lock(&buffer->mutex);
-> +
->  	atomic_inc(&buffer->resize_disabled);
->  	atomic_inc(&cpu_buffer->record_disabled);
->  
-> @@ -4317,6 +4319,8 @@ void ring_buffer_reset_cpu(struct ring_buffer *buffer, int cpu)
->  
->  	atomic_dec(&cpu_buffer->record_disabled);
->  	atomic_dec(&buffer->resize_disabled);
-> +
-> +	mutex_unlock(&buffer->mutex);
+>  struct drm_plane_helper_funcs {
+>  	...
+> 	void (*atomic_update)(struct drm_plane *plane,
+> -			      struct drm_plane_state *plane_state);
+> +			      struct drm_atomic_state *state);
+>  	...
 >  }
->  EXPORT_SYMBOL_GPL(ring_buffer_reset_cpu);
->  
+> 
+> @@
+> identifier plane, plane_state;
+> symbol state;
+> @@
+> 
+>  struct drm_plane_helper_funcs {
+> 	...
+> 	void (*atomic_disable)(struct drm_plane *plane,
+> -			       struct drm_plane_state *plane_state);
+> +			       struct drm_atomic_state *state);
+> 	...
+>  }
+> 
+> @ plane_atomic_func @
+> identifier helpers;
+> identifier func;
+> @@
+> 
+> (
+>  static const struct drm_plane_helper_funcs helpers = {
+>  	...,
+>  	.atomic_update = func,
+> 	...,
+>  };
+> |
+>  static const struct drm_plane_helper_funcs helpers = {
+>  	...,
+>  	.atomic_disable = func,
+> 	...,
+>  };
+> )
+> 
+> @@
+> struct drm_plane_helper_funcs *FUNCS;
+> identifier f;
+> identifier crtc_state;
+> identifier plane, plane_state, state;
+> expression e;
+> @@
+> 
+>  f(struct drm_crtc_state *crtc_state)
+>  {
+>  	...
+>  	struct drm_atomic_state *state = e;
+>  	<+...
+> (
+> -	FUNCS->atomic_disable(plane, plane_state)
+> +	FUNCS->atomic_disable(plane, state)
+> |
+> -	FUNCS->atomic_update(plane, plane_state)
+> +	FUNCS->atomic_update(plane, state)
+> )
+>  	...+>
+>  }
+> 
+> @@
+> identifier plane_atomic_func.func;
+> identifier plane;
+> symbol state;
+> @@
+> 
+>  func(struct drm_plane *plane,
+> -    struct drm_plane_state *state)
+> +    struct drm_plane_state *old_plane_state)
+>  {
+> 	<...
+> -	state
+> +	old_plane_state
+> 	...>
+>  }
+> 
+> @ ignores_old_state @
+> identifier plane_atomic_func.func;
+> identifier plane, old_state;
+> @@
+> 
+>  func(struct drm_plane *plane, struct drm_plane_state *old_state)
+>  {
+> 	... when != old_state
+>  }
+> 
+> @ adds_old_state depends on plane_atomic_func && !ignores_old_state @
+> identifier plane_atomic_func.func;
+> identifier plane, plane_state;
+> @@
+> 
+>  func(struct drm_plane *plane, struct drm_plane_state *plane_state)
+>  {
+> +	struct drm_plane_state *plane_state = drm_atomic_get_old_plane_state(state, plane);
+>  	...
+>  }
+> 
+> @ depends on plane_atomic_func @
+> identifier plane_atomic_func.func;
+> identifier plane, plane_state;
+> @@
+> 
+>  func(struct drm_plane *plane,
+> -     struct drm_plane_state *plane_state
+> +     struct drm_atomic_state *state
+>      )
+>  { ... }
+> 
+> @ include depends on adds_old_state @
+> @@
+> 
+>  #include <drm/drm_atomic.h>
+> 
+> @ no_include depends on !include && adds_old_state @
+> @@
+> 
+> + #include <drm/drm_atomic.h>
+>   #include <drm/...>
+> 
+> @@
+> identifier plane_atomic_func.func;
+> identifier plane, state;
+> identifier plane_state;
+> @@
+> 
+>  func(struct drm_plane *plane, struct drm_atomic_state *state) {
+>  	...
+>  	struct drm_plane_state *plane_state = drm_atomic_get_old_plane_state(state, plane);
+>  	<+...
+> -	plane_state->state
+> +	state
+>  	...+>
+>  }
+> 
+> Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+> 
+> ---
+> 
+> Changes from v1:
+>   - Reintroduce the old_plane_state check in zynqmp_disp_crtc_atomic_disable
+> ---
+>  drivers/gpu/drm/drm_atomic_helper.c               |  8 ++++----
+>  drivers/gpu/drm/drm_simple_kms_helper.c           |  4 +++-
+>  drivers/gpu/drm/mxsfb/mxsfb_kms.c                 |  6 ++++--
+>  drivers/gpu/drm/omapdrm/omap_plane.c              |  4 ++--
+>  drivers/gpu/drm/rcar-du/rcar_du_plane.c           |  4 +++-
+>  drivers/gpu/drm/rcar-du/rcar_du_vsp.c             |  4 +++-
+>  drivers/gpu/drm/tidss/tidss_plane.c               |  4 ++--
+>  drivers/gpu/drm/tilcdc/tilcdc_plane.c             |  2 +-
+>  drivers/gpu/drm/xlnx/zynqmp_disp.c                | 15 ++++++++-------
+>  include/drm/drm_modeset_helper_vtables.h          |  4 ++--
 
-That could possibly work.
+For these,
 
--- Steve
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
+>  58 files changed, 211 insertions(+), 123 deletions(-)
+
+-- 
+Regards,
+
+Laurent Pinchart
