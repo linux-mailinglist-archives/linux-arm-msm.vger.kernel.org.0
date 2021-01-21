@@ -2,86 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 23FDB2FE461
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 08:52:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E02032FE5E7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 10:09:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727383AbhAUHv2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jan 2021 02:51:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51036 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726652AbhAUHvL (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jan 2021 02:51:11 -0500
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC29EC061757
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 23:50:30 -0800 (PST)
-Received: by mail-pf1-x433.google.com with SMTP id q20so1016979pfu.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 23:50:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ArpukKqgHaMQZrpxDemmGF/e2k0kfVvSSfm28/4Eajg=;
-        b=DxdlftMrvjU0fFdVCZUiVxOENUjQAxQ5q3grNRXS2DaVvl5XJ8zzLYQBo95qvUEk36
-         Uz+SkBigXiXTjaaQp6MNHvohSlPS2ZxLRX8M1qW88yORg2sNbUMpwe5n7ie6d5C4Yw+J
-         lu2FE6i9VcYG4M0esNqxuhVcTKzjpO46JIFEsa2yNTi6ReS7ms7kgSH7ygTBsM6KuFCA
-         EdjACO5nPmVvNkQKUwZzHb0hd/yMr8LujBfJ/QenS5hiFWRfWtVwdP/EQJwAzSnwrpcx
-         jfbYDXnnRff/7G0Uv2EdJMSRFC9tc1xZ9mw5meLiJiXyVWWsvTlYouO3zoIQKkN6PHGX
-         M1Og==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ArpukKqgHaMQZrpxDemmGF/e2k0kfVvSSfm28/4Eajg=;
-        b=iZab9kKUKEUM7BR2KTMHVaRX5FTnpEXzvFvLot59F1lArt4DX2XmKd096YhdyTwNoD
-         ztaAM2rsXw0vz79Tpn1wMS7dpBkRVeef6dPdO6EUJwJ7CnmE2Jx/dRvgUQpW3Cxtnk/1
-         I+Wvmd6JEnbWZ/5NRvIBerMJ77TXvbO4xvrhxWDEswbQHjXklR1DX6ssLzArNo8j4Dr4
-         in7SctSBnyCVZYzjWAVbli/b+hizoRSj1SLBIEPx39gyR5zRt+iogq+Y0Ce71gllAw67
-         0DjGF/iaL/4DjcGhzGSmPNsRZjz8/VLWK8nVPvIuYgbA+4/xfqBj/1vkc2tso1OPX0IJ
-         yRPA==
-X-Gm-Message-State: AOAM531Xy5NpOA0UTpjbKPe3DGXSpmMUayJh/s7ZFOLKgNpp9VwAmAY8
-        1Y4i4mZXs4L9vmVo+F6OT43X
-X-Google-Smtp-Source: ABdhPJzLO4YjHwLIXAeASc3SG0WAxtF3gM2EPAuV/kqvQN0pQASMkju6ZWl5Pdiq14ij4kWWNA+zNg==
-X-Received: by 2002:a62:528c:0:b029:19e:4a39:d9ea with SMTP id g134-20020a62528c0000b029019e4a39d9eamr12954725pfb.20.1611215430389;
-        Wed, 20 Jan 2021 23:50:30 -0800 (PST)
-Received: from thinkpad ([2409:4072:6182:23c4:4d5:e6d9:fc7e:c8e2])
-        by smtp.gmail.com with ESMTPSA id w20sm5139557pga.90.2021.01.20.23.50.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jan 2021 23:50:29 -0800 (PST)
-Date:   Thu, 21 Jan 2021 13:20:22 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        carl.yin@quectel.com, naveen.kumar@quectel.com,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        loic.poulain@linaro.org
-Subject: Re: [PATCH v2 1/3] bus: mhi: core: Clear devices when moving
- execution environments
-Message-ID: <20210121075022.GA30041@thinkpad>
-References: <1610651795-31287-1-git-send-email-bbhatt@codeaurora.org>
- <1610651795-31287-2-git-send-email-bbhatt@codeaurora.org>
+        id S1726251AbhAUJJS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jan 2021 04:09:18 -0500
+Received: from mail.kernel.org ([198.145.29.99]:37836 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728446AbhAUJEe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 21 Jan 2021 04:04:34 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 0F41A23356;
+        Thu, 21 Jan 2021 09:03:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1611219833;
+        bh=WWkiOlL5YRAT2gYztz4fBhB6bujfVFTQ5ffqrJmrp0g=;
+        h=From:To:Cc:Subject:Date:From;
+        b=THXg0WhRR+fO/xgH9NKM8+eAVMQeWOtqn1NB81oEl3LY7KefuK0BEqm8MajvimpFe
+         SDgAn3+xqqpneqWw/GFCfB3pYVotp5r1DqxukqAjzt88qz7+6sTCd0+4m58tLmfDvo
+         K6ZdOPjriH4yv5bZQcuc+JVW5MhdHAy6OmW2DeSNdZtCuElaFomO8XGLEdu1EiINHi
+         TVj2u3wVAOTyPA4Ycrvhycc9Xi8JkHSBmHYfpcFLRX1uEvB47Qu7sM5JfzlPqwzaF8
+         DdfGSdoWBAwqcuo+Y1AJ5ZkGsb4Yvk1LBG+2TmhDvwiLZ8VWhvaHwQCHFj1zWLfimn
+         EkzO/Wl7w6nOQ==
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     linux-mmc@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-fscrypt@vger.kernel.org, Satya Tangirala <satyat@google.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Neeraj Soni <neersoni@codeaurora.org>,
+        Barani Muthukumaran <bmuthuku@codeaurora.org>,
+        Peng Zhou <peng.zhou@mediatek.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Konrad Dybcio <konradybcio@gmail.com>
+Subject: [PATCH v5 0/9] eMMC inline encryption support
+Date:   Thu, 21 Jan 2021 01:01:31 -0800
+Message-Id: <20210121090140.326380-1-ebiggers@kernel.org>
+X-Mailer: git-send-email 2.30.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1610651795-31287-2-git-send-email-bbhatt@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 14, 2021 at 11:16:33AM -0800, Bhaumik Bhatt wrote:
-> When moving from SBL to mission mode execution environment, there
-> is no remove callback notification to MHI client drivers which
-> operate on SBL mode only. Client driver devices are being created
-> in SBL or AMSS(mission mode) and only destroyed after power down
-> or SYS_ERROR. If there exist any SBL-specific channels, those are
-> left open and client drivers are thus unaware of the new execution
-> environment where those channels cannot operate. Close the gap and
-> issue remove callbacks to SBL-specific client drivers once device
-> enters mission mode.
-> 
+Hello,
 
-What are the SBL specific channels and the client drivers operating on them?
-If this is something going to come in future, then this patch can come later.
+This patchset adds support for eMMC inline encryption, as specified by
+the upcoming version of the eMMC specification and as already
+implemented and used on many devices.  Building on that, it then adds
+Qualcomm ICE support and wires it up for the Snapdragon 630 SoC.
 
-Thanks,
-Mani
+Inline encryption hardware improves the performance of storage
+encryption and reduces power usage.  See
+Documentation/block/inline-encryption.rst for more information about
+inline encryption and the blk-crypto framework (upstreamed in v5.8)
+which supports it.  Most mobile devices already use UFS or eMMC inline
+encryption hardware; UFS support was already upstreamed in v5.9.
+
+Patches 1-4 add support for the standard eMMC inline encryption.
+
+However, as with UFS, host controller-specific patches are needed on top
+of the standard support.  Therefore, patches 5-9 add Qualcomm ICE
+(Inline Crypto Engine) support and wire it up on the Snapdragon 630 SoC.
+
+To test this I took advantage of the recently upstreamed support for the
+Snapdragon 630 SoC, plus work-in-progress patches from the SoMainline
+project (https://github.com/SoMainline/linux/tree/konrad/v5.10-rc3).  In
+particular, I was able to run the fscrypt xfstests for ext4 and f2fs in
+a Debian chroot.  Among other things, these tests verified that the
+correct ciphertext is written to disk (the same as software encryption).
+
+It will also be possible to add support for Mediatek eMMC inline
+encryption hardware in mtk-sd, and it should be easier than the Qualcomm
+hardware since the Mediatek hardware follows the standard more closely.
+I.e., patches 1-4 should be almost enough for the Mediatek hardware.
+
+This patchset is based on v5.11-rc2 plus the patch
+"block/keyslot-manager: introduce devm_blk_ksm_init()"
+(https://lkml.kernel.org/r/20210121082155.111333-2-ebiggers@kernel.org).
+It can also be retrieved from tag "mmc-crypto-v5" of
+https://git.kernel.org/pub/scm/linux/kernel/git/ebiggers/linux.git
+
+Changed since v4:
+  - Use the proposed resource-managed variant of blk_ksm_init().
+  - Removed an unnecessary call to devm_kfree().
+
+Changed since v3:
+  - Added Acked-by and Reviewed-and-tested-by tags.
+  - Rebased onto v5.11-rc2.
+
+Changed since v2:
+  - Improved comment for sdhci_msm_ice_wait_bist_status()
+  - Removed an unhelpful comment in union cqhci_crypto_cfg_entry.
+  - Fixed the commit message of "mmc: cqhci: initialize upper 64 bits of
+    128-bit task descriptors".
+  - Added Reviewed-by's and Acked-by's.
+
+Changed since v1:
+  - Only select QCOM_SCM if ARCH_QCOM.  (Fixes a build break.)
+  - Split most of the cqhci_prep_task_desc() change into its own patch.
+  - Made sdhci_msm_ice_wait_bist_status() use readl_poll_timeout().
+  - Added a couple more comments.
+  - Added some Acked-by's.
+
+Eric Biggers (9):
+  mmc: add basic support for inline encryption
+  mmc: cqhci: rename cqhci.c to cqhci-core.c
+  mmc: cqhci: initialize upper 64 bits of 128-bit task descriptors
+  mmc: cqhci: add support for inline encryption
+  mmc: cqhci: add cqhci_host_ops::program_key
+  firmware: qcom_scm: update comment for ICE-related functions
+  dt-bindings: mmc: sdhci-msm: add ICE registers and clock
+  arm64: dts: qcom: sdm630: add ICE registers and clocks
+  mmc: sdhci-msm: add Inline Crypto Engine support
+
+ .../devicetree/bindings/mmc/sdhci-msm.txt     |   3 +
+ arch/arm64/boot/dts/qcom/sdm630.dtsi          |  10 +-
+ drivers/firmware/qcom_scm.c                   |  16 +-
+ drivers/mmc/core/Kconfig                      |   8 +
+ drivers/mmc/core/Makefile                     |   1 +
+ drivers/mmc/core/block.c                      |   3 +
+ drivers/mmc/core/core.c                       |   3 +
+ drivers/mmc/core/crypto.c                     |  48 +++
+ drivers/mmc/core/crypto.h                     |  40 +++
+ drivers/mmc/core/host.c                       |   1 +
+ drivers/mmc/core/queue.c                      |   3 +
+ drivers/mmc/host/Kconfig                      |   1 +
+ drivers/mmc/host/Makefile                     |   2 +
+ drivers/mmc/host/{cqhci.c => cqhci-core.c}    |  69 ++++-
+ drivers/mmc/host/cqhci-crypto.c               | 242 +++++++++++++++
+ drivers/mmc/host/cqhci-crypto.h               |  47 +++
+ drivers/mmc/host/cqhci.h                      |  84 +++++-
+ drivers/mmc/host/sdhci-msm.c                  | 276 +++++++++++++++++-
+ include/linux/mmc/core.h                      |   6 +
+ include/linux/mmc/host.h                      |   7 +
+ 20 files changed, 845 insertions(+), 25 deletions(-)
+ create mode 100644 drivers/mmc/core/crypto.c
+ create mode 100644 drivers/mmc/core/crypto.h
+ rename drivers/mmc/host/{cqhci.c => cqhci-core.c} (94%)
+ create mode 100644 drivers/mmc/host/cqhci-crypto.c
+ create mode 100644 drivers/mmc/host/cqhci-crypto.h
+
+-- 
+2.30.0
+
