@@ -2,161 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CE9FD2FE42C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 08:40:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F0D792FE449
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 08:46:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727425AbhAUHkU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jan 2021 02:40:20 -0500
-Received: from mail.kernel.org ([198.145.29.99]:40542 "EHLO mail.kernel.org"
+        id S1727108AbhAUHqr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jan 2021 02:46:47 -0500
+Received: from mail.kernel.org ([198.145.29.99]:46378 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726147AbhAUHUW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jan 2021 02:20:22 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 726C123A1D;
-        Thu, 21 Jan 2021 07:18:28 +0000 (UTC)
+        id S1727718AbhAUHqe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 21 Jan 2021 02:46:34 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 367BC2396F;
+        Thu, 21 Jan 2021 07:45:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1611213508;
-        bh=h+FnArthq66xndfpWsFAxK7FHnJyAY6Cs3A8V9B1WC0=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=nyfeM0WI0p5CSnc2WUbULtfjVcNrK60h2ehrfLTQtfb3VKnCYTJflEkSQTP7aKeQr
-         x2IFvg4iWlvC5z2i5USAHXAqFi+wPnmZP/nlm/7zr80hw0s4jdtz8fZCAn9HJ6rll8
-         kEgEYNwNbNVlFo9OqjvTW+it/AriYck/Nscq07DhyRgYDuRtFWzDBZYLAJ0gpGoPx9
-         SQd77r4aidPTDsTMc2TMj5JtMiTtqQNeZtgFenV6aOFpWeLpYOOFeduWRz98qhNEwV
-         0E1OH2yuVOG6ic+3S9RChVKAekcF7LPcyfIBKE3Sr/8Sh1FwDhi7+2V8NRsdULCebc
-         1D/1jCebbvUnQ==
-Received: by mail.kernel.org with local (Exim 4.94)
-        (envelope-from <mchehab@kernel.org>)
-        id 1l2UEb-004BsX-PP; Thu, 21 Jan 2021 08:18:25 +0100
-From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To:     Mark Brown <broonie@kernel.org>, Lee Jones <lee.jones@linaro.org>
-Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Colin Ian King <colin.king@canonical.com>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Mayulong <mayulong1@huawei.com>,
+        s=k20201202; t=1611215153;
+        bh=jaWMXBe7gnB8W5jif/JfABLr8mo1KpxJERzgLN9oXZo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=OIDIMftRkRi5Tl0tyXx+ZfQIiktUN9xr0cGBGwWiV3B05YmzMI7mQh/rqhcdylAk2
+         1Sx9vkp4ogpH4hgwRwG/MRGCdmgSw42h+/aLshnTE+Pz3sYTsh6vjN9GOsY9jjkMvB
+         KsR5DjRqcQ8QKqwTJrk5D68VwH7eE6Hd2b0y5xTsi70MkOejjM3G4k3gMqgzXhT8ou
+         GawbG31BRe0AgsWemiWFo7HlHfgRyjIvQ/++wn5al8FF0ny9XFqKVwSYetumffqwK9
+         nHOkG54I3m7qaWH8hgmhvGlbNk25E9pHnCZT6EvEEWlkzVs+fNUJW1Ryx48ORKNJQo
+         Lk5ldJLBn0vsw==
+Date:   Wed, 20 Jan 2021 23:45:51 -0800
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>, linux-fscrypt@vger.kernel.org,
+        Satya Tangirala <satyat@google.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Asutosh Das <asutoshd@codeaurora.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        YueHaibing <yuehaibing@huawei.com>, devel@driverdev.osuosl.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v5 18/21] spmi: hisi-spmi-controller: move driver from staging
-Date:   Thu, 21 Jan 2021 08:18:20 +0100
-Message-Id: <edc1a3f12e802607be42c60814b141aa5e1554f4.1611212783.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <cover.1611212783.git.mchehab+huawei@kernel.org>
-References: <cover.1611212783.git.mchehab+huawei@kernel.org>
+        Neeraj Soni <neersoni@codeaurora.org>,
+        Barani Muthukumaran <bmuthuku@codeaurora.org>,
+        Peng Zhou <peng.zhou@mediatek.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Konrad Dybcio <konradybcio@gmail.com>
+Subject: Re: [PATCH v4 1/9] mmc: add basic support for inline encryption
+Message-ID: <YAkxLx4JiAtSlx1E@sol.localdomain>
+References: <20210104184542.4616-1-ebiggers@kernel.org>
+ <20210104184542.4616-2-ebiggers@kernel.org>
+ <CAPDyKFq717teu2HPZLCn9QVxLOwZHdi_iS+Ji69S0kYX1o52PQ@mail.gmail.com>
+ <YAHXPREJaKjK/z7+@sol.localdomain>
+ <CAPDyKFopKy6dwENJ6YQQ0KRPQdT25R_zmhrNH7jyu=+p6bKpNA@mail.gmail.com>
+ <YAdGbqU12cbJr78K@sol.localdomain>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Sender: Mauro Carvalho Chehab <mchehab@kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YAdGbqU12cbJr78K@sol.localdomain>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Hisilicon 6421v600 SPMI driver is ready for mainstream.
+On Tue, Jan 19, 2021 at 12:52:00PM -0800, Eric Biggers wrote:
+> > To free up the data structures, blk_ksm_destroy() is called from
+> > mmc_free_host().
+> > 
+> > To me, this can be made more consistent. For example, it looks like
+> > blk_ksm_destroy() could be called, even if blk_ksm_init() hasn't been
+> > called (depending on the probe error path of the mmc host).
+> 
+> blk_ksm_destroy() is a no-op on an all-zeroed struct, so it's fine to call it
+> unnecessarily.  We could call it unconditionally, if that would be clearer.
+> 
+> > There are a couple of options to better deal with this.
+> > 1) Extend the blk_ksm interface with a devm_blk_ksm_init() function
+> > (thus let it deal with lifecycle problems for us) and simply drop the
+> > call to blk_ksm_destroy().
+> 
+> This would require adding APIs to devm to support zeroing buffers on free and to
+> use kvmalloc() instead of kmalloc().  It looks like these new APIs wouldn't be
+> useful for many drivers (since almost everyone else just wants regular kmalloc
+> with no special behavior on free), so they don't seem worth adding yet.
 
-So, move it from staging.
+Actually devres is more flexible than I thought; it's possible to register
+custom actions to be executed.  I'll send out a patchset that adds
+devm_blk_ksm_init() and converts the UFS driver to use it.
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
----
- .../spmi}/hisilicon,hisi-spmi-controller.yaml         |  0
- MAINTAINERS                                           |  7 +++++++
- drivers/spmi/Kconfig                                  |  9 +++++++++
- drivers/spmi/Makefile                                 |  1 +
- .../{staging/hikey9xx => spmi}/hisi-spmi-controller.c |  0
- drivers/staging/hikey9xx/Kconfig                      | 11 -----------
- drivers/staging/hikey9xx/Makefile                     |  1 -
- 7 files changed, 17 insertions(+), 12 deletions(-)
- rename {drivers/staging/hikey9xx => Documentation/devicetree/bindings/spmi}/hisilicon,hisi-spmi-controller.yaml (100%)
- rename drivers/{staging/hikey9xx => spmi}/hisi-spmi-controller.c (100%)
-
-diff --git a/drivers/staging/hikey9xx/hisilicon,hisi-spmi-controller.yaml b/Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.yaml
-similarity index 100%
-rename from drivers/staging/hikey9xx/hisilicon,hisi-spmi-controller.yaml
-rename to Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.yaml
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 281de213ef47..056777397c68 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -7999,6 +7999,13 @@ F:	drivers/crypto/hisilicon/sec2/sec_crypto.c
- F:	drivers/crypto/hisilicon/sec2/sec_crypto.h
- F:	drivers/crypto/hisilicon/sec2/sec_main.c
- 
-+HISILICON SPMI CONTROLLER DRIVER FOR HIKEY 970
-+M:	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-+L:	linux-kernel@vger.kernel.org
-+S:	Maintained
-+F:	Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.yaml
-+F:	drivers/spmi/hisi-spmi-controller.c
-+
- HISILICON STAGING DRIVERS FOR HIKEY 960/970
- M:	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
- L:	devel@driverdev.osuosl.org
-diff --git a/drivers/spmi/Kconfig b/drivers/spmi/Kconfig
-index a53bad541f1a..2874b6c26028 100644
---- a/drivers/spmi/Kconfig
-+++ b/drivers/spmi/Kconfig
-@@ -11,6 +11,15 @@ menuconfig SPMI
- 
- if SPMI
- 
-+config SPMI_HISI3670
-+	tristate "Hisilicon 3670 SPMI Controller"
-+	select IRQ_DOMAIN_HIERARCHY
-+	depends on HAS_IOMEM
-+	help
-+	  If you say yes to this option, support will be included for the
-+	  built-in SPMI PMIC Arbiter interface on Hisilicon 3670
-+	  processors.
-+
- config SPMI_MSM_PMIC_ARB
- 	tristate "Qualcomm MSM SPMI Controller (PMIC Arbiter)"
- 	select IRQ_DOMAIN_HIERARCHY
-diff --git a/drivers/spmi/Makefile b/drivers/spmi/Makefile
-index 55a94cadeffe..6e092e6f290c 100644
---- a/drivers/spmi/Makefile
-+++ b/drivers/spmi/Makefile
-@@ -4,4 +4,5 @@
- #
- obj-$(CONFIG_SPMI)	+= spmi.o
- 
-+obj-$(CONFIG_SPMI_HISI3670)	+= hisi-spmi-controller.o
- obj-$(CONFIG_SPMI_MSM_PMIC_ARB)	+= spmi-pmic-arb.o
-diff --git a/drivers/staging/hikey9xx/hisi-spmi-controller.c b/drivers/spmi/hisi-spmi-controller.c
-similarity index 100%
-rename from drivers/staging/hikey9xx/hisi-spmi-controller.c
-rename to drivers/spmi/hisi-spmi-controller.c
-diff --git a/drivers/staging/hikey9xx/Kconfig b/drivers/staging/hikey9xx/Kconfig
-index b29f5d5df134..6dc9f9307510 100644
---- a/drivers/staging/hikey9xx/Kconfig
-+++ b/drivers/staging/hikey9xx/Kconfig
-@@ -11,17 +11,6 @@ config PHY_HI3670_USB
- 
- 	  To compile this driver as a module, choose M here.
- 
--# to be placed at drivers/spmi
--config SPMI_HISI3670
--	tristate "Hisilicon 3670 SPMI Controller"
--	select IRQ_DOMAIN_HIERARCHY
--	depends on HAS_IOMEM
--	depends on SPMI
--	help
--	  If you say yes to this option, support will be included for the
--	  built-in SPMI PMIC Arbiter interface on Hisilicon 3670
--	  processors.
--
- # to be placed at drivers/mfd
- config MFD_HI6421_SPMI
- 	tristate "HiSilicon Hi6421v600 SPMI PMU/Codec IC"
-diff --git a/drivers/staging/hikey9xx/Makefile b/drivers/staging/hikey9xx/Makefile
-index 1924fadac952..64b419cf7bca 100644
---- a/drivers/staging/hikey9xx/Makefile
-+++ b/drivers/staging/hikey9xx/Makefile
-@@ -2,6 +2,5 @@
- 
- obj-$(CONFIG_PHY_HI3670_USB)		+= phy-hi3670-usb3.o
- 
--obj-$(CONFIG_SPMI_HISI3670)		+= hisi-spmi-controller.o
- obj-$(CONFIG_MFD_HI6421_SPMI)		+= hi6421-spmi-pmic.o
- obj-$(CONFIG_REGULATOR_HI6421V600)	+= hi6421v600-regulator.o
--- 
-2.29.2
-
+- Eric
