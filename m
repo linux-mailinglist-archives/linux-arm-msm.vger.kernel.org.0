@@ -2,197 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E60F2FF437
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 20:20:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 51C932FF4D7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 20:43:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727163AbhAUTTy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jan 2021 14:19:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58882 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726998AbhAUTTv (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jan 2021 14:19:51 -0500
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8FABC06174A;
-        Thu, 21 Jan 2021 11:19:05 -0800 (PST)
-Received: by mail-pl1-x62b.google.com with SMTP id g3so1854412plp.2;
-        Thu, 21 Jan 2021 11:19:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=OJPeUr95r7qe0zay9wgTNA4xYQ3SP/NdIq7pjxqRZ8w=;
-        b=HwPxn2l58r0mlOJ5V17hBBWQWQ8RWvyoGCk7idFJgDHwiHm4hU5bxPTKC9i5KpaySY
-         wmbxfKvRSxdRPpXH08VrqK66CZ2D8HtoDpv6YEJ2nsjKGLVRA0aU1sZMnBW1TPwdt22g
-         KBOA0k5SWkrL4FkgQyLwNWcsHe3rFDgJfHaDwhKCpeyViT2qA0FsbiyMJ+yBoaU9CPpI
-         0mTZNCGkyUxWOj1L0CNmtWtGcR7h8vW2lDewM3/EHv2rFK/AQNX6toLgVW7Vs7GjGyiV
-         MYoX1VbsJTfBoMWZiE6dy9SfaWuP5fbLTTdlTtUEwQ4xuTIhx7gUmF8KkV4DYhNq6rcA
-         2jgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=OJPeUr95r7qe0zay9wgTNA4xYQ3SP/NdIq7pjxqRZ8w=;
-        b=DiBpmwH+eY0Gl+kqwJJ25cz4g75osd3sWKMOPL8vjtD3Qe8UBFxhL4JsGIAPDBWjeU
-         eSgoqHSVDM6TnlN2IOrXvkF1+DFJht+v41r4R8IZjwD8FDC4LM3JeRSF8Rcfn5iGPWIr
-         CqlfWLumCruqhhqlIDO9t/t3dPFVP3cN4H59GoBT4wzHw5Dg8t9xN16nhQmhlBakfFHj
-         0hyRq6fRIX6ARS9TZj6xlhRcOizU5UMdww9ufAsejGmLbbgI1wJfvmbd8e4iBV1rGNx4
-         zpL0z1X8f61XASbR538+i+JhL00MwgIEk09PSGF2UCymGRNgeKu8Lw9Fn3GsPD7ERrxi
-         XiOA==
-X-Gm-Message-State: AOAM533InT5noqHhasxxtbogdOpaPSXKNJBug084A+zX8rN2Zy7I51pg
-        XFm8e5wRShNAz/LZnHjuiOg=
-X-Google-Smtp-Source: ABdhPJwYb7y1Ji+aONNbWB23QbRQS4m+r3yjm/gsBwxmFeyTtTWF580sv9zaKPvIsBRZ5dBPId7c5g==
-X-Received: by 2002:a17:902:724b:b029:de:229a:47f1 with SMTP id c11-20020a170902724bb02900de229a47f1mr915587pll.10.1611256745320;
-        Thu, 21 Jan 2021 11:19:05 -0800 (PST)
-Received: from ansuel-xps20.localdomain (host-80-182-172-197.pool80182.interbusiness.it. [80.182.172.197])
-        by smtp.googlemail.com with ESMTPSA id p9sm6559634pfq.136.2021.01.21.11.18.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Jan 2021 11:19:04 -0800 (PST)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Amit Kucheria <amitk@kernel.org>
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v8 8/8] dt-bindings: thermal: tsens: Document ipq8064 bindings
-Date:   Thu, 21 Jan 2021 20:18:53 +0100
-Message-Id: <20210121191853.14600-1-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.29.2
+        id S1726437AbhAUTlI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jan 2021 14:41:08 -0500
+Received: from mail.kernel.org ([198.145.29.99]:46782 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726556AbhAUTlC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 21 Jan 2021 14:41:02 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 379D123A3A;
+        Thu, 21 Jan 2021 19:40:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1611258021;
+        bh=N0U+XWIf0wWuQGetEOr/vLTRMW3Qgr7Tde8oPv8YgWs=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=HTyZQkGKeUeDcbyaOAdGK7eVFwCwNaQy/59IRXOBZ1ZdF5yFogOkcItdm3+kIwClc
+         Js2NH8GhbnNh+BTTz9Cx8M0IaoTt+z8GZIlizvKQEeqr8a1c6BHLv41jWrwqzubG+4
+         qann443jt52H43Ku74iNnja3hmbMBkrlseN4g1inR+i7LisLqspdVtL2O4Z3FcNuGz
+         bgvG7rCs6ce6feQIe14IH8Gg8dHFH/I/xgFgBMtpR+TCm2opL3PAeqbgb3YiSMJ2Kj
+         YJLWUDh6f+BlTbuSLq2XFG/1ZuxVN+UsXcEYanH3F1HxRd0J0MGqVMlAacyGTV2qbq
+         DK7q7bnlpdjMw==
+From:   Mark Brown <broonie@kernel.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        V Sujith Kumar Reddy <vsujithk@codeaurora.org>,
+        linux-kernel@vger.kernel.org,
+        Srinivasa Rao <srivasam@codeaurora.org>,
+        Cheng-Yi Chiang <cychiang@chromium.org>,
+        Patrick Lai <plai@codeaurora.org>
+In-Reply-To: <20210115203329.846824-1-swboyd@chromium.org>
+References: <20210115203329.846824-1-swboyd@chromium.org>
+Subject: Re: [PATCH] ASoC: qcom: Fix number of HDMI RDMA channels on sc7180
+Message-Id: <161125795422.35635.5979635189908672108.b4-ty@kernel.org>
+Date:   Thu, 21 Jan 2021 19:39:14 +0000
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the use of bindings used for msm8960 tsens based devices.
-msm8960 use the same gcc regs and is set as a child of the qcom gcc.
+On Fri, 15 Jan 2021 12:33:29 -0800, Stephen Boyd wrote:
+> Suspending/resuming with an HDMI dongle attached leads to crashes from
+> an audio regmap.
+> 
+>  Unable to handle kernel paging request at virtual address ffffffc018068000
+>  Mem abort info:
+>    ESR = 0x96000047
+>    EC = 0x25: DABT (current EL), IL = 32 bits
+>    SET = 0, FnV = 0
+>    EA = 0, S1PTW = 0
+>  Data abort info:
+>    ISV = 0, ISS = 0x00000047
+>    CM = 0, WnR = 1
+>  swapper pgtable: 4k pages, 39-bit VAs, pgdp=0000000081b12000
+>  [ffffffc018068000] pgd=0000000275d14003, pud=0000000275d14003, pmd=000000026365d003, pte=0000000000000000
+>  Internal error: Oops: 96000047 [#1] PREEMPT SMP
+>  Call trace:
+>   regmap_mmio_write32le+0x2c/0x40
+>   regmap_mmio_write+0x48/0x6c
+>   _regmap_bus_reg_write+0x34/0x44
+>   _regmap_write+0x100/0x150
+>   regcache_default_sync+0xc0/0x138
+>   regcache_sync+0x188/0x26c
+>   lpass_platform_pcmops_resume+0x48/0x54 [snd_soc_lpass_platform]
+>   snd_soc_component_resume+0x28/0x40
+>   soc_resume_deferred+0x6c/0x178
+>   process_one_work+0x208/0x3c8
+>   worker_thread+0x23c/0x3e8
+>   kthread+0x144/0x178
+>   ret_from_fork+0x10/0x18
+>  Code: d503201f d50332bf f94002a8 8b344108 (b9000113)
+> 
+> [...]
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
- .../bindings/thermal/qcom-tsens.yaml          | 75 ++++++++++++++++---
- 1 file changed, 65 insertions(+), 10 deletions(-)
+Applied to
 
-diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-index 95462e071ab4..11ce1d7da679 100644
---- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-+++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-@@ -19,6 +19,11 @@ description: |
- properties:
-   compatible:
-     oneOf:
-+      - description: msm9860 TSENS based
-+        items:
-+          - enum:
-+            - qcom,ipq8064-tsens
-+
-       - description: v0.1 of TSENS
-         items:
-           - enum:
-@@ -71,9 +76,6 @@ properties:
-   nvmem-cell-names:
-     minItems: 1
-     maxItems: 2
--    items:
--      - const: calib
--      - const: calib_sel
- 
-   "#qcom,sensors":
-     description:
-@@ -88,12 +90,40 @@ properties:
-       Number of cells required to uniquely identify the thermal sensors. Since
-       we have multiple sensors this is set to 1
- 
-+required:
-+  - compatible
-+  - interrupts
-+  - interrupt-names
-+  - "#thermal-sensor-cells"
-+  - "#qcom,sensors"
-+
- allOf:
-   - if:
-       properties:
-         compatible:
-           contains:
-             enum:
-+              - qcom,ipq8064-tsens
-+    then:
-+      properties:
-+        nvmem-cell-names:
-+          items:
-+            - const: calib
-+            - const: calib_backup
-+
-+    else:
-+      properties:
-+        nvmem-cell-names:
-+          items:
-+            - const: calib
-+            - const: calib_sel
-+
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,ipq8064-tsens
-               - qcom,msm8916-tsens
-               - qcom,msm8974-tsens
-               - qcom,msm8976-tsens
-@@ -114,17 +144,42 @@ allOf:
-         interrupt-names:
-           minItems: 2
- 
--required:
--  - compatible
--  - reg
--  - "#qcom,sensors"
--  - interrupts
--  - interrupt-names
--  - "#thermal-sensor-cells"
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,tsens-v0_1
-+              - qcom,tsens-v1
-+              - qcom,tsens-v2
-+
-+    then:
-+      required:
-+        - reg
- 
- additionalProperties: false
- 
- examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    // Example msm9860 based SoC (ipq8064):
-+    gcc: clock-controller {
-+
-+           /* ... */
-+
-+           tsens: thermal-sensor {
-+                compatible = "qcom,ipq8064-tsens";
-+
-+                 nvmem-cells = <&tsens_calib>, <&tsens_calib_backup>;
-+                 nvmem-cell-names = "calib", "calib_backup";
-+                 interrupts = <GIC_SPI 178 IRQ_TYPE_LEVEL_HIGH>;
-+                 interrupt-names = "uplow";
-+
-+                 #qcom,sensors = <11>;
-+                 #thermal-sensor-cells = <1>;
-+          };
-+    };
-+
-   - |
-     #include <dt-bindings/interrupt-controller/arm-gic.h>
-     // Example 1 (legacy: for pre v1 IP):
--- 
-2.29.2
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
+Thanks!
+
+[1/1] ASoC: qcom: Fix number of HDMI RDMA channels on sc7180
+      commit: 7dfe20ee92f681ab1342015254ddb77a18f40cdb
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
