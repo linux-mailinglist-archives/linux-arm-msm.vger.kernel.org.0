@@ -2,58 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 66C5B2FE92D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 12:48:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 251142FE8FC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 12:39:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730223AbhAULrL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jan 2021 06:47:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39700 "EHLO
+        id S1730450AbhAULiY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jan 2021 06:38:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729940AbhAULV0 (ORCPT
+        with ESMTP id S1729725AbhAULYM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jan 2021 06:21:26 -0500
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3FCEC0617BC
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jan 2021 03:19:35 -0800 (PST)
-Received: by mail-pj1-x1036.google.com with SMTP id g15so1462078pjd.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jan 2021 03:19:35 -0800 (PST)
+        Thu, 21 Jan 2021 06:24:12 -0500
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1056EC061757
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jan 2021 03:23:32 -0800 (PST)
+Received: by mail-pg1-x529.google.com with SMTP id n7so1178452pgg.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jan 2021 03:23:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=nHw2TbBd91GFbyo9oUYtySF5P39+d7uFhdN/MG9zJNI=;
-        b=kOFp5ahEN76l2Wt4u6mK8/csoL6VMfIIn7Z1FU5VvbxDR/4jQWthtN+mqx+/9YKRx5
-         drj1gH+a3/2KzaOReGzfExpOZdZPrk2JdwpAK9gPm6twsIp2R+B3+YdETLYyFByw4eJ0
-         yAde3uDPWHlY1421/5qiy4Zv+JLlvFayjkCt3wpbBtgrWfrA3lYi+sbB8vfCCdK8TPpf
-         J7PLKVrtn6jQtlQRFX1z2mRx/Z8GufZKkaTCyXEXSfo9vbmQlF0XBOKBcgI0xt21hvU8
-         lgVudlxCXbUvDFcyHkq3UMXPjTCpggMsN6cjDWp/69cDR2HwSBjLW1v1y5hWZeQPdm4v
-         K6bA==
+        bh=giomJ0krdJfgizuRFfQAQJInEH5uDbYd+ubs6SVJPMw=;
+        b=jc/7LjX7pEy7Z4id9wguYide/tGH5AC9R2RdHFr+ivXj4qHt0B3XvP1W7qFrDthckL
+         QIYRtDtgw8aqcxKnohaFmoTevQSxz7rDFOf+gWr1ui4SiHJ4A7bH7tEomVMuCyjuhQjn
+         r13XAKzt5acImnlAFBEWYHknP8nQOdosiL144lwUyHziHnEACfqP6Qwnh9ITWVHsJH6P
+         eQjFzMYiwk2afewtPDGBgvY4P/oBS8pXkDj9mvzugit/l716a5lhCe0d1GVbir7svUAo
+         zXnkxBltmwde72YawM9AB5lPf5GZ+W9nCrZxerAYAgYATuxSBZw+nSf4Tq39lbMb7Z5c
+         MW3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=nHw2TbBd91GFbyo9oUYtySF5P39+d7uFhdN/MG9zJNI=;
-        b=ch5WxL/m1souQ5XPoP31bOyw0VeliZoWkoeDc7OHEhWruXbRexw9JimkwAkX2JZ8qy
-         ijdDAVXjcXPEIRi7W1EBk7ePExyIZrdq4vH6eEGF8f1x/lGK1Riyg2JHgaYJnp+MNgvU
-         axPiW5WljLmAma9eQSOQezWB4Se5k5hY9AtBGAkgTmMyLEHdub4dP+HYwRPYHl0vekQL
-         kUUteiIUSarYJhMYYQ03WqPgbhLgWoLFxMNQ8SJUGcjuzomQitnwlOQ1hlUgD+FlfTIg
-         XIK5/CAnh2o9lHweyx9s6yZ+RWVkdr7RYnhL+S6T3CapZmhooGU8yFKyEoNK2EbXvggv
-         OBJQ==
-X-Gm-Message-State: AOAM532lDc7uMBP96xXUsFENei6BW6m7ozm6cfeLXre4/tbG6fV/bDgg
-        2ygHHteXWJgbqoeUklsRaNd0
-X-Google-Smtp-Source: ABdhPJwPZq6QapUifvcOvP1mXke+7fjxffXBKGjZjM1grA+mC0BJWIeJMimNaBos0kl4txGiWGpBbw==
-X-Received: by 2002:a17:90a:bb0d:: with SMTP id u13mr11416483pjr.106.1611227975030;
-        Thu, 21 Jan 2021 03:19:35 -0800 (PST)
+        bh=giomJ0krdJfgizuRFfQAQJInEH5uDbYd+ubs6SVJPMw=;
+        b=DHOCXt54inAM1XNQ8cSqSdP9suTJ9rOlfUAi5IHX+bRiJ93t1xS44CKTCK2UuRttEu
+         45s7DNmb6kBWIHycn30eXba8F+sEofEMEB6l2Kr5OCq3NNHCT44fO1P9LhQcOUnljysT
+         O9y94ET1Y+Jeeftt+ng1uMcs1jTi5/DMZaAoxaUFUPXbyMyJLOlwwUdWofnPJWQMYWHN
+         Jt9a7ueZ60dLyn31/S2OEswL0f3eQ3coF9UDn8TBme1qi8cmhFFlyPZj7t37JydSjRy/
+         LBmdDo/VZALsvrlBcnRx/NvYudakvC9b7E9hSHEf3JKKbCUaaUmH+zQvRCSuvJqOz1Zr
+         4HAw==
+X-Gm-Message-State: AOAM533gvex56fao0xbK4I+y+gd/5FaPo3LeQRpJRvjvGOFcZrBwFxFD
+        sYPXRXKnXWEGH0NeIxbeBJwEGyISCJ9i
+X-Google-Smtp-Source: ABdhPJxuDXXRSJfH+Me2gwYTbYQFYyTC6s/EkAWsLovQr43EwtSy/snxcrIYA+UWlgEvHpGQX8lTng==
+X-Received: by 2002:a63:1b22:: with SMTP id b34mr14036636pgb.132.1611228211508;
+        Thu, 21 Jan 2021 03:23:31 -0800 (PST)
 Received: from thinkpad ([2409:4072:6182:23c4:4d5:e6d9:fc7e:c8e2])
-        by smtp.gmail.com with ESMTPSA id n2sm4978036pfu.42.2021.01.21.03.19.30
+        by smtp.gmail.com with ESMTPSA id i1sm5708444pfb.54.2021.01.21.03.23.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Jan 2021 03:19:33 -0800 (PST)
-Date:   Thu, 21 Jan 2021 16:49:28 +0530
+        Thu, 21 Jan 2021 03:23:30 -0800 (PST)
+Date:   Thu, 21 Jan 2021 16:53:26 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Loic Poulain <loic.poulain@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org
 Subject: Re: [PATCH v2] mhi: core: Factorize mhi queuing
-Message-ID: <20210121111928.GC30041@thinkpad>
+Message-ID: <20210121112326.GD30041@thinkpad>
 References: <1610124750-11950-1-git-send-email-loic.poulain@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -74,9 +74,7 @@ On Fri, Jan 08, 2021 at 05:52:30PM +0100, Loic Poulain wrote:
 > 
 > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 
-This looks much cleaner!
-
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Applied to mhi-next!
 
 Thanks,
 Mani
