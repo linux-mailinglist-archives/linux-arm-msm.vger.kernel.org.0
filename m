@@ -2,299 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 38E0C2FF4F3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 20:45:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A506A2FF5A5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 21:17:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726583AbhAUTnR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jan 2021 14:43:17 -0500
-Received: from relay07.th.seeweb.it ([5.144.164.168]:33195 "EHLO
-        relay07.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726672AbhAUTlp (ORCPT
+        id S1725923AbhAUUQZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jan 2021 15:16:25 -0500
+Received: from mail-lf1-f47.google.com ([209.85.167.47]:47056 "EHLO
+        mail-lf1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726674AbhAUUQI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jan 2021 14:41:45 -0500
-Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 332A93EEED;
-        Thu, 21 Jan 2021 20:40:54 +0100 (CET)
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-To:     bjorn.andersson@linaro.org
-Cc:     agross@kernel.org, robh+dt@kernel.org, lgirdwood@gmail.com,
-        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        phone-devel@vger.kernel.org, konrad.dybcio@somainline.org,
-        marijn.suijten@somainline.org, jeffrey.l.hugo@gmail.com,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Subject: [PATCH v5 3/3] dt-bindings: soc: qcom: cpr3: Add bindings for CPR3 driver
-Date:   Thu, 21 Jan 2021 20:40:51 +0100
-Message-Id: <20210121194051.484209-4-angelogioacchino.delregno@somainline.org>
-X-Mailer: git-send-email 2.30.0
-In-Reply-To: <20210121194051.484209-1-angelogioacchino.delregno@somainline.org>
-References: <20210121194051.484209-1-angelogioacchino.delregno@somainline.org>
+        Thu, 21 Jan 2021 15:16:08 -0500
+Received: by mail-lf1-f47.google.com with SMTP id o10so4307671lfl.13;
+        Thu, 21 Jan 2021 12:15:50 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:to:cc:references:from:subject
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=dVsjvKaCVwralxI5zARSOQQIxlzovaj1ya8SYQBcCCE=;
+        b=J6Wq1E/EcLyb7cZ7OVsTDBCxC4yMk1O2t7hb6NPvvMLv0rEHX2r9mIUbcsnBXDCL9d
+         f/eZfX4M549U4clI9R2knH98WYbS29Zjj4VTgrstkxrhlDqMky1oL1wkL1U0td1wg2++
+         F846LZYZsCYeqI6KkjKnapTmZK1rrEPemy9HI6qYNsYLhXsISabAmuzkuJScCUb2wJer
+         DwI6a+xSR5iwtj1DgmgjONoSbffTfxyXj5z9NrYe2fDo/dYFBbLEGAdY26jdNVBZckOa
+         NPEaIuiK+/HFsbOJxDWpUV/PlzL+uIxEHI3rUiURjW5WSGeE+5U1jzyL/6fdVQQ+DkKd
+         3tgQ==
+X-Gm-Message-State: AOAM533WFLsRm+7EpHE0ELmCcvmnriZAqjIDN39k+pXJwc8PwzzXMGlp
+        mjMcI2gWr/CQCJNtqAvg+Ec=
+X-Google-Smtp-Source: ABdhPJztUOXA2UEP44W6sfFicy+OUij/Vcd2aeJkNJaNKcmlgiV5wLM2KhltZLxQHfRAiYhBuIwy7w==
+X-Received: by 2002:a05:6512:20d2:: with SMTP id u18mr28647lfr.47.1611260124380;
+        Thu, 21 Jan 2021 12:15:24 -0800 (PST)
+Received: from [10.68.32.148] (broadband-188-32-236-56.ip.moscow.rt.ru. [188.32.236.56])
+        by smtp.gmail.com with ESMTPSA id m12sm682023lji.110.2021.01.21.12.15.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 Jan 2021 12:15:23 -0800 (PST)
+Reply-To: efremov@linux.com
+To:     Steven Rostedt <rostedt@goodmis.org>
+Cc:     Gaurav Kohli <gkohli@codeaurora.org>, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, stable@vger.kernel.org,
+        Julia Lawall <julia.lawall@inria.fr>
+References: <1601976833-24377-1-git-send-email-gkohli@codeaurora.org>
+ <f06efd7b-c7b5-85c9-1a0e-6bb865111ede@linux.com>
+ <20210121140951.2a554a5e@gandalf.local.home>
+From:   Denis Efremov <efremov@linux.com>
+Subject: Re: [PATCH v1] trace: Fix race in trace_open and buffer resize call
+Message-ID: <021b1b38-47ce-bc8b-3867-99160cc85523@linux.com>
+Date:   Thu, 21 Jan 2021 23:15:22 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
+In-Reply-To: <20210121140951.2a554a5e@gandalf.local.home>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the bindings for the CPR3 driver to the documentation.
 
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
----
- .../bindings/soc/qcom/qcom,cpr3.yaml          | 241 ++++++++++++++++++
- 1 file changed, 241 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml
 
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml
-new file mode 100644
-index 000000000000..e2753740c86b
---- /dev/null
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml
-@@ -0,0 +1,241 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: "http://devicetree.org/schemas/soc/qcom/qcom,cpr3.yaml#"
-+$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+On 1/21/21 10:09 PM, Steven Rostedt wrote:
+> On Thu, 21 Jan 2021 17:30:40 +0300
+> Denis Efremov <efremov@linux.com> wrote:
+> 
+>> Hi,
+>>
+>> This patch (CVE-2020-27825) was tagged with
+>> Fixes: b23d7a5f4a07a ("ring-buffer: speed up buffer resets by avoiding synchronize_rcu for each CPU")
+>>
+>> I'm not an expert here but it seems like b23d7a5f4a07a only refactored
+>> ring_buffer_reset_cpu() by introducing reset_disabled_cpu_buffer() without
+>> significant changes. Hence, mutex_lock(&buffer->mutex)/mutex_unlock(&buffer->mutex)
+>> can be backported further than b23d7a5f4a07a~ and to all LTS kernels. Is
+>> b23d7a5f4a07a the actual cause of the bug?
+>>
+> 
+> Ug, that looks to be a mistake. Looking back at the thread about this:
+> 
+>   https://lore.kernel.org/linux-arm-msm/20200915141304.41fa7c30@gandalf.local.home/
+
+I see from the link that it was planned to backport the patch to LTS kernels:
+
+> Actually we are seeing issue in older kernel like 4.19/4.14/5.4 and there below patch was not 
+> present in stable branches:
+> Commit b23d7a5f4a07 ("ring-buffer: speed up buffer resets by avoiding synchronize_rcu for each CPU")
+
+The point is that it's not backported yet. Maybe because of Fixes tag. I've discovered
+this while trying to formalize CVE-2020-27825 bug in cvehound
+https://github.com/evdenis/cvehound/blob/master/cvehound/cve/CVE-2020-27825.cocci
+
+I think that the backport to the 4.4+ should be something like:
+
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index 547a3a5ac57b..2171b377bbc1 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -4295,6 +4295,8 @@ void ring_buffer_reset_cpu(struct ring_buffer *buffer, int cpu)
+ 	if (!cpumask_test_cpu(cpu, buffer->cpumask))
+ 		return;
+ 
++	mutex_lock(&buffer->mutex);
 +
-+title: Qualcomm Core Power Reduction v3/v4/Hardened (CPR3, CPR4, CPRh)
+ 	atomic_inc(&buffer->resize_disabled);
+ 	atomic_inc(&cpu_buffer->record_disabled);
+ 
+@@ -4317,6 +4319,8 @@ void ring_buffer_reset_cpu(struct ring_buffer *buffer, int cpu)
+ 
+ 	atomic_dec(&cpu_buffer->record_disabled);
+ 	atomic_dec(&buffer->resize_disabled);
 +
-+description: |
-+  CPR (Core Power Reduction) is a technology to reduce core power on a CPU
-+  or other device. Each OPP of a device corresponds to a "corner" that has
-+  a range of valid voltages for a particular frequency. While the device is
-+  running at a particular frequency, CPR monitors dynamic factors such as
-+  temperature, etc. and suggests or, in the CPR-Hardened case performs,
-+  adjustments to the voltage to save power and meet silicon characteristic
-+  requirements.
-+
-+maintainers:
-+  - AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-+
-+properties:
-+  compatible:
-+    oneOf:
-+      - description: CPRv3 controller
-+        items:
-+          - const: qcom,cpr3
-+      - description: CPRv4 controller
-+        items:
-+          - const: qcom,cpr4
-+      - description: CPRv4-Hardened controller
-+        items:
-+          - enum:
-+              - qcom,msm8998-cprh
-+              - qcom,sdm630-cprh
-+          - const: qcom,cprh
-+
-+  reg:
-+    description: Base address and size of the CPR controller(s)
-+    minItems: 1
-+    maxItems: 2
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  clock-names:
-+    items:
-+      - const: "ref"
-+
-+  clocks:
-+    items:
-+      - description: CPR reference clock
-+
-+  vdd-supply:
-+    description: Autonomous Phase Control (APC) or other power supply
-+
-+  '#power-domain-cells':
-+    const: 1
-+
-+  acc-syscon:
-+    description: phandle to syscon for writing ACC settings
-+
-+  nvmem-cells:
-+    description: Cells containing the fuse corners and revision data
-+    minItems: 10
-+    maxItems: 32
-+
-+  nvmem-cell-names:
-+    minItems: 10
-+    maxItems: 32
-+
-+  operating-points-v2: true
-+
-+required:
-+  - compatible
-+  - reg
-+  - clock-names
-+  - clocks
-+  - "#power-domain-cells"
-+  - nvmem-cells
-+  - nvmem-cell-names
-+  - operating-points-v2
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,gcc-msm8998.h>
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+
-+    cpus {
-+        #address-cells = <2>;
-+        #size-cells = <0>;
-+
-+        cpu@0 {
-+            compatible = "qcom,kryo280";
-+            device_type = "cpu";
-+            reg = <0x0 0x0>;
-+            operating-points-v2 = <&cpu_gold_opp_table>;
-+            power-domains = <&apc_cprh 0>;
-+            power-domain-names = "cprh";
-+        };
-+
-+        cpu@100 {
-+            compatible = "qcom,kryo280";
-+            device_type = "cpu";
-+            reg = <0x0 0x0>;
-+            operating-points-v2 = <&cpu_silver_opp_table>;
-+            power-domains = <&apc_cprh 1>;
-+            power-domain-names = "cprh";
-+        };
-+    };
-+
-+    cpu_silver_opp_table: cpu-silver-opp-table {
-+        compatible = "operating-points-v2";
-+        opp-shared;
-+
-+        opp-1843200000 {
-+            opp-hz = /bits/ 64 <1843200000>;
-+            required-opps = <&cprh_opp3>;
-+        };
-+        opp-1094400000 {
-+            opp-hz = /bits/ 64 <1094400000>;
-+            required-opps = <&cprh_opp2>;
-+        };
-+        opp-300000000 {
-+            opp-hz = /bits/ 64 <300000000>;
-+            required-opps = <&cprh_opp1>;
-+        };
-+    };
-+
-+    cpu_gold_opp_table: cpu-gold-opp-table {
-+        compatible = "operating-points-v2";
-+        opp-shared;
-+
-+        opp-2208000000 {
-+            opp-hz = /bits/ 64 <2208000000>;
-+            required-opps = <&cprh_opp3>;
-+        };
-+        opp-1113600000 {
-+            opp-hz = /bits/ 64 <1113600000>;
-+            required-opps = <&cprh_opp2>;
-+        };
-+        opp-300000000 {
-+            opp-hz = /bits/ 64 <300000000>;
-+            required-opps = <&cprh_opp1>;
-+        };
-+    };
-+
-+    cprh_opp_table: cpr-hardened-opp-table {
-+        compatible = "operating-points-v2-qcom-level";
-+
-+        cprh_opp1: opp1 {
-+            opp-level = <1>;
-+            qcom,opp-fuse-level = <1>;
-+        };
-+        cprh_opp2: opp2 {
-+            opp-level = <2>;
-+            qcom,opp-fuse-level = <2>;
-+        };
-+        cprh_opp3: opp3 {
-+            opp-level = <3>;
-+            qcom,opp-fuse-level = <2 3>;
-+        };
-+    };
-+
-+    apc_cprh: power-controller@179c8000 {
-+        compatible = "qcom,msm8998-cprh", "qcom,cprh";
-+        reg = <0x0179c8000 0x4000>, <0x0179c4000 0x4000>;
-+        clocks = <&gcc GCC_HMSS_RBCPR_CLK>;
-+        clock-names = "ref";
-+
-+        #power-domain-cells = <1>;
-+        operating-points-v2 = <&cprh_opp_table>;
-+
-+        nvmem-cells = <&cpr_efuse_speedbin>,
-+                      <&cpr_fuse_revision>,
-+                      <&cpr_quot0_pwrcl>,
-+                      <&cpr_quot1_pwrcl>,
-+                      <&cpr_quot2_pwrcl>,
-+                      <&cpr_quot3_pwrcl>,
-+                      <&cpr_quot_offset1_pwrcl>,
-+                      <&cpr_quot_offset2_pwrcl>,
-+                      <&cpr_quot_offset3_pwrcl>,
-+                      <&cpr_init_voltage0_pwrcl>,
-+                      <&cpr_init_voltage1_pwrcl>,
-+                      <&cpr_init_voltage2_pwrcl>,
-+                      <&cpr_init_voltage3_pwrcl>,
-+                      <&cpr_ro_sel0_pwrcl>,
-+                      <&cpr_ro_sel1_pwrcl>,
-+                      <&cpr_ro_sel2_pwrcl>,
-+                      <&cpr_ro_sel3_pwrcl>,
-+                      <&cpr_quot0_perfcl>,
-+                      <&cpr_quot1_perfcl>,
-+                      <&cpr_quot2_perfcl>,
-+                      <&cpr_quot3_perfcl>,
-+                      <&cpr_quot_offset1_perfcl>,
-+                      <&cpr_quot_offset2_perfcl>,
-+                      <&cpr_quot_offset3_perfcl>,
-+                      <&cpr_init_voltage0_perfcl>,
-+                      <&cpr_init_voltage1_perfcl>,
-+                      <&cpr_init_voltage2_perfcl>,
-+                      <&cpr_init_voltage3_perfcl>,
-+                      <&cpr_ro_sel0_perfcl>,
-+                      <&cpr_ro_sel1_perfcl>,
-+                      <&cpr_ro_sel2_perfcl>,
-+                      <&cpr_ro_sel3_perfcl>;
-+
-+        nvmem-cell-names = "cpr_speed_bin",
-+                           "cpr_fuse_revision",
-+                           "cpr0_quotient1",
-+                           "cpr0_quotient2",
-+                           "cpr0_quotient3",
-+                           "cpr0_quotient4",
-+                           "cpr0_quotient_offset2",
-+                           "cpr0_quotient_offset3",
-+                           "cpr0_quotient_offset4",
-+                           "cpr0_init_voltage1",
-+                           "cpr0_init_voltage2",
-+                           "cpr0_init_voltage3",
-+                           "cpr0_init_voltage4",
-+                           "cpr0_ring_osc1",
-+                           "cpr0_ring_osc2",
-+                           "cpr0_ring_osc3",
-+                           "cpr0_ring_osc4",
-+                           "cpr1_quotient1",
-+                           "cpr1_quotient2",
-+                           "cpr1_quotient3",
-+                           "cpr1_quotient4",
-+                           "cpr1_quotient_offset2",
-+                           "cpr1_quotient_offset3",
-+                           "cpr1_quotient_offset4",
-+                           "cpr1_init_voltage1",
-+                           "cpr1_init_voltage2",
-+                           "cpr1_init_voltage3",
-+                           "cpr1_init_voltage4",
-+                           "cpr1_ring_osc1",
-+                           "cpr1_ring_osc2",
-+                           "cpr1_ring_osc3",
-+                           "cpr1_ring_osc4";
-+    };
-+...
--- 
-2.30.0
++	mutex_unlock(&buffer->mutex);
+ }
+ EXPORT_SYMBOL_GPL(ring_buffer_reset_cpu);
+ 
+
+Thanks,
+Denis
+
+
+
+
 
