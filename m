@@ -2,85 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BEEDD2FF371
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 19:47:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A44D2FF3E1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 20:11:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726516AbhAUSZb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jan 2021 13:25:31 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60030 "EHLO mail.kernel.org"
+        id S1726881AbhAUTKo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jan 2021 14:10:44 -0500
+Received: from mail.kernel.org ([198.145.29.99]:38610 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727457AbhAUSS2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jan 2021 13:18:28 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 9A83423A3A;
-        Thu, 21 Jan 2021 18:17:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1611253054;
-        bh=K7MU5q7tdkr5vyIPyOgPh9VwES77OWz5XH2UBN04YNU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Gr1KnQqIE58OCbsdj+RYzLgiqTk2+MQv3Nt7Li3FKrHYGLN0p8GZieJHo68vXnuRf
-         Qycv1yW1F6e7dpkLF+MacJ4GqHUSFUE7aEDRkHhskBexkDX9Ix+Y+5+83iqGw7vlqj
-         grajGkIvNu4iPlxrqBR7NK/SjMbTKhAuMpymIjwXj39J9J8kKuL9/Tv90t7eC2PmkZ
-         grQFrwKosKzYFsf/G4fcbISkDSVUYprsXQlz+aDOm4EpfMcjcJElqYcgR1fzNjqhYw
-         ujNrVlQU6RRPlf9qNCGjCrCKx3flmJ31OplyBYCGUw+8RkQcirPFcV7Ad6UI+Vkcs0
-         OYQGmHGEO9MyQ==
-Date:   Thu, 21 Jan 2021 10:17:32 -0800
-From:   Eric Biggers <ebiggers@kernel.org>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>, linux-fscrypt@vger.kernel.org,
-        Satya Tangirala <satyat@google.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Neeraj Soni <neersoni@codeaurora.org>,
-        Barani Muthukumaran <bmuthuku@codeaurora.org>,
-        Peng Zhou <peng.zhou@mediatek.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Konrad Dybcio <konradybcio@gmail.com>
-Subject: Re: [PATCH v5 4/9] mmc: cqhci: add support for inline encryption
-Message-ID: <YAnFPC0f4vJsKbuL@sol.localdomain>
-References: <20210121090140.326380-1-ebiggers@kernel.org>
- <20210121090140.326380-5-ebiggers@kernel.org>
- <CAPDyKFqCz=N9R6RpEoMO+zoKhJbds1rbvgzHJ2z+6k2U2Wq6Yg@mail.gmail.com>
+        id S1726821AbhAUTKh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 21 Jan 2021 14:10:37 -0500
+Received: from gandalf.local.home (cpe-66-24-58-225.stny.res.rr.com [66.24.58.225])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 8BDCF221E7;
+        Thu, 21 Jan 2021 19:09:52 +0000 (UTC)
+Date:   Thu, 21 Jan 2021 14:09:51 -0500
+From:   Steven Rostedt <rostedt@goodmis.org>
+To:     Denis Efremov <efremov@linux.com>
+Cc:     Gaurav Kohli <gkohli@codeaurora.org>, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH v1] trace: Fix race in trace_open and buffer resize call
+Message-ID: <20210121140951.2a554a5e@gandalf.local.home>
+In-Reply-To: <f06efd7b-c7b5-85c9-1a0e-6bb865111ede@linux.com>
+References: <1601976833-24377-1-git-send-email-gkohli@codeaurora.org>
+        <f06efd7b-c7b5-85c9-1a0e-6bb865111ede@linux.com>
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPDyKFqCz=N9R6RpEoMO+zoKhJbds1rbvgzHJ2z+6k2U2Wq6Yg@mail.gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 21, 2021 at 02:04:37PM +0100, Ulf Hansson wrote:
-> > +#else /* CONFIG_MMC_CRYPTO */
-> > +
-> > +static inline int cqhci_crypto_init(struct cqhci_host *host)
-> > +{
-> > +       return 0;
+On Thu, 21 Jan 2021 17:30:40 +0300
+Denis Efremov <efremov@linux.com> wrote:
+
+> Hi,
 > 
-> The host calling this function may have MMC_CAP2_CRYPTO set for it.
+> This patch (CVE-2020-27825) was tagged with
+> Fixes: b23d7a5f4a07a ("ring-buffer: speed up buffer resets by avoiding synchronize_rcu for each CPU")
 > 
-> When CONFIG_MMC_CRYPTO is set, cqhci_crypto_init() may unset
-> MMC_CAP2_CRYPTO if initialization fails. It seems like we should unset
-> MMC_CAP2_CRYPTO in this stub function as well, right?
+> I'm not an expert here but it seems like b23d7a5f4a07a only refactored
+> ring_buffer_reset_cpu() by introducing reset_disabled_cpu_buffer() without
+> significant changes. Hence, mutex_lock(&buffer->mutex)/mutex_unlock(&buffer->mutex)
+> can be backported further than b23d7a5f4a07a~ and to all LTS kernels. Is
+> b23d7a5f4a07a the actual cause of the bug?
+> 
 
-The code in sdhci-msm.c that sets MMC_CAP2_CRYPTO is conditional on
-CONFIG_MMC_CRYPTO.  So, MMC_CAP2_CRYPTO won't be set when !CONFIG_MMC_CRYPTO.
+Ug, that looks to be a mistake. Looking back at the thread about this:
 
-I suppose we might as well do something to stop other drivers from accidentally
-getting that wrong, though.
+  https://lore.kernel.org/linux-arm-msm/20200915141304.41fa7c30@gandalf.local.home/
 
-How about just defining the flag to 0 when !CONFIG_MMC_CRYPTO:
+That should have been:
 
-#ifdef CONFIG_MMC_CRYPTO
-#define MMC_CAP2_CRYPTO         (1 << 27)       /* Host supports inline encryption */
-#else
-#define MMC_CAP2_CRYPTO         0
-#endif
+Depends-on: b23d7a5f4a07 ("ring-buffer: speed up buffer resets by avoiding synchronize_rcu for each CPU")
 
-That would be more reliable than relying on the flag getting cleared by
-something.
-
-- Eric
+-- Steve
