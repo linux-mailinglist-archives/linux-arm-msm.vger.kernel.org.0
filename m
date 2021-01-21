@@ -2,212 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B7CAC2FE336
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 07:51:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 42C922FE3C9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 08:21:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725874AbhAUGvM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jan 2021 01:51:12 -0500
-Received: from m42-8.mailgun.net ([69.72.42.8]:30775 "EHLO m42-8.mailgun.net"
+        id S1727270AbhAUHUl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jan 2021 02:20:41 -0500
+Received: from mail.kernel.org ([198.145.29.99]:40566 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725933AbhAUGvG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jan 2021 01:51:06 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1611211832; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=PwTBUKX4zXJvBDtn++wgHmrDeVAGMzEFT5WBMoLMpQo=; b=qH2PkBia0lgnFdR/9Rl1c0tUxe1z/Xh3FRbOgH1uv5i3OXhTebl2A2Euo6wn407V2N/3GVp+
- 3C038JbRpyBi10WL1eWAszda9pKHapHVjbP+U+lc858j2AnixXtZs++6R/N+P5ajs3pHkO59
- WiJSZcS8lQtyMOZEQM3tn55Fu/E=
-X-Mailgun-Sending-Ip: 69.72.42.8
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 6009241bad4c9e395bda041f (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 21 Jan 2021 06:50:03
- GMT
-Sender: tdas=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 82FECC43462; Thu, 21 Jan 2021 06:50:03 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.0.105] (unknown [49.204.182.139])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: tdas)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id AFEB9C433CA;
-        Thu, 21 Jan 2021 06:49:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AFEB9C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=tdas@codeaurora.org
-Subject: Re: [PATCH V1] clk: qcom: gcc-sc7180: Mark the MM XO clocks to be
- always ON
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette ? <mturquette@baylibre.com>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1611128871-5898-1-git-send-email-tdas@codeaurora.org>
- <YAixaN6fta27XDnO@builder.lan>
-From:   Taniya Das <tdas@codeaurora.org>
-Message-ID: <71dc2c94-7488-1a69-5cb8-2ff4db184338@codeaurora.org>
-Date:   Thu, 21 Jan 2021 12:19:54 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.1
+        id S1727237AbhAUHUD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 21 Jan 2021 02:20:03 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 4F02D239EB;
+        Thu, 21 Jan 2021 07:18:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1611213508;
+        bh=BH323A96671wBxsWq5JSNzrGgyPy3nPY3HxuAVj+PcE=;
+        h=From:To:Cc:Subject:Date:From;
+        b=LQcSN3iS+RCjsfFHrcP6OvJVnUytFjJeop6yQ/3qGV6KN//xoOmtBHUP7+PcOop9I
+         UZRQWm9GJgweHmyTB1xxTUHZ31/LDGrbVntvsTY5f9JmomuWuKOn53RcTV39an4SFC
+         ubTEg+GWGsFcHTu8QvzawMI+/53xUrQS76LRjkItV3wYluNxGAfpLbBX/ND1h8hlgM
+         qw09hc63LmJxDGJtGSUhmX6yyjZ3gVwa6y3CLnrgVM9uMYh0/fikqTH20P0M1jtSHR
+         dDK0Cb07OmgbAmBuG7JFUbGKKTO1wlvmhuM4v8r+isRdDcgFR20Gs+SyyUA0onVdcL
+         0MbYxU1WlNOtQ==
+Received: by mail.kernel.org with local (Exim 4.94)
+        (envelope-from <mchehab@kernel.org>)
+        id 1l2UEb-004Bru-9D; Thu, 21 Jan 2021 08:18:25 +0100
+From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To:     Mark Brown <broonie@kernel.org>, Lee Jones <lee.jones@linaro.org>
+Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        Colin Ian King <colin.king@canonical.com>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mayulong <mayulong1@huawei.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>, Wei Xu <xuwei5@hisilicon.com>,
+        YueHaibing <yuehaibing@huawei.com>, devel@driverdev.osuosl.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v5 00/21] Move Hisilicon 6421v600 SPMI driver set out of staging
+Date:   Thu, 21 Jan 2021 08:18:02 +0100
+Message-Id: <cover.1611212783.git.mchehab+huawei@kernel.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-In-Reply-To: <YAixaN6fta27XDnO@builder.lan>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Sender: Mauro Carvalho Chehab <mchehab@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+Hi Mark/Lee,
 
-On 1/21/2021 4:10 AM, Bjorn Andersson wrote:
-> On Wed 20 Jan 01:47 CST 2021, Taniya Das wrote:
-> 
->> There are intermittent GDSC power-up failures observed for titan top
->> gdsc, which requires the XO clock. Thus mark all the MM XO clocks always
->> enabled from probe.
->>
-> 
-> But if this is the reason for keeping all these {ahb,xo}_clks critical
-> (or upstream just a bunch of hard coded regmap_update_bits()) why don't
-> we properly describe them as dependencies for the clock controller/gdsc?
-> I.e. by the use of pm_clk_add()?
-> 
-> Regards,
-> Bjorn
+This patch series finish addressing support for Hikey 970
+SPMI controller, PMIC and regulators.
 
-They are already defined in the camcc driver, but they are not working 
-as expected, thus I am forced to mark them always ON.
+This version was generated with -M, in order to make easier
+to merge upstream.  Also, rebased on the top of v5.10,
+without any dependencies from the other patch series
+I'm submitting for this board.
 
-> 
->> Fixes: 8d4025943e13 ("clk: qcom: camcc-sc7180: Use runtime PM ops instead of clk ones")
->> Signed-off-by: Taniya Das <tdas@codeaurora.org>
->> ---
->>   drivers/clk/qcom/gcc-sc7180.c | 47 ++++---------------------------------------
->>   1 file changed, 4 insertions(+), 43 deletions(-)
->>
->> diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-sc7180.c
->> index b05901b..88e896a 100644
->> --- a/drivers/clk/qcom/gcc-sc7180.c
->> +++ b/drivers/clk/qcom/gcc-sc7180.c
->> @@ -1,6 +1,6 @@
->>   // SPDX-License-Identifier: GPL-2.0-only
->>   /*
->> - * Copyright (c) 2019-2020, The Linux Foundation. All rights reserved.
->> + * Copyright (c) 2019-2021, The Linux Foundation. All rights reserved.
->>    */
->>
->>   #include <linux/clk-provider.h>
->> @@ -919,19 +919,6 @@ static struct clk_branch gcc_camera_throttle_hf_axi_clk = {
->>   	},
->>   };
->>
->> -static struct clk_branch gcc_camera_xo_clk = {
->> -	.halt_reg = 0xb02c,
->> -	.halt_check = BRANCH_HALT,
->> -	.clkr = {
->> -		.enable_reg = 0xb02c,
->> -		.enable_mask = BIT(0),
->> -		.hw.init = &(struct clk_init_data){
->> -			.name = "gcc_camera_xo_clk",
->> -			.ops = &clk_branch2_ops,
->> -		},
->> -	},
->> -};
->> -
->>   static struct clk_branch gcc_ce1_ahb_clk = {
->>   	.halt_reg = 0x4100c,
->>   	.halt_check = BRANCH_HALT_VOTED,
->> @@ -1096,19 +1083,6 @@ static struct clk_branch gcc_disp_throttle_hf_axi_clk = {
->>   	},
->>   };
->>
->> -static struct clk_branch gcc_disp_xo_clk = {
->> -	.halt_reg = 0xb030,
->> -	.halt_check = BRANCH_HALT,
->> -	.clkr = {
->> -		.enable_reg = 0xb030,
->> -		.enable_mask = BIT(0),
->> -		.hw.init = &(struct clk_init_data){
->> -			.name = "gcc_disp_xo_clk",
->> -			.ops = &clk_branch2_ops,
->> -		},
->> -	},
->> -};
->> -
->>   static struct clk_branch gcc_gp1_clk = {
->>   	.halt_reg = 0x64000,
->>   	.halt_check = BRANCH_HALT,
->> @@ -2159,19 +2133,6 @@ static struct clk_branch gcc_video_throttle_axi_clk = {
->>   	},
->>   };
->>
->> -static struct clk_branch gcc_video_xo_clk = {
->> -	.halt_reg = 0xb028,
->> -	.halt_check = BRANCH_HALT,
->> -	.clkr = {
->> -		.enable_reg = 0xb028,
->> -		.enable_mask = BIT(0),
->> -		.hw.init = &(struct clk_init_data){
->> -			.name = "gcc_video_xo_clk",
->> -			.ops = &clk_branch2_ops,
->> -		},
->> -	},
->> -};
->> -
->>   static struct clk_branch gcc_mss_cfg_ahb_clk = {
->>   	.halt_reg = 0x8a000,
->>   	.halt_check = BRANCH_HALT,
->> @@ -2304,7 +2265,6 @@ static struct clk_regmap *gcc_sc7180_clocks[] = {
->>   	[GCC_BOOT_ROM_AHB_CLK] = &gcc_boot_rom_ahb_clk.clkr,
->>   	[GCC_CAMERA_HF_AXI_CLK] = &gcc_camera_hf_axi_clk.clkr,
->>   	[GCC_CAMERA_THROTTLE_HF_AXI_CLK] = &gcc_camera_throttle_hf_axi_clk.clkr,
->> -	[GCC_CAMERA_XO_CLK] = &gcc_camera_xo_clk.clkr,
->>   	[GCC_CE1_AHB_CLK] = &gcc_ce1_ahb_clk.clkr,
->>   	[GCC_CE1_AXI_CLK] = &gcc_ce1_axi_clk.clkr,
->>   	[GCC_CE1_CLK] = &gcc_ce1_clk.clkr,
->> @@ -2317,7 +2277,6 @@ static struct clk_regmap *gcc_sc7180_clocks[] = {
->>   	[GCC_DISP_GPLL0_DIV_CLK_SRC] = &gcc_disp_gpll0_div_clk_src.clkr,
->>   	[GCC_DISP_HF_AXI_CLK] = &gcc_disp_hf_axi_clk.clkr,
->>   	[GCC_DISP_THROTTLE_HF_AXI_CLK] = &gcc_disp_throttle_hf_axi_clk.clkr,
->> -	[GCC_DISP_XO_CLK] = &gcc_disp_xo_clk.clkr,
->>   	[GCC_GP1_CLK] = &gcc_gp1_clk.clkr,
->>   	[GCC_GP1_CLK_SRC] = &gcc_gp1_clk_src.clkr,
->>   	[GCC_GP2_CLK] = &gcc_gp2_clk.clkr,
->> @@ -2413,7 +2372,6 @@ static struct clk_regmap *gcc_sc7180_clocks[] = {
->>   	[GCC_VIDEO_AXI_CLK] = &gcc_video_axi_clk.clkr,
->>   	[GCC_VIDEO_GPLL0_DIV_CLK_SRC] = &gcc_video_gpll0_div_clk_src.clkr,
->>   	[GCC_VIDEO_THROTTLE_AXI_CLK] = &gcc_video_throttle_axi_clk.clkr,
->> -	[GCC_VIDEO_XO_CLK] = &gcc_video_xo_clk.clkr,
->>   	[GPLL0] = &gpll0.clkr,
->>   	[GPLL0_OUT_EVEN] = &gpll0_out_even.clkr,
->>   	[GPLL6] = &gpll6.clkr,
->> @@ -2510,6 +2468,9 @@ static int gcc_sc7180_probe(struct platform_device *pdev)
->>   	regmap_update_bits(regmap, 0x0b004, BIT(0), BIT(0));
->>   	regmap_update_bits(regmap, 0x0b008, BIT(0), BIT(0));
->>   	regmap_update_bits(regmap, 0x0b00c, BIT(0), BIT(0));
->> +	regmap_update_bits(regmap, 0x0b02c, BIT(0), BIT(0));
->> +	regmap_update_bits(regmap, 0x0b028, BIT(0), BIT(0));
->> +	regmap_update_bits(regmap, 0x0b030, BIT(0), BIT(0));
->>   	regmap_update_bits(regmap, 0x71004, BIT(0), BIT(0));
->>
->>   	ret = qcom_cc_register_rcg_dfs(regmap, gcc_dfs_clocks,
->> --
->> Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
->> of the Code Aurora Forum, hosted by the  Linux Foundation.
->>
+Yet,  patch 18 to 20 modifies drivers/staging/hikey9xx/Kconfig
+and drivers/staging/hikey9xx/Makefile. So, trivial conflicts
+will rise if they're applied via different trees, as they all
+remove some lines from such files. 
+
+Regards,
+Mauro
+
+v5:
+- rebased to not depend on USB PHY patchset;
+- removed an USB-specific DT binding;
+- changed the subject of one of the patches;
+- no driver nor DT contents were changed.
+
+v4:
+- use regmap for mfd and spmi drivers;
+- a few minor cleanups at the mfd driver.
+
+v3:
+- fixed a bug with eco-mode at get_optimum_mode;
+- changed the sleep logic when enabling/disabling a power line;
+- additional cleanups, as requested by Mark.
+
+v2:
+
+- this driver's probe routine is very similar to the one at the non-SPMI
+  variant of Hisilicon 6421;
+- The register/voltage data were moved from DT into the driver itself;
+- It doesn't have anymore any static data;
+- All debug messages got removed;
+- Addressed a few be32 warnings from sparse.
+
+Mauro Carvalho Chehab (21):
+  staging: hikey9xx: hisilicon,hisi-spmi-controller.yaml fix bindings
+  staging: hikey9xx: hisilicon,hi6421-spmi-pmic.yaml: simplify props
+  staging: hikey9xx: hisi-spmi-controller: clean sparse warnings
+  staging: hikey9xx: hi6421v600-regulator: do some cleanups
+  staging: hikey9xx: hi6421v600-regulator: move LDO config from DT
+  staging: hikey9xx: hi6421v600-regulator: cleanup debug msgs
+  staging: hikey9xx: hi6421v600-regulator: get rid of an static data
+  staging: hikey9xx: hi6421v600-regulator: do some cleanups
+  staging: hikey9xx: hi6421v600-regulator: update copyright
+  staging: hikey9xx: hi6421v600-regulator: fix delay logic
+  staging: hikey9xx: hi6421v600-regulator: cleanup comments
+  staging: hikey9xx: hi6421v600-regulator: fix get_optimum_mode
+  staging: hikey9xx: hisilicon,hi6421-spmi-pmic.yaml: cleanup a warning
+  staging: hikey9xx: spmi driver: convert to regmap
+  staging: hikey9xx: hi6421-spmi-pmic: update copyright
+  staging: hikey9xx: hi6421-spmi-pmic: simplify includes
+  staging: hikey9xx: hi6421v600-regulator: use some regmap helpers
+  spmi: hisi-spmi-controller: move driver from staging
+  mfd: hi6421-spmi-pmic: move driver from staging
+  regulator: hi6421v600-regulator: move it from staging
+  dts: hisilicon: add support for the PMIC found on Hikey 970
+
+ .../mfd/hisilicon,hi6421-spmi-pmic.yaml       | 135 +++++
+ .../spmi}/hisilicon,hisi-spmi-controller.yaml |  19 +-
+ MAINTAINERS                                   |  15 +-
+ .../boot/dts/hisilicon/hi3670-hikey970.dts    |  22 +-
+ .../boot/dts/hisilicon/hikey970-pmic.dtsi     |  87 ++++
+ drivers/mfd/Kconfig                           |  15 +
+ drivers/mfd/Makefile                          |   1 +
+ .../hikey9xx => mfd}/hi6421-spmi-pmic.c       | 147 ++----
+ drivers/regulator/Kconfig                     |   8 +
+ drivers/regulator/Makefile                    |   1 +
+ drivers/regulator/hi6421v600-regulator.c      | 299 +++++++++++
+ drivers/spmi/Kconfig                          |   9 +
+ drivers/spmi/Makefile                         |   1 +
+ .../hikey9xx => spmi}/hisi-spmi-controller.c  |   4 +-
+ drivers/staging/Kconfig                       |   2 -
+ drivers/staging/Makefile                      |   1 -
+ drivers/staging/hikey9xx/Kconfig              |  37 --
+ drivers/staging/hikey9xx/Makefile             |   4 -
+ .../staging/hikey9xx/hi6421v600-regulator.c   | 478 ------------------
+ .../hikey9xx/hisilicon,hi6421-spmi-pmic.yaml  | 159 ------
+ include/linux/mfd/hi6421-spmi-pmic.h          |   8 +-
+ 21 files changed, 634 insertions(+), 818 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/mfd/hisilicon,hi6421-spmi-pmic.yaml
+ rename {drivers/staging/hikey9xx => Documentation/devicetree/bindings/spmi}/hisilicon,hisi-spmi-controller.yaml (84%)
+ create mode 100644 arch/arm64/boot/dts/hisilicon/hikey970-pmic.dtsi
+ rename drivers/{staging/hikey9xx => mfd}/hi6421-spmi-pmic.c (65%)
+ create mode 100644 drivers/regulator/hi6421v600-regulator.c
+ rename drivers/{staging/hikey9xx => spmi}/hisi-spmi-controller.c (99%)
+ delete mode 100644 drivers/staging/hikey9xx/hi6421v600-regulator.c
+ delete mode 100644 drivers/staging/hikey9xx/hisilicon,hi6421-spmi-pmic.yaml
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation.
+2.29.2
 
---
+
