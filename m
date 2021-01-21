@@ -2,108 +2,207 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A06C02FF5FD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 21:36:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B4DFC2FF5E9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 21:33:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726210AbhAUUfn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jan 2021 15:35:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51542 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727828AbhAUHx3 (ORCPT
+        id S1727364AbhAUUci (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jan 2021 15:32:38 -0500
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:35010 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727246AbhAUUb0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jan 2021 02:53:29 -0500
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61277C061757
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 23:52:49 -0800 (PST)
-Received: by mail-pg1-x52c.google.com with SMTP id i7so840420pgc.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 23:52:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=dT9+H7Wn+xe3mxpnUyhf4xC/aOE8YkVdW3Zd3U5DkAE=;
-        b=mgoKd1TUDtE9hpIY2dItKRVTwAcV6hUUtfa5S384O/FDwQveLM9dbdNMgBMHXV0JbG
-         Scoce0JJnigfMrWhJ/5Zg2dvzes1eDyDWrjhKjuSv7OTaZLpTyIKuOtqK38kCZEGpLl3
-         DzmfRwnLnWLoJmG4zCMe0lRaMZnnT/iV0Glsy9uHBuBpY1P6aoV8XcgxyR0hpuDRHXjQ
-         5xEknotM20Ptm9ZSx1y59mukcLOpGZ04VFvfECdP1IRblEIZTTQ1VCJl3aQKWYcEEwR7
-         3P02mMSI2Q8ikeGCg+i9VOBcJ+nN31UFbexf7pFXYyd78pdAZXsrgZqTSzgyN73Wo4jp
-         MT0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=dT9+H7Wn+xe3mxpnUyhf4xC/aOE8YkVdW3Zd3U5DkAE=;
-        b=AgrgjTCkf2+5gCEryKrHpEEM5ucJdORs5oY/JUQXyIuBRG+hXEFq9N8ahAMBVhjF5t
-         JIVHhpUgZzy8asgD4AIDJ6h+RAnN5BzDNBSGt6C4S2IRGh7c1i5DM4Ye2HHu6IU/nfyi
-         Ngtc1D8YbSh227ptaYPa0xm+0CLODQIGtF6GW74/+ysnbUznp/T9uurKLOZpFxzplMvu
-         QaHNFDkUP5EIaWc9MgrWnK1Ebw7m5NAf4d0nsnRk4Tceiwp8FsSFF0z1HsYcGAOHnKNc
-         sQea21KHaras9XpBTfveskft62HWkVGx4O6cCKgbrLVgqNBBG+3H/SNQ9GQMKaFQz+uy
-         hhVA==
-X-Gm-Message-State: AOAM533Bae5j/dxiaT0+Barwh12W685xj3rDYjY1aZJJfKELfxQbQyWC
-        IOEMSeW7WFwm+Cq3GWjiQ83S
-X-Google-Smtp-Source: ABdhPJx/nzxnmS/57IY8S3HyB80kjVJ1GniNQmxUlfCxDq6JD4rdGp1huhlfoy3elXUD/qnM2O85yg==
-X-Received: by 2002:a63:e14a:: with SMTP id h10mr13372799pgk.297.1611215568647;
-        Wed, 20 Jan 2021 23:52:48 -0800 (PST)
-Received: from thinkpad ([2409:4072:6182:23c4:4d5:e6d9:fc7e:c8e2])
-        by smtp.gmail.com with ESMTPSA id i6sm4685076pgc.58.2021.01.20.23.52.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jan 2021 23:52:47 -0800 (PST)
-Date:   Thu, 21 Jan 2021 13:22:42 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Kalle Valo <kvalo@codeaurora.org>
-Cc:     Carl Huang <cjhuang@codeaurora.org>, hemantk@codeaurora.org,
-        ath11k@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3] mhi: use irq_flags if controller driver configures it
-Message-ID: <20210121075242.GB30041@thinkpad>
-References: <20210104101128.8217-1-cjhuang@codeaurora.org>
- <20210104170359.GE2256@work>
- <87o8hti8t8.fsf@codeaurora.org>
+        Thu, 21 Jan 2021 15:31:26 -0500
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20210121203041euoutp017b6aee603a3599066a093a54a0715a02~cWWFu5lxX1559315593euoutp01c
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jan 2021 20:30:41 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20210121203041euoutp017b6aee603a3599066a093a54a0715a02~cWWFu5lxX1559315593euoutp01c
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1611261041;
+        bh=h6zKDtX6u5QFojsyZseVpclsd7VNDEJ9rj+biyf1v3A=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=Bq0AYuOE4clGGAJvxD9GVVa7k/wl2kZP1LNOb6t5wlxjQUq6OdW/BpXF6bV0W49Qa
+         XPyEKNVFlLy1uwUqn5hM2QBarFjNGtcNYVI5WgYZZOL27l67UmEaQDhBkgt7d5rMD3
+         mDEWSJUQdPiomt+lEz7vczLuy79sxMIZr6dLjXYE=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20210121203041eucas1p1e1f6d8770ee77de01bd792b77df733a5~cWWFJwYwr0484104841eucas1p1d;
+        Thu, 21 Jan 2021 20:30:41 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 58.89.45488.074E9006; Thu, 21
+        Jan 2021 20:30:40 +0000 (GMT)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20210121203040eucas1p2818713a21a74b580ad05383ce6ee9f8e~cWWElLBxO0875408754eucas1p2M;
+        Thu, 21 Jan 2021 20:30:40 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20210121203040eusmtrp209f45cf289b60741a9fd0b304277cb61~cWWEkkODc0577405774eusmtrp2P;
+        Thu, 21 Jan 2021 20:30:40 +0000 (GMT)
+X-AuditID: cbfec7f5-c5fff7000000b1b0-b2-6009e470cdb2
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id C8.4D.16282.074E9006; Thu, 21
+        Jan 2021 20:30:40 +0000 (GMT)
+Received: from [106.210.134.192] (unknown [106.210.134.192]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20210121203039eusmtip2ab1db0c7bf3a433d19781fa9c5cdd5f8~cWWDyf-Hx2324623246eusmtip2e;
+        Thu, 21 Jan 2021 20:30:39 +0000 (GMT)
+Subject: Re: [PATCH] regulator: core: avoid regulator_resolve_supply() race
+ condition
+To:     Mark Brown <broonie@kernel.org>
+Cc:     David Collins <collinsd@codeaurora.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        'Linux Samsung SOC' <linux-samsung-soc@vger.kernel.org>
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+Message-ID: <e7e4b633-21cb-54e6-f75c-fac28147396c@samsung.com>
+Date:   Thu, 21 Jan 2021 21:30:39 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0)
+        Gecko/20100101 Thunderbird/78.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87o8hti8t8.fsf@codeaurora.org>
+In-Reply-To: <20210121154418.GE4588@sirena.org.uk>
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrMKsWRmVeSWpSXmKPExsWy7djP87oFTzgTDBqnWFpsnLGe1WLqwyds
+        Fl1tQhbnz29gt/h2pYPJYuL+s+wWl3fNYbOYcX4fkwOHx+W+XiaPnbPusntsWtXJ5tG3ZRWj
+        x+dNcgGsUVw2Kak5mWWpRfp2CVwZex4kFRwSqbjdPIGlgfE+fxcjJ4eEgInE2QM3WLsYuTiE
+        BFYwSsw/NoUFwvnCKPGoayqU85lR4tebx4wwLVt3/maHSCxnlPjesQLK+cgosWHKD1aQKmGB
+        cIm1/36ygNgiAsoSV7/vBRvFLLCaSeLClS42kASbgKFE11sIm1fATmLu5rlgzSwCqhJzO+ex
+        g9iiAkkSd+8cZoKoEZQ4OfMJ2FBOASOJKR+bwU5iFpCXaN46mxnCFpe49WQ+E8gyCYEnHBJn
+        Zr9kgbjbRWLThV1QtrDEq+Nb2CFsGYn/O2EamhklHp5byw7h9DBKXG6aAfW1tcSdc7+ATuUA
+        WqEpsX6XPkTYUWLqiqfMIGEJAT6JG28FIY7gk5i0bTpUmFeio00IolpNYtbxdXBrD164xDyB
+        UWkWktdmIXlnFpJ3ZiHsXcDIsopRPLW0ODc9tdg4L7Vcrzgxt7g0L10vOT93EyMwHZ3+d/zr
+        DsYVrz7qHWJk4mA8xCjBwawkwvvIkiNBiDclsbIqtSg/vqg0J7X4EKM0B4uSOO+urWvihQTS
+        E0tSs1NTC1KLYLJMHJxSDUylca+sWG1tZLYJqbFYq4r/edeledo+0eDdRoGbRiEvuQXmnr43
+        94CX9zfdi065E2+sZxTZUReUVvtvntFv5jy5e4XtgTeb5aPf3tXPdfp8IW9FxvdACYXZU3wu
+        WUTl8wvOFHkTuqcnI1Cp6PP301uqkt9MW/DhjnR9NtsS6ZDf0z/dzwxTeK8Tt03/Ppe/m1mH
+        xt1Fp/tcspzn1jMb/LrKt3iPgKTUmY8ZO6PXGq78F6/zS2627aZMH9uwKdN+159+uzjanrHl
+        75OIYlOu16GlF7Jjd58WvXrTbJuMCvehmOZzU58IaO+d84P18PbPWpm8s2faSG1q/b1/30fH
+        9BMJXnyO/+7wTr7Qu7lGKkWJpTgj0VCLuag4EQD5ArBBtgMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrKIsWRmVeSWpSXmKPExsVy+t/xe7oFTzgTDJYvYrPYOGM9q8XUh0/Y
+        LLrahCzOn9/AbvHtSgeTxcT9Z9ktLu+aw2Yx4/w+JgcOj8t9vUweO2fdZffYtKqTzaNvyypG
+        j8+b5AJYo/RsivJLS1IVMvKLS2yVog0tjPQMLS30jEws9QyNzWOtjEyV9O1sUlJzMstSi/Tt
+        EvQy9jxIKjgkUnG7eQJLA+N9/i5GTg4JAROJrTt/s3cxcnEICSxllNjyfDETREJG4uS0BlYI
+        W1jiz7UuNoii94wShz9eYQNJCAuES6z995MFxBYRUJa4+n0vC0gRs8BqJomPryaxQnRcYZK4
+        eXsjWBWbgKFE19susG5eATuJuZvngq1gEVCVmNs5jx3EFhVIkjgx6xMzRI2gxMmZT8B6OQWM
+        JKZ8bGYEsZkFzCTmbX7IDGHLSzRvnQ1li0vcejKfaQKj0Cwk7bOQtMxC0jILScsCRpZVjCKp
+        pcW56bnFRnrFibnFpXnpesn5uZsYgfG37djPLTsYV776qHeIkYmD8RCjBAezkgjvI0uOBCHe
+        lMTKqtSi/Pii0pzU4kOMpkD/TGSWEk3OByaAvJJ4QzMDU0MTM0sDU0szYyVxXpMja+KFBNIT
+        S1KzU1MLUotg+pg4OKUamDKZ/8plhX1effPctgvpWaqV269aOp/hXqRubrHHZ7fE6+uqTU4f
+        nXjmXq+KC2xjzlFM/r5hxURXPkGRWu8JK25ylmVtbLKfYNa9l61pubWj6of+qa/d4ySnz04V
+        rbf/mXzX0FX390IX9ia5Of4Fzz7PCN29bv2KQq3HugwsXyQubJCQ1d0UYrrA+nTrgl+aumpf
+        RJZUsaXMrnT/LmQjdurDjM4Fi0uuSZ5fMY/Nwjn3YXbiFObK71oHZ8v9f7w4UOzdBRlB118n
+        +49HN3fWtNRlMan88ZA7OVOkbfd9tfesHeIVbmcdFlalLrnjG/7t24GzWqrb7Z+t2jLz0f1n
+        Bw4tOu95zmzTlS2m9ivvFimxFGckGmoxFxUnAgBULiA6SAMAAA==
+X-CMS-MailID: 20210121203040eucas1p2818713a21a74b580ad05383ce6ee9f8e
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20210112213419eucas1p24231e4d0ac11c31184f2f8f3f20cbd9d
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20210112213419eucas1p24231e4d0ac11c31184f2f8f3f20cbd9d
+References: <1610068562-4410-1-git-send-email-collinsd@codeaurora.org>
+        <CGME20210112213419eucas1p24231e4d0ac11c31184f2f8f3f20cbd9d@eucas1p2.samsung.com>
+        <e512ee85-7fa6-e5fe-eb30-f088bb83cf23@samsung.com>
+        <20210118204958.GS4455@sirena.org.uk>
+        <5f37ae96-c5f9-6619-d88f-21c5e483ff8e@samsung.com>
+        <20210121154418.GE4588@sirena.org.uk>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 13, 2021 at 09:40:19AM +0200, Kalle Valo wrote:
-> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
-> 
-> > On Mon, Jan 04, 2021 at 06:11:28PM +0800, Carl Huang wrote:
-> >> If controller driver has specified the irq_flags, mhi uses this specified
-> >> irq_flags. Otherwise, mhi uses default irq_flags.
-> >> 
-> >> The purpose of this change is to support one MSI vector for QCA6390.
-> >> MHI will use one same MSI vector too in this scenario.
-> >> 
-> >> In case of one MSI vector, IRQ_NO_BALANCING is needed when irq handler
-> >> is requested. The reason is if irq migration happens, the msi_data may
-> >> change too. However, the msi_data is already programmed to QCA6390
-> >> hardware during initialization phase. This msi_data inconsistence will
-> >> result in crash in kernel.
-> >> 
-> >> Another issue is in case of one MSI vector, IRQF_NO_SUSPEND will trigger
-> >> WARNINGS because QCA6390 wants to disable the IRQ during the suspend.
-> >> 
-> >> To avoid above two issues, QCA6390 driver specifies the irq_flags in case
-> >> of one MSI vector when mhi_register_controller is called.
-> >> 
-> >> Signed-off-by: Carl Huang <cjhuang@codeaurora.org>
-> >> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> >
-> > Applied to mhi-next!
-> 
-> Would it be possible again to have an immutable branch for this commit?
-> We need it for implementing one MHI support to ath11k[1] required by
-> Dell XPS 13 9310 laptops, which a lot of people are waiting. Otherwise I
-> can only apply the feature for v5.13, which will be released on July.
-> 
+Hi Mark,
 
-Dropped this patch from mhi-next and applied to mhi-ath11k-immutable branch:
-https://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git/log/?h=mhi-ath11k-immutable
+On 21.01.2021 16:44, Mark Brown wrote:
+> On Thu, Jan 21, 2021 at 10:41:59AM +0100, Marek Szyprowski wrote:
+>> On 18.01.2021 21:49, Mark Brown wrote:
+>>> Does this help (completely untested):
+>> Sadly nope. I get same warning:
+> Try this instead:
+>
+> diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+> index 3ae5ccd9277d..31503776dbd7 100644
+> --- a/drivers/regulator/core.c
+> +++ b/drivers/regulator/core.c
+> @@ -1823,17 +1823,6 @@ static int regulator_resolve_supply(struct regulator_dev *rdev)
+>   	if (rdev->supply)
+>   		return 0;
+>   
+> -	/*
+> -	 * Recheck rdev->supply with rdev->mutex lock held to avoid a race
+> -	 * between rdev->supply null check and setting rdev->supply in
+> -	 * set_supply() from concurrent tasks.
+> -	 */
+> -	regulator_lock(rdev);
+> -
+> -	/* Supply just resolved by a concurrent task? */
+> -	if (rdev->supply)
+> -		goto out;
+> -
+>   	r = regulator_dev_lookup(dev, rdev->supply_name);
+>   	if (IS_ERR(r)) {
+>   		ret = PTR_ERR(r);
+> @@ -1885,12 +1874,29 @@ static int regulator_resolve_supply(struct regulator_dev *rdev)
+>   		goto out;
+>   	}
+>   
+> +	/*
+> +	 * Recheck rdev->supply with rdev->mutex lock held to avoid a race
+> +	 * between rdev->supply null check and setting rdev->supply in
+> +	 * set_supply() from concurrent tasks.
+> +	 */
+> +	regulator_lock(rdev);
+> +
+> +	/* Supply just resolved by a concurrent task? */
+> +	if (rdev->supply) {
+> +		regulator_unlock(rdev);
+> +		put_device(&r->dev);
+> +		return ret;
+> +	}
+> +
+>   	ret = set_supply(rdev, r);
+>   	if (ret < 0) {
+> +		regulator_unlock(rdev);
+>   		put_device(&r->dev);
+> -		goto out;
+> +		return ret;
+>   	}
+>   
+> +	regulator_unlock(rdev);
+> +
+>   	/*
+>   	 * In set_machine_constraints() we may have turned this regulator on
+>   	 * but we couldn't propagate to the supply if it hadn't been resolved
+> @@ -1901,12 +1907,11 @@ static int regulator_resolve_supply(struct regulator_dev *rdev)
+>   		if (ret < 0) {
+>   			_regulator_put(rdev->supply);
+>   			rdev->supply = NULL;
+> -			goto out;
+> +			goto out_rdev_lock;
 
-This branch will also be merged into mhi-next.
+drivers/regulator/core.c:1910:4: error: label ‘out_rdev_lock’ used but 
+not defined
 
-Thanks,
-Mani
+>   		}
+>   	}
+>   
+>   out:
+> -	regulator_unlock(rdev);
+>   	return ret;
+>   }
+>   
+
+It looks that it finally fixes the locking issue, with the above goto 
+removed completely to fix build. Feel free to add:
+
+Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
+
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+
+Best regards
+
+-- 
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
+
