@@ -2,96 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BFCAA2FF1E9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 18:29:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BEEDD2FF371
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 19:47:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733270AbhAUR15 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jan 2021 12:27:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34740 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388036AbhAUR1x (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jan 2021 12:27:53 -0500
-Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D722C061756
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jan 2021 09:27:08 -0800 (PST)
-Received: by mail-oo1-xc33.google.com with SMTP id v19so692913ooj.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jan 2021 09:27:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=oa/WlyzI1t1uo49jIQ3nlsFVHbY2DgsZWB05ly/k8lg=;
-        b=QluiuTKvgz/tsNDHzWjmgWjImUK5Qq6O9z8ss/nQki7j71tJHadQnqp/nLjuAPY/iY
-         pZtRtkK8OLtO/CPidiugOZzJ+ZVa0omO/8B8cECJgHsSP7xh/zrVLvd1kxmjRmMmNF5S
-         Nb+HY8UvcFoQiwwSbZ4HcNXiKRqlv6PlZDQxIMnMePpwQi3uMdi3nA/p5TuYyifdy0Qp
-         sp6pIoZmspMP934FKTDyYCsgRGtSWbMel1dmNftC8T0/6Ue6XdmxJSEnNZAd75FtV/Y0
-         agQZqX2KvO2buP9AGvHRi3BKxEvysCpWgPOOsrR0bSGLaX9iOBLD/qTEXrY7jyu8x8U3
-         1PRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=oa/WlyzI1t1uo49jIQ3nlsFVHbY2DgsZWB05ly/k8lg=;
-        b=Vl9ru5aW9UTYDXxnJ41R0bii0gSb0S8AHWGaZOQhnYKTwVKvGU36bqWzOASMtEYRTx
-         KS+FEMk8I9MPSwW7ia98vEFHaNpAVAZ2V51imJ++EoApu6zvZbb2/oZ75qcYNNtkgCss
-         Y/CcdBYRsAv5DoEYozoHhTEG04iUqT1CIwxIfhTrnEuVELQFH1wcKrYYRMpE13aZnxjk
-         HTaBOnDSCKs90aBTydtJ1o/Zkz0SEyWUF2T0UfN2ZyTgkMTbCUrvuT6+lGWlGpht1IzF
-         n2WfTpmGz7/gHwgamBaGgR5ntjU7oygjKnr1EJ8/EWH0XBJF5gzHilduuVvs/pO8M3X0
-         64xQ==
-X-Gm-Message-State: AOAM533olhusFG8rtTjWk0EWqaoM8J5gJsB67VUg0xcnhB/8HlqmaUI0
-        5AhzLAezvYlCCTqnwVRrCbs7UA==
-X-Google-Smtp-Source: ABdhPJyBs3fFzgKIzhqWkdoZMbLxqO+3+KDvlPsoaZCMvaTQqmg6dx9sfO9UItazUxpFXL0ceEb/eg==
-X-Received: by 2002:a05:6820:255:: with SMTP id b21mr572162ooe.0.1611250027694;
-        Thu, 21 Jan 2021 09:27:07 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 69sm1151286otc.76.2021.01.21.09.27.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Jan 2021 09:27:07 -0800 (PST)
-Date:   Thu, 21 Jan 2021 11:27:05 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Raghavendra Rao Ananta <rananta@codeaurora.org>,
-        Jeevan Shriram <jshriram@codeaurora.org>
-Subject: Re: [PATCH v5 2/2] pinctrl: qcom: Add SM8350 pinctrl driver
-Message-ID: <YAm5afOWs95tN0vf@builder.lan>
-References: <20210121171747.3161543-1-vkoul@kernel.org>
- <20210121171747.3161543-3-vkoul@kernel.org>
+        id S1726516AbhAUSZb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jan 2021 13:25:31 -0500
+Received: from mail.kernel.org ([198.145.29.99]:60030 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727457AbhAUSS2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 21 Jan 2021 13:18:28 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 9A83423A3A;
+        Thu, 21 Jan 2021 18:17:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1611253054;
+        bh=K7MU5q7tdkr5vyIPyOgPh9VwES77OWz5XH2UBN04YNU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Gr1KnQqIE58OCbsdj+RYzLgiqTk2+MQv3Nt7Li3FKrHYGLN0p8GZieJHo68vXnuRf
+         Qycv1yW1F6e7dpkLF+MacJ4GqHUSFUE7aEDRkHhskBexkDX9Ix+Y+5+83iqGw7vlqj
+         grajGkIvNu4iPlxrqBR7NK/SjMbTKhAuMpymIjwXj39J9J8kKuL9/Tv90t7eC2PmkZ
+         grQFrwKosKzYFsf/G4fcbISkDSVUYprsXQlz+aDOm4EpfMcjcJElqYcgR1fzNjqhYw
+         ujNrVlQU6RRPlf9qNCGjCrCKx3flmJ31OplyBYCGUw+8RkQcirPFcV7Ad6UI+Vkcs0
+         OYQGmHGEO9MyQ==
+Date:   Thu, 21 Jan 2021 10:17:32 -0800
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>, linux-fscrypt@vger.kernel.org,
+        Satya Tangirala <satyat@google.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Neeraj Soni <neersoni@codeaurora.org>,
+        Barani Muthukumaran <bmuthuku@codeaurora.org>,
+        Peng Zhou <peng.zhou@mediatek.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Konrad Dybcio <konradybcio@gmail.com>
+Subject: Re: [PATCH v5 4/9] mmc: cqhci: add support for inline encryption
+Message-ID: <YAnFPC0f4vJsKbuL@sol.localdomain>
+References: <20210121090140.326380-1-ebiggers@kernel.org>
+ <20210121090140.326380-5-ebiggers@kernel.org>
+ <CAPDyKFqCz=N9R6RpEoMO+zoKhJbds1rbvgzHJ2z+6k2U2Wq6Yg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210121171747.3161543-3-vkoul@kernel.org>
+In-Reply-To: <CAPDyKFqCz=N9R6RpEoMO+zoKhJbds1rbvgzHJ2z+6k2U2Wq6Yg@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 21 Jan 11:17 CST 2021, Vinod Koul wrote:
-
-> This adds pincontrol driver for tlmm block found in SM8350 SoC
+On Thu, Jan 21, 2021 at 02:04:37PM +0100, Ulf Hansson wrote:
+> > +#else /* CONFIG_MMC_CRYPTO */
+> > +
+> > +static inline int cqhci_crypto_init(struct cqhci_host *host)
+> > +{
+> > +       return 0;
 > 
-> This patch is based on initial code downstream by Raghavendra.
+> The host calling this function may have MMC_CAP2_CRYPTO set for it.
 > 
+> When CONFIG_MMC_CRYPTO is set, cqhci_crypto_init() may unset
+> MMC_CAP2_CRYPTO if initialization fails. It seems like we should unset
+> MMC_CAP2_CRYPTO in this stub function as well, right?
 
-> Signed-off-by: Raghavendra Rao Ananta <rananta@codeaurora.org>
+The code in sdhci-msm.c that sets MMC_CAP2_CRYPTO is conditional on
+CONFIG_MMC_CRYPTO.  So, MMC_CAP2_CRYPTO won't be set when !CONFIG_MMC_CRYPTO.
 
-With Raghavendra's s-o-b here he should be From:, but based on the
-changes you've done I don't think he has certified the origin of this
-patch anymore.
+I suppose we might as well do something to stop other drivers from accidentally
+getting that wrong, though.
 
-So the line crediting his work above and your alone S-o-b seems more
-reasonable.
+How about just defining the flag to 0 when !CONFIG_MMC_CRYPTO:
 
+#ifdef CONFIG_MMC_CRYPTO
+#define MMC_CAP2_CRYPTO         (1 << 27)       /* Host supports inline encryption */
+#else
+#define MMC_CAP2_CRYPTO         0
+#endif
 
-For the content of the patch:
+That would be more reliable than relying on the flag getting cleared by
+something.
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Regards,
-Bjorn
-
-> Signed-off-by: Jeevan Shriram <jshriram@codeaurora.org>
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+- Eric
