@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BEA92FF8F8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jan 2021 00:34:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A568D2FF8F7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jan 2021 00:34:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726516AbhAUXdu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jan 2021 18:33:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57022 "EHLO
+        id S1725779AbhAUXeB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jan 2021 18:34:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725829AbhAUXdt (ORCPT
+        with ESMTP id S1726202AbhAUXdu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jan 2021 18:33:49 -0500
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACAFAC061756
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jan 2021 15:33:08 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id m25so5006651lfc.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jan 2021 15:33:08 -0800 (PST)
+        Thu, 21 Jan 2021 18:33:50 -0500
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47B49C0613D6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jan 2021 15:33:10 -0800 (PST)
+Received: by mail-lj1-x22f.google.com with SMTP id f11so4466705ljm.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jan 2021 15:33:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=V6TNPYLJ/iTyhc4r9Xcvd9mWakKDvfSC0jfUqMNIv0I=;
-        b=xDLeMku/suleSBlyaJI8VCb98rqZT5n7zloXMr0s4hjlYwxAMh6jU9eP9V0Dg0jBOB
-         aJOa9mDJ+obXgxCwOoxVZRUXk3BIArQHWmpxYCfcuj2xoNJk2OwSWt4bfUKo+D8JW4/k
-         WojIq+xhCo3UW4ETF+NnJbfyho8A7Aw84vHfLoJrTOFHLL68eWVmAzy5r7SZXVK31wdo
-         bfa3vO+g7d4J7CfFu9dIDnLUd8s3y75P9Lh+sHHekVo+lvLpC7bG10tQl4c5k0qE7htG
-         ZxkwHtyH8+/EWrRTEbWZwH2WJ7ep2ckyl/2ublNeWvTumoe6fTvShqlG6ds5AWHEs6//
-         EOUg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=nLR41DXLpX01EFGGqYnK9wGC2B/eZfRvF8CSAXF0+wM=;
+        b=uW5eW3TZasEXRCDWT0TKkUuPWqXEULz2GdydhJeniRJoiM1zBePlAtNcnqi376CPhm
+         gWC58dX5F0i+Vs0WgL2uoQFc416FPZKpX3cvmoq6j0O+biInsJYOfjCT9N6WVrJnjxoS
+         6onjhcbX0HZDdS3PsjiC1cUvSpoY5zyYIkt3QBYC6TrTTD5NwcfHJ+25qD7BBE6dtbED
+         1HYkhlHQiXPL1LaC1ZLBga9KzL7UO72SHgcynsqU/ZPyoyujvV9nFSQWz9uEQ6J2BIEX
+         Cv10xXwNRVrXMetW0r8CtvnQDLWUe38sfIxvwxTLGep7Bk8WXnzxIs0K2xMIeLgXpA0+
+         ldwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=V6TNPYLJ/iTyhc4r9Xcvd9mWakKDvfSC0jfUqMNIv0I=;
-        b=Lh78kXOt1FaMIlsDu51WEEk4q4E8YsvVtFGB5PH2eUnjIDp+q5gTgZgtHnw+jNMOWm
-         xHaEWAjcuPHVk6vJK/hLhtFvxQK5pV+T+O5BS1or6EEmY3CakyFp8I4qhNdVXlGPzBwj
-         oWkjA10viGQdvf+NpHZ68CgXqqC3nVwtc2Jr8wt736TbFD16uY+GtXpm2/9L1k8HQlzD
-         TDQein9BlSqXpTFnYA7a++0aO1r0F+nDQxSuW/YSEXqaNaCdFxIn02oGkDZOTBzMoVxw
-         hg2l3rsfCvFiacBiqwT8ZgXlwaO+hfoGaoTSbioItsWGCwThyoc4KGts1y4kWYpifEpG
-         Rxyg==
-X-Gm-Message-State: AOAM532NV0Wqcp+rVdGpogMvM/N0m85qnmHmLFJOEWWW1/glZaLMBxv4
-        2RXZL0gUVF06tnZG72++TokLsQ==
-X-Google-Smtp-Source: ABdhPJwsdWbtbJtOtXvFD0vfg/VHE1WKYeMUXeN2ZJo8MM+gyoIui3wEyNDP67qjC817StoRNRGlpQ==
-X-Received: by 2002:ac2:5dd1:: with SMTP id x17mr276362lfq.252.1611271987142;
-        Thu, 21 Jan 2021 15:33:07 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=nLR41DXLpX01EFGGqYnK9wGC2B/eZfRvF8CSAXF0+wM=;
+        b=BS3LPC/B0yXqL9ZNn1iyhrNhnUvd1eekxwgQOO+PB+WdUzXdnDKLvmpNf1E330/Yx2
+         vjOAykNO7hj+TB9jWC+4gzpYQBFPsrXmKXCw09XEmDfEq9YmdpUq3kQJkenwVhdMXIU4
+         7CU9JoGz62k23jR1kB3HI5n+QFswanX/3ESIEyP7e8guQQQT5+pmL3/h92bdrT+QLvkT
+         WeKlM/LSEsKdJk8RXsEn0A2MjlxI90FYffiq+4+ufuaje9tbFhxGxaf6opTmgMFceNCR
+         /eHyJcYvxKugp0pROdUcBMEJYf1c7ox5rZ2tinFfGSGfa3+VKzkGMY7TbTybPuTjaPYa
+         bGCg==
+X-Gm-Message-State: AOAM530Fm32wFEvyyEOqJZbb6G4jxpuGdsafQd+E72nKZG2Is7q4x5sA
+        s4IZ4IWKRwILDHcLG7J6YIAMpQ==
+X-Google-Smtp-Source: ABdhPJyTWeBrunTtFpZ8ytV0REk/xDX7IQe2MnkWbZ1xNoNwfR8h06feNxw//96kKZqiswmlj/GD/w==
+X-Received: by 2002:a2e:b4d1:: with SMTP id r17mr871501ljm.466.1611271988840;
+        Thu, 21 Jan 2021 15:33:08 -0800 (PST)
 Received: from eriador.lan ([188.162.64.145])
-        by smtp.gmail.com with ESMTPSA id l28sm726969ljb.42.2021.01.21.15.33.05
+        by smtp.gmail.com with ESMTPSA id l28sm726969ljb.42.2021.01.21.15.33.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Jan 2021 15:33:06 -0800 (PST)
+        Thu, 21 Jan 2021 15:33:08 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
 Cc:     Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@linux.ie>,
@@ -57,35 +57,58 @@ Cc:     Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@linux.ie>,
         Jonas Karlman <jonas@kwiboo.se>,
         Jernej Skrabec <jernej.skrabec@siol.net>,
         Vinod Koul <vkoul@kernel.org>, Sam Ravnborg <sam@ravnborg.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v4 0/3] drm/bridge/lontium-lt9611uxc: fix handling of EDID/HPD
-Date:   Fri, 22 Jan 2021 02:33:00 +0300
-Message-Id: <20210121233303.1221784-1-dmitry.baryshkov@linaro.org>
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: [PATCH v4 1/3] drm/bridge/lontium-lt9611uxc: fix waiting for EDID to become available
+Date:   Fri, 22 Jan 2021 02:33:01 +0300
+Message-Id: <20210121233303.1221784-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.29.2
+In-Reply-To: <20210121233303.1221784-1-dmitry.baryshkov@linaro.org>
+References: <20210121233303.1221784-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-These three patches provide fixes for HPD handling and EDID readout for
-Lontium lt9611uxc DSI-to-HDMI bridge driver.
+- Call wake_up() when EDID ready event is received to wake
+  wait_event_interruptible_timeout()
 
-Changes since v3:
- - Protect hdmi_connected using ocm_mutex
- - Remove !! conversion from int to boolean
- - Add missing Reviewed-by tags.
+- Increase waiting timeout, reading EDID can take longer than 100ms, so
+  let's be on a safe side.
 
-Changes since v2:
- - Declare lt9611uxc_hpd_work as static
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 0cbbd5b1a012 ("drm: bridge: add support for lontium LT9611UXC bridge")
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ drivers/gpu/drm/bridge/lontium-lt9611uxc.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-Changes since v1:
- - Split first patch into two smaller patches
- - Add Fixes tags
-
-Dmitry Baryshkov (3):
-      drm/bridge/lontium-lt9611uxc: fix waiting for EDID to become available
-      drm/bridge/lontium-lt9611uxc: fix get_edid return code
-      drm/bridge/lontium-lt9611uxc: move HPD notification out of IRQ handler
-
+diff --git a/drivers/gpu/drm/bridge/lontium-lt9611uxc.c b/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
+index 0c98d27f84ac..a59e811f1705 100644
+--- a/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
++++ b/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
+@@ -145,8 +145,10 @@ static irqreturn_t lt9611uxc_irq_thread_handler(int irq, void *dev_id)
+ 
+ 	lt9611uxc_unlock(lt9611uxc);
+ 
+-	if (irq_status & BIT(0))
++	if (irq_status & BIT(0)) {
+ 		lt9611uxc->edid_read = !!(hpd_status & BIT(0));
++		wake_up_all(&lt9611uxc->wq);
++	}
+ 
+ 	if (irq_status & BIT(1)) {
+ 		if (lt9611uxc->connector.dev)
+@@ -465,7 +467,7 @@ static enum drm_connector_status lt9611uxc_bridge_detect(struct drm_bridge *brid
+ static int lt9611uxc_wait_for_edid(struct lt9611uxc *lt9611uxc)
+ {
+ 	return wait_event_interruptible_timeout(lt9611uxc->wq, lt9611uxc->edid_read,
+-			msecs_to_jiffies(100));
++			msecs_to_jiffies(500));
+ }
+ 
+ static int lt9611uxc_get_edid_block(void *data, u8 *buf, unsigned int block, size_t len)
+-- 
+2.29.2
 
