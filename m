@@ -2,123 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A506A2FF5A5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 21:17:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A06C02FF5FD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 21:36:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725923AbhAUUQZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jan 2021 15:16:25 -0500
-Received: from mail-lf1-f47.google.com ([209.85.167.47]:47056 "EHLO
-        mail-lf1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726674AbhAUUQI (ORCPT
+        id S1726210AbhAUUfn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jan 2021 15:35:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51542 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727828AbhAUHx3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jan 2021 15:16:08 -0500
-Received: by mail-lf1-f47.google.com with SMTP id o10so4307671lfl.13;
-        Thu, 21 Jan 2021 12:15:50 -0800 (PST)
+        Thu, 21 Jan 2021 02:53:29 -0500
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61277C061757
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 23:52:49 -0800 (PST)
+Received: by mail-pg1-x52c.google.com with SMTP id i7so840420pgc.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 23:52:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=dT9+H7Wn+xe3mxpnUyhf4xC/aOE8YkVdW3Zd3U5DkAE=;
+        b=mgoKd1TUDtE9hpIY2dItKRVTwAcV6hUUtfa5S384O/FDwQveLM9dbdNMgBMHXV0JbG
+         Scoce0JJnigfMrWhJ/5Zg2dvzes1eDyDWrjhKjuSv7OTaZLpTyIKuOtqK38kCZEGpLl3
+         DzmfRwnLnWLoJmG4zCMe0lRaMZnnT/iV0Glsy9uHBuBpY1P6aoV8XcgxyR0hpuDRHXjQ
+         5xEknotM20Ptm9ZSx1y59mukcLOpGZ04VFvfECdP1IRblEIZTTQ1VCJl3aQKWYcEEwR7
+         3P02mMSI2Q8ikeGCg+i9VOBcJ+nN31UFbexf7pFXYyd78pdAZXsrgZqTSzgyN73Wo4jp
+         MT0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:to:cc:references:from:subject
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=dVsjvKaCVwralxI5zARSOQQIxlzovaj1ya8SYQBcCCE=;
-        b=J6Wq1E/EcLyb7cZ7OVsTDBCxC4yMk1O2t7hb6NPvvMLv0rEHX2r9mIUbcsnBXDCL9d
-         f/eZfX4M549U4clI9R2knH98WYbS29Zjj4VTgrstkxrhlDqMky1oL1wkL1U0td1wg2++
-         F846LZYZsCYeqI6KkjKnapTmZK1rrEPemy9HI6qYNsYLhXsISabAmuzkuJScCUb2wJer
-         DwI6a+xSR5iwtj1DgmgjONoSbffTfxyXj5z9NrYe2fDo/dYFBbLEGAdY26jdNVBZckOa
-         NPEaIuiK+/HFsbOJxDWpUV/PlzL+uIxEHI3rUiURjW5WSGeE+5U1jzyL/6fdVQQ+DkKd
-         3tgQ==
-X-Gm-Message-State: AOAM533WFLsRm+7EpHE0ELmCcvmnriZAqjIDN39k+pXJwc8PwzzXMGlp
-        mjMcI2gWr/CQCJNtqAvg+Ec=
-X-Google-Smtp-Source: ABdhPJztUOXA2UEP44W6sfFicy+OUij/Vcd2aeJkNJaNKcmlgiV5wLM2KhltZLxQHfRAiYhBuIwy7w==
-X-Received: by 2002:a05:6512:20d2:: with SMTP id u18mr28647lfr.47.1611260124380;
-        Thu, 21 Jan 2021 12:15:24 -0800 (PST)
-Received: from [10.68.32.148] (broadband-188-32-236-56.ip.moscow.rt.ru. [188.32.236.56])
-        by smtp.gmail.com with ESMTPSA id m12sm682023lji.110.2021.01.21.12.15.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Jan 2021 12:15:23 -0800 (PST)
-Reply-To: efremov@linux.com
-To:     Steven Rostedt <rostedt@goodmis.org>
-Cc:     Gaurav Kohli <gkohli@codeaurora.org>, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, stable@vger.kernel.org,
-        Julia Lawall <julia.lawall@inria.fr>
-References: <1601976833-24377-1-git-send-email-gkohli@codeaurora.org>
- <f06efd7b-c7b5-85c9-1a0e-6bb865111ede@linux.com>
- <20210121140951.2a554a5e@gandalf.local.home>
-From:   Denis Efremov <efremov@linux.com>
-Subject: Re: [PATCH v1] trace: Fix race in trace_open and buffer resize call
-Message-ID: <021b1b38-47ce-bc8b-3867-99160cc85523@linux.com>
-Date:   Thu, 21 Jan 2021 23:15:22 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=dT9+H7Wn+xe3mxpnUyhf4xC/aOE8YkVdW3Zd3U5DkAE=;
+        b=AgrgjTCkf2+5gCEryKrHpEEM5ucJdORs5oY/JUQXyIuBRG+hXEFq9N8ahAMBVhjF5t
+         JIVHhpUgZzy8asgD4AIDJ6h+RAnN5BzDNBSGt6C4S2IRGh7c1i5DM4Ye2HHu6IU/nfyi
+         Ngtc1D8YbSh227ptaYPa0xm+0CLODQIGtF6GW74/+ysnbUznp/T9uurKLOZpFxzplMvu
+         QaHNFDkUP5EIaWc9MgrWnK1Ebw7m5NAf4d0nsnRk4Tceiwp8FsSFF0z1HsYcGAOHnKNc
+         sQea21KHaras9XpBTfveskft62HWkVGx4O6cCKgbrLVgqNBBG+3H/SNQ9GQMKaFQz+uy
+         hhVA==
+X-Gm-Message-State: AOAM533Bae5j/dxiaT0+Barwh12W685xj3rDYjY1aZJJfKELfxQbQyWC
+        IOEMSeW7WFwm+Cq3GWjiQ83S
+X-Google-Smtp-Source: ABdhPJx/nzxnmS/57IY8S3HyB80kjVJ1GniNQmxUlfCxDq6JD4rdGp1huhlfoy3elXUD/qnM2O85yg==
+X-Received: by 2002:a63:e14a:: with SMTP id h10mr13372799pgk.297.1611215568647;
+        Wed, 20 Jan 2021 23:52:48 -0800 (PST)
+Received: from thinkpad ([2409:4072:6182:23c4:4d5:e6d9:fc7e:c8e2])
+        by smtp.gmail.com with ESMTPSA id i6sm4685076pgc.58.2021.01.20.23.52.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Jan 2021 23:52:47 -0800 (PST)
+Date:   Thu, 21 Jan 2021 13:22:42 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Kalle Valo <kvalo@codeaurora.org>
+Cc:     Carl Huang <cjhuang@codeaurora.org>, hemantk@codeaurora.org,
+        ath11k@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3] mhi: use irq_flags if controller driver configures it
+Message-ID: <20210121075242.GB30041@thinkpad>
+References: <20210104101128.8217-1-cjhuang@codeaurora.org>
+ <20210104170359.GE2256@work>
+ <87o8hti8t8.fsf@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20210121140951.2a554a5e@gandalf.local.home>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87o8hti8t8.fsf@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 1/21/21 10:09 PM, Steven Rostedt wrote:
-> On Thu, 21 Jan 2021 17:30:40 +0300
-> Denis Efremov <efremov@linux.com> wrote:
+On Wed, Jan 13, 2021 at 09:40:19AM +0200, Kalle Valo wrote:
+> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
 > 
->> Hi,
->>
->> This patch (CVE-2020-27825) was tagged with
->> Fixes: b23d7a5f4a07a ("ring-buffer: speed up buffer resets by avoiding synchronize_rcu for each CPU")
->>
->> I'm not an expert here but it seems like b23d7a5f4a07a only refactored
->> ring_buffer_reset_cpu() by introducing reset_disabled_cpu_buffer() without
->> significant changes. Hence, mutex_lock(&buffer->mutex)/mutex_unlock(&buffer->mutex)
->> can be backported further than b23d7a5f4a07a~ and to all LTS kernels. Is
->> b23d7a5f4a07a the actual cause of the bug?
->>
+> > On Mon, Jan 04, 2021 at 06:11:28PM +0800, Carl Huang wrote:
+> >> If controller driver has specified the irq_flags, mhi uses this specified
+> >> irq_flags. Otherwise, mhi uses default irq_flags.
+> >> 
+> >> The purpose of this change is to support one MSI vector for QCA6390.
+> >> MHI will use one same MSI vector too in this scenario.
+> >> 
+> >> In case of one MSI vector, IRQ_NO_BALANCING is needed when irq handler
+> >> is requested. The reason is if irq migration happens, the msi_data may
+> >> change too. However, the msi_data is already programmed to QCA6390
+> >> hardware during initialization phase. This msi_data inconsistence will
+> >> result in crash in kernel.
+> >> 
+> >> Another issue is in case of one MSI vector, IRQF_NO_SUSPEND will trigger
+> >> WARNINGS because QCA6390 wants to disable the IRQ during the suspend.
+> >> 
+> >> To avoid above two issues, QCA6390 driver specifies the irq_flags in case
+> >> of one MSI vector when mhi_register_controller is called.
+> >> 
+> >> Signed-off-by: Carl Huang <cjhuang@codeaurora.org>
+> >> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> >
+> > Applied to mhi-next!
 > 
-> Ug, that looks to be a mistake. Looking back at the thread about this:
+> Would it be possible again to have an immutable branch for this commit?
+> We need it for implementing one MHI support to ath11k[1] required by
+> Dell XPS 13 9310 laptops, which a lot of people are waiting. Otherwise I
+> can only apply the feature for v5.13, which will be released on July.
 > 
->   https://lore.kernel.org/linux-arm-msm/20200915141304.41fa7c30@gandalf.local.home/
 
-I see from the link that it was planned to backport the patch to LTS kernels:
+Dropped this patch from mhi-next and applied to mhi-ath11k-immutable branch:
+https://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git/log/?h=mhi-ath11k-immutable
 
-> Actually we are seeing issue in older kernel like 4.19/4.14/5.4 and there below patch was not 
-> present in stable branches:
-> Commit b23d7a5f4a07 ("ring-buffer: speed up buffer resets by avoiding synchronize_rcu for each CPU")
-
-The point is that it's not backported yet. Maybe because of Fixes tag. I've discovered
-this while trying to formalize CVE-2020-27825 bug in cvehound
-https://github.com/evdenis/cvehound/blob/master/cvehound/cve/CVE-2020-27825.cocci
-
-I think that the backport to the 4.4+ should be something like:
-
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index 547a3a5ac57b..2171b377bbc1 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -4295,6 +4295,8 @@ void ring_buffer_reset_cpu(struct ring_buffer *buffer, int cpu)
- 	if (!cpumask_test_cpu(cpu, buffer->cpumask))
- 		return;
- 
-+	mutex_lock(&buffer->mutex);
-+
- 	atomic_inc(&buffer->resize_disabled);
- 	atomic_inc(&cpu_buffer->record_disabled);
- 
-@@ -4317,6 +4319,8 @@ void ring_buffer_reset_cpu(struct ring_buffer *buffer, int cpu)
- 
- 	atomic_dec(&cpu_buffer->record_disabled);
- 	atomic_dec(&buffer->resize_disabled);
-+
-+	mutex_unlock(&buffer->mutex);
- }
- EXPORT_SYMBOL_GPL(ring_buffer_reset_cpu);
- 
+This branch will also be merged into mhi-next.
 
 Thanks,
-Denis
-
-
-
-
-
+Mani
