@@ -2,123 +2,313 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 801132FE92B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 12:48:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 66C5B2FE92D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 12:48:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730362AbhAULrG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jan 2021 06:47:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39916 "EHLO
+        id S1730223AbhAULrL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jan 2021 06:47:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730217AbhAULVe (ORCPT
+        with ESMTP id S1729940AbhAULV0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jan 2021 06:21:34 -0500
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0AAAC0617B0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jan 2021 03:19:18 -0800 (PST)
-Received: by mail-pg1-x533.google.com with SMTP id n7so1172827pgg.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jan 2021 03:19:18 -0800 (PST)
+        Thu, 21 Jan 2021 06:21:26 -0500
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3FCEC0617BC
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jan 2021 03:19:35 -0800 (PST)
+Received: by mail-pj1-x1036.google.com with SMTP id g15so1462078pjd.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jan 2021 03:19:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=lxCu1KRXdVN3L+OkUbo1cLFCc74qHBWwsGsHoVvYmGQ=;
-        b=a87cJbhAisItlTCiddZHPHEtszqt8a4bVO1biv2X4xyyxixy0vT9T72gtaa3iyj1/S
-         0BYSnHb7hnb7XQ1rwlEu5cBS3rWsXlBuzJ4FCOmHrteZ986iw9RUbu7t7crDd55rb+q0
-         KYQl0KVBN5AykV+JO3HcTaywDinFAvXk5RBBj+bYE7h3h/GJhlpuhndjXEI073NQmGYd
-         F8sCiXjYnLCSEiHzao8Cj5NEiGNRRhnEQY8ln7F6+OXeYTrLLExrly2aWRCNqMuVgIyM
-         o+ZW521aJNq2QMtttfOcvWZ9gEK/aMtc7HonSr2L7N/XYDiInAo5mzdEK+TIZbY9C/Xa
-         SMRg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=nHw2TbBd91GFbyo9oUYtySF5P39+d7uFhdN/MG9zJNI=;
+        b=kOFp5ahEN76l2Wt4u6mK8/csoL6VMfIIn7Z1FU5VvbxDR/4jQWthtN+mqx+/9YKRx5
+         drj1gH+a3/2KzaOReGzfExpOZdZPrk2JdwpAK9gPm6twsIp2R+B3+YdETLYyFByw4eJ0
+         yAde3uDPWHlY1421/5qiy4Zv+JLlvFayjkCt3wpbBtgrWfrA3lYi+sbB8vfCCdK8TPpf
+         J7PLKVrtn6jQtlQRFX1z2mRx/Z8GufZKkaTCyXEXSfo9vbmQlF0XBOKBcgI0xt21hvU8
+         lgVudlxCXbUvDFcyHkq3UMXPjTCpggMsN6cjDWp/69cDR2HwSBjLW1v1y5hWZeQPdm4v
+         K6bA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=lxCu1KRXdVN3L+OkUbo1cLFCc74qHBWwsGsHoVvYmGQ=;
-        b=dOchwD75EafGAIv7//CKYwRyDZsJtsA680MWlRyOscFL8MZgOUS4WnCZbO+md6rZe5
-         Q1sSiygKUinVJonZKnag46Z8KQpW1Ai/mFqLzCABZw/IpxSMyS3TVnMWlc8YF80Nj0Sp
-         hMLUGpbzveNQbP2VW/hK+t2fDpc8RjOuS14Gkp7Brobs0a+RD6gAzbj4/v8kV6g6HNA8
-         XJDhy5fe1AwPBx+gqQmPKHmc8yGmHOgY14qshDG5AhUq+P+dTFfK04ecpH9PKZV/F+af
-         iaBb3NAAXQb8xJg4Qaz5uAF4vLHBxSrePGUVrBWGzWa1dtHV8t14/5jxTBFFch5AqQhs
-         FwNg==
-X-Gm-Message-State: AOAM530RwDO6WL6ZUvpnfFLWctYMCwi9URI7YS6TDleysG3Z2cwEaKUt
-        CtqP6VxX7mMrPzHcm7IF+QSuSw==
-X-Google-Smtp-Source: ABdhPJxRoJPh+zCGLlNXEzcomeslehl5ItANfOXfCWt+o9vxW4dTT0mgqMj6QlfqpWP4MwpTT0cTAw==
-X-Received: by 2002:a65:4083:: with SMTP id t3mr14089089pgp.150.1611227958549;
-        Thu, 21 Jan 2021 03:19:18 -0800 (PST)
-Received: from localhost ([122.172.59.240])
-        by smtp.gmail.com with ESMTPSA id f36sm6098298pjk.52.2021.01.21.03.19.17
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 Jan 2021 03:19:17 -0800 (PST)
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Dmitry Osipenko <digetx@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Cc:     Viresh Kumar <viresh.kumar@linaro.org>, linux-pm@vger.kernel.org,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Rafael Wysocki <rjw@rjwysocki.net>,
-        Stephen Boyd <sboyd@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH 12/13] drm: msm: Migrate to dev_pm_opp_set_opp()
-Date:   Thu, 21 Jan 2021 16:47:52 +0530
-Message-Id: <8d10f850eead0e91b1a0e20bd2ae449f4f4f8bb3.1611227342.git.viresh.kumar@linaro.org>
-X-Mailer: git-send-email 2.25.0.rc1.19.g042ed3e048af
-In-Reply-To: <cover.1611227342.git.viresh.kumar@linaro.org>
-References: <cover.1611227342.git.viresh.kumar@linaro.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=nHw2TbBd91GFbyo9oUYtySF5P39+d7uFhdN/MG9zJNI=;
+        b=ch5WxL/m1souQ5XPoP31bOyw0VeliZoWkoeDc7OHEhWruXbRexw9JimkwAkX2JZ8qy
+         ijdDAVXjcXPEIRi7W1EBk7ePExyIZrdq4vH6eEGF8f1x/lGK1Riyg2JHgaYJnp+MNgvU
+         axPiW5WljLmAma9eQSOQezWB4Se5k5hY9AtBGAkgTmMyLEHdub4dP+HYwRPYHl0vekQL
+         kUUteiIUSarYJhMYYQ03WqPgbhLgWoLFxMNQ8SJUGcjuzomQitnwlOQ1hlUgD+FlfTIg
+         XIK5/CAnh2o9lHweyx9s6yZ+RWVkdr7RYnhL+S6T3CapZmhooGU8yFKyEoNK2EbXvggv
+         OBJQ==
+X-Gm-Message-State: AOAM532lDc7uMBP96xXUsFENei6BW6m7ozm6cfeLXre4/tbG6fV/bDgg
+        2ygHHteXWJgbqoeUklsRaNd0
+X-Google-Smtp-Source: ABdhPJwPZq6QapUifvcOvP1mXke+7fjxffXBKGjZjM1grA+mC0BJWIeJMimNaBos0kl4txGiWGpBbw==
+X-Received: by 2002:a17:90a:bb0d:: with SMTP id u13mr11416483pjr.106.1611227975030;
+        Thu, 21 Jan 2021 03:19:35 -0800 (PST)
+Received: from thinkpad ([2409:4072:6182:23c4:4d5:e6d9:fc7e:c8e2])
+        by smtp.gmail.com with ESMTPSA id n2sm4978036pfu.42.2021.01.21.03.19.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Jan 2021 03:19:33 -0800 (PST)
+Date:   Thu, 21 Jan 2021 16:49:28 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org
+Subject: Re: [PATCH v2] mhi: core: Factorize mhi queuing
+Message-ID: <20210121111928.GC30041@thinkpad>
+References: <1610124750-11950-1-git-send-email-loic.poulain@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1610124750-11950-1-git-send-email-loic.poulain@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-dev_pm_opp_set_bw() is getting removed and dev_pm_opp_set_opp() should
-be used instead. Migrate to the new API.
+On Fri, Jan 08, 2021 at 05:52:30PM +0100, Loic Poulain wrote:
+> Instead of duplicating queuing procedure in mhi_queue_dma(),
+> mhi_queue_buf() and mhi_queue_skb(), add a new generic mhi_queue()
+> as common helper.
+> 
+> Note that the unified mhi_queue align pm_lock locking on mhi_queue_buf
+> behavior, taking it with irqsave variant (vs _bh for former queue_skb
+> and queue_dma version).
+> 
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
----
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+This looks much cleaner!
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index e6703ae98760..05e0ef58fe32 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -134,7 +134,7 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
- 
- 	if (!gmu->legacy) {
- 		a6xx_hfi_set_freq(gmu, perf_index);
--		dev_pm_opp_set_bw(&gpu->pdev->dev, opp);
-+		dev_pm_opp_set_opp(&gpu->pdev->dev, opp);
- 		pm_runtime_put(gmu->dev);
- 		return;
- 	}
-@@ -158,7 +158,7 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
- 	if (ret)
- 		dev_err(gmu->dev, "GMU set GPU frequency error: %d\n", ret);
- 
--	dev_pm_opp_set_bw(&gpu->pdev->dev, opp);
-+	dev_pm_opp_set_opp(&gpu->pdev->dev, opp);
- 	pm_runtime_put(gmu->dev);
- }
- 
-@@ -866,7 +866,7 @@ static void a6xx_gmu_set_initial_bw(struct msm_gpu *gpu, struct a6xx_gmu *gmu)
- 	if (IS_ERR_OR_NULL(gpu_opp))
- 		return;
- 
--	dev_pm_opp_set_bw(&gpu->pdev->dev, gpu_opp);
-+	dev_pm_opp_set_opp(&gpu->pdev->dev, gpu_opp);
- 	dev_pm_opp_put(gpu_opp);
- }
- 
-@@ -1072,7 +1072,7 @@ int a6xx_gmu_stop(struct a6xx_gpu *a6xx_gpu)
- 		a6xx_gmu_shutdown(gmu);
- 
- 	/* Remove the bus vote */
--	dev_pm_opp_set_bw(&gpu->pdev->dev, NULL);
-+	dev_pm_opp_set_opp(&gpu->pdev->dev, NULL);
- 
- 	/*
- 	 * Make sure the GX domain is off before turning off the GMU (CX)
--- 
-2.25.0.rc1.19.g042ed3e048af
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
+Thanks,
+Mani
+
+> ---
+>  v2: re-integrate pre_alloc check (Mani)
+>      comment about _bh to _irqsave unification     
+> 
+>  drivers/bus/mhi/core/main.c | 161 +++++++++++---------------------------------
+>  1 file changed, 40 insertions(+), 121 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> index effe94f..2d9157ce 100644
+> --- a/drivers/bus/mhi/core/main.c
+> +++ b/drivers/bus/mhi/core/main.c
+> @@ -969,118 +969,81 @@ static bool mhi_is_ring_full(struct mhi_controller *mhi_cntrl,
+>  	return (tmp == ring->rp);
+>  }
+>  
+> -int mhi_queue_skb(struct mhi_device *mhi_dev, enum dma_data_direction dir,
+> -		  struct sk_buff *skb, size_t len, enum mhi_flags mflags)
+> +static int mhi_queue(struct mhi_device *mhi_dev, struct mhi_buf_info *buf_info,
+> +		     enum dma_data_direction dir, enum mhi_flags mflags)
+>  {
+>  	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
+>  	struct mhi_chan *mhi_chan = (dir == DMA_TO_DEVICE) ? mhi_dev->ul_chan :
+>  							     mhi_dev->dl_chan;
+>  	struct mhi_ring *tre_ring = &mhi_chan->tre_ring;
+> -	struct mhi_buf_info buf_info = { };
+> +	unsigned long flags;
+>  	int ret;
+>  
+> -	/* If MHI host pre-allocates buffers then client drivers cannot queue */
+> -	if (mhi_chan->pre_alloc)
+> +	if (unlikely(mhi_chan->pre_alloc))
+>  		return -EINVAL;
+>  
+> -	if (mhi_is_ring_full(mhi_cntrl, tre_ring))
+> -		return -ENOMEM;
+> -
+> -	read_lock_bh(&mhi_cntrl->pm_lock);
+> -	if (unlikely(MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state))) {
+> -		read_unlock_bh(&mhi_cntrl->pm_lock);
+> +	if (unlikely(MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)))
+>  		return -EIO;
+> +
+> +	read_lock_irqsave(&mhi_cntrl->pm_lock, flags);
+> +
+> +	ret = mhi_is_ring_full(mhi_cntrl, tre_ring);
+> +	if (unlikely(ret)) {
+> +		ret = -ENOMEM;
+> +		goto exit_unlock;
+>  	}
+>  
+> -	/* we're in M3 or transitioning to M3 */
+> +	ret = mhi_gen_tre(mhi_cntrl, mhi_chan, buf_info, mflags);
+> +	if (unlikely(ret))
+> +		goto exit_unlock;
+> +
+> +	/* trigger M3 exit if necessary */
+>  	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state))
+>  		mhi_trigger_resume(mhi_cntrl);
+>  
+> -	/* Toggle wake to exit out of M2 */
+> +	/* Assert dev_wake (to exit/prevent M1/M2)*/
+>  	mhi_cntrl->wake_toggle(mhi_cntrl);
+>  
+> -	buf_info.v_addr = skb->data;
+> -	buf_info.cb_buf = skb;
+> -	buf_info.len = len;
+> -
+> -	ret = mhi_gen_tre(mhi_cntrl, mhi_chan, &buf_info, mflags);
+> -	if (unlikely(ret)) {
+> -		read_unlock_bh(&mhi_cntrl->pm_lock);
+> -		return ret;
+> -	}
+> -
+>  	if (mhi_chan->dir == DMA_TO_DEVICE)
+>  		atomic_inc(&mhi_cntrl->pending_pkts);
+>  
+> -	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl))) {
+> -		read_lock_bh(&mhi_chan->lock);
+> -		mhi_ring_chan_db(mhi_cntrl, mhi_chan);
+> -		read_unlock_bh(&mhi_chan->lock);
+> +	if (unlikely(!MHI_DB_ACCESS_VALID(mhi_cntrl))) {
+> +		ret = -EIO;
+> +		goto exit_unlock;
+>  	}
+>  
+> -	read_unlock_bh(&mhi_cntrl->pm_lock);
+> +	mhi_ring_chan_db(mhi_cntrl, mhi_chan);
+>  
+> -	return 0;
+> +exit_unlock:
+> +	read_unlock_irqrestore(&mhi_cntrl->pm_lock, flags);
+> +
+> +	return ret;
+>  }
+> -EXPORT_SYMBOL_GPL(mhi_queue_skb);
+>  
+> -int mhi_queue_dma(struct mhi_device *mhi_dev, enum dma_data_direction dir,
+> -		  struct mhi_buf *mhi_buf, size_t len, enum mhi_flags mflags)
+> +int mhi_queue_skb(struct mhi_device *mhi_dev, enum dma_data_direction dir,
+> +		  struct sk_buff *skb, size_t len, enum mhi_flags mflags)
+>  {
+> -	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
+> -	struct mhi_chan *mhi_chan = (dir == DMA_TO_DEVICE) ? mhi_dev->ul_chan :
+> -							     mhi_dev->dl_chan;
+> -	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> -	struct mhi_ring *tre_ring = &mhi_chan->tre_ring;
+>  	struct mhi_buf_info buf_info = { };
+> -	int ret;
+> -
+> -	/* If MHI host pre-allocates buffers then client drivers cannot queue */
+> -	if (mhi_chan->pre_alloc)
+> -		return -EINVAL;
+> -
+> -	if (mhi_is_ring_full(mhi_cntrl, tre_ring))
+> -		return -ENOMEM;
+> -
+> -	read_lock_bh(&mhi_cntrl->pm_lock);
+> -	if (unlikely(MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state))) {
+> -		dev_err(dev, "MHI is not in activate state, PM state: %s\n",
+> -			to_mhi_pm_state_str(mhi_cntrl->pm_state));
+> -		read_unlock_bh(&mhi_cntrl->pm_lock);
+>  
+> -		return -EIO;
+> -	}
+> +	buf_info.v_addr = skb->data;
+> +	buf_info.cb_buf = skb;
+> +	buf_info.len = len;
+>  
+> -	/* we're in M3 or transitioning to M3 */
+> -	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state))
+> -		mhi_trigger_resume(mhi_cntrl);
+> +	return mhi_queue(mhi_dev, &buf_info, dir, mflags);
+> +}
+> +EXPORT_SYMBOL_GPL(mhi_queue_skb);
+>  
+> -	/* Toggle wake to exit out of M2 */
+> -	mhi_cntrl->wake_toggle(mhi_cntrl);
+> +int mhi_queue_dma(struct mhi_device *mhi_dev, enum dma_data_direction dir,
+> +		  struct mhi_buf *mhi_buf, size_t len, enum mhi_flags mflags)
+> +{
+> +	struct mhi_buf_info buf_info = { };
+>  
+>  	buf_info.p_addr = mhi_buf->dma_addr;
+>  	buf_info.cb_buf = mhi_buf;
+>  	buf_info.pre_mapped = true;
+>  	buf_info.len = len;
+>  
+> -	ret = mhi_gen_tre(mhi_cntrl, mhi_chan, &buf_info, mflags);
+> -	if (unlikely(ret)) {
+> -		read_unlock_bh(&mhi_cntrl->pm_lock);
+> -		return ret;
+> -	}
+> -
+> -	if (mhi_chan->dir == DMA_TO_DEVICE)
+> -		atomic_inc(&mhi_cntrl->pending_pkts);
+> -
+> -	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl))) {
+> -		read_lock_bh(&mhi_chan->lock);
+> -		mhi_ring_chan_db(mhi_cntrl, mhi_chan);
+> -		read_unlock_bh(&mhi_chan->lock);
+> -	}
+> -
+> -	read_unlock_bh(&mhi_cntrl->pm_lock);
+> -
+> -	return 0;
+> +	return mhi_queue(mhi_dev, &buf_info, dir, mflags);
+>  }
+>  EXPORT_SYMBOL_GPL(mhi_queue_dma);
+>  
+> @@ -1134,57 +1097,13 @@ int mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
+>  int mhi_queue_buf(struct mhi_device *mhi_dev, enum dma_data_direction dir,
+>  		  void *buf, size_t len, enum mhi_flags mflags)
+>  {
+> -	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
+> -	struct mhi_chan *mhi_chan = (dir == DMA_TO_DEVICE) ? mhi_dev->ul_chan :
+> -							     mhi_dev->dl_chan;
+> -	struct mhi_ring *tre_ring;
+>  	struct mhi_buf_info buf_info = { };
+> -	unsigned long flags;
+> -	int ret;
+> -
+> -	/*
+> -	 * this check here only as a guard, it's always
+> -	 * possible mhi can enter error while executing rest of function,
+> -	 * which is not fatal so we do not need to hold pm_lock
+> -	 */
+> -	if (unlikely(MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)))
+> -		return -EIO;
+> -
+> -	tre_ring = &mhi_chan->tre_ring;
+> -	if (mhi_is_ring_full(mhi_cntrl, tre_ring))
+> -		return -ENOMEM;
+>  
+>  	buf_info.v_addr = buf;
+>  	buf_info.cb_buf = buf;
+>  	buf_info.len = len;
+>  
+> -	ret = mhi_gen_tre(mhi_cntrl, mhi_chan, &buf_info, mflags);
+> -	if (unlikely(ret))
+> -		return ret;
+> -
+> -	read_lock_irqsave(&mhi_cntrl->pm_lock, flags);
+> -
+> -	/* we're in M3 or transitioning to M3 */
+> -	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state))
+> -		mhi_trigger_resume(mhi_cntrl);
+> -
+> -	/* Toggle wake to exit out of M2 */
+> -	mhi_cntrl->wake_toggle(mhi_cntrl);
+> -
+> -	if (mhi_chan->dir == DMA_TO_DEVICE)
+> -		atomic_inc(&mhi_cntrl->pending_pkts);
+> -
+> -	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl))) {
+> -		unsigned long flags;
+> -
+> -		read_lock_irqsave(&mhi_chan->lock, flags);
+> -		mhi_ring_chan_db(mhi_cntrl, mhi_chan);
+> -		read_unlock_irqrestore(&mhi_chan->lock, flags);
+> -	}
+> -
+> -	read_unlock_irqrestore(&mhi_cntrl->pm_lock, flags);
+> -
+> -	return 0;
+> +	return mhi_queue(mhi_dev, &buf_info, dir, mflags);
+>  }
+>  EXPORT_SYMBOL_GPL(mhi_queue_buf);
+>  
+> -- 
+> 2.7.4
+> 
