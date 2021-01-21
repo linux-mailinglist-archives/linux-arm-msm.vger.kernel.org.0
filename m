@@ -2,95 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9CC482FE024
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 04:52:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 854D82FE022
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 04:52:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727216AbhAUDvQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jan 2021 22:51:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57124 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730720AbhAUBob (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Jan 2021 20:44:31 -0500
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EF68C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 17:43:33 -0800 (PST)
-Received: by mail-oi1-x22a.google.com with SMTP id 15so499861oix.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 17:43:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=35YOuN4RoCdV/aCbpWrFTknzRYidSYBqsWYqor+LJ3s=;
-        b=dZFoUf5G3RQMVXyG+vD0SRCEqlRhwLQZeEQ77RS4EBjqLeUFlMoE/1a4bZtzJP9jRF
-         E2TsrWJtve5xHd7+GIItkFhcoD/qH67nPKMucZ2Q3DN3v54R/JRcLndmLmo+ioji5kFL
-         x8mfLYTsnuLCBdx0/R1C1UfVMww2HG7FbDDZjxJwUOrljDcdi09GKkiQXej1aFGX+u50
-         JU1OP4CsUS7mYNOrT933CMExhtReK+WdYq+SVZe8CZBf0ikMzYMNv6XSNfzBMwbAKoTJ
-         lApAM/dgHOiOvFe5TpZz+cVTZcKduJfZzhu/wt0dZsJRjdV9PpNzfB+UIsndROV6OjKb
-         Xcdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=35YOuN4RoCdV/aCbpWrFTknzRYidSYBqsWYqor+LJ3s=;
-        b=Or9DkkJEs3WLV8aAYW+ize5S0mJs700XYGP1dngN0r8XDH/2qBbcxFf8RZOEHrp+Wm
-         pDyVS63LQJhMGd8whoQXAoMNFKk8dVElzzK2RpX0SGbyKHzuXpRYZSCulL91/y+mVAlw
-         SYtbHfKmglntkSgF0WAqLe0fAjjBorY8ItDz1wm9EZmviviFjVgSXfDXUbFNZOXyzoAM
-         3RRpy4JzfJk1HQy/zAqxu3xZoJ1C1NFq9yxSKPadl+bM40jIvBS+P/gyD5mOra9dX0E+
-         VbOs6cBNo/OBgIuK2XFDd7D4/MxN5WCS3UB1e2JJc4SGla+EINeDvWFLDne20HUff7gl
-         Px/g==
-X-Gm-Message-State: AOAM5325ZPHEkyt98FfhFmuXvkjjJTO+dg43Abx20pDge7vYG+oOg2gX
-        T6ZgqwjWuBPQzaILWo4Eae0H8A==
-X-Google-Smtp-Source: ABdhPJxI8cfCPFjZAnqYCflbPb1t26VJ8O/yV+uMDRe6QnktW+qu7OjHwM91bsFKWtU9taxYV2UvnA==
-X-Received: by 2002:aca:58d6:: with SMTP id m205mr4584837oib.121.1611193412495;
-        Wed, 20 Jan 2021 17:43:32 -0800 (PST)
-Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id s69sm779032oih.38.2021.01.20.17.43.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jan 2021 17:43:31 -0800 (PST)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Manu Gautam <mgautam@codeaurora.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH 2/2] phy: qcom-qmp: Add SC8180X USB phy
-Date:   Wed, 20 Jan 2021 17:43:39 -0800
-Message-Id: <20210121014339.1612525-2-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210121014339.1612525-1-bjorn.andersson@linaro.org>
-References: <20210121014339.1612525-1-bjorn.andersson@linaro.org>
+        id S1727136AbhAUDwD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jan 2021 22:52:03 -0500
+Received: from mail.kernel.org ([198.145.29.99]:56128 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726456AbhAUC5S (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 20 Jan 2021 21:57:18 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 2111523884;
+        Thu, 21 Jan 2021 02:46:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1611197165;
+        bh=c1XsJT/SXPWs5fqOseN8Eebhs8J1o75FxNXKgsJnSIc=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=NYWE9SMnDc3ZX8r69M2IAJPIMqU03VJt5VgjP/Au5NlA1q40qVo8cxLf4vGe9pGPJ
+         5UVAgaO+PRHYaK0gGinYEC+Y58Pgta3ULKtzBEXJagCVsbb9aqmQX7aMe3IC+hXERI
+         HHa/LTu5zc0LxrBBGOvGVNVkfx6WjLShbSz4CAV7AQJjQ5FDt1+DMMUAIzWZ7oEri6
+         d0RPCBfeejOuujlPfOUMmhB1Ffs1dJ+Lwnqq48OKJ4SMEcw5HVFJKQUrKHvT13gE0b
+         PUv8tBWKTh1dIicht0jaVd5h2EMsGtF/Lbqup+kzhvm4/5XE0QJUZuuEXMP/17YQJy
+         PFgnW6WkLzGbA==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <e6843147-514b-8901-a04c-b1d6e3ebf1c2@somainline.org>
+References: <1611128871-5898-1-git-send-email-tdas@codeaurora.org> <e6843147-514b-8901-a04c-b1d6e3ebf1c2@somainline.org>
+Subject: Re: [PATCH V1] clk: qcom: gcc-sc7180: Mark the MM XO clocks to be always ON
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>
+Date:   Wed, 20 Jan 2021 18:46:03 -0800
+Message-ID: <161119716362.3661239.18168143877101107424@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Qualcomm SC8180X has two QMP phys used for SuperSpeed USB, which are
-either the same or very similar to the same found in SM8150. Add a
-compatible for this, reusing the existing SM8150 USB phy config.
+Quoting AngeloGioacchino Del Regno (2021-01-20 01:16:17)
+> Il 20/01/21 08:47, Taniya Das ha scritto:
+> > There are intermittent GDSC power-up failures observed for titan top
+> > gdsc, which requires the XO clock. Thus mark all the MM XO clocks always
+> > enabled from probe.
+> >=20
+>=20
+> Hello Tanya,
+>=20
+> > Fixes: 8d4025943e13 ("clk: qcom: camcc-sc7180: Use runtime PM ops inste=
+ad of clk ones")
+> > Signed-off-by: Taniya Das <tdas@codeaurora.org>
+> > ---
+> >   drivers/clk/qcom/gcc-sc7180.c | 47 ++++------------------------------=
+---------
+> >   1 file changed, 4 insertions(+), 43 deletions(-)
+> >=20
+> > --
+> > Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+> > of the Code Aurora Forum, hosted by the  Linux Foundation.
+> >=20
+> > diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-sc718=
+0.c
+> > index b05901b..88e896a 100644
+> > --- a/drivers/clk/qcom/gcc-sc7180.c
+> > +++ b/drivers/clk/qcom/gcc-sc7180.c
+> > @@ -1,6 +1,6 @@
+> >   // SPDX-License-Identifier: GPL-2.0-only
+> >   /*
+> > - * Copyright (c) 2019-2020, The Linux Foundation. All rights reserved.
+> > + * Copyright (c) 2019-2021, The Linux Foundation. All rights reserved.
+> >    */
+> >=20
+> >   #include <linux/clk-provider.h>
+> > @@ -919,19 +919,6 @@ static struct clk_branch gcc_camera_throttle_hf_ax=
+i_clk =3D {
+> >       },
+> >   };
+> >=20
+> > -static struct clk_branch gcc_camera_xo_clk =3D {
+> > -     .halt_reg =3D 0xb02c,
+> > -     .halt_check =3D BRANCH_HALT,
+> > -     .clkr =3D {
+> > -             .enable_reg =3D 0xb02c,
+> > -             .enable_mask =3D BIT(0),
+> > -             .hw.init =3D &(struct clk_init_data){
+> > -                     .name =3D "gcc_camera_xo_clk",
+> > -                     .ops =3D &clk_branch2_ops,
+> > -             },
+> > -     },
+> > -};
+> > -
+>=20
+> Why are you avoiding to register these clocks entirely?
+> If this is needed by the Titan GDSC, this clock "does indeed exist".
+>=20
+> If these clocks shall never be turned off, then you should add the
+> CLK_IS_CRITICAL flag and perhaps add a comment explaining why.
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-index a1ea911856fb..8a63148a6df6 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -4211,6 +4211,9 @@ static const struct of_device_id qcom_qmp_phy_of_match_table[] = {
- 	}, {
- 		.compatible = "qcom,sc8180x-qmp-ufs-phy",
- 		.data = &sm8150_ufsphy_cfg,
-+	}, {
-+		.compatible = "qcom,sc8180x-qmp-usb3-phy",
-+		.data = &sm8150_usb3phy_cfg,
- 	}, {
- 		.compatible = "qcom,sdm845-qhp-pcie-phy",
- 		.data = &sdm845_qhp_pciephy_cfg,
--- 
-2.29.2
-
+I'd rather not have critical clks wasting kernel memory and registration
+time if they're never going to be turned off and we're basically just
+writing a bit so that they're always on. This patch looks OK to me from
+that perspective. There aren't any parents for these clks either so
+really it's a glorified bit toggle and poll to make sure that it is
+enabled. Maybe we should be checking that they're actually enabled at
+the end of probe, but otherwise we don't need all this complexity.
