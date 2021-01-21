@@ -2,111 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 999F32FDDF7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 01:32:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 257C92FDE53
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 02:01:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403809AbhAUAbd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jan 2021 19:31:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54728 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404052AbhATXXt (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Jan 2021 18:23:49 -0500
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60D57C06138B
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 14:50:31 -0800 (PST)
-Received: by mail-ot1-x32a.google.com with SMTP id o11so25039632ote.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 14:50:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=4idyrgOjbPCo0xIvVDxnoQX1+7++2YYqASwzmUbTSIg=;
-        b=FwpFBEdguoiC+d4juDT3vyfKfWHn9cZAGK9cR+YsoPIdAANOkVKQvzUBgY460yF0YW
-         Y1W7EeLTIwQWdYygIyO03+K/O3PKuFQTfhmBhhxhL2TPN9rltmJru4ry5loGDnXVO8+s
-         ohSkXH6uOH/MLP/ksrmbF+ncN5DQM+fWvWEscvZ3efjMIIt9QhE3imCLLwtvsKL/w88Y
-         vfegYkpMwCQ7mFNiKBAs6ME7NLKJ4hxJiFvcPtHYx++uQuODT6MEHD/fHvM7zeQqErkg
-         ZKUS4iMInVT5/QgI+yogRUDCaSZk31f5VZY7KLJIBBnV2WhXqvnUWH6ZVJx9NniH7b88
-         ZVOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=4idyrgOjbPCo0xIvVDxnoQX1+7++2YYqASwzmUbTSIg=;
-        b=oMRX4LQqX/rxbKWSaiyCQkjgaADu5ItMLKgMnMgutIIDkuZ25iReG2ul4fgLuFlVL8
-         8P56XuSfjlcAMk4UFwmccQxETjys1c/Kb1953bcFQ6fT/cdaCRz1W07DC2Nx8V+qpMpn
-         GQaD4145JDmi1HwmJCplJFLyhfPN9/Yk9Ynn+wluHCWmgtBT3S5kL6jihJs8+AA6pq24
-         mT4Mb2O/L7wwhmU90k4geNkE/Zyp8IfrJT0E2AOAAKtR5Re/iPEIgYuOMg1JQzZwg3ZO
-         lA+dWKZnzawjirL62rtjXevNjQyz44DBfHKSigefG/rWv50qOqzGTclBqsRxAtiXV0nj
-         sCIg==
-X-Gm-Message-State: AOAM533KtfZPiezoOjHQmBW6VsOQ2cjUHBTMapHUXTZ1S8/sK/oY9bpC
-        eiFjF7GTNge7GVQ/vFdG2K6K6g==
-X-Google-Smtp-Source: ABdhPJyI5wePjhle5rg1W7f9Ny2WB6bW1HhAX6OhimdlyLMDYG/NNtvs8dUtFT6bjs4SeTFn/jGw6Q==
-X-Received: by 2002:a9d:4b03:: with SMTP id q3mr8362686otf.88.1611183030357;
-        Wed, 20 Jan 2021 14:50:30 -0800 (PST)
-Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id r133sm677632oia.17.2021.01.20.14.50.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jan 2021 14:50:29 -0800 (PST)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] soc: qcom: rpmhpd: Add SC8180X
-Date:   Wed, 20 Jan 2021 14:50:37 -0800
-Message-Id: <20210120225037.1611353-2-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210120225037.1611353-1-bjorn.andersson@linaro.org>
-References: <20210120225037.1611353-1-bjorn.andersson@linaro.org>
+        id S1727037AbhAUA7R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jan 2021 19:59:17 -0500
+Received: from mail.kernel.org ([198.145.29.99]:54592 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2390369AbhAUAJI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 20 Jan 2021 19:09:08 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 79B7C23730;
+        Thu, 21 Jan 2021 00:08:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1611187700;
+        bh=AtC5q2W2oLkfDoZzLgASSBt9b4kFplLrpoUru6BPG4g=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=VwRIy3GP+8gDpjzd9jJZMwZrpCuYm+Z5t82CXBMh8nTKRUNV2jjRLu20Gm/yA3CT1
+         6+ducthmEeo2uO5q0NDMipcdYhbAJLJ+8aVvS+q7YLLZ/dA9m9b8xXDn1so1g9LV8t
+         +jiTJJHWvrppzaBPfkEwMZ45MsE2FPd6sQdv7XcXF3uRES4YzRxBrnB4Ry7/TQTI4T
+         5ztrKsd4UCtj3zGN6mfa/4qeAmKmBWaycDwOs6ckJWph83CVDEEh7/OkIYkE0eCElx
+         9+X6K91Ic9dl+9IDsaTdZ0ysTa2w2xEw3FNtff35RfyEMfH4YzdJIDGqeHIiKDYNan
+         god6FAfLcBzTw==
+From:   Mark Brown <broonie@kernel.org>
+To:     linux-arm-msm@vger.kernel.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
+        phone-devel@vger.kernel.org, sumit.semwal@linaro.org,
+        linux-kernel@vger.kernel.org, martin.botka@somainline.org,
+        devicetree@vger.kernel.org, konrad.dybcio@somainline.org,
+        robh+dt@kernel.org, marijn.suijten@somainline.org,
+        lgirdwood@gmail.com
+In-Reply-To: <20210119174421.226541-1-angelogioacchino.delregno@somainline.org>
+References: <20210119174421.226541-1-angelogioacchino.delregno@somainline.org>
+Subject: Re: (subset) [PATCH v4 0/7] Really implement Qualcomm LAB/IBB regulators
+Message-Id: <161118766212.46058.17597385912492952608.b4-ty@kernel.org>
+Date:   Thu, 21 Jan 2021 00:07:42 +0000
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the power domains exposed by RPMH in the Qualcomm SC8180X platform.
+On Tue, 19 Jan 2021 18:44:14 +0100, AngeloGioacchino Del Regno wrote:
+> Okay, the title may be a little "aggressive"? However, the qcom-labibb
+> driver wasn't really .. doing much.
+> The current form of this driver is only taking care of enabling or
+> disabling the regulators, which is pretty useless if they were not
+> pre-set from the bootloader, which sets them only if continuous
+> splash is enabled.
+> Moreover, some bootloaders are setting a higher voltage and/or a higher
+> current limit compared to what's actually required by the attached
+> hardware (which is, in 99.9% of the cases, a display) and this produces
+> a higher power consumption, higher heat output and a risk of actually
+> burning the display if kept up for a very long time: for example, this
+> is true on at least some Sony Xperia MSM8998 (Yoshino platform) and
+> especially on some Sony Xperia SDM845 (Tama platform) smartphones.
+> 
+> [...]
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/soc/qcom/rpmhpd.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+Applied to
 
-diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
-index 7ce06356d24c..18d5180c0ca0 100644
---- a/drivers/soc/qcom/rpmhpd.c
-+++ b/drivers/soc/qcom/rpmhpd.c
-@@ -217,8 +217,29 @@ static const struct rpmhpd_desc sc7180_desc = {
- 	.num_pds = ARRAY_SIZE(sc7180_rpmhpds),
- };
- 
-+/* SC8180x RPMH powerdomains */
-+static struct rpmhpd *sc8180x_rpmhpds[] = {
-+	[SC8180X_CX] = &sdm845_cx,
-+	[SC8180X_CX_AO] = &sdm845_cx_ao,
-+	[SC8180X_EBI] = &sdm845_ebi,
-+	[SC8180X_GFX] = &sdm845_gfx,
-+	[SC8180X_LCX] = &sdm845_lcx,
-+	[SC8180X_LMX] = &sdm845_lmx,
-+	[SC8180X_MMCX] = &sm8150_mmcx,
-+	[SC8180X_MMCX_AO] = &sm8150_mmcx_ao,
-+	[SC8180X_MSS] = &sdm845_mss,
-+	[SC8180X_MX] = &sdm845_mx,
-+	[SC8180X_MX_AO] = &sdm845_mx_ao,
-+};
-+
-+static const struct rpmhpd_desc sc8180x_desc = {
-+	.rpmhpds = sc8180x_rpmhpds,
-+	.num_pds = ARRAY_SIZE(sc8180x_rpmhpds),
-+};
-+
- static const struct of_device_id rpmhpd_match_table[] = {
- 	{ .compatible = "qcom,sc7180-rpmhpd", .data = &sc7180_desc },
-+	{ .compatible = "qcom,sc8180x-rpmhpd", .data = &sc8180x_desc },
- 	{ .compatible = "qcom,sdm845-rpmhpd", .data = &sdm845_desc },
- 	{ .compatible = "qcom,sdx55-rpmhpd", .data = &sdx55_desc},
- 	{ .compatible = "qcom,sm8150-rpmhpd", .data = &sm8150_desc },
--- 
-2.29.2
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
 
+Thanks!
+
+[1/7] regulator: qcom-labibb: Switch voltage ops from linear_range to linear
+      commit: 9a12eb704ea27826ece4414cb8822388ec54883c
+[2/7] regulator: qcom-labibb: Implement current limiting
+      commit: 8056704ba948c1c54c7a67d78a8399a749f2d04b
+[3/7] regulator: qcom-labibb: Implement pull-down, softstart, active discharge
+      commit: 3bc7cb99fb6eafae5a40bf71ded444df70a425f7
+[4/7] dt-bindings: regulator: qcom-labibb: Document soft start properties
+      commit: 5581304004659ddc8d0d45561c1f2abfe080b4d4
+[5/7] regulator: qcom-labibb: Implement short-circuit and over-current IRQs
+      commit: 390af53e04114f790d60b63802a4de9d815ade03
+[6/7] dt-bindings: regulator: qcom-labibb: Document SCP/OCP interrupts
+      commit: 9499200484669fe33c20c735a3d5a29a0dc0e9d4
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
