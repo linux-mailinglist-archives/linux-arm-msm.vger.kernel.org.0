@@ -2,117 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 524732FEF12
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 16:40:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C22DB2FEF5B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 16:47:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728663AbhAUPjC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jan 2021 10:39:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39098 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733149AbhAUPhh (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jan 2021 10:37:37 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CEBDC061756
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jan 2021 07:36:56 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id c124so1824878wma.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jan 2021 07:36:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=JcVTg+smuk+JvjKNodQ46EIl4LUKQrz4MgqUhJc2c80=;
-        b=JiBVAej+mj5P09SDTOqy/z13p3dfmhJLUGqUlhdCTWBgsEh4vciDlpLWsRf8TL4lvi
-         sNqqBZluOfTslKoM48OG8EjkDvHT/8XFUcUCgycz+OvAN8p9j3lyD5HbXCldJSLwkzqK
-         JYjvMxQgkPIUGjMPRxzaF97kve0KuVZebypAlN8uJqY6G1HiUo8Is+OfXsjeBYgBQL3U
-         T88HHH7F4w5U819uM4sV8QWcHSbhGRsbACOP/kercgXBHMRsxcea6g5faDvCqUJqb6te
-         KOCp/cR0z4xjU0+OnWCfQmhTdEsWtgiD54SNU1h8bDxJk2n0BCCckVasXzLfIjSSwWs2
-         uL8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=JcVTg+smuk+JvjKNodQ46EIl4LUKQrz4MgqUhJc2c80=;
-        b=LXV4mEO94ir89tI3il1CPruMSph26imlpS/7p/QFp+JWOK9MQCvZsyjbDhOhT6w49f
-         OH9r07a0ymVMlkFvezlQ/jeNQKM9tlEPd8EwJ72pVreOosyAVBkIbiOm6I4WVyjFCqIv
-         ymzjE33KiZLVRVhqbutmtJ35JG+rgX1I7Z7EURIP7buljlgVb0aDKnFwbkP+fPVvxev+
-         fpMx4jLqNL4F89SXUqVYqB4HNqbvq3cpMXpbIvE2RyCwzPlQQdYpJyYXtG2cULwRKjFq
-         jtVDocxR38Kl4rP74xwQJ9m+RzegxJd0mhw2N0qQFOg5Wu73ZLX8emNV2jl7gg8rftT4
-         w0Mg==
-X-Gm-Message-State: AOAM531FtMCCFcguLbLfrSbvaAUhB7UNqj6LjxezFkQSToeQYpwa2TWh
-        OT4j8UVoSGN+5YW2zxcrAbKI8g==
-X-Google-Smtp-Source: ABdhPJyfXqxxgqOmtoSnJpiF3iqSkYaC/yU+/103LNk7Ep1oDZ5J01CBAR32cmExYpf+0vSeN4/3KQ==
-X-Received: by 2002:a1c:608b:: with SMTP id u133mr9438737wmb.140.1611243415109;
-        Thu, 21 Jan 2021 07:36:55 -0800 (PST)
-Received: from ?IPv6:2a01:e34:ed2f:f020:1539:1c19:f5a3:71b8? ([2a01:e34:ed2f:f020:1539:1c19:f5a3:71b8])
-        by smtp.googlemail.com with ESMTPSA id p17sm8602926wmg.46.2021.01.21.07.36.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Jan 2021 07:36:54 -0800 (PST)
-Subject: Re: [PATCH v12 0/5] qcom: pm8150: add support for thermal monitoring
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Amit Kucheria <amitk@kernel.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-iio@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Jishnu Prakash <jprakash@qti.qualcomm.com>
-References: <20210119054848.592329-1-dmitry.baryshkov@linaro.org>
- <078a7025-ce5c-a252-f8f4-694c56153b3a@linaro.org>
- <YAmedqs9/1oDSWvK@builder.lan>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-Message-ID: <49eb2533-e6ba-9310-a4f8-5b633c7a0253@linaro.org>
-Date:   Thu, 21 Jan 2021 16:36:50 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S1733215AbhAUPqi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jan 2021 10:46:38 -0500
+Received: from mail.kernel.org ([198.145.29.99]:49252 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2387493AbhAUPpi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 21 Jan 2021 10:45:38 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 99D1E2073C;
+        Thu, 21 Jan 2021 15:44:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1611243897;
+        bh=+5gRibZkC6bk1wv39tmFyPEKELorKhefP3ySjz4oV7Q=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=paOfH3uVrTWvohDqTqpIdqpX2ef5Ki07Df+QI0JomD1Z3Sd6xIxEgnbyPqqdPwJB2
+         +IsZnsl++3nCaiS9+JmHzVWBZsGBW5bywW/LxtPgNH8XH0vAT8Safno/b6NBN6E0Pu
+         3RFh3H11gbKk1X54ZMfmDYtW3lCbvtMx6HbWMA77zA8OhJmr5gBpJ3BCKLIyKOAPWr
+         V4Vq+3HCiyYzwISCgV4voRb76fhGfBuNWNohRdmxqDyiBsTbs0JTXRWOcBhQEUO//d
+         /rf7ynQ9XyTlPclKhATceuAqbZyWlfXTI5vFuZXKAjXpBDPP5IJTDu6xg/hfsg50R0
+         er2sWL3RYnLAA==
+Date:   Thu, 21 Jan 2021 15:44:18 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     Marek Szyprowski <m.szyprowski@samsung.com>
+Cc:     David Collins <collinsd@codeaurora.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        'Linux Samsung SOC' <linux-samsung-soc@vger.kernel.org>
+Subject: Re: [PATCH] regulator: core: avoid regulator_resolve_supply() race
+ condition
+Message-ID: <20210121154418.GE4588@sirena.org.uk>
+References: <1610068562-4410-1-git-send-email-collinsd@codeaurora.org>
+ <CGME20210112213419eucas1p24231e4d0ac11c31184f2f8f3f20cbd9d@eucas1p2.samsung.com>
+ <e512ee85-7fa6-e5fe-eb30-f088bb83cf23@samsung.com>
+ <20210118204958.GS4455@sirena.org.uk>
+ <5f37ae96-c5f9-6619-d88f-21c5e483ff8e@samsung.com>
 MIME-Version: 1.0
-In-Reply-To: <YAmedqs9/1oDSWvK@builder.lan>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="orO6xySwJI16pVnm"
+Content-Disposition: inline
+In-Reply-To: <5f37ae96-c5f9-6619-d88f-21c5e483ff8e@samsung.com>
+X-Cookie: Generic Fortune.
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/01/2021 16:32, Bjorn Andersson wrote:
-> On Tue 19 Jan 14:57 CST 2021, Daniel Lezcano wrote:
-> 
->> On 19/01/2021 06:48, Dmitry Baryshkov wrote:
->>> This patch serie adds support for thermal monitoring block on Qualcomm's
->>> PMIC5 chips. PM8150{,b,l}, qrb5165-rb5 board and sm8250-mtp board device
->>> trees are extended to support thermal zones provided by this thermal
->>> monitoring block.  Unlike the rest of PMIC thermal senses, these thermal
->>> zones describe particular thermistors, which differ between from board
->>> to board.
->>>
->>> Dependencies: https://git.kernel.org/pub/scm/linux/kernel/git/jic23/iio.git/log/?h=ib-iio-thermal-5.11-rc1
->>
->> Shall I pick 3,4,5 also ?
->>
-> 
-> I believe I have some adjacent changes staged in these files, so I'll
-> prefer to pick them through the Qualcomm tree.
 
-Ok, thanks
+--orO6xySwJI16pVnm
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->> -- 
->> <http://www.linaro.org/> Linaro.org ??? Open source software for ARM SoCs
->>
->> Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
->> <http://twitter.com/#!/linaroorg> Twitter |
->> <http://www.linaro.org/linaro-blog/> Blog
+On Thu, Jan 21, 2021 at 10:41:59AM +0100, Marek Szyprowski wrote:
+> On 18.01.2021 21:49, Mark Brown wrote:
 
+> > Does this help (completely untested):
 
--- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+> Sadly nope. I get same warning:
 
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+Try this instead:
+
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 3ae5ccd9277d..31503776dbd7 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1823,17 +1823,6 @@ static int regulator_resolve_supply(struct regulator=
+_dev *rdev)
+ 	if (rdev->supply)
+ 		return 0;
+=20
+-	/*
+-	 * Recheck rdev->supply with rdev->mutex lock held to avoid a race
+-	 * between rdev->supply null check and setting rdev->supply in
+-	 * set_supply() from concurrent tasks.
+-	 */
+-	regulator_lock(rdev);
+-
+-	/* Supply just resolved by a concurrent task? */
+-	if (rdev->supply)
+-		goto out;
+-
+ 	r =3D regulator_dev_lookup(dev, rdev->supply_name);
+ 	if (IS_ERR(r)) {
+ 		ret =3D PTR_ERR(r);
+@@ -1885,12 +1874,29 @@ static int regulator_resolve_supply(struct regulato=
+r_dev *rdev)
+ 		goto out;
+ 	}
+=20
++	/*
++	 * Recheck rdev->supply with rdev->mutex lock held to avoid a race
++	 * between rdev->supply null check and setting rdev->supply in
++	 * set_supply() from concurrent tasks.
++	 */
++	regulator_lock(rdev);
++
++	/* Supply just resolved by a concurrent task? */
++	if (rdev->supply) {
++		regulator_unlock(rdev);
++		put_device(&r->dev);
++		return ret;
++	}
++
+ 	ret =3D set_supply(rdev, r);
+ 	if (ret < 0) {
++		regulator_unlock(rdev);
+ 		put_device(&r->dev);
+-		goto out;
++		return ret;
+ 	}
+=20
++	regulator_unlock(rdev);
++
+ 	/*
+ 	 * In set_machine_constraints() we may have turned this regulator on
+ 	 * but we couldn't propagate to the supply if it hadn't been resolved
+@@ -1901,12 +1907,11 @@ static int regulator_resolve_supply(struct regulato=
+r_dev *rdev)
+ 		if (ret < 0) {
+ 			_regulator_put(rdev->supply);
+ 			rdev->supply =3D NULL;
+-			goto out;
++			goto out_rdev_lock;
+ 		}
+ 	}
+=20
+ out:
+-	regulator_unlock(rdev);
+ 	return ret;
+ }
+=20
+
+--orO6xySwJI16pVnm
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmAJoVEACgkQJNaLcl1U
+h9Cf8wf/XDuOH0gnqkdF8ahweAnC2dYaUGZyEUY+81aGMyOlfAOg28Xm6qM0Epf5
+eoNso/xFUG9If6M7wjFbidSEW8R9GuGvw6MqNEtW56Fi/OyvXQ79zvNaOkDoHxcT
+n+Cc1p5XvjNpwo//JCrJklmdYT3qTB5Lk0hY05p3LTw+Q+soTwcUqYB5NieEhySA
+v1XdrRZnCdiYw/usO05C2pdERQmt9YDem9oj8yfu2PcKza2zE1g3Eu8EJQcfQe9I
+/3XeE2sLvLcjusTcH9DaiUOeOCFL4YWgnK5mB46dAuIE/fPqv48fUFMuyZ52PlN9
+VQTkUxDM2/BrCf1GRByt4G5hRIhkvQ==
+=Jbpl
+-----END PGP SIGNATURE-----
+
+--orO6xySwJI16pVnm--
