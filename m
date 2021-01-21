@@ -2,87 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A63F22FF161
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 18:07:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DEEB22FF1A0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 18:19:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388447AbhAURHK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jan 2021 12:07:10 -0500
-Received: from mail.kernel.org ([198.145.29.99]:39218 "EHLO mail.kernel.org"
+        id S2388367AbhAURSn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jan 2021 12:18:43 -0500
+Received: from mail.kernel.org ([198.145.29.99]:43074 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388318AbhAURHC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jan 2021 12:07:02 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id C448E23A54;
-        Thu, 21 Jan 2021 17:06:20 +0000 (UTC)
+        id S2388800AbhAURSk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 21 Jan 2021 12:18:40 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 9273323A57;
+        Thu, 21 Jan 2021 17:17:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1611248781;
-        bh=AcrmoB+h/zi8HkyQOGW0ipwVsjuiLu5lEygPUCOSziI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=nHwYplwmzmV/RgR+6OYNo7t5ugwqY1LFSFDMmoTsgv9ZzpwgKB/K/O/nNVbn2Y653
-         piCZylP722MxqXNb7GrPCno1NAnfpzdK/4+6kp4kRJH7599ZcrmmrUidUMPbOdmE3I
-         EvKlcQpbKdhZr47y7YPDuVPspLgfwtWDcyjKPrOn6ZOCt+sG8tCp0EAd4EcmqheOef
-         T7Le/hL4SbIjXHV2cZCIPUAIIzBrE6OHE0ZXBicNALu8RkFT3LKuGQr8fncLEjQbPP
-         sDAG23r6UJUzh0EAoZOO8a1dpVjeDv0caIiLHqy4ljsYuDJfVp/ZrY2G+b4cVFTJ0o
-         zTJZlscreZQ+A==
-Date:   Thu, 21 Jan 2021 22:36:17 +0530
+        s=k20201202; t=1611249477;
+        bh=6AwqWcAOwTOOIJWaYhNG4AO3gYTwMZyEYPz1FEVOmcg=;
+        h=From:To:Cc:Subject:Date:From;
+        b=Wl9UmszsGOiJ8ERmu5xtorm+6t4VXebKH89JpBRUiykZTPrCp0vb9rylU29eQjpjo
+         2tVQG4+hCjJG6r6LK07+NkOf3C9D51JGtfn0YOouBMo4x2+hu/eKOaZ45SHLY4Cibo
+         mCcVx2OQXrI78KyoqcTjaFJGps+ddATnmi4nCQdPEC4te6xr660DikGyt16QHKw1Wf
+         xK2F9nqO7YPxyQ+sijLl8UN5VgqKHqxQvxfYToenbw1nW8RSSK5hi6Foc1ICiKtTWM
+         5T7r/QXMweJQqqq6B1oRrQM+J3gbCmJFPumpV9Li0K9QdPxtcbPI2oDraQ+DHxPxcg
+         9EwrQSwWVlBQQ==
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/3] dt-bindings: pinctrl: qcom: Define common TLMM
- binding
-Message-ID: <20210121170617.GH2771@vkoul-mobl>
-References: <20210120222114.1609779-1-bjorn.andersson@linaro.org>
- <20210120222114.1609779-2-bjorn.andersson@linaro.org>
- <CACRpkdY6G_EP8QAp1C-eghdbgcgwQezA1ap=nDtSHPNqjuDF6Q@mail.gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v5 0/2] pinctrl: qcom: Add SM8350 pinctrl support
+Date:   Thu, 21 Jan 2021 22:47:45 +0530
+Message-Id: <20210121171747.3161543-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACRpkdY6G_EP8QAp1C-eghdbgcgwQezA1ap=nDtSHPNqjuDF6Q@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21-01-21, 14:20, Linus Walleij wrote:
-> On Wed, Jan 20, 2021 at 11:21 PM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> 
-> > Several properties are shared between all TLMM bindings. By providing a
-> > common binding to define these properties each platform's binding can be
-> > reduced to just listing which of these properties should be checked for
-> > - or further specified.
-> >
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+This adds binding and driver for TLMM block found in SM8350 SoC
 
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
+Changes in v5:
+ - rebase and revise binding based on Bjorn's qcom common TLMM binding
 
-> Overall it looks good, just cutting some slack for reviewers (especially
-> DT people) before applying.
+Changes in v4:
+ - rename to qcom,sm8350-tlmm along with binding and driver structs
+ - fix some nits in binding pointer by Rob
 
-Yeah it does clean stuff up. I have rebased on SM8350 series on top of this, will post soon.
+Vinod Koul (2):
+  dt-bindings: pinctrl: qcom: Add SM8350 pinctrl bindings
+  pinctrl: qcom: Add SM8350 pinctrl driver
 
-> > +description:
-> > +  This defines the common properties used to describe all Qualcomm TLMM
-> > +  bindings and pinconf/pinmux states for these.
-> 
-> I vaguely recall asking you in the past what the acronym TLMM actually
-> means. This would be a good place to expand the acronym so people
-> know what these four letters actually represent.
-
-It is Top Level Mode Multiplexer (TLMM) it is actually used in the
-binding doc :)
-
-> 
-> (There, I finally gave you an official reason to go and poke Qualcomm
-> hardware engineers about this. ;)
-> 
-> Yours,
-> Linus Walleij
+ .../bindings/pinctrl/qcom,sm8350-pinctrl.yaml |  146 ++
+ drivers/pinctrl/qcom/Kconfig                  |    9 +
+ drivers/pinctrl/qcom/Makefile                 |    1 +
+ drivers/pinctrl/qcom/pinctrl-sm8350.c         | 1649 +++++++++++++++++
+ 4 files changed, 1805 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm8350-pinctrl.yaml
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-sm8350.c
 
 -- 
-~Vinod
+2.26.2
+
