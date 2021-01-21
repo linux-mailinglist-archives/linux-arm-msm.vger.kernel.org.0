@@ -2,100 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 257C92FDE53
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 02:01:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 677602FE01F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 04:52:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727037AbhAUA7R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jan 2021 19:59:17 -0500
-Received: from mail.kernel.org ([198.145.29.99]:54592 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2390369AbhAUAJI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Jan 2021 19:09:08 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 79B7C23730;
-        Thu, 21 Jan 2021 00:08:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1611187700;
-        bh=AtC5q2W2oLkfDoZzLgASSBt9b4kFplLrpoUru6BPG4g=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=VwRIy3GP+8gDpjzd9jJZMwZrpCuYm+Z5t82CXBMh8nTKRUNV2jjRLu20Gm/yA3CT1
-         6+ducthmEeo2uO5q0NDMipcdYhbAJLJ+8aVvS+q7YLLZ/dA9m9b8xXDn1so1g9LV8t
-         +jiTJJHWvrppzaBPfkEwMZ45MsE2FPd6sQdv7XcXF3uRES4YzRxBrnB4Ry7/TQTI4T
-         5ztrKsd4UCtj3zGN6mfa/4qeAmKmBWaycDwOs6ckJWph83CVDEEh7/OkIYkE0eCElx
-         9+X6K91Ic9dl+9IDsaTdZ0ysTa2w2xEw3FNtff35RfyEMfH4YzdJIDGqeHIiKDYNan
-         god6FAfLcBzTw==
-From:   Mark Brown <broonie@kernel.org>
-To:     linux-arm-msm@vger.kernel.org,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
-        phone-devel@vger.kernel.org, sumit.semwal@linaro.org,
-        linux-kernel@vger.kernel.org, martin.botka@somainline.org,
-        devicetree@vger.kernel.org, konrad.dybcio@somainline.org,
-        robh+dt@kernel.org, marijn.suijten@somainline.org,
-        lgirdwood@gmail.com
-In-Reply-To: <20210119174421.226541-1-angelogioacchino.delregno@somainline.org>
-References: <20210119174421.226541-1-angelogioacchino.delregno@somainline.org>
-Subject: Re: (subset) [PATCH v4 0/7] Really implement Qualcomm LAB/IBB regulators
-Message-Id: <161118766212.46058.17597385912492952608.b4-ty@kernel.org>
-Date:   Thu, 21 Jan 2021 00:07:42 +0000
+        id S1727589AbhAUDvG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jan 2021 22:51:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56646 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731209AbhAUBmO (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 20 Jan 2021 20:42:14 -0500
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 867E2C061757
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 17:41:23 -0800 (PST)
+Received: by mail-oi1-x235.google.com with SMTP id h192so536129oib.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 17:41:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=SDflA4yuNTlUbw0Uk2L5jr8nyCGDHDhgCKlPACVW+1g=;
+        b=K3YD9LsG8u5dpfbZjWZY3o2EqkT0dLIbH8Str3bKPZKDO/xTC7248HblIFSQdH6gq3
+         Hj8dRyuAXAJms2l20d+A9dohnMqld/goXJxUs1KNc/ZyfQL8GiDwLYaP8BAQ9lrRBUHd
+         o6scXg/wrc1UL0ZljC9NszpZBLl2epW0z+kqT8XbsBC1wAKN38uz4a7HVuDLeg8amBgC
+         fYittVc06ERjaytZlUs/LFmI0df40TqrP1ABqz+gOk4jdE4NLrBn7Q3lXYS9Vry400Jc
+         lb6y3dXuQkmAsVXq2Tq6rIHZtxEpHiWLZRkGuovGYnpt6+g+Z8aiEHkrKOCuR9J9PDgo
+         swfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=SDflA4yuNTlUbw0Uk2L5jr8nyCGDHDhgCKlPACVW+1g=;
+        b=FGpeARFxrawTOhaiivYpxDAsphhuiMRNud6lfOnmF57kWbE1aZ9R9WLKu4BwvfmBJx
+         yXCfdz3C99hQP5/Nu7CCj5sd4hO2F2++HRhHZPmBUUfOnQF6us6mUxPG396+g/eg8782
+         NuIHQLiWgfA5yTcIa9Pbx++sz//IGRF3WKdKz4nli/Gl4tRbj/xMvNXaQjAM2Mf45zKF
+         4rJsmRG2qySX7PqOOrwrIklQ6+Q50M0QxUxgq4so3fxju7Fgdtts2HEW8c2idBXtMQNT
+         5Bf7vSmTmN6+Cnhz3UK0tlxg5TlcEg7AuLbP2rCND5czjNG+LIOqwi7HQXhVmjT/7BD0
+         hXCw==
+X-Gm-Message-State: AOAM530U5aw08GMuPIBG6zubkPzpaZrCjjhwL7QYMhUeHxugBhRRIkQR
+        3J4XbqUjELFO9EFLPO6/PTpSyA==
+X-Google-Smtp-Source: ABdhPJybFlKXr/4AOpsYKgduJCZR1R1j77s4XDXoJeasKfYBlC8PNPODPG3h/YsrzpMmQ/xyhgvVEw==
+X-Received: by 2002:aca:c4ca:: with SMTP id u193mr3298388oif.178.1611193282998;
+        Wed, 20 Jan 2021 17:41:22 -0800 (PST)
+Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id j1sm766978oiw.50.2021.01.20.17.41.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Jan 2021 17:41:22 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Sivaprakash Murugesan <sivaprak@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 1/2] dt-bindings: mailbox: qcom: Add SC8180X APCS compatible
+Date:   Wed, 20 Jan 2021 17:41:29 -0800
+Message-Id: <20210121014130.1612454-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 19 Jan 2021 18:44:14 +0100, AngeloGioacchino Del Regno wrote:
-> Okay, the title may be a little "aggressive"? However, the qcom-labibb
-> driver wasn't really .. doing much.
-> The current form of this driver is only taking care of enabling or
-> disabling the regulators, which is pretty useless if they were not
-> pre-set from the bootloader, which sets them only if continuous
-> splash is enabled.
-> Moreover, some bootloaders are setting a higher voltage and/or a higher
-> current limit compared to what's actually required by the attached
-> hardware (which is, in 99.9% of the cases, a display) and this produces
-> a higher power consumption, higher heat output and a risk of actually
-> burning the display if kept up for a very long time: for example, this
-> is true on at least some Sony Xperia MSM8998 (Yoshino platform) and
-> especially on some Sony Xperia SDM845 (Tama platform) smartphones.
-> 
-> [...]
+Add compatible for the Qualcomm SC8180x APCS block to the Qualcomm APCS
+binding.
 
-Applied to
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ .../devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml       | 1 +
+ 1 file changed, 1 insertion(+)
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+diff --git a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
+index ffd09b664ff5..ec4054087bc1 100644
+--- a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
++++ b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
+@@ -24,6 +24,7 @@ properties:
+       - qcom,msm8998-apcs-hmss-global
+       - qcom,qcs404-apcs-apps-global
+       - qcom,sc7180-apss-shared
++      - qcom,sc8180x-apss-shared
+       - qcom,sdm660-apcs-hmss-global
+       - qcom,sdm845-apss-shared
+       - qcom,sm8150-apss-shared
+-- 
+2.29.2
 
-Thanks!
-
-[1/7] regulator: qcom-labibb: Switch voltage ops from linear_range to linear
-      commit: 9a12eb704ea27826ece4414cb8822388ec54883c
-[2/7] regulator: qcom-labibb: Implement current limiting
-      commit: 8056704ba948c1c54c7a67d78a8399a749f2d04b
-[3/7] regulator: qcom-labibb: Implement pull-down, softstart, active discharge
-      commit: 3bc7cb99fb6eafae5a40bf71ded444df70a425f7
-[4/7] dt-bindings: regulator: qcom-labibb: Document soft start properties
-      commit: 5581304004659ddc8d0d45561c1f2abfe080b4d4
-[5/7] regulator: qcom-labibb: Implement short-circuit and over-current IRQs
-      commit: 390af53e04114f790d60b63802a4de9d815ade03
-[6/7] dt-bindings: regulator: qcom-labibb: Document SCP/OCP interrupts
-      commit: 9499200484669fe33c20c735a3d5a29a0dc0e9d4
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
