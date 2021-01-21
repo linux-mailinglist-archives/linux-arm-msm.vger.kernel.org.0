@@ -2,245 +2,212 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 220772FE2CC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 07:27:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B7CAC2FE336
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 07:51:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727075AbhAUG0U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jan 2021 01:26:20 -0500
-Received: from a1.mail.mailgun.net ([198.61.254.60]:39403 "EHLO
-        a1.mail.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727035AbhAUG0I (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jan 2021 01:26:08 -0500
+        id S1725874AbhAUGvM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jan 2021 01:51:12 -0500
+Received: from m42-8.mailgun.net ([69.72.42.8]:30775 "EHLO m42-8.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725933AbhAUGvG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 21 Jan 2021 01:51:06 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1611210344; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=pJq/ux+uNougAFTA98Ujww3oEURPxlPExUtHDMCMge8=;
- b=vMJ2VWd1wiuyCM+boSyJZiUF6A7QPqpXPJZv2VGyEZ3GKfmo/FTSKeCawLz2YQQcWfGNgTb/
- PMsla6rjJFy7RB5I2uilGYkzSoUGsCGGwJtMIBwBfQ6l/62d/6bQY6vDy6Yyn84/aGbHR+0A
- nAW/kX0G/bb5nhm65x/rCBKtKqA=
-X-Mailgun-Sending-Ip: 198.61.254.60
+ s=smtp; t=1611211832; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=PwTBUKX4zXJvBDtn++wgHmrDeVAGMzEFT5WBMoLMpQo=; b=qH2PkBia0lgnFdR/9Rl1c0tUxe1z/Xh3FRbOgH1uv5i3OXhTebl2A2Euo6wn407V2N/3GVp+
+ 3C038JbRpyBi10WL1eWAszda9pKHapHVjbP+U+lc858j2AnixXtZs++6R/N+P5ajs3pHkO59
+ WiJSZcS8lQtyMOZEQM3tn55Fu/E=
+X-Mailgun-Sending-Ip: 69.72.42.8
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 60091e4abeacd1a252c1389b (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 21 Jan 2021 06:25:13
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 6009241bad4c9e395bda041f (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 21 Jan 2021 06:50:03
  GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Sender: tdas=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D9A25C43469; Thu, 21 Jan 2021 06:25:12 +0000 (UTC)
+        id 82FECC43462; Thu, 21 Jan 2021 06:50:03 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.0.105] (unknown [49.204.182.139])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 38338C43462;
-        Thu, 21 Jan 2021 06:25:11 +0000 (UTC)
+        (Authenticated sender: tdas)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AFEB9C433CA;
+        Thu, 21 Jan 2021 06:49:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AFEB9C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=tdas@codeaurora.org
+Subject: Re: [PATCH V1] clk: qcom: gcc-sc7180: Mark the MM XO clocks to be
+ always ON
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette ? <mturquette@baylibre.com>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <1611128871-5898-1-git-send-email-tdas@codeaurora.org>
+ <YAixaN6fta27XDnO@builder.lan>
+From:   Taniya Das <tdas@codeaurora.org>
+Message-ID: <71dc2c94-7488-1a69-5cb8-2ff4db184338@codeaurora.org>
+Date:   Thu, 21 Jan 2021 12:19:54 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <YAixaN6fta27XDnO@builder.lan>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Date:   Thu, 21 Jan 2021 11:55:11 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-kernel@vger.kernel.org,
-        Kristian H Kristensen <hoegsberg@google.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>
-Subject: Re: [PATCH 2/2] drm/msm/a6xx: Create an A6XX GPU specific address
- space
-In-Reply-To: <1120efd2-151b-4643-9a57-c15c46ab6e16@somainline.org>
-References: <cover.1610366113.git.saiprakash.ranjan@codeaurora.org>
- <c5848b1c15765c8d6db7de2305baac856e818f12.1610366113.git.saiprakash.ranjan@codeaurora.org>
- <1120efd2-151b-4643-9a57-c15c46ab6e16@somainline.org>
-Message-ID: <fa15ea8d634bad2f7ec1654416fc5776@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Angelo,
+Hi Bjorn,
 
-On 2021-01-20 16:34, AngeloGioacchino Del Regno wrote:
-> Il 11/01/21 13:04, Sai Prakash Ranjan ha scritto:
->> A6XX GPUs have support for last level cache(LLC) also known
->> as system cache and need to set the bus attributes to
->> use it. Currently we use a generic adreno iommu address space
->> implementation which are also used by older GPU generations
->> which do not have LLC and might introduce issues accidentally
->> and is not clean in a way that anymore additions of GPUs
->> supporting LLC would have to be guarded under ifdefs. So keep
->> the generic code separate and make the address space creation
->> A6XX specific. We also have a helper to set the llc attributes
->> so that if the newer GPU generations do support them, we can
->> use it instead of open coding domain attribute setting for each
->> GPU.
->> 
+On 1/21/2021 4:10 AM, Bjorn Andersson wrote:
+> On Wed 20 Jan 01:47 CST 2021, Taniya Das wrote:
 > 
-> Hello!
+>> There are intermittent GDSC power-up failures observed for titan top
+>> gdsc, which requires the XO clock. Thus mark all the MM XO clocks always
+>> enabled from probe.
+>>
 > 
->> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> But if this is the reason for keeping all these {ahb,xo}_clks critical
+> (or upstream just a bunch of hard coded regmap_update_bits()) why don't
+> we properly describe them as dependencies for the clock controller/gdsc?
+> I.e. by the use of pm_clk_add()?
+> 
+> Regards,
+> Bjorn
+
+They are already defined in the camcc driver, but they are not working 
+as expected, thus I am forced to mark them always ON.
+
+> 
+>> Fixes: 8d4025943e13 ("clk: qcom: camcc-sc7180: Use runtime PM ops instead of clk ones")
+>> Signed-off-by: Taniya Das <tdas@codeaurora.org>
 >> ---
->>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c   | 46 
->> ++++++++++++++++++++++++-
->>   drivers/gpu/drm/msm/adreno/adreno_gpu.c | 23 +++++--------
->>   drivers/gpu/drm/msm/adreno/adreno_gpu.h |  7 ++--
->>   3 files changed, 55 insertions(+), 21 deletions(-)
->> 
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c 
->> b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> index 3b798e883f82..3c7ad51732bb 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> @@ -1239,6 +1239,50 @@ static unsigned long a6xx_gpu_busy(struct 
->> msm_gpu *gpu)
->>   	return (unsigned long)busy_time;
->>   }
->>   +static struct msm_gem_address_space *
->> +a6xx_create_address_space(struct msm_gpu *gpu, struct platform_device 
->> *pdev)
->> +{
->> +	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->> +	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->> +	struct iommu_domain *iommu;
->> +	struct msm_mmu *mmu;
->> +	struct msm_gem_address_space *aspace;
->> +	u64 start, size;
->> +
->> +	iommu = iommu_domain_alloc(&platform_bus_type);
->> +	if (!iommu)
->> +		return NULL;
->> +
->> +	/*
->> +	 * This allows GPU to set the bus attributes required to use system
->> +	 * cache on behalf of the iommu page table walker.
->> +	 */
->> +	if (!IS_ERR_OR_NULL(a6xx_gpu->htw_llc_slice))
->> +		adreno_set_llc_attributes(iommu);
->> +
->> +	mmu = msm_iommu_new(&pdev->dev, iommu);
->> +	if (IS_ERR(mmu)) {
->> +		iommu_domain_free(iommu);
->> +		return ERR_CAST(mmu);
->> +	}
->> +
->> +	/*
->> +	 * Use the aperture start or SZ_16M, whichever is greater. This will
->> +	 * ensure that we align with the allocated pagetable range while 
->> still
->> +	 * allowing room in the lower 32 bits for GMEM and whatnot
->> +	 */
->> +	start = max_t(u64, SZ_16M, iommu->geometry.aperture_start);
->> +	size = iommu->geometry.aperture_end - start + 1;
->> +
->> +	aspace = msm_gem_address_space_create(mmu, "gpu",
->> +		start & GENMASK_ULL(48, 0), size);
->> +
->> +	if (IS_ERR(aspace) && !IS_ERR(mmu))
->> +		mmu->funcs->destroy(mmu);
->> +
->> +	return aspace;
->> +}
->> +
-> 
-> I get what you're trying to do - yes the intentions are good, 
-> however...
-> you are effectively duplicating code 1:1, as this *is* the same as
-> function adreno_iommu_create_address_space.
-> 
-> I don't see adding two lines to a function as a valid justification to
-> duplicate all the rest: perhaps, you may want to find another way to do
-> this;
-> 
-> Here's one of the many ideas, perhaps you could:
-> 1. Introduce a "generic feature" to signal LLCC support (perhaps in
->    struct adreno_info ?)
-> 2. If LLCC is supported, and LLCC slices are initialized, set the LLCC
->    attributes on the IOMMU. Of course this would mean passing the init
->    state of the slices (maybe just a bool would be fine) back to the
->    generic adreno_gpu.c
-> 
-> This, unless you tell me that the entire function is going to be a6xx
-> specific, but that doesn't seem to be the case at all.
-> 
-> Concerns are that when an hypotetical Adreno A7XX comes and perhaps 
-> also
-> uses the LLCC slices, this function will be duplicated yet another 
-> time.
-> 
-
-As Rob mentioned in other reply, this was more of a point to not break
-older gen gpus when we add some feature which is specific to a6xx.
-So there are a{3,4,5}xx using adreno_iommu_create_address_space and
-any addition to a6xx or let's say in future a7xx(assuming we do not
-have its own address space impl and use this generic one), then all
-these older gens need to be taken care of either via some conditions
-and test on those so that they won't break. IMO, rather than keep
-adding ifs in the generic code, it is better to have a separate
-address space impl.
-
->>   static struct msm_gem_address_space *
->>   a6xx_create_private_address_space(struct msm_gpu *gpu)
->>   {
->> @@ -1285,7 +1329,7 @@ static const struct adreno_gpu_funcs funcs = {
->>   		.gpu_state_get = a6xx_gpu_state_get,
->>   		.gpu_state_put = a6xx_gpu_state_put,
->>   #endif
->> -		.create_address_space = adreno_iommu_create_address_space,
->> +		.create_address_space = a6xx_create_address_space,
->>   		.create_private_address_space = a6xx_create_private_address_space,
->>   		.get_rptr = a6xx_get_rptr,
+>>   drivers/clk/qcom/gcc-sc7180.c | 47 ++++---------------------------------------
+>>   1 file changed, 4 insertions(+), 43 deletions(-)
+>>
+>> diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-sc7180.c
+>> index b05901b..88e896a 100644
+>> --- a/drivers/clk/qcom/gcc-sc7180.c
+>> +++ b/drivers/clk/qcom/gcc-sc7180.c
+>> @@ -1,6 +1,6 @@
+>>   // SPDX-License-Identifier: GPL-2.0-only
+>>   /*
+>> - * Copyright (c) 2019-2020, The Linux Foundation. All rights reserved.
+>> + * Copyright (c) 2019-2021, The Linux Foundation. All rights reserved.
+>>    */
+>>
+>>   #include <linux/clk-provider.h>
+>> @@ -919,19 +919,6 @@ static struct clk_branch gcc_camera_throttle_hf_axi_clk = {
 >>   	},
->> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c 
->> b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
->> index b35914de1b27..0f184c3dd9d9 100644
->> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
->> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
->> @@ -186,11 +186,18 @@ int adreno_zap_shader_load(struct msm_gpu *gpu, 
->> u32 pasid)
->>   	return zap_shader_load_mdt(gpu, adreno_gpu->info->zapfw, pasid);
->>   }
->>   +void adreno_set_llc_attributes(struct iommu_domain *iommu)
-> 
-> Since this function is relative to the iommu part of this driver, I
-> think that it would be appropriate to give it the same prefix as all
-> the other functions that are "working in this context".
-> Hint: adreno_iommu_set_llc_attributes
-
-Yes, I will change the name to adreno_iommu_set_llc_attributes.
-
-> Alternatively, this two lines function may just be a static inline in
-> the header....
-> 
-> 
-> But then, what are we talking about, here?
-> Since you should stop code duplication and bring everything back in
-> here (in a generic way!!!), then this helper would be of no use, at 
-> all,
-> because then you would be just "throwing" these two lines back in the
-> function adreno_iommu_create_address_space....
-> 
-> 
-
-See above reply. Thanks for taking a look.
-
-Thanks,
-Sai
+>>   };
+>>
+>> -static struct clk_branch gcc_camera_xo_clk = {
+>> -	.halt_reg = 0xb02c,
+>> -	.halt_check = BRANCH_HALT,
+>> -	.clkr = {
+>> -		.enable_reg = 0xb02c,
+>> -		.enable_mask = BIT(0),
+>> -		.hw.init = &(struct clk_init_data){
+>> -			.name = "gcc_camera_xo_clk",
+>> -			.ops = &clk_branch2_ops,
+>> -		},
+>> -	},
+>> -};
+>> -
+>>   static struct clk_branch gcc_ce1_ahb_clk = {
+>>   	.halt_reg = 0x4100c,
+>>   	.halt_check = BRANCH_HALT_VOTED,
+>> @@ -1096,19 +1083,6 @@ static struct clk_branch gcc_disp_throttle_hf_axi_clk = {
+>>   	},
+>>   };
+>>
+>> -static struct clk_branch gcc_disp_xo_clk = {
+>> -	.halt_reg = 0xb030,
+>> -	.halt_check = BRANCH_HALT,
+>> -	.clkr = {
+>> -		.enable_reg = 0xb030,
+>> -		.enable_mask = BIT(0),
+>> -		.hw.init = &(struct clk_init_data){
+>> -			.name = "gcc_disp_xo_clk",
+>> -			.ops = &clk_branch2_ops,
+>> -		},
+>> -	},
+>> -};
+>> -
+>>   static struct clk_branch gcc_gp1_clk = {
+>>   	.halt_reg = 0x64000,
+>>   	.halt_check = BRANCH_HALT,
+>> @@ -2159,19 +2133,6 @@ static struct clk_branch gcc_video_throttle_axi_clk = {
+>>   	},
+>>   };
+>>
+>> -static struct clk_branch gcc_video_xo_clk = {
+>> -	.halt_reg = 0xb028,
+>> -	.halt_check = BRANCH_HALT,
+>> -	.clkr = {
+>> -		.enable_reg = 0xb028,
+>> -		.enable_mask = BIT(0),
+>> -		.hw.init = &(struct clk_init_data){
+>> -			.name = "gcc_video_xo_clk",
+>> -			.ops = &clk_branch2_ops,
+>> -		},
+>> -	},
+>> -};
+>> -
+>>   static struct clk_branch gcc_mss_cfg_ahb_clk = {
+>>   	.halt_reg = 0x8a000,
+>>   	.halt_check = BRANCH_HALT,
+>> @@ -2304,7 +2265,6 @@ static struct clk_regmap *gcc_sc7180_clocks[] = {
+>>   	[GCC_BOOT_ROM_AHB_CLK] = &gcc_boot_rom_ahb_clk.clkr,
+>>   	[GCC_CAMERA_HF_AXI_CLK] = &gcc_camera_hf_axi_clk.clkr,
+>>   	[GCC_CAMERA_THROTTLE_HF_AXI_CLK] = &gcc_camera_throttle_hf_axi_clk.clkr,
+>> -	[GCC_CAMERA_XO_CLK] = &gcc_camera_xo_clk.clkr,
+>>   	[GCC_CE1_AHB_CLK] = &gcc_ce1_ahb_clk.clkr,
+>>   	[GCC_CE1_AXI_CLK] = &gcc_ce1_axi_clk.clkr,
+>>   	[GCC_CE1_CLK] = &gcc_ce1_clk.clkr,
+>> @@ -2317,7 +2277,6 @@ static struct clk_regmap *gcc_sc7180_clocks[] = {
+>>   	[GCC_DISP_GPLL0_DIV_CLK_SRC] = &gcc_disp_gpll0_div_clk_src.clkr,
+>>   	[GCC_DISP_HF_AXI_CLK] = &gcc_disp_hf_axi_clk.clkr,
+>>   	[GCC_DISP_THROTTLE_HF_AXI_CLK] = &gcc_disp_throttle_hf_axi_clk.clkr,
+>> -	[GCC_DISP_XO_CLK] = &gcc_disp_xo_clk.clkr,
+>>   	[GCC_GP1_CLK] = &gcc_gp1_clk.clkr,
+>>   	[GCC_GP1_CLK_SRC] = &gcc_gp1_clk_src.clkr,
+>>   	[GCC_GP2_CLK] = &gcc_gp2_clk.clkr,
+>> @@ -2413,7 +2372,6 @@ static struct clk_regmap *gcc_sc7180_clocks[] = {
+>>   	[GCC_VIDEO_AXI_CLK] = &gcc_video_axi_clk.clkr,
+>>   	[GCC_VIDEO_GPLL0_DIV_CLK_SRC] = &gcc_video_gpll0_div_clk_src.clkr,
+>>   	[GCC_VIDEO_THROTTLE_AXI_CLK] = &gcc_video_throttle_axi_clk.clkr,
+>> -	[GCC_VIDEO_XO_CLK] = &gcc_video_xo_clk.clkr,
+>>   	[GPLL0] = &gpll0.clkr,
+>>   	[GPLL0_OUT_EVEN] = &gpll0_out_even.clkr,
+>>   	[GPLL6] = &gpll6.clkr,
+>> @@ -2510,6 +2468,9 @@ static int gcc_sc7180_probe(struct platform_device *pdev)
+>>   	regmap_update_bits(regmap, 0x0b004, BIT(0), BIT(0));
+>>   	regmap_update_bits(regmap, 0x0b008, BIT(0), BIT(0));
+>>   	regmap_update_bits(regmap, 0x0b00c, BIT(0), BIT(0));
+>> +	regmap_update_bits(regmap, 0x0b02c, BIT(0), BIT(0));
+>> +	regmap_update_bits(regmap, 0x0b028, BIT(0), BIT(0));
+>> +	regmap_update_bits(regmap, 0x0b030, BIT(0), BIT(0));
+>>   	regmap_update_bits(regmap, 0x71004, BIT(0), BIT(0));
+>>
+>>   	ret = qcom_cc_register_rcg_dfs(regmap, gcc_dfs_clocks,
+>> --
+>> Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+>> of the Code Aurora Forum, hosted by the  Linux Foundation.
+>>
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation.
+
+--
