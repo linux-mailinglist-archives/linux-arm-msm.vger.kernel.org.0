@@ -2,111 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 854D82FE022
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 04:52:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C32392FE154
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jan 2021 06:00:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727136AbhAUDwD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jan 2021 22:52:03 -0500
-Received: from mail.kernel.org ([198.145.29.99]:56128 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726456AbhAUC5S (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Jan 2021 21:57:18 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 2111523884;
-        Thu, 21 Jan 2021 02:46:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1611197165;
-        bh=c1XsJT/SXPWs5fqOseN8Eebhs8J1o75FxNXKgsJnSIc=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=NYWE9SMnDc3ZX8r69M2IAJPIMqU03VJt5VgjP/Au5NlA1q40qVo8cxLf4vGe9pGPJ
-         5UVAgaO+PRHYaK0gGinYEC+Y58Pgta3ULKtzBEXJagCVsbb9aqmQX7aMe3IC+hXERI
-         HHa/LTu5zc0LxrBBGOvGVNVkfx6WjLShbSz4CAV7AQJjQ5FDt1+DMMUAIzWZ7oEri6
-         d0RPCBfeejOuujlPfOUMmhB1Ffs1dJ+Lwnqq48OKJ4SMEcw5HVFJKQUrKHvT13gE0b
-         PUv8tBWKTh1dIicht0jaVd5h2EMsGtF/Lbqup+kzhvm4/5XE0QJUZuuEXMP/17YQJy
-         PFgnW6WkLzGbA==
-Content-Type: text/plain; charset="utf-8"
+        id S1726431AbhAUDvq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jan 2021 22:51:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57468 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387714AbhAUBpr (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 20 Jan 2021 20:45:47 -0500
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 737BCC061796
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 17:44:46 -0800 (PST)
+Received: by mail-oi1-x22a.google.com with SMTP id w8so537797oie.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jan 2021 17:44:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Qp0XT0+UoBcR+Gi5dgLwWchPJkjtv/YFAjritEYTQg8=;
+        b=gK1QE3kHtp8QEIvI0opo00JntZ47JjasRnLUT4pcuhqDwfFeCVcjyBf3Frt1m6Jk/v
+         98JgcUKQdj1bA0tXXqAe2W1DzllqPVuIYS79GmNiLrUTJ1Xu+4LUbGUWh7dExLlJ/RVM
+         TmGpPT6QeJI6UR58yvUTeUtDg3gN7dgmbKUxrrfIG9somTEHx6RVD0ihDZizxN8WTnYg
+         S01HXxtnxrt6+rYo9NiC1S7RJbSTnfs7ESTQcZV6lCE2ztmQ+KJ2MNeer++R88jaPmlq
+         Xdd1xd1PH7L9Y+qlbyclsNuGLU/nJ6oPlLrtoVW1uNzZ9xMSh43/55UHhx8N9KT4bae1
+         IxFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Qp0XT0+UoBcR+Gi5dgLwWchPJkjtv/YFAjritEYTQg8=;
+        b=MFjHErqkFMH04Zag6pQjeRBzLmcyBf9mbUBOHz8fuTJihRHAyvrDc5jWdwCO76UHtw
+         AoKIP7J0b7rlRNYpYvvUG9BcSZwiJccLUeEA9pdua/WQ6lSyBKNSGyQJBFLW1RPjrztG
+         BWNWYMwjTuEDJI7U5GZbIClbc78aLhklYSw0LITLW9Ji6sRBdMILeMCM+y9UEVkLdIbN
+         xN1f8Ga2WSBfVbg76AJ67wGIIWv+RhaHhKCz4wtdjfiHXOjYKdtClCqZc3xWQkLHhXT0
+         sQCCsBUj4n9B4q5QhujzOhPpPk/1CLixs0Btr+pRSo/9vNAdnWO65jIYHJnpdDFBbtZS
+         c9ng==
+X-Gm-Message-State: AOAM533K2PymqTX9pSplGY+GWjapahhMLqBYaWShFeXjc0PjTzlaS5J9
+        n40VDZuDKyZaD7TqH0+tVnSU4A==
+X-Google-Smtp-Source: ABdhPJzNT2oBjfAhJtmUA7Pw/7g34pYi3OjIvYIC1ROZi/AsGVVPbAtEZcOetMr57/gdKh0uGpp/Qw==
+X-Received: by 2002:aca:8c5:: with SMTP id 188mr4705027oii.46.1611193485882;
+        Wed, 20 Jan 2021 17:44:45 -0800 (PST)
+Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id x197sm758026ooa.27.2021.01.20.17.44.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Jan 2021 17:44:45 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 2/2] remoteproc: qcom: pas: Add SC8180X adsp, cdsp and mpss
+Date:   Wed, 20 Jan 2021 17:44:52 -0800
+Message-Id: <20210121014452.1612594-2-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.29.2
+In-Reply-To: <20210121014452.1612594-1-bjorn.andersson@linaro.org>
+References: <20210121014452.1612594-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <e6843147-514b-8901-a04c-b1d6e3ebf1c2@somainline.org>
-References: <1611128871-5898-1-git-send-email-tdas@codeaurora.org> <e6843147-514b-8901-a04c-b1d6e3ebf1c2@somainline.org>
-Subject: Re: [PATCH V1] clk: qcom: gcc-sc7180: Mark the MM XO clocks to be always ON
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>
-Date:   Wed, 20 Jan 2021 18:46:03 -0800
-Message-ID: <161119716362.3661239.18168143877101107424@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting AngeloGioacchino Del Regno (2021-01-20 01:16:17)
-> Il 20/01/21 08:47, Taniya Das ha scritto:
-> > There are intermittent GDSC power-up failures observed for titan top
-> > gdsc, which requires the XO clock. Thus mark all the MM XO clocks always
-> > enabled from probe.
-> >=20
->=20
-> Hello Tanya,
->=20
-> > Fixes: 8d4025943e13 ("clk: qcom: camcc-sc7180: Use runtime PM ops inste=
-ad of clk ones")
-> > Signed-off-by: Taniya Das <tdas@codeaurora.org>
-> > ---
-> >   drivers/clk/qcom/gcc-sc7180.c | 47 ++++------------------------------=
----------
-> >   1 file changed, 4 insertions(+), 43 deletions(-)
-> >=20
-> > --
-> > Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
-> > of the Code Aurora Forum, hosted by the  Linux Foundation.
-> >=20
-> > diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-sc718=
-0.c
-> > index b05901b..88e896a 100644
-> > --- a/drivers/clk/qcom/gcc-sc7180.c
-> > +++ b/drivers/clk/qcom/gcc-sc7180.c
-> > @@ -1,6 +1,6 @@
-> >   // SPDX-License-Identifier: GPL-2.0-only
-> >   /*
-> > - * Copyright (c) 2019-2020, The Linux Foundation. All rights reserved.
-> > + * Copyright (c) 2019-2021, The Linux Foundation. All rights reserved.
-> >    */
-> >=20
-> >   #include <linux/clk-provider.h>
-> > @@ -919,19 +919,6 @@ static struct clk_branch gcc_camera_throttle_hf_ax=
-i_clk =3D {
-> >       },
-> >   };
-> >=20
-> > -static struct clk_branch gcc_camera_xo_clk =3D {
-> > -     .halt_reg =3D 0xb02c,
-> > -     .halt_check =3D BRANCH_HALT,
-> > -     .clkr =3D {
-> > -             .enable_reg =3D 0xb02c,
-> > -             .enable_mask =3D BIT(0),
-> > -             .hw.init =3D &(struct clk_init_data){
-> > -                     .name =3D "gcc_camera_xo_clk",
-> > -                     .ops =3D &clk_branch2_ops,
-> > -             },
-> > -     },
-> > -};
-> > -
->=20
-> Why are you avoiding to register these clocks entirely?
-> If this is needed by the Titan GDSC, this clock "does indeed exist".
->=20
-> If these clocks shall never be turned off, then you should add the
-> CLK_IS_CRITICAL flag and perhaps add a comment explaining why.
+The Qualcomm SC8180X has the typical ADSP, CDSP and MPSS remote
+processors operated using the PAS interface, add support for these.
 
-I'd rather not have critical clks wasting kernel memory and registration
-time if they're never going to be turned off and we're basically just
-writing a bit so that they're always on. This patch looks OK to me from
-that perspective. There aren't any parents for these clks either so
-really it's a glorified bit toggle and poll to make sure that it is
-enabled. Maybe we should be checking that they're actually enabled at
-the end of probe, but otherwise we don't need all this complexity.
+Attempts to configuring mss.lvl is failing, so a new adsp_data is
+provided that skips this resource, for now.
+
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ drivers/remoteproc/qcom_q6v5_pas.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index ee586226e438..1231980d268f 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -650,6 +650,25 @@ static const struct adsp_data mpss_resource_init = {
+ 	.ssctl_id = 0x12,
+ };
+ 
++static const struct adsp_data sc8180x_mpss_resource = {
++	.crash_reason_smem = 421,
++	.firmware_name = "modem.mdt",
++	.pas_id = 4,
++	.has_aggre2_clk = false,
++	.auto_boot = false,
++	.active_pd_names = (char*[]){
++		"load_state",
++		NULL
++	},
++	.proxy_pd_names = (char*[]){
++		"cx",
++		NULL
++	},
++	.ssr_name = "mpss",
++	.sysmon_name = "modem",
++	.ssctl_id = 0x12,
++};
++
+ static const struct adsp_data slpi_resource_init = {
+ 		.crash_reason_smem = 424,
+ 		.firmware_name = "slpi.mdt",
+@@ -736,6 +755,9 @@ static const struct of_device_id adsp_of_match[] = {
+ 	{ .compatible = "qcom,qcs404-cdsp-pas", .data = &cdsp_resource_init },
+ 	{ .compatible = "qcom,qcs404-wcss-pas", .data = &wcss_resource_init },
+ 	{ .compatible = "qcom,sc7180-mpss-pas", .data = &mpss_resource_init},
++	{ .compatible = "qcom,sc8180x-adsp-pas", .data = &sm8150_adsp_resource},
++	{ .compatible = "qcom,sc8180x-cdsp-pas", .data = &sm8150_cdsp_resource},
++	{ .compatible = "qcom,sc8180x-mpss-pas", .data = &sc8180x_mpss_resource},
+ 	{ .compatible = "qcom,sdm845-adsp-pas", .data = &adsp_resource_init},
+ 	{ .compatible = "qcom,sdm845-cdsp-pas", .data = &cdsp_resource_init},
+ 	{ .compatible = "qcom,sm8150-adsp-pas", .data = &sm8150_adsp_resource},
+-- 
+2.29.2
+
