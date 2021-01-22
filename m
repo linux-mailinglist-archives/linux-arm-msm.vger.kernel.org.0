@@ -2,85 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C864B2FFB7B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jan 2021 05:04:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 41C322FFBFE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jan 2021 06:11:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726793AbhAVECi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jan 2021 23:02:38 -0500
-Received: from m42-8.mailgun.net ([69.72.42.8]:38630 "EHLO m42-8.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726744AbhAVECf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jan 2021 23:02:35 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1611288134; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=sun6PXmkpTos03dKinPR3tyIdnLtxhROStSolQ4hmZw=; b=mP14DI58FwGq36VYOkOYO04dePK4Bo800bytAos+c7Bt1BQyUccbFvsJ0EqFIhlmJOZVE3Rr
- 0DlsV93VQ2826yLv/J+D1QWppX58IkoccA3bIyJTCg5tQi3QQez8RQ1COUXGKzmXXVoxcZZk
- sqv5y3diSMaEQtTVxRRcnBr4+eA=
-X-Mailgun-Sending-Ip: 69.72.42.8
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 600a4e2c5677aca7bdeb3b5d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 22 Jan 2021 04:01:48
- GMT
-Sender: wcheng=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B681DC43467; Fri, 22 Jan 2021 04:01:48 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from wcheng-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: wcheng)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 62CCFC43461;
-        Fri, 22 Jan 2021 04:01:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 62CCFC43461
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=wcheng@codeaurora.org
-From:   Wesley Cheng <wcheng@codeaurora.org>
-To:     balbi@kernel.org, gregkh@linuxfoundation.org, robh+dt@kernel.org,
-        agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        peter.chen@nxp.com, jackp@codeaurora.org,
-        Wesley Cheng <wcheng@codeaurora.org>
-Subject: [PATCH v6 4/4] arm64: boot: dts: qcom: sm8150: Enable dynamic TX FIFO resize logic
-Date:   Thu, 21 Jan 2021 20:01:40 -0800
-Message-Id: <1611288100-31118-5-git-send-email-wcheng@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1611288100-31118-1-git-send-email-wcheng@codeaurora.org>
-References: <1611288100-31118-1-git-send-email-wcheng@codeaurora.org>
+        id S1726648AbhAVFLF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Jan 2021 00:11:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44800 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726127AbhAVFLB (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 22 Jan 2021 00:11:01 -0500
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 904EFC061756
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jan 2021 21:10:21 -0800 (PST)
+Received: by mail-pg1-x534.google.com with SMTP id 30so2903112pgr.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jan 2021 21:10:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Dnd5Lmoa7qG/mekK/QsrLWb7/Ux/XM9dIbFRQBx8804=;
+        b=uYSu4y26VifN1OwinqfjeWLsTzuucqM+IaRLgeUL6gAbyyYeUgmhW8GHKwEDH2lwzC
+         YFLbL9GhLE6SkyhQeQVoVPKOfuAQSmWfp+tlpiGgUnePkM9YAWJyh+JuGIT6ojpUcTbn
+         QqTLxGBUwPp3sStKx/N4jOTWR/H4MCfFD7/7LAEAHmlj5nE1AqSK3HoaEB17eVqk8grC
+         BZf7EFEC79NTdLv04tXPq4E2EaDfOCM/Xl883serZkWKzIlGi0s04RjP+zxS+ASBfdOU
+         UcM/zJcpCTuPK+mPTrsIE7Otmpv69qyVOM12HwjwPyj5l5zrAFs8R4Ma6sIV1fmwgtkx
+         LYYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Dnd5Lmoa7qG/mekK/QsrLWb7/Ux/XM9dIbFRQBx8804=;
+        b=hPMM8yiFywhjb2gRl2PrOwRWr4usmcmcM8eFHYL/ki8DTFv03LYYgIHdxKhtwgupWp
+         GDAqERaOx6BtanB0XYM9mAJaRjCWooj0Y/RZNiAUn/FSwtT3hciNhFavPXPXKXTN+XMQ
+         7VODe2EFQzW6ZwvFVh5GVJcBvZFPIcQbS74XRC3Vi8UQrInO3AP3FEOD8V80uZdtNv+e
+         u4e9JqBffeqFtHLKxtogfgGq1EiDZ/ix9r8q2g8vrrBpXPDV77ujCwz/48aqf7dW4rnm
+         XXW5FYMDbpr0VOGOEhxmpFevgjPqdGWmDGXuYTbstsXVPjhZ+v5MWKX8cg3rACoeo984
+         VWAw==
+X-Gm-Message-State: AOAM532JYaxbcsH1MkW6f3fISQCJdahlnD868HQpOb3FaZ4MFCkbwY8I
+        aoRHE5KzZ4W8F/XsCjbrUsbptQ==
+X-Google-Smtp-Source: ABdhPJxrVqHG2MzVfQiwcXFk6yRa8jL+kIbN2oObVj9raOE0wukKGVEuijKUieN4a/96gA/wu1POtg==
+X-Received: by 2002:a63:c444:: with SMTP id m4mr2942946pgg.420.1611292221096;
+        Thu, 21 Jan 2021 21:10:21 -0800 (PST)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id q12sm7034796pgj.24.2021.01.21.21.10.18
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 21 Jan 2021 21:10:20 -0800 (PST)
+Date:   Fri, 22 Jan 2021 13:10:14 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        dan.j.williams@intel.com, vkoul@kernel.org,
+        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drivers: dma: qcom: bam_dma: Manage clocks when
+ controlled_remotely is set
+Message-ID: <20210122051013.GE2479@dragon>
+References: <20210122025251.3501362-1-thara.gopinath@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210122025251.3501362-1-thara.gopinath@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the flexible TX FIFO resize logic on SM8150.  Using a larger TX FIFO
-SZ can help account for situations when system latency is greater than the
-USB bus transmission latency.
+On Thu, Jan 21, 2021 at 09:52:51PM -0500, Thara Gopinath wrote:
+> When bam dma is "controlled remotely", thus far clocks were not controlled
+> from the Linux. In this scenario, Linux was disabling runtime pm in bam dma
+> driver and not doing any clock management in suspend/resume hooks.
+> 
+> With introduction of crypto engine bam dma, the clock is a rpmh resource
+> that can be controlled from both Linux and TZ/remote side.  Now bam dma
+> clock is getting enabled during probe even though the bam dma can be
+> "controlled remotely". But due to clocks not being handled properly,
+> bam_suspend generates a unbalanced clk_unprepare warning during system
+> suspend.
+> 
+> To fix the above issue and to enable proper clock-management, this patch
+> enables runtim-pm and handles bam dma clocks in suspend/resume hooks if
+> the clock node is present irrespective of controlled_remotely property.
 
-Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+Shouldn't the following probe code need some update?  Now we have both
+controlled_remotely and clocks handle for cryptobam node.  For example,
+if devm_clk_get() returns -EPROBE_DEFER, we do not want to continue with
+bamclk forcing to be NULL, right?
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index 5270bda..c7706f4 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -1569,6 +1569,7 @@
- 				iommus = <&apps_smmu 0x140 0>;
- 				snps,dis_u2_susphy_quirk;
- 				snps,dis_enblslpm_quirk;
-+				tx-fifo-resize;
- 				phys = <&usb_1_hsphy>, <&usb_1_ssphy>;
- 				phy-names = "usb2-phy", "usb3-phy";
- 			};
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+        bdev->bamclk = devm_clk_get(bdev->dev, "bam_clk");
+        if (IS_ERR(bdev->bamclk)) {
+                if (!bdev->controlled_remotely)
+                        return PTR_ERR(bdev->bamclk);
 
+                bdev->bamclk = NULL;
+        }
+
+> 
+> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+> ---
+>  drivers/dma/qcom/bam_dma.c | 20 +++++++++++---------
+>  1 file changed, 11 insertions(+), 9 deletions(-)
+> 
+> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+> index 88579857ca1d..b3a34be63e99 100644
+> --- a/drivers/dma/qcom/bam_dma.c
+> +++ b/drivers/dma/qcom/bam_dma.c
+> @@ -1350,7 +1350,7 @@ static int bam_dma_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		goto err_unregister_dma;
+>  
+> -	if (bdev->controlled_remotely) {
+> +	if (!bdev->bamclk) {
+>  		pm_runtime_disable(&pdev->dev);
+>  		return 0;
+>  	}
+> @@ -1438,10 +1438,10 @@ static int __maybe_unused bam_dma_suspend(struct device *dev)
+>  {
+>  	struct bam_device *bdev = dev_get_drvdata(dev);
+>  
+> -	if (!bdev->controlled_remotely)
+> +	if (bdev->bamclk) {
+>  		pm_runtime_force_suspend(dev);
+> -
+> -	clk_unprepare(bdev->bamclk);
+> +		clk_unprepare(bdev->bamclk);
+> +	}
+>  
+>  	return 0;
+>  }
+> @@ -1451,12 +1451,14 @@ static int __maybe_unused bam_dma_resume(struct device *dev)
+>  	struct bam_device *bdev = dev_get_drvdata(dev);
+>  	int ret;
+>  
+> -	ret = clk_prepare(bdev->bamclk);
+> -	if (ret)
+> -		return ret;
+> +	if (bdev->bamclk) {
+> +		ret = clk_prepare(bdev->bamclk);
+> +		if (ret)
+> +			return ret;
+>  
+> -	if (!bdev->controlled_remotely)
+> -		pm_runtime_force_resume(dev);
+> +		if (!bdev->controlled_remotely)
+
+Why do we still need controlled_remotely check here?
+
+Shawn
+
+> +			pm_runtime_force_resume(dev);
+> +	}
+>  
+>  	return 0;
+>  }
+> -- 
+> 2.25.1
+> 
