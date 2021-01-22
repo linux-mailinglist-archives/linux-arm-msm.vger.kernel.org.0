@@ -2,156 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 32A192FF91F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jan 2021 00:54:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 710CA2FFAAE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jan 2021 03:53:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726037AbhAUXxz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jan 2021 18:53:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33100 "EHLO
+        id S1726686AbhAVCxe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jan 2021 21:53:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726291AbhAUXxy (ORCPT
+        with ESMTP id S1726497AbhAVCxd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jan 2021 18:53:54 -0500
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47B82C06174A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jan 2021 15:53:01 -0800 (PST)
-Received: by mail-pj1-x102e.google.com with SMTP id b5so2722695pjl.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jan 2021 15:53:01 -0800 (PST)
+        Thu, 21 Jan 2021 21:53:33 -0500
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3949CC061756
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jan 2021 18:52:53 -0800 (PST)
+Received: by mail-qt1-x830.google.com with SMTP id r9so3167040qtp.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jan 2021 18:52:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=oJrGhqFdkfW9wRZyay7gwNcE73cpE4zERtrcMcbTWr0=;
-        b=OPELpH75YfQI1ATMiUGuilGIUBPs8DsfCGvxdD/RxoAW+K4McjtBdgnhXdrGn/sFIi
-         FFFHaobn9FbUP/3jpSBU7Fl48nrsSETVJaAgZhzmJQKea0q2Tp6Q1S3iREur5mT8Fndj
-         ToIWyQPv+mVhJ9RNEMO17mrBpmavV39aPqP9VcmYkLbjxLLgB2fpALfHSVVLh2+NnGtp
-         79qKIAvIN9KaZlHViSxHuZjpU8ONYfEyGA5Vd8U0YSDWUpboZ+vQ1o7s9FgyJorqqn7m
-         vzFHOo40C6i18UnWn60qehhiBeY9fckRMbffVdWOyea5kZlP/q6124YSsJ4Oah15AoFc
-         GOpg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GKuYChxcbat6wOowZ/luWuFDp05RLb0vBoPsH1W9HLw=;
+        b=fWX1fVnSDfRBs4lvhqIkcuFxJczn4RVcy8W7l7m57JkcWR8brGBrkwyok3ZO5XV3YL
+         3RccD753tIuCIC0P4G1d7mBywZOi/pwihdwRctYeiqSLrd9jVCS+qK9fGTIdbkuLYYCS
+         wmiRwQx4lOEVr6f1M1UMbUV7pdeeceHIKQBdN+13ziDRMeW3A+V/Dx/Fs0WlmOo7SdLo
+         JJYv89XgNZzOZo2HQPNOQZOF04qMh+bCZS9313D0PLJfkSbDKkfKJr/RoCKSqWdreMaW
+         1LXNrQAk6BdJryD72zjbT/O3Uq3Mxe1tWCyoUdVrWzcQIJsXi0z5WjEdMRtU8cQhWeLM
+         a4yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=oJrGhqFdkfW9wRZyay7gwNcE73cpE4zERtrcMcbTWr0=;
-        b=eHQ2PSDjlG0hiDtM1auzBtrnt4Pxb28/cJX49PxUAF+953ODay/bhPtlqTN2qYMKAk
-         jZjhTgg7VQifo8LS2KCKB4uE3p7ahXzHooN2YDIkmAnuW+kzBXQqANBF/QOZh/Hv3HNT
-         wtnsUV3Lo7+HmfE2FIf40kn8Ms52Cla24zdAM18svF2THiDDrubsj8lefNlYP94NQDjC
-         0wCKGpL8egpNHOTAwsg2TVo04Q/yKjjwO72zJ7pNALYQqL5wAOPKCa1cHOtCXTABSjGJ
-         879vzPWPISoo2sjPx1lgl9UVkx39lTpDv3nTU7RatNF6XM1dzYIEKYPJVAZ4LSefal7k
-         eevg==
-X-Gm-Message-State: AOAM5323QnBfWqprd1CLu6++EhwWJcJ/9yAlf69od5mSHHMoejyHEvHt
-        dtHsHHLo8vWPhreqDak16+JAZg==
-X-Google-Smtp-Source: ABdhPJw7vWA2rsCwRMG2SZYl6Oy49UG7A7wKq6eSudZ3L0H49zTx2h1DTw4Jgm7bepuEOjnJz6wz5g==
-X-Received: by 2002:a17:902:834a:b029:de:343e:adb0 with SMTP id z10-20020a170902834ab02900de343eadb0mr1943726pln.28.1611273180836;
-        Thu, 21 Jan 2021 15:53:00 -0800 (PST)
-Received: from xps15 (S0106889e681aac74.cg.shawcable.net. [68.147.0.187])
-        by smtp.gmail.com with ESMTPSA id n128sm6948132pga.55.2021.01.21.15.52.59
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GKuYChxcbat6wOowZ/luWuFDp05RLb0vBoPsH1W9HLw=;
+        b=UJKOVD+v3wfzA6gW64QkVI3Vl4sTnG54ThIe2enU8jNmtRyLHnSPZOD67V8vXdA5cc
+         fQOnPTH8XymWpnkAx2uvRdwuOA4XHAdqQB1HRhbcF3FdPTGXrzP108Kiu/1qrwEGAZdO
+         9ta/chbD+PUX23vFjuOUrpAwQ0KtoLrqZFNq0kF7u3Pdt2e9w/NdlOlE6AwpMB7tLFwW
+         UU/Uop/cK24xoJ1R72Aob+yrk2Jb58+PNV2P3A/jWLmFESRweQhA3xkL8n7UuEo23O7i
+         SsgMM8YzTWg5+FfVkwNRDGWUK4bdSbPG/S4frNeDCLck6mxGyRSREgkZ0B8DNWm46diC
+         xSvg==
+X-Gm-Message-State: AOAM533ffgCCV7M3KkLiek++1FxGlrXb+/OaEWLO9r03f0HTMlFJkAyY
+        Hi5WqDW0NvkD6uflYjjxUwL7+A==
+X-Google-Smtp-Source: ABdhPJz0/0z3vN1mwtb/eHobd43pDem3zer8bhWxzdjrhtLzoPfPsWI7C+OqW6A2WNXnrCjLU5m9dg==
+X-Received: by 2002:ac8:718d:: with SMTP id w13mr2513193qto.361.1611283972393;
+        Thu, 21 Jan 2021 18:52:52 -0800 (PST)
+Received: from pop-os.fios-router.home (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.googlemail.com with ESMTPSA id n62sm5414409qkn.125.2021.01.21.18.52.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Jan 2021 15:53:00 -0800 (PST)
-Date:   Thu, 21 Jan 2021 16:52:58 -0700
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Andy Gross <agross@kernel.org>,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 04/16] rpmsg: ctrl: implement the ioctl function to
- create device
-Message-ID: <20210121235258.GG611676@xps15>
-References: <20201222105726.16906-1-arnaud.pouliquen@foss.st.com>
- <20201222105726.16906-5-arnaud.pouliquen@foss.st.com>
+        Thu, 21 Jan 2021 18:52:51 -0800 (PST)
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        dan.j.williams@intel.com, vkoul@kernel.org
+Cc:     shawn.guo@linaro.org, srinivas.kandagatla@linaro.org,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] drivers: dma: qcom: bam_dma: Manage clocks when controlled_remotely is set
+Date:   Thu, 21 Jan 2021 21:52:51 -0500
+Message-Id: <20210122025251.3501362-1-thara.gopinath@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201222105726.16906-5-arnaud.pouliquen@foss.st.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Dec 22, 2020 at 11:57:14AM +0100, Arnaud Pouliquen wrote:
-> Implement the ioctl function that parses the list of
-> rpmsg drivers registered to create an associated device.
-> To be ISO user API, in a first step, the driver_override
-> is only allowed for the RPMsg raw service, supported by the
-> rpmsg_char driver.
-> 
-> Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
-> ---
->  drivers/rpmsg/rpmsg_ctrl.c | 43 ++++++++++++++++++++++++++++++++++++--
->  1 file changed, 41 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/rpmsg/rpmsg_ctrl.c b/drivers/rpmsg/rpmsg_ctrl.c
-> index 065e2e304019..8381b5b2b794 100644
-> --- a/drivers/rpmsg/rpmsg_ctrl.c
-> +++ b/drivers/rpmsg/rpmsg_ctrl.c
-> @@ -56,12 +56,51 @@ static int rpmsg_ctrl_dev_open(struct inode *inode, struct file *filp)
->  	return 0;
->  }
->  
-> +static const char *rpmsg_ctrl_get_drv_name(u32 service)
-> +{
-> +	struct rpmsg_ctl_info *drv_info;
-> +
-> +	list_for_each_entry(drv_info, &rpmsg_drv_list, node) {
-> +		if (drv_info->ctrl->service == service)
-> +			return drv_info->ctrl->drv_name;
-> +	}
-> +
+When bam dma is "controlled remotely", thus far clocks were not controlled
+from the Linux. In this scenario, Linux was disabling runtime pm in bam dma
+driver and not doing any clock management in suspend/resume hooks.
 
-I'm unsure about the above... To me this looks like what the .match() function
-of a bus would do.  And when I read Bjorn's comment he brought up the
-auxiliary_bus.  I don't know about the auxiliary_bus but it is worth looking
-into.  Registering with a bus would streamline a lot of the code in this
-patchset.
+With introduction of crypto engine bam dma, the clock is a rpmh resource
+that can be controlled from both Linux and TZ/remote side.  Now bam dma
+clock is getting enabled during probe even though the bam dma can be
+"controlled remotely". But due to clocks not being handled properly,
+bam_suspend generates a unbalanced clk_unprepare warning during system
+suspend.
 
-I'm out of time for today - I will continue tomorrow.
+To fix the above issue and to enable proper clock-management, this patch
+enables runtim-pm and handles bam dma clocks in suspend/resume hooks if
+the clock node is present irrespective of controlled_remotely property.
 
-Thanks,
-Mathieu
+Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+---
+ drivers/dma/qcom/bam_dma.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-> +	return NULL;
-> +}
-> +
->  static long rpmsg_ctrl_dev_ioctl(struct file *fp, unsigned int cmd,
->  				 unsigned long arg)
->  {
->  	struct rpmsg_ctrl_dev *ctrldev = fp->private_data;
-> -
-> -	dev_info(&ctrldev->dev, "Control not yet implemented\n");
-> +	void __user *argp = (void __user *)arg;
-> +	struct rpmsg_channel_info chinfo;
-> +	struct rpmsg_endpoint_info eptinfo;
-> +	struct rpmsg_device *newch;
-> +
-> +	if (cmd != RPMSG_CREATE_EPT_IOCTL)
-> +		return -EINVAL;
-> +
-> +	if (copy_from_user(&eptinfo, argp, sizeof(eptinfo)))
-> +		return -EFAULT;
-> +
-> +	/*
-> +	 * In a frst step only the rpmsg_raw service is supported.
-> +	 * The override is foorced to RPMSG_RAW_SERVICE
-> +	 */
-> +	chinfo.driver_override = rpmsg_ctrl_get_drv_name(RPMSG_RAW_SERVICE);
-> +	if (!chinfo.driver_override)
-> +		return -ENODEV;
-> +
-> +	memcpy(chinfo.name, eptinfo.name, RPMSG_NAME_SIZE);
-> +	chinfo.name[RPMSG_NAME_SIZE - 1] = '\0';
-> +	chinfo.src = eptinfo.src;
-> +	chinfo.dst = eptinfo.dst;
-> +
-> +	newch = rpmsg_create_channel(ctrldev->rpdev, &chinfo);
-> +	if (!newch) {
-> +		dev_err(&ctrldev->dev, "rpmsg_create_channel failed\n");
-> +		return -ENXIO;
-> +	}
->  
->  	return 0;
->  };
-> -- 
-> 2.17.1
-> 
+diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+index 88579857ca1d..b3a34be63e99 100644
+--- a/drivers/dma/qcom/bam_dma.c
++++ b/drivers/dma/qcom/bam_dma.c
+@@ -1350,7 +1350,7 @@ static int bam_dma_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_unregister_dma;
+ 
+-	if (bdev->controlled_remotely) {
++	if (!bdev->bamclk) {
+ 		pm_runtime_disable(&pdev->dev);
+ 		return 0;
+ 	}
+@@ -1438,10 +1438,10 @@ static int __maybe_unused bam_dma_suspend(struct device *dev)
+ {
+ 	struct bam_device *bdev = dev_get_drvdata(dev);
+ 
+-	if (!bdev->controlled_remotely)
++	if (bdev->bamclk) {
+ 		pm_runtime_force_suspend(dev);
+-
+-	clk_unprepare(bdev->bamclk);
++		clk_unprepare(bdev->bamclk);
++	}
+ 
+ 	return 0;
+ }
+@@ -1451,12 +1451,14 @@ static int __maybe_unused bam_dma_resume(struct device *dev)
+ 	struct bam_device *bdev = dev_get_drvdata(dev);
+ 	int ret;
+ 
+-	ret = clk_prepare(bdev->bamclk);
+-	if (ret)
+-		return ret;
++	if (bdev->bamclk) {
++		ret = clk_prepare(bdev->bamclk);
++		if (ret)
++			return ret;
+ 
+-	if (!bdev->controlled_remotely)
+-		pm_runtime_force_resume(dev);
++		if (!bdev->controlled_remotely)
++			pm_runtime_force_resume(dev);
++	}
+ 
+ 	return 0;
+ }
+-- 
+2.25.1
+
