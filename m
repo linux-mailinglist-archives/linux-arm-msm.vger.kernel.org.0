@@ -2,41 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 13D8B300F0E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jan 2021 22:42:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A14E300F0D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jan 2021 22:42:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729176AbhAVVlM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Jan 2021 16:41:12 -0500
-Received: from mail.kernel.org ([198.145.29.99]:59608 "EHLO mail.kernel.org"
+        id S1729138AbhAVVlG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Jan 2021 16:41:06 -0500
+Received: from mail.kernel.org ([198.145.29.99]:59612 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729232AbhAVVkw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S1729363AbhAVVkw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 22 Jan 2021 16:40:52 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id 644CD23B08;
+Received: by mail.kernel.org (Postfix) with ESMTPS id 6CBFF23B09;
         Fri, 22 Jan 2021 21:40:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1611351612;
-        bh=RviUmAXBIeQMVflFrkCLncodprLXj5ont28SDdaD0BM=;
+        bh=7epZbfbB1UufM0S8s2eyikkWlQ6IIVCKEbY/nTMysRg=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=Xf8juJQ3Lczzzn97/qXnO/MVW9RK4iALZfPygkAOvcDqdDTL4hWNzNuj0KYYhMF8F
-         TU/xRfAMDYh5DnKX08yiImWrI6o59aoE/QnUxv9HLqx8TymTaV7nW6PhNpO5NPDYBm
-         rgLZJhSEq5KnOw1W7xnmr7NF28CrFbLqN6culcIuYL8ZM0ddGNdnjU3socnzKFsEO/
-         FudsPh4N4+HleAByXkbEyzcYHktrLXjWsU94Y3mw6u29KlgV6wZxr06vS6ajl1+HlU
-         OKCfgdU/5Y2n9d79XB0dHmrIzE2Nrntw9Mvr6uiSYBHwY0FA9RgZ4ln9p8ZpJoNWv7
-         SG0vjjzlUveyw==
+        b=WqHm1TGIApAT/ofPqtAbBBd1V1Gf1fBIArXqAe2v5M1sfVbTjrN5SnhXH+FckoFpH
+         9cUP9v9RKpgThBBpo+9sFSDlZcRHXZ5an78o3k+qTxdMld2fj4Nv0Q+7SDZEBxqnbX
+         xhFBQS9GWpKieJwq6bMl8ml8g/+IdFeiFFTFUI5w6J+ztUMa071hxMpZrY9ccEn9wU
+         fRwEqL6tlV8cy4M/qc5t4NSW3EtGXYaMe0/uAtlppuRpfyMX8fax7EjvToZgNUxL5R
+         2SHRUW7QotczSVM5NoWQ6xYFDM9AgKi6SAwzCFOVAeJO9YXDseaSI1HL8NKbpMj2nj
+         mC/cgWvnE20qg==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 585ED652D1;
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 61164652D4;
         Fri, 22 Jan 2021 21:40:12 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 1/2] ARM: dts: qcom: add additional DT labels in
- qcom-ipq8064.dtsi
+Subject: Re: [PATCH v8] ARM: dts: qcom: ipq4019: add USB devicetree nodes
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <161135161235.27172.3503628172160741623.git-patchwork-notify@kernel.org>
+Message-Id: <161135161239.27172.8830363238708746421.git-patchwork-notify@kernel.org>
 Date:   Fri, 22 Jan 2021 21:40:12 +0000
-References: <20200902165159.7733-1-freifunk@adrianschmutzler.de>
-In-Reply-To: <20200902165159.7733-1-freifunk@adrianschmutzler.de>
-To:     Adrian Schmutzler <freifunk@adrianschmutzler.de>
+References: <20200909163831.1894142-1-robert.marko@sartura.hr>
+In-Reply-To: <20200909163831.1894142-1-robert.marko@sartura.hr>
+To:     Robert Marko <robert.marko@sartura.hr>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -44,24 +43,23 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hello:
 
-This series was applied to qcom/linux.git (refs/heads/for-next):
+This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Wed,  2 Sep 2020 18:51:58 +0200 you wrote:
-> This adds some additional DT labels which are handy when referring
-> to the nodes in derived DTS(I) files. It will also make the
-> definitions more consistent, e.g. by adding gsbi2_serial and
-> gsbi5_serial where we previously "only" had gsbi4_serial defined.
+On Wed,  9 Sep 2020 18:38:31 +0200 you wrote:
+> From: John Crispin <john@phrozen.org>
 > 
-> While at it, add missing spaces after some DT labels and remove one
-> useless empty line.
+> Since we now have driver for the USB PHY, and USB controller is already supported by the DWC3 driver lets add the necessary nodes to DTSI.
+> 
+> Signed-off-by: John Crispin <john@phrozen.org>
+> Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+> Cc: Luka Perkov <luka.perkov@sartura.hr>
+> Reviewed-by: Vinod Koul <vkoul@kernel.org>
 > 
 > [...]
 
 Here is the summary with links:
-  - [1/2] ARM: dts: qcom: add additional DT labels in qcom-ipq8064.dtsi
-    https://git.kernel.org/qcom/c/dd1ebbcf7b60
-  - [2/2] ARM: dts: qcom: remove commented mmc-ddr-1_8v for sdcc3
-    https://git.kernel.org/qcom/c/59595f65b3aa
+  - [v8] ARM: dts: qcom: ipq4019: add USB devicetree nodes
+    https://git.kernel.org/qcom/c/b8afc254b401
 
 You are awesome, thank you!
 --
