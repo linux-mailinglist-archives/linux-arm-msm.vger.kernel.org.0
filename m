@@ -2,135 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 710CA2FFAAE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jan 2021 03:53:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5644D2FFB87
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jan 2021 05:04:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726686AbhAVCxe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jan 2021 21:53:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43560 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726497AbhAVCxd (ORCPT
+        id S1726826AbhAVEDe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jan 2021 23:03:34 -0500
+Received: from a1.mail.mailgun.net ([198.61.254.60]:24014 "EHLO
+        a1.mail.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726708AbhAVECd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jan 2021 21:53:33 -0500
-Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3949CC061756
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jan 2021 18:52:53 -0800 (PST)
-Received: by mail-qt1-x830.google.com with SMTP id r9so3167040qtp.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jan 2021 18:52:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=GKuYChxcbat6wOowZ/luWuFDp05RLb0vBoPsH1W9HLw=;
-        b=fWX1fVnSDfRBs4lvhqIkcuFxJczn4RVcy8W7l7m57JkcWR8brGBrkwyok3ZO5XV3YL
-         3RccD753tIuCIC0P4G1d7mBywZOi/pwihdwRctYeiqSLrd9jVCS+qK9fGTIdbkuLYYCS
-         wmiRwQx4lOEVr6f1M1UMbUV7pdeeceHIKQBdN+13ziDRMeW3A+V/Dx/Fs0WlmOo7SdLo
-         JJYv89XgNZzOZo2HQPNOQZOF04qMh+bCZS9313D0PLJfkSbDKkfKJr/RoCKSqWdreMaW
-         1LXNrQAk6BdJryD72zjbT/O3Uq3Mxe1tWCyoUdVrWzcQIJsXi0z5WjEdMRtU8cQhWeLM
-         a4yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=GKuYChxcbat6wOowZ/luWuFDp05RLb0vBoPsH1W9HLw=;
-        b=UJKOVD+v3wfzA6gW64QkVI3Vl4sTnG54ThIe2enU8jNmtRyLHnSPZOD67V8vXdA5cc
-         fQOnPTH8XymWpnkAx2uvRdwuOA4XHAdqQB1HRhbcF3FdPTGXrzP108Kiu/1qrwEGAZdO
-         9ta/chbD+PUX23vFjuOUrpAwQ0KtoLrqZFNq0kF7u3Pdt2e9w/NdlOlE6AwpMB7tLFwW
-         UU/Uop/cK24xoJ1R72Aob+yrk2Jb58+PNV2P3A/jWLmFESRweQhA3xkL8n7UuEo23O7i
-         SsgMM8YzTWg5+FfVkwNRDGWUK4bdSbPG/S4frNeDCLck6mxGyRSREgkZ0B8DNWm46diC
-         xSvg==
-X-Gm-Message-State: AOAM533ffgCCV7M3KkLiek++1FxGlrXb+/OaEWLO9r03f0HTMlFJkAyY
-        Hi5WqDW0NvkD6uflYjjxUwL7+A==
-X-Google-Smtp-Source: ABdhPJz0/0z3vN1mwtb/eHobd43pDem3zer8bhWxzdjrhtLzoPfPsWI7C+OqW6A2WNXnrCjLU5m9dg==
-X-Received: by 2002:ac8:718d:: with SMTP id w13mr2513193qto.361.1611283972393;
-        Thu, 21 Jan 2021 18:52:52 -0800 (PST)
-Received: from pop-os.fios-router.home (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.googlemail.com with ESMTPSA id n62sm5414409qkn.125.2021.01.21.18.52.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Jan 2021 18:52:51 -0800 (PST)
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        dan.j.williams@intel.com, vkoul@kernel.org
-Cc:     shawn.guo@linaro.org, srinivas.kandagatla@linaro.org,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] drivers: dma: qcom: bam_dma: Manage clocks when controlled_remotely is set
-Date:   Thu, 21 Jan 2021 21:52:51 -0500
-Message-Id: <20210122025251.3501362-1-thara.gopinath@linaro.org>
-X-Mailer: git-send-email 2.25.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Thu, 21 Jan 2021 23:02:33 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1611288132; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=DQZAtvavund/9OBwiAQlADma1bn2t2367yC/DGsBIag=; b=tGZR5BUbPOAgLukR4jTeELNbantN/goyXt38AVp0wrMd+3onYNJ9I0J5kyImYFCC5HjVKUsG
+ bCcC0nyTGgY1No9vp+W7O640jjv83itlhlE+7WPfichMQ+DQaZtUe0leTEamsWyQPfY2wbCU
+ B7tzOnec+R94dkQzm2CYfEx0jm4=
+X-Mailgun-Sending-Ip: 198.61.254.60
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 600a4e2972b7c29fd5fbaaf5 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 22 Jan 2021 04:01:45
+ GMT
+Sender: wcheng=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 9DBA6C433ED; Fri, 22 Jan 2021 04:01:45 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from wcheng-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: wcheng)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4F5BDC433CA;
+        Fri, 22 Jan 2021 04:01:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4F5BDC433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=wcheng@codeaurora.org
+From:   Wesley Cheng <wcheng@codeaurora.org>
+To:     balbi@kernel.org, gregkh@linuxfoundation.org, robh+dt@kernel.org,
+        agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        peter.chen@nxp.com, jackp@codeaurora.org,
+        Wesley Cheng <wcheng@codeaurora.org>
+Subject: [PATCH v6 0/4] Re-introduce TX FIFO resize for larger EP bursting
+Date:   Thu, 21 Jan 2021 20:01:36 -0800
+Message-Id: <1611288100-31118-1-git-send-email-wcheng@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When bam dma is "controlled remotely", thus far clocks were not controlled
-from the Linux. In this scenario, Linux was disabling runtime pm in bam dma
-driver and not doing any clock management in suspend/resume hooks.
+Changes in V6:
+ - Rebased patches to usb-testing.
+ - Renamed to PATCH series instead of RFC.
+ - Checking for fs_descriptors instead of ss_descriptors for determining the
+   endpoint count for a particular configuration.
+ - Re-ordered patch series to fix patch dependencies.
 
-With introduction of crypto engine bam dma, the clock is a rpmh resource
-that can be controlled from both Linux and TZ/remote side.  Now bam dma
-clock is getting enabled during probe even though the bam dma can be
-"controlled remotely". But due to clocks not being handled properly,
-bam_suspend generates a unbalanced clk_unprepare warning during system
-suspend.
+Changes in V5:
+ - Added check_config() logic, which is used to communicate the number of EPs
+   used in a particular configuration.  Based on this, the DWC3 gadget driver
+   has the ability to know the maximum number of eps utilized in all configs.
+   This helps reduce unnecessary allocation to unused eps, and will catch fifo
+   allocation issues at bind() time.
+ - Fixed variable declaration to single line per variable, and reverse xmas.
+ - Created a helper for fifo clearing, which is used by ep0.c
 
-To fix the above issue and to enable proper clock-management, this patch
-enables runtim-pm and handles bam dma clocks in suspend/resume hooks if
-the clock node is present irrespective of controlled_remotely property.
+Changes in V4:
+ - Removed struct dwc3* as an argument for dwc3_gadget_resize_tx_fifos()
+ - Removed WARN_ON(1) in case we run out of fifo space
+ 
+Changes in V3:
+ - Removed "Reviewed-by" tags
+ - Renamed series back to RFC
+ - Modified logic to ensure that fifo_size is reset if we pass the minimum
+   threshold.  Tested with binding multiple FDs requesting 6 FIFOs.
 
-Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
----
- drivers/dma/qcom/bam_dma.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+Changes in V2:
+ - Modified TXFIFO resizing logic to ensure that each EP is reserved a
+   FIFO.
+ - Removed dev_dbg() prints and fixed typos from patches
+ - Added some more description on the dt-bindings commit message
 
-diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-index 88579857ca1d..b3a34be63e99 100644
---- a/drivers/dma/qcom/bam_dma.c
-+++ b/drivers/dma/qcom/bam_dma.c
-@@ -1350,7 +1350,7 @@ static int bam_dma_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto err_unregister_dma;
- 
--	if (bdev->controlled_remotely) {
-+	if (!bdev->bamclk) {
- 		pm_runtime_disable(&pdev->dev);
- 		return 0;
- 	}
-@@ -1438,10 +1438,10 @@ static int __maybe_unused bam_dma_suspend(struct device *dev)
- {
- 	struct bam_device *bdev = dev_get_drvdata(dev);
- 
--	if (!bdev->controlled_remotely)
-+	if (bdev->bamclk) {
- 		pm_runtime_force_suspend(dev);
--
--	clk_unprepare(bdev->bamclk);
-+		clk_unprepare(bdev->bamclk);
-+	}
- 
- 	return 0;
- }
-@@ -1451,12 +1451,14 @@ static int __maybe_unused bam_dma_resume(struct device *dev)
- 	struct bam_device *bdev = dev_get_drvdata(dev);
- 	int ret;
- 
--	ret = clk_prepare(bdev->bamclk);
--	if (ret)
--		return ret;
-+	if (bdev->bamclk) {
-+		ret = clk_prepare(bdev->bamclk);
-+		if (ret)
-+			return ret;
- 
--	if (!bdev->controlled_remotely)
--		pm_runtime_force_resume(dev);
-+		if (!bdev->controlled_remotely)
-+			pm_runtime_force_resume(dev);
-+	}
- 
- 	return 0;
- }
+Currently, there is no functionality to allow for resizing the TXFIFOs, and
+relying on the HW default setting for the TXFIFO depth.  In most cases, the
+HW default is probably sufficient, but for USB compositions that contain
+multiple functions that require EP bursting, the default settings
+might not be enough.  Also to note, the current SW will assign an EP to a
+function driver w/o checking to see if the TXFIFO size for that particular
+EP is large enough. (this is a problem if there are multiple HW defined
+values for the TXFIFO size)
+
+It is mentioned in the SNPS databook that a minimum of TX FIFO depth = 3
+is required for an EP that supports bursting.  Otherwise, there may be
+frequent occurences of bursts ending.  For high bandwidth functions,
+such as data tethering (protocols that support data aggregation), mass
+storage, and media transfer protocol (over FFS), the bMaxBurst value can be
+large, and a bigger TXFIFO depth may prove to be beneficial in terms of USB
+throughput. (which can be associated to system access latency, etc...)  It
+allows for a more consistent burst of traffic, w/o any interruptions, as
+data is readily available in the FIFO.
+
+With testing done using the mass storage function driver, the results show
+that with a larger TXFIFO depth, the bandwidth increased significantly.
+
+Test Parameters:
+ - Platform: Qualcomm SM8150
+ - bMaxBurst = 6
+ - USB req size = 256kB
+ - Num of USB reqs = 16
+ - USB Speed = Super-Speed
+ - Function Driver: Mass Storage (w/ ramdisk)
+ - Test Application: CrystalDiskMark
+
+Results:
+
+TXFIFO Depth = 3 max packets
+
+Test Case | Data Size | AVG tput (in MB/s)
+-------------------------------------------
+Sequential|1 GB x     | 
+Read      |9 loops    | 193.60
+	  |           | 195.86
+          |           | 184.77
+          |           | 193.60
+-------------------------------------------
+
+TXFIFO Depth = 6 max packets
+
+Test Case | Data Size | AVG tput (in MB/s)
+-------------------------------------------
+Sequential|1 GB x     | 
+Read      |9 loops    | 287.35
+	  |           | 304.94
+          |           | 289.64
+          |           | 293.61
+-------------------------------------------
+Wesley Cheng (4):
+  usb: gadget: udc: core: Introduce check_config to verify USB
+    configuration
+  usb: gadget: configfs: Check USB configuration before adding
+  usb: dwc3: Resize TX FIFOs to meet EP bursting requirements
+  arm64: boot: dts: qcom: sm8150: Enable dynamic TX FIFO resize logic
+
+ arch/arm64/boot/dts/qcom/sm8150.dtsi |   1 +
+ drivers/usb/dwc3/core.c              |   2 +
+ drivers/usb/dwc3/core.h              |   8 ++
+ drivers/usb/dwc3/ep0.c               |   2 +
+ drivers/usb/dwc3/gadget.c            | 194 +++++++++++++++++++++++++++++++++++
+ drivers/usb/gadget/configfs.c        |  22 ++++
+ drivers/usb/gadget/udc/core.c        |   9 ++
+ include/linux/usb/gadget.h           |   2 +
+ 8 files changed, 240 insertions(+)
+
 -- 
-2.25.1
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
