@@ -2,126 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E196300788
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jan 2021 16:41:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C6F33007B2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jan 2021 16:46:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728695AbhAVPka (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Jan 2021 10:40:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57988 "EHLO
+        id S1728507AbhAVPpB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Jan 2021 10:45:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728918AbhAVO5P (ORCPT
+        with ESMTP id S1728697AbhAVPow (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Jan 2021 09:57:15 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 035FBC061797;
-        Fri, 22 Jan 2021 06:56:17 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id o10so6838057wmc.1;
-        Fri, 22 Jan 2021 06:56:16 -0800 (PST)
+        Fri, 22 Jan 2021 10:44:52 -0500
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 963FCC06174A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Jan 2021 07:44:11 -0800 (PST)
+Received: by mail-qt1-x82a.google.com with SMTP id t14so768801qto.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Jan 2021 07:44:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=//vxmImvEZezGNbMSIPWRQhGQeqxvlD68gBH9D1FgFg=;
-        b=JPar7D3w+4QjE7ggC2yQUd84apZvRlfnhsMeP3VfxutsXPkOv2YARWvy7r+jcSbjMz
-         g9e1j6lqPQRFHjBJLwCKF/yyOxsVyHSXDhaZOWxRPDxtjcwM870Lcn9ffBsEHLO+hCpS
-         plyVfXmYe1PVCbAlQwRpAqQm6oHJ57wUVckSujUam2Pxem58n9WZXuGRQCJ3DJFLKuiW
-         yiBwT3Eh5IlssUVChG9xxlTkYC0KYBfzSdJY1OzZxBqc9SEG/hgwIJbWHA4NP2hXDGip
-         u0qYtwhxyTziey28d+SPlzqRWSrQaE/MHZXIX6H41fzr8jdJNItEMgVlf9OerZ/RYLBE
-         2i9w==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=nJ5Mm7jDvt8rYYjqfuGcAKVlF1C7OcwWb/rDTKJ5d/Q=;
+        b=wcWMa2FpEYwa9IT1fn9c6WjOp7s8r0ejmanTOS4UW7OvflsrFUpCD6F4pcKzYPFC81
+         17nnqVC3NCknrcdEJcqD4nSWJOb+uY33GwliYT+O8wKc/5qi4Jc1FjAEwoeNzn1exNHs
+         qIw/6/Z+T8FGuv24jzsa+eRU6XI4fCK8I1qUe7CfR1QNNxegep2k6Yc/DFJ+sga+gJwJ
+         7w87e3YSYF48VPfreqMzKl/dTsEI5IV5x5K8M2LHTHdRAa7D67JMah8uKz1k8Pj3Kwvr
+         G9gue26Ip4oMikjTsZf541S5wI+4/icsGylvKMYDB9Zf5kfJLOy79t6PG43MtcxlV+dH
+         Yddw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=//vxmImvEZezGNbMSIPWRQhGQeqxvlD68gBH9D1FgFg=;
-        b=Rb9s2c1I/s2c7VAMqkBz/vGDeiW6Av3SkodDVLVNlxn0whaPuoGzx7dygLRst1Mp4m
-         TQAOKW7eU7vY3EidqweiGXVD54nHknLOuAj8Hjj5mm7DrPmvDKe5u7GIr2SLQV1rLABR
-         mwAF4iXuulhSfUqloZOTknRlbiAhmUL6BRbG1vGFmnJ+VWw0kzely30i1+X6GgzOla9g
-         MM47QO3hyKCXq2GunjYnkVso1UzFeTO66G7ANucZIlM4qMHNCM7p1VB+voKUJZYuw5Jt
-         UMw8hijNcf5OUlBtXdbLi+QC2KKagjX5PgYWt2M5vu3pTGOxYeUNntf4DTiXD3vZIpSO
-         KJ3w==
-X-Gm-Message-State: AOAM533ut2WruRREcc3EV+GZVhtmAXMNkHi2BKVqRcYYKzMVn1YWmuE7
-        d7gH8mbh98ig/y7ENiL8nUw=
-X-Google-Smtp-Source: ABdhPJzsPfIhwyo5zD/eGSjW/yDGzdjyLGuFZrXt5nMls6xsdf7VpzXEuw2Eosd2paxB7oLsbK7wbg==
-X-Received: by 2002:a7b:c779:: with SMTP id x25mr4322874wmk.138.1611327375585;
-        Fri, 22 Jan 2021 06:56:15 -0800 (PST)
-Received: from ansuel-xps20.localdomain (host-79-45-3-77.retail.telecomitalia.it. [79.45.3.77])
-        by smtp.googlemail.com with ESMTPSA id t67sm12061106wmt.28.2021.01.22.06.56.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Jan 2021 06:56:15 -0800 (PST)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Amit Kucheria <amitk@kernel.org>
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v9 5/8] drivers: thermal: tsens: Fix bug in sensor enable for msm8960
-Date:   Fri, 22 Jan 2021 15:55:54 +0100
-Message-Id: <20210122145558.4982-6-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210122145558.4982-1-ansuelsmth@gmail.com>
-References: <20210122145558.4982-1-ansuelsmth@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=nJ5Mm7jDvt8rYYjqfuGcAKVlF1C7OcwWb/rDTKJ5d/Q=;
+        b=OvPZrmt7aIuYX/Q7NO/+ZNXoaWuM0prEhJZ69iUevE52uyglPWHqyb25WdYtzpNdNR
+         GDgeTcUc/RREMRprOc4AkXsLcFxXecddpyMjqtwrImxn+3isbp0c7AjuotQa7aSsEd6S
+         tyP8VUQCMWmFb/9Hl30mGi8GiGQ/AKZU9a8rBDOz4afhxEHlQUOwo8h8Lg+1J/7VVvl9
+         2BZi7glglZ64NxfuCW3Q129WqpADyq8+kAA/6keKZYZiYGz7sc8htwXfA35P/V03IsEx
+         ZDBopiNihADXaLPwnvEWT7w6HCpiofr2W/dgZhAZHWK+1AgOyTKe6jO0ETc42K1sTyaV
+         LnZA==
+X-Gm-Message-State: AOAM5303h6mbRttCQpvrynaoeH6CVwqoctjGqBxKysuKSp4dtsNS1+52
+        WlGqxbCrtFejr22FU+X0/50m/g==
+X-Google-Smtp-Source: ABdhPJwRZyDqa9tInh1QS8BuhgaOJCcFWxaygOKtTTGW608RraEiVWrtKYW+ODZ0VLA+FLfMgCDVzA==
+X-Received: by 2002:aed:2be7:: with SMTP id e94mr4817414qtd.110.1611330250814;
+        Fri, 22 Jan 2021 07:44:10 -0800 (PST)
+Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.gmail.com with ESMTPSA id p75sm6616661qka.72.2021.01.22.07.44.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 Jan 2021 07:44:10 -0800 (PST)
+Subject: Re: [PATCH] drivers: dma: qcom: bam_dma: Manage clocks when
+ controlled_remotely is set
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        dan.j.williams@intel.com, vkoul@kernel.org,
+        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20210122025251.3501362-1-thara.gopinath@linaro.org>
+ <20210122051013.GE2479@dragon>
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+Message-ID: <d1f1724c-39f1-7b6e-8cd4-638a44608d9c@linaro.org>
+Date:   Fri, 22 Jan 2021 10:44:09 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210122051013.GE2479@dragon>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It's present a hardware bug in tsens VER_0 where if sensors upper to id
-6 are enabled selectively, underfined results are expected. Fix this by
-enabling all the remaining sensor in one step.
+Hi Shawn,
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
- drivers/thermal/qcom/tsens-8960.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+Thanks for the review
 
-diff --git a/drivers/thermal/qcom/tsens-8960.c b/drivers/thermal/qcom/tsens-8960.c
-index 86585f439985..248aaa65b5b0 100644
---- a/drivers/thermal/qcom/tsens-8960.c
-+++ b/drivers/thermal/qcom/tsens-8960.c
-@@ -27,9 +27,9 @@
- #define EN			BIT(0)
- #define SW_RST			BIT(1)
- #define SENSOR0_EN		BIT(3)
-+#define MEASURE_PERIOD		BIT(18)
- #define SLP_CLK_ENA		BIT(26)
- #define SLP_CLK_ENA_8660	BIT(24)
--#define MEASURE_PERIOD		1
- #define SENSOR0_SHIFT		3
- 
- /* INT_STATUS_ADDR bitmasks */
-@@ -132,11 +132,26 @@ static int enable_8960(struct tsens_priv *priv, int id)
- 	if (ret)
- 		return ret;
- 
--	mask = BIT(id + SENSOR0_SHIFT);
-+	/* HARDWARE BUG:
-+	 * On platform with more than 5 sensors, all the remaining
-+	 * sensors needs to be enabled all togheder or underfined
-+	 * results are expected. (Sensor 6-7 disabled, Sensor 3
-+	 * disabled...) In the original driver, all the sensors
-+	 * are enabled in one step hence this bug is not triggered.
-+	 */
-+	if (id > 5)
-+		mask = GENMASK(10, 6);
-+	else
-+		mask = BIT(id);
-+
-+	mask <<= SENSOR0_SHIFT;
-+
- 	ret = regmap_write(priv->tm_map, CNTL_ADDR, reg | SW_RST);
- 	if (ret)
- 		return ret;
- 
-+	reg |= MEASURE_PERIOD;
-+
- 	if (priv->num_sensors > 1)
- 		reg |= mask | SLP_CLK_ENA | EN;
- 	else
+On 1/22/21 12:10 AM, Shawn Guo wrote:
+> On Thu, Jan 21, 2021 at 09:52:51PM -0500, Thara Gopinath wrote:
+>> When bam dma is "controlled remotely", thus far clocks were not controlled
+>> from the Linux. In this scenario, Linux was disabling runtime pm in bam dma
+>> driver and not doing any clock management in suspend/resume hooks.
+>>
+>> With introduction of crypto engine bam dma, the clock is a rpmh resource
+>> that can be controlled from both Linux and TZ/remote side.  Now bam dma
+>> clock is getting enabled during probe even though the bam dma can be
+>> "controlled remotely". But due to clocks not being handled properly,
+>> bam_suspend generates a unbalanced clk_unprepare warning during system
+>> suspend.
+>>
+>> To fix the above issue and to enable proper clock-management, this patch
+>> enables runtim-pm and handles bam dma clocks in suspend/resume hooks if
+>> the clock node is present irrespective of controlled_remotely property.
+> 
+> Shouldn't the following probe code need some update?  Now we have both
+> controlled_remotely and clocks handle for cryptobam node.  For example,
+> if devm_clk_get() returns -EPROBE_DEFER, we do not want to continue with
+> bamclk forcing to be NULL, right?
+
+We still will have to set bdev->bamclk to NULL in certain scenarios. For 
+eg slimbus bam dma is controlled-remotely and the clocks are handled by 
+the remote s/w. Linux does not handle the clocks at all and  there is no 
+clock specified in the dt node.This is the norm for the devices that are 
+also controlled by remote s/w. Crypto bam dma is a special case where 
+the clock is actually a rpmh resource and hence can be independently 
+handled from both remote side and Linux by voting. In this case, the dma 
+is controlled remotely but clock can be turned off and on in Linux. 
+Hence the need for this patch.
+
+Yes, the probe code needs updating to handle -EPROBE_DEFER (esp if the 
+clock driver is built in as a module) I am not sure if the clock 
+framework handles -EPROBE_DEFER properly either. So that
+might need updating too. This is a separate activity and not part of 
+this patch.
+
+> 
+>          bdev->bamclk = devm_clk_get(bdev->dev, "bam_clk");
+>          if (IS_ERR(bdev->bamclk)) {
+>                  if (!bdev->controlled_remotely)
+>                          return PTR_ERR(bdev->bamclk);
+> 
+>                  bdev->bamclk = NULL;
+>          }
+> 
+>>
+>> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+>> ---
+>>   drivers/dma/qcom/bam_dma.c | 20 +++++++++++---------
+>>   1 file changed, 11 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+>> index 88579857ca1d..b3a34be63e99 100644
+>> --- a/drivers/dma/qcom/bam_dma.c
+>> +++ b/drivers/dma/qcom/bam_dma.c
+>> @@ -1350,7 +1350,7 @@ static int bam_dma_probe(struct platform_device *pdev)
+>>   	if (ret)
+>>   		goto err_unregister_dma;
+>>   
+>> -	if (bdev->controlled_remotely) {
+>> +	if (!bdev->bamclk) {
+>>   		pm_runtime_disable(&pdev->dev);
+>>   		return 0;
+>>   	}
+>> @@ -1438,10 +1438,10 @@ static int __maybe_unused bam_dma_suspend(struct device *dev)
+>>   {
+>>   	struct bam_device *bdev = dev_get_drvdata(dev);
+>>   
+>> -	if (!bdev->controlled_remotely)
+>> +	if (bdev->bamclk) {
+>>   		pm_runtime_force_suspend(dev);
+>> -
+>> -	clk_unprepare(bdev->bamclk);
+>> +		clk_unprepare(bdev->bamclk);
+>> +	}
+>>   
+>>   	return 0;
+>>   }
+>> @@ -1451,12 +1451,14 @@ static int __maybe_unused bam_dma_resume(struct device *dev)
+>>   	struct bam_device *bdev = dev_get_drvdata(dev);
+>>   	int ret;
+>>   
+>> -	ret = clk_prepare(bdev->bamclk);
+>> -	if (ret)
+>> -		return ret;
+>> +	if (bdev->bamclk) {
+>> +		ret = clk_prepare(bdev->bamclk);
+>> +		if (ret)
+>> +			return ret;
+>>   
+>> -	if (!bdev->controlled_remotely)
+>> -		pm_runtime_force_resume(dev);
+>> +		if (!bdev->controlled_remotely)
+> 
+> Why do we still need controlled_remotely check here?
+
+Yes you are right. This should be removed.I will send v2.
+
 -- 
-2.29.2
-
+Warm Regards
+Thara
