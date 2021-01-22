@@ -2,201 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7EAFB3002C1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jan 2021 13:21:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 09937300364
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jan 2021 13:43:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727256AbhAVMT2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Jan 2021 07:19:28 -0500
-Received: from mga02.intel.com ([134.134.136.20]:44424 "EHLO mga02.intel.com"
+        id S1728003AbhAVMmR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Jan 2021 07:42:17 -0500
+Received: from mail.kernel.org ([198.145.29.99]:45122 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728007AbhAVMJO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Jan 2021 07:09:14 -0500
-IronPort-SDR: J1cRqzL8Yg5NuWT2ihPY3JWXzdJplrWkxKvBhuijh5kFyqnDpncI3xiaJsiw7PYDYQH4L1Qhb2
- GOOikGKB8L8A==
-X-IronPort-AV: E=McAfee;i="6000,8403,9871"; a="166537736"
-X-IronPort-AV: E=Sophos;i="5.79,366,1602572400"; 
-   d="scan'208";a="166537736"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jan 2021 04:07:28 -0800
-IronPort-SDR: LI7d1B/P80MeyJkVkKXKN7OEzVq/WmfB9ZPT+CyMbHq5Dbr0B1vmeqlILwhcjOQ2ieQXgKqBA2
- BA4zdrJP78EQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.79,366,1602572400"; 
-   d="scan'208";a="427949436"
-Received: from stinkbox.fi.intel.com (HELO stinkbox) ([10.237.72.174])
-  by orsmga001.jf.intel.com with SMTP; 22 Jan 2021 04:07:22 -0800
-Received: by stinkbox (sSMTP sendmail emulation); Fri, 22 Jan 2021 14:07:22 +0200
-Date:   Fri, 22 Jan 2021 14:07:22 +0200
-From:   Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-To:     Maxime Ripard <maxime@cerno.tech>
-Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        David Airlie <airlied@linux.ie>, Sean Paul <sean@poorly.run>,
-        freedreno@lists.freedesktop.org, Tomi Valkeinen <tomba@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Jyri Sarha <jyri.sarha@iki.fi>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, Shawn Guo <shawnguo@kernel.org>,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v2 06/11] drm: Use state helper instead of plane state
- pointer in atomic_check
-Message-ID: <YAq/+udQfTwdamQ0@intel.com>
-References: <20210121163537.1466118-1-maxime@cerno.tech>
- <20210121163537.1466118-6-maxime@cerno.tech>
+        id S1728025AbhAVMmM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 22 Jan 2021 07:42:12 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 75CE122DBF;
+        Fri, 22 Jan 2021 12:41:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1611319291;
+        bh=7rbUbkdEvJJvR3jEHrdTAYGXW1UTMHgBbr6d4EQwOhY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=A9lp3fd+MM+zlTZ7LhS0bL5D77eTmFbjEsclVnm181waq+jpKLXMvdkm8wi0NKpzg
+         AOXvTWfwYFnfWXunCnyyabRSrzc3OTmYU3H9NEl2z9Nv1i07yb4SeuZ5ZO3Km3cZlM
+         yKUhHfxTYK3cJ7tozZjEb/pd51F3ET4WejY3GwXRWcgmZX7dcOO5zbysL77wv7SmFn
+         xUlQ1a6mUHpRI0mHor2RndETI8jRVNQrfg/JeRud9H6aKciNEu8Sd586RaCCLRhhqY
+         lk1IVQrgIuyktBHf0dRqMnSeO2oHV38FJREzx1/pYPxZzITVyVeVZxEf9mf6r18S82
+         qJog8QJ8i66/A==
+Date:   Fri, 22 Jan 2021 12:41:26 +0000
+From:   Will Deacon <will@kernel.org>
+To:     Jordan Crouse <jcrouse@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, Robin Murphy <robin.murphy@arm.com>,
+        iommu@lists.linux-foundation.org,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] iommu/arm-smmu: Add support for driver IOMMU
+ fault handlers
+Message-ID: <20210122124125.GA24102@willie-the-truck>
+References: <20201124191600.2051751-1-jcrouse@codeaurora.org>
+ <20201124191600.2051751-2-jcrouse@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210121163537.1466118-6-maxime@cerno.tech>
-X-Patchwork-Hint: comment
+In-Reply-To: <20201124191600.2051751-2-jcrouse@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 21, 2021 at 05:35:31PM +0100, Maxime Ripard wrote:
-> Many drivers reference the plane->state pointer in order to get the
-> current plane state in their atomic_check hook, which would be the old
-> plane state in the global atomic state since _swap_state hasn't happened
-> when atomic_check is run.
+On Tue, Nov 24, 2020 at 12:15:58PM -0700, Jordan Crouse wrote:
+> Call report_iommu_fault() to allow upper-level drivers to register their
+> own fault handlers.
 > 
-> Use the drm_atomic_get_old_plane_state helper to get that state to make
-> it more obvious.
-> 
-> This was made using the coccinelle script below:
-> 
-> @ plane_atomic_func @
-> identifier helpers;
-> identifier func;
-> @@
-> 
-> static struct drm_plane_helper_funcs helpers = {
-> 	...,
-> 	.atomic_check = func,
-> 	...,
-> };
-> 
-> @ replaces_old_state @
-> identifier plane_atomic_func.func;
-> identifier plane, state, plane_state;
-> @@
-> 
->  func(struct drm_plane *plane, struct drm_atomic_state *state) {
->  	...
-> -	struct drm_plane_state *plane_state = plane->state;
-> +	struct drm_plane_state *plane_state = drm_atomic_get_old_plane_state(state, plane);
->  	...
->  }
-> 
-> @@
-> identifier plane_atomic_func.func;
-> identifier plane, state, plane_state;
-> @@
-> 
->  func(struct drm_plane *plane, struct drm_atomic_state *state) {
->  	struct drm_plane_state *plane_state = drm_atomic_get_old_plane_state(state, plane);
->  	...
-> -	plane->state
-> +	plane_state
->  	...
-
-We don't need the <... ...> style here? It's been a while since
-I did any serious cocci so I'm getting a bit rusty on the details...
-
-Otherwise looks great
-Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-
->  }
-> 
-> @ adds_old_state @
-> identifier plane_atomic_func.func;
-> identifier plane, state;
-> @@
-> 
->  func(struct drm_plane *plane, struct drm_atomic_state *state) {
-> +	struct drm_plane_state *old_plane_state = drm_atomic_get_old_plane_state(state, plane);
->  	...
-> -	plane->state
-> +	old_plane_state
->  	...
->  }
-> 
-> @ include depends on adds_old_state || replaces_old_state @
-> @@
-> 
->  #include <drm/drm_atomic.h>
-> 
-> @ no_include depends on !include && (adds_old_state || replaces_old_state) @
-> @@
-> 
-> + #include <drm/drm_atomic.h>
->   #include <drm/...>
-> 
-> Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
 > ---
->  drivers/gpu/drm/imx/ipuv3-plane.c          | 3 ++-
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c | 4 +++-
->  drivers/gpu/drm/tilcdc/tilcdc_plane.c      | 3 ++-
->  3 files changed, 7 insertions(+), 3 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/imx/ipuv3-plane.c b/drivers/gpu/drm/imx/ipuv3-plane.c
-> index b5f6123850bb..6484592e3f86 100644
-> --- a/drivers/gpu/drm/imx/ipuv3-plane.c
-> +++ b/drivers/gpu/drm/imx/ipuv3-plane.c
-> @@ -341,7 +341,8 @@ static int ipu_plane_atomic_check(struct drm_plane *plane,
->  {
->  	struct drm_plane_state *new_state = drm_atomic_get_new_plane_state(state,
->  									   plane);
-> -	struct drm_plane_state *old_state = plane->state;
-> +	struct drm_plane_state *old_state = drm_atomic_get_old_plane_state(state,
-> +									   plane);
->  	struct drm_crtc_state *crtc_state;
->  	struct device *dev = plane->dev->dev;
->  	struct drm_framebuffer *fb = new_state->fb;
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-> index 4aac6217a5ad..6ce6ce09fecc 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-> @@ -406,12 +406,14 @@ static int mdp5_plane_atomic_check_with_state(struct drm_crtc_state *crtc_state,
->  static int mdp5_plane_atomic_check(struct drm_plane *plane,
->  				   struct drm_atomic_state *state)
->  {
-> +	struct drm_plane_state *old_plane_state = drm_atomic_get_old_plane_state(state,
-> +										 plane);
->  	struct drm_plane_state *new_plane_state = drm_atomic_get_new_plane_state(state,
->  										 plane);
->  	struct drm_crtc *crtc;
->  	struct drm_crtc_state *crtc_state;
->  
-> -	crtc = new_plane_state->crtc ? new_plane_state->crtc : plane->state->crtc;
-> +	crtc = new_plane_state->crtc ? new_plane_state->crtc : old_plane_state->crtc;
->  	if (!crtc)
->  		return 0;
->  
-> diff --git a/drivers/gpu/drm/tilcdc/tilcdc_plane.c b/drivers/gpu/drm/tilcdc/tilcdc_plane.c
-> index ebdd42dcaf82..c86258132432 100644
-> --- a/drivers/gpu/drm/tilcdc/tilcdc_plane.c
-> +++ b/drivers/gpu/drm/tilcdc/tilcdc_plane.c
-> @@ -26,7 +26,8 @@ static int tilcdc_plane_atomic_check(struct drm_plane *plane,
->  	struct drm_plane_state *new_state = drm_atomic_get_new_plane_state(state,
->  									   plane);
->  	struct drm_crtc_state *crtc_state;
-> -	struct drm_plane_state *old_state = plane->state;
-> +	struct drm_plane_state *old_state = drm_atomic_get_old_plane_state(state,
-> +									   plane);
->  	unsigned int pitch;
->  
->  	if (!new_state->crtc)
-> -- 
-> 2.29.2
+>  drivers/iommu/arm/arm-smmu/arm-smmu.c | 16 +++++++++++++---
+>  1 file changed, 13 insertions(+), 3 deletions(-)
 > 
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> index 0f28a8614da3..7fd18bbda8f5 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> @@ -427,6 +427,7 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
+>  	struct arm_smmu_domain *smmu_domain = to_smmu_domain(domain);
+>  	struct arm_smmu_device *smmu = smmu_domain->smmu;
+>  	int idx = smmu_domain->cfg.cbndx;
+> +	int ret;
+>  
+>  	fsr = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSR);
+>  	if (!(fsr & ARM_SMMU_FSR_FAULT))
+> @@ -436,11 +437,20 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
+>  	iova = arm_smmu_cb_readq(smmu, idx, ARM_SMMU_CB_FAR);
+>  	cbfrsynra = arm_smmu_gr1_read(smmu, ARM_SMMU_GR1_CBFRSYNRA(idx));
+>  
+> -	dev_err_ratelimited(smmu->dev,
+> -	"Unhandled context fault: fsr=0x%x, iova=0x%08lx, fsynr=0x%x, cbfrsynra=0x%x, cb=%d\n",
+> +	ret = report_iommu_fault(domain, dev, iova,
+> +		fsynr & ARM_SMMU_FSYNR0_WNR ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ);
+> +
+> +	if (ret == -ENOSYS)
+> +		dev_err_ratelimited(smmu->dev,
+> +		"Unhandled context fault: fsr=0x%x, iova=0x%08lx, fsynr=0x%x, cbfrsynra=0x%x, cb=%d\n",
+>  			    fsr, iova, fsynr, cbfrsynra, idx);
+>  
+> -	arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, fsr);
+> +	/*
+> +	 * If the iommu fault returns an error (except -ENOSYS) then assume that
+> +	 * they will handle resuming on their own
+> +	 */
+> +	if (!ret || ret == -ENOSYS)
+> +		arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, fsr);
 
--- 
-Ville Syrjälä
-Intel
+Hmm, I don't grok this part. If the fault handler returned an error and
+we don't clear the FSR, won't we just re-take the irq immediately? I think
+it would be better to do this unconditionally, and print the "Unhandled
+context fault" message for any non-zero value of ret.
+
+Will
