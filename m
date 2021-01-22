@@ -2,180 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C6F33007B2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jan 2021 16:46:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 32C4330085A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jan 2021 17:14:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728507AbhAVPpB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Jan 2021 10:45:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40088 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728697AbhAVPow (ORCPT
+        id S1729468AbhAVQLy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Jan 2021 11:11:54 -0500
+Received: from mail-oi1-f175.google.com ([209.85.167.175]:44604 "EHLO
+        mail-oi1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729472AbhAVQLA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Jan 2021 10:44:52 -0500
-Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 963FCC06174A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Jan 2021 07:44:11 -0800 (PST)
-Received: by mail-qt1-x82a.google.com with SMTP id t14so768801qto.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Jan 2021 07:44:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=nJ5Mm7jDvt8rYYjqfuGcAKVlF1C7OcwWb/rDTKJ5d/Q=;
-        b=wcWMa2FpEYwa9IT1fn9c6WjOp7s8r0ejmanTOS4UW7OvflsrFUpCD6F4pcKzYPFC81
-         17nnqVC3NCknrcdEJcqD4nSWJOb+uY33GwliYT+O8wKc/5qi4Jc1FjAEwoeNzn1exNHs
-         qIw/6/Z+T8FGuv24jzsa+eRU6XI4fCK8I1qUe7CfR1QNNxegep2k6Yc/DFJ+sga+gJwJ
-         7w87e3YSYF48VPfreqMzKl/dTsEI5IV5x5K8M2LHTHdRAa7D67JMah8uKz1k8Pj3Kwvr
-         G9gue26Ip4oMikjTsZf541S5wI+4/icsGylvKMYDB9Zf5kfJLOy79t6PG43MtcxlV+dH
-         Yddw==
+        Fri, 22 Jan 2021 11:11:00 -0500
+Received: by mail-oi1-f175.google.com with SMTP id x137so5261008oix.11;
+        Fri, 22 Jan 2021 08:10:45 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=nJ5Mm7jDvt8rYYjqfuGcAKVlF1C7OcwWb/rDTKJ5d/Q=;
-        b=OvPZrmt7aIuYX/Q7NO/+ZNXoaWuM0prEhJZ69iUevE52uyglPWHqyb25WdYtzpNdNR
-         GDgeTcUc/RREMRprOc4AkXsLcFxXecddpyMjqtwrImxn+3isbp0c7AjuotQa7aSsEd6S
-         tyP8VUQCMWmFb/9Hl30mGi8GiGQ/AKZU9a8rBDOz4afhxEHlQUOwo8h8Lg+1J/7VVvl9
-         2BZi7glglZ64NxfuCW3Q129WqpADyq8+kAA/6keKZYZiYGz7sc8htwXfA35P/V03IsEx
-         ZDBopiNihADXaLPwnvEWT7w6HCpiofr2W/dgZhAZHWK+1AgOyTKe6jO0ETc42K1sTyaV
-         LnZA==
-X-Gm-Message-State: AOAM5303h6mbRttCQpvrynaoeH6CVwqoctjGqBxKysuKSp4dtsNS1+52
-        WlGqxbCrtFejr22FU+X0/50m/g==
-X-Google-Smtp-Source: ABdhPJwRZyDqa9tInh1QS8BuhgaOJCcFWxaygOKtTTGW608RraEiVWrtKYW+ODZ0VLA+FLfMgCDVzA==
-X-Received: by 2002:aed:2be7:: with SMTP id e94mr4817414qtd.110.1611330250814;
-        Fri, 22 Jan 2021 07:44:10 -0800 (PST)
-Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.gmail.com with ESMTPSA id p75sm6616661qka.72.2021.01.22.07.44.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Jan 2021 07:44:10 -0800 (PST)
-Subject: Re: [PATCH] drivers: dma: qcom: bam_dma: Manage clocks when
- controlled_remotely is set
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        dan.j.williams@intel.com, vkoul@kernel.org,
-        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20210122025251.3501362-1-thara.gopinath@linaro.org>
- <20210122051013.GE2479@dragon>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <d1f1724c-39f1-7b6e-8cd4-638a44608d9c@linaro.org>
-Date:   Fri, 22 Jan 2021 10:44:09 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4QJOLWJZmF+NWe59yyneExd/euMLwMsHwRJgWMafHFM=;
+        b=DkPxlrvgQIVFgxggGFDhoozd32azQr3rc6AcrGtjefcFpyLipJbcl9zQ9FMh9lQF7p
+         DCkix/xiUTbr0N8pq6QlkX1bm1AcQEQ5Ewe+M8mfCRz32dC12El0yZy9Y6cn82Eav9qu
+         w6QAK94vNeU4MJFM7KT7QFfNJuwsmSuMZfrBIz8z42jKkk74HLlGT4ijQsq5qHr8IMxx
+         rntqUI5qLrbBYFHLewTReLgbR0ldyPXf4qzO+mOq7Hed7axe74umT9P3oqJrvHV65UHV
+         VCO24MhcKb/XFF1LGKh75QbLcCLu6DnfQeyR16ieqsQlY66c6Px27Lum0k1wlqlTVPBC
+         uZyw==
+X-Gm-Message-State: AOAM532r+2vQdfRyfAgZCQYid8C+QsSTDLV0zcw6US38/G73+KtEwz9d
+        qiAJVoyDLBJMs4Ea6lWz5BebsXHlBIA9dFSFdkc=
+X-Google-Smtp-Source: ABdhPJxLY5PerPLcwqA+39SgSd1WtO2QsOPj1ChUZwmItWePbMy79hWTWs5EsUq7wotD9dbPPmm4Cc+wW2qA3rtpYCU=
+X-Received: by 2002:aca:308a:: with SMTP id w132mr3586396oiw.69.1611331818926;
+ Fri, 22 Jan 2021 08:10:18 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20210122051013.GE2479@dragon>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20210120155042.28975-1-ilina@codeaurora.org>
+In-Reply-To: <20210120155042.28975-1-ilina@codeaurora.org>
+From:   "Rafael J. Wysocki" <rafael@kernel.org>
+Date:   Fri, 22 Jan 2021 17:10:07 +0100
+Message-ID: <CAJZ5v0i88KBG6fUGWhwE_AYnPeqN_1BtHnsWFPScjn25JuV4CQ@mail.gmail.com>
+Subject: Re: [PATCH v9 0/2] Better domain idle from device wakeup patterns
+To:     Lina Iyer <ilina@codeaurora.org>
+Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Shawn,
+On Wed, Jan 20, 2021 at 4:53 PM Lina Iyer <ilina@codeaurora.org> wrote:
+>
+> Changes since v8 [8]:
+> - Check if device is attached to genpd
+>
+> Changes since v7 [7]:
+> - Whitespace and comment fixes
+> - Add Reviewed-by tags
+>
+> Changes since v6 [6];
+> - Based on discussions on [6], this update simplifies the next wakeup
+>   of domains based on genpd flag GENPD_FLAG_MIN_RESIDENCY specified at
+>   init.
+> - Assume next wakeup will be set by devices when the domain is not
+>   powered down. This could avoid locking requirements.
+> - Update commit text.
+>
+> Changes since v5 [5]:
+> - It was pointed out that we don't want to run through the unnecessary
+>   work for domains that do not need or support next-wakeup. So, patch #1
+>   in this version, now uses a flag to detemine if the domain would
+>   support next-wakeup.
+> - Other review comments addressed in patches #2, #3
+>
+> Changes since v4 [4]:
+> - Address review comments
+>
+> Changes since v3 [3]:
+> - Move the next_wakeup info of the device deeper into the device's
+>   domain data. This should avoid overhead for devices that do not have a
+>   predictable wakeup pattern.
+>
+> Changes since v2:
+> - Fix unwanted change
+>
+> Changes since v1 [2]:
+> - Update documentation and commit text
+> - Remove check for runtime PM when setting next_event
+> - Fix kernel-test robot reported issue
+>
+> Changes since RFC [1]:
+> - Organized the code to make it cleaner
+> - Fixed some issues with idle state determination
+> - Add documentation and update commit text
+>
+> Hello,
+>
+> I was looking for an option to do better power management for some
+> domains where the devices enter runtime PM in a predictable fashion. For
+> example a display device that sends a vsync interrupt every 16 ms for a
+> 60 Hz panel. These interrupts are not timer interrupts but tend to
+> interrupt periodically to service the workflow and the devices and
+> domains may go back to idle soon after. Two domains are affected by this
+> - the device's PM domain and the CPU PM domain.
+>
+> As a first step, I am looking to solve for the device's PM domain idle
+> state (and hopefully solve for the CPU PM domains subsequently). The PM
+> domain could have multiple idle states and/or the enter/exit latencies
+> could be high. In either case, it may not always be beneficial to power
+> off the domain, only to turn it back on before satisfying the idle state
+> residency. When the wakeup is known for the device, we could use that to
+> determine the worthiness of entering a domain idle state. Only the
+> device can tell us when the future event would be and that could change
+> as the usecase changes. Like, when the panel refresh rate increases to
+> 120 Hz. If this information was made available to runtime PM, we could
+> use that in the domain governor to determine a suitable idle state. This
+> is the idea behind these patches.
+>
+> Would appreciate your thoughts on this.
+>
+> Thanks,
+> Lina
+>
+> [1].
+> https://lore.kernel.org/linux-pm/010101746eccb270-05beb27f-e1e4-40eb-92da-ad1bb48feb41-000000@us-west-2.amazonses.com/T
+> /
+> [2]. https://lore.kernel.org/linux-pm/20201012223400.23609-3-ilina@codeaurora.org/T/#u
+> [3]. https://lore.kernel.org/linux-pm/20201015193807.17423-1-ilina@codeaurora.org/
+> [4]. https://www.spinics.net/lists/linux-arm-msm/msg74322.html
+> [5]. https://lore.kernel.org/linux-pm/20201106164811.3698-1-ilina@codeaurora.org/T/#t
+> [6]. https://lore.kernel.org/linux-pm/20201130225039.15981-1-ilina@codeaurora.org/T/#t
+> [7]. https://lore.kernel.org/linux-pm/20210113201601.14874-1-ilina@codeaurora.org/T/#t
+> [8]. https://lore.kernel.org/linux-pm/20210115165004.22385-1-ilina@codeaurora.org/T/#t
+>
+>
+> Lina Iyer (2):
+>   PM / domains: inform PM domain of a device's next wakeup
+>   PM / Domains: use device's next wakeup to determine domain idle state
+>
+>  drivers/base/power/domain.c          |  30 ++++++++
+>  drivers/base/power/domain_governor.c | 102 ++++++++++++++++++++++++---
+>  include/linux/pm_domain.h            |  12 ++++
+>  3 files changed, 135 insertions(+), 9 deletions(-)
+>
+> --
 
-Thanks for the review
-
-On 1/22/21 12:10 AM, Shawn Guo wrote:
-> On Thu, Jan 21, 2021 at 09:52:51PM -0500, Thara Gopinath wrote:
->> When bam dma is "controlled remotely", thus far clocks were not controlled
->> from the Linux. In this scenario, Linux was disabling runtime pm in bam dma
->> driver and not doing any clock management in suspend/resume hooks.
->>
->> With introduction of crypto engine bam dma, the clock is a rpmh resource
->> that can be controlled from both Linux and TZ/remote side.  Now bam dma
->> clock is getting enabled during probe even though the bam dma can be
->> "controlled remotely". But due to clocks not being handled properly,
->> bam_suspend generates a unbalanced clk_unprepare warning during system
->> suspend.
->>
->> To fix the above issue and to enable proper clock-management, this patch
->> enables runtim-pm and handles bam dma clocks in suspend/resume hooks if
->> the clock node is present irrespective of controlled_remotely property.
-> 
-> Shouldn't the following probe code need some update?  Now we have both
-> controlled_remotely and clocks handle for cryptobam node.  For example,
-> if devm_clk_get() returns -EPROBE_DEFER, we do not want to continue with
-> bamclk forcing to be NULL, right?
-
-We still will have to set bdev->bamclk to NULL in certain scenarios. For 
-eg slimbus bam dma is controlled-remotely and the clocks are handled by 
-the remote s/w. Linux does not handle the clocks at all and  there is no 
-clock specified in the dt node.This is the norm for the devices that are 
-also controlled by remote s/w. Crypto bam dma is a special case where 
-the clock is actually a rpmh resource and hence can be independently 
-handled from both remote side and Linux by voting. In this case, the dma 
-is controlled remotely but clock can be turned off and on in Linux. 
-Hence the need for this patch.
-
-Yes, the probe code needs updating to handle -EPROBE_DEFER (esp if the 
-clock driver is built in as a module) I am not sure if the clock 
-framework handles -EPROBE_DEFER properly either. So that
-might need updating too. This is a separate activity and not part of 
-this patch.
-
-> 
->          bdev->bamclk = devm_clk_get(bdev->dev, "bam_clk");
->          if (IS_ERR(bdev->bamclk)) {
->                  if (!bdev->controlled_remotely)
->                          return PTR_ERR(bdev->bamclk);
-> 
->                  bdev->bamclk = NULL;
->          }
-> 
->>
->> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
->> ---
->>   drivers/dma/qcom/bam_dma.c | 20 +++++++++++---------
->>   1 file changed, 11 insertions(+), 9 deletions(-)
->>
->> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
->> index 88579857ca1d..b3a34be63e99 100644
->> --- a/drivers/dma/qcom/bam_dma.c
->> +++ b/drivers/dma/qcom/bam_dma.c
->> @@ -1350,7 +1350,7 @@ static int bam_dma_probe(struct platform_device *pdev)
->>   	if (ret)
->>   		goto err_unregister_dma;
->>   
->> -	if (bdev->controlled_remotely) {
->> +	if (!bdev->bamclk) {
->>   		pm_runtime_disable(&pdev->dev);
->>   		return 0;
->>   	}
->> @@ -1438,10 +1438,10 @@ static int __maybe_unused bam_dma_suspend(struct device *dev)
->>   {
->>   	struct bam_device *bdev = dev_get_drvdata(dev);
->>   
->> -	if (!bdev->controlled_remotely)
->> +	if (bdev->bamclk) {
->>   		pm_runtime_force_suspend(dev);
->> -
->> -	clk_unprepare(bdev->bamclk);
->> +		clk_unprepare(bdev->bamclk);
->> +	}
->>   
->>   	return 0;
->>   }
->> @@ -1451,12 +1451,14 @@ static int __maybe_unused bam_dma_resume(struct device *dev)
->>   	struct bam_device *bdev = dev_get_drvdata(dev);
->>   	int ret;
->>   
->> -	ret = clk_prepare(bdev->bamclk);
->> -	if (ret)
->> -		return ret;
->> +	if (bdev->bamclk) {
->> +		ret = clk_prepare(bdev->bamclk);
->> +		if (ret)
->> +			return ret;
->>   
->> -	if (!bdev->controlled_remotely)
->> -		pm_runtime_force_resume(dev);
->> +		if (!bdev->controlled_remotely)
-> 
-> Why do we still need controlled_remotely check here?
-
-Yes you are right. This should be removed.I will send v2.
-
--- 
-Warm Regards
-Thara
+Both patches applied as 5.12 material, thanks!
