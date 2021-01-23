@@ -2,108 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AC0DC3016D3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Jan 2021 17:35:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9448B3017AA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Jan 2021 19:37:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725932AbhAWQev (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 Jan 2021 11:34:51 -0500
-Received: from m42-8.mailgun.net ([69.72.42.8]:27195 "EHLO m42-8.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725891AbhAWQev (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 Jan 2021 11:34:51 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1611419671; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=oT7MRBChsv+idL281B/pS9tqQFqOqOFuyvZzg95aFI0=; b=oENa4mUF8sL5WVNuRPR92WDansV2ePKk/pltF71msr97dI7yAgNYUShWodr2lU+y94ke9rsY
- 1GS9a+s29zG7jvtiwmqkiyW+BGdnql6e5bJTpolZ3pTEAUpItQTkFxoXLDEnbfEoc8ve9VYe
- rk2IPoUYuRjBSuFjUrsvQcU/Uz4=
-X-Mailgun-Sending-Ip: 69.72.42.8
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 600c4ff6fb02735e8cf5561c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 23 Jan 2021 16:33:58
- GMT
-Sender: gkohli=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id F1A0DC43461; Sat, 23 Jan 2021 16:33:57 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.1.4] (unknown [136.185.226.226])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: gkohli)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EC1ACC433ED;
-        Sat, 23 Jan 2021 16:33:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EC1ACC433ED
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=gkohli@codeaurora.org
-Subject: Re: [PATCH v1] trace: Fix race in trace_open and buffer resize call
-To:     Denis Efremov <efremov@linux.com>,
-        Steven Rostedt <rostedt@goodmis.org>
-Cc:     Greg KH <gregkh@linuxfoundation.org>, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, stable@vger.kernel.org,
-        Julia Lawall <julia.lawall@inria.fr>
-References: <1601976833-24377-1-git-send-email-gkohli@codeaurora.org>
- <f06efd7b-c7b5-85c9-1a0e-6bb865111ede@linux.com>
- <20210121140951.2a554a5e@gandalf.local.home>
- <021b1b38-47ce-bc8b-3867-99160cc85523@linux.com>
- <20210121153732.43d7b96b@gandalf.local.home> <YAqwD/ivTgVJ7aap@kroah.com>
- <8e17ad41-b62b-5d39-82ef-3ee6ea9f4278@codeaurora.org>
- <20210122093758.320bb4f9@gandalf.local.home>
- <5959315a-507a-00df-031a-e60d45c1f7ab@linux.com>
-From:   Gaurav Kohli <gkohli@codeaurora.org>
-Message-ID: <46d1f82b-1eb4-a828-c79c-e6556eccf9d5@codeaurora.org>
-Date:   Sat, 23 Jan 2021 22:03:27 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.1
+        id S1726208AbhAWSgv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Jan 2021 13:36:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47150 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725883AbhAWSgt (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 23 Jan 2021 13:36:49 -0500
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C753C0613D6;
+        Sat, 23 Jan 2021 10:36:09 -0800 (PST)
+Received: by mail-oi1-x22b.google.com with SMTP id q205so10009781oig.13;
+        Sat, 23 Jan 2021 10:36:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ItoMLXE2qEE4kruDNMdVDPu9neEQLYaZYrZXcHLnvn4=;
+        b=i554GOlBBGDXstaVUKaUwKdjOrjOOTJEvVyZ73dfJ9it/FF3RP2E//KBg1RTdlrfNo
+         a+IPsEBD2HlyfFyu228qDOLDnG/nXtqq34rawAEypmzYWxXnpOaLQE2NEB7w4VIazLFX
+         4B/gUvFd2PCr2/IE3Zs1Ezc3q90c0jhi2rTu8HwrulrXDePPm38/pgi3ROwgEi9/Wti9
+         UnaI6WaLGAOSe4jBzU/VEnX60eyfbLstdJlDRLc+QVBgvmKNrtrsSucQSdPmOcWrh3VR
+         srN9I1fSaQNhaRfpXGmVSRaG/7vkFsFide5wToOX2yYlpAs15xvRhRzB/DgR+I57BaFE
+         1P8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ItoMLXE2qEE4kruDNMdVDPu9neEQLYaZYrZXcHLnvn4=;
+        b=COri4QfBQAWzeBsfYUAOrxeZoBDYv2aU+00jyAKc2Q2puSl+8QVe16q0PXjP4SKCzn
+         pPHpBzm+r7uv4YreVLaPkqrYBxs8fan8n3EnpWH79EFTTdPkCPg/V9gFOuOStaqJV03Q
+         cRV6ToAIAZthSTdK9zUD8wB6sY9XEF/PTpK3X9NoMXOOzI4CyjVIo+agqTEf86csAYv5
+         NOtEO06s1U1lc6T453WDhd2lYD7xcfMKvfYcyyB5+AcbqjXpLYDvj5NHHJ+kOcUPAw3U
+         PNZD8tJZfXKKDoEyQqm36zGmiYJZl43ZbvfJjvorxiVYK4tjvCZs8sAWq5hDsSSJrXSh
+         YR7g==
+X-Gm-Message-State: AOAM533t0lt4ZWoG0fEqrWRuewrpzV/iLtoNygI2f3wfqn9KIVhKwgEx
+        DksYUlzHPEflMJW4N8NncQI=
+X-Google-Smtp-Source: ABdhPJwKpCizBfiTvJfhVhw0EIuISprqmUO/0Er7f8LTpeU7bHbjQAAch0rtr2m3FhZraSv+NPy+ug==
+X-Received: by 2002:aca:c394:: with SMTP id t142mr1796144oif.44.1611426968802;
+        Sat, 23 Jan 2021 10:36:08 -0800 (PST)
+Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id f20sm2446310otl.21.2021.01.23.10.36.07
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 23 Jan 2021 10:36:08 -0800 (PST)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date:   Sat, 23 Jan 2021 10:36:07 -0800
+From:   Guenter Roeck <linux@roeck-us.net>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 4/7] dt-bindings: watchdog: Add binding for Qcom SDX55
+Message-ID: <20210123183607.GA60896@roeck-us.net>
+References: <20210118051005.55958-1-manivannan.sadhasivam@linaro.org>
+ <20210118051005.55958-5-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <5959315a-507a-00df-031a-e60d45c1f7ab@linux.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210118051005.55958-5-manivannan.sadhasivam@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Jan 18, 2021 at 10:40:02AM +0530, Manivannan Sadhasivam wrote:
+> Add devicetree binding for watchdog present in Qcom SDX55 platform.
+> 
+> Cc: Wim Van Sebroeck <wim@linux-watchdog.org>
+> Cc: Guenter Roeck <linux@roeck-us.net>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Cc: linux-watchdog@vger.kernel.org
+> Cc: devicetree@vger.kernel.org
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
 
-On 1/23/2021 4:19 PM, Denis Efremov wrote:
+> ---
+>  Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> 
-> On 1/22/21 5:37 PM, Steven Rostedt wrote:
->> On Fri, 22 Jan 2021 16:55:29 +0530
->> Gaurav Kohli <gkohli@codeaurora.org> wrote:
->>
->>>>> That could possibly work.
->>>
->>> Yes, this will work, As i have tested similar patch for internal testing
->>> for kernel branches like 5.4/4.19.
->>
->> Can you or Denis send a proper patch for Greg to backport? I'll review it,
->> test it and give my ack to it, so Greg can take it without issue.
->>
-> 
-> I can prepare the patch, but it will be compile-tested only from my side. Honestly,
-> I think it's better when the patch and its backports have the same author and
-> commit message. And I can't test the fix by myself as I don't know how to reproduce
-> conditions for the bug. I think it's better if Gaurav will prepare this backport,
-> unless he have reasons for me to do it or maybe just don't have enough time nowadays.
-> Gaurav, if you want to somehow mention me you add my Reported-by:
-> 
-> Thanks,
-> Denis
-> 
-
-Sure I will do, I have never posted on backport branches. Let me check 
-and post it.
-
--- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center,
-Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+> diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> index 8e3760a3822b..b8e4118945a0 100644
+> --- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> +++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> @@ -18,6 +18,7 @@ properties:
+>        - qcom,apss-wdt-qcs404
+>        - qcom,apss-wdt-sc7180
+>        - qcom,apss-wdt-sdm845
+> +      - qcom,apss-wdt-sdx55
+>        - qcom,apss-wdt-sm8150
+>        - qcom,kpss-timer
+>        - qcom,kpss-wdt
