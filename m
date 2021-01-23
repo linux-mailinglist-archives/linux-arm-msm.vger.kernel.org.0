@@ -2,97 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BB80F301265
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Jan 2021 03:48:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CD98D3013AD
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Jan 2021 08:20:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726602AbhAWCqy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Jan 2021 21:46:54 -0500
-Received: from m42-8.mailgun.net ([69.72.42.8]:13341 "EHLO m42-8.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726594AbhAWCqs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Jan 2021 21:46:48 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1611369983; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=eoRl5Yg9+Kk7pQqSSHj/yvwSZ/cQGnqwlmE3BwZXzdY=; b=eXJTisrTBdNWfPhS/oVEdsFAmXywKj+qG1BL3JIf/nUt8Hr0HbUhrjdikEasZNae7MENXyYJ
- 9WL6/BsOg39XL28uVDG+vsYt7uYX0OST3Viy9L/7yGvhJ+x5VOaqeNcbsuwF9jSVCHikUJ9G
- gjAymoa3TW2PR7BRLp03rtHaEtI=
-X-Mailgun-Sending-Ip: 69.72.42.8
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 600b8ddfbeacd1a25272eb02 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 23 Jan 2021 02:45:51
- GMT
-Sender: subbaram=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0D3DFC433CA; Sat, 23 Jan 2021 02:45:51 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from subbaram-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: subbaram)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id DA756C433CA;
-        Sat, 23 Jan 2021 02:45:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DA756C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=subbaram@codeaurora.org
-From:   Subbaraman Narayanamurthy <subbaram@codeaurora.org>
-To:     sboyd@kernel.org, linux-kernel@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, collinsd@coreaurora.org,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
-Subject: [PATCH] spmi: spmi-pmic-arb: Fix hw_irq overflow
-Date:   Fri, 22 Jan 2021 18:45:43 -0800
-Message-Id: <1611369943-18685-1-git-send-email-subbaram@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S1726554AbhAWHUP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Jan 2021 02:20:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43856 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726242AbhAWHUN (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 23 Jan 2021 02:20:13 -0500
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3068BC06174A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Jan 2021 23:19:33 -0800 (PST)
+Received: by mail-pl1-x634.google.com with SMTP id g3so4579498plp.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Jan 2021 23:19:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=RiZZvwwyb49yURnSjcY0X14bt1OOhPEh7Q9ZLRAbppo=;
+        b=sfTx+w7Ky5+LoSBCX4toBY4WMmFidBHo6vNYmD2yT3IB/q6R7L0lmk4vRNoMacXrS5
+         nYo8EmtLYA3e0K+QhamFclIdZid4uMLXb1hI2PvBfQnPhtl9Iy8CezuWSXeZbolfb6Rh
+         7sENDnvBnlu9iFlDLdnxtAm043puL67MYHsUR1+W1BDwZFWvG4cDKg+7qDHLcnwqeCCS
+         tcnvmE8kfrvTzyL3vWlxs0aNDJRdKPJY9mGYLB3DGXAV52vMA+6SHaKDNo1HcRspIFkv
+         njQlfItLHMyWhgacE7sWzKgqYiWhbi+WuVcQsGgNGVCDxQRLu+ylyeMG5norNR0bgc5G
+         3a8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=RiZZvwwyb49yURnSjcY0X14bt1OOhPEh7Q9ZLRAbppo=;
+        b=b5vCpHabuZfyQzpSA+oZH2XXHzpxRGAMGLv8b65P2YE4pRNaff176oCvSmU+aW5QOT
+         yFMlrysuD8IrWMYEI2YES68zcIlEQVrI4AlEA5YLDmxNiQh0FPR5LIjCfi9NrgLfZIfd
+         aWvD89+I9vFYTLeNTvgPyq7LerZhFDQHugCAanWFf6yIexGRltrk0OsM3mYQ/M7zUtG9
+         bLQCrKVgBjv/3Lo+4VNNMBw8vICrrwsdiMnykYrVy/8x0RRKmqHgHRIpUH+JUzjssKVL
+         s0S26r0CaCuDXIO83dzkRvtwxz1vegGBI7A0X6RpMddD9spEMPEAPu8vZQ9CQWaWkpsS
+         rAWw==
+X-Gm-Message-State: AOAM530vLAuA3ilAPVFJ22lW3nWDSmwwFWO4CnCxhniJ4cb8/ftKOVvQ
+        RVn4YsSeSU6Japfx0IBfrCQGUw==
+X-Google-Smtp-Source: ABdhPJzRf4OR0O4j4MVOHVNlecGUVQ8m3Ufn11l8XPw3WRtQKtG0P34UJ9Vel+HMs5aKNSjKy7Dmdg==
+X-Received: by 2002:a17:902:7b96:b029:de:7ae6:b8db with SMTP id w22-20020a1709027b96b02900de7ae6b8dbmr8914440pll.0.1611386372534;
+        Fri, 22 Jan 2021 23:19:32 -0800 (PST)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id b7sm10607315pff.96.2021.01.22.23.19.29
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 22 Jan 2021 23:19:31 -0800 (PST)
+Date:   Sat, 23 Jan 2021 15:19:25 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        dan.j.williams@intel.com, vkoul@kernel.org,
+        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drivers: dma: qcom: bam_dma: Manage clocks when
+ controlled_remotely is set
+Message-ID: <20210123071924.GF2479@dragon>
+References: <20210122025251.3501362-1-thara.gopinath@linaro.org>
+ <20210122051013.GE2479@dragon>
+ <d1f1724c-39f1-7b6e-8cd4-638a44608d9c@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d1f1724c-39f1-7b6e-8cd4-638a44608d9c@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently, when handling the SPMI summary interrupt, the hw_irq
-number is calculated based on SID, Peripheral ID, IRQ index and
-APID. This is then passed to irq_find_mapping() to see if a
-mapping exists for this hw_irq and if available, invoke the
-interrupt handler. Since the IRQ index uses an "int" type, hw_irq
-which is of unsigned long data type can take a large value when
-SID has its MSB set to 1 and the type conversion happens. Because
-of this, irq_find_mapping() returns 0 as there is no mapping
-for this hw_irq. This ends up invoking cleanup_irq() as if
-the interrupt is spurious whereas it is actually a valid
-interrupt. Fix this by using the proper data type (u32) for id.
+On Fri, Jan 22, 2021 at 10:44:09AM -0500, Thara Gopinath wrote:
+> Hi Shawn,
+> 
+> Thanks for the review
+> 
+> On 1/22/21 12:10 AM, Shawn Guo wrote:
+> > On Thu, Jan 21, 2021 at 09:52:51PM -0500, Thara Gopinath wrote:
+> > > When bam dma is "controlled remotely", thus far clocks were not controlled
+> > > from the Linux. In this scenario, Linux was disabling runtime pm in bam dma
+> > > driver and not doing any clock management in suspend/resume hooks.
+> > > 
+> > > With introduction of crypto engine bam dma, the clock is a rpmh resource
+> > > that can be controlled from both Linux and TZ/remote side.  Now bam dma
+> > > clock is getting enabled during probe even though the bam dma can be
+> > > "controlled remotely". But due to clocks not being handled properly,
+> > > bam_suspend generates a unbalanced clk_unprepare warning during system
+> > > suspend.
+> > > 
+> > > To fix the above issue and to enable proper clock-management, this patch
+> > > enables runtim-pm and handles bam dma clocks in suspend/resume hooks if
+> > > the clock node is present irrespective of controlled_remotely property.
+> > 
+> > Shouldn't the following probe code need some update?  Now we have both
+> > controlled_remotely and clocks handle for cryptobam node.  For example,
+> > if devm_clk_get() returns -EPROBE_DEFER, we do not want to continue with
+> > bamclk forcing to be NULL, right?
+> 
+> We still will have to set bdev->bamclk to NULL in certain scenarios. For eg
+> slimbus bam dma is controlled-remotely and the clocks are handled by the
+> remote s/w. Linux does not handle the clocks at all and  there is no clock
+> specified in the dt node.This is the norm for the devices that are also
+> controlled by remote s/w. Crypto bam dma is a special case where the clock
+> is actually a rpmh resource and hence can be independently handled from both
+> remote side and Linux by voting. In this case, the dma is controlled
+> remotely but clock can be turned off and on in Linux. Hence the need for
+> this patch.
 
-Signed-off-by: Subbaraman Narayanamurthy <subbaram@codeaurora.org>
----
- drivers/spmi/spmi-pmic-arb.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+So is it correct to say that clock is mandatory for !controlled-remotely
+BAM, while it's optional for controlled-remotely one.  If yes, maybe we
+can do something like below to make the code a bit easier to read?
 
-diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
-index de844b4..bbbd311 100644
---- a/drivers/spmi/spmi-pmic-arb.c
-+++ b/drivers/spmi/spmi-pmic-arb.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /*
-- * Copyright (c) 2012-2015, 2017, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2012-2015, 2017, 2021, The Linux Foundation. All rights reserved.
-  */
- #include <linux/bitmap.h>
- #include <linux/delay.h>
-@@ -505,8 +505,7 @@ static void cleanup_irq(struct spmi_pmic_arb *pmic_arb, u16 apid, int id)
- static void periph_interrupt(struct spmi_pmic_arb *pmic_arb, u16 apid)
- {
- 	unsigned int irq;
--	u32 status;
--	int id;
-+	u32 status, id;
- 	u8 sid = (pmic_arb->apid_data[apid].ppid >> 8) & 0xF;
- 	u8 per = pmic_arb->apid_data[apid].ppid & 0xFF;
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+	if (controlled-remotely)
+		bdev->bamclk = devm_clk_get_optional();
+	else
+		bdev->bamclk = devm_clk_get();
+		
+> Yes, the probe code needs updating to handle -EPROBE_DEFER (esp if the clock
+> driver is built in as a module) I am not sure if the clock framework handles
+> -EPROBE_DEFER properly either. So that
+> might need updating too. This is a separate activity and not part of this
+> patch.
 
+As the patch breaks the assumption that for controlled-remotely BAM
+there is no clock to be managed, the probe code becomes buggy right
+away.
+
+Shawn
