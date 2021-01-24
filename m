@@ -2,90 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F95C3018CF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Jan 2021 00:02:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 68D5C301954
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Jan 2021 04:22:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726348AbhAWXBl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 Jan 2021 18:01:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47292 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725932AbhAWXBe (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 Jan 2021 18:01:34 -0500
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B2E9C061786
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Jan 2021 15:00:54 -0800 (PST)
-Received: by mail-lj1-x230.google.com with SMTP id f17so10826626ljg.12
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Jan 2021 15:00:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=HrXVK1Xlvva74EMLsVDvNnC5B0+F3JZZDWEbxcIzfFk=;
-        b=Vmm1S9RZHzIZvDYnDDrAzJH3S3oguv46vM7BrHrlebnTIkbmlQNHWC2pvKYVIHdsgv
-         7yaKYVS2GotTPqpZiwnVBUYN5YieVS7QGZqdYh5tXVyf2jy/OCkql7fZ5yMkcL9lT2d8
-         HgEmHpD3dFeA5Z+9ANmkoMHmwLTRa2E+7ZAnLRCc2t3rgtzwSRM6UJDB7fmfGc5dz/PO
-         Agwqcjv1MHb2lBXqORpM159TskCW+bUPf1AfrwcWFJFuGYGad3RT0baDFn652T/rNC/E
-         IYGbyGvwDV0zAXrzpaEesz1+LPFMHEZq086XCdvkLiRpizAZM/F894y+gsE85BZQl+Gz
-         Mbgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=HrXVK1Xlvva74EMLsVDvNnC5B0+F3JZZDWEbxcIzfFk=;
-        b=cgPfgy1NufV0poNULSx8ouzmXfzTeh1kMYuaQ1qoDV23Yv+01WJ1up9fcsr03DK9vX
-         ErWEoLqtVUniElTTyXHynp0HpAV0lBFkqH1HYCg3DH5p9rk6Vqlb2PD4FjrRWFOYgICq
-         smJThPcrpPjkwOLTcZpUZHC3QE6EKRitCwCaDYOzU0YFmNGjubKKiUbp53RwlSoeC3dG
-         6vf7TZMWqakWS+cttdGmJnL+q8dKrrnby421RPORRd84EAdilNyK7YiggLk0M49jixZu
-         5IW91N/Us2CwHv8z91BDf6ymmpckWwis8GRmY0i2+TIIBAWNr3golNjUn2yaXKFr49KI
-         Klbg==
-X-Gm-Message-State: AOAM5320jZmoZnXhfxcBqjhoZVGob1FQMkt9qAKLR6Qtt75WE2AFLo/7
-        Paczlo2/t7Ak5dsbTQsYZxJNTfdeovI2Mo5x+luAzg==
-X-Google-Smtp-Source: ABdhPJxxyemhnBxyJIW6WUkq6tdnONnoKmLFjru3rwB+p5RRR8juI+8vkgZwRHs0U5QBMfiq9BIQky35UFJW+y54/vg=
-X-Received: by 2002:a2e:9ec3:: with SMTP id h3mr220937ljk.200.1611442852795;
- Sat, 23 Jan 2021 15:00:52 -0800 (PST)
+        id S1726223AbhAXDWb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Jan 2021 22:22:31 -0500
+Received: from mail.kernel.org ([198.145.29.99]:33832 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725943AbhAXDWa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 23 Jan 2021 22:22:30 -0500
+Received: from oasis.local.home (cpe-66-24-58-225.stny.res.rr.com [66.24.58.225])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 5142822D0A;
+        Sun, 24 Jan 2021 03:21:49 +0000 (UTC)
+Date:   Sat, 23 Jan 2021 22:21:47 -0500
+From:   Steven Rostedt <rostedt@goodmis.org>
+To:     Gaurav Kohli <gkohli@codeaurora.org>
+Cc:     Denis Efremov <efremov@linux.com>,
+        Greg KH <gregkh@linuxfoundation.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        stable@vger.kernel.org, Julia Lawall <julia.lawall@inria.fr>
+Subject: Re: [PATCH v1] trace: Fix race in trace_open and buffer resize call
+Message-ID: <20210123222147.1e2d5626@oasis.local.home>
+In-Reply-To: <46d1f82b-1eb4-a828-c79c-e6556eccf9d5@codeaurora.org>
+References: <1601976833-24377-1-git-send-email-gkohli@codeaurora.org>
+        <f06efd7b-c7b5-85c9-1a0e-6bb865111ede@linux.com>
+        <20210121140951.2a554a5e@gandalf.local.home>
+        <021b1b38-47ce-bc8b-3867-99160cc85523@linux.com>
+        <20210121153732.43d7b96b@gandalf.local.home>
+        <YAqwD/ivTgVJ7aap@kroah.com>
+        <8e17ad41-b62b-5d39-82ef-3ee6ea9f4278@codeaurora.org>
+        <20210122093758.320bb4f9@gandalf.local.home>
+        <5959315a-507a-00df-031a-e60d45c1f7ab@linux.com>
+        <46d1f82b-1eb4-a828-c79c-e6556eccf9d5@codeaurora.org>
+X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-References: <20210121114907.109267-1-bianpan2016@163.com> <CACRpkdZzVY=AKFhW-hEmCAHmdMgVF8=hQeE8a8W=2W0h44eQVg@mail.gmail.com>
- <YAtdlKe7q4JskefR@builder.lan>
-In-Reply-To: <YAtdlKe7q4JskefR@builder.lan>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Sun, 24 Jan 2021 00:00:42 +0100
-Message-ID: <CACRpkdb18fxjaspBWpRCvPt32ajXPzoEXPU77QiS2m8tjqL=NA@mail.gmail.com>
-Subject: Re: [PATCH] bus: qcom: Put child node before return
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Pan Bian <bianpan2016@163.com>, Andy Gross <agross@kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Jan 23, 2021 at 12:19 AM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
-> On Fri 22 Jan 16:47 CST 2021, Linus Walleij wrote:
->
-> > On Thu, Jan 21, 2021 at 12:49 PM Pan Bian <bianpan2016@163.com> wrote:
-> >
-> > > Put child node before return to fix potential reference count leak.
-> > > Generally, the reference count of child is incremented and decremented
-> > > automatically in the macro for_each_available_child_of_node() and should
-> > > be decremented manually if the loop is broken in loop body.
-> > >
-> > > Fixes: 335a12754808 ("bus: qcom: add EBI2 driver")
-> > > Signed-off-by: Pan Bian <bianpan2016@163.com>
-> >
-> > Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-> >
-> > Please submit this patch for inclusion through the ARM SoC tree.
-> >
->
-> Any objections to me picking it in the Qualcomm tree? Or that's what you
-> indirectly meant?
+On Sat, 23 Jan 2021 22:03:27 +0530
+Gaurav Kohli <gkohli@codeaurora.org> wrote:
 
-Kind-of-sort-of :D
 
-Apply it to the Qualcomm tree!
+> Sure I will do, I have never posted on backport branches. Let me check 
+> and post it.
+> 
 
-Yours,
-Linus Walleij
+Basically you take your original patch that was in mainline (as the
+subject and commit message), and make it work as if you were doing the
+same exact fix for the stable release.
+
+Send it to me (and Cc everyone else), and I'll give it a test too.
+
+Thanks!
+
+-- Steve
+
