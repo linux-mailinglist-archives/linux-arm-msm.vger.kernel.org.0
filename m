@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DEA1C301C6A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Jan 2021 14:57:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D67AC301C75
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Jan 2021 15:00:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726134AbhAXN5j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 24 Jan 2021 08:57:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40570 "EHLO
+        id S1726126AbhAXN6z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 24 Jan 2021 08:58:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726117AbhAXN5e (ORCPT
+        with ESMTP id S1726035AbhAXN5h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 24 Jan 2021 08:57:34 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 714EAC061786;
-        Sun, 24 Jan 2021 05:56:43 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id g12so14216493ejf.8;
-        Sun, 24 Jan 2021 05:56:43 -0800 (PST)
+        Sun, 24 Jan 2021 08:57:37 -0500
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CE08C061788;
+        Sun, 24 Jan 2021 05:56:46 -0800 (PST)
+Received: by mail-ej1-x634.google.com with SMTP id hs11so14237451ejc.1;
+        Sun, 24 Jan 2021 05:56:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=oYZGFRrNRJohp3t9IqS0qYQQf/UrbKkxJuhh4Cbw970=;
-        b=iw3mLRFleJw4bB8R1WKx/al6CEdyjMHtjujBhS+18jvwbmf1RXS5phJOZQvYPwSr6z
-         //yN9cw0Llv9YKu2+gA2/zNyLSpXhwGosg13TRnVXC0fq3BfnKaIrVC2p8Qi/E2PbvOk
-         su1ysBxBiUVEerNWIiXrJMTxnpzffxOm8THMGwt0EMYNZ62/uZX9Ubym2far409AaGJN
-         56Dnf6jA9zfZpslv8cSzMtiPVWMkVBP3eTwusv9bYRG1F5n5KNDky94/0E724EVhPRbO
-         LBRruitoopt6fH4qXCtvtt1XIpmwfNRtwchYToqsk9BeFtT8XNgs0dwiLghLT4walN8x
-         NuPA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=DcVySy0XdLlShiYBkJyH9r+svRLETjB/758IrdVCUQ0=;
+        b=sRvCQMEzzE/rcPEwO9JxEjc4blKuTSKWw62oRdYu7PebCMyviACPhLNtz8OpgaXPoW
+         asTKq8uqS9AzeM+oMgr3dLKiOvSLqq8lECZglvcxOpieCehifS7iScXB94QYMYdPlGFg
+         K3sjb13jztf/kFIMuAB3BLw1ZS8CBdffWXI5LNdC321XOo+Ngij6jdd4d7sQ6Gf8ANZH
+         dF45R4aLfSvghawX2cyNoSnSHqN7Y/NyQ6YxiHykQhbj5bfakpdtErK/Xte6k0qzMyzV
+         IvfT7JehgK5hDL8f6VqgkbE9KBvnQvNmdafhw6zicMFnZnNOk6kSButmUNft0J1FwWDt
+         uRKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=oYZGFRrNRJohp3t9IqS0qYQQf/UrbKkxJuhh4Cbw970=;
-        b=D4ObLitlIEIuB+rQg5U7IK1wZq2TvlMzjaeuavtakRtYNYZS9UGKqWYDQ6pXgybPsj
-         tXbwUKAg8c/GXEwJTSRaqjKrtR/M1RP6vVb/JvCv5Uf7MjvtoSOUzbBraJKStl7wGkrq
-         v4Ni31JfbV9BRFduc7jtM1rHz9wU5NWYiBgE2mQO4iFveRjYIpO9QLp2ZI1puvz8u53+
-         qiKzGmRYOMqb2JPgJAapPWibvzr5z8USlyW29BaEuxQq34xtFE0OR0wvgN9ztvb+x2uD
-         fzcOda1fkCcrfzfvdAWUAoH42/IILkB2xQaUz9A1okhwi7DGhFhfICEr6Ce66O1LwxR0
-         jn9g==
-X-Gm-Message-State: AOAM533dhUK6koqnKhtIcXbp9FlSMB61LxvQjQ/isOrehXQAfx/SoJKw
-        QJW1NJo0Gy9GpomeHoRfCok=
-X-Google-Smtp-Source: ABdhPJxlzW561c7H++Y/tLImi5j+0079Jz6AhnPdyAzuq0w6CYKp5EASSC42NnyG1uzMcmcZeAl8Ww==
-X-Received: by 2002:a17:906:ae9b:: with SMTP id md27mr893120ejb.357.1611496602189;
-        Sun, 24 Jan 2021 05:56:42 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=DcVySy0XdLlShiYBkJyH9r+svRLETjB/758IrdVCUQ0=;
+        b=nnBLw90BezEufRl3FTgEPmBk0tjtZoWjXYR2+kzo4H41MMcO6VxaYAVKWPrzYSGZDF
+         qgPi0iIe4A34ut3W9SQ7fR20xE3/pGykS3lFOkjYQfPoj+SGgIL5oyQd3bR6tp10NeSW
+         eeET5eXt3rTXcMo72oKcJAl2zNwWEsqnbTP7Rfi51yEHE8XLF0G57GMe8/AJQ78I4Q2s
+         EJRu+egdco5qEqd9/Iogicfka7BcMICTuyGTkHGACv0+rhGNagHDQQQgRkl3KLk1SexZ
+         iJTPml/xXD4bD62R3sY2MolWNmMtuWWS/48UbEz+9HchO5HLEExuEpG+JapGaao0lm6R
+         4m1Q==
+X-Gm-Message-State: AOAM533CReovtol2C7/PBqIV6pyBf4XB+bor2jz7aIy2Oli+R7ukljQK
+        crwC9p2JAXg2jRePIt6BkOE=
+X-Google-Smtp-Source: ABdhPJzb3Ro1ID4ggk5LvOAS1cwIQ+TLrtPFSB9pPSml9g5pVyZb85FdzyzChKrnD2J76KSr1qn1dw==
+X-Received: by 2002:a17:906:dfd3:: with SMTP id jt19mr335281ejc.64.1611496605019;
+        Sun, 24 Jan 2021 05:56:45 -0800 (PST)
 Received: from localhost (178-169-161-196.razgrad.ddns.bulsat.com. [178.169.161.196])
-        by smtp.gmail.com with ESMTPSA id g25sm6995049ejf.15.2021.01.24.05.56.39
+        by smtp.gmail.com with ESMTPSA id j27sm2060338ejb.102.2021.01.24.05.56.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 24 Jan 2021 05:56:41 -0800 (PST)
+        Sun, 24 Jan 2021 05:56:44 -0800 (PST)
 From:   Iskren Chernev <iskren.chernev@gmail.com>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
@@ -56,96 +56,49 @@ Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         Iskren Chernev <iskren.chernev@gmail.com>,
         ~postmarketos/upstreaming@lists.sr.ht,
         Samuel Pascua <pascua.samuel.14@gmail.com>,
-        Alexey Minnekhanov <alexeymin@postmarketos.org>,
-        Brian Masney <masneyb@onstation.org>
-Subject: [PATCH 1/4] ARM: dts: qcom: msm8974: add gpu support
-Date:   Sun, 24 Jan 2021 15:56:07 +0200
-Message-Id: <20210124135610.1779295-1-iskren.chernev@gmail.com>
+        Alexey Minnekhanov <alexeymin@postmarketos.org>
+Subject: [PATCH 2/4] ARM: dts: qcom: msm8974-klte: add support for GPU
+Date:   Sun, 24 Jan 2021 15:56:08 +0200
+Message-Id: <20210124135610.1779295-2-iskren.chernev@gmail.com>
 X-Mailer: git-send-email 2.30.0
+In-Reply-To: <20210124135610.1779295-1-iskren.chernev@gmail.com>
+References: <20210124135610.1779295-1-iskren.chernev@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Brian Masney <masneyb@onstation.org>
+From: Samuel Pascua <pascua.samuel.14@gmail.com>
 
-Add support for the a3xx GPU
+Enable adreno and opp_table dt nodes.
 
-Signed-off-by: Brian Masney <masneyb@onstation.org>
+Signed-off-by: Samuel Pascua <pascua.samuel.14@gmail.com>
 Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
 Tested-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
-Reviewed-by: Brian Masney <masneyb@onstation.org>
 ---
-Changes in v2:
-- base set to next-20210122
-- add tags from v1 replies
-- add Signed-off-by: me on first three patches
-- add commit message to 2nd patch
+ arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-v1: https://lkml.org/lkml/2020/12/30/322
-
- arch/arm/boot/dts/qcom-msm8974.dtsi | 45 +++++++++++++++++++++++++++++
- 1 file changed, 45 insertions(+)
-
-diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-index 51f5f904f9eb9..c399446d8154e 100644
---- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-@@ -1399,6 +1399,51 @@ cnoc: interconnect@fc480000 {
- 			         <&rpmcc RPM_SMD_CNOC_A_CLK>;
+diff --git a/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts b/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
+index f23d1002b8f8b..5a7ac4a31031f 100644
+--- a/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
++++ b/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
+@@ -697,6 +697,14 @@ fuelgauge@36 {
+ 			pinctrl-0 = <&fuelgauge_pin>;
  		};
+ 	};
++
++	opp_table {
++		status = "ok";
++	};
++
++	adreno@fdb00000 {
++		status = "ok";
++	};
+ };
  
-+		gpu_opp_table: opp_table {
-+			status = "disabled";
-+
-+			compatible = "operating-points-v2";
-+
-+			opp-800000000 {
-+				opp-hz = /bits/ 64 <800000000>;
-+			};
-+
-+			opp-500000000 {
-+				opp-hz = /bits/ 64 <500000000>;
-+			};
-+
-+			opp-275000000 {
-+				opp-hz = /bits/ 64 <275000000>;
-+			};
-+		};
-+
-+		gpu: adreno@fdb00000 {
-+			status = "disabled";
-+
-+			compatible = "qcom,adreno-330.2",
-+			             "qcom,adreno";
-+			reg = <0xfdb00000 0x10000>;
-+			reg-names = "kgsl_3d0_reg_memory";
-+			interrupts = <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "kgsl_3d0_irq";
-+			clock-names = "core",
-+			              "iface",
-+			              "mem_iface";
-+			clocks = <&mmcc OXILI_GFX3D_CLK>,
-+			         <&mmcc OXILICX_AHB_CLK>,
-+			         <&mmcc OXILICX_AXI_CLK>;
-+			sram = <&gmu_sram>;
-+			power-domains = <&mmcc OXILICX_GDSC>;
-+			operating-points-v2 = <&gpu_opp_table>;
-+
-+			interconnects = <&mmssnoc MNOC_MAS_GRAPHICS_3D &bimc BIMC_SLV_EBI_CH0>,
-+			                <&ocmemnoc OCMEM_VNOC_MAS_GFX3D &ocmemnoc OCMEM_SLV_OCMEM>;
-+			interconnect-names = "gfx-mem",
-+			                     "ocmem";
-+
-+			// iommus = <&gpu_iommu 0>;
-+		};
-+
- 		mdss: mdss@fd900000 {
- 			status = "disabled";
- 
-
-base-commit: 226871e2eda4832d94c3239add7e52ad17b81ce5
+ &spmi_bus {
 -- 
 2.30.0
 
