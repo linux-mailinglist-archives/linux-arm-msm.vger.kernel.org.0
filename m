@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D24B301C66
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Jan 2021 14:57:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 56A59301C6B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Jan 2021 14:57:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726070AbhAXN51 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 24 Jan 2021 08:57:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40488 "EHLO
+        id S1726157AbhAXN5o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 24 Jan 2021 08:57:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726035AbhAXN5N (ORCPT
+        with ESMTP id S1726114AbhAXN5f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 24 Jan 2021 08:57:13 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6152C0613D6;
-        Sun, 24 Jan 2021 05:56:32 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id i9so1944681wmq.1;
-        Sun, 24 Jan 2021 05:56:32 -0800 (PST)
+        Sun, 24 Jan 2021 08:57:35 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17647C0613ED;
+        Sun, 24 Jan 2021 05:56:42 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id u14so1668320wml.4;
+        Sun, 24 Jan 2021 05:56:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=AHT49i6GyNpyvj3dxg+CB5QvV0SG3lXZeXOaf7l4V8M=;
-        b=MJ3PlxPcG3R9uoMzEJciGkBnDHw0EcAVlnlVXoFXJg77snSLxUrpwo1lVsqw7fZig5
-         QeRWGfoTAADzQaikDitYkBlVvgFCCz1G5zAd33ir5v44NtcoaQqRPRDpwcltqh4emlLD
-         +6ATP0Hj2LG6Nki02N1CRGI7SawaMFsI8TkWUHksYjagdamtrR7lhivZZuzB9SPD5tBB
-         Lh3gngn06C1xi6XfClrlPGqCpxzM4ifL3WTEWKonc0kdk+uxfyjf+MSgxbtKsVrVsU4f
-         6qR0GRpU4BhtzWwTO5neo5v2MAUVvo1EWnsaSSvunW/HTmrilC58Ly3O1B2bUtOFuBX8
-         feOA==
+        bh=jXFAmUtKtjhIfr6Qnmj7e1YF9rrTfOmCZQGx30u2fmY=;
+        b=N810cDFj64zSqA8S6VewzlCxsKIhGVmKk0+7xqcAlo0sNwJbDeLLPLzZTZCKHBKO1V
+         IeR5Qawgwix2AITjEz4oUGfNvkrY5F+TPpaCJcrW2jb1lx8yLMfLwpBh9xj/bDLaPraW
+         9JkQsMH8X1d0/3UaV8p0Wg46q93Idj7EW6eKgVsU0Sp3IcV1rgaDWSEAC9UXUKevdktX
+         EYlwVrS6OuWIQd2/dG8nN5jQVwXst6vhPHHbqAMvpUHDf18YWFG1ZXYI4iyoREANL7QB
+         wmoeicp3GVF4pz0pmqxUzgSWWFxOfDRDK5r3itdHiQg/6wZWWoIu7gPQztCdvHRQohfZ
+         Abyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=AHT49i6GyNpyvj3dxg+CB5QvV0SG3lXZeXOaf7l4V8M=;
-        b=URRo9gG+BAJ3Cnq3rUIdSqaxxCI4WNOnG0U/44rzUD+EAdj5zdFkDUkdD4iQ2+V7Cy
-         od5r9VNBZUJIuRBdi2Kti7sBhfq26WBYKYWlB6tg+/BvjtLc81yZU2oMATb6LKV5jUkw
-         6LjD7zWtqBkOOyelQOTH7HtirxJPxxto6jqKzSnMSAuDN0NCby0YZXiZiYAM9DHcRQEt
-         M7YNvAJ9NTTgzWOBKSg236UVC6/DvEOg/S7Lux1s2eiz9kM7WLTxx6wdwgToVHwiB87R
-         PaySVxFS4yQLiraDKF/4DpTGeagCJ2aPQY482Vrd1jeLHd6BJQLke11tG0/E9nSRl2fB
-         ZKFA==
-X-Gm-Message-State: AOAM531YBouxiX2ub76DO7EosHrF4NpxFFhmReHQGjaFgG77jMrhN+MC
-        D8ZRMTlcM59sZMZVeHNBy6lGLqDtasrS3A==
-X-Google-Smtp-Source: ABdhPJzBdeKoBoaePz3OMNbA0g97JBOdJd1oFzPfmUPWSCTLBspHdIj+mObR61TloisPBOhyWgocdQ==
-X-Received: by 2002:a1c:2ec2:: with SMTP id u185mr1267040wmu.83.1611496591302;
-        Sun, 24 Jan 2021 05:56:31 -0800 (PST)
+        bh=jXFAmUtKtjhIfr6Qnmj7e1YF9rrTfOmCZQGx30u2fmY=;
+        b=AWUzmq7+kei0UcilgojDLfBmvyrATlt4tH47xNUN0FHdymRSy8DVIzbA6U11EcbYnI
+         3lYfeSPKqSQz3StSci7K83EqDhTPvRXnYzZ5jYTo94XKTdRtpq/Xy0aAmvhE8JPykKtH
+         2SATbOutM6f5EVPhr73r8T6F6MVhEmb92nrf48BlqMOAbWyeZkby8JnZJOKAO4G7iKfu
+         CIptUcHqXf4fQkVeI2m63/gbEZ91e4ybfuZDYFXmZt+3JJbTnBBzBSqe1HyhdJYptHlI
+         7/5+9sQ4uw/fTc4HAkB1Y20QI0NriFCMJrWjZ9ExY/3Ko2Q0vxIpEUGvhR9LPI0rdPbd
+         0k0Q==
+X-Gm-Message-State: AOAM531gAt5YrgX4tsRSru9UYzyf+FpqzSg4uv7dFjYv4B8LwxdL5uLo
+        9UEYRS0+tjSjW5GYGW0i0LosMt3QGtDIag==
+X-Google-Smtp-Source: ABdhPJyzFL+uOjMNLebAdZD/9Hzmy28qJTSsA3rsAL04fNLRragpOTLncKkhZjMUIkFxUsPmayTdxQ==
+X-Received: by 2002:a1c:f619:: with SMTP id w25mr3228605wmc.179.1611496600515;
+        Sun, 24 Jan 2021 05:56:40 -0800 (PST)
 Received: from jonathan-N53SV.station ([151.81.101.204])
-        by smtp.googlemail.com with ESMTPSA id a27sm19658409wrc.94.2021.01.24.05.56.30
+        by smtp.googlemail.com with ESMTPSA id a27sm19658409wrc.94.2021.01.24.05.56.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 24 Jan 2021 05:56:30 -0800 (PST)
+        Sun, 24 Jan 2021 05:56:39 -0800 (PST)
 From:   Jonathan Albrieux <jonathan.albrieux@gmail.com>
 To:     linux-kernel@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, stephan@gerhold.net,
@@ -55,9 +55,9 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht, stephan@gerhold.net,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH 2/3] arm64: dts: qcom: msm8916: Add blsp_i2c3
-Date:   Sun, 24 Jan 2021 14:54:06 +0100
-Message-Id: <20210124135409.5473-3-jonathan.albrieux@gmail.com>
+Subject: [PATCH 3/3] arm64: dts: qcom: msm8916-longcheer-l8910: Add imu/magnetometer
+Date:   Sun, 24 Jan 2021 14:54:07 +0100
+Message-Id: <20210124135409.5473-4-jonathan.albrieux@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20210124135409.5473-1-jonathan.albrieux@gmail.com>
 References: <20210124135409.5473-1-jonathan.albrieux@gmail.com>
@@ -65,70 +65,73 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-MSM8916 has another I2C QUP controller that can be enabled on
-GPIO 10 and 11.
+BQ Aquaris X5 (Longcheer L8910) has:
+ - BMI160 accelerometer and gyroscope sensor
+ - AK09911 magnetometer sensor
+Add them to the device tree.
 
-Add blsp_i2c3 to msm8916.dtsi and disable it by default.
+This patch depends on patch "arm64: dts: qcom: msm8916: Add blsp_i2c3".
 
 Signed-off-by: Jonathan Albrieux <jonathan.albrieux@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/msm8916-pins.dtsi | 16 ++++++++++++++++
- arch/arm64/boot/dts/qcom/msm8916.dtsi      | 15 +++++++++++++++
- 2 files changed, 31 insertions(+)
+ .../boot/dts/qcom/msm8916-longcheer-l8910.dts | 37 +++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi b/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi
-index 4dc437f13fa5..7dedb91b9930 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi
-@@ -220,6 +220,22 @@
- 		bias-disable;
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts
+index 7d5eff922f41..c3933ec0f116 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts
+@@ -56,6 +56,35 @@
  	};
+ };
  
-+	i2c3_default: i2c3-default {
-+		pins = "gpio10", "gpio11";
-+		function = "blsp_i2c3";
++&blsp_i2c3 {
++	status = "okay";
 +
-+		drive-strength = <2>;
-+		bias-disable;
++	imu@68 {
++		compatible = "bosch,bmi160";
++		reg = <0x68>;
++
++		vdd-supply = <&pm8916_l17>;
++		vddio-supply = <&pm8916_l6>;
++
++		mount-matrix = "0", "1", "0",
++			      "-1", "0", "0",
++			       "0", "0", "1";
 +	};
 +
-+	i2c3_sleep: i2c3-sleep {
-+		pins = "gpio10", "gpio11";
++	magnetometer@d {
++		compatible = "asahi-kasei,ak09911";
++		reg = <0x0d>;
++
++		vdd-supply = <&pm8916_l17>;
++		vid-supply = <&pm8916_l6>;
++
++		reset-gpios = <&msmgpio 111 GPIO_ACTIVE_LOW>;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&mag_reset_default>;
++	};
++};
++
+ &blsp1_uart2 {
+ 	status = "okay";
+ };
+@@ -220,6 +249,14 @@
+ 		bias-pull-up;
+ 	};
+ 
++	mag_reset_default: mag-reset-default {
++		pins = "gpio111";
 +		function = "gpio";
 +
 +		drive-strength = <2>;
 +		bias-disable;
 +	};
 +
- 	i2c4_default: i2c4-default {
- 		pins = "gpio14", "gpio15";
- 		function = "blsp_i2c4";
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index 402e891a84ab..1045d7e518f3 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -1528,6 +1528,21 @@
- 			status = "disabled";
- 		};
- 
-+		blsp_i2c3: i2c@78b7000 {
-+			compatible = "qcom,i2c-qup-v2.2.1";
-+			reg = <0x078b7000 0x500>;
-+			interrupts = <GIC_SPI 97 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&gcc GCC_BLSP1_AHB_CLK>,
-+				 <&gcc GCC_BLSP1_QUP3_I2C_APPS_CLK>;
-+			clock-names = "iface", "core";
-+			pinctrl-names = "default", "sleep";
-+			pinctrl-0 = <&i2c3_default>;
-+			pinctrl-1 = <&i2c3_sleep>;
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			status = "disabled";
-+		};
-+
- 		blsp_spi3: spi@78b7000 {
- 			compatible = "qcom,spi-qup-v2.2.1";
- 			reg = <0x078b7000 0x500>;
+ 	usb_id_default: usb-id-default {
+ 		pins = "gpio110";
+ 		function = "gpio";
 -- 
 2.17.1
 
