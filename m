@@ -2,462 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E4D07302410
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Jan 2021 12:08:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 81D1830258D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Jan 2021 14:37:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727354AbhAYLFj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Jan 2021 06:05:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56624 "EHLO
+        id S1728718AbhAYNfK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Jan 2021 08:35:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727712AbhAYLDO (ORCPT
+        with ESMTP id S1728952AbhAYNeu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Jan 2021 06:03:14 -0500
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 459C3C06178C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jan 2021 03:02:33 -0800 (PST)
-Received: by mail-io1-xd34.google.com with SMTP id y19so25626708iov.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jan 2021 03:02:33 -0800 (PST)
+        Mon, 25 Jan 2021 08:34:50 -0500
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F299C061793
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jan 2021 05:33:24 -0800 (PST)
+Received: by mail-qk1-x731.google.com with SMTP id r77so12191006qka.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jan 2021 05:33:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=l8oRndeKEP3ue0fCeGtfqJXoFVoj6o71flyQ1jEJgiM=;
-        b=rwGg0uM7mdSCgjHFhcepOjwGxATWjLrSKUPLlN/2B3s7LDwFx+pFSSJ/Uwwy6Cp5RV
-         Eu7fBNWH5dzWU3GzVgMotBDHhfXr7G8js3bItkTCTUazMLj0WSWAlP/Dcq4+x2TKQmys
-         Ollbs1kff4JiobnXvfdDgBvcbCUhU6ldtDRkHt7/5pI2GLpM3gMGzfSlJv0JSZrcfWuv
-         THLrogT/7Y3NdMnEz3DOVlUzbvCwjVKQ8jyZzA6h2USWQenJaG9LI2PuSk4l95I9iWEH
-         dytkUfZceK3v6J5wr7VYjDHiy6b0fs6ztvf3610N8Sm9OYum3eXZ9G1Gj3tjxYOZgS9H
-         peZA==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=nkYjifaadDKUN2A03i+6Bz+1YtH0jSHjyjWsjSahiSM=;
+        b=mP4LUf21MwAjH4kN4dXyT4fkqKESBIoz/aDvWsKEPt5U34es68aocF+FgswhN73A+a
+         nKf78vrq8s762U/3o/qIFx4Lcse4dn675hz9IpXQ5V1J8W3AwooILanGLuG25qHgVT+V
+         AnghkYYxljpaQh8xTe2EdCTAOTEcG61MJnGBGZpvrekICwUoucgpb13G/GdumPNt4HIe
+         3oldteJ9W0Q+hRsOlUEr86W6o8NsDg4WsJ7m9mMs9OxkW1IH46nRjNiVmLJwVJlRzwo8
+         E57fA5FtRieTA7AnuN63ukVL/XsN7Gdvs8eiWib2OYFR16b5aV6ZCfHO4VHwtYeG7KQn
+         kuNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=l8oRndeKEP3ue0fCeGtfqJXoFVoj6o71flyQ1jEJgiM=;
-        b=AL4EMBDnUNpFAHCN3qp/ksFvj4jQrBUH4fL1YPeXDAo/VYF+nZSUIE2obQK3fjdqOR
-         nMAS/50DBNax6FrXXCrlYGu3DYGGW/kSGIEkzU3OFU/Dd8SEE/aafGTH6rIgBeQ1Z8nv
-         pKWJPzQy2Dz1pKfRIzYKb8BWfxtUwYAIsQq0U35WfRdyd8moCvvLaOX9ypEKaggaZK1Q
-         6xWMJkHnK+MnnF6ulY0mmz6giemA5C0wYA6/X7d7mGgI56nfPouYXlMjYIlJ6L11sH+7
-         2MQNZViRbIoWgLWlotZnZMHqytgW76zWucY9JSmwWfxg0tptgCVvfuLNDHqZVa7XHdvi
-         C03Q==
-X-Gm-Message-State: AOAM530Mh0BDP/IFqYdfvGwVNWAmqiNKGW2UehWIs4F9lZYdGNy4iM6v
-        pxKK3jf0PJXhFmz08j95CcGUYWAB8Nq1XMm28QMWpw==
-X-Google-Smtp-Source: ABdhPJzyTFadXoGGZjPk5yID07BPttXFd/2XAim50yKiesvP9Qt2lYedLwdgXKZNiXo8ncmB/pnDXZLLesRES69OfM8=
-X-Received: by 2002:a92:6907:: with SMTP id e7mr211878ilc.134.1611572552463;
- Mon, 25 Jan 2021 03:02:32 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=nkYjifaadDKUN2A03i+6Bz+1YtH0jSHjyjWsjSahiSM=;
+        b=QouqlkcDcDUu/5HT0SpY7gHI5gstZCnVVqmLw9bRz80zmv5wI9fQ9HK2/9DauWDwQp
+         jaYgwJarhTZhF6++FGn7NAA8+HnTa4DFGEw6X+1LtUdj+EOeH/ArKSgrzY5Oe2mTWiIL
+         v6DCtP4vS5aQQKpmNS7OKnanF+IoKncsedSGh41adxzEmY1ySMNMBtfJIqol67P+4Jbg
+         I3UCkAgutysQ+qAdqXtuaci8LBwFtCjB+Ft/J2xwrbhExaXTZCl3btxjELRDguAsz65W
+         xOlX4srpSuV/Dl5dNdtwZIIZ81kWvlHqLcRsKqfhgjnEXXAja7vyrlf+JkDFDXjAMmis
+         UsEw==
+X-Gm-Message-State: AOAM531/2Kfghr74FrJ7muKvWfEufWCtAfA2F67rBFGBs65Wf+3Q/L9h
+        VNtZA/9JJ2/DVMnnzg5DzugU/A==
+X-Google-Smtp-Source: ABdhPJztUgDmuOPoaK2+3lrjRYGxsWqSwWTwr1jVgLFFmhxaxk9GQArfwe6Z72+5T+v9iFuPjT8v1Q==
+X-Received: by 2002:a05:620a:4c:: with SMTP id t12mr720564qkt.74.1611581603501;
+        Mon, 25 Jan 2021 05:33:23 -0800 (PST)
+Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.gmail.com with ESMTPSA id u1sm11537939qth.19.2021.01.25.05.33.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Jan 2021 05:33:22 -0800 (PST)
+Subject: Re: [PATCH] drivers: dma: qcom: bam_dma: Manage clocks when
+ controlled_remotely is set
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        dan.j.williams@intel.com, vkoul@kernel.org,
+        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20210122025251.3501362-1-thara.gopinath@linaro.org>
+ <20210122051013.GE2479@dragon>
+ <d1f1724c-39f1-7b6e-8cd4-638a44608d9c@linaro.org>
+ <20210123071924.GF2479@dragon>
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+Message-ID: <16da38a6-36a2-2126-c8d5-6618fd9e4814@linaro.org>
+Date:   Mon, 25 Jan 2021 08:33:15 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-References: <20200909195640.3127341-1-robert.marko@sartura.hr>
- <20200909195640.3127341-5-robert.marko@sartura.hr> <CA+HBbNEkmYMi5KutwrBVh3uqzjdEmHrbJnPbH43C9B-Kq1MBNA@mail.gmail.com>
- <YAsf9aZ8mXU8vLZK@builder.lan>
-In-Reply-To: <YAsf9aZ8mXU8vLZK@builder.lan>
-From:   Robert Marko <robert.marko@sartura.hr>
-Date:   Mon, 25 Jan 2021 12:02:21 +0100
-Message-ID: <CA+HBbNHoyCAKcDGkaiguVV3eQz2ZUFRzEVupBD9CWVaJEinw7Q@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] arm: dts: add 8devices Habanero DVK
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, robh+dt@kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Luka Perkov <luka.perkov@sartura.hr>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20210123071924.GF2479@dragon>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 22, 2021 at 7:56 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Fri 02 Oct 12:41 CDT 2020, Robert Marko wrote:
->
-> > On Wed, Sep 9, 2020 at 9:56 PM Robert Marko <robert.marko@sartura.hr> wrote:
-> > >
-> > > 8devices Habanero DVK is a dual-band SoM development kit based on Qualcomm
-> > > IPQ4019 + QCA8075 platform.
-> > >
-> > > Specs are:
-> > > CPU: QCA IPQ4019
-> > > RAM: DDR3L 512MB
-> > > Storage: 32MB SPI-NOR and optional Parallel SLC NAND(Some boards ship with it and some without)
-> > > WLAN1: 2.4 GHz built into IPQ4019 (802.11n) 2x2
-> > > WLAN2: 5 GHz built into IPO4019 (802.11ac Wawe-2) 2x2
-> > > Ethernet: 5x Gbit LAN (QCA 8075)
-> > > USB: 1x USB 2.0 and 1x USB 3.0 (Both built into IPQ4019)
-> > > MicroSD slot (Uses SD controller built into IPQ4019)
-> > > SDIO3.0/EMMC slot (Uses the same SD controller)
-> > > Mini PCI-E Gen 2.0 slot (Built into IPQ4019)
-> > > 5x LEDs (4 GPIO controllable)
-> > > 2x Pushbutton (1 is connected to GPIO, other to SoC reset)
-> > > LCD ZIF socket (Uses the LCD controller built into IPQ4019 which has no driver support)
-> > > 1x UART 115200 rate on J18
-> > >
-> > > 2x breakout development headers
-> > > 12V DC Jack for power
-> > > DIP switch for bootstrap configuration
-> > >
-> > > Signed-off-by: Robert Marko <robert.marko@sartura.hr>
-> > > Cc: Luka Perkov <luka.perkov@sartura.hr>
-> > > ---
-> > > Changes since v1:
-> > > * Drop include that does not exist
-> > >
-> > >  arch/arm/boot/dts/Makefile                    |   1 +
-> > >  .../boot/dts/qcom-ipq4019-habanero-dvk.dts    | 304 ++++++++++++++++++
-> > >  2 files changed, 305 insertions(+)
-> > >  create mode 100644 arch/arm/boot/dts/qcom-ipq4019-habanero-dvk.dts
-> > >
-> > > diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-> > > index 246d82fc5fcd..004262e0d699 100644
-> > > --- a/arch/arm/boot/dts/Makefile
-> > > +++ b/arch/arm/boot/dts/Makefile
-> > > @@ -898,6 +898,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
-> > >         qcom-ipq4019-ap.dk04.1-c3.dtb \
-> > >         qcom-ipq4019-ap.dk07.1-c1.dtb \
-> > >         qcom-ipq4019-ap.dk07.1-c2.dtb \
-> > > +       qcom-ipq4019-habanero-dvk.dtb \
-> > >         qcom-ipq8064-ap148.dtb \
-> > >         qcom-ipq8064-rb3011.dtb \
-> > >         qcom-msm8660-surf.dtb \
-> > > diff --git a/arch/arm/boot/dts/qcom-ipq4019-habanero-dvk.dts b/arch/arm/boot/dts/qcom-ipq4019-habanero-dvk.dts
-> > > new file mode 100644
-> > > index 000000000000..fe054adda0a7
-> > > --- /dev/null
-> > > +++ b/arch/arm/boot/dts/qcom-ipq4019-habanero-dvk.dts
-> > > @@ -0,0 +1,304 @@
-> > > +// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
-> > > +/* Copyright (c) 2019, Robert Marko <robimarko@gmail.com> */
-> > > +
-> > > +#include "qcom-ipq4019.dtsi"
-> > > +#include <dt-bindings/gpio/gpio.h>
-> > > +#include <dt-bindings/input/input.h>
-> > > +
-> > > +/ {
-> > > +       model = "8devices Habanero DVK";
-> > > +       compatible = "8dev,habanero-dvk";
-> > > +
-> > > +       keys {
-> > > +               compatible = "gpio-keys";
-> > > +
-> > > +               reset {
-> > > +                       label = "reset";
-> > > +                       gpios = <&tlmm 8 GPIO_ACTIVE_LOW>;
-> > > +                       linux,code = <KEY_RESTART>;
-> > > +               };
-> > > +       };
-> > > +
-> > > +       leds {
-> > > +               compatible = "gpio-leds";
-> > > +
-> > > +               led_status: status {
-> > > +                       label = "habanero-dvk:green:status";
-> > > +                       gpios = <&tlmm 37 GPIO_ACTIVE_HIGH>;
-> > > +                       panic-indicator;
-> > > +               };
-> > > +
-> > > +               led_upgrade: upgrade {
-> > > +                       label = "habanero-dvk:green:upgrade";
-> > > +                       gpios = <&tlmm 40 GPIO_ACTIVE_HIGH>;
-> > > +               };
-> > > +
-> > > +               wlan2g {
-> > > +                       label = "habanero-dvk:green:wlan2g";
-> > > +                       gpios = <&tlmm 46 GPIO_ACTIVE_HIGH>;
-> > > +                       linux,default-trigger = "phy0tpt";
-> > > +               };
-> > > +
-> > > +               wlan5g {
-> > > +                       label = "habanero-dvk:green:wlan5g";
-> > > +                       gpios = <&tlmm 48 GPIO_ACTIVE_HIGH>;
-> > > +                       linux,default-trigger = "phy1tpt";
-> > > +               };
-> > > +       };
-> > > +};
-> > > +
-> > > +&vqmmc {
-> > > +       status = "okay";
-> > > +};
-> > > +
-> > > +&sdhci {
-> > > +       status = "okay";
-> > > +
-> > > +       pinctrl-0 = <&sd_pins>;
-> > > +       pinctrl-names = "default";
-> > > +       cd-gpios = <&tlmm 22 GPIO_ACTIVE_LOW>;
-> > > +       vqmmc-supply = <&vqmmc>;
-> > > +};
-> > > +
-> > > +&qpic_bam {
-> > > +       status = "okay";
-> > > +};
-> > > +
-> > > +&tlmm {
-> > > +       mdio_pins: mdio_pinmux {
-> > > +               mux_1 {
-> > > +                       pins = "gpio6";
-> > > +                       function = "mdio";
-> > > +                       bias-pull-up;
-> > > +               };
-> > > +
-> > > +               mux_2 {
-> > > +                       pins = "gpio7";
-> > > +                       function = "mdc";
-> > > +                       bias-pull-up;
-> > > +               };
-> > > +       };
-> > > +
-> > > +       serial_pins: serial_pinmux {
-> > > +               mux {
-> > > +                       pins = "gpio16", "gpio17";
-> > > +                       function = "blsp_uart0";
-> > > +                       bias-disable;
-> > > +               };
-> > > +       };
-> > > +
-> > > +       spi_0_pins: spi_0_pinmux {
-> > > +               pinmux {
-> > > +                       function = "blsp_spi0";
-> > > +                       pins = "gpio13", "gpio14", "gpio15";
-> > > +                       drive-strength = <12>;
-> > > +                       bias-disable;
-> > > +               };
-> > > +
-> > > +               pinmux_cs {
-> > > +                       function = "gpio";
-> > > +                       pins = "gpio12";
-> > > +                       drive-strength = <2>;
-> > > +                       bias-disable;
-> > > +                       output-high;
-> > > +               };
-> > > +       };
-> > > +
-> > > +       nand_pins: nand_pins {
-> > > +               pullups {
-> > > +                       pins =  "gpio52", "gpio53", "gpio58", "gpio59";
-> > > +                       function = "qpic";
-> > > +                       bias-pull-up;
-> > > +               };
-> > > +
-> > > +               pulldowns {
-> > > +                       pins = "gpio54", "gpio55", "gpio56", "gpio57",
-> > > +                               "gpio60", "gpio62", "gpio63", "gpio64",
-> > > +                               "gpio65", "gpio66", "gpio67", "gpio68",
-> > > +                               "gpio69";
-> > > +                       function = "qpic";
-> > > +                       bias-pull-down;
-> > > +               };
-> > > +       };
-> > > +
-> > > +       sd_pins: sd_pins {
-> > > +               pinmux {
-> > > +                       function = "sdio";
-> > > +                       pins = "gpio23", "gpio24", "gpio25", "gpio26",
-> > > +                               "gpio28", "gpio29", "gpio30", "gpio31";
-> > > +                       drive-strength = <10>;
-> > > +               };
-> > > +
-> > > +               pinmux_sd_clk {
-> > > +                       function = "sdio";
-> > > +                       pins = "gpio27";
-> > > +                       drive-strength = <16>;
-> > > +               };
-> > > +
-> > > +               pinmux_sd7 {
-> > > +                       function = "sdio";
-> > > +                       pins = "gpio32";
-> > > +                       drive-strength = <10>;
-> > > +                       bias-disable;
-> > > +               };
-> > > +       };
-> > > +};
-> > > +
-> > > +&watchdog {
-> > > +       status = "okay";
-> > > +};
-> > > +
-> > > +&prng {
-> > > +       status = "okay";
-> > > +};
-> > > +
-> > > +&blsp_dma {
-> > > +       status = "okay";
-> > > +};
-> > > +
-> > > +&blsp1_spi1 {
-> > > +       status = "okay";
-> > > +
-> > > +       pinctrl-0 = <&spi_0_pins>;
-> > > +       pinctrl-names = "default";
-> > > +       cs-gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
-> > > +
-> > > +       flash@0 {
-> > > +               compatible = "jedec,spi-nor";
-> > > +               spi-max-frequency = <24000000>;
-> > > +               reg = <0>;
-> > > +
-> > > +               partitions {
-> > > +                       compatible = "fixed-partitions";
-> > > +                       #address-cells = <1>;
-> > > +                       #size-cells = <1>;
-> > > +
-> > > +                       partition@0 {
-> > > +                               label = "SBL1";
-> > > +                               reg = <0x00000000 0x00040000>;
-> > > +                               read-only;
-> > > +                       };
-> > > +                       partition@40000 {
-> > > +                               label = "MIBIB";
-> > > +                               reg = <0x00040000 0x00020000>;
-> > > +                               read-only;
-> > > +                       };
-> > > +                       partition@60000 {
-> > > +                               label = "QSEE";
-> > > +                               reg = <0x00060000 0x00060000>;
-> > > +                               read-only;
-> > > +                       };
-> > > +                       partition@c0000 {
-> > > +                               label = "CDT";
-> > > +                               reg = <0x000c0000 0x00010000>;
-> > > +                               read-only;
-> > > +                       };
-> > > +                       partition@d0000 {
-> > > +                               label = "DDRPARAMS";
-> > > +                               reg = <0x000d0000 0x00010000>;
-> > > +                               read-only;
-> > > +                       };
-> > > +                       partition@e0000 {
-> > > +                               label = "APPSBLENV"; /* uboot env */
-> > > +                               reg = <0x000e0000 0x00010000>;
-> > > +                               read-only;
-> > > +                       };
-> > > +                       partition@f0000 {
-> > > +                               label = "APPSBL"; /* uboot */
-> > > +                               reg = <0x000f0000 0x00080000>;
-> > > +                               read-only;
-> > > +                       };
-> > > +                       partition@170000 {
-> > > +                               label = "ART";
-> > > +                               reg = <0x00170000 0x00010000>;
-> > > +                               read-only;
-> > > +                       };
-> > > +                       partition@180000 {
-> > > +                               label = "cfg";
-> > > +                               reg = <0x00180000 0x00040000>;
-> > > +                       };
-> > > +                       partition@1c0000 {
-> > > +                               label = "firmware";
-> > > +                               compatible = "denx,fit";
-> > > +                               reg = <0x001c0000 0x01e40000>;
-> > > +                       };
-> > > +               };
-> > > +       };
-> > > +};
-> > > +
-> > > +/* Some DVK boards ship without NAND */
-> > > +&nand {
-> > > +       status = "okay";
-> > > +
-> > > +       pinctrl-0 = <&nand_pins>;
-> > > +       pinctrl-names = "default";
-> > > +};
-> > > +
-> > > +&blsp1_uart1 {
-> > > +       status = "okay";
-> > > +
-> > > +       pinctrl-0 = <&serial_pins>;
-> > > +       pinctrl-names = "default";
-> > > +};
-> > > +
-> > > +&cryptobam {
-> > > +       status = "okay";
-> > > +};
-> > > +
-> > > +&crypto {
-> > > +       status = "okay";
-> > > +};
-> > > +
-> > > +&mdio {
-> > > +       status = "okay";
-> > > +
-> > > +       pinctrl-0 = <&mdio_pins>;
-> > > +       pinctrl-names = "default";
-> > > +};
-> > > +
-> > > +&pcie0 {
-> > > +       status = "okay";
-> > > +
-> > > +       perst-gpio = <&tlmm 38 GPIO_ACTIVE_LOW>;
-> > > +       wake-gpio = <&tlmm 50 GPIO_ACTIVE_LOW>;
-> > > +
-> > > +       /* Free slot for use */
-> > > +       bridge@0,0 {
-> > > +               reg = <0x00000000 0 0 0 0>;
-> > > +               #address-cells = <3>;
-> > > +               #size-cells = <2>;
-> > > +               ranges;
-> > > +       };
-> > > +};
-> > > +
-> > > +&wifi0 {
-> > > +       status = "okay";
-> > > +
-> > > +       qcom,ath10k-calibration-variant = "8devices-Habanero";
-> > > +};
-> > > +
-> > > +&wifi1 {
-> > > +       status = "okay";
-> > > +
-> > > +       qcom,ath10k-calibration-variant = "8devices-Habanero";
-> > > +};
-> > > +
-> > > +&usb3_ss_phy {
-> > > +       status = "okay";
-> > > +};
-> > > +
-> > > +&usb3_hs_phy {
-> > > +       status = "okay";
-> > > +};
-> > > +
-> > > +&usb3 {
-> > > +       status = "okay";
-> > > +};
-> > > +
-> > > +&usb2_hs_phy {
-> > > +       status = "okay";
-> > > +};
-> > > +
-> > > +&usb2 {
-> > > +       status = "okay";
-> > > +};
-> > > --
-> > > 2.26.2
-> > >
-> >
-> > Hi,
-> > Is there an issue with the patch preventing the review?
-> >
->
-> Found this in my inbox and I don't know why I never replied to you,
-> perhaps because kernel test robot says it doesn't build...
->
-> I tried to apply it now but there's no "vqmmc" so it doesn't build :/
->
->
-> If you're still interested in this I'd be happy to merge it if you can
-> fix up the vqmmc - and if respinning it I would appreciate if you could
-> sort the nodes alphabetically.
->
-> Regards,
-> Bjorn
+Hi Shawn,
 
-Hi,
-This patch series depends on:
-https://patchwork.kernel.org/patch/11765789/
-https://patchwork.kernel.org/patch/11760437/
+On 1/23/21 2:19 AM, Shawn Guo wrote:
+> On Fri, Jan 22, 2021 at 10:44:09AM -0500, Thara Gopinath wrote:
+>> Hi Shawn,
+>>
+>> Thanks for the review
+>>
+>> On 1/22/21 12:10 AM, Shawn Guo wrote:
+>>> On Thu, Jan 21, 2021 at 09:52:51PM -0500, Thara Gopinath wrote:
+>>>> When bam dma is "controlled remotely", thus far clocks were not controlled
+>>>> from the Linux. In this scenario, Linux was disabling runtime pm in bam dma
+>>>> driver and not doing any clock management in suspend/resume hooks.
+>>>>
+>>>> With introduction of crypto engine bam dma, the clock is a rpmh resource
+>>>> that can be controlled from both Linux and TZ/remote side.  Now bam dma
+>>>> clock is getting enabled during probe even though the bam dma can be
+>>>> "controlled remotely". But due to clocks not being handled properly,
+>>>> bam_suspend generates a unbalanced clk_unprepare warning during system
+>>>> suspend.
+>>>>
+>>>> To fix the above issue and to enable proper clock-management, this patch
+>>>> enables runtim-pm and handles bam dma clocks in suspend/resume hooks if
+>>>> the clock node is present irrespective of controlled_remotely property.
+>>>
+>>> Shouldn't the following probe code need some update?  Now we have both
+>>> controlled_remotely and clocks handle for cryptobam node.  For example,
+>>> if devm_clk_get() returns -EPROBE_DEFER, we do not want to continue with
+>>> bamclk forcing to be NULL, right?
+>>
+>> We still will have to set bdev->bamclk to NULL in certain scenarios. For eg
+>> slimbus bam dma is controlled-remotely and the clocks are handled by the
+>> remote s/w. Linux does not handle the clocks at all and  there is no clock
+>> specified in the dt node.This is the norm for the devices that are also
+>> controlled by remote s/w. Crypto bam dma is a special case where the clock
+>> is actually a rpmh resource and hence can be independently handled from both
+>> remote side and Linux by voting. In this case, the dma is controlled
+>> remotely but clock can be turned off and on in Linux. Hence the need for
+>> this patch.
+> 
+> So is it correct to say that clock is mandatory for !controlled-remotely
+> BAM, while it's optional for controlled-remotely one.  If yes, maybe we
+> can do something like below to make the code a bit easier to read?
 
-USB nodes appear to finally be picked for the Qcom tree while the VQMMC LDO
-is still pending.
+Yes. Sure. I will change it to below.
 
-I am still interested in this and was planning to send the updated
-versions anyway soon.
-I Will respin these and reorder the nodes.
+> 
+> 	if (controlled-remotely)
+> 		bdev->bamclk = devm_clk_get_optional();
+> 	else
+> 		bdev->bamclk = devm_clk_get();
+> 		
+>> Yes, the probe code needs updating to handle -EPROBE_DEFER (esp if the clock
+>> driver is built in as a module) I am not sure if the clock framework handles
+>> -EPROBE_DEFER properly either. So that
+>> might need updating too. This is a separate activity and not part of this
+>> patch >
+> 
+> As the patch breaks the assumption that for controlled-remotely BAM
+> there is no clock to be managed, the probe code becomes buggy right
+> away.
 
-Regards,
-Robert
+mmm... not really. Either ways we don't handle -EPROBE_DEFER from clock 
+code. That behavior is not worse because of this patch. I can send a 
+separate patch to fix the -EPROBE_DEFER issue.
+
+> 
+> Shawn
+> 
+
+-- 
+Warm Regards
+Thara
