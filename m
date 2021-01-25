@@ -2,147 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2DBB3302917
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Jan 2021 18:39:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 04680302998
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Jan 2021 19:07:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730995AbhAYRiV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Jan 2021 12:38:21 -0500
-Received: from a1.mail.mailgun.net ([198.61.254.60]:30413 "EHLO
-        a1.mail.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731073AbhAYRiA (ORCPT
+        id S1730973AbhAYSF5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Jan 2021 13:05:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35426 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729481AbhAYSFo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Jan 2021 12:38:00 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1611596245; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=22axXwf5Mw+tKBhvbOQLUF2dKW4sQ8w9RfN61rAA2hY=; b=rnve34BlGxzYpT+bT/6BMl2EnR1UOllYnUnbi7VCacH2feluvgeubXq28rmMpmZFMSKeQBb2
- QcP34teuC2K182MptqbxqTycjPh/qUP/KSeoM0VnYpy2hckba+tPAWs32PNWmQioWzsaWl5f
- jY6kmteywKPTyAlRg1pPvSnBLNw=
-X-Mailgun-Sending-Ip: 198.61.254.60
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 600f01afad4c9e395bcad061 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 25 Jan 2021 17:36:47
- GMT
-Sender: jackp=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BEE3AC43463; Mon, 25 Jan 2021 17:36:47 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from jackp-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: jackp)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 84DE4C43461;
-        Mon, 25 Jan 2021 17:36:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 84DE4C43461
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jackp@codeaurora.org
-Date:   Mon, 25 Jan 2021 09:36:42 -0800
-From:   Jack Pham <jackp@codeaurora.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/4] phy: qcom-qmp: Add UFS v4 registers found in SM8350
-Message-ID: <20210125173641.GA27487@jackp-linux.qualcomm.com>
-References: <20210125100906.4004908-1-vkoul@kernel.org>
- <20210125100906.4004908-4-vkoul@kernel.org>
+        Mon, 25 Jan 2021 13:05:44 -0500
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B42C1C06174A;
+        Mon, 25 Jan 2021 10:05:02 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id n6so16545403edt.10;
+        Mon, 25 Jan 2021 10:05:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UDJrM+VObhQM/htR7xUxXEq8/3SNBalypsfeL4EmF2w=;
+        b=pLxYuLaVuy9i9RrCOeTt+Ra3ac0FztbvVloblfhJa4KR0vf+aRF/AGcPVs8eLWXEAT
+         xAAsSVzYrNjygz8Jxo+IaWXyXOU9r0qXIRgQEYsQM1ZlS6iYFeBDyFi702OHMuKtJTTw
+         5lv1VG/r3+PtnAmeXzyDN5XfuiCIxecaBj/nEMeKr3zyHdkHCEd2WKr174UgOhbOMbWY
+         5I5ul7scP8Tne+Bshl84snibgjyTkNNZ/l/hk6zGbpeVwjKTGJN/FL0Tm9OnqJadgCKJ
+         o3u116RB3tQJADnZRZ4DfLMXCm55zA7JfMrcdFZRNRoqMJ2+tW1T/IkKelNz6ZJCzKnl
+         dU0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UDJrM+VObhQM/htR7xUxXEq8/3SNBalypsfeL4EmF2w=;
+        b=TsowLmgzojYlLt4VldgzoIlEiCMhMThRxn2oVFXw+gMxx0F2B8HBgjGgRBd7mP19Bp
+         rrsmfoINfJF6+PPT39oHsGduBI36BECHmIP4i51DeYU4jWNwjJYne1soacDl4bVgN4ie
+         0oa1u1NntCPJmd2uJoYsz2pBW4UEoNf+uMNVVLWPaO+5PutyFdETT0H5sKYNQa1/8mMi
+         WsW36kPUGtghReFJuludnvG260VoW5gUT6VKJJLJT8A5A4WdFa+ybMFKJiy4C9Dm2udD
+         elGcXMlOuUrbH3pUAMfNX3w6BFDSK4KDtF6R2qhu443q7R1aIPexucGVlDxCe+SKRk25
+         /2cg==
+X-Gm-Message-State: AOAM532dGeBc2U/sJ7DQr9sqGGPcUcCq+RiVNuwYZoIWpjr1z3UHX/Ea
+        PElOMGUT8xD8rozVXM1tZuA=
+X-Google-Smtp-Source: ABdhPJyprG2pZ2VHd1B+QLdm2O8aTju8TlntahMjrmU4U0TiTm5jEK4KNLZuCxKXkv3STAbF1mTg7Q==
+X-Received: by 2002:a05:6402:1701:: with SMTP id y1mr1446570edu.251.1611597901034;
+        Mon, 25 Jan 2021 10:05:01 -0800 (PST)
+Received: from localhost (178-169-161-196.razgrad.ddns.bulsat.com. [178.169.161.196])
+        by smtp.gmail.com with ESMTPSA id gb13sm5590778ejc.81.2021.01.25.10.04.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Jan 2021 10:04:59 -0800 (PST)
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Iskren Chernev <iskren.chernev@gmail.com>,
+        Samuel Pascua <pascua.samuel.14@gmail.com>,
+        Alexey Minnekhanov <alexeymin@postmarketos.org>,
+        Brian Masney <masneyb@onstation.org>,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: [PATCH v3 1/4] ARM: dts: qcom: msm8974: add gpu support
+Date:   Mon, 25 Jan 2021 20:04:24 +0200
+Message-Id: <20210125180427.3109269-1-iskren.chernev@gmail.com>
+X-Mailer: git-send-email 2.30.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210125100906.4004908-4-vkoul@kernel.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Vinod,
+From: Brian Masney <masneyb@onstation.org>
 
-On Mon, Jan 25, 2021 at 03:39:05PM +0530, Vinod Koul wrote:
-> Add the registers for few new registers found in SM8350. Also the UFS
-> phy used in SM8350 seems to have different offsets than V4 phy, although
-> it claims it is v4 phy, so add the new offsets with SM8350 tag instead
-> of V4 tag.
+Add support for the a3xx GPU. opp_table is chosen to include lower
+frequencies common to all different msm8974 variants.
 
-Actually I believe SM8350 UFS PHY is on V5, as the internal IP revision
-shows 5.0.0. So IMO some of the below definitions should just be using
-the V5 macros for consistency with the ones I recently added for USB3.
+Signed-off-by: Brian Masney <masneyb@onstation.org>
+[iskren.chernev@gmail.com: change opp-table values in v3]
+Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
+---
+Changes in v3:
+- change opp-table as suggested by Konrad Dybcio
+- remove tested-by/reviewed-by because of code changes
 
-And like USB3 QMP, it seems we have mixed usage of V4/V5 macros in the
-sequence tables, mainly wherever the offsets are identical between IP
-revisions. Hope this doesn't turn out to be a maintenance nightmare...
+v2: https://lkml.org/lkml/2021/1/24/142
+v1: https://lkml.org/lkml/2020/12/30/322
 
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp.h | 27 +++++++++++++++++++++++++++
->  1 file changed, 27 insertions(+)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.h b/drivers/phy/qualcomm/phy-qcom-qmp.h
-> index dff7be5a1cc1..bba1d5e3eb73 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp.h
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.h
-> @@ -451,6 +451,7 @@
->  #define QSERDES_V4_TX_RES_CODE_LANE_OFFSET_RX 		0x40
->  #define QSERDES_V4_TX_LANE_MODE_1			0x84
->  #define QSERDES_V4_TX_LANE_MODE_2			0x88
-> +#define QSERDES_V4_TX_LANE_MODE_3			0x8C
->  #define QSERDES_V4_TX_RCV_DETECT_LVL_2			0x9c
->  #define QSERDES_V4_TX_PWM_GEAR_1_DIVIDER_BAND0_1	0xd8
->  #define QSERDES_V4_TX_PWM_GEAR_2_DIVIDER_BAND0_1	0xdC
-> @@ -459,6 +460,13 @@
->  #define QSERDES_V4_TX_TRAN_DRVR_EMP_EN			0xb8
->  #define QSERDES_V4_TX_PI_QEC_CTRL		0x104
->  
-> +/* Only for SM8350 QMP V4 Phy TX offsets different from V4 */
-> +#define QSERDES_SM8350_TX_PWM_GEAR_1_DIVIDER_BAND0_1	0x178
-> +#define QSERDES_SM8350_TX_PWM_GEAR_2_DIVIDER_BAND0_1	0x17c
-> +#define QSERDES_SM8350_TX_PWM_GEAR_3_DIVIDER_BAND0_1	0x180
-> +#define QSERDES_SM8350_TX_PWM_GEAR_4_DIVIDER_BAND0_1	0x184
-> +#define QSERDES_SM8350_TX_TRAN_DRVR_EMP_EN		0xc0
+ arch/arm/boot/dts/qcom-msm8974.dtsi | 45 +++++++++++++++++++++++++++++
+ 1 file changed, 45 insertions(+)
 
-These could be augmented to the V5 TX defintions? Although they are not
-present for USB, so not sure if you want to add "V5_UFS" to the prefix.
-But since they are at offsets past the end of the USB TX bank it should
-also be ok to share in the QSERDES_V5_TX namespace.
+diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
+index 51f5f904f9eb9..683622d6c8954 100644
+--- a/arch/arm/boot/dts/qcom-msm8974.dtsi
++++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
+@@ -1399,6 +1399,51 @@ cnoc: interconnect@fc480000 {
+ 			         <&rpmcc RPM_SMD_CNOC_A_CLK>;
+ 		};
 
-> +
->  /* Only for QMP V4 PHY - RX registers */
->  #define QSERDES_V4_RX_UCDR_FO_GAIN			0x008
->  #define QSERDES_V4_RX_UCDR_SO_GAIN			0x014
-> @@ -514,6 +522,24 @@
->  #define QSERDES_V4_RX_DCC_CTRL1				0x1bc
->  #define QSERDES_V4_RX_VTH_CODE				0x1c4
->  
-> +/* Only for SM8350 QMP V4 Phy RX offsets different from V4 */
-> +#define QSERDES_SM8350_RX_RX_MODE_00_LOW		0x15c
-> +#define QSERDES_SM8350_RX_RX_MODE_00_HIGH		0x160
-> +#define QSERDES_SM8350_RX_RX_MODE_00_HIGH2		0x164
-> +#define QSERDES_SM8350_RX_RX_MODE_00_HIGH3		0x168
-> +#define QSERDES_SM8350_RX_RX_MODE_00_HIGH4		0x16c
-> +#define QSERDES_SM8350_RX_RX_MODE_01_LOW		0x170
-> +#define QSERDES_SM8350_RX_RX_MODE_01_HIGH		0x174
-> +#define QSERDES_SM8350_RX_RX_MODE_01_HIGH2		0x178
-> +#define QSERDES_SM8350_RX_RX_MODE_01_HIGH3		0x17c
-> +#define QSERDES_SM8350_RX_RX_MODE_01_HIGH4		0x180
-> +#define QSERDES_SM8350_RX_RX_MODE_10_LOW		0x184
-> +#define QSERDES_SM8350_RX_RX_MODE_10_HIGH		0x188
-> +#define QSERDES_SM8350_RX_RX_MODE_10_HIGH2		0x18c
-> +#define QSERDES_SM8350_RX_RX_MODE_10_HIGH3		0x190
-> +#define QSERDES_SM8350_RX_RX_MODE_10_HIGH4		0x194
-> +#define QSERDES_SM8350_RX_DCC_CTRL1			0x1a8
++		gpu_opp_table: opp_table {
++			status = "disabled";
++
++			compatible = "operating-points-v2";
++
++			opp-320000000 {
++				opp-hz = /bits/ 64 <320000000>;
++			};
++
++			opp-200000000 {
++				opp-hz = /bits/ 64 <200000000>;
++			};
++
++			opp-27000000 {
++				opp-hz = /bits/ 64 <27000000>;
++			};
++		};
++
++		gpu: adreno@fdb00000 {
++			status = "disabled";
++
++			compatible = "qcom,adreno-330.2",
++			             "qcom,adreno";
++			reg = <0xfdb00000 0x10000>;
++			reg-names = "kgsl_3d0_reg_memory";
++			interrupts = <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "kgsl_3d0_irq";
++			clock-names = "core",
++			              "iface",
++			              "mem_iface";
++			clocks = <&mmcc OXILI_GFX3D_CLK>,
++			         <&mmcc OXILICX_AHB_CLK>,
++			         <&mmcc OXILICX_AXI_CLK>;
++			sram = <&gmu_sram>;
++			power-domains = <&mmcc OXILICX_GDSC>;
++			operating-points-v2 = <&gpu_opp_table>;
++
++			interconnects = <&mmssnoc MNOC_MAS_GRAPHICS_3D &bimc BIMC_SLV_EBI_CH0>,
++			                <&ocmemnoc OCMEM_VNOC_MAS_GFX3D &ocmemnoc OCMEM_SLV_OCMEM>;
++			interconnect-names = "gfx-mem",
++			                     "ocmem";
++
++			// iommus = <&gpu_iommu 0>;
++		};
++
+ 		mdss: mdss@fd900000 {
+ 			status = "disabled";
 
-These are identical to the "V5" offsets I had added for SM8350 USB.
 
-Thanks,
-Jack
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+base-commit: 226871e2eda4832d94c3239add7e52ad17b81ce5
+--
+2.30.0
+
