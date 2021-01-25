@@ -2,95 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 90F3A301FB0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Jan 2021 01:17:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EA5F13021E8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Jan 2021 06:48:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726642AbhAYAM5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 24 Jan 2021 19:12:57 -0500
-Received: from onstation.org ([52.200.56.107]:35086 "EHLO onstation.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726593AbhAYALe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 24 Jan 2021 19:11:34 -0500
-Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id D68943EA88;
-        Mon, 25 Jan 2021 00:09:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1611533357;
-        bh=NX04KDq22imvna2j2KPjU62cAJRCEXT8lTRLg6sU+9M=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ZTys71IW91sT6zb8BsXKM4Z3CwcgI6qowbfvayR2iwYFDP+Dcwdtph0pjhHUik6ik
-         Qjqhko3nVgog/EN8ikkXbaf+DTy14IgQZoe6pgCURs1+IHao6gUlhFnCjwIyF7WE4d
-         ODQtZGIouWhWgkLKWc4j/1grPYVXDigIT9++KJVU=
-Date:   Sun, 24 Jan 2021 19:09:16 -0500
-From:   Brian Masney <masneyb@onstation.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Iskren Chernev <iskren.chernev@gmail.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Samuel Pascua <pascua.samuel.14@gmail.com>,
-        Alexey Minnekhanov <alexeymin@postmarketos.org>
-Subject: Re: [PATCH 1/4] ARM: dts: qcom: msm8974: add gpu support
-Message-ID: <20210125000916.GA22513@onstation.org>
-References: <20210124135610.1779295-1-iskren.chernev@gmail.com>
- <f1438c9d-458b-2ff7-cae9-f7bf4228ef4c@somainline.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f1438c9d-458b-2ff7-cae9-f7bf4228ef4c@somainline.org>
+        id S1725959AbhAYFs1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Jan 2021 00:48:27 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:19708 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725821AbhAYFs0 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 25 Jan 2021 00:48:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=qti.qualcomm.com; i=@qti.qualcomm.com; q=dns/txt;
+  s=qcdkim; t=1611553706; x=1643089706;
+  h=from:to:cc:subject:date:message-id;
+  bh=Jc0pww2EeutSvXzzlyYPwaeU7Tg2Hh9IkScJ5YhJZCE=;
+  b=Cq6gSEqXXHKGOs/JJ7FTO8C2vFxr4TCsLFWXieaZv+6DES7LFFyz4IYy
+   hdDx4Wgl+X1B/tMzlZYj/pwB1ISLbLkqjy6skDoE4oVfpAJ85lAwT2CEr
+   SFOY4Sa2cJ1gblb/yCA+SMWr05vEjqPjSzovupblgQvdl2qOI38ZFwei2
+   E=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 24 Jan 2021 21:47:45 -0800
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 24 Jan 2021 21:47:44 -0800
+X-QCInternal: smtphost
+Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 25 Jan 2021 11:17:28 +0530
+Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
+        id EE43921578; Mon, 25 Jan 2021 11:17:27 +0530 (IST)
+From:   Dikshita Agarwal <dikshita@qti.qualcomm.com>
+To:     linux-media@vger.kernel.org, hverkuil-cisco@xs4all.nl,
+        stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org,
+        Dikshita Agarwal <dikshita@qti.qualcomm.com>
+Subject: [PATCH v6 0/2] Add encoder ctrls for long term reference
+Date:   Mon, 25 Jan 2021 11:16:56 +0530
+Message-Id: <1611553618-17224-1-git-send-email-dikshita@qti.qualcomm.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jan 24, 2021 at 03:56:06PM +0100, Konrad Dybcio wrote:
-> Hi,
-> 
-> 
-> > +		gpu_opp_table: opp_table {
-> > +			status = "disabled";
-> 
-> 
-> Is there a good reason to disable this?
-> 
-> 
-> > +			opp-800000000 {
-> > +				opp-hz = /bits/ 64 <800000000>;
-> > +			};
-> 
-> No. A330 can't go lightspeed (unless there's some secret ultra-binned msm8974pro-v4-ad-5g). [1]
+This series add the encoder controls for long term reference (LTR)
+and support for the same in venus driver.
 
-Hi Iskren,
+Dikshita Agarwal (2):
+  media: v4l2-ctrl: add controls for long term reference.
+  venus: venc: Add support for Long Term Reference (LTR) controls
 
-I believe that the Nexus 5 GPU frequencies are documented in the
-downstream kernel at:
-https://github.com/AICP/kernel_lge_hammerhead/blob/n7.1/arch/arm/boot/dts/msm8974-gpu.dtsi#L67
+ .../userspace-api/media/v4l/ext-ctrls-codec.rst    | 18 ++++++++
+ drivers/media/platform/qcom/venus/venc_ctrls.c     | 49 +++++++++++++++++++++-
+ drivers/media/v4l2-core/v4l2-ctrls.c               | 14 +++++++
+ include/uapi/linux/v4l2-controls.h                 |  3 ++
+ 4 files changed, 83 insertions(+), 1 deletion(-)
 
-I am fairly certain that the qcom,bus-freq property is an index into the
-qcom,msm-bus,vectors-KBps property above. This will map to the
-interconnect and operating points in the upstream kernel.
+-- 
+2.7.4
 
-Note that the actual implementation in a3xx_gpu.c and a4xx_gpu.c
-currently has this snippet to set the bus speed:
-
-    /*
-     * Set the ICC path to maximum speed for now by multiplying the fastest
-     * frequency by the bus width (8). We'll want to scale this later on to
-     * improve battery life.
-     */
-    icc_set_bw(icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
-    icc_set_bw(ocmem_icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
-
-This should be fine for the time being. You'll want to document it
-correctly in device tree though.
-
-If the v2 changes too much, then feel free to drop my name from the
-patch. I thought that I had made these changes already but apparently
-not. :/
-
-Brian
