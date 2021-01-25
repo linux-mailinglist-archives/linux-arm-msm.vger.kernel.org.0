@@ -2,156 +2,219 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DBE6A302E5E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Jan 2021 22:53:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C313302ECD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Jan 2021 23:18:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732835AbhAYVwj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Jan 2021 16:52:39 -0500
-Received: from a1.mail.mailgun.net ([198.61.254.60]:36133 "EHLO
-        a1.mail.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732749AbhAYVwK (ORCPT
+        id S1732206AbhAYWRh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Jan 2021 17:17:37 -0500
+Received: from mail-ot1-f42.google.com ([209.85.210.42]:38979 "EHLO
+        mail-ot1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732149AbhAYWRY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Jan 2021 16:52:10 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1611611503; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=oHOfrs93dyIetVBU17pSKVVbhMAMi8Wbu2YOAnCq9/E=; b=pqrS83KCenanL+hYK3YUx+RwfcUPxAyf1eZypWMYunSfSMzYOQLxeSbAXQ68vziu6lPuEFFs
- CRNS5XpMVZQ+lVbGXVrZwc6rYLYxnUWXLXMnwF5izxodO/5T+Pp1eHAKJcrnbjchOGPNuhbH
- kQOdAnEEPwBVbKbBCz1NaYAqJ6E=
-X-Mailgun-Sending-Ip: 198.61.254.60
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 600f3d50f07bb817adaee6fe (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 25 Jan 2021 21:51:12
- GMT
-Sender: jcrouse=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 84EF7C43462; Mon, 25 Jan 2021 21:51:12 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 89640C433C6;
-        Mon, 25 Jan 2021 21:51:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 89640C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Mon, 25 Jan 2021 14:51:07 -0700
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
-        iommu@lists.linux-foundation.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/3] iommu/arm-smmu: Add support for driver IOMMU
- fault handlers
-Message-ID: <20210125215107.GB16374@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Robin Murphy <robin.murphy@arm.com>,
-        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
-        iommu@lists.linux-foundation.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Joerg Roedel <joro@8bytes.org>, Krishna Reddy <vdumpa@nvidia.com>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20201124191600.2051751-1-jcrouse@codeaurora.org>
- <20201124191600.2051751-2-jcrouse@codeaurora.org>
- <20210122124125.GA24102@willie-the-truck>
- <8ba2f53d-abbf-af7f-07f6-48ad7f383a37@arm.com>
+        Mon, 25 Jan 2021 17:17:24 -0500
+Received: by mail-ot1-f42.google.com with SMTP id i30so14371662ota.6;
+        Mon, 25 Jan 2021 14:17:08 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=NQ5JL+SNoLNcGdkjrMErXpzVLEwik9AOVNcI7M81MEU=;
+        b=I8DDx6cOrF1ZGkOTlrr65WJyRMLROOA+kCQR8T8UgMAly0ghI0Sep6CA24jhZHnRuV
+         Lg5s/oXjtKrch+ASwobcQOBEBtWB6XEeWSOM7uxG48EWrWeMvSTrNTq1BzTajbjTb8du
+         NNyACSsybarx6UVNaxMW02WEOHODLUwMEs2A0Q0ERm9UXCUkSNJD98akvCQVdvbd/Q7r
+         dfOgofYQdzTeSFlR7/LQRxc+Hivrp7IBuLHwh3xWHGvbCc9Tmku/aSLsJ9jaFIom3Xto
+         EEghXO9McQ3AKESMtmfGyQQR+lAGSpyfe+EsIC+PHY7CmffarzGHGEnRD5K0HbVeNcDx
+         xCMw==
+X-Gm-Message-State: AOAM5307esgJF3pZDd8zXyBrPwMrI2RltsZPp2KCwr+WVN2gLbx+xfey
+        mRbocZP0sdAjmm8A1GLAvQ==
+X-Google-Smtp-Source: ABdhPJzS7d1TUvtKHpkjE8UMffqfiSDjT+KfYEiCZzBnXitlT4F0Lm6QWG+s3w9pghPVr7CrJbg/ZA==
+X-Received: by 2002:a9d:ea6:: with SMTP id 35mr1882871otj.188.1611613001124;
+        Mon, 25 Jan 2021 14:16:41 -0800 (PST)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id e17sm3764329otf.32.2021.01.25.14.16.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Jan 2021 14:16:39 -0800 (PST)
+Received: (nullmailer pid 1117744 invoked by uid 1000);
+        Mon, 25 Jan 2021 22:16:33 -0000
+Date:   Mon, 25 Jan 2021 16:16:33 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
+        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
+        martin.botka@somainline.org, bjorn.andersson@linaro.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-i2c@vger.kernel.org, phone-devel@vger.kernel.org
+Subject: Re: [PATCH v3 1/3] dt-bindings: i2c: qcom,i2c-qup: Convert txt to
+ YAML schema
+Message-ID: <20210125221633.GA1112939@robh.at.kernel.org>
+References: <20210114180415.404418-1-angelogioacchino.delregno@somainline.org>
+ <20210114180415.404418-2-angelogioacchino.delregno@somainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <8ba2f53d-abbf-af7f-07f6-48ad7f383a37@arm.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20210114180415.404418-2-angelogioacchino.delregno@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 22, 2021 at 12:53:17PM +0000, Robin Murphy wrote:
-> On 2021-01-22 12:41, Will Deacon wrote:
-> >On Tue, Nov 24, 2020 at 12:15:58PM -0700, Jordan Crouse wrote:
-> >>Call report_iommu_fault() to allow upper-level drivers to register their
-> >>own fault handlers.
-> >>
-> >>Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
-> >>---
-> >>
-> >>  drivers/iommu/arm/arm-smmu/arm-smmu.c | 16 +++++++++++++---
-> >>  1 file changed, 13 insertions(+), 3 deletions(-)
-> >>
-> >>diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> >>index 0f28a8614da3..7fd18bbda8f5 100644
-> >>--- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> >>+++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> >>@@ -427,6 +427,7 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
-> >>  	struct arm_smmu_domain *smmu_domain = to_smmu_domain(domain);
-> >>  	struct arm_smmu_device *smmu = smmu_domain->smmu;
-> >>  	int idx = smmu_domain->cfg.cbndx;
-> >>+	int ret;
-> >>  	fsr = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSR);
-> >>  	if (!(fsr & ARM_SMMU_FSR_FAULT))
-> >>@@ -436,11 +437,20 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
-> >>  	iova = arm_smmu_cb_readq(smmu, idx, ARM_SMMU_CB_FAR);
-> >>  	cbfrsynra = arm_smmu_gr1_read(smmu, ARM_SMMU_GR1_CBFRSYNRA(idx));
-> >>-	dev_err_ratelimited(smmu->dev,
-> >>-	"Unhandled context fault: fsr=0x%x, iova=0x%08lx, fsynr=0x%x, cbfrsynra=0x%x, cb=%d\n",
-> >>+	ret = report_iommu_fault(domain, dev, iova,
-> >>+		fsynr & ARM_SMMU_FSYNR0_WNR ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ);
-> >>+
-> >>+	if (ret == -ENOSYS)
-> >>+		dev_err_ratelimited(smmu->dev,
-> >>+		"Unhandled context fault: fsr=0x%x, iova=0x%08lx, fsynr=0x%x, cbfrsynra=0x%x, cb=%d\n",
-> >>  			    fsr, iova, fsynr, cbfrsynra, idx);
-> >>-	arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, fsr);
-> >>+	/*
-> >>+	 * If the iommu fault returns an error (except -ENOSYS) then assume that
-> >>+	 * they will handle resuming on their own
-> >>+	 */
-> >>+	if (!ret || ret == -ENOSYS)
-> >>+		arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, fsr);
-> >
-> >Hmm, I don't grok this part. If the fault handler returned an error and
-> >we don't clear the FSR, won't we just re-take the irq immediately?
+On Thu, Jan 14, 2021 at 07:04:13PM +0100, AngeloGioacchino Del Regno wrote:
+> Convert the qcom,i2c-qup binding to YAML schema.
 > 
-> If we don't touch the FSR at all, yes. Even if we clear the fault indicator
-> bits, the interrupt *might* remain asserted until a stalled transaction is
-> actually resolved - that's that lovely IMP-DEF corner.
->
-> Robin.
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> ---
+>  .../devicetree/bindings/i2c/qcom,i2c-qup.txt  | 40 ---------
+>  .../devicetree/bindings/i2c/qcom,i2c-qup.yaml | 87 +++++++++++++++++++
+>  2 files changed, 87 insertions(+), 40 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/i2c/qcom,i2c-qup.txt
+>  create mode 100644 Documentation/devicetree/bindings/i2c/qcom,i2c-qup.yaml
 > 
+> diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-qup.txt b/Documentation/devicetree/bindings/i2c/qcom,i2c-qup.txt
+> deleted file mode 100644
+> index dc71754a56af..000000000000
+> --- a/Documentation/devicetree/bindings/i2c/qcom,i2c-qup.txt
+> +++ /dev/null
+> @@ -1,40 +0,0 @@
+> -Qualcomm Universal Peripheral (QUP) I2C controller
+> -
+> -Required properties:
+> - - compatible: Should be:
+> -   * "qcom,i2c-qup-v1.1.1" for 8660, 8960 and 8064.
+> -   * "qcom,i2c-qup-v2.1.1" for 8974 v1.
+> -   * "qcom,i2c-qup-v2.2.1" for 8974 v2 and later.
+> - - reg: Should contain QUP register address and length.
+> - - interrupts: Should contain I2C interrupt.
+> -
+> - - clocks: A list of phandles + clock-specifiers, one for each entry in
+> -   clock-names.
+> - - clock-names: Should contain:
+> -   * "core" for the core clock
+> -   * "iface" for the AHB clock
+> -
+> - - #address-cells: Should be <1> Address cells for i2c device address
+> - - #size-cells: Should be <0> as i2c addresses have no size component
+> -
+> -Optional properties:
+> - - clock-frequency: Should specify the desired i2c bus clock frequency in Hz,
+> -                    defaults to 100kHz if omitted.
+> -
+> -Child nodes should conform to i2c bus binding.
+> -
+> -Example:
+> -
+> - i2c@f9924000 {
+> - 	compatible = "qcom,i2c-qup-v2.2.1";
+> - 	reg = <0xf9924000 0x1000>;
+> - 	interrupts = <0 96 0>;
+> -
+> - 	clocks = <&gcc GCC_BLSP1_QUP2_I2C_APPS_CLK>, <&gcc GCC_BLSP1_AHB_CLK>;
+> - 	clock-names = "core", "iface";
+> -
+> - 	clock-frequency = <355000>;
+> -
+> - 	#address-cells = <1>;
+> - 	#size-cells = <0>;
+> - };
+> diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-qup.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-qup.yaml
+> new file mode 100644
+> index 000000000000..c5c7db3ac2a6
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-qup.yaml
+> @@ -0,0 +1,87 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +
+> +$id: http://devicetree.org/schemas/i2c/qcom,i2c-qup.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Universal Peripheral (QUP) I2C controller
+> +
+> +maintainers:
+> +  - Andy Gross <agross@kernel.org>
+> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+> +
+> +description: Binding for Qualcomm "QUP" I2C controllers
+> +
+> +allOf:
+> +  - $ref: /schemas/i2c/i2c-controller.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,i2c-qup-v1.1.1
+> +      - qcom,i2c-qup-v2.1.1
+> +      - qcom,i2c-qup-v2.2.1
+> +
+> +  reg:
+> +    items:
+> +      - description: QUP I2C register iospace
 
-This is for stall-on-fault. The idea is that if the developer chooses to do so
-we would stall the GPU after a fault long enough to take a picture of it with
-devcoredump and then release the FSR. Since we can't take the devcoredump from
-the interrupt handler we schedule it in a worker and then return an error
-to let the main handler know that we'll come back around clear the FSR later
-when we are done.
+Just 'maxItems: 1' is sufficient for a single entry.
 
-It is assumed that we'll have to turn off interrupts in our handler to allow
-this to work. Its all very implementation specific, but then again we're
-assuming that if you want to do this then you know what you are doing.
+> +
+> +  clocks:
+> +    items:
+> +      - description: Core QUP I2C clock
+> +      - description: AHB clock
+> +
+> +  clock-names:
+> +    items:
+> +      - const: core
+> +      - const: iface
+> +
+> +  clock-frequency:
+> +    minimum: 100000
+> +    maximum: 1000000
+> +    default: 100000
+> +
+> +  dmas:
+> +    items:
+> +      - description: RX DMA Channel phandle
+> +      - description: TX DMA Channel phandle
+> +
+> +  dma-names:
+> +    items:
+> +      - const: rx
+> +      - const: tx
+> +
 
-In that spirit the error that skips the FSR should probably be something
-specific instead of "all errors" - that way a well meaning handler that returns
-a -EINVAL doesn't accidentally break itself.
+> +  '#address-cells':
+> +    const: 1
+> +
+> +  '#size-cells':
+> +    const: 0
 
-Jordan
+Can drop these. Covered by i2c-controller.yaml
 
-> >I think
-> >it would be better to do this unconditionally, and print the "Unhandled
-> >context fault" message for any non-zero value of ret.
-
-> >
-> >Will
-> >
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+> +
+> +required:
+> +  - compatible
+> +  - clocks
+> +  - clock-names
+> +  - reg
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-msm8998.h>
+> +    #include <dt-bindings/gpio/gpio.h>
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +
+> +    i2c@c175000 {
+> +        compatible = "qcom,i2c-qup-v2.2.1";
+> +        reg = <0x0c175000 0x600>;
+> +        interrupts = <GIC_SPI 95 IRQ_TYPE_LEVEL_HIGH>;
+> +        clocks = <&gcc GCC_BLSP1_QUP1_I2C_APPS_CLK>,
+> +                 <&gcc GCC_BLSP1_AHB_CLK>;
+> +        clock-names = "core", "iface";
+> +        clock-frequency = <400000>;
+> +        dmas = <&blsp_dma 4>, <&blsp_dma 5>;
+> +        dma-names = "rx", "tx";
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +    };
+> -- 
+> 2.29.2
+> 
