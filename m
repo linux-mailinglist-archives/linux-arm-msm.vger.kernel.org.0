@@ -2,145 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A102303457
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 06:23:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E48A303458
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 06:23:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730028AbhAZFXU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jan 2021 00:23:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51794 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728605AbhAYRLw (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Jan 2021 12:11:52 -0500
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6B95C06174A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jan 2021 09:11:09 -0800 (PST)
-Received: by mail-oi1-x22f.google.com with SMTP id i25so4095856oie.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jan 2021 09:11:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=a0Iqg19k3JMRXQlA8s8jCCfzTrbVd+zw1E8fGhfYxAY=;
-        b=LrRDlaf2+TSX3mP5qfWdjxpLL+wSSYHc7gfcsGgve8bCOge7xQ2qSez8D8gV5fyAto
-         yoYPO6qVqoFvjnLdMDm3PUsSnqZ5RqWPz74AZRpcfrgPlpFdpUvsLMsw3wA6AyLCwgIj
-         6SIl7T5srv/eElFgUtnih+3+eBqlHOg5DsfVQoW7wmeBJ/5Me6+iowJ8SX4W3OCfT2Wf
-         DoRSQK6/DjT2bmoSz2TIFQmbLINqbsjFQG1ig6Tu6qJ04k7gDw4j/R7CthFFQHrbGhrM
-         sAIVLslkPKokraAiOd9QdOwNSJzyqHwOQ5wBN0cdIhVJh3SVmZWd2Drp7v3DmSkavLdU
-         ekkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=a0Iqg19k3JMRXQlA8s8jCCfzTrbVd+zw1E8fGhfYxAY=;
-        b=na60j+My1YSPQidRj9dB88SzyUJusNTKyU/shTWsIxQwF4CDlw1Rj02bJWrmjvBYme
-         DQN9mwI/mv0CY7drZoHm13BMzPX6I7ftQ5AGy8KzhkpHiXt1Z8QXg3bFPr8k+ywf5BlT
-         CIPIepBDFoKNbABzugDsF3UNEyh8qzi5aUCwPokQB+UtXeMzawYvGZgJsxGiNPcSc2oe
-         LzzsrdNGKCaDD/a/Za7MvCVSzQ+gZodqh8dItPei/BvEQx7CSyBi1Tm3eacV35fhjZBK
-         geT/n0ZXwtsJNfPQmTAcdj8q1+4+fnYAs6av+nHsv/ykco1gis9JbRUBCDeRJM0ddUXw
-         AsqQ==
-X-Gm-Message-State: AOAM5329miUi2r4sfYQ4K/gGHX4+zOZqM/iLzgJoUdxG3oNpYOujSjHo
-        mL9BmKYi3/HWvoZ+LjHusOwx+Q==
-X-Google-Smtp-Source: ABdhPJwl27mCw1DWsN9nRAvIc6uolsENPpbyKyfTHDnrSNSA76hNllSU127S8ADVw67sf4CMGm/PtQ==
-X-Received: by 2002:aca:ec43:: with SMTP id k64mr752340oih.13.1611594669250;
-        Mon, 25 Jan 2021 09:11:09 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 93sm1571168ots.36.2021.01.25.09.11.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Jan 2021 09:11:08 -0800 (PST)
-Date:   Mon, 25 Jan 2021 11:11:07 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        id S1732429AbhAZFXZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jan 2021 00:23:25 -0500
+Received: from mail.kernel.org ([198.145.29.99]:57742 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727232AbhAYSlL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 25 Jan 2021 13:41:11 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 68E3920665;
+        Mon, 25 Jan 2021 18:40:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1611600030;
+        bh=ameHPCB/oz4/BeevZFfLSTXuBt6P8JY+tdmpWZqMTOI=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=LA4m4N6FXgHyOFlkbB/vbDdcKkTsOWHGq8aVNiWl+NeRe0qUBrXa8hgPXNCGvDFtj
+         62V5wwoCzzlD8OD4Dis6MC5G0ILs+073C78v5IdZW/l33ujfNiPJxBHnvGTb6VWJLA
+         EvdUzjmbhxFRVrLjPQf/ie8xajj5MnQv1oCGhugQl7K6o5Yh87fXTFIBat8+zlEbkT
+         6Qp+sX6NuanSlGnG6YuXhfDvD0jV5AiN1+JzvZo7x3OoWzVSrNS2DxIjD1Yu8p6dux
+         xlpu30CkBvnrFJuoR7njdD4tadMMOFHtjMqdGQ2Ae8jQIRzsAMZVRjGH3vr5aP9Okh
+         qdF+vn2F1q5gg==
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     linux-mmc@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-fscrypt@vger.kernel.org, Satya Tangirala <satyat@google.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
         Asutosh Das <asutoshd@codeaurora.org>,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/4] phy: qcom-qmp: Add UFS v4 registers found in SM8350
-Message-ID: <YA77q/CZnjdW5pOM@builder.lan>
-References: <20210125100906.4004908-1-vkoul@kernel.org>
- <20210125100906.4004908-4-vkoul@kernel.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Neeraj Soni <neersoni@codeaurora.org>,
+        Barani Muthukumaran <bmuthuku@codeaurora.org>,
+        Peng Zhou <peng.zhou@mediatek.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Konrad Dybcio <konradybcio@gmail.com>
+Subject: [PATCH v6 2/9] mmc: cqhci: rename cqhci.c to cqhci-core.c
+Date:   Mon, 25 Jan 2021 10:38:03 -0800
+Message-Id: <20210125183810.198008-3-ebiggers@kernel.org>
+X-Mailer: git-send-email 2.30.0
+In-Reply-To: <20210125183810.198008-1-ebiggers@kernel.org>
+References: <20210125183810.198008-1-ebiggers@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210125100906.4004908-4-vkoul@kernel.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 25 Jan 04:09 CST 2021, Vinod Koul wrote:
+From: Eric Biggers <ebiggers@google.com>
 
-> Add the registers for few new registers found in SM8350. Also the UFS
-> phy used in SM8350 seems to have different offsets than V4 phy, although
-> it claims it is v4 phy, so add the new offsets with SM8350 tag instead
-> of V4 tag.
-> 
+Rename cqhci.c to cqhci-core.c so that another source file can be added
+to the cqhci module without having to rename the module.
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-and-tested-by: Peng Zhou <peng.zhou@mediatek.com>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+---
+ drivers/mmc/host/Makefile                  | 1 +
+ drivers/mmc/host/{cqhci.c => cqhci-core.c} | 0
+ 2 files changed, 1 insertion(+)
+ rename drivers/mmc/host/{cqhci.c => cqhci-core.c} (100%)
 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp.h | 27 +++++++++++++++++++++++++++
->  1 file changed, 27 insertions(+)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.h b/drivers/phy/qualcomm/phy-qcom-qmp.h
-> index dff7be5a1cc1..bba1d5e3eb73 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp.h
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.h
-> @@ -451,6 +451,7 @@
->  #define QSERDES_V4_TX_RES_CODE_LANE_OFFSET_RX 		0x40
->  #define QSERDES_V4_TX_LANE_MODE_1			0x84
->  #define QSERDES_V4_TX_LANE_MODE_2			0x88
-> +#define QSERDES_V4_TX_LANE_MODE_3			0x8C
->  #define QSERDES_V4_TX_RCV_DETECT_LVL_2			0x9c
->  #define QSERDES_V4_TX_PWM_GEAR_1_DIVIDER_BAND0_1	0xd8
->  #define QSERDES_V4_TX_PWM_GEAR_2_DIVIDER_BAND0_1	0xdC
-> @@ -459,6 +460,13 @@
->  #define QSERDES_V4_TX_TRAN_DRVR_EMP_EN			0xb8
->  #define QSERDES_V4_TX_PI_QEC_CTRL		0x104
->  
-> +/* Only for SM8350 QMP V4 Phy TX offsets different from V4 */
-> +#define QSERDES_SM8350_TX_PWM_GEAR_1_DIVIDER_BAND0_1	0x178
-> +#define QSERDES_SM8350_TX_PWM_GEAR_2_DIVIDER_BAND0_1	0x17c
-> +#define QSERDES_SM8350_TX_PWM_GEAR_3_DIVIDER_BAND0_1	0x180
-> +#define QSERDES_SM8350_TX_PWM_GEAR_4_DIVIDER_BAND0_1	0x184
-> +#define QSERDES_SM8350_TX_TRAN_DRVR_EMP_EN		0xc0
-> +
->  /* Only for QMP V4 PHY - RX registers */
->  #define QSERDES_V4_RX_UCDR_FO_GAIN			0x008
->  #define QSERDES_V4_RX_UCDR_SO_GAIN			0x014
-> @@ -514,6 +522,24 @@
->  #define QSERDES_V4_RX_DCC_CTRL1				0x1bc
->  #define QSERDES_V4_RX_VTH_CODE				0x1c4
->  
-> +/* Only for SM8350 QMP V4 Phy RX offsets different from V4 */
-> +#define QSERDES_SM8350_RX_RX_MODE_00_LOW		0x15c
-> +#define QSERDES_SM8350_RX_RX_MODE_00_HIGH		0x160
-> +#define QSERDES_SM8350_RX_RX_MODE_00_HIGH2		0x164
-> +#define QSERDES_SM8350_RX_RX_MODE_00_HIGH3		0x168
-> +#define QSERDES_SM8350_RX_RX_MODE_00_HIGH4		0x16c
-> +#define QSERDES_SM8350_RX_RX_MODE_01_LOW		0x170
-> +#define QSERDES_SM8350_RX_RX_MODE_01_HIGH		0x174
-> +#define QSERDES_SM8350_RX_RX_MODE_01_HIGH2		0x178
-> +#define QSERDES_SM8350_RX_RX_MODE_01_HIGH3		0x17c
-> +#define QSERDES_SM8350_RX_RX_MODE_01_HIGH4		0x180
-> +#define QSERDES_SM8350_RX_RX_MODE_10_LOW		0x184
-> +#define QSERDES_SM8350_RX_RX_MODE_10_HIGH		0x188
-> +#define QSERDES_SM8350_RX_RX_MODE_10_HIGH2		0x18c
-> +#define QSERDES_SM8350_RX_RX_MODE_10_HIGH3		0x190
-> +#define QSERDES_SM8350_RX_RX_MODE_10_HIGH4		0x194
-> +#define QSERDES_SM8350_RX_DCC_CTRL1			0x1a8
-> +
->  /* Only for QMP V4 PHY - UFS PCS registers */
->  #define QPHY_V4_PCS_UFS_PHY_START				0x000
->  #define QPHY_V4_PCS_UFS_POWER_DOWN_CONTROL			0x004
-> @@ -529,6 +555,7 @@
->  #define QPHY_V4_PCS_UFS_DEBUG_BUS_CLKSEL			0x124
->  #define QPHY_V4_PCS_UFS_LINECFG_DISABLE				0x148
->  #define QPHY_V4_PCS_UFS_RX_MIN_HIBERN8_TIME			0x150
-> +#define QPHY_V4_PCS_UFS_RX_SIGDET_CTRL1				0x154
->  #define QPHY_V4_PCS_UFS_RX_SIGDET_CTRL2				0x158
->  #define QPHY_V4_PCS_UFS_TX_PWM_GEAR_BAND			0x160
->  #define QPHY_V4_PCS_UFS_TX_HS_GEAR_BAND				0x168
-> -- 
-> 2.26.2
-> 
+diff --git a/drivers/mmc/host/Makefile b/drivers/mmc/host/Makefile
+index d2ec428cc8086..19687ad42c6b4 100644
+--- a/drivers/mmc/host/Makefile
++++ b/drivers/mmc/host/Makefile
+@@ -102,6 +102,7 @@ obj-$(CONFIG_MMC_SDHCI_BRCMSTB)		+= sdhci-brcmstb.o
+ obj-$(CONFIG_MMC_SDHCI_OMAP)		+= sdhci-omap.o
+ obj-$(CONFIG_MMC_SDHCI_SPRD)		+= sdhci-sprd.o
+ obj-$(CONFIG_MMC_CQHCI)			+= cqhci.o
++cqhci-y					+= cqhci-core.o
+ obj-$(CONFIG_MMC_HSQ)			+= mmc_hsq.o
+ 
+ ifeq ($(CONFIG_CB710_DEBUG),y)
+diff --git a/drivers/mmc/host/cqhci.c b/drivers/mmc/host/cqhci-core.c
+similarity index 100%
+rename from drivers/mmc/host/cqhci.c
+rename to drivers/mmc/host/cqhci-core.c
+-- 
+2.30.0
+
