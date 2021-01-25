@@ -2,93 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E403303459
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 06:23:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1620430345F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 06:24:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729736AbhAZFXo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jan 2021 00:23:44 -0500
-Received: from mail.kernel.org ([198.145.29.99]:58348 "EHLO mail.kernel.org"
+        id S1731082AbhAZFXr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jan 2021 00:23:47 -0500
+Received: from mail.kernel.org ([198.145.29.99]:36206 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726586AbhAYSmF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Jan 2021 13:42:05 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id A769B206FA;
-        Mon, 25 Jan 2021 18:40:34 +0000 (UTC)
+        id S1731083AbhAYSu1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 25 Jan 2021 13:50:27 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id 9B6A9230FC;
+        Mon, 25 Jan 2021 18:50:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1611600035;
-        bh=G16sIENRX9EMyT17x8UvaimcQGeqHoMJpMYb9LmaK3k=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=lxXvobahmBexVbR80EMa8QXk0stwHxVUyECEStOVYqjbcx0CMuqD0ME0i+boBzAdw
-         2zPKXSM6mf1nOeVSR4iqUFsLJQPqDF++ogzs/uFCTdYnXGCAXCP8sviUuPMsKSJutq
-         k31ny/cXGIsXjd+TxLdhJ9WWRDvfUE1G1zehMv+ctAuYNnwJU2Bxe7aDIp2roLQXOu
-         t/Q4+2Lhp6s5xBksAaCe0Y9EqM2sKVh6JbI8S7AXfmp5MFcQL4M6o6NlnKGFKfDeBi
-         cpgJxXXo0YUbkRYgmm0ggQc3oxZnxgdOTNbw8vorLY41IVkIy6dcmLn4sS8RDNe4HS
-         1BT2mCzktY4yg==
-From:   Eric Biggers <ebiggers@kernel.org>
-To:     linux-mmc@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-fscrypt@vger.kernel.org, Satya Tangirala <satyat@google.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Neeraj Soni <neersoni@codeaurora.org>,
-        Barani Muthukumaran <bmuthuku@codeaurora.org>,
-        Peng Zhou <peng.zhou@mediatek.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Konrad Dybcio <konradybcio@gmail.com>
-Subject: [PATCH v6 9/9] arm64: dts: qcom: sdm630: add ICE registers and clocks
-Date:   Mon, 25 Jan 2021 10:38:10 -0800
-Message-Id: <20210125183810.198008-10-ebiggers@kernel.org>
-X-Mailer: git-send-email 2.30.0
-In-Reply-To: <20210125183810.198008-1-ebiggers@kernel.org>
-References: <20210125183810.198008-1-ebiggers@kernel.org>
+        s=k20201202; t=1611600610;
+        bh=RU4Hy23V2yowEKboEdGanykKMKVBYFtosXNA3EhMfJs=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=jctOgTCWzhsCA1UwD432EIAsdgVQ5dfY8Iivhl+z0mHxus8bB/h2tPMbY9LeB9Xo1
+         vDFh3G3Wek4nVpDM+x0sq+Qft2p0F3odbkWImxWM3vok/zachkwgWHRYx398vcY6jX
+         ogkZfY4jrx9i+7wL1n1kP8VcxirQU0+7qinxKgnhwfRY+aprEwM/MGk74vOr5CkMaE
+         gc1FDzP6QCr9IWb2ep6j+D/6vCMW1bMbdMdzUqxQDBzr9hdiVO+tQA+jR+8gAJiXIW
+         nyOZGi0aMXjqOIQIHRhNkfnhfKqdeNGk2xmHkgShXPsG4N+L6G+7xDonqm6HAjSr2b
+         nGJ1/KLYyks+Q==
+Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 9244761E45;
+        Mon, 25 Jan 2021 18:50:10 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH 01/11] arm64: dts: qcom: Add support for remaining Sony
+ Kitakami boards
+From:   patchwork-bot+linux-arm-msm@kernel.org
+Message-Id: <161160061059.4014.8765859437325861788.git-patchwork-notify@kernel.org>
+Date:   Mon, 25 Jan 2021 18:50:10 +0000
+References: <20210118162432.107275-1-konrad.dybcio@somainline.org>
+In-Reply-To: <20210118162432.107275-1-konrad.dybcio@somainline.org>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Eric Biggers <ebiggers@google.com>
+Hello:
 
-Add the registers and clock for the Inline Crypto Engine (ICE) to the
-device tree node for the sdhci-msm host controller on sdm630.  This
-allows sdhci-msm to support inline encryption on sdm630.
+This series was applied to qcom/linux.git (refs/heads/for-next):
 
-Signed-off-by: Eric Biggers <ebiggers@google.com>
----
- arch/arm64/boot/dts/qcom/sdm630.dtsi | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+On Mon, 18 Jan 2021 17:24:21 +0100 you wrote:
+> This patch adds support for the following Xperias:
+> 
+> * Z3+ [aka Z4 in some regions] (Ivy)
+> * Z4 Tablet (Karin)
+> * Z4 Tablet Wi-Fi (Karin_windy) [APQ8094]
+> * Z5 Compact (Suzuran)
+> * Z5 Premium (Satsuki)
+> 
+> [...]
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index 37d5cc32f6b62..afb3d20c31fa0 100644
---- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -808,8 +808,9 @@ spmi_bus: spmi@800f000 {
- 		sdhc_1: sdhci@c0c4000 {
- 			compatible = "qcom,sdm630-sdhci", "qcom,sdhci-msm-v5";
- 			reg = <0x0c0c4000 0x1000>,
--				<0x0c0c5000 0x1000>;
--			reg-names = "hc", "cqhci";
-+				<0x0c0c5000 0x1000>,
-+				<0x0c0c8000 0x8000>;
-+			reg-names = "hc", "cqhci", "ice";
- 
- 			interrupts = <GIC_SPI 110 IRQ_TYPE_LEVEL_HIGH>,
- 					<GIC_SPI 112 IRQ_TYPE_LEVEL_HIGH>;
-@@ -817,8 +818,9 @@ sdhc_1: sdhci@c0c4000 {
- 
- 			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
- 					<&gcc GCC_SDCC1_AHB_CLK>,
--					<&xo_board>;
--			clock-names = "core", "iface", "xo";
-+					<&xo_board>,
-+					<&gcc GCC_SDCC1_ICE_CORE_CLK>;
-+			clock-names = "core", "iface", "xo", "ice";
- 
- 			pinctrl-names = "default", "sleep";
- 			pinctrl-0 = <&sdc1_clk_on &sdc1_cmd_on &sdc1_data_on &sdc1_rclk_on>;
--- 
-2.30.0
+Here is the summary with links:
+  - [01/11] arm64: dts: qcom: Add support for remaining Sony Kitakami boards
+    https://git.kernel.org/qcom/c/72b312411de7
+  - [02/11] arm64: dts: qcom: msm8992-bullhead: Update regulator config
+    https://git.kernel.org/qcom/c/1628dfe5f67e
+  - [03/11] arm64: dts: qcom: msm8992-libra: Update regulator config
+    https://git.kernel.org/qcom/c/31d9dbd2ae36
+  - [04/11] arm64: dts: qcom: msm8992/4: Rename vreg_vph_pwr to vph_pwr
+    https://git.kernel.org/qcom/c/53364cfcaa7d
+  - [05/11] arm64: dts: qcom: msm/apq8994-kitakami: Add regulator config
+    https://git.kernel.org/qcom/c/676b61b4790a
+  - [06/11] arm64: dts: qcom: msm8994-kitakami: Add Synaptics RMI touchscreen
+    https://git.kernel.org/qcom/c/e8528157b7f0
+  - [07/11] arm64: dts: qcom: msm8994-kitakami: Add uSD card support
+    https://git.kernel.org/qcom/c/ab8e4a853731
+  - [08/11] arm64: dts: qcom: msm8994-kitakami: Add VDD_GFX regulator
+    https://git.kernel.org/qcom/c/e9783584c9b7
+  - [09/11] arm64: dts: qcom: msm8994: Fix BLSP2_UART2 node
+    https://git.kernel.org/qcom/c/a046032c37c0
+  - [10/11] arm64: dts: qcom: msm8994/8994-kitakami: Fix up the memory map
+    https://git.kernel.org/qcom/c/74d6d0a14583
+  - [11/11] arm64: dts: qcom: msm8994-kitakami: Add missing email in the copyright
+    https://git.kernel.org/qcom/c/54b1511e4f31
+
+You are awesome, thank you!
+--
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
