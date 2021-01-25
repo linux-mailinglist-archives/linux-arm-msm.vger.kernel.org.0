@@ -2,238 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F66E3031E3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 03:34:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C26173031DF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 03:32:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726386AbhAYSaP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Jan 2021 13:30:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51938 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730443AbhAYRMa (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Jan 2021 12:12:30 -0500
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D50EC06178A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jan 2021 09:11:49 -0800 (PST)
-Received: by mail-oi1-x235.google.com with SMTP id j25so10097658oii.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jan 2021 09:11:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=3gRhcAZqlZ8w1ZOOmWYn0J7vuVCgK/CV0V5p4Dxi6QQ=;
-        b=ftrrLte4nO3FwHnuZRZuJ188/r9i0/q+j2O4QKSeu0SLB3jsRyup4UDWcx/J78PYXO
-         hGfq2YvMphv1/YuzCx/NPvLTrIFkhxDIQe9MW56dDawuCEmTQ5o+yZltxpIoEURB1oRU
-         CA+llszVP5o1SuZ0WWslW9t9muv183v5LUDPSyLLhwTMrg2WDM8O5fw67QmXkbLicrbG
-         kXwIq3jGgHwyx4N2lWnCYEcOFyC2/tww3VfMjcNBfywj0e1TbkTGWm3Wkznb29iLWiTv
-         UxGJluNH9h6RQxsqWnaPMeX5yRT1TigHTNTiARl9u8uLtSdqZBjON+Em+mr8NfVZEsGd
-         LbUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=3gRhcAZqlZ8w1ZOOmWYn0J7vuVCgK/CV0V5p4Dxi6QQ=;
-        b=BBcjHL1f86zB7zAoC64yEdLRG+jxWe153u8RAnruANbo6qRdjnQTUhor7E732h7YlN
-         Cz3AfNfylpx/hCYd8ypr072pArEjyyfxG6YrquEw65EisA8iANXTuAgikqYsr7I+wKEJ
-         lLpVGhd0oA/0NzBXqhxrKpKvnLORaIuMtPO9zLYABr13cXjQUBQ/DQYUdlS9KtgIRYh5
-         r+Ai07wEk7v1IN7GKT+wbV50RdK7+a4hzCzI6iJHQuYgfelM4isPU1GSp2uRQSZIKTSF
-         wr+LKgjh219u7WOJoLbPJwokmuZ80xVjAq1vSHLw+iOisMorPBblp9e1RJxdU2QzXDIZ
-         9B3A==
-X-Gm-Message-State: AOAM530yc8QkJv0jAml/fPe+E03ocqectcC6ieghuSz7pktXuM3TrgXk
-        1MvkndwqEATnjGB9p671YW7AlA==
-X-Google-Smtp-Source: ABdhPJwlpxYQsm2lTuKhQrAJ5QRT5stxC/4NvTSbOnk30+tkN0oqi2opUpa+z4B7SyY6Nog835o2AA==
-X-Received: by 2002:aca:ab14:: with SMTP id u20mr722510oie.117.1611594708287;
-        Mon, 25 Jan 2021 09:11:48 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id g14sm3103869oon.23.2021.01.25.09.11.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Jan 2021 09:11:47 -0800 (PST)
-Date:   Mon, 25 Jan 2021 11:11:46 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        id S1727300AbhAYSl0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Jan 2021 13:41:26 -0500
+Received: from mail.kernel.org ([198.145.29.99]:57702 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727050AbhAYSlK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 25 Jan 2021 13:41:10 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 3A1982063A;
+        Mon, 25 Jan 2021 18:40:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1611600029;
+        bh=hh8b0e0c4loqqFoN+PWjxQCkQrYyCAkBlcpa1rAA1QY=;
+        h=From:To:Cc:Subject:Date:From;
+        b=Ub0exa77R2jvKdBW5JYmLGIwsruOb6XnIBAGZI3kLwdsJDHdapC0WwaKzxa4VLrFi
+         VODw8ehplEKjqNmtk2QX5JWk7w1of6OK3NwNZMiq3XvVx+LoSoOp8/vMnxrryNLQQE
+         CAT5OjuoY+GM+w0drYE58ffed0soxL+PJwroi5T0vtnruugKY+zpLeII/ZcZ2oDs63
+         N0l6JWjbtYVXA2Tat+LE4Mcf3lUPSJN7hu1jODKxsM6rcH/DRTGBdA5o004xfn0pzA
+         a6P/nxQQ4Xs0NYtnO4UxspybKIeKlwrZoeROp1WrGfqu3ymIrD62sIbbbDz/G6HZW/
+         BKoB2TAixQcsQ==
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     linux-mmc@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-fscrypt@vger.kernel.org, Satya Tangirala <satyat@google.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
         Asutosh Das <asutoshd@codeaurora.org>,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 4/4] phy: qcom-qmp: Add support for SM8350 UFS phy
-Message-ID: <YA770pSyy4MDFzxG@builder.lan>
-References: <20210125100906.4004908-1-vkoul@kernel.org>
- <20210125100906.4004908-5-vkoul@kernel.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Neeraj Soni <neersoni@codeaurora.org>,
+        Barani Muthukumaran <bmuthuku@codeaurora.org>,
+        Peng Zhou <peng.zhou@mediatek.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Konrad Dybcio <konradybcio@gmail.com>
+Subject: [PATCH v6 0/9] eMMC inline encryption support
+Date:   Mon, 25 Jan 2021 10:38:01 -0800
+Message-Id: <20210125183810.198008-1-ebiggers@kernel.org>
+X-Mailer: git-send-email 2.30.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210125100906.4004908-5-vkoul@kernel.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 25 Jan 04:09 CST 2021, Vinod Koul wrote:
+Hello,
 
-> Add the tables for init sequences for UFS QMP phy found in  SM8350 SoC.
-> 
+This patchset adds support for eMMC inline encryption, as specified by
+the upcoming version of the eMMC specification and as already
+implemented and used on many devices.  Building on that, it then adds
+Qualcomm ICE support and wires it up for the Snapdragon 630 SoC.
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Inline encryption hardware improves the performance of storage
+encryption and reduces power usage.  See
+Documentation/block/inline-encryption.rst for more information about
+inline encryption and the blk-crypto framework (upstreamed in v5.8)
+which supports it.  Most mobile devices already use UFS or eMMC inline
+encryption hardware; UFS support was already upstreamed in v5.9.
 
-Regards,
-Bjorn
+Patches 1-4 add support for the standard eMMC inline encryption.
 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp.c | 127 ++++++++++++++++++++++++++++
->  1 file changed, 127 insertions(+)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> index dbc12a19b702..4a9d1010910d 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> @@ -1983,6 +1983,106 @@ static const struct qmp_phy_init_tbl sm8250_qmp_gen3x2_pcie_pcs_misc_tbl[] = {
->  	QMP_PHY_INIT_CFG(QPHY_V4_PCS_PCIE_POWER_STATE_CONFIG4, 0x07),
->  };
->  
-> +static const struct qmp_phy_init_tbl sm8350_ufsphy_serdes_tbl[] = {
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_COM_SYSCLK_EN_SEL, 0xd9),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_COM_HSCLK_SEL, 0x11),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_COM_HSCLK_HS_SWITCH_SEL, 0x00),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_COM_LOCK_CMP_EN, 0x42),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_COM_VCO_TUNE_MAP, 0x02),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_COM_PLL_IVCO, 0x0f),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_COM_VCO_TUNE_INITVAL2, 0x00),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_COM_BIN_VCOCAL_HSCLK_SEL, 0x11),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_COM_DEC_START_MODE0, 0x82),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_COM_CP_CTRL_MODE0, 0x14),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_COM_PLL_RCTRL_MODE0, 0x18),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_COM_PLL_CCTRL_MODE0, 0x18),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_COM_LOCK_CMP1_MODE0, 0xff),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_COM_LOCK_CMP2_MODE0, 0x19),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE1_MODE0, 0xac),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE2_MODE0, 0x1e),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_COM_DEC_START_MODE1, 0x98),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_COM_CP_CTRL_MODE1, 0x14),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_COM_PLL_RCTRL_MODE1, 0x18),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_COM_PLL_CCTRL_MODE1, 0x18),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_COM_LOCK_CMP1_MODE1, 0x65),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_COM_LOCK_CMP2_MODE1, 0x1e),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE1_MODE1, 0xdd),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE2_MODE1, 0x23),
-> +
-> +	/* Rate B */
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_COM_VCO_TUNE_MAP, 0x06),
-> +};
-> +
-> +static const struct qmp_phy_init_tbl sm8350_ufsphy_tx_tbl[] = {
-> +	QMP_PHY_INIT_CFG(QSERDES_SM8350_TX_PWM_GEAR_1_DIVIDER_BAND0_1, 0x06),
-> +	QMP_PHY_INIT_CFG(QSERDES_SM8350_TX_PWM_GEAR_2_DIVIDER_BAND0_1, 0x03),
-> +	QMP_PHY_INIT_CFG(QSERDES_SM8350_TX_PWM_GEAR_3_DIVIDER_BAND0_1, 0x01),
-> +	QMP_PHY_INIT_CFG(QSERDES_SM8350_TX_PWM_GEAR_4_DIVIDER_BAND0_1, 0x00),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_TX_LANE_MODE_1, 0xf5),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_TX_LANE_MODE_3, 0x3f),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_TX_RES_CODE_LANE_OFFSET_TX, 0x09),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_TX_RES_CODE_LANE_OFFSET_RX, 0x09),
-> +	QMP_PHY_INIT_CFG(QSERDES_SM8350_TX_TRAN_DRVR_EMP_EN, 0x0c),
-> +};
-> +
-> +static const struct qmp_phy_init_tbl sm8350_ufsphy_rx_tbl[] = {
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_SIGDET_LVL, 0x24),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_SIGDET_CNTRL, 0x0f),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_SIGDET_DEGLITCH_CNTRL, 0x1e),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_BAND, 0x18),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_FASTLOCK_FO_GAIN, 0x0a),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_SO_SATURATION_AND_ENABLE, 0x5a),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_PI_CONTROLS, 0xf1),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_FASTLOCK_COUNT_LOW, 0x80),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_PI_CTRL2, 0x80),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_FO_GAIN, 0x0e),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_SO_GAIN, 0x04),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_TERM_BW, 0x1b),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_EQU_ADAPTOR_CNTRL1, 0x04),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_EQU_ADAPTOR_CNTRL2, 0x06),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_EQU_ADAPTOR_CNTRL3, 0x04),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_EQU_ADAPTOR_CNTRL4, 0x1a),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_EQ_OFFSET_ADAPTOR_CNTRL1, 0x17),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_OFFSET_ADAPTOR_CNTRL2, 0x00),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_IDAC_MEASURE_TIME, 0x10),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_IDAC_TSETTLE_LOW, 0xc0),
-> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_IDAC_TSETTLE_HIGH, 0x00),
-> +	QMP_PHY_INIT_CFG(QSERDES_SM8350_RX_RX_MODE_00_LOW, 0x6d),
-> +	QMP_PHY_INIT_CFG(QSERDES_SM8350_RX_RX_MODE_00_HIGH, 0x6d),
-> +	QMP_PHY_INIT_CFG(QSERDES_SM8350_RX_RX_MODE_00_HIGH2, 0xed),
-> +	QMP_PHY_INIT_CFG(QSERDES_SM8350_RX_RX_MODE_00_HIGH3, 0x3b),
-> +	QMP_PHY_INIT_CFG(QSERDES_SM8350_RX_RX_MODE_00_HIGH4, 0x3c),
-> +	QMP_PHY_INIT_CFG(QSERDES_SM8350_RX_RX_MODE_01_LOW, 0xe0),
-> +	QMP_PHY_INIT_CFG(QSERDES_SM8350_RX_RX_MODE_01_HIGH, 0xc8),
-> +	QMP_PHY_INIT_CFG(QSERDES_SM8350_RX_RX_MODE_01_HIGH2, 0xc8),
-> +	QMP_PHY_INIT_CFG(QSERDES_SM8350_RX_RX_MODE_01_HIGH3, 0x3b),
-> +	QMP_PHY_INIT_CFG(QSERDES_SM8350_RX_RX_MODE_01_HIGH4, 0xb7),
-> +	QMP_PHY_INIT_CFG(QSERDES_SM8350_RX_RX_MODE_10_LOW, 0xe0),
-> +	QMP_PHY_INIT_CFG(QSERDES_SM8350_RX_RX_MODE_10_HIGH, 0xc8),
-> +	QMP_PHY_INIT_CFG(QSERDES_SM8350_RX_RX_MODE_10_HIGH2, 0xc8),
-> +	QMP_PHY_INIT_CFG(QSERDES_SM8350_RX_RX_MODE_10_HIGH3, 0x3b),
-> +	QMP_PHY_INIT_CFG(QSERDES_SM8350_RX_RX_MODE_10_HIGH4, 0xb7),
-> +	QMP_PHY_INIT_CFG(QSERDES_SM8350_RX_DCC_CTRL1, 0x0c),
-> +};
-> +
-> +static const struct qmp_phy_init_tbl sm8350_ufsphy_pcs_tbl[] = {
-> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_RX_SIGDET_CTRL2, 0x6d),
-> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TX_LARGE_AMP_DRV_LVL, 0x0a),
-> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TX_SMALL_AMP_DRV_LVL, 0x02),
-> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TX_MID_TERM_CTRL1, 0x43),
-> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_DEBUG_BUS_CLKSEL, 0x1f),
-> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_RX_MIN_HIBERN8_TIME, 0xff),
-> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_PLL_CNTL, 0x03),
-> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TIMER_20US_CORECLK_STEPS_MSB, 0x16),
-> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TIMER_20US_CORECLK_STEPS_LSB, 0xd8),
-> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TX_PWM_GEAR_BAND, 0xaa),
-> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TX_HS_GEAR_BAND, 0x06),
-> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TX_HSGEAR_CAPABILITY, 0x03),
-> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_RX_HSGEAR_CAPABILITY, 0x03),
-> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_RX_SIGDET_CTRL1, 0x0e),
-> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_MULTI_LANE_CTRL1, 0x02),
-> +};
-> +
->  static const struct qmp_phy_init_tbl sm8350_usb3_tx_tbl[] = {
->  	QMP_PHY_INIT_CFG(QSERDES_V5_TX_RES_CODE_LANE_TX, 0x00),
->  	QMP_PHY_INIT_CFG(QSERDES_V5_TX_RES_CODE_LANE_RX, 0x00),
-> @@ -2971,6 +3071,30 @@ static const struct qmp_phy_cfg sm8250_usb3_uniphy_cfg = {
->  	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
->  };
->  
-> +static const struct qmp_phy_cfg sm8350_ufsphy_cfg = {
-> +	.type			= PHY_TYPE_UFS,
-> +	.nlanes			= 2,
-> +
-> +	.serdes_tbl		= sm8350_ufsphy_serdes_tbl,
-> +	.serdes_tbl_num		= ARRAY_SIZE(sm8350_ufsphy_serdes_tbl),
-> +	.tx_tbl			= sm8350_ufsphy_tx_tbl,
-> +	.tx_tbl_num		= ARRAY_SIZE(sm8350_ufsphy_tx_tbl),
-> +	.rx_tbl			= sm8350_ufsphy_rx_tbl,
-> +	.rx_tbl_num		= ARRAY_SIZE(sm8350_ufsphy_rx_tbl),
-> +	.pcs_tbl		= sm8350_ufsphy_pcs_tbl,
-> +	.pcs_tbl_num		= ARRAY_SIZE(sm8350_ufsphy_pcs_tbl),
-> +	.clk_list		= sdm845_ufs_phy_clk_l,
-> +	.num_clks		= ARRAY_SIZE(sdm845_ufs_phy_clk_l),
-> +	.vreg_list		= qmp_phy_vreg_l,
-> +	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-> +	.regs			= sm8150_ufsphy_regs_layout,
-> +
-> +	.start_ctrl		= SERDES_START,
-> +	.pwrdn_ctrl		= SW_PWRDN,
-> +
-> +	.is_dual_lane_phy	= true,
-> +};
-> +
->  static const struct qmp_phy_cfg sm8350_usb3phy_cfg = {
->  	.type			= PHY_TYPE_USB3,
->  	.nlanes			= 1,
-> @@ -4379,6 +4503,9 @@ static const struct of_device_id qcom_qmp_phy_of_match_table[] = {
->  	}, {
->  		.compatible = "qcom,sm8250-qmp-modem-pcie-phy",
->  		.data = &sm8250_qmp_gen3x2_pciephy_cfg,
-> +	}, {
-> +		.compatible = "qcom,sm8350-qmp-ufs-phy",
-> +		.data = &sm8350_ufsphy_cfg,
->  	}, {
->  		.compatible = "qcom,sm8350-qmp-usb3-phy",
->  		.data = &sm8350_usb3phy_cfg,
-> -- 
-> 2.26.2
-> 
+However, as with UFS, host controller-specific patches are needed on top
+of the standard support.  Therefore, patches 5-9 add Qualcomm ICE
+(Inline Crypto Engine) support and wire it up on the Snapdragon 630 SoC.
+
+To test this I took advantage of the recently upstreamed support for the
+Snapdragon 630 SoC, plus work-in-progress patches from the SoMainline
+project (https://github.com/SoMainline/linux/tree/konrad/v5.10-rc3).  In
+particular, I was able to run the fscrypt xfstests for ext4 and f2fs in
+a Debian chroot.  Among other things, these tests verified that the
+correct ciphertext is written to disk (the same as software encryption).
+
+It will also be possible to add support for Mediatek eMMC inline
+encryption hardware in mtk-sd, and it should be easier than the Qualcomm
+hardware since the Mediatek hardware follows the standard more closely.
+I.e., patches 1-4 should be almost enough for the Mediatek hardware.
+
+This patchset is based on the "next" branch of
+https://git.kernel.org/pub/scm/linux/kernel/git/ulfh/mmc.git,
+plus the patch "block/keyslot-manager: introduce devm_blk_ksm_init()"
+(https://lkml.kernel.org/r/20210121082155.111333-2-ebiggers@kernel.org).
+It can also be retrieved from tag "mmc-crypto-v6" of
+https://git.kernel.org/pub/scm/linux/kernel/git/ebiggers/linux.git
+
+Changed in v6:
+  - Define MMC_CAP2_CRYPTO to 0 when !CONFIG_MMC_CRYPTO.
+  - Moved the sdm630 device tree update to the end of the series,
+    since it will go in through a different tree.
+  - Added an Acked-by.
+
+Changed in v5:
+  - Use the proposed resource-managed variant of blk_ksm_init().
+  - Removed an unnecessary call to devm_kfree().
+
+Changed in v4:
+  - Added Acked-by and Reviewed-and-tested-by tags.
+  - Rebased onto v5.11-rc2.
+
+Changed in v3:
+  - Improved comment for sdhci_msm_ice_wait_bist_status()
+  - Removed an unhelpful comment in union cqhci_crypto_cfg_entry.
+  - Fixed the commit message of "mmc: cqhci: initialize upper 64 bits of
+    128-bit task descriptors".
+  - Added Reviewed-by's and Acked-by's.
+
+Changed in v2:
+  - Only select QCOM_SCM if ARCH_QCOM.  (Fixes a build break.)
+  - Split most of the cqhci_prep_task_desc() change into its own patch.
+  - Made sdhci_msm_ice_wait_bist_status() use readl_poll_timeout().
+  - Added a couple more comments.
+  - Added some Acked-by's.
+
+Eric Biggers (9):
+  mmc: add basic support for inline encryption
+  mmc: cqhci: rename cqhci.c to cqhci-core.c
+  mmc: cqhci: initialize upper 64 bits of 128-bit task descriptors
+  mmc: cqhci: add support for inline encryption
+  mmc: cqhci: add cqhci_host_ops::program_key
+  firmware: qcom_scm: update comment for ICE-related functions
+  dt-bindings: mmc: sdhci-msm: add ICE registers and clock
+  mmc: sdhci-msm: add Inline Crypto Engine support
+  arm64: dts: qcom: sdm630: add ICE registers and clocks
+
+ .../devicetree/bindings/mmc/sdhci-msm.txt     |   3 +
+ arch/arm64/boot/dts/qcom/sdm630.dtsi          |  10 +-
+ drivers/firmware/qcom_scm.c                   |  16 +-
+ drivers/mmc/core/Kconfig                      |   8 +
+ drivers/mmc/core/Makefile                     |   1 +
+ drivers/mmc/core/block.c                      |   3 +
+ drivers/mmc/core/core.c                       |   3 +
+ drivers/mmc/core/crypto.c                     |  48 +++
+ drivers/mmc/core/crypto.h                     |  40 +++
+ drivers/mmc/core/host.c                       |   1 +
+ drivers/mmc/core/queue.c                      |   3 +
+ drivers/mmc/host/Kconfig                      |   1 +
+ drivers/mmc/host/Makefile                     |   2 +
+ drivers/mmc/host/{cqhci.c => cqhci-core.c}    |  69 ++++-
+ drivers/mmc/host/cqhci-crypto.c               | 242 +++++++++++++++
+ drivers/mmc/host/cqhci-crypto.h               |  47 +++
+ drivers/mmc/host/cqhci.h                      |  84 +++++-
+ drivers/mmc/host/sdhci-msm.c                  | 276 +++++++++++++++++-
+ include/linux/mmc/core.h                      |   6 +
+ include/linux/mmc/host.h                      |  11 +
+ 20 files changed, 849 insertions(+), 25 deletions(-)
+ create mode 100644 drivers/mmc/core/crypto.c
+ create mode 100644 drivers/mmc/core/crypto.h
+ rename drivers/mmc/host/{cqhci.c => cqhci-core.c} (94%)
+ create mode 100644 drivers/mmc/host/cqhci-crypto.c
+ create mode 100644 drivers/mmc/host/cqhci-crypto.h
+
+-- 
+2.30.0
+
