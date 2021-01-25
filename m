@@ -2,67 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C5990302386
+	by mail.lfdr.de (Postfix) with ESMTP id 5DE41302385
 	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Jan 2021 11:14:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727385AbhAYKOZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Jan 2021 05:14:25 -0500
-Received: from mail.kernel.org ([198.145.29.99]:44442 "EHLO mail.kernel.org"
+        id S1727359AbhAYKMW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Jan 2021 05:12:22 -0500
+Received: from mail.kernel.org ([198.145.29.99]:44480 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727333AbhAYKMG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Jan 2021 05:12:06 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 2C01E222F9;
-        Mon, 25 Jan 2021 10:09:16 +0000 (UTC)
+        id S1727340AbhAYKLh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 25 Jan 2021 05:11:37 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 4982A22512;
+        Mon, 25 Jan 2021 10:09:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1611569361;
-        bh=TkT+ypujt2p8pA33Wjsa9W2l077mMS3GDY+RwaLe/X8=;
-        h=From:To:Cc:Subject:Date:From;
-        b=iWoucnVMCZc0rVivAThCiMfgwgnrQUoewAmIVFedb7NjeyS6dOEhfxBUhVZ5zfn52
-         wugUPiK98vqqg8cD0JLX8b0hmbJDn1O7RCMVzznrq95K0sZMA+ythIgvlnxh+BpWfW
-         cyXJoTvZgCaJ4fw3WKqBVG4slsWV69fmbj/0T/YKqnqKASyIIJebjTWDaLjmEjfI6h
-         eDrBikeubte6ed6Bz2tHZ7P0zN2neQ0z3OT6HW0ECzzjOlPtVx+PXUb7su4YTTCeqb
-         penmATeKy1uZSt3j/jT3zbtnpIELQ0hBRfQ2P7IsC0sbaGtbcC2bP6Yvw6N2zEfbTj
-         tx+Hd5dp+yzuw==
+        s=k20201202; t=1611569369;
+        bh=q5VWWPzg4C4SUHCK+RykuznWauwMATDOUvYvmNmEm1k=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=A6GpUSnHC44x1/0BB5hRB699hn4GLDV5+HLXYe3ujy5l8moQ2B/PwZCLcNQofxjY/
+         FQQ5J4m9FiKdj3L+Fkm7Lwj8LRNQtQVSTIFnNXQIKBpSZkALs35r3j4fYCGPvl6m9K
+         ysZJkS50sgX3hACbEdRmA/vLFRSIsxMcHSh54IXrYryEYmCFEU+KPq7MEMAGkCWaJy
+         5f/pQeuzEYumoi9Yhwqt5xv6VfGaFYNhty/7CWIkc7Bp8qarwUghLWfCB9EUCaqP+j
+         tUGOKvoiN5zBCAa+1zOHjqssHb7MQuYxyt2kWU8i1nR6kppPCM+nZohnzYdQK2hFWT
+         PWp3I/thJMduw==
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Kishon Vijay Abraham I <kishon@ti.com>,
-        "Martin K . Petersen" <martin.petersen@oracle.com>
+To:     Kishon Vijay Abraham I <kishon@ti.com>
 Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Manu Gautam <mgautam@codeaurora.org>,
-        "James E . J . Bottomley" <jejb@linux.ibm.com>,
         Asutosh Das <asutoshd@codeaurora.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 0/4] Add Support for SM8350 UFS
-Date:   Mon, 25 Jan 2021 15:39:02 +0530
-Message-Id: <20210125100906.4004908-1-vkoul@kernel.org>
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH 2/4] dt-bindings: phy: qcom,qmp: Add SM8350 UFS PHY bindings
+Date:   Mon, 25 Jan 2021 15:39:04 +0530
+Message-Id: <20210125100906.4004908-3-vkoul@kernel.org>
 X-Mailer: git-send-email 2.26.2
+In-Reply-To: <20210125100906.4004908-1-vkoul@kernel.org>
+References: <20210125100906.4004908-1-vkoul@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series adds support for UFS found in SM8350 SoC. First we add UFS HC
-compatible strings, along with missing one for SM8250. This can go thru SCSI
-subssystem.
+Add the compatible strings for the UFS PHY found on SM8350 SoC.
 
-Then we add binding for UFS phy and new regsiters and nw offsets specific to
-SM8350 followed by UFS phy tables. This can go thru phy subsystem.
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+---
+ Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-Vinod Koul (4):
-  scsi: dt-bindings: ufs: Add sm8250, sm8350 compatible strings
-  dt-bindings: phy: qcom,qmp: Add SM8350 UFS PHY bindings
-  phy: qcom-qmp: Add UFS v4 registers found in SM8350
-  phy: qcom-qmp: Add support for SM8350 UFS phy
-
- .../devicetree/bindings/phy/qcom,qmp-phy.yaml |   1 +
- .../devicetree/bindings/ufs/ufshcd-pltfrm.txt |   2 +
- drivers/phy/qualcomm/phy-qcom-qmp.c           | 127 ++++++++++++++++++
- drivers/phy/qualcomm/phy-qcom-qmp.h           |  27 ++++
- 4 files changed, 157 insertions(+)
-
+diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+index 62c4f2ba5b9f..bf804c12fa5f 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+@@ -38,6 +38,7 @@ properties:
+       - qcom,sm8250-qmp-modem-pcie-phy
+       - qcom,sm8250-qmp-usb3-phy
+       - qcom,sm8250-qmp-usb3-uni-phy
++      - qcom,sm8350-qmp-ufs-phy
+       - qcom,sm8350-qmp-usb3-phy
+       - qcom,sm8350-qmp-usb3-uni-phy
+       - qcom,sdx55-qmp-usb3-uni-phy
 -- 
 2.26.2
 
