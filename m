@@ -2,101 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 372183049D7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 21:17:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 250573049D9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 21:17:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732343AbhAZFWh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jan 2021 00:22:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54726 "EHLO
+        id S1732354AbhAZFWo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jan 2021 00:22:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728489AbhAYNEw (ORCPT
+        with ESMTP id S1730299AbhAYPpG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Jan 2021 08:04:52 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BEE7C06174A;
-        Mon, 25 Jan 2021 05:03:45 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id r12so17829236ejb.9;
-        Mon, 25 Jan 2021 05:03:45 -0800 (PST)
+        Mon, 25 Jan 2021 10:45:06 -0500
+Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1116CC061355
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jan 2021 07:18:49 -0800 (PST)
+Received: by mail-oo1-xc2a.google.com with SMTP id q3so3342996oog.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jan 2021 07:18:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=5BtAz/bpqn5E3fKEbGDIqpaPzkxzUwSHMlIJU+EClb0=;
-        b=XzpCnQQWDyE42zz/8z0OjMguAGw1ihehqyESZVWYsnWQI6ax9813rW9GOFmn254QAS
-         MXgJmPIhpSbHwIsa8Hkqx8KklsrWj20TQU5pHTB59GA+gnCIcYbr9qUtlTKzUD9u1aLI
-         kv3w6sE0KkqsVfKirCnEGqmoL3Wiigwv38wv/T7fuZs83brjLpcjmlqQKj0OVTdoJelS
-         /CAEjphsAdKz2SE7iDMtnNNee0qHA9Syoq1J/Uea7ow+XJ7IFBA492zI2iSV8vksUBZ0
-         xcG/2/TDuZvFwzToPu9r0hhP50AaoOW8C7NXyqGnVIDTop+3HFn75wxigohLuYfY+cI1
-         FVTQ==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=tqHsUUcTKe2jpNesKI4Ls70gHgXQSHomQormGTtd+iw=;
+        b=imItcls200JtD5a68DthH3lsLf4uMZWQ91vTV4g7TYBg/St0bmxyqGgdbR2rjn+iIn
+         15IkSULWWDrZXcQisDmEKjoemcLL+w95s//mDlWuqpn1ypwxq18OsLoIHX0HT+7fnFBr
+         gHfE+lEYIN24Q9D9WVpXPXNpVAUg4x06GLOOSCxEdKzQgDNUvqlA9INcdgIqp+3SN48t
+         poqxp3XiVOn8u5prL2a86r9pykxuSIRUX6rqn25vYQ+ze2XDzkZIcwfhKgERUdL7a2RP
+         i9m7zEA33fA7c7FxLWieFyPQBNFvXBOchQ0DN2rc1uL5FLu2bF83xmYA+emTYMDrPDHn
+         6Lug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=5BtAz/bpqn5E3fKEbGDIqpaPzkxzUwSHMlIJU+EClb0=;
-        b=lVhJfm5nwg0piYkkD7iY1Xcp7kgxleW8KqNZA54uP8o5V5bqo4y5CzVcKM0T3bvKjR
-         YXbCMlZy+SuidzNwIw3fLeTUy8PbGu3W/NmCPajbA4/eNo08V9G3mN1584fomrjDj4fP
-         UHsVegenBdXursZo8UH4AeUheduQVCJQJoDkX82eYB1Wmf/cI8BS8db/vANSY/bDGaQP
-         9rgbDA1LM7cGs0/PWsW5vPZ8+XntInW7PxqtidY4GNx96lW8owDl8JGx6aPFmf+1jeCB
-         5FreqYBOgM+LktuPWR/NvEK4Dx3xViFxSIbDmLmeylJrF+YvYKIycexMSptNw5teRked
-         eT1g==
-X-Gm-Message-State: AOAM531ZF/YD7tuzQXMYhgWUfm3fDq9xzBstpmtnYw+Scu0LNS4ZgZgL
-        2d98YG0mABBaGDSkZLvJY5QLqX3BIQ+esg==
-X-Google-Smtp-Source: ABdhPJwPrRzjjiIXXpH8oj4ahx1fjvueIZ6h1f1UhC2xPD8O5Q7iFPsAWpILsXO5lDPpcY4RcoK7wQ==
-X-Received: by 2002:a17:907:2458:: with SMTP id yw24mr278853ejb.333.1611579824230;
-        Mon, 25 Jan 2021 05:03:44 -0800 (PST)
-Received: from [192.168.74.106] (178-169-161-196.razgrad.ddns.bulsat.com. [178.169.161.196])
-        by smtp.gmail.com with ESMTPSA id w4sm10443005eds.40.2021.01.25.05.03.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Jan 2021 05:03:43 -0800 (PST)
-Subject: Re: [PATCH 1/4] ARM: dts: qcom: msm8974: add gpu support
-To:     Pavel Machek <pavel@ucw.cz>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Samuel Pascua <pascua.samuel.14@gmail.com>,
-        Alexey Minnekhanov <alexeymin@postmarketos.org>,
-        Brian Masney <masneyb@onstation.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=tqHsUUcTKe2jpNesKI4Ls70gHgXQSHomQormGTtd+iw=;
+        b=hl7bIOEU4m4TFVkm8gdL6fRdkxAICSewtY12vJLL+eyJ/9oYOLGewH27mjAIZmOk+D
+         Mt+P56JAI3zHGgZRMvRt3VPjO1z0bFfNNK4e70UhyQ4bkBkKdpeCXbVlyoEi3CXLH0in
+         SXgqulI8A+65MnrDTDQNh98SmSZL5aM0CF/WwXPIR7XHUVHqznr5y/w8uP3W+JwwXGiQ
+         thKQuBfVhS8d6ZvVFZNihxcy15WoYYnR5DkzyJxV8U6RFfVGpRWkn1iaV0/Eoc2+97jw
+         vkm+za3wVclF48Voh9HuglVO99HlD4AA2n5g9pDVkG1Fx08NmOp8oMgCUxNAdqDPflMr
+         fKKA==
+X-Gm-Message-State: AOAM530vyF8a/EKnTwHrndcy0nt3rWfFDk7hNyHgV0z5a6IuLi6xPuyj
+        tIBqP4LuRCbR/uy6sE/t7Y4v1A==
+X-Google-Smtp-Source: ABdhPJxhWtj7ijUayPT4NSsxAYdvO1VOqHaRxL5y+7iV9e5hW3l/lC2sNftCU/43hxqEuvMuSgiwdQ==
+X-Received: by 2002:a05:6820:22c:: with SMTP id j12mr815447oob.65.1611587928383;
+        Mon, 25 Jan 2021 07:18:48 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id m7sm3524169otq.33.2021.01.25.07.18.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Jan 2021 07:18:47 -0800 (PST)
+Date:   Mon, 25 Jan 2021 09:18:45 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Cc:     Hans Verkuil <hverkuil@xs4all.nl>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        agross@kernel.org, mchehab@kernel.org, robh+dt@kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
         phone-devel@vger.kernel.org
-References: <20210124135610.1779295-1-iskren.chernev@gmail.com>
- <20210124210527.GB27676@amd>
-From:   Iskren Chernev <iskren.chernev@gmail.com>
-Message-ID: <14a9bef3-bff6-1f25-7a15-485277b0b1ad@gmail.com>
-Date:   Mon, 25 Jan 2021 15:03:41 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.1
+Subject: Re: [PATCH 1/2] media: venus: core: Add sdm660 DT compatible and
+ resource struct
+Message-ID: <YA7hVQVTXT554cKN@builder.lan>
+References: <20210115185252.333562-1-angelogioacchino.delregno@somainline.org>
+ <20210115185252.333562-2-angelogioacchino.delregno@somainline.org>
+ <2dc8a95f-110f-526f-18a8-6393e508c3a6@linaro.org>
+ <eabc91cc-de96-08ef-756c-87fe43d6fadc@somainline.org>
+ <cfc1998f-8d9b-5237-f286-7fdc69874b30@xs4all.nl>
+ <40c38734-a69d-2314-c342-244ee5a0e6b1@somainline.org>
 MIME-Version: 1.0
-In-Reply-To: <20210124210527.GB27676@amd>
-Content-Type: text/plain; charset=windows-1252
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <40c38734-a69d-2314-c342-244ee5a0e6b1@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon 25 Jan 08:51 CST 2021, AngeloGioacchino Del Regno wrote:
 
-
-On 1/24/21 11:05 PM, Pavel Machek wrote:
-> On Sun 2021-01-24 15:56:07, Iskren Chernev wrote:
->> From: Brian Masney <masneyb@onstation.org>
->>
->> Add support for the a3xx GPU
+> Il 25/01/21 11:40, Hans Verkuil ha scritto:
+> > On 18/01/2021 18:45, AngeloGioacchino Del Regno wrote:
+> > > Il 18/01/21 18:21, Stanimir Varbanov ha scritto:
+> > > > > diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+[..]
+> > > > > +	.fwname = "qcom/venus-4.4/venus.mdt",
+[..]
+> > This patch can't be merged unless there is a corresponding firmware available
+> > in linux-firmware. Is the current 4.2 firmware in linux-firmware signed by
+> > Qualcomm? Can they provided 4.4 firmware as well?
+> > 
 > 
-> This is phone, right? Can I ask phone-devel@vger.kernel.org to be
-> cc-ed?
+> If there is such issue, then maybe we should do "something" about it: I
+> would then propose to remove all references to fwname and just get this
+> done in DT, where every qcom board already specifies its own path for
+> its own firmware.
+> 
 
-CC-ing phone-devel@vger.kernel.org.
+We have the same problem with production devices on e.g. SDM845, where
+the firmware referenced by fw_name and present in linux-firmware won't
+work on any real devices.
 
-I'm not sure why you didn't do it :-/
-
->
-> Thank you,
-> 							Pavel
-> 							
->
+As such, providing means for specifying the firmware name in DT would be
+a very reasonable thing, and in line with how we handle this in other
+subsystems (using the firmware-name property, containing the full
+relative path).
 
 Regards,
-Iskren
+Bjorn
