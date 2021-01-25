@@ -2,101 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BFF1F301F03
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Jan 2021 22:52:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 90F3A301FB0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Jan 2021 01:17:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726164AbhAXVwQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 24 Jan 2021 16:52:16 -0500
-Received: from mo4-p01-ob.smtp.rzone.de ([81.169.146.166]:24516 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726023AbhAXVwP (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 24 Jan 2021 16:52:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1611524961;
-        s=strato-dkim-0002; d=gerhold.net;
-        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:From:
-        Subject:Sender;
-        bh=NSnGwwqn9sdPtkfoFA8tFRtFDL/birwrCnYk8NJrUB4=;
-        b=hr2pt92cWBv0ZHnyCVwblXzqlJtwGiz41JFpTxG9UAd+HF3cHOsEEVRQouX1xLQywy
-        qSHDqREvtSEWeO85I3z4s5hwBRRlNWPxBKF1st5s3hQM18a56MGfEM5fkH9TjYUtegpy
-        lxd/6sS2ik9a6VYXNfWpr2AJlAEfaepProdZ2oY1rvKfi1Ul+ugqh2RJ8WyWtqYEccfM
-        BQP7O6ODK6jxhvpazxyQjUZ9o2QT8g/QMjdxyP2lBLLjXc3Uwcoefcuf72tnldrdQsL0
-        uCeFrDkqCnmPGCbYWgjY4P5IqvErg/OmQo96XH+0jjpkBJ5gaBcgVD3vbyFzY9FIlvLV
-        jgpg==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j7IczBa4o="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-        by smtp.strato.de (RZmta 47.12.1 DYNA|AUTH)
-        with ESMTPSA id R0a218x0OLnGiXN
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-        Sun, 24 Jan 2021 22:49:16 +0100 (CET)
-Date:   Sun, 24 Jan 2021 22:49:12 +0100
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Pavel Machek <pavel@ucw.cz>
-Cc:     Jonathan Albrieux <jonathan.albrieux@gmail.com>,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
+        id S1726642AbhAYAM5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 24 Jan 2021 19:12:57 -0500
+Received: from onstation.org ([52.200.56.107]:35086 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726593AbhAYALe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 24 Jan 2021 19:11:34 -0500
+Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id D68943EA88;
+        Mon, 25 Jan 2021 00:09:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1611533357;
+        bh=NX04KDq22imvna2j2KPjU62cAJRCEXT8lTRLg6sU+9M=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ZTys71IW91sT6zb8BsXKM4Z3CwcgI6qowbfvayR2iwYFDP+Dcwdtph0pjhHUik6ik
+         Qjqhko3nVgog/EN8ikkXbaf+DTy14IgQZoe6pgCURs1+IHao6gUlhFnCjwIyF7WE4d
+         ODQtZGIouWhWgkLKWc4j/1grPYVXDigIT9++KJVU=
+Date:   Sun, 24 Jan 2021 19:09:16 -0500
+From:   Brian Masney <masneyb@onstation.org>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Iskren Chernev <iskren.chernev@gmail.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        phone-devel@vger.kernel.org
-Subject: Re: [PATCH 0/3] Add initial support for BQ Aquaris X5
-Message-ID: <YA3rTAx2vfOXPCMq@gerhold.net>
-References: <20210124135409.5473-1-jonathan.albrieux@gmail.com>
- <20210124210119.GA27676@amd>
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Samuel Pascua <pascua.samuel.14@gmail.com>,
+        Alexey Minnekhanov <alexeymin@postmarketos.org>
+Subject: Re: [PATCH 1/4] ARM: dts: qcom: msm8974: add gpu support
+Message-ID: <20210125000916.GA22513@onstation.org>
+References: <20210124135610.1779295-1-iskren.chernev@gmail.com>
+ <f1438c9d-458b-2ff7-cae9-f7bf4228ef4c@somainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210124210119.GA27676@amd>
+In-Reply-To: <f1438c9d-458b-2ff7-cae9-f7bf4228ef4c@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Pavel,
-
-On Sun, Jan 24, 2021 at 10:01:19PM +0100, Pavel Machek wrote:
-> Hi!
+On Sun, Jan 24, 2021 at 03:56:06PM +0100, Konrad Dybcio wrote:
+> Hi,
 > 
-> > Aquaris X5 (Longcheer L8910) is a smartphone released by BQ in 2015.
-> > 
-> > As part of msm8916-mainline project, this series aims to bring initial
-> > mainline support for it.
 > 
-> Good to see another phone being supported. Can I ask you to cc:
-> phone-devel@vger.kernel.org with phone stuff?
+> > +		gpu_opp_table: opp_table {
+> > +			status = "disabled";
 > 
-> > Features added:
-> >  - SDHCI (internal and external storage)
-> >  - USB Device Mode
-> >  - UART
-> >  - Regulators
-> >  - WiFi/BT
-> >  - Volume buttons
-> >  - Vibrator
-> >  - Touchkeys backlight
-> >  - Accelerometer and gyroscope sensor
-> >  - Magnetometer sensor
 > 
-> How close are you to having useful phone calls?
+> Is there a good reason to disable this?
 > 
+> 
+> > +			opp-800000000 {
+> > +				opp-hz = /bits/ 64 <800000000>;
+> > +			};
+> 
+> No. A330 can't go lightspeed (unless there's some secret ultra-binned msm8974pro-v4-ad-5g). [1]
 
-You can do phone calls (with audio) and you can use mobile data, if you
-have the patches for that. :) I'm trying to find time to finish up the
-drivers needed for that, but I've been a bit short on time lately.
+Hi Iskren,
 
-Actually we have come pretty far with MSM8916-based smartphones.
-Most functionality is (somewhat) working at this point, the primary
-open task is optimizing suspend/power consumption. Battery/charging
-and camera is also tricky but works somewhat on some of the devices.
+I believe that the Nexus 5 GPU frequencies are documented in the
+downstream kernel at:
+https://github.com/AICP/kernel_lge_hammerhead/blob/n7.1/arch/arm/boot/dts/msm8974-gpu.dtsi#L67
 
-Most of the functionality is packaged in postmarketOS [1] and you can
-find a list of the devices in the postmarketOS wiki [2]. Especially
-the ones in the "community" category are quite similar in terms of
-working functionality.
+I am fairly certain that the qcom,bus-freq property is an index into the
+qcom,msm-bus,vectors-KBps property above. This will map to the
+interconnect and operating points in the upstream kernel.
 
-Stephan
+Note that the actual implementation in a3xx_gpu.c and a4xx_gpu.c
+currently has this snippet to set the bus speed:
 
-[1]: https://postmarketos.org
-[2]: https://wiki.postmarketos.org/wiki/Qualcomm_Snapdragon_410/412_(MSM8916)
+    /*
+     * Set the ICC path to maximum speed for now by multiplying the fastest
+     * frequency by the bus width (8). We'll want to scale this later on to
+     * improve battery life.
+     */
+    icc_set_bw(icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
+    icc_set_bw(ocmem_icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
+
+This should be fine for the time being. You'll want to document it
+correctly in device tree though.
+
+If the v2 changes too much, then feel free to drop my name from the
+patch. I thought that I had made these changes already but apparently
+not. :/
+
+Brian
