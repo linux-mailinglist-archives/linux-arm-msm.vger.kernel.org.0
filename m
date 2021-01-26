@@ -2,65 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ED42C3040AE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 15:44:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E23B730408A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 15:38:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390782AbhAZOmn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jan 2021 09:42:43 -0500
-Received: from mail.kernel.org ([198.145.29.99]:35222 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2391183AbhAZJol (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jan 2021 04:44:41 -0500
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org [51.254.78.96])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 606B52255F;
-        Tue, 26 Jan 2021 09:43:55 +0000 (UTC)
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78] helo=hot-poop.lan)
-        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94)
-        (envelope-from <maz@kernel.org>)
-        id 1l4Kt7-00A4su-4M; Tue, 26 Jan 2021 09:43:53 +0000
-From:   Marc Zyngier <maz@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH 1/2] [REPOST] dt-bindings: qcom,pdc: Add compatible for SM8250
-Date:   Tue, 26 Jan 2021 09:43:49 +0000
-Message-Id: <161165420457.2432543.12711584905186329501.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210115090941.2289416-1-vkoul@kernel.org>
-References: <20210115090941.2289416-1-vkoul@kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: vkoul@kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, robh+dt@kernel.org, bjorn.andersson@linaro.org, robh@kernel.org, agross@kernel.org, tglx@linutronix.de, devicetree@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+        id S2405882AbhAZOhp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jan 2021 09:37:45 -0500
+Received: from out30-44.freemail.mail.aliyun.com ([115.124.30.44]:48779 "EHLO
+        out30-44.freemail.mail.aliyun.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2391577AbhAZJwV (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 26 Jan 2021 04:52:21 -0500
+X-Alimail-AntiSpam: AC=PASS;BC=-1|-1;BR=01201311R211e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=e01e01424;MF=abaci-bugfix@linux.alibaba.com;NM=1;PH=DS;RN=13;SR=0;TI=SMTPD_---0UMyf0qW_1611654680;
+Received: from j63c13417.sqa.eu95.tbsite.net(mailfrom:abaci-bugfix@linux.alibaba.com fp:SMTPD_---0UMyf0qW_1611654680)
+          by smtp.aliyun-inc.com(127.0.0.1);
+          Tue, 26 Jan 2021 17:51:33 +0800
+From:   Jiapeng Zhong <abaci-bugfix@linux.alibaba.com>
+To:     robdclark@gmail.com
+Cc:     sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
+        sumit.semwal@linaro.org, christian.koenig@amd.com,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org,
+        Jiapeng Zhong <abaci-bugfix@linux.alibaba.com>
+Subject: [PATCH] drm/msm: remove redundant NULL check
+Date:   Tue, 26 Jan 2021 17:51:19 +0800
+Message-Id: <1611654679-102885-1-git-send-email-abaci-bugfix@linux.alibaba.com>
+X-Mailer: git-send-email 1.8.3.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 15 Jan 2021 14:39:40 +0530, Vinod Koul wrote:
-> Add the compatible string for SM8250 SoC from Qualcomm. This compatible
-> is used already in DTS files but not documented yet
+Fix below warnings reported by coccicheck:
+./drivers/gpu/drm/msm/msm_gem.c:991:3-9: WARNING: NULL check before some
+freeing functions is not needed.
 
-Applied to irq/irqchip-5.12, thanks!
+Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+Signed-off-by: Jiapeng Zhong <abaci-bugfix@linux.alibaba.com>
+---
+ drivers/gpu/drm/msm/msm_gem.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-[1/2] dt-bindings: qcom,pdc: Add compatible for SM8250
-      commit: e6f93c0115cb24ae4b473f28a27294e99faf129a
-[2/2] dt-bindings: qcom,pdc: Add compatible for SM8350
-      commit: 9eaad15e5a409f59660f9fdf867f7d3e6e3db15a
-
-Cheers,
-
-	M.
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index 9d10739..4f1f1a0 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -987,8 +987,7 @@ void msm_gem_free_object(struct drm_gem_object *obj)
+ 		/* Don't drop the pages for imported dmabuf, as they are not
+ 		 * ours, just free the array we allocated:
+ 		 */
+-		if (msm_obj->pages)
+-			kvfree(msm_obj->pages);
++		kvfree(msm_obj->pages);
+ 
+ 		put_iova_vmas(obj);
+ 
 -- 
-Without deviation from the norm, progress is not possible.
-
+1.8.3.1
 
