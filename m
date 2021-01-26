@@ -2,93 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D8FB630346A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 06:25:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D76EC303465
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 06:25:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732539AbhAZFY2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jan 2021 00:24:28 -0500
-Received: from mail.kernel.org ([198.145.29.99]:37336 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729983AbhAZCGQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Jan 2021 21:06:16 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 51EB222D50;
-        Tue, 26 Jan 2021 00:15:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1611620117;
-        bh=G16sIENRX9EMyT17x8UvaimcQGeqHoMJpMYb9LmaK3k=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=iEufz0HdZJC1U8LIy/seQ34aF3gVSFXWEmeHUby/eUKsm5lI4Ci13ZXStoKWIUWik
-         poGDxnRQkvDK8XZK7nJCc7cSTyFwRAZkCEnId29adMDNCfd8RRfXcXuYj7aKAdWClK
-         FhOXpue4UMeZo4yaHpDc9XvNmcd3sUD4J7Sjy6fUxLVu3I8fZPTOVCuPV27CzzyC7m
-         iN8LJOnKZ5NYpwtnJqUD6H4YXmLToAQIJkwW9jaKZ0Qq6eQ3bBSOScbHUky4vBf+b4
-         SQiAPwaXbiGrBDLDfJVsmDVLyMeY5CqbmCchFRU752siOfKe9go46VcxbfouG5rr4b
-         J/KyEepdMXghg==
-From:   Eric Biggers <ebiggers@kernel.org>
-To:     linux-mmc@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-fscrypt@vger.kernel.org, Satya Tangirala <satyat@google.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        id S1732499AbhAZFYT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jan 2021 00:24:19 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:32931 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1732006AbhAZBey (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 25 Jan 2021 20:34:54 -0500
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 25 Jan 2021 16:38:43 -0800
+X-QCInternal: smtphost
+Received: from gurus-linux.qualcomm.com ([10.46.162.81])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP; 25 Jan 2021 16:38:42 -0800
+Received: by gurus-linux.qualcomm.com (Postfix, from userid 383780)
+        id 1723418DB; Mon, 25 Jan 2021 16:38:35 -0800 (PST)
+From:   Guru Das Srinagesh <gurus@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Neeraj Soni <neersoni@codeaurora.org>,
-        Barani Muthukumaran <bmuthuku@codeaurora.org>,
-        Peng Zhou <peng.zhou@mediatek.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Konrad Dybcio <konradybcio@gmail.com>
-Subject: [PATCH RESEND v6 9/9] arm64: dts: qcom: sdm630: add ICE registers and clocks
-Date:   Mon, 25 Jan 2021 16:14:56 -0800
-Message-Id: <20210126001456.382989-10-ebiggers@kernel.org>
-X-Mailer: git-send-email 2.30.0
-In-Reply-To: <20210126001456.382989-1-ebiggers@kernel.org>
-References: <20210126001456.382989-1-ebiggers@kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
+Cc:     Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
+        David Collins <collinsd@codeaurora.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Stephen Boyd <sboyd@kernel.org>,
+        Guru Das Srinagesh <gurus@codeaurora.org>
+Subject: [RESEND PATCH v6 1/3] bindings: pm8941-misc: Convert bindings to YAML
+Date:   Mon, 25 Jan 2021 16:38:30 -0800
+Message-Id: <b8dcd61fdd8674b79d81c94b424fce79b86d8979.1611621365.git.gurus@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <cover.1611621365.git.gurus@codeaurora.org>
+References: <cover.1611621365.git.gurus@codeaurora.org>
+In-Reply-To: <cover.1611621365.git.gurus@codeaurora.org>
+References: <cover.1611621365.git.gurus@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Eric Biggers <ebiggers@google.com>
+Convert bindings from txt to YAML.
 
-Add the registers and clock for the Inline Crypto Engine (ICE) to the
-device tree node for the sdhci-msm host controller on sdm630.  This
-allows sdhci-msm to support inline encryption on sdm630.
-
-Signed-off-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm630.dtsi | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ .../bindings/extcon/qcom,pm8941-misc.txt           | 41 ---------------
+ .../bindings/extcon/qcom,pm8941-misc.yaml          | 59 ++++++++++++++++++++++
+ 2 files changed, 59 insertions(+), 41 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.txt
+ create mode 100644 Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index 37d5cc32f6b62..afb3d20c31fa0 100644
---- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -808,8 +808,9 @@ spmi_bus: spmi@800f000 {
- 		sdhc_1: sdhci@c0c4000 {
- 			compatible = "qcom,sdm630-sdhci", "qcom,sdhci-msm-v5";
- 			reg = <0x0c0c4000 0x1000>,
--				<0x0c0c5000 0x1000>;
--			reg-names = "hc", "cqhci";
-+				<0x0c0c5000 0x1000>,
-+				<0x0c0c8000 0x8000>;
-+			reg-names = "hc", "cqhci", "ice";
- 
- 			interrupts = <GIC_SPI 110 IRQ_TYPE_LEVEL_HIGH>,
- 					<GIC_SPI 112 IRQ_TYPE_LEVEL_HIGH>;
-@@ -817,8 +818,9 @@ sdhc_1: sdhci@c0c4000 {
- 
- 			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
- 					<&gcc GCC_SDCC1_AHB_CLK>,
--					<&xo_board>;
--			clock-names = "core", "iface", "xo";
-+					<&xo_board>,
-+					<&gcc GCC_SDCC1_ICE_CORE_CLK>;
-+			clock-names = "core", "iface", "xo", "ice";
- 
- 			pinctrl-names = "default", "sleep";
- 			pinctrl-0 = <&sdc1_clk_on &sdc1_cmd_on &sdc1_data_on &sdc1_rclk_on>;
+diff --git a/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.txt b/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.txt
+deleted file mode 100644
+index 35383adb..0000000
+--- a/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.txt
++++ /dev/null
+@@ -1,41 +0,0 @@
+-Qualcomm's PM8941 USB ID Extcon device
+-
+-Some Qualcomm PMICs have a "misc" module that can be used to detect when
+-the USB ID pin has been pulled low or high.
+-
+-PROPERTIES
+-
+-- compatible:
+-    Usage: required
+-    Value type: <string>
+-    Definition: Should contain "qcom,pm8941-misc";
+-
+-- reg:
+-    Usage: required
+-    Value type: <u32>
+-    Definition: Should contain the offset to the misc address space
+-
+-- interrupts:
+-    Usage: required
+-    Value type: <prop-encoded-array>
+-    Definition: Should contain the usb id interrupt
+-
+-- interrupt-names:
+-    Usage: required
+-    Value type: <stringlist>
+-    Definition: Should contain the string "usb_id" for the usb id interrupt
+-
+-Example:
+-
+-	pmic {
+-		usb_id: misc@900 {
+-			compatible = "qcom,pm8941-misc";
+-			reg = <0x900>;
+-			interrupts = <0x0 0x9 0 IRQ_TYPE_EDGE_BOTH>;
+-			interrupt-names = "usb_id";
+-		};
+-	}
+-
+-	usb-controller {
+-		extcon = <&usb_id>;
+-	};
+diff --git a/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml b/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
+new file mode 100644
+index 0000000..e8eea83
+--- /dev/null
++++ b/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
+@@ -0,0 +1,59 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/extcon/qcom,pm8941-misc.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Technologies, Inc. PM8941 USB ID Extcon device
++
++maintainers:
++  - Guru Das Srinagesh <gurus@codeaurora.org>
++
++description: |
++  Some Qualcomm PMICs have a "misc" module that can be used to detect when
++  the USB ID pin has been pulled low or high.
++
++properties:
++  compatible:
++    items:
++      - const: qcom,pm8941-misc
++
++  reg:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 1
++
++  interrupt-names:
++    items:
++      - const: usb_id
++
++required:
++  - compatible
++  - reg
++  - interrupts
++  - interrupt-names
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/irq.h>
++
++    pmic {
++            #address-cells = <1>;
++            #size-cells = <0>;
++            interrupt-controller;
++            #interrupt-cells = <4>;
++
++            usb_id: misc@900 {
++                    compatible = "qcom,pm8941-misc";
++                    reg = <0x900>;
++                    interrupts = <0x0 0x9 0 IRQ_TYPE_EDGE_BOTH>;
++                    interrupt-names = "usb_id";
++            };
++    };
++
++    usb-controller {
++           extcon = <&usb_id>;
++    };
 -- 
-2.30.0
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
