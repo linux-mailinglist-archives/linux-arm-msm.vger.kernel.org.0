@@ -2,156 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EB19D303EDE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 14:38:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CEBD303F85
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 15:01:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404437AbhAZNfx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jan 2021 08:35:53 -0500
-Received: from mga06.intel.com ([134.134.136.31]:48273 "EHLO mga06.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2392005AbhAZN0n (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jan 2021 08:26:43 -0500
-IronPort-SDR: Ksr2gGZ7dn03b/85c1HgNMlPduJ5NJC4EiCDNMkUNQVcrdHtToYzTjEMhgvdUx+T9+FNarGHaf
- N+TpHz0X3cag==
-X-IronPort-AV: E=McAfee;i="6000,8403,9875"; a="241429103"
-X-IronPort-AV: E=Sophos;i="5.79,375,1602572400"; 
-   d="scan'208";a="241429103"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jan 2021 05:24:53 -0800
-IronPort-SDR: g4Zswe3qz4zMid/EyEG5xz4WWhFPriWd/t2t5KrG0ShP0j9WNEEJayXNCJQTEkRkM2/IHRNzgx
- zk+bb8SSGplQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.79,375,1602572400"; 
-   d="scan'208";a="369103591"
-Received: from stinkbox.fi.intel.com (HELO stinkbox) ([10.237.72.174])
-  by orsmga002.jf.intel.com with SMTP; 26 Jan 2021 05:24:36 -0800
-Received: by stinkbox (sSMTP sendmail emulation); Tue, 26 Jan 2021 15:24:35 +0200
-Date:   Tue, 26 Jan 2021 15:24:35 +0200
-From:   Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-To:     Maxime Ripard <maxime@cerno.tech>
-Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        David Airlie <airlied@linux.ie>,
-        Haneen Mohammed <hamohammed.sa@gmail.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Xinliang Liu <xinliang.liu@linaro.org>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        dri-devel@lists.freedesktop.org, Sandy Huang <hjc@rock-chips.com>,
-        Paul Cercueil <paul@crapouillou.net>,
-        linux-tegra@vger.kernel.org, Chen-Yu Tsai <wens@csie.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        Anitha Chrisanthus <anitha.chrisanthus@intel.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Marek Vasut <marex@denx.de>,
-        Yannick Fertre <yannick.fertre@st.com>,
-        linux-samsung-soc@vger.kernel.org,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
-        linux-rockchip@lists.infradead.org,
-        Alexey Brodkin <abrodkin@synopsys.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        freedreno@lists.freedesktop.org,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        VMware Graphics <linux-graphics-maintainer@vmware.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        linux-arm-msm@vger.kernel.org,
-        Philippe Cornu <philippe.cornu@st.com>,
-        Dave Airlie <airlied@redhat.com>,
-        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
-        virtualization@lists.linux-foundation.org,
-        Hyun Kwon <hyun.kwon@xilinx.com>,
-        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-        Alexandre Torgue <alexandre.torgue@st.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Chen Feng <puck.chen@hisilicon.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Alison Wang <alison.wang@nxp.com>,
-        Roland Scheidegger <sroland@vmware.com>,
-        linux-renesas-soc@vger.kernel.org, linux-mips@vger.kernel.org,
-        Hans de Goede <hdegoede@redhat.com>,
-        linux-mediatek@lists.infradead
-Subject: Re: [PATCH v2 10/11] drm: Use state helper instead of the plane
- state pointer
-Message-ID: <YBAYE4YH4bgURmuf@intel.com>
-References: <20210121163537.1466118-1-maxime@cerno.tech>
- <20210121163537.1466118-10-maxime@cerno.tech>
+        id S2405661AbhAZOAr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jan 2021 09:00:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38868 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405664AbhAZOAW (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 26 Jan 2021 09:00:22 -0500
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22D80C061D7F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 05:59:36 -0800 (PST)
+Received: by mail-ot1-x334.google.com with SMTP id v1so16211909ott.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 05:59:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=YTsupxga+KtJHJ2/NwGiOg8d0eBxSmIPJj1rUhYEku0=;
+        b=yZ54dQI7WHPKCbJ+/b1AnRgCgElbV/u79mPNAInoK/gifKSkO/cgksWh5+YswXIUkB
+         X66rUBm/PkWwkTrXbSReCtBrnOhvjVVXExV7yfeos0jPSQtjTz/uvEuZBr5hZDojhvWw
+         HjbWc2KUBDg7j66deFQaLawYvG8xk7JH/zhjA9WomtqszMWICRrnb75pOLKC70hxQ7E6
+         7IF7FmTP1IrI8um/tg2lYWbR9IdUBZ0wsrhKjQxosu9T0zTJ2efRETym6gkwsr5+1l85
+         BD1XHMN6NXPUh9Rt1Yi4Vpo4e57AGV60/0R6oGQZm2sVDLhOy6h9V3cK+mRs98Tt67CK
+         S0GA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=YTsupxga+KtJHJ2/NwGiOg8d0eBxSmIPJj1rUhYEku0=;
+        b=BFJOqlIEubLHrXScQrw8L65QapEp9IQEAZx6lc7KTuvRUmiAFELg79pizU65npLPlk
+         SJ/rXYoCXzGkaqI7eLgNpKgYU0sXYsDnYcJS0H3loU//UXlDeDtHSwL+41Ge5w8/etcS
+         uwnR5ZHER/wXtumohixL4SqMygWSdeg9Z3002jD2MtO4ujsNcorhVnmNN0DqDbwPAttM
+         odPLMgKFzmHQ/FUunw4eJ9YX4eNk5F+PcBxxkmnp0/WAOmF4ANm6HDLUwfdvmjXajOnw
+         Li/lut876LZ7C7hG0UvAUsivB2bzzPxTHnwppRWbRahGHTWSpWu+X6RBbjnyaGJEssBM
+         Y+mw==
+X-Gm-Message-State: AOAM532O0fLzoQ0coACone/t53c5l21FGPt/5jNwv1yiaSunDFRMPTuL
+        68RQWAYl3o69fyoQ9weD3c6cVA==
+X-Google-Smtp-Source: ABdhPJymcp9pMAiu4zVhoCug/E78peraXZ+L6YX6ZbPuuw5jYLiWmahXMCax5kRqBawVjHCZAWMf+g==
+X-Received: by 2002:a05:6830:1614:: with SMTP id g20mr3941554otr.77.1611669575430;
+        Tue, 26 Jan 2021 05:59:35 -0800 (PST)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id z3sm4126369ota.80.2021.01.26.05.59.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Jan 2021 05:59:34 -0800 (PST)
+Date:   Tue, 26 Jan 2021 07:59:32 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org
+Subject: Re: [PATCH 04/21] clk: qcom: clk-regmap: Provide missing description
+ for 'devm_clk_register_regmap()'s dev param
+Message-ID: <20210126135932.GC1241218@yoga>
+References: <20210126124540.3320214-1-lee.jones@linaro.org>
+ <20210126124540.3320214-5-lee.jones@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210121163537.1466118-10-maxime@cerno.tech>
-X-Patchwork-Hint: comment
+In-Reply-To: <20210126124540.3320214-5-lee.jones@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 21, 2021 at 05:35:35PM +0100, Maxime Ripard wrote:
-> Many drivers reference the plane->state pointer in order to get the
-> current plane state in their atomic_update or atomic_disable hooks,
-> which would be the new plane state in the global atomic state since
-> _swap_state happened when those hooks are run.
-> 
-> Use the drm_atomic_get_new_plane_state helper to get that state to make it
-> more obvious.
-> 
-> This was made using the coccinelle script below:
-> 
-> @ plane_atomic_func @
-> identifier helpers;
-> identifier func;
-> @@
-> 
-> (
->  static const struct drm_plane_helper_funcs helpers = {
->  	...,
->  	.atomic_disable = func,
-> 	...,
->  };
-> |
->  static const struct drm_plane_helper_funcs helpers = {
->  	...,
->  	.atomic_update = func,
-> 	...,
->  };
-> )
-> 
-> @ adds_new_state @
-> identifier plane_atomic_func.func;
-> identifier plane, state;
-> identifier new_state;
-> @@
-> 
->  func(struct drm_plane *plane, struct drm_atomic_state *state)
->  {
->  	...
-> -	struct drm_plane_state *new_state = plane->state;
-> +	struct drm_plane_state *new_state = drm_atomic_get_new_plane_state(state, plane);
-> 	...
->  }
-> 
-> @ include depends on adds_new_state @
-> @@
-> 
->  #include <drm/drm_atomic.h>
-> 
-> @ no_include depends on !include && adds_new_state @
-> @@
-> 
-> + #include <drm/drm_atomic.h>
->   #include <drm/...>
-> 
-> Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+On Tue 26 Jan 06:45 CST 2021, Lee Jones wrote:
 
-Looks great.
+> Fixes the following W=1 kernel build warning(s):
+> 
+>  drivers/clk/qcom/clk-regmap.c:97: warning: Function parameter or member 'dev' not described in 'devm_clk_register_regmap'
+> 
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Michael Turquette <mturquette@baylibre.com>
+> Cc: Stephen Boyd <sboyd@kernel.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: linux-clk@vger.kernel.org
 
-Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
--- 
-Ville Syrjälä
-Intel
+> Signed-off-by: Lee Jones <lee.jones@linaro.org>
+> ---
+>  drivers/clk/qcom/clk-regmap.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/clk/qcom/clk-regmap.c b/drivers/clk/qcom/clk-regmap.c
+> index ce80db27ccf2a..92ac4e0d7dbe2 100644
+> --- a/drivers/clk/qcom/clk-regmap.c
+> +++ b/drivers/clk/qcom/clk-regmap.c
+> @@ -87,6 +87,7 @@ EXPORT_SYMBOL_GPL(clk_disable_regmap);
+>  /**
+>   * devm_clk_register_regmap - register a clk_regmap clock
+>   *
+> + * @dev: reference to the caller's device
+>   * @rclk: clk to operate on
+>   *
+>   * Clocks that use regmap for their register I/O should register their
+> -- 
+> 2.25.1
+> 
