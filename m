@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F40E8303E2A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 14:10:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CF870303E24
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 14:08:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391691AbhAZNJU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jan 2021 08:09:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51306 "EHLO
+        id S2392325AbhAZNIW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jan 2021 08:08:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2403943AbhAZMsq (ORCPT
+        with ESMTP id S2391968AbhAZMsz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jan 2021 07:48:46 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E92D9C0698FE
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 04:46:04 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id p15so9652193wrq.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 04:46:04 -0800 (PST)
+        Tue, 26 Jan 2021 07:48:55 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46103C035430
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 04:46:07 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id e15so2665476wme.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 04:46:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Vsa1KLPM2HfEp5vPRGS+UCgmT+VY3fPWtM+ipeYcvaE=;
-        b=ubNNa5o9m+gajTa5oKlGyu7B8gwi4nKoh16thJTW4WeFwRg1FKFeybQ9F+rIJulvaq
-         EBfVO029Q4zaQwtL72rs90nuQLE7qUC254lKleHwmU2gYBcRoNvPjCCmN809zdwh/cYg
-         nuTuk7O6VJ5r1Aectu/nUjCx7mj5cP2Av5If4PjQxp0iG/CE6S9ZF1zyADLrz97pGBhe
-         8ogTNVz3DObwZ44MF+xEI5iPC8MwLjcDi2wxCQbsL5y49kSP2i9UWsjJCU5WqqspQVfL
-         1h5+sY7XSdE72Mk4ujGNvdlCQBrssRRUo4ciOaaqWZABEL4HNRxtizPvRLPPQJgfJUo1
-         CNqg==
+        bh=ACuhHqUyAOgeit1pJS1MxY6/38vCSWpT3UKaTx8+/JY=;
+        b=fM8B1mFx2eVpjNGE3vhWFZC0WnRAysxKHxe+DAlNp0M68o88FbxPu79MK7N6KiE2w6
+         9Xz6u4qdahy0LI9WhaFK/lyoXeoeyTIRv3jDEuQ+1axa99t2wwYOv3R4ZYP7Nf33NHcF
+         h/ifupziL/bRk8bMH6nIbZRqrxAaPuu8HhFAWxW4P1w0jDAp4QjTtN/sMy8BVDVsBKeJ
+         5XqZMH2ZHCMbswWDflwfuj2IwwEkK5sK41ABrUURUYOQM0CqIeNKuZ/QR+TlG/5OyQY4
+         UAK2fLKyhInTzveMOSTFN0HX58oaY6FSzzY0nRCsLMpkwG8QaNeop7L+F9Ub+d7NkC/G
+         +g1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Vsa1KLPM2HfEp5vPRGS+UCgmT+VY3fPWtM+ipeYcvaE=;
-        b=DVoi/K9H1LGSjoUc5c3QYnrK8lbrLqLi2l72IWZD8t5Qiv/T0ZiJF2oqRBLSXDGbnv
-         Hznk4BGydiRA0MzSFmSn8adeuHfKsZRhfNzoL0TIcxq0bKyUaJwpHswDbrC2rTzJ/+Wm
-         HxvwH3vx74z9lOYfZd8NiDhD02On5dF3M9YgjrPJIWkwjBaIq7Z9bOIOCJ6ojDTVyf4f
-         Q8Sr6/ckOHGxVsus9Wz4AOcJI3Ea1WKJcXNqV8lkFDZrl9Rr1r3CJGd0ZoNgbK2ktE3d
-         u+IVTHWXC/UqMODthRCqdqVLJ3XWtwVM9lzK8XIAz9Jstvlqaz85cwRqU0ntE/1L3iXm
-         9PuQ==
-X-Gm-Message-State: AOAM531mOoLcuUGBlqs/ef0Nm7yNkKyagH0XGtvE3flfapdTZXcS5aQ1
-        IpLBto8m1WQ0oc4PRO3W+MsB5g==
-X-Google-Smtp-Source: ABdhPJw96PjK5RdN98v/EC7iTHJqEnR7IM/3cvwe4dKecgDyNq/XlXgX/iw8xfudPIuyHSNiwCkb1Q==
-X-Received: by 2002:adf:ecd2:: with SMTP id s18mr3963512wro.311.1611665163634;
-        Tue, 26 Jan 2021 04:46:03 -0800 (PST)
+        bh=ACuhHqUyAOgeit1pJS1MxY6/38vCSWpT3UKaTx8+/JY=;
+        b=WSpXKSMS3Z2vYtLyKisG+0gTtv8k75ONwir0eJdFkmWtm9mwS78BHZnu/cE98teA7r
+         w+0LkhaZvnY1QndFVDK7y/OczMhZI5UfeGCBp5NWqnRejDYWLpdDLSIwBX9YZHkS9PfQ
+         +5FnJebcHE2+30VlZYSK+iAHDdzk6rYOr7VdlCClu0Fiw8/+ORyS3f5ggIcZNuu6v5Tz
+         p10MCOkmTcd5IcZOjvoekQaZlr60F17aCSUs14/RrvDDaTeDe1yf5e3TdbnygmKE/D0F
+         1o22/RVpT/+5bE2t3/xmMZRTIgCmxPYdGj9MgLMJtfkQyKNYTe/KnBZPr/GWLFto3U+D
+         ng8A==
+X-Gm-Message-State: AOAM533T6jVgDNvspnyKOWtXvqu/4gkF/3g53nZ7kq+VSVUGDdtyTbkZ
+        8101cWTSeP8V4xQpoU9eL7zV1Q==
+X-Google-Smtp-Source: ABdhPJwZRlj953gT/ow/PoTz03HbJCu8kx7ksSmJH59sdocGmJhel18R3yS87cxTtuQ5kIlJ9yN83w==
+X-Received: by 2002:a1c:f706:: with SMTP id v6mr4569286wmh.85.1611665166044;
+        Tue, 26 Jan 2021 04:46:06 -0800 (PST)
 Received: from dell.default ([91.110.221.188])
-        by smtp.gmail.com with ESMTPSA id i131sm3263073wmi.25.2021.01.26.04.46.02
+        by smtp.gmail.com with ESMTPSA id i131sm3263073wmi.25.2021.01.26.04.46.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jan 2021 04:46:02 -0800 (PST)
+        Tue, 26 Jan 2021 04:46:05 -0800 (PST)
 From:   Lee Jones <lee.jones@linaro.org>
 To:     lee.jones@linaro.org
 Cc:     linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
@@ -55,9 +55,9 @@ Cc:     linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
         Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-clk@vger.kernel.org
-Subject: [PATCH 16/21] clk: qcom: mmcc-msm8974: Remove unused static const tables 'mmcc_xo_mmpll0_1_2_gpll0{map}'
-Date:   Tue, 26 Jan 2021 12:45:35 +0000
-Message-Id: <20210126124540.3320214-17-lee.jones@linaro.org>
+Subject: [PATCH 18/21] clk: qcom: clk-rpm: Remove a bunch of superfluous code
+Date:   Tue, 26 Jan 2021 12:45:37 +0000
+Message-Id: <20210126124540.3320214-19-lee.jones@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20210126124540.3320214-1-lee.jones@linaro.org>
 References: <20210126124540.3320214-1-lee.jones@linaro.org>
@@ -70,8 +70,7 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Fixes the following W=1 kernel build warning(s):
 
- drivers/clk/qcom/mmcc-msm8974.c:85:27: warning: ‘mmcc_xo_mmpll0_1_2_gpll0’ defined but not used [-Wunused-const-variable=]
- drivers/clk/qcom/mmcc-msm8974.c:77:32: warning: ‘mmcc_xo_mmpll0_1_2_gpll0_map’ defined but not used [-Wunused-const-variable=]
+ drivers/clk/qcom/clk-rpm.c:453:29: warning: ‘clk_rpm_branch_ops’ defined but not used [-Wunused-const-variable=]
 
 Cc: Andy Gross <agross@kernel.org>
 Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
@@ -81,36 +80,90 @@ Cc: linux-arm-msm@vger.kernel.org
 Cc: linux-clk@vger.kernel.org
 Signed-off-by: Lee Jones <lee.jones@linaro.org>
 ---
- drivers/clk/qcom/mmcc-msm8974.c | 16 ----------------
- 1 file changed, 16 deletions(-)
+ drivers/clk/qcom/clk-rpm.c | 63 --------------------------------------
+ 1 file changed, 63 deletions(-)
 
-diff --git a/drivers/clk/qcom/mmcc-msm8974.c b/drivers/clk/qcom/mmcc-msm8974.c
-index 015426262d080..a1552b6771bc6 100644
---- a/drivers/clk/qcom/mmcc-msm8974.c
-+++ b/drivers/clk/qcom/mmcc-msm8974.c
-@@ -74,22 +74,6 @@ static const char * const mmcc_xo_mmpll0_dsi_hdmi_gpll0[] = {
- 	"dsi1pll",
+diff --git a/drivers/clk/qcom/clk-rpm.c b/drivers/clk/qcom/clk-rpm.c
+index f71d228fd6bd5..a18811c380187 100644
+--- a/drivers/clk/qcom/clk-rpm.c
++++ b/drivers/clk/qcom/clk-rpm.c
+@@ -73,62 +73,6 @@
+ 		},							      \
+ 	}
+ 
+-#define DEFINE_CLK_RPM_PXO_BRANCH(_platform, _name, _active, r_id, r)	      \
+-	static struct clk_rpm _platform##_##_active;			      \
+-	static struct clk_rpm _platform##_##_name = {			      \
+-		.rpm_clk_id = (r_id),					      \
+-		.active_only = true,					      \
+-		.peer = &_platform##_##_active,				      \
+-		.rate = (r),						      \
+-		.branch = true,						      \
+-		.hw.init = &(struct clk_init_data){			      \
+-			.ops = &clk_rpm_branch_ops,			      \
+-			.name = #_name,					      \
+-			.parent_names = (const char *[]){ "pxo_board" },      \
+-			.num_parents = 1,				      \
+-		},							      \
+-	};								      \
+-	static struct clk_rpm _platform##_##_active = {			      \
+-		.rpm_clk_id = (r_id),					      \
+-		.peer = &_platform##_##_name,				      \
+-		.rate = (r),						      \
+-		.branch = true,						      \
+-		.hw.init = &(struct clk_init_data){			      \
+-			.ops = &clk_rpm_branch_ops,			      \
+-			.name = #_active,				      \
+-			.parent_names = (const char *[]){ "pxo_board" },      \
+-			.num_parents = 1,				      \
+-		},							      \
+-	}
+-
+-#define DEFINE_CLK_RPM_CXO_BRANCH(_platform, _name, _active, r_id, r)	      \
+-	static struct clk_rpm _platform##_##_active;			      \
+-	static struct clk_rpm _platform##_##_name = {			      \
+-		.rpm_clk_id = (r_id),					      \
+-		.peer = &_platform##_##_active,				      \
+-		.rate = (r),						      \
+-		.branch = true,						      \
+-		.hw.init = &(struct clk_init_data){			      \
+-			.ops = &clk_rpm_branch_ops,			      \
+-			.name = #_name,					      \
+-			.parent_names = (const char *[]){ "cxo_board" },      \
+-			.num_parents = 1,				      \
+-		},							      \
+-	};								      \
+-	static struct clk_rpm _platform##_##_active = {			      \
+-		.rpm_clk_id = (r_id),					      \
+-		.active_only = true,					      \
+-		.peer = &_platform##_##_name,				      \
+-		.rate = (r),						      \
+-		.branch = true,						      \
+-		.hw.init = &(struct clk_init_data){			      \
+-			.ops = &clk_rpm_branch_ops,			      \
+-			.name = #_active,				      \
+-			.parent_names = (const char *[]){ "cxo_board" },      \
+-			.num_parents = 1,				      \
+-		},							      \
+-	}
+-
+ #define to_clk_rpm(_hw) container_of(_hw, struct clk_rpm, hw)
+ 
+ struct rpm_cc;
+@@ -450,13 +394,6 @@ static const struct clk_ops clk_rpm_ops = {
+ 	.recalc_rate	= clk_rpm_recalc_rate,
  };
  
--static const struct parent_map mmcc_xo_mmpll0_1_2_gpll0_map[] = {
--	{ P_XO, 0 },
--	{ P_MMPLL0, 1 },
--	{ P_MMPLL1, 2 },
--	{ P_GPLL0, 5 },
--	{ P_MMPLL2, 3 }
+-static const struct clk_ops clk_rpm_branch_ops = {
+-	.prepare	= clk_rpm_prepare,
+-	.unprepare	= clk_rpm_unprepare,
+-	.round_rate	= clk_rpm_round_rate,
+-	.recalc_rate	= clk_rpm_recalc_rate,
 -};
 -
--static const char * const mmcc_xo_mmpll0_1_2_gpll0[] = {
--	"xo",
--	"mmpll0_vote",
--	"mmpll1_vote",
--	"mmss_gpll0_vote",
--	"mmpll2",
--};
--
- static const struct parent_map mmcc_xo_mmpll0_1_3_gpll0_map[] = {
- 	{ P_XO, 0 },
- 	{ P_MMPLL0, 1 },
+ /* MSM8660/APQ8060 */
+ DEFINE_CLK_RPM(msm8660, afab_clk, afab_a_clk, QCOM_RPM_APPS_FABRIC_CLK);
+ DEFINE_CLK_RPM(msm8660, sfab_clk, sfab_a_clk, QCOM_RPM_SYS_FABRIC_CLK);
 -- 
 2.25.1
 
