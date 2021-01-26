@@ -2,90 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 606973042F1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 16:50:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 090A6304309
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 16:53:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391050AbhAZPt3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jan 2021 10:49:29 -0500
-Received: from m42-8.mailgun.net ([69.72.42.8]:38602 "EHLO m42-8.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2392796AbhAZPtP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jan 2021 10:49:15 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1611676129; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=Ihpo8mFm3i1ohTnHMdozJ4PCjzxZjB5mmGhRcs2i7E0=; b=oMcDqoWaUNA5dyeFoZCENyHjEWklDTVw1kePVqYaK1PJ3CZl9Q+dXmiOzHChR/KvU0kr/SsH
- edMDIql3ZmylLZwBmnxKh1zCcq5KsXmMD0so7lvN/YiyFk/BQyXMixccraEbeh+uZSwRA6QL
- U6XfzgdGTTenm7cMJvJAkabPFdQ=
-X-Mailgun-Sending-Ip: 69.72.42.8
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 601039c15677aca7bd9cd107 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 26 Jan 2021 15:48:17
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 81418C433C6; Tue, 26 Jan 2021 15:48:17 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A1D94C433CA;
-        Tue, 26 Jan 2021 15:48:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A1D94C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Guenter Roeck <linux@roeck-us.net>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        linux-watchdog@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCH 4/4] arm64: dts: qcom: sm8250: Add watchdog bark interrupt
-Date:   Tue, 26 Jan 2021 21:17:32 +0530
-Message-Id: <ff0758b158d62e82fd0636f5861115f435f821ac.1611466260.git.saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.29.0
-In-Reply-To: <cover.1611466260.git.saiprakash.ranjan@codeaurora.org>
-References: <cover.1611466260.git.saiprakash.ranjan@codeaurora.org>
+        id S2403812AbhAZPwX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jan 2021 10:52:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35330 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732105AbhAZPwP (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 26 Jan 2021 10:52:15 -0500
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87C60C0698C0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 07:51:35 -0800 (PST)
+Received: by mail-pj1-x102d.google.com with SMTP id lw17so1466238pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 07:51:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=PzZyFBzr4f1W011B4gds9g7r9/jftdBns1YRMkXB7G4=;
+        b=HOFUATxySjWJF9wDr1dtWEkN+/idvEzn47Zjt9MKZL3qGL1P87LT1q+9u5NM9j7v8k
+         obQGW/r4Ddie+9jlcmPuPh9sr+WLnmaHVVwTQCN+5uujt0uwUqUAnkAbW6NLqyp4E8kZ
+         N9iYoV0lni2uaomeyhRyfzBxhn/embFLAkuTYk3ScoPKQHYre/uVftOlCqlDZCiwPrAx
+         plP9flXyFRkfl07jr/ergkUlOc/odRWH6f3xD2rJuelLWuQaUYnJeyTGEuT8cXc3m7Y+
+         mEJuvJzOSPlzZxc2yNKjgCO6FwWi1t3I1BmgOS+mP+WmpcPjZcmEiJAjIfvrixhXKYCh
+         YWOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=PzZyFBzr4f1W011B4gds9g7r9/jftdBns1YRMkXB7G4=;
+        b=HVrjXh0nG6rB6LMXuX11E6OhAxhykhuLxWWRwQE9LjqKWeWNhL71r2nPavuxvasVdK
+         PfKe/tyuTTwFK79425VecLXO/BRONJjj2sbW7viQDed5+a/DbdpIEQ0MJBC/Vply/edI
+         Zz3OrCyJg2xnvnUGX2hnewUFm7F3Fe9hsUdtq4Yla73KkhpWvZ3pThnwA7lt0IMWroxx
+         r52Cb4CEiD0ZubWOHDVOzwXTp3a5tOqnhT1KFM9uj2XBqsHChmt6YtX+k9E4ZTEoS77v
+         WGywdkAUOiCJg+RD74gsAXEBeeK+4akuoVZYxWp62/Qa8UqGb3iQjB4a7L/hANxz2ikc
+         SFSA==
+X-Gm-Message-State: AOAM532QyFmYgZu5MSKZc3V4PkvYGQe+Uxa8MNnwBkQP7oDmaywZ7en3
+        GNs8FTwc31dAcAGkkyt14VWsGc6gSSO2CuxS3OQthA==
+X-Google-Smtp-Source: ABdhPJxT6M1sJ1hYz7Ajt4zTCMc/Fq44WCfGtLRnoQTq/rcNFbTPShvjS86lvm79AzCU2Th24aK0wvSkVq+CXn3YDyY=
+X-Received: by 2002:a17:90a:9414:: with SMTP id r20mr413274pjo.222.1611676295029;
+ Tue, 26 Jan 2021 07:51:35 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20210120134357.1522254-1-robert.foss@linaro.org>
+ <20210120134357.1522254-15-robert.foss@linaro.org> <20210122163427.GA922435@robh.at.kernel.org>
+In-Reply-To: <20210122163427.GA922435@robh.at.kernel.org>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Tue, 26 Jan 2021 16:51:24 +0100
+Message-ID: <CAG3jFysf5D1T7zkEJCR2KXEm+r6AHRiNp-HMk=+CtFyExDyaVQ@mail.gmail.com>
+Subject: Re: [PATCH v2 15/22] dt-bindings: media: camss: Add qcom,sdm660-camss binding
+To:     Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Todor Tomov <todor.too@gmail.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>, will@kernel.org,
+        shawnguo@kernel.org, leoyang.li@nxp.com, geert+renesas@glider.be,
+        Vinod Koul <vkoul@kernel.org>, Anson.Huang@nxp.com,
+        michael@walle.cc, agx@sigxcpu.org, max.oss.09@gmail.com,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        linux-media <linux-media@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Andrey Konovalov <andrey.konovalov@linaro.org>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
+        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
+        Jonathan Marek <jonathan@marek.ca>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Specify bark interrupt for APSS watchdog to support pre-timeout
-notification on SM8250 SoC.
+Thanks Rob!
 
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+On Fri, 22 Jan 2021 at 17:34, Rob Herring <robh@kernel.org> wrote:
+>
+> On Wed, Jan 20, 2021 at 02:43:50PM +0100, Robert Foss wrote:
+> > Add bindings for qcom,sdm660-camss in order to support the camera
+> > subsystem on SDM630/660 and SDA variants.
+> >
+> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> > ---
+> >
+> > Changes since v1:
+> >  - Laurent: Reworked driver to use dtschema
+>
+> Same comments on this one.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 20e70d5641ea..61191f7f5861 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -3289,6 +3289,7 @@ watchdog@17c10000 {
- 			compatible = "qcom,apss-wdt-sm8250", "qcom,kpss-wdt";
- 			reg = <0 0x17c10000 0 0x1000>;
- 			clocks = <&sleep_clk>;
-+			interrupts = <GIC_SPI 0 IRQ_TYPE_LEVEL_HIGH>;
- 		};
- 
- 		timer@17c20000 {
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
-
+I applied the same feedback to msm8916, msm8996, sdm660 & sdm845
+bindings in this series.
+Thanks!
