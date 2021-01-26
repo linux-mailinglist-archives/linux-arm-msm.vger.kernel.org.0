@@ -2,113 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C8385303D25
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 13:39:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B004303DCE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 13:55:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731494AbhAZMjY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jan 2021 07:39:24 -0500
-Received: from m42-8.mailgun.net ([69.72.42.8]:22412 "EHLO m42-8.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2403949AbhAZKPB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jan 2021 05:15:01 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1611656077; h=Content-Type: MIME-Version: Message-ID:
- In-Reply-To: Date: References: Subject: Cc: To: From: Sender;
- bh=VJRxFY8ci75sUTvygaKMgJ009Mw8EC58s0wPRv5AOG4=; b=L28xRo3csmr/BF1G/C1kB1QfExpWYS423glXgS9kP1qVio7dedjHq9nonfOX9PStN9MyjZso
- IW17mVqB9TFEc0XM36MymvdcMEV718U3Kca4eEedvFCr4D1HebJ9ubZ7MfpMAe5a2aAjZZy3
- 2f8D0ceuSWPIvgpqnUfmtbfx+Tw=
-X-Mailgun-Sending-Ip: 69.72.42.8
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 600feb712c36b2106d36caa6 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 26 Jan 2021 10:14:09
- GMT
-Sender: kvalo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id F1352C43461; Tue, 26 Jan 2021 10:14:08 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from potku.adurom.net (88-114-240-156.elisa-laajakaista.fi [88.114.240.156])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: kvalo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 89D80C433C6;
-        Tue, 26 Jan 2021 10:14:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 89D80C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kvalo@codeaurora.org
-From:   Kalle Valo <kvalo@codeaurora.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        Carl Huang <cjhuang@codeaurora.org>,
-        ath11k@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3] mhi: use irq_flags if controller driver configures it
-References: <20210104101128.8217-1-cjhuang@codeaurora.org>
-        <20210104170359.GE2256@work> <87o8hti8t8.fsf@codeaurora.org>
-        <20210121075242.GB30041@thinkpad>
-Date:   Tue, 26 Jan 2021 12:14:04 +0200
-In-Reply-To: <20210121075242.GB30041@thinkpad> (Manivannan Sadhasivam's
-        message of "Thu, 21 Jan 2021 13:22:42 +0530")
-Message-ID: <87k0s0atub.fsf@codeaurora.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+        id S2404030AbhAZMtY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jan 2021 07:49:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51026 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391934AbhAZMsj (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 26 Jan 2021 07:48:39 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C5B3C0698E2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 04:46:01 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id c127so2615517wmf.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 04:46:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=4mll2lpwENE608kX1kOhep+FnuspDxHBBTIWjYWHVv4=;
+        b=pN4lfLmmVBgLX1q2BKk4RyuM8nfGi0iSK2p5oFzqbwR48oc2/k0GoyukN3ekRynO06
+         FKaAaAsWyotTSplcMwQPMAZVfJizyGQiOJBMk0yYcAymhgu9N2ZSbUSh6qjy288ou0pc
+         HqtayVh1cyMBIbzfiBYPHmvVjr9IdO/PtWWdjNpPkVFE2CynLfawGQEBle+vluHgUEPi
+         XIkSyDlNFtRmGLri4EMRNLpm0jF2EqbuLb6EDwAkGFdlQ5TAMlRTr4lVHYp6w+0UpvW3
+         IMv+nTm9wowh7LVp4WikScVxnNSItGlVg6V+ACms+OKjBP2oRnEDQeXLGZ596/KJomrY
+         KMoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=4mll2lpwENE608kX1kOhep+FnuspDxHBBTIWjYWHVv4=;
+        b=tZnwdmqRY/Gdrnv76N/TsncVjDbTC5cw/fcL8vOWdRKiEosJ7SAjZ+/bXrTHKTdlI4
+         CjNx0shhQnLpopDFGN8T0OHjsdPVZ2MIlmSOLngNFiS3FD3Q7h5/o2QrWe56y8UgO9NG
+         sV0wlhE/y4hEP5V8fQaRu5ArXEliaD+ZdYqW/Y2xfaTyiezEhg9DjtzLVFfgqOoldNnG
+         sCGh6oy/NoEnuAyqO7/r83HkqO+/41/jBlg1ch+VQPfbCk1LUpWIjL49v0uEpsxztEQT
+         Jf/5yrkJbHTKwLmyKDaMOh6lfyPYInZznjox2ln/W1CSetIrW6VfdeWt4F9ww+3u1+uT
+         cX/A==
+X-Gm-Message-State: AOAM5302xp7wjHlXsZatpzsmntBhS/LCuRxINBVqqWcFXpFiXJZJ9UQ2
+        5jXcFXBVPTpnsro0cHBX79QKbeb9b3wqQAgV
+X-Google-Smtp-Source: ABdhPJwsLKoq02G2opNkx2KyZBjwCJrT1QWUMlzjgyZlIH/qv0W5suRHKqypiyBgXWhP7zNqj62Grg==
+X-Received: by 2002:a05:600c:1911:: with SMTP id j17mr4552481wmq.63.1611665159968;
+        Tue, 26 Jan 2021 04:45:59 -0800 (PST)
+Received: from dell.default ([91.110.221.188])
+        by smtp.gmail.com with ESMTPSA id i131sm3263073wmi.25.2021.01.26.04.45.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Jan 2021 04:45:59 -0800 (PST)
+From:   Lee Jones <lee.jones@linaro.org>
+To:     lee.jones@linaro.org
+Cc:     linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org
+Subject: [PATCH 13/21] clk: qcom: gcc-ipq4019: Remove unused variable 'ret'
+Date:   Tue, 26 Jan 2021 12:45:32 +0000
+Message-Id: <20210126124540.3320214-14-lee.jones@linaro.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20210126124540.3320214-1-lee.jones@linaro.org>
+References: <20210126124540.3320214-1-lee.jones@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
+Fixes the following W=1 kernel build warning(s):
 
-> On Wed, Jan 13, 2021 at 09:40:19AM +0200, Kalle Valo wrote:
->> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
->> 
->> > On Mon, Jan 04, 2021 at 06:11:28PM +0800, Carl Huang wrote:
->> >> If controller driver has specified the irq_flags, mhi uses this specified
->> >> irq_flags. Otherwise, mhi uses default irq_flags.
->> >> 
->> >> The purpose of this change is to support one MSI vector for QCA6390.
->> >> MHI will use one same MSI vector too in this scenario.
->> >> 
->> >> In case of one MSI vector, IRQ_NO_BALANCING is needed when irq handler
->> >> is requested. The reason is if irq migration happens, the msi_data may
->> >> change too. However, the msi_data is already programmed to QCA6390
->> >> hardware during initialization phase. This msi_data inconsistence will
->> >> result in crash in kernel.
->> >> 
->> >> Another issue is in case of one MSI vector, IRQF_NO_SUSPEND will trigger
->> >> WARNINGS because QCA6390 wants to disable the IRQ during the suspend.
->> >> 
->> >> To avoid above two issues, QCA6390 driver specifies the irq_flags in case
->> >> of one MSI vector when mhi_register_controller is called.
->> >> 
->> >> Signed-off-by: Carl Huang <cjhuang@codeaurora.org>
->> >> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->> >
->> > Applied to mhi-next!
->> 
->> Would it be possible again to have an immutable branch for this commit?
->> We need it for implementing one MHI support to ath11k[1] required by
->> Dell XPS 13 9310 laptops, which a lot of people are waiting. Otherwise I
->> can only apply the feature for v5.13, which will be released on July.
->> 
->
-> Dropped this patch from mhi-next and applied to mhi-ath11k-immutable branch:
-> https://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git/log/?h=mhi-ath11k-immutable
->
-> This branch will also be merged into mhi-next.
+ drivers/clk/qcom/gcc-ipq4019.c: In function ‘clk_cpu_div_set_rate’:
+ drivers/clk/qcom/gcc-ipq4019.c:1279:6: warning: variable ‘ret’ set but not used [-Wunused-but-set-variable]
 
-Thanks a lot!
+Cc: Andy Gross <agross@kernel.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Michael Turquette <mturquette@baylibre.com>
+Cc: Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-clk@vger.kernel.org
+Signed-off-by: Lee Jones <lee.jones@linaro.org>
+---
+ drivers/clk/qcom/gcc-ipq4019.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-And Greg will also pull this directly so that commit ids won't change?
-Just trying to avoid conflicts between ath and mhi trees as much as
-possible.
-
+diff --git a/drivers/clk/qcom/gcc-ipq4019.c b/drivers/clk/qcom/gcc-ipq4019.c
+index ef5137fd50f3f..8abad4032de71 100644
+--- a/drivers/clk/qcom/gcc-ipq4019.c
++++ b/drivers/clk/qcom/gcc-ipq4019.c
+@@ -1276,16 +1276,15 @@ static int clk_cpu_div_set_rate(struct clk_hw *hw, unsigned long rate,
+ 	struct clk_fepll *pll = to_clk_fepll(hw);
+ 	const struct freq_tbl *f;
+ 	u32 mask;
+-	int ret;
+ 
+ 	f = qcom_find_freq(pll->freq_tbl, rate);
+ 	if (!f)
+ 		return -EINVAL;
+ 
+ 	mask = (BIT(pll->cdiv.width) - 1) << pll->cdiv.shift;
+-	ret = regmap_update_bits(pll->cdiv.clkr.regmap,
+-				 pll->cdiv.reg, mask,
+-				 f->pre_div << pll->cdiv.shift);
++	regmap_update_bits(pll->cdiv.clkr.regmap,
++			   pll->cdiv.reg, mask,
++			   f->pre_div << pll->cdiv.shift);
+ 	/*
+ 	 * There is no status bit which can be checked for successful CPU
+ 	 * divider update operation so using delay for the same.
 -- 
-https://patchwork.kernel.org/project/linux-wireless/list/
+2.25.1
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
