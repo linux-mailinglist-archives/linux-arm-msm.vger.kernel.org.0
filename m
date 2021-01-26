@@ -2,110 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C4BF3046A4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 19:40:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EA66D3046A7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 19:40:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389686AbhAZRVx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jan 2021 12:21:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54968 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729287AbhAZInt (ORCPT
+        id S1730071AbhAZRV7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jan 2021 12:21:59 -0500
+Received: from out4436.biz.mail.alibaba.com ([47.88.44.36]:33932 "EHLO
+        out4436.biz.mail.alibaba.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2390516AbhAZIxO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jan 2021 03:43:49 -0500
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 916AAC061573
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 00:43:08 -0800 (PST)
-Received: by mail-ed1-x531.google.com with SMTP id bx12so18722937edb.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 00:43:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=t2z1NGbSv+92Iq3y3cHfX8r3rHSgzWMGOLngnUuImF8=;
-        b=HqvMQYpbjsMs5FO0qw8p+bYpP7RjH7vBlf6l0HF5VNPGglgnOsbLVfBqJljbCsIasF
-         NaYGE3B0ARKF9zXOk8iR5t9vxzgRRMOUE7jeQ4cqURu19xi64IpFfjsjuzIBdl51A+hC
-         kmyXKCuwFkg/seQLV8IzyJL2tsx1vEJpZJMh5o2b5n2r1ko4f3p5zXbHSOPZiwd68r+Y
-         EuLylY5VI4sLkTuc+4qAJhM/6vvPKW0T8NjQmIhBfqQ8EzuNyprvsXrov4AKw2qPm1ZO
-         eWgrDM2jc3tKXYPKcV11SGdwMUuRoBXLTR/iSN8Xl6lBGJSYDPLMJUv6bQ+lcwKpb08+
-         VXEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=t2z1NGbSv+92Iq3y3cHfX8r3rHSgzWMGOLngnUuImF8=;
-        b=gaedQOOj18Jua6YPAtu/cQZDw7jOn+rSXOw8NbwMvEUzaurtOwmu4paQ2T0DnaaUWO
-         qJfZAZOkmQXHksEARrbtpLs+FJ2tMarwQQWbFuQeIGd7MLl69hEMRDrQiWLCJAxL8+kx
-         V2eXyUMKLcWdFJZahz2ZSTOiCsNBgk0v2XMineK60ef2pcfUxsGIa3PyMcnv2uhT4XC2
-         0i2uStznH9KOZTKqJeE8BMbVRZaSaDL3kubn1pjLl1xPkHODbVbFL4uj0VrfvqzxYYBA
-         sJkV/21Gt+9OqS1sA+N2mt5Kp0yieAO/lVMGMdJvLwsjUSpviwfEiJvGgMekW+Ab8t5s
-         e25Q==
-X-Gm-Message-State: AOAM530GvnOddLZYl9UgoipZL8NEBUJcOZBq5QrwX8v6/VHYY+FyG5LL
-        ImRgf7B6B5d7n9N4d3JPw8NtpA==
-X-Google-Smtp-Source: ABdhPJwXmN0+EIt8RzL3ueMP/CCxmZVMUAxRmK9RWZ7CZYPhgMXX2MhPsEKA8AQcrWMlG54ahj8c1Q==
-X-Received: by 2002:aa7:cc98:: with SMTP id p24mr3854242edt.126.1611650587275;
-        Tue, 26 Jan 2021 00:43:07 -0800 (PST)
-Received: from localhost.localdomain (hst-221-9.medicom.bg. [84.238.221.9])
-        by smtp.gmail.com with ESMTPSA id i4sm9511524eje.90.2021.01.26.00.43.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jan 2021 00:43:06 -0800 (PST)
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Hans Verkuil <hverkuil@xs4all.nl>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH] venus: core: Parse firmware-name DT property
-Date:   Tue, 26 Jan 2021 10:42:52 +0200
-Message-Id: <20210126084252.238078-1-stanimir.varbanov@linaro.org>
-X-Mailer: git-send-email 2.25.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Tue, 26 Jan 2021 03:53:14 -0500
+X-Alimail-AntiSpam: AC=PASS;BC=-1|-1;BR=01201311R201e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=e01e04357;MF=abaci-bugfix@linux.alibaba.com;NM=1;PH=DS;RN=6;SR=0;TI=SMTPD_---0UMxxrW._1611651145;
+Received: from j63c13417.sqa.eu95.tbsite.net(mailfrom:abaci-bugfix@linux.alibaba.com fp:SMTPD_---0UMxxrW._1611651145)
+          by smtp.aliyun-inc.com(127.0.0.1);
+          Tue, 26 Jan 2021 16:52:29 +0800
+From:   Jiapeng Zhong <abaci-bugfix@linux.alibaba.com>
+To:     agross@kernel.org
+Cc:     bjorn.andersson@linaro.org, p.zabel@pengutronix.de,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jiapeng Zhong <abaci-bugfix@linux.alibaba.com>
+Subject: [PATCH] media: firmware: qcom_scm: Simplify the calculation of variables
+Date:   Tue, 26 Jan 2021 16:52:24 +0800
+Message-Id: <1611651144-42491-1-git-send-email-abaci-bugfix@linux.alibaba.com>
+X-Mailer: git-send-email 1.8.3.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On production devices the firmware could be located on different
-places, this path could be provided by special firmware-name DT
-property.
+Fix the following coccicheck warnings:
 
-Here we check for existence of such DT property and if it exist
-take the firmware path from there. Otherwise, if the property
-is missing we fallback to the predefined path from driver resource
-structure.
+./drivers/firmware/qcom_scm.c:324:20-22: WARNING !A || A && B is
+equivalent to !A || B.
 
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+Signed-off-by: Jiapeng Zhong <abaci-bugfix@linux.alibaba.com>
 ---
- drivers/media/platform/qcom/venus/firmware.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/firmware/qcom_scm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
-index d03e2dd5808c..56c8fb5a019b 100644
---- a/drivers/media/platform/qcom/venus/firmware.c
-+++ b/drivers/media/platform/qcom/venus/firmware.c
-@@ -187,6 +187,7 @@ int venus_boot(struct venus_core *core)
- {
- 	struct device *dev = core->dev;
- 	const struct venus_resources *res = core->res;
-+	const char *fwpath = NULL;
- 	phys_addr_t mem_phys;
- 	size_t mem_size;
- 	int ret;
-@@ -195,7 +196,12 @@ int venus_boot(struct venus_core *core)
- 	    (core->use_tz && !qcom_scm_is_available()))
- 		return -EPROBE_DEFER;
+diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+index 7be48c1..c530072 100644
+--- a/drivers/firmware/qcom_scm.c
++++ b/drivers/firmware/qcom_scm.c
+@@ -321,7 +321,7 @@ int qcom_scm_set_cold_boot_addr(void *entry, const cpumask_t *cpus)
+ 		.owner = ARM_SMCCC_OWNER_SIP,
+ 	};
  
--	ret = venus_load_fw(core, core->res->fwname, &mem_phys, &mem_size);
-+	ret = of_property_read_string_index(dev->of_node, "firmware-name", 0,
-+					    &fwpath);
-+	if (ret)
-+		fwpath = core->res->fwname;
-+
-+	ret = venus_load_fw(core, fwpath, &mem_phys, &mem_size);
- 	if (ret) {
- 		dev_err(dev, "fail to load video firmware\n");
+-	if (!cpus || (cpus && cpumask_empty(cpus)))
++	if (!cpus || cpumask_empty(cpus))
  		return -EINVAL;
+ 
+ 	for_each_cpu(cpu, cpus) {
 -- 
-2.25.1
+1.8.3.1
 
