@@ -2,112 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B004303DCE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 13:55:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B5451303DE6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 13:58:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404030AbhAZMtY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jan 2021 07:49:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51026 "EHLO
+        id S2392376AbhAZM6W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jan 2021 07:58:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53488 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391934AbhAZMsj (ORCPT
+        with ESMTP id S2392364AbhAZM6N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jan 2021 07:48:39 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C5B3C0698E2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 04:46:01 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id c127so2615517wmf.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 04:46:01 -0800 (PST)
+        Tue, 26 Jan 2021 07:58:13 -0500
+Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 628D8C0698C5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 04:56:39 -0800 (PST)
+Received: by mail-ed1-x541.google.com with SMTP id c6so19640650ede.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 04:56:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=4mll2lpwENE608kX1kOhep+FnuspDxHBBTIWjYWHVv4=;
-        b=pN4lfLmmVBgLX1q2BKk4RyuM8nfGi0iSK2p5oFzqbwR48oc2/k0GoyukN3ekRynO06
-         FKaAaAsWyotTSplcMwQPMAZVfJizyGQiOJBMk0yYcAymhgu9N2ZSbUSh6qjy288ou0pc
-         HqtayVh1cyMBIbzfiBYPHmvVjr9IdO/PtWWdjNpPkVFE2CynLfawGQEBle+vluHgUEPi
-         XIkSyDlNFtRmGLri4EMRNLpm0jF2EqbuLb6EDwAkGFdlQ5TAMlRTr4lVHYp6w+0UpvW3
-         IMv+nTm9wowh7LVp4WikScVxnNSItGlVg6V+ACms+OKjBP2oRnEDQeXLGZ596/KJomrY
-         KMoQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=rH4rr1SnYvL9K62Ub8DyhAEQN4Ic5cSs1nbnJHOUTjQ=;
+        b=xfJq63PGWuythSzr4ByBtDoadek3HXxFhL4aye8BPSw70Mho+eF8fwuu+F040Jffyu
+         IDR2qZWvdiADHimvg3fstBdeTEoUM9GSyjU3XBnOeH6/lLb4l5M7oUaCamWTcVT/PZBk
+         18PR2HT4lZ+4F+v0Tx3w6Im08ocWRUV0RZtroJ7LasTh0eeoU++y7GyDlMcYa2/4Bwm2
+         AreBBvSD13QzVKjjtEVwC0BXKktGzSMQU8Vk76EFPcQ3/v3eovgQ6r4KicK4Z6OmwpCN
+         2u//Wm+UYZF2GBQzoUGkzqUWOBMrv/G0M1y7JnXjGXwuZSslhQday02gl6KEYRgi9fpI
+         /VPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=4mll2lpwENE608kX1kOhep+FnuspDxHBBTIWjYWHVv4=;
-        b=tZnwdmqRY/Gdrnv76N/TsncVjDbTC5cw/fcL8vOWdRKiEosJ7SAjZ+/bXrTHKTdlI4
-         CjNx0shhQnLpopDFGN8T0OHjsdPVZ2MIlmSOLngNFiS3FD3Q7h5/o2QrWe56y8UgO9NG
-         sV0wlhE/y4hEP5V8fQaRu5ArXEliaD+ZdYqW/Y2xfaTyiezEhg9DjtzLVFfgqOoldNnG
-         sCGh6oy/NoEnuAyqO7/r83HkqO+/41/jBlg1ch+VQPfbCk1LUpWIjL49v0uEpsxztEQT
-         Jf/5yrkJbHTKwLmyKDaMOh6lfyPYInZznjox2ln/W1CSetIrW6VfdeWt4F9ww+3u1+uT
-         cX/A==
-X-Gm-Message-State: AOAM5302xp7wjHlXsZatpzsmntBhS/LCuRxINBVqqWcFXpFiXJZJ9UQ2
-        5jXcFXBVPTpnsro0cHBX79QKbeb9b3wqQAgV
-X-Google-Smtp-Source: ABdhPJwsLKoq02G2opNkx2KyZBjwCJrT1QWUMlzjgyZlIH/qv0W5suRHKqypiyBgXWhP7zNqj62Grg==
-X-Received: by 2002:a05:600c:1911:: with SMTP id j17mr4552481wmq.63.1611665159968;
-        Tue, 26 Jan 2021 04:45:59 -0800 (PST)
-Received: from dell.default ([91.110.221.188])
-        by smtp.gmail.com with ESMTPSA id i131sm3263073wmi.25.2021.01.26.04.45.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jan 2021 04:45:59 -0800 (PST)
-From:   Lee Jones <lee.jones@linaro.org>
-To:     lee.jones@linaro.org
-Cc:     linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Subject: [PATCH 13/21] clk: qcom: gcc-ipq4019: Remove unused variable 'ret'
-Date:   Tue, 26 Jan 2021 12:45:32 +0000
-Message-Id: <20210126124540.3320214-14-lee.jones@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210126124540.3320214-1-lee.jones@linaro.org>
-References: <20210126124540.3320214-1-lee.jones@linaro.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=rH4rr1SnYvL9K62Ub8DyhAEQN4Ic5cSs1nbnJHOUTjQ=;
+        b=WbRxvzD4zZCBz56AUtdfwUg3SBr4zBOhTecF6X/xBZgqKIwRqz8uC8+1fIWYoThJQM
+         hYBJGwouguCsfOUsdqjnHPlFL7YuhTXR/W+KwxgWyp/eQ0rBBY6LPH62rCO3NlkwXQjO
+         MfZXz5tFf0WhrC5ioWKR4GShYTmiYrDFh7AeQRoLlNbWUG/+ySGAYq8B9LfHtUxBvoYs
+         e4y0XV8EKpxasj4Ysif4Vp/xvtnTnpGLBV/GbVgvjiAJHinnFgCr8UTctJpSogoxsp9h
+         Ux3KQ2iV7Ak4MYgIsStmqsVkb/eveUBGtBrE6QfEK7IxZpi+lpoAa52Wx3AmyGeJnZY6
+         ssVA==
+X-Gm-Message-State: AOAM531fo9PVR+m9MtRCQdZF09vn2nxlqSuxKMmZwIbVpUW9NdDeC44Z
+        HHTp4ZW/wresOaFMHCrFouWXsA==
+X-Google-Smtp-Source: ABdhPJwac9lzUnHGfRXJt3Z+kSVTr6sUpD8pwpLyf+fbeL+Byx1uvwyHgQ6Bqtpg+Ds+slrmATkBaA==
+X-Received: by 2002:aa7:c9c9:: with SMTP id i9mr4462032edt.160.1611665798137;
+        Tue, 26 Jan 2021 04:56:38 -0800 (PST)
+Received: from [192.168.0.4] (hst-221-83.medicom.bg. [84.238.221.83])
+        by smtp.googlemail.com with ESMTPSA id s21sm9756274ejz.87.2021.01.26.04.56.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 26 Jan 2021 04:56:37 -0800 (PST)
+Subject: Re: [PATCH v2 0/4] MFC private ctrls to std ctrls
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc:     Hans Verkuil <hverkuil-cisco@xs4all.nl>
+References: <20210115092607.29849-1-stanimir.varbanov@linaro.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <4882147f-7f3f-d1e1-03eb-0abddb4f1b4c@linaro.org>
+Date:   Tue, 26 Jan 2021 14:56:36 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
+In-Reply-To: <20210115092607.29849-1-stanimir.varbanov@linaro.org>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fixes the following W=1 kernel build warning(s):
+Hans, any comments ?
 
- drivers/clk/qcom/gcc-ipq4019.c: In function ‘clk_cpu_div_set_rate’:
- drivers/clk/qcom/gcc-ipq4019.c:1279:6: warning: variable ‘ret’ set but not used [-Wunused-but-set-variable]
+On 1/15/21 11:26 AM, Stanimir Varbanov wrote:
+> Hello,
+> 
+> Changes in v2:
+> 
+>  * use _DEC_ instead of _DECODER_ in the name of the new controls (Hans)
+>  * rebase on top of media master branch
+> 
+> v1 can be found at [1]
+> 
+> regards,
+> Stan
+> 
+> [1] https://patchwork.linuxtv.org/project/linux-media/cover/20201109173541.10016-1-stanimir.varbanov@linaro.org/
+> 
+> Stanimir Varbanov (4):
+>   v4l2-ctrl: Make display delay and display enable std controls
+>   venus: vdec: Add support for display delay and delay enable controls
+>   s5p-mfc: Use display delay and display enable std controls
+>   docs: Deprecate mfc display delay controls
+> 
+>  .../media/v4l/ext-ctrls-codec.rst             | 25 +++++++++++++++++++
+>  drivers/media/platform/qcom/venus/core.h      |  2 ++
+>  drivers/media/platform/qcom/venus/vdec.c      | 10 +++++++-
+>  .../media/platform/qcom/venus/vdec_ctrls.c    | 16 +++++++++++-
+>  drivers/media/platform/s5p-mfc/s5p_mfc_dec.c  | 16 ++++++++++++
+>  drivers/media/v4l2-core/v4l2-ctrls.c          |  4 +++
+>  include/uapi/linux/v4l2-controls.h            |  3 +++
+>  7 files changed, 74 insertions(+), 2 deletions(-)
+> 
 
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Michael Turquette <mturquette@baylibre.com>
-Cc: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: linux-clk@vger.kernel.org
-Signed-off-by: Lee Jones <lee.jones@linaro.org>
----
- drivers/clk/qcom/gcc-ipq4019.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/clk/qcom/gcc-ipq4019.c b/drivers/clk/qcom/gcc-ipq4019.c
-index ef5137fd50f3f..8abad4032de71 100644
---- a/drivers/clk/qcom/gcc-ipq4019.c
-+++ b/drivers/clk/qcom/gcc-ipq4019.c
-@@ -1276,16 +1276,15 @@ static int clk_cpu_div_set_rate(struct clk_hw *hw, unsigned long rate,
- 	struct clk_fepll *pll = to_clk_fepll(hw);
- 	const struct freq_tbl *f;
- 	u32 mask;
--	int ret;
- 
- 	f = qcom_find_freq(pll->freq_tbl, rate);
- 	if (!f)
- 		return -EINVAL;
- 
- 	mask = (BIT(pll->cdiv.width) - 1) << pll->cdiv.shift;
--	ret = regmap_update_bits(pll->cdiv.clkr.regmap,
--				 pll->cdiv.reg, mask,
--				 f->pre_div << pll->cdiv.shift);
-+	regmap_update_bits(pll->cdiv.clkr.regmap,
-+			   pll->cdiv.reg, mask,
-+			   f->pre_div << pll->cdiv.shift);
- 	/*
- 	 * There is no status bit which can be checked for successful CPU
- 	 * divider update operation so using delay for the same.
 -- 
-2.25.1
-
+regards,
+Stan
