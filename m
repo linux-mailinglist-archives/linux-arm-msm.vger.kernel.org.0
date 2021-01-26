@@ -2,194 +2,388 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A7D7304259
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 16:24:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F376B3042DA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 16:47:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392756AbhAZPXy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jan 2021 10:23:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57300 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389107AbhAZPXp (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jan 2021 10:23:45 -0500
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E401EC061A31;
-        Tue, 26 Jan 2021 07:23:04 -0800 (PST)
-Received: by mail-ot1-x32d.google.com with SMTP id k8so16524231otr.8;
-        Tue, 26 Jan 2021 07:23:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:subject:to:cc:references:from:autocrypt:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=9HqJz4ccFu+2h4+0g/4xAgaRFGGTbElPLcdY6EqSi4g=;
-        b=J9//tWL5VV1XxropJFiiLpj2bX7uW6LYBGx5uYDqyqvvMq7xfv0NTziP3AZEi4AadA
-         8BiBR/BlPHs4zzP2kG2yNDQOSSi/9+DG5I8nPNz7Zek4yXtkgrokk8qJxQsIF/1UqEuf
-         TzVM8oHZpUng88iju5MIeQHipRmcssLRI8g1JrIhQmyyyhh5aK/1L2/lPPpinPQuvM1X
-         NNyCg5dLrLL47SIQVG8Fus8nDtfxXQHtWJgN+1DvQu7OulYWY5VlGGzRYAW9QGYmtnjq
-         d5Bi6b20VSK2LRsRL9q8NwDy+ebqfgMJobIZZCSnN0lp+sQj+uKVKwtUBIb+C7rKrEKT
-         GCQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:subject:to:cc:references:from:autocrypt
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=9HqJz4ccFu+2h4+0g/4xAgaRFGGTbElPLcdY6EqSi4g=;
-        b=Hv+h+ddc5gi+x8l++Cfa6MPWx9grH+P66nbbqhfa8SR26pIAAm/4KguqQQLcyAISnJ
-         el7B8iLOwg1heg8cKqiYdhjVjuzERzej8maBURUSo8N6BLcUGEfFzeimNp5CjblU7FCv
-         wr3O/g8XIK4WYhkrMkopr7MDUcJJ1IGmJwL45R0TIpwFo05gl37S1sGGQHQCR9wXr1g/
-         xmTDwSAzDBCUk4GKxVwog4sshiKWqpTHgyQ6csXo4Pvogj2rBzd42zN59H/NlTziM3Ih
-         GbbywGkholt+MQKWIMT+1Pld2ZKMCWsW1Yx0iTVeTerSZm05hBfi+h2iBjNW97qBMqSM
-         xTWA==
-X-Gm-Message-State: AOAM5328ZEPTXL1apdOVqN/LRTiyFPR0G+jT50j6LfQY6kO7XFq6OnBp
-        uwSFH1KiS77+ks1HVI3bALki/6c6Xw4=
-X-Google-Smtp-Source: ABdhPJxgKwJGdMviBooR22j1M56rJfq2oNt3Fy+S9pjMXiciLviX4pKU78H8g03p+tKJ5WaPmKMLuA==
-X-Received: by 2002:a9d:20e9:: with SMTP id x96mr4221433ota.193.1611674584069;
-        Tue, 26 Jan 2021 07:23:04 -0800 (PST)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id l64sm4191634oib.13.2021.01.26.07.23.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Jan 2021 07:23:02 -0800 (PST)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Subject: Re: [PATCH] watchdog: qcom: Remove incorrect usage of
- QCOM_WDT_ENABLE_IRQ
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        linux-watchdog@vger.kernel.org,
-        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
-        jorge@foundries.io
-Cc:     linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        stable@vger.kernel.org
-References: <20210126150241.10009-1-saiprakash.ranjan@codeaurora.org>
-From:   Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-Message-ID: <1c9d5e19-7ddd-345d-aa2d-b4fb48d9b4df@roeck-us.net>
-Date:   Tue, 26 Jan 2021 07:23:00 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S2391757AbhAZPpf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jan 2021 10:45:35 -0500
+Received: from mail.kernel.org ([198.145.29.99]:45750 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2391862AbhAZPnZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 26 Jan 2021 10:43:25 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 097AF2100A;
+        Tue, 26 Jan 2021 15:42:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1611675764;
+        bh=yQoMRGi5PdjwxvIyMrxoV2bK3IlRzoWkiHHKm3zY+FI=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=NiKDpU7btcGkRCx/S+NoBjcOvv/ZyB46/2G8nBpeBa1hKksq/5/vU+wJtImwbarXu
+         5NN6snx790B3zfcKOgLukDFVnn8nF27CWGIvgN7PVdm7OeXqEfcGc/zllxvuFx/u4h
+         nk9jZQ9GJ7ypS0+haIeSmsbVfcs4X6z1kgOkd1Q9eF73bOCj2ZcjUu2I3NfAQcwjUC
+         z1NBgsVpTERv3taC+gKQoQQ+13HuobfYFuNQdlcmQKnP2jRB1LQtWnzLPdy588YcA4
+         Ly0p445MzdSXmCIA00VCQ+6O5jmId5LNaAxG8bp+aKMFQslDubceaYFh7GBNBZkjGx
+         NFR1tuum32J6g==
+Received: by mail-ej1-f53.google.com with SMTP id kg20so23126440ejc.4;
+        Tue, 26 Jan 2021 07:42:43 -0800 (PST)
+X-Gm-Message-State: AOAM533qIo0YF4aVBm0Wb0759HweC3Ie7Oo7iPooFUMyNj5bd4PaC0Iy
+        krueot7uWNw2uHnXtUhCqg+JZAPaf4xngORcIg==
+X-Google-Smtp-Source: ABdhPJzAO1B6HEQxoXCrUkx7cM5FMklSTeICUd2JeJwy9EL7S31MxkB/KQkUni41DZup9fORFFdpbZJkraVXHkmTi7E=
+X-Received: by 2002:a17:906:ce49:: with SMTP id se9mr3870805ejb.341.1611675762536;
+ Tue, 26 Jan 2021 07:42:42 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20210126150241.10009-1-saiprakash.ranjan@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <cover.1611645945.git.mchehab+huawei@kernel.org> <55f479324098b66d7dba89c8f9c3e455731df4f7.1611645945.git.mchehab+huawei@kernel.org>
+In-Reply-To: <55f479324098b66d7dba89c8f9c3e455731df4f7.1611645945.git.mchehab+huawei@kernel.org>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Tue, 26 Jan 2021 09:42:30 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqLfTxqUtFxbkojaUevCgg5V-StBkhXC4Fwx0Vh9NRougw@mail.gmail.com>
+Message-ID: <CAL_JsqLfTxqUtFxbkojaUevCgg5V-StBkhXC4Fwx0Vh9NRougw@mail.gmail.com>
+Subject: Re: [PATCH RFC 1/2] dt: pci: designware-pcie.txt: convert it to yaml
+To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Jesper Nilsson <jesper.nilsson@axis.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Jonathan Chocron <jonnyc@amazon.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Richard Zhu <hongxing.zhu@nxp.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        Zhou Wang <wangzhou1@hisilicon.com>,
+        devicetree@vger.kernel.org,
+        "open list:ARM/Amlogic Meson..." <linux-amlogic@lists.infradead.org>,
+        linux-arm-kernel@axis.com,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        linux-omap <linux-omap@vger.kernel.org>,
+        PCI <linux-pci@vger.kernel.org>,
+        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
+        linux-tegra <linux-tegra@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 1/26/21 7:02 AM, Sai Prakash Ranjan wrote:
-> As per register documentation, QCOM_WDT_ENABLE_IRQ which is BIT(1)
-> of watchdog control register is wakeup interrupt enable bit and
-> not related to bark interrupt at all, BIT(0) is used for that.
-> So remove incorrect usage of this bit when supporting bark irq for
-> pre-timeout notification. Currently with this bit set and bark
-> interrupt specified, pre-timeout notification and/or watchdog
-> reset/bite does not occur.
-> 
-> Fixes: 36375491a439 ("watchdog: qcom: support pre-timeout when the bark irq is available")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+On Tue, Jan 26, 2021 at 1:35 AM Mauro Carvalho Chehab
+<mchehab+huawei@kernel.org> wrote:
+>
+> Convert the file into a JSON description at the yaml format.
 
-Assuming that pretimeout _does_ work with this patch applied,
+json-schema, not JSON really. I prefer just 'DT schema' which implies
+json-schema in yaml file format.
 
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+This one is a bit tricky and suspect it needs a few others converted
+to get right. Not asking for that yet, just keep that in mind.
 
+>
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 > ---
-> 
-> Reading the conversations from when qcom pre-timeout support was
-> added [1], Bjorn already had mentioned it was not right to touch this
-> bit, not sure which SoC the pre-timeout was tested on at that time,
-> but I have tested this on SDM845, SM8150, SC7180 and watchdog bark
-> and bite does not occur with enabling this bit with the bark irq
-> specified in DT.
-> 
-> [1] https://lore.kernel.org/linux-watchdog/20190906174009.GC11938@tuxbook-pro/
-> 
-> ---
->  drivers/watchdog/qcom-wdt.c | 13 +------------
->  1 file changed, 1 insertion(+), 12 deletions(-)
-> 
-> diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
-> index 7cf0f2ec649b..e38a87ffe5f5 100644
-> --- a/drivers/watchdog/qcom-wdt.c
-> +++ b/drivers/watchdog/qcom-wdt.c
-> @@ -22,7 +22,6 @@ enum wdt_reg {
->  };
->  
->  #define QCOM_WDT_ENABLE		BIT(0)
-> -#define QCOM_WDT_ENABLE_IRQ	BIT(1)
->  
->  static const u32 reg_offset_data_apcs_tmr[] = {
->  	[WDT_RST] = 0x38,
-> @@ -63,16 +62,6 @@ struct qcom_wdt *to_qcom_wdt(struct watchdog_device *wdd)
->  	return container_of(wdd, struct qcom_wdt, wdd);
->  }
->  
-> -static inline int qcom_get_enable(struct watchdog_device *wdd)
-> -{
-> -	int enable = QCOM_WDT_ENABLE;
-> -
-> -	if (wdd->pretimeout)
-> -		enable |= QCOM_WDT_ENABLE_IRQ;
-> -
-> -	return enable;
-> -}
-> -
->  static irqreturn_t qcom_wdt_isr(int irq, void *arg)
->  {
->  	struct watchdog_device *wdd = arg;
-> @@ -91,7 +80,7 @@ static int qcom_wdt_start(struct watchdog_device *wdd)
->  	writel(1, wdt_addr(wdt, WDT_RST));
->  	writel(bark * wdt->rate, wdt_addr(wdt, WDT_BARK_TIME));
->  	writel(wdd->timeout * wdt->rate, wdt_addr(wdt, WDT_BITE_TIME));
-> -	writel(qcom_get_enable(wdd), wdt_addr(wdt, WDT_EN));
-> +	writel(QCOM_WDT_ENABLE, wdt_addr(wdt, WDT_EN));
->  	return 0;
->  }
->  
-> 
+>  .../bindings/pci/amlogic,meson-pcie.txt       |   4 +-
+>  .../bindings/pci/axis,artpec6-pcie.txt        |   2 +-
+>  .../bindings/pci/designware,pcie.yaml         | 194 ++++++++++++++++++
 
+snps,dw-pcie.yaml
+
+>  .../bindings/pci/designware-pcie.txt          |  77 -------
+>  .../bindings/pci/fsl,imx6q-pcie.txt           |   2 +-
+>  .../bindings/pci/hisilicon-histb-pcie.txt     |   2 +-
+>  .../bindings/pci/hisilicon-pcie.txt           |   2 +-
+>  .../devicetree/bindings/pci/kirin-pcie.txt    |   2 +-
+>  .../bindings/pci/layerscape-pci.txt           |   2 +-
+>  .../bindings/pci/nvidia,tegra194-pcie.txt     |   4 +-
+>  .../devicetree/bindings/pci/pci-armada8k.txt  |   2 +-
+>  .../devicetree/bindings/pci/pci-keystone.txt  |  10 +-
+>  .../devicetree/bindings/pci/pcie-al.txt       |   2 +-
+>  .../devicetree/bindings/pci/qcom,pcie.txt     |  14 +-
+>  .../bindings/pci/samsung,exynos5440-pcie.txt  |   4 +-
+>  .../pci/socionext,uniphier-pcie-ep.yaml       |   2 +-
+>  .../devicetree/bindings/pci/ti-pci.txt        |   4 +-
+>  .../devicetree/bindings/pci/uniphier-pcie.txt |   2 +-
+>  MAINTAINERS                                   |   2 +-
+>  19 files changed, 225 insertions(+), 108 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/pci/designware,pcie.yaml
+>  delete mode 100644 Documentation/devicetree/bindings/pci/designware-pcie.txt
+
+
+> diff --git a/Documentation/devicetree/bindings/pci/designware,pcie.yaml b/Documentation/devicetree/bindings/pci/designware,pcie.yaml
+> new file mode 100644
+> index 000000000000..e610ed073789
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pci/designware,pcie.yaml
+> @@ -0,0 +1,194 @@
+> +# SPDX-License-Identifier: GPL-2.0
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pci/designware,pcie.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Synopsys DesignWare PCIe interface
+> +
+> +maintainers:
+> +  - Jingoo Han <jingoohan1@gmail.com>
+> +  - Gustavo Pimentel <gustavo.pimentel@synopsys.com>
+> +
+> +description: |
+> +  Synopsys DesignWare PCIe host controller
+> +
+> +properties:
+> +  compatible:
+> +    description: |
+> +      The compatible can be either:
+> +      - snps,dw-pcie       # for RC mode
+> +      - snps,dw-pcie-ep    # For EP mode
+> +      or some other value, when there's a host-specific driver
+
+Needs to be a schema. This is complicated because sometimes it's used
+and sometimes not. So we need something like this:
+
+anyOf:
+  - {}
+  - items:
+      contains:
+        enum:
+          - snps,dw-pcie
+          - snps,dw-pcie-ep
+
+This will always be true, but at least documents the strings in a
+parseable form.
+
+> +
+> +  reg:
+> +    description: |
+> +      For designware cores version < 4.80 contains the configuration
+> +      address space. For designware core version >= 4.80, contains
+> +      the configuration and ATU address space
+
+And DBI for all versions.
+
+
+> +    maxItems: 4
+
+minItems: 2
+
+(dbi and config must always be there)
+
+> +
+> +  reg-names:
+> +    description: |
+> +      Must be "config" for the PCIe configuration space and "atu" for
+> +      the ATU address space.
+> +      (The old way of getting the configuration address space from
+> +      "ranges" is deprecated and should be avoided.)
+
+This is getting dropped from the driver and can be dropped here. This
+only existed for a few months back in 2013.
+
+> +    maxItems: 4
+
+minItems: 2
+items:
+  contains:
+    enum: [ dbi, dbi2, config, atu ]
+
+> +
+> +  num-lanes:
+> +    description: |
+> +      number of lanes to use (this property should be specified unless
+> +      the link is brought already up in BIOS)
+> +    maxItems: 1
+
+Not an array. IIRC, pci-bus.yaml covers this. If not, needs a type ref
+and min/max (1-16).
+
+> +
+> +  reset-gpio:
+> +    description: GPIO pin number of power good signal
+
+Isn't this the PERST# signal?
+
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    description: |
+> +      Must contain an entry for each entry in clock-names.
+> +      See Documentation/devicetree/bindings/clock/clock-bindings.txt for
+> +      details.
+
+This is every 'clocks', drop.
+
+> +    minItems: 2
+> +    maxItems: 8
+> +
+> +  clock-names:
+> +    description: |
+> +      Must include the following entries:
+> +      - "pcie"
+> +      - "pcie_bus"
+
+Need to be in a schema.
+
+> +    minItems: 2
+> +    maxItems: 8
+> +
+> +  "snps,enable-cdm-check":
+> +    $ref: /schemas/types.yaml#definitions/flag
+> +    description: |
+> +      This is a boolean property and if present enables
+> +      automatic checking of CDM (Configuration Dependent Module) registers
+> +      for data corruption. CDM registers include standard PCIe configuration
+> +      space registers, Port Logic registers, DMA and iATU (internal Address
+> +      Translation Unit) registers.
+> +
+
+> +  # The following are mandatory properties for RC Mode
+> +
+> +  "#address-cells":
+> +    const: 3
+> +
+> +  "#size-cells":
+> +    const: 2
+> +
+> +  device_type:
+> +    const: pci
+> +
+> +  ranges:
+> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+> +    description: |
+> +      ranges for the PCI memory and I/O regions
+> +    minItems: 1
+> +    maxItems: 8
+> +
+> +  "#interrupt-cells":
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    const: 1
+> +
+> +  interrupt-map-mask:
+> +    description: |
+> +      Standard PCI properties to define the mapping of the PCIe
+> +      interface to interrupt numbers.
+> +
+> +  interrupt-map:
+> +    description: |
+> +      Standard PCI properties to define the mapping of the PCIe
+> +      interface to interrupt numbers.
+
+pci-bus.yaml already covers these. Drop and reference pci-bus.yaml
+
+> +
+> +  # The following are optional properties for RC mode
+> +
+> +  num-viewport:
+> +    description: |
+> +      number of view ports configured in hardware. If a platform
+> +      does not specify it, the driver assumes 2.
+
+This is detected now and can be marked 'deprecated'.
+
+> +
+> +  bus-range:
+> +    description: |
+> +      PCI bus numbers covered (it is recommended for new devicetrees
+> +      to specify this property, to keep backwards compatibility a range of
+> +      0x00-0xff is assumed if not present)
+
+Covered by pci-bus.yaml.
+
+> +
+> +  # The following are mandatory properties for EP Mode
+> +
+> +  num-ib-windows:
+> +    description: number of inbound address translation windows
+> +    maxItems: 1
+> +
+> +  num-ob-windows:
+> +    description: number of outbound address translation windows
+> +    maxItems: 1
+
+These 2 are detected now and can be marked 'deprecated'.
+
+> +
+> +  # The following are optional properties for EP mode
+> +
+> +  max-functions:
+> +    description: maximum number of functions that can be configured
+> +    maxItems: 1
+
+Not an array.
+
+> +
+> +required:
+> +  - reg
+> +  - reg-names
+> +  - compatible
+> +
+> +allOf:
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            const: snps,dw-pcie
+> +    then:
+> +      required:
+> +        - compatible
+> +        - "#address-cells"
+> +        - "#size-cells"
+> +        - device_type
+> +        - ranges
+> +        - "#interrupt-cells"
+> +        - interrupt-map-mask
+> +        - interrupt-map
+
+All these are required for all pci hosts.
+
+
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            const: snps,dw-pcie-ep
+> +    then:
+> +      required:
+> +        - compatible
+> +        - num-ib-windows
+> +        - num-ob-windows
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    pcie: pcie@dfc00000 {
+> +      compatible = "snps,dw-pcie";
+> +      reg = <0xdfc00000 0x0001000>, /* IP registers */
+> +            <0xd0000000 0x0002000>; /* Configuration space */
+> +      reg-names = "dbi", "config";
+> +      #address-cells = <3>;
+> +      #size-cells = <2>;
+> +      device_type = "pci";
+> +      ranges = <0x81000000 0 0x00000000 0xde000000 0 0x00010000
+> +          0x82000000 0 0xd0400000 0xd0400000 0 0x0d000000>;
+> +      interrupts = <25>, <24>;
+> +      #interrupt-cells = <1>;
+> +      num-lanes = <1>;
+> +    };
+> +    pcie_ep: pcie_ep@dfd00000 {
+> +      compatible = "snps,dw-pcie-ep";
+> +      reg = <0xdfc00000 0x0001000>, /* IP registers 1 */
+> +            <0xdfc01000 0x0001000>, /* IP registers 2 */
+> +            <0xd0000000 0x2000000>; /* Configuration space */
+> +      reg-names = "dbi", "dbi2", "addr_space";
+> +      num-ib-windows = <6>;
+> +      num-ob-windows = <2>;
+> +      num-lanes = <1>;
+> +    };
