@@ -2,168 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CF870303E24
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 14:08:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EB19D303EDE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 14:38:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392325AbhAZNIW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jan 2021 08:08:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51100 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391968AbhAZMsz (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jan 2021 07:48:55 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46103C035430
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 04:46:07 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id e15so2665476wme.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 04:46:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ACuhHqUyAOgeit1pJS1MxY6/38vCSWpT3UKaTx8+/JY=;
-        b=fM8B1mFx2eVpjNGE3vhWFZC0WnRAysxKHxe+DAlNp0M68o88FbxPu79MK7N6KiE2w6
-         9Xz6u4qdahy0LI9WhaFK/lyoXeoeyTIRv3jDEuQ+1axa99t2wwYOv3R4ZYP7Nf33NHcF
-         h/ifupziL/bRk8bMH6nIbZRqrxAaPuu8HhFAWxW4P1w0jDAp4QjTtN/sMy8BVDVsBKeJ
-         5XqZMH2ZHCMbswWDflwfuj2IwwEkK5sK41ABrUURUYOQM0CqIeNKuZ/QR+TlG/5OyQY4
-         UAK2fLKyhInTzveMOSTFN0HX58oaY6FSzzY0nRCsLMpkwG8QaNeop7L+F9Ub+d7NkC/G
-         +g1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ACuhHqUyAOgeit1pJS1MxY6/38vCSWpT3UKaTx8+/JY=;
-        b=WSpXKSMS3Z2vYtLyKisG+0gTtv8k75ONwir0eJdFkmWtm9mwS78BHZnu/cE98teA7r
-         w+0LkhaZvnY1QndFVDK7y/OczMhZI5UfeGCBp5NWqnRejDYWLpdDLSIwBX9YZHkS9PfQ
-         +5FnJebcHE2+30VlZYSK+iAHDdzk6rYOr7VdlCClu0Fiw8/+ORyS3f5ggIcZNuu6v5Tz
-         p10MCOkmTcd5IcZOjvoekQaZlr60F17aCSUs14/RrvDDaTeDe1yf5e3TdbnygmKE/D0F
-         1o22/RVpT/+5bE2t3/xmMZRTIgCmxPYdGj9MgLMJtfkQyKNYTe/KnBZPr/GWLFto3U+D
-         ng8A==
-X-Gm-Message-State: AOAM533T6jVgDNvspnyKOWtXvqu/4gkF/3g53nZ7kq+VSVUGDdtyTbkZ
-        8101cWTSeP8V4xQpoU9eL7zV1Q==
-X-Google-Smtp-Source: ABdhPJwZRlj953gT/ow/PoTz03HbJCu8kx7ksSmJH59sdocGmJhel18R3yS87cxTtuQ5kIlJ9yN83w==
-X-Received: by 2002:a1c:f706:: with SMTP id v6mr4569286wmh.85.1611665166044;
-        Tue, 26 Jan 2021 04:46:06 -0800 (PST)
-Received: from dell.default ([91.110.221.188])
-        by smtp.gmail.com with ESMTPSA id i131sm3263073wmi.25.2021.01.26.04.46.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jan 2021 04:46:05 -0800 (PST)
-From:   Lee Jones <lee.jones@linaro.org>
-To:     lee.jones@linaro.org
-Cc:     linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Subject: [PATCH 18/21] clk: qcom: clk-rpm: Remove a bunch of superfluous code
-Date:   Tue, 26 Jan 2021 12:45:37 +0000
-Message-Id: <20210126124540.3320214-19-lee.jones@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210126124540.3320214-1-lee.jones@linaro.org>
-References: <20210126124540.3320214-1-lee.jones@linaro.org>
+        id S2404437AbhAZNfx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jan 2021 08:35:53 -0500
+Received: from mga06.intel.com ([134.134.136.31]:48273 "EHLO mga06.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2392005AbhAZN0n (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 26 Jan 2021 08:26:43 -0500
+IronPort-SDR: Ksr2gGZ7dn03b/85c1HgNMlPduJ5NJC4EiCDNMkUNQVcrdHtToYzTjEMhgvdUx+T9+FNarGHaf
+ N+TpHz0X3cag==
+X-IronPort-AV: E=McAfee;i="6000,8403,9875"; a="241429103"
+X-IronPort-AV: E=Sophos;i="5.79,375,1602572400"; 
+   d="scan'208";a="241429103"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jan 2021 05:24:53 -0800
+IronPort-SDR: g4Zswe3qz4zMid/EyEG5xz4WWhFPriWd/t2t5KrG0ShP0j9WNEEJayXNCJQTEkRkM2/IHRNzgx
+ zk+bb8SSGplQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.79,375,1602572400"; 
+   d="scan'208";a="369103591"
+Received: from stinkbox.fi.intel.com (HELO stinkbox) ([10.237.72.174])
+  by orsmga002.jf.intel.com with SMTP; 26 Jan 2021 05:24:36 -0800
+Received: by stinkbox (sSMTP sendmail emulation); Tue, 26 Jan 2021 15:24:35 +0200
+Date:   Tue, 26 Jan 2021 15:24:35 +0200
+From:   Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
+To:     Maxime Ripard <maxime@cerno.tech>
+Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        David Airlie <airlied@linux.ie>,
+        Haneen Mohammed <hamohammed.sa@gmail.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Xinliang Liu <xinliang.liu@linaro.org>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        dri-devel@lists.freedesktop.org, Sandy Huang <hjc@rock-chips.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        linux-tegra@vger.kernel.org, Chen-Yu Tsai <wens@csie.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        Anitha Chrisanthus <anitha.chrisanthus@intel.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Marek Vasut <marex@denx.de>,
+        Yannick Fertre <yannick.fertre@st.com>,
+        linux-samsung-soc@vger.kernel.org,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        linux-rockchip@lists.infradead.org,
+        Alexey Brodkin <abrodkin@synopsys.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        freedreno@lists.freedesktop.org,
+        Ludovic Desroches <ludovic.desroches@microchip.com>,
+        VMware Graphics <linux-graphics-maintainer@vmware.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        linux-arm-msm@vger.kernel.org,
+        Philippe Cornu <philippe.cornu@st.com>,
+        Dave Airlie <airlied@redhat.com>,
+        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+        virtualization@lists.linux-foundation.org,
+        Hyun Kwon <hyun.kwon@xilinx.com>,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Alexandre Torgue <alexandre.torgue@st.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Chen Feng <puck.chen@hisilicon.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Alison Wang <alison.wang@nxp.com>,
+        Roland Scheidegger <sroland@vmware.com>,
+        linux-renesas-soc@vger.kernel.org, linux-mips@vger.kernel.org,
+        Hans de Goede <hdegoede@redhat.com>,
+        linux-mediatek@lists.infradead
+Subject: Re: [PATCH v2 10/11] drm: Use state helper instead of the plane
+ state pointer
+Message-ID: <YBAYE4YH4bgURmuf@intel.com>
+References: <20210121163537.1466118-1-maxime@cerno.tech>
+ <20210121163537.1466118-10-maxime@cerno.tech>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210121163537.1466118-10-maxime@cerno.tech>
+X-Patchwork-Hint: comment
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fixes the following W=1 kernel build warning(s):
+On Thu, Jan 21, 2021 at 05:35:35PM +0100, Maxime Ripard wrote:
+> Many drivers reference the plane->state pointer in order to get the
+> current plane state in their atomic_update or atomic_disable hooks,
+> which would be the new plane state in the global atomic state since
+> _swap_state happened when those hooks are run.
+> 
+> Use the drm_atomic_get_new_plane_state helper to get that state to make it
+> more obvious.
+> 
+> This was made using the coccinelle script below:
+> 
+> @ plane_atomic_func @
+> identifier helpers;
+> identifier func;
+> @@
+> 
+> (
+>  static const struct drm_plane_helper_funcs helpers = {
+>  	...,
+>  	.atomic_disable = func,
+> 	...,
+>  };
+> |
+>  static const struct drm_plane_helper_funcs helpers = {
+>  	...,
+>  	.atomic_update = func,
+> 	...,
+>  };
+> )
+> 
+> @ adds_new_state @
+> identifier plane_atomic_func.func;
+> identifier plane, state;
+> identifier new_state;
+> @@
+> 
+>  func(struct drm_plane *plane, struct drm_atomic_state *state)
+>  {
+>  	...
+> -	struct drm_plane_state *new_state = plane->state;
+> +	struct drm_plane_state *new_state = drm_atomic_get_new_plane_state(state, plane);
+> 	...
+>  }
+> 
+> @ include depends on adds_new_state @
+> @@
+> 
+>  #include <drm/drm_atomic.h>
+> 
+> @ no_include depends on !include && adds_new_state @
+> @@
+> 
+> + #include <drm/drm_atomic.h>
+>   #include <drm/...>
+> 
+> Signed-off-by: Maxime Ripard <maxime@cerno.tech>
 
- drivers/clk/qcom/clk-rpm.c:453:29: warning: â€˜clk_rpm_branch_opsâ€™ defined but not used [-Wunused-const-variable=]
+Looks great.
 
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Michael Turquette <mturquette@baylibre.com>
-Cc: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: linux-clk@vger.kernel.org
-Signed-off-by: Lee Jones <lee.jones@linaro.org>
----
- drivers/clk/qcom/clk-rpm.c | 63 --------------------------------------
- 1 file changed, 63 deletions(-)
+Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-diff --git a/drivers/clk/qcom/clk-rpm.c b/drivers/clk/qcom/clk-rpm.c
-index f71d228fd6bd5..a18811c380187 100644
---- a/drivers/clk/qcom/clk-rpm.c
-+++ b/drivers/clk/qcom/clk-rpm.c
-@@ -73,62 +73,6 @@
- 		},							      \
- 	}
- 
--#define DEFINE_CLK_RPM_PXO_BRANCH(_platform, _name, _active, r_id, r)	      \
--	static struct clk_rpm _platform##_##_active;			      \
--	static struct clk_rpm _platform##_##_name = {			      \
--		.rpm_clk_id = (r_id),					      \
--		.active_only = true,					      \
--		.peer = &_platform##_##_active,				      \
--		.rate = (r),						      \
--		.branch = true,						      \
--		.hw.init = &(struct clk_init_data){			      \
--			.ops = &clk_rpm_branch_ops,			      \
--			.name = #_name,					      \
--			.parent_names = (const char *[]){ "pxo_board" },      \
--			.num_parents = 1,				      \
--		},							      \
--	};								      \
--	static struct clk_rpm _platform##_##_active = {			      \
--		.rpm_clk_id = (r_id),					      \
--		.peer = &_platform##_##_name,				      \
--		.rate = (r),						      \
--		.branch = true,						      \
--		.hw.init = &(struct clk_init_data){			      \
--			.ops = &clk_rpm_branch_ops,			      \
--			.name = #_active,				      \
--			.parent_names = (const char *[]){ "pxo_board" },      \
--			.num_parents = 1,				      \
--		},							      \
--	}
--
--#define DEFINE_CLK_RPM_CXO_BRANCH(_platform, _name, _active, r_id, r)	      \
--	static struct clk_rpm _platform##_##_active;			      \
--	static struct clk_rpm _platform##_##_name = {			      \
--		.rpm_clk_id = (r_id),					      \
--		.peer = &_platform##_##_active,				      \
--		.rate = (r),						      \
--		.branch = true,						      \
--		.hw.init = &(struct clk_init_data){			      \
--			.ops = &clk_rpm_branch_ops,			      \
--			.name = #_name,					      \
--			.parent_names = (const char *[]){ "cxo_board" },      \
--			.num_parents = 1,				      \
--		},							      \
--	};								      \
--	static struct clk_rpm _platform##_##_active = {			      \
--		.rpm_clk_id = (r_id),					      \
--		.active_only = true,					      \
--		.peer = &_platform##_##_name,				      \
--		.rate = (r),						      \
--		.branch = true,						      \
--		.hw.init = &(struct clk_init_data){			      \
--			.ops = &clk_rpm_branch_ops,			      \
--			.name = #_active,				      \
--			.parent_names = (const char *[]){ "cxo_board" },      \
--			.num_parents = 1,				      \
--		},							      \
--	}
--
- #define to_clk_rpm(_hw) container_of(_hw, struct clk_rpm, hw)
- 
- struct rpm_cc;
-@@ -450,13 +394,6 @@ static const struct clk_ops clk_rpm_ops = {
- 	.recalc_rate	= clk_rpm_recalc_rate,
- };
- 
--static const struct clk_ops clk_rpm_branch_ops = {
--	.prepare	= clk_rpm_prepare,
--	.unprepare	= clk_rpm_unprepare,
--	.round_rate	= clk_rpm_round_rate,
--	.recalc_rate	= clk_rpm_recalc_rate,
--};
--
- /* MSM8660/APQ8060 */
- DEFINE_CLK_RPM(msm8660, afab_clk, afab_a_clk, QCOM_RPM_APPS_FABRIC_CLK);
- DEFINE_CLK_RPM(msm8660, sfab_clk, sfab_a_clk, QCOM_RPM_SYS_FABRIC_CLK);
 -- 
-2.25.1
-
+Ville Syrjälä
+Intel
