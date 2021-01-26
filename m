@@ -2,98 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3FF5B303FC2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 15:10:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B67D1303FBE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 15:10:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392686AbhAZOJv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jan 2021 09:09:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40584 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405724AbhAZOH6 (ORCPT
+        id S2404526AbhAZOJw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jan 2021 09:09:52 -0500
+Received: from relay08.th.seeweb.it ([5.144.164.169]:34853 "EHLO
+        relay08.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404788AbhAZOIO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jan 2021 09:07:58 -0500
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01518C061D73
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 06:07:18 -0800 (PST)
-Received: by mail-ot1-x333.google.com with SMTP id h14so16249424otr.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 06:07:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=IQ1mHRGGkeAWSLltIAOirHSUgPq2D+lfO6NPdhx+kbk=;
-        b=nSntSCMT12ixFL7rKiXDb9a3nofYWhAoNV9NbbrNNorP2Il6xg18+E1tcWTCFF57lu
-         /usVi7gupanU3YRCGUUt0pcPFhrNj8wEyiStsNvbNzdR9rsr5s4BNsZTFO9dDilrjCjy
-         /zupnJ0BN2W9ChCIvlDFwQLXMMFF4OzqJp5xVQr2CLj1UiD8l6Wr+JDPeKq+hwaop+it
-         s55taU82Xy0f2keH7UcovRUXaBVkLPe0cuvmwEqse01tIbO+oOzyDMzM5/QXq/NsUvzz
-         bkeopHtSBtqexnk875g3BhNPddL1FYKjKYg52C8dL4kZjzYVgcBNKdjl0+2Qq/yrRP+/
-         Yr4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=IQ1mHRGGkeAWSLltIAOirHSUgPq2D+lfO6NPdhx+kbk=;
-        b=UxE72yswfXYC2XpLkr5YSM1D9iJ+As9epcXeNtjl1bipOshtYMGDhsHXVDcmYKXWcP
-         QDd/5jULEfS10cnoLUePwrsCe22n11ywxguyVUzjzYaNU3JqdnlbxEZoqxxPffvn1JNb
-         yhZ2I5PhksgpabuZnMX25MoatDK1PICEDqnga051yjl/kF4ElVz5Nhar5JO+6fSPaBKR
-         5aXNWk+JIDiosahJuqA1DfE8lcnyFHYBZ+ygWl9IzJx8935sxig5H/m7XVfR+YhGFkLI
-         J5egukAq1t/djBpfWGDr+Dj8bq6twR/jZ8UEz8uPG+4hxdmrPcQO4qIdPB6xUb6ocYq/
-         mMYA==
-X-Gm-Message-State: AOAM530gzryVlElsXZuYjAuf6Q5bQBeolwmKsQGXPcYWAZ29mPkc9NBC
-        cx8AQkwce3b/VddGusdJacN9AQ==
-X-Google-Smtp-Source: ABdhPJy7AYp4AcoJFrfFGte6lqF9tUTZ+0VN9mh8hPlQxw314jX/VkvHT6IrGZ7qHf/E8GVyGkqE2w==
-X-Received: by 2002:a9d:66d1:: with SMTP id t17mr3986317otm.163.1611670037403;
-        Tue, 26 Jan 2021 06:07:17 -0800 (PST)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id o16sm4103118ote.79.2021.01.26.06.07.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jan 2021 06:07:16 -0800 (PST)
-Date:   Tue, 26 Jan 2021 08:07:14 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Jiapeng Zhong <abaci-bugfix@linux.alibaba.com>
-Cc:     agross@kernel.org, p.zabel@pengutronix.de,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] media: firmware: qcom_scm: Simplify the calculation of
- variables
-Message-ID: <20210126140714.GG1241218@yoga>
-References: <1611651144-42491-1-git-send-email-abaci-bugfix@linux.alibaba.com>
+        Tue, 26 Jan 2021 09:08:14 -0500
+Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 7A49C3E7D4;
+        Tue, 26 Jan 2021 15:07:19 +0100 (CET)
+Subject: Re: [PATCH] venus: core: Parse firmware-name DT property
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Hans Verkuil <hverkuil@xs4all.nl>
+References: <20210126084252.238078-1-stanimir.varbanov@linaro.org>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Message-ID: <b2afcf41-5135-1ac0-c603-6394bb0ab492@somainline.org>
+Date:   Tue, 26 Jan 2021 15:07:19 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1611651144-42491-1-git-send-email-abaci-bugfix@linux.alibaba.com>
+In-Reply-To: <20210126084252.238078-1-stanimir.varbanov@linaro.org>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 26 Jan 02:52 CST 2021, Jiapeng Zhong wrote:
-
-> Fix the following coccicheck warnings:
+Il 26/01/21 09:42, Stanimir Varbanov ha scritto:
+> On production devices the firmware could be located on different
+> places, this path could be provided by special firmware-name DT
+> property.
 > 
-> ./drivers/firmware/qcom_scm.c:324:20-22: WARNING !A || A && B is
-> equivalent to !A || B.
+> Here we check for existence of such DT property and if it exist
+> take the firmware path from there. Otherwise, if the property
+> is missing we fallback to the predefined path from driver resource
+> structure.
 > 
-
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-> Reported-by: Abaci Robot <abaci@linux.alibaba.com>
-> Signed-off-by: Jiapeng Zhong <abaci-bugfix@linux.alibaba.com>
+> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 > ---
->  drivers/firmware/qcom_scm.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>   drivers/media/platform/qcom/venus/firmware.c | 8 +++++++-
+>   1 file changed, 7 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> index 7be48c1..c530072 100644
-> --- a/drivers/firmware/qcom_scm.c
-> +++ b/drivers/firmware/qcom_scm.c
-> @@ -321,7 +321,7 @@ int qcom_scm_set_cold_boot_addr(void *entry, const cpumask_t *cpus)
->  		.owner = ARM_SMCCC_OWNER_SIP,
->  	};
->  
-> -	if (!cpus || (cpus && cpumask_empty(cpus)))
-> +	if (!cpus || cpumask_empty(cpus))
->  		return -EINVAL;
->  
->  	for_each_cpu(cpu, cpus) {
-> -- 
-> 1.8.3.1
+> diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
+> index d03e2dd5808c..56c8fb5a019b 100644
+> --- a/drivers/media/platform/qcom/venus/firmware.c
+> +++ b/drivers/media/platform/qcom/venus/firmware.c
+> @@ -187,6 +187,7 @@ int venus_boot(struct venus_core *core)
+>   {
+>   	struct device *dev = core->dev;
+>   	const struct venus_resources *res = core->res;
+> +	const char *fwpath = NULL;
+>   	phys_addr_t mem_phys;
+>   	size_t mem_size;
+>   	int ret;
+> @@ -195,7 +196,12 @@ int venus_boot(struct venus_core *core)
+>   	    (core->use_tz && !qcom_scm_is_available()))
+>   		return -EPROBE_DEFER;
+>   
+> -	ret = venus_load_fw(core, core->res->fwname, &mem_phys, &mem_size);
+> +	ret = of_property_read_string_index(dev->of_node, "firmware-name", 0,
+> +					    &fwpath);
+> +	if (ret)
+> +		fwpath = core->res->fwname;
+> +
+> +	ret = venus_load_fw(core, fwpath, &mem_phys, &mem_size);
+>   	if (ret) {
+>   		dev_err(dev, "fail to load video firmware\n");
+>   		return -EINVAL;
 > 
+
+Super! As you surely know, I totally agree.
+
+It may not have huge value, but:
+Reviewed-By: AngeloGioacchino Del Regno 
+<angelogioacchino.delregno@somainline.org>
