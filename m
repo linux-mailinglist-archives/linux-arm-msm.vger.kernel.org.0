@@ -2,190 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AD5E4303D86
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 13:46:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DD5E9303D2E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 13:41:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391769AbhAZMqB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jan 2021 07:46:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42946 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391782AbhAZJ7W (ORCPT
+        id S2391589AbhAZMkw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jan 2021 07:40:52 -0500
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:42026 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2403859AbhAZKOO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jan 2021 04:59:22 -0500
-Received: from mail-ua1-x92d.google.com (mail-ua1-x92d.google.com [IPv6:2607:f8b0:4864:20::92d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D77DFC061786
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 01:58:40 -0800 (PST)
-Received: by mail-ua1-x92d.google.com with SMTP id i3so1933075uai.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 01:58:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=2s091ZCbXkY5kPsLe1N1zqI9t9bafuafJrjbGry9Cmw=;
-        b=me7uH48huC1WigZiogNpzBPm61ucNewUzZWg0f4fVWUAqnmeg73oSGMw4cvVl2YpMt
-         m72B812Vm8Ep+efiP0kM/1TqNPHPscNieVwDInZRX0ifjLlx7FYHf0cjb/OWBrgf+ds3
-         7Cm4pWLLKay1jkb2Am2XSCfPDKoCsGwe5kZUCEOC7qxwgW3sIxWZc7vU+iaeWgbxrVDa
-         Xq70GMRtoA/80D1FIAh2KEknoBJOHZrlCLUt4lij3HI0+7RRLYvLyiQPJLbr2jX9NL2E
-         BWfnkt8ZX7GJ10s1XK+eQD4cJd9K9b1tVPCy+zQbvLokDBSOJt2nc+bg6qNEbkTLVDx4
-         9Qrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2s091ZCbXkY5kPsLe1N1zqI9t9bafuafJrjbGry9Cmw=;
-        b=oglNksE23X3UwBLJmctguRVg03rtqKLdudP14OTdYOJGJWFo2mud1bGPVjq8pvw+M4
-         Fpb5whjxKOZfIrek4GruMnrYZ/enoHu6oXfE1LNdJG4xSd431CXfkx0DTq5YRxQSMESk
-         05oqQOW4aU59C2Ke5jrR8scARtA28nkB3QuXCQA2PLsn8U8TDgTm1UideGTHJvPQCol+
-         yt9Uyjg+cRz27JQz1WfQ1xjFpwb0AZ5dIiWY0EBVYbiYmt3KZjjKVnwMl9RbjLDqTpd+
-         MIPlXuB1uGkAS3fpiEkGLqAfwSFwELzyJ/e/HKQg3fHCsjQ2UgNgtmOIL98cQZem9/PK
-         y0ag==
-X-Gm-Message-State: AOAM532qy6BhuBbEGD2lS2B7NqOxsntmFOd1GHTKD2oL0sl1+ZCjGMZp
-        ar6lS2HG2dfMjyz38+QX6LFJnm3FcKq3TH1W8hizKA==
-X-Google-Smtp-Source: ABdhPJzoOxmNVPAsa+mo+p6s77bXk9Znkd/2lfcQFCTupY7epko0u8YpeILwE6V0/D1n9mDNs1+v+nrLYpCm/DmzQUA=
-X-Received: by 2002:ab0:338c:: with SMTP id y12mr3373917uap.19.1611655120019;
- Tue, 26 Jan 2021 01:58:40 -0800 (PST)
-MIME-Version: 1.0
-References: <20210126001456.382989-1-ebiggers@kernel.org>
-In-Reply-To: <20210126001456.382989-1-ebiggers@kernel.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Tue, 26 Jan 2021 10:58:03 +0100
-Message-ID: <CAPDyKFqLVtiYkjeQmuYOf8K8k=oQSZ18928PPHvJDiUtTw2F-g@mail.gmail.com>
-Subject: Re: [PATCH RESEND v6 0/9] eMMC inline encryption support
-To:     Eric Biggers <ebiggers@kernel.org>
-Cc:     "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>, linux-fscrypt@vger.kernel.org,
-        Satya Tangirala <satyat@google.com>,
-        Andy Gross <agross@kernel.org>,
+        Tue, 26 Jan 2021 05:14:14 -0500
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20210126101322euoutp020b4e0b2578308c7c33ca126f141ef64d~dwJiGCfw91531515315euoutp02c;
+        Tue, 26 Jan 2021 10:13:22 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20210126101322euoutp020b4e0b2578308c7c33ca126f141ef64d~dwJiGCfw91531515315euoutp02c
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1611656003;
+        bh=tenaChUOPWN+TjdSN94yGfg4JVgE422Qow8mGZKWxmU=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=PQbFYlUwWphocIp18Zkw995lGKR0ECAnGMqg1rfjLHGLghqqoYZRjWgK+/Dyq2Nas
+         UrgAx8sBe9GXcjH9NJ5+V7r4Pjqu7rdwLqtNqItc7HBwY2dwY9AgLxKWmvb02O8Irz
+         D6qW90gdzHZhdkXiJoFXVSALNh1469FpiMtRfcVg=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20210126101322eucas1p1bde65ae9ec10e0fd6a2f05840a345a99~dwJh6P9Mk0756807568eucas1p19;
+        Tue, 26 Jan 2021 10:13:22 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id AC.57.45488.24BEF006; Tue, 26
+        Jan 2021 10:13:22 +0000 (GMT)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20210126101322eucas1p2a54daff89cfebe5aaf3a9b5b0fa281ad~dwJhSBHa31256412564eucas1p2r;
+        Tue, 26 Jan 2021 10:13:22 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20210126101322eusmtrp1503a93e4c3dd78b1e6117c5f441fca2d~dwJhQtVYK2213122131eusmtrp1L;
+        Tue, 26 Jan 2021 10:13:22 +0000 (GMT)
+X-AuditID: cbfec7f5-c5fff7000000b1b0-a7-600feb4271a3
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id 66.5E.21957.14BEF006; Tue, 26
+        Jan 2021 10:13:21 +0000 (GMT)
+Received: from [106.210.134.192] (unknown [106.210.134.192]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20210126101320eusmtip250948c1ccaa4131b5c43f5f9d697581e~dwJfjH2nZ0723407234eusmtip2d;
+        Tue, 26 Jan 2021 10:13:20 +0000 (GMT)
+Subject: Re: [PATCH RFC 1/2] dt: pci: designware-pcie.txt: convert it to
+ yaml
+To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Neeraj Soni <neersoni@codeaurora.org>,
-        Barani Muthukumaran <bmuthuku@codeaurora.org>,
-        Peng Zhou <peng.zhou@mediatek.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Konrad Dybcio <konradybcio@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Jesper Nilsson <jesper.nilsson@axis.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Jonathan Chocron <jonnyc@amazon.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Richard Zhu <hongxing.zhu@nxp.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        Zhou Wang <wangzhou1@hisilicon.com>,
+        devicetree@vger.kernel.org, linux-amlogic@lists.infradead.org,
+        linux-arm-kernel@axis.com, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-omap@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+Message-ID: <b6ab7110-fc87-85d7-d591-dffad32985ec@samsung.com>
+Date:   Tue, 26 Jan 2021 11:13:20 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0)
+        Gecko/20100101 Thunderbird/78.6.1
+MIME-Version: 1.0
+In-Reply-To: <55f479324098b66d7dba89c8f9c3e455731df4f7.1611645945.git.mchehab+huawei@kernel.org>
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Brightmail-Tracker: H4sIAAAAAAAAA01TaVBTZxTt997Le4/Q0JcIw1e0Y2Wki20Rq3a+KQytbae8bgMzdnQqVojy
+        BhzWJuDSqnVAlgRkiyyGtUARGAoSUpR0iQUkpJBARZZSoOygQBwLyDZggact/84999x77vlx
+        aVwyRDrQJ0PCOVmINMiRFBI1jYvmN96bfM7XpThmJzIPLxOoKDIANestBMprMAvQYIcn0vXF
+        Uai+OxIgdU0OQFNDDTgar1PjqGT2KoUuqQsI1P/oH4DK0moJtBirxVDbaAKJWluvU2gg508M
+        5WdZI72hFEOa4U4BStGbKKRcKsVRuy6bRFlFSQQy5RpIlNn6K4YUs2oSNRYYCTSY1QFQXaI3
+        iv6lgUIrNzQEmtDao0VdLoEUUxYKDXVmY+86sSVtSgHbVeHFPuiOptjc8m/YWnUfxeZrItjR
+        ZBXFDudUUaymTEGyvZ0/k2x10bfs5SgLyVZZbmJs0ooL25QxT7Ba/QzwkhwRuvlxQSdPcbLd
+        7r7CgKnvYwRhDTZnJnJnqYsgzVoJrGjI7IOFI3pCCYS0hCkBMNM4gPPFLIBXTIkCvpgBMHF8
+        GDwdWRjMFKxjCXMNwJbuo7zoIYBxxcvkemML4wlT9Ty2Zb6ApvJMYh3jzF9CmF54bh2TzB6o
+        nFZuaESMO1zOzt5YSjBO8N54zIaZHXMc9vXWY7xGDI1XRzb2WDG+0LCURPI7t8Mb09k4j+1h
+        z0getn4QZBaEsFHVQ/FXfwDLC+cJHm+B9w3aJ/w22KxKIPiBKAAHzT9QfJEAYHtk5pPMrrDX
+        vLRmR69ZvAordbt5+gDMqMjfoCFjA7unxfwRNjC1JgPnaRGMi5Hw6peg2lDxn+1vbXfwZOCo
+        3hRNvSmOelMc9f+++YAoA/ZchDzYn5PvDeFOO8ulwfKIEH/nE6HBGrD2Bs2rhrmboOT+Q+c6
+        gNGgDkAad7QV/eT8rK9E5Cc9+zUnC/WRRQRx8jqwlSYc7UW6H8t9JIy/NJwL5LgwTva0i9FW
+        DhcxO7srGc/XV1empy8OFWgdyg4lFLoH7Q80hPtJjRfSW1c/ZVXWC8Vdhx88Vv+x6/RnA5+f
+        7837ROVxTjfz3YvbPoz1GGWvpUSJxG3Ml69l3fvo/IQnfsI1gzpT8fEF53mTePptt7tH0opf
+        77JVxN9lj1ZqWkJjZyeD7ZJLLTvpF+LfHGsPbTIp/DzoaKw26VFp4djhHitF/KEdI07B5ttT
+        E9e73YrJfqGPwHJ5rmX7K/3vbHUau33rq9/D9p0NOObzd6rflFdTldXqgYOhgXM7XCYrjwVc
+        qrIJci0Ve1NztrdExx9bDqYw2pkmaumZvS9HGsEp4x3fphSxR8f+PO8VTlAteP8tR0IeIN2z
+        C5fJpf8CadsTXnUEAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA02SfUwTdxjH9+td71oEdhYMJ1uEdCHuxZ0UofuBjqBs7hamEF2WTeZKlRPI
+        oCU9ujH8A8Z4sY0O1OnoUQpj4BQbI6UIgqOzY1YkQKeh6jLYeJM6CkToFHBlo9Ql/PdJnufz
+        ffIkXwEicvNDBVmKPEalkGeLMT+0d9k2/PrOqefTIm3fxMH+sacobCjOhL2WGRTWdvfz4chg
+        MuwYOobDn+8VA8hdqQHQNdqNwEkrh8Dzbh0OS7h6FA4/ngOw6cxVFC6Wm3nQPnEcgwMDl3H4
+        Z819HqyrXgcttgs8aBpz8OFJSx8OtUsXEHinQ4/B6oYKFPYZbBisGujiQY2bw+CN+h4UjlQP
+        Amj9OhWW/tiNQ0+bCYVOcwhc7DCgUOOaweGoQ89LiKDP27V8+u6lFHr2XilOG4xH6avcEE7X
+        mdT0ROVpnB6racZpU5MGo393XMPoloZC+sRXMxjdPNPOoys8kfTNb5+gtNkyD1JEB6gdKqU6
+        jwnPVLJ5b4pTJTCKksRCKio6lpJse+NgXFSMeGv8jnQmO+szRrU1Po3KdDWW8XO7A/OdBjde
+        BM6s0wKhgCSiyYWRKr4W+AlERCMgWycf8n2DF8mes0XPOIj8x6HFfEuzgHT9bQbeQRCxh5xb
+        vIN7OZj4iDxmrFllhPjDj2zVhHtZRDwA5C3dES9jhITUTnuDhIIAIp58qtevHkCJCPLhZNlq
+        5gbiEHmTm0N8O+vJHt046mUhkUbaliowX76UNLSMID4OI9um9c84hPxtvJZXCUTcGp1bo3Br
+        FG6NUgfQJhDMqNmcjBxWQrHyHFatyKAOK3NMYKV+V24strQDw1+PKCvgCYAVkAJEHBzQSfmn
+        iQLS5V8UMCqlTKXOZlgriFn55yQSuuGwcqW/ijyZRBoZI4mWxkbGxEq3iUMCWmuMMhGRIc9j
+        PmWYXEb1v8cTCEOLeDB1emG+bzf/y3Mek1r3yeWh5V0JokSzaz7Y6FhwckcLl18eX+gUENLE
+        wY9va8/6bbHLZm7d/S6pZb1/gj1RWv7k3ZykromuMHCq6lTg9WhF6r76jqae5Djl8T2Tpe9P
+        Uhu5INZjoB6MLLfdbvA/Xb+P3VRreefSe0HFu6eQt9hw+0ZMUpDfN/zCxdlkxYevtB96+8jS
+        dOEvnl/dgZv+LSiR6a5Xlnfej/je1Juy/0S3Q1DyEozt6zfufNR8Lnd2XmZuvOaaCq88ULvd
+        +VNretRjfdYPF1/7IEldNW30ROzaUv952X5xnP9onV9hmLtwabvj4F6NW/fcZqcwge/Kl9qc
+        YWKUzZRLXkVUrPw/SLJQEAcEAAA=
+X-CMS-MailID: 20210126101322eucas1p2a54daff89cfebe5aaf3a9b5b0fa281ad
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20210126074127eucas1p1dd8f2d1704d708d64458922566b934f1
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20210126074127eucas1p1dd8f2d1704d708d64458922566b934f1
+References: <cover.1611645945.git.mchehab+huawei@kernel.org>
+        <CGME20210126074127eucas1p1dd8f2d1704d708d64458922566b934f1@eucas1p1.samsung.com>
+        <55f479324098b66d7dba89c8f9c3e455731df4f7.1611645945.git.mchehab+huawei@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 26 Jan 2021 at 01:15, Eric Biggers <ebiggers@kernel.org> wrote:
->
-> [Resending because most of the patches didn't make it to the lists for
-> some reason...]
->
-> Hello,
->
-> This patchset adds support for eMMC inline encryption, as specified by
-> the upcoming version of the eMMC specification and as already
-> implemented and used on many devices.  Building on that, it then adds
-> Qualcomm ICE support and wires it up for the Snapdragon 630 SoC.
->
-> Inline encryption hardware improves the performance of storage
-> encryption and reduces power usage.  See
-> Documentation/block/inline-encryption.rst for more information about
-> inline encryption and the blk-crypto framework (upstreamed in v5.8)
-> which supports it.  Most mobile devices already use UFS or eMMC inline
-> encryption hardware; UFS support was already upstreamed in v5.9.
->
-> Patches 1-4 add support for the standard eMMC inline encryption.
->
-> However, as with UFS, host controller-specific patches are needed on top
-> of the standard support.  Therefore, patches 5-9 add Qualcomm ICE
-> (Inline Crypto Engine) support and wire it up on the Snapdragon 630 SoC.
->
-> To test this I took advantage of the recently upstreamed support for the
-> Snapdragon 630 SoC, plus work-in-progress patches from the SoMainline
-> project (https://github.com/SoMainline/linux/tree/konrad/v5.10-rc3).  In
-> particular, I was able to run the fscrypt xfstests for ext4 and f2fs in
-> a Debian chroot.  Among other things, these tests verified that the
-> correct ciphertext is written to disk (the same as software encryption).
->
-> It will also be possible to add support for Mediatek eMMC inline
-> encryption hardware in mtk-sd, and it should be easier than the Qualcomm
-> hardware since the Mediatek hardware follows the standard more closely.
-> I.e., patches 1-4 should be almost enough for the Mediatek hardware.
->
-> This patchset is based on the "next" branch (commit 42af8761bc84) of
-> https://git.kernel.org/pub/scm/linux/kernel/git/ulfh/mmc.git,
-> plus the patch "block/keyslot-manager: introduce devm_blk_ksm_init()"
-> (https://lkml.kernel.org/r/20210121082155.111333-2-ebiggers@kernel.org).
-> It can also be retrieved from tag "mmc-crypto-v6" of
-> https://git.kernel.org/pub/scm/linux/kernel/git/ebiggers/linux.git
->
-> Changed in v6:
->   - Define MMC_CAP2_CRYPTO to 0 when !CONFIG_MMC_CRYPTO.
->   - Moved the sdm630 device tree update to the end of the series,
->     since it will go in through a different tree.
->   - Added an Acked-by.
->
-> Changed in v5:
->   - Use the proposed resource-managed variant of blk_ksm_init().
->   - Removed an unnecessary call to devm_kfree().
->
-> Changed in v4:
->   - Added Acked-by and Reviewed-and-tested-by tags.
->   - Rebased onto v5.11-rc2.
->
-> Changed in v3:
->   - Improved comment for sdhci_msm_ice_wait_bist_status()
->   - Removed an unhelpful comment in union cqhci_crypto_cfg_entry.
->   - Fixed the commit message of "mmc: cqhci: initialize upper 64 bits of
->     128-bit task descriptors".
->   - Added Reviewed-by's and Acked-by's.
->
-> Changed in v2:
->   - Only select QCOM_SCM if ARCH_QCOM.  (Fixes a build break.)
->   - Split most of the cqhci_prep_task_desc() change into its own patch.
->   - Made sdhci_msm_ice_wait_bist_status() use readl_poll_timeout().
->   - Added a couple more comments.
->   - Added some Acked-by's.
->
-> Eric Biggers (9):
->   mmc: add basic support for inline encryption
->   mmc: cqhci: rename cqhci.c to cqhci-core.c
->   mmc: cqhci: initialize upper 64 bits of 128-bit task descriptors
->   mmc: cqhci: add support for inline encryption
->   mmc: cqhci: add cqhci_host_ops::program_key
->   firmware: qcom_scm: update comment for ICE-related functions
->   dt-bindings: mmc: sdhci-msm: add ICE registers and clock
->   mmc: sdhci-msm: add Inline Crypto Engine support
->   arm64: dts: qcom: sdm630: add ICE registers and clocks
->
->  .../devicetree/bindings/mmc/sdhci-msm.txt     |   3 +
->  arch/arm64/boot/dts/qcom/sdm630.dtsi          |  10 +-
->  drivers/firmware/qcom_scm.c                   |  16 +-
->  drivers/mmc/core/Kconfig                      |   8 +
->  drivers/mmc/core/Makefile                     |   1 +
->  drivers/mmc/core/block.c                      |   3 +
->  drivers/mmc/core/core.c                       |   3 +
->  drivers/mmc/core/crypto.c                     |  48 +++
->  drivers/mmc/core/crypto.h                     |  40 +++
->  drivers/mmc/core/host.c                       |   1 +
->  drivers/mmc/core/queue.c                      |   3 +
->  drivers/mmc/host/Kconfig                      |   1 +
->  drivers/mmc/host/Makefile                     |   2 +
->  drivers/mmc/host/{cqhci.c => cqhci-core.c}    |  69 ++++-
->  drivers/mmc/host/cqhci-crypto.c               | 242 +++++++++++++++
->  drivers/mmc/host/cqhci-crypto.h               |  47 +++
->  drivers/mmc/host/cqhci.h                      |  84 +++++-
->  drivers/mmc/host/sdhci-msm.c                  | 276 +++++++++++++++++-
->  include/linux/mmc/core.h                      |   6 +
->  include/linux/mmc/host.h                      |  11 +
->  20 files changed, 849 insertions(+), 25 deletions(-)
->  create mode 100644 drivers/mmc/core/crypto.c
->  create mode 100644 drivers/mmc/core/crypto.h
->  rename drivers/mmc/host/{cqhci.c => cqhci-core.c} (94%)
->  create mode 100644 drivers/mmc/host/cqhci-crypto.c
->  create mode 100644 drivers/mmc/host/cqhci-crypto.h
->
-> --
-> 2.30.0
->
+Hi Mauro,
 
-Applied for next (leaving patch9 for arm soc), thanks!
+On 26.01.2021 08:35, Mauro Carvalho Chehab wrote:
+> Convert the file into a JSON description at the yaml format.
+>
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> ---
+>   .../bindings/pci/amlogic,meson-pcie.txt       |   4 +-
+>   .../bindings/pci/axis,artpec6-pcie.txt        |   2 +-
+>   .../bindings/pci/designware,pcie.yaml         | 194 ++++++++++++++++++
+>   .../bindings/pci/designware-pcie.txt          |  77 -------
+>   .../bindings/pci/fsl,imx6q-pcie.txt           |   2 +-
+>   .../bindings/pci/hisilicon-histb-pcie.txt     |   2 +-
+>   .../bindings/pci/hisilicon-pcie.txt           |   2 +-
+>   .../devicetree/bindings/pci/kirin-pcie.txt    |   2 +-
+>   .../bindings/pci/layerscape-pci.txt           |   2 +-
+>   .../bindings/pci/nvidia,tegra194-pcie.txt     |   4 +-
+>   .../devicetree/bindings/pci/pci-armada8k.txt  |   2 +-
+>   .../devicetree/bindings/pci/pci-keystone.txt  |  10 +-
+>   .../devicetree/bindings/pci/pcie-al.txt       |   2 +-
+>   .../devicetree/bindings/pci/qcom,pcie.txt     |  14 +-
+>   .../bindings/pci/samsung,exynos5440-pcie.txt  |   4 +-
+You must have used an old tree for preparing this patchset. The above 
+file is gone in v5.11-rc1 and there is 
+Documentation/devicetree/bindings/pci/samsung,exynos-pcie.yaml instead.
+>   .../pci/socionext,uniphier-pcie-ep.yaml       |   2 +-
+>   .../devicetree/bindings/pci/ti-pci.txt        |   4 +-
+>   .../devicetree/bindings/pci/uniphier-pcie.txt |   2 +-
+>   MAINTAINERS                                   |   2 +-
+>   19 files changed, 225 insertions(+), 108 deletions(-)
+>   create mode 100644 Documentation/devicetree/bindings/pci/designware,pcie.yaml
+>   delete mode 100644 Documentation/devicetree/bindings/pci/designware-pcie.txt
+> ...
 
-Kind regards
-Uffe
+Best regards
+-- 
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
+
