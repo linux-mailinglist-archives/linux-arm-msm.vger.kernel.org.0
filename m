@@ -2,107 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B6BE2303481
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 06:25:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 82A89303482
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 06:25:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732637AbhAZFYk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jan 2021 00:24:40 -0500
-Received: from m42-8.mailgun.net ([69.72.42.8]:21149 "EHLO m42-8.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727417AbhAZEUF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Jan 2021 23:20:05 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1611634784; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=IhQq464FAKYY3Pw5e/mnjd4aWb7ctts6/K72ciBiFCg=; b=nLPrmLf//I0pqZufffU/C4npfAPLY7KOLnBpxejkfZjTCOblk5AjoGdLn3WlcoH5e9KUgC6y
- jdEnZeuLfbiIw3C9k6tXgZ7EMqcYc/fNO82AFQUvEHmfW0DuaL9IutZaWkLos2NCBXzXO6lY
- tUZHwNkmQQlEecTKilPvJdi1SN8=
-X-Mailgun-Sending-Ip: 69.72.42.8
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 600f983b2c36b2106d90d88a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 26 Jan 2021 04:19:07
- GMT
-Sender: subbaram=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 332C6C433C6; Tue, 26 Jan 2021 04:19:07 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from subbaram-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: subbaram)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 18E0BC433CA;
-        Tue, 26 Jan 2021 04:19:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 18E0BC433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=subbaram@codeaurora.org
-From:   Subbaraman Narayanamurthy <subbaram@codeaurora.org>
-To:     srinivas.kandagatla@linaro.org, agross@kernel.org,
-        bjorn.andersson@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
-Subject: [PATCH] nvmem: qcom-spmi-sdam: Fix uninitialized pdev pointer
-Date:   Mon, 25 Jan 2021 20:18:55 -0800
-Message-Id: <1611634735-5366-1-git-send-email-subbaram@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S1732644AbhAZFYl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jan 2021 00:24:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56526 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729655AbhAZE13 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 25 Jan 2021 23:27:29 -0500
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9179CC0613ED
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jan 2021 20:26:49 -0800 (PST)
+Received: by mail-oi1-x235.google.com with SMTP id r189so17258536oih.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jan 2021 20:26:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=7OfSmxia+d3pqBmg2qua9BIWvPfSArrmZHl7lfwH9bI=;
+        b=m/+KjqM5Hx+G7dpkXv2YKNv2H2FKgj16d8e49AOFfqtI8ojbKwxLyV1BwuN3jgH8sR
+         2tHPgGOIqQYMqT7VybYxf4p4+QWDfpHsSovRGXaZJS4Kp8EI/AQ8yvIhZssSSfAvkfLw
+         ErbX1J+b9l4o0crsP13U33C69sAY0H3Y18Uaoi8tfF7GNgbgibsrVGVzE62Cj5NBiNqL
+         sEf5TWbT/ur1c0WXwvpqITkDO8j9cxy1d6M6oItz7DXudrcyiemiBg3aqoJSK7JqhRf+
+         WHZnkE91LhaMw4sZjLR1K77jX1zUWW9ewfWV11hYDMISzVGwz8FggRWb1kOsJtI0IA5K
+         kIVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=7OfSmxia+d3pqBmg2qua9BIWvPfSArrmZHl7lfwH9bI=;
+        b=Q+YyD8/+9WxxRpXHbhsbSHECycShf0keyz6DkBMx5+tbpE9puLVgoZ3SFoAkzbzBM0
+         5/uQ+dtqcS6Q+lvnqLgJOj7QYBplvU8+JBMt83gyH4p5tIvBeqxh6lUG5PDslBqXyyWD
+         vCEkrJ1uFARUVHXkqyKV8XbCHmSacvCQA097G/9Mdka2PPNBR0cSjpiCifRueZ39msJA
+         T9GrZehBDln+TXZBF4abDlFgr9Qfl5dad/+WedeMZ+IZ/o/r/2ZmTU5w9zqHkGJmEMnW
+         Kh/F7KP01yQxKoSXsocdGS91n5G8gcEevY5VvK0ShCqzhZY4gH6HoiXiFYY3cYaguiNC
+         1y+w==
+X-Gm-Message-State: AOAM53068PDuyQbadp5ISJl2t/JHf9y6Y3b9v0a8TcP1VEAGR/QkLxuS
+        o3iqJJoMTXCj5MSheHcw7JWzbQ==
+X-Google-Smtp-Source: ABdhPJx42pEiS0LPCsrnXU+9YGM8qZfwg0kcwZPz3gbIhhaxDspxI48nk8487EJaDBRxB9leW1KXkQ==
+X-Received: by 2002:aca:5088:: with SMTP id e130mr2069256oib.78.1611635208790;
+        Mon, 25 Jan 2021 20:26:48 -0800 (PST)
+Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id w129sm3930638oig.23.2021.01.25.20.26.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Jan 2021 20:26:48 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH v2 1/3] dt-bindings: pinctrl: qcom: Define common TLMM binding
+Date:   Mon, 25 Jan 2021 20:26:48 -0800
+Message-Id: <20210126042650.1725176-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.29.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-"sdam->pdev" is uninitialized and it is used to print error logs.
-Fix it. Since device pointer can be used from sdam_config, use it
-directly thereby removing pdev pointer.
+Several properties are shared between all TLMM bindings. By providing a
+common binding to define these properties each platform's binding can be
+reduced to just listing which of these properties should be checked for
+- or further specified.
 
-Signed-off-by: Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+Reviewed-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
----
- drivers/nvmem/qcom-spmi-sdam.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/nvmem/qcom-spmi-sdam.c b/drivers/nvmem/qcom-spmi-sdam.c
-index a72704c..f6e9f96 100644
---- a/drivers/nvmem/qcom-spmi-sdam.c
-+++ b/drivers/nvmem/qcom-spmi-sdam.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /*
-- * Copyright (c) 2017, 2020 The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2017, 2020-2021, The Linux Foundation. All rights reserved.
-  */
- 
- #include <linux/device.h>
-@@ -18,7 +18,6 @@
- #define SDAM_PBS_TRIG_CLR		0xE6
- 
- struct sdam_chip {
--	struct platform_device		*pdev;
- 	struct regmap			*regmap;
- 	struct nvmem_config		sdam_config;
- 	unsigned int			base;
-@@ -65,7 +64,7 @@ static int sdam_read(void *priv, unsigned int offset, void *val,
- 				size_t bytes)
- {
- 	struct sdam_chip *sdam = priv;
--	struct device *dev = &sdam->pdev->dev;
-+	struct device *dev = sdam->sdam_config.dev;
- 	int rc;
- 
- 	if (!sdam_is_valid(sdam, offset, bytes)) {
-@@ -86,7 +85,7 @@ static int sdam_write(void *priv, unsigned int offset, void *val,
- 				size_t bytes)
- {
- 	struct sdam_chip *sdam = priv;
--	struct device *dev = &sdam->pdev->dev;
-+	struct device *dev = sdam->sdam_config.dev;
- 	int rc;
- 
- 	if (!sdam_is_valid(sdam, offset, bytes)) {
+Changes since v1:
+- Dropped "phandle", as Rob pushed this to the dt-schema instead
+- Expanded the "TLMM" abbreviation
+
+ .../bindings/pinctrl/qcom,tlmm-common.yaml    | 85 +++++++++++++++++++
+ 1 file changed, 85 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,tlmm-common.yaml
+
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,tlmm-common.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,tlmm-common.yaml
+new file mode 100644
+index 000000000000..3b37cf102d41
+--- /dev/null
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,tlmm-common.yaml
+@@ -0,0 +1,85 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/pinctrl/qcom,tlmm-common.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Technologies, Inc. Top Level Mode Multiplexer (TLMM) definitions
++
++maintainers:
++  - Bjorn Andersson <bjorn.andersson@linaro.org>
++
++description:
++  This defines the common properties used to describe all Qualcomm Top Level
++  Mode Multiplexer bindings and pinconf/pinmux states for these.
++
++properties:
++  interrupts:
++    description:
++      Specifies the TLMM summary IRQ
++    maxItems: 1
++
++  interrupt-controller: true
++
++  '#interrupt-cells':
++    description:
++      Specifies the PIN numbers and Flags, as defined in defined in
++      include/dt-bindings/interrupt-controller/irq.h
++    const: 2
++
++  gpio-controller: true
++
++  '#gpio-cells':
++    description:
++      Specifying the pin number and flags, as defined in
++      include/dt-bindings/gpio/gpio.h
++    const: 2
++
++  gpio-ranges:
++    maxItems: 1
++
++  wakeup-parent:
++    description:
++      Specifying the interrupt-controller used to wake up the system when the
++      TLMM block has been powered down.
++    maxItems: 1
++
++  gpio-reserved-ranges:
++    description:
++      Pins can be reserved for trusted applications and thereby unaccessible
++      from the OS.  This property can be used to mark the pins which resources
++      should not be accessed by the OS. Please see the ../gpio/gpio.txt for more
++      information.
++
++required:
++  - interrupts
++  - interrupt-controller
++  - '#interrupt-cells'
++  - gpio-controller
++  - '#gpio-cells'
++  - gpio-ranges
++
++additionalProperties: true
++
++$defs:
++  qcom-tlmm-state:
++    allOf:
++      - $ref: pincfg-node.yaml#
++      - $ref: pinmux-node.yaml#
++
++    properties:
++      drive-strength:
++        enum: [2, 4, 6, 8, 10, 12, 14, 16]
++        default: 2
++        description:
++          Selects the drive strength for the specified pins, in mA.
++
++      bias-pull-down: true
++      bias-pull-up: true
++      bias-disable: true
++      input-enable: true
++      output-high: true
++      output-low: true
++
++    additionalProperties: true
++...
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.29.2
 
