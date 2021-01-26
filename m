@@ -2,154 +2,237 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 44F323049C8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 21:16:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E6B053049B3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 21:14:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732529AbhAZFY0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jan 2021 00:24:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53738 "EHLO
+        id S1732649AbhAZFYl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jan 2021 00:24:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732144AbhAZCFz (ORCPT
+        with ESMTP id S1730425AbhAZE2W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Jan 2021 21:05:55 -0500
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9D2DC0617AB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jan 2021 18:01:20 -0800 (PST)
-Received: by mail-pl1-x62b.google.com with SMTP id j21so4233581pls.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jan 2021 18:01:20 -0800 (PST)
+        Mon, 25 Jan 2021 23:28:22 -0500
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D0A1C06178B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jan 2021 20:26:50 -0800 (PST)
+Received: by mail-ot1-x334.google.com with SMTP id 63so15113184oty.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jan 2021 20:26:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=cuvqgCacX4Pb/J8emd8ASYQj+aaRXfkyo5/tJUTXC18=;
-        b=Q1nyIoOg9cA/NbhZwjGDZ1yfAR40idBgrI8GJtJYQD0Jy5i4RP5cMAnGe8d3sup0X9
-         TtInhbmtjpHx5/vQC6JZ25GsSIDxUgJkKpRCryJVAUzjjG39MnQ33CfJtSDKLYdgc6du
-         MQ9XR+oahIBNnUJIEzG9uyxkdZI3aRmVXxjRU=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Sxs612cpeWk15s9IRsZQmGfQWRxEVp1NyNx2VAk5PQg=;
+        b=pLxjBRSUifb+FQNiC5QIELRNYUDee8Q/998g8Xz+9uTbKm2/PeB+SMw5G3wj/othVN
+         0RmH6L36rIVwRog1w3xBrSZGaNVb9FDdyxIoj3lTKMhRt/3Pz2NVq0Y3TpHFAAttq5cf
+         Bxib/8d6lZZhIWBBmvLy2EF3LHzo6PLEq/2eYFC7OkbPQc+CKFb3ZeF8U+w2UDef1Je9
+         VZoGkAvWiXFLH8GwiFKkLyqdkAuSJp7MKufFB3P4cVaH/VMnpSg7HSZSjTqfrh7vbCix
+         aYpkgpgQg2iR/C42fH6ktfxQ2+MlUIWf1f4Aybic7pqDGZ1hsjtJ0ZHzStuAzfjFaJPN
+         VC+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=cuvqgCacX4Pb/J8emd8ASYQj+aaRXfkyo5/tJUTXC18=;
-        b=dj/Z7WNcY+T4Lg4lBs1bSM/pzfaYzI86tEbioY1aEcRvXxGMasY4gO6BdRGBXQL9vF
-         Ahfg6K3jDtkeQIztPghwlCLzkj/QIXqpdgeg26rCzBnyQIaDpo2QWu+IneF0nunuFS+l
-         zxodkaLwSp2l6wXE1OMYCMuqDkoXEfXjRUpGgH8LtbApz1zaAF2PqaNVteSJlwi8PgZu
-         VT9Bjzjk2oKGz5ewJHxhdupgIJBED9MNnboTIArmchIVJ/EVUM9XXH5azgrV7OcIPfJf
-         6K6/6aATRTk1rElur6lW1rvGdB6Qd9jtJElMZbJ8xS40+hTk5uK/KWwYixlVJ34Pt4TM
-         yptA==
-X-Gm-Message-State: AOAM531HIxNguYXnymkq8IUbF1eDgzV1VK/zb5awQPTqVgGFTNt3h2O9
-        +2vOG4KgYB+je4+rJKC921plSw==
-X-Google-Smtp-Source: ABdhPJw/S2YrtvvvxKvJJZka0jRnlXv6swbqbI0W46SZnmLlTUVuNP8AiVQFCtSIVh74m6nO4eXWsQ==
-X-Received: by 2002:a17:90a:f318:: with SMTP id ca24mr3337732pjb.30.1611626480086;
-        Mon, 25 Jan 2021 18:01:20 -0800 (PST)
-Received: from smtp.gmail.com ([2620:15c:202:201:1066:b437:97cd:2278])
-        by smtp.gmail.com with ESMTPSA id n2sm16975028pfu.42.2021.01.25.18.01.18
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Sxs612cpeWk15s9IRsZQmGfQWRxEVp1NyNx2VAk5PQg=;
+        b=YMjA10HSZM1DNwGeBYpaWq7nfZFRQuhLL+7glLkJOwHTNbXnnnRi//EZU7RprLQ8Zz
+         XlsYUvdZBtt7/9tlo+MWDbrO6+srkwnUHnJ6AzAeq50egIpmKPv5NbBksyB31ClRC6FY
+         C0WoqJPdgL7MGnR4WiPPJvakaf8EfWU2u4zIqxtTfI7iQZEz/u59FMngN6PRKsR+1CF8
+         Xu9kneEGOsK1298DJ4NqFnPNgguH3mc24jDIOnr7Enj+noEX0b0DEcGtRpYz0m0IrNSO
+         y9FooqUBWGW2hFVf49DF8W57pWrVz+IBTLie0bzzLO5aN+wR0hZukqN3nvH3SeBkfmKg
+         hOGw==
+X-Gm-Message-State: AOAM530cwoUpKhdQWF6hTuoWuv0X7JY+d9OMuXEwkGkc8ZhL4gWfhTsW
+        r2X2bxG1qbV6bjd5mIUtycOfmKj6f2g5Yw==
+X-Google-Smtp-Source: ABdhPJwIgqPvhOuEMX2vL3suWxRX/QP8lNokACHAx9Lh9I02IwyKl4hFXECw0s1y7YEUUVS0/hgCPA==
+X-Received: by 2002:a9d:3985:: with SMTP id y5mr2700391otb.202.1611635209827;
+        Mon, 25 Jan 2021 20:26:49 -0800 (PST)
+Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id w129sm3930638oig.23.2021.01.25.20.26.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Jan 2021 18:01:19 -0800 (PST)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        Krishna Manikandan <mkrishn@codeaurora.org>
-Subject: [PATCH] drm/msm/kms: Make a lock_class_key for each crtc mutex
-Date:   Mon, 25 Jan 2021 18:01:13 -0800
-Message-Id: <20210126020117.2753615-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.30.0.280.ga3ce27912f-goog
+        Mon, 25 Jan 2021 20:26:49 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 2/3] dt-bindings: pinctrl: qcom: Add sc8180x binding
+Date:   Mon, 25 Jan 2021 20:26:49 -0800
+Message-Id: <20210126042650.1725176-2-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.29.2
+In-Reply-To: <20210126042650.1725176-1-bjorn.andersson@linaro.org>
+References: <20210126042650.1725176-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Lockdep complains about an AA deadlock when rebooting the device.
+Add binding for the TLMM block in the Qualcomm SC8180X platform.
 
-============================================
-WARNING: possible recursive locking detected
-5.4.91 #1 Not tainted
---------------------------------------------
-reboot/5213 is trying to acquire lock:
-ffffff80d13391b0 (&kms->commit_lock[i]){+.+.}, at: lock_crtcs+0x60/0xa4
-
-but task is already holding lock:
-ffffff80d1339110 (&kms->commit_lock[i]){+.+.}, at: lock_crtcs+0x60/0xa4
-
-other info that might help us debug this:
-Possible unsafe locking scenario:
-
-CPU0
-----
-lock(&kms->commit_lock[i]);
-lock(&kms->commit_lock[i]);
-
-*** DEADLOCK ***
-
-May be due to missing lock nesting notation
-
-6 locks held by reboot/5213:
-__arm64_sys_reboot+0x148/0x2a0
-device_shutdown+0x10c/0x2c4
-drm_atomic_helper_shutdown+0x48/0xfc
-modeset_lock+0x120/0x24c
-lock_crtcs+0x60/0xa4
-
-stack backtrace:
-CPU: 4 PID: 5213 Comm: reboot Not tainted 5.4.91 #1
-Hardware name: Google Pompom (rev1) with LTE (DT)
-Call trace:
-dump_backtrace+0x0/0x1dc
-show_stack+0x24/0x30
-dump_stack+0xfc/0x1a8
-__lock_acquire+0xcd0/0x22b8
-lock_acquire+0x1ec/0x240
-__mutex_lock_common+0xe0/0xc84
-mutex_lock_nested+0x48/0x58
-lock_crtcs+0x60/0xa4
-msm_atomic_commit_tail+0x348/0x570
-commit_tail+0xdc/0x178
-drm_atomic_helper_commit+0x160/0x168
-drm_atomic_commit+0x68/0x80
-
-This is because lockdep thinks all the locks taken in lock_crtcs() are
-the same lock, when they actually aren't. That's because we call
-mutex_init() in msm_kms_init() and that assigns on static key for every
-lock initialized in this loop. Let's allocate a dynamic number of
-lock_class_keys and assign them to each lock so that lockdep can figure
-out an AA deadlock isn't possible here.
-
-Fixes: b3d91800d9ac ("drm/msm: Fix race condition in msm driver with async layer updates")
-Cc: Krishna Manikandan <mkrishn@codeaurora.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- drivers/gpu/drm/msm/msm_kms.h | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ .../pinctrl/qcom,sc8180x-pinctrl.yaml         | 152 ++++++++++++++++++
+ 1 file changed, 152 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sc8180x-pinctrl.yaml
 
-diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
-index d8151a89e163..4735251a394d 100644
---- a/drivers/gpu/drm/msm/msm_kms.h
-+++ b/drivers/gpu/drm/msm/msm_kms.h
-@@ -157,6 +157,7 @@ struct msm_kms {
- 	 * from the crtc's pending_timer close to end of the frame:
- 	 */
- 	struct mutex commit_lock[MAX_CRTCS];
-+	struct lock_class_key commit_lock_keys[MAX_CRTCS];
- 	unsigned pending_crtc_mask;
- 	struct msm_pending_timer pending_timers[MAX_CRTCS];
- };
-@@ -166,8 +167,11 @@ static inline int msm_kms_init(struct msm_kms *kms,
- {
- 	unsigned i, ret;
- 
--	for (i = 0; i < ARRAY_SIZE(kms->commit_lock); i++)
--		mutex_init(&kms->commit_lock[i]);
-+	for (i = 0; i < ARRAY_SIZE(kms->commit_lock); i++) {
-+		lockdep_register_key(&kms->commit_lock_keys[i]);
-+		__mutex_init(&kms->commit_lock[i], "&kms->commit_lock[i]",
-+			     &kms->commit_lock_keys[i]);
-+	}
- 
- 	kms->funcs = funcs;
- 
-
-base-commit: 19c329f6808995b142b3966301f217c831e7cf31
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sc8180x-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sc8180x-pinctrl.yaml
+new file mode 100644
+index 000000000000..a82dab898395
+--- /dev/null
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,sc8180x-pinctrl.yaml
+@@ -0,0 +1,152 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/pinctrl/qcom,sc8180x-pinctrl.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Technologies, Inc. SC8180X TLMM block
++
++maintainers:
++  - Bjorn Andersson <bjorn.andersson@linaro.org>
++
++description: |
++  This binding describes the Top Level Mode Multiplexer block found in the
++  SC8180X platform.
++
++allOf:
++  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
++
++properties:
++  compatible:
++    const: qcom,sc8180x-tlmm
++
++  reg:
++    maxItems: 3
++
++  reg-names:
++    items:
++      - const: "west"
++      - const: "east"
++      - const: "south"
++
++  interrupts: true
++  interrupt-controller: true
++  '#interrupt-cells': true
++  gpio-controller: true
++  gpio-reserved-ranges: true
++  '#gpio-cells': true
++  gpio-ranges: true
++  wakeup-parent: true
++
++required:
++  - compatible
++  - reg
++  - reg-names
++
++additionalProperties: false
++
++patternProperties:
++  '-state$':
++    oneOf:
++      - $ref: "#/$defs/qcom-sc8180x-tlmm-state"
++      - patternProperties:
++          ".*":
++            $ref: "#/$defs/qcom-sc8180x-tlmm-state"
++
++'$defs':
++  qcom-sc8180x-tlmm-state:
++    type: object
++    description:
++      Pinctrl node's client devices use subnodes for desired pin configuration.
++      Client device subnodes use below standard properties.
++    $ref: "qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state"
++
++    properties:
++      pins:
++        description:
++          List of gpio pins affected by the properties specified in this
++          subnode.
++        items:
++          oneOf:
++            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-8][0-9])$"
++            - enum: [ sdc2_clk, sdc2_cmd, sdc2_data, ufs_reset ]
++        minItems: 1
++        maxItems: 16
++
++      function:
++        description:
++          Specify the alternative function to be configured for the specified
++          pins.
++
++        enum: [ adsp_ext, agera_pll, aoss_cti, atest_char, atest_tsens,
++                atest_tsens2, atest_usb0, atest_usb1, atest_usb2, atest_usb3,
++                atest_usb4, audio_ref, btfm_slimbus, cam_mclk, cci_async,
++                cci_i2c, cci_timer0, cci_timer1, cci_timer2, cci_timer3,
++                cci_timer4, cci_timer5, cci_timer6, cci_timer7, cci_timer8,
++                cci_timer9, cri_trng, dbg_out, ddr_bist, ddr_pxi, debug_hot,
++                dp_hot, edp_hot, edp_lcd, emac_phy, emac_pps, gcc_gp1, gcc_gp2,
++                gcc_gp3, gcc_gp4, gcc_gp5, gpio, gps, grfc, hs1_mi2s, hs2_mi2s,
++                hs3_mi2s, jitter_bist, lpass_slimbus, m_voc, mdp_vsync,
++                mdp_vsync0, mdp_vsync1, mdp_vsync2, mdp_vsync3, mdp_vsync4,
++                mdp_vsync5, mss_lte, nav_pps, pa_indicator, pci_e0, pci_e1,
++                pci_e2, pci_e3, phase_flag, pll_bist, pll_bypassnl, pll_reset,
++                pri_mi2s, pri_mi2s_ws, prng_rosc, qdss_cti, qdss_gpio, qlink,
++                qspi0, qspi0_clk, qspi0_cs, qspi1, qspi1_clk, qspi1_cs,
++                qua_mi2s, qup0, qup1, qup2, qup3, qup4, qup5, qup6, qup7, qup8,
++                qup9, qup10, qup11, qup12, qup13, qup14, qup15, qup16, qup17,
++                qup18, qup19, qup_l4, qup_l5, qup_l6, rgmii, sd_write, sdc4,
++                sdc4_clk, sdc4_cmd, sec_mi2s, sp_cmu, spkr_i2s, ter_mi2s, tgu,
++                tsense_pwm1, tsense_pwm2, tsif1, tsif2, uim1, uim2, uim_batt,
++                usb0_phy, usb1_phy, usb2phy_ac, vfr_1, vsense_trigger,
++                wlan1_adc, wlan2_adc, wmss_reset ]
++
++      bias-disable: true
++      bias-pull-down: true
++      bias-pull-up: true
++      drive-strength: true
++      input-enable: true
++      output-high: true
++      output-low: true
++
++    required:
++      - pins
++      - function
++
++    additionalProperties: false
++
++examples:
++  - |
++        #include <dt-bindings/interrupt-controller/arm-gic.h>
++        pinctrl@3100000 {
++                compatible = "qcom,sc8180x-tlmm";
++                reg = <0x03100000 0x300000>,
++                      <0x03500000 0x700000>,
++                      <0x03d00000 0x300000>;
++                reg-names = "west", "east", "south";
++                interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
++                gpio-controller;
++                #gpio-cells = <2>;
++                interrupt-controller;
++                #interrupt-cells = <2>;
++                gpio-ranges = <&tlmm 0 0 190>;
++
++                gpio-wo-subnode-state {
++                        pins = "gpio1";
++                        function = "gpio";
++                };
++
++                uart-w-subnodes-state {
++                        rx {
++                                pins = "gpio4";
++                                function = "qup6";
++                                bias-pull-up;
++                        };
++
++                        tx {
++                                pins = "gpio5";
++                                function = "qup6";
++                                bias-disable;
++                        };
++                };
++        };
++...
 -- 
-https://chromeos.dev
+2.29.2
 
