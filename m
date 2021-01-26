@@ -2,122 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E5389303F99
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 15:05:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 55050303F9C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 15:05:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405682AbhAZODk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jan 2021 09:03:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39458 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405648AbhAZODI (ORCPT
+        id S2405556AbhAZOEs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jan 2021 09:04:48 -0500
+Received: from mail-40131.protonmail.ch ([185.70.40.131]:23709 "EHLO
+        mail-40131.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405699AbhAZOEa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jan 2021 09:03:08 -0500
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19BF6C0611C2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 06:02:20 -0800 (PST)
-Received: by mail-oi1-x22f.google.com with SMTP id i25so7127587oie.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 06:02:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=iCgywgUomaAnl88OTPiAxB3oreK05N2B2YVxS1nEzMQ=;
-        b=Wk6YedfYeIdh3B/aXqkiWd6jXJC/L9Xs3uQZxUwft+3BQ/Peu2TtUYn/LXjc3bmDOI
-         eQcZRP7RseyuMJItspflzmBA6VeOCkUF1Q+3HpVlWu4sMQLZk9zh3qShDXc67Z9ohYdD
-         146HJSTmJhzeeSVorlgOGJ84lTurhdCK+koPVctLPOysU3HzWAL6H+hYO8H+iS3cQ/wN
-         3hriQJkXOT2X6hv6fC5DUj9sfTGWcnU9HEMU7plJuNsOGFtPmkwxWa/qR9oxzfzlaskd
-         OPb4GIERodd0JzJ9Amq9lYVV4WychNCeruHndm8LtHuciHoNnYEFdrKYBaIIAxL0ulGs
-         e6hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=iCgywgUomaAnl88OTPiAxB3oreK05N2B2YVxS1nEzMQ=;
-        b=IQA8RjgZq7P9hMt768J3csqL5mCk8xj3TeODQJIIMrZnuXQ93SKKZQlFaKGVbH54kZ
-         GPq3hvKaPf0QegMz8VvYYcLlnNlH48Un1FxLxJJRcgnrB8AbUfUtbXEZadEOSDt6tpkb
-         9QGEHxFmKAMTUrrKiPVGg8q0kYUr/VMPXHo4MTSDXeVonP7cEMj2DddnLT61Hrv0x6io
-         INMg4a8QzhIzWNY0gyLxW/XTd5XCBes62Omr1swweXUgTy9mJ3AfoDcCPUAlbJI+KyWf
-         hUqy1tqlRUnvznf5K4QnuAVKdosawvXRvX4sD3wIMBuwUw/bIJ2uGQOXIm7UrrpYphRJ
-         Ga9Q==
-X-Gm-Message-State: AOAM533Gox5MAVMqZR0FIrfr2PNHXWQwHynBFLtCzNUNCD1Oyw+E7/Vz
-        uE92zUKCSLzug1sq/OHD+f2wViYyiwqZ7A==
-X-Google-Smtp-Source: ABdhPJzDn0bV0+wpWfja0pZ8iNnsNPS2Q3XwgFVEL9ZYwqbfqGSwQGCMQiH9Kc8zeSchbksBkWNR+A==
-X-Received: by 2002:aca:4e4f:: with SMTP id c76mr3280084oib.167.1611669739503;
-        Tue, 26 Jan 2021 06:02:19 -0800 (PST)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id a188sm1902234oif.11.2021.01.26.06.02.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jan 2021 06:02:18 -0800 (PST)
-Date:   Tue, 26 Jan 2021 08:02:17 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Lee Jones <lee.jones@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Subject: Re: [PATCH 16/21] clk: qcom: mmcc-msm8974: Remove unused static
- const tables 'mmcc_xo_mmpll0_1_2_gpll0{map}'
-Message-ID: <20210126140217.GE1241218@yoga>
-References: <20210126124540.3320214-1-lee.jones@linaro.org>
- <20210126124540.3320214-17-lee.jones@linaro.org>
+        Tue, 26 Jan 2021 09:04:30 -0500
+Date:   Tue, 26 Jan 2021 14:03:33 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail; t=1611669821;
+        bh=gQnuGXgHXwf08KWKFfxhg7QR+vbxSAEHzfJQokrIxus=;
+        h=Date:To:From:Cc:Reply-To:Subject:From;
+        b=DzSp4TE3Rrx3BRNzUxidjhhMU6UQnudt3fofH2ivlrlVD0+yWfX/NR+x/D/DV4otv
+         3pKV4oJX7mH3n87CaNcYkXdBgvEPfOWtkZ9Ya8lSuHl3+junak7Ak4DJEgNCgsc6N4
+         Ycop2mNEdyf6gbp9JZwvUUX+x5ftkHIQFOlbH3lY=
+To:     Pavel Machek <pavel@ucw.cz>, Dan Murphy <dmurphy@ti.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+From:   =?utf-8?Q?N=C3=ADcolas_F=2E_R=2E_A=2E_Prado?= 
+        <nfraprado@protonmail.com>
+Cc:     linux-leds@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Brian Masney <masneyb@onstation.org>,
+        Luca Weiss <luca@z3ntu.xyz>,
+        Russell King <linux@armlinux.org.uk>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        lkcamp@lists.libreplanetbr.org, andrealmeid@collabora.com
+Reply-To: =?utf-8?Q?N=C3=ADcolas_F=2E_R=2E_A=2E_Prado?= 
+          <nfraprado@protonmail.com>
+Subject: [PATCH v2 0/4] Add support for QCOM SPMI Flash LEDs
+Message-ID: <20210126140240.1517044-1-nfraprado@protonmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210126124540.3320214-17-lee.jones@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
+        autolearn=disabled version=3.4.4
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
+        mailout.protonmail.ch
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 26 Jan 06:45 CST 2021, Lee Jones wrote:
+Hi,
 
-> Fixes the following W=1 kernel build warning(s):
-> 
->  drivers/clk/qcom/mmcc-msm8974.c:85:27: warning: ‘mmcc_xo_mmpll0_1_2_gpll0’ defined but not used [-Wunused-const-variable=]
->  drivers/clk/qcom/mmcc-msm8974.c:77:32: warning: ‘mmcc_xo_mmpll0_1_2_gpll0_map’ defined but not used [-Wunused-const-variable=]
-> 
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Michael Turquette <mturquette@baylibre.com>
-> Cc: Stephen Boyd <sboyd@kernel.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: linux-clk@vger.kernel.org
+this patch series adds support for Qualcomm's SPMI Flash LEDs present in th=
+e
+PM8941 PMIC. It is used as part of MSM8974 based devices, like the Nexus 5
+(hammerhead), as a camera flash or as a lantern when in torch mode.
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Patch 1 adds the dt-bindings for the driver, together with a header for the
+values of some properties.
 
-> Signed-off-by: Lee Jones <lee.jones@linaro.org>
-> ---
->  drivers/clk/qcom/mmcc-msm8974.c | 16 ----------------
->  1 file changed, 16 deletions(-)
-> 
-> diff --git a/drivers/clk/qcom/mmcc-msm8974.c b/drivers/clk/qcom/mmcc-msm8974.c
-> index 015426262d080..a1552b6771bc6 100644
-> --- a/drivers/clk/qcom/mmcc-msm8974.c
-> +++ b/drivers/clk/qcom/mmcc-msm8974.c
-> @@ -74,22 +74,6 @@ static const char * const mmcc_xo_mmpll0_dsi_hdmi_gpll0[] = {
->  	"dsi1pll",
->  };
->  
-> -static const struct parent_map mmcc_xo_mmpll0_1_2_gpll0_map[] = {
-> -	{ P_XO, 0 },
-> -	{ P_MMPLL0, 1 },
-> -	{ P_MMPLL1, 2 },
-> -	{ P_GPLL0, 5 },
-> -	{ P_MMPLL2, 3 }
-> -};
-> -
-> -static const char * const mmcc_xo_mmpll0_1_2_gpll0[] = {
-> -	"xo",
-> -	"mmpll0_vote",
-> -	"mmpll1_vote",
-> -	"mmss_gpll0_vote",
-> -	"mmpll2",
-> -};
-> -
->  static const struct parent_map mmcc_xo_mmpll0_1_3_gpll0_map[] = {
->  	{ P_XO, 0 },
->  	{ P_MMPLL0, 1 },
-> -- 
-> 2.25.1
-> 
+Patch 2 adds the driver, which was ported from downstream [1], and is now u=
+sing
+the flash LED class framework.
+
+Patch 3 enables the driver as a module in qcom_defconfig, and also enables
+CONFIG_LEDS_CLASS_FLASH since it is required by the driver.
+
+Patch 4 adds the device tree nodes configuring the driver in the pm8941 dts=
+i.
+
+After the feedback I received from the v1 RFC patch (thank you Jacek and
+Bjorn!), I implemented the flash LED class framework, renamed the driver to
+qcom-spmi-flash and added the dt-bindings. I also did a whole lot of cleanu=
+p.
+
+Some caveats:
+- I still didn't implement get_strobe() and get_fault() for the flash LEDs,
+  because I'm still not sure how to do it. get_strobe() in particular I'm n=
+ot
+  even sure if is possible, since after the flash turns off automatically a=
+fter
+  the timeout, I don't see any change in the SPMI registers. So I'm unsure =
+how
+  one would get the current strobe state.
+- I have yet to add the V4L2 flash wrapper for the flash LEDs. I still didn=
+'t do
+  it because I wasn't sure if it was needed, so wanted to double check. But
+  being a camera flash it seems that would be useful. Also, it would be gre=
+at if
+  someone could point me how I would go about testing the flash usage throu=
+gh
+  V4L2.
+
+Another thing worth mentioning: for v1 the dt nodes were added in hammerhea=
+d's
+dts (just to simplify testing), but I have now moved them to pm8941's dtsi,
+since it was like that in downstream. So if folks using devices based on
+PM8941/MSM8974 other than the Nexus 5 could test it, that would be great, s=
+ince
+I have only tested on the Nexus 5.
+
+v1 RFC: https://lore.kernel.org/lkml/20201106165737.1029106-1-nfraprado@pro=
+tonmail.com/
+
+[1] https://github.com/AICP/kernel_lge_hammerhead/blob/n7.1/drivers/leds/le=
+ds-qpnp.c
+
+N=C3=ADcolas F. R. A. Prado (4):
+  dt-bindings: leds: Add binding for qcom-spmi-flash
+  leds: Add driver for QCOM SPMI Flash LEDs
+  ARM: qcom_defconfig: Enable QCOM SPMI Flash LEDs
+  ARM: dts: qcom: pm8941: Add nodes for QCOM SPMI Flash LEDs
+
+ .../bindings/leds/leds-qcom-spmi-flash.yaml   |   94 ++
+ arch/arm/boot/dts/qcom-pm8941.dtsi            |   38 +
+ arch/arm/configs/qcom_defconfig               |    2 +
+ drivers/leds/Kconfig                          |    8 +
+ drivers/leds/Makefile                         |    1 +
+ drivers/leds/leds-qcom-spmi-flash.c           | 1153 +++++++++++++++++
+ .../dt-bindings/leds/leds-qcom-spmi-flash.h   |   15 +
+ 7 files changed, 1311 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/leds/leds-qcom-spmi-f=
+lash.yaml
+ create mode 100644 drivers/leds/leds-qcom-spmi-flash.c
+ create mode 100644 include/dt-bindings/leds/leds-qcom-spmi-flash.h
+
+--=20
+2.30.0
+
+
