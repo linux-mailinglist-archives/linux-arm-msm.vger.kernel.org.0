@@ -2,45 +2,45 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 73BEF3042EF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 16:50:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 409063042EB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 16:49:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392522AbhAZPt1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jan 2021 10:49:27 -0500
-Received: from a1.mail.mailgun.net ([198.61.254.60]:54489 "EHLO
+        id S2391581AbhAZPtY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jan 2021 10:49:24 -0500
+Received: from a1.mail.mailgun.net ([198.61.254.60]:10629 "EHLO
         a1.mail.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392448AbhAZPsy (ORCPT
+        with ESMTP id S2389697AbhAZPsv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jan 2021 10:48:54 -0500
+        Tue, 26 Jan 2021 10:48:51 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1611676114; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=AIGp3sOSpcvWiZSeRL/t8BvDsbq1gMaRV6JTPMxNUP4=; b=HnoQy3TBL56iSQmM9CDJOZooOWkZ6LR9o9xIzP4SM0pyFMdnRYtr8+CAFnlglRfnzUwjJEyD
- DaNioeeQ8KVOwYCqEv6l1OeC9TkFdHuvqqYECWMQ9lahW1ctQVDUnKTNGjYnpz5obeq0yoHB
- WP7hwZDHiujY+qFigk+s3o1HCEs=
+ s=smtp; t=1611676106; h=Content-Transfer-Encoding: MIME-Version:
+ References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=5nV61r1T9dCQDmvGdYN4sVbYg/QzQGJRllUOuaqUdL0=; b=ZdN0haVZtt+ABIMdMMOZ7NFh2mJA3QghqZo23FS9A4OK5zGtnGUOu5Dy0P9G2G98ZUQhOkns
+ f85EtdVFiPcXB+hBQkXkV8jqX918hkozj/hn9wr99zyBob6jl35Htft8qqD8tNlm/VV1Tkrq
+ pmXYDOJzRvl3io/fuIxLcrMpmaw=
 X-Mailgun-Sending-Ip: 198.61.254.60
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 601039ab72b7c29fd5db02cf (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 26 Jan 2021 15:47:55
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 601039b0f07bb817adcd89b9 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 26 Jan 2021 15:48:00
  GMT
 Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5DBBAC43467; Tue, 26 Jan 2021 15:47:55 +0000 (UTC)
+        id D7E4FC43465; Tue, 26 Jan 2021 15:48:00 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 49718C433CA;
-        Tue, 26 Jan 2021 15:47:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 49718C433CA
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BB5C1C433ED;
+        Tue, 26 Jan 2021 15:47:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BB5C1C433ED
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
 From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
@@ -54,39 +54,38 @@ Cc:     Guenter Roeck <linux@roeck-us.net>,
         Douglas Anderson <dianders@chromium.org>,
         Stephen Boyd <swboyd@chromium.org>,
         Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCH 0/4] arm64: dts: qcom: Add watchdog bark irq for  SC7180, SDM845, SM8150, SM8250
-Date:   Tue, 26 Jan 2021 21:17:28 +0530
-Message-Id: <cover.1611466260.git.saiprakash.ranjan@codeaurora.org>
+Subject: [PATCH 1/4] arm64: dts: qcom: sc7180: Add watchdog bark interrupt
+Date:   Tue, 26 Jan 2021 21:17:29 +0530
+Message-Id: <535b368f6c22bab7078842d803a73e695f28a751.1611466260.git.saiprakash.ranjan@codeaurora.org>
 X-Mailer: git-send-email 2.29.0
+In-Reply-To: <cover.1611466260.git.saiprakash.ranjan@codeaurora.org>
+References: <cover.1611466260.git.saiprakash.ranjan@codeaurora.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series adds pre-timeout notification support via bark
-interrupt for SC7180, SDM845, SM8150, SM8250 SoCs.
+Specify bark interrupt for APSS watchdog to support pre-timeout
+notification on SC7180 SoC.
 
-Note: This has a functional dependency on [1] without which
-the watchdog functionality would be broken.
-
-[1] https://lore.kernel.org/patchwork/patch/1371266/
-
-Sai Prakash Ranjan (4):
-  arm64: dts: qcom: sc7180: Add watchdog bark interrupt
-  arm64: dts: qcom: sdm845: Add watchdog bark interrupt
-  arm64: dts: qcom: sm8150: Add watchdog bark interrupt
-  arm64: dts: qcom: sm8250: Add watchdog bark interrupt
-
+Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+---
  arch/arm64/boot/dts/qcom/sc7180.dtsi | 1 +
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 1 +
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 1 +
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 1 +
- 4 files changed, 4 insertions(+)
+ 1 file changed, 1 insertion(+)
 
-
-base-commit: 76bb4dc36d0e6bd13c70536a77240f93a0260f7e
-prerequisite-patch-id: 46f598da3a2dbddfefa72da5636438142a00babd
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 2bd06beafecc..04445cd3cfd9 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -3349,6 +3349,7 @@ watchdog@17c10000 {
+ 			compatible = "qcom,apss-wdt-sc7180", "qcom,kpss-wdt";
+ 			reg = <0 0x17c10000 0 0x1000>;
+ 			clocks = <&sleep_clk>;
++			interrupts = <GIC_SPI 0 IRQ_TYPE_LEVEL_HIGH>;
+ 		};
+ 
+ 		timer@17c20000{
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
