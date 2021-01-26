@@ -2,140 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E7D7303C14
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 12:51:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AD5E4303D86
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 13:46:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405330AbhAZLti (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jan 2021 06:49:38 -0500
-Received: from foss.arm.com ([217.140.110.172]:35260 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2392424AbhAZLlt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jan 2021 06:41:49 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6BE5F101E;
-        Tue, 26 Jan 2021 03:41:00 -0800 (PST)
-Received: from [10.57.43.46] (unknown [10.57.43.46])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 231C13F66B;
-        Tue, 26 Jan 2021 03:40:59 -0800 (PST)
-Subject: Re: [PATCH v2 1/3] iommu/arm-smmu: Add support for driver IOMMU fault
- handlers
-To:     Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
-        iommu@lists.linux-foundation.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20201124191600.2051751-1-jcrouse@codeaurora.org>
- <20201124191600.2051751-2-jcrouse@codeaurora.org>
- <20210122124125.GA24102@willie-the-truck>
- <8ba2f53d-abbf-af7f-07f6-48ad7f383a37@arm.com>
- <20210125215107.GB16374@jcrouse1-lnx.qualcomm.com>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <dc035204-ade7-03ec-0b82-2ecedc856d42@arm.com>
-Date:   Tue, 26 Jan 2021 11:40:57 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
- Thunderbird/78.6.1
+        id S2391769AbhAZMqB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jan 2021 07:46:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42946 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391782AbhAZJ7W (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 26 Jan 2021 04:59:22 -0500
+Received: from mail-ua1-x92d.google.com (mail-ua1-x92d.google.com [IPv6:2607:f8b0:4864:20::92d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D77DFC061786
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 01:58:40 -0800 (PST)
+Received: by mail-ua1-x92d.google.com with SMTP id i3so1933075uai.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 01:58:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2s091ZCbXkY5kPsLe1N1zqI9t9bafuafJrjbGry9Cmw=;
+        b=me7uH48huC1WigZiogNpzBPm61ucNewUzZWg0f4fVWUAqnmeg73oSGMw4cvVl2YpMt
+         m72B812Vm8Ep+efiP0kM/1TqNPHPscNieVwDInZRX0ifjLlx7FYHf0cjb/OWBrgf+ds3
+         7Cm4pWLLKay1jkb2Am2XSCfPDKoCsGwe5kZUCEOC7qxwgW3sIxWZc7vU+iaeWgbxrVDa
+         Xq70GMRtoA/80D1FIAh2KEknoBJOHZrlCLUt4lij3HI0+7RRLYvLyiQPJLbr2jX9NL2E
+         BWfnkt8ZX7GJ10s1XK+eQD4cJd9K9b1tVPCy+zQbvLokDBSOJt2nc+bg6qNEbkTLVDx4
+         9Qrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2s091ZCbXkY5kPsLe1N1zqI9t9bafuafJrjbGry9Cmw=;
+        b=oglNksE23X3UwBLJmctguRVg03rtqKLdudP14OTdYOJGJWFo2mud1bGPVjq8pvw+M4
+         Fpb5whjxKOZfIrek4GruMnrYZ/enoHu6oXfE1LNdJG4xSd431CXfkx0DTq5YRxQSMESk
+         05oqQOW4aU59C2Ke5jrR8scARtA28nkB3QuXCQA2PLsn8U8TDgTm1UideGTHJvPQCol+
+         yt9Uyjg+cRz27JQz1WfQ1xjFpwb0AZ5dIiWY0EBVYbiYmt3KZjjKVnwMl9RbjLDqTpd+
+         MIPlXuB1uGkAS3fpiEkGLqAfwSFwELzyJ/e/HKQg3fHCsjQ2UgNgtmOIL98cQZem9/PK
+         y0ag==
+X-Gm-Message-State: AOAM532qy6BhuBbEGD2lS2B7NqOxsntmFOd1GHTKD2oL0sl1+ZCjGMZp
+        ar6lS2HG2dfMjyz38+QX6LFJnm3FcKq3TH1W8hizKA==
+X-Google-Smtp-Source: ABdhPJzoOxmNVPAsa+mo+p6s77bXk9Znkd/2lfcQFCTupY7epko0u8YpeILwE6V0/D1n9mDNs1+v+nrLYpCm/DmzQUA=
+X-Received: by 2002:ab0:338c:: with SMTP id y12mr3373917uap.19.1611655120019;
+ Tue, 26 Jan 2021 01:58:40 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20210125215107.GB16374@jcrouse1-lnx.qualcomm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+References: <20210126001456.382989-1-ebiggers@kernel.org>
+In-Reply-To: <20210126001456.382989-1-ebiggers@kernel.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 26 Jan 2021 10:58:03 +0100
+Message-ID: <CAPDyKFqLVtiYkjeQmuYOf8K8k=oQSZ18928PPHvJDiUtTw2F-g@mail.gmail.com>
+Subject: Re: [PATCH RESEND v6 0/9] eMMC inline encryption support
+To:     Eric Biggers <ebiggers@kernel.org>
+Cc:     "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>, linux-fscrypt@vger.kernel.org,
+        Satya Tangirala <satyat@google.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Neeraj Soni <neersoni@codeaurora.org>,
+        Barani Muthukumaran <bmuthuku@codeaurora.org>,
+        Peng Zhou <peng.zhou@mediatek.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Konrad Dybcio <konradybcio@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-01-25 21:51, Jordan Crouse wrote:
-> On Fri, Jan 22, 2021 at 12:53:17PM +0000, Robin Murphy wrote:
->> On 2021-01-22 12:41, Will Deacon wrote:
->>> On Tue, Nov 24, 2020 at 12:15:58PM -0700, Jordan Crouse wrote:
->>>> Call report_iommu_fault() to allow upper-level drivers to register their
->>>> own fault handlers.
->>>>
->>>> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
->>>> ---
->>>>
->>>>   drivers/iommu/arm/arm-smmu/arm-smmu.c | 16 +++++++++++++---
->>>>   1 file changed, 13 insertions(+), 3 deletions(-)
->>>>
->>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
->>>> index 0f28a8614da3..7fd18bbda8f5 100644
->>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
->>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
->>>> @@ -427,6 +427,7 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
->>>>   	struct arm_smmu_domain *smmu_domain = to_smmu_domain(domain);
->>>>   	struct arm_smmu_device *smmu = smmu_domain->smmu;
->>>>   	int idx = smmu_domain->cfg.cbndx;
->>>> +	int ret;
->>>>   	fsr = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSR);
->>>>   	if (!(fsr & ARM_SMMU_FSR_FAULT))
->>>> @@ -436,11 +437,20 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
->>>>   	iova = arm_smmu_cb_readq(smmu, idx, ARM_SMMU_CB_FAR);
->>>>   	cbfrsynra = arm_smmu_gr1_read(smmu, ARM_SMMU_GR1_CBFRSYNRA(idx));
->>>> -	dev_err_ratelimited(smmu->dev,
->>>> -	"Unhandled context fault: fsr=0x%x, iova=0x%08lx, fsynr=0x%x, cbfrsynra=0x%x, cb=%d\n",
->>>> +	ret = report_iommu_fault(domain, dev, iova,
->>>> +		fsynr & ARM_SMMU_FSYNR0_WNR ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ);
->>>> +
->>>> +	if (ret == -ENOSYS)
->>>> +		dev_err_ratelimited(smmu->dev,
->>>> +		"Unhandled context fault: fsr=0x%x, iova=0x%08lx, fsynr=0x%x, cbfrsynra=0x%x, cb=%d\n",
->>>>   			    fsr, iova, fsynr, cbfrsynra, idx);
->>>> -	arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, fsr);
->>>> +	/*
->>>> +	 * If the iommu fault returns an error (except -ENOSYS) then assume that
->>>> +	 * they will handle resuming on their own
->>>> +	 */
->>>> +	if (!ret || ret == -ENOSYS)
->>>> +		arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, fsr);
->>>
->>> Hmm, I don't grok this part. If the fault handler returned an error and
->>> we don't clear the FSR, won't we just re-take the irq immediately?
->>
->> If we don't touch the FSR at all, yes. Even if we clear the fault indicator
->> bits, the interrupt *might* remain asserted until a stalled transaction is
->> actually resolved - that's that lovely IMP-DEF corner.
->>
->> Robin.
->>
-> 
-> This is for stall-on-fault. The idea is that if the developer chooses to do so
-> we would stall the GPU after a fault long enough to take a picture of it with
-> devcoredump and then release the FSR. Since we can't take the devcoredump from
-> the interrupt handler we schedule it in a worker and then return an error
-> to let the main handler know that we'll come back around clear the FSR later
-> when we are done.
+On Tue, 26 Jan 2021 at 01:15, Eric Biggers <ebiggers@kernel.org> wrote:
+>
+> [Resending because most of the patches didn't make it to the lists for
+> some reason...]
+>
+> Hello,
+>
+> This patchset adds support for eMMC inline encryption, as specified by
+> the upcoming version of the eMMC specification and as already
+> implemented and used on many devices.  Building on that, it then adds
+> Qualcomm ICE support and wires it up for the Snapdragon 630 SoC.
+>
+> Inline encryption hardware improves the performance of storage
+> encryption and reduces power usage.  See
+> Documentation/block/inline-encryption.rst for more information about
+> inline encryption and the blk-crypto framework (upstreamed in v5.8)
+> which supports it.  Most mobile devices already use UFS or eMMC inline
+> encryption hardware; UFS support was already upstreamed in v5.9.
+>
+> Patches 1-4 add support for the standard eMMC inline encryption.
+>
+> However, as with UFS, host controller-specific patches are needed on top
+> of the standard support.  Therefore, patches 5-9 add Qualcomm ICE
+> (Inline Crypto Engine) support and wire it up on the Snapdragon 630 SoC.
+>
+> To test this I took advantage of the recently upstreamed support for the
+> Snapdragon 630 SoC, plus work-in-progress patches from the SoMainline
+> project (https://github.com/SoMainline/linux/tree/konrad/v5.10-rc3).  In
+> particular, I was able to run the fscrypt xfstests for ext4 and f2fs in
+> a Debian chroot.  Among other things, these tests verified that the
+> correct ciphertext is written to disk (the same as software encryption).
+>
+> It will also be possible to add support for Mediatek eMMC inline
+> encryption hardware in mtk-sd, and it should be easier than the Qualcomm
+> hardware since the Mediatek hardware follows the standard more closely.
+> I.e., patches 1-4 should be almost enough for the Mediatek hardware.
+>
+> This patchset is based on the "next" branch (commit 42af8761bc84) of
+> https://git.kernel.org/pub/scm/linux/kernel/git/ulfh/mmc.git,
+> plus the patch "block/keyslot-manager: introduce devm_blk_ksm_init()"
+> (https://lkml.kernel.org/r/20210121082155.111333-2-ebiggers@kernel.org).
+> It can also be retrieved from tag "mmc-crypto-v6" of
+> https://git.kernel.org/pub/scm/linux/kernel/git/ebiggers/linux.git
+>
+> Changed in v6:
+>   - Define MMC_CAP2_CRYPTO to 0 when !CONFIG_MMC_CRYPTO.
+>   - Moved the sdm630 device tree update to the end of the series,
+>     since it will go in through a different tree.
+>   - Added an Acked-by.
+>
+> Changed in v5:
+>   - Use the proposed resource-managed variant of blk_ksm_init().
+>   - Removed an unnecessary call to devm_kfree().
+>
+> Changed in v4:
+>   - Added Acked-by and Reviewed-and-tested-by tags.
+>   - Rebased onto v5.11-rc2.
+>
+> Changed in v3:
+>   - Improved comment for sdhci_msm_ice_wait_bist_status()
+>   - Removed an unhelpful comment in union cqhci_crypto_cfg_entry.
+>   - Fixed the commit message of "mmc: cqhci: initialize upper 64 bits of
+>     128-bit task descriptors".
+>   - Added Reviewed-by's and Acked-by's.
+>
+> Changed in v2:
+>   - Only select QCOM_SCM if ARCH_QCOM.  (Fixes a build break.)
+>   - Split most of the cqhci_prep_task_desc() change into its own patch.
+>   - Made sdhci_msm_ice_wait_bist_status() use readl_poll_timeout().
+>   - Added a couple more comments.
+>   - Added some Acked-by's.
+>
+> Eric Biggers (9):
+>   mmc: add basic support for inline encryption
+>   mmc: cqhci: rename cqhci.c to cqhci-core.c
+>   mmc: cqhci: initialize upper 64 bits of 128-bit task descriptors
+>   mmc: cqhci: add support for inline encryption
+>   mmc: cqhci: add cqhci_host_ops::program_key
+>   firmware: qcom_scm: update comment for ICE-related functions
+>   dt-bindings: mmc: sdhci-msm: add ICE registers and clock
+>   mmc: sdhci-msm: add Inline Crypto Engine support
+>   arm64: dts: qcom: sdm630: add ICE registers and clocks
+>
+>  .../devicetree/bindings/mmc/sdhci-msm.txt     |   3 +
+>  arch/arm64/boot/dts/qcom/sdm630.dtsi          |  10 +-
+>  drivers/firmware/qcom_scm.c                   |  16 +-
+>  drivers/mmc/core/Kconfig                      |   8 +
+>  drivers/mmc/core/Makefile                     |   1 +
+>  drivers/mmc/core/block.c                      |   3 +
+>  drivers/mmc/core/core.c                       |   3 +
+>  drivers/mmc/core/crypto.c                     |  48 +++
+>  drivers/mmc/core/crypto.h                     |  40 +++
+>  drivers/mmc/core/host.c                       |   1 +
+>  drivers/mmc/core/queue.c                      |   3 +
+>  drivers/mmc/host/Kconfig                      |   1 +
+>  drivers/mmc/host/Makefile                     |   2 +
+>  drivers/mmc/host/{cqhci.c => cqhci-core.c}    |  69 ++++-
+>  drivers/mmc/host/cqhci-crypto.c               | 242 +++++++++++++++
+>  drivers/mmc/host/cqhci-crypto.h               |  47 +++
+>  drivers/mmc/host/cqhci.h                      |  84 +++++-
+>  drivers/mmc/host/sdhci-msm.c                  | 276 +++++++++++++++++-
+>  include/linux/mmc/core.h                      |   6 +
+>  include/linux/mmc/host.h                      |  11 +
+>  20 files changed, 849 insertions(+), 25 deletions(-)
+>  create mode 100644 drivers/mmc/core/crypto.c
+>  create mode 100644 drivers/mmc/core/crypto.h
+>  rename drivers/mmc/host/{cqhci.c => cqhci-core.c} (94%)
+>  create mode 100644 drivers/mmc/host/cqhci-crypto.c
+>  create mode 100644 drivers/mmc/host/cqhci-crypto.h
+>
+> --
+> 2.30.0
+>
 
-Sure, but clearing FSR is not writing to RESUME to resolve the stalled 
-transaction(s). You can already snarf the FSR contents from your 
-report_iommu_fault() handler if you want to, so either way I don't see 
-what's gained by not clearing it as expected at the point where we've 
-handled the *interrupt*, even if it will take longer to decide what to 
-do with the underlying *fault* that it signalled. I'm particularly not 
-keen on having unusual behaviour in the core interrupt handling which 
-callers may unwittingly trigger, for the sake of one 
-very-very-driver-specific flow having a slightly richer debugging 
-experience.
+Applied for next (leaving patch9 for arm soc), thanks!
 
-For actually *handling* faults, I thought we were going to need to hook 
-up the new IOPF fault queue stuff anyway?
-
-Robin.
-
-> It is assumed that we'll have to turn off interrupts in our handler to allow
-> this to work. Its all very implementation specific, but then again we're
-> assuming that if you want to do this then you know what you are doing.
-> 
-> In that spirit the error that skips the FSR should probably be something
-> specific instead of "all errors" - that way a well meaning handler that returns
-> a -EINVAL doesn't accidentally break itself.
-> 
-> Jordan
-> 
->>> I think
->>> it would be better to do this unconditionally, and print the "Unhandled
->>> context fault" message for any non-zero value of ret.
-> 
->>>
->>> Will
->>>
-> 
+Kind regards
+Uffe
