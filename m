@@ -2,93 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C1503049AD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 21:14:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C2C43049AB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 21:14:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732596AbhAZFYg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jan 2021 00:24:36 -0500
-Received: from mail.kernel.org ([198.145.29.99]:44844 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732335AbhAZDPL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Jan 2021 22:15:11 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 121BD22B3F;
-        Tue, 26 Jan 2021 00:15:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1611620116;
-        bh=cX3hhlW1d9/YsB6hj6Qe4lavdDpm38z9XYx4ck60cDE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=TOhwCDaBYtIiDMkwl5c8+FMG7ZL+sc6YXZYcQK1oZKLaDHGEFAk7V6Jx13+UdN3HW
-         dgliD1jTkIonfLbPwgTZPL0+TIlfcVrPF7DuMBys2SPvgzXQUG+pU8PBKa2FLZNB96
-         E7sOpZuOscjJWLWLirk9PoTDdLi9Py9NHy+Jk3iFMEkbZgdtoPiO2illCCvKXC5bbK
-         I9MI490tcr0SnzSVoT8Mxl7+3Pv3J9KKdl+LB2OD6EAXor75C/e4XGF2uO/F+VHLdG
-         qQJl2T0mZfRzkXJMbOZ/oeZbd6R4KXHJEqB5IMCqoTjH0PoOSiqOWSCnnS5dTI4m6v
-         isCHYmoGuRRgA==
-From:   Eric Biggers <ebiggers@kernel.org>
-To:     linux-mmc@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-fscrypt@vger.kernel.org, Satya Tangirala <satyat@google.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        id S1732591AbhAZFYf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jan 2021 00:24:35 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:3162 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726852AbhAZCOB (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 25 Jan 2021 21:14:01 -0500
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 25 Jan 2021 16:38:36 -0800
+X-QCInternal: smtphost
+Received: from gurus-linux.qualcomm.com ([10.46.162.81])
+  by ironmsg03-sd.qualcomm.com with ESMTP; 25 Jan 2021 16:38:36 -0800
+Received: by gurus-linux.qualcomm.com (Postfix, from userid 383780)
+        id CED371A64; Mon, 25 Jan 2021 16:38:35 -0800 (PST)
+From:   Guru Das Srinagesh <gurus@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Neeraj Soni <neersoni@codeaurora.org>,
-        Barani Muthukumaran <bmuthuku@codeaurora.org>,
-        Peng Zhou <peng.zhou@mediatek.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Rob Herring <robh@kernel.org>
-Subject: [PATCH RESEND v6 7/9] dt-bindings: mmc: sdhci-msm: add ICE registers and clock
-Date:   Mon, 25 Jan 2021 16:14:54 -0800
-Message-Id: <20210126001456.382989-8-ebiggers@kernel.org>
-X-Mailer: git-send-email 2.30.0
-In-Reply-To: <20210126001456.382989-1-ebiggers@kernel.org>
-References: <20210126001456.382989-1-ebiggers@kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
+Cc:     Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
+        David Collins <collinsd@codeaurora.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Stephen Boyd <sboyd@kernel.org>,
+        Guru Das Srinagesh <gurus@codeaurora.org>
+Subject: [RESEND PATCH v6 0/3] Add support for VBUS detection
+Date:   Mon, 25 Jan 2021 16:38:29 -0800
+Message-Id: <cover.1611621365.git.gurus@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Eric Biggers <ebiggers@google.com>
+[REQUEST]
 
-Document the bindings for the registers and clock for the MMC instance
-of the Inline Crypto Engine (ICE) on Snapdragon SoCs.  These bindings
-are needed in order for sdhci-msm to support inline encryption.
+Thanks Rob for reviewing the dt patches.
 
-Reviewed-by: Satya Tangirala <satyat@google.com>
-Acked-by: Rob Herring <robh@kernel.org>
-Signed-off-by: Eric Biggers <ebiggers@google.com>
----
- Documentation/devicetree/bindings/mmc/sdhci-msm.txt | 3 +++
- 1 file changed, 3 insertions(+)
+Would it be possible for the maintainers and reviewers to review the code as
+well? 
 
-diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-index 9fa8a24fbc97d..4c7fa6a4ed15c 100644
---- a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-+++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-@@ -31,10 +31,12 @@ Required properties:
- 	- SD Core register map (required for controllers earlier than msm-v5)
- 	- CQE register map (Optional, CQE support is present on SDHC instance meant
- 	                    for eMMC and version v4.2 and above)
-+	- Inline Crypto Engine register map (optional)
- - reg-names: When CQE register map is supplied, below reg-names are required
- 	- "hc" for Host controller register map
- 	- "core" for SD core register map
- 	- "cqhci" for CQE register map
-+	- "ice" for Inline Crypto Engine register map (optional)
- - interrupts: Should contain an interrupt-specifiers for the interrupts:
- 	- Host controller interrupt (required)
- - pinctrl-names: Should contain only one value - "default".
-@@ -47,6 +49,7 @@ Required properties:
- 	"xo"	- TCXO clock (optional)
- 	"cal"	- reference clock for RCLK delay calibration (optional)
- 	"sleep"	- sleep clock for RCLK delay calibration (optional)
-+	"ice" - clock for Inline Crypto Engine (optional)
- 
- - qcom,ddr-config: Certain chipsets and platforms require particular settings
- 	for the DDR_CONFIG register. Use this field to specify the register
+[COVER LETTER]
+
+Add support to enable VBUS detection in the pm8941 extcon driver.
+
+Changes from v5:
+- Gathered Rob H's Acked-by for the dt-bindings patch.
+
+Changes from v4:
+- Drop addition of new compatible string in both bindings and driver.
+
+Changes from v3:
+- Split bindings into direct conversion of txt file, and addition of VBUS
+  detection support.
+
+  Changes from v2:
+  - Fix YAML errors in dt binding document.
+
+  Changes from v1:
+  - Change bindings from txt to YAML.
+
+Anirudh Ghayal (1):
+  extcon: qcom-spmi: Add support for VBUS detection
+
+Guru Das Srinagesh (2):
+  bindings: pm8941-misc: Convert bindings to YAML
+  bindings: pm8941-misc: Add support for VBUS detection
+
+ .../bindings/extcon/qcom,pm8941-misc.txt           | 41 ---------
+ .../bindings/extcon/qcom,pm8941-misc.yaml          | 62 ++++++++++++++
+ drivers/extcon/extcon-qcom-spmi-misc.c             | 99 +++++++++++++++++-----
+ 3 files changed, 142 insertions(+), 60 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.txt
+ create mode 100644 Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
+
 -- 
-2.30.0
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
