@@ -2,132 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 55050303F9C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 15:05:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B0816303FA4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 15:05:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405556AbhAZOEs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jan 2021 09:04:48 -0500
-Received: from mail-40131.protonmail.ch ([185.70.40.131]:23709 "EHLO
-        mail-40131.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405699AbhAZOEa (ORCPT
+        id S2405672AbhAZOFV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jan 2021 09:05:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39858 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405573AbhAZOEs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jan 2021 09:04:30 -0500
-Date:   Tue, 26 Jan 2021 14:03:33 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1611669821;
-        bh=gQnuGXgHXwf08KWKFfxhg7QR+vbxSAEHzfJQokrIxus=;
-        h=Date:To:From:Cc:Reply-To:Subject:From;
-        b=DzSp4TE3Rrx3BRNzUxidjhhMU6UQnudt3fofH2ivlrlVD0+yWfX/NR+x/D/DV4otv
-         3pKV4oJX7mH3n87CaNcYkXdBgvEPfOWtkZ9Ya8lSuHl3+junak7Ak4DJEgNCgsc6N4
-         Ycop2mNEdyf6gbp9JZwvUUX+x5ftkHIQFOlbH3lY=
-To:     Pavel Machek <pavel@ucw.cz>, Dan Murphy <dmurphy@ti.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-From:   =?utf-8?Q?N=C3=ADcolas_F=2E_R=2E_A=2E_Prado?= 
-        <nfraprado@protonmail.com>
-Cc:     linux-leds@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Brian Masney <masneyb@onstation.org>,
-        Luca Weiss <luca@z3ntu.xyz>,
-        Russell King <linux@armlinux.org.uk>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        lkcamp@lists.libreplanetbr.org, andrealmeid@collabora.com
-Reply-To: =?utf-8?Q?N=C3=ADcolas_F=2E_R=2E_A=2E_Prado?= 
-          <nfraprado@protonmail.com>
-Subject: [PATCH v2 0/4] Add support for QCOM SPMI Flash LEDs
-Message-ID: <20210126140240.1517044-1-nfraprado@protonmail.com>
+        Tue, 26 Jan 2021 09:04:48 -0500
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40010C061D73
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 06:04:08 -0800 (PST)
+Received: by mail-ot1-x32f.google.com with SMTP id i30so16245143ota.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 06:04:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=MsK4CaeZUuQbxzldo8dFAj7Ip1Nra/4PEZy0IWNDwKA=;
+        b=oJDgbuOkCoz6zAvL2MLojuABQE1LnOHQsv8Sr8dJJkZmRIJW4fT+lBOiWCHwFxgyXl
+         f5SppIvh70EKm2GeJyfWlQ5OA7825I/pCJhXVsP0EmZKDWarGYzCLE4YFS4n44X63N27
+         CuzTTDKuisrWcbigIqWkS1qeGfiDC76d2VkFbKyVzkzUgTqKWz8lqCKQ0drBWS9ehbTi
+         ixyXptqL0Wa8G7XtYbpibYb3mZr2LJbpj5/Uxwy2/qnrdXTXSg77XIk7N1xvgWp6euQ4
+         jEXzA2BR8T82RcTsXX0Gr8l2vemy9hL5H7+O+sZKFrEyDvKrYauu0QHcsbcqMQXMc7Qd
+         vaYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=MsK4CaeZUuQbxzldo8dFAj7Ip1Nra/4PEZy0IWNDwKA=;
+        b=jcXRiOzSVUohu3RSAEeFSy+wzHhBkAhSq/7Sw+K+bzQ8pwtCpOm3zdFMqVMP2b3yiQ
+         WAII0+ICe9Oa4rKm+Am5ql8kcgl4nb82UdglNHLfa8ujQITvHYSKDA2GvfvlcVE1uQqC
+         808eEZYT70fQQAu5oeBfCTordUutknjIVOcppPg2/f3C3oYgURq+u+nhhj1K9bqcXB0d
+         v2NNxcU/zLF4J4zhI3DTVzNX2b/e7urigHssm5793rkMejFuBbhQn0HWNHfPge2JF/GH
+         vl9LF5Cu4nYLRhuvA9hUFwK2ybLhmCIUQ86xkNYnZYIyP0rAzxgJntUveYQiJiTi2mkt
+         mAmA==
+X-Gm-Message-State: AOAM533ICHBjn3fWE7I1cO0qzLqkckOp1vNHYEpyqlfhV4dJ1tgYhAcu
+        uayhYSA6L59xgscHnCqfKBijbw==
+X-Google-Smtp-Source: ABdhPJxX8nY7QjrZBeaPXb5VbSrI1X+GKXGhNuDRRN1eLhvoaMkZFItzLc7hvWzb53yTMa8LtnmSMQ==
+X-Received: by 2002:a9d:6c90:: with SMTP id c16mr4106448otr.177.1611669846924;
+        Tue, 26 Jan 2021 06:04:06 -0800 (PST)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id 186sm3853267ood.6.2021.01.26.06.04.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Jan 2021 06:04:06 -0800 (PST)
+Date:   Tue, 26 Jan 2021 08:04:04 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org
+Subject: Re: [PATCH 18/21] clk: qcom: clk-rpm: Remove a bunch of superfluous
+ code
+Message-ID: <20210126140404.GF1241218@yoga>
+References: <20210126124540.3320214-1-lee.jones@linaro.org>
+ <20210126124540.3320214-19-lee.jones@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+Content-Type: text/plain; charset=windows-1252
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210126124540.3320214-19-lee.jones@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Tue 26 Jan 06:45 CST 2021, Lee Jones wrote:
 
-this patch series adds support for Qualcomm's SPMI Flash LEDs present in th=
-e
-PM8941 PMIC. It is used as part of MSM8974 based devices, like the Nexus 5
-(hammerhead), as a camera flash or as a lantern when in torch mode.
+> Fixes the following W=1 kernel build warning(s):
+> 
+>  drivers/clk/qcom/clk-rpm.c:453:29: warning: ‘clk_rpm_branch_ops’ defined but not used [-Wunused-const-variable=]
+> 
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Michael Turquette <mturquette@baylibre.com>
+> Cc: Stephen Boyd <sboyd@kernel.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: linux-clk@vger.kernel.org
 
-Patch 1 adds the dt-bindings for the driver, together with a header for the
-values of some properties.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Patch 2 adds the driver, which was ported from downstream [1], and is now u=
-sing
-the flash LED class framework.
-
-Patch 3 enables the driver as a module in qcom_defconfig, and also enables
-CONFIG_LEDS_CLASS_FLASH since it is required by the driver.
-
-Patch 4 adds the device tree nodes configuring the driver in the pm8941 dts=
-i.
-
-After the feedback I received from the v1 RFC patch (thank you Jacek and
-Bjorn!), I implemented the flash LED class framework, renamed the driver to
-qcom-spmi-flash and added the dt-bindings. I also did a whole lot of cleanu=
-p.
-
-Some caveats:
-- I still didn't implement get_strobe() and get_fault() for the flash LEDs,
-  because I'm still not sure how to do it. get_strobe() in particular I'm n=
-ot
-  even sure if is possible, since after the flash turns off automatically a=
-fter
-  the timeout, I don't see any change in the SPMI registers. So I'm unsure =
-how
-  one would get the current strobe state.
-- I have yet to add the V4L2 flash wrapper for the flash LEDs. I still didn=
-'t do
-  it because I wasn't sure if it was needed, so wanted to double check. But
-  being a camera flash it seems that would be useful. Also, it would be gre=
-at if
-  someone could point me how I would go about testing the flash usage throu=
-gh
-  V4L2.
-
-Another thing worth mentioning: for v1 the dt nodes were added in hammerhea=
-d's
-dts (just to simplify testing), but I have now moved them to pm8941's dtsi,
-since it was like that in downstream. So if folks using devices based on
-PM8941/MSM8974 other than the Nexus 5 could test it, that would be great, s=
-ince
-I have only tested on the Nexus 5.
-
-v1 RFC: https://lore.kernel.org/lkml/20201106165737.1029106-1-nfraprado@pro=
-tonmail.com/
-
-[1] https://github.com/AICP/kernel_lge_hammerhead/blob/n7.1/drivers/leds/le=
-ds-qpnp.c
-
-N=C3=ADcolas F. R. A. Prado (4):
-  dt-bindings: leds: Add binding for qcom-spmi-flash
-  leds: Add driver for QCOM SPMI Flash LEDs
-  ARM: qcom_defconfig: Enable QCOM SPMI Flash LEDs
-  ARM: dts: qcom: pm8941: Add nodes for QCOM SPMI Flash LEDs
-
- .../bindings/leds/leds-qcom-spmi-flash.yaml   |   94 ++
- arch/arm/boot/dts/qcom-pm8941.dtsi            |   38 +
- arch/arm/configs/qcom_defconfig               |    2 +
- drivers/leds/Kconfig                          |    8 +
- drivers/leds/Makefile                         |    1 +
- drivers/leds/leds-qcom-spmi-flash.c           | 1153 +++++++++++++++++
- .../dt-bindings/leds/leds-qcom-spmi-flash.h   |   15 +
- 7 files changed, 1311 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/leds/leds-qcom-spmi-f=
-lash.yaml
- create mode 100644 drivers/leds/leds-qcom-spmi-flash.c
- create mode 100644 include/dt-bindings/leds/leds-qcom-spmi-flash.h
-
---=20
-2.30.0
-
-
+> Signed-off-by: Lee Jones <lee.jones@linaro.org>
+> ---
+>  drivers/clk/qcom/clk-rpm.c | 63 --------------------------------------
+>  1 file changed, 63 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/clk-rpm.c b/drivers/clk/qcom/clk-rpm.c
+> index f71d228fd6bd5..a18811c380187 100644
+> --- a/drivers/clk/qcom/clk-rpm.c
+> +++ b/drivers/clk/qcom/clk-rpm.c
+> @@ -73,62 +73,6 @@
+>  		},							      \
+>  	}
+>  
+> -#define DEFINE_CLK_RPM_PXO_BRANCH(_platform, _name, _active, r_id, r)	      \
+> -	static struct clk_rpm _platform##_##_active;			      \
+> -	static struct clk_rpm _platform##_##_name = {			      \
+> -		.rpm_clk_id = (r_id),					      \
+> -		.active_only = true,					      \
+> -		.peer = &_platform##_##_active,				      \
+> -		.rate = (r),						      \
+> -		.branch = true,						      \
+> -		.hw.init = &(struct clk_init_data){			      \
+> -			.ops = &clk_rpm_branch_ops,			      \
+> -			.name = #_name,					      \
+> -			.parent_names = (const char *[]){ "pxo_board" },      \
+> -			.num_parents = 1,				      \
+> -		},							      \
+> -	};								      \
+> -	static struct clk_rpm _platform##_##_active = {			      \
+> -		.rpm_clk_id = (r_id),					      \
+> -		.peer = &_platform##_##_name,				      \
+> -		.rate = (r),						      \
+> -		.branch = true,						      \
+> -		.hw.init = &(struct clk_init_data){			      \
+> -			.ops = &clk_rpm_branch_ops,			      \
+> -			.name = #_active,				      \
+> -			.parent_names = (const char *[]){ "pxo_board" },      \
+> -			.num_parents = 1,				      \
+> -		},							      \
+> -	}
+> -
+> -#define DEFINE_CLK_RPM_CXO_BRANCH(_platform, _name, _active, r_id, r)	      \
+> -	static struct clk_rpm _platform##_##_active;			      \
+> -	static struct clk_rpm _platform##_##_name = {			      \
+> -		.rpm_clk_id = (r_id),					      \
+> -		.peer = &_platform##_##_active,				      \
+> -		.rate = (r),						      \
+> -		.branch = true,						      \
+> -		.hw.init = &(struct clk_init_data){			      \
+> -			.ops = &clk_rpm_branch_ops,			      \
+> -			.name = #_name,					      \
+> -			.parent_names = (const char *[]){ "cxo_board" },      \
+> -			.num_parents = 1,				      \
+> -		},							      \
+> -	};								      \
+> -	static struct clk_rpm _platform##_##_active = {			      \
+> -		.rpm_clk_id = (r_id),					      \
+> -		.active_only = true,					      \
+> -		.peer = &_platform##_##_name,				      \
+> -		.rate = (r),						      \
+> -		.branch = true,						      \
+> -		.hw.init = &(struct clk_init_data){			      \
+> -			.ops = &clk_rpm_branch_ops,			      \
+> -			.name = #_active,				      \
+> -			.parent_names = (const char *[]){ "cxo_board" },      \
+> -			.num_parents = 1,				      \
+> -		},							      \
+> -	}
+> -
+>  #define to_clk_rpm(_hw) container_of(_hw, struct clk_rpm, hw)
+>  
+>  struct rpm_cc;
+> @@ -450,13 +394,6 @@ static const struct clk_ops clk_rpm_ops = {
+>  	.recalc_rate	= clk_rpm_recalc_rate,
+>  };
+>  
+> -static const struct clk_ops clk_rpm_branch_ops = {
+> -	.prepare	= clk_rpm_prepare,
+> -	.unprepare	= clk_rpm_unprepare,
+> -	.round_rate	= clk_rpm_round_rate,
+> -	.recalc_rate	= clk_rpm_recalc_rate,
+> -};
+> -
+>  /* MSM8660/APQ8060 */
+>  DEFINE_CLK_RPM(msm8660, afab_clk, afab_a_clk, QCOM_RPM_APPS_FABRIC_CLK);
+>  DEFINE_CLK_RPM(msm8660, sfab_clk, sfab_a_clk, QCOM_RPM_SYS_FABRIC_CLK);
+> -- 
+> 2.25.1
+> 
