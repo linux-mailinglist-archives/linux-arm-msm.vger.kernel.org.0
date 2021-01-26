@@ -2,126 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 95828303FB8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 15:08:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FF5B303FC2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 15:10:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405708AbhAZOHy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jan 2021 09:07:54 -0500
-Received: from mail-40136.protonmail.ch ([185.70.40.136]:56573 "EHLO
-        mail-40136.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405712AbhAZOHv (ORCPT
+        id S2392686AbhAZOJv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jan 2021 09:09:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40584 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405724AbhAZOH6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jan 2021 09:07:51 -0500
-Date:   Tue, 26 Jan 2021 14:06:59 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1611670025;
-        bh=salyD/WHDIurAfXLaRdlHjy/N3gO/EgJ38mXhbWj+8A=;
-        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=q+HTsB7Uqut7TDSqzeqkeRLfypg5t9zC4sq5LSGRFXYLjJ4ngWqoirWhUky/juxGQ
-         rN7eNCEZGezvPUctVw4/tc5Rbg+bY8AbpHw33S4jL4mdDogThy2JFU+eLWJNfBLAma
-         fJu7BQd7ZQmcn9HjcaXfniqfIEedKnoIcXypjjEw=
-To:     Pavel Machek <pavel@ucw.cz>, Dan Murphy <dmurphy@ti.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-From:   =?utf-8?Q?N=C3=ADcolas_F=2E_R=2E_A=2E_Prado?= 
-        <nfraprado@protonmail.com>
-Cc:     linux-leds@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Brian Masney <masneyb@onstation.org>,
-        Luca Weiss <luca@z3ntu.xyz>,
-        Russell King <linux@armlinux.org.uk>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        lkcamp@lists.libreplanetbr.org, andrealmeid@collabora.com
-Reply-To: =?utf-8?Q?N=C3=ADcolas_F=2E_R=2E_A=2E_Prado?= 
-          <nfraprado@protonmail.com>
-Subject: [PATCH v2 4/4] ARM: dts: qcom: pm8941: Add nodes for QCOM SPMI Flash LEDs
-Message-ID: <20210126140240.1517044-5-nfraprado@protonmail.com>
-In-Reply-To: <20210126140240.1517044-1-nfraprado@protonmail.com>
-References: <20210126140240.1517044-1-nfraprado@protonmail.com>
+        Tue, 26 Jan 2021 09:07:58 -0500
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01518C061D73
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 06:07:18 -0800 (PST)
+Received: by mail-ot1-x333.google.com with SMTP id h14so16249424otr.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 06:07:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=IQ1mHRGGkeAWSLltIAOirHSUgPq2D+lfO6NPdhx+kbk=;
+        b=nSntSCMT12ixFL7rKiXDb9a3nofYWhAoNV9NbbrNNorP2Il6xg18+E1tcWTCFF57lu
+         /usVi7gupanU3YRCGUUt0pcPFhrNj8wEyiStsNvbNzdR9rsr5s4BNsZTFO9dDilrjCjy
+         /zupnJ0BN2W9ChCIvlDFwQLXMMFF4OzqJp5xVQr2CLj1UiD8l6Wr+JDPeKq+hwaop+it
+         s55taU82Xy0f2keH7UcovRUXaBVkLPe0cuvmwEqse01tIbO+oOzyDMzM5/QXq/NsUvzz
+         bkeopHtSBtqexnk875g3BhNPddL1FYKjKYg52C8dL4kZjzYVgcBNKdjl0+2Qq/yrRP+/
+         Yr4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=IQ1mHRGGkeAWSLltIAOirHSUgPq2D+lfO6NPdhx+kbk=;
+        b=UxE72yswfXYC2XpLkr5YSM1D9iJ+As9epcXeNtjl1bipOshtYMGDhsHXVDcmYKXWcP
+         QDd/5jULEfS10cnoLUePwrsCe22n11ywxguyVUzjzYaNU3JqdnlbxEZoqxxPffvn1JNb
+         yhZ2I5PhksgpabuZnMX25MoatDK1PICEDqnga051yjl/kF4ElVz5Nhar5JO+6fSPaBKR
+         5aXNWk+JIDiosahJuqA1DfE8lcnyFHYBZ+ygWl9IzJx8935sxig5H/m7XVfR+YhGFkLI
+         J5egukAq1t/djBpfWGDr+Dj8bq6twR/jZ8UEz8uPG+4hxdmrPcQO4qIdPB6xUb6ocYq/
+         mMYA==
+X-Gm-Message-State: AOAM530gzryVlElsXZuYjAuf6Q5bQBeolwmKsQGXPcYWAZ29mPkc9NBC
+        cx8AQkwce3b/VddGusdJacN9AQ==
+X-Google-Smtp-Source: ABdhPJy7AYp4AcoJFrfFGte6lqF9tUTZ+0VN9mh8hPlQxw314jX/VkvHT6IrGZ7qHf/E8GVyGkqE2w==
+X-Received: by 2002:a9d:66d1:: with SMTP id t17mr3986317otm.163.1611670037403;
+        Tue, 26 Jan 2021 06:07:17 -0800 (PST)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id o16sm4103118ote.79.2021.01.26.06.07.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Jan 2021 06:07:16 -0800 (PST)
+Date:   Tue, 26 Jan 2021 08:07:14 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Jiapeng Zhong <abaci-bugfix@linux.alibaba.com>
+Cc:     agross@kernel.org, p.zabel@pengutronix.de,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] media: firmware: qcom_scm: Simplify the calculation of
+ variables
+Message-ID: <20210126140714.GG1241218@yoga>
+References: <1611651144-42491-1-git-send-email-abaci-bugfix@linux.alibaba.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1611651144-42491-1-git-send-email-abaci-bugfix@linux.alibaba.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the necessary devicetree nodes for the Qualcomm SPMI Flash LEDs
-present in PM8941.
+On Tue 26 Jan 02:52 CST 2021, Jiapeng Zhong wrote:
 
-Signed-off-by: N=C3=ADcolas F. R. A. Prado <nfraprado@protonmail.com>
----
-Changes in v2:
-- Moved from hammerhead dts to pm8941 dtsi, as it was this way downstream
-- Now using values from leds-qcom-spmi-flash.h
+> Fix the following coccicheck warnings:
+> 
+> ./drivers/firmware/qcom_scm.c:324:20-22: WARNING !A || A && B is
+> equivalent to !A || B.
+> 
 
- arch/arm/boot/dts/qcom-pm8941.dtsi | 38 ++++++++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-diff --git a/arch/arm/boot/dts/qcom-pm8941.dtsi b/arch/arm/boot/dts/qcom-pm=
-8941.dtsi
-index c1f2012d1c8b..89309d3c777c 100644
---- a/arch/arm/boot/dts/qcom-pm8941.dtsi
-+++ b/arch/arm/boot/dts/qcom-pm8941.dtsi
-@@ -2,6 +2,8 @@
- #include <dt-bindings/iio/qcom,spmi-vadc.h>
- #include <dt-bindings/interrupt-controller/irq.h>
- #include <dt-bindings/spmi/spmi.h>
-+#include <dt-bindings/leds/common.h>
-+#include <dt-bindings/leds/leds-qcom-spmi-flash.h>
-=20
- &spmi_bus {
-=20
-@@ -189,5 +191,41 @@ pm8941_5vs2: 5vs2 {
- =09=09=09=09regulator-initial-mode =3D <1>;
- =09=09=09};
- =09=09};
-+
-+=09=09qcom,spmi-flash@d300 {
-+=09=09=09status =3D "okay";
-+
-+=09=09=09compatible =3D "qcom,spmi-flash";
-+=09=09=09reg =3D <0xd300 0x100>;
-+=09=09=09flash-boost-supply =3D <&pm8941_5vs1>;
-+=09=09=09torch-boost-supply =3D <&pm8941_5v>;
-+=09=09=09pm8941_flash0: led0 {
-+=09=09=09=09led-sources =3D <0>;
-+=09=09=09=09function =3D LED_FUNCTION_FLASH;
-+=09=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09=09led-max-microamp =3D <200000>;
-+=09=09=09=09flash-max-microamp =3D <1000000>;
-+=09=09=09=09flash-max-timeout-us =3D <1280000>;
-+=09=09=09=09default-state =3D "off";
-+=09=09=09=09qcom,clamp-curr =3D <200000>;
-+=09=09=09=09qcom,headroom =3D <QCOM_SPMI_FLASH_HEADROOM_500MV>;
-+=09=09=09=09qcom,startup-dly =3D <QCOM_SPMI_FLASH_STARTUP_DLY_128US>;
-+=09=09=09=09qcom,safety-timer;
-+=09=09=09};
-+
-+=09=09=09pm8941_flash1: led1 {
-+=09=09=09=09led-sources =3D <1>;
-+=09=09=09=09function =3D LED_FUNCTION_FLASH;
-+=09=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09=09led-max-microamp =3D <200000>;
-+=09=09=09=09flash-max-microamp =3D <1000000>;
-+=09=09=09=09flash-max-timeout-us =3D <1280000>;
-+=09=09=09=09default-state =3D "off";
-+=09=09=09=09qcom,clamp-curr =3D <200000>;
-+=09=09=09=09qcom,headroom =3D <QCOM_SPMI_FLASH_HEADROOM_500MV>;
-+=09=09=09=09qcom,startup-dly =3D <QCOM_SPMI_FLASH_STARTUP_DLY_128US>;
-+=09=09=09=09qcom,safety-timer;
-+=09=09=09};
-+=09=09};
- =09};
- };
---=20
-2.30.0
-
-
+> Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+> Signed-off-by: Jiapeng Zhong <abaci-bugfix@linux.alibaba.com>
+> ---
+>  drivers/firmware/qcom_scm.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> index 7be48c1..c530072 100644
+> --- a/drivers/firmware/qcom_scm.c
+> +++ b/drivers/firmware/qcom_scm.c
+> @@ -321,7 +321,7 @@ int qcom_scm_set_cold_boot_addr(void *entry, const cpumask_t *cpus)
+>  		.owner = ARM_SMCCC_OWNER_SIP,
+>  	};
+>  
+> -	if (!cpus || (cpus && cpumask_empty(cpus)))
+> +	if (!cpus || cpumask_empty(cpus))
+>  		return -EINVAL;
+>  
+>  	for_each_cpu(cpu, cpus) {
+> -- 
+> 1.8.3.1
+> 
