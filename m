@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 33C4930347C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 06:25:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 64F5D30346F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jan 2021 06:25:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732607AbhAZFYh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jan 2021 00:24:37 -0500
-Received: from mail.kernel.org ([198.145.29.99]:44838 "EHLO mail.kernel.org"
+        id S1732551AbhAZFYb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jan 2021 00:24:31 -0500
+Received: from mail.kernel.org ([198.145.29.99]:37338 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727498AbhAZDPL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Jan 2021 22:15:11 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 116DF22AAC;
+        id S1732171AbhAZCGQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 25 Jan 2021 21:06:16 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id A308022ADF;
         Tue, 26 Jan 2021 00:15:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1611620113;
-        bh=ameHPCB/oz4/BeevZFfLSTXuBt6P8JY+tdmpWZqMTOI=;
+        s=k20201202; t=1611620114;
+        bh=4SCmQuraOYmu7VQ5L24jw7LalSZJa0vOhswtHkrL8l8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Wf11EHrrCmVm35joh6g3yG//NltKnKnMLqdau3Tic7vMBtrOeHy5sqNRdxsYW1ajv
-         OYNTYb9OGSm4Tzv3TKVM81kAhMebqLTLMnYDtqfQLNiH2CrkxPuGn/TZCHdKm1ubST
-         +lp8z6o1hkoBtVGY4MT6x2S76ioNu6rSMz9kPo8D4/DcQqM8kFuXvvZKSNLFuzDSK+
-         8T+ovQiVScQxxWPtRU6CWbpEocdNtviyfpemGwACQWv7X5dVkhwqiw7ffpwjnNOZqE
-         Y2VZgfp8tWvoSZS5XSmpsM6R/O3rv2z/R2zc+qrxRr7DA2o1iw/SouqcQ680/JAtGl
-         CwPw5tWnpvAkw==
+        b=m7edEaCpEew0vDhx/9upmmNP4JqKWsq+kP2QJAQGT47X3dNZNlPae8Ea14yqvIJX0
+         wTSBhHWsDfoHqSDCyKyx8CVXwSoTFBKEy5eFZWSRBnrlp2g4xTjrRgo0cXxqhiZ7JH
+         CN3g6Ia2zarWHnrtMremsfqU4zFiEmAdMr456ZvwA+dSbxzONls3+Ddda1gJCS5rOo
+         Hmy+HmhUcLAFu10qCvGoCgprbGwY3NcJMCu7C9mzqn4bhLNhhO1T4C7absvwrqyqwR
+         MTQt2kjx49VsfOn8yAArEJYV1RKlRW/aLPbExeY/zq+WFRlHUvW5f+JcdpsglUM+O7
+         Snysm3MH5+4AQ==
 From:   Eric Biggers <ebiggers@kernel.org>
 To:     linux-mmc@vger.kernel.org
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
@@ -38,9 +38,9 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Peng Zhou <peng.zhou@mediatek.com>,
         Stanley Chu <stanley.chu@mediatek.com>,
         Konrad Dybcio <konradybcio@gmail.com>
-Subject: [PATCH RESEND v6 2/9] mmc: cqhci: rename cqhci.c to cqhci-core.c
-Date:   Mon, 25 Jan 2021 16:14:49 -0800
-Message-Id: <20210126001456.382989-3-ebiggers@kernel.org>
+Subject: [PATCH RESEND v6 3/9] mmc: cqhci: initialize upper 64 bits of 128-bit task descriptors
+Date:   Mon, 25 Jan 2021 16:14:50 -0800
+Message-Id: <20210126001456.382989-4-ebiggers@kernel.org>
 X-Mailer: git-send-email 2.30.0
 In-Reply-To: <20210126001456.382989-1-ebiggers@kernel.org>
 References: <20210126001456.382989-1-ebiggers@kernel.org>
@@ -52,34 +52,88 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Eric Biggers <ebiggers@google.com>
 
-Rename cqhci.c to cqhci-core.c so that another source file can be added
-to the cqhci module without having to rename the module.
+Move the task descriptor initialization into cqhci_prep_task_desc().
+In addition, make it explicitly initialize all 128 bits of the task
+descriptor if the host controller is using 128-bit task descriptors,
+rather than relying on the implicit zeroing from dmam_alloc_coherent().
+
+This is needed to prepare for CQHCI inline encryption support, which
+requires 128-bit task descriptors and uses the upper 64 bits.
 
 Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Satya Tangirala <satyat@google.com>
 Reviewed-and-tested-by: Peng Zhou <peng.zhou@mediatek.com>
 Signed-off-by: Eric Biggers <ebiggers@google.com>
 ---
- drivers/mmc/host/Makefile                  | 1 +
- drivers/mmc/host/{cqhci.c => cqhci-core.c} | 0
- 2 files changed, 1 insertion(+)
- rename drivers/mmc/host/{cqhci.c => cqhci-core.c} (100%)
+ drivers/mmc/host/cqhci-core.c | 30 ++++++++++++++++++++----------
+ 1 file changed, 20 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/mmc/host/Makefile b/drivers/mmc/host/Makefile
-index d2ec428cc8086..19687ad42c6b4 100644
---- a/drivers/mmc/host/Makefile
-+++ b/drivers/mmc/host/Makefile
-@@ -102,6 +102,7 @@ obj-$(CONFIG_MMC_SDHCI_BRCMSTB)		+= sdhci-brcmstb.o
- obj-$(CONFIG_MMC_SDHCI_OMAP)		+= sdhci-omap.o
- obj-$(CONFIG_MMC_SDHCI_SPRD)		+= sdhci-sprd.o
- obj-$(CONFIG_MMC_CQHCI)			+= cqhci.o
-+cqhci-y					+= cqhci-core.o
- obj-$(CONFIG_MMC_HSQ)			+= mmc_hsq.o
+diff --git a/drivers/mmc/host/cqhci-core.c b/drivers/mmc/host/cqhci-core.c
+index 697fe40756bf2..ad7c9acff1728 100644
+--- a/drivers/mmc/host/cqhci-core.c
++++ b/drivers/mmc/host/cqhci-core.c
+@@ -408,13 +408,15 @@ static void cqhci_disable(struct mmc_host *mmc)
+ }
  
- ifeq ($(CONFIG_CB710_DEBUG),y)
-diff --git a/drivers/mmc/host/cqhci.c b/drivers/mmc/host/cqhci-core.c
-similarity index 100%
-rename from drivers/mmc/host/cqhci.c
-rename to drivers/mmc/host/cqhci-core.c
+ static void cqhci_prep_task_desc(struct mmc_request *mrq,
+-					u64 *data, bool intr)
++				 struct cqhci_host *cq_host, int tag)
+ {
++	__le64 *task_desc = (__le64 __force *)get_desc(cq_host, tag);
+ 	u32 req_flags = mrq->data->flags;
++	u64 desc0;
+ 
+-	*data = CQHCI_VALID(1) |
++	desc0 = CQHCI_VALID(1) |
+ 		CQHCI_END(1) |
+-		CQHCI_INT(intr) |
++		CQHCI_INT(1) |
+ 		CQHCI_ACT(0x5) |
+ 		CQHCI_FORCED_PROG(!!(req_flags & MMC_DATA_FORCED_PRG)) |
+ 		CQHCI_DATA_TAG(!!(req_flags & MMC_DATA_DAT_TAG)) |
+@@ -425,8 +427,19 @@ static void cqhci_prep_task_desc(struct mmc_request *mrq,
+ 		CQHCI_BLK_COUNT(mrq->data->blocks) |
+ 		CQHCI_BLK_ADDR((u64)mrq->data->blk_addr);
+ 
+-	pr_debug("%s: cqhci: tag %d task descriptor 0x%016llx\n",
+-		 mmc_hostname(mrq->host), mrq->tag, (unsigned long long)*data);
++	task_desc[0] = cpu_to_le64(desc0);
++
++	if (cq_host->caps & CQHCI_TASK_DESC_SZ_128) {
++		u64 desc1 = 0;
++
++		task_desc[1] = cpu_to_le64(desc1);
++
++		pr_debug("%s: cqhci: tag %d task descriptor 0x%016llx%016llx\n",
++			 mmc_hostname(mrq->host), mrq->tag, desc1, desc0);
++	} else {
++		pr_debug("%s: cqhci: tag %d task descriptor 0x%016llx\n",
++			 mmc_hostname(mrq->host), mrq->tag, desc0);
++	}
+ }
+ 
+ static int cqhci_dma_map(struct mmc_host *host, struct mmc_request *mrq)
+@@ -567,8 +580,6 @@ static inline int cqhci_tag(struct mmc_request *mrq)
+ static int cqhci_request(struct mmc_host *mmc, struct mmc_request *mrq)
+ {
+ 	int err = 0;
+-	u64 data = 0;
+-	u64 *task_desc = NULL;
+ 	int tag = cqhci_tag(mrq);
+ 	struct cqhci_host *cq_host = mmc->cqe_private;
+ 	unsigned long flags;
+@@ -598,9 +609,8 @@ static int cqhci_request(struct mmc_host *mmc, struct mmc_request *mrq)
+ 	}
+ 
+ 	if (mrq->data) {
+-		task_desc = (__le64 __force *)get_desc(cq_host, tag);
+-		cqhci_prep_task_desc(mrq, &data, 1);
+-		*task_desc = cpu_to_le64(data);
++		cqhci_prep_task_desc(mrq, cq_host, tag);
++
+ 		err = cqhci_prep_tran_desc(mrq, cq_host, tag);
+ 		if (err) {
+ 			pr_err("%s: cqhci: failed to setup tx desc: %d\n",
 -- 
 2.30.0
 
