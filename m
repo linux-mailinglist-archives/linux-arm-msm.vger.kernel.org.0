@@ -2,114 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 06DAF305ADD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jan 2021 13:08:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 593EE305B6A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jan 2021 13:31:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237571AbhA0MHp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jan 2021 07:07:45 -0500
-Received: from mail.kernel.org ([198.145.29.99]:42234 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237541AbhA0MFu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jan 2021 07:05:50 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id DD01220781;
-        Wed, 27 Jan 2021 12:05:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1611749109;
-        bh=3RBTVL1iF42NCBHvowP/tzdrAJTD7tRnl7zSmjKg/BU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=RqiTxbZ+x1490GbJal6dfrK8j/avd6fsnOy+FrkbXMElpnrSd3nLHJDKtC2Mz5y6d
-         ChtaV0tRp36ta2YMGyfuLXxdCdBmK96FpKGkW8mHtEdX371me5Mqwvpp4YXJhXdlEs
-         OGTwXdUPK/SHwqWHUwxhI9XAkWhpAX9eSSpSb1NDQy5hFjqGVPleJDzUOatmguqZUI
-         YolMtRHNDRPs4pdP5iOD2bSl5VuxPxkk1xjgxE76ykYL2BGXufO3Qw4QVweCnWb/1e
-         nfvCxRX6ZKMZIHguB4ysQDYP8dyTaUn6Cp6wqLtlSKuj7p7Cj/ueKMFnIoQub6ITTP
-         hApq6CKKK0jqg==
-Date:   Wed, 27 Jan 2021 12:04:26 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     devel@driverdev.osuosl.org, devicetree@vger.kernel.org,
-        Mayulong <mayulong1@huawei.com>,
-        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        linux-arm-msm@vger.kernel.org, YueHaibing <yuehaibing@huawei.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Wei Xu <xuwei5@hisilicon.com>, linux-kernel@vger.kernel.org,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Colin Ian King <colin.king@canonical.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Dan Carpenter <dan.carpenter@oracle.com>
-Subject: Re: [PATCH v5 00/21] Move Hisilicon 6421v600 SPMI driver set out of
- staging
-Message-ID: <20210127120426.GB4387@sirena.org.uk>
-References: <cover.1611212783.git.mchehab+huawei@kernel.org>
- <YBBXcdLbj92yMJhw@kroah.com>
- <20210126175752.GF4839@sirena.org.uk>
- <YBBZP9LjXPi/rzfP@kroah.com>
- <20210126181124.GG4839@sirena.org.uk>
- <YBErBByYD8lNIWAX@kroah.com>
+        id S1343504AbhA0M3j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jan 2021 07:29:39 -0500
+Received: from lb3-smtp-cloud9.xs4all.net ([194.109.24.30]:51963 "EHLO
+        lb3-smtp-cloud9.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S233266AbhA0M0w (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 27 Jan 2021 07:26:52 -0500
+Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
+        by smtp-cloud9.xs4all.net with ESMTPA
+        id 4jtDlXrtHI2394jtHlhHxa; Wed, 27 Jan 2021 13:25:47 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s2;
+        t=1611750347; bh=5pnR9efidnDm0mE/2lo2491Qu6WM408Ua+znGofrnok=;
+        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
+         Subject;
+        b=vafleieXoGTn0LiFzQRDJhPuIWcKMPDuK47p9kQRA8sT02yjTJrQGmRPaFtXnDPbS
+         jdfaV0lSUQix+L/n25N/UOb+S+icROm8r3e/owC/CPQ58aDKsudbZsUcAitxGICMRB
+         gm94zN2950r5DsXz9mbrxfqvi1UJ4CYY4KQ6bp7m0agloO+1nDiTgqth/6lGzbQl/w
+         AV0WY3drm7AgfuCksec2LdwyvyuVyxTAJuzOYgRSTrV0L9NlBuE/jLwQgWXvY55m05
+         VFnyFYK+dgpB/dHXb4gP77Pm75DylUP+FDv3iF9vriUUHzivHfF01wajSH808LR92k
+         /bhgefovyw0Pw==
+Subject: Re: [PATCH v2 1/4] v4l2-ctrl: Make display delay and display enable
+ std controls
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+References: <20210115092607.29849-1-stanimir.varbanov@linaro.org>
+ <20210115092607.29849-2-stanimir.varbanov@linaro.org>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Message-ID: <22d84616-b7d1-095b-3bec-e894e19b72ca@xs4all.nl>
+Date:   Wed, 27 Jan 2021 13:25:39 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="RASg3xLB4tUQ4RcS"
-Content-Disposition: inline
-In-Reply-To: <YBErBByYD8lNIWAX@kroah.com>
-X-Cookie: La-dee-dee, la-dee-dah.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20210115092607.29849-2-stanimir.varbanov@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfOAL65zyTC//yHf/SmChGe0Jj5VEkIjPCNGV7ilNw4tN8cO5MWSM5f3QdN+ufKM58/AmsOQO6nCGisvrRbS4o/dhFAJuVkb9X6ylRBP/QdPyVfKH4RH3
+ E0XWsN8GxEAv4AmTIpoUb9D3NLEnEbS1lYrn4GhJQecYVmVuusHQmw/0drz8ROI62ZXeXkdL8P6VVopyBQ71xFPwIb3qiQJq1YPL2px3ccG9uiEMp6ku7J2o
+ +aZBgpRLKqKEd/FaRHk21gZvubkwEl+R4VEU2b56LbebblSLuhctk1357AX4LHjUdjWpmeKOeQAtUNYYB9KjS2mpNa/troYb0nYVkPBadeaTelhpQjwVBWKK
+ eDLvOXiNhxBEpFHYZI1KTW+QV9yUxQ==
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 15/01/2021 10:26, Stanimir Varbanov wrote:
+> Make display delay and display delay enable MFC controls standard v4l
+> controls. This will allow reuse of the controls for other decoder
+> drivers. Also the new proposed controls are now codec agnostic because
+> they could be used for any codec.
+> 
+> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 
---RASg3xLB4tUQ4RcS
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Acked-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-On Wed, Jan 27, 2021 at 09:57:40AM +0100, Greg Kroah-Hartman wrote:
-> On Tue, Jan 26, 2021 at 06:11:24PM +0000, Mark Brown wrote:
+Thanks!
 
-> > > Do you need a tag to pull from?
+	Hans
 
-> > It'd be nice but not essential.
+> ---
+>  .../userspace-api/media/v4l/ext-ctrls-codec.rst   | 15 +++++++++++++++
+>  drivers/media/v4l2-core/v4l2-ctrls.c              |  4 ++++
+>  include/uapi/linux/v4l2-controls.h                |  3 +++
+>  3 files changed, 22 insertions(+)
+> 
+> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> index 00944e97d638..5d7c47837035 100644
+> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> @@ -679,6 +679,21 @@ enum v4l2_mpeg_video_frame_skip_mode -
+>      otherwise the decoder expects a single frame in per buffer.
+>      Applicable to the decoder, all codecs.
+>  
+> +``V4L2_CID_MPEG_VIDEO_DEC_DISPLAY_DELAY_ENABLE (boolean)``
+> +    If the display delay is enabled then the decoder is forced to return
+> +    a CAPTURE buffer (decoded frame) after processing a certain number
+> +    of OUTPUT buffers. The delay can be set through
+> +    ``V4L2_CID_MPEG_VIDEO_DEC_DISPLAY_DELAY``. This
+> +    feature can be used for example for generating thumbnails of videos.
+> +    Applicable to the decoder.
+> +
+> +``V4L2_CID_MPEG_VIDEO_DEC_DISPLAY_DELAY (integer)``
+> +    Display delay value for decoder. The decoder is forced to
+> +    return a decoded frame after the set 'display delay' number of
+> +    frames. If this number is low it may result in frames returned out
+> +    of display order, in addition the hardware may still be using the
+> +    returned buffer as a reference picture for subsequent frames.
+> +
+>  ``V4L2_CID_MPEG_VIDEO_H264_VUI_SAR_ENABLE (boolean)``
+>      Enable writing sample aspect ratio in the Video Usability
+>      Information. Applicable to the H264 encoder.
+> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
+> index f7b310240af2..2ae305d6db01 100644
+> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
+> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
+> @@ -874,6 +874,8 @@ const char *v4l2_ctrl_get_name(u32 id)
+>  	case V4L2_CID_MPEG_VIDEO_HEADER_MODE:			return "Sequence Header Mode";
+>  	case V4L2_CID_MPEG_VIDEO_MAX_REF_PIC:			return "Max Number of Reference Pics";
+>  	case V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE:		return "Frame Skip Mode";
+> +	case V4L2_CID_MPEG_VIDEO_DEC_DISPLAY_DELAY:		return "Display Delay";
+> +	case V4L2_CID_MPEG_VIDEO_DEC_DISPLAY_DELAY_ENABLE:	return "Display Delay Enable";
+>  	case V4L2_CID_MPEG_VIDEO_H263_I_FRAME_QP:		return "H263 I-Frame QP Value";
+>  	case V4L2_CID_MPEG_VIDEO_H263_P_FRAME_QP:		return "H263 P-Frame QP Value";
+>  	case V4L2_CID_MPEG_VIDEO_H263_B_FRAME_QP:		return "H263 B-Frame QP Value";
+> @@ -1241,6 +1243,7 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
+>  	case V4L2_CID_FLASH_READY:
+>  	case V4L2_CID_MPEG_VIDEO_DECODER_MPEG4_DEBLOCK_FILTER:
+>  	case V4L2_CID_MPEG_VIDEO_DECODER_SLICE_INTERFACE:
+> +	case V4L2_CID_MPEG_VIDEO_DEC_DISPLAY_DELAY_ENABLE:
+>  	case V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE:
+>  	case V4L2_CID_MPEG_VIDEO_MB_RC_ENABLE:
+>  	case V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM:
+> @@ -1276,6 +1279,7 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
+>  		break;
+>  	case V4L2_CID_MPEG_VIDEO_MV_H_SEARCH_RANGE:
+>  	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:
+> +	case V4L2_CID_MPEG_VIDEO_DEC_DISPLAY_DELAY:
+>  		*type = V4L2_CTRL_TYPE_INTEGER;
+>  		break;
+>  	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:
+> diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
+> index 039c0d7add1b..4b361fdce231 100644
+> --- a/include/uapi/linux/v4l2-controls.h
+> +++ b/include/uapi/linux/v4l2-controls.h
+> @@ -797,6 +797,9 @@ enum v4l2_mpeg_video_frame_skip_mode {
+>  #define V4L2_CID_MPEG_VIDEO_HEVC_B_FRAME_MIN_QP        (V4L2_CID_CODEC_BASE + 651)
+>  #define V4L2_CID_MPEG_VIDEO_HEVC_B_FRAME_MAX_QP        (V4L2_CID_CODEC_BASE + 652)
+>  
+> +#define V4L2_CID_MPEG_VIDEO_DEC_DISPLAY_DELAY		(V4L2_CID_CODEC_BASE + 653)
+> +#define V4L2_CID_MPEG_VIDEO_DEC_DISPLAY_DELAY_ENABLE	(V4L2_CID_CODEC_BASE + 654)
+> +
+>  /*  MPEG-class control IDs specific to the CX2341x driver as defined by V4L2 */
+>  #define V4L2_CID_CODEC_CX2341X_BASE				(V4L2_CTRL_CLASS_CODEC | 0x1000)
+>  #define V4L2_CID_MPEG_CX2341X_VIDEO_SPATIAL_FILTER_MODE		(V4L2_CID_CODEC_CX2341X_BASE+0)
+> 
 
-> Why do you want/need this?  Having these changes in your tree is good,
-> but what about other coding style cleanups that I will end up applying
-> over time before the 5.12-rc1 merge window opens?  Are you wanting to
-> take the moved driver in your tree, or something else?
-
-I want to apply the regulator driver so I stop being sent this patch
-series which will help keep my backlog more manageable.
-
-> Traditionally moving drivers out of staging can be done 2 ways:
-> 	- all happens in the staging tree, I take an ack from the
-> 	  subsystem maintainer that this is ok to do.
-> 	- A new driver enters the "real" subsystem tree, and then I
-> 	  delete the driver in the staging tree.  This doesn't preserve
-> 	  history as well (not at all), but can be easier for trees that
-> 	  move quickly (like networking.)
-
-The whole reason the driver is in the staging tree is that Mauro has a
-requirement to do things in a way that preserves history and so won't
-send any non-incremental patches.
-
-> Which ever works for you is fine with me, but relying on the code to
-> stay "not touched" in my tree after you pull it almost never happens due
-> to the number of drive-by coding style cleanups that end up in the
-> staging tree every week.
-
-I'm sure someone can work out the conflicts if they're going to happen.
-
---RASg3xLB4tUQ4RcS
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmARVsoACgkQJNaLcl1U
-h9CwZwf/Y4GV970+UoDmVlH4gvV6PpELe5BpI9sfABbfvY4sD+ozqjiJdzjRecw3
-yn5O3nm62AX6VR3vEhua6wA8iZAg6ShI1kVX8u8atddzuPwPDYkIjjW0y94kI5j0
-Fle7XbIJQpaSkFOykOaqKe6PoVl/CdGXp2dQ1Dvno6LecZnEkalJ47lSdLawUgax
-9POSQ0pg5htrSwGfBSjsmtIO1szwkuJs2KTn/nwQR+EF9+HMZH/fdDOwoslB06cA
-m+SM+rQyE7O/cbEZepBc1REC9ND4cpZPIQ9VmodaoqajQ89oSdGf3dhN8RaFpBWq
-9j/SadeGlnCgk583W33vC5H3R73uZA==
-=Voti
------END PGP SIGNATURE-----
-
---RASg3xLB4tUQ4RcS--
