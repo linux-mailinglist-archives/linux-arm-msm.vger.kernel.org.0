@@ -2,114 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EF7DE305504
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jan 2021 08:52:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 17541305564
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jan 2021 09:16:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234366AbhA0Hvu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jan 2021 02:51:50 -0500
-Received: from mail.kernel.org ([198.145.29.99]:52312 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234070AbhA0Hte (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jan 2021 02:49:34 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id BF76B2074A;
-        Wed, 27 Jan 2021 07:48:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1611733728;
-        bh=Nro3vfQTCFtmv98iajZ/Tld6vSBtHkyWqkV/zj14XFw=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=SHMBfSfTtkKbBZei+R26dC4Lsa2N+suQiJ9H3LZMp1MaKa5JjGt+4QjAdFsyIyLUT
-         tQmzXXgXxEdLQ2XzmFzAyIzEDH80xOrFrwsQDYWFBcKKnne9TgiIilSEhMFajPzLcb
-         WKlppAIzlGh3Fdk7NfvaI8omlrDmEFva/CSsY1cFN2joSSKZRYRcFT7U90A+CfEknv
-         NgBhXEjQyytURjwbuv1CbEWSI5z02gPfxp9eYDmJnFUBTAyEZEGvdNF+R6c9qOt6Gv
-         k1vZRXX2j4SYiZQErTdX1uQdkl0rrqMB5kZzlCHOYRGKTz5ie1ZeE0UWWrrB+E8xPk
-         07s+G/JFyQ1kw==
-Date:   Wed, 27 Jan 2021 08:48:37 +0100
-From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To:     Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Jesper Nilsson <jesper.nilsson@axis.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Jonathan Chocron <jonnyc@amazon.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Richard Zhu <hongxing.zhu@nxp.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        Zhou Wang <wangzhou1@hisilicon.com>,
-        devicetree@vger.kernel.org, linux-amlogic@lists.infradead.org,
-        linux-arm-kernel@axis.com, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-omap@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org
-Subject: Re: [PATCH RFC 1/2] dt: pci: designware-pcie.txt: convert it to
- yaml
-Message-ID: <20210127084837.39d68850@coco.lan>
-In-Reply-To: <b6ab7110-fc87-85d7-d591-dffad32985ec@samsung.com>
-References: <cover.1611645945.git.mchehab+huawei@kernel.org>
-        <CGME20210126074127eucas1p1dd8f2d1704d708d64458922566b934f1@eucas1p1.samsung.com>
-        <55f479324098b66d7dba89c8f9c3e455731df4f7.1611645945.git.mchehab+huawei@kernel.org>
-        <b6ab7110-fc87-85d7-d591-dffad32985ec@samsung.com>
-X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
+        id S234574AbhA0IQW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jan 2021 03:16:22 -0500
+Received: from a1.mail.mailgun.net ([198.61.254.60]:27023 "EHLO
+        a1.mail.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234565AbhA0IMo (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 27 Jan 2021 03:12:44 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1611735115; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=960hhNTG56+qX20fkyX8J9sKQsVs3STq7WvHt5UIqf8=;
+ b=cGJj11TYTTo5i61xMwAPQ0566AQgksxJa1wpF553jmt+QTIO2usUtHtX+w3d4jXh0+gal9vt
+ 8x+EL3dEW+6CPMQxA66JG0Usx4UOhMCtM4w/2ZFRsUqmlaMuM4NMiZge7n1gSPbUUxslFQLd
+ 9wVBGQ3/nBe78+Breu+REx/vQ6c=
+X-Mailgun-Sending-Ip: 198.61.254.60
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 60111d6983c9d4cc539c9123 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 27 Jan 2021 07:59:37
+ GMT
+Sender: cang=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3C403C43463; Wed, 27 Jan 2021 07:59:37 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: cang)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 90577C433CA;
+        Wed, 27 Jan 2021 07:59:36 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Wed, 27 Jan 2021 15:59:36 +0800
+From:   Can Guo <cang@codeaurora.org>
+To:     Avri Altman <Avri.Altman@wdc.com>
+Cc:     Asutosh Das <asutoshd@codeaurora.org>, martin.petersen@oracle.com,
+        linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        stern@rowland.harvard.edu,
+        "Bao D . Nguyen" <nguyenb@codeaurora.org>,
+        FUJITA Tomonori <fujita.tomonori@lab.ntt.co.jp>,
+        Jens Axboe <axboe@kernel.dk>,
+        "open list:BLOCK LAYER" <linux-block@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [RFC PATCH v1 1/2] block: bsg: resume scsi device before
+ accessing
+In-Reply-To: <DM6PR04MB6575D64869B24B4275D63503FCBB9@DM6PR04MB6575.namprd04.prod.outlook.com>
+References: <cover.1611719814.git.asutoshd@codeaurora.org>
+ <c04a11a590628c2497cef113b0dfea781de90416.1611719814.git.asutoshd@codeaurora.org>
+ <DM6PR04MB6575D64869B24B4275D63503FCBB9@DM6PR04MB6575.namprd04.prod.outlook.com>
+Message-ID: <75c66862d61c63fcfa61cd6dce254169@codeaurora.org>
+X-Sender: cang@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Marek,
-
-Em Tue, 26 Jan 2021 11:13:20 +0100
-Marek Szyprowski <m.szyprowski@samsung.com> escreveu:
-
-> Hi Mauro,
+On 2021-01-27 15:09, Avri Altman wrote:
+>> 
+>> Resumes the scsi device before accessing it.
+>> 
+>> Change-Id: I2929af60f2a92c89704a582fcdb285d35b429fde
+>> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
+>> Signed-off-by: Can Guo <cang@codeaurora.org>
+>> Signed-off-by: Bao D. Nguyen <nguyenb@codeaurora.org>
+> Following this patch, is it possible to revert commit 74e5e468b664d?
 > 
-> On 26.01.2021 08:35, Mauro Carvalho Chehab wrote:
-> > Convert the file into a JSON description at the yaml format.
-> >
-> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > ---
-> >   .../bindings/pci/amlogic,meson-pcie.txt       |   4 +-
-> >   .../bindings/pci/axis,artpec6-pcie.txt        |   2 +-
-> >   .../bindings/pci/designware,pcie.yaml         | 194 ++++++++++++++++++
-> >   .../bindings/pci/designware-pcie.txt          |  77 -------
-> >   .../bindings/pci/fsl,imx6q-pcie.txt           |   2 +-
-> >   .../bindings/pci/hisilicon-histb-pcie.txt     |   2 +-
-> >   .../bindings/pci/hisilicon-pcie.txt           |   2 +-
-> >   .../devicetree/bindings/pci/kirin-pcie.txt    |   2 +-
-> >   .../bindings/pci/layerscape-pci.txt           |   2 +-
-> >   .../bindings/pci/nvidia,tegra194-pcie.txt     |   4 +-
-> >   .../devicetree/bindings/pci/pci-armada8k.txt  |   2 +-
-> >   .../devicetree/bindings/pci/pci-keystone.txt  |  10 +-
-> >   .../devicetree/bindings/pci/pcie-al.txt       |   2 +-
-> >   .../devicetree/bindings/pci/qcom,pcie.txt     |  14 +-
-> >   .../bindings/pci/samsung,exynos5440-pcie.txt  |   4 +-  
 
-> You must have used an old tree for preparing this patchset. The above 
-> file is gone in v5.11-rc1 and there is 
-> Documentation/devicetree/bindings/pci/samsung,exynos-pcie.yaml instead.
-
-Yeah, this series was generated against v5.10, as part of my efforts
-to have Hikey 970 properly supported upstream:
-
-	https://github.com/mchehab/linux/commits/devel/hikey970
-
-For the next version, I'll rebase on the top of linux-next. 
+No, but this is a good finding... This change assumes
+that the queue->queue_data is a scsi_device, which is
+why we call scsi_auto_pm_get(). But for ufs_bsg's case,
+queue->queue_data is a device...
 
 Thanks,
-Mauro
+Can Guo.
+
+> Thanks,
+> Avri
