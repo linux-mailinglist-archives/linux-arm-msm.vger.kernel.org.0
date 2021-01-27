@@ -2,228 +2,212 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D4A7030633E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jan 2021 19:27:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D14D306349
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jan 2021 19:28:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235157AbhA0SZ6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jan 2021 13:25:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39112 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343828AbhA0SZx (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jan 2021 13:25:53 -0500
-X-Greylist: delayed 662 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 27 Jan 2021 10:25:12 PST
-Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9490BC061573;
-        Wed, 27 Jan 2021 10:25:12 -0800 (PST)
-Received: from localhost.localdomain (abaf219.neoplus.adsl.tpnet.pl [83.6.169.219])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 6EB0F200A4;
-        Wed, 27 Jan 2021 19:25:10 +0100 (CET)
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-To:     phone-devel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2] thermal: qcom: tsens-v0_1: Add support for MDM9607
-Date:   Wed, 27 Jan 2021 19:25:05 +0100
-Message-Id: <20210127182506.52311-1-konrad.dybcio@somainline.org>
-X-Mailer: git-send-email 2.30.0
+        id S236423AbhA0S1V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jan 2021 13:27:21 -0500
+Received: from m42-8.mailgun.net ([69.72.42.8]:36395 "EHLO m42-8.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236211AbhA0S1Q (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 27 Jan 2021 13:27:16 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1611772015; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=k7pNE/3vLZHCiBBDw12FPkHMI8j0bhqUkbbxxev4hhs=;
+ b=nYtYVvYc0Pncz83p8/e6FSfhB2bfAVVnufjGkMeo5LDgfwqHdhNP2kvdrgwe9YsTouOqbCUw
+ mJ1qBU9ze8msa0yHnIIg1cvJ4JtxYmgx3yWRUG9d5haNIT6rezWBe9mYI6W8A5tcFPseAtan
+ nsTzMLocqgfuGgKuD0MTXE8sUu0=
+X-Mailgun-Sending-Ip: 69.72.42.8
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 6011b050beacd1a2521fccfb (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 27 Jan 2021 18:26:24
+ GMT
+Sender: mdalam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id BB736C433CA; Wed, 27 Jan 2021 18:26:23 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: mdalam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 84248C433C6;
+        Wed, 27 Jan 2021 18:26:22 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 27 Jan 2021 23:56:22 +0530
+From:   mdalam@codeaurora.org
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     corbet@lwn.net, agross@kernel.org, bjorn.andersson@linaro.org,
+        dan.j.williams@intel.com, dmaengine@vger.kernel.org,
+        linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, sricharan@codeaurora.org,
+        mdalam=codeaurora.org@codeaurora.org
+Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Add LOCK and UNLOCK flag bit
+ support
+In-Reply-To: <20210119164511.GE2771@vkoul-mobl>
+References: <1608215842-15381-1-git-send-email-mdalam@codeaurora.org>
+ <20201221092355.GA3323@vkoul-mobl>
+ <efcc74bbdf36b4ddbf764eb6b4ed99f2@codeaurora.org>
+ <f7de0117c8ff2e61c09f58acdea0e5b0@codeaurora.org>
+ <20210112101056.GI2771@vkoul-mobl>
+ <e3cf7c4fc02c54d17fd2fd213f39005b@codeaurora.org>
+ <20210115055806.GE2771@vkoul-mobl>
+ <97ce29b230164a5848a38f6448d1be60@codeaurora.org>
+ <20210119164511.GE2771@vkoul-mobl>
+Message-ID: <534308caab7c18730ad0cc25248d116f@codeaurora.org>
+X-Sender: mdalam@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-MDM9607 TSENS IP is very similar to the one of MSM8916, with
-minor adjustments to various tuning values.
+On 2021-01-19 22:15, Vinod Koul wrote:
+> On 18-01-21, 09:21, mdalam@codeaurora.org wrote:
+>> On 2021-01-15 11:28, Vinod Koul wrote:
+>> > On 14-01-21, 01:20, mdalam@codeaurora.org wrote:
+>> > > On 2021-01-12 15:40, Vinod Koul wrote:
+>> > > > On 12-01-21, 15:01, mdalam@codeaurora.org wrote:
+>> > > > > On 2020-12-21 23:03, mdalam@codeaurora.org wrote:
+>> > > > > > On 2020-12-21 14:53, Vinod Koul wrote:
+>> > > > > > > Hello,
+>> > > > > > >
+>> > > > > > > On 17-12-20, 20:07, Md Sadre Alam wrote:
+>> > > > > > > > This change will add support for LOCK & UNLOCK flag bit support
+>> > > > > > > > on CMD descriptor.
+>> > > > > > > >
+>> > > > > > > > If DMA_PREP_LOCK flag passed in prep_slave_sg then requester of this
+>> > > > > > > > transaction wanted to lock the DMA controller for this transaction so
+>> > > > > > > > BAM driver should set LOCK bit for the HW descriptor.
+>> > > > > > > >
+>> > > > > > > > If DMA_PREP_UNLOCK flag passed in prep_slave_sg then requester
+>> > > > > > > > of this
+>> > > > > > > > transaction wanted to unlock the DMA controller.so BAM driver
+>> > > > > > > > should set
+>> > > > > > > > UNLOCK bit for the HW descriptor.
+>> > > > > > >
+>> > > > > > > Can you explain why would we need to first lock and then unlock..? How
+>> > > > > > > would this be used in real world.
+>> > > > > > >
+>> > > > > > > I have read a bit of documentation but is unclear to me. Also should
+>> > > > > > > this be exposed as an API to users, sounds like internal to driver..?
+>> > > > > > >
+>> > > > > >
+>> > > > > > IPQ5018 SoC having only one Crypto Hardware Engine. This Crypto Hardware
+>> > > > > > Engine
+>> > > > > > will be shared between A53 core & ubi32 core. There is two separate
+>> > > > > > driver dedicated
+>> > > > > > to A53 core and ubi32 core. So to use Crypto Hardware Engine
+>> > > > > > parallelly for encryption/description
+>> > > > > > we need bam locking mechanism. if one driver will submit the request
+>> > > > > > for encryption/description
+>> > > > > > to Crypto then first it has to set LOCK flag bit on command descriptor
+>> > > > > > so that other pipes will
+>> > > > > > get locked.
+>> > > > > >
+>> > > > > > The Pipe Locking/Unlocking will be only on command-descriptor. Upon
+>> > > > > > encountering a command descriptor
+>> > > >
+>> > > > Can you explain what is a cmd descriptor?
+>> > >
+>> > >   In BAM pipe descriptor structure there is a field called CMD
+>> > > (Command
+>> > > descriptor).
+>> > >   CMD allows the SW to create descriptors of type Command which does
+>> > > not
+>> > > generate any data transmissions
+>> > >   but configures registers in the Peripheral (write operations, and
+>> > > read
+>> > > registers operations ).
+>> > >   Using command descriptor enables the SW to queue new configurations
+>> > > between data transfers in advance.
+>> >
+>> > What and when is the CMD descriptor used for..?
+>> 
+>>   CMD descriptor is mainly used for configuring controller register.
+>>   We can read/write controller register via BAM using CMD descriptor 
+>> only.
+>>   CMD descriptor use command pipe for the transaction.
+> 
+> In which use cases would you need to issue cmd descriptors..?
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
----
-Changes since v1:
-- Move the defines so as not to cut into the middle of 8974 regs
+   In IPQ5018 there is only one Crypto engine and it will get shared 
+between
+   UBI32 core & A53 core. So here we need to use command descriptor 
+in-order to
+   perform LOCKING/UNLOCKING mechanism. Since LOCK/ULOCK flag we can set 
+only on
+   CMD descriptor.
+> 
+>> >
+>> > > >
+>> > > > > > with LOCK bit set, The BAM will lock all other pipes not related to
+>> > > > > > the current pipe group, and keep
+>> > > > > > handling the current pipe only until it sees the UNLOCK set then it
+>> > > > > > will release all locked pipes.
+>> > > > > > locked pipe will not fetch new descriptors even if it got event/events
+>> > > > > > adding more descriptors for
+>> > > > > > this pipe (locked pipe).
+>> > > > > >
+>> > > > > > No need to expose as an API to user because its internal to driver, so
+>> > > > > > while preparing command descriptor
+>> > > > > > just we have to update the LOCK/UNLOCK flag.
+>> > > >
+>> > > > So IIUC, no api right? it would be internal to driver..?
+>> > >
+>> > >   Yes its totally internal to deriver.
+>> >
+>> > So no need for this patch then, right?
+>> 
+>>   This patch is needed , because if some hardware will shared between
+>>   multiple core like A53 and ubi32 for example. In IPQ5018 there is
+>>   only one crypto engine and this will be shared between A53 core and
+>>   ubi32 core and in A53 core & ubi32 core there are different drivers
+>>   is getting used. So if encryption/decryption request come at same
+>>   time from both the driver then things will get messed up. So here we
+>>   need LOCKING mechanism.  If first request is from A53 core driver
+>>   then this driver should lock all the pipes other than pipe dedicated
+>>   to A53 core. So while preparing CMD descriptor driver should used
+>>   this flag "DMA_PREP_LOCK", Since LOCK and UNLOCK flag bit we can set
+>>   only on CMD descriptor. Once request processed then driver will set
+>>   UNLOCK flag on CMD descriptor. Driver should use this flag
+>>   "DMA_PREP_UNLOCK" while preparing CMD descriptor. Same logic will be
+>>   apply for ubi32 core driver as well.
+> 
+> Why cant this be applied at driver level, based on txn being issued it
+> can lock issue the txn and then unlock when done. I am not convinced 
+> yet
+> that this needs to be exported to users and can be managed by dmaengine
+> driver.
 
- .../bindings/thermal/qcom-tsens.yaml          |   2 +
- drivers/thermal/qcom/tsens-v0_1.c             | 100 +++++++++++++++++-
- drivers/thermal/qcom/tsens.c                  |   3 +
- drivers/thermal/qcom/tsens.h                  |   2 +-
- 4 files changed, 105 insertions(+), 2 deletions(-)
+   The actual LOCK/UNLOCK flag should be set on hardware command 
+descriptor.
+   so this flag setting should be done in DMA engine driver. The user of 
+the DMA
+   driver like (in case of IPQ5018) Crypto can use flag "DMA_PREP_LOCK" & 
+"DMA_PREP_UNLOCK"
+   while preparing CMD descriptor before submitting to the DMA engine. In 
+DMA engine driver
+   we are checking these flasgs on CMD descriptor and setting actual 
+LOCK/UNLOCK flag on hardware
+   descriptor.
 
-diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-index 95462e071ab4..8ad9dc139c23 100644
---- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-+++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-@@ -22,6 +22,7 @@ properties:
-       - description: v0.1 of TSENS
-         items:
-           - enum:
-+              - qcom,mdm9607-tsens
-               - qcom,msm8916-tsens
-               - qcom,msm8939-tsens
-               - qcom,msm8974-tsens
-@@ -94,6 +95,7 @@ allOf:
-         compatible:
-           contains:
-             enum:
-+              - qcom,mdm9607-tsens
-               - qcom,msm8916-tsens
-               - qcom,msm8974-tsens
-               - qcom,msm8976-tsens
-diff --git a/drivers/thermal/qcom/tsens-v0_1.c b/drivers/thermal/qcom/tsens-v0_1.c
-index 4ffa2e2c0145..7b13c01a1693 100644
---- a/drivers/thermal/qcom/tsens-v0_1.c
-+++ b/drivers/thermal/qcom/tsens-v0_1.c
-@@ -190,6 +190,39 @@
- 
- #define BIT_APPEND		0x3
- 
-+/* eeprom layout data for mdm9607 */
-+#define MDM9607_BASE0_MASK	0x000000ff
-+#define MDM9607_BASE1_MASK	0x000ff000
-+#define MDM9607_BASE0_SHIFT	0
-+#define MDM9607_BASE1_SHIFT	12
-+
-+#define MDM9607_S0_P1_MASK	0x00003f00
-+#define MDM9607_S1_P1_MASK	0x03f00000
-+#define MDM9607_S2_P1_MASK	0x0000003f
-+#define MDM9607_S3_P1_MASK	0x0003f000
-+#define MDM9607_S4_P1_MASK	0x0000003f
-+
-+#define MDM9607_S0_P2_MASK	0x000fc000
-+#define MDM9607_S1_P2_MASK	0xfc000000
-+#define MDM9607_S2_P2_MASK	0x00000fc0
-+#define MDM9607_S3_P2_MASK	0x00fc0000
-+#define MDM9607_S4_P2_MASK	0x00000fc0
-+
-+#define MDM9607_S0_P1_SHIFT	8
-+#define MDM9607_S1_P1_SHIFT	20
-+#define MDM9607_S2_P1_SHIFT	0
-+#define MDM9607_S3_P1_SHIFT	12
-+#define MDM9607_S4_P1_SHIFT	0
-+
-+#define MDM9607_S0_P2_SHIFT	14
-+#define MDM9607_S1_P2_SHIFT	26
-+#define MDM9607_S2_P2_SHIFT	6
-+#define MDM9607_S3_P2_SHIFT	18
-+#define MDM9607_S4_P2_SHIFT	6
-+
-+#define MDM9607_CAL_SEL_MASK	0x00700000
-+#define MDM9607_CAL_SEL_SHIFT	20
-+
- static int calibrate_8916(struct tsens_priv *priv)
- {
- 	int base0 = 0, base1 = 0, i;
-@@ -452,7 +485,57 @@ static int calibrate_8974(struct tsens_priv *priv)
- 	return 0;
- }
- 
--/* v0.1: 8916, 8939, 8974 */
-+static int calibrate_9607(struct tsens_priv *priv)
-+{
-+	int base0 = 0, base1 = 0, i;
-+	u32 p1[5], p2[5];
-+	int mode = 0;
-+	u32 *qfprom_cdata, *qfprom_csel;
-+
-+	qfprom_cdata = (u32 *)qfprom_read(priv->dev, "calib");
-+	if (IS_ERR(qfprom_cdata))
-+		return PTR_ERR(qfprom_cdata);
-+
-+	mode = (qfprom_cdata[2] & MDM9607_CAL_SEL_MASK) >> MDM9607_CAL_SEL_SHIFT;
-+	dev_dbg(priv->dev, "calibration mode is %d\n", mode);
-+
-+	switch (mode) {
-+	case TWO_PT_CALIB:
-+		base1 = (qfprom_cdata[2] & MDM9607_BASE1_MASK) >> MDM9607_BASE1_SHIFT;
-+		p2[0] = (qfprom_cdata[0] & MDM9607_S0_P2_MASK) >> MDM9607_S0_P2_SHIFT;
-+		p2[1] = (qfprom_cdata[0] & MDM9607_S1_P2_MASK) >> MDM9607_S1_P2_SHIFT;
-+		p2[2] = (qfprom_cdata[1] & MDM9607_S2_P2_MASK) >> MDM9607_S2_P2_SHIFT;
-+		p2[3] = (qfprom_cdata[1] & MDM9607_S3_P2_MASK) >> MDM9607_S3_P2_SHIFT;
-+		p2[4] = (qfprom_cdata[2] & MDM9607_S4_P2_MASK) >> MDM9607_S4_P2_SHIFT;
-+		for (i = 0; i < priv->num_sensors; i++)
-+			p2[i] = ((base1 + p2[i]) << 2);
-+		fallthrough;
-+	case ONE_PT_CALIB2:
-+		base0 = (qfprom_cdata[0] & MDM9607_BASE0_MASK);
-+		p1[0] = (qfprom_cdata[0] & MDM9607_S0_P1_MASK) >> MDM9607_S0_P1_SHIFT;
-+		p1[1] = (qfprom_cdata[0] & MDM9607_S1_P1_MASK) >> MDM9607_S1_P1_SHIFT;
-+		p1[2] = (qfprom_cdata[1] & MDM9607_S2_P1_MASK) >> MDM9607_S2_P1_SHIFT;
-+		p1[3] = (qfprom_cdata[1] & MDM9607_S3_P1_MASK) >> MDM9607_S3_P1_SHIFT;
-+		p1[4] = (qfprom_cdata[2] & MDM9607_S4_P1_MASK) >> MDM9607_S4_P1_SHIFT;
-+		for (i = 0; i < priv->num_sensors; i++)
-+			p1[i] = (((base0) + p1[i]) << 2);
-+		break;
-+	default:
-+		for (i = 0; i < priv->num_sensors; i++) {
-+			p1[i] = 500;
-+			p2[i] = 780;
-+		}
-+		break;
-+	}
-+
-+	compute_intercept_slope(priv, p1, p2, mode);
-+	kfree(qfprom_cdata);
-+	kfree(qfprom_csel);
-+
-+	return 0;
-+}
-+
-+/* v0.1: 8916, 8939, 8974, 9607 */
- 
- static struct tsens_features tsens_v0_1_feat = {
- 	.ver_major	= VER_0_1,
-@@ -540,3 +623,18 @@ struct tsens_plat_data data_8974 = {
- 	.feat		= &tsens_v0_1_feat,
- 	.fields	= tsens_v0_1_regfields,
- };
-+
-+static const struct tsens_ops ops_9607 = {
-+	.init		= init_common,
-+	.calibrate	= calibrate_9607,
-+	.get_temp	= get_temp_common,
-+};
-+
-+struct tsens_plat_data data_9607 = {
-+	.num_sensors	= 5,
-+	.ops		= &ops_9607,
-+	.hw_ids		= (unsigned int []){ 0, 1, 2, 3, 4 },
-+
-+	.feat		= &tsens_v0_1_feat,
-+	.fields	= tsens_v0_1_regfields,
-+};
-diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-index d8ce3a687b80..51c36b9e8e69 100644
---- a/drivers/thermal/qcom/tsens.c
-+++ b/drivers/thermal/qcom/tsens.c
-@@ -895,6 +895,9 @@ static SIMPLE_DEV_PM_OPS(tsens_pm_ops, tsens_suspend, tsens_resume);
- 
- static const struct of_device_id tsens_table[] = {
- 	{
-+		.compatible = "qcom,mdm9607-tsens",
-+		.data = &data_9607,
-+	}, {
- 		.compatible = "qcom,msm8916-tsens",
- 		.data = &data_8916,
- 	}, {
-diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
-index f40b625f897e..cba64c33b4f9 100644
---- a/drivers/thermal/qcom/tsens.h
-+++ b/drivers/thermal/qcom/tsens.h
-@@ -585,7 +585,7 @@ int get_temp_common(const struct tsens_sensor *s, int *temp);
- extern struct tsens_plat_data data_8960;
- 
- /* TSENS v0.1 targets */
--extern struct tsens_plat_data data_8916, data_8939, data_8974;
-+extern struct tsens_plat_data data_8916, data_8939, data_8974, data_9607;
- 
- /* TSENS v1 targets */
- extern struct tsens_plat_data data_tsens_v1, data_8976;
--- 
-2.30.0
-
+    if (flags & DMA_PREP_CMD) { <== check for descriptor type
+		if (flags & DMA_PREP_LOCK)
+			desc->flags |= cpu_to_le16(DESC_FLAG_LOCK); <== Actual LOCK flag 
+setting on HW descriptor.
+		if (flags & DMA_PREP_UNLOCK)
+			desc->flags |= cpu_to_le16(DESC_FLAG_UNLOCK); <== Actual UNLOCK flag 
+setting on HW descriptor.
+	}
+> 
+> Thanks
