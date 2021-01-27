@@ -2,104 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ED7F9305847
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jan 2021 11:25:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E415D3057E7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jan 2021 11:11:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S314195AbhAZXCR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jan 2021 18:02:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34898 "EHLO
+        id S233597AbhA0KLQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jan 2021 05:11:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405419AbhAZUMZ (ORCPT
+        with ESMTP id S231557AbhA0KJN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jan 2021 15:12:25 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08165C0613ED
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 12:11:45 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id a8so24468959lfi.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 12:11:44 -0800 (PST)
+        Wed, 27 Jan 2021 05:09:13 -0500
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEE99C0613ED
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jan 2021 02:08:20 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id i9so1098415wmq.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jan 2021 02:08:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=8YPuJSo/Ctz3y/b9vjns8oaUIFXpJod7O95PtwVpOOg=;
-        b=hf9VsxQjKXwhtOt5BE9bt4BAarY5cOZBvh16EtXohnJctrjCQdQdfrShx6AcuEHvcc
-         KAlNOdM2tJUwfAI+6+GuPoVlX1MumpKq2NAz0OxRoTBZ/NMaLsF6uNnD/nmJ5WcgSMjj
-         /CpRgnoe2+WsJL6gGz+y0gaDINQb7Oc2yeptmLXf/t7XZ9DRw9SloN9FwSs8B2ckvAf4
-         5zH+V7COyXRV+jRtaUSffzryQwUbRA0a7HT6kwWa6rkH3RSnvT1Wg+Fsg0c8Ou1q/oa9
-         p0KSGT36juNFCMfKcFEyS7cMTYeVnmPBeHbrIVFFJUYiOADq7CQdXoO55sFkKqFtDj0Z
-         JGWA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=2WndoVJoechlesOP2uW9G5Dn7tzK4MkFx2WMsweb0HA=;
+        b=UpH17eq02fjfb4twcUSs1kzVLGwnfViW+xXxsIpep3kj4mMwpmbQwEd3udpeUvscAJ
+         Bg7m1KlikJ7nYe5NuPDDLi54HdO6mAbCbhQ/pdxtSIyAywSu6U/bPrihOD4hrHLSyd+P
+         89ly7Y0yHSE/Ial1sv+bDkoilOd4MF8/RKh+tSZrCCMcn3iQPBf5JwsOqC6ZDpAP/Wa+
+         4TDpW6E6EVFbbTdnei+0+oqjY/VKJs/A/+/xEXzN2yXgfVmuOwl9jvMTYGUqXhvolaoA
+         jWuTqGAT44a4of40CpPq48iJ+jpbsX7b+3x8WlzoJTSGuIaxKsbvlDZh1k3MF9X3gyv2
+         1xjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=8YPuJSo/Ctz3y/b9vjns8oaUIFXpJod7O95PtwVpOOg=;
-        b=RFxEgLQRHO451JHsoDYdQUP+y8oZNCp3qzbWkES4TolOII3wn29Mm3W8dJrqoVlfB6
-         7of97vZePxmjSWxNUfgcokZV6ImAFKER23EIs+T8f93+b2YFJvZPPiSbUD1LjsV9Dotf
-         J6Xlm79T/vOEHBVaR1rIIRNO9fMT8RWAUozAunZdSlgD1r67XMtW0C0A+pXO6wzfmqaQ
-         WLvjRwmS3vF7TMIwPoJ2qb2cCqS5l8yII72+KUpWI/rrCroAGKBMhqawo+eCgpbkPVQV
-         nuWcufhmuvDaZRrXTbT2Hk3ZkaX5lf03nJdcBMg+n5H8CKtagre2pz/EvpSDIXl8tXOW
-         kFlw==
-X-Gm-Message-State: AOAM533JlFf/tCHfAbdsDiDSsUxkK2zMvP5Va7I+uU5Y9P9YL2628HzH
-        veDWaUKcuVPXR7O+uxDkVIbHcA==
-X-Google-Smtp-Source: ABdhPJxs4fHMHxtc4B4yVQwvl50X5PLLxgMZq91FRxwZxRqFFiGbXAW/cT1/bgeFBXX56rr+mQy5+g==
-X-Received: by 2002:a05:6512:22c2:: with SMTP id g2mr3521030lfu.634.1611691903540;
-        Tue, 26 Jan 2021 12:11:43 -0800 (PST)
-Received: from [192.168.1.211] ([94.25.229.205])
-        by smtp.gmail.com with ESMTPSA id g27sm622716lfh.291.2021.01.26.12.11.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Jan 2021 12:11:42 -0800 (PST)
-Subject: Re: [PATCH v5 0/2] PCI: qcom: fix PCIe support on sm8250
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=2WndoVJoechlesOP2uW9G5Dn7tzK4MkFx2WMsweb0HA=;
+        b=fumDqgSrsSY7ODxcStvPGgSqu6Bbi13c+DvIU/msqbzqP7AzYZemoW98kyLPMGb7SF
+         xk0Y3xcoo2zxoaWj8VRek9moQWFrx51pjC9NLJNtMqYU8S+xvAcR4/ZnvwITHsW6fPTn
+         Mb2RUSImcEOYdrXOMgq8EEathVklfiAFBjd/huHyDhlN1hyRTh5mRoXtADeVVLzTHxSw
+         DygHKOTPBauKDl1VGooAhubB7QAOLRwesJWZJ6OIjIVaPJSO+qmNOlEbcE8FdXh7kf2A
+         sQP+9tSHpQzevohjtq2JOW2RbUgk0r2CsKrBXHpXvyOn+G30qtAdfP0qnZOiKv0pO2m1
+         5quQ==
+X-Gm-Message-State: AOAM530j355Ax2Yh9CTw6dB8xJekzgA2YsQhQwv3cYYPQTxxDjXUJq+6
+        jbc+OOxlCDczlz0q7hO3DxdIDg==
+X-Google-Smtp-Source: ABdhPJzKk7QEfIsVAuxkRlFKl+4OqrXBwYa149X8CairnOU8B6TmtO66T64zZBYBt2QVi/VcyNwmyQ==
+X-Received: by 2002:a1c:4e05:: with SMTP id g5mr3552331wmh.105.1611742099265;
+        Wed, 27 Jan 2021 02:08:19 -0800 (PST)
+Received: from dell ([91.110.221.188])
+        by smtp.gmail.com with ESMTPSA id g192sm2137417wmg.18.2021.01.27.02.08.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Jan 2021 02:08:18 -0800 (PST)
+Date:   Wed, 27 Jan 2021 10:08:16 +0000
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Mark Brown <broonie@kernel.org>, devel@driverdev.osuosl.org,
+        devicetree@vger.kernel.org, Mayulong <mayulong1@huawei.com>,
+        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        linux-arm-msm@vger.kernel.org, YueHaibing <yuehaibing@huawei.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Wei Xu <xuwei5@hisilicon.com>, linux-kernel@vger.kernel.org,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-pci@vger.kernel.org
-References: <20210117013114.441973-1-dmitry.baryshkov@linaro.org>
-Message-ID: <64f62684-523d-cbd5-708b-4c06e7d03954@linaro.org>
-Date:   Tue, 26 Jan 2021 23:11:41 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.0
+        linux-arm-kernel@lists.infradead.org,
+        Colin Ian King <colin.king@canonical.com>,
+        Dan Carpenter <dan.carpenter@oracle.com>
+Subject: Re: [PATCH v5 00/21] Move Hisilicon 6421v600 SPMI driver set out of
+ staging
+Message-ID: <20210127100816.GH4903@dell>
+References: <cover.1611212783.git.mchehab+huawei@kernel.org>
+ <YBBXcdLbj92yMJhw@kroah.com>
+ <20210126175752.GF4839@sirena.org.uk>
+ <YBBZP9LjXPi/rzfP@kroah.com>
+ <20210126181124.GG4839@sirena.org.uk>
+ <YBErBByYD8lNIWAX@kroah.com>
 MIME-Version: 1.0
-In-Reply-To: <20210117013114.441973-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <YBErBByYD8lNIWAX@kroah.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Rob, Lorenzo, gracious poke for this patchset.
+On Wed, 27 Jan 2021, Greg Kroah-Hartman wrote:
 
+> On Tue, Jan 26, 2021 at 06:11:24PM +0000, Mark Brown wrote:
+> > On Tue, Jan 26, 2021 at 07:02:39PM +0100, Greg Kroah-Hartman wrote:
+> > > On Tue, Jan 26, 2021 at 05:57:52PM +0000, Mark Brown wrote:
+> > 
+> > > > Is there a branch we can pull from?
+> > 
+> > > Once 0-day passes, you can pull from my staging-testing branch from
+> > > staging.git on git.kernel.org if you want.  Give it 24 hours to pass
+> > > before it hits that location.
+> > 
+> > Thanks.
+> 
+> Should be out there now if you want to pull.
+> 
+> > > Do you need a tag to pull from?
+> > 
+> > It'd be nice but not essential.
+> 
+> Why do you want/need this?  Having these changes in your tree is good,
+> but what about other coding style cleanups that I will end up applying
+> over time before the 5.12-rc1 merge window opens?  Are you wanting to
+> take the moved driver in your tree, or something else?
+> 
+> Traditionally moving drivers out of staging can be done 2 ways:
+> 	- all happens in the staging tree, I take an ack from the
+> 	  subsystem maintainer that this is ok to do.
+> 	- A new driver enters the "real" subsystem tree, and then I
+> 	  delete the driver in the staging tree.  This doesn't preserve
+> 	  history as well (not at all), but can be easier for trees that
+> 	  move quickly (like networking.)
+> 
+> Which ever works for you is fine with me, but relying on the code to
+> stay "not touched" in my tree after you pull it almost never happens due
+> to the number of drive-by coding style cleanups that end up in the
+> staging tree every week.
 
-On 17/01/2021 04:31, Dmitry Baryshkov wrote:
-> SM8250 platform requires additional clock to be enabled for PCIe to
-> function. In case it is disabled, PCIe access will result in IOMMU
-> timeouts. Add device tree binding and driver support for this clock.
-> 
-> Canges since v4:
->   - Remove QCOM_PCIE_2_7_0_MAX_CLOCKS define and has_sf_tbu variable.
-> 
-> Changes since v3:
->   - Merge clock handling back into qcom_pcie_get_resources_2_7_0().
->     Define res->num_clks to the amount of clocks used for this particular
->     platform.
-> 
-> Changes since v2:
->   - Split this clock handling from qcom_pcie_get_resources_2_7_0()
->   - Change comment to point that the clock is required rather than
->     optional
-> 
-> Changes since v1:
->   - Added Fixes: tags, as respective patches have hit the upstream Linux
->     tree.
-> 
-> 
+I would have expected the whole set to be merged as a set into a
+single tree, placed on an immutable branch and a pull-request to be
+sent out for the other maintainers to pull from (if they so wished).
 
+This would ensure development could continue on any/all of the
+affected drivers/files.
+
+If it's not too late, I'd be more than happy to facilitate.
 
 -- 
-With best wishes
-Dmitry
+Lee Jones [李琼斯]
+Senior Technical Lead - Developer Services
+Linaro.org │ Open source software for Arm SoCs
+Follow Linaro: Facebook | Twitter | Blog
