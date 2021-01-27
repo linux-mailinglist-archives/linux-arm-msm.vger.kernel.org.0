@@ -2,96 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9329B305B68
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jan 2021 13:31:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D49D0305BAD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jan 2021 13:41:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234451AbhA0M3c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jan 2021 07:29:32 -0500
-Received: from lb2-smtp-cloud9.xs4all.net ([194.109.24.26]:46339 "EHLO
-        lb2-smtp-cloud9.xs4all.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S237728AbhA0M0v (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jan 2021 07:26:51 -0500
-Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
-        by smtp-cloud9.xs4all.net with ESMTPA
-        id 4jtUlXs0TI2394jtYlhI1h; Wed, 27 Jan 2021 13:26:00 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s2;
-        t=1611750360; bh=qSlszqB0O1piuaM6c1hXzd8CpL/mh8jhsF6rOIoDLcU=;
-        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
-         Subject;
-        b=GStSguRQStfiDZCSk15DvRNqhtywlqJykOK6gWvB87ms/FzgYTj8VdtsZKWo3PPuc
-         y40bIfALvYeAEyNxoPtDQoFblpS4LDLhv5ptO+i6SgpA2gWFNWVIz+Bm2bAAX4ppn0
-         7Up5qv4ykmcoJ7q152T6d1msxjUwwSdOe3tYDfNOMwmADk3SQa1zG94M9OMoejrOam
-         ThigzFMRUwC6qaV5ueK0keQnk9qo0tHQpOVc5aB4/nIh1RIYnXT8S+DJzUwLCjSmGn
-         hmYjRDYL4GMAk1PMJuvv4mj7/UWBvXm+e2SBRowlEuyLGSZ4dCjVpJh/1p+MkkheGr
-         sDhzv/Q1HJPiQ==
-Subject: Re: [PATCH v2 4/4] docs: Deprecate mfc display delay controls
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-References: <20210115092607.29849-1-stanimir.varbanov@linaro.org>
- <20210115092607.29849-5-stanimir.varbanov@linaro.org>
-From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Message-ID: <acd7cd1f-607c-5901-07b7-c661a12d0c60@xs4all.nl>
-Date:   Wed, 27 Jan 2021 13:25:56 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.0
+        id S237038AbhA0Mec (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jan 2021 07:34:32 -0500
+Received: from mail.kernel.org ([198.145.29.99]:48378 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237971AbhA0Mbm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 27 Jan 2021 07:31:42 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 94D1920739;
+        Wed, 27 Jan 2021 12:30:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1611750662;
+        bh=kfPWuMiJgpAL7RluS7ayXnMgIu7E8eRHIeDT+ADuoFE=;
+        h=From:To:Cc:Subject:Date:From;
+        b=jzeoAYfuKS7XXmCKfwYw+jb0uFJReYDxA5lHU5PnW2BVvm/Y5e7a3KUBmZ4+bwHPZ
+         wyhaw1+6VuxhfoITL53j1L40IZAq2ElRHk5ziOEqbuAzpbVBFoj3FJJuqm05j5zpk8
+         6OTfK9d1ydEIyxB26PWXFETiifozMHnxs9P6/hj5n9SjcHjgg4bdP6kWReOsAmHrCV
+         PSNzkbnyhGtBP6rxewXhUNLdXbbTgHmjKMW7NMy6R+quuKUEiqpqiKpaC//A9PApo+
+         WpWlfwELW9GaXd6/7oy0i4NBXcNlYOVIlCW6iHgC6XfdaEnSs+4LjxLtg/Xv/Akuca
+         BD9u+FiV6KM5g==
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/6] Add binding and dts for Qualcomm SM8350 SoC
+Date:   Wed, 27 Jan 2021 18:00:48 +0530
+Message-Id: <20210127123054.263231-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-In-Reply-To: <20210115092607.29849-5-stanimir.varbanov@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfKMCZr7OSd0aI+BYzO+vdtUjnnb/oFQndYbsiLiLwf00BwQMB0SjO5o1Z9pTnVfKKNNBeV+2gvGPz0/TS+bLG98V33owhH7Vc+uFgDNyQhI4Or1FtCfX
- KxhfkuKafXrvOmOlVs7DCUAJilfDOXfxM5qzTZYdfZt4BLVSVmxPOQgkKivmIdCPpUSNfVDJ7kytReDKtgBYVtULHQrSlKhG1LKpvLcD9A2PR3t+kSo9noTN
- OrgK+5/BWHdq8gg7FCQi2whKX8f+K9Dnc1I4hLCRFIV2IqcqPYxosGu/ih/ach/tFKMNevFGk6YYUXrEz37ZxfUQZ3asPcmPP+axPckP9T3bVwR5JBsTe2Zy
- o1DxlyfxCez9+kIEVRRgsf8r8jQjkg==
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/01/2021 10:26, Stanimir Varbanov wrote:
-> Deprecate mfc private display delay and display enable controls for
-> new clients and use the standard controls instead.
-> 
-> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Hi,
 
-Acked-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+This series adds the compatible for SM8350 SoC, boardi, cpu, scm and aoss
+compatible.  Then the base DTS for SM8350 SoC which contains clock (gcc,
+rpmh), pinctrl, uart, reserved memory and cpu nodes. The board file for MTP
+enables uart and adds the rpmh regulators
 
-Thanks!
+Changes in v2:
+ - Add ack by Rob recieved for v1
+ - Document cpu and scm compatible and use soc specific scm compatible
+ - Fix errors pointed by Rob and make dtbs_check as well as W=1 compilation
 
-	Hans
+Vinod Koul (6):
+  dt-bindings: arm: qcom: Document SM8350 SoC and boards
+  soc: qcom: aoss: Add SM8350 compatible
+  dt-bindings: arm: cpus: Add kryo685 compatible
+  dt-bindings: firmware: scm: Add SM8250 and SM8350 compatible
+  arm64: dts: qcom: Add basic devicetree support for SM8350 SoC
+  arm64: dts: qcom: Add basic devicetree support for SM8350-MTP board
 
-> ---
->  .../userspace-api/media/v4l/ext-ctrls-codec.rst        | 10 ++++++++++
->  1 file changed, 10 insertions(+)
-> 
-> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> index 5d7c47837035..815c6eb4a0d0 100644
-> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> @@ -2111,6 +2111,11 @@ MFC 5.1 Control IDs
->      feature can be used for example for generating thumbnails of videos.
->      Applicable to the H264 decoder.
->  
-> +    .. note::
-> +
-> +       This control is deprecated. Use the standard
-> +       ``V4L2_CID_MPEG_VIDEO_DEC_DISPLAY_DELAY_ENABLE`` control instead.
-> +
->  ``V4L2_CID_MPEG_MFC51_VIDEO_DECODER_H264_DISPLAY_DELAY (integer)``
->      Display delay value for H264 decoder. The decoder is forced to
->      return a decoded frame after the set 'display delay' number of
-> @@ -2118,6 +2123,11 @@ MFC 5.1 Control IDs
->      of display order, in addition the hardware may still be using the
->      returned buffer as a reference picture for subsequent frames.
->  
-> +    .. note::
-> +
-> +       This control is deprecated. Use the standard
-> +       ``V4L2_CID_MPEG_VIDEO_DEC_DISPLAY_DELAY`` control instead.
-> +
->  ``V4L2_CID_MPEG_MFC51_VIDEO_H264_NUM_REF_PIC_FOR_P (integer)``
->      The number of reference pictures used for encoding a P picture.
->      Applicable to the H264 encoder.
-> 
+ .../devicetree/bindings/arm/cpus.yaml         |   1 +
+ .../devicetree/bindings/arm/qcom.yaml         |   6 +
+ .../devicetree/bindings/firmware/qcom,scm.txt |   2 +
+ .../bindings/soc/qcom/qcom,aoss-qmp.txt       |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ arch/arm64/boot/dts/qcom/sm8350-mtp.dts       | 250 +++++++++
+ arch/arm64/boot/dts/qcom/sm8350.dtsi          | 499 ++++++++++++++++++
+ drivers/soc/qcom/qcom_aoss.c                  |   1 +
+ 8 files changed, 761 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sm8350-mtp.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sm8350.dtsi
+
+-- 
+2.26.2
 
