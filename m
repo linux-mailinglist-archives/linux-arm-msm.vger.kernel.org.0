@@ -2,63 +2,364 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E0BE5305FFE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jan 2021 16:46:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F2A63060B2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jan 2021 17:12:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236491AbhA0Pot (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jan 2021 10:44:49 -0500
-Received: from mail.kernel.org ([198.145.29.99]:36580 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236236AbhA0PnF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jan 2021 10:43:05 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 2F6F8207CC;
-        Wed, 27 Jan 2021 15:42:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1611762145;
-        bh=hTTKruYKBe92ui3jqhTUD4Nv5kSB/j+ATAzHAvegku0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=qTDJm0UOXGy1TM4Bk3E42hB2CzgjJ+zAA0BW2Hz67WXWg6TYvay6NEGSiIZmSL3AD
-         8Ug6ZXF4Kx7ZkYJ7aLIzlUPF4G3K/qzvNlChP7qGrI/8pnp43+c1X2gdEHCXaadgWR
-         Eida5XTdN6u7KMSLPxvAcSl+AH7fbTPp7Z7XNFh4zdrVHB3swWJoI2dheXAZTdFTCQ
-         xfjsnKjVvbbld5TrDpq9m5HQPICi7Lsi1PrEn70EiGk0ZjAxuJmyHtpPZ9KIklQHWf
-         aEbevlVOrWTzczKRgBP8/8URuqo8ZtnYHyi39HDznPMeM/Yl2dWNwyoZ6KdWeh89T0
-         VGX+C2YBEh22w==
-Date:   Wed, 27 Jan 2021 21:12:21 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        dan.j.williams@intel.com, shawn.guo@linaro.org,
-        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] dma: qcom: bam_dma: Manage clocks when
- controlled_remotely is set
-Message-ID: <20210127154221.GD2771@vkoul-mobl>
-References: <20210126211859.790892-1-thara.gopinath@linaro.org>
+        id S234788AbhA0QLh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jan 2021 11:11:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50344 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235078AbhA0O5J (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 27 Jan 2021 09:57:09 -0500
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65CABC0610D6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jan 2021 06:50:40 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id g3so3030189ejb.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jan 2021 06:50:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=SkMVbS7aH6BuE3265iqQ4ivP1hacr/hHVcVPsN8FP4c=;
+        b=xvIbZvcxEiFKXrjbmYZhn7tF03R87W9PEwkDMPL8Atz0r6fKve1q3339mwRIlJ5f1j
+         v+ncP/KzAQdJVZXMHehsptb4UDNXlIkY8YNEi3ake3CGWdhylvnk332ToBaPnbB5hL87
+         HT6Pmwys7Kp15SKMGi43r/hltwQ5WLhIpjzReryDQEoWSH3CKbWVy2tg5jEAQP0YsvPI
+         vEYKhj4mS1DXIMjfckcaKY/ynYKNsraFm3S2TZmReUa3oSo7GUPxIPijSxTg5kguBOqG
+         GcUvgSMP5/iFS//MG89Eatucu+GMBa0KzF4vr/SPQkOl1O+Exl7t9asRP+M0TT1CF0wJ
+         lzyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=SkMVbS7aH6BuE3265iqQ4ivP1hacr/hHVcVPsN8FP4c=;
+        b=PhazHn2IzOIiaLsMvBO7GBo6uO83M8rKzTLdXGbUpbSWdSJ1mOnI9SmCMy790n0MY4
+         ZvECH0+5hVEILJTrsWNv4Qx072kX/+HujAuWpX5vuzSFQpIJJsv02BeZqkWentpHf6Xs
+         zpnLdnBPm5k7hpyaGZ/OfjTef9w8LmWSbV9FmIZj9sz/EbGBy3wZx2FpQUSv9sBaABKF
+         RA3Ew551FcvRskQLx3Edh11pV58Zuzq5PxuimXYpo7TwJN/uDGr/U/N4DyMnDfcMfxMt
+         EhCtydWo0cJPzZrxuT0L7PcLR72z3FrcylR3OWEonrkJHkbu12gM9xPNXd6DK7PiJC2b
+         rjvQ==
+X-Gm-Message-State: AOAM5334f/BqKfy9M4AwLSKLgKuIALYdXdmJ0yqrdS/dOKQeE+DCA/F1
+        nsJQALYid0TWBZifM3/5jtrm3Q==
+X-Google-Smtp-Source: ABdhPJyigzXmoeo7pXXK9HulVnLK5oyPiAG9b/I4Z1ioazSxzxSw+ItI7ISs+yhI4VwbR8A9ejbV1w==
+X-Received: by 2002:a17:906:cb82:: with SMTP id mf2mr7488284ejb.515.1611759039140;
+        Wed, 27 Jan 2021 06:50:39 -0800 (PST)
+Received: from localhost.localdomain ([2a02:2450:102f:d6a:62e7:589a:1625:7acc])
+        by smtp.gmail.com with ESMTPSA id ah12sm947799ejc.70.2021.01.27.06.50.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Jan 2021 06:50:38 -0800 (PST)
+From:   Robert Foss <robert.foss@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        robert.foss@linaro.org, todor.too@gmail.com, mchehab@kernel.org,
+        robh+dt@kernel.org, catalin.marinas@arm.com, will@kernel.org,
+        shawnguo@kernel.org, leoyang.li@nxp.com, geert+renesas@glider.be,
+        arnd@arndb.de, Anson.Huang@nxp.com, michael@walle.cc,
+        agx@sigxcpu.org, max.oss.09@gmail.com,
+        angelogioacchino.delregno@somainline.org,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Rob Herring <robh@kernel.org>,
+        Andrey Konovalov <andrey.konovalov@linaro.org>
+Cc:     Tomasz Figa <tfiga@chromium.org>,
+        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
+        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Jonathan Marek <jonathan@marek.ca>
+Subject: [PATCH v3 13/22] dt-bindings: media: camss: Add qcom,msm8916-camss binding
+Date:   Wed, 27 Jan 2021 15:49:21 +0100
+Message-Id: <20210127144930.2158242-14-robert.foss@linaro.org>
+X-Mailer: git-send-email 2.27.0
+In-Reply-To: <20210127144930.2158242-1-robert.foss@linaro.org>
+References: <20210127144930.2158242-1-robert.foss@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210126211859.790892-1-thara.gopinath@linaro.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26-01-21, 16:18, Thara Gopinath wrote:
-> When bam dma is "controlled remotely", thus far clocks were not controlled
-> from the Linux. In this scenario, Linux was disabling runtime pm in bam dma
-> driver and not doing any clock management in suspend/resume hooks.
-> 
-> With introduction of crypto engine bam dma, the clock is a rpmh resource
-> that can be controlled from both Linux and TZ/remote side.  Now bam dma
-> clock is getting enabled during probe even though the bam dma can be
-> "controlled remotely". But due to clocks not being handled properly,
-> bam_suspend generates a unbalanced clk_unprepare warning during system
-> suspend.
-> 
-> To fix the above issue and to enable proper clock-management, this patch
-> enables runtim-pm and handles bam dma clocks in suspend/resume hooks if
-> the clock node is present irrespective of controlled_remotely property.
+Add bindings for qcom,msm8916-camss in order to support the camera
+subsystem on MSM8916.
 
-Applied after fixing subsystem name, thanks
+Signed-off-by: Robert Foss <robert.foss@linaro.org>
+---
 
+Changes since v2:
+ - Remove redundant descriptions
+ - Add power domain description
+ - Make clock-lanes a constant
+ - Add max & minItems to data-lanes
+ - Remove ports requirement - endpoint & reg
+ - Rework to conform to new port schema
+
+
+ .../bindings/media/qcom,msm8916-camss.yaml    | 256 ++++++++++++++++++
+ 1 file changed, 256 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml
+
+diff --git a/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml b/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml
+new file mode 100644
+index 000000000000..304908072d72
+--- /dev/null
++++ b/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml
+@@ -0,0 +1,256 @@
++# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
++
++%YAML 1.2
++---
++$id: "http://devicetree.org/schemas/media/qcom,msm8916-camss.yaml#"
++$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++
++title: Qualcomm CAMSS ISP
++
++maintainers:
++  - Robert Foss <robert.foss@linaro.org>
++  - Todor Tomov <todor.too@gmail.com>
++
++description: |
++  The CAMSS IP is a CSI decoder and ISP present on Qualcomm platforms
++
++properties:
++  compatible:
++    const: qcom,msm8916-camss
++
++  clocks:
++    minItems: 19
++    maxItems: 19
++
++  clock-names:
++    items:
++      - const: top_ahb
++      - const: ispif_ahb
++      - const: csiphy0_timer
++      - const: csiphy1_timer
++      - const: csi0_ahb
++      - const: csi0
++      - const: csi0_phy
++      - const: csi0_pix
++      - const: csi0_rdi
++      - const: csi1_ahb
++      - const: csi1
++      - const: csi1_phy
++      - const: csi1_pix
++      - const: csi1_rdi
++      - const: ahb
++      - const: vfe0
++      - const: csi_vfe0
++      - const: vfe_ahb
++      - const: vfe_axi
++
++  interrupts:
++    minItems: 6
++    maxItems: 6
++
++  interrupt-names:
++    items:
++      - const: csiphy0
++      - const: csiphy1
++      - const: csid0
++      - const: csid1
++      - const: ispif
++      - const: vfe0
++
++  iommus:
++    maxItems: 1
++
++  power-domains:
++    items:
++      - description: VFE GDSC - Video Front End, Global Distributed Switch Controller.
++
++  ports:
++    $ref: /schemas/graph.yaml#/properties/ports
++
++    description:
++      CSI input ports.
++
++    properties:
++      port@0:
++        $ref: /schemas/graph.yaml#/$defs/port-base
++        unevaluatedProperties: false
++        description:
++          Input port for receiving CSI data.
++
++        properties:
++          endpoint:
++            $ref: video-interfaces.yaml#
++            unevaluatedProperties: false
++
++            properties:
++              clock-lanes:
++                items:
++                  - const: 1
++
++              data-lanes:
++                description:
++                  An array of physical data lanes indexes.
++                  Position of an entry determines the logical
++                  lane number, while the value of an entry
++                  indicates physical lane index. Lane swapping
++                  is supported. Physical lane indexes;
++                  0, 2, 3, 4.
++                minItems: 1
++                maxItems: 4
++
++            required:
++              - clock-lanes
++              - data-lanes
++
++      port@1:
++        $ref: /schemas/graph.yaml#/$defs/port-base
++        unevaluatedProperties: false
++        description:
++          Input port for receiving CSI data.
++
++        properties:
++          endpoint:
++            $ref: video-interfaces.yaml#
++            unevaluatedProperties: false
++
++            properties:
++              clock-lanes:
++                items:
++                  - const: 1
++
++              data-lanes:
++                minItems: 1
++                maxItems: 4
++
++            required:
++              - clock-lanes
++              - data-lanes
++
++  reg:
++    minItems: 9
++    maxItems: 9
++
++  reg-names:
++    items:
++      - const: csiphy0
++      - const: csiphy0_clk_mux
++      - const: csiphy1
++      - const: csiphy1_clk_mux
++      - const: csid0
++      - const: csid1
++      - const: ispif
++      - const: csi_clk_mux
++      - const: vfe0
++
++  vdda-supply:
++    description:
++      Definition of the regulator used as analog power supply.
++
++required:
++  - clock-names
++  - clocks
++  - compatible
++  - interrupt-names
++  - interrupts
++  - iommus
++  - power-domains
++  - reg
++  - reg-names
++  - vdda-supply
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    #include <dt-bindings/clock/qcom,gcc-msm8916.h>
++
++    camss: camss@1b00000 {
++      compatible = "qcom,msm8916-camss";
++
++      clocks = <&gcc GCC_CAMSS_TOP_AHB_CLK>,
++        <&gcc GCC_CAMSS_ISPIF_AHB_CLK>,
++        <&gcc GCC_CAMSS_CSI0PHYTIMER_CLK>,
++        <&gcc GCC_CAMSS_CSI1PHYTIMER_CLK>,
++        <&gcc GCC_CAMSS_CSI0_AHB_CLK>,
++        <&gcc GCC_CAMSS_CSI0_CLK>,
++        <&gcc GCC_CAMSS_CSI0PHY_CLK>,
++        <&gcc GCC_CAMSS_CSI0PIX_CLK>,
++        <&gcc GCC_CAMSS_CSI0RDI_CLK>,
++        <&gcc GCC_CAMSS_CSI1_AHB_CLK>,
++        <&gcc GCC_CAMSS_CSI1_CLK>,
++        <&gcc GCC_CAMSS_CSI1PHY_CLK>,
++        <&gcc GCC_CAMSS_CSI1PIX_CLK>,
++        <&gcc GCC_CAMSS_CSI1RDI_CLK>,
++        <&gcc GCC_CAMSS_AHB_CLK>,
++        <&gcc GCC_CAMSS_VFE0_CLK>,
++        <&gcc GCC_CAMSS_CSI_VFE0_CLK>,
++        <&gcc GCC_CAMSS_VFE_AHB_CLK>,
++        <&gcc GCC_CAMSS_VFE_AXI_CLK>;
++
++      clock-names = "top_ahb",
++        "ispif_ahb",
++        "csiphy0_timer",
++        "csiphy1_timer",
++        "csi0_ahb",
++        "csi0",
++        "csi0_phy",
++        "csi0_pix",
++        "csi0_rdi",
++        "csi1_ahb",
++        "csi1",
++        "csi1_phy",
++        "csi1_pix",
++        "csi1_rdi",
++        "ahb",
++        "vfe0",
++        "csi_vfe0",
++        "vfe_ahb",
++        "vfe_axi";
++
++      interrupts = <GIC_SPI 78 IRQ_TYPE_EDGE_RISING>,
++        <GIC_SPI 79 IRQ_TYPE_EDGE_RISING>,
++        <GIC_SPI 51 IRQ_TYPE_EDGE_RISING>,
++        <GIC_SPI 52 IRQ_TYPE_EDGE_RISING>,
++        <GIC_SPI 55 IRQ_TYPE_EDGE_RISING>,
++        <GIC_SPI 57 IRQ_TYPE_EDGE_RISING>;
++
++      interrupt-names = "csiphy0",
++        "csiphy1",
++        "csid0",
++        "csid1",
++        "ispif",
++        "vfe0";
++
++      iommus = <&apps_iommu 3>;
++
++      power-domains = <&gcc VFE_GDSC>;
++
++      reg = <0x01b0ac00 0x200>,
++        <0x01b00030 0x4>,
++        <0x01b0b000 0x200>,
++        <0x01b00038 0x4>,
++        <0x01b08000 0x100>,
++        <0x01b08400 0x100>,
++        <0x01b0a000 0x500>,
++        <0x01b00020 0x10>,
++        <0x01b10000 0x1000>;
++
++      reg-names = "csiphy0",
++        "csiphy0_clk_mux",
++        "csiphy1",
++        "csiphy1_clk_mux",
++        "csid0",
++        "csid1",
++        "ispif",
++        "csi_clk_mux",
++        "vfe0";
++
++      vdda-supply = <&reg_2v8>;
++
++      ports {
++        #address-cells = <1>;
++        #size-cells = <0>;
++      };
++
++    };
 -- 
-~Vinod
+2.27.0
+
