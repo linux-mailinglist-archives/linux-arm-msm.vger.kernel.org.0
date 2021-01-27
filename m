@@ -2,169 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BE5E305E64
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jan 2021 15:35:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B2011305EA9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jan 2021 15:51:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231562AbhA0OeA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jan 2021 09:34:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45156 "EHLO
+        id S234589AbhA0OvO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jan 2021 09:51:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234237AbhA0OdL (ORCPT
+        with ESMTP id S234325AbhA0Our (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jan 2021 09:33:11 -0500
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8626BC061788
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jan 2021 06:32:31 -0800 (PST)
-Received: by mail-ot1-x32b.google.com with SMTP id h14so1831119otr.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jan 2021 06:32:31 -0800 (PST)
+        Wed, 27 Jan 2021 09:50:47 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 216F4C061756
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jan 2021 06:50:07 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id c6so2796402ede.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jan 2021 06:50:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=AkjKYkZu/O3ZhL9C1ly1S1R+Lu1EqcZrKzNmqSx7LJM=;
-        b=ds5cTovti/PtWeJ9L9rKyAOoOCJlHao6cqyS9WX5rNXOcqjvrACFYWilYmHuy7YEyU
-         Zr2gd5FdUeJLOW4mz/aprPbp4jYKkyWlUXgrn9h3WYr3u6hB8NAXTQzpnelYnHsugmKZ
-         8PMgx78aR3uz8ZN6yPR1Fkrs+Kt5ya4IVDz5OvzISuhkLEicnFWhBEqdIXCZprV357r3
-         980hdxNsheXU0huewLbFRO07m8egm/Zkuhqmd8q/0jApuDMAriwEoDScJaO8OaW6pD60
-         J9WcOsudPLTYDO1sGadIy6cBl0PLr/9byY+lSqueuNJHlLE2zEF6GcacqQhYJS9jvbWy
-         qo+g==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GCGC/gkCyw1X0Err6vZJJCoT1TDJpHK/DfxHGbzxp00=;
+        b=HDMOxm8BahVW66FebcoyOtIxADN4QSEmi0GGMF1ClaANemxus4PC6mIRHDfmylCRag
+         dNGaPo5EGnabEx0h+qvBjn29EtyfJ9NqWPcllg9p5GrPgU3DtckdMhWf7WD8LU3zNZpb
+         tgJp0pBZc5faWCSFbr9pXdqGUrp3AC89KHS669wMphvUpkZFIPOEU1gbppH3TG+AJ6t1
+         3sCPaBuMK9bvsGBdkLHfj8BNTvNrID7JE9pzB+dp4n3Kwzsrmll6CGB30cFquxNUIjXT
+         eRlMr6PFh3orGEXZ4n+6/qEHt+uAzE7b+EdnowlWpL/NFGWEzsD9w4vzbjhS0jsPejOS
+         ZMfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=AkjKYkZu/O3ZhL9C1ly1S1R+Lu1EqcZrKzNmqSx7LJM=;
-        b=RXrucWuZ3d6uWZfSTX6VGum/JQ20uImVQ5RN5/y1NuIu2iMCEh09NuD58QmGNgcCon
-         lgoImM9Sgdc8YRNPIvqFLROQHjv6IOxNe1g1ifVbOoi4xebVnoev+6pebLS1DoO1RYoR
-         EDTB+o1UDYxgjeyRprDphF9fW1Nmnw7vjfwx0WU9kgh8AiDkd8Vsu0J+k8G8k6qemUAE
-         4UQwnMOBc8xgzDx+G8K22cif9Di5flZNmNUUc2lN4CkfRfK6yjXjSnx2zTZxsCja4qzz
-         rgWFj1vb5MJFrjy/AWbAyE1YWLsXQBhipG2UozSd47vuA/6Qo491jFnVgDR30B+77tWW
-         PCIQ==
-X-Gm-Message-State: AOAM531Skxza9uvsORVqd1YeyiIlSqlTfDalEHa4MwVX8R0bEaBPOawM
-        iBr2XLxgPc1jbtVaWasn3W4cBA==
-X-Google-Smtp-Source: ABdhPJwmTqQPsWpvtbjcC2msBX3cGjNcoI9u2JDtZqhZPL4fnGyhqt4gHpM29qTSW+yW9tkibHcSxA==
-X-Received: by 2002:a9d:5cc3:: with SMTP id r3mr8437957oti.286.1611757950813;
-        Wed, 27 Jan 2021 06:32:30 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id o98sm404617ota.0.2021.01.27.06.32.29
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GCGC/gkCyw1X0Err6vZJJCoT1TDJpHK/DfxHGbzxp00=;
+        b=J0kFJdvgqMMyYwny/3QgY/luE1A13kF/FJ6yrsLjaxAPgqYsz7YXZMQ+oIBDhr5GMS
+         MnF0AYPcTrmxeZzwFZc+gZb921GstFVdBCwSVIrnwYFQPZ3R7g2qcNbb33W0HS0p7pHJ
+         butLx/ApCxTbiD83c9q8pBS8EPp6Kc7ZJ7yYqxuvAU0B0omlgbo0RRM3w5QBhPVq8bmh
+         jFgT8sD7EQY28BD59Q8UgXXClSeM0w8ut6GPJcr8rsqt6H1+y/8R6gtSAWI40jAcDfrQ
+         7z8EjW5BmhmAJt9boEmSAY5K9s6QeLrLr+BoVM0Iyd1bdPXcJTN6j24l8vD7AwFCIB2r
+         ggug==
+X-Gm-Message-State: AOAM531Q4M7w2il/eYJ7LIWdgRumrEMp4sKSO+ortGqwPRVALU+GJ1lO
+        8ZZv6R7VjAfrwnyIVY8E4BhVSg==
+X-Google-Smtp-Source: ABdhPJzwvRUXcgXlLmEU7q2oiNLblvR3egcACaa/+BTckiePbKCd8trvnOCUk8BZ3HzC/TfSMFQH7A==
+X-Received: by 2002:a05:6402:78f:: with SMTP id d15mr9145986edy.362.1611759005648;
+        Wed, 27 Jan 2021 06:50:05 -0800 (PST)
+Received: from localhost.localdomain ([2a02:2450:102f:d6a:62e7:589a:1625:7acc])
+        by smtp.gmail.com with ESMTPSA id ah12sm947799ejc.70.2021.01.27.06.50.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Jan 2021 06:32:30 -0800 (PST)
-Date:   Wed, 27 Jan 2021 08:32:28 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     "N?colas F. R. A. Prado" <nfraprado@protonmail.com>
-Cc:     Pavel Machek <pavel@ucw.cz>, Dan Murphy <dmurphy@ti.com>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-leds@vger.kernel.org,
+        Wed, 27 Jan 2021 06:50:04 -0800 (PST)
+From:   Robert Foss <robert.foss@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        robert.foss@linaro.org, todor.too@gmail.com, mchehab@kernel.org,
+        robh+dt@kernel.org, catalin.marinas@arm.com, will@kernel.org,
+        shawnguo@kernel.org, leoyang.li@nxp.com, geert+renesas@glider.be,
+        arnd@arndb.de, Anson.Huang@nxp.com, michael@walle.cc,
+        agx@sigxcpu.org, max.oss.09@gmail.com,
+        angelogioacchino.delregno@somainline.org,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Brian Masney <masneyb@onstation.org>,
-        Luca Weiss <luca@z3ntu.xyz>,
-        Russell King <linux@armlinux.org.uk>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        lkcamp@lists.libreplanetbr.org, andrealmeid@collabora.com
-Subject: Re: [PATCH v2 4/4] ARM: dts: qcom: pm8941: Add nodes for QCOM SPMI
- Flash LEDs
-Message-ID: <YBF5fPD8Mq0K8XDn@builder.lan>
-References: <20210126140240.1517044-1-nfraprado@protonmail.com>
- <20210126140240.1517044-5-nfraprado@protonmail.com>
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Rob Herring <robh@kernel.org>,
+        Andrey Konovalov <andrey.konovalov@linaro.org>
+Cc:     Tomasz Figa <tfiga@chromium.org>,
+        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
+        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Jonathan Marek <jonathan@marek.ca>
+Subject: [PATCH v3 00/22] Add support for the SDM845 Camera Subsystem
+Date:   Wed, 27 Jan 2021 15:49:08 +0100
+Message-Id: <20210127144930.2158242-1-robert.foss@linaro.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210126140240.1517044-5-nfraprado@protonmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 26 Jan 08:06 CST 2021, N?colas F. R. A. Prado wrote:
+This series implements support for the camera subsystem found in
+the SDM845 SOCs and the Titan 170 ISP. The support is partial
+in that it implements CSIPHY, CSID, and partial VFE support.
 
-> Add the necessary devicetree nodes for the Qualcomm SPMI Flash LEDs
-> present in PM8941.
-> 
-> Signed-off-by: Nícolas F. R. A. Prado <nfraprado@protonmail.com>
-> ---
-> Changes in v2:
-> - Moved from hammerhead dts to pm8941 dtsi, as it was this way downstream
-> - Now using values from leds-qcom-spmi-flash.h
-> 
->  arch/arm/boot/dts/qcom-pm8941.dtsi | 38 ++++++++++++++++++++++++++++++
->  1 file changed, 38 insertions(+)
-> 
-> diff --git a/arch/arm/boot/dts/qcom-pm8941.dtsi b/arch/arm/boot/dts/qcom-pm8941.dtsi
-> index c1f2012d1c8b..89309d3c777c 100644
-> --- a/arch/arm/boot/dts/qcom-pm8941.dtsi
-> +++ b/arch/arm/boot/dts/qcom-pm8941.dtsi
-> @@ -2,6 +2,8 @@
->  #include <dt-bindings/iio/qcom,spmi-vadc.h>
->  #include <dt-bindings/interrupt-controller/irq.h>
->  #include <dt-bindings/spmi/spmi.h>
-> +#include <dt-bindings/leds/common.h>
-> +#include <dt-bindings/leds/leds-qcom-spmi-flash.h>
->  
->  &spmi_bus {
->  
-> @@ -189,5 +191,41 @@ pm8941_5vs2: 5vs2 {
->  				regulator-initial-mode = <1>;
->  			};
->  		};
-> +
-> +		qcom,spmi-flash@d300 {
+The Titan generation of the ISP diverges a fair amount from the
+design of the previous architecture generation, CAMSS. As a result
+some pretty invasive refactoring is done in this series. It also
+means that at this time we're unable to implement support for all
+of the IP blocks contained. This is due to a combination of legal
+considerations with respect to the IP and its owner Qualcomm and
+time & man hour constrains on the Linaro side.
 
-Please avoid "qcom," in the node names.
+The CSIPHY (CSI Physical Layer) & CSID (CSI Decoder) support is
+complete, but the VFE (Video Front End, which is referred to as IFE
+(Image Front End) in the Titan generation of ISPs) only has support
+for the RDI (Raw Dump Interface) which allows the raw output of
+the CSID to be written to memory.
 
-> +			status = "okay";
+The 2nd interface implemented in the VFE silicon is the PIX
+interface, and camss does not support it for this generation of ISPs.
+The reason for this is that the PIX interface is used for sending
+image data to the BPS (Bayer Processing Section) & IPE (Image
+Processing Engine), but both of these units are beyond the scope
+of enabling basic ISP functionality for the SDM845.
 
-The "default" status is "okay", so no need to specify that if you're not
-disabling it. That said, there are 8974 devices without flash LED...
+Since the Titan architecture generation diverges quite a bit from
+the CAMSS generation, a lot of pretty major refactoring is carried
+out in this series. Both the CSID & VFE core paths are made more
+general and hardware version specific parts are broken out.
+The CSIPHY didn't require quite as radical changes and therefore
+keeps its current form.
 
-> +
-> +			compatible = "qcom,spmi-flash";
-> +			reg = <0xd300 0x100>;
-> +			flash-boost-supply = <&pm8941_5vs1>;
-> +			torch-boost-supply = <&pm8941_5v>;
-> +			pm8941_flash0: led0 {
-> +				led-sources = <0>;
-> +				function = LED_FUNCTION_FLASH;
-> +				color = <LED_COLOR_ID_WHITE>;
-> +				led-max-microamp = <200000>;
-> +				flash-max-microamp = <1000000>;
-> +				flash-max-timeout-us = <1280000>;
-> +				default-state = "off";
-> +				qcom,clamp-curr = <200000>;
-> +				qcom,headroom = <QCOM_SPMI_FLASH_HEADROOM_500MV>;
-> +				qcom,startup-dly = <QCOM_SPMI_FLASH_STARTUP_DLY_128US>;
-> +				qcom,safety-timer;
+Tested on:
+ - Qcom RB3 / db845c + camera mezzanine, which is SDM845 based
+ - db410c + D3 Camera mezzanine, which is APQ8016 based
+ 
+Branch:
+ - https://git.linaro.org/people/robert.foss/linux.git/log/?h=camss_sdm845_v1
+ - https://git.linaro.org/people/robert.foss/linux.git/log/?h=camss_sdm845_v2
+ - https://git.linaro.org/people/robert.foss/linux.git/log/?h=camss_sdm845_v3
 
-...and I would expect that at least some of these properties should be
-tweaked/tuned/reviewed for each device.
 
-So it would probably be a good idea to make the spmi-flash status
-"disabled" and move some of these properties to the product .dts.
+Due to the dt-bindings supporting sdm660-camss, this series depends
+the sdm660 clock driver being upstreamed. I've linked this series below.
 
-Regards,
-Bjorn
+SDM630/660 Multimedia and GPU clock controllers
+https://lkml.org/lkml/2020/9/26/166
 
-> +			};
-> +
-> +			pm8941_flash1: led1 {
-> +				led-sources = <1>;
-> +				function = LED_FUNCTION_FLASH;
-> +				color = <LED_COLOR_ID_WHITE>;
-> +				led-max-microamp = <200000>;
-> +				flash-max-microamp = <1000000>;
-> +				flash-max-timeout-us = <1280000>;
-> +				default-state = "off";
-> +				qcom,clamp-curr = <200000>;
-> +				qcom,headroom = <QCOM_SPMI_FLASH_HEADROOM_500MV>;
-> +				qcom,startup-dly = <QCOM_SPMI_FLASH_STARTUP_DLY_128US>;
-> +				qcom,safety-timer;
-> +			};
-> +		};
->  	};
->  };
-> -- 
-> 2.30.0
-> 
-> 
+
+
+Robert Foss (22):
+  media: camss: Fix vfe_isr_comp_done() documentation
+  media: camss: Fix vfe_isr comment typo
+  media: camss: Add CAMSS_845 camss version
+  media: camss: Make ISPIF subdevice optional
+  media: camss: Refactor VFE HW version support
+  media: camss: Add support for VFE hardware version Titan 170
+  media: camss: Add missing format identifiers
+  media: camss: Refactor CSID HW version support
+  media: camss: Add support for CSID hardware version Titan 170
+  media: camss: Add support for CSIPHY hardware version Titan 170
+  media: camss: Remove per VFE power domain toggling
+  media: camss: Enable SDM845
+  dt-bindings: media: camss: Add qcom,msm8916-camss binding
+  dt-bindings: media: camss: Add qcom,msm8996-camss binding
+  dt-bindings: media: camss: Add qcom,sdm660-camss binding
+  dt-bindings: media: camss: Add qcom,sdm845-camss binding
+  MAINTAINERS: Change CAMSS documentation to use dtschema bindings
+  media: dt-bindings: media: Remove qcom,camss documentation
+  arm64: defconfig: Build Qcom CAMSS as module
+  arm64: dts: sdm845: Add CAMSS ISP node
+  arm64: dts: sdm845-db845c: Configure regulators for camss node
+  arm64: dts: sdm845-db845c: Enable ov8856 sensor and connect to ISP
+
+ .../devicetree/bindings/media/qcom,camss.txt  |  236 ----
+ .../bindings/media/qcom,msm8916-camss.yaml    |  256 ++++
+ .../bindings/media/qcom,msm8996-camss.yaml    |  387 ++++++
+ .../bindings/media/qcom,sdm660-camss.yaml     |  398 ++++++
+ .../bindings/media/qcom,sdm845-camss.yaml     |  370 ++++++
+ MAINTAINERS                                   |    2 +-
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts    |   23 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  130 ++
+ arch/arm64/configs/defconfig                  |    1 +
+ drivers/media/platform/qcom/camss/Makefile    |    6 +
+ .../platform/qcom/camss/camss-csid-170.c      |  602 +++++++++
+ .../platform/qcom/camss/camss-csid-4-1.c      |  338 +++++
+ .../platform/qcom/camss/camss-csid-4-7.c      |  406 ++++++
+ .../media/platform/qcom/camss/camss-csid.c    |  620 +--------
+ .../media/platform/qcom/camss/camss-csid.h    |  178 ++-
+ .../qcom/camss/camss-csiphy-3ph-1-0.c         |  182 ++-
+ .../media/platform/qcom/camss/camss-csiphy.c  |   66 +-
+ .../media/platform/qcom/camss/camss-ispif.c   |  117 +-
+ .../media/platform/qcom/camss/camss-ispif.h   |    3 +-
+ .../media/platform/qcom/camss/camss-vfe-170.c |  804 ++++++++++++
+ .../media/platform/qcom/camss/camss-vfe-4-1.c |  119 +-
+ .../media/platform/qcom/camss/camss-vfe-4-7.c |  240 ++--
+ .../media/platform/qcom/camss/camss-vfe-4-8.c | 1166 +++++++++++++++++
+ .../platform/qcom/camss/camss-vfe-gen1.c      |  763 +++++++++++
+ .../platform/qcom/camss/camss-vfe-gen1.h      |  110 ++
+ drivers/media/platform/qcom/camss/camss-vfe.c |  840 +-----------
+ drivers/media/platform/qcom/camss/camss-vfe.h |  118 +-
+ .../media/platform/qcom/camss/camss-video.c   |  100 ++
+ drivers/media/platform/qcom/camss/camss.c     |  419 ++++--
+ drivers/media/platform/qcom/camss/camss.h     |   17 +-
+ 30 files changed, 6959 insertions(+), 2058 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/media/qcom,camss.txt
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
+ create mode 100644 drivers/media/platform/qcom/camss/camss-csid-170.c
+ create mode 100644 drivers/media/platform/qcom/camss/camss-csid-4-1.c
+ create mode 100644 drivers/media/platform/qcom/camss/camss-csid-4-7.c
+ create mode 100644 drivers/media/platform/qcom/camss/camss-vfe-170.c
+ create mode 100644 drivers/media/platform/qcom/camss/camss-vfe-4-8.c
+ create mode 100644 drivers/media/platform/qcom/camss/camss-vfe-gen1.c
+ create mode 100644 drivers/media/platform/qcom/camss/camss-vfe-gen1.h
+
+-- 
+2.27.0
+
