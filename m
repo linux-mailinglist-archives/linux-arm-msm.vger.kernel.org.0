@@ -2,180 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B916305265
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jan 2021 06:48:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DAA2530536A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jan 2021 07:48:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231944AbhA0Frr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jan 2021 00:47:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42170 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231625AbhA0Fe1 (ORCPT
+        id S231148AbhA0GsA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jan 2021 01:48:00 -0500
+Received: from a1.mail.mailgun.net ([198.61.254.60]:43890 "EHLO
+        a1.mail.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231797AbhA0Gb5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jan 2021 00:34:27 -0500
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E7B8C061574
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 21:33:42 -0800 (PST)
-Received: by mail-ot1-x32c.google.com with SMTP id i20so599238otl.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jan 2021 21:33:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=UXTjp2O+kLbB9CTCJxJt0SD+zZK5wsiYg7svDRD619A=;
-        b=dOn1TON+07GhKGJIoyayMjmuy9BWh8V5ii5n4VTX82icYwL/TZwbySdeoTGe3zAzC7
-         oSuVT+QQQ33v+XleMivKtoG2pI8n2OuZ9WN0bVODaUZ1UVzMKaFDoNYW6SEGK0pCKGKQ
-         oWxYyv3zdNrU3Ep7X6AREUC29Rlo8lcyt4qvfUGVJ+VMNTx5UuJgcjV0rAxgRI/6Bk/K
-         0i+FrH5GAbdXLc9mePC17FZ9ip41xi53D0APB/iDZlFNapeDRcpz5BD2WXJpdKPZBOIJ
-         MnfwfXayWeimpxJ4hLheuNTqOC1Bq0ahgp4WJngILzzvK0tC/Jj3ClVY+bA4mPvdkw79
-         6Z2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=UXTjp2O+kLbB9CTCJxJt0SD+zZK5wsiYg7svDRD619A=;
-        b=r4HihVPjSxucD4g2i7WAchQ+rau5a/ES4x4kM04ZyLUGSphfNOGOkGWMa5Dt/CsYQ5
-         J5uEqwPxbTafOsj76Is8LCcM1Yv0pxEPnmuaX+VM3UfbuhzEwbwdvocpaJxXfect9eP4
-         UmNpkOC5HNWElnaZMiUat6poLJKmF6cX379KMFGElcGArjQDqdeToDCwAzr/AMp8wBrp
-         TCI+KcJnC834LtNn5/AGfpATRSyfDU7KPndjPtnKSY4unZ9io8Jj937X5SYsq4oW0VjH
-         JgFroMMEObfghmdiHJ97sOiF8/Skr8qZ3Jd22c61l8HVHcGHNd2caPcU7ycdh462pJl6
-         VDUw==
-X-Gm-Message-State: AOAM532srQFleA18XUVNlMjIAMO6KLe6RyDYCxIB+9jDHxYINVRme4LS
-        UzM7puwRXzhHF+7EUllc+V4JNw==
-X-Google-Smtp-Source: ABdhPJw+Yk3fYOO7ud+1dReFka/e+p0BzGgE33P9Oxdtl8BwVzczBeoJnHajCPDXBfylS3T2qXrRLA==
-X-Received: by 2002:a9d:37a6:: with SMTP id x35mr6665900otb.275.1611725621367;
-        Tue, 26 Jan 2021 21:33:41 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id y66sm260747oia.20.2021.01.26.21.33.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jan 2021 21:33:40 -0800 (PST)
-Date:   Tue, 26 Jan 2021 23:33:38 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     agross@kernel.org, dan.j.williams@intel.com, vkoul@kernel.org,
-        shawn.guo@linaro.org, srinivas.kandagatla@linaro.org,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] dma: qcom: bam_dma: Manage clocks when
- controlled_remotely is set
-Message-ID: <YBD7Mhh1MowRDMBF@builder.lan>
-References: <20210126211859.790892-1-thara.gopinath@linaro.org>
+        Wed, 27 Jan 2021 01:31:57 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1611729094; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=1AlCbGcXQpcDuIl+9znSO2VU+lh46j8cRnkxvcuFTtU=; b=lKeNUMCEuLR5ib9Z14TOxi/YmZNpZn4P+O1MZxAjBajMIq7MvdYgmhqcTTCOoP67McEXoLtg
+ NNUJIqF9dVi6zz2C73B3ZJJTyNRe5g8Um00dwZ7v2eZBxjduK2wOXoY5TyoeUCA75N6dYs5Y
+ 37y9wou2VLxPXIGNyMC0ETJP8q4=
+X-Mailgun-Sending-Ip: 198.61.254.60
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 601108aaf07bb817adf5dd6d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 27 Jan 2021 06:31:06
+ GMT
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A1764C43463; Wed, 27 Jan 2021 06:31:06 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 28861C433C6;
+        Wed, 27 Jan 2021 06:31:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 28861C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Subject: [PATCH] ASoC: qcom: lpass-cpu: Remove bit clock state check
+Date:   Wed, 27 Jan 2021 12:00:38 +0530
+Message-Id: <20210127063038.1399-1-srivasam@codeaurora.org>
+X-Mailer: git-send-email 2.29.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210126211859.790892-1-thara.gopinath@linaro.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 26 Jan 15:18 CST 2021, Thara Gopinath wrote:
+No need of BCLK state maintenance from driver side as
+clock_enable and clk_disable API's maintaing state counter.
 
-> When bam dma is "controlled remotely", thus far clocks were not controlled
-> from the Linux. In this scenario, Linux was disabling runtime pm in bam dma
-> driver and not doing any clock management in suspend/resume hooks.
-> 
-> With introduction of crypto engine bam dma, the clock is a rpmh resource
-> that can be controlled from both Linux and TZ/remote side.  Now bam dma
-> clock is getting enabled during probe even though the bam dma can be
-> "controlled remotely". But due to clocks not being handled properly,
-> bam_suspend generates a unbalanced clk_unprepare warning during system
-> suspend.
-> 
-> To fix the above issue and to enable proper clock-management, this patch
-> enables runtim-pm and handles bam dma clocks in suspend/resume hooks if
-> the clock node is present irrespective of controlled_remotely property.
-> 
-> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+One of the major issue was spotted when Headset jack inserted
+while playback continues, due to same PCM device node opens twice
+for playaback/capture and closes once for capture and playback continues.
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+It can resolve the errors in such scenarios.
 
+Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+---
+ sound/soc/qcom/lpass-cpu.c       | 22 ++++++++--------------
+ sound/soc/qcom/lpass-lpaif-reg.h |  3 ---
+ sound/soc/qcom/lpass.h           |  1 -
+ 3 files changed, 8 insertions(+), 18 deletions(-)
 
-And from John on IRC:
+diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
+index ae8efbc89af2..a669202e0001 100644
+--- a/sound/soc/qcom/lpass-cpu.c
++++ b/sound/soc/qcom/lpass-cpu.c
+@@ -286,16 +286,12 @@ static int lpass_cpu_daiops_trigger(struct snd_pcm_substream *substream,
+ 			dev_err(dai->dev, "error writing to i2sctl reg: %d\n",
+ 				ret);
+ 
+-		if (drvdata->bit_clk_state[id] == LPAIF_BIT_CLK_DISABLE) {
+-			ret = clk_enable(drvdata->mi2s_bit_clk[id]);
+-			if (ret) {
+-				dev_err(dai->dev, "error in enabling mi2s bit clk: %d\n", ret);
+-				clk_disable(drvdata->mi2s_osr_clk[id]);
+-				return ret;
+-			}
+-			drvdata->bit_clk_state[id] = LPAIF_BIT_CLK_ENABLE;
++		ret = clk_enable(drvdata->mi2s_bit_clk[id]);
++		if (ret) {
++			dev_err(dai->dev, "error in enabling mi2s bit clk: %d\n", ret);
++			clk_disable(drvdata->mi2s_osr_clk[id]);
++			return ret;
+ 		}
+-
+ 		break;
+ 	case SNDRV_PCM_TRIGGER_STOP:
+ 	case SNDRV_PCM_TRIGGER_SUSPEND:
+@@ -310,10 +306,9 @@ static int lpass_cpu_daiops_trigger(struct snd_pcm_substream *substream,
+ 		if (ret)
+ 			dev_err(dai->dev, "error writing to i2sctl reg: %d\n",
+ 				ret);
+-		if (drvdata->bit_clk_state[id] == LPAIF_BIT_CLK_ENABLE) {
+-			clk_disable(drvdata->mi2s_bit_clk[dai->driver->id]);
+-			drvdata->bit_clk_state[id] = LPAIF_BIT_CLK_DISABLE;
+-		}
++
++		clk_disable(drvdata->mi2s_bit_clk[dai->driver->id]);
++
+ 		break;
+ 	}
+ 
+@@ -861,7 +856,6 @@ int asoc_qcom_lpass_cpu_platform_probe(struct platform_device *pdev)
+ 				PTR_ERR(drvdata->mi2s_bit_clk[dai_id]));
+ 			return PTR_ERR(drvdata->mi2s_bit_clk[dai_id]);
+ 		}
+-		drvdata->bit_clk_state[dai_id] = LPAIF_BIT_CLK_DISABLE;
+ 	}
+ 
+ 	/* Allocation for i2sctl regmap fields */
+diff --git a/sound/soc/qcom/lpass-lpaif-reg.h b/sound/soc/qcom/lpass-lpaif-reg.h
+index 405542832e99..c8e1d75340b2 100644
+--- a/sound/soc/qcom/lpass-lpaif-reg.h
++++ b/sound/soc/qcom/lpass-lpaif-reg.h
+@@ -60,9 +60,6 @@
+ #define LPAIF_I2SCTL_BITWIDTH_24	1
+ #define LPAIF_I2SCTL_BITWIDTH_32	2
+ 
+-#define LPAIF_BIT_CLK_DISABLE		0
+-#define LPAIF_BIT_CLK_ENABLE		1
+-
+ #define LPAIF_I2SCTL_RESET_STATE	0x003C0004
+ #define LPAIF_DMACTL_RESET_STATE	0x00200000
+ 
+diff --git a/sound/soc/qcom/lpass.h b/sound/soc/qcom/lpass.h
+index 2d68af0da34d..83b2e08ade06 100644
+--- a/sound/soc/qcom/lpass.h
++++ b/sound/soc/qcom/lpass.h
+@@ -68,7 +68,6 @@ struct lpass_data {
+ 	unsigned int mi2s_playback_sd_mode[LPASS_MAX_MI2S_PORTS];
+ 	unsigned int mi2s_capture_sd_mode[LPASS_MAX_MI2S_PORTS];
+ 	int hdmi_port_enable;
+-	int bit_clk_state[LPASS_MAX_MI2S_PORTS];
+ 
+ 	/* low-power audio interface (LPAIF) registers */
+ 	void __iomem *lpaif;
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
-Tested-by: John Stultz <john.stultz@linaro.org>
-
-Regards,
-Bjorn
-
-> ---
-> 
-> v1->v2:
-> 	- As per Shawn's suggestion, use devm_clk_get_optional to get the
-> 	  bam clock if the "controlled_remotely" property is set so that
-> 	  the clock code takes care of setting the bam clock to NULL if
-> 	  not specified by dt. 
-> 	- Remove the check for "controlled_remotely" property in
-> 	  bam_dma_resume now that clock enable / disable is based on
-> 	  whether bamclk is NULL or not.
-> 	- Rebased to v5.11-rc5
-> 
->  drivers/dma/qcom/bam_dma.c | 29 +++++++++++++++--------------
->  1 file changed, 15 insertions(+), 14 deletions(-)
-> 
-> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-> index 88579857ca1d..c8a77b428b52 100644
-> --- a/drivers/dma/qcom/bam_dma.c
-> +++ b/drivers/dma/qcom/bam_dma.c
-> @@ -1270,13 +1270,13 @@ static int bam_dma_probe(struct platform_device *pdev)
->  			dev_err(bdev->dev, "num-ees unspecified in dt\n");
->  	}
->  
-> -	bdev->bamclk = devm_clk_get(bdev->dev, "bam_clk");
-> -	if (IS_ERR(bdev->bamclk)) {
-> -		if (!bdev->controlled_remotely)
-> -			return PTR_ERR(bdev->bamclk);
-> +	if (bdev->controlled_remotely)
-> +		bdev->bamclk = devm_clk_get_optional(bdev->dev, "bam_clk");
-> +	else
-> +		bdev->bamclk = devm_clk_get(bdev->dev, "bam_clk");
->  
-> -		bdev->bamclk = NULL;
-> -	}
-> +	if (IS_ERR(bdev->bamclk))
-> +		return PTR_ERR(bdev->bamclk);
->  
->  	ret = clk_prepare_enable(bdev->bamclk);
->  	if (ret) {
-> @@ -1350,7 +1350,7 @@ static int bam_dma_probe(struct platform_device *pdev)
->  	if (ret)
->  		goto err_unregister_dma;
->  
-> -	if (bdev->controlled_remotely) {
-> +	if (!bdev->bamclk) {
->  		pm_runtime_disable(&pdev->dev);
->  		return 0;
->  	}
-> @@ -1438,10 +1438,10 @@ static int __maybe_unused bam_dma_suspend(struct device *dev)
->  {
->  	struct bam_device *bdev = dev_get_drvdata(dev);
->  
-> -	if (!bdev->controlled_remotely)
-> +	if (bdev->bamclk) {
->  		pm_runtime_force_suspend(dev);
-> -
-> -	clk_unprepare(bdev->bamclk);
-> +		clk_unprepare(bdev->bamclk);
-> +	}
->  
->  	return 0;
->  }
-> @@ -1451,12 +1451,13 @@ static int __maybe_unused bam_dma_resume(struct device *dev)
->  	struct bam_device *bdev = dev_get_drvdata(dev);
->  	int ret;
->  
-> -	ret = clk_prepare(bdev->bamclk);
-> -	if (ret)
-> -		return ret;
-> +	if (bdev->bamclk) {
-> +		ret = clk_prepare(bdev->bamclk);
-> +		if (ret)
-> +			return ret;
->  
-> -	if (!bdev->controlled_remotely)
->  		pm_runtime_force_resume(dev);
-> +	}
->  
->  	return 0;
->  }
-> -- 
-> 2.25.1
-> 
