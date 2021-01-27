@@ -2,176 +2,221 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D2B6306296
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jan 2021 18:51:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E9B8306311
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jan 2021 19:15:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344286AbhA0Rtq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jan 2021 12:49:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59530 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344191AbhA0Rtb (ORCPT
+        id S233089AbhA0SPK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jan 2021 13:15:10 -0500
+Received: from relay04.th.seeweb.it ([5.144.164.165]:34101 "EHLO
+        relay04.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233569AbhA0SPH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jan 2021 12:49:31 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76FB3C061573
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jan 2021 09:48:51 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id 190so2262080wmz.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jan 2021 09:48:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=fA8V3wK/iXuNUDNxQGGXePONMGKipgMljYi7+GjKWGw=;
-        b=a8OhkeDNIrmKqsh/XjliHEErqfLR1649OYBoBGFEvLBOZ+ggHDLSWAX/n6j/z3w97I
-         O9tH41Smi3ymg1pzgGeLbzIMLsO1feji4tUOSibpYzaPjyI82MNd0eb9IWB7PxDjg0G0
-         oxyBWYBW+1tVrQZsIKJypSvyl4xSYL6BjScCBKZXOj15rIGNmx6Y2hxnOya6A+R0gFYw
-         nztYfgt+1rsHdsegI70WVsq2XlPBJoH0aNeyT1TF2D7loXZjMTjNyppoXG6dOigQsqHY
-         Yseux6Wu2pv1M40LIaXYKK+8w94rILX4hZXdN1tnWevAeuMKey6Q3DlEpnyb6rlTCzWk
-         vZxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=fA8V3wK/iXuNUDNxQGGXePONMGKipgMljYi7+GjKWGw=;
-        b=H+yn3r03rMjo081/fdmu+oVjiEtUHLVVQ4fiLIzx0U4BMAk9LadT1udfMuVejSAD7a
-         wYIBl/McWGdsKeEiCTT/9aPT97WKPMc43miKNuhLqoHAufN70ykWOzaSTvvf5e/d2jwg
-         5vfBthMkEyC0IA2g7txo7xsNsr/0nlyFm7NqxKr/1uylx2FA1FwsAutMsxgZzbsNoZ9K
-         pD5I+D6ef13Cx58mDp8VDdbmQImQJ/cJnbPXkCuNodrbwrCSoCVH23ay7HIwySMor0GU
-         /KDZ7igBCQMS1VNgIZ/DI6cWjoKDAaoIhhWKchDrc29OSiRC3sADvEZArGwGp1oRfKoG
-         lyeQ==
-X-Gm-Message-State: AOAM5321kTlgxXVISfgod3WvZ5eKGLCINlXvrl5Rmme/W3Q+uQa59bkZ
-        OoIbnuITCseNVgYk22OjLNlcdQ==
-X-Google-Smtp-Source: ABdhPJytQUIw/wSZmG+xRMZTNwB9UYiZ1gjegwsMACvZMcy5esdmS9dTfu0F9n4G/uSGin5bLFQNew==
-X-Received: by 2002:a1c:6486:: with SMTP id y128mr5397108wmb.12.1611769730244;
-        Wed, 27 Jan 2021 09:48:50 -0800 (PST)
-Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.googlemail.com with ESMTPSA id e12sm3680787wrs.67.2021.01.27.09.48.48
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 27 Jan 2021 09:48:49 -0800 (PST)
-Subject: Re: [PATCH v2] ASoC: qcom: lpass-cpu: Remove bit clock state check
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        Wed, 27 Jan 2021 13:15:07 -0500
+Received: from localhost.localdomain (abaf219.neoplus.adsl.tpnet.pl [83.6.169.219])
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 5FF9B200A5;
+        Wed, 27 Jan 2021 19:14:06 +0100 (CET)
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+To:     phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20210127151824.8929-1-srivasam@codeaurora.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <752d2980-2c84-c03f-7960-b9de8027c4d6@linaro.org>
-Date:   Wed, 27 Jan 2021 17:48:48 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+Subject: [PATCH] thermal: qcom: tsens-v0_1: Add support for MDM9607
+Date:   Wed, 27 Jan 2021 19:14:00 +0100
+Message-Id: <20210127181400.44642-1-konrad.dybcio@somainline.org>
+X-Mailer: git-send-email 2.30.0
 MIME-Version: 1.0
-In-Reply-To: <20210127151824.8929-1-srivasam@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+MDM9607 TSENS IP is very similar to the one of MSM8916, with
+minor adjustments to various tuning values.
 
+Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+---
+ .../bindings/thermal/qcom-tsens.yaml          |   2 +
+ drivers/thermal/qcom/tsens-v0_1.c             | 100 +++++++++++++++++-
+ drivers/thermal/qcom/tsens.c                  |   3 +
+ drivers/thermal/qcom/tsens.h                  |   2 +-
+ 4 files changed, 105 insertions(+), 2 deletions(-)
 
-On 27/01/2021 15:18, Srinivasa Rao Mandadapu wrote:
-> No need of BCLK state maintenance from driver side as
-> clock_enable and clk_disable API's maintaing state counter.
-> 
-> One of the major issue was spotted when Headset jack inserted
-> while playback continues, due to same PCM device node opens twice
-> for playaback/capture and closes once for capture and playback continues.
-> 
-> It can resolve the errors in such scenarios.
-> 
-> Fixes: b1824968221c ("ASoC: qcom: Fix enabling BCLK and LRCLK in LPAIF invalid state")
-> 
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+index 95462e071ab4..8ad9dc139c23 100644
+--- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
++++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+@@ -22,6 +22,7 @@ properties:
+       - description: v0.1 of TSENS
+         items:
+           - enum:
++              - qcom,mdm9607-tsens
+               - qcom,msm8916-tsens
+               - qcom,msm8939-tsens
+               - qcom,msm8974-tsens
+@@ -94,6 +95,7 @@ allOf:
+         compatible:
+           contains:
+             enum:
++              - qcom,mdm9607-tsens
+               - qcom,msm8916-tsens
+               - qcom,msm8974-tsens
+               - qcom,msm8976-tsens
+diff --git a/drivers/thermal/qcom/tsens-v0_1.c b/drivers/thermal/qcom/tsens-v0_1.c
+index 4ffa2e2c0145..8efe925b860f 100644
+--- a/drivers/thermal/qcom/tsens-v0_1.c
++++ b/drivers/thermal/qcom/tsens-v0_1.c
+@@ -126,6 +126,39 @@
+ #define CAL_SEL_SHIFT		30
+ #define CAL_SEL_SHIFT_2		28
+ 
++/* eeprom layout data for mdm9607 */
++#define MDM9607_BASE0_MASK	0x000000ff
++#define MDM9607_BASE1_MASK	0x000ff000
++#define MDM9607_BASE0_SHIFT	0
++#define MDM9607_BASE1_SHIFT	12
++
++#define MDM9607_S0_P1_MASK	0x00003f00
++#define MDM9607_S1_P1_MASK	0x03f00000
++#define MDM9607_S2_P1_MASK	0x0000003f
++#define MDM9607_S3_P1_MASK	0x0003f000
++#define MDM9607_S4_P1_MASK	0x0000003f
++
++#define MDM9607_S0_P2_MASK	0x000fc000
++#define MDM9607_S1_P2_MASK	0xfc000000
++#define MDM9607_S2_P2_MASK	0x00000fc0
++#define MDM9607_S3_P2_MASK	0x00fc0000
++#define MDM9607_S4_P2_MASK	0x00000fc0
++
++#define MDM9607_S0_P1_SHIFT	8
++#define MDM9607_S1_P1_SHIFT	20
++#define MDM9607_S2_P1_SHIFT	0
++#define MDM9607_S3_P1_SHIFT	12
++#define MDM9607_S4_P1_SHIFT	0
++
++#define MDM9607_S0_P2_SHIFT	14
++#define MDM9607_S1_P2_SHIFT	26
++#define MDM9607_S2_P2_SHIFT	6
++#define MDM9607_S3_P2_SHIFT	18
++#define MDM9607_S4_P2_SHIFT	6
++
++#define MDM9607_CAL_SEL_MASK	0x00700000
++#define MDM9607_CAL_SEL_SHIFT	20
++
+ #define S0_P1_SHIFT		8
+ #define S1_P1_SHIFT		14
+ #define S2_P1_SHIFT		20
+@@ -452,7 +485,57 @@ static int calibrate_8974(struct tsens_priv *priv)
+ 	return 0;
+ }
+ 
+-/* v0.1: 8916, 8939, 8974 */
++static int calibrate_9607(struct tsens_priv *priv)
++{
++	int base0 = 0, base1 = 0, i;
++	u32 p1[5], p2[5];
++	int mode = 0;
++	u32 *qfprom_cdata, *qfprom_csel;
++
++	qfprom_cdata = (u32 *)qfprom_read(priv->dev, "calib");
++	if (IS_ERR(qfprom_cdata))
++		return PTR_ERR(qfprom_cdata);
++
++	mode = (qfprom_cdata[2] & MDM9607_CAL_SEL_MASK) >> MDM9607_CAL_SEL_SHIFT;
++	dev_dbg(priv->dev, "calibration mode is %d\n", mode);
++
++	switch (mode) {
++	case TWO_PT_CALIB:
++		base1 = (qfprom_cdata[2] & MDM9607_BASE1_MASK) >> MDM9607_BASE1_SHIFT;
++		p2[0] = (qfprom_cdata[0] & MDM9607_S0_P2_MASK) >> MDM9607_S0_P2_SHIFT;
++		p2[1] = (qfprom_cdata[0] & MDM9607_S1_P2_MASK) >> MDM9607_S1_P2_SHIFT;
++		p2[2] = (qfprom_cdata[1] & MDM9607_S2_P2_MASK) >> MDM9607_S2_P2_SHIFT;
++		p2[3] = (qfprom_cdata[1] & MDM9607_S3_P2_MASK) >> MDM9607_S3_P2_SHIFT;
++		p2[4] = (qfprom_cdata[2] & MDM9607_S4_P2_MASK) >> MDM9607_S4_P2_SHIFT;
++		for (i = 0; i < priv->num_sensors; i++)
++			p2[i] = ((base1 + p2[i]) << 2);
++		fallthrough;
++	case ONE_PT_CALIB2:
++		base0 = (qfprom_cdata[0] & MDM9607_BASE0_MASK);
++		p1[0] = (qfprom_cdata[0] & MDM9607_S0_P1_MASK) >> MDM9607_S0_P1_SHIFT;
++		p1[1] = (qfprom_cdata[0] & MDM9607_S1_P1_MASK) >> MDM9607_S1_P1_SHIFT;
++		p1[2] = (qfprom_cdata[1] & MDM9607_S2_P1_MASK) >> MDM9607_S2_P1_SHIFT;
++		p1[3] = (qfprom_cdata[1] & MDM9607_S3_P1_MASK) >> MDM9607_S3_P1_SHIFT;
++		p1[4] = (qfprom_cdata[2] & MDM9607_S4_P1_MASK) >> MDM9607_S4_P1_SHIFT;
++		for (i = 0; i < priv->num_sensors; i++)
++			p1[i] = (((base0) + p1[i]) << 2);
++		break;
++	default:
++		for (i = 0; i < priv->num_sensors; i++) {
++			p1[i] = 500;
++			p2[i] = 780;
++		}
++		break;
++	}
++
++	compute_intercept_slope(priv, p1, p2, mode);
++	kfree(qfprom_cdata);
++	kfree(qfprom_csel);
++
++	return 0;
++}
++
++/* v0.1: 8916, 8939, 8974, 9607 */
+ 
+ static struct tsens_features tsens_v0_1_feat = {
+ 	.ver_major	= VER_0_1,
+@@ -540,3 +623,18 @@ struct tsens_plat_data data_8974 = {
+ 	.feat		= &tsens_v0_1_feat,
+ 	.fields	= tsens_v0_1_regfields,
+ };
++
++static const struct tsens_ops ops_9607 = {
++	.init		= init_common,
++	.calibrate	= calibrate_9607,
++	.get_temp	= get_temp_common,
++};
++
++struct tsens_plat_data data_9607 = {
++	.num_sensors	= 5,
++	.ops		= &ops_9607,
++	.hw_ids		= (unsigned int []){ 0, 1, 2, 3, 4 },
++
++	.feat		= &tsens_v0_1_feat,
++	.fields	= tsens_v0_1_regfields,
++};
+diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+index d8ce3a687b80..51c36b9e8e69 100644
+--- a/drivers/thermal/qcom/tsens.c
++++ b/drivers/thermal/qcom/tsens.c
+@@ -895,6 +895,9 @@ static SIMPLE_DEV_PM_OPS(tsens_pm_ops, tsens_suspend, tsens_resume);
+ 
+ static const struct of_device_id tsens_table[] = {
+ 	{
++		.compatible = "qcom,mdm9607-tsens",
++		.data = &data_9607,
++	}, {
+ 		.compatible = "qcom,msm8916-tsens",
+ 		.data = &data_8916,
+ 	}, {
+diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+index f40b625f897e..cba64c33b4f9 100644
+--- a/drivers/thermal/qcom/tsens.h
++++ b/drivers/thermal/qcom/tsens.h
+@@ -585,7 +585,7 @@ int get_temp_common(const struct tsens_sensor *s, int *temp);
+ extern struct tsens_plat_data data_8960;
+ 
+ /* TSENS v0.1 targets */
+-extern struct tsens_plat_data data_8916, data_8939, data_8974;
++extern struct tsens_plat_data data_8916, data_8939, data_8974, data_9607;
+ 
+ /* TSENS v1 targets */
+ extern struct tsens_plat_data data_tsens_v1, data_8976;
+-- 
+2.30.0
 
-
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-
-> ---
-> Changes since v1:
->     -- Commit message changed
-> 
->   sound/soc/qcom/lpass-cpu.c       | 22 ++++++++--------------
->   sound/soc/qcom/lpass-lpaif-reg.h |  3 ---
->   sound/soc/qcom/lpass.h           |  1 -
->   3 files changed, 8 insertions(+), 18 deletions(-)
-> 
-> diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
-> index ae8efbc89af2..a669202e0001 100644
-> --- a/sound/soc/qcom/lpass-cpu.c
-> +++ b/sound/soc/qcom/lpass-cpu.c
-> @@ -286,16 +286,12 @@ static int lpass_cpu_daiops_trigger(struct snd_pcm_substream *substream,
->   			dev_err(dai->dev, "error writing to i2sctl reg: %d\n",
->   				ret);
->   
-> -		if (drvdata->bit_clk_state[id] == LPAIF_BIT_CLK_DISABLE) {
-> -			ret = clk_enable(drvdata->mi2s_bit_clk[id]);
-> -			if (ret) {
-> -				dev_err(dai->dev, "error in enabling mi2s bit clk: %d\n", ret);
-> -				clk_disable(drvdata->mi2s_osr_clk[id]);
-> -				return ret;
-> -			}
-> -			drvdata->bit_clk_state[id] = LPAIF_BIT_CLK_ENABLE;
-> +		ret = clk_enable(drvdata->mi2s_bit_clk[id]);
-> +		if (ret) {
-> +			dev_err(dai->dev, "error in enabling mi2s bit clk: %d\n", ret);
-> +			clk_disable(drvdata->mi2s_osr_clk[id]);
-> +			return ret;
->   		}
-> -
->   		break;
->   	case SNDRV_PCM_TRIGGER_STOP:
->   	case SNDRV_PCM_TRIGGER_SUSPEND:
-> @@ -310,10 +306,9 @@ static int lpass_cpu_daiops_trigger(struct snd_pcm_substream *substream,
->   		if (ret)
->   			dev_err(dai->dev, "error writing to i2sctl reg: %d\n",
->   				ret);
-> -		if (drvdata->bit_clk_state[id] == LPAIF_BIT_CLK_ENABLE) {
-> -			clk_disable(drvdata->mi2s_bit_clk[dai->driver->id]);
-> -			drvdata->bit_clk_state[id] = LPAIF_BIT_CLK_DISABLE;
-> -		}
-> +
-> +		clk_disable(drvdata->mi2s_bit_clk[dai->driver->id]);
-> +
->   		break;
->   	}
->   
-> @@ -861,7 +856,6 @@ int asoc_qcom_lpass_cpu_platform_probe(struct platform_device *pdev)
->   				PTR_ERR(drvdata->mi2s_bit_clk[dai_id]));
->   			return PTR_ERR(drvdata->mi2s_bit_clk[dai_id]);
->   		}
-> -		drvdata->bit_clk_state[dai_id] = LPAIF_BIT_CLK_DISABLE;
->   	}
->   
->   	/* Allocation for i2sctl regmap fields */
-> diff --git a/sound/soc/qcom/lpass-lpaif-reg.h b/sound/soc/qcom/lpass-lpaif-reg.h
-> index 405542832e99..c8e1d75340b2 100644
-> --- a/sound/soc/qcom/lpass-lpaif-reg.h
-> +++ b/sound/soc/qcom/lpass-lpaif-reg.h
-> @@ -60,9 +60,6 @@
->   #define LPAIF_I2SCTL_BITWIDTH_24	1
->   #define LPAIF_I2SCTL_BITWIDTH_32	2
->   
-> -#define LPAIF_BIT_CLK_DISABLE		0
-> -#define LPAIF_BIT_CLK_ENABLE		1
-> -
->   #define LPAIF_I2SCTL_RESET_STATE	0x003C0004
->   #define LPAIF_DMACTL_RESET_STATE	0x00200000
->   
-> diff --git a/sound/soc/qcom/lpass.h b/sound/soc/qcom/lpass.h
-> index 2d68af0da34d..83b2e08ade06 100644
-> --- a/sound/soc/qcom/lpass.h
-> +++ b/sound/soc/qcom/lpass.h
-> @@ -68,7 +68,6 @@ struct lpass_data {
->   	unsigned int mi2s_playback_sd_mode[LPASS_MAX_MI2S_PORTS];
->   	unsigned int mi2s_capture_sd_mode[LPASS_MAX_MI2S_PORTS];
->   	int hdmi_port_enable;
-> -	int bit_clk_state[LPASS_MAX_MI2S_PORTS];
->   
->   	/* low-power audio interface (LPAIF) registers */
->   	void __iomem *lpaif;
-> 
