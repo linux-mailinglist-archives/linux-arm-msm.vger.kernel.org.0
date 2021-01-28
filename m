@@ -2,114 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 228B8306F9C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jan 2021 08:36:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C28BF307156
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jan 2021 09:23:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231873AbhA1Heh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Jan 2021 02:34:37 -0500
-Received: from m42-8.mailgun.net ([69.72.42.8]:57755 "EHLO m42-8.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231878AbhA1Hc2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Jan 2021 02:32:28 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1611819132; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=tOwx9ySemA2pZ8ZeH5+WX2oWlYQS0p0fzZnS0NMhwKY=;
- b=Fw2kJ/yezY6VAtdRIUGlLKp3I7o9heQKPxf4kds0yFa5uoFau8tXOl3yKSs4FymfwQ6bFAh9
- tiMlxdzrZ2M8Xe1XEMFzfb5AwUy886ISwEbWTvzUggtvdWBlJy9nDqF1wrQMLeo4ZweY46aM
- QlHQIhP28ww69BaO+NkTLIZLA9c=
-X-Mailgun-Sending-Ip: 69.72.42.8
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 6012685e262adddd45401421 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 28 Jan 2021 07:31:42
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 51072C433ED; Thu, 28 Jan 2021 07:31:42 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D967EC433C6;
-        Thu, 28 Jan 2021 07:31:41 +0000 (UTC)
+        id S231432AbhA1IVE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Jan 2021 03:21:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48470 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231722AbhA1IUh (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 28 Jan 2021 03:20:37 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 316D9C061756
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jan 2021 00:19:27 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id j18so3545131wmi.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jan 2021 00:19:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=foundries.io; s=google;
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=OaDHkLa3cmo9Wol8qwuGHS4BgxQz50ECcY1Y3aHRi6Q=;
+        b=Oyowa+rFa3kOXPrSNGP8xvv2Po05U/VFpGV3TJrHKgGX9preexld2hw22odEfHnPBZ
+         y/yQb/XstNbl5yWuyyOZ9cBJoXwCUu5qe/fwBhgZsDXOy4M3Pm1HdroNQEW4sxD0nkEx
+         R4i36WB0qL4o1k/NE7dEYvbHCjerTayhM733OY6AhMiYeMOeDZotm1j21cuDj+Rqr7rX
+         v0ymsGRhdQhbR7lonQIc9W98g8ysqfNThJ5NxNaDvxmXj9EJFsDp7Rrrrx49ZKPxeoJG
+         irqO/wzKPyTfunE7EGyfob7MRaOQC6YbCrbn8kbq6IEkmTBtDWt+52yTvKVZqAe98NJA
+         P31g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=OaDHkLa3cmo9Wol8qwuGHS4BgxQz50ECcY1Y3aHRi6Q=;
+        b=fs1P3/M5C3j0tcUjhKhYkGduMz/YxcmyG5xh+d+yTdSC7mojPjSE1hcwij55l/PmVz
+         QPw2ln+l4/l5QN590ziiD4CNInf1qWHgekggEo7sjdodMYS3GUNFjU5+/65J6YFU2yjC
+         gOyminF/XDCIgcNNmqgBYxzMgiXt0Pg/QAJes9IhCWUFlqBDS1H+y6kPfkrJnu/3dAHF
+         5HPRx4F/LztRQubuHh0XupPVzZ5vRLNRjwTq4natiPlBH3EfRLY5geRpVbvXh5WIi5hi
+         3oxkAssNIf27+NW5rEavjju2sWcj1O83Ta312pCeylmqveIICg+qhDr6kigplKc5QjGB
+         DTzQ==
+X-Gm-Message-State: AOAM533oc1ILHyqjglPiINfzEE7CDHzQD2aDXh08W25YJNyPFz9Vpac1
+        YniNQPSbYb8S5PrjDedF5dtq9NV4ec9yjQ==
+X-Google-Smtp-Source: ABdhPJyMZil5oITulxkk1okkcwfpreeNR6ghrVtonTPnww4tQokRLCN7uNH8lckATwV1szUgwO8IaA==
+X-Received: by 2002:a7b:cb8a:: with SMTP id m10mr7382596wmi.127.1611821965902;
+        Thu, 28 Jan 2021 00:19:25 -0800 (PST)
+Received: from trex (182.red-79-146-86.dynamicip.rima-tde.net. [79.146.86.182])
+        by smtp.gmail.com with ESMTPSA id g187sm5242347wmf.1.2021.01.28.00.19.24
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 28 Jan 2021 00:19:25 -0800 (PST)
+From:   "Jorge Ramirez-Ortiz, Foundries" <jorge@foundries.io>
+X-Google-Original-From: "Jorge Ramirez-Ortiz, Foundries" <JorgeRamirez-Ortiz>
+Date:   Thu, 28 Jan 2021 09:19:24 +0100
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        linux-watchdog@vger.kernel.org,
+        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
+        jorge@foundries.io, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        stable@vger.kernel.org
+Subject: Re: [PATCH] watchdog: qcom: Remove incorrect usage of
+ QCOM_WDT_ENABLE_IRQ
+Message-ID: <20210128081924.GA30289@trex>
+References: <20210126150241.10009-1-saiprakash.ranjan@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 28 Jan 2021 13:01:41 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 5/6] arm64: dts: qcom: Add basic devicetree support for
- SM8350 SoC
-In-Reply-To: <20210127153307.GC2771@vkoul-mobl>
-References: <20210127123054.263231-1-vkoul@kernel.org>
- <20210127123054.263231-6-vkoul@kernel.org>
- <194d2ebe26a9420f842c97738adb0443@codeaurora.org>
- <20210127153307.GC2771@vkoul-mobl>
-Message-ID: <bd1b9a6eeec94577e14d5c89c23ce9df@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210126150241.10009-1-saiprakash.ranjan@codeaurora.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Vinod,
-
-On 2021-01-27 21:03, Vinod Koul wrote:
-> Hi Sai,
+On 26/01/21, Sai Prakash Ranjan wrote:
+> As per register documentation, QCOM_WDT_ENABLE_IRQ which is BIT(1)
+> of watchdog control register is wakeup interrupt enable bit and
+> not related to bark interrupt at all, BIT(0) is used for that.
+> So remove incorrect usage of this bit when supporting bark irq for
+> pre-timeout notification. Currently with this bit set and bark
+> interrupt specified, pre-timeout notification and/or watchdog
+> reset/bite does not occur.
 > 
-> On 27-01-21, 18:37, Sai Prakash Ranjan wrote:
->> Hi Vinod,
->> 
->> On 2021-01-27 18:00, Vinod Koul wrote:
+> Fixes: 36375491a439 ("watchdog: qcom: support pre-timeout when the bark irq is available")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> ---
 > 
->> > +	timer {
->> > +		compatible = "arm,armv8-timer";
->> > +		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(8) |
->> > IRQ_TYPE_LEVEL_LOW)>,
->> > +			     <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
->> > +			     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
->> > +			     <GIC_PPI 12 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
->> 
->> The last interrupt should be hypervisor physical interrupt(10) not 
->> 12(hyp
->> virtual).
->> It works currently with android bootloaders because the host linux 
->> kernel
->> will run
->> at EL1 and will use EL1 physical timer interrupt(14), but if we ever 
->> have
->> the host
->> kernel run in EL2(for example, chrome) then we will not receive any 
->> timer
->> interrupts.
+> Reading the conversations from when qcom pre-timeout support was
+> added [1], Bjorn already had mentioned it was not right to touch this
+> bit, not sure which SoC the pre-timeout was tested on at that time,
+> but I have tested this on SDM845, SM8150, SC7180 and watchdog bark
+> and bite does not occur with enabling this bit with the bark irq
+> specified in DT.
+
+this was tested on QCS404. have you validated there? unfortunately I
+no longer have access to that hardware or the documentation
+
+
 > 
-> I got these values from downstream and used them as is. I will update
-> and also check documentation. Thanks for pointing out
-
-Yes looks like lot of SoC dtsi entries in downstream got it wrong.
-I see upstream sm8250 also missed this. We learnt it the hard way
-spending lot of time debugging why we are not able to reach the
-console(because no timer interrupts) during bringup on a system
-with kernel running in EL2(with VHE). I will try to reach out to
-baseport guys to make sure they take care of it in future.
-
-Thanks,
-Sai
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+> [1] https://lore.kernel.org/linux-watchdog/20190906174009.GC11938@tuxbook-pro/
+> 
+> ---
+>  drivers/watchdog/qcom-wdt.c | 13 +------------
+>  1 file changed, 1 insertion(+), 12 deletions(-)
+> 
+> diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
+> index 7cf0f2ec649b..e38a87ffe5f5 100644
+> --- a/drivers/watchdog/qcom-wdt.c
+> +++ b/drivers/watchdog/qcom-wdt.c
+> @@ -22,7 +22,6 @@ enum wdt_reg {
+>  };
+>  
+>  #define QCOM_WDT_ENABLE		BIT(0)
+> -#define QCOM_WDT_ENABLE_IRQ	BIT(1)
+>  
+>  static const u32 reg_offset_data_apcs_tmr[] = {
+>  	[WDT_RST] = 0x38,
+> @@ -63,16 +62,6 @@ struct qcom_wdt *to_qcom_wdt(struct watchdog_device *wdd)
+>  	return container_of(wdd, struct qcom_wdt, wdd);
+>  }
+>  
+> -static inline int qcom_get_enable(struct watchdog_device *wdd)
+> -{
+> -	int enable = QCOM_WDT_ENABLE;
+> -
+> -	if (wdd->pretimeout)
+> -		enable |= QCOM_WDT_ENABLE_IRQ;
+> -
+> -	return enable;
+> -}
+> -
+>  static irqreturn_t qcom_wdt_isr(int irq, void *arg)
+>  {
+>  	struct watchdog_device *wdd = arg;
+> @@ -91,7 +80,7 @@ static int qcom_wdt_start(struct watchdog_device *wdd)
+>  	writel(1, wdt_addr(wdt, WDT_RST));
+>  	writel(bark * wdt->rate, wdt_addr(wdt, WDT_BARK_TIME));
+>  	writel(wdd->timeout * wdt->rate, wdt_addr(wdt, WDT_BITE_TIME));
+> -	writel(qcom_get_enable(wdd), wdt_addr(wdt, WDT_EN));
+> +	writel(QCOM_WDT_ENABLE, wdt_addr(wdt, WDT_EN));
+>  	return 0;
+>  }
+>  
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
+> 
