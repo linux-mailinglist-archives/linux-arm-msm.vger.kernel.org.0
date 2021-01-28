@@ -2,92 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4BE7430718B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jan 2021 09:35:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D6D130726D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jan 2021 10:21:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231876AbhA1IbJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Jan 2021 03:31:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50760 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231789AbhA1Iau (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Jan 2021 03:30:50 -0500
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80E1CC06174A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jan 2021 00:30:08 -0800 (PST)
-Received: by mail-pj1-x102e.google.com with SMTP id jx18so3849180pjb.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jan 2021 00:30:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=ylVX93kG0pfKLjOK+VyaAAnOVEasqsi8+AYeDV5CIVc=;
-        b=m1b089FNnXo/FIiunebnJhh/k60S/WpehXj3Sn+4cJjvq7c7gjsn3qu3e1LmwBksDI
-         c1uj3sQjem5jPatGk0juLcrRCEyooTxLT869X7uL5VkZRiITvBItmB0neRIuYzBqVhX+
-         ewZGSlmSnNBvkKwWR0vJTGCrtbVA/WUvXlyBw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=ylVX93kG0pfKLjOK+VyaAAnOVEasqsi8+AYeDV5CIVc=;
-        b=NvcBbTsUZimt1q+RcEmv4dCwk3MwjDHprhQxqb9RtzTe1uou1R707X5IQr8aLHBNfG
-         6L1H5gHVQHlhEsLl510qPSzLW+gpouwJm4vRJK2P/V0420oO0fmQ4MDRl5ZTqosxdyln
-         huLAbX7/vxPEoQ5KIUhh0ahoHg7tSL4IN1xUhbg//Z8ZLMQIZtfoCE2FzPWxOaYnrYuo
-         SnjVeFJu0FEQAB4Hwn9EAA3E1hQAxeugqlDyKXbTpFKdMCiCrIv81f9fgpKxzemZJO1s
-         zCQLpf+P6KMdWnIll9BupILmavODEWgVYambO1u/j9yu1ssFxyp1g7HT9qj38dilckTy
-         e89w==
-X-Gm-Message-State: AOAM531cDh+ENZ/zjSUcpOqZAHeXPswPXEN00Sp1kUsPPAOmxnwMPev6
-        yPTqJn853A3mz+G78HZQ9bL7GA==
-X-Google-Smtp-Source: ABdhPJxv0VGQQsxMPwF5kTuNuglyyXV6LtQH2Bm9BpqAnuekS43gpU7rJFA5oCN9CaT2gYItOLy3cA==
-X-Received: by 2002:a17:90a:df0c:: with SMTP id gp12mr10171448pjb.3.1611822608072;
-        Thu, 28 Jan 2021 00:30:08 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:201:304c:5453:303a:8268])
-        by smtp.gmail.com with ESMTPSA id l190sm4813102pfl.205.2021.01.28.00.30.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Jan 2021 00:30:07 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
+        id S231838AbhA1JQP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Jan 2021 04:16:15 -0500
+Received: from mail.kernel.org ([198.145.29.99]:50742 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231975AbhA1JNq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 28 Jan 2021 04:13:46 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id DAB2D64DBD;
+        Thu, 28 Jan 2021 09:13:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1611825185;
+        bh=nCoc08hyKcJ5vfOd6TzDee2uuvisAAk6p0qjWq14A2o=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=kzlWs2Dcyzckg43G6RflwpFzr0VJqgFzXsVPvlb8RNe76r9kWJudG65uiq+lraOdc
+         G9g2Z3woBHci3VOmC6wOEUfwNUzjYtKCkHkPmEOvZ8TvJYRzMtwTxCbW60JZEW7AEY
+         /fdFNCGGBdR75gw0Yj7UyPfah1Z2hQQ9wwCEDyQxujoesiGAZNVgpQ0HZfTD1M+EiI
+         zKJCg5FsSlODr9FwmmCZ1fsPQXPhxQVSgpZVGShuEhIsuommTcA/WJt6/JY5CvC9Vz
+         0yFhbAK8s+5psQXd1xSpgO4oxjffyvvPTENStWhlNtEGLMWWjz/d/cCmELYsMXLJqa
+         B4hTktMgNxSuw==
+Date:   Thu, 28 Jan 2021 10:13:02 +0100
+From:   Wolfram Sang <wsa@kernel.org>
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
+        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
+        martin.botka@somainline.org, bjorn.andersson@linaro.org,
+        robh+dt@kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        phone-devel@vger.kernel.org
+Subject: Re: [PATCH v3 3/3] dt-bindings: i2c: qcom,i2c-qup: Document noise
+ rejection properties
+Message-ID: <20210128091302.GG963@ninjato>
+References: <20210114180415.404418-1-angelogioacchino.delregno@somainline.org>
+ <20210114180415.404418-4-angelogioacchino.delregno@somainline.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20210128021753.2560931-1-judyhsiao@google.com>
-References: <20210128021753.2560931-1-judyhsiao@google.com>
-Subject: Re: [PATCH] drm/msm/dp: trigger unplug event in msm_dp_display_disable
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Mark Brown <broonie@kernel.org>, Taniya Das <tdas@codeaurora.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>, dianders@chromium.org,
-        dgreid@chromium.org, cychiang@google.com, tzungbi@chromium.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        alsa-devel@alsa-project.org, Judy Hsiao <judyhsiao@google.com>,
-        Judy Hsiao <judyhsiao@chromium.org>
-To:     Judy Hsiao <judyhsiao@chromium.org>, linux-kernel@vger.kernel.org
-Date:   Thu, 28 Jan 2021 00:30:05 -0800
-Message-ID: <161182260580.76967.3767678954967498619@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="gm5TwAJMO0F2iVRz"
+Content-Disposition: inline
+In-Reply-To: <20210114180415.404418-4-angelogioacchino.delregno@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Judy Hsiao (2021-01-27 18:17:53)
-> 1. Trigger the unplug event in msm_dp_display_disable() to shutdown
->    audio properly.
-> 2. Reset the completion before signal the disconnect event.
->=20
-> Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
-> ---
 
-Fixes: 158b9aa74479 ("drm/msm/dp: wait for audio notification before disabl=
-ing clocks")
+--gm5TwAJMO0F2iVRz
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Tested-by: Stephen Boyd <swboyd@chromium.org>
+
+> +  qcom,noise-reject-sda:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    description: Noise rejection level for the SDA line.
+> +    minimum: 0
+> +    maximum: 3
+> +    default: 0
+
+What does this u32 describe? I wonder if we can introduce a generic
+property instead of a vendor-specific one.
+
+
+--gm5TwAJMO0F2iVRz
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmASgB4ACgkQFA3kzBSg
+Kbav/BAAoZZxCeFm2JgyZX5Iyv10zaVI7zevlrKrhcHrYWLaAQux2y2c+b4UCz7r
+nR2SLFgjRWELz2oomSb25ckMaNtBohgQurjk+lisKJoaar41C9mkFxFiQpWuFm8r
+QnTuwScs1CXAxK2zETbZNRrkoHtC4zSeVM9ut6q0hMl2Apfz8NDIZnySrz13AAjC
+UDGlZi3aqaa0iypPeRiuqABOlJ+0IGz72ZzlicH3RDazX4u6s51paxM59XessQQ5
+QnBMWpcO8H1aeLGhFsuJtk8LH8wx7PP5jxl1dq8h4JpGRX84ge1itFytwBBfiBHl
+q14hxVGg1bmCyTjJfnhWOANxi/wSdfYhnR/IVILAqJtjhxVeZp3Ry+QjqQpZBzHb
+uTwUF+mz6MtK3a0bsl57d7z76519Lk4Pdh0PyXUm2s8IAjpjSmMiYUZP/GkSNf2a
+7CZ0VjcqYA8RXs4nszb35HEY9hRCR3of11ZDDWtDCfm9VQonIYt1xTqG9mi+cTAy
+AylaZ+4rsKCLbp52Ik38uFGwwsdLw68TkLI5Teq5gXnQJZSpQz6Otdrdaxb6/K0f
+GZEQxOfFzoAiL08ejQ0vYub4vloDorZFVRLRCoYyDPtClIBcxkj6eNHR7KXqR26v
+Ij/6kxBNFSu6cZxtfwjXHa5NF6J+Sv8dvJ1C19sN6xrt76HnWjM=
+=dkAk
+-----END PGP SIGNATURE-----
+
+--gm5TwAJMO0F2iVRz--
