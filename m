@@ -2,113 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B3985306D2F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jan 2021 07:02:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 228B8306F9C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jan 2021 08:36:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229504AbhA1GA4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Jan 2021 01:00:56 -0500
-Received: from m42-8.mailgun.net ([69.72.42.8]:55937 "EHLO m42-8.mailgun.net"
+        id S231873AbhA1Heh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Jan 2021 02:34:37 -0500
+Received: from m42-8.mailgun.net ([69.72.42.8]:57755 "EHLO m42-8.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229676AbhA1GAx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Jan 2021 01:00:53 -0500
+        id S231878AbhA1Hc2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 28 Jan 2021 02:32:28 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1611813635; h=Content-Type: MIME-Version: Message-ID:
- In-Reply-To: Date: References: Subject: Cc: To: From: Sender;
- bh=RisD2+TVae4MdXPvoqbK31LEWDspmYpo9m5NuqSO0pk=; b=v43VKtRwD7e/sg03Ea8h4FepbWQpt0Ckd4ob8R5UkK3CImd1+f47Mvj35A3tlG7TPDlB/kjd
- BsShp5Md9Ret86cqO/sjNRHKajisvi8WK5usKMZAfU/NiLHrwEirSbdk3nkrVTepWsslkEjJ
- +P5zMaAAYnxUkdAwE1YTz35U+t0=
+ s=smtp; t=1611819132; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=tOwx9ySemA2pZ8ZeH5+WX2oWlYQS0p0fzZnS0NMhwKY=;
+ b=Fw2kJ/yezY6VAtdRIUGlLKp3I7o9heQKPxf4kds0yFa5uoFau8tXOl3yKSs4FymfwQ6bFAh9
+ tiMlxdzrZ2M8Xe1XEMFzfb5AwUy886ISwEbWTvzUggtvdWBlJy9nDqF1wrQMLeo4ZweY46aM
+ QlHQIhP28ww69BaO+NkTLIZLA9c=
 X-Mailgun-Sending-Ip: 69.72.42.8
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 601252e12ef52906cefc1101 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 28 Jan 2021 06:00:01
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 6012685e262adddd45401421 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 28 Jan 2021 07:31:42
  GMT
-Sender: kvalo=codeaurora.org@mg.codeaurora.org
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BC971C43462; Thu, 28 Jan 2021 06:00:01 +0000 (UTC)
+        id 51072C433ED; Thu, 28 Jan 2021 07:31:42 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from tynnyri.adurom.net (tynnyri.adurom.net [51.15.11.48])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: kvalo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E06F0C433ED;
-        Thu, 28 Jan 2021 05:59:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E06F0C433ED
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kvalo@codeaurora.org
-From:   Kalle Valo <kvalo@codeaurora.org>
-To:     Kalle Valo <kvalo@codeaurora.org>
-Cc:     Loic Poulain <loic.poulain@linaro.org>,
-        manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
-        bbhatt@codeaurora.org, hemantk@codeaurora.org
-Subject: Re: [PATCH v8 07/10] mhi: pci_generic: Add health-check
-References: <1609776899-30664-1-git-send-email-loic.poulain@linaro.org>
-        <1609776899-30664-8-git-send-email-loic.poulain@linaro.org>
-        <87sg6lmwqo.fsf@tynnyri.adurom.net>
-Date:   Thu, 28 Jan 2021 07:59:55 +0200
-In-Reply-To: <87sg6lmwqo.fsf@tynnyri.adurom.net> (Kalle Valo's message of
-        "Thu, 28 Jan 2021 07:55:11 +0200")
-Message-ID: <87k0rxmwis.fsf@tynnyri.adurom.net>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D967EC433C6;
+        Thu, 28 Jan 2021 07:31:41 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 28 Jan 2021 13:01:41 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 5/6] arm64: dts: qcom: Add basic devicetree support for
+ SM8350 SoC
+In-Reply-To: <20210127153307.GC2771@vkoul-mobl>
+References: <20210127123054.263231-1-vkoul@kernel.org>
+ <20210127123054.263231-6-vkoul@kernel.org>
+ <194d2ebe26a9420f842c97738adb0443@codeaurora.org>
+ <20210127153307.GC2771@vkoul-mobl>
+Message-ID: <bd1b9a6eeec94577e14d5c89c23ce9df@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Kalle Valo <kvalo@codeaurora.org> writes:
+Hi Vinod,
 
-> Loic Poulain <loic.poulain@linaro.org> writes:
->
->> If the modem crashes for any reason, we may not be able to detect
->> it at MHI level (MHI registers not reachable anymore).
->>
->> This patch implements a health-check mechanism to check regularly
->> that device is alive (MHI layer can communicate with). If device
->> is not alive (because a crash or unexpected reset), the recovery
->> procedure is triggered.
->>
->> Tested successfully with Telit FN980m module.
->>
->> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
->> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->> Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
->
-> [...]
->
->> +#define HEALTH_CHECK_PERIOD (HZ * 2)
->
-> [...]
->
->> +static void health_check(struct timer_list *t)
->> +{
->> +	struct mhi_pci_device *mhi_pdev = from_timer(mhi_pdev, t, health_check_timer);
->> +	struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
->> +
->> +	if (!mhi_pci_is_alive(mhi_cntrl)) {
->> +		dev_err(mhi_cntrl->cntrl_dev, "Device died\n");
->> +		queue_work(system_long_wq, &mhi_pdev->recovery_work);
->> +		return;
->> +	}
->> +
->> +	/* reschedule in two seconds */
->> +	mod_timer(&mhi_pdev->health_check_timer, jiffies + HEALTH_CHECK_PERIOD);
->> +}
->
-> Sorry for the late reply, I see that this is already applied. But I
-> wonder how this 2s polling affects battery life? Especially I'm worried
-> about increased power consumption with ath11k on laptops.
+On 2021-01-27 21:03, Vinod Koul wrote:
+> Hi Sai,
+> 
+> On 27-01-21, 18:37, Sai Prakash Ranjan wrote:
+>> Hi Vinod,
+>> 
+>> On 2021-01-27 18:00, Vinod Koul wrote:
+> 
+>> > +	timer {
+>> > +		compatible = "arm,armv8-timer";
+>> > +		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(8) |
+>> > IRQ_TYPE_LEVEL_LOW)>,
+>> > +			     <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+>> > +			     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+>> > +			     <GIC_PPI 12 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
+>> 
+>> The last interrupt should be hypervisor physical interrupt(10) not 
+>> 12(hyp
+>> virtual).
+>> It works currently with android bootloaders because the host linux 
+>> kernel
+>> will run
+>> at EL1 and will use EL1 physical timer interrupt(14), but if we ever 
+>> have
+>> the host
+>> kernel run in EL2(for example, chrome) then we will not receive any 
+>> timer
+>> interrupts.
+> 
+> I got these values from downstream and used them as is. I will update
+> and also check documentation. Thanks for pointing out
 
-Nevermind, I didn't realise that this is for pci_generic and ath11k does
-not use it. Sorry for the noise.
+Yes looks like lot of SoC dtsi entries in downstream got it wrong.
+I see upstream sm8250 also missed this. We learnt it the hard way
+spending lot of time debugging why we are not able to reach the
+console(because no timer interrupts) during bringup on a system
+with kernel running in EL2(with VHE). I will try to reach out to
+baseport guys to make sure they take care of it in future.
+
+Thanks,
+Sai
 
 -- 
-https://patchwork.kernel.org/project/linux-wireless/list/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
