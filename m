@@ -2,149 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C28BF307156
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jan 2021 09:23:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BE7430718B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jan 2021 09:35:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231432AbhA1IVE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Jan 2021 03:21:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48470 "EHLO
+        id S231876AbhA1IbJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Jan 2021 03:31:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231722AbhA1IUh (ORCPT
+        with ESMTP id S231789AbhA1Iau (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Jan 2021 03:20:37 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 316D9C061756
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jan 2021 00:19:27 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id j18so3545131wmi.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jan 2021 00:19:27 -0800 (PST)
+        Thu, 28 Jan 2021 03:30:50 -0500
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80E1CC06174A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jan 2021 00:30:08 -0800 (PST)
+Received: by mail-pj1-x102e.google.com with SMTP id jx18so3849180pjb.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jan 2021 00:30:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=foundries.io; s=google;
-        h=from:date:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=OaDHkLa3cmo9Wol8qwuGHS4BgxQz50ECcY1Y3aHRi6Q=;
-        b=Oyowa+rFa3kOXPrSNGP8xvv2Po05U/VFpGV3TJrHKgGX9preexld2hw22odEfHnPBZ
-         y/yQb/XstNbl5yWuyyOZ9cBJoXwCUu5qe/fwBhgZsDXOy4M3Pm1HdroNQEW4sxD0nkEx
-         R4i36WB0qL4o1k/NE7dEYvbHCjerTayhM733OY6AhMiYeMOeDZotm1j21cuDj+Rqr7rX
-         v0ymsGRhdQhbR7lonQIc9W98g8ysqfNThJ5NxNaDvxmXj9EJFsDp7Rrrrx49ZKPxeoJG
-         irqO/wzKPyTfunE7EGyfob7MRaOQC6YbCrbn8kbq6IEkmTBtDWt+52yTvKVZqAe98NJA
-         P31g==
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=ylVX93kG0pfKLjOK+VyaAAnOVEasqsi8+AYeDV5CIVc=;
+        b=m1b089FNnXo/FIiunebnJhh/k60S/WpehXj3Sn+4cJjvq7c7gjsn3qu3e1LmwBksDI
+         c1uj3sQjem5jPatGk0juLcrRCEyooTxLT869X7uL5VkZRiITvBItmB0neRIuYzBqVhX+
+         ewZGSlmSnNBvkKwWR0vJTGCrtbVA/WUvXlyBw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=OaDHkLa3cmo9Wol8qwuGHS4BgxQz50ECcY1Y3aHRi6Q=;
-        b=fs1P3/M5C3j0tcUjhKhYkGduMz/YxcmyG5xh+d+yTdSC7mojPjSE1hcwij55l/PmVz
-         QPw2ln+l4/l5QN590ziiD4CNInf1qWHgekggEo7sjdodMYS3GUNFjU5+/65J6YFU2yjC
-         gOyminF/XDCIgcNNmqgBYxzMgiXt0Pg/QAJes9IhCWUFlqBDS1H+y6kPfkrJnu/3dAHF
-         5HPRx4F/LztRQubuHh0XupPVzZ5vRLNRjwTq4natiPlBH3EfRLY5geRpVbvXh5WIi5hi
-         3oxkAssNIf27+NW5rEavjju2sWcj1O83Ta312pCeylmqveIICg+qhDr6kigplKc5QjGB
-         DTzQ==
-X-Gm-Message-State: AOAM533oc1ILHyqjglPiINfzEE7CDHzQD2aDXh08W25YJNyPFz9Vpac1
-        YniNQPSbYb8S5PrjDedF5dtq9NV4ec9yjQ==
-X-Google-Smtp-Source: ABdhPJyMZil5oITulxkk1okkcwfpreeNR6ghrVtonTPnww4tQokRLCN7uNH8lckATwV1szUgwO8IaA==
-X-Received: by 2002:a7b:cb8a:: with SMTP id m10mr7382596wmi.127.1611821965902;
-        Thu, 28 Jan 2021 00:19:25 -0800 (PST)
-Received: from trex (182.red-79-146-86.dynamicip.rima-tde.net. [79.146.86.182])
-        by smtp.gmail.com with ESMTPSA id g187sm5242347wmf.1.2021.01.28.00.19.24
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 28 Jan 2021 00:19:25 -0800 (PST)
-From:   "Jorge Ramirez-Ortiz, Foundries" <jorge@foundries.io>
-X-Google-Original-From: "Jorge Ramirez-Ortiz, Foundries" <JorgeRamirez-Ortiz>
-Date:   Thu, 28 Jan 2021 09:19:24 +0100
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        linux-watchdog@vger.kernel.org,
-        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
-        jorge@foundries.io, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        stable@vger.kernel.org
-Subject: Re: [PATCH] watchdog: qcom: Remove incorrect usage of
- QCOM_WDT_ENABLE_IRQ
-Message-ID: <20210128081924.GA30289@trex>
-References: <20210126150241.10009-1-saiprakash.ranjan@codeaurora.org>
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=ylVX93kG0pfKLjOK+VyaAAnOVEasqsi8+AYeDV5CIVc=;
+        b=NvcBbTsUZimt1q+RcEmv4dCwk3MwjDHprhQxqb9RtzTe1uou1R707X5IQr8aLHBNfG
+         6L1H5gHVQHlhEsLl510qPSzLW+gpouwJm4vRJK2P/V0420oO0fmQ4MDRl5ZTqosxdyln
+         huLAbX7/vxPEoQ5KIUhh0ahoHg7tSL4IN1xUhbg//Z8ZLMQIZtfoCE2FzPWxOaYnrYuo
+         SnjVeFJu0FEQAB4Hwn9EAA3E1hQAxeugqlDyKXbTpFKdMCiCrIv81f9fgpKxzemZJO1s
+         zCQLpf+P6KMdWnIll9BupILmavODEWgVYambO1u/j9yu1ssFxyp1g7HT9qj38dilckTy
+         e89w==
+X-Gm-Message-State: AOAM531cDh+ENZ/zjSUcpOqZAHeXPswPXEN00Sp1kUsPPAOmxnwMPev6
+        yPTqJn853A3mz+G78HZQ9bL7GA==
+X-Google-Smtp-Source: ABdhPJxv0VGQQsxMPwF5kTuNuglyyXV6LtQH2Bm9BpqAnuekS43gpU7rJFA5oCN9CaT2gYItOLy3cA==
+X-Received: by 2002:a17:90a:df0c:: with SMTP id gp12mr10171448pjb.3.1611822608072;
+        Thu, 28 Jan 2021 00:30:08 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:201:304c:5453:303a:8268])
+        by smtp.gmail.com with ESMTPSA id l190sm4813102pfl.205.2021.01.28.00.30.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 Jan 2021 00:30:07 -0800 (PST)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210126150241.10009-1-saiprakash.ranjan@codeaurora.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20210128021753.2560931-1-judyhsiao@google.com>
+References: <20210128021753.2560931-1-judyhsiao@google.com>
+Subject: Re: [PATCH] drm/msm/dp: trigger unplug event in msm_dp_display_disable
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     Mark Brown <broonie@kernel.org>, Taniya Das <tdas@codeaurora.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>, dianders@chromium.org,
+        dgreid@chromium.org, cychiang@google.com, tzungbi@chromium.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        alsa-devel@alsa-project.org, Judy Hsiao <judyhsiao@google.com>,
+        Judy Hsiao <judyhsiao@chromium.org>
+To:     Judy Hsiao <judyhsiao@chromium.org>, linux-kernel@vger.kernel.org
+Date:   Thu, 28 Jan 2021 00:30:05 -0800
+Message-ID: <161182260580.76967.3767678954967498619@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/01/21, Sai Prakash Ranjan wrote:
-> As per register documentation, QCOM_WDT_ENABLE_IRQ which is BIT(1)
-> of watchdog control register is wakeup interrupt enable bit and
-> not related to bark interrupt at all, BIT(0) is used for that.
-> So remove incorrect usage of this bit when supporting bark irq for
-> pre-timeout notification. Currently with this bit set and bark
-> interrupt specified, pre-timeout notification and/or watchdog
-> reset/bite does not occur.
-> 
-> Fixes: 36375491a439 ("watchdog: qcom: support pre-timeout when the bark irq is available")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Quoting Judy Hsiao (2021-01-27 18:17:53)
+> 1. Trigger the unplug event in msm_dp_display_disable() to shutdown
+>    audio properly.
+> 2. Reset the completion before signal the disconnect event.
+>=20
+> Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
 > ---
-> 
-> Reading the conversations from when qcom pre-timeout support was
-> added [1], Bjorn already had mentioned it was not right to touch this
-> bit, not sure which SoC the pre-timeout was tested on at that time,
-> but I have tested this on SDM845, SM8150, SC7180 and watchdog bark
-> and bite does not occur with enabling this bit with the bark irq
-> specified in DT.
 
-this was tested on QCS404. have you validated there? unfortunately I
-no longer have access to that hardware or the documentation
+Fixes: 158b9aa74479 ("drm/msm/dp: wait for audio notification before disabl=
+ing clocks")
 
-
-> 
-> [1] https://lore.kernel.org/linux-watchdog/20190906174009.GC11938@tuxbook-pro/
-> 
-> ---
->  drivers/watchdog/qcom-wdt.c | 13 +------------
->  1 file changed, 1 insertion(+), 12 deletions(-)
-> 
-> diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
-> index 7cf0f2ec649b..e38a87ffe5f5 100644
-> --- a/drivers/watchdog/qcom-wdt.c
-> +++ b/drivers/watchdog/qcom-wdt.c
-> @@ -22,7 +22,6 @@ enum wdt_reg {
->  };
->  
->  #define QCOM_WDT_ENABLE		BIT(0)
-> -#define QCOM_WDT_ENABLE_IRQ	BIT(1)
->  
->  static const u32 reg_offset_data_apcs_tmr[] = {
->  	[WDT_RST] = 0x38,
-> @@ -63,16 +62,6 @@ struct qcom_wdt *to_qcom_wdt(struct watchdog_device *wdd)
->  	return container_of(wdd, struct qcom_wdt, wdd);
->  }
->  
-> -static inline int qcom_get_enable(struct watchdog_device *wdd)
-> -{
-> -	int enable = QCOM_WDT_ENABLE;
-> -
-> -	if (wdd->pretimeout)
-> -		enable |= QCOM_WDT_ENABLE_IRQ;
-> -
-> -	return enable;
-> -}
-> -
->  static irqreturn_t qcom_wdt_isr(int irq, void *arg)
->  {
->  	struct watchdog_device *wdd = arg;
-> @@ -91,7 +80,7 @@ static int qcom_wdt_start(struct watchdog_device *wdd)
->  	writel(1, wdt_addr(wdt, WDT_RST));
->  	writel(bark * wdt->rate, wdt_addr(wdt, WDT_BARK_TIME));
->  	writel(wdd->timeout * wdt->rate, wdt_addr(wdt, WDT_BITE_TIME));
-> -	writel(qcom_get_enable(wdd), wdt_addr(wdt, WDT_EN));
-> +	writel(QCOM_WDT_ENABLE, wdt_addr(wdt, WDT_EN));
->  	return 0;
->  }
->  
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
-> 
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Tested-by: Stephen Boyd <swboyd@chromium.org>
