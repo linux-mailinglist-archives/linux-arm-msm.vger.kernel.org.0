@@ -2,118 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F1442308083
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jan 2021 22:26:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 810FE30802D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jan 2021 22:06:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231545AbhA1V0C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Jan 2021 16:26:02 -0500
-Received: from m42-8.mailgun.net ([69.72.42.8]:28469 "EHLO m42-8.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231374AbhA1VZi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Jan 2021 16:25:38 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1611869107; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=A3uJbsbReqIC2xWBCaCbZ26cdt1NNPaHfgT5Jx4zBlU=; b=I9kLOa/gnASJY5LzQCcEpevBveJj+EfhItWHoN3vtFIbNBYFfWO1VQdUI9PB+r4v3clTbLqd
- NroIl9stwxZd77S8yK/EYUUmwRAfVURiRUqZ9M8y29H4221Dz8WZX+uraOu2FipXA2n1dHCM
- 34rSyB9W1BYZ+2wgJgouV5ZyBZA=
-X-Mailgun-Sending-Ip: 69.72.42.8
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 601306d89137d6636dca25c5 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 28 Jan 2021 18:47:52
- GMT
-Sender: jcrouse=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8E88BC43463; Thu, 28 Jan 2021 18:47:52 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0DF80C433CA;
-        Thu, 28 Jan 2021 18:47:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0DF80C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Thu, 28 Jan 2021 11:47:48 -0700
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Eric Anholt <eric@anholt.net>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        id S231347AbhA1VFC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Jan 2021 16:05:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43268 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231231AbhA1VFC (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 28 Jan 2021 16:05:02 -0500
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53F2AC061788
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jan 2021 13:03:43 -0800 (PST)
+Received: by mail-pg1-x532.google.com with SMTP id s23so3840849pgh.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jan 2021 13:03:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=anholt-net.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3WONUXtOBA+aimidJBvuVmUVV583MRFRwJEB2kxrPYs=;
+        b=YBojJS9p5xbUaHKy2Lz2exq+I/GlOwWsVyMzlakgcN5k6/BM6757RCUFuEhsw8dCfB
+         9UEEpZeZj1zog1T/mkmttEZM8l3dbQVyYDv6LBQdB/UPJOe03VCWXD5VBq0BRQX4KiLH
+         ma3VCoVUws7V3pu4w1LfWsKEv02ZUmn/UfmGg4GY77V1wJvPlaOdIRlro9d6Dp9PopvF
+         kM5Qmt/lRx5kDPtA06kkMyG3RDp0Pu3B/eGPIRRA9JzNr98Sey/KnZuJbIt1nh8oIh5l
+         SHsqgSF3FTXSJpCCzOoNGuU48b99UVXx/HwVY7lwCRKEnfBuDbIIZ09OjEDuXF+ikVee
+         C3rg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3WONUXtOBA+aimidJBvuVmUVV583MRFRwJEB2kxrPYs=;
+        b=oqaehCV6QOUeNcnsWUhoAxff7w2Zi1sq3F/v/bm1U7TKXe2o7wQHWf90JHr3FN2ayO
+         jRQ7LVXdhURZiC6tBux43KSjWR71h4Wk1E2yRb8/j1WUmq4BClYfFBjYSinNUFwme5MU
+         1G3m0qT24cB+TdWCBesFooO7WuzY+x5xbH480uQjP4rYqSbnm9SgiPwv2auiXm2Irxnk
+         6H5rJPJG7H7m23VWDhTyruN7QwaQhQp2nSgjei72U9k4gs42HZ3k+DDEw0eKkzOVKeLW
+         zV/ftLuBW6me17ioSb6jKab7DLVfjNNLnt9tYw7nnGVslQFT/HeibESI7grq3lAcOhI0
+         0ONw==
+X-Gm-Message-State: AOAM533T3/d1slqCQmGCKPFoShecqp/U/SREm2RpyYZkTPT0DjMf4WMx
+        q3AZuKNKHjhaysreZKAiFMtNwA==
+X-Google-Smtp-Source: ABdhPJyjDHTf5cZ2T8LWCexxoeNi+YORZrAIIvHkgQ9CukxkleXU959cZ4xsh58LnwRvlkSO+tlCgw==
+X-Received: by 2002:a65:62d3:: with SMTP id m19mr1313991pgv.180.1611867821498;
+        Thu, 28 Jan 2021 13:03:41 -0800 (PST)
+Received: from wildbow.anholt.net ([75.164.105.146])
+        by smtp.gmail.com with ESMTPSA id l2sm6753295pga.65.2021.01.28.13.03.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 Jan 2021 13:03:40 -0800 (PST)
+From:   Eric Anholt <eric@anholt.net>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, linux-kernel@vger.kernel.org,
-        stable@vger.kernel.org
-Subject: Re: [PATCH 2/3] drm/msm: Fix races managing the OOB state for
- timestamp vs timestamps.
-Message-ID: <20210128184748.GC29306@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Eric Anholt <eric@anholt.net>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, linux-kernel@vger.kernel.org,
-        stable@vger.kernel.org
-References: <20210127233946.1286386-1-eric@anholt.net>
- <20210127233946.1286386-2-eric@anholt.net>
+        Sean Paul <sean@poorly.run>,
+        Jordan Crouse <jcrouse@codeaurora.org>
+Cc:     linux-kernel@vger.kernel.org, Eric Anholt <eric@anholt.net>
+Subject: [PATCH v3 0/3] drm/msm: fix for "Timeout waiting for GMU OOB set GPU_SET: 0x0"
+Date:   Thu, 28 Jan 2021 13:03:29 -0800
+Message-Id: <20210128210332.1690609-1-eric@anholt.net>
+X-Mailer: git-send-email 2.30.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210127233946.1286386-2-eric@anholt.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 27, 2021 at 03:39:45PM -0800, Eric Anholt wrote:
-> Now that we're not racing with GPU setup, also fix races of timestamps
-> against other timestamps.  In CI, we were seeing this path trigger
-> timeouts on setting the GMU bit, especially on the first set of tests
-> right after boot (it's probably easier to lose the race than one might
-> think, given that we start many tests in parallel, and waiting for NFS
-> to page in code probably means that lots of tests hit the same point
-> of screen init at the same time).
-> 
-> Signed-off-by: Eric Anholt <eric@anholt.net>
-> Cc: stable@vger.kernel.org # v5.9
+Updated commit messages over v2, no code changes.
 
-The joys of not having a global mutex locking everything.
+Eric Anholt (3):
+  drm/msm: Fix race of GPU init vs timestamp power management.
+  drm/msm: Fix races managing the OOB state for timestamp vs timestamps.
+  drm/msm: Clean up GMU OOB set/clear handling.
 
-Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
-
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index 7424a70b9d35..e8f0b5325a7f 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -1175,6 +1175,9 @@ static int a6xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
->  {
->  	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->  	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
-> +	static DEFINE_MUTEX(perfcounter_oob);
-> +
-> +	mutex_lock(&perfcounter_oob);
->  
->  	/* Force the GPU power on so we can read this register */
->  	a6xx_gmu_set_oob(&a6xx_gpu->gmu, GMU_OOB_PERFCOUNTER_SET);
-> @@ -1183,6 +1186,7 @@ static int a6xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
->  		REG_A6XX_RBBM_PERFCTR_CP_0_HI);
->  
->  	a6xx_gmu_clear_oob(&a6xx_gpu->gmu, GMU_OOB_PERFCOUNTER_SET);
-> +	mutex_unlock(&perfcounter_oob);
->  	return 0;
->  }
->  
-> -- 
-> 2.30.0
-> 
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 105 +++++++++++++++-----------
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.h |  49 ++++--------
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c |   8 +-
+ 3 files changed, 84 insertions(+), 78 deletions(-)
 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.30.0
+
