@@ -2,113 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4768A307FCD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jan 2021 21:43:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 58E4E308003
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jan 2021 21:58:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231292AbhA1Ulr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Jan 2021 15:41:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38274 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229825AbhA1Ulp (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Jan 2021 15:41:45 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC8DAC061574;
-        Thu, 28 Jan 2021 12:41:04 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id z6so6705517wrq.10;
-        Thu, 28 Jan 2021 12:41:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=eZQDBDX7ysZjWH15k/VD+oczZr4PH6075utJ1xgiXgY=;
-        b=oHlkxnKaIiOGZACS9UxXHxQTNSI7Cf3kAEv/slmvz6Fr6NiFpmgruxfX4MNyTwkasB
-         QYt4Sbp/LClgIHBtTOO4s/5Uqy5bSHlA42pmWC8og0ee5189WTurNXFr2P4RzcomIong
-         1/XFeLRQMFdH/v8QAZ3J5KM6uki8FjmqPKj+M12CVNCm+QghYs4NKDF+z0M/TRUhZqg1
-         CgUK9ZcnQYBG0T/c+iRTtaR6wn7EErMTDKGXXQYWa4oczFCR61YH0rmK/xOisN5q65We
-         Mqd8EPEqgHiO35rl8Fe61apwXy+FKSFIL5ES5Wz2/ocpzoqu6faCNFqpR+5Xsy2Z9KdN
-         /dUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=eZQDBDX7ysZjWH15k/VD+oczZr4PH6075utJ1xgiXgY=;
-        b=EJZRdiO83TstL/sVpR/JszPXfpXXtd0wNc/OCijKXY1MJJISzfT2nkXPvhG+xRbLUe
-         UOB7Y549TY3gZ5caWM8tjDD8qlx48r9MeyxOZUWgLWvmZspt2xbETjwijt+K74w35bFl
-         Zq6e2ouQowxFk0r6bnQnvdgXFCH6//RlP3w2hgXsS/vHfdsfsd0aYZ/xGutjdVNU/UQo
-         35h0Y3+NDh9inCc9hpIDBP5y1BoBSryc5zmwbJHB3D3VLfOkAouhCuRsRVHsZ70e5vGc
-         9P+wXS9WQmFG4hHcnfVjQqZiRfsxAO6UBt7YM5I5c1nGSkcosg+tG13BOARyMOjREQAt
-         CdrA==
-X-Gm-Message-State: AOAM531cGN9poXZA4xC6XjG+WsuhqajreMObJXzKm214klvkC8XdTLqm
-        etR/dTrpaabm++ly3RF2KuDYfYmDNEBrVehOreG6JRPkJgY=
-X-Google-Smtp-Source: ABdhPJwlenfZHCOiOfMruxm3X3cs5f9FZfYo4d1ePGXG/fE7YrlvrE++5B7mIUl2kqjHSrrwt81TWvaGodsyTveDQsM=
-X-Received: by 2002:adf:f749:: with SMTP id z9mr855909wrp.327.1611866463544;
- Thu, 28 Jan 2021 12:41:03 -0800 (PST)
+        id S231267AbhA1U4O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Jan 2021 15:56:14 -0500
+Received: from mail.kernel.org ([198.145.29.99]:56250 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231235AbhA1U4H (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 28 Jan 2021 15:56:07 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 6EB9964DDB;
+        Thu, 28 Jan 2021 20:55:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1611867326;
+        bh=1Q3JBbzrKlWRCyGG2/vnKM+0MChylTS66CNfZCbA83s=;
+        h=From:To:In-Reply-To:References:Subject:Date:From;
+        b=W2AmedK8qteza6t210CV/04DlkSh4wmuXEyHvn4+d6/UTDb61kzk9dk14593RdgV4
+         qtMMwcvtaDyY0uXkqcu95Gef2utD3hbfV/CPk+chhWQGJEbdjgNrc7ZNm/jMSXQDpM
+         ZCEoQAwZE6OglIFrQ6G1n/uVfSHfGQaC+vAGYZsUEt/nf+LYbAn0XyzleKxVkGcSLe
+         2kEC4PXDzBeDDalioxGRjR2BE/RVIaGpSpj5sg14PAXienTIlTCaIbmHTKIMZIFlog
+         mXrVlnMqAaRtMgMbifNMncXHgvbADwA36ARZn1eLqpIbd4YLlxipUWhaX/nred/guT
+         +SGS1DMIBqUzw==
+From:   Mark Brown <broonie@kernel.org>
+To:     bgoswami@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        plai@codeaurora.org, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
+        alsa-devel@alsa-project.org, lgirdwood@gmail.com,
+        robh+dt@kernel.org, perex@perex.cz, devicetree@vger.kernel.org,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        linux-kernel@vger.kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org
+In-Reply-To: <20210127151824.8929-1-srivasam@codeaurora.org>
+References: <20210127151824.8929-1-srivasam@codeaurora.org>
+Subject: Re: [PATCH v2] ASoC: qcom: lpass-cpu: Remove bit clock state check
+Message-Id: <161186727762.43763.16675933644941230011.b4-ty@kernel.org>
+Date:   Thu, 28 Jan 2021 20:54:37 +0000
 MIME-Version: 1.0
-References: <20210127233946.1286386-1-eric@anholt.net> <20210127233946.1286386-2-eric@anholt.net>
-In-Reply-To: <20210127233946.1286386-2-eric@anholt.net>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 28 Jan 2021 12:40:52 -0800
-Message-ID: <CAF6AEGuXeU18cUKGogtJD7O4SPUgFVQZcw3H-MDXNR5HAXcgFw@mail.gmail.com>
-Subject: Re: [PATCH 2/3] drm/msm: Fix races managing the OOB state for
- timestamp vs timestamps.
-To:     Eric Anholt <eric@anholt.net>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        stable <stable@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 27, 2021 at 3:39 PM Eric Anholt <eric@anholt.net> wrote:
->
-> Now that we're not racing with GPU setup, also fix races of timestamps
-> against other timestamps.  In CI, we were seeing this path trigger
-> timeouts on setting the GMU bit, especially on the first set of tests
-> right after boot (it's probably easier to lose the race than one might
-> think, given that we start many tests in parallel, and waiting for NFS
-> to page in code probably means that lots of tests hit the same point
-> of screen init at the same time).
+On Wed, 27 Jan 2021 20:48:24 +0530, Srinivasa Rao Mandadapu wrote:
+> No need of BCLK state maintenance from driver side as
+> clock_enable and clk_disable API's maintaing state counter.
+> 
+> One of the major issue was spotted when Headset jack inserted
+> while playback continues, due to same PCM device node opens twice
+> for playaback/capture and closes once for capture and playback continues.
+> 
+> [...]
 
-Could you add the error msg to the commit msg, to make it more easily
-searchable?
+Applied to
 
-BR,
--R
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
-> Signed-off-by: Eric Anholt <eric@anholt.net>
-> Cc: stable@vger.kernel.org # v5.9
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index 7424a70b9d35..e8f0b5325a7f 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -1175,6 +1175,9 @@ static int a6xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
->  {
->         struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->         struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
-> +       static DEFINE_MUTEX(perfcounter_oob);
-> +
-> +       mutex_lock(&perfcounter_oob);
->
->         /* Force the GPU power on so we can read this register */
->         a6xx_gmu_set_oob(&a6xx_gpu->gmu, GMU_OOB_PERFCOUNTER_SET);
-> @@ -1183,6 +1186,7 @@ static int a6xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
->                 REG_A6XX_RBBM_PERFCTR_CP_0_HI);
->
->         a6xx_gmu_clear_oob(&a6xx_gpu->gmu, GMU_OOB_PERFCOUNTER_SET);
-> +       mutex_unlock(&perfcounter_oob);
->         return 0;
->  }
->
-> --
-> 2.30.0
->
+Thanks!
+
+[1/1] ASoC: qcom: lpass-cpu: Remove bit clock state check
+      commit: 6c28377b7114d04cf82eedffe9dcc8fa66ecec48
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
