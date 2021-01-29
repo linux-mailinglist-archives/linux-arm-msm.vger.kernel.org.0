@@ -2,176 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 414F3308247
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Jan 2021 01:15:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 275AD308452
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Jan 2021 04:46:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231244AbhA2AOG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Jan 2021 19:14:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55548 "EHLO
+        id S229757AbhA2DqJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Jan 2021 22:46:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231256AbhA2AOC (ORCPT
+        with ESMTP id S231788AbhA2DqF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Jan 2021 19:14:02 -0500
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7551C061354
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jan 2021 16:13:06 -0800 (PST)
-Received: by mail-pg1-x52c.google.com with SMTP id o63so5411296pgo.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jan 2021 16:13:06 -0800 (PST)
+        Thu, 28 Jan 2021 22:46:05 -0500
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26E7AC06174A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jan 2021 19:45:25 -0800 (PST)
+Received: by mail-lj1-x235.google.com with SMTP id a25so8973566ljn.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jan 2021 19:45:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=DvXKajRo/sxOf4IOVGOfrlqOa4H+vynjfq2cu2QEPHs=;
-        b=LBgFNkuNXpSTQcIsZcvhpIfjd9FmCB1AcxB4yaQafY98EB4WohlJ+c9g91dB/lReAp
-         g87T9DUvk5kmVttqkF7c8H/FU1IP3uAg1byEKeOGnW0LN7qnjjgPgI8D+/phW1b7zbTr
-         MNKOKfWzCOwaKEVBI7LWsrPrze1rtdCqVZX/D6gkS4xHV/T0uwOFj1F6cKTcyPGDf9sO
-         IQloDZZZHFrRv4oSY3Wdhhb0PFS6RQF8LjDbFUWuLHbGm7NTTwr1T4zWnpHTbw3VbC36
-         zsLPpi7cmjccnXo0EfTzBGBxefTPt31T83MgXTvjQOTLkvc3HLZf1rR5/jSjNuVMBeuh
-         ADcw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=QYx6/uSUyh2hqwQYt//2VWudlIbI5/06ASiZSy/mLyo=;
+        b=MQpAIdc1jbYRb4uE1UMqpIpEiIdRlXP9v/3iG9ReMEVTIsKFUlysLHvaIEd7HNqYVa
+         QCxw+7t3130iWoa1TG2q9hjKAIbYwnz49quuEwrCfBqLcwbsk6ANb535I/GRxb8uMpIH
+         RHAmEilRZcRxEH9rV/o5hIzRTjOnJX033PWiUUBYjh/sZRHrNdx/+A+J7KfFgJtKuoyH
+         i2uPd9MS354efk26N08RzHGAtL7iusyieL11tcRR1dpNIPHjoVl1X53P9ZjC5TmI7Xzn
+         Rm8prgJGAUAxsQbHTfhGlK1+qIICAXJKhqPD6VaCrPs0xVJxOqh3zo+K/1AV74EDU5b/
+         OXCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=DvXKajRo/sxOf4IOVGOfrlqOa4H+vynjfq2cu2QEPHs=;
-        b=QCdkhm+TluNVsbJ7o731XpEGLIf572ozEXKiRl283WGawOgnzz/EeeDh/I9v35Nt3p
-         eVnFCBmA2neYhMycPGrpDDXuPyCsFQdcD2ej439fdR7G+G7PRPnBuFU6BJvJpEBfIMHc
-         ouCOTaiEOvW6DmAL18BHzv6u6+sIFXQDn5Ta44uTn3Eq+evLkvQoShr5Qa1K3eTi1eZ+
-         EunoQzMgypiEPC8ZQfc7MPICL2ew3pYIsTBE8gmY6uG6W/y4poOVuUspwEKFzSQ8cvFS
-         EjlgpOk5zTFMI6zrUKzv4Pvi0fVrQjeqxZTiHF9EPGjL8ceRenxpDMmqx755T6TEFvfA
-         1O2w==
-X-Gm-Message-State: AOAM533ipIAP0ypNABl1LmZy4eE/fXXQXkpGPvweujWrgn7jxbrrIhur
-        dEvdQT5E0LQa8aO34GotzF3Zyw==
-X-Google-Smtp-Source: ABdhPJwI5XsRAklaO6w93ZOvFl74HCJjs7x8iMLj3nCgU9B/WvrEaxXRekU7t1Y/L2d1vbTjRA5/Rg==
-X-Received: by 2002:a63:33c4:: with SMTP id z187mr1953619pgz.312.1611879186273;
-        Thu, 28 Jan 2021 16:13:06 -0800 (PST)
-Received: from xps15 (S0106889e681aac74.cg.shawcable.net. [68.147.0.187])
-        by smtp.gmail.com with ESMTPSA id n1sm5789580pjv.47.2021.01.28.16.13.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Jan 2021 16:13:05 -0800 (PST)
-Date:   Thu, 28 Jan 2021 17:13:03 -0700
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Andy Gross <agross@kernel.org>,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 04/16] rpmsg: ctrl: implement the ioctl function to
- create device
-Message-ID: <20210129001303.GA1211489@xps15>
-References: <20201222105726.16906-1-arnaud.pouliquen@foss.st.com>
- <20201222105726.16906-5-arnaud.pouliquen@foss.st.com>
- <20210121235258.GG611676@xps15>
- <1b76bf93-9647-c658-b4dd-1b10264a1189@foss.st.com>
- <20210122205934.GA866146@xps15>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=QYx6/uSUyh2hqwQYt//2VWudlIbI5/06ASiZSy/mLyo=;
+        b=o/cd573k8fHII+qLLhBBJYcJvQpwDDDVEJyXUK19bdB13B1Btd5z0IrLDL2Bc+V5O1
+         BkmMO0vEmFNeCIIViBAHDKQu0lnelP5VIWtWUlRr4fBTP/8s40Gk3lIdh3NlDTdz89cx
+         epljxQkSvgL09B7ZefuU9Cg6XJELEFgyUbiqANmlFHVja4SXIR45KJUDzFciTqRozL7l
+         RiO80q3EU2IqSQc91ylFJBESdlbDGSu8v4XA5j9Yewr4cNsKi1PUeusjL/M1vOtbqD+4
+         8RTGVvvcwF0aM6VnTZYq+r/f6zSW0bBtBPFpR7iRik6IGcgZgtw3juS647YCw75Co863
+         lKZg==
+X-Gm-Message-State: AOAM532Dti/G7WfwoQsT9YJBdjfuqRj44aI3BtYQVaK1KQah87ojyqZY
+        dZyiC25AjmPKStd6rpDubXF7oA==
+X-Google-Smtp-Source: ABdhPJyFOTD0X8ECLTsqb/tuQIyGfQ96Bn2nBwZMbpwL3vuLlc5XCnWGi+2l0v/x8onFfQokSxOHzw==
+X-Received: by 2002:a05:651c:1a3:: with SMTP id c3mr1298160ljn.498.1611891923583;
+        Thu, 28 Jan 2021 19:45:23 -0800 (PST)
+Received: from [192.168.1.211] ([94.25.229.83])
+        by smtp.gmail.com with ESMTPSA id a30sm2358345ljq.96.2021.01.28.19.45.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 28 Jan 2021 19:45:23 -0800 (PST)
+Subject: Re: [PATCH v2 3/5] pcie-qcom: provide a way to power up qca6390 chip
+ on RB5 platform
+To:     Rob Herring <robh+dt@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        PCI <linux-pci@vger.kernel.org>
+References: <20210128175225.3102958-1-dmitry.baryshkov@linaro.org>
+ <20210128175225.3102958-4-dmitry.baryshkov@linaro.org>
+ <CAL_JsqLRn40h0K-Fze5m1LS2+raLp94LariMkUh7XtekTBT5+Q@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <da0ac373-4edb-0230-b264-49697fa3d86a@linaro.org>
+Date:   Fri, 29 Jan 2021 06:45:21 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210122205934.GA866146@xps15>
+In-Reply-To: <CAL_JsqLRn40h0K-Fze5m1LS2+raLp94LariMkUh7XtekTBT5+Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[...]
-
-> > It seems to me that the main point to step forward is to clarify the global
-> > design and features of the rpmsg-ctrl.
-> > Depending on the decision taken, this series could be trashed and rewritten from
-> > a blank page...To not lost to much time on the series don't hesitate to limit
-> > the review to the minimum.
-> > 
+On 28/01/2021 22:26, Rob Herring wrote:
+> On Thu, Jan 28, 2021 at 11:52 AM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+>>
+>> Some Qualcomm platforms require to power up an external device before
+>> probing the PCI bus. E.g. on RB5 platform the QCA6390 WiFi/BT chip needs
+>> to be powered up before PCIe0 bus is probed. Add a quirk to the
+>> respective PCIe root bridge to attach to the power domain if one is
+>> required, so that the QCA chip is started before scanning the PCIe bus.
 > 
-> I doubt you will ever get clear guidelines on the whole solution.  I will get
-> back to you once I am done with the SMD driver, which should be in the
-> latter part of next week.
->
+> This is solving a generic problem in a specific driver. It needs to be
+> solved for any PCI host and any device.
 
-After looking at the rpmsg_chrdev driver, its current customers (i.e the Qcom
-drivers), the rpmsg name service and considering the long term goals of this
-patchset I have the following guidelines: 
+Ack. I see your point here.
 
-1) I thought long and hard about how to split the current rpmsg_chrdev driver
-between the control plane and the raw device plane and the end solution looks
-much slimpler than I expected.  Exporting function rpmsg_eptdev_create() after
-moving it to another file (along with other dependencies) should be all we need.
-Calling rpmsg_eptdev_create() from rpmsg_ctrldev_ioctl() will automatically load
-the new driver, the same way calling rpmsg_ns_register_device() from
-rpmsg_probe() took care of loading the rpmsg_ns driver.
-
-2) While keeping the control plane functionality related to
-RPMSG_CREATE_EPT_IOCTL intact, introduce a new RPMSG_CREATE_DEV_IOCTL that will
-allow for the instantiation of rpmsg_devices, exactly the same way a name service
-announcement from a remote processor does.  I envision that code path to
-eventually call rpmsg_create_channel().
-
-3) Leave the rpmsg_channel_info structure intact and use the
-rpmsg_channel_info::name to bind to a rpmsg_driver, exactly how it is currently
-done for name service driver selection.  That will allow us to re-use the
-current rpmsg_bus intrastructure, i.e rpmsg_bus::match(), without having to deal
-with yet another bus type.  Proceeding this way gives us the opportunity to keep
-the current channel name convention for other rpmch_chrdev users untouched.
-
-4) In a prior conversation you indicated the intention of instantiating the
-rpmsg_chrdev from the name service interface.  I agree with doing so but 
-conjugating that with the RPMSG_CHAR kenrel define may be tricky.  I will wait
-to see what you come up with.
-
-I hope this helps.
-
-Thanks,
-Mathieu
+As this would require porting code from powerpc/spark of-pci code and 
+changing pcie port driver to apply power supply before bus probing 
+happens, I'd also ask for the comments from PCI maintainers. Will that 
+solution be acceptable to you?
 
 
- 
-> > Thanks,
-> > Arnaud
-> > 
-> > > 
-> > > Thanks,
-> > > Mathieu
-> > > 
-> > >> +	return NULL;
-> > >> +}
-> > >> +
-> > >>  static long rpmsg_ctrl_dev_ioctl(struct file *fp, unsigned int cmd,
-> > >>  				 unsigned long arg)
-> > >>  {
-> > >>  	struct rpmsg_ctrl_dev *ctrldev = fp->private_data;
-> > >> -
-> > >> -	dev_info(&ctrldev->dev, "Control not yet implemented\n");
-> > >> +	void __user *argp = (void __user *)arg;
-> > >> +	struct rpmsg_channel_info chinfo;
-> > >> +	struct rpmsg_endpoint_info eptinfo;
-> > >> +	struct rpmsg_device *newch;
-> > >> +
-> > >> +	if (cmd != RPMSG_CREATE_EPT_IOCTL)
-> > >> +		return -EINVAL;
-> > >> +
-> > >> +	if (copy_from_user(&eptinfo, argp, sizeof(eptinfo)))
-> > >> +		return -EFAULT;
-> > >> +
-> > >> +	/*
-> > >> +	 * In a frst step only the rpmsg_raw service is supported.
-> > >> +	 * The override is foorced to RPMSG_RAW_SERVICE
-> > >> +	 */
-> > >> +	chinfo.driver_override = rpmsg_ctrl_get_drv_name(RPMSG_RAW_SERVICE);
-> > >> +	if (!chinfo.driver_override)
-> > >> +		return -ENODEV;
-> > >> +
-> > >> +	memcpy(chinfo.name, eptinfo.name, RPMSG_NAME_SIZE);
-> > >> +	chinfo.name[RPMSG_NAME_SIZE - 1] = '\0';
-> > >> +	chinfo.src = eptinfo.src;
-> > >> +	chinfo.dst = eptinfo.dst;
-> > >> +
-> > >> +	newch = rpmsg_create_channel(ctrldev->rpdev, &chinfo);
-> > >> +	if (!newch) {
-> > >> +		dev_err(&ctrldev->dev, "rpmsg_create_channel failed\n");
-> > >> +		return -ENXIO;
-> > >> +	}
-> > >>  
-> > >>  	return 0;
-> > >>  };
-> > >> -- 
-> > >> 2.17.1
-> > >>
+> 
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   drivers/pci/controller/dwc/pcie-qcom.c | 21 +++++++++++++++++++++
+>>   1 file changed, 21 insertions(+)
+>>
+>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+>> index ab21aa01c95d..eb73c8540d4d 100644
+>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+>> @@ -20,6 +20,7 @@
+>>   #include <linux/of_device.h>
+>>   #include <linux/of_gpio.h>
+>>   #include <linux/pci.h>
+>> +#include <linux/pm_domain.h>
+>>   #include <linux/pm_runtime.h>
+>>   #include <linux/platform_device.h>
+>>   #include <linux/phy/phy.h>
+>> @@ -1568,6 +1569,26 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0302, qcom_fixup_class);
+>>   DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1000, qcom_fixup_class);
+>>   DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1001, qcom_fixup_class);
+>>
+>> +static void qcom_fixup_power(struct pci_dev *dev)
+>> +{
+>> +       int ret;
+>> +       struct pcie_port *pp = dev->bus->sysdata;
+>> +       struct dw_pcie *pci;
+>> +
+>> +       if (!pci_is_root_bus(dev->bus))
+>> +               return;
+>> +
+>> +       ret = dev_pm_domain_attach(&dev->dev, true);
+>> +       if (ret < 0 || !dev->dev.pm_domain)
+>> +               return;
+>> +
+>> +       pci = to_dw_pcie_from_pp(pp);
+>> +       dev_info(&dev->dev, "Bus powered up, waiting for link to come up\n");
+>> +
+>> +       dw_pcie_wait_for_link(pci);
+>> +}
+>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x010b, qcom_fixup_power);
+>> +
+>>   static struct platform_driver qcom_pcie_driver = {
+>>          .probe = qcom_pcie_probe,
+>>          .driver = {
+>> --
+>> 2.29.2
+>>
+
+
+-- 
+With best wishes
+Dmitry
