@@ -2,90 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 86348308D72
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Jan 2021 20:36:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E265308E8F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Jan 2021 21:40:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232777AbhA2Tbr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Jan 2021 14:31:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49290 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232727AbhA2Tbr (ORCPT
+        id S232756AbhA2UhN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Jan 2021 15:37:13 -0500
+Received: from mail29.static.mailgun.info ([104.130.122.29]:31881 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S232887AbhA2UhN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Jan 2021 14:31:47 -0500
-Received: from casper.infradead.org (casper.infradead.org [IPv6:2001:8b0:10b:1236::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 385E6C061573;
-        Fri, 29 Jan 2021 11:31:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-        References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description;
-        bh=G0ZiICELnT572thIosI7PE9Z9AIMFdeffhjU4wBEDBY=; b=OyXMh3h1KojvKpIaBonPsRaADj
-        U1WWm4Oe0hpYyzRABWpLKhPKZEgMcECjhaDNHpw4atnSSIQLAQxyzffI+xXw3Rw33flpjbLegX3CA
-        7Ew/NW2/dABBCR8pD9VQGZzvuMA8SVwdyqRdWoiSSbXE8ZLJnOA02GCJ8UCBELRCaa61EAKAHxayg
-        fQlQVP5Io49ywTs6zGMy4aCOEUlpA3dhrAkN3CeR+0bYimZnDQoBzBdGUNwgJ6kgbBpq6jlux6RBh
-        V6imSC1SuQDsX3eGheI9WqcJMHpdPxT1cnFuxdgm50qjeRqabAESbsKtYE/m38wmNx8cUEVjpv2Co
-        cn/ns9eQ==;
-Received: from j217100.upc-j.chello.nl ([24.132.217.100] helo=worktop.programming.kicks-ass.net)
-        by casper.infradead.org with esmtpsa (Exim 4.94 #2 (Red Hat Linux))
-        id 1l5ZTg-00AE7B-Da; Fri, 29 Jan 2021 19:30:49 +0000
-Received: by worktop.programming.kicks-ass.net (Postfix, from userid 1000)
-        id BC5D1981210; Fri, 29 Jan 2021 20:30:40 +0100 (CET)
-Date:   Fri, 29 Jan 2021 20:30:40 +0100
-From:   Peter Zijlstra <peterz@infradead.org>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Ingo Molnar <mingo@redhat.com>,
-        Arnaldo Carvalho de Melo <acme@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Jiri Olsa <jolsa@redhat.com>,
-        Namhyung Kim <namhyung@kernel.org>,
-        Leo Yan <leo.yan@linaro.org>, coresight@lists.linaro.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Denis Nikitin <denik@chromium.org>,
-        Mattias Nissler <mnissler@chromium.org>,
-        Al Grant <al.grant@arm.com>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 1/4] perf/core: Add support to exclude kernel mode
- instruction tracing
-Message-ID: <20210129193040.GJ8912@worktop.programming.kicks-ass.net>
-References: <cover.1611909025.git.saiprakash.ranjan@codeaurora.org>
- <89c7ff59d887a0360434e607bd625393ec3190e5.1611909025.git.saiprakash.ranjan@codeaurora.org>
+        Fri, 29 Jan 2021 15:37:13 -0500
+X-Greylist: delayed 371 seconds by postgrey-1.27 at vger.kernel.org; Fri, 29 Jan 2021 15:37:12 EST
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1611952607; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=drmkmIL2SroI4KkHMKq3UPc/T4ZxaQH66OmhxBJF2Rc=; b=BAoRNUPDM7UjuAwHr3Pu6vWUIma37dKIV6RMRKoYFddkAeJIkgj5wlC2jMVe6psK0e2tkXXW
+ dxjeoKbgETw+IHmd19MRA+R/NDjI71oHpqzzQfnjDXrph7fy7ttlT6SQMKk/3jin27NCZr8B
+ o50G+knVSqgsHWOY6D4ceN1FEkA=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 601470547a21b36a9d0347a8 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 29 Jan 2021 20:30:12
+ GMT
+Sender: wcheng=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A74D5C43461; Fri, 29 Jan 2021 20:30:11 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.110.127.29] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: wcheng)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 36F25C433C6;
+        Fri, 29 Jan 2021 20:30:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 36F25C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=wcheng@codeaurora.org
+Subject: Re: [PATCH v7 4/5] usb: dwc3: dwc3-qcom: Enable tx-fifo-resize
+ property by default
+To:     Jack Pham <jackp@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, balbi@kernel.org,
+        gregkh@linuxfoundation.org, robh+dt@kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org
+References: <1611895604-4496-1-git-send-email-wcheng@codeaurora.org>
+ <1611895604-4496-5-git-send-email-wcheng@codeaurora.org>
+ <20210129092418.GA1879@jackp-linux.qualcomm.com>
+From:   Wesley Cheng <wcheng@codeaurora.org>
+Message-ID: <b9143845-0c40-392f-8c36-a11c0074f52e@codeaurora.org>
+Date:   Fri, 29 Jan 2021 12:30:09 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <89c7ff59d887a0360434e607bd625393ec3190e5.1611909025.git.saiprakash.ranjan@codeaurora.org>
+In-Reply-To: <20210129092418.GA1879@jackp-linux.qualcomm.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Jan 30, 2021 at 12:35:10AM +0530, Sai Prakash Ranjan wrote:
 
-> Here the idea is to protect such important information from all users
-> including root users since root privileges does not have to mean full
-> control over the kernel [1] and root compromise does not have to be
-> the end of the world.
 
-And yet, your thing lacks:
+On 1/29/2021 1:24 AM, Jack Pham wrote:
+> Hi Wesley,
+> 
+> On Thu, Jan 28, 2021 at 08:46:43PM -0800, Wesley Cheng wrote:
+>> In order to take advantage of the TX fifo resizing logic, manually add
+>> these properties to the DWC3 child node by default.  This will allow
+>> the DWC3 gadget to resize the TX fifos for the IN endpoints, which
+>> help with performance.
+>>
+>> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
+>> ---
+>>  drivers/usb/dwc3/dwc3-qcom.c | 10 ++++++++++
+>>  1 file changed, 10 insertions(+)
+>>
+>> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+>> index d803ee9..4ea6be3 100644
+>> --- a/drivers/usb/dwc3/dwc3-qcom.c
+>> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+>> @@ -564,6 +564,7 @@ static int dwc3_qcom_clk_init(struct dwc3_qcom *qcom, int count)
+>>  
+>>  static const struct property_entry dwc3_qcom_acpi_properties[] = {
+>>  	PROPERTY_ENTRY_STRING("dr_mode", "host"),
+>> +	PROPERTY_ENTRY_BOOL("tx-fifo-resize"),
+>>  	{}
+>>  };
+>>  
+>> @@ -634,6 +635,7 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
+>>  	struct dwc3_qcom	*qcom = platform_get_drvdata(pdev);
+>>  	struct device_node	*np = pdev->dev.of_node, *dwc3_np;
+>>  	struct device		*dev = &pdev->dev;
+>> +	struct property		*prop;
+>>  	int			ret;
+>>  
+>>  	dwc3_np = of_get_child_by_name(np, "dwc3");
+>> @@ -642,6 +644,14 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
+>>  		return -ENODEV;
+>>  	}
+>>  
+>> +	prop = kzalloc(sizeof(*prop), GFP_KERNEL);
+>> +	if (prop) {
+>> +		prop->name = "tx-fifo-resize";
+>> +		ret = of_add_property(dwc3_np, prop);
+>> +		if (ret < 0)
+>> +			dev_info(dev, "unable to add tx-fifo-resize prop\n");
+> 
+> You'll need to kfree(prop) both in case of error here as well as in the
+> driver's .remove() callback. Maybe easier to devm_kzalloc()?
 
-> +config EXCLUDE_KERNEL_HW_ITRACE
-> +	bool "Exclude kernel mode hardware assisted instruction tracing"
-> +	depends on PERF_EVENTS
-	depends on SECURITY_LOCKDOWN
+Hi Jack,
 
-or whatever the appropriate symbol is.
+Thanks for the catch, will fix this with the devm variant.
 
-> +	help
-> +	  Exclude kernel mode instruction tracing by hardware tracing
-> +	  family such as ARM Coresight ETM, Intel PT and so on.
-> +
-> +	  This option allows to disable kernel mode instruction tracing
-> +	  offered by hardware assisted tracing for all users(including root)
-> +	  especially for production systems where only userspace tracing might
-> +	  be preferred for security reasons.
+Hi Bjorn,
 
-Also, colour me unconvinced, pretty much all kernel level PMU usage
-can be employed to side-channel / infer crypto keys, why focus on
-ITRACE over others?
+Just wanted to see what you thought about this approach?  This way we
+can just keep the dt binding w/o having to re-add it in the future, as
+well as not needing to enable this property on every qcom platform with
+dwc3.
+
+Tested on my set up, and removed the change which added the property
+from the DTSI node.
+
+Thanks
+Wesley Cheng
+
+> 
+> Jack
+> 
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
