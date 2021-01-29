@@ -2,170 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 35CBB308463
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Jan 2021 04:51:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6CEBA3084A3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Jan 2021 05:50:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231697AbhA2Dun (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Jan 2021 22:50:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45528 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231783AbhA2Dug (ORCPT
+        id S231926AbhA2EtV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Jan 2021 23:49:21 -0500
+Received: from a1.mail.mailgun.net ([198.61.254.60]:32761 "EHLO
+        a1.mail.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231855AbhA2Erz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Jan 2021 22:50:36 -0500
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADABDC06174A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jan 2021 19:49:55 -0800 (PST)
-Received: by mail-lj1-x22e.google.com with SMTP id s18so8941728ljg.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jan 2021 19:49:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=xMvJoMHuEXdWFwhVnHo1SQV4orUEAbd3SRkoCZWs3jQ=;
-        b=CT2ivzq/AImbcMwRyug0dhVU6XpQ/KDjrVZcJ34Noi/PqsGK+I5u7bJv7mdhfy6eHs
-         eFxrnCd5XyJisiZ/vrTzQUX8pM+TcDvW3UTi9L4SqdM0hTLNu9GSZINp2Ug9ChGVd2Gz
-         NGNDRVGNYeFCUm7HRLNsZwzo5EWIWzmgIBjvhZCCqGd4wLtX+ZV/vtdnbYlXX5702Flb
-         oJ30u05CYXRwhOTP0gi4yWMSjIPiWItLIS97IJhatJdelZvO+QeHTsyA41+QZ5UjCv/+
-         9N3YCtS5QqHR99FOzFAfM3zbX3JNyS52Rr7UTTCmFzmN684SL12/vNWI8b/CamzL3LRr
-         S5MA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=xMvJoMHuEXdWFwhVnHo1SQV4orUEAbd3SRkoCZWs3jQ=;
-        b=LgG6F2+0VxSIbr6HJqz8hHCEicEFdz/ihc78H/CrAlx3ADw//GOm5HjcAemnCr05ES
-         UPO4hmq2UYrX2CN0daAWoow4yKRMuE+G4djzfJ9Zv8Epc/AmbpPYtEjWUTFNWKm86J0F
-         0ySVRCZJyu/QqGA3xJ4/G97JKDh06XeF2KP0W5qgXo6R2p2eYvZkpIUlnDIqec6X6SCu
-         W3uzrnvg/dp0CZZOK9GKs0mD/OUmCaqi0VMvEsuef+dRmbLh5V9W+xyXA4vTc1dZbp7E
-         SkUlk61Uu3g1YwnRA8t3voUw1SM3Z4bNnLZ83A2ACUCl1fEe8xZZxp682FVCdFOCS2ES
-         lRBw==
-X-Gm-Message-State: AOAM533JSyMUuEdwEGGVIpcPfpIwwJ45zCerFVkh0FZytZppjKaD1wCt
-        JQHZ9setWJGKb/3I3bQOTwWEow==
-X-Google-Smtp-Source: ABdhPJy5iwaV6zkENFUGsz+wmKhi/YZasjaeDKImIMv+I+rcV9HgjHv5ad5v55Gggc+I3ABQ67djow==
-X-Received: by 2002:a2e:5802:: with SMTP id m2mr1385650ljb.145.1611892194238;
-        Thu, 28 Jan 2021 19:49:54 -0800 (PST)
-Received: from [192.168.1.211] ([94.25.229.83])
-        by smtp.gmail.com with ESMTPSA id s3sm2347641ljj.4.2021.01.28.19.49.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Jan 2021 19:49:53 -0800 (PST)
-Subject: Re: [PATCH v2 5/5] arm64: dts: qcom: Add Bluetooth support on RB5
-To:     Rob Herring <robh+dt@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        PCI <linux-pci@vger.kernel.org>
-References: <20210128175225.3102958-1-dmitry.baryshkov@linaro.org>
- <20210128175225.3102958-6-dmitry.baryshkov@linaro.org>
- <CAL_Jsq+nNRv3KceHthgktHR1oRMs+eKWC4O7n0k78izs1aTPfA@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <6dd1f5cd-03c7-5945-9fa2-1c2698405110@linaro.org>
-Date:   Fri, 29 Jan 2021 06:49:52 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.1
-MIME-Version: 1.0
-In-Reply-To: <CAL_Jsq+nNRv3KceHthgktHR1oRMs+eKWC4O7n0k78izs1aTPfA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+        Thu, 28 Jan 2021 23:47:55 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1611895650; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=EU5RjXRxYWSaZvF77fs2S7MnownYSfzA+7vesuYPTwo=; b=aAtOdEzA3N0aLbbdL8TJ+MDGwaR7AaXiWhgib0cYWL1qpOLopnbtxgSg9o4+otjmY4GVuH7j
+ CwKk5BmD4jzlaDwVwFi36GB6w14ktCEYOa7S2RPlWzmhbdAL5pk4a5cHYL4SjCk9Gq0BtNY2
+ LVBjD8Lp+cczv4jqcxXoMzCC2Qs=
+X-Mailgun-Sending-Ip: 198.61.254.60
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 6013933b91b605c2ed01bcc0 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 29 Jan 2021 04:46:51
+ GMT
+Sender: wcheng=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 40111C43461; Fri, 29 Jan 2021 04:46:51 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from wcheng-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: wcheng)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D9426C433C6;
+        Fri, 29 Jan 2021 04:46:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D9426C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=wcheng@codeaurora.org
+From:   Wesley Cheng <wcheng@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, balbi@kernel.org,
+        gregkh@linuxfoundation.org, robh+dt@kernel.org
+Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        Wesley Cheng <wcheng@codeaurora.org>
+Subject: [PATCH v7 0/5] Re-introduce TX FIFO resize for larger EP bursting
+Date:   Thu, 28 Jan 2021 20:46:39 -0800
+Message-Id: <1611895604-4496-1-git-send-email-wcheng@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/01/2021 22:15, Rob Herring wrote:
-> On Thu, Jan 28, 2021 at 11:52 AM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
->>
->> From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->>
->> Add Bluetooth support on RB5 using the onboard QCA6391 WLAN+BT chipset.
->>
->> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->> [DB: added qca6391 power domain, removed s2f regulator]
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 29 ++++++++++++++++++++++++
->>   1 file changed, 29 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
->> index b39a9729395f..c65c13994a86 100644
->> --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
->> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
->> @@ -19,6 +19,7 @@ / {
->>          compatible = "qcom,qrb5165-rb5", "qcom,sm8250";
->>
->>          aliases {
->> +               hsuart0 = &uart6;
-> 
-> Serial devices should be 'serialN'. Don't add custom aliases.
+Changes in V7:
+ - Added a new property tx-fifo-max-num for limiting how much fifo space the
+   resizing logic can allocate for endpoints with large burst values.  This
+   can differ across platforms, and tie in closely with overall system latency.
+ - Added recommended checks for DWC32.
+ - Added changes to set the tx-fifo-resize property from dwc3-qcom by default
+   instead of modifying the current DTSI files.
+ - Added comments on all APIs/variables introduced.
+ - Updated the DWC3 YAML to include a better description of the tx-fifo-resize
+   property and added an entry for tx-fifo-max-num.
 
-Ack
+Changes in V6:
+ - Rebased patches to usb-testing.
+ - Renamed to PATCH series instead of RFC.
+ - Checking for fs_descriptors instead of ss_descriptors for determining the
+   endpoint count for a particular configuration.
+ - Re-ordered patch series to fix patch dependencies.
 
-> 
->>                  serial0 = &uart12;
->>                  sdhc2 = &sdhc_2;
-> 
-> BTW, this should be dropped too.
+Changes in V5:
+ - Added check_config() logic, which is used to communicate the number of EPs
+   used in a particular configuration.  Based on this, the DWC3 gadget driver
+   has the ability to know the maximum number of eps utilized in all configs.
+   This helps reduce unnecessary allocation to unused eps, and will catch fifo
+   allocation issues at bind() time.
+ - Fixed variable declaration to single line per variable, and reverse xmas.
+ - Created a helper for fifo clearing, which is used by ep0.c
 
-Ack
+Changes in V4:
+ - Removed struct dwc3* as an argument for dwc3_gadget_resize_tx_fifos()
+ - Removed WARN_ON(1) in case we run out of fifo space
+ 
+Changes in V3:
+ - Removed "Reviewed-by" tags
+ - Renamed series back to RFC
+ - Modified logic to ensure that fifo_size is reset if we pass the minimum
+   threshold.  Tested with binding multiple FDs requesting 6 FIFOs.
 
-> 
->>          };
->> @@ -689,6 +690,26 @@ &pm8150_rtc {
->>          status = "okay";
->>   };
->>
->> +&qup_uart6_default {
->> +       ctsrx {
->> +               pins = "gpio16", "gpio19";
->> +               drive-strength = <2>;
->> +               bias-disable;
->> +       };
->> +
->> +       rts {
->> +               pins = "gpio17";
->> +               drive-strength = <2>;
->> +               bias-disable;
->> +       };
->> +
->> +       tx {
->> +               pins = "gpio18";
->> +               drive-strength = <2>;
->> +               bias-pull-up;
->> +       };
->> +};
->> +
->>   &qupv3_id_0 {
->>          status = "okay";
->>   };
->> @@ -1194,6 +1215,14 @@ wlan-en {
->>          };
->>   };
->>
->> +&uart6 {
->> +       status = "okay";
->> +       bluetooth {
->> +               compatible = "qcom,qca6390-bt";
->> +               power-domains = <&qca6391>;
->> +       };
->> +};
->> +
->>   &uart12 {
->>          status = "okay";
->>   };
->> --
->> 2.29.2
->>
+Changes in V2:
+ - Modified TXFIFO resizing logic to ensure that each EP is reserved a
+   FIFO.
+ - Removed dev_dbg() prints and fixed typos from patches
+ - Added some more description on the dt-bindings commit message
 
+Currently, there is no functionality to allow for resizing the TXFIFOs, and
+relying on the HW default setting for the TXFIFO depth.  In most cases, the
+HW default is probably sufficient, but for USB compositions that contain
+multiple functions that require EP bursting, the default settings
+might not be enough.  Also to note, the current SW will assign an EP to a
+function driver w/o checking to see if the TXFIFO size for that particular
+EP is large enough. (this is a problem if there are multiple HW defined
+values for the TXFIFO size)
+
+It is mentioned in the SNPS databook that a minimum of TX FIFO depth = 3
+is required for an EP that supports bursting.  Otherwise, there may be
+frequent occurences of bursts ending.  For high bandwidth functions,
+such as data tethering (protocols that support data aggregation), mass
+storage, and media transfer protocol (over FFS), the bMaxBurst value can be
+large, and a bigger TXFIFO depth may prove to be beneficial in terms of USB
+throughput. (which can be associated to system access latency, etc...)  It
+allows for a more consistent burst of traffic, w/o any interruptions, as
+data is readily available in the FIFO.
+
+With testing done using the mass storage function driver, the results show
+that with a larger TXFIFO depth, the bandwidth increased significantly.
+
+Test Parameters:
+ - Platform: Qualcomm SM8150
+ - bMaxBurst = 6
+ - USB req size = 256kB
+ - Num of USB reqs = 16
+ - USB Speed = Super-Speed
+ - Function Driver: Mass Storage (w/ ramdisk)
+ - Test Application: CrystalDiskMark
+
+Results:
+
+TXFIFO Depth = 3 max packets
+
+Test Case | Data Size | AVG tput (in MB/s)
+-------------------------------------------
+Sequential|1 GB x     | 
+Read      |9 loops    | 193.60
+	  |           | 195.86
+          |           | 184.77
+          |           | 193.60
+-------------------------------------------
+
+TXFIFO Depth = 6 max packets
+
+Test Case | Data Size | AVG tput (in MB/s)
+-------------------------------------------
+Sequential|1 GB x     | 
+Read      |9 loops    | 287.35
+	  |           | 304.94
+          |           | 289.64
+          |           | 293.61
+-------------------------------------------
+
+Wesley Cheng (5):
+  usb: gadget: udc: core: Introduce check_config to verify USB
+    configuration
+  usb: gadget: configfs: Check USB configuration before adding
+  usb: dwc3: Resize TX FIFOs to meet EP bursting requirements
+  usb: dwc3: dwc3-qcom: Enable tx-fifo-resize property by default
+  dt-bindings: usb: dwc3: Update dwc3 TX fifo properties
+
+ .../devicetree/bindings/usb/snps,dwc3.yaml         |  15 +-
+ drivers/usb/dwc3/core.c                            |   9 +
+ drivers/usb/dwc3/core.h                            |  15 ++
+ drivers/usb/dwc3/dwc3-qcom.c                       |  10 +
+ drivers/usb/dwc3/ep0.c                             |   2 +
+ drivers/usb/dwc3/gadget.c                          | 214 +++++++++++++++++++++
+ drivers/usb/gadget/configfs.c                      |  22 +++
+ drivers/usb/gadget/udc/core.c                      |  25 +++
+ include/linux/usb/gadget.h                         |   5 +
+ 9 files changed, 315 insertions(+), 2 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
