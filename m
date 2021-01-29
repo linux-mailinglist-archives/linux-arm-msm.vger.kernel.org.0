@@ -2,91 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B6383090B1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Jan 2021 00:40:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B98513090BF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Jan 2021 00:50:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231316AbhA2XkO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Jan 2021 18:40:14 -0500
-Received: from mail.kernel.org ([198.145.29.99]:37572 "EHLO mail.kernel.org"
+        id S232062AbhA2XtN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Jan 2021 18:49:13 -0500
+Received: from so15.mailgun.net ([198.61.254.15]:30521 "EHLO so15.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231296AbhA2XkM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Jan 2021 18:40:12 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id DC77A64DFB;
-        Fri, 29 Jan 2021 23:39:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1611963571;
-        bh=ERrJYHFh8Jj6TX3rWZ8jzW16SHBX6admnR8+Rc0W3iA=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=IhHNVERl3GvC0h6SOMOD/atc+1VsIPS/6gySIr4qlDWRXNI2Gtx91MT0UeXUFVN8i
-         pbAS+FIPkCzaTpf3vZyuMROZgTOaUpu3Vc73G5EYk0jurTdZyX5dsXHba34rvgogvp
-         d7m6bHm/nB4stDF1g8dO3WzoJisodcVOpZQ2+u1oYTaaRK1/N/BuosOjOktII6JBTB
-         tedI5aoh5Hz2EGCwzyEvqwNMFbhSu++SKG46dGiLk4xL/FiYULXGe4a8SwbyXinXem
-         Y2d7UEvSKHFBYOGs4yMdiGvxHHaOUx2GQub5hDTrne9+dXEn3yIKLVaUXv+Kz8Hi//
-         iMNIRbCvPXODQ==
-Received: by mail-ed1-f51.google.com with SMTP id s11so12526061edd.5;
-        Fri, 29 Jan 2021 15:39:30 -0800 (PST)
-X-Gm-Message-State: AOAM530Cpz1KAMEel8DPJcyIdevJ3QxbZf4woGUlZHftxvOtfnKl3H4O
-        3lnpy08menNckY5NodI5WarIB97iDmSsjZPbBA==
-X-Google-Smtp-Source: ABdhPJwj8wUk4PoqlM3tcYKPzYCPGNO0F0zImcCS2wvT5z3jofsqBR0sdYUgKNDBI+L9oGNn3ZsyveDUbiuFp1F4y+o=
-X-Received: by 2002:aa7:d987:: with SMTP id u7mr7891493eds.62.1611963569366;
- Fri, 29 Jan 2021 15:39:29 -0800 (PST)
+        id S231195AbhA2XtL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 29 Jan 2021 18:49:11 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1611964130; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=HUNiHIQmr/npCagMU/t/LtTySsZ+JNwCBw3sxHTxVDE=; b=WFpMbhwBjqjEJQMrzxg2HEl7X5VgB3Mwi74sGJov9ulB+hBjBNLslVG9b8Lafhqj9VKcBaRV
+ U4dODAuURlX9bLcC1SEsIL8kFpMDNr8o+sk2QW77eVsvi/i2rFipvmX71mh745FDX/Tt5l0A
+ Xbx2TZPLGdcuShmiGdFgr0uNGF0=
+X-Mailgun-Sending-Ip: 198.61.254.15
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 60149ec04ee30634eb209d91 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 29 Jan 2021 23:48:16
+ GMT
+Sender: jcrouse=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 1AA0CC43462; Fri, 29 Jan 2021 23:48:16 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 53D46C433C6;
+        Fri, 29 Jan 2021 23:48:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 53D46C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Fri, 29 Jan 2021 16:48:11 -0700
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Eric Anholt <eric@anholt.net>
+Cc:     DRI Development <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        LKML <linux-kernel@vger.kernel.org>, stable@vger.kernel.org
+Subject: Re: [PATCH 1/3] drm/msm: Fix race of GPU init vs timestamp power
+ management.
+Message-ID: <20210129234811.GA1612@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Eric Anholt <eric@anholt.net>,
+        DRI Development <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        LKML <linux-kernel@vger.kernel.org>, stable@vger.kernel.org
+References: <20210127233946.1286386-1-eric@anholt.net>
+ <20210128184702.GB29306@jcrouse1-lnx.qualcomm.com>
+ <CADaigPVF=Ti4tLYTUsK+0Gi6GbK9ADOuFf4tCYftmVZ96gJLxg@mail.gmail.com>
 MIME-Version: 1.0
-References: <20210128175225.3102958-1-dmitry.baryshkov@linaro.org>
- <20210128175225.3102958-4-dmitry.baryshkov@linaro.org> <CAL_JsqLRn40h0K-Fze5m1LS2+raLp94LariMkUh7XtekTBT5+Q@mail.gmail.com>
- <da0ac373-4edb-0230-b264-49697fa3d86a@linaro.org>
-In-Reply-To: <da0ac373-4edb-0230-b264-49697fa3d86a@linaro.org>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Fri, 29 Jan 2021 17:39:18 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqJcBDfa6s7sG0Zho41T7zbVg15GH2WDh+inKNtTs+CcZw@mail.gmail.com>
-Message-ID: <CAL_JsqJcBDfa6s7sG0Zho41T7zbVg15GH2WDh+inKNtTs+CcZw@mail.gmail.com>
-Subject: Re: [PATCH v2 3/5] pcie-qcom: provide a way to power up qca6390 chip
- on RB5 platform
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        PCI <linux-pci@vger.kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CADaigPVF=Ti4tLYTUsK+0Gi6GbK9ADOuFf4tCYftmVZ96gJLxg@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 28, 2021 at 9:45 PM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On 28/01/2021 22:26, Rob Herring wrote:
-> > On Thu, Jan 28, 2021 at 11:52 AM Dmitry Baryshkov
-> > <dmitry.baryshkov@linaro.org> wrote:
-> >>
-> >> Some Qualcomm platforms require to power up an external device before
-> >> probing the PCI bus. E.g. on RB5 platform the QCA6390 WiFi/BT chip needs
-> >> to be powered up before PCIe0 bus is probed. Add a quirk to the
-> >> respective PCIe root bridge to attach to the power domain if one is
-> >> required, so that the QCA chip is started before scanning the PCIe bus.
+On Thu, Jan 28, 2021 at 11:17:16AM -0800, Eric Anholt wrote:
+> On Thu, Jan 28, 2021 at 10:52 AM Jordan Crouse <jcrouse@codeaurora.org> wrote:
 > >
-> > This is solving a generic problem in a specific driver. It needs to be
-> > solved for any PCI host and any device.
->
-> Ack. I see your point here.
->
-> As this would require porting code from powerpc/spark of-pci code and
-> changing pcie port driver to apply power supply before bus probing
-> happens, I'd also ask for the comments from PCI maintainers. Will that
-> solution be acceptable to you?
+> > On Wed, Jan 27, 2021 at 03:39:44PM -0800, Eric Anholt wrote:
+> > > We were using the same force-poweron bit in the two codepaths, so they
+> > > could race to have one of them lose GPU power early.
+> > >
+> > > Signed-off-by: Eric Anholt <eric@anholt.net>
+> > > Cc: stable@vger.kernel.org # v5.9
+> >
+> > You can add:
+> > Fixes: 4b565ca5a2cb ("drm/msm: Add A6XX device support")
+> >
+> > Because that was my ugly.
+> >
+> > Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
+> 
+> I only pointed it at 5.9 because it looked like it would probably
+> conflict against older branches.  I can add the fixes tag if you'd
+> like, though.
 
-Oh good, something exists. :)
+Fair enough. It is a good bug to fix but not if there are a lot of conflicts to
+deal with.
 
-FYI, there's another similar case needing this that just popped up[1].
+Jordan
+> _______________________________________________
+> dri-devel mailing list
+> dri-devel@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/dri-devel
 
-Rob
-
-[1] https://lore.kernel.org/linux-pci/20210129173057.30288c9d@coco.lan/
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
