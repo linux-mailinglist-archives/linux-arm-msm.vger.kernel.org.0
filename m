@@ -2,146 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E81B30F9BE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Feb 2021 18:33:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 681F530FA75
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Feb 2021 19:01:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238529AbhBDRbv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Feb 2021 12:31:51 -0500
-Received: from mail-ot1-f44.google.com ([209.85.210.44]:44648 "EHLO
-        mail-ot1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238484AbhBDRab (ORCPT
+        id S238462AbhBDRr7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Feb 2021 12:47:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35276 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238441AbhBDRYb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Feb 2021 12:30:31 -0500
-Received: by mail-ot1-f44.google.com with SMTP id e70so4132402ote.11;
-        Thu, 04 Feb 2021 09:30:14 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=VABDqQO4SCCxw9n6VdMjP3tpI9MOBd0XV0ilXTl4TqU=;
-        b=bXZsNUSAr9FCbeJcIlPQ3E82Ruq35nNAKUkkToEQlsWSGZmyEy24aI6FZXVfkZmY+G
-         TF64rW4JYqJAajQypMzpzuxFvGkH4UakP7wEiHaKO7fQ+LPvUFbBO10X2nVwuDFt9jDU
-         WpWAUdKvKSk2cJL1POhx0EL5NA+qJcCkdxz389/pT9YODDrZXxM2r9HMeXiwPaF9cRh3
-         HhdM7swoTdodw0GT3qbA0Gcs9fU6TyT0fuvqVJSxRa7kiM1Q00vKUKCQRmtFjwe+nDfp
-         xhgZPRp1tT+Hc2oyZ7fz/6ZhMb/FRyzu2e5MyxixLIia+jHSg27SFf2bcn00RLu4Aayd
-         OSiw==
-X-Gm-Message-State: AOAM532L9rSKQC/tT7al+O6vDAOpNpIJ+0wGtsDOismZW9B3mOXzT7cF
-        gZzIrfwKSvohs7mLbRi3qA==
-X-Google-Smtp-Source: ABdhPJyRucRa6WFuTvsk3abTvCXMHWztBy5ONKR24Bi/EstX7fiI57+Du8n2gQUyyz1NuIk23MVq1Q==
-X-Received: by 2002:a9d:1c9a:: with SMTP id l26mr331207ota.316.1612459788720;
-        Thu, 04 Feb 2021 09:29:48 -0800 (PST)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id z10sm1238418otk.8.2021.02.04.09.29.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Feb 2021 09:29:47 -0800 (PST)
-Received: (nullmailer pid 682797 invoked by uid 1000);
-        Thu, 04 Feb 2021 17:29:45 -0000
-Date:   Thu, 4 Feb 2021 11:29:45 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc:     Sascha Hauer <s.hauer@pengutronix.de>,
-        linux-kernel@vger.kernel.org,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Jaehoon Chung <jh80.chung@samsung.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Andy Gross <agross@kernel.org>,
-        Jesper Nilsson <jesper.nilsson@axis.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        linux-amlogic@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        Lucas Stach <l.stach@pengutronix.de>,
-        linux-samsung-soc@vger.kernel.org,
-        Kevin Hilman <khilman@baylibre.com>,
-        devicetree@vger.kernel.org,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        linux-arm-kernel@axis.com, Richard Zhu <hongxing.zhu@nxp.com>,
-        linux-arm-msm@vger.kernel.org,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-pci@vger.kernel.org, Jerome Brunet <jbrunet@baylibre.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        linux-omap@vger.kernel.org, Jingoo Han <jingoohan1@gmail.com>,
-        linux-tegra@vger.kernel.org, Jonathan Chocron <jonnyc@amazon.com>,
-        Zhou Wang <wangzhou1@hisilicon.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>
-Subject: Re: [PATCH 01/13] doc: bindings: pci: designware-pcie.txt: convert
- it to yaml
-Message-ID: <20210204172945.GA662023@robh.at.kernel.org>
-References: <cover.1612271903.git.mchehab+huawei@kernel.org>
- <706e684f571e142362d7be74eb1dcee2c8558052.1612271903.git.mchehab+huawei@kernel.org>
- <1612287895.001149.3887347.nullmailer@robh.at.kernel.org>
- <20210203074900.6d581153@coco.lan>
+        Thu, 4 Feb 2021 12:24:31 -0500
+Received: from merlin.infradead.org (merlin.infradead.org [IPv6:2001:8b0:10b:1231::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C17F7C061788;
+        Thu,  4 Feb 2021 09:23:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=merlin.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+        References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description;
+        bh=G0ZiICELnT572thIosI7PE9Z9AIMFdeffhjU4wBEDBY=; b=gJyvre1gVVhhTmYNgtikqMop7M
+        +b2jf1Lqy6+f5iFyWm7l6rq28y5FooyO291w45noJ4N/I2JqGkiSl4DL8uSMoWozMt81NG0tkqFAu
+        Ex1OW8Zx9HVrFP/xDhT0vHQeEpPVtkyH9cJrmbrPykSiHuYF5aqej0+wK8GUkynfOgPicSMhAzSAJ
+        4U8uaTq+D4336lyNp1b8qjXB7fLSSe4kkUDuPp0pQzCZWxGnXF5DeVxuy9WsogXMX+gpQuYQkZWr+
+        NXNVVXB4vcdlj75jnPvQxQZbURI3wRqjqAqCTZ3H9elPwyZwrwExoN6pa4krPlcSv7j94lbYWvqcI
+        KYTHDS8w==;
+Received: from j217100.upc-j.chello.nl ([24.132.217.100] helo=worktop.programming.kicks-ass.net)
+        by merlin.infradead.org with esmtpsa (Exim 4.92.3 #3 (Red Hat Linux))
+        id 1l7iLz-0001q3-8h; Thu, 04 Feb 2021 17:23:39 +0000
+Received: by worktop.programming.kicks-ass.net (Postfix, from userid 1000)
+        id BC5D1981210; Fri, 29 Jan 2021 20:30:40 +0100 (CET)
+Date:   Fri, 29 Jan 2021 20:30:40 +0100
+From:   Peter Zijlstra <peterz@infradead.org>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Ingo Molnar <mingo@redhat.com>,
+        Arnaldo Carvalho de Melo <acme@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Jiri Olsa <jolsa@redhat.com>,
+        Namhyung Kim <namhyung@kernel.org>,
+        Leo Yan <leo.yan@linaro.org>, coresight@lists.linaro.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Denis Nikitin <denik@chromium.org>,
+        Mattias Nissler <mnissler@chromium.org>,
+        Al Grant <al.grant@arm.com>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH 1/4] perf/core: Add support to exclude kernel mode
+ instruction tracing
+Message-ID: <20210129193040.GJ8912@worktop.programming.kicks-ass.net>
+References: <cover.1611909025.git.saiprakash.ranjan@codeaurora.org>
+ <89c7ff59d887a0360434e607bd625393ec3190e5.1611909025.git.saiprakash.ranjan@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210203074900.6d581153@coco.lan>
+In-Reply-To: <89c7ff59d887a0360434e607bd625393ec3190e5.1611909025.git.saiprakash.ranjan@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 03, 2021 at 07:49:00AM +0100, Mauro Carvalho Chehab wrote:
-> Hi Rob,
-> 
-> Em Tue, 02 Feb 2021 11:44:54 -0600
-> Rob Herring <robh@kernel.org> escreveu:
-> 
-> > My bot found errors running 'make dt_binding_check' on your patch:
-> > 
-> > yamllint warnings/errors:
-> > 
-> > dtschema/dtc warnings/errors:
-> > /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pci/snps,pcie.yaml: properties:snps,enable-cdm-check: 'oneOf' conditional failed, one must be fixed:
-> > 	'type' is a required property
-> > 	Additional properties are not allowed ('$ref' was unexpected)
-> > 	/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pci/snps,pcie.yaml: properties:snps,enable-cdm-check: 'oneOf' conditional failed, one must be fixed:
-> > 		'enum' is a required property
-> > 		'const' is a required property
-> > 	'/schemas/types.yaml#definitions/flag' does not match 'types.yaml#/definitions/'
+On Sat, Jan 30, 2021 at 12:35:10AM +0530, Sai Prakash Ranjan wrote:
 
-You need a '/' between '#' and 'definitions'.
+> Here the idea is to protect such important information from all users
+> including root users since root privileges does not have to mean full
+> control over the kernel [1] and root compromise does not have to be
+> the end of the world.
 
+And yet, your thing lacks:
 
-> > /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pci/snps,pcie.yaml: ignoring, error in schema: properties: snps,enable-cdm-check
-> > warning: no schema found in file: ./Documentation/devicetree/bindings/pci/snps,pcie.yaml
-> > 
-> > See https://patchwork.ozlabs.org/patch/1434686
-> > 
-> > This check can fail if there are any dependencies. The base for a patch
-> > series is generally the most recent rc1.
-> > 
-> > If you already ran 'make dt_binding_check' and didn't see the above
-> > error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> > date:
-> > 
-> > pip3 install dtschema --upgrade
-> > 
-> > Please check and re-submit.
-> 
-> I've no idea why the bot is hitting those. My tree is based on
-> staging-testing[1], as I need the regulator patches merged there.
-> Such tree is based on v5.11-rc5.
-> 
-> There, dt_binding_check doesn't get any warnings on this schema:
-> 
-> $ pip3 install dtschema --upgrade --user
-> Requirement already up-to-date: dtschema in /home/mchehab/.local/lib/python3.9/site-packages (2020.12)
+> +config EXCLUDE_KERNEL_HW_ITRACE
+> +	bool "Exclude kernel mode hardware assisted instruction tracing"
+> +	depends on PERF_EVENTS
+	depends on SECURITY_LOCKDOWN
 
-This particular check is in master, but not yet a release on pypi. I'll 
-be tagging a release soon.
+or whatever the appropriate symbol is.
 
-I've got this problem that adding new meta-schema checks like this one 
-requires fixing up all the existing in tree schemas first. So I give 
-some amount of time before adding them to a tagged release. However, I 
-want to start testing new schemas right away. I haven't come up with a 
-better solution short of importing the meta-schema into the kernel tree 
-or separately versioning them.
+> +	help
+> +	  Exclude kernel mode instruction tracing by hardware tracing
+> +	  family such as ARM Coresight ETM, Intel PT and so on.
+> +
+> +	  This option allows to disable kernel mode instruction tracing
+> +	  offered by hardware assisted tracing for all users(including root)
+> +	  especially for production systems where only userspace tracing might
+> +	  be preferred for security reasons.
 
-Rob
+Also, colour me unconvinced, pretty much all kernel level PMU usage
+can be employed to side-channel / infer crypto keys, why focus on
+ITRACE over others?
