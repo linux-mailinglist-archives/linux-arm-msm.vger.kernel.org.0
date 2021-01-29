@@ -2,33 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B76C308D19
+	by mail.lfdr.de (Postfix) with ESMTP id ED0BC308D1B
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Jan 2021 20:16:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232654AbhA2TIP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Jan 2021 14:08:15 -0500
-Received: from a1.mail.mailgun.net ([198.61.254.60]:31405 "EHLO
+        id S232498AbhA2TIp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Jan 2021 14:08:45 -0500
+Received: from a1.mail.mailgun.net ([198.61.254.60]:60044 "EHLO
         a1.mail.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232976AbhA2TGt (ORCPT
+        with ESMTP id S232969AbhA2TG6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Jan 2021 14:06:49 -0500
+        Fri, 29 Jan 2021 14:06:58 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1611947188; h=Content-Transfer-Encoding: MIME-Version:
+ s=smtp; t=1611947193; h=Content-Transfer-Encoding: MIME-Version:
  References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=VMujPUGd1jiuhd+wcY5Jmmw6odhxrHztTpfyjzjg/Dk=; b=BeIIEJP/GdJQDlr/O1Y1ijhpUBSM6GHH2j82OUtgTrixWRJcCbSvYQ+2paBCOrnW/7lTJOhO
- 3eSngqzwH5V7xk1ET+R70FDSdTpkzX3Kpf7kqUVr42PxrGmQ6sD4FsK/reKLcqU+aa6PKzoy
- 2TAPJW6KR/JBeFo4n2azoGvg5NM=
+ Sender; bh=7vMq+j0bLCzEeUJ30r82syZD6LFTIUQzve2rWEp2Ea0=; b=BaoJP0agEYQ6lGlgvJNcWempTRUPniKnGKYokDcVrP3xZIosOF6jTNALSx2z+hw8wnO6KpTc
+ o4KoJMKuE43q2VOYaQ/pU6pjtSF8Kw4J2KhDYvytUkfmbgRQaPz92ETtt4oanRqDro67UkQZ
+ 0aT3p3mws4RltD0CjSLXqx8YfAA=
 X-Mailgun-Sending-Ip: 198.61.254.60
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 60145c926776573488be8bc7 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 29 Jan 2021 19:05:54
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 60145c9ef71e8b9934a9c292 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 29 Jan 2021 19:06:06
  GMT
 Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 88302C4346D; Fri, 29 Jan 2021 19:05:54 +0000 (UTC)
+        id 68AA0C433CA; Fri, 29 Jan 2021 19:06:06 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -38,9 +38,9 @@ Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Out
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A92AEC433ED;
-        Fri, 29 Jan 2021 19:05:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A92AEC433ED
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 84ED2C43462;
+        Fri, 29 Jan 2021 19:05:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 84ED2C43462
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
 From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
@@ -61,9 +61,9 @@ Cc:     coresight@lists.linaro.org, Stephen Boyd <swboyd@chromium.org>,
         Al Grant <al.grant@arm.com>, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCH 3/4] coresight: etm4x: Add support to exclude kernel mode tracing
-Date:   Sat, 30 Jan 2021 00:35:12 +0530
-Message-Id: <5d063d6035ff079b10e34cee110a26b856957ebe.1611909025.git.saiprakash.ranjan@codeaurora.org>
+Subject: [PATCH 4/4] coresight: etm3x: Add support to exclude kernel mode tracing
+Date:   Sat, 30 Jan 2021 00:35:13 +0530
+Message-Id: <da8cef63e6edd48fc958101a2f5f62f37e65284b.1611909025.git.saiprakash.ranjan@codeaurora.org>
 X-Mailer: git-send-email 2.29.0
 In-Reply-To: <cover.1611909025.git.saiprakash.ranjan@codeaurora.org>
 References: <cover.1611909025.git.saiprakash.ranjan@codeaurora.org>
@@ -84,46 +84,37 @@ the sysfs mode of tracing. This config is disabled by default and
 would not affect the current configuration which has both kernel and
 userspace tracing enabled by default.
 
-Tested-by: Denis Nikitin <denik@chromium.org>
 Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 ---
- drivers/hwtracing/coresight/coresight-etm4x-core.c | 14 +++++++++++++-
- .../hwtracing/coresight/coresight-etm4x-sysfs.c    |  3 ++-
- 2 files changed, 15 insertions(+), 2 deletions(-)
+ drivers/hwtracing/coresight/coresight-etm3x-core.c  | 11 +++++++++++
+ drivers/hwtracing/coresight/coresight-etm3x-sysfs.c |  3 ++-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-index b20b6ff17cf6..f94143057bb8 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -1052,12 +1052,16 @@ static void etm4_set_default(struct etmv4_config *config)
+diff --git a/drivers/hwtracing/coresight/coresight-etm3x-core.c b/drivers/hwtracing/coresight/coresight-etm3x-core.c
+index 5bf5a5a4ce6d..4da3bfa66b70 100644
+--- a/drivers/hwtracing/coresight/coresight-etm3x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm3x-core.c
+@@ -195,6 +195,9 @@ void etm_set_default(struct etm_config *config)
+ 	if (WARN_ON_ONCE(!config))
  		return;
  
- 	/*
--	 * Make default initialisation trace everything
-+	 * Make default initialisation trace everything when
-+	 * CONFIG_EXCLUDE_KERNEL_HW_ITRACE is disabled.
- 	 *
- 	 * This is done by a minimum default config sufficient to enable
- 	 * full instruction trace - with a default filter for trace all
- 	 * achieved by having no filtering.
- 	 */
 +	if (IS_ENABLED(CONFIG_EXCLUDE_KERNEL_HW_ITRACE))
 +		config->mode |= ETM_MODE_EXCL_KERN;
 +
- 	etm4_set_default_config(config);
- 	etm4_set_default_filter(config);
- }
-@@ -1195,6 +1199,7 @@ static int etm4_set_event_filters(struct etmv4_drvdata *drvdata,
- void etm4_config_trace_mode(struct etmv4_config *config)
+ 	/*
+ 	 * Taken verbatim from the TRM:
+ 	 *
+@@ -239,6 +242,7 @@ void etm_set_default(struct etm_config *config)
+ void etm_config_trace_mode(struct etm_config *config)
  {
- 	u32 mode;
-+	struct etmv4_drvdata *drvdata = container_of(config, struct etmv4_drvdata, config);
+ 	u32 flags, mode;
++	struct etm_drvdata *drvdata = container_of(config, struct etm_drvdata, config);
  
  	mode = config->mode;
- 	mode &= (ETM_MODE_EXCL_KERN | ETM_MODE_EXCL_USER);
-@@ -1202,6 +1207,13 @@ void etm4_config_trace_mode(struct etmv4_config *config)
- 	/* excluding kernel AND user space doesn't make sense */
- 	WARN_ON_ONCE(mode == (ETM_MODE_EXCL_KERN | ETM_MODE_EXCL_USER));
+ 
+@@ -248,6 +252,13 @@ void etm_config_trace_mode(struct etm_config *config)
+ 	if (mode == (ETM_MODE_EXCL_KERN | ETM_MODE_EXCL_USER))
+ 		return;
  
 +	if (!(mode & ETM_MODE_EXCL_KERN) && IS_ENABLED(CONFIG_EXCLUDE_KERNEL_HW_ITRACE)) {
 +		dev_err(&drvdata->csdev->dev,
@@ -135,18 +126,18 @@ index b20b6ff17cf6..f94143057bb8 100644
  	/* nothing to do if neither flags are set */
  	if (!(mode & ETM_MODE_EXCL_KERN) && !(mode & ETM_MODE_EXCL_USER))
  		return;
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c b/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
-index 989ce7b8ade7..f1d19d69d151 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
-@@ -426,7 +426,8 @@ static ssize_t mode_store(struct device *dev,
+diff --git a/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c b/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c
+index e8c7649f123e..26642dafddbb 100644
+--- a/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c
++++ b/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c
+@@ -164,7 +164,8 @@ static ssize_t mode_store(struct device *dev,
  	else
- 		config->vinst_ctrl &= ~BIT(11);
+ 		config->ctrl &= ~ETMCR_RETURN_STACK;
  
 -	if (config->mode & (ETM_MODE_EXCL_KERN | ETM_MODE_EXCL_USER))
 +	if ((config->mode & (ETM_MODE_EXCL_KERN | ETM_MODE_EXCL_USER)) ||
 +	    IS_ENABLED(CONFIG_EXCLUDE_KERNEL_HW_ITRACE))
- 		etm4_config_trace_mode(config);
+ 		etm_config_trace_mode(config);
  
  	spin_unlock(&drvdata->spinlock);
 -- 
