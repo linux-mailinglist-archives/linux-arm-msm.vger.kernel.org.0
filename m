@@ -2,144 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E265308E8F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Jan 2021 21:40:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CD2D5308FA2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Jan 2021 22:52:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232756AbhA2UhN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Jan 2021 15:37:13 -0500
-Received: from mail29.static.mailgun.info ([104.130.122.29]:31881 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232887AbhA2UhN (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Jan 2021 15:37:13 -0500
-X-Greylist: delayed 371 seconds by postgrey-1.27 at vger.kernel.org; Fri, 29 Jan 2021 15:37:12 EST
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1611952607; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=drmkmIL2SroI4KkHMKq3UPc/T4ZxaQH66OmhxBJF2Rc=; b=BAoRNUPDM7UjuAwHr3Pu6vWUIma37dKIV6RMRKoYFddkAeJIkgj5wlC2jMVe6psK0e2tkXXW
- dxjeoKbgETw+IHmd19MRA+R/NDjI71oHpqzzQfnjDXrph7fy7ttlT6SQMKk/3jin27NCZr8B
- o50G+knVSqgsHWOY6D4ceN1FEkA=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 601470547a21b36a9d0347a8 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 29 Jan 2021 20:30:12
- GMT
-Sender: wcheng=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A74D5C43461; Fri, 29 Jan 2021 20:30:11 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.110.127.29] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: wcheng)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 36F25C433C6;
-        Fri, 29 Jan 2021 20:30:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 36F25C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=wcheng@codeaurora.org
-Subject: Re: [PATCH v7 4/5] usb: dwc3: dwc3-qcom: Enable tx-fifo-resize
- property by default
-To:     Jack Pham <jackp@codeaurora.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, balbi@kernel.org,
-        gregkh@linuxfoundation.org, robh+dt@kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org
-References: <1611895604-4496-1-git-send-email-wcheng@codeaurora.org>
- <1611895604-4496-5-git-send-email-wcheng@codeaurora.org>
- <20210129092418.GA1879@jackp-linux.qualcomm.com>
-From:   Wesley Cheng <wcheng@codeaurora.org>
-Message-ID: <b9143845-0c40-392f-8c36-a11c0074f52e@codeaurora.org>
-Date:   Fri, 29 Jan 2021 12:30:09 -0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.0
+        id S233378AbhA2Vv0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Jan 2021 16:51:26 -0500
+Received: from mail.kernel.org ([198.145.29.99]:55200 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231169AbhA2VvH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 29 Jan 2021 16:51:07 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id E617064D7F;
+        Fri, 29 Jan 2021 21:50:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1611957026;
+        bh=vQA5KzxHuphY6TPIp7lU22R5TOoyWqbkWLYbeBGkZ14=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=UoNG+jLwHxo8QHqOKgSc3rRnkDlQ48CKxbj5S472I3pSBMHB+pYY6LbtgVf2RR/dQ
+         BH843idb7uW5lm9u2xOM+0jkB6Wu0da5NE1Xkf33zENWqdyuvJ7Cfpo6deSIqjYReI
+         EsdxLraGuWnG4DAsxHUeOKoMlLZbPeFakfAg5UBIkSPLGSwlRmwHkbYw4JNLpcw27y
+         ngYygTweOJDXyPOe3+CO2/lLnSTEpQmZshSc2Z9DiVq+zZy/YAS4D026oQmZizVksS
+         mxlXPZaqHJpJyl2uk4Mr3eLA5JPLgE/W5O/Z5U9v57QIJjEgFrN/YQWAxcQXMYKsu4
+         S+s7lnurqdnqQ==
+Date:   Fri, 29 Jan 2021 15:50:24 -0600
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        PCI <linux-pci@vger.kernel.org>
+Subject: Re: [PATCH v2 3/5] pcie-qcom: provide a way to power up qca6390 chip
+ on RB5 platform
+Message-ID: <20210129215024.GA113900@bjorn-Precision-5520>
 MIME-Version: 1.0
-In-Reply-To: <20210129092418.GA1879@jackp-linux.qualcomm.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <da0ac373-4edb-0230-b264-49697fa3d86a@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 1/29/2021 1:24 AM, Jack Pham wrote:
-> Hi Wesley,
+On Fri, Jan 29, 2021 at 06:45:21AM +0300, Dmitry Baryshkov wrote:
+> On 28/01/2021 22:26, Rob Herring wrote:
+> > On Thu, Jan 28, 2021 at 11:52 AM Dmitry Baryshkov
+> > <dmitry.baryshkov@linaro.org> wrote:
+> > > 
+> > > Some Qualcomm platforms require to power up an external device before
+> > > probing the PCI bus. E.g. on RB5 platform the QCA6390 WiFi/BT chip needs
+> > > to be powered up before PCIe0 bus is probed. Add a quirk to the
+> > > respective PCIe root bridge to attach to the power domain if one is
+> > > required, so that the QCA chip is started before scanning the PCIe bus.
+> > 
+> > This is solving a generic problem in a specific driver. It needs to be
+> > solved for any PCI host and any device.
 > 
-> On Thu, Jan 28, 2021 at 08:46:43PM -0800, Wesley Cheng wrote:
->> In order to take advantage of the TX fifo resizing logic, manually add
->> these properties to the DWC3 child node by default.  This will allow
->> the DWC3 gadget to resize the TX fifos for the IN endpoints, which
->> help with performance.
->>
->> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
->> ---
->>  drivers/usb/dwc3/dwc3-qcom.c | 10 ++++++++++
->>  1 file changed, 10 insertions(+)
->>
->> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
->> index d803ee9..4ea6be3 100644
->> --- a/drivers/usb/dwc3/dwc3-qcom.c
->> +++ b/drivers/usb/dwc3/dwc3-qcom.c
->> @@ -564,6 +564,7 @@ static int dwc3_qcom_clk_init(struct dwc3_qcom *qcom, int count)
->>  
->>  static const struct property_entry dwc3_qcom_acpi_properties[] = {
->>  	PROPERTY_ENTRY_STRING("dr_mode", "host"),
->> +	PROPERTY_ENTRY_BOOL("tx-fifo-resize"),
->>  	{}
->>  };
->>  
->> @@ -634,6 +635,7 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
->>  	struct dwc3_qcom	*qcom = platform_get_drvdata(pdev);
->>  	struct device_node	*np = pdev->dev.of_node, *dwc3_np;
->>  	struct device		*dev = &pdev->dev;
->> +	struct property		*prop;
->>  	int			ret;
->>  
->>  	dwc3_np = of_get_child_by_name(np, "dwc3");
->> @@ -642,6 +644,14 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
->>  		return -ENODEV;
->>  	}
->>  
->> +	prop = kzalloc(sizeof(*prop), GFP_KERNEL);
->> +	if (prop) {
->> +		prop->name = "tx-fifo-resize";
->> +		ret = of_add_property(dwc3_np, prop);
->> +		if (ret < 0)
->> +			dev_info(dev, "unable to add tx-fifo-resize prop\n");
+> Ack. I see your point here.
 > 
-> You'll need to kfree(prop) both in case of error here as well as in the
-> driver's .remove() callback. Maybe easier to devm_kzalloc()?
+> As this would require porting code from powerpc/spark of-pci code and
+> changing pcie port driver to apply power supply before bus probing happens,
+> I'd also ask for the comments from PCI maintainers. Will that solution be
+> acceptable to you?
 
-Hi Jack,
+I can't say without seeing the code.  I don't know enough about this
+scenario to envision how it might look.
 
-Thanks for the catch, will fix this with the devm variant.
+I guess the QCA6390 is a PCIe device?  Why does it need to be powered
+up before probing?  Shouldn't we get a link-up interrupt when it is
+powered up so we could probe it then?
 
-Hi Bjorn,
+Nit: when changing any file, please take a look at the commit history
+and make yours match, e.g.,
 
-Just wanted to see what you thought about this approach?  This way we
-can just keep the dt binding w/o having to re-add it in the future, as
-well as not needing to enable this property on every qcom platform with
-dwc3.
+  pcie-qcom: provide a way to power up qca6390 chip on RB5 platform
 
-Tested on my set up, and removed the change which added the property
-from the DTSI node.
+does not look like:
 
-Thanks
-Wesley Cheng
+  PCI: qcom: Add support for configuring BDF to SID mapping for SM8250
+  PCI: qcom: Add SM8250 SoC support
+  PCI: qcom: Make sure PCIe is reset before init for rev 2.1.0
+  PCI: qcom: Replace define with standard value
+  PCI: qcom: Support pci speed set for ipq806x
+  PCI: qcom: Add ipq8064 rev2 variant
 
+Also, if you capitalize it as "QCA6390" in the commit log, do it the
+same in the subject.
+
+> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > ---
+> > >   drivers/pci/controller/dwc/pcie-qcom.c | 21 +++++++++++++++++++++
+> > >   1 file changed, 21 insertions(+)
+> > > 
+> > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > index ab21aa01c95d..eb73c8540d4d 100644
+> > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > @@ -20,6 +20,7 @@
+> > >   #include <linux/of_device.h>
+> > >   #include <linux/of_gpio.h>
+> > >   #include <linux/pci.h>
+> > > +#include <linux/pm_domain.h>
+> > >   #include <linux/pm_runtime.h>
+> > >   #include <linux/platform_device.h>
+> > >   #include <linux/phy/phy.h>
+> > > @@ -1568,6 +1569,26 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0302, qcom_fixup_class);
+> > >   DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1000, qcom_fixup_class);
+> > >   DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1001, qcom_fixup_class);
+> > > 
+> > > +static void qcom_fixup_power(struct pci_dev *dev)
+> > > +{
+> > > +       int ret;
+> > > +       struct pcie_port *pp = dev->bus->sysdata;
+> > > +       struct dw_pcie *pci;
+> > > +
+> > > +       if (!pci_is_root_bus(dev->bus))
+> > > +               return;
+> > > +
+> > > +       ret = dev_pm_domain_attach(&dev->dev, true);
+> > > +       if (ret < 0 || !dev->dev.pm_domain)
+> > > +               return;
+> > > +
+> > > +       pci = to_dw_pcie_from_pp(pp);
+> > > +       dev_info(&dev->dev, "Bus powered up, waiting for link to come up\n");
+> > > +
+> > > +       dw_pcie_wait_for_link(pci);
+> > > +}
+> > > +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x010b, qcom_fixup_power);
+> > > +
+> > >   static struct platform_driver qcom_pcie_driver = {
+> > >          .probe = qcom_pcie_probe,
+> > >          .driver = {
+> > > --
+> > > 2.29.2
+> > > 
 > 
-> Jack
 > 
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+> -- 
+> With best wishes
+> Dmitry
