@@ -2,163 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E5063092D4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Jan 2021 10:05:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CD7353092F7
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Jan 2021 10:14:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229498AbhA3JEe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Jan 2021 04:04:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57054 "EHLO
+        id S233521AbhA3ERG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Jan 2021 23:17:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233805AbhA3E5I (ORCPT
+        with ESMTP id S233637AbhA3Dsa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Jan 2021 23:57:08 -0500
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D8C5C061574
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Jan 2021 18:00:07 -0800 (PST)
-Received: by mail-pf1-x42b.google.com with SMTP id e19so7347499pfh.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Jan 2021 18:00:07 -0800 (PST)
+        Fri, 29 Jan 2021 22:48:30 -0500
+Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3607FC0617AB
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Jan 2021 19:47:41 -0800 (PST)
+Received: by mail-oo1-xc34.google.com with SMTP id x19so640570ooj.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Jan 2021 19:47:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=squareup.com; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=83BGZrgiNBtf2HpHYA3huRBYyscfozlNKzPdwrXaPyM=;
-        b=Tb2s6Ek8oTj0J/p1phYDamGzIXjcF/3+Xnpz5Mkz78Z+7sSZ7QHKCVWxkc/UL5N8Yw
-         NK8jlUCQJojL9or/+XvI7qRKDIj6T7ArW2Q40/NKacIoQKYspHXBq2GBhXNTlotge0ma
-         fLLnX8xSuTuy0lywtth7yzH6tDJPJM4M89ix0=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=nP75y4ZlajL2hHjYKNjPgV2d6UjbR2QsqHFCSmA9Tug=;
+        b=EbQKlDL9Q0AC1ekv2k9jaEdwiQfys+GTv+HpiGBoUBXFl6HnnvlQBPa9kJi2i5Yw4Y
+         SJlzsDH05ojH0EgVxnYvv1s6aUYWhTa91DWPSBXyc5zEegD3GLmvGl1oLjMqcG1WCDM/
+         7bRYPVzupz0DROkGMhxCgQuOWTEKZdtYFpvrgmiwH+QLDdz81O9dH+wil0N1N6VbIh4K
+         3WVvNwZUlsWro7rdwnwORgqP/UzYdF1a0RXwTAcfAqgqQ9ZCRq+S5hboT8qeViUFZrJt
+         CdOK3i6PYFcXFlZrIk3l0OHxzgmRnc03E9vxToFQQU5pIolnSB71Mc/XxHBqsnUCZ6O/
+         R9SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=83BGZrgiNBtf2HpHYA3huRBYyscfozlNKzPdwrXaPyM=;
-        b=Aa+2l1Yex6V82JkqPrVjBCiUdX+VLE9Axbc3fMmZ0eU6EH3XpKcovNXk+9HGR/GbXC
-         YvHPzwd+mpiTDuC5R3qnqm/tp3mk+zXDlDxx+IKPHUuqO2/k2YU83vxn/y64q0b8FfYx
-         CSQmoRouvnw9arzdjMJwIcIpUtyvDI69d3mOXlx7OualHAlLIyy77o3NDWZgRZQa2jY6
-         VFn5ev23qNsZYBKXjUW+Qu6/EgV04ThiSUVN7eJVRJAdJcfN++a8r8xDhxzffVpZgMs1
-         9WnFD39pVlnDs47lqSvSbBTj0GKXAlQidqPY2YfZqt4wJ/J3bpMERzNaoCeWurkAyuXI
-         keSg==
-X-Gm-Message-State: AOAM533JfonDN2ImHkwvpkWTeAKLL2xpXvjoM1IvpStFre6s+FXYMWMk
-        2/Kn/T6EMIPkESv/vHgeKLxh9A==
-X-Google-Smtp-Source: ABdhPJzzRHJTltKDkyuuKbIHmJ6PmrxJocGWpBLCqvqhabxzHF6lx6ptLhoy0flFHE7TzqAxPpylZg==
-X-Received: by 2002:a05:6a00:148a:b029:1ae:6d20:fbb3 with SMTP id v10-20020a056a00148ab02901ae6d20fbb3mr6722703pfu.55.1611972007047;
-        Fri, 29 Jan 2021 18:00:07 -0800 (PST)
-Received: from benl-m5lvdt.local ([2600:1700:87d0:94f:65bd:6864:3edc:1e8f])
-        by smtp.gmail.com with ESMTPSA id f13sm11033259pjj.1.2021.01.29.18.00.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Jan 2021 18:00:06 -0800 (PST)
-Subject: Re: [PATCH] drm/msm/dsi: save PLL registers across first PHY reset
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        robdclark@gmail.com, sean@poorly.run
-Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Harigovindan P <harigovi@codeaurora.org>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        zhengbin <zhengbin13@huawei.com>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org,
-        Anibal Limon <anibal.limon@linaro.org>
-References: <010101750064e17e-3db0087e-fc37-494d-aac9-2c2b9b0a7c5b-000000@us-west-2.amazonses.com>
- <508ae9e2-5240-2f43-6c97-493bb7d9fbe8@linaro.org>
-From:   Benjamin Li <benl@squareup.com>
-Message-ID: <eda75757-5cf2-14a7-3de4-ca57eb099cfd@squareup.com>
-Date:   Fri, 29 Jan 2021 18:00:03 -0800
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.7.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=nP75y4ZlajL2hHjYKNjPgV2d6UjbR2QsqHFCSmA9Tug=;
+        b=Awo3y2YngNTIw/txhDDnG5Q4Z/kGc5oZh8gCYVKYa92xjBF+Y05GCwPS2mTgbrope+
+         ZMCx9W0MV81nc0lPnC5dYcxJTYfXUeHU5mvVXkVg/EdcBzun91hvitfDie+AMBik1uGY
+         ZF6DwtnkRhHTJh5hhmQAlXNZem3vQmaJ1UQQDTyr858MKHHqLZUyJ0ubpEyn7l4Wx+Yh
+         6j/N9tfKc6i2VJJvrT7W/+3EzyJudUJnamTWHS3PwuKasQDPK5XA4dxE0o+5VEw7FwA1
+         pYjS2mVbCjGLhYGuL1IK6b4S0KL8LJe9bPhzy/tQ8NYNOpi/iSkN+D4mNPwpVt9dRdDh
+         YItg==
+X-Gm-Message-State: AOAM5317RZKKRw2D/zD1+h8aHPMbmfFFuwgGllvjfn2uQ8Orv7iRDXbX
+        Ez+cuQ8Lh5btP2PhZtOCbHHjcg==
+X-Google-Smtp-Source: ABdhPJw+PYNPlKnGi2851SXcXGelsjzqO7Dy2YZ7mqAmciNAXHFBsBqoMoKN3XL5tGQg53QSAP/jew==
+X-Received: by 2002:a4a:a5cc:: with SMTP id k12mr5164268oom.33.1611978460467;
+        Fri, 29 Jan 2021 19:47:40 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id t62sm2526969oif.2.2021.01.29.19.47.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 29 Jan 2021 19:47:39 -0800 (PST)
+Date:   Fri, 29 Jan 2021 21:47:37 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        linux-arm-msm@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pci@vger.kernel.org
+Subject: Re: [PATCH v2 2/5] arm64: qcom: dts: qrb5165-rb5: add qca6391 power
+ device
+Message-ID: <YBTW2et0IVCUGmdg@builder.lan>
+References: <20210128175225.3102958-1-dmitry.baryshkov@linaro.org>
+ <20210128175225.3102958-3-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <508ae9e2-5240-2f43-6c97-493bb7d9fbe8@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210128175225.3102958-3-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu 28 Jan 11:52 CST 2021, Dmitry Baryshkov wrote:
 
-On 10/30/20 6:55 AM, Dmitry Baryshkov wrote:
-> Hello,
+> Add qca6391 to device tree as a way to provide power domain to WiFi and
+> BT parts of the chip.
 > 
-> On 07/10/2020 03:10, benl-kernelpatches@squareup.com wrote:
->> From: Benjamin Li <benl@squareup.com>
->>
->> Take advantage of previously-added support for persisting PLL
->> registers across DSI PHY disable/enable cycles (see 328e1a6
->> 'drm/msm/dsi: Save/Restore PLL status across PHY reset') to
->> support persisting across the very first DSI PHY enable at
->> boot.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 61 ++++++++++++++++++++++++
+>  1 file changed, 61 insertions(+)
 > 
-> Interesting enough, this breaks exactly on 8016. On DB410c with latest bootloader and w/o splash screen this patch causes boot freeze. Without this patch the board would successfully boot with display routed to HDMI.
+> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> index 8aebc3660b11..2b0c1cc9333b 100644
+> --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> @@ -151,6 +151,23 @@ vreg_s4a_1p8: vreg-s4a-1p8 {
+>  		regulator-max-microvolt = <1800000>;
+>  		regulator-always-on;
+>  	};
+> +
+> +	qca6391: qca6391 {
+> +		compatible = "qcom,qca6390";
+> +		#power-domain-cells = <0>;
+> +
+> +		vddaon-supply = <&vreg_s6a_0p95>;
+> +		vddpmu-supply = <&vreg_s2f_0p95>;
+> +		vddrfa1-supply = <&vreg_s2f_0p95>;
+> +		vddrfa2-supply = <&vreg_s8c_1p3>;
+> +		vddrfa3-supply = <&vreg_s5a_1p9>;
+> +		vddpcie1-supply = <&vreg_s8c_1p3>;
+> +		vddpcie2-supply = <&vreg_s5a_1p9>;
+> +		vddio-supply = <&vreg_s4a_1p8>;
+> +		pinctrl-names = "default", "active";
+> +		pinctrl-0 = <&wlan_default_state &bt_default_state>;
+> +		pinctrl-1 = <&wlan_active_state &bt_active_state>;
 
-Hi Dimtry,
+I dislike the use of pinctrl states for toggling the level of the gpio
+and would prefer that you use the gpio binding and api for this instead.
 
-Thanks for your fix for the DB410c breakage ("drm/msm/dsi: do not
-try reading 28nm vco rate if it's not enabled") that this patch
-causes.
+> +	};
+>  };
+>  
+>  &adsp {
+> @@ -1013,6 +1030,28 @@ &tlmm {
+>  		"HST_WLAN_UART_TX",
+>  		"HST_WLAN_UART_RX";
+>  
+> +	bt_default_state: bt-default-state {
 
-I re-tested my patch on top of qcom/linux for-next (3e6a8ce094759)
-which now has your fix, on a DB410c with HDMI display and no splash
-(which seems to be the default using the Linaro SD card image's LK),
-and indeed it is fixed.
+Are you sure you need to drive the BT_EN pin in order to have WiFi
+working? On QCA6174 I believe the "WL_EN" was actually RESET_N and BT_EN
+was actually "blueooth enable" - so we wired that in the bluetooth node
+instead.
 
-I assume you already also did the same & are okay with this going in.
-Appreciate the testing!
+> +		bt-en {
+> +			pins = "gpio21";
+> +			function = "gpio";
+> +
+> +			drive-strength = <16>;
+> +			output-low;
+> +			bias-pull-up;
+> +		};
+> +	};
+> +
+> +	bt_active_state: bt-active-state {
+> +		bt-en {
+> +			pins = "gpio21";
+> +			function = "gpio";
+> +
+> +			drive-strength = <16>;
+> +			output-high;
+> +			bias-pull-up;
+> +		};
+> +	};
+> +
+>  	lt9611_irq_pin: lt9611-irq {
+>  		pins = "gpio63";
+>  		function = "gpio";
+> @@ -1119,6 +1158,28 @@ sdc2_card_det_n: sd-card-det-n {
+>  		function = "gpio";
+>  		bias-pull-up;
+>  	};
+> +
+> +	wlan_default_state: wlan-default-state {
 
-Ben
+JFYI. You don't need this "dummy" subnode, you can put the properties
+directly in the state node.
 
-> 
->> The bootloader may have left the PLL registers in a non-default
->> state. For example, for dsi_pll_28nm.c on 8x16/8x39, the byte
->> clock mux's power-on reset configuration is to bypass DIV1, but
->> depending on bandwidth requirements[1] the bootloader may have
->> set the DIV1 path.
->>
->> When the byte clock mux is registered with the generic clock
->> framework at probe time, the framework reads & caches the value
->> of the mux bit field (the initial clock parent). After PHY enable,
->> when clk_set_rate is called on the byte clock, the framework
->> assumes there is no need to reparent, and doesn't re-write the
->> mux bit field. But PHY enable resets PLL registers, so the mux
->> bit field actually silently reverted to the DIV1 bypass path.
->> This causes the byte clock to be off by a factor of e.g. 2 for
->> our tested WXGA panel.
->>
->> The above issue manifests as the display not working and a
->> constant stream of FIFO/LP0 contention errors.
->>
->> [1] The specific requirement for triggering the DIV1 path (and
->> thus this issue) on 28nm is a panel with pixel clock <116.7MHz
->> (one-third the minimum VCO setting). FHD/1080p (~145MHz) is fine,
->> WXGA/1280x800 (~75MHz) is not.
->>
->> Signed-off-by: Benjamin Li <benl@squareup.com>
->> ---
->>   drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 16 ++++++++++++++++
->>   1 file changed, 16 insertions(+)
->>
->> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
->> index 009f5b843dd1..139b4a5aaf86 100644
->> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
->> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
->> @@ -621,6 +621,22 @@ static int dsi_phy_driver_probe(struct platform_device *pdev)
->>           phy->pll = NULL;
->>       }
->>   +    /*
->> +     * As explained in msm_dsi_phy_enable, resetting the DSI PHY (as done
->> +     * in dsi_mgr_phy_enable) silently changes its PLL registers to power-on
->> +     * defaults, but the generic clock framework manages and caches several
->> +     * of the PLL registers. It initializes these caches at registration
->> +     * time via register read.
->> +     *
->> +     * As a result, we need to save DSI PLL registers once at probe in order
->> +     * for the first call to msm_dsi_phy_enable to successfully bring PLL
->> +     * registers back in line with what the generic clock framework expects.
->> +     *
->> +     * Subsequent PLL restores during msm_dsi_phy_enable will always be
->> +     * paired with PLL saves in msm_dsi_phy_disable.
->> +     */
->> +    msm_dsi_pll_save_state(phy->pll);
->> +
->>       dsi_phy_disable_resource(phy);
->>         platform_set_drvdata(pdev, phy);
->>
-> 
+Regards,
+Bjorn
+
+> +		wlan-en {
+> +			pins = "gpio20";
+> +			function = "gpio";
+> +
+> +			drive-strength = <16>;
+> +			output-low;
+> +			bias-pull-up;
+> +		};
+> +	};
+> +
+> +	wlan_active_state: wlan-active-state {
+> +		wlan-en {
+> +			pins = "gpio20";
+> +			function = "gpio";
+> +
+> +			drive-strength = <16>;
+> +			output-high;
+> +			bias-pull-up;
+> +		};
+> +	};
+>  };
+>  
+>  &uart12 {
+> -- 
+> 2.29.2
 > 
