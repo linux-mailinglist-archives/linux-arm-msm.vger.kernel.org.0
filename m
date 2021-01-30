@@ -2,79 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A276A30972A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Jan 2021 18:24:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DE8A309731
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Jan 2021 18:24:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230045AbhA3RW0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Jan 2021 12:22:26 -0500
-Received: from m-r2.th.seeweb.it ([5.144.164.171]:53827 "EHLO
-        m-r2.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229468AbhA3RWZ (ORCPT
+        id S231386AbhA3RY0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Jan 2021 12:24:26 -0500
+Received: from mail-ot1-f50.google.com ([209.85.210.50]:37195 "EHLO
+        mail-ot1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229498AbhA3RYZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Jan 2021 12:22:25 -0500
-Received: from [192.168.1.101] (abaf219.neoplus.adsl.tpnet.pl [83.6.169.219])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 00E0C3E8B4;
-        Sat, 30 Jan 2021 18:21:27 +0100 (CET)
-Subject: Re: [PATCH v2 00/11] Clock fixes for MSM8998 GCC, MMCC, GPUCC
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     marijn.suijten@somainline.org, martin.botka@somainline.org,
-        phone-devel@vger.kernel.org, linux-kernel@vger.kernel.org,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org
-References: <20210114221059.483390-1-angelogioacchino.delregno@somainline.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-Message-ID: <2b682fa5-0403-df04-6805-3e431df4fca8@somainline.org>
-Date:   Sat, 30 Jan 2021 18:21:27 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.1
-MIME-Version: 1.0
-In-Reply-To: <20210114221059.483390-1-angelogioacchino.delregno@somainline.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+        Sat, 30 Jan 2021 12:24:25 -0500
+Received: by mail-ot1-f50.google.com with SMTP id h14so11952748otr.4;
+        Sat, 30 Jan 2021 09:24:10 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=pXuQbzH1HhbE+f1usaw5pbQpp7LXrV9fgnnlovgh3z8=;
+        b=FrJFyt9H2afVCY5Fua7uTzevccdwrBh0s3FmT3EJ16onBevk7/uzWYztdO5G1mqOs2
+         IyDxlyCR69iZmE0J96AKA6LBduTZRJQWgMWQqIQsZO8/NWKWJ+MzbcG8TTzkN7itPD+s
+         fmm+wclsi8r2ajvxJE9qXZeH91lMBu2ptt9e5kTsZIuUL2alG88oTHB8DaJIPhXVc2dG
+         rQ1TDHiLY6ZOzXS81lVyQ1Uv+r6koZChKGjeTy53501/Fk8tobo7IMJj8EXjJQY6lE/z
+         6tZvUrqTcR4Tlgpqr03K3Q19JNfL8OyI1oo4FVvoYhMiO6VbNH41u7wFE/h+FdMkcyVl
+         TE8Q==
+X-Gm-Message-State: AOAM530WJFkYITHyIsTO4i1EWW8MGmoWOyy/tcTsmnPKTLG+1x/wIhPJ
+        ecs4YSWEhWtivu09/soIBA==
+X-Google-Smtp-Source: ABdhPJyC2w56EW+vPolgtnxys1vpJEGvBhlMP/2uRtJ5IE0ERqsRBTtx7mfXHFhBD2cviSyGXrCBNg==
+X-Received: by 2002:a05:6830:230b:: with SMTP id u11mr6704466ote.184.1612027424559;
+        Sat, 30 Jan 2021 09:23:44 -0800 (PST)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id t16sm2842618otc.30.2021.01.30.09.23.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 30 Jan 2021 09:23:42 -0800 (PST)
+Received: (nullmailer pid 1419425 invoked by uid 1000);
+        Sat, 30 Jan 2021 17:23:40 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Robert Foss <robert.foss@linaro.org>
+Cc:     michael@walle.cc, leoyang.li@nxp.com, linux-media@vger.kernel.org,
+        todor.too@gmail.com, bjorn.andersson@linaro.org,
+        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
+        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
+        catalin.marinas@arm.com, mchehab@kernel.org,
+        Andrey Konovalov <andrey.konovalov@linaro.org>,
+        Anson.Huang@nxp.com, geert+renesas@glider.be, arnd@arndb.de,
+        linux-arm-kernel@lists.infradead.org,
+        Jonathan Marek <jonathan@marek.ca>, shawnguo@kernel.org,
+        linux-kernel@vger.kernel.org,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        agx@sigxcpu.org, Tomasz Figa <tfiga@chromium.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        robh+dt@kernel.org, angelogioacchino.delregno@somainline.org,
+        max.oss.09@gmail.com,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        will@kernel.org, agross@kernel.org
+In-Reply-To: <20210127144930.2158242-16-robert.foss@linaro.org>
+References: <20210127144930.2158242-1-robert.foss@linaro.org> <20210127144930.2158242-16-robert.foss@linaro.org>
+Subject: Re: [PATCH v3 15/22] dt-bindings: media: camss: Add qcom, sdm660-camss binding
+Date:   Sat, 30 Jan 2021 11:23:40 -0600
+Message-Id: <1612027420.831924.1419424.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, 27 Jan 2021 15:49:23 +0100, Robert Foss wrote:
+> Add bindings for qcom,sdm660-camss in order to support the camera
+> subsystem on SDM630/660 and SDA variants.
+> 
+> Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> ---
+> 
+> Changes since v2
+>  - Rob: Add new line at end of file
+>  - Rob: Remove redundant descriptions
+>  - Rob: Add power domain description
+>  - Rob: Make clock-lanes a constant
+>  - Rob: Rework to conform to new port schema
+>  - Add max & minItems to data-lanes
+>  - Remove ports requirement - endpoint & reg
+>  - Added Angelo as binding maintainer
+>  - Removed Todor as binding maintainer
+> 
+> 
+>  .../bindings/media/qcom,sdm660-camss.yaml     | 398 ++++++++++++++++++
+>  1 file changed, 398 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
+> 
 
-On 14.01.2021 23:10, AngeloGioacchino Del Regno wrote:
-> This patch series fixes some issues with the MSM8998 clocks and, in
-> particular, brings a very important fix to the GCC PLLs.
->
-> These fixes are enhancing this SoC's stability and also makes it
-> possible to eventually enable the Adreno GPU (with proper clock
-> scaling) and other components.
->
-> This patch series was tested on:
-> - Sony Xperia XZ Premium (MSM8998)
-> - F(x)Tec Pro1 (MSM8998)
->
-> AngeloGioacchino Del Regno (11):
->   dt-bindings: clocks: gcc-msm8998: Add GCC_MMSS_GPLL0_CLK definition
->   clk: qcom: gcc-msm8998: Wire up gcc_mmss_gpll0 clock
->   dt-bindings: clock: gcc-msm8998: Add HMSS_GPLL0_CLK_SRC definition
->   clk: qcom: gcc-msm8998: Add missing hmss_gpll0_clk_src clock
->   clk: qcom: gcc-msm8998: Mark gpu_cfg_ahb_clk as critical
->   clk: qcom: gcc-msm8998: Fix Alpha PLL type for all GPLLs
->   clk: qcom: mmcc-msm8998: Set CLK_GET_RATE_NOCACHE to pixel/byte clks
->   clk: qcom: mmcc-msm8998: Add hardware clockgating registers to some
->     clks
->   clk: qcom: mmcc-msm8998: Set bimc_smmu_gdsc always on
->   clk: qcom: gpucc-msm8998: Add resets, cxc, fix flags on gpu_gx_gdsc
->   clk: qcom: gpucc-msm8998: Allow fabia gpupll0 rate setting
->
->  drivers/clk/qcom/gcc-msm8998.c               | 143 ++++++++++++-------
->  drivers/clk/qcom/gpucc-msm8998.c             |  18 ++-
->  drivers/clk/qcom/mmcc-msm8998.c              |  20 ++-
->  include/dt-bindings/clock/qcom,gcc-msm8998.h |   2 +
->  4 files changed, 125 insertions(+), 58 deletions(-)
+My bot found errors running 'make dt_binding_check' on your patch:
 
+yamllint warnings/errors:
 
-Bump! I can tell all of these patches work as they should :)
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/media/qcom,sdm660-camss.example.dts:21:18: fatal error: dt-bindings/clock/qcom,mmcc-sdm660.h: No such file or directory
+   21 |         #include <dt-bindings/clock/qcom,mmcc-sdm660.h>
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make[1]: *** [scripts/Makefile.lib:344: Documentation/devicetree/bindings/media/qcom,sdm660-camss.example.dt.yaml] Error 1
+make[1]: *** Waiting for unfinished jobs....
+make: *** [Makefile:1370: dt_binding_check] Error 2
+
+See https://patchwork.ozlabs.org/patch/1432255
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
 
