@@ -2,113 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C6A2309695
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Jan 2021 17:18:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 02E203096CD
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Jan 2021 17:37:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232236AbhA3QSp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Jan 2021 11:18:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60748 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230085AbhA3QRS (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Jan 2021 11:17:18 -0500
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FE57C061573
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Jan 2021 08:16:22 -0800 (PST)
-Received: by mail-qk1-x734.google.com with SMTP id r77so11877165qka.12
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Jan 2021 08:16:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ejssOulrsTZ3ouHbrBBarxFuH2SuoMwxOAnWZQut8vY=;
-        b=fmLNhBeiMEpCT64iXb708ra7uyU/Zu3j1K6JAv36RVHp01n5CleHqXKzoT74F9zaKL
-         wncl6lJDD/PlSfUmmKmJdnMKUoo797O6FRVEjLRnyufjvFId6qRLeJQlRkiG6ypIC5+B
-         fE5+v0pAHXXbvTEC65/I2ZAMahOFJe4XIbIutYTHZs4bANICZZw7g+HNQ5VwlgpOMUtv
-         C1+rSGClaWl1qjmgmV0TJB9xn/iFlgNVbxQpxd+1m3AYeijxvhrI0sT6EDqPsgSEcUUO
-         72tMlzC4kQ4hJFXavIUisZ1M3dK7Yf0icFZeWv9toAeRTyfhzKK252rM9jUJSt6+cdA7
-         a77A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ejssOulrsTZ3ouHbrBBarxFuH2SuoMwxOAnWZQut8vY=;
-        b=DafkmPhh2XBw3tjZCNBsTiNlGPw+tPAkNIJ3LbVYlU4t9oapzIvcTTyrTEQ7Ux2y2f
-         H8HjlJJA2uG+phzfmJNM4Cwsrxm9dgepHch1AcJVfral5XRmXTVlzzhbiOI4zEdvbizx
-         jJzPkjme7u6C4SbnhRePv5yKuF4FmIe6Vt2FaeW7jYG0h+bAuugzOc1xhkXOAh6HOWTM
-         ZW/4sukbHJ4nv8tx/Gxndkt81A897nyFR4OERvGbd2oHI/MGMgHm290SFKTU/54ElI01
-         YPeIzag/FGwP4fPHGTpsH5XpkA5CkaDE2SQOT6qPW2K4ZYFC9wXQvHGuNEzVqx0Hr7Ir
-         tWKA==
-X-Gm-Message-State: AOAM531v3lLhsra32Y+CwOQMYZbW2dFEWMCVRTXJvMWjb+2rBPAz72dF
-        gKLk4NFzOuHpd4HlVvx4OCHCQDA77SK3BfuLjhaIKw==
-X-Google-Smtp-Source: ABdhPJxjFzuwpFzrLhh+nGrXrs4raiQtDHat0NUdPD5KVJSQnlTf0MuHS/yGpjPuaALH/of+u93L6laMiPrv5cVnAro=
-X-Received: by 2002:a05:620a:ec2:: with SMTP id x2mr8981436qkm.138.1612023381824;
- Sat, 30 Jan 2021 08:16:21 -0800 (PST)
+        id S229498AbhA3QgF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Jan 2021 11:36:05 -0500
+Received: from mail.z3ntu.xyz ([128.199.32.197]:60246 "EHLO mail.z3ntu.xyz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231617AbhA3O0i (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 30 Jan 2021 09:26:38 -0500
+Received: from localhost.localdomain (91-115-28-172.adsl.highway.telekom.at [91.115.28.172])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id E4EE1C4D09;
+        Sat, 30 Jan 2021 14:24:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1612016642; bh=ogHO0gWBqB7dfJUJ5LmZsuLbW5GwhjBNOZ4Ucl5LvUs=;
+        h=From:To:Cc:Subject:Date;
+        b=PVkyvSmszVmxI+29mJcJCWSQvkRTOAW2+YTixg8ohhLUUiTrkX4oYII8L1vhJzOcR
+         xTNJECme5qbB82+Vw13pxFZZEH6T9p09+7sw5k98Ux52tI8t/7T2q9RGNvL5z4RlEB
+         li0zPWANvnPXpwy0kbzETFbTr18wOtD9Qm5JeYNE=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, Luca Weiss <luca@z3ntu.xyz>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Brian Masney <masneyb@onstation.org>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] soc: qcom: ocmem: don't return NULL in of_get_ocmem
+Date:   Sat, 30 Jan 2021 15:23:49 +0100
+Message-Id: <20210130142349.53335-1-luca@z3ntu.xyz>
+X-Mailer: git-send-email 2.30.0
 MIME-Version: 1.0
-References: <010101750064e17e-3db0087e-fc37-494d-aac9-2c2b9b0a7c5b-000000@us-west-2.amazonses.com>
- <508ae9e2-5240-2f43-6c97-493bb7d9fbe8@linaro.org> <eda75757-5cf2-14a7-3de4-ca57eb099cfd@squareup.com>
-In-Reply-To: <eda75757-5cf2-14a7-3de4-ca57eb099cfd@squareup.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 30 Jan 2021 19:16:10 +0300
-Message-ID: <CAA8EJprOYwe8pSc+QzptVjxWKiTG-jGxoUh0aa5JTGq-4nnt+g@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dsi: save PLL registers across first PHY reset
-To:     Benjamin Li <benl@squareup.com>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Harigovindan P <harigovi@codeaurora.org>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        zhengbin <zhengbin13@huawei.com>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Anibal Limon <anibal.limon@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 30 Jan 2021 at 05:00, Benjamin Li <benl@squareup.com> wrote:
->
->
-> On 10/30/20 6:55 AM, Dmitry Baryshkov wrote:
-> > Hello,
-> >
-> > On 07/10/2020 03:10, benl-kernelpatches@squareup.com wrote:
-> >> From: Benjamin Li <benl@squareup.com>
-> >>
-> >> Take advantage of previously-added support for persisting PLL
-> >> registers across DSI PHY disable/enable cycles (see 328e1a6
-> >> 'drm/msm/dsi: Save/Restore PLL status across PHY reset') to
-> >> support persisting across the very first DSI PHY enable at
-> >> boot.
-> >
-> > Interesting enough, this breaks exactly on 8016. On DB410c with latest bootloader and w/o splash screen this patch causes boot freeze. Without this patch the board would successfully boot with display routed to HDMI.
->
-> Hi Dimtry,
->
-> Thanks for your fix for the DB410c breakage ("drm/msm/dsi: do not
-> try reading 28nm vco rate if it's not enabled") that this patch
-> causes.
->
-> I re-tested my patch on top of qcom/linux for-next (3e6a8ce094759)
-> which now has your fix, on a DB410c with HDMI display and no splash
-> (which seems to be the default using the Linaro SD card image's LK),
-> and indeed it is fixed.
->
-> I assume you already also did the same & are okay with this going in.
-> Appreciate the testing!
+If ocmem probe fails for whatever reason, of_get_ocmem returned NULL.
+Without this, users must check for both NULL and IS_ERR on the returned
+pointer - which didn't happen in drivers/gpu/drm/msm/adreno/adreno_gpu.c
+leading to a NULL pointer dereference.
 
-Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Tested on RB5 and Dragonboard 845c (RB3).
+Fixes: 88c1e9404f1d ("soc: qcom: add OCMEM driver")
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+ drivers/soc/qcom/ocmem.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-
-
-
+diff --git a/drivers/soc/qcom/ocmem.c b/drivers/soc/qcom/ocmem.c
+index 7f9e9944d1ea..f1875dc31ae2 100644
+--- a/drivers/soc/qcom/ocmem.c
++++ b/drivers/soc/qcom/ocmem.c
+@@ -189,6 +189,7 @@ struct ocmem *of_get_ocmem(struct device *dev)
+ {
+ 	struct platform_device *pdev;
+ 	struct device_node *devnode;
++	struct ocmem *ocmem;
+ 
+ 	devnode = of_parse_phandle(dev->of_node, "sram", 0);
+ 	if (!devnode || !devnode->parent) {
+@@ -202,7 +203,12 @@ struct ocmem *of_get_ocmem(struct device *dev)
+ 		return ERR_PTR(-EPROBE_DEFER);
+ 	}
+ 
+-	return platform_get_drvdata(pdev);
++	ocmem = platform_get_drvdata(pdev);
++	if (!ocmem) {
++		dev_err(dev, "Cannot get ocmem\n");
++		return ERR_PTR(-ENODEV);
++	}
++	return ocmem;
+ }
+ EXPORT_SYMBOL(of_get_ocmem);
+ 
 -- 
-With best wishes
-Dmitry
+2.30.0
+
