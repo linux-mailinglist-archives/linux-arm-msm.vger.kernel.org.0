@@ -2,199 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C59A3092BC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Jan 2021 09:59:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E5063092D4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Jan 2021 10:05:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230114AbhA3I57 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Jan 2021 03:57:59 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:16935 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230518AbhA3FYn (ORCPT
+        id S229498AbhA3JEe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Jan 2021 04:04:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57054 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233805AbhA3E5I (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Jan 2021 00:24:43 -0500
-Received: from ironmsg07-lv.qualcomm.com (HELO ironmsg07-lv.qulacomm.com) ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 29 Jan 2021 21:20:28 -0800
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg07-lv.qulacomm.com with ESMTP/TLS/AES256-SHA; 29 Jan 2021 21:20:25 -0800
-X-QCInternal: smtphost
-Received: from gokulsri-linux.qualcomm.com ([10.201.2.207])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 30 Jan 2021 10:50:14 +0530
-Received: by gokulsri-linux.qualcomm.com (Postfix, from userid 432570)
-        id AFD9A219E7; Sat, 30 Jan 2021 10:50:14 +0530 (IST)
-From:   Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
-To:     sboyd@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
-        david.brown@linaro.org, devicetree@vger.kernel.org,
-        jassisinghbrar@gmail.com, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, mark.rutland@arm.com,
-        mturquette@baylibre.com, ohad@wizery.com, robh+dt@kernel.org,
-        sricharan@codeaurora.org, gokulsri@codeaurora.org
-Subject: [PATCH v8 9/9] arm64: dts: qcom: Enable Q6v5 WCSS for ipq8074 SoC
-Date:   Sat, 30 Jan 2021 10:50:13 +0530
-Message-Id: <1611984013-10201-10-git-send-email-gokulsri@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1611984013-10201-1-git-send-email-gokulsri@codeaurora.org>
-References: <1611984013-10201-1-git-send-email-gokulsri@codeaurora.org>
+        Fri, 29 Jan 2021 23:57:08 -0500
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D8C5C061574
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Jan 2021 18:00:07 -0800 (PST)
+Received: by mail-pf1-x42b.google.com with SMTP id e19so7347499pfh.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Jan 2021 18:00:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=squareup.com; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=83BGZrgiNBtf2HpHYA3huRBYyscfozlNKzPdwrXaPyM=;
+        b=Tb2s6Ek8oTj0J/p1phYDamGzIXjcF/3+Xnpz5Mkz78Z+7sSZ7QHKCVWxkc/UL5N8Yw
+         NK8jlUCQJojL9or/+XvI7qRKDIj6T7ArW2Q40/NKacIoQKYspHXBq2GBhXNTlotge0ma
+         fLLnX8xSuTuy0lywtth7yzH6tDJPJM4M89ix0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=83BGZrgiNBtf2HpHYA3huRBYyscfozlNKzPdwrXaPyM=;
+        b=Aa+2l1Yex6V82JkqPrVjBCiUdX+VLE9Axbc3fMmZ0eU6EH3XpKcovNXk+9HGR/GbXC
+         YvHPzwd+mpiTDuC5R3qnqm/tp3mk+zXDlDxx+IKPHUuqO2/k2YU83vxn/y64q0b8FfYx
+         CSQmoRouvnw9arzdjMJwIcIpUtyvDI69d3mOXlx7OualHAlLIyy77o3NDWZgRZQa2jY6
+         VFn5ev23qNsZYBKXjUW+Qu6/EgV04ThiSUVN7eJVRJAdJcfN++a8r8xDhxzffVpZgMs1
+         9WnFD39pVlnDs47lqSvSbBTj0GKXAlQidqPY2YfZqt4wJ/J3bpMERzNaoCeWurkAyuXI
+         keSg==
+X-Gm-Message-State: AOAM533JfonDN2ImHkwvpkWTeAKLL2xpXvjoM1IvpStFre6s+FXYMWMk
+        2/Kn/T6EMIPkESv/vHgeKLxh9A==
+X-Google-Smtp-Source: ABdhPJzzRHJTltKDkyuuKbIHmJ6PmrxJocGWpBLCqvqhabxzHF6lx6ptLhoy0flFHE7TzqAxPpylZg==
+X-Received: by 2002:a05:6a00:148a:b029:1ae:6d20:fbb3 with SMTP id v10-20020a056a00148ab02901ae6d20fbb3mr6722703pfu.55.1611972007047;
+        Fri, 29 Jan 2021 18:00:07 -0800 (PST)
+Received: from benl-m5lvdt.local ([2600:1700:87d0:94f:65bd:6864:3edc:1e8f])
+        by smtp.gmail.com with ESMTPSA id f13sm11033259pjj.1.2021.01.29.18.00.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 Jan 2021 18:00:06 -0800 (PST)
+Subject: Re: [PATCH] drm/msm/dsi: save PLL registers across first PHY reset
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        robdclark@gmail.com, sean@poorly.run
+Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Harigovindan P <harigovi@codeaurora.org>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        zhengbin <zhengbin13@huawei.com>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org,
+        Anibal Limon <anibal.limon@linaro.org>
+References: <010101750064e17e-3db0087e-fc37-494d-aac9-2c2b9b0a7c5b-000000@us-west-2.amazonses.com>
+ <508ae9e2-5240-2f43-6c97-493bb7d9fbe8@linaro.org>
+From:   Benjamin Li <benl@squareup.com>
+Message-ID: <eda75757-5cf2-14a7-3de4-ca57eb099cfd@squareup.com>
+Date:   Fri, 29 Jan 2021 18:00:03 -0800
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.7.0
+MIME-Version: 1.0
+In-Reply-To: <508ae9e2-5240-2f43-6c97-493bb7d9fbe8@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable remoteproc WCSS PIL driver with glink
-and ssr subdevices. Also configures shared memory
-and enables smp2p and mailboxes required for IPC.
 
-Signed-off-by: Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
-Signed-off-by: Sricharan R <sricharan@codeaurora.org>
-Signed-off-by: Nikhil Prakash V <nprakash@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 121 ++++++++++++++++++++++++++++++++++
- 1 file changed, 121 insertions(+)
+On 10/30/20 6:55 AM, Dmitry Baryshkov wrote:
+> Hello,
+> 
+> On 07/10/2020 03:10, benl-kernelpatches@squareup.com wrote:
+>> From: Benjamin Li <benl@squareup.com>
+>>
+>> Take advantage of previously-added support for persisting PLL
+>> registers across DSI PHY disable/enable cycles (see 328e1a6
+>> 'drm/msm/dsi: Save/Restore PLL status across PHY reset') to
+>> support persisting across the very first DSI PHY enable at
+>> boot.
+> 
+> Interesting enough, this breaks exactly on 8016. On DB410c with latest bootloader and w/o splash screen this patch causes boot freeze. Without this patch the board would successfully boot with display routed to HDMI.
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 6e719b4..9bde3f9c 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -76,12 +76,66 @@
- 		method = "smc";
- 	};
- 
-+	reserved-memory {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		smem_region: memory@4ab00000 {
-+			no-map;
-+			reg = <0x0 0x4ab00000 0x0 0x00100000>;
-+		};
-+
-+		q6_region: memory@4b000000 {
-+			no-map;
-+			reg = <0x0 0x4b000000 0x0 0x05f00000>;
-+		};
-+	};
-+
- 	firmware {
- 		scm {
- 			compatible = "qcom,scm-ipq8074", "qcom,scm";
- 		};
- 	};
- 
-+	tcsr_mutex: hwlock@193d000 {
-+		compatible = "qcom,tcsr-mutex";
-+		syscon = <&tcsr_mutex_regs 0 0x80>;
-+		#hwlock-cells = <1>;
-+	};
-+
-+	smem {
-+		compatible = "qcom,smem";
-+		memory-region = <&smem_region>;
-+		hwlocks = <&tcsr_mutex 0>;
-+	};
-+
-+	wcss: smp2p-wcss {
-+		compatible = "qcom,smp2p";
-+		qcom,smem = <435>, <428>;
-+
-+		interrupt-parent = <&intc>;
-+		interrupts = <0 322 1>;
-+
-+		mboxes = <&apcs_glb 9>;
-+
-+		qcom,local-pid = <0>;
-+		qcom,remote-pid = <1>;
-+
-+		wcss_smp2p_out: master-kernel {
-+			qcom,entry-name = "master-kernel";
-+			qcom,smp2p-feature-ssr-ack;
-+			#qcom,smem-state-cells = <1>;
-+		};
-+
-+		wcss_smp2p_in: slave-kernel {
-+			qcom,entry-name = "slave-kernel";
-+
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+		};
-+	};
-+
- 	soc: soc {
- 		#address-cells = <0x1>;
- 		#size-cells = <0x1>;
-@@ -695,5 +749,72 @@
- 				      "axi_m_sticky";
- 			status = "disabled";
- 		};
-+
-+		tcsr_q6: syscon@1945000 {
-+			compatible = "syscon";
-+			reg = <0x01945000 0xe000>;
-+		};
-+
-+		tcsr_mutex_regs: syscon@193d000 {
-+			compatible = "syscon";
-+			reg = <0x01905000 0x8000>;
-+		};
-+
-+		apcs_glb: mailbox@b111000 {
-+			compatible = "qcom,ipq8074-apcs-apps-global";
-+			reg = <0x0b111000 0x1000>;
-+
-+			#mbox-cells = <1>;
-+		};
-+
-+		q6v5_wcss: q6v5_wcss@cd00000 {
-+			compatible = "qcom,ipq8074-wcss-pil";
-+			reg = <0x0cd00000 0x4040>,
-+			      <0x004ab000 0x20>;
-+			reg-names = "qdsp6",
-+				    "rmb";
-+			qca,auto-restart;
-+			qca,extended-intc;
-+			interrupts-extended = <&intc 0 325 1>,
-+					      <&wcss_smp2p_in 0 0>,
-+					      <&wcss_smp2p_in 1 0>,
-+					      <&wcss_smp2p_in 2 0>,
-+					      <&wcss_smp2p_in 3 0>;
-+			interrupt-names = "wdog",
-+					  "fatal",
-+					  "ready",
-+					  "handover",
-+					  "stop-ack";
-+
-+			resets = <&gcc GCC_WCSSAON_RESET>,
-+				 <&gcc GCC_WCSS_BCR>,
-+				 <&gcc GCC_WCSS_Q6_BCR>;
-+
-+			reset-names = "wcss_aon_reset",
-+				      "wcss_reset",
-+				      "wcss_q6_reset";
-+
-+			clocks = <&gcc GCC_PRNG_AHB_CLK>;
-+			clock-names = "prng";
-+
-+			qcom,halt-regs = <&tcsr_q6 0xa000 0xd000 0x0>;
-+
-+			qcom,smem-states = <&wcss_smp2p_out 0>,
-+					   <&wcss_smp2p_out 1>;
-+			qcom,smem-state-names = "shutdown",
-+						"stop";
-+
-+			memory-region = <&q6_region>;
-+
-+			glink-edge {
-+				interrupts = <GIC_SPI 321 IRQ_TYPE_EDGE_RISING>;
-+				qcom,remote-pid = <1>;
-+				mboxes = <&apcs_glb 8>;
-+
-+				rpm_requests {
-+					qcom,glink-channels = "IPCRTR";
-+				};
-+			};
-+		};
- 	};
- };
--- 
-2.7.4
+Hi Dimtry,
 
+Thanks for your fix for the DB410c breakage ("drm/msm/dsi: do not
+try reading 28nm vco rate if it's not enabled") that this patch
+causes.
+
+I re-tested my patch on top of qcom/linux for-next (3e6a8ce094759)
+which now has your fix, on a DB410c with HDMI display and no splash
+(which seems to be the default using the Linaro SD card image's LK),
+and indeed it is fixed.
+
+I assume you already also did the same & are okay with this going in.
+Appreciate the testing!
+
+Ben
+
+> 
+>> The bootloader may have left the PLL registers in a non-default
+>> state. For example, for dsi_pll_28nm.c on 8x16/8x39, the byte
+>> clock mux's power-on reset configuration is to bypass DIV1, but
+>> depending on bandwidth requirements[1] the bootloader may have
+>> set the DIV1 path.
+>>
+>> When the byte clock mux is registered with the generic clock
+>> framework at probe time, the framework reads & caches the value
+>> of the mux bit field (the initial clock parent). After PHY enable,
+>> when clk_set_rate is called on the byte clock, the framework
+>> assumes there is no need to reparent, and doesn't re-write the
+>> mux bit field. But PHY enable resets PLL registers, so the mux
+>> bit field actually silently reverted to the DIV1 bypass path.
+>> This causes the byte clock to be off by a factor of e.g. 2 for
+>> our tested WXGA panel.
+>>
+>> The above issue manifests as the display not working and a
+>> constant stream of FIFO/LP0 contention errors.
+>>
+>> [1] The specific requirement for triggering the DIV1 path (and
+>> thus this issue) on 28nm is a panel with pixel clock <116.7MHz
+>> (one-third the minimum VCO setting). FHD/1080p (~145MHz) is fine,
+>> WXGA/1280x800 (~75MHz) is not.
+>>
+>> Signed-off-by: Benjamin Li <benl@squareup.com>
+>> ---
+>>   drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 16 ++++++++++++++++
+>>   1 file changed, 16 insertions(+)
+>>
+>> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+>> index 009f5b843dd1..139b4a5aaf86 100644
+>> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+>> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+>> @@ -621,6 +621,22 @@ static int dsi_phy_driver_probe(struct platform_device *pdev)
+>>           phy->pll = NULL;
+>>       }
+>>   +    /*
+>> +     * As explained in msm_dsi_phy_enable, resetting the DSI PHY (as done
+>> +     * in dsi_mgr_phy_enable) silently changes its PLL registers to power-on
+>> +     * defaults, but the generic clock framework manages and caches several
+>> +     * of the PLL registers. It initializes these caches at registration
+>> +     * time via register read.
+>> +     *
+>> +     * As a result, we need to save DSI PLL registers once at probe in order
+>> +     * for the first call to msm_dsi_phy_enable to successfully bring PLL
+>> +     * registers back in line with what the generic clock framework expects.
+>> +     *
+>> +     * Subsequent PLL restores during msm_dsi_phy_enable will always be
+>> +     * paired with PLL saves in msm_dsi_phy_disable.
+>> +     */
+>> +    msm_dsi_pll_save_state(phy->pll);
+>> +
+>>       dsi_phy_disable_resource(phy);
+>>         platform_set_drvdata(pdev, phy);
+>>
+> 
+> 
