@@ -2,64 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 887C630CDC0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Feb 2021 22:10:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 00842309F4A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Jan 2021 23:54:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232471AbhBBVKT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Feb 2021 16:10:19 -0500
-Received: from [20.39.40.203] ([20.39.40.203]:65313 "EHLO optinix.in"
-        rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-        id S231256AbhBBVKS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Feb 2021 16:10:18 -0500
-dkim-signature: v=1; a=rsa-sha256; d=digitalsol.in; s=dkim;
-        c=relaxed/relaxed; q=dns/txt; h=From:Reply-To:Subject:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding;
-        bh=wK2neTcOXNiSQ+RBxrnFed+mRrGUU/ndLGEgvo8IMCc=;
-        b=TP5ImnyHcJd6ZOutD2G4fr5f8wWoUQwQgOLW2PI/280OHeTqlZLToIxAIofahXeo75Wu3EjCyPUkWCAvONVwZu0fevODO9NabCWAisW+z0dGu9MXtR6qZycknhfK+mQQvORufc2uJdOyxsLmIaqgju02ah6NTaY7MUrrDAsnypqV/dHvFc1ZCeNq9M9cnBgI6P8moRvB3Uy5b0Di8H1i0zAyCi2Ui0iRGfGkTkO0ugXob5Evs8zBCz+bQn
-        OGNJsvkyEuoIiGf1dhK8ZygeNRPTDeubCEGrI3iP2v+CePRDNJj0O+GADoZLV93dYARi5DbbBgbqte2GtdOqu1KHIrhw==
-Received: from User (Unknown [52.231.31.5])
-        by optinix.in with ESMTP
-        ; Sat, 30 Jan 2021 02:13:52 +0000
-Message-ID: <8F335769-7194-475D-8960-10F7C26454EB@optinix.in>
-Reply-To: <ms.reem@yandex.com>
-From:   "Ms. Reem" <support@digitalsol.in>
-Subject: Re:read
-Date:   Sat, 30 Jan 2021 02:13:50 -0000
+        id S229500AbhAaWyS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 31 Jan 2021 17:54:18 -0500
+Received: from onstation.org ([52.200.56.107]:47748 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229481AbhAaWyN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 31 Jan 2021 17:54:13 -0500
+Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id 3A72B3F0B3;
+        Sun, 31 Jan 2021 22:53:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1612133612;
+        bh=zBA2yPYI5rqrcZZX1WyKJXmK/xwJfSI0vnhAopp38lQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Ii5/ljccGSGrgtlADn5zOAj21GGPnpw4RRDjpazsXOUkwjZaqsawZWC4VsO99bEH3
+         ff4Hu+ztI9Z5B3A2/CaZZhFdtWTL4hTA/ixFXpPItkWXJdGdadWUCjh6bUlGU4Byts
+         imNHm+yQuGvAEQmsCq0cyIgTRn8YtN/Rphb/MhzA=
+Date:   Sun, 31 Jan 2021 17:53:30 -0500
+From:   Brian Masney <masneyb@onstation.org>
+To:     Iskren Chernev <iskren.chernev@gmail.com>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        ~postmarketos/upstreaming@lists.sr.ht, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Maxime Ripard <maxime@cerno.tech>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Emil Velikov <emil.velikov@collabora.com>,
+        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+        Lee Jones <lee.jones@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/mdp5: Fix wait-for-commit for cmd panels
+Message-ID: <20210131225330.GA7982@onstation.org>
+References: <20210127152442.533468-1-iskren.chernev@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="Windows-1251"
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2600.0000
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
-To:     unlisted-recipients:; (no To-header on input)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210127152442.533468-1-iskren.chernev@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
+On Wed, Jan 27, 2021 at 05:24:40PM +0200, Iskren Chernev wrote:
+> Before the offending commit in msm_atomic_commit_tail wait_flush was
+> called once per frame, after the commit was submitted. After it
+> wait_flush is also called at the beginning to ensure previous
+> potentially async commits are done.
+> 
+> For cmd panels the source of wait_flush is a ping-pong irq notifying
+> a completion. The completion needs to be notified with complete_all so
+> multiple waiting parties (new async committers) can proceed.
+> 
+> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
+> Suggested-by: Rob Clark <robdclark@gmail.com>
+> Fixes: 2d99ced787e3d ("drm/msm: async commit support")
 
-My name is Ms. Reem Ebrahim Al-Hashimi, I am the "Minister of state
-and Petroleum" also "Minister of State for International Cooperation"
-in UAE. I write to you on behalf of my other "three (3) colleagues"
-who has approved me to solicit for your "partnership in claiming of
-{us$47=Million}" from a Financial Home in Cambodia on their behalf and
-for our "Mutual Benefits".
+Nice job tracking down this fix!
 
-The Fund {us$47=Million} is our share from the (over-invoiced) Oil/Gas
-deal with Cambodian/Vietnam Government within 2013/2014, however, we
-don't want our government to know about the fund. If this proposal
-interests you, let me know, by sending me an email and I will send to
-you detailed information on how this business would be successfully
-transacted. Be informed that nobody knows about the secret of this
-fund except us, and we know how to carry out the entire transaction.
-So I am compelled to ask, that you will stand on our behalf and
-receive this fund into any account that is solely controlled by you.
-
-We will compensate you with 15% of the total amount involved as
-gratification for being our partner in this transaction. Reply to:
-ms.reem@yandex.com
-
-Regards,
-Ms. Reem.
+Reviewed-by: Brian Masney <masneyb@onstation.org>
+Tested-by: Brian Masney <masneyb@onstation.org>
 
