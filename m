@@ -2,19 +2,22 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 59C903099D1
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Jan 2021 02:42:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F60A3099CD
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Jan 2021 02:42:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232552AbhAaBm2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Jan 2021 20:42:28 -0500
-Received: from relay04.th.seeweb.it ([5.144.164.165]:52335 "EHLO
-        relay04.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232680AbhAaBlV (ORCPT
+        id S232829AbhAaBmJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Jan 2021 20:42:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39952 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232776AbhAaBlW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Jan 2021 20:41:21 -0500
+        Sat, 30 Jan 2021 20:41:22 -0500
+Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28CE6C06178A
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Jan 2021 17:40:20 -0800 (PST)
 Received: from localhost.localdomain (abaf219.neoplus.adsl.tpnet.pl [83.6.169.219])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id A03F91F519;
-        Sun, 31 Jan 2021 02:40:13 +0100 (CET)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 28B761F6C5;
+        Sun, 31 Jan 2021 02:40:18 +0100 (CET)
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 To:     phone-devel@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht,
@@ -25,9 +28,9 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         Gustave Monce <gustave.monce@outlook.com>
-Subject: [PATCH 15/18] arm64: dts: qcom: msm8994-octagon: Add NXP NFC node
-Date:   Sun, 31 Jan 2021 02:38:46 +0100
-Message-Id: <20210131013853.55810-16-konrad.dybcio@somainline.org>
+Subject: [PATCH 16/18] arm64: dts: qcom: msm8994-octagon: Add sensors on blsp1_i2c5
+Date:   Sun, 31 Jan 2021 02:38:47 +0100
+Message-Id: <20210131013853.55810-17-konrad.dybcio@somainline.org>
 X-Mailer: git-send-email 2.30.0
 In-Reply-To: <20210131013853.55810-1-konrad.dybcio@somainline.org>
 References: <20210131013853.55810-1-konrad.dybcio@somainline.org>
@@ -39,41 +42,62 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Gustave Monce <gustave.monce@outlook.com>
 
-Octagon devices use PN544 connected over I2C. Configure it.
+Add AK09912 magnetometer, ZPA2326 barometer and MPU6500 accelerometer
+nodes.
 
 Signed-off-by: Gustave Monce <gustave.monce@outlook.com>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
- .../dts/qcom/msm8994-msft-lumia-octagon.dtsi     | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ .../dts/qcom/msm8994-msft-lumia-octagon.dtsi  | 36 +++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi b/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
-index 80e4ed48a1e3..e01c9dce187c 100644
+index e01c9dce187c..4aa33682f975 100644
 --- a/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
 +++ b/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
-@@ -300,6 +300,22 @@ rmi4-f12@12 {
+@@ -300,6 +300,42 @@ rmi4-f12@12 {
  	};
  };
  
-+&blsp1_i2c6 {
++&blsp1_i2c5 {
 +	status = "okay";
 +
-+	pn547: pn547@28 {
-+		compatible = "nxp,pn544-i2c";
-+
-+		reg = <0x28>;
++	ak09912: magnetometer@c {
++		compatible = "asahi-kasei,ak09912";
++		reg = <0xc>;
 +
 +		interrupt-parent = <&tlmm>;
-+		interrupts = <29 IRQ_TYPE_EDGE_RISING>;
++		interrupts = <26 IRQ_TYPE_EDGE_RISING>;
 +
-+		enable-gpios = <&tlmm 30 GPIO_ACTIVE_HIGH>;
-+		firmware-gpios = <&tlmm 94 GPIO_ACTIVE_HIGH>;
++		vdd-supply = <&vreg_l18a_2p85>;
++		vid-supply = <&vreg_lvs2a_1p8>;
++	};
++
++	zpa2326: barometer@5c {
++		compatible = "murata,zpa2326";
++		reg = <0x5c>;
++
++		interrupt-parent = <&tlmm>;
++		interrupts = <74 IRQ_TYPE_EDGE_RISING>;
++
++		vdd-supply = <&vreg_lvs2a_1p8>;
++	};
++
++	mpu6050: accelerometer@68 {
++		compatible = "invensense,mpu6500";
++		reg = <0x68>;
++
++		interrupt-parent = <&tlmm>;
++		interrupts = <64 IRQ_TYPE_EDGE_RISING>;
++		
++		vdd-supply = <&vreg_lvs2a_1p8>;
++		vddio-supply = <&vreg_lvs2a_1p8>;
 +	};
 +};
 +
- &blsp1_uart2 {
+ &blsp1_i2c6 {
  	status = "okay";
- };
+ 
 -- 
 2.30.0
 
