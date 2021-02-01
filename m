@@ -2,125 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7045030A656
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Feb 2021 12:17:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8661830A660
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Feb 2021 12:21:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232937AbhBALQp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Feb 2021 06:16:45 -0500
-Received: from mail.kernel.org ([198.145.29.99]:45844 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233338AbhBALQo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Feb 2021 06:16:44 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 4BF4260295;
-        Mon,  1 Feb 2021 11:16:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1612178163;
-        bh=hKAt1deWUX5/xDiTH9sYCeS4LQkY0BTslNtqnwjcIjM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=IWObnZZlXJUW4JhK2hwnWD3A/oSMtWejuWWNwC2LUGXgEArvEWxH8eZgdi/SlEfNQ
-         Jfmv+EVI6ZlTDPRGfL6hKwRoknp9oWLFaa39J6F23jvjCM92XVKiSCmQ5eZQrcc/Nv
-         8zAwg5+fQBe9sfcmhKidXx4MZjagJ1M+SHQmvf1A+3LFVpLD/ASZKznLCXllzZJGyz
-         x+6z3iRowfF9eh/6NR7qaSdLdRV4o/tPMRo8db7Pu6YkgZIWRkDUST54gebn8JPZkA
-         +ejW4kxmDInSYBPXEPHSfVLFkDhB8ST4L2K0yHFyG3nQJ0B+eBF3/m1KNDI489k2PL
-         sc5by+e4iVAJw==
-Date:   Mon, 1 Feb 2021 11:15:56 +0000
-From:   Will Deacon <will@kernel.org>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        isaacm@codeaurora.org, iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Kristian H Kristensen <hoegsberg@google.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH 2/3] iommu/io-pgtable-arm: Add IOMMU_LLC page protection
- flag
-Message-ID: <20210201111556.GA7172@willie-the-truck>
-References: <cover.1610372717.git.saiprakash.ranjan@codeaurora.org>
- <3f589e7de3f9fa93e84c83420c5270c546a0c368.1610372717.git.saiprakash.ranjan@codeaurora.org>
- <20210129090516.GB3998@willie-the-truck>
- <5d23fce629323bcda71594010824aad0@codeaurora.org>
+        id S233404AbhBALVI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Feb 2021 06:21:08 -0500
+Received: from lb2-smtp-cloud7.xs4all.net ([194.109.24.28]:32809 "EHLO
+        lb2-smtp-cloud7.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S233219AbhBALVH (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Feb 2021 06:21:07 -0500
+Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
+        by smtp-cloud7.xs4all.net with ESMTPA
+        id 6XFklvDwlefbk6XFnlgLOh; Mon, 01 Feb 2021 12:20:23 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s2;
+        t=1612178423; bh=hszt98APAs4vtpYcEWGqcYnvbnBQJqUfs1RIQxxIaL0=;
+        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
+         Subject;
+        b=mhVpvMAQfmvHHyu+Dr6UiAtN3UwAkGlvwEwepiaM3yx7VY2YF8J6dG+DT8u+1WItC
+         ApYO/0V1XD4ni9vrzxbKNFYvBl9Kukxwf7b95knTKBoruqG4lC4eVSp8NEw6b+1FwI
+         oSjiOIX1RqdrS0+q7z/Mt3sWu64/PbjoeoMAqwZ2J2mN6xJKO3vNwrcCxu3JiP2ZCI
+         3PSBKkSAK5NGE2qy4DtNa1pj4J2jLzH4PyhqxbT8BBj5u5mV3h/2PcUiYfIINTqedp
+         pmfSxaMXmYWeLqHGAKRaZ/0dgsPBmjkCaqz53pYCbHHvW9IWnGE63iZCBForC6F/qX
+         WpBDMElc9zS4Q==
+Subject: Re: [PATCH v6 1/2] media: v4l2-ctrl: add controls for long term
+ reference.
+To:     Dikshita Agarwal <dikshita@codeaurora.org>,
+        linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org
+References: <1611553919-17919-1-git-send-email-dikshita@codeaurora.org>
+ <1611553919-17919-2-git-send-email-dikshita@codeaurora.org>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Message-ID: <d20ba57f-54a7-5a61-a64b-2d9433b79281@xs4all.nl>
+Date:   Mon, 1 Feb 2021 12:20:19 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5d23fce629323bcda71594010824aad0@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <1611553919-17919-2-git-send-email-dikshita@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfDVn+00m4tzB2wKDHfLZEKb52G2SPVDITu9AZKkJZ+V/WJ46uu4QXa7ijEdPAGLUxYjtFLWAjvsP2AZUX29AKgBWP9z9L7ny+hmviy/2OBE2BiluzEuP
+ B8GjzK3z/pE8LqK3G/uDyITt+2xOIC5uNJBUuLUosB1N61fm5WDSlEwOLUUMV0ZpMLuUzuhkKxvmO1Rdm0vtthyahzxGOwA/6TYkcz+4gQDMq6bhI1cz//5P
+ whLdwnkqdgIDPL81LbzzrGqbfgMtsHxNChXBGBN6tivwdkiDpfgkDoeiQMEuaOJvv2oz1vULReYzvx5Ot5BVLfsgbMwpBIF9PDJwK3wJJJjMUwqIIZf2Q6BY
+ VP6xgEOyN0LH4rqpbUDsCpYrY06BnfZvaFlux0qmcRFXVyBv4TE=
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 29, 2021 at 03:12:59PM +0530, Sai Prakash Ranjan wrote:
-> On 2021-01-29 14:35, Will Deacon wrote:
-> > On Mon, Jan 11, 2021 at 07:45:04PM +0530, Sai Prakash Ranjan wrote:
-> > > Add a new page protection flag IOMMU_LLC which can be used
-> > > by non-coherent masters to set cacheable memory attributes
-> > > for an outer level of cache called as last-level cache or
-> > > system cache. Initial user of this page protection flag is
-> > > the adreno gpu and then can later be used by other clients
-> > > such as video where this can be used for per-buffer based
-> > > mapping.
-> > > 
-> > > Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> > > ---
-> > >  drivers/iommu/io-pgtable-arm.c | 3 +++
-> > >  include/linux/iommu.h          | 6 ++++++
-> > >  2 files changed, 9 insertions(+)
-> > > 
-> > > diff --git a/drivers/iommu/io-pgtable-arm.c
-> > > b/drivers/iommu/io-pgtable-arm.c
-> > > index 7439ee7fdcdb..ebe653ef601b 100644
-> > > --- a/drivers/iommu/io-pgtable-arm.c
-> > > +++ b/drivers/iommu/io-pgtable-arm.c
-> > > @@ -415,6 +415,9 @@ static arm_lpae_iopte
-> > > arm_lpae_prot_to_pte(struct arm_lpae_io_pgtable *data,
-> > >  		else if (prot & IOMMU_CACHE)
-> > >  			pte |= (ARM_LPAE_MAIR_ATTR_IDX_CACHE
-> > >  				<< ARM_LPAE_PTE_ATTRINDX_SHIFT);
-> > > +		else if (prot & IOMMU_LLC)
-> > > +			pte |= (ARM_LPAE_MAIR_ATTR_IDX_INC_OCACHE
-> > > +				<< ARM_LPAE_PTE_ATTRINDX_SHIFT);
-> > >  	}
-> > > 
-> > >  	if (prot & IOMMU_CACHE)
-> > > diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-> > > index ffaa389ea128..1f82057df531 100644
-> > > --- a/include/linux/iommu.h
-> > > +++ b/include/linux/iommu.h
-> > > @@ -31,6 +31,12 @@
-> > >   * if the IOMMU page table format is equivalent.
-> > >   */
-> > >  #define IOMMU_PRIV	(1 << 5)
-> > > +/*
-> > > + * Non-coherent masters can use this page protection flag to set
-> > > cacheable
-> > > + * memory attributes for only a transparent outer level of cache,
-> > > also known as
-> > > + * the last-level or system cache.
-> > > + */
-> > > +#define IOMMU_LLC	(1 << 6)
-> > 
-> > On reflection, I'm a bit worried about exposing this because I think it
-> > will
-> > introduce a mismatched virtual alias with the CPU (we don't even have a
-> > MAIR
-> > set up for this memory type). Now, we also have that issue for the PTW,
-> > but
-> > since we always use cache maintenance (i.e. the streaming API) for
-> > publishing the page-tables to a non-coheren walker, it works out.
-> > However,
-> > if somebody expects IOMMU_LLC to be coherent with a DMA API coherent
-> > allocation, then they're potentially in for a nasty surprise due to the
-> > mismatched outer-cacheability attributes.
-> > 
+On 25/01/2021 06:51, Dikshita Agarwal wrote:
+> Long Term Reference (LTR) frames are the frames that are encoded
+> sometime in the past and stored in the DPB buffer list to be used
+> as reference to encode future frames.
+> This change adds controls to enable this feature.
 > 
-> Can't we add the syscached memory type similar to what is done on android?
+> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+> ---
+>  .../userspace-api/media/v4l/ext-ctrls-codec.rst        | 18 ++++++++++++++++++
+>  drivers/media/v4l2-core/v4l2-ctrls.c                   | 14 ++++++++++++++
+>  include/uapi/linux/v4l2-controls.h                     |  3 +++
+>  3 files changed, 35 insertions(+)
+> 
+> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> index 400774c..a37d460 100644
+> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> @@ -3637,3 +3637,21 @@ enum v4l2_mpeg_video_hevc_size_of_length_field -
+>        - Selecting this value specifies that HEVC slices are expected
+>          to be prefixed by Annex B start codes. According to :ref:`hevc`
+>          valid start codes can be 3-bytes 0x000001 or 4-bytes 0x00000001.
+> +
+> +``V4L2_CID_MPEG_VIDEO_LTR_COUNT (integer)``
+> +       Specifies the number of Long Term Reference (LTR) frames encoder needs
+> +       to generate or keep. This is applicable to the H264 and HEVC encoders.
+> +
+> +``V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX (integer)``
+> +       The current frame is marked as a Long Term Reference (LTR) frame
+> +       and given this LTR index which ranges from 0 to LTR_COUNT-1.
+> +       This is applicable to the H264 and HEVC encoders and can be applied using
+> +       Request API.
 
-Maybe. How does the GPU driver map these things on the CPU side?
+You mentioned in reply to my comment that the venus driver didn't support the
+Request API that it is also possible to use it without that API.
 
-Will
+But that requires more precise documentation. I assume that without the Request
+API you would set this control, then queue the buffer containing the frame this
+control should apply to, then wait until it is dequeued. Since that's the only
+way you can be certain this control is applied to the correct frame.
+
+Is this indeed what you do in your application?
+
+Regards,
+
+	Hans
+
+> +       Source Rec. ITU-T H.264 (06/2019); Table 7.9
+> +
+> +``V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES (bitmask)``
+> +       Specifies the Long Term Reference (LTR) frame(s) to be used for
+> +       encoding the current frame.
+> +       This provides a bitmask which consists of bits [0, LTR_COUNT-1].
+> +       This is applicable to the H264 and HEVC encoders and can be applied using
+> +       Request API.
+> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
+> index 16ab54f..84c1eb8 100644
+> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
+> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
+> @@ -950,6 +950,9 @@ const char *v4l2_ctrl_get_name(u32 id)
+>  	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:		return "Vertical MV Search Range";
+>  	case V4L2_CID_MPEG_VIDEO_REPEAT_SEQ_HEADER:		return "Repeat Sequence Header";
+>  	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:		return "Force Key Frame";
+> +	case V4L2_CID_MPEG_VIDEO_LTR_COUNT:			return "LTR Count";
+> +	case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:		return "Frame LTR Index";
+> +	case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES:		return "Use LTR Frames";
+>  	case V4L2_CID_MPEG_VIDEO_MPEG2_SLICE_PARAMS:		return "MPEG-2 Slice Parameters";
+>  	case V4L2_CID_MPEG_VIDEO_MPEG2_QUANTIZATION:		return "MPEG-2 Quantization Matrices";
+>  	case V4L2_CID_FWHT_I_FRAME_QP:				return "FWHT I-Frame QP Value";
+> @@ -1277,6 +1280,17 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
+>  	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:
+>  		*type = V4L2_CTRL_TYPE_INTEGER;
+>  		break;
+> +	case V4L2_CID_MPEG_VIDEO_LTR_COUNT:
+> +		*type = V4L2_CTRL_TYPE_INTEGER;
+> +		break;
+> +	case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:
+> +		*type = V4L2_CTRL_TYPE_INTEGER;
+> +		*flags |= V4L2_CTRL_FLAG_EXECUTE_ON_WRITE;
+> +		break;
+> +	case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES:
+> +		*type = V4L2_CTRL_TYPE_BITMASK;
+> +		*flags |= V4L2_CTRL_FLAG_EXECUTE_ON_WRITE;
+> +		break;
+>  	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:
+>  	case V4L2_CID_PAN_RESET:
+>  	case V4L2_CID_TILT_RESET:
+> diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
+> index af8dda2..c0bb87b 100644
+> --- a/include/uapi/linux/v4l2-controls.h
+> +++ b/include/uapi/linux/v4l2-controls.h
+> @@ -422,6 +422,9 @@ enum v4l2_mpeg_video_multi_slice_mode {
+>  #define V4L2_CID_MPEG_VIDEO_MV_H_SEARCH_RANGE		(V4L2_CID_CODEC_BASE+227)
+>  #define V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE		(V4L2_CID_CODEC_BASE+228)
+>  #define V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME		(V4L2_CID_CODEC_BASE+229)
+> +#define V4L2_CID_MPEG_VIDEO_LTR_COUNT			(V4L2_CID_CODEC_BASE+230)
+> +#define V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX		(V4L2_CID_CODEC_BASE+231)
+> +#define V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES		(V4L2_CID_CODEC_BASE+232)
+>  
+>  /* CIDs for the MPEG-2 Part 2 (H.262) codec */
+>  #define V4L2_CID_MPEG_VIDEO_MPEG2_LEVEL			(V4L2_CID_CODEC_BASE+270)
+> 
+
