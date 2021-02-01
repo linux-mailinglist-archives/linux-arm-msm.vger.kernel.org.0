@@ -2,192 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7540630ABF0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Feb 2021 16:51:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DE6BD30AC7D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Feb 2021 17:19:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231561AbhBAPvY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Feb 2021 10:51:24 -0500
-Received: from so15.mailgun.net ([198.61.254.15]:35639 "EHLO so15.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231713AbhBAPvC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Feb 2021 10:51:02 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1612194638; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=0JHy+RI+wqivBbAHeg6tMeuSs3uLzrkCav5CTvzzCWI=;
- b=fXx21QPZnXQRfkbAV0RFz0g+HeLgCS+qF/cxiwvEHMqcQw82c/6IWUXCfNcOfzpUpEJg7jm+
- eZi/NPf1Sv+l3Ect8xU34Cv7MhUnHfvGJymizfgYg4e9Qv8WdA5uuhRMDyBRIHWSM6+3p5bF
- rZ6C8p28aNR88tRmwtux0ITsKok=
-X-Mailgun-Sending-Ip: 198.61.254.15
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 601823312d8ee3f99f68ae3a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 01 Feb 2021 15:50:09
- GMT
-Sender: mdalam=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 778F4C433C6; Mon,  1 Feb 2021 15:50:08 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: mdalam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 794ABC433CA;
-        Mon,  1 Feb 2021 15:50:07 +0000 (UTC)
+        id S230298AbhBAQSy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Feb 2021 11:18:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52190 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229793AbhBAQSx (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Feb 2021 11:18:53 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A807DC061573;
+        Mon,  1 Feb 2021 08:18:11 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id v15so17250138wrx.4;
+        Mon, 01 Feb 2021 08:18:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=tVx3P1GkJGLI1uKBNlxXY3RMDtB/IpyYjPT6P6zHw5s=;
+        b=gS7cvhd9tIsWsQWamd844erzMzEv+0azffG4y1wnD7p6yHLCPnwK1aG4LbChngEOSC
+         8/weiexIBXRCHk53nWXfv/Iyj8jDwsjtuplhe5CGty81EU/CxmmwQ9qj8Ad2xBUhkyoa
+         BPLiuGV/g9R2Y7wGLkD2eEL7eY3SBOT0jaoYns5AV+pkP8mD83TDp1eXF5osBlCtAEfx
+         Af01yVytJ4pAuQAfCOc/FCxZosdmRwhn4p6PIWo/9BtvnILStCOvKMcOVQbspyJmReZk
+         zUXVtvGTZgeNd/BAfuhrvN9U1c7h8QzABedZOgYceTPH3Ot98yLe651CV1PaIFqQSYeN
+         V5nQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=tVx3P1GkJGLI1uKBNlxXY3RMDtB/IpyYjPT6P6zHw5s=;
+        b=if57/V1hfnwh0sR1VK7VXYvPYPidUoaVQ6tN5896Ssh/q7H0yjDFa+4SVlTfwGaWW5
+         QaqP7cNQQ42glaZB1X494wZWtorw75gahYuULmAHE6PVG7rmjQV1FOEjvsH2HiFoQNTG
+         ysU5umbpwnQN8JNAifEPO0q3nQ/Dnnadogu9Gvr2QLIfgphBWc7WlIZ1L/VQ0bbXFrII
+         QGgO9QVCiuNkDqW6g57pBy6NaUCLYxGdln9iqq4Lkyxwvsadqu2dHTGy1MAHDDzJ/+3E
+         c33Use8eNIi3Z2uH3Zc216j7C7bbfid2zowmw4IJHymyJ7p+LUrKTvp8TTQElKVbowtD
+         mvgw==
+X-Gm-Message-State: AOAM532TP+VL7pTI9LO43pEBIf7x8Br3PAicKbBUSwG2yGXF9oV+tK5J
+        bywY4ZFGqi4mQQ3q1Im3YlWUtFQYZiOpCjSTd3s=
+X-Google-Smtp-Source: ABdhPJx8q9wwVZBia3ylOOk6tIuKE9b+ySiZiBv3V7ppswlXm6ZEtFt5l8YWZ+VVvUpdPPdbcnjj4tChykQ3ODiG83E=
+X-Received: by 2002:adf:dd07:: with SMTP id a7mr19293832wrm.83.1612196290263;
+ Mon, 01 Feb 2021 08:18:10 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 01 Feb 2021 21:20:07 +0530
-From:   mdalam@codeaurora.org
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     corbet@lwn.net, agross@kernel.org, bjorn.andersson@linaro.org,
-        dan.j.williams@intel.com, dmaengine@vger.kernel.org,
-        linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, sricharan@codeaurora.org,
-        mdalam=codeaurora.org@codeaurora.org
-Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Add LOCK and UNLOCK flag bit
- support
-In-Reply-To: <20210201064314.GM2771@vkoul-mobl>
-References: <efcc74bbdf36b4ddbf764eb6b4ed99f2@codeaurora.org>
- <f7de0117c8ff2e61c09f58acdea0e5b0@codeaurora.org>
- <20210112101056.GI2771@vkoul-mobl>
- <e3cf7c4fc02c54d17fd2fd213f39005b@codeaurora.org>
- <20210115055806.GE2771@vkoul-mobl>
- <97ce29b230164a5848a38f6448d1be60@codeaurora.org>
- <20210119164511.GE2771@vkoul-mobl>
- <534308caab7c18730ad0cc25248d116f@codeaurora.org>
- <20210201060508.GK2771@vkoul-mobl>
- <9d33d73682f24d92338757e1823ccd88@codeaurora.org>
- <20210201064314.GM2771@vkoul-mobl>
-Message-ID: <73c871d3d674607fafc7b79e602ec587@codeaurora.org>
-X-Sender: mdalam@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <cover.1610372717.git.saiprakash.ranjan@codeaurora.org>
+ <3f589e7de3f9fa93e84c83420c5270c546a0c368.1610372717.git.saiprakash.ranjan@codeaurora.org>
+ <20210129090516.GB3998@willie-the-truck> <5d23fce629323bcda71594010824aad0@codeaurora.org>
+ <20210201111556.GA7172@willie-the-truck>
+In-Reply-To: <20210201111556.GA7172@willie-the-truck>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Mon, 1 Feb 2021 08:20:44 -0800
+Message-ID: <CAF6AEGsARmkAFsjaQLfa2miMgeijo183MWDKGtW_ti-UCpzBqA@mail.gmail.com>
+Subject: Re: [PATCH 2/3] iommu/io-pgtable-arm: Add IOMMU_LLC page protection flag
+To:     Will Deacon <will@kernel.org>
+Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        "Isaac J. Manjarres" <isaacm@codeaurora.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Kristian H Kristensen <hoegsberg@google.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        dri-devel <dri-devel@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-02-01 12:13, Vinod Koul wrote:
-> On 01-02-21, 11:52, mdalam@codeaurora.org wrote:
->> On 2021-02-01 11:35, Vinod Koul wrote:
->> > On 27-01-21, 23:56, mdalam@codeaurora.org wrote:
-> 
->> > >   The actual LOCK/UNLOCK flag should be set on hardware command
->> > > descriptor.
->> > >   so this flag setting should be done in DMA engine driver. The user
->> > > of the
->> > > DMA
->> > >   driver like (in case of IPQ5018) Crypto can use flag
->> > > "DMA_PREP_LOCK" &
->> > > "DMA_PREP_UNLOCK"
->> > >   while preparing CMD descriptor before submitting to the DMA
->> > > engine. In DMA
->> > > engine driver
->> > >   we are checking these flasgs on CMD descriptor and setting actual
->> > > LOCK/UNLOCK flag on hardware
->> > >   descriptor.
->> >
->> >
->> > I am not sure I comprehend this yet.. when is that we would need to do
->> > this... is this for each txn submitted to dmaengine.. or something
->> > else..
->> 
->>  Its not for each transaction submitted to dmaengine. We have to set 
->> this
->> only
->>  once on CMD descriptor. So when A53 crypto driver need to change the 
->> crypto
->> configuration
->>  then first it will lock the all other pipes using setting the LOCK 
->> flag bit
->> on CMD
->>  descriptor and then it can start the transaction , on data descriptor 
->> this
->> flag will
->>  not get set once all transaction will be completed the A53 crypto 
->> driver
->> release the lock on
->>  all other pipes using UNLOCK flag on CMD descriptor. So LOCK/UNLOCK 
->> will be
->> only once and not for
->>  the each transaction.
-> 
-> Okay so why cant the bam driver check cmd descriptor and do lock/unlock
-> as below, why do we need users to do this.
-> 
->         if (flags & DMA_PREP_CMD) {
->                 do_lock_bam();
+On Mon, Feb 1, 2021 at 3:16 AM Will Deacon <will@kernel.org> wrote:
+>
+> On Fri, Jan 29, 2021 at 03:12:59PM +0530, Sai Prakash Ranjan wrote:
+> > On 2021-01-29 14:35, Will Deacon wrote:
+> > > On Mon, Jan 11, 2021 at 07:45:04PM +0530, Sai Prakash Ranjan wrote:
+> > > > Add a new page protection flag IOMMU_LLC which can be used
+> > > > by non-coherent masters to set cacheable memory attributes
+> > > > for an outer level of cache called as last-level cache or
+> > > > system cache. Initial user of this page protection flag is
+> > > > the adreno gpu and then can later be used by other clients
+> > > > such as video where this can be used for per-buffer based
+> > > > mapping.
+> > > >
+> > > > Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> > > > ---
+> > > >  drivers/iommu/io-pgtable-arm.c | 3 +++
+> > > >  include/linux/iommu.h          | 6 ++++++
+> > > >  2 files changed, 9 insertions(+)
+> > > >
+> > > > diff --git a/drivers/iommu/io-pgtable-arm.c
+> > > > b/drivers/iommu/io-pgtable-arm.c
+> > > > index 7439ee7fdcdb..ebe653ef601b 100644
+> > > > --- a/drivers/iommu/io-pgtable-arm.c
+> > > > +++ b/drivers/iommu/io-pgtable-arm.c
+> > > > @@ -415,6 +415,9 @@ static arm_lpae_iopte
+> > > > arm_lpae_prot_to_pte(struct arm_lpae_io_pgtable *data,
+> > > >           else if (prot & IOMMU_CACHE)
+> > > >                   pte |= (ARM_LPAE_MAIR_ATTR_IDX_CACHE
+> > > >                           << ARM_LPAE_PTE_ATTRINDX_SHIFT);
+> > > > +         else if (prot & IOMMU_LLC)
+> > > > +                 pte |= (ARM_LPAE_MAIR_ATTR_IDX_INC_OCACHE
+> > > > +                         << ARM_LPAE_PTE_ATTRINDX_SHIFT);
+> > > >   }
+> > > >
+> > > >   if (prot & IOMMU_CACHE)
+> > > > diff --git a/include/linux/iommu.h b/include/linux/iommu.h
+> > > > index ffaa389ea128..1f82057df531 100644
+> > > > --- a/include/linux/iommu.h
+> > > > +++ b/include/linux/iommu.h
+> > > > @@ -31,6 +31,12 @@
+> > > >   * if the IOMMU page table format is equivalent.
+> > > >   */
+> > > >  #define IOMMU_PRIV       (1 << 5)
+> > > > +/*
+> > > > + * Non-coherent masters can use this page protection flag to set
+> > > > cacheable
+> > > > + * memory attributes for only a transparent outer level of cache,
+> > > > also known as
+> > > > + * the last-level or system cache.
+> > > > + */
+> > > > +#define IOMMU_LLC        (1 << 6)
+> > >
+> > > On reflection, I'm a bit worried about exposing this because I think it
+> > > will
+> > > introduce a mismatched virtual alias with the CPU (we don't even have a
+> > > MAIR
+> > > set up for this memory type). Now, we also have that issue for the PTW,
+> > > but
+> > > since we always use cache maintenance (i.e. the streaming API) for
+> > > publishing the page-tables to a non-coheren walker, it works out.
+> > > However,
+> > > if somebody expects IOMMU_LLC to be coherent with a DMA API coherent
+> > > allocation, then they're potentially in for a nasty surprise due to the
+> > > mismatched outer-cacheability attributes.
+> > >
+> >
+> > Can't we add the syscached memory type similar to what is done on android?
+>
+> Maybe. How does the GPU driver map these things on the CPU side?
 
-  User will not decide to do this LOCK/UNLOCK mechanism. It depends on 
-use case.
-  This LOCK/UNLOCK mechanism not required always. It needs only when 
-hardware will be shared
-  between different core with different driver.
-  The LOCK/UNLOCK flags provides SW to enter ordering between pipes 
-execution.
-  (Generally, the BAM pipes are total independent from each other and 
-work in parallel manner).
-  This LOCK/UNLOCK flags are part of actual pipe hardware descriptor.
+Currently we use writecombine mappings for everything, although there
+are some cases that we'd like to use cached (but have not merged
+patches that would give userspace a way to flush/invalidate)
 
-  Pipe descriptor having the following flags:
-  INT : Interrupt
-  EOT: End of transfer
-  EOB: End of block
-  NWD: Notify when done
-  CMD: Command
-  LOCK: Lock
-  UNLOCK: Unlock
-  etc.
-
-  Here the BAM driver is common driver for (QPIC, Crypto, QUP etc. in 
-IPQ5018)
-  So here only Crypto will be shared b/w multiple cores so For crypto 
-request only the LOCK/UNLOCK
-  mechanism required.
-  For other request like for QPIC driver, QUPT driver etc. its not 
-required. So Crypto driver has to raise the flag for
-  LOCK/UNLOCK while preparing CMD descriptor. The actual locking will 
-happen in BAM driver only using condition
-  if (flags & DMA_PREP_CMD) {
-      if (flags & DMA_PREP_LOCK)
-         desc->flags |= cpu_to_le16(DESC_FLAG_LOCK);
-  }
-
-  So Crypto driver should set this flag DMA_PREP_LOCK while preparing CMD 
-descriptor.
-  So LOCK should be set on actual hardware pipe descriptor with 
-descriptor type CMD.
-
-> 
-> The point here is that this seems to be internal to dma and should be
-> handled by dma driver.
-> 
-   This LOCK/UNLOK flags are part of actual hardware descriptor so this 
-should be handled by BAM driver only.
-   If we set condition like this
-   if (flags & DMA_PREP_CMD) {
-                 do_lock_bam();
-   Then LOCK/UNLOCK will be applied for all the CMD descriptor including 
-(QPIC driver, QUP driver , Crypto driver etc.).
-   So this is not our intension. So we need to set this LOCK/UNLOCK only 
-for the drivers it needs. So Crypto driver needs
-   locking mechanism so we will set LOCK/UNLOCK flag on Crypto driver 
-request only for other driver request like QPIC driver,
-   QUP driver will not set this.
-
-> Also if we do this, it needs to be done for specific platforms..
-> 
-
-
-
-
-
-
-
-> Thanks
+BR,
+-R
