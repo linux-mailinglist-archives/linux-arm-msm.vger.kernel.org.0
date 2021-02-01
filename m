@@ -2,341 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4220230ADDE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Feb 2021 18:32:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DED4130AF04
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Feb 2021 19:22:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231984AbhBARao (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Feb 2021 12:30:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39430 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230479AbhBARaj (ORCPT
+        id S232736AbhBASVF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Feb 2021 13:21:05 -0500
+Received: from mail29.static.mailgun.info ([104.130.122.29]:58114 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231584AbhBASUw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Feb 2021 12:30:39 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7D9FC0617AB;
-        Mon,  1 Feb 2021 09:29:09 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id j18so13331491wmi.3;
-        Mon, 01 Feb 2021 09:29:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Q7iSFKPQnY7htpgRxXxEoZo/eBaqwddVGwHVjV7n17w=;
-        b=Q5mEBiXKw1amXBBuN3EMwRNsqrZK8/NXbwltxpYAnqzm6vkBzXTc7XGdEyGiqjDy3d
-         ZN46Eon3p/5S1yn7ZTrDaHAWew1Dlgxpnv8l+SjX20UeU78LS5fCIKNgk+RE9kDuwhln
-         qh9aGB5y8CWLpdLGwPAybY9osVjtCwzpS9feI7UGW568lHIn3+4R/wptcv3w7xLJrqtM
-         vS4x+GdE++8FAU66PyX6ilywaxHlwpFhUMIjnWH4ozcSjN8pkF4p0fC3QZcu7coobr6h
-         6fIoxk9nSTgQng0S3rc0Tnk5vd/0AZW5/Ozp2nFT8LesTdHR1A0kZliHfl8m8AwqSopt
-         zTsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Q7iSFKPQnY7htpgRxXxEoZo/eBaqwddVGwHVjV7n17w=;
-        b=PCPtBJdFKuNR8Z4kC9l8UF+WTBJR9tiwIPFi/SlYLUPO1bQh7KnIygbYvHBQNO4DeZ
-         uDuiMYdIThEdKEpdU4CbjKx52vFEXiis0BIJeVsk0SqMOuLPtYus+J5KRK9zWD6mHcHc
-         uhaf24UhYcwz0f6Xvj2aXpsx5Kky8gBpBnglTeIHG3ZwyT/0adx0RA3X2WVqshqN6s72
-         wqmdy5zKUSps/ZyaqUc1z/aGOcwvvKVqHieZi4Li/q51UmNkO+AWo3OzW4UISd7SNzHB
-         DcMG5Wp0WJzzh1ybVE86dY380QFNH+4+S3WYhKQ6A+hQKehWmkMG27GKWD1JY3I33fM6
-         zmZw==
-X-Gm-Message-State: AOAM5318mnMoXuZz/Yof/P2tV5QeAmy/1nOifPA/vygr/1PvRXy7yiS+
-        VtlnAKepaRcwqZVxvCAKFCstkg7GpempKZ4SPkUphyDMr7289Q==
-X-Google-Smtp-Source: ABdhPJw+XoLZf9mqX141njeFpHuPfDHx1K7JkInSMz5b+lSSqMynhp2j/ETP9RO78i3nk9mkyh/KU1uV+nU+hK+9Hic=
-X-Received: by 2002:a05:600c:2902:: with SMTP id i2mr16150078wmd.123.1612200548513;
- Mon, 01 Feb 2021 09:29:08 -0800 (PST)
-MIME-Version: 1.0
-References: <20210109135112.147759-1-angelogioacchino.delregno@somainline.org>
- <20210109135112.147759-4-angelogioacchino.delregno@somainline.org>
- <CAF6AEGvDzdgDy7Znw6dQCV7Z=YxnF2_XsqkV+7BT+oY777TqHA@mail.gmail.com>
- <8f8c7c37-f7b2-f763-19e1-d89e5c454ab4@somainline.org> <CAF6AEGsQp4xHpH2brUdHmAX1ic2k88EFJRVVWDRxWXUqF9njfw@mail.gmail.com>
- <CAF6AEGueo71HVBcLW2Mtu5GQ=9HgwL43WczUGLuTk2JWLoH=ew@mail.gmail.com> <CAF6AEGspvnwRrXurmRvvRhr8dsFRc6fNnLsSo52Te0rHXtj4jA@mail.gmail.com>
-In-Reply-To: <CAF6AEGspvnwRrXurmRvvRhr8dsFRc6fNnLsSo52Te0rHXtj4jA@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 1 Feb 2021 09:31:42 -0800
-Message-ID: <CAF6AEGsDL-qRyXWftTgzHGn=UTvz=rcyEUcJv+oGtVXCkYibug@mail.gmail.com>
-Subject: Re: [PATCH 3/5] drm/msm/dsi_pll_10nm: Fix bad VCO rate calculation
- and prescaler
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        marijn.suijten@somainline.org, martin.botka@somainline.org,
-        phone-devel@vger.kernel.org,
+        Mon, 1 Feb 2021 13:20:52 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1612203630; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=KCP5gKkHPVjwLZx5nyh5N3OYo5vrT4dmcu2MEeNyjnI=; b=XzxT0rZhgoc6Ty6DtdCO2sBzjE7IXOlnaIcATuSJq/pPss6Qeeg8IFMpO6Awi0S+ZoueV9CC
+ 8i2kKD+gfoHIaLFhKK1x9/mtAUxpjnQ8dhUWaaFnpG5fkk3QHMDbnxKWFu+fhJ/Lb14mHQmN
+ qMa26rolHQTLiEyufWEDrxRHvv8=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 60184666ab96aecb9fd1de77 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 01 Feb 2021 18:20:22
+ GMT
+Sender: jcrouse=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 67FA9C43462; Mon,  1 Feb 2021 18:20:22 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5F93FC433C6;
+        Mon,  1 Feb 2021 18:20:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5F93FC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Mon, 1 Feb 2021 11:20:16 -0700
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Will Deacon <will@kernel.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        "Isaac J. Manjarres" <isaacm@codeaurora.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Kristian H Kristensen <hoegsberg@google.com>,
         Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>
+Subject: Re: [PATCH 2/3] iommu/io-pgtable-arm: Add IOMMU_LLC page protection
+ flag
+Message-ID: <20210201182016.GA21629@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
+        Will Deacon <will@kernel.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        "Isaac J. Manjarres" <isaacm@codeaurora.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" <linux-arm-kernel@lists.infradead.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         freedreno <freedreno@lists.freedesktop.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+        Kristian H Kristensen <hoegsberg@google.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        dri-devel <dri-devel@lists.freedesktop.org>
+References: <cover.1610372717.git.saiprakash.ranjan@codeaurora.org>
+ <3f589e7de3f9fa93e84c83420c5270c546a0c368.1610372717.git.saiprakash.ranjan@codeaurora.org>
+ <20210129090516.GB3998@willie-the-truck>
+ <5d23fce629323bcda71594010824aad0@codeaurora.org>
+ <20210201111556.GA7172@willie-the-truck>
+ <CAF6AEGsARmkAFsjaQLfa2miMgeijo183MWDKGtW_ti-UCpzBqA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAF6AEGsARmkAFsjaQLfa2miMgeijo183MWDKGtW_ti-UCpzBqA@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 1, 2021 at 9:18 AM Rob Clark <robdclark@gmail.com> wrote:
->
-> On Mon, Feb 1, 2021 at 9:05 AM Rob Clark <robdclark@gmail.com> wrote:
+On Mon, Feb 01, 2021 at 08:20:44AM -0800, Rob Clark wrote:
+> On Mon, Feb 1, 2021 at 3:16 AM Will Deacon <will@kernel.org> wrote:
 > >
-> > On Mon, Feb 1, 2021 at 7:47 AM Rob Clark <robdclark@gmail.com> wrote:
-> > >
-> > > On Mon, Feb 1, 2021 at 2:11 AM AngeloGioacchino Del Regno
-> > > <angelogioacchino.delregno@somainline.org> wrote:
-> > > >
-> > > > Il 31/01/21 20:50, Rob Clark ha scritto:
-> > > > > On Sat, Jan 9, 2021 at 5:51 AM AngeloGioacchino Del Regno
-> > > > > <angelogioacchino.delregno@somainline.org> wrote:
-> > > > >>
-> > > > >> The VCO rate was being miscalculated due to a big overlook during
-> > > > >> the process of porting this driver from downstream to upstream:
-> > > > >> here we are really recalculating the rate of the VCO by reading
-> > > > >> the appropriate registers and returning a real frequency, while
-> > > > >> downstream the driver was doing something entirely different.
-> > > > >>
-> > > > >> In our case here, the recalculated rate was wrong, as it was then
-> > > > >> given back to the set_rate function, which was erroneously doing
-> > > > >> a division on the fractional value, based on the prescaler being
-> > > > >> either enabled or disabled: this was actually producing a bug for
-> > > > >> which the final VCO rate was being doubled, causing very obvious
-> > > > >> issues when trying to drive a DSI panel because the actual divider
-> > > > >> value was multiplied by two!
-> > > > >>
-> > > > >> To make things work properly, remove the multiplication of the
-> > > > >> reference clock by two from function dsi_pll_calc_dec_frac and
-> > > > >> account for the prescaler enablement in the vco_recalc_rate (if
-> > > > >> the prescaler is enabled, then the hardware will divide the rate
-> > > > >> by two).
-> > > > >>
-> > > > >> This will make the vco_recalc_rate function to pass the right
-> > > > >> frequency to the (clock framework) set_rate function when called,
-> > > > >> which will - in turn - program the right values in both the
-> > > > >> DECIMAL_DIV_START_1 and the FRAC_DIV_START_{LOW/MID/HIGH}_1
-> > > > >> registers, finally making the PLL to output the right clock.
-> > > > >>
-> > > > >> Also, while at it, remove the prescaler TODO by also adding the
-> > > > >> possibility of disabling the prescaler on the PLL (it is in the
-> > > > >> PLL_ANALOG_CONTROLS_ONE register).
-> > > > >> Of course, both prescaler-ON and OFF cases were tested.
+> > On Fri, Jan 29, 2021 at 03:12:59PM +0530, Sai Prakash Ranjan wrote:
+> > > On 2021-01-29 14:35, Will Deacon wrote:
+> > > > On Mon, Jan 11, 2021 at 07:45:04PM +0530, Sai Prakash Ranjan wrote:
+> > > > > Add a new page protection flag IOMMU_LLC which can be used
+> > > > > by non-coherent masters to set cacheable memory attributes
+> > > > > for an outer level of cache called as last-level cache or
+> > > > > system cache. Initial user of this page protection flag is
+> > > > > the adreno gpu and then can later be used by other clients
+> > > > > such as video where this can be used for per-buffer based
+> > > > > mapping.
 > > > > >
-> > > > > This somehow breaks things on sc7180 (display gets stuck at first
-> > > > > frame of splash screen).  (This is a setup w/ an ti-sn65dsi86 dsi->eDP
-> > > > > bridge)
+> > > > > Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> > > > > ---
+> > > > >  drivers/iommu/io-pgtable-arm.c | 3 +++
+> > > > >  include/linux/iommu.h          | 6 ++++++
+> > > > >  2 files changed, 9 insertions(+)
 > > > > >
+> > > > > diff --git a/drivers/iommu/io-pgtable-arm.c
+> > > > > b/drivers/iommu/io-pgtable-arm.c
+> > > > > index 7439ee7fdcdb..ebe653ef601b 100644
+> > > > > --- a/drivers/iommu/io-pgtable-arm.c
+> > > > > +++ b/drivers/iommu/io-pgtable-arm.c
+> > > > > @@ -415,6 +415,9 @@ static arm_lpae_iopte
+> > > > > arm_lpae_prot_to_pte(struct arm_lpae_io_pgtable *data,
+> > > > >           else if (prot & IOMMU_CACHE)
+> > > > >                   pte |= (ARM_LPAE_MAIR_ATTR_IDX_CACHE
+> > > > >                           << ARM_LPAE_PTE_ATTRINDX_SHIFT);
+> > > > > +         else if (prot & IOMMU_LLC)
+> > > > > +                 pte |= (ARM_LPAE_MAIR_ATTR_IDX_INC_OCACHE
+> > > > > +                         << ARM_LPAE_PTE_ATTRINDX_SHIFT);
+> > > > >   }
+> > > > >
+> > > > >   if (prot & IOMMU_CACHE)
+> > > > > diff --git a/include/linux/iommu.h b/include/linux/iommu.h
+> > > > > index ffaa389ea128..1f82057df531 100644
+> > > > > --- a/include/linux/iommu.h
+> > > > > +++ b/include/linux/iommu.h
+> > > > > @@ -31,6 +31,12 @@
+> > > > >   * if the IOMMU page table format is equivalent.
+> > > > >   */
+> > > > >  #define IOMMU_PRIV       (1 << 5)
+> > > > > +/*
+> > > > > + * Non-coherent masters can use this page protection flag to set
+> > > > > cacheable
+> > > > > + * memory attributes for only a transparent outer level of cache,
+> > > > > also known as
+> > > > > + * the last-level or system cache.
+> > > > > + */
+> > > > > +#define IOMMU_LLC        (1 << 6)
 > > > >
-> > > > First frame of the splash means that something is "a bit" wrong...
-> > > > ...like the DSI clock is a little off.
+> > > > On reflection, I'm a bit worried about exposing this because I think it
+> > > > will
+> > > > introduce a mismatched virtual alias with the CPU (we don't even have a
+> > > > MAIR
+> > > > set up for this memory type). Now, we also have that issue for the PTW,
+> > > > but
+> > > > since we always use cache maintenance (i.e. the streaming API) for
+> > > > publishing the page-tables to a non-coheren walker, it works out.
+> > > > However,
+> > > > if somebody expects IOMMU_LLC to be coherent with a DMA API coherent
+> > > > allocation, then they're potentially in for a nasty surprise due to the
+> > > > mismatched outer-cacheability attributes.
 > > > >
-> > > > I don't have such hardware, otherwise I would've tried... but what you
-> > > > describe is a bit strange.
-> > > > Is there any other older qcom platform using this chip? Any other
-> > > > non-qcom platform? Is the driver for the SN65DSI86 surely fine?
-> > > > Anyway, as you know, I would never propose untested patches nor
-> > > > partially working ones for any reason: I'm sorry that this happened.
 > > >
-> > > I don't think there is anything publicly avail w/ sc7180 (yet.. but very soon)
-> > >
-> > > The ti-sn65dsi86 bridge is used on a bunch of 845/850 devices (like
-> > > the snapdragon windows laptops).. and I think also the older 835
-> > > laptops.. ofc that doesn't mean that there isn't some bug, but I'd
-> > > guess maybe more likely that there is some small difference in DSI vs
-> > > older devices, or some cmd vs video mode difference.
-> > >
-> > > Anyways, seems like the screen did eventually recover so that gives me
-> > > a bit of confidence to bisect this series, which I'll do a bit later
-> > > today.
+> > > Can't we add the syscached memory type similar to what is done on android?
 > >
-> > fwiw, this series minus this patch, and everything looks ok.. let me
-> > take a closer look at what changes with this patch
->
-> Btw, it looks like upstream, config->disable_prescaler is always
-> false.. I don't suppose you have anything WIP that changes this?
+> > Maybe. How does the GPU driver map these things on the CPU side?
+> 
+> Currently we use writecombine mappings for everything, although there
+> are some cases that we'd like to use cached (but have not merged
+> patches that would give userspace a way to flush/invalidate)
+> 
+> BR,
+> -R
 
-fwiw, this is the clk_summary diff with and without this patch:
+LLC/system cache doesn't have a relationship with the CPU cache.  Its just a
+little accelerator that sits on the connection from the GPU to DDR and caches
+accesses. The hint that Sai is suggesting is used to mark the buffers as
+'no-write-allocate' to prevent GPU write operations from being cached in the LLC
+which a) isn't interesting and b) takes up cache space for read operations.
 
-------------------
-270,282c270,282
-<     dsi0_pll_out_div_clk              1        1        0
-887039941          0     0  50000         Y
-<        dsi0_pll_post_out_div_clk       0        0        0
-221759985          0     0  50000         Y
-<        dsi0_pll_bit_clk               2        2        0
-887039941          0     0  50000         Y
-<           dsi0_pclk_mux               1        1        0
-887039941          0     0  50000         Y
-<              dsi0_phy_pll_out_dsiclk       1        1        0
-147839991          0     0  50000         Y
-<                 disp_cc_mdss_pclk0_clk_src       1        1        0
-  147839991          0     0  50000         Y
-<                    disp_cc_mdss_pclk0_clk       1        1        0
- 147839991          0     0  50000         Y
-<           dsi0_pll_by_2_bit_clk       0        0        0
-443519970          0     0  50000         Y
-<           dsi0_phy_pll_out_byteclk       1        1        0
-110879992          0     0  50000         Y
-<              disp_cc_mdss_byte0_clk_src       2        2        0
-110879992          0     0  50000         Y
-<                 disp_cc_mdss_byte0_div_clk_src       1        1
-  0    55439996          0     0  50000         Y
-<                    disp_cc_mdss_byte0_intf_clk       1        1
-  0    55439996          0     0  50000         Y
-<                 disp_cc_mdss_byte0_clk       1        1        0
-110879992          0     0  50000         Y
----
->     dsi0_pll_out_div_clk              1        1        0   887039978          0     0  50000         Y
->        dsi0_pll_post_out_div_clk       0        0        0   221759994          0     0  50000         Y
->        dsi0_pll_bit_clk               2        2        0   887039978          0     0  50000         Y
->           dsi0_pclk_mux               1        1        0   887039978          0     0  50000         Y
->              dsi0_phy_pll_out_dsiclk       1        1        0   147839997          0     0  50000         Y
->                 disp_cc_mdss_pclk0_clk_src       1        1        0   147839997          0     0  50000         Y
->                    disp_cc_mdss_pclk0_clk       1        1        0   147839997          0     0  50000         Y
->           dsi0_pll_by_2_bit_clk       0        0        0   443519989          0     0  50000         Y
->           dsi0_phy_pll_out_byteclk       1        1        0   110879997          0     0  50000         Y
->              disp_cc_mdss_byte0_clk_src       2        2        0   110879997          0     0  50000         Y
->                 disp_cc_mdss_byte0_div_clk_src       1        1        0    55439999          0     0  50000         Y
->                    disp_cc_mdss_byte0_intf_clk       1        1        0    55439999          0     0  50000         Y
->                 disp_cc_mdss_byte0_clk       1        1        0   110879997          0     0  50000         Y
-------------------
+Its easiest to think of the LLC as a bonus accelerator that has no cost for
+us to use outside of the unfortunate per buffer hint.
 
+We do have to worry about the CPU cache w.r.t I/O coherency (which is a
+different hint) and in that case we have all of concerns that Will identified.
 
-> >
-> > > > In any case, just to be perfectly transparent, while being here waiting
-> > > > for review, this patch series got tested on more smartphones, even ones
-> > > > that I don't personally own, with different displays.
-> > > >
-> > > > For your reference, here's a list (all MSM8998..):
-> > > > - OnePlus 5               (1920x1080)
-> > > > - F(x)Tec Pro 1           (2160x1080)
-> > > > - Sony Xperia XZ1 Compact (1280x720)
-> > > > - Sony Xperia XZ1         (1920x1080)
-> > > > - Sony Xperia XZ Premium  (3840x2160)
-> > > >
-> > >
-> > > Yeah, no worries, I wasn't trying to imply that the patch was untested.
-> > >
-> > > Out of curiosity, are any of those video mode panels?
-> > >
-> > > >
-> > > > > Also, something (I assume DSI related) that I was testing on
-> > > > > msm-next-staging seems to have effected the colors on the panel (ie.
-> > > > > they are more muted).. which seems to persist across reboots (ie. when
-> > > >
-> > > > So much "fun". This makes me think something about the PCC block doing
-> > > > the wrong thing (getting misconfigured).
-> > > >
-> > > > > switching back to a good kernel), and interestingly if I reboot from a
-> > > > > good kernel I see part of the login prompt (or whatever was previously
-> > > > > on-screen) in the firmware ui screen !?!  (so maybe somehow triggered
-> > > > > the display to think it is in PSR mode??)
-> > > > >
-> > > >
-> > > >  From a fast read, the SN65DSI86 is on I2C.. giving it a wrong dsi clock
-> > > > cannot produce (logically, at least) this, so I say that it is very
-> > > > unlikely for this to be a consequence of the 10nm pll fixes...
-> > > >
-> > >
-> > > Note that the bridge can also be programmed via dsi cmd mode packets,
-> > > which I believe is the case on the 835 laptops (or at least one of
-> > > them).. but all the things I have are using i2c as the control path.
-> > >
-> > > > ...unless the bootloader is not configuring the DSI rates, but that's
-> > > > also veeeeery unlikely (it always does, or it always does not).
-> > >
-> > > I haven't looked at the bootloader display code, but booting back to
-> > > an old/good kernel didn't change anything..  even powering off didn't.
-> > > But the ghost image seemed to fade after some time, and by the next
-> > > morning it was fine.  Which is strange. (But tbf, I'm more a gpu guy
-> > > who works on display only when necessary.. ie. a gpu without a display
-> > > isn't so much fun ;-))
-> > >
-> > > > > Not sure if that is caused by these patches, but if I can figure out
-> > > > > how to get the panel back to normal I can bisect.  I think for now
-> > > > > I'll drop this series.  Possibly it could be a
-> > > > > two-wrongs-makes-a-right situation that had things working before, but
-> > > > > I think someone from qcom who knows the DSI IP should take a look.
-> > > > >
-> > > >
-> > > > I would be happy if someone from Qualcomm takes a look: after all, there
-> > > > is no documentation and they're the only ones that can verify this kind
-> > > > of stuff. Please, Qualcomm.
-> > >
-> > > Hopefully someone can take a look.
-> > >
-> > > > Besides that, if there's anything I can help with to solve this riddle,
-> > > > I'm here for you.
-> > >
-> > > Thanks, like I said I'll try applying the patches one by one and see
-> > > if I can narrow down what made the panel go funny, and we can go from
-> > > there
-> > >
-> > > BR,
-> > > -R
-> > >
-> > > > Yours,
-> > > > -- Angelo
-> > > >
-> > > > > BR,
-> > > > > -R
-> > > > >
-> > > > >
-> > > > >> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> > > > >> ---
-> > > > >>   drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c | 22 +++++++++-------------
-> > > > >>   1 file changed, 9 insertions(+), 13 deletions(-)
-> > > > >>
-> > > > >> diff --git a/drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c b/drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c
-> > > > >> index 8b66e852eb36..5be562dfbf06 100644
-> > > > >> --- a/drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c
-> > > > >> +++ b/drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c
-> > > > >> @@ -165,11 +165,7 @@ static void dsi_pll_calc_dec_frac(struct dsi_pll_10nm *pll)
-> > > > >>
-> > > > >>          pll_freq = pll->vco_current_rate;
-> > > > >>
-> > > > >> -       if (config->disable_prescaler)
-> > > > >> -               divider = fref;
-> > > > >> -       else
-> > > > >> -               divider = fref * 2;
-> > > > >> -
-> > > > >> +       divider = fref;
-> > > > >>          multiplier = 1 << config->frac_bits;
-> > > > >>          dec_multiple = div_u64(pll_freq * multiplier, divider);
-> > > > >>          dec = div_u64_rem(dec_multiple, multiplier, &frac);
-> > > > >> @@ -266,9 +262,11 @@ static void dsi_pll_ssc_commit(struct dsi_pll_10nm *pll)
-> > > > >>
-> > > > >>   static void dsi_pll_config_hzindep_reg(struct dsi_pll_10nm *pll)
-> > > > >>   {
-> > > > >> +       struct dsi_pll_config *config = &pll->pll_configuration;
-> > > > >>          void __iomem *base = pll->mmio;
-> > > > >> +       u32 val = config->disable_prescaler ? 0x0 : 0x80;
-> > > > >>
-> > > > >> -       pll_write(base + REG_DSI_10nm_PHY_PLL_ANALOG_CONTROLS_ONE, 0x80);
-> > > > >> +       pll_write(base + REG_DSI_10nm_PHY_PLL_ANALOG_CONTROLS_ONE, val);
-> > > > >>          pll_write(base + REG_DSI_10nm_PHY_PLL_ANALOG_CONTROLS_TWO, 0x03);
-> > > > >>          pll_write(base + REG_DSI_10nm_PHY_PLL_ANALOG_CONTROLS_THREE, 0x00);
-> > > > >>          pll_write(base + REG_DSI_10nm_PHY_PLL_DSM_DIVIDER, 0x00);
-> > > > >> @@ -499,17 +497,15 @@ static unsigned long dsi_pll_10nm_vco_recalc_rate(struct clk_hw *hw,
-> > > > >>          frac |= ((pll_read(base + REG_DSI_10nm_PHY_PLL_FRAC_DIV_START_HIGH_1) &
-> > > > >>                    0x3) << 16);
-> > > > >>
-> > > > >> -       /*
-> > > > >> -        * TODO:
-> > > > >> -        *      1. Assumes prescaler is disabled
-> > > > >> -        */
-> > > > >>          multiplier = 1 << config->frac_bits;
-> > > > >> -       pll_freq = dec * (ref_clk * 2);
-> > > > >> -       tmp64 = (ref_clk * 2 * frac);
-> > > > >> +       pll_freq = dec * ref_clk;
-> > > > >> +       tmp64 = ref_clk * frac;
-> > > > >>          pll_freq += div_u64(tmp64, multiplier);
-> > > > >> -
-> > > > >>          vco_rate = pll_freq;
-> > > > >>
-> > > > >> +       if (config->disable_prescaler)
-> > > > >> +               vco_rate = div_u64(vco_rate, 2);
-> > > > >> +
-> > > > >>          DBG("DSI PLL%d returning vco rate = %lu, dec = %x, frac = %x",
-> > > > >>              pll_10nm->id, (unsigned long)vco_rate, dec, frac);
-> > > > >>
-> > > > >> --
-> > > > >> 2.29.2
-> > > > >>
-> > > >
+Jordan
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
