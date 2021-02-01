@@ -2,155 +2,225 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F0CE30A7B8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Feb 2021 13:36:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E85DC30A90B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Feb 2021 14:49:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231197AbhBAMgt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Feb 2021 07:36:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60866 "EHLO
+        id S231649AbhBANsP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Feb 2021 08:48:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231187AbhBAMgs (ORCPT
+        with ESMTP id S229707AbhBANsM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Feb 2021 07:36:48 -0500
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9892C061756
-        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Feb 2021 04:36:07 -0800 (PST)
-Received: by mail-pj1-x102b.google.com with SMTP id kx7so10227720pjb.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Feb 2021 04:36:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=aubOLGUr38JbgOFBEsGBKw5otENSJyK21msYOAdprUo=;
-        b=mLci0Qi20948hhLLaInBmW62ubOIpF9fL7qKXMFfTyeFnpOlsbYsl11mhUdnLt5H41
-         opI/BhUu0NmskxVbtZN6B+URC4kcCa27Zj1dih5tG3nvufAV8byOvzr9bMZaSVO/8ezv
-         MHedQ83Pg3QXFGmk0YfZKs4t1XX8L4kK0CmVq5XOyoKDWd/7OdEpMpxAyaxBIL1bvVUC
-         drvC1O0q12vZSX4teqi6SPLFXV3SyF2Vu2GItdY802N3m/3ngEq9OtiF+/Mv72wt8Ykl
-         nVBAzG++C4cfwEiz26b51bpX0i7CuRDn9AfejGnFF4xo/u42GO/fE2vGNIIopSUo5l/p
-         rkrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=aubOLGUr38JbgOFBEsGBKw5otENSJyK21msYOAdprUo=;
-        b=SKDmbB7mwAnaqGHAJIwE25OMeBtkuxkf3BVk7JPGMex3l5gvrZxz1pQX2jfu3+VM76
-         hE5P+Q9xtyAFFdc1DVSgwCV9ReIXWg9jXlqVqVScXWLOlqjMWY2e6YgCgOzI8+L0QI7R
-         6zemEYJhc7lAwoAg36IOlMY+MbIUyS2otC/bxWJPhQ97p8fdLkk7XDRRpoKWCSZ8nhwo
-         clKuRKMA4iF/p6Ci55ANeLpPZwom7lOahZIZU0v0U5yznbj4P8VPMFulFRp7ul/QK9mS
-         uKdi0lKYaZMd1wKmegXVpPCBO+8ERPfkdmYscM2dBsH5jVxnCpAr+9jT5swrYsXUP7uv
-         Ovpw==
-X-Gm-Message-State: AOAM531HSPoxAvFvsCzrGJi4jszce98vPIie5XVEh/HC0qnTY6SPPIim
-        xSmuI5ZqcnVpYWK/0IJrHgzL
-X-Google-Smtp-Source: ABdhPJwEy3jT5OzO6ZIaXOaPhYxmEqRfzl1fLck4+1pJfPg329b18wKkZGACNJ7rHEa6I8+oFVtTvg==
-X-Received: by 2002:a17:902:a710:b029:dc:3817:e7c2 with SMTP id w16-20020a170902a710b02900dc3817e7c2mr17320672plq.0.1612182967365;
-        Mon, 01 Feb 2021 04:36:07 -0800 (PST)
-Received: from thinkpad ([103.77.37.179])
-        by smtp.gmail.com with ESMTPSA id h1sm18590849pgj.59.2021.02.01.04.36.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Feb 2021 04:36:06 -0800 (PST)
-Date:   Mon, 1 Feb 2021 18:06:02 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     linux@armlinux.org.uk, will@kernel.org
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2] ARM: kernel: Fix interrupted SMC calls
-Message-ID: <20210201123602.GD108653@thinkpad>
-References: <20210118181040.51238-1-manivannan.sadhasivam@linaro.org>
+        Mon, 1 Feb 2021 08:48:12 -0500
+X-Greylist: delayed 437 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 01 Feb 2021 05:47:32 PST
+Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [IPv6:2a0b:5c81:1c1::37])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69904C061756
+        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Feb 2021 05:47:32 -0800 (PST)
+Received: from hillosipuli.retiisi.eu (dbd4xkyj7wcfw2k22jcct-3.rev.dnainternet.fi [IPv6:2001:14ba:8f1:3400:fb90:892b:22d6:3885])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: sailus)
+        by lahtoruutu.iki.fi (Postfix) with ESMTPSA id DB8BD1B0039A;
+        Mon,  1 Feb 2021 15:40:10 +0200 (EET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
+        t=1612186811;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=OkI1JNtw0Xal9WHkoR/QpG6O9dg+7qJWczM5eRfGy7g=;
+        b=NONgVykmpdi7vvXK2PO4MjqG0OKypiZPV+ty4N01GBLCG4iy2h4fQjbZ9BE8WfCgcyFtqc
+        2n9T28JJGegO2qLTvcQADL4bILhyiPKp9TeGtnf6V7+BhERZRNGftimewd1l3gxW3PSQ/K
+        v3y0+5tgpE90Y1zZCJAEciscT+E5GKdXQRwF5ezIRqBH8ajYyjUTuDOj/2osenI/uC00k4
+        KVfbxGrK5iltbFX+P8+44Kbj1c70XBPVRVC0fsxPH4Fm8p3hfH+aW8BlZMm45SaXnpoZQp
+        6wINeSuaQMOLuOU52LUX5Y3adSes/T/+XmV8BOjIcSIW2NxN8mjsZ/Y+IDjfWA==
+Received: from valkosipuli.localdomain (valkosipuli.localdomain [IPv6:fd35:1bc8:1a6:d3d5::80:2])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        by hillosipuli.retiisi.eu (Postfix) with ESMTPS id B63A6634C92;
+        Mon,  1 Feb 2021 15:39:55 +0200 (EET)
+Received: from localhost ([127.0.0.1] helo=valkosipuli.retiisi.org.uk)
+        by valkosipuli.localdomain with esmtp (Exim 4.92)
+        (envelope-from <sakari.ailus@iki.fi>)
+        id 1l6ZR1-0000hG-Tn; Mon, 01 Feb 2021 15:40:07 +0200
+Date:   Mon, 1 Feb 2021 15:40:07 +0200
+From:   Sakari Ailus <sakari.ailus@iki.fi>
+To:     Robert Foss <robert.foss@linaro.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, todor.too@gmail.com,
+        mchehab@kernel.org, robh+dt@kernel.org, catalin.marinas@arm.com,
+        will@kernel.org, shawnguo@kernel.org, leoyang.li@nxp.com,
+        geert+renesas@glider.be, arnd@arndb.de, Anson.Huang@nxp.com,
+        michael@walle.cc, agx@sigxcpu.org, max.oss.09@gmail.com,
+        angelogioacchino.delregno@somainline.org,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Rob Herring <robh@kernel.org>,
+        Andrey Konovalov <andrey.konovalov@linaro.org>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
+        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Jonathan Marek <jonathan@marek.ca>
+Subject: Re: [PATCH v3 10/22] media: camss: Add support for CSIPHY hardware
+ version Titan 170
+Message-ID: <20210201134007.GE3@valkosipuli.retiisi.org.uk>
+References: <20210127144930.2158242-1-robert.foss@linaro.org>
+ <20210127144930.2158242-11-robert.foss@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210118181040.51238-1-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20210127144930.2158242-11-robert.foss@linaro.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1612186811; a=rsa-sha256;
+        cv=none;
+        b=RyJQBLcGrJOWPEu11MLWf1AV/oztOT08Kz2Dlya9hefcHpvFLZo5b8SDGG7YjfPZO87eT1
+        QEnEzauOPfXiiTijuivyMbE3jG3OYHblOngw27Xj4Vf6h24Rpvf7QgBhq5rYng5iO+Cmhu
+        0VQE87Z7Seks7IUJq6frZSSg3A0uBMwVpzRmV59QNjjQmO3pp4s1YwVROkagoi0+Kx1xB7
+        2s10C0J+qYa2c0nYmKekWMGOxlTzYNJqnmJUP9pWAosS6+VRC8VxOcZhnPm2LfwxIGOq+s
+        /L4lk5poUEJqsHs6YEtl8gvYSQL3zH/TE9LEPHUqXIqWr7+tbGUxEPyYqPTMTQ==
+ARC-Authentication-Results: i=1;
+        ORIGINATING;
+        auth=pass smtp.auth=sailus smtp.mailfrom=sakari.ailus@iki.fi
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
+        s=lahtoruutu; t=1612186811;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=OkI1JNtw0Xal9WHkoR/QpG6O9dg+7qJWczM5eRfGy7g=;
+        b=LlPD+zgot2cSVqfLenc/LZaVyiQN7fGYOOhE+DChsJgMr6iMrj/DMIl8VZrVmRjjBmfRyz
+        QoAPyBpC8Bq0CyfbxJva+HU+O92v0kk78GdQZFnpPvu5YUEyAL1vt+ejSUABB1/5xCFE/q
+        sc/7yEifKWGje9LrBjPa+RsTpRP59a2W9xovihjctQWdR85DVvaP9kEEw6U58TkOXX8Lhc
+        Ee/tZdJzsIB2DWYgSZnG0NVqIebJ4WBk2wrko5b0bFJTHizKdoFe5c8JbaZJFGaMQOYmd5
+        ciSN7Ccg4utoXlCsFXrIDCfLW3CM7k43NR9f3gQiAgJZxf7qz5pV/jLOY/y1/g==
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Robert,
 
-On Mon, Jan 18, 2021 at 11:40:40PM +0530, Manivannan Sadhasivam wrote:
-> On Qualcomm ARM32 platforms, the SMC call can return before it has
-> completed. If this occurs, the call can be restarted, but it requires
-> using the returned session ID value from the interrupted SMC call.
+On Wed, Jan 27, 2021 at 03:49:18PM +0100, Robert Foss wrote:
+> Add register definitions for version 170 of the Titan architecture
+> and implement support for the CSIPHY subdevice.
 > 
-> The ARM32 SMCC code already has the provision to add platform specific
-> quirks for things like this. So let's make use of it and add the
-> Qualcomm specific quirk (ARM_SMCCC_QUIRK_QCOM_A6) used by the QCOM_SCM
-> driver.
-> 
-> This change is similar to the below one added for ARM64 a while ago:
-> commit 82bcd087029f ("firmware: qcom: scm: Fix interrupted SCM calls")
-> 
-> Without this change, the Qualcomm ARM32 platforms like SDX55 will return
-> -EINVAL for SMC calls used for modem firmware loading and validation.
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-A gentle ping on this patch!
-
-Thanks,
-Mani
-
+> Signed-off-by: Robert Foss <robert.foss@linaro.org>
 > ---
+>  .../qcom/camss/camss-csiphy-3ph-1-0.c         | 182 ++++++++++++++++--
+>  .../media/platform/qcom/camss/camss-csiphy.c  |  66 +++++--
+>  drivers/media/platform/qcom/camss/camss.c     |  74 +++++++
+>  3 files changed, 290 insertions(+), 32 deletions(-)
 > 
-> Changes in v2:
-> 
-> * Preserved callee saved registers and used the registers r4, r5 which
->   are getting pushed onto the stack.
-> 
->  arch/arm/kernel/asm-offsets.c |  3 +++
->  arch/arm/kernel/smccc-call.S  | 11 ++++++++++-
->  2 files changed, 13 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm/kernel/asm-offsets.c b/arch/arm/kernel/asm-offsets.c
-> index a1570c8bab25..2e2fa6fc2d4f 100644
-> --- a/arch/arm/kernel/asm-offsets.c
-> +++ b/arch/arm/kernel/asm-offsets.c
-> @@ -23,6 +23,7 @@
->  #include <asm/vdso_datapage.h>
->  #include <asm/hardware/cache-l2x0.h>
->  #include <linux/kbuild.h>
-> +#include <linux/arm-smccc.h>
->  #include "signal.h"
+> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> index 97cb9de85031..8cf1440b7d70 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> @@ -47,6 +47,105 @@
+>  #define CSIPHY_3PH_CMN_CSI_COMMON_CTRL6_SHOW_REV_ID	BIT(1)
+>  #define CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(n)	(0x8b0 + 0x4 * (n))
 >  
->  /*
-> @@ -147,6 +148,8 @@ int main(void)
->    DEFINE(SLEEP_SAVE_SP_PHYS,	offsetof(struct sleep_save_sp, save_ptr_stash_phys));
->    DEFINE(SLEEP_SAVE_SP_VIRT,	offsetof(struct sleep_save_sp, save_ptr_stash));
->  #endif
-> +  DEFINE(ARM_SMCCC_QUIRK_ID_OFFS,	offsetof(struct arm_smccc_quirk, id));
-> +  DEFINE(ARM_SMCCC_QUIRK_STATE_OFFS,	offsetof(struct arm_smccc_quirk, state));
->    BLANK();
->    DEFINE(DMA_BIDIRECTIONAL,	DMA_BIDIRECTIONAL);
->    DEFINE(DMA_TO_DEVICE,		DMA_TO_DEVICE);
-> diff --git a/arch/arm/kernel/smccc-call.S b/arch/arm/kernel/smccc-call.S
-> index 00664c78faca..931df62a7831 100644
-> --- a/arch/arm/kernel/smccc-call.S
-> +++ b/arch/arm/kernel/smccc-call.S
-> @@ -3,7 +3,9 @@
->   * Copyright (c) 2015, Linaro Limited
->   */
->  #include <linux/linkage.h>
-> +#include <linux/arm-smccc.h>
->  
-> +#include <asm/asm-offsets.h>
->  #include <asm/opcodes-sec.h>
->  #include <asm/opcodes-virt.h>
->  #include <asm/unwind.h>
-> @@ -27,7 +29,14 @@ UNWIND(	.fnstart)
->  UNWIND(	.save	{r4-r7})
->  	ldm	r12, {r4-r7}
->  	\instr
-> -	pop	{r4-r7}
-> +	ldr	r4, [sp, #36]
-> +	cmp	r4, #0
-> +	beq	1f			// No quirk structure
-> +	ldr     r5, [r4, #ARM_SMCCC_QUIRK_ID_OFFS]
-> +	cmp     r5, #ARM_SMCCC_QUIRK_QCOM_A6
-> +	bne	1f			// No quirk present
-> +	str	r6, [r4, #ARM_SMCCC_QUIRK_STATE_OFFS]
-> +1:	pop	{r4-r7}
->  	ldr	r12, [sp, #(4 * 4)]
->  	stm	r12, {r0-r3}
->  	bx	lr
-> -- 
-> 2.25.1
-> 
+> +#define CSIPHY_DEFAULT_PARAMS            0
+> +#define CSIPHY_LANE_ENABLE               1
+> +#define CSIPHY_SETTLE_CNT_LOWER_BYTE     2
+> +#define CSIPHY_SETTLE_CNT_HIGHER_BYTE    3
+> +#define CSIPHY_DNP_PARAMS                4
+> +#define CSIPHY_2PH_REGS                  5
+> +#define CSIPHY_3PH_REGS                  6
+> +
+> +struct csiphy_reg_t {
+> +	int32_t  reg_addr;
+> +	int32_t  reg_data;
+> +	int32_t  delay;
+> +	uint32_t csiphy_param_type;
+> +};
+> +
+> +static struct
+
+This should be const.
+
+> +csiphy_reg_t lane_regs_sdm845[5][14] = {
+> +	{
+> +		{0x0004, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x002C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0034, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x001C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0014, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0028, 0x00, 0x00, CSIPHY_DNP_PARAMS},
+> +		{0x003C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0000, 0x91, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0008, 0x00, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
+> +		{0x000c, 0x00, 0x00, CSIPHY_DNP_PARAMS},
+> +		{0x0010, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0038, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0060, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0064, 0x7F, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	},
+> +	{
+> +		{0x0704, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x072C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0734, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x071C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0714, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0728, 0x04, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x073C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0700, 0x80, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0708, 0x14, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
+> +		{0x070C, 0xA5, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0710, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0738, 0x1F, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0760, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0764, 0x7F, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	},
+> +	{
+> +		{0x0204, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x022C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0234, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x021C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0214, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0228, 0x00, 0x00, CSIPHY_DNP_PARAMS},
+> +		{0x023C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0200, 0x91, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0208, 0x00, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
+> +		{0x020C, 0x00, 0x00, CSIPHY_DNP_PARAMS},
+> +		{0x0210, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0238, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0260, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0264, 0x7F, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	},
+> +	{
+> +		{0x0404, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x042C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0434, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x041C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0414, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0428, 0x00, 0x00, CSIPHY_DNP_PARAMS},
+> +		{0x043C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0400, 0x91, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0408, 0x00, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
+> +		{0x040C, 0x00, 0x00, CSIPHY_DNP_PARAMS},
+> +		{0x0410, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0438, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0460, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0464, 0x7F, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	},
+> +	{
+> +		{0x0604, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x062C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0634, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x061C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0614, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0628, 0x00, 0x00, CSIPHY_DNP_PARAMS},
+> +		{0x063C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0600, 0x91, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0608, 0x00, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
+> +		{0x060C, 0x00, 0x00, CSIPHY_DNP_PARAMS},
+> +		{0x0610, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0638, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0660, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +		{0x0664, 0x7F, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	},
+> +};
+
+-- 
+Sakari Ailus
