@@ -2,103 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 909C030A942
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Feb 2021 15:03:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5423330A97F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Feb 2021 15:19:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231946AbhBAODA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Feb 2021 09:03:00 -0500
-Received: from mail-oi1-f174.google.com ([209.85.167.174]:35338 "EHLO
-        mail-oi1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231916AbhBAOC7 (ORCPT
+        id S231145AbhBAOTQ convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>); Mon, 1 Feb 2021 09:19:16 -0500
+Received: from relay12.mail.gandi.net ([217.70.178.232]:59123 "EHLO
+        relay12.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229785AbhBAOTP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Feb 2021 09:02:59 -0500
-Received: by mail-oi1-f174.google.com with SMTP id w8so18862534oie.2;
-        Mon, 01 Feb 2021 06:02:43 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=PjQ2aAipDSaq5oC4lmBya+0Rk1klXjpSSVN7GA5y3Ng=;
-        b=tx1hsv+UOTZdkmkVsqprjcwNkmce1Z7Kmpr6pVGux/5cntzJ2+koInp0Of+ZT8GbbJ
-         f3no2hLMfDxlojDrrdwgtfwFA6sAas2+nDMYMC546L4Z8+f92+XKR22Qlb3hW1/+2BAv
-         76dK4TmaINCX7ABBvHZg24xqVRXC8AD2P/utJ7FAE8L6wkIbLHagITuqyVexyf86y4F/
-         Va/7SNL6sHQ8wCtMJ9e1gKNSkdXTCPiB6beau2M09LDn6m9XuoLgwrbtD4FpLGHzZGNN
-         s3knvojLv0oj72LR3mYLtGCf5T3JEUq9yYXkAIIDbByxu581gckufiBS4DsT+Z8bYH61
-         JAaA==
-X-Gm-Message-State: AOAM530BfBbSKtSkkefXKOXXPVRSEzvV8tY62vmTkcJsCkEFM4iAsNdQ
-        kaJtlvfZA5wjvJZfRLdbuv3h08tQCLymoFSMxXWOs7q1
-X-Google-Smtp-Source: ABdhPJw1DQOtXQiOfLob/rMGpYwphh6HqBDyeQVpm2HarfCzjirlfFQpNkL8KnEPZ6WvYaJWPQuOJUtbJQHKhwp2iUI=
-X-Received: by 2002:aca:fc84:: with SMTP id a126mr11038406oii.71.1612188138028;
- Mon, 01 Feb 2021 06:02:18 -0800 (PST)
+        Mon, 1 Feb 2021 09:19:15 -0500
+Received: from xps13 (lfbn-tou-1-972-150.w86-210.abo.wanadoo.fr [86.210.203.150])
+        (Authenticated sender: miquel.raynal@bootlin.com)
+        by relay12.mail.gandi.net (Postfix) with ESMTPSA id 90F55200008;
+        Mon,  1 Feb 2021 14:18:25 +0000 (UTC)
+Date:   Mon, 1 Feb 2021 15:18:24 +0100
+From:   Miquel Raynal <miquel.raynal@bootlin.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     richard@nod.at, vigneshr@ti.com, boris.brezillon@collabora.com,
+        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org
+Subject: Re: [PATCH] mtd: rawnand: Do not check for bad block if bbt is
+ unavailable
+Message-ID: <20210201151824.5a9dca4a@xps13>
+In-Reply-To: <20210130035412.6456-1-manivannan.sadhasivam@linaro.org>
+References: <20210130035412.6456-1-manivannan.sadhasivam@linaro.org>
+Organization: Bootlin
+X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-References: <377d2e2d328276070ae2f26c65daa1497bb3c3cf.1612166647.git.viresh.kumar@linaro.org>
- <YBfNb91psVcf3TAS@light.dominikbrodowski.net> <20210201100502.xluaj5rpqosqsq7b@vireshk-i7>
-In-Reply-To: <20210201100502.xluaj5rpqosqsq7b@vireshk-i7>
-From:   "Rafael J. Wysocki" <rafael@kernel.org>
-Date:   Mon, 1 Feb 2021 15:02:06 +0100
-Message-ID: <CAJZ5v0iowSHeie2HLPjHUftBDVBQXi30O1Kfk3Kxchc0K=gYag@mail.gmail.com>
-Subject: Re: [PATCH] cpufreq: Remove CPUFREQ_STICKY flag
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Dominik Brodowski <linux@dominikbrodowski.net>,
-        Rafael Wysocki <rjw@rjwysocki.net>,
-        Keguang Zhang <keguang.zhang@gmail.com>,
-        Kevin Hilman <khilman@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-mips@vger.kernel.org,
-        Linux OMAP Mailing List <linux-omap@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Linux Samsung SoC <linux-samsung-soc@vger.kernel.org>,
-        linux-tegra <linux-tegra@vger.kernel.org>,
-        "moderated list:ARM/Mediatek SoC..." 
-        <linux-mediatek@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 1, 2021 at 11:06 AM Viresh Kumar <viresh.kumar@linaro.org> wrote:
->
-> On 01-02-21, 10:44, Dominik Brodowski wrote:
-> > IIRC, it was required on various ARM systems,[*] as CPUs were registered as
-> > subsys_initcall(), while cpufreq used to be initialized only later, as an
->
-> s/later/earlier ? arch happens before subsys not at least and that is
-> the only way we can break cpufreq here, i.e. when the driver comes up
-> before the CPUs are registered.
->
-> > arch_initcall(). If the ordering is opposite now on all architectures (it
-> > wasn't on ARM back then), we should be fine.
-> >
-> > [*] https://git.kernel.org/pub/scm/linux/kernel/git/tglx/history.git/commit/arch/arm/mach-sa1100/cpu-sa1100.c?id=f59d3bbe35f6268d729f51be82af8325d62f20f5
->
-> Thanks for your reply, it made me look at that aspect in some more
-> detail to confirm I don't end up breaking anything. Unless I am making
-> a mistake in reading the code, this is the code flow that we have
-> right now:
->
-> start_kernel()
-> -> kernel_init()
->    -> kernel_init_freeable()
->       -> do_basic_setup()
->          -> driver_init()
->             -> cpu_dev_init()
->                -> subsys_system_register(for-CPUs)
->
->          -> do_initcalls()
->             -> register-cpufreq-driver from any level
->
-> And so CPUs should always be there for a cpufreq driver.
->
-> Makes sense ?
+Hi Manivannan,
 
-It does to me, but can you update the changelog, please?
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote on Sat,
+30 Jan 2021 09:24:12 +0530:
+
+> The bbt pointer will be unavailable when NAND_SKIP_BBTSCAN option is
+> set for a NAND chip. The intention is to skip scanning for the bad
+> blocks during boot time.
+
+I don't have the same understanding: this flag skips the bad block
+table scan, not the bad block scan. We do want to scan all the devices
+in order to construct a RAM based table.
+
+> However, the MTD core will call
+> _block_isreserved() and _block_isbad() callbacks unconditionally for
+> the rawnand devices due to the callbacks always present while collecting
+> the ecc stats.
+> 
+> The _block_isreserved() callback for rawnand will bail out if bbt
+> pointer is not available. But _block_isbad() will continue without
+> checking for it. So this contradicts with the NAND_SKIP_BBTSCAN option
+> since the bad block check will happen anyways (ie., not much difference
+> between scanning for bad blocks and checking each block for bad ones).
+> 
+> Hence, do not check for the bad block if bbt pointer is unavailable.
+
+Not checking for bad blocks at all feels insane. I don't really get the
+scope and goal of such change?
+
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  drivers/mtd/nand/raw/nand_base.c | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/drivers/mtd/nand/raw/nand_base.c b/drivers/mtd/nand/raw/nand_base.c
+> index c33fa1b1847f..f18cd1db79a9 100644
+> --- a/drivers/mtd/nand/raw/nand_base.c
+> +++ b/drivers/mtd/nand/raw/nand_base.c
+> @@ -4286,6 +4286,9 @@ static int nand_block_isbad(struct mtd_info *mtd, loff_t offs)
+>  	int chipnr = (int)(offs >> chip->chip_shift);
+>  	int ret;
+>  
+> +	if (!chip->bbt)
+> +		return 0;
+> +
+>  	/* Select the NAND device */
+>  	ret = nand_get_device(chip);
+>  	if (ret)
+
+Cheers,
+Miquèl
