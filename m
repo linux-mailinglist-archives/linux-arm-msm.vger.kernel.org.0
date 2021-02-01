@@ -2,140 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A1DF30A755
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Feb 2021 13:15:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F0CE30A7B8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Feb 2021 13:36:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230527AbhBAMOM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Feb 2021 07:14:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56012 "EHLO
+        id S231197AbhBAMgt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Feb 2021 07:36:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229707AbhBAMOI (ORCPT
+        with ESMTP id S231187AbhBAMgs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Feb 2021 07:14:08 -0500
-Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7FA4C0613ED
-        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Feb 2021 04:13:27 -0800 (PST)
-Received: by mail-pg1-x52a.google.com with SMTP id z21so11950007pgj.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Feb 2021 04:13:27 -0800 (PST)
+        Mon, 1 Feb 2021 07:36:48 -0500
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9892C061756
+        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Feb 2021 04:36:07 -0800 (PST)
+Received: by mail-pj1-x102b.google.com with SMTP id kx7so10227720pjb.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Feb 2021 04:36:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=PQKa0QbKtMZtWsNJ8J3oY3JodpMQf8nMPv8lfKSosC4=;
-        b=J47QIGJX20a07kPVr7Jg8VvUq0WIyppcjnP2ZYodc8HJYVgLkzSXzScnPznMicPfOF
-         OzhTG+Xy2QZHZFlLJFY4I9CH7CdvNF/A93wbScWxz6FB25bx5eHB25gwx5w+tPMZskpk
-         vy8UaCidgCrwRqNwAViM+BJOvT61sTaCBPZ1BH6nhj2n7SkfrWuQLzZgVEfwM8deXQyF
-         wh6nO56FTLtU84uxjZbojFCN7T7NPrBVDPbTerDzqgb7KPqDHYZlHE0T1OBV7eVkILSA
-         7ftjV8JAo+Y57GjeJn56ss3MuDITY8xwbINnJzDd/AhKWWFtDVJ1mgxm/Ybbmr+qKpiV
-         Tiiw==
+        bh=aubOLGUr38JbgOFBEsGBKw5otENSJyK21msYOAdprUo=;
+        b=mLci0Qi20948hhLLaInBmW62ubOIpF9fL7qKXMFfTyeFnpOlsbYsl11mhUdnLt5H41
+         opI/BhUu0NmskxVbtZN6B+URC4kcCa27Zj1dih5tG3nvufAV8byOvzr9bMZaSVO/8ezv
+         MHedQ83Pg3QXFGmk0YfZKs4t1XX8L4kK0CmVq5XOyoKDWd/7OdEpMpxAyaxBIL1bvVUC
+         drvC1O0q12vZSX4teqi6SPLFXV3SyF2Vu2GItdY802N3m/3ngEq9OtiF+/Mv72wt8Ykl
+         nVBAzG++C4cfwEiz26b51bpX0i7CuRDn9AfejGnFF4xo/u42GO/fE2vGNIIopSUo5l/p
+         rkrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=PQKa0QbKtMZtWsNJ8J3oY3JodpMQf8nMPv8lfKSosC4=;
-        b=XcnWCTp4/ZG4hmdvMIs4HOBMPGT0qpIdKLXrXo0EvMMzU5W7gV5z63pekGgLxieQYR
-         Ef9eCswF/JzYYBZwp0E7f9H8hQo9AcLjMF2YLehgGjETRdqz6le0Bslv2m2me4frJ0hU
-         wHj69NlapvSUlVqfdKnwwiboDZYnHz+Wo805X4Y/P0qsqsNA5/xoFT6oEdmsENSQsv8f
-         8X8WBUva0/liAlkkplMl0UJZ/JHktmsohKM7Vth1bjz1CmTluEQDmc58A122S7x4dZnT
-         kyL77kejjwsyMJ0feYUae2J/svMvpfKU7oGm/ggyy597tbX02iIfN/lXY6A5iQ+p/ZJG
-         AXVQ==
-X-Gm-Message-State: AOAM5308S1KhQNSCe89dSaT7bFdMsKtAYh8Z3GMMSnLOfpHaoeH20NsR
-        GV1Lyi7ZKAz1tKGkEcQkJNam
-X-Google-Smtp-Source: ABdhPJxvXtXtPNdQJBehzz4G4bByyyDTAZPIGymO4yZngY1PB57ITVWg6TzyGTycWLB0XmWgwwHCuQ==
-X-Received: by 2002:a62:7541:0:b029:1b9:c47e:7c14 with SMTP id q62-20020a6275410000b02901b9c47e7c14mr16865949pfc.30.1612181606880;
-        Mon, 01 Feb 2021 04:13:26 -0800 (PST)
+        bh=aubOLGUr38JbgOFBEsGBKw5otENSJyK21msYOAdprUo=;
+        b=SKDmbB7mwAnaqGHAJIwE25OMeBtkuxkf3BVk7JPGMex3l5gvrZxz1pQX2jfu3+VM76
+         hE5P+Q9xtyAFFdc1DVSgwCV9ReIXWg9jXlqVqVScXWLOlqjMWY2e6YgCgOzI8+L0QI7R
+         6zemEYJhc7lAwoAg36IOlMY+MbIUyS2otC/bxWJPhQ97p8fdLkk7XDRRpoKWCSZ8nhwo
+         clKuRKMA4iF/p6Ci55ANeLpPZwom7lOahZIZU0v0U5yznbj4P8VPMFulFRp7ul/QK9mS
+         uKdi0lKYaZMd1wKmegXVpPCBO+8ERPfkdmYscM2dBsH5jVxnCpAr+9jT5swrYsXUP7uv
+         Ovpw==
+X-Gm-Message-State: AOAM531HSPoxAvFvsCzrGJi4jszce98vPIie5XVEh/HC0qnTY6SPPIim
+        xSmuI5ZqcnVpYWK/0IJrHgzL
+X-Google-Smtp-Source: ABdhPJwEy3jT5OzO6ZIaXOaPhYxmEqRfzl1fLck4+1pJfPg329b18wKkZGACNJ7rHEa6I8+oFVtTvg==
+X-Received: by 2002:a17:902:a710:b029:dc:3817:e7c2 with SMTP id w16-20020a170902a710b02900dc3817e7c2mr17320672plq.0.1612182967365;
+        Mon, 01 Feb 2021 04:36:07 -0800 (PST)
 Received: from thinkpad ([103.77.37.179])
-        by smtp.gmail.com with ESMTPSA id c204sm17329883pfc.152.2021.02.01.04.13.24
+        by smtp.gmail.com with ESMTPSA id h1sm18590849pgj.59.2021.02.01.04.36.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Feb 2021 04:13:26 -0800 (PST)
-Date:   Mon, 1 Feb 2021 17:43:22 +0530
+        Mon, 01 Feb 2021 04:36:06 -0800 (PST)
+Date:   Mon, 1 Feb 2021 18:06:02 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Greg KH <gregkh@linuxfoundation.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        jhugo@codeaurora.org, bbhatt@codeaurora.org,
-        loic.poulain@linaro.org, netdev@vger.kernel.org
-Subject: Re: [RESEND PATCH v18 0/3] userspace MHI client interface driver
-Message-ID: <20210201121322.GC108653@thinkpad>
-References: <1609958656-15064-1-git-send-email-hemantk@codeaurora.org>
- <20210113152625.GB30246@work>
- <YBGDng3VhE1Yw6zt@kroah.com>
- <20210201105549.GB108653@thinkpad>
- <YBfi573Bdfxy0GBt@kroah.com>
+To:     linux@armlinux.org.uk, will@kernel.org
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2] ARM: kernel: Fix interrupted SMC calls
+Message-ID: <20210201123602.GD108653@thinkpad>
+References: <20210118181040.51238-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YBfi573Bdfxy0GBt@kroah.com>
+In-Reply-To: <20210118181040.51238-1-manivannan.sadhasivam@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 01, 2021 at 12:15:51PM +0100, Greg KH wrote:
-> On Mon, Feb 01, 2021 at 04:25:49PM +0530, Manivannan Sadhasivam wrote:
-> > Hi Greg,
-> > 
-> > On Wed, Jan 27, 2021 at 04:15:42PM +0100, Greg KH wrote:
-> > > On Wed, Jan 13, 2021 at 08:56:25PM +0530, Manivannan Sadhasivam wrote:
-> > > > Hi Greg,
-> > > > 
-> > > > On Wed, Jan 06, 2021 at 10:44:13AM -0800, Hemant Kumar wrote:
-> > > > > This patch series adds support for UCI driver. UCI driver enables userspace
-> > > > > clients to communicate to external MHI devices like modem. UCI driver probe
-> > > > > creates standard character device file nodes for userspace clients to
-> > > > > perform open, read, write, poll and release file operations. These file
-> > > > > operations call MHI core layer APIs to perform data transfer using MHI bus
-> > > > > to communicate with MHI device. 
-> > > > > 
-> > > > > This interface allows exposing modem control channel(s) such as QMI, MBIM,
-> > > > > or AT commands to userspace which can be used to configure the modem using
-> > > > > tools such as libqmi, ModemManager, minicom (for AT), etc over MHI. This is
-> > > > > required as there are no kernel APIs to access modem control path for device
-> > > > > configuration. Data path transporting the network payload (IP), however, is
-> > > > > routed to the Linux network via the mhi-net driver. Currently driver supports
-> > > > > QMI channel. libqmi is userspace MHI client which communicates to a QMI
-> > > > > service using QMI channel. Please refer to
-> > > > > https://www.freedesktop.org/wiki/Software/libqmi/ for additional information
-> > > > > on libqmi.
-> > > > > 
-> > > > > Patch is tested using arm64 and x86 based platform.
-> > > > > 
-> > > > 
-> > > > This series looks good to me and I'd like to merge it into mhi-next. You
-> > > > shared your reviews on the previous revisions, so I'd like to get your
-> > > > opinion first.
-> > > 
-> > > If you get the networking people to give you an ack on this, it's fine
-> > > with me.
-> > > 
-> > 
-> > As discussed in previous iteration, this series is not belonging to networking
-> > subsystem. The functionality provided by this series allows us to configure the
-> > modem over MHI bus and the rest of the networking stuff happens over the
-> > networking subsystem as usual.
-> 
-> Great, then it should be easy to get their acceptance :)
-> 
-> > This holds the same with USB and serial modems which we are having over decades
-> > in mainline.
-> 
-> I don't see the connection here, sorry.
-> 
+Hi,
 
-For instance USB_NET_CDC_MBIM driver creates the /dev/cdc-wdmX chardev node for
-configuring the modems which supports MBIM protocol over USB. Like that, this
-driver creates /dev/mhiX_MBIM chardev node for configuring the modem over MHI
-bus instead of USB. The question arised why we are creating a chardev node for
-each supported configuration (channels in the case of MHI) and why can't we use
-the existing /dev/cdc-wdmZ interfaces? The anwser is there is no standard
-subsystem for WWAN and all the drivers represent a chardev which gets used by
-the userspace tools such a Network manager for establishing connection.
+On Mon, Jan 18, 2021 at 11:40:40PM +0530, Manivannan Sadhasivam wrote:
+> On Qualcomm ARM32 platforms, the SMC call can return before it has
+> completed. If this occurs, the call can be restarted, but it requires
+> using the returned session ID value from the interrupted SMC call.
+> 
+> The ARM32 SMCC code already has the provision to add platform specific
+> quirks for things like this. So let's make use of it and add the
+> Qualcomm specific quirk (ARM_SMCCC_QUIRK_QCOM_A6) used by the QCOM_SCM
+> driver.
+> 
+> This change is similar to the below one added for ARM64 a while ago:
+> commit 82bcd087029f ("firmware: qcom: scm: Fix interrupted SCM calls")
+> 
+> Without this change, the Qualcomm ARM32 platforms like SDX55 will return
+> -EINVAL for SMC calls used for modem firmware loading and validation.
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-And /dev/cdc-wdmX is restricted to the USB CDC devices.
-
-Hope this clarifies!
+A gentle ping on this patch!
 
 Thanks,
 Mani
 
-> thanks,
+> ---
 > 
-> greg k-h
+> Changes in v2:
+> 
+> * Preserved callee saved registers and used the registers r4, r5 which
+>   are getting pushed onto the stack.
+> 
+>  arch/arm/kernel/asm-offsets.c |  3 +++
+>  arch/arm/kernel/smccc-call.S  | 11 ++++++++++-
+>  2 files changed, 13 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm/kernel/asm-offsets.c b/arch/arm/kernel/asm-offsets.c
+> index a1570c8bab25..2e2fa6fc2d4f 100644
+> --- a/arch/arm/kernel/asm-offsets.c
+> +++ b/arch/arm/kernel/asm-offsets.c
+> @@ -23,6 +23,7 @@
+>  #include <asm/vdso_datapage.h>
+>  #include <asm/hardware/cache-l2x0.h>
+>  #include <linux/kbuild.h>
+> +#include <linux/arm-smccc.h>
+>  #include "signal.h"
+>  
+>  /*
+> @@ -147,6 +148,8 @@ int main(void)
+>    DEFINE(SLEEP_SAVE_SP_PHYS,	offsetof(struct sleep_save_sp, save_ptr_stash_phys));
+>    DEFINE(SLEEP_SAVE_SP_VIRT,	offsetof(struct sleep_save_sp, save_ptr_stash));
+>  #endif
+> +  DEFINE(ARM_SMCCC_QUIRK_ID_OFFS,	offsetof(struct arm_smccc_quirk, id));
+> +  DEFINE(ARM_SMCCC_QUIRK_STATE_OFFS,	offsetof(struct arm_smccc_quirk, state));
+>    BLANK();
+>    DEFINE(DMA_BIDIRECTIONAL,	DMA_BIDIRECTIONAL);
+>    DEFINE(DMA_TO_DEVICE,		DMA_TO_DEVICE);
+> diff --git a/arch/arm/kernel/smccc-call.S b/arch/arm/kernel/smccc-call.S
+> index 00664c78faca..931df62a7831 100644
+> --- a/arch/arm/kernel/smccc-call.S
+> +++ b/arch/arm/kernel/smccc-call.S
+> @@ -3,7 +3,9 @@
+>   * Copyright (c) 2015, Linaro Limited
+>   */
+>  #include <linux/linkage.h>
+> +#include <linux/arm-smccc.h>
+>  
+> +#include <asm/asm-offsets.h>
+>  #include <asm/opcodes-sec.h>
+>  #include <asm/opcodes-virt.h>
+>  #include <asm/unwind.h>
+> @@ -27,7 +29,14 @@ UNWIND(	.fnstart)
+>  UNWIND(	.save	{r4-r7})
+>  	ldm	r12, {r4-r7}
+>  	\instr
+> -	pop	{r4-r7}
+> +	ldr	r4, [sp, #36]
+> +	cmp	r4, #0
+> +	beq	1f			// No quirk structure
+> +	ldr     r5, [r4, #ARM_SMCCC_QUIRK_ID_OFFS]
+> +	cmp     r5, #ARM_SMCCC_QUIRK_QCOM_A6
+> +	bne	1f			// No quirk present
+> +	str	r6, [r4, #ARM_SMCCC_QUIRK_STATE_OFFS]
+> +1:	pop	{r4-r7}
+>  	ldr	r12, [sp, #(4 * 4)]
+>  	stm	r12, {r0-r3}
+>  	bx	lr
+> -- 
+> 2.25.1
+> 
