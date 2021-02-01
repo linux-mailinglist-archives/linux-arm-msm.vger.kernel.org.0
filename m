@@ -2,56 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 46D78311152
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Feb 2021 20:38:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FB0A311262
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Feb 2021 21:26:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233438AbhBERyx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Feb 2021 12:54:53 -0500
-Received: from foss.arm.com ([217.140.110.172]:36964 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233281AbhBEP33 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Feb 2021 10:29:29 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CE76E31B;
-        Fri,  5 Feb 2021 09:11:01 -0800 (PST)
-Received: from e123427-lin.arm.com (unknown [10.57.37.213])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 081B43F718;
-        Fri,  5 Feb 2021 09:10:59 -0800 (PST)
-From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-To:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org
-Subject: Re: [PATCH v5 0/2] PCI: qcom: fix PCIe support on sm8250
-Date:   Fri,  5 Feb 2021 17:10:53 +0000
-Message-Id: <161254496801.21053.820582580317270864.b4-ty@arm.com>
-X-Mailer: git-send-email 2.26.1
-In-Reply-To: <20210117013114.441973-1-dmitry.baryshkov@linaro.org>
-References: <20210117013114.441973-1-dmitry.baryshkov@linaro.org>
+        id S233496AbhBEShV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Feb 2021 13:37:21 -0500
+Received: from [20.39.40.203] ([20.39.40.203]:54986 "EHLO optinix.in"
+        rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+        id S233003AbhBEPJb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 5 Feb 2021 10:09:31 -0500
+dkim-signature: v=1; a=rsa-sha256; d=digitalsol.in; s=dkim;
+        c=relaxed/relaxed; q=dns/txt; h=From:Reply-To:Subject:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding;
+        bh=wK2neTcOXNiSQ+RBxrnFed+mRrGUU/ndLGEgvo8IMCc=;
+        b=UQEHlnVg5XQbvsB12U1Ol3bhaQI9w8E6XPoWFxWLZmrTEAjZvoQaEbrphRRSyBGIIWdRriBN1NgjJnIHHuwrDk7Jiepk7hcecgKlubZ8Cbf+eyLm3How+vKdkYfuxbESucRjBUGhM3uNAIEl+djc5YuHgus55Al0uLGG/w84VCgbq4C5haAYakmS1vYlSgFchzN2F++luNM29v8DFhI75uaDxJSrLZjsc+U9sEzNpAaOCR9pw2OgdpmsaX
+        RpEWSooLH5k7s+lJH9RwsRzupCIBYaSMrEgafQL+30fpkHM9MFjkLmthx4Z1XqGeg54bjdS4mLhUgJrpa/zvXopT6v+g==
+Received: from User (Unknown [52.231.31.5])
+        by optinix.in with ESMTP
+        ; Mon, 1 Feb 2021 08:49:51 +0000
+Message-ID: <7494048F-E4B5-4167-8C98-9021CA321467@optinix.in>
+Reply-To: <ms.reem@yandex.com>
+From:   "Ms. Reem" <support@digitalsol.in>
+Subject: Re:read
+Date:   Mon, 1 Feb 2021 08:49:50 -0000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+        charset="Windows-1251"
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2600.0000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 17 Jan 2021 04:31:12 +0300, Dmitry Baryshkov wrote:
-> SM8250 platform requires additional clock to be enabled for PCIe to
-> function. In case it is disabled, PCIe access will result in IOMMU
-> timeouts. Add device tree binding and driver support for this clock.
-> 
-> Canges since v4:
->  - Remove QCOM_PCIE_2_7_0_MAX_CLOCKS define and has_sf_tbu variable.
-> 
-> [...]
+Hello,
 
-Applied to pci/qcom, thanks!
+My name is Ms. Reem Ebrahim Al-Hashimi, I am the "Minister of state
+and Petroleum" also "Minister of State for International Cooperation"
+in UAE. I write to you on behalf of my other "three (3) colleagues"
+who has approved me to solicit for your "partnership in claiming of
+{us$47=Million}" from a Financial Home in Cambodia on their behalf and
+for our "Mutual Benefits".
 
-[1/2] dt-bindings: pci: qcom: Document ddrss_sf_tbu clock for sm8250
-      https://git.kernel.org/lpieralisi/pci/c/a8069a4831
-[2/2] PCI: qcom: add support for ddrss_sf_tbu clock
-      https://git.kernel.org/lpieralisi/pci/c/f5d48a3328
+The Fund {us$47=Million} is our share from the (over-invoiced) Oil/Gas
+deal with Cambodian/Vietnam Government within 2013/2014, however, we
+don't want our government to know about the fund. If this proposal
+interests you, let me know, by sending me an email and I will send to
+you detailed information on how this business would be successfully
+transacted. Be informed that nobody knows about the secret of this
+fund except us, and we know how to carry out the entire transaction.
+So I am compelled to ask, that you will stand on our behalf and
+receive this fund into any account that is solely controlled by you.
 
-Thanks,
-Lorenzo
+We will compensate you with 15% of the total amount involved as
+gratification for being our partner in this transaction. Reply to:
+ms.reem@yandex.com
+
+Regards,
+Ms. Reem.
+
