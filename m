@@ -2,94 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DB0930C74D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Feb 2021 18:17:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B8C030C84D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Feb 2021 18:49:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235887AbhBBRQm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Feb 2021 12:16:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34684 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236860AbhBBRO3 (ORCPT
+        id S237846AbhBBRry (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Feb 2021 12:47:54 -0500
+Received: from mail-ot1-f45.google.com ([209.85.210.45]:45119 "EHLO
+        mail-ot1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237849AbhBBRpm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Feb 2021 12:14:29 -0500
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1C5BC06178A
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Feb 2021 09:13:49 -0800 (PST)
-Received: by mail-pl1-x62c.google.com with SMTP id b8so12833769plh.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Feb 2021 09:13:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=R9+VZ08mb33ZsTxVzQHNgGkTJo5Su5clNDxSbYpH3ag=;
-        b=diRSFPRygD49Poc/JZ4AusskfpBz3SaZRrJbDOY2fzcR5LXqQZkKd93tiH5mFnVm+c
-         l1os581Ds05eO63iyR7OnzGQMv2TCaYRXhmgGXRHMgUlySvwd30gJYp/5SmK4zxMQ/r3
-         vIwgooy/K8jXDGjVec6xdrGb/eVPIVdbTEm8A=
+        Tue, 2 Feb 2021 12:45:42 -0500
+Received: by mail-ot1-f45.google.com with SMTP id n42so20625703ota.12;
+        Tue, 02 Feb 2021 09:45:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=R9+VZ08mb33ZsTxVzQHNgGkTJo5Su5clNDxSbYpH3ag=;
-        b=KDa27hYdAeZqxlPpxLDpiS7tz1dY2LJkczpXrP3TaC5GW19HNZ6q/PqbF1cZjMcPiK
-         a4iUBRKMECejpzYVWRdXSta9njrHEF/B3EE383SMoPkKTqNrSH91nGd9aARBCPFA8hi8
-         tM6dtQ0YDwNfNC7rwGjW4g1IcqOyC8aXnfp8CILM+GGqy+AMZa/PzDfi83CVGmwTdWI6
-         7oPtEGELjexZXzcZXe7fcd5pn2HYIsuAxwiT4B4BU4Rm6QVfMQ+cM3QFRijSbe7siGH+
-         InQ8npDSAM8m9py+AsxiOe1RMwxe2FfZlDjnugVxHWL56DisoYrFvnvLNtTmt69BS8Lq
-         IdPg==
-X-Gm-Message-State: AOAM530B7VUVwj69tqXk/2SF4nW5whYgkXdcvI32AwkU1Pi7S12GkepV
-        W+1chivTU7Nh7UiPb7Vxsxjqaw==
-X-Google-Smtp-Source: ABdhPJxEYEQvyqydvkJ+XYVfnYzEhjQ5pqGLkN0GNmAahlnaTN7GjhaapXRizG0V3QW8Ky6mrCbAVQ==
-X-Received: by 2002:a17:902:d4d0:b029:df:d246:ca81 with SMTP id o16-20020a170902d4d0b02900dfd246ca81mr23826450plg.58.1612286029370;
-        Tue, 02 Feb 2021 09:13:49 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:201:3571:bd6e:ee19:b59f])
-        by smtp.gmail.com with ESMTPSA id c17sm21839493pfi.88.2021.02.02.09.13.48
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=dXcV2lusAKjpXaSjnWl/fIkigGZVjdMH0wGYu3s5F9U=;
+        b=rEWf50QU9nJKa9FiBZqL558aMY84huNuzE7Xo4Mh1cOQi6tKdzXwPOuBF/gVNBsTzu
+         Fv6y7eKK93cJ6KQe7xzgLP3sIbBWZXifO5xHFtSiO0hIRLkZY32bU5244isZdzQWLHJn
+         GoqIWzfJBSjY4do1ryn05Xj+oLK9wpIYiU6lFDXUZHCEEcPx3G9uQBEaONlgU1UNCG9Q
+         ZmH6XNrE2ptnpihGu8UZMpBsmoOiAOd0UTyn6lWmRuqHSou3jGNgnU5XTTkWCm7eZdk0
+         2FODmQ3MWgq/Slhqk3jNEBpmwf1SKWqOSIjB+ZxoB8z5U/Tb6e8+IZbcnNdM58bku7i3
+         St/A==
+X-Gm-Message-State: AOAM531I5qDEF8RrqSpSpuyrQH6ZlqFKFap8qtgEktvnIzvYDqSbFH3E
+        rU22CIVvuM4Jholl0+MhPg==
+X-Google-Smtp-Source: ABdhPJwFA1zAuUMqn+6HziXpCsNLVDtNJm8XRkxO4ss2xfBlEqm8gKWEdsb6buTK11ZNUr94TWTkaQ==
+X-Received: by 2002:a9d:6c9a:: with SMTP id c26mr15987302otr.96.1612287900437;
+        Tue, 02 Feb 2021 09:45:00 -0800 (PST)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id a71sm4919072oob.48.2021.02.02.09.44.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Feb 2021 09:13:48 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20210202062727.22469-1-srivasam@codeaurora.org>
-References: <20210202062727.22469-1-srivasam@codeaurora.org>
-Subject: Re: [PATCH] ASoC: qcom: Fix typo error in HDMI regmap config callbacks
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        agross@kernel.org, alsa-devel@alsa-project.org,
-        bgoswami@codeaurora.org, bjorn.andersson@linaro.org,
-        broonie@kernel.org, devicetree@vger.kernel.org,
-        lgirdwood@gmail.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, perex@perex.cz, plai@codeaurora.org,
-        robh+dt@kernel.org, rohitkr@codeaurora.org,
-        srinivas.kandagatla@linaro.org, tiwai@suse.com
-Date:   Tue, 02 Feb 2021 09:13:47 -0800
-Message-ID: <161228602729.76967.7642340787963440028@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+        Tue, 02 Feb 2021 09:44:59 -0800 (PST)
+Received: (nullmailer pid 3887348 invoked by uid 1000);
+        Tue, 02 Feb 2021 17:44:55 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc:     Sascha Hauer <s.hauer@pengutronix.de>,
+        linux-kernel@vger.kernel.org,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Jaehoon Chung <jh80.chung@samsung.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Andy Gross <agross@kernel.org>,
+        Jesper Nilsson <jesper.nilsson@axis.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        linux-amlogic@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        Lucas Stach <l.stach@pengutronix.de>,
+        linux-samsung-soc@vger.kernel.org,
+        Kevin Hilman <khilman@baylibre.com>,
+        devicetree@vger.kernel.org,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        linux-arm-kernel@axis.com, Richard Zhu <hongxing.zhu@nxp.com>,
+        linux-arm-msm@vger.kernel.org,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-pci@vger.kernel.org, Jerome Brunet <jbrunet@baylibre.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        linux-omap@vger.kernel.org, Jingoo Han <jingoohan1@gmail.com>,
+        linux-tegra@vger.kernel.org, Jonathan Chocron <jonnyc@amazon.com>,
+        Zhou Wang <wangzhou1@hisilicon.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>
+In-Reply-To: <706e684f571e142362d7be74eb1dcee2c8558052.1612271903.git.mchehab+huawei@kernel.org>
+References: <cover.1612271903.git.mchehab+huawei@kernel.org> <706e684f571e142362d7be74eb1dcee2c8558052.1612271903.git.mchehab+huawei@kernel.org>
+Subject: Re: [PATCH 01/13] doc: bindings: pci: designware-pcie.txt: convert it to yaml
+Date:   Tue, 02 Feb 2021 11:44:54 -0600
+Message-Id: <1612287895.001149.3887347.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Srinivasa Rao Mandadapu (2021-02-01 22:27:27)
-> Had a typo in lpass platform driver that resulted in crash
-> during suspend/resume with an HDMI dongle connected.
->=20
-> The regmap read/write/volatile regesters validation callbacks in lpass-cpu
-> were using MI2S rdma_channels count instead of hdmi_rdma_channels.
->=20
-> This typo error causing to read registers from the regmap beyond the leng=
-th
-> of the mapping created by ioremap().
->=20
-> This fix avoids the need for reducing number hdmi_rdma_channels,
-> which is done in
-> commit 7dfe20ee92f6 ("ASoC: qcom: Fix number of HDMI RDMA channels on sc7=
-180").
-> So reverting the same.
->=20
-> Fixes: 7cb37b7bd0d3c ("ASoC: qcom: Add support for lpass hdmi driver")
->=20
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+On Tue, 02 Feb 2021 14:29:46 +0100, Mauro Carvalho Chehab wrote:
+> Convert the file into a DT schema.
+> 
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 > ---
+>  .../bindings/pci/amlogic,meson-pcie.txt       |   4 +-
+>  .../bindings/pci/axis,artpec6-pcie.txt        |   2 +-
+>  .../bindings/pci/designware-pcie.txt          |  77 ----------
+>  .../bindings/pci/fsl,imx6q-pcie.txt           |   2 +-
+>  .../bindings/pci/hisilicon-histb-pcie.txt     |   2 +-
+>  .../bindings/pci/hisilicon-pcie.txt           |   2 +-
+>  .../devicetree/bindings/pci/kirin-pcie.txt    |   2 +-
+>  .../bindings/pci/layerscape-pci.txt           |   2 +-
+>  .../bindings/pci/nvidia,tegra194-pcie.txt     |   4 +-
+>  .../devicetree/bindings/pci/pci-armada8k.txt  |   2 +-
+>  .../devicetree/bindings/pci/pci-keystone.txt  |  10 +-
+>  .../devicetree/bindings/pci/pcie-al.txt       |   2 +-
+>  .../devicetree/bindings/pci/qcom,pcie.txt     |  14 +-
+>  .../bindings/pci/samsung,exynos-pcie.yaml     |   2 +-
+>  .../devicetree/bindings/pci/snps,pcie.yaml    | 139 ++++++++++++++++++
+>  .../pci/socionext,uniphier-pcie-ep.yaml       |   2 +-
+>  .../devicetree/bindings/pci/ti-pci.txt        |   4 +-
+>  .../devicetree/bindings/pci/uniphier-pcie.txt |   2 +-
+>  MAINTAINERS                                   |   2 +-
+>  19 files changed, 169 insertions(+), 107 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/pci/designware-pcie.txt
+>  create mode 100644 Documentation/devicetree/bindings/pci/snps,pcie.yaml
+> 
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Tested-by: Stephen Boyd <swboyd@chromium.org>
+My bot found errors running 'make dt_binding_check' on your patch:
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pci/snps,pcie.yaml: properties:snps,enable-cdm-check: 'oneOf' conditional failed, one must be fixed:
+	'type' is a required property
+	Additional properties are not allowed ('$ref' was unexpected)
+	/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pci/snps,pcie.yaml: properties:snps,enable-cdm-check: 'oneOf' conditional failed, one must be fixed:
+		'enum' is a required property
+		'const' is a required property
+	'/schemas/types.yaml#definitions/flag' does not match 'types.yaml#/definitions/'
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pci/snps,pcie.yaml: ignoring, error in schema: properties: snps,enable-cdm-check
+warning: no schema found in file: ./Documentation/devicetree/bindings/pci/snps,pcie.yaml
+
+See https://patchwork.ozlabs.org/patch/1434686
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
