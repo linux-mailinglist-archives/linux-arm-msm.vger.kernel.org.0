@@ -2,109 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5051D30CF79
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Feb 2021 23:58:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 94A9530CF93
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Feb 2021 00:04:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235852AbhBBW44 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Feb 2021 17:56:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52328 "EHLO
+        id S235152AbhBBXC6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Feb 2021 18:02:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235844AbhBBW4z (ORCPT
+        with ESMTP id S236097AbhBBXCw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Feb 2021 17:56:55 -0500
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53D5AC06174A
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Feb 2021 14:56:15 -0800 (PST)
-Received: by mail-oi1-x229.google.com with SMTP id x71so24634554oia.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Feb 2021 14:56:15 -0800 (PST)
+        Tue, 2 Feb 2021 18:02:52 -0500
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF644C061786
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Feb 2021 15:02:11 -0800 (PST)
+Received: by mail-ot1-x331.google.com with SMTP id f6so21530182ots.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Feb 2021 15:02:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=Dm32qGeITy/wXwfoci85QkTYUB156GzAa0S0XhSZkKM=;
-        b=r/jvhvEyOyCWAh1FptsuynQV5JI8870kjAmNMkfZfSB2H+ihLrbWp1zBV1ous6TZXr
-         u/LsqWeOITp54W/EpB6jrpaOhOZ1lNUJBPl0NRKc5qKS7RRbCEqEwakggX3nMOYTNHx0
-         Zr5Ipb3NjnWWvD0EUr/c7TBmlw7yerWHZ7D/8JsT7J1nKPRzDFUwKDoWEGb68oKwY2Pk
-         m9wjk9hN3Z6hPSnfGNwfsJqWDYGC8eITmUFXTCEdw4Sf7i4kpei5QKO0FZTlEf8DWJO4
-         YPXSjJC9KgP308CYzeHFfx6znTrIWabkD/9e/jwYiy+SKHAaA/xOPes+zO4pjx9/zL0h
-         xB5g==
+        bh=XGGgE9xbLQzvIfmDO0cdQ0AC2QlXscqj6q7EJ+IMmFM=;
+        b=DT4ONh4pI/pF5jcB4d5SDi6QIrzKbnFB+yX6kaR5IVP+21bDSRorBa8DbuUSfq6u1U
+         20+RNjU+DSb2WWP7hR+HFRaK2q8Pr3EwfvF0lN7U7hxLF/arEIL/+TvlX0PNX5KZnHYo
+         LXgiAEc5XclfLALiJl/zP1f04hk8GYc6gnjgv1kqvgWOZR6nWkkyNggiPYrWuxVQra8f
+         b2C/D7dtgXFyLjhRLeGV7f92a4Oa9y34gSedLOwZz8vjrhfrMGJNMdsAIgdMm2KjI48q
+         iSFNBEsELlPpDfQK5lMRKH/UjxUq8JToeTV9Dwz0MvXWB0tW6JgzpUUu1hoEjfpCO0vS
+         hoNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=Dm32qGeITy/wXwfoci85QkTYUB156GzAa0S0XhSZkKM=;
-        b=dShi0amyayyAOucYXkXgDkSb8MpdvpWkMXlvP3kjHc0l2by+ZYIxRbSWiKqmLebW0v
-         9WUJHXHsYy466e6YWO1rZp+Vnekkol5PoR18Raqsl2irCyMSWtAkw7k4Ou1YMxil0EZf
-         OJ2yFhMfkPmK+GG38My2WE4zwwAw1dyj0N6B4QlpFBLJO2vA2JVuMqxySpj84UqVu4J8
-         eEejdHhL2VffGlLTTCtF/pb9RckGtklwZOpiNo+hDFw9J62VFcO7Gx0YAy4lyH4MlfMU
-         8VqRlHzOJy0GPHMoz/Rq0epqIUR03WmSkrLxmDGKl1FS1BAHTsYX12MGycZZ2wxbvQK/
-         68ww==
-X-Gm-Message-State: AOAM533GBufY7n/gWX6eJip90aW+cuepAInF7vo85Yfk80rdYOcIFj5B
-        AoMm7VvV4PNx5SQjBscJ41XXvA==
-X-Google-Smtp-Source: ABdhPJy3HieX1y6uSigaWYaXmpsZXAqkqYtUylVeJnOtvXiG/XVI6XNX9v2cD0qRMi/XIB7UpzUGDA==
-X-Received: by 2002:a05:6808:84:: with SMTP id s4mr88001oic.164.1612306574723;
-        Tue, 02 Feb 2021 14:56:14 -0800 (PST)
+        bh=XGGgE9xbLQzvIfmDO0cdQ0AC2QlXscqj6q7EJ+IMmFM=;
+        b=Aga81nc6n8tav+6l8Wjwqeqyan5rUiPK+DkiyLrMX0vFTv7Ke8aR12v7kwR1HG1OoM
+         XEQoyhxuxaS/AhLm6cYBhtxIeWP0OvD/YOkEmNmzpZ/SuZusXOHBJoFPjuCSPUimQ7h2
+         2Luuz0d4+JawucLTEBbl0XerOXd2wCSnIDICwd9pSnks5o0f/woHA4qbJ3ewNDt8NMPQ
+         WyZ/2mbTOpwFbTCaiDl3Fvq5XrWY+WTE1DnV6W3qYY+EneS+hxkdvTtWZ6POpHS4cYoZ
+         lXZNwP5Qr7vMGaGWc9163cz+8aQaPZoPyDsCbI7hHNtNPN4HQdXj6UzhjGOmihaVtrRw
+         cttw==
+X-Gm-Message-State: AOAM533+tBKRxNkvMv+ZYJ1BitmFR0QWiiLMILMgQ27ZESgKfAfzQzfA
+        yjYCdmNxRY4Y2ERAd/jCBuKk7g==
+X-Google-Smtp-Source: ABdhPJzCG++xaEY5rOt60SAJJi86UczJMGRaSnKu5WBUd5ezFl1KTI4M6w++OEHELGtK4wRZYzR3Zg==
+X-Received: by 2002:a05:6830:12c7:: with SMTP id a7mr22184otq.103.1612306931321;
+        Tue, 02 Feb 2021 15:02:11 -0800 (PST)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id l4sm59124oou.8.2021.02.02.14.56.13
+        by smtp.gmail.com with ESMTPSA id u25sm67993otg.40.2021.02.02.15.02.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Feb 2021 14:56:13 -0800 (PST)
-Date:   Tue, 2 Feb 2021 16:56:11 -0600
+        Tue, 02 Feb 2021 15:02:10 -0800 (PST)
+Date:   Tue, 2 Feb 2021 17:02:08 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Yassine Oudjana <y.oudjana@protonmail.com>
-Cc:     "agross@kernel.org" <agross@kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: pm8994: Add resin node to PON
-Message-ID: <YBnYi2eMl0xtMcfq@builder.lan>
-References: <8WhEzfSgoSe_f8OT9eH_6hLGTqY9k_Cy9ZLr84OJsFctROAlbUEz552XibQxt684Um8E5NS1_0qxIn3tRVSs0ui1mVUKhBFmUjJ_dannvrQ=@protonmail.com>
+To:     Serge Semin <Sergey.Semin@baikalelectronics.ru>
+Cc:     Felipe Balbi <balbi@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Serge Semin <fancer.lancer@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 09/10] usb: dwc3: qcom: Detect DWC3 DT-nodes with
+ "usb"-prefixed names
+Message-ID: <YBnZ8O+zI/dzrjDQ@builder.lan>
+References: <20201205155621.3045-1-Sergey.Semin@baikalelectronics.ru>
+ <20201205155621.3045-10-Sergey.Semin@baikalelectronics.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <8WhEzfSgoSe_f8OT9eH_6hLGTqY9k_Cy9ZLr84OJsFctROAlbUEz552XibQxt684Um8E5NS1_0qxIn3tRVSs0ui1mVUKhBFmUjJ_dannvrQ=@protonmail.com>
+In-Reply-To: <20201205155621.3045-10-Sergey.Semin@baikalelectronics.ru>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 29 Dec 06:47 CST 2020, Yassine Oudjana wrote:
+On Sat 05 Dec 09:56 CST 2020, Serge Semin wrote:
 
-> From: Yassine Oudjana <y.oudjana@protonmail.com>
-> Date: Sun, 27 Dec 2020 21:23:40 +0400
+> In accordance with the USB HCD/DRD schema all the USB controllers are
+> supposed to have DT-nodes named with prefix "^usb(@.*)?".  Since the
+> existing DT-nodes will be renamed in a subsequent patch let's first make
+> sure the DWC3 Qualcomm driver supports them and second falls back to the
+> deprecated naming so not to fail on the legacy DTS-files passed to the
+> newer kernels.
 > 
-> Add resin as a child node of PON.
-> 
-> Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
-> ---
->  arch/arm64/boot/dts/qcom/pm8994.dtsi | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/pm8994.dtsi b/arch/arm64/boot/dts/qcom/pm8994.dtsi
-> index 5ffdf37d8e31..334774a38602 100644
-> --- a/arch/arm64/boot/dts/qcom/pm8994.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pm8994.dtsi
-> @@ -58,6 +58,14 @@ pwrkey {
->  				linux,code = <KEY_POWER>;
->  			};
-> 
-> +			resin {
-> +				compatible = "qcom,pm8941-resin";
-> +				interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_BOTH>;
-> +				debounce = <15625>;
-> +				bias-pull-up;
-> +				linux,code = <KEY_VOLUMEDOWN>;
 
-Is resin always volume down?
-
-Also this node is already defined in apq8096-db820c.dtsi, so how about
-moving the common properties here, but leave it status = "disabled" and
-then in the device specific file make it status = okay?
+Felipe, will you merge this, so that I can merge the dts patch depending
+on this into the Qualcomm DT tree?
 
 Regards,
 Bjorn
 
-> +			};
-> +
->  		};
+> Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  drivers/usb/dwc3/dwc3-qcom.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 > 
->  		pm8994_temp: temp-alarm@2400 {
-> --
+> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> index c703d552bbcf..49ad8d507d37 100644
+> --- a/drivers/usb/dwc3/dwc3-qcom.c
+> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> @@ -630,7 +630,8 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
+>  	struct device		*dev = &pdev->dev;
+>  	int			ret;
+>  
+> -	dwc3_np = of_get_child_by_name(np, "dwc3");
+> +	dwc3_np = of_get_child_by_name(np, "usb") ?:
+> +		  of_get_child_by_name(np, "dwc3");
+>  	if (!dwc3_np) {
+>  		dev_err(dev, "failed to find dwc3 core child\n");
+>  		return -ENODEV;
+> -- 
 > 2.29.2
 > 
