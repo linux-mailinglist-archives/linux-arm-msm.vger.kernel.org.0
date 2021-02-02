@@ -2,92 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 81C1E30C23A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Feb 2021 15:45:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4073E30C255
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Feb 2021 15:49:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234679AbhBBOpK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Feb 2021 09:45:10 -0500
-Received: from relay08.th.seeweb.it ([5.144.164.169]:40329 "EHLO
-        relay08.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232802AbhBBOnF (ORCPT
+        id S234604AbhBBOre (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Feb 2021 09:47:34 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:50648 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232227AbhBBOqS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Feb 2021 09:43:05 -0500
-Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 2FABE3E9BF;
-        Tue,  2 Feb 2021 15:42:21 +0100 (CET)
-Subject: Re: [PATCH 1/2] regulator: qcom-labibb: avoid unbalanced IRQ enable
-To:     Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
-        mazziesaccount@gmail.com
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <0400d7471571144bfeba27e3a80a24eb17d81f4d.1612249657.git.matti.vaittinen@fi.rohmeurope.com>
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Message-ID: <67c5886a-8cfd-5c1f-0bd1-8a6f259f03fb@somainline.org>
-Date:   Tue, 2 Feb 2021 15:42:20 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.0
-MIME-Version: 1.0
-In-Reply-To: <0400d7471571144bfeba27e3a80a24eb17d81f4d.1612249657.git.matti.vaittinen@fi.rohmeurope.com>
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        Tue, 2 Feb 2021 09:46:18 -0500
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 02 Feb 2021 06:45:34 -0800
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 02 Feb 2021 06:45:33 -0800
+X-QCInternal: smtphost
+Received: from gubbaven-linux.qualcomm.com ([10.206.64.32])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 02 Feb 2021 20:15:09 +0530
+Received: by gubbaven-linux.qualcomm.com (Postfix, from userid 2365015)
+        id EB59521DF9; Tue,  2 Feb 2021 20:15:08 +0530 (IST)
+From:   Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        rjliao@codeaurora.org, hbandi@codeaurora.org,
+        abhishekpandit@chromium.org,
+        Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+Subject: [PATCH v1] Bluetooth: hci_qca: check for SSR triggered flag while suspend
+Date:   Tue,  2 Feb 2021 20:15:07 +0530
+Message-Id: <1612277107-12163-1-git-send-email-gubbaven@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 02/02/21 08:36, Matti Vaittinen ha scritto:
-> If a spurious OCP IRQ occurs the isr schedules delayed work
-> but does not disable the IRQ. The delayed work assumes IRQ was
-> disabled in handler and attempts enabling it again causing
-> unbalanced enable.
-> 
+QCA_IBS_DISABLED flag will be set after memorydump started from
+controller.Currently qca_suspend() is waiting for SSR to complete
+based on flag QCA_IBS_DISABLED.Added to check for QCA_SSR_TRIGGERED
+flag too.
 
-You break the logic like this. Though, I also see the problem.
-It is critical for the recovery worker to be executed whenever we enter
-the OCP interrupt routine, as we get in there only something wrong
-happened.
+Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+---
+ drivers/bluetooth/hci_qca.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Please fix this patch.
-P.S.: You can't disable irq before qcom_labibb_check_ocp_status;
-       perhaps just after it, or in the if branch before goto?
-
-Thank you!
--- Angelo
-
-> Fixes: 390af53e04114 ("regulator: qcom-labibb: Implement short-circuit and over-current IRQs")
-> 
-> Signed-off-by: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-> ---
-> This fix is done purely based on code reading. No testing is done.
-> 
-> I don't have the HW (and even if I did I might have hard time producing
-> these errors) I have not tested this and I am unsure if my code-reading
-> is correct => I would _really_ appreciate second opinion and/or testing
-> 
->   drivers/regulator/qcom-labibb-regulator.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/regulator/qcom-labibb-regulator.c b/drivers/regulator/qcom-labibb-regulator.c
-> index dbb4511c3c6d..5ac4566f9b7f 100644
-> --- a/drivers/regulator/qcom-labibb-regulator.c
-> +++ b/drivers/regulator/qcom-labibb-regulator.c
-> @@ -275,7 +275,7 @@ static irqreturn_t qcom_labibb_ocp_isr(int irq, void *chip)
->   	ret = qcom_labibb_check_ocp_status(vreg);
->   	if (ret == 0) {
->   		vreg->ocp_irq_count = 0;
-> -		goto end;
-> +		return IRQ_NONE;
->   	}
->   	vreg->ocp_irq_count++;
->   
-> 
-> base-commit: 4288b4ccda966c2a49ec7c67100208378bdb34d2
-> 
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index 17a3859..ff2fb68 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -2111,7 +2111,8 @@ static int __maybe_unused qca_suspend(struct device *dev)
+ 	    !test_bit(QCA_SSR_TRIGGERED, &qca->flags))
+ 		return 0;
+ 
+-	if (test_bit(QCA_IBS_DISABLED, &qca->flags)) {
++	if (test_bit(QCA_IBS_DISABLED, &qca->flags) ||
++	    test_bit(QCA_SSR_TRIGGERED, &qca->flags)) {
+ 		wait_timeout = test_bit(QCA_SSR_TRIGGERED, &qca->flags) ?
+ 					IBS_DISABLE_SSR_TIMEOUT_MS :
+ 					FW_DOWNLOAD_TIMEOUT_MS;
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
 
