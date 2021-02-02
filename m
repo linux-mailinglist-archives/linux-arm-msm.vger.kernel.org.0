@@ -2,639 +2,392 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 74FC030BF87
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Feb 2021 14:34:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A284030C1D2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Feb 2021 15:35:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232491AbhBBNdC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Feb 2021 08:33:02 -0500
-Received: from mail.kernel.org ([198.145.29.99]:59628 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232369AbhBBNbg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Feb 2021 08:31:36 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 2310764F76;
-        Tue,  2 Feb 2021 13:30:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1612272602;
-        bh=nJFVkFVcxLt04mnBQIBfm4IXRi2ERW4Q1DqINzouepk=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=PPTE7k8kTk+XXzwTslQP0Ritd+T4aPUY8VCOztRnA7mqy4ZhQaU13lMM9J+EHkc0b
-         yHwbrU5KYbfnq7JwpONZhJCQD/Di55pgcdQKKTe1A1eH6OI/ZwrRwUhK3UBmPyXzDC
-         W4Xpyu5c2qmm8psfC/oPx0S9HEzxNZBhGCMmHnPs/RB7YKB0JX4AR4RwxUvZdTkn8i
-         tSD6s1rzTdzE75rWsXszeu9TLr8mzm4G9X5mH7xiIfRuVg7+2ZuLQ4T2h3CcQljtK/
-         4UBVJP+WXDZnacBS1vF+DGD8+gZ1M5qSrMEKnOzmksi1K9bu2AUlO4BAKSOTtNlWyw
-         T4oAWoVR/1HPQ==
-Received: by mail.kernel.org with local (Exim 4.94)
-        (envelope-from <mchehab@kernel.org>)
-        id 1l6vkl-0011yn-Db; Tue, 02 Feb 2021 14:29:59 +0100
-From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Jaehoon Chung <jh80.chung@samsung.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Jesper Nilsson <jesper.nilsson@axis.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Jonathan Chocron <jonnyc@amazon.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Richard Zhu <hongxing.zhu@nxp.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        Zhou Wang <wangzhou1@hisilicon.com>,
-        devicetree@vger.kernel.org, linux-amlogic@lists.infradead.org,
-        linux-arm-kernel@axis.com, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-omap@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org
-Subject: [PATCH 01/13] doc: bindings: pci: designware-pcie.txt: convert it to yaml
-Date:   Tue,  2 Feb 2021 14:29:46 +0100
-Message-Id: <706e684f571e142362d7be74eb1dcee2c8558052.1612271903.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <cover.1612271903.git.mchehab+huawei@kernel.org>
-References: <cover.1612271903.git.mchehab+huawei@kernel.org>
+        id S234593AbhBBOdm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Feb 2021 09:33:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56326 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234569AbhBBOdE (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Feb 2021 09:33:04 -0500
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E1D7C06178B
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Feb 2021 06:32:09 -0800 (PST)
+Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 8807E3EBA0;
+        Tue,  2 Feb 2021 15:32:04 +0100 (CET)
+Subject: Re: [PATCH 3/5] drm/msm/dsi_pll_10nm: Fix bad VCO rate calculation
+ and prescaler
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        marijn.suijten@somainline.org, martin.botka@somainline.org,
+        phone-devel@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>
+References: <20210109135112.147759-1-angelogioacchino.delregno@somainline.org>
+ <20210109135112.147759-4-angelogioacchino.delregno@somainline.org>
+ <CAF6AEGvDzdgDy7Znw6dQCV7Z=YxnF2_XsqkV+7BT+oY777TqHA@mail.gmail.com>
+ <8f8c7c37-f7b2-f763-19e1-d89e5c454ab4@somainline.org>
+ <CAF6AEGsQp4xHpH2brUdHmAX1ic2k88EFJRVVWDRxWXUqF9njfw@mail.gmail.com>
+ <CAF6AEGueo71HVBcLW2Mtu5GQ=9HgwL43WczUGLuTk2JWLoH=ew@mail.gmail.com>
+ <CAF6AEGspvnwRrXurmRvvRhr8dsFRc6fNnLsSo52Te0rHXtj4jA@mail.gmail.com>
+ <CAF6AEGsDL-qRyXWftTgzHGn=UTvz=rcyEUcJv+oGtVXCkYibug@mail.gmail.com>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Message-ID: <e338e4bd-0e8c-9199-caa1-93945ed2b94b@somainline.org>
+Date:   Tue, 2 Feb 2021 15:32:04 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Sender: Mauro Carvalho Chehab <mchehab@kernel.org>
-To:     unlisted-recipients:; (no To-header on input)
+In-Reply-To: <CAF6AEGsDL-qRyXWftTgzHGn=UTvz=rcyEUcJv+oGtVXCkYibug@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert the file into a DT schema.
+Il 01/02/21 18:31, Rob Clark ha scritto:
+> On Mon, Feb 1, 2021 at 9:18 AM Rob Clark <robdclark@gmail.com> wrote:
+>>
+>> On Mon, Feb 1, 2021 at 9:05 AM Rob Clark <robdclark@gmail.com> wrote:
+>>>
+>>> On Mon, Feb 1, 2021 at 7:47 AM Rob Clark <robdclark@gmail.com> wrote:
+>>>>
+>>>> On Mon, Feb 1, 2021 at 2:11 AM AngeloGioacchino Del Regno
+>>>> <angelogioacchino.delregno@somainline.org> wrote:
+>>>>>
+>>>>> Il 31/01/21 20:50, Rob Clark ha scritto:
+>>>>>> On Sat, Jan 9, 2021 at 5:51 AM AngeloGioacchino Del Regno
+>>>>>> <angelogioacchino.delregno@somainline.org> wrote:
+>>>>>>>
+>>>>>>> The VCO rate was being miscalculated due to a big overlook during
+>>>>>>> the process of porting this driver from downstream to upstream:
+>>>>>>> here we are really recalculating the rate of the VCO by reading
+>>>>>>> the appropriate registers and returning a real frequency, while
+>>>>>>> downstream the driver was doing something entirely different.
+>>>>>>>
+>>>>>>> In our case here, the recalculated rate was wrong, as it was then
+>>>>>>> given back to the set_rate function, which was erroneously doing
+>>>>>>> a division on the fractional value, based on the prescaler being
+>>>>>>> either enabled or disabled: this was actually producing a bug for
+>>>>>>> which the final VCO rate was being doubled, causing very obvious
+>>>>>>> issues when trying to drive a DSI panel because the actual divider
+>>>>>>> value was multiplied by two!
+>>>>>>>
+>>>>>>> To make things work properly, remove the multiplication of the
+>>>>>>> reference clock by two from function dsi_pll_calc_dec_frac and
+>>>>>>> account for the prescaler enablement in the vco_recalc_rate (if
+>>>>>>> the prescaler is enabled, then the hardware will divide the rate
+>>>>>>> by two).
+>>>>>>>
+>>>>>>> This will make the vco_recalc_rate function to pass the right
+>>>>>>> frequency to the (clock framework) set_rate function when called,
+>>>>>>> which will - in turn - program the right values in both the
+>>>>>>> DECIMAL_DIV_START_1 and the FRAC_DIV_START_{LOW/MID/HIGH}_1
+>>>>>>> registers, finally making the PLL to output the right clock.
+>>>>>>>
+>>>>>>> Also, while at it, remove the prescaler TODO by also adding the
+>>>>>>> possibility of disabling the prescaler on the PLL (it is in the
+>>>>>>> PLL_ANALOG_CONTROLS_ONE register).
+>>>>>>> Of course, both prescaler-ON and OFF cases were tested.
+>>>>>>
+>>>>>> This somehow breaks things on sc7180 (display gets stuck at first
+>>>>>> frame of splash screen).  (This is a setup w/ an ti-sn65dsi86 dsi->eDP
+>>>>>> bridge)
+>>>>>>
+>>>>>
+>>>>> First frame of the splash means that something is "a bit" wrong...
+>>>>> ...like the DSI clock is a little off.
+>>>>>
+>>>>> I don't have such hardware, otherwise I would've tried... but what you
+>>>>> describe is a bit strange.
+>>>>> Is there any other older qcom platform using this chip? Any other
+>>>>> non-qcom platform? Is the driver for the SN65DSI86 surely fine?
+>>>>> Anyway, as you know, I would never propose untested patches nor
+>>>>> partially working ones for any reason: I'm sorry that this happened.
+>>>>
+>>>> I don't think there is anything publicly avail w/ sc7180 (yet.. but very soon)
+>>>>
+>>>> The ti-sn65dsi86 bridge is used on a bunch of 845/850 devices (like
+>>>> the snapdragon windows laptops).. and I think also the older 835
+>>>> laptops.. ofc that doesn't mean that there isn't some bug, but I'd
+>>>> guess maybe more likely that there is some small difference in DSI vs
+>>>> older devices, or some cmd vs video mode difference.
+>>>>
+>>>> Anyways, seems like the screen did eventually recover so that gives me
+>>>> a bit of confidence to bisect this series, which I'll do a bit later
+>>>> today.
+>>>
+>>> fwiw, this series minus this patch, and everything looks ok.. let me
+>>> take a closer look at what changes with this patch
+>>
+>> Btw, it looks like upstream, config->disable_prescaler is always
+>> false.. I don't suppose you have anything WIP that changes this?
+> 
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
----
- .../bindings/pci/amlogic,meson-pcie.txt       |   4 +-
- .../bindings/pci/axis,artpec6-pcie.txt        |   2 +-
- .../bindings/pci/designware-pcie.txt          |  77 ----------
- .../bindings/pci/fsl,imx6q-pcie.txt           |   2 +-
- .../bindings/pci/hisilicon-histb-pcie.txt     |   2 +-
- .../bindings/pci/hisilicon-pcie.txt           |   2 +-
- .../devicetree/bindings/pci/kirin-pcie.txt    |   2 +-
- .../bindings/pci/layerscape-pci.txt           |   2 +-
- .../bindings/pci/nvidia,tegra194-pcie.txt     |   4 +-
- .../devicetree/bindings/pci/pci-armada8k.txt  |   2 +-
- .../devicetree/bindings/pci/pci-keystone.txt  |  10 +-
- .../devicetree/bindings/pci/pcie-al.txt       |   2 +-
- .../devicetree/bindings/pci/qcom,pcie.txt     |  14 +-
- .../bindings/pci/samsung,exynos-pcie.yaml     |   2 +-
- .../devicetree/bindings/pci/snps,pcie.yaml    | 139 ++++++++++++++++++
- .../pci/socionext,uniphier-pcie-ep.yaml       |   2 +-
- .../devicetree/bindings/pci/ti-pci.txt        |   4 +-
- .../devicetree/bindings/pci/uniphier-pcie.txt |   2 +-
- MAINTAINERS                                   |   2 +-
- 19 files changed, 169 insertions(+), 107 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/pci/designware-pcie.txt
- create mode 100644 Documentation/devicetree/bindings/pci/snps,pcie.yaml
+Regarding that one, I have tested the driver in both cases, with
+and without prescaler enabled (both worked fine), then I have decided
+to leave the prescaler option exactly as the previous default.
 
-diff --git a/Documentation/devicetree/bindings/pci/amlogic,meson-pcie.txt b/Documentation/devicetree/bindings/pci/amlogic,meson-pcie.txt
-index b6acbe694ffb..da9253d43550 100644
---- a/Documentation/devicetree/bindings/pci/amlogic,meson-pcie.txt
-+++ b/Documentation/devicetree/bindings/pci/amlogic,meson-pcie.txt
-@@ -3,7 +3,7 @@ Amlogic Meson AXG DWC PCIE SoC controller
- Amlogic Meson PCIe host controller is based on the Synopsys DesignWare PCI core.
- It shares common functions with the PCIe DesignWare core driver and
- inherits common properties defined in
--Documentation/devicetree/bindings/pci/designware-pcie.txt.
-+Documentation/devicetree/bindings/pci/snps,pcie.yaml.
- 
- Additional properties are described here:
- 
-@@ -33,7 +33,7 @@ Required properties:
- - phy-names: must contain "pcie"
- 
- - device_type:
--	should be "pci". As specified in designware-pcie.txt
-+	should be "pci". As specified in snps,pcie.yaml
- 
- 
- Example configuration:
-diff --git a/Documentation/devicetree/bindings/pci/axis,artpec6-pcie.txt b/Documentation/devicetree/bindings/pci/axis,artpec6-pcie.txt
-index 979dc7b6cfe8..84b53ae2c376 100644
---- a/Documentation/devicetree/bindings/pci/axis,artpec6-pcie.txt
-+++ b/Documentation/devicetree/bindings/pci/axis,artpec6-pcie.txt
-@@ -1,7 +1,7 @@
- * Axis ARTPEC-6 PCIe interface
- 
- This PCIe host controller is based on the Synopsys DesignWare PCIe IP
--and thus inherits all the common properties defined in designware-pcie.txt.
-+and thus inherits all the common properties defined in snps,pcie.yaml.
- 
- Required properties:
- - compatible: "axis,artpec6-pcie", "snps,dw-pcie" for ARTPEC-6 in RC mode;
-diff --git a/Documentation/devicetree/bindings/pci/designware-pcie.txt b/Documentation/devicetree/bindings/pci/designware-pcie.txt
-deleted file mode 100644
-index 78494c4050f7..000000000000
---- a/Documentation/devicetree/bindings/pci/designware-pcie.txt
-+++ /dev/null
-@@ -1,77 +0,0 @@
--* Synopsys DesignWare PCIe interface
--
--Required properties:
--- compatible:
--	"snps,dw-pcie" for RC mode;
--	"snps,dw-pcie-ep" for EP mode;
--- reg: For designware cores version < 4.80 contains the configuration
--       address space. For designware core version >= 4.80, contains
--       the configuration and ATU address space
--- reg-names: Must be "config" for the PCIe configuration space and "atu" for
--	     the ATU address space.
--    (The old way of getting the configuration address space from "ranges"
--    is deprecated and should be avoided.)
--RC mode:
--- #address-cells: set to <3>
--- #size-cells: set to <2>
--- device_type: set to "pci"
--- ranges: ranges for the PCI memory and I/O regions
--- #interrupt-cells: set to <1>
--- interrupt-map-mask and interrupt-map: standard PCI
--	properties to define the mapping of the PCIe interface to interrupt
--	numbers.
--EP mode:
--- num-ib-windows: number of inbound address translation windows
--- num-ob-windows: number of outbound address translation windows
--
--Optional properties:
--- num-lanes: number of lanes to use (this property should be specified unless
--  the link is brought already up in BIOS)
--- reset-gpio: GPIO pin number of power good signal
--- clocks: Must contain an entry for each entry in clock-names.
--	See ../clocks/clock-bindings.txt for details.
--- clock-names: Must include the following entries:
--	- "pcie"
--	- "pcie_bus"
--- snps,enable-cdm-check: This is a boolean property and if present enables
--   automatic checking of CDM (Configuration Dependent Module) registers
--   for data corruption. CDM registers include standard PCIe configuration
--   space registers, Port Logic registers, DMA and iATU (internal Address
--   Translation Unit) registers.
--RC mode:
--- num-viewport: number of view ports configured in hardware. If a platform
--  does not specify it, the driver assumes 2.
--- bus-range: PCI bus numbers covered (it is recommended for new devicetrees
--  to specify this property, to keep backwards compatibility a range of
--  0x00-0xff is assumed if not present)
--
--EP mode:
--- max-functions: maximum number of functions that can be configured
--
--Example configuration:
--
--	pcie: pcie@dfc00000 {
--		compatible = "snps,dw-pcie";
--		reg = <0xdfc00000 0x0001000>, /* IP registers */
--		      <0xd0000000 0x0002000>; /* Configuration space */
--		reg-names = "dbi", "config";
--		#address-cells = <3>;
--		#size-cells = <2>;
--		device_type = "pci";
--		ranges = <0x81000000 0 0x00000000 0xde000000 0 0x00010000
--			  0x82000000 0 0xd0400000 0xd0400000 0 0x0d000000>;
--		interrupts = <25>, <24>;
--		#interrupt-cells = <1>;
--		num-lanes = <1>;
--	};
--or
--	pcie: pcie@dfc00000 {
--		compatible = "snps,dw-pcie-ep";
--		reg = <0xdfc00000 0x0001000>, /* IP registers 1 */
--		      <0xdfc01000 0x0001000>, /* IP registers 2 */
--		      <0xd0000000 0x2000000>; /* Configuration space */
--		reg-names = "dbi", "dbi2", "addr_space";
--		num-ib-windows = <6>;
--		num-ob-windows = <2>;
--		num-lanes = <1>;
--	};
-diff --git a/Documentation/devicetree/bindings/pci/fsl,imx6q-pcie.txt b/Documentation/devicetree/bindings/pci/fsl,imx6q-pcie.txt
-index de4b2baf91e8..9470b279e3e4 100644
---- a/Documentation/devicetree/bindings/pci/fsl,imx6q-pcie.txt
-+++ b/Documentation/devicetree/bindings/pci/fsl,imx6q-pcie.txt
-@@ -1,7 +1,7 @@
- * Freescale i.MX6 PCIe interface
- 
- This PCIe host controller is based on the Synopsys DesignWare PCIe IP
--and thus inherits all the common properties defined in designware-pcie.txt.
-+and thus inherits all the common properties defined in snps,pcie.yaml.
- 
- Required properties:
- - compatible:
-diff --git a/Documentation/devicetree/bindings/pci/hisilicon-histb-pcie.txt b/Documentation/devicetree/bindings/pci/hisilicon-histb-pcie.txt
-index 760b4d740616..2f62119d97b9 100644
---- a/Documentation/devicetree/bindings/pci/hisilicon-histb-pcie.txt
-+++ b/Documentation/devicetree/bindings/pci/hisilicon-histb-pcie.txt
-@@ -3,7 +3,7 @@ HiSilicon STB PCIe host bridge DT description
- The HiSilicon STB PCIe host controller is based on the DesignWare PCIe core.
- It shares common functions with the DesignWare PCIe core driver and inherits
- common properties defined in
--Documentation/devicetree/bindings/pci/designware-pcie.txt.
-+Documentation/devicetree/bindings/pci/snps,pcie.yaml.
- 
- Additional properties are described here:
- 
-diff --git a/Documentation/devicetree/bindings/pci/hisilicon-pcie.txt b/Documentation/devicetree/bindings/pci/hisilicon-pcie.txt
-index d6796ef54ea1..4d243bfb9709 100644
---- a/Documentation/devicetree/bindings/pci/hisilicon-pcie.txt
-+++ b/Documentation/devicetree/bindings/pci/hisilicon-pcie.txt
-@@ -3,7 +3,7 @@ HiSilicon Hip05 and Hip06 PCIe host bridge DT description
- HiSilicon PCIe host controller is based on the Synopsys DesignWare PCI core.
- It shares common functions with the PCIe DesignWare core driver and inherits
- common properties defined in
--Documentation/devicetree/bindings/pci/designware-pcie.txt.
-+Documentation/devicetree/bindings/pci/snps,pcie.yaml.
- 
- Additional properties are described here:
- 
-diff --git a/Documentation/devicetree/bindings/pci/kirin-pcie.txt b/Documentation/devicetree/bindings/pci/kirin-pcie.txt
-index 6bbe43818ad5..a38f8e38a67b 100644
---- a/Documentation/devicetree/bindings/pci/kirin-pcie.txt
-+++ b/Documentation/devicetree/bindings/pci/kirin-pcie.txt
-@@ -3,7 +3,7 @@ HiSilicon Kirin SoCs PCIe host DT description
- Kirin PCIe host controller is based on the Synopsys DesignWare PCI core.
- It shares common functions with the PCIe DesignWare core driver and
- inherits common properties defined in
--Documentation/devicetree/bindings/pci/designware-pcie.txt.
-+Documentation/devicetree/bindings/pci/snps,pcie.yaml.
- 
- Additional properties are described here:
- 
-diff --git a/Documentation/devicetree/bindings/pci/layerscape-pci.txt b/Documentation/devicetree/bindings/pci/layerscape-pci.txt
-index daa99f7d4c3f..8070adfc1746 100644
---- a/Documentation/devicetree/bindings/pci/layerscape-pci.txt
-+++ b/Documentation/devicetree/bindings/pci/layerscape-pci.txt
-@@ -1,7 +1,7 @@
- Freescale Layerscape PCIe controller
- 
- This PCIe host controller is based on the Synopsys DesignWare PCIe IP
--and thus inherits all the common properties defined in designware-pcie.txt.
-+and thus inherits all the common properties defined in snps,pcie.yaml.
- 
- This controller derives its clocks from the Reset Configuration Word (RCW)
- which is used to describe the PLL settings at the time of chip-reset.
-diff --git a/Documentation/devicetree/bindings/pci/nvidia,tegra194-pcie.txt b/Documentation/devicetree/bindings/pci/nvidia,tegra194-pcie.txt
-index bd43f3c3ece4..4644d79e0e0c 100644
---- a/Documentation/devicetree/bindings/pci/nvidia,tegra194-pcie.txt
-+++ b/Documentation/devicetree/bindings/pci/nvidia,tegra194-pcie.txt
-@@ -1,7 +1,7 @@
- NVIDIA Tegra PCIe controller (Synopsys DesignWare Core based)
- 
- This PCIe controller is based on the Synopsis Designware PCIe IP
--and thus inherits all the common properties defined in designware-pcie.txt.
-+and thus inherits all the common properties defined in snps,pcie.yaml.
- Some of the controller instances are dual mode where in they can work either
- in root port mode or endpoint mode but one at a time.
- 
-@@ -22,7 +22,7 @@ Required properties:
-   property.
- - reg-names: Must include the following entries:
-   "appl": Controller's application logic registers
--  "config": As per the definition in designware-pcie.txt
-+  "config": As per the definition in snps,pcie.yaml
-   "atu_dma": iATU and DMA registers. This is where the iATU (internal Address
-              Translation Unit) registers of the PCIe core are made available
-              for SW access.
-diff --git a/Documentation/devicetree/bindings/pci/pci-armada8k.txt b/Documentation/devicetree/bindings/pci/pci-armada8k.txt
-index 7a813d0e6d63..4531b895e9ea 100644
---- a/Documentation/devicetree/bindings/pci/pci-armada8k.txt
-+++ b/Documentation/devicetree/bindings/pci/pci-armada8k.txt
-@@ -1,7 +1,7 @@
- * Marvell Armada 7K/8K PCIe interface
- 
- This PCIe host controller is based on the Synopsys DesignWare PCIe IP
--and thus inherits all the common properties defined in designware-pcie.txt.
-+and thus inherits all the common properties defined in snps,pcie.yaml.
- 
- Required properties:
- - compatible: "marvell,armada8k-pcie"
-diff --git a/Documentation/devicetree/bindings/pci/pci-keystone.txt b/Documentation/devicetree/bindings/pci/pci-keystone.txt
-index 47202a2938f2..ac271a0ca078 100644
---- a/Documentation/devicetree/bindings/pci/pci-keystone.txt
-+++ b/Documentation/devicetree/bindings/pci/pci-keystone.txt
-@@ -3,9 +3,9 @@ TI Keystone PCIe interface
- Keystone PCI host Controller is based on the Synopsys DesignWare PCI
- hardware version 3.65.  It shares common functions with the PCIe DesignWare
- core driver and inherits common properties defined in
--Documentation/devicetree/bindings/pci/designware-pcie.txt
-+Documentation/devicetree/bindings/pci/snps,pcie.yaml
- 
--Please refer to Documentation/devicetree/bindings/pci/designware-pcie.txt
-+Please refer to Documentation/devicetree/bindings/pci/snps,pcie.yaml
- for the details of DesignWare DT bindings.  Additional properties are
- described here as well as properties that are not applicable.
- 
-@@ -82,11 +82,11 @@ reg-names: "dbics" for the DesignWare PCIe registers, "app" for the
- 	   Address Translation Unit configuration registers and
- 	   "addr_space" used to map remote RC address space
- num-ib-windows: As specified in
--		Documentation/devicetree/bindings/pci/designware-pcie.txt
-+		Documentation/devicetree/bindings/pci/snps,pcie.yaml
- num-ob-windows: As specified in
--		Documentation/devicetree/bindings/pci/designware-pcie.txt
-+		Documentation/devicetree/bindings/pci/snps,pcie.yaml
- num-lanes: As specified in
--	   Documentation/devicetree/bindings/pci/designware-pcie.txt
-+	   Documentation/devicetree/bindings/pci/snps,pcie.yaml
- power-domains: As documented by the generic PM domain bindings in
- 	       Documentation/devicetree/bindings/power/power_domain.txt.
- ti,syscon-pcie-mode: phandle to the device control module required to configure
-diff --git a/Documentation/devicetree/bindings/pci/pcie-al.txt b/Documentation/devicetree/bindings/pci/pcie-al.txt
-index 557a5089229d..6e1e20e15ae9 100644
---- a/Documentation/devicetree/bindings/pci/pcie-al.txt
-+++ b/Documentation/devicetree/bindings/pci/pcie-al.txt
-@@ -2,7 +2,7 @@
- 
- Amazon's Annapurna Labs PCIe Host Controller is based on the Synopsys DesignWare
- PCI core. It inherits common properties defined in
--Documentation/devicetree/bindings/pci/designware-pcie.txt.
-+Documentation/devicetree/bindings/pci/snps,pcie.yaml.
- 
- Properties of the host controller node that differ from it are:
- 
-diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.txt b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-index 3b55310390a0..43c3086cf6ea 100644
---- a/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-+++ b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-@@ -33,22 +33,22 @@
- - device_type:
- 	Usage: required
- 	Value type: <string>
--	Definition: Should be "pci". As specified in designware-pcie.txt
-+	Definition: Should be "pci". As specified in snps,pcie.yaml
- 
- - #address-cells:
- 	Usage: required
- 	Value type: <u32>
--	Definition: Should be 3. As specified in designware-pcie.txt
-+	Definition: Should be 3. As specified in snps,pcie.yaml
- 
- - #size-cells:
- 	Usage: required
- 	Value type: <u32>
--	Definition: Should be 2. As specified in designware-pcie.txt
-+	Definition: Should be 2. As specified in snps,pcie.yaml
- 
- - ranges:
- 	Usage: required
- 	Value type: <prop-encoded-array>
--	Definition: As specified in designware-pcie.txt
-+	Definition: As specified in snps,pcie.yaml
- 
- - interrupts:
- 	Usage: required
-@@ -63,17 +63,17 @@
- - #interrupt-cells:
- 	Usage: required
- 	Value type: <u32>
--	Definition: Should be 1. As specified in designware-pcie.txt
-+	Definition: Should be 1. As specified in snps,pcie.yaml
- 
- - interrupt-map-mask:
- 	Usage: required
- 	Value type: <prop-encoded-array>
--	Definition: As specified in designware-pcie.txt
-+	Definition: As specified in snps,pcie.yaml
- 
- - interrupt-map:
- 	Usage: required
- 	Value type: <prop-encoded-array>
--	Definition: As specified in designware-pcie.txt
-+	Definition: As specified in snps,pcie.yaml
- 
- - clocks:
- 	Usage: required
-diff --git a/Documentation/devicetree/bindings/pci/samsung,exynos-pcie.yaml b/Documentation/devicetree/bindings/pci/samsung,exynos-pcie.yaml
-index 1810bf722350..8a4fe2d021ed 100644
---- a/Documentation/devicetree/bindings/pci/samsung,exynos-pcie.yaml
-+++ b/Documentation/devicetree/bindings/pci/samsung,exynos-pcie.yaml
-@@ -13,7 +13,7 @@ maintainers:
- description: |+
-   Exynos5433 SoC PCIe host controller is based on the Synopsys DesignWare
-   PCIe IP and thus inherits all the common properties defined in
--  designware-pcie.txt.
-+  snps,pcie.yaml.
- 
- allOf:
-   - $ref: /schemas/pci/pci-bus.yaml#
-diff --git a/Documentation/devicetree/bindings/pci/snps,pcie.yaml b/Documentation/devicetree/bindings/pci/snps,pcie.yaml
-new file mode 100644
-index 000000000000..eeb5dad6937d
---- /dev/null
-+++ b/Documentation/devicetree/bindings/pci/snps,pcie.yaml
-@@ -0,0 +1,139 @@
-+# SPDX-License-Identifier: GPL-2.0
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/pci/snps,pcie.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Synopsys DesignWare PCIe interface
-+
-+maintainers:
-+  - Jingoo Han <jingoohan1@gmail.com>
-+  - Gustavo Pimentel <gustavo.pimentel@synopsys.com>
-+
-+description: |
-+  Synopsys DesignWare PCIe host controller
-+
-+anyOf:
-+  - {}
-+  - items:
-+      contains:
-+        enum:
-+          - snps,dw-pcie
-+          - snps,dw-pcie-ep
-+
-+properties:
-+  compatible:
-+    description: |
-+      The compatible can be either:
-+      - snps,dw-pcie       # for RC mode
-+      - snps,dw-pcie-ep    # For EP mode
-+      or some other value, when there's a host-specific driver
-+
-+  reg:
-+    description: |
-+      Contains DBI and the configuration address space for all
-+      Designware versions.
-+      For Designware core version >= 4.80, should also contain the
-+      ATU address space.
-+    minItems: 2
-+    maxItems: 4
-+
-+  reset-gpio:
-+    description: GPIO pin number for the PERST# signal
-+    maxItems: 1
-+
-+  clocks:
-+    minItems: 2
-+    maxItems: 8
-+
-+  clock-names:
-+    items:
-+      contains:
-+        enum: [ pcie, pcie_bus ]
-+    minItems: 2
-+    maxItems: 8
-+
-+  "snps,enable-cdm-check":
-+    $ref: /schemas/types.yaml#definitions/flag
-+    description: |
-+      This is a boolean property and if present enables
-+      automatic checking of CDM (Configuration Dependent Module) registers
-+      for data corruption. CDM registers include standard PCIe configuration
-+      space registers, Port Logic registers, DMA and iATU (internal Address
-+      Translation Unit) registers.
-+
-+  # The following are optional properties for RC mode
-+
-+  num-viewport:
-+    description: |
-+      number of view ports configured in hardware. If a platform
-+      does not specify it, the driver assumes 2.
-+    deprecated: true
-+
-+  # The following are mandatory properties for EP Mode
-+
-+  num-ib-windows:
-+    description: number of inbound address translation windows
-+    maxItems: 1
-+    deprecated: true
-+
-+  num-ob-windows:
-+    description: number of outbound address translation windows
-+    maxItems: 1
-+    deprecated: true
-+
-+  # The following are optional properties for EP mode
-+
-+  max-functions:
-+    description: maximum number of functions that can be configured
-+
-+required:
-+  - reg
-+  - reg-names
-+
-+allOf:
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            const: snps,dw-pcie
-+    then:
-+      allOf:
-+        - $ref: /schemas/pci/pci-bus.yaml#
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            const: snps,dw-pcie-ep
-+    then:
-+      required:
-+        - compatible
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    pcie: pcie@dfc00000 {
-+      compatible = "snps,dw-pcie";
-+      reg = <0xdfc00000 0x0001000>, /* IP registers */
-+            <0xd0000000 0x0002000>; /* Configuration space */
-+      reg-names = "dbi", "config";
-+      #address-cells = <3>;
-+      #size-cells = <2>;
-+      device_type = "pci";
-+      ranges = <0x81000000 0 0x00000000 0xde000000 0 0x00010000>,
-+               <0x82000000 0 0xd0400000 0xd0400000 0 0x0d000000>;
-+      interrupts = <25>, <24>;
-+      #interrupt-cells = <1>;
-+      num-lanes = <1>;
-+    };
-+    pcie_ep: pcie_ep@dfd00000 {
-+      compatible = "snps,dw-pcie-ep";
-+      reg = <0xdfc00000 0x0001000>, /* IP registers 1 */
-+            <0xdfc01000 0x0001000>, /* IP registers 2 */
-+            <0xd0000000 0x2000000>; /* Configuration space */
-+      reg-names = "dbi", "dbi2", "addr_space";
-+      num-ib-windows = <6>;
-+      num-ob-windows = <2>;
-+      num-lanes = <1>;
-+    };
-diff --git a/Documentation/devicetree/bindings/pci/socionext,uniphier-pcie-ep.yaml b/Documentation/devicetree/bindings/pci/socionext,uniphier-pcie-ep.yaml
-index d6cf8a560ef0..9c8733d21de4 100644
---- a/Documentation/devicetree/bindings/pci/socionext,uniphier-pcie-ep.yaml
-+++ b/Documentation/devicetree/bindings/pci/socionext,uniphier-pcie-ep.yaml
-@@ -10,7 +10,7 @@ description: |
-   UniPhier PCIe endpoint controller is based on the Synopsys DesignWare
-   PCI core. It shares common features with the PCIe DesignWare core and
-   inherits common properties defined in
--  Documentation/devicetree/bindings/pci/designware-pcie.txt.
-+  Documentation/devicetree/bindings/pci/snps,pcie.yaml.
- 
- maintainers:
-   - Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-diff --git a/Documentation/devicetree/bindings/pci/ti-pci.txt b/Documentation/devicetree/bindings/pci/ti-pci.txt
-index d5cbfe6b0d89..dfebfdb9b819 100644
---- a/Documentation/devicetree/bindings/pci/ti-pci.txt
-+++ b/Documentation/devicetree/bindings/pci/ti-pci.txt
-@@ -12,7 +12,7 @@ PCIe DesignWare Controller
- 	       number of PHYs as specified in *phys* property.
-  - ti,hwmods : Name of the hwmod associated to the pcie, "pcie<X>",
- 	       where <X> is the instance number of the pcie from the HW spec.
-- - num-lanes as specified in ../designware-pcie.txt
-+ - num-lanes as specified in ../snps,pcie.yaml
-  - ti,syscon-lane-sel : phandle/offset pair. Phandle to the system control
- 			module and the register offset to specify lane
- 			selection.
-@@ -32,7 +32,7 @@ HOST MODE
-    device_type,
-    ranges,
-    interrupt-map-mask,
--   interrupt-map : as specified in ../designware-pcie.txt
-+   interrupt-map : as specified in ../snps,pcie.yaml
-  - ti,syscon-unaligned-access: phandle to the syscon DT node. The 1st argument
- 			       should contain the register offset within syscon
- 			       and the 2nd argument should contain the bit field
-diff --git a/Documentation/devicetree/bindings/pci/uniphier-pcie.txt b/Documentation/devicetree/bindings/pci/uniphier-pcie.txt
-index c4b7381733a0..17cfe504d800 100644
---- a/Documentation/devicetree/bindings/pci/uniphier-pcie.txt
-+++ b/Documentation/devicetree/bindings/pci/uniphier-pcie.txt
-@@ -6,7 +6,7 @@ on Socionext UniPhier SoCs.
- UniPhier PCIe host controller is based on the Synopsys DesignWare PCI core.
- It shares common functions with the PCIe DesignWare core driver and inherits
- common properties defined in
--Documentation/devicetree/bindings/pci/designware-pcie.txt.
-+Documentation/devicetree/bindings/pci/snps,pcie.yaml.
- 
- Required properties:
- - compatible: Should be "socionext,uniphier-pcie".
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 2dd0a662d931..0bcba0d4994c 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -13673,7 +13673,7 @@ M:	Jingoo Han <jingoohan1@gmail.com>
- M:	Gustavo Pimentel <gustavo.pimentel@synopsys.com>
- L:	linux-pci@vger.kernel.org
- S:	Maintained
--F:	Documentation/devicetree/bindings/pci/designware-pcie.txt
-+F:	Documentation/devicetree/bindings/pci/snps,pcie.yaml
- F:	drivers/pci/controller/dwc/*designware*
- 
- PCI DRIVER FOR TI DRA7XX/J721E
--- 
-2.29.2
+My plan about this was/still is:
+1. Wait until this one gets merged (gives me time to also look
+    at the other billion patches that I've sent);
+2. Add the prescaler option DT property and explain that it has
+    to be used only with "puny" displays (low resolution, low
+    clocks) as with "good ones", enabling the prescaler gives less
+    clock jitter (and some microamps more power consumption);
+3. Add the Spread Spectrum Clock (SSC) functionality with related
+    DT properties.
+
+Point 2 and 3 would go in the same series, unless someone does
+N.2 before I do... and N.3 requires a bit of extensive testing,
+which I have already partially started on the FxTec phone.
+
+> fwiw, this is the clk_summary diff with and without this patch:
+> 
+> ------------------
+> 270,282c270,282
+> <     dsi0_pll_out_div_clk              1        1        0
+> 887039941          0     0  50000         Y
+> <        dsi0_pll_post_out_div_clk       0        0        0
+> 221759985          0     0  50000         Y
+> <        dsi0_pll_bit_clk               2        2        0
+> 887039941          0     0  50000         Y
+> <           dsi0_pclk_mux               1        1        0
+> 887039941          0     0  50000         Y
+> <              dsi0_phy_pll_out_dsiclk       1        1        0
+> 147839991          0     0  50000         Y
+> <                 disp_cc_mdss_pclk0_clk_src       1        1        0
+>    147839991          0     0  50000         Y
+> <                    disp_cc_mdss_pclk0_clk       1        1        0
+>   147839991          0     0  50000         Y
+> <           dsi0_pll_by_2_bit_clk       0        0        0
+> 443519970          0     0  50000         Y
+> <           dsi0_phy_pll_out_byteclk       1        1        0
+> 110879992          0     0  50000         Y
+> <              disp_cc_mdss_byte0_clk_src       2        2        0
+> 110879992          0     0  50000         Y
+> <                 disp_cc_mdss_byte0_div_clk_src       1        1
+>    0    55439996          0     0  50000         Y
+> <                    disp_cc_mdss_byte0_intf_clk       1        1
+>    0    55439996          0     0  50000         Y
+> <                 disp_cc_mdss_byte0_clk       1        1        0
+> 110879992          0     0  50000         Y
+> ---
+>>      dsi0_pll_out_div_clk              1        1        0   887039978          0     0  50000         Y
+>>         dsi0_pll_post_out_div_clk       0        0        0   221759994          0     0  50000         Y
+>>         dsi0_pll_bit_clk               2        2        0   887039978          0     0  50000         Y
+>>            dsi0_pclk_mux               1        1        0   887039978          0     0  50000         Y
+>>               dsi0_phy_pll_out_dsiclk       1        1        0   147839997          0     0  50000         Y
+>>                  disp_cc_mdss_pclk0_clk_src       1        1        0   147839997          0     0  50000         Y
+>>                     disp_cc_mdss_pclk0_clk       1        1        0   147839997          0     0  50000         Y
+>>            dsi0_pll_by_2_bit_clk       0        0        0   443519989          0     0  50000         Y
+>>            dsi0_phy_pll_out_byteclk       1        1        0   110879997          0     0  50000         Y
+>>               disp_cc_mdss_byte0_clk_src       2        2        0   110879997          0     0  50000         Y
+>>                  disp_cc_mdss_byte0_div_clk_src       1        1        0    55439999          0     0  50000         Y
+>>                     disp_cc_mdss_byte0_intf_clk       1        1        0    55439999          0     0  50000         Y
+>>                  disp_cc_mdss_byte0_clk       1        1        0   110879997          0     0  50000         Y
+> ------------------
+> 
+> 
+
+This is almost exactly what I saw on my devices as well, you get a
+difference of "just some Hz" (which can be totally ignored), because
+of how the calculation is done now.
+
+Thing is, what you see as PIXEL and BYTE clocks *before* the change is
+Linux thinking that your DSI is at that frequency, while the PLL will
+output *half* the rate, which is exactly what the patch fixes.
+
+"Fun" story is: the Xperia XZ1 (8998) and XZ (8996) have got the same
+display... by lowering the DSI rate on the MSM8996 phone by half, I
+get the same *identical* issues as the 8998 one without this patch.
+The clocks all match between one and another, because.. it's.. the same
+display, after all.
+
+It is because of the aforementioned test that I have raised doubts about
+the TI chip driver (or anything else really).. but then, anything is
+possible.
+
+>>>
+>>>>> In any case, just to be perfectly transparent, while being here waiting
+>>>>> for review, this patch series got tested on more smartphones, even ones
+>>>>> that I don't personally own, with different displays.
+>>>>>
+>>>>> For your reference, here's a list (all MSM8998..):
+>>>>> - OnePlus 5               (1920x1080)
+>>>>> - F(x)Tec Pro 1           (2160x1080)
+>>>>> - Sony Xperia XZ1 Compact (1280x720)
+>>>>> - Sony Xperia XZ1         (1920x1080)
+>>>>> - Sony Xperia XZ Premium  (3840x2160)
+>>>>>
+>>>>
+>>>> Yeah, no worries, I wasn't trying to imply that the patch was untested.
+>>>>
+
+I know, of course!
+
+>>>> Out of curiosity, are any of those video mode panels?
+
+Yes and "also":
+The FxTec Pro1 has a video mode panel, for which I'm trying to upstream
+the driver...look here: https://lore.kernel.org/patchwork/patch/1365228/
+
+The Xperia XZ Premium has a Sharp LS055D1SX04 panel under NT35950, which
+can be configured as command or as video mode... I tried both modes, but
+there is some issue with the DPU1/DSI drivers and *DUAL DSI*, as cmd
+does work with some tearing, but video doesn't even start (downstream it
+works).
+
+So the only video mode panel that I could test is that BOE panel on the
+FxTec phone (single dsi), which works just great.
+
+>>>>
+>>>>>
+>>>>>> Also, something (I assume DSI related) that I was testing on
+>>>>>> msm-next-staging seems to have effected the colors on the panel (ie.
+>>>>>> they are more muted).. which seems to persist across reboots (ie. when
+>>>>>
+>>>>> So much "fun". This makes me think something about the PCC block doing
+>>>>> the wrong thing (getting misconfigured).
+>>>>>
+>>>>>> switching back to a good kernel), and interestingly if I reboot from a
+>>>>>> good kernel I see part of the login prompt (or whatever was previously
+>>>>>> on-screen) in the firmware ui screen !?!  (so maybe somehow triggered
+>>>>>> the display to think it is in PSR mode??)
+>>>>>>
+>>>>>
+>>>>>   From a fast read, the SN65DSI86 is on I2C.. giving it a wrong dsi clock
+>>>>> cannot produce (logically, at least) this, so I say that it is very
+>>>>> unlikely for this to be a consequence of the 10nm pll fixes...
+>>>>>
+>>>>
+>>>> Note that the bridge can also be programmed via dsi cmd mode packets,
+>>>> which I believe is the case on the 835 laptops (or at least one of
+>>>> them).. but all the things I have are using i2c as the control path.
+>>>>
+>>>>> ...unless the bootloader is not configuring the DSI rates, but that's
+>>>>> also veeeeery unlikely (it always does, or it always does not).
+>>>>
+>>>> I haven't looked at the bootloader display code, but booting back to
+>>>> an old/good kernel didn't change anything..  even powering off didn't.
+>>>> But the ghost image seemed to fade after some time, and by the next
+>>>> morning it was fine.  Which is strange. (But tbf, I'm more a gpu guy
+>>>> who works on display only when necessary.. ie. a gpu without a display
+>>>> isn't so much fun ;-))
+>>>>
+
+OpenCL all the way! lol :D
+
+On Qualcomm platforms, the first thing that I've ever done was to bring
+up displays on 8974 Sony platforms... (we're talking about years ago).
+
+I'm a lil more on the display side of things (but growing a beard while
+waiting between a frame and another due to no GPU isn't so much fun
+either!).
+
+>>>>>> Not sure if that is caused by these patches, but if I can figure out
+>>>>>> how to get the panel back to normal I can bisect.  I think for now
+>>>>>> I'll drop this series.  Possibly it could be a
+>>>>>> two-wrongs-makes-a-right situation that had things working before, but
+>>>>>> I think someone from qcom who knows the DSI IP should take a look.
+>>>>>>
+>>>>>
+>>>>> I would be happy if someone from Qualcomm takes a look: after all, there
+>>>>> is no documentation and they're the only ones that can verify this kind
+>>>>> of stuff. Please, Qualcomm.
+>>>>
+>>>> Hopefully someone can take a look.
+>>>>
+>>>>> Besides that, if there's anything I can help with to solve this riddle,
+>>>>> I'm here for you.
+>>>>
+>>>> Thanks, like I said I'll try applying the patches one by one and see
+>>>> if I can narrow down what made the panel go funny, and we can go from
+>>>> there
+>>>>
+>>>> BR,
+>>>> -R
+>>>>
+>>>>> Yours,
+>>>>> -- Angelo
+>>>>>
+>>>>>> BR,
+>>>>>> -R
+>>>>>>
+>>>>>>
+>>>>>>> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+>>>>>>> ---
+>>>>>>>    drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c | 22 +++++++++-------------
+>>>>>>>    1 file changed, 9 insertions(+), 13 deletions(-)
+>>>>>>>
+>>>>>>> diff --git a/drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c b/drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c
+>>>>>>> index 8b66e852eb36..5be562dfbf06 100644
+>>>>>>> --- a/drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c
+>>>>>>> +++ b/drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c
+>>>>>>> @@ -165,11 +165,7 @@ static void dsi_pll_calc_dec_frac(struct dsi_pll_10nm *pll)
+>>>>>>>
+>>>>>>>           pll_freq = pll->vco_current_rate;
+>>>>>>>
+>>>>>>> -       if (config->disable_prescaler)
+>>>>>>> -               divider = fref;
+>>>>>>> -       else
+>>>>>>> -               divider = fref * 2;
+>>>>>>> -
+>>>>>>> +       divider = fref;
+>>>>>>>           multiplier = 1 << config->frac_bits;
+>>>>>>>           dec_multiple = div_u64(pll_freq * multiplier, divider);
+>>>>>>>           dec = div_u64_rem(dec_multiple, multiplier, &frac);
+>>>>>>> @@ -266,9 +262,11 @@ static void dsi_pll_ssc_commit(struct dsi_pll_10nm *pll)
+>>>>>>>
+>>>>>>>    static void dsi_pll_config_hzindep_reg(struct dsi_pll_10nm *pll)
+>>>>>>>    {
+>>>>>>> +       struct dsi_pll_config *config = &pll->pll_configuration;
+>>>>>>>           void __iomem *base = pll->mmio;
+>>>>>>> +       u32 val = config->disable_prescaler ? 0x0 : 0x80;
+>>>>>>>
+>>>>>>> -       pll_write(base + REG_DSI_10nm_PHY_PLL_ANALOG_CONTROLS_ONE, 0x80);
+>>>>>>> +       pll_write(base + REG_DSI_10nm_PHY_PLL_ANALOG_CONTROLS_ONE, val);
+>>>>>>>           pll_write(base + REG_DSI_10nm_PHY_PLL_ANALOG_CONTROLS_TWO, 0x03);
+>>>>>>>           pll_write(base + REG_DSI_10nm_PHY_PLL_ANALOG_CONTROLS_THREE, 0x00);
+>>>>>>>           pll_write(base + REG_DSI_10nm_PHY_PLL_DSM_DIVIDER, 0x00);
+>>>>>>> @@ -499,17 +497,15 @@ static unsigned long dsi_pll_10nm_vco_recalc_rate(struct clk_hw *hw,
+>>>>>>>           frac |= ((pll_read(base + REG_DSI_10nm_PHY_PLL_FRAC_DIV_START_HIGH_1) &
+>>>>>>>                     0x3) << 16);
+>>>>>>>
+>>>>>>> -       /*
+>>>>>>> -        * TODO:
+>>>>>>> -        *      1. Assumes prescaler is disabled
+>>>>>>> -        */
+>>>>>>>           multiplier = 1 << config->frac_bits;
+>>>>>>> -       pll_freq = dec * (ref_clk * 2);
+>>>>>>> -       tmp64 = (ref_clk * 2 * frac);
+>>>>>>> +       pll_freq = dec * ref_clk;
+>>>>>>> +       tmp64 = ref_clk * frac;
+>>>>>>>           pll_freq += div_u64(tmp64, multiplier);
+>>>>>>> -
+>>>>>>>           vco_rate = pll_freq;
+>>>>>>>
+>>>>>>> +       if (config->disable_prescaler)
+>>>>>>> +               vco_rate = div_u64(vco_rate, 2);
+>>>>>>> +
+>>>>>>>           DBG("DSI PLL%d returning vco rate = %lu, dec = %x, frac = %x",
+>>>>>>>               pll_10nm->id, (unsigned long)vco_rate, dec, frac);
+>>>>>>>
+>>>>>>> --
+>>>>>>> 2.29.2
+>>>>>>>
+>>>>>
 
