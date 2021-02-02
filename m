@@ -2,151 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A916430CC48
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Feb 2021 20:51:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C8EEF30CD5A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Feb 2021 21:54:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240073AbhBBTuT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Feb 2021 14:50:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40106 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240138AbhBBTtL (ORCPT
+        id S232829AbhBBUxt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Feb 2021 15:53:49 -0500
+Received: from mail29.static.mailgun.info ([104.130.122.29]:10817 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S230002AbhBBUxr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Feb 2021 14:49:11 -0500
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C680C06178C
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Feb 2021 11:48:31 -0800 (PST)
-Received: by mail-oi1-x235.google.com with SMTP id w8so24083940oie.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Feb 2021 11:48:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ZSXnsXOh3hBwQ0FBMh5iVZ9JTSULSvhbn6nE2ip4xGU=;
-        b=ZUrCz+B1eGiuxlVYw+vA2x/efphepCu8o71osANOPPpf4+fFruvqtUjr4CEaJTPofL
-         Qr7/U7HE6MO6wYuDZcFbYFAYUbgwLwhA00TTDWsR3PMSyOBwgD0k6PQOc1Z1j7YzME+/
-         vXmE3O6flEaUv2HFMrjnMnowunrZfdOP1tynDGMCOOZsd0KZBQXtvELYQNAQpUJoWMYj
-         9WhjCKFI1TiwFuJC8YwppSM9T9xouL/jAyhb9dU709pvBMcIfwsXVIzYVBgkDePnBbk/
-         5lEysnoAz5Y+TnA59cZa+CFrcdYHFHo6YriuEzM8pcF9tI2+WgcTOI1EI+kCBY9VcDLA
-         Yhsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ZSXnsXOh3hBwQ0FBMh5iVZ9JTSULSvhbn6nE2ip4xGU=;
-        b=jBWa/V1TWGrI948IX6pyRnYBEaCewWxUH9yHMP6OCRjTl8H5idrhPfggf3MA42ZcU5
-         VMvcRpXmtG6YGAg0Aaaw9T33pJU7bORjP2vcw+rAFmWcH7jIGm43uLiMIGhrmtR7LVBO
-         H+bHhIZuJj+ykBW3xdjDroPXy1q6HFmEycttK0nIQSV4tBIjX938bMfBwyvbCsH54MBK
-         9oGO74amK/xHlGE/G7D4U7M2QABdqL2xN47TaoU2nsAY6GsYCfAqAwDl0aK5RmzYLRSG
-         JIjH5tlQiIk7vgTAUajGBOM+Bv+diJ639Ah8GTNn2bYCLaWxewguqjrs1RS6nl+iBEvF
-         WcnA==
-X-Gm-Message-State: AOAM532NVptsY1FpP8WDJ9rlENZxQFIvE9/mZZGeSf0hXwQ5PR+IU3Jh
-        jYUARVa++nx9eoIDk01qlczQew==
-X-Google-Smtp-Source: ABdhPJxMbOKdnb0NsWQpRqJsWqS2ZPHN8kvdgzsSEVMxwE9+RCz70zlYR/Iv9MWqZYfjLu5EhXTMdg==
-X-Received: by 2002:aca:a905:: with SMTP id s5mr3717098oie.5.1612295310681;
-        Tue, 02 Feb 2021 11:48:30 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id r7sm2468593oih.31.2021.02.02.11.48.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Feb 2021 11:48:30 -0800 (PST)
-Date:   Tue, 2 Feb 2021 13:48:28 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bjorn Helgaas <helgaas@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        PCI <linux-pci@vger.kernel.org>
-Subject: Re: [PATCH v2 3/5] pcie-qcom: provide a way to power up qca6390 chip
- on RB5 platform
-Message-ID: <YBmsjDiKnpQjYeQh@builder.lan>
-References: <da0ac373-4edb-0230-b264-49697fa3d86a@linaro.org>
- <20210129215024.GA113900@bjorn-Precision-5520>
- <CAA8EJpoPsv5tfsaiJq4UnBYt3o+gJanWzy8aaZRK=V8yOk3mJQ@mail.gmail.com>
- <YBTYKLi81Cf65yUB@builder.lan>
- <CAA8EJprwBKbGrh-BjrzkQTxoboUi470wYcn-gTBHdNQ1Af7DKA@mail.gmail.com>
+        Tue, 2 Feb 2021 15:53:47 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1612299203; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=Kc0BGWO7ac9Fj5088Vazpv6+ZSCVPkzHcUD4b+gryrg=; b=nvk28YNXxjlIQjLIgJWsA3xfTti5wYZNnwAAUdIXVT88/esemzo/GtlpIVC2kpO9zTIpYEzE
+ 9x3dAHKaxc4uKsg8xETo5ztJInWyzRiasjj8glVlYka5qhWw0SxndZnZ9//SxAyj8ccdMZyU
+ rWlIkZroLxmNcbABBb5oRsbMlyU=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 6019bba4bfd9520723af1852 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 02 Feb 2021 20:52:52
+ GMT
+Sender: asutoshd=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 9B274C433C6; Tue,  2 Feb 2021 20:52:51 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from stor-presley.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: asutoshd)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7E5D2C433ED;
+        Tue,  2 Feb 2021 20:52:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7E5D2C433ED
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=asutoshd@codeaurora.org
+Date:   Tue, 2 Feb 2021 12:52:45 -0800
+From:   Asutosh Das <asutoshd@codeaurora.org>
+To:     Alan Stern <stern@rowland.harvard.edu>
+Cc:     cang@codeaurora.org, martin.petersen@oracle.com,
+        Bart Van Assche <bvanassche@acm.org>,
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org
+Subject: Re: [RFC PATCH v2 0/2] Fix deadlock in ufs
+Message-ID: <20210202205245.GA8444@stor-presley.qualcomm.com>
+References: <cover.1611719814.git.asutoshd@codeaurora.org>
+ <84a182cc-de9c-4d6d-2193-3a44e4c88c8b@codeaurora.org>
+ <20210201214802.GB420232@rowland.harvard.edu>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <CAA8EJprwBKbGrh-BjrzkQTxoboUi470wYcn-gTBHdNQ1Af7DKA@mail.gmail.com>
+In-Reply-To: <20210201214802.GB420232@rowland.harvard.edu>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat 30 Jan 10:14 CST 2021, Dmitry Baryshkov wrote:
+On Mon, Feb 01 2021 at 13:48 -0800, Alan Stern wrote:
+>On Mon, Feb 01, 2021 at 12:11:23PM -0800, Asutosh Das (asd) wrote:
+>> On 1/27/2021 7:26 PM, Asutosh Das wrote:
+>> > v1 -> v2
+>> > Use pm_runtime_get/put APIs.
+>> > Assuming that all bsg devices are scsi devices may break.
+>> >
+>> > This patchset attempts to fix a deadlock in ufs.
+>> > This deadlock occurs because the ufs host driver tries to resume
+>> > its child (wlun scsi device) to send SSU to it during its suspend.
+>> >
+>> > Asutosh Das (2):
+>> >    block: bsg: resume scsi device before accessing
+>> >    scsi: ufs: Fix deadlock while suspending ufs host
+>> >
+>> >   block/bsg.c               |  8 ++++++++
+>> >   drivers/scsi/ufs/ufshcd.c | 18 ++----------------
+>> >   2 files changed, 10 insertions(+), 16 deletions(-)
+>> >
+>>
+>> Hi Alan/Bart
+>>
+>> Please can you take a look at this series.
+>> Please let me know if you've any better suggestions for this.
+>
+>I haven't commented on them so far because I don't understand them.
 
-> On Sat, 30 Jan 2021 at 06:53, Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> >
-> > On Fri 29 Jan 16:19 CST 2021, Dmitry Baryshkov wrote:
-> >
-> > > On Sat, 30 Jan 2021 at 00:50, Bjorn Helgaas <helgaas@kernel.org> wrote:
-> > > >
-> > > > On Fri, Jan 29, 2021 at 06:45:21AM +0300, Dmitry Baryshkov wrote:
-> > > > > On 28/01/2021 22:26, Rob Herring wrote:
-> > > > > > On Thu, Jan 28, 2021 at 11:52 AM Dmitry Baryshkov
-> > > > > > <dmitry.baryshkov@linaro.org> wrote:
-> > > > > > >
-> > > > > > > Some Qualcomm platforms require to power up an external device before
-> > > > > > > probing the PCI bus. E.g. on RB5 platform the QCA6390 WiFi/BT chip needs
-> > > > > > > to be powered up before PCIe0 bus is probed. Add a quirk to the
-> > > > > > > respective PCIe root bridge to attach to the power domain if one is
-> > > > > > > required, so that the QCA chip is started before scanning the PCIe bus.
-> > > > > >
-> > > > > > This is solving a generic problem in a specific driver. It needs to be
-> > > > > > solved for any PCI host and any device.
-> > > > >
-> > > > > Ack. I see your point here.
-> > > > >
-> > > > > As this would require porting code from powerpc/spark of-pci code and
-> > > > > changing pcie port driver to apply power supply before bus probing happens,
-> > > > > I'd also ask for the comments from PCI maintainers. Will that solution be
-> > > > > acceptable to you?
-> > > >
-> > > > I can't say without seeing the code.  I don't know enough about this
-> > > > scenario to envision how it might look.
-> > > >
-> > > > I guess the QCA6390 is a PCIe device?  Why does it need to be powered
-> > > > up before probing?  Shouldn't we get a link-up interrupt when it is
-> > > > powered up so we could probe it then?
-> > >
-> > > Not quite. QCA6390 is a multifunction device, with PCIe and serial
-> > > parts. It has internal power regulators which once enabled will
-> > > powerup the PCIe, serial and radio parts. There is no need to manage
-> > > regulators. Once enabled they will automatically handle device
-> > > suspend/resume, etc.
-> > >
-> >
-> > So what you're saying is that if either the PCI controller or bluetooth
-> > driver probes these regulators will be turned on, indefinitely?
-> >
-> > If so, why do we need a driver to turn them on, rather than just mark
-> > them as always-on?
-> >
-> > What's the timing requirement wrt regulators vs WL_EN/BT_EN?
-> 
-> According to the documentation I have, they must be enabled right
-> after enabling powering the chip and they must stay enabled all the
-> time.
-> 
+Merging thread with Bart.
 
-So presumably just marking these things always-on and flipping the GPIO
-statically won't be good enough due to the lack of control over the
-timing.
+>Against which kernel version has this patch series been prepared and
+>tested? Have you noticed the following patch series that went into
+>v5.11-rc1
+>https://lore.kernel.org/linux-scsi/20201209052951.16136-1-bvanassche@acm.org/
+Hi Bart - Yes this was tested with this series pulled in.
+I'm on 5.10.9.
 
-This really do look like a simplified case of what we see with the
-PCIe attached modems, where similar requirements are provided, but also
-the ability to perform a device specific reset sequence in case the
-hardware has locked up. I'm slightly worried about the ability of
-extending your power-domain model to handle the restart operation
-though.
+Thanks Alan.
+I've tried to summarize below the problem that I'm seeing.
 
-Regards,
-Bjorn
+Problem:
+There's a deadlock seen in ufs's runtime-suspend path.
+Currently, the wlun's are registered to request based blk-pm.
+During ufs pltform-dev runtime-suspend cb, as per protocol needs,
+it sends a few cmds (uac, ssu) to wlun.
+
+In this path, it tries to resume the ufs platform device which is actually
+suspending and deadlocks.
+
+Yes, if the host doesn't send any commands during it's suspend there wouldn't be
+this deadlock.
+Setting manage_start_stop would send ssu only.
+I can't seem to find a way to send cmds to wlun during it's suspend.
+Would overriding sd_pm_ops for wlun be a good idea?
+Do you've any other pointers on how to do this?
+I'd appreciate any pointers.
+
+>
+>> [RFC PATCH v2 1/2] block: bsg: resume platform device before accessing:
+>>
+>> It may happen that the underlying device's runtime-pm is
+>> not controlled by block-pm. So it's possible that when
+>> commands are sent to the device, it's suspended and may not
+>> be resumed by blk-pm. Hence explicitly resume the parent
+>> which is the platform device.
+>
+>If you want to send a command to the underlying device, why do you
+>resume the underlying device's _parent_?  Why not resume the device
+>itself?
+>
+>Why is bsg sending commands to the underlying device in a way that
+>evades checks for whether the device is suspended?  Shouldn't the
+>device's driver already be responsible for automatically resuming the
+>device when a command is sent?
+>
+>> [RFC PATCH v2 2/2] scsi: ufs: Fix deadlock while suspending ufs host:
+>>
+>> During runtime-suspend of ufs host, the scsi devices are
+>> already suspended and so are the queues associated with them.
+>> But the ufs host sends SSU to wlun during its runtime-suspend.
+>> During the process blk_queue_enter checks if the queue is not in
+>> suspended state. If so, it waits for the queue to resume, and never
+>> comes out of it.
+>> The commit
+>> (d55d15a33: scsi: block: Do not accept any requests while suspended)
+>> adds the check if the queue is in suspended state in blk_queue_enter().
+>>
+>> Fix this, by decoupling wlun scsi devices from block layer pm.
+>> The runtime-pm for these devices would be managed by bsg and sg drivers.
+>
+>Why do you need to send a command to the wlun when the host is being
+>suspended?  Shouldn't that command already have been sent, at the time
+>when the wlun was suspended?
+>
+>Alan Stern
