@@ -2,128 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 34B9230B7B2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Feb 2021 07:15:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8379D30B7BE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Feb 2021 07:19:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232017AbhBBGMe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Feb 2021 01:12:34 -0500
-Received: from so15.mailgun.net ([198.61.254.15]:56440 "EHLO so15.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232024AbhBBGMd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Feb 2021 01:12:33 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1612246324; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=ld1KwqNhIaj2UeohZAxwpLhgN9XG65KEVMvbh4zSBBU=;
- b=DDBvQ836/o5DtLnNw7ihfreVlT1kAh27amOvoHuHBLxtLDv/CPBjMNhQhOMtDe2yfXEHpl+A
- XBuctwI8+1C7iuUQcddYWWOZD+OCvcCaePPBjYtzCAUt5BWjQOZX6fQ4eDuABF09i+saytj/
- wYs3xrY2Ej4b1eQcbbGaIPD2m5g=
-X-Mailgun-Sending-Ip: 198.61.254.15
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 6018ed1af71e8b9934d3b533 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 02 Feb 2021 06:11:38
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B8FF9C43466; Tue,  2 Feb 2021 06:11:38 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CD4FDC433CA;
-        Tue,  2 Feb 2021 06:11:37 +0000 (UTC)
+        id S231909AbhBBGRL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Feb 2021 01:17:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34696 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231912AbhBBGRJ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Feb 2021 01:17:09 -0500
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5288C061573
+        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Feb 2021 22:16:28 -0800 (PST)
+Received: by mail-pj1-x1033.google.com with SMTP id q72so214319pjq.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Feb 2021 22:16:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=1NqKt1tkYjXYw5uT6W0gag7j6UD0Pw2ioTo6s17oNpE=;
+        b=LIQE6iXhoVslxswTP0KgBiXobDim0ju5ZYkrmyKvYra9JaoER+znAmc9qT9xTPVIt9
+         jtJp4IGHblx4gB7wk3KL0g+Hb00CnXsMXEYUJcWHtjBB8foOwO+AUaKNeRXK9ZgkhRKx
+         unkdwcCqhuoaaet8S05RadBgyTo9LLCg4RKzfWTfjpFw0H97MwDGbtL4K8TPiIrR+CLV
+         DwRwQ/IGJ8gY6RwwC4QvP+2Eo9r3HN+B83VS/PZdcxWUj5ka7LREzljL9mQeerH3xM4Z
+         9xY7VqEODF93PjT/9QkROmbj3BKowCGvzX+TVEKvk4DRJaXjYZyncefY2/3uwm/Blrhc
+         kU9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=1NqKt1tkYjXYw5uT6W0gag7j6UD0Pw2ioTo6s17oNpE=;
+        b=S9gSM7bVX1Xnz2f3T12R1S2YNNMfME5/W47Bo9E+momTfHTQepl+pI0r0f80Jpv4/n
+         FwCUFuxERfFkfxXGD8+CY5wEu+drF0loFGpKFaHrgLFjZ+XbtBtkOdIKYjAXAFf1sjXI
+         BqB3doC6e/QbLbcaxGUrm17FHIj0g7P3K+0Gl2AeOf+4AZmkN/4LckhqWBCia0o1znML
+         YuMdyzwG3+Ya2T8RUKuetziotEkBtHa08RDyv+SDB23dupJa5AohaStC04hEnOEepgjW
+         /J53deeJsF4o7jiGFevSz34wFNd0bab04FL30i1keRX3tw3aox0T+felxIf6gYL6a9vz
+         LZvw==
+X-Gm-Message-State: AOAM531qXDFXdrWNcGC68Qhp/ey8rdK4AHOZogkzawym8j2vg/bFJmIx
+        RF6NXjEnYFMh05CWlp9bx2gM
+X-Google-Smtp-Source: ABdhPJx0A/UAcWiA3V+ISiM2k6qA5tPlnvHP9HVWN/SYdIrEkyV65T+v0hqfxGwDjC/6oH+Cyvts7w==
+X-Received: by 2002:a17:903:1cc:b029:de:98bb:d46d with SMTP id e12-20020a17090301ccb02900de98bbd46dmr21069426plh.54.1612246588193;
+        Mon, 01 Feb 2021 22:16:28 -0800 (PST)
+Received: from thinkpad ([2409:4072:6d83:1efe:9823:4cab:2941:306])
+        by smtp.gmail.com with ESMTPSA id l2sm1447547pju.25.2021.02.01.22.16.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Feb 2021 22:16:27 -0800 (PST)
+Date:   Tue, 2 Feb 2021 11:46:19 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Rob Herring <robh+dt@kernel.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        PCI <linux-pci@vger.kernel.org>
+Subject: Re: [PATCH v2 5/5] arm64: dts: qcom: Add Bluetooth support on RB5
+Message-ID: <20210202061619.GA13607@thinkpad>
+References: <20210128175225.3102958-1-dmitry.baryshkov@linaro.org>
+ <20210128175225.3102958-6-dmitry.baryshkov@linaro.org>
+ <CAL_Jsq+nNRv3KceHthgktHR1oRMs+eKWC4O7n0k78izs1aTPfA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 02 Feb 2021 11:41:37 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Peter Zijlstra <peterz@infradead.org>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Ingo Molnar <mingo@redhat.com>,
-        Arnaldo Carvalho de Melo <acme@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Jiri Olsa <jolsa@redhat.com>,
-        Namhyung Kim <namhyung@kernel.org>,
-        Leo Yan <leo.yan@linaro.org>, coresight@lists.linaro.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Denis Nikitin <denik@chromium.org>,
-        Mattias Nissler <mnissler@chromium.org>,
-        Al Grant <al.grant@arm.com>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        jannh@google.com
-Subject: Re: [PATCH 1/4] perf/core: Add support to exclude kernel mode
- instruction tracing
-In-Reply-To: <YBgFDXgX57y5XzOn@hirez.programming.kicks-ass.net>
-References: <cover.1611909025.git.saiprakash.ranjan@codeaurora.org>
- <89c7ff59d887a0360434e607bd625393ec3190e5.1611909025.git.saiprakash.ranjan@codeaurora.org>
- <20210129193040.GJ8912@worktop.programming.kicks-ass.net>
- <3c96026b544c2244e57b46119427b8a0@codeaurora.org>
- <YBgFDXgX57y5XzOn@hirez.programming.kicks-ass.net>
-Message-ID: <6903bc0588a5c8e41892503a204015ee@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAL_Jsq+nNRv3KceHthgktHR1oRMs+eKWC4O7n0k78izs1aTPfA@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Peter,
+On Thu, Jan 28, 2021 at 01:15:22PM -0600, Rob Herring wrote:
+> On Thu, Jan 28, 2021 at 11:52 AM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> >
+> > Add Bluetooth support on RB5 using the onboard QCA6391 WLAN+BT chipset.
+> >
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > [DB: added qca6391 power domain, removed s2f regulator]
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 29 ++++++++++++++++++++++++
+> >  1 file changed, 29 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> > index b39a9729395f..c65c13994a86 100644
+> > --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> > +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> > @@ -19,6 +19,7 @@ / {
+> >         compatible = "qcom,qrb5165-rb5", "qcom,sm8250";
+> >
+> >         aliases {
+> > +               hsuart0 = &uart6;
+> 
+> Serial devices should be 'serialN'. Don't add custom aliases.
+> 
 
-On 2021-02-01 19:11, Peter Zijlstra wrote:
-> On Mon, Feb 01, 2021 at 01:11:04PM +0530, Sai Prakash Ranjan wrote:
-> 
->> Ok I suppose you mean CONFIG_SECURITY_LOCKDOWN_LSM? But I don't see
->> how this new config has to depend on that? This can work independently
->> whether complete lockdown is enforced or not since it applies to only
->> hardware instruction tracing. Ideally this depends on several hardware
->> tracing configs such as ETMs and others but we don't need them because
->> we are already exposing PERF_PMU_CAP_ITRACE check in the events core.
-> 
-> If you don't have lockdown, root pretty much owns the kernel, or am I
-> missing something?
-> 
-
-You are right in saying that without lockdown root would own kernel but
-this config(EXCLUDE_KERNEL) will independently make sure that kernel
-level pmu tracing is not allowed(we return -EACCES) even if LOCKDOWN
-config is disabled. So I'm saying that we don't need to depend on
-LOCKDOWN config, its good to have LOCKDOWN config enabled but perf
-subsystem doesn't have to care about that.
-
->> be used for some speculative execution based attacks. Which other
->> kernel level PMUs can be used to get a full branch trace that is not
->> locked down? If there is one, then this should probably be applied to
->> it as well.
-> 
-> Just the regular counters. The information isn't as accurate, but given
-> enough goes you can infer plenty.
-> 
-> Just like all the SMT size-channel attacks.
-> 
-> Sure, PT and friends make it even easier, but I don't see a fundamental
-> distinction.
-
-Right, we should then exclude all kernel level pmu tracing, is it fine?
-
-if (IS_ENABLED(CONFIG_EXCLUDE_KERNEL_HW_ITRACE) && 
-!attr.exclude_kernel))
-     return -EACCES;
+Sorry, this is needed by the serial driver:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/tty/serial/qcom_geni_serial.c#n1364
 
 Thanks,
-Sai
+Mani
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+> >                 serial0 = &uart12;
+> >                 sdhc2 = &sdhc_2;
+> 
+> BTW, this should be dropped too.
+> 
+> >         };
+> > @@ -689,6 +690,26 @@ &pm8150_rtc {
+> >         status = "okay";
+> >  };
+> >
+> > +&qup_uart6_default {
+> > +       ctsrx {
+> > +               pins = "gpio16", "gpio19";
+> > +               drive-strength = <2>;
+> > +               bias-disable;
+> > +       };
+> > +
+> > +       rts {
+> > +               pins = "gpio17";
+> > +               drive-strength = <2>;
+> > +               bias-disable;
+> > +       };
+> > +
+> > +       tx {
+> > +               pins = "gpio18";
+> > +               drive-strength = <2>;
+> > +               bias-pull-up;
+> > +       };
+> > +};
+> > +
+> >  &qupv3_id_0 {
+> >         status = "okay";
+> >  };
+> > @@ -1194,6 +1215,14 @@ wlan-en {
+> >         };
+> >  };
+> >
+> > +&uart6 {
+> > +       status = "okay";
+> > +       bluetooth {
+> > +               compatible = "qcom,qca6390-bt";
+> > +               power-domains = <&qca6391>;
+> > +       };
+> > +};
+> > +
+> >  &uart12 {
+> >         status = "okay";
+> >  };
+> > --
+> > 2.29.2
+> >
