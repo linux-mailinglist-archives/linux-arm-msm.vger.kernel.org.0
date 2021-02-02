@@ -2,113 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B72630B8C6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Feb 2021 08:41:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 43AEE30B966
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Feb 2021 09:18:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231358AbhBBHiw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Feb 2021 02:38:52 -0500
-Received: from mail-lj1-f174.google.com ([209.85.208.174]:39241 "EHLO
-        mail-lj1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232202AbhBBHir (ORCPT
+        id S229466AbhBBIQF convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>); Tue, 2 Feb 2021 03:16:05 -0500
+Received: from relay10.mail.gandi.net ([217.70.178.230]:38401 "EHLO
+        relay10.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232366AbhBBIPq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Feb 2021 02:38:47 -0500
-Received: by mail-lj1-f174.google.com with SMTP id u4so21291843ljh.6;
-        Mon, 01 Feb 2021 23:38:30 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=RCsq0lQnyJowuaLECngen64lS6PLCnkwIXsedpi2nHs=;
-        b=XHfeht+h8FlBQPYqUlIn2vfVddgSGqQe2BKRNlTRxS29XZD0xN4kC4P7VxDFCjZjAr
-         q/SFnxQH3TJIZgl1OegamEmbcVAn9+exiYhb6gkL13vnUT3WF2dQ06zR5OP9KwudaOYU
-         SEAHSBfCu2WlAdQ+h1FdJdeypGRYoROtFiYrZZpbJ/k9GsXclRmiy2PNTG2NK7gbNLfN
-         EwsdcyW9SkgoUs5Tk8QS95P9yRWhEf4+T1q1zvYK6cRmXPxnKissDzuRI9fE7/6aGJux
-         PH8hwsZkMSCOOY8WwJ5SjyypV8g9+FGqaU8kWwjXordQtsrLYAU/jB3Qkp3BhFgJgZVh
-         oG+w==
-X-Gm-Message-State: AOAM530k0GwVLZ35orXc8KWLIFty3kMTVbCssKH3crp72j9Bu6OoX6rs
-        6jqJhxBoBTQo/JxqhdAz60Q=
-X-Google-Smtp-Source: ABdhPJxtBkSx+nBB44/bwUk/mCPW67PLF2vhzRPzdifuoJj0sy1m5Sn4toDtTqwOYD8iB1+grRHtLw==
-X-Received: by 2002:a2e:7614:: with SMTP id r20mr12913905ljc.93.1612251485093;
-        Mon, 01 Feb 2021 23:38:05 -0800 (PST)
-Received: from localhost.localdomain (62-78-225-252.bb.dnainternet.fi. [62.78.225.252])
-        by smtp.gmail.com with ESMTPSA id z14sm45830lfh.296.2021.02.01.23.38.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Feb 2021 23:38:04 -0800 (PST)
-Date:   Tue, 2 Feb 2021 09:37:58 +0200
-From:   Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-To:     matti.vaittinen@fi.rohmeurope.com, mazziesaccount@gmail.com
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] regulator: qcom-labibb: Use disable_irq_nosync from isr
-Message-ID: <f2c4c88d90bf7473e1b84b8a99b7b33d7a081764.1612249657.git.matti.vaittinen@fi.rohmeurope.com>
-References: <0400d7471571144bfeba27e3a80a24eb17d81f4d.1612249657.git.matti.vaittinen@fi.rohmeurope.com>
+        Tue, 2 Feb 2021 03:15:46 -0500
+Received: from xps13 (lfbn-tou-1-972-150.w86-210.abo.wanadoo.fr [86.210.203.150])
+        (Authenticated sender: miquel.raynal@bootlin.com)
+        by relay10.mail.gandi.net (Postfix) with ESMTPSA id 77FF924000E;
+        Tue,  2 Feb 2021 08:15:00 +0000 (UTC)
+Date:   Tue, 2 Feb 2021 09:14:59 +0100
+From:   Miquel Raynal <miquel.raynal@bootlin.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     richard@nod.at, vigneshr@ti.com, boris.brezillon@collabora.com,
+        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org
+Subject: Re: [PATCH] mtd: rawnand: Do not check for bad block if bbt is
+ unavailable
+Message-ID: <20210202091459.0c41a769@xps13>
+In-Reply-To: <20210202041614.GA840@work>
+References: <20210130035412.6456-1-manivannan.sadhasivam@linaro.org>
+        <20210201151824.5a9dca4a@xps13>
+        <20210202041614.GA840@work>
+Organization: Bootlin
+X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0400d7471571144bfeba27e3a80a24eb17d81f4d.1612249657.git.matti.vaittinen@fi.rohmeurope.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Calling the disable_irq() from irq handler might be a bad idea as
-disable_irq() should wait for handlers to run. I don't see why
-this wouldn't deadlock in wait_event waiting for the threaded
-handler to complete.
+Hi Manivannan,
 
-Use disable_irq_nosync() instead.
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote on Tue,
+2 Feb 2021 09:46:14 +0530:
 
-Fixes: 390af53e04114 ("regulator: qcom-labibb: Implement short-circuit and over-current IRQs")
+> Hi,
+> 
+> On Mon, Feb 01, 2021 at 03:18:24PM +0100, Miquel Raynal wrote:
+> > Hi Manivannan,
+> > 
+> > Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote on Sat,
+> > 30 Jan 2021 09:24:12 +0530:
+> >   
+> > > The bbt pointer will be unavailable when NAND_SKIP_BBTSCAN option is
+> > > set for a NAND chip. The intention is to skip scanning for the bad
+> > > blocks during boot time.  
+> > 
+> > I don't have the same understanding: this flag skips the bad block
+> > table scan, not the bad block scan. We do want to scan all the devices
+> > in order to construct a RAM based table.
+> >   
+> > > However, the MTD core will call
+> > > _block_isreserved() and _block_isbad() callbacks unconditionally for
+> > > the rawnand devices due to the callbacks always present while collecting
+> > > the ecc stats.
+> > > 
+> > > The _block_isreserved() callback for rawnand will bail out if bbt
+> > > pointer is not available. But _block_isbad() will continue without
+> > > checking for it. So this contradicts with the NAND_SKIP_BBTSCAN option
+> > > since the bad block check will happen anyways (ie., not much difference
+> > > between scanning for bad blocks and checking each block for bad ones).
+> > > 
+> > > Hence, do not check for the bad block if bbt pointer is unavailable.  
+> > 
+> > Not checking for bad blocks at all feels insane. I don't really get the
+> > scope and goal of such change?
+> >   
+> 
+> The issue I encountered is, on the Telit FN980 device one of the
+> partition seems to be protected. So trying to read the bad blocks in
+> that partition makes the device to reboot during boot.
 
-Signed-off-by: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
----
-This fix is done purely based on code reading. No testing is done.
+o_O
 
-I don't have the HW (and even if I did I might have hard time producing
-these errors) I have not tested this and I am unsure if my code-reading
-is correct => I would _really_ appreciate second opinion and/or testing
+Reading a protected block makes the device to reboot?
 
- drivers/regulator/qcom-labibb-regulator.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+What is the exact device? Can you share the datasheet? Is this behavior
+expected? Because it seems really broken to me, a read should not
+trigger *anything* that bad.
 
-diff --git a/drivers/regulator/qcom-labibb-regulator.c b/drivers/regulator/qcom-labibb-regulator.c
-index 5ac4566f9b7f..40e92670e307 100644
---- a/drivers/regulator/qcom-labibb-regulator.c
-+++ b/drivers/regulator/qcom-labibb-regulator.c
-@@ -283,7 +283,7 @@ static irqreturn_t qcom_labibb_ocp_isr(int irq, void *chip)
- 	 * Disable the interrupt temporarily, or it will fire continuously;
- 	 * we will re-enable it in the recovery worker function.
- 	 */
--	disable_irq(irq);
-+	disable_irq_nosync(irq);
- 
- 	/* Warn the user for overcurrent */
- 	dev_warn(vreg->dev, "Over-Current interrupt fired!\n");
-@@ -536,7 +536,7 @@ static irqreturn_t qcom_labibb_sc_isr(int irq, void *chip)
- 	 * Disable the interrupt temporarily, or it will fire continuously;
- 	 * we will re-enable it in the recovery worker function.
- 	 */
--	disable_irq(irq);
-+	disable_irq_nosync(irq);
- 
- 	/* Signal out of regulation event to drivers */
- 	regulator_notifier_call_chain(vreg->rdev,
--- 
-2.25.4
+> There seems to be no flag passed by the parser for this partition. So
+> the only way I could let the device to boot is to completely skip the
+> bad block check.
 
+We do have a "lock" property which informs the host to first unlock the
+device, would this help? Is this locking reversible?
 
--- 
-Matti Vaittinen, Linux device drivers
-ROHM Semiconductors, Finland SWDC
-Kiviharjunlenkki 1E
-90220 OULU
-FINLAND
+> AFAIK, MTD core only supports checking for the reserved blocks to be
+> used for BBM and there is no way to check for a reserved partition like
+> this.
 
-~~~ "I don't think so," said Rene Descartes. Just then he vanished ~~~
-Simon says - in Latin please.
-~~~ "non cogito me" dixit Rene Descarte, deinde evanescavit ~~~
-Thanks to Simon Glass for the translation =] 
+It sounds like a chip specificity/bug, would it make sense to add a
+specific vendor implementation for that?
+
+> I agree that skipping bad block check is not a sane way but I don't know
+> any other way to handle this problem.
+> 
+> Thanks,
+> Mani
+> 
+
+Thanks,
+Miquèl
