@@ -2,392 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A284030C1D2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Feb 2021 15:35:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A80F730C22C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Feb 2021 15:45:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234593AbhBBOdm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Feb 2021 09:33:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56326 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234569AbhBBOdE (ORCPT
+        id S234695AbhBBOmb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Feb 2021 09:42:31 -0500
+Received: from relay06.th.seeweb.it ([5.144.164.167]:54565 "EHLO
+        relay06.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234441AbhBBOhC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Feb 2021 09:33:04 -0500
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E1D7C06178B
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Feb 2021 06:32:09 -0800 (PST)
+        Tue, 2 Feb 2021 09:37:02 -0500
 Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
         (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 8807E3EBA0;
-        Tue,  2 Feb 2021 15:32:04 +0100 (CET)
-Subject: Re: [PATCH 3/5] drm/msm/dsi_pll_10nm: Fix bad VCO rate calculation
- and prescaler
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        marijn.suijten@somainline.org, martin.botka@somainline.org,
-        phone-devel@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>
-References: <20210109135112.147759-1-angelogioacchino.delregno@somainline.org>
- <20210109135112.147759-4-angelogioacchino.delregno@somainline.org>
- <CAF6AEGvDzdgDy7Znw6dQCV7Z=YxnF2_XsqkV+7BT+oY777TqHA@mail.gmail.com>
- <8f8c7c37-f7b2-f763-19e1-d89e5c454ab4@somainline.org>
- <CAF6AEGsQp4xHpH2brUdHmAX1ic2k88EFJRVVWDRxWXUqF9njfw@mail.gmail.com>
- <CAF6AEGueo71HVBcLW2Mtu5GQ=9HgwL43WczUGLuTk2JWLoH=ew@mail.gmail.com>
- <CAF6AEGspvnwRrXurmRvvRhr8dsFRc6fNnLsSo52Te0rHXtj4jA@mail.gmail.com>
- <CAF6AEGsDL-qRyXWftTgzHGn=UTvz=rcyEUcJv+oGtVXCkYibug@mail.gmail.com>
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id B9EFE3EEC7;
+        Tue,  2 Feb 2021 15:36:17 +0100 (CET)
+Subject: Re: [PATCH 2/2] regulator: qcom-labibb: Use disable_irq_nosync from
+ isr
+To:     Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
+        mazziesaccount@gmail.com
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <0400d7471571144bfeba27e3a80a24eb17d81f4d.1612249657.git.matti.vaittinen@fi.rohmeurope.com>
+ <f2c4c88d90bf7473e1b84b8a99b7b33d7a081764.1612249657.git.matti.vaittinen@fi.rohmeurope.com>
 From:   AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>
-Message-ID: <e338e4bd-0e8c-9199-caa1-93945ed2b94b@somainline.org>
-Date:   Tue, 2 Feb 2021 15:32:04 +0100
+Message-ID: <1d37a36c-f82b-726a-6edb-866b087aeef8@somainline.org>
+Date:   Tue, 2 Feb 2021 15:36:17 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.5.0
 MIME-Version: 1.0
-In-Reply-To: <CAF6AEGsDL-qRyXWftTgzHGn=UTvz=rcyEUcJv+oGtVXCkYibug@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <f2c4c88d90bf7473e1b84b8a99b7b33d7a081764.1612249657.git.matti.vaittinen@fi.rohmeurope.com>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 01/02/21 18:31, Rob Clark ha scritto:
-> On Mon, Feb 1, 2021 at 9:18 AM Rob Clark <robdclark@gmail.com> wrote:
->>
->> On Mon, Feb 1, 2021 at 9:05 AM Rob Clark <robdclark@gmail.com> wrote:
->>>
->>> On Mon, Feb 1, 2021 at 7:47 AM Rob Clark <robdclark@gmail.com> wrote:
->>>>
->>>> On Mon, Feb 1, 2021 at 2:11 AM AngeloGioacchino Del Regno
->>>> <angelogioacchino.delregno@somainline.org> wrote:
->>>>>
->>>>> Il 31/01/21 20:50, Rob Clark ha scritto:
->>>>>> On Sat, Jan 9, 2021 at 5:51 AM AngeloGioacchino Del Regno
->>>>>> <angelogioacchino.delregno@somainline.org> wrote:
->>>>>>>
->>>>>>> The VCO rate was being miscalculated due to a big overlook during
->>>>>>> the process of porting this driver from downstream to upstream:
->>>>>>> here we are really recalculating the rate of the VCO by reading
->>>>>>> the appropriate registers and returning a real frequency, while
->>>>>>> downstream the driver was doing something entirely different.
->>>>>>>
->>>>>>> In our case here, the recalculated rate was wrong, as it was then
->>>>>>> given back to the set_rate function, which was erroneously doing
->>>>>>> a division on the fractional value, based on the prescaler being
->>>>>>> either enabled or disabled: this was actually producing a bug for
->>>>>>> which the final VCO rate was being doubled, causing very obvious
->>>>>>> issues when trying to drive a DSI panel because the actual divider
->>>>>>> value was multiplied by two!
->>>>>>>
->>>>>>> To make things work properly, remove the multiplication of the
->>>>>>> reference clock by two from function dsi_pll_calc_dec_frac and
->>>>>>> account for the prescaler enablement in the vco_recalc_rate (if
->>>>>>> the prescaler is enabled, then the hardware will divide the rate
->>>>>>> by two).
->>>>>>>
->>>>>>> This will make the vco_recalc_rate function to pass the right
->>>>>>> frequency to the (clock framework) set_rate function when called,
->>>>>>> which will - in turn - program the right values in both the
->>>>>>> DECIMAL_DIV_START_1 and the FRAC_DIV_START_{LOW/MID/HIGH}_1
->>>>>>> registers, finally making the PLL to output the right clock.
->>>>>>>
->>>>>>> Also, while at it, remove the prescaler TODO by also adding the
->>>>>>> possibility of disabling the prescaler on the PLL (it is in the
->>>>>>> PLL_ANALOG_CONTROLS_ONE register).
->>>>>>> Of course, both prescaler-ON and OFF cases were tested.
->>>>>>
->>>>>> This somehow breaks things on sc7180 (display gets stuck at first
->>>>>> frame of splash screen).  (This is a setup w/ an ti-sn65dsi86 dsi->eDP
->>>>>> bridge)
->>>>>>
->>>>>
->>>>> First frame of the splash means that something is "a bit" wrong...
->>>>> ...like the DSI clock is a little off.
->>>>>
->>>>> I don't have such hardware, otherwise I would've tried... but what you
->>>>> describe is a bit strange.
->>>>> Is there any other older qcom platform using this chip? Any other
->>>>> non-qcom platform? Is the driver for the SN65DSI86 surely fine?
->>>>> Anyway, as you know, I would never propose untested patches nor
->>>>> partially working ones for any reason: I'm sorry that this happened.
->>>>
->>>> I don't think there is anything publicly avail w/ sc7180 (yet.. but very soon)
->>>>
->>>> The ti-sn65dsi86 bridge is used on a bunch of 845/850 devices (like
->>>> the snapdragon windows laptops).. and I think also the older 835
->>>> laptops.. ofc that doesn't mean that there isn't some bug, but I'd
->>>> guess maybe more likely that there is some small difference in DSI vs
->>>> older devices, or some cmd vs video mode difference.
->>>>
->>>> Anyways, seems like the screen did eventually recover so that gives me
->>>> a bit of confidence to bisect this series, which I'll do a bit later
->>>> today.
->>>
->>> fwiw, this series minus this patch, and everything looks ok.. let me
->>> take a closer look at what changes with this patch
->>
->> Btw, it looks like upstream, config->disable_prescaler is always
->> false.. I don't suppose you have anything WIP that changes this?
+Il 02/02/21 08:37, Matti Vaittinen ha scritto:
+> Calling the disable_irq() from irq handler might be a bad idea as
+> disable_irq() should wait for handlers to run. I don't see why
+> this wouldn't deadlock in wait_event waiting for the threaded
+> handler to complete.
+> 
+> Use disable_irq_nosync() instead.
 > 
 
-Regarding that one, I have tested the driver in both cases, with
-and without prescaler enabled (both worked fine), then I have decided
-to leave the prescaler option exactly as the previous default.
+It didn't deadlock, but looking at it again -- oh my, I agree with you.
 
-My plan about this was/still is:
-1. Wait until this one gets merged (gives me time to also look
-    at the other billion patches that I've sent);
-2. Add the prescaler option DT property and explain that it has
-    to be used only with "puny" displays (low resolution, low
-    clocks) as with "good ones", enabling the prescaler gives less
-    clock jitter (and some microamps more power consumption);
-3. Add the Spread Spectrum Clock (SSC) functionality with related
-    DT properties.
+Reviewed-by: AngeloGioacchino Del Regno 
+<angelogioacchino.delregno@somainline.org>
 
-Point 2 and 3 would go in the same series, unless someone does
-N.2 before I do... and N.3 requires a bit of extensive testing,
-which I have already partially started on the FxTec phone.
-
-> fwiw, this is the clk_summary diff with and without this patch:
+> Fixes: 390af53e04114 ("regulator: qcom-labibb: Implement short-circuit and over-current IRQs")
 > 
-> ------------------
-> 270,282c270,282
-> <     dsi0_pll_out_div_clk              1        1        0
-> 887039941          0     0  50000         Y
-> <        dsi0_pll_post_out_div_clk       0        0        0
-> 221759985          0     0  50000         Y
-> <        dsi0_pll_bit_clk               2        2        0
-> 887039941          0     0  50000         Y
-> <           dsi0_pclk_mux               1        1        0
-> 887039941          0     0  50000         Y
-> <              dsi0_phy_pll_out_dsiclk       1        1        0
-> 147839991          0     0  50000         Y
-> <                 disp_cc_mdss_pclk0_clk_src       1        1        0
->    147839991          0     0  50000         Y
-> <                    disp_cc_mdss_pclk0_clk       1        1        0
->   147839991          0     0  50000         Y
-> <           dsi0_pll_by_2_bit_clk       0        0        0
-> 443519970          0     0  50000         Y
-> <           dsi0_phy_pll_out_byteclk       1        1        0
-> 110879992          0     0  50000         Y
-> <              disp_cc_mdss_byte0_clk_src       2        2        0
-> 110879992          0     0  50000         Y
-> <                 disp_cc_mdss_byte0_div_clk_src       1        1
->    0    55439996          0     0  50000         Y
-> <                    disp_cc_mdss_byte0_intf_clk       1        1
->    0    55439996          0     0  50000         Y
-> <                 disp_cc_mdss_byte0_clk       1        1        0
-> 110879992          0     0  50000         Y
+> Signed-off-by: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
 > ---
->>      dsi0_pll_out_div_clk              1        1        0   887039978          0     0  50000         Y
->>         dsi0_pll_post_out_div_clk       0        0        0   221759994          0     0  50000         Y
->>         dsi0_pll_bit_clk               2        2        0   887039978          0     0  50000         Y
->>            dsi0_pclk_mux               1        1        0   887039978          0     0  50000         Y
->>               dsi0_phy_pll_out_dsiclk       1        1        0   147839997          0     0  50000         Y
->>                  disp_cc_mdss_pclk0_clk_src       1        1        0   147839997          0     0  50000         Y
->>                     disp_cc_mdss_pclk0_clk       1        1        0   147839997          0     0  50000         Y
->>            dsi0_pll_by_2_bit_clk       0        0        0   443519989          0     0  50000         Y
->>            dsi0_phy_pll_out_byteclk       1        1        0   110879997          0     0  50000         Y
->>               disp_cc_mdss_byte0_clk_src       2        2        0   110879997          0     0  50000         Y
->>                  disp_cc_mdss_byte0_div_clk_src       1        1        0    55439999          0     0  50000         Y
->>                     disp_cc_mdss_byte0_intf_clk       1        1        0    55439999          0     0  50000         Y
->>                  disp_cc_mdss_byte0_clk       1        1        0   110879997          0     0  50000         Y
-> ------------------
+> This fix is done purely based on code reading. No testing is done.
 > 
+> I don't have the HW (and even if I did I might have hard time producing
+> these errors) I have not tested this and I am unsure if my code-reading
+> is correct => I would _really_ appreciate second opinion and/or testing
 > 
-
-This is almost exactly what I saw on my devices as well, you get a
-difference of "just some Hz" (which can be totally ignored), because
-of how the calculation is done now.
-
-Thing is, what you see as PIXEL and BYTE clocks *before* the change is
-Linux thinking that your DSI is at that frequency, while the PLL will
-output *half* the rate, which is exactly what the patch fixes.
-
-"Fun" story is: the Xperia XZ1 (8998) and XZ (8996) have got the same
-display... by lowering the DSI rate on the MSM8996 phone by half, I
-get the same *identical* issues as the 8998 one without this patch.
-The clocks all match between one and another, because.. it's.. the same
-display, after all.
-
-It is because of the aforementioned test that I have raised doubts about
-the TI chip driver (or anything else really).. but then, anything is
-possible.
-
->>>
->>>>> In any case, just to be perfectly transparent, while being here waiting
->>>>> for review, this patch series got tested on more smartphones, even ones
->>>>> that I don't personally own, with different displays.
->>>>>
->>>>> For your reference, here's a list (all MSM8998..):
->>>>> - OnePlus 5               (1920x1080)
->>>>> - F(x)Tec Pro 1           (2160x1080)
->>>>> - Sony Xperia XZ1 Compact (1280x720)
->>>>> - Sony Xperia XZ1         (1920x1080)
->>>>> - Sony Xperia XZ Premium  (3840x2160)
->>>>>
->>>>
->>>> Yeah, no worries, I wasn't trying to imply that the patch was untested.
->>>>
-
-I know, of course!
-
->>>> Out of curiosity, are any of those video mode panels?
-
-Yes and "also":
-The FxTec Pro1 has a video mode panel, for which I'm trying to upstream
-the driver...look here: https://lore.kernel.org/patchwork/patch/1365228/
-
-The Xperia XZ Premium has a Sharp LS055D1SX04 panel under NT35950, which
-can be configured as command or as video mode... I tried both modes, but
-there is some issue with the DPU1/DSI drivers and *DUAL DSI*, as cmd
-does work with some tearing, but video doesn't even start (downstream it
-works).
-
-So the only video mode panel that I could test is that BOE panel on the
-FxTec phone (single dsi), which works just great.
-
->>>>
->>>>>
->>>>>> Also, something (I assume DSI related) that I was testing on
->>>>>> msm-next-staging seems to have effected the colors on the panel (ie.
->>>>>> they are more muted).. which seems to persist across reboots (ie. when
->>>>>
->>>>> So much "fun". This makes me think something about the PCC block doing
->>>>> the wrong thing (getting misconfigured).
->>>>>
->>>>>> switching back to a good kernel), and interestingly if I reboot from a
->>>>>> good kernel I see part of the login prompt (or whatever was previously
->>>>>> on-screen) in the firmware ui screen !?!  (so maybe somehow triggered
->>>>>> the display to think it is in PSR mode??)
->>>>>>
->>>>>
->>>>>   From a fast read, the SN65DSI86 is on I2C.. giving it a wrong dsi clock
->>>>> cannot produce (logically, at least) this, so I say that it is very
->>>>> unlikely for this to be a consequence of the 10nm pll fixes...
->>>>>
->>>>
->>>> Note that the bridge can also be programmed via dsi cmd mode packets,
->>>> which I believe is the case on the 835 laptops (or at least one of
->>>> them).. but all the things I have are using i2c as the control path.
->>>>
->>>>> ...unless the bootloader is not configuring the DSI rates, but that's
->>>>> also veeeeery unlikely (it always does, or it always does not).
->>>>
->>>> I haven't looked at the bootloader display code, but booting back to
->>>> an old/good kernel didn't change anything..  even powering off didn't.
->>>> But the ghost image seemed to fade after some time, and by the next
->>>> morning it was fine.  Which is strange. (But tbf, I'm more a gpu guy
->>>> who works on display only when necessary.. ie. a gpu without a display
->>>> isn't so much fun ;-))
->>>>
-
-OpenCL all the way! lol :D
-
-On Qualcomm platforms, the first thing that I've ever done was to bring
-up displays on 8974 Sony platforms... (we're talking about years ago).
-
-I'm a lil more on the display side of things (but growing a beard while
-waiting between a frame and another due to no GPU isn't so much fun
-either!).
-
->>>>>> Not sure if that is caused by these patches, but if I can figure out
->>>>>> how to get the panel back to normal I can bisect.  I think for now
->>>>>> I'll drop this series.  Possibly it could be a
->>>>>> two-wrongs-makes-a-right situation that had things working before, but
->>>>>> I think someone from qcom who knows the DSI IP should take a look.
->>>>>>
->>>>>
->>>>> I would be happy if someone from Qualcomm takes a look: after all, there
->>>>> is no documentation and they're the only ones that can verify this kind
->>>>> of stuff. Please, Qualcomm.
->>>>
->>>> Hopefully someone can take a look.
->>>>
->>>>> Besides that, if there's anything I can help with to solve this riddle,
->>>>> I'm here for you.
->>>>
->>>> Thanks, like I said I'll try applying the patches one by one and see
->>>> if I can narrow down what made the panel go funny, and we can go from
->>>> there
->>>>
->>>> BR,
->>>> -R
->>>>
->>>>> Yours,
->>>>> -- Angelo
->>>>>
->>>>>> BR,
->>>>>> -R
->>>>>>
->>>>>>
->>>>>>> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
->>>>>>> ---
->>>>>>>    drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c | 22 +++++++++-------------
->>>>>>>    1 file changed, 9 insertions(+), 13 deletions(-)
->>>>>>>
->>>>>>> diff --git a/drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c b/drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c
->>>>>>> index 8b66e852eb36..5be562dfbf06 100644
->>>>>>> --- a/drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c
->>>>>>> +++ b/drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c
->>>>>>> @@ -165,11 +165,7 @@ static void dsi_pll_calc_dec_frac(struct dsi_pll_10nm *pll)
->>>>>>>
->>>>>>>           pll_freq = pll->vco_current_rate;
->>>>>>>
->>>>>>> -       if (config->disable_prescaler)
->>>>>>> -               divider = fref;
->>>>>>> -       else
->>>>>>> -               divider = fref * 2;
->>>>>>> -
->>>>>>> +       divider = fref;
->>>>>>>           multiplier = 1 << config->frac_bits;
->>>>>>>           dec_multiple = div_u64(pll_freq * multiplier, divider);
->>>>>>>           dec = div_u64_rem(dec_multiple, multiplier, &frac);
->>>>>>> @@ -266,9 +262,11 @@ static void dsi_pll_ssc_commit(struct dsi_pll_10nm *pll)
->>>>>>>
->>>>>>>    static void dsi_pll_config_hzindep_reg(struct dsi_pll_10nm *pll)
->>>>>>>    {
->>>>>>> +       struct dsi_pll_config *config = &pll->pll_configuration;
->>>>>>>           void __iomem *base = pll->mmio;
->>>>>>> +       u32 val = config->disable_prescaler ? 0x0 : 0x80;
->>>>>>>
->>>>>>> -       pll_write(base + REG_DSI_10nm_PHY_PLL_ANALOG_CONTROLS_ONE, 0x80);
->>>>>>> +       pll_write(base + REG_DSI_10nm_PHY_PLL_ANALOG_CONTROLS_ONE, val);
->>>>>>>           pll_write(base + REG_DSI_10nm_PHY_PLL_ANALOG_CONTROLS_TWO, 0x03);
->>>>>>>           pll_write(base + REG_DSI_10nm_PHY_PLL_ANALOG_CONTROLS_THREE, 0x00);
->>>>>>>           pll_write(base + REG_DSI_10nm_PHY_PLL_DSM_DIVIDER, 0x00);
->>>>>>> @@ -499,17 +497,15 @@ static unsigned long dsi_pll_10nm_vco_recalc_rate(struct clk_hw *hw,
->>>>>>>           frac |= ((pll_read(base + REG_DSI_10nm_PHY_PLL_FRAC_DIV_START_HIGH_1) &
->>>>>>>                     0x3) << 16);
->>>>>>>
->>>>>>> -       /*
->>>>>>> -        * TODO:
->>>>>>> -        *      1. Assumes prescaler is disabled
->>>>>>> -        */
->>>>>>>           multiplier = 1 << config->frac_bits;
->>>>>>> -       pll_freq = dec * (ref_clk * 2);
->>>>>>> -       tmp64 = (ref_clk * 2 * frac);
->>>>>>> +       pll_freq = dec * ref_clk;
->>>>>>> +       tmp64 = ref_clk * frac;
->>>>>>>           pll_freq += div_u64(tmp64, multiplier);
->>>>>>> -
->>>>>>>           vco_rate = pll_freq;
->>>>>>>
->>>>>>> +       if (config->disable_prescaler)
->>>>>>> +               vco_rate = div_u64(vco_rate, 2);
->>>>>>> +
->>>>>>>           DBG("DSI PLL%d returning vco rate = %lu, dec = %x, frac = %x",
->>>>>>>               pll_10nm->id, (unsigned long)vco_rate, dec, frac);
->>>>>>>
->>>>>>> --
->>>>>>> 2.29.2
->>>>>>>
->>>>>
+>   drivers/regulator/qcom-labibb-regulator.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/regulator/qcom-labibb-regulator.c b/drivers/regulator/qcom-labibb-regulator.c
+> index 5ac4566f9b7f..40e92670e307 100644
+> --- a/drivers/regulator/qcom-labibb-regulator.c
+> +++ b/drivers/regulator/qcom-labibb-regulator.c
+> @@ -283,7 +283,7 @@ static irqreturn_t qcom_labibb_ocp_isr(int irq, void *chip)
+>   	 * Disable the interrupt temporarily, or it will fire continuously;
+>   	 * we will re-enable it in the recovery worker function.
+>   	 */
+> -	disable_irq(irq);
+> +	disable_irq_nosync(irq);
+>   
+>   	/* Warn the user for overcurrent */
+>   	dev_warn(vreg->dev, "Over-Current interrupt fired!\n");
+> @@ -536,7 +536,7 @@ static irqreturn_t qcom_labibb_sc_isr(int irq, void *chip)
+>   	 * Disable the interrupt temporarily, or it will fire continuously;
+>   	 * we will re-enable it in the recovery worker function.
+>   	 */
+> -	disable_irq(irq);
+> +	disable_irq_nosync(irq);
+>   
+>   	/* Signal out of regulation event to drivers */
+>   	regulator_notifier_call_chain(vreg->rdev,
+> 
 
