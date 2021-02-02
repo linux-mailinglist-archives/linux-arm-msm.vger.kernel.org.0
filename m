@@ -2,201 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4154A30C466
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Feb 2021 16:52:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DB0230C5A1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Feb 2021 17:29:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235728AbhBBPuI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Feb 2021 10:50:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44202 "EHLO
+        id S236300AbhBBQ1b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Feb 2021 11:27:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235718AbhBBPrm (ORCPT
+        with ESMTP id S236311AbhBBQXE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Feb 2021 10:47:42 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08860C06174A
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Feb 2021 07:47:01 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id y187so2719533wmd.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Feb 2021 07:47:00 -0800 (PST)
+        Tue, 2 Feb 2021 11:23:04 -0500
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9CC5C0611BD
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Feb 2021 08:19:27 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id s5so10681152edw.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Feb 2021 08:19:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=f8qxGPcRh9HAR8Xi8fDP2DL2jLjx52coGhpEuMS0fJI=;
-        b=FNqLZbndjzFWU2NyGwDReOjQfkL1OUgvOv5ZeR1Nb/JpNeBwq8aNlfRhy0PWJBTmi+
-         ZRKNKC0kcTKRZB4/2Ud02HFebrv+Qpy5JJvxbDm7YMeOqXj52HqymPxpjQ+hJP6KGhk8
-         SOJOuY99UyXKHU8ar69nSb0bdBJZr9O15C6X0=
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=YMlokKzdK8V+Gvn42ll3ctucK3HqZBs6Jki/pOm978k=;
+        b=CJkHp49YHJzedJgJ8H0hrsZdj+gxcN3BAsvOFGka+ihZA4DTtNVEF5t6RKE0TjxW2v
+         3VMpxwUMuwbNi+sSTVjV8U9TbMQR0g84EXXXwMnBwLizunO/vn7NmdkDEm3nB97gJTge
+         CmQx3qInSpzwbtaBji+YfXyAplBiO9PFpqcoQ0ydL6y+RMvM1c0F3g9IW/lFuwUbT5i2
+         qsaxe9NAtjm1ocM5j13weD5kinZM7PA6gEygB1wxycnQH2CQLBM2UcnuYsGyVzyaSeIq
+         biGF22X3wYmB4rJilAkhYYsEww8QJ/4taedDev41OVAc/XEl2Hmuu3ClRaJTCidCqhBc
+         rsXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=f8qxGPcRh9HAR8Xi8fDP2DL2jLjx52coGhpEuMS0fJI=;
-        b=f1tSiTzZ1toqxJ+B2Xj+LHK0A2O07CF2OK1yC6pPSp/9H8GdPvRgdvFGUxHQZiwOaB
-         /0A5X/wTyvT5orbzRLsNVMlwy8PqHa4Xaf0+F6IiowjVCElybfKH+vPzRAHI14EnLLd+
-         JoXya2/bC7D0RAu6cCmMsKWuYTiwpy3Pl781TZEPitZDxV6yO6GmqpE3D6UgXhmchfxw
-         kg5fi7hWm0paSaLQMpUVdg0DpMAG/lC9eyTnlRyY7XyVXPWqUtZPfrXpC+qnMAdKFP32
-         Niig8xfabGmv7VvWKDMvQQSXIOwvHoF7aN8tVjorIRnrQu0dVkLhyocPdSLjESW2EoYt
-         vBew==
-X-Gm-Message-State: AOAM531KSEu+B/R+7cqnDA+C4AESryosKbFg5SP08awHSLhVkQdLM1ok
-        gsjCrjpePdE4Yakzq+cack9gCg==
-X-Google-Smtp-Source: ABdhPJzGDcfEbXLu5zWgOTaJHCrtUgCi8vnt5G/ag2pejaSfAJI0aWalNdwwTM/uYA2FjMPfL/MkHQ==
-X-Received: by 2002:a1c:2905:: with SMTP id p5mr4175635wmp.156.1612280819590;
-        Tue, 02 Feb 2021 07:46:59 -0800 (PST)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id b13sm31067041wrt.31.2021.02.02.07.46.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Feb 2021 07:46:58 -0800 (PST)
-Date:   Tue, 2 Feb 2021 16:46:56 +0100
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org,
-        Krishna Manikandan <mkrishn@codeaurora.org>
-Subject: Re: [PATCH] drm/msm/kms: Make a lock_class_key for each crtc mutex
-Message-ID: <YBlz8Go2DseRWuOa@phenom.ffwll.local>
-Mail-Followup-To: Stephen Boyd <swboyd@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org,
-        Krishna Manikandan <mkrishn@codeaurora.org>
-References: <20210125234901.2730699-1-swboyd@chromium.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=YMlokKzdK8V+Gvn42ll3ctucK3HqZBs6Jki/pOm978k=;
+        b=a5n8Z0kNGh/CtTycP7I9a7IFCUUPsfB3A1/wgjADIqZUFkZRQha4LGu/exwUpcrVq0
+         CbjQIf72cT2zKernG6MobJhIaRusW86LruMAafcv05tZRo8Nwe0V40b6XCynI+dIYCsH
+         xjG0OPs4Pl/OekJiKpBAF7dmCmWWNaErYWt5sH6HfOWcRuw0V0HA5JYvYkIb5WbTEeix
+         RupsNrGS50PuVBHsoroiDEUmdyK8Zfnf/qQv7JpGWKkUXgQsEZpdPewcUC6w3upa+FNE
+         bQsVBpLCTFkOY8S5m3YxusasMRzs7xw373g7Z3ob9LEquaPDLYU1myXTqTBxNOktPR8x
+         44Og==
+X-Gm-Message-State: AOAM530XYd9TBFwq/Hp1U0On/+YEmQV2wnh95ThZjh+W9yn6pTkKBDjM
+        JXqZzfL5RMw30eyM3KnyPJ9ZNRCN+bHKhZtkVBD/zg==
+X-Google-Smtp-Source: ABdhPJwCqe/XoviTy7D5nVnoFrHySYWSUZsc5T9i8NY4Drep3y9EoWok5QgcVbshVpZUffyKN2kscyfdEMC4Lz+Xmes=
+X-Received: by 2002:a05:6402:202a:: with SMTP id ay10mr3681976edb.93.1612282766286;
+ Tue, 02 Feb 2021 08:19:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210125234901.2730699-1-swboyd@chromium.org>
-X-Operating-System: Linux phenom 5.7.0-1-amd64 
+References: <20210202123214.15787-1-bernard@vivo.com>
+In-Reply-To: <20210202123214.15787-1-bernard@vivo.com>
+From:   Guenter Roeck <groeck@google.com>
+Date:   Tue, 2 Feb 2021 08:19:14 -0800
+Message-ID: <CABXOdTePOqMtZ88oTNDc0TT7oH652nLHApuXkbB-44jG5Z8PAg@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: remove unneeded variable: "rc"
+To:     Bernard Zhao <bernard@vivo.com>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Kuogee Hsieh <khsieh@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Guenter Roeck <groeck@chromium.org>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Maling list - DRI developers 
+        <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        opensource.kernel@vivo.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 25, 2021 at 03:49:01PM -0800, Stephen Boyd wrote:
-> Lockdep complains about an AA deadlock when rebooting the device.
-> 
-> ============================================
-> WARNING: possible recursive locking detected
-> 5.4.91 #1 Not tainted
-> --------------------------------------------
-> reboot/5213 is trying to acquire lock:
-> ffffff80d13391b0 (&kms->commit_lock[i]){+.+.}, at: lock_crtcs+0x60/0xa4
-> 
-> but task is already holding lock:
-> ffffff80d1339110 (&kms->commit_lock[i]){+.+.}, at: lock_crtcs+0x60/0xa4
-> 
-> other info that might help us debug this:
-> Possible unsafe locking scenario:
-> 
-> CPU0
-> ----
-> lock(&kms->commit_lock[i]);
-> lock(&kms->commit_lock[i]);
-> 
-> *** DEADLOCK ***
-> 
-> May be due to missing lock nesting notation
-> 
-> 6 locks held by reboot/5213:
-> __arm64_sys_reboot+0x148/0x2a0
-> device_shutdown+0x10c/0x2c4
-> drm_atomic_helper_shutdown+0x48/0xfc
-> modeset_lock+0x120/0x24c
-> lock_crtcs+0x60/0xa4
-> 
-> stack backtrace:
-> CPU: 4 PID: 5213 Comm: reboot Not tainted 5.4.91 #1
-> Hardware name: Google Pompom (rev1) with LTE (DT)
-> Call trace:
-> dump_backtrace+0x0/0x1dc
-> show_stack+0x24/0x30
-> dump_stack+0xfc/0x1a8
-> __lock_acquire+0xcd0/0x22b8
-> lock_acquire+0x1ec/0x240
-> __mutex_lock_common+0xe0/0xc84
-> mutex_lock_nested+0x48/0x58
-> lock_crtcs+0x60/0xa4
-> msm_atomic_commit_tail+0x348/0x570
-> commit_tail+0xdc/0x178
-> drm_atomic_helper_commit+0x160/0x168
-> drm_atomic_commit+0x68/0x80
-> 
-> This is because lockdep thinks all the locks taken in lock_crtcs() are
-> the same lock, when they actually aren't. That's because we call
-> mutex_init() in msm_kms_init() and that assigns on static key for every
-> lock initialized in this loop. Let's allocate a dynamic number of
-> lock_class_keys and assign them to each lock so that lockdep can figure
-> out an AA deadlock isn't possible here.
-> 
-> Fixes: b3d91800d9ac ("drm/msm: Fix race condition in msm driver with async layer updates")
-> Cc: Krishna Manikandan <mkrishn@codeaurora.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+On Tue, Feb 2, 2021 at 4:32 AM Bernard Zhao <bernard@vivo.com> wrote:
+>
+> remove unneeded variable: "rc".
+>
+> Signed-off-by: Bernard Zhao <bernard@vivo.com>
 
-This smells like throwing more bad after initial bad code ...
+Reviewed-by: Guenter Roeck <groeck@chromium.org>
 
-First a rant: https://blog.ffwll.ch/2020/08/lockdep-false-positives.html
-
-Yes I know the locking you're doing here is correct, but that goes to the
-second issue: Why is this needed? atomic_async_update helpers are supposed
-to take care of ordering fun like this, if they're not, we need to address
-things there. The problem that
-
-commit b3d91800d9ac35014e0349292273a6fa7938d402
-Author: Krishna Manikandan <mkrishn@codeaurora.org>
-Date:   Fri Oct 16 19:40:43 2020 +0530
-
-    drm/msm: Fix race condition in msm driver with async layer updates
-
-is _the_ reason we have drm_crtc_commit to track stuff, and Maxime has
-recently rolled out a pile of changes to vc4 to use these things
-correctly. Hacking some glorious hand-rolled locking for synchronization
-of updates really should be the exception for kms drivers, not the rule.
-And this one here doesn't look like an exception by far (the one legit I
-know of is the locking issues amdgpu has between atomic_commit_tail and
-gpu reset, and that one is really nasty, so not going to get fixed in
-helpers, ever).
-
-Cheers, Daniel
-
+>
 > ---
->  drivers/gpu/drm/msm/msm_kms.h | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
-> index d8151a89e163..4735251a394d 100644
-> --- a/drivers/gpu/drm/msm/msm_kms.h
-> +++ b/drivers/gpu/drm/msm/msm_kms.h
-> @@ -157,6 +157,7 @@ struct msm_kms {
->  	 * from the crtc's pending_timer close to end of the frame:
->  	 */
->  	struct mutex commit_lock[MAX_CRTCS];
-> +	struct lock_class_key commit_lock_keys[MAX_CRTCS];
->  	unsigned pending_crtc_mask;
->  	struct msm_pending_timer pending_timers[MAX_CRTCS];
->  };
-> @@ -166,8 +167,11 @@ static inline int msm_kms_init(struct msm_kms *kms,
+>  drivers/gpu/drm/msm/dp/dp_panel.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+> index d1780bcac8cc..9cc816663668 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+> @@ -409,7 +409,6 @@ int dp_panel_timing_cfg(struct dp_panel *dp_panel)
+>
+>  int dp_panel_init_panel_info(struct dp_panel *dp_panel)
 >  {
->  	unsigned i, ret;
->  
-> -	for (i = 0; i < ARRAY_SIZE(kms->commit_lock); i++)
-> -		mutex_init(&kms->commit_lock[i]);
-> +	for (i = 0; i < ARRAY_SIZE(kms->commit_lock); i++) {
-> +		lockdep_register_key(&kms->commit_lock_keys[i]);
-> +		__mutex_init(&kms->commit_lock[i], "&kms->commit_lock[i]",
-> +			     &kms->commit_lock_keys[i]);
-> +	}
->  
->  	kms->funcs = funcs;
->  
-> 
-> base-commit: 19c329f6808995b142b3966301f217c831e7cf31
-> -- 
-> https://chromeos.dev
-> 
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
-
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+> -       int rc = 0;
+>         struct drm_display_mode *drm_mode;
+>
+>         drm_mode = &dp_panel->dp_mode.drm_mode;
+> @@ -436,7 +435,7 @@ int dp_panel_init_panel_info(struct dp_panel *dp_panel)
+>                                         min_t(u32, dp_panel->dp_mode.bpp, 30));
+>         DRM_DEBUG_DP("updated bpp = %d\n", dp_panel->dp_mode.bpp);
+>
+> -       return rc;
+> +       return 0;
+>  }
+>
+>  struct dp_panel *dp_panel_get(struct dp_panel_in *in)
+> --
+> 2.29.0
+>
