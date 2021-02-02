@@ -2,89 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D09E30CC43
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Feb 2021 20:51:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A916430CC48
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Feb 2021 20:51:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239999AbhBBTta (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Feb 2021 14:49:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40052 "EHLO
+        id S240073AbhBBTuT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Feb 2021 14:50:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240120AbhBBTs7 (ORCPT
+        with ESMTP id S240138AbhBBTtL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Feb 2021 14:48:59 -0500
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 837BCC061788
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Feb 2021 11:47:54 -0800 (PST)
-Received: by mail-pj1-x102d.google.com with SMTP id e9so3094739pjj.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Feb 2021 11:47:54 -0800 (PST)
+        Tue, 2 Feb 2021 14:49:11 -0500
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C680C06178C
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Feb 2021 11:48:31 -0800 (PST)
+Received: by mail-oi1-x235.google.com with SMTP id w8so24083940oie.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Feb 2021 11:48:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=19MA6VmZ1TXGx8xgl9B9Clwb3xJWJIXQ38902RwSETk=;
-        b=EL9fLzJ5P3xbNoPG8Vlm3VM/gRsuPNy/rlkgBwqU+bfbZUtgTS8ZiUYTrOCFk6Tpdt
-         /2Ivlcgw/W5ksz7SjXnpr+qapDNeWulA/kGj/NkvEiLhh9o8p37NXDSt3Ip71keOqeDf
-         z/4COF+i+KNTUQ8Dw+uakxac8ZS7upbcIPJic=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=ZSXnsXOh3hBwQ0FBMh5iVZ9JTSULSvhbn6nE2ip4xGU=;
+        b=ZUrCz+B1eGiuxlVYw+vA2x/efphepCu8o71osANOPPpf4+fFruvqtUjr4CEaJTPofL
+         Qr7/U7HE6MO6wYuDZcFbYFAYUbgwLwhA00TTDWsR3PMSyOBwgD0k6PQOc1Z1j7YzME+/
+         vXmE3O6flEaUv2HFMrjnMnowunrZfdOP1tynDGMCOOZsd0KZBQXtvELYQNAQpUJoWMYj
+         9WhjCKFI1TiwFuJC8YwppSM9T9xouL/jAyhb9dU709pvBMcIfwsXVIzYVBgkDePnBbk/
+         5lEysnoAz5Y+TnA59cZa+CFrcdYHFHo6YriuEzM8pcF9tI2+WgcTOI1EI+kCBY9VcDLA
+         Yhsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=19MA6VmZ1TXGx8xgl9B9Clwb3xJWJIXQ38902RwSETk=;
-        b=bDqb7fhas5c9Er54nUG2/vQWrUJc08cW85UHFtnbv+OPrLBOXg/BdGszezISLCCLFt
-         sFkFAyS9CMphvjyfFY3OX5T+yQ7vb9zjS9VZkZQ6LLVav78a+Tfy7aODXIchGeMLES4e
-         zXj3yujqGyDeofqr+quHE5vMq56QPsp2jtZVgddT6d01eh40soBr4hJed91xNgFXgYmq
-         mu7bne1Q+1h7Xp7kDl4zldjWEO5i/2OO0/Co6fdernumnL4jDdhjV9HaX06d5JD+l5WP
-         XCHOBgfmdBmaObWTQ9ula2ybQCq2VYtrJ1LylqyV7NSeH6T+CNZJ9atOqiyWGVFaXxRB
-         GLbg==
-X-Gm-Message-State: AOAM533x3WBJYIIblkzab7YRdncdRBr8arjDTsJ5hxlL2iBHi5HWCA1n
-        dfH1QIHfJRy1SCebgAk1HSvV/1MTA0+RJg==
-X-Google-Smtp-Source: ABdhPJwSL9tHYTjbifQL+Zy89Yj6xktCPVIn0O5ReEMsqIDmMMYCKbhDZN7ISmPAgxVTvhZ/nTKhog==
-X-Received: by 2002:a17:90a:5318:: with SMTP id x24mr6051241pjh.226.1612295274185;
-        Tue, 02 Feb 2021 11:47:54 -0800 (PST)
-Received: from smtp.gmail.com ([2620:15c:202:201:3571:bd6e:ee19:b59f])
-        by smtp.gmail.com with ESMTPSA id j4sm17021751pfa.131.2021.02.02.11.47.53
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ZSXnsXOh3hBwQ0FBMh5iVZ9JTSULSvhbn6nE2ip4xGU=;
+        b=jBWa/V1TWGrI948IX6pyRnYBEaCewWxUH9yHMP6OCRjTl8H5idrhPfggf3MA42ZcU5
+         VMvcRpXmtG6YGAg0Aaaw9T33pJU7bORjP2vcw+rAFmWcH7jIGm43uLiMIGhrmtR7LVBO
+         H+bHhIZuJj+ykBW3xdjDroPXy1q6HFmEycttK0nIQSV4tBIjX938bMfBwyvbCsH54MBK
+         9oGO74amK/xHlGE/G7D4U7M2QABdqL2xN47TaoU2nsAY6GsYCfAqAwDl0aK5RmzYLRSG
+         JIjH5tlQiIk7vgTAUajGBOM+Bv+diJ639Ah8GTNn2bYCLaWxewguqjrs1RS6nl+iBEvF
+         WcnA==
+X-Gm-Message-State: AOAM532NVptsY1FpP8WDJ9rlENZxQFIvE9/mZZGeSf0hXwQ5PR+IU3Jh
+        jYUARVa++nx9eoIDk01qlczQew==
+X-Google-Smtp-Source: ABdhPJxMbOKdnb0NsWQpRqJsWqS2ZPHN8kvdgzsSEVMxwE9+RCz70zlYR/Iv9MWqZYfjLu5EhXTMdg==
+X-Received: by 2002:aca:a905:: with SMTP id s5mr3717098oie.5.1612295310681;
+        Tue, 02 Feb 2021 11:48:30 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id r7sm2468593oih.31.2021.02.02.11.48.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Feb 2021 11:47:53 -0800 (PST)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     linux-kernel@vger.kernel.org,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        Dikshita Agarwal <dikshita@codeaurora.org>
-Subject: [PATCH -next] media: venus: Include io.h for memremap()
-Date:   Tue,  2 Feb 2021 11:47:52 -0800
-Message-Id: <20210202194752.247301-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.30.0.365.g02bc693789-goog
+        Tue, 02 Feb 2021 11:48:30 -0800 (PST)
+Date:   Tue, 2 Feb 2021 13:48:28 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Helgaas <helgaas@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        PCI <linux-pci@vger.kernel.org>
+Subject: Re: [PATCH v2 3/5] pcie-qcom: provide a way to power up qca6390 chip
+ on RB5 platform
+Message-ID: <YBmsjDiKnpQjYeQh@builder.lan>
+References: <da0ac373-4edb-0230-b264-49697fa3d86a@linaro.org>
+ <20210129215024.GA113900@bjorn-Precision-5520>
+ <CAA8EJpoPsv5tfsaiJq4UnBYt3o+gJanWzy8aaZRK=V8yOk3mJQ@mail.gmail.com>
+ <YBTYKLi81Cf65yUB@builder.lan>
+ <CAA8EJprwBKbGrh-BjrzkQTxoboUi470wYcn-gTBHdNQ1Af7DKA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJprwBKbGrh-BjrzkQTxoboUi470wYcn-gTBHdNQ1Af7DKA@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This file uses memremap() now, so we should include io.h instead of
-relying on any sort of implicit include elsewhere.
+On Sat 30 Jan 10:14 CST 2021, Dmitry Baryshkov wrote:
 
-Cc: Dikshita Agarwal <dikshita@codeaurora.org>
-Fixes: 0ca0ca980505 ("media: venus: core: add support to dump FW region")
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/media/platform/qcom/venus/core.c | 1 +
- 1 file changed, 1 insertion(+)
+> On Sat, 30 Jan 2021 at 06:53, Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+> >
+> > On Fri 29 Jan 16:19 CST 2021, Dmitry Baryshkov wrote:
+> >
+> > > On Sat, 30 Jan 2021 at 00:50, Bjorn Helgaas <helgaas@kernel.org> wrote:
+> > > >
+> > > > On Fri, Jan 29, 2021 at 06:45:21AM +0300, Dmitry Baryshkov wrote:
+> > > > > On 28/01/2021 22:26, Rob Herring wrote:
+> > > > > > On Thu, Jan 28, 2021 at 11:52 AM Dmitry Baryshkov
+> > > > > > <dmitry.baryshkov@linaro.org> wrote:
+> > > > > > >
+> > > > > > > Some Qualcomm platforms require to power up an external device before
+> > > > > > > probing the PCI bus. E.g. on RB5 platform the QCA6390 WiFi/BT chip needs
+> > > > > > > to be powered up before PCIe0 bus is probed. Add a quirk to the
+> > > > > > > respective PCIe root bridge to attach to the power domain if one is
+> > > > > > > required, so that the QCA chip is started before scanning the PCIe bus.
+> > > > > >
+> > > > > > This is solving a generic problem in a specific driver. It needs to be
+> > > > > > solved for any PCI host and any device.
+> > > > >
+> > > > > Ack. I see your point here.
+> > > > >
+> > > > > As this would require porting code from powerpc/spark of-pci code and
+> > > > > changing pcie port driver to apply power supply before bus probing happens,
+> > > > > I'd also ask for the comments from PCI maintainers. Will that solution be
+> > > > > acceptable to you?
+> > > >
+> > > > I can't say without seeing the code.  I don't know enough about this
+> > > > scenario to envision how it might look.
+> > > >
+> > > > I guess the QCA6390 is a PCIe device?  Why does it need to be powered
+> > > > up before probing?  Shouldn't we get a link-up interrupt when it is
+> > > > powered up so we could probe it then?
+> > >
+> > > Not quite. QCA6390 is a multifunction device, with PCIe and serial
+> > > parts. It has internal power regulators which once enabled will
+> > > powerup the PCIe, serial and radio parts. There is no need to manage
+> > > regulators. Once enabled they will automatically handle device
+> > > suspend/resume, etc.
+> > >
+> >
+> > So what you're saying is that if either the PCI controller or bluetooth
+> > driver probes these regulators will be turned on, indefinitely?
+> >
+> > If so, why do we need a driver to turn them on, rather than just mark
+> > them as always-on?
+> >
+> > What's the timing requirement wrt regulators vs WL_EN/BT_EN?
+> 
+> According to the documentation I have, they must be enabled right
+> after enabling powering the chip and they must stay enabled all the
+> time.
+> 
 
-diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index 1471c7f9c89d..915b3ed8ed64 100644
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -5,6 +5,7 @@
-  */
- #include <linux/init.h>
- #include <linux/interconnect.h>
-+#include <linux/io.h>
- #include <linux/ioctl.h>
- #include <linux/delay.h>
- #include <linux/devcoredump.h>
+So presumably just marking these things always-on and flipping the GPIO
+statically won't be good enough due to the lack of control over the
+timing.
 
-base-commit: 0ca0ca9805055bb0efc16890f9d6433c65bd07cc
--- 
-https://chromeos.dev
+This really do look like a simplified case of what we see with the
+PCIe attached modems, where similar requirements are provided, but also
+the ability to perform a device specific reset sequence in case the
+hardware has locked up. I'm slightly worried about the ability of
+extending your power-domain model to handle the restart operation
+though.
 
+Regards,
+Bjorn
