@@ -2,134 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F1CD30C73A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Feb 2021 18:17:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4897E30C5F6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Feb 2021 17:37:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236199AbhBBROA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Feb 2021 12:14:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52316 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236373AbhBBQZc (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Feb 2021 11:25:32 -0500
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86F47C0617A7
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Feb 2021 08:23:09 -0800 (PST)
-Received: by mail-oi1-x233.google.com with SMTP id j25so23384400oii.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Feb 2021 08:23:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=nmtKOztRPU1FHLWkkh8andN7amnZAPXC6AXlDwUJfkM=;
-        b=xNfXP/GMRfWtyYmR9X6j3Nh5jpiQWgvYPDyLx6wo9BR1leBdbgF/GRp292X0xCbDLo
-         B8cDJzU8sTUW6RmBsm847N2mLoDOnrdopQyxp1b4Jr7gDGa+jXrvkQxO7rcu6inHKgdL
-         tavjCt2VYeCDmdZL59OfjHZ9FxvBYU7rjqgTHt+M+kAn0EvcsDV1w2wOtQUkpD7Lu5wr
-         mjW/+i2cCdzKU47Ya9YSlwSiVtGWlf1C3AsZSAili3iYsHJrRDhRG4k8I3jaXVG+SqGX
-         +2Tal4E0nSdNaANLcxedEHeXD6p4qCN4crrT8EMJqzkaijuMhmTkN5FRbkzg4muxKKDt
-         achw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=nmtKOztRPU1FHLWkkh8andN7amnZAPXC6AXlDwUJfkM=;
-        b=HiABL2aO34g3Nx35Ape4IGdgcl8eRbJLDtnENx7ZVBpxXDi6p/FvzWWg4JqC6K+wvB
-         7LUshHINSS77XeHA59Q9kvPPV8igLCMSMqalQtWHmmWvVXvcVLrwPb+KLRj3VczaXjR4
-         rbb9dx1dP5hu+/HaqjBo2D0G0eEPvR/sS4v6oN/zpc/dn1ySGMIpx8f+Zq+dv2NPGi5m
-         M6cctmnzbwcFoeVSJXNNCNmG5dZ1nZqXGF+m+9OZfQnob2cj99Vefqga6GzkZhPv5rqq
-         sf5c+d/+B9BEfpcWqF+9iympM3YGHrr6HtOCLAEc4S4rIrbHhe3uSt62O6Xovvt1BUst
-         XsPg==
-X-Gm-Message-State: AOAM530oB4Wl/LLsNerJimt7GxbLZbOidDGkSIVKD2n1ZF07Eiv+AoY/
-        XnHp50egQCgGbxiw6G/dMGnjTA==
-X-Google-Smtp-Source: ABdhPJztV5fpvulQl1IAaifHUQhhM0mV4tu9adu6SEVgj9qRz3WaVUCEDUhOOYl0wj0Dwz1yPDqKSA==
-X-Received: by 2002:aca:308a:: with SMTP id w132mr3114257oiw.69.1612282988874;
-        Tue, 02 Feb 2021 08:23:08 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id q3sm4239695oih.35.2021.02.02.08.23.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Feb 2021 08:23:08 -0800 (PST)
-Date:   Tue, 2 Feb 2021 10:23:06 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Wesley Cheng <wcheng@codeaurora.org>
-Cc:     agross@kernel.org, balbi@kernel.org, gregkh@linuxfoundation.org,
-        robh+dt@kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org
-Subject: Re: [PATCH v7 4/5] usb: dwc3: dwc3-qcom: Enable tx-fifo-resize
- property by default
-Message-ID: <YBl8aszdk1xgbg1i@builder.lan>
-References: <1611895604-4496-1-git-send-email-wcheng@codeaurora.org>
- <1611895604-4496-5-git-send-email-wcheng@codeaurora.org>
+        id S236633AbhBBQft (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Feb 2021 11:35:49 -0500
+Received: from mail.kernel.org ([198.145.29.99]:59190 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236455AbhBBQdc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Feb 2021 11:33:32 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id E067364F79;
+        Tue,  2 Feb 2021 16:32:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1612283571;
+        bh=YWHfyr2/AnPgY4UlYi+YIrWZvY9TvUAJqBz883GtN+8=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=WuZY4PzrKxLZei/0QrkUSLj7JT7R/qQ4uj0khxMrvXs1jDuFWY3gPFcyTB7ClHQ6Y
+         rlkDcyg0QxZiZiQYhKoDX0v3Fu/DQ9j4B5H9DaP3MOOMSFymuifCK2rDGbETRbUOfm
+         3BdU/8TSArNJFBGQP0x0RX5OVD1F8o6aAPEk6Sc8lPnpfSLmImp2xTeO5slq/VTbDm
+         fB7q39XdtFE19LcJ0a9NzmJx1GfmHMmekaObpoA+jKEMjCTY1WESa0Zyu2Eb3dRb6G
+         z1+JaaLA6AIjEnQ55+MsIXKkbLhCz4DYCyqigrWFNh2d8tFb+7eBUzr9lDw34Jsjil
+         GnL+UmAV1ODnQ==
+From:   Mark Brown <broonie@kernel.org>
+To:     mazziesaccount@gmail.com,
+        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
+Cc:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+In-Reply-To: <0400d7471571144bfeba27e3a80a24eb17d81f4d.1612249657.git.matti.vaittinen@fi.rohmeurope.com>
+References: <0400d7471571144bfeba27e3a80a24eb17d81f4d.1612249657.git.matti.vaittinen@fi.rohmeurope.com>
+Subject: Re: (subset) [PATCH 1/2] regulator: qcom-labibb: avoid unbalanced IRQ enable
+Message-Id: <161228352412.18127.16657481619745854565.b4-ty@kernel.org>
+Date:   Tue, 02 Feb 2021 16:32:04 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1611895604-4496-5-git-send-email-wcheng@codeaurora.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 28 Jan 22:46 CST 2021, Wesley Cheng wrote:
-
-> In order to take advantage of the TX fifo resizing logic, manually add
-> these properties to the DWC3 child node by default.  This will allow
-> the DWC3 gadget to resize the TX fifos for the IN endpoints, which
-> help with performance.
+On Tue, 2 Feb 2021 09:36:34 +0200, Matti Vaittinen wrote:
+> If a spurious OCP IRQ occurs the isr schedules delayed work
+> but does not disable the IRQ. The delayed work assumes IRQ was
+> disabled in handler and attempts enabling it again causing
+> unbalanced enable.
 > 
-> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
-> ---
->  drivers/usb/dwc3/dwc3-qcom.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
-> 
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index d803ee9..4ea6be3 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -564,6 +564,7 @@ static int dwc3_qcom_clk_init(struct dwc3_qcom *qcom, int count)
->  
->  static const struct property_entry dwc3_qcom_acpi_properties[] = {
->  	PROPERTY_ENTRY_STRING("dr_mode", "host"),
-> +	PROPERTY_ENTRY_BOOL("tx-fifo-resize"),
+> Fixes: 390af53e04114 ("regulator: qcom-labibb: Implement short-circuit and over-current IRQs")
 
-I checked the ACPI tables for Lenovo Miix 630, Yoga C630 and Flex 5G and
-neither one has this property specified. So while we could just add this
-here, it would have to be done in collaboration with the people who
-actually define these. And as said before, I believe we want this to
-always be enabled.
+Applied to
 
->  	{}
->  };
->  
-> @@ -634,6 +635,7 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
->  	struct dwc3_qcom	*qcom = platform_get_drvdata(pdev);
->  	struct device_node	*np = pdev->dev.of_node, *dwc3_np;
->  	struct device		*dev = &pdev->dev;
-> +	struct property		*prop;
->  	int			ret;
->  
->  	dwc3_np = of_get_child_by_name(np, "dwc3");
-> @@ -642,6 +644,14 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
->  		return -ENODEV;
->  	}
->  
-> +	prop = kzalloc(sizeof(*prop), GFP_KERNEL);
-> +	if (prop) {
-> +		prop->name = "tx-fifo-resize";
-> +		ret = of_add_property(dwc3_np, prop);
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
 
-Can't we come up with a way where the platform driver enables this on
-the core driver without modifying DT?
+Thanks!
 
-Regards,
-Bjorn
+[2/2] regulator: qcom-labibb: Use disable_irq_nosync from isr
+      commit: 337710b3121a4f4183c38ff056f6f9ef516cc34f
 
-> +		if (ret < 0)
-> +			dev_info(dev, "unable to add tx-fifo-resize prop\n");
-> +	}
-> +
->  	ret = of_platform_populate(np, NULL, NULL, dev);
->  	if (ret) {
->  		dev_err(dev, "failed to register dwc3 core - %d\n", ret);
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
