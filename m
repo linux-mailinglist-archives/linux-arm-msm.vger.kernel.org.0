@@ -2,39 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 61FF330B8BF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Feb 2021 08:38:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B72630B8C6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Feb 2021 08:41:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231856AbhBBHh1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Feb 2021 02:37:27 -0500
-Received: from mail-lf1-f49.google.com ([209.85.167.49]:39547 "EHLO
-        mail-lf1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231560AbhBBHhY (ORCPT
+        id S231358AbhBBHiw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Feb 2021 02:38:52 -0500
+Received: from mail-lj1-f174.google.com ([209.85.208.174]:39241 "EHLO
+        mail-lj1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232202AbhBBHir (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Feb 2021 02:37:24 -0500
-Received: by mail-lf1-f49.google.com with SMTP id h7so26548757lfc.6;
-        Mon, 01 Feb 2021 23:37:07 -0800 (PST)
+        Tue, 2 Feb 2021 02:38:47 -0500
+Received: by mail-lj1-f174.google.com with SMTP id u4so21291843ljh.6;
+        Mon, 01 Feb 2021 23:38:30 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition;
-        bh=a9oX6SQpcG6aFxEmEN6XUmbcvrUqBQW0B4ivGRUk14Y=;
-        b=spo7QMjo1skBbbmVtRzS6gtjW9Jkk9ppf/p/B7tb2/R0+Wyg+xdSl+btPqCbeDpB7J
-         4mMCNa7gv9IqSBECAdFMJ6t8OeXXVFyoS9VQoLSnqj3PxrxhUQs4qAevg2B8tp5rJ2I2
-         M/5zWmoRQ3ZC9sTUNC2OBPK6moMU+DcJ/YD0dZSN3jLZwrkI/TI2npnq/rrz3NZJhxCx
-         GYsvffGGF4800Fm1Vk2L2FxlzmJafyyHGExI0U360DaeDy5TsQue7QKq5j88Jsi+3Ukb
-         zRlbD6dSo92rs9xbnyvGEhrOb5B/UHPzgTFULxf2wg/NeFFjwt4u+mNlqbWlrbK1stvn
-         cLSQ==
-X-Gm-Message-State: AOAM531uUane5yE6XFPHwqJOukVbsDEsHSgJWvPi7TgFFvvDkCY2QTVv
-        dySv52ZPLwE78EYFcOxDzhQ=
-X-Google-Smtp-Source: ABdhPJzB7+ux71l4/Jmbl28nLibAzVE8RnJXOBl4tc1wi2EMbXgZRM7sAJaLrOxK2MjJzmlLIXNwHQ==
-X-Received: by 2002:a19:305:: with SMTP id 5mr10122694lfd.348.1612251401712;
-        Mon, 01 Feb 2021 23:36:41 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=RCsq0lQnyJowuaLECngen64lS6PLCnkwIXsedpi2nHs=;
+        b=XHfeht+h8FlBQPYqUlIn2vfVddgSGqQe2BKRNlTRxS29XZD0xN4kC4P7VxDFCjZjAr
+         q/SFnxQH3TJIZgl1OegamEmbcVAn9+exiYhb6gkL13vnUT3WF2dQ06zR5OP9KwudaOYU
+         SEAHSBfCu2WlAdQ+h1FdJdeypGRYoROtFiYrZZpbJ/k9GsXclRmiy2PNTG2NK7gbNLfN
+         EwsdcyW9SkgoUs5Tk8QS95P9yRWhEf4+T1q1zvYK6cRmXPxnKissDzuRI9fE7/6aGJux
+         PH8hwsZkMSCOOY8WwJ5SjyypV8g9+FGqaU8kWwjXordQtsrLYAU/jB3Qkp3BhFgJgZVh
+         oG+w==
+X-Gm-Message-State: AOAM530k0GwVLZ35orXc8KWLIFty3kMTVbCssKH3crp72j9Bu6OoX6rs
+        6jqJhxBoBTQo/JxqhdAz60Q=
+X-Google-Smtp-Source: ABdhPJxtBkSx+nBB44/bwUk/mCPW67PLF2vhzRPzdifuoJj0sy1m5Sn4toDtTqwOYD8iB1+grRHtLw==
+X-Received: by 2002:a2e:7614:: with SMTP id r20mr12913905ljc.93.1612251485093;
+        Mon, 01 Feb 2021 23:38:05 -0800 (PST)
 Received: from localhost.localdomain (62-78-225-252.bb.dnainternet.fi. [62.78.225.252])
-        by smtp.gmail.com with ESMTPSA id s19sm2461535ljg.43.2021.02.01.23.36.40
+        by smtp.gmail.com with ESMTPSA id z14sm45830lfh.296.2021.02.01.23.38.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Feb 2021 23:36:40 -0800 (PST)
-Date:   Tue, 2 Feb 2021 09:36:34 +0200
+        Mon, 01 Feb 2021 23:38:04 -0800 (PST)
+Date:   Tue, 2 Feb 2021 09:37:58 +0200
 From:   Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
 To:     matti.vaittinen@fi.rohmeurope.com, mazziesaccount@gmail.com
 Cc:     Andy Gross <agross@kernel.org>,
@@ -44,19 +44,23 @@ Cc:     Andy Gross <agross@kernel.org>,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 1/2] regulator: qcom-labibb: avoid unbalanced IRQ enable
-Message-ID: <0400d7471571144bfeba27e3a80a24eb17d81f4d.1612249657.git.matti.vaittinen@fi.rohmeurope.com>
+Subject: [PATCH 2/2] regulator: qcom-labibb: Use disable_irq_nosync from isr
+Message-ID: <f2c4c88d90bf7473e1b84b8a99b7b33d7a081764.1612249657.git.matti.vaittinen@fi.rohmeurope.com>
+References: <0400d7471571144bfeba27e3a80a24eb17d81f4d.1612249657.git.matti.vaittinen@fi.rohmeurope.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <0400d7471571144bfeba27e3a80a24eb17d81f4d.1612249657.git.matti.vaittinen@fi.rohmeurope.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If a spurious OCP IRQ occurs the isr schedules delayed work
-but does not disable the IRQ. The delayed work assumes IRQ was
-disabled in handler and attempts enabling it again causing
-unbalanced enable.
+Calling the disable_irq() from irq handler might be a bad idea as
+disable_irq() should wait for handlers to run. I don't see why
+this wouldn't deadlock in wait_event waiting for the threaded
+handler to complete.
+
+Use disable_irq_nosync() instead.
 
 Fixes: 390af53e04114 ("regulator: qcom-labibb: Implement short-circuit and over-current IRQs")
 
@@ -68,24 +72,31 @@ I don't have the HW (and even if I did I might have hard time producing
 these errors) I have not tested this and I am unsure if my code-reading
 is correct => I would _really_ appreciate second opinion and/or testing
 
- drivers/regulator/qcom-labibb-regulator.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/regulator/qcom-labibb-regulator.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/regulator/qcom-labibb-regulator.c b/drivers/regulator/qcom-labibb-regulator.c
-index dbb4511c3c6d..5ac4566f9b7f 100644
+index 5ac4566f9b7f..40e92670e307 100644
 --- a/drivers/regulator/qcom-labibb-regulator.c
 +++ b/drivers/regulator/qcom-labibb-regulator.c
-@@ -275,7 +275,7 @@ static irqreturn_t qcom_labibb_ocp_isr(int irq, void *chip)
- 	ret = qcom_labibb_check_ocp_status(vreg);
- 	if (ret == 0) {
- 		vreg->ocp_irq_count = 0;
--		goto end;
-+		return IRQ_NONE;
- 	}
- 	vreg->ocp_irq_count++;
+@@ -283,7 +283,7 @@ static irqreturn_t qcom_labibb_ocp_isr(int irq, void *chip)
+ 	 * Disable the interrupt temporarily, or it will fire continuously;
+ 	 * we will re-enable it in the recovery worker function.
+ 	 */
+-	disable_irq(irq);
++	disable_irq_nosync(irq);
  
-
-base-commit: 4288b4ccda966c2a49ec7c67100208378bdb34d2
+ 	/* Warn the user for overcurrent */
+ 	dev_warn(vreg->dev, "Over-Current interrupt fired!\n");
+@@ -536,7 +536,7 @@ static irqreturn_t qcom_labibb_sc_isr(int irq, void *chip)
+ 	 * Disable the interrupt temporarily, or it will fire continuously;
+ 	 * we will re-enable it in the recovery worker function.
+ 	 */
+-	disable_irq(irq);
++	disable_irq_nosync(irq);
+ 
+ 	/* Signal out of regulation event to drivers */
+ 	regulator_notifier_call_chain(vreg->rdev,
 -- 
 2.25.4
 
