@@ -2,168 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A2E3C30D6E7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Feb 2021 11:00:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 73F2E30D702
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Feb 2021 11:06:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233586AbhBCKAO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Feb 2021 05:00:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53394 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233562AbhBCKAG (ORCPT
+        id S233520AbhBCKGL convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>); Wed, 3 Feb 2021 05:06:11 -0500
+Received: from relay7-d.mail.gandi.net ([217.70.183.200]:47809 "EHLO
+        relay7-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233404AbhBCKGK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Feb 2021 05:00:06 -0500
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EEECC0613D6
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Feb 2021 01:59:23 -0800 (PST)
-Received: by mail-pg1-x529.google.com with SMTP id b21so16974728pgk.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Feb 2021 01:59:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=b/R050Y1V5Ge6RgQndzOtSwrUqfobK01w5MWFMoCoZ8=;
-        b=LKVycDXu0rsyOBfww/WsyR7fnRDdngTyJ0nhdbiq7M5uOFBrBJ9KNZqfmMbVDQL9Sr
-         866hPIsso4aRMM+hkbxVJZ8o/4Pm/6Cti1gadMSOAGnnk6Sfsa463M6nR4eHS178Glbk
-         +35ZJ6gMP9bSlDGW7UVIPsEVWaTPtIlbZjjOxQYwUmy9moXwqZ6NCrqtiLl8g+q2uJ5h
-         /lsPqhs6EaVup+ACAU0KGc0FSwl8Cy5AfzBWiT6z828uJGegzpNX+iVieSc3/HSCEnMA
-         OBfXswsLbTp15zuTgO2pSQtwOgYHSjP/rNR+2SMDFpVHhv2/NGy2yLKK/H+PhpYoIe2I
-         uiHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=b/R050Y1V5Ge6RgQndzOtSwrUqfobK01w5MWFMoCoZ8=;
-        b=Qs7d84SZddH5Q8Yl1nWjcLH5hNh/7KhMPLqRHqTqSvnROXV+j20JLHplmChDeafFXH
-         rYOxABJF593IX9eyUwneGMGNyu9Nk7PNAwU6yxnqSr5HxxQPA426KMp/rJYxW3xjf9dW
-         M+iCezaJP1nmdKh7EsviGPCulsPPa96M3ZvpKFy08JqXAmfSFWseMBn/Hp6HBvdbvv4N
-         Ri1aIb+M5ufNOZZDmlTw3p6YiglEXLoHJCMpf0NZjqTbT/YLmPn6sgaXVaEzgxSCtNWL
-         9rpF2o5OCP9/bvjXEd51/dIDNJZvEzh7ovdNQm3aqtSqRAk1CBiR0AkEnKNSZD+IRUGm
-         Er7g==
-X-Gm-Message-State: AOAM533SD1utGrgZWcwqoLD6Akt7l3xYOtH740atxsK6NTzUo3uIRjgi
-        Jx4+DjV4P9qH44H453/w0Jn+Hw==
-X-Google-Smtp-Source: ABdhPJzt+iVFoaJcjuLKZlhysrfskisg5TT52CJKFKEDsjf4a4huk6neQOw5FYOuABb5d83ch1bfsA==
-X-Received: by 2002:a63:db03:: with SMTP id e3mr2733397pgg.225.1612346362659;
-        Wed, 03 Feb 2021 01:59:22 -0800 (PST)
-Received: from localhost.localdomain ([2405:201:6803:610b:1c6f:cebf:a887:dd42])
-        by smtp.gmail.com with ESMTPSA id p16sm1757182pfq.28.2021.02.03.01.59.19
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Feb 2021 01:59:22 -0800 (PST)
-From:   Amit Pundir <amit.pundir@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dt <devicetree@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>, phone-devel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sdm845-xiaomi-beryllium: Add DSI and panel bits
-Date:   Wed,  3 Feb 2021 15:29:16 +0530
-Message-Id: <1612346356-26445-1-git-send-email-amit.pundir@linaro.org>
-X-Mailer: git-send-email 2.7.4
+        Wed, 3 Feb 2021 05:06:10 -0500
+X-Originating-IP: 86.210.203.150
+Received: from xps13 (lfbn-tou-1-972-150.w86-210.abo.wanadoo.fr [86.210.203.150])
+        (Authenticated sender: miquel.raynal@bootlin.com)
+        by relay7-d.mail.gandi.net (Postfix) with ESMTPSA id 6CF792000E;
+        Wed,  3 Feb 2021 10:05:23 +0000 (UTC)
+Date:   Wed, 3 Feb 2021 11:05:22 +0100
+From:   Miquel Raynal <miquel.raynal@bootlin.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     richard@nod.at, vigneshr@ti.com, boris.brezillon@collabora.com,
+        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org
+Subject: Re: [PATCH] mtd: rawnand: Do not check for bad block if bbt is
+ unavailable
+Message-ID: <20210203110522.12f2b326@xps13>
+In-Reply-To: <AFD0F5A6-7876-447B-A089-85091225BE11@linaro.org>
+References: <20210130035412.6456-1-manivannan.sadhasivam@linaro.org>
+        <20210201151824.5a9dca4a@xps13>
+        <20210202041614.GA840@work>
+        <20210202091459.0c41a769@xps13>
+        <AFD0F5A6-7876-447B-A089-85091225BE11@linaro.org>
+Organization: Bootlin
+X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Sumit Semwal <sumit.semwal@linaro.org>
+Hi Manivannan,
 
-Enabling the Display panel for beryllium phone (Xiaomi
-Pocophone F1) requires DSI labibb regulators and panel
-dts nodes to be added. It is also required to keep some
-of the regulators as always-on.
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote on Wed,
+03 Feb 2021 15:28:20 +0530:
 
-Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
-Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
----
- .../boot/dts/qcom/sdm845-xiaomi-beryllium.dts      | 55 ++++++++++++++++++++++
- 1 file changed, 55 insertions(+)
+> Hi Miquel, 
+> 
+> On 2 February 2021 1:44:59 PM IST, Miquel Raynal <miquel.raynal@bootlin.com> wrote:
+> >Hi Manivannan,
+> >
+> >Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote on Tue,
+> >2 Feb 2021 09:46:14 +0530:
+> >  
+> >> Hi,
+> >> 
+> >> On Mon, Feb 01, 2021 at 03:18:24PM +0100, Miquel Raynal wrote:  
+> >> > Hi Manivannan,
+> >> > 
+> >> > Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote on  
+> >Sat,  
+> >> > 30 Jan 2021 09:24:12 +0530:
+> >> >     
+> >> > > The bbt pointer will be unavailable when NAND_SKIP_BBTSCAN option  
+> >is  
+> >> > > set for a NAND chip. The intention is to skip scanning for the  
+> >bad  
+> >> > > blocks during boot time.    
+> >> > 
+> >> > I don't have the same understanding: this flag skips the bad block
+> >> > table scan, not the bad block scan. We do want to scan all the  
+> >devices  
+> >> > in order to construct a RAM based table.
+> >> >     
+> >> > > However, the MTD core will call
+> >> > > _block_isreserved() and _block_isbad() callbacks unconditionally  
+> >for  
+> >> > > the rawnand devices due to the callbacks always present while  
+> >collecting  
+> >> > > the ecc stats.
+> >> > > 
+> >> > > The _block_isreserved() callback for rawnand will bail out if bbt
+> >> > > pointer is not available. But _block_isbad() will continue  
+> >without  
+> >> > > checking for it. So this contradicts with the NAND_SKIP_BBTSCAN  
+> >option  
+> >> > > since the bad block check will happen anyways (ie., not much  
+> >difference  
+> >> > > between scanning for bad blocks and checking each block for bad  
+> >ones).  
+> >> > > 
+> >> > > Hence, do not check for the bad block if bbt pointer is  
+> >unavailable.    
+> >> > 
+> >> > Not checking for bad blocks at all feels insane. I don't really get  
+> >the  
+> >> > scope and goal of such change?
+> >> >     
+> >> 
+> >> The issue I encountered is, on the Telit FN980 device one of the
+> >> partition seems to be protected. So trying to read the bad blocks in
+> >> that partition makes the device to reboot during boot.  
+> >
+> >o_O
+> >
+> >Reading a protected block makes the device to reboot?
+> >
+> >What is the exact device? Can you share the datasheet? Is this behavior
+> >expected? Because it seems really broken to me, a read should not
+> >trigger *anything* that bad.
+> >  
+> 
+> I got more information from the vendor, Telit. The access to the 3rd partition is protected by Trustzone and any access in non privileged mode (where Linux kernel runs) causes kernel panic and the device reboots. 
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-index cd15ae0347e8..e09effa555f1 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-@@ -160,6 +160,14 @@
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
-+		vreg_l14a_1p88: ldo14 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-boot-on;
-+			regulator-always-on;
-+		};
-+
- 		vreg_l17a_1p3: ldo17 {
- 			regulator-min-microvolt = <1304000>;
- 			regulator-max-microvolt = <1304000>;
-@@ -194,6 +202,7 @@
- 			regulator-min-microvolt = <1200000>;
- 			regulator-max-microvolt = <1200000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-boot-on;
- 		};
- 	};
- };
-@@ -207,6 +216,44 @@
- 	firmware-name = "qcom/sdm845/cdsp.mdt";
- };
- 
-+&dsi0 {
-+	status = "okay";
-+	vdda-supply = <&vreg_l26a_1p2>;
-+
-+	ports {
-+		port@1 {
-+			endpoint {
-+				remote-endpoint = <&tianma_nt36672a_in_0>;
-+				data-lanes = <0 1 2 3>;
-+			};
-+		};
-+	};
-+
-+	panel@0 {
-+		compatible = "tianma,fhd-video";
-+		reg = <0>;
-+		vddi0-supply = <&vreg_l14a_1p88>;
-+		vddpos-supply = <&lab>;
-+		vddneg-supply = <&ibb>;
-+
-+		reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		port {
-+			tianma_nt36672a_in_0: endpoint {
-+				remote-endpoint = <&dsi0_out>;
-+			};
-+		};
-+	};
-+};
-+
-+&dsi0_phy {
-+	status = "okay";
-+	vdds-supply = <&vreg_l1a_0p875>;
-+};
-+
- &gcc {
- 	protected-clocks = <GCC_QSPI_CORE_CLK>,
- 			   <GCC_QSPI_CORE_CLK_SRC>,
-@@ -274,6 +321,14 @@
- 
- };
- 
-+&mdss {
-+	status = "okay";
-+};
-+
-+&mdss_mdp {
-+	status = "okay";
-+};
-+
- &mss_pil {
- 	status = "okay";
- 	firmware-name = "qcom/sdm845/mba.mbn", "qcom/sdm845/modem.mdt";
--- 
-2.7.4
+Ok, so this is not a chip feature but more a host constraint.
 
+In this case it would be a good idea to add a host DT property which
+describes the zone to avoid accessing it. Something like:
+
+	secure-area/secure-section = <start length>;
+
+From the core perspective, we should parse this property early enough
+and return -EIO when trying to access this area.
+
+Does this solution sound reasonable to you?
+
+Thanks,
+Miquèl
