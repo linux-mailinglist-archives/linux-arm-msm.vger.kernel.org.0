@@ -2,72 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E4FBC30D868
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Feb 2021 12:20:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 89B2030D898
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Feb 2021 12:27:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234091AbhBCLTW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Feb 2021 06:19:22 -0500
-Received: from mail.baikalelectronics.com ([87.245.175.226]:45358 "EHLO
-        mail.baikalelectronics.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233865AbhBCLTV (ORCPT
+        id S234344AbhBCLZx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Feb 2021 06:25:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43306 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234261AbhBCLYX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Feb 2021 06:19:21 -0500
-Date:   Wed, 3 Feb 2021 14:18:32 +0300
-From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC:     Serge Semin <fancer.lancer@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v3 09/10] usb: dwc3: qcom: Detect DWC3 DT-nodes with
- "usb"-prefixed names
-Message-ID: <20210203111832.a7i56dvd3d6iq5je@mobilestation>
-References: <20201205155621.3045-1-Sergey.Semin@baikalelectronics.ru>
- <20201205155621.3045-10-Sergey.Semin@baikalelectronics.ru>
- <YBnZ8O+zI/dzrjDQ@builder.lan>
- <YBpnpj+0KHM1Q8l8@kroah.com>
+        Wed, 3 Feb 2021 06:24:23 -0500
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C1EEC0613D6
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Feb 2021 03:23:43 -0800 (PST)
+Received: by mail-pj1-x1032.google.com with SMTP id cl8so2914297pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Feb 2021 03:23:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=RnlKEoqL6Uqu9RS0As6U8cIWvU/IELkyhrvevpKdgbw=;
+        b=UCJf7UQE4VrPAHUTxOeE0IsNKU7wvCbx6VNRvt7n1unumgU7/r9krB7H9HQ61DJiq+
+         rnu5L10YfSJBjuiZ3N1FUsO3PkE9uYMpjMw/S29sRWVd3poQWAQv55ENSei9Qw6cz9fa
+         72ShS/6wQajSwGt31iYAFb57X45dXvNZrdCqQl57Wndd8w67cVNN2SVhJaDdiD/d0UQ1
+         oyZpzeGoACyQVnDntN6hG2HHs6omTr2dyLZRvner+OzUl66HeiZHqQbK/nXFMJy8KwAr
+         /jEwW4qxdj5DTG+jZPsN7itsc07ZVORplhBsVcObF66SU/pBhWlN1zDU6BCe7jzAgOMA
+         OKEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=RnlKEoqL6Uqu9RS0As6U8cIWvU/IELkyhrvevpKdgbw=;
+        b=St/3hsBqY082ijsN0tMsRa+W0YFcSufKwjL+HFlFRxsQmChJXEj2LSEQFgDj7++ajx
+         8j32svDDw1LuWE+rB32/z8Al+onqy0TibHtTu/XUnj+leVBpelD3RM7w8rWWOsFberHb
+         8xMpV2xgS2sPdOQYOEgczLiC3pji1dqPX9mhqIl/ezJK2mUXKnfKWnX0e2HZQZZpXeX+
+         SwBqHdJ03JfrOOi2/qpjwxd8PPPpF9SPiAgPh/sBMaHx6zSyfXBJekCxVveccYCc8Gl6
+         CnQTdiePiVVuTwI0yMkZK/xGklGZb1B+BKx5+62uqiasoMCn2dT+nUFuJ53mSRozf5x/
+         4jQg==
+X-Gm-Message-State: AOAM533lK6rDYaPtFntv2EQ2sEyrf6ozIPqVk9oxo7a9WLdnSDiGXyvt
+        VA9U+q35L6UBTUv8v1rEj30UwQYtBeMerzLNQSYR7A==
+X-Google-Smtp-Source: ABdhPJx4nQQVdUgmUlxyoMXLNsuDGqeQE8pvJ48nGJ398xMHkV8QhPQ2xHWO0IiNyMsiTwLSd+9zeJn/fk9UacodvKA=
+X-Received: by 2002:a17:90a:9414:: with SMTP id r20mr2615124pjo.222.1612351422042;
+ Wed, 03 Feb 2021 03:23:42 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <YBpnpj+0KHM1Q8l8@kroah.com>
-X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
+References: <20210127144930.2158242-1-robert.foss@linaro.org>
+ <20210127144930.2158242-16-robert.foss@linaro.org> <1612027420.831924.1419424.nullmailer@robh.at.kernel.org>
+In-Reply-To: <1612027420.831924.1419424.nullmailer@robh.at.kernel.org>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Wed, 3 Feb 2021 12:23:30 +0100
+Message-ID: <CAG3jFytNc39y4XR4j-b8mrxjUQPmoejJA6NZfszib2ZO3V_CFA@mail.gmail.com>
+Subject: Re: [PATCH v3 15/22] dt-bindings: media: camss: Add qcom,
+ sdm660-camss binding
+To:     Rob Herring <robh@kernel.org>
+Cc:     michael@walle.cc, leoyang.li@nxp.com,
+        linux-media <linux-media@vger.kernel.org>,
+        Todor Tomov <todor.too@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
+        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Andrey Konovalov <andrey.konovalov@linaro.org>,
+        Anson.Huang@nxp.com, Geert Uytterhoeven <geert+renesas@glider.be>,
+        Arnd Bergmann <arnd@arndb.de>,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        Jonathan Marek <jonathan@marek.ca>, shawnguo@kernel.org,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        agx@sigxcpu.org, Tomasz Figa <tfiga@chromium.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, MSM <linux-arm-msm@vger.kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        angelogioacchino.delregno@somainline.org, max.oss.09@gmail.com,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 03, 2021 at 10:06:46AM +0100, Greg Kroah-Hartman wrote:
-> On Tue, Feb 02, 2021 at 05:02:08PM -0600, Bjorn Andersson wrote:
-> > On Sat 05 Dec 09:56 CST 2020, Serge Semin wrote:
-> > 
-> > > In accordance with the USB HCD/DRD schema all the USB controllers are
-> > > supposed to have DT-nodes named with prefix "^usb(@.*)?".  Since the
-> > > existing DT-nodes will be renamed in a subsequent patch let's first make
-> > > sure the DWC3 Qualcomm driver supports them and second falls back to the
-> > > deprecated naming so not to fail on the legacy DTS-files passed to the
-> > > newer kernels.
-> > > 
-> > 
-> > Felipe, will you merge this, so that I can merge the dts patch depending
-> > on this into the Qualcomm DT tree?
-> 
-> Patches this old are long-gone out of our queues.  If it needs to be
-> applied to a linux-usb tree, please resend.
+On Sat, 30 Jan 2021 at 18:23, Rob Herring <robh@kernel.org> wrote:
+>
+> On Wed, 27 Jan 2021 15:49:23 +0100, Robert Foss wrote:
+> > Add bindings for qcom,sdm660-camss in order to support the camera
+> > subsystem on SDM630/660 and SDA variants.
+> >
+> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> > ---
+> >
+> > Changes since v2
+> >  - Rob: Add new line at end of file
+> >  - Rob: Remove redundant descriptions
+> >  - Rob: Add power domain description
+> >  - Rob: Make clock-lanes a constant
+> >  - Rob: Rework to conform to new port schema
+> >  - Add max & minItems to data-lanes
+> >  - Remove ports requirement - endpoint & reg
+> >  - Added Angelo as binding maintainer
+> >  - Removed Todor as binding maintainer
+> >
+> >
+> >  .../bindings/media/qcom,sdm660-camss.yaml     | 398 ++++++++++++++++++
+> >  1 file changed, 398 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
+> >
+>
+> My bot found errors running 'make dt_binding_check' on your patch:
+>
+> yamllint warnings/errors:
+>
+> dtschema/dtc warnings/errors:
+> Documentation/devicetree/bindings/media/qcom,sdm660-camss.example.dts:21:18: fatal error: dt-bindings/clock/qcom,mmcc-sdm660.h: No such file or directory
+>    21 |         #include <dt-bindings/clock/qcom,mmcc-sdm660.h>
+>       |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> compilation terminated.
+> make[1]: *** [scripts/Makefile.lib:344: Documentation/devicetree/bindings/media/qcom,sdm660-camss.example.dt.yaml] Error 1
+> make[1]: *** Waiting for unfinished jobs....
+> make: *** [Makefile:1370: dt_binding_check] Error 2
 
-Hello Greg,
-I'll revise the series and resend the patches, which haven't been
-merged in yet, on this week. Sorry for a delay. I should have done
-that earlier, but I have been kind of drown with fixes for DW GMAC
-(stmmac) driver, so couldn't pay much attention to the rest of the
-work.
+This is expected and mentioned in the cover letter due to a dependency
+on an as of yet unmerged mmcc-sdm660 series.
 
--Sergey
-
-> 
-> thanks,
-> 
-> greg k-h
+>
+> See https://patchwork.ozlabs.org/patch/1432255
+>
+> This check can fail if there are any dependencies. The base for a patch
+> series is generally the most recent rc1.
+>
+> If you already ran 'make dt_binding_check' and didn't see the above
+> error(s), then make sure 'yamllint' is installed and dt-schema is up to
+> date:
+>
+> pip3 install dtschema --upgrade
+>
+> Please check and re-submit.
+>
