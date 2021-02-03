@@ -2,218 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 10EA530D7D8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Feb 2021 11:44:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 288FF30D7F9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Feb 2021 11:53:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233365AbhBCKna (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Feb 2021 05:43:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34452 "EHLO
+        id S233758AbhBCKxb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Feb 2021 05:53:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233694AbhBCKnX (ORCPT
+        with ESMTP id S233670AbhBCKxa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Feb 2021 05:43:23 -0500
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51306C061786
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Feb 2021 02:42:43 -0800 (PST)
-Received: by mail-pl1-x630.google.com with SMTP id e12so4991868pls.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Feb 2021 02:42:43 -0800 (PST)
+        Wed, 3 Feb 2021 05:53:30 -0500
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F186AC061573
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Feb 2021 02:52:49 -0800 (PST)
+Received: by mail-pf1-x436.google.com with SMTP id e19so16385766pfh.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Feb 2021 02:52:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Iy/eDo12X7/X/dP07CNNtclY4xvDsxISKIjmhqf7NUg=;
-        b=k5MFLbQDq/ojv39xglXJP5+GMcKafiMxwpDWN25g9We8ceWlDa2ronH4HBIJlRSLND
-         hZK3Ofz7K5OsHCmRCerGUyqILa9Gqt1YeWVCI5+IOox7bb8gpRItl+MdaVRYim6FrDVT
-         MtljRVBkUcDNLale+tcCd6pYR8wC+Spq+yUUHAt1/CyjjybHTPnobVVD6UTju9MDaEgv
-         tdfrNRbve9ZOXSGTRLC0WUMmIDEnX4UqSv0SsNQGeTO+fiGUOA2uCk1jqyD/39FVqVW0
-         K4IgdWfGsakJFAAl9ZhsWGWRZ8r/7W9/mN42eDXGw7G5hGDI/UIPSFOp6gS0lJ+SDiB6
-         V0PA==
+        h=date:user-agent:in-reply-to:references:mime-version
+         :content-transfer-encoding:subject:to:cc:from:message-id;
+        bh=p3o0sLDAxz/W/SPP1XvuN5vOHHS8YIT9o0J8SbVCzPU=;
+        b=W+4qYUqcIh38GzlEXekPSBK0jKJUGEAF+x3oEj1qvsDJyIdJCyVzcNlQ8qPkQZfa2f
+         xsIU70exVuHxfOi+9bKpTjCutEsgBJx0yE9DHMt6PqDdAPO4ZytJQrHAq3/F3tlOJg7T
+         mny54zCXL60z3U7jmXvxgA1TqpvVZeUJGNJX2b9Z+ZKGpyr0YQo0TZMir22j2UcPjFxI
+         sTOHe8OC9dXMpZPCKVgEfoXWRyDgECs0by/ROKZFgrrOtBTa5yLVc8Nj+jEvxn2+QijJ
+         DLF1g/Cg2OQxmYywTx0n/VxaOduTn92UMj1ZlHmrdaM0jh3Q+J41j9hT/KNVaP52bIEH
+         HAgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Iy/eDo12X7/X/dP07CNNtclY4xvDsxISKIjmhqf7NUg=;
-        b=AWH2rGGDNNAJK3CWeXYjTz5BUvmwJy1RonIJN4U5tQUMnwm169XjrzMsKcK/FQhyLF
-         TX8kQa0glgyjSNB/7NPsISnjq/TwNzQd6b0MAeVedgJsYTVyjjYWyUb8hHpFFtjr0deP
-         odJ6SOAoSSG97cWRZIkgTJTawwmEQtuXaPFjFCDqafAxt+kU/DE1M6v2RRVwgAO+9vNW
-         yXZ1aAPahfHQTp04xECJaT5DF5Nu6SHiHRhoKQijlC7wLPCSUk2zMbyZeAOAqv85+P76
-         yuuGovP70Q/gS+7iwbkX41L0wKio8JpGEMqRcenZ1X6z3x3s+s/YAfBso17BfOx+WMSP
-         +2hw==
-X-Gm-Message-State: AOAM5317fqmgXwPlmRCFG2gMkuxW/M39nbafEvZsoAl0TBnttLkmAlJS
-        Qdk4NEhgo9CNPMtxuFGJiR1LxeP2z9i19duRIyBtgQ==
-X-Google-Smtp-Source: ABdhPJxaJ4FEBmLlfldOXozrJQdmppDfIh0KJQl1KqDLNen4yo6fV/I89C/RcD4X3BHjFLxNvMBQEyQLOmUilTbGy4Y=
-X-Received: by 2002:a17:90a:4ecb:: with SMTP id v11mr2595701pjl.75.1612348962588;
- Wed, 03 Feb 2021 02:42:42 -0800 (PST)
+        h=x-gm-message-state:date:user-agent:in-reply-to:references
+         :mime-version:content-transfer-encoding:subject:to:cc:from
+         :message-id;
+        bh=p3o0sLDAxz/W/SPP1XvuN5vOHHS8YIT9o0J8SbVCzPU=;
+        b=O8JbsOh0D/0aHRSBEHxXwyDRZ//iF26XbGL/TC1MBqCeozDM4++sf4M5guDUw3VyjZ
+         +n7RXDk6IfMyHMZdkpiRZ3Zq6ChG9IaPKJjRpU5X4x4ueoGzprfqs9EyDQzj4oSp4Ubr
+         lZPyTWr9EP0WB64ZmTJIjP8BspS7xZfXkwBD0QSwK+IuRB+hL9kmZiWYqh6RXZ5oiemu
+         2Fy/By9WAD1GK8qpG8TNBcwepQrQt0DYWPpmFsnv8KhbASker7CB+lwK2KDCvn+Wnjio
+         i5WP8hjkaOwzlVCw+5QXpWB5Cn6+LhBgFb6lei9qN3ePf9XT9DAleBrMg0FFb8lxLpbR
+         rIWw==
+X-Gm-Message-State: AOAM5330DxXoKvgarJsmvPlDMvL2BbEeB6hfOai0Qrz/ctd3u1qNBQII
+        HYZKC8/p6EfU79AX+mlrf7/X
+X-Google-Smtp-Source: ABdhPJzf5nDeWWg+gxoU7O5XqypjGXLwFZUdDgdnQHTCPf3Z/9XBQTN9ihVdCQS1qn8/Rf37ob5DhA==
+X-Received: by 2002:a62:ae0c:0:b029:1bc:a0b9:f0aa with SMTP id q12-20020a62ae0c0000b02901bca0b9f0aamr2525847pff.78.1612349569452;
+        Wed, 03 Feb 2021 02:52:49 -0800 (PST)
+Received: from ?IPv6:2409:4072:619f:ff99:700b:51f3:e28:b00? ([2409:4072:619f:ff99:700b:51f3:e28:b00])
+        by smtp.gmail.com with ESMTPSA id a12sm1772842pjs.53.2021.02.03.02.52.48
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 03 Feb 2021 02:52:48 -0800 (PST)
+Date:   Wed, 03 Feb 2021 16:22:42 +0530
+User-Agent: K-9 Mail for Android
+In-Reply-To: <20210203111914.1c2f68f6@collabora.com>
+References: <20210130035412.6456-1-manivannan.sadhasivam@linaro.org> <20210201151824.5a9dca4a@xps13> <20210202041614.GA840@work> <20210202091459.0c41a769@xps13> <AFD0F5A6-7876-447B-A089-85091225BE11@linaro.org> <20210203110522.12f2b326@xps13> <EBDAB319-549F-4CB1-8CE3-9DFA99DBFBC0@linaro.org> <20210203111914.1c2f68f6@collabora.com>
 MIME-Version: 1.0
-References: <20210127144930.2158242-1-robert.foss@linaro.org>
- <20210127144930.2158242-11-robert.foss@linaro.org> <20210201134007.GE3@valkosipuli.retiisi.org.uk>
-In-Reply-To: <20210201134007.GE3@valkosipuli.retiisi.org.uk>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Wed, 3 Feb 2021 11:42:31 +0100
-Message-ID: <CAG3jFytzqBnjB9AT1e0jyePGdD0KLriKfu3EpXYxgnv1Fsq3Lg@mail.gmail.com>
-Subject: Re: [PATCH v3 10/22] media: camss: Add support for CSIPHY hardware
- version Titan 170
-To:     Sakari Ailus <sakari.ailus@iki.fi>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, shawnguo@kernel.org,
-        leoyang.li@nxp.com, Geert Uytterhoeven <geert+renesas@glider.be>,
-        Arnd Bergmann <arnd@arndb.de>, Anson.Huang@nxp.com,
-        michael@walle.cc, agx@sigxcpu.org, max.oss.09@gmail.com,
-        angelogioacchino.delregno@somainline.org,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        linux-media <linux-media@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Rob Herring <robh@kernel.org>,
-        Andrey Konovalov <andrey.konovalov@linaro.org>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
-        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Jonathan Marek <jonathan@marek.ca>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH] mtd: rawnand: Do not check for bad block if bbt is unavailable
+To:     Boris Brezillon <boris.brezillon@collabora.com>
+CC:     Miquel Raynal <miquel.raynal@bootlin.com>, richard@nod.at,
+        vigneshr@ti.com, linux-mtd@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bjorn.andersson@linaro.org
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Message-ID: <8A2468D5-B435-4923-BA4F-7BF7CC0FF207@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Sakari,
 
-On Mon, 1 Feb 2021 at 14:40, Sakari Ailus <sakari.ailus@iki.fi> wrote:
->
-> Hi Robert,
->
-> On Wed, Jan 27, 2021 at 03:49:18PM +0100, Robert Foss wrote:
-> > Add register definitions for version 170 of the Titan architecture
-> > and implement support for the CSIPHY subdevice.
-> >
-> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
-> > ---
-> >  .../qcom/camss/camss-csiphy-3ph-1-0.c         | 182 ++++++++++++++++--
-> >  .../media/platform/qcom/camss/camss-csiphy.c  |  66 +++++--
-> >  drivers/media/platform/qcom/camss/camss.c     |  74 +++++++
-> >  3 files changed, 290 insertions(+), 32 deletions(-)
-> >
-> > diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-> > index 97cb9de85031..8cf1440b7d70 100644
-> > --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-> > +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-> > @@ -47,6 +47,105 @@
-> >  #define CSIPHY_3PH_CMN_CSI_COMMON_CTRL6_SHOW_REV_ID  BIT(1)
-> >  #define CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(n) (0x8b0 + 0x4 * (n))
-> >
-> > +#define CSIPHY_DEFAULT_PARAMS            0
-> > +#define CSIPHY_LANE_ENABLE               1
-> > +#define CSIPHY_SETTLE_CNT_LOWER_BYTE     2
-> > +#define CSIPHY_SETTLE_CNT_HIGHER_BYTE    3
-> > +#define CSIPHY_DNP_PARAMS                4
-> > +#define CSIPHY_2PH_REGS                  5
-> > +#define CSIPHY_3PH_REGS                  6
-> > +
-> > +struct csiphy_reg_t {
-> > +     int32_t  reg_addr;
-> > +     int32_t  reg_data;
-> > +     int32_t  delay;
-> > +     uint32_t csiphy_param_type;
-> > +};
-> > +
-> > +static struct
->
-> This should be const.
 
-Agreed. Thanks for catching this!
+On 3 February 2021 3:49:14 PM IST, Boris Brezillon <boris=2Ebrezillon@coll=
+abora=2Ecom> wrote:
+>On Wed, 03 Feb 2021 15:42:02 +0530
+>Manivannan Sadhasivam <manivannan=2Esadhasivam@linaro=2Eorg> wrote:
+>
+>> >>=20
+>> >> I got more information from the vendor, Telit=2E The access to the
+>3rd =20
+>> >partition is protected by Trustzone and any access in non privileged
+>> >mode (where Linux kernel runs) causes kernel panic and the device
+>> >reboots=2E=20
+>
+>Out of curiosity, is it a per-CS-line thing or is this section
+>protected on all CS?
+>
 
+Sorry, I didn't get your question=2E=20
+
+>> >
+>> >Ok, so this is not a chip feature but more a host constraint=2E
+>> >
+>> >In this case it would be a good idea to add a host DT property which
+>> >describes the zone to avoid accessing it=2E Something like:
+>> >
+>> >	secure-area/secure-section =3D <start length>;
+>> >
+>> >From the core perspective, we should parse this property early
+>enough
+>> >and return -EIO when trying to access this area=2E
 >
-> > +csiphy_reg_t lane_regs_sdm845[5][14] = {
-> > +     {
-> > +             {0x0004, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x002C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0034, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x001C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0014, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0028, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> > +             {0x003C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0000, 0x91, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0008, 0x00, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
-> > +             {0x000c, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> > +             {0x0010, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0038, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0060, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0064, 0x7F, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +     },
-> > +     {
-> > +             {0x0704, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x072C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0734, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x071C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0714, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0728, 0x04, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x073C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0700, 0x80, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0708, 0x14, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
-> > +             {0x070C, 0xA5, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0710, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0738, 0x1F, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0760, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0764, 0x7F, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +     },
-> > +     {
-> > +             {0x0204, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x022C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0234, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x021C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0214, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0228, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> > +             {0x023C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0200, 0x91, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0208, 0x00, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
-> > +             {0x020C, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> > +             {0x0210, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0238, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0260, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0264, 0x7F, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +     },
-> > +     {
-> > +             {0x0404, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x042C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0434, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x041C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0414, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0428, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> > +             {0x043C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0400, 0x91, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0408, 0x00, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
-> > +             {0x040C, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> > +             {0x0410, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0438, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0460, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0464, 0x7F, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +     },
-> > +     {
-> > +             {0x0604, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x062C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0634, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x061C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0614, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0628, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> > +             {0x063C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0600, 0x91, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0608, 0x00, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
-> > +             {0x060C, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> > +             {0x0610, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0638, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0660, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +             {0x0664, 0x7F, 0x00, CSIPHY_DEFAULT_PARAMS},
-> > +     },
-> > +};
->
-> --
-> Sakari Ailus
+>FWIW, I'm not sure making it part of the core is a good idea, at least
+>not until we have a different platform with a same needs=2E The
+>controller driver can parse it and return -EACCESS (or -EIO) when this
+>section is accessed=2E
+
+Fine with me=2E=20
+
+Thanks,=20
+Mani
+
+--=20
+Sent from my Android device with K-9 Mail=2E Please excuse my brevity=2E
