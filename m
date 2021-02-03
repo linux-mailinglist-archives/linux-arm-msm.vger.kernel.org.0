@@ -2,123 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EE38130D387
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Feb 2021 07:51:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E49130D3C2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Feb 2021 08:05:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231733AbhBCGu1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Feb 2021 01:50:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40842 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231723AbhBCGuX (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Feb 2021 01:50:23 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 403F4C0613ED
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Feb 2021 22:49:43 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id q7so22864446wre.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Feb 2021 22:49:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=Llt9wZ/++YWpNuv24fYJyAK2KaKZ50JAQBYyHHTRHl0=;
-        b=eMd6ybxnZ1GMNU8CePXnXb1pTr6Ufz1IDd0Ctp4ZlKMVoPoNxn0ozbVA2qeUr1CqPN
-         Go0jM+q9METdwsc19UY3lhxyBGBqmQem9uQv3feFzfiYu4Xm4gubwTEDWsqd6ndAz/R5
-         zZaaTNnjrM7HXSPRIzwwnd+ICKb9BAO+0Q0r9CbY+tLvoNv5Wmq3vEwWU3qWhB6v6x0s
-         p15tmaQ+8Rx7FSXc4FF1/shXUABaAcZhXzjWQvk+prBEyBK8nxwoDu2/H9wPkCsqj7wv
-         jXQo5x/fNSBx3ThDZnAN6BUFvMO4tD6gcg8vofcRDo3n2hTDGX67QtWQV5CHc9lU+dg9
-         aiAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Llt9wZ/++YWpNuv24fYJyAK2KaKZ50JAQBYyHHTRHl0=;
-        b=j/Tlbp4UIwEgRvJDoTRXPPcbwRBXRnauaZr5czTpHbidNLfy2H9qsJSR8pBLsvoHlP
-         QNpO1rbP7d+3e9cvD/liXUN5Ofrudh+qv5JF5dFM6vs+cDJN+s2z+kOa7uaaHRGn6t27
-         VZzORFJgDWnGJLCKEyOdshjw/7AwJSTbs3u0TjL0pEefGtNSiiMd03z2Y5X+2rs4QOse
-         DTbxDi06HYydzy9v2OliI/SfAl2CcU1RXuqOUcmHeuT2Uph+Q5VLOT2UIZCPjooIX9YI
-         VRkrE6AL3JaAxpSB9HGmtHCkX92WxD3JXCqmX3GqgpE2E9nXeGAvHK0YWBPO0gxEncUe
-         JV/w==
-X-Gm-Message-State: AOAM530Bwhn0B2NMJW4J520+K0YfIFJ3W62T+G3ABDdo19eXwGud44wX
-        SCOeX9O+JKB+Guy+lccqKMuOgg==
-X-Google-Smtp-Source: ABdhPJxQrjhEspsMyRywC+CZuV6pLjH2d0gs0SU2q/MWY/IqDeweyxSs/Z4+de3Z6tAprGygraB2Qw==
-X-Received: by 2002:adf:fc86:: with SMTP id g6mr1721941wrr.20.1612334981687;
-        Tue, 02 Feb 2021 22:49:41 -0800 (PST)
-Received: from [10.44.66.8] ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id l5sm1883815wrv.44.2021.02.02.22.49.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Feb 2021 22:49:41 -0800 (PST)
-Subject: Re: [PATCH v2 5/5] interconnect: qcom: Add MSM8939 interconnect
- provider driver
-To:     Benjamin Li <benl@squareup.com>,
-        Vincent Knecht <vincent.knecht@mailoo.org>,
-        Jun Nie <jun.nie@linaro.org>, devicetree@vger.kernel.org,
-        bjorn.andersson@linaro.org, agross@kernel.org,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, robh@kernel.org
-Cc:     shawn.guo@linaro.org
-References: <20201204075345.5161-1-jun.nie@linaro.org>
- <20201204075345.5161-6-jun.nie@linaro.org>
- <d869ea94b3b1c73800a5c3b855cb6f280be6c185.camel@mailoo.org>
- <a88b39dd-1c50-8aff-f85e-27086db9b040@linaro.org>
- <7630c4aa-b023-55a6-e2aa-37a7538c6b45@squareup.com>
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-Message-ID: <8aa03f6d-dcf5-73b3-41f8-0d872d9f4f86@linaro.org>
-Date:   Wed, 3 Feb 2021 08:49:40 +0200
+        id S232079AbhBCHDo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Feb 2021 02:03:44 -0500
+Received: from mail.kernel.org ([198.145.29.99]:35528 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232023AbhBCHD0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 3 Feb 2021 02:03:26 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id A6FAB64F69;
+        Wed,  3 Feb 2021 07:02:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1612335720;
+        bh=H8e8UvRVRIeJRBMFLtr0H3UUm6rcx/88jqoabLKu+dk=;
+        h=From:To:Cc:Subject:Date:From;
+        b=aS9UcuGjtxyieyW+HARPPO1G4YNg5vmzsvSepSa3s2Cbv+6GEGc2iRzlg7UEhPdb1
+         4LYDPyafbn/BEe/OhxzSqAZ7XfVWhQS9SwYyN2kDspIKm5Gryk/1k6maAfOhS5D4+2
+         B26dshHhKf+1VYMSqO3kU4Hf6U9aRXTE2BmGxB/nimAAYxb2uTlaE/1dW0DJ/MwnzY
+         yYJUckv8WIuBX0nYKvh81NRSvrDBD+w8fduDxVbuvhzVuHVORa+eVV1vHeqLuBf086
+         urFLbMPclo4U354gRiGNlLc7vaui3rVC74Offis3Bttg9MKIQ4lmHYNV9H0Ym44l+b
+         2N0uIemGk5rEg==
+Received: by mail.kernel.org with local (Exim 4.94)
+        (envelope-from <mchehab@kernel.org>)
+        id 1l7CAn-001CAO-UU; Wed, 03 Feb 2021 08:01:57 +0100
+From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Binghui Wang <wangbinghui@hisilicon.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Jaehoon Chung <jh80.chung@samsung.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Jesper Nilsson <jesper.nilsson@axis.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Jonathan Chocron <jonnyc@amazon.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mark Brown <broonie@kernel.org>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Richard Zhu <hongxing.zhu@nxp.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        Xiaowei Song <songxiaowei@hisilicon.com>,
+        Zhou Wang <wangzhou1@hisilicon.com>,
+        devicetree@vger.kernel.org, linux-amlogic@lists.infradead.org,
+        linux-arm-kernel@axis.com, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-omap@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org
+Subject: [PATCH v2 00/11] Add support for Hikey 970 PCIe
+Date:   Wed,  3 Feb 2021 08:01:44 +0100
+Message-Id: <cover.1612335031.git.mchehab+huawei@kernel.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-In-Reply-To: <7630c4aa-b023-55a6-e2aa-37a7538c6b45@squareup.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
+Sender: Mauro Carvalho Chehab <mchehab@kernel.org>
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Ben,
+This series add PCIe support for Kirin 970 SoC.
 
-On 2/3/21 02:50, Benjamin Li wrote:
-> On 1/5/21 5:54 AM, Georgi Djakov wrote:
->> On 1/2/21 13:08, Vincent Knecht wrote:
->>> Le vendredi 04 décembre 2020 à 15:53 +0800, Jun Nie a écrit :
->>>> Add driver for the Qualcomm interconnect buses found in MSM8939 based
->>>> platforms. The topology consists of four NoCs that are controlled by
->>>> a remote processor that collects the aggregated bandwidth for each
->>>> master-slave pairs.
->>>>
->>>> Signed-off-by: Jun Nie <jun.nie@linaro.org>
->>>
->>> Shouldn't some rpm ids be changed like they were for msm8916 in the following patch ?
->>> c497f9322af9 ("interconnect: qcom: msm8916: Remove rpm-ids from non-RPM nodes")
->>> https://patchwork.kernel.org/project/linux-arm-msm/patch/20201112105140.10092-1-georgi.djakov@linaro.org/
->>
->> Maybe they should. I don't have the hardware to try it, but the test will be
->> to just add the NoC DT nodes, enable the driver and inspect the boot log for
->> messages like:
->> [    2.926647] qcom_icc_rpm_smd_send mas X error -6
->>
->> Thanks,
->> Georgi
-> 
-> Hi Vincent & Georgi,
-> 
-> Thanks, I ran your suggestion on an MSM8939 board (with an additional
-> change to print slave IDs as well). Results:
-> 
-> [    1.901376] qcom_icc_rpm_smd_send slv 24 error -6
-> [    2.005977] qcom_icc_rpm_smd_send mas 20 error -6
-> [    2.010250] qcom_icc_rpm_smd_send slv 20 error -6
-> [    2.014684] qcom_icc_rpm_smd_send slv 106 error -6
-> [    2.019338] qcom_icc_rpm_smd_send slv 107 error -6
-> [    2.024615] qcom_icc_rpm_smd_send slv 29 error -6
-> [    2.028782] qcom_icc_rpm_smd_send mas 3 error -6
-> [    2.034657] qcom_icc_rpm_smd_send mas 100 error -6
-> (and there's another slv 131 that's hidden by the mas 100 failure)
-> 
-> Jun, I'll send you the patch I tested with to silence all these errors,
-> if you want to just squash that into the next version of your patchset.
+Patch 1 converts the Synopsys DesignWare PCIe binding documentation to
+the DT schema;
 
-Thank you for doing this! Please send a follow-up patch as i already
-queued Jun's patches.
+Patch 2 converts the pcie-kirin DT binding to the DT schema;
 
-Thanks,
-Georgi
+Patch 3 adds some extra configuration needed to support Kirin 970.
+
+Patch 4 were imported from Manivannan's HiKey 970 96boards tree:
+
+   https://git.linaro.org/people/manivannan.sadhasivam/96b-common.git/commit/?h=hikey970_pcie&id=4917380ad023c62960aa0f876bd4f23cefc8729e
+
+It contains the original port made by Linaro.
+
+The remaining patches contain several cleanups applied on the top of
+Manivann's work.
+
+They cleanup the code and change it to use the DT bindings defined on
+patch 3.
+
+---
+
+v2:
+- DTS bindings dropped, as they depend on other DTS changes that will be
+   happening at staging and ARM trees;
+- Use regulator_get() for Kirin 970, instead of regulator_get_optional();
+- The power supply was renamed to "pcie_vdd", in order to better match the
+  schematics;
+- The patch descriptions were renamed in order to match the terms used
+  by other PCI patches;
+- dts patches removed from this series, as they depend on other patches
+  being merged via other trees.
+
+Manivannan Sadhasivam (1):
+  PCI: dwc: pcie-kirin: add support for Kirin 970 PCIe controller
+
+Mauro Carvalho Chehab (10):
+  doc: bindings: PCI: designware-pcie.txt: convert it to YAML
+  doc: bindings: kirin-pcie.txt: convert it to YAML
+  doc: bindings: add new parameters used by Kirin 970
+  PCI: dwc: pcie-kirin: simplify error handling logic
+  PCI: dwc: pcie-kirin: simplify Kirin 970 get resource logic
+  PCI: dwc: pcie-kirin: place common init code altogether
+  PCI: dwc: pcie-kirin: add support for a regulator
+  PCI: dwc: pcie-kirin: allow using multiple reset GPIOs
+  PCI: dwc: pcie-kirin: add support for clkreq GPIOs
+  pci: dwc: pcie-kirin: cleanup kirin970_pcie_get_eyeparam()
+
+ .../bindings/pci/amlogic,meson-pcie.txt       |   4 +-
+ .../bindings/pci/axis,artpec6-pcie.txt        |   2 +-
+ .../bindings/pci/designware-pcie.txt          |  77 --
+ .../bindings/pci/fsl,imx6q-pcie.txt           |   2 +-
+ .../bindings/pci/hisilicon,kirin-pcie.yaml    | 144 ++++
+ .../bindings/pci/hisilicon-histb-pcie.txt     |   2 +-
+ .../bindings/pci/hisilicon-pcie.txt           |   2 +-
+ .../devicetree/bindings/pci/kirin-pcie.txt    |  50 --
+ .../bindings/pci/layerscape-pci.txt           |   2 +-
+ .../bindings/pci/nvidia,tegra194-pcie.txt     |   4 +-
+ .../devicetree/bindings/pci/pci-armada8k.txt  |   2 +-
+ .../devicetree/bindings/pci/pci-keystone.txt  |  10 +-
+ .../devicetree/bindings/pci/pcie-al.txt       |   2 +-
+ .../devicetree/bindings/pci/qcom,pcie.txt     |  14 +-
+ .../bindings/pci/samsung,exynos-pcie.yaml     |   2 +-
+ .../devicetree/bindings/pci/snps,pcie.yaml    | 139 ++++
+ .../pci/socionext,uniphier-pcie-ep.yaml       |   2 +-
+ .../devicetree/bindings/pci/ti-pci.txt        |   4 +-
+ .../devicetree/bindings/pci/uniphier-pcie.txt |   2 +-
+ MAINTAINERS                                   |   4 +-
+ drivers/pci/controller/dwc/pcie-kirin.c       | 749 +++++++++++++++++-
+ 21 files changed, 1033 insertions(+), 186 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/pci/designware-pcie.txt
+ create mode 100644 Documentation/devicetree/bindings/pci/hisilicon,kirin-pcie.yaml
+ delete mode 100644 Documentation/devicetree/bindings/pci/kirin-pcie.txt
+ create mode 100644 Documentation/devicetree/bindings/pci/snps,pcie.yaml
+
+-- 
+2.29.2
+
+
