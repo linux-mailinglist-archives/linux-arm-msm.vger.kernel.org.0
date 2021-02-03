@@ -2,178 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7108130DD6E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Feb 2021 16:02:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4966B30DFB0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Feb 2021 17:27:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232996AbhBCPB5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Feb 2021 10:01:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33896 "EHLO
+        id S231805AbhBCQ0F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Feb 2021 11:26:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232791AbhBCPB4 (ORCPT
+        with ESMTP id S231571AbhBCQ0D (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Feb 2021 10:01:56 -0500
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC074C061573
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Feb 2021 07:01:15 -0800 (PST)
-Received: by mail-yb1-xb30.google.com with SMTP id y128so24230547ybf.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Feb 2021 07:01:15 -0800 (PST)
+        Wed, 3 Feb 2021 11:26:03 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82D60C061573
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Feb 2021 08:25:22 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id l12so25103237wry.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Feb 2021 08:25:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=WJ7CGQhYFtJFl07ok5/69cMGKvlS3zw3sFP/g+CPbqE=;
-        b=uZRRLhF3y0eS4ljMgqi7OwEh7OK1K0i0l31vpn/9XZAt2nrvyjY193G5ODx9d1MwTy
-         CtGWgi7zLNhfBfC4dS/zMN9ASHn+zM2vJMDusoIzh4ufmwXQieEUCQ7QXb9Rl/VCOMNw
-         3+flaW4lom3bFvCog1A2VWA2/65sy9tTQUUfZ8mtd0ClAodwHZYBmr7VC+44oG182xst
-         XYQkG68olRjlOj60fGtXQ8owKFIsLXXCAwQydtPH3kKTNOgXgRRJtjcn2NIak5mN33Sk
-         jf0D6ymnpixxzJccr6sOkGqyLoBTwocxntAAov1uxolPvGX7AEI5sAMqCKnY2i4TB1J8
-         Oj1A==
+        h=from:to:cc:subject:date:message-id;
+        bh=mZtKCFeSZ7YtgJTLNAMjO8CL16GchCOBM1eFkgbXiic=;
+        b=o7DIE9/86yqlIjZAuY+SLAlPzZG1X69Y8/F7VTZXZTVuTCHy65N5Q4nL7EhstALiXO
+         ie7y0gACvDDIjaq6NSrO94SnKQ9nyps3K0d+K4hZhM66QIbeFJ+r7Bt5rrx3wiqXdnAd
+         MUbxTHYoEWx8zwWKfjX5KZ6K8PwdjMwlgSQjXQdi8s2lvlzlLYTC/aHELwGaaCNCxisU
+         GaWgOJd+hZeoMyTYz+GJvhW77hGEH7SzFP64/R9vR1BBYxyVukeud74SMhmD10P0zUl1
+         F8lBHPNR9dCBPIuHC40vq9Kb2aDYOZtjRNE/z+zc+7501Wv3039MhwQ8xnj2eRjLqmfW
+         yhcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=WJ7CGQhYFtJFl07ok5/69cMGKvlS3zw3sFP/g+CPbqE=;
-        b=gPWkfq2P5sSO1Gbwvh00WzaarmOPuP3VcPLMMqEs/z4ohbNahe0Fr1E6DnamlQR7Oy
-         Gcox7390KzN9AzQA6nMwbNE/SCAQ68JUejmhWJ4eYJUFy7RauFudaoePqvFSS+59rj6+
-         vo4ebBLBwwxlotbBV6uiOeC62s7PQXOY+AJfXj+DnRE2G5FZ9/OEZmlqx0eFR8HFQ2Af
-         Zr9EwXX1sYjZXmiJ2SfJfyyzSIWHt/WYWHbqDv/D5PvEXdJ+cA8mFefyvTES2eRYHWga
-         skeS3OcQpGzNK8ZHcncmh4TdQt/jIvcaASsabgOpeCjOIsS0UokwCjDdE6Gogo+TFU29
-         hbsA==
-X-Gm-Message-State: AOAM532OdgS1dcHcV8Nh0khApyN57hrZX4/SkJvg38pGhvGEWIMeYYEU
-        cnxSwVXa50PfK50wYllh+KBpU9LwePyvINCLJp48Ew==
-X-Google-Smtp-Source: ABdhPJwRthCdZBCwaBHOQPF2SrN9ZvGM6S/fgfnLOLSpJL/wn3O50hA0qpEtO0YWCyaTDqZpAcvV9FeDz/C+DXAww/k=
-X-Received: by 2002:a25:1457:: with SMTP id 84mr5080609ybu.74.1612364475171;
- Wed, 03 Feb 2021 07:01:15 -0800 (PST)
-MIME-Version: 1.0
-References: <1612346356-26445-1-git-send-email-amit.pundir@linaro.org>
-In-Reply-To: <1612346356-26445-1-git-send-email-amit.pundir@linaro.org>
-From:   Amit Pundir <amit.pundir@linaro.org>
-Date:   Wed, 3 Feb 2021 20:30:39 +0530
-Message-ID: <CAMi1Hd1cCtSFMBjXm6=fwEeSYMYs5xvKPK25TxsxU9YDogxxDQ@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sdm845-xiaomi-beryllium: Add DSI and
- panel bits
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dt <devicetree@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>, phone-devel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=mZtKCFeSZ7YtgJTLNAMjO8CL16GchCOBM1eFkgbXiic=;
+        b=aQiYVPGwtzJo+gT6WTnkRKPF4yMT3SmY1ajDwRzO189dZW65xTVdcma+IOTslNZGBG
+         sxco5Rk7i35XZVT1DB/yATeqEtYUOuK0h07r8uwr+8JAFchRRwYMLoIJnQhUblwpfeoF
+         30Ix9c6wGoY17xpJXlgn88TqAwMArwoJo1STVIEBgdTBuUwSuJTruQOB9LhCUOWDlDG9
+         Q+X9ePqpf7DWtIFIdYAOmfXyZOd3yV0ltZxJqInUsRXS40KPUQoDESXT+N58MxtPX2DH
+         cdbp4Z1QQhXbyK61vQT5ddEL/RJhF4Edjcq8+A25+yNNNL4UjZc7qF6d4BM2Q6vSixE4
+         g2IA==
+X-Gm-Message-State: AOAM5324zacYvgdlZXYrFswotojp3zVm18NSZlKzh74z98Vf1vtlgH+z
+        equ9zgQKs2mdm4ttG18PRdiLGk3WA3rKfQ==
+X-Google-Smtp-Source: ABdhPJzfV5EAJYymiZZGdstB6HYNI3Wnl1cJ/hi3GcHSvYOsJaA9N2nGFmWiqopeY8mpJuX/WsBcMw==
+X-Received: by 2002:adf:d4ce:: with SMTP id w14mr4326526wrk.89.1612369521214;
+        Wed, 03 Feb 2021 08:25:21 -0800 (PST)
+Received: from localhost.localdomain ([88.122.66.28])
+        by smtp.gmail.com with ESMTPSA id r15sm4468350wrj.61.2021.02.03.08.25.20
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 03 Feb 2021 08:25:20 -0800 (PST)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH] mhi: pci_generic: Print warning in case of firmware crash
+Date:   Wed,  3 Feb 2021 17:33:03 +0100
+Message-Id: <1612369983-21013-1-git-send-email-loic.poulain@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Argh.. This patch is not formatted on top of mainline. It doesn't
-apply cleanly. Sorry about that. I'll fix that in the next version.
+Print warning when MHI detects sys error.
 
-Regards,
-Amit Pundir
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+---
+ drivers/bus/mhi/pci_generic.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-On Wed, 3 Feb 2021 at 15:29, Amit Pundir <amit.pundir@linaro.org> wrote:
->
-> From: Sumit Semwal <sumit.semwal@linaro.org>
->
-> Enabling the Display panel for beryllium phone (Xiaomi
-> Pocophone F1) requires DSI labibb regulators and panel
-> dts nodes to be added. It is also required to keep some
-> of the regulators as always-on.
->
-> Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
-> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
-> ---
->  .../boot/dts/qcom/sdm845-xiaomi-beryllium.dts      | 55 ++++++++++++++++++++++
->  1 file changed, 55 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-> index cd15ae0347e8..e09effa555f1 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-> @@ -160,6 +160,14 @@
->                         regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->                 };
->
-> +               vreg_l14a_1p88: ldo14 {
-> +                       regulator-min-microvolt = <1800000>;
-> +                       regulator-max-microvolt = <1800000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +                       regulator-boot-on;
-> +                       regulator-always-on;
-> +               };
-> +
->                 vreg_l17a_1p3: ldo17 {
->                         regulator-min-microvolt = <1304000>;
->                         regulator-max-microvolt = <1304000>;
-> @@ -194,6 +202,7 @@
->                         regulator-min-microvolt = <1200000>;
->                         regulator-max-microvolt = <1200000>;
->                         regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +                       regulator-boot-on;
->                 };
->         };
->  };
-> @@ -207,6 +216,44 @@
->         firmware-name = "qcom/sdm845/cdsp.mdt";
->  };
->
-> +&dsi0 {
-> +       status = "okay";
-> +       vdda-supply = <&vreg_l26a_1p2>;
-> +
-> +       ports {
-> +               port@1 {
-> +                       endpoint {
-> +                               remote-endpoint = <&tianma_nt36672a_in_0>;
-> +                               data-lanes = <0 1 2 3>;
-> +                       };
-> +               };
-> +       };
-> +
-> +       panel@0 {
-> +               compatible = "tianma,fhd-video";
-> +               reg = <0>;
-> +               vddi0-supply = <&vreg_l14a_1p88>;
-> +               vddpos-supply = <&lab>;
-> +               vddneg-supply = <&ibb>;
-> +
-> +               reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
-> +
-> +               #address-cells = <1>;
-> +               #size-cells = <0>;
-> +
-> +               port {
-> +                       tianma_nt36672a_in_0: endpoint {
-> +                               remote-endpoint = <&dsi0_out>;
-> +                       };
-> +               };
-> +       };
-> +};
-> +
-> +&dsi0_phy {
-> +       status = "okay";
-> +       vdds-supply = <&vreg_l1a_0p875>;
-> +};
-> +
->  &gcc {
->         protected-clocks = <GCC_QSPI_CORE_CLK>,
->                            <GCC_QSPI_CORE_CLK_SRC>,
-> @@ -274,6 +321,14 @@
->
->  };
->
-> +&mdss {
-> +       status = "okay";
-> +};
-> +
-> +&mdss_mdp {
-> +       status = "okay";
-> +};
-> +
->  &mss_pil {
->         status = "okay";
->         firmware-name = "qcom/sdm845/mba.mbn", "qcom/sdm845/modem.mdt";
-> --
-> 2.7.4
->
+diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+index 444693e..81b1500 100644
+--- a/drivers/bus/mhi/pci_generic.c
++++ b/drivers/bus/mhi/pci_generic.c
+@@ -217,7 +217,19 @@ static void mhi_pci_write_reg(struct mhi_controller *mhi_cntrl,
+ static void mhi_pci_status_cb(struct mhi_controller *mhi_cntrl,
+ 			      enum mhi_callback cb)
+ {
++	struct pci_dev *pdev = to_pci_dev(mhi_cntrl->cntrl_dev);
++	struct mhi_pci_device *mhi_pdev = pci_get_drvdata(pdev);
++
+ 	/* Nothing to do for now */
++	switch (cb) {
++	case MHI_CB_FATAL_ERROR:
++		/* fallthrough */
++	case MHI_CB_SYS_ERROR:
++		dev_warn(&pdev->dev, "firmware crashed (%u)\n", cb);
++		break;
++	default:
++		break;
++	}
+ }
+ 
+ static bool mhi_pci_is_alive(struct mhi_controller *mhi_cntrl)
+-- 
+2.7.4
+
