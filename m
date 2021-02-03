@@ -2,139 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 89B2030D898
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Feb 2021 12:27:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6645330D8A5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Feb 2021 12:29:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234344AbhBCLZx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Feb 2021 06:25:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43306 "EHLO
+        id S234261AbhBCL1x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Feb 2021 06:27:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234261AbhBCLYX (ORCPT
+        with ESMTP id S234255AbhBCL0R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Feb 2021 06:24:23 -0500
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C1EEC0613D6
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Feb 2021 03:23:43 -0800 (PST)
-Received: by mail-pj1-x1032.google.com with SMTP id cl8so2914297pjb.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Feb 2021 03:23:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=RnlKEoqL6Uqu9RS0As6U8cIWvU/IELkyhrvevpKdgbw=;
-        b=UCJf7UQE4VrPAHUTxOeE0IsNKU7wvCbx6VNRvt7n1unumgU7/r9krB7H9HQ61DJiq+
-         rnu5L10YfSJBjuiZ3N1FUsO3PkE9uYMpjMw/S29sRWVd3poQWAQv55ENSei9Qw6cz9fa
-         72ShS/6wQajSwGt31iYAFb57X45dXvNZrdCqQl57Wndd8w67cVNN2SVhJaDdiD/d0UQ1
-         oyZpzeGoACyQVnDntN6hG2HHs6omTr2dyLZRvner+OzUl66HeiZHqQbK/nXFMJy8KwAr
-         /jEwW4qxdj5DTG+jZPsN7itsc07ZVORplhBsVcObF66SU/pBhWlN1zDU6BCe7jzAgOMA
-         OKEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=RnlKEoqL6Uqu9RS0As6U8cIWvU/IELkyhrvevpKdgbw=;
-        b=St/3hsBqY082ijsN0tMsRa+W0YFcSufKwjL+HFlFRxsQmChJXEj2LSEQFgDj7++ajx
-         8j32svDDw1LuWE+rB32/z8Al+onqy0TibHtTu/XUnj+leVBpelD3RM7w8rWWOsFberHb
-         8xMpV2xgS2sPdOQYOEgczLiC3pji1dqPX9mhqIl/ezJK2mUXKnfKWnX0e2HZQZZpXeX+
-         SwBqHdJ03JfrOOi2/qpjwxd8PPPpF9SPiAgPh/sBMaHx6zSyfXBJekCxVveccYCc8Gl6
-         CnQTdiePiVVuTwI0yMkZK/xGklGZb1B+BKx5+62uqiasoMCn2dT+nUFuJ53mSRozf5x/
-         4jQg==
-X-Gm-Message-State: AOAM533lK6rDYaPtFntv2EQ2sEyrf6ozIPqVk9oxo7a9WLdnSDiGXyvt
-        VA9U+q35L6UBTUv8v1rEj30UwQYtBeMerzLNQSYR7A==
-X-Google-Smtp-Source: ABdhPJx4nQQVdUgmUlxyoMXLNsuDGqeQE8pvJ48nGJ398xMHkV8QhPQ2xHWO0IiNyMsiTwLSd+9zeJn/fk9UacodvKA=
-X-Received: by 2002:a17:90a:9414:: with SMTP id r20mr2615124pjo.222.1612351422042;
- Wed, 03 Feb 2021 03:23:42 -0800 (PST)
+        Wed, 3 Feb 2021 06:26:17 -0500
+Received: from bhuna.collabora.co.uk (bhuna.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e3e3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA156C061794;
+        Wed,  3 Feb 2021 03:24:32 -0800 (PST)
+Received: from localhost (unknown [IPv6:2a01:e0a:2c:6930:b93f:9fae:b276:a89a])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbrezillon)
+        by bhuna.collabora.co.uk (Postfix) with ESMTPSA id C06581F451BB;
+        Wed,  3 Feb 2021 11:24:28 +0000 (GMT)
+Date:   Wed, 3 Feb 2021 12:24:22 +0100
+From:   Boris Brezillon <boris.brezillon@collabora.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        richard@nod.at
+Cc:     Miquel Raynal <miquel.raynal@bootlin.com>, vigneshr@ti.com,
+        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org
+Subject: Re: [PATCH] mtd: rawnand: Do not check for bad block if bbt is
+ unavailable
+Message-ID: <20210203122422.6963b0ed@collabora.com>
+In-Reply-To: <8A2468D5-B435-4923-BA4F-7BF7CC0FF207@linaro.org>
+References: <20210130035412.6456-1-manivannan.sadhasivam@linaro.org>
+        <20210201151824.5a9dca4a@xps13>
+        <20210202041614.GA840@work>
+        <20210202091459.0c41a769@xps13>
+        <AFD0F5A6-7876-447B-A089-85091225BE11@linaro.org>
+        <20210203110522.12f2b326@xps13>
+        <EBDAB319-549F-4CB1-8CE3-9DFA99DBFBC0@linaro.org>
+        <20210203111914.1c2f68f6@collabora.com>
+        <8A2468D5-B435-4923-BA4F-7BF7CC0FF207@linaro.org>
+Organization: Collabora
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-References: <20210127144930.2158242-1-robert.foss@linaro.org>
- <20210127144930.2158242-16-robert.foss@linaro.org> <1612027420.831924.1419424.nullmailer@robh.at.kernel.org>
-In-Reply-To: <1612027420.831924.1419424.nullmailer@robh.at.kernel.org>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Wed, 3 Feb 2021 12:23:30 +0100
-Message-ID: <CAG3jFytNc39y4XR4j-b8mrxjUQPmoejJA6NZfszib2ZO3V_CFA@mail.gmail.com>
-Subject: Re: [PATCH v3 15/22] dt-bindings: media: camss: Add qcom,
- sdm660-camss binding
-To:     Rob Herring <robh@kernel.org>
-Cc:     michael@walle.cc, leoyang.li@nxp.com,
-        linux-media <linux-media@vger.kernel.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
-        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Andrey Konovalov <andrey.konovalov@linaro.org>,
-        Anson.Huang@nxp.com, Geert Uytterhoeven <geert+renesas@glider.be>,
-        Arnd Bergmann <arnd@arndb.de>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        Jonathan Marek <jonathan@marek.ca>, shawnguo@kernel.org,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        agx@sigxcpu.org, Tomasz Figa <tfiga@chromium.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, MSM <linux-arm-msm@vger.kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        angelogioacchino.delregno@somainline.org, max.oss.09@gmail.com,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 30 Jan 2021 at 18:23, Rob Herring <robh@kernel.org> wrote:
->
-> On Wed, 27 Jan 2021 15:49:23 +0100, Robert Foss wrote:
-> > Add bindings for qcom,sdm660-camss in order to support the camera
-> > subsystem on SDM630/660 and SDA variants.
-> >
-> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
-> > ---
-> >
-> > Changes since v2
-> >  - Rob: Add new line at end of file
-> >  - Rob: Remove redundant descriptions
-> >  - Rob: Add power domain description
-> >  - Rob: Make clock-lanes a constant
-> >  - Rob: Rework to conform to new port schema
-> >  - Add max & minItems to data-lanes
-> >  - Remove ports requirement - endpoint & reg
-> >  - Added Angelo as binding maintainer
-> >  - Removed Todor as binding maintainer
-> >
-> >
-> >  .../bindings/media/qcom,sdm660-camss.yaml     | 398 ++++++++++++++++++
-> >  1 file changed, 398 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
-> >
->
-> My bot found errors running 'make dt_binding_check' on your patch:
->
-> yamllint warnings/errors:
->
-> dtschema/dtc warnings/errors:
-> Documentation/devicetree/bindings/media/qcom,sdm660-camss.example.dts:21:18: fatal error: dt-bindings/clock/qcom,mmcc-sdm660.h: No such file or directory
->    21 |         #include <dt-bindings/clock/qcom,mmcc-sdm660.h>
->       |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> compilation terminated.
-> make[1]: *** [scripts/Makefile.lib:344: Documentation/devicetree/bindings/media/qcom,sdm660-camss.example.dt.yaml] Error 1
-> make[1]: *** Waiting for unfinished jobs....
-> make: *** [Makefile:1370: dt_binding_check] Error 2
+On Wed, 03 Feb 2021 16:22:42 +0530
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote:
 
-This is expected and mentioned in the cover letter due to a dependency
-on an as of yet unmerged mmcc-sdm660 series.
+> On 3 February 2021 3:49:14 PM IST, Boris Brezillon <boris.brezillon@collabora.com> wrote:
+> >On Wed, 03 Feb 2021 15:42:02 +0530
+> >Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote:
+> >  
+> >> >> 
+> >> >> I got more information from the vendor, Telit. The access to the  
+> >3rd    
+> >> >partition is protected by Trustzone and any access in non privileged
+> >> >mode (where Linux kernel runs) causes kernel panic and the device
+> >> >reboots.   
+> >
+> >Out of curiosity, is it a per-CS-line thing or is this section
+> >protected on all CS?
+> >  
+> 
+> Sorry, I didn't get your question. 
 
->
-> See https://patchwork.ozlabs.org/patch/1432255
->
-> This check can fail if there are any dependencies. The base for a patch
-> series is generally the most recent rc1.
->
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
->
-> pip3 install dtschema --upgrade
->
-> Please check and re-submit.
->
+The qcom controller can handle several chips, each connected through a
+different CS (chip-select) line, right? I'm wondering if the firmware
+running in secure mode has the ability to block access for a specific
+CS line or if all CS lines have the same constraint. That will impact
+the way you describe it in your DT (in one case the secure-region
+property should be under the controller node, in the other case it
+should be under the NAND chip node).
