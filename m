@@ -2,75 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F62730D73A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Feb 2021 11:18:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 397B130D753
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Feb 2021 11:20:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233662AbhBCKQv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Feb 2021 05:16:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56998 "EHLO
+        id S233725AbhBCKUC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Feb 2021 05:20:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232865AbhBCKQu (ORCPT
+        with ESMTP id S233488AbhBCKUA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Feb 2021 05:16:50 -0500
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56311C06174A;
-        Wed,  3 Feb 2021 02:16:10 -0800 (PST)
-Received: by mail-wm1-x342.google.com with SMTP id y187so4619832wmd.3;
-        Wed, 03 Feb 2021 02:16:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:subject:to:cc:message-id:mime-version;
-        bh=yl2GMo/ZRyYTJF+nXp5dEsJ4EzRz6Kgdjk3GzIkM2DE=;
-        b=n0SqmLaWgMRqLX6zlac8j3+FNiXueFvuA1DG7treIv2WRC9oo/Px7TdZYgYoBtFaur
-         +igdH1tZPQVPOaeyrsugBcLmEG5v1gzS793GqHtTiNBfn8dAq/2CoxQT+SYtO8FcrJRm
-         HCbIyl9jKrjop+vk2QtpWjRfMwJm+Q5aH/pIoZLTUNZdANyzvpmxmfJSZuAi9Au7IvHq
-         ScMUR0ZzGyqODtEg+bPbVPhcsww0mTbM0d25NpRqc1O4M1i5UghD4jVjE11j36Y8bial
-         srMvLSEYG6RR5CuGrSriDriwmsg2ETk5oenBAFBnw/0eLpKk50ZXRaybx5ohoxNouf56
-         bLlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:subject:to:cc:message-id:mime-version;
-        bh=yl2GMo/ZRyYTJF+nXp5dEsJ4EzRz6Kgdjk3GzIkM2DE=;
-        b=kU2zf3YDyhgSHQ56YMy0HKQeEJ6Mm+MUcod3IqF4f1wj8uBh6a/SC50hA6NrNxcYT6
-         qhZOChHG3u0F1SaCV+4i3KVs/8SwWcmpZtliZBhLti2S9O9c3F3OxZ/8OiYt/tayqnhS
-         5/MdV0FUiZZi6W8OLibSIBGWf9gXdS01rB/2H2QiUiHvDPY2/9FKiEO9xi6KS9Pg3ABG
-         rHbxRT6UygSonzVDZtti3WxXcSsgMY6xBaZRT7cyWdE1A9GBY8fnGgo2sDTvKbRv9fmw
-         VQwZPQ1fJiBwFNnFsUP7nt3/SVbiFefuS89Nme0w4JJjHuVkzShtUisJOvvarDw5gHJ4
-         lx2g==
-X-Gm-Message-State: AOAM530Pv0FORgN7KZfeZEbmq/+LF/0Q2JOycv3CTiwqjdZFswkBOsFP
-        +JG5Y2KVhxks5g7Mq/pMngrEjKTdeTQ=
-X-Google-Smtp-Source: ABdhPJwUdLzfSYpQmEYMXxLnBXpDYUNGxDilIJxXfL+T8oTA22l8fTLoL8WsjxZjsNxDaceM7ZdeZQ==
-X-Received: by 2002:a1c:6308:: with SMTP id x8mr2134937wmb.78.1612347369057;
-        Wed, 03 Feb 2021 02:16:09 -0800 (PST)
-Received: from [10.19.0.22] (89-38-97-125.hosted-by-worldstream.net. [89.38.97.125])
-        by smtp.gmail.com with ESMTPSA id b3sm2315369wme.32.2021.02.03.02.16.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Feb 2021 02:16:08 -0800 (PST)
-Date:   Wed, 03 Feb 2021 14:15:58 +0400
-From:   Yassine Oudjana <yassine.oudjana@gmail.com>
-Subject: Re: [PATCH v5 0/5] msm8996 CPU scaling support
-To:     loic.poulain@linaro.org
-Cc:     amit.kucheria@linaro.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        sboyd@kernel.org
-Message-Id: <M67YNQ.F8F0P7L0UKV81@gmail.com>
-X-Mailer: geary/3.38.1
+        Wed, 3 Feb 2021 05:20:00 -0500
+Received: from bhuna.collabora.co.uk (bhuna.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e3e3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5EE2C061573;
+        Wed,  3 Feb 2021 02:19:19 -0800 (PST)
+Received: from localhost (unknown [IPv6:2a01:e0a:2c:6930:b93f:9fae:b276:a89a])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbrezillon)
+        by bhuna.collabora.co.uk (Postfix) with ESMTPSA id D17DB1F452BC;
+        Wed,  3 Feb 2021 10:19:17 +0000 (GMT)
+Date:   Wed, 3 Feb 2021 11:19:14 +0100
+From:   Boris Brezillon <boris.brezillon@collabora.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Miquel Raynal <miquel.raynal@bootlin.com>, richard@nod.at,
+        vigneshr@ti.com, linux-mtd@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bjorn.andersson@linaro.org
+Subject: Re: [PATCH] mtd: rawnand: Do not check for bad block if bbt is
+ unavailable
+Message-ID: <20210203111914.1c2f68f6@collabora.com>
+In-Reply-To: <EBDAB319-549F-4CB1-8CE3-9DFA99DBFBC0@linaro.org>
+References: <20210130035412.6456-1-manivannan.sadhasivam@linaro.org>
+        <20210201151824.5a9dca4a@xps13>
+        <20210202041614.GA840@work>
+        <20210202091459.0c41a769@xps13>
+        <AFD0F5A6-7876-447B-A089-85091225BE11@linaro.org>
+        <20210203110522.12f2b326@xps13>
+        <EBDAB319-549F-4CB1-8CE3-9DFA99DBFBC0@linaro.org>
+Organization: Collabora
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Wed, 03 Feb 2021 15:42:02 +0530
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote:
 
-Any recent progress on this?
+> >> 
+> >> I got more information from the vendor, Telit. The access to the 3rd  
+> >partition is protected by Trustzone and any access in non privileged
+> >mode (where Linux kernel runs) causes kernel panic and the device
+> >reboots. 
 
-Testing it on Xiaomi MI Note 2 (msm8996pro), It freezes during boot 
-and/or crashes and reboots most of the time. When it doesn't do that it 
-works well, until I stress all 4 CPUs, which makes it crash. Maybe 
-msm8996pro needs some extra work?
+Out of curiosity, is it a per-CS-line thing or is this section
+protected on all CS?
 
-Setting s11 to 470000-1140000uV, 980000-980000uV, or 1140000,1140000uV 
-doesn't change anything.
+> >
+> >Ok, so this is not a chip feature but more a host constraint.
+> >
+> >In this case it would be a good idea to add a host DT property which
+> >describes the zone to avoid accessing it. Something like:
+> >
+> >	secure-area/secure-section = <start length>;
+> >
+> >From the core perspective, we should parse this property early enough
+> >and return -EIO when trying to access this area.
 
-
+FWIW, I'm not sure making it part of the core is a good idea, at least
+not until we have a different platform with a same needs. The
+controller driver can parse it and return -EACCESS (or -EIO) when this
+section is accessed.
