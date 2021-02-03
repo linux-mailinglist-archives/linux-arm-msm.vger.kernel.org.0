@@ -2,210 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 61C1D30D264
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Feb 2021 05:15:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EA8DE30D269
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Feb 2021 05:21:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232427AbhBCEPZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Feb 2021 23:15:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36076 "EHLO
+        id S232507AbhBCEQO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Feb 2021 23:16:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232404AbhBCEPW (ORCPT
+        with ESMTP id S232491AbhBCEQF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Feb 2021 23:15:22 -0500
-Received: from mail-qv1-xf35.google.com (mail-qv1-xf35.google.com [IPv6:2607:f8b0:4864:20::f35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47121C06174A
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Feb 2021 20:14:42 -0800 (PST)
-Received: by mail-qv1-xf35.google.com with SMTP id ew18so11077486qvb.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Feb 2021 20:14:42 -0800 (PST)
+        Tue, 2 Feb 2021 23:16:05 -0500
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2846C061788
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Feb 2021 20:15:21 -0800 (PST)
+Received: by mail-pg1-x534.google.com with SMTP id j2so14747534pgl.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Feb 2021 20:15:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=u1Kmi6mnBkkCqSWXEJQ15LYAb6ytoT8kO+7cz71e1rU=;
-        b=da6AATUe8y4TboRqC4zCieDv8D8OTBREivy/rggxnLrmM4ziQ7FHrIaC9xbR1/gg6b
-         T2QplsYjhFngkMCxETRmRDh/+TpN7R0t24Lad14wuzuax/Di+7OfttDIADXD+QsfYaI6
-         U0+nahdPRrKwTQF3SbyyONb6rncuE7am214uqugNs324lrx7TVD9MMv5VpmPsJsJB4rl
-         IcfI1VUwSiM0KXr9Hq7HDhU0IDXi3E95taL5v7cTTQ6PRZI1Ki2y/9NHL0MWlrHeO4y8
-         oL+iFyip3MeYsxKTfqaEaJkVnRUyE3gr9ijr+OLsbdUZulStbY0hJ7suCupZfEN9mGKF
-         09Mg==
+        h=date:user-agent:in-reply-to:references:mime-version
+         :content-transfer-encoding:subject:to:cc:from:message-id;
+        bh=ntZZuB4lNRdlEmA1QwdGzboawIbLKUN51trQnhnQNhU=;
+        b=Sdc3sNaWQ52HnnDoOGP/5HG0j4k/oLV2QwXxTRbqVZHOtpRufdZ9YVNfKRwqPJ3sAl
+         gl1mKpAJHwtmWWQ1+u2oESPzTxoLy1NKUwGfKm+YbvKBJoPGBldUDm/a/Hd6bUZwutIk
+         4wyCHArpvAglGApXB4CrLwMnX/64gcwqslmzB1B2MFvwdmNldfDZa7H8qPSsXL7XBxZ4
+         Tl3sLKVaBOL8JeVT/Mvypx18RqLsLMILZklVdyfJLpjltOhknEw3uIPTr3zljLJXuXkU
+         f4SwUl0wT4p+diG2DXUdWDSeE+ZxSVH7k8AFTDQOkakNMzto46wXUya2vJGONAMmK2LK
+         9pbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=u1Kmi6mnBkkCqSWXEJQ15LYAb6ytoT8kO+7cz71e1rU=;
-        b=PHNAnyq15X0sNDV7m7h/b2pWvb4yR7qAwwZahRvICoyuGfNF69160sWDzUI9qJiTG2
-         mIZOytAL1jwgJ44SoMsG+AYYrUYGrZat4OT9e4+ApZ5vHadMBWZrpYVehwpUrH4lNRqi
-         0Qa5SbCPrYNrK+ulvpp87BwF0e1MpZUfKAWUrpI06kNFEazLDlwY0SqsIJkQSql2DvdA
-         dJIQfoqLluOQTy+QxWkJZl5pjS5xuHnR3fDKOW2SRseLocSIK9HNZb+ATewwmcKbS5ao
-         mnDAdMHZcoq9TSO9zP4BoE7PTeVAn2CSfhQPwRTrF/qirXiRlh2w9Vm/G3nznbvaHECz
-         sItA==
-X-Gm-Message-State: AOAM533QuC/1TOOnrGYkgUxDxrX8rQXBosRO8qpWsyeyjk9rZxhyDoZp
-        4H5NcPWqkb5bUw4mwKTgejhHA9Dm88csdXG0+d8JjA==
-X-Google-Smtp-Source: ABdhPJxjosTt4MD6QbAu3MNnxE3G5OB3RpNdWyI4h5AYp07kKinJhX1QGim1Veu0tQDQNyij7ZBP8TFf51YhyE1Uj1g=
-X-Received: by 2002:a0c:b912:: with SMTP id u18mr1348119qvf.2.1612325681056;
- Tue, 02 Feb 2021 20:14:41 -0800 (PST)
+        h=x-gm-message-state:date:user-agent:in-reply-to:references
+         :mime-version:content-transfer-encoding:subject:to:cc:from
+         :message-id;
+        bh=ntZZuB4lNRdlEmA1QwdGzboawIbLKUN51trQnhnQNhU=;
+        b=o7kInG+j1olKwyui9UMxXmDRsew7Kh2vz95DA1kXb94Gka8M29fHtB/Sl2BBDNNE0I
+         0DTcRXvaH9lbVGYbrf6w2LHg2jlQJag/eyS5tT85E7hKAGs4cNUD485GpnAO3C+fcsfF
+         aP+jl5K4lKMKlte/PCyDyILYbdeG7vq1EELQDzfKdLG1w/yVWL73WSxAA1Ggd1Ui6PZS
+         Kmv5DIsFy3viuQnlwbBWxCSntPNle1PcVa/ZNGhw7Ps9LVeJMx3N+ZJZk7ZkMf9gXi19
+         GxCfBUZ2q0NcuvSeBwuGf9Lo9DZsbfckAFPU2OfUiDL0rCTSHKDEsnUVUH1YJm9D07Jh
+         a/mg==
+X-Gm-Message-State: AOAM532bqNegwzCEYO2uH7qaMsiown6n79W0lMq3aSQ/CllEfznquHU+
+        WK210hmrXRnoNzyaPEFwwJug
+X-Google-Smtp-Source: ABdhPJztdID0w8dWehyys/UHBYBMqIoU4AGL99x/xmLaUN6co6J8MOQwa53NtiNdTj7MLlr83yR5KQ==
+X-Received: by 2002:a63:5351:: with SMTP id t17mr1499848pgl.176.1612325721421;
+        Tue, 02 Feb 2021 20:15:21 -0800 (PST)
+Received: from ?IPv6:2409:4072:619f:ff99:700b:51f3:e28:b00? ([2409:4072:619f:ff99:700b:51f3:e28:b00])
+        by smtp.gmail.com with ESMTPSA id p15sm477148pfn.172.2021.02.02.20.15.19
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 02 Feb 2021 20:15:20 -0800 (PST)
+Date:   Wed, 03 Feb 2021 09:45:06 +0530
+User-Agent: K-9 Mail for Android
+In-Reply-To: <20210202201008.274209f9@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+References: <1609958656-15064-1-git-send-email-hemantk@codeaurora.org> <20210113152625.GB30246@work> <YBGDng3VhE1Yw6zt@kroah.com> <20210201105549.GB108653@thinkpad> <YBfi573Bdfxy0GBt@kroah.com> <20210201121322.GC108653@thinkpad> <20210202042208.GB840@work> <20210202201008.274209f9@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
 MIME-Version: 1.0
-References: <da0ac373-4edb-0230-b264-49697fa3d86a@linaro.org>
- <20210129215024.GA113900@bjorn-Precision-5520> <CAA8EJpoPsv5tfsaiJq4UnBYt3o+gJanWzy8aaZRK=V8yOk3mJQ@mail.gmail.com>
- <YBTYKLi81Cf65yUB@builder.lan> <CAA8EJprwBKbGrh-BjrzkQTxoboUi470wYcn-gTBHdNQ1Af7DKA@mail.gmail.com>
- <YBmsjDiKnpQjYeQh@builder.lan> <CAL_JsqJoKEVUs0f7rP87M3Wh6yVvB-bYi7vBprti8hoim3-e-A@mail.gmail.com>
-In-Reply-To: <CAL_JsqJoKEVUs0f7rP87M3Wh6yVvB-bYi7vBprti8hoim3-e-A@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 3 Feb 2021 07:14:30 +0300
-Message-ID: <CAA8EJpq6A28RHSD7YVz_AAdWnnvtCEAh1XcPyUTu0Ufp67M1XA@mail.gmail.com>
-Subject: Re: [PATCH v2 3/5] pcie-qcom: provide a way to power up qca6390 chip
- on RB5 platform
-To:     Rob Herring <robh+dt@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Bjorn Helgaas <helgaas@kernel.org>,
-        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        PCI <linux-pci@vger.kernel.org>,
-        Kalle Valo <kvalo@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [RESEND PATCH v18 0/3] userspace MHI client interface driver
+To:     Jakub Kicinski <kuba@kernel.org>
+CC:     Greg KH <gregkh@linuxfoundation.org>, davem@davemloft.net,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jhugo@codeaurora.org, bbhatt@codeaurora.org,
+        loic.poulain@linaro.org, netdev@vger.kernel.org
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Message-ID: <835B2E08-7B84-4A02-B82F-445467D69083@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 3 Feb 2021 at 00:37, Rob Herring <robh+dt@kernel.org> wrote:
+Hi Jakub,=20
+
+On 3 February 2021 9:40:08 AM IST, Jakub Kicinski <kuba@kernel=2Eorg> wrot=
+e:
+>On Tue, 2 Feb 2021 09:52:08 +0530 Manivannan Sadhasivam wrote:
+>> > > I don't see the connection here, sorry=2E
+>> >=20
+>> > For instance USB_NET_CDC_MBIM driver creates the /dev/cdc-wdmX
+>chardev node for
+>> > configuring the modems which supports MBIM protocol over USB=2E Like
+>that, this
+>> > driver creates /dev/mhiX_MBIM chardev node for configuring the
+>modem over MHI
+>> > bus instead of USB=2E The question arised why we are creating a
+>chardev node for
+>> > each supported configuration (channels in the case of MHI) and why
+>can't we use
+>> > the existing /dev/cdc-wdmZ interfaces? The anwser is there is no
+>standard
+>> > subsystem for WWAN and all the drivers represent a chardev which
+>gets used by
+>> > the userspace tools such a Network manager for establishing
+>connection=2E
+>> >=20
+>> > And /dev/cdc-wdmX is restricted to the USB CDC devices=2E
+>> >=20
+>> > Hope this clarifies!
+>>=20
+>> Jakub, Dave, Adding you both to get your reviews on this series=2E I've
+>> provided an explanation above and in the previous iteration [1]=2E
 >
-> On Tue, Feb 2, 2021 at 1:48 PM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> >
-> > On Sat 30 Jan 10:14 CST 2021, Dmitry Baryshkov wrote:
-> >
-> > > On Sat, 30 Jan 2021 at 06:53, Bjorn Andersson
-> > > <bjorn.andersson@linaro.org> wrote:
-> > > >
-> > > > On Fri 29 Jan 16:19 CST 2021, Dmitry Baryshkov wrote:
-> > > >
-> > > > > On Sat, 30 Jan 2021 at 00:50, Bjorn Helgaas <helgaas@kernel.org> wrote:
-> > > > > >
-> > > > > > On Fri, Jan 29, 2021 at 06:45:21AM +0300, Dmitry Baryshkov wrote:
-> > > > > > > On 28/01/2021 22:26, Rob Herring wrote:
-> > > > > > > > On Thu, Jan 28, 2021 at 11:52 AM Dmitry Baryshkov
-> > > > > > > > <dmitry.baryshkov@linaro.org> wrote:
-> > > > > > > > >
-> > > > > > > > > Some Qualcomm platforms require to power up an external device before
-> > > > > > > > > probing the PCI bus. E.g. on RB5 platform the QCA6390 WiFi/BT chip needs
-> > > > > > > > > to be powered up before PCIe0 bus is probed. Add a quirk to the
-> > > > > > > > > respective PCIe root bridge to attach to the power domain if one is
-> > > > > > > > > required, so that the QCA chip is started before scanning the PCIe bus.
-> > > > > > > >
-> > > > > > > > This is solving a generic problem in a specific driver. It needs to be
-> > > > > > > > solved for any PCI host and any device.
-> > > > > > >
-> > > > > > > Ack. I see your point here.
-> > > > > > >
-> > > > > > > As this would require porting code from powerpc/spark of-pci code and
-> > > > > > > changing pcie port driver to apply power supply before bus probing happens,
-> > > > > > > I'd also ask for the comments from PCI maintainers. Will that solution be
-> > > > > > > acceptable to you?
-> > > > > >
-> > > > > > I can't say without seeing the code.  I don't know enough about this
-> > > > > > scenario to envision how it might look.
-> > > > > >
-> > > > > > I guess the QCA6390 is a PCIe device?  Why does it need to be powered
-> > > > > > up before probing?  Shouldn't we get a link-up interrupt when it is
-> > > > > > powered up so we could probe it then?
-> > > > >
-> > > > > Not quite. QCA6390 is a multifunction device, with PCIe and serial
-> > > > > parts. It has internal power regulators which once enabled will
-> > > > > powerup the PCIe, serial and radio parts. There is no need to manage
-> > > > > regulators. Once enabled they will automatically handle device
-> > > > > suspend/resume, etc.
-> > > > >
-> > > >
-> > > > So what you're saying is that if either the PCI controller or bluetooth
-> > > > driver probes these regulators will be turned on, indefinitely?
-> > > >
-> > > > If so, why do we need a driver to turn them on, rather than just mark
-> > > > them as always-on?
-> > > >
-> > > > What's the timing requirement wrt regulators vs WL_EN/BT_EN?
-> > >
-> > > According to the documentation I have, they must be enabled right
-> > > after enabling powering the chip and they must stay enabled all the
-> > > time.
-> > >
-> >
-> > So presumably just marking these things always-on and flipping the GPIO
-> > statically won't be good enough due to the lack of control over the
-> > timing.
-> >
-> > This really do look like a simplified case of what we see with the
-> > PCIe attached modems, where similar requirements are provided, but also
-> > the ability to perform a device specific reset sequence in case the
-> > hardware has locked up. I'm slightly worried about the ability of
-> > extending your power-domain model to handle the restart operation
-> > though.
->
-> I think this is an abuse of 'power-domains'. Just define the
-> regulators in both WiFi and BT nodes and have each driver enable them.
+>Let's be clear what the review would be for=2E Yet another QMI chardev=20
+>or the "UCI" direct generic user space to firmware pipe?
 
-I think it is too late to enable regulators in the WiFi driver. Even
-if I modify the/pci code to register devices basing on the OF nodes
-(like we do for PPC and Sparc), necessary link training/hotplug
-handling should happen outside of the WiFi driver.
+The current patchset only supports QMI channel so I'd request you to revie=
+w the chardev node created for it=2E The QMI chardev node created will be u=
+nique for the MHI bus and the number of nodes depends on the MHI controller=
+s in the system (typically 1 but not limited)=2E=20
 
-> They're refcounted. If that's still not enough control over the power
-> sequencing, then create a 3rd entity to do it, but that doesn't need
-> to leak into DT. You already have all the information you need.
+Thanks,=20
+Mani
 
-From my point of view the proposed design (with three nodes) exactly
-represents the hardware: the power-handling part, the WiFi part and
-the BT part. If you don't like the power domains, would regulators be
-better from your point of view? The "power" device providing a
-regulator to be used by the child nodes. For the BT part the regulator
-is fine, while for the WiFi...
-
-The major problem with regulators in this case is that they are
-typically enabled by the device driver itself, rather than by parent
-device/bus code. And in the WiFi driver case the WiFi chip should be
-already up and running before probing the ath11k driver.
-
-Maybe it would still be better to take a step back and just introduce
-'vcc-child-supply' entry to the pcie-qcom device tree node or to the
-PCIe bridge node? This would also cover cases of PCIe mezzanine boards
-when the on-mezzanine devices are visible through the PCIe bus, but
-the mezzanine is powered by a separate voltage regulator. It would not
-be possible to describe child devices in the device tree node, but
-rather it would be possible to describe that there might be devices
-behind the PCIe bridge, they must be powered on using a referenced
-regulator. This starts to sound like a kind of PCI hotplug.
-
-This would result in the following nodes:
-
-pcie0: pci@1c0000 {
-   compatible = "qcom,pcie-sm8250";
-   [....]
-   bridge@0,0 {
-        compatible = "pci17cb,010b", "linux,regulator-hotplug";
-        [....]
-        vcc-children-supply = <&qca6390>;
-        /* known WiFi card */
-   };
-};
-
-pce1: pci@1c08000 {
-   compatible = "qcom,pcie-sm8250";
-   [....]
-   bridge@1,0 {
-        compatible = "pci17cb,010b", "linux,regulator-hotplug";
-        [....]
-        vcc-children-supply = <&vdc_gpio13>;
-        /* unpredictable devices on the mezzanine card */
-   };
-};
-
--- 
-With best wishes
-Dmitry
+--=20
+Sent from my Android device with K-9 Mail=2E Please excuse my brevity=2E
