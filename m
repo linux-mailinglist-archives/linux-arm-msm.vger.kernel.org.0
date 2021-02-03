@@ -2,258 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F4F630D717
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Feb 2021 11:11:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B2B530D721
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Feb 2021 11:13:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233731AbhBCKLO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Feb 2021 05:11:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55730 "EHLO
+        id S233357AbhBCKMz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Feb 2021 05:12:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233584AbhBCKK7 (ORCPT
+        with ESMTP id S233215AbhBCKMv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Feb 2021 05:10:59 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9BEDC06174A
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Feb 2021 02:10:18 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id a1so23487819wrq.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Feb 2021 02:10:18 -0800 (PST)
+        Wed, 3 Feb 2021 05:12:51 -0500
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6D7EC0613D6
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Feb 2021 02:12:11 -0800 (PST)
+Received: by mail-pg1-x530.google.com with SMTP id b21so17000529pgk.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Feb 2021 02:12:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=WjAb3bjxrnBBIZBFFvoXjbq0IWsGADmBvpPF9+XYq5c=;
-        b=JhfNdyWRmHINUIbD+b6Ny+bIugLoaAKz0kl5fRRxFCOlffDx8oH/tIXSICsUaIGvqU
-         MDcrXqlFsK+GFj6gUfpruu7WAhOvPqTSrh1HUjiTyUyZkUSMnwubKkPhUf+WRyzxit3e
-         1JJC1rO4k+qWKLpSfzd0JFAiY7CeGCLe8nCaU=
+        d=linaro.org; s=google;
+        h=date:user-agent:in-reply-to:references:mime-version
+         :content-transfer-encoding:subject:to:cc:from:message-id;
+        bh=Jj5P/+FGKB+Gx/8nToaLLeEz9vFqyWcYXQiDNxG9J9c=;
+        b=m5IL6Z7rCQYN/Fj8ZKWDB8gQoOgWX6QRwxPqBgNFcyGr45TD20iVxc0EqHk+JbBscm
+         Oe3G0AgcSOHjcjkUlQY8AShMbWE4/wPzGpASS3wssxEzKBzN75giqDQZBLPIP+evMnG+
+         a0zU7aInwHO2DJBPZexzCRonTzRqlDHz/GBcCYTFkoMDyWVek4PzMtqmMcsm4h8nPgPe
+         Cl3qR203m5WUtsxLGV7hswqtoeycf3HrnMBHYPD/g3IQcSUFIznuNyb2KERjxNZFxYXU
+         idO5YBEKAXLpsaoJYDS5A3qyI9YWmo0FeJZXhkX6mreOX9O/TvpN34RL7vz4OSa5wRjm
+         qRRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=WjAb3bjxrnBBIZBFFvoXjbq0IWsGADmBvpPF9+XYq5c=;
-        b=Ms3QCfHyMkYC/x1jf41IW4mie3OLUjlWvCLvJLUVPiUDbXDhdWlVkTtIthtBvE88mE
-         H3ZnLtZkeqHuDXhxqDVAvZlY13z37O7dSKjCwYx87bofDrwz+PgoE6bH+2cykf3tp0gZ
-         t970ZBR3nHRiTW8Sno9GceXh/8g4iLdXSywVMaMejzqv8NxJKRdff3h92HKxAwfVN0ph
-         6D4jq8ZgYjvgnQcxUqeLDBz6n6+f1jS2qyw99f2UtX9DnU7QoFcmLhz9+XgK3ysrMaCe
-         ewkXSAgr44obbXVIy9UiZgJqfHyu2L3Xk0Zjan0Y5dNYhmYLXfs9sJKEZG+yxniNTGZH
-         UnGg==
-X-Gm-Message-State: AOAM5311TMuMtJYB5DLv+mHji3s/C6+VQjcgTzpmsP9xSL9Dtasa7Dmv
-        nW7WSkj2ileHYmxGGQYoGkIsVw==
-X-Google-Smtp-Source: ABdhPJxvzaYuPsLio37fz9QR6bEnLbuirbEIPwQgVxFysZvBiDXjuW53yrL9tqCFVxPeD4h43umWqw==
-X-Received: by 2002:adf:cd01:: with SMTP id w1mr2536998wrm.316.1612347017561;
-        Wed, 03 Feb 2021 02:10:17 -0800 (PST)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id g1sm2977197wrq.30.2021.02.03.02.10.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Feb 2021 02:10:16 -0800 (PST)
-Date:   Wed, 3 Feb 2021 11:10:15 +0100
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Krishna Manikandan <mkrishn@codeaurora.org>
-Subject: Re: [PATCH] drm/msm/kms: Make a lock_class_key for each crtc mutex
-Message-ID: <YBp2h2cVXrF6lBno@phenom.ffwll.local>
-Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Krishna Manikandan <mkrishn@codeaurora.org>
-References: <20210125234901.2730699-1-swboyd@chromium.org>
- <YBlz8Go2DseRWuOa@phenom.ffwll.local>
- <CAF6AEGuWhGuzxsBquj-WLSwa83r+zO7jAQ9ten2m+2KtoGpYSw@mail.gmail.com>
+        h=x-gm-message-state:date:user-agent:in-reply-to:references
+         :mime-version:content-transfer-encoding:subject:to:cc:from
+         :message-id;
+        bh=Jj5P/+FGKB+Gx/8nToaLLeEz9vFqyWcYXQiDNxG9J9c=;
+        b=Moeb3VZ54TBM8GPeNA1fTMMB7MCtuymoAbooc3X2wojrCzwNu+OuCoWH4ys/Oik5n9
+         9h9d/r/5MAz2vP5h5PNiXvWzW/q0RBMJ7/fIe0SvR8mjBfqaT6XA+arVuPfDSfGBgVhZ
+         Z4/bxI8BvVUkCtfxxW030I/Y/DWWJPbK8o6g+IiOPOwAT1U3MD51KYhsM1mHsE8/BzOK
+         ym0uqiLhoiVRf3d4UXrqerLfLa3lqynbBB/SFY+teoQeng5VGEjVpwR6akz0gza5J7QK
+         QHGne8mnwWQb8q+cy5eYo4avyBbvD8kEgmqhOIlhX8YtGLSjkHpGv8bO5KjqhmB6cXc0
+         aRDg==
+X-Gm-Message-State: AOAM531ddpunCeKXqk/DIW7S18yTVW3IctNyRtLiz1FyDFLps/mRGT4d
+        fPs4fSfKAHGLk4Br9zM6DmCF
+X-Google-Smtp-Source: ABdhPJz/JdTHb2LWEEGIyYASRUhlaQG7crk7c3TVHaxEj38YS7W8P72bn162d6OF16rO8b9q0C/ZyQ==
+X-Received: by 2002:a62:1dd7:0:b029:1be:ef0d:9507 with SMTP id d206-20020a621dd70000b02901beef0d9507mr2424246pfd.62.1612347131212;
+        Wed, 03 Feb 2021 02:12:11 -0800 (PST)
+Received: from ?IPv6:2409:4072:619f:ff99:700b:51f3:e28:b00? ([2409:4072:619f:ff99:700b:51f3:e28:b00])
+        by smtp.gmail.com with ESMTPSA id dw23sm1688325pjb.3.2021.02.03.02.12.09
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 03 Feb 2021 02:12:10 -0800 (PST)
+Date:   Wed, 03 Feb 2021 15:42:02 +0530
+User-Agent: K-9 Mail for Android
+In-Reply-To: <20210203110522.12f2b326@xps13>
+References: <20210130035412.6456-1-manivannan.sadhasivam@linaro.org> <20210201151824.5a9dca4a@xps13> <20210202041614.GA840@work> <20210202091459.0c41a769@xps13> <AFD0F5A6-7876-447B-A089-85091225BE11@linaro.org> <20210203110522.12f2b326@xps13>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAF6AEGuWhGuzxsBquj-WLSwa83r+zO7jAQ9ten2m+2KtoGpYSw@mail.gmail.com>
-X-Operating-System: Linux phenom 5.7.0-1-amd64 
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH] mtd: rawnand: Do not check for bad block if bbt is unavailable
+To:     Miquel Raynal <miquel.raynal@bootlin.com>
+CC:     richard@nod.at, vigneshr@ti.com, boris.brezillon@collabora.com,
+        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Message-ID: <EBDAB319-549F-4CB1-8CE3-9DFA99DBFBC0@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 02, 2021 at 08:51:25AM -0800, Rob Clark wrote:
-> On Tue, Feb 2, 2021 at 7:46 AM Daniel Vetter <daniel@ffwll.ch> wrote:
-> >
-> > On Mon, Jan 25, 2021 at 03:49:01PM -0800, Stephen Boyd wrote:
-> > > Lockdep complains about an AA deadlock when rebooting the device.
-> > >
-> > > ============================================
-> > > WARNING: possible recursive locking detected
-> > > 5.4.91 #1 Not tainted
-> > > --------------------------------------------
-> > > reboot/5213 is trying to acquire lock:
-> > > ffffff80d13391b0 (&kms->commit_lock[i]){+.+.}, at: lock_crtcs+0x60/0xa4
-> > >
-> > > but task is already holding lock:
-> > > ffffff80d1339110 (&kms->commit_lock[i]){+.+.}, at: lock_crtcs+0x60/0xa4
-> > >
-> > > other info that might help us debug this:
-> > > Possible unsafe locking scenario:
-> > >
-> > > CPU0
-> > > ----
-> > > lock(&kms->commit_lock[i]);
-> > > lock(&kms->commit_lock[i]);
-> > >
-> > > *** DEADLOCK ***
-> > >
-> > > May be due to missing lock nesting notation
-> > >
-> > > 6 locks held by reboot/5213:
-> > > __arm64_sys_reboot+0x148/0x2a0
-> > > device_shutdown+0x10c/0x2c4
-> > > drm_atomic_helper_shutdown+0x48/0xfc
-> > > modeset_lock+0x120/0x24c
-> > > lock_crtcs+0x60/0xa4
-> > >
-> > > stack backtrace:
-> > > CPU: 4 PID: 5213 Comm: reboot Not tainted 5.4.91 #1
-> > > Hardware name: Google Pompom (rev1) with LTE (DT)
-> > > Call trace:
-> > > dump_backtrace+0x0/0x1dc
-> > > show_stack+0x24/0x30
-> > > dump_stack+0xfc/0x1a8
-> > > __lock_acquire+0xcd0/0x22b8
-> > > lock_acquire+0x1ec/0x240
-> > > __mutex_lock_common+0xe0/0xc84
-> > > mutex_lock_nested+0x48/0x58
-> > > lock_crtcs+0x60/0xa4
-> > > msm_atomic_commit_tail+0x348/0x570
-> > > commit_tail+0xdc/0x178
-> > > drm_atomic_helper_commit+0x160/0x168
-> > > drm_atomic_commit+0x68/0x80
-> > >
-> > > This is because lockdep thinks all the locks taken in lock_crtcs() are
-> > > the same lock, when they actually aren't. That's because we call
-> > > mutex_init() in msm_kms_init() and that assigns on static key for every
-> > > lock initialized in this loop. Let's allocate a dynamic number of
-> > > lock_class_keys and assign them to each lock so that lockdep can figure
-> > > out an AA deadlock isn't possible here.
-> > >
-> > > Fixes: b3d91800d9ac ("drm/msm: Fix race condition in msm driver with async layer updates")
-> > > Cc: Krishna Manikandan <mkrishn@codeaurora.org>
-> > > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> >
-> > This smells like throwing more bad after initial bad code ...
-> >
-> > First a rant: https://blog.ffwll.ch/2020/08/lockdep-false-positives.html
+Hi Miquel,=20
 
-Some technical on the patch itself: I think you want
-mutex_lock_nested(crtc->lock, drm_crtc_index(crtc)), not your own locking
-classes hand-rolled. It's defacto the same, but much more obviously
-correct since self-documenting.
+On 3 February 2021 3:35:22 PM IST, Miquel Raynal <miquel=2Eraynal@bootlin=
+=2Ecom> wrote:
+>Hi Manivannan,
+>
+>Manivannan Sadhasivam <manivannan=2Esadhasivam@linaro=2Eorg> wrote on Wed=
+,
+>03 Feb 2021 15:28:20 +0530:
+>
+>> Hi Miquel,=20
+>>=20
+>> On 2 February 2021 1:44:59 PM IST, Miquel Raynal
+><miquel=2Eraynal@bootlin=2Ecom> wrote:
+>> >Hi Manivannan,
+>> >
+>> >Manivannan Sadhasivam <manivannan=2Esadhasivam@linaro=2Eorg> wrote on
+>Tue,
+>> >2 Feb 2021 09:46:14 +0530:
+>> > =20
+>> >> Hi,
+>> >>=20
+>> >> On Mon, Feb 01, 2021 at 03:18:24PM +0100, Miquel Raynal wrote: =20
+>> >> > Hi Manivannan,
+>> >> >=20
+>> >> > Manivannan Sadhasivam <manivannan=2Esadhasivam@linaro=2Eorg> wrote
+>on =20
+>> >Sat, =20
+>> >> > 30 Jan 2021 09:24:12 +0530:
+>> >> >    =20
+>> >> > > The bbt pointer will be unavailable when NAND_SKIP_BBTSCAN
+>option =20
+>> >is =20
+>> >> > > set for a NAND chip=2E The intention is to skip scanning for the
+>=20
+>> >bad =20
+>> >> > > blocks during boot time=2E   =20
+>> >> >=20
+>> >> > I don't have the same understanding: this flag skips the bad
+>block
+>> >> > table scan, not the bad block scan=2E We do want to scan all the =
+=20
+>> >devices =20
+>> >> > in order to construct a RAM based table=2E
+>> >> >    =20
+>> >> > > However, the MTD core will call
+>> >> > > _block_isreserved() and _block_isbad() callbacks
+>unconditionally =20
+>> >for =20
+>> >> > > the rawnand devices due to the callbacks always present while=20
+>
+>> >collecting =20
+>> >> > > the ecc stats=2E
+>> >> > >=20
+>> >> > > The _block_isreserved() callback for rawnand will bail out if
+>bbt
+>> >> > > pointer is not available=2E But _block_isbad() will continue =20
+>> >without =20
+>> >> > > checking for it=2E So this contradicts with the
+>NAND_SKIP_BBTSCAN =20
+>> >option =20
+>> >> > > since the bad block check will happen anyways (ie=2E, not much =
+=20
+>> >difference =20
+>> >> > > between scanning for bad blocks and checking each block for
+>bad =20
+>> >ones)=2E =20
+>> >> > >=20
+>> >> > > Hence, do not check for the bad block if bbt pointer is =20
+>> >unavailable=2E   =20
+>> >> >=20
+>> >> > Not checking for bad blocks at all feels insane=2E I don't really
+>get =20
+>> >the =20
+>> >> > scope and goal of such change?
+>> >> >    =20
+>> >>=20
+>> >> The issue I encountered is, on the Telit FN980 device one of the
+>> >> partition seems to be protected=2E So trying to read the bad blocks
+>in
+>> >> that partition makes the device to reboot during boot=2E =20
+>> >
+>> >o_O
+>> >
+>> >Reading a protected block makes the device to reboot?
+>> >
+>> >What is the exact device? Can you share the datasheet? Is this
+>behavior
+>> >expected? Because it seems really broken to me, a read should not
+>> >trigger *anything* that bad=2E
+>> > =20
+>>=20
+>> I got more information from the vendor, Telit=2E The access to the 3rd
+>partition is protected by Trustzone and any access in non privileged
+>mode (where Linux kernel runs) causes kernel panic and the device
+>reboots=2E=20
+>
+>Ok, so this is not a chip feature but more a host constraint=2E
+>
+>In this case it would be a good idea to add a host DT property which
+>describes the zone to avoid accessing it=2E Something like:
+>
+>	secure-area/secure-section =3D <start length>;
+>
+>From the core perspective, we should parse this property early enough
+>and return -EIO when trying to access this area=2E
+>
+>Does this solution sound reasonable to you?
+>
 
-> > Yes I know the locking you're doing here is correct, but that goes to the
-> > second issue: Why is this needed? atomic_async_update helpers are supposed
-> > to take care of ordering fun like this, if they're not, we need to address
-> > things there. The problem that
-> 
-> Maybe a better solution would be helper awareness of hw that has
-> double-buffered state and flush bits.. ie. something that looks a bit
-> more like the internal kms fxn ptrs. Currently the locking is
-> protecting something that the atomic helpers are not aware of, ie.
-> we've already written previous cursor updates to hw and are just
-> waiting until close to vblank to write the flush bits
-> 
-> But, we've been over this before. I'd tried various approaches.. the
-> current scheme replaces seanpaul's earlier attempts to do it the
-> "helper" way.  The current implementation does the best job of
-> avoiding fps drops when the legacy cursor uapi is in play.  (And yes,
-> legacy cursor + atomic ioctls is maybe not the greatest, but it is
-> what it is.)
+This sounds good to me=2E I'll give it a go and share the patch soon=2E=20
 
-I didn't read enough of the context and got confused, the flush handling
-looks all reasonable and obviously needs some locks to avoid races with
-updates.
+Thanks,=20
+Mani
 
-It still looks a bit strange that you need multi-crtc locks for cursor
-(generally this stuff is supposed to be solved with ordering) and why the
-async helpers don't work since msm has something that's pretty close
-itself. Atomic+cursor is a bit nasty, but if every driver hacks this
-together themselves then there's not much chance of this ever really
-working well across the board. And aside from the flush bit instead of
-automatic double buffering (which you're just emulating) there's not
-really anything special with msm afaics. So pretty sure that if this
-doesn't work for msm, it doesn't work anywhere else.
--Daniel
+>Thanks,
+>Miqu=C3=A8l
 
-> 
-> BR,
-> -R
-> 
-> >
-> > commit b3d91800d9ac35014e0349292273a6fa7938d402
-> > Author: Krishna Manikandan <mkrishn@codeaurora.org>
-> > Date:   Fri Oct 16 19:40:43 2020 +0530
-> >
-> >     drm/msm: Fix race condition in msm driver with async layer updates
-> >
-> > is _the_ reason we have drm_crtc_commit to track stuff, and Maxime has
-> > recently rolled out a pile of changes to vc4 to use these things
-> > correctly. Hacking some glorious hand-rolled locking for synchronization
-> > of updates really should be the exception for kms drivers, not the rule.
-> > And this one here doesn't look like an exception by far (the one legit I
-> > know of is the locking issues amdgpu has between atomic_commit_tail and
-> > gpu reset, and that one is really nasty, so not going to get fixed in
-> > helpers, ever).
-> >
-> > Cheers, Daniel
-> >
-> > > ---
-> > >  drivers/gpu/drm/msm/msm_kms.h | 8 ++++++--
-> > >  1 file changed, 6 insertions(+), 2 deletions(-)
-> > >
-> > > diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
-> > > index d8151a89e163..4735251a394d 100644
-> > > --- a/drivers/gpu/drm/msm/msm_kms.h
-> > > +++ b/drivers/gpu/drm/msm/msm_kms.h
-> > > @@ -157,6 +157,7 @@ struct msm_kms {
-> > >        * from the crtc's pending_timer close to end of the frame:
-> > >        */
-> > >       struct mutex commit_lock[MAX_CRTCS];
-> > > +     struct lock_class_key commit_lock_keys[MAX_CRTCS];
-> > >       unsigned pending_crtc_mask;
-> > >       struct msm_pending_timer pending_timers[MAX_CRTCS];
-> > >  };
-> > > @@ -166,8 +167,11 @@ static inline int msm_kms_init(struct msm_kms *kms,
-> > >  {
-> > >       unsigned i, ret;
-> > >
-> > > -     for (i = 0; i < ARRAY_SIZE(kms->commit_lock); i++)
-> > > -             mutex_init(&kms->commit_lock[i]);
-> > > +     for (i = 0; i < ARRAY_SIZE(kms->commit_lock); i++) {
-> > > +             lockdep_register_key(&kms->commit_lock_keys[i]);
-> > > +             __mutex_init(&kms->commit_lock[i], "&kms->commit_lock[i]",
-> > > +                          &kms->commit_lock_keys[i]);
-> > > +     }
-> > >
-> > >       kms->funcs = funcs;
-> > >
-> > >
-> > > base-commit: 19c329f6808995b142b3966301f217c831e7cf31
-> > > --
-> > > https://chromeos.dev
-> > >
-> > > _______________________________________________
-> > > dri-devel mailing list
-> > > dri-devel@lists.freedesktop.org
-> > > https://lists.freedesktop.org/mailman/listinfo/dri-devel
-> >
-> > --
-> > Daniel Vetter
-> > Software Engineer, Intel Corporation
-> > http://blog.ffwll.ch
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
-
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+--=20
+Sent from my Android device with K-9 Mail=2E Please excuse my brevity=2E
