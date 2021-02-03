@@ -2,119 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AD68C30DD5E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Feb 2021 15:57:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7108130DD6E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Feb 2021 16:02:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233319AbhBCO5Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Feb 2021 09:57:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32898 "EHLO
+        id S232996AbhBCPB5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Feb 2021 10:01:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233408AbhBCO5P (ORCPT
+        with ESMTP id S232791AbhBCPB4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Feb 2021 09:57:15 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06B46C0613ED
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Feb 2021 06:56:35 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id m13so24695601wro.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Feb 2021 06:56:34 -0800 (PST)
+        Wed, 3 Feb 2021 10:01:56 -0500
+Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC074C061573
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Feb 2021 07:01:15 -0800 (PST)
+Received: by mail-yb1-xb30.google.com with SMTP id y128so24230547ybf.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Feb 2021 07:01:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=/khvAx8rQ8Qk52GP0rkxvX+3p71gytl4XILm6NOSqc4=;
-        b=fxHOM3y6U+nbYfCeyvFmAzm91pa+sRp0VXwqggGywOy9f8Ej37Nis49Sd0M9Dha7Zs
-         seI2re+vVv0HAocQpSeEF5t3O56DPj1Jab5MKnhzJ/YJaCORtqy6Vl90VXp8piPPhFxr
-         QQq/BB+Q2SOU9QPcmrBWOxwaFWY0eJaoN1t4CBYxgIv5KX+c14nAUwuYYJswyI7rxit+
-         tEHgIgsr8+wbd3ADZafgBZndSRuzAI1L7E2frf5rslC+c9PgF/NqQZExcRynjL5L2Uqg
-         L5VZYLrOxSbghr6cpH9iIG7B6qXK3duQZ70YTmKtII8Hp3OJQ7LG/s/uGvh3OIz0tR8Y
-         HG6A==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=WJ7CGQhYFtJFl07ok5/69cMGKvlS3zw3sFP/g+CPbqE=;
+        b=uZRRLhF3y0eS4ljMgqi7OwEh7OK1K0i0l31vpn/9XZAt2nrvyjY193G5ODx9d1MwTy
+         CtGWgi7zLNhfBfC4dS/zMN9ASHn+zM2vJMDusoIzh4ufmwXQieEUCQ7QXb9Rl/VCOMNw
+         3+flaW4lom3bFvCog1A2VWA2/65sy9tTQUUfZ8mtd0ClAodwHZYBmr7VC+44oG182xst
+         XYQkG68olRjlOj60fGtXQ8owKFIsLXXCAwQydtPH3kKTNOgXgRRJtjcn2NIak5mN33Sk
+         jf0D6ymnpixxzJccr6sOkGqyLoBTwocxntAAov1uxolPvGX7AEI5sAMqCKnY2i4TB1J8
+         Oj1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=/khvAx8rQ8Qk52GP0rkxvX+3p71gytl4XILm6NOSqc4=;
-        b=GaOa+Z6HPMpsHthsDZSnsuSN3WtGP/sVH59lZd6Xx5QN3woiQWZa16Z60LunjAiqMm
-         8hD/sb5YAsJmQPTg/WRbXBis72VvrVp3/BHSVzb2KSDkwIuU39mfRzAbnXp178/R+zm/
-         Qhp7G5rVlm/A7gWTVDw3C7O3O8F9FCx12S8D4nLT10H16wruopIcngl05SWpvr27RmrL
-         yP8DcPaN1zkr6ovxyOFzh2Vs78B8lHMS6WCjjx7sineuu8sA7laL8HHdigqTSN5wt7i0
-         FXgdUmHoPhDnfWPtkOszdBsXhbl7xm39KuYeJM+74b82ZRO4260vphDjlvMTuOJN82UN
-         ZsmA==
-X-Gm-Message-State: AOAM530VdeLjh+SfixFm7IazqbrPE6r08yf5HAftJJOZ7vPtYGZJUDy6
-        iFErd8X9UWJHoD/WEMTsKy1zMQ==
-X-Google-Smtp-Source: ABdhPJxlmTGKmFIfRymu6L6bKQmRbeAyXxl+996VN3I2FJ2wceggr+Cq4MlXXYpaiMsxCLOydf+2FQ==
-X-Received: by 2002:a5d:4806:: with SMTP id l6mr4049170wrq.389.1612364193776;
-        Wed, 03 Feb 2021 06:56:33 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id g14sm4179375wru.45.2021.02.03.06.56.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Feb 2021 06:56:32 -0800 (PST)
-Subject: Re: [RESEND PATCH 0/4] Fixup clocks for venus on sm8250
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     "open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Dikshita Agarwal <dikshita@codeaurora.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-References: <20210203115456.1072975-1-bryan.odonoghue@linaro.org>
- <CAA8EJpquw_HBT+x=go_378_ZVqLiHmq7y9FvBEgoqESaTosy4Q@mail.gmail.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Message-ID: <106dcea1-557a-a3cd-267a-43517815eaef@linaro.org>
-Date:   Wed, 3 Feb 2021 14:57:53 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.3
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=WJ7CGQhYFtJFl07ok5/69cMGKvlS3zw3sFP/g+CPbqE=;
+        b=gPWkfq2P5sSO1Gbwvh00WzaarmOPuP3VcPLMMqEs/z4ohbNahe0Fr1E6DnamlQR7Oy
+         Gcox7390KzN9AzQA6nMwbNE/SCAQ68JUejmhWJ4eYJUFy7RauFudaoePqvFSS+59rj6+
+         vo4ebBLBwwxlotbBV6uiOeC62s7PQXOY+AJfXj+DnRE2G5FZ9/OEZmlqx0eFR8HFQ2Af
+         Zr9EwXX1sYjZXmiJ2SfJfyyzSIWHt/WYWHbqDv/D5PvEXdJ+cA8mFefyvTES2eRYHWga
+         skeS3OcQpGzNK8ZHcncmh4TdQt/jIvcaASsabgOpeCjOIsS0UokwCjDdE6Gogo+TFU29
+         hbsA==
+X-Gm-Message-State: AOAM532OdgS1dcHcV8Nh0khApyN57hrZX4/SkJvg38pGhvGEWIMeYYEU
+        cnxSwVXa50PfK50wYllh+KBpU9LwePyvINCLJp48Ew==
+X-Google-Smtp-Source: ABdhPJwRthCdZBCwaBHOQPF2SrN9ZvGM6S/fgfnLOLSpJL/wn3O50hA0qpEtO0YWCyaTDqZpAcvV9FeDz/C+DXAww/k=
+X-Received: by 2002:a25:1457:: with SMTP id 84mr5080609ybu.74.1612364475171;
+ Wed, 03 Feb 2021 07:01:15 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAA8EJpquw_HBT+x=go_378_ZVqLiHmq7y9FvBEgoqESaTosy4Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <1612346356-26445-1-git-send-email-amit.pundir@linaro.org>
+In-Reply-To: <1612346356-26445-1-git-send-email-amit.pundir@linaro.org>
+From:   Amit Pundir <amit.pundir@linaro.org>
+Date:   Wed, 3 Feb 2021 20:30:39 +0530
+Message-ID: <CAMi1Hd1cCtSFMBjXm6=fwEeSYMYs5xvKPK25TxsxU9YDogxxDQ@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sdm845-xiaomi-beryllium: Add DSI and
+ panel bits
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>, phone-devel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/02/2021 14:25, Dmitry Baryshkov wrote:
-> On Wed, 3 Feb 2021 at 14:53, Bryan O'Donoghue
-> <bryan.odonoghue@linaro.org> wrote:
->>
->> - Adds some missing indices to the videocc index
->> - Adds videocc clock tree hirearchy for msv0
->> - Adds a regulator to power the videocc consistent with downstream
->>
->> Once done we can move on to enabling these clocks in the DTS and switch on
->> the venus.
->>
->> Bryan O'Donoghue (4):
->>    dt-bindings: clock: Add missing SM8250 videoc clock indices
->>    clk: qcom: videocc: Add sm8250 VIDEO_CC_MVS0_DIV_CLK_SRC
->>    clk: qcom: videocc: Add sm8250 VIDEO_CC_MVS0_CLK
->>    clk: qcom: videocc: Add gdsc mmcx-reg supply hook
-> 
-> I remember now the old discussion about these two clocks
-> (https://lore.kernel.org/linux-arm-msm/160092826778.310579.12225989905897101118@swboyd.mtv.corp.google.com/).
-> 
-> Is the message. reported by Jonathan, solved by the mmcx-reg supply?
+Argh.. This patch is not formatted on top of mainline. It doesn't
+apply cleanly. Sorry about that. I'll fix that in the next version.
 
-The stuck problem is a bandwidth problem not a regulator problem, 
-there's some internal clock dependency we don't have visibility of.
+Regards,
+Amit Pundir
 
-Both of these resolve,
-
-Jonathan had a hack:
-https://git.linaro.org/people/bryan.odonoghue/kernel.git/commit/?h=tracking-qcomlt-sm8250-09-11-20%2bvenus-flto-simple-test2&id=d4bea74282d14244127a1e97766b6108ec68e22f
-
-Dikshita proposed this instead, which, we will send out soon:
-https://git.linaro.org/people/bryan.odonoghue/kernel.git/commit/?h=tracking-qcomlt-sm8250-venus-integrated-sm8250&id=782202d611761e639af7e44d8344c0c098642b9f
-
-> Also are these clocks necessary at all?
-
-Eh well I'm not sure what happens if I try to dump the clocks but, this 
-is an accurate representation of what is done downstream so..
-
----
-bod
+On Wed, 3 Feb 2021 at 15:29, Amit Pundir <amit.pundir@linaro.org> wrote:
+>
+> From: Sumit Semwal <sumit.semwal@linaro.org>
+>
+> Enabling the Display panel for beryllium phone (Xiaomi
+> Pocophone F1) requires DSI labibb regulators and panel
+> dts nodes to be added. It is also required to keep some
+> of the regulators as always-on.
+>
+> Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
+> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+> ---
+>  .../boot/dts/qcom/sdm845-xiaomi-beryllium.dts      | 55 ++++++++++++++++++++++
+>  1 file changed, 55 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+> index cd15ae0347e8..e09effa555f1 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+> @@ -160,6 +160,14 @@
+>                         regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>                 };
+>
+> +               vreg_l14a_1p88: ldo14 {
+> +                       regulator-min-microvolt = <1800000>;
+> +                       regulator-max-microvolt = <1800000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +                       regulator-boot-on;
+> +                       regulator-always-on;
+> +               };
+> +
+>                 vreg_l17a_1p3: ldo17 {
+>                         regulator-min-microvolt = <1304000>;
+>                         regulator-max-microvolt = <1304000>;
+> @@ -194,6 +202,7 @@
+>                         regulator-min-microvolt = <1200000>;
+>                         regulator-max-microvolt = <1200000>;
+>                         regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +                       regulator-boot-on;
+>                 };
+>         };
+>  };
+> @@ -207,6 +216,44 @@
+>         firmware-name = "qcom/sdm845/cdsp.mdt";
+>  };
+>
+> +&dsi0 {
+> +       status = "okay";
+> +       vdda-supply = <&vreg_l26a_1p2>;
+> +
+> +       ports {
+> +               port@1 {
+> +                       endpoint {
+> +                               remote-endpoint = <&tianma_nt36672a_in_0>;
+> +                               data-lanes = <0 1 2 3>;
+> +                       };
+> +               };
+> +       };
+> +
+> +       panel@0 {
+> +               compatible = "tianma,fhd-video";
+> +               reg = <0>;
+> +               vddi0-supply = <&vreg_l14a_1p88>;
+> +               vddpos-supply = <&lab>;
+> +               vddneg-supply = <&ibb>;
+> +
+> +               reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
+> +
+> +               #address-cells = <1>;
+> +               #size-cells = <0>;
+> +
+> +               port {
+> +                       tianma_nt36672a_in_0: endpoint {
+> +                               remote-endpoint = <&dsi0_out>;
+> +                       };
+> +               };
+> +       };
+> +};
+> +
+> +&dsi0_phy {
+> +       status = "okay";
+> +       vdds-supply = <&vreg_l1a_0p875>;
+> +};
+> +
+>  &gcc {
+>         protected-clocks = <GCC_QSPI_CORE_CLK>,
+>                            <GCC_QSPI_CORE_CLK_SRC>,
+> @@ -274,6 +321,14 @@
+>
+>  };
+>
+> +&mdss {
+> +       status = "okay";
+> +};
+> +
+> +&mdss_mdp {
+> +       status = "okay";
+> +};
+> +
+>  &mss_pil {
+>         status = "okay";
+>         firmware-name = "qcom/sdm845/mba.mbn", "qcom/sdm845/modem.mdt";
+> --
+> 2.7.4
+>
