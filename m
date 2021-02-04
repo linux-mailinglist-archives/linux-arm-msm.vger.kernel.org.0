@@ -2,173 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C1A530EE0F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Feb 2021 09:11:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5709830EE21
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Feb 2021 09:16:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234755AbhBDIK1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Feb 2021 03:10:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57620 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234719AbhBDIKY (ORCPT
+        id S234732AbhBDIOj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Feb 2021 03:14:39 -0500
+Received: from relay11.mail.gandi.net ([217.70.178.231]:60335 "EHLO
+        relay11.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234658AbhBDIOZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Feb 2021 03:10:24 -0500
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C524C061786
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Feb 2021 00:09:44 -0800 (PST)
-Received: by mail-pj1-x102f.google.com with SMTP id gx20so1339744pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Feb 2021 00:09:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=mbzglOInmCBEXi+RhAT4Ml3f+J7eG2WI0sIBzkLXfK0=;
-        b=SZ3fQhEZi6dCMB7apBij9SlRLDenqp7RPeseE09ECbMTNx32BSzfp6j2xkAjThBubz
-         X71vvESM4qpUsKIetZcjH8oVKxHRc6tIOMvcCcFqvDdh8w41zEzu1a7Q491f1mld2xK0
-         SC2IxsAGzp5RuKelfRv0qCkpaJKBJiisG7Qc3IrOrTRbubkwB6PdHClePE3c1dncS4yP
-         q0Q8WJhAl+GF0glkL48/U04GIIQwHeG+wALkCJrX4iE6I4Xf754hrSFzEb+/Dy9Qg5Qv
-         d4WaYj9IEQraIvPO6KRE2JOYrodg/Q1ckGZUjH64spb83V7j7aNB0Sc1XRboPE8yUWEj
-         z3pQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=mbzglOInmCBEXi+RhAT4Ml3f+J7eG2WI0sIBzkLXfK0=;
-        b=Zt+my17yy4OzeD+iVDRdMWK7DlsdVH01sIfGWp1darVWxWib7TK9sqGO0u4iQ9ryyO
-         HhQCjGoIVdPfCXkRLMBmAWB9QG2dHXd37hKDWj0BYccq6Z4OPd6P8/tLdkLZL6ghG4lJ
-         kkTntW/+EWD3gAGL+B0blvCNsAQk4UgeP1DW3DMsYc8Q+xaafG6vz1lWUo8Pue3SlnVS
-         YVyxcpf2AddZOLsvu+6E+ldYK5ATccXz9LJpR8BKUIY5c0TGYe2xtIRCCKsscloodYxz
-         Hs25o0ybPyHhBaCI7qayHK55zM2IQWNYlZBsX4CukLAWPKAcJKYvA0lOl2c8JLET/wSR
-         vVcw==
-X-Gm-Message-State: AOAM530H1Wosiy4lViAGViQ/4fmbXzPXNqHPNsBNwokLFP8ACAy0MrNG
-        9DbipXDI1pOT35aR2GoUrQsFMQ==
-X-Google-Smtp-Source: ABdhPJx84IjwzzWpe79dKS1zQyZmeN9Puw8PDovhSQYM9e3FvitZrqHK6CyiqgES8SplFG48bg1KVg==
-X-Received: by 2002:a17:902:ea0f:b029:de:5fd5:abb9 with SMTP id s15-20020a170902ea0fb02900de5fd5abb9mr6853830plg.46.1612426183934;
-        Thu, 04 Feb 2021 00:09:43 -0800 (PST)
-Received: from localhost.localdomain ([2405:201:6803:610b:1c6f:cebf:a887:dd42])
-        by smtp.gmail.com with ESMTPSA id 9sm4698796pfy.110.2021.02.04.00.09.40
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 04 Feb 2021 00:09:43 -0800 (PST)
-From:   Amit Pundir <amit.pundir@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dt <devicetree@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>, phone-devel@vger.kernel.org
-Subject: [PATCH v2] arm64: dts: qcom: sdm845-xiaomi-beryllium: Add DSI and panel bits
-Date:   Thu,  4 Feb 2021 13:39:37 +0530
-Message-Id: <1612426177-6611-1-git-send-email-amit.pundir@linaro.org>
-X-Mailer: git-send-email 2.7.4
+        Thu, 4 Feb 2021 03:14:25 -0500
+Received: from xps13 (lfbn-tou-1-972-150.w86-210.abo.wanadoo.fr [86.210.203.150])
+        (Authenticated sender: miquel.raynal@bootlin.com)
+        by relay11.mail.gandi.net (Postfix) with ESMTPSA id DC160100012;
+        Thu,  4 Feb 2021 08:13:37 +0000 (UTC)
+Date:   Thu, 4 Feb 2021 09:13:36 +0100
+From:   Miquel Raynal <miquel.raynal@bootlin.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Boris Brezillon <boris.brezillon@collabora.com>, richard@nod.at,
+        vigneshr@ti.com, linux-mtd@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bjorn.andersson@linaro.org
+Subject: Re: [PATCH] mtd: rawnand: Do not check for bad block if bbt is
+ unavailable
+Message-ID: <20210204091336.1406ca3b@xps13>
+In-Reply-To: <F55F9D7B-0542-448E-A711-D1035E467ACA@linaro.org>
+References: <20210130035412.6456-1-manivannan.sadhasivam@linaro.org>
+        <20210201151824.5a9dca4a@xps13>
+        <20210202041614.GA840@work>
+        <20210202091459.0c41a769@xps13>
+        <AFD0F5A6-7876-447B-A089-85091225BE11@linaro.org>
+        <20210203110522.12f2b326@xps13>
+        <EBDAB319-549F-4CB1-8CE3-9DFA99DBFBC0@linaro.org>
+        <20210203111914.1c2f68f6@collabora.com>
+        <8A2468D5-B435-4923-BA4F-7BF7CC0FF207@linaro.org>
+        <20210203122422.6963b0ed@collabora.com>
+        <F55F9D7B-0542-448E-A711-D1035E467ACA@linaro.org>
+Organization: Bootlin
+X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Sumit Semwal <sumit.semwal@linaro.org>
+Hi Manivannan,
 
-Enabling the Display panel for beryllium phone (Xiaomi
-Pocophone F1) requires DSI labibb regulators and panel
-dts nodes to be added. It is also required to keep some
-of the regulators as always-on.
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote on Wed,
+03 Feb 2021 17:11:31 +0530:
 
-Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
-Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
----
-v2: Rebased to mainline (v5.11-rc6) and fixed build warnings.
+> On 3 February 2021 4:54:22 PM IST, Boris Brezillon <boris.brezillon@collabora.com> wrote:
+> >On Wed, 03 Feb 2021 16:22:42 +0530
+> >Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote:
+> >  
+> >> On 3 February 2021 3:49:14 PM IST, Boris Brezillon  
+> ><boris.brezillon@collabora.com> wrote:  
+> >> >On Wed, 03 Feb 2021 15:42:02 +0530
+> >> >Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote:
+> >> >    
+> >> >> >> 
+> >> >> >> I got more information from the vendor, Telit. The access to  
+> >the    
+> >> >3rd      
+> >> >> >partition is protected by Trustzone and any access in non  
+> >privileged  
+> >> >> >mode (where Linux kernel runs) causes kernel panic and the device
+> >> >> >reboots.     
+> >> >
+> >> >Out of curiosity, is it a per-CS-line thing or is this section
+> >> >protected on all CS?
+> >> >    
+> >> 
+> >> Sorry, I didn't get your question.   
+> >
+> >The qcom controller can handle several chips, each connected through a
+> >different CS (chip-select) line, right? I'm wondering if the firmware
+> >running in secure mode has the ability to block access for a specific
+> >CS line or if all CS lines have the same constraint. That will impact
+> >the way you describe it in your DT (in one case the secure-region
+> >property should be under the controller node, in the other case it
+> >should be under the NAND chip node).  
+> 
+> Right. I believe the implementation is common to all NAND chips so the property should be in the controller node. 
 
- .../boot/dts/qcom/sdm845-xiaomi-beryllium.dts      | 58 ++++++++++++++++++++++
- 1 file changed, 58 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-index 86cbae63eaf7..034246b5c529 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-@@ -157,6 +157,14 @@
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
-+		vreg_l14a_1p88: ldo14 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-boot-on;
-+			regulator-always-on;
-+		};
-+
- 		vreg_l17a_1p3: ldo17 {
- 			regulator-min-microvolt = <1304000>;
- 			regulator-max-microvolt = <1304000>;
-@@ -191,6 +199,7 @@
- 			regulator-min-microvolt = <1200000>;
- 			regulator-max-microvolt = <1200000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-boot-on;
- 		};
- 	};
- };
-@@ -200,6 +209,47 @@
- 	firmware-name = "qcom/sdm845/cdsp.mdt";
- };
- 
-+&dsi0 {
-+	status = "okay";
-+	vdda-supply = <&vreg_l26a_1p2>;
-+
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+
-+	ports {
-+		port@1 {
-+			endpoint {
-+				remote-endpoint = <&tianma_nt36672a_in_0>;
-+				data-lanes = <0 1 2 3>;
-+			};
-+		};
-+	};
-+
-+	panel@0 {
-+		compatible = "tianma,fhd-video";
-+		reg = <0>;
-+		vddi0-supply = <&vreg_l14a_1p88>;
-+		vddpos-supply = <&lab>;
-+		vddneg-supply = <&ibb>;
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
-+
-+		port {
-+			tianma_nt36672a_in_0: endpoint {
-+				remote-endpoint = <&dsi0_out>;
-+			};
-+		};
-+	};
-+};
-+
-+&dsi0_phy {
-+	status = "okay";
-+	vdds-supply = <&vreg_l1a_0p875>;
-+};
-+
- &gcc {
- 	protected-clocks = <GCC_QSPI_CORE_CLK>,
- 			   <GCC_QSPI_CORE_CLK_SRC>,
-@@ -215,6 +265,14 @@
- 	};
- };
- 
-+&mdss {
-+	status = "okay";
-+};
-+
-+&mdss_mdp {
-+	status = "okay";
-+};
-+
- &mss_pil {
- 	status = "okay";
- 	firmware-name = "qcom/sdm845/mba.mbn", "qcom/sdm845/modem.mdt";
--- 
-2.7.4
-
+Looks weird: do you mean that each of the chips will have a secure area?
