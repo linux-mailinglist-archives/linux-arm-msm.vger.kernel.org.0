@@ -2,209 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8515E30EBB0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Feb 2021 06:04:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4843630EBCF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Feb 2021 06:21:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229734AbhBDFCp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Feb 2021 00:02:45 -0500
-Received: from mail29.static.mailgun.info ([104.130.122.29]:52337 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229725AbhBDFCp (ORCPT
+        id S230252AbhBDFUl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Feb 2021 00:20:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49504 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230172AbhBDFUi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Feb 2021 00:02:45 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1612414944; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=RiWhMQeAOucPPUpz/FHQEGTSDjaoFEovqQdCTOGDWGE=;
- b=rVjm3glKsLu46I6IEcO/Z1xhtgPIUlpkYf5aXsGlJ1ZnCl2/9bcVcaon2IYhO7qAIfkaEBlb
- TW+ZQjM9vW1biyhBb26gq+qwUzZHVWP0Odz9oLirCbd2XBi/e19MjKTXfJnLuQRJXovzCopv
- gqrEafGySOojA2dayoXp6BOqljA=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 601b7fc15a2f264828a3670d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 04 Feb 2021 05:01:53
- GMT
-Sender: dikshita=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0E3E5C433C6; Thu,  4 Feb 2021 05:01:53 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: dikshita)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 078ECC433ED;
-        Thu,  4 Feb 2021 05:01:51 +0000 (UTC)
+        Thu, 4 Feb 2021 00:20:38 -0500
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD2C6C061573
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Feb 2021 21:19:58 -0800 (PST)
+Received: by mail-oi1-x22c.google.com with SMTP id n7so2497910oic.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Feb 2021 21:19:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=kJzCjy0nMms07nuaWu9NrrP4hmPYEqwniCQtXa1rukQ=;
+        b=KQ2AhCWW56C5JV7cqUzGBtT+Jp2isIlTZStXIUFAhpb088QKrxZ241ncAwPABWuv1f
+         j/HuikFvkj90ccJsW5w7cFva4BuCyUYrC/WcIsel6hzAtAo2NqjhldrxEKKTjMxAmq5Z
+         zg/BA9QxcJ9tTw2ttPIHTBw4FHWaDagFoMZ2Hi3viO633+rzFz7xb9jcs9f39hYL+Bqb
+         Ms724vHHecjzGL+D5ucmMkK1A35F6OC5DGzepiTOVicblOOn3mJa0YfHMdHhAulUjCna
+         zSqfY/aX6rACUGnhFbax4GGbkXmOf1+fwbEAq3Lx3fWHcdPGAJGlqf3oYMWE3ICFX5cY
+         HqiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=kJzCjy0nMms07nuaWu9NrrP4hmPYEqwniCQtXa1rukQ=;
+        b=L23x0pLGhsGyi1Dudz4WuhdbyPChFvXAz4/By3dDEnSkD1ImNphlTn1QPOEAEB8G/p
+         OTZNs+L4Z7ce4arYFaNOyrBsxao5rmEXG8umL6eYBCnz5tMc3hZQsw7zygcpRiFKQGtu
+         Knzsyv++9Tm5nrO9mEv3w8dNsQqct7U2l9U1xlDrr2enzBK4phdD9xuzlamWuK5FjlEp
+         Ho25y2DmJY2hWEi6fcmQm2qlUDQJHk3odhZks2an2b//Hn+nyhjAJWndu80U9aMRXmti
+         PhSdygdiruualXa9j4RyY+793qRoZJa3AafYZdU8AV7zhGohoEt/ywaEqTnlPH5eYCwK
+         0zwQ==
+X-Gm-Message-State: AOAM531cUvUtG+LEadghUaJVs0aACQcSqbk0/j5Gqj3NAtEvpDIAafR/
+        XRfeWr7qBClV3AkMO69qzjPQWQ==
+X-Google-Smtp-Source: ABdhPJzrkdaH7GRTiA5I5fleV+9Wgd1JQvQZ/aAfIsJO7Hji0lsIOEzjo1HSu7B6SES+76GMosBXTg==
+X-Received: by 2002:a05:6808:6d2:: with SMTP id m18mr3064386oih.32.1612415997898;
+        Wed, 03 Feb 2021 21:19:57 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id l3sm945276ooa.12.2021.02.03.21.19.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Feb 2021 21:19:57 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     arm@kernel.org, soc@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Olof Johansson <olof@lixom.net>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [GIT PULL] Qualcomm ARM64 defconfig updates for 5.12
+Date:   Wed,  3 Feb 2021 23:19:56 -0600
+Message-Id: <20210204051956.388355-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 04 Feb 2021 10:31:51 +0530
-From:   dikshita@codeaurora.org
-To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Cc:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org
-Subject: Re: [PATCH v6 1/2] media: v4l2-ctrl: add controls for long term
- reference.
-In-Reply-To: <d20ba57f-54a7-5a61-a64b-2d9433b79281@xs4all.nl>
-References: <1611553919-17919-1-git-send-email-dikshita@codeaurora.org>
- <1611553919-17919-2-git-send-email-dikshita@codeaurora.org>
- <d20ba57f-54a7-5a61-a64b-2d9433b79281@xs4all.nl>
-Message-ID: <6e59d1bee1d0f1b64aab77959bb22e6e@codeaurora.org>
-X-Sender: dikshita@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-02-01 16:50, Hans Verkuil wrote:
-> On 25/01/2021 06:51, Dikshita Agarwal wrote:
->> Long Term Reference (LTR) frames are the frames that are encoded
->> sometime in the past and stored in the DPB buffer list to be used
->> as reference to encode future frames.
->> This change adds controls to enable this feature.
->> 
->> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
->> ---
->>  .../userspace-api/media/v4l/ext-ctrls-codec.rst        | 18 
->> ++++++++++++++++++
->>  drivers/media/v4l2-core/v4l2-ctrls.c                   | 14 
->> ++++++++++++++
->>  include/uapi/linux/v4l2-controls.h                     |  3 +++
->>  3 files changed, 35 insertions(+)
->> 
->> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst 
->> b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
->> index 400774c..a37d460 100644
->> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
->> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
->> @@ -3637,3 +3637,21 @@ enum v4l2_mpeg_video_hevc_size_of_length_field 
->> -
->>        - Selecting this value specifies that HEVC slices are expected
->>          to be prefixed by Annex B start codes. According to 
->> :ref:`hevc`
->>          valid start codes can be 3-bytes 0x000001 or 4-bytes 
->> 0x00000001.
->> +
->> +``V4L2_CID_MPEG_VIDEO_LTR_COUNT (integer)``
->> +       Specifies the number of Long Term Reference (LTR) frames 
->> encoder needs
->> +       to generate or keep. This is applicable to the H264 and HEVC 
->> encoders.
->> +
->> +``V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX (integer)``
->> +       The current frame is marked as a Long Term Reference (LTR) 
->> frame
->> +       and given this LTR index which ranges from 0 to LTR_COUNT-1.
->> +       This is applicable to the H264 and HEVC encoders and can be 
->> applied using
->> +       Request API.
-> 
-> You mentioned in reply to my comment that the venus driver didn't 
-> support the
-> Request API that it is also possible to use it without that API.
-> 
-> But that requires more precise documentation. I assume that without the 
-> Request
-> API you would set this control, then queue the buffer containing the 
-> frame this
-> control should apply to, then wait until it is dequeued. Since that's 
-> the only
-> way you can be certain this control is applied to the correct frame.
-> 
-> Is this indeed what you do in your application?
-> 
-> Regards,
-> 
-> 	Hans
-> 
-Hi Hans,
+The following changes since commit 5c8fe583cce542aa0b84adc939ce85293de36e5e:
 
-Yes, It is possible without request API as well in a non-synchronized 
-way.
-And we don't need to wait for the frame to be dequeued.
-The driver implementation ensures that whenever the LTR control is 
-received,
-it applies to the frame received after that. Not to frame which would be 
-encoded next.
-So that it is at least synchronized between driver & encoder.
+  Linux 5.11-rc1 (2020-12-27 15:30:22 -0800)
 
-Thanks,
-Dikshita
+are available in the Git repository at:
 
->> +       Source Rec. ITU-T H.264 (06/2019); Table 7.9
->> +
->> +``V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES (bitmask)``
->> +       Specifies the Long Term Reference (LTR) frame(s) to be used 
->> for
->> +       encoding the current frame.
->> +       This provides a bitmask which consists of bits [0, 
->> LTR_COUNT-1].
->> +       This is applicable to the H264 and HEVC encoders and can be 
->> applied using
->> +       Request API.
->> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c 
->> b/drivers/media/v4l2-core/v4l2-ctrls.c
->> index 16ab54f..84c1eb8 100644
->> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
->> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
->> @@ -950,6 +950,9 @@ const char *v4l2_ctrl_get_name(u32 id)
->>  	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:		return "Vertical MV 
->> Search Range";
->>  	case V4L2_CID_MPEG_VIDEO_REPEAT_SEQ_HEADER:		return "Repeat Sequence 
->> Header";
->>  	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:		return "Force Key Frame";
->> +	case V4L2_CID_MPEG_VIDEO_LTR_COUNT:			return "LTR Count";
->> +	case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:		return "Frame LTR Index";
->> +	case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES:		return "Use LTR Frames";
->>  	case V4L2_CID_MPEG_VIDEO_MPEG2_SLICE_PARAMS:		return "MPEG-2 Slice 
->> Parameters";
->>  	case V4L2_CID_MPEG_VIDEO_MPEG2_QUANTIZATION:		return "MPEG-2 
->> Quantization Matrices";
->>  	case V4L2_CID_FWHT_I_FRAME_QP:				return "FWHT I-Frame QP Value";
->> @@ -1277,6 +1280,17 @@ void v4l2_ctrl_fill(u32 id, const char **name, 
->> enum v4l2_ctrl_type *type,
->>  	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:
->>  		*type = V4L2_CTRL_TYPE_INTEGER;
->>  		break;
->> +	case V4L2_CID_MPEG_VIDEO_LTR_COUNT:
->> +		*type = V4L2_CTRL_TYPE_INTEGER;
->> +		break;
->> +	case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:
->> +		*type = V4L2_CTRL_TYPE_INTEGER;
->> +		*flags |= V4L2_CTRL_FLAG_EXECUTE_ON_WRITE;
->> +		break;
->> +	case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES:
->> +		*type = V4L2_CTRL_TYPE_BITMASK;
->> +		*flags |= V4L2_CTRL_FLAG_EXECUTE_ON_WRITE;
->> +		break;
->>  	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:
->>  	case V4L2_CID_PAN_RESET:
->>  	case V4L2_CID_TILT_RESET:
->> diff --git a/include/uapi/linux/v4l2-controls.h 
->> b/include/uapi/linux/v4l2-controls.h
->> index af8dda2..c0bb87b 100644
->> --- a/include/uapi/linux/v4l2-controls.h
->> +++ b/include/uapi/linux/v4l2-controls.h
->> @@ -422,6 +422,9 @@ enum v4l2_mpeg_video_multi_slice_mode {
->>  #define 
->> V4L2_CID_MPEG_VIDEO_MV_H_SEARCH_RANGE		(V4L2_CID_CODEC_BASE+227)
->>  #define 
->> V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE		(V4L2_CID_CODEC_BASE+228)
->>  #define 
->> V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME		(V4L2_CID_CODEC_BASE+229)
->> +#define V4L2_CID_MPEG_VIDEO_LTR_COUNT			(V4L2_CID_CODEC_BASE+230)
->> +#define 
->> V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX		(V4L2_CID_CODEC_BASE+231)
->> +#define V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES		(V4L2_CID_CODEC_BASE+232)
->> 
->>  /* CIDs for the MPEG-2 Part 2 (H.262) codec */
->>  #define V4L2_CID_MPEG_VIDEO_MPEG2_LEVEL			(V4L2_CID_CODEC_BASE+270)
->> 
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-defconfig-for-5.12
+
+for you to fetch changes up to e6c88b8e434f1a856b330a7c07e4ed338e41a92e:
+
+  arm64: defconfig: Enable Qualcomm SM8250 audio config (2021-01-15 10:20:00 -0600)
+
+----------------------------------------------------------------
+Qualcomm ARM64 defconfig updates for 5.12
+
+This enables HID multitouch and TMPFS Posix ACL, for off-the-shelf
+distro support on the Snapdragon laptops. It also enables display
+clocks, audio configs and the LT9611UXC HDMI bridge for used on the
+SM8250 and specifically RB5 board.
+
+----------------------------------------------------------------
+Bjorn Andersson (2):
+      arm64: defconfig: Enable HID multitouch
+      arm64: defconfig: Enable TMPFS Posix ACL
+
+Dmitry Baryshkov (3):
+      arm64: defconfig: enable display clock controller on sm8250
+      arm64: defconfig: enable Lontium LT9611UXC bridge driver
+      arm64: defconfig: Enable Qualcomm SM8250 audio config
+
+ arch/arm64/configs/defconfig | 9 +++++++++
+ 1 file changed, 9 insertions(+)
