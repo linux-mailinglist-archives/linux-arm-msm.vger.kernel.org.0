@@ -2,240 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C70ED30F944
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Feb 2021 18:15:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E81B30F9BE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Feb 2021 18:33:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238314AbhBDRNR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Feb 2021 12:13:17 -0500
-Received: from mail.kernel.org ([198.145.29.99]:57128 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238344AbhBDRMG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Feb 2021 12:12:06 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id A71A164F76;
-        Thu,  4 Feb 2021 17:09:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1612458573;
-        bh=moLH7O3aPLeWeYHvK8JnDz0bw/lDVlhdHDFhU17tFB8=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=RFLVlEe9qr5yIsioQY0+U/XfTDdYhYH5Y/PlSVSi/sM9124WY4jw1NejH6XhnrtQG
-         e+krMAeIdhXCAO6WQh/+2HicZScaXCKvnpMqTcbfMJLmf2nonCQGHa9gEtRujfSVb2
-         7W1ghJ8DS8mOUw+8pd9eJgf8a92W7FwAccEcSPCK9KT9TWWEhAHZXB/+QrWfemGoqv
-         gMat04vRp0uweR1pWYIhNnEOwbAFkg4iMTAetuIEFzo7ma66HahkNUqGACr+i5izOo
-         vm8rpqcmNBGtxeJbo0ZW1W2MnG/dZNd4fzZ7lX85PxVc9XoTFuu396aQFgOncCszM7
-         dHBDJQw2ucyoA==
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org
-Subject: [PATCH 6/6] arm64: dts: qcom: sm8350-mtp: add regulator names
-Date:   Thu,  4 Feb 2021 22:39:07 +0530
-Message-Id: <20210204170907.63545-7-vkoul@kernel.org>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20210204170907.63545-1-vkoul@kernel.org>
-References: <20210204170907.63545-1-vkoul@kernel.org>
+        id S238529AbhBDRbv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Feb 2021 12:31:51 -0500
+Received: from mail-ot1-f44.google.com ([209.85.210.44]:44648 "EHLO
+        mail-ot1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238484AbhBDRab (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 4 Feb 2021 12:30:31 -0500
+Received: by mail-ot1-f44.google.com with SMTP id e70so4132402ote.11;
+        Thu, 04 Feb 2021 09:30:14 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=VABDqQO4SCCxw9n6VdMjP3tpI9MOBd0XV0ilXTl4TqU=;
+        b=bXZsNUSAr9FCbeJcIlPQ3E82Ruq35nNAKUkkToEQlsWSGZmyEy24aI6FZXVfkZmY+G
+         TF64rW4JYqJAajQypMzpzuxFvGkH4UakP7wEiHaKO7fQ+LPvUFbBO10X2nVwuDFt9jDU
+         WpWAUdKvKSk2cJL1POhx0EL5NA+qJcCkdxz389/pT9YODDrZXxM2r9HMeXiwPaF9cRh3
+         HhdM7swoTdodw0GT3qbA0Gcs9fU6TyT0fuvqVJSxRa7kiM1Q00vKUKCQRmtFjwe+nDfp
+         xhgZPRp1tT+Hc2oyZ7fz/6ZhMb/FRyzu2e5MyxixLIia+jHSg27SFf2bcn00RLu4Aayd
+         OSiw==
+X-Gm-Message-State: AOAM532L9rSKQC/tT7al+O6vDAOpNpIJ+0wGtsDOismZW9B3mOXzT7cF
+        gZzIrfwKSvohs7mLbRi3qA==
+X-Google-Smtp-Source: ABdhPJyRucRa6WFuTvsk3abTvCXMHWztBy5ONKR24Bi/EstX7fiI57+Du8n2gQUyyz1NuIk23MVq1Q==
+X-Received: by 2002:a9d:1c9a:: with SMTP id l26mr331207ota.316.1612459788720;
+        Thu, 04 Feb 2021 09:29:48 -0800 (PST)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id z10sm1238418otk.8.2021.02.04.09.29.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Feb 2021 09:29:47 -0800 (PST)
+Received: (nullmailer pid 682797 invoked by uid 1000);
+        Thu, 04 Feb 2021 17:29:45 -0000
+Date:   Thu, 4 Feb 2021 11:29:45 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc:     Sascha Hauer <s.hauer@pengutronix.de>,
+        linux-kernel@vger.kernel.org,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Jaehoon Chung <jh80.chung@samsung.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Andy Gross <agross@kernel.org>,
+        Jesper Nilsson <jesper.nilsson@axis.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        linux-amlogic@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        Lucas Stach <l.stach@pengutronix.de>,
+        linux-samsung-soc@vger.kernel.org,
+        Kevin Hilman <khilman@baylibre.com>,
+        devicetree@vger.kernel.org,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        linux-arm-kernel@axis.com, Richard Zhu <hongxing.zhu@nxp.com>,
+        linux-arm-msm@vger.kernel.org,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-pci@vger.kernel.org, Jerome Brunet <jbrunet@baylibre.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        linux-omap@vger.kernel.org, Jingoo Han <jingoohan1@gmail.com>,
+        linux-tegra@vger.kernel.org, Jonathan Chocron <jonnyc@amazon.com>,
+        Zhou Wang <wangzhou1@hisilicon.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>
+Subject: Re: [PATCH 01/13] doc: bindings: pci: designware-pcie.txt: convert
+ it to yaml
+Message-ID: <20210204172945.GA662023@robh.at.kernel.org>
+References: <cover.1612271903.git.mchehab+huawei@kernel.org>
+ <706e684f571e142362d7be74eb1dcee2c8558052.1612271903.git.mchehab+huawei@kernel.org>
+ <1612287895.001149.3887347.nullmailer@robh.at.kernel.org>
+ <20210203074900.6d581153@coco.lan>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210203074900.6d581153@coco.lan>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the property "regulator-names" to the regulators as given in
-schematics so that it is easier to understand the regulators being used
+On Wed, Feb 03, 2021 at 07:49:00AM +0100, Mauro Carvalho Chehab wrote:
+> Hi Rob,
+> 
+> Em Tue, 02 Feb 2021 11:44:54 -0600
+> Rob Herring <robh@kernel.org> escreveu:
+> 
+> > My bot found errors running 'make dt_binding_check' on your patch:
+> > 
+> > yamllint warnings/errors:
+> > 
+> > dtschema/dtc warnings/errors:
+> > /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pci/snps,pcie.yaml: properties:snps,enable-cdm-check: 'oneOf' conditional failed, one must be fixed:
+> > 	'type' is a required property
+> > 	Additional properties are not allowed ('$ref' was unexpected)
+> > 	/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pci/snps,pcie.yaml: properties:snps,enable-cdm-check: 'oneOf' conditional failed, one must be fixed:
+> > 		'enum' is a required property
+> > 		'const' is a required property
+> > 	'/schemas/types.yaml#definitions/flag' does not match 'types.yaml#/definitions/'
 
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- arch/arm64/boot/dts/qcom/sm8350-mtp.dts | 27 +++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+You need a '/' between '#' and 'definitions'.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350-mtp.dts b/arch/arm64/boot/dts/qcom/sm8350-mtp.dts
-index 2675afbbd75e..e544fe6b421f 100644
---- a/arch/arm64/boot/dts/qcom/sm8350-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8350-mtp.dts
-@@ -57,57 +57,67 @@ pm8350-rpmh-regulators {
- 		vdd-l8-supply = <&vreg_s2c_0p8>;
- 
- 		vreg_s10b_1p8: smps10 {
-+			regulator-name = "vreg_s10b_1p8";
- 			regulator-min-microvolt = <1800000>;
- 			regulator-max-microvolt = <1800000>;
- 		};
- 
- 		vreg_s11b_0p95: smps11 {
-+			regulator-name = "vreg_s11b_0p95";
- 			regulator-min-microvolt = <752000>;
- 			regulator-max-microvolt = <1000000>;
- 		};
- 
- 		vreg_s12b_1p25: smps12 {
-+			regulator-name = "vreg_s12b_1p25";
- 			regulator-min-microvolt = <1224000>;
- 			regulator-max-microvolt = <1360000>;
- 		};
- 
- 		vreg_l1b_0p88: ldo1 {
-+			regulator-name = "vreg_l1b_0p88";
- 			regulator-min-microvolt = <912000>;
- 			regulator-max-microvolt = <920000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
- 		vreg_l2b_3p07: ldo2 {
-+			regulator-name = "vreg_l2b_3p07";
- 			regulator-min-microvolt = <3072000>;
- 			regulator-max-microvolt = <3072000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
- 		vreg_l3b_0p9: ldo3 {
-+			regulator-name = "vreg_l3b_0p9";
- 			regulator-min-microvolt = <904000>;
- 			regulator-max-microvolt = <904000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
- 		vreg_l5b_0p88: ldo5 {
-+			regulator-name = "vreg_l3b_0p9";
- 			regulator-min-microvolt = <880000>;
- 			regulator-max-microvolt = <888000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
- 		vreg_l6b_1p2: ldo6 {
-+			regulator-name = "vreg_l6b_1p2";
- 			regulator-min-microvolt = <1200000>;
- 			regulator-max-microvolt = <1208000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
- 		vreg_l7b_2p96: ldo7 {
-+			regulator-name = "vreg_l7b_2p96";
- 			regulator-min-microvolt = <2400000>;
- 			regulator-max-microvolt = <3008000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
- 		vreg_l9b_1p2: ldo9 {
-+			regulator-name = "vreg_l9b_1p2";
- 			regulator-min-microvolt = <1200000>;
- 			regulator-max-microvolt = <1200000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-@@ -138,99 +148,116 @@ pm8350c-rpmh-regulators {
- 		vdd-bob-supply = <&vph_pwr>;
- 
- 		vreg_s1c_1p86: smps1 {
-+			regulator-name = "vreg_s1c_1p86";
- 			regulator-min-microvolt = <1800000>;
- 			regulator-max-microvolt = <1952000>;
- 		};
- 
- 		vreg_s2c_0p8: smps2 {
-+			regulator-name = "vreg_s2c_0p8";
- 			regulator-min-microvolt = <640000>;
- 			regulator-max-microvolt = <1000000>;
- 		};
- 
- 		vreg_s10c_1p05: smps10 {
-+			regulator-name = "vreg_s10c_1p05";
- 			regulator-min-microvolt = <1048000>;
- 			regulator-max-microvolt = <1128000>;
- 		};
- 
- 		vreg_bob: bob {
-+			regulator-name = "vreg_bob";
- 			regulator-min-microvolt = <3008000>;
- 			regulator-max-microvolt = <3960000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_AUTO>;
- 		};
- 
- 		vreg_l1c_1p8: ldo1 {
-+			regulator-name = "vreg_l1c_1p8";
- 			regulator-min-microvolt = <1800000>;
- 			regulator-max-microvolt = <1800000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
- 		vreg_l2c_1p8: ldo2 {
-+			regulator-name = "vreg_l2c_1p8";
- 			regulator-min-microvolt = <1800000>;
- 			regulator-max-microvolt = <1800000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
- 		vreg_l3c_3p0: ldo3 {
-+			regulator-name = "vreg_l3c_3p0";
- 			regulator-min-microvolt = <3008000>;
- 			regulator-max-microvolt = <3008000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
- 		vreg_l4c_uim1: ldo4 {
-+			regulator-name = "vreg_l4c_uim1";
- 			regulator-min-microvolt = <1704000>;
- 			regulator-max-microvolt = <3000000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
- 		vreg_l5c_uim2: ldo5 {
-+			regulator-name = "vreg_l5c_uim2";
- 			regulator-min-microvolt = <1704000>;
- 			regulator-max-microvolt = <3000000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
- 		vreg_l6c_1p8: ldo6 {
-+			regulator-name = "vreg_l6c_1p8";
- 			regulator-min-microvolt = <1800000>;
- 			regulator-max-microvolt = <2960000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
- 		vreg_l7c_3p0: ldo7 {
-+			regulator-name = "vreg_l7c_3p0";
- 			regulator-min-microvolt = <3008000>;
- 			regulator-max-microvolt = <3008000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
- 		vreg_l8c_1p8: ldo8 {
-+			regulator-name = "vreg_l8c_1p8";
- 			regulator-min-microvolt = <1800000>;
- 			regulator-max-microvolt = <1800000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
- 		vreg_l9c_2p96: ldo9 {
-+			regulator-name = "vreg_l9c_2p96";
- 			regulator-min-microvolt = <2960000>;
- 			regulator-max-microvolt = <3008000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
- 		vreg_l10c_1p2: ldo10 {
-+			regulator-name = "vreg_l10c_1p2";
- 			regulator-min-microvolt = <1200000>;
- 			regulator-max-microvolt = <1200000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
- 		vreg_l11c_2p96: ldo11 {
-+			regulator-name = "vreg_l11c_2p96";
- 			regulator-min-microvolt = <2400000>;
- 			regulator-max-microvolt = <3008000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
- 		vreg_l12c_1p8: ldo12 {
-+			regulator-name = "vreg_l12c_1p8";
- 			regulator-min-microvolt = <1800000>;
- 			regulator-max-microvolt = <2000000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
- 		vreg_l13c_3p0: ldo13 {
-+			regulator-name = "vreg_l13c_3p0";
- 			regulator-min-microvolt = <3000000>;
- 			regulator-max-microvolt = <3000000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
--- 
-2.26.2
 
+> > /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pci/snps,pcie.yaml: ignoring, error in schema: properties: snps,enable-cdm-check
+> > warning: no schema found in file: ./Documentation/devicetree/bindings/pci/snps,pcie.yaml
+> > 
+> > See https://patchwork.ozlabs.org/patch/1434686
+> > 
+> > This check can fail if there are any dependencies. The base for a patch
+> > series is generally the most recent rc1.
+> > 
+> > If you already ran 'make dt_binding_check' and didn't see the above
+> > error(s), then make sure 'yamllint' is installed and dt-schema is up to
+> > date:
+> > 
+> > pip3 install dtschema --upgrade
+> > 
+> > Please check and re-submit.
+> 
+> I've no idea why the bot is hitting those. My tree is based on
+> staging-testing[1], as I need the regulator patches merged there.
+> Such tree is based on v5.11-rc5.
+> 
+> There, dt_binding_check doesn't get any warnings on this schema:
+> 
+> $ pip3 install dtschema --upgrade --user
+> Requirement already up-to-date: dtschema in /home/mchehab/.local/lib/python3.9/site-packages (2020.12)
+
+This particular check is in master, but not yet a release on pypi. I'll 
+be tagging a release soon.
+
+I've got this problem that adding new meta-schema checks like this one 
+requires fixing up all the existing in tree schemas first. So I give 
+some amount of time before adding them to a tagged release. However, I 
+want to start testing new schemas right away. I haven't come up with a 
+better solution short of importing the meta-schema into the kernel tree 
+or separately versioning them.
+
+Rob
