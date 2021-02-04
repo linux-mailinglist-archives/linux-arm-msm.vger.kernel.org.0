@@ -2,67 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3CD1F3100D6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Feb 2021 00:40:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BF35A310122
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Feb 2021 00:54:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230122AbhBDXkW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Feb 2021 18:40:22 -0500
-Received: from mail-oi1-f180.google.com ([209.85.167.180]:34727 "EHLO
-        mail-oi1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230432AbhBDXkR (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Feb 2021 18:40:17 -0500
-Received: by mail-oi1-f180.google.com with SMTP id h192so5647715oib.1;
-        Thu, 04 Feb 2021 15:39:33 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=5GQHrqEfP/qkwIRLdLdnADatda2rpnQETgAt2j0ygXo=;
-        b=IYF9NbSa5ueW8aGUYjm9yWjjxB7ddQnMF2ZW/hx1HexqcVvnUEa/9dM9okqENtjZka
-         1wOJ/scKIKYVfME0XjqbWsKc1/K+KY9odBhv1DFy6+pVc4k9s+qSQcOXgiISjeGInxSJ
-         HgtZtTNYbdmSLuwfG1RGXMs2vFJWuiMahXx6T3NwVt/o3L45McouSyVgFOKyfQEiPOAu
-         t2slFVzbRTMexrjV+59D8xM3NToTx3O3hI87FClElCiMYzO30AoVBtefXDuBaMeCwVl7
-         5Z5i3ZM3odNNnK/JZjv8HKH66piKHw+9e4Kqo/j6PGVJuhVi8HB5KauAk7KA7VRVGwwK
-         XBcA==
-X-Gm-Message-State: AOAM530lIhSVFmo4K4M9z1bNgX6B0UOM/oKyoRAme8P66sEDof+lvKd0
-        b7GeX6oEqqNSkrbrHWMThQ==
-X-Google-Smtp-Source: ABdhPJznSlbQlfcVKn+rh6985IYJmQ0sGEMdwg1mdkNPQ+BT6nuWZ069yaak1ll7q2qmXNZGtoVPyA==
-X-Received: by 2002:aca:31c1:: with SMTP id x184mr1322104oix.74.1612481947660;
-        Thu, 04 Feb 2021 15:39:07 -0800 (PST)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id c2sm1379016ooo.17.2021.02.04.15.39.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Feb 2021 15:39:06 -0800 (PST)
-Received: (nullmailer pid 1334577 invoked by uid 1000);
-        Thu, 04 Feb 2021 23:39:05 -0000
-Date:   Thu, 4 Feb 2021 17:39:05 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     vgarodia@qti.qualcomm.com, robh+dt@kernel.org, agross@kernel.org,
-        dikshita@qti.qualcomm.com, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        stanimir.varbanov@linaro.org, jonathan@marek.ca
-Subject: Re: [PATCH 1/1] dt-bindings: media: venus: Add sm8250 dt schema
-Message-ID: <20210204233905.GA1334487@robh.at.kernel.org>
-References: <20210203113914.1072380-1-bryan.odonoghue@linaro.org>
- <20210203113914.1072380-2-bryan.odonoghue@linaro.org>
+        id S231320AbhBDXxu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Feb 2021 18:53:50 -0500
+Received: from so15.mailgun.net ([198.61.254.15]:15282 "EHLO so15.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231372AbhBDXxt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 4 Feb 2021 18:53:49 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1612482803; h=Message-ID: References: In-Reply-To: Reply-To:
+ Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=uGT+mmLcNimmrF5O0goRR8yE0/KU/5rkdgh5w5fKbJg=;
+ b=Zvk5LfizGYsfgbiUI4FzoGWNngVtchOr0zOtN1nYJna+FxdHv8rKaKnhiTwbNkKjTuaO5Mn5
+ sE0cpVs0MDNnsnHUsGaOEX/hkvVF7oaqkJo3Aw0RpSen/ZtLa7gRwU0mklcQVVoVi9Nx8qYo
+ Jxq0c7DraG3EIn4iLqJX/9UFuD8=
+X-Mailgun-Sending-Ip: 198.61.254.15
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 601c88d35d0f3847870441fc (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 04 Feb 2021 23:52:51
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3CF2CC43462; Thu,  4 Feb 2021 23:52:50 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A0088C433C6;
+        Thu,  4 Feb 2021 23:52:49 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210203113914.1072380-2-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 04 Feb 2021 15:52:49 -0800
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        carl.yin@quectel.com, naveen.kumar@quectel.com,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
+        loic.poulain@linaro.org
+Subject: Re: [PATCH v2 1/3] bus: mhi: core: Clear devices when moving
+ execution environments
+Organization: Qualcomm Innovation Center, Inc.
+Reply-To: bbhatt@codeaurora.org
+Mail-Reply-To: bbhatt@codeaurora.org
+In-Reply-To: <20210121075022.GA30041@thinkpad>
+References: <1610651795-31287-1-git-send-email-bbhatt@codeaurora.org>
+ <1610651795-31287-2-git-send-email-bbhatt@codeaurora.org>
+ <20210121075022.GA30041@thinkpad>
+Message-ID: <fb1246c0bbc2ebef6ef97f2645d3a741@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 03 Feb 2021 11:39:14 +0000, Bryan O'Donoghue wrote:
-> Add a schema description for the venus video encoder/decoder on the sm8250.
-> 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->  .../bindings/media/qcom,sm8250-venus.yaml     | 153 ++++++++++++++++++
->  1 file changed, 153 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml
-> 
+Hi Mani,
 
-Applied, thanks!
+On 2021-01-20 11:50 PM, Manivannan Sadhasivam wrote:
+> On Thu, Jan 14, 2021 at 11:16:33AM -0800, Bhaumik Bhatt wrote:
+>> When moving from SBL to mission mode execution environment, there
+>> is no remove callback notification to MHI client drivers which
+>> operate on SBL mode only. Client driver devices are being created
+>> in SBL or AMSS(mission mode) and only destroyed after power down
+>> or SYS_ERROR. If there exist any SBL-specific channels, those are
+>> left open and client drivers are thus unaware of the new execution
+>> environment where those channels cannot operate. Close the gap and
+>> issue remove callbacks to SBL-specific client drivers once device
+>> enters mission mode.
+>> 
+> 
+> What are the SBL specific channels and the client drivers operating on 
+> them?
+> If this is something going to come in future, then this patch can come 
+> later.
+> 
+> Thanks,
+> Mani
+
+Carl from Quectel (CC'd here) will need this patch as he works on EDL 
+and Flash
+Programmer changes which also needs usage of QSAHARA server over SBL.
+
+Thanks,
+Bhaumik
+---
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
+a Linux Foundation Collaborative Project
