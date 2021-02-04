@@ -2,35 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6EDF430FC8B
+	by mail.lfdr.de (Postfix) with ESMTP id DFD8230FC8C
 	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Feb 2021 20:23:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238255AbhBDTXM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Feb 2021 14:23:12 -0500
-Received: from mail.kernel.org ([198.145.29.99]:56746 "EHLO mail.kernel.org"
+        id S239799AbhBDTXJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Feb 2021 14:23:09 -0500
+Received: from mail.kernel.org ([198.145.29.99]:56766 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238339AbhBDRKX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Feb 2021 12:10:23 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 8317864F65;
-        Thu,  4 Feb 2021 17:09:23 +0000 (UTC)
+        id S237638AbhBDRKY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 4 Feb 2021 12:10:24 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 6D46B64F72;
+        Thu,  4 Feb 2021 17:09:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1612458565;
-        bh=35QGcWRXrFZZKLLrP8CbNn95b1JWwB0ykltG6Pu99j0=;
+        s=k20201202; t=1612458568;
+        bh=xoWq4aqI+4Cn3qczfLSrx0Hoi/7jeG+0q0yZ6kUSHEI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=c99jDqMx9VGky9p5LbB87lAzjRfq0NmAeChii4YBlgoO+poQrAxqMv0KN8Z0+ycn2
-         zQYqfEscDgreKoiaxrDsrD27tiFfGIWaAFp4rd6bVEgRUUc+gCEKXiWOp6TrBMGeeA
-         eIxWQA7wcPPIHl+yG3SlSPb10lllGz5fI61Pg5PTEeiYZO8EIjl46Q5hwEakbxGi6g
-         r+nZSiFutbq6f7A7ImRxCeivzHj7kF0NgJgtVA+Yaj8kbB9HcSKPqAlVF8ZwdvfWMj
-         cVOBHm4T/BcJ2xb/LwluApe/BB8Lbx7cNJaMLEv2f9q/EUpIAqICT9eAVkawKC4gSg
-         DiLv3YWxB2+3w==
+        b=mZb6C2ZHWcIsQ9vh/meYf1QtwEykwrBwN/jD7JbFvj6AoZY9KwvNm4b9Di7dP59xt
+         sEKVPjV+Tz4FehL5zPN+3XwEsc2XMhOQ2HRGNv12xeK3mKKEqtuFaqXqgACC8iOjoH
+         K7sqE/+hBSCMP1AHSNFHBxYAIdhseiEr5Yf51lr1RqcDrl9vM4qEs7Wc0LPA+g+R/o
+         GKePDhA+6pqiFucxd3JHdrITtlynclJ8rZrvFjgpceC9mpuhLJTBXocF53aHrLpiSl
+         o10iqV1r+9ZZlO/KIHd12KZlN08a7CP3rYu6vFwmlpRLjTjvUPu7HtipzX+/lyaKt5
+         ScOr7Vz2PgPWw==
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, Jack Pham <jackp@codeaurora.org>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
-        Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 3/6] arm64: dts: qcom: sm8350-mtp: enable USB nodes
-Date:   Thu,  4 Feb 2021 22:39:04 +0530
-Message-Id: <20210204170907.63545-4-vkoul@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org
+Subject: [PATCH 4/6] arm64: dts: qcom: Add SM8350 UFS nodes
+Date:   Thu,  4 Feb 2021 22:39:05 +0530
+Message-Id: <20210204170907.63545-5-vkoul@kernel.org>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20210204170907.63545-1-vkoul@kernel.org>
 References: <20210204170907.63545-1-vkoul@kernel.org>
@@ -40,75 +39,100 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Jack Pham <jackp@codeaurora.org>
+This adds UFS HC and UFS phy nodes to the SM8350 DTS
 
-Enable both USB controllers and associated hsphy and qmp phy nodes
-on sm8350 MTP. Designate the usb_1 instance as peripheral-mode only
-until proper PMIC based Type-C dual-role handling is supported.
-
-TODO: the second USB controller is exposed to a microAB port. Dual-
-role can be supported for this by adding the "usb-role-switch"
-property as well as defining a USB connector node with a
-"gpio-usb-b-connector" compatible. However, this requires GPIO
-support from PM8350 which is still missing.
-
-Signed-off-by: Jack Pham <jackp@codeaurora.org>
-Message-Id: <20210116013802.1609-3-jackp@codeaurora.org>
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8350-mtp.dts | 42 +++++++++++++++++++++++++
- 1 file changed, 42 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 76 ++++++++++++++++++++++++++++
+ 1 file changed, 76 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350-mtp.dts b/arch/arm64/boot/dts/qcom/sm8350-mtp.dts
-index 8923657579fb..a2baa1ad3752 100644
---- a/arch/arm64/boot/dts/qcom/sm8350-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8350-mtp.dts
-@@ -248,3 +248,45 @@ &tlmm {
- &uart2 {
- 	status = "okay";
- };
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index e51d9ca0210c..188f4011352c 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -593,6 +593,82 @@ rpmhcc: clock-controller {
+ 
+ 		};
+ 
++		ufs_mem_hc: ufshc@1d84000 {
++			compatible = "qcom,sm8350-ufshc", "qcom,ufshc",
++				     "jedec,ufs-2.0";
++			reg = <0 0x01d84000 0 0x3000>;
++			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
++			phys = <&ufs_mem_phy_lanes>;
++			phy-names = "ufsphy";
++			lanes-per-direction = <2>;
++			#reset-cells = <1>;
++			resets = <&gcc 25>;
++			reset-names = "rst";
 +
-+&usb_1 {
-+	status = "okay";
-+};
++			power-domains = <&gcc 3>;
 +
-+&usb_1_dwc3 {
-+	dr_mode = "peripheral";
-+};
++			iommus = <&apps_smmu 0xe0 0x0>;
 +
-+&usb_1_hsphy {
-+	status = "okay";
++			clock-names =
++				"ref_clk",
++				"core_clk",
++				"bus_aggr_clk",
++				"iface_clk",
++				"core_clk_unipro",
++				"ref_clk",
++				"tx_lane0_sync_clk",
++				"rx_lane0_sync_clk",
++				"rx_lane1_sync_clk";
++			clocks =
++				<&rpmhcc RPMH_CXO_CLK>,
++				<&gcc 155>,
++				<&gcc 16>,
++				<&gcc 154>,
++				<&gcc 170>,
++				<&rpmhcc RPMH_CXO_CLK>,
++				<&gcc 168>,
++				<&gcc 164>,
++				<&gcc 166>;
++			freq-table-hz =
++				<75000000 300000000>,
++				<75000000 300000000>,
++				<0 0>,
++				<0 0>,
++				<75000000 300000000>,
++				<0 0>,
++				<0 0>,
++				<75000000 300000000>,
++				<75000000 300000000>;
++			status = "disabled";
++		};
 +
-+	vdda-pll-supply = <&vreg_l5b_0p88>;
-+	vdda18-supply = <&vreg_l1c_1p8>;
-+	vdda33-supply = <&vreg_l2b_3p07>;
-+};
++		ufs_mem_phy: phy@1d87000 {
++			compatible = "qcom,sm8350-qmp-ufs-phy";
++			reg = <0 0x01d87000 0 0xe10>;
++			#address-cells = <2>;
++			#size-cells = <2>;
++			#clock-cells = <1>;
++			ranges;
++			clock-names = "ref",
++				      "ref_aux";
++			clocks = <&rpmhcc RPMH_CXO_CLK>,
++				 <&gcc 161>;
 +
-+&usb_1_qmpphy {
-+	status = "okay";
++			resets = <&ufs_mem_hc 0>;
++			reset-names = "ufsphy";
++			status = "disabled";
 +
-+	vdda-phy-supply = <&vreg_l6b_1p2>;
-+	vdda-pll-supply = <&vreg_l1b_0p88>;
-+};
++			ufs_mem_phy_lanes: lanes@1d87400 {
++				reg = <0 0x01d87400 0 0x108>,
++				      <0 0x01d87600 0 0x1e0>,
++				      <0 0x01d87c00 0 0x1dc>,
++				      <0 0x01d87800 0 0x108>,
++				      <0 0x01d87a00 0 0x1e0>;
++				#phy-cells = <0>;
++				#clock-cells = <0>;
++			};
++		};
 +
-+&usb_2 {
-+	status = "okay";
-+};
-+
-+&usb_2_hsphy {
-+	status = "okay";
-+
-+	vdda-pll-supply = <&vreg_l5b_0p88>;
-+	vdda18-supply = <&vreg_l1c_1p8>;
-+	vdda33-supply = <&vreg_l2b_3p07>;
-+};
-+
-+&usb_2_qmpphy {
-+	status = "okay";
-+
-+	vdda-phy-supply = <&vreg_l6b_1p2>;
-+	vdda-pll-supply = <&vreg_l5b_0p88>;
-+};
+ 		usb_1_hsphy: phy@88e3000 {
+ 			compatible = "qcom,sm8350-usb-hs-phy",
+ 				     "qcom,usb-snps-hs-7nm-phy";
 -- 
 2.26.2
 
