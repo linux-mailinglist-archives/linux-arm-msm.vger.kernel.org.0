@@ -2,116 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D0A330F608
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Feb 2021 16:21:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A1C430F603
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Feb 2021 16:19:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237129AbhBDPOJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Feb 2021 10:14:09 -0500
-Received: from mx07-00178001.pphosted.com ([185.132.182.106]:11302 "EHLO
-        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S237111AbhBDPMS (ORCPT
+        id S237055AbhBDPTG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Feb 2021 10:19:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36416 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237235AbhBDPSl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Feb 2021 10:12:18 -0500
-Received: from pps.filterd (m0046668.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id 114F2AAf019077;
-        Thu, 4 Feb 2021 16:11:14 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=subject : to : cc :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=selector1;
- bh=sE6exNrtQq570ihFE/Urs/fOiX/fcIs+40k5WvNHbCU=;
- b=3YP4elACwrLPsMfVFx3oqTAbN2nrwbUUjDET+rokUwyW58zM/vP0Lrxg01V/Ym4U5wsH
- oIgiCByyqYsDajGrJl/M6v37u1OzgnSPLai11PKUjhUD97SfGlqT1erk2zfKiV9vNC9t
- ZfleUze9tsFYrzJsutJpOfbSkMwIKO3cmPlCJfDp+5UOGIVlZD/l3AsRs1M9wLAi6dBm
- b/I4LArXJ3vHXsns3MY57LxKVlhHAALkO2/f+nrV7zVnm6mqc9IwBRtDPLQehn49qpH0
- hKuQWxs5fl0cAkmcIHMhY8tcxGvhoxzZWbZQ1DIymX3oflIpSVYr5Ec2ZddZV7jvquD/ GQ== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com with ESMTP id 36d0fs86hx-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 04 Feb 2021 16:11:14 +0100
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id AA37010002A;
-        Thu,  4 Feb 2021 16:11:13 +0100 (CET)
-Received: from Webmail-eu.st.com (sfhdag2node3.st.com [10.75.127.6])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 62BEC2BA2CA;
-        Thu,  4 Feb 2021 16:11:13 +0100 (CET)
-Received: from lmecxl0889.lme.st.com (10.75.127.51) by SFHDAG2NODE3.st.com
- (10.75.127.6) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Thu, 4 Feb
- 2021 16:11:12 +0100
-Subject: Re: [PATCH v3 06/15] rpmsg: update rpmsg_chrdev_register_device
- function
-To:     kernel test robot <lkp@intel.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Andy Gross <agross@kernel.org>
-CC:     <kbuild-all@lists.01.org>, <linux-remoteproc@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20210204084534.10516-7-arnaud.pouliquen@foss.st.com>
- <202102042006.UBNrTXCE-lkp@intel.com>
-From:   Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
-Message-ID: <c853e1f6-d5f9-4270-5a78-2e9730e5089e@foss.st.com>
-Date:   Thu, 4 Feb 2021 16:11:12 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Thu, 4 Feb 2021 10:18:41 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E7E8C0613D6
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Feb 2021 07:18:00 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id m13so3911684wro.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Feb 2021 07:18:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=lpfJPe/1tU+7DzTf4KYc1pV9RSxza5H3pS4oizaxjuc=;
+        b=HcCeGBGJsMKx9yLKPrbfI+qpmPRZoIkJQeDpi0L9B/qg48Sp9HqgwH4gNJpK0bECyq
+         zk+eFwNrB0sB4xpAcFmrm++/3Fk1dfCl0mOyOPMG4vdT1nynBruqqtQCIzsMGQP14+aN
+         fpa6ojnGDSvQaNthY/dZXaE3//+3Ry3GIwJpE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=lpfJPe/1tU+7DzTf4KYc1pV9RSxza5H3pS4oizaxjuc=;
+        b=r8vf+4KZymfFGLG9aZYc0+uF2WrP9aJ6f7MDmggtwpFsXK9L1C+IAEGzKu3uNaYlQU
+         QcdsCukz6IhF4O5dxbartrVVsSdU2+6srN59DqAwfYG2WnrVpAxQk/PmteUvZWm8QQjG
+         DOQkE29x1nxtblUg7e6O13L9D1cswjMSpjPah4Qyevmhj3dM1pVDvDX4z8TZdGCaTq+k
+         CHlfDxBrQjmiZWyJlj+JwKpPM4CY8kjMyQ93dU8GfBQRxCuHodERfbuoUd5PEkMuKbF3
+         3Y/Ij5IwKAjcYtrXN7huq7CBq6J4H3wrt2z1gaIpRwtmMm5tW4OEJKGhB2Tpj1IHBkQ0
+         iMtg==
+X-Gm-Message-State: AOAM531PyotPTcIqGNu9DoOdKMLD6nYgjhDf9dOCdU6qNXOKuSvwG32n
+        v10V5vP/LveDpMGLeNCIFmPjBg==
+X-Google-Smtp-Source: ABdhPJyBIQIVsMcklYb+yXnw0qimDfJH83/YxKcR6iv94o3WNC66b1hbf14zmpSAbgwo++Gvnf8wLA==
+X-Received: by 2002:adf:dd45:: with SMTP id u5mr9836389wrm.392.1612451879310;
+        Thu, 04 Feb 2021 07:17:59 -0800 (PST)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id w15sm8097023wrp.15.2021.02.04.07.17.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Feb 2021 07:17:58 -0800 (PST)
+Date:   Thu, 4 Feb 2021 16:17:56 +0100
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Krishna Manikandan <mkrishn@codeaurora.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH] drm/msm/kms: Make a lock_class_key for each crtc mutex
+Message-ID: <YBwQJPepkIS39Grc@phenom.ffwll.local>
+Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Krishna Manikandan <mkrishn@codeaurora.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+References: <20210125234901.2730699-1-swboyd@chromium.org>
+ <YBlz8Go2DseRWuOa@phenom.ffwll.local>
+ <CAF6AEGuWhGuzxsBquj-WLSwa83r+zO7jAQ9ten2m+2KtoGpYSw@mail.gmail.com>
+ <YBp2h2cVXrF6lBno@phenom.ffwll.local>
+ <CAF6AEGvTrfYYTfReGbAm9zcBNhjZvX0tko4kZUeQcyNZv4cM6w@mail.gmail.com>
+ <161238950899.76967.16385691346035591773@swboyd.mtv.corp.google.com>
+ <CAF6AEGtFpjpYoY_iu8F2z-RMJ=0+tBYo-akKJ1JbgKagBuQWtA@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <202102042006.UBNrTXCE-lkp@intel.com>
-Content-Type: text/plain; charset="windows-1252"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.75.127.51]
-X-ClientProxiedBy: SFHDAG2NODE3.st.com (10.75.127.6) To SFHDAG2NODE3.st.com
- (10.75.127.6)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369,18.0.737
- definitions=2021-02-04_08:2021-02-04,2021-02-04 signatures=0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAF6AEGtFpjpYoY_iu8F2z-RMJ=0+tBYo-akKJ1JbgKagBuQWtA@mail.gmail.com>
+X-Operating-System: Linux phenom 5.7.0-1-amd64 
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Feb 03, 2021 at 02:11:09PM -0800, Rob Clark wrote:
+> On Wed, Feb 3, 2021 at 1:58 PM Stephen Boyd <swboyd@chromium.org> wrote:
+> >
+> > Quoting Rob Clark (2021-02-03 09:29:09)
+> > > On Wed, Feb 3, 2021 at 2:10 AM Daniel Vetter <daniel@ffwll.ch> wrote:
+> > > >
+> > > > On Tue, Feb 02, 2021 at 08:51:25AM -0800, Rob Clark wrote:
+> > > > > On Tue, Feb 2, 2021 at 7:46 AM Daniel Vetter <daniel@ffwll.ch> wrote:
+> > > > > >
+> > > > > > On Mon, Jan 25, 2021 at 03:49:01PM -0800, Stephen Boyd wrote:
+> > > > > > > This is because lockdep thinks all the locks taken in lock_crtcs() are
+> > > > > > > the same lock, when they actually aren't. That's because we call
+> > > > > > > mutex_init() in msm_kms_init() and that assigns on static key for every
+> > > > > > > lock initialized in this loop. Let's allocate a dynamic number of
+> > > > > > > lock_class_keys and assign them to each lock so that lockdep can figure
+> > > > > > > out an AA deadlock isn't possible here.
+> > > > > > >
+> > > > > > > Fixes: b3d91800d9ac ("drm/msm: Fix race condition in msm driver with async layer updates")
+> > > > > > > Cc: Krishna Manikandan <mkrishn@codeaurora.org>
+> > > > > > > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> > > > > >
+> > > > > > This smells like throwing more bad after initial bad code ...
+> > > > > >
+> > > > > > First a rant: https://blog.ffwll.ch/2020/08/lockdep-false-positives.html
+> > > >
+> > > > Some technical on the patch itself: I think you want
+> > > > mutex_lock_nested(crtc->lock, drm_crtc_index(crtc)), not your own locking
+> > > > classes hand-rolled. It's defacto the same, but much more obviously
+> > > > correct since self-documenting.
+> > >
+> > > hmm, yeah, that is a bit cleaner.. but this patch is already on
+> > > msm-next, maybe I'll add a patch on top to change it
+> >
+> > How many CRTCs are there? The subclass number tops out at 8, per
+> > MAX_LOCKDEP_SUBCLASSES so if we have more than that many bits possible
+> > then it will fail.
 
+Hm good point, tbh the mutex_lock_nested annotations isn't super awesome
+either, it would be kinda neat if we could put that annotation into
+mutex_lock_init fairly statically (and at that point we could allos resize
+the array fairly easily I think at runtime).
 
-On 2/4/21 1:44 PM, kernel test robot wrote:
-> Hi Arnaud,
-> 
-> I love your patch! Yet something to improve:
-> 
-> [auto build test ERROR on linus/master]
-> [also build test ERROR on v5.11-rc6 next-20210125]
-> [cannot apply to rpmsg/for-next agross-msm/qcom/for-next]
-> [If your patch is applied to the wrong git tree, kindly drop us a note.
-> And when submitting patch, we suggest to use '--base' as documented in
-> https://git-scm.com/docs/git-format-patch]
-> 
-> url:    https://github.com/0day-ci/linux/commits/Arnaud-Pouliquen/introduce-a-generic-IOCTL-interface-for-RPMsg-channels-management/20210204-165337
-> base:   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git 61556703b610a104de324e4f061dc6cf7b218b46
-> config: openrisc-randconfig-r001-20210204 (attached as .config)
-> compiler: or1k-linux-gcc (GCC) 9.3.0
-> reproduce (this is a W=1 build):
->         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
->         chmod +x ~/bin/make.cross
->         # https://github.com/0day-ci/linux/commit/23c166e0b157f0695fa7daefb8c5e30f383c3efd
->         git remote add linux-review https://github.com/0day-ci/linux
->         git fetch --no-tags linux-review Arnaud-Pouliquen/introduce-a-generic-IOCTL-interface-for-RPMsg-channels-management/20210204-165337
->         git checkout 23c166e0b157f0695fa7daefb8c5e30f383c3efd
->         # save the attached .config to linux build tree
->         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-9.3.0 make.cross ARCH=openrisc 
-> 
-> If you fix the issue, kindly add following tag as appropriate
-> Reported-by: kernel test robot <lkp@intel.com>>
-> All errors (new ones prefixed by >>):
-> 
->    or1k-linux-ld: drivers/rpmsg/qcom_glink_native.o: in function `qcom_glink_native_probe':
->>> qcom_glink_native.c:(.text+0x2e88): undefined reference to `rpmsg_ctrl_register_device'
->    qcom_glink_native.c:(.text+0x2e88): relocation truncated to fit: R_OR1K_INSN_REL_26 against undefined symbol `rpmsg_ctrl_register_device'
+The nice thing with the nesting index is just that it makes it a bit more
+obvious that there's a static nesting going on and why it's ok.
+-Daniel
 
-Thanks for highlighting it!
-
-I await further review comments first, but I will address this in my next
-revision, if it still relevant.
-
+> conveniently MAX_CRTCS is 8.. realistically I don't *think* you'd ever
+> see more than 2 or 3
 > 
-> ---
-> 0-DAY CI Kernel Test Service, Intel Corporation
-> https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
-> 
+> BR,
+> -R
+> _______________________________________________
+> dri-devel mailing list
+> dri-devel@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/dri-devel
+
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
