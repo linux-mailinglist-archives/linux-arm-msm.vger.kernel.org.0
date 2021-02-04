@@ -2,223 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3626730F026
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Feb 2021 11:07:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C8E8E30F134
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Feb 2021 11:51:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235310AbhBDKG3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Feb 2021 05:06:29 -0500
-Received: from lb3-smtp-cloud8.xs4all.net ([194.109.24.29]:50977 "EHLO
-        lb3-smtp-cloud8.xs4all.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232838AbhBDKGZ (ORCPT
+        id S235436AbhBDKvE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Feb 2021 05:51:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35490 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235443AbhBDKvD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Feb 2021 05:06:25 -0500
-Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
-        by smtp-cloud8.xs4all.net with ESMTPA
-        id 7bW6lHLD4W4yN7bW9lc0C2; Thu, 04 Feb 2021 11:05:42 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s2;
-        t=1612433142; bh=yAXC53mYOMWxeyXb4NHgAo5+WHbJZU+POp1z/V97ZRA=;
-        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
-         Subject;
-        b=et2wEZN5HKlQmzAeOk4U67mtHQLqpMys1zgho6qwXgnfc8n97mpebs9TNgQgyqMRu
-         z7r2kaNLLdZ1OL7tffEy5n6kiyGAe9zrCvBGE4/jzWCt3BYwz/KpnZE23gwGZB7BJx
-         GIinaelWucbqAAiejiqkWXYFLgOzMPG6hZSPcBb3f4/34aILZb/dPbY1s37LdrcZdo
-         Kgz6LhISsb82R8lflTGJUNBhSUJZqp0aHPrfWePp1RJ6dTUAdswVpUy8XNyhlrGIBr
-         FPPAH4y6BsB7xsLn/WcEtLgz4gvTGqKyDIU2CpOg8BHd8pJBiaVjfSbdwCxEqfuMWR
-         9jRnxxYORr0/Q==
-Subject: Re: [PATCH v6 1/2] media: v4l2-ctrl: add controls for long term
- reference.
-To:     dikshita@codeaurora.org
-Cc:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org
-References: <1611553919-17919-1-git-send-email-dikshita@codeaurora.org>
- <1611553919-17919-2-git-send-email-dikshita@codeaurora.org>
- <d20ba57f-54a7-5a61-a64b-2d9433b79281@xs4all.nl>
- <6e59d1bee1d0f1b64aab77959bb22e6e@codeaurora.org>
-From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Message-ID: <2a6bf75f-a44c-e921-55a0-abd6d6eaf67f@xs4all.nl>
-Date:   Thu, 4 Feb 2021 11:05:38 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.0
+        Thu, 4 Feb 2021 05:51:03 -0500
+Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F1B6C0613D6
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Feb 2021 02:50:23 -0800 (PST)
+Received: by mail-qv1-xf2e.google.com with SMTP id j13so1461380qvu.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Feb 2021 02:50:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=KVJwoeo9aPU3oZrumbGjpJHY7ISC3SG8P4gukAladUE=;
+        b=YwSGrMfBKYycd9952zyMwL6n+5aHZS3/ah4z18MM+qmnt9vpg2GV5t4FfzQvx/bNWG
+         pNVEwY31a3dJeCrZw4YpAPXnBGGGf3S1H6MMELpMFdQDlrLasgZqjkTJvb/7CGMW5zCv
+         c7W0kkO+TxFqbOyus7I7WRZm7eJMJH0hf7iU97Yw73OqpJNEGPDLkaPKBTc9HSmDs8yI
+         T0Lfv3Y9e62gOOMYQVqf9Uy91Z0r5zfRJ8cQSqxkmg+mYaOszr+357/juASIGqnszSmg
+         tYw1HQOMagAkmbPE+R6Q5Xv6RNSYfEsKW0IzCZGMEtByuSZ4MNaeFrCeUY2vg2BLwVGy
+         vyog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=KVJwoeo9aPU3oZrumbGjpJHY7ISC3SG8P4gukAladUE=;
+        b=dql7kgj24dbEucW/b9A2iR0p0bnLLlSHnknuSARl9wLAQkPNJRX3VqNuT9hjVtW2L3
+         wVeu9SvR0qYgmYH/FB6wRt1taQ7nEJlsucEHmYH66tHfT9ZRYo9jJYCIkt+Qg/DXo11y
+         LXdoWsjpd52gLDDRzGAE798mdxvQEBAYEHElmmZs637poMl0syp57DjqvQh/yqZHrxvs
+         PIJkMs665bSjMmX28YSpXAJ/BOrUI81X+gtWFnJzrPDPFJV3yZGclZlnp0W2rZ5jMj49
+         FxicX5HPQ8G2gLvFxUjT9rNoGml52UH8KLroBgXxT/Z7Zns8pd3A5mLCI4lG+MSlprlv
+         sT3A==
+X-Gm-Message-State: AOAM532kpS8D0OuL5YrbOht5G7KgORqs/sbdL+6i4O+BawXdnluAI6mZ
+        UPsPrCPhfsb9rD2WeDp+fP08CvZRms4YG0y3ak0TMw==
+X-Google-Smtp-Source: ABdhPJwDLoOb7M+O/coq4UCyxUTpnTvoOCHWQdo/SUD4EELPuV+ioJfdBg193A7umuGhZent605PsFkFkw1Lqd5/JUg=
+X-Received: by 2002:a0c:d403:: with SMTP id t3mr6765787qvh.4.1612435822422;
+ Thu, 04 Feb 2021 02:50:22 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <6e59d1bee1d0f1b64aab77959bb22e6e@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfMA53xV7GeJVLhzthRb9CfQDc/W8Hlyn2srB8VnNs5QiXMVYoe0bSupnZQIwCy0Pe3dby/vke4r1MkfMV9YLjSoS+F0eGgICK9yziQ3n34FmnCu3TuC1
- ciMVzzlYBfN41RmCzQi/S0CBOvxqniAjO4k18GWhJnanv3swO/jYfZms5u397uFM3SSHbQ93OLiC7PtvmbTTcf5Z0IvILOt59zFvftAy+muq3ljjxUUTBc9U
- n4XN/6BV/wai5EmVA+5iD505inFj+doD8K/bxmQvGWphZQd9dAEeknI49FswcSevrynOvZLGfKXDDZjraiTyiE+TZQCmqhueMvbIY4WvMGhzwvW79Vq5S5cB
- xAffUuqJTnoQ8ZUKjsM0JO8OT5WuswnqaZxBfrBsaSQjEgjddXI=
+References: <20210203115456.1072975-1-bryan.odonoghue@linaro.org>
+ <CAA8EJpquw_HBT+x=go_378_ZVqLiHmq7y9FvBEgoqESaTosy4Q@mail.gmail.com> <106dcea1-557a-a3cd-267a-43517815eaef@linaro.org>
+In-Reply-To: <106dcea1-557a-a3cd-267a-43517815eaef@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 4 Feb 2021 13:50:12 +0300
+Message-ID: <CAA8EJpo2kVg_=wny49tgs_0-sX9RXZUaCupXxN2X_z=t7o8WNQ@mail.gmail.com>
+Subject: Re: [RESEND PATCH 0/4] Fixup clocks for venus on sm8250
+To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+Cc:     "open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Dikshita Agarwal <dikshita@codeaurora.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/02/2021 06:01, dikshita@codeaurora.org wrote:
-> On 2021-02-01 16:50, Hans Verkuil wrote:
->> On 25/01/2021 06:51, Dikshita Agarwal wrote:
->>> Long Term Reference (LTR) frames are the frames that are encoded
->>> sometime in the past and stored in the DPB buffer list to be used
->>> as reference to encode future frames.
->>> This change adds controls to enable this feature.
->>>
->>> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
->>> ---
->>>  .../userspace-api/media/v4l/ext-ctrls-codec.rst        | 18 
->>> ++++++++++++++++++
->>>  drivers/media/v4l2-core/v4l2-ctrls.c                   | 14 
->>> ++++++++++++++
->>>  include/uapi/linux/v4l2-controls.h                     |  3 +++
->>>  3 files changed, 35 insertions(+)
->>>
->>> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst 
->>> b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
->>> index 400774c..a37d460 100644
->>> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
->>> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
->>> @@ -3637,3 +3637,21 @@ enum v4l2_mpeg_video_hevc_size_of_length_field 
->>> -
->>>        - Selecting this value specifies that HEVC slices are expected
->>>          to be prefixed by Annex B start codes. According to 
->>> :ref:`hevc`
->>>          valid start codes can be 3-bytes 0x000001 or 4-bytes 
->>> 0x00000001.
->>> +
->>> +``V4L2_CID_MPEG_VIDEO_LTR_COUNT (integer)``
->>> +       Specifies the number of Long Term Reference (LTR) frames 
->>> encoder needs
->>> +       to generate or keep. This is applicable to the H264 and HEVC 
->>> encoders.
->>> +
->>> +``V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX (integer)``
->>> +       The current frame is marked as a Long Term Reference (LTR) 
->>> frame
->>> +       and given this LTR index which ranges from 0 to LTR_COUNT-1.
->>> +       This is applicable to the H264 and HEVC encoders and can be 
->>> applied using
->>> +       Request API.
->>
->> You mentioned in reply to my comment that the venus driver didn't 
->> support the
->> Request API that it is also possible to use it without that API.
->>
->> But that requires more precise documentation. I assume that without the 
->> Request
->> API you would set this control, then queue the buffer containing the 
->> frame this
->> control should apply to, then wait until it is dequeued. Since that's 
->> the only
->> way you can be certain this control is applied to the correct frame.
->>
->> Is this indeed what you do in your application?
->>
->> Regards,
->>
->> 	Hans
->>
-> Hi Hans,
-> 
-> Yes, It is possible without request API as well in a non-synchronized 
-> way.
-> And we don't need to wait for the frame to be dequeued.
-> The driver implementation ensures that whenever the LTR control is 
-> received,
-> it applies to the frame received after that. Not to frame which would be 
-> encoded next.
-> So that it is at least synchronized between driver & encoder.
+On Wed, 3 Feb 2021 at 17:56, Bryan O'Donoghue
+<bryan.odonoghue@linaro.org> wrote:
+>
+> On 03/02/2021 14:25, Dmitry Baryshkov wrote:
+> > On Wed, 3 Feb 2021 at 14:53, Bryan O'Donoghue
+> > <bryan.odonoghue@linaro.org> wrote:
+> >>
+> >> - Adds some missing indices to the videocc index
+> >> - Adds videocc clock tree hirearchy for msv0
+> >> - Adds a regulator to power the videocc consistent with downstream
+> >>
+> >> Once done we can move on to enabling these clocks in the DTS and switch on
+> >> the venus.
+> >>
+> >> Bryan O'Donoghue (4):
+> >>    dt-bindings: clock: Add missing SM8250 videoc clock indices
+> >>    clk: qcom: videocc: Add sm8250 VIDEO_CC_MVS0_DIV_CLK_SRC
+> >>    clk: qcom: videocc: Add sm8250 VIDEO_CC_MVS0_CLK
+> >>    clk: qcom: videocc: Add gdsc mmcx-reg supply hook
+> >
+> > I remember now the old discussion about these two clocks
+> > (https://lore.kernel.org/linux-arm-msm/160092826778.310579.12225989905897101118@swboyd.mtv.corp.google.com/).
+> >
+> > Is the message. reported by Jonathan, solved by the mmcx-reg supply?
+>
+> The stuck problem is a bandwidth problem not a regulator problem,
+> there's some internal clock dependency we don't have visibility of.
+>
+> Both of these resolve,
+>
+> Jonathan had a hack:
+> https://git.linaro.org/people/bryan.odonoghue/kernel.git/commit/?h=tracking-qcomlt-sm8250-09-11-20%2bvenus-flto-simple-test2&id=d4bea74282d14244127a1e97766b6108ec68e22f
+>
+> Dikshita proposed this instead, which, we will send out soon:
+> https://git.linaro.org/people/bryan.odonoghue/kernel.git/commit/?h=tracking-qcomlt-sm8250-venus-integrated-sm8250&id=782202d611761e639af7e44d8344c0c098642b9f
+>
+> > Also are these clocks necessary at all?
+>
+> Eh well I'm not sure what happens if I try to dump the clocks but, this
+> is an accurate representation of what is done downstream so..
 
-This is highly driver dependent. I'm not even sure this is true for the venus
-driver: if you prequeue, say, 4 output buffers to the encoder and call
-V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX after the second buffer (so it should
-apply to the third), and only after the fourth you call VIDIOC_STREAMON,
-does the venus driver still keep track of the order of the queued buffers
-and when these controls are set? Once STREAMON is called it looks like it
-stays synced since everything is queued into a command queue, if I understand
-the code correctly.
+OK then.
 
-The problem is that when controls are applied in relation to queued buffers
-is not defined, unless you use the Request API. Typically controls are applied
-immediately, so the venus driver is a bit of an anomaly in that respect.
-
-You can make an explicit requirement that these controls apply to the next
-queued buffer if no request API is used, but you really must be 100% certain
-that the venus driver does that right (and as mentioned, I have my doubts about
-the case where you queue buffers before calling STREAMON).
-
-Regards,
-
-	Hans
-
-> 
-> Thanks,
-> Dikshita
-> 
->>> +       Source Rec. ITU-T H.264 (06/2019); Table 7.9
->>> +
->>> +``V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES (bitmask)``
->>> +       Specifies the Long Term Reference (LTR) frame(s) to be used 
->>> for
->>> +       encoding the current frame.
->>> +       This provides a bitmask which consists of bits [0, 
->>> LTR_COUNT-1].
->>> +       This is applicable to the H264 and HEVC encoders and can be 
->>> applied using
->>> +       Request API.
->>> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c 
->>> b/drivers/media/v4l2-core/v4l2-ctrls.c
->>> index 16ab54f..84c1eb8 100644
->>> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
->>> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
->>> @@ -950,6 +950,9 @@ const char *v4l2_ctrl_get_name(u32 id)
->>>  	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:		return "Vertical MV 
->>> Search Range";
->>>  	case V4L2_CID_MPEG_VIDEO_REPEAT_SEQ_HEADER:		return "Repeat Sequence 
->>> Header";
->>>  	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:		return "Force Key Frame";
->>> +	case V4L2_CID_MPEG_VIDEO_LTR_COUNT:			return "LTR Count";
->>> +	case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:		return "Frame LTR Index";
->>> +	case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES:		return "Use LTR Frames";
->>>  	case V4L2_CID_MPEG_VIDEO_MPEG2_SLICE_PARAMS:		return "MPEG-2 Slice 
->>> Parameters";
->>>  	case V4L2_CID_MPEG_VIDEO_MPEG2_QUANTIZATION:		return "MPEG-2 
->>> Quantization Matrices";
->>>  	case V4L2_CID_FWHT_I_FRAME_QP:				return "FWHT I-Frame QP Value";
->>> @@ -1277,6 +1280,17 @@ void v4l2_ctrl_fill(u32 id, const char **name, 
->>> enum v4l2_ctrl_type *type,
->>>  	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:
->>>  		*type = V4L2_CTRL_TYPE_INTEGER;
->>>  		break;
->>> +	case V4L2_CID_MPEG_VIDEO_LTR_COUNT:
->>> +		*type = V4L2_CTRL_TYPE_INTEGER;
->>> +		break;
->>> +	case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:
->>> +		*type = V4L2_CTRL_TYPE_INTEGER;
->>> +		*flags |= V4L2_CTRL_FLAG_EXECUTE_ON_WRITE;
->>> +		break;
->>> +	case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES:
->>> +		*type = V4L2_CTRL_TYPE_BITMASK;
->>> +		*flags |= V4L2_CTRL_FLAG_EXECUTE_ON_WRITE;
->>> +		break;
->>>  	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:
->>>  	case V4L2_CID_PAN_RESET:
->>>  	case V4L2_CID_TILT_RESET:
->>> diff --git a/include/uapi/linux/v4l2-controls.h 
->>> b/include/uapi/linux/v4l2-controls.h
->>> index af8dda2..c0bb87b 100644
->>> --- a/include/uapi/linux/v4l2-controls.h
->>> +++ b/include/uapi/linux/v4l2-controls.h
->>> @@ -422,6 +422,9 @@ enum v4l2_mpeg_video_multi_slice_mode {
->>>  #define 
->>> V4L2_CID_MPEG_VIDEO_MV_H_SEARCH_RANGE		(V4L2_CID_CODEC_BASE+227)
->>>  #define 
->>> V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE		(V4L2_CID_CODEC_BASE+228)
->>>  #define 
->>> V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME		(V4L2_CID_CODEC_BASE+229)
->>> +#define V4L2_CID_MPEG_VIDEO_LTR_COUNT			(V4L2_CID_CODEC_BASE+230)
->>> +#define 
->>> V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX		(V4L2_CID_CODEC_BASE+231)
->>> +#define V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES		(V4L2_CID_CODEC_BASE+232)
->>>
->>>  /* CIDs for the MPEG-2 Part 2 (H.262) codec */
->>>  #define V4L2_CID_MPEG_VIDEO_MPEG2_LEVEL			(V4L2_CID_CODEC_BASE+270)
->>>
-
+-- 
+With best wishes
+Dmitry
