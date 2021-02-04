@@ -2,94 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A832830F914
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Feb 2021 18:07:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D9BD930F942
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Feb 2021 18:15:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238005AbhBDRFv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Feb 2021 12:05:51 -0500
-Received: from foss.arm.com ([217.140.110.172]:33978 "EHLO foss.arm.com"
+        id S238286AbhBDRMr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Feb 2021 12:12:47 -0500
+Received: from mail.kernel.org ([198.145.29.99]:57126 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238355AbhBDRDj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Feb 2021 12:03:39 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9C85713A1;
-        Thu,  4 Feb 2021 09:02:53 -0800 (PST)
-Received: from e121166-lin.cambridge.arm.com (e121166-lin.cambridge.arm.com [10.1.196.255])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 814BB3F73B;
-        Thu,  4 Feb 2021 09:02:52 -0800 (PST)
-Date:   Thu, 4 Feb 2021 17:02:47 +0000
-From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        PCI <linux-pci@vger.kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>
-Subject: Re: [PATCH v5 0/2] PCI: qcom: fix PCIe support on sm8250
-Message-ID: <20210204170247.GA583@e121166-lin.cambridge.arm.com>
-References: <20210117013114.441973-1-dmitry.baryshkov@linaro.org>
- <64f62684-523d-cbd5-708b-4c06e7d03954@linaro.org>
- <CAA8EJpqxtqxy5Z8KGt_wQGLvXKWhmLXi845VQ+w2_ps71fKVhg@mail.gmail.com>
+        id S238342AbhBDRMG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 4 Feb 2021 12:12:06 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 0F37764F70;
+        Thu,  4 Feb 2021 17:09:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1612458571;
+        bh=rVkFqKiMv651OhiZuuMPdxsM2ChvMEUmeWBZTKPpj9E=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=omlHFt+6EED+KLr0pZ0VvVb5LnhbPQzSvA9aSqO+hDrhnA2KCIVQ1XCCdXAbwJVij
+         SZjD16oHgyMDaoq8LR33y6UAo4kiijU3pQhoYInwBw6z7SZWkVDsa20PRFU1Y7jxun
+         uIg01cRVxLv71J47FM0EGVuXV6EGCK+kUo5Z+XaXIj0G8TKhFsGbtwXn2TIDavltBa
+         3QQ3nbkSIQ8jr340wQTJiO8bN0QMBXUnNAHSUPnOSm+xiIcDf6sNgXl3elinaxI9zR
+         Mm04FOSoxThSIA1BKdUgCYnVag0nBokIYS80rdVZSirrZoU+Z/nOTfX0BtkW/U6iWH
+         VGbcIezau8RKw==
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org
+Subject: [PATCH 5/6] arm64: dts: qcom: sm8350-mtp: enable UFS nodes
+Date:   Thu,  4 Feb 2021 22:39:06 +0530
+Message-Id: <20210204170907.63545-6-vkoul@kernel.org>
+X-Mailer: git-send-email 2.26.2
+In-Reply-To: <20210204170907.63545-1-vkoul@kernel.org>
+References: <20210204170907.63545-1-vkoul@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpqxtqxy5Z8KGt_wQGLvXKWhmLXi845VQ+w2_ps71fKVhg@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[+Stanimir]
+Enabled the UFS node found in SM8350-MTP platform, also add the
+regulators associated with UFS HC and UFS phy to these nodes.
 
-On Thu, Feb 04, 2021 at 06:06:16PM +0300, Dmitry Baryshkov wrote:
-> On Tue, 26 Jan 2021 at 23:11, Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > Rob, Lorenzo, gracious poke for this patchset.
-> 
-> Dear colleagues, another gracious ping. I'm not insisting on getting
-> this into 5.12 (it would be good though), but I'd kindly ask for these
-> patches to be reviewed/acked.
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+---
+ arch/arm64/boot/dts/qcom/sm8350-mtp.dts | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-I need an ACK from the maintainer(s) to pull them.
+diff --git a/arch/arm64/boot/dts/qcom/sm8350-mtp.dts b/arch/arm64/boot/dts/qcom/sm8350-mtp.dts
+index a2baa1ad3752..2675afbbd75e 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350-mtp.dts
++++ b/arch/arm64/boot/dts/qcom/sm8350-mtp.dts
+@@ -5,6 +5,7 @@
+ 
+ /dts-v1/;
+ 
++#include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+ #include "sm8350.dtsi"
+ 
+@@ -249,6 +250,26 @@ &uart2 {
+ 	status = "okay";
+ };
+ 
++&ufs_mem_hc {
++	status = "okay";
++
++	reset-gpios = <&tlmm 203 GPIO_ACTIVE_LOW>;
++
++	vcc-supply = <&vreg_l7b_2p96>;
++	vcc-max-microamp = <800000>;
++	vccq-supply = <&vreg_l9b_1p2>;
++	vccq-max-microamp = <900000>;
++};
++
++&ufs_mem_phy {
++	status = "okay";
++
++	vdda-phy-supply = <&vreg_l5b_0p88>;
++	vdda-max-microamp = <91600>;
++	vdda-pll-supply = <&vreg_l6b_1p2>;
++	vdda-pll-max-microamp = <19000>;
++};
++
+ &usb_1 {
+ 	status = "okay";
+ };
+-- 
+2.26.2
 
-Thanks,
-Lorenzo
-
-> > On 17/01/2021 04:31, Dmitry Baryshkov wrote:
-> > > SM8250 platform requires additional clock to be enabled for PCIe to
-> > > function. In case it is disabled, PCIe access will result in IOMMU
-> > > timeouts. Add device tree binding and driver support for this clock.
-> > >
-> > > Canges since v4:
-> > >   - Remove QCOM_PCIE_2_7_0_MAX_CLOCKS define and has_sf_tbu variable.
-> > >
-> > > Changes since v3:
-> > >   - Merge clock handling back into qcom_pcie_get_resources_2_7_0().
-> > >     Define res->num_clks to the amount of clocks used for this particular
-> > >     platform.
-> > >
-> > > Changes since v2:
-> > >   - Split this clock handling from qcom_pcie_get_resources_2_7_0()
-> > >   - Change comment to point that the clock is required rather than
-> > >     optional
-> > >
-> > > Changes since v1:
-> > >   - Added Fixes: tags, as respective patches have hit the upstream Linux
-> > >     tree.
-> > >
-> > >
-> >
-> >
-> > --
-> > With best wishes
-> > Dmitry
-> 
-> 
-> 
-> -- 
-> With best wishes
-> Dmitry
