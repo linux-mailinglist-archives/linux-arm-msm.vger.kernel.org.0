@@ -2,148 +2,223 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4219630EFBB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Feb 2021 10:35:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3626730F026
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Feb 2021 11:07:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235205AbhBDJcp convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>); Thu, 4 Feb 2021 04:32:45 -0500
-Received: from relay8-d.mail.gandi.net ([217.70.183.201]:43487 "EHLO
-        relay8-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233628AbhBDJcm (ORCPT
+        id S235310AbhBDKG3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Feb 2021 05:06:29 -0500
+Received: from lb3-smtp-cloud8.xs4all.net ([194.109.24.29]:50977 "EHLO
+        lb3-smtp-cloud8.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S232838AbhBDKGZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Feb 2021 04:32:42 -0500
-X-Originating-IP: 86.210.203.150
-Received: from xps13 (lfbn-tou-1-972-150.w86-210.abo.wanadoo.fr [86.210.203.150])
-        (Authenticated sender: miquel.raynal@bootlin.com)
-        by relay8-d.mail.gandi.net (Postfix) with ESMTPSA id 16E051BF212;
-        Thu,  4 Feb 2021 09:31:52 +0000 (UTC)
-Date:   Thu, 4 Feb 2021 10:31:52 +0100
-From:   Miquel Raynal <miquel.raynal@bootlin.com>
-To:     Boris Brezillon <boris.brezillon@collabora.com>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        richard@nod.at, vigneshr@ti.com, linux-mtd@lists.infradead.org,
+        Thu, 4 Feb 2021 05:06:25 -0500
+Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
+        by smtp-cloud8.xs4all.net with ESMTPA
+        id 7bW6lHLD4W4yN7bW9lc0C2; Thu, 04 Feb 2021 11:05:42 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s2;
+        t=1612433142; bh=yAXC53mYOMWxeyXb4NHgAo5+WHbJZU+POp1z/V97ZRA=;
+        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
+         Subject;
+        b=et2wEZN5HKlQmzAeOk4U67mtHQLqpMys1zgho6qwXgnfc8n97mpebs9TNgQgyqMRu
+         z7r2kaNLLdZ1OL7tffEy5n6kiyGAe9zrCvBGE4/jzWCt3BYwz/KpnZE23gwGZB7BJx
+         GIinaelWucbqAAiejiqkWXYFLgOzMPG6hZSPcBb3f4/34aILZb/dPbY1s37LdrcZdo
+         Kgz6LhISsb82R8lflTGJUNBhSUJZqp0aHPrfWePp1RJ6dTUAdswVpUy8XNyhlrGIBr
+         FPPAH4y6BsB7xsLn/WcEtLgz4gvTGqKyDIU2CpOg8BHd8pJBiaVjfSbdwCxEqfuMWR
+         9jRnxxYORr0/Q==
+Subject: Re: [PATCH v6 1/2] media: v4l2-ctrl: add controls for long term
+ reference.
+To:     dikshita@codeaurora.org
+Cc:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bjorn.andersson@linaro.org
-Subject: Re: [PATCH] mtd: rawnand: Do not check for bad block if bbt is
- unavailable
-Message-ID: <20210204103152.5d086525@xps13>
-In-Reply-To: <20210204102738.3ea8393e@collabora.com>
-References: <20210202041614.GA840@work>
-        <20210202091459.0c41a769@xps13>
-        <AFD0F5A6-7876-447B-A089-85091225BE11@linaro.org>
-        <20210203110522.12f2b326@xps13>
-        <EBDAB319-549F-4CB1-8CE3-9DFA99DBFBC0@linaro.org>
-        <20210203111914.1c2f68f6@collabora.com>
-        <8A2468D5-B435-4923-BA4F-7BF7CC0FF207@linaro.org>
-        <20210203122422.6963b0ed@collabora.com>
-        <F55F9D7B-0542-448E-A711-D1035E467ACA@linaro.org>
-        <20210204091336.1406ca3b@xps13>
-        <20210204085221.GB8235@thinkpad>
-        <20210204095945.51ef0c33@collabora.com>
-        <20210204100408.6eb053d8@xps13>
-        <20210204102738.3ea8393e@collabora.com>
-Organization: Bootlin
-X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+        vgarodia@codeaurora.org
+References: <1611553919-17919-1-git-send-email-dikshita@codeaurora.org>
+ <1611553919-17919-2-git-send-email-dikshita@codeaurora.org>
+ <d20ba57f-54a7-5a61-a64b-2d9433b79281@xs4all.nl>
+ <6e59d1bee1d0f1b64aab77959bb22e6e@codeaurora.org>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Message-ID: <2a6bf75f-a44c-e921-55a0-abd6d6eaf67f@xs4all.nl>
+Date:   Thu, 4 Feb 2021 11:05:38 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+In-Reply-To: <6e59d1bee1d0f1b64aab77959bb22e6e@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfMA53xV7GeJVLhzthRb9CfQDc/W8Hlyn2srB8VnNs5QiXMVYoe0bSupnZQIwCy0Pe3dby/vke4r1MkfMV9YLjSoS+F0eGgICK9yziQ3n34FmnCu3TuC1
+ ciMVzzlYBfN41RmCzQi/S0CBOvxqniAjO4k18GWhJnanv3swO/jYfZms5u397uFM3SSHbQ93OLiC7PtvmbTTcf5Z0IvILOt59zFvftAy+muq3ljjxUUTBc9U
+ n4XN/6BV/wai5EmVA+5iD505inFj+doD8K/bxmQvGWphZQd9dAEeknI49FswcSevrynOvZLGfKXDDZjraiTyiE+TZQCmqhueMvbIY4WvMGhzwvW79Vq5S5cB
+ xAffUuqJTnoQ8ZUKjsM0JO8OT5WuswnqaZxBfrBsaSQjEgjddXI=
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Boris,
-
-Boris Brezillon <boris.brezillon@collabora.com> wrote on Thu, 4 Feb
-2021 10:27:38 +0100:
-
-> On Thu, 4 Feb 2021 10:04:08 +0100
-> Miquel Raynal <miquel.raynal@bootlin.com> wrote:
+On 04/02/2021 06:01, dikshita@codeaurora.org wrote:
+> On 2021-02-01 16:50, Hans Verkuil wrote:
+>> On 25/01/2021 06:51, Dikshita Agarwal wrote:
+>>> Long Term Reference (LTR) frames are the frames that are encoded
+>>> sometime in the past and stored in the DPB buffer list to be used
+>>> as reference to encode future frames.
+>>> This change adds controls to enable this feature.
+>>>
+>>> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+>>> ---
+>>>  .../userspace-api/media/v4l/ext-ctrls-codec.rst        | 18 
+>>> ++++++++++++++++++
+>>>  drivers/media/v4l2-core/v4l2-ctrls.c                   | 14 
+>>> ++++++++++++++
+>>>  include/uapi/linux/v4l2-controls.h                     |  3 +++
+>>>  3 files changed, 35 insertions(+)
+>>>
+>>> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst 
+>>> b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+>>> index 400774c..a37d460 100644
+>>> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+>>> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+>>> @@ -3637,3 +3637,21 @@ enum v4l2_mpeg_video_hevc_size_of_length_field 
+>>> -
+>>>        - Selecting this value specifies that HEVC slices are expected
+>>>          to be prefixed by Annex B start codes. According to 
+>>> :ref:`hevc`
+>>>          valid start codes can be 3-bytes 0x000001 or 4-bytes 
+>>> 0x00000001.
+>>> +
+>>> +``V4L2_CID_MPEG_VIDEO_LTR_COUNT (integer)``
+>>> +       Specifies the number of Long Term Reference (LTR) frames 
+>>> encoder needs
+>>> +       to generate or keep. This is applicable to the H264 and HEVC 
+>>> encoders.
+>>> +
+>>> +``V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX (integer)``
+>>> +       The current frame is marked as a Long Term Reference (LTR) 
+>>> frame
+>>> +       and given this LTR index which ranges from 0 to LTR_COUNT-1.
+>>> +       This is applicable to the H264 and HEVC encoders and can be 
+>>> applied using
+>>> +       Request API.
+>>
+>> You mentioned in reply to my comment that the venus driver didn't 
+>> support the
+>> Request API that it is also possible to use it without that API.
+>>
+>> But that requires more precise documentation. I assume that without the 
+>> Request
+>> API you would set this control, then queue the buffer containing the 
+>> frame this
+>> control should apply to, then wait until it is dequeued. Since that's 
+>> the only
+>> way you can be certain this control is applied to the correct frame.
+>>
+>> Is this indeed what you do in your application?
+>>
+>> Regards,
+>>
+>> 	Hans
+>>
+> Hi Hans,
 > 
-> > Hi Boris,
-> > 
-> > Boris Brezillon <boris.brezillon@collabora.com> wrote on Thu, 4 Feb
-> > 2021 09:59:45 +0100:
-> >   
-> > > On Thu, 4 Feb 2021 14:22:21 +0530
-> > > Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote:
-> > >     
-> > > > On Thu, Feb 04, 2021 at 09:13:36AM +0100, Miquel Raynal wrote:      
-> > > > > Hi Manivannan,
-> > > > > 
-> > > > > Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote on Wed,
-> > > > > 03 Feb 2021 17:11:31 +0530:
-> > > > >         
-> > > > > > On 3 February 2021 4:54:22 PM IST, Boris Brezillon <boris.brezillon@collabora.com> wrote:        
-> > > > > > >On Wed, 03 Feb 2021 16:22:42 +0530
-> > > > > > >Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote:
-> > > > > > >          
-> > > > > > >> On 3 February 2021 3:49:14 PM IST, Boris Brezillon          
-> > > > > > ><boris.brezillon@collabora.com> wrote:          
-> > > > > > >> >On Wed, 03 Feb 2021 15:42:02 +0530
-> > > > > > >> >Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote:
-> > > > > > >> >            
-> > > > > > >> >> >> 
-> > > > > > >> >> >> I got more information from the vendor, Telit. The access to          
-> > > > > > >the            
-> > > > > > >> >3rd              
-> > > > > > >> >> >partition is protected by Trustzone and any access in non          
-> > > > > > >privileged          
-> > > > > > >> >> >mode (where Linux kernel runs) causes kernel panic and the device
-> > > > > > >> >> >reboots.             
-> > > > > > >> >
-> > > > > > >> >Out of curiosity, is it a per-CS-line thing or is this section
-> > > > > > >> >protected on all CS?
-> > > > > > >> >            
-> > > > > > >> 
-> > > > > > >> Sorry, I didn't get your question.           
-> > > > > > >
-> > > > > > >The qcom controller can handle several chips, each connected through a
-> > > > > > >different CS (chip-select) line, right? I'm wondering if the firmware
-> > > > > > >running in secure mode has the ability to block access for a specific
-> > > > > > >CS line or if all CS lines have the same constraint. That will impact
-> > > > > > >the way you describe it in your DT (in one case the secure-region
-> > > > > > >property should be under the controller node, in the other case it
-> > > > > > >should be under the NAND chip node).          
-> > > > > > 
-> > > > > > Right. I believe the implementation is common to all NAND chips so the property should be in the controller node.         
-> > > > > 
-> > > > > Looks weird: do you mean that each of the chips will have a secure area?        
-> > > > 
-> > > > I way I said is, the "secure-region" property will be present in the controller
-> > > > node and not in the NAND chip node since this is not related to the device
-> > > > functionality.
-> > > > 
-> > > > But for referencing the NAND device, the property can have the phandle as below:
-> > > > 
-> > > > secure-region = <&nand0 0xffff>;      
-> > > 
-> > > My question was really what happens from a functional PoV. If you have
-> > > per-chip protection at the FW level, this property should be under the
-> > > NAND node. OTH, if the FW doesn't look at the selected chip before
-> > > blocking the access, it should be at the controller level. So, you
-> > > really have to understand what the secure FW does.    
-> > 
-> > I'm not so sure actually, that's why I like the phandle to nand0 -> in
-> > any case it's not a property of the NAND chip itself, it's kind of a
-> > host constraint, so I don't get why the property should be at the
-> > NAND node level?  
+> Yes, It is possible without request API as well in a non-synchronized 
+> way.
+> And we don't need to wait for the frame to be dequeued.
+> The driver implementation ensures that whenever the LTR control is 
+> received,
+> it applies to the frame received after that. Not to frame which would be 
+> encoded next.
+> So that it is at least synchronized between driver & encoder.
+
+This is highly driver dependent. I'm not even sure this is true for the venus
+driver: if you prequeue, say, 4 output buffers to the encoder and call
+V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX after the second buffer (so it should
+apply to the third), and only after the fourth you call VIDIOC_STREAMON,
+does the venus driver still keep track of the order of the queued buffers
+and when these controls are set? Once STREAMON is called it looks like it
+stays synced since everything is queued into a command queue, if I understand
+the code correctly.
+
+The problem is that when controls are applied in relation to queued buffers
+is not defined, unless you use the Request API. Typically controls are applied
+immediately, so the venus driver is a bit of an anomaly in that respect.
+
+You can make an explicit requirement that these controls apply to the next
+queued buffer if no request API is used, but you really must be 100% certain
+that the venus driver does that right (and as mentioned, I have my doubts about
+the case where you queue buffers before calling STREAMON).
+
+Regards,
+
+	Hans
+
 > 
-> I would argue that we already have plenty of NAND properties that
-> encode things controlled by the host (ECC, partitions, HW randomizer,
-> boot device, and all kind of controller specific stuff) :P. Having
-> the props under the NAND node makes it clear what those things are
-> applied to, and it's also easier to parse for the driver (you already
-> have to parse each node to get the reg property anyway).
-
-Fair points.
-
-> > Also, we should probably support several secure regions (which could be
-> > a way to express the fact that the FW does not look at the CS)?  
+> Thanks,
+> Dikshita
 > 
-> Sure, the secure-region should probably be renamed secure-regions, even
-> if it's defined at the NAND chip level.
+>>> +       Source Rec. ITU-T H.264 (06/2019); Table 7.9
+>>> +
+>>> +``V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES (bitmask)``
+>>> +       Specifies the Long Term Reference (LTR) frame(s) to be used 
+>>> for
+>>> +       encoding the current frame.
+>>> +       This provides a bitmask which consists of bits [0, 
+>>> LTR_COUNT-1].
+>>> +       This is applicable to the H264 and HEVC encoders and can be 
+>>> applied using
+>>> +       Request API.
+>>> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c 
+>>> b/drivers/media/v4l2-core/v4l2-ctrls.c
+>>> index 16ab54f..84c1eb8 100644
+>>> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
+>>> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
+>>> @@ -950,6 +950,9 @@ const char *v4l2_ctrl_get_name(u32 id)
+>>>  	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:		return "Vertical MV 
+>>> Search Range";
+>>>  	case V4L2_CID_MPEG_VIDEO_REPEAT_SEQ_HEADER:		return "Repeat Sequence 
+>>> Header";
+>>>  	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:		return "Force Key Frame";
+>>> +	case V4L2_CID_MPEG_VIDEO_LTR_COUNT:			return "LTR Count";
+>>> +	case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:		return "Frame LTR Index";
+>>> +	case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES:		return "Use LTR Frames";
+>>>  	case V4L2_CID_MPEG_VIDEO_MPEG2_SLICE_PARAMS:		return "MPEG-2 Slice 
+>>> Parameters";
+>>>  	case V4L2_CID_MPEG_VIDEO_MPEG2_QUANTIZATION:		return "MPEG-2 
+>>> Quantization Matrices";
+>>>  	case V4L2_CID_FWHT_I_FRAME_QP:				return "FWHT I-Frame QP Value";
+>>> @@ -1277,6 +1280,17 @@ void v4l2_ctrl_fill(u32 id, const char **name, 
+>>> enum v4l2_ctrl_type *type,
+>>>  	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:
+>>>  		*type = V4L2_CTRL_TYPE_INTEGER;
+>>>  		break;
+>>> +	case V4L2_CID_MPEG_VIDEO_LTR_COUNT:
+>>> +		*type = V4L2_CTRL_TYPE_INTEGER;
+>>> +		break;
+>>> +	case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:
+>>> +		*type = V4L2_CTRL_TYPE_INTEGER;
+>>> +		*flags |= V4L2_CTRL_FLAG_EXECUTE_ON_WRITE;
+>>> +		break;
+>>> +	case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES:
+>>> +		*type = V4L2_CTRL_TYPE_BITMASK;
+>>> +		*flags |= V4L2_CTRL_FLAG_EXECUTE_ON_WRITE;
+>>> +		break;
+>>>  	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:
+>>>  	case V4L2_CID_PAN_RESET:
+>>>  	case V4L2_CID_TILT_RESET:
+>>> diff --git a/include/uapi/linux/v4l2-controls.h 
+>>> b/include/uapi/linux/v4l2-controls.h
+>>> index af8dda2..c0bb87b 100644
+>>> --- a/include/uapi/linux/v4l2-controls.h
+>>> +++ b/include/uapi/linux/v4l2-controls.h
+>>> @@ -422,6 +422,9 @@ enum v4l2_mpeg_video_multi_slice_mode {
+>>>  #define 
+>>> V4L2_CID_MPEG_VIDEO_MV_H_SEARCH_RANGE		(V4L2_CID_CODEC_BASE+227)
+>>>  #define 
+>>> V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE		(V4L2_CID_CODEC_BASE+228)
+>>>  #define 
+>>> V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME		(V4L2_CID_CODEC_BASE+229)
+>>> +#define V4L2_CID_MPEG_VIDEO_LTR_COUNT			(V4L2_CID_CODEC_BASE+230)
+>>> +#define 
+>>> V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX		(V4L2_CID_CODEC_BASE+231)
+>>> +#define V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES		(V4L2_CID_CODEC_BASE+232)
+>>>
+>>>  /* CIDs for the MPEG-2 Part 2 (H.262) codec */
+>>>  #define V4L2_CID_MPEG_VIDEO_MPEG2_LEVEL			(V4L2_CID_CODEC_BASE+270)
+>>>
 
-Absolutely.
-
-Thanks,
-Miquèl
