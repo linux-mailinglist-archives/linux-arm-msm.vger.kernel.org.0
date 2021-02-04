@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E5EE730EBD2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Feb 2021 06:23:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B01E530EBD3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Feb 2021 06:24:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229508AbhBDFXl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Feb 2021 00:23:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50154 "EHLO
+        id S230001AbhBDFYC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Feb 2021 00:24:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230001AbhBDFXk (ORCPT
+        with ESMTP id S229790AbhBDFYC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Feb 2021 00:23:40 -0500
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25687C061573
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Feb 2021 21:23:00 -0800 (PST)
-Received: by mail-ot1-x32f.google.com with SMTP id k25so170236otb.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Feb 2021 21:23:00 -0800 (PST)
+        Thu, 4 Feb 2021 00:24:02 -0500
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 430EDC0613D6
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Feb 2021 21:23:22 -0800 (PST)
+Received: by mail-ot1-x330.google.com with SMTP id d1so2229595otl.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Feb 2021 21:23:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=DdzXXZfVky7bYs1orc7IE9J5miYIkRPeW5sycyboBg4=;
-        b=uVJcATAX3yR8sE2iv4IogQa2vjXQZmYJD0O0xkvyPwuEv3zpcSiA4tnXqAL4K7nzWv
-         Ue1FamtLQDRenEvvpPTUOl0Wv24mQOMtu6+DrAiMPc7wxZPEKTpojIkKYXi9B9kZx6Q4
-         igaisY69MdQ/lbxC3gJ8KCSizPAPP9s/nDHAhqj+3O5pwDEL/4veR+CLTu7nfRYtRSNt
-         y6xwWZXVqzPan1s99Y3NF016EGPYpS9Gp/JCGAZKJpmeklwWbODeT7O4Hhs7a3YB039X
-         JiS5DVp23Y396DYG/ptmdUcwFIbJXRasuBcE/iHTznHHuw0xaWPWZLReNFR6RpvHG23v
-         gTrA==
+        bh=/W/+DuYXbeC3pcNovNCJ3kl63oZ8C5/BOehNjO/O5f4=;
+        b=m65N3SctErjAnUtD/4m3KvA3d+iumeynJSjRG8MK3evlQ+z4gVhkwfI/JYwNxVtiJR
+         b1XS/a5KK6+nR+j4xtaNTPZEtYY/IcABiwMVYsA0ztwV3+VDTlBZ3ITDnIkvsN235AjI
+         cNcHEXGY+LV4Snvom/ebUvUvOIl/ePpfO6KIaDSv1I7wH1glGyyIlFnMNwzHfgzsIZED
+         FLD3w05SyaFluJ2E4uZekeuMD32vrVl/8qlLLRs0y3M+MXnJn1E9Lw9Z2zKTJr6FK1Xr
+         X3F9j2vINCIGx6O4+WEvWtPhT3hN8Jo3/f4F3YBdiPFpa5TRtN9pCqGqrVbHNoH4QJn4
+         9w4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=DdzXXZfVky7bYs1orc7IE9J5miYIkRPeW5sycyboBg4=;
-        b=FaLSad1Y1YJKxgmpsgt35VwDJX112KzbEkVkrm4gtvioYvSIkIqMvGHonjh0C4wkwF
-         Qa9MlplAaAYWVfj8dztfKOeSXEFhyMmjN27yvrmH6ybfrhzU5sVQO99Tz15YKp4DnHF+
-         bAID0ClBJBo9mXGuTGJqumB5/lSr0utaqMz7d4TexahyFx9iFqtz9PkcxYWi1nVPWh2g
-         NLsEQU4pYIYUikPj5jBSYVU/oCfiFQzzXvnyKDt9U97E8S5L3vwG5Cz+qmLqcyn7irbq
-         nzEwC6jDKquAoEa8xdpf6uUMsbNQgqtumW9ZF/Gui7ixOEpaWzEuUUZaw4P4iictdhxa
-         FgyQ==
-X-Gm-Message-State: AOAM531YfIBt15431bfOMXuxSmgP1oeOGpIU/qB5QSKU0F6VCXtTYQQj
-        ppfo2sw/mSp98RwMjb3HP42+hg==
-X-Google-Smtp-Source: ABdhPJypjdhXu0KOvBqfelMNks1LQHuv1Qj7pBpGFvYqrFrTANF7iRIX7aiVoacmiEWCNBaIO9FzVg==
-X-Received: by 2002:a9d:21b6:: with SMTP id s51mr4448172otb.13.1612416179580;
-        Wed, 03 Feb 2021 21:22:59 -0800 (PST)
+        bh=/W/+DuYXbeC3pcNovNCJ3kl63oZ8C5/BOehNjO/O5f4=;
+        b=kBNRW0cnOq3eiMy6kLruVKr5R+zU6/Wf/lU74hnNjkUrmxkcZfOwNUo8P0xRdyOrHi
+         mH6CS2oQrGxCruYM//wBVHixsukgThTtZlfuqmU5m7gKskh8MU5GLU//qbFMvmGWxn0j
+         kcwiSEIUgz4dY9++V0gfVQQjw1+PTziZqmrkJBUkGN9qpBY/YrLXIRZ0Fk6j5HfBQeUO
+         IBPi81f37iLw3zRI6neuE1gBHyhWuHNWQZezj3hK2fof3uTo+6KQaNHfasQH3TxcYAgt
+         ul31pChkVHpOVgadjkl1g7gfnlM/XTjVKqhqhXpoVUObgWk6IFHGoQZe3FqvBZhXmVOM
+         t/EQ==
+X-Gm-Message-State: AOAM531s2n0eqQpGfaGtX4UdkGbP4+ueioA9QfgJyBQlVAqCe+HucZoD
+        P4EBsceJUsbKqJVByihtQRmMRA==
+X-Google-Smtp-Source: ABdhPJykXhmgoPzBNP2RqMfWZC8yooDwyYMsUS+xUpOYJDnWLKYgXEsXbAcczlxei9HvsVjdGBNQoQ==
+X-Received: by 2002:a9d:1717:: with SMTP id i23mr4114963ota.179.1612416201682;
+        Wed, 03 Feb 2021 21:23:21 -0800 (PST)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id b7sm934193oib.53.2021.02.03.21.22.58
+        by smtp.gmail.com with ESMTPSA id u73sm929149oie.30.2021.02.03.21.23.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Feb 2021 21:22:59 -0800 (PST)
+        Wed, 03 Feb 2021 21:23:20 -0800 (PST)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     arm@kernel.org, soc@kernel.org
 Cc:     linux-arm-msm@vger.kernel.org,
@@ -55,21 +55,19 @@ Cc:     linux-arm-msm@vger.kernel.org,
         Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
         Olof Johansson <olof@lixom.net>,
         Kevin Hilman <khilman@baylibre.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Lina Iyer <ilina@codeaurora.org>,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Luca Weiss <luca@z3ntu.xyz>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Vinod Koul <vkoul@kernel.org>
-Subject: [GIT PULL] Qualcomm driver updates for 5.12
-Date:   Wed,  3 Feb 2021 23:22:58 -0600
-Message-Id: <20210204052258.388890-1-bjorn.andersson@linaro.org>
+        Vinod Koul <vkoul@kernel.org>,
+        Robert Marko <robert.marko@sartura.hr>,
+        Adrian Schmutzler <freifunk@adrianschmutzler.de>,
+        Samuel Pascua <pascua.samuel.14@gmail.com>,
+        Alexey Minnekhanov <alexeymin@postmarketos.org>,
+        Brian Masney <masneyb@onstation.org>,
+        Iskren Chernev <iskren.chernev@gmail.com>,
+        John Crispin <john@phrozen.org>,
+        Jonathan McDowell <noodles@earth.li>
+Subject: [GIT PULL] Qualcomm ARM dts updates for 5.12
+Date:   Wed,  3 Feb 2021 23:23:20 -0600
+Message-Id: <20210204052320.388999-1-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -83,79 +81,127 @@ The following changes since commit 5c8fe583cce542aa0b84adc939ce85293de36e5e:
 
 are available in the Git repository at:
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-drivers-for-5.12
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-dts-for-5.12
 
-for you to fetch changes up to 01f937ffc4686837d6c43dea80c6ade6cbd2940a:
+for you to fetch changes up to 9d1ee210ab8ae610285e5d6db9ea47491fce6dc6:
 
-  soc: qcom: ocmem: don't return NULL in of_get_ocmem (2021-02-02 15:39:13 -0600)
-
-----------------------------------------------------------------
-Qualcomm driver updates for 5.12
-
-The socinfo driver gains support for dumping information about the platform's
-PMICs, as well as new definitions for a number of platforms. The LLCC driver
-gains SM8250 support, AOSS QMP gains SM8350 support and the RPMPD driver gains
-support for MSM8994 power domains. In addition to this it contains a few minor
-fixes in the ocmem, rpmh and llcc drivers.
+  ARM: dts: qcom: msm8974-klte: Mark essential regulators (2021-02-02 16:45:09 -0600)
 
 ----------------------------------------------------------------
-Andy Shevchenko (1):
-      soc: qcom: smem: use %*ph to print small buffer
+Qualcomm ARM dts updates for 5.12
 
-Colin Ian King (1):
-      soc: qcom: socinfo: Fix off-by-one array index bounds check
+Introduces the Qualcomm SDX55 platform and the platform's MTP device,
+with support for NAND, SDHCI and USB.
 
-Dan Carpenter (1):
-      soc: qcom: socinfo: Fix an off by one in qcom_show_pmic_model()
+USB is enabled for IPQ4019 and the Alfa Network AP120C-AC and 8devices
+Jalapeno boards are added.
 
-Dmitry Baryshkov (5):
-      dt-bindings: soc: qcom: convert qcom,smem bindings to yaml
-      soc: qcom: socinfo: add qrb5165 SoC ID
-      soc: qcom: socinfo: add several PMIC IDs
-      soc: qcom: socinfo: add info from PMIC models array
-      soc: qcom: socinfo: Remove unwanted le32_to_cpu()
+Samsung Galaxy S5 gains display and GPU support.
 
-Konrad Dybcio (4):
-      soc: qcom: socinfo: Add SoC IDs for 630 family
-      soc: qcom: socinfo: Add SoC IDs for APQ/MSM8998
-      soc: qcom: socinfo: Add MDM9607 IDs
-      drivers: soc: qcom: rpmpd: Add msm8994 RPM Power Domains
+----------------------------------------------------------------
+Adrian Schmutzler (3):
+      ARM: dts: qcom: remove commented mmc-ddr-1_8v for sdcc3
+      ARM: dts: qcom: add additional DT labels in qcom-ipq8064.dtsi
+      ARM: dts: qcom: replace status value "ok" by "okay"
 
-Lina Iyer (2):
-      drivers: qcom: rpmh-rsc: Do not read back the register write on trigger
-      soc: qcom: rpmh: Remove serialization of TCS commands
+Alexey Minnekhanov (1):
+      ARM: dts: qcom: msm8974-klte: Fix shdc numbering
 
-Luca Weiss (1):
-      soc: qcom: ocmem: don't return NULL in of_get_ocmem
+Bjorn Andersson (1):
+      ARM: dts: qcom: sdx55: Enable ARM SMMU
 
-Manivannan Sadhasivam (2):
-      dt-bindings: msm: Add LLCC for SM8250
-      soc: qcom: llcc-qcom: Add support for SM8250 SoC
+Brian Masney (1):
+      ARM: dts: qcom: msm8974: add gpu support
 
-Sai Prakash Ranjan (1):
-      soc: qcom: llcc-qcom: Extract major hardware version
+Iskren Chernev (1):
+      ARM: dts: qcom: msm8974-klte: Mark essential regulators
 
-Stephen Boyd (1):
-      soc: qcom: socinfo: Open read access to all for debugfs
+John Crispin (1):
+      ARM: dts: qcom: ipq4019: add USB devicetree nodes
 
-Vinod Koul (1):
-      soc: qcom: aoss: Add SM8350 compatible
+Jonathan McDowell (1):
+      ARM: dts: qcom: add prng definition to ipq806x
 
- .../devicetree/bindings/arm/msm/qcom,llcc.yaml     |   1 +
- .../devicetree/bindings/power/qcom,rpmpd.yaml      |   1 +
- .../devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt |   1 +
- .../devicetree/bindings/soc/qcom/qcom,smem.txt     |  57 -----------
- .../devicetree/bindings/soc/qcom/qcom,smem.yaml    |  72 ++++++++++++++
- drivers/soc/qcom/llcc-qcom.c                       |  50 ++++++++++
- drivers/soc/qcom/ocmem.c                           |   8 +-
- drivers/soc/qcom/qcom_aoss.c                       |   1 +
- drivers/soc/qcom/rpmh-rsc.c                        |  24 ++---
- drivers/soc/qcom/rpmpd.c                           |  28 ++++++
- drivers/soc/qcom/smem.c                            |   4 +-
- drivers/soc/qcom/socinfo.c                         | 105 ++++++++++++++++-----
- include/dt-bindings/power/qcom-rpmpd.h             |   9 ++
- include/linux/soc/qcom/llcc-qcom.h                 |   3 +
- include/soc/qcom/tcs.h                             |   9 +-
- 15 files changed, 273 insertions(+), 100 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smem.txt
- create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
+Manivannan Sadhasivam (14):
+      ARM: dts: qcom: Add SDX55 platform and MTP board support
+      ARM: dts: qcom: sdx55: Add support for SDHCI controller
+      ARM: dts: qcom: sdx55: Add support for TCSR Mutex
+      ARM: dts: qcom: sdx55: Add Shared memory manager support
+      ARM: dts: qcom: sdx55: Add QPIC BAM support
+      ARM: dts: qcom: sdx55: Add QPIC NAND support
+      ARM: dts: qcom: sdx55-mtp: Enable BAM DMA
+      ARM: dts: qcom: sdx55-mtp: Enable QPIC NAND
+      dt-bindings: usb: qcom,dwc3: Add binding for SDX55
+      ARM: dts: qcom: sdx55: Add USB3 and PHY support
+      ARM: dts: qcom: sdx55-mtp: Enable USB3 and PHY support
+      dt-bindings: watchdog: Add binding for Qcom SDX55
+      ARM: dts: qcom: sdx55: Add Watchdog support
+      ARM: dts: qcom: sdx55: Add pshold support
+
+Robert Marko (4):
+      ARM: dts: qcom: ipq4019: add more labels
+      ARM: dts: qcom: add 8devices Jalapeno
+      ARM: dts: qcom: add Alfa Network AP120C-AC
+      ARM: dts: qcom: ipq4019: add SDHCI VQMMC LDO node
+
+Samuel Pascua (2):
+      ARM: dts: qcom: msm8974-klte: add support for GPU
+      ARM: dts: qcom: msm8974-klte: add support for display
+
+Vinod Koul (9):
+      dt-bindings: arm: qcom: Document SDX55 platform and boards
+      ARM: dts: qcom: sdx55: Add pincontrol node
+      ARM: dts: qcom: sdx55: Add reserved memory nodes
+      ARM: dts: qcom: sdx55: Add spmi node
+      ARM: dts: qcom: sdx55-mtp: Add pm8150b pmic
+      ARM: dts: qcom: sdx55: Add rpmpd node
+      ARM: dts: qcom: Add PMIC pmx55 dts
+      ARM: dts: qcom: sdx55-mtp: Add pmx55 pmic
+      ARM: dts: qcom: sdx55-mtp: Add regulator nodes
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   6 +
+ .../devicetree/bindings/usb/qcom,dwc3.yaml         |   1 +
+ .../devicetree/bindings/watchdog/qcom-wdt.yaml     |   1 +
+ arch/arm/boot/dts/Makefile                         |   6 +-
+ arch/arm/boot/dts/qcom-apq8060-dragonboard.dts     |  12 +-
+ arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dts |   8 +-
+ arch/arm/boot/dts/qcom-apq8064-cm-qs600.dts        |   8 +-
+ arch/arm/boot/dts/qcom-apq8064-ifc6410.dts         |  10 +-
+ .../arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dts |   4 +-
+ arch/arm/boot/dts/qcom-apq8074-dragonboard.dts     |  10 +-
+ arch/arm/boot/dts/qcom-ipq4018-ap120c-ac-bit.dts   |  28 ++
+ arch/arm/boot/dts/qcom-ipq4018-ap120c-ac.dts       |  27 ++
+ arch/arm/boot/dts/qcom-ipq4018-ap120c-ac.dtsi      | 254 +++++++++++
+ arch/arm/boot/dts/qcom-ipq4018-jalapeno.dts        | 214 +++++++++
+ arch/arm/boot/dts/qcom-ipq4019-ap.dk01.1.dtsi      |  18 +-
+ arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c1.dts    |   4 +-
+ arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1.dtsi      |  10 +-
+ arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c1.dts    |   8 +-
+ arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c2.dts    |   2 +-
+ arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1.dtsi      |  10 +-
+ arch/arm/boot/dts/qcom-ipq4019.dtsi                |  90 +++-
+ arch/arm/boot/dts/qcom-ipq8064-ap148.dts           |   2 +-
+ arch/arm/boot/dts/qcom-ipq8064-v1.0.dtsi           |  12 +-
+ arch/arm/boot/dts/qcom-ipq8064.dtsi                |  31 +-
+ arch/arm/boot/dts/qcom-mdm9615-wp8548.dtsi         |  16 +-
+ arch/arm/boot/dts/qcom-msm8660-surf.dts            |   4 +-
+ arch/arm/boot/dts/qcom-msm8960-cdp.dts             |   8 +-
+ arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dts   |  14 +-
+ .../dts/qcom-msm8974-lge-nexus5-hammerhead.dts     |  32 +-
+ arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts    | 115 ++++-
+ .../boot/dts/qcom-msm8974-sony-xperia-amami.dts    |  14 +-
+ .../boot/dts/qcom-msm8974-sony-xperia-castor.dts   |  18 +-
+ .../boot/dts/qcom-msm8974-sony-xperia-honami.dts   |  16 +-
+ arch/arm/boot/dts/qcom-msm8974.dtsi                |  43 ++
+ arch/arm/boot/dts/qcom-msm8974pro.dtsi             |   5 +
+ arch/arm/boot/dts/qcom-pmx55.dtsi                  |  84 ++++
+ arch/arm/boot/dts/qcom-sdx55-mtp.dts               | 251 ++++++++++
+ arch/arm/boot/dts/qcom-sdx55.dtsi                  | 505 +++++++++++++++++++++
+ 38 files changed, 1757 insertions(+), 144 deletions(-)
+ create mode 100644 arch/arm/boot/dts/qcom-ipq4018-ap120c-ac-bit.dts
+ create mode 100644 arch/arm/boot/dts/qcom-ipq4018-ap120c-ac.dts
+ create mode 100644 arch/arm/boot/dts/qcom-ipq4018-ap120c-ac.dtsi
+ create mode 100644 arch/arm/boot/dts/qcom-ipq4018-jalapeno.dts
+ create mode 100644 arch/arm/boot/dts/qcom-pmx55.dtsi
+ create mode 100644 arch/arm/boot/dts/qcom-sdx55-mtp.dts
+ create mode 100644 arch/arm/boot/dts/qcom-sdx55.dtsi
