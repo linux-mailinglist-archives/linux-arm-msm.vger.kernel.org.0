@@ -2,94 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1707030EEE9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Feb 2021 09:50:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F415730EF13
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Feb 2021 09:55:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235176AbhBDIrh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Feb 2021 03:47:37 -0500
-Received: from mx08-00178001.pphosted.com ([91.207.212.93]:48710 "EHLO
-        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S235172AbhBDIrf (ORCPT
+        id S234783AbhBDIxL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Feb 2021 03:53:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38544 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234712AbhBDIxK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Feb 2021 03:47:35 -0500
-Received: from pps.filterd (m0046661.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id 1148hBSl031731;
-        Thu, 4 Feb 2021 09:46:48 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=selector1;
- bh=CRnSbQdFwvKmyMc039keRokTHONUmSL8dsL/yTFkE0w=;
- b=ePxY2HbPMpCuB8kddpwEm6Emz4/cYsmwvRWwohDT1FctlKzcBD2op2D6/H90Wi2mr3VI
- Lpwrut+VYD1RLsRaQ5lAAdccXY4aiT7xg9l0n3b/YfDWG3BpkP3qGnHYwVQxnWBhxahz
- 1DCwGqAjZ71BhXyPiJY/pMZ9UtsF1zBeAmOCoUyXoo8OQjsbQoIki9Z+U+geqOyRs/ra
- +L5/qRuva1epfkhkJ05j0/8ee3vxZYUE56VEmHxJtJlR9FVsJo2w5lLvFGCtxGx+rZ36
- 6H+zkb6yMyAere215uFYUEg+4yhcpDllh8lSWpK9ijXP1n5M8zNbIe+Pos8xWJBIwpsI Bw== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com with ESMTP id 36e7x16f1w-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 04 Feb 2021 09:46:48 +0100
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id D5E9310002A;
-        Thu,  4 Feb 2021 09:46:47 +0100 (CET)
-Received: from Webmail-eu.st.com (sfhdag2node3.st.com [10.75.127.6])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id C7FF622AE4F;
-        Thu,  4 Feb 2021 09:46:47 +0100 (CET)
-Received: from localhost (10.75.127.49) by SFHDAG2NODE3.st.com (10.75.127.6)
- with Microsoft SMTP Server (TLS) id 15.0.1473.3; Thu, 4 Feb 2021 09:46:47
- +0100
-From:   Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Andy Gross <agross@kernel.org>
-CC:     <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-msm@vger.kernel.org>, <arnaud.pouliquen@foss.st.com>
-Subject: [PATCH v3 15/15] rpmsg: char: return an error if device already open
-Date:   Thu, 4 Feb 2021 09:45:34 +0100
-Message-ID: <20210204084534.10516-16-arnaud.pouliquen@foss.st.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20210204084534.10516-1-arnaud.pouliquen@foss.st.com>
-References: <20210204084534.10516-1-arnaud.pouliquen@foss.st.com>
+        Thu, 4 Feb 2021 03:53:10 -0500
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A702C061573
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Feb 2021 00:52:30 -0800 (PST)
+Received: by mail-pl1-x629.google.com with SMTP id j11so1377367plt.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Feb 2021 00:52:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=3GYc3j0LV6uWWeY9tuYUCxyV+hFD6RVupRGibO/7f98=;
+        b=LU9+t/+6TpnqCyJxyc5la5O0NK5DxLuzM20lcBxz3KoUXOFtQWBOhjAxqOnFVJkYmN
+         Sos2ltry4CR1JQXRQW5+8O/RdCKzotTxq02FqCNEusjCkhWDIgiNuWiNTOBsXDn5o1vR
+         XaA0PGHtDR4WoiQoE5DLS4UW4SuWqbyx4pb+n9vtPyibKFZE5sd8ElCXrM844vetV64M
+         2QPmwVpHzHQqNcIBl7mY7V5p9sfch8UDQogFW8VgSZVXCLey8IejjxIf9g8QIfKWIFqg
+         he0p3DSGOjjmM4u37MBY6w1uk74723A0/+4ME9qwZ7Ga87YSz7ELn3dYqFoCxu5uU1Gd
+         pXLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=3GYc3j0LV6uWWeY9tuYUCxyV+hFD6RVupRGibO/7f98=;
+        b=gJ+mXklmdzfCYx2KCbvosT93ZcdZtziKHnU+AWv+mYj1E7DrGRiFDXWVIlcfMbApLC
+         q0DO4JykL979H98RHiquS2bdW93K3YSmPFHJgR2KRLO5WoCrXMCPH7TY/1lilVCTiXvc
+         YcGaXx6oAJ61cBq7z8QIYshjCz6Mf/c+V9PqT/+xzIL0OfOTMaQpB9fPYfItjuxIKJma
+         /9ZqrPFikhuHRa6IYcCZ2YdZWHaPxVrRsrCMmN2/fQ1/FNNG76bUCXIxbXcwBROzTdKU
+         ynW4orN9x2h8H5V6KkDOx8D3vYeXLbMDekflb9OctEc+CyYXc4MIzQsTGrtpLBKiaEis
+         GzFw==
+X-Gm-Message-State: AOAM531UVsdKjGg4gotK8PMOGqpmIlYNWiLEh7jmw3BT3amf7qRONypg
+        Fjymi1IeysmUViQLmCG0tNWP
+X-Google-Smtp-Source: ABdhPJwFRfv+E9t3nw8/umSWCNIlyd5aUrs4h9KN7me07HwrpyiQgKNxbD0cp5qXBcb73+tmScx2xw==
+X-Received: by 2002:a17:90a:5a86:: with SMTP id n6mr7711124pji.65.1612428750089;
+        Thu, 04 Feb 2021 00:52:30 -0800 (PST)
+Received: from thinkpad ([2409:4072:502:e1e4:2c42:3883:f540:5b9c])
+        by smtp.gmail.com with ESMTPSA id y26sm5604528pgk.42.2021.02.04.00.52.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Feb 2021 00:52:29 -0800 (PST)
+Date:   Thu, 4 Feb 2021 14:22:21 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Miquel Raynal <miquel.raynal@bootlin.com>
+Cc:     Boris Brezillon <boris.brezillon@collabora.com>, richard@nod.at,
+        vigneshr@ti.com, linux-mtd@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bjorn.andersson@linaro.org
+Subject: Re: [PATCH] mtd: rawnand: Do not check for bad block if bbt is
+ unavailable
+Message-ID: <20210204085221.GB8235@thinkpad>
+References: <20210202041614.GA840@work>
+ <20210202091459.0c41a769@xps13>
+ <AFD0F5A6-7876-447B-A089-85091225BE11@linaro.org>
+ <20210203110522.12f2b326@xps13>
+ <EBDAB319-549F-4CB1-8CE3-9DFA99DBFBC0@linaro.org>
+ <20210203111914.1c2f68f6@collabora.com>
+ <8A2468D5-B435-4923-BA4F-7BF7CC0FF207@linaro.org>
+ <20210203122422.6963b0ed@collabora.com>
+ <F55F9D7B-0542-448E-A711-D1035E467ACA@linaro.org>
+ <20210204091336.1406ca3b@xps13>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.75.127.49]
-X-ClientProxiedBy: SFHDAG2NODE1.st.com (10.75.127.4) To SFHDAG2NODE3.st.com
- (10.75.127.6)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369,18.0.737
- definitions=2021-02-04_03:2021-02-04,2021-02-04 signatures=0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210204091336.1406ca3b@xps13>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The rpmsg_create_ept function is invoked when the device is opened.
-As only one endpoint must be created per device. It is not possible to
-open the same device twice. But there is nothing to prevent multi open.
-Return -EBUSY when device is already opened to have a generic error
-instead of relying on the back-end to potentially detect the error.
+On Thu, Feb 04, 2021 at 09:13:36AM +0100, Miquel Raynal wrote:
+> Hi Manivannan,
+> 
+> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote on Wed,
+> 03 Feb 2021 17:11:31 +0530:
+> 
+> > On 3 February 2021 4:54:22 PM IST, Boris Brezillon <boris.brezillon@collabora.com> wrote:
+> > >On Wed, 03 Feb 2021 16:22:42 +0530
+> > >Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote:
+> > >  
+> > >> On 3 February 2021 3:49:14 PM IST, Boris Brezillon  
+> > ><boris.brezillon@collabora.com> wrote:  
+> > >> >On Wed, 03 Feb 2021 15:42:02 +0530
+> > >> >Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote:
+> > >> >    
+> > >> >> >> 
+> > >> >> >> I got more information from the vendor, Telit. The access to  
+> > >the    
+> > >> >3rd      
+> > >> >> >partition is protected by Trustzone and any access in non  
+> > >privileged  
+> > >> >> >mode (where Linux kernel runs) causes kernel panic and the device
+> > >> >> >reboots.     
+> > >> >
+> > >> >Out of curiosity, is it a per-CS-line thing or is this section
+> > >> >protected on all CS?
+> > >> >    
+> > >> 
+> > >> Sorry, I didn't get your question.   
+> > >
+> > >The qcom controller can handle several chips, each connected through a
+> > >different CS (chip-select) line, right? I'm wondering if the firmware
+> > >running in secure mode has the ability to block access for a specific
+> > >CS line or if all CS lines have the same constraint. That will impact
+> > >the way you describe it in your DT (in one case the secure-region
+> > >property should be under the controller node, in the other case it
+> > >should be under the NAND chip node).  
+> > 
+> > Right. I believe the implementation is common to all NAND chips so the property should be in the controller node. 
+> 
+> Looks weird: do you mean that each of the chips will have a secure area?
 
-Without this patch for instance the GLINK driver return -EBUSY while
-the virtio bus return -ENOSPC.
+I way I said is, the "secure-region" property will be present in the controller
+node and not in the NAND chip node since this is not related to the device
+functionality.
 
-Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
----
- drivers/rpmsg/rpmsg_char.c | 3 +++
- 1 file changed, 3 insertions(+)
+But for referencing the NAND device, the property can have the phandle as below:
 
-diff --git a/drivers/rpmsg/rpmsg_char.c b/drivers/rpmsg/rpmsg_char.c
-index 0b0a6b7c0c9a..2eacddb83e29 100644
---- a/drivers/rpmsg/rpmsg_char.c
-+++ b/drivers/rpmsg/rpmsg_char.c
-@@ -116,6 +116,9 @@ static int rpmsg_eptdev_open(struct inode *inode, struct file *filp)
- 	struct device *dev = &eptdev->dev;
- 	u32 addr = eptdev->chinfo.src;
- 
-+	if (eptdev->ept)
-+		return -EBUSY;
-+
- 	get_device(dev);
- 
- 	/*
--- 
-2.17.1
+secure-region = <&nand0 0xffff>;
 
+Thanks,
+Mani
