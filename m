@@ -2,121 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C276930EB64
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Feb 2021 05:08:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6848930EB9F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Feb 2021 05:52:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229996AbhBDEIg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Feb 2021 23:08:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34180 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229786AbhBDEIg (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Feb 2021 23:08:36 -0500
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3FCBC0613D6
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Feb 2021 20:07:55 -0800 (PST)
-Received: by mail-pf1-x42a.google.com with SMTP id m6so1288927pfk.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Feb 2021 20:07:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=fOA87upY96wx5CXAVS9O4APStVDrdyQiHwsnXM+mTec=;
-        b=sa59R/OzxkpnEIbtqjhQL5jTExM8FKCANWqyFCslWMkMYwBSZWDj4d1mAcRw8R7xn7
-         isiwAAhKC31uEQSIjaYGr5EMoFAg+rIo/s0b8dQV82uqYwtZ8InKg9q8sjR7+6afEOb3
-         SqsGALoM3Pa3yE9c8TQNhE0fRilA8LEBFltrujA3xzmyFjdVtRY8QnHSnNl6gFfxJahm
-         wXXE2KSG4t0F5IIqSf70vxO6dwQDb+jdGgmbmcwsB1sVQov05cu/znMNuqq6ZhxDop51
-         AZkb7laPpVi27NYfr8uhNjTea+XaDNUT4d3m7PDAzOwoZuZ6WCn0YTzl7GVFNvDtQKah
-         Llrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=fOA87upY96wx5CXAVS9O4APStVDrdyQiHwsnXM+mTec=;
-        b=JhwDnPabr4y5zA/B2Ul23AqG3WcXTCZL03tFkOAnebp0Yzu2zd5sLizHlqifBvF0Yu
-         0wkQeiso95vxGM+DZo9ezTMvmnL0umvXmkdgoj2+UwQEcIfOrVn8Q44PMGBMLU13KsgF
-         YKBWq6Xy2i5ayYkrmvMkWNZBgJKzdTeUlhBhG96e4qQqeuLnRasbZgCH4kyvqCjIs+1P
-         WYn+we+zaf8ELKl7IcUR5F5X7+/NMFsTU0wzq1xjsfrnSLQhylj6K8gebd3jChPZQOsz
-         Jio7oZ+muYQmBKPTWhYQvWkX7apR8wNiEqWu03yl8kc/BwUugRA/yIsv1l9DAQ4WN0dD
-         HWNg==
-X-Gm-Message-State: AOAM530aTzTcoaCn1Q3RtN9Kl6NoOPH12SLN0pbZt7ZU2zp1xZFwsS+F
-        pXvsqlMMxOAmm2VzYYIA82LH
-X-Google-Smtp-Source: ABdhPJy467GxfvHn3Ve+OONVt2FbgC7gDKGno9kW/cY2dEIbXI24laqwCf54pVWRUEvz4zrvZuASrQ==
-X-Received: by 2002:a62:bd05:0:b029:1ab:6d2:5edf with SMTP id a5-20020a62bd050000b02901ab06d25edfmr6267487pff.32.1612411675035;
-        Wed, 03 Feb 2021 20:07:55 -0800 (PST)
-Received: from thinkpad ([2409:4072:502:e1e4:2c42:3883:f540:5b9c])
-        by smtp.gmail.com with ESMTPSA id j3sm3435456pjs.50.2021.02.03.20.07.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Feb 2021 20:07:54 -0800 (PST)
-Date:   Thu, 4 Feb 2021 09:37:46 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Jakub Kicinski <kuba@kernel.org>
-Cc:     Loic Poulain <loic.poulain@linaro.org>,
-        Greg KH <gregkh@linuxfoundation.org>,
-        David Miller <davem@davemloft.net>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        Network Development <netdev@vger.kernel.org>
-Subject: Re: [RESEND PATCH v18 0/3] userspace MHI client interface driver
-Message-ID: <20210204040746.GA8235@thinkpad>
-References: <YBGDng3VhE1Yw6zt@kroah.com>
- <20210201105549.GB108653@thinkpad>
- <YBfi573Bdfxy0GBt@kroah.com>
- <20210201121322.GC108653@thinkpad>
- <20210202042208.GB840@work>
- <20210202201008.274209f9@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <835B2E08-7B84-4A02-B82F-445467D69083@linaro.org>
- <20210203100508.1082f73e@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <CAMZdPi8o44RPTGcLSvP0nptmdUEmJWFO4HkCB_kjJvfPDgchhQ@mail.gmail.com>
- <20210203104028.62d41962@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+        id S231299AbhBDEwK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Feb 2021 23:52:10 -0500
+Received: from so15.mailgun.net ([198.61.254.15]:37131 "EHLO so15.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231217AbhBDEwJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 3 Feb 2021 23:52:09 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1612414302; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=Xsxjf33aoVgIbymSpKPYOKz+VxBjb10oTvQJk5g94GA=;
+ b=C9qnQYKLB7/QVEe73AeusgZ9Ob+fzC7j+I/97mQdsZjSBU95CMpXXJmiJu0luqIEyCuHwRJW
+ zzgfSsU4h3JrgMwzHE1AmBLxdKA3Zy7gMM2o+kSsGcI19XZZja5tC/vU9tIGQ0tpUT1eTnK8
+ 7wlC7+HbIRdLAZdEOJ8fq01UlUY=
+X-Mailgun-Sending-Ip: 198.61.254.15
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 601b7d3a4c7254588a06d184 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 04 Feb 2021 04:51:06
+ GMT
+Sender: dikshita=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B0A8BC433ED; Thu,  4 Feb 2021 04:51:05 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: dikshita)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 96FBFC433C6;
+        Thu,  4 Feb 2021 04:51:04 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210203104028.62d41962@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 04 Feb 2021 10:21:04 +0530
+From:   dikshita@codeaurora.org
+To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Cc:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org
+Subject: Re: [PATCH v6 1/2] media: v4l2-ctrl: add controls for long term
+ reference.
+In-Reply-To: <9b5bd3aa-ca42-0c0f-dfde-de86b27affe4@xs4all.nl>
+References: <1611553919-17919-1-git-send-email-dikshita@codeaurora.org>
+ <1611553919-17919-2-git-send-email-dikshita@codeaurora.org>
+ <9b5bd3aa-ca42-0c0f-dfde-de86b27affe4@xs4all.nl>
+Message-ID: <63404566a261c91ba0d389ca733a56a9@codeaurora.org>
+X-Sender: dikshita@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 03, 2021 at 10:40:28AM -0800, Jakub Kicinski wrote:
-> On Wed, 3 Feb 2021 19:28:28 +0100 Loic Poulain wrote:
-> > On Wed, 3 Feb 2021 at 19:05, Jakub Kicinski <kuba@kernel.org> wrote:
-> > > On Wed, 03 Feb 2021 09:45:06 +0530 Manivannan Sadhasivam wrote:  
-> > > > The current patchset only supports QMI channel so I'd request you to
-> > > > review the chardev node created for it. The QMI chardev node created
-> > > > will be unique for the MHI bus and the number of nodes depends on the
-> > > > MHI controllers in the system (typically 1 but not limited).  
-> > >
-> > > If you want to add a MHI QMI driver, please write a QMI-only driver.
-> > > This generic "userspace client interface" driver is a no go. Nobody will
-> > > have the time and attention to police what you throw in there later.  
-> > 
-> > Think it should be seen as filtered userspace access to MHI bus
-> > (filtered because not all channels are exposed), again it's not
-> > specific to MHI, any bus in Linux offers that (i2c, spi, usb, serial,
-> > etc...). It will not be specific to QMI, since we will also need it
-> > for MBIM (modem control path), AT commands, and GPS (NMEA frames), all
-> > these protocols are usually handled by userspace tools and not linked
-> > to any internal Linux framework, so it would be better not having a
-> > dedicated chardev for each of them.
+On 2021-02-01 16:40, Hans Verkuil wrote:
+> On 25/01/2021 06:51, Dikshita Agarwal wrote:
+>> Long Term Reference (LTR) frames are the frames that are encoded
+>> sometime in the past and stored in the DPB buffer list to be used
+>> as reference to encode future frames.
+>> This change adds controls to enable this feature.
+>> 
+>> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+>> ---
+>>  .../userspace-api/media/v4l/ext-ctrls-codec.rst        | 18 
+>> ++++++++++++++++++
+>>  drivers/media/v4l2-core/v4l2-ctrls.c                   | 14 
+>> ++++++++++++++
+>>  include/uapi/linux/v4l2-controls.h                     |  3 +++
+>>  3 files changed, 35 insertions(+)
+>> 
+>> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst 
+>> b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+>> index 400774c..a37d460 100644
+>> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+>> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+>> @@ -3637,3 +3637,21 @@ enum v4l2_mpeg_video_hevc_size_of_length_field 
+>> -
+>>        - Selecting this value specifies that HEVC slices are expected
+>>          to be prefixed by Annex B start codes. According to 
+>> :ref:`hevc`
+>>          valid start codes can be 3-bytes 0x000001 or 4-bytes 
+>> 0x00000001.
+>> +
+>> +``V4L2_CID_MPEG_VIDEO_LTR_COUNT (integer)``
+>> +       Specifies the number of Long Term Reference (LTR) frames 
+>> encoder needs
 > 
-> The more people argue for this backdoor interface the more distrustful
-> of it we'll become. Keep going at your own peril.
+> frames encoder -> frames the encoder
+> 
+>> +       to generate or keep. This is applicable to the H264 and HEVC 
+>> encoders.
+> 
+> Isn't this really the maximum number of LTR frames? I.e., the actual 
+> number
+> of LTR frames is something that is determined by userspace, right?
+> 
+> And you say 'generate or keep': but the encoder doesn't generate LTR 
+> frames,
+> they are marked as such by userspace. So this text would be just: "to 
+> keep".
+> 
+> Or am I wrong?
+> 
+> Regards,
+> 
+> 	Hans
+> 
+Hi Hans,
 
-Sorry, I do not want this to go towards rant... But I don't think this is anyway
-near a backdoor interface. There are userspace tools available to evaluate the
-chardev node and whatever this driver supports and going to support in the
-future is part of the Qualcomm modems. The fact that we can't add a separate
-driver for MHI QMI is due to the code duplication as the underlying interface is
-same it is just the channel which differs.
-
-And I got your point in doing everything in the chardev'ish way here. But we
-don't have any standard mechanism (QMI, MBIM, firmware/crash dump download).
-And lot of people argued that we are too far away from creating a WWAN
-subsystem. And the usecase we are dealing here is specific to Qualcomm. So IMO
-we should go ahead with the current interface this driver offers.
+I Will update this as:
+Specifies the maximum number of Long Term Reference (LTR) frames at any 
+given time
+that the encoder can keep.
 
 Thanks,
-Mani
+Dikshita
 
+>> +
+>> +``V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX (integer)``
+>> +       The current frame is marked as a Long Term Reference (LTR) 
+>> frame
+>> +       and given this LTR index which ranges from 0 to LTR_COUNT-1.
+>> +       This is applicable to the H264 and HEVC encoders and can be 
+>> applied using
+>> +       Request API.
+>> +       Source Rec. ITU-T H.264 (06/2019); Table 7.9
+>> +
+>> +``V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES (bitmask)``
+>> +       Specifies the Long Term Reference (LTR) frame(s) to be used 
+>> for
+>> +       encoding the current frame.
+>> +       This provides a bitmask which consists of bits [0, 
+>> LTR_COUNT-1].
+>> +       This is applicable to the H264 and HEVC encoders and can be 
+>> applied using
+>> +       Request API.
+>> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c 
+>> b/drivers/media/v4l2-core/v4l2-ctrls.c
+>> index 16ab54f..84c1eb8 100644
+>> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
+>> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
+>> @@ -950,6 +950,9 @@ const char *v4l2_ctrl_get_name(u32 id)
+>>  	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:		return "Vertical MV 
+>> Search Range";
+>>  	case V4L2_CID_MPEG_VIDEO_REPEAT_SEQ_HEADER:		return "Repeat Sequence 
+>> Header";
+>>  	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:		return "Force Key Frame";
+>> +	case V4L2_CID_MPEG_VIDEO_LTR_COUNT:			return "LTR Count";
+>> +	case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:		return "Frame LTR Index";
+>> +	case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES:		return "Use LTR Frames";
+>>  	case V4L2_CID_MPEG_VIDEO_MPEG2_SLICE_PARAMS:		return "MPEG-2 Slice 
+>> Parameters";
+>>  	case V4L2_CID_MPEG_VIDEO_MPEG2_QUANTIZATION:		return "MPEG-2 
+>> Quantization Matrices";
+>>  	case V4L2_CID_FWHT_I_FRAME_QP:				return "FWHT I-Frame QP Value";
+>> @@ -1277,6 +1280,17 @@ void v4l2_ctrl_fill(u32 id, const char **name, 
+>> enum v4l2_ctrl_type *type,
+>>  	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:
+>>  		*type = V4L2_CTRL_TYPE_INTEGER;
+>>  		break;
+>> +	case V4L2_CID_MPEG_VIDEO_LTR_COUNT:
+>> +		*type = V4L2_CTRL_TYPE_INTEGER;
+>> +		break;
+>> +	case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:
+>> +		*type = V4L2_CTRL_TYPE_INTEGER;
+>> +		*flags |= V4L2_CTRL_FLAG_EXECUTE_ON_WRITE;
+>> +		break;
+>> +	case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES:
+>> +		*type = V4L2_CTRL_TYPE_BITMASK;
+>> +		*flags |= V4L2_CTRL_FLAG_EXECUTE_ON_WRITE;
+>> +		break;
+>>  	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:
+>>  	case V4L2_CID_PAN_RESET:
+>>  	case V4L2_CID_TILT_RESET:
+>> diff --git a/include/uapi/linux/v4l2-controls.h 
+>> b/include/uapi/linux/v4l2-controls.h
+>> index af8dda2..c0bb87b 100644
+>> --- a/include/uapi/linux/v4l2-controls.h
+>> +++ b/include/uapi/linux/v4l2-controls.h
+>> @@ -422,6 +422,9 @@ enum v4l2_mpeg_video_multi_slice_mode {
+>>  #define 
+>> V4L2_CID_MPEG_VIDEO_MV_H_SEARCH_RANGE		(V4L2_CID_CODEC_BASE+227)
+>>  #define 
+>> V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE		(V4L2_CID_CODEC_BASE+228)
+>>  #define 
+>> V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME		(V4L2_CID_CODEC_BASE+229)
+>> +#define V4L2_CID_MPEG_VIDEO_LTR_COUNT			(V4L2_CID_CODEC_BASE+230)
+>> +#define 
+>> V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX		(V4L2_CID_CODEC_BASE+231)
+>> +#define V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES		(V4L2_CID_CODEC_BASE+232)
+>> 
+>>  /* CIDs for the MPEG-2 Part 2 (H.262) codec */
+>>  #define V4L2_CID_MPEG_VIDEO_MPEG2_LEVEL			(V4L2_CID_CODEC_BASE+270)
+>> 
