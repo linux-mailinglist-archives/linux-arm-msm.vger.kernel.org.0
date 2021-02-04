@@ -2,153 +2,279 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E35E430FF23
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Feb 2021 22:16:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C4B630FF65
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Feb 2021 22:35:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229771AbhBDVPV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Feb 2021 16:15:21 -0500
-Received: from so15.mailgun.net ([198.61.254.15]:55094 "EHLO so15.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229681AbhBDVPU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Feb 2021 16:15:20 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1612473296; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=Q0Z2ooCutv+Sy4ASqZ6ylHm5V+ET74643XcJtaloPtg=; b=UjQskntqbQuCOZX2G1j3zt/q7G95WlOAgXs1XMHPQetpkBo/hhvFUZf7PFynDB6UtBKh/53a
- wWCj8c02+Ia0epDi7NJfYyk6Zy+PBHOTECJ1M5Y61iItvZQjM8BVKPtrI+duzBp0sPHhMEC/
- AGMS4kvnQCHHKVYcyXTgLuOuLa8=
-X-Mailgun-Sending-Ip: 198.61.254.15
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 601c63b3f112b7872cecc4f3 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 04 Feb 2021 21:14:27
- GMT
-Sender: asutoshd=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 59A9DC433C6; Thu,  4 Feb 2021 21:14:27 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from stor-presley.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: asutoshd)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3558BC433CA;
-        Thu,  4 Feb 2021 21:14:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3558BC433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=asutoshd@codeaurora.org
-Date:   Thu, 4 Feb 2021 13:14:24 -0800
-From:   Asutosh Das <asutoshd@codeaurora.org>
-To:     Alan Stern <stern@rowland.harvard.edu>
-Cc:     cang@codeaurora.org, martin.petersen@oracle.com,
-        Bart Van Assche <bvanassche@acm.org>,
-        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org
-Subject: Re: [RFC PATCH v2 0/2] Fix deadlock in ufs
-Message-ID: <20210204211424.GH37557@stor-presley.qualcomm.com>
-References: <cover.1611719814.git.asutoshd@codeaurora.org>
- <84a182cc-de9c-4d6d-2193-3a44e4c88c8b@codeaurora.org>
- <20210201214802.GB420232@rowland.harvard.edu>
- <20210202205245.GA8444@stor-presley.qualcomm.com>
- <20210202220536.GA464234@rowland.harvard.edu>
- <20210204001354.GD37557@stor-presley.qualcomm.com>
- <20210204194831.GA567391@rowland.harvard.edu>
+        id S229625AbhBDVfd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Feb 2021 16:35:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33248 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229731AbhBDVfb (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 4 Feb 2021 16:35:31 -0500
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DB5FC06178A
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Feb 2021 13:34:50 -0800 (PST)
+Received: by mail-lj1-x230.google.com with SMTP id e18so5186180lja.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Feb 2021 13:34:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=BCno6Ao+dwCVXfvTIIoqfVrP6GUQPTZVIPIC7Z6fmno=;
+        b=BZOz6UaayRrtBM/evJF7kodBQxJhWGPCHVI2t097sAYuulXR8u02ZfuBKw5zaXFbn9
+         PFirLtNtBcle8UsXYmPksbaJM2bfWX+9Bdk+IPTMvWmHOVRu8NwRGdUEHtfEFxiJxihO
+         B4o2FCVq/8Tb55huK2zS+6GFwpJat6/241fnu0lCxzTbuhoHBirr2Wz2/xRAFvlUT0xV
+         CVMfIBqTqQpb/AY8m9Srg1+X4AIzajKf+2Tq4WPquGirA2NF1lZ7o26SfGxVPA9r0gYF
+         nS55UBQfH9R+82EJRf8D/YHalynvu/ZyB7rvY5vKZu2dHiWck4c62yvaKg/mgIL9LUmj
+         YvOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=BCno6Ao+dwCVXfvTIIoqfVrP6GUQPTZVIPIC7Z6fmno=;
+        b=DNfP+lDxOuV3tgjYZoXFAdWUp6VYhykAhzjXNs2bmu/LztklKly4FwMErnSxhBk78W
+         Dm8bBWJzvsgBxdVfZlvDmij5hE9b0c/LsqjF+EB1HKJ4mVog4EJ6omRptclp6f+oA4ev
+         2hif00hzqn69S0xbNwwz/s7VbjGGYJiwJTDj1NQWpFlh73xZf0mdExygxN/p6MRbtNo6
+         h/ERds/7HpaaNF5RG8p2cXH/5ypqKVy8SICiRqzENfY2Un7DDh20exoXjfQXM3UdMF7d
+         UKkiNEzB3gaY6qa+lCK105UxRg+hW+TjSkxA/aeCvHpb4ffMEaAHguWfSn7fGpXJcYO8
+         jZMQ==
+X-Gm-Message-State: AOAM530miVH1CdpfaXcn2bqoFDKY7pQ3ujcMw0QWEUSdZB3z5Ani2tRY
+        j/cFN0Yf71cZoAorviIG2Ga29w==
+X-Google-Smtp-Source: ABdhPJwKUWSgvkl+QDCXohVE2j8HxXVX0EEU8jhBEYfSjwR2RJ6yEaMjEmXlDauz9H4svNTK1hCO+A==
+X-Received: by 2002:a2e:a550:: with SMTP id e16mr770611ljn.197.1612474489012;
+        Thu, 04 Feb 2021 13:34:49 -0800 (PST)
+Received: from [192.168.1.211] ([188.162.64.67])
+        by smtp.gmail.com with ESMTPSA id h15sm747258lfc.221.2021.02.04.13.34.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 Feb 2021 13:34:48 -0800 (PST)
+Subject: Re: [PATCH 4/7] spi: spi-geni-qcom: Add support for GPI dma
+To:     Vinod Koul <vkoul@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mark Brown <broonie@kernel.org>, Wolfram Sang <wsa@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        linux-spi@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20210111151651.1616813-1-vkoul@kernel.org>
+ <20210111151651.1616813-5-vkoul@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <14dbf839-a9f9-73b6-8de3-cdb2f6353833@linaro.org>
+Date:   Fri, 5 Feb 2021 00:34:40 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20210204194831.GA567391@rowland.harvard.edu>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20210111151651.1616813-5-vkoul@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Feb 04 2021 at 11:48 -0800, Alan Stern wrote:
->On Wed, Feb 03, 2021 at 04:13:54PM -0800, Asutosh Das wrote:
->> Thanks Alan.
->> I understand the issues with the current ufs design.
->>
->> ufs has a wlun (well-known lun) that handles power management commands,
->> such as SSUs. Now this wlun (device wlun) is registered as a scsi_device.
->> It's queue is also set up for runtime-pm. Likewise there're 2
->> more wluns, BOOT and RPMB.
->>
->> Currently, the scsi devices independently runtime suspend/resume - request driven.
->> So to send SSU while suspending wlun (scsi_device) this scsi device should
->> be the last to be runtime suspended amongst all other ufs luns (scsi devices). The
->> reason is syncronize_cache() is sent to luns during their suspend and if SSU has
->> been sent already, it mostly would fail.
->
->The SCSI subsystem assumes that different LUNs operate independently.
->Evidently that isn't true here.
->
->> Perhaps that's the reason to send SSU during platform-device suspend. I'm not
->> sure if that's the right thing to do, but that's what it is now and is causing
->> this deadlock.
->> Now this wlun is also registered to bsg and some applications interact with rpmb
->> wlun and the device-wlun using that interface. Registering the corresponding
->> queues to runtime-pm ensures that the whole path is resumed before the request
->> is issued.
->> Because, we see this deadlock, in the RFC patch, I skipped registering the
->> queues representing the wluns to runtime-pm, thus removing the restrictions to
->> issue the request until queue is resumed.
->> But when the requests come-in via bsg, the device has to be resumed. Hence the
->> get_sync()/put_sync() in bsg driver.
->
->Does the bsg interface send its I/O requests to the LUNs through the
->block request queue?
->
->
->> The reason for initiating get_sync()/put_sync() on the parent device was because
->> the corresponding queue of this wlun was not setup for runtime-pm anymore.
->> And for ufs resuming the scsi device essentially means sending a SSU to wlun
->> which the ufs platform device does in its runtime resume now. I'm not sure if
->> that was a good idea though, hence the RFC on the patches.
->>
->> And now it looks to me that adding a cb to sd_suspend_runtime may not work.
->> Because the scsi devices suspend asynchronously and the wlun suspends earlier than the others.
->>
->> [    7.846165]scsi 0:0:0:49488: scsi_runtime_idle
->> [    7.851547]scsi 0:0:0:49488: device wlun
->> [    7.851809]sd 0:0:0:49488: scsi_runtime_idle
->> [    7.861536]sd 0:0:0:49488: scsi_runtime_suspend < suspends prior to other luns
->> [...]
->> [   12.861984]sd 0:0:0:1: [sdb] Synchronizing SCSI cache
->> [   12.868894]sd 0:0:0:2: [sdc] Synchronizing SCSI cache
->> [   13.124331]sd 0:0:0:0: [sda] Synchronizing SCSI cache
->> [   13.143961]sd 0:0:0:3: [sdd] Synchronizing SCSI cache
->> [   13.163876]sd 0:0:0:6: [sdg] Synchronizing SCSI cache
->> [   13.164024]sd 0:0:0:4: [sde] Synchronizing SCSI cache
->> [   13.167066]sd 0:0:0:5: [sdf] Synchronizing SCSI cache
->> [   17.101285]sd 0:0:0:7: [sdh] Synchronizing SCSI cache
->> [   73.889551]sd 0:0:0:4: [sde] Synchronizing SCSI cache
->>
->> I'm not sure if there's a way to force the wlun to suspend only after all other luns are suspended.
->> Is there? I hope Bart/others help provide some inputs on this.
->
->I don't know what would work best for you; it depends on how the LUNs
->are used.  But one possibility is to make sure that whenever the boot
->and rpmb wluns are resumed, the device wlun is also resumed.  So for
->example, the runtime-resume callback routines for the rpmb and boot
->wluns could call pm_runtime_get_sync() for the device wlun, and their
->runtime-suspend callback routines could call pm_runtime_put() for the
->device wlun.  And of course there would have to be appropriate
->operations when those LUNs are bound to and unbound from their drivers.
->
->Alan Stern
->
-Thanks Alan.
-CanG & I had some discussions on it as well the other day.
-I'm now looking into creating a device link between the siblings.
-e.g. make the device wlun as a supplier for all the other luns & wluns.
-So device wlun (supplier) wouldn't suspend (runtime/system) until all of the other
-consumers are suspended. After this linking, I can move all the
-pm commands that are being sent by host to the dedicated suspend routine of the device
-wlun and the host needn't send any cmds during its suspend and layering
-violation wouldn't take place.
+On 11/01/2021 18:16, Vinod Koul wrote:
+> We can use GPI DMA for devices where it is enabled by firmware. Add
+> support for this mode
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>   drivers/spi/spi-geni-qcom.c | 395 +++++++++++++++++++++++++++++++++++-
+>   1 file changed, 384 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+> index 512e925d5ea4..5bb0e2192734 100644
+> --- a/drivers/spi/spi-geni-qcom.c
+> +++ b/drivers/spi/spi-geni-qcom.c
 
--asd
+[skipped]
 
+> @@ -328,8 +609,34 @@ static int spi_geni_init(struct spi_geni_master *mas)
+>   	spi_tx_cfg &= ~CS_TOGGLE;
+>   	writel(spi_tx_cfg, se->base + SE_SPI_TRANS_CFG);
+>   
+> +	mas->tx = dma_request_slave_channel(mas->dev, "tx");
+> +	if (IS_ERR_OR_NULL(mas->tx)) {
+
+dma_request_slave_channel() is deprecated. Also it does not return an 
+actualy error, it always returns NULL. So the error path here is bugged.
+Judging from the rest of the driver, it might be logical to select the 
+transfer mode at the probe time, then it would be possible to skip 
+checking for DMA channels if FIFO mode is selected.
+
+> +		dev_err(mas->dev, "Failed to get tx DMA ch %ld", PTR_ERR(mas->tx));
+> +		ret = PTR_ERR(mas->tx);
+> +		goto out_pm;
+> +	} else {
+> +		mas->rx = dma_request_slave_channel(mas->dev, "rx");
+> +		if (IS_ERR_OR_NULL(mas->rx)) {
+> +			dev_err(mas->dev, "Failed to get rx DMA ch %ld", PTR_ERR(mas->rx));
+> +			dma_release_channel(mas->tx);
+> +			ret = PTR_ERR(mas->rx);
+> +			goto out_pm;
+> +		}
+> +
+> +		gsi_sz = sizeof(struct spi_geni_gsi) * NUM_SPI_XFER;
+> +		mas->gsi = devm_kzalloc(mas->dev, gsi_sz, GFP_KERNEL);
+> +		if (IS_ERR_OR_NULL(mas->gsi)) {
+> +			dma_release_channel(mas->tx);
+> +			dma_release_channel(mas->rx);
+> +			mas->tx = NULL;
+> +			mas->rx = NULL;
+> +			goto out_pm;
+> +		}
+> +	}
+> +
+> +out_pm:
+>   	pm_runtime_put(mas->dev);
+> -	return 0;
+> +	return ret;
+>   }
+>   
+>   static unsigned int geni_byte_per_fifo_word(struct spi_geni_master *mas)
+> @@ -420,6 +727,7 @@ static void setup_fifo_xfer(struct spi_transfer *xfer,
+>   {
+>   	u32 m_cmd = 0;
+>   	u32 len;
+> +	u32 m_param = 0;
+>   	struct geni_se *se = &mas->se;
+>   	int ret;
+>   
+> @@ -457,6 +765,11 @@ static void setup_fifo_xfer(struct spi_transfer *xfer,
+>   		len = xfer->len / (mas->cur_bits_per_word / BITS_PER_BYTE + 1);
+>   	len &= TRANS_LEN_MSK;
+>   
+> +	if (!xfer->cs_change) {
+> +		if (!list_is_last(&xfer->transfer_list, &spi->cur_msg->transfers))
+> +			m_param |= FRAGMENTATION;
+> +	}
+> +
+>   	mas->cur_xfer = xfer;
+>   	if (xfer->tx_buf) {
+>   		m_cmd |= SPI_TX_ONLY;
+> @@ -475,7 +788,7 @@ static void setup_fifo_xfer(struct spi_transfer *xfer,
+>   	 * interrupt could come in at any time now.
+>   	 */
+>   	spin_lock_irq(&mas->lock);
+> -	geni_se_setup_m_cmd(se, m_cmd, FRAGMENTATION);
+> +	geni_se_setup_m_cmd(se, m_cmd, m_param);
+>   
+>   	/*
+>   	 * TX_WATERMARK_REG should be set after SPI configuration and
+> @@ -494,13 +807,52 @@ static int spi_geni_transfer_one(struct spi_master *spi,
+>   				struct spi_transfer *xfer)
+>   {
+>   	struct spi_geni_master *mas = spi_master_get_devdata(spi);
+> +	unsigned long timeout, jiffies;
+> +	int ret = 0i, i;
+>   
+>   	/* Terminate and return success for 0 byte length transfer */
+>   	if (!xfer->len)
+> -		return 0;
+> +		return ret;
+> +
+> +	if (mas->cur_xfer_mode == GENI_SE_FIFO) {
+> +		setup_fifo_xfer(xfer, mas, slv->mode, spi);
+> +	} else {
+> +		setup_gsi_xfer(xfer, mas, slv, spi);
+> +		if (mas->num_xfers >= NUM_SPI_XFER ||
+> +		    (list_is_last(&xfer->transfer_list, &spi->cur_msg->transfers))) {
+> +			for (i = 0 ; i < mas->num_tx_eot; i++) {
+> +				jiffies = msecs_to_jiffies(SPI_XFER_TIMEOUT_MS);
+> +				timeout = wait_for_completion_timeout(&mas->tx_cb, jiffies);
+> +				if (timeout <= 0) {
+> +					dev_err(mas->dev, "Tx[%d] timeout%lu\n", i, timeout);
+> +					ret = -ETIMEDOUT;
+> +					goto err_gsi_geni_transfer_one;
+> +				}
+> +				spi_finalize_current_transfer(spi);
+> +			}
+> +			for (i = 0 ; i < mas->num_rx_eot; i++) {
+> +				jiffies = msecs_to_jiffies(SPI_XFER_TIMEOUT_MS);
+> +				timeout = wait_for_completion_timeout(&mas->tx_cb, jiffies);
+> +				if (timeout <= 0) {
+> +					dev_err(mas->dev, "Rx[%d] timeout%lu\n", i, timeout);
+> +					ret = -ETIMEDOUT;
+> +					goto err_gsi_geni_transfer_one;
+> +				}
+> +				spi_finalize_current_transfer(spi);
+> +			}
+> +			if (mas->qn_err) {
+> +				ret = -EIO;
+> +				mas->qn_err = false;
+> +				goto err_gsi_geni_transfer_one;
+> +			}
+> +		}
+> +	}
+>   
+> -	setup_fifo_xfer(xfer, mas, slv->mode, spi);
+> -	return 1;
+> +	return ret;
+> +
+> +err_gsi_geni_transfer_one:
+> +	dmaengine_terminate_all(mas->tx);
+> +	return ret;
+>   }
+>   
+>   static irqreturn_t geni_spi_isr(int irq, void *data)
+> @@ -595,6 +947,15 @@ static int spi_geni_probe(struct platform_device *pdev)
+>   	if (irq < 0)
+>   		return irq;
+>   
+> +	ret = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64));
+> +	if (ret) {
+> +		ret = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
+> +		if (ret) {
+> +			dev_err(&pdev->dev, "could not set DMA mask\n");
+> +			return ret;
+> +		}
+> +	}
+> +
+>   	base = devm_platform_ioremap_resource(pdev, 0);
+>   	if (IS_ERR(base))
+>   		return PTR_ERR(base);
+> @@ -632,15 +993,18 @@ static int spi_geni_probe(struct platform_device *pdev)
+>   	spi->num_chipselect = 4;
+>   	spi->max_speed_hz = 50000000;
+>   	spi->prepare_message = spi_geni_prepare_message;
+> +	spi->unprepare_message = spi_geni_unprepare_message;
+>   	spi->transfer_one = spi_geni_transfer_one;
+>   	spi->auto_runtime_pm = true;
+>   	spi->handle_err = handle_fifo_timeout;
+> -	spi->set_cs = spi_geni_set_cs;
+>   	spi->use_gpio_descriptors = true;
+>   
+>   	init_completion(&mas->cs_done);
+>   	init_completion(&mas->cancel_done);
+>   	init_completion(&mas->abort_done);
+> +	init_completion(&mas->xfer_done);
+> +	init_completion(&mas->tx_cb);
+> +	init_completion(&mas->rx_cb);
+>   	spin_lock_init(&mas->lock);
+>   	pm_runtime_use_autosuspend(&pdev->dev);
+>   	pm_runtime_set_autosuspend_delay(&pdev->dev, 250);
+> @@ -661,6 +1025,15 @@ static int spi_geni_probe(struct platform_device *pdev)
+>   	if (ret)
+>   		goto spi_geni_probe_runtime_disable;
+>   
+> +	/*
+> +	 * query the mode supported and set_cs for fifo mode only
+> +	 * for dma (gsi) mode, the gsi will set cs based on params passed in
+> +	 * TRE
+> +	 */
+> +	mas->cur_xfer_mode = get_xfer_mode(spi);
+> +	if (mas->cur_xfer_mode == GENI_SE_FIFO)
+> +		spi->set_cs = spi_geni_set_cs;
+> +
+>   	ret = request_irq(mas->irq, geni_spi_isr, 0, dev_name(dev), spi);
+>   	if (ret)
+>   		goto spi_geni_probe_runtime_disable;
+> 
+
+
+-- 
+With best wishes
+Dmitry
