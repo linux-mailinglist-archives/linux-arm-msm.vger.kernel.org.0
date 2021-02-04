@@ -2,141 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A1C430F603
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Feb 2021 16:19:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C8D430F661
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Feb 2021 16:34:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237055AbhBDPTG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Feb 2021 10:19:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36416 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237235AbhBDPSl (ORCPT
+        id S237264AbhBDPdC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Feb 2021 10:33:02 -0500
+Received: from mail-oo1-f44.google.com ([209.85.161.44]:44999 "EHLO
+        mail-oo1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237250AbhBDPVs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Feb 2021 10:18:41 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E7E8C0613D6
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Feb 2021 07:18:00 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id m13so3911684wro.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Feb 2021 07:18:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=lpfJPe/1tU+7DzTf4KYc1pV9RSxza5H3pS4oizaxjuc=;
-        b=HcCeGBGJsMKx9yLKPrbfI+qpmPRZoIkJQeDpi0L9B/qg48Sp9HqgwH4gNJpK0bECyq
-         zk+eFwNrB0sB4xpAcFmrm++/3Fk1dfCl0mOyOPMG4vdT1nynBruqqtQCIzsMGQP14+aN
-         fpa6ojnGDSvQaNthY/dZXaE3//+3Ry3GIwJpE=
+        Thu, 4 Feb 2021 10:21:48 -0500
+Received: by mail-oo1-f44.google.com with SMTP id n19so827328ooj.11;
+        Thu, 04 Feb 2021 07:21:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=lpfJPe/1tU+7DzTf4KYc1pV9RSxza5H3pS4oizaxjuc=;
-        b=r8vf+4KZymfFGLG9aZYc0+uF2WrP9aJ6f7MDmggtwpFsXK9L1C+IAEGzKu3uNaYlQU
-         QcdsCukz6IhF4O5dxbartrVVsSdU2+6srN59DqAwfYG2WnrVpAxQk/PmteUvZWm8QQjG
-         DOQkE29x1nxtblUg7e6O13L9D1cswjMSpjPah4Qyevmhj3dM1pVDvDX4z8TZdGCaTq+k
-         CHlfDxBrQjmiZWyJlj+JwKpPM4CY8kjMyQ93dU8GfBQRxCuHodERfbuoUd5PEkMuKbF3
-         3Y/Ij5IwKAjcYtrXN7huq7CBq6J4H3wrt2z1gaIpRwtmMm5tW4OEJKGhB2Tpj1IHBkQ0
-         iMtg==
-X-Gm-Message-State: AOAM531PyotPTcIqGNu9DoOdKMLD6nYgjhDf9dOCdU6qNXOKuSvwG32n
-        v10V5vP/LveDpMGLeNCIFmPjBg==
-X-Google-Smtp-Source: ABdhPJyBIQIVsMcklYb+yXnw0qimDfJH83/YxKcR6iv94o3WNC66b1hbf14zmpSAbgwo++Gvnf8wLA==
-X-Received: by 2002:adf:dd45:: with SMTP id u5mr9836389wrm.392.1612451879310;
-        Thu, 04 Feb 2021 07:17:59 -0800 (PST)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id w15sm8097023wrp.15.2021.02.04.07.17.58
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=P7JarkNG0Jr4x/lj1itZ7BSEgkDgo9dz5ORdHCgfdk8=;
+        b=Zo0NmWhlaKEdDnz60vg4clm2uM+qfG+TmAsZm9uWAvERLScDh4aCBssmqQmhsnkvXV
+         /KQr2iMRTO/5k7QcFS6a7Wmgc4frscHFgJ/Z49Spim8GruSrTb3q5oGm2o/AthpH6U6a
+         Hu06U+3yLqV/fGfYkgWDEzNGkzrRZ2k7YNkUb1CaIGUEPIbiLPMfQiaG+1mVl7CznLH+
+         QrWpqhtMpGgkBss750HPJDA9UsMCWfSHsT7A+ekoJqIA2Y595xd9RyZeA/ApKwpiy8dD
+         0JqJCXvBMJ75aDILVkggF62iWKAVWqWt34UGrPUQU4e9F4fypVNbtyAqqtT5sFmgLdAs
+         6EXQ==
+X-Gm-Message-State: AOAM533IhD3MzlLMZgW2JJ2jxZvgpOGejP280jVFylV82VZMS/tWJ7Ax
+        3At+zr8vNQY/6C3jFuEKlw==
+X-Google-Smtp-Source: ABdhPJzM3kHORViPede34wMD/uUSw98pduiPbhxgxRYTa/nSc0pWIAtPIW3tqD1eZiyu3WZiHYs1VA==
+X-Received: by 2002:a4a:d50d:: with SMTP id m13mr52826oos.2.1612452060739;
+        Thu, 04 Feb 2021 07:21:00 -0800 (PST)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id 33sm1139125ota.69.2021.02.04.07.20.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Feb 2021 07:17:58 -0800 (PST)
-Date:   Thu, 4 Feb 2021 16:17:56 +0100
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Krishna Manikandan <mkrishn@codeaurora.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH] drm/msm/kms: Make a lock_class_key for each crtc mutex
-Message-ID: <YBwQJPepkIS39Grc@phenom.ffwll.local>
-Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Krishna Manikandan <mkrishn@codeaurora.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-References: <20210125234901.2730699-1-swboyd@chromium.org>
- <YBlz8Go2DseRWuOa@phenom.ffwll.local>
- <CAF6AEGuWhGuzxsBquj-WLSwa83r+zO7jAQ9ten2m+2KtoGpYSw@mail.gmail.com>
- <YBp2h2cVXrF6lBno@phenom.ffwll.local>
- <CAF6AEGvTrfYYTfReGbAm9zcBNhjZvX0tko4kZUeQcyNZv4cM6w@mail.gmail.com>
- <161238950899.76967.16385691346035591773@swboyd.mtv.corp.google.com>
- <CAF6AEGtFpjpYoY_iu8F2z-RMJ=0+tBYo-akKJ1JbgKagBuQWtA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAF6AEGtFpjpYoY_iu8F2z-RMJ=0+tBYo-akKJ1JbgKagBuQWtA@mail.gmail.com>
-X-Operating-System: Linux phenom 5.7.0-1-amd64 
+        Thu, 04 Feb 2021 07:20:59 -0800 (PST)
+Received: (nullmailer pid 452035 invoked by uid 1000);
+        Thu, 04 Feb 2021 15:20:57 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc:     Neil Armstrong <narmstrong@baylibre.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        linux-arm-kernel@axis.com, Kevin Hilman <khilman@baylibre.com>,
+        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        linux-samsung-soc@vger.kernel.org,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Jonathan Chocron <jonnyc@amazon.com>,
+        devicetree@vger.kernel.org, Jaehoon Chung <jh80.chung@samsung.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        linux-tegra@vger.kernel.org, linux-pci@vger.kernel.org,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Jesper Nilsson <jesper.nilsson@axis.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-omap@vger.kernel.org, Jingoo Han <jingoohan1@gmail.com>,
+        linux-amlogic@lists.infradead.org,
+        Zhou Wang <wangzhou1@hisilicon.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        Fabio Estevam <festevam@gmail.com>,
+        Richard Zhu <hongxing.zhu@nxp.com>
+In-Reply-To: <bf3d0a5683c50062a55182922daeec5cfdbe00cc.1612335031.git.mchehab+huawei@kernel.org>
+References: <cover.1612335031.git.mchehab+huawei@kernel.org> <bf3d0a5683c50062a55182922daeec5cfdbe00cc.1612335031.git.mchehab+huawei@kernel.org>
+Subject: Re: [PATCH v2 01/11] doc: bindings: PCI: designware-pcie.txt: convert it to YAML
+Date:   Thu, 04 Feb 2021 09:20:57 -0600
+Message-Id: <1612452057.699681.452034.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 03, 2021 at 02:11:09PM -0800, Rob Clark wrote:
-> On Wed, Feb 3, 2021 at 1:58 PM Stephen Boyd <swboyd@chromium.org> wrote:
-> >
-> > Quoting Rob Clark (2021-02-03 09:29:09)
-> > > On Wed, Feb 3, 2021 at 2:10 AM Daniel Vetter <daniel@ffwll.ch> wrote:
-> > > >
-> > > > On Tue, Feb 02, 2021 at 08:51:25AM -0800, Rob Clark wrote:
-> > > > > On Tue, Feb 2, 2021 at 7:46 AM Daniel Vetter <daniel@ffwll.ch> wrote:
-> > > > > >
-> > > > > > On Mon, Jan 25, 2021 at 03:49:01PM -0800, Stephen Boyd wrote:
-> > > > > > > This is because lockdep thinks all the locks taken in lock_crtcs() are
-> > > > > > > the same lock, when they actually aren't. That's because we call
-> > > > > > > mutex_init() in msm_kms_init() and that assigns on static key for every
-> > > > > > > lock initialized in this loop. Let's allocate a dynamic number of
-> > > > > > > lock_class_keys and assign them to each lock so that lockdep can figure
-> > > > > > > out an AA deadlock isn't possible here.
-> > > > > > >
-> > > > > > > Fixes: b3d91800d9ac ("drm/msm: Fix race condition in msm driver with async layer updates")
-> > > > > > > Cc: Krishna Manikandan <mkrishn@codeaurora.org>
-> > > > > > > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> > > > > >
-> > > > > > This smells like throwing more bad after initial bad code ...
-> > > > > >
-> > > > > > First a rant: https://blog.ffwll.ch/2020/08/lockdep-false-positives.html
-> > > >
-> > > > Some technical on the patch itself: I think you want
-> > > > mutex_lock_nested(crtc->lock, drm_crtc_index(crtc)), not your own locking
-> > > > classes hand-rolled. It's defacto the same, but much more obviously
-> > > > correct since self-documenting.
-> > >
-> > > hmm, yeah, that is a bit cleaner.. but this patch is already on
-> > > msm-next, maybe I'll add a patch on top to change it
-> >
-> > How many CRTCs are there? The subclass number tops out at 8, per
-> > MAX_LOCKDEP_SUBCLASSES so if we have more than that many bits possible
-> > then it will fail.
-
-Hm good point, tbh the mutex_lock_nested annotations isn't super awesome
-either, it would be kinda neat if we could put that annotation into
-mutex_lock_init fairly statically (and at that point we could allos resize
-the array fairly easily I think at runtime).
-
-The nice thing with the nesting index is just that it makes it a bit more
-obvious that there's a static nesting going on and why it's ok.
--Daniel
-
-> conveniently MAX_CRTCS is 8.. realistically I don't *think* you'd ever
-> see more than 2 or 3
+On Wed, 03 Feb 2021 08:01:45 +0100, Mauro Carvalho Chehab wrote:
+> Convert the file into a DT schema.
 > 
-> BR,
-> -R
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> ---
+>  .../bindings/pci/amlogic,meson-pcie.txt       |   4 +-
+>  .../bindings/pci/axis,artpec6-pcie.txt        |   2 +-
+>  .../bindings/pci/designware-pcie.txt          |  77 ----------
+>  .../bindings/pci/fsl,imx6q-pcie.txt           |   2 +-
+>  .../bindings/pci/hisilicon-histb-pcie.txt     |   2 +-
+>  .../bindings/pci/hisilicon-pcie.txt           |   2 +-
+>  .../devicetree/bindings/pci/kirin-pcie.txt    |   2 +-
+>  .../bindings/pci/layerscape-pci.txt           |   2 +-
+>  .../bindings/pci/nvidia,tegra194-pcie.txt     |   4 +-
+>  .../devicetree/bindings/pci/pci-armada8k.txt  |   2 +-
+>  .../devicetree/bindings/pci/pci-keystone.txt  |  10 +-
+>  .../devicetree/bindings/pci/pcie-al.txt       |   2 +-
+>  .../devicetree/bindings/pci/qcom,pcie.txt     |  14 +-
+>  .../bindings/pci/samsung,exynos-pcie.yaml     |   2 +-
+>  .../devicetree/bindings/pci/snps,pcie.yaml    | 139 ++++++++++++++++++
+>  .../pci/socionext,uniphier-pcie-ep.yaml       |   2 +-
+>  .../devicetree/bindings/pci/ti-pci.txt        |   4 +-
+>  .../devicetree/bindings/pci/uniphier-pcie.txt |   2 +-
+>  MAINTAINERS                                   |   2 +-
+>  19 files changed, 169 insertions(+), 107 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/pci/designware-pcie.txt
+>  create mode 100644 Documentation/devicetree/bindings/pci/snps,pcie.yaml
+> 
 
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+My bot found errors running 'make dt_binding_check' on your patch:
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pci/snps,pcie.yaml: properties:snps,enable-cdm-check: 'oneOf' conditional failed, one must be fixed:
+	'type' is a required property
+	Additional properties are not allowed ('$ref' was unexpected)
+	/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pci/snps,pcie.yaml: properties:snps,enable-cdm-check: 'oneOf' conditional failed, one must be fixed:
+		'enum' is a required property
+		'const' is a required property
+	'/schemas/types.yaml#definitions/flag' does not match 'types.yaml#/definitions/'
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pci/snps,pcie.yaml: ignoring, error in schema: properties: snps,enable-cdm-check
+warning: no schema found in file: ./Documentation/devicetree/bindings/pci/snps,pcie.yaml
+
+See https://patchwork.ozlabs.org/patch/1435145
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
