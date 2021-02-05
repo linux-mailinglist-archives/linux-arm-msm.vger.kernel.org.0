@@ -2,89 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A1F92310E9B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Feb 2021 18:25:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C883310F06
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Feb 2021 18:46:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230000AbhBEPmH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Feb 2021 10:42:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56650 "EHLO
+        id S233564AbhBEQEG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Feb 2021 11:04:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233231AbhBEPbG (ORCPT
+        with ESMTP id S233510AbhBEQCM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Feb 2021 10:31:06 -0500
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B1B1C0613D6
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Feb 2021 09:13:13 -0800 (PST)
-Received: by mail-qt1-x832.google.com with SMTP id h16so5448085qth.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Feb 2021 09:13:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=XRLPSBu7GnfzbioyN2Rn36eiMaGh3kGmVcZSC5axiZU=;
-        b=OpRllUoQoMbc8LvWsziwwfQEPKpWw+Oq6Y1wCA8VjTO6K8lrjlNDlWT9Po1aYZkxwA
-         vrug9gc6zOWNCcJYYWas6xpOM+0+OXADX21ysb4pOFU9PjawfuhzfMJVu6zydM33vbtH
-         AHp554PzizZcfekbVMSHZMXorvmtosxwmxNIuZs8Sd7bapUFZ7OJkvJPLBx7YZYQsV09
-         HpGfP43qM0Lz+VbA19x8m6qiWZey/P7mqA5Z273FLJiVFg6MZ514x3UMWGuMKGaqSebh
-         eVK1oAWD2K3xHSpveTjs6Ci49/TbV5685G8tLyWvTm2jFH1BqSu+LFSff8K2794g9bsw
-         h1+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=XRLPSBu7GnfzbioyN2Rn36eiMaGh3kGmVcZSC5axiZU=;
-        b=dQBX1voR+psCN1U5dIIlqsQmZGlF2+WOrBFH1cgD62QlGglmS3ejgD4GnGX6tZMBqc
-         YvjC0jj4AbqjqwHoKUYSqFDmHq1FtxxS56hwwQ1f56adcXbXjC0IrV7K66bjVGqQ/4LL
-         lsNrIMNuuxcn54iX9idZinIIKdOb3VcGsln4338/smKvwR9xCLcVs3xFs7trb0gpLFH8
-         kmfScd8NzfWa4hu386x9n3bgY8XA+rrwEXvO8t4mHsTe3jt7pT2/aUZ9J+Xhddof1eBX
-         R1suxW3RCixFEA0g8ab4x64zD274kxGl6xdLgWlEkktD0KjQ9/rr9VJ0Som9/KRSifoO
-         BsaA==
-X-Gm-Message-State: AOAM532C/O1PYergkml+oLhWJmFTzUp3cLITUCZpCZxzs5EekJQU6KYr
-        VUC2Ut9iBAOvrq44Ao/Gf943hRvyZs3iqGgLd1BYCg==
-X-Google-Smtp-Source: ABdhPJx5tt87aREmGHLaNT7Iq2UoJtK2ylHYFmU6SNEs2nwB+4/ET3YqwIfQ5LhMPM0jiNIr4HT0LDB1v/yUibEExdA=
-X-Received: by 2002:ac8:4b51:: with SMTP id e17mr4965120qts.135.1612545192423;
- Fri, 05 Feb 2021 09:13:12 -0800 (PST)
+        Fri, 5 Feb 2021 11:02:12 -0500
+Received: from merlin.infradead.org (merlin.infradead.org [IPv6:2001:8b0:10b:1231::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49174C061574;
+        Fri,  5 Feb 2021 09:43:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=merlin.20170209; h=Content-Transfer-Encoding:Content-Type:
+        In-Reply-To:MIME-Version:Date:Message-ID:From:References:To:Subject:Sender:
+        Reply-To:Cc:Content-ID:Content-Description;
+        bh=08/9eUYrON8JjgNfSMvnJtGPuDDsOmQbDO2HePIMB/Q=; b=ebzoSt+d2x4Dn+mrVLeczYcm2O
+        PyJ1PE4gCqwN0xjgVnEQsl3+4UXMZK7M+KeoKbdsFQH3qfNvFgyOw8WqMxbnzufp2c2p3XbabtPOl
+        cwvBvy1rDIAoZ0roobw6O4AGPu37ol+D2tlfLxW8AzZCsztgkaq6uZZsUD2EwNNw7b1aZOpbK0oS5
+        eLRNo6+hrS8Q9NTyyzg/Bzu0Ay3LusTcbpd2PFln1F8UQOIk616M5thi14c4pNu5jYPCHjBJJKnY6
+        SjfK1KXbyHh9VVXKzfwmL0BOUZa+sGS92978yOE2o76pjWtiGHBdxnBUtSxAhBbOCJdU6GK81s5w2
+        eumII7jw==;
+Received: from [2601:1c0:6280:3f0::aec2]
+        by merlin.infradead.org with esmtpsa (Exim 4.92.3 #3 (Red Hat Linux))
+        id 1l8595-000862-PJ; Fri, 05 Feb 2021 17:43:52 +0000
+Subject: Re: [PATCH] drivers: gpu: drm: msn: disp: dpu1: Fixed couple of
+ spellings in the file dpu_hw_top.h
+To:     Bhaskar Chowdhury <unixbhaskar@gmail.com>, robdclark@gmail.com,
+        sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
+        jonathan@marek.ca, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+References: <20210205084758.354509-1-unixbhaskar@gmail.com>
+From:   Randy Dunlap <rdunlap@infradead.org>
+Message-ID: <638f6e0c-cf14-a113-b1cf-5d07299c7332@infradead.org>
+Date:   Fri, 5 Feb 2021 09:43:46 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.0
 MIME-Version: 1.0
-References: <20210117013114.441973-1-dmitry.baryshkov@linaro.org> <161254496801.21053.820582580317270864.b4-ty@arm.com>
-In-Reply-To: <161254496801.21053.820582580317270864.b4-ty@arm.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 5 Feb 2021 20:12:59 +0300
-Message-ID: <CAA8EJpqbm1N5PER6+Uc76oRfgcdujLdFcyYAkT-DQAkke02NGw@mail.gmail.com>
-Subject: Re: [PATCH v5 0/2] PCI: qcom: fix PCIe support on sm8250
-To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>, PCI <linux-pci@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20210205084758.354509-1-unixbhaskar@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 5 Feb 2021 at 20:11, Lorenzo Pieralisi
-<lorenzo.pieralisi@arm.com> wrote:
->
-> On Sun, 17 Jan 2021 04:31:12 +0300, Dmitry Baryshkov wrote:
-> > SM8250 platform requires additional clock to be enabled for PCIe to
-> > function. In case it is disabled, PCIe access will result in IOMMU
-> > timeouts. Add device tree binding and driver support for this clock.
-> >
-> > Canges since v4:
-> >  - Remove QCOM_PCIE_2_7_0_MAX_CLOCKS define and has_sf_tbu variable.
-> >
-> > [...]
->
-> Applied to pci/qcom, thanks!
+On 2/5/21 12:47 AM, Bhaskar Chowdhury wrote:
+> 
+> 
+> s/confguration/configuration/
+> s/Regsiters/Registers/
+> 
+> Signed-off-by: Bhaskar Chowdhury <unixbhaskar@gmail.com>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
+> index 8018fff5667a..3aa10c89ca1b 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
+> @@ -30,7 +30,7 @@ struct traffic_shaper_cfg {
+> 
+>  /**
+>   * struct split_pipe_cfg - pipe configuration for dual display panels
+> - * @en        : Enable/disable dual pipe confguration
+> + * @en        : Enable/disable dual pipe configuration
+>   * @mode      : Panel interface mode
+>   * @intf      : Interface id for main control path
+>   * @split_flush_en: Allows both the paths to be flushed when master path is
+> @@ -76,7 +76,7 @@ struct dpu_vsync_source_cfg {
+>   * @setup_traffic_shaper : programs traffic shaper control
+>   */
+>  struct dpu_hw_mdp_ops {
+> -	/** setup_split_pipe() : Regsiters are not double buffered, thisk
+> +	/** setup_split_pipe() : Registers are not double buffered, thisk
 
-Thank you!
+	                                                            this
 
->
-> [1/2] dt-bindings: pci: qcom: Document ddrss_sf_tbu clock for sm8250
->       https://git.kernel.org/lpieralisi/pci/c/a8069a4831
-> [2/2] PCI: qcom: add support for ddrss_sf_tbu clock
->       https://git.kernel.org/lpieralisi/pci/c/f5d48a3328
+>  	 * function should be called before timing control enable
+>  	 * @mdp  : mdp top context driver
+>  	 * @cfg  : upper and lower part of pipe configuration
+> --
+> 2.30.0
+> 
+
 
 -- 
-With best wishes
-Dmitry
+~Randy
+
