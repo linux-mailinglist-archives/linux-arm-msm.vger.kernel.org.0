@@ -2,80 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E69FA310AFE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Feb 2021 13:22:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F15C310B14
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Feb 2021 13:31:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231814AbhBEMTs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Feb 2021 07:19:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52660 "EHLO
+        id S232012AbhBEM3p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Feb 2021 07:29:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231274AbhBEMPb (ORCPT
+        with ESMTP id S231362AbhBEM1W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Feb 2021 07:15:31 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C7D0C06178B
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Feb 2021 04:14:50 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id a1so7456946wrq.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Feb 2021 04:14:50 -0800 (PST)
+        Fri, 5 Feb 2021 07:27:22 -0500
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DD49C06178C
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Feb 2021 04:26:42 -0800 (PST)
+Received: by mail-pf1-x433.google.com with SMTP id d26so2986228pfn.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Feb 2021 04:26:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=2sVpw/Ilm0KnpiFsmLHbM4e+ReVA/N71RFFlYJCi6Jc=;
-        b=BB7ALc7sbCHtH1mv+N60GaVRHeBWzmnWHyy9GHAu0+HnEZRTe2hDxu60TGg/CntGow
-         PXwmSKAren/fPwW78lkaDllUHZ2ZnCEkxXh4EQ+cVQTU39vLdkBJ2docqsa74xECOm5D
-         tHXU45AE03NZSQiVv6yl01GUf/2ux2ytvffYlNyWsJFm8/UyoRaaPwgU1/0U9LNLO6st
-         yQx0UYGMOs24EOf9Kk97ely+uuGzEgGL4/6CgLZ5ideldCoZbBsnvSgRhwsC2v02ptYi
-         HdHJKWu3/eKIzjqKey6BBl2ImTn/qy7CkWiluMVpeaKsmTF16UwiZGSe+xTNfJA3gWtt
-         H5SA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=olKxdUhhAjEHtniNFoNUxSd3ztLWLPRSJlDLlalivBQ=;
+        b=QmSNoiBQEj3J0pPbLIzBouFKa9BDCavK9l9t2/OgYWKOzJIdspcMLiNVznn5ccLjnv
+         VGm2tVraAkYij4tZX8r4QKA93WFo9lNOoDVE/vX9Nk1b0L7C/EXicSR4Ars8IekX1kOF
+         pv8qQQ/qcoglQ2qLwNiOqKas+DD4T/GYKqOm5qp1KY/2spV/42EIPtbrrtceCTTnlFFt
+         01OGMaJ+aO9v9o3nBIfTHP9JwqlYajPZ6QtOeFTSdXCwCsCF7kACNE8aws/oytPdqvwO
+         ZjM/K9lksnm5xMmQHx7AqP4Yk53J4TB9404tS8MAsnK40kNJfqjhSfxXlPqg1dgzoBys
+         +NKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=2sVpw/Ilm0KnpiFsmLHbM4e+ReVA/N71RFFlYJCi6Jc=;
-        b=Ei+GYaTXZwLjGZ8QBddPaHen5CgwYPmIwMW5ZQpteYrEU4FKGfhK86hKDcQmVWwMT2
-         WB+4yoORoKIMAWGvatSHbD05CRL0A/eBJoe/VkUvHBqiOUkgrtL6ozV1M0NNryxJbOSg
-         Rfj92JKnkCrl36eAmeRp82mROnRNoN5/M6yKRKgfMFRRutPUnCVQk8B42cCXB154fi77
-         TXolEY9Cl+p+xs3Z5HeaclNXwQdkmDjQEbA8/mV9ifqOTkA+zmI7x/o482DlYJfeBJEg
-         xJd9kGCieVjJJoIen+AQAWLG6f90fkPbhYRQtXxroWiYrssap2NaG7gpFILFEryzia2j
-         ZflA==
-X-Gm-Message-State: AOAM530F+e7PpRgeauVmVp03SbmPpGLvlhgklScVHpQ82dPUl34rskMA
-        NNTSJ2i/hGXiucCzoSh7IZcy/Q==
-X-Google-Smtp-Source: ABdhPJzKK4p9VlSBCj/6RXVnS8gpIG2x+6hUraDqzjA2Wwgll9c+czXiR3yHJjjrNuwF8J5hBM5t/Q==
-X-Received: by 2002:a5d:414c:: with SMTP id c12mr4845606wrq.251.1612527288915;
-        Fri, 05 Feb 2021 04:14:48 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id 23sm8549833wmo.47.2021.02.05.04.14.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Feb 2021 04:14:48 -0800 (PST)
-Subject: Re: [PATCH] media: venus: core, venc, vdec: Fix probe dependency
- error
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     dmitry.baryshkov@linaro.org
-References: <20210204125614.1453916-1-bryan.odonoghue@linaro.org>
- <836fac64-81b3-2048-c440-8c41cd185e94@linaro.org>
- <e2d89409-6691-e98c-1f68-fcdc63d26be4@linaro.org>
- <b0adc363-c5b0-e7f0-5e1c-ea4d33f6d0f7@linaro.org>
- <d7d114fe-6255-5672-e91c-2558d56da745@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Message-ID: <2a905877-9475-683b-7ecf-7328c1f6cfa4@linaro.org>
-Date:   Fri, 5 Feb 2021 12:16:09 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.3
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=olKxdUhhAjEHtniNFoNUxSd3ztLWLPRSJlDLlalivBQ=;
+        b=LI9LtNFs0Xzf2NaT7bnJr6lth1H4o4E5V9fpIWkrARW5EILXZ68HxCywnoG+VukCUG
+         dmJj4VLpfuC7KCjaa2NPe4CzxEYcIEknGumtAYjvgGkaxTFKqxkqswyUQHH+ONwfcOuT
+         4N5Uslbu6zH6uQa1c99s+Fa3brXLaoCJGFRWyA3EITcQGbHSP6NP5ril0m3WcxXvw1DA
+         in04zqGI7V8tEx2197+jbU1shG5qehy/fTnb44+AGEbvd0Firz7ZjM9QAf6otNnZ4x2Y
+         TZRedtO29/gs9SVCyGezziQ7hPpv6oPKZqrJ6bz+Ll7xkzVTznJh0rSFEeh010zBU5lO
+         7o0w==
+X-Gm-Message-State: AOAM531qfm66+KL4qekAs1x/25M+FmZ4+VKlzQJzSOeJjZh38sd1N8tO
+        ctlG692cFQZy0tfwGavQ4NCzo4mWLicS
+X-Google-Smtp-Source: ABdhPJyowgLWzv5TXrD+DbNhkcq2x4kzEHs1olBsR73VpuKwZWwQLiEfpcS2QIIBHn63hosUTqSG+A==
+X-Received: by 2002:a63:ec4f:: with SMTP id r15mr4160194pgj.344.1612528001558;
+        Fri, 05 Feb 2021 04:26:41 -0800 (PST)
+Received: from thinkpad ([2409:4072:6419:ab3e:3106:54ac:6216:6b24])
+        by smtp.gmail.com with ESMTPSA id 141sm9399385pfa.65.2021.02.05.04.26.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Feb 2021 04:26:40 -0800 (PST)
+Date:   Fri, 5 Feb 2021 17:56:34 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2] mhi: pci_generic: Print warning in case of firmware
+ crash
+Message-ID: <20210205122634.GB3221@thinkpad>
+References: <1612370382-21643-1-git-send-email-loic.poulain@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <d7d114fe-6255-5672-e91c-2558d56da745@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1612370382-21643-1-git-send-email-loic.poulain@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/02/2021 11:52, Stanimir Varbanov wrote:
-> Wait, venus_runtime_suspend|resume also relies on that
-> dev_get_drvdata(). Can we call v4l2_device_register() earlier in
-> venus_probe?
+On Wed, Feb 03, 2021 at 05:39:42PM +0100, Loic Poulain wrote:
+> Print warning when MHI detects sys error.
+> 
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 
-I can give it a go
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+Thanks,
+Mani
+
+> ---
+>  v2: remove useless fallthough & unused mhi_pdev variable
+> 
+>  drivers/bus/mhi/pci_generic.c | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+> index 444693e..2476041 100644
+> --- a/drivers/bus/mhi/pci_generic.c
+> +++ b/drivers/bus/mhi/pci_generic.c
+> @@ -217,7 +217,17 @@ static void mhi_pci_write_reg(struct mhi_controller *mhi_cntrl,
+>  static void mhi_pci_status_cb(struct mhi_controller *mhi_cntrl,
+>  			      enum mhi_callback cb)
+>  {
+> +	struct pci_dev *pdev = to_pci_dev(mhi_cntrl->cntrl_dev);
+> +
+>  	/* Nothing to do for now */
+> +	switch (cb) {
+> +	case MHI_CB_FATAL_ERROR:
+> +	case MHI_CB_SYS_ERROR:
+> +		dev_warn(&pdev->dev, "firmware crashed (%u)\n", cb);
+> +		break;
+> +	default:
+> +		break;
+> +	}
+>  }
+>  
+>  static bool mhi_pci_is_alive(struct mhi_controller *mhi_cntrl)
+> -- 
+> 2.7.4
+> 
