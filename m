@@ -2,101 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BF35A310122
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Feb 2021 00:54:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BE6D310137
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Feb 2021 01:02:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231320AbhBDXxu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Feb 2021 18:53:50 -0500
-Received: from so15.mailgun.net ([198.61.254.15]:15282 "EHLO so15.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231372AbhBDXxt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Feb 2021 18:53:49 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1612482803; h=Message-ID: References: In-Reply-To: Reply-To:
- Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=uGT+mmLcNimmrF5O0goRR8yE0/KU/5rkdgh5w5fKbJg=;
- b=Zvk5LfizGYsfgbiUI4FzoGWNngVtchOr0zOtN1nYJna+FxdHv8rKaKnhiTwbNkKjTuaO5Mn5
- sE0cpVs0MDNnsnHUsGaOEX/hkvVF7oaqkJo3Aw0RpSen/ZtLa7gRwU0mklcQVVoVi9Nx8qYo
- Jxq0c7DraG3EIn4iLqJX/9UFuD8=
-X-Mailgun-Sending-Ip: 198.61.254.15
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 601c88d35d0f3847870441fc (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 04 Feb 2021 23:52:51
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3CF2CC43462; Thu,  4 Feb 2021 23:52:50 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A0088C433C6;
-        Thu,  4 Feb 2021 23:52:49 +0000 (UTC)
+        id S231518AbhBEACH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Feb 2021 19:02:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36550 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231508AbhBEACE (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 4 Feb 2021 19:02:04 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6267FC06178B
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Feb 2021 16:01:24 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id u25so7317484lfc.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Feb 2021 16:01:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=zLqPTFh6CuSeccJgUeUot2gtzesuWCTA8N4g9JUgJlg=;
+        b=fhw60sCMKSzS6vpKxVfqfnprR1Gtbsn0Wxse5P5rrCDoZ6UwYx7uLY25tp2uuhFX7O
+         BemTos5LhfGk5sleNbZ+39yJ1FXQ/e/Rz6CgdB//tPK4ReckJ1rGdJjM8gi665JDYbmA
+         LKiS7Kr7pf3dQ7q/L/wQeFCdT3CTu6nBdwghdKOslF9VgUGLviXJdkjy2QtjMeIrZTsM
+         s46gZj8bvH1K61SP3c6iLBj4IjD7tzGqYqgt8En8L8VUnxa7apl5kH9IheBa6sJrxF0N
+         nre6zg9VGTaAvLmm2JVwwStMDQAZKN7w3OcQMHl3BvD84AE4rY0yiyQ1e05n714z1ZBW
+         iByQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=zLqPTFh6CuSeccJgUeUot2gtzesuWCTA8N4g9JUgJlg=;
+        b=Zvy7D0bwBwtf2VSohkR6+Gn9Tefi1XLvG16+pLDl7/HDdb0RF53p8KOWP1rT7dlQY/
+         K84N+KigVjr19GPwE5I0mZIphfMA5x6y+Uhjb2Aj8fFoVIEJmkd5dH1AgVirHeljd+wZ
+         KyQYFA/L0DwYQY+cCWmgb4zawDEPay52scWua7CRv5R54FeDTtEjW3dZ/pTTtmHsCt7g
+         lL61c7Nb2M6T7lLwG55LK3lbEl4bai8l++yjfWmencyOmAOHMFaW1J7unhdRzI/9Xvsi
+         BLnxteqMSALHIbm1PQs3MuBjH0ylpIXESLpuPeXR3adIs+pJ5O8AaLzmdpVyJIyH2XBl
+         l3lA==
+X-Gm-Message-State: AOAM533S7Vy6XXKaOEGiUF6I825ZFIhpCPTohzLZHCQ6cvqLxmYHzW1X
+        SJOzD6QLPv+OTf7Pk2Z1qV73bQ==
+X-Google-Smtp-Source: ABdhPJyL2cGQ3cX3iT0ggBpT5cJGbH5cWbn0wNvpFUEBfbnV9f5wHpFlWmZm4QiOa+XIxvQp21WB/A==
+X-Received: by 2002:a05:6512:2248:: with SMTP id i8mr939789lfu.632.1612483282579;
+        Thu, 04 Feb 2021 16:01:22 -0800 (PST)
+Received: from eriador.lan ([188.162.64.67])
+        by smtp.gmail.com with ESMTPSA id x11sm799532ljh.69.2021.02.04.16.01.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Feb 2021 16:01:22 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-iio@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Jishnu Prakash <jprakash@qti.qualcomm.com>
+Subject: [PATCH v14 0/2] thermal: qcom: add support for adc-tm5 PMIC thermal monitor
+Date:   Fri,  5 Feb 2021 03:01:16 +0300
+Message-Id: <20210205000118.493610-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.30.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 04 Feb 2021 15:52:49 -0800
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        carl.yin@quectel.com, naveen.kumar@quectel.com,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        loic.poulain@linaro.org
-Subject: Re: [PATCH v2 1/3] bus: mhi: core: Clear devices when moving
- execution environments
-Organization: Qualcomm Innovation Center, Inc.
-Reply-To: bbhatt@codeaurora.org
-Mail-Reply-To: bbhatt@codeaurora.org
-In-Reply-To: <20210121075022.GA30041@thinkpad>
-References: <1610651795-31287-1-git-send-email-bbhatt@codeaurora.org>
- <1610651795-31287-2-git-send-email-bbhatt@codeaurora.org>
- <20210121075022.GA30041@thinkpad>
-Message-ID: <fb1246c0bbc2ebef6ef97f2645d3a741@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mani,
+This patch serie adds support for thermal monitoring block on Qualcomm's
+PMIC5 chips. PM8150{,b,l}, qrb5165-rb5 board and sm8250-mtp board device
+trees are extended to support thermal zones provided by this thermal
+monitoring block.  Unlike the rest of PMIC thermal senses, these thermal
+zones describe particular thermistors, which differ between from board
+to board.
 
-On 2021-01-20 11:50 PM, Manivannan Sadhasivam wrote:
-> On Thu, Jan 14, 2021 at 11:16:33AM -0800, Bhaumik Bhatt wrote:
->> When moving from SBL to mission mode execution environment, there
->> is no remove callback notification to MHI client drivers which
->> operate on SBL mode only. Client driver devices are being created
->> in SBL or AMSS(mission mode) and only destroyed after power down
->> or SYS_ERROR. If there exist any SBL-specific channels, those are
->> left open and client drivers are thus unaware of the new execution
->> environment where those channels cannot operate. Close the gap and
->> issue remove callbacks to SBL-specific client drivers once device
->> enters mission mode.
->> 
-> 
-> What are the SBL specific channels and the client drivers operating on 
-> them?
-> If this is something going to come in future, then this patch can come 
-> later.
-> 
-> Thanks,
-> Mani
+Dependencies: https://git.kernel.org/pub/scm/linux/kernel/git/jic23/iio.git/log/?h=ib-iio-thermal-5.11-rc1
 
-Carl from Quectel (CC'd here) will need this patch as he works on EDL 
-and Flash
-Programmer changes which also needs usage of QSAHARA server over SBL.
+Changes since v13:
+ - Really fix adc_tm5_get_temp(). Failed to squash the fixup into the
+   v13.
 
-Thanks,
-Bhaumik
----
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
+Changes since v12:
+ - Drop patches taken into linux-next.
+ - Fix adc_tm5_get_temp to handle IIO_VAL_INT properly (removed in v9).
+
+Changes since v11:
+ - Drop io-channel-ranges from dts example.
+
+Changes since v10:
+ - Rebased on top of ib-iio-thermal-5.11-rc1 immutable branch, with
+   IIO-related patches picked up by Jonathan.
+ - Changed thermal zone device tree nodes to use -thermal suffix
+   following the schema.
+ - Reordered device tree nodes to keep the alphanumeric sorting order.
+
+Changes since v9:
+ - In patch 12 add comments to the code as requested by Daniel Lezcano.
+ - Change copyright comment in qcom-spmi-adc-tm5.c to clearly note
+   driver history.
+
+Changes since v8:
+ - Simplified qcom_vadc_map_voltage_temp() code by removing ascending
+   tables support
+ - Simplified qcom-vadc-common volt/temp mapping code
+ - Implement suggestions by Matthias Kaehlcke: message formatting,
+   rewrite comments, remove unused variable initialization.
+
+Changes since v7:
+ - Move qcom-vadc-common.h header to include/linux/iio/adc/ dir.
+ - Use explicit sizeof(var) instead of hand-coding 1 when accessing
+   adc-tm registers.
+ - Remove buffer read from adc_tm5_init().
+ - Remove extra on-stack var from adc_tm5_get_temp().
+ - Minor formatting changes as suggested Daniel.
+
+Changes since v6:
+ - Added include <linux/bitfield.h> as noted by Jishnu Prakash.
+
+Changes since v5:
+ - Reworked DT bindings:
+   * Removed qcom,adc-channel, instead it is parsed from io-channels
+   * Renamed qcom,hw-settle-time to include -us suffix
+ - Re-added monitor enabling which got lost during refactored. Noted by
+   Jishnu Prakash.
+ - Use threaded IRQ handler as susggested by Jishnu.
+
+Changes since v4:
+ - Added kernel-doc comments to ADC-TM structures
+ - Used several sizeof(buf) instead of hand-conding register size
+
+Changes since v3:
+ - Fix DT description to spell "thermal monitoring" instead of just TM
+ - Fix warnings in DT example
+ - Add EXPORT_SYMBOL_GPL(of_iio_channel_get_by_name)
+ - Fixed whitespace chanes in qcom-vadc-common.c
+ - Removed error message if IIO chanel get returns -EPROBE_DEFER
+
+Changes since v2:
+ - IIO: export of_iio_channel_get_by_name() function
+ - dt-bindings: move individual io-channels to each thermal monitoring
+   channel rather than listing them all in device node
+ - added fallback defaults to of_device_get_match_data calls in
+   qcom-spmi-adc5 and qcom-spmi-adc-tm5 drivers
+ - minor typo fixes
+
+Changes since v1:
+ - Introduce fixp_linear_interpolate() by Craig Tatlor
+ - Lots of syntax/whitespace changes
+ - Cleaned up register definitions per Jonathan's suggestion
+ - Implemented most of the suggestions from Bjorn's and Jonathan's
+   review
+
+
+
