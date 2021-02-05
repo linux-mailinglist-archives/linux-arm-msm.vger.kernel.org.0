@@ -2,123 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 64E82310195
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Feb 2021 01:27:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5393C31026F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Feb 2021 02:53:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231776AbhBEA0b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Feb 2021 19:26:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41800 "EHLO
+        id S229500AbhBEBxV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Feb 2021 20:53:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231728AbhBEA0a (ORCPT
+        with ESMTP id S229509AbhBEBxS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Feb 2021 19:26:30 -0500
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DD1DC0613D6
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Feb 2021 16:25:50 -0800 (PST)
-Received: by mail-ot1-x335.google.com with SMTP id v1so5261490ott.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Feb 2021 16:25:50 -0800 (PST)
+        Thu, 4 Feb 2021 20:53:18 -0500
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4246C061786
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Feb 2021 17:52:38 -0800 (PST)
+Received: by mail-pl1-x632.google.com with SMTP id e9so2760828plh.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Feb 2021 17:52:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=i/sNjGPUQcWgJ1ou2Z+VvX7lJEt0tPpGFRGnJSTZWUw=;
-        b=qh8V4sd3cpeDsMoS2M2hVBUqCdX+5DaTZKbYGcSPFaY+oxDILNVgyKFq26suOLFNUd
-         tFUUveEtPHgEiRU7xMhy9mKLZkMYQU0yPa8df2/ALMMDHAqUf4E0/MT5J24Bd2Ur8zxx
-         v4JGBqpXlVJ/kspGGP+xeB0+68lczZ0rU98KXhBevu+2F4eCV5cEp5M/6Oka/ZdVwgQp
-         b5r5j/THQz0qqfqjq2bbN5S3oda8dbiXFEDd+nZR7yl3Wi4Z02on6OMmc4J0t+vre6qd
-         vENTbn90aaWAuHvTZ6XiRrRr6sGPvecYU/1RsgHbhuI3wp7Sh39AjPwn+ahZwaL34BH2
-         xczQ==
+        d=squareup.com; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=HPlCt/oLMkzfdSzMbmF5TMe9TN1Pemw5Bf1xj8IPkbc=;
+        b=aaG88vmPvUfGM+ENAlspEss54lgXvtTfMg1yw0Ql+KXLOFMxNllsPhTgb5xD5vwMml
+         LKssZfpTlxkEKEnt+aWgG7SwotZi4G0ZYlUJftzq6jjL5Vx49gbNPC9tUaGQPLJ4D7IM
+         hTavVEUW3lsn+B0Lo96JJ73j2/1BsGxN3VgDs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=i/sNjGPUQcWgJ1ou2Z+VvX7lJEt0tPpGFRGnJSTZWUw=;
-        b=B3E9sfDw7BHA6y468gUZhTnW0bKgo57xuwpHIieGcVPCInntUmghhtOcPr2stIiKab
-         fe+pr4KwNpB7/EGHaMKzdbJzwy0ci4NcGtn9R1iBS+BQSvK5CcmpUat2ivTSB+ipykZZ
-         7e7ur70rEMdaw3ajU4LPqjS+O0Kc6oxYkUtS1YkMk1u6Fb/jMDn9UknW20ZoiTpEiVzI
-         oVgOWBFkV1tbElgCBIBuJdI2a9HTHfKrXn1ZPcCZWA1z+4RNDyubjZyVuzaB9GwOG06A
-         raadbZl4p/JynEvS2S82xvZYbcEa9DeNdUAYkTnRsXIR7QP83AkpLBy2iMAHoH27T9vY
-         WRcA==
-X-Gm-Message-State: AOAM532qcQyOksDgaCmZcyq4nFxznK2zpWQKER70MqdXW44QYiFOCquj
-        OEJeX3KhoSshLlJMZc8KjlBHBMc7blAQVg==
-X-Google-Smtp-Source: ABdhPJzK+Xe8lrhuUDCohyQSuukdOaTCgv3mu/gMNZA1HuzoxV54HbqiffI5+csgiAbHGtwZwEIqwg==
-X-Received: by 2002:a9d:7694:: with SMTP id j20mr1474344otl.89.1612484749644;
-        Thu, 04 Feb 2021 16:25:49 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id c18sm1441183oov.20.2021.02.04.16.25.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Feb 2021 16:25:48 -0800 (PST)
-Date:   Thu, 4 Feb 2021 18:25:47 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=HPlCt/oLMkzfdSzMbmF5TMe9TN1Pemw5Bf1xj8IPkbc=;
+        b=G1JnFTUnOhRr0I3DajgOJa43fSCg/A4kIEOCy3XYaMpUb7FBSOCZZ6MLZnaCVS4rz8
+         /IOHE1iW01WVTCMS9GXk3U+X3YogXQCumjJ+FO/g+rflFIk4W6Fq0blNaEsY9sy1IpXD
+         238sZry3Jv5oEL7d/yAhzHI5eFShSlbYdy07ZYSx4yvBX+y8lZqRQqG+Hx+qgW8OOY1f
+         Eb6K3pmd/3A/Zd/nGsB0sOxY0VhmiB56HsYNqQ8a8Zbj6f4WlxDPbfe+d+eops2xrgCt
+         DkJ+Dare6FYkzy4QLNYWxjy6f1mtjpEzxSQ8QILTu/RVk9AMDTzNhp2mszHa9Fnh/Gjv
+         ftfQ==
+X-Gm-Message-State: AOAM532rGlAWcE/QkQidAEXXE85SRLuJCEYRy+JZ5z6JaK5U9oZWiYFY
+        1wdwOLhW/rn4TypKEvcrtkIQgQ==
+X-Google-Smtp-Source: ABdhPJztxs5hvHnG2TytvQiPpYtx+iVGjsBzbaRXxg+ESnHMEM6gYYE5tWFqg+xsj1ShR/Ew4HAcYg==
+X-Received: by 2002:a17:90a:2ec7:: with SMTP id h7mr1780338pjs.200.1612489958131;
+        Thu, 04 Feb 2021 17:52:38 -0800 (PST)
+Received: from localhost (162-207-206-139.lightspeed.sntcca.sbcglobal.net. [162.207.206.139])
+        by smtp.gmail.com with ESMTPSA id h124sm3327073pfe.216.2021.02.04.17.52.36
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 04 Feb 2021 17:52:37 -0800 (PST)
+From:   Benjamin Li <benl@squareup.com>
+To:     Georgi Djakov <georgi.djakov@linaro.org>,
+        Jun Nie <jun.nie@linaro.org>
+Cc:     kernel@squareup.com, Benjamin Li <benl@squareup.com>,
         Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sm8250: add pinctrl for SPI using
- GPIO as a CS
-Message-ID: <YByQizVTnj2uTNt2@builder.lan>
-References: <20210204204904.294555-1-dmitry.baryshkov@linaro.org>
- <YBx+LcgrbyUKpYig@builder.lan>
- <CAD=FV=XOk14DfAJT9j86WbiRifxUQZFPy1grJWoz0A7Fon1edg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAD=FV=XOk14DfAJT9j86WbiRifxUQZFPy1grJWoz0A7Fon1edg@mail.gmail.com>
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/2] Clean up MSM8939 interconnect driver
+Date:   Thu,  4 Feb 2021 17:52:03 -0800
+Message-Id: <20210205015205.22947-1-benl@squareup.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 04 Feb 17:31 CST 2021, Doug Anderson wrote:
-> On Thu, Feb 4, 2021 at 3:07 PM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> > On Thu 04 Feb 14:49 CST 2021, Dmitry Baryshkov wrote:
-[..]
-> > > diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> > > index 3cea28058a91..03015174ec06 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> > > @@ -3046,6 +3046,25 @@ config {
-> > >                               };
-> > >                       };
-> > >
-> > > +                     qup_spi0_cs_gpio: qup-spi0-cs-gpio {
-> >
-> > There might be others who need the same states, but I would prefer if we
-> > move this to the device's dts.
-> 
-> This is opposite to what Stephen requested, though it was in a review
-> on our gerrit and not on lists [1].  :-P
-> 
-> It definitely feels like a 6 of one half dozen of the other.  Unless
-> you're dead set on moving them to the board dts my bias would be
-> towards keeping consistent with what was done on sc7180.  If you
-> really want this moved to the board file we should do it for sc7180
-> too.
-> 
+Following up on a review comment on commit 6c6fe5d3dc5e ("interconnect: qcom:
+Add MSM8939 interconnect provider driver") to clean up some log pollution.
 
-What I dislike is the fact that we have a huge amount of these unused in
-the platform.dtsi, but let's align with what I agreed to on
-sc7180...Sorry for the short memory.
+This is based on icc-next (which appears to contain a refactor commonizing
+functions into icc-rpm.c).
 
-> 
-> > > +                             mux {
-> >
-> > Rather than splitting the properties in {mux, cs, config} I think it
-> > makes more sense to split them in {spi, cs} or something like that.
-> 
-> In general pinconf doesn't belong in the SoC dts file.  If there's no
-> reason to change it seems like this should match what sc7180 did.
-> 
+v2:
+- Update commit message to add a full explanation, rather than referencing a
+  previous commit.
 
-Right, but I still would prefer the pinctrl state to be split by
-function/pins, rather than pinmux vs pinconf. That way it's natural to
-add pinconf properties to the various functional parts (i.e. bias or
-drive-strength for the spi pins vs cs).
+Benjamin Li (2):
+  interconnect: qcom: icc-rpm: record slave RPM id in error log
+  interconnect: qcom: msm8939: remove rpm-ids from non-RPM nodes
 
-Do you have any concerns with this?
+ drivers/interconnect/qcom/icc-rpm.c |  4 ++--
+ drivers/interconnect/qcom/msm8939.c | 16 ++++++++--------
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
-Regards,
-Bjorn
+-- 
+2.17.1
 
-> 
-> [1] https://chromium-review.googlesource.com/c/chromiumos/third_party/kernel/+/2406557/1/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
