@@ -2,165 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 155593104DE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Feb 2021 07:11:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A079310507
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Feb 2021 07:42:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230490AbhBEGKt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Feb 2021 01:10:49 -0500
-Received: from so15.mailgun.net ([198.61.254.15]:49189 "EHLO so15.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230366AbhBEGKr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Feb 2021 01:10:47 -0500
+        id S229492AbhBEGmM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Feb 2021 01:42:12 -0500
+Received: from mail29.static.mailgun.info ([104.130.122.29]:49260 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231126AbhBEGmJ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 5 Feb 2021 01:42:09 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1612505427; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=4P2pIqrzxl9M50olLzLc0I1wxDxpfpzDB4id+jGUKbs=;
- b=v0ZPVOwO+RUtRfLJUe5G+Ssu1JScDouViQf5+EUWH4gW2Cjmqxu+yUdgt5QfMAYdYodTobwk
- XM1kHqmsdAhMBuXo14jysoIl/wRidrojmHidKO8vca53oA3nc+u5JW/fuBRc4KLn1Vc/zw86
- cAJDrsAa9C2EIdcZijNspLQKHm0=
-X-Mailgun-Sending-Ip: 198.61.254.15
+ s=smtp; t=1612507311; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=Pq6SFpYB7bZzneOPuiPx50qEYnSet0KQsUNB8GY6yTU=; b=pAN46sm4PDamKcfsw9fe85MN+lA4P0rGpqQhngYobznM0g8GVBuIpZXdRc2Vrf6UK1zOZrxH
+ EhrQbMENEs7ptqCQLyqAkhuODXgcCWo3XdYWkjFaNRzBRSn2zqtKrtCg4YKehohs7+Zhv02j
+ V31mJfXBdn8ItCme79+3ehLbtQ8=
+X-Mailgun-Sending-Ip: 104.130.122.29
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 601ce12af112b7872c393646 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 05 Feb 2021 06:09:46
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 601ce8900bb8f50fb9918825 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 05 Feb 2021 06:41:20
  GMT
-Sender: kathirav=codeaurora.org@mg.codeaurora.org
+Sender: akhilpo=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0DECFC433CA; Fri,  5 Feb 2021 06:09:46 +0000 (UTC)
+        id 551BAC43462; Fri,  5 Feb 2021 06:41:19 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+X-Spam-Status: No, score=-3.2 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.1.105] (unknown [61.1.238.129])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: kathirav)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D0FCDC433C6;
-        Fri,  5 Feb 2021 06:09:44 +0000 (UTC)
+        (Authenticated sender: akhilpo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 59B2AC433CA;
+        Fri,  5 Feb 2021 06:41:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 59B2AC433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
+Subject: Re: [PATCH] drm/msm: Fix legacy relocs path
+To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>, David Airlie <airlied@linux.ie>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "Kristian H. Kristensen" <hoegsberg@google.com>,
+        Sean Paul <sean@poorly.run>,
+        Emil Velikov <emil.velikov@collabora.com>
+References: <20210204225650.1284384-1-robdclark@gmail.com>
+From:   Akhil P Oommen <akhilpo@codeaurora.org>
+Message-ID: <dc2fb87e-67f0-4fa9-c920-515a6609a04d@codeaurora.org>
+Date:   Fri, 5 Feb 2021 12:11:10 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <20210204225650.1284384-1-robdclark@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Date:   Fri, 05 Feb 2021 11:39:44 +0530
-From:   Kathiravan T <kathirav@codeaurora.org>
-To:     Baruch Siach <baruch@tkos.co.il>
-Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 3/3] arm64: dts: ipq6018: enable USB2 support
-In-Reply-To: <59a0d43f34b69406cd320f16edc4e7fabe022bfd.1611756920.git.baruch@tkos.co.il>
-References: <cover.1611756920.git.baruch@tkos.co.il>
- <59a0d43f34b69406cd320f16edc4e7fabe022bfd.1611756920.git.baruch@tkos.co.il>
-Message-ID: <ebdc1f5c424968a8e1b5463b29f616cf@codeaurora.org>
-X-Sender: kathirav@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-01-27 19:50, Baruch Siach wrote:
-> From: Kathiravan T <kathirav@codeaurora.org>
+On 2/5/2021 4:26 AM, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
-> Signed-off-by: Kathiravan T <kathirav@codeaurora.org>
-> [baruch: adjust regs address/size; drop binding updates;
->  drop unsupported quirk properties]
-> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+> In moving code around, we ended up using the same pointer to
+> copy_from_user() the relocs tables as we used for the cmd table
+> entry, which is clearly not right.  This went unnoticed because
+> modern mesa on non-ancent kernels does not actually use relocs.
+> But this broke ancient mesa on modern kernels.
+> 
+> Reported-by: Emil Velikov <emil.velikov@collabora.com>
+> Fixes: 20224d715a88 ("drm/msm/submit: Move copy_from_user ahead of locking bos")
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 > ---
->  arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts |  8 ++++
->  arch/arm64/boot/dts/qcom/ipq6018.dtsi        | 48 ++++++++++++++++++++
->  2 files changed, 56 insertions(+)
+>   drivers/gpu/drm/msm/msm_gem_submit.c | 2 ++
+>   1 file changed, 2 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-> b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-> index 99cefe88f6f2..5aec18308712 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-> +++ b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-> @@ -78,3 +78,11 @@ nand@0 {
->  		nand-bus-width = <8>;
->  	};
->  };
+> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+> index d04c349d8112..5480852bdeda 100644
+> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
+> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+> @@ -198,6 +198,8 @@ static int submit_lookup_cmds(struct msm_gem_submit *submit,
+>   		submit->cmd[i].idx  = submit_cmd.submit_idx;
+>   		submit->cmd[i].nr_relocs = submit_cmd.nr_relocs;
+>   
+> +		userptr = u64_to_user_ptr(submit_cmd.relocs);
 > +
-> +&qusb_phy_1 {
-> +	status = "ok";
-> +};
-> +
-> +&usb2 {
-> +	status = "ok";
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> index 9fa5b028e4f3..d4a3d4e4a7e9 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> @@ -524,6 +524,54 @@ qrtr_requests {
->  			};
->  		};
+>   		sz = array_size(submit_cmd.nr_relocs,
+>   				sizeof(struct drm_msm_gem_submit_reloc));
+>   		/* check for overflow: */
 > 
-> +		qusb_phy_1: qusb@59000 {
-> +			compatible = "qcom,ipq6018-qusb2-phy";
-> +			reg = <0x0 0x059000 0x0 0x180>;
-> +			#phy-cells = <0>;
-> +
-> +			clocks = <&gcc GCC_USB1_PHY_CFG_AHB_CLK>,
-> +				 <&xo>;
-> +			clock-names = "cfg_ahb", "ref";
 
-As per the bindings, ref clock should be 19.2MHz where the XO in IPQ60xx 
-is 24MHz. Did the USB enumerated successfully and able to perform read / 
-write operations?
+Reviewed-by: Akhil P Oommen <akhilpo@codeaurora.org>
 
-Thanks,
-Kathiravan T.
-
-
-> +
-> +			resets = <&gcc GCC_QUSB2_1_PHY_BCR>;
-> +			status = "disabled";
-> +		};
-> +
-> +		usb2: usb2@7000000 {
-> +			compatible = "qcom,ipq6018-dwc3", "qcom,dwc3";
-> +			reg = <0x0 0x070F8800 0x0 0x400>;
-> +			#address-cells = <2>;
-> +			#size-cells = <2>;
-> +			ranges;
-> +			clocks = <&gcc GCC_USB1_MASTER_CLK>,
-> +				 <&gcc GCC_USB1_SLEEP_CLK>,
-> +				 <&gcc GCC_USB1_MOCK_UTMI_CLK>;
-> +			clock-names = "master",
-> +				      "sleep",
-> +				      "mock_utmi";
-> +
-> +			assigned-clocks = <&gcc GCC_USB1_MASTER_CLK>,
-> +					  <&gcc GCC_USB1_MOCK_UTMI_CLK>;
-> +			assigned-clock-rates = <133330000>,
-> +					       <24000000>;
-> +			resets = <&gcc GCC_USB1_BCR>;
-> +			status = "disabled";
-> +
-> +			dwc_1: dwc3@7000000 {
-> +			       compatible = "snps,dwc3";
-> +			       reg = <0x0 0x7000000 0x0 0xcd00>;
-> +			       interrupts = <GIC_SPI 99 IRQ_TYPE_LEVEL_HIGH>;
-> +			       phys = <&qusb_phy_1>;
-> +			       phy-names = "usb2-phy";
-> +			       tx-fifo-resize;
-> +			       snps,is-utmi-l1-suspend;
-> +			       snps,hird-threshold = /bits/ 8 <0x0>;
-> +			       snps,dis_u2_susphy_quirk;
-> +			       snps,dis_u3_susphy_quirk;
-> +			       dr_mode = "host";
-> +			};
-> +		};
-> +
->  	};
-> 
->  	wcss: wcss-smp2p {
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member of Code Aurora Forum, hosted by The Linux Foundation
+-Akhil.
