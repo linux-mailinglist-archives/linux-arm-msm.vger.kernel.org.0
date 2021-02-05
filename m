@@ -2,111 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F96531043A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Feb 2021 05:54:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 81A253104BB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Feb 2021 06:48:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231194AbhBEExm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Feb 2021 23:53:42 -0500
-Received: from mail-03.mail-europe.com ([91.134.188.129]:55896 "EHLO
-        mail-03.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231181AbhBEExZ (ORCPT
+        id S229587AbhBEFsF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Feb 2021 00:48:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54172 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229586AbhBEFsF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Feb 2021 23:53:25 -0500
-Date:   Fri, 05 Feb 2021 04:51:54 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1612500719;
-        bh=T15argtmAt/CR8F8tv3EWr8uxycCuahn7wYhmd3o3pY=;
-        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=ry9aaxHQLOwZGzIkH3q32+tihDZ5O4xx1Bo5C5FstuU/xfG0sbd2dx5rOf9kPrkj2
-         o69pQPUBjj3Fv0zubAaBJjZP8mn5VVcgoho/8lmP1jD/0TYQXfrwXpC7OMqhpOpEFC
-         43a7qOfiz0AAF1RwjsE1r5ZHMyZDLyWPkjz0/z4M=
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-From:   Yassine Oudjana <y.oudjana@protonmail.com>
+        Fri, 5 Feb 2021 00:48:05 -0500
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9944C061786
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Feb 2021 21:47:24 -0800 (PST)
+Received: by mail-ot1-x32d.google.com with SMTP id t25so5851010otc.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Feb 2021 21:47:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Rrj20D7a53wrOzeKZZKSNUikqq6xnexSDHxUpV51KT8=;
+        b=Fbnuh06jpfffd5wEvn2YSS9D7wKguxWNAPENLLEFQuEqaSV6riOlAX7706JEf8OUEb
+         cwoaZKTro/agmwYmyqrn0Of8tMSwmFXQDTfgIumk/Tl7wU7d/rLAopYnUSiAK2TTSxM5
+         59wzuQVblMQwlzeEWbc3DS6Lo6Y9kIcto1iafxlsZTKS5sDwNCvOMpVDfusoSE7e1tW/
+         cQsxfpXbRxEFExNTiaOIVlyKP/Nh06JUwD+FrVVOWkn2fklWD8SwwNfcj+qkE5LjjDXM
+         +wdD/i1kEhaF9rTTHjda9RK3pl4Qw/yM8EcYt8ewJ/FTp+vBsgL8MhHm2bJaZPkFjV9Q
+         O4vQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Rrj20D7a53wrOzeKZZKSNUikqq6xnexSDHxUpV51KT8=;
+        b=B+eYCVG3rxISqtaM2tgos8qoiUlNs9b3GorBVw6mPbMEK+0zkdqxygShNzr0z6tIuw
+         tCXoHEx2RcEsvqbIzYj8NenlndBOL1HjD57udYZAek+jyZLwwI8boWtzAWdQTMTz0QxV
+         UnDzALgDnBt6+q9kuTiygMGnKcqbjmHXhd7cj1K3faaA40SRfOM5MJ2SoD5szkCx3EyJ
+         n2VPPoehDyFZ8/aPFn0l0Bg2MvhQyMvDg/il62QdJsVso/BDnCrkkxzKSkv7TOhF888y
+         j1iRrtf0JP+Jmd5GF7lTn0U31gS97reUlsdk1tl4Sjk74bBBq8AbsT44pHH5mP/kWZKM
+         OHQw==
+X-Gm-Message-State: AOAM531J6f/FiQ2UD96VxzSu2hUwJCwrnCPLGAcEpi8wDIcRZOJ8rHtn
+        +dA7z+yOdV753ayrItNWopK7zg==
+X-Google-Smtp-Source: ABdhPJz9xij+gLz0CwnaxC20p0yxQoBcNW7MsLZMGld4VXUPQto8ViHwTWsQ5HTeh0hLeBB7iIylDw==
+X-Received: by 2002:a9d:b85:: with SMTP id 5mr2307683oth.281.1612504043704;
+        Thu, 04 Feb 2021 21:47:23 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id o25sm1612254oie.57.2021.02.04.21.47.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Feb 2021 21:47:23 -0800 (PST)
+Date:   Thu, 4 Feb 2021 23:47:21 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Yassine Oudjana <y.oudjana@protonmail.com>
 Cc:     "agross@kernel.org" <agross@kernel.org>,
         "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
-Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
 Subject: Re: [PATCH] arm64: dts: qcom: pm8994: Add resin node to PON
-Message-ID: <qlZLjlncIG-fOtti8ZUSOF9ct71-oaDKMJQmDUYXvUoCJMkstc1Gjyuigwo6uK5Q4E2ZKCv70No663d-_qqD0HOnNYEKuWjOByYbG_g4jqE=@protonmail.com>
-In-Reply-To: <YBnYi2eMl0xtMcfq@builder.lan>
-References: <8WhEzfSgoSe_f8OT9eH_6hLGTqY9k_Cy9ZLr84OJsFctROAlbUEz552XibQxt684Um8E5NS1_0qxIn3tRVSs0ui1mVUKhBFmUjJ_dannvrQ=@protonmail.com> <YBnYi2eMl0xtMcfq@builder.lan>
+Message-ID: <YBzb6eDm34Be9Q4A@builder.lan>
+References: <8WhEzfSgoSe_f8OT9eH_6hLGTqY9k_Cy9ZLr84OJsFctROAlbUEz552XibQxt684Um8E5NS1_0qxIn3tRVSs0ui1mVUKhBFmUjJ_dannvrQ=@protonmail.com>
+ <YBnYi2eMl0xtMcfq@builder.lan>
+ <qlZLjlncIG-fOtti8ZUSOF9ct71-oaDKMJQmDUYXvUoCJMkstc1Gjyuigwo6uK5Q4E2ZKCv70No663d-_qqD0HOnNYEKuWjOByYbG_g4jqE=@protonmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <qlZLjlncIG-fOtti8ZUSOF9ct71-oaDKMJQmDUYXvUoCJMkstc1Gjyuigwo6uK5Q4E2ZKCv70No663d-_qqD0HOnNYEKuWjOByYbG_g4jqE=@protonmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wednesday, February 3, 2021 2:56 AM, Bjorn Andersson <bjorn.andersson@li=
-naro.org> wrote:
+On Thu 04 Feb 22:51 CST 2021, Yassine Oudjana wrote:
 
-> On Tue 29 Dec 06:47 CST 2020, Yassine Oudjana wrote:
->
-> > From: Yassine Oudjana y.oudjana@protonmail.com
-> > Date: Sun, 27 Dec 2020 21:23:40 +0400
-> > Add resin as a child node of PON.
+> On Wednesday, February 3, 2021 2:56 AM, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
+> 
+> > On Tue 29 Dec 06:47 CST 2020, Yassine Oudjana wrote:
 > >
-> > Signed-off-by: Yassine Oudjana y.oudjana@protonmail.com
+> > > From: Yassine Oudjana y.oudjana@protonmail.com
+> > > Date: Sun, 27 Dec 2020 21:23:40 +0400
+> > > Add resin as a child node of PON.
+> > >
+> > > Signed-off-by: Yassine Oudjana y.oudjana@protonmail.com
+> > >
+> > > --------------------------------------------------------
+> > >
+> > > arch/arm64/boot/dts/qcom/pm8994.dtsi | 8 ++++++++
+> > > 1 file changed, 8 insertions(+)
+> > > diff --git a/arch/arm64/boot/dts/qcom/pm8994.dtsi b/arch/arm64/boot/dts/qcom/pm8994.dtsi
+> > > index 5ffdf37d8e31..334774a38602 100644
+> > > --- a/arch/arm64/boot/dts/qcom/pm8994.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/pm8994.dtsi
+> > > @@ -58,6 +58,14 @@ pwrkey {
+> > > linux,code = <KEY_POWER>;
+> > > };
+> > >
+> > > -       	resin {
+> > >
+> > >
+> > > -       		compatible = "qcom,pm8941-resin";
+> > >
+> > >
+> > > -       		interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_BOTH>;
+> > >
+> > >
+> > > -       		debounce = <15625>;
+> > >
+> > >
+> > > -       		bias-pull-up;
+> > >
+> > >
+> > > -       		linux,code = <KEY_VOLUMEDOWN>;
+> > >
+> > >
 > >
-> > --------------------------------------------------------
-> >
-> > arch/arm64/boot/dts/qcom/pm8994.dtsi | 8 ++++++++
-> > 1 file changed, 8 insertions(+)
-> > diff --git a/arch/arm64/boot/dts/qcom/pm8994.dtsi b/arch/arm64/boot/dts=
-/qcom/pm8994.dtsi
-> > index 5ffdf37d8e31..334774a38602 100644
-> > --- a/arch/arm64/boot/dts/qcom/pm8994.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/pm8994.dtsi
-> > @@ -58,6 +58,14 @@ pwrkey {
-> > linux,code =3D <KEY_POWER>;
-> > };
-> >
-> > -       =09resin {
-> >
-> >
-> > -       =09=09compatible =3D "qcom,pm8941-resin";
-> >
-> >
-> > -       =09=09interrupts =3D <0x0 0x8 1 IRQ_TYPE_EDGE_BOTH>;
-> >
-> >
-> > -       =09=09debounce =3D <15625>;
-> >
-> >
-> > -       =09=09bias-pull-up;
-> >
-> >
-> > -       =09=09linux,code =3D <KEY_VOLUMEDOWN>;
-> >
-> >
->
-> Is resin always volume down?
+> > Is resin always volume down?
+> 
+> I'm not sure, but I haven't found a device that uses it and sets it as anything else.
+> 
+> > Also this node is already defined in apq8096-db820c.dtsi, so how about
+> > moving the common properties here, but leave it status = "disabled" and
+> > then in the device specific file make it status = okay?
+> 
+> Sounds good. So have everything other than linux,code defined there, then
+> add status = "disabled" and a label to it?
+> 
 
-I'm not sure, but I haven't found a device that uses it and sets it as anyt=
-hing else.
+Sounds good to me.
 
-> Also this node is already defined in apq8096-db820c.dtsi, so how about
-> moving the common properties here, but leave it status =3D "disabled" and
-> then in the device specific file make it status =3D okay?
+Thanks,
+Bjorn
 
-Sounds good. So have everything other than linux,code defined there, then
-add status =3D "disabled" and a label to it?
-
-> Regards,
-> Bjorn
->
-> > -       =09};
+> > Regards,
+> > Bjorn
 > >
-> >
-> > -       };
-> >
-> >         pm8994_temp: temp-alarm@2400 {
-> >
-> >
-> >
-> > --
-> > 2.29.2
+> > > -       	};
+> > >
+> > >
+> > > -       };
+> > >
+> > >         pm8994_temp: temp-alarm@2400 {
+> > >
+> > >
+> > >
+> > > --
+> > > 2.29.2
