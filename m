@@ -2,84 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 23F7A311910
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Feb 2021 03:55:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BE452311911
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Feb 2021 03:55:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231574AbhBFCyL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Feb 2021 21:54:11 -0500
-Received: from so15.mailgun.net ([198.61.254.15]:44257 "EHLO so15.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231135AbhBFCrv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Feb 2021 21:47:51 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1612579663; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=YCO3A4nbifS+88eVDGVj45VVWBGNfR5wxgkvk0/07Xc=; b=LXjpO+XKdpHN7eDfbnejqJ0IZXLUnQOBs9uHrrryCOW5a8ui4Tyy+mK65+4bRlQtayZjovwu
- 8z46FYWBnsvlLedBMHn2VlWawVgvfAliztT1CQTxfVn2uGzUmlJ2wj3ZWd98ws8THCa66AMv
- vO1K3YF7KE6ulNAz+V/tcTW0B6k=
-X-Mailgun-Sending-Ip: 198.61.254.15
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 601dcad0f112b7872cb1c440 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 05 Feb 2021 22:46:40
- GMT
-Sender: hemantk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3C97EC43462; Fri,  5 Feb 2021 22:46:40 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.2 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8673BC433C6;
-        Fri,  5 Feb 2021 22:46:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8673BC433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
-Subject: Re: [PATCH v6 8/8] bus: mhi: core: Do not clear channel context more
- than once
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, jhugo@codeaurora.org,
-        linux-kernel@vger.kernel.org, loic.poulain@linaro.org
-References: <1612470486-10440-1-git-send-email-bbhatt@codeaurora.org>
- <1612470486-10440-9-git-send-email-bbhatt@codeaurora.org>
-From:   Hemant Kumar <hemantk@codeaurora.org>
-Message-ID: <3d1171bd-407b-f644-bbd1-bd6cb8769c18@codeaurora.org>
-Date:   Fri, 5 Feb 2021 14:46:39 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S231865AbhBFCyQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Feb 2021 21:54:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40996 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232062AbhBFCuv (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 5 Feb 2021 21:50:51 -0500
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11BD7C0698C0
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Feb 2021 14:50:10 -0800 (PST)
+Received: by mail-pj1-x102d.google.com with SMTP id m12so4419326pjs.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Feb 2021 14:50:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=gKCMWJy86du3XdDODHHkwDL4EqHeNQp1OLhPf7Jz0/g=;
+        b=DeXiiiz5Xu4mcDBbUqmfnVGscCw+wn6NsdbMyjAgmzY0DOwxWhcYOd/PnXNYyBohsH
+         kYceKhwQiG+aY1UbhHj+Kxmycp6RYnmrSDn4qOIt132V+xkdfuUzzL1LBYYDUIerwPc1
+         txnAFI8K2L0gYegSqTqvFwLAFkxZc02oP87Ok=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=gKCMWJy86du3XdDODHHkwDL4EqHeNQp1OLhPf7Jz0/g=;
+        b=iHy1tDr+WWQ73+0X13vBSjbNPQGIdoG4IMexF7CmNjx71wkQNkl/2meuZBPg98pZkK
+         oLt4vgsvcvJRxDgpWD4hYv0oySFzIg5Gma9hJi9/URMNwnaOsDS8vRVIZedZmFwpnMrE
+         WWkPmkePTbBFSBko1UsLMYHZJbXIQBnQD4j1jNO87XElB9khI3gQkiIcJ586CqS3AQ3g
+         9bzMDSYTNKm6cRpAZHvgKY7OmJabU+0LlFXKAiltjVNwEbxbHjW58lOBnXN3SInigWvD
+         L0sTvF6GWL93sU2/d7cRsp1BSlr/bArr8zwVKNp23z+LVGiYCxOkGrQrd9ahykjLtQfw
+         7h/Q==
+X-Gm-Message-State: AOAM531XKggVGKBS5USKXs7JyczC+i+P+rvMJPOIO8HyH4lai5rg8iOK
+        9bA19UcVuqDBTy2rOS8XUR+/BCjsDuHSvw==
+X-Google-Smtp-Source: ABdhPJwGvnWZVMON25jxMBQujRQW8J9vouiPFt6BaQnmk2Wd20tbSiNga0UjbYPbrvJYFU44SNIh9w==
+X-Received: by 2002:a17:90a:8b15:: with SMTP id y21mr5929152pjn.82.1612565409676;
+        Fri, 05 Feb 2021 14:50:09 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:201:3d74:5f76:aaaa:6cb8])
+        by smtp.gmail.com with ESMTPSA id s126sm6639348pfs.81.2021.02.05.14.50.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Feb 2021 14:50:09 -0800 (PST)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <1612470486-10440-9-git-send-email-bbhatt@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1612557878-19743-1-git-send-email-khsieh@codeaurora.org>
+References: <1612557878-19743-1-git-send-email-khsieh@codeaurora.org>
+Subject: Re: [PATCH] drm/msm/dp: reset dp controller only at boot up and pm_resume
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     tanmay@codeaurora.org, abhinavk@codeaurora.org,
+        aravindh@codeaurora.org, khsieh@codeaurora.org, airlied@linux.ie,
+        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+To:     Kuogee Hsieh <khsieh@codeaurora.org>, robdclark@gmail.com,
+        sean@poorly.run
+Date:   Fri, 05 Feb 2021 14:50:07 -0800
+Message-ID: <161256540764.76967.2035577896654812758@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Quoting Kuogee Hsieh (2021-02-05 12:44:38)
+> DP_SW_RESET is the global SW reset that is used to initialize DP
+> controller. If DP_SW_RESET executed during connection setup,
+> two HPD related side effects may occurred,
+> 1) pending HPD interrupts cleared unexpected
+> 2) re start debounce logic which trigger another interrupt
+> This patch only issue DP_SW_RESET at boot up and pm_resume.
+> This patch also reinit video_comp before configure dp controller
+> to avoid missing VIDEO_READY interrupt.
+>=20
+> Fixes: 9fc418430c65 ("drm/msm/dp: unplug interrupt missed after irq_hpd h=
+andler")
+> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+> ---
 
-
-On 2/4/21 12:28 PM, Bhaumik Bhatt wrote:
-> Clearing a channel context can happen twice if the client driver
-> unprepares and reset the channels from the remove() callback from
-> a controller requested MHI power down sequence. If there are
-> multiple attempts at calling the mhi_free_coherent() API, we see
-> kernel warnings such as "trying to free invalid coherent area".
-> Example for one such client is the QRTR MHI driver. Avoid these
-> warnings by skipping mhi_deinit_chan_ctxt() API call and prevent
-> extra work from MHI as the channels are already disabled.
-> 
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-
-Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
