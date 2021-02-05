@@ -2,238 +2,246 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 480953112F2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Feb 2021 21:59:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 48148311345
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Feb 2021 22:18:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233654AbhBETQq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Feb 2021 14:16:46 -0500
-Received: from so15.mailgun.net ([198.61.254.15]:31503 "EHLO so15.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233773AbhBETOc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Feb 2021 14:14:32 -0500
+        id S233628AbhBEVQl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Feb 2021 16:16:41 -0500
+Received: from mail29.static.mailgun.info ([104.130.122.29]:25493 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S232789AbhBETDM (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 5 Feb 2021 14:03:12 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1612558594; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=eDL+b9jfY8DE4XA0q5g1K7AJkRLqUrDeFoVlzPeAM2g=;
- b=PODGeunNNhysyjVwa+pi0sLS93sN+N0CtISBxamu80YS+JsuYheIORRKkMPIjxZoofHkOITF
- 6iD2hQ7MuMKjhxnOMZ46IOMwB/xtvVH9HMiYcW6aNSprfvdTiMQkJjzBO4sVJl26bx2fg0wj
- 3oYm8gZHcOKsHfsgJEFz2RhV1Qc=
-X-Mailgun-Sending-Ip: 198.61.254.15
+ s=smtp; t=1612557916; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=3BclvZ99xRNsYy0No6aROEDf6otnaYKYIumBhd5Kht8=; b=dsrwSuGWJ0IgjmniPicsSmlKevYphsdPo/YEGpVKZwq/J3DKOiazDNibk07DZpBbBhS9FrUH
+ S4pnvGqdBzhHAMbx7NgAZyrmEdtOXTsDZ15OQ0RksI197jk/PT5ELYiHRkwbCllhKFOVVjJ6
+ s9ReuqILwOP/WsmuLry49ikksaw=
+X-Mailgun-Sending-Ip: 104.130.122.29
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 601db0d53919dfb455f76a53 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 05 Feb 2021 20:55:49
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 601dae430bb8f50fb98af5d7 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 05 Feb 2021 20:44:51
  GMT
 Sender: khsieh=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0241BC43463; Fri,  5 Feb 2021 20:55:49 +0000 (UTC)
+        id 81287C43464; Fri,  5 Feb 2021 20:44:50 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E1C41C433ED;
-        Fri,  5 Feb 2021 20:55:47 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 05 Feb 2021 12:55:47 -0800
-From:   khsieh@codeaurora.org
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, kalyan_t@codeaurora.org,
-        tanmay@codeaurora.org, abhinavk@codeaurora.org,
-        robdclark@gmail.com, bjorn.andersson@linaro.org,
-        vinod.koul@linaro.org, rnayak@codeaurora.org,
-        dianders@chromium.org, sibis@codeaurora.org,
-        Vara Reddy <varar@codeaurora.org>
-Subject: Re: [PATCH v10 4/4] dt-bindings: msm/dp: Add bindings of MSM
- DisplayPort controller
-In-Reply-To: <161255172811.76967.16401619378965156134@swboyd.mtv.corp.google.com>
-References: <1612420939-15502-1-git-send-email-mkrishn@codeaurora.org>
- <1612420939-15502-4-git-send-email-mkrishn@codeaurora.org>
- <161255172811.76967.16401619378965156134@swboyd.mtv.corp.google.com>
-Message-ID: <b4bd2263a21f464869ac6d84aa0df131@codeaurora.org>
-X-Sender: khsieh@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B23E8C433CA;
+        Fri,  5 Feb 2021 20:44:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B23E8C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=khsieh@codeaurora.org
+From:   Kuogee Hsieh <khsieh@codeaurora.org>
+To:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org
+Cc:     tanmay@codeaurora.org, abhinavk@codeaurora.org,
+        aravindh@codeaurora.org, khsieh@codeaurora.org, airlied@linux.ie,
+        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/msm/dp: reset dp controller only at boot up and pm_resume
+Date:   Fri,  5 Feb 2021 12:44:38 -0800
+Message-Id: <1612557878-19743-1-git-send-email-khsieh@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-02-05 11:02, Stephen Boyd wrote:
-> Quoting Krishna Manikandan (2021-02-03 22:42:19)
->> Add bindings for Snapdragon DisplayPort controller driver.
->> 
->> Signed-off-by: Chandan Uddaraju <chandanu@codeaurora.org>
->> Signed-off-by: Vara Reddy <varar@codeaurora.org>
->> Signed-off-by: Tanmay Shah <tanmay@codeaurora.org>
->> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
->> 
-> [...]
->> 
->> Changes in v11:
->> - add ports required of both #address-cells and  #size-cells
->> - add required operating-points-v2
->> - add required #sound-dai-cells
->> - add required power-domains
->> - update maintainer list
-> 
-> Where's that maintainer file update?
-I had deleted Tanmay.
-Anyway, I will removed Chandan at next upload.
-> 
->> ---
->>  .../bindings/display/msm/dp-controller.yaml        | 157 
->> +++++++++++++++++++++
->>  .../bindings/display/msm/dpu-sc7180.yaml           |  10 ++
->>  2 files changed, 167 insertions(+)
->>  create mode 100644 
->> Documentation/devicetree/bindings/display/msm/dp-controller.yaml
->> 
->> diff --git 
->> a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml 
->> b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
->> new file mode 100644
->> index 0000000..2b71c7a
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
->> @@ -0,0 +1,157 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: MSM Display Port Controller
->> +
->> +maintainers:
->> +  - Chandan Uddaraju <chandanu@codeaurora.org>
-> 
-> This email is bouncing. Please remove Chandan.
-ok
-> 
->> +  - Vara Reddy <varar@codeaurora.org>
->> +  - Kuogee Hsieh <khsieh@codeaurora.org>
->> +
->> +description: |
->> +  Device tree bindings for DisplayPort host controller for MSM 
->> targets
->> +  that are compatible with VESA DisplayPort interface specification.
->> +
->> +properties:
->> +  compatible:
->> +    enum:
->> +      - qcom,sc7180-dp
->> +
->> +  reg:
->> +    maxItems: 1
->> +
->> +  interrupts:
->> +    maxItems: 1
->> +
->> +  clocks:
->> +    items:
->> +      - description: AHB clock to enable register access
->> +      - description: Display Port AUX clock
->> +      - description: Display Port Link clock
->> +      - description: Link interface clock between DP and PHY
->> +      - description: Display Port Pixel clock
->> +
->> +  clock-names:
->> +    items:
->> +      - const: core_iface
->> +      - const: core_aux
->> +      - const: ctrl_link
->> +      - const: ctrl_link_iface
->> +      - const: stream_pixel
->> +
->> +  phys:
->> +    maxItems: 1
->> +
->> +  phy-names:
->> +    items:
->> +      - const: dp
->> +
->> +  operating-points-v2:
->> +    maxItems: 1
->> +
->> +  power-domains:
->> +    maxItems: 1
->> +
->> +  "#sound-dai-cells":
->> +    const: 0
->> +
->> +  ports:
->> +    type: object
->> +    description: |
->> +      A ports node with endpoint definitions as defined in
->> +      Documentation/devicetree/bindings/media/video-interfaces.txt.
->> +    properties:
->> +      "#address-cells":
->> +        const: 1
->> +
->> +      "#size-cells":
->> +        const: 0
->> +
->> +      port@0:
->> +        type: object
->> +        description: Input endpoint of the controller
->> +
->> +      port@1:
->> +        type: object
->> +        description: Output endpoint of the controller
->> +
->> +    required:
->> +      - "#address-cells"
->> +      - "#size-cells"
->> +
->> +    additionalProperties: false
->> +
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +  - interrupts
->> +  - clocks
->> +  - clock-names
->> +  - phys
->> +  - phy-names
->> +  - "#sound-dai-cells"
->> +  - power-domains
->> +  - ports
->> +
->> +additionalProperties: false
->> +
->> +examples:
->> +  - |
->> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
->> +    #include <dt-bindings/clock/qcom,dispcc-sc7180.h>
->> +    #include <dt-bindings/power/qcom-aoss-qmp.h>
->> +    #include <dt-bindings/power/qcom-rpmpd.h>
->> +
->> +    mdss@ae00000 {
-> 
-> mdss is not a standard node name. Maybe 'subsystem'?
-Can you give me more details regrading this.
-I had double checked both ti/ti,am65x-dss.yaml and msm/dsi-phy.yaml and 
-can not find any clue for this.
-Can I just followed msm/dsi-phy.yaml for this?
-> 
->> +      #address-cells = <2>;
->> +      #size-cells = <2>;
->> +      reg = <0xae00000 0x1000>,   /* mdss */
->> +            <0xae90000 0x1400>;   /* dp */
-> 
-> This second reg property shouldn't be here.
-ok
-> 
->> +      reg-names = "mdss", "dp";
->> +
->> +      displayport-controller@ae90000 {
+DP_SW_RESET is the global SW reset that is used to initialize DP
+controller. If DP_SW_RESET executed during connection setup,
+two HPD related side effects may occurred,
+1) pending HPD interrupts cleared unexpected
+2) re start debounce logic which trigger another interrupt
+This patch only issue DP_SW_RESET at boot up and pm_resume.
+This patch also reinit video_comp before configure dp controller
+to avoid missing VIDEO_READY interrupt.
+
+Fixes: 9fc418430c65 ("drm/msm/dp: unplug interrupt missed after irq_hpd handler")
+Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+---
+ drivers/gpu/drm/msm/dp/dp_ctrl.c    | 22 +++++++++-------------
+ drivers/gpu/drm/msm/dp/dp_ctrl.h    |  2 +-
+ drivers/gpu/drm/msm/dp/dp_display.c | 14 +++++++-------
+ 3 files changed, 17 insertions(+), 21 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+index 55b7d0e..f8e75e2 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+@@ -1296,8 +1296,6 @@ static int dp_ctrl_setup_main_link(struct dp_ctrl_private *ctrl,
+ 	 * transitioned to PUSH_IDLE. In order to start transmitting
+ 	 * a link training pattern, we have to first do soft reset.
+ 	 */
+-	if (*training_step == DP_TRAINING_1)
+-		dp_catalog_ctrl_reset(ctrl->catalog);
+ 
+ 	ret = dp_ctrl_link_train(ctrl, cr, training_step);
+ 
+@@ -1366,7 +1364,7 @@ static int dp_ctrl_enable_stream_clocks(struct dp_ctrl_private *ctrl)
+ 	return ret;
+ }
+ 
+-int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool flip)
++int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool flip, bool reset)
+ {
+ 	struct dp_ctrl_private *ctrl;
+ 	struct dp_io *dp_io;
+@@ -1383,6 +1381,9 @@ int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool flip)
+ 
+ 	ctrl->dp_ctrl.orientation = flip;
+ 
++	if (reset)
++		dp_catalog_ctrl_reset(ctrl->catalog);
++
+ 	dp_catalog_ctrl_phy_reset(ctrl->catalog);
+ 	phy_init(phy);
+ 	dp_catalog_ctrl_enable_irq(ctrl->catalog, true);
+@@ -1492,18 +1493,14 @@ static int dp_ctrl_deinitialize_mainlink(struct dp_ctrl_private *ctrl)
+ 	return 0;
+ }
+ 
+-static void dp_ctrl_link_idle_reset(struct dp_ctrl_private *ctrl)
+-{
+-	dp_ctrl_push_idle(&ctrl->dp_ctrl);
+-	dp_catalog_ctrl_reset(ctrl->catalog);
+-}
+-
+ static int dp_ctrl_link_maintenance(struct dp_ctrl_private *ctrl)
+ {
+ 	int ret = 0;
+ 	struct dp_cr_status cr;
+ 	int training_step = DP_TRAINING_NONE;
+ 
++	dp_ctrl_push_idle(&ctrl->dp_ctrl);
++
+ 	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
+ 
+ 	ret = dp_ctrl_setup_main_link(ctrl, &cr, &training_step);
+@@ -1630,7 +1627,6 @@ void dp_ctrl_handle_sink_request(struct dp_ctrl *dp_ctrl)
+ 
+ 	if (sink_request & DP_TEST_LINK_TRAINING) {
+ 		dp_link_send_test_response(ctrl->link);
+-		dp_ctrl_link_idle_reset(ctrl);
+ 		if (dp_ctrl_link_maintenance(ctrl)) {
+ 			DRM_ERROR("LM failed: TEST_LINK_TRAINING\n");
+ 			return;
+@@ -1684,7 +1680,7 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
+ 			break;
+ 		}
+ 
+-		training_step = DP_TRAINING_1;
++		training_step = DP_TRAINING_NONE;
+ 		rc = dp_ctrl_setup_main_link(ctrl, &cr, &training_step);
+ 		if (rc == 0) {
+ 			/* training completed successfully */
+@@ -1792,14 +1788,14 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
+ 	 * Set up transfer unit values and set controller state to send
+ 	 * video.
+ 	 */
++	reinit_completion(&ctrl->video_comp);
++
+ 	dp_ctrl_configure_source_params(ctrl);
+ 
+ 	dp_catalog_ctrl_config_msa(ctrl->catalog,
+ 		ctrl->link->link_params.rate,
+ 		ctrl->dp_ctrl.pixel_rate, dp_ctrl_use_fixed_nvid(ctrl));
+ 
+-	reinit_completion(&ctrl->video_comp);
+-
+ 	dp_ctrl_setup_tr_unit(ctrl);
+ 
+ 	dp_catalog_ctrl_state_ctrl(ctrl->catalog, DP_STATE_CTRL_SEND_VIDEO);
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+index f60ba93..a836bd3 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+@@ -19,7 +19,7 @@ struct dp_ctrl {
+ 	u32 pixel_rate;
+ };
+ 
+-int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool flip);
++int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool flip, bool reset);
+ void dp_ctrl_host_deinit(struct dp_ctrl *dp_ctrl);
+ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl);
+ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl);
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index d9216f8..5a39da6 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -350,7 +350,7 @@ static int dp_display_process_hpd_high(struct dp_display_private *dp)
+ 	return rc;
+ }
+ 
+-static void dp_display_host_init(struct dp_display_private *dp)
++static void dp_display_host_init(struct dp_display_private *dp, int reset)
+ {
+ 	bool flip = false;
+ 
+@@ -365,7 +365,7 @@ static void dp_display_host_init(struct dp_display_private *dp)
+ 	dp_display_set_encoder_mode(dp);
+ 
+ 	dp_power_init(dp->power, flip);
+-	dp_ctrl_host_init(dp->ctrl, flip);
++	dp_ctrl_host_init(dp->ctrl, flip, reset);
+ 	dp_aux_init(dp->aux);
+ 	dp->core_initialized = true;
+ }
+@@ -403,7 +403,7 @@ static int dp_display_usbpd_configure_cb(struct device *dev)
+ 		goto end;
+ 	}
+ 
+-	dp_display_host_init(dp);
++	dp_display_host_init(dp, false);
+ 
+ 	/*
+ 	 * set sink to normal operation mode -- D0
+@@ -700,7 +700,7 @@ static int dp_irq_hpd_handle(struct dp_display_private *dp, u32 data)
+ 		return 0;
+ 	}
+ 
+-	if (state == ST_CONNECT_PENDING) {
++	if (state == ST_CONNECT_PENDING || state == ST_DISCONNECT_PENDING) {
+ 		/* wait until ST_CONNECTED */
+ 		dp_add_event(dp, EV_IRQ_HPD_INT, 0, 1); /* delay = 1 */
+ 		mutex_unlock(&dp->event_mutex);
+@@ -1012,7 +1012,7 @@ int dp_display_get_test_bpp(struct msm_dp *dp)
+ static void dp_display_config_hpd(struct dp_display_private *dp)
+ {
+ 
+-	dp_display_host_init(dp);
++	dp_display_host_init(dp, true);
+ 	dp_catalog_ctrl_hpd_config(dp->catalog);
+ 
+ 	/* Enable interrupt first time
+@@ -1266,7 +1266,7 @@ static int dp_pm_resume(struct device *dev)
+ 	dp->hpd_state = ST_DISCONNECTED;
+ 
+ 	/* turn on dp ctrl/phy */
+-	dp_display_host_init(dp);
++	dp_display_host_init(dp, true);
+ 
+ 	dp_catalog_ctrl_hpd_config(dp->catalog);
+ 
+@@ -1449,7 +1449,7 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder)
+ 	state =  dp_display->hpd_state;
+ 
+ 	if (state == ST_DISPLAY_OFF)
+-		dp_display_host_init(dp_display);
++		dp_display_host_init(dp_display, true);
+ 
+ 	dp_display_enable(dp_display, 0);
+ 
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
