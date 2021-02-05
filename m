@@ -2,212 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 729823114EF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Feb 2021 23:23:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AC8B2311621
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Feb 2021 23:59:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232596AbhBEWS5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Feb 2021 17:18:57 -0500
-Received: from so15.mailgun.net ([198.61.254.15]:45828 "EHLO so15.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232692AbhBEOdU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Feb 2021 09:33:20 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1612541492; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=KAzH7tCJId+h5JSCihS+FaheGWIFSeiWWbMU0s2+TME=; b=c006pJXkCwsLGbpFXuMsoS95B4+G4N/9jicPW7rwO4ncChhjcwNQKitvKvWqpi8P/JE9cfAH
- rTC1vKjQUuKC9CTHwZjS4My3w+NaGSGv62M30BS+VnlZqrW+8UDScztvsSjlZmM/ZoCBT+41
- PQ6gmSIiWFmMaHAbw0L91cZAixY=
-X-Mailgun-Sending-Ip: 198.61.254.15
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 601d6e1934db06ef79767e9a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 05 Feb 2021 16:11:05
- GMT
-Sender: asutoshd=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 49F4DC433ED; Fri,  5 Feb 2021 16:11:05 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from stor-presley.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: asutoshd)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id DADB6C433C6;
-        Fri,  5 Feb 2021 16:11:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DADB6C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=asutoshd@codeaurora.org
-Date:   Fri, 5 Feb 2021 08:11:02 -0800
-From:   Asutosh Das <asutoshd@codeaurora.org>
-To:     Avri Altman <Avri.Altman@wdc.com>
-Cc:     Alan Stern <stern@rowland.harvard.edu>,
-        "cang@codeaurora.org" <cang@codeaurora.org>,
-        "martin.petersen@oracle.com" <martin.petersen@oracle.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>
-Subject: Re: [RFC PATCH v2 0/2] Fix deadlock in ufs
-Message-ID: <20210205161102.GJ37557@stor-presley.qualcomm.com>
-References: <cover.1611719814.git.asutoshd@codeaurora.org>
- <84a182cc-de9c-4d6d-2193-3a44e4c88c8b@codeaurora.org>
- <20210201214802.GB420232@rowland.harvard.edu>
- <20210202205245.GA8444@stor-presley.qualcomm.com>
- <20210202220536.GA464234@rowland.harvard.edu>
- <20210204001354.GD37557@stor-presley.qualcomm.com>
- <20210204194831.GA567391@rowland.harvard.edu>
- <20210204211424.GH37557@stor-presley.qualcomm.com>
- <DM6PR04MB6575692524202EC91E2A5480FCB29@DM6PR04MB6575.namprd04.prod.outlook.com>
+        id S230475AbhBEWvp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Feb 2021 17:51:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34490 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232464AbhBENCp (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 5 Feb 2021 08:02:45 -0500
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B013C06178A
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Feb 2021 05:01:50 -0800 (PST)
+Received: by mail-pg1-x530.google.com with SMTP id r38so4465742pgk.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Feb 2021 05:01:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
+        bh=nGeMDckkLWCC40p3zLt6eORZusUAfTVspeKPwP+7SUY=;
+        b=OabTUYnxjQvIIHYtviRH6WllUaGPW3oQ+UBGLnix/ZL/Mn9uMBh/dhF1X+PmMz3UOv
+         D65C05oc1MUg6uLv5DUyWl9VP666javRUNId5bRF4gO3b8CPhFe/pZGcfoDrC/66xyD8
+         jhIAJsDVnX96j6S5pS98ah5yviHIrbEKBL9a4pjixd0bReTIZXSClPCO3FXElyyznGVY
+         6YT0qCn2dLDVFCzi7acKuYDeJxT+/925zkJfrwXYgSSWtDXXmfzaxpohqZhHbeU3hD+y
+         EJXa6t8gpLcujGuPWtL1mfVqZJ5ChcsXNqPglnrt0HrxHxRcX22CETEXIUJmLkzLhMew
+         SsCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition;
+        bh=nGeMDckkLWCC40p3zLt6eORZusUAfTVspeKPwP+7SUY=;
+        b=CWQ+lS1OEIWAc1b7UxqIuMMkJMOiE0HV2K1Swp16VLrVAMg87Xo0N50AsGeIbQK9Nf
+         1hTxUSXLQy48EXbnyiD7qa97c7SlBd9/QuM7Da8Zu+STovnK/jEX5EF33nr9smiv16z5
+         iLBvQEntkiAYVTrJwH1dpcHFjv5krNDgbRlD+KdqXY9imW+APiPBT2bHEL4CNQJIxtHQ
+         xjPNFhi6fDwdAD4BnKTBeeqAqfJ8gtQkEy2nR+iQHCKBJIQKX8Ock8fz0Grv9lCoTnEy
+         dAruvIFXUtY24FxBOJarKEwHnnOhs2I5n9u9iQkhwrJsPO5Mob5AGozDwMpKfIGik/01
+         vUEA==
+X-Gm-Message-State: AOAM531pEXQXKi+TM3l7vRamBnOA+I5GMc59RBwC/KPjsVXPtvmF+EyR
+        WDlPKyz2Ky2nytwkUH64JIAw
+X-Google-Smtp-Source: ABdhPJw03aj65fZ+DijctHrGCUKSUeSMIEUA0SQ3MTk0eWdo5sybCYHMQ2IbIu2fxS3YfcUGZH5h8A==
+X-Received: by 2002:a63:181e:: with SMTP id y30mr4107842pgl.324.1612530109921;
+        Fri, 05 Feb 2021 05:01:49 -0800 (PST)
+Received: from thinkpad ([2409:4072:6419:ab3e:3106:54ac:6216:6b24])
+        by smtp.gmail.com with ESMTPSA id 124sm9339596pfd.59.2021.02.05.05.01.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Feb 2021 05:01:49 -0800 (PST)
+Date:   Fri, 5 Feb 2021 18:31:41 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     gregkh@linuxfoundation.org
+Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, jhugo@codeaurora.org,
+        linux-kernel@vger.kernel.org, loic.poulain@linaro.org,
+        Kalle Valo <kvalo@codeaurora.org>, cjhuang@codeaurora.org,
+        ath11k@lists.infradead.org
+Subject: [GIT PULL] MHI changes for v5.12
+Message-ID: <20210205130141.GE3221@thinkpad>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <DM6PR04MB6575692524202EC91E2A5480FCB29@DM6PR04MB6575.namprd04.prod.outlook.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Feb 05 2021 at 23:56 -0800, Avri Altman wrote:
->>
->> On Thu, Feb 04 2021 at 11:48 -0800, Alan Stern wrote:
->> >On Wed, Feb 03, 2021 at 04:13:54PM -0800, Asutosh Das wrote:
->> >> Thanks Alan.
->> >> I understand the issues with the current ufs design.
->> >>
->> >> ufs has a wlun (well-known lun) that handles power management
->> commands,
->> >> such as SSUs. Now this wlun (device wlun) is registered as a scsi_device.
->> >> It's queue is also set up for runtime-pm. Likewise there're 2
->> >> more wluns, BOOT and RPMB.
->> >>
->> >> Currently, the scsi devices independently runtime suspend/resume - request
->> driven.
->> >> So to send SSU while suspending wlun (scsi_device) this scsi device should
->> >> be the last to be runtime suspended amongst all other ufs luns (scsi devices).
->> The
->> >> reason is syncronize_cache() is sent to luns during their suspend and if SSU
->> has
->> >> been sent already, it mostly would fail.
->> >
->> >The SCSI subsystem assumes that different LUNs operate independently.
->> >Evidently that isn't true here.
->> >
->> >> Perhaps that's the reason to send SSU during platform-device suspend. I'm
->> not
->> >> sure if that's the right thing to do, but that's what it is now and is causing
->> >> this deadlock.
->> >> Now this wlun is also registered to bsg and some applications interact with
->> rpmb
->> >> wlun and the device-wlun using that interface. Registering the
->> corresponding
->> >> queues to runtime-pm ensures that the whole path is resumed before the
->> request
->> >> is issued.
->> >> Because, we see this deadlock, in the RFC patch, I skipped registering the
->> >> queues representing the wluns to runtime-pm, thus removing the
->> restrictions to
->> >> issue the request until queue is resumed.
->> >> But when the requests come-in via bsg, the device has to be resumed. Hence
->> the
->> >> get_sync()/put_sync() in bsg driver.
->> >
->> >Does the bsg interface send its I/O requests to the LUNs through the
->> >block request queue?
->> >
->> >
->> >> The reason for initiating get_sync()/put_sync() on the parent device was
->> because
->> >> the corresponding queue of this wlun was not setup for runtime-pm
->> anymore.
->> >> And for ufs resuming the scsi device essentially means sending a SSU to wlun
->> >> which the ufs platform device does in its runtime resume now. I'm not sure
->> if
->> >> that was a good idea though, hence the RFC on the patches.
->> >>
->> >> And now it looks to me that adding a cb to sd_suspend_runtime may not
->> work.
->> >> Because the scsi devices suspend asynchronously and the wlun suspends
->> earlier than the others.
->> >>
->> >> [    7.846165]scsi 0:0:0:49488: scsi_runtime_idle
->> >> [    7.851547]scsi 0:0:0:49488: device wlun
->> >> [    7.851809]sd 0:0:0:49488: scsi_runtime_idle
->> >> [    7.861536]sd 0:0:0:49488: scsi_runtime_suspend < suspends prior to other
->> luns
->> >> [...]
->> >> [   12.861984]sd 0:0:0:1: [sdb] Synchronizing SCSI cache
->> >> [   12.868894]sd 0:0:0:2: [sdc] Synchronizing SCSI cache
->> >> [   13.124331]sd 0:0:0:0: [sda] Synchronizing SCSI cache
->> >> [   13.143961]sd 0:0:0:3: [sdd] Synchronizing SCSI cache
->> >> [   13.163876]sd 0:0:0:6: [sdg] Synchronizing SCSI cache
->> >> [   13.164024]sd 0:0:0:4: [sde] Synchronizing SCSI cache
->> >> [   13.167066]sd 0:0:0:5: [sdf] Synchronizing SCSI cache
->> >> [   17.101285]sd 0:0:0:7: [sdh] Synchronizing SCSI cache
->> >> [   73.889551]sd 0:0:0:4: [sde] Synchronizing SCSI cache
->> >>
->> >> I'm not sure if there's a way to force the wlun to suspend only after all other
->> luns are suspended.
->> >> Is there? I hope Bart/others help provide some inputs on this.
->> >
->> >I don't know what would work best for you; it depends on how the LUNs
->> >are used.  But one possibility is to make sure that whenever the boot
->> >and rpmb wluns are resumed, the device wlun is also resumed.  So for
->> >example, the runtime-resume callback routines for the rpmb and boot
->> >wluns could call pm_runtime_get_sync() for the device wlun, and their
->> >runtime-suspend callback routines could call pm_runtime_put() for the
->> >device wlun.  And of course there would have to be appropriate
->> >operations when those LUNs are bound to and unbound from their drivers.
->> >
->> >Alan Stern
->> >
->> Thanks Alan.
->> CanG & I had some discussions on it as well the other day.
->> I'm now looking into creating a device link between the siblings.
->> e.g. make the device wlun as a supplier for all the other luns & wluns.
->> So device wlun (supplier) wouldn't suspend (runtime/system) until all of the
->> other
->> consumers are suspended. After this linking, I can move all the
->> pm commands that are being sent by host to the dedicated suspend routine of
->> the device
->> wlun and the host needn't send any cmds during its suspend and layering
->> violation wouldn't take place.
->Regardless of your above proposal, as for the issues you were witnessing with rpmb,
->That started this RFC in the first place, and the whole clearing uac series for that matter:
-> "In order to conduct FFU or RPMB operations, UFS needs to clear UNIT ATTENTION condition...."
->
->Functionally, This was already done for the device wlun, and only added the rpmb wlun.
->
->Now you are trying to solve stuff because the rpmb is not provisioned.
->a) There should be no relation between response to request-sense command,
-> and if the key is programmed or not. And
->b) rpmb is accessed from user-space.  If it is not provisioned, it should processed the error (-7)
->    and realize that by itself.  And also, It only makes sense that if needed,
->    the access sequence will include  the request-sense command.
->
->Therefore, IMHO, just reverting Randall commit (1918651f2d7e) and fixing the user-space code
->Should suffice.
->
->Thanks,
->Avri
->
-Hi Avri
+Hi Greg,
 
-Thanks.
+Here is the MHI Pull request for the v5.12 cycle. As like last time, I needed to
+do PR this time due to the immutable branches with net-next and ath11k-next.
 
-I don't think reverting 1918651f2d7e would fix this.
+Patch details are in the signed tag, please consider merging!
 
-[   12.182750] ufshcd-qcom 1d84000.ufshc: ufshcd_suspend: Setting power mode
-[   12.190467] ufshcd-qcom 1d84000.ufshc: wlun_dev_clr_ua: 0 <-- uac wasn't sent
-[   12.196735] ufshcd-qcom 1d84000.ufshc: Sending ssu
-[   12.202412] scsi 0:0:0:49488: Queue rpm status b4 ssu: 2 <- sdev_ufs_device queue is suspended
-[   12.208613] ufshcd-qcom 1d84000.ufshc: Wait for resume - <-- deadlock!
+Thanks,
+Mani
 
-The issue is sending any command to any lun which is registered for blk
-runtime-pm in ufs host's suspend path would deadlock; since, it'd try to resume
-the ufs host in the same suspend calling sequence.
+---
 
--asd
+The following changes since commit 5c8fe583cce542aa0b84adc939ce85293de36e5e:
+
+  Linux 5.11-rc1 (2020-12-27 15:30:22 -0800)
+
+are available in the Git repository at:
+
+  git://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git tags/mhi-for-v5.12
+
+for you to fetch changes up to 026c5b1ec29cb9904406c7b3090eaf54e345e7f2:
+
+  bus: mhi: pci_generic: Increase num of elements in hw event ring (2021-02-05 17:59:29 +0530)
+
+----------------------------------------------------------------
+MHI changes for v5.12
+
+Loic improved the MHI PCI generic controller by adding support for DIAG channel,
+PCI error handling, suspend/recovery/resume, and health check. Loic also added
+support for resetting the MHI device as per the MHI specification. This includes
+writing to a specific register for default cases and looking for controller
+specific callback when provided.
+
+Along with this Loic, also added a new API which gets the number for free TREs
+(Transfer Ring Elements) from the MHI core. The client drivers can make use of
+this API and the current consumer is the "mhi-net" driver. For taking both the
+"mhi-net" driver change and the API change, we created "mhi-net-immutable"
+branch for this patch and merged the same into net-next and mhi-next.
+
+Carl added a patch which lets the controller driver to pass the custom IRQ
+flags for BHI and MHI event interrupts to the MHI core. The current consumer of
+this feature is the ath11k MHI controller driver. For taking both the changes,
+we created "mhi-ath11k-immutable" branch for this patch and merged into
+ath11k-next and mhi-next.
+
+Finally, Loic cleaned up the MHI queue APIs and fixed the shared MSI vector
+support.
+
+----------------------------------------------------------------
+Carl Huang (1):
+      mhi: use irq_flags if controller driver configures it
+
+Hemant Kumar (1):
+      bus: mhi: core: Add helper API to return number of free TREs
+
+Loic Poulain (16):
+      bus: mhi: core: Add device hardware reset support
+      mhi: pci-generic: Increase number of hardware events
+      mhi: pci_generic: Enable burst mode for hardware channels
+      mhi: pci_generic: Add support for reset
+      mhi: pci_generic: Add suspend/resume/recovery procedure
+      mhi: pci_generic: Add PCI error handlers
+      mhi: pci_generic: Add health-check
+      mhi: pci_generic: Increase controller timeout value
+      mhi: pci_generic: Add diag channels
+      mhi: pci_generic: Set irq moderation value to 1ms for hw channels
+      bus: mhi: Ensure correct ring update ordering with memory barrier
+      mhi: unconstify mhi_event_config
+      mhi: pci_generic: Fix shared MSI vector support
+      mhi: core: Factorize mhi queuing
+      mhi: pci_generic: Print warning in case of firmware crash
+      bus: mhi: pci_generic: Increase num of elements in hw event ring
+
+Manivannan Sadhasivam (2):
+      Merge branch 'mhi-ath11k-immutable' into mhi-next
+      Merge branch 'mhi-net-immutable' into mhi-next
+
+ drivers/bus/mhi/core/init.c   |   9 ++-
+ drivers/bus/mhi/core/main.c   | 194 +++++++++++++++++++++++------------------------------------
+ drivers/bus/mhi/pci_generic.c | 381 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--------
+ include/linux/mhi.h           |  22 ++++++-
+ 4 files changed, 461 insertions(+), 145 deletions(-)
