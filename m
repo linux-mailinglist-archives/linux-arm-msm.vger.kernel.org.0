@@ -2,103 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D18B531158B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Feb 2021 23:43:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C634731168A
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Feb 2021 00:19:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230000AbhBEWdG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Feb 2021 17:33:06 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:51762 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232131AbhBEOOr (ORCPT
+        id S231934AbhBEXEA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Feb 2021 18:04:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33272 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231532AbhBEKpk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Feb 2021 09:14:47 -0500
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 05 Feb 2021 07:37:44 -0800
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 05 Feb 2021 07:37:42 -0800
-X-QCInternal: smtphost
-Received: from gubbaven-linux.qualcomm.com ([10.206.64.32])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 05 Feb 2021 21:07:18 +0530
-Received: by gubbaven-linux.qualcomm.com (Postfix, from userid 2365015)
-        id 3161A21E01; Fri,  5 Feb 2021 21:07:18 +0530 (IST)
-From:   Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        rjliao@codeaurora.org, hbandi@codeaurora.org,
-        abhishekpandit@chromium.org,
-        Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-Subject: [PATCH v1] Bluetooth: hci_qca:Fixed issue during suspend
-Date:   Fri,  5 Feb 2021 21:07:16 +0530
-Message-Id: <1612539436-8498-1-git-send-email-gubbaven@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Fri, 5 Feb 2021 05:45:40 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18A89C06178A
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Feb 2021 02:44:51 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id j11so5611946wmi.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Feb 2021 02:44:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PscHFxOMqgQynPYB8wJSydBOtl1mB/ZENgiaMJXnBNg=;
+        b=Xnwy6Stvyl7d4mKYFauSzv4Ov4mLtGai8oShxV8Wzv7cqw2yCwQ3bVX43bFIPPnBFV
+         axNNOqrQiHNBZ/HsdXiar0jdpxQCUAYtkn3S/VL1BCznwnKQJS0Lqj/vXKV/q9arYQqL
+         FjpcjUrWWxDv0aGM716N7nsK633aaqZ4dWKRUUwXOGNs4HOWgbg3meFv5qrrjq1WI6OY
+         CVco7R9OdXitqKx+IbjVCDsXGwBdKbXHyAr0rCR/JzcqRkL60OX/KiOwfjsSFlABxIDE
+         TV7YAuq16tEpdsJuLElNu1MJUbXBmxQ2/Fvd4pUlBqYENcn/jiA6aQCltNiBsGIl8D+c
+         e/ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PscHFxOMqgQynPYB8wJSydBOtl1mB/ZENgiaMJXnBNg=;
+        b=Tw7YKOpFNeYi0ZgBC0RoZgxh5R/ijfkskV3fAqrHNzbIZHPwQL1F3zidCTM0RG77iO
+         YUTXcW6Jh59MvM1E5+DqF2sAh5mPU6p9K1V7EaPRD0JS+6/0am7O4KDFl0m3GlV44Bob
+         GVGL02BYZFr7b+LnjJTk7qtJH8cfJ+sjJ9ZoElM4VlR+ZIefxVrYIsG8LAjlivtnrPsJ
+         YgO0zZewsPl0kF/IqoojAufq0q/r9Uf2DnfgfmIc2/YoWokppWpVI/RzQ8hfC88pxl2y
+         79b5Su2sumvw4crJdiay1POWacQl4C29wP+O1LbaFqfTDT6s3lqIztjjSZTJOTNCiog3
+         IjjA==
+X-Gm-Message-State: AOAM531+8REd0/SIH8JJGsLBy8c8rP2RYMLi8UMuAPOPiWrgbCiCam4X
+        dWcwns+UJG0XsHHFAoAErpRA2A==
+X-Google-Smtp-Source: ABdhPJwCYhuOndrmaR6NkwZDOMSptgFNZUKBjUqRiHuxhmTMygAkfKARJfqiGnPk4elsLNgYvTqeLQ==
+X-Received: by 2002:a05:600c:4f0d:: with SMTP id l13mr3055927wmq.92.1612521889780;
+        Fri, 05 Feb 2021 02:44:49 -0800 (PST)
+Received: from localhost.localdomain ([2a02:2450:102f:d6a:38fd:e0db:ea01:afc8])
+        by smtp.gmail.com with ESMTPSA id u4sm11300233wrr.37.2021.02.05.02.44.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Feb 2021 02:44:49 -0800 (PST)
+From:   Robert Foss <robert.foss@linaro.org>
+To:     robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
+        bjorn.andersson@linaro.org, mchehab@kernel.org, robh+dt@kernel.org,
+        angelogioacchino.delregno@somainline.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Rob Herring <robh@kernel.org>,
+        Sakari Ailus <sakari.ailus@iki.fi>,
+        Nicolas Boichat <drinkcat@chromium.org>,
+        Andrey Konovalov <andrey.konovalov@linaro.org>
+Cc:     Tomasz Figa <tfiga@chromium.org>,
+        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
+        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Jonathan Marek <jonathan@marek.ca>
+Subject: [PATCH v4 00/22] Add support for the SDM845 Camera Subsystem
+Date:   Fri,  5 Feb 2021 11:43:52 +0100
+Message-Id: <20210205104414.299732-1-robert.foss@linaro.org>
+X-Mailer: git-send-email 2.27.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If BT SoC is running with ROM FW then just return in
-qca_suspend function as ROM FW does not support
-in-band sleep.
+This series implements support for the camera subsystem found in
+the SDM845 SOCs and the Titan 170 ISP. The support is partial
+in that it implements CSIPHY, CSID, and partial VFE support.
 
-Fixes: 2be43abac5a8 ("Bluetooth: hci_qca: Wait for timeout during suspend")
-Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
----
- drivers/bluetooth/hci_qca.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+The Titan generation of the ISP diverges a fair amount from the
+design of the previous architecture generation, CAMSS. As a result
+some pretty invasive refactoring is done in this series. It also
+means that at this time we're unable to implement support for all
+of the IP blocks contained. This is due to a combination of legal
+considerations with respect to the IP and its owner Qualcomm and
+time & man hour constrains on the Linaro side.
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index ff2fb68..de36af6 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -77,7 +77,8 @@ enum qca_flags {
- 	QCA_MEMDUMP_COLLECTION,
- 	QCA_HW_ERROR_EVENT,
- 	QCA_SSR_TRIGGERED,
--	QCA_BT_OFF
-+	QCA_BT_OFF,
-+	QCA_ROM_FW
- };
+The CSIPHY (CSI Physical Layer) & CSID (CSI Decoder) support is
+complete, but the VFE (Video Front End, which is referred to as IFE
+(Image Front End) in the Titan generation of ISPs) only has support
+for the RDI (Raw Dump Interface) which allows the raw output of
+the CSID to be written to memory.
+
+The 2nd interface implemented in the VFE silicon is the PIX
+interface, and camss does not support it for this generation of ISPs.
+The reason for this is that the PIX interface is used for sending
+image data to the BPS (Bayer Processing Section) & IPE (Image
+Processing Engine), but both of these units are beyond the scope
+of enabling basic ISP functionality for the SDM845.
+
+Since the Titan architecture generation diverges quite a bit from
+the CAMSS generation, a lot of pretty major refactoring is carried
+out in this series. Both the CSID & VFE core paths are made more
+general and hardware version specific parts are broken out.
+The CSIPHY didn't require quite as radical changes and therefore
+keeps its current form.
+
+Tested on:
+ - Qcom RB3 / db845c + camera mezzanine, which is SDM845 based
+ - db410c + D3 Camera mezzanine, which is APQ8016 based
  
- enum qca_capabilities {
-@@ -1664,6 +1665,7 @@ static int qca_setup(struct hci_uart *hu)
- 	if (ret)
- 		return ret;
- 
-+	clear_bit(QCA_ROM_FW, &qca->flags);
- 	/* Patch downloading has to be done without IBS mode */
- 	set_bit(QCA_IBS_DISABLED, &qca->flags);
- 
-@@ -1721,12 +1723,14 @@ static int qca_setup(struct hci_uart *hu)
- 		hu->hdev->cmd_timeout = qca_cmd_timeout;
- 	} else if (ret == -ENOENT) {
- 		/* No patch/nvm-config found, run with original fw/config */
-+		set_bit(QCA_ROM_FW, &qca->flags);
- 		ret = 0;
- 	} else if (ret == -EAGAIN) {
- 		/*
- 		 * Userspace firmware loader will return -EAGAIN in case no
- 		 * patch/nvm-config is found, so run with original fw/config.
- 		 */
-+		set_bit(QCA_ROM_FW, &qca->flags);
- 		ret = 0;
- 	}
- 
-@@ -2103,6 +2107,12 @@ static int __maybe_unused qca_suspend(struct device *dev)
- 
- 	set_bit(QCA_SUSPENDING, &qca->flags);
- 
-+	/* if BT SoC is running with default firmware then it does not
-+	 * support in-band sleep
-+	 */
-+	if (test_bit(QCA_ROM_FW, &qca->flags))
-+		return 0;
-+
- 	/* During SSR after memory dump collection, controller will be
- 	 * powered off and then powered on.If controller is powered off
- 	 * during SSR then we should wait until SSR is completed.
+Branch:
+ - https://git.linaro.org/people/robert.foss/linux.git/log/?h=camss_sdm845_v1
+ - https://git.linaro.org/people/robert.foss/linux.git/log/?h=camss_sdm845_v2
+ - https://git.linaro.org/people/robert.foss/linux.git/log/?h=camss_sdm845_v3
+
+
+Due to the dt-bindings supporting sdm660-camss, this series depends
+the sdm660 clock driver being upstreamed. I've linked this series below.
+
+SDM630/660 Multimedia and GPU clock controllers
+https://lkml.org/lkml/2020/9/26/166
+
+
+Robert Foss (22):
+  media: camss: Fix vfe_isr_comp_done() documentation
+  media: camss: Fix vfe_isr comment typo
+  media: camss: Replace trace_printk() with dev_dbg()
+  media: camss: Add CAMSS_845 camss version
+  media: camss: Make ISPIF subdevice optional
+  media: camss: Refactor VFE HW version support
+  media: camss: Add support for VFE hardware version Titan 170
+  media: camss: Add missing format identifiers
+  media: camss: Refactor CSID HW version support
+  media: camss: Add support for CSID hardware version Titan 170
+  media: camss: Add support for CSIPHY hardware version Titan 170
+  media: camss: Remove per VFE power domain toggling
+  media: camss: Enable SDM845
+  dt-bindings: media: camss: Add qcom,msm8916-camss binding
+  dt-bindings: media: camss: Add qcom,msm8996-camss binding
+  dt-bindings: media: camss: Add qcom,sdm660-camss binding
+  dt-bindings: media: camss: Add qcom,sdm845-camss binding
+  MAINTAINERS: Change CAMSS documentation to use dtschema bindings
+  media: dt-bindings: media: Remove qcom,camss documentation
+  arm64: dts: sdm845: Add CAMSS ISP node
+  arm64: dts: sdm845-db845c: Configure regulators for camss node
+  arm64: dts: sdm845-db845c: Enable ov8856 sensor and connect to ISP
+
+ .../devicetree/bindings/media/qcom,camss.txt  |  236 ----
+ .../bindings/media/qcom,msm8916-camss.yaml    |  256 ++++
+ .../bindings/media/qcom,msm8996-camss.yaml    |  387 ++++++
+ .../bindings/media/qcom,sdm660-camss.yaml     |  398 ++++++
+ .../bindings/media/qcom,sdm845-camss.yaml     |  370 ++++++
+ MAINTAINERS                                   |    2 +-
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts    |   23 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  135 ++
+ drivers/media/platform/qcom/camss/Makefile    |    6 +
+ .../platform/qcom/camss/camss-csid-170.c      |  602 +++++++++
+ .../platform/qcom/camss/camss-csid-4-1.c      |  338 +++++
+ .../platform/qcom/camss/camss-csid-4-7.c      |  406 ++++++
+ .../media/platform/qcom/camss/camss-csid.c    |  620 +--------
+ .../media/platform/qcom/camss/camss-csid.h    |  178 ++-
+ .../qcom/camss/camss-csiphy-3ph-1-0.c         |  182 ++-
+ .../media/platform/qcom/camss/camss-csiphy.c  |   66 +-
+ .../media/platform/qcom/camss/camss-ispif.c   |  117 +-
+ .../media/platform/qcom/camss/camss-ispif.h   |    3 +-
+ .../media/platform/qcom/camss/camss-vfe-170.c |  804 ++++++++++++
+ .../media/platform/qcom/camss/camss-vfe-4-1.c |  123 +-
+ .../media/platform/qcom/camss/camss-vfe-4-7.c |  244 ++--
+ .../media/platform/qcom/camss/camss-vfe-4-8.c | 1164 +++++++++++++++++
+ .../platform/qcom/camss/camss-vfe-gen1.c      |  763 +++++++++++
+ .../platform/qcom/camss/camss-vfe-gen1.h      |  110 ++
+ drivers/media/platform/qcom/camss/camss-vfe.c |  840 +-----------
+ drivers/media/platform/qcom/camss/camss-vfe.h |  118 +-
+ .../media/platform/qcom/camss/camss-video.c   |  100 ++
+ drivers/media/platform/qcom/camss/camss.c     |  419 ++++--
+ drivers/media/platform/qcom/camss/camss.h     |   17 +-
+ 29 files changed, 6965 insertions(+), 2062 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/media/qcom,camss.txt
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
+ create mode 100644 drivers/media/platform/qcom/camss/camss-csid-170.c
+ create mode 100644 drivers/media/platform/qcom/camss/camss-csid-4-1.c
+ create mode 100644 drivers/media/platform/qcom/camss/camss-csid-4-7.c
+ create mode 100644 drivers/media/platform/qcom/camss/camss-vfe-170.c
+ create mode 100644 drivers/media/platform/qcom/camss/camss-vfe-4-8.c
+ create mode 100644 drivers/media/platform/qcom/camss/camss-vfe-gen1.c
+ create mode 100644 drivers/media/platform/qcom/camss/camss-vfe-gen1.h
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
+2.27.0
 
