@@ -2,398 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 91580311067
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Feb 2021 19:54:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ADC8C31107D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Feb 2021 19:59:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232803AbhBERKz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Feb 2021 12:10:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41586 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233097AbhBEQ3D (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Feb 2021 11:29:03 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B79B0C061788
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Feb 2021 10:10:44 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id u14so8720113wri.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Feb 2021 10:10:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=SMWBiaCjZ8IaLrycEYBNrZsO7mfYYYt0PFkXkXHcQ2g=;
-        b=oFB5FHYTKFg80jxGzrbq386XoYU/aS4+2+wwb6OktgcSK9Xfd7Ssbj3QDhi3wATl4X
-         gxLPYUY4VNCmb+IvXG83enmpxQW1/OdIImpnbip/aukx316+hrjLa5oUMblL5/fjuklU
-         mmJl3ja1J/I5DnnDO4AiFbGwksmtaNNpXS83V3WqkxEhTOGnNCOgwOJcta5LI5lwef5c
-         hd8IER6MDuLYxO9zYEHFco+TAYENIKWWE/b1era1nZ/Bi7nVBDuDq2RIVD7zAoXj2cph
-         1tldLpCobF1lPznHpNfZSCDJYnPPYZ9WLFVBPY/SwP9HNQ+S+mzkaZVey5UlN6SsS8mE
-         VZmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=SMWBiaCjZ8IaLrycEYBNrZsO7mfYYYt0PFkXkXHcQ2g=;
-        b=DOIPppMDxBIW+tIG/UlrwAfPfgQEMqKHs7BPnDwwf7s5pe8SpJKp5EXnagwu4LlCNU
-         qzG0Y7RkZ8QA7u0nOGsK7/3AMcl0Yd+umCQWOTE9s8z5fQgcZXgYxpW325+bVuS7WcTB
-         2fx9VRNzTw46rpOhX498KdGRYWfic15jU9xAhpkIGOmOmyyCqV8QSuGixjZmj92t/H3Q
-         xY2rCogmEq1jKrzYDMEsoHEb43HSYzO1RFlnZYp756Uu1luGSX9nQJwHJILOO8jic+DL
-         DYyJJsQvNjx5bwkSybFLbUvRELybm1IGYMebiM8te6Dibc7SmVEFtFmiRUP7yQQof4Gj
-         lVBw==
-X-Gm-Message-State: AOAM533e3MgUehony6AxV0ug3tyhmS083+yZYVpF8/GPmiitCLJwq0xD
-        6Me4XDaVXrsnTfSDSG/dtS6/Ew==
-X-Google-Smtp-Source: ABdhPJwniytCIhkdqKk9C4HKf/KWVlc+8hN8rFoAgl4tjvR3//P4Y5q//Rs6A6IUThd/z1xc8RGsdg==
-X-Received: by 2002:a5d:4d0b:: with SMTP id z11mr6412138wrt.388.1612548642552;
-        Fri, 05 Feb 2021 10:10:42 -0800 (PST)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id r15sm13248568wrj.61.2021.02.05.10.10.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Feb 2021 10:10:41 -0800 (PST)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        stanimir.varbanov@linaro.org
-Cc:     bryan.odonoghue@linaro.org, dmitry.baryshkov@linaro.org
-Subject: [RESEND PATCH v2] media: venus: core, venc, vdec: Fix probe dependency error
-Date:   Fri,  5 Feb 2021 18:11:49 +0000
-Message-Id: <20210205181149.1828547-1-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.29.2
+        id S233505AbhBERPW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Feb 2021 12:15:22 -0500
+Received: from mail.kernel.org ([198.145.29.99]:49990 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233121AbhBERN2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 5 Feb 2021 12:13:28 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 8D95764EFE;
+        Fri,  5 Feb 2021 18:55:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1612551306;
+        bh=l2A8CAgF/G7BGZq7431N93An0up6jDTvpRHYH8cBfG8=;
+        h=In-Reply-To:References:Subject:From:To:Date:From;
+        b=RPOj45dXJLj+vuNI8ahjCDXbfaAmoG+k7jRNp9Mp4pxf/xI3v4qYPHjTR0eZjUonW
+         SIkvXTlfrM4M5V1csQXDB3KtpyaetGu3A6NSZYiVjly/E1FtXUuVDnKKj90+hT7kga
+         72GNn9IGjtdxL9hhA7OKuQ0JoS0oaz+FFxGgl8kX1jZmqqDFq/kLas956fzVQg3+Tp
+         cgoCrwd84QWZpwzQ6Ju8Ml1ADw81R8AIzyyJMcL7KtTYIWcDxWum6dtU8ejQXc+zPm
+         cCC61w8Y3422l2yvWjt7AzjbIe5Cj51B0BEhUV+uecnjDzzoWzG0vHppylMCNsvTKj
+         IHO260731sTEw==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20210203083155.GA2329016@dell>
+References: <20210126124540.3320214-1-lee.jones@linaro.org> <20210203083155.GA2329016@dell>
+Subject: Re: [PATCH 00/21] [Set 2] Rid W=1 warnings from Clock
+From:   Stephen Boyd <sboyd@kernel.org>
+To:     Ahmad Fatoum <a.fatoum@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Avi Fishman <avifishman70@gmail.com>,
+        Benjamin Fair <benjaminfair@google.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Boris BREZILLON <boris.brezillon@free-electrons.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Emilio =?utf-8?q?L=C3=B3pez?= <emilio@elopez.com.ar>,
+        Fabio Estevam <festevam@gmail.com>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Jan Kotas <jank@cadence.com>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Lee Jones <lee.jones@linaro.org>, Loc Ho <lho@apm.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Michal Simek <michal.simek@xilinx.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Nancy Yuen <yuenn@google.com>,
+        Nuvoton Technologies <tali.perry@nuvoton.com>,
+        Patrick Venture <venture@google.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Peter De Schrijver <pdeschrijver@nvidia.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        P rashant Gaikwad <pgaikwad@nvidia.com>,
+        Rajan Vaja <rajan.vaja@xilinx.com>,
+        Rajeev Kumar <rajeev-dlh.kumar@st.com>,
+        Richard Woodruff <r-woodruff2@ti.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Shiraz Hashim <shiraz.linux.kernel@gmail.com>,
+        =?utf-8?q?S=C3=B6ren?= Brinkmann <soren.brinkmann@xilinx.com>,
+        Tali Perry <tali.perry1@gmail.com>,
+        Tero Kristo <kristo@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Tomer Maimon <tmaimon77@gmail.com>,
+        Viresh Kumar <vireshk@kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-omap@vger.kernel.org,
+        linux-renesas-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+        openbmc@lists.ozlabs.org
+Date:   Fri, 05 Feb 2021 10:55:05 -0800
+Message-ID: <161255130506.76967.8682382463883809207@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Commit aaaa93eda64b ("media] media: venus: venc: add video encoder files")
-is the last in a series of three commits to add core.c vdec.c and venc.c
-adding core, encoder and decoder.
+Quoting Lee Jones (2021-02-03 00:31:55)
+> On Tue, 26 Jan 2021, Lee Jones wrote:
+>=20
+> > This set is part of a larger effort attempting to clean-up W=3D1
+> > kernel builds, which are currently overwhelmingly riddled with
+> > niggly little warnings.
+> >=20
+> > This is the last set.  Clock is clean after this.
+>=20
+> Out of interest, what normally happens to the patches which aren't
+> picked up by individual driver Maintainers?
+>=20
 
-The encoder and decoder check for core drvdata as set and return -EPROBE_DEFER
-if it has not been set, however both the encoder and decoder rely on
-core.v4l2_dev as valid.
-
-core.v4l2_dev will not be valid until v4l2_device_register() has completed
-in core.c's probe().
-
-Normally this is never seen however, Dmitry reported the following
-backtrace when compiling drivers and firmware directly into a kernel image.
-
-[    5.259968] Hardware name: Qualcomm Technologies, Inc. Robotics RB5 (DT)
-[    5.269850] sd 0:0:0:3: [sdd] Optimal transfer size 524288 bytes
-[    5.275505] Workqueue: events deferred_probe_work_func
-[    5.275513] pstate: 60400005 (nZCv daif +PAN -UAO -TCO BTYPE=--)
-[    5.441211] usb 2-1: new SuperSpeedPlus Gen 2 USB device number 2 using xhci-hcd
-[    5.442486] pc : refcount_warn_saturate+0x140/0x148
-[    5.493756] hub 2-1:1.0: USB hub found
-[    5.496266] lr : refcount_warn_saturate+0x140/0x148
-[    5.500982] hub 2-1:1.0: 4 ports detected
-[    5.503440] sp : ffff80001067b730
-[    5.503442] x29: ffff80001067b730
-[    5.592660] usb 1-1: new high-speed USB device number 2 using xhci-hcd
-[    5.598478] x28: ffff6c6bc1c379b8
-[    5.598480] x27: ffffa5c673852960 x26: ffffa5c673852000
-[    5.598484] x25: ffff6c6bc1c37800 x24: 0000000000000001
-[    5.810652] x23: 0000000000000000 x22: ffffa5c673bc7118
-[    5.813777] hub 1-1:1.0: USB hub found
-[    5.816108] x21: ffffa5c674440000 x20: 0000000000000001
-[    5.820846] hub 1-1:1.0: 4 ports detected
-[    5.825415] x19: ffffa5c6744f4000 x18: ffffffffffffffff
-[    5.825418] x17: 0000000000000000 x16: 0000000000000000
-[    5.825421] x15: 00000a4810c193ba x14: 0000000000000000
-[    5.825424] x13: 00000000000002b8 x12: 000000000000f20a
-[    5.825427] x11: 000000000000f20a x10: 0000000000000038
-[    5.845447] usb 2-1.1: new SuperSpeed Gen 1 USB device number 3 using xhci-hcd
-[    5.845904]
-[    5.845905] x9 : 0000000000000000 x8 : ffff6c6d36fae780
-[    5.871208] x7 : ffff6c6d36faf240 x6 : 0000000000000000
-[    5.876664] x5 : 0000000000000004 x4 : 0000000000000085
-[    5.882121] x3 : 0000000000000119 x2 : ffffa5c6741ef478
-[    5.887578] x1 : 3acbb3926faf5f00 x0 : 0000000000000000
-[    5.893036] Call trace:
-[    5.895551]  refcount_warn_saturate+0x140/0x148
-[    5.900202]  __video_register_device+0x64c/0xd10
-[    5.904944]  venc_probe+0xc4/0x148
-[    5.908444]  platform_probe+0x68/0xe0
-[    5.912210]  really_probe+0x118/0x3e0
-[    5.915977]  driver_probe_device+0x5c/0xc0
-[    5.920187]  __device_attach_driver+0x98/0xb8
-[    5.924661]  bus_for_each_drv+0x68/0xd0
-[    5.928604]  __device_attach+0xec/0x148
-[    5.932547]  device_initial_probe+0x14/0x20
-[    5.936845]  bus_probe_device+0x9c/0xa8
-[    5.940788]  device_add+0x3e8/0x7c8
-[    5.944376]  of_device_add+0x4c/0x60
-[    5.948056]  of_platform_device_create_pdata+0xbc/0x140
-[    5.953425]  of_platform_bus_create+0x17c/0x3c0
-[    5.958078]  of_platform_populate+0x80/0x110
-[    5.962463]  venus_probe+0x2ec/0x4d8
-[    5.966143]  platform_probe+0x68/0xe0
-[    5.969907]  really_probe+0x118/0x3e0
-[    5.973674]  driver_probe_device+0x5c/0xc0
-[    5.977882]  __device_attach_driver+0x98/0xb8
-[    5.982356]  bus_for_each_drv+0x68/0xd0
-[    5.986298]  __device_attach+0xec/0x148
-[    5.990242]  device_initial_probe+0x14/0x20
-[    5.994539]  bus_probe_device+0x9c/0xa8
-[    5.998481]  deferred_probe_work_func+0x74/0xb0
-[    6.003132]  process_one_work+0x1e8/0x360
-[    6.007254]  worker_thread+0x208/0x478
-[    6.011106]  kthread+0x150/0x158
-[    6.014431]  ret_from_fork+0x10/0x30
-[    6.018111] ---[ end trace f074246b1ecdb466 ]---
-
-This patch fixes by
-
-- Only setting drvdata after v4l2_device_register() completes
-- Moving v4l2_device_register() so that suspend/reume in core::probe()
-  stays as-is
-- Changes pm_ops->core_function() to take struct venus_core not struct
-  device
-- Minimal rework of v4l2_device_*register in probe/remove
-
-Link: https://lore.kernel.org/linux-media/d7d114fe-6255-5672-e91c-2558d56da745@linaro.org/T/#m9bc6892d0c25a544364b71cb123e3217c0c02111
-Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Fixes: aaaa93eda64b ("media] media: venus: venc: add video encoder files")
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- drivers/media/platform/qcom/venus/core.c      | 30 ++++++++++---------
- .../media/platform/qcom/venus/pm_helpers.c    | 30 ++++++++-----------
- .../media/platform/qcom/venus/pm_helpers.h    |  7 +++--
- 3 files changed, 33 insertions(+), 34 deletions(-)
-
-diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index 1471c7f9c89d..360f3bc60797 100644
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -218,7 +218,6 @@ static int venus_probe(struct platform_device *pdev)
- 		return -ENOMEM;
- 
- 	core->dev = dev;
--	platform_set_drvdata(pdev, core);
- 
- 	r = platform_get_resource(pdev, IORESOURCE_MEM, 0);
- 	core->base = devm_ioremap_resource(dev, r);
-@@ -248,7 +247,7 @@ static int venus_probe(struct platform_device *pdev)
- 		return -ENODEV;
- 
- 	if (core->pm_ops->core_get) {
--		ret = core->pm_ops->core_get(dev);
-+		ret = core->pm_ops->core_get(core);
- 		if (ret)
- 			return ret;
- 	}
-@@ -273,6 +272,12 @@ static int venus_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto err_core_put;
- 
-+	ret = v4l2_device_register(dev, &core->v4l2_dev);
-+	if (ret)
-+		goto err_core_deinit;
-+
-+	platform_set_drvdata(pdev, core);
-+
- 	pm_runtime_enable(dev);
- 
- 	ret = pm_runtime_get_sync(dev);
-@@ -307,10 +312,6 @@ static int venus_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto err_venus_shutdown;
- 
--	ret = v4l2_device_register(dev, &core->v4l2_dev);
--	if (ret)
--		goto err_core_deinit;
--
- 	ret = pm_runtime_put_sync(dev);
- 	if (ret) {
- 		pm_runtime_get_noresume(dev);
-@@ -323,8 +324,6 @@ static int venus_probe(struct platform_device *pdev)
- 
- err_dev_unregister:
- 	v4l2_device_unregister(&core->v4l2_dev);
--err_core_deinit:
--	hfi_core_deinit(core, false);
- err_venus_shutdown:
- 	venus_shutdown(core);
- err_runtime_disable:
-@@ -332,9 +331,11 @@ static int venus_probe(struct platform_device *pdev)
- 	pm_runtime_set_suspended(dev);
- 	pm_runtime_disable(dev);
- 	hfi_destroy(core);
-+err_core_deinit:
-+	hfi_core_deinit(core, false);
- err_core_put:
- 	if (core->pm_ops->core_put)
--		core->pm_ops->core_put(dev);
-+		core->pm_ops->core_put(core);
- 	return ret;
- }
- 
-@@ -360,14 +361,15 @@ static int venus_remove(struct platform_device *pdev)
- 	pm_runtime_disable(dev);
- 
- 	if (pm_ops->core_put)
--		pm_ops->core_put(dev);
-+		pm_ops->core_put(core);
-+
-+	v4l2_device_unregister(&core->v4l2_dev);
- 
- 	hfi_destroy(core);
- 
- 	icc_put(core->video_path);
- 	icc_put(core->cpucfg_path);
- 
--	v4l2_device_unregister(&core->v4l2_dev);
- 	mutex_destroy(&core->pm_lock);
- 	mutex_destroy(&core->lock);
- 	venus_dbgfs_deinit(core);
-@@ -394,7 +396,7 @@ static __maybe_unused int venus_runtime_suspend(struct device *dev)
- 		return ret;
- 
- 	if (pm_ops->core_power) {
--		ret = pm_ops->core_power(dev, POWER_OFF);
-+		ret = pm_ops->core_power(core, POWER_OFF);
- 		if (ret)
- 			return ret;
- 	}
-@@ -412,7 +414,7 @@ static __maybe_unused int venus_runtime_suspend(struct device *dev)
- err_video_path:
- 	icc_set_bw(core->cpucfg_path, kbps_to_icc(1000), 0);
- err_cpucfg_path:
--	pm_ops->core_power(dev, POWER_ON);
-+	pm_ops->core_power(core, POWER_ON);
- 
- 	return ret;
- }
-@@ -432,7 +434,7 @@ static __maybe_unused int venus_runtime_resume(struct device *dev)
- 		return ret;
- 
- 	if (pm_ops->core_power) {
--		ret = pm_ops->core_power(dev, POWER_ON);
-+		ret = pm_ops->core_power(core, POWER_ON);
- 		if (ret)
- 			return ret;
- 	}
-diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-index 43c4e3d9e281..e349d01422c5 100644
---- a/drivers/media/platform/qcom/venus/pm_helpers.c
-+++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-@@ -277,16 +277,13 @@ static int load_scale_v1(struct venus_inst *inst)
- 	return 0;
- }
- 
--static int core_get_v1(struct device *dev)
-+static int core_get_v1(struct venus_core *core)
- {
--	struct venus_core *core = dev_get_drvdata(dev);
--
- 	return core_clks_get(core);
- }
- 
--static int core_power_v1(struct device *dev, int on)
-+static int core_power_v1(struct venus_core *core, int on)
- {
--	struct venus_core *core = dev_get_drvdata(dev);
- 	int ret = 0;
- 
- 	if (on == POWER_ON)
-@@ -753,12 +750,12 @@ static int venc_power_v4(struct device *dev, int on)
- 	return ret;
- }
- 
--static int vcodec_domains_get(struct device *dev)
-+static int vcodec_domains_get(struct venus_core *core)
- {
- 	int ret;
- 	struct opp_table *opp_table;
- 	struct device **opp_virt_dev;
--	struct venus_core *core = dev_get_drvdata(dev);
-+	struct device *dev = core->dev;
- 	const struct venus_resources *res = core->res;
- 	struct device *pd;
- 	unsigned int i;
-@@ -809,9 +806,8 @@ static int vcodec_domains_get(struct device *dev)
- 	return ret;
- }
- 
--static void vcodec_domains_put(struct device *dev)
-+static void vcodec_domains_put(struct venus_core *core)
- {
--	struct venus_core *core = dev_get_drvdata(dev);
- 	const struct venus_resources *res = core->res;
- 	unsigned int i;
- 
-@@ -834,9 +830,9 @@ static void vcodec_domains_put(struct device *dev)
- 	dev_pm_opp_detach_genpd(core->opp_table);
- }
- 
--static int core_get_v4(struct device *dev)
-+static int core_get_v4(struct venus_core *core)
- {
--	struct venus_core *core = dev_get_drvdata(dev);
-+	struct device *dev = core->dev;
- 	const struct venus_resources *res = core->res;
- 	int ret;
- 
-@@ -875,7 +871,7 @@ static int core_get_v4(struct device *dev)
- 		}
- 	}
- 
--	ret = vcodec_domains_get(dev);
-+	ret = vcodec_domains_get(core);
- 	if (ret) {
- 		if (core->has_opp_table)
- 			dev_pm_opp_of_remove_table(dev);
-@@ -886,14 +882,14 @@ static int core_get_v4(struct device *dev)
- 	return 0;
- }
- 
--static void core_put_v4(struct device *dev)
-+static void core_put_v4(struct venus_core *core)
- {
--	struct venus_core *core = dev_get_drvdata(dev);
-+	struct device *dev = core->dev;
- 
- 	if (legacy_binding)
- 		return;
- 
--	vcodec_domains_put(dev);
-+	vcodec_domains_put(core);
- 
- 	if (core->has_opp_table)
- 		dev_pm_opp_of_remove_table(dev);
-@@ -901,9 +897,9 @@ static void core_put_v4(struct device *dev)
- 
- }
- 
--static int core_power_v4(struct device *dev, int on)
-+static int core_power_v4(struct venus_core *core, int on)
- {
--	struct venus_core *core = dev_get_drvdata(dev);
-+	struct device *dev = core->dev;
- 	struct device *pmctrl = core->pmdomains[0];
- 	int ret = 0;
- 
-diff --git a/drivers/media/platform/qcom/venus/pm_helpers.h b/drivers/media/platform/qcom/venus/pm_helpers.h
-index aa2f6afa2354..a492c50c5543 100644
---- a/drivers/media/platform/qcom/venus/pm_helpers.h
-+++ b/drivers/media/platform/qcom/venus/pm_helpers.h
-@@ -4,14 +4,15 @@
- #define __VENUS_PM_HELPERS_H__
- 
- struct device;
-+struct venus_core;
- 
- #define POWER_ON	1
- #define POWER_OFF	0
- 
- struct venus_pm_ops {
--	int (*core_get)(struct device *dev);
--	void (*core_put)(struct device *dev);
--	int (*core_power)(struct device *dev, int on);
-+	int (*core_get)(struct venus_core *core);
-+	void (*core_put)(struct venus_core *core);
-+	int (*core_power)(struct venus_core *core, int on);
- 
- 	int (*vdec_get)(struct device *dev);
- 	void (*vdec_put)(struct device *dev);
--- 
-2.29.2
-
+I have to go in and figure it out! :)
