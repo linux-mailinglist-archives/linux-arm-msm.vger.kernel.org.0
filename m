@@ -2,162 +2,212 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4584B311518
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Feb 2021 23:24:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 729823114EF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Feb 2021 23:23:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232597AbhBEWXc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Feb 2021 17:23:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42578 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232237AbhBEO1o (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Feb 2021 09:27:44 -0500
-Received: from mail-oo1-xc2e.google.com (mail-oo1-xc2e.google.com [IPv6:2607:f8b0:4864:20::c2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19EB8C061221
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Feb 2021 08:05:50 -0800 (PST)
-Received: by mail-oo1-xc2e.google.com with SMTP id x19so1729463ooj.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Feb 2021 08:05:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=i+s2FZx53SQqxDw+1zONomhnnt1uwtiTU8GemVlvAO0=;
-        b=fot037dobwcRId/9HL/KeJ7m7AtvNPnIuli3LuaUHiSIuMoDWtJEP0R7+qmv1XaKXN
-         9lT/yZg+DvR5DJxSVbT/lHnMC7MzqKCFAYUMjntE8M++BVlJfTMLSTs6nX81Y74gwWW3
-         IU2Y/KNJdxJJ1X+KJbw6atVuEPR9a/mgLAf1/6qVEwEGW8Q0YpT1EeZNzMOJOpK6uhvg
-         87FLh4N4l5LnQh/5hkxoLbtXKVwKXvg7W26hhgTKgJ+mQJ53e+OHdZjKGXV/NkWXzR+m
-         psZGPWWMLEkohzZdJg9ud7dYimzBnw6Kc04he1gOqmGGXv7hU6S7Lp5srqyjXz6n31AR
-         gFPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=i+s2FZx53SQqxDw+1zONomhnnt1uwtiTU8GemVlvAO0=;
-        b=bi0LjrXwA3kty+yys/rIUCpzRIYx8Pw4wpwH/vD/tr8VatB9dRIgznuQXPx5c5MPjZ
-         WRfPjbVNStfzq+v4zTRZZgRJiVv7yV3RVquO6UazwUs473uvnilPpLeii8w1Z5P54xgK
-         Dxe2RvMAG1EpD4TeQOkhQidMhfzMMs8XbLR6PCK7K5oOTcrmMlewa2w7oMblNHMvONPO
-         WZLFWejY0/WPXGxttBFupAUWVwycLEebDSKuutdELl2sgx/oW1EDuj6MncqkNculoTmY
-         2HoSBz1WMZPgMWY2DNmhtdAc2/gUAGiBRNHVLL2WU/1FKWbjfmuOvc1OCAVchOMoL4Pr
-         e8wQ==
-X-Gm-Message-State: AOAM533DbNDe73Fb9rqT9Gr4jrBjA7h4HRsLu+iNjIOwhN37Z7WHZDBU
-        t3809jKLisQMPpck35CRodeTqQ==
-X-Google-Smtp-Source: ABdhPJwCsMQUz4jaikEzFIzuv4+PIPPBltgRkatECk/BpkPrrPOkmq7zHAw9E2z6WlXuG+pdO5L5cg==
-X-Received: by 2002:a4a:e99b:: with SMTP id s27mr242342ood.87.1612541149476;
-        Fri, 05 Feb 2021 08:05:49 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id y66sm990059oig.46.2021.02.05.08.05.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Feb 2021 08:05:48 -0800 (PST)
-Date:   Fri, 5 Feb 2021 10:05:47 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        Jack Pham <jackp@codeaurora.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] phy: qcom-qmp: Add UFS V5 registers found in
- SM8350
-Message-ID: <YB1s2/lo0ud82anm@builder.lan>
-References: <20210204165805.62235-1-vkoul@kernel.org>
- <20210204165805.62235-3-vkoul@kernel.org>
+        id S232596AbhBEWS5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Feb 2021 17:18:57 -0500
+Received: from so15.mailgun.net ([198.61.254.15]:45828 "EHLO so15.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232692AbhBEOdU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 5 Feb 2021 09:33:20 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1612541492; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=KAzH7tCJId+h5JSCihS+FaheGWIFSeiWWbMU0s2+TME=; b=c006pJXkCwsLGbpFXuMsoS95B4+G4N/9jicPW7rwO4ncChhjcwNQKitvKvWqpi8P/JE9cfAH
+ rTC1vKjQUuKC9CTHwZjS4My3w+NaGSGv62M30BS+VnlZqrW+8UDScztvsSjlZmM/ZoCBT+41
+ PQ6gmSIiWFmMaHAbw0L91cZAixY=
+X-Mailgun-Sending-Ip: 198.61.254.15
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 601d6e1934db06ef79767e9a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 05 Feb 2021 16:11:05
+ GMT
+Sender: asutoshd=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 49F4DC433ED; Fri,  5 Feb 2021 16:11:05 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from stor-presley.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: asutoshd)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id DADB6C433C6;
+        Fri,  5 Feb 2021 16:11:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DADB6C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=asutoshd@codeaurora.org
+Date:   Fri, 5 Feb 2021 08:11:02 -0800
+From:   Asutosh Das <asutoshd@codeaurora.org>
+To:     Avri Altman <Avri.Altman@wdc.com>
+Cc:     Alan Stern <stern@rowland.harvard.edu>,
+        "cang@codeaurora.org" <cang@codeaurora.org>,
+        "martin.petersen@oracle.com" <martin.petersen@oracle.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>
+Subject: Re: [RFC PATCH v2 0/2] Fix deadlock in ufs
+Message-ID: <20210205161102.GJ37557@stor-presley.qualcomm.com>
+References: <cover.1611719814.git.asutoshd@codeaurora.org>
+ <84a182cc-de9c-4d6d-2193-3a44e4c88c8b@codeaurora.org>
+ <20210201214802.GB420232@rowland.harvard.edu>
+ <20210202205245.GA8444@stor-presley.qualcomm.com>
+ <20210202220536.GA464234@rowland.harvard.edu>
+ <20210204001354.GD37557@stor-presley.qualcomm.com>
+ <20210204194831.GA567391@rowland.harvard.edu>
+ <20210204211424.GH37557@stor-presley.qualcomm.com>
+ <DM6PR04MB6575692524202EC91E2A5480FCB29@DM6PR04MB6575.namprd04.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20210204165805.62235-3-vkoul@kernel.org>
+In-Reply-To: <DM6PR04MB6575692524202EC91E2A5480FCB29@DM6PR04MB6575.namprd04.prod.outlook.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 04 Feb 10:58 CST 2021, Vinod Koul wrote:
+On Fri, Feb 05 2021 at 23:56 -0800, Avri Altman wrote:
+>>
+>> On Thu, Feb 04 2021 at 11:48 -0800, Alan Stern wrote:
+>> >On Wed, Feb 03, 2021 at 04:13:54PM -0800, Asutosh Das wrote:
+>> >> Thanks Alan.
+>> >> I understand the issues with the current ufs design.
+>> >>
+>> >> ufs has a wlun (well-known lun) that handles power management
+>> commands,
+>> >> such as SSUs. Now this wlun (device wlun) is registered as a scsi_device.
+>> >> It's queue is also set up for runtime-pm. Likewise there're 2
+>> >> more wluns, BOOT and RPMB.
+>> >>
+>> >> Currently, the scsi devices independently runtime suspend/resume - request
+>> driven.
+>> >> So to send SSU while suspending wlun (scsi_device) this scsi device should
+>> >> be the last to be runtime suspended amongst all other ufs luns (scsi devices).
+>> The
+>> >> reason is syncronize_cache() is sent to luns during their suspend and if SSU
+>> has
+>> >> been sent already, it mostly would fail.
+>> >
+>> >The SCSI subsystem assumes that different LUNs operate independently.
+>> >Evidently that isn't true here.
+>> >
+>> >> Perhaps that's the reason to send SSU during platform-device suspend. I'm
+>> not
+>> >> sure if that's the right thing to do, but that's what it is now and is causing
+>> >> this deadlock.
+>> >> Now this wlun is also registered to bsg and some applications interact with
+>> rpmb
+>> >> wlun and the device-wlun using that interface. Registering the
+>> corresponding
+>> >> queues to runtime-pm ensures that the whole path is resumed before the
+>> request
+>> >> is issued.
+>> >> Because, we see this deadlock, in the RFC patch, I skipped registering the
+>> >> queues representing the wluns to runtime-pm, thus removing the
+>> restrictions to
+>> >> issue the request until queue is resumed.
+>> >> But when the requests come-in via bsg, the device has to be resumed. Hence
+>> the
+>> >> get_sync()/put_sync() in bsg driver.
+>> >
+>> >Does the bsg interface send its I/O requests to the LUNs through the
+>> >block request queue?
+>> >
+>> >
+>> >> The reason for initiating get_sync()/put_sync() on the parent device was
+>> because
+>> >> the corresponding queue of this wlun was not setup for runtime-pm
+>> anymore.
+>> >> And for ufs resuming the scsi device essentially means sending a SSU to wlun
+>> >> which the ufs platform device does in its runtime resume now. I'm not sure
+>> if
+>> >> that was a good idea though, hence the RFC on the patches.
+>> >>
+>> >> And now it looks to me that adding a cb to sd_suspend_runtime may not
+>> work.
+>> >> Because the scsi devices suspend asynchronously and the wlun suspends
+>> earlier than the others.
+>> >>
+>> >> [    7.846165]scsi 0:0:0:49488: scsi_runtime_idle
+>> >> [    7.851547]scsi 0:0:0:49488: device wlun
+>> >> [    7.851809]sd 0:0:0:49488: scsi_runtime_idle
+>> >> [    7.861536]sd 0:0:0:49488: scsi_runtime_suspend < suspends prior to other
+>> luns
+>> >> [...]
+>> >> [   12.861984]sd 0:0:0:1: [sdb] Synchronizing SCSI cache
+>> >> [   12.868894]sd 0:0:0:2: [sdc] Synchronizing SCSI cache
+>> >> [   13.124331]sd 0:0:0:0: [sda] Synchronizing SCSI cache
+>> >> [   13.143961]sd 0:0:0:3: [sdd] Synchronizing SCSI cache
+>> >> [   13.163876]sd 0:0:0:6: [sdg] Synchronizing SCSI cache
+>> >> [   13.164024]sd 0:0:0:4: [sde] Synchronizing SCSI cache
+>> >> [   13.167066]sd 0:0:0:5: [sdf] Synchronizing SCSI cache
+>> >> [   17.101285]sd 0:0:0:7: [sdh] Synchronizing SCSI cache
+>> >> [   73.889551]sd 0:0:0:4: [sde] Synchronizing SCSI cache
+>> >>
+>> >> I'm not sure if there's a way to force the wlun to suspend only after all other
+>> luns are suspended.
+>> >> Is there? I hope Bart/others help provide some inputs on this.
+>> >
+>> >I don't know what would work best for you; it depends on how the LUNs
+>> >are used.  But one possibility is to make sure that whenever the boot
+>> >and rpmb wluns are resumed, the device wlun is also resumed.  So for
+>> >example, the runtime-resume callback routines for the rpmb and boot
+>> >wluns could call pm_runtime_get_sync() for the device wlun, and their
+>> >runtime-suspend callback routines could call pm_runtime_put() for the
+>> >device wlun.  And of course there would have to be appropriate
+>> >operations when those LUNs are bound to and unbound from their drivers.
+>> >
+>> >Alan Stern
+>> >
+>> Thanks Alan.
+>> CanG & I had some discussions on it as well the other day.
+>> I'm now looking into creating a device link between the siblings.
+>> e.g. make the device wlun as a supplier for all the other luns & wluns.
+>> So device wlun (supplier) wouldn't suspend (runtime/system) until all of the
+>> other
+>> consumers are suspended. After this linking, I can move all the
+>> pm commands that are being sent by host to the dedicated suspend routine of
+>> the device
+>> wlun and the host needn't send any cmds during its suspend and layering
+>> violation wouldn't take place.
+>Regardless of your above proposal, as for the issues you were witnessing with rpmb,
+>That started this RFC in the first place, and the whole clearing uac series for that matter:
+> "In order to conduct FFU or RPMB operations, UFS needs to clear UNIT ATTENTION condition...."
+>
+>Functionally, This was already done for the device wlun, and only added the rpmb wlun.
+>
+>Now you are trying to solve stuff because the rpmb is not provisioned.
+>a) There should be no relation between response to request-sense command,
+> and if the key is programmed or not. And
+>b) rpmb is accessed from user-space.  If it is not provisioned, it should processed the error (-7)
+>    and realize that by itself.  And also, It only makes sense that if needed,
+>    the access sequence will include  the request-sense command.
+>
+>Therefore, IMHO, just reverting Randall commit (1918651f2d7e) and fixing the user-space code
+>Should suffice.
+>
+>Thanks,
+>Avri
+>
+Hi Avri
 
-> Add the registers for UFS found in SM8350. The UFS phy used in SM8350
-> seems to have same offsets as V5 phy, although Documentation for that is
-> lacking.
-> 
+Thanks.
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+I don't think reverting 1918651f2d7e would fix this.
 
-Regards,
-Bjorn
+[   12.182750] ufshcd-qcom 1d84000.ufshc: ufshcd_suspend: Setting power mode
+[   12.190467] ufshcd-qcom 1d84000.ufshc: wlun_dev_clr_ua: 0 <-- uac wasn't sent
+[   12.196735] ufshcd-qcom 1d84000.ufshc: Sending ssu
+[   12.202412] scsi 0:0:0:49488: Queue rpm status b4 ssu: 2 <- sdev_ufs_device queue is suspended
+[   12.208613] ufshcd-qcom 1d84000.ufshc: Wait for resume - <-- deadlock!
 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp.h | 47 +++++++++++++++++++++++++++++
->  1 file changed, 47 insertions(+)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.h b/drivers/phy/qualcomm/phy-qcom-qmp.h
-> index dff7be5a1cc1..71ce3aa174ae 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp.h
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.h
-> @@ -824,6 +824,32 @@
->  #define QPHY_V4_PCS_PCIE_PRESET_P10_PRE			0xbc
->  #define QPHY_V4_PCS_PCIE_PRESET_P10_POST		0xe0
->  
-> +/* Only for QMP V5 PHY - QSERDES COM registers */
-> +#define QSERDES_V5_COM_PLL_IVCO				0x058
-> +#define QSERDES_V5_COM_CP_CTRL_MODE0			0x074
-> +#define QSERDES_V5_COM_CP_CTRL_MODE1			0x078
-> +#define QSERDES_V5_COM_PLL_RCTRL_MODE0			0x07c
-> +#define QSERDES_V5_COM_PLL_RCTRL_MODE1			0x080
-> +#define QSERDES_V5_COM_PLL_CCTRL_MODE0			0x084
-> +#define QSERDES_V5_COM_PLL_CCTRL_MODE1			0x088
-> +#define QSERDES_V5_COM_SYSCLK_EN_SEL			0x094
-> +#define QSERDES_V5_COM_LOCK_CMP_EN			0x0a4
-> +#define QSERDES_V5_COM_LOCK_CMP1_MODE0			0x0ac
-> +#define QSERDES_V5_COM_LOCK_CMP2_MODE0			0x0b0
-> +#define QSERDES_V5_COM_LOCK_CMP1_MODE1			0x0b4
-> +#define QSERDES_V5_COM_DEC_START_MODE0			0x0bc
-> +#define QSERDES_V5_COM_LOCK_CMP2_MODE1			0x0b8
-> +#define QSERDES_V5_COM_DEC_START_MODE1			0x0c4
-> +#define QSERDES_V5_COM_VCO_TUNE_MAP			0x10c
-> +#define QSERDES_V5_COM_VCO_TUNE_INITVAL2		0x124
-> +#define QSERDES_V5_COM_HSCLK_SEL			0x158
-> +#define QSERDES_V5_COM_HSCLK_HS_SWITCH_SEL		0x15c
-> +#define QSERDES_V5_COM_BIN_VCOCAL_CMP_CODE1_MODE0	0x1ac
-> +#define QSERDES_V5_COM_BIN_VCOCAL_CMP_CODE2_MODE0	0x1b0
-> +#define QSERDES_V5_COM_BIN_VCOCAL_CMP_CODE1_MODE1	0x1b4
-> +#define QSERDES_V5_COM_BIN_VCOCAL_HSCLK_SEL		0x1bc
-> +#define QSERDES_V5_COM_BIN_VCOCAL_CMP_CODE2_MODE1	0x1b8
-> +
->  /* Only for QMP V5 PHY - TX registers */
->  #define QSERDES_V5_TX_RES_CODE_LANE_TX			0x34
->  #define QSERDES_V5_TX_RES_CODE_LANE_RX			0x38
-> @@ -837,6 +863,10 @@
->  #define QSERDES_V5_TX_RCV_DETECT_LVL_2			0xa4
->  #define QSERDES_V5_TX_TRAN_DRVR_EMP_EN			0xc0
->  #define QSERDES_V5_TX_PI_QEC_CTRL			0xe4
-> +#define QSERDES_V5_TX_PWM_GEAR_1_DIVIDER_BAND0_1	0x178
-> +#define QSERDES_V5_TX_PWM_GEAR_2_DIVIDER_BAND0_1	0x17c
-> +#define QSERDES_V5_TX_PWM_GEAR_3_DIVIDER_BAND0_1	0x180
-> +#define QSERDES_V5_TX_PWM_GEAR_4_DIVIDER_BAND0_1	0x184
->  
->  /* Only for QMP V5 PHY - RX registers */
->  #define QSERDES_V5_RX_UCDR_FO_GAIN			0x008
-> @@ -893,6 +923,23 @@
->  #define QSERDES_V5_RX_DCC_CTRL1				0x1a8
->  #define QSERDES_V5_RX_VTH_CODE				0x1b0
->  
-> +/* Only for QMP V5 PHY - UFS PCS registers */
-> +#define QPHY_V5_PCS_UFS_TIMER_20US_CORECLK_STEPS_MSB	0x00c
-> +#define QPHY_V5_PCS_UFS_TIMER_20US_CORECLK_STEPS_LSB	0x010
-> +#define QPHY_V5_PCS_UFS_PLL_CNTL			0x02c
-> +#define QPHY_V5_PCS_UFS_TX_LARGE_AMP_DRV_LVL		0x030
-> +#define QPHY_V5_PCS_UFS_TX_SMALL_AMP_DRV_LVL		0x038
-> +#define QPHY_V5_PCS_UFS_TX_HSGEAR_CAPABILITY		0x074
-> +#define QPHY_V5_PCS_UFS_RX_HSGEAR_CAPABILITY		0x0b4
-> +#define QPHY_V5_PCS_UFS_DEBUG_BUS_CLKSEL		0x124
-> +#define QPHY_V5_PCS_UFS_RX_MIN_HIBERN8_TIME		0x150
-> +#define QPHY_V5_PCS_UFS_RX_SIGDET_CTRL1			0x154
-> +#define QPHY_V5_PCS_UFS_RX_SIGDET_CTRL2			0x158
-> +#define QPHY_V5_PCS_UFS_TX_PWM_GEAR_BAND		0x160
-> +#define QPHY_V5_PCS_UFS_TX_HS_GEAR_BAND			0x168
-> +#define QPHY_V5_PCS_UFS_TX_MID_TERM_CTRL1		0x1d8
-> +#define QPHY_V5_PCS_UFS_MULTI_LANE_CTRL1		0x1e0
-> +
->  /* Only for QMP V5 PHY - USB3 have different offsets than V4 */
->  #define QPHY_V5_PCS_USB3_POWER_STATE_CONFIG1		0x300
->  #define QPHY_V5_PCS_USB3_AUTONOMOUS_MODE_STATUS		0x304
-> -- 
-> 2.26.2
-> 
+The issue is sending any command to any lun which is registered for blk
+runtime-pm in ufs host's suspend path would deadlock; since, it'd try to resume
+the ufs host in the same suspend calling sequence.
+
+-asd
