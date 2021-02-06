@@ -2,153 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9AFCC3119C0
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Feb 2021 04:18:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A17FD3119C2
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Feb 2021 04:18:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232297AbhBFDRw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Feb 2021 22:17:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40406 "EHLO
+        id S231229AbhBFDSL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Feb 2021 22:18:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232032AbhBFCuX (ORCPT
+        with ESMTP id S229742AbhBFDMf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Feb 2021 21:50:23 -0500
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B263C08ECAD
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Feb 2021 14:38:51 -0800 (PST)
-Received: by mail-pj1-x102a.google.com with SMTP id g15so4631838pjd.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Feb 2021 14:38:51 -0800 (PST)
+        Fri, 5 Feb 2021 22:12:35 -0500
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEFA3C061786
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Feb 2021 19:11:53 -0800 (PST)
+Received: by mail-pg1-x532.google.com with SMTP id o7so5899464pgl.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Feb 2021 19:11:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=TPy6/3PPA+frW49ypCmGHWEc+3NWyGIGLFzSHlW7ETI=;
-        b=MEHSJ7ZaLqO9dIWUAK/L2fuyHmQ6z/39pCYT8H/kxVc+RKyotBmPbZOznVKWYGcCj9
-         S+NWusmu5VZvtZTc6Oy3jSEb6MwiQ2bR9BAUyT6ZRGD6sR+wgJ8z6rhySKfkjaLqnV5+
-         emuaEKuKKjnAvZ4Uge4lcnWfSlzVtaeLIWmQc=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=03Irav0Kn7d3PmwdWltq8yhVeaa7+Yo6U0jt6YgZEOM=;
+        b=DFmxgNlGvwe3ViCthiyT2nkSLaQNiDYG62IdcIyg60j76khiIWkG7ZL85g/T/7FKrU
+         OgrzGWOdftRv8IHcr0+PsU/nRTlgiC8Au4wV7DUkVkE9mtP/wAReUXv9qtUtxV3a7crt
+         8Ili36d2Ox8kFn/d1XX2mw2XaAaWF5VckKs4EIkTebWbOgDfZzt4tiLHbZSkIsEg6C1l
+         FS8z8PWGIAIWh6ISTUTF+C6vHzMxBihpLduERWDRf3sx1iCQu0WS+a1KiB61ZL3OnreY
+         9nbgDin9ULICHYmKKpMUikJ4PqhKYl5AIEWMejBekc/JGZNFhYlRs6d55dOA3LPjTQgZ
+         xLdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=TPy6/3PPA+frW49ypCmGHWEc+3NWyGIGLFzSHlW7ETI=;
-        b=hLk9CsjaB7F33iZzA1cj5XkPpYuXTTE9gRwSyou9GMBOp1RqKtmhVXzQ4gb8qOkbNK
-         NwLiS5adqDf8gekrKko3duq/OhCA4tg9Y+ZUQgzL5D2ajEjpQlzHiJ9atW93YK/jJpvZ
-         fn5xd0RDyeR+vSh/5L77qtL0Hbo3SNqieAqseQ81CYh7YOn4ECVzp8J3xWtSnkrwShyL
-         RagBJyETCJYeMH1iJ8Lolqj+IkH47M7kDmMPv1WgZQi4L4+lTo3+f6OGeGMoR+djQFsX
-         hV18zHWpIOmqbbjYuuDLf7wKdVAzivk4Wm8YX29AauiJriEj5Jvsrmh3RfXKFK3OwKcE
-         fg1w==
-X-Gm-Message-State: AOAM532VBv4pR3zI3wh7WO33srqnW0uptrHrwEkVEqY5c9IEfBlcx443
-        cNNJmKny08u4BqQZ8SR8a2Y1Ig==
-X-Google-Smtp-Source: ABdhPJzQkRoqy7NHVtV1bJaBWZ+N3veHooHF1rNh/xVijXxElZXV1En02xrxUD03p0PR3Z0/ZknQoQ==
-X-Received: by 2002:a17:90a:fb44:: with SMTP id iq4mr6030343pjb.155.1612564730941;
-        Fri, 05 Feb 2021 14:38:50 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:201:3d74:5f76:aaaa:6cb8])
-        by smtp.gmail.com with ESMTPSA id d14sm10820208pfo.156.2021.02.05.14.38.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Feb 2021 14:38:50 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=03Irav0Kn7d3PmwdWltq8yhVeaa7+Yo6U0jt6YgZEOM=;
+        b=WG2kd8F4scMrNpuoujZjuRHzjMZhAaDvXs+0exST0mNiCRwc9mlrgZ0sP7RpPQnVxL
+         rbhkyFvKUBa3hiZZc8xEUS1mrx208tBx9Kf4sNvXRsmsaozenbfC4h0mf3Qep0Gb+KVN
+         BDVKi8ynTvLknaW0I14cDxnXLnKH93ZUtGP4hH81JwCc2Eg1mBQUGVfIZpDt4G2yvJV0
+         EMNLW3ZGyS+n7iNYK6bC3J2FsGdZvC7wravBqwaVlwJ5nF622MFEm916A5vnCJqAaW5e
+         ijehhgMmgN3CLbTQ/v+dy9A5ANAdRNpjYtSrYH6VIv7OdNu31HMAUwRUvxAIp2DYRHbC
+         +whw==
+X-Gm-Message-State: AOAM5310zY6kT832KlC0RRJKRUFS7ZNx9f1+dabBqXULnl2vtFmiuulj
+        xugNbXW53zSZmF6xG/8AGilPmg==
+X-Google-Smtp-Source: ABdhPJwrsGW2P1pW+WkekABo8xTR+L+k0eCCXm8bQCwQQOAOFnKsiA1f6hb8gX5zfR74LatrZKR/7A==
+X-Received: by 2002:a62:5e44:0:b029:1a4:daae:e765 with SMTP id s65-20020a625e440000b02901a4daaee765mr7426181pfb.8.1612581113257;
+        Fri, 05 Feb 2021 19:11:53 -0800 (PST)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id cq2sm9725597pjb.55.2021.02.05.19.11.50
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 05 Feb 2021 19:11:52 -0800 (PST)
+Date:   Sat, 6 Feb 2021 11:11:46 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Ard Biesheuvel <ardb@kernel.org>
+Cc:     linux-arm-kernel@lists.infradead.org, lorenzo.pieralisi@arm.com,
+        kernel-hardening@lists.openwall.com, catalin.marinas@arm.com,
+        linux-acpi@vger.kernel.org, sudeep.holla@arm.com, will@kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3 2/2] arm64/acpi: disallow writeable AML opregion
+ mapping for EFI code regions
+Message-ID: <20210206031145.GA27503@dragon>
+References: <20200626155832.2323789-1-ardb@kernel.org>
+ <20200626155832.2323789-3-ardb@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <b4bd2263a21f464869ac6d84aa0df131@codeaurora.org>
-References: <1612420939-15502-1-git-send-email-mkrishn@codeaurora.org> <1612420939-15502-4-git-send-email-mkrishn@codeaurora.org> <161255172811.76967.16401619378965156134@swboyd.mtv.corp.google.com> <b4bd2263a21f464869ac6d84aa0df131@codeaurora.org>
-Subject: Re: [PATCH v10 4/4] dt-bindings: msm/dp: Add bindings of MSM DisplayPort controller
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, kalyan_t@codeaurora.org,
-        tanmay@codeaurora.org, abhinavk@codeaurora.org,
-        robdclark@gmail.com, bjorn.andersson@linaro.org,
-        vinod.koul@linaro.org, rnayak@codeaurora.org,
-        dianders@chromium.org, sibis@codeaurora.org,
-        Vara Reddy <varar@codeaurora.org>
-To:     khsieh@codeaurora.org
-Date:   Fri, 05 Feb 2021 14:38:48 -0800
-Message-ID: <161256472868.76967.11097632368706888024@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200626155832.2323789-3-ardb@kernel.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting khsieh@codeaurora.org (2021-02-05 12:55:47)
-> On 2021-02-05 11:02, Stephen Boyd wrote:
-> > Quoting Krishna Manikandan (2021-02-03 22:42:19)
-> >> Add bindings for Snapdragon DisplayPort controller driver.
-> >>=20
-> >> Signed-off-by: Chandan Uddaraju <chandanu@codeaurora.org>
-> >> Signed-off-by: Vara Reddy <varar@codeaurora.org>
-> >> Signed-off-by: Tanmay Shah <tanmay@codeaurora.org>
-> >> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+Hi Ard,
 
-Krishna is sending these patches, so there should be an SoB line here
-from Krishna. Please add it next time.
+On Fri, Jun 26, 2020 at 05:58:32PM +0200, Ard Biesheuvel wrote:
+> Given that the contents of EFI runtime code and data regions are
+> provided by the firmware, as well as the DSDT, it is not unimaginable
+> that AML code exists today that accesses EFI runtime code regions using
+> a SystemMemory OpRegion. There is nothing fundamentally wrong with that,
+> but since we take great care to ensure that executable code is never
+> mapped writeable and executable at the same time, we should not permit
+> AML to create writable mapping.
+> 
+> Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 
-> >>=20
-> > [...]
-> >>=20
-> >> Changes in v11:
-> >> - add ports required of both #address-cells and  #size-cells
-> >> - add required operating-points-v2
-> >> - add required #sound-dai-cells
-> >> - add required power-domains
-> >> - update maintainer list
-> >=20
-> > Where's that maintainer file update?
-> I had deleted Tanmay.
-> Anyway, I will removed Chandan at next upload.
+I'm booting Lenovo Flex 5G laptop with ACPI, and seeing this change
+causes a memory abort[1] when upgrading ACPI tables via initrd[2].
+Dropping this change seems to fix the issue for me.  But does that
+looks like a correct fix to you?
 
-Ok.
+Shawn
 
-> >=20
-> >> ---
-> >>  .../bindings/display/msm/dp-controller.yaml        | 157=20
-> >> +++++++++++++++++++++
-> >>  .../bindings/display/msm/dpu-sc7180.yaml           |  10 ++
-> >>  2 files changed, 167 insertions(+)
-> >>  create mode 100644=20
-> >> Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-> >>=20
-> >> diff --git=20
-> >> a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml=20
-> >> b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-> >> new file mode 100644
-> >> index 0000000..2b71c7a
-> >> --- /dev/null
-> >> +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-> >> @@ -0,0 +1,157 @@
-> >> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-[...]
-> >> +required:
-> >> +  - compatible
-> >> +  - reg
-> >> +  - interrupts
-> >> +  - clocks
-> >> +  - clock-names
-> >> +  - phys
-> >> +  - phy-names
-> >> +  - "#sound-dai-cells"
-> >> +  - power-domains
-> >> +  - ports
-> >> +
-> >> +additionalProperties: false
-> >> +
-> >> +examples:
-> >> +  - |
-> >> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> >> +    #include <dt-bindings/clock/qcom,dispcc-sc7180.h>
-> >> +    #include <dt-bindings/power/qcom-aoss-qmp.h>
-> >> +    #include <dt-bindings/power/qcom-rpmpd.h>
-> >> +
-> >> +    mdss@ae00000 {
-> >=20
-> > mdss is not a standard node name. Maybe 'subsystem'?
-> Can you give me more details regrading this.
-> I had double checked both ti/ti,am65x-dss.yaml and msm/dsi-phy.yaml and=20
-> can not find any clue for this.
-> Can I just followed msm/dsi-phy.yaml for this?
+[1] https://fileserver.linaro.org/s/iDe9SaZeNNkyNxG
+[2] Documentation/admin-guide/acpi/initrd_table_override.rst
 
-Please look at section "2.2.2 Generic Names Recommendation" of the DT
-spec[1] to find a proper name. I don't see 'subsystem' there but that
-may be because it shouldn't really exist as a node. Instead we should
-have the child nodes sit directly under the SoC node.
-
-[1] https://github.com/devicetree-org/devicetree-specification/releases/dow=
-nload/v0.3/devicetree-specification-v0.3.pdf
+> ---
+>  arch/arm64/kernel/acpi.c | 9 +++++++++
+>  1 file changed, 9 insertions(+)
+> 
+> diff --git a/arch/arm64/kernel/acpi.c b/arch/arm64/kernel/acpi.c
+> index 01b861e225b0..455966401102 100644
+> --- a/arch/arm64/kernel/acpi.c
+> +++ b/arch/arm64/kernel/acpi.c
+> @@ -301,6 +301,15 @@ void __iomem *acpi_os_ioremap(acpi_physical_address phys, acpi_size size)
+>  			pr_warn(FW_BUG "requested region covers kernel memory @ %pa\n", &phys);
+>  			return NULL;
+>  
+> +		case EFI_RUNTIME_SERVICES_CODE:
+> +			/*
+> +			 * This would be unusual, but not problematic per se,
+> +			 * as long as we take care not to create a writable
+> +			 * mapping for executable code.
+> +			 */
+> +			prot = PAGE_KERNEL_RO;
+> +			break;
+> +
+>  		case EFI_ACPI_RECLAIM_MEMORY:
+>  			/*
+>  			 * ACPI reclaim memory is used to pass firmware tables
+> -- 
+> 2.27.0
