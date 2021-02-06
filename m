@@ -2,119 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A17FD3119C2
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Feb 2021 04:18:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C3F14311AB0
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Feb 2021 05:08:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231229AbhBFDSL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Feb 2021 22:18:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46230 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229742AbhBFDMf (ORCPT
+        id S229931AbhBFEHa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Feb 2021 23:07:30 -0500
+Received: from mail29.static.mailgun.info ([104.130.122.29]:12718 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229693AbhBFEFr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Feb 2021 22:12:35 -0500
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEFA3C061786
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Feb 2021 19:11:53 -0800 (PST)
-Received: by mail-pg1-x532.google.com with SMTP id o7so5899464pgl.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Feb 2021 19:11:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=03Irav0Kn7d3PmwdWltq8yhVeaa7+Yo6U0jt6YgZEOM=;
-        b=DFmxgNlGvwe3ViCthiyT2nkSLaQNiDYG62IdcIyg60j76khiIWkG7ZL85g/T/7FKrU
-         OgrzGWOdftRv8IHcr0+PsU/nRTlgiC8Au4wV7DUkVkE9mtP/wAReUXv9qtUtxV3a7crt
-         8Ili36d2Ox8kFn/d1XX2mw2XaAaWF5VckKs4EIkTebWbOgDfZzt4tiLHbZSkIsEg6C1l
-         FS8z8PWGIAIWh6ISTUTF+C6vHzMxBihpLduERWDRf3sx1iCQu0WS+a1KiB61ZL3OnreY
-         9nbgDin9ULICHYmKKpMUikJ4PqhKYl5AIEWMejBekc/JGZNFhYlRs6d55dOA3LPjTQgZ
-         xLdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=03Irav0Kn7d3PmwdWltq8yhVeaa7+Yo6U0jt6YgZEOM=;
-        b=WG2kd8F4scMrNpuoujZjuRHzjMZhAaDvXs+0exST0mNiCRwc9mlrgZ0sP7RpPQnVxL
-         rbhkyFvKUBa3hiZZc8xEUS1mrx208tBx9Kf4sNvXRsmsaozenbfC4h0mf3Qep0Gb+KVN
-         BDVKi8ynTvLknaW0I14cDxnXLnKH93ZUtGP4hH81JwCc2Eg1mBQUGVfIZpDt4G2yvJV0
-         EMNLW3ZGyS+n7iNYK6bC3J2FsGdZvC7wravBqwaVlwJ5nF622MFEm916A5vnCJqAaW5e
-         ijehhgMmgN3CLbTQ/v+dy9A5ANAdRNpjYtSrYH6VIv7OdNu31HMAUwRUvxAIp2DYRHbC
-         +whw==
-X-Gm-Message-State: AOAM5310zY6kT832KlC0RRJKRUFS7ZNx9f1+dabBqXULnl2vtFmiuulj
-        xugNbXW53zSZmF6xG/8AGilPmg==
-X-Google-Smtp-Source: ABdhPJwrsGW2P1pW+WkekABo8xTR+L+k0eCCXm8bQCwQQOAOFnKsiA1f6hb8gX5zfR74LatrZKR/7A==
-X-Received: by 2002:a62:5e44:0:b029:1a4:daae:e765 with SMTP id s65-20020a625e440000b02901a4daaee765mr7426181pfb.8.1612581113257;
-        Fri, 05 Feb 2021 19:11:53 -0800 (PST)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id cq2sm9725597pjb.55.2021.02.05.19.11.50
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 05 Feb 2021 19:11:52 -0800 (PST)
-Date:   Sat, 6 Feb 2021 11:11:46 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Ard Biesheuvel <ardb@kernel.org>
-Cc:     linux-arm-kernel@lists.infradead.org, lorenzo.pieralisi@arm.com,
-        kernel-hardening@lists.openwall.com, catalin.marinas@arm.com,
-        linux-acpi@vger.kernel.org, sudeep.holla@arm.com, will@kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3 2/2] arm64/acpi: disallow writeable AML opregion
- mapping for EFI code regions
-Message-ID: <20210206031145.GA27503@dragon>
-References: <20200626155832.2323789-1-ardb@kernel.org>
- <20200626155832.2323789-3-ardb@kernel.org>
+        Fri, 5 Feb 2021 23:05:47 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1612584304; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=+/uIP87vJEaaYUqbVLHKGTP87A5yWxtIFnA2Yl8Y65Y=;
+ b=HcYDSYNMFfbJ2uhTyqT8qd+UPyBqem1/wb6hhxm70QEW7CiA2B9Fe6Djg9hHvM8ddORfws/2
+ ZPEvb+9CgCTAaQkD/0bWkDpQ2a7gO+JyadXKP1poy72CsRd+yB0QJnRdRZPFH2vrCH+1/T8G
+ Ki+6o8gDzT/I+OAWN8CAr1+SbP8=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 601ddd2d3919dfb4555a5859 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 06 Feb 2021 00:05:01
+ GMT
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 475A3C433C6; Sat,  6 Feb 2021 00:05:01 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id EA5EEC433ED;
+        Sat,  6 Feb 2021 00:04:59 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200626155832.2323789-3-ardb@kernel.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 05 Feb 2021 16:04:59 -0800
+From:   abhinavk@codeaurora.org
+To:     Yang Li <yang.lee@linux.alibaba.com>
+Cc:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, daniel@ffwll.ch,
+        freedreno@lists.freedesktop.org
+Subject: Re: [Freedreno] [PATCH] drm/msm/dp: remove unneeded semicolon
+In-Reply-To: <1612321727-25156-1-git-send-email-yang.lee@linux.alibaba.com>
+References: <1612321727-25156-1-git-send-email-yang.lee@linux.alibaba.com>
+Message-ID: <4efdd6c16dacc1909c9253c355c3c810@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Ard,
-
-On Fri, Jun 26, 2020 at 05:58:32PM +0200, Ard Biesheuvel wrote:
-> Given that the contents of EFI runtime code and data regions are
-> provided by the firmware, as well as the DSDT, it is not unimaginable
-> that AML code exists today that accesses EFI runtime code regions using
-> a SystemMemory OpRegion. There is nothing fundamentally wrong with that,
-> but since we take great care to ensure that executable code is never
-> mapped writeable and executable at the same time, we should not permit
-> AML to create writable mapping.
+On 2021-02-02 19:08, Yang Li wrote:
+> Eliminate the following coccicheck warning:
+> ./drivers/gpu/drm/msm/dp/dp_ctrl.c:1161:2-3: Unneeded semicolon
 > 
-> Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-
-I'm booting Lenovo Flex 5G laptop with ACPI, and seeing this change
-causes a memory abort[1] when upgrading ACPI tables via initrd[2].
-Dropping this change seems to fix the issue for me.  But does that
-looks like a correct fix to you?
-
-Shawn
-
-[1] https://fileserver.linaro.org/s/iDe9SaZeNNkyNxG
-[2] Documentation/admin-guide/acpi/initrd_table_override.rst
-
+> Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+> Signed-off-by: Yang Li <yang.lee@linux.alibaba.com>
+Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
 > ---
->  arch/arm64/kernel/acpi.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
+>  drivers/gpu/drm/msm/dp/dp_ctrl.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/arch/arm64/kernel/acpi.c b/arch/arm64/kernel/acpi.c
-> index 01b861e225b0..455966401102 100644
-> --- a/arch/arm64/kernel/acpi.c
-> +++ b/arch/arm64/kernel/acpi.c
-> @@ -301,6 +301,15 @@ void __iomem *acpi_os_ioremap(acpi_physical_address phys, acpi_size size)
->  			pr_warn(FW_BUG "requested region covers kernel memory @ %pa\n", &phys);
->  			return NULL;
->  
-> +		case EFI_RUNTIME_SERVICES_CODE:
-> +			/*
-> +			 * This would be unusual, but not problematic per se,
-> +			 * as long as we take care not to create a writable
-> +			 * mapping for executable code.
-> +			 */
-> +			prot = PAGE_KERNEL_RO;
-> +			break;
-> +
->  		case EFI_ACPI_RECLAIM_MEMORY:
->  			/*
->  			 * ACPI reclaim memory is used to pass firmware tables
-> -- 
-> 2.27.0
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c 
+> b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> index e3462f5..61ed67b 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> @@ -1158,7 +1158,7 @@ static int dp_ctrl_link_rate_down_shift(struct
+> dp_ctrl_private *ctrl)
+>  	default:
+>  		ret = -EINVAL;
+>  		break;
+> -	};
+> +	}
+> 
+>  	if (!ret)
+>  		DRM_DEBUG_DP("new rate=0x%x\n", ctrl->link->link_params.rate);
