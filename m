@@ -2,75 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C44D83120E0
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Feb 2021 03:24:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F0CB31214C
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Feb 2021 05:21:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229566AbhBGCYk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 6 Feb 2021 21:24:40 -0500
-Received: from mail-pg1-f169.google.com ([209.85.215.169]:41687 "EHLO
-        mail-pg1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229522AbhBGCYj (ORCPT
+        id S229785AbhBGET4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 6 Feb 2021 23:19:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57070 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229788AbhBGETl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 6 Feb 2021 21:24:39 -0500
-Received: by mail-pg1-f169.google.com with SMTP id t11so4288420pgu.8;
-        Sat, 06 Feb 2021 18:24:24 -0800 (PST)
+        Sat, 6 Feb 2021 23:19:41 -0500
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06A8EC061788
+        for <linux-arm-msm@vger.kernel.org>; Sat,  6 Feb 2021 20:19:01 -0800 (PST)
+Received: by mail-pj1-x1036.google.com with SMTP id m12so6396380pjs.4
+        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Feb 2021 20:19:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ZuUSwDW1QlcZo//J19uXwwWVGrMnsuuGUvOzqh+LAAY=;
+        b=XbbuIvVB/Ar1MJ2wdsGeAVmm5p6lIIZF+uPoC8txf+bsyY+gXm7mABMOlXwcXtMySh
+         IgKTNiebjanc1weOVklTRdteWOdNyAZnvKgBSPlksrIeCsPCJx5MfazXzP9otQ6hMPuE
+         ExCwcvR0YnaeyPfBJ8uG+HlkNc8RkYzTWFUpk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=DV9HHj90/6CU2obG3fOkTfyceXYyBSjTuvrMdoSYT4c=;
-        b=iFvJ7bz/qRVsOZ33D9VbVw483HO+57AL+eyl8ykEpYGpwR3MxD3TsC+PesBsv4n5cx
-         TQBHuoUcB6tB4ZRvRcKun4ooCgBqayzsbFBPk/z/R+fdHyS9rOdCkLdxBawWn7HHs/QY
-         O+StKcOyl39yofzsgbfUsEhicUec7LunrHkLfQA9qjxGEvqfG4Ah9IPXqwuyIKOxqhCx
-         aBrbOmG0UN8sk+AIHK5plE2F+3gAJp8dfP7QJjdb5lBW9ulRZxR9qz1rrsN2Qm4XAV/t
-         bPyxRfIgmNUT5BQQ1QxsizesmjPz9nWYDCE2LaS/Kfa2RXFBPsBPN670yN/zDWIMspzT
-         OCHQ==
-X-Gm-Message-State: AOAM530RHMtFvMhJlFWhAldCIqLRjDLe+eE2Kn6wjTr4Lpo2/+cdzGFQ
-        bTmBeHll9xK/jCcReAyVLrVaHPBlyrc=
-X-Google-Smtp-Source: ABdhPJwtnw8SZQ2wx4sc+xxcjWnCOja9n0ib3wtDBNghEuUST9w/8PrNn78lYbXSNr7Is/+5IHj/4Q==
-X-Received: by 2002:a62:ab16:0:b029:1bd:9bdc:2459 with SMTP id p22-20020a62ab160000b02901bd9bdc2459mr11980992pff.19.1612664638483;
-        Sat, 06 Feb 2021 18:23:58 -0800 (PST)
-Received: from ?IPv6:2601:647:4000:d7:7d2:d17b:df07:7747? ([2601:647:4000:d7:7d2:d17b:df07:7747])
-        by smtp.gmail.com with ESMTPSA id c15sm7748482pjc.9.2021.02.06.18.23.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 06 Feb 2021 18:23:57 -0800 (PST)
-Subject: Re: [RFC PATCH v1 1/2] block: bsg: resume scsi device before
- accessing
-To:     Asutosh Das <asutoshd@codeaurora.org>, cang@codeaurora.org,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, stern@rowland.harvard.edu,
-        "Bao D . Nguyen" <nguyenb@codeaurora.org>,
-        FUJITA Tomonori <fujita.tomonori@lab.ntt.co.jp>,
-        Jens Axboe <axboe@kernel.dk>,
-        "open list:BLOCK LAYER" <linux-block@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <cover.1611719814.git.asutoshd@codeaurora.org>
- <c04a11a590628c2497cef113b0dfea781de90416.1611719814.git.asutoshd@codeaurora.org>
-From:   Bart Van Assche <bvanassche@acm.org>
-Message-ID: <f83e890d-61b9-e428-6289-b7268fbe7e01@acm.org>
-Date:   Sat, 6 Feb 2021 18:23:55 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.0
+        bh=ZuUSwDW1QlcZo//J19uXwwWVGrMnsuuGUvOzqh+LAAY=;
+        b=dIiiYgr0RSTbOKuzu1m9/V+ERBB80n/rU9Pn08Bhg5sfDfozBmFWEmK2leCx6r9d0s
+         RrTu9lkytV6Tym2NRLYlc7x3l6DDIlc9guvNIfhvepRc3dq9J6IsZroTiGzyLL6TJyaJ
+         7WDH2rZN/+jLvXtRe9pGF+iFm6I406yD5tnK+z0Ev7U+1EjAr6fcL2GzD3cANDRbNIkj
+         2oD5jtUvvuucbn1ysFhqv9230avUELSX0mzgKB5PCYceuLQnqYy0gG7khJR4qcU6IMRN
+         w+E5MgVXMHXFfG+1OIkqDHZpfJPiKESBDc9AKlu5CCIpQIx071DLLSKaNb1+tSXN08M9
+         q3XQ==
+X-Gm-Message-State: AOAM533c06JmTC7ahyv1qVdraXuj6Eca64VeDq3qGW4ywM36aBJnS9xW
+        oOi4IOijTH0lEf/ZaJxGdakiQoolJTv1Ow==
+X-Google-Smtp-Source: ABdhPJzCyWtt6C/0vpNQnL1jkMGfNzMDP+aZniFfVTygDhZAtTN6sXQlhcGUh44k9O7mvq9Xen522w==
+X-Received: by 2002:a17:90b:1a86:: with SMTP id ng6mr10787360pjb.113.1612671540567;
+        Sat, 06 Feb 2021 20:19:00 -0800 (PST)
+Received: from smtp.gmail.com ([2620:15c:202:201:2c64:7ee8:fefb:fab2])
+        by smtp.gmail.com with ESMTPSA id 76sm14392262pfz.174.2021.02.06.20.18.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 06 Feb 2021 20:18:59 -0800 (PST)
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     linux-kernel@vger.kernel.org, Sean Paul <sean@poorly.run>,
+        Kuogee Hsieh <khsieh@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, Lee Jones <lee.jones@linaro.org>
+Subject: [PATCH] drm/msm/dp: Add a missing semi-colon
+Date:   Sat,  6 Feb 2021 20:18:58 -0800
+Message-Id: <20210207041858.3317171-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.30.0.478.g8a0d178c01-goog
 MIME-Version: 1.0
-In-Reply-To: <c04a11a590628c2497cef113b0dfea781de90416.1611719814.git.asutoshd@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 1/26/21 8:00 PM, Asutosh Das wrote:
-> Resumes the scsi device before accessing it.
-> 
-> Change-Id: I2929af60f2a92c89704a582fcdb285d35b429fde
-> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
-> Signed-off-by: Can Guo <cang@codeaurora.org>
-> Signed-off-by: Bao D. Nguyen <nguyenb@codeaurora.org>
+A missing semicolon here causes my external display to stop working.
+Indeed, missing the semicolon on the return statement leads to
+dp_panel_update_tu_timings() not existing because the compiler thinks
+it's part of the return statement of a void function, so it must not be
+important.
 
-No Change-Id tags in upstream patches please.
+  $ ./scripts/bloat-o-meter before.o after.o
+  add/remove: 1/1 grow/shrink: 0/1 up/down: 7400/-7540 (-140)
+  Function                                     old     new   delta
+  dp_panel_update_tu_timings                     -    7400   +7400
+  _dp_ctrl_calc_tu.constprop                 18024   17900    -124
+  dp_panel_update_tu_timings.constprop        7416       -   -7416
+  Total: Before=54440, After=54300, chg -0.26%
 
-Thanks,
+Add a semicolon so this function works like it used to.
 
-Bart.
+Cc: Sean Paul <sean@poorly.run>
+Cc: Kuogee Hsieh <khsieh@codeaurora.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org
+Cc: Lee Jones <lee.jones@linaro.org>
+Fixes: cc9014bf63a4 ("drm/msm/dp/dp_ctrl: Move 'tu' from the stack to the heap")
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ drivers/gpu/drm/msm/dp/dp_ctrl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+index 55b7d0edffbf..95913db97616 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+@@ -631,7 +631,7 @@ static void _dp_ctrl_calc_tu(struct dp_tu_calc_input *in,
+ 
+ 	tu = kzalloc(sizeof(*tu), GFP_KERNEL);
+ 	if (!tu)
+-		return
++		return;
+ 
+ 	dp_panel_update_tu_timings(in, tu);
+ 
+
+base-commit: ce5226625a694fa5a46db241ac4c77a1430e37fe
+-- 
+https://chromeos.dev
+
