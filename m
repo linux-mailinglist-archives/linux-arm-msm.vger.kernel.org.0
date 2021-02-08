@@ -2,94 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AE1E8314197
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Feb 2021 22:21:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C44DE31428C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Feb 2021 23:08:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236206AbhBHVVW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Feb 2021 16:21:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46750 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236176AbhBHVVS (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Feb 2021 16:21:18 -0500
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9E67C061786;
-        Mon,  8 Feb 2021 13:20:38 -0800 (PST)
-Received: by mail-pl1-x62b.google.com with SMTP id g3so8542498plp.2;
-        Mon, 08 Feb 2021 13:20:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=R+r2jOyAlqjRMKHtvLPADXW3voMgq9h98r709KcrCLA=;
-        b=on8PcE7z2qaHBS1NRAIcQDoBXSzdz3AfDUoAyrGwgMKmBymB8+KwNn/wQ8bxs/nE8W
-         F4+jm/1ZrtEw2O3+RjFPADSLKNZtUYPAFmJqs8iB9H2lppiw+EQp7dBDi2JyI1AqPoPP
-         H6pWUG78CBYYcLwAQvNvv7Q6OelL3XodzgyVOaPFcp12WC+VTD/ea+aaeULbzkwVCsAX
-         NGtjR2iaRo/kU901b5AjsBBCjdSb6vFLAwL0t6Uzl48C9fxcV6ygj9O4biTxV/qn6lY3
-         oxt3BS01ghGL4UxY+wQpHaoyqqmD+gTxUanw5JXjP53YIBdZlvf7LSJd/TC1eicyLSL9
-         jOKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=R+r2jOyAlqjRMKHtvLPADXW3voMgq9h98r709KcrCLA=;
-        b=hHZh5F3PZrAEl2D+aOHkiDnZ/8JCJSLoKjKJGAUgoHEjf0SXNUpGT+5/733Z0vSccl
-         4SjwjJGbBzNhWkjcTWMmozeG2PML0/Ea0TcHqnRW3PFSQnaDvp8uGZ1QyWlOyANF3A4O
-         RON9HSVhEgh7z3dBsm1WxM2UDaGls62DkIZpSc9bkrBotj8U4gb5JbhNb3PArWmdXjL3
-         UOCDEUM+JdCb9fhE1mXVV1mDCKpH1PtWj3ZMD/etRgKsI9JzcPJnPTHrmurE9a/GHppc
-         +nqZRb+SNkykgn+4NFsrgtPXUNyJwfTMOXkeKz5vZm8h0q9DVQNl1TGu2njm1skhVNF9
-         zE0g==
-X-Gm-Message-State: AOAM532slb+ge+EJKQgiJ1dhdIduDdjngHtEWfKisb+urpca8D246XNT
-        gq7rlPnHvnFMFxeuYwTwRBuM2Rg6cZQ444AjRQzivU0d
-X-Google-Smtp-Source: ABdhPJwlLrUw1rV3Nhhbhev6KiudY8wFgGQ6XXUwlUEyRbugwdSU+pRmpSd2OCN8pUcKOXmjuWx45WHicCFxjzqqWkU=
-X-Received: by 2002:a17:90b:14cf:: with SMTP id jz15mr716661pjb.180.1612819238195;
- Mon, 08 Feb 2021 13:20:38 -0800 (PST)
+        id S230244AbhBHWHz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Feb 2021 17:07:55 -0500
+Received: from mail.kernel.org ([198.145.29.99]:44366 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230090AbhBHWHy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 8 Feb 2021 17:07:54 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 2DA0664E27;
+        Mon,  8 Feb 2021 22:07:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1612822034;
+        bh=d45fruyMe2LIRicqFUcbjfSPAJ46rlT885i916wbg1M=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=Rs/SGVlc5JYIWflp/bjz/2kv7Uf1Wopy2HTaSlo5yvxmjcx03ByKlXeJA4I3EZFx0
+         0TIZZuY/TVTqaNtl1sjKQ9jP0jlB914X6JY40yQGOqRJO+nLq403dOcGt0r06mTxf4
+         5sIAqMmgtFm5cau9bko2C0wJ5k3RdnEjcC9a+glDrQLIXVLcc3roEuoRyMUCW78r3J
+         5fDZ7TXSfC3QRdMcqjREvl7Pf81ICj7YFN4ui9/p358cgzui19iRDpfoSPLtQuDPYF
+         jJQgJPQULDCXSOOQEyREvnsEJYXkytV7uzeUQy85yUALxtIA0eCiHeyoVibDN+72kK
+         L7Uy7fJLn0tAw==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20210118041156.50016-1-manivannan.sadhasivam@linaro.org>
- <161280637168.76967.9168707371952675235@swboyd.mtv.corp.google.com> <20210208181954.GA276254@thinkpad>
-In-Reply-To: <20210208181954.GA276254@thinkpad>
-From:   Jassi Brar <jassisinghbrar@gmail.com>
-Date:   Mon, 8 Feb 2021 15:20:27 -0600
-Message-ID: <CABb+yY2pCdQnvmkBMBuYXsMYCNKheqmroQxF5YvjDQ5xqJP-NA@mail.gmail.com>
-Subject: Re: [PATCH v3 0/5] Add APCS support for SDX55
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-clk@vger.kernel.org,
-        Devicetree List <devicetree@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1612812784-26369-1-git-send-email-subbaram@codeaurora.org>
+References: <1612812784-26369-1-git-send-email-subbaram@codeaurora.org>
+Subject: Re: [PATCH] spmi: spmi-pmic-arb: Fix hw_irq overflow
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        David Collins <collinsd@codeaurora.org>,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
+        stable@vger.kernel.org
+To:     Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
+        linux-kernel@vger.kernel.org
+Date:   Mon, 08 Feb 2021 14:07:12 -0800
+Message-ID: <161282203270.4168818.14030280893762596656@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 8, 2021 at 12:20 PM Manivannan Sadhasivam
-<manivannan.sadhasivam@linaro.org> wrote:
->
-> On Mon, Feb 08, 2021 at 09:46:11AM -0800, Stephen Boyd wrote:
-> > Quoting Manivannan Sadhasivam (2021-01-17 20:11:51)
-> > > Changes in v2:
-> > >
-> > > * Modified the max_register value as per the SDX55 IPC offset in mailbox
-> > >   driver.
-> > >
-> > > Manivannan Sadhasivam (5):
-> > >   dt-bindings: mailbox: Add binding for SDX55 APCS
-> > >   mailbox: qcom: Add support for SDX55 APCS IPC
-> >
-> > I think I can apply the clk patches to clk tree without the mailbox
-> > patches, right?
-> >
->
-> Yes, you can. Thanks for applying!
->
-> Jassi: Can you please look into the mailbox patches?
->
-They are compatible strings mostly... so assume it ok.
+Quoting Subbaraman Narayanamurthy (2021-02-08 11:33:04)
+> Currently, when handling the SPMI summary interrupt, the hw_irq
+> number is calculated based on SID, Peripheral ID, IRQ index and
+> APID. This is then passed to irq_find_mapping() to see if a
+> mapping exists for this hw_irq and if available, invoke the
+> interrupt handler. Since the IRQ index uses an "int" type, hw_irq
+> which is of unsigned long data type can take a large value when
+> SID has its MSB set to 1 and the type conversion happens. Because
+> of this, irq_find_mapping() returns 0 as there is no mapping
+> for this hw_irq. This ends up invoking cleanup_irq() as if
+> the interrupt is spurious whereas it is actually a valid
+> interrupt. Fix this by using the proper data type (u32) for id.
+>=20
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+> ---
 
-cheers!
+Applied to spmi-next
