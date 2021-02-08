@@ -2,217 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B9AC2313CAF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Feb 2021 19:09:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 33C66313CB9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Feb 2021 19:10:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235305AbhBHSIl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Feb 2021 13:08:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60722 "EHLO
+        id S235522AbhBHSJD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Feb 2021 13:09:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235420AbhBHSF7 (ORCPT
+        with ESMTP id S235444AbhBHSGp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Feb 2021 13:05:59 -0500
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA951C06178B
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Feb 2021 10:04:47 -0800 (PST)
-Received: by mail-ot1-x329.google.com with SMTP id k10so12664746otl.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Feb 2021 10:04:47 -0800 (PST)
+        Mon, 8 Feb 2021 13:06:45 -0500
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88927C0617A9
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Feb 2021 10:06:03 -0800 (PST)
+Received: by mail-pf1-x429.google.com with SMTP id q131so10197915pfq.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Feb 2021 10:06:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=s0RIoB1WAQe/tEigFmwUYum/yUBo+ij598mpG26j+5M=;
-        b=GefWkzc5q7nF//IW8dHNFJ6oekSNOcVbMpt/m9OyvEm1hgR3CVrWmBRplWRn7Za1kU
-         JaFahqChKJudbL92hSzPX9ql68ESi6ylCBr/J3ZauuPnLCaz9QBl4E6lJkThhyoujBDM
-         qMQyeK4hm7xlLtJiL43CA3u9Xnw2vU+RsnfPB8yUXq8nSTO4+zpGbUKrrWHolArYJtuK
-         WNJcfNQn0/okHc4BVIU+OuHbCjZ7wNQoVxhhdp7ERkMkap6h3akrrqZSD0ra3gyWHHMF
-         iWpjGr+yXneNOwLzTCModqi6CwdzNTKCarxpO94D/j/lxJultHTRyM7+fc8M1rVLc4Tt
-         m9JQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=1RrfaCk/ab0gQx86EL5Lr0A0foJQv5sUEHlv15Ow4xg=;
+        b=y2DYs/64pOfUxtEFP0JTu0LQ6E4NCRqRR8vmIatkdpBvCBAvWm5qxghhKRxCzMw5WP
+         M50nJDQq6rBg5MdAec9YEQ2JZtYpiT+bvrnNS9qIm29xzPM6CLMsWVSrZyp1A1DawCfP
+         B+OaXZEOq1R0YW2cnqfzbA46KlLHYJ0F9XwTWNRY9T3qrEZdjHitI0Fsl4pSB9HcWV74
+         3HjCMoc0DJiVZuWNpzlK87YY1LnQVORNzH5mZqSOVGBTL5XruU/jDmKGb3ZAypyn7i9Z
+         cBZnplDZ10Tsl3CH0IxZovpvkQhxrZ1YLSZ0kcpC8z+KXXUXuV+AzF+pDXgfU+RvGzQo
+         77iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=s0RIoB1WAQe/tEigFmwUYum/yUBo+ij598mpG26j+5M=;
-        b=V+C9T9dVU+nsRjtTwspfik7NA+E/KFEyRzwzKZd+amovGzydfsjycFgJQk6PNcIqOp
-         qoQ/v1iLcWh3jYwW6DsZFfEyzPOBtJKkjfiZdAVXW9Z6R+Tu11NBsu2KF5c9bAeRfQ+x
-         vPT1B+Mu9iFbBB3Rj46Avb+XQNQaROa4AKQkYup+5PWDTeaMLkH9/uNA7sId9W/h6yGY
-         0d/gtR8aRsljFJWOGKYIfmxBvp0fIp2jPsVdJR4hofGIcp3wfK0i0nQBw/ukrGHLVqGL
-         eyv0+UciAFP/AixSHsXrpWZ1uASODaI0AxUdlhUFLUAsUeJ/XFfoWoatQI/XvM3wjT2p
-         ZDMg==
-X-Gm-Message-State: AOAM5309bWDHRaEe/Q2Du6ON79UnuGSROC6vE1/zy35rAw82rL7kZWBD
-        UeeBb/+5wk+3+nxBB+rJZipXzErQSerYTQ==
-X-Google-Smtp-Source: ABdhPJzb+I/DjZSGmQeEQpz5MrORann8MfWst3vtPIDE+lx/6Piwt7SSwY+PkCGUZ8cH1vt16Q3yHw==
-X-Received: by 2002:a05:6830:19e7:: with SMTP id t7mr3702796ott.211.1612807486542;
-        Mon, 08 Feb 2021 10:04:46 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id w196sm2040111oif.12.2021.02.08.10.04.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Feb 2021 10:04:45 -0800 (PST)
-Date:   Mon, 8 Feb 2021 12:04:44 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sm8250: add pinctrl for SPI using
- GPIO as a CS
-Message-ID: <YCF9PKJl0HZrKBz1@builder.lan>
-References: <20210204204904.294555-1-dmitry.baryshkov@linaro.org>
- <YBx+LcgrbyUKpYig@builder.lan>
- <CAD=FV=XOk14DfAJT9j86WbiRifxUQZFPy1grJWoz0A7Fon1edg@mail.gmail.com>
- <YByQizVTnj2uTNt2@builder.lan>
- <CAD=FV=UYmv-PH-m4T6RcuW1JuQ-fCZ2Lg6gCCUJ5xquT1NP1jA@mail.gmail.com>
- <YB122qwCSdQka5jw@builder.lan>
- <CAD=FV=UY_AFRrAY0tef5jP698LEng6oN652LcX3B4nG=aWh0gA@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=1RrfaCk/ab0gQx86EL5Lr0A0foJQv5sUEHlv15Ow4xg=;
+        b=psPB3m0tQsN4QU6tqvQ0lNJTLjcJvrUBVK+TR3ErPjMok30CpMVll/0CW3eMiGysO3
+         IyttyNOfuVHSoc1KifbvG0ytr7GcbC6mOPxKtJAD8KwP3U49bakuk0VasnRgYEFU7BfR
+         mxtnzkicTDs9bG70ewD8eR6umrJZK9fzpJsRDdSCUnl2XlQKbIwf7t+R8DHa1N/8Dj21
+         MF7GjkDHACS99nZQ83eR8cZFOKbM/9P984Ee5o+zy5M1aeIOEgqnubATmdwQE1ysGpjd
+         2KeaoEWSFBbaxajbG3z9UsjcNUi1CPEfb+ynsNOGBDm1jPgAewRbkLI/3fasBl4rNbVQ
+         USOQ==
+X-Gm-Message-State: AOAM532JlgoaxZanjNCHEard+UmvzsdZgmqT4+zXTQJy896JaCPrG/uK
+        OmiphH0uqOBUsOgxJWsAVyXjX1+2KAFXuoHNWG/X7g==
+X-Google-Smtp-Source: ABdhPJxmN7mpOQo+VyXhtq0eFDx6U+wJTaUAzUw3pzcQ9XjhtXKyYcGlBd7iTXqYYVt9bMZmNHjUL8PTrbsM0qUD3FY=
+X-Received: by 2002:a63:5b4f:: with SMTP id l15mr18563509pgm.339.1612807563034;
+ Mon, 08 Feb 2021 10:06:03 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAD=FV=UY_AFRrAY0tef5jP698LEng6oN652LcX3B4nG=aWh0gA@mail.gmail.com>
+References: <20210205104414.299732-1-robert.foss@linaro.org>
+ <20210205104414.299732-12-robert.foss@linaro.org> <104e9dad-6819-119e-8f76-d83473374642@linaro.org>
+In-Reply-To: <104e9dad-6819-119e-8f76-d83473374642@linaro.org>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Mon, 8 Feb 2021 19:05:51 +0100
+Message-ID: <CAG3jFyt7_UD-12UXNBWHMYK12reWos4x51z98xuihj2JY5hv8g@mail.gmail.com>
+Subject: Re: [PATCH v4 11/22] media: camss: Add support for CSIPHY hardware
+ version Titan 170
+To:     Andrey Konovalov <andrey.konovalov@linaro.org>
+Cc:     Todor Tomov <todor.too@gmail.com>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        angelogioacchino.delregno@somainline.org,
+        linux-media <linux-media@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Rob Herring <robh@kernel.org>,
+        Sakari Ailus <sakari.ailus@iki.fi>,
+        Nicolas Boichat <drinkcat@chromium.org>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
+        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Jonathan Marek <jonathan@marek.ca>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 08 Feb 09:58 CST 2021, Doug Anderson wrote:
+Hey Andrey,
 
-> Hi,
-> 
-> On Fri, Feb 5, 2021 at 8:48 AM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
+On Mon, 8 Feb 2021 at 19:02, Andrey Konovalov
+<andrey.konovalov@linaro.org> wrote:
+>
+> Hi Robert,
+>
+> Thank you for your patchset!
+>
+> On 05.02.2021 13:44, Robert Foss wrote:
+> > Add register definitions for version 170 of the Titan architecture
+> > and implement support for the CSIPHY subdevice.
 > >
-> > On Fri 05 Feb 09:00 CST 2021, Doug Anderson wrote:
+> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> > ---
+> >   .../qcom/camss/camss-csiphy-3ph-1-0.c         | 182 ++++++++++++++++-=
+-
+> >   .../media/platform/qcom/camss/camss-csiphy.c  |  66 +++++--
+> >   drivers/media/platform/qcom/camss/camss.c     |  74 +++++++
+> >   3 files changed, 290 insertions(+), 32 deletions(-)
 > >
-> > > Hi,
-> > >
-> > > On Thu, Feb 4, 2021 at 4:25 PM Bjorn Andersson
-> > > <bjorn.andersson@linaro.org> wrote:
-> > > >
-> > > > > > > +                             mux {
-> > > > > >
-> > > > > > Rather than splitting the properties in {mux, cs, config} I think it
-> > > > > > makes more sense to split them in {spi, cs} or something like that.
-> > > > >
-> > > > > In general pinconf doesn't belong in the SoC dts file.  If there's no
-> > > > > reason to change it seems like this should match what sc7180 did.
-> > > > >
-> > > >
-> > > > Right, but I still would prefer the pinctrl state to be split by
-> > > > function/pins, rather than pinmux vs pinconf. That way it's natural to
-> > > > add pinconf properties to the various functional parts (i.e. bias or
-> > > > drive-strength for the spi pins vs cs).
-> > > >
-> > > > Do you have any concerns with this?
-> > >
-> > > I read this a few times and I'm not exactly sure what you're
-> > > proposing.  Can you provide an example of what you want it to look
-> > > like in this case?
-> > >
+> > diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b=
+/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> > index 97cb9de85031..148b8c50382c 100644
+> > --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> > +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> > @@ -47,6 +47,105 @@
+> >   #define CSIPHY_3PH_CMN_CSI_COMMON_CTRL6_SHOW_REV_ID BIT(1)
+> >   #define CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(n)        (0x8b0 + 0x4 * (n=
+))
 > >
-> > Today in most cases we group pinctrl properties by being a "conf" of a
-> > "mux" property, so we end up with:
+> > +#define CSIPHY_DEFAULT_PARAMS            0
+> > +#define CSIPHY_LANE_ENABLE               1
+> > +#define CSIPHY_SETTLE_CNT_LOWER_BYTE     2
+> > +#define CSIPHY_SETTLE_CNT_HIGHER_BYTE    3
+> > +#define CSIPHY_DNP_PARAMS                4
+> > +#define CSIPHY_2PH_REGS                  5
+> > +#define CSIPHY_3PH_REGS                  6
+> > +
+> > +struct csiphy_reg_t {
+> > +     int32_t  reg_addr;
+> > +     int32_t  reg_data;
+> > +     int32_t  delay;
+> > +     uint32_t csiphy_param_type;
+> > +};
+> > +
+> > +static const struct
+> > +csiphy_reg_t lane_regs_sdm845[5][14] =3D {
+>
+> <snip>
+>
+> > @@ -208,6 +294,66 @@ static void csiphy_lanes_enable(struct csiphy_devi=
+ce *csiphy,
 > >
-> > the_state: spi-state {
-> >         all-the-mux-properties {
-> >                 pins = "gpio40", gpio41", "gpio42", "gpio43";
-> >                 function = qup14";
-> >         };
-> >
-> >         repeat-pins-and-add-all-conf-properties {
-> >                 pins = "gpio40", gpio41", "gpio42", "gpio43";
-> >                 drive-strength = <6>;
-> >                 bias-disable;
-> >         };
-> > };
-> >
-> > This made sense to me after implementing the driver, there's muxing to
-> > be done and there's electrical configuration to configure.
-> >
-> > But what's actually trying to describe is a hardware state; i.e. that
-> > miso, mosi, clk and cs should be acting in a particular fashion.
-> >
-> > In particular this lends itself useful when the hardware state consists
-> > of different functions, a good example being the Bluetooth UART, or in
-> > the SPI-with-separate-GPIO:
-> >
-> > the_state: spi-state {
-> >         miso-mosi-clk {
-> >                 pins = "gpio40", gpio41", "gpio42"
-> >                 function = qup14";
-> >                 drive-strength = <6>;
-> >                 bias-disable;
-> >         };
-> >
-> >         cs {
-> >                 pins = "gpio43";
-> >                 function = "gpio";
-> >                 drive-strength = <6>;
-> >                 bias-disable;
-> >         };
-> > };
-> >
-> >
-> > For the case of uniform configuration across the state we've come to
-> > sprinkle a few different synonyms for "pinconf" and "pinmux" in the
-> > state nodes. But a few years ago someone updated the state parser to
-> > handle cases either directly in the state or in subnodes. So we can
-> > avoid these boilerplate nodes with a simple:
-> >
-> > the_state: spi-state {
-> >         pins = "gpio40", gpio41", "gpio42", "gpio43";
-> >         function = qup14";
-> >         drive-strength = <6>;
-> >         bias-disable;
-> > };
-> 
-> OK, this makes sense to me.  I always felt like the extra "pinconf" /
-> "pinmux" made things awkward.
+> >       val =3D CSIPHY_3PH_LNn_MISC1_IS_CLKLANE;
+> >       writel_relaxed(val, csiphy->base + CSIPHY_3PH_LNn_MISC1(l));
+> > +}
+> > +
+> > +static void csiphy_gen2_config_lanes(struct csiphy_device *csiphy,
+> > +                                  u8 settle_cnt)
+> > +{
+> > +     int i, l;
+> > +     u32 val;
+> > +
+> > +     for (l =3D 0; l < 5; l++) {
+> > +             for (i =3D 0; i < 14; i++) {
+> > +                     struct csiphy_reg_t *r =3D &lane_regs_sdm845[l][i=
+];
+>
+> - this line gives me a compilation warning :
+> warning: initialization discards =E2=80=98const=E2=80=99 qualifier from p=
+ointer target type [-Wdiscarded-qualifiers]
+>    306 |    struct csiphy_reg_t *r =3D &lane_regs_sdm845[l][i];
+>
+> Change it to:
+>         const struct csiphy_reg_t *r =3D &lane_regs_sdm845[l][i];
+> ?
+>
 
-I'm happy to hear that :)
+Yep, I applied that change to my local tree. But didn't thank the bot
+for it's graceful contribution.
 
-> I guess someone should try to convert some SoC dtsi fully over so we
-> can see how it looks?
 
-Sounds good. I feel fairly confident, so let's pick SM8250 and aim to
-land this patch in the "new" form.
-
-> In this case I think you'd have something like this, right?
-> 
-> SoC dtsi:
-> 
-> tlmm: pinctrl@... {
->   qup_spi0_data_clk: qup-spi0-data-clk {
->     pins = "gpio28", "gpio29", "gpio30";
->     function = "qup0";
->   };
-> 
->   qup_spi0_cs: qup-spi0-cs {
->     pins = "gpio31";
->     function = "qup0";
->   };
-> 
->   qup_spi0_cs_gpio: qup-spi0-cs-gpio {
->     pins = "gpio31";
->     function = "gpio";
->   };
-> };
-> 
-> Board dts:
-> 
-> &spi0 {
->   pinctrl-0 = <&qup_spi0_data_clk>, &<qup_spi0_cs_gpio>;
-> };
-> 
-> &qup_spi0_data_clk {
->   drive-strength = <6>;
->   bias-disable;
-> };
-> 
-> &qup_spi0_cs_gpio {
->   drive-strength = <6>;
->   bias-disable;
-> };
-
-Correct. And providing a common state for the 3 non-cs pins and using
-the pinctrl-0 to select which kind of cs we want looks even better.
-
-Regards,
-Bjorn
+Rob.
