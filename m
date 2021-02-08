@@ -2,100 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CFF02313F1A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Feb 2021 20:36:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C40BD313FF0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Feb 2021 21:08:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236277AbhBHTf0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Feb 2021 14:35:26 -0500
-Received: from so15.mailgun.net ([198.61.254.15]:22418 "EHLO so15.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236242AbhBHTe3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Feb 2021 14:34:29 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1612812844; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=ekryDzh7CqtuJpTiAyGom8aL8IUPv2qJB5wkgaK5lQQ=; b=oeL6TENSwiMWk2qDFuyi6n/dhSwxAnotnzMLaD8h0wCOq97aPz2SCSafJeHXJZRE2/R1GKFU
- hr1acDJ8HuDAZ6px7J3IwnfqYSOY7CR0oIuJPgB3/moya07+tR0FOCX+pHRYgsX7buN5YY81
- nqBk74zaeYNgtfTSMehtVrrgI3Y=
-X-Mailgun-Sending-Ip: 198.61.254.15
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 6021920a81f6c45dceca36e3 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 08 Feb 2021 19:33:30
- GMT
-Sender: subbaram=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BA063C43461; Mon,  8 Feb 2021 19:33:29 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from subbaram-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: subbaram)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CCDCBC433CA;
-        Mon,  8 Feb 2021 19:33:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CCDCBC433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=subbaram@codeaurora.org
-From:   Subbaraman Narayanamurthy <subbaram@codeaurora.org>
-To:     Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        David Collins <collinsd@codeaurora.org>,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
-        stable@vger.kernel.org
-Subject: [PATCH] spmi: spmi-pmic-arb: Fix hw_irq overflow
-Date:   Mon,  8 Feb 2021 11:33:04 -0800
-Message-Id: <1612812784-26369-1-git-send-email-subbaram@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S232677AbhBHUIC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Feb 2021 15:08:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59250 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236643AbhBHUHx (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 8 Feb 2021 15:07:53 -0500
+Received: from mail-qv1-xf2d.google.com (mail-qv1-xf2d.google.com [IPv6:2607:f8b0:4864:20::f2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B62DEC061788
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Feb 2021 12:07:13 -0800 (PST)
+Received: by mail-qv1-xf2d.google.com with SMTP id f18so1443413qvm.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Feb 2021 12:07:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=eP5/j98wp1t6sAqe5tfFmscgonRv+nQeEYYt6nNWAig=;
+        b=zeKbPy4n3j+GckYgfzXgy3Jrr2u0TvsWN7EM6jmh9pZO27kf1AMRJ8hE5LWnec/b26
+         6xzSTJlnmAjgEYi+f7SgeEyVERKXSduSd7w0B/MkglpXE5/c3OrcUCOVF1BRPqXuG846
+         ehnDG5c/7/FIz1cZbEeChApXOFgrNz0BQXel62qTvjkWT9XscOcDWDwMTv2YgVBFDcef
+         25NSdQq7PJ+SdvWqPKYDzdh+PV4Jycu90J3dy2xcQ9p9BB1nUMlxGvNsl8SgypctOgDg
+         FC+3QcqlsKSBKjYr3z8oe5BJEOeUW7YIccMubT/oq5RvyWkL/EX34aENm8kaqT4plxMx
+         WRqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=eP5/j98wp1t6sAqe5tfFmscgonRv+nQeEYYt6nNWAig=;
+        b=EYluR7KSHk3OKV/mBtLJHa+V3Cw3JMjzjhSWLQ/Wdi2bSLCJx7V6V8i/9Sf/EbUjcv
+         +/Saf7YWJOD4K/bMI570MD0f1u5f4Gmif91uTr6YE5NmhkYUaBgHSwsLzWhiGQeaqw0p
+         De0pEtFXKLsbEj41f+gE8MbxaTGA3Okf3HrUK1wi0d7gSDvsQG6PJmVoFSCIB4RtPHkn
+         IaHIUcwRmvpL+xFD528oliQs2yKUM5TOo/KmzFnP5YpKBEXpIIGpTWD24fK+tnsDgTK3
+         uTFEvtba2Bm5m0uH7e+txaiOMVF4qTfbNPReqPirXk07albwckHvVmS7BUvMOeIOhcW4
+         3RIg==
+X-Gm-Message-State: AOAM532uMF/oLpOYnCZjOHglb0Rnv5/1Vc+1qvfIIvZFlHqDQrYxa/Hb
+        ejuDDLlIwe1xTlAYWuKlPnzPWzx/PTdJIj8d
+X-Google-Smtp-Source: ABdhPJyFOwdUIUyn/vUcIKbnbe01w02jVSNywGAvgPLr+K2tbQLcPm3G+qBjJsRptWcL06Al3DzeNg==
+X-Received: by 2002:a0c:f114:: with SMTP id i20mr2404071qvl.20.1612814832641;
+        Mon, 08 Feb 2021 12:07:12 -0800 (PST)
+Received: from localhost.localdomain (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
+        by smtp.gmail.com with ESMTPSA id x63sm1847433qkb.22.2021.02.08.12.07.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 Feb 2021 12:07:11 -0800 (PST)
+From:   Jonathan Marek <jonathan@marek.ca>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] misc: fastrpc: fix incorrect usage of dma_map_sgtable
+Date:   Mon,  8 Feb 2021 15:04:01 -0500
+Message-Id: <20210208200401.31100-1-jonathan@marek.ca>
+X-Mailer: git-send-email 2.26.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently, when handling the SPMI summary interrupt, the hw_irq
-number is calculated based on SID, Peripheral ID, IRQ index and
-APID. This is then passed to irq_find_mapping() to see if a
-mapping exists for this hw_irq and if available, invoke the
-interrupt handler. Since the IRQ index uses an "int" type, hw_irq
-which is of unsigned long data type can take a large value when
-SID has its MSB set to 1 and the type conversion happens. Because
-of this, irq_find_mapping() returns 0 as there is no mapping
-for this hw_irq. This ends up invoking cleanup_irq() as if
-the interrupt is spurious whereas it is actually a valid
-interrupt. Fix this by using the proper data type (u32) for id.
+dma_map_sgtable() returns 0 on success, which is the opposite of what this
+code was doing.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+Fixes: 7cd7edb89437 ("misc: fastrpc: fix common struct sg_table related issues")
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 ---
- drivers/spmi/spmi-pmic-arb.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/misc/fastrpc.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
-index de844b4..bbbd311 100644
---- a/drivers/spmi/spmi-pmic-arb.c
-+++ b/drivers/spmi/spmi-pmic-arb.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /*
-- * Copyright (c) 2012-2015, 2017, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2012-2015, 2017, 2021, The Linux Foundation. All rights reserved.
-  */
- #include <linux/bitmap.h>
- #include <linux/delay.h>
-@@ -505,8 +505,7 @@ static void cleanup_irq(struct spmi_pmic_arb *pmic_arb, u16 apid, int id)
- static void periph_interrupt(struct spmi_pmic_arb *pmic_arb, u16 apid)
+diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+index 70eb5ed942d0..f12e909034ac 100644
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -520,12 +520,13 @@ fastrpc_map_dma_buf(struct dma_buf_attachment *attachment,
  {
- 	unsigned int irq;
--	u32 status;
--	int id;
-+	u32 status, id;
- 	u8 sid = (pmic_arb->apid_data[apid].ppid >> 8) & 0xF;
- 	u8 per = pmic_arb->apid_data[apid].ppid & 0xFF;
+ 	struct fastrpc_dma_buf_attachment *a = attachment->priv;
+ 	struct sg_table *table;
++	int ret;
+ 
+ 	table = &a->sgt;
+ 
+-	if (!dma_map_sgtable(attachment->dev, table, dir, 0))
+-		return ERR_PTR(-ENOMEM);
+-
++	ret = dma_map_sgtable(attachment->dev, table, dir, 0);
++	if (ret)
++		table = ERR_PTR(ret);
+ 	return table;
+ }
  
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.26.1
 
