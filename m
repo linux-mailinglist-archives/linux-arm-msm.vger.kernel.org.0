@@ -2,33 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A06EA313D1B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Feb 2021 19:20:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B80C9313D23
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Feb 2021 19:21:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235342AbhBHSUL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Feb 2021 13:20:11 -0500
-Received: from mail.kernel.org ([198.145.29.99]:53002 "EHLO mail.kernel.org"
+        id S235538AbhBHSUk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Feb 2021 13:20:40 -0500
+Received: from mail.kernel.org ([198.145.29.99]:53082 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235418AbhBHSTX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Feb 2021 13:19:23 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 39ABC64E37;
-        Mon,  8 Feb 2021 18:18:42 +0000 (UTC)
+        id S235481AbhBHSTs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 8 Feb 2021 13:19:48 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id C029A60232;
+        Mon,  8 Feb 2021 18:19:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1612808322;
-        bh=96MNIodpcXR/mW7T1ax+ZYH4V6b346/V4WuZthXRDCM=;
+        s=k20201202; t=1612808347;
+        bh=dAk6jAEnB/3PNWiM5i+hERJ1F1c4+wxifLhwpeVZQY8=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=N8LW/lRR47VtbE+4a8lW6Jaj0cKLZMWVFpFUVs6JL64Vw8tMQreuygRNPqgsDwabI
-         qgRDXKuvcAkFduYw8UmXDb9C4l1D1aYqSm+mSI8qdRFSmUQopzQpxMma3jUxdDessL
-         FMDYerSWW2kKlTQngJueKtJx+ERg/ghe0tm0gIf1MLKTgcKtshKutGiK5dQaLGpSy5
-         eBUOstCxOO+GygKvlpscvlynqIwWAanVUnkj/dfwopMLMX+jWrZUjV3GYD0V9dnET3
-         nwKZrUsS+rLdtCluF1GGchLP4Sej7YYwmH8fqwZqHj2HCrJQMTvMRufsd5PAEaVpr6
-         +tmVU4FY+YnaQ==
+        b=c10ID4+eoXrcZaXUrWkQR4TBFN+KkTjoSC8bpuvcLqcEHSe34pVxY9OmQb9bxmFuE
+         dl0x8M+dl3Plg+RGhsLoMCx11RnohrN+IPFxZ5vkjCvjbn5hEAcDnkGb6tYzOKS8bW
+         vOuDIS0an6XxlA6z3DbyrPoBwNRM3UVpPRCmHOJXu6lDe005Grjjpwbil+x1QnkPez
+         3J/6mQ/Wzpv0yebDpoja1vSMAhhI85LMWxVDq8VGYTseJJIXpdxdoHpdSUEDe+9kgH
+         ib6nk27G24NKBapBwSvDjVNhb8OEQHURrbaOdXK25JVUn5+dI7anMFAZQ05g8anptV
+         HBL/HaXN2y+MA==
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20210114221059.483390-6-angelogioacchino.delregno@somainline.org>
-References: <20210114221059.483390-1-angelogioacchino.delregno@somainline.org> <20210114221059.483390-6-angelogioacchino.delregno@somainline.org>
-Subject: Re: [PATCH v2 05/11] clk: qcom: gcc-msm8998: Mark gpu_cfg_ahb_clk as critical
+In-Reply-To: <20210114221059.483390-2-angelogioacchino.delregno@somainline.org>
+References: <20210114221059.483390-1-angelogioacchino.delregno@somainline.org> <20210114221059.483390-2-angelogioacchino.delregno@somainline.org>
+Subject: Re: [PATCH v2 01/11] dt-bindings: clocks: gcc-msm8998: Add GCC_MMSS_GPLL0_CLK definition
 From:   Stephen Boyd <sboyd@kernel.org>
 Cc:     konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
         martin.botka@somainline.org, phone-devel@vger.kernel.org,
@@ -41,47 +41,18 @@ Cc:     konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
 To:     AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>,
         linux-arm-msm@vger.kernel.org
-Date:   Mon, 08 Feb 2021 10:18:40 -0800
-Message-ID: <161280832085.76967.5394456316048533384@swboyd.mtv.corp.google.com>
+Date:   Mon, 08 Feb 2021 10:19:06 -0800
+Message-ID: <161280834643.76967.10247333191757057612@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting AngeloGioacchino Del Regno (2021-01-14 14:10:53)
-> The GPU IOMMU depends on this clock and the hypervisor will crash
-> the SoC if this clock gets disabled because the secure contexts
-> that have been set on this IOMMU by the bootloader will become
-> unaccessible (or they get reset).
-> Mark this clock as critical to avoid this issue when the Adreno
-> GPU is enabled.
+Quoting AngeloGioacchino Del Regno (2021-01-14 14:10:49)
+> Add new clock definition to gcc-msm8998 dt-bindings.
 >=20
 > Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@soma=
 inline.org>
 > ---
->  drivers/clk/qcom/gcc-msm8998.c | 6 ++++++
->  1 file changed, 6 insertions(+)
->=20
-> diff --git a/drivers/clk/qcom/gcc-msm8998.c b/drivers/clk/qcom/gcc-msm899=
-8.c
-> index c8d4c0348952..afea60a3ef43 100644
-> --- a/drivers/clk/qcom/gcc-msm8998.c
-> +++ b/drivers/clk/qcom/gcc-msm8998.c
-> @@ -2081,6 +2081,12 @@ static struct clk_branch gcc_gpu_cfg_ahb_clk =3D {
->                 .hw.init =3D &(struct clk_init_data){
->                         .name =3D "gcc_gpu_cfg_ahb_clk",
->                         .ops =3D &clk_branch2_ops,
-> +                       /*
-> +                        * The GPU IOMMU depends on this clock and hyperv=
-isor
-> +                        * will crash the SoC if this clock goes down, du=
-e to
-> +                        * secure contexts protection.
-> +                        */
-> +                       .flags =3D CLK_IS_CRITICAL,
->                 },
->         },
 
-Please send a followup patch that hits the branch on at probe time and
-removes this clk from the kernel. That will save some memory and
-overhead of worrying about this clk.
+Applied to clk-next
