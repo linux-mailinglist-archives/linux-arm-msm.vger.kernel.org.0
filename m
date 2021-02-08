@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D7210313D46
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Feb 2021 19:24:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C66B313D53
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Feb 2021 19:24:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235618AbhBHSWR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Feb 2021 13:22:17 -0500
-Received: from mail.kernel.org ([198.145.29.99]:53540 "EHLO mail.kernel.org"
+        id S233489AbhBHSXp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Feb 2021 13:23:45 -0500
+Received: from mail.kernel.org ([198.145.29.99]:53760 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235561AbhBHSVU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Feb 2021 13:21:20 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 5276C64E84;
-        Mon,  8 Feb 2021 18:20:01 +0000 (UTC)
+        id S235578AbhBHSWB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 8 Feb 2021 13:22:01 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 5CBBD64E37;
+        Mon,  8 Feb 2021 18:21:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1612808401;
-        bh=Q2bV0W0mG9IErCZlLHYlZZENLrVP+bhFSPA37zd7yC4=;
+        s=k20201202; t=1612808480;
+        bh=CQW2KH8hztBtqgksHVPea2uZay2ILfsC+tVqR0PIWaE=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=V8AGt3XuTmxpuatBgyimbWe5UdeNMQ6RItBqIwQMpMZAulnv84nM401vN3bTpF/kF
-         Zwaw5XJBndyZgrxHL0qxPBo7WmtccPZnSBREo0CMjki18w3s8ATJhjCYShFId82AA5
-         VXssfrp1oigtUiIPmmWOZ3u8nd/Y3P3+rxOgrN/SIc29U3coxYYL/IlHA8I0fShumV
-         RxYmde97aciAbPpAcFV9R9PmGdV3ZcdmgU0EHv1uEk0ShoU6iM5hSGgBG1orYIEoNj
-         1VX9BV7y+Hyu8bpQNrvqmlUWBErkH/y4s12rAGUt07SWcoM+hJlVorA4wpTJpsv9dQ
-         LHj8ekHR41Lpw==
+        b=mp2CF9xbSTMZl5F7CWA1EJ3bh17FeANgjlT9oICwoFw5XKHWP+g+ffxHnf9bz9mAH
+         L+pdbnqTeZPGMgoMNDme/lg835/JBQtYjodgv7B2AC6Z7MVkSPFgGIVMSOsoI6GtNj
+         7VXKXtFhbNjJjSBm+AKtEi7s0Ct7U1a1CtI4mgQ0KNoxxXf6RtKl8EX6ZJ9hc0bXBH
+         3ywGh3PmWOfUEZRnZ4tTsW2xE0IgMtasvOB8F1V3nvlYvZkZH1EaeGzfFXfW/xQUGQ
+         pWA6ifIJby4WKuIQ006+r3uNhbNuwLaJ8cRXraQkrHt5/iA0wnQjFr3TxuOOD3vEcf
+         uqk+MGZmBKYkA==
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
@@ -41,8 +41,8 @@ Cc:     konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
 To:     AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>,
         linux-arm-msm@vger.kernel.org
-Date:   Mon, 08 Feb 2021 10:20:00 -0800
-Message-ID: <161280840018.76967.9481288975245040550@swboyd.mtv.corp.google.com>
+Date:   Mon, 08 Feb 2021 10:21:19 -0800
+Message-ID: <161280847912.76967.9613917615673032246@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -58,5 +58,9 @@ Quoting AngeloGioacchino Del Regno (2021-01-14 14:10:55)
 > Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@soma=
 inline.org>
 > ---
+>  drivers/clk/qcom/mmcc-msm8998.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
 
-Applied to clk-next
+We didn't do this on sdm845, so I'm not going to apply this patch. The
+rate caching thing is a problem with the display driver that should be
+fixed some other way vs. setting nocache here.
