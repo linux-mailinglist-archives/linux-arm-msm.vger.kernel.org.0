@@ -2,33 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9764B313D5C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Feb 2021 19:24:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 72987313D60
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Feb 2021 19:24:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235467AbhBHSYI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Feb 2021 13:24:08 -0500
-Received: from mail.kernel.org ([198.145.29.99]:54050 "EHLO mail.kernel.org"
+        id S235563AbhBHSYN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Feb 2021 13:24:13 -0500
+Received: from mail.kernel.org ([198.145.29.99]:54368 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235527AbhBHSWn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Feb 2021 13:22:43 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 866E964E87;
-        Mon,  8 Feb 2021 18:22:02 +0000 (UTC)
+        id S235694AbhBHSXV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 8 Feb 2021 13:23:21 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id E90CC60232;
+        Mon,  8 Feb 2021 18:22:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1612808522;
-        bh=EO83n/wj15OvM55uRBxb+vXmPcyQn4uZJdwuzwhmyeQ=;
+        s=k20201202; t=1612808561;
+        bh=m+d1CMPcVEjxEOH68w4+gwDF1jsY07r6dUy2czHRJeU=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=ceS6QjlGz12MfU/ryugdPsP+QjNBELHYr3Hx8hdxpXwl5yJVhy10ipYYSE6sxezxK
-         2rVIbvz4dlzQiDIm2AV+YApyjvksyRW2uYWLEfaz+iMKbmFwMEZ/KcEV7LdMr77EaR
-         z95fpwnuPIkR2hiszHq3P6FOlWwP9+FG27EJmzPo7G574zgwZPtYfsm2U2EF8plROm
-         cxEjC4A5Xyw1Tn3aT/ExX84iki9iVGZCkvfjwzboZ6BLKtf6faMXNaUhqkDKkuwE6U
-         HsPF7+aPkUoa4OYp0GEV5QTd9RhtPeyrMlKpKHj65KHAZd1DZxVa1CdFwu19N/mt44
-         IK7hOvlksoNEA==
+        b=MG7sM8rw+xzQRquW7TWeyPv06nOT9hUygmnK7AXIi09Zaqq94YhCnRAtopYRpb5yA
+         sbiEtRC9cNJpxSMu6I00425+SBS1NHGj0RwNnq4kPzVBX04CxnUZc3CAK1bWEFPWdL
+         vFcDa3UBXs3mgbqmeetFoYmD3kPNv4/DGv3GNq8B5pfhc7A8Nozg6UyNEoRo0POtYT
+         RAn4EZ7qL3cxrrBIMi2E37TfMXUUcJuJWSf/FJ7WZ/EgbE/EVYL6d3265hDdYHddNw
+         //JrIWOuGDFLlJGS3je5K8Bx07uYid2tMJbyDUOiNDGwVbAYCw8aZ0eIfnxhfTThOp
+         MrgSlpmHIAwhg==
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20210114221059.483390-10-angelogioacchino.delregno@somainline.org>
-References: <20210114221059.483390-1-angelogioacchino.delregno@somainline.org> <20210114221059.483390-10-angelogioacchino.delregno@somainline.org>
-Subject: Re: [PATCH v2 09/11] clk: qcom: mmcc-msm8998: Set bimc_smmu_gdsc always on
+In-Reply-To: <20210114221059.483390-11-angelogioacchino.delregno@somainline.org>
+References: <20210114221059.483390-1-angelogioacchino.delregno@somainline.org> <20210114221059.483390-11-angelogioacchino.delregno@somainline.org>
+Subject: Re: [PATCH v2 10/11] clk: qcom: gpucc-msm8998: Add resets, cxc, fix flags on gpu_gx_gdsc
 From:   Stephen Boyd <sboyd@kernel.org>
 Cc:     konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
         martin.botka@somainline.org, phone-devel@vger.kernel.org,
@@ -41,21 +41,24 @@ Cc:     konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
 To:     AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>,
         linux-arm-msm@vger.kernel.org
-Date:   Mon, 08 Feb 2021 10:22:01 -0800
-Message-ID: <161280852103.76967.6165783606297241763@swboyd.mtv.corp.google.com>
+Date:   Mon, 08 Feb 2021 10:22:39 -0800
+Message-ID: <161280855974.76967.14566908373250985342@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting AngeloGioacchino Del Regno (2021-01-14 14:10:57)
-> This GDSC enables (or cuts!) power to the Multimedia Subsystem IOMMU
-> (mmss smmu), which has bootloader pre-set secure contexts.
-> In the event of a complete power loss, the secure contexts will be
-> reset and the hypervisor will crash the SoC.
+Quoting AngeloGioacchino Del Regno (2021-01-14 14:10:58)
+> The GPU GX GDSC has GPU_GX_BCR reset and gfx3d_clk CXC, as stated
+> on downstream kernels (and as verified upstream, because otherwise
+> random lockups happen).
+> Also, add PWRSTS_RET and NO_RET_PERIPH: also as found downstream,
+> and also as verified here, to avoid GPU related lockups it is
+> necessary to force retain mem, but *not* peripheral when enabling
+> this GDSC (and, of course, the inverse on disablement).
 >=20
-> To prevent this, and get a working multimedia subsystem, set this
-> GDSC as always on.
+> With this change, the GPU finally works flawlessly on my four
+> different MSM8998 devices from two different manufacturers.
 >=20
 > Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@soma=
 inline.org>
