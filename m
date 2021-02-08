@@ -2,200 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 532A53138BE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Feb 2021 17:01:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C3DA313956
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Feb 2021 17:26:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234145AbhBHQBO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Feb 2021 11:01:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33910 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234129AbhBHP7f (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Feb 2021 10:59:35 -0500
-Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30DFCC061786
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Feb 2021 07:58:55 -0800 (PST)
-Received: by mail-qt1-x82b.google.com with SMTP id c1so10660445qtc.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Feb 2021 07:58:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ar5a9upAWqd9rstoJ9nPmfXVeGzQci2wgcFqCPGRHlw=;
-        b=GUWgI4+zWgYnuvHHDFChzTNagH4BB968l0eubfbPvFgOVqi8BeBxWGQSyTDnx0iPMw
-         i8FqLLBeAuh5hZi8K1NOsNhf2uvXGGY8AQ9fktIBsneKbyldnAA1fxUh8LLQjCVxEn2y
-         gKyX4W63cF0TobLp4ybOpswS+CoidqC9VsHpk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ar5a9upAWqd9rstoJ9nPmfXVeGzQci2wgcFqCPGRHlw=;
-        b=CVxYg40jjhoWHDnpg5QwZeA+dTemkBBTDunHnDOaCUdswi7uJ4hAOHLir5kqHj+6Xq
-         7+OFed6BwOeS7UY0OFlQzOewwr5BtzlZOL+r3gttP1VP4Rnm5oF2e42jvE0U0GUGUTGt
-         IU+FZIzdVpYYHAV44BrGu0JPvg+xAKmLALkIHczdRfr2KSRR3rtXp16SV38ayhbR61PP
-         KyvDGvXPqUSKOlf73wkMpI4WMWo+1484LmKuI4M6AkGDzW8ubtcnNnGcQe6fc1WWELxT
-         MQjdGigt01uYXiQA8PLu/+CsxmVy1lhvz+wteECgMy0LJSXS1FvCuvTe4okM9pB/ah1b
-         8MYg==
-X-Gm-Message-State: AOAM532LLXBWTlj1be6HPNQRmF+3qKIYsJZwrU9zwQ7hOtOzO2ynaDeK
-        Che8XJSHB7KwQ2RX8CYjnhO6YUfLSuvxFQ==
-X-Google-Smtp-Source: ABdhPJzsk87I/aRdna1A/4IMA2GMyssiC5mAJc9vG+/HaVEB+6Ojt5qM+GcMJpU831xGJL/Qt/FHMw==
-X-Received: by 2002:aed:38a2:: with SMTP id k31mr16143757qte.187.1612799934013;
-        Mon, 08 Feb 2021 07:58:54 -0800 (PST)
-Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com. [209.85.219.171])
-        by smtp.gmail.com with ESMTPSA id i23sm2588884qtq.42.2021.02.08.07.58.52
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Feb 2021 07:58:52 -0800 (PST)
-Received: by mail-yb1-f171.google.com with SMTP id e132so15031480ybh.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Feb 2021 07:58:52 -0800 (PST)
-X-Received: by 2002:a25:4fc3:: with SMTP id d186mr24413774ybb.343.1612799932352;
- Mon, 08 Feb 2021 07:58:52 -0800 (PST)
+        id S234372AbhBHQZd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Feb 2021 11:25:33 -0500
+Received: from so15.mailgun.net ([198.61.254.15]:57558 "EHLO so15.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234338AbhBHQZY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 8 Feb 2021 11:25:24 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1612801500; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=NDr/HPHdjO2ZWUoJtkzsAUeh5iN7eMmJUDu+B2PEZ9Q=; b=u3dvI+c/jV3TJyFUcgSvo98PWZBVHQe2qdmqf4DHu4aMetL7R8SPPmSvzlm9I9hurEcMIlfL
+ rEUSev2yELPeT/qhplVN7GMi71SU4/BAyR6jdpofEMlVdxn5FEwfcVAWc6PGWOJW1qRjACb8
+ 0z4jizf6pHrEQW3A6AOMt3nDnK8=
+X-Mailgun-Sending-Ip: 198.61.254.15
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 602165b9e3df861f4b4e65e8 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 08 Feb 2021 16:24:25
+ GMT
+Sender: asutoshd=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id F3332C433ED; Mon,  8 Feb 2021 16:24:24 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from stor-presley.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: asutoshd)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id EC716C433CA;
+        Mon,  8 Feb 2021 16:24:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EC716C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=asutoshd@codeaurora.org
+Date:   Mon, 8 Feb 2021 08:24:22 -0800
+From:   Asutosh Das <asutoshd@codeaurora.org>
+To:     Avri Altman <Avri.Altman@wdc.com>
+Cc:     Alan Stern <stern@rowland.harvard.edu>,
+        "cang@codeaurora.org" <cang@codeaurora.org>,
+        "martin.petersen@oracle.com" <martin.petersen@oracle.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>
+Subject: Re: [RFC PATCH v2 0/2] Fix deadlock in ufs
+Message-ID: <20210208162422.GL37557@stor-presley.qualcomm.com>
+References: <84a182cc-de9c-4d6d-2193-3a44e4c88c8b@codeaurora.org>
+ <20210201214802.GB420232@rowland.harvard.edu>
+ <20210202205245.GA8444@stor-presley.qualcomm.com>
+ <20210202220536.GA464234@rowland.harvard.edu>
+ <20210204001354.GD37557@stor-presley.qualcomm.com>
+ <20210204194831.GA567391@rowland.harvard.edu>
+ <20210204211424.GH37557@stor-presley.qualcomm.com>
+ <DM6PR04MB6575692524202EC91E2A5480FCB29@DM6PR04MB6575.namprd04.prod.outlook.com>
+ <20210205161102.GJ37557@stor-presley.qualcomm.com>
+ <DM6PR04MB65759417507BA054F8CAE86AFCB19@DM6PR04MB6575.namprd04.prod.outlook.com>
 MIME-Version: 1.0
-References: <20210204204904.294555-1-dmitry.baryshkov@linaro.org>
- <YBx+LcgrbyUKpYig@builder.lan> <CAD=FV=XOk14DfAJT9j86WbiRifxUQZFPy1grJWoz0A7Fon1edg@mail.gmail.com>
- <YByQizVTnj2uTNt2@builder.lan> <CAD=FV=UYmv-PH-m4T6RcuW1JuQ-fCZ2Lg6gCCUJ5xquT1NP1jA@mail.gmail.com>
- <YB122qwCSdQka5jw@builder.lan>
-In-Reply-To: <YB122qwCSdQka5jw@builder.lan>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 8 Feb 2021 07:58:40 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=UY_AFRrAY0tef5jP698LEng6oN652LcX3B4nG=aWh0gA@mail.gmail.com>
-Message-ID: <CAD=FV=UY_AFRrAY0tef5jP698LEng6oN652LcX3B4nG=aWh0gA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sm8250: add pinctrl for SPI using
- GPIO as a CS
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <DM6PR04MB65759417507BA054F8CAE86AFCB19@DM6PR04MB6575.namprd04.prod.outlook.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Sat, Feb 06 2021 at 11:24 -0800, Avri Altman wrote:
+>> >Regardless of your above proposal, as for the issues you were witnessing with
+>> rpmb,
+>> >That started this RFC in the first place, and the whole clearing uac series for
+>> that matter:
+>> > "In order to conduct FFU or RPMB operations, UFS needs to clear UNIT
+>> ATTENTION condition...."
+>> >
+>> >Functionally, This was already done for the device wlun, and only added the
+>> rpmb wlun.
+>> >
+>> >Now you are trying to solve stuff because the rpmb is not provisioned.
+>> >a) There should be no relation between response to request-sense command,
+>> > and if the key is programmed or not. And
+>> >b) rpmb is accessed from user-space.  If it is not provisioned, it should
+>> processed the error (-7)
+>> >    and realize that by itself.  And also, It only makes sense that if needed,
+>> >    the access sequence will include  the request-sense command.
+>> >
+>> >Therefore, IMHO, just reverting Randall commit (1918651f2d7e) and fixing
+>> the user-space code
+>> >Should suffice.
+>> >
+>> >Thanks,
+>> >Avri
+>> >
+>> Hi Avri
+>>
+>> Thanks.
+>>
+>> I don't think reverting 1918651f2d7e would fix this.
+>>
+>> [   12.182750] ufshcd-qcom 1d84000.ufshc: ufshcd_suspend: Setting power
+>> mode
+>> [   12.190467] ufshcd-qcom 1d84000.ufshc: wlun_dev_clr_ua: 0 <-- uac wasn't
+>> sent
+>> [   12.196735] ufshcd-qcom 1d84000.ufshc: Sending ssu
+>> [   12.202412] scsi 0:0:0:49488: Queue rpm status b4 ssu: 2 <- sdev_ufs_device
+>> queue is suspended
+>> [   12.208613] ufshcd-qcom 1d84000.ufshc: Wait for resume - <-- deadlock!
+>>
+>> The issue is sending any command to any lun which is registered for blk
+>> runtime-pm in ufs host's suspend path would deadlock; since, it'd try to resume
+>> the ufs host in the same suspend calling sequence.
+>Did you managed to bisect the commit that caused the regression?
+No - I didn't bisect.
 
-On Fri, Feb 5, 2021 at 8:48 AM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
+>Is it in the series that Bart referred to?
 >
-> On Fri 05 Feb 09:00 CST 2021, Doug Anderson wrote:
->
-> > Hi,
-> >
-> > On Thu, Feb 4, 2021 at 4:25 PM Bjorn Andersson
-> > <bjorn.andersson@linaro.org> wrote:
-> > >
-> > > > > > +                             mux {
-> > > > >
-> > > > > Rather than splitting the properties in {mux, cs, config} I think it
-> > > > > makes more sense to split them in {spi, cs} or something like that.
-> > > >
-> > > > In general pinconf doesn't belong in the SoC dts file.  If there's no
-> > > > reason to change it seems like this should match what sc7180 did.
-> > > >
-> > >
-> > > Right, but I still would prefer the pinctrl state to be split by
-> > > function/pins, rather than pinmux vs pinconf. That way it's natural to
-> > > add pinconf properties to the various functional parts (i.e. bias or
-> > > drive-strength for the spi pins vs cs).
-> > >
-> > > Do you have any concerns with this?
-> >
-> > I read this a few times and I'm not exactly sure what you're
-> > proposing.  Can you provide an example of what you want it to look
-> > like in this case?
-> >
->
-> Today in most cases we group pinctrl properties by being a "conf" of a
-> "mux" property, so we end up with:
->
-> the_state: spi-state {
->         all-the-mux-properties {
->                 pins = "gpio40", gpio41", "gpio42", "gpio43";
->                 function = qup14";
->         };
->
->         repeat-pins-and-add-all-conf-properties {
->                 pins = "gpio40", gpio41", "gpio42", "gpio43";
->                 drive-strength = <6>;
->                 bias-disable;
->         };
-> };
->
-> This made sense to me after implementing the driver, there's muxing to
-> be done and there's electrical configuration to configure.
->
-> But what's actually trying to describe is a hardware state; i.e. that
-> miso, mosi, clk and cs should be acting in a particular fashion.
->
-> In particular this lends itself useful when the hardware state consists
-> of different functions, a good example being the Bluetooth UART, or in
-> the SPI-with-separate-GPIO:
->
-> the_state: spi-state {
->         miso-mosi-clk {
->                 pins = "gpio40", gpio41", "gpio42"
->                 function = qup14";
->                 drive-strength = <6>;
->                 bias-disable;
->         };
->
->         cs {
->                 pins = "gpio43";
->                 function = "gpio";
->                 drive-strength = <6>;
->                 bias-disable;
->         };
-> };
->
->
-> For the case of uniform configuration across the state we've come to
-> sprinkle a few different synonyms for "pinconf" and "pinmux" in the
-> state nodes. But a few years ago someone updated the state parser to
-> handle cases either directly in the state or in subnodes. So we can
-> avoid these boilerplate nodes with a simple:
->
-> the_state: spi-state {
->         pins = "gpio40", gpio41", "gpio42", "gpio43";
->         function = qup14";
->         drive-strength = <6>;
->         bias-disable;
-> };
+Yes - the debug points to that.
 
-OK, this makes sense to me.  I always felt like the extra "pinconf" /
-"pinmux" made things awkward.  I guess someone should try to convert
-some SoC dtsi fully over so we can see how it looks?  In this case I
-think you'd have something like this, right?
-
-SoC dtsi:
-
-tlmm: pinctrl@... {
-  qup_spi0_data_clk: qup-spi0-data-clk {
-    pins = "gpio28", "gpio29", "gpio30";
-    function = "qup0";
-  };
-
-  qup_spi0_cs: qup-spi0-cs {
-    pins = "gpio31";
-    function = "qup0";
-  };
-
-  qup_spi0_cs_gpio: qup-spi0-cs-gpio {
-    pins = "gpio31";
-    function = "gpio";
-  };
-};
-
-Board dts:
-
-&spi0 {
-  pinctrl-0 = <&qup_spi0_data_clk>, &<qup_spi0_cs_gpio>;
-};
-
-&qup_spi0_data_clk {
-  drive-strength = <6>;
-  bias-disable;
-};
-
-&qup_spi0_cs_gpio {
-  drive-strength = <6>;
-  bias-disable;
-};
+>Thanks,
+>Avri
