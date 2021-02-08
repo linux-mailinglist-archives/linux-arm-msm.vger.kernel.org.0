@@ -2,193 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A6F1F31268C
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Feb 2021 19:06:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 94100312A30
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Feb 2021 06:46:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229491AbhBGSGn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 7 Feb 2021 13:06:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35396 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbhBGSGn (ORCPT
+        id S229581AbhBHFpE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Feb 2021 00:45:04 -0500
+Received: from mail29.static.mailgun.info ([104.130.122.29]:26886 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229482AbhBHFpC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 7 Feb 2021 13:06:43 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D8BEC06174A
-        for <linux-arm-msm@vger.kernel.org>; Sun,  7 Feb 2021 10:06:02 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id n6so1738734wrv.8
-        for <linux-arm-msm@vger.kernel.org>; Sun, 07 Feb 2021 10:06:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=54n6BaQ+bXyUY9n7V2psnQU0SFJKuMhVDij/J+OY0uU=;
-        b=kaQSml3XKmw/2KsxMTej5+99BzITwIojbWxDW63n9cglhIPRNjyYs+u8CeOZFDDN5d
-         jl0PLCHYf/e9Y+52OaG4vMwnkBO52pUVbG7xBzEreJZ4EKyEMVno+YDLTpJfbt66vbbs
-         Q18Jxl93fXXJtF/AGodJSWhzV9FTgNGvg2gveYfk5svrxyVflFTLxh1z8+Pa0jQIxdpC
-         EI1oI3co1jBG/Of4FMhCcuXDJ2Vn32xdBVqSixtPf5d5xgwFZL1NWX1KycySKMFH3Yfs
-         1JDqhIEshDey3pw0iyLNyyaRV3yZSjlVJxpQA1tr/CW6sACUSQzZYHpOaWVv/j1TBQ8N
-         S3yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=54n6BaQ+bXyUY9n7V2psnQU0SFJKuMhVDij/J+OY0uU=;
-        b=CRlnMthRGrv+IxPnLO/HtUv3F8ZmQeiSkiHS5ngb2WhiRSGJzwPEOUdQdbN/LUL2jt
-         XhCM8ObkjSRs1LYdhlP0oiYUG27h+8jrVt+m29ourt905MdQPeTEum52BGU4zBrPii7I
-         yBdhMmsz7NJXlsjtZ+XnLCDLigCCE3XZxXvXXDylGo/FHEbAZgk6831ppvPPTdDBVPDa
-         pE8Y4ruwN4ZfV047wHaEjP0TF/kSy2CtloRDjMNvtEbB1gdQsiDYUBJkopF0UCMrzNFB
-         kHtkiqRE0+77HIT+4L8OUbkKcjq1pd8uO3e18E6WBS7ShXK7HLNMlF7ip6XoDToEy6AP
-         0RAw==
-X-Gm-Message-State: AOAM5338MZqRCW0xM3gEkiRSiLkKoWbe3cZL1FU8cUPIN8BAHP2jP2RQ
-        F58lO6LF5zzFmdBck8Pg9XLSpMT23zmOFJA9hBs=
-X-Google-Smtp-Source: ABdhPJwYnsksXoMsxGMYpPJIE+kCSxQFgn0Tyr7i9QmE43Ij34+M6kWRsfnpkdQmkjVv5bOtwGlQ9HnhSgZlR3qexWI=
-X-Received: by 2002:adf:f749:: with SMTP id z9mr15702978wrp.327.1612721161047;
- Sun, 07 Feb 2021 10:06:01 -0800 (PST)
+        Mon, 8 Feb 2021 00:45:02 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1612763077; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=SNwZjcgmzSGiqNT0HEv7usgWCVSuQQU7Ep8ZviLz5tk=;
+ b=lcnZu1mK//09cCneG8ZDgP3HKCY83jlrNbc9/Y2aK0Shiy8mibCD+Sxk+ytXKl0tnlXTiPU+
+ +qGfSLdID31oBns7gBEnU5rj3qsxWO+04SGNZd12LlifWy6NCsh1xdmTZJZAxzSoTjLFDi67
+ X7BT4gRPuQY2Tn1RM0gYHEtpLwU=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 6020cfaa34db06ef7987b381 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 08 Feb 2021 05:44:10
+ GMT
+Sender: kathirav=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 4DED4C433ED; Mon,  8 Feb 2021 05:44:10 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: kathirav)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 24E76C433C6;
+        Mon,  8 Feb 2021 05:44:09 +0000 (UTC)
 MIME-Version: 1.0
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Sun, 7 Feb 2021 10:08:38 -0800
-Message-ID: <CAF6AEGvh3tvLz_xtk=4x9xUfo2h2s4xkniOvC7HyLO2jrXnXkw@mail.gmail.com>
-Subject: [pull] drm/msm: msm-next for 5.12
-To:     Dave Airlie <airlied@gmail.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 08 Feb 2021 11:14:09 +0530
+From:   Kathiravan T <kathirav@codeaurora.org>
+To:     Baruch Siach <baruch@tkos.co.il>
+Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Balaji Prakash J <bjagadee@codeaurora.org>
+Subject: Re: [PATCH 3/3] arm64: dts: ipq6018: enable USB2 support
+In-Reply-To: <87sg68xn1y.fsf@tarshish>
+References: <cover.1611756920.git.baruch@tkos.co.il>
+ <59a0d43f34b69406cd320f16edc4e7fabe022bfd.1611756920.git.baruch@tkos.co.il>
+ <ebdc1f5c424968a8e1b5463b29f616cf@codeaurora.org> <87sg68xn1y.fsf@tarshish>
+Message-ID: <a5870d87bdfd02087af217130a801022@codeaurora.org>
+X-Sender: kathirav@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dave,
+On 2021-02-07 14:38, Baruch Siach wrote:
+> Hi Kathiravan T,
+> 
+> Thanks for your review.
+> 
+> On Fri, Feb 05 2021, Kathiravan T wrote:
+>> On 2021-01-27 19:50, Baruch Siach wrote:
+>>> From: Kathiravan T <kathirav@codeaurora.org>
+>>> Signed-off-by: Kathiravan T <kathirav@codeaurora.org>
+>>> [baruch: adjust regs address/size; drop binding updates;
+>>>  drop unsupported quirk properties]
+>>> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+>>> ---
+>>>  arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts |  8 ++++
+>>>  arch/arm64/boot/dts/qcom/ipq6018.dtsi        | 48 
+>>> ++++++++++++++++++++
+>>>  2 files changed, 56 insertions(+)
+>>> diff --git a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
+>>> b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
+>>> index 99cefe88f6f2..5aec18308712 100644
+>>> --- a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
+>>> +++ b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
+>>> @@ -78,3 +78,11 @@ nand@0 {
+>>>  		nand-bus-width = <8>;
+>>>  	};
+>>>  };
+>>> +
+>>> +&qusb_phy_1 {
+>>> +	status = "ok";
+>>> +};
+>>> +
+>>> +&usb2 {
+>>> +	status = "ok";
+>>> +};
+>>> diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+>>> b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+>>> index 9fa5b028e4f3..d4a3d4e4a7e9 100644
+>>> --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+>>> @@ -524,6 +524,54 @@ qrtr_requests {
+>>>  			};
+>>>  		};
+>>> +		qusb_phy_1: qusb@59000 {
+>>> +			compatible = "qcom,ipq6018-qusb2-phy";
+>>> +			reg = <0x0 0x059000 0x0 0x180>;
+>>> +			#phy-cells = <0>;
+>>> +
+>>> +			clocks = <&gcc GCC_USB1_PHY_CFG_AHB_CLK>,
+>>> +				 <&xo>;
+>>> +			clock-names = "cfg_ahb", "ref";
+>> 
+>> As per the bindings, ref clock should be 19.2MHz where the XO in 
+>> IPQ60xx is
+>> 24MHz. Did the USB enumerated successfully and able to perform read / 
+>> write
+>> operations?
+> 
+> I managed to enumerate an Ethernet USB dongle with only this series
+> applied.  But then I tested again with USB storage device. That only
+> worked with downstream clock adjust/period patch:
+> 
+> 
+> https://source.codeaurora.org/quic/qsdk/oss/kernel/linux-ipq-5.4/commit/?h=fig&id=707d8fa2b481888f4792edc6561e81999301cbcf
+> 
+> That patch applies cleanly on top of v5.11-rc4.
+> 
+> Is anyone at Codeaurora pushing the dwc3 clock patch upstream? Should I
+> do that?
 
-This time around:
+Sure, please go ahead.
 
-* a6xx speedbin support
-* a508, a509, a512 support
-* various a5xx fixes
-* various dpu fixes
-* qseed3lite support for sm8250
-* dsi fix for msm8994
-* mdp5 fix for framerate bug with cmd mode panels
-* a6xx GMU OOB race fixes that were showing up in CI
-* various addition and removal of semicolons
-* gem submit fix for legacy userspace relocs path
+> 
+> Thanks,
+> baruch
 
-The following changes since commit 6ee1d745b7c9fd573fba142a2efdad76a9f1cb04:
-
-  Linux 5.11-rc5 (2021-01-24 16:47:14 -0800)
-
-are available in the Git repository at:
-
-  https://gitlab.freedesktop.org/drm/msm.git tags/drm-msm-next-2021-02-07
-
-for you to fetch changes up to 182b4a2d251305201b6f9cae29067f7112f05835:
-
-  drm/msm/dp: Add a missing semi-colon (2021-02-07 09:57:04 -0800)
-
-----------------------------------------------------------------
-Akhil P Oommen (1):
-      drm/msm: Add speed-bin support to a618 gpu
-
-AngeloGioacchino Del Regno (16):
-      drm/msm/a5xx: Allow all patchid for A540 chip
-      drm/msm/a5xx: Remove overwriting A5XX_PC_DBG_ECO_CNTL register
-      drm/msm/a5xx: Separate A5XX_PC_DBG_ECO_CNTL write from main branch
-      drm/msm/a5xx: Add support for Adreno 508, 509, 512 GPUs
-      drm/msm/a5xx: Reset VBIF before PC only on A510 and A530
-      drm/msm/dpu: Fix VBIF_XINL_QOS_LVL_REMAP_000 register offset
-      drm/msm/dpu: Move DPU_SSPP_QOS_8LVL bit to SDM845 and SC7180 masks
-      drm/msm/dpu: Add prog_fetch_lines_worst_case to INTF_BLK macro
-      drm/msm/dpu: Allow specifying features and sblk in DSPP_BLK macro
-      drm/msm/dpu: Disable autorefresh in command mode
-      drm/msm/dpu: Correctly configure vsync tearcheck for command mode
-      drm/msm/dpu: Remove unused call in wait_for_commit_done
-      drm/msm/dsi_pll_10nm: Fix dividing the same numbers twice
-      drm/msm/dsi_pll_10nm: Solve TODO for multiplier frac_bits assignment
-      drm/msm/dsi_pll_10nm: Fix variable usage for pll_lockdet_rate
-      drm/msm/dsi_pll_10nm: Convert pr_err prints to DRM_DEV_ERROR
-
-Bernard Zhao (1):
-      drm/msm: remove unneeded variable: "rc"
-
-Dmitry Baryshkov (1):
-      drm/msm/dpu1: add support for qseed3lite used on sm8250
-
-Eric Anholt (3):
-      drm/msm: Fix race of GPU init vs timestamp power management.
-      drm/msm: Fix races managing the OOB state for timestamp vs timestamps.
-      drm/msm: Clean up GMU OOB set/clear handling.
-
-Iskren Chernev (2):
-      drm/msm: Fix MSM_INFO_GET_IOVA with carveout
-      drm/msm/mdp5: Fix wait-for-commit for cmd panels
-
-Jiapeng Zhong (1):
-      drm/msm: remove redundant NULL check
-
-Judy Hsiao (1):
-      drm/msm/dp: trigger unplug event in msm_dp_display_disable
-
-Konrad Dybcio (5):
-      drm/msm/a5xx: Fix VPC protect value in gpu_write()
-      drm/msm/a5xx: Disable flat shading optimization
-      drm/msm/a5xx: Disable UCHE global filter
-      drm/msm/dsi: Correct io_start for MSM8994 (20nm PHY)
-      drm/msm/disp/mdp5: mdp5_cfg: Fix msm8974v2 max_clk
-
-Kuogee Hsieh (2):
-      drm/msm/dp: unplug interrupt missed after irq_hpd handler
-      drm/msm/dp: reset dp controller only at boot up and pm_resume
-
-Rob Clark (1):
-      drm/msm: Fix legacy relocs path
-
-Sai Prakash Ranjan (2):
-      drm/msm: Add proper checks for GPU LLCC support
-      drm/msm/a6xx: Create an A6XX GPU specific address space
-
-Stephen Boyd (2):
-      drm/msm/kms: Make a lock_class_key for each crtc mutex
-      drm/msm/dp: Add a missing semi-colon
-
-Xu Wang (2):
-      drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c: Remove unneeded semicolon
-      drm/msm/dp/dp_ctrl: Remove unneeded semicolon
-
- drivers/gpu/drm/msm/adreno/a5xx.xml.h              |   2 +
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c              | 195 ++++++++++++++++++---
- drivers/gpu/drm/msm/adreno/a5xx_power.c            |   4 +-
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c              | 105 ++++++-----
- drivers/gpu/drm/msm/adreno/a6xx_gmu.h              |  49 ++----
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c              | 139 ++++++++++++++-
- drivers/gpu/drm/msm/adreno/a6xx_gpu.h              |   2 +
- drivers/gpu/drm/msm/adreno/adreno_device.c         |  54 +++++-
- drivers/gpu/drm/msm/adreno/adreno_gpu.c            |  23 +--
- drivers/gpu/drm/msm/adreno/adreno_gpu.h            |  22 ++-
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c   |  90 ++++++++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  87 ++++++---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   2 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c    |  26 +++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h    |  14 ++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c        |   1 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h        |   1 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c        |  73 +++++++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h        |   3 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.c        |   9 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c          |   1 +
- drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c           |   2 +-
- drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c          |   2 +-
- drivers/gpu/drm/msm/dp/dp_aux.c                    |   7 -
- drivers/gpu/drm/msm/dp/dp_catalog.c                |  24 +++
- drivers/gpu/drm/msm/dp/dp_ctrl.c                   |  15 +-
- drivers/gpu/drm/msm/dp/dp_ctrl.h                   |   2 +-
- drivers/gpu/drm/msm/dp/dp_display.c                |  24 ++-
- drivers/gpu/drm/msm/dp/dp_panel.c                  |   3 +-
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c         |   2 +-
- drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c         |  21 +--
- drivers/gpu/drm/msm/msm_drv.c                      |   3 +-
- drivers/gpu/drm/msm/msm_gem.c                      |   3 +-
- drivers/gpu/drm/msm/msm_gem_submit.c               |   2 +
- drivers/gpu/drm/msm/msm_kms.h                      |   8 +-
- 36 files changed, 803 insertions(+), 219 deletions(-)
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member of Code Aurora Forum, hosted by The Linux Foundation
