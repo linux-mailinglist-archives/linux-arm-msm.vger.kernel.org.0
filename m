@@ -2,162 +2,227 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 98AF8314008
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Feb 2021 21:13:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 067F33140BB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Feb 2021 21:44:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236709AbhBHUMI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Feb 2021 15:12:08 -0500
-Received: from mail29.static.mailgun.info ([104.130.122.29]:26883 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S236705AbhBHUMG (ORCPT
+        id S230313AbhBHUn6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Feb 2021 15:43:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38474 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232827AbhBHUmu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Feb 2021 15:12:06 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1612815109; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=u8iIJehkth8Jk+VBQwZ5ZjLbDDng2RrkWNfl+aRo0Gw=; b=ukm2vp/b0HVr9/nCLW5xMSaxtZgfO7k+Qy+JWsq82vvJ8+PqaL+WXElkIaz6+dNOCaZSm7ce
- grDCHmyofaIJR1iOi8Ln/sUlhUc4fiCzOeMwTpdvbAaqtya5/vPY9Z0+HYSXci08fqhyevLE
- 5yN8CthKbolaLptUGrlywZZDP+8=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 60219ae434db06ef798f2c8f (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 08 Feb 2021 20:11:16
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 14747C433C6; Mon,  8 Feb 2021 20:11:16 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3A10BC43465;
-        Mon,  8 Feb 2021 20:11:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3A10BC43465
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        loic.poulain@linaro.org, carl.yin@quectel.com,
-        naveen.kumar@quectel.com, Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: [PATCH v3 3/3] bus: mhi: core: Process execution environment changes serially
-Date:   Mon,  8 Feb 2021 12:11:02 -0800
-Message-Id: <1612815062-4738-4-git-send-email-bbhatt@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1612815062-4738-1-git-send-email-bbhatt@codeaurora.org>
-References: <1612815062-4738-1-git-send-email-bbhatt@codeaurora.org>
+        Mon, 8 Feb 2021 15:42:50 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33C68C06178C;
+        Mon,  8 Feb 2021 12:42:09 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id s5so20556158edw.8;
+        Mon, 08 Feb 2021 12:42:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:date:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=DJnyZ/1Cnxk+D3nM2fOPzoXqYQ/251s/xnKgRXcQRhw=;
+        b=EvLcEAcYrivTK761OkY+cfAheK/A9qrd6wJvIIrvfMZ3nbg5WQhKECLlwXZYXfe5mF
+         1MdPqa318RS4fxvnCKevs0qEKz8+kSzoZrBF/iCbmSAyVGxBrlUsZ+jFRm7fZKbyFCbH
+         yl8fcX3W1Mp9b7rZEE/gpzG7G69ju1el46x6BiM+7koHGSwzuLWUXTSKbZS8z6j7rzBi
+         fifg7JqyWoL3M1FNqcicVmQEfDxCvkcjsqc52XQh6em3OvSKTxoTBTzGnARmMjFqO1zs
+         UpH+WZ2Ph4Y9rLZXJWAty/tgj0qHKywy3KbKVjAWNXNvrAfK3rUzvdDk+ciMXX5tgBon
+         hejw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=DJnyZ/1Cnxk+D3nM2fOPzoXqYQ/251s/xnKgRXcQRhw=;
+        b=EbZrtuItVIIALMzuSEvF2QNKm1Sa8jiqm6YGNGoHC9EcXSOcc3L0RldCzzf1w6O1z9
+         N3qglXZ7l+MNJm65An60Bt46gfkfc9oiTgVmwOaeerwSsLpnuw5u66aF/lrDWmjAcDfn
+         CRJlU82CsjWqnm/Frx3CpecTG1fk4mIALaQqXHks05TbhfTK5l5wEesbaFM7VsfEbBsv
+         3TPqiLUlrlHxjs8AC2u8FpL3TYyvfBn+GBfcIUqo4mb0mCK+XRFYA6NvmkuPxhh2wOKs
+         vgkeDyJEOlM+LuTHbVAScqVPIz+us4y2LrH8XiOEt3WnuZet8+IHMMk3o0JXkgCgbMHg
+         0lbQ==
+X-Gm-Message-State: AOAM533LZMHhrdV7Y7b7RET85U1hkLDDcgfnO9NGmCcsZh+F+OiyFfED
+        By4b/Y51en9omZkNX3zvE10=
+X-Google-Smtp-Source: ABdhPJx19QKwaSCRAgeFG8WQLCwKXMZqbqwibtJ0hqpiLh/h1sn40jK/LxOeSxRKJXb8vy0ReWsEAg==
+X-Received: by 2002:a05:6402:30a3:: with SMTP id df3mr7839430edb.237.1612816927877;
+        Mon, 08 Feb 2021 12:42:07 -0800 (PST)
+Received: from ubuntu-laptop (ip5f5bee1b.dynamic.kabel-deutschland.de. [95.91.238.27])
+        by smtp.googlemail.com with ESMTPSA id a7sm9334645eje.96.2021.02.08.12.42.05
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 08 Feb 2021 12:42:07 -0800 (PST)
+Message-ID: <4cea12c5c2a1c42ab6c1b96b82489cc59da39517.camel@gmail.com>
+Subject: Re: [PATCH] scsi: ufs: create a hook for unipro dme control
+From:   Bean Huo <huobean@gmail.com>
+To:     Leo Liou <leoliou@google.com>, agross@kernel.org,
+        bjorn.andersson@linaro.org, alim.akhtar@samsung.com,
+        avri.altman@wdc.com, jejb@linux.ibm.com,
+        martin.petersen@oracle.com, stanley.chu@mediatek.com,
+        cang@codeaurora.org, asutoshd@codeaurora.org, beanhuo@micron.com,
+        jaegeuk@kernel.org, adrian.hunter@intel.com, satyat@google.com,
+        essuuj@gmail.com, linux-arm-msm@vger.kernel.org,
+        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
+Date:   Mon, 08 Feb 2021 21:42:05 +0100
+In-Reply-To: <20210208125628.2758665-1-leoliou@google.com>
+References: <20210208125628.2758665-1-leoliou@google.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.2 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In current design, whenever the BHI interrupt is fired, the
-execution environment is updated. This can cause race conditions
-and impede any ongoing power up/down processing. For example, if
-a power down is in progress, MHI host updates the execution
-environment to a local "disabled" state. If a BHI interrupt fires
-later, the value gets replaced with one from the BHI EE register.
-This impacts the controller as it does not expect multiple RDDM
-execution environment change status callbacks as an example.
-Another issue would be that the device can enter mission mode and
-the execution environment is updated, while device creation for
-SBL channels is still going on due to slower PM state worker
-thread run, leading to multiple attempts at opening the same IPCR
-channel.
+On Mon, 2021-02-08 at 20:56 +0800, Leo Liou wrote:
+> Based on ufshci spec, it defines that "Offset C0h to FFh" belong
+> to vendor specific. If cpu vendor doesn't support these commands, it
+> makes the dme errors:
+> 
+> ufs: dme-set: attr-id 0xd041 val 0x1fff failed 0 retries
+> ufs: dme-set: attr-id 0xd042 val 0xffff failed 0 retries
+> ufs: dme-set: attr-id 0xd043 val 0x7fff failed 0 retries
+> 
 
-Ensure that EE changes are handled only from appropriate places and
-occur one after another and handle only PBL or RDDM EE changes as
-critical events directly from the interrupt handler. This also makes
-sure that we use the correct execution environment to notify the
-controller driver when the device resets to one of the PBL execution
-environments.
+Hi Leo
+"Offset C0h to FFh" registers belong to the UFSHCI, but the attribtes
+you moved belong to "DME Attributes for DME_SET-based High Level Power
+Mode Control" defined in Unipro and doesen't say they are vendor-
+defined attributes. How these two are associated?
 
-Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
----
- drivers/bus/mhi/core/main.c | 14 ++++++++------
- drivers/bus/mhi/core/pm.c   |  5 +++--
- 2 files changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-index a73ca03..69401ab 100644
---- a/drivers/bus/mhi/core/main.c
-+++ b/drivers/bus/mhi/core/main.c
-@@ -423,7 +423,7 @@ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
- 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
- 	enum mhi_state state = MHI_STATE_MAX;
- 	enum mhi_pm_state pm_state = 0;
--	enum mhi_ee_type ee = 0;
-+	enum mhi_ee_type ee = MHI_EE_MAX;
- 
- 	write_lock_irq(&mhi_cntrl->pm_lock);
- 	if (!MHI_REG_ACCESS_VALID(mhi_cntrl->pm_state)) {
-@@ -432,8 +432,7 @@ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
- 	}
- 
- 	state = mhi_get_mhi_state(mhi_cntrl);
--	ee = mhi_cntrl->ee;
--	mhi_cntrl->ee = mhi_get_exec_env(mhi_cntrl);
-+	ee = mhi_get_exec_env(mhi_cntrl);
- 	dev_dbg(dev, "local ee:%s device ee:%s dev_state:%s\n",
- 		TO_MHI_EXEC_STR(mhi_cntrl->ee), TO_MHI_EXEC_STR(ee),
- 		TO_MHI_STATE_STR(state));
-@@ -451,8 +450,9 @@ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
- 		if (!mhi_is_active(mhi_cntrl))
- 			goto exit_intvec;
- 
--		if (mhi_cntrl->ee == MHI_EE_RDDM && mhi_cntrl->ee != ee) {
-+		if (ee == MHI_EE_RDDM && mhi_cntrl->ee != MHI_EE_RDDM) {
- 			mhi_cntrl->status_cb(mhi_cntrl, MHI_CB_EE_RDDM);
-+			mhi_cntrl->ee = ee;
- 			wake_up_all(&mhi_cntrl->state_event);
- 		}
- 		goto exit_intvec;
-@@ -462,10 +462,12 @@ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
- 		wake_up_all(&mhi_cntrl->state_event);
- 
- 		/* For fatal errors, we let controller decide next step */
--		if (MHI_IN_PBL(ee))
-+		if (MHI_IN_PBL(ee)) {
- 			mhi_cntrl->status_cb(mhi_cntrl, MHI_CB_FATAL_ERROR);
--		else
-+			mhi_cntrl->ee = ee;
-+		} else {
- 			mhi_pm_sys_err_handler(mhi_cntrl);
-+		}
- 	}
- 
- exit_intvec:
-diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-index 44aa7eb..c870fa8 100644
---- a/drivers/bus/mhi/core/pm.c
-+++ b/drivers/bus/mhi/core/pm.c
-@@ -384,14 +384,15 @@ static int mhi_pm_mission_mode_transition(struct mhi_controller *mhi_cntrl)
- 
- 	write_lock_irq(&mhi_cntrl->pm_lock);
- 	if (MHI_REG_ACCESS_VALID(mhi_cntrl->pm_state))
--		mhi_cntrl->ee = mhi_get_exec_env(mhi_cntrl);
-+		ee = mhi_get_exec_env(mhi_cntrl);
- 
--	if (!MHI_IN_MISSION_MODE(mhi_cntrl->ee)) {
-+	if (!MHI_IN_MISSION_MODE(ee)) {
- 		mhi_cntrl->pm_state = MHI_PM_LD_ERR_FATAL_DETECT;
- 		write_unlock_irq(&mhi_cntrl->pm_lock);
- 		wake_up_all(&mhi_cntrl->state_event);
- 		return -EIO;
- 	}
-+	mhi_cntrl->ee = ee;
- 	write_unlock_irq(&mhi_cntrl->pm_lock);
- 
- 	wake_up_all(&mhi_cntrl->state_event);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Kind regards,
+Bean
+
+> Create a hook for unipro vendor-specific commands.
+> 
+> Signed-off-by: Leo Liou <leoliou@google.com>
+> ---
+>  drivers/scsi/ufs/ufs-qcom.c | 11 +++++++++++
+>  drivers/scsi/ufs/ufs-qcom.h |  5 +++++
+>  drivers/scsi/ufs/ufshcd.c   |  7 +------
+>  drivers/scsi/ufs/ufshcd.h   |  8 ++++++++
+>  drivers/scsi/ufs/unipro.h   |  4 ----
+>  5 files changed, 25 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-
+> qcom.c
+> index 2206b1e4b774..f2a925587029 100644
+> --- a/drivers/scsi/ufs/ufs-qcom.c
+> +++ b/drivers/scsi/ufs/ufs-qcom.c
+> @@ -759,6 +759,16 @@ static int ufs_qcom_pwr_change_notify(struct
+> ufs_hba *hba,
+>  	return ret;
+>  }
+>  
+> +static void ufs_qcom_unipro_dme_set(struct ufs_hba *hba)
+> +{
+> +	ufshcd_dme_set(hba,
+> UIC_ARG_MIB(DME_LocalFC0ProtectionTimeOutVal),
+> +		       DL_FC0ProtectionTimeOutVal_Default);
+> +	ufshcd_dme_set(hba, UIC_ARG_MIB(DME_LocalTC0ReplayTimeOutVal),
+> +		       DL_TC0ReplayTimeOutVal_Default);
+> +	ufshcd_dme_set(hba, UIC_ARG_MIB(DME_LocalAFC0ReqTimeOutVal),
+> +		       DL_AFC0ReqTimeOutVal_Default);
+> +}
+> +
+>  static int ufs_qcom_quirk_host_pa_saveconfigtime(struct ufs_hba
+> *hba)
+>  {
+>  	int err;
+> @@ -1469,6 +1479,7 @@ static const struct ufs_hba_variant_ops
+> ufs_hba_qcom_vops = {
+>  	.hce_enable_notify      = ufs_qcom_hce_enable_notify,
+>  	.link_startup_notify    = ufs_qcom_link_startup_notify,
+>  	.pwr_change_notify	= ufs_qcom_pwr_change_notify,
+> +	.unipro_dme_set		= ufs_qcom_unipro_dme_set,
+>  	.apply_dev_quirks	= ufs_qcom_apply_dev_quirks,
+>  	.suspend		= ufs_qcom_suspend,
+>  	.resume			= ufs_qcom_resume,
+> diff --git a/drivers/scsi/ufs/ufs-qcom.h b/drivers/scsi/ufs/ufs-
+> qcom.h
+> index 8208e3a3ef59..83db97caaa1b 100644
+> --- a/drivers/scsi/ufs/ufs-qcom.h
+> +++ b/drivers/scsi/ufs/ufs-qcom.h
+> @@ -124,6 +124,11 @@ enum {
+>  /* QUniPro Vendor specific attributes */
+>  #define PA_VS_CONFIG_REG1	0x9000
+>  #define DME_VS_CORE_CLK_CTRL	0xD002
+> +
+> +#define DME_LocalFC0ProtectionTimeOutVal	0xD041
+> +#define DME_LocalTC0ReplayTimeOutVal		0xD042
+> +#define DME_LocalAFC0ReqTimeOutVal		0xD043
+> +
+>  /* bit and mask definitions for DME_VS_CORE_CLK_CTRL attribute */
+>  #define DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT		BIT(8)
+>  #define DME_VS_CORE_CLK_CTRL_MAX_CORE_CLK_1US_CYCLES_MASK	0xFF
+> diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
+> index fb32d122f2e3..8ba2ce8c5d0c 100644
+> --- a/drivers/scsi/ufs/ufshcd.c
+> +++ b/drivers/scsi/ufs/ufshcd.c
+> @@ -4231,12 +4231,7 @@ static int ufshcd_change_power_mode(struct
+> ufs_hba *hba,
+>  	ufshcd_dme_set(hba, UIC_ARG_MIB(PA_PWRMODEUSERDATA5),
+>  			DL_AFC1ReqTimeOutVal_Default);
+>  
+> -	ufshcd_dme_set(hba,
+> UIC_ARG_MIB(DME_LocalFC0ProtectionTimeOutVal),
+> -			DL_FC0ProtectionTimeOutVal_Default);
+> -	ufshcd_dme_set(hba, UIC_ARG_MIB(DME_LocalTC0ReplayTimeOutVal),
+> -			DL_TC0ReplayTimeOutVal_Default);
+> -	ufshcd_dme_set(hba, UIC_ARG_MIB(DME_LocalAFC0ReqTimeOutVal),
+> -			DL_AFC0ReqTimeOutVal_Default);
+> +	ufshcd_vops_unipro_dme_set(hba);
+>  
+>  	ret = ufshcd_uic_change_pwr_mode(hba, pwr_mode->pwr_rx << 4
+>  			| pwr_mode->pwr_tx);
+> diff --git a/drivers/scsi/ufs/ufshcd.h b/drivers/scsi/ufs/ufshcd.h
+> index aa9ea3552323..b8c90bee7503 100644
+> --- a/drivers/scsi/ufs/ufshcd.h
+> +++ b/drivers/scsi/ufs/ufshcd.h
+> @@ -311,6 +311,7 @@ struct ufs_pwr_mode_info {
+>   * @pwr_change_notify: called before and after a power mode change
+>   *			is carried out to allow vendor spesific
+> capabilities
+>   *			to be set.
+> + * @unipro_dme_set: called when vendor speicific control is needed
+>   * @setup_xfer_req: called before any transfer request is issued
+>   *                  to set some things
+>   * @setup_task_mgmt: called before any task management request is
+> issued
+> @@ -342,6 +343,7 @@ struct ufs_hba_variant_ops {
+>  					enum ufs_notify_change_status
+> status,
+>  					struct ufs_pa_layer_attr *,
+>  					struct ufs_pa_layer_attr *);
+> +	void    (*unipro_dme_set)(struct ufs_hba *hba);
+>  	void	(*setup_xfer_req)(struct ufs_hba *, int, bool);
+>  	void	(*setup_task_mgmt)(struct ufs_hba *, int, u8);
+>  	void    (*hibern8_notify)(struct ufs_hba *, enum uic_cmd_dme,
+> @@ -1161,6 +1163,12 @@ static inline int
+> ufshcd_vops_pwr_change_notify(struct ufs_hba *hba,
+>  	return -ENOTSUPP;
+>  }
+>  
+> +static inline void ufshcd_vops_unipro_dme_set(struct ufs_hba *hba)
+> +{
+> +	if (hba->vops && hba->vops->unipro_dme_set)
+> +		return hba->vops->unipro_dme_set(hba);
+> +}
+> +
+>  static inline void ufshcd_vops_setup_xfer_req(struct ufs_hba *hba,
+> int tag,
+>  					bool is_scsi_cmd)
+>  {
+> diff --git a/drivers/scsi/ufs/unipro.h b/drivers/scsi/ufs/unipro.h
+> index 8e9e486a4f7b..224162e5afd8 100644
+> --- a/drivers/scsi/ufs/unipro.h
+> +++ b/drivers/scsi/ufs/unipro.h
+> @@ -192,10 +192,6 @@
+>  #define DL_TC1ReplayTimeOutVal_Default		65535
+>  #define DL_AFC1ReqTimeOutVal_Default		32767
+>  
+> -#define DME_LocalFC0ProtectionTimeOutVal	0xD041
+> -#define DME_LocalTC0ReplayTimeOutVal		0xD042
+> -#define DME_LocalAFC0ReqTimeOutVal		0xD043
+> -
+>  /* PA power modes */
+>  enum {
+>  	FAST_MODE	= 1,
 
