@@ -2,38 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EACC7313BF9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Feb 2021 18:59:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A532313C5E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Feb 2021 19:07:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235095AbhBHR7b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Feb 2021 12:59:31 -0500
-Received: from mail.kernel.org ([198.145.29.99]:45796 "EHLO mail.kernel.org"
+        id S235425AbhBHSGC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Feb 2021 13:06:02 -0500
+Received: from mail.kernel.org ([198.145.29.99]:46610 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233914AbhBHR6x (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Feb 2021 12:58:53 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 32EE864E8A;
-        Mon,  8 Feb 2021 17:58:12 +0000 (UTC)
+        id S235191AbhBHSCk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 8 Feb 2021 13:02:40 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 85B7864D92;
+        Mon,  8 Feb 2021 17:59:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1612807093;
-        bh=kFmKTrabg5KPDv675yNUKA0/ZjWb5Rr9aKIU0/5y+ok=;
+        s=k20201202; t=1612807142;
+        bh=l/mRLh6nguuYRxV20ToE7e2U3A0nwpk5ETan8VcVz9Q=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=okP0NBK5SxCyihXW+Ds6O2/fikcHLkRO09MPBdY0+VSsS96Ei3rCmS7hnDxj4Qm9x
-         JDT13gTHMfGSchT7y1eJ7lEbNUIUOHi/3xWqljJkSB/JU7pwTkrCUzHlQAqug23jtz
-         xnYvozPBTgEK3h787zWmJILWTG47KYYJ4qCFEYjSGlyzWmqi6RYl8yjsinGNtth41x
-         EZ5/LpQzEydKSYxBbV6Nv8OCCMfEjU4d9RFlPDjs/MsGJnaf5XUQek2pRdQcRyMkKc
-         AMNDz0i7O6LEwqpqs+USCAuJO44SFeaU3xyyZjPG2l3ioJHK1n6mI/DXfxGMG0BAqQ
-         tahbfc4LoFOXQ==
+        b=ehUUkbsGDf2jX4SBbRZV5jxfK5Cjv41PEoz7KapGeIxhWhMzIV9AozeG09ZNRdsnt
+         /voD1GjJ/Wri6VE4m22JPYKeWnxJM1KIsjpMG4mQzStVZJvccHqLu2X+uXxczeN/PU
+         scCXw4d3hzNB7CwTN/PlhRVjjmddNGpK0Qx/PFUoPj5jQ/OVorDVd495C/cjyaliW6
+         F2OQE9LuYNE73uzI6J1EXb5/oWAuLf8nSVebe7wyxjKqRSnpBPxHxtWL1f5Gms1GT5
+         K03e1/ft8HH/yQmbVjDHwqy0GrWNP5g4GoFLUTnQBwXq64Q8a6M7gHHTKB0FkORcLi
+         utTdY9eqk+axQ==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 04/36] arm64: dts: qcom: sdm845: Reserve LPASS clocks in gcc
-Date:   Mon,  8 Feb 2021 12:57:34 -0500
-Message-Id: <20210208175806.2091668-4-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.4 02/19] arm64: dts: qcom: sdm845: Reserve LPASS clocks in gcc
+Date:   Mon,  8 Feb 2021 12:58:41 -0500
+Message-Id: <20210208175858.2092008-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20210208175806.2091668-1-sashal@kernel.org>
-References: <20210208175806.2091668-1-sashal@kernel.org>
+In-Reply-To: <20210208175858.2092008-1-sashal@kernel.org>
+References: <20210208175858.2092008-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -66,10 +66,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  2 files changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index 7cc236575ee20..c0b93813ea9ac 100644
+index 751651a6cd819..bf4fde88011c8 100644
 --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
 +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -415,7 +415,9 @@ &dsi0_phy {
+@@ -337,7 +337,9 @@ &cdsp_pas {
  &gcc {
  	protected-clocks = <GCC_QSPI_CORE_CLK>,
  			   <GCC_QSPI_CORE_CLK_SRC>,
@@ -79,12 +79,12 @@ index 7cc236575ee20..c0b93813ea9ac 100644
 +			   <GCC_LPASS_SWAY_CLK>;
  };
  
- &gpu {
+ &pm8998_gpio {
 diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-index 76a8c996d497f..5748a404062bb 100644
+index f539b3655f6b9..ccecc8ea0f96d 100644
 --- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
 +++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-@@ -245,7 +245,9 @@ &cdsp_pas {
+@@ -232,7 +232,9 @@ &apps_smmu {
  &gcc {
  	protected-clocks = <GCC_QSPI_CORE_CLK>,
  			   <GCC_QSPI_CORE_CLK_SRC>,
@@ -94,7 +94,7 @@ index 76a8c996d497f..5748a404062bb 100644
 +			   <GCC_LPASS_SWAY_CLK>;
  };
  
- &gpu {
+ &i2c1 {
 -- 
 2.27.0
 
