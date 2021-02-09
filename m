@@ -2,133 +2,229 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 38227315A1D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Feb 2021 00:37:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7638E315AFA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Feb 2021 01:21:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234476AbhBIXdw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Feb 2021 18:33:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44450 "EHLO
+        id S234091AbhBJATN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Feb 2021 19:19:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234386AbhBIX2W (ORCPT
+        with ESMTP id S233354AbhBJAB7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Feb 2021 18:28:22 -0500
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE6E6C06121D
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Feb 2021 15:26:26 -0800 (PST)
-Received: by mail-ot1-x330.google.com with SMTP id s107so119760otb.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Feb 2021 15:26:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=IwjXZ3dkAIZUownYRrDsDZnRxOFipZhcPjf1znpQlRU=;
-        b=q91+zAClRM7pyaCnLFx3MyKyH7OSxHVCSJpb77hP1+0SiR/fqGac79HrjLCaptgY6+
-         Lf27lzi31zn+AJXdqJYupbclg/9XBIdSU0quV1yfIw1kKidFcATuGNt50YwFLkCR9Sxe
-         BTaX1H7MWwVwg71ebPrwXplIv0VvsW1NztckZJign/UjFLsLvxZ0ylNHYQKApzED5RkY
-         bCCm+LpNvgdzyq3tECg/zZJzC9K6y8se77udepdOroQ5Efyhi2WTrLtJaocE2nQtKnsv
-         zQITzIU3rPEiEOva3hZ4M8wNFLh/qxx2K8hEDQqKsmZBK91un4Xxpr/0TzXFIswzAfAl
-         lK6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=IwjXZ3dkAIZUownYRrDsDZnRxOFipZhcPjf1znpQlRU=;
-        b=bfvQj8DIqTl9e/aSSrmxw/mpTVCJ3VxRPn5taSHUqAk3LVw0dYECiJRN88cyL1SQPv
-         LuKfW848AkaUhJa1FZCu3uV0AASjdIAmTrZluhtZ9q3cYW9H5L2hPGh+Isxzk2g4f8hV
-         hFbPymQueEwMq3fPSRdrI5KZlJnfoReqHOSBY7UmUjKtE8ltL9VuqvORNgY/s583jA8f
-         uuNXyWynbfwJlipLPCXoDu9N/yOM9uhModTDQnIJtR9BiPI6Qg97DHTraeVO5vOcKpBI
-         n6HKBA6EcNowOH+2+QA7Xgp4IZSs24yrYuxzEfBBcl2M3eRmaIw+0J070XXcWsoFQfnM
-         Dq5g==
-X-Gm-Message-State: AOAM532/4va8IzdVbqIBfZqoHD5A7cem1SnSz7DQqriCsMNDqoQlcolB
-        OvS0l88gZOBFEmT2JtqCalTD3Q==
-X-Google-Smtp-Source: ABdhPJwUBm3MgKUTm/uqt3L5ze0JESuAsqG9gWJMpqLjxyJ5YKUQ/ezM6jHaJ8b0gtPMlK1L69wtlA==
-X-Received: by 2002:a05:6830:2106:: with SMTP id i6mr62990otc.260.1612913186087;
-        Tue, 09 Feb 2021 15:26:26 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id y65sm50603oie.50.2021.02.09.15.26.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Feb 2021 15:26:25 -0800 (PST)
-Date:   Tue, 9 Feb 2021 17:26:23 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Arnd Bergmann <arnd@kernel.org>
-Cc:     arm@kernel.org, soc@kernel.org, Arnd Bergmann <arnd@arndb.de>,
-        Andy Gross <agross@kernel.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Olof Johansson <olof@lixom.net>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Gustave Monce <gustave.monce@outlook.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Vincent Knecht <vincent.knecht@mailoo.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Danny Lin <danny@kdrag0n.dev>,
-        "J . R . Divya Antony" <d.antony.jr@gmail.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Jonathan Albrieux <jonathan.albrieux@gmail.com>,
+        Tue, 9 Feb 2021 19:01:59 -0500
+Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47C2DC061A28;
+        Tue,  9 Feb 2021 11:28:36 -0800 (PST)
+Received: from localhost.localdomain (abac187.neoplus.adsl.tpnet.pl [83.6.166.187])
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id AEEBE1F52D;
+        Tue,  9 Feb 2021 20:25:49 +0100 (CET)
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+To:     phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Vinod Koul <vkoul@kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Eric Biggers <ebiggers@google.com>,
-        linux-arm-msm@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        Caleb Connolly <caleb@connolly.tech>
-Subject: Re: [GIT PULL] Qualcomm ARM64 DT updates for 5.12
-Message-ID: <YCMaH1pYhU2VH8wp@builder.lan>
-References: <20210204052043.388621-1-bjorn.andersson@linaro.org>
- <161291108058.974605.13581246808545504549.b4-ty@arndb.de>
+        Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v3] thermal: qcom: tsens-v0_1: Add support for MDM9607
+Date:   Tue,  9 Feb 2021 20:25:25 +0100
+Message-Id: <20210209192526.455106-1-konrad.dybcio@somainline.org>
+X-Mailer: git-send-email 2.30.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <161291108058.974605.13581246808545504549.b4-ty@arndb.de>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 09 Feb 17:06 CST 2021, Arnd Bergmann wrote:
+MDM9607 TSENS IP is very similar to the one of MSM8916, with
+minor adjustments to various tuning values.
 
-> From: Arnd Bergmann <arnd@arndb.de>
-> 
-> On Wed, 3 Feb 2021 23:20:43 -0600, Bjorn Andersson wrote:
-> > The following changes since commit 5c8fe583cce542aa0b84adc939ce85293de36e5e:
-> > 
-> >   Linux 5.11-rc1 (2020-12-27 15:30:22 -0800)
-> > 
-> > are available in the Git repository at:
-> > 
-> >   https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-for-5.12
-> > 
-> > [...]
-> 
-> Merged into arm/dt, thanks!
-> 
-> I noticed that this came fairly late in the cycle and has a fairly
-> large amount of changes in it. It would be nice if you could try
-> to send some of the DT contents a little earlier in the future to
-> avoid risking them to miss out.
-> 
+Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Acked-by: Rob Herring <robh@kernel.org>
 
-Yeah, sorry about it showing up late.
+---
+Changes since v2:
+- Address Bjorn's comments (remove redundant variable and kfree)
+ .../bindings/thermal/qcom-tsens.yaml          |  2 +
+ drivers/thermal/qcom/tsens-v0_1.c             | 99 ++++++++++++++++++-
+ drivers/thermal/qcom/tsens.c                  |  3 +
+ drivers/thermal/qcom/tsens.h                  |  2 +-
+ 4 files changed, 104 insertions(+), 2 deletions(-)
 
-I'm trying to balance it because I do feel frustration from the
-contributors that the Qualcomm branches are "locked down" for 4-5 weeks
-per cycle.
+diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+index 95462e071ab4..8ad9dc139c23 100644
+--- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
++++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+@@ -22,6 +22,7 @@ properties:
+       - description: v0.1 of TSENS
+         items:
+           - enum:
++              - qcom,mdm9607-tsens
+               - qcom,msm8916-tsens
+               - qcom,msm8939-tsens
+               - qcom,msm8974-tsens
+@@ -94,6 +95,7 @@ allOf:
+         compatible:
+           contains:
+             enum:
++              - qcom,mdm9607-tsens
+               - qcom,msm8916-tsens
+               - qcom,msm8974-tsens
+               - qcom,msm8976-tsens
+diff --git a/drivers/thermal/qcom/tsens-v0_1.c b/drivers/thermal/qcom/tsens-v0_1.c
+index 4ffa2e2c0145..a9fc92a4779b 100644
+--- a/drivers/thermal/qcom/tsens-v0_1.c
++++ b/drivers/thermal/qcom/tsens-v0_1.c
+@@ -190,6 +190,39 @@
+ 
+ #define BIT_APPEND		0x3
+ 
++/* eeprom layout data for mdm9607 */
++#define MDM9607_BASE0_MASK	0x000000ff
++#define MDM9607_BASE1_MASK	0x000ff000
++#define MDM9607_BASE0_SHIFT	0
++#define MDM9607_BASE1_SHIFT	12
++
++#define MDM9607_S0_P1_MASK	0x00003f00
++#define MDM9607_S1_P1_MASK	0x03f00000
++#define MDM9607_S2_P1_MASK	0x0000003f
++#define MDM9607_S3_P1_MASK	0x0003f000
++#define MDM9607_S4_P1_MASK	0x0000003f
++
++#define MDM9607_S0_P2_MASK	0x000fc000
++#define MDM9607_S1_P2_MASK	0xfc000000
++#define MDM9607_S2_P2_MASK	0x00000fc0
++#define MDM9607_S3_P2_MASK	0x00fc0000
++#define MDM9607_S4_P2_MASK	0x00000fc0
++
++#define MDM9607_S0_P1_SHIFT	8
++#define MDM9607_S1_P1_SHIFT	20
++#define MDM9607_S2_P1_SHIFT	0
++#define MDM9607_S3_P1_SHIFT	12
++#define MDM9607_S4_P1_SHIFT	0
++
++#define MDM9607_S0_P2_SHIFT	14
++#define MDM9607_S1_P2_SHIFT	26
++#define MDM9607_S2_P2_SHIFT	6
++#define MDM9607_S3_P2_SHIFT	18
++#define MDM9607_S4_P2_SHIFT	6
++
++#define MDM9607_CAL_SEL_MASK	0x00700000
++#define MDM9607_CAL_SEL_SHIFT	20
++
+ static int calibrate_8916(struct tsens_priv *priv)
+ {
+ 	int base0 = 0, base1 = 0, i;
+@@ -452,7 +485,56 @@ static int calibrate_8974(struct tsens_priv *priv)
+ 	return 0;
+ }
+ 
+-/* v0.1: 8916, 8939, 8974 */
++static int calibrate_9607(struct tsens_priv *priv)
++{
++	int base, i;
++	u32 p1[5], p2[5];
++	int mode = 0;
++	u32 *qfprom_cdata;
++
++	qfprom_cdata = (u32 *)qfprom_read(priv->dev, "calib");
++	if (IS_ERR(qfprom_cdata))
++		return PTR_ERR(qfprom_cdata);
++
++	mode = (qfprom_cdata[2] & MDM9607_CAL_SEL_MASK) >> MDM9607_CAL_SEL_SHIFT;
++	dev_dbg(priv->dev, "calibration mode is %d\n", mode);
++
++	switch (mode) {
++	case TWO_PT_CALIB:
++		base = (qfprom_cdata[2] & MDM9607_BASE1_MASK) >> MDM9607_BASE1_SHIFT;
++		p2[0] = (qfprom_cdata[0] & MDM9607_S0_P2_MASK) >> MDM9607_S0_P2_SHIFT;
++		p2[1] = (qfprom_cdata[0] & MDM9607_S1_P2_MASK) >> MDM9607_S1_P2_SHIFT;
++		p2[2] = (qfprom_cdata[1] & MDM9607_S2_P2_MASK) >> MDM9607_S2_P2_SHIFT;
++		p2[3] = (qfprom_cdata[1] & MDM9607_S3_P2_MASK) >> MDM9607_S3_P2_SHIFT;
++		p2[4] = (qfprom_cdata[2] & MDM9607_S4_P2_MASK) >> MDM9607_S4_P2_SHIFT;
++		for (i = 0; i < priv->num_sensors; i++)
++			p2[i] = ((base + p2[i]) << 2);
++		fallthrough;
++	case ONE_PT_CALIB2:
++		base = (qfprom_cdata[0] & MDM9607_BASE0_MASK);
++		p1[0] = (qfprom_cdata[0] & MDM9607_S0_P1_MASK) >> MDM9607_S0_P1_SHIFT;
++		p1[1] = (qfprom_cdata[0] & MDM9607_S1_P1_MASK) >> MDM9607_S1_P1_SHIFT;
++		p1[2] = (qfprom_cdata[1] & MDM9607_S2_P1_MASK) >> MDM9607_S2_P1_SHIFT;
++		p1[3] = (qfprom_cdata[1] & MDM9607_S3_P1_MASK) >> MDM9607_S3_P1_SHIFT;
++		p1[4] = (qfprom_cdata[2] & MDM9607_S4_P1_MASK) >> MDM9607_S4_P1_SHIFT;
++		for (i = 0; i < priv->num_sensors; i++)
++			p1[i] = (((base) + p1[i]) << 2);
++		break;
++	default:
++		for (i = 0; i < priv->num_sensors; i++) {
++			p1[i] = 500;
++			p2[i] = 780;
++		}
++		break;
++	}
++
++	compute_intercept_slope(priv, p1, p2, mode);
++	kfree(qfprom_cdata);
++
++	return 0;
++}
++
++/* v0.1: 8916, 8939, 8974, 9607 */
+ 
+ static struct tsens_features tsens_v0_1_feat = {
+ 	.ver_major	= VER_0_1,
+@@ -540,3 +622,18 @@ struct tsens_plat_data data_8974 = {
+ 	.feat		= &tsens_v0_1_feat,
+ 	.fields	= tsens_v0_1_regfields,
+ };
++
++static const struct tsens_ops ops_9607 = {
++	.init		= init_common,
++	.calibrate	= calibrate_9607,
++	.get_temp	= get_temp_common,
++};
++
++struct tsens_plat_data data_9607 = {
++	.num_sensors	= 5,
++	.ops		= &ops_9607,
++	.hw_ids		= (unsigned int []){ 0, 1, 2, 3, 4 },
++
++	.feat		= &tsens_v0_1_feat,
++	.fields	= tsens_v0_1_regfields,
++};
+diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+index d8ce3a687b80..51c36b9e8e69 100644
+--- a/drivers/thermal/qcom/tsens.c
++++ b/drivers/thermal/qcom/tsens.c
+@@ -895,6 +895,9 @@ static SIMPLE_DEV_PM_OPS(tsens_pm_ops, tsens_suspend, tsens_resume);
+ 
+ static const struct of_device_id tsens_table[] = {
+ 	{
++		.compatible = "qcom,mdm9607-tsens",
++		.data = &data_9607,
++	}, {
+ 		.compatible = "qcom,msm8916-tsens",
+ 		.data = &data_8916,
+ 	}, {
+diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+index f40b625f897e..cba64c33b4f9 100644
+--- a/drivers/thermal/qcom/tsens.h
++++ b/drivers/thermal/qcom/tsens.h
+@@ -585,7 +585,7 @@ int get_temp_common(const struct tsens_sensor *s, int *temp);
+ extern struct tsens_plat_data data_8960;
+ 
+ /* TSENS v0.1 targets */
+-extern struct tsens_plat_data data_8916, data_8939, data_8974;
++extern struct tsens_plat_data data_8916, data_8939, data_8974, data_9607;
+ 
+ /* TSENS v1 targets */
+ extern struct tsens_plat_data data_tsens_v1, data_8976;
+-- 
+2.30.0
 
-> It could also help to split up the largest branches to make them a
-> little smaller, e.g. by having one branch just for new SoC and/or
-> new board support, and another branch for changes to existing machines.
-> 
-
-It's fairly common that things such as PMICs are reused between new and
-old platforms, so I fear that such a split will cause unnecessary
-conflicts between my trees.
-
-Perhaps I should just send multiple pull requests throughout the cycle?
-
-Regards,
-Bjorn
