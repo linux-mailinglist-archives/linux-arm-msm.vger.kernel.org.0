@@ -2,234 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F9313153D5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Feb 2021 17:28:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BE85B315416
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Feb 2021 17:41:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232898AbhBIQ1L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Feb 2021 11:27:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38356 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232875AbhBIQ0g (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Feb 2021 11:26:36 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA9B6C06121C
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Feb 2021 08:24:53 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id v15so22677718wrx.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Feb 2021 08:24:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=wu1Zf/mFp11ctNj1vtuDSQPYbJ+HL7jrEiQ0KZuFezo=;
-        b=I6D4bF5uMxtRWwS0Mn+TavIJ4XVUv7hvagTHG3ISwzJ6D/6d3zSF2mNypBEES4av7Y
-         hJxhwYsGmnnRSERkuFsGkCiLx5/fycwp13gXAiPeBIk1hei6pdyckZMlA6uJFrDbDf91
-         W8LkGgTZ4DiQekZ6ace+CgTv2aRjSWN0ZpEdtrSHimr51N2xkkBJPRuFSVzPYj4uXYWx
-         l0ubWK1bc+cKKQGXGI329I1xBooi6THHIgW7m4564Le9Jymvvo/OQ10LDX8C/qp25DJM
-         WqQxR+X81bpjX2yOKQonm4dz4rO6rCfsgkNVW427O1s8gWplkQtlmMZLbZvKgDRs7Y8S
-         JUgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=wu1Zf/mFp11ctNj1vtuDSQPYbJ+HL7jrEiQ0KZuFezo=;
-        b=S2oz37+/vJ5N90O6VOikMCWqx2sh3dMvNYe2zQQuEWDde1hQoZLo3ZBV99fw67LjT4
-         nnJx7guQYlMIsp0i8qA76oF1s+deLNWp2dUeNxPOyZOEa+s+e/YoruSJr/2rmkEi3ACM
-         LT0QvQa7UbmAhpcG8WRHBFYcKs958VK3kyIAZvN+dN6kLkCXhUpAqwgtbgwUb5azSR8A
-         St1jIitDEJv6hkCSoBVuvM6Q0c3KOQVkjeGXIED0BUk3LGsHz4ijEuZo7CX6pGzc6s9t
-         kNIi1UNTlxENRsqH/8z/50xEpzO7VV2KKD0fncyeRrBr4APR3M0aVopKhZpU2vmgavOW
-         Zwtg==
-X-Gm-Message-State: AOAM533J7G/RHJJQhY6KUW7VRF7WIW4jj9d8RuPL4vKXxN8lhhIbDHOy
-        SOBzpJHenoL5/7p6qP8JMZz6Rg==
-X-Google-Smtp-Source: ABdhPJxArIq1MgIBSFwswh1oCzfmdRDGnZkYUUmsbnXFD6laxQ912wKVUj3UuGfdmyrGygBoc0S/Bg==
-X-Received: by 2002:a5d:540d:: with SMTP id g13mr12949443wrv.143.1612887892665;
-        Tue, 09 Feb 2021 08:24:52 -0800 (PST)
-Received: from localhost.localdomain (hst-221-125.medicom.bg. [84.238.221.125])
-        by smtp.gmail.com with ESMTPSA id w8sm45210wrm.21.2021.02.09.08.24.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Feb 2021 08:24:52 -0800 (PST)
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Ezequiel Garcia <ezequiel@collabora.com>,
-        Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH v5 5/5] venus: venc: Add support for CLL and Mastering display controls
-Date:   Tue,  9 Feb 2021 18:24:25 +0200
-Message-Id: <20210209162425.3970393-6-stanimir.varbanov@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210209162425.3970393-1-stanimir.varbanov@linaro.org>
-References: <20210209162425.3970393-1-stanimir.varbanov@linaro.org>
+        id S232983AbhBIQkk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Feb 2021 11:40:40 -0500
+Received: from so15.mailgun.net ([198.61.254.15]:44179 "EHLO so15.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232972AbhBIQkX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 9 Feb 2021 11:40:23 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1612888793; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=mQCwxFFSXafw6XxuGbR0UZRSX80djScErIhHBoGB1Xs=;
+ b=lR+Sj2jLPur3Bsp7z3tyL1G1PS/BGBWvTFmANBE+CxKGvjKUQHUxuwWX6GlgDCtWuUTyCXII
+ uWmqab3cbBmMSDzgbU0Fp+1XXWAQiqtsNY90x1Ls2Ql78bitWc0ubZRiS4FfTb+1oL/V5q9w
+ rXteVGJ+mXCqjoryGwPabbo3/Hw=
+X-Mailgun-Sending-Ip: 198.61.254.15
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 6022babae4842e91282939aa (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 09 Feb 2021 16:39:22
+ GMT
+Sender: mdalam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 17AC9C43463; Tue,  9 Feb 2021 16:39:22 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: mdalam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0C837C433ED;
+        Tue,  9 Feb 2021 16:39:20 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 09 Feb 2021 22:09:20 +0530
+From:   mdalam@codeaurora.org
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     corbet@lwn.net, agross@kernel.org, bjorn.andersson@linaro.org,
+        dan.j.williams@intel.com, dmaengine@vger.kernel.org,
+        linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, sricharan@codeaurora.org,
+        mdalam=codeaurora.org@codeaurora.org
+Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Add LOCK and UNLOCK flag bit
+ support
+In-Reply-To: <73c871d3d674607fafc7b79e602ec587@codeaurora.org>
+References: <efcc74bbdf36b4ddbf764eb6b4ed99f2@codeaurora.org>
+ <f7de0117c8ff2e61c09f58acdea0e5b0@codeaurora.org>
+ <20210112101056.GI2771@vkoul-mobl>
+ <e3cf7c4fc02c54d17fd2fd213f39005b@codeaurora.org>
+ <20210115055806.GE2771@vkoul-mobl>
+ <97ce29b230164a5848a38f6448d1be60@codeaurora.org>
+ <20210119164511.GE2771@vkoul-mobl>
+ <534308caab7c18730ad0cc25248d116f@codeaurora.org>
+ <20210201060508.GK2771@vkoul-mobl>
+ <9d33d73682f24d92338757e1823ccd88@codeaurora.org>
+ <20210201064314.GM2771@vkoul-mobl>
+ <73c871d3d674607fafc7b79e602ec587@codeaurora.org>
+Message-ID: <755d79fe46d819a4c5aaab245ab00634@codeaurora.org>
+X-Sender: mdalam@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Create CLL and Mastering display colour volume v4l2 controls for
-encoder, add handling of HDR10 PQ SEI packet payloads for v4.
+On 2021-02-01 21:20, mdalam@codeaurora.org wrote:
+> On 2021-02-01 12:13, Vinod Koul wrote:
+>> On 01-02-21, 11:52, mdalam@codeaurora.org wrote:
+>>> On 2021-02-01 11:35, Vinod Koul wrote:
+>>> > On 27-01-21, 23:56, mdalam@codeaurora.org wrote:
+>> 
+>>> > >   The actual LOCK/UNLOCK flag should be set on hardware command
+>>> > > descriptor.
+>>> > >   so this flag setting should be done in DMA engine driver. The user
+>>> > > of the
+>>> > > DMA
+>>> > >   driver like (in case of IPQ5018) Crypto can use flag
+>>> > > "DMA_PREP_LOCK" &
+>>> > > "DMA_PREP_UNLOCK"
+>>> > >   while preparing CMD descriptor before submitting to the DMA
+>>> > > engine. In DMA
+>>> > > engine driver
+>>> > >   we are checking these flasgs on CMD descriptor and setting actual
+>>> > > LOCK/UNLOCK flag on hardware
+>>> > >   descriptor.
+>>> >
+>>> >
+>>> > I am not sure I comprehend this yet.. when is that we would need to do
+>>> > this... is this for each txn submitted to dmaengine.. or something
+>>> > else..
+>>> 
+>>>  Its not for each transaction submitted to dmaengine. We have to set 
+>>> this
+>>> only
+>>>  once on CMD descriptor. So when A53 crypto driver need to change the 
+>>> crypto
+>>> configuration
+>>>  then first it will lock the all other pipes using setting the LOCK 
+>>> flag bit
+>>> on CMD
+>>>  descriptor and then it can start the transaction , on data 
+>>> descriptor this
+>>> flag will
+>>>  not get set once all transaction will be completed the A53 crypto 
+>>> driver
+>>> release the lock on
+>>>  all other pipes using UNLOCK flag on CMD descriptor. So LOCK/UNLOCK 
+>>> will be
+>>> only once and not for
+>>>  the each transaction.
+>> 
+>> Okay so why cant the bam driver check cmd descriptor and do 
+>> lock/unlock
+>> as below, why do we need users to do this.
+>> 
+>>         if (flags & DMA_PREP_CMD) {
+>>                 do_lock_bam();
+> 
+>  User will not decide to do this LOCK/UNLOCK mechanism. It depends on 
+> use case.
+>  This LOCK/UNLOCK mechanism not required always. It needs only when
+> hardware will be shared
+>  between different core with different driver.
+>  The LOCK/UNLOCK flags provides SW to enter ordering between pipes 
+> execution.
+>  (Generally, the BAM pipes are total independent from each other and
+> work in parallel manner).
+>  This LOCK/UNLOCK flags are part of actual pipe hardware descriptor.
+> 
+>  Pipe descriptor having the following flags:
+>  INT : Interrupt
+>  EOT: End of transfer
+>  EOB: End of block
+>  NWD: Notify when done
+>  CMD: Command
+>  LOCK: Lock
+>  UNLOCK: Unlock
+>  etc.
+> 
+>  Here the BAM driver is common driver for (QPIC, Crypto, QUP etc. in 
+> IPQ5018)
+>  So here only Crypto will be shared b/w multiple cores so For crypto
+> request only the LOCK/UNLOCK
+>  mechanism required.
+>  For other request like for QPIC driver, QUPT driver etc. its not
+> required. So Crypto driver has to raise the flag for
+>  LOCK/UNLOCK while preparing CMD descriptor. The actual locking will
+> happen in BAM driver only using condition
+>  if (flags & DMA_PREP_CMD) {
+>      if (flags & DMA_PREP_LOCK)
+>         desc->flags |= cpu_to_le16(DESC_FLAG_LOCK);
+>  }
+> 
+>  So Crypto driver should set this flag DMA_PREP_LOCK while preparing
+> CMD descriptor.
+>  So LOCK should be set on actual hardware pipe descriptor with
+> descriptor type CMD.
+> 
+>> 
+>> The point here is that this seems to be internal to dma and should be
+>> handled by dma driver.
+>> 
+>   This LOCK/UNLOK flags are part of actual hardware descriptor so this
+> should be handled by BAM driver only.
+>   If we set condition like this
+>   if (flags & DMA_PREP_CMD) {
+>                 do_lock_bam();
+>   Then LOCK/UNLOCK will be applied for all the CMD descriptor
+> including (QPIC driver, QUP driver , Crypto driver etc.).
+>   So this is not our intension. So we need to set this LOCK/UNLOCK
+> only for the drivers it needs. So Crypto driver needs
+>   locking mechanism so we will set LOCK/UNLOCK flag on Crypto driver
+> request only for other driver request like QPIC driver,
+>   QUP driver will not set this.
+> 
 
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
----
- drivers/media/platform/qcom/venus/core.h      |  2 ++
- drivers/media/platform/qcom/venus/hfi_cmds.c  |  8 +++++
- .../media/platform/qcom/venus/hfi_helper.h    | 20 +++++++++++++
- drivers/media/platform/qcom/venus/venc.c      | 29 +++++++++++++++++++
- .../media/platform/qcom/venus/venc_ctrls.c    | 16 +++++++++-
- 5 files changed, 74 insertions(+), 1 deletion(-)
+    ping! Do you need any further info on this?
 
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index a252ed32cc14..adbcda6e9386 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -238,6 +238,8 @@ struct venc_controls {
- 	} level;
- 
- 	u32 base_priority_id;
-+	struct v4l2_ctrl_hdr10_cll_info cll;
-+	struct v4l2_ctrl_hdr10_mastering_display mastering;
- };
- 
- struct venus_buffer {
-diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
-index 4f7565834469..d2edf3896cf1 100644
---- a/drivers/media/platform/qcom/venus/hfi_cmds.c
-+++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
-@@ -1217,6 +1217,14 @@ pkt_session_set_property_4xx(struct hfi_session_set_property_pkt *pkt,
- 		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*info);
- 		break;
- 	}
-+	case HFI_PROPERTY_PARAM_VENC_HDR10_PQ_SEI: {
-+		struct hfi_hdr10_pq_sei *in = pdata, *hdr10 = prop_data;
-+
-+		memcpy(hdr10, in, sizeof(*hdr10));
-+		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*hdr10);
-+		break;
-+	}
-+
- 	case HFI_PROPERTY_CONFIG_VENC_MAX_BITRATE:
- 	case HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER:
- 	case HFI_PROPERTY_PARAM_BUFFER_ALLOC_MODE:
-diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
-index 6b524c7cde5f..d32d926c7b2c 100644
---- a/drivers/media/platform/qcom/venus/hfi_helper.h
-+++ b/drivers/media/platform/qcom/venus/hfi_helper.h
-@@ -513,6 +513,7 @@
- #define HFI_PROPERTY_PARAM_VENC_VPX_ERROR_RESILIENCE_MODE	0x2005029
- #define HFI_PROPERTY_PARAM_VENC_HIER_B_MAX_NUM_ENH_LAYER	0x200502c
- #define HFI_PROPERTY_PARAM_VENC_HIER_P_HYBRID_MODE		0x200502f
-+#define HFI_PROPERTY_PARAM_VENC_HDR10_PQ_SEI			0x2005036
- 
- /*
-  * HFI_PROPERTY_CONFIG_VENC_COMMON_START
-@@ -809,6 +810,25 @@ struct hfi_ltr_mark {
- 	u32 mark_frame;
- };
- 
-+struct hfi_mastering_display_colour_sei_payload {
-+	u32 display_primaries_x[3];
-+	u32 display_primaries_y[3];
-+	u32 white_point_x;
-+	u32 white_point_y;
-+	u32 max_display_mastering_luminance;
-+	u32 min_display_mastering_luminance;
-+};
-+
-+struct hfi_content_light_level_sei_payload {
-+	u32 max_content_light;
-+	u32 max_pic_average_light;
-+};
-+
-+struct hfi_hdr10_pq_sei {
-+	struct hfi_mastering_display_colour_sei_payload mastering;
-+	struct hfi_content_light_level_sei_payload cll;
-+};
-+
- struct hfi_framesize {
- 	u32 buffer_type;
- 	u32 width;
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index 6976ed553647..192b8c4ef778 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -612,6 +612,35 @@ static int venc_set_properties(struct venus_inst *inst)
- 			return ret;
- 	}
- 
-+	if (inst->fmt_cap->pixfmt == V4L2_PIX_FMT_HEVC) {
-+		struct hfi_hdr10_pq_sei hdr10;
-+		unsigned int c;
-+
-+		ptype = HFI_PROPERTY_PARAM_VENC_HDR10_PQ_SEI;
-+
-+		for (c = 0; c < 3; c++) {
-+			hdr10.mastering.display_primaries_x[c] =
-+				ctr->mastering.display_primaries_x[c];
-+			hdr10.mastering.display_primaries_y[c] =
-+				ctr->mastering.display_primaries_y[c];
-+		}
-+
-+		hdr10.mastering.white_point_x = ctr->mastering.white_point_x;
-+		hdr10.mastering.white_point_y = ctr->mastering.white_point_y;
-+		hdr10.mastering.max_display_mastering_luminance =
-+			ctr->mastering.max_display_mastering_luminance;
-+		hdr10.mastering.min_display_mastering_luminance =
-+			ctr->mastering.min_display_mastering_luminance;
-+
-+		hdr10.cll.max_content_light = ctr->cll.max_content_light_level;
-+		hdr10.cll.max_pic_average_light =
-+			ctr->cll.max_pic_average_light_level;
-+
-+		ret = hfi_session_set_property(inst, ptype, &hdr10);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	if (ctr->num_b_frames) {
- 		u32 max_num_b_frames = NUM_B_FRAMES_MAX;
- 
-diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
-index a52b80055173..52ae665f361e 100644
---- a/drivers/media/platform/qcom/venus/venc_ctrls.c
-+++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
-@@ -276,6 +276,12 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
- 	case V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITY_ID:
- 		ctr->base_priority_id = ctrl->val;
- 		break;
-+	case V4L2_CID_COLORIMETRY_HDR10_CLL_INFO:
-+		ctr->cll = *ctrl->p_new.p_hdr10_cll;
-+		break;
-+	case V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY:
-+		ctr->mastering = *ctrl->p_new.p_hdr10_mastering;
-+		break;
- 	default:
- 		return -EINVAL;
- 	}
-@@ -291,7 +297,7 @@ int venc_ctrl_init(struct venus_inst *inst)
- {
- 	int ret;
- 
--	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 51);
-+	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 53);
- 	if (ret)
- 		return ret;
- 
-@@ -498,6 +504,14 @@ int venc_ctrl_init(struct venus_inst *inst)
- 			  V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITY_ID, 0,
- 			  6, 1, 0);
- 
-+	v4l2_ctrl_new_std_compound(&inst->ctrl_handler, &venc_ctrl_ops,
-+				   V4L2_CID_COLORIMETRY_HDR10_CLL_INFO,
-+				   v4l2_ctrl_ptr_create(NULL));
-+
-+	v4l2_ctrl_new_std_compound(&inst->ctrl_handler, &venc_ctrl_ops,
-+				   V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY,
-+				   v4l2_ctrl_ptr_create(NULL));
-+
- 	ret = inst->ctrl_handler.error;
- 	if (ret)
- 		goto err;
--- 
-2.25.1
-
+>> Also if we do this, it needs to be done for specific platforms..
+>> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+>> Thanks
