@@ -2,131 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 609DE31545E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Feb 2021 17:52:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2DA2331549A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Feb 2021 18:05:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233133AbhBIQvw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Feb 2021 11:51:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43726 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233061AbhBIQun (ORCPT
+        id S232925AbhBIRDj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Feb 2021 12:03:39 -0500
+Received: from mail29.static.mailgun.info ([104.130.122.29]:10614 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S233061AbhBIRDh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Feb 2021 11:50:43 -0500
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2ED22C0613D6
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Feb 2021 08:50:02 -0800 (PST)
-Received: by mail-ot1-x32d.google.com with SMTP id 100so11369619otg.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Feb 2021 08:50:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=aleksander-es.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=dKwNo6TC+1q3oQgv5Miw/gtfysz963YICrpQOCkStJ8=;
-        b=nRmGzLhyU4G9H274uUqksm/3yq38VX5VcGp0ZwGZqNDUNETv8QvewOOKe0Y+SwksNG
-         t3oES0hFI9jU/A0sJF1MenV1DhvlYGoOkQm1Ua0A5c4uVI3uFifwp7gL0ZeWKDtQPRcJ
-         58PvjG/3BhqPJm8FAp9d2KFgOawr5WCwgRBCpaKQ4Scj51MSJ5MMqCpo9eN2/w29f27m
-         GvLP2d711dMWgtB/1BeAe4CE+0pMPPHhwj1TfIEtUh6zZIHB/wHP6xvrd8GkpL0uJviC
-         +OEkeACTEZgt2TNjef6IRGtWDcMiKQoP4oqriD/vQxpIAzciIxkAnEntXXVfAH999IC3
-         c9iA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=dKwNo6TC+1q3oQgv5Miw/gtfysz963YICrpQOCkStJ8=;
-        b=sXpQxZy6losGmlXuIGa07xSaEXsgHxB+CwY8fSJBffsmt3+qtnC/Qqka4jI559yfjO
-         nHsftXdV3zUOEIev0GtYv2nyh1oTKzwNILG2YvtHNv9QvkuyWCPJghpKtUuvdIudkKrx
-         BItapg4O/Kh8L6nPoTOaoFjBT3fJ3Wj5UCetkHwelfK0m3DH35b4c/CYK1TlAj+uHpwP
-         xsOvHCPCnjw6lDtVd/lRTMonJy9BuMUb2iGBUNo0zPSfXRk3r1qSLKyHgMV1hFcXdsce
-         DGiOHtjVM0++tisa6Nmdf7+us/HKLhNNgKzvsT2oEAZKKTfw4h4wPJQ3ehU6R6MIGWzY
-         1yNw==
-X-Gm-Message-State: AOAM533QQxzEVa7v3CBRJj4ZhPhgRaiO8MfR4KHiKsVfNMqZCbJ0Jdfe
-        tdu7li7kwiTa6VyE5T38UduIRbDVBieKkYExW3kVlQ==
-X-Google-Smtp-Source: ABdhPJxi3nburzdMpmtBueqBH1zmdUHAFcqMySogLILTXDVvPm/8sGfTIrB4GvKr/ee2mYjeic1LaaWxwIWNVa+Tumg=
-X-Received: by 2002:a9d:6358:: with SMTP id y24mr16384584otk.229.1612889401486;
- Tue, 09 Feb 2021 08:50:01 -0800 (PST)
+        Tue, 9 Feb 2021 12:03:37 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1612890197; h=Content-Type: MIME-Version: Message-ID:
+ In-Reply-To: Date: References: Subject: Cc: To: From: Sender;
+ bh=6o/6RLJ+Nd2zpwJacnDC5NcTpfXXzsslRlwdBtcYCKI=; b=lspTDLwzPS4PveCSm2JvKIKs8Le14blMMbcbhVMKMMPTqYUOVLiP2Qpsg2rZ2mEGw4zUEoaE
+ EWVRacUrwtS6CUmnJIM7onGz2In5HACmFLJrBOTeepRUlupk1kOW3oO2+dmJeJ3bEIcRlwxu
+ Y3gGJcLNLxqGZCM04a8HcMlQ97Y=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 6022c013e4842e9128400565 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 09 Feb 2021 17:02:11
+ GMT
+Sender: kvalo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 004CCC433ED; Tue,  9 Feb 2021 17:02:10 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from potku.adurom.net (88-114-240-156.elisa-laajakaista.fi [88.114.240.156])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: kvalo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 105A2C43461;
+        Tue,  9 Feb 2021 17:02:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 105A2C43461
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kvalo@codeaurora.org
+From:   Kalle Valo <kvalo@codeaurora.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: Re: [PATCH] mhi: Fix double dma free
+References: <1612885989-12288-1-git-send-email-loic.poulain@linaro.org>
+        <CAMZdPi9xRTrhkZ+q4db0GKZb+AcJ9YXY_-_wTO6KNROCxipj0g@mail.gmail.com>
+Date:   Tue, 09 Feb 2021 19:02:06 +0200
+In-Reply-To: <CAMZdPi9xRTrhkZ+q4db0GKZb+AcJ9YXY_-_wTO6KNROCxipj0g@mail.gmail.com>
+        (Loic Poulain's message of "Tue, 9 Feb 2021 16:55:04 +0100")
+Message-ID: <87tuqltbsh.fsf@codeaurora.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
 MIME-Version: 1.0
-References: <1609958656-15064-1-git-send-email-hemantk@codeaurora.org>
- <20210113152625.GB30246@work> <YBGDng3VhE1Yw6zt@kroah.com>
- <20210201105549.GB108653@thinkpad> <YBfi573Bdfxy0GBt@kroah.com>
- <20210201121322.GC108653@thinkpad> <20210202042208.GB840@work>
- <20210202201008.274209f9@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <835B2E08-7B84-4A02-B82F-445467D69083@linaro.org> <20210203100508.1082f73e@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <CAMZdPi8o44RPTGcLSvP0nptmdUEmJWFO4HkCB_kjJvfPDgchhQ@mail.gmail.com>
- <20210203104028.62d41962@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <CAAP7ucLZ5jKbKriSp39OtDLotbv72eBWKFCfqCbAF854kCBU8w@mail.gmail.com> <20210209081744.43eea7b5@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-In-Reply-To: <20210209081744.43eea7b5@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-From:   Aleksander Morgado <aleksander@aleksander.es>
-Date:   Tue, 9 Feb 2021 17:49:50 +0100
-Message-ID: <CAAP7ucLVVTUqMX4_jFvvYNXALHgHZmcvX4WQei8cPubfUgXKGQ@mail.gmail.com>
-Subject: Re: [RESEND PATCH v18 0/3] userspace MHI client interface driver
-To:     Jakub Kicinski <kuba@kernel.org>
-Cc:     Loic Poulain <loic.poulain@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Greg KH <gregkh@linuxfoundation.org>,
-        David Miller <davem@davemloft.net>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        Network Development <netdev@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey,
+Loic Poulain <loic.poulain@linaro.org> writes:
 
-> On Tue, 9 Feb 2021 10:20:30 +0100 Aleksander Morgado wrote:
-> > This may be a stupid suggestion, but would the integration look less a
-> > backdoor if it would have been named "mhi_wwan" and it exposed already
-> > all the AT+DIAG+QMI+MBIM+NMEA possible channels as chardevs, not just
-> > QMI?
+> Hi Kalle,
 >
-> What's DIAG?
+> On Tue, 9 Feb 2021 at 16:45, Loic Poulain <loic.poulain@linaro.org> wrote:
+>>
+>> mhi_deinit_chan_ctxt functionthat takes care of unitializing channel
+>> resources, including unmapping coherent MHI areas, can be called
+>> from different path in case of controller unregistering/removal:
+>>  - From a client driver remove callback, via mhi_unprepare_channel
+>>  - From mhi_driver_remove that unitialize all channels
+>>
+>> mhi_driver_remove()
+>> |-> driver->remove()
+>> |    |-> mhi_unprepare_channel()
+>> |        |-> mhi_deinit_chan_ctxt()
+>> |...
+>> |-> mhi_deinit_chan_ctxt()
+>>
+>> This leads to double dma freeing...
+>>
+>> Fix that by preventing deinit for already uninitialized channel.
+>>
+>> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+>> Reported-by: Kalle Valo <kvalo@codeaurora.org>
+>
+> This is a 'blind' fix tentative, can you please check if it resolves
+> the issue on your side?
 
-DIAG/QCDM is an older protocol in Qualcomm based modems; in USB based
-devices we would get a TTY that speaks this protocol. In legacy CDMA
-modems this was required for actual device control (and ModemManager
-has a libqcdm for that
-https://gitlab.freedesktop.org/mobile-broadband/ModemManager/-/tree/master/libqcdm)
-but in all newest modems I'd say this is exclusively used for modem
-trace retrieval (e.g. asking the modem to enable some internal traces
-of the LTE stack which are downloaded in the host via this port). When
-debugging issues with manufacturers, this is what they would ask you
-to do, use this port to retrieve these traces (e.g. Quectel's QLog
-program does that, each manufacturer keeps its own).
+I did a quick test few times and I don't see any crashes anymore, thanks!
 
-> Who's going to remember that this is a backdoor driver
-> a year from now when Qualcomm sends a one liner patches which just
-> adds a single ID to open another channel?
+Tested-by: Kalle Valo <kvalo@codeaurora.org>
 
-I'm obviously not going to argue about that possibility; although,
-wouldn't it make more sense to discuss that whenever that happens?
-This work is implemented in a very generic way probably, but it
-focuses on WWAN control ports, which is what we need in userspace.
+And like Jeffrey said:
 
-Right now this mhi_uci integration can be used for QMI control of the
-modems, and I assume once that gets merged (if ever!), more patches
-would arrive to enable AT, DIAG and MBIM control ports. The channels
-associated to these WWAN control protocols have clearly defined
-channel ids, and I believe the device itself chooses which channels
-are exposed, so a device may e.g. say that it's going to expose only
-the MBIM control port. This is also very manufacturer dependent I
-think; I know for example that WWAN modules for laptops will probably
-want to expose the MBIM channel instead of QMI, so that the same HW
-integration is used in both Linux and Windows easily. The single and
-generic mhi_uci integration for all these different WWAN control ports
-would allow any of those combinations, very much like with USB devices
-and different USB configurations.
+Fixes: a7f422f2f89e ("bus: mhi: Fix channel close issue on driver remove")
 
-Userspace is also ready for this integration, btw; at least libmbim
-and libqmi don't have any problem with these chardevs, and
-ModemManager has a branch ready to land to support this new
-integration. A lot of new laptops that are already being sold since
-last year come now with PCIe-only WWAN modules, and unfortunately I've
-also seen different manufacturers pushing their own out-of-tree
-variants of this same mhi_uci idea with better or worse luck. I
-personally was very glad to see this work moving forward.
+Is it too late to push this to v5.11? But this should go to v5.12.
 
---
-Aleksander
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
