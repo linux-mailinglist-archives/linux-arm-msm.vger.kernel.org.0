@@ -2,77 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D015F31576F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Feb 2021 21:07:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 262B43157C2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Feb 2021 21:37:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233859AbhBIUFJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Feb 2021 15:05:09 -0500
-Received: from mail-ot1-f50.google.com ([209.85.210.50]:40092 "EHLO
-        mail-ot1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233757AbhBITve (ORCPT
+        id S233733AbhBIUgk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Feb 2021 15:36:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35464 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233680AbhBIUd6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Feb 2021 14:51:34 -0500
-Received: by mail-ot1-f50.google.com with SMTP id i20so18608134otl.7;
-        Tue, 09 Feb 2021 11:49:35 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=lCKSYN1S/BMKGDmQxUAKaGzQhreo9bxAbsTabQriVq0=;
-        b=WwcGk1ZvHSjfEtVskRS5Q2zCPensODY8QCuqZ9uhz4L2nG3uVwCefG9Ja4WKglWddC
-         h9nL9fwVzciflWGp8d8RmwTqEPDHC9u6PYqqC0JRPlfYMzl7jKsVZnv8WsTp0CjFHk8h
-         hEvPF5FqJmQJZPBMz8tEdMXnJieW9IwKfW64vFO5qcKyLHXlH49jjsVe823SQP8Lk1Ed
-         /gToaFmBeGUNc9sC+fe9ik+YD3K8/7aLn6JqHc0OJVM2mvVqbBTlgKMJs98XEj9Z9D7f
-         2WYIbkMWYtsL+JxQN5V/9nIW78NcHmCJvazss9g7V9wHERpJ6tIlV2LP/wmzC+9KaLqZ
-         wjyQ==
-X-Gm-Message-State: AOAM531gjgoTISR2LITsDym7JbuJq0E3BVX7FT6VpHu7GyOawfNA9D2i
-        id/nfMrVc0rXYX36j4pXEXavZ4ZPMw==
-X-Google-Smtp-Source: ABdhPJx6BPlprKBUC+xb/5qwJuVzUFsGtm4/bQfhNhu+3WhtLx7/Y0mh++ghwg3JoeR3YOsrjneqAg==
-X-Received: by 2002:a9d:ec7:: with SMTP id 65mr17119409otj.311.1612898517920;
-        Tue, 09 Feb 2021 11:21:57 -0800 (PST)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id l110sm4513430otc.25.2021.02.09.11.21.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Feb 2021 11:21:56 -0800 (PST)
-Received: (nullmailer pid 4191780 invoked by uid 1000);
-        Tue, 09 Feb 2021 19:21:55 -0000
-Date:   Tue, 9 Feb 2021 13:21:55 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
-        Zhang Rui <rui.zhang@intel.com>,
+        Tue, 9 Feb 2021 15:33:58 -0500
+Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71A84C06121E;
+        Tue,  9 Feb 2021 11:54:05 -0800 (PST)
+Received: from localhost.localdomain (abac187.neoplus.adsl.tpnet.pl [83.6.166.187])
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 9F5B61FABC;
+        Tue,  9 Feb 2021 20:54:02 +0100 (CET)
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+To:     phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Amit Kucheria <amitk@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] thermal: qcom: tsens-v0_1: Add support for MDM9607
-Message-ID: <20210209192155.GA4191751@robh.at.kernel.org>
-References: <20210127182506.52311-1-konrad.dybcio@somainline.org>
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 2/2] thermal: qcom: tsens-v1: Add MSM8992 support
+Date:   Tue,  9 Feb 2021 20:53:46 +0100
+Message-Id: <20210209195346.457803-2-konrad.dybcio@somainline.org>
+X-Mailer: git-send-email 2.30.0
+In-Reply-To: <20210209195346.457803-1-konrad.dybcio@somainline.org>
+References: <20210209195346.457803-1-konrad.dybcio@somainline.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210127182506.52311-1-konrad.dybcio@somainline.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 27 Jan 2021 19:25:05 +0100, Konrad Dybcio wrote:
-> MDM9607 TSENS IP is very similar to the one of MSM8916, with
-> minor adjustments to various tuning values.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> ---
-> Changes since v1:
-> - Move the defines so as not to cut into the middle of 8974 regs
-> 
->  .../bindings/thermal/qcom-tsens.yaml          |   2 +
->  drivers/thermal/qcom/tsens-v0_1.c             | 100 +++++++++++++++++-
->  drivers/thermal/qcom/tsens.c                  |   3 +
->  drivers/thermal/qcom/tsens.h                  |   2 +-
->  4 files changed, 105 insertions(+), 2 deletions(-)
-> 
+MSM8992 is more or less a cut-down MSM8994, so it only
+makes sense that TSENS support only requires a few lines
+on top of the bigger brother's code.
 
-Acked-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+---
+ .../bindings/thermal/qcom-tsens.yaml          |  1 +
+ drivers/thermal/qcom/tsens-v1.c               | 25 +++++++++++++++++++
+ drivers/thermal/qcom/tsens.c                  |  3 +++
+ drivers/thermal/qcom/tsens.h                  |  2 +-
+ 4 files changed, 30 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+index f194e914a62e..c69b8727a09c 100644
+--- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
++++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+@@ -31,6 +31,7 @@ properties:
+         items:
+           - enum:
+               - qcom,msm8976-tsens
++              - qcom,msm8992-tsens
+               - qcom,msm8994-tsens
+               - qcom,qcs404-tsens
+           - const: qcom,tsens-v1
+diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
+index 2127b6edd1ae..a470b24ae720 100644
+--- a/drivers/thermal/qcom/tsens-v1.c
++++ b/drivers/thermal/qcom/tsens-v1.c
+@@ -541,6 +541,17 @@ static int calibrate_8994(struct tsens_priv *priv)
+ 		base1[i] = base1[0];
+ 	}
+ 
++	/* 8992 features less sensors and remaps some */
++	if (priv->num_sensors == 13) {
++		p[6] = p[7];
++		p[7] = p[9];
++		p[8] = p[10];
++		p[9] = p[11];
++		p[10] = p[12];
++		p[11] = p[13];
++		p[12] = p[14];
++	}
++
+ 	compute_intercept_slope_8994(priv, base0, base1, p, mode);
+ 	kfree(calib0);
+ 	kfree(calib1);
+@@ -642,6 +653,20 @@ struct tsens_plat_data data_8976 = {
+ 	.fields		= tsens_v1_regfields,
+ };
+ 
++static const struct tsens_ops ops_8992 = {
++	.init		= init_common,
++	.calibrate	= calibrate_8994,
++	.get_temp	= get_temp_tsens_valid,
++};
++
++struct tsens_plat_data data_8992 = {
++	.num_sensors	= 13,
++	.ops		= &ops_8992,
++	.hw_ids		= (unsigned int []){ 0, 1, 2, 3, 4, 5, 7, 9, 10, 11, 12, 13, 14 },
++	.feat		= &tsens_v1_feat,
++	.fields	= tsens_v1_regfields,
++};
++
+ static const struct tsens_ops ops_8994 = {
+ 	.init		= init_common,
+ 	.calibrate	= calibrate_8994,
+diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+index 96d17afe3460..1c2e9bebc7c0 100644
+--- a/drivers/thermal/qcom/tsens.c
++++ b/drivers/thermal/qcom/tsens.c
+@@ -903,6 +903,9 @@ static const struct of_device_id tsens_table[] = {
+ 	}, {
+ 		.compatible = "qcom,msm8974-tsens",
+ 		.data = &data_8974,
++	}, {
++		.compatible = "qcom,msm8992-tsens",
++		.data = &data_8992,
+ 	}, {
+ 		.compatible = "qcom,msm8994-tsens",
+ 		.data = &data_8994,
+diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+index dfbff7f6442c..2548edaa36ec 100644
+--- a/drivers/thermal/qcom/tsens.h
++++ b/drivers/thermal/qcom/tsens.h
+@@ -588,7 +588,7 @@ extern struct tsens_plat_data data_8960;
+ extern struct tsens_plat_data data_8916, data_8939, data_8974;
+ 
+ /* TSENS v1 targets */
+-extern struct tsens_plat_data data_tsens_v1, data_8976, data_8994;
++extern struct tsens_plat_data data_tsens_v1, data_8976, data_8992, data_8994;
+ 
+ /* TSENS v2 targets */
+ extern struct tsens_plat_data data_8996, data_tsens_v2;
+-- 
+2.30.0
+
