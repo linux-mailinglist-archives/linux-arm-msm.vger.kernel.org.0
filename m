@@ -2,149 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DE5C314B02
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Feb 2021 10:00:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B1C0314B8A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Feb 2021 10:29:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229731AbhBIJA0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Feb 2021 04:00:26 -0500
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:44242 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230145AbhBII6r (ORCPT
+        id S230268AbhBIJ0j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Feb 2021 04:26:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59778 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229719AbhBIJVW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Feb 2021 03:58:47 -0500
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20210209085745euoutp025fcb8ccad851338cf0dd35646fcd7adf~iCJgRBEYu1143211432euoutp02Y
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Feb 2021 08:57:45 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20210209085745euoutp025fcb8ccad851338cf0dd35646fcd7adf~iCJgRBEYu1143211432euoutp02Y
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1612861065;
-        bh=gsa0796qs2tF26mzxamPCLDFS263O5nP2xeA+S968SY=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=e7nllApZTnWnSy/SRSsfGJXxfoBILYxUstDhq1iKQ7N7sOXbpej/RJlJflljJgaLp
-         x6moZer3HLeB/eY6tHV3/qeuVUFgqU+5ufZ3MiCicF54vHbKENW8NuYZx6wS/j3aF5
-         4tkK1jVakvOtdGxBgy3jDEZ1RgFo7iJIWKZCEeu8=
-Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20210209085745eucas1p2bff2e224d77f2913c8422214e9d13dc4~iCJgCa-IV3112931129eucas1p2r;
-        Tue,  9 Feb 2021 08:57:45 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges3new.samsung.com (EUCPMTA) with SMTP id 5B.FA.45488.98E42206; Tue,  9
-        Feb 2021 08:57:45 +0000 (GMT)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20210209085745eucas1p2a4db55275e1ec3a629310483290e70a7~iCJfpk9B-3112931129eucas1p2q;
-        Tue,  9 Feb 2021 08:57:45 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20210209085745eusmtrp1e74a08cefc9d3fa0192bd31c97c16f2c~iCJfo-opo1341213412eusmtrp1U;
-        Tue,  9 Feb 2021 08:57:45 +0000 (GMT)
-X-AuditID: cbfec7f5-c5fff7000000b1b0-61-60224e898942
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 4A.11.21957.88E42206; Tue,  9
-        Feb 2021 08:57:45 +0000 (GMT)
-Received: from [106.210.134.192] (unknown [106.210.134.192]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20210209085744eusmtip2d8171f159a888904ee80e4dbce67f26b~iCJfTXi6J3267832678eusmtip2C;
-        Tue,  9 Feb 2021 08:57:44 +0000 (GMT)
-Subject: Re: [PATCH] misc: fastrpc: fix incorrect usage of dma_map_sgtable
-To:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org
-Cc:     Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        open list <linux-kernel@vger.kernel.org>
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-Message-ID: <90d01919-859d-d46d-e357-3f94a0187cbe@samsung.com>
-Date:   Tue, 9 Feb 2021 09:57:45 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0)
-        Gecko/20100101 Thunderbird/78.7.0
+        Tue, 9 Feb 2021 04:21:22 -0500
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 387B1C061797
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Feb 2021 01:20:42 -0800 (PST)
+Received: by mail-oi1-x233.google.com with SMTP id i3so7844984oif.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Feb 2021 01:20:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=aleksander-es.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=DTuMJKWknYrnZ1xNYLzvsaQ4qGCwYj1qIz7kzYoSeRA=;
+        b=Qvh2eOYXxet9fIRUiK5jbirxVA95uKvfHeqJxDuEqaqGmqez7+7SRKdVYPxjchgmS5
+         yGKUVXReARDTXcxSTTxD5WpiINvj1C4U32vy+IJZhG5H4zED5LVLlyIF+iWsFagZk/VK
+         DYWGw+cm/45qOW0SokH6DnTFC6/v4IKUXQ5xeA9agT978WkDUNGa3b/mMLnPxwy50ZAy
+         1C3w4EWLszGGsxqtHJoh9qPHc9Hha9mT98z9NHGjUyO2GSP4ywUasmWaaMrCJ+Ms7Wrp
+         t8eI1oDZhznkfM1rU5uqw8W3kS0Mn553wDxvX3bVYdD1kaLQ2y6YS1mUZNOB3g4SUZpl
+         KN2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=DTuMJKWknYrnZ1xNYLzvsaQ4qGCwYj1qIz7kzYoSeRA=;
+        b=nbYlKBcoMguK1t9wvBjkhccZbqc4c+zefIHI7tqgWRIP7RKFhglaclwHj0j1RHKvWr
+         teBPBtHajUjjPPGYeH8IB5JXsg0mtAjoEDQvIBgmAdRWZvP2B63hBof5eHSw/RgbfvVU
+         ZH+j9TmlVBgra4ZjkukiLbU173SSak0izYJXU3xZ5KbnpkaL+UnOWIKVskBYJu00r9AX
+         Zri6mLnD1HdMw96LcQSjNDsQtD4xhxkFkexLhuFHuvN95SvrRl3EQJd9wFu6scfpNOk3
+         UnwDoF1k+v5KlyqhXo3RiDfQDCTkTmEGQWZnMDztq+Zo1MIj95NOynCddtYXk1XBm7dZ
+         ztxg==
+X-Gm-Message-State: AOAM5335Cd6ibZifWGOJJx83FEFoQ3iCoAb42bOPViNpEMl4fVp52NL4
+        u4svv7aiA7I9tRfuyEWnNGPo8umAu218/ZlEwLXGxJysy4tn7g==
+X-Google-Smtp-Source: ABdhPJzLJ0oqa6+5bZtVfKINmAk0MnWV5DDDsEUpdQr5xU20juQWB4o82JCmg0PmqAhwFRdn8WGiuMPUsCipS3eJVOA=
+X-Received: by 2002:aca:d908:: with SMTP id q8mr1781140oig.67.1612862441549;
+ Tue, 09 Feb 2021 01:20:41 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20210208200401.31100-1-jonathan@marek.ca>
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupnleLIzCtJLcpLzFFi42LZduznOd1OP6UEg2nTZCz+TjrGbtG8eD2b
-        xdQ9GxktJu4/y25xedccNgdWj9+/JjF67J+7ht3j8bEXrB6fN8kFsERx2aSk5mSWpRbp2yVw
-        Zczo/cRSsJ2zoveCXwPjMfYuRk4OCQETic7WH8xdjFwcQgIrGCUeXb/PCuF8YZQ4fGovI4Tz
-        mVFiypXHLDAtC+bsYYJILGeUWDv1BwuE85FR4uvDl4wgVcICXhLN3z+DdYgIuEocOjcTbCGz
-        QJ3E9YlTwGw2AUOJrrddbCA2r4CdxNPpLawgNouAisTe7gtgNaICSRLLb/5hgqgRlDg58wnY
-        TE4Bc4nTXVOZIGbKS2x/O4cZwhaXuPVkPth1EgIHOCTOT1/JBnG2i8SMl11QXwtLvDq+BcqW
-        kTg9uYcFoqGZUeLhubXsEE4Po8TlphmMEFXWEnfO/QKaxAG0QlNi/S59iLCjxJnL25lAwhIC
-        fBI33gpCHMEnMWnbdGaIMK9ER5sQRLWaxKzj6+DWHrxwiXkCo9IsJK/NQvLOLCTvzELYu4CR
-        ZRWjeGppcW56arFxXmq5XnFibnFpXrpecn7uJkZgmjn97/jXHYwrXn3UO8TIxMF4iFGCg1lJ
-        hDewUy5BiDclsbIqtSg/vqg0J7X4EKM0B4uSOO+urWvihQTSE0tSs1NTC1KLYLJMHJxSDUzZ
-        zgwVBtM61BdtTwgsK7Qqc+5Ys2X5rLQ9XQsXqdVKbmoRExLPN0pfYyEwiXXLHpvwz3calB9E
-        56kbHLCco5Sz13ZjYwnHZ/GNCnt25L28nH1QfUlA5nphfk7vlaLHBbm7fIWuPNggHRO9ZFG7
-        slXilYh3/z2CXzE2iRu/22mfy/VJXj91hfPshcqbwo5lqazbnbhAN5Bz2iGlivzuouSt2nan
-        pskKt86Z6MkosuFIi3KepuG+kpW8aRNXRHbNu+pUwOLfz2f+lln1WVwNj8gH6RP7QvPNX/eH
-        6RdxBeU89Fgg2+064aXwxeQfL/5/2Hmv6o7J1K/Tcw8bZ777NfN95I2zn42UXORf99ipKrEU
-        ZyQaajEXFScCANbYzimiAwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrIIsWRmVeSWpSXmKPExsVy+t/xe7qdfkoJBm2fGS3+TjrGbtG8eD2b
-        xdQ9GxktJu4/y25xedccNgdWj9+/JjF67J+7ht3j8bEXrB6fN8kFsETp2RTll5akKmTkF5fY
-        KkUbWhjpGVpa6BmZWOoZGpvHWhmZKunb2aSk5mSWpRbp2yXoZczo/cRSsJ2zoveCXwPjMfYu
-        Rk4OCQETiQVz9jB1MXJxCAksZZQ4OP8ZC0RCRuLktAZWCFtY4s+1LjaIoveMEtu75rGBJIQF
-        vCSav38GaxARcJU4dG4m2FRmgQZGiZ4pghANXYwSS661gyXYBAwlut52gTXzCthJPJ3eAraB
-        RUBFYm/3BbAaUYEkice37jNB1AhKnJz5BGwBp4C5xOmuqUwQC8wk5m1+yAxhy0tsfzsHyhaX
-        uPVkPtMERqFZSNpnIWmZhaRlFpKWBYwsqxhFUkuLc9Nziw31ihNzi0vz0vWS83M3MQLjatux
-        n5t3MM579VHvECMTB+MhRgkOZiUR3sBOuQQh3pTEyqrUovz4otKc1OJDjKZA/0xklhJNzgdG
-        dl5JvKGZgamhiZmlgamlmbGSOO/WuWvihQTSE0tSs1NTC1KLYPqYODilGph0lvzKMK+5MdvM
-        3DamItI4529AUom88XeBewd4E/wuOMq/Va7QWC/FFP1Fdkv0q4urJk71d7tsdYrXYP7R84y2
-        M5+/eloeL8lXUi8ZabKo9HKeYOPUSJtiG+WbyzI+Rfc0W0+7vCXq9dENZcy/Jtv9mbKr5PFP
-        vs7WvqmOldd3CFZmrj0hPPVwrYJId/+VCVdZj/FX8csophvt/ug2g9f24rHS+Mi6w9smCD9r
-        C9A67Hoi4VD0v52e0ps0JuRJ1s3OLr5f6py28/Cq72v55IS3rueQ5PlsL3pd9fe393alB8My
-        Y3Rfn5J7+Cjz1F67RXwL/vA+eJPdmRZ++7h/426PL09Nv/6fGys0c8PcrRlKLMUZiYZazEXF
-        iQDe/k+pNAMAAA==
-X-CMS-MailID: 20210209085745eucas1p2a4db55275e1ec3a629310483290e70a7
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20210208200719eucas1p2e865a1368c6bc64bcc95a7ebe4af35ff
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20210208200719eucas1p2e865a1368c6bc64bcc95a7ebe4af35ff
-References: <CGME20210208200719eucas1p2e865a1368c6bc64bcc95a7ebe4af35ff@eucas1p2.samsung.com>
-        <20210208200401.31100-1-jonathan@marek.ca>
+References: <1609958656-15064-1-git-send-email-hemantk@codeaurora.org>
+ <20210113152625.GB30246@work> <YBGDng3VhE1Yw6zt@kroah.com>
+ <20210201105549.GB108653@thinkpad> <YBfi573Bdfxy0GBt@kroah.com>
+ <20210201121322.GC108653@thinkpad> <20210202042208.GB840@work>
+ <20210202201008.274209f9@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+ <835B2E08-7B84-4A02-B82F-445467D69083@linaro.org> <20210203100508.1082f73e@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+ <CAMZdPi8o44RPTGcLSvP0nptmdUEmJWFO4HkCB_kjJvfPDgchhQ@mail.gmail.com> <20210203104028.62d41962@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+In-Reply-To: <20210203104028.62d41962@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+From:   Aleksander Morgado <aleksander@aleksander.es>
+Date:   Tue, 9 Feb 2021 10:20:30 +0100
+Message-ID: <CAAP7ucLZ5jKbKriSp39OtDLotbv72eBWKFCfqCbAF854kCBU8w@mail.gmail.com>
+Subject: Re: [RESEND PATCH v18 0/3] userspace MHI client interface driver
+To:     Jakub Kicinski <kuba@kernel.org>
+Cc:     Loic Poulain <loic.poulain@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Greg KH <gregkh@linuxfoundation.org>,
+        David Miller <davem@davemloft.net>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>,
+        Network Development <netdev@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi
+Hey Jakub
 
-On 08.02.2021 21:04, Jonathan Marek wrote:
-> dma_map_sgtable() returns 0 on success, which is the opposite of what this
-> code was doing.
+On Wed, Feb 3, 2021 at 7:41 PM Jakub Kicinski <kuba@kernel.org> wrote:
 >
-> Fixes: 7cd7edb89437 ("misc: fastrpc: fix common struct sg_table related issues")
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-
-Right, I'm really sorry for this regression.
-
-Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
-
-> ---
->   drivers/misc/fastrpc.c | 7 ++++---
->   1 file changed, 4 insertions(+), 3 deletions(-)
+> On Wed, 3 Feb 2021 19:28:28 +0100 Loic Poulain wrote:
+> > On Wed, 3 Feb 2021 at 19:05, Jakub Kicinski <kuba@kernel.org> wrote:
+> > > On Wed, 03 Feb 2021 09:45:06 +0530 Manivannan Sadhasivam wrote:
+> > > > The current patchset only supports QMI channel so I'd request you to
+> > > > review the chardev node created for it. The QMI chardev node created
+> > > > will be unique for the MHI bus and the number of nodes depends on the
+> > > > MHI controllers in the system (typically 1 but not limited).
+> > >
+> > > If you want to add a MHI QMI driver, please write a QMI-only driver.
+> > > This generic "userspace client interface" driver is a no go. Nobody will
+> > > have the time and attention to police what you throw in there later.
+> >
+> > Think it should be seen as filtered userspace access to MHI bus
+> > (filtered because not all channels are exposed), again it's not
+> > specific to MHI, any bus in Linux offers that (i2c, spi, usb, serial,
+> > etc...). It will not be specific to QMI, since we will also need it
+> > for MBIM (modem control path), AT commands, and GPS (NMEA frames), all
+> > these protocols are usually handled by userspace tools and not linked
+> > to any internal Linux framework, so it would be better not having a
+> > dedicated chardev for each of them.
 >
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 70eb5ed942d0..f12e909034ac 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -520,12 +520,13 @@ fastrpc_map_dma_buf(struct dma_buf_attachment *attachment,
->   {
->   	struct fastrpc_dma_buf_attachment *a = attachment->priv;
->   	struct sg_table *table;
-> +	int ret;
->   
->   	table = &a->sgt;
->   
-> -	if (!dma_map_sgtable(attachment->dev, table, dir, 0))
-> -		return ERR_PTR(-ENOMEM);
-> -
-> +	ret = dma_map_sgtable(attachment->dev, table, dir, 0);
-> +	if (ret)
-> +		table = ERR_PTR(ret);
->   	return table;
->   }
->   
+> The more people argue for this backdoor interface the more distrustful
+> of it we'll become. Keep going at your own peril.
 
-Best regards
+Are your worries that this driver will end up being used for many more
+things than the initial wwan control port management being suggested
+here? If so, what would be the suggested alternative for this
+integration? Just a different way to access those control ports
+instead of a chardev? A per port type specific driver?
+
+This may be a stupid suggestion, but would the integration look less a
+backdoor if it would have been named "mhi_wwan" and it exposed already
+all the AT+DIAG+QMI+MBIM+NMEA possible channels as chardevs, not just
+QMI?
+
 -- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
-
+Aleksander
