@@ -2,386 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E15A8314508
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Feb 2021 01:43:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DBE0B3145BD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Feb 2021 02:42:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230038AbhBIAnK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Feb 2021 19:43:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33398 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229816AbhBIAnI (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Feb 2021 19:43:08 -0500
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACD1CC06178C
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Feb 2021 16:42:27 -0800 (PST)
-Received: by mail-pg1-x52c.google.com with SMTP id r38so11338682pgk.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Feb 2021 16:42:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=nVPN4UxPEU4aVrwT1YdaPeb+eZCqj8n8X5pzdQWiYkg=;
-        b=EVLgGSo8IwfM7scBBkA54yw1YCtCvUbpvVg7vYDVb8DwJd0AHv8AuCwtQ/pAnVvtUD
-         Xcx5W128HYWUJQMURWir6029LF6tr1hb3xOKCw4hh8XPcOA/+r4ljXCmE1fprVCktne4
-         irO7FrL0IHJcf/rhbuuyv6JzJftoTDqk2sNdc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=nVPN4UxPEU4aVrwT1YdaPeb+eZCqj8n8X5pzdQWiYkg=;
-        b=e0esbwKsbXLEKXfpI1hCyoA7tRpOcnuLd546R75klwNza02M7SSBZ5szww9nsMkhg0
-         2b1zM4otW8nSXVkQjzPfOrjW5c7AfymT9PsHi8XGPLyl2K8LuJd0ecXvzouz6gFPmfj2
-         KG0ge+yf6Jg+77DmAU2fpnAPYxGVVNLkfMDazastm7A3vy8KzHW8tzNfVttbpqHKzJFq
-         K0lLl82LelCGLmH3xtparn2aN1DEscX1snInKV4ITgF6vXhjEn6eruqCLGPc5YMQOn70
-         /IvJa2KOriwDp0yehpZ5m80aMNo5jsZjAK6Kyw5SSLETR04KuGtyOmt7fL62kurdcuLM
-         Y98w==
-X-Gm-Message-State: AOAM533Edp23rlrZRpy2IEdwdfCvA4ucAQu94Xqax1kfmZWcOh0MuVWb
-        NgteAdYopQahSA0RriVN4F644AG6JePf+g==
-X-Google-Smtp-Source: ABdhPJyD8IQTuK+U/Bizax/F0z25etXnsB1iM0MSbg8O1PSDuVayIwuE0rzc47b4PO3WGhCBC1u8Ag==
-X-Received: by 2002:a65:46c6:: with SMTP id n6mr19634580pgr.110.1612831346848;
-        Mon, 08 Feb 2021 16:42:26 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:201:751a:ba0b:8918:c305])
-        by smtp.gmail.com with ESMTPSA id s21sm19511044pga.12.2021.02.08.16.42.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Feb 2021 16:42:26 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
+        id S229816AbhBIBk5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Feb 2021 20:40:57 -0500
+Received: from mail.kernel.org ([198.145.29.99]:54544 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230296AbhBIBj5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 8 Feb 2021 20:39:57 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 9E87E64EB7;
+        Tue,  9 Feb 2021 01:39:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1612834756;
+        bh=Yssry1rGrff/ixMW7HC9O2cGPS/DZCi9ONOYOLrfEEU=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=NHOjjP7VU7qiBkVJj4mWLok+NVAtg70PVb12cY+ZH/wR2uSOGXElEDoaKtwH4TSHb
+         w9IvajANNwDF6Kv+NYfdLVx34pQnctxxO51LdF+gO2RXCD9AGniGpsDOQXUjGwrz3p
+         J63W+wX2sI1ja5xDAJ4EHVfulKcOFydNCPdtbAWtVH6VZglUr31x8p8BQYEeTmFkts
+         50Goym9lFRV6jgcaEIgCroDzphHc8Xw8jz11zsp3Ii7Im2J4lnobX7MnDV4TJxhyfa
+         FjL+yaUk1pbQd1EZoAJERV23YrRWcdMxJX+0By0IGV0bXKr61IGYqHwS6CPTdvh8ao
+         MCZlOZnOzVE+Q==
+Received: by mail-ed1-f49.google.com with SMTP id s3so21551452edi.7;
+        Mon, 08 Feb 2021 17:39:16 -0800 (PST)
+X-Gm-Message-State: AOAM532Amj8WNZcxfHDw9q8XD7JvVlz7CN1O/wX4Sl0PtW2z7MaBwcc0
+        5SnRCPOiOt74Lmgl68rlVY1F8bbdeHXeq+qhzQ==
+X-Google-Smtp-Source: ABdhPJwNIL+IgeMPg0JT77GupHlMMWVPBldkV7z70Fsk6uAKAPgZpHyk7Ce2OSyYBpUjYbFtwOwmo9pncZ1VFo9FiAI=
+X-Received: by 2002:a05:6402:6c7:: with SMTP id n7mr20413803edy.289.1612834755034;
+ Mon, 08 Feb 2021 17:39:15 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1612448508-9179-3-git-send-email-mkshah@codeaurora.org>
-References: <1612448508-9179-1-git-send-email-mkshah@codeaurora.org> <1612448508-9179-3-git-send-email-mkshah@codeaurora.org>
-Subject: Re: [PATCH v6 2/4] soc: qcom: Add SoC sleep stats driver
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        agross@kernel.org, dianders@chromium.org, linux@roeck-us.net,
-        rnayak@codeaurora.org, ilina@codeaurora.org, lsrao@codeaurora.org,
-        Mahesh Sivasubramanian <msivasub@codeaurora.org>,
-        Maulik Shah <mkshah@codeaurora.org>
-To:     Maulik Shah <mkshah@codeaurora.org>, bjorn.andersson@linaro.org,
-        evgreen@chromium.org, mka@chromium.org
-Date:   Mon, 08 Feb 2021 16:42:24 -0800
-Message-ID: <161283134463.76967.4872263092725341078@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+References: <20210203113914.1072380-1-bryan.odonoghue@linaro.org>
+ <20210203113914.1072380-2-bryan.odonoghue@linaro.org> <20210204233905.GA1334487@robh.at.kernel.org>
+In-Reply-To: <20210204233905.GA1334487@robh.at.kernel.org>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Mon, 8 Feb 2021 19:39:03 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqLE91CqOOjqmvDs-xbtbjp_T1ux7Gd375gHF8pJapUyCQ@mail.gmail.com>
+Message-ID: <CAL_JsqLE91CqOOjqmvDs-xbtbjp_T1ux7Gd375gHF8pJapUyCQ@mail.gmail.com>
+Subject: Re: [PATCH 1/1] dt-bindings: media: venus: Add sm8250 dt schema
+To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+Cc:     vgarodia@qti.qualcomm.com, "Gross, Andy" <agross@kernel.org>,
+        dikshita@qti.qualcomm.com,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        devicetree@vger.kernel.org,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Maulik Shah (2021-02-04 06:21:46)
-> From: Mahesh Sivasubramanian <msivasub@codeaurora.org>
->=20
-> Let's add a driver to read the stats from remote processor and
-> export to debugfs.
->=20
-> The driver creates "qcom_sleep_stats" directory in debugfs and
-> adds files for various low power mode available. Below is sample
-> output with command
->=20
-> cat /sys/kernel/debug/qcom_sleep_stats/ddr
+On Thu, Feb 4, 2021 at 5:39 PM Rob Herring <robh@kernel.org> wrote:
+>
+> On Wed, 03 Feb 2021 11:39:14 +0000, Bryan O'Donoghue wrote:
+> > Add a schema description for the venus video encoder/decoder on the sm8250.
+> >
+> > Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> > ---
+> >  .../bindings/media/qcom,sm8250-venus.yaml     | 153 ++++++++++++++++++
+> >  1 file changed, 153 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml
+> >
+>
+> Applied, thanks!
 
-The ddr subsystem isn't listed below in subsystems though. Can the
-example be updated to reflect what is supported? Or can we gain the ddr
-subsystem?
+And now dropped. The example has lots of errors and I got tired of
+fixing them and didn't know if the undocumented properties should be
+removed or documented. Here's what I fixed so far:
 
-> count =3D 0
-> Last Entered At =3D 0
-> Last Exited At =3D 0
-> Accumulated Duration =3D 0
->=20
-> Signed-off-by: Mahesh Sivasubramanian <msivasub@codeaurora.org>
-> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
-> [mkshah: add subsystem sleep stats, create one file for each stat]
-> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-> ---
->  drivers/soc/qcom/Kconfig           |  10 ++
->  drivers/soc/qcom/Makefile          |   1 +
->  drivers/soc/qcom/soc_sleep_stats.c | 258 +++++++++++++++++++++++++++++++=
-++++++
->  3 files changed, 269 insertions(+)
->  create mode 100644 drivers/soc/qcom/soc_sleep_stats.c
->=20
-> diff --git a/drivers/soc/qcom/soc_sleep_stats.c b/drivers/soc/qcom/soc_sl=
-eep_stats.c
-> new file mode 100644
-> index 0000000..66df638
-> --- /dev/null
-> +++ b/drivers/soc/qcom/soc_sleep_stats.c
-> @@ -0,0 +1,258 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2011-2021, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#include <linux/debugfs.h>
+diff --git a/Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml
+b/Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml
+index 1d4b1ab63297..fe66de5d91ea 100644
+--- a/Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml
++++ b/Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml
+@@ -116,10 +116,13 @@ examples:
+   - |
+         #include <dt-bindings/interrupt-controller/arm-gic.h>
+         #include <dt-bindings/clock/qcom,videocc-sm8250.h>
++        #include <dt-bindings/clock/qcom,gcc-sm8250.h>
++        #include <dt-bindings/power/qcom-rpmpd.h>
++        #include <dt-bindings/interconnect/qcom,sm8250.h>
 
-Any chance to get off of debugfs and expose this in sysfs instead?
+         venus: video-codec@aa00000 {
+             compatible = "qcom,sm8250-venus";
+-            reg = <0 0x0aa00000 0 0xff000>;
++            reg = <0x0aa00000 0xff000>;
+             interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
+             power-domains = <&videocc MVS0C_GDSC>,
+                             <&videocc MVS0_GDSC>,
+@@ -129,12 +132,12 @@ examples:
 
-> +#include <linux/device.h>
-> +#include <linux/io.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/seq_file.h>
-> +
-> +#include <linux/soc/qcom/smem.h>
-> +#include <clocksource/arm_arch_timer.h>
-> +
-> +#define STAT_TYPE_ADDR         0x0
-> +#define COUNT_ADDR             0x4
-> +#define LAST_ENTERED_AT_ADDR   0x8
-> +#define LAST_EXITED_AT_ADDR    0x10
-> +#define ACCUMULATED_ADDR       0x18
-> +#define CLIENT_VOTES_ADDR      0x1c
-> +
-> +#define STAT_OFFSET(record_no, type) (((record_no)*(sizeof(struct sleep_=
-stats))) + (type))
-> +#define APPENDED_STAT_OFFSET(record_no) ((record_no)*(sizeof(struct appe=
-nded_stats)))
-> +
-> +struct subsystem_data {
-> +       const char *name;
-> +       u32 smem_item;
-> +       u32 pid;
-> +};
-> +
-> +static const struct subsystem_data subsystems[] =3D {
-> +       { "modem", 605, 1 },
-> +       { "adsp", 606, 2 },
-> +       { "cdsp", 607, 5 },
-> +       { "slpi", 608, 3 },
-> +       { "gpu", 609, 0 },
-> +       { "display", 610, 0 },
-> +       { "adsp_island", 613, 2 },
-> +       { "slpi_island", 613, 3 },
-> +};
-> +
-> +struct stats_config {
-> +       u32 offset_addr;
-> +       u32 num_records;
+             clocks = <&gcc GCC_VIDEO_AXI0_CLK>,
+                      <&videocc VIDEO_CC_MVS0C_CLK>,
+-                     <&videocc VIDEO_CC_MVS0_CLK>;
++                     <&videocc VIDEO_CC_MVS0_CLK_SRC>;
+             clock-names = "iface", "core", "vcodec0_core";
 
-size_t?
+             interconnects = <&gem_noc MASTER_AMPSS_M0 &config_noc
+SLAVE_VENUS_CFG>,
+                             <&mmss_noc MASTER_VIDEO_P0 &mc_virt SLAVE_EBI_CH0>;
+-            interconnect-names = "cpu-cfg", "video-mem";
++            interconnect-names = "video-mem", "cpu-cfg";
 
-> +       bool appended_stats_avail;
-> +};
-> +
-> +struct stats_prv_data {
-> +       bool appended_stats_avail;
-> +       void __iomem *reg;
-> +};
-> +
-> +struct sleep_stats {
-> +       u32 stat_type;
-> +       u32 count;
-> +       u64 last_entered_at;
-> +       u64 last_exited_at;
-> +       u64 accumulated;
-> +};
-> +
-> +struct appended_stats {
-> +       u32 client_votes;
-> +       u32 reserved[3];
-> +};
-> +
-> +static void print_sleep_stats(struct seq_file *s, const struct sleep_sta=
-ts *stat)
-> +{
-> +       u64 accumulated =3D stat->accumulated;
-> +       /*
-> +        * If a subsystem is in sleep when reading the sleep stats adjust
-> +        * the accumulated sleep duration to show actual sleep time.
-> +        */
-> +       if (stat->last_entered_at > stat->last_exited_at)
-> +               accumulated +=3D arch_timer_read_counter()
-> +                              - stat->last_entered_at;
-> +
-> +       seq_printf(s, "Count =3D %u\n", stat->count);
-> +       seq_printf(s, "Last Entered At =3D %llu\n", stat->last_entered_at=
-);
-> +       seq_printf(s, "Last Exited At =3D %llu\n", stat->last_exited_at);
-> +       seq_printf(s, "Accumulated Duration =3D %llu\n", accumulated);
-> +}
-> +
-> +static int subsystem_sleep_stats_show(struct seq_file *s, void *d)
-> +{
-> +       struct subsystem_data *subsystem =3D s->private;
-> +       struct sleep_stats *stat;
-> +
-> +       /*
-> +        * Saving this pointer during probe may not help in cases like
-> +        * subsystem restart, beside not each subsystem is a remote proce=
-ssor
-
-s/beside/besides/
-s/each/every/
-
-> +        * for e.g display for which we can get start and stop notificati=
-on
-
-for example
-s/notification/notification./
-
-> +        *
-> +        * Lookup smem pointer each time to keep it simple.
-> +        */
-> +       stat =3D qcom_smem_get(subsystem->pid, subsystem->smem_item, NULL=
-);
-> +       if (IS_ERR(stat))
-> +               return PTR_ERR(stat);
-> +
-> +       print_sleep_stats(s, stat);
-> +
-> +       return 0;
-> +}
-> +
-> +static int soc_sleep_stats_show(struct seq_file *s, void *d)
-> +{
-> +       struct stats_prv_data *prv_data =3D s->private;
-> +       void __iomem *reg =3D prv_data->reg;
-> +       struct sleep_stats stat;
-> +
-> +       stat.count =3D readl(reg + COUNT_ADDR);
-> +       stat.last_entered_at =3D readq(reg + LAST_ENTERED_AT_ADDR);
-> +       stat.last_exited_at =3D readq(reg + LAST_EXITED_AT_ADDR);
-> +       stat.accumulated =3D readq(reg + ACCUMULATED_ADDR);
-> +
-> +       print_sleep_stats(s, &stat);
-> +
-> +       if (prv_data->appended_stats_avail) {
-> +               struct appended_stats app_stat;
-> +
-> +               app_stat.client_votes =3D readl(reg + CLIENT_VOTES_ADDR);
-> +               seq_printf(s, "Client_votes =3D %#x\n", app_stat.client_v=
-otes);
-> +       }
-> +
-> +       return 0;
-> +}
-> +
-> +DEFINE_SHOW_ATTRIBUTE(soc_sleep_stats);
-> +DEFINE_SHOW_ATTRIBUTE(subsystem_sleep_stats);
-> +
-> +static struct dentry *create_debugfs_entries(void __iomem *reg,
-
-Can this be soc_sleep_stats_*()? Or inlined at the call site?
-create_debugfs_entries() is too generic.
-
-> +                                            struct stats_prv_data *prv_d=
-ata,
-> +                                            u32 num_records)
-> +{
-> +       struct dentry *root;
-> +       struct sleep_stats *stat;
-> +       char stat_type[sizeof(u32)] =3D {0};
-> +       u32 offset, type;
-> +       int i;
-> +
-> +       root =3D debugfs_create_dir("qcom_sleep_stats", NULL);
-> +
-> +       for (i =3D 0; i < num_records; i++) {
-> +               offset =3D STAT_OFFSET(i, STAT_TYPE_ADDR);
-> +
-> +               if (prv_data[i].appended_stats_avail)
-> +                       offset +=3D APPENDED_STAT_OFFSET(i);
-> +
-> +               prv_data[i].reg =3D reg + offset;
-> +
-> +               type =3D readl(prv_data[i].reg);
-> +               memcpy_fromio(stat_type, &type, sizeof(u32));
-
-type isn't an __iomem pointer though. Did you compile this with sparse?
-Use 'make C=3D2'
-
-Also, this is really bad design. The mmio register contains a physical
-address of where to read from? It's not an offset from the register or
-something like that? If an IOMMU is rewriting physical addresses this
-driver is screwed and will try to map some other physical address that
-could be completely different based on what the IOMMU decides that
-IPA maps to physically.
-
-> +               strim(stat_type);
-> +               debugfs_create_file(stat_type, 0400, root,
-> +                                   &prv_data[i],
-> +                                   &soc_sleep_stats_fops);
-> +       }
-> +
-> +       for (i =3D 0; i < ARRAY_SIZE(subsystems); i++) {
-> +               stat =3D qcom_smem_get(subsystems[i].pid, subsystems[i].s=
-mem_item,
-> +                                    NULL);
-> +               if (IS_ERR(stat))
-> +                       continue;
-> +
-> +               debugfs_create_file(subsystems[i].name, 0400, root,
-> +                                   (void *)&subsystems[i],
-
-cast to void shouldn't be needed. Please drop it.
-
-> +                                   &subsystem_sleep_stats_fops);
-> +       }
-> +
-> +       return root;
-> +}
-> +
-> +static int soc_sleep_stats_probe(struct platform_device *pdev)
-> +{
-> +       struct resource *res;
-> +       void __iomem *reg;
-> +       void __iomem *offset_addr;
-> +       phys_addr_t stats_base;
-> +       resource_size_t stats_size;
-> +       struct dentry *root;
-> +       const struct stats_config *config;
-> +       struct stats_prv_data *prv_data;
-> +       int i;
-> +
-> +       config =3D device_get_match_data(&pdev->dev);
-> +       if (!config)
-> +               return -ENODEV;
-> +
-> +       res =3D platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> +       if (!res)
-> +               return PTR_ERR(res);
-> +
-> +       offset_addr =3D ioremap(res->start + config->offset_addr, sizeof(=
-u32));
-> +       if (IS_ERR(offset_addr))
-> +               return PTR_ERR(offset_addr);
-> +
-> +       stats_base =3D res->start | readl_relaxed(offset_addr);
-> +       stats_size =3D resource_size(res);
-> +       iounmap(offset_addr);
-> +
-> +       reg =3D devm_ioremap(&pdev->dev, stats_base, stats_size);
-> +       if (!reg)
-> +               return -ENOMEM;
-> +
-> +       prv_data =3D devm_kcalloc(&pdev->dev, config->num_records,
-> +                               sizeof(struct stats_prv_data), GFP_KERNEL=
-);
-
-sizeof(*prv_data) please so we don't have to think about the type
-matching the pointer storage.
-
-> +       if (!prv_data)
-> +               return -ENOMEM;
-> +
-> +       for (i =3D 0; i < config->num_records; i++)
-> +               prv_data[i].appended_stats_avail =3D config->appended_sta=
-ts_avail;
-> +
-> +       root =3D create_debugfs_entries(reg, prv_data, config->num_record=
-s);
-> +       platform_set_drvdata(pdev, root);
-> +
-> +       return 0;
-> +}
-> +
-> +static int soc_sleep_stats_remove(struct platform_device *pdev)
-> +{
-> +       struct dentry *root =3D platform_get_drvdata(pdev);
-> +
-> +       debugfs_remove_recursive(root);
-> +
-> +       return 0;
-> +}
-> +
+             iommus = <&apps_smmu 0x2100 0x0400>;
+             memory-region = <&video_mem>;
+diff --git a/arch/arm64/boot/dts/arm/foundation-v8.dtsi
+b/arch/arm64/boot/dts/arm/foundation-v8.dtsi
+index 05ae893d1b2e..312c076379e1 100644
+--- a/arch/arm64/boot/dts/arm/foundation-v8.dtsi
++++ b/arch/arm64/boot/dts/arm/foundation-v8.dtsi
+@@ -36,6 +36,7 @@ cpu0: cpu@0 {
+                        compatible = "arm,armv8";
+                        reg = <0x0 0x0>;
+                        next-level-cache = <&L2_0>;
++                       next-level-cache {};
+                };
+                cpu1: cpu@1 {
+                        device_type = "cpu";
