@@ -2,101 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B11543157F1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Feb 2021 21:49:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 633D83157F7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Feb 2021 21:49:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233277AbhBIUrV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Feb 2021 15:47:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36188 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233823AbhBIUjm (ORCPT
+        id S233673AbhBIUsx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Feb 2021 15:48:53 -0500
+Received: from mail-ot1-f47.google.com ([209.85.210.47]:43346 "EHLO
+        mail-ot1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233538AbhBIUj1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Feb 2021 15:39:42 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBFA5C0698D2
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Feb 2021 12:29:01 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id f1so30423362lfu.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Feb 2021 12:29:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=6OxpCi4/ew0z4JtIeTxbcNZX4otnbAgHcS0KslAEtyg=;
-        b=AjJtABr2CUrHE5SzrGNhAZLssHLpD3gFc11wcoYbY+Fzgmv0H5HrcUsWY+Sd8j6+6m
-         OdxLy/hQx1oAi8rnlywCpVwrKx75CBjPk1PiAOhUHmWEQxWaEiJCRnIFEXBQ1+KKhUMp
-         ugfBUDB2Bbj+WHdl7PcN41t/2oqN6bmV9LQA8yMXhcsOk/R4Ra6nGoH8gbib31GdZhxo
-         wZjpQNcpduT34Y6l0T2z1vTlu8HpWaA2iO1PFkbXflddCrqW5xf9aG5xZb0FFJ+92ZnO
-         PDRlVvCuBzJwWdEkjw5x7tO5gCGcTBEilwOEB8cfabqdntHf32Wwn5pUoKudA3/O3kWB
-         BXtw==
+        Tue, 9 Feb 2021 15:39:27 -0500
+Received: by mail-ot1-f47.google.com with SMTP id l23so7085582otn.10;
+        Tue, 09 Feb 2021 12:38:33 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=6OxpCi4/ew0z4JtIeTxbcNZX4otnbAgHcS0KslAEtyg=;
-        b=o+Vu8xrNNZS1QogJ+MApipoFI2RfCTVETPmUs1CUhhuRFovacD6P9P0hQT+aoSsNyx
-         3Cp5rJtobCYdngZLMU32QRTJZw4sgam/CujWpXBm1u1QnVQ9nqzFH2jhwmo7Jmr6BIPn
-         FQWqPH/BqPpyEQGIa7ynfK1qvzwC5mIURiPwkAJZbwThMmmaaJ25LspDUGBjeTQgD8Pd
-         xX7jaHASog3vufW+0818FMUieDzOdEm5ZU1ooFBSeiFkDZ97mUz3qKQCDVQhzum0Euyp
-         iv+r3VxDEOpJBFn4gA3vI8ChHZSjhYaKPs4d/wcsrXzSWP/8GSLshr6uXuG2D/bI5tXE
-         15UA==
-X-Gm-Message-State: AOAM531D0k3DMnd8Gq8ba82uf2znjc6zwlmPszX7n/NhUqb6dIyC8MfI
-        nEuMr62KfmYAOxY1iNdS+g+gmA==
-X-Google-Smtp-Source: ABdhPJw+ejMsm190iix0E46MoZBDuSoo/sM8mSoP+ownqrINa4TeoBUi5YswFFH+mFuFdo7+S+g8lg==
-X-Received: by 2002:a19:ad0a:: with SMTP id t10mr14502263lfc.471.1612902540296;
-        Tue, 09 Feb 2021 12:29:00 -0800 (PST)
-Received: from eriador.lan ([94.25.229.138])
-        by smtp.gmail.com with ESMTPSA id o19sm2680449lfu.182.2021.02.09.12.28.59
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=+b3no4S6tPR9GkQZ2NNZiFO6SO8UXN4Y7IGlIsfkFlU=;
+        b=QPJOcmpOC24+6nRh0F1ozsOzjLixbnOAPyfioFk7Kw7U7Jqro+rQUBthLyKMW/FQaM
+         /fYlee7mljzzBL2oTvINasZKbqP5XVOpGG42aa1pwbZydg+zKPvwWBqf3LuTeGVs0ooT
+         dffs+3Unehe/i3HujegJ+f4M3nexC1Xa2ISIgv6qfFY2zK1UItVsxMeIcjyUNFIXA0cr
+         zHh4vHzE2ChIn6vEFYcURVzCFKqgcsL5aSPOFdY9VgGdrnfdHJ79O+a6R5+iW3g71heo
+         PN9Ulck2gRDftJtqrHjBAxun7EKbqYIW+FsRHCDKOGtsG62vykhpMyHFFo2seqKC1Bd7
+         oplQ==
+X-Gm-Message-State: AOAM533iK5bab2FkkS+0y+NJTZfCHWDNxLUCATFaTNXXA1zqekqQ8s8U
+        CDEX5TwrM5E1go/VnAYRMQXwF4Szdw==
+X-Google-Smtp-Source: ABdhPJwCMhN9eVCFYtSeCIytQ3vC3Cr8S0JoccLSz2ofPHGeOKWnLItB/sMia+njhoBRERRsV//MPA==
+X-Received: by 2002:a9d:4d0a:: with SMTP id n10mr16869282otf.73.1612903085857;
+        Tue, 09 Feb 2021 12:38:05 -0800 (PST)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id i9sm4473410oii.34.2021.02.09.12.38.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Feb 2021 12:28:59 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Tue, 09 Feb 2021 12:38:04 -0800 (PST)
+Received: (nullmailer pid 131928 invoked by uid 1000);
+        Tue, 09 Feb 2021 20:38:03 -0000
+Date:   Tue, 9 Feb 2021 14:38:03 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Doug Anderson <dianders@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org
-Subject: [PATCH v3 4/4] arm64: dts: qcom: qrb5165-rb5: switch into using GPIO for SPI0 CS
-Date:   Tue,  9 Feb 2021 23:28:49 +0300
-Message-Id: <20210209202849.1148569-5-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.30.0
-In-Reply-To: <20210209202849.1148569-1-dmitry.baryshkov@linaro.org>
-References: <20210209202849.1148569-1-dmitry.baryshkov@linaro.org>
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] firmware: qcom_scm: Add MDM9607 compatible
+Message-ID: <20210209203803.GA129939@robh.at.kernel.org>
+References: <20210131013058.54299-1-konrad.dybcio@somainline.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210131013058.54299-1-konrad.dybcio@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-GENI SPI controller shows several issues if it manages the CS on its own
-(see 37dd4b777942 ("arm64: dts: qcom: sc7180: Provide pinconf for SPI to
-use GPIO for CS")) for the details. Configure SPI0 CS pin as a GPIO.
+On Sun, Jan 31, 2021 at 02:30:57AM +0100, Konrad Dybcio wrote:
+> Add a compatible for MDM9607. It uses the "legacy" calling
+> convention.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> ---
+>  Documentation/devicetree/bindings/firmware/qcom,scm.txt | 1 +
+>  drivers/firmware/qcom_scm.c                             | 3 +++
+>  2 files changed, 4 insertions(+)
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+In the future, please split binding changes to separate patch.
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-index 922f329d623a..d329829c61fa 100644
---- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-@@ -815,7 +815,7 @@ &pm8150_rtc {
- 	status = "okay";
- };
- 
--&qup_spi0_cs {
-+&qup_spi0_cs_gpio {
- 	drive-strength = <6>;
- 	bias-disable;
- };
-@@ -963,7 +963,8 @@ codec {
- &spi0 {
- 	status = "okay";
- 	pinctrl-names = "default";
--	pinctrl-0 = <&qup_spi0_data_clk>, <&qup_spi0_cs>;
-+	pinctrl-0 = <&qup_spi0_data_clk>, <&qup_spi0_cs_gpio>;
-+	cs-gpios = <&tlmm 31 GPIO_ACTIVE_LOW>;
- 
- 	can@0 {
- 		compatible = "microchip,mcp2518fd";
--- 
-2.30.0
+Acked-by: Rob Herring <robh@kernel.org>
 
+> 
+> diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.txt b/Documentation/devicetree/bindings/firmware/qcom,scm.txt
+> index 78456437df5f..df8379356021 100644
+> --- a/Documentation/devicetree/bindings/firmware/qcom,scm.txt
+> +++ b/Documentation/devicetree/bindings/firmware/qcom,scm.txt
+> @@ -12,6 +12,7 @@ Required properties:
+>   * "qcom,scm-ipq4019"
+>   * "qcom,scm-ipq806x"
+>   * "qcom,scm-ipq8074"
+> + * "qcom,scm-mdm9607"
+>   * "qcom,scm-msm8660"
+>   * "qcom,scm-msm8916"
+>   * "qcom,scm-msm8960"
+> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> index 7be48c1bec96..b5b9b13d8d29 100644
+> --- a/drivers/firmware/qcom_scm.c
+> +++ b/drivers/firmware/qcom_scm.c
+> @@ -1265,6 +1265,9 @@ static const struct of_device_id qcom_scm_dt_match[] = {
+>  							     SCM_HAS_BUS_CLK)
+>  	},
+>  	{ .compatible = "qcom,scm-ipq4019" },
+> +	{ .compatible = "qcom,scm-mdm9607", .data = (void *)(SCM_HAS_CORE_CLK |
+> +							     SCM_HAS_IFACE_CLK |
+> +							     SCM_HAS_BUS_CLK) },
+>  	{ .compatible = "qcom,scm-msm8660", .data = (void *) SCM_HAS_CORE_CLK },
+>  	{ .compatible = "qcom,scm-msm8960", .data = (void *) SCM_HAS_CORE_CLK },
+>  	{ .compatible = "qcom,scm-msm8916", .data = (void *)(SCM_HAS_CORE_CLK |
+> -- 
+> 2.30.0
+> 
