@@ -2,174 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 17E9E314C08
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Feb 2021 10:47:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F542314CC6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Feb 2021 11:21:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230207AbhBIJqf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Feb 2021 04:46:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36518 "EHLO
+        id S231308AbhBIKSt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Feb 2021 05:18:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230461AbhBIJob (ORCPT
+        with ESMTP id S231436AbhBIKQd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Feb 2021 04:44:31 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E45EBC061794
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Feb 2021 01:43:45 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id i5so2452132wmq.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Feb 2021 01:43:45 -0800 (PST)
+        Tue, 9 Feb 2021 05:16:33 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21881C061786
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Feb 2021 02:15:45 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id hs11so30426914ejc.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Feb 2021 02:15:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/vf1mB4T1/394CEX0VM8YVRJCvYayOVx/u5Plqvs+cE=;
-        b=MwkMTrh+ujHGUEPEYew4i7QwVZEO8njwpnxjPqFZ7mH1YX/KoilS6srOdbeu27ap2I
-         xqsKI87n/I36gtKKApdoZwxw7XIVEIQNljiTtYR3MAXVQfA6ZqJJefWIyLsmpLUsaSzL
-         GD26RgF6u4JuL/HK4JkGOjHHWhPM24avbePJQs5Ih+wyHHKGQlfDxnhk+vXEZWSjVsle
-         ukqBct7asalytvxSCxCsX1gRTysbMAKQnlLGl4nrSdZu8UUjakWcEksn5i2AXxninfQG
-         MBko+lbhW4VxlgZqtfDr7bPohq5YIZukMxhmYn7aQut+6TKnJI7u4lHQ4N+P2S+MXo56
-         qTeg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=zeO3sY4fbSBwh5uWv4Oqzo1Gi6tqlkYzvN/i5rqf3qU=;
+        b=spw3R/IQ+ixH4qYVWy1fvUGlrOVdgInPdBvFjZeqyzbtEOqs1+X95sHl/HLLJ4VLLk
+         f/zCWcsYsIGVxFo3DtWdh4loosYk4PDaki0Z66TJGdxEAn1X4uIO411xgU0w+TS32yES
+         TgNwhsLlSeYp5zOMvXfik/iwxbNg17Iyfg06o/2vjPLVXLaoyrwuS7yL3HPnMSj+CEc3
+         WCn62lyieJuwi6KV8qL+aBhCZ8EGrYKboHcc1VltCLlKjUceTsCqerLZaAod0AlBTQot
+         bk/P7uysddwFDcJ+kmfogaC16xgoU6kBDC61vr+NFK0MDgPRUaQMOmzc5Xf+Fylvnazi
+         WHWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=/vf1mB4T1/394CEX0VM8YVRJCvYayOVx/u5Plqvs+cE=;
-        b=UiOlJCJGUMtykXBA/VPs8IOAc9Xj315o3/kSo+trsT5TArFGeb/qCc6z1iov+p8llM
-         cEMdvuDhQqzAPrQIrBbTMLRgtJlwKLJcJ5zbaspOiDKrwjEAmItIe36tYCiBu5uSjkk4
-         Tw/CXNqNhG6bh0hgaSy8YGgJNZ8+c2kNIzoJd7Waaymigww8qNIByTkHvit1FR/mfdBk
-         Rfjvp8OmRd0BUllgxVmDc9w13/il0vRLGpB+VO7immzP1xwyk0TndWt52qec7/mmdlff
-         SNVCjyQJvIt2NtNioiC2jWaWs3fIMjpiYWNydSWAfruuZgRPZFg4Cr11Uidm+reaOIyD
-         mHmA==
-X-Gm-Message-State: AOAM531HdNTP7aRn554u618V/o7iNviW9OO3VBd6qqkehhBGofGRPlyr
-        Fwk4yrSwou/yrZV5pPAV7uztyw==
-X-Google-Smtp-Source: ABdhPJzZN8wfrZLORvmD7A+8UQfVlVqtB4qnxVW1K6GmnEQbhCvUJBg+xI7bEHtA6+iOvuwNzcrTDQ==
-X-Received: by 2002:a1c:9cc5:: with SMTP id f188mr2480339wme.171.1612863824585;
-        Tue, 09 Feb 2021 01:43:44 -0800 (PST)
-Received: from localhost.localdomain ([88.122.66.28])
-        by smtp.gmail.com with ESMTPSA id u3sm39444168wre.54.2021.02.09.01.43.43
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Feb 2021 01:43:44 -0800 (PST)
-From:   Loic Poulain <loic.poulain@linaro.org>
-To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org, carl.yin@quectel.com,
-        mpearson@lenovo.com, cchen50@lenovo.com, jwjiang@lenovo.com,
-        ivan.zhang@quectel.com, naveen.kumar@quectel.com,
-        ivan.mikhanchuk@quectel.com, Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH v2 2/2] mhi: pci_generic: Introduce quectel EM1XXGR-L support
-Date:   Tue,  9 Feb 2021 10:51:46 +0100
-Message-Id: <1612864306-10108-2-git-send-email-loic.poulain@linaro.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1612864306-10108-1-git-send-email-loic.poulain@linaro.org>
-References: <1612864306-10108-1-git-send-email-loic.poulain@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=zeO3sY4fbSBwh5uWv4Oqzo1Gi6tqlkYzvN/i5rqf3qU=;
+        b=aohNnfqLr7htEyeO01YpiVkV1P2KLLpvuXrqBfVXxfmEddAUj67zxTAcGBrDhlX+DX
+         bM4G5wsgwTXIlBXWyXM9pO0DzHIOQ/j3Y4RpIT1zMudZpBVdFQv0mJ/PySv4zWSpQEAZ
+         +fbUtkprtTo1X9XUj0GcAMwwTtXKwaq9DN4zISbxQykPYa3NfH5Pd/7t0AcjQvmZZElW
+         KrpNw5dfvOa6DkfCevZT5KMR172YJDqBzj9SqF1Ho3Z9FUN/0UyCdWIhAsip60mAzRcc
+         UggvGgfd6GvFCC8VuW3v7kl7PzfJ4bpT7fBT8ZKlSjXR40+rbYCfBI1ryD73a8VfB59B
+         2B8A==
+X-Gm-Message-State: AOAM532aDk2mSssB6+qyUd5gq+c8LyRfSLnaEaj7I20f3qyMHixmw5Na
+        bepIIEgbju1yEkWRaVGL7v3k7Pz1OD9TuipV8XqDyQ==
+X-Google-Smtp-Source: ABdhPJyivaUoVOHT/b59A0UT7hjGtf3I5Gw7XQw0zN+7mKUdmfdZvWXnEWoEcRnJ8KO3EMcS0vOSEk4+NNJqOGmhDGk=
+X-Received: by 2002:a17:906:d8ca:: with SMTP id re10mr1468224ejb.18.1612865743771;
+ Tue, 09 Feb 2021 02:15:43 -0800 (PST)
+MIME-Version: 1.0
+References: <20210104065503.199631-1-jasowang@redhat.com> <20210104065503.199631-17-jasowang@redhat.com>
+In-Reply-To: <20210104065503.199631-17-jasowang@redhat.com>
+From:   Naresh Kamboju <naresh.kamboju@linaro.org>
+Date:   Tue, 9 Feb 2021 15:45:32 +0530
+Message-ID: <CA+G9fYteUN=s5Mp+BhdMPZt96B3qDa+2HwudmWgEmmrDELLPdw@mail.gmail.com>
+Subject: Re: [PATCH V3 16/19] virtio-pci: introduce modern device module
+To:     Jason Wang <jasowang@redhat.com>
+Cc:     "Michael S. Tsirkin" <mst@redhat.com>,
+        virtualization@lists.linux-foundation.org,
+        open list <linux-kernel@vger.kernel.org>, shahafs@mellanox.com,
+        lulu@redhat.com, sgarzare@redhat.com,
+        Randy Dunlap <rdunlap@infradead.org>,
+        lkft-triage@lists.linaro.org,
+        Linux-Next Mailing List <linux-next@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Stephen Rothwell <sfr@canb.auug.org.au>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for EM1XXGR-L modems, this modem series is based on SDX24
-qcom chip. The modem is mainly based on MBIM protocol for both the
-data and control path. The drivers for these channels (mhi-net-mbim and
-mhi_uci) are not yet part of the kernel but will be integrated by
-different series.
+Hi Jason,
 
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
----
- v2: Specify 256 elements for the hardware event rings
+On Mon, 4 Jan 2021 at 12:28, Jason Wang <jasowang@redhat.com> wrote:
+>
+> Signed-off-by: Jason Wang <jasowang@redhat.com>
+> ---
+>  drivers/virtio/Kconfig                 |  10 +-
+>  drivers/virtio/Makefile                |   1 +
+>  drivers/virtio/virtio_pci_common.h     |  27 +-
+>  drivers/virtio/virtio_pci_modern.c     | 617 -------------------------
+>  drivers/virtio/virtio_pci_modern_dev.c | 599 ++++++++++++++++++++++++
+>  include/linux/virtio_pci_modern.h      | 111 +++++
+>  6 files changed, 721 insertions(+), 644 deletions(-)
+>  create mode 100644 drivers/virtio/virtio_pci_modern_dev.c
+>  create mode 100644 include/linux/virtio_pci_modern.h
+>
+> diff --git a/drivers/virtio/Kconfig b/drivers/virtio/Kconfig
+> index 7b41130d3f35..6b9b81f4b8c2 100644
+> --- a/drivers/virtio/Kconfig
+> +++ b/drivers/virtio/Kconfig
+> @@ -12,6 +12,14 @@ config ARCH_HAS_RESTRICTED_VIRTIO_MEMORY_ACCESS
+>           This option is selected if the architecture may need to enforce
+>           VIRTIO_F_ACCESS_PLATFORM
+>
+> +config VIRTIO_PCI_MODERN
+> +       tristate "Modern Virtio PCI Device"
+> +       depends on PCI
+> +       help
+> +         Modern PCI device implementation. This module implements the
+> +         basic probe and control for devices which are based on modern
+> +         PCI device with possible vendor specific extensions.
+> +
+>  menuconfig VIRTIO_MENU
+>         bool "Virtio drivers"
+>         default y
+> @@ -20,7 +28,7 @@ if VIRTIO_MENU
+>
+>  config VIRTIO_PCI
+>         tristate "PCI driver for virtio devices"
+> -       depends on PCI
+> +       depends on VIRTIO_PCI_MODERN
 
- drivers/bus/mhi/pci_generic.c | 73 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 73 insertions(+)
+While booting Linux next tag 20210208 kernel on qemu_arm64 and qemu_arm
+mount rootfs failed.  The root cause seems to be due to missing configs
+CONFIG_VIRTIO_PCI=y
+CONFIG_VIRTIO_PCI_LEGACY=y
 
-diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-index c58bf96..56bd9ed 100644
---- a/drivers/bus/mhi/pci_generic.c
-+++ b/drivers/bus/mhi/pci_generic.c
-@@ -114,6 +114,36 @@ struct mhi_pci_dev_info {
- 		.doorbell_mode_switch = true,		\
- 	}
- 
-+#define MHI_CHANNEL_CONFIG_UL_SBL(ch_num, ch_name, el_count, ev_ring) \
-+	{						\
-+		.num = ch_num,				\
-+		.name = ch_name,			\
-+		.num_elements = el_count,		\
-+		.event_ring = ev_ring,			\
-+		.dir = DMA_TO_DEVICE,			\
-+		.ee_mask = BIT(MHI_EE_SBL),		\
-+		.pollcfg = 0,				\
-+		.doorbell = MHI_DB_BRST_DISABLE,	\
-+		.lpm_notify = false,			\
-+		.offload_channel = false,		\
-+		.doorbell_mode_switch = false,		\
-+	}						\
-+
-+#define MHI_CHANNEL_CONFIG_DL_SBL(ch_num, ch_name, el_count, ev_ring) \
-+	{						\
-+		.num = ch_num,				\
-+		.name = ch_name,			\
-+		.num_elements = el_count,		\
-+		.event_ring = ev_ring,			\
-+		.dir = DMA_FROM_DEVICE,			\
-+		.ee_mask = BIT(MHI_EE_SBL),		\
-+		.pollcfg = 0,				\
-+		.doorbell = MHI_DB_BRST_DISABLE,	\
-+		.lpm_notify = false,			\
-+		.offload_channel = false,		\
-+		.doorbell_mode_switch = false,		\
-+	}
-+
- #define MHI_EVENT_CONFIG_DATA(ev_ring, el_count) \
- 	{					\
- 		.num_elements = el_count,	\
-@@ -182,9 +212,52 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
- 	.dma_data_width = 32
- };
- 
-+static const struct mhi_channel_config mhi_quectel_em1xx_channels[] = {
-+	MHI_CHANNEL_CONFIG_UL(0, "NMEA", 16, 0),
-+	MHI_CHANNEL_CONFIG_DL(1, "NMEA", 16, 0),
-+	MHI_CHANNEL_CONFIG_UL_SBL(2, "SAHARA", 16, 0),
-+	MHI_CHANNEL_CONFIG_DL_SBL(3, "SAHARA", 16, 0),
-+	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 16, 1),
-+	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 16, 1),
-+	MHI_CHANNEL_CONFIG_UL(12, "MBIM", 16, 0),
-+	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 16, 0),
-+	MHI_CHANNEL_CONFIG_UL(32, "DUN", 8, 0),
-+	MHI_CHANNEL_CONFIG_DL(33, "DUN", 8, 0),
-+	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
-+	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
-+};
-+
-+static struct mhi_event_config mhi_quectel_em1xx_events[] = {
-+	MHI_EVENT_CONFIG_CTRL(0, 128),
-+	MHI_EVENT_CONFIG_DATA(1, 128),
-+	MHI_EVENT_CONFIG_HW_DATA(2, 256, 100),
-+	MHI_EVENT_CONFIG_HW_DATA(3, 256, 101)
-+};
-+
-+static struct mhi_controller_config modem_quectel_em1xx_config = {
-+	.max_channels = 128,
-+	.timeout_ms = 8000,
-+	.num_channels = ARRAY_SIZE(mhi_quectel_em1xx_channels),
-+	.ch_cfg = mhi_quectel_em1xx_channels,
-+	.num_events = ARRAY_SIZE(mhi_quectel_em1xx_events),
-+	.event_cfg = mhi_quectel_em1xx_events,
-+};
-+
-+static const struct mhi_pci_dev_info mhi_quectel_em1xx_info = {
-+	.name = "quectel-em1xx",
-+	.edl = "quectel/prog_firehose_sdx24.mbn",
-+	.config = &modem_quectel_em1xx_config,
-+	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-+	.dma_data_width = 32
-+};
-+
- static const struct pci_device_id mhi_pci_id_table[] = {
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0306),
- 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx55_info },
-+	{ PCI_DEVICE(0x1eac, 0x1001), /* EM120R-GL (sdx24) */
-+		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
-+	{ PCI_DEVICE(0x1eac, 0x1002), /* EM160R-GL (sdx24) */
-+		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
- 	{  }
- };
- MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+
+Then I have to force to enable this MODERN config
+CONFIG_VIRTIO_PCI_MODERN=y
+and which enabled
+CONFIG_VIRTIO_PCI=y
+CONFIG_VIRTIO_PCI_LEGACY=y
+
+and the qemu_arm64 and qemu_arm boot pass.
+
+
+New build link,
+https://builds.tuxbuild.com/1oEse4EFsoQr1FkKBfiLmhMCe7j/
+
+
 -- 
-2.7.4
-
+Linaro LKFT
+https://lkft.linaro.org
