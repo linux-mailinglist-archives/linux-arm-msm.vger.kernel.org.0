@@ -2,57 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AB5A315313
+	by mail.lfdr.de (Postfix) with ESMTP id 7BCFE315314
 	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Feb 2021 16:46:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231654AbhBIPo5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Feb 2021 10:44:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57618 "EHLO
+        id S232566AbhBIPpu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Feb 2021 10:45:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232549AbhBIPos (ORCPT
+        with ESMTP id S232458AbhBIPpr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Feb 2021 10:44:48 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26294C06178B
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Feb 2021 07:44:08 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id i9so3932449wmq.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Feb 2021 07:44:08 -0800 (PST)
+        Tue, 9 Feb 2021 10:45:47 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 302C6C06178A
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Feb 2021 07:45:06 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id b3so22519812wrj.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Feb 2021 07:45:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id;
         bh=ABItdWGRGB5buiMzSb0NZJyau1C1bdQlMKBzWQzFZYg=;
-        b=AApIhTxC9tfQZJBaOa/Qa7UfoV/DMdMCT4SgV5jKHmlt2Ns3RR8n5w7gmDACAr5Xcf
-         ZXwjuI4SvTAMFLXd2+NGS1BO3poe53CxnfSiaEMFNPkrbTyjIoL1aT4zCbND/8SUmj3t
-         9OPjVtopRbRScV7kPrPb1GVkzXi+o2SAr/jZ1Eb1Q046OF80YW+EVQScrpjfujJOUqnw
-         bJnWgHsOHqk96R7E7qytaiQx0bssVQaiCm6sPjxyNd1BlEJs2Sax0NLCVVu0sR+bqjtS
-         GRw8zwTffyzxxXmiwA3OXpVaYx7fajPdLUYXpRksby9EBGp2gw+DMNJ1JdKpiMYKS4sO
-         JyyA==
+        b=LpZFf8cLFAmaDvSn+gG5NPYFOi0zqy1vMdcj+yZvxk5IrhdUWO2avtIE49Hcl5Zrar
+         i1fqOVn0pCU9F0ycWVBzrpGLMBJBxhUB+6PNkRHMKOFGyz+ugKJXaXgLGI/yZYbGSjub
+         ukYwDwdAoteJNWJrpAIc3X8Tb6zwRA6zI4uPbVFqTSTGUFFOuh3q5AcoRn5nGsICTOZi
+         TeaBC74zaKmwOPla5XUsmGAXzOZP9tLxvk6D/mYascR19bSyYbSDp3ChxVejorzdkGbv
+         oAvTYQWkinlG/4Mtdg1+ecR3lVD05XsUCHu9XoGoEjCDWDGBfZBhh4YiTVBoVWNM30JC
+         cT1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id;
         bh=ABItdWGRGB5buiMzSb0NZJyau1C1bdQlMKBzWQzFZYg=;
-        b=VFfVSz5gYQydv9OD6K20BH1fXxMoTzd0VaYo0s9CBlDvFvyYF3Dlq8oNGU0KoKUBjV
-         vHlIhPYpnd/eDF811GK4vshHvIJQy55wzt7si0+A96Csoq7YKKIdCthXtdZE3RfcuH2o
-         w37SF6/3HU05ydgHra9nyGg/qs1iWdV9tHXMBMWwzZtFLbHl8QwCmbUbH0AFZhnppwoC
-         h2dlNXSsbqjHBje1RN1NfOpKRyeYJqT3D+jagc+xN82++CATFLp9bvYZsHm+XA30jxLB
-         tphOZp0TgOBntNC536oecg5X0/8KxsA6hMCFuPJDd02AUV9OMwG+oE9LdoDl/6bey42B
-         yq3Q==
-X-Gm-Message-State: AOAM530UxcPxsjGFuvDizF9BdcJfs5eAobC2oT/WewIAqghlnXP/m1P2
-        26zNogASFNCvJOlBk6TVe0fHOg==
-X-Google-Smtp-Source: ABdhPJxRQaQXQKnkO5RRhU1/BVKpXVkw4y8FYcwBdUkAfaaGODdFZbfMRq/NAmtDSPAXghIHwONrZw==
-X-Received: by 2002:a1c:5584:: with SMTP id j126mr3622728wmb.153.1612885446790;
-        Tue, 09 Feb 2021 07:44:06 -0800 (PST)
+        b=Fn3KaW/OyafRMtAzD10blJSlWJ0F6+OXrS+5iuswCG0m8cHF5Xrd9fB3R5Uq/bp51n
+         GQfMjVxPeKlmQ958VlCn08cduHOByh5d7ZcvnxUtySx3sGDkrF51t/A8TJKIodHxWPR2
+         ARwpxg+72/yYHVFfgTm1qU3x5ZqZLX7JidX0wR1dB8v0um8xxaEgN+lmbd8NqZ+vnIpW
+         30qYkYthm7ZiIWQ3BR+wlzRujgA2QU4iZhy7aySMyUPdSDwNJ3Z4sNLvcSKXiMftA6CX
+         prJgQSoxxbu18tR2FXke5kquY3i05oy4SUpG4QNSyY1RrB6HovaG5Pi1urgv+g4wpRwt
+         BuEA==
+X-Gm-Message-State: AOAM532bSBMBDpGbTcYY1dv5vScbbMDikLbhxvUd05sY63d71xuGU4AY
+        O3z6CCfptnQs5LsTlgy+rT1HwQ==
+X-Google-Smtp-Source: ABdhPJzwOdqcBkeGJ0Nqvcm4eFhDq+wBRf2UHCef4tuEFgEGsTHZYsksVxS+Ro7GG5VZ5r68PGvqEQ==
+X-Received: by 2002:adf:f60f:: with SMTP id t15mr26720910wrp.53.1612885504832;
+        Tue, 09 Feb 2021 07:45:04 -0800 (PST)
 Received: from localhost.localdomain ([88.122.66.28])
-        by smtp.gmail.com with ESMTPSA id s4sm35088486wrt.85.2021.02.09.07.44.06
+        by smtp.gmail.com with ESMTPSA id w11sm5123244wmi.37.2021.02.09.07.45.04
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Feb 2021 07:44:06 -0800 (PST)
+        Tue, 09 Feb 2021 07:45:04 -0800 (PST)
 From:   Loic Poulain <loic.poulain@linaro.org>
-To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
+To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
+        kvalo@codeaurora.org
 Cc:     linux-arm-msm@vger.kernel.org,
         Loic Poulain <loic.poulain@linaro.org>
 Subject: [PATCH] mhi: Fix double dma free
-Date:   Tue,  9 Feb 2021 16:52:10 +0100
-Message-Id: <1612885930-12201-1-git-send-email-loic.poulain@linaro.org>
+Date:   Tue,  9 Feb 2021 16:53:09 +0100
+Message-Id: <1612885989-12288-1-git-send-email-loic.poulain@linaro.org>
 X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
