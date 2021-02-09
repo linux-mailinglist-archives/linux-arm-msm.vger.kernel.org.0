@@ -2,198 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BE85B315416
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Feb 2021 17:41:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 609DE31545E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Feb 2021 17:52:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232983AbhBIQkk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Feb 2021 11:40:40 -0500
-Received: from so15.mailgun.net ([198.61.254.15]:44179 "EHLO so15.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232972AbhBIQkX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Feb 2021 11:40:23 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1612888793; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=mQCwxFFSXafw6XxuGbR0UZRSX80djScErIhHBoGB1Xs=;
- b=lR+Sj2jLPur3Bsp7z3tyL1G1PS/BGBWvTFmANBE+CxKGvjKUQHUxuwWX6GlgDCtWuUTyCXII
- uWmqab3cbBmMSDzgbU0Fp+1XXWAQiqtsNY90x1Ls2Ql78bitWc0ubZRiS4FfTb+1oL/V5q9w
- rXteVGJ+mXCqjoryGwPabbo3/Hw=
-X-Mailgun-Sending-Ip: 198.61.254.15
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 6022babae4842e91282939aa (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 09 Feb 2021 16:39:22
- GMT
-Sender: mdalam=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 17AC9C43463; Tue,  9 Feb 2021 16:39:22 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: mdalam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0C837C433ED;
-        Tue,  9 Feb 2021 16:39:20 +0000 (UTC)
+        id S233133AbhBIQvw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Feb 2021 11:51:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43726 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233061AbhBIQun (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 9 Feb 2021 11:50:43 -0500
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2ED22C0613D6
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Feb 2021 08:50:02 -0800 (PST)
+Received: by mail-ot1-x32d.google.com with SMTP id 100so11369619otg.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Feb 2021 08:50:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=aleksander-es.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=dKwNo6TC+1q3oQgv5Miw/gtfysz963YICrpQOCkStJ8=;
+        b=nRmGzLhyU4G9H274uUqksm/3yq38VX5VcGp0ZwGZqNDUNETv8QvewOOKe0Y+SwksNG
+         t3oES0hFI9jU/A0sJF1MenV1DhvlYGoOkQm1Ua0A5c4uVI3uFifwp7gL0ZeWKDtQPRcJ
+         58PvjG/3BhqPJm8FAp9d2KFgOawr5WCwgRBCpaKQ4Scj51MSJ5MMqCpo9eN2/w29f27m
+         GvLP2d711dMWgtB/1BeAe4CE+0pMPPHhwj1TfIEtUh6zZIHB/wHP6xvrd8GkpL0uJviC
+         +OEkeACTEZgt2TNjef6IRGtWDcMiKQoP4oqriD/vQxpIAzciIxkAnEntXXVfAH999IC3
+         c9iA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=dKwNo6TC+1q3oQgv5Miw/gtfysz963YICrpQOCkStJ8=;
+        b=sXpQxZy6losGmlXuIGa07xSaEXsgHxB+CwY8fSJBffsmt3+qtnC/Qqka4jI559yfjO
+         nHsftXdV3zUOEIev0GtYv2nyh1oTKzwNILG2YvtHNv9QvkuyWCPJghpKtUuvdIudkKrx
+         BItapg4O/Kh8L6nPoTOaoFjBT3fJ3Wj5UCetkHwelfK0m3DH35b4c/CYK1TlAj+uHpwP
+         xsOvHCPCnjw6lDtVd/lRTMonJy9BuMUb2iGBUNo0zPSfXRk3r1qSLKyHgMV1hFcXdsce
+         DGiOHtjVM0++tisa6Nmdf7+us/HKLhNNgKzvsT2oEAZKKTfw4h4wPJQ3ehU6R6MIGWzY
+         1yNw==
+X-Gm-Message-State: AOAM533QQxzEVa7v3CBRJj4ZhPhgRaiO8MfR4KHiKsVfNMqZCbJ0Jdfe
+        tdu7li7kwiTa6VyE5T38UduIRbDVBieKkYExW3kVlQ==
+X-Google-Smtp-Source: ABdhPJxi3nburzdMpmtBueqBH1zmdUHAFcqMySogLILTXDVvPm/8sGfTIrB4GvKr/ee2mYjeic1LaaWxwIWNVa+Tumg=
+X-Received: by 2002:a9d:6358:: with SMTP id y24mr16384584otk.229.1612889401486;
+ Tue, 09 Feb 2021 08:50:01 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 09 Feb 2021 22:09:20 +0530
-From:   mdalam@codeaurora.org
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     corbet@lwn.net, agross@kernel.org, bjorn.andersson@linaro.org,
-        dan.j.williams@intel.com, dmaengine@vger.kernel.org,
-        linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, sricharan@codeaurora.org,
-        mdalam=codeaurora.org@codeaurora.org
-Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Add LOCK and UNLOCK flag bit
- support
-In-Reply-To: <73c871d3d674607fafc7b79e602ec587@codeaurora.org>
-References: <efcc74bbdf36b4ddbf764eb6b4ed99f2@codeaurora.org>
- <f7de0117c8ff2e61c09f58acdea0e5b0@codeaurora.org>
- <20210112101056.GI2771@vkoul-mobl>
- <e3cf7c4fc02c54d17fd2fd213f39005b@codeaurora.org>
- <20210115055806.GE2771@vkoul-mobl>
- <97ce29b230164a5848a38f6448d1be60@codeaurora.org>
- <20210119164511.GE2771@vkoul-mobl>
- <534308caab7c18730ad0cc25248d116f@codeaurora.org>
- <20210201060508.GK2771@vkoul-mobl>
- <9d33d73682f24d92338757e1823ccd88@codeaurora.org>
- <20210201064314.GM2771@vkoul-mobl>
- <73c871d3d674607fafc7b79e602ec587@codeaurora.org>
-Message-ID: <755d79fe46d819a4c5aaab245ab00634@codeaurora.org>
-X-Sender: mdalam@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <1609958656-15064-1-git-send-email-hemantk@codeaurora.org>
+ <20210113152625.GB30246@work> <YBGDng3VhE1Yw6zt@kroah.com>
+ <20210201105549.GB108653@thinkpad> <YBfi573Bdfxy0GBt@kroah.com>
+ <20210201121322.GC108653@thinkpad> <20210202042208.GB840@work>
+ <20210202201008.274209f9@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+ <835B2E08-7B84-4A02-B82F-445467D69083@linaro.org> <20210203100508.1082f73e@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+ <CAMZdPi8o44RPTGcLSvP0nptmdUEmJWFO4HkCB_kjJvfPDgchhQ@mail.gmail.com>
+ <20210203104028.62d41962@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+ <CAAP7ucLZ5jKbKriSp39OtDLotbv72eBWKFCfqCbAF854kCBU8w@mail.gmail.com> <20210209081744.43eea7b5@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+In-Reply-To: <20210209081744.43eea7b5@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+From:   Aleksander Morgado <aleksander@aleksander.es>
+Date:   Tue, 9 Feb 2021 17:49:50 +0100
+Message-ID: <CAAP7ucLVVTUqMX4_jFvvYNXALHgHZmcvX4WQei8cPubfUgXKGQ@mail.gmail.com>
+Subject: Re: [RESEND PATCH v18 0/3] userspace MHI client interface driver
+To:     Jakub Kicinski <kuba@kernel.org>
+Cc:     Loic Poulain <loic.poulain@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Greg KH <gregkh@linuxfoundation.org>,
+        David Miller <davem@davemloft.net>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>,
+        Network Development <netdev@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-02-01 21:20, mdalam@codeaurora.org wrote:
-> On 2021-02-01 12:13, Vinod Koul wrote:
->> On 01-02-21, 11:52, mdalam@codeaurora.org wrote:
->>> On 2021-02-01 11:35, Vinod Koul wrote:
->>> > On 27-01-21, 23:56, mdalam@codeaurora.org wrote:
->> 
->>> > >   The actual LOCK/UNLOCK flag should be set on hardware command
->>> > > descriptor.
->>> > >   so this flag setting should be done in DMA engine driver. The user
->>> > > of the
->>> > > DMA
->>> > >   driver like (in case of IPQ5018) Crypto can use flag
->>> > > "DMA_PREP_LOCK" &
->>> > > "DMA_PREP_UNLOCK"
->>> > >   while preparing CMD descriptor before submitting to the DMA
->>> > > engine. In DMA
->>> > > engine driver
->>> > >   we are checking these flasgs on CMD descriptor and setting actual
->>> > > LOCK/UNLOCK flag on hardware
->>> > >   descriptor.
->>> >
->>> >
->>> > I am not sure I comprehend this yet.. when is that we would need to do
->>> > this... is this for each txn submitted to dmaengine.. or something
->>> > else..
->>> 
->>>  Its not for each transaction submitted to dmaengine. We have to set 
->>> this
->>> only
->>>  once on CMD descriptor. So when A53 crypto driver need to change the 
->>> crypto
->>> configuration
->>>  then first it will lock the all other pipes using setting the LOCK 
->>> flag bit
->>> on CMD
->>>  descriptor and then it can start the transaction , on data 
->>> descriptor this
->>> flag will
->>>  not get set once all transaction will be completed the A53 crypto 
->>> driver
->>> release the lock on
->>>  all other pipes using UNLOCK flag on CMD descriptor. So LOCK/UNLOCK 
->>> will be
->>> only once and not for
->>>  the each transaction.
->> 
->> Okay so why cant the bam driver check cmd descriptor and do 
->> lock/unlock
->> as below, why do we need users to do this.
->> 
->>         if (flags & DMA_PREP_CMD) {
->>                 do_lock_bam();
-> 
->  User will not decide to do this LOCK/UNLOCK mechanism. It depends on 
-> use case.
->  This LOCK/UNLOCK mechanism not required always. It needs only when
-> hardware will be shared
->  between different core with different driver.
->  The LOCK/UNLOCK flags provides SW to enter ordering between pipes 
-> execution.
->  (Generally, the BAM pipes are total independent from each other and
-> work in parallel manner).
->  This LOCK/UNLOCK flags are part of actual pipe hardware descriptor.
-> 
->  Pipe descriptor having the following flags:
->  INT : Interrupt
->  EOT: End of transfer
->  EOB: End of block
->  NWD: Notify when done
->  CMD: Command
->  LOCK: Lock
->  UNLOCK: Unlock
->  etc.
-> 
->  Here the BAM driver is common driver for (QPIC, Crypto, QUP etc. in 
-> IPQ5018)
->  So here only Crypto will be shared b/w multiple cores so For crypto
-> request only the LOCK/UNLOCK
->  mechanism required.
->  For other request like for QPIC driver, QUPT driver etc. its not
-> required. So Crypto driver has to raise the flag for
->  LOCK/UNLOCK while preparing CMD descriptor. The actual locking will
-> happen in BAM driver only using condition
->  if (flags & DMA_PREP_CMD) {
->      if (flags & DMA_PREP_LOCK)
->         desc->flags |= cpu_to_le16(DESC_FLAG_LOCK);
->  }
-> 
->  So Crypto driver should set this flag DMA_PREP_LOCK while preparing
-> CMD descriptor.
->  So LOCK should be set on actual hardware pipe descriptor with
-> descriptor type CMD.
-> 
->> 
->> The point here is that this seems to be internal to dma and should be
->> handled by dma driver.
->> 
->   This LOCK/UNLOK flags are part of actual hardware descriptor so this
-> should be handled by BAM driver only.
->   If we set condition like this
->   if (flags & DMA_PREP_CMD) {
->                 do_lock_bam();
->   Then LOCK/UNLOCK will be applied for all the CMD descriptor
-> including (QPIC driver, QUP driver , Crypto driver etc.).
->   So this is not our intension. So we need to set this LOCK/UNLOCK
-> only for the drivers it needs. So Crypto driver needs
->   locking mechanism so we will set LOCK/UNLOCK flag on Crypto driver
-> request only for other driver request like QPIC driver,
->   QUP driver will not set this.
-> 
+Hey,
 
-    ping! Do you need any further info on this?
+> On Tue, 9 Feb 2021 10:20:30 +0100 Aleksander Morgado wrote:
+> > This may be a stupid suggestion, but would the integration look less a
+> > backdoor if it would have been named "mhi_wwan" and it exposed already
+> > all the AT+DIAG+QMI+MBIM+NMEA possible channels as chardevs, not just
+> > QMI?
+>
+> What's DIAG?
 
->> Also if we do this, it needs to be done for specific platforms..
->> 
-> 
-> 
-> 
-> 
-> 
-> 
-> 
->> Thanks
+DIAG/QCDM is an older protocol in Qualcomm based modems; in USB based
+devices we would get a TTY that speaks this protocol. In legacy CDMA
+modems this was required for actual device control (and ModemManager
+has a libqcdm for that
+https://gitlab.freedesktop.org/mobile-broadband/ModemManager/-/tree/master/libqcdm)
+but in all newest modems I'd say this is exclusively used for modem
+trace retrieval (e.g. asking the modem to enable some internal traces
+of the LTE stack which are downloaded in the host via this port). When
+debugging issues with manufacturers, this is what they would ask you
+to do, use this port to retrieve these traces (e.g. Quectel's QLog
+program does that, each manufacturer keeps its own).
+
+> Who's going to remember that this is a backdoor driver
+> a year from now when Qualcomm sends a one liner patches which just
+> adds a single ID to open another channel?
+
+I'm obviously not going to argue about that possibility; although,
+wouldn't it make more sense to discuss that whenever that happens?
+This work is implemented in a very generic way probably, but it
+focuses on WWAN control ports, which is what we need in userspace.
+
+Right now this mhi_uci integration can be used for QMI control of the
+modems, and I assume once that gets merged (if ever!), more patches
+would arrive to enable AT, DIAG and MBIM control ports. The channels
+associated to these WWAN control protocols have clearly defined
+channel ids, and I believe the device itself chooses which channels
+are exposed, so a device may e.g. say that it's going to expose only
+the MBIM control port. This is also very manufacturer dependent I
+think; I know for example that WWAN modules for laptops will probably
+want to expose the MBIM channel instead of QMI, so that the same HW
+integration is used in both Linux and Windows easily. The single and
+generic mhi_uci integration for all these different WWAN control ports
+would allow any of those combinations, very much like with USB devices
+and different USB configurations.
+
+Userspace is also ready for this integration, btw; at least libmbim
+and libqmi don't have any problem with these chardevs, and
+ModemManager has a branch ready to land to support this new
+integration. A lot of new laptops that are already being sold since
+last year come now with PCIe-only WWAN modules, and unfortunately I've
+also seen different manufacturers pushing their own out-of-tree
+variants of this same mhi_uci idea with better or worse luck. I
+personally was very glad to see this work moving forward.
+
+--
+Aleksander
