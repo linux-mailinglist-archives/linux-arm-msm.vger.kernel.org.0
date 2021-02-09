@@ -2,136 +2,222 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F542314CC6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Feb 2021 11:21:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CC4BA314CE2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Feb 2021 11:25:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231308AbhBIKSt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Feb 2021 05:18:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43390 "EHLO
+        id S230159AbhBIKYQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Feb 2021 05:24:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231436AbhBIKQd (ORCPT
+        with ESMTP id S229919AbhBIKWA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Feb 2021 05:16:33 -0500
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21881C061786
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Feb 2021 02:15:45 -0800 (PST)
-Received: by mail-ej1-x62f.google.com with SMTP id hs11so30426914ejc.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Feb 2021 02:15:45 -0800 (PST)
+        Tue, 9 Feb 2021 05:22:00 -0500
+Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EEC9C061786
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Feb 2021 02:21:20 -0800 (PST)
+Received: by mail-qk1-x72b.google.com with SMTP id m144so1602300qke.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Feb 2021 02:21:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=zeO3sY4fbSBwh5uWv4Oqzo1Gi6tqlkYzvN/i5rqf3qU=;
-        b=spw3R/IQ+ixH4qYVWy1fvUGlrOVdgInPdBvFjZeqyzbtEOqs1+X95sHl/HLLJ4VLLk
-         f/zCWcsYsIGVxFo3DtWdh4loosYk4PDaki0Z66TJGdxEAn1X4uIO411xgU0w+TS32yES
-         TgNwhsLlSeYp5zOMvXfik/iwxbNg17Iyfg06o/2vjPLVXLaoyrwuS7yL3HPnMSj+CEc3
-         WCn62lyieJuwi6KV8qL+aBhCZ8EGrYKboHcc1VltCLlKjUceTsCqerLZaAod0AlBTQot
-         bk/P7uysddwFDcJ+kmfogaC16xgoU6kBDC61vr+NFK0MDgPRUaQMOmzc5Xf+Fylvnazi
-         WHWQ==
+        bh=JFbbId4eV6SwnEvOsCaL5vUkhULlMluOIteiiOj1FEE=;
+        b=XwIg55VMJkq4l/LyseacXXOX0cge6N+JMEM7Fo12LlGaOxr84kvLlvmcYSW9BKOY/g
+         GgzjQxV9dpOu299U27lqodUfqH6itfK4DZVKRat94hqDl/za11RUpm7R2Qy0pcxRDiFV
+         4XbSJE6NEgqOQdBD9YP51v9Z/S3pETrwDzl2rBThHLd5kskPD255FPn/hWBt17XaYk6g
+         HXCMVAaVyP3nCZBUST3Zl9eURBeu23dUg4XXvjmc4ftzCkQCRRBrDr0DfkwLVsWY4uJ2
+         aMhjPe1oWbvQ0RDOihjCrcF3GtqPrM1fFcuGtL5RGvPxX7I0qwFb9YAAHofZ4asjBUqY
+         dW2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=zeO3sY4fbSBwh5uWv4Oqzo1Gi6tqlkYzvN/i5rqf3qU=;
-        b=aohNnfqLr7htEyeO01YpiVkV1P2KLLpvuXrqBfVXxfmEddAUj67zxTAcGBrDhlX+DX
-         bM4G5wsgwTXIlBXWyXM9pO0DzHIOQ/j3Y4RpIT1zMudZpBVdFQv0mJ/PySv4zWSpQEAZ
-         +fbUtkprtTo1X9XUj0GcAMwwTtXKwaq9DN4zISbxQykPYa3NfH5Pd/7t0AcjQvmZZElW
-         KrpNw5dfvOa6DkfCevZT5KMR172YJDqBzj9SqF1Ho3Z9FUN/0UyCdWIhAsip60mAzRcc
-         UggvGgfd6GvFCC8VuW3v7kl7PzfJ4bpT7fBT8ZKlSjXR40+rbYCfBI1ryD73a8VfB59B
-         2B8A==
-X-Gm-Message-State: AOAM532aDk2mSssB6+qyUd5gq+c8LyRfSLnaEaj7I20f3qyMHixmw5Na
-        bepIIEgbju1yEkWRaVGL7v3k7Pz1OD9TuipV8XqDyQ==
-X-Google-Smtp-Source: ABdhPJyivaUoVOHT/b59A0UT7hjGtf3I5Gw7XQw0zN+7mKUdmfdZvWXnEWoEcRnJ8KO3EMcS0vOSEk4+NNJqOGmhDGk=
-X-Received: by 2002:a17:906:d8ca:: with SMTP id re10mr1468224ejb.18.1612865743771;
- Tue, 09 Feb 2021 02:15:43 -0800 (PST)
+        bh=JFbbId4eV6SwnEvOsCaL5vUkhULlMluOIteiiOj1FEE=;
+        b=HoIZt43HLHV97JZL85jzAgemawP70m/rkJTD+wAa3vJBMWTYttUZSOMq1BszyTkqTU
+         P2p/0bVZT7h88c8/bpzNidvI3GKsf067eKuEBq7asBrobebSbjA11rlcA2BfHT4Ekeqr
+         pVgjG5EMvLXd5m5dgMme4LOO9Nx1kgQwjk4YGnrsFpDITrlo/nWvvObUYcG9idhr0u6T
+         kz46sSkJOp8PtvYfOq92qH2Y4EMyt9Ne+PW5cyrPBVK0DwU8WHzPCxdtFJiEr0fciRXZ
+         VndrQpOQuW+ZBL/VllnxoTOEcHuu8hoB01pwzkFPRYF4vTASUJ9pG7EttT/FPS+ZIm0Z
+         sgQA==
+X-Gm-Message-State: AOAM531Zb5QxE6ukD9csrtXPjEURx3+xjhsrJ9Eowsvuutr6cIYH1DGt
+        C2rooM4NHS1CHUXRrLgUNYf4Gk893RoUj5s2lonu7g==
+X-Google-Smtp-Source: ABdhPJxETDB1AAqo99mNu3ZA/IGnxQ3PDw3Rf6fL61udAdiYNWOh7z9nHMR7AoL7EQ87AjwgwJ/Ez1FPPpQ5bKjJze8=
+X-Received: by 2002:a05:620a:ec2:: with SMTP id x2mr20968257qkm.138.1612866079663;
+ Tue, 09 Feb 2021 02:21:19 -0800 (PST)
 MIME-Version: 1.0
-References: <20210104065503.199631-1-jasowang@redhat.com> <20210104065503.199631-17-jasowang@redhat.com>
-In-Reply-To: <20210104065503.199631-17-jasowang@redhat.com>
-From:   Naresh Kamboju <naresh.kamboju@linaro.org>
-Date:   Tue, 9 Feb 2021 15:45:32 +0530
-Message-ID: <CA+G9fYteUN=s5Mp+BhdMPZt96B3qDa+2HwudmWgEmmrDELLPdw@mail.gmail.com>
-Subject: Re: [PATCH V3 16/19] virtio-pci: introduce modern device module
-To:     Jason Wang <jasowang@redhat.com>
-Cc:     "Michael S. Tsirkin" <mst@redhat.com>,
-        virtualization@lists.linux-foundation.org,
-        open list <linux-kernel@vger.kernel.org>, shahafs@mellanox.com,
-        lulu@redhat.com, sgarzare@redhat.com,
-        Randy Dunlap <rdunlap@infradead.org>,
-        lkft-triage@lists.linaro.org,
-        Linux-Next Mailing List <linux-next@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Stephen Rothwell <sfr@canb.auug.org.au>
+References: <20210204204904.294555-1-dmitry.baryshkov@linaro.org>
+ <YBx+LcgrbyUKpYig@builder.lan> <CAD=FV=XOk14DfAJT9j86WbiRifxUQZFPy1grJWoz0A7Fon1edg@mail.gmail.com>
+ <YByQizVTnj2uTNt2@builder.lan> <CAD=FV=UYmv-PH-m4T6RcuW1JuQ-fCZ2Lg6gCCUJ5xquT1NP1jA@mail.gmail.com>
+ <YB122qwCSdQka5jw@builder.lan> <CAD=FV=UY_AFRrAY0tef5jP698LEng6oN652LcX3B4nG=aWh0gA@mail.gmail.com>
+ <YCF9PKJl0HZrKBz1@builder.lan>
+In-Reply-To: <YCF9PKJl0HZrKBz1@builder.lan>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 9 Feb 2021 13:21:06 +0300
+Message-ID: <CAA8EJpre32RQiDhjTgbdnmKGmPP57==MuNAxYp4kdVrRNtgtHw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sm8250: add pinctrl for SPI using
+ GPIO as a CS
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Doug Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jason,
-
-On Mon, 4 Jan 2021 at 12:28, Jason Wang <jasowang@redhat.com> wrote:
+On Mon, 8 Feb 2021 at 21:04, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
 >
-> Signed-off-by: Jason Wang <jasowang@redhat.com>
-> ---
->  drivers/virtio/Kconfig                 |  10 +-
->  drivers/virtio/Makefile                |   1 +
->  drivers/virtio/virtio_pci_common.h     |  27 +-
->  drivers/virtio/virtio_pci_modern.c     | 617 -------------------------
->  drivers/virtio/virtio_pci_modern_dev.c | 599 ++++++++++++++++++++++++
->  include/linux/virtio_pci_modern.h      | 111 +++++
->  6 files changed, 721 insertions(+), 644 deletions(-)
->  create mode 100644 drivers/virtio/virtio_pci_modern_dev.c
->  create mode 100644 include/linux/virtio_pci_modern.h
+> On Mon 08 Feb 09:58 CST 2021, Doug Anderson wrote:
 >
-> diff --git a/drivers/virtio/Kconfig b/drivers/virtio/Kconfig
-> index 7b41130d3f35..6b9b81f4b8c2 100644
-> --- a/drivers/virtio/Kconfig
-> +++ b/drivers/virtio/Kconfig
-> @@ -12,6 +12,14 @@ config ARCH_HAS_RESTRICTED_VIRTIO_MEMORY_ACCESS
->           This option is selected if the architecture may need to enforce
->           VIRTIO_F_ACCESS_PLATFORM
+> > Hi,
+> >
+> > On Fri, Feb 5, 2021 at 8:48 AM Bjorn Andersson
+> > <bjorn.andersson@linaro.org> wrote:
+> > >
+> > > On Fri 05 Feb 09:00 CST 2021, Doug Anderson wrote:
+> > >
+> > > > Hi,
+> > > >
+> > > > On Thu, Feb 4, 2021 at 4:25 PM Bjorn Andersson
+> > > > <bjorn.andersson@linaro.org> wrote:
+> > > > >
+> > > > > > > > +                             mux {
+> > > > > > >
+> > > > > > > Rather than splitting the properties in {mux, cs, config} I think it
+> > > > > > > makes more sense to split them in {spi, cs} or something like that.
+> > > > > >
+> > > > > > In general pinconf doesn't belong in the SoC dts file.  If there's no
+> > > > > > reason to change it seems like this should match what sc7180 did.
+> > > > > >
+> > > > >
+> > > > > Right, but I still would prefer the pinctrl state to be split by
+> > > > > function/pins, rather than pinmux vs pinconf. That way it's natural to
+> > > > > add pinconf properties to the various functional parts (i.e. bias or
+> > > > > drive-strength for the spi pins vs cs).
+> > > > >
+> > > > > Do you have any concerns with this?
+> > > >
+> > > > I read this a few times and I'm not exactly sure what you're
+> > > > proposing.  Can you provide an example of what you want it to look
+> > > > like in this case?
+> > > >
+> > >
+> > > Today in most cases we group pinctrl properties by being a "conf" of a
+> > > "mux" property, so we end up with:
+> > >
+> > > the_state: spi-state {
+> > >         all-the-mux-properties {
+> > >                 pins = "gpio40", gpio41", "gpio42", "gpio43";
+> > >                 function = qup14";
+> > >         };
+> > >
+> > >         repeat-pins-and-add-all-conf-properties {
+> > >                 pins = "gpio40", gpio41", "gpio42", "gpio43";
+> > >                 drive-strength = <6>;
+> > >                 bias-disable;
+> > >         };
+> > > };
+> > >
+> > > This made sense to me after implementing the driver, there's muxing to
+> > > be done and there's electrical configuration to configure.
+> > >
+> > > But what's actually trying to describe is a hardware state; i.e. that
+> > > miso, mosi, clk and cs should be acting in a particular fashion.
+> > >
+> > > In particular this lends itself useful when the hardware state consists
+> > > of different functions, a good example being the Bluetooth UART, or in
+> > > the SPI-with-separate-GPIO:
+> > >
+> > > the_state: spi-state {
+> > >         miso-mosi-clk {
+> > >                 pins = "gpio40", gpio41", "gpio42"
+> > >                 function = qup14";
+> > >                 drive-strength = <6>;
+> > >                 bias-disable;
+> > >         };
+> > >
+> > >         cs {
+> > >                 pins = "gpio43";
+> > >                 function = "gpio";
+> > >                 drive-strength = <6>;
+> > >                 bias-disable;
+> > >         };
+> > > };
+> > >
+> > >
+> > > For the case of uniform configuration across the state we've come to
+> > > sprinkle a few different synonyms for "pinconf" and "pinmux" in the
+> > > state nodes. But a few years ago someone updated the state parser to
+> > > handle cases either directly in the state or in subnodes. So we can
+> > > avoid these boilerplate nodes with a simple:
+> > >
+> > > the_state: spi-state {
+> > >         pins = "gpio40", gpio41", "gpio42", "gpio43";
+> > >         function = qup14";
+> > >         drive-strength = <6>;
+> > >         bias-disable;
+> > > };
+> >
+> > OK, this makes sense to me.  I always felt like the extra "pinconf" /
+> > "pinmux" made things awkward.
 >
-> +config VIRTIO_PCI_MODERN
-> +       tristate "Modern Virtio PCI Device"
-> +       depends on PCI
-> +       help
-> +         Modern PCI device implementation. This module implements the
-> +         basic probe and control for devices which are based on modern
-> +         PCI device with possible vendor specific extensions.
-> +
->  menuconfig VIRTIO_MENU
->         bool "Virtio drivers"
->         default y
-> @@ -20,7 +28,7 @@ if VIRTIO_MENU
+> I'm happy to hear that :)
 >
->  config VIRTIO_PCI
->         tristate "PCI driver for virtio devices"
-> -       depends on PCI
-> +       depends on VIRTIO_PCI_MODERN
+> > I guess someone should try to convert some SoC dtsi fully over so we
+> > can see how it looks?
+>
+> Sounds good. I feel fairly confident, so let's pick SM8250 and aim to
+> land this patch in the "new" form.
 
-While booting Linux next tag 20210208 kernel on qemu_arm64 and qemu_arm
-mount rootfs failed.  The root cause seems to be due to missing configs
-CONFIG_VIRTIO_PCI=y
-CONFIG_VIRTIO_PCI_LEGACY=y
+OK. As a starting bit I will convert SPI pinctrl for now with the rest
+of pins to follow.
 
-Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+>
+> > In this case I think you'd have something like this, right?
+> >
+> > SoC dtsi:
+> >
+> > tlmm: pinctrl@... {
+> >   qup_spi0_data_clk: qup-spi0-data-clk {
+> >     pins = "gpio28", "gpio29", "gpio30";
+> >     function = "qup0";
+> >   };
+> >
+> >   qup_spi0_cs: qup-spi0-cs {
+> >     pins = "gpio31";
+> >     function = "qup0";
+> >   };
+> >
+> >   qup_spi0_cs_gpio: qup-spi0-cs-gpio {
+> >     pins = "gpio31";
+> >     function = "gpio";
+> >   };
+> > };
+> >
+> > Board dts:
+> >
+> > &spi0 {
+> >   pinctrl-0 = <&qup_spi0_data_clk>, &<qup_spi0_cs_gpio>;
+> > };
+> >
+> > &qup_spi0_data_clk {
+> >   drive-strength = <6>;
+> >   bias-disable;
+> > };
+> >
+> > &qup_spi0_cs_gpio {
+> >   drive-strength = <6>;
+> >   bias-disable;
+> > };
+>
+> Correct. And providing a common state for the 3 non-cs pins and using
+> the pinctrl-0 to select which kind of cs we want looks even better.
+>
+> Regards,
+> Bjorn
 
-Then I have to force to enable this MODERN config
-CONFIG_VIRTIO_PCI_MODERN=y
-and which enabled
-CONFIG_VIRTIO_PCI=y
-CONFIG_VIRTIO_PCI_LEGACY=y
-
-and the qemu_arm64 and qemu_arm boot pass.
-
-
-New build link,
-https://builds.tuxbuild.com/1oEse4EFsoQr1FkKBfiLmhMCe7j/
 
 
 -- 
-Linaro LKFT
-https://lkft.linaro.org
+With best wishes
+Dmitry
