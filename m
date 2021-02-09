@@ -2,114 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B1C0314B8A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Feb 2021 10:29:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 16CA0314C17
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Feb 2021 10:51:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230268AbhBIJ0j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Feb 2021 04:26:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59778 "EHLO
+        id S231246AbhBIJtJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Feb 2021 04:49:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229719AbhBIJVW (ORCPT
+        with ESMTP id S230473AbhBIJrH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Feb 2021 04:21:22 -0500
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 387B1C061797
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Feb 2021 01:20:42 -0800 (PST)
-Received: by mail-oi1-x233.google.com with SMTP id i3so7844984oif.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Feb 2021 01:20:42 -0800 (PST)
+        Tue, 9 Feb 2021 04:47:07 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FBE0C0617A7
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Feb 2021 01:46:26 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id j21so2834886wmj.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Feb 2021 01:46:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=aleksander-es.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=DTuMJKWknYrnZ1xNYLzvsaQ4qGCwYj1qIz7kzYoSeRA=;
-        b=Qvh2eOYXxet9fIRUiK5jbirxVA95uKvfHeqJxDuEqaqGmqez7+7SRKdVYPxjchgmS5
-         yGKUVXReARDTXcxSTTxD5WpiINvj1C4U32vy+IJZhG5H4zED5LVLlyIF+iWsFagZk/VK
-         DYWGw+cm/45qOW0SokH6DnTFC6/v4IKUXQ5xeA9agT978WkDUNGa3b/mMLnPxwy50ZAy
-         1C3w4EWLszGGsxqtHJoh9qPHc9Hha9mT98z9NHGjUyO2GSP4ywUasmWaaMrCJ+Ms7Wrp
-         t8eI1oDZhznkfM1rU5uqw8W3kS0Mn553wDxvX3bVYdD1kaLQ2y6YS1mUZNOB3g4SUZpl
-         KN2g==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NtiOGrIIJ5Mm3MgDZJonQ2tOQT3ZSoFpEI0CN22UV14=;
+        b=u5g39gXJIngfU1XExmEXBx8hqDny5vGFigabTUxsM0TPFIQA7FuqkLq0j7YwYUBp6f
+         RskGlhaj1idVZ2wvXZ8yQTiP3S9PHjWg8ozxjUDFRsBgVrFd5AfAQmR7nnCt/DGONGs4
+         PixCihIg+INClWp6UZmF0QmAgarFGkpMiuEJKNqSYrWxq1QSM8qh8xlnsItfRD5blKdO
+         fG+QiD70qlCXlqR69gS+qAvpyV4uUPjl5p/+cqCeBSt67lGXPQ4ysvYYbnF6g86WPdSw
+         oKS++DcM+hWzFUS1AICMoY0DQcI13BDLhDmVE1aviSr6fFaZNllS38oPY66PjFL6aBy0
+         Xn6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=DTuMJKWknYrnZ1xNYLzvsaQ4qGCwYj1qIz7kzYoSeRA=;
-        b=nbYlKBcoMguK1t9wvBjkhccZbqc4c+zefIHI7tqgWRIP7RKFhglaclwHj0j1RHKvWr
-         teBPBtHajUjjPPGYeH8IB5JXsg0mtAjoEDQvIBgmAdRWZvP2B63hBof5eHSw/RgbfvVU
-         ZH+j9TmlVBgra4ZjkukiLbU173SSak0izYJXU3xZ5KbnpkaL+UnOWIKVskBYJu00r9AX
-         Zri6mLnD1HdMw96LcQSjNDsQtD4xhxkFkexLhuFHuvN95SvrRl3EQJd9wFu6scfpNOk3
-         UnwDoF1k+v5KlyqhXo3RiDfQDCTkTmEGQWZnMDztq+Zo1MIj95NOynCddtYXk1XBm7dZ
-         ztxg==
-X-Gm-Message-State: AOAM5335Cd6ibZifWGOJJx83FEFoQ3iCoAb42bOPViNpEMl4fVp52NL4
-        u4svv7aiA7I9tRfuyEWnNGPo8umAu218/ZlEwLXGxJysy4tn7g==
-X-Google-Smtp-Source: ABdhPJzLJ0oqa6+5bZtVfKINmAk0MnWV5DDDsEUpdQr5xU20juQWB4o82JCmg0PmqAhwFRdn8WGiuMPUsCipS3eJVOA=
-X-Received: by 2002:aca:d908:: with SMTP id q8mr1781140oig.67.1612862441549;
- Tue, 09 Feb 2021 01:20:41 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NtiOGrIIJ5Mm3MgDZJonQ2tOQT3ZSoFpEI0CN22UV14=;
+        b=T8ueS0Z+wLzhFBvE5DL8660Dm8Vsrfy4FaQ3AMe3cWMWbd397UOOqx6W87za2tqHdh
+         XOCE2ZE7rkwY8BOiTWxQCgrytZtWCuCfWwGzelI9FJ6f99Fk01ygDO7K1Le2RrvmaBSM
+         +TvE4QjP75bMCzWdXbLt5kUjXVWT+b1AVSJV/ZCpMZMle1djGM3NU9qpPeEpOp6YdJO7
+         EOzNQRiWAjxrxs8+/9+BBTlLqZabcCNW8LJFyElCzl59lvvO//vKAqDfYmYV6nYrtgOi
+         vO7EVYqVwsP19VMT31GhauaiaY9fY+NGY6LMe2FP9K0IagMLUPluEvoB6cju9frMjCSu
+         RiXQ==
+X-Gm-Message-State: AOAM532fI5qem1lgoE7Il81URJjt1Ai7s3Gg2OTvr/jKX/bgyC3rPXgG
+        b7z/+Rm3ZAPd3crkQ1Cz6RBm2w==
+X-Google-Smtp-Source: ABdhPJxXQSPqb96K9C+tjUdGhrW9PVpw7siPtQwZ7h3AN8rn+JLKNtGm276sUZjhB5XDOFTFY1HKPA==
+X-Received: by 2002:a1c:f70f:: with SMTP id v15mr2554723wmh.38.1612863980176;
+        Tue, 09 Feb 2021 01:46:20 -0800 (PST)
+Received: from localhost.localdomain (hst-221-63.medicom.bg. [84.238.221.63])
+        by smtp.gmail.com with ESMTPSA id u14sm1509627wro.10.2021.02.09.01.46.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Feb 2021 01:46:19 -0800 (PST)
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Subject: [PATCH 0/2] Add decoder conceal color ctrl
+Date:   Tue,  9 Feb 2021 11:45:25 +0200
+Message-Id: <20210209094527.2173690-1-stanimir.varbanov@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <1609958656-15064-1-git-send-email-hemantk@codeaurora.org>
- <20210113152625.GB30246@work> <YBGDng3VhE1Yw6zt@kroah.com>
- <20210201105549.GB108653@thinkpad> <YBfi573Bdfxy0GBt@kroah.com>
- <20210201121322.GC108653@thinkpad> <20210202042208.GB840@work>
- <20210202201008.274209f9@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <835B2E08-7B84-4A02-B82F-445467D69083@linaro.org> <20210203100508.1082f73e@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <CAMZdPi8o44RPTGcLSvP0nptmdUEmJWFO4HkCB_kjJvfPDgchhQ@mail.gmail.com> <20210203104028.62d41962@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-In-Reply-To: <20210203104028.62d41962@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-From:   Aleksander Morgado <aleksander@aleksander.es>
-Date:   Tue, 9 Feb 2021 10:20:30 +0100
-Message-ID: <CAAP7ucLZ5jKbKriSp39OtDLotbv72eBWKFCfqCbAF854kCBU8w@mail.gmail.com>
-Subject: Re: [RESEND PATCH v18 0/3] userspace MHI client interface driver
-To:     Jakub Kicinski <kuba@kernel.org>
-Cc:     Loic Poulain <loic.poulain@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Greg KH <gregkh@linuxfoundation.org>,
-        David Miller <davem@davemloft.net>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        Network Development <netdev@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Jakub
+Hello,
 
-On Wed, Feb 3, 2021 at 7:41 PM Jakub Kicinski <kuba@kernel.org> wrote:
->
-> On Wed, 3 Feb 2021 19:28:28 +0100 Loic Poulain wrote:
-> > On Wed, 3 Feb 2021 at 19:05, Jakub Kicinski <kuba@kernel.org> wrote:
-> > > On Wed, 03 Feb 2021 09:45:06 +0530 Manivannan Sadhasivam wrote:
-> > > > The current patchset only supports QMI channel so I'd request you to
-> > > > review the chardev node created for it. The QMI chardev node created
-> > > > will be unique for the MHI bus and the number of nodes depends on the
-> > > > MHI controllers in the system (typically 1 but not limited).
-> > >
-> > > If you want to add a MHI QMI driver, please write a QMI-only driver.
-> > > This generic "userspace client interface" driver is a no go. Nobody will
-> > > have the time and attention to police what you throw in there later.
-> >
-> > Think it should be seen as filtered userspace access to MHI bus
-> > (filtered because not all channels are exposed), again it's not
-> > specific to MHI, any bus in Linux offers that (i2c, spi, usb, serial,
-> > etc...). It will not be specific to QMI, since we will also need it
-> > for MBIM (modem control path), AT commands, and GPS (NMEA frames), all
-> > these protocols are usually handled by userspace tools and not linked
-> > to any internal Linux framework, so it would be better not having a
-> > dedicated chardev for each of them.
->
-> The more people argue for this backdoor interface the more distrustful
-> of it we'll become. Keep going at your own peril.
+The first patch is adding a new control for conceal error color and the
+second adds support for it in the Venus decoder driver.
 
-Are your worries that this driver will end up being used for many more
-things than the initial wwan control port management being suggested
-here? If so, what would be the suggested alternative for this
-integration? Just a different way to access those control ports
-instead of a chardev? A per port type specific driver?
+Comments are welcome!
 
-This may be a stupid suggestion, but would the integration look less a
-backdoor if it would have been named "mhi_wwan" and it exposed already
-all the AT+DIAG+QMI+MBIM+NMEA possible channels as chardevs, not just
-QMI?
+regards,
+Stan
+
+Stanimir Varbanov (2):
+  v4l2-ctrl: Add decoder conceal color control
+  venus: vdec: Add support for conceal control
+
+ .../media/v4l/ext-ctrls-codec.rst             | 20 +++++++++++++++++++
+ drivers/media/platform/qcom/venus/core.h      |  1 +
+ drivers/media/platform/qcom/venus/hfi_cmds.c  | 18 +++++++++++++++--
+ .../media/platform/qcom/venus/hfi_helper.h    | 10 ++++++++++
+ drivers/media/platform/qcom/venus/vdec.c      | 11 +++++++++-
+ .../media/platform/qcom/venus/vdec_ctrls.c    |  7 +++++++
+ drivers/media/v4l2-core/v4l2-ctrls.c          |  9 +++++++++
+ include/uapi/linux/v4l2-controls.h            |  1 +
+ 8 files changed, 74 insertions(+), 3 deletions(-)
 
 -- 
-Aleksander
+2.25.1
+
