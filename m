@@ -2,277 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FF77316AA8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Feb 2021 17:04:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5219E316ADB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Feb 2021 17:14:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232062AbhBJQD7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Feb 2021 11:03:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33568 "EHLO
+        id S232009AbhBJQNs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Feb 2021 11:13:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230043AbhBJQD6 (ORCPT
+        with ESMTP id S232024AbhBJQNo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Feb 2021 11:03:58 -0500
-Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01B19C06174A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Feb 2021 08:03:12 -0800 (PST)
-Received: by mail-qv1-xf33.google.com with SMTP id l14so1064503qvp.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Feb 2021 08:03:11 -0800 (PST)
+        Wed, 10 Feb 2021 11:13:44 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89749C061786
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Feb 2021 08:13:03 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id i9so2305887wmq.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Feb 2021 08:13:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ndufresne-ca.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=vMl09xTYk2AzALOlDDizo3CtDKFHQF/1OYESJTbYIHg=;
-        b=MY7Bzkhn+T42ADKv7SQ4rQ8Qqnl4ETe3P4Pt2BITRHMV3Vdh3k9/Km1pq1HPRX9W/t
-         zkorU+6gWfq714Nryh19tvtsebphMZOejYl02HNdjjIhpsjZYeiF6COnxBIfQmzUI++q
-         7t/Ya43TTTwsBvGPhZP8/W/+kVuOAwlDCi4OkJGk1/UANOuO3jBvLOCojxfP2wAPO1ui
-         87Fde9Zq2SqVRu4S50N2Ft+07oCXZASFE5H7x1hDHZOe5jw2Dex6K+kEhmp5oPmPlUHQ
-         5FDoFCtPem73WB91W6i1HLGt2FkyCMII5Izct3UqkIF+ju+U9tcjlfJR5ZZpnUWrtpS5
-         IYmg==
+        d=linaro.org; s=google;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=9EqkICeAqFea9hutcJE8LTJk6fkCLGfHmOvQQmMvAJM=;
+        b=Hh49I+GceO/gmkekotuymhn3rjlU3YIypVisjoLOygTP1mgYBpzmbiY1B+Z5kDHv1H
+         X+1p+H/pZbOPlldO65mL33J/nmB6ms47MC+u60d9S34oT4MiRfwDpZZWh/qETmt/Om/y
+         olUsvQGKt/zp/HREvWDezf3EVhY9WQSBDq//vrYo+RtlXuw1teA/flfEzF4rT2UCYUo6
+         WEyPCuv9rP7JAXB7hd4Zk5CXQfiPo2bj7YDV4C/V4SfKbO6gG7O8nWSxiVamK32i6r03
+         Vi1DcAM4Whf1JnAWKjVWawTmQnF73oyA7TPneeQ1mIDpdIwY/evQfcTuEdgRAkLg3tZr
+         f/6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:user-agent:mime-version:content-transfer-encoding;
-        bh=vMl09xTYk2AzALOlDDizo3CtDKFHQF/1OYESJTbYIHg=;
-        b=Q8QoxoUGcjuHR+ct1PUw4nezPbwM1eetY79ow1nPARjXPw5jsy7ulInuPzOjikoCrP
-         QgJatYB5sQm8VHOsUkNJk+1qHT5L2ccu5m1ZWSRzBxhmi5+3QiC1qKhcnnBVsACqSs1x
-         PosElH01IqbJCAv7NH+jQRGnTbRHlhqwdApugzZUumIW4rz8iEFdEwY419mW2N0HKk9K
-         /AEhJ/dGY7m7i6e/O2oHJZ7zgI/TcMRbwv0UCQceCSrR6jwTh8tOfC+Bm1uhRyBRuw/n
-         HzJx7MqcOcHBz6GzFE2m8crSg4xQFNGnbNcPT8p+ai2yrduD9K2l81SuIT7rpvMe81DW
-         0/FA==
-X-Gm-Message-State: AOAM532t4m1RfMY7/iRGBAvjJPgfWFdDGLmLylo3jb3ynnzNgJxVbVkK
-        FOI+8fQTYPC5L2sTzsOiiyjO9g==
-X-Google-Smtp-Source: ABdhPJwKloPRibW3+NS+02RBOsavIVO21dXRly8FSjWsWvAz63HU/pBF+GI07636yktDtlCHCq6SLA==
-X-Received: by 2002:ad4:54ad:: with SMTP id r13mr3450326qvy.48.1612972991130;
-        Wed, 10 Feb 2021 08:03:11 -0800 (PST)
-Received: from nicolas-tpx395.localdomain (173-246-12-168.qc.cable.ebox.net. [173.246.12.168])
-        by smtp.gmail.com with ESMTPSA id 11sm1798878qkm.25.2021.02.10.08.03.08
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=9EqkICeAqFea9hutcJE8LTJk6fkCLGfHmOvQQmMvAJM=;
+        b=XRRF8P0TNX95MNO7Yu/0A9xQSEDuZC05dtVAMEkQQbcBUFZCJoe+uXA7K6yYBFLHmi
+         y84X2fiepzDPJdTEaKHo408MC+0Vt5YzxFtW9w8ndv6ppjsg/8NrQCZZIrCgUN//c5jb
+         KxNEjX/+eMUWbG5ZXhOWn7f0Z7kJFsEG4Tv+fPH8sGF4x8fUsBUII3DEzlTFXlGFojEt
+         W7FakWgLhThJSPu93fFHxDkrFAlnHly3w5C41vMlu8bKDJggFgztfvvS269woxjL6BuF
+         iQeuCCvEIMpzDV5FrPZn6f5xz6twFmt4U8vc33XlI0b7EJRmLNhL1ezG5PbjoCrkHaNF
+         lqZA==
+X-Gm-Message-State: AOAM532veAmDwnZQYU1YUT8pK2jlqssLDJMB5YtQWNu46fezMBukjeu5
+        GPcHZl6Zf70LPeqL6NAdubYMyQ==
+X-Google-Smtp-Source: ABdhPJxwjN9tnOjYE29ii/KagRZk+egL7JyD+GF9hT3oJWkCY7DOqROK+nqMjm3eItHTGs95G9LYOA==
+X-Received: by 2002:a05:600c:216:: with SMTP id 22mr3432179wmi.111.1612973581930;
+        Wed, 10 Feb 2021 08:13:01 -0800 (PST)
+Received: from x1 ([91.110.221.237])
+        by smtp.gmail.com with ESMTPSA id x9sm3275333wmb.14.2021.02.10.08.12.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Feb 2021 08:03:09 -0800 (PST)
-Message-ID: <26407550afb3d5a2ee4b3af4474acdcf4191ed68.camel@ndufresne.ca>
-Subject: Re: [PATCH v6 1/2] media: v4l2-ctrl: add controls for long term
- reference.
-From:   Nicolas Dufresne <nicolas@ndufresne.ca>
-To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>, dikshita@codeaurora.org
-Cc:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org
-Date:   Wed, 10 Feb 2021 11:03:08 -0500
-In-Reply-To: <2a6bf75f-a44c-e921-55a0-abd6d6eaf67f@xs4all.nl>
-References: <1611553919-17919-1-git-send-email-dikshita@codeaurora.org>
-         <1611553919-17919-2-git-send-email-dikshita@codeaurora.org>
-         <d20ba57f-54a7-5a61-a64b-2d9433b79281@xs4all.nl>
-         <6e59d1bee1d0f1b64aab77959bb22e6e@codeaurora.org>
-         <2a6bf75f-a44c-e921-55a0-abd6d6eaf67f@xs4all.nl>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.38.3 (3.38.3-1.fc33) 
+        Wed, 10 Feb 2021 08:13:00 -0800 (PST)
+Date:   Wed, 10 Feb 2021 16:12:58 +0000
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Julia Lawall <Julia.Lawall@inria.fr>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        linux-kernel@vger.kernel.org,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        kernel-janitors@vger.kernel.org,
+        Michal Simek <michal.simek@xilinx.com>,
+        dri-devel@lists.freedesktop.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        linux-fbdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Shawn Guo <shawnguo@kernel.org>, linux-omap@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH] video: use getter/setter functions
+Message-ID: <20210210161258.GA124276@x1>
+References: <20210209211325.1261842-1-Julia.Lawall@inria.fr>
+ <20210210082341.GH220368@dell>
+ <YCPbxSHWMipTz+mB@phenom.ffwll.local>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <YCPbxSHWMipTz+mB@phenom.ffwll.local>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Le jeudi 04 février 2021 à 11:05 +0100, Hans Verkuil a écrit :
-> On 04/02/2021 06:01, dikshita@codeaurora.org wrote:
-> > On 2021-02-01 16:50, Hans Verkuil wrote:
-> > > On 25/01/2021 06:51, Dikshita Agarwal wrote:
-> > > > Long Term Reference (LTR) frames are the frames that are encoded
-> > > > sometime in the past and stored in the DPB buffer list to be used
-> > > > as reference to encode future frames.
-> > > > This change adds controls to enable this feature.
-> > > > 
-> > > > Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
-> > > > ---
-> > > >  .../userspace-api/media/v4l/ext-ctrls-codec.rst        | 18 
-> > > > ++++++++++++++++++
-> > > >  drivers/media/v4l2-core/v4l2-ctrls.c                   | 14 
-> > > > ++++++++++++++
-> > > >  include/uapi/linux/v4l2-controls.h                     |  3 +++
-> > > >  3 files changed, 35 insertions(+)
-> > > > 
-> > > > diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst 
-> > > > b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> > > > index 400774c..a37d460 100644
-> > > > --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> > > > +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> > > > @@ -3637,3 +3637,21 @@ enum v4l2_mpeg_video_hevc_size_of_length_field 
-> > > > -
-> > > >        - Selecting this value specifies that HEVC slices are expected
-> > > >          to be prefixed by Annex B start codes. According to 
-> > > > :ref:`hevc`
-> > > >          valid start codes can be 3-bytes 0x000001 or 4-bytes 
-> > > > 0x00000001.
-> > > > +
-> > > > +``V4L2_CID_MPEG_VIDEO_LTR_COUNT (integer)``
-> > > > +       Specifies the number of Long Term Reference (LTR) frames 
-> > > > encoder needs
-> > > > +       to generate or keep. This is applicable to the H264 and HEVC 
-> > > > encoders.
-> > > > +
-> > > > +``V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX (integer)``
-> > > > +       The current frame is marked as a Long Term Reference (LTR) 
-> > > > frame
-> > > > +       and given this LTR index which ranges from 0 to LTR_COUNT-1.
-> > > > +       This is applicable to the H264 and HEVC encoders and can be 
-> > > > applied using
-> > > > +       Request API.
-> > > 
-> > > You mentioned in reply to my comment that the venus driver didn't 
-> > > support the
-> > > Request API that it is also possible to use it without that API.
-> > > 
-> > > But that requires more precise documentation. I assume that without the 
-> > > Request
-> > > API you would set this control, then queue the buffer containing the 
-> > > frame this
-> > > control should apply to, then wait until it is dequeued. Since that's 
-> > > the only
-> > > way you can be certain this control is applied to the correct frame.
-> > > 
-> > > Is this indeed what you do in your application?
-> > > 
-> > > Regards,
-> > > 
-> > >         Hans
-> > > 
-> > Hi Hans,
+On Wed, 10 Feb 2021, Daniel Vetter wrote:
+
+> On Wed, Feb 10, 2021 at 08:23:41AM +0000, Lee Jones wrote:
+> > On Tue, 09 Feb 2021, Julia Lawall wrote:
 > > 
-> > Yes, It is possible without request API as well in a non-synchronized 
-> > way.
-> > And we don't need to wait for the frame to be dequeued.
-> > The driver implementation ensures that whenever the LTR control is 
-> > received,
-> > it applies to the frame received after that. Not to frame which would be 
-> > encoded next.
-> > So that it is at least synchronized between driver & encoder.
-> 
-> This is highly driver dependent. I'm not even sure this is true for the venus
-> driver: if you prequeue, say, 4 output buffers to the encoder and call
-> V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX after the second buffer (so it should
-> apply to the third), and only after the fourth you call VIDIOC_STREAMON,
-> does the venus driver still keep track of the order of the queued buffers
-> and when these controls are set? Once STREAMON is called it looks like it
-> stays synced since everything is queued into a command queue, if I understand
-> the code correctly.
-> 
-> The problem is that when controls are applied in relation to queued buffers
-> is not defined, unless you use the Request API. Typically controls are applied
-> immediately, so the venus driver is a bit of an anomaly in that respect.
-> 
-> You can make an explicit requirement that these controls apply to the next
-> queued buffer if no request API is used, but you really must be 100% certain
-> that the venus driver does that right (and as mentioned, I have my doubts
-> about
-> the case where you queue buffers before calling STREAMON).
-
-Do you propose to start usign request for stateful encoder ? If this is the
-case, I'd like to remind that it's not always possible to notify encode
-completion in request queue order for this type of HW. Reordering might be
-implicit in the firmware design, so the driver may not have any notification
-until multiple frames have been encoded.
-
-To resume, we can use request for this type of application, no issues, but
-userspace may not switch to waiting on the request for completion as this may
-have HW specific behaviour. It will have to resort to polling for READ, and
-dequeue from capture queue and figure-out after the fact which request are now
-complete.
-
-Nicolas
-
-> 
-> Regards,
-> 
->         Hans
-> 
+> > > Use getter and setter functions, for platform_device structures and a
+> > > spi_device structure.
+> > > 
+> > > Signed-off-by: Julia Lawall <Julia.Lawall@inria.fr>
+> > > 
+> > > ---
+> > >  drivers/video/backlight/qcom-wled.c                                  |    2 +-
 > > 
-> > Thanks,
-> > Dikshita
+> > This patch is fine.
 > > 
-> > > > +       Source Rec. ITU-T H.264 (06/2019); Table 7.9
-> > > > +
-> > > > +``V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES (bitmask)``
-> > > > +       Specifies the Long Term Reference (LTR) frame(s) to be used 
-> > > > for
-> > > > +       encoding the current frame.
-> > > > +       This provides a bitmask which consists of bits [0, 
-> > > > LTR_COUNT-1].
-> > > > +       This is applicable to the H264 and HEVC encoders and can be 
-> > > > applied using
-> > > > +       Request API.
-> > > > diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c 
-> > > > b/drivers/media/v4l2-core/v4l2-ctrls.c
-> > > > index 16ab54f..84c1eb8 100644
-> > > > --- a/drivers/media/v4l2-core/v4l2-ctrls.c
-> > > > +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
-> > > > @@ -950,6 +950,9 @@ const char *v4l2_ctrl_get_name(u32 id)
-> > > >         case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:             return
-> > > > "Vertical MV 
-> > > > Search Range";
-> > > >         case V4L2_CID_MPEG_VIDEO_REPEAT_SEQ_HEADER:             return
-> > > > "Repeat Sequence 
-> > > > Header";
-> > > >         case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:               return
-> > > > "Force Key Frame";
-> > > > +       case V4L2_CID_MPEG_VIDEO_LTR_COUNT:                     return
-> > > > "LTR Count";
-> > > > +       case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:               return
-> > > > "Frame LTR Index";
-> > > > +       case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES:                return
-> > > > "Use LTR Frames";
-> > > >         case V4L2_CID_MPEG_VIDEO_MPEG2_SLICE_PARAMS:            return
-> > > > "MPEG-2 Slice 
-> > > > Parameters";
-> > > >         case V4L2_CID_MPEG_VIDEO_MPEG2_QUANTIZATION:            return
-> > > > "MPEG-2 
-> > > > Quantization Matrices";
-> > > >         case V4L2_CID_FWHT_I_FRAME_QP:                          return
-> > > > "FWHT I-Frame QP Value";
-> > > > @@ -1277,6 +1280,17 @@ void v4l2_ctrl_fill(u32 id, const char **name, 
-> > > > enum v4l2_ctrl_type *type,
-> > > >         case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:
-> > > >                 *type = V4L2_CTRL_TYPE_INTEGER;
-> > > >                 break;
-> > > > +       case V4L2_CID_MPEG_VIDEO_LTR_COUNT:
-> > > > +               *type = V4L2_CTRL_TYPE_INTEGER;
-> > > > +               break;
-> > > > +       case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:
-> > > > +               *type = V4L2_CTRL_TYPE_INTEGER;
-> > > > +               *flags |= V4L2_CTRL_FLAG_EXECUTE_ON_WRITE;
-> > > > +               break;
-> > > > +       case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES:
-> > > > +               *type = V4L2_CTRL_TYPE_BITMASK;
-> > > > +               *flags |= V4L2_CTRL_FLAG_EXECUTE_ON_WRITE;
-> > > > +               break;
-> > > >         case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:
-> > > >         case V4L2_CID_PAN_RESET:
-> > > >         case V4L2_CID_TILT_RESET:
-> > > > diff --git a/include/uapi/linux/v4l2-controls.h 
-> > > > b/include/uapi/linux/v4l2-controls.h
-> > > > index af8dda2..c0bb87b 100644
-> > > > --- a/include/uapi/linux/v4l2-controls.h
-> > > > +++ b/include/uapi/linux/v4l2-controls.h
-> > > > @@ -422,6 +422,9 @@ enum v4l2_mpeg_video_multi_slice_mode {
-> > > >  #define 
-> > > > V4L2_CID_MPEG_VIDEO_MV_H_SEARCH_RANGE           (V4L2_CID_CODEC_BASE+227
-> > > > )
-> > > >  #define 
-> > > > V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE           (V4L2_CID_CODEC_BASE+228
-> > > > )
-> > > >  #define 
-> > > > V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME             (V4L2_CID_CODEC_BASE+229
-> > > > )
-> > > > +#define
-> > > > V4L2_CID_MPEG_VIDEO_LTR_COUNT                  (V4L2_CID_CODEC_BASE+230)
-> > > > +#define 
-> > > > V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX             (V4L2_CID_CODEC_BASE+231
-> > > > )
-> > > > +#define
-> > > > V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES             (V4L2_CID_CODEC_BASE+232)
-> > > > 
-> > > >  /* CIDs for the MPEG-2 Part 2 (H.262) codec */
-> > > >  #define
-> > > > V4L2_CID_MPEG_VIDEO_MPEG2_LEVEL                        (V4L2_CID_CODEC_B
-> > > > ASE+270)
-> > > > 
+> > Could you please split it out and submit it separately though please.
+> 
+> Or just apply the entire patch through backlight tree, there's nothing
+> going on in fbdev anyway I think.
+> 
+> Acked-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+
+I can do that.  Is that an fbdev Ack?
+
+> > >  drivers/video/fbdev/amifb.c                                          |    4 ++--
+> > >  drivers/video/fbdev/da8xx-fb.c                                       |    4 ++--
+> > >  drivers/video/fbdev/imxfb.c                                          |    2 +-
+> > >  drivers/video/fbdev/omap2/omapfb/displays/panel-lgphilips-lb035q02.c |    6 +++---
+> > >  drivers/video/fbdev/omap2/omapfb/dss/dpi.c                           |    4 ++--
+> > >  drivers/video/fbdev/omap2/omapfb/dss/dsi.c                           |    4 ++--
+> > >  drivers/video/fbdev/omap2/omapfb/dss/hdmi4.c                         |    2 +-
+> > >  drivers/video/fbdev/omap2/omapfb/dss/hdmi5.c                         |    2 +-
+> > >  drivers/video/fbdev/xilinxfb.c                                       |    2 +-
+> > >  10 files changed, 16 insertions(+), 16 deletions(-)
+> > 
+> > ...]
+> > 
+> > > diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
+> > > index 3bc7800eb0a9..091f07e7c145 100644
+> > > --- a/drivers/video/backlight/qcom-wled.c
+> > > +++ b/drivers/video/backlight/qcom-wled.c
+> > > @@ -1692,7 +1692,7 @@ static int wled_probe(struct platform_device *pdev)
+> > >  
+> > >  static int wled_remove(struct platform_device *pdev)
+> > >  {
+> > > -	struct wled *wled = dev_get_drvdata(&pdev->dev);
+> > > +	struct wled *wled = platform_get_drvdata(pdev);
+> > >  
+> > >  	mutex_destroy(&wled->lock);
+> > >  	cancel_delayed_work_sync(&wled->ovp_work);
+> > 
+> > For my own reference (apply this as-is to your sign-off block):
+> > 
+> >   Acked-for-Backlight-by: Lee Jones <lee.jones@linaro.org>
+> > 
 > 
 
-
+-- 
+Lee Jones [李琼斯]
+Senior Technical Lead - Developer Services
+Linaro.org │ Open source software for Arm SoCs
+Follow Linaro: Facebook | Twitter | Blog
