@@ -2,143 +2,206 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5219E316ADB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Feb 2021 17:14:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BA10B316AF9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Feb 2021 17:17:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232009AbhBJQNs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Feb 2021 11:13:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35698 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232024AbhBJQNo (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Feb 2021 11:13:44 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89749C061786
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Feb 2021 08:13:03 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id i9so2305887wmq.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Feb 2021 08:13:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=9EqkICeAqFea9hutcJE8LTJk6fkCLGfHmOvQQmMvAJM=;
-        b=Hh49I+GceO/gmkekotuymhn3rjlU3YIypVisjoLOygTP1mgYBpzmbiY1B+Z5kDHv1H
-         X+1p+H/pZbOPlldO65mL33J/nmB6ms47MC+u60d9S34oT4MiRfwDpZZWh/qETmt/Om/y
-         olUsvQGKt/zp/HREvWDezf3EVhY9WQSBDq//vrYo+RtlXuw1teA/flfEzF4rT2UCYUo6
-         WEyPCuv9rP7JAXB7hd4Zk5CXQfiPo2bj7YDV4C/V4SfKbO6gG7O8nWSxiVamK32i6r03
-         Vi1DcAM4Whf1JnAWKjVWawTmQnF73oyA7TPneeQ1mIDpdIwY/evQfcTuEdgRAkLg3tZr
-         f/6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=9EqkICeAqFea9hutcJE8LTJk6fkCLGfHmOvQQmMvAJM=;
-        b=XRRF8P0TNX95MNO7Yu/0A9xQSEDuZC05dtVAMEkQQbcBUFZCJoe+uXA7K6yYBFLHmi
-         y84X2fiepzDPJdTEaKHo408MC+0Vt5YzxFtW9w8ndv6ppjsg/8NrQCZZIrCgUN//c5jb
-         KxNEjX/+eMUWbG5ZXhOWn7f0Z7kJFsEG4Tv+fPH8sGF4x8fUsBUII3DEzlTFXlGFojEt
-         W7FakWgLhThJSPu93fFHxDkrFAlnHly3w5C41vMlu8bKDJggFgztfvvS269woxjL6BuF
-         iQeuCCvEIMpzDV5FrPZn6f5xz6twFmt4U8vc33XlI0b7EJRmLNhL1ezG5PbjoCrkHaNF
-         lqZA==
-X-Gm-Message-State: AOAM532veAmDwnZQYU1YUT8pK2jlqssLDJMB5YtQWNu46fezMBukjeu5
-        GPcHZl6Zf70LPeqL6NAdubYMyQ==
-X-Google-Smtp-Source: ABdhPJxwjN9tnOjYE29ii/KagRZk+egL7JyD+GF9hT3oJWkCY7DOqROK+nqMjm3eItHTGs95G9LYOA==
-X-Received: by 2002:a05:600c:216:: with SMTP id 22mr3432179wmi.111.1612973581930;
-        Wed, 10 Feb 2021 08:13:01 -0800 (PST)
-Received: from x1 ([91.110.221.237])
-        by smtp.gmail.com with ESMTPSA id x9sm3275333wmb.14.2021.02.10.08.12.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Feb 2021 08:13:00 -0800 (PST)
-Date:   Wed, 10 Feb 2021 16:12:58 +0000
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Julia Lawall <Julia.Lawall@inria.fr>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        linux-kernel@vger.kernel.org,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        kernel-janitors@vger.kernel.org,
-        Michal Simek <michal.simek@xilinx.com>,
-        dri-devel@lists.freedesktop.org,
+        id S232207AbhBJQRo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Feb 2021 11:17:44 -0500
+Received: from mail.kernel.org ([198.145.29.99]:55958 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232184AbhBJQRl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Feb 2021 11:17:41 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id A627C64E05;
+        Wed, 10 Feb 2021 16:16:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1612973820;
+        bh=hh4UIkJdtViE9hIUqy2HP352No8PkABh6qI6Cce0cZI=;
+        h=From:To:Cc:Subject:Date:From;
+        b=Y0XyTvfrhIwcX/ppb49PkzQCYxWXkGOEC5KujWcwQziC033w4IUoJ7IP5Gje3b8RK
+         1qWyy5fi6A4/l5c38FstWJSoQjQvLXvsjtGH3wZWQmjtGPKkMyIye2OW52T3+M5nx9
+         qg6yFU4d3E/XKy0rxPesbQCl4kQc3pdITqXzfJuhiXeWza+qjX9cg6eQab/Uo9oUwX
+         sm5Q9rRLiMwvdfx/YipLKMIkLRQ71tvkwaqWihjTweMtJgiXgARPLmT/5eAKwanOZa
+         wojusx2hbVfr3HIe6nXGWrVS5rxBOADCFwNsnb6SWI5CPH/s1gS/kIUA5KWoFD+bt4
+         P2kZoh+e8tjMA==
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        linux-fbdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Shawn Guo <shawnguo@kernel.org>, linux-omap@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH] video: use getter/setter functions
-Message-ID: <20210210161258.GA124276@x1>
-References: <20210209211325.1261842-1-Julia.Lawall@inria.fr>
- <20210210082341.GH220368@dell>
- <YCPbxSHWMipTz+mB@phenom.ffwll.local>
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH] clk: qcom: gcc-sm8350: add gdsc
+Date:   Wed, 10 Feb 2021 21:46:49 +0530
+Message-Id: <20210210161649.431741-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <YCPbxSHWMipTz+mB@phenom.ffwll.local>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 10 Feb 2021, Daniel Vetter wrote:
+Add the GDSC found in GCC for SM8350 SoC
 
-> On Wed, Feb 10, 2021 at 08:23:41AM +0000, Lee Jones wrote:
-> > On Tue, 09 Feb 2021, Julia Lawall wrote:
-> > 
-> > > Use getter and setter functions, for platform_device structures and a
-> > > spi_device structure.
-> > > 
-> > > Signed-off-by: Julia Lawall <Julia.Lawall@inria.fr>
-> > > 
-> > > ---
-> > >  drivers/video/backlight/qcom-wled.c                                  |    2 +-
-> > 
-> > This patch is fine.
-> > 
-> > Could you please split it out and submit it separately though please.
-> 
-> Or just apply the entire patch through backlight tree, there's nothing
-> going on in fbdev anyway I think.
-> 
-> Acked-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+---
+ drivers/clk/qcom/gcc-sm8350.c               | 100 ++++++++++++++++++++
+ include/dt-bindings/clock/qcom,gcc-sm8350.h |  12 +++
+ 2 files changed, 112 insertions(+)
 
-I can do that.  Is that an fbdev Ack?
-
-> > >  drivers/video/fbdev/amifb.c                                          |    4 ++--
-> > >  drivers/video/fbdev/da8xx-fb.c                                       |    4 ++--
-> > >  drivers/video/fbdev/imxfb.c                                          |    2 +-
-> > >  drivers/video/fbdev/omap2/omapfb/displays/panel-lgphilips-lb035q02.c |    6 +++---
-> > >  drivers/video/fbdev/omap2/omapfb/dss/dpi.c                           |    4 ++--
-> > >  drivers/video/fbdev/omap2/omapfb/dss/dsi.c                           |    4 ++--
-> > >  drivers/video/fbdev/omap2/omapfb/dss/hdmi4.c                         |    2 +-
-> > >  drivers/video/fbdev/omap2/omapfb/dss/hdmi5.c                         |    2 +-
-> > >  drivers/video/fbdev/xilinxfb.c                                       |    2 +-
-> > >  10 files changed, 16 insertions(+), 16 deletions(-)
-> > 
-> > ...]
-> > 
-> > > diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
-> > > index 3bc7800eb0a9..091f07e7c145 100644
-> > > --- a/drivers/video/backlight/qcom-wled.c
-> > > +++ b/drivers/video/backlight/qcom-wled.c
-> > > @@ -1692,7 +1692,7 @@ static int wled_probe(struct platform_device *pdev)
-> > >  
-> > >  static int wled_remove(struct platform_device *pdev)
-> > >  {
-> > > -	struct wled *wled = dev_get_drvdata(&pdev->dev);
-> > > +	struct wled *wled = platform_get_drvdata(pdev);
-> > >  
-> > >  	mutex_destroy(&wled->lock);
-> > >  	cancel_delayed_work_sync(&wled->ovp_work);
-> > 
-> > For my own reference (apply this as-is to your sign-off block):
-> > 
-> >   Acked-for-Backlight-by: Lee Jones <lee.jones@linaro.org>
-> > 
-> 
-
+diff --git a/drivers/clk/qcom/gcc-sm8350.c b/drivers/clk/qcom/gcc-sm8350.c
+index a16c08651206..1c23b9f84900 100644
+--- a/drivers/clk/qcom/gcc-sm8350.c
++++ b/drivers/clk/qcom/gcc-sm8350.c
+@@ -16,6 +16,7 @@
+ #include "clk-regmap.h"
+ #include "clk-regmap-divider.h"
+ #include "clk-regmap-mux.h"
++#include "gdsc.h"
+ #include "reset.h"
+ 
+ enum {
+@@ -3452,6 +3453,90 @@ static struct clk_branch gcc_video_axi1_clk = {
+ 	},
+ };
+ 
++static struct gdsc pcie_0_gdsc = {
++	.gdscr = 0x6b004,
++	.pd = {
++		.name = "pcie_0_gdsc",
++	},
++	.pwrsts = PWRSTS_OFF_ON,
++};
++
++static struct gdsc pcie_1_gdsc = {
++	.gdscr = 0x8d004,
++	.pd = {
++		.name = "pcie_1_gdsc",
++	},
++	.pwrsts = PWRSTS_OFF_ON,
++};
++
++static struct gdsc ufs_card_gdsc = {
++	.gdscr = 0x75004,
++	.pd = {
++		.name = "ufs_card_gdsc",
++	},
++	.pwrsts = PWRSTS_OFF_ON,
++};
++
++static struct gdsc ufs_phy_gdsc = {
++	.gdscr = 0x77004,
++	.pd = {
++		.name = "ufs_phy_gdsc",
++	},
++	.pwrsts = PWRSTS_OFF_ON,
++};
++
++static struct gdsc usb30_prim_gdsc = {
++	.gdscr = 0xf004,
++	.pd = {
++		.name = "usb30_prim_gdsc",
++	},
++	.pwrsts = PWRSTS_OFF_ON,
++};
++
++static struct gdsc usb30_sec_gdsc = {
++	.gdscr = 0x10004,
++	.pd = {
++		.name = "usb30_sec_gdsc",
++	},
++	.pwrsts = PWRSTS_OFF_ON,
++};
++
++static struct gdsc hlos1_vote_mmnoc_mmu_tbu_hf0_gdsc = {
++	.gdscr = 0x7d050,
++	.pd = {
++		.name = "hlos1_vote_mmnoc_mmu_tbu_hf0_gdsc",
++	},
++	.pwrsts = PWRSTS_OFF_ON,
++	.flags = VOTABLE,
++};
++
++static struct gdsc hlos1_vote_mmnoc_mmu_tbu_hf1_gdsc = {
++	.gdscr = 0x7d058,
++	.pd = {
++		.name = "hlos1_vote_mmnoc_mmu_tbu_hf1_gdsc",
++	},
++	.pwrsts = PWRSTS_OFF_ON,
++	.flags = VOTABLE,
++};
++
++static struct gdsc hlos1_vote_mmnoc_mmu_tbu_sf0_gdsc = {
++	.gdscr = 0x7d054,
++	.pd = {
++		.name = "hlos1_vote_mmnoc_mmu_tbu_sf0_gdsc",
++	},
++	.pwrsts = PWRSTS_OFF_ON,
++	.flags = VOTABLE,
++};
++
++static struct gdsc hlos1_vote_mmnoc_mmu_tbu_sf1_gdsc = {
++	.gdscr = 0x7d06c,
++	.pd = {
++		.name = "hlos1_vote_mmnoc_mmu_tbu_sf1_gdsc",
++	},
++	.pwrsts = PWRSTS_OFF_ON,
++	.flags = VOTABLE,
++};
++
+ static struct clk_regmap *gcc_sm8350_clocks[] = {
+ 	[GCC_AGGRE_NOC_PCIE_0_AXI_CLK] = &gcc_aggre_noc_pcie_0_axi_clk.clkr,
+ 	[GCC_AGGRE_NOC_PCIE_1_AXI_CLK] = &gcc_aggre_noc_pcie_1_axi_clk.clkr,
+@@ -3646,6 +3731,19 @@ static struct clk_regmap *gcc_sm8350_clocks[] = {
+ 	[GCC_VIDEO_AXI1_CLK] = &gcc_video_axi1_clk.clkr,
+ };
+ 
++static struct gdsc *gcc_sm8350_gdscs[] = {
++	[PCIE_0_GDSC] = &pcie_0_gdsc,
++	[PCIE_1_GDSC] = &pcie_1_gdsc,
++	[UFS_CARD_GDSC] = &ufs_card_gdsc,
++	[UFS_PHY_GDSC] = &ufs_phy_gdsc,
++	[USB30_PRIM_GDSC] = &usb30_prim_gdsc,
++	[USB30_SEC_GDSC] = &usb30_sec_gdsc,
++	[HLOS1_VOTE_MMNOC_MMU_TBU_HF0_GDSC] = &hlos1_vote_mmnoc_mmu_tbu_hf0_gdsc,
++	[HLOS1_VOTE_MMNOC_MMU_TBU_HF1_GDSC] = &hlos1_vote_mmnoc_mmu_tbu_hf1_gdsc,
++	[HLOS1_VOTE_MMNOC_MMU_TBU_SF0_GDSC] = &hlos1_vote_mmnoc_mmu_tbu_sf0_gdsc,
++	[HLOS1_VOTE_MMNOC_MMU_TBU_SF1_GDSC] = &hlos1_vote_mmnoc_mmu_tbu_sf1_gdsc,
++};
++
+ static const struct qcom_reset_map gcc_sm8350_resets[] = {
+ 	[GCC_CAMERA_BCR] = { 0x26000 },
+ 	[GCC_DISPLAY_BCR] = { 0x27000 },
+@@ -3724,6 +3822,8 @@ static const struct qcom_cc_desc gcc_sm8350_desc = {
+ 	.num_clks = ARRAY_SIZE(gcc_sm8350_clocks),
+ 	.resets = gcc_sm8350_resets,
+ 	.num_resets = ARRAY_SIZE(gcc_sm8350_resets),
++	.gdscs = gcc_sm8350_gdscs,
++	.num_gdscs = ARRAY_SIZE(gcc_sm8350_gdscs),
+ };
+ 
+ static const struct of_device_id gcc_sm8350_match_table[] = {
+diff --git a/include/dt-bindings/clock/qcom,gcc-sm8350.h b/include/dt-bindings/clock/qcom,gcc-sm8350.h
+index 1331da65f669..f6be3da5f781 100644
+--- a/include/dt-bindings/clock/qcom,gcc-sm8350.h
++++ b/include/dt-bindings/clock/qcom,gcc-sm8350.h
+@@ -251,4 +251,16 @@
+ #define GCC_VIDEO_AXI1_CLK_ARES					36
+ #define GCC_VIDEO_BCR						37
+ 
++/* GCC power domains */
++#define PCIE_0_GDSC						0
++#define PCIE_1_GDSC						1
++#define UFS_CARD_GDSC						2
++#define UFS_PHY_GDSC						3
++#define USB30_PRIM_GDSC						4
++#define USB30_SEC_GDSC						5
++#define HLOS1_VOTE_MMNOC_MMU_TBU_HF0_GDSC			6
++#define HLOS1_VOTE_MMNOC_MMU_TBU_HF1_GDSC			7
++#define HLOS1_VOTE_MMNOC_MMU_TBU_SF0_GDSC			8
++#define HLOS1_VOTE_MMNOC_MMU_TBU_SF1_GDSC			9
++
+ #endif
 -- 
-Lee Jones [李琼斯]
-Senior Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
+2.26.2
+
