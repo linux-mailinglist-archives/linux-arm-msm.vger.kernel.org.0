@@ -2,60 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 28688316E62
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Feb 2021 19:21:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C23B0316E64
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Feb 2021 19:21:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233970AbhBJSTw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Feb 2021 13:19:52 -0500
-Received: from mail.kernel.org ([198.145.29.99]:57822 "EHLO mail.kernel.org"
+        id S233646AbhBJSUR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Feb 2021 13:20:17 -0500
+Received: from mail.kernel.org ([198.145.29.99]:58204 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233809AbhBJSSB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Feb 2021 13:18:01 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id ADAE064EE9;
-        Wed, 10 Feb 2021 18:16:49 +0000 (UTC)
+        id S234116AbhBJSSU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Feb 2021 13:18:20 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id C2B9764E15;
+        Wed, 10 Feb 2021 18:17:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1612981009;
-        bh=Y3M41xwZVH3Dio4o/VsIyICva0DpELAmRG0OwZz7C1Y=;
+        s=k20201202; t=1612981059;
+        bh=JkIgv0PsH0aVjNdkXET4vD9GYKm1WPva9nrwwlYRssQ=;
         h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=QM7pBvQZXERvSGVgvVQf7/8bIgSjJ1LFA/QqdCKHjseU3TJdXhwdyRqlAohdiep5Y
-         ccCj9qMxQ00ZZL5/zdNDgyrMtC/uJJIhU5zT90AAT5gh5E4CRD8NIo1utDowjzRE6L
-         RSXQIstLwQh+q983wgmIG69dRBcZICctI9Yzzh3HjAaHF+YoO5+HRfkGDbOcKLs4E9
-         KmnqwHD8vgvZxBhHsjXiByuC4u7CiPVwRyCqEFr3QEl6GQNSQjLhqYUpPGV0xpLPoM
-         BBAx3oxFCcyYCN/7z2GTGIwbl0dJb3vp85lJkX6pplDCGq8WX8xOn88uv8E/euu1+9
-         i/DEf4jgqEj1g==
-Received: by mail-qv1-f46.google.com with SMTP id ew18so1303424qvb.4;
-        Wed, 10 Feb 2021 10:16:49 -0800 (PST)
-X-Gm-Message-State: AOAM530v2gKJZGkjfatpIhCp8IVAGpWyVOgwFT2G+TuN5S0RqlG1+2j+
-        YjxpUjcmE01LVVG8GgpeQxf1ARBQ0jAsU2ngNA==
-X-Google-Smtp-Source: ABdhPJxvrP8Mx1Q6brlIT04YJdW8GZAt91MQw70k4YzGnJ4FdepboyPbcyxHhdadzSfGAHVYcBki3D4fuCUyMhVxlvI=
-X-Received: by 2002:ad4:45ca:: with SMTP id v10mr4316438qvt.11.1612981008833;
- Wed, 10 Feb 2021 10:16:48 -0800 (PST)
+        b=V2rsf54QqKRJDTUiwppWXT6bgPy5pZbBfCw99VWJObQlRJ6nJbsQeJpFcymk2l02T
+         ca0EKvNzOqaEeYR37x+0ncfgsw+WE74a6ZOr0QG+ylb/NGe0Q1vcIceFY0l0hiqGFb
+         1AMuBqqQsHw9wlY+g2tyKggv7xejrCbFReVKYtrBt//OY1GexxT8L3u5sA+4l2tAOC
+         0X6FyzgYsAbkym4xz7m1rXP9bULzQqpwaVaxg5fljLWfaGYsJOYzWi7GMypOqzDUS1
+         1zXaeA/9l/xK37Mk9po0SgaTebGwCGgQh3Pu7eWQH336KREqlHGXOpP0JuNkRope9M
+         BaYGI6HX9rKMQ==
+Received: by mail-qv1-f44.google.com with SMTP id a1so1281511qvd.13;
+        Wed, 10 Feb 2021 10:17:39 -0800 (PST)
+X-Gm-Message-State: AOAM533o3YrAK/nTrAavflwKE8Jq2AZf0U+V6UCDjU2b8X3iDM37aCM3
+        rdh0Nby9sZH+WQwfbA3Q+yQGVwIcZP2VBGF6ew==
+X-Google-Smtp-Source: ABdhPJyNbqqxp2l81REmTIA1J/QVaz+CtqLOY8hLzE1VKv/bCCuxPtMwNDlAUzUHMbDvC1Y7FHZt2Ed4g1kpFU9Gr1A=
+X-Received: by 2002:a05:6214:209:: with SMTP id i9mr3996451qvt.4.1612981058968;
+ Wed, 10 Feb 2021 10:17:38 -0800 (PST)
 MIME-Version: 1.0
-References: <20201205155621.3045-1-Sergey.Semin@baikalelectronics.ru> <20201205155621.3045-10-Sergey.Semin@baikalelectronics.ru>
-In-Reply-To: <20201205155621.3045-10-Sergey.Semin@baikalelectronics.ru>
+References: <20210210172850.20849-1-Sergey.Semin@baikalelectronics.ru> <20210210172850.20849-10-Sergey.Semin@baikalelectronics.ru>
+In-Reply-To: <20210210172850.20849-10-Sergey.Semin@baikalelectronics.ru>
 From:   Rob Herring <robh+dt@kernel.org>
-Date:   Wed, 10 Feb 2021 12:16:37 -0600
-X-Gmail-Original-Message-ID: <CAL_Jsq+0iZC5NcXkn9K+yPZ+7-j-Ee6n-teitrUjSkOYo=3MLQ@mail.gmail.com>
-Message-ID: <CAL_Jsq+0iZC5NcXkn9K+yPZ+7-j-Ee6n-teitrUjSkOYo=3MLQ@mail.gmail.com>
-Subject: Re: [PATCH v3 09/10] usb: dwc3: qcom: Detect DWC3 DT-nodes with
+Date:   Wed, 10 Feb 2021 12:17:27 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqJBknqhCSUOdpZVbtmp6TYetBQPLoQUCT6DTFajpChaSA@mail.gmail.com>
+Message-ID: <CAL_JsqJBknqhCSUOdpZVbtmp6TYetBQPLoQUCT6DTFajpChaSA@mail.gmail.com>
+Subject: Re: [PATCH v6 09/10] usb: dwc3: qcom: Detect DWC3 DT-nodes with
  "usb"-prefixed names
 To:     Serge Semin <Sergey.Semin@baikalelectronics.ru>
 Cc:     Felipe Balbi <balbi@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
         Florian Fainelli <f.fainelli@gmail.com>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         Linux USB List <linux-usb@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Dec 5, 2020 at 9:56 AM Serge Semin
+On Wed, Feb 10, 2021 at 11:29 AM Serge Semin
 <Sergey.Semin@baikalelectronics.ru> wrote:
 >
 > In accordance with the USB HCD/DRD schema all the USB controllers are
@@ -85,9 +84,4 @@ On Sat, Dec 5, 2020 at 9:56 AM Serge Semin
 
 Is there some reason using compatible instead wouldn't work here?
 
->         if (!dwc3_np) {
->                 dev_err(dev, "failed to find dwc3 core child\n");
->                 return -ENODEV;
-> --
-> 2.29.2
->
+Rob
