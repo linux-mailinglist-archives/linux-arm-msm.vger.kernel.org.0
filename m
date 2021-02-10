@@ -2,89 +2,312 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 48C453173CC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Feb 2021 23:58:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D38073173E0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Feb 2021 00:04:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233744AbhBJW6F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Feb 2021 17:58:05 -0500
-Received: from mail.kernel.org ([198.145.29.99]:51874 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233741AbhBJW6D (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Feb 2021 17:58:03 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id D51F764EBB;
-        Wed, 10 Feb 2021 22:57:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1612997842;
-        bh=UJfsvvn0ix5B2B8amG6o871cR0JpZNABhACiEZxCNac=;
-        h=Date:From:To:Cc:Subject:From;
-        b=ufNE5DNDh1Nz18RJZvqyxD8pqzzCI4sLMwzCHcu7bd4gyZbGlSGs7hl1FGfbrLhCN
-         TTtlr0jUuqQoiHt2McjjzMx9UD+zdntHOEkwpDeHXgekdkKtEvrplPYebrNktNFrO7
-         t38XpKrUzE8xhGYENhtb7ByvdhqLzdpDCNSITuMfFrrquD3m8HIDOete+TTEXnKJpM
-         dLHzgQU5A4fpLVbxuoAmhTVJmSKpxq1Z5plbKZ60beAO4OW2i8GANro1lLM4530d48
-         xS1oTmKteX6WCMoBJSzTGGLuulB1ZYX+EISCVqdt6hzTMR6U9t7cDoll9in8HTKmVL
-         MJ+jlPlu0NbQQ==
-Date:   Wed, 10 Feb 2021 16:57:20 -0600
-From:   "Gustavo A. R. Silva" <gustavoars@kernel.org>
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        linux-hardening@vger.kernel.org
-Subject: [PATCH][next] media: venus: hfi_cmds.h: Replace one-element array
- with flexible-array member
-Message-ID: <20210210225720.GA13710@embeddedor>
+        id S233231AbhBJXDr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Feb 2021 18:03:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39460 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232578AbhBJXDp (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Feb 2021 18:03:45 -0500
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6383FC06178A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Feb 2021 15:03:04 -0800 (PST)
+Received: by mail-pj1-x1030.google.com with SMTP id fa16so2024472pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Feb 2021 15:03:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=IjGlw67S4HT+y09BWaA/ElCfy4H4nmZCU+jUdyhxTME=;
+        b=h2PFxIFjt/ApW7niNCOX5hg1CQD9Nt5Zv0L0c14oojSwvonX3rtsGQsNru7ajuZ0tV
+         NkeVsCQRwDfDyVIrHl8iaz+PrO90WZm4WUiRwRg5taOBbxG01FTPBuNvkDqt/qMOb78q
+         etTEHwkLLlfqv40kPlvXmLM05ytPpiLBWxwjE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=IjGlw67S4HT+y09BWaA/ElCfy4H4nmZCU+jUdyhxTME=;
+        b=HsaeZEjmzYVfYEq4M2sz3wQ7w/Oc3ftpY5PHpvAwMkDD2+xWOsbB4j2GgLo6ygUftc
+         cjlAFg+smviR0XBJsEmJqydzeJoDg2pvCr4cAr8b2tsS09+FP253PRiP7tExLnaAuczz
+         Jhonv88MHTXTDHz8RSgtOMPEYw7tKg7fTasYx/ArbtjZwLBZwE5JquxJHorxDiX2CcxL
+         WpsN0gy4rY0d75OQ6anuRgWG7OMVV9h66Bnuxa9Ib6uDoF1eNBgzd88rm2+Ka7B9k2U9
+         H6+RJUD+tleF3o3XCQ7ndZaPJjvJXwWG8TJPEmvtIAsomxyV3AH3FWaiTmZJ8sHwFQ1n
+         29ag==
+X-Gm-Message-State: AOAM530OWdBVUCL7+mOHptekSqLbc1hHeUizSShJrh5mubXXtBWtbl+2
+        Vd98qwc5BLKahnzKyHMyiJW7Vg==
+X-Google-Smtp-Source: ABdhPJyZ86C24O+6fSuPBJC1cokqDCCxNGONb+nbBduJdH5l2qug1tc/YSjVEZvKCMkMy1LwzsVUgQ==
+X-Received: by 2002:a17:90a:5217:: with SMTP id v23mr1172520pjh.126.1612998183904;
+        Wed, 10 Feb 2021 15:03:03 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:201:5533:1106:2710:3ce])
+        by smtp.gmail.com with ESMTPSA id q2sm3255689pfj.32.2021.02.10.15.03.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Feb 2021 15:03:03 -0800 (PST)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1612957913-23982-1-git-send-email-mkrishn@codeaurora.org>
+References: <1612957913-23982-1-git-send-email-mkrishn@codeaurora.org>
+Subject: Re: [PATCH v11 1/4] dt-bindings: msm: disp: add yaml schemas for DPU bindings
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
+        kalyan_t@codeaurora.org, tanmay@codeaurora.org,
+        abhinavk@codeaurora.org, robdclark@gmail.com,
+        bjorn.andersson@linaro.org, vinod.koul@linaro.org,
+        rnayak@codeaurora.org, dianders@chromium.org, sibis@codeaurora.org,
+        khsieh@codeaurora.org
+To:     Krishna Manikandan <mkrishn@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org
+Date:   Wed, 10 Feb 2021 15:03:01 -0800
+Message-ID: <161299818159.418021.1243536374062913589@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is a regular need in the kernel to provide a way to declare having
-a dynamically sized set of trailing elements in a structure. Kernel code
-should always use “flexible array members”[1] for these cases. The older
-style of one-element or zero-length arrays should no longer be used[2].
+Quoting Krishna Manikandan (2021-02-10 03:51:50)
+> diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yam=
+l b/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
+> new file mode 100644
+> index 0000000..821c253
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
+> @@ -0,0 +1,211 @@
+> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/display/msm/dpu-sc7180.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Description of Qualcomm Display DPU dt properties
+> +
+> +maintainers:
+> +  - Krishna Manikandan <mkrishn@codeaurora.org>
+> +
+> +description: |
+> +  Device tree bindings for MSM Mobile Display Subsytem(MDSS) that encaps=
+ulates
+> +  sub-blocks like DPU display controller, DSI and DP interfaces etc. Dev=
+ice tree
+> +  bindings of MDSS and DPU are mentioned for SC7180 target.
+> +
+> +properties:
+> +  compatible:
+> +    items:
+> +      - const: qcom,sc7180-mdss
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  reg-names:
+> +    const: mdss
+> +
+> +  power-domains:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    items:
+> +      - description: Display AHB clock from gcc
+> +      - description: Display AHB clock from dispcc
+> +      - description: Display core clock
+> +
+> +  clock-names:
+> +    items:
+> +      - const: iface
+> +      - const: ahb
+> +      - const: core
+> +
+> +  interrupts:
+> +    minItems: 1
 
-Use flexible-array member in struct hfi_sys_set_property_pkt instead of
-one-element array.
+Should this be maxItems: 1 instead? Is there the possibility for more
+than one interrupt?
 
-Also, this helps with the ongoing efforts to enable -Warray-bounds and
-fix the following warnings:
+> +
+> +  interrupt-controller: true
+> +
+> +  "#interrupt-cells":
+> +    const: 1
+> +
+> +  iommus:
+> +    maxItems: 1
 
-drivers/media/platform/qcom/venus/hfi_cmds.c: In function ‘pkt_sys_coverage_config’:
-drivers/media/platform/qcom/venus/hfi_cmds.c:57:11: warning: array subscript 1 is above array bounds of ‘u32[1]’ {aka ‘unsigned int[1]’} [-Warray-bounds]
-   57 |  pkt->data[1] = mode;
-      |  ~~~~~~~~~^~~
+Can this be 'items' instead with some description of what it is?
 
-[1] https://en.wikipedia.org/wiki/Flexible_array_member
-[2] https://www.kernel.org/doc/html/v5.9/process/deprecated.html#zero-length-and-one-element-arrays
+> +
+> +  "#address-cells":
+> +    const: 2
+> +
+> +  "#size-cells":
+> +    const: 2
+> +
+> +  ranges: true
+> +
+> +  interconnects:
+> +    description: |
+> +      Interconnect path specifier for MDSS according to
+> +      Documentation/devicetree/bindings/interconnect/interconnect.txt.
+> +    minItems: 1
 
-Link: https://github.com/KSPP/linux/issues/79
-Link: https://github.com/KSPP/linux/issues/109
-Build-tested-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/lkml/602416da.iZqae7Dbk7nyl6OY%25lkp@intel.com/
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
----
- drivers/media/platform/qcom/venus/hfi_cmds.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Any max here? I'd rather see an 'items' list similar to the clocks
+property.
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.h b/drivers/media/platform/qcom/venus/hfi_cmds.h
-index 83705e237f1c..327ed90a2788 100644
---- a/drivers/media/platform/qcom/venus/hfi_cmds.h
-+++ b/drivers/media/platform/qcom/venus/hfi_cmds.h
-@@ -68,7 +68,7 @@ struct hfi_sys_release_resource_pkt {
- struct hfi_sys_set_property_pkt {
- 	struct hfi_pkt_hdr hdr;
- 	u32 num_properties;
--	u32 data[1];
-+	u32 data[];
- };
- 
- struct hfi_sys_get_property_pkt {
--- 
-2.27.0
+> +
+> +  interconnect-names:
+> +    items:
+> +      - const: mdp0-mem
 
+Seems like there's only one.
+
+> +
+> +patternProperties:
+> +  "^mdp@[0-9a-f]+$":
+
+Still think this should be something more generic like
+display-controller.
+
+> +    type: object
+> +    description: Node containing the properties of DPU.
+> +
+> +    properties:
+> +      compatible:
+> +        items:
+> +          - const: qcom,sc7180-dpu
+> +
+> +      reg:
+> +        maxItems: 2
+
+Can this be 'items' list as well?
+
+> +
+> +      reg-names:
+> +        items:
+> +          - const: mdp
+> +          - const: vbif
+> +
+> +      clocks:
+> +        items:
+> +          - description: Display hf axi clock
+> +          - description: Display ahb clock
+> +          - description: Display rotator clock
+> +          - description: Display lut clock
+> +          - description: Display core clock
+> +          - description: Display vsync clock
+> +
+> +      clock-names:
+> +        items:
+> +          - const: bus
+> +          - const: iface
+> +          - const: rot
+> +          - const: lut
+> +          - const: core
+> +          - const: vsync
+> +
+> +      interrupts:
+> +        minItems: 1
+> +
+> +      ports:
+> +        type: object
+> +        description: |
+> +          Contains the list of output ports from DPU device. These ports
+> +          connect to interfaces that are external to the DPU hardware,
+> +          such as DSI, DP etc. Each output port contains an endpoint that
+> +          describes how it is connected to an external interface. These
+> +          are described by the standard properties documented in files
+> +          mentioned below.
+> +
+> +          Documentation/devicetree/bindings/graph.txt
+> +          Documentation/devicetree/bindings/media/video-interfaces.txt
+> +
+> +        properties:
+> +          port@0:
+> +            type: object
+> +            description: DPU_INTF1 (DSI1)
+> +
+> +          port@1:
+> +            type: object
+> +            description: DPU_INTF2 (DSI2)
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - reg-names
+> +  - power-domains
+> +  - clocks
+> +  - interrupts
+> +  - interrupt-controller
+> +  - iommus
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,dispcc-sc7180.h>
+> +    #include <dt-bindings/clock/qcom,gcc-sc7180.h>
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/interconnect/qcom,sdm845.h>
+> +
+> +    soc {
+> +      #address-cells =3D <2>;
+> +      #size-cells =3D <2>;
+> +
+> +      mdss@ae00000 {
+> +         compatible =3D "qcom,sc7180-mdss";
+> +         #address-cells =3D <2>;
+> +         #size-cells =3D <2>;
+> +         reg =3D <0 0xae00000 0 0x1000>;
+> +         reg-names =3D "mdss";
+> +         power-domains =3D <&dispcc MDSS_GDSC>;
+> +
+> +         clocks =3D <&gcc GCC_DISP_AHB_CLK>,
+> +                  <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +                  <&dispcc DISP_CC_MDSS_MDP_CLK>;
+> +         clock-names =3D "iface", "ahb", "core";
+> +
+> +         interrupts =3D <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
+> +         interrupt-controller;
+> +         #interrupt-cells =3D <1>;
+> +
+> +         interconnects =3D <&mmss_noc MASTER_MDP0 &mc_virt SLAVE_EBI1>;
+> +         interconnect-names =3D "mdp0-mem";
+> +
+> +         iommus =3D <&apps_smmu 0x800 0x2>;
+> +
+> +         mdp@ae01000 {
+> +                   compatible =3D "qcom,sc7180-dpu";
+> +                   reg =3D <0 0x0ae01000 0 0x8f000>,
+> +                         <0 0x0aeb0000 0 0x2008>;
+> +
+> +                   reg-names =3D "mdp", "vbif";
+> +
+> +                   clocks =3D <&gcc GCC_DISP_HF_AXI_CLK>,
+> +                            <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +                            <&dispcc DISP_CC_MDSS_ROT_CLK>,
+> +                            <&dispcc DISP_CC_MDSS_MDP_LUT_CLK>,
+> +                            <&dispcc DISP_CC_MDSS_MDP_CLK>,
+> +                            <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
+> +                   clock-names =3D "bus", "iface", "rot", "lut", "core",
+> +                                 "vsync";
+> +
+> +                   interrupt-parent =3D <&mdss>;
+> +                   interrupts =3D <0>;
+> +
+> +                   ports {
+> +                           #address-cells =3D <1>;
+> +                           #size-cells =3D <0>;
+> +
+> +                           port@0 {
+> +                                   reg =3D <0>;
+> +                                   dpu_intf1_out: endpoint {
+> +                                                  remote-endpoint =3D <&=
+dsi0_in>;
+> +                                   };
+> +                           };
+> +                   };
+> +         };
+> +      };
+> +    };
+> +...
