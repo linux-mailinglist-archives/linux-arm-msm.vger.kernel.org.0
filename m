@@ -2,80 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2DB07315FD6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Feb 2021 08:04:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 02229316025
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Feb 2021 08:39:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231927AbhBJHEW convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Feb 2021 02:04:22 -0500
-Received: from spam.auroraoh.com ([24.56.89.101]:51444 "EHLO
-        barracuda.auroraoh.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S231987AbhBJHEP (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Feb 2021 02:04:15 -0500
-X-ASG-Debug-ID: 1612940587-112c0d6a799c950002-81RTv0
-Received: from COASRV-MAIL2.auroraoh.loc (coasrv-mail2.auroraoh.loc [10.3.1.15]) by barracuda.auroraoh.com with ESMTP id 7mA8j449GEhrgtbG; Wed, 10 Feb 2021 02:03:08 -0500 (EST)
-X-Barracuda-Envelope-From: JanuskaD@auroraoh.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.3.1.15
-Received: from [172.20.10.5] (197.210.29.8) by COASRV-MAIL2.auroraoh.loc
- (10.3.1.15) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Tue, 9 Feb 2021
- 02:41:50 -0500
-Content-Type: text/plain; charset="iso-8859-1"
-X-Barracuda-RBL-Trusted-Forwarder: 172.20.10.5
+        id S232484AbhBJHjL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Feb 2021 02:39:11 -0500
+Received: from so15.mailgun.net ([198.61.254.15]:32804 "EHLO so15.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232775AbhBJHjE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Feb 2021 02:39:04 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1612942723; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=m9mgYxO7qovsOFENfWe6v9wHtSFv2z5fptvE2FDjRlA=;
+ b=LE0oVLROmirV7nWvN73z6Qk3xCesdbbgFJeRpq/hMxUMDKQPzLApFrir1Kry0e/MsG2pUo3r
+ H3XY9jKcmWsZAcP5lJZQlDtv4L/CpYogdm/dIXX3WFjYgZpyXlWMe6dFVRa4HPPv48JCIyMu
+ 7oteWcw6kT/mP5/O07zewingtuM=
+X-Mailgun-Sending-Ip: 198.61.254.15
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 60238d5ef112b7872c3ede68 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 10 Feb 2021 07:38:06
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 9F2F5C43467; Wed, 10 Feb 2021 07:38:06 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B3B6BC433C6;
+        Wed, 10 Feb 2021 07:38:05 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Description: Mail message body
-Subject: We are a registered Private Loan Investment Company in the United Kingdom,
- we also registered with the Turkish British Chamber of Commerce and Industry
- (TBCCI) we have operations in Europe and Asia.
-To:     Recipients <januskad@auroraoh.com>
-X-ASG-Orig-Subj: We are a registered Private Loan Investment Company in the United Kingdom,
- we also registered with the Turkish British Chamber of Commerce and Industry
- (TBCCI) we have operations in Europe and Asia.
-From:   <januskad@auroraoh.com>
-Date:   Tue, 9 Feb 2021 15:41:03 +0800
-Reply-To: <cfolimiited@gmail.com>
-X-Priority: 1 (High)
-X-Antivirus: Avast (VPS 210207-2, 02/07/2021), Outbound message
-X-Antivirus-Status: Clean
-Message-ID: <19476914-06ef-4e05-b16e-afe6693abdc0@COASRV-MAIL2.auroraoh.loc>
-X-Originating-IP: [197.210.29.8]
-X-ClientProxiedBy: COASRV-MAIL3.auroraoh.loc (10.3.1.13) To
- COASRV-MAIL2.auroraoh.loc (10.3.1.15)
-X-Barracuda-Connect: coasrv-mail2.auroraoh.loc[10.3.1.15]
-X-Barracuda-Start-Time: 1612940587
-X-Barracuda-URL: https://10.3.1.12:443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at auroraoh.com
-X-Barracuda-Scan-Msg-Size: 755
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Spam-Score: 1.61
-X-Barracuda-Spam-Status: No, SCORE=1.61 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=5.0 tests=BSF_SC0_SA609_NRN, BSF_SC0_SA912_RP_FR, BSF_SC0_SA_TO_FROM_ADDR_MATCH, NO_REAL_NAME
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.87879
-        Rule breakdown below
-         pts rule name              description
-        ---- ---------------------- --------------------------------------------------
-        0.00 NO_REAL_NAME           From: does not include a real name
-        0.01 BSF_SC0_SA912_RP_FR    Custom Rule BSF_SC0_SA912_RP_FR
-        0.50 BSF_SC0_SA_TO_FROM_ADDR_MATCH Sender Address Matches Recipient
-                                   Address
-        1.10 BSF_SC0_SA609_NRN      Custom Rule SA609_NRN
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 10 Feb 2021 13:08:05 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Peter Zijlstra <peterz@infradead.org>
+Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Ingo Molnar <mingo@redhat.com>,
+        Arnaldo Carvalho de Melo <acme@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Jiri Olsa <jolsa@redhat.com>,
+        Namhyung Kim <namhyung@kernel.org>,
+        Leo Yan <leo.yan@linaro.org>, coresight@lists.linaro.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Denis Nikitin <denik@chromium.org>,
+        Mattias Nissler <mnissler@chromium.org>,
+        Al Grant <al.grant@arm.com>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        jannh@google.com
+Subject: Re: [PATCH 1/4] perf/core: Add support to exclude kernel mode
+ instruction tracing
+In-Reply-To: <6903bc0588a5c8e41892503a204015ee@codeaurora.org>
+References: <cover.1611909025.git.saiprakash.ranjan@codeaurora.org>
+ <89c7ff59d887a0360434e607bd625393ec3190e5.1611909025.git.saiprakash.ranjan@codeaurora.org>
+ <20210129193040.GJ8912@worktop.programming.kicks-ass.net>
+ <3c96026b544c2244e57b46119427b8a0@codeaurora.org>
+ <YBgFDXgX57y5XzOn@hirez.programming.kicks-ass.net>
+ <6903bc0588a5c8e41892503a204015ee@codeaurora.org>
+Message-ID: <b5cbc2607e3f847887e94bfad18534d8@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We are seeking for beneficiaries who source for fund to expand/relocating their business interest abroad. We are ready to fund projects outside Turkey and United Kingdom in the form of Soft Loan. We grant loans to both corporate and private entities at a low interest rate of 2% R.O.I per annul.
+Hi Peter,
 
-We like to grant loan in the following sectors: oil/Gas, banking, real estate, stock speculation and mining, transportation, health sector and tobacco, Communication Services, Agriculture Forestry & Fishing, thus any sector. The terms are very flexible and interesting.
+On 2021-02-02 11:41, Sai Prakash Ranjan wrote:
+> Hi Peter,
+> 
+> On 2021-02-01 19:11, Peter Zijlstra wrote:
+>> On Mon, Feb 01, 2021 at 01:11:04PM +0530, Sai Prakash Ranjan wrote:
+>> 
+>>> Ok I suppose you mean CONFIG_SECURITY_LOCKDOWN_LSM? But I don't see
+>>> how this new config has to depend on that? This can work 
+>>> independently
+>>> whether complete lockdown is enforced or not since it applies to only
+>>> hardware instruction tracing. Ideally this depends on several 
+>>> hardware
+>>> tracing configs such as ETMs and others but we don't need them 
+>>> because
+>>> we are already exposing PERF_PMU_CAP_ITRACE check in the events core.
+>> 
+>> If you don't have lockdown, root pretty much owns the kernel, or am I
+>> missing something?
+>> 
+> 
+> You are right in saying that without lockdown root would own kernel but
+> this config(EXCLUDE_KERNEL) will independently make sure that kernel
+> level pmu tracing is not allowed(we return -EACCES) even if LOCKDOWN
+> config is disabled. So I'm saying that we don't need to depend on
+> LOCKDOWN config, its good to have LOCKDOWN config enabled but perf
+> subsystem doesn't have to care about that.
+> 
+>>> be used for some speculative execution based attacks. Which other
+>>> kernel level PMUs can be used to get a full branch trace that is not
+>>> locked down? If there is one, then this should probably be applied to
+>>> it as well.
+>> 
+>> Just the regular counters. The information isn't as accurate, but 
+>> given
+>> enough goes you can infer plenty.
+>> 
+>> Just like all the SMT size-channel attacks.
+>> 
+>> Sure, PT and friends make it even easier, but I don't see a 
+>> fundamental
+>> distinction.
+> 
+> Right, we should then exclude all kernel level pmu tracing, is it fine?
+> 
+> if (IS_ENABLED(CONFIG_EXCLUDE_KERNEL_HW_ITRACE) && 
+> !attr.exclude_kernel))
+>     return -EACCES;
+> 
 
-Please contact us for more details;
+Sorry for being pushy, but does the above make sense?
 
-
-Kind regards,
-
-Paul McCann
+Thanks,
+Sai
 
 -- 
-This email has been checked for viruses by Avast antivirus software.
-https://www.avast.com/antivirus
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
