@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A681231673B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Feb 2021 13:57:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B61E3316738
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Feb 2021 13:57:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230267AbhBJM5g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Feb 2021 07:57:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49636 "EHLO
+        id S230388AbhBJM4Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Feb 2021 07:56:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231363AbhBJM4O (ORCPT
+        with ESMTP id S230192AbhBJM4K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Feb 2021 07:56:14 -0500
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FB70C06178A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Feb 2021 04:55:33 -0800 (PST)
-Received: by mail-ej1-x62a.google.com with SMTP id jj19so4010792ejc.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Feb 2021 04:55:33 -0800 (PST)
+        Wed, 10 Feb 2021 07:56:10 -0500
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E66C7C061794
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Feb 2021 04:55:34 -0800 (PST)
+Received: by mail-ej1-x636.google.com with SMTP id jj19so4011006ejc.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Feb 2021 04:55:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=sartura-hr.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=QP3xask6OD7k8KSQ5tVVcC2So9/tpald+pKQ9QG/+P8=;
-        b=HjJ6Lp/AhwITcJlB6qLHzWAJY/BrcnEYgKc4a+8TzLCZ5CCXAWI50E7ZohLrJGmbNh
-         vJrTk3rv9gio+BQgS8wQLCxK71fcPm4j7kUztMMCdcVx/oTZX9NlArdOQaVP7cWrf4O9
-         GwQ0TONto3hfchlvQ64hAmFR9JDfWwa/PSQobPThflThTbPoWGazrjdNbtRIidAB3yRg
-         nxZgEs+dFWA85wunPG6kzc023yG4EgtDXPtOazdvsunr0wY4BaDYGMfNUx4VVEuuRKhH
-         uVE2hurMQquNBrpsxDYaWpM95IBONWC3y795H39kYzccBfOuawpXw9sIVli4PaGufh6n
-         l54w==
+        bh=j2pR7GHtK2D/n+G2R92gU7IY+vciRBprFSrIu2y8jqQ=;
+        b=WslFAuX+r5eNLy3aXOBoL0GU98/EoUPq2zxD0CU3YakcUF4V+Dbh+rIM8LT+Y/NZFt
+         r30eVO8OkS/PnaMN0+P+D/7LGo0bQ64S6U72ik4nmpZ8z3G9calBQfksAriS+kBWD6Be
+         Vkijvz/G+ZkA8oNACGzE95SROw/+WhW8QOYcQC0R/MzHvL2JvGLfS80AVFDM79XaFOun
+         8ewt8EMwnR3BiEyNEp5hGKkPiQqIznAGA6PN42f+9Qm7o6MeZAxJxcTfgyDCuCtv6hkj
+         pRr2Rby2Tpd45ghShLBKoyvERynA+JIVS+VhBiECqaCk03ucGxqAJafW3zuY1CCmqHY2
+         JoYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=QP3xask6OD7k8KSQ5tVVcC2So9/tpald+pKQ9QG/+P8=;
-        b=BgwxcXU602Ept9etpVN+xGTLHPF2PsVGLuHvtIuaT1dxc9bqrBlPsDfWo2i/j226Vt
-         pgYfmIugYO8SYmUcfiFgAhQwOVdUs7vjSx2w/y5HDT9vVtrlQAONXhjiRc1JMuuVwscZ
-         jWPuZ2DlxdGf5gb2ic9d8m7D95rcx48P5ttWcC/mzEidWVP0hc+bEhiznccqUo7RU8tJ
-         lVqhGcMSruk8aaVmQFIO2v6Hfsp8jmRD7BNNzajGCRC6ZyCVhJu3/X3Smf1/48Nt41Aw
-         YaYS47OQ/lsYiRogNcWiSGEOP9w80uZDREK421Eov2KJHCHhJDis9hg50TRO5RUtyDM7
-         eRmA==
-X-Gm-Message-State: AOAM531i0NdE1gJS2c2KMiaj5NVPEGIlhE/0JZokLxu7aGYdFIZhOW+e
-        ALZnFSLjAuSg3qdUZPJDP00DBA==
-X-Google-Smtp-Source: ABdhPJySVHbEy7cRf3FVEZU38MkaaqoQGA40nPFPDQevnBQvfDLbeE2YY+LPPPi8oagsbkMesjJCnQ==
-X-Received: by 2002:a17:906:2b16:: with SMTP id a22mr2792396ejg.291.1612961731916;
-        Wed, 10 Feb 2021 04:55:31 -0800 (PST)
+        bh=j2pR7GHtK2D/n+G2R92gU7IY+vciRBprFSrIu2y8jqQ=;
+        b=sOIjyrv/SPLeNVdj3QVWi6U7GhAFALP+rzjr8ghw1DEwp0Q3vIGYKI1kReZ8pqzYD5
+         aY96tKbCAPmm8opwMZt4GxvatyhHA7U8ob74JT4eS2wSrhKRL5sq3QptTrs13/99HIvf
+         u+lOhyiw3I/kjAf4bGXcpmJMp4R2po1p3Td2vKH0cmdATAHeOcbg2x2jBczuQ1ruvBYM
+         kwA2Bi0P162H4kkx9dYX+gzO8QMjCTnUlJtGof/kfa4FKaa+CJSSq7BvKhqDkjoZ/xhT
+         cvNsVgfu8UiFPUqHsR3CeXX9k4QL0dposy771oXhVP5Z8mxOmtyCNruRyPR8B40jdnaw
+         RB+w==
+X-Gm-Message-State: AOAM533ckB2skUXdHnGroNOZNHRQi5jRNRqya+YB8oTjfyzaG7NYoixr
+        BqvlptnvO1q6NzIGJdn8/CHgLQ==
+X-Google-Smtp-Source: ABdhPJx+cbffJtH/oYQNj2WBZy9er7kIC5vD6i5EoJcwf8fbm03n2PHzuHv1N5sFqvqdWOJGYNCDPQ==
+X-Received: by 2002:a17:906:4013:: with SMTP id v19mr2822228ejj.5.1612961733706;
+        Wed, 10 Feb 2021 04:55:33 -0800 (PST)
 Received: from localhost.localdomain (dh207-97-164.xnet.hr. [88.207.97.164])
-        by smtp.googlemail.com with ESMTPSA id u5sm1084900edc.29.2021.02.10.04.55.30
+        by smtp.googlemail.com with ESMTPSA id u5sm1084900edc.29.2021.02.10.04.55.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Feb 2021 04:55:31 -0800 (PST)
+        Wed, 10 Feb 2021 04:55:33 -0800 (PST)
 From:   Robert Marko <robert.marko@sartura.hr>
 To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
@@ -56,67 +56,107 @@ To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
         linux@armlinux.org.uk
 Cc:     Robert Marko <robert.marko@sartura.hr>,
         Luka Perkov <luka.perkov@sartura.hr>
-Subject: [PATCH v2 net-next 1/4] dt-bindings: net: Add QCA807x PHY
-Date:   Wed, 10 Feb 2021 13:55:20 +0100
-Message-Id: <20210210125523.2146352-2-robert.marko@sartura.hr>
+Subject: [PATCH v2 net-next 2/4] dt-bindings: net: Add bindings for Qualcomm QCA807x
+Date:   Wed, 10 Feb 2021 13:55:21 +0100
+Message-Id: <20210210125523.2146352-3-robert.marko@sartura.hr>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210210125523.2146352-1-robert.marko@sartura.hr>
 References: <20210210125523.2146352-1-robert.marko@sartura.hr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add DT bindings for Qualcomm QCA807x PHY series.
+Add DT bindings for Qualcomm QCA807x PHYs.
 
 Signed-off-by: Robert Marko <robert.marko@sartura.hr>
 Cc: Luka Perkov <luka.perkov@sartura.hr>
 ---
 Changes in v2:
-* Drop PSGMII/QSGMII TX driver defines
+* Drop LED properties
+* Directly define PSGMII/QSGMII SerDes driver values
 
- include/dt-bindings/net/qcom-qca807x.h | 30 ++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
- create mode 100644 include/dt-bindings/net/qcom-qca807x.h
+ .../devicetree/bindings/net/qcom,qca807x.yaml | 70 +++++++++++++++++++
+ 1 file changed, 70 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/net/qcom,qca807x.yaml
 
-diff --git a/include/dt-bindings/net/qcom-qca807x.h b/include/dt-bindings/net/qcom-qca807x.h
+diff --git a/Documentation/devicetree/bindings/net/qcom,qca807x.yaml b/Documentation/devicetree/bindings/net/qcom,qca807x.yaml
 new file mode 100644
-index 000000000000..a5ac12777c2b
+index 000000000000..0867f5e698cd
 --- /dev/null
-+++ b/include/dt-bindings/net/qcom-qca807x.h
-@@ -0,0 +1,30 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * Device Tree constants for the Qualcomm QCA807X PHYs
-+ */
++++ b/Documentation/devicetree/bindings/net/qcom,qca807x.yaml
+@@ -0,0 +1,70 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/net/qcom,qca807x.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+#ifndef _DT_BINDINGS_QCOM_QCA807X_H
-+#define _DT_BINDINGS_QCOM_QCA807X_H
++title: Qualcomm QCA807x PHY
 +
-+/* Full amplitude, full bias current */
-+#define QCA807X_CONTROL_DAC_FULL_VOLT_BIAS		0
-+/* Amplitude follow DSP (amplitude is adjusted based on cable length), half bias current */
-+#define QCA807X_CONTROL_DAC_DSP_VOLT_HALF_BIAS		1
-+/* Full amplitude, bias current follow DSP (bias current is adjusted based on cable length) */
-+#define QCA807X_CONTROL_DAC_FULL_VOLT_DSP_BIAS		2
-+/* Both amplitude and bias current follow DSP */
-+#define QCA807X_CONTROL_DAC_DSP_VOLT_BIAS		3
-+/* Full amplitude, half bias current */
-+#define QCA807X_CONTROL_DAC_FULL_VOLT_HALF_BIAS		4
-+/* Amplitude follow DSP setting; 1/4 bias current when cable<10m,
-+ * otherwise half bias current
-+ */
-+#define QCA807X_CONTROL_DAC_DSP_VOLT_QUARTER_BIAS	5
-+/* Full amplitude; same bias current setting with “010” and “011”,
-+ * but half more bias is reduced when cable <10m
-+ */
-+#define QCA807X_CONTROL_DAC_FULL_VOLT_HALF_BIAS_SHORT	6
-+/* Amplitude follow DSP; same bias current setting with “110”, default value */
-+#define QCA807X_CONTROL_DAC_DSP_VOLT_HALF_BIAS_SHORT	7
++maintainers:
++  - Robert Marko <robert.marko@sartura.hr>
 +
-+#endif
++description: |
++  Bindings for Qualcomm QCA807x PHYs
++
++allOf:
++  - $ref: ethernet-phy.yaml#
++
++properties:
++  reg:
++    maxItems: 1
++
++  qcom,fiber-enable:
++    description: |
++      If present, then PHYs combo port is configured to operate in combo
++      mode. In combo mode autodetection of copper and fiber media is
++      used in order to support both of them.
++      Combo mode can be strapped as well, if not strapped this property
++      will set combo support anyway.
++    type: boolean
++
++  qcom,psgmii-az:
++    description: |
++      If present, then PSMGII PHY will advertise 802.3-az support to
++      the MAC.
++    type: boolean
++
++  gpio-controller: true
++  "#gpio-cells":
++    const: 2
++
++  qcom,tx-driver-strength:
++    description: PSGMII/QSGMII SerDes TX driver strength control in mV.
++    $ref: /schemas/types.yaml#/definitions/uint32
++    enum: [140, 160, 180, 200, 220, 240, 260, 280, 300, 320, 400, 500, 600]
++
++  qcom,control-dac:
++    description: Analog MDI driver amplitude and bias current.
++    $ref: /schemas/types.yaml#/definitions/uint32
++    enum: [0, 1, 2, 3, 4, 5, 6, 7]
++
++required:
++  - reg
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/net/qcom-qca807x.h>
++
++    mdio {
++      #address-cells = <1>;
++      #size-cells = <0>;
++
++      ethphy0: ethernet-phy@0 {
++        compatible = "ethernet-phy-ieee802.3-c22";
++        reg = <0>;
++
++        qcom,control-dac = <QCA807X_CONTROL_DAC_DSP_VOLT_QUARTER_BIAS>;
++      };
++    };
 -- 
 2.29.2
 
