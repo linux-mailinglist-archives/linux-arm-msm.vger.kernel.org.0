@@ -2,478 +2,714 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D661316570
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Feb 2021 12:45:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F5A73165C1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Feb 2021 12:55:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230272AbhBJLoy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Feb 2021 06:44:54 -0500
-Received: from so15.mailgun.net ([198.61.254.15]:33948 "EHLO so15.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230111AbhBJLmc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Feb 2021 06:42:32 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1612957325; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=FdWZ8v47qn9vG1ClIB6jnANA2037y82kDKbNrM59kRc=;
- b=IxSDPY8iWJtKxg8vLGfGXFZWrD64jafl3T4VfcCuwar+T0/nUaV8kWa2vqWxem1mpblGkvUJ
- +mXH+JS+LVRg8dKogHmb05C6jb2WCJVjO/BVrhZQvjhb5qFWi864+WMxILnSlf5yuMcr2t74
- CflPrk673JQS77nZW/eWbA7J/jU=
-X-Mailgun-Sending-Ip: 198.61.254.15
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 6023c65ee3df861f4bca41d9 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 10 Feb 2021 11:41:18
- GMT
-Sender: kalyan_t=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 60890C43461; Wed, 10 Feb 2021 11:41:17 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: kalyan_t)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1BC8AC433C6;
-        Wed, 10 Feb 2021 11:41:16 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 10 Feb 2021 17:11:16 +0530
-From:   kalyan_t@codeaurora.org
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Krishna Manikandan <mkrishn@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Drew Davenport <ddavenport@chromium.org>,
-        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-Subject: Re: [Freedreno] [v2] drm/msm/disp/dpu1: turn off vblank irqs
- aggressively in dpu driver
-In-Reply-To: <CAF6AEGvvtDq7FK4NcKCc2FG2sbArBU-YboEA4u73oPR9o3coag@mail.gmail.com>
-References: <1608287227-17685-1-git-send-email-kalyan_t@codeaurora.org>
- <CAF6AEGvvtDq7FK4NcKCc2FG2sbArBU-YboEA4u73oPR9o3coag@mail.gmail.com>
-Message-ID: <fda3742598a6952c4e6797f31763aea8@codeaurora.org>
-X-Sender: kalyan_t@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        id S231286AbhBJLzZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Feb 2021 06:55:25 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:10367 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231617AbhBJLxP (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Feb 2021 06:53:15 -0500
+Received: from ironmsg07-lv.qualcomm.com (HELO ironmsg07-lv.qulacomm.com) ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 10 Feb 2021 03:52:25 -0800
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg07-lv.qulacomm.com with ESMTP/TLS/AES256-SHA; 10 Feb 2021 03:52:24 -0800
+X-QCInternal: smtphost
+Received: from mkrishn-linux.qualcomm.com ([10.204.66.35])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 10 Feb 2021 17:21:57 +0530
+Received: by mkrishn-linux.qualcomm.com (Postfix, from userid 438394)
+        id 00A9C218F7; Wed, 10 Feb 2021 17:21:56 +0530 (IST)
+From:   Krishna Manikandan <mkrishn@codeaurora.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
+        kalyan_t@codeaurora.org, tanmay@codeaurora.org,
+        abhinavk@codeaurora.org, robdclark@gmail.com, swboyd@chromium.org,
+        bjorn.andersson@linaro.org, vinod.koul@linaro.org,
+        rnayak@codeaurora.org, dianders@chromium.org, sibis@codeaurora.org,
+        khsieh@codeaurora.org
+Subject: [PATCH v11 1/4] dt-bindings: msm: disp: add yaml schemas for DPU bindings
+Date:   Wed, 10 Feb 2021 17:21:50 +0530
+Message-Id: <1612957913-23982-1-git-send-email-mkrishn@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-02-01 00:46, Rob Clark wrote:
-> On Fri, Dec 18, 2020 at 2:27 AM Kalyan Thota <kalyan_t@codeaurora.org> 
-> wrote:
->> 
->> Set the flag vblank_disable_immediate = true to turn off vblank irqs
->> immediately as soon as drm_vblank_put is requested so that there are
->> no irqs triggered during idle state. This will reduce cpu wakeups
->> and help in power saving.
->> 
->> To enable vblank_disable_immediate flag the underlying KMS driver
->> needs to support high precision vblank timestamping and also a
->> reliable way of providing vblank counter which is incrementing
->> at the leading edge of vblank.
->> 
->> This patch also brings in changes to support vblank_disable_immediate
->> requirement in dpu driver.
->> 
->> Changes in v1:
->>  - Specify reason to add vblank timestamp support. (Rob)
->>  - Add changes to provide vblank counter from dpu driver.
->> 
->> Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
-> 
-> This seems to be triggering:
-> 
-> [  +0.032668] ------------[ cut here ]------------
-> [  +0.004759] msm ae00000.mdss: drm_WARN_ON_ONCE(cur_vblank != 
-> vblank->last)
-> [  +0.000024] WARNING: CPU: 0 PID: 362 at
-> drivers/gpu/drm/drm_vblank.c:354 drm_update_vblank_count+0x1e4/0x258
-> [  +0.017154] Modules linked in: joydev
-> [  +0.003784] CPU: 0 PID: 362 Comm: frecon Not tainted
-> 5.11.0-rc5-00037-g33d3504871dd #2
-> [  +0.008135] Hardware name: Google Lazor (rev1 - 2) with LTE (DT)
-> [  +0.006167] pstate: 60400089 (nZCv daIf +PAN -UAO -TCO BTYPE=--)
-> [  +0.006169] pc : drm_update_vblank_count+0x1e4/0x258
-> [  +0.005105] lr : drm_update_vblank_count+0x1e4/0x258
-> [  +0.005106] sp : ffffffc010003b70
-> [  +0.003409] x29: ffffffc010003b70 x28: ffffff80855d9d98
-> [  +0.005466] x27: 0000000000000000 x26: 0000000000fe502a
-> [  +0.005458] x25: 0000000000000001 x24: 0000000000000001
-> [  +0.005466] x23: 0000000000000001 x22: ffffff808561ce80
-> [  +0.005465] x21: 0000000000000000 x20: 0000000000000000
-> [  +0.005468] x19: ffffff80850d6800 x18: 0000000000000000
-> [  +0.005466] x17: 0000000000000000 x16: 0000000000000000
-> [  +0.005465] x15: 000000000000000a x14: 000000000000263b
-> [  +0.005466] x13: 0000000000000006 x12: ffffffffffffffff
-> [  +0.005465] x11: 0000000000000010 x10: ffffffc090003797
-> [  +0.005466] x9 : ffffffed200e2a8c x8 : 0000000000000000
-> [  +0.005466] x7 : 00000000ffffffff x6 : ffffffed213b2b51
-> [  +0.005465] x5 : c0000000ffffdfff x4 : ffffffed21218048
-> [  +0.005465] x3 : 0000000000000000 x2 : 0000000000000000
-> [  +0.005465] x1 : 0000000000000000 x0 : 0000000000000000
-> [  +0.005466] Call trace:
-> [  +0.002520]  drm_update_vblank_count+0x1e4/0x258
-> [  +0.004748]  drm_handle_vblank+0xd0/0x35c
-> [  +0.004130]  drm_crtc_handle_vblank+0x24/0x30
-> [  +0.004487]  dpu_crtc_vblank_callback+0x3c/0xc4
-> [  +0.004662]  dpu_encoder_vblank_callback+0x70/0xc4
-> [  +0.004931]  dpu_encoder_phys_vid_vblank_irq+0x50/0x12c
-> [  +0.005378]  dpu_core_irq_callback_handler+0xf4/0xfc
-> [  +0.005107]  dpu_hw_intr_dispatch_irq+0x100/0x120
-> [  +0.004834]  dpu_core_irq+0x44/0x5c
-> [  +0.003597]  dpu_irq+0x1c/0x28
-> [  +0.003141]  msm_irq+0x34/0x40
-> [  +0.003153]  __handle_irq_event_percpu+0xfc/0x254
-> [  +0.004838]  handle_irq_event_percpu+0x3c/0x94
-> [  +0.004574]  handle_irq_event+0x54/0x98
-> [  +0.003944]  handle_level_irq+0xa0/0xd0
-> [  +0.003943]  generic_handle_irq+0x30/0x48
-> [  +0.004131]  dpu_mdss_irq+0xe4/0x118
-> [  +0.003684]  generic_handle_irq+0x30/0x48
-> [  +0.004127]  __handle_domain_irq+0xa8/0xac
-> [  +0.004215]  gic_handle_irq+0xdc/0x150
-> [  +0.003856]  el1_irq+0xb4/0x180
-> [  +0.003237]  dpu_encoder_vsync_time+0x78/0x230
-> [  +0.004574]  dpu_encoder_kickoff+0x190/0x354
-> [  +0.004386]  dpu_crtc_commit_kickoff+0x194/0x1a0
-> [  +0.004748]  dpu_kms_flush_commit+0xf4/0x108
-> [  +0.004390]  msm_atomic_commit_tail+0x2e8/0x384
-> [  +0.004661]  commit_tail+0x80/0x108
-> [  +0.003588]  drm_atomic_helper_commit+0x118/0x11c
-> [  +0.004834]  drm_atomic_commit+0x58/0x68
-> [  +0.004033]  drm_atomic_helper_set_config+0x70/0x9c
-> [  +0.005018]  drm_mode_setcrtc+0x390/0x584
-> [  +0.004131]  drm_ioctl_kernel+0xc8/0x11c
-> [  +0.004035]  drm_ioctl+0x2f8/0x34c
-> [  +0.003500]  drm_compat_ioctl+0x48/0xe8
-> [  +0.003945]  __arm64_compat_sys_ioctl+0xe8/0x104
-> [  +0.004750]  el0_svc_common.constprop.0+0x114/0x188
-> [  +0.005019]  do_el0_svc_compat+0x28/0x38
-> [  +0.004031]  el0_svc_compat+0x20/0x30
-> [  +0.003772]  el0_sync_compat_handler+0x104/0x18c
-> [  +0.004749]  el0_sync_compat+0x178/0x180
-> [  +0.004034] ---[ end trace 2959d178e74f2555 ]---
-> 
-> 
-> BR,
-> -R
-> 
-Hi Rob,
+MSM Mobile Display Subsytem (MDSS) encapsulates sub-blocks
+like DPU display controller, DSI etc. Add YAML schema
+for DPU device tree bindings.
 
-on DPU HW, with prefetch enabled, the frame count increment and vsync 
-irq are not happening at same instance. This is causing the frame count 
-to mismatch.
+Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
 
-Example:
-|----###########--^--|----###########--^--|
+Changes in v2:
+    - Changed dpu to DPU (Sam Ravnborg)
+    - Fixed indentation issues (Sam Ravnborg)
+    - Added empty line between different properties (Sam Ravnborg)
+    - Replaced reference txt files with  their corresponding
+      yaml files (Sam Ravnborg)
+    - Modified the file to use "|" only when it is
+      necessary (Sam Ravnborg)
 
-for the above vsync cycle with prefetch enabled "^" --> marks a fetch 
-counter where in we are asking the hw to start fetching in the front 
-porch so that we will have more time to fetch data by first active line 
-of next frame.
+Changes in v3:
+    - Corrected the license used (Rob Herring)
+    - Added maxItems for properties (Rob Herring)
+    - Dropped generic descriptions (Rob Herring)
+    - Added ranges property (Rob Herring)
+    - Corrected the indendation (Rob Herring)
+    - Added additionalProperties (Rob Herring)
+    - Split dsi file into two, one for dsi controller
+      and another one for dsi phy per target (Rob Herring)
+    - Corrected description for pinctrl-names (Rob Herring)
+    - Corrected the examples used in yaml file (Rob Herring)
+    - Delete dsi.txt and dpu.txt (Rob Herring)
 
-In this case, the vsync irq will be triggered at fetch start marker 
-("^") so that double buffered updates are submitted to HW and the frame 
-count update will happen at the end of front porch ("|")
+Changes in v4:
+    - Move schema up by one level (Rob Herring)
+    - Add patternProperties for mdp node (Rob Herring)
+    - Corrected description of some properties (Rob Herring)
 
-to handle this, can we fallback on the SW vblank counter 
-(drm_vblank_no_hw_counter) ? another way is to run a static counter in 
-the driver irq handler and return that to drm_vblank framework instead 
-reading from the HW block.  can you share your thoughts ?
+Changes in v5:
+    - Correct the indentation (Rob Herring)
+    - Remove unnecessary description from properties (Rob Herring)
+    - Correct the number of interconnect entries (Rob Herring)
+    - Add interconnect names for sc7180 (Rob Herring)
+    - Add description for ports (Rob Herring)
+    - Remove common properties (Rob Herring)
+    - Add unevalutatedProperties (Rob Herring)
+    - Reference existing dsi controller yaml in the common
+      dsi controller file (Rob Herring)
+    - Correct the description of clock names to include only the
+      clocks that are required (Rob Herring)
+    - Remove properties which are already covered under the common
+      binding (Rob Herring)
+    - Add dsi phy supply nodes which are required for sc7180 and
+      sdm845 targets (Rob Herring)
+    - Add type ref for syscon-sfpb (Rob Herring)
 
--Kalyan
->> ---
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c           | 80 
->> ++++++++++++++++++++++
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        | 30 ++++++++
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h        | 11 +++
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h   |  1 +
->>  .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   | 17 +++++
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |  5 ++
->>  6 files changed, 144 insertions(+)
->> 
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->> index d4662e8..9a80981 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->> @@ -65,6 +65,83 @@ static void dpu_crtc_destroy(struct drm_crtc *crtc)
->>         kfree(dpu_crtc);
->>  }
->> 
->> +static struct drm_encoder *get_encoder_from_crtc(struct drm_crtc 
->> *crtc)
->> +{
->> +       struct drm_device *dev = crtc->dev;
->> +       struct drm_encoder *encoder;
->> +
->> +       drm_for_each_encoder(encoder, dev)
->> +               if (encoder->crtc == crtc)
->> +                       return encoder;
->> +
->> +       return NULL;
->> +}
->> +
->> +static u32 dpu_crtc_get_vblank_counter(struct drm_crtc *crtc)
->> +{
->> +       struct drm_encoder *encoder;
->> +
->> +       encoder = get_encoder_from_crtc(crtc);
->> +       if (!encoder) {
->> +               DRM_ERROR("no encoder found for crtc %d\n", 
->> crtc->index);
->> +               return false;
->> +       }
->> +
->> +       return dpu_encoder_get_frame_count(encoder);
->> +}
->> +
->> +static bool dpu_crtc_get_scanout_position(struct drm_crtc *crtc,
->> +                                          bool in_vblank_irq,
->> +                                          int *vpos, int *hpos,
->> +                                          ktime_t *stime, ktime_t 
->> *etime,
->> +                                          const struct 
->> drm_display_mode *mode)
->> +{
->> +       unsigned int pipe = crtc->index;
->> +       struct drm_encoder *encoder;
->> +       int line, vsw, vbp, vactive_start, vactive_end, vfp_end;
->> +
->> +       encoder = get_encoder_from_crtc(crtc);
->> +       if (!encoder) {
->> +               DRM_ERROR("no encoder found for crtc %d\n", pipe);
->> +               return false;
->> +       }
->> +
->> +       vsw = mode->crtc_vsync_end - mode->crtc_vsync_start;
->> +       vbp = mode->crtc_vtotal - mode->crtc_vsync_end;
->> +
->> +       /*
->> +        * the line counter is 1 at the start of the VSYNC pulse and 
->> VTOTAL at
->> +        * the end of VFP. Translate the porch values relative to the 
->> line
->> +        * counter positions.
->> +        */
->> +
->> +       vactive_start = vsw + vbp + 1;
->> +       vactive_end = vactive_start + mode->crtc_vdisplay;
->> +
->> +       /* last scan line before VSYNC */
->> +       vfp_end = mode->crtc_vtotal;
->> +
->> +       if (stime)
->> +               *stime = ktime_get();
->> +
->> +       line = dpu_encoder_get_linecount(encoder);
->> +
->> +       if (line < vactive_start)
->> +               line -= vactive_start;
->> +       else if (line > vactive_end)
->> +               line = line - vfp_end - vactive_start;
->> +       else
->> +               line -= vactive_start;
->> +
->> +       *vpos = line;
->> +       *hpos = 0;
->> +
->> +       if (etime)
->> +               *etime = ktime_get();
->> +
->> +       return true;
->> +}
->> +
->>  static void _dpu_crtc_setup_blend_cfg(struct dpu_crtc_mixer *mixer,
->>                 struct dpu_plane_state *pstate, struct dpu_format 
->> *format)
->>  {
->> @@ -1243,6 +1320,8 @@ static const struct drm_crtc_funcs 
->> dpu_crtc_funcs = {
->>         .early_unregister = dpu_crtc_early_unregister,
->>         .enable_vblank  = msm_crtc_enable_vblank,
->>         .disable_vblank = msm_crtc_disable_vblank,
->> +       .get_vblank_timestamp = 
->> drm_crtc_vblank_helper_get_vblank_timestamp,
->> +       .get_vblank_counter = dpu_crtc_get_vblank_counter,
->>  };
->> 
->>  static const struct drm_crtc_helper_funcs dpu_crtc_helper_funcs = {
->> @@ -1251,6 +1330,7 @@ static const struct drm_crtc_helper_funcs 
->> dpu_crtc_helper_funcs = {
->>         .atomic_check = dpu_crtc_atomic_check,
->>         .atomic_begin = dpu_crtc_atomic_begin,
->>         .atomic_flush = dpu_crtc_atomic_flush,
->> +       .get_scanout_position = dpu_crtc_get_scanout_position,
->>  };
->> 
->>  /* initialize crtc */
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> index f7f5c25..5cd3f31 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> @@ -425,6 +425,36 @@ int dpu_encoder_helper_unregister_irq(struct 
->> dpu_encoder_phys *phys_enc,
->>         return 0;
->>  }
->> 
->> +int dpu_encoder_get_frame_count(struct drm_encoder *drm_enc)
->> +{
->> +       struct dpu_encoder_virt *dpu_enc;
->> +       struct dpu_encoder_phys *phys;
->> +       int framecount = 0;
->> +
->> +       dpu_enc = to_dpu_encoder_virt(drm_enc);
->> +       phys = dpu_enc ? dpu_enc->cur_master : NULL;
->> +
->> +       if (phys && phys->ops.get_frame_count)
->> +               framecount = phys->ops.get_frame_count(phys);
->> +
->> +       return framecount;
->> +}
->> +
->> +int dpu_encoder_get_linecount(struct drm_encoder *drm_enc)
->> +{
->> +       struct dpu_encoder_virt *dpu_enc;
->> +       struct dpu_encoder_phys *phys;
->> +       int linecount = 0;
->> +
->> +       dpu_enc = to_dpu_encoder_virt(drm_enc);
->> +       phys = dpu_enc ? dpu_enc->cur_master : NULL;
->> +
->> +       if (phys && phys->ops.get_line_count)
->> +               linecount = phys->ops.get_line_count(phys);
->> +
->> +       return linecount;
->> +}
->> +
->>  void dpu_encoder_get_hw_resources(struct drm_encoder *drm_enc,
->>                                   struct dpu_encoder_hw_resources 
->> *hw_res)
->>  {
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->> index b491346..99a5d73 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->> @@ -156,5 +156,16 @@ void dpu_encoder_prepare_commit(struct 
->> drm_encoder *drm_enc);
->>   */
->>  void dpu_encoder_set_idle_timeout(struct drm_encoder *drm_enc,
->>                                                         u32 
->> idle_timeout);
->> +/**
->> + * dpu_encoder_get_linecount - get interface line count for the 
->> encoder.
->> + * @drm_enc:    Pointer to previously created drm encoder structure
->> + */
->> +int dpu_encoder_get_linecount(struct drm_encoder *drm_enc);
->> +
->> +/**
->> + * dpu_encoder_get_frame_count - get interface frame count for the 
->> encoder.
->> + * @drm_enc:    Pointer to previously created drm encoder structure
->> + */
->> +int dpu_encoder_get_frame_count(struct drm_encoder *drm_enc);
->> 
->>  #endif /* __DPU_ENCODER_H__ */
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
->> index f8f2515..ecbc4be 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
->> @@ -143,6 +143,7 @@ struct dpu_encoder_phys_ops {
->>         void (*prepare_idle_pc)(struct dpu_encoder_phys *phys_enc);
->>         void (*restore)(struct dpu_encoder_phys *phys);
->>         int (*get_line_count)(struct dpu_encoder_phys *phys);
->> +       int (*get_frame_count)(struct dpu_encoder_phys *phys);
->>  };
->> 
->>  /**
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
->> index 9a69fad..f983595 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
->> @@ -658,6 +658,22 @@ static int dpu_encoder_phys_vid_get_line_count(
->>         return 
->> phys_enc->hw_intf->ops.get_line_count(phys_enc->hw_intf);
->>  }
->> 
->> +static int dpu_encoder_phys_vid_get_frame_count(
->> +               struct dpu_encoder_phys *phys_enc)
->> +{
->> +       struct intf_status s = {0};
->> +
->> +       if (!dpu_encoder_phys_vid_is_master(phys_enc))
->> +               return -EINVAL;
->> +
->> +       if (!phys_enc->hw_intf || !phys_enc->hw_intf->ops.get_status)
->> +               return -EINVAL;
->> +
->> +       phys_enc->hw_intf->ops.get_status(phys_enc->hw_intf, &s);
->> +
->> +       return s.frame_count;
->> +}
->> +
->>  static void dpu_encoder_phys_vid_init_ops(struct dpu_encoder_phys_ops 
->> *ops)
->>  {
->>         ops->is_master = dpu_encoder_phys_vid_is_master;
->> @@ -676,6 +692,7 @@ static void dpu_encoder_phys_vid_init_ops(struct 
->> dpu_encoder_phys_ops *ops)
->>         ops->handle_post_kickoff = 
->> dpu_encoder_phys_vid_handle_post_kickoff;
->>         ops->needs_single_flush = 
->> dpu_encoder_phys_vid_needs_single_flush;
->>         ops->get_line_count = dpu_encoder_phys_vid_get_line_count;
->> +       ops->get_frame_count = dpu_encoder_phys_vid_get_frame_count;
->>  }
->> 
->>  struct dpu_encoder_phys *dpu_encoder_phys_vid_init(
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> index 374b0e8..764a773 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> @@ -14,6 +14,7 @@
->> 
->>  #include <drm/drm_crtc.h>
->>  #include <drm/drm_file.h>
->> +#include <drm/drm_vblank.h>
->> 
->>  #include "msm_drv.h"
->>  #include "msm_mmu.h"
->> @@ -1020,6 +1021,10 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
->>          */
->>         dev->mode_config.allow_fb_modifiers = true;
->> 
->> +       dev->max_vblank_count = 0;
->> +       /* Disable vblank irqs aggressively for power-saving */
->> +       dev->vblank_disable_immediate = true;
->> +
->>         /*
->>          * _dpu_kms_drm_obj_init should create the DRM related objects
->>          * i.e. CRTCs, planes, encoders, connectors and so forth
->> --
->> 2.7.4
->> 
-> _______________________________________________
-> Freedreno mailing list
-> Freedreno@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/freedreno
+Changes in v6:
+    - Fixed errors during dt_binding_check (Rob Herring)
+    - Add maxItems for phys and phys-names (Rob Herring)
+    - Use unevaluatedProperties wherever required (Rob Herring)
+    - Removed interrupt controller from required properties for
+      dsi controller (Rob Herring)
+    - Add constraints for dsi-phy reg-names based on the compatible
+      phy version (Rob Herring)
+    - Add constraints for dsi-phy supply nodes based on the
+      compatible phy version (Rob Herring)
+
+Changes in v7:
+    - Add default value for qcom,mdss-mdp-transfer-time-us (Rob Herring)
+    - Modify the schema for data-lanes (Rob Herring)
+    - Split the phy schema into separate schemas based on
+      the phy version (Rob Herring)
+
+Changes in v8:
+    - Resolve merge conflicts with latest dsi.txt file
+    - Include dp yaml change also in the same series
+
+Changes in v9:
+    - Combine target specific dsi controller yaml files
+      to a single yaml file (Rob Herring)
+    - Combine target specific dsi phy yaml files into a
+      single yaml file (Rob Herring)
+    - Use unevaluatedProperties and additionalProperties
+      wherever required
+    - Remove duplicate properties from common yaml files
+
+Changes in v10:
+    - Split the patch into separate patches for DPU, DSI and
+      PHY (Stephen Boyd)
+    - Drop unnecessary fullstop (Stephen Boyd)
+    - Add newline whereever required (Stephen Boyd)
+    - Add description for clock used (Stephen Boyd)
+    - Modify the description for interconnect entries  (Stephen Boyd)
+    - Drop assigned clock entries as it a generic property (Stephen Boyd)
+    - Correct the definition for interrupts (Stephen Boyd)
+    - Drop clock names from required properties (Stephen Boyd)
+    - Drop labels for display nodes from example (Stephen Boyd)
+    - Drop flags from interrupts entries (Stephen Boyd)
+
+Changes in v11:
+    - Drop maxItems for clocks (Stephen Boyd)
+---
+ .../bindings/display/msm/dpu-sc7180.yaml           | 211 +++++++++++++++++++++
+ .../bindings/display/msm/dpu-sdm845.yaml           | 197 +++++++++++++++++++
+ .../devicetree/bindings/display/msm/dpu.txt        | 141 --------------
+ 3 files changed, 408 insertions(+), 141 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
+ create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
+ delete mode 100644 Documentation/devicetree/bindings/display/msm/dpu.txt
+
+diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
+new file mode 100644
+index 0000000..821c253
+--- /dev/null
++++ b/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
+@@ -0,0 +1,211 @@
++# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/display/msm/dpu-sc7180.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Description of Qualcomm Display DPU dt properties
++
++maintainers:
++  - Krishna Manikandan <mkrishn@codeaurora.org>
++
++description: |
++  Device tree bindings for MSM Mobile Display Subsytem(MDSS) that encapsulates
++  sub-blocks like DPU display controller, DSI and DP interfaces etc. Device tree
++  bindings of MDSS and DPU are mentioned for SC7180 target.
++
++properties:
++  compatible:
++    items:
++      - const: qcom,sc7180-mdss
++
++  reg:
++    maxItems: 1
++
++  reg-names:
++    const: mdss
++
++  power-domains:
++    maxItems: 1
++
++  clocks:
++    items:
++      - description: Display AHB clock from gcc
++      - description: Display AHB clock from dispcc
++      - description: Display core clock
++
++  clock-names:
++    items:
++      - const: iface
++      - const: ahb
++      - const: core
++
++  interrupts:
++    minItems: 1
++
++  interrupt-controller: true
++
++  "#interrupt-cells":
++    const: 1
++
++  iommus:
++    maxItems: 1
++
++  "#address-cells":
++    const: 2
++
++  "#size-cells":
++    const: 2
++
++  ranges: true
++
++  interconnects:
++    description: |
++      Interconnect path specifier for MDSS according to
++      Documentation/devicetree/bindings/interconnect/interconnect.txt.
++    minItems: 1
++
++  interconnect-names:
++    items:
++      - const: mdp0-mem
++
++patternProperties:
++  "^mdp@[0-9a-f]+$":
++    type: object
++    description: Node containing the properties of DPU.
++
++    properties:
++      compatible:
++        items:
++          - const: qcom,sc7180-dpu
++
++      reg:
++        maxItems: 2
++
++      reg-names:
++        items:
++          - const: mdp
++          - const: vbif
++
++      clocks:
++        items:
++          - description: Display hf axi clock
++          - description: Display ahb clock
++          - description: Display rotator clock
++          - description: Display lut clock
++          - description: Display core clock
++          - description: Display vsync clock
++
++      clock-names:
++        items:
++          - const: bus
++          - const: iface
++          - const: rot
++          - const: lut
++          - const: core
++          - const: vsync
++
++      interrupts:
++        minItems: 1
++
++      ports:
++        type: object
++        description: |
++          Contains the list of output ports from DPU device. These ports
++          connect to interfaces that are external to the DPU hardware,
++          such as DSI, DP etc. Each output port contains an endpoint that
++          describes how it is connected to an external interface. These
++          are described by the standard properties documented in files
++          mentioned below.
++
++          Documentation/devicetree/bindings/graph.txt
++          Documentation/devicetree/bindings/media/video-interfaces.txt
++
++        properties:
++          port@0:
++            type: object
++            description: DPU_INTF1 (DSI1)
++
++          port@1:
++            type: object
++            description: DPU_INTF2 (DSI2)
++
++required:
++  - compatible
++  - reg
++  - reg-names
++  - power-domains
++  - clocks
++  - interrupts
++  - interrupt-controller
++  - iommus
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,dispcc-sc7180.h>
++    #include <dt-bindings/clock/qcom,gcc-sc7180.h>
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    #include <dt-bindings/interconnect/qcom,sdm845.h>
++
++    soc {
++      #address-cells = <2>;
++      #size-cells = <2>;
++
++      mdss@ae00000 {
++         compatible = "qcom,sc7180-mdss";
++         #address-cells = <2>;
++         #size-cells = <2>;
++         reg = <0 0xae00000 0 0x1000>;
++         reg-names = "mdss";
++         power-domains = <&dispcc MDSS_GDSC>;
++
++         clocks = <&gcc GCC_DISP_AHB_CLK>,
++                  <&dispcc DISP_CC_MDSS_AHB_CLK>,
++                  <&dispcc DISP_CC_MDSS_MDP_CLK>;
++         clock-names = "iface", "ahb", "core";
++
++         interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
++         interrupt-controller;
++         #interrupt-cells = <1>;
++
++         interconnects = <&mmss_noc MASTER_MDP0 &mc_virt SLAVE_EBI1>;
++         interconnect-names = "mdp0-mem";
++
++         iommus = <&apps_smmu 0x800 0x2>;
++
++         mdp@ae01000 {
++                   compatible = "qcom,sc7180-dpu";
++                   reg = <0 0x0ae01000 0 0x8f000>,
++                         <0 0x0aeb0000 0 0x2008>;
++
++                   reg-names = "mdp", "vbif";
++
++                   clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
++                            <&dispcc DISP_CC_MDSS_AHB_CLK>,
++                            <&dispcc DISP_CC_MDSS_ROT_CLK>,
++                            <&dispcc DISP_CC_MDSS_MDP_LUT_CLK>,
++                            <&dispcc DISP_CC_MDSS_MDP_CLK>,
++                            <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
++                   clock-names = "bus", "iface", "rot", "lut", "core",
++                                 "vsync";
++
++                   interrupt-parent = <&mdss>;
++                   interrupts = <0>;
++
++                   ports {
++                           #address-cells = <1>;
++                           #size-cells = <0>;
++
++                           port@0 {
++                                   reg = <0>;
++                                   dpu_intf1_out: endpoint {
++                                                  remote-endpoint = <&dsi0_in>;
++                                   };
++                           };
++                   };
++         };
++      };
++    };
++...
+diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
+new file mode 100644
+index 0000000..6609370
+--- /dev/null
++++ b/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
+@@ -0,0 +1,197 @@
++# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/display/msm/dpu-sdm845.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Description of Qualcomm Display DPU dt properties
++
++maintainers:
++  - Krishna Manikandan <mkrishn@codeaurora.org>
++
++description: |
++  Device tree bindings for MSM Mobile Display Subsytem(MDSS) that encapsulates
++  sub-blocks like DPU display controller, DSI and DP interfaces etc. Device tree
++  bindings of MDSS and DPU are mentioned for SDM845 target.
++
++properties:
++  compatible:
++    items:
++      - const: qcom,sdm845-mdss
++
++  reg:
++    maxItems: 1
++
++  reg-names:
++    const: mdss
++
++  power-domains:
++    maxItems: 1
++
++  clocks:
++    items:
++      - description: Display AHB clock from gcc
++      - description: Display AXI clock
++      - description: Display core clock
++
++  clock-names:
++    items:
++      - const: iface
++      - const: bus
++      - const: core
++
++  interrupts:
++    minItems: 1
++
++  interrupt-controller: true
++
++  "#interrupt-cells":
++    const: 1
++
++  iommus:
++    maxItems: 2
++
++  "#address-cells":
++    const: 2
++
++  "#size-cells":
++    const: 2
++
++  ranges: true
++
++patternProperties:
++  "^mdp@[0-9a-f]+$":
++    type: object
++    description: Node containing the properties of DPU.
++
++    properties:
++      compatible:
++        items:
++          - const: qcom,sdm845-dpu
++
++      reg:
++        maxItems: 2
++
++      reg-names:
++        items:
++          - const: mdp
++          - const: vbif
++
++      clocks:
++        items:
++          - description: Display ahb clock
++          - description: Display axi clock
++          - description: Display core clock
++          - description: Display vsync clock
++
++      clock-names:
++        items:
++          - const: iface
++          - const: bus
++          - const: core
++          - const: vsync
++
++      interrupts:
++        minItems: 1
++
++      ports:
++        type: object
++        description: |
++          Contains the list of output ports from DPU device. These ports
++          connect to interfaces that are external to the DPU hardware,
++          such as DSI, DP etc. Each output port contains an endpoint that
++          describes how it is connected to an external interface. These
++          are described by the standard properties documented in files
++          mentioned below.
++
++          Documentation/devicetree/bindings/graph.txt
++          Documentation/devicetree/bindings/media/video-interfaces.txt
++
++        properties:
++          port@0:
++            type: object
++            description: DPU_INTF1 (DSI1)
++
++          port@1:
++            type: object
++            description: DPU_INTF2 (DSI2)
++
++required:
++  - compatible
++  - reg
++  - reg-names
++  - power-domains
++  - clocks
++  - interrupts
++  - interrupt-controller
++  - iommus
++
++additionalProperties: false
++
++examples:
++- |
++    #include <dt-bindings/clock/qcom,dispcc-sdm845.h>
++    #include <dt-bindings/clock/qcom,gcc-sdm845.h>
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++
++    soc {
++      #address-cells = <2>;
++      #size-cells = <2>;
++
++      mdss@ae00000 {
++          compatible = "qcom,sdm845-mdss";
++          #address-cells = <2>;
++          #size-cells = <2>;
++          reg = <0 0x0ae00000 0 0x1000>;
++          reg-names = "mdss";
++          power-domains = <&dispcc MDSS_GDSC>;
++
++          clocks = <&gcc GCC_DISP_AHB_CLK>,
++                   <&gcc GCC_DISP_AXI_CLK>,
++                   <&dispcc DISP_CC_MDSS_MDP_CLK>;
++          clock-names = "iface", "bus", "core";
++
++          interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
++          interrupt-controller;
++          #interrupt-cells = <1>;
++
++          iommus = <&apps_smmu 0x880 0x8>,
++                   <&apps_smmu 0xc80 0x8>;
++
++          mdp@ae01000 {
++                    compatible = "qcom,sdm845-dpu";
++                    reg = <0 0x0ae01000 0 0x8f000>,
++                          <0 0x0aeb0000 0 0x2008>;
++                    reg-names = "mdp", "vbif";
++
++                    clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
++                             <&dispcc DISP_CC_MDSS_AXI_CLK>,
++                             <&dispcc DISP_CC_MDSS_MDP_CLK>,
++                             <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
++                    clock-names = "iface", "bus", "core", "vsync";
++
++                    interrupt-parent = <&mdss>;
++                    interrupts = <0>;
++
++                    ports {
++                           #address-cells = <1>;
++                           #size-cells = <0>;
++
++                           port@0 {
++                                   reg = <0>;
++                                   dpu_intf1_out: endpoint {
++                                                  remote-endpoint = <&dsi0_in>;
++                                   };
++                           };
++
++                           port@1 {
++                                   reg = <1>;
++                                   dpu_intf2_out: endpoint {
++                                                  remote-endpoint = <&dsi1_in>;
++                                   };
++                           };
++                    };
++          };
++      };
++    };
++...
+diff --git a/Documentation/devicetree/bindings/display/msm/dpu.txt b/Documentation/devicetree/bindings/display/msm/dpu.txt
+deleted file mode 100644
+index 551ae26..0000000
+--- a/Documentation/devicetree/bindings/display/msm/dpu.txt
++++ /dev/null
+@@ -1,141 +0,0 @@
+-Qualcomm Technologies, Inc. DPU KMS
+-
+-Description:
+-
+-Device tree bindings for MSM Mobile Display Subsytem(MDSS) that encapsulates
+-sub-blocks like DPU display controller, DSI and DP interfaces etc.
+-The DPU display controller is found in SDM845 SoC.
+-
+-MDSS:
+-Required properties:
+-- compatible:  "qcom,sdm845-mdss", "qcom,sc7180-mdss"
+-- reg: physical base address and length of contoller's registers.
+-- reg-names: register region names. The following region is required:
+-  * "mdss"
+-- power-domains: a power domain consumer specifier according to
+-  Documentation/devicetree/bindings/power/power_domain.txt
+-- clocks: list of clock specifiers for clocks needed by the device.
+-- clock-names: device clock names, must be in same order as clocks property.
+-  The following clocks are required:
+-  * "iface"
+-  * "bus"
+-  * "core"
+-- interrupts: interrupt signal from MDSS.
+-- interrupt-controller: identifies the node as an interrupt controller.
+-- #interrupt-cells: specifies the number of cells needed to encode an interrupt
+-  source, should be 1.
+-- iommus: phandle of iommu device node.
+-- #address-cells: number of address cells for the MDSS children. Should be 1.
+-- #size-cells: Should be 1.
+-- ranges: parent bus address space is the same as the child bus address space.
+-- interconnects : interconnect path specifier for MDSS according to
+-  Documentation/devicetree/bindings/interconnect/interconnect.txt. Should be
+-  2 paths corresponding to 2 AXI ports.
+-- interconnect-names : MDSS will have 2 port names to differentiate between the
+-  2 interconnect paths defined with interconnect specifier.
+-
+-Optional properties:
+-- assigned-clocks: list of clock specifiers for clocks needing rate assignment
+-- assigned-clock-rates: list of clock frequencies sorted in the same order as
+-  the assigned-clocks property.
+-
+-MDP:
+-Required properties:
+-- compatible: "qcom,sdm845-dpu", "qcom,sc7180-dpu"
+-- reg: physical base address and length of controller's registers.
+-- reg-names : register region names. The following region is required:
+-  * "mdp"
+-  * "vbif"
+-- clocks: list of clock specifiers for clocks needed by the device.
+-- clock-names: device clock names, must be in same order as clocks property.
+-  The following clocks are required.
+-  * "bus"
+-  * "iface"
+-  * "core"
+-  * "vsync"
+-- interrupts: interrupt line from DPU to MDSS.
+-- ports: contains the list of output ports from DPU device. These ports connect
+-  to interfaces that are external to the DPU hardware, such as DSI, DP etc.
+-
+-  Each output port contains an endpoint that describes how it is connected to an
+-  external interface. These are described by the standard properties documented
+-  here:
+-	Documentation/devicetree/bindings/graph.txt
+-	Documentation/devicetree/bindings/media/video-interfaces.txt
+-
+-	Port 0 -> DPU_INTF1 (DSI1)
+-	Port 1 -> DPU_INTF2 (DSI2)
+-
+-Optional properties:
+-- assigned-clocks: list of clock specifiers for clocks needing rate assignment
+-- assigned-clock-rates: list of clock frequencies sorted in the same order as
+-  the assigned-clocks property.
+-
+-Example:
+-
+-	mdss: mdss@ae00000 {
+-		compatible = "qcom,sdm845-mdss";
+-		reg = <0xae00000 0x1000>;
+-		reg-names = "mdss";
+-
+-		power-domains = <&clock_dispcc 0>;
+-
+-		clocks = <&gcc GCC_DISP_AHB_CLK>, <&gcc GCC_DISP_AXI_CLK>,
+-			 <&clock_dispcc DISP_CC_MDSS_MDP_CLK>;
+-		clock-names = "iface", "bus", "core";
+-
+-		assigned-clocks = <&clock_dispcc DISP_CC_MDSS_MDP_CLK>;
+-		assigned-clock-rates = <300000000>;
+-
+-		interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
+-		interrupt-controller;
+-		#interrupt-cells = <1>;
+-
+-		interconnects = <&rsc_hlos MASTER_MDP0 &rsc_hlos SLAVE_EBI1>,
+-				<&rsc_hlos MASTER_MDP1 &rsc_hlos SLAVE_EBI1>;
+-
+-		interconnect-names = "mdp0-mem", "mdp1-mem";
+-
+-		iommus = <&apps_iommu 0>;
+-
+-		#address-cells = <2>;
+-		#size-cells = <1>;
+-		ranges = <0 0 0xae00000 0xb2008>;
+-
+-		mdss_mdp: mdp@ae01000 {
+-			compatible = "qcom,sdm845-dpu";
+-			reg = <0 0x1000 0x8f000>, <0 0xb0000 0x2008>;
+-			reg-names = "mdp", "vbif";
+-
+-			clocks = <&clock_dispcc DISP_CC_MDSS_AHB_CLK>,
+-				 <&clock_dispcc DISP_CC_MDSS_AXI_CLK>,
+-				 <&clock_dispcc DISP_CC_MDSS_MDP_CLK>,
+-				 <&clock_dispcc DISP_CC_MDSS_VSYNC_CLK>;
+-			clock-names = "iface", "bus", "core", "vsync";
+-
+-			assigned-clocks = <&clock_dispcc DISP_CC_MDSS_MDP_CLK>,
+-					  <&clock_dispcc DISP_CC_MDSS_VSYNC_CLK>;
+-			assigned-clock-rates = <0 0 300000000 19200000>;
+-
+-			interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
+-
+-			ports {
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				port@0 {
+-					reg = <0>;
+-					dpu_intf1_out: endpoint {
+-						remote-endpoint = <&dsi0_in>;
+-					};
+-				};
+-
+-				port@1 {
+-					reg = <1>;
+-					dpu_intf2_out: endpoint {
+-						remote-endpoint = <&dsi1_in>;
+-					};
+-				};
+-			};
+-		};
+-	};
+-- 
+2.7.4
+
