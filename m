@@ -2,180 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BFF4316F10
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Feb 2021 19:46:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8015E316F5E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Feb 2021 20:00:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234147AbhBJSqK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Feb 2021 13:46:10 -0500
-Received: from mail.baikalelectronics.com ([87.245.175.226]:35120 "EHLO
-        mail.baikalelectronics.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234272AbhBJSoA (ORCPT
+        id S233553AbhBJS6w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Feb 2021 13:58:52 -0500
+Received: from relay08.th.seeweb.it ([5.144.164.169]:53121 "EHLO
+        relay08.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232178AbhBJS4q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Feb 2021 13:44:00 -0500
-Date:   Wed, 10 Feb 2021 21:43:11 +0300
-From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
-To:     Florian Fainelli <f.fainelli@gmail.com>
-CC:     Serge Semin <fancer.lancer@gmail.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <linux-usb@vger.kernel.org>, Vineet Gupta <vgupta@synopsys.com>,
-        Rafal Milecki <zajec5@gmail.com>,
-        Wei Xu <xuwei5@hisilicon.com>,
-        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Santosh Shilimkar <ssantosh@kernel.org>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Benoit Cousson <bcousson@baylibre.com>,
-        Patrice Chotard <patrice.chotard@st.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Khuong Dinh <khuong@os.amperecomputing.com>,
+        Wed, 10 Feb 2021 13:56:46 -0500
+Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 10E853F350;
+        Wed, 10 Feb 2021 19:55:38 +0100 (CET)
+Subject: Re: [PATCH v3] arm64: dts: qcom: sdm845-xiaomi-beryllium: Add DSI and
+ panel bits
+To:     Amit Pundir <amit.pundir@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Alexey Brodkin <abrodkin@synopsys.com>,
-        Hauke Mehrtens <hauke@hauke-m.de>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@st.com>,
-        Amelie Delaunay <amelie.delaunay@st.com>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-        Paul Mackerras <paulus@samba.org>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Kukjin Kim <kgene@kernel.org>, Li Yang <leoyang.li@nxp.com>,
-        Tony Lindgren <tony@atomide.com>, Chen-Yu Tsai <wens@csie.org>,
-        Jun Li <lijun.kernel@gmail.com>,
-        <linux-snps-arc@lists.infradead.org>,
-        <bcm-kernel-feedback-list@broadcom.com>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-mips@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
-        <linuxppc-dev@lists.ozlabs.org>,
-        <linux-samsung-soc@vger.kernel.org>, <linux-omap@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH RESEND v6 00/10] dt-bindings: usb: Harmonize
- xHCI/EHCI/OHCI/DWC3 nodes name
-Message-ID: <20210210184311.ouc6zft675kybyjx@mobilestation>
-References: <20210210172850.20849-1-Sergey.Semin@baikalelectronics.ru>
- <e169630f-1255-7597-86f2-63ee8760cc8c@gmail.com>
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>, phone-devel@vger.kernel.org
+References: <1612945128-23174-1-git-send-email-amit.pundir@linaro.org>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Message-ID: <13bd5e9d-3f3b-0b97-aa48-9a7bc551ddf6@somainline.org>
+Date:   Wed, 10 Feb 2021 19:55:37 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <e169630f-1255-7597-86f2-63ee8760cc8c@gmail.com>
-X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
+In-Reply-To: <1612945128-23174-1-git-send-email-amit.pundir@linaro.org>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 10, 2021 at 10:21:47AM -0800, Florian Fainelli wrote:
-> On 2/10/21 9:28 AM, Serge Semin wrote:
-> > As the subject states this series is an attempt to harmonize the xHCI,
-> > EHCI, OHCI and DWC USB3 DT nodes with the DT schema introduced in the
-> > framework of the patchset [1].
-> > 
-> > Firstly as Krzysztof suggested we've deprecated a support of DWC USB3
-> > controllers with "synopsys,"-vendor prefix compatible string in favor of
-> > the ones with valid "snps,"-prefix. It's done in all the DTS files,
-> > which have been unfortunate to define such nodes.
-> > 
-> > Secondly we suggest to fix the snps,quirk-frame-length-adjustment property
-> > declaration in the Amlogic meson-g12-common.dtsi DTS file, since it has
-> > been erroneously declared as boolean while having uint32 type. Neil said
-> > it was ok to init that property with 0x20 value.
-> > 
-> > Thirdly the main part of the patchset concern fixing the xHCI, EHCI/OHCI
-> > and DWC USB3 DT nodes name as in accordance with their DT schema the
-> > corresponding node name is suppose to comply with the Generic USB HCD DT
-> > schema, which requires the USB nodes to have the name acceptable by the
-> > regexp: "^usb(@.*)?". Such requirement had been applicable even before we
-> > introduced the new DT schema in [1], but as we can see it hasn't been
-> > strictly implemented for a lot the DTS files. Since DT schema is now
-> > available the automated DTS validation shall make sure that the rule isn't
-> > violated.
-> > 
-> > Note most of these patches have been a part of the last three patches of
-> > [1]. But since there is no way to have them merged in in a combined
-> > manner, I had to move them to the dedicated series and split them up so to
-> > be accepted by the corresponding subsystem maintainers one-by-one.
-> > 
-> > [1] Link: https://lore.kernel.org/linux-usb/20201014101402.18271-1-Sergey.Semin@baikalelectronics.ru/
-> > Changelog v1:
-> > - As Krzysztof suggested I've created a script which checked whether the
-> >   node names had been also updated in all the depended dts files. As a
-> >   result I found two more files which should have been also modified:
-> >   arch/arc/boot/dts/{axc003.dtsi,axc003_idu.dtsi}
-> > - Correct the USB DWC3 nodes name found in
-> >   arch/arm64/boot/dts/apm/{apm-storm.dtsi,apm-shadowcat.dtsi} too.
-> > 
-> > Link: https://lore.kernel.org/linux-usb/20201020115959.2658-1-Sergey.Semin@baikalelectronics.ru
-> > Changelog v2:
-> > - Drop the patch:
-> >   [PATCH 01/29] usb: dwc3: Discard synopsys,dwc3 compatibility string
-> >   and get back the one which marks the "synopsys,dwc3" compatible string
-> >   as deprecated into the DT schema related series.
-> > - Drop the patches:
-> >   [PATCH 03/29] arm: dts: am437x: Correct DWC USB3 compatible string
-> >   [PATCH 04/29] arm: dts: exynos: Correct DWC USB3 compatible string
-> >   [PATCH 07/29] arm: dts: bcm53x: Harmonize EHCI/OHCI DT nodes name
-> >   [PATCH 08/29] arm: dts: stm32: Harmonize EHCI/OHCI DT nodes name
-> >   [PATCH 16/29] arm: dts: bcm5301x: Harmonize xHCI DT nodes name
-> >   [PATCH 19/29] arm: dts: exynos: Harmonize DWC USB3 DT nodes name
-> >   [PATCH 21/29] arm: dts: ls1021a: Harmonize DWC USB3 DT nodes name
-> >   [PATCH 22/29] arm: dts: omap5: Harmonize DWC USB3 DT nodes name
-> >   [PATCH 24/29] arm64: dts: allwinner: h6: Harmonize DWC USB3 DT nodes name
-> >   [PATCH 26/29] arm64: dts: exynos: Harmonize DWC USB3 DT nodes name
-> >   [PATCH 27/29] arm64: dts: layerscape: Harmonize DWC USB3 DT nodes name
-> >   since they have been applied to the corresponding maintainers repos.
-> > - Fix drivers/usb/dwc3/dwc3-qcom.c to be looking for the "usb@"-prefixed
-> >   sub-node and falling back to the "dwc3@"-prefixed one on failure.
-> > 
-> > Link: https://lore.kernel.org/linux-usb/20201111091552.15593-1-Sergey.Semin@baikalelectronics.ru
-> > Changelog v3:
-> > - Drop the patches:
-> >   [PATCH v2 04/18] arm: dts: hisi-x5hd2: Harmonize EHCI/OHCI DT nodes name
-> >   [PATCH v2 06/18] arm64: dts: hisi: Harmonize EHCI/OHCI DT nodes name
-> >   [PATCH v2 07/18] mips: dts: jz47x: Harmonize EHCI/OHCI DT nodes name
-> >   [PATCH v2 08/18] mips: dts: sead3: Harmonize EHCI/OHCI DT nodes name
-> >   [PATCH v2 09/18] mips: dts: ralink: mt7628a: Harmonize EHCI/OHCI DT nodes name
-> >   [PATCH v2 11/18] arm64: dts: marvell: cp11x: Harmonize xHCI DT nodes name
-> >   [PATCH v2 12/18] arm: dts: marvell: armada-375: Harmonize DWC USB3 DT nodes name
-> >   [PATCH v2 16/18] arm64: dts: hi3660: Harmonize DWC USB3 DT nodes name
-> >   since they have been applied to the corresponding maintainers repos.
-> > 
-> > Link: https://lore.kernel.org/linux-usb/20201205155621.3045-1-Sergey.Semin@baikalelectronics.ru
-> > Changelog v4:
-> > - Just resend.
-> > 
-> > Link: https://lore.kernel.org/linux-usb/20201210091756.18057-1-Sergey.Semin@baikalelectronics.ru/
-> > Changelog v5:
-> > - Drop the patch:
-> >   [PATCH v4 02/10] arm64: dts: amlogic: meson-g12: Set FL-adj property value
-> >   since it has been applied to the corresponding maintainers repos.
-> > - Get back the patch:
-> >   [PATCH 21/29] arm: dts: ls1021a: Harmonize DWC USB3 DT nodes name
-> >   as it has been missing in the kernel 5.11-rc7
-> > - Rebase onto the kernel 5.11-rc7
-> > 
-> > Link: https://lore.kernel.org/lkml/20210208135154.6645-1-Sergey.Semin@baikalelectronics.ru/
-> > Changelog v6:
-> > - Just resend and add linux-usb.vger.kernel.org to the list of Ccecipients.
+Il 10/02/21 09:18, Amit Pundir ha scritto:
+> From: Sumit Semwal <sumit.semwal@linaro.org>
 > 
+> Enabling the Display panel for beryllium requires DSI
+> labibb regulators and panel dts nodes to be added.
+> It is also required to keep some of the regulators as
+> always-on.
+> 
+> Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
+> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+> ---
+
+Hello!
+Your patch looks good, however, I have a few concerns...
+
+> v3: Addressed Konrad's concerns. Configured labibb regulators
+>      explicitly based on downstream microvolt values. Display
+>      comes up fine with default discharge-resistor-kohms and
+>      soft-start-us properties, so didn't touch them.
+>      Smoke tested on next-20210209.
+> v2: Rebased to mainline (v5.11-rc6) and fixed build warnings.
+> 
+>   .../boot/dts/qcom/sdm845-xiaomi-beryllium.dts      | 64 ++++++++++++++++++++++
+>   1 file changed, 64 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+> index 86cbae63eaf7..5ac049a247e1 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+> @@ -157,6 +157,14 @@
+>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>   		};
+>   
+> +		vreg_l14a_1p8: ldo14 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-boot-on;
+> +			regulator-always-on;
+> +		};
+> +
+>   		vreg_l17a_1p3: ldo17 {
+>   			regulator-min-microvolt = <1304000>;
+>   			regulator-max-microvolt = <1304000>;
+> @@ -191,6 +199,7 @@
+>   			regulator-min-microvolt = <1200000>;
+>   			regulator-max-microvolt = <1200000>;
+>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-boot-on;
+>   		};
+>   	};
+>   };
+> @@ -200,6 +209,43 @@
+>   	firmware-name = "qcom/sdm845/cdsp.mdt";
+>   };
+>   
+> +&dsi0 {
+> +	status = "okay";
+> +	vdda-supply = <&vreg_l26a_1p2>;
+> +
+> +	#address-cells = <1>;
+> +	#size-cells = <0>;
+> +
+> +	panel@0 {
+> +		compatible = "tianma,fhd-video";
+> +		reg = <0>;
+> +		vddi0-supply = <&vreg_l14a_1p8>;
+> +		vddpos-supply = <&lab>;
+> +		vddneg-supply = <&ibb>;
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
+> +
+> +		port {
+> +			tianma_nt36672a_in_0: endpoint {
+> +				remote-endpoint = <&dsi0_out>;
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&dsi0_out {
+> +	remote-endpoint = <&tianma_nt36672a_in_0>;
+> +	data-lanes = <0 1 2 3>;
+> +};
+> +
+> +&dsi0_phy {
+> +	status = "okay";
+> +	vdds-supply = <&vreg_l1a_0p875>;
+> +};
+> +
+>   &gcc {
+>   	protected-clocks = <GCC_QSPI_CORE_CLK>,
+>   			   <GCC_QSPI_CORE_CLK_SRC>,
+> @@ -215,6 +261,24 @@
+>   	};
+>   };
+>   
+> +&ibb {
+> +	regulator-min-microvolt = <4600000>;
+> +	regulator-max-microvolt = <6000000>;
+> +};
+> +
+
+I think you want to also configure overvoltage and overcurrent 
+protection values for both LAB and IBB, as these regulators may be a bit 
+dangerous if used without.
+Besides that, even if it wouldn't be that dangerous, since the 
+protection features are present, it would be nice to configure them 
+properly as in the rare event that something bad happens, you would be 
+able to save the hardware (or at least have a chance to!).
+
+> +&lab {
+> +	regulator-min-microvolt = <4600000>;
+> +	regulator-max-microvolt = <6000000>;
+> +};
+> +
+
+Same here.
+
+Yours,
+-- Angelo
+
+> +&mdss {
+> +	status = "okay";
+> +};
+> +
+> +&mdss_mdp {
+> +	status = "okay";
+> +};
+> +
+>   &mss_pil {
+>   	status = "okay";
+>   	firmware-name = "qcom/sdm845/mba.mbn", "qcom/sdm845/modem.mdt";
 > 
 
-> If this needs to go on, can you drop the people who already took your
-> patches (trying to lower my email amount to something manageable).
-> Thank you.
-
-Ah, sorry for the noise. I'll clean the Cc-list up in the next attempt
-to have this finally fully accepted.
-
--Sergey
-
-> -- 
-> Florian
