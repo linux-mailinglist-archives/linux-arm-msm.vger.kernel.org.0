@@ -2,155 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A31CB315E3F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Feb 2021 05:38:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D692A315E44
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Feb 2021 05:40:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230285AbhBJEiJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Feb 2021 23:38:09 -0500
-Received: from mail29.static.mailgun.info ([104.130.122.29]:46835 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230239AbhBJEiJ (ORCPT
+        id S230231AbhBJEkY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Feb 2021 23:40:24 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([216.205.24.124]:35418 "EHLO
+        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229690AbhBJEkX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Feb 2021 23:38:09 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1612931868; h=Message-ID: References: In-Reply-To: Reply-To:
- Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=N3xnd6tq+GFGxbplmh9oJkDWRssF3z3HwqbOit9w3xA=;
- b=IvCeyd80IAMbxAPd0bLcGSssG8ob5VI/ykPIBzdsyTqVkBYGnKLWlpIIraUPpLmHLYJPtVqN
- u1k9mySHlNmrMLgV7xApMnpdfPwJd+lOBRgMUOnZ9lCKajyGGVOD4M9eMIOX6eqF9hsNQ1nT
- XiwnhlkQ28JUGGdmiizJ8k0Cq8I=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 602363033919dfb455a76aba (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 10 Feb 2021 04:37:23
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 412CDC433C6; Wed, 10 Feb 2021 04:37:22 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        Tue, 9 Feb 2021 23:40:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1612931937;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=/OTZsXH2tD0HeIgH/lI8h+bZrxEF7HhE4ZNU7vfxtAk=;
+        b=DcVR+IJM6N1IotiMz+N8jMpfmSw+4QVX0CYgx+KLML51SGBHnRe7iw5SuczhOpE4b7gTQR
+        5zMETSCuspQa9RFwj3TGkJjXldpCi2WuPV957a5qVwgvljhARPE1fIyOli9TTBjA3CtfE7
+        QRbriyfCAU6e6dfc+tYWH+7O4AgpHC0=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-395-f0srScS3Nb6YY6KHfMJKew-1; Tue, 09 Feb 2021 23:38:50 -0500
+X-MC-Unique: f0srScS3Nb6YY6KHfMJKew-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com [10.5.11.12])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7B767C433CA;
-        Wed, 10 Feb 2021 04:37:21 +0000 (UTC)
+        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 2B3C3100A8FC;
+        Wed, 10 Feb 2021 04:38:48 +0000 (UTC)
+Received: from [10.72.12.223] (ovpn-12-223.pek2.redhat.com [10.72.12.223])
+        by smtp.corp.redhat.com (Postfix) with ESMTP id BA6B460C4D;
+        Wed, 10 Feb 2021 04:38:35 +0000 (UTC)
+Subject: Re: [PATCH V3 16/19] virtio-pci: introduce modern device module
+To:     Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc:     "Michael S. Tsirkin" <mst@redhat.com>,
+        virtualization@lists.linux-foundation.org,
+        open list <linux-kernel@vger.kernel.org>, shahafs@mellanox.com,
+        lulu@redhat.com, sgarzare@redhat.com,
+        Randy Dunlap <rdunlap@infradead.org>,
+        lkft-triage@lists.linaro.org,
+        Linux-Next Mailing List <linux-next@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Stephen Rothwell <sfr@canb.auug.org.au>
+References: <20210104065503.199631-1-jasowang@redhat.com>
+ <20210104065503.199631-17-jasowang@redhat.com>
+ <CA+G9fYteUN=s5Mp+BhdMPZt96B3qDa+2HwudmWgEmmrDELLPdw@mail.gmail.com>
+From:   Jason Wang <jasowang@redhat.com>
+Message-ID: <9cc9d649-e891-8bcc-e5f8-cec7c0d40077@redhat.com>
+Date:   Wed, 10 Feb 2021 12:38:34 +0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 09 Feb 2021 20:37:21 -0800
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     Loic Poulain <loic.poulain@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Hemant Kumar <hemantk@codeaurora.org>
-Cc:     Jeffrey Hugo <jhugo@codeaurora.org>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH] mhi: Fix double dma free
-Organization: Qualcomm Innovation Center, Inc.
-Reply-To: bbhatt@codeaurora.org
-Mail-Reply-To: bbhatt@codeaurora.org
-In-Reply-To: <CAMZdPi-3PBGLE7KYoSkKWOT7YrbrpA70NRJo2Lrc-MQr=oKUyg@mail.gmail.com>
-References: <1612885989-12288-1-git-send-email-loic.poulain@linaro.org>
- <f2612a01-2c10-9735-d4ba-46ea87c70379@codeaurora.org>
- <CAMZdPi_16SfDoYC0vqqhRfEOqn3SHc6EUmfpVz0RRLaGek7_PQ@mail.gmail.com>
- <7a641d95c2e8c74c7dfc537c74a7ae1a@codeaurora.org>
- <CAMZdPi-3PBGLE7KYoSkKWOT7YrbrpA70NRJo2Lrc-MQr=oKUyg@mail.gmail.com>
-Message-ID: <9916d2b982f8ad407c7d5297da7d946d@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+In-Reply-To: <CA+G9fYteUN=s5Mp+BhdMPZt96B3qDa+2HwudmWgEmmrDELLPdw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Loic, Mani, Hemant,
 
-On 2021-02-09 10:17 AM, Loic Poulain wrote:
-> Hi Bhaumik,
-> 
-> On Tue, 9 Feb 2021 at 18:27, Bhaumik Bhatt <bbhatt@codeaurora.org> 
-> wrote:
->> 
->> On 2021-02-09 08:06 AM, Loic Poulain wrote:
->> > On Tue, 9 Feb 2021 at 16:55, Jeffrey Hugo <jhugo@codeaurora.org> wrote:
->> >>
->> >> On 2/9/2021 8:53 AM, Loic Poulain wrote:
->> >> > mhi_deinit_chan_ctxt functionthat takes care of unitializing channel
->> >> > resources, including unmapping coherent MHI areas, can be called
->> >> > from different path in case of controller unregistering/removal:
->> >> >   - From a client driver remove callback, via mhi_unprepare_channel
->> >> >   - From mhi_driver_remove that unitialize all channels
->> >> >
->> >> > mhi_driver_remove()
->> >> > |-> driver->remove()
->> >> > |    |-> mhi_unprepare_channel()
->> >> > |        |-> mhi_deinit_chan_ctxt()
->> >> > |...
->> >> > |-> mhi_deinit_chan_ctxt()
->> >> >
->> >> > This leads to double dma freeing...
->> >> >
->> >> > Fix that by preventing deinit for already uninitialized channel.
->> >> >
->> >> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
->> >> > Reported-by: Kalle Valo <kvalo@codeaurora.org>
->> >> > ---
->> >>
->> >> Seems like this should have a Fixes: tag, no?
->> >
->> > Right, thanks, i'll add it in V2 once I get feedback.
->> 
->> Hi Loic, Mani,
->> 
->> I saw this same issue a while back but could not collect the logs for
->> it.
->> 
->> I had already pushed a patch to fix this differently [1] which was
->> recently reviewed by Hemant.
->> 
->> Although there wasn't a purposeful fixes tag for it. I think the 
->> culprit
->> for this issue is [2]:
->> 
->> As it allows the unprepare to go through on remove(), which was
->> traditionally not allowed and
->> ends up uncovering this issue as it fixes another.
->> 
->> Channel updates [3] address that and provide a bunch of other
->> improvements. Please consider them.
-> 
-> Yes, patch [2] is the culprit. I would recommend merging this tiny fix
-> so that it can be easily grab for 5.11 or backported, and keep your
-> series (rebased on top), for mhi-next (going to review/test it btw).
-> 
-> Regards,
-> Loic
+On 2021/2/9 下午6:15, Naresh Kamboju wrote:
+> Hi Jason,
+>
+> On Mon, 4 Jan 2021 at 12:28, Jason Wang <jasowang@redhat.com> wrote:
+>> Signed-off-by: Jason Wang <jasowang@redhat.com>
+>> ---
+>>   drivers/virtio/Kconfig                 |  10 +-
+>>   drivers/virtio/Makefile                |   1 +
+>>   drivers/virtio/virtio_pci_common.h     |  27 +-
+>>   drivers/virtio/virtio_pci_modern.c     | 617 -------------------------
+>>   drivers/virtio/virtio_pci_modern_dev.c | 599 ++++++++++++++++++++++++
+>>   include/linux/virtio_pci_modern.h      | 111 +++++
+>>   6 files changed, 721 insertions(+), 644 deletions(-)
+>>   create mode 100644 drivers/virtio/virtio_pci_modern_dev.c
+>>   create mode 100644 include/linux/virtio_pci_modern.h
+>>
+>> diff --git a/drivers/virtio/Kconfig b/drivers/virtio/Kconfig
+>> index 7b41130d3f35..6b9b81f4b8c2 100644
+>> --- a/drivers/virtio/Kconfig
+>> +++ b/drivers/virtio/Kconfig
+>> @@ -12,6 +12,14 @@ config ARCH_HAS_RESTRICTED_VIRTIO_MEMORY_ACCESS
+>>            This option is selected if the architecture may need to enforce
+>>            VIRTIO_F_ACCESS_PLATFORM
+>>
+>> +config VIRTIO_PCI_MODERN
+>> +       tristate "Modern Virtio PCI Device"
+>> +       depends on PCI
+>> +       help
+>> +         Modern PCI device implementation. This module implements the
+>> +         basic probe and control for devices which are based on modern
+>> +         PCI device with possible vendor specific extensions.
+>> +
+>>   menuconfig VIRTIO_MENU
+>>          bool "Virtio drivers"
+>>          default y
+>> @@ -20,7 +28,7 @@ if VIRTIO_MENU
+>>
+>>   config VIRTIO_PCI
+>>          tristate "PCI driver for virtio devices"
+>> -       depends on PCI
+>> +       depends on VIRTIO_PCI_MODERN
+> While booting Linux next tag 20210208 kernel on qemu_arm64 and qemu_arm
+> mount rootfs failed.  The root cause seems to be due to missing configs
+> CONFIG_VIRTIO_PCI=y
+> CONFIG_VIRTIO_PCI_LEGACY=y
+>
+> Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+>
+> Then I have to force to enable this MODERN config
+> CONFIG_VIRTIO_PCI_MODERN=y
+> and which enabled
+> CONFIG_VIRTIO_PCI=y
+> CONFIG_VIRTIO_PCI_LEGACY=y
+>
+> and the qemu_arm64 and qemu_arm boot pass.
+>
+>
+> New build link,
+> https://builds.tuxbuild.com/1oEse4EFsoQr1FkKBfiLmhMCe7j/
 
-If priority is to get this fix in ASAP, your suggestion is OK. I just 
-see some
-typo fixes and a title update to "bus: mhi: core: Fix double dma free() 
-call"
-or something as review comments for your patch.
 
-Another option is that I can send my patch [1] separately and remove it 
-from my
-"channel updates" patch series, if that helps.
+Thanks for the reporting.
 
-I'd like to see what Mani and Hemant on what they prefer. Please advise.
+I will post a patch to fix the def config to enable VIRTIO_PCI_MODERN.
 
-Thanks,
-Bhaumik
+Thanks
 
-[1] https://lkml.org/lkml/2021/2/4/1161
 
----
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
+>
+>
+
