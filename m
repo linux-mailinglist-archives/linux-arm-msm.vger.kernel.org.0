@@ -2,53 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AD462316956
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Feb 2021 15:44:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5613431698C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Feb 2021 15:57:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231645AbhBJOoQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Feb 2021 09:44:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44634 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231626AbhBJOoO (ORCPT
+        id S231431AbhBJO5j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Feb 2021 09:57:39 -0500
+Received: from mail.baikalelectronics.com ([87.245.175.226]:34458 "EHLO
+        mail.baikalelectronics.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229888AbhBJO5d (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Feb 2021 09:44:14 -0500
-Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECE83C0613D6;
-        Wed, 10 Feb 2021 06:43:32 -0800 (PST)
-Received: from [192.168.1.101] (abac187.neoplus.adsl.tpnet.pl [83.6.166.187])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id ED5BF3F3F7;
-        Wed, 10 Feb 2021 15:43:27 +0100 (CET)
-Subject: Re: [PATCH v3] arm64: dts: qcom: sdm845-xiaomi-beryllium: Add DSI and
- panel bits
-To:     Amit Pundir <amit.pundir@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Wed, 10 Feb 2021 09:57:33 -0500
+Date:   Wed, 10 Feb 2021 17:56:40 +0300
+From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC:     Serge Semin <fancer.lancer@gmail.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Florian Fainelli <f.fainelli@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dt <devicetree@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>, phone-devel@vger.kernel.org
-References: <1612945128-23174-1-git-send-email-amit.pundir@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-Message-ID: <75692378-d864-4862-45dc-aa0fd9594a2d@somainline.org>
-Date:   Wed, 10 Feb 2021 15:43:27 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.0
+        Andy Gross <agross@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v3 09/10] usb: dwc3: qcom: Detect DWC3 DT-nodes with
+ "usb"-prefixed names
+Message-ID: <20210210145640.xhvcnarq3xoeeesu@mobilestation>
+References: <20201205155621.3045-1-Sergey.Semin@baikalelectronics.ru>
+ <20201205155621.3045-10-Sergey.Semin@baikalelectronics.ru>
+ <YBnZ8O+zI/dzrjDQ@builder.lan>
+ <YBpnpj+0KHM1Q8l8@kroah.com>
 MIME-Version: 1.0
-In-Reply-To: <1612945128-23174-1-git-send-email-amit.pundir@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <YBpnpj+0KHM1Q8l8@kroah.com>
+X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+On Wed, Feb 03, 2021 at 10:06:46AM +0100, Greg Kroah-Hartman wrote:
+> On Tue, Feb 02, 2021 at 05:02:08PM -0600, Bjorn Andersson wrote:
+> > On Sat 05 Dec 09:56 CST 2020, Serge Semin wrote:
+> > 
+> > > In accordance with the USB HCD/DRD schema all the USB controllers are
+> > > supposed to have DT-nodes named with prefix "^usb(@.*)?".  Since the
+> > > existing DT-nodes will be renamed in a subsequent patch let's first make
+> > > sure the DWC3 Qualcomm driver supports them and second falls back to the
+> > > deprecated naming so not to fail on the legacy DTS-files passed to the
+> > > newer kernels.
+> > > 
+> > 
+> > Felipe, will you merge this, so that I can merge the dts patch depending
+> > on this into the Qualcomm DT tree?
+> 
+> Patches this old are long-gone out of our queues.  If it needs to be
+> applied to a linux-usb tree, please resend.
 
-Konrad
+Greg, Bjorn,
+I've revised and resent the series. Please find the recently posted
+patchset:
+Link: https://lore.kernel.org/lkml/20210208135154.6645-1-Sergey.Semin@baikalelectronics.ru/
+
+Alas I've forgotten to Cc the linux-usb mailing list. Should I resend
+the series one more time?
+
+-Sergey
+
+> 
+> thanks,
+> 
+> greg k-h
