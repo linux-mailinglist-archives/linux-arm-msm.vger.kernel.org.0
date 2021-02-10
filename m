@@ -2,89 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8488E316EFD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Feb 2021 19:44:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D2743316F00
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Feb 2021 19:44:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234228AbhBJSnw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Feb 2021 13:43:52 -0500
-Received: from mail.baikalelectronics.com ([87.245.175.226]:35068 "EHLO
-        mail.baikalelectronics.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232813AbhBJSli (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Feb 2021 13:41:38 -0500
-Date:   Wed, 10 Feb 2021 21:40:51 +0300
-From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
-To:     Rob Herring <robh+dt@kernel.org>
-CC:     Serge Semin <fancer.lancer@gmail.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Linux USB List <linux-usb@vger.kernel.org>,
+        id S232097AbhBJSoN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Feb 2021 13:44:13 -0500
+Received: from mail.kernel.org ([198.145.29.99]:53678 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234140AbhBJSmK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Feb 2021 13:42:10 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 919AD64E16;
+        Wed, 10 Feb 2021 18:41:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1612982490;
+        bh=XgP03GM5rkGUCwpgxJpGaI0tT3DNsJVXchGDzh6j1hE=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=MEFkVIa6UfYMXfntzDOMuVFmJrM7E5ceftlVeGUdxE41afIlXmWt7/kcRx73hl83J
+         wYYuJNInXpScSjwW4bBQhpPW7Hp2KGIb/B0DG1ouWcjpA8NUDwRBXLe614zWDOea1P
+         jmUquVg0xO4R6ubhx+c5h5cVOlhjL8zXvtnlDs9CZ918TRTgzdnfUeHlWX/3yQGmxD
+         f75dTDNFKEefws7zXFbXqq6k2Kh8LA32G/JPOCQI1W5iWvB/bH3No5rhfYMbvhqsQy
+         fp0Jrfn6WhtKH38ZVuH/9i4CiHf6a5Bn+JbvB/Kgpv72JXErDsYpJWOFxV0tPT8kg+
+         9cjpt4Pnx3thg==
+Date:   Wed, 10 Feb 2021 10:41:28 -0800
+From:   Jakub Kicinski <kuba@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Aleksander Morgado <aleksander@aleksander.es>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Greg KH <gregkh@linuxfoundation.org>,
+        David Miller <davem@davemloft.net>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v6 09/10] usb: dwc3: qcom: Detect DWC3 DT-nodes with
- "usb"-prefixed names
-Message-ID: <20210210184051.ncvvs5xgyo7o3uzq@mobilestation>
-References: <20210210172850.20849-1-Sergey.Semin@baikalelectronics.ru>
- <20210210172850.20849-10-Sergey.Semin@baikalelectronics.ru>
- <CAL_JsqJBknqhCSUOdpZVbtmp6TYetBQPLoQUCT6DTFajpChaSA@mail.gmail.com>
+        open list <linux-kernel@vger.kernel.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>,
+        Network Development <netdev@vger.kernel.org>
+Subject: Re: [RESEND PATCH v18 0/3] userspace MHI client interface driver
+Message-ID: <20210210104128.2166e506@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+In-Reply-To: <20210210062531.GA13668@work>
+References: <YBfi573Bdfxy0GBt@kroah.com>
+        <20210201121322.GC108653@thinkpad>
+        <20210202042208.GB840@work>
+        <20210202201008.274209f9@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+        <835B2E08-7B84-4A02-B82F-445467D69083@linaro.org>
+        <20210203100508.1082f73e@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+        <CAMZdPi8o44RPTGcLSvP0nptmdUEmJWFO4HkCB_kjJvfPDgchhQ@mail.gmail.com>
+        <20210203104028.62d41962@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+        <CAAP7ucLZ5jKbKriSp39OtDLotbv72eBWKFCfqCbAF854kCBU8w@mail.gmail.com>
+        <20210209081744.43eea7b5@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+        <20210210062531.GA13668@work>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <CAL_JsqJBknqhCSUOdpZVbtmp6TYetBQPLoQUCT6DTFajpChaSA@mail.gmail.com>
-X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 10, 2021 at 12:17:27PM -0600, Rob Herring wrote:
-> On Wed, Feb 10, 2021 at 11:29 AM Serge Semin
-> <Sergey.Semin@baikalelectronics.ru> wrote:
-> >
-> > In accordance with the USB HCD/DRD schema all the USB controllers are
-> > supposed to have DT-nodes named with prefix "^usb(@.*)?".  Since the
-> > existing DT-nodes will be renamed in a subsequent patch let's first make
-> > sure the DWC3 Qualcomm driver supports them and second falls back to the
-> > deprecated naming so not to fail on the legacy DTS-files passed to the
-> > newer kernels.
-> >
-> > Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-> > Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> >  drivers/usb/dwc3/dwc3-qcom.c | 3 ++-
-> >  1 file changed, 2 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> > index c703d552bbcf..49ad8d507d37 100644
-> > --- a/drivers/usb/dwc3/dwc3-qcom.c
-> > +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> > @@ -630,7 +630,8 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
-> >         struct device           *dev = &pdev->dev;
-> >         int                     ret;
-> >
-> > -       dwc3_np = of_get_child_by_name(np, "dwc3");
-> > +       dwc3_np = of_get_child_by_name(np, "usb") ?:
-> > +                 of_get_child_by_name(np, "dwc3");
+On Wed, 10 Feb 2021 11:55:31 +0530 Manivannan Sadhasivam wrote:
+> On Tue, Feb 09, 2021 at 08:17:44AM -0800, Jakub Kicinski wrote:
+> > On Tue, 9 Feb 2021 10:20:30 +0100 Aleksander Morgado wrote:  
+> > > This may be a stupid suggestion, but would the integration look less a
+> > > backdoor if it would have been named "mhi_wwan" and it exposed already
+> > > all the AT+DIAG+QMI+MBIM+NMEA possible channels as chardevs, not just
+> > > QMI?  
+> > 
+> > What's DIAG? Who's going to remember that this is a backdoor driver 
+> > a year from now when Qualcomm sends a one liner patches which just 
+> > adds a single ID to open another channel?  
 > 
-
-> Is there some reason using compatible instead wouldn't work here?
-
-I don't know for sure. The fix has been requested in the framework of
-this discussion:
-https://lore.kernel.org/linux-usb/20201020115959.2658-30-Sergey.Semin@baikalelectronics.ru/#t
-by the driver maintainer Bjorn. To get a firm answer it's better to
-have him asked. As I see it having of_get_compatible_child() utilized
-here would also work. At least for the available in kernel dt-files.
-See the affected dts-es in:
-https://lore.kernel.org/linux-usb/20210210172850.20849-11-Sergey.Semin@baikalelectronics.ru/
-
-A problem may happen if some older versions of DTS-es had another
-compatible string in the dwc3 sub-node...
-
--Sergey
-
+> I really appreciate your feedback on this driver eventhough I'm not
+> inclined with you calling this driver a "backdoor interface". But can
+> you please propose a solution on how to make this driver a good one as
+> per your thoughts?
 > 
-> Rob
+> I really don't know what bothers you even if the userspace tools making
+> use of these chardevs are available openly (you can do the audit and see
+> if anything wrong we are doing).
+
+What bothers me is maintaining shim drivers which just shuttle opaque
+messages between user space and firmware. One of which definitely is,
+and the other may well be, proprietary. This is an open source project,
+users are supposed to be able to meaningfully change the behavior of
+the system.
+
+What bothers me is that we have 3 WWAN vendors all doing their own
+thing and no common Linux API for WWAN. It may have been fine 10 years
+ago, but WWAN is increasingly complex and important.
+
+> And exposing the raw access to the
+> hardware is not a new thing in kernel. There are several existing
+> subsystems/drivers does this as pointed out by Bjorn. Moreover we don't
+> have in-kernel APIs for the functionalities exposed by this driver and
+> creating one is not feasible as explained by many.
+> 
+> So please let us know the path forward on this series. We are open to
+> any suggestions but you haven't provided one till now.
+
+Well. You sure know how to aggravate people. I said clearly that you
+can move forward on purpose build drivers (e.g. for WWAN). There is no
+way forward on this common shim driver as far as I'm concerned.
