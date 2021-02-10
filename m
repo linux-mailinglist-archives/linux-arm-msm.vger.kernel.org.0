@@ -2,140 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 02229316025
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Feb 2021 08:39:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D53A3160BF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Feb 2021 09:15:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232484AbhBJHjL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Feb 2021 02:39:11 -0500
-Received: from so15.mailgun.net ([198.61.254.15]:32804 "EHLO so15.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232775AbhBJHjE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Feb 2021 02:39:04 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1612942723; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=m9mgYxO7qovsOFENfWe6v9wHtSFv2z5fptvE2FDjRlA=;
- b=LE0oVLROmirV7nWvN73z6Qk3xCesdbbgFJeRpq/hMxUMDKQPzLApFrir1Kry0e/MsG2pUo3r
- H3XY9jKcmWsZAcP5lJZQlDtv4L/CpYogdm/dIXX3WFjYgZpyXlWMe6dFVRa4HPPv48JCIyMu
- 7oteWcw6kT/mP5/O07zewingtuM=
-X-Mailgun-Sending-Ip: 198.61.254.15
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 60238d5ef112b7872c3ede68 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 10 Feb 2021 07:38:06
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9F2F5C43467; Wed, 10 Feb 2021 07:38:06 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B3B6BC433C6;
-        Wed, 10 Feb 2021 07:38:05 +0000 (UTC)
+        id S233493AbhBJIPi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Feb 2021 03:15:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45792 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233767AbhBJIPY (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Feb 2021 03:15:24 -0500
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBD50C06174A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Feb 2021 00:14:43 -0800 (PST)
+Received: by mail-pl1-x62c.google.com with SMTP id e12so786125pls.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Feb 2021 00:14:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=teATK7TqlsR6FecITFgdLZO0PyVXHjRxwgE/FTuMEuE=;
+        b=PcHSlhbN4ONNxaKC7dL0+yWD2/lywMHMvWZOv6HbFvd/7tn5V0xybz2tlUpa9QEHJ7
+         GRNvUp7PEmkmg/71FJ5la96uLM4DjVccnmXf5NcECeg6yt5Mra0bHxGkzHk5XuHKtPIY
+         lE/7RlSvikHmQQZ4EXPl1a9nGgciP+GUY3zgeNTEmXpTya6WYkP7Hy1F6s8K8kZuFRJZ
+         P8pMpD+4DkoRseAe+4MHEGamj7XVMtUEu5zNPptSVDJ/nTJFgaiqyu5ZOZGrU5lMdNIx
+         lhn/UDHiSG1aSGJClOvv6VJq5gfUDpgSzPODfmARpSwkpetskoGlk6y5Be6dECoCde1m
+         rI9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=teATK7TqlsR6FecITFgdLZO0PyVXHjRxwgE/FTuMEuE=;
+        b=dZEk5YZwxP4X42lS/HIEhWuVpziCsQ/pLk+fMItUQo/HYfIStSu1JD7fy3aG4TVVUm
+         z6NCzIMoAay9jeR/GiSDH8ZvRfxKLz2YznYoZe5Xy5V+G0cbUp3VNVYqT/gASVoQ1qKy
+         2ZM0MO+MeT3Tdbcd47xDMkVYhA14QtnMkdNulFTJiNRalXlISlOJ80ZG+2PnEaHmrQc7
+         Y6pV8ntljh9c+Gk5N9rl+1pv/NrMxxV5vSEFaMAqgJl92w717AZm2PdNLlhr3tvpV3qJ
+         /uWXoib3GbdA70ev8MyS5EaJMeElqcYWYKy4908NwzSUwIWFbf6Rsr0vvjj8988NaT6s
+         vmYA==
+X-Gm-Message-State: AOAM5322xw3LEjyYndpsR0zi67FO15qClCkAtc+63MToYxleoTZ0h59m
+        WlxJrWOrRwCZmAJKb0Uv81N8U8dKuOVs
+X-Google-Smtp-Source: ABdhPJwpAuI79HEOzpkh7txmm7y4OYOLlzhFzX89l4NsgIty7mw7yIGe2xeg1t1vzVO5BW4YrBkJXw==
+X-Received: by 2002:a17:90a:d145:: with SMTP id t5mr2100285pjw.104.1612944883327;
+        Wed, 10 Feb 2021 00:14:43 -0800 (PST)
+Received: from work ([103.66.79.29])
+        by smtp.gmail.com with ESMTPSA id bb4sm1236668pjb.56.2021.02.10.00.14.41
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 10 Feb 2021 00:14:42 -0800 (PST)
+Date:   Wed, 10 Feb 2021 13:44:39 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        kvalo@codeaurora.org
+Subject: Re: [PATCH v2] mhi: Fix double dma free
+Message-ID: <20210210081439.GB13668@work>
+References: <1612894264-15956-1-git-send-email-loic.poulain@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 10 Feb 2021 13:08:05 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Peter Zijlstra <peterz@infradead.org>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Ingo Molnar <mingo@redhat.com>,
-        Arnaldo Carvalho de Melo <acme@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Jiri Olsa <jolsa@redhat.com>,
-        Namhyung Kim <namhyung@kernel.org>,
-        Leo Yan <leo.yan@linaro.org>, coresight@lists.linaro.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Denis Nikitin <denik@chromium.org>,
-        Mattias Nissler <mnissler@chromium.org>,
-        Al Grant <al.grant@arm.com>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        jannh@google.com
-Subject: Re: [PATCH 1/4] perf/core: Add support to exclude kernel mode
- instruction tracing
-In-Reply-To: <6903bc0588a5c8e41892503a204015ee@codeaurora.org>
-References: <cover.1611909025.git.saiprakash.ranjan@codeaurora.org>
- <89c7ff59d887a0360434e607bd625393ec3190e5.1611909025.git.saiprakash.ranjan@codeaurora.org>
- <20210129193040.GJ8912@worktop.programming.kicks-ass.net>
- <3c96026b544c2244e57b46119427b8a0@codeaurora.org>
- <YBgFDXgX57y5XzOn@hirez.programming.kicks-ass.net>
- <6903bc0588a5c8e41892503a204015ee@codeaurora.org>
-Message-ID: <b5cbc2607e3f847887e94bfad18534d8@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1612894264-15956-1-git-send-email-loic.poulain@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Peter,
+On Tue, Feb 09, 2021 at 07:11:04PM +0100, Loic Poulain wrote:
+> mhi_deinit_chan_ctxt functionthat takes care of unitializing channel
+> resources, including unmapping coherent MHI areas, can be called
+> from different path in case of controller unregistering/removal:
+>  - From a client driver remove callback, via mhi_unprepare_channel
+>  - From mhi_driver_remove that unitialize all channels
+> 
+> mhi_driver_remove()
+> |-> driver->remove()
+> |    |-> mhi_unprepare_channel()
+> |        |-> mhi_deinit_chan_ctxt()
+> |...
+> |-> mhi_deinit_chan_ctxt()
+> 
+> This leads to double dma freeing...
+> 
+> Fix that by preventing deinit for already uninitialized channel.
+> 
+> Fixes: a7f422f2f89e ("bus: mhi: Fix channel close issue on driver remove")
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> Reported-by: Kalle Valo <kvalo@codeaurora.org>
+> Tested-by: Kalle Valo <kvalo@codeaurora.org>
 
-On 2021-02-02 11:41, Sai Prakash Ranjan wrote:
-> Hi Peter,
-> 
-> On 2021-02-01 19:11, Peter Zijlstra wrote:
->> On Mon, Feb 01, 2021 at 01:11:04PM +0530, Sai Prakash Ranjan wrote:
->> 
->>> Ok I suppose you mean CONFIG_SECURITY_LOCKDOWN_LSM? But I don't see
->>> how this new config has to depend on that? This can work 
->>> independently
->>> whether complete lockdown is enforced or not since it applies to only
->>> hardware instruction tracing. Ideally this depends on several 
->>> hardware
->>> tracing configs such as ETMs and others but we don't need them 
->>> because
->>> we are already exposing PERF_PMU_CAP_ITRACE check in the events core.
->> 
->> If you don't have lockdown, root pretty much owns the kernel, or am I
->> missing something?
->> 
-> 
-> You are right in saying that without lockdown root would own kernel but
-> this config(EXCLUDE_KERNEL) will independently make sure that kernel
-> level pmu tracing is not allowed(we return -EACCES) even if LOCKDOWN
-> config is disabled. So I'm saying that we don't need to depend on
-> LOCKDOWN config, its good to have LOCKDOWN config enabled but perf
-> subsystem doesn't have to care about that.
-> 
->>> be used for some speculative execution based attacks. Which other
->>> kernel level PMUs can be used to get a full branch trace that is not
->>> locked down? If there is one, then this should probably be applied to
->>> it as well.
->> 
->> Just the regular counters. The information isn't as accurate, but 
->> given
->> enough goes you can infer plenty.
->> 
->> Just like all the SMT size-channel attacks.
->> 
->> Sure, PT and friends make it even easier, but I don't see a 
->> fundamental
->> distinction.
-> 
-> Right, we should then exclude all kernel level pmu tracing, is it fine?
-> 
-> if (IS_ENABLED(CONFIG_EXCLUDE_KERNEL_HW_ITRACE) && 
-> !attr.exclude_kernel))
->     return -EACCES;
-> 
-
-Sorry for being pushy, but does the above make sense?
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 Thanks,
-Sai
+Mani
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+> ---
+>  v2: add Fixes tag
+> 
+>  drivers/bus/mhi/core/init.c | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+> index aa575d3..be4eebb 100644
+> --- a/drivers/bus/mhi/core/init.c
+> +++ b/drivers/bus/mhi/core/init.c
+> @@ -557,6 +557,9 @@ void mhi_deinit_chan_ctxt(struct mhi_controller *mhi_cntrl,
+>  	tre_ring = &mhi_chan->tre_ring;
+>  	chan_ctxt = &mhi_cntrl->mhi_ctxt->chan_ctxt[mhi_chan->chan];
+>  
+> +	if (!chan_ctxt->rbase) /* Already uninitialized */
+> +		return;
+> +
+>  	mhi_free_coherent(mhi_cntrl, tre_ring->alloc_size,
+>  			  tre_ring->pre_aligned, tre_ring->dma_handle);
+>  	vfree(buf_ring->base);
+> -- 
+> 2.7.4
+> 
