@@ -2,172 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ACE363191B8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Feb 2021 18:59:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CC3743191C9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Feb 2021 19:06:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230452AbhBKR7C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Feb 2021 12:59:02 -0500
-Received: from so15.mailgun.net ([198.61.254.15]:34654 "EHLO so15.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231499AbhBKR4h (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Feb 2021 12:56:37 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1613066161; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=/SXN84APFbIiVpRHneySmieV66r2cg+BeMSnAfogVHI=; b=tQGlsZkXb3X8QEPBIib4cYaa0Vd7Q34SD/LAbxRQUuNqDQpz59OtKr4tEVqQ4Ze6ePmdZu5/
- 4hP+Qk9SF+8kN54MMVq3pxmNvGw3uYk6xpZYDATTwW/nKwr7sS5cA3xYrn7yA4yxTQJq5y5F
- TJQx9akXi01FPsthfmk9sGiBemQ=
-X-Mailgun-Sending-Ip: 198.61.254.15
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 60256f984bd23a05aeda17dd (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 11 Feb 2021 17:55:36
- GMT
-Sender: jhugo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E890FC43465; Thu, 11 Feb 2021 17:55:35 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.0 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S229869AbhBKSDx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Feb 2021 13:03:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57508 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231614AbhBKSCT (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 11 Feb 2021 13:02:19 -0500
+Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC3FEC061786;
+        Thu, 11 Feb 2021 09:50:21 -0800 (PST)
+Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D4E61C433ED;
-        Thu, 11 Feb 2021 17:55:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D4E61C433ED
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH] mhi: pci_generic: Ensure device readiness before starting
- MHI
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-References: <1613063283-12029-1-git-send-email-loic.poulain@linaro.org>
- <fa8c8c21-4c07-cdcc-0ce7-76945905f0d0@codeaurora.org>
- <CAMZdPi8rguNCgQ1rahmtBsen40nOA=d+w9smhK4uN+jeDW01SQ@mail.gmail.com>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <6cf90335-ad7f-9e72-651e-dd3beb709d1f@codeaurora.org>
-Date:   Thu, 11 Feb 2021 10:55:34 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.0
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 4A7001F4EA;
+        Thu, 11 Feb 2021 18:50:17 +0100 (CET)
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+To:     elder@kernel.org
+Cc:     bjorn.andersson@linaro.org, agross@kernel.org, davem@davemloft.net,
+        kuba@kernel.org, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
+        marijn.suijten@somainline.org, phone-devel@vger.kernel.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Subject: [PATCH v1 0/7] Add support for IPA v3.1, GSI v1.0, MSM8998 IPA
+Date:   Thu, 11 Feb 2021 18:50:08 +0100
+Message-Id: <20210211175015.200772-1-angelogioacchino.delregno@somainline.org>
+X-Mailer: git-send-email 2.30.0
 MIME-Version: 1.0
-In-Reply-To: <CAMZdPi8rguNCgQ1rahmtBsen40nOA=d+w9smhK4uN+jeDW01SQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/11/2021 10:47 AM, Loic Poulain wrote:
-> On Thu, 11 Feb 2021 at 18:13, Jeffrey Hugo <jhugo@codeaurora.org> wrote:
->>
->> On 2/11/2021 10:08 AM, Loic Poulain wrote:
->>> The PCI device may have not been bound from cold boot and be in
->>> undefined state, or simply not yet ready for MHI operations. This
->>> change ensures that the MHI layer is reset to initial state and
->>> ready for MHI initialization and power up.
->>>
->>> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
->>> ---
->>>    drivers/bus/mhi/pci_generic.c | 23 +++++++++++++++++++++++
->>>    1 file changed, 23 insertions(+)
->>>
->>> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
->>> index c20f59e..bfa0a1e 100644
->>> --- a/drivers/bus/mhi/pci_generic.c
->>> +++ b/drivers/bus/mhi/pci_generic.c
->>> @@ -17,6 +17,8 @@
->>>    #include <linux/timer.h>
->>>    #include <linux/workqueue.h>
->>>
->>> +#include "core/internal.h"
->>> +
->>>    #define MHI_PCI_DEFAULT_BAR_NUM 0
->>>
->>>    #define MHI_POST_RESET_DELAY_MS 500
->>> @@ -391,6 +393,22 @@ static void health_check(struct timer_list *t)
->>>        mod_timer(&mhi_pdev->health_check_timer, jiffies + HEALTH_CHECK_PERIOD);
->>>    }
->>>
->>> +static void __mhi_sw_reset(struct mhi_controller *mhi_cntrl)
->>> +{
->>> +     unsigned int max_wait_ready = 200;
->>> +
->>> +     mhi_pci_write_reg(mhi_cntrl, mhi_cntrl->regs + MHICTRL,
->>> +                       MHICTRL_RESET_MASK);
->>> +
->>> +     while (mhi_get_mhi_state(mhi_cntrl) != MHI_STATE_READY) {
->>> +             if (!max_wait_ready--) {
->>> +                     dev_warn(mhi_cntrl->cntrl_dev, "Not ready\n");
->>> +                     break;
->>> +             }
->>> +             msleep(50);
->>> +     }
->>> +}
->>> +
->>>    static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
->>>    {
->>>        const struct mhi_pci_dev_info *info = (struct mhi_pci_dev_info *) id->driver_data;
->>> @@ -451,6 +469,9 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
->>>                goto err_unregister;
->>>        }
->>>
->>> +     /* Before starting MHI, ensure device is in good initial state */
->>> +     __mhi_sw_reset(mhi_cntrl);
->>> +
->>>        err = mhi_sync_power_up(mhi_cntrl);
->>>        if (err) {
->>>                dev_err(&pdev->dev, "failed to power up MHI controller\n");
->>> @@ -532,6 +553,8 @@ static void mhi_pci_reset_done(struct pci_dev *pdev)
->>>                return;
->>>        }
->>>
->>> +     __mhi_sw_reset(mhi_cntrl);
->>> +
->>>        err = mhi_sync_power_up(mhi_cntrl);
->>>        if (err) {
->>>                dev_err(&pdev->dev, "failed to power up MHI controller\n");
->>>
->>
->> So, I'm curious, how does this actually work?
->>
->>   From what I can see, you define SBL images.  If those get loaded by the
->> PBL, it doesn't happen over MHI.  PBL will not move MHI to ready state,
->> except in the specific instance of a fatal error.
-> 
-> I defined generic SBL images for flashless controller versions, but
-> mine is not, and so it boots directly in mission mode.
-> 
->>
->> Your above change works if the device comes up straight in mission mode
->> (AMSS), but if it comes up in PBL, you are going to hit the timeout and
->> dev_warn() every time.
-> 
-> Ok, I thought we should get into MHI ready state, whatever the
-> 'execution environment'... So I definitely need to take that into
-> consideration. thanks.
+Hey all!
 
-I could see where you could think that, which is why I commented.  I 
-didn't want you to run into issues later, assuming those issues are 
-valid to you.
+This time around I thought that it would be nice to get some modem
+action going on. We have it, it's working (ish), so just.. why not.
 
-MHI only gets into the ready state via EEs which drive MHI.  PBL 
-famously does not drive MHI because PBL is encoded into hardware and 
-extremely difficult to fix, so it is generally designed with the mantra 
-of "simpler is more reliable".
+This series adds support for IPA v3.1 (featuring GSI v1.0) and also
+takes account for some bits that are shared with other unimplemented
+IPA v3 variants and it is specifically targeting MSM8998, for which
+support is added.
 
-Hopefully I didn't throw a wrench in things for you.  Just trying to 
-save you some pain later.
+Since the userspace isn't entirely ready (as far as I can see) for
+data connection (3g/lte/whatever) through the modem, it was possible
+to only partially test this series.
+Specifically, loading the IPA firmware and setting up the interface
+went just fine, along with a basic setup of the network interface
+that got exposed by this driver.
+
+With this series, the benefits that I see are:
+ 1. The modem doesn't crash anymore when trying to setup a data
+    connection, as now the modem firmware seems to be happy with
+    having IPA initialized and ready;
+ 2. Other random modem crashes while picking up LTE home network
+    signal (even just for calling, nothing fancy) seem to be gone.
+
+These are the reasons why I think that this series is ready for
+upstream action. It's *at least* stabilizing the platform when
+the modem is up.
+
+This was tested on the F(x)Tec Pro 1 (MSM8998) smartphone.
+
+AngeloGioacchino Del Regno (7):
+  net: ipa: Add support for IPA v3.1 with GSI v1.0
+  net: ipa: endpoint: Don't read unexistant register on IPAv3.1
+  net: ipa: gsi: Avoid some writes during irq setup for older IPA
+  net: ipa: gsi: Use right masks for GSI v1.0 channels hw param
+  net: ipa: Add support for IPA on MSM8998
+  dt-bindings: net: qcom-ipa: Document qcom,sc7180-ipa compatible
+  dt-bindings: net: qcom-ipa: Document qcom,msm8998-ipa compatible
+
+ .../devicetree/bindings/net/qcom,ipa.yaml     |   7 +-
+ drivers/net/ipa/Makefile                      |   3 +-
+ drivers/net/ipa/gsi.c                         |  33 +-
+ drivers/net/ipa/gsi_reg.h                     |   5 +
+ drivers/net/ipa/ipa_data-msm8998.c            | 407 ++++++++++++++++++
+ drivers/net/ipa/ipa_data.h                    |   5 +
+ drivers/net/ipa/ipa_endpoint.c                |  26 +-
+ drivers/net/ipa/ipa_main.c                    |  12 +-
+ drivers/net/ipa/ipa_reg.h                     |   3 +
+ drivers/net/ipa/ipa_version.h                 |   1 +
+ 10 files changed, 480 insertions(+), 22 deletions(-)
+ create mode 100644 drivers/net/ipa/ipa_data-msm8998.c
 
 -- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+2.30.0
+
