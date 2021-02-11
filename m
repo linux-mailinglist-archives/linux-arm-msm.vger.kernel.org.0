@@ -2,137 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 86D32319471
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Feb 2021 21:28:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7BD813194B4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Feb 2021 21:48:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231395AbhBKU1q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Feb 2021 15:27:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60514 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231821AbhBKU1p (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Feb 2021 15:27:45 -0500
-Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F263C061786
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Feb 2021 12:27:04 -0800 (PST)
-Received: by mail-il1-x134.google.com with SMTP id m20so6242470ilj.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Feb 2021 12:27:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ieee.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=BhGQshN1SJ6FzYvK/Ylak5i6bTCB8ww2nvYRmIy1Hhg=;
-        b=dB8jc5NwlVjd5jAbswz4S6tGscnbR1vlEnvWXzmI5VGKQxt92AINve6Ax5LT703TnI
-         HX50/z+Qhm+1paetK0Na84hXoIqb6Up1iN8socEjg9gbMDWyCcb87Rbykh1peungcU2T
-         Ei0LSx02rQCMLWO3IolI/80HT2YrDpmKhTBWM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=BhGQshN1SJ6FzYvK/Ylak5i6bTCB8ww2nvYRmIy1Hhg=;
-        b=YvRGDjjaeN6879di2avZDuz6WQrz7glmPagVtlf5oFwh+Q57ORD9qdDCRcvH9mRq/U
-         HOGoK3aeBQRS4sCzLOFvA3b5q9qVS7XnaQkb0ZYbAOMHMFIodQc9htvx6CbCNaM1sfcc
-         vPGBv8czLt3qrk/l3GdRtytWSXFNieiRgi/54R7YECsl8C5MTVT7qJZVpX3gwfNakYiG
-         3xOD63HhwGIT2trYYwi9ye6EyhbqlTon44yw9fLVtWsMAxT4A3C7KelsxS08/uCbCxeT
-         0eT4JIpqEos4vHKpqEVxJtFagMmmrtfHGv1Fw34c/NNXkoipOylyX7JpvTocqjBXf0VG
-         8gMQ==
-X-Gm-Message-State: AOAM530u0XE46AlFhylMi5yJYCnmqpuhI4B7ciFYUFiwNUbHxDoFvjY+
-        Cev8d7v60RdXiHCdAkmEsN/xYw==
-X-Google-Smtp-Source: ABdhPJzMlL6cxuNZc0DR632e+CNV3R+bRT9mM+nrr2xk1U1V2+1gi/DwvLGaJVPrlE7F5QiYXbEqsA==
-X-Received: by 2002:a92:730a:: with SMTP id o10mr7310122ilc.160.1613075223595;
-        Thu, 11 Feb 2021 12:27:03 -0800 (PST)
-Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.googlemail.com with ESMTPSA id h2sm3009479ioh.6.2021.02.11.12.27.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Feb 2021 12:27:03 -0800 (PST)
-Subject: Re: [PATCH v1 0/7] Add support for IPA v3.1, GSI v1.0, MSM8998 IPA
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>, elder@kernel.org
-Cc:     bjorn.andersson@linaro.org, agross@kernel.org, davem@davemloft.net,
-        kuba@kernel.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
-        marijn.suijten@somainline.org, phone-devel@vger.kernel.org
-References: <20210211175015.200772-1-angelogioacchino.delregno@somainline.org>
-From:   Alex Elder <elder@ieee.org>
-Message-ID: <3a596fce-9aa3-e2eb-7920-4ada65f8d2ee@ieee.org>
-Date:   Thu, 11 Feb 2021 14:27:01 -0600
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.1
+        id S230470AbhBKUry (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Feb 2021 15:47:54 -0500
+Received: from mail.kernel.org ([198.145.29.99]:50166 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230450AbhBKUrx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 11 Feb 2021 15:47:53 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id D6FD864E3B;
+        Thu, 11 Feb 2021 20:47:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1613076432;
+        bh=vG0YvE0JNwxsy3Hevz/Y83+mEgLMI6DUHbIarDb9OXE=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=PVxo1LcX30rdtmFh6xUTj0kdmeNXam0jtuw6i0BLJQDVuKWEDUq9DsCKxKe5cZ7j1
+         75/Mjac7W7cQpPmKJWeJ29DNvE8fjxy3nKld2+4lQpBanSpgWJPv4/VETRy6/iVUXD
+         YLffOrahpYQWiA4lqBppMqKoxm6/rN83EQZJ5dnLQqqLrX1/UxngHD0L11G42nD4xd
+         qvjtqSD9WCW+CnL5eGFhL75f7lIx+A81XawEnKMMXzZNi7lT9lmmZYGnIfE2z3+1iD
+         UQ+OsCH6IuHmlXyDe7uIqmrktnI8W8QvKTviHz47x2lPSsVy5PWxgrUX3iMD7uVGnZ
+         E90e1uh8zSx2A==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <20210211175015.200772-1-angelogioacchino.delregno@somainline.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20210126124540.3320214-1-lee.jones@linaro.org>
+References: <20210126124540.3320214-1-lee.jones@linaro.org>
+Subject: Re: [PATCH 00/21] [Set 2] Rid W=1 warnings from Clock
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-kernel@vger.kernel.org,
+        Ahmad Fatoum <a.fatoum@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Avi Fishman <avifishman70@gmail.com>,
+        Benjamin Fair <benjaminfair@google.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Boris BREZILLON <boris.brezillon@free-electrons.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Emilio =?utf-8?q?L=C3=B3pez?= <emilio@elopez.com.ar>,
+        Fabio Estevam <festevam@gmail.com>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Jan Kotas <jank@cadence.com>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        linux-tegra@vger.kernel.org, Loc Ho <lho@apm.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Nancy Yuen <yuenn@google.com>,
+        Nuvoton Technologies <tali.perry@nuvoton.com>,
+        NXP Linux Team <linux-imx@nxp.com>, openbmc@lists.ozlabs.org,
+        Patrick Venture <venture@google.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Peter De Schrijver <pdeschrijver@nvidia.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Prashant Gaikwad <pgaikwad@nvidia.com>,
+        Rajan Vaja <rajan.vaja@xilinx.com>,
+        Rajeev Kumar <rajeev-dlh.kumar@st.com>,
+        Richard Woodruff <r-woodruff2@ti.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Shiraz Hashim <shiraz.linux.kernel@gmail.com>,
+        =?utf-8?q?S=C3=B6ren?= Brinkmann <soren.brinkmann@xilinx.com>,
+        Tali Perry <tali.perry1@gmail.com>,
+        Tero Kristo <kristo@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Tomer Maimon <tmaimon77@gmail.com>,
+        Viresh Kumar <vireshk@kernel.org>
+To:     lee.jones@linaro.org
+Date:   Thu, 11 Feb 2021 12:47:11 -0800
+Message-ID: <161307643148.1254594.6590013599999468609@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/11/21 11:50 AM, AngeloGioacchino Del Regno wrote:
-> Hey all!
-> 
-> This time around I thought that it would be nice to get some modem
-> action going on. We have it, it's working (ish), so just.. why not.
+Quoting Lee Jones (2021-01-26 04:45:19)
+> This set is part of a larger effort attempting to clean-up W=3D1
+> kernel builds, which are currently overwhelmingly riddled with
+> niggly little warnings.
+>=20
+> This is the last set.  Clock is clean after this.
 
-Thank you for the patches!
-
-I would like to review these carefully but I'm sorry
-I won't be able to get to it today, and possibly not
-for a few days.  But I *will* review them.
-
-I just want you to know I'm paying attention, though
-I'm sort of buried in an important issue right now.
-
-I'm very impressed at how small the patches are though.
-
-					-Alex
-
-> This series adds support for IPA v3.1 (featuring GSI v1.0) and also
-> takes account for some bits that are shared with other unimplemented
-> IPA v3 variants and it is specifically targeting MSM8998, for which
-> support is added.
-> 
-> Since the userspace isn't entirely ready (as far as I can see) for
-> data connection (3g/lte/whatever) through the modem, it was possible
-> to only partially test this series.
-> Specifically, loading the IPA firmware and setting up the interface
-> went just fine, along with a basic setup of the network interface
-> that got exposed by this driver.
-> 
-> With this series, the benefits that I see are:
->   1. The modem doesn't crash anymore when trying to setup a data
->      connection, as now the modem firmware seems to be happy with
->      having IPA initialized and ready;
->   2. Other random modem crashes while picking up LTE home network
->      signal (even just for calling, nothing fancy) seem to be gone.
-> 
-> These are the reasons why I think that this series is ready for
-> upstream action. It's *at least* stabilizing the platform when
-> the modem is up.
-> 
-> This was tested on the F(x)Tec Pro 1 (MSM8998) smartphone.
-> 
-> AngeloGioacchino Del Regno (7):
->    net: ipa: Add support for IPA v3.1 with GSI v1.0
->    net: ipa: endpoint: Don't read unexistant register on IPAv3.1
->    net: ipa: gsi: Avoid some writes during irq setup for older IPA
->    net: ipa: gsi: Use right masks for GSI v1.0 channels hw param
->    net: ipa: Add support for IPA on MSM8998
->    dt-bindings: net: qcom-ipa: Document qcom,sc7180-ipa compatible
->    dt-bindings: net: qcom-ipa: Document qcom,msm8998-ipa compatible
-> 
->   .../devicetree/bindings/net/qcom,ipa.yaml     |   7 +-
->   drivers/net/ipa/Makefile                      |   3 +-
->   drivers/net/ipa/gsi.c                         |  33 +-
->   drivers/net/ipa/gsi_reg.h                     |   5 +
->   drivers/net/ipa/ipa_data-msm8998.c            | 407 ++++++++++++++++++
->   drivers/net/ipa/ipa_data.h                    |   5 +
->   drivers/net/ipa/ipa_endpoint.c                |  26 +-
->   drivers/net/ipa/ipa_main.c                    |  12 +-
->   drivers/net/ipa/ipa_reg.h                     |   3 +
->   drivers/net/ipa/ipa_version.h                 |   1 +
->   10 files changed, 480 insertions(+), 22 deletions(-)
->   create mode 100644 drivers/net/ipa/ipa_data-msm8998.c
-> 
-
+Is it possible to slam in some patch that makes W=3D1 the default for the
+clk directory? I'm trying to avoid seeing this patch series again.
