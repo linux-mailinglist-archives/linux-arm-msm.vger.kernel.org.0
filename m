@@ -2,114 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AB8DA318719
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Feb 2021 10:30:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A1C1E318AE4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Feb 2021 13:40:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229939AbhBKJ3g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Feb 2021 04:29:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60084 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229714AbhBKJ1d (ORCPT
+        id S231437AbhBKMha (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Feb 2021 07:37:30 -0500
+Received: from mail-lj1-f173.google.com ([209.85.208.173]:40563 "EHLO
+        mail-lj1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231731AbhBKMen (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Feb 2021 04:27:33 -0500
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38E9BC061756
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Feb 2021 01:26:52 -0800 (PST)
-Received: by mail-oi1-x231.google.com with SMTP id v193so5342834oie.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Feb 2021 01:26:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=aleksander-es.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=jsCRFes+iNIOcA6nuOPlPmxykHMWcGsGKAHRk6OtZ4g=;
-        b=CTHYiCAbf+o6JC9kn+qEUxdqKhPrVEV3YHNVIaKlDvhW6HYWNLZ1W3A4T48m22bJi3
-         mn3k02g7hun/GzF2Qv1AupXiGmP1A0Pp7t86Njpka0mvNRuEeYmUkZTG7Y4pqSSpaHOh
-         IST7SBiMiLkIKs8YD/FXWIX0evIZ8d2xDIr7cUv3XSky7rvPzP/QJQr4dpegaUm0lZDg
-         VF6Zm9+DXPlobw9KtY9X+0+LAYD5Hih9mkOLjQ67XV6heoyAekh2xHbN6sNp6X3Zdn9r
-         UM5CjPi+sc8e05LPoYBM6GNO3GPlMbSBkFlfXlo5igoLlZSeV/KyOMFpgPeSxce05Qht
-         4WkA==
+        Thu, 11 Feb 2021 07:34:43 -0500
+Received: by mail-lj1-f173.google.com with SMTP id s18so7146077ljg.7;
+        Thu, 11 Feb 2021 04:34:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=jsCRFes+iNIOcA6nuOPlPmxykHMWcGsGKAHRk6OtZ4g=;
-        b=K14WIQIknT+SIOKzMND6LJhsnzojBLHnrO7ADht1Sp7faDKywwIE5f5br0GOPkkU3n
-         bY7sWxqu5mp1tIF1h/0T7A4cR+ISli0cmrGVOsVKNsF4fXbpg5F8lM3GpW7mVAoFHiha
-         g52zeQiGHF5UIVjkq6Umjur3l6AOCDUcjqJPyc5XHzMqv1j6qpF0e8UvoL39cOklbCP0
-         Cg2gZ6ock4ZFOO/chXidNjJVpmHiUuoltpGH8AEV24Ol2zc7pm4WJDAbPyioqT4Aic6w
-         zlRiPQ6Z/zVHcxDeimplyEqKKp4ZMY4l6xd7qlVIQerD+mU9Zq5vbqypHnQA5GTTS2HX
-         /zBw==
-X-Gm-Message-State: AOAM533cnJMMitbc23beiUVv8LipOf/RxhAootA0ZA0grxAHzygwaJBV
-        h+NfdLr3ihiCzCxDxuv3+uRlEvJrPXtlz+Ln7F3h6A==
-X-Google-Smtp-Source: ABdhPJxGM+df1a7ssbuK/9sS4Nwt+ETuRDz+SyJX9bnygZ54cEdli2nkn1V9NZXjSzOez+Ij/NdOZz87tIt/ywTNQfk=
-X-Received: by 2002:aca:e108:: with SMTP id y8mr2194310oig.114.1613035611589;
- Thu, 11 Feb 2021 01:26:51 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition;
+        bh=Vfzvo58svu0cI4ektpdyAWp8bMlg9yHoVOYTB38z9Ac=;
+        b=OLuZaeSGQxW636TorJxWplWt8D+FAFG7KVR7iWXrIM+8Qoky9cgn90zqaWtYSqBXiF
+         +RGC1VFSt5mw1UdJNTXfjPH4XJV+62wPSilLpIM7z3x8Uwgob6tfaaYKqZdeYryPwHWr
+         Xw56B+iafDiuLinwRmoJqOTt0IrSJ10QrASA2pdyUzQSyE6eoZkF2FmiTrJS9ShivSkB
+         N6YxoJ2BCEdicbpGh2izIYiN+XewMKoAp2CzTf4dtajyzzntTdyLgBMv/s6/K8bs77aa
+         QFyVFSsLp99Y9nVs6sfgbGKROyy2qOPureRQUbvlHGXu6UbMs0Xah7xi2ImSwAlss6Wl
+         xcMw==
+X-Gm-Message-State: AOAM533N6CLxlbke+7O77ie/+Ac3SVTXbyMbBVtTeUE+gmwZtUT8nSmo
+        vnZbTuyTkUb1gitL8g6jvCY=
+X-Google-Smtp-Source: ABdhPJzHrY+i8lXDbk3HhnSOBszJblF0GoFyWsjEXEiAT6oOCw77CztVBIUuVhV8buqRz4p4H9eXiQ==
+X-Received: by 2002:a05:651c:1029:: with SMTP id w9mr5010944ljm.142.1613046840288;
+        Thu, 11 Feb 2021 04:34:00 -0800 (PST)
+Received: from localhost.localdomain (62-78-225-252.bb.dnainternet.fi. [62.78.225.252])
+        by smtp.gmail.com with ESMTPSA id t13sm628114lfc.147.2021.02.11.04.33.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Feb 2021 04:33:59 -0800 (PST)
+Date:   Thu, 11 Feb 2021 14:33:53 +0200
+From:   Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
+To:     mazziesaccount@gmail.com, matti.vaittinen@fi.rohmeurope.com
+Cc:     Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-power@fi.rohmeurope.com, linux-arm-msm@vger.kernel.org,
+        linux-renesas-soc@vger.kernel.org
+Subject: [RFC PATCH 0/7] Extend regulator notification support
+Message-ID: <cover.1613042245.git.matti.vaittinen@fi.rohmeurope.com>
 MIME-Version: 1.0
-References: <YBfi573Bdfxy0GBt@kroah.com> <20210201121322.GC108653@thinkpad>
- <20210202042208.GB840@work> <20210202201008.274209f9@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <835B2E08-7B84-4A02-B82F-445467D69083@linaro.org> <20210203100508.1082f73e@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <CAMZdPi8o44RPTGcLSvP0nptmdUEmJWFO4HkCB_kjJvfPDgchhQ@mail.gmail.com>
- <20210203104028.62d41962@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <CAAP7ucLZ5jKbKriSp39OtDLotbv72eBWKFCfqCbAF854kCBU8w@mail.gmail.com>
- <20210209081744.43eea7b5@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <20210210062531.GA13668@work> <20210210104128.2166e506@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-In-Reply-To: <20210210104128.2166e506@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-From:   Aleksander Morgado <aleksander@aleksander.es>
-Date:   Thu, 11 Feb 2021 10:26:40 +0100
-Message-ID: <CAAP7uc+cEeD=G4H-2+Jbt3j15tuak6PruVnAbJhhbeUsizwhYA@mail.gmail.com>
-Subject: Re: [RESEND PATCH v18 0/3] userspace MHI client interface driver
-To:     Jakub Kicinski <kuba@kernel.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Greg KH <gregkh@linuxfoundation.org>,
-        David Miller <davem@davemloft.net>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        Network Development <netdev@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> What bothers me is maintaining shim drivers which just shuttle opaque
-> messages between user space and firmware. One of which definitely is,
-> and the other may well be, proprietary. This is an open source project,
-> users are supposed to be able to meaningfully change the behavior of
-> the system.
+Extend regulator notification support
 
-libqmi is an open source library under the LGPL; so all the messages
-that are passed between e.g. ModemManager and the modem firmware can
-be easily inspected by anyone. It is true, though, that libqmi may
-also allow passing "unknown" messages between other proprietary third
-party applications and the firmware, but that is very much like any
-other modem control port that we already have; be it a plain tty, or a
-ttyUSB or a ttyACM or a cdc-wdm port. The kernel drivers are passing
-unknown stuff between modem firmware and userspace; I don't see how
-the kernel driver would be interested in any other thing really. QMI
-and MBIM are just 2 binary protocols (and we have libqmi and libmbim),
-and there's a generic 3GPP AT command set, but every vendor then has
-its own interpretation of that AT command set, and vendor-specific AT
-commands, and what not. From my point of view, it's not like the
-kernel should know or have much to say on what's being passed to the
-modem.
+This is an RFC series for getting feedback on extending the regulator
+notification and error flag support. Initial discussion on the topic can
+be found here:
+https://lore.kernel.org/lkml/6046836e22b8252983f08d5621c35ececb97820d.camel@fi.rohmeurope.com/
 
->
-> What bothers me is that we have 3 WWAN vendors all doing their own
-> thing and no common Linux API for WWAN. It may have been fine 10 years
-> ago, but WWAN is increasingly complex and important.
->
+This series is built on top of the:
+commit 7aa382cfe714 ("regulator: mt6315: Add support for MT6315 regulator")
+regulator tree for-5.12 branch + The BD9576MUF support patch series v8
+which is not yet in-tree
+Here:
+https://lore.kernel.org/lkml/cover.1613031055.git.matti.vaittinen@fi.rohmeurope.com/
 
-A WWAN modem is nowadays a complete Linux system itself with tons of
-features, and if there is sometime a generic WWAN system in the kernel
-providing API/ABI for generic features (e.g. data connection), that
-API/ABI should anyway provide access to pass messages (be it binary,
-or text AT commands) between firmware and userspace, for all the other
-side features for which no generic API/ABI is provided by that
-hypothetical generic WWAN system. Unless we don't want any of those
-side features... like Voice call management, SMS, USSD, GNSS, SAR,
-OMA-DM, carrier config selection, multi-SIM setups...
+In a nutshell - the RFC adds:
+
+1. WARNING level events/error flags. (Patch 2)
+  Current regulator 'ERROR' event notifications for over/under
+  voltage, over current and over temperature are used to indicate
+  condition where monitored entity is so badly "off" that it actually
+  indicates a hardware error which can not be recovered. The most
+  typical hanling for that is believed to be a (graceful)
+  system-shutdown. Here we add set of 'WARNING' level flags to allow
+  sending notifications to consumers before things are 'that badly off'
+  so that consumer drivers can implement recovery-actions.
+2. Device-tree properties for specifying limit values. (Patches 1, 4)
+  Add limits for above mentioned 'ERROR' and 'WARNING' levels (which
+  send notifications to consumers) and also for a 'PROTECTION' level
+  (which will be used to immediately shut-down the regulator(s) W/O
+  informing consumer drivers. Typically implemented by hardware).
+  Property parsing is implemented in regulator core which then calls
+  callback operations for limit setting from the IC drivers. A
+  warning is emitted if protection is requested by device tree but the
+  underlying IC does not support configuring requested protection.
+3. Helpers which can be registered by IC. (Patch 3)
+  Target is to avoid implementing IRQ handling and IRQ storm protection
+  in each IC driver. (Many of the ICs implementin these IRQs do not allow
+  masking or acking the IRQ but keep the IRQ asserted for the whole
+  duration of problem keeping the processor in IRQ handling loop).
+
+The helper was attempted to be done so it could be used to implement
+roughly same logic as is used in qcom-labibb regulator. This means
+amongst other things a safety shut-down if IC registers are not readable.
+Using these shut-down retry counters are optional. The idea is that the
+helper could be also used by simpler ICs which do not provide status
+register(s) which can be used to check if error is still active.
+
+ICs which do not have such status register can simply omit the 'renable'
+callback (and retry-counts etc) - and helper assumes the situation is Ok
+and re-enables IRQ after given time period. If problem persists the
+handler is ran again and another notification is sent - but at least the
+delay allows processor to avoid IRQ loop.
+
+Patch 6 takes this notification support in use at BD9576MUF.
+
+--
+
+Matti Vaittinen (7):
+  dt_bindings: Add protection limit properties
+  regulator: add warning flags
+  regulator: IRQ based event/error notification helpers
+  regulator: add property parsing and callbacks to set protection limits
+  dt-bindings: regulator: bd9576 add FET ON-resistance for OCW
+  regulator: bd9576: Support error reporting
+  regulator: bd9576: Fix the driver name in id table
+
+ .../bindings/regulator/regulator.yaml         |   82 ++
+ .../regulator/rohm,bd9576-regulator.yaml      |    5 +
+ drivers/regulator/Makefile                    |    2 +-
+ drivers/regulator/bd9576-regulator.c          | 1030 ++++++++++++++---
+ drivers/regulator/core.c                      |  146 ++-
+ drivers/regulator/irq_helpers.c               |  396 +++++++
+ drivers/regulator/of_regulator.c              |   58 +
+ drivers/regulator/qcom-labibb-regulator.c     |   10 +-
+ drivers/regulator/stpmic1_regulator.c         |   17 +-
+ include/linux/regulator/consumer.h            |   14 +
+ include/linux/regulator/driver.h              |  170 ++-
+ include/linux/regulator/machine.h             |   26 +
+ 12 files changed, 1816 insertions(+), 140 deletions(-)
+ create mode 100644 drivers/regulator/irq_helpers.c
 
 -- 
-Aleksander
+2.25.4
+
+
+-- 
+Matti Vaittinen, Linux device drivers
+ROHM Semiconductors, Finland SWDC
+Kiviharjunlenkki 1E
+90220 OULU
+FINLAND
+
+~~~ "I don't think so," said Rene Descartes. Just then he vanished ~~~
+Simon says - in Latin please.
+~~~ "non cogito me" dixit Rene Descarte, deinde evanescavit ~~~
+Thanks to Simon Glass for the translation =] 
