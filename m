@@ -2,162 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 937F43191FC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Feb 2021 19:15:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DC91131922C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Feb 2021 19:25:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231948AbhBKSNz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Feb 2021 13:13:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59544 "EHLO
+        id S231362AbhBKSXp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Feb 2021 13:23:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231758AbhBKSLp (ORCPT
+        with ESMTP id S232679AbhBKSVi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Feb 2021 13:11:45 -0500
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74549C061794
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Feb 2021 10:11:04 -0800 (PST)
-Received: by mail-qk1-x729.google.com with SMTP id t63so6128310qkc.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Feb 2021 10:11:04 -0800 (PST)
+        Thu, 11 Feb 2021 13:21:38 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3FDEC06178B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Feb 2021 10:20:35 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id i8so11495700ejc.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Feb 2021 10:20:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Y4RC940/J5vqsaVIPUQNgWPR3nZvZ8dS+NWG2FVApHg=;
-        b=zCo1c5051LK4hPwO4DWPdGWEhVsMvHQD93HMbDG5V0p/liAldRQVl2FAKPAwJwQ/L2
-         QiuhOeVKK9lt1VxO4bVCm33ZVecybl0tOhgn9PHq0xlYJkAymO1y7lWsHKDNbMV3a0e4
-         8k0q4pF01J8Y1+UM13ZrIQ0bQ0eiGl/0Napz+EGBobm+YZwZg135Ak81EtkAN2BeosS7
-         pwm1Vk3TxWjGSb7HAfMsbAtWgoJ50Y7rzImMEhHJcooKMUlFhC3s9O1NjWbejB38ipHh
-         f8mhRNeZsZ5mJgKrT5AvK2ffsorP2fjNYvFklgDqgxm00VRYkm3X4W8OpPo35hOsR8Dv
-         TaFw==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=LSyPsxQYDwEbXoo0qBDIb16a5QUGE4UOcEOoAe9ypXc=;
+        b=jv5PsFyuFEilGIx1Nt044fa2qO6BHmXQPSuCdZ0ioQA8UolQp9vqzfqMAZF3ZVxjdr
+         Oe5Epuj6VGuSgW3NuKjoGK2b/Jz+qdFUBqwdeGyarIf1cfLt0FWGDjEHK4UKHsYvRxov
+         8ZIj4COHTKrnx8G17xkOnehqOffST7TKs+pStECqpfuYR+hXOjC2yygCcFkoPStcl5Sy
+         Zt+NNIYi/vLRWePFro0QkESh4wb3NKshbGIO8HkryAvgEnNI6Izi8GQ2ZruVJ7lry6YG
+         vb5mw3VYxpWVfEjV8rpzvU+mA22EzrEG9HIhJ3gNp8KXw1gf3TacThf5HT3hT4uoPnjM
+         qsrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Y4RC940/J5vqsaVIPUQNgWPR3nZvZ8dS+NWG2FVApHg=;
-        b=MXxjctoh5S1uB2llR03EPEpBSDmzqppNwGNgOCVRmF72n64TAXDXcHsXluuiN/WrSd
-         4QnYvfi41tZ7gszwdPR5qTzkCOhn2hiRKLKK6MhhB/uTihbnhkXkvkS/NXUsP3dxBn8B
-         5Z7HDrDEyg9wV691W1qKkHEMI3oBjtGhuiYd2GYa3cMNxAh5s6jC2axaCdMdgpG5gYJB
-         xf0tCB1uL1CvgmQsFBP8cl+Cs9pw4F3d2/0+k1cx57EN12wa8NP6DxZpnmelVvzWH1e/
-         86x+AZ+bv6rZH/shJqkbrrY2WV8P3sWQEnNUCBsOHqJEp+uiuEJ/Dqp78JjV14TE0vbv
-         A7TA==
-X-Gm-Message-State: AOAM532HliHKpcXNB4u/rlxPBTx49ekXtJuBYclmnf+V2dvAmjV0CeUo
-        GHhosRiDQSJm1gOL8P2SzkPd+jyq0ZHbIG3B
-X-Google-Smtp-Source: ABdhPJz9waq/K9FzbyVnTjZ8KBEHlAtEWbEq4NxPq8Fm77HgPGqQvzF1ENDhDdTgTCxuGOk+VAQduQ==
-X-Received: by 2002:a37:478a:: with SMTP id u132mr9692463qka.135.1613067063249;
-        Thu, 11 Feb 2021 10:11:03 -0800 (PST)
-Received: from localhost.localdomain (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
-        by smtp.gmail.com with ESMTPSA id 11sm4615412qkm.25.2021.02.11.10.11.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Feb 2021 10:11:02 -0800 (PST)
-From:   Jonathan Marek <jonathan@marek.ca>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
-        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 2/2] arm64: dts: qcom: sm8250: fix display nodes
-Date:   Thu, 11 Feb 2021 13:09:59 -0500
-Message-Id: <20210211181002.22922-3-jonathan@marek.ca>
-X-Mailer: git-send-email 2.26.1
-In-Reply-To: <20210211181002.22922-1-jonathan@marek.ca>
-References: <20210211181002.22922-1-jonathan@marek.ca>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=LSyPsxQYDwEbXoo0qBDIb16a5QUGE4UOcEOoAe9ypXc=;
+        b=G8jacutw97QYasIbyaTqWhwR12Z6h8ZSJRrGV0OYPNKWsPOmPOo+5SZvomXVEtmXjP
+         x1H54ZNZOVIV8vNfohjPy+OH0cQ9to6YGdwTxP/8bMK0mvL7pxkz7kOAYtxlaY+gBiGU
+         6/0ibtmJ+28kNW/HnaxLvnL1WoqMHb9K9bTv5/6QLlxXKdBNvaLz3muCmPSCq/QUp+9L
+         NDxgLD419ZZ4i5a7p/qBZ65AOA4b8lERKm+fXhcq7MYKRnDcuq4B8QqKQdMPhpk+0kLR
+         vOKXprvDQtnx0+2jPk15Hw3Dfhm5trZ6pKo/xXBICTtTyQerd/mVeZ553HWbxUuhgDoU
+         ytYg==
+X-Gm-Message-State: AOAM531KS+rpWP0j/0Urm7G6WbZYls1eA2ZAOnNGFXVpnDbmYLZrWdKS
+        rBCT69cm8Ks5aFfkBsx/qgoE4l2M6pAWFRZCoYVAHbDclV99qA==
+X-Google-Smtp-Source: ABdhPJymbCGB7mrl1aZfmoBW1DkJt9HTm0PoAtR8RonX4q87JTNs+07baonNM1sirg9anRLdZPRTL9BoxRuJkwGTqOc=
+X-Received: by 2002:a17:906:b6cc:: with SMTP id ec12mr9711111ejb.520.1613067633258;
+ Thu, 11 Feb 2021 10:20:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <1613063283-12029-1-git-send-email-loic.poulain@linaro.org>
+ <fa8c8c21-4c07-cdcc-0ce7-76945905f0d0@codeaurora.org> <CAMZdPi8rguNCgQ1rahmtBsen40nOA=d+w9smhK4uN+jeDW01SQ@mail.gmail.com>
+ <6cf90335-ad7f-9e72-651e-dd3beb709d1f@codeaurora.org>
+In-Reply-To: <6cf90335-ad7f-9e72-651e-dd3beb709d1f@codeaurora.org>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Thu, 11 Feb 2021 19:28:07 +0100
+Message-ID: <CAMZdPi939vrEY-vQJ6t5L0Xo8OQR_sFs=EZnTKc3jsUxpraGKw@mail.gmail.com>
+Subject: Re: [PATCH] mhi: pci_generic: Ensure device readiness before starting MHI
+To:     Jeffrey Hugo <jhugo@codeaurora.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Apply these fixes to the newly added sm8250 display ndoes
- - Use sm8250 compatibles instead of sdm845 compatibles
- - Remove "notused" interconnect (which apparently was blindly copied from
-   my old patches)
- - Use dispcc node example from dt-bindings, removing clocks which aren't
-   documented or used by the driver and fixing the region size.
+On Thu, 11 Feb 2021 at 18:55, Jeffrey Hugo <jhugo@codeaurora.org> wrote:
+>
+> On 2/11/2021 10:47 AM, Loic Poulain wrote:
+> > On Thu, 11 Feb 2021 at 18:13, Jeffrey Hugo <jhugo@codeaurora.org> wrote:
+> >>
+> >> On 2/11/2021 10:08 AM, Loic Poulain wrote:
+> >>> The PCI device may have not been bound from cold boot and be in
+> >>> undefined state, or simply not yet ready for MHI operations. This
+> >>> change ensures that the MHI layer is reset to initial state and
+> >>> ready for MHI initialization and power up.
+> >>>
+> >>> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> >>> ---
+> >>>    drivers/bus/mhi/pci_generic.c | 23 +++++++++++++++++++++++
+> >>>    1 file changed, 23 insertions(+)
+> >>>
+> >>> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+> >>> index c20f59e..bfa0a1e 100644
+> >>> --- a/drivers/bus/mhi/pci_generic.c
+> >>> +++ b/drivers/bus/mhi/pci_generic.c
+> >>> @@ -17,6 +17,8 @@
+> >>>    #include <linux/timer.h>
+> >>>    #include <linux/workqueue.h>
+> >>>
+> >>> +#include "core/internal.h"
+> >>> +
+> >>>    #define MHI_PCI_DEFAULT_BAR_NUM 0
+> >>>
+> >>>    #define MHI_POST_RESET_DELAY_MS 500
+> >>> @@ -391,6 +393,22 @@ static void health_check(struct timer_list *t)
+> >>>        mod_timer(&mhi_pdev->health_check_timer, jiffies + HEALTH_CHECK_PERIOD);
+> >>>    }
+> >>>
+> >>> +static void __mhi_sw_reset(struct mhi_controller *mhi_cntrl)
+> >>> +{
+> >>> +     unsigned int max_wait_ready = 200;
+> >>> +
+> >>> +     mhi_pci_write_reg(mhi_cntrl, mhi_cntrl->regs + MHICTRL,
+> >>> +                       MHICTRL_RESET_MASK);
+> >>> +
+> >>> +     while (mhi_get_mhi_state(mhi_cntrl) != MHI_STATE_READY) {
+> >>> +             if (!max_wait_ready--) {
+> >>> +                     dev_warn(mhi_cntrl->cntrl_dev, "Not ready\n");
+> >>> +                     break;
+> >>> +             }
+> >>> +             msleep(50);
+> >>> +     }
+> >>> +}
+> >>> +
+> >>>    static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+> >>>    {
+> >>>        const struct mhi_pci_dev_info *info = (struct mhi_pci_dev_info *) id->driver_data;
+> >>> @@ -451,6 +469,9 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+> >>>                goto err_unregister;
+> >>>        }
+> >>>
+> >>> +     /* Before starting MHI, ensure device is in good initial state */
+> >>> +     __mhi_sw_reset(mhi_cntrl);
+> >>> +
+> >>>        err = mhi_sync_power_up(mhi_cntrl);
+> >>>        if (err) {
+> >>>                dev_err(&pdev->dev, "failed to power up MHI controller\n");
+> >>> @@ -532,6 +553,8 @@ static void mhi_pci_reset_done(struct pci_dev *pdev)
+> >>>                return;
+> >>>        }
+> >>>
+> >>> +     __mhi_sw_reset(mhi_cntrl);
+> >>> +
+> >>>        err = mhi_sync_power_up(mhi_cntrl);
+> >>>        if (err) {
+> >>>                dev_err(&pdev->dev, "failed to power up MHI controller\n");
+> >>>
+> >>
+> >> So, I'm curious, how does this actually work?
+> >>
+> >>   From what I can see, you define SBL images.  If those get loaded by the
+> >> PBL, it doesn't happen over MHI.  PBL will not move MHI to ready state,
+> >> except in the specific instance of a fatal error.
+> >
+> > I defined generic SBL images for flashless controller versions, but
+> > mine is not, and so it boots directly in mission mode.
+> >
+> >>
+> >> Your above change works if the device comes up straight in mission mode
+> >> (AMSS), but if it comes up in PBL, you are going to hit the timeout and
+> >> dev_warn() every time.
+> >
+> > Ok, I thought we should get into MHI ready state, whatever the
+> > 'execution environment'... So I definitely need to take that into
+> > consideration. thanks.
+>
+> I could see where you could think that, which is why I commented.  I
+> didn't want you to run into issues later, assuming those issues are
+> valid to you.
+>
+> MHI only gets into the ready state via EEs which drive MHI.  PBL
+> famously does not drive MHI because PBL is encoded into hardware and
+> extremely difficult to fix, so it is generally designed with the mantra
+> of "simpler is more reliable".
 
-Note: also removed the mmcx-supply for dispcc which wasn't documented when
-it was added. I would have left it there but it is also breaking my
-use-case (setting a lower power level than what the bootloader sets?).
+Ok understood.
 
-Fixes: 7c1dffd471b1 ("arm64: dts: qcom: sm8250.dtsi: add display system nodes")
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 34 ++++++++--------------------
- 1 file changed, 9 insertions(+), 25 deletions(-)
+>
+> Hopefully I didn't throw a wrench in things for you.  Just trying to
+> save you some pain later.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 947e1accae3a..20a3ff30e924 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2323,14 +2323,13 @@ usb_2_dwc3: dwc3@a800000 {
- 		};
- 
- 		mdss: mdss@ae00000 {
--			compatible = "qcom,sdm845-mdss";
-+			compatible = "qcom,sm8250-mdss";
- 			reg = <0 0x0ae00000 0 0x1000>;
- 			reg-names = "mdss";
- 
--			interconnects = <&gem_noc MASTER_AMPSS_M0 &config_noc SLAVE_DISPLAY_CFG>,
--					<&mmss_noc MASTER_MDP_PORT0 &mc_virt SLAVE_EBI_CH0>,
-+			interconnects = <&mmss_noc MASTER_MDP_PORT0 &mc_virt SLAVE_EBI_CH0>,
- 					<&mmss_noc MASTER_MDP_PORT1 &mc_virt SLAVE_EBI_CH0>;
--			interconnect-names = "notused", "mdp0-mem", "mdp1-mem";
-+			interconnect-names = "mdp0-mem", "mdp1-mem";
- 
- 			power-domains = <&dispcc MDSS_GDSC>;
- 
-@@ -2356,7 +2355,7 @@ mdss: mdss@ae00000 {
- 			ranges;
- 
- 			mdss_mdp: mdp@ae01000 {
--				compatible = "qcom,sdm845-dpu";
-+				compatible = "qcom,sm8250-dpu";
- 				reg = <0 0x0ae01000 0 0x8f000>,
- 				      <0 0x0aeb0000 0 0x2008>;
- 				reg-names = "mdp", "vbif";
-@@ -2580,36 +2579,21 @@ opp-358000000 {
- 
- 		dispcc: clock-controller@af00000 {
- 			compatible = "qcom,sm8250-dispcc";
--			reg = <0 0x0af00000 0 0x20000>;
--			mmcx-supply = <&mmcx_reg>;
-+			reg = <0 0x0af00000 0 0x10000>;
- 			clocks = <&rpmhcc RPMH_CXO_CLK>,
- 				 <&dsi0_phy 0>,
- 				 <&dsi0_phy 1>,
- 				 <&dsi1_phy 0>,
- 				 <&dsi1_phy 1>,
--				 <0>,
--				 <0>,
--				 <0>,
--				 <0>,
--				 <0>,
--				 <0>,
--				 <0>,
--				 <0>,
--				 <&sleep_clk>;
-+				 <&dp_phy 0>,
-+				 <&dp_phy 1>;
- 			clock-names = "bi_tcxo",
- 				      "dsi0_phy_pll_out_byteclk",
- 				      "dsi0_phy_pll_out_dsiclk",
- 				      "dsi1_phy_pll_out_byteclk",
- 				      "dsi1_phy_pll_out_dsiclk",
--				      "dp_link_clk_divsel_ten",
--				      "dp_vco_divided_clk_src_mux",
--				      "dptx1_phy_pll_link_clk",
--				      "dptx1_phy_pll_vco_div_clk",
--				      "dptx2_phy_pll_link_clk",
--				      "dptx2_phy_pll_vco_div_clk",
--				      "edp_phy_pll_link_clk",
--				      "edp_phy_pll_vco_div_clk",
--				      "sleep_clk";
-+				      "dp_phy_pll_link_clk",
-+				      "dp_phy_pll_vco_div_clk";
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
- 			#power-domain-cells = <1>;
--- 
-2.26.1
+Yes, that's perfectly fine and valid, so I'm going to rework that.
 
+Regards,
+Loic
