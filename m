@@ -2,166 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 525B8318ED5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Feb 2021 16:39:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6216A318F04
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Feb 2021 16:45:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229954AbhBKPf2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Feb 2021 10:35:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53610 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231443AbhBKPdF (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Feb 2021 10:33:05 -0500
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 383E0C061794
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Feb 2021 07:32:25 -0800 (PST)
-Received: by mail-pj1-x102a.google.com with SMTP id fa16so3595498pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Feb 2021 07:32:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=QgFTmgXQGiqIKd8Yj0TUSai/AxpTkOZablyty8uKeWs=;
-        b=fe9rmSwpPG6/cICUyh5vAqXFbE0rZ2ghlkJ1JD599XlNP1DSCFLWB94x6hp/zCsL3J
-         sta5FsZwxZuxs9EGz6xDKMn3wnwLoqaClFVGiLnCLtQ389h4qulfwQjNVNw3Oj0telzO
-         Pa09qtrpl7PunI9Su2hm7p1bffkTzRmn+eKMTGFm1G36JI5vrj++ds2/8S6QhRdupyJk
-         Mur4RhLxWMQ9q9jHUMEzkXtrEF+cOdREcRQdpnxqOP/avNd+O8SZMJ13XHJW+6u14Ko/
-         QxcN7XvyYkhpaUPsREKxMwvD2KELNdbJOwybrJZNmFPV8qMolK6frgmDAVPStClu1J2H
-         OdcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=QgFTmgXQGiqIKd8Yj0TUSai/AxpTkOZablyty8uKeWs=;
-        b=ObGmf4Kh4x793Eje3wER2V5ItKkI1/rsYJoSv0zIApcrcUno6e/5kOq/bM2zwKSamI
-         CB18Wow+vWxLqZbW24rbjsdraJptstftMd36Vdj8RVfFW0M/OLp1KeVxZHeisVONK5Yl
-         AtVzVQhrnkzcDNxNN8wA2oomohT/OGWNBO/MC8DVepyzmUlfeObqKDJ/d4I2ste9/hN2
-         Bv6tt7QoWTOCIEfiDqtlSPdo18s4rGN/B42kl5E4jHbUAnyKiTVIXmgX5xWiba0xMpi4
-         /w/Vy9M2VZnUIrIR+c7aj2zOsYlcVLgyFz1PIZidCXjnmBt/sFfy1mBLcERmoEcbTnOz
-         y92A==
-X-Gm-Message-State: AOAM530l+zF2TL5LPSsS/JmlyPv7r9SnZu1bPUsXsvOiSbkhp0f4pCI7
-        7w6XkL50/crq0cvgebYW5Y4O
-X-Google-Smtp-Source: ABdhPJwv7fLaLq77pnuho7qi6QrDXBBzzM3uo0EsfxioJXGCbIhZdJv8ths0icJyjaWvsWcKadCoxg==
-X-Received: by 2002:a17:902:b285:b029:e1:5b44:454 with SMTP id u5-20020a170902b285b02900e15b440454mr8152642plr.54.1613057544628;
-        Thu, 11 Feb 2021 07:32:24 -0800 (PST)
-Received: from work ([103.66.79.29])
-        by smtp.gmail.com with ESMTPSA id e7sm4656075pfd.169.2021.02.11.07.32.22
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 11 Feb 2021 07:32:24 -0800 (PST)
-Date:   Thu, 11 Feb 2021 21:02:20 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     linux@armlinux.org.uk, will@kernel.org, arnd@arndb.de
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2] ARM: kernel: Fix interrupted SMC calls
-Message-ID: <20210211153220.GB22704@work>
-References: <20210118181040.51238-1-manivannan.sadhasivam@linaro.org>
- <20210201123602.GD108653@thinkpad>
+        id S229790AbhBKPnk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Feb 2021 10:43:40 -0500
+Received: from mail.kernel.org ([198.145.29.99]:57846 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229821AbhBKPlI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 11 Feb 2021 10:41:08 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id A6B1164EA1;
+        Thu, 11 Feb 2021 15:40:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1613058028;
+        bh=zwgpHvB2pG/cgh/9ys3TmdSepVbZhel/XWss2jXMKsQ=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=FMakK3QQlvkvo/kqKMiGSb1zlcNpRX2vftjjz5T8YKZ8TpVnTcvrD5u/LxyxHoZ2K
+         08OzscQZlk7w4GXd4rdQP2bCvZ7InIR7dWq/HziHxd8Fk1MRxQPHkJCrEF6L5jhUcq
+         f7BQL95mtBNy0+Ugj2sn/VR7FaEIpDGZbcgqWN9BHv4eB4JG+F3d0hHPFWZmKW7kKn
+         ZLmUCssQY3Ik091dxnVYM9RKwl6m+mGfGBO96VWznxrUzrGDrM38pM4JZ41mghuAI1
+         p2qfhm3R1HXRzwJnuAFSJOXAcqx88XCxcgL4Bq512CAxCpWPu4wjtHuKIQNbbl8GyD
+         /RVUbwdADgffA==
+From:   Mark Brown <broonie@kernel.org>
+To:     linux-arm-msm@vger.kernel.org, Jonathan Marek <jonathan@marek.ca>
+Cc:     "open list:VOLTAGE AND CURRENT REGULATOR FRAMEWORK" 
+        <linux-kernel@vger.kernel.org>, Andy Gross <agross@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>
+In-Reply-To: <20210211034935.5622-1-jonathan@marek.ca>
+References: <20210211034935.5622-1-jonathan@marek.ca>
+Subject: Re: [PATCH] regulator: qcom-rpmh: fix pm8009 ldo7
+Message-Id: <161305796963.12598.841305500980411793.b4-ty@kernel.org>
+Date:   Thu, 11 Feb 2021 15:39:29 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210201123602.GD108653@thinkpad>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+ Arnd
+On Wed, 10 Feb 2021 22:49:35 -0500, Jonathan Marek wrote:
+> Use the correct name to avoid ldo7 commands being sent to ldo6's address.
 
-On Mon, Feb 01, 2021 at 06:06:07PM +0530, Manivannan Sadhasivam wrote:
-> Hi,
-> 
-> On Mon, Jan 18, 2021 at 11:40:40PM +0530, Manivannan Sadhasivam wrote:
-> > On Qualcomm ARM32 platforms, the SMC call can return before it has
-> > completed. If this occurs, the call can be restarted, but it requires
-> > using the returned session ID value from the interrupted SMC call.
-> > 
-> > The ARM32 SMCC code already has the provision to add platform specific
-> > quirks for things like this. So let's make use of it and add the
-> > Qualcomm specific quirk (ARM_SMCCC_QUIRK_QCOM_A6) used by the QCOM_SCM
-> > driver.
-> > 
-> > This change is similar to the below one added for ARM64 a while ago:
-> > commit 82bcd087029f ("firmware: qcom: scm: Fix interrupted SCM calls")
-> > 
-> > Without this change, the Qualcomm ARM32 platforms like SDX55 will return
-> > -EINVAL for SMC calls used for modem firmware loading and validation.
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> 
-> A gentle ping on this patch!
-> 
+Applied to
 
-Ping again!
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+
+Thanks!
+
+[1/1] regulator: qcom-rpmh: fix pm8009 ldo7
+      commit: 20ccc362c3d20da734af896e075b74222589f2c0
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
 
 Thanks,
-Mani
-
-> Thanks,
-> Mani
-> 
-> > ---
-> > 
-> > Changes in v2:
-> > 
-> > * Preserved callee saved registers and used the registers r4, r5 which
-> >   are getting pushed onto the stack.
-> > 
-> >  arch/arm/kernel/asm-offsets.c |  3 +++
-> >  arch/arm/kernel/smccc-call.S  | 11 ++++++++++-
-> >  2 files changed, 13 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/arch/arm/kernel/asm-offsets.c b/arch/arm/kernel/asm-offsets.c
-> > index a1570c8bab25..2e2fa6fc2d4f 100644
-> > --- a/arch/arm/kernel/asm-offsets.c
-> > +++ b/arch/arm/kernel/asm-offsets.c
-> > @@ -23,6 +23,7 @@
-> >  #include <asm/vdso_datapage.h>
-> >  #include <asm/hardware/cache-l2x0.h>
-> >  #include <linux/kbuild.h>
-> > +#include <linux/arm-smccc.h>
-> >  #include "signal.h"
-> >  
-> >  /*
-> > @@ -147,6 +148,8 @@ int main(void)
-> >    DEFINE(SLEEP_SAVE_SP_PHYS,	offsetof(struct sleep_save_sp, save_ptr_stash_phys));
-> >    DEFINE(SLEEP_SAVE_SP_VIRT,	offsetof(struct sleep_save_sp, save_ptr_stash));
-> >  #endif
-> > +  DEFINE(ARM_SMCCC_QUIRK_ID_OFFS,	offsetof(struct arm_smccc_quirk, id));
-> > +  DEFINE(ARM_SMCCC_QUIRK_STATE_OFFS,	offsetof(struct arm_smccc_quirk, state));
-> >    BLANK();
-> >    DEFINE(DMA_BIDIRECTIONAL,	DMA_BIDIRECTIONAL);
-> >    DEFINE(DMA_TO_DEVICE,		DMA_TO_DEVICE);
-> > diff --git a/arch/arm/kernel/smccc-call.S b/arch/arm/kernel/smccc-call.S
-> > index 00664c78faca..931df62a7831 100644
-> > --- a/arch/arm/kernel/smccc-call.S
-> > +++ b/arch/arm/kernel/smccc-call.S
-> > @@ -3,7 +3,9 @@
-> >   * Copyright (c) 2015, Linaro Limited
-> >   */
-> >  #include <linux/linkage.h>
-> > +#include <linux/arm-smccc.h>
-> >  
-> > +#include <asm/asm-offsets.h>
-> >  #include <asm/opcodes-sec.h>
-> >  #include <asm/opcodes-virt.h>
-> >  #include <asm/unwind.h>
-> > @@ -27,7 +29,14 @@ UNWIND(	.fnstart)
-> >  UNWIND(	.save	{r4-r7})
-> >  	ldm	r12, {r4-r7}
-> >  	\instr
-> > -	pop	{r4-r7}
-> > +	ldr	r4, [sp, #36]
-> > +	cmp	r4, #0
-> > +	beq	1f			// No quirk structure
-> > +	ldr     r5, [r4, #ARM_SMCCC_QUIRK_ID_OFFS]
-> > +	cmp     r5, #ARM_SMCCC_QUIRK_QCOM_A6
-> > +	bne	1f			// No quirk present
-> > +	str	r6, [r4, #ARM_SMCCC_QUIRK_STATE_OFFS]
-> > +1:	pop	{r4-r7}
-> >  	ldr	r12, [sp, #(4 * 4)]
-> >  	stm	r12, {r0-r3}
-> >  	bx	lr
-> > -- 
-> > 2.25.1
-> > 
+Mark
