@@ -2,173 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DC91131922C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Feb 2021 19:25:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BFB6319287
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Feb 2021 19:53:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231362AbhBKSXp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Feb 2021 13:23:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33418 "EHLO
+        id S229873AbhBKSws (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Feb 2021 13:52:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232679AbhBKSVi (ORCPT
+        with ESMTP id S229533AbhBKSwo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Feb 2021 13:21:38 -0500
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3FDEC06178B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Feb 2021 10:20:35 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id i8so11495700ejc.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Feb 2021 10:20:35 -0800 (PST)
+        Thu, 11 Feb 2021 13:52:44 -0500
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 998A0C061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Feb 2021 10:52:04 -0800 (PST)
+Received: by mail-ot1-x330.google.com with SMTP id k10so6133476otl.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Feb 2021 10:52:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=LSyPsxQYDwEbXoo0qBDIb16a5QUGE4UOcEOoAe9ypXc=;
-        b=jv5PsFyuFEilGIx1Nt044fa2qO6BHmXQPSuCdZ0ioQA8UolQp9vqzfqMAZF3ZVxjdr
-         Oe5Epuj6VGuSgW3NuKjoGK2b/Jz+qdFUBqwdeGyarIf1cfLt0FWGDjEHK4UKHsYvRxov
-         8ZIj4COHTKrnx8G17xkOnehqOffST7TKs+pStECqpfuYR+hXOjC2yygCcFkoPStcl5Sy
-         Zt+NNIYi/vLRWePFro0QkESh4wb3NKshbGIO8HkryAvgEnNI6Izi8GQ2ZruVJ7lry6YG
-         vb5mw3VYxpWVfEjV8rpzvU+mA22EzrEG9HIhJ3gNp8KXw1gf3TacThf5HT3hT4uoPnjM
-         qsrg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=OVkOWiTcef92BZcXSFNKI6urGv4ClWKqZ2aHBAwr9WI=;
+        b=OcKtPxTMPJ/pI5h/KaWloIQ13BI9MrFfYMnPg8duScubygGcThI6E2xXB64LlL6ubT
+         l6A6w3WjIxITYaBdZvnWhSpbX3kEGtxW/lS84byVX6UzXpL78+Suf8SNIYStVsamPob/
+         4TywyNhn7bkqLbDxNxNWkPxWBxOBI/fC0uP/GEZ1JYSJOmrYVAZ7v2mXU2OJVyJJkJfQ
+         FBoBD9I2C2ogJ/YmvzqfQUueaAbKAgNBGXNqO+KWrlNB1Nin66InnfiYX01UFOrA+or2
+         e1ym18sWol82D+9QLEBkjfSrLZcYkk77QtbbSIQn54G4kDYzKphdrSHM/JglFmm8qNvX
+         L2TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=LSyPsxQYDwEbXoo0qBDIb16a5QUGE4UOcEOoAe9ypXc=;
-        b=G8jacutw97QYasIbyaTqWhwR12Z6h8ZSJRrGV0OYPNKWsPOmPOo+5SZvomXVEtmXjP
-         x1H54ZNZOVIV8vNfohjPy+OH0cQ9to6YGdwTxP/8bMK0mvL7pxkz7kOAYtxlaY+gBiGU
-         6/0ibtmJ+28kNW/HnaxLvnL1WoqMHb9K9bTv5/6QLlxXKdBNvaLz3muCmPSCq/QUp+9L
-         NDxgLD419ZZ4i5a7p/qBZ65AOA4b8lERKm+fXhcq7MYKRnDcuq4B8QqKQdMPhpk+0kLR
-         vOKXprvDQtnx0+2jPk15Hw3Dfhm5trZ6pKo/xXBICTtTyQerd/mVeZ553HWbxUuhgDoU
-         ytYg==
-X-Gm-Message-State: AOAM531KS+rpWP0j/0Urm7G6WbZYls1eA2ZAOnNGFXVpnDbmYLZrWdKS
-        rBCT69cm8Ks5aFfkBsx/qgoE4l2M6pAWFRZCoYVAHbDclV99qA==
-X-Google-Smtp-Source: ABdhPJymbCGB7mrl1aZfmoBW1DkJt9HTm0PoAtR8RonX4q87JTNs+07baonNM1sirg9anRLdZPRTL9BoxRuJkwGTqOc=
-X-Received: by 2002:a17:906:b6cc:: with SMTP id ec12mr9711111ejb.520.1613067633258;
- Thu, 11 Feb 2021 10:20:33 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=OVkOWiTcef92BZcXSFNKI6urGv4ClWKqZ2aHBAwr9WI=;
+        b=hUEc9ypilGPqIVKA01LWtcpBFv4TNaUT2o+y3qEWKGVABEZVbeqyT4iDoaFwNimSne
+         FhQVrBufveAhGbey5rkEIL4+HSELCPULCfExkMAMY1N+SMhoaPVviQw7uHTOX5e7ORmk
+         9w2AETIfiUB/bSonnlcg2dbHvP+xIBr+N0bmmQpJN6+9Zbt7XO5VZKV0OWNmZYO+1sS/
+         iqIilwMvF97iBRRmSVAE7VTJjhBY5bztaW0utJzWsSGqpjSEZo12HoX1F9MmS7aIhO/0
+         ul3cYSWjc6jrddjk6MrKZDBDWv8C+UBsqzg1pitz7YtADyGVanQ77lpiBxcgmdQN6k9s
+         KTPw==
+X-Gm-Message-State: AOAM532UpyOI+Ay9+DWGBPVjb5nq6rTggxb9tk4dMgWJl/hoXNL/hdtb
+        mvBYgkv2ngUUj/fwFTVFDJRUxA==
+X-Google-Smtp-Source: ABdhPJwf6gkTQIas5Mts7gamBTwBrwhQ9GsZm1U8X195GnlW/kAkgV8Ivieym0/0ILPnR3HQuoP/Vg==
+X-Received: by 2002:a9d:77d6:: with SMTP id w22mr6796757otl.145.1613069523801;
+        Thu, 11 Feb 2021 10:52:03 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id b21sm122655otq.4.2021.02.11.10.52.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Feb 2021 10:52:03 -0800 (PST)
+Date:   Thu, 11 Feb 2021 12:52:01 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: remoteproc: qcom: pas: Add SM8350
+ remoteprocs
+Message-ID: <YCV80dfkxXEPBveo@builder.lan>
+References: <20210210104539.340349-1-vkoul@kernel.org>
 MIME-Version: 1.0
-References: <1613063283-12029-1-git-send-email-loic.poulain@linaro.org>
- <fa8c8c21-4c07-cdcc-0ce7-76945905f0d0@codeaurora.org> <CAMZdPi8rguNCgQ1rahmtBsen40nOA=d+w9smhK4uN+jeDW01SQ@mail.gmail.com>
- <6cf90335-ad7f-9e72-651e-dd3beb709d1f@codeaurora.org>
-In-Reply-To: <6cf90335-ad7f-9e72-651e-dd3beb709d1f@codeaurora.org>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Thu, 11 Feb 2021 19:28:07 +0100
-Message-ID: <CAMZdPi939vrEY-vQJ6t5L0Xo8OQR_sFs=EZnTKc3jsUxpraGKw@mail.gmail.com>
-Subject: Re: [PATCH] mhi: pci_generic: Ensure device readiness before starting MHI
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210210104539.340349-1-vkoul@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 11 Feb 2021 at 18:55, Jeffrey Hugo <jhugo@codeaurora.org> wrote:
->
-> On 2/11/2021 10:47 AM, Loic Poulain wrote:
-> > On Thu, 11 Feb 2021 at 18:13, Jeffrey Hugo <jhugo@codeaurora.org> wrote:
-> >>
-> >> On 2/11/2021 10:08 AM, Loic Poulain wrote:
-> >>> The PCI device may have not been bound from cold boot and be in
-> >>> undefined state, or simply not yet ready for MHI operations. This
-> >>> change ensures that the MHI layer is reset to initial state and
-> >>> ready for MHI initialization and power up.
-> >>>
-> >>> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> >>> ---
-> >>>    drivers/bus/mhi/pci_generic.c | 23 +++++++++++++++++++++++
-> >>>    1 file changed, 23 insertions(+)
-> >>>
-> >>> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-> >>> index c20f59e..bfa0a1e 100644
-> >>> --- a/drivers/bus/mhi/pci_generic.c
-> >>> +++ b/drivers/bus/mhi/pci_generic.c
-> >>> @@ -17,6 +17,8 @@
-> >>>    #include <linux/timer.h>
-> >>>    #include <linux/workqueue.h>
-> >>>
-> >>> +#include "core/internal.h"
-> >>> +
-> >>>    #define MHI_PCI_DEFAULT_BAR_NUM 0
-> >>>
-> >>>    #define MHI_POST_RESET_DELAY_MS 500
-> >>> @@ -391,6 +393,22 @@ static void health_check(struct timer_list *t)
-> >>>        mod_timer(&mhi_pdev->health_check_timer, jiffies + HEALTH_CHECK_PERIOD);
-> >>>    }
-> >>>
-> >>> +static void __mhi_sw_reset(struct mhi_controller *mhi_cntrl)
-> >>> +{
-> >>> +     unsigned int max_wait_ready = 200;
-> >>> +
-> >>> +     mhi_pci_write_reg(mhi_cntrl, mhi_cntrl->regs + MHICTRL,
-> >>> +                       MHICTRL_RESET_MASK);
-> >>> +
-> >>> +     while (mhi_get_mhi_state(mhi_cntrl) != MHI_STATE_READY) {
-> >>> +             if (!max_wait_ready--) {
-> >>> +                     dev_warn(mhi_cntrl->cntrl_dev, "Not ready\n");
-> >>> +                     break;
-> >>> +             }
-> >>> +             msleep(50);
-> >>> +     }
-> >>> +}
-> >>> +
-> >>>    static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
-> >>>    {
-> >>>        const struct mhi_pci_dev_info *info = (struct mhi_pci_dev_info *) id->driver_data;
-> >>> @@ -451,6 +469,9 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
-> >>>                goto err_unregister;
-> >>>        }
-> >>>
-> >>> +     /* Before starting MHI, ensure device is in good initial state */
-> >>> +     __mhi_sw_reset(mhi_cntrl);
-> >>> +
-> >>>        err = mhi_sync_power_up(mhi_cntrl);
-> >>>        if (err) {
-> >>>                dev_err(&pdev->dev, "failed to power up MHI controller\n");
-> >>> @@ -532,6 +553,8 @@ static void mhi_pci_reset_done(struct pci_dev *pdev)
-> >>>                return;
-> >>>        }
-> >>>
-> >>> +     __mhi_sw_reset(mhi_cntrl);
-> >>> +
-> >>>        err = mhi_sync_power_up(mhi_cntrl);
-> >>>        if (err) {
-> >>>                dev_err(&pdev->dev, "failed to power up MHI controller\n");
-> >>>
-> >>
-> >> So, I'm curious, how does this actually work?
-> >>
-> >>   From what I can see, you define SBL images.  If those get loaded by the
-> >> PBL, it doesn't happen over MHI.  PBL will not move MHI to ready state,
-> >> except in the specific instance of a fatal error.
-> >
-> > I defined generic SBL images for flashless controller versions, but
-> > mine is not, and so it boots directly in mission mode.
-> >
-> >>
-> >> Your above change works if the device comes up straight in mission mode
-> >> (AMSS), but if it comes up in PBL, you are going to hit the timeout and
-> >> dev_warn() every time.
-> >
-> > Ok, I thought we should get into MHI ready state, whatever the
-> > 'execution environment'... So I definitely need to take that into
-> > consideration. thanks.
->
-> I could see where you could think that, which is why I commented.  I
-> didn't want you to run into issues later, assuming those issues are
-> valid to you.
->
-> MHI only gets into the ready state via EEs which drive MHI.  PBL
-> famously does not drive MHI because PBL is encoded into hardware and
-> extremely difficult to fix, so it is generally designed with the mantra
-> of "simpler is more reliable".
+On Wed 10 Feb 04:45 CST 2021, Vinod Koul wrote:
 
-Ok understood.
+> Add the SM8350 audio, compute, modem and sensor remoteprocs to the PAS
+> DT binding.
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>  .../devicetree/bindings/remoteproc/qcom,adsp.txt     | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.txt b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.txt
+> index 54737024da20..41eaa2466aab 100644
+> --- a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.txt
+> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.txt
+> @@ -25,6 +25,10 @@ on the Qualcomm ADSP Hexagon core.
+>  		    "qcom,sm8250-adsp-pas"
+>  		    "qcom,sm8250-cdsp-pas"
+>  		    "qcom,sm8250-slpi-pas"
+> +		    "qcom,sm8350-adsp-pas"
+> +		    "qcom,sm8350-cdsp-pas"
+> +		    "qcom,sm8350-slpi-pas"
+> +		    "qcom,sm8350-mpss-pas"
+>  
+>  - interrupts-extended:
+>  	Usage: required
+> @@ -51,10 +55,14 @@ on the Qualcomm ADSP Hexagon core.
+>  	qcom,sm8250-adsp-pas:
+>  	qcom,sm8250-cdsp-pas:
+>  	qcom,sm8250-slpi-pas:
+> +	qcom,sm8350-adsp-pas:
+> +	qcom,sm8350-cdsp-pas:
+> +	qcom,sm8350-slpi-pas:
+>  		    must be "wdog", "fatal", "ready", "handover", "stop-ack"
+>  	qcom,qcs404-wcss-pas:
+>  	qcom,sc7180-mpss-pas:
+>  	qcom,sm8150-mpss-pas:
+> +	qcom,sm8350-mpss-pas:
+>  		    must be "wdog", "fatal", "ready", "handover", "stop-ack",
+>  		    "shutdown-ack"
+>  
+> @@ -113,14 +121,18 @@ on the Qualcomm ADSP Hexagon core.
+>  	qcom,sdm845-cdsp-pas:
+>  	qcom,sm8150-adsp-pas:
+>  	qcom,sm8150-cdsp-pas:
+> +	qcom,sm8250-cdsp-pas:
 
->
-> Hopefully I didn't throw a wrench in things for you.  Just trying to
-> save you some pain later.
+This should be sm8350, I fixed this up and applied the patch.
 
-Yes, that's perfectly fine and valid, so I'm going to rework that.
+Thanks,
+Bjorn
 
-Regards,
-Loic
+>  	qcom,sm8250-cdsp-pas:
+>  		    must be "cx", "load_state"
+>  	qcom,sc7180-mpss-pas:
+>  	qcom,sm8150-mpss-pas:
+> +	qcom,sm8350-mpss-pas:
+>  		    must be "cx", "load_state", "mss"
+>  	qcom,sm8250-adsp-pas:
+> +	qcom,sm8350-adsp-pas:
+>  	qcom,sm8150-slpi-pas:
+>  	qcom,sm8250-slpi-pas:
+> +	qcom,sm8350-slpi-pas:
+>  		    must be "lcx", "lmx", "load_state"
+>  
+>  - memory-region:
+> -- 
+> 2.26.2
+> 
