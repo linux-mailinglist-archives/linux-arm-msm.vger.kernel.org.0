@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CC3743191C9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Feb 2021 19:06:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C2A83191CE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Feb 2021 19:06:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229869AbhBKSDx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Feb 2021 13:03:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57508 "EHLO
+        id S232532AbhBKSEx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Feb 2021 13:04:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231614AbhBKSCT (ORCPT
+        with ESMTP id S232541AbhBKSCe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Feb 2021 13:02:19 -0500
-Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC3FEC061786;
-        Thu, 11 Feb 2021 09:50:21 -0800 (PST)
+        Thu, 11 Feb 2021 13:02:34 -0500
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C88DC0617A9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Feb 2021 09:50:21 -0800 (PST)
 Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 4A7001F4EA;
-        Thu, 11 Feb 2021 18:50:17 +0100 (CET)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 9E3621F8CC;
+        Thu, 11 Feb 2021 18:50:18 +0100 (CET)
 From:   AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>
 To:     elder@kernel.org
@@ -31,68 +31,85 @@ Cc:     bjorn.andersson@linaro.org, agross@kernel.org, davem@davemloft.net,
         marijn.suijten@somainline.org, phone-devel@vger.kernel.org,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>
-Subject: [PATCH v1 0/7] Add support for IPA v3.1, GSI v1.0, MSM8998 IPA
-Date:   Thu, 11 Feb 2021 18:50:08 +0100
-Message-Id: <20210211175015.200772-1-angelogioacchino.delregno@somainline.org>
+Subject: [PATCH v1 4/7] net: ipa: gsi: Use right masks for GSI v1.0 channels hw param
+Date:   Thu, 11 Feb 2021 18:50:12 +0100
+Message-Id: <20210211175015.200772-5-angelogioacchino.delregno@somainline.org>
 X-Mailer: git-send-email 2.30.0
+In-Reply-To: <20210211175015.200772-1-angelogioacchino.delregno@somainline.org>
+References: <20210211175015.200772-1-angelogioacchino.delregno@somainline.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey all!
+In GSI v1.0 the register GSI_HW_PARAM_2_OFFSET has different layout
+so the number of channels and events per EE are, of course, laid out
+in 8 bits each (0-7, 8-15 respectively).
 
-This time around I thought that it would be nice to get some modem
-action going on. We have it, it's working (ish), so just.. why not.
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+---
+ drivers/net/ipa/gsi.c     | 16 +++++++++++++---
+ drivers/net/ipa/gsi_reg.h |  5 +++++
+ 2 files changed, 18 insertions(+), 3 deletions(-)
 
-This series adds support for IPA v3.1 (featuring GSI v1.0) and also
-takes account for some bits that are shared with other unimplemented
-IPA v3 variants and it is specifically targeting MSM8998, for which
-support is added.
-
-Since the userspace isn't entirely ready (as far as I can see) for
-data connection (3g/lte/whatever) through the modem, it was possible
-to only partially test this series.
-Specifically, loading the IPA firmware and setting up the interface
-went just fine, along with a basic setup of the network interface
-that got exposed by this driver.
-
-With this series, the benefits that I see are:
- 1. The modem doesn't crash anymore when trying to setup a data
-    connection, as now the modem firmware seems to be happy with
-    having IPA initialized and ready;
- 2. Other random modem crashes while picking up LTE home network
-    signal (even just for calling, nothing fancy) seem to be gone.
-
-These are the reasons why I think that this series is ready for
-upstream action. It's *at least* stabilizing the platform when
-the modem is up.
-
-This was tested on the F(x)Tec Pro 1 (MSM8998) smartphone.
-
-AngeloGioacchino Del Regno (7):
-  net: ipa: Add support for IPA v3.1 with GSI v1.0
-  net: ipa: endpoint: Don't read unexistant register on IPAv3.1
-  net: ipa: gsi: Avoid some writes during irq setup for older IPA
-  net: ipa: gsi: Use right masks for GSI v1.0 channels hw param
-  net: ipa: Add support for IPA on MSM8998
-  dt-bindings: net: qcom-ipa: Document qcom,sc7180-ipa compatible
-  dt-bindings: net: qcom-ipa: Document qcom,msm8998-ipa compatible
-
- .../devicetree/bindings/net/qcom,ipa.yaml     |   7 +-
- drivers/net/ipa/Makefile                      |   3 +-
- drivers/net/ipa/gsi.c                         |  33 +-
- drivers/net/ipa/gsi_reg.h                     |   5 +
- drivers/net/ipa/ipa_data-msm8998.c            | 407 ++++++++++++++++++
- drivers/net/ipa/ipa_data.h                    |   5 +
- drivers/net/ipa/ipa_endpoint.c                |  26 +-
- drivers/net/ipa/ipa_main.c                    |  12 +-
- drivers/net/ipa/ipa_reg.h                     |   3 +
- drivers/net/ipa/ipa_version.h                 |   1 +
- 10 files changed, 480 insertions(+), 22 deletions(-)
- create mode 100644 drivers/net/ipa/ipa_data-msm8998.c
-
+diff --git a/drivers/net/ipa/gsi.c b/drivers/net/ipa/gsi.c
+index b5460cbb085c..3311ffe514c9 100644
+--- a/drivers/net/ipa/gsi.c
++++ b/drivers/net/ipa/gsi.c
+@@ -1790,7 +1790,7 @@ static void gsi_channel_teardown(struct gsi *gsi)
+ int gsi_setup(struct gsi *gsi)
+ {
+ 	struct device *dev = gsi->dev;
+-	u32 val;
++	u32 val, mask;
+ 	int ret;
+ 
+ 	/* Here is where we first touch the GSI hardware */
+@@ -1804,7 +1804,12 @@ int gsi_setup(struct gsi *gsi)
+ 
+ 	val = ioread32(gsi->virt + GSI_GSI_HW_PARAM_2_OFFSET);
+ 
+-	gsi->channel_count = u32_get_bits(val, NUM_CH_PER_EE_FMASK);
++	if (gsi->version == IPA_VERSION_3_1)
++		mask = GSIV1_NUM_CH_PER_EE_FMASK;
++	else
++		mask = NUM_CH_PER_EE_FMASK;
++
++	gsi->channel_count = u32_get_bits(val, mask);
+ 	if (!gsi->channel_count) {
+ 		dev_err(dev, "GSI reports zero channels supported\n");
+ 		return -EINVAL;
+@@ -1816,7 +1821,12 @@ int gsi_setup(struct gsi *gsi)
+ 		gsi->channel_count = GSI_CHANNEL_COUNT_MAX;
+ 	}
+ 
+-	gsi->evt_ring_count = u32_get_bits(val, NUM_EV_PER_EE_FMASK);
++	if (gsi->version == IPA_VERSION_3_1)
++		mask = GSIV1_NUM_EV_PER_EE_FMASK;
++	else
++		mask = NUM_EV_PER_EE_FMASK;
++
++	gsi->evt_ring_count = u32_get_bits(val, mask);
+ 	if (!gsi->evt_ring_count) {
+ 		dev_err(dev, "GSI reports zero event rings supported\n");
+ 		return -EINVAL;
+diff --git a/drivers/net/ipa/gsi_reg.h b/drivers/net/ipa/gsi_reg.h
+index 0e138bbd8205..4ba579fa21c2 100644
+--- a/drivers/net/ipa/gsi_reg.h
++++ b/drivers/net/ipa/gsi_reg.h
+@@ -287,6 +287,11 @@ enum gsi_generic_cmd_opcode {
+ 			GSI_EE_N_GSI_HW_PARAM_2_OFFSET(GSI_EE_AP)
+ #define GSI_EE_N_GSI_HW_PARAM_2_OFFSET(ee) \
+ 			(0x0001f040 + 0x4000 * (ee))
++
++/* Fields below are present for IPA v3.1 with GSI version 1 */
++#define GSIV1_NUM_EV_PER_EE_FMASK	GENMASK(8, 0)
++#define GSIV1_NUM_CH_PER_EE_FMASK	GENMASK(15, 8)
++/* Fields below are present for IPA v3.5.1 and above */
+ #define IRAM_SIZE_FMASK			GENMASK(2, 0)
+ #define NUM_CH_PER_EE_FMASK		GENMASK(7, 3)
+ #define NUM_EV_PER_EE_FMASK		GENMASK(12, 8)
 -- 
 2.30.0
 
