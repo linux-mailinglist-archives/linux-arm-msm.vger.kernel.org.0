@@ -2,137 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0BFB6319287
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Feb 2021 19:53:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C88943192F3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Feb 2021 20:20:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229873AbhBKSws (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Feb 2021 13:52:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40074 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229533AbhBKSwo (ORCPT
+        id S230138AbhBKTTc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Feb 2021 14:19:32 -0500
+Received: from labrats.qualcomm.com ([199.106.110.90]:12488 "EHLO
+        labrats.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229742AbhBKTT3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Feb 2021 13:52:44 -0500
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 998A0C061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Feb 2021 10:52:04 -0800 (PST)
-Received: by mail-ot1-x330.google.com with SMTP id k10so6133476otl.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Feb 2021 10:52:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=OVkOWiTcef92BZcXSFNKI6urGv4ClWKqZ2aHBAwr9WI=;
-        b=OcKtPxTMPJ/pI5h/KaWloIQ13BI9MrFfYMnPg8duScubygGcThI6E2xXB64LlL6ubT
-         l6A6w3WjIxITYaBdZvnWhSpbX3kEGtxW/lS84byVX6UzXpL78+Suf8SNIYStVsamPob/
-         4TywyNhn7bkqLbDxNxNWkPxWBxOBI/fC0uP/GEZ1JYSJOmrYVAZ7v2mXU2OJVyJJkJfQ
-         FBoBD9I2C2ogJ/YmvzqfQUueaAbKAgNBGXNqO+KWrlNB1Nin66InnfiYX01UFOrA+or2
-         e1ym18sWol82D+9QLEBkjfSrLZcYkk77QtbbSIQn54G4kDYzKphdrSHM/JglFmm8qNvX
-         L2TA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=OVkOWiTcef92BZcXSFNKI6urGv4ClWKqZ2aHBAwr9WI=;
-        b=hUEc9ypilGPqIVKA01LWtcpBFv4TNaUT2o+y3qEWKGVABEZVbeqyT4iDoaFwNimSne
-         FhQVrBufveAhGbey5rkEIL4+HSELCPULCfExkMAMY1N+SMhoaPVviQw7uHTOX5e7ORmk
-         9w2AETIfiUB/bSonnlcg2dbHvP+xIBr+N0bmmQpJN6+9Zbt7XO5VZKV0OWNmZYO+1sS/
-         iqIilwMvF97iBRRmSVAE7VTJjhBY5bztaW0utJzWsSGqpjSEZo12HoX1F9MmS7aIhO/0
-         ul3cYSWjc6jrddjk6MrKZDBDWv8C+UBsqzg1pitz7YtADyGVanQ77lpiBxcgmdQN6k9s
-         KTPw==
-X-Gm-Message-State: AOAM532UpyOI+Ay9+DWGBPVjb5nq6rTggxb9tk4dMgWJl/hoXNL/hdtb
-        mvBYgkv2ngUUj/fwFTVFDJRUxA==
-X-Google-Smtp-Source: ABdhPJwf6gkTQIas5Mts7gamBTwBrwhQ9GsZm1U8X195GnlW/kAkgV8Ivieym0/0ILPnR3HQuoP/Vg==
-X-Received: by 2002:a9d:77d6:: with SMTP id w22mr6796757otl.145.1613069523801;
-        Thu, 11 Feb 2021 10:52:03 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id b21sm122655otq.4.2021.02.11.10.52.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Feb 2021 10:52:03 -0800 (PST)
-Date:   Thu, 11 Feb 2021 12:52:01 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: remoteproc: qcom: pas: Add SM8350
- remoteprocs
-Message-ID: <YCV80dfkxXEPBveo@builder.lan>
-References: <20210210104539.340349-1-vkoul@kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210210104539.340349-1-vkoul@kernel.org>
+        Thu, 11 Feb 2021 14:19:29 -0500
+IronPort-SDR: yazEGgeAj2g9SnbjH6tVBw2tYi46SQgj9ZXwINNiGU/dIVCSAsXyEReM4v7NBiiPEjRi5mu1ja
+ g3SkZoKbGjbIW5Rm4XSDGhPzFe7esDXzpURjaVA45RlOdjXXCLMQbKMtiN2Hth9Uec0eqEl4eK
+ KQA0zJqVdM06RnzEIH3AvYQEEAyvRaTJrCvCob8IwCtSbb2Ut9owLEd0GhzQokUxUxaL+AMFES
+ eL7VBgpNX34qtyyL7Gkc3w8OZemz97Oa0Z2F163IGF5DcUpNlCuR5BsVwDCurKIWutR42nlLSi
+ ojM=
+X-IronPort-AV: E=Sophos;i="5.81,171,1610438400"; 
+   d="scan'208";a="47741091"
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by labrats.qualcomm.com with ESMTP; 11 Feb 2021 11:18:48 -0800
+X-QCInternal: smtphost
+Received: from wsp769891wss.qualcomm.com (HELO stor-presley.qualcomm.com) ([192.168.140.85])
+  by ironmsg02-sd.qualcomm.com with ESMTP; 11 Feb 2021 11:18:47 -0800
+Received: by stor-presley.qualcomm.com (Postfix, from userid 92687)
+        id CB9982191A; Thu, 11 Feb 2021 11:18:47 -0800 (PST)
+From:   Asutosh Das <asutoshd@codeaurora.org>
+To:     cang@codeaurora.org, martin.petersen@oracle.com,
+        linux-scsi@vger.kernel.org
+Cc:     Asutosh Das <asutoshd@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, stern@rowland.harvard.edu
+Subject: [RFC PATCH v3 0/1] Enable power management for ufs wlun 
+Date:   Thu, 11 Feb 2021 11:18:28 -0800
+Message-Id: <cover.1613070911.git.asutoshd@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 10 Feb 04:45 CST 2021, Vinod Koul wrote:
 
-> Add the SM8350 audio, compute, modem and sensor remoteprocs to the PAS
-> DT binding.
-> 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  .../devicetree/bindings/remoteproc/qcom,adsp.txt     | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.txt b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.txt
-> index 54737024da20..41eaa2466aab 100644
-> --- a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.txt
-> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.txt
-> @@ -25,6 +25,10 @@ on the Qualcomm ADSP Hexagon core.
->  		    "qcom,sm8250-adsp-pas"
->  		    "qcom,sm8250-cdsp-pas"
->  		    "qcom,sm8250-slpi-pas"
-> +		    "qcom,sm8350-adsp-pas"
-> +		    "qcom,sm8350-cdsp-pas"
-> +		    "qcom,sm8350-slpi-pas"
-> +		    "qcom,sm8350-mpss-pas"
->  
->  - interrupts-extended:
->  	Usage: required
-> @@ -51,10 +55,14 @@ on the Qualcomm ADSP Hexagon core.
->  	qcom,sm8250-adsp-pas:
->  	qcom,sm8250-cdsp-pas:
->  	qcom,sm8250-slpi-pas:
-> +	qcom,sm8350-adsp-pas:
-> +	qcom,sm8350-cdsp-pas:
-> +	qcom,sm8350-slpi-pas:
->  		    must be "wdog", "fatal", "ready", "handover", "stop-ack"
->  	qcom,qcs404-wcss-pas:
->  	qcom,sc7180-mpss-pas:
->  	qcom,sm8150-mpss-pas:
-> +	qcom,sm8350-mpss-pas:
->  		    must be "wdog", "fatal", "ready", "handover", "stop-ack",
->  		    "shutdown-ack"
->  
-> @@ -113,14 +121,18 @@ on the Qualcomm ADSP Hexagon core.
->  	qcom,sdm845-cdsp-pas:
->  	qcom,sm8150-adsp-pas:
->  	qcom,sm8150-cdsp-pas:
-> +	qcom,sm8250-cdsp-pas:
+This patch attempts to fix a deadlock in ufs while sending SSU.
+Recently, blk_queue_enter() added a check to not process requests if the
+queue is suspended. That leads to a resume of the associated device which
+is suspended. In ufs, that device is ufs device wlun and it's parent is
+ufs_hba. This resume tries to resume ufs device wlun which in turn tries
+to resume ufs_hba, which is already in the process of suspending, thus
+causing a deadlock.
 
-This should be sm8350, I fixed this up and applied the patch.
+This patch takes care of:
+* Suspending the ufs device lun only after all other luns are suspended
+* Sending SSU during ufs device wlun suspend
+* Clearing uac for rpmb and ufs device wlun
+* Not sending commands to the device during host suspend
 
-Thanks,
-Bjorn
+I'm testing it out now, please take a look and let me know.
 
->  	qcom,sm8250-cdsp-pas:
->  		    must be "cx", "load_state"
->  	qcom,sc7180-mpss-pas:
->  	qcom,sm8150-mpss-pas:
-> +	qcom,sm8350-mpss-pas:
->  		    must be "cx", "load_state", "mss"
->  	qcom,sm8250-adsp-pas:
-> +	qcom,sm8350-adsp-pas:
->  	qcom,sm8150-slpi-pas:
->  	qcom,sm8250-slpi-pas:
-> +	qcom,sm8350-slpi-pas:
->  		    must be "lcx", "lmx", "load_state"
->  
->  - memory-region:
-> -- 
-> 2.26.2
-> 
+Asutosh Das (1):
+  scsi: ufs: Enable power management for wlun
+
+ drivers/scsi/ufs/ufshcd.c  | 415 +++++++++++++++++++++++++++++++++++++--------
+ drivers/scsi/ufs/ufshcd.h  |   4 +
+ include/trace/events/ufs.h |  20 +++
+ 3 files changed, 364 insertions(+), 75 deletions(-)
+
+-- 
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+
