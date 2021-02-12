@@ -2,98 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A0D3031993A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Feb 2021 05:39:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9420131994D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Feb 2021 05:47:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229636AbhBLEic (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Feb 2021 23:38:32 -0500
-Received: from mail.kernel.org ([198.145.29.99]:36194 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229497AbhBLEi2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Feb 2021 23:38:28 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 2522964E6B;
-        Fri, 12 Feb 2021 04:37:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1613104668;
-        bh=4De3mzBZ+mqAwyW0Wsfgk0cGyXtUPIYJ8BazedKSyq0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=lfH94CfbcfbOVPkrbhfRmwNXExIR3Q0ExwWk4qI23kNJXIVGzztqqSU56d6NAKKGt
-         5JZQSqxf7O/XtjubHfsXSfxuab/286gEngC6VWWtQ12zQL5+K6VtW0gng3ci+bfrkC
-         OYz0b8hDgrq9Zg0k4mYXcZvDuUKDf3Scsw0esQ7raXZ92g/KqnJhR3Yn9czfjOSQeC
-         C5dFRSw9OMSCCQ3sbLLZDPVQ5SgAO4ZCZIwXANMkbFzC1EY5nJM5cQUChDm+/yx4tU
-         UeTGEnHB7IiJmrRE7orD71SyTgv4C6oCN1CM5a2ZD+kJkJflTN9A7l4nZr+JXGPB2J
-         CO3F8x7QCExTA==
-Date:   Fri, 12 Feb 2021 10:07:44 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: remoteproc: qcom: pas: Add SM8350
- remoteprocs
-Message-ID: <20210212043744.GL2774@vkoul-mobl.Dlink>
-References: <20210210104539.340349-1-vkoul@kernel.org>
- <YCV80dfkxXEPBveo@builder.lan>
+        id S229871AbhBLErR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Feb 2021 23:47:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54460 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229888AbhBLErE (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 11 Feb 2021 23:47:04 -0500
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2B72C0613D6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Feb 2021 20:46:23 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id c6so9364585ede.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Feb 2021 20:46:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=9+2yrPqX2PuOtJQUEK4jTbIiRslC1Fg3ZyV+1OHc848=;
+        b=RKyIKnbvKOs02wQagQDLcw7ZyPj/rRl1baNQmo2q3O7ofpvR5z/20KgSJjIXuH09iZ
+         5QYL0YL2PZFQ71p1YAR0tsJnuSnYqt9OgACRg7g7EK+HXwA1vschMMJCvq1P2pZI+GaY
+         zV2XFRSNH+/OyEuOUb4hCCIDeKOsP8PBs/XS67mT4/01ckV9zzpEsmAEX/nbk55xuv5Y
+         i9jMGuP6aPmTKilWKCFuulkwPmb+F01x+GntLPDkviI4PyYI8n7N9DzzoRG0xVMDhSEx
+         RyO22bnInB8Hxw34sFVS7DJ/K69LrDXYAV9Ti96id7n6mHAVDkVpW7/cj3SG4vIj9ZbM
+         zakg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=9+2yrPqX2PuOtJQUEK4jTbIiRslC1Fg3ZyV+1OHc848=;
+        b=CrY+zdLedEVe4aFa8qt6u4fsVQcWEmEIMhKU/0BleO4ffyfNW+K/tXgUpFaKgAwIRz
+         bO/jOgxuyEGrfgsCnjMGjPWnlpZ9lLYx7mRsB8w1AYXh4hft0qnW2wyfACLd/KxqoGC/
+         EZj//sLvRxBZeyGk01IoQyV7xpxbdm7T9QUTQ47bcJl2Cyr/j68G0TwB6fzyBm0QMvvu
+         xjzT3P38V11h8wMU5krPf1XAHB9fEECKlUBgqQq27euGfNKpcnCexhBIkGbzFjp8+Mbl
+         joU+CJKuMdgtBoDH7hTOiSIZ3wrXW/3mW76QVeTIxRU05BdlKni1HlCuFblCgGLcUK9L
+         BN1Q==
+X-Gm-Message-State: AOAM530I4w02g0MJ7MmUDvDpsP53t19tdTSXDXMjmjjRmtY2NtbWyAEb
+        E6WED+tnyIv1I8xbG+XkFbgle93piwF9YKqwvBunyA==
+X-Google-Smtp-Source: ABdhPJy0lJyBPB/Ayi6OC6JWEL6RjKMWAjdxD1+csMzTd3UjkDnZX4sKKlB9/3I3OBcy+ZpxS3tLUaPUGoAH3tBG9nU=
+X-Received: by 2002:a05:6402:2053:: with SMTP id bc19mr1453492edb.230.1613105182209;
+ Thu, 11 Feb 2021 20:46:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YCV80dfkxXEPBveo@builder.lan>
+References: <20210211150147.743660073@linuxfoundation.org>
+In-Reply-To: <20210211150147.743660073@linuxfoundation.org>
+From:   Naresh Kamboju <naresh.kamboju@linaro.org>
+Date:   Fri, 12 Feb 2021 10:16:11 +0530
+Message-ID: <CA+G9fYugE5n1qsudwP7XntBvvNcEquxQkMEskWvxJAZdZX5Fng@mail.gmail.com>
+Subject: Re: [PATCH 4.19 00/24] 4.19.176-rc1 review
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     open list <linux-kernel@vger.kernel.org>,
+        Shuah Khan <shuah@kernel.org>, patches@kernelci.org,
+        lkft-triage@lists.linaro.org, Jon Hunter <jonathanh@nvidia.com>,
+        linux-stable <stable@vger.kernel.org>, pavel@denx.de,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        David Collins <collinsd@codeaurora.org>,
+        Mark Brown <broonie@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11-02-21, 12:52, Bjorn Andersson wrote:
-> On Wed 10 Feb 04:45 CST 2021, Vinod Koul wrote:
-> 
-> > Add the SM8350 audio, compute, modem and sensor remoteprocs to the PAS
-> > DT binding.
-> > 
-> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > ---
-> >  .../devicetree/bindings/remoteproc/qcom,adsp.txt     | 12 ++++++++++++
-> >  1 file changed, 12 insertions(+)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.txt b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.txt
-> > index 54737024da20..41eaa2466aab 100644
-> > --- a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.txt
-> > +++ b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.txt
-> > @@ -25,6 +25,10 @@ on the Qualcomm ADSP Hexagon core.
-> >  		    "qcom,sm8250-adsp-pas"
-> >  		    "qcom,sm8250-cdsp-pas"
-> >  		    "qcom,sm8250-slpi-pas"
-> > +		    "qcom,sm8350-adsp-pas"
-> > +		    "qcom,sm8350-cdsp-pas"
-> > +		    "qcom,sm8350-slpi-pas"
-> > +		    "qcom,sm8350-mpss-pas"
-> >  
-> >  - interrupts-extended:
-> >  	Usage: required
-> > @@ -51,10 +55,14 @@ on the Qualcomm ADSP Hexagon core.
-> >  	qcom,sm8250-adsp-pas:
-> >  	qcom,sm8250-cdsp-pas:
-> >  	qcom,sm8250-slpi-pas:
-> > +	qcom,sm8350-adsp-pas:
-> > +	qcom,sm8350-cdsp-pas:
-> > +	qcom,sm8350-slpi-pas:
-> >  		    must be "wdog", "fatal", "ready", "handover", "stop-ack"
-> >  	qcom,qcs404-wcss-pas:
-> >  	qcom,sc7180-mpss-pas:
-> >  	qcom,sm8150-mpss-pas:
-> > +	qcom,sm8350-mpss-pas:
-> >  		    must be "wdog", "fatal", "ready", "handover", "stop-ack",
-> >  		    "shutdown-ack"
-> >  
-> > @@ -113,14 +121,18 @@ on the Qualcomm ADSP Hexagon core.
-> >  	qcom,sdm845-cdsp-pas:
-> >  	qcom,sm8150-adsp-pas:
-> >  	qcom,sm8150-cdsp-pas:
-> > +	qcom,sm8250-cdsp-pas:
-> 
-> This should be sm8350, I fixed this up and applied the patch.
+On Thu, 11 Feb 2021 at 20:36, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 4.19.176 release.
+> There are 24 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sat, 13 Feb 2021 15:01:39 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.176-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Sorry for missing this and thanks for fixing it up
+The following lockdep noticed on the arm beaglebone x15 device.
+I have not bisected this problem yet.
+Suspecting this patch,
+
+> David Collins <collinsd@codeaurora.org>
+>     regulator: core: avoid regulator_resolve_supply() race condition
+
+
+[    2.470568] WARNING: possible recursive locking detected
+[    2.470580] 4.19.176-rc1 #1 Not tainted
+[    2.470590] --------------------------------------------
+[    2.470600] swapper/0/1 is trying to acquire lock:
+[    2.470611] (ptrval) (&rdev->mutex){+.+.}, at: regulator_enable+0x44/0x20c
+[    2.470639]
+[    2.470639] but task is already holding lock:
+[    2.470650] (ptrval) (&rdev->mutex){+.+.}, at:
+regulator_lock_nested+0x28/0x88
+[    2.470676]
+[    2.470676] other info that might help us debug this:
+[    2.470687]  Possible unsafe locking scenario:
+[    2.470687]
+[    2.470698]        CPU0
+[    2.470707]        ----
+[    2.470716]   lock(&rdev->mutex);
+[    2.470728]   lock(&rdev->mutex);
+[    2.470740]
+[    2.470740]  *** DEADLOCK ***
+[    2.470740]
+[    2.470752]  May be due to missing lock nesting notation
+[    2.470752]
+[    2.470765] 2 locks held by swapper/0/1:
+[    2.470774]  #0: (ptrval) (&dev->mutex){....}, at: __driver_attach+0x78/0x168
+[    2.470797]  #1: (ptrval) (&rdev->mutex){+.+.}, at:
+regulator_lock_nested+0x28/0x88
+[    2.470820]
+[    2.470820] stack backtrace:
+[    2.470836] CPU: 1 PID: 1 Comm: swapper/0 Not tainted 4.19.176-rc1 #1
+[    2.470846] Hardware name: Generic DRA74X (Flattened Device Tree)
+[    2.470871] [<c0416430>] (unwind_backtrace) from [<c040f920>]
+(show_stack+0x20/0x24)
+[    2.470891] [<c040f920>] (show_stack) from [<c1306bec>]
+(dump_stack+0xe8/0x114)
+[    2.470910] [<c1306bec>] (dump_stack) from [<c04c2a04>]
+(__lock_acquire+0x7cc/0x1acc)
+[    2.470925] [<c04c2a04>] (__lock_acquire) from [<c04c46ec>]
+(lock_acquire+0xdc/0x238)
+[    2.470941] [<c04c46ec>] (lock_acquire) from [<c130a008>]
+(__mutex_lock+0xa0/0xaf4)
+[    2.470958] [<c130a008>] (__mutex_lock) from [<c130aa88>]
+(mutex_lock_nested+0x2c/0x34)
+[    2.470974] [<c130aa88>] (mutex_lock_nested) from [<c0ae9434>]
+(regulator_enable+0x44/0x20c)
+[    2.470990] [<c0ae9434>] (regulator_enable) from [<c0ae9780>]
+(regulator_resolve_supply+0x184/0x2c8)
+[    2.471006] [<c0ae9780>] (regulator_resolve_supply) from
+[<c0ae98e8>] (regulator_register_resolve_supply+0x24/0x8c)
+[    2.471022] [<c0ae98e8>] (regulator_register_resolve_supply) from
+[<c0c294f0>] (class_for_each_device+0x70/0xe8)
+[    2.471037] [<c0c294f0>] (class_for_each_device) from [<c0aea368>]
+(regulator_register+0xa18/0xc58)
+[    2.471053] [<c0aea368>] (regulator_register) from [<c0aebd64>]
+(devm_regulator_register+0x54/0x84)
+[    2.471069] [<c0aebd64>] (devm_regulator_register) from
+[<c0af8c28>] (pbias_regulator_probe+0x1f4/0x2d0)
+[    2.471084] [<c0af8c28>] (pbias_regulator_probe) from [<c0c29da0>]
+(platform_drv_probe+0x58/0xa8)
+[    2.471101] [<c0c29da0>] (platform_drv_probe) from [<c0c273b8>]
+(really_probe+0x310/0x418)
+[    2.471119] [<c0c273b8>] (really_probe) from [<c0c276e4>]
+(driver_probe_device+0x88/0x1dc)
+[    2.471135] [<c0c276e4>] (driver_probe_device) from [<c0c27984>]
+(__driver_attach+0x14c/0x168)
+[    2.471150] [<c0c27984>] (__driver_attach) from [<c0c24e08>]
+(bus_for_each_dev+0x84/0xc4)
+[    2.471167] [<c0c24e08>] (bus_for_each_dev) from [<c0c26a18>]
+(driver_attach+0x2c/0x30)
+[    2.471184] [<c0c26a18>] (driver_attach) from [<c0c26380>]
+(bus_add_driver+0x1d0/0x274)
+[    2.471199] [<c0c26380>] (bus_add_driver) from [<c0c28a4c>]
+(driver_register+0x84/0x118)
+[    2.471213] [<c0c28a4c>] (driver_register) from [<c0c29cf0>]
+(__platform_driver_register+0x50/0x58)
+[    2.471231] [<c0c29cf0>] (__platform_driver_register) from
+[<c1ca3174>] (pbias_regulator_driver_init+0x24/0x28)
+[    2.471249] [<c1ca3174>] (pbias_regulator_driver_init) from
+[<c0403a68>] (do_one_initcall+0xa0/0x394)
+[    2.471268] [<c0403a68>] (do_one_initcall) from [<c1c01454>]
+(kernel_init_freeable+0x3ec/0x484)
+[    2.471283] [<c1c01454>] (kernel_init_freeable) from [<c1306ff4>]
+(kernel_init+0x18/0x128)
+[    2.471299] [<c1306ff4>] (kernel_init) from [<c04010ac>]
+(ret_from_fork+0x14/0x28)
+[    2.471310] Exception stack(0xee19bfb0 to 0xee19bff8)
+[    2.471323] bfa0:                                     00000000
+00000000 00000000 00000000
+[    2.471336] bfc0: 00000000 00000000 00000000 00000000 00000000
+00000000 00000000 00000000
+[    2.471348] bfe0: 00000000 00000000 00000000 00000000 00000013 00000000
+[    2.471385] vtt_fixed: supplied by smps3
+
+test log link,
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.19.y/build/v4.19.175-25-g30e16c3fd5ac/testrun/3938030/suite/linux-log-parser/test/check-kernel-warning-2263196/log
+
+metadata:
+  git branch: linux-4.19.y
+  git repo: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+  git commit: 30e16c3fd5acd42264d873aacb75891f3cd202c4
+  git describe: v4.19.175-25-g30e16c3fd5ac
+  make_kernelversion: 4.19.176-rc1
+  kernel-config:
+http://snapshots.linaro.org/openembedded/lkft/lkft/sumo/am57xx-evm/lkft/linux-stable-rc-4.19/747/config
 
 -- 
-~Vinod
+Linaro LKFT
+https://lkft.linaro.org
