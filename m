@@ -2,81 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4309B319AE4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Feb 2021 08:54:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 60FC2319AF1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Feb 2021 08:59:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229690AbhBLHvk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Feb 2021 02:51:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37438 "EHLO
+        id S229994AbhBLH5F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Feb 2021 02:57:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229928AbhBLHvg (ORCPT
+        with ESMTP id S229712AbhBLH5C (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Feb 2021 02:51:36 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25ED4C061786
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Feb 2021 23:50:56 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id d3so11816214lfg.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Feb 2021 23:50:56 -0800 (PST)
+        Fri, 12 Feb 2021 02:57:02 -0500
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEC9AC0613D6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Feb 2021 23:56:21 -0800 (PST)
+Received: by mail-lj1-x233.google.com with SMTP id q14so10520982ljp.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Feb 2021 23:56:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=IcYBOTOTtM/fD05ORuEKGods9zXoh8CDnQEGXlPlh3I=;
-        b=fxgD7GASpgLTqeJwS4fg2RtRYUKSrlc8VbpU+zoaKG0lW2Jj29H6n/7ucLhDYUJUfb
-         SeLrXVIOWrpjE7OaWUROE1ZRbBL/mHf5ygAM+6wuzIAOUd4MPde2tV5l6EGNxtvCF201
-         o10gLbViG4Xj+CRCJvC/GZWhUm2c4EiNErY3ZZymU7ltFtEEqgC5bIp6YF0sll+hONWo
-         6afIB7EeH9Dzp8usBzft0rPwY2Tvi1Ro/I0wjQKyftc2XiJy5B4Qdz/IxA32StXOqsvt
-         tOeQkP3g3K4vZSXWCXHE4K0tQLnFq4uGMdli1Ck7CqgWPIt5Bg5K+61IwYu9ZeMwLn5C
-         seAQ==
+        bh=QogP32dUSk289sEm+VMFcJgOp3ifNl8gli5/F7VzCkE=;
+        b=qtcjp5MGIdyPonGk8pqvatQgZt/HBgNfGQPjrW4fJmDJ+OV3HFh5Xy0el4bLfnCQrs
+         2uzl3O9i8qRucye5baCw6DeJC3/thlKp9X2pFImwkOspAvIrcvoeWty+/NBx4Xpje4Bn
+         Cve1u5xupVRQhiiwvLBe8CJjfR98JeDr4yj/A1JLQd23xC3DOgls8uhnrCuylIX0xzoq
+         FHiYpJrWpllbBXqwPerr9u+k+MMc48kVCdIp1e2CYlSaYUo1u4xtGKo6YMGHv5zAJeAj
+         25b2hKanl/6XAGdGzlcCORLtkt8KVsZZkKBsl47MhGocGq2kAJ9KiwJnWxLZMoOvWojF
+         0YVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=IcYBOTOTtM/fD05ORuEKGods9zXoh8CDnQEGXlPlh3I=;
-        b=XjqDJehi/xcVQmtyI8UnCDh0vRXITLpcBRqNKiNfAdhchuKaZe31L+tIHP6HQSpqpU
-         oS8TZUpGheSF5CXATpMiV04o7pEhKfbr+YJJdL8bOLps2vnSB6RUTZRpGs69WGqgYjQ0
-         kxFGUff100+iEeRsAbJIxaOP5tXYief55jKRWI38Ewqqbffe5DRx6RxBetaxPlmrQlQT
-         wisr/G0NafJEdZ1u4qBG6+PhWNiwFeG5jeqIt8LOU9lZa1oibPoO22DnT/FxSo137bzD
-         6LLsN1AxCZYxCfySOlmBD5+oqSanQGW3GYUDTP6gLYDIVBTaMKv5rfRN7Dk1/5XAjmwL
-         pRNw==
-X-Gm-Message-State: AOAM533nIWMvYyoKIZOK7PLKB27H9YGdjzVzWABxNgFBKIF/nO7iZ1k9
-        xWtJpIqYFpt8JXuMeG6RJkIWTWbpSTXsbBxqM6kqdg==
-X-Google-Smtp-Source: ABdhPJy6hy0DafG+RP/hCnhT3D81OmDjB4+p69zTidYbeLYX6fKxq6ptiW7znBA9tupHQJ/1Y90M1Is2a5r+DyQAAu0=
-X-Received: by 2002:a19:6b06:: with SMTP id d6mr1005706lfa.29.1613116254456;
- Thu, 11 Feb 2021 23:50:54 -0800 (PST)
+        bh=QogP32dUSk289sEm+VMFcJgOp3ifNl8gli5/F7VzCkE=;
+        b=DiBgMjFOkvDfyzBu2Yo0MqMIlQW9B8iCtGniIN+I62TprzeDQBunrPBHc1c12bISHJ
+         93BJ1vUxWnWBu/yBsQ6olCQfCchPU80gUng1ZDaynDmXhi+6LaFyh4snr73GTIiWr3hR
+         G3an4dlkppsE5KMHmtXkyeDtwjFnZyv1GPzUjSpbG2J1un/yt3YAQzGqmvsNkM9978ab
+         OSrod3DxJxLgKqTQclurnT2dNqMNe/s4+dhHpztMnNH2PuZdMuzV/U5NUcoH+w+iVaet
+         AarjLxWUCROIvQWPqhBDst3cdVq6sguiH9XZ71V0AuOINw/ybQwOK9Gp1M1GwskKAC9q
+         xUVA==
+X-Gm-Message-State: AOAM5310DPF8usJVF5OT33G00w6UeYhRZrU56H4vBmToGDLIAFNDFsZI
+        8R0nyV5Dyt+AdOg4PKuy+dBEksdn36X+PQBG6oUMmA==
+X-Google-Smtp-Source: ABdhPJwAWhaQ9FI1gF2R7GuKXY4mozPW9Oo6w5q2u4DudIm9FDUa7Nq1U1Pjo74FTvcKAkg3fdkWUhNmZeEPy66njZg=
+X-Received: by 2002:a2e:8e84:: with SMTP id z4mr954349ljk.467.1613116580134;
+ Thu, 11 Feb 2021 23:56:20 -0800 (PST)
 MIME-Version: 1.0
-References: <20210205140132.274242-1-vkoul@kernel.org>
-In-Reply-To: <20210205140132.274242-1-vkoul@kernel.org>
+References: <20210126042650.1725176-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20210126042650.1725176-1-bjorn.andersson@linaro.org>
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Fri, 12 Feb 2021 08:50:43 +0100
-Message-ID: <CACRpkdY393_LUDUQxVuv9JEY=hkkfs=u2OziwzxZsL52QxqusA@mail.gmail.com>
-Subject: Re: [PATCH v6 0/2] pinctrl: qcom: Add SM8350 pinctrl support
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     MSM <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+Date:   Fri, 12 Feb 2021 08:56:09 +0100
+Message-ID: <CACRpkdaBcqgiOzovD8KxxBp=_6CCY61Li10SjEO080Qd==xwpg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] dt-bindings: pinctrl: qcom: Define common TLMM binding
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
         "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
         "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
         <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Vinod Koul <vkoul@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Feb 5, 2021 at 3:01 PM Vinod Koul <vkoul@kernel.org> wrote:
+On Tue, Jan 26, 2021 at 5:26 AM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
 
-> This adds binding and driver for TLMM block found in SM8350 SoC
+> Several properties are shared between all TLMM bindings. By providing a
+> common binding to define these properties each platform's binding can be
+> reduced to just listing which of these properties should be checked for
+> - or further specified.
 >
-> The binding is dependent on TLMM common binding from Bjorn:
->  https://lore.kernel.org/linux-arm-msm/20210126042650.1725176-1-bjorn.andersson@linaro.org
->
-> Changes in v6:
->  - Add rob and bjorn r-b
->  - removed quotes around 'defs' and drop the phandle for binding
+> Reviewed-by: Vinod Koul <vkoul@kernel.org>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Patches applied!
+Patches applied! Good work with the YAML conversion here,
+much appreciated!
 
-Thanks!
+Yours,
 Linus Walleij
