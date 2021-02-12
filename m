@@ -2,164 +2,314 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BD50831A424
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Feb 2021 19:02:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 16D5131A42B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Feb 2021 19:05:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231406AbhBLSBx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Feb 2021 13:01:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55156 "EHLO
+        id S231638AbhBLSC6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Feb 2021 13:02:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231317AbhBLSBw (ORCPT
+        with ESMTP id S230376AbhBLSCx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Feb 2021 13:01:52 -0500
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82DCBC061756
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Feb 2021 10:01:13 -0800 (PST)
-Received: by mail-ot1-x336.google.com with SMTP id i20so9178981otl.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Feb 2021 10:01:13 -0800 (PST)
+        Fri, 12 Feb 2021 13:02:53 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FFAAC061574;
+        Fri, 12 Feb 2021 10:02:15 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id o15so392736wmq.5;
+        Fri, 12 Feb 2021 10:02:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=DgDULeiKflVFwoR6BsGB3cUqPpNxfkBwuzxZxXpXoLY=;
-        b=DCzDEBVjLIaaQd57q6fVH1cUKOsUzde77Y6qiR5L/k48zTlVtQYI7DtAlnEuHF9q0X
-         57rDgE3EcctbG+Jjyd+60Xa5CgCSRK1FuwvPs9VyBfXVKDLM67rJPYdyWPy19b9xMWBO
-         QSR459ll+V93R4uNHr4h0eO5o3QUfjngs5f5dPrkNeivbE3YQCBNlmQAy1dDZosVX3EL
-         6D1Xz5zusS+1ld+MGkk3JmZ2ySbbSANFUOOXxCVgZq+JEZ3YP9okvyOPuFhS+4Oe7XD6
-         56tb6NsTZPbt4iLyids3gREv+ebIoulLV0KlupwbKepL8afknT8QgtgpkI/JAdCsWg9C
-         fOBg==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=jVEdZq3GXiVFA/Hko3DC5hV80mFfZHXwzqSPv2+Qh3I=;
+        b=ZzgZiI5k0XMEAkPdDut+jSWlIMgtK1K1YKjJmKtVh7e6Y7zOFL+dZcp1z8CebuM1I4
+         DWJWK+SR/O2UKUwfoi9goozcqXNa5tDBo3bA2o/NifZerhGU9jkuSTBxZXuNfVZHGfWR
+         4r9BPzBigCObUlynW+T2ALDq7qe419Rfskb6+KikDTLCI+B5CEUfJdf/9Qyqx7hbpXBW
+         NFrFjTMA5wuCEGYb2/QwUx2RtOdZnKyhYQl0JzUpLFkhd9HY6JdyoOmbauUBMz4O4ePP
+         Fp+Et6xq7caTC6h/FhySN+MMBf++Irmqg/8sCHtOw6KtcAy1SgY6Q68b/n91rhcqe5hT
+         G+QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=DgDULeiKflVFwoR6BsGB3cUqPpNxfkBwuzxZxXpXoLY=;
-        b=GucjExTOqbSnq330lI1u10qeHv+i8dYP5xetznV52gtPC7d8Lc7YbVxBX69d+PxhLZ
-         9tBAw4VTBaMR6UmhMoqdRk/aZlLE3EhQSFKmqdjEFYNm2YPzKtt7ZFralSsqcLSRl663
-         9jMp92yWAdnJoA/A2iUSNqiC7UF0hhBhtxpVJLZ/x2h05QoZp+/4M/NrMg+V247d+0Qi
-         Ow5cavmYQP4mczcsWFhfCUByEtxr/9V3mdAIeforveW48015EVXvff3lEELz+5wUrFCO
-         IJQ0InSJYMUluIMMrZEcBi88hPRcST0jEaiTs65lT47RPytizgWGPitjtLq3L507Gm9Z
-         dBZQ==
-X-Gm-Message-State: AOAM532ZMqvZd00Pr3rUdJ2uoGDW5tGV2gd+xrdT/g3wpXg70Uw8zTWS
-        DoIPEda/Mz2I8WzFQoccgME0rQ==
-X-Google-Smtp-Source: ABdhPJyniCmu8jCeQK56LqSsb0pYBEXvHH0wktvHQXkTlk5uyu8JEP55tx/ozoDyxTZNRcxrBKdOug==
-X-Received: by 2002:a9d:8f2:: with SMTP id 105mr2836518otf.64.1613152872844;
-        Fri, 12 Feb 2021 10:01:12 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id e14sm1684583oou.19.2021.02.12.10.01.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Feb 2021 10:01:12 -0800 (PST)
-Date:   Fri, 12 Feb 2021 12:01:10 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Cc:     Serge Semin <fancer.lancer@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Linux USB List <linux-usb@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v6 09/10] usb: dwc3: qcom: Detect DWC3 DT-nodes with
- "usb"-prefixed names
-Message-ID: <YCbCZuaO9ryAzxzy@builder.lan>
-References: <20210210172850.20849-1-Sergey.Semin@baikalelectronics.ru>
- <20210210172850.20849-10-Sergey.Semin@baikalelectronics.ru>
- <CAL_JsqJBknqhCSUOdpZVbtmp6TYetBQPLoQUCT6DTFajpChaSA@mail.gmail.com>
- <20210210184051.ncvvs5xgyo7o3uzq@mobilestation>
- <YCQse9EtEHtLVe9A@builder.lan>
- <20210210193325.inp7rgpsfr624zhd@mobilestation>
- <20210212173315.jgr6kata2yxrbkuu@mobilestation>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=jVEdZq3GXiVFA/Hko3DC5hV80mFfZHXwzqSPv2+Qh3I=;
+        b=GIA2Sy7gRVwZ1H64ufxV0ANcJi4OFV34crzvtT1ZG3V+DeOhomzswmSeuf4HqnrRaC
+         R6NDoCDfxwTrUDKSq3HjQSLofCXO5DQ7aTQZtEW07V+fhTFK5kduZL7lUipIcchB/KwM
+         pmPW58xsWRbaxYlv6AU/03ywlsP34bxOQcavQc5LVJ/12yfEz5HVb81pWje3jbppJh1f
+         ROylxv9TL37w0wZp1m4e2mng+Ryp4Hr2+ag1MqOXx98n04jPFtX5d7f/EUeDyuFTM9Ml
+         6VGtnwgIj1JeG3QiKcUkC3OmBtsh6ndmmRVpqnpvol15SU9iukxAzycX3z4yhG2TmT1/
+         djJA==
+X-Gm-Message-State: AOAM530j6ww6zA1VkwWXJ6/ueZDxo0NHWJT23q2aaXxs7Qbkv4XQ9rth
+        thI1irrqU2Bo3DE4ku2oMJiSjfA3X2jxGdAbTfJ2O1m3Qls=
+X-Google-Smtp-Source: ABdhPJy55WTrl7HX52ZANz2U9Sl1yhlrkaWTzoX7iaehNGJUg0wrUyilFtlsgBqKa1sAHLIxVP0otPwFNp9bSxJ9rYo=
+X-Received: by 2002:a1c:31d5:: with SMTP id x204mr3123920wmx.175.1613152933703;
+ Fri, 12 Feb 2021 10:02:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210212173315.jgr6kata2yxrbkuu@mobilestation>
+References: <1613130289-16280-1-git-send-email-kalyant@codeaurora.org>
+In-Reply-To: <1613130289-16280-1-git-send-email-kalyant@codeaurora.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Fri, 12 Feb 2021 10:02:01 -0800
+Message-ID: <CAF6AEGuoc5nd=D+AVoFAVf3emjAnkGitoJcoNoOT0ZOeqv_QfQ@mail.gmail.com>
+Subject: Re: [v3] drm/msm/disp/dpu1: turn off vblank irqs aggressively in dpu
+To:     Kalyan Thota <kalyant@codeaurora.org>
+Cc:     y@qualcomm.com, dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Krishna Manikandan <mkrishn@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Drew Davenport <ddavenport@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 12 Feb 11:33 CST 2021, Serge Semin wrote:
+On Fri, Feb 12, 2021 at 3:45 AM Kalyan Thota <kalyant@codeaurora.org> wrote:
+>
+> Set the flag vblank_disable_immediate = true to turn off vblank irqs
+> immediately as soon as drm_vblank_put is requested so that there are
+> no irqs triggered during idle state. This will reduce cpu wakeups
+> and help in power saving.
+>
+> To enable vblank_disable_immediate flag the underlying KMS driver
+> needs to support high precision vblank timestamping and also a
+> reliable way of providing vblank counter which is incrementing
+> at the leading edge of vblank.
+>
+> This patch also brings in changes to support vblank_disable_immediate
+> requirement in dpu driver.
+>
+> Changes in v1:
+>  - Specify reason to add vblank timestamp support. (Rob)
+>  - Add changes to provide vblank counter from dpu driver.
+>
+> Changes in v2:
+>  - fix warn stack reported by Rob with v2 patch
+>
+> Signed-off-by: Kalyan Thota <kalyant@codeaurora.org>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 80 +++++++++++++++++++++++++++++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 28 +++++++++-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h | 11 ++++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     |  5 ++
+>  4 files changed, 123 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> index d4662e8..9a80981 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> @@ -65,6 +65,83 @@ static void dpu_crtc_destroy(struct drm_crtc *crtc)
+>         kfree(dpu_crtc);
+>  }
+>
+> +static struct drm_encoder *get_encoder_from_crtc(struct drm_crtc *crtc)
+> +{
+> +       struct drm_device *dev = crtc->dev;
+> +       struct drm_encoder *encoder;
+> +
+> +       drm_for_each_encoder(encoder, dev)
+> +               if (encoder->crtc == crtc)
+> +                       return encoder;
+> +
+> +       return NULL;
+> +}
+> +
+> +static u32 dpu_crtc_get_vblank_counter(struct drm_crtc *crtc)
+> +{
+> +       struct drm_encoder *encoder;
+> +
+> +       encoder = get_encoder_from_crtc(crtc);
+> +       if (!encoder) {
+> +               DRM_ERROR("no encoder found for crtc %d\n", crtc->index);
+> +               return false;
+> +       }
+> +
+> +       return dpu_encoder_get_frame_count(encoder);
+> +}
+> +
+> +static bool dpu_crtc_get_scanout_position(struct drm_crtc *crtc,
+> +                                          bool in_vblank_irq,
+> +                                          int *vpos, int *hpos,
+> +                                          ktime_t *stime, ktime_t *etime,
+> +                                          const struct drm_display_mode *mode)
+> +{
+> +       unsigned int pipe = crtc->index;
+> +       struct drm_encoder *encoder;
+> +       int line, vsw, vbp, vactive_start, vactive_end, vfp_end;
+> +
+> +       encoder = get_encoder_from_crtc(crtc);
+> +       if (!encoder) {
+> +               DRM_ERROR("no encoder found for crtc %d\n", pipe);
+> +               return false;
+> +       }
+> +
+> +       vsw = mode->crtc_vsync_end - mode->crtc_vsync_start;
+> +       vbp = mode->crtc_vtotal - mode->crtc_vsync_end;
+> +
+> +       /*
+> +        * the line counter is 1 at the start of the VSYNC pulse and VTOTAL at
+> +        * the end of VFP. Translate the porch values relative to the line
+> +        * counter positions.
+> +        */
+> +
+> +       vactive_start = vsw + vbp + 1;
+> +       vactive_end = vactive_start + mode->crtc_vdisplay;
+> +
+> +       /* last scan line before VSYNC */
+> +       vfp_end = mode->crtc_vtotal;
+> +
+> +       if (stime)
+> +               *stime = ktime_get();
+> +
+> +       line = dpu_encoder_get_linecount(encoder);
+> +
+> +       if (line < vactive_start)
+> +               line -= vactive_start;
+> +       else if (line > vactive_end)
+> +               line = line - vfp_end - vactive_start;
+> +       else
+> +               line -= vactive_start;
+> +
+> +       *vpos = line;
+> +       *hpos = 0;
+> +
+> +       if (etime)
+> +               *etime = ktime_get();
+> +
+> +       return true;
+> +}
+> +
+>  static void _dpu_crtc_setup_blend_cfg(struct dpu_crtc_mixer *mixer,
+>                 struct dpu_plane_state *pstate, struct dpu_format *format)
+>  {
+> @@ -1243,6 +1320,8 @@ static const struct drm_crtc_funcs dpu_crtc_funcs = {
+>         .early_unregister = dpu_crtc_early_unregister,
+>         .enable_vblank  = msm_crtc_enable_vblank,
+>         .disable_vblank = msm_crtc_disable_vblank,
+> +       .get_vblank_timestamp = drm_crtc_vblank_helper_get_vblank_timestamp,
+> +       .get_vblank_counter = dpu_crtc_get_vblank_counter,
+>  };
+>
+>  static const struct drm_crtc_helper_funcs dpu_crtc_helper_funcs = {
+> @@ -1251,6 +1330,7 @@ static const struct drm_crtc_helper_funcs dpu_crtc_helper_funcs = {
+>         .atomic_check = dpu_crtc_atomic_check,
+>         .atomic_begin = dpu_crtc_atomic_begin,
+>         .atomic_flush = dpu_crtc_atomic_flush,
+> +       .get_scanout_position = dpu_crtc_get_scanout_position,
+>  };
+>
+>  /* initialize crtc */
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index f7f5c25..fb6546c 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -425,6 +425,32 @@ int dpu_encoder_helper_unregister_irq(struct dpu_encoder_phys *phys_enc,
+>         return 0;
+>  }
+>
+> +int dpu_encoder_get_frame_count(struct drm_encoder *drm_enc)
+> +{
+> +       struct dpu_encoder_virt *dpu_enc;
+> +       struct dpu_encoder_phys *phy_enc;
+> +
+> +       dpu_enc = to_dpu_encoder_virt(drm_enc);
+> +       phy_enc = dpu_enc ? dpu_enc->cur_master : NULL;
+> +
+> +       return phy_enc ? atomic_read(&phy_enc->vsync_cnt) : 0;
 
-> On Wed, Feb 10, 2021 at 10:33:26PM +0300, Serge Semin wrote:
-> > On Wed, Feb 10, 2021 at 12:56:59PM -0600, Bjorn Andersson wrote:
-> > > On Wed 10 Feb 12:40 CST 2021, Serge Semin wrote:
-> > > 
-> > > > On Wed, Feb 10, 2021 at 12:17:27PM -0600, Rob Herring wrote:
-> > > > > On Wed, Feb 10, 2021 at 11:29 AM Serge Semin
-> > > > > <Sergey.Semin@baikalelectronics.ru> wrote:
-> > > > > >
-> > > > > > In accordance with the USB HCD/DRD schema all the USB controllers are
-> > > > > > supposed to have DT-nodes named with prefix "^usb(@.*)?".  Since the
-> > > > > > existing DT-nodes will be renamed in a subsequent patch let's first make
-> > > > > > sure the DWC3 Qualcomm driver supports them and second falls back to the
-> > > > > > deprecated naming so not to fail on the legacy DTS-files passed to the
-> > > > > > newer kernels.
-> > > > > >
-> > > > > > Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-> > > > > > Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > > > > ---
-> > > > > >  drivers/usb/dwc3/dwc3-qcom.c | 3 ++-
-> > > > > >  1 file changed, 2 insertions(+), 1 deletion(-)
-> > > > > >
-> > > > > > diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> > > > > > index c703d552bbcf..49ad8d507d37 100644
-> > > > > > --- a/drivers/usb/dwc3/dwc3-qcom.c
-> > > > > > +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> > > > > > @@ -630,7 +630,8 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
-> > > > > >         struct device           *dev = &pdev->dev;
-> > > > > >         int                     ret;
-> > > > > >
-> > > > > > -       dwc3_np = of_get_child_by_name(np, "dwc3");
-> > > > > > +       dwc3_np = of_get_child_by_name(np, "usb") ?:
-> > > > > > +                 of_get_child_by_name(np, "dwc3");
-> > > > > 
-> > > > 
-> > > > > Is there some reason using compatible instead wouldn't work here?
-> > > > 
-> > > > I don't know for sure. The fix has been requested in the framework of
-> > > > this discussion:
-> > > > https://lore.kernel.org/linux-usb/20201020115959.2658-30-Sergey.Semin@baikalelectronics.ru/#t
-> > > > by the driver maintainer Bjorn. To get a firm answer it's better to
-> > > > have him asked.
-> > > 
-> > > My feedback was simply that it has to catch both cases, I didn't
-> > > consider the fact that we have a compatible to match against.
-> > > 
-> > > > As I see it having of_get_compatible_child() utilized
-> > > > here would also work. At least for the available in kernel dt-files.
-> > > > See the affected dts-es in:
-> > > > https://lore.kernel.org/linux-usb/20210210172850.20849-11-Sergey.Semin@baikalelectronics.ru/
-> > > > 
-> > > > A problem may happen if some older versions of DTS-es had another
-> > > > compatible string in the dwc3 sub-node...
-> > > > 
-> > > 
-> > > Afaict all Qualcomm dts files has "snps,dwc3", so you can match against
-> > > that instead.
-> > 
-> > Ok then. I'll replace of_get_child_by_name() here with
-> > of_get_compatible_child() matching just against "snps,dwc3" in v7. Can you
-> > confirm that noone ever had a Qcom-based hardware described with dts having
-> > the "synopsys,dwc3" compatible used as the DWC USB3 sub-node here? That
-> > string has been marked as deprecated recently because the vendor-prefix
-> > was changed sometime ago, but the original driver still accept it.
-> > 
-> > Alternatively to be on a safe side we could match against both
-> > compatibles here as Rob suggests. What do you think?
-> 
-> Bjorn, any comment on the question above? So I could respin the series
-> with this patch updated.
-> 
-> Also note, since the patch's gonna be changed I'll have to remove your
-> Reviewed-by tag unless u explicitly say I shouldn't.
-> 
+I don't think we should use a sw vsync_cntr.. or at least not use it
+for anything more than detecting that we are in this post-vblank limbo
+period
 
-Sounds good, I'd be happy to review the new patch.
+But might as well keep the discussion on the v2 thread
 
-PS. As this only affect the Qualcomm part of the series I would suggest
-that you send these patches off separate and don't send all 10 patches
-together.
+BR,
+-R
 
-Thanks,
-Bjorn
+> +}
+> +
+> +int dpu_encoder_get_linecount(struct drm_encoder *drm_enc)
+> +{
+> +       struct dpu_encoder_virt *dpu_enc;
+> +       struct dpu_encoder_phys *phys;
+> +       int linecount = 0;
+> +
+> +       dpu_enc = to_dpu_encoder_virt(drm_enc);
+> +       phys = dpu_enc ? dpu_enc->cur_master : NULL;
+> +
+> +       if (phys && phys->ops.get_line_count)
+> +               linecount = phys->ops.get_line_count(phys);
+> +
+> +       return linecount;
+> +}
+> +
+>  void dpu_encoder_get_hw_resources(struct drm_encoder *drm_enc,
+>                                   struct dpu_encoder_hw_resources *hw_res)
+>  {
+> @@ -1296,12 +1322,12 @@ static void dpu_encoder_vblank_callback(struct drm_encoder *drm_enc,
+>         DPU_ATRACE_BEGIN("encoder_vblank_callback");
+>         dpu_enc = to_dpu_encoder_virt(drm_enc);
+>
+> +       atomic_inc(&phy_enc->vsync_cnt);
+>         spin_lock_irqsave(&dpu_enc->enc_spinlock, lock_flags);
+>         if (dpu_enc->crtc)
+>                 dpu_crtc_vblank_callback(dpu_enc->crtc);
+>         spin_unlock_irqrestore(&dpu_enc->enc_spinlock, lock_flags);
+>
+> -       atomic_inc(&phy_enc->vsync_cnt);
+>         DPU_ATRACE_END("encoder_vblank_callback");
+>  }
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> index b491346..99a5d73 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> @@ -156,5 +156,16 @@ void dpu_encoder_prepare_commit(struct drm_encoder *drm_enc);
+>   */
+>  void dpu_encoder_set_idle_timeout(struct drm_encoder *drm_enc,
+>                                                         u32 idle_timeout);
+> +/**
+> + * dpu_encoder_get_linecount - get interface line count for the encoder.
+> + * @drm_enc:    Pointer to previously created drm encoder structure
+> + */
+> +int dpu_encoder_get_linecount(struct drm_encoder *drm_enc);
+> +
+> +/**
+> + * dpu_encoder_get_frame_count - get interface frame count for the encoder.
+> + * @drm_enc:    Pointer to previously created drm encoder structure
+> + */
+> +int dpu_encoder_get_frame_count(struct drm_encoder *drm_enc);
+>
+>  #endif /* __DPU_ENCODER_H__ */
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index 374b0e8..ed636f1 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -14,6 +14,7 @@
+>
+>  #include <drm/drm_crtc.h>
+>  #include <drm/drm_file.h>
+> +#include <drm/drm_vblank.h>
+>
+>  #include "msm_drv.h"
+>  #include "msm_mmu.h"
+> @@ -1020,6 +1021,10 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
+>          */
+>         dev->mode_config.allow_fb_modifiers = true;
+>
+> +       dev->max_vblank_count = 0xffffffff;
+> +       /* Disable vblank irqs aggressively for power-saving */
+> +       dev->vblank_disable_immediate = true;
+> +
+>         /*
+>          * _dpu_kms_drm_obj_init should create the DRM related objects
+>          * i.e. CRTCs, planes, encoders, connectors and so forth
+> --
+> 2.7.4
+>
