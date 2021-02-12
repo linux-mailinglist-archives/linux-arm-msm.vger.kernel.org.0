@@ -2,88 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A7CD131A6E0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Feb 2021 22:29:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A86B231A74E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Feb 2021 23:06:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229660AbhBLV2e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Feb 2021 16:28:34 -0500
-Received: from mail29.static.mailgun.info ([104.130.122.29]:55975 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232057AbhBLV2d (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Feb 2021 16:28:33 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1613165287; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=iahau7b0RP23BqJ1mHFpNKNC9lJ0XkgdYICyLtBm1lc=; b=AdQFgRokYZ78K524zkKoYmT7ySRz9/3OmwDvXat1Xa/+6xQILRzlc68e7rQnqV0yzemN+ckL
- klNBRLAc7OOjFAURar5LnE95G6f8Vs8O17R3jzKx8WMgmHNqQhkdP9t2Z/HeeevcqmODjJUf
- mwdeg8MMfxtWvPHhoZ9SZ5GQT3c=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 6026f2cc4bd23a05ae37a145 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 12 Feb 2021 21:27:40
- GMT
-Sender: jhugo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 10D45C43462; Fri, 12 Feb 2021 21:27:40 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from jhugo-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EA27AC433ED;
-        Fri, 12 Feb 2021 21:27:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EA27AC433ED
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
-Cc:     bbhatt@codeaurora.org, loic.poulain@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jeffrey Hugo <jhugo@codeaurora.org>
-Subject: [PATCH] bus: mhi: core: Fix check for syserr at power_up
-Date:   Fri, 12 Feb 2021 14:27:23 -0700
-Message-Id: <1613165243-23359-1-git-send-email-jhugo@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S229650AbhBLWG2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Feb 2021 17:06:28 -0500
+Received: from mail.kernel.org ([198.145.29.99]:41398 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229497AbhBLWG1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 12 Feb 2021 17:06:27 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 0132264DE0;
+        Fri, 12 Feb 2021 22:05:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1613167547;
+        bh=x7+O4dfMkemD6U+vgZkpKlnW63NDjJ8hkv36eJK9x4o=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=utCEACe2van290abpiVInryUj9yVn2FwsXMbagw9hbUab72VorrpgY32/Amx4utiN
+         j7Mc9urIjizH+MO0kEXOEdRlO76JE8KDEfkf4VWZwpa5zwrsAHPR56JbVeQtLZm12M
+         bt5NlZBF9WzNhSn0NR7WBJh7jZ+hZ/mTGX3E9sSXjoSfOubGx2bNNkcKvhIvonnWu6
+         JniU8yhese97VZl+fQvPXwdJS917BMwsjIXpAOMxS4tvp7ZmpIAVtFA5fW1n1VvGsu
+         HrqDR1yu8d1pn1hjR0JDtDenwDYyBO+cHSWBDZDx/N3OrSRsy+traSF5EdAtnY+kyN
+         qSNMsCRFENbmg==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20210212212630.GD179940@dell>
+References: <20210126124540.3320214-1-lee.jones@linaro.org> <161307643148.1254594.6590013599999468609@swboyd.mtv.corp.google.com> <20210211211054.GD4572@dell> <161309925025.1254594.6210738031889810500@swboyd.mtv.corp.google.com> <20210212092016.GF4572@dell> <161316374113.1254594.14156657225822268891@swboyd.mtv.corp.google.com> <20210212212503.GC179940@dell> <20210212212630.GD179940@dell>
+Subject: Re: [PATCH 00/21] [Set 2] Rid W=1 warnings from Clock
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-kernel@vger.kernel.org,
+        Ahmad Fatoum <a.fatoum@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Avi Fishman <avifishman70@gmail.com>,
+        Benjamin Fair <benjaminfair@google.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Boris BREZILLON <boris.brezillon@free-electrons.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Emilio =?utf-8?q?L=C3=B3pez?= <emilio@elopez.com.ar>,
+        Fabio Estevam <festevam@gmail.com>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Jan Kotas <jank@cadence.com>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        linux-tegra@vger.kernel.org, Loc Ho <lho@apm.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Nancy Yuen <yuenn@google.com>,
+        Nuvoton Technologies <tali.perry@nuvoton.com>,
+        NXP Linux Team <linux-imx@nxp.com>, openbmc@lists.ozlabs.org,
+        Patrick Venture <venture@google.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Peter De Schrijver <pdeschrijver@nvidia.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Prashant Gaikwad <pgaikwad@nvidia.com>,
+        Rajan Vaja <rajan.vaja@xilinx.com>,
+        Rajeev Kumar <rajeev-dlh.kumar@st.com>,
+        Richard Woodruff <r-woodruff2@ti.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Shiraz Hashim <shiraz.linux.kernel@gmail.com>,
+        =?utf-8?q?S=C3=B6ren?= Brinkmann <soren.brinkmann@xilinx.com>,
+        Tali Perry <tali.perry1@gmail.com>,
+        Tero Kristo <kristo@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Tomer Maimon <tmaimon77@gmail.com>,
+        Viresh Kumar <vireshk@kernel.org>
+To:     Lee Jones <lee.jones@linaro.org>
+Date:   Fri, 12 Feb 2021 14:05:45 -0800
+Message-ID: <161316754567.1254594.9542583200097699504@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The check to see if we have reset the device after detecting syserr at
-power_up is inverted.  wait_for_event_timeout() returns 0 on failure,
-and a positive value on success.  The check is looking for non-zero
-as a failure, which is likely to incorrectly cause a device init failure
-if syserr was detected at power_up.  Fix this.
+Quoting Lee Jones (2021-02-12 13:26:30)
+> On Fri, 12 Feb 2021, Lee Jones wrote:
+>=20
+> > The alternative is to not worry about it and review the slow drip of
+> > fixes that will occur as a result.  The issues I just fixed were built
+> > up over years.  They won't get to that level again.
+> >=20
+> > In my mind contributors should be compiling their submissions with W=3D1
+> > enabled by default.  I'm fairly sure the auto-builders do this now.
 
-Fixes: e18d4e9fa79b ("bus: mhi: core: Handle syserr during power_up")
-Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
----
- drivers/bus/mhi/core/pm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+That's good.
 
-diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-index 681960c..36ab7aa 100644
---- a/drivers/bus/mhi/core/pm.c
-+++ b/drivers/bus/mhi/core/pm.c
-@@ -1092,7 +1092,7 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
- 							   &val) ||
- 					!val,
- 				msecs_to_jiffies(mhi_cntrl->timeout_ms));
--		if (ret) {
-+		if (!ret) {
- 			ret = -EIO;
- 			dev_info(dev, "Failed to reset MHI due to syserr state\n");
- 			goto error_bhi_offset;
--- 
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+> >=20
+> > Once W=3D1 warnings are down to an acceptable level in the kernel as a
+> > whole, we can provide some guidance in SubmittingPatches (or similar)
+> > on how to enable them (hint: you add "W=3D1" on the compile line).
+> >=20
+> > Enabling W=3D1 in the default build will only serve to annoy Linus IMHO.
+> > If he wants them to be enabled by default, they wouldn't be W=3D1 in the
+> > first place, they'd be W=3D0 which *is* the default build.
+>=20
+> Just to add real quick - my advice is to enable them for yourself and
+> send back any issues along with your normal review.  A W=3D1 issue is no
+> different to a semantic or coding style one.
+>=20
 
+I'd like to enable it for only files under drivers/clk/ but it doesn't
+seem to work. I'm not asking to enable it at the toplevel Makefile. I'm
+asking to enable it for drivers/clk/ so nobody has to think about it now
+that you've done the hard work of getting the numbers in this directory
+down to zero or close to zero.
