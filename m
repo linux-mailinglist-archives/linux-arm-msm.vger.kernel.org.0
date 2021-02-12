@@ -2,44 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FEA0319D88
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Feb 2021 12:47:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 10BAE319DA1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Feb 2021 12:54:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229653AbhBLLqG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Feb 2021 06:46:06 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:46742 "EHLO
+        id S230257AbhBLLxt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Feb 2021 06:53:49 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:10229 "EHLO
         alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229608AbhBLLqG (ORCPT
+        with ESMTP id S229991AbhBLLxG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Feb 2021 06:46:06 -0500
+        Fri, 12 Feb 2021 06:53:06 -0500
 Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 12 Feb 2021 03:45:25 -0800
+  by alexa-out.qualcomm.com with ESMTP; 12 Feb 2021 03:52:20 -0800
 X-QCInternal: smtphost
 Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 12 Feb 2021 03:45:23 -0800
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 12 Feb 2021 03:52:19 -0800
 X-QCInternal: smtphost
 Received: from kalyant-linux.qualcomm.com ([10.204.66.210])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 12 Feb 2021 17:14:50 +0530
+  by ironmsg02-blr.qualcomm.com with ESMTP; 12 Feb 2021 17:22:09 +0530
 Received: by kalyant-linux.qualcomm.com (Postfix, from userid 94428)
-        id 1E25C427B; Fri, 12 Feb 2021 03:44:51 -0800 (PST)
-From:   Kalyan Thota <kalyant@codeaurora.org>
+        id 8C5FC427B; Fri, 12 Feb 2021 03:52:09 -0800 (PST)
+From:   Kalyan Thota <kalyan_t@codeaurora.org>
 To:     y@qualcomm.com, dri-devel@lists.freedesktop.org,
         linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
         devicetree@vger.kernel.org
 Cc:     Kalyan Thota <kalyant@codeaurora.org>,
         linux-kernel@vger.kernel.org, robdclark@gmail.com,
         seanpaul@chromium.org, hoegsberg@chromium.org,
-        dianders@chromium.org, mkrishn@codeaurora.org, swboyd@chromium.org,
-        abhinavk@codeaurora.org, ddavenport@chromium.org
+        dianders@chromium.org, mkrishn@codeaurora.org,
+        travitej@codeaurora.org, nganji@codeaurora.org,
+        swboyd@chromium.org, Kalyan Thota <kalyan_t@codeaurora.org>
 Subject: [v3] drm/msm/disp/dpu1: turn off vblank irqs aggressively in dpu
-Date:   Fri, 12 Feb 2021 03:44:49 -0800
-Message-Id: <1613130289-16280-1-git-send-email-kalyant@codeaurora.org>
+Date:   Fri, 12 Feb 2021 03:52:07 -0800
+Message-Id: <1613130727-18094-1-git-send-email-kalyan_t@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <y>
 References: <y>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
+
+From: Kalyan Thota <kalyant@codeaurora.org>
 
 Set the flag vblank_disable_immediate = true to turn off vblank irqs
 immediately as soon as drm_vblank_put is requested so that there are
@@ -55,13 +58,13 @@ This patch also brings in changes to support vblank_disable_immediate
 requirement in dpu driver.
 
 Changes in v1:
- - Specify reason to add vblank timestamp support. (Rob)
+ - Specify reason to add vblank timestamp support. (Rob Clark)
  - Add changes to provide vblank counter from dpu driver.
 
 Changes in v2:
- - fix warn stack reported by Rob with v2 patch
+ - Fix warn stack reported by Rob Clark with v2 patch
 
-Signed-off-by: Kalyan Thota <kalyant@codeaurora.org>
+Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
 ---
  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 80 +++++++++++++++++++++++++++++
  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 28 +++++++++-
