@@ -2,129 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F0153195F8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Feb 2021 23:43:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 356C3319807
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Feb 2021 02:42:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230080AbhBKWlu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Feb 2021 17:41:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60932 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229564AbhBKWlk (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Feb 2021 17:41:40 -0500
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABD20C061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Feb 2021 14:41:00 -0800 (PST)
-Received: by mail-pg1-x534.google.com with SMTP id o7so4978245pgl.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Feb 2021 14:41:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=B6yvPNRRNRl+hAEm+aAT4OMwWbagrM0k8oerqfFt/Fk=;
-        b=YY4SkTg7rV4kPjQAkZOLvLicOXO6Y+7cVQ/0LiM1pIHZgGh1E3le3JNADcZA9QBqwD
-         RAPUqPDgumgL705j+GvlBu0L6iJycVzgsFNx1q5EHNd9O1z54qA7fR078HEud6FvhRbc
-         eqXDmistUlMI3PCbnvlRLq4NNrGQBymskySB8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=B6yvPNRRNRl+hAEm+aAT4OMwWbagrM0k8oerqfFt/Fk=;
-        b=OI+Cf/apONmiU1SXwUX9ejZcP4C33ig32MrXhqalZ/zomBBO4z+aq7otI0uGoFmygc
-         /x5waJXjElL2wI6prbmmSSEsrZ49wwgsHvSK0zv/KGdk4Dnz4M0JIFk1kJpvd2Nklvyf
-         y0i5uiXnpdaDi1OgXVedbnaSYZOrJksWttBIXEMjq3rLS7f4zjRT8RKlMevGvvdsz5cA
-         /ZSKvoNOfz0re6xSQS1+YyLiHj/SAkQ5Zy/pZ1hJRO1ZU4dlLDVa8AYTG11rrhFGby+M
-         gC5RRnIsZ7UoNIuYwtC3YI9+RvB9Z1cputX0kVRkHbGIwPrZUjdkJCLZuFypBvwCyN3F
-         k4ng==
-X-Gm-Message-State: AOAM530aM1/C73wYZsfqfRhmOEysXrMJ8RxXm20RMkHp7zVQZWew+wne
-        1uw2SeCxfLqjCiy0sKoN0GhKiE0gdIMGXQ==
-X-Google-Smtp-Source: ABdhPJzT0xSERmgIjPMidxbPCsmfbyLhZNGEakqTmas5KJF/Xma8ce2B7quh8a1ulXA9ffLJ4R3uZA==
-X-Received: by 2002:a62:8416:0:b029:1dd:9d4e:7002 with SMTP id k22-20020a6284160000b02901dd9d4e7002mr321648pfd.18.1613083260119;
-        Thu, 11 Feb 2021 14:41:00 -0800 (PST)
-Received: from smtp.gmail.com ([2620:15c:202:201:f038:5688:cf3c:eca2])
-        by smtp.gmail.com with ESMTPSA id i67sm6675454pfc.153.2021.02.11.14.40.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Feb 2021 14:40:59 -0800 (PST)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     linux-kernel@vger.kernel.org, Sean Paul <sean@poorly.run>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Krishna Manikandan <mkrishn@codeaurora.org>,
-        Daniel Vetter <daniel@ffwll.ch>
-Subject: [PATCH] drm/msm/kms: Use nested locking for crtc lock instead of custom classes
-Date:   Thu, 11 Feb 2021 14:40:58 -0800
-Message-Id: <20210211224058.2853809-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.30.0.478.g8a0d178c01-goog
+        id S229475AbhBLBmM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Feb 2021 20:42:12 -0500
+Received: from so15.mailgun.net ([198.61.254.15]:16396 "EHLO so15.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229469AbhBLBmM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 11 Feb 2021 20:42:12 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1613094114; h=Message-ID: References: In-Reply-To: Reply-To:
+ Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=20+RKKCF4DeXLj+WHzzy4Jh3DV97x7W4t8v7lxLZWOs=;
+ b=MdEIq1YY2Bn8JKhMY12Bbznh/ElF2ZjDxMxf0FwtvieqXPtDfagIdUYYnRSoYIE4BFyl7MED
+ KGKPLDBYy9gCBFlzEjsaf0l10cOuDU7ZCsgI1ckP4M8yA8GTMZDiQ3L8DH8ZDrf8HQKNgO80
+ UidqqzNN+t8+4fSBzVjJGiWuvTc=
+X-Mailgun-Sending-Ip: 198.61.254.15
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 6025dcb84bd23a05ae032b31 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 12 Feb 2021 01:41:12
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id EDD46C433CA; Fri, 12 Feb 2021 01:41:11 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 24566C433C6;
+        Fri, 12 Feb 2021 01:41:11 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 11 Feb 2021 17:41:11 -0800
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, jhugo@codeaurora.org
+Subject: Re: [PATCH v3] mhi: pci_generic: Ensure device readiness before
+ starting MHI
+Organization: Qualcomm Innovation Center, Inc.
+Reply-To: bbhatt@codeaurora.org
+Mail-Reply-To: bbhatt@codeaurora.org
+In-Reply-To: <1613071507-31489-1-git-send-email-loic.poulain@linaro.org>
+References: <1613071507-31489-1-git-send-email-loic.poulain@linaro.org>
+Message-ID: <fc43871e37761808e5c1e00406daef5e@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We don't need to make up custom lock classes here, we can simply use
-mutex_lock_nested() and pass in the index of the crtc to the locking
-APIs instead. This helps lockdep understand that these are really
-different locks while avoiding having to allocate custom lockdep
-classes.
+Hi Loic,
 
-Cc: Krishna Manikandan <mkrishn@codeaurora.org>
-Suggested-by: Daniel Vetter <daniel@ffwll.ch>
-Fixes: b3d91800d9ac ("drm/msm: Fix race condition in msm driver with async layer updates")
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+On 2021-02-11 11:25 AM, Loic Poulain wrote:
+> The PCI device may have not been bound from cold boot and be in
+> undefined state, or simply not yet ready for MHI operations. This
+> change ensures that the MHI layer is reset to initial state and
+> ready for MHI initialization and power up.
+> 
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> ---
+>  v2: reset only if necessary
+>  v3: do not wait for MHI readiness in PBL context
+> 
+>  drivers/bus/mhi/pci_generic.c | 33 +++++++++++++++++++++++++++++++++
+>  1 file changed, 33 insertions(+)
+> 
+> diff --git a/drivers/bus/mhi/pci_generic.c 
+> b/drivers/bus/mhi/pci_generic.c
+> index c20f59e..87abd7c 100644
+> --- a/drivers/bus/mhi/pci_generic.c
+> +++ b/drivers/bus/mhi/pci_generic.c
+> @@ -17,6 +17,8 @@
+>  #include <linux/timer.h>
+>  #include <linux/workqueue.h>
+> 
+> +#include "core/internal.h"
+> +
+>  #define MHI_PCI_DEFAULT_BAR_NUM 0
+> 
+>  #define MHI_POST_RESET_DELAY_MS 500
+> @@ -256,6 +258,7 @@ static int mhi_pci_claim(struct mhi_controller 
+> *mhi_cntrl,
+>  		return err;
+>  	}
+>  	mhi_cntrl->regs = pcim_iomap_table(pdev)[bar_num];
+> +	mhi_cntrl->bhi = mhi_cntrl->regs + readl(mhi_cntrl->regs + BHIOFF);
+> 
+>  	err = pci_set_dma_mask(pdev, dma_mask);
+>  	if (err) {
+> @@ -391,6 +394,31 @@ static void health_check(struct timer_list *t)
+>  	mod_timer(&mhi_pdev->health_check_timer, jiffies + 
+> HEALTH_CHECK_PERIOD);
+>  }
+> 
+> +static void __mhi_sw_reset(struct mhi_controller *mhi_cntrl)
+> +{
+> +	unsigned int max_wait_ready = 100;
+> +
+> +	if (MHI_IN_PBL(mhi_get_exec_env(mhi_cntrl))) {
+> +		/* nothing to do, ready for BHI */
+> +		return;
+> +	}
+> +
+> +	if (mhi_get_mhi_state(mhi_cntrl) >= MHI_STATE_M0) {
+> +		dev_warn(mhi_cntrl->cntrl_dev, "Need reset\n");
+> +		writel(MHICTRL_RESET_MASK, mhi_cntrl->regs + MHICTRL);
+> +		msleep(10);
+> +	}
+> +
+> +	while (mhi_get_mhi_state(mhi_cntrl) != MHI_STATE_READY) {
+> +		if (!max_wait_ready--) {
+> +			dev_warn(mhi_cntrl->cntrl_dev, "Not ready (state %u)\n",
+> +				 mhi_get_mhi_state(mhi_cntrl));
+> +			break;
+> +		}
+> +		msleep(50);
+> +	}
+> +}
+> +
+>  static int mhi_pci_probe(struct pci_dev *pdev, const struct 
+> pci_device_id *id)
+>  {
+>  	const struct mhi_pci_dev_info *info = (struct mhi_pci_dev_info *)
+> id->driver_data;
+> @@ -451,6 +479,9 @@ static int mhi_pci_probe(struct pci_dev *pdev,
+> const struct pci_device_id *id)
+>  		goto err_unregister;
+>  	}
+> 
+> +	/* Before starting MHI, ensure device is in good initial state */
+> +	__mhi_sw_reset(mhi_cntrl);
+> +
+>  	err = mhi_sync_power_up(mhi_cntrl);
+>  	if (err) {
+>  		dev_err(&pdev->dev, "failed to power up MHI controller\n");
+> @@ -532,6 +563,8 @@ static void mhi_pci_reset_done(struct pci_dev 
+> *pdev)
+>  		return;
+>  	}
+> 
+> +	__mhi_sw_reset(mhi_cntrl);
+> +
+>  	err = mhi_sync_power_up(mhi_cntrl);
+>  	if (err) {
+>  		dev_err(&pdev->dev, "failed to power up MHI controller\n");
+
+Can you share logs of what you're seeing as it is not clear why you 
+would need
+this patch.
+
+We have a mechanism in place that Jeff added a while back [1], to check 
+if device
+is in SYS_ERROR state and do the same: issue reset and later, wait for 
+ready from
+within mhi_sync_power_up() API.
+
+Note that the MHI_IN_PBL() macro includes EDL and Pass Through modes as 
+well and
+we do expect an MHI READY state move after Pass Through.
+
+Thanks,
+Bhaumik
+
+[1] 
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/drivers/bus/mhi/core?h=v5.11-rc7&id=e18d4e9fa79bb27de6447c0c172bb1c428a52bb2
 ---
- drivers/gpu/drm/msm/msm_atomic.c | 7 +++++--
- drivers/gpu/drm/msm/msm_kms.h    | 8 ++------
- 2 files changed, 7 insertions(+), 8 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
-index 6a326761dc4a..edcaccaa27e6 100644
---- a/drivers/gpu/drm/msm/msm_atomic.c
-+++ b/drivers/gpu/drm/msm/msm_atomic.c
-@@ -57,10 +57,13 @@ static void vblank_put(struct msm_kms *kms, unsigned crtc_mask)
- 
- static void lock_crtcs(struct msm_kms *kms, unsigned int crtc_mask)
- {
-+	int crtc_index;
- 	struct drm_crtc *crtc;
- 
--	for_each_crtc_mask(kms->dev, crtc, crtc_mask)
--		mutex_lock(&kms->commit_lock[drm_crtc_index(crtc)]);
-+	for_each_crtc_mask(kms->dev, crtc, crtc_mask) {
-+		crtc_index = drm_crtc_index(crtc);
-+		mutex_lock_nested(&kms->commit_lock[crtc_index], crtc_index);
-+	}
- }
- 
- static void unlock_crtcs(struct msm_kms *kms, unsigned int crtc_mask)
-diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
-index 4735251a394d..d8151a89e163 100644
---- a/drivers/gpu/drm/msm/msm_kms.h
-+++ b/drivers/gpu/drm/msm/msm_kms.h
-@@ -157,7 +157,6 @@ struct msm_kms {
- 	 * from the crtc's pending_timer close to end of the frame:
- 	 */
- 	struct mutex commit_lock[MAX_CRTCS];
--	struct lock_class_key commit_lock_keys[MAX_CRTCS];
- 	unsigned pending_crtc_mask;
- 	struct msm_pending_timer pending_timers[MAX_CRTCS];
- };
-@@ -167,11 +166,8 @@ static inline int msm_kms_init(struct msm_kms *kms,
- {
- 	unsigned i, ret;
- 
--	for (i = 0; i < ARRAY_SIZE(kms->commit_lock); i++) {
--		lockdep_register_key(&kms->commit_lock_keys[i]);
--		__mutex_init(&kms->commit_lock[i], "&kms->commit_lock[i]",
--			     &kms->commit_lock_keys[i]);
--	}
-+	for (i = 0; i < ARRAY_SIZE(kms->commit_lock); i++)
-+		mutex_init(&kms->commit_lock[i]);
- 
- 	kms->funcs = funcs;
- 
-
-base-commit: 182b4a2d251305201b6f9cae29067f7112f05835
--- 
-https://chromeos.dev
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
+a Linux Foundation Collaborative Project
