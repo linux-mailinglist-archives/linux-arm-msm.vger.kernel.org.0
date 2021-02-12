@@ -2,74 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 44D8E31A4C0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Feb 2021 19:52:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DD1731A5A7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Feb 2021 20:52:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231445AbhBLSu4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Feb 2021 13:50:56 -0500
-Received: from mail.kernel.org ([198.145.29.99]:56552 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229558AbhBLSuy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Feb 2021 13:50:54 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id BBFA164E9A;
-        Fri, 12 Feb 2021 18:50:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1613155814;
-        bh=ca8NmUoXUMn3p9qX2HDf8b5wDt/sG8WeAWOl8PNCSNg=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=K4VklQHDUj8mWEb4wGE+IuW8XY3tfX4XirqHLdhm8NL4rRGvgVWiVNrEvoxd6asMG
-         acVSKvNhW3JF1eqQ5NwuH3d0FjbRoA9Jy0OSLAoJCv0fSfOHkjRzrm29M5qVl2vPtU
-         Wwznm6jAIELdvqqJlKO+oYn/+SZ6+FLVHvzxuDFfOwRxA3SUS0T6Er7pqO45IgwblN
-         03l+2BdTTavhsowiNsAod+LFVICJE53KYG2i8h1lZDGdWFMS3WixWKhAjcqtiLzfzF
-         mQ9qo4LiufgHRs4PO1EgIdrAd6LjE/87ihsC5G+Ive0cmdYr8YCkpDV17IasBPBSHL
-         DQmXm/TC6oHXA==
-Date:   Fri, 12 Feb 2021 10:50:12 -0800
-From:   Jakub Kicinski <kuba@kernel.org>
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Cc:     elder@kernel.org, bjorn.andersson@linaro.org, agross@kernel.org,
-        davem@davemloft.net, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
-        marijn.suijten@somainline.org, phone-devel@vger.kernel.org
-Subject: Re: [PATCH v1 5/7] net: ipa: Add support for IPA on MSM8998
-Message-ID: <20210212105012.2f425230@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-In-Reply-To: <20210211175015.200772-6-angelogioacchino.delregno@somainline.org>
-References: <20210211175015.200772-1-angelogioacchino.delregno@somainline.org>
-        <20210211175015.200772-6-angelogioacchino.delregno@somainline.org>
+        id S229959AbhBLTwE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Feb 2021 14:52:04 -0500
+Received: from mail.baikalelectronics.com ([87.245.175.226]:40446 "EHLO
+        mail.baikalelectronics.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229451AbhBLTwC (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 12 Feb 2021 14:52:02 -0500
+Date:   Fri, 12 Feb 2021 22:51:19 +0300
+From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     Serge Semin <fancer.lancer@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Linux USB List <linux-usb@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v6 09/10] usb: dwc3: qcom: Detect DWC3 DT-nodes with
+ "usb"-prefixed names
+Message-ID: <20210212195119.f55q7mcmfcsqna5s@mobilestation>
+References: <20210210172850.20849-1-Sergey.Semin@baikalelectronics.ru>
+ <20210210172850.20849-10-Sergey.Semin@baikalelectronics.ru>
+ <CAL_JsqJBknqhCSUOdpZVbtmp6TYetBQPLoQUCT6DTFajpChaSA@mail.gmail.com>
+ <20210210184051.ncvvs5xgyo7o3uzq@mobilestation>
+ <YCQse9EtEHtLVe9A@builder.lan>
+ <20210210193325.inp7rgpsfr624zhd@mobilestation>
+ <YCa/m4qfT1T4e6CW@builder.lan>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <YCa/m4qfT1T4e6CW@builder.lan>
+X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 11 Feb 2021 18:50:13 +0100 AngeloGioacchino Del Regno wrote:
-> MSM8998 features IPA v3.1 (GSI v1.0): add the required configuration
-> data for it.
->=20
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@soma=
-inline.org>
+On Fri, Feb 12, 2021 at 11:49:15AM -0600, Bjorn Andersson wrote:
+> On Wed 10 Feb 13:33 CST 2021, Serge Semin wrote:
+> 
+> > On Wed, Feb 10, 2021 at 12:56:59PM -0600, Bjorn Andersson wrote:
+> > > On Wed 10 Feb 12:40 CST 2021, Serge Semin wrote:
+> > > 
+> > > > On Wed, Feb 10, 2021 at 12:17:27PM -0600, Rob Herring wrote:
+> > > > > On Wed, Feb 10, 2021 at 11:29 AM Serge Semin
+> > > > > <Sergey.Semin@baikalelectronics.ru> wrote:
+> > > > > >
+> > > > > > In accordance with the USB HCD/DRD schema all the USB controllers are
+> > > > > > supposed to have DT-nodes named with prefix "^usb(@.*)?".  Since the
+> > > > > > existing DT-nodes will be renamed in a subsequent patch let's first make
+> > > > > > sure the DWC3 Qualcomm driver supports them and second falls back to the
+> > > > > > deprecated naming so not to fail on the legacy DTS-files passed to the
+> > > > > > newer kernels.
+> > > > > >
+> > > > > > Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+> > > > > > Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > > > > > ---
+> > > > > >  drivers/usb/dwc3/dwc3-qcom.c | 3 ++-
+> > > > > >  1 file changed, 2 insertions(+), 1 deletion(-)
+> > > > > >
+> > > > > > diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> > > > > > index c703d552bbcf..49ad8d507d37 100644
+> > > > > > --- a/drivers/usb/dwc3/dwc3-qcom.c
+> > > > > > +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> > > > > > @@ -630,7 +630,8 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
+> > > > > >         struct device           *dev = &pdev->dev;
+> > > > > >         int                     ret;
+> > > > > >
+> > > > > > -       dwc3_np = of_get_child_by_name(np, "dwc3");
+> > > > > > +       dwc3_np = of_get_child_by_name(np, "usb") ?:
+> > > > > > +                 of_get_child_by_name(np, "dwc3");
+> > > > > 
+> > > > 
+> > > > > Is there some reason using compatible instead wouldn't work here?
+> > > > 
+> > > > I don't know for sure. The fix has been requested in the framework of
+> > > > this discussion:
+> > > > https://lore.kernel.org/linux-usb/20201020115959.2658-30-Sergey.Semin@baikalelectronics.ru/#t
+> > > > by the driver maintainer Bjorn. To get a firm answer it's better to
+> > > > have him asked.
+> > > 
+> > > My feedback was simply that it has to catch both cases, I didn't
+> > > consider the fact that we have a compatible to match against.
+> > > 
+> > > > As I see it having of_get_compatible_child() utilized
+> > > > here would also work. At least for the available in kernel dt-files.
+> > > > See the affected dts-es in:
+> > > > https://lore.kernel.org/linux-usb/20210210172850.20849-11-Sergey.Semin@baikalelectronics.ru/
+> > > > 
+> > > > A problem may happen if some older versions of DTS-es had another
+> > > > compatible string in the dwc3 sub-node...
+> > > > 
+> > > 
+> > > Afaict all Qualcomm dts files has "snps,dwc3", so you can match against
+> > > that instead.
+> > 
+> > Ok then. I'll replace of_get_child_by_name() here with
+> > of_get_compatible_child() matching just against "snps,dwc3" in v7. Can you
+> > confirm that noone ever had a Qcom-based hardware described with dts having
+> > the "synopsys,dwc3" compatible used as the DWC USB3 sub-node here? That
+> > string has been marked as deprecated recently because the vendor-prefix
+> > was changed sometime ago, but the original driver still accept it.
+> > 
+> 
+> I don't see any Qualcomm users of "synopsys,dwc3", past or present.
+> 
+> > Alternatively to be on a safe side we could match against both
+> > compatibles here as Rob suggests. What do you think?
+> > 
+> 
+> Let's go with only "snps,dwc3".
 
-This one does not build:
+Ok. Thanks. I'll resend just two patches in ten minutes.
 
-drivers/net/ipa/ipa_data-msm8998.c:382:3: error: =E2=80=98struct ipa_clock_=
-data=E2=80=99 has no member named =E2=80=98interconnect=E2=80=99; did you m=
-ean =E2=80=98interconnect_data=E2=80=99?
-  382 |  .interconnect =3D {
-      |   ^~~~~~~~~~~~
-      |   interconnect_data
-drivers/net/ipa/ipa_data-msm8998.c:382:2: warning: braces around scalar ini=
-tializer
-  382 |  .interconnect =3D {
-      |  ^
-drivers/net/ipa/ipa_data-msm8998.c:382:2: note: (near initialization for =
-=E2=80=98ipa_clock_data.interconnect_count=E2=80=99)
-drivers/net/ipa/ipa_data-msm8998.c:383:4: error: =E2=80=98IPA_INTERCONNECT_=
-MEMORY=E2=80=99 undeclared here (not in a function)
-  383 |   [IPA_INTERCONNECT_MEMORY] =3D {
-      |    ^~~~~~~~~~~~~~~~~~~~~~~
+-Sergey
 
-
-Each commit must build cleanly and not add any transient W=3D1 C=3D1
-warnings.
+> 
+> Regards,
+> Bjorn
