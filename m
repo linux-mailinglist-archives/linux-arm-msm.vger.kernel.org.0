@@ -2,56 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EB68731AAEF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Feb 2021 11:56:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CCDD631AAFF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Feb 2021 12:25:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229580AbhBMKzr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 13 Feb 2021 05:55:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45438 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229512AbhBMKzp (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 13 Feb 2021 05:55:45 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61B3FC061574
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Feb 2021 02:55:05 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id n8so2504874wrm.10
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Feb 2021 02:55:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=p7aJCQPOAWhA7x4o25lcJFhvX0SrgHfv80XtgRDoDP4=;
-        b=wLgGZeVFTkNo/KYwPBF7sQ4JU6KMzh3rUFRnZsXataO9rNbkboX3IS3ML/eQ3sdn9c
-         3BpDHqu4bJ43peaZEjoAJX/QKxsxxt3B0CNeC0I+FKW4j83W6qBpTxayn+iLs0eZgjaR
-         cWuQvJKxyoHo+UdxxmhX+zCTmyVI6Ju1eH+fVbfDnBn5lbxQUlXD8tzUYOkLgvr2zOP5
-         InwqsN56moapHKC8xretWr6F5p3WWlAe4bNsrvm3CniXUTUtwj2PbqIx0NbRGQwjIIA2
-         gSxeq3rzdiW7AkjZn5xE0V+Dk5RWnc7hL2RxN1WXIl4k7vSgqSE99Ama8srX7MQJXgd/
-         jXkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=p7aJCQPOAWhA7x4o25lcJFhvX0SrgHfv80XtgRDoDP4=;
-        b=C3rGK3Ifgjx5588InVs4nBjxgvaImtxhMZtuD73S2hADVcVw3RW1scwJmqXhxdM46m
-         j5xfEPSizZ2AUWkHoTPyTvK3JGs3vhFsrgHM7YqBFF12E0rFLNwjt1pWXhS664C6d6lT
-         1pSd9I6baNOEGhOFlreNzOEG6ov2wr9s74euezlnrUtdOHEu06J25IBpCXUfOK8NSDqd
-         0+Y7hrW18aj+yBxS7u7ThtfWachPPOLUO+MuJ8VTFSk154nG0xNRwE+PHBG7C8HNAHss
-         vz3tgMcYqtw77NcHWbSzI907gkfX2i8W+WdPRubCLqMbDTCVUmlWDpcFuCuIHJZTEt+f
-         B9Sw==
-X-Gm-Message-State: AOAM531soT1PAFaOG839FesZ4JsMJ4Se38d3Q/zEZCBRUAgj3I46PDrv
-        UEnxHZDnV//pv7PuDCn4TCa+8Tork+JvLOPi9HnByA==
-X-Google-Smtp-Source: ABdhPJx6AtGx/GgpqQgbBTpHd04etQqgxM8y1ZKKYsczFDKKXWnhl/Vn66Xlhx3En73obdX4RK9nbVYmFwVErzpnIcc=
-X-Received: by 2002:adf:e884:: with SMTP id d4mr7991020wrm.275.1613213704109;
- Sat, 13 Feb 2021 02:55:04 -0800 (PST)
+        id S229587AbhBMLZe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 13 Feb 2021 06:25:34 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:47251 "EHLO z11.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229478AbhBMLZb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 13 Feb 2021 06:25:31 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1613215510; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=WwWdTqspb8dts3dfTnbbRXtTvtaMdbxt2Yfgj+sc2Sg=;
+ b=kzsBFjMJyj7uvxr3LBhDzlW2oh1HetmOdmFJLIS6481Xpfa2ZT5TDEsiei/kSXHE8vd3O8hH
+ 6zThNobMWq1v6w7nkipgSd7ZWtqKv0ztjZub6Q0EqJyix1XJYx1V9cOny/WATn0ASVrR9cC1
+ twQTfg1ovf1BPX9YmW8lV9jBeZE=
+X-Mailgun-Sending-Ip: 104.130.96.11
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 6027b59b8e43a988b74ca40a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 13 Feb 2021 11:18:51
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 7DEDCC43462; Sat, 13 Feb 2021 11:18:51 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B8F2BC433CA;
+        Sat, 13 Feb 2021 11:18:50 +0000 (UTC)
 MIME-Version: 1.0
-References: <20210212172336.20550-1-saiprakash.ranjan@codeaurora.org>
-In-Reply-To: <20210212172336.20550-1-saiprakash.ranjan@codeaurora.org>
-From:   Mike Leach <mike.leach@linaro.org>
-Date:   Sat, 13 Feb 2021 10:54:53 +0000
-Message-ID: <CAJ9a7VgDxgVUhgrcZc7jX3psWrxWoqHOJ+O36eQf7+-MjVOVeQ@mail.gmail.com>
-Subject: Re: [PATCH] coresight: etm4x: Add ETM PIDs for Cortex-A55 and Cortex-A78
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Sat, 13 Feb 2021 16:48:50 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Mike Leach <mike.leach@linaro.org>
 Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
         Suzuki K Poulose <suzuki.poulose@arm.com>,
         Leo Yan <leo.yan@linaro.org>,
@@ -61,57 +56,81 @@ Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
         linux-arm-msm@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH] coresight: etm4x: Add ETM PIDs for Cortex-A55 and
+ Cortex-A78
+In-Reply-To: <CAJ9a7VgDxgVUhgrcZc7jX3psWrxWoqHOJ+O36eQf7+-MjVOVeQ@mail.gmail.com>
+References: <20210212172336.20550-1-saiprakash.ranjan@codeaurora.org>
+ <CAJ9a7VgDxgVUhgrcZc7jX3psWrxWoqHOJ+O36eQf7+-MjVOVeQ@mail.gmail.com>
+Message-ID: <a0f2a95c4e4d3d079cf8379bd49b527a@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sai,
+Hi Mike,
 
-This patch does not apply to coresight/next - possibly because the PID
-for A55 has been added in an earlier patch ( [b8336ad947e19 ]
-coresight: etm4x: add AMBA id for Cortex-A55 and Cortex-A75).
+On 2021-02-13 16:24, Mike Leach wrote:
+> Hi Sai,
+> 
+> This patch does not apply to coresight/next - possibly because the PID
+> for A55 has been added in an earlier patch ( [b8336ad947e19 ]
+> coresight: etm4x: add AMBA id for Cortex-A55 and Cortex-A75).
+> 
 
-Regards
+Apologies, my remote was still pointing to linaro coresight repo,
+https://git.linaro.org/kernel/coresight.git, I have now updated
+the remote to a proper kernel.org coresight repo and will post
+the updated patchset.
 
-Mike
+Thanks,
+Sai
 
-
-
-On Fri, 12 Feb 2021 at 17:23, Sai Prakash Ranjan
-<saiprakash.ranjan@codeaurora.org> wrote:
->
-> Add ETM PIDs for Cortex-A55 and Cortex-A78 to the list of
-> supported ETMs.
->
-> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> ---
->  drivers/hwtracing/coresight/coresight-etm4x-core.c | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> index b20b6ff17cf6..193233792ab5 100644
-> --- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> +++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> @@ -1713,7 +1713,9 @@ static const struct amba_id etm4_ids[] = {
->         CS_AMBA_ID(0x000bb95a),                 /* Cortex-A72 */
->         CS_AMBA_ID(0x000bb959),                 /* Cortex-A73 */
->         CS_AMBA_UCI_ID(0x000bb9da, uci_id_etm4),/* Cortex-A35 */
-> +       CS_AMBA_UCI_ID(0x000bbd05, uci_id_etm4),/* Cortex-A55 */
->         CS_AMBA_UCI_ID(0x000bbd0c, uci_id_etm4),/* Neoverse N1 */
-> +       CS_AMBA_UCI_ID(0x000bbd41, uci_id_etm4),/* Cortex-A78 */
->         CS_AMBA_UCI_ID(0x000f0205, uci_id_etm4),/* Qualcomm Kryo */
->         CS_AMBA_UCI_ID(0x000f0211, uci_id_etm4),/* Qualcomm Kryo */
->         CS_AMBA_UCI_ID(0x000bb802, uci_id_etm4),/* Qualcomm Kryo 385 Cortex-A55 */
->
-> base-commit: 1efbcec2ef8c037f1e801c76e4b9434ee2400be7
+> 
+> 
+> 
+> On Fri, 12 Feb 2021 at 17:23, Sai Prakash Ranjan
+> <saiprakash.ranjan@codeaurora.org> wrote:
+>> 
+>> Add ETM PIDs for Cortex-A55 and Cortex-A78 to the list of
+>> supported ETMs.
+>> 
+>> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+>> ---
+>>  drivers/hwtracing/coresight/coresight-etm4x-core.c | 2 ++
+>>  1 file changed, 2 insertions(+)
+>> 
+>> diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c 
+>> b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+>> index b20b6ff17cf6..193233792ab5 100644
+>> --- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
+>> +++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+>> @@ -1713,7 +1713,9 @@ static const struct amba_id etm4_ids[] = {
+>>         CS_AMBA_ID(0x000bb95a),                 /* Cortex-A72 */
+>>         CS_AMBA_ID(0x000bb959),                 /* Cortex-A73 */
+>>         CS_AMBA_UCI_ID(0x000bb9da, uci_id_etm4),/* Cortex-A35 */
+>> +       CS_AMBA_UCI_ID(0x000bbd05, uci_id_etm4),/* Cortex-A55 */
+>>         CS_AMBA_UCI_ID(0x000bbd0c, uci_id_etm4),/* Neoverse N1 */
+>> +       CS_AMBA_UCI_ID(0x000bbd41, uci_id_etm4),/* Cortex-A78 */
+>>         CS_AMBA_UCI_ID(0x000f0205, uci_id_etm4),/* Qualcomm Kryo */
+>>         CS_AMBA_UCI_ID(0x000f0211, uci_id_etm4),/* Qualcomm Kryo */
+>>         CS_AMBA_UCI_ID(0x000bb802, uci_id_etm4),/* Qualcomm Kryo 385 
+>> Cortex-A55 */
+>> 
+>> base-commit: 1efbcec2ef8c037f1e801c76e4b9434ee2400be7
+>> --
+>> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+>> member
+>> of Code Aurora Forum, hosted by The Linux Foundation
+>> 
+> 
+> 
 > --
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
->
+> Mike Leach
+> Principal Engineer, ARM Ltd.
+> Manchester Design Centre. UK
 
-
---
-Mike Leach
-Principal Engineer, ARM Ltd.
-Manchester Design Centre. UK
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
