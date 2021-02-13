@@ -2,89 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B4B8531A8DF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Feb 2021 01:42:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B8B9331A8EC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Feb 2021 01:47:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229903AbhBMAlX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Feb 2021 19:41:23 -0500
-Received: from mail29.static.mailgun.info ([104.130.122.29]:50423 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230376AbhBMAlW (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Feb 2021 19:41:22 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1613176863; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=Cck1QrwRGtEz4wQz0BHETOps/FNBT1eplTNtHgE5sro=; b=aKi+MXB0SdqzagqEobpwUB/4Dq33dQJr7zsZqHKKjsOmBdJFJ/dOQ55l58C5aeATfPyj9tQZ
- KZk6C71MMYWrim8cnZfSVZxT9M1+f+aTVHIZeRx5MYgoA/Hcj/RgFzIbxmvzva/kOyLAlanz
- /Yg5UKWa5XHOzifkygMYk2uUf0Q=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 60271ffd81f6c45dce33270a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 13 Feb 2021 00:40:29
- GMT
-Sender: jhugo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7600BC43462; Sat, 13 Feb 2021 00:40:28 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from jhugo-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3063AC433C6;
-        Sat, 13 Feb 2021 00:40:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3063AC433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
-Cc:     bbhatt@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Jeffrey Hugo <jhugo@codeaurora.org>
-Subject: [PATCH] bus: mhi: core: Use current ee in intvec handler for syserr
-Date:   Fri, 12 Feb 2021 17:40:14 -0700
-Message-Id: <1613176814-29171-1-git-send-email-jhugo@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S230270AbhBMArC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Feb 2021 19:47:02 -0500
+Received: from mail.kernel.org ([198.145.29.99]:56920 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229693AbhBMArB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 12 Feb 2021 19:47:01 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id EF3F664DF0;
+        Sat, 13 Feb 2021 00:46:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1613177181;
+        bh=xfJoTNnYLr8VjuwQHo+s5dK9qvDcgo32iKZ23awshN0=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=Qc5qjwQ+7XZ5k+sjHUQk/zEwpLi49iirao+8TxGrcfus4KvxUY1riHYJGNmmCpFVf
+         0Mc4MxwkSaDebtqhCh1mBG1hXZ3BkZJbos7NVJSnie61sQg/vNLl/jgSdqqI8U/flh
+         FZdKMoRXR2tFpZI4W9g0LeZRelmvTH17aP24+K644QMHOh2bU5O+RhlG3dnuFPoz/O
+         h5DWfvl8MVwDQteKnGMcuj6toplQ+Q1Awky+0ayjUhRQ/aVFEyLSMJs9cTRSzbA/GR
+         ok5NEfzCeKVSj2GbvDwd4lzpEM6WzadEkTrs65FWXGSPw8hp/8+ChIkAcm3eZuk+5r
+         O9Nsa5gRbE0ug==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1612977230-11566-2-git-send-email-tdas@codeaurora.org>
+References: <1612977230-11566-1-git-send-email-tdas@codeaurora.org> <1612977230-11566-2-git-send-email-tdas@codeaurora.org>
+Subject: Re: [PATCH v1 1/2] dt-bindings: clock: Add RPMHCC bindings for SC7280
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, robh@kernel.org, robh+dt@kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+To:     Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>
+Date:   Fri, 12 Feb 2021 16:46:19 -0800
+Message-ID: <161317717957.1254594.4653336289156860657@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The intvec handler stores the caches ee in a local variable for use in
-processing the intvec.  When determining if a syserr is a fatal error or
-not, the intvec handler is using the cached version, when it should be
-using the current ee read from the device.  Currently, the device could
-be in the PBL ee as the result of a fatal error, but the cached ee might
-be AMSS, which would cause the intvec handler to incorrectly signal a
-non-fatal syserr.
+Quoting Taniya Das (2021-02-10 09:13:49)
+> Add bindings and update documentation for clock rpmh driver on SC7280.
+>=20
+> Signed-off-by: Taniya Das <tdas@codeaurora.org>
+> ---
 
-Fixes: 3000f85b8f47 ("bus: mhi: core: Add support for basic PM operations")
-Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
----
- drivers/bus/mhi/core/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-index 4e0131b..f182736 100644
---- a/drivers/bus/mhi/core/main.c
-+++ b/drivers/bus/mhi/core/main.c
-@@ -448,7 +448,7 @@ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
- 		wake_up_all(&mhi_cntrl->state_event);
- 
- 		/* For fatal errors, we let controller decide next step */
--		if (MHI_IN_PBL(ee))
-+		if (MHI_IN_PBL(mhi_cntrl->ee))
- 			mhi_cntrl->status_cb(mhi_cntrl, MHI_CB_FATAL_ERROR);
- 		else
- 			mhi_pm_sys_err_handler(mhi_cntrl);
--- 
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
-
+Applied to clk-next
