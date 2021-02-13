@@ -2,121 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E5AAF31A9C3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Feb 2021 04:26:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EB68731AAEF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Feb 2021 11:56:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229679AbhBMDZ7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Feb 2021 22:25:59 -0500
-Received: from mail-pj1-f49.google.com ([209.85.216.49]:50381 "EHLO
-        mail-pj1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229648AbhBMDZ6 (ORCPT
+        id S229580AbhBMKzr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 13 Feb 2021 05:55:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45438 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229512AbhBMKzp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Feb 2021 22:25:58 -0500
-Received: by mail-pj1-f49.google.com with SMTP id cl8so679441pjb.0;
-        Fri, 12 Feb 2021 19:25:43 -0800 (PST)
+        Sat, 13 Feb 2021 05:55:45 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61B3FC061574
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Feb 2021 02:55:05 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id n8so2504874wrm.10
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Feb 2021 02:55:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=p7aJCQPOAWhA7x4o25lcJFhvX0SrgHfv80XtgRDoDP4=;
+        b=wLgGZeVFTkNo/KYwPBF7sQ4JU6KMzh3rUFRnZsXataO9rNbkboX3IS3ML/eQ3sdn9c
+         3BpDHqu4bJ43peaZEjoAJX/QKxsxxt3B0CNeC0I+FKW4j83W6qBpTxayn+iLs0eZgjaR
+         cWuQvJKxyoHo+UdxxmhX+zCTmyVI6Ju1eH+fVbfDnBn5lbxQUlXD8tzUYOkLgvr2zOP5
+         InwqsN56moapHKC8xretWr6F5p3WWlAe4bNsrvm3CniXUTUtwj2PbqIx0NbRGQwjIIA2
+         gSxeq3rzdiW7AkjZn5xE0V+Dk5RWnc7hL2RxN1WXIl4k7vSgqSE99Ama8srX7MQJXgd/
+         jXkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ZDK5F7tnO4b2ft9Zo/5qZ+F8VO7X7IwT4LLVFZ1PYwU=;
-        b=OJtpfdQMZ/zIUokpnXYyEj4OCO8Om6Z/Kw9do9pr5gpH0psaRF0dw/nhLMnMcrkOH6
-         O+L/oFKuSESlp6m/B1ehK8gObvHogndEsbyGHgpOrq5sanR7bMHv6cI+WyHZCgHQssub
-         Iy1ObasEoVpY/yBNieaVLEw74ZnmooFaFyltZ5XXP3FL7XOhS5FQD1Kgg9MivQ87bmYe
-         WOYVPLvY/LFVfClMKhwDKgSJapEUIINzTV2skrSvSUaiol3P5toujIX4527rsOtnVSPi
-         9Ik/VHXZapFgsvj1tVBQof9+lVotP9W+4J3DKQPGKveDJjWxfSxpEwKD4JD7E6nOZzs1
-         kmcg==
-X-Gm-Message-State: AOAM531BnhHPMg31hU0tq/nBtZZEuL1kq2+wt89kVSsb2RrlCnLVLfvo
-        Rq/lLeRQsv5jbvWaVTXRh3fDgT43Eko=
-X-Google-Smtp-Source: ABdhPJxn19h6MYI/Ybf1mOYrG0afmx694nMh8K9UfLwB4lz8P4EvdkML+GScoC91Zq7bPUpH3BkAQQ==
-X-Received: by 2002:a17:90a:8b82:: with SMTP id z2mr5455309pjn.25.1613186717224;
-        Fri, 12 Feb 2021 19:25:17 -0800 (PST)
-Received: from ?IPv6:2601:647:4000:d7:7f86:b7b7:63df:6d7a? ([2601:647:4000:d7:7f86:b7b7:63df:6d7a])
-        by smtp.gmail.com with ESMTPSA id z11sm9598558pjn.5.2021.02.12.19.25.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Feb 2021 19:25:16 -0800 (PST)
-Subject: Re: [RFC PATCH v3 1/1] scsi: ufs: Enable power management for wlun
-To:     Asutosh Das <asutoshd@codeaurora.org>, cang@codeaurora.org,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, stern@rowland.harvard.edu,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Ingo Molnar <mingo@redhat.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Bean Huo <beanhuo@micron.com>,
-        Jaegeuk Kim <jaegeuk@kernel.org>,
-        Kiwoong Kim <kwmad.kim@samsung.com>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Satya Tangirala <satyat@google.com>,
-        open list <linux-kernel@vger.kernel.org>
-References: <cover.1613070911.git.asutoshd@codeaurora.org>
- <eed327cdace40d1e1d706da5b0fa64ea4ee99422.1613070912.git.asutoshd@codeaurora.org>
-From:   Bart Van Assche <bvanassche@acm.org>
-Message-ID: <29fcd3c1-72c7-1191-ec03-aea1b0c6b8c9@acm.org>
-Date:   Fri, 12 Feb 2021 19:25:13 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=p7aJCQPOAWhA7x4o25lcJFhvX0SrgHfv80XtgRDoDP4=;
+        b=C3rGK3Ifgjx5588InVs4nBjxgvaImtxhMZtuD73S2hADVcVw3RW1scwJmqXhxdM46m
+         j5xfEPSizZ2AUWkHoTPyTvK3JGs3vhFsrgHM7YqBFF12E0rFLNwjt1pWXhS664C6d6lT
+         1pSd9I6baNOEGhOFlreNzOEG6ov2wr9s74euezlnrUtdOHEu06J25IBpCXUfOK8NSDqd
+         0+Y7hrW18aj+yBxS7u7ThtfWachPPOLUO+MuJ8VTFSk154nG0xNRwE+PHBG7C8HNAHss
+         vz3tgMcYqtw77NcHWbSzI907gkfX2i8W+WdPRubCLqMbDTCVUmlWDpcFuCuIHJZTEt+f
+         B9Sw==
+X-Gm-Message-State: AOAM531soT1PAFaOG839FesZ4JsMJ4Se38d3Q/zEZCBRUAgj3I46PDrv
+        UEnxHZDnV//pv7PuDCn4TCa+8Tork+JvLOPi9HnByA==
+X-Google-Smtp-Source: ABdhPJx6AtGx/GgpqQgbBTpHd04etQqgxM8y1ZKKYsczFDKKXWnhl/Vn66Xlhx3En73obdX4RK9nbVYmFwVErzpnIcc=
+X-Received: by 2002:adf:e884:: with SMTP id d4mr7991020wrm.275.1613213704109;
+ Sat, 13 Feb 2021 02:55:04 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <eed327cdace40d1e1d706da5b0fa64ea4ee99422.1613070912.git.asutoshd@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20210212172336.20550-1-saiprakash.ranjan@codeaurora.org>
+In-Reply-To: <20210212172336.20550-1-saiprakash.ranjan@codeaurora.org>
+From:   Mike Leach <mike.leach@linaro.org>
+Date:   Sat, 13 Feb 2021 10:54:53 +0000
+Message-ID: <CAJ9a7VgDxgVUhgrcZc7jX3psWrxWoqHOJ+O36eQf7+-MjVOVeQ@mail.gmail.com>
+Subject: Re: [PATCH] coresight: etm4x: Add ETM PIDs for Cortex-A55 and Cortex-A78
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Coresight ML <coresight@lists.linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Denis Nikitin <denik@chromium.org>,
+        linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/11/21 11:18 AM, Asutosh Das wrote:
-> +static inline bool is_rpmb_wlun(struct scsi_device *sdev)
-> +{
-> +	return (sdev->lun == ufshcd_upiu_wlun_to_scsi_wlun(UFS_UPIU_RPMB_WLUN));
-> +}
-> +
-> +static inline bool is_device_wlun(struct scsi_device *sdev)
-> +{
-> +	return (sdev->lun ==
-> +		ufshcd_upiu_wlun_to_scsi_wlun(UFS_UPIU_UFS_DEVICE_WLUN));
-> +}
+Hi Sai,
 
-A minor comment: checkpatch should have reported that "return is not a
-function" for the above code.
+This patch does not apply to coresight/next - possibly because the PID
+for A55 has been added in an earlier patch ( [b8336ad947e19 ]
+coresight: etm4x: add AMBA id for Cortex-A55 and Cortex-A75).
 
->  /**
-> + * ufshcd_setup_links - associate link b/w device wlun and other luns
-> + * @sdev: pointer to SCSI device
-> + * @hba: pointer to ufs hba
-> + *
-> + * Returns void
-> + */
+Regards
 
-Please leave out "Returns void".
+Mike
 
-> +static int ufshcd_wl_suspend(struct device *dev)
-> +{
-> +	struct scsi_device *sdev = to_scsi_device(dev);
-> +	struct ufs_hba *hba;
-> +	int ret;
-> +	ktime_t start = ktime_get();
-> +
-> +	if (is_rpmb_wlun(sdev))
-> +		return 0;
-> +	hba = shost_priv(sdev->host);
-> +	ret = __ufshcd_wl_suspend(hba, UFS_SYSTEM_PM);
-> +	if (ret)
-> +		dev_err(&sdev->sdev_gendev, "%s failed: %d\n", __func__,  ret);
-> +
-> +	trace_ufshcd_wl_suspend(dev_name(dev), ret,
-> +		ktime_to_us(ktime_sub(ktime_get(), start)),
-> +		hba->curr_dev_pwr_mode, hba->uic_link_state);
-> +
-> +	return ret;
-> +
-> +}
 
-Please remove the blank line after the return statement.
 
-Otherwise this patch looks good to me. Hence:
+On Fri, 12 Feb 2021 at 17:23, Sai Prakash Ranjan
+<saiprakash.ranjan@codeaurora.org> wrote:
+>
+> Add ETM PIDs for Cortex-A55 and Cortex-A78 to the list of
+> supported ETMs.
+>
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> ---
+>  drivers/hwtracing/coresight/coresight-etm4x-core.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+> index b20b6ff17cf6..193233792ab5 100644
+> --- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
+> +++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+> @@ -1713,7 +1713,9 @@ static const struct amba_id etm4_ids[] = {
+>         CS_AMBA_ID(0x000bb95a),                 /* Cortex-A72 */
+>         CS_AMBA_ID(0x000bb959),                 /* Cortex-A73 */
+>         CS_AMBA_UCI_ID(0x000bb9da, uci_id_etm4),/* Cortex-A35 */
+> +       CS_AMBA_UCI_ID(0x000bbd05, uci_id_etm4),/* Cortex-A55 */
+>         CS_AMBA_UCI_ID(0x000bbd0c, uci_id_etm4),/* Neoverse N1 */
+> +       CS_AMBA_UCI_ID(0x000bbd41, uci_id_etm4),/* Cortex-A78 */
+>         CS_AMBA_UCI_ID(0x000f0205, uci_id_etm4),/* Qualcomm Kryo */
+>         CS_AMBA_UCI_ID(0x000f0211, uci_id_etm4),/* Qualcomm Kryo */
+>         CS_AMBA_UCI_ID(0x000bb802, uci_id_etm4),/* Qualcomm Kryo 385 Cortex-A55 */
+>
+> base-commit: 1efbcec2ef8c037f1e801c76e4b9434ee2400be7
+> --
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
+>
 
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 
+--
+Mike Leach
+Principal Engineer, ARM Ltd.
+Manchester Design Centre. UK
