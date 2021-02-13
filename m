@@ -2,57 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 431AA31AB2D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Feb 2021 13:04:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F3E9A31AB37
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Feb 2021 13:14:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229531AbhBMMEB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 13 Feb 2021 07:04:01 -0500
-Received: from mail-lj1-f176.google.com ([209.85.208.176]:34902 "EHLO
-        mail-lj1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229517AbhBMMEA (ORCPT
+        id S229608AbhBMMNe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 13 Feb 2021 07:13:34 -0500
+Received: from mail-lf1-f41.google.com ([209.85.167.41]:37647 "EHLO
+        mail-lf1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229587AbhBMMNb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 13 Feb 2021 07:04:00 -0500
-Received: by mail-lj1-f176.google.com with SMTP id a17so2203533ljq.2;
-        Sat, 13 Feb 2021 04:03:42 -0800 (PST)
+        Sat, 13 Feb 2021 07:13:31 -0500
+Received: by mail-lf1-f41.google.com with SMTP id w36so3336521lfu.4;
+        Sat, 13 Feb 2021 04:13:13 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=WY1NnsH30Be8VVli1iUXQg5r7coQiLhOd+l5J1iwT2s=;
-        b=OZX9jKsC+nbrJggk+7jJhVeFYgylAInj0RpmVWEyPpXLi+Ev1V+TeGtOyI+1FTV0Vb
-         rtbZIsJqDOKDSBfzPzVQxm9nHH315pJoBb/TUExcIWpeITFwPwAZogvRxWIFiuYpgFhl
-         8obQkzgISAjshN5U8ucLKOxkEltU+q2NXHcHF5ZB3BS6j65N56tW5NSiOMnVNpJAT+2M
-         ldfQAiU054miXipBffhJGwp9+HifvE8WNq/DyxhSrN7pwL2UnFvgA0Ml3GzM2omyWb4l
-         CGPNmK0VG3TFOZx8vShu7ppGKQNToOF2xWwhYTTNlFae8wFMZlelztpWTGjyHJHaIDEe
-         HBcQ==
-X-Gm-Message-State: AOAM532ByVzifZEFvmZ+sBGNvm6GCVRapAegS86c3noponKAxBqYd0nP
-        9m26UVg+uCN856DKlmGNi/g=
-X-Google-Smtp-Source: ABdhPJxUdeaMmTYzA7YQVQxceXoNkiGOX3StpS6KDXnwCWU7vfPj2QjyndWprvgIyvffCm27kLu5rg==
-X-Received: by 2002:a2e:3207:: with SMTP id y7mr4170152ljy.190.1613217796566;
-        Sat, 13 Feb 2021 04:03:16 -0800 (PST)
+        bh=/wcypx8WYqbd3PbUC8UFQYMrgUAZ57NXVJLZyBANM9Y=;
+        b=cBVFYO0qUjH9uM413kRUKE2KEUB2Sfwp7tLeQ75r7hbsMIxVzzJa+zzgWIQQgSUmWE
+         9MjnRgux1yvf1QXYsaQCm6z0TJu3Nc6fkWYFm72adRFGsV1at7SKfmWCSeRCwcELmagg
+         rYqUArqqZC5czUwYKuM4Xob5RhXjj3YshtUsqglpK+gwAa8BhMUXI1X5q/xdre1aacIJ
+         cCbXHZwY7j7hsDmXoMynzRFHDw4+0Os2Jyocrx6JiIQ2Ihfra6JVL+pjzAJA+VDJ9Pca
+         JAq8VbEM0OD3h0S6QIn8n7B5Ze78F6QlovUYQmbRWHyA7qZHsVA1aie+IGU1+VGfQyCj
+         RU9Q==
+X-Gm-Message-State: AOAM532DPySWnpFNvMAPjoLVSNTkE3C4HUywsClIuY8OFZka+KAaapzd
+        q0JDKLq3nUTmVn4xA60gqxM=
+X-Google-Smtp-Source: ABdhPJxAaQcTXpDiEK33DXA9GI0tISkxAd6AsbAZXMQIapL+WpO5si30vhjIBMHHsT/JEuGBPMUlAg==
+X-Received: by 2002:a19:d3:: with SMTP id 202mr3710842lfa.570.1613218367707;
+        Sat, 13 Feb 2021 04:12:47 -0800 (PST)
 Received: from localhost.localdomain (dc7vkhyyyyyyyyyyyyycy-3.rev.dnainternet.fi. [2001:14ba:16e2:8300::4])
-        by smtp.gmail.com with ESMTPSA id y5sm1834900lfg.138.2021.02.13.04.03.15
+        by smtp.gmail.com with ESMTPSA id m1sm808736ljg.111.2021.02.13.04.12.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Feb 2021 04:03:16 -0800 (PST)
-Date:   Sat, 13 Feb 2021 14:03:09 +0200
+        Sat, 13 Feb 2021 04:12:47 -0800 (PST)
+Date:   Sat, 13 Feb 2021 14:12:41 +0200
 From:   Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
 To:     mazziesaccount@gmail.com, matti.vaittinen@fi.rohmeurope.com
 Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         "Rafael J. Wysocki" <rafael@kernel.org>,
-        MyungJoo Ham <myungjoo.ham@samsung.com>,
         Chanwoo Choi <cw00.choi@samsung.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Jean Delvare <jdelvare@suse.com>,
-        Hans de Goede <hdegoede@redhat.com>,
         Mark Gross <mgross@linux.intel.com>,
+        Sebastian Reichel <sre@kernel.org>,
         Chen-Yu Tsai <wens@csie.org>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [RFC PATCH 2/7] extconn: Clean-up few drivers by using managed work
- init
-Message-ID: <2268e68a236bee165b5af245754249fa93ce4669.1613216412.git.matti.vaittinen@fi.rohmeurope.com>
+        Saravana Kannan <saravanak@google.com>,
+        Joerg Roedel <jroedel@suse.de>,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Subject: [RFC PATCH 5/7] power: supply: Clean-up few drivers by using managed
+ work init
+Message-ID: <a3ca401194012d75725049839a1c210d313f0595.1613216412.git.matti.vaittinen@fi.rohmeurope.com>
 References: <cover.1613216412.git.matti.vaittinen@fi.rohmeurope.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -70,173 +71,184 @@ This change is compile-tested only. All testing is appreciated.
 
 Signed-off-by: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
 ---
- drivers/extcon/extcon-gpio.c           | 14 +++-----------
- drivers/extcon/extcon-intel-int3496.c  | 15 +++------------
- drivers/extcon/extcon-palmas.c         | 16 +++++-----------
- drivers/extcon/extcon-qcom-spmi-misc.c | 16 +++++-----------
- 4 files changed, 16 insertions(+), 45 deletions(-)
+ drivers/power/supply/axp20x_usb_power.c      | 15 ++++-----------
+ drivers/power/supply/bq24735-charger.c       | 17 +++++------------
+ drivers/power/supply/ltc2941-battery-gauge.c | 19 ++++++-------------
+ drivers/power/supply/sbs-battery.c           | 15 ++++-----------
+ 4 files changed, 19 insertions(+), 47 deletions(-)
 
-diff --git a/drivers/extcon/extcon-gpio.c b/drivers/extcon/extcon-gpio.c
-index c211222f5d0c..7a45610e6c59 100644
---- a/drivers/extcon/extcon-gpio.c
-+++ b/drivers/extcon/extcon-gpio.c
-@@ -112,7 +112,9 @@ static int gpio_extcon_probe(struct platform_device *pdev)
- 	if (ret < 0)
- 		return ret;
+diff --git a/drivers/power/supply/axp20x_usb_power.c b/drivers/power/supply/axp20x_usb_power.c
+index 70b28b699a80..149119601da3 100644
+--- a/drivers/power/supply/axp20x_usb_power.c
++++ b/drivers/power/supply/axp20x_usb_power.c
+@@ -645,22 +645,16 @@ static int axp20x_usb_power_probe(struct platform_device *pdev)
+ 		}
+ 	}
  
--	INIT_DELAYED_WORK(&data->work, gpio_extcon_work);
-+	ret = devm_delayed_work_autocancel(dev, &data->work, gpio_extcon_work);
+-	INIT_DELAYED_WORK(&power->vbus_detect, axp20x_usb_power_poll_vbus);
++	ret = devm_delayed_work_autocancel(&pdev->dev, &power->vbus_detect,
++					   axp20x_usb_power_poll_vbus);
 +	if (ret)
 +		return ret;
+ 	if (axp20x_usb_vbus_needs_polling(power))
+ 		queue_delayed_work(system_power_efficient_wq, &power->vbus_detect, 0);
  
- 	/*
- 	 * Request the interrupt of gpio to detect whether external connector
-@@ -131,15 +133,6 @@ static int gpio_extcon_probe(struct platform_device *pdev)
  	return 0;
  }
  
--static int gpio_extcon_remove(struct platform_device *pdev)
+-static int axp20x_usb_power_remove(struct platform_device *pdev)
 -{
--	struct gpio_extcon_data *data = platform_get_drvdata(pdev);
+-	struct axp20x_usb_power *power = platform_get_drvdata(pdev);
 -
--	cancel_delayed_work_sync(&data->work);
+-	cancel_delayed_work_sync(&power->vbus_detect);
 -
 -	return 0;
 -}
 -
- #ifdef CONFIG_PM_SLEEP
- static int gpio_extcon_resume(struct device *dev)
- {
-@@ -158,7 +151,6 @@ static SIMPLE_DEV_PM_OPS(gpio_extcon_pm_ops, NULL, gpio_extcon_resume);
+ static const struct of_device_id axp20x_usb_power_match[] = {
+ 	{
+ 		.compatible = "x-powers,axp202-usb-power-supply",
+@@ -680,7 +674,6 @@ MODULE_DEVICE_TABLE(of, axp20x_usb_power_match);
  
- static struct platform_driver gpio_extcon_driver = {
- 	.probe		= gpio_extcon_probe,
--	.remove		= gpio_extcon_remove,
- 	.driver		= {
- 		.name	= "extcon-gpio",
- 		.pm	= &gpio_extcon_pm_ops,
-diff --git a/drivers/extcon/extcon-intel-int3496.c b/drivers/extcon/extcon-intel-int3496.c
-index 80c9abcc3f97..508a63dae3b4 100644
---- a/drivers/extcon/extcon-intel-int3496.c
-+++ b/drivers/extcon/extcon-intel-int3496.c
-@@ -101,7 +101,9 @@ static int int3496_probe(struct platform_device *pdev)
- 		return -ENOMEM;
+ static struct platform_driver axp20x_usb_power_driver = {
+ 	.probe = axp20x_usb_power_probe,
+-	.remove = axp20x_usb_power_remove,
+ 	.driver = {
+ 		.name		= DRVNAME,
+ 		.of_match_table	= axp20x_usb_power_match,
+diff --git a/drivers/power/supply/bq24735-charger.c b/drivers/power/supply/bq24735-charger.c
+index ab2f4bf8f603..eb23a5665664 100644
+--- a/drivers/power/supply/bq24735-charger.c
++++ b/drivers/power/supply/bq24735-charger.c
+@@ -473,7 +473,11 @@ static int bq24735_charger_probe(struct i2c_client *client,
+ 		if (!charger->poll_interval)
+ 			return 0;
  
- 	data->dev = dev;
--	INIT_DELAYED_WORK(&data->work, int3496_do_usb_id);
-+	ret = devm_delayed_work_autocancel(dev, &data->work, int3496_do_usb_id);
-+	if (ret)
-+		return ret;
- 
- 	data->gpio_usb_id = devm_gpiod_get(dev, "id", GPIOD_IN);
- 	if (IS_ERR(data->gpio_usb_id)) {
-@@ -155,16 +157,6 @@ static int int3496_probe(struct platform_device *pdev)
+-		INIT_DELAYED_WORK(&charger->poll, bq24735_poll);
++		ret = devm_delayed_work_autocancel(&client->dev, &charger->poll,
++						   bq24735_poll);
++		if (ret)
++			return ret;
++
+ 		schedule_delayed_work(&charger->poll,
+ 				      msecs_to_jiffies(charger->poll_interval));
+ 	}
+@@ -481,16 +485,6 @@ static int bq24735_charger_probe(struct i2c_client *client,
  	return 0;
  }
  
--static int int3496_remove(struct platform_device *pdev)
+-static int bq24735_charger_remove(struct i2c_client *client)
 -{
--	struct int3496_data *data = platform_get_drvdata(pdev);
+-	struct bq24735 *charger = i2c_get_clientdata(client);
 -
--	devm_free_irq(&pdev->dev, data->usb_id_irq, data);
--	cancel_delayed_work_sync(&data->work);
+-	if (charger->poll_interval)
+-		cancel_delayed_work_sync(&charger->poll);
 -
 -	return 0;
 -}
 -
- static const struct acpi_device_id int3496_acpi_match[] = {
- 	{ "INT3496" },
- 	{ }
-@@ -177,7 +169,6 @@ static struct platform_driver int3496_driver = {
- 		.acpi_match_table = int3496_acpi_match,
+ static const struct i2c_device_id bq24735_charger_id[] = {
+ 	{ "bq24735-charger", 0 },
+ 	{}
+@@ -509,7 +503,6 @@ static struct i2c_driver bq24735_charger_driver = {
+ 		.of_match_table = bq24735_match_ids,
  	},
- 	.probe = int3496_probe,
--	.remove = int3496_remove,
+ 	.probe = bq24735_charger_probe,
+-	.remove = bq24735_charger_remove,
+ 	.id_table = bq24735_charger_id,
  };
  
- module_platform_driver(int3496_driver);
-diff --git a/drivers/extcon/extcon-palmas.c b/drivers/extcon/extcon-palmas.c
-index a2852bcc5f0d..1c48094bcf68 100644
---- a/drivers/extcon/extcon-palmas.c
-+++ b/drivers/extcon/extcon-palmas.c
-@@ -237,7 +237,11 @@ static int palmas_usb_probe(struct platform_device *pdev)
- 			palmas_usb->sw_debounce_jiffies = msecs_to_jiffies(debounce);
- 	}
+diff --git a/drivers/power/supply/ltc2941-battery-gauge.c b/drivers/power/supply/ltc2941-battery-gauge.c
+index 10cd617516ec..7eaa0f6115dc 100644
+--- a/drivers/power/supply/ltc2941-battery-gauge.c
++++ b/drivers/power/supply/ltc2941-battery-gauge.c
+@@ -445,15 +445,6 @@ static enum power_supply_property ltc294x_properties[] = {
+ 	POWER_SUPPLY_PROP_CURRENT_NOW,
+ };
  
--	INIT_DELAYED_WORK(&palmas_usb->wq_detectid, palmas_gpio_id_detect);
-+	status = devm_delayed_work_autocancel(&pdev->dev,
-+					      &palmas_usb->wq_detectid,
-+					      palmas_gpio_id_detect);
-+	if (status)
-+		return status;
- 
- 	palmas->usb = palmas_usb;
- 	palmas_usb->palmas = palmas;
-@@ -359,15 +363,6 @@ static int palmas_usb_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int palmas_usb_remove(struct platform_device *pdev)
+-static int ltc294x_i2c_remove(struct i2c_client *client)
 -{
--	struct palmas_usb *palmas_usb = platform_get_drvdata(pdev);
+-	struct ltc294x_info *info = i2c_get_clientdata(client);
 -
--	cancel_delayed_work_sync(&palmas_usb->wq_detectid);
--
+-	cancel_delayed_work_sync(&info->work);
+-	power_supply_unregister(info->supply);
 -	return 0;
 -}
 -
- #ifdef CONFIG_PM_SLEEP
- static int palmas_usb_suspend(struct device *dev)
+ static int ltc294x_i2c_probe(struct i2c_client *client,
+ 	const struct i2c_device_id *id)
  {
-@@ -422,7 +417,6 @@ static const struct of_device_id of_palmas_match_tbl[] = {
+@@ -547,7 +538,10 @@ static int ltc294x_i2c_probe(struct i2c_client *client,
  
- static struct platform_driver palmas_usb_driver = {
- 	.probe = palmas_usb_probe,
--	.remove = palmas_usb_remove,
- 	.driver = {
- 		.name = "palmas-usb",
- 		.of_match_table = of_palmas_match_tbl,
-diff --git a/drivers/extcon/extcon-qcom-spmi-misc.c b/drivers/extcon/extcon-qcom-spmi-misc.c
-index 6b836ae62176..82a7498951d2 100644
---- a/drivers/extcon/extcon-qcom-spmi-misc.c
-+++ b/drivers/extcon/extcon-qcom-spmi-misc.c
-@@ -80,7 +80,11 @@ static int qcom_usb_extcon_probe(struct platform_device *pdev)
- 	}
+ 	psy_cfg.drv_data = info;
  
- 	info->debounce_jiffies = msecs_to_jiffies(USB_ID_DEBOUNCE_MS);
--	INIT_DELAYED_WORK(&info->wq_detcable, qcom_usb_extcon_detect_cable);
-+
-+	ret = devm_delayed_work_autocancel(dev, &info->wq_detcable,
-+					   qcom_usb_extcon_detect_cable);
+-	INIT_DELAYED_WORK(&info->work, ltc294x_work);
++	ret = devm_delayed_work_autocancel(&client->dev, &info->work,
++					   ltc294x_work);
 +	if (ret)
 +		return ret;
  
- 	info->irq = platform_get_irq_byname(pdev, "usb_id");
- 	if (info->irq < 0)
-@@ -105,15 +109,6 @@ static int qcom_usb_extcon_probe(struct platform_device *pdev)
- 	return 0;
+ 	ret = ltc294x_reset(info, prescaler_exp);
+ 	if (ret < 0) {
+@@ -555,8 +549,8 @@ static int ltc294x_i2c_probe(struct i2c_client *client,
+ 		return ret;
+ 	}
+ 
+-	info->supply = power_supply_register(&client->dev, &info->supply_desc,
+-					     &psy_cfg);
++	info->supply = devm_power_supply_register(&client->dev,
++						  &info->supply_desc, &psy_cfg);
+ 	if (IS_ERR(info->supply)) {
+ 		dev_err(&client->dev, "failed to register ltc2941\n");
+ 		return PTR_ERR(info->supply);
+@@ -655,7 +649,6 @@ static struct i2c_driver ltc294x_driver = {
+ 		.pm	= LTC294X_PM_OPS,
+ 	},
+ 	.probe		= ltc294x_i2c_probe,
+-	.remove		= ltc294x_i2c_remove,
+ 	.shutdown	= ltc294x_i2c_shutdown,
+ 	.id_table	= ltc294x_i2c_id,
+ };
+diff --git a/drivers/power/supply/sbs-battery.c b/drivers/power/supply/sbs-battery.c
+index b6a538ebb378..83d894624454 100644
+--- a/drivers/power/supply/sbs-battery.c
++++ b/drivers/power/supply/sbs-battery.c
+@@ -1165,7 +1165,10 @@ static int sbs_probe(struct i2c_client *client)
+ 		}
+ 	}
+ 
+-	INIT_DELAYED_WORK(&chip->work, sbs_delayed_work);
++	rc = devm_delayed_work_autocancel(&client->dev, &chip->work,
++					  sbs_delayed_work);
++	if (rc)
++		return rc;
+ 
+ 	chip->power_supply = devm_power_supply_register(&client->dev, sbs_desc,
+ 						   &psy_cfg);
+@@ -1185,15 +1188,6 @@ static int sbs_probe(struct i2c_client *client)
+ 	return rc;
  }
  
--static int qcom_usb_extcon_remove(struct platform_device *pdev)
+-static int sbs_remove(struct i2c_client *client)
 -{
--	struct qcom_usb_extcon_info *info = platform_get_drvdata(pdev);
+-	struct sbs_info *chip = i2c_get_clientdata(client);
 -
--	cancel_delayed_work_sync(&info->wq_detcable);
+-	cancel_delayed_work_sync(&chip->work);
 -
 -	return 0;
 -}
 -
- #ifdef CONFIG_PM_SLEEP
- static int qcom_usb_extcon_suspend(struct device *dev)
- {
-@@ -149,7 +144,6 @@ MODULE_DEVICE_TABLE(of, qcom_usb_extcon_dt_match);
+ #if defined CONFIG_PM_SLEEP
  
- static struct platform_driver qcom_usb_extcon_driver = {
- 	.probe		= qcom_usb_extcon_probe,
--	.remove		= qcom_usb_extcon_remove,
- 	.driver		= {
- 		.name	= "extcon-pm8941-misc",
- 		.pm	= &qcom_usb_extcon_pm_ops,
+ static int sbs_suspend(struct device *dev)
+@@ -1248,7 +1242,6 @@ MODULE_DEVICE_TABLE(of, sbs_dt_ids);
+ 
+ static struct i2c_driver sbs_battery_driver = {
+ 	.probe_new	= sbs_probe,
+-	.remove		= sbs_remove,
+ 	.alert		= sbs_alert,
+ 	.id_table	= sbs_id,
+ 	.driver = {
 -- 
 2.25.4
 
