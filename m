@@ -2,39 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C19E31AB2A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Feb 2021 13:03:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 431AA31AB2D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Feb 2021 13:04:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229733AbhBML7p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 13 Feb 2021 06:59:45 -0500
-Received: from mail-lj1-f181.google.com ([209.85.208.181]:41921 "EHLO
-        mail-lj1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229706AbhBML7g (ORCPT
+        id S229531AbhBMMEB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 13 Feb 2021 07:04:01 -0500
+Received: from mail-lj1-f176.google.com ([209.85.208.176]:34902 "EHLO
+        mail-lj1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229517AbhBMMEA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 13 Feb 2021 06:59:36 -0500
-Received: by mail-lj1-f181.google.com with SMTP id e17so2145556ljl.8;
-        Sat, 13 Feb 2021 03:59:19 -0800 (PST)
+        Sat, 13 Feb 2021 07:04:00 -0500
+Received: by mail-lj1-f176.google.com with SMTP id a17so2203533ljq.2;
+        Sat, 13 Feb 2021 04:03:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=Og3EKyxPUKMGfzz8yqu0JBwP+v96RpWUBQsEZbrHD+8=;
-        b=inRjugq8dZYlJ6CKvLuFRZuygDwWgg/eI1qK0UtvZC5aXeTHWXAZnh4CmXIvaUpdET
-         RZbmyLvO2Jgjrc8l/m7pxQ6AQfapVpdoTDVR72Z3a3f2BFyr5+VCS57NzbTlVjVIKga6
-         PWwfLi6Ytk0GX9K3QgfsxOUXNqecAQaYp8Ri+Z0dNzn9zCQd5KJ9+TTG7fZ973FNzx6k
-         d/hPzIS96BCawHPV9lkFNxvvqKXl7tnRfA12eivyl0Zn56uwyCHdacF0JNqDawGw395+
-         X3reRIZlP3l4ffScErusYdied3SeyAqU1qQEBxYPIsBUMPKUkViW4qjtO8v51+ZvPj2l
-         vIHg==
-X-Gm-Message-State: AOAM5311BlORlGJ4wtfdqkHqgDcrgZjlZFL437zEnwtxdQcCWfr5k3Je
-        sarltkWfCO+KaWsm9Jx+z1g=
-X-Google-Smtp-Source: ABdhPJxj3xe2a6po48BGrT8aKajunBGOzOMxU/3dhpzzTPYFHT/e8seZG86Yo2/QJ4xnTqfESId53w==
-X-Received: by 2002:a2e:7a18:: with SMTP id v24mr4030132ljc.55.1613217533531;
-        Sat, 13 Feb 2021 03:58:53 -0800 (PST)
+        bh=WY1NnsH30Be8VVli1iUXQg5r7coQiLhOd+l5J1iwT2s=;
+        b=OZX9jKsC+nbrJggk+7jJhVeFYgylAInj0RpmVWEyPpXLi+Ev1V+TeGtOyI+1FTV0Vb
+         rtbZIsJqDOKDSBfzPzVQxm9nHH315pJoBb/TUExcIWpeITFwPwAZogvRxWIFiuYpgFhl
+         8obQkzgISAjshN5U8ucLKOxkEltU+q2NXHcHF5ZB3BS6j65N56tW5NSiOMnVNpJAT+2M
+         ldfQAiU054miXipBffhJGwp9+HifvE8WNq/DyxhSrN7pwL2UnFvgA0Ml3GzM2omyWb4l
+         CGPNmK0VG3TFOZx8vShu7ppGKQNToOF2xWwhYTTNlFae8wFMZlelztpWTGjyHJHaIDEe
+         HBcQ==
+X-Gm-Message-State: AOAM532ByVzifZEFvmZ+sBGNvm6GCVRapAegS86c3noponKAxBqYd0nP
+        9m26UVg+uCN856DKlmGNi/g=
+X-Google-Smtp-Source: ABdhPJxUdeaMmTYzA7YQVQxceXoNkiGOX3StpS6KDXnwCWU7vfPj2QjyndWprvgIyvffCm27kLu5rg==
+X-Received: by 2002:a2e:3207:: with SMTP id y7mr4170152ljy.190.1613217796566;
+        Sat, 13 Feb 2021 04:03:16 -0800 (PST)
 Received: from localhost.localdomain (dc7vkhyyyyyyyyyyyyycy-3.rev.dnainternet.fi. [2001:14ba:16e2:8300::4])
-        by smtp.gmail.com with ESMTPSA id v72sm1838780lfa.77.2021.02.13.03.58.51
+        by smtp.gmail.com with ESMTPSA id y5sm1834900lfg.138.2021.02.13.04.03.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Feb 2021 03:58:52 -0800 (PST)
-Date:   Sat, 13 Feb 2021 13:58:44 +0200
+        Sat, 13 Feb 2021 04:03:16 -0800 (PST)
+Date:   Sat, 13 Feb 2021 14:03:09 +0200
 From:   Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
 To:     mazziesaccount@gmail.com, matti.vaittinen@fi.rohmeurope.com
 Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,26 +44,15 @@ Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Jean Delvare <jdelvare@suse.com>,
-        Guenter Roeck <linux@roeck-us.net>,
         Hans de Goede <hdegoede@redhat.com>,
         Mark Gross <mgross@linux.intel.com>,
-        Sebastian Reichel <sre@kernel.org>,
         Chen-Yu Tsai <wens@csie.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Saravana Kannan <saravanak@google.com>,
         Heikki Krogerus <heikki.krogerus@linux.intel.com>,
         Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Joerg Roedel <jroedel@suse.de>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-hwmon@vger.kernel.org, platform-driver-x86@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-watchdog@vger.kernel.org
-Subject: [RFC PATCH 1/7] drivers: base: Add resource managed version of
- delayed work init
-Message-ID: <1230b0d2ba99ad546d72ab079e76cb1b3df32afb.1613216412.git.matti.vaittinen@fi.rohmeurope.com>
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [RFC PATCH 2/7] extconn: Clean-up few drivers by using managed work
+ init
+Message-ID: <2268e68a236bee165b5af245754249fa93ce4669.1613216412.git.matti.vaittinen@fi.rohmeurope.com>
 References: <cover.1613216412.git.matti.vaittinen@fi.rohmeurope.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -73,81 +62,181 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-A few drivers which need a delayed work-queue must cancel work at exit.
-Some of those implement remove solely for this purpose. Help drivers
-to avoid unnecessary remove and error-branch implementation by adding
-managed verision of delayed work initialization
+Few drivers implement remove call-back only for ensuring a delayed
+work gets cancelled prior driver removal. Clean-up these by switching
+to use devm_delayed_work_autocancel() instead.
+
+This change is compile-tested only. All testing is appreciated.
 
 Signed-off-by: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
 ---
- drivers/base/devres.c  | 33 +++++++++++++++++++++++++++++++++
- include/linux/device.h |  5 +++++
- 2 files changed, 38 insertions(+)
+ drivers/extcon/extcon-gpio.c           | 14 +++-----------
+ drivers/extcon/extcon-intel-int3496.c  | 15 +++------------
+ drivers/extcon/extcon-palmas.c         | 16 +++++-----------
+ drivers/extcon/extcon-qcom-spmi-misc.c | 16 +++++-----------
+ 4 files changed, 16 insertions(+), 45 deletions(-)
 
-diff --git a/drivers/base/devres.c b/drivers/base/devres.c
-index fb9d5289a620..2879595bb5a4 100644
---- a/drivers/base/devres.c
-+++ b/drivers/base/devres.c
-@@ -1231,3 +1231,36 @@ void devm_free_percpu(struct device *dev, void __percpu *pdata)
- 			       (void *)pdata));
- }
- EXPORT_SYMBOL_GPL(devm_free_percpu);
-+
-+static void dev_delayed_work_drop(struct device *dev, void *res)
-+{
-+	cancel_delayed_work_sync(*(struct delayed_work **)res);
-+}
-+
-+/**
-+ * devm_delayed_work_autocancel - Resource-managed work allocation
-+ * @dev: Device which lifetime work is bound to
-+ * @pdata: work to be cancelled when device exits
-+ *
-+ * Initialize work which is automatically cancelled when device exits.
-+ * A few drivers need delayed work which must be cancelled before driver
-+ * is unload to avoid accessing removed resources.
-+ * devm_delayed_work_autocancel() can be used to omit the explicit
-+ * cancelleation when driver is unload.
-+ */
-+int devm_delayed_work_autocancel(struct device *dev, struct delayed_work *w,
-+				 void (*worker)(struct work_struct *work))
-+{
-+	struct delayed_work **ptr;
-+
-+	ptr = devres_alloc(dev_delayed_work_drop, sizeof(*ptr), GFP_KERNEL);
-+	if (!ptr)
-+		return -ENOMEM;
-+
-+	INIT_DELAYED_WORK(w, worker);
-+	*ptr = w;
-+	devres_add(dev, ptr);
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(devm_delayed_work_autocancel);
-diff --git a/include/linux/device.h b/include/linux/device.h
-index 1779f90eeb4c..192456198de7 100644
---- a/include/linux/device.h
-+++ b/include/linux/device.h
-@@ -27,6 +27,7 @@
- #include <linux/uidgid.h>
- #include <linux/gfp.h>
- #include <linux/overflow.h>
-+#include <linux/workqueue.h>
- #include <linux/device/bus.h>
- #include <linux/device/class.h>
- #include <linux/device/driver.h>
-@@ -249,6 +250,10 @@ void __iomem *devm_of_iomap(struct device *dev,
- 			    struct device_node *node, int index,
- 			    resource_size_t *size);
+diff --git a/drivers/extcon/extcon-gpio.c b/drivers/extcon/extcon-gpio.c
+index c211222f5d0c..7a45610e6c59 100644
+--- a/drivers/extcon/extcon-gpio.c
++++ b/drivers/extcon/extcon-gpio.c
+@@ -112,7 +112,9 @@ static int gpio_extcon_probe(struct platform_device *pdev)
+ 	if (ret < 0)
+ 		return ret;
  
-+/* delayed work which is cancelled when driver exits */
-+int devm_delayed_work_autocancel(struct device *dev, struct delayed_work *w,
-+				 void (*worker)(struct work_struct *work));
+-	INIT_DELAYED_WORK(&data->work, gpio_extcon_work);
++	ret = devm_delayed_work_autocancel(dev, &data->work, gpio_extcon_work);
++	if (ret)
++		return ret;
+ 
+ 	/*
+ 	 * Request the interrupt of gpio to detect whether external connector
+@@ -131,15 +133,6 @@ static int gpio_extcon_probe(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-static int gpio_extcon_remove(struct platform_device *pdev)
+-{
+-	struct gpio_extcon_data *data = platform_get_drvdata(pdev);
+-
+-	cancel_delayed_work_sync(&data->work);
+-
+-	return 0;
+-}
+-
+ #ifdef CONFIG_PM_SLEEP
+ static int gpio_extcon_resume(struct device *dev)
+ {
+@@ -158,7 +151,6 @@ static SIMPLE_DEV_PM_OPS(gpio_extcon_pm_ops, NULL, gpio_extcon_resume);
+ 
+ static struct platform_driver gpio_extcon_driver = {
+ 	.probe		= gpio_extcon_probe,
+-	.remove		= gpio_extcon_remove,
+ 	.driver		= {
+ 		.name	= "extcon-gpio",
+ 		.pm	= &gpio_extcon_pm_ops,
+diff --git a/drivers/extcon/extcon-intel-int3496.c b/drivers/extcon/extcon-intel-int3496.c
+index 80c9abcc3f97..508a63dae3b4 100644
+--- a/drivers/extcon/extcon-intel-int3496.c
++++ b/drivers/extcon/extcon-intel-int3496.c
+@@ -101,7 +101,9 @@ static int int3496_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
+ 
+ 	data->dev = dev;
+-	INIT_DELAYED_WORK(&data->work, int3496_do_usb_id);
++	ret = devm_delayed_work_autocancel(dev, &data->work, int3496_do_usb_id);
++	if (ret)
++		return ret;
+ 
+ 	data->gpio_usb_id = devm_gpiod_get(dev, "id", GPIOD_IN);
+ 	if (IS_ERR(data->gpio_usb_id)) {
+@@ -155,16 +157,6 @@ static int int3496_probe(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-static int int3496_remove(struct platform_device *pdev)
+-{
+-	struct int3496_data *data = platform_get_drvdata(pdev);
+-
+-	devm_free_irq(&pdev->dev, data->usb_id_irq, data);
+-	cancel_delayed_work_sync(&data->work);
+-
+-	return 0;
+-}
+-
+ static const struct acpi_device_id int3496_acpi_match[] = {
+ 	{ "INT3496" },
+ 	{ }
+@@ -177,7 +169,6 @@ static struct platform_driver int3496_driver = {
+ 		.acpi_match_table = int3496_acpi_match,
+ 	},
+ 	.probe = int3496_probe,
+-	.remove = int3496_remove,
+ };
+ 
+ module_platform_driver(int3496_driver);
+diff --git a/drivers/extcon/extcon-palmas.c b/drivers/extcon/extcon-palmas.c
+index a2852bcc5f0d..1c48094bcf68 100644
+--- a/drivers/extcon/extcon-palmas.c
++++ b/drivers/extcon/extcon-palmas.c
+@@ -237,7 +237,11 @@ static int palmas_usb_probe(struct platform_device *pdev)
+ 			palmas_usb->sw_debounce_jiffies = msecs_to_jiffies(debounce);
+ 	}
+ 
+-	INIT_DELAYED_WORK(&palmas_usb->wq_detectid, palmas_gpio_id_detect);
++	status = devm_delayed_work_autocancel(&pdev->dev,
++					      &palmas_usb->wq_detectid,
++					      palmas_gpio_id_detect);
++	if (status)
++		return status;
+ 
+ 	palmas->usb = palmas_usb;
+ 	palmas_usb->palmas = palmas;
+@@ -359,15 +363,6 @@ static int palmas_usb_probe(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-static int palmas_usb_remove(struct platform_device *pdev)
+-{
+-	struct palmas_usb *palmas_usb = platform_get_drvdata(pdev);
+-
+-	cancel_delayed_work_sync(&palmas_usb->wq_detectid);
+-
+-	return 0;
+-}
+-
+ #ifdef CONFIG_PM_SLEEP
+ static int palmas_usb_suspend(struct device *dev)
+ {
+@@ -422,7 +417,6 @@ static const struct of_device_id of_palmas_match_tbl[] = {
+ 
+ static struct platform_driver palmas_usb_driver = {
+ 	.probe = palmas_usb_probe,
+-	.remove = palmas_usb_remove,
+ 	.driver = {
+ 		.name = "palmas-usb",
+ 		.of_match_table = of_palmas_match_tbl,
+diff --git a/drivers/extcon/extcon-qcom-spmi-misc.c b/drivers/extcon/extcon-qcom-spmi-misc.c
+index 6b836ae62176..82a7498951d2 100644
+--- a/drivers/extcon/extcon-qcom-spmi-misc.c
++++ b/drivers/extcon/extcon-qcom-spmi-misc.c
+@@ -80,7 +80,11 @@ static int qcom_usb_extcon_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	info->debounce_jiffies = msecs_to_jiffies(USB_ID_DEBOUNCE_MS);
+-	INIT_DELAYED_WORK(&info->wq_detcable, qcom_usb_extcon_detect_cable);
 +
- /* allows to add/remove a custom action to devres stack */
- int devm_add_action(struct device *dev, void (*action)(void *), void *data);
- void devm_remove_action(struct device *dev, void (*action)(void *), void *data);
++	ret = devm_delayed_work_autocancel(dev, &info->wq_detcable,
++					   qcom_usb_extcon_detect_cable);
++	if (ret)
++		return ret;
+ 
+ 	info->irq = platform_get_irq_byname(pdev, "usb_id");
+ 	if (info->irq < 0)
+@@ -105,15 +109,6 @@ static int qcom_usb_extcon_probe(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-static int qcom_usb_extcon_remove(struct platform_device *pdev)
+-{
+-	struct qcom_usb_extcon_info *info = platform_get_drvdata(pdev);
+-
+-	cancel_delayed_work_sync(&info->wq_detcable);
+-
+-	return 0;
+-}
+-
+ #ifdef CONFIG_PM_SLEEP
+ static int qcom_usb_extcon_suspend(struct device *dev)
+ {
+@@ -149,7 +144,6 @@ MODULE_DEVICE_TABLE(of, qcom_usb_extcon_dt_match);
+ 
+ static struct platform_driver qcom_usb_extcon_driver = {
+ 	.probe		= qcom_usb_extcon_probe,
+-	.remove		= qcom_usb_extcon_remove,
+ 	.driver		= {
+ 		.name	= "extcon-pm8941-misc",
+ 		.pm	= &qcom_usb_extcon_pm_ops,
 -- 
 2.25.4
 
