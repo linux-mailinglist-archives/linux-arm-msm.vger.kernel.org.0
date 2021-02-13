@@ -2,128 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 47EFE31A89C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Feb 2021 01:07:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B4B8531A8DF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Feb 2021 01:42:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231175AbhBMAH0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Feb 2021 19:07:26 -0500
-Received: from mail.kernel.org ([198.145.29.99]:53626 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230270AbhBMAHZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Feb 2021 19:07:25 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 44DBE64D5D;
-        Sat, 13 Feb 2021 00:06:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1613174804;
-        bh=6m1MgblqVpx2ZL9Qb/ULnnRME03jhhV7p1Q36nSaUdY=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=G9Px+xh1+C0b30Uqy4encAJlGjMbAWpLfR5SAqO9vaRJbBjxE9UQYVrpp0yBfBIMS
-         23goH7nV09kbpsgRisoN4zPe4DFtI2ayczc53Vt4TAOFQLjeqOYiihoCDoOuCM0qTx
-         zZH53/j5K6S6+SH18reXPp8rjn42X4eAuz5djM3M0fqQURKKGdjgXsufRcvgxKB85K
-         rwlecfi/HU/SAIDG3IlMTY6GyUv9o50ac2ncy/AId4c8BZroJp6QJarB4Sc7r+cnfU
-         TKDDPIwg7hmISxx1hZBHfSNx2Sne12k3j1vqou9djofxPikw29IuOj9Ct5p7u2nExT
-         pOX7KrfmUSClA==
-Content-Type: text/plain; charset="utf-8"
+        id S229903AbhBMAlX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Feb 2021 19:41:23 -0500
+Received: from mail29.static.mailgun.info ([104.130.122.29]:50423 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S230376AbhBMAlW (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 12 Feb 2021 19:41:22 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1613176863; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=Cck1QrwRGtEz4wQz0BHETOps/FNBT1eplTNtHgE5sro=; b=aKi+MXB0SdqzagqEobpwUB/4Dq33dQJr7zsZqHKKjsOmBdJFJ/dOQ55l58C5aeATfPyj9tQZ
+ KZk6C71MMYWrim8cnZfSVZxT9M1+f+aTVHIZeRx5MYgoA/Hcj/RgFzIbxmvzva/kOyLAlanz
+ /Yg5UKWa5XHOzifkygMYk2uUf0Q=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 60271ffd81f6c45dce33270a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 13 Feb 2021 00:40:29
+ GMT
+Sender: jhugo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 7600BC43462; Sat, 13 Feb 2021 00:40:28 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from jhugo-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3063AC433C6;
+        Sat, 13 Feb 2021 00:40:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3063AC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
+Cc:     bbhatt@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Jeffrey Hugo <jhugo@codeaurora.org>
+Subject: [PATCH] bus: mhi: core: Use current ee in intvec handler for syserr
+Date:   Fri, 12 Feb 2021 17:40:14 -0700
+Message-Id: <1613176814-29171-1-git-send-email-jhugo@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20210212223739.GE179940@dell>
-References: <20210126124540.3320214-1-lee.jones@linaro.org> <161307643148.1254594.6590013599999468609@swboyd.mtv.corp.google.com> <20210211211054.GD4572@dell> <161309925025.1254594.6210738031889810500@swboyd.mtv.corp.google.com> <20210212092016.GF4572@dell> <161316374113.1254594.14156657225822268891@swboyd.mtv.corp.google.com> <20210212212503.GC179940@dell> <20210212212630.GD179940@dell> <161316754567.1254594.9542583200097699504@swboyd.mtv.corp.google.com> <20210212223739.GE179940@dell>
-Subject: Re: [PATCH 00/21] [Set 2] Rid W=1 warnings from Clock
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-kernel@vger.kernel.org,
-        Ahmad Fatoum <a.fatoum@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Avi Fishman <avifishman70@gmail.com>,
-        Benjamin Fair <benjaminfair@google.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Boris BREZILLON <boris.brezillon@free-electrons.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Emilio =?utf-8?q?L=C3=B3pez?= <emilio@elopez.com.ar>,
-        Fabio Estevam <festevam@gmail.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Jan Kotas <jank@cadence.com>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-tegra@vger.kernel.org, Loc Ho <lho@apm.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Nancy Yuen <yuenn@google.com>,
-        Nuvoton Technologies <tali.perry@nuvoton.com>,
-        NXP Linux Team <linux-imx@nxp.com>, openbmc@lists.ozlabs.org,
-        Patrick Venture <venture@google.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Peter De Schrijver <pdeschrijver@nvidia.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Prashant Gaikwad <pgaikwad@nvidia.com>,
-        Rajan Vaja <rajan.vaja@xilinx.com>,
-        Rajeev Kumar <rajeev-dlh.kumar@st.com>,
-        Richard Woodruff <r-woodruff2@ti.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Shiraz Hashim <shiraz.linux.kernel@gmail.com>,
-        =?utf-8?q?S=C3=B6ren?= Brinkmann <soren.brinkmann@xilinx.com>,
-        Tali Perry <tali.perry1@gmail.com>,
-        Tero Kristo <kristo@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Tomer Maimon <tmaimon77@gmail.com>,
-        Viresh Kumar <vireshk@kernel.org>
-To:     Lee Jones <lee.jones@linaro.org>
-Date:   Fri, 12 Feb 2021 16:06:43 -0800
-Message-ID: <161317480301.1254594.16648868282165823277@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Lee Jones (2021-02-12 14:37:39)
-> On Fri, 12 Feb 2021, Stephen Boyd wrote:
->=20
-> >=20
-> > I'd like to enable it for only files under drivers/clk/ but it doesn't
-> > seem to work. I'm not asking to enable it at the toplevel Makefile. I'm
-> > asking to enable it for drivers/clk/ so nobody has to think about it now
-> > that you've done the hard work of getting the numbers in this directory
-> > down to zero or close to zero.
->=20
-> I'm not sure which one of us is confused.  Probably me, but ...
->=20
-> Even if you could enable it per-subsystem, how would that help you?
->=20
-> How can you ensure that contributors see any new W=3D1 warnings, but
-> Linus doesn't?  When Linus conducts his build-tests during the merge
-> window, he is also going to build W=3D1 for drivers/clk.
+The intvec handler stores the caches ee in a local variable for use in
+processing the intvec.  When determining if a syserr is a fatal error or
+not, the intvec handler is using the cached version, when it should be
+using the current ee read from the device.  Currently, the device could
+be in the PBL ee as the result of a fatal error, but the cached ee might
+be AMSS, which would cause the intvec handler to incorrectly signal a
+non-fatal syserr.
 
-The assumption is contributors would have compiled the code they're
-sending, but that's obviously not always the case, so this assumption
-relies on developers running make. If they do run make then the hope is
-they would see the warnings now, without having to rely on them to know
-about passing W=3D1 to make, and fix them before sending code. If
-developers are ignoring build errors or warnings then we can't do
-anything anyway.
+Fixes: 3000f85b8f47 ("bus: mhi: core: Add support for basic PM operations")
+Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+---
+ drivers/bus/mhi/core/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
->=20
-> All that's going to achieve is put you in the firing line.
+diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+index 4e0131b..f182736 100644
+--- a/drivers/bus/mhi/core/main.c
++++ b/drivers/bus/mhi/core/main.c
+@@ -448,7 +448,7 @@ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
+ 		wake_up_all(&mhi_cntrl->state_event);
+ 
+ 		/* For fatal errors, we let controller decide next step */
+-		if (MHI_IN_PBL(ee))
++		if (MHI_IN_PBL(mhi_cntrl->ee))
+ 			mhi_cntrl->status_cb(mhi_cntrl, MHI_CB_FATAL_ERROR);
+ 		else
+ 			mhi_pm_sys_err_handler(mhi_cntrl);
+-- 
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
 
-Ok. Is this prior experience?
-
->=20
-> From my PoV W=3D1 builds should be enabled during the development phase
-> (i.e. contributor, auto-builder, maintainer).  By the time patches get
-> make it into Mainline the review/testing stage is over and only the
-> default W=3D0 warnings are meaningful.
->=20
-
-Alright maybe I don't understand and W=3D1 builds are noisy for the
-drivers/clk subdirectory even after applying these patches. Or it has
-some false positives that won't be fixed? Or a new compiler can cause
-new warnings to happen? I could see these things being a problem.
-
-I'm trying to see if we can make lives better for everyone by exposing
-the warnings by default in the drivers/clk/ directory now that there are
-supposedly none left. Shouldn't we tighten the screws now that we've
-cleaned them?
