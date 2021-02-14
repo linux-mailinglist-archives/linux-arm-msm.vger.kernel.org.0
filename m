@@ -2,184 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A4E5831AE24
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Feb 2021 22:38:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BF1F231AFA1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Feb 2021 08:49:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229653AbhBMVij (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 13 Feb 2021 16:38:39 -0500
-Received: from esa1.hgst.iphmx.com ([68.232.141.245]:52925 "EHLO
-        esa1.hgst.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229649AbhBMVii (ORCPT
+        id S229563AbhBNHtZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 14 Feb 2021 02:49:25 -0500
+Received: from esa2.hgst.iphmx.com ([68.232.143.124]:48374 "EHLO
+        esa2.hgst.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229520AbhBNHtY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 13 Feb 2021 16:38:38 -0500
+        Sun, 14 Feb 2021 02:49:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
   d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
-  t=1613252317; x=1644788317;
+  t=1613289660; x=1644825660;
   h=from:to:cc:subject:date:message-id:references:
    in-reply-to:content-transfer-encoding:mime-version;
-  bh=hEthZFVgY/5JEaYISYodOeMEYOTIJbCZZkB6T8eWyJ4=;
-  b=J7so7GvnTMy95uHBi906feF3R3d6zJjyOXDbFbZzDTrJA0Z0vmw82igb
-   OkGzte2UQK/AZzm0E1eFFAp9Wyt2Nnlg+TnzcufcRxLQ8YOUjLjwYZ2br
-   dYqYNATolD8cH5y7aQ5k5vZ5kFl/vrbmJ5R3qAYVXLEotUppOMJYbDpvQ
-   leNQXQyMt6zs2EOxgVe4W0pRdIbDa+U2e7Bz2msb16wlL9c473LFKu4Rh
-   fPd3Dm7UzMJJaoVwSYgcaIFfznKouEHnZBIb5NhbzmloURjo+cn6uVHx/
-   qUbw8a+fi41rw9b+peHvptQ5po7uLkSSCEPRmpQ64+1BU5/nWUPHJk3xE
-   A==;
-IronPort-SDR: j5BPhZRLWmhZuqaCAkKMYGUBEhi3YdoSz2K/I8qfNWgRz0v92/b2qjZ4pfUm/pw+riMEWKFGU+
- sq5rUkG6zt+vTkJXCwjIt4eIkvh4wLQY6o2wGIapI0CltTZOE97VWkcvyqptIZL0EywkMxWWM+
- W3VuTXKBbBwU3sqc/OmT1x9hWH0CRmiH5/gYZXDFICYaNK5JbAMskHGjyAIKTZ8kfM9+A1WI9a
- kcZnOLdp8wpiWPlmZ9l/x2gMdVAkwaT5tqTHoLqQpUZ0KYqebJfVjiD+RPXeMhQZkYzsoLnQmH
- yhE=
-X-IronPort-AV: E=Sophos;i="5.81,176,1610380800"; 
-   d="scan'208";a="270413696"
-Received: from mail-dm6nam10lp2104.outbound.protection.outlook.com (HELO NAM10-DM6-obe.outbound.protection.outlook.com) ([104.47.58.104])
-  by ob1.hgst.iphmx.com with ESMTP; 14 Feb 2021 05:37:30 +0800
+  bh=KSLolCJAFSxJ+25qAVEroJZUdW8c8dN5sP+adQdXWYw=;
+  b=CMArOAS5hCUKGP+lATQqQIX5eEMtC/R16IX1A2W2eUKHzaHVAAPna3ss
+   mlVH8EbGT9mlH+mRD5RlSbGfUsCzdixWFpa5fK0K87S6zsPBYQy6wmu/J
+   u8uCB5/nmtCbo8wdfNlSLql5lVniYE4Pm6o9HvVZqTC4xADC71XhQ0wuN
+   maqueEsp0zJQrKslxnBJw3yWjDy8qoC1BgtqTXORBqCKm6I/s0oepV9tO
+   DjGnuYVICywJkH9guDWnXlJ9C2WZYd3uThbm45HZ/U5DdnQ0o7W7LyB8w
+   4K4U1pzHwkDzi0dQ04Kdqy5AnbBOO4V/iYFAsqBBi88fBi/BjEUCmRLyX
+   Q==;
+IronPort-SDR: XmdjpI7Gl+Hqb6SOGEV3H3cmXxa+a1nBtxPVizDhFaJ9ntqHNgEsAubH0rJHbkSMh+jCv8pc5/
+ Pqnp7gCYtPHjeNxFOmEbN16NavBACKUF3Wj5eqagYebDokF5gG06k1NtHFxWGvBWdd+zcwHysx
+ Hsw8Ai67fkbMAU88Ez1H9r131q5msBF3GbcGkQDcrQtJXPsBaLJ1N0KQq1Gu1whd7mzT0qO8dK
+ jKXpUIqMkjke1brEE60VQz5lnYZKEFfAybWrDTuA8ahEFIPXtjulAZdNcRELUETQ6CmZx1E5Dx
+ VPs=
+X-IronPort-AV: E=Sophos;i="5.81,178,1610380800"; 
+   d="scan'208";a="264067373"
+Received: from mail-dm6nam10lp2106.outbound.protection.outlook.com (HELO NAM10-DM6-obe.outbound.protection.outlook.com) ([104.47.58.106])
+  by ob1.hgst.iphmx.com with ESMTP; 14 Feb 2021 15:59:20 +0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=h2cEl/IoCfoPYt7q1Xgqf0FKpwD4RM4VSYbqHjeC8yQYoUn0hKlOd/sVlFbIFS0hYW8VeInQiYKh2cDc+SlY7SeYPjDOxylEEAPb2prKi9xgvPlEYj44ib+tLR+MsqMzZBPmQLuIQMHnyjdtQxU2IzgvPwQ2N5R9A8TwrIrFEzv1rEjNP07SNapD8hYR+fWAsLePx3XczWUeex07KGPaBQZOevKiADrIPSKeJj5tU2UJWjX8lQYIYJY7N/3ZiNMkqbjVJ6LTyYyA38ijWwz+ygm4+WqD5ku5PGBWxTdNisubZ67NIga/e32N6hlAzCO3uHeXSiS+dutPx2h4SYSbIg==
+ b=agA115eunnZhea7ROwDRya942mqUX0yyA2j9MZ+lxaqKUFCHitQA1j0Ae+jtG6NRPozq+SYN7lLrbAchPTYuXKHi+4WRpu7N4cGnHn/0ozkbnJvxIMVs3DdAjl8q5q8sGUwaCjsM/MjdbRRUBXyeAHqraa5baZPyLKpV/JEqfTSu0jRcftiDV5uzB0znZGvy6gLfXbI235OZ/j7RUSoKmw+BBFk8sm4w4lyfx3VAA3GHgsh+RJPMVY8vf1ZOQQVAj0XiOdQgIGOYPAuQwX6a0PrlXQbC24++k7rR5l/zUVqb2DqXjqKT4TriPrQeTjeqsV51EKCz2czcS1WVdM77XA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0Qj5DCE0pUOZjKDPDb5CMm8xTEncaMtHTUzIsq0tIgE=;
- b=YoAN/Ek0yrkA2oRsWT6l7X6FK4o0pvJTzUs0QzfowZANxGiSlZuCwi0w1CHzmJT2EfuDGcDxv3LxyWtqML9PuToTXJ7E+DOBRfcerhPwjR9y/lGi2DdvnL1fKcLeoYzJ7P8TU+5sBnuJy8ThXrFWYGPPBpprpLnmGGpiH89dmNUmMrPcHxYY6mB/SlLBLISURsnIPOwVhWQimOM59oqNQnL00rprPzQ15NcBNYqg8Aj34Zj7mGGTjTVj8verCPaB1Mg2nQM1bfqi59/hnCocYrztw2X63ophZJ9t4RVMmkWBzCJ9U08lhVqEzItj3vfnxLVdnD4LbQWEuz2x4kR6gg==
+ bh=KSLolCJAFSxJ+25qAVEroJZUdW8c8dN5sP+adQdXWYw=;
+ b=HpSqKZZqklnWt18CSXAIlh7U6T56E+WZmFiW5vr3JI/nYUngDZRpkGYAMiXfYcfDO6MmIR0w1sDtCZM4rbwtK44s+zrri0PAN6Q/D02SqcTTGLfdE8fRphQMEYL4N7PQouSrc9g/jQi2rrzGk/STCHLQKwSghX8+UhzhocE5+fwwYZY3gSSg8rNAp5MYYkPrUHZ5OpZE3muKWfRKJkj2nWps3sUgY3MMnVrkXJu6NrnRN4wqkvlJsvJofcilJ4J+Fim6tUqdzEzz5dpJIL/ffWMwGIbnSFiz7s31jId9TvjM8OW2XssCUp1k47gFRqAC9Kl7G14NLyMhRGLBnSatgw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
  header.d=wdc.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0Qj5DCE0pUOZjKDPDb5CMm8xTEncaMtHTUzIsq0tIgE=;
- b=JmNO1Yf64Tsu2oi0CtboiGKB5FQw9+wID+K1DqniNU7Oqg/ChAaqOtUBbGQimyCeJw13kosjsHUJgsd5P8A94jsI2YSy9ahyBGUw0mARN6gRnaKI/ce7D1VBjQeM5geBcsh5iyt6cSgX1KEnoF1VgnQm8p9bwRKU3EFyo/qusaY=
+ bh=KSLolCJAFSxJ+25qAVEroJZUdW8c8dN5sP+adQdXWYw=;
+ b=NTUiSMwM8uEid7sDNTQTALGG7MOkvYU+yPDIrMK5/4w/mOVzZkR3gAVNzxkNXgMinA71KDUz/IDqzE5WO+5TTcYrz5xF6yGOoqJ0byxic2oNFHSGIZWeRax9+qpl+byVNZIvPY7zkWpm6/1ETEYbhFH75HbnEW9cqwKTilavuLs=
 Received: from DM6PR04MB6575.namprd04.prod.outlook.com (2603:10b6:5:1b7::7) by
- DM6PR04MB6969.namprd04.prod.outlook.com (2603:10b6:5:240::20) with Microsoft
+ DM5PR04MB1100.namprd04.prod.outlook.com (2603:10b6:4:46::22) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3846.26; Sat, 13 Feb 2021 21:37:29 +0000
+ 15.20.3846.29; Sun, 14 Feb 2021 07:48:10 +0000
 Received: from DM6PR04MB6575.namprd04.prod.outlook.com
  ([fe80::e824:f31b:38cf:ef66]) by DM6PR04MB6575.namprd04.prod.outlook.com
- ([fe80::e824:f31b:38cf:ef66%4]) with mapi id 15.20.3846.035; Sat, 13 Feb 2021
- 21:37:29 +0000
+ ([fe80::e824:f31b:38cf:ef66%4]) with mapi id 15.20.3846.039; Sun, 14 Feb 2021
+ 07:48:10 +0000
 From:   Avri Altman <Avri.Altman@wdc.com>
-To:     Asutosh Das <asutoshd@codeaurora.org>,
+To:     Avri Altman <Avri.Altman@wdc.com>,
+        Asutosh Das <asutoshd@codeaurora.org>,
         "cang@codeaurora.org" <cang@codeaurora.org>,
         "martin.petersen@oracle.com" <martin.petersen@oracle.com>,
         "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>
 CC:     "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "stern@rowland.harvard.edu" <stern@rowland.harvard.edu>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Ingo Molnar <mingo@redhat.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Bean Huo <beanhuo@micron.com>,
-        Jaegeuk Kim <jaegeuk@kernel.org>,
-        Kiwoong Kim <kwmad.kim@samsung.com>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Satya Tangirala <satyat@google.com>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: RE: [RFC PATCH v3 1/1] scsi: ufs: Enable power management for wlun
-Thread-Topic: [RFC PATCH v3 1/1] scsi: ufs: Enable power management for wlun
-Thread-Index: AQHXAKrEeNNZ6E03PU2kp7215n4xZKpWndRQ
-Date:   Sat, 13 Feb 2021 21:37:29 +0000
-Message-ID: <DM6PR04MB65758E0EBF4171FD6E1CF0CFFC8A9@DM6PR04MB6575.namprd04.prod.outlook.com>
+        "stern@rowland.harvard.edu" <stern@rowland.harvard.edu>
+Subject: RE: [RFC PATCH v3 0/1] Enable power management for ufs wlun 
+Thread-Topic: [RFC PATCH v3 0/1] Enable power management for ufs wlun 
+Thread-Index: AQHXAKtK6bkpCHugCkOJOgXYFyz9BapWjQWAgAC8EdA=
+Date:   Sun, 14 Feb 2021 07:48:10 +0000
+Message-ID: <DM6PR04MB65758D026C49C4DE9606CCD2FC899@DM6PR04MB6575.namprd04.prod.outlook.com>
 References: <cover.1613070911.git.asutoshd@codeaurora.org>
- <eed327cdace40d1e1d706da5b0fa64ea4ee99422.1613070912.git.asutoshd@codeaurora.org>
-In-Reply-To: <eed327cdace40d1e1d706da5b0fa64ea4ee99422.1613070912.git.asutoshd@codeaurora.org>
+ <DM6PR04MB6575172ABC466BA0824743D5FC8A9@DM6PR04MB6575.namprd04.prod.outlook.com>
+In-Reply-To: <DM6PR04MB6575172ABC466BA0824743D5FC8A9@DM6PR04MB6575.namprd04.prod.outlook.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-authentication-results: codeaurora.org; dkim=none (message not signed)
- header.d=none;codeaurora.org; dmarc=none action=none header.from=wdc.com;
-x-originating-ip: [77.138.4.172]
+authentication-results: wdc.com; dkim=none (message not signed)
+ header.d=none;wdc.com; dmarc=none action=none header.from=wdc.com;
+x-originating-ip: [212.25.79.133]
 x-ms-publictraffictype: Email
 x-ms-office365-filtering-ht: Tenant
-x-ms-office365-filtering-correlation-id: 0b213bbc-c11a-4336-7ca6-08d8d0679060
-x-ms-traffictypediagnostic: DM6PR04MB6969:
-x-microsoft-antispam-prvs: <DM6PR04MB696992B75E7DDE95FA59F54AFC8A9@DM6PR04MB6969.namprd04.prod.outlook.com>
+x-ms-office365-filtering-correlation-id: 34efa399-a9ef-4ff8-0d7b-08d8d0bce043
+x-ms-traffictypediagnostic: DM5PR04MB1100:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <DM5PR04MB110043353353A1563836EB1CFC899@DM5PR04MB1100.namprd04.prod.outlook.com>
 wdcipoutbound: EOP-TRUE
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
+x-ms-oob-tlc-oobclassifiers: OLM:5516;
 x-ms-exchange-senderadcheck: 1
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: dIuav81MSRWq/iZmwO7Fz+3K0jo458FGkA5dMzRjGnMC6SUr2UJhh8N5MNxZ7pf7rYpS7vnpdja5KvIlLbccn1ZuyLJrs5hblUNsxt96tFbOjk+O3GFBKZgvvThzejAJCCK2BwxzmXG8RenIjOeizc53RxaXoHHfhoUZN+BZ0KK+x8xQFXdSHKEk2cLKeuHIs8GIdenNSbh/fU+fguv0/WyweHrUdDWYELUgKak3qDZVFDPcxCjvAXbeODkI1x5r3lVJYGiOw2cNH/69qDL8Sj1qBa6v2cV4Qqr7zOycwcXeSOgndPhDcdJxBsKtcBnIqPnEhcRRl/NdUx8cQVhDTr3hM4c2b6UPTnHZXVCGaGh9ohDbFju7Ndd5PPYt2hzk3kZy7+ipKOaMtKS8rlng+Vu44kqM5HpEXVtIrafLHJOBVsk5p8E4KaMUKRTv74X8uEZgJXpqx4xnTWbT62CuK7or31IW7AjdRPz45xbOB8yeX/HuG324+OqFbEsJENq3P3guRrjqGnD8PXbFb5KeqA==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR04MB6575.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(346002)(376002)(136003)(39860400002)(396003)(366004)(7696005)(33656002)(54906003)(52536014)(5660300002)(71200400001)(4744005)(316002)(86362001)(110136005)(8936002)(7416002)(2906002)(478600001)(66476007)(64756008)(76116006)(55016002)(66946007)(66446008)(66556008)(4326008)(186003)(26005)(6506007)(9686003)(83380400001)(8676002);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata: =?us-ascii?Q?Uxzi2He4jsSQZlilRteHjdoVpr18NNFHX5l48tXGqSVaAnC43nFIgw2ftNMu?=
- =?us-ascii?Q?3Y94+uXNMFPVvpQz32oZ9WqbAGEf8btltANKBgtQtsAdnWqzzTsj0Xo7ncFg?=
- =?us-ascii?Q?S1FSv2qVeXhCNH+Gzz56uJpN73WmNBHyGPIuBhSEmjFzPDPrL6H7KtwzZug9?=
- =?us-ascii?Q?RmnEb3/C1F6Tau5KFyUu+1dTPel/QoPh+9OlR3Ry9FKcuDeIHCzLsj1x5GjR?=
- =?us-ascii?Q?GGlVAuu22RQof8Uv2hdqBgD9EVrnk3HJrZnelNcAmWta76m4Uv5i9ZFKHCB/?=
- =?us-ascii?Q?bk0IGz18Yff+Qx4hHLZzuFRBH4yliVX0S6Oyb3Qcvh7s4j00SFiqTvjSuKIf?=
- =?us-ascii?Q?hCx5Qu3V7FB9B0waZQlvwIQM8x47SznZyCPegqvw2/pSJWvzSBTnapICOdRX?=
- =?us-ascii?Q?JWuysAEdHsyt7GGR5dsBN3S2p3/KuhzJLKLkVwdGO17jwYYohK9ZsT+RI9du?=
- =?us-ascii?Q?/Mue0r0aTOAVCA6sPoJC6J2Go30ka6OC1HC3z/LijZR8Wc6vo0jx78VlvttB?=
- =?us-ascii?Q?BqsA440FCAPEPtznhLyxna1FI9aASEYGAGe/trLpnholzK9Gm24Bk+9I01C2?=
- =?us-ascii?Q?xOSGK9MAmcu1nI3w5riJ37cGDo/K2mB5e60FUwLJCAouGvt1pF+TxiUQNZOg?=
- =?us-ascii?Q?B8UrTlR28tToEoUROSGruWgm+GM7aAFjrUWh2eyc93BMU9jcMGWeFeEqYnJ/?=
- =?us-ascii?Q?KJgRd2VkxQvjZyHIF+Pz72t68uSF3q1jAMuXFSFXzQzKusgQaGOFuAUQC+E7?=
- =?us-ascii?Q?tLup43xksoCmcHq2ZIQoJ2gyKaRCravzGURoPr5Wp+2UC35eYarspiFwx2+J?=
- =?us-ascii?Q?oYWM8A4NWfByDOdWsEftS3m4Zepw2Efu8k7NdksQ/5Te2lqzcfHkSqwoPJtu?=
- =?us-ascii?Q?xIQTox9JlQfzE/GR4aMltc6+5z97T0Y8c6pTAFf5OvdA1kqrF/Xs7KELoO3q?=
- =?us-ascii?Q?xR+6b06j24YUStYncVkaHRfeTL5y1Vc0PfD3A24UfZ0Y+PZxnxWCdznLNapz?=
- =?us-ascii?Q?h7Jt5IxEogHINAIzi73PlJRHHiIBhzYZCh7p2h8h823ZJJGta8ANGQzxBfCy?=
- =?us-ascii?Q?9RrVITGisdD7l0sFHlj1OOujKEVveCCuZgpuWqlLqoU/wieKVmorQNNH1fqw?=
- =?us-ascii?Q?ZcCuobcdWIbLYCvwnEoCtHkHGv9K9aRJFXNarJCCiLLDoKnZd/jK05+GEZ40?=
- =?us-ascii?Q?KZ/tuhwm+xCcfBisTw093LjMv9M670QMaAFPHedz0bZ+czvi7ezrHn+qhi4q?=
- =?us-ascii?Q?dcw+U1FYzbIobvRTNfnUEKy8nzv4xu6+KTxHrKad9onDOOWhUsDWhSQ5WyfQ?=
- =?us-ascii?Q?eOM=3D?=
-x-ms-exchange-transport-forked: True
+x-microsoft-antispam-message-info: GNdqUjpi52sNLEHcqibltpfHbkzWfJQv417RsCaQsFMsR21xMZUowbBWkYCb+8KnHYYA98ZKGUPGjN47X+3gS1H27rrkxMQJuDSMyQ8UmxjF1YeVAtF0lggnVtaHBp4rnny+sKRB52qcv1JCoRwfyfki87+INY1R37tnvUvWh1g/cZGk2yLuzaLYhvURs+fOgR+qek+E9jI8xaAZ0bxBg1DwKWDdSHUI8M0oPs22XJ2iU+x1F0tGyhc1fCLb9XLogUc6cSjDVzGhprLBUjuYjM+E1L6w0zEy4DmeQgxSsXoG+haRsoeyP53HfMQ1rQDwZikf0p3Of4v4KUiqQLWLXAg3v6s/IAXrvtG3uw0PLp++2jJrNF6kvcnA1MjMCy/X3cT66bWI68DLtM2meeW9+zwsD2aIAWVl800MSsEuMeZmrk8/GqHE3g5xlaIqOurxQKJ3kJRU4iwuXPXQkNiqurMIgGU3UHBzxl8Rt6GU6GkmaiQI53iPrc7XGb5kiqVHR0UtFIAMawxKEaPzY18e8w==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR04MB6575.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(136003)(346002)(376002)(39850400004)(396003)(26005)(55016002)(76116006)(83380400001)(110136005)(6506007)(54906003)(186003)(316002)(2906002)(7696005)(478600001)(66946007)(66476007)(4326008)(86362001)(9686003)(33656002)(64756008)(66446008)(66556008)(52536014)(8676002)(8936002)(4743002)(5660300002)(4744005)(71200400001);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata: =?us-ascii?Q?k3Nit3QPI+tMBbAYdAytDNYIPfoZsS+TlcsA1nKJuhivuWs9vj9KvdPj0TSS?=
+ =?us-ascii?Q?B/bQjpldjbS0gqpm6iZt13i+aLzB+zlGL1CPdP9qW2Juicxv6wRgGQWso9Ne?=
+ =?us-ascii?Q?ULDtn7TxNXja3AyygTHuSB3KJrF4r4enhAecbnMs1zLq99BGobxXdRGWa/zQ?=
+ =?us-ascii?Q?ZxAEaW9lYAh9KXmVudiZR6oLhHP3aqHMGqIoYyqXaF+p41GGvqZFOC4tD7T4?=
+ =?us-ascii?Q?Gd70ZHiCR0+20J6TrIRTIEC8CyrwKXyZ8arPQf/XiWNMiSrB1IWytkEt/TgE?=
+ =?us-ascii?Q?Tg+7oTLsP0vj1u5rQrbAC1nrRXYYsmw0kd8AnzBp/Pz+uFn5Q4ZzRxbX/Joi?=
+ =?us-ascii?Q?woC/HCZ7sHMcOe5UHT47fmqqOgbG6lID6NHpOx/97ewl9i6tc9cTFBVWPcKe?=
+ =?us-ascii?Q?R5Yu9oBbqDyyx0t08rzvNgScME3fiO9S4LdjxzJz8VKEvit84OI0Hx0Z2b68?=
+ =?us-ascii?Q?CyVkAqqso3cIyYyQv97PE1epcAbuSd78DgHCNEjB59sljGI6yDsbDeouEmpM?=
+ =?us-ascii?Q?zVy/Ban1flOS+smkngJHE0G1fQM13TAA3BJmvOY+I453rQI+mR+8SJdo73aa?=
+ =?us-ascii?Q?FOMU40BkqSU5XLEQr7mGAp7UR6Qkk0SN/x8ooWrmMGdYiIa5eZU6KOZPxXL9?=
+ =?us-ascii?Q?liHgRVQ9L26oJJO2hZ+GKksILoi9LG7levDLM83gfbZwCG5wp9XeR1Q9RVKe?=
+ =?us-ascii?Q?UdKjRMOhbXVOuR3SbMdkuT5nhHCqNT8tU98BWVF3UdhUU6NWS1m10p8AueNT?=
+ =?us-ascii?Q?jHaqefV0l6MT3fs8djaeo/l26f+CYTRRttRVBGEexz6kxd7XZSQM7n8Zy5Qk?=
+ =?us-ascii?Q?Q8sm4zp+J+LwizJo0ffyG/BTVLOdnOa8cKnxGSS/2leN4kCmOV4hKImP88iU?=
+ =?us-ascii?Q?85fJD58P+KJ2zyfFRqftcl6ccdpku9+UDwFWCPa2dA//hLAg/9QlZ0tiurCd?=
+ =?us-ascii?Q?a/4RKFeInWhjo8OaOjm6ZvPbiqVmi8RyEpelqgN9sdZVCxGIvzP3OuxjursY?=
+ =?us-ascii?Q?2ar09xhQvWcif6uCuRxeedAQdeF0kHfGXU52OE+Oa/P831xl1A/m+blepRuR?=
+ =?us-ascii?Q?Ng1pqqy3StDWC8JlZj0rFR4iRuzQfuWTZA8636wkhgGLlnN88PVyROpA+2Rj?=
+ =?us-ascii?Q?OnWuLnjb4ltR8+pcL6FCbnc9v2th0st9ljRakNecQkhDhsi1aO5U8klgwi2f?=
+ =?us-ascii?Q?pEQFXiuVdRNJEXKBH/I4yeO2/Psi/qFugDcd6FwhSBzBzq0J6JBBPwRrHpyw?=
+ =?us-ascii?Q?WEpygorDLaxl2SeZmpoxbZZuYuj3gxfIeyl0QmKF/jH0MjhVpfnZOv3jiBzr?=
+ =?us-ascii?Q?YiOcxTW/vidvsGw/7dFjPyd/?=
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: wdc.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR04MB6575.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0b213bbc-c11a-4336-7ca6-08d8d0679060
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Feb 2021 21:37:29.4719
+X-MS-Exchange-CrossTenant-Network-Message-Id: 34efa399-a9ef-4ff8-0d7b-08d8d0bce043
+X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Feb 2021 07:48:10.6102
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: oPO67jXgGmakMZFEgfUy1M48bFziGpQ01vG6ASF4IxwTcUJmeoeXK/c6JxXtvBXnAxeX5M832I8kQq/15EZmGQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR04MB6969
+X-MS-Exchange-CrossTenant-userprincipalname: eBCR7cjVqyo2YH+MBA/JaLqhF7kSFrWpbJ6LUhDVsoHATWPNoZs7mxjSYmw7wpZJG6/P8kOQzW2ti4+zGKaGyw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR04MB1100
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> +       } else {
-Is it possible to get here?
-Scsi_scan_host is called only after successful add_wluns
+> >
+> > This patch attempts to fix a deadlock in ufs while sending SSU.
+> > Recently, blk_queue_enter() added a check to not process requests if th=
+e
+> > queue is suspended. That leads to a resume of the associated device whi=
+ch
+> > is suspended. In ufs, that device is ufs device wlun and it's parent is
+> > ufs_hba. This resume tries to resume ufs device wlun which in turn trie=
+s
+> > to resume ufs_hba, which is already in the process of suspending, thus
+> > causing a deadlock.
+> >
+> > This patch takes care of:
+> > * Suspending the ufs device lun only after all other luns are suspended
+> ufs device lun -> ufs device wlun
+You might also want to consider, as a preliminary step in your series,
+reverting one or more of the recent "clear uac" patches,
+As you are nailing the root cause of the issues/live-lock they witnessed.
 
-> +               /* device wlun is probed */
-> +               hba->luns_avail--;
-> +       }
-> +}
-> +
+Thanks,
+Avri
 
-
->=20
->  /**
-> @@ -7254,6 +7312,14 @@ static int ufshcd_scsi_add_wlus(struct ufs_hba
-> *hba)
->                 goto out;
->         }
->         ufshcd_blk_pm_runtime_init(hba->sdev_ufs_device);
-> +       /*
-> +        * A pm_runtime_put_sync is invoked when this device enables
-> blk_pm_runtime
-> +        * & would suspend the device-wlun upon timer expiry.
-> +        * But suspending device wlun _may_ put the ufs device in the pre=
--defined
-> +        * low power mode (SSU <rpm_lvl>). Probing of other luns may fail=
- then.
-> +        * Don't allow this suspend until all the luns have been probed.
-Maybe add one more sentence: see pm_runtime_mark_last_busy in ufshcd_setup_=
-links
-
-
-
-> -       ufshcd_clear_ua_wluns(hba);
-Are there any callers left to ufshcd_clear_ua_wluns?
-Can it be removed?
-
-> +       if (hba->wlun_dev_clr_ua)
-> +               ufshcd_clear_ua_wlun(hba, UFS_UPIU_UFS_DEVICE_WLUN);
->=20
->         cmd[4] =3D pwr_mode << 4;
