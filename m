@@ -2,108 +2,208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 286E731B726
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Feb 2021 11:30:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D455F31B74C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Feb 2021 11:39:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230254AbhBOK1z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Feb 2021 05:27:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58336 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229890AbhBOK1a (ORCPT
+        id S230117AbhBOKjA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Feb 2021 05:39:00 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([216.205.24.124]:55441 "EHLO
+        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229983AbhBOKi6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Feb 2021 05:27:30 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6723AC061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Feb 2021 02:26:50 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id m1so8818405wml.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Feb 2021 02:26:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=V3M/xiqC8wV/3y9yM6WJrdsmEi1wT28KwJ+diusuGyE=;
-        b=jWG7bLz+T1/EUxodu4l9HMpKg7v6tgRITknDTZbLkGgl+ZXymPK+ipJvYAvVwWdNCe
-         lHbFNEXpxyGcomfDlP6ihC0SSO7MMSIKFdLOklsh7FDM4xmvjIv4w2HkTwd4zxzmiIZd
-         6hvUB6uvH6TSPMf7SyTBxd8wWKMA5RbYkZ/bR5dIv1lZ+ustBpK7ZAz5NdWVrRs8Hrwi
-         5VBY7KplDF2Y2I3sTGcvyBlRRVpuaaD2aZEnceichN/YP9KZUhSRJ0/LE7AGZkjGFbaq
-         UK7pFDAEOy69AdsobcIDZDEEV+FTBg1n79i08LujIUAjYHnHSLQtqynUMMIJZ1LJxUst
-         TY2g==
+        Mon, 15 Feb 2021 05:38:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1613385451;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=Qc6c5uDkuHKyGcgNcwsQu/75zJZpP0qScLTmIXfkA7E=;
+        b=RxMAgqsVcqV/6MO24WgOaaC8wzdSNXL1qUewpfOEWSkrl7swn0ouLyxAwss5uhkNHuDX1r
+        AMKVHyB4AZynPXK/QV9hbKElu7R2gxq3w9JA7nuwf95wCHmcEZMmOkGBY1J5lh+QTtIREW
+        O6dwvN45244fegtjVi29TC4OHtF/rRQ=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-341-xTa1X7ELMq2O2N9a2eFVKQ-1; Mon, 15 Feb 2021 05:37:29 -0500
+X-MC-Unique: xTa1X7ELMq2O2N9a2eFVKQ-1
+Received: by mail-ej1-f70.google.com with SMTP id ce9so4095310ejc.17
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Feb 2021 02:37:29 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=V3M/xiqC8wV/3y9yM6WJrdsmEi1wT28KwJ+diusuGyE=;
-        b=eCO1ZXfluNdBdNijZI2sHsmcvm7JAK5cz5ACsYbOECt4cpo3wCi5jvuncqV8OmrSZz
-         xnViGD1tfPGrnhklIYtz0UelNNEvtyPICC7av98nA7gBBBaSGUOrsxoDWnE3B5QxeSUy
-         Ekmg926i8mkp9wc3hYJlDMq5u/et5LsvRaNQtv04xlhydMkmBj1hBKzOW9ISpxYgD1+g
-         BL3U8/k/IJLXx70D5rROH0dIvGQG6BdDDYoO07/40uNjFy2gQ3pUi7kfUL1mtr3xi4pB
-         oaZVhKnQ8xJ7bnX9DCyetJJ/uYOk/PG4i0A12RKfG+b7ecRnktFhSW9FiQCd0Up3ZX1V
-         ESlw==
-X-Gm-Message-State: AOAM533Hqlb/aTc9CHYXhC17lCwGx/W/aATJaZGz2Qy0qFcoVJEFz07h
-        EOhGjIfW/ktgm8T37LkxrKuGV4/Ssdb8l5bubcOk2Q==
-X-Google-Smtp-Source: ABdhPJxsAjvcE+uYtuJqM2TlAiSIbcNkuW6sJZJAOd/JN52Hk6NPuR78ITJ3OQz+VJXpVDOnlwVVFLak5p2/ImqKlFA=
-X-Received: by 2002:a1c:7e85:: with SMTP id z127mr13758695wmc.131.1613384809179;
- Mon, 15 Feb 2021 02:26:49 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Qc6c5uDkuHKyGcgNcwsQu/75zJZpP0qScLTmIXfkA7E=;
+        b=g0lloVerLHuGrtgQ0kQEoCm7aDJDTufjmgKgbwV4+h/m0AWPqa4Gt1zxjgwkofhs9g
+         BBipPJ7kQP/+0nBKWb1i74GopGzcLQ1qDsuASJyuOrPoPvikBHbpuB3h2TDrCtgYk2TB
+         fxpYRJSwkENEbrF+kdOBiQFd/h5Lc92hPh2FxVx1F3LYAQiTQ1E6Nldns1Vzgueju9qF
+         wSH2z8SICPdsf88H/GLv7Rtvmi+/MHG4H2S0+4He9DezFfITw+OhrLxCNkJcF2Emia3O
+         Y0c8ChGKycqQj1oS88g4t1+X7Yc4k0IvyPgg6+kbO2TXpy1EPdq/aYHyb2ghCpJx+ua2
+         KOEw==
+X-Gm-Message-State: AOAM530sVeZgu4Gyad8FdYgvKc3Ngp6vxnENRkuBAtKQf7aYwYsXwI0W
+        we5jlglhjAIlZI5AbnJMgQwZrxZMKiLq65pJO4cciJtI2IEu61ZwRm9M9w/Wa3gWUbX3jO1641a
+        g7oNLmRAJ8KmStlVyshTHdZFFIA==
+X-Received: by 2002:a17:906:4c85:: with SMTP id q5mr14729135eju.375.1613385448067;
+        Mon, 15 Feb 2021 02:37:28 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJz48iDFT6icNz/G5V8W+1Gbn7S+71yinDSb0pE+yIHXEoPgTdlObwbV19LXrzwB8QNHY2LTFQ==
+X-Received: by 2002:a17:906:4c85:: with SMTP id q5mr14729106eju.375.1613385447894;
+        Mon, 15 Feb 2021 02:37:27 -0800 (PST)
+Received: from x1.localdomain (2001-1c00-0c1e-bf00-1054-9d19-e0f0-8214.cable.dynamic.v6.ziggo.nl. [2001:1c00:c1e:bf00:1054:9d19:e0f0:8214])
+        by smtp.gmail.com with ESMTPSA id o4sm9693499edw.78.2021.02.15.02.37.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Feb 2021 02:37:27 -0800 (PST)
+Subject: Re: [RFC PATCH 1/7] drivers: base: Add resource managed version of
+ delayed work init
+To:     "Vaittinen, Matti" <Matti.Vaittinen@fi.rohmeurope.com>,
+        "linux@roeck-us.net" <linux@roeck-us.net>
+Cc:     "linux-pm@vger.kernel.org" <linux-pm@vger.kernel.org>,
+        "broonie@kernel.org" <broonie@kernel.org>,
+        "linux-watchdog@vger.kernel.org" <linux-watchdog@vger.kernel.org>,
+        "bgolaszewski@baylibre.com" <bgolaszewski@baylibre.com>,
+        "dan.j.williams@intel.com" <dan.j.williams@intel.com>,
+        "wim@linux-watchdog.org" <wim@linux-watchdog.org>,
+        "sre@kernel.org" <sre@kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-hwmon@vger.kernel.org" <linux-hwmon@vger.kernel.org>,
+        "jdelvare@suse.com" <jdelvare@suse.com>,
+        "mgross@linux.intel.com" <mgross@linux.intel.com>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        "lgirdwood@gmail.com" <lgirdwood@gmail.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "platform-driver-x86@vger.kernel.org" 
+        <platform-driver-x86@vger.kernel.org>,
+        "wens@csie.org" <wens@csie.org>,
+        "saravanak@google.com" <saravanak@google.com>,
+        "heikki.krogerus@linux.intel.com" <heikki.krogerus@linux.intel.com>,
+        "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+        "jroedel@suse.de" <jroedel@suse.de>,
+        "rafael@kernel.org" <rafael@kernel.org>,
+        "myungjoo.ham@samsung.com" <myungjoo.ham@samsung.com>,
+        "andriy.shevchenko@linux.intel.com" 
+        <andriy.shevchenko@linux.intel.com>,
+        "agross@kernel.org" <agross@kernel.org>,
+        "cw00.choi@samsung.com" <cw00.choi@samsung.com>
+References: <cover.1613216412.git.matti.vaittinen@fi.rohmeurope.com>
+ <1230b0d2ba99ad546d72ab079e76cb1b3df32afb.1613216412.git.matti.vaittinen@fi.rohmeurope.com>
+ <2fb4b305-a93f-f91e-3001-dab5057e39cc@redhat.com>
+ <084893a3-0071-13e9-5ce6-b7b027e6cd2a@roeck-us.net>
+ <16140f5b-c504-1c07-9f0c-3813d686d157@redhat.com>
+ <74ec29cb5780e93cca3d4cdec221c65e764c8a3e.camel@fi.rohmeurope.com>
+From:   Hans de Goede <hdegoede@redhat.com>
+Message-ID: <400d3e82-a76e-136c-0e03-ed7e40608e2a@redhat.com>
+Date:   Mon, 15 Feb 2021 11:37:26 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.0
 MIME-Version: 1.0
-References: <20210213112829.26834-1-saiprakash.ranjan@codeaurora.org>
-In-Reply-To: <20210213112829.26834-1-saiprakash.ranjan@codeaurora.org>
-From:   Mike Leach <mike.leach@linaro.org>
-Date:   Mon, 15 Feb 2021 10:26:38 +0000
-Message-ID: <CAJ9a7VgwxXgs+Zrb2LgX=E7i1+0wpqiL6gOyktPF7_0eojeVNw@mail.gmail.com>
-Subject: Re: [PATCHv2] coresight: etm4x: Add ETM PID for Cortex-A78
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Coresight ML <coresight@lists.linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Denis Nikitin <denik@chromium.org>,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <74ec29cb5780e93cca3d4cdec221c65e764c8a3e.camel@fi.rohmeurope.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Reviewed-by: Mike Leach <mike.leach@linaro.org>
+Hi,
 
-On Sat, 13 Feb 2021 at 11:28, Sai Prakash Ranjan
-<saiprakash.ranjan@codeaurora.org> wrote:
->
-> Add ETM PID for Cortex-A78 to the list of supported ETMs.
->
-> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> ---
->
-> Changes in v2:
->  * Rebased on top of coresight/next from kernel.org coresight repo.
->
-> ---
->  drivers/hwtracing/coresight/coresight-etm4x-core.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> index 15016f757828..a5b13a7779c3 100644
-> --- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> +++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> @@ -1951,6 +1951,7 @@ static const struct amba_id etm4_ids[] = {
->         CS_AMBA_UCI_ID(0x000bbd05, uci_id_etm4),/* Cortex-A55 */
->         CS_AMBA_UCI_ID(0x000bbd0a, uci_id_etm4),/* Cortex-A75 */
->         CS_AMBA_UCI_ID(0x000bbd0c, uci_id_etm4),/* Neoverse N1 */
-> +       CS_AMBA_UCI_ID(0x000bbd41, uci_id_etm4),/* Cortex-A78 */
->         CS_AMBA_UCI_ID(0x000f0205, uci_id_etm4),/* Qualcomm Kryo */
->         CS_AMBA_UCI_ID(0x000f0211, uci_id_etm4),/* Qualcomm Kryo */
->         CS_AMBA_UCI_ID(0x000bb802, uci_id_etm4),/* Qualcomm Kryo 385 Cortex-A55 */
->
-> base-commit: 06c18e28c402ecfb842df8e22a19a097c35ffca9
-> --
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
->
+On 2/15/21 8:22 AM, Vaittinen, Matti wrote:
+> 
+> On Sat, 2021-02-13 at 16:59 +0100, Hans de Goede wrote:
+>> Hi,
+>>
+>> On 2/13/21 4:27 PM, Guenter Roeck wrote:
+>>> On 2/13/21 7:03 AM, Hans de Goede wrote:
+>>> [ ... ]
+>>>> I think something like this should work:
+>>>>
+>>>> static int devm_delayed_work_autocancel(struct device *dev,
+>>>> struct delayed_work *w,
+>>>> 					void (*worker)(struct
+>>>> work_struct *work)) {
+>>>> 	INIT_DELAYED_WORK(w, worker);
+>>>> 	return devm_add_action(dev, (void (*action)(void
+>>>> *))cancel_delayed_work_sync, w);
+>>>> }
+>>>>
+>>>> I'm not sure about the cast, that may need something like this
+>>>> instead:
+>>>>
+>>>> typedef void (*devm_action_func)(void *);
+>>>>
+>>>> static int devm_delayed_work_autocancel(struct device *dev,
+>>>> struct delayed_work *w,
+>>>> 					void (*worker)(struct
+>>>> work_struct *work)) {
+>>>> 	INIT_DELAYED_WORK(w, worker);
+>>>> 	return devm_add_action(dev,
+>>>> (devm_action_func)cancel_delayed_work_sync, w);
+>>>
+>>> Unfortunately, you can not type cast function pointers in C. It is
+>>> against the C ABI.
+>>> I am sure it is done in a few places in the kernel anyway, but
+>>> those are wrong.
+>>
+>> I see, bummer.
+> 
+> I think using devm_add_action() is still a good idea.
 
+Yes, we could also just have a 1 line static inline function to do
+the function-cast. Like this:
 
--- 
-Mike Leach
-Principal Engineer, ARM Ltd.
-Manchester Design Centre. UK
+static inline void devm_delayed_work_autocancel_func(void *work)
+{
+	cancel_delayed_work_sync(work);
+}
+
+static inline int devm_delayed_work_autocancel(struct device *dev, struct delayed_work *w, void (*worker)(struct work_struct *work))
+{
+	INIT_DELAYED_WORK(w, worker);
+	return devm_add_action(dev, devm_delayed_work_autocancel_func, w);
+}
+
+Both functions will then simply be compiled out in files which do not
+use them.
+
+>> If we add a devm_clk_prepare_enable() helper that should probably be
+>> added
+>> to drivers/clk/clk-devres.c and not to drivers/base/devres.c .
+>>
+>> I also still wonder if we cannot find a better place for this new
+>> devm_delayed_work_autocancel() helper but nothing comes to mind.
+> 
+> I don't like the idea of including device.h from workqueue.h - and I
+> think this would be necessary if we added
+> devm_delayed_work_autocancel() as inline in workqueue.h, right?
+
+Yes.
+
+> I also see strong objection towards the devm managed clean-ups.
+
+Yes it seems that there are some people who don't like this, where as
+others do like them.
+
+> How about adding some devm-helpers.c in drivers/base - where we could
+> collect devm-based helpers - and which could be enabled by own CONFIG -
+> and left out by those who dislike it?
+
+I would make this something configurable through Kconfig, but if
+go the static inline route, which I'm in favor of then we could just
+have a:
+
+include/linux/devm-cleanup-helpers.h
+
+And put everything (including kdoc texts) there.
+
+This way the functionality is 100% opt-in (by explicitly including
+the header if you want the helpers) which hopefully makes this a
+bit more acceptable to people who don't like this style of cleanups.
+
+I would be even happy to act as the upstream maintainer for such a
+include/linux/devm-cleanup-helpers.h file, I can maintain it as part
+of the platform-drivers-x86 tree (with its own MAINTAINERS entry).
+
+Greg, would this be an acceptable solution to you ?
+
+Regards,
+
+Hans
+
