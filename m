@@ -2,121 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D223131BF9F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Feb 2021 17:46:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C09A331BFFD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Feb 2021 18:02:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231224AbhBOQpL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Feb 2021 11:45:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54576 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231621AbhBOQoo (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Feb 2021 11:44:44 -0500
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B50BC0613D6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Feb 2021 08:44:03 -0800 (PST)
-Received: by mail-pg1-x52b.google.com with SMTP id m2so4521701pgq.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Feb 2021 08:44:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=33j1CgCUh3TWUoQ0xJDvwUExbx7Q5rZOkjB3QkdUKDQ=;
-        b=onFXJfeWdIwyD3pNMy9IHHdBIMyx5rIo+uuSmuEqK0oFapfbq+tc/M+/mfIABldMvK
-         XK3ypvhkrPW+q91jhhkkyB/Q7L4B6DfB1OAiEBqH22olr2Ns+08/XoaI1Wey+CjODWBU
-         LE6VdLg3dNCX825LUvz/lxIy/O557X+AfcjrltnbYZyjMNqgWvFykFrN+22NpPF1r6L9
-         JV/zIY5zUyQYbfWmAoORHilGbQJh+HWpm+u6ZvSV+5/rZmfBXXpGbkHEIl4yi6s4iWOb
-         cu95PxkROmmIlpsfpiLVo20GCHs6hd7vD7qAqEW2i2r8DflB3+tUSldyrUPeKSchd2Rr
-         mCCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=33j1CgCUh3TWUoQ0xJDvwUExbx7Q5rZOkjB3QkdUKDQ=;
-        b=tH5NQbL2kxI4JXSN8iUl7I9Pv6zzcKbEl4ozWDoFC2H3EM1BPvSXJQcajr8kgS97sL
-         cPGsgGStoJV1g3V6QxbNzwz/UMKmzJ/CaPq/bkQt6hJkEpw75RwBMKZ3RMSgw75kUpct
-         ZVNIQT9szp0Je5FFqkbCxLw1A1XqIHM1yirKSJH38PkWiK7FuuR83oBAwXz/dKQG5jWC
-         MLKXwNXLfiRRzYppX8Ck6QLsCfPyMcMgfEx01GRTfv7p4CyyaCGpwOwv24mp1LQQY73U
-         XWxMxvijOJxpxR3YFhH5K2Qwrh8/MmrWxxmovDcLwVIQZox2xBBdNMQBFJZEPWkhJg9R
-         I10w==
-X-Gm-Message-State: AOAM531VHf+Z6U8ynf0dicd88X/TDKHBBcHsPvh+V38q39ZNeNztamoy
-        Tr6221XMAKNwJi89ayfPj8B05A==
-X-Google-Smtp-Source: ABdhPJw4J4gtZMLXZERaHYawEcxlFYDMgSyAhN2XHJI0VfN07x36PQRutew8OTy+jkiQAH8ZPluKow==
-X-Received: by 2002:aa7:94b5:0:b029:1d7:f868:e48d with SMTP id a21-20020aa794b50000b02901d7f868e48dmr16215808pfl.9.1613407442601;
-        Mon, 15 Feb 2021 08:44:02 -0800 (PST)
-Received: from xps15 (S0106889e681aac74.cg.shawcable.net. [68.147.0.187])
-        by smtp.gmail.com with ESMTPSA id q13sm11919246pfg.155.2021.02.15.08.44.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Feb 2021 08:44:02 -0800 (PST)
-Date:   Mon, 15 Feb 2021 09:44:00 -0700
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Mike Leach <mike.leach@linaro.org>
-Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Coresight ML <coresight@lists.linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Denis Nikitin <denik@chromium.org>,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCHv2] coresight: etm4x: Add ETM PID for Cortex-A78
-Message-ID: <20210215164400.GA2770547@xps15>
-References: <20210213112829.26834-1-saiprakash.ranjan@codeaurora.org>
- <CAJ9a7VgwxXgs+Zrb2LgX=E7i1+0wpqiL6gOyktPF7_0eojeVNw@mail.gmail.com>
+        id S231327AbhBORA2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Feb 2021 12:00:28 -0500
+Received: from m42-2.mailgun.net ([69.72.42.2]:20056 "EHLO m42-2.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231776AbhBOQ7o (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 15 Feb 2021 11:59:44 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1613408349; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=6/7x/zTiP849A84Hz7Ue0M0/fXbMktUF0+XXQ6/mdCU=;
+ b=Zv9mR7f16HS9nTHjDsCTM5LeFYU0N0K7YZqnGepVU94VlbR/EdZtL2f71XOyeHeL3rHjVSXi
+ 9fMOWSrbeYioSr2vOvzkVKds6EMwhZWfNmhvwr5H8EFhUGG0BGlTquedxn0jRyoZv4ONEat0
+ rBAKz0BnhBbKGBAvJ+QRz81OxV0=
+X-Mailgun-Sending-Ip: 69.72.42.2
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 602aa83f8e43a988b7ba360f (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 15 Feb 2021 16:58:39
+ GMT
+Sender: kathirav=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 40005C433CA; Mon, 15 Feb 2021 16:58:39 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: kathirav)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 34185C433C6;
+        Mon, 15 Feb 2021 16:58:38 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAJ9a7VgwxXgs+Zrb2LgX=E7i1+0wpqiL6gOyktPF7_0eojeVNw@mail.gmail.com>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 15 Feb 2021 22:28:38 +0530
+From:   Kathiravan T <kathirav@codeaurora.org>
+To:     Baruch Siach <baruch@tkos.co.il>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>, linux-usb@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Balaji Prakash J <bjagadee@codeaurora.org>
+Subject: Re: [PATCH] usb: dwc3: reference clock configuration
+In-Reply-To: <87sg64wj01.fsf@tarshish>
+References: <8fc38cb73afd31269f1ea0c28e73604c53cebb17.1612764006.git.baruch@tkos.co.il>
+ <YCGCRQpqVNI2KZyi@builder.lan> <87sg64wj01.fsf@tarshish>
+Message-ID: <e1a05b5c6bf70e62b526a7a7d70b1a12@codeaurora.org>
+X-Sender: kathirav@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 15, 2021 at 10:26:38AM +0000, Mike Leach wrote:
-> Reviewed-by: Mike Leach <mike.leach@linaro.org>
-
-I will pick this up when 5.12-rc1 comes out.
-
-Thanks,
-Mathieu
-
+On 2021-02-10 11:40, Baruch Siach wrote:
+> Hi Bjorn,
 > 
-> On Sat, 13 Feb 2021 at 11:28, Sai Prakash Ranjan
-> <saiprakash.ranjan@codeaurora.org> wrote:
-> >
-> > Add ETM PID for Cortex-A78 to the list of supported ETMs.
-> >
-> > Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> > ---
-> >
-> > Changes in v2:
-> >  * Rebased on top of coresight/next from kernel.org coresight repo.
-> >
-> > ---
-> >  drivers/hwtracing/coresight/coresight-etm4x-core.c | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> > index 15016f757828..a5b13a7779c3 100644
-> > --- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> > +++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> > @@ -1951,6 +1951,7 @@ static const struct amba_id etm4_ids[] = {
-> >         CS_AMBA_UCI_ID(0x000bbd05, uci_id_etm4),/* Cortex-A55 */
-> >         CS_AMBA_UCI_ID(0x000bbd0a, uci_id_etm4),/* Cortex-A75 */
-> >         CS_AMBA_UCI_ID(0x000bbd0c, uci_id_etm4),/* Neoverse N1 */
-> > +       CS_AMBA_UCI_ID(0x000bbd41, uci_id_etm4),/* Cortex-A78 */
-> >         CS_AMBA_UCI_ID(0x000f0205, uci_id_etm4),/* Qualcomm Kryo */
-> >         CS_AMBA_UCI_ID(0x000f0211, uci_id_etm4),/* Qualcomm Kryo */
-> >         CS_AMBA_UCI_ID(0x000bb802, uci_id_etm4),/* Qualcomm Kryo 385 Cortex-A55 */
-> >
-> > base-commit: 06c18e28c402ecfb842df8e22a19a097c35ffca9
-> > --
-> > QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> > of Code Aurora Forum, hosted by The Linux Foundation
-> >
+> Thanks for your review comments.
 > 
+> On Mon, Feb 08 2021, Bjorn Andersson wrote:
+>> On Mon 08 Feb 00:00 CST 2021, Baruch Siach wrote:
+>>> From: Balaji Prakash J <bjagadee@codeaurora.org>
+>>> 
+>>> DWC_USB3_GFLADJ and DWC_USB3_GUCTL registers contain options
+>>> to control the behavior of controller with respect to SOF and ITP.
+>>> The reset values of these registers are aligned for 19.2 MHz
+>>> reference clock source. This change will add option to override
+>>> these settings for reference clock other than 19.2 MHz
+>>> 
+>>> Tested on IPQ6018 SoC based CP01 board with 24MHz reference clock.
+>>> 
+>>> Signed-off-by: Balaji Prakash J <bjagadee@codeaurora.org>
+>>> [ baruch: mention tested hardware ]
+>>> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+>>> ---
+>>>  .../devicetree/bindings/usb/dwc3.txt          |  5 ++
+>>>  drivers/usb/dwc3/core.c                       | 52 
+>>> +++++++++++++++++++
+>>>  drivers/usb/dwc3/core.h                       | 12 +++++
+>>>  3 files changed, 69 insertions(+)
+>>> 
+>>> diff --git a/Documentation/devicetree/bindings/usb/dwc3.txt 
+>>> b/Documentation/devicetree/bindings/usb/dwc3.txt
+>>> index 1aae2b6160c1..4ffa87b697dc 100644
+>>> --- a/Documentation/devicetree/bindings/usb/dwc3.txt
+>>> +++ b/Documentation/devicetree/bindings/usb/dwc3.txt
+>>> @@ -89,6 +89,11 @@ Optional properties:
+>>>   - snps,quirk-frame-length-adjustment: Value for GFLADJ_30MHZ field 
+>>> of GFLADJ
+>>>  	register for post-silicon frame length adjustment when the
+>>>  	fladj_30mhz_sdbnd signal is invalid or incorrect.
+>>> + - snps,quirk-ref-clock-adjustment: Value for GFLADJ_REFCLK_* fields 
+>>> of GFLADJ
+>>> +	register for reference clock other than 19.2 MHz is used.
+>> 
+>> What are typical values for this property? What unit does it have? How
+>> does it actually relate to the frequency of the reference clock?
 > 
-> -- 
-> Mike Leach
-> Principal Engineer, ARM Ltd.
-> Manchester Design Centre. UK
+> Downstream codeaurora kernel (fig branch) sets 0xA87F0 for IPQ6018
+> (24MHz reference clock), and 0x49459 for IPQ5018 (60MHz). So this value
+> appears to correlates with clock rate. I have no access to DWC3
+> documentation. I only tested IPQ6018 hardware.
+> 
+
+It will be written as (0xA87F0 << 7) retaining the 0-7 LSB value.
+I could see, BIT(23) of GFLADJ register enables the functionality of
+running SOF/ITP counters based on the reference clock. Since this bit is 
+set, we need to
+compute the other fields as well i.e., from 8th bit to 31st bit. Finally 
+it is derived to
+0xA87F0 for IPQ6018.
+
+
+>>> + - snps,quirk-ref-clock-period: Value for REFCLKPER filed of GUCTL. 
+>>> This field
+>>> +	indicates in terms of nano seconds the period of ref_clk. To 
+>>> calculate the
+>>> +	ideal value, REFCLKPER = (1/ref_clk in Hz)*10^9.
+>> 
+>> Can't we make the dwc3 reference this clock and use clk_get_rate() and
+>> then do this math in the driver?
+> 
+> This is doable, I believe. Though current code does not identify
+> specific clocks, as far as I can see.
+> 
+> baruch
+
+We can mention one more clock(ref) in the USB device node and do the 
+math (NSEC_PER_SEC / clk_get_rate()) in dwc3 driver.
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member of Code Aurora Forum, hosted by The Linux Foundation
