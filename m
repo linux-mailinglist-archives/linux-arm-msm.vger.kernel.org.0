@@ -2,223 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 25EAA31B843
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Feb 2021 12:46:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D7A9231B880
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Feb 2021 12:58:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229604AbhBOLpg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Feb 2021 06:45:36 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([216.205.24.124]:59109 "EHLO
-        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229988AbhBOLpX (ORCPT
+        id S229936AbhBOL6O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Feb 2021 06:58:14 -0500
+Received: from lb3-smtp-cloud9.xs4all.net ([194.109.24.30]:60599 "EHLO
+        lb3-smtp-cloud9.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229928AbhBOL6N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Feb 2021 06:45:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1613389431;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=NyLZvu3C9gxrD7BWsY94nLA5hwIfWLctPM6LAQPWhHE=;
-        b=DnfkB6k0KYLqYg2lHsolEUlGMyATj1e76Nl+N5NgyGYYVJT1HIf+O53s0K6upw9zjlylaO
-        MYWT/hvQcCwOPgWOzjZK0d4v+ypV7s2nmsWY5IeKnHZ3hCVhb/57fOw1gq9zhWn2GW7D9p
-        uJDja4oVVJbvbe3jlIq68Z94I8U0A6A=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-191-iShgKnu4P-C-ol5NCzoUlQ-1; Mon, 15 Feb 2021 06:43:50 -0500
-X-MC-Unique: iShgKnu4P-C-ol5NCzoUlQ-1
-Received: by mail-ej1-f69.google.com with SMTP id yh28so4172350ejb.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Feb 2021 03:43:49 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=NyLZvu3C9gxrD7BWsY94nLA5hwIfWLctPM6LAQPWhHE=;
-        b=MqdwupQksgiOVM2z1Avnynua+aCkOFwiFR9o6iuHUDAXVJ5miM5DQKdGshgkezTe4X
-         2Kf2s+tVyQ9vG+Tq6pG5owns4W1gUwCMMjsnebGSuaKPXl7I+Yxr276VAqEzqAlGtd27
-         ZtMzQgO3BKDw5rbmZPMVPgdx25UjdFvVGmNzw5nMxyf0kzg2lE5QQV/F+a8eLOgyPeoA
-         PEEY3iDzf8JEfcTBi5oYPCqnrMnP5tI/MrwI1bmWRDLTKKL1SmxLDXmD+2gGLzvYIkhn
-         0bTi8gQrDC9GM+qOXgqgdgjhFQhWYHWr44nGrKJgs6lPLXSrbkXi8LQSPsHeGVBz0CBn
-         Fo5w==
-X-Gm-Message-State: AOAM5335rk9NLYw8KyRILLSq/lR2xqquU49knRa7mTMAZcG1ttugG4pS
-        IYv6TQtg4SXDXsXlgtgt1dYNfyXXiV45cDBs1H9EMctINCzNSqfIIedBtOxWM+h5xEG7UUG+DS6
-        Xx+ZpjEDj/SfCsEMWco+nNQvcQg==
-X-Received: by 2002:a17:906:2e43:: with SMTP id r3mr6862793eji.279.1613389428731;
-        Mon, 15 Feb 2021 03:43:48 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJwhwJ5khStYq3Vqinasnp+W4Qh6cW9Jw9bGQdGQqj903lJ0uEA4CJ3iVvkdAwWRIqbSeBHiyQ==
-X-Received: by 2002:a17:906:2e43:: with SMTP id r3mr6862782eji.279.1613389428553;
-        Mon, 15 Feb 2021 03:43:48 -0800 (PST)
-Received: from x1.localdomain (2001-1c00-0c1e-bf00-1054-9d19-e0f0-8214.cable.dynamic.v6.ziggo.nl. [2001:1c00:c1e:bf00:1054:9d19:e0f0:8214])
-        by smtp.gmail.com with ESMTPSA id u18sm10278200ejc.76.2021.02.15.03.43.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Feb 2021 03:43:48 -0800 (PST)
-Subject: Re: [RFC PATCH 1/7] drivers: base: Add resource managed version of
- delayed work init
-To:     "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>
-Cc:     "Vaittinen, Matti" <Matti.Vaittinen@fi.rohmeurope.com>,
-        "linux@roeck-us.net" <linux@roeck-us.net>,
-        "linux-pm@vger.kernel.org" <linux-pm@vger.kernel.org>,
-        "broonie@kernel.org" <broonie@kernel.org>,
-        "linux-watchdog@vger.kernel.org" <linux-watchdog@vger.kernel.org>,
-        "bgolaszewski@baylibre.com" <bgolaszewski@baylibre.com>,
-        "dan.j.williams@intel.com" <dan.j.williams@intel.com>,
-        "wim@linux-watchdog.org" <wim@linux-watchdog.org>,
-        "sre@kernel.org" <sre@kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-hwmon@vger.kernel.org" <linux-hwmon@vger.kernel.org>,
-        "jdelvare@suse.com" <jdelvare@suse.com>,
-        "mgross@linux.intel.com" <mgross@linux.intel.com>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        "lgirdwood@gmail.com" <lgirdwood@gmail.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "platform-driver-x86@vger.kernel.org" 
-        <platform-driver-x86@vger.kernel.org>,
-        "wens@csie.org" <wens@csie.org>,
-        "saravanak@google.com" <saravanak@google.com>,
-        "heikki.krogerus@linux.intel.com" <heikki.krogerus@linux.intel.com>,
-        "jroedel@suse.de" <jroedel@suse.de>,
-        "rafael@kernel.org" <rafael@kernel.org>,
-        "myungjoo.ham@samsung.com" <myungjoo.ham@samsung.com>,
-        "andriy.shevchenko@linux.intel.com" 
-        <andriy.shevchenko@linux.intel.com>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "cw00.choi@samsung.com" <cw00.choi@samsung.com>
-References: <cover.1613216412.git.matti.vaittinen@fi.rohmeurope.com>
- <1230b0d2ba99ad546d72ab079e76cb1b3df32afb.1613216412.git.matti.vaittinen@fi.rohmeurope.com>
- <2fb4b305-a93f-f91e-3001-dab5057e39cc@redhat.com>
- <084893a3-0071-13e9-5ce6-b7b027e6cd2a@roeck-us.net>
- <16140f5b-c504-1c07-9f0c-3813d686d157@redhat.com>
- <74ec29cb5780e93cca3d4cdec221c65e764c8a3e.camel@fi.rohmeurope.com>
- <400d3e82-a76e-136c-0e03-ed7e40608e2a@redhat.com>
- <YCpbit8W3xsvb37Q@kroah.com>
-From:   Hans de Goede <hdegoede@redhat.com>
-Message-ID: <a1e74f7c-06d3-dfd0-c467-ea68af6f081f@redhat.com>
-Date:   Mon, 15 Feb 2021 12:43:47 +0100
+        Mon, 15 Feb 2021 06:58:13 -0500
+Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
+        by smtp-cloud9.xs4all.net with ESMTPA
+        id BcVKlvqnUZvk6BcVNl2Mgq; Mon, 15 Feb 2021 12:57:30 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s2;
+        t=1613390250; bh=ENs/RpR7JUml7REP6F9IRjgXPPLhwSOWl45B7FoLMOg=;
+        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
+         Subject;
+        b=igZZ9QwEK/HNXiUJYQGSR+d2UFiUNjmVNINT/XfMHCwI9IoOJOx0IKIZe4vW2zgwN
+         jAjSO0kRljltIFxD0JOakP744qmECRq207L8GstwpGjWqqylQAyVzk0P0SuatmCEv2
+         yLxoK+fCp8XFAtq4jkwtBKQKR6xluUk7QSVcnKGgArtAH9b9iLLsxex6IlTgUfEXjh
+         Fl3znKRRGJE/X9oLnx8DtQkGCAupWZf1O6eGcutnnUrdK/7Va+mxt9uxHNbPhBXsqO
+         U1D6EW2X7gjtvh6o5uo0mHfp2gS8S3IZ87mLUr0buAxOp39jowzNce/w/PrW+ljING
+         VlnnETJVoITfQ==
+Subject: Re: [PATCH 1/2] v4l2-ctrl: Add decoder conceal color control
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20210209094527.2173690-1-stanimir.varbanov@linaro.org>
+ <20210209094527.2173690-2-stanimir.varbanov@linaro.org>
+ <cccae00e-e30e-6691-d954-27379a104115@xs4all.nl>
+ <489f1417-085d-4057-f2e8-1cc8db0ed161@linaro.org>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Message-ID: <70c04719-39ac-9ba7-cd2f-6c5b9d5f2275@xs4all.nl>
+Date:   Mon, 15 Feb 2021 12:57:26 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.7.0
 MIME-Version: 1.0
-In-Reply-To: <YCpbit8W3xsvb37Q@kroah.com>
+In-Reply-To: <489f1417-085d-4057-f2e8-1cc8db0ed161@linaro.org>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfFzEGMLVvUjM0qzT3MdaqQLaMU6QvDi43bqipTkzqF4EagJQeCFz0nLJUPg1i5mnjXb+KedTDeI3VBqHe0Bu7Ki1NtgaRIZrOaIz61nJh83+ApUVTxiJ
+ h1Glku0FHibV71VtCvQGYnfZhvViEkxkMrlLjYWMgpampf6xK/rHtrUXhRlqhzau+7kje/hXTtAiS9cZtAOywHIqLVMnLeaRMgUMmKnaMWw06rQlqX9kQ/C8
+ 56myM3swrLAT2RLebvmWKjQwOMWAKbuChMTmfhln8BoJ6T9MozsLnEYzLrRnRJc1YQTBNIRn8dFlUZR93P3BaDqIWDzAWMjvZ5rretDsoIc=
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On 2/15/21 12:31 PM, gregkh@linuxfoundation.org wrote:
-> On Mon, Feb 15, 2021 at 11:37:26AM +0100, Hans de Goede wrote:
->> Hi,
->>
->> On 2/15/21 8:22 AM, Vaittinen, Matti wrote:
->>>
->>> On Sat, 2021-02-13 at 16:59 +0100, Hans de Goede wrote:
->>>> Hi,
->>>>
->>>> On 2/13/21 4:27 PM, Guenter Roeck wrote:
->>>>> On 2/13/21 7:03 AM, Hans de Goede wrote:
->>>>> [ ... ]
->>>>>> I think something like this should work:
->>>>>>
->>>>>> static int devm_delayed_work_autocancel(struct device *dev,
->>>>>> struct delayed_work *w,
->>>>>> 					void (*worker)(struct
->>>>>> work_struct *work)) {
->>>>>> 	INIT_DELAYED_WORK(w, worker);
->>>>>> 	return devm_add_action(dev, (void (*action)(void
->>>>>> *))cancel_delayed_work_sync, w);
->>>>>> }
->>>>>>
->>>>>> I'm not sure about the cast, that may need something like this
->>>>>> instead:
->>>>>>
->>>>>> typedef void (*devm_action_func)(void *);
->>>>>>
->>>>>> static int devm_delayed_work_autocancel(struct device *dev,
->>>>>> struct delayed_work *w,
->>>>>> 					void (*worker)(struct
->>>>>> work_struct *work)) {
->>>>>> 	INIT_DELAYED_WORK(w, worker);
->>>>>> 	return devm_add_action(dev,
->>>>>> (devm_action_func)cancel_delayed_work_sync, w);
->>>>>
->>>>> Unfortunately, you can not type cast function pointers in C. It is
->>>>> against the C ABI.
->>>>> I am sure it is done in a few places in the kernel anyway, but
->>>>> those are wrong.
->>>>
->>>> I see, bummer.
->>>
->>> I think using devm_add_action() is still a good idea.
->>
->> Yes, we could also just have a 1 line static inline function to do
->> the function-cast. Like this:
->>
->> static inline void devm_delayed_work_autocancel_func(void *work)
->> {
->> 	cancel_delayed_work_sync(work);
->> }
->>
->> static inline int devm_delayed_work_autocancel(struct device *dev, struct delayed_work *w, void (*worker)(struct work_struct *work))
->> {
->> 	INIT_DELAYED_WORK(w, worker);
->> 	return devm_add_action(dev, devm_delayed_work_autocancel_func, w);
->> }
->>
->> Both functions will then simply be compiled out in files which do not
->> use them.
->>
->>>> If we add a devm_clk_prepare_enable() helper that should probably be
->>>> added
->>>> to drivers/clk/clk-devres.c and not to drivers/base/devres.c .
->>>>
->>>> I also still wonder if we cannot find a better place for this new
->>>> devm_delayed_work_autocancel() helper but nothing comes to mind.
->>>
->>> I don't like the idea of including device.h from workqueue.h - and I
->>> think this would be necessary if we added
->>> devm_delayed_work_autocancel() as inline in workqueue.h, right?
->>
->> Yes.
->>
->>> I also see strong objection towards the devm managed clean-ups.
->>
->> Yes it seems that there are some people who don't like this, where as
->> others do like them.
->>
->>> How about adding some devm-helpers.c in drivers/base - where we could
->>> collect devm-based helpers - and which could be enabled by own CONFIG -
->>> and left out by those who dislike it?
->>
->> I would make this something configurable through Kconfig, but if
-
-Clarification I meant to write: "I would NOT make this something configurable through Kconfig".
-
->> go the static inline route, which I'm in favor of then we could just
->> have a:
->>
->> include/linux/devm-cleanup-helpers.h
->>
->> And put everything (including kdoc texts) there.
->>
->> This way the functionality is 100% opt-in (by explicitly including
->> the header if you want the helpers) which hopefully makes this a
->> bit more acceptable to people who don't like this style of cleanups.
->>
->> I would be even happy to act as the upstream maintainer for such a
->> include/linux/devm-cleanup-helpers.h file, I can maintain it as part
->> of the platform-drivers-x86 tree (with its own MAINTAINERS entry).
->>
->> Greg, would this be an acceptable solution to you ?
+On 15/02/2021 12:32, Stanimir Varbanov wrote:
 > 
-> I don't know, sorry, let's revisit this after 5.12-rc1 is out, with a
-> patch set that I can review again, and we can go from there as I can't
-> do anything until then...
+> 
+> On 2/9/21 1:05 PM, Hans Verkuil wrote:
+>> On 09/02/2021 10:45, Stanimir Varbanov wrote:
+>>> Add decoder v4l2 control to set conceal color.
+>>>
+>>> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+>>> ---
+>>>  .../media/v4l/ext-ctrls-codec.rst             | 20 +++++++++++++++++++
+>>>  drivers/media/v4l2-core/v4l2-ctrls.c          |  9 +++++++++
+>>>  include/uapi/linux/v4l2-controls.h            |  1 +
+>>>  3 files changed, 30 insertions(+)
+>>>
+>>> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+>>> index 00944e97d638..994650052333 100644
+>>> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+>>> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+>>> @@ -674,6 +674,26 @@ enum v4l2_mpeg_video_frame_skip_mode -
+>>>      is currently displayed (decoded). This value is reset to 0 whenever
+>>>      the decoder is started.
+>>>  
+>>> +``V4L2_CID_MPEG_VIDEO_DEC_CONCEAL_COLOR (integer64)``
+>>> +    This control sets conceal color in YUV color space. It describes the
+>>> +    client preference of error conceal color in case of error where
+>>> +    reference frame is missing. The decoder would paint the reference
+>>> +    buffer with preferred color and use it for future decoding.
+>>> +    Applicable to decoders.
+>>
+>> You should mention explicitly that this is using 16-bit color components
+>> and expects Limited Range.
+> 
+> I don't want to limit the client to Limited range only. I'll mention in
+> the description that both ranges are valid.
 
-Ok.
+OK, but then you need to describe what the color format depends on. See more
+below.
+
+> 
+>>
+>>> +
+>>> +.. flat-table::
+>>> +    :header-rows:  0
+>>> +    :stub-columns: 0
+>>> +
+>>> +    * - Bit 0:15
+>>> +      - Y luminance
+>>> +    * - Bit 16:31
+>>> +      - Cb chrominance
+>>> +    * - Bit 32:47
+>>> +      - Cr chrominance
+>>> +    * - Bit 48:63
+>>> +      - Must be zero
+>>> +
+>>>  ``V4L2_CID_MPEG_VIDEO_DECODER_SLICE_INTERFACE (boolean)``
+>>>      If enabled the decoder expects to receive a single slice per buffer,
+>>>      otherwise the decoder expects a single frame in per buffer.
+>>> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
+>>> index 016cf6204cbb..a3b9d28a00b7 100644
+>>> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
+>>> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
+>>> @@ -945,6 +945,7 @@ const char *v4l2_ctrl_get_name(u32 id)
+>>>  	case V4L2_CID_MPEG_VIDEO_VBV_SIZE:			return "VBV Buffer Size";
+>>>  	case V4L2_CID_MPEG_VIDEO_DEC_PTS:			return "Video Decoder PTS";
+>>>  	case V4L2_CID_MPEG_VIDEO_DEC_FRAME:			return "Video Decoder Frame Count";
+>>> +	case V4L2_CID_MPEG_VIDEO_DEC_CONCEAL_COLOR:		return "Video Decoder Conceal Color";
+>>>  	case V4L2_CID_MPEG_VIDEO_VBV_DELAY:			return "Initial Delay for VBV Control";
+>>>  	case V4L2_CID_MPEG_VIDEO_MV_H_SEARCH_RANGE:		return "Horizontal MV Search Range";
+>>>  	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:		return "Vertical MV Search Range";
+>>> @@ -1430,6 +1431,14 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
+>>>  		*max = 0x7fffffffffffffffLL;
+>>>  		*step = 1;
+>>>  		break;
+>>> +	case V4L2_CID_MPEG_VIDEO_DEC_CONCEAL_COLOR:
+>>> +		*type = V4L2_CTRL_TYPE_INTEGER64;
+>>> +		*min = 0;
+>>> +		/* default for 8bit black, luma is 16, chroma is 128 */
+>>
+>> Since this is 16 bit the actual default luma value for black is 4096 and for chroma use
+>> 32768 (i.e. both values are times 256).
+> 
+> If we follow this for pixel format with 10bit per channel we have to
+> multiply by 64?
+
+No, you multiply by 4. 12 bit depth will multiple by 16, and 16 bit depth by 256.
+
+But how do you format this? Using bits 29-0? Or use 9-0 for one color component,
+25-16 for another and 41-32 for the last component?
+
+Also missing is an explanation of which bits are for Y', which for Cb and which for Cr.
+
+It is surprisingly hard to provide an unambiguous description of this :-)
 
 Regards,
 
-Hans
+	Hans
+
+> 
+>>
+>>> +		*def = 0x8000800010LL;
+>>> +		*max = 0xffffffffffffLL;
+>>> +		*step = 1;
+>>> +		break;
+>>>  	case V4L2_CID_PIXEL_RATE:
+>>>  		*type = V4L2_CTRL_TYPE_INTEGER64;
+>>>  		*flags |= V4L2_CTRL_FLAG_READ_ONLY;
+>>> diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
+>>> index 039c0d7add1b..5e5a3068be2d 100644
+>>> --- a/include/uapi/linux/v4l2-controls.h
+>>> +++ b/include/uapi/linux/v4l2-controls.h
+>>> @@ -428,6 +428,7 @@ enum v4l2_mpeg_video_multi_slice_mode {
+>>>  #define V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE		(V4L2_CID_CODEC_BASE+228)
+>>>  #define V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME		(V4L2_CID_CODEC_BASE+229)
+>>>  #define V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITY_ID	(V4L2_CID_CODEC_BASE+230)
+>>> +#define V4L2_CID_MPEG_VIDEO_DEC_CONCEAL_COLOR		(V4L2_CID_CODEC_BASE+231)
+>>>  
+>>>  /* CIDs for the MPEG-2 Part 2 (H.262) codec */
+>>>  #define V4L2_CID_MPEG_VIDEO_MPEG2_LEVEL			(V4L2_CID_CODEC_BASE+270)
+>>>
+>>
+>> Regards,
+>>
+>> 	Hans
+>>
+> 
 
