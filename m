@@ -2,387 +2,497 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F5FD31C2F2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Feb 2021 21:26:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 361D531C353
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Feb 2021 22:00:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229782AbhBOU0E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Feb 2021 15:26:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45428 "EHLO
+        id S229652AbhBOU7U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Feb 2021 15:59:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229608AbhBOU0C (ORCPT
+        with ESMTP id S229469AbhBOU7S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Feb 2021 15:26:02 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70C47C0613D6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Feb 2021 12:25:22 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id n10so10497754wmq.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Feb 2021 12:25:22 -0800 (PST)
+        Mon, 15 Feb 2021 15:59:18 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E096C061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Feb 2021 12:58:36 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id v30so12592895lfq.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Feb 2021 12:58:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=jDZtnEWOf82ehEYa4p3dFHkPyYl0MUvWn4LAUrQcIyQ=;
-        b=TXBbY9fwjA05K6LxSreuUsHBAGr3qqHUmmhq/w6txO+FUV3t9a+6jsR+SPvyczGU1w
-         Rwxn+usXimzVEtlOdoCIy5RU9N0bwmGHp9sfdx4T97SRNK63xPPZbRE8wK4J88yBmE0d
-         yT0BNVxRnE0O9F/QjLZsIwwZFzJflO9TVUSdJLLWMAVX3ICGcsOl6WohQKR/fCZMDqfk
-         kWUdwHqqbSehSwPONMSpoOvCcknZ7Yjbrq9s8CUNpqaxFtYNVWBNrjq6vTrR2+MJslBu
-         06rKPlX2BQgeRXfRTTw0bMEywXh1thd/KegRo5Kz8pIYOI6GRjgfXuxHd7bBSDvMXcBs
-         4uGg==
+        bh=SCU2T2MkwX0ouknZrnu9ZLkUR0hFUW+fCg9m59d3sLo=;
+        b=LzCF0dobxVgGXuQ6tZWI+E7jUnEBqsp5AJZ1yZXoqqJk/ieglLdLNttFExV1ajFR+P
+         Sfc8X7+wLkKmuCLXmHeOWtpaoCZbmaxRgwkYfdKfYX4nzOiD2pmb7J8DKGeGtGK8lnME
+         TNCDugU9E9sD0RZyFcmzou2Af3KFM6lXU9O+fZP74LpJA2TarV4pGMi4LzfsPdK91N+t
+         IkOWDKRawRTakDvhTer526+PgK18e3P+EJiTAb4wsMNoVhDv+G7ID7V8HUklT9VPh4Op
+         tD1NIXN1LdX+MqbhHOzwWFl26B8Ih5BLYnQy0VXGJeDWhD4tPduqITD3OyX1SJNFMK2v
+         9HlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=jDZtnEWOf82ehEYa4p3dFHkPyYl0MUvWn4LAUrQcIyQ=;
-        b=a3ROiRoPsLhuPWE9LunvZ6sDdM9LzzLmhaR3QUIG8359MZINJd0nx2TSgZELgNLh6W
-         VTjuvfymYI2edc49Dw6E86txzw5WOrxa2F1lEnAdbcq67FVIYzzpFyhPNTom5DCFhn5p
-         +98JwLmIgB1Y8H3yUKLnM2K8dNqwejnMrL23QmP8x46rwh8FmTnnl2Nl17Z5EvK0o5sM
-         5UCHtdd+ru1ZZWArfjcQLxVZeyVmEjWCJN6OTxWEkZAFriTZeMk34uXRNGsiZxiFSWLD
-         IQDLPAVWRcIbO77YA6wzDUxTU3Okf7kEIabkEFRmH03qpB61WmezQVwmdoMK6xGFJHuv
-         uiYg==
-X-Gm-Message-State: AOAM532LMllsMjLuLOeZ6YVplS3pDCkRMCtuNBZRFlQo1shtHnJbsEOK
-        JOPVPU+PQHR4l6WgcRr+AwSx7g==
-X-Google-Smtp-Source: ABdhPJz9/WbE1uEWKoaEcjNs+ultQA6IqlcWbxOwm/+rUXxB4dupMetnCFtRYey8q2YLHMaaybyTaw==
-X-Received: by 2002:a1c:6a02:: with SMTP id f2mr518688wmc.36.1613420720969;
-        Mon, 15 Feb 2021 12:25:20 -0800 (PST)
-Received: from ?IPv6:2a01:e34:ed2f:f020:1c0d:1b29:8630:3df5? ([2a01:e34:ed2f:f020:1c0d:1b29:8630:3df5])
-        by smtp.googlemail.com with ESMTPSA id h15sm8800051wrh.13.2021.02.15.12.25.19
+        bh=SCU2T2MkwX0ouknZrnu9ZLkUR0hFUW+fCg9m59d3sLo=;
+        b=suDbLdammsiYe1wThUEpQLS/RvJ1zyeoWGEg1Ri3fG27mUrBox6WjwBuca8ZTtW59M
+         c/nd6SRqfoVEG5IBZBWdjVwE3uza4FvenOcBu9xyxw/f65acBlymcVw44XoLea4zEhME
+         lGMNkuu/n35oY8JVCmpPO5YoHGukcHzfxEXixXkELApwrapZhBbv7QNjAQqhqLDv2iJR
+         MCzRjI2bTEqlHJQBnAHkjuesr3zlgTjb/SQrXaQ0yxzby876QtADQp+ZJI7GOsl8TZGP
+         VcKxOj8udU10FcDh2r+5nnsAWWXOxCFdAQuyzenXNFrk3Z5JP2cOmW3TgDanC0Q//eWd
+         f+lg==
+X-Gm-Message-State: AOAM531QRBy5hJIb8Ttwie5OVEEu/bQ0V2sHXsebuhpI1bUf/CyoSTuN
+        Fox+gEc6ctWg8g1Mg+vcimJsCg==
+X-Google-Smtp-Source: ABdhPJz7uYEEu3Zmic1PDmYvIPgb7RavfqPasys2ph9V5Ey8V5dKjfZqb8rZjmQ0828ZWpFbPFSSkA==
+X-Received: by 2002:a19:38e:: with SMTP id 136mr9681465lfd.170.1613422714734;
+        Mon, 15 Feb 2021 12:58:34 -0800 (PST)
+Received: from [192.168.118.216] ([85.249.43.69])
+        by smtp.gmail.com with ESMTPSA id n26sm498056lfe.121.2021.02.15.12.58.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Feb 2021 12:25:20 -0800 (PST)
-Subject: Re: [PATCH v9 1/8] drivers: thermal: tsens: Add VER_0 tsens version
-To:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Amit Kucheria <amitk@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Rob Herring <robh+dt@kernel.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20210122145558.4982-1-ansuelsmth@gmail.com>
- <20210122145558.4982-2-ansuelsmth@gmail.com>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-Message-ID: <84a44ce8-163a-5c31-ddd3-c4cf0247bc46@linaro.org>
-Date:   Mon, 15 Feb 2021 21:25:19 +0100
+        Mon, 15 Feb 2021 12:58:33 -0800 (PST)
+Subject: Re: [PATCH 1/2] media: camss: use v4l2_get_link_freq() to calculate
+ the relevant clocks
+To:     Jacopo Mondi <jacopo@jmondi.org>
+Cc:     junak.pub@gmail.com, robert.foss@linaro.org,
+        sakari.ailus@linux.intel.com, todor.too@gmail.com,
+        agross@kernel.org, bjorn.andersson@linaro.org, mchehab@kernel.org,
+        laurent.pinchart@ideasonboard.com, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20210214213404.8373-1-andrey.konovalov@linaro.org>
+ <20210214213404.8373-2-andrey.konovalov@linaro.org>
+ <20210215120007.trtojpmq2wyknbuq@uno.localdomain>
+From:   Andrey Konovalov <andrey.konovalov@linaro.org>
+Message-ID: <1dbad2a7-0de3-3200-f50a-bc5f99531084@linaro.org>
+Date:   Mon, 15 Feb 2021 23:58:27 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.10.0
 MIME-Version: 1.0
-In-Reply-To: <20210122145558.4982-2-ansuelsmth@gmail.com>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <20210215120007.trtojpmq2wyknbuq@uno.localdomain>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/01/2021 15:55, Ansuel Smith wrote:
-> VER_0 is used to describe device based on tsens version before v0.1.
-> These device are devices based on msm8960 for example apq8064 or
-> ipq806x.
+Hi Jacopo,
+
+Thank you for the detailed review!
+
+On 15.02.2021 15:00, Jacopo Mondi wrote:
+> Hi Andrey,
+>     nice to see progress in this direction
 > 
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-
-At the first glance, this series sounds ok but there is no ack from the
-maintainers of this driver so I'm uncomfortable picking these changes.
-
-Bjorn ? Amit ?
-
-> ---
->  drivers/thermal/qcom/tsens.c | 171 +++++++++++++++++++++++++++++------
->  drivers/thermal/qcom/tsens.h |   4 +-
->  2 files changed, 147 insertions(+), 28 deletions(-)
+> On Mon, Feb 15, 2021 at 12:34:03AM +0300, Andrey Konovalov wrote:
+>> There are places in the camss driver where camss_get_pixel_clock() is
+>> called to get the pixel rate (using V4L2_CID_PIXEL_RATE control) and to
+>> calculate the link frequency from it. There is a case when this would
+>> not work: when V4L2_CID_PIXEL_RATE gets the rate at which the pixels are
+>> read (sampled) from the sensor's pixel array, and this rate is different
+>> from the pixel transmission rate over the CSI link, the link frequency
+>> value can't be calculated from the pixel rate. One needs to use
+>> V4L2_CID_LINK_FREQ to get the link frequency in this case.
+>>
+>> Replace such calls to camss_get_pixel_clock() with calls to a wrapper
+>> around v4l2_get_link_freq(). v4l2_get_link_freq() tries V4L2_CID_LINK_FREQ
+>> first, and if it is not implemented by the camera sensor driver, falls
+>> back to V4L2_CID_PIXEL_RATE to calculate the link frequency value from.
 > 
-> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-> index d8ce3a687b80..eaeaa1d69d92 100644
-> --- a/drivers/thermal/qcom/tsens.c
-> +++ b/drivers/thermal/qcom/tsens.c
-> @@ -12,6 +12,7 @@
->  #include <linux/of.h>
->  #include <linux/of_address.h>
->  #include <linux/of_platform.h>
-> +#include <linux/mfd/syscon.h>
->  #include <linux/platform_device.h>
->  #include <linux/pm.h>
->  #include <linux/regmap.h>
-> @@ -515,6 +516,15 @@ static irqreturn_t tsens_irq_thread(int irq, void *data)
->  			dev_dbg(priv->dev, "[%u] %s: no violation:  %d\n",
->  				hw_id, __func__, temp);
->  		}
-> +
-> +		if (tsens_version(priv) < VER_0_1) {
-> +			/* Constraint: There is only 1 interrupt control register for all
-> +			 * 11 temperature sensor. So monitoring more than 1 sensor based
-> +			 * on interrupts will yield inconsistent result. To overcome this
-> +			 * issue we will monitor only sensor 0 which is the master sensor.
-> +			 */
-> +			break;
-> +		}
->  	}
->  
->  	return IRQ_HANDLED;
-> @@ -530,6 +540,13 @@ static int tsens_set_trips(void *_sensor, int low, int high)
->  	int high_val, low_val, cl_high, cl_low;
->  	u32 hw_id = s->hw_id;
->  
-> +	if (tsens_version(priv) < VER_0_1) {
-> +		/* Pre v0.1 IP had a single register for each type of interrupt
-> +		 * and thresholds
-> +		 */
-> +		hw_id = 0;
-> +	}
-> +
->  	dev_dbg(dev, "[%u] %s: proposed thresholds: (%d:%d)\n",
->  		hw_id, __func__, low, high);
->  
-> @@ -584,18 +601,21 @@ int get_temp_tsens_valid(const struct tsens_sensor *s, int *temp)
->  	u32 valid;
->  	int ret;
->  
-> -	ret = regmap_field_read(priv->rf[valid_idx], &valid);
-> -	if (ret)
-> -		return ret;
-> -	while (!valid) {
-> -		/* Valid bit is 0 for 6 AHB clock cycles.
-> -		 * At 19.2MHz, 1 AHB clock is ~60ns.
-> -		 * We should enter this loop very, very rarely.
-> -		 */
-> -		ndelay(400);
-> +	/* VER_0 doesn't have VALID bit */
-> +	if (tsens_version(priv) >= VER_0_1) {
->  		ret = regmap_field_read(priv->rf[valid_idx], &valid);
->  		if (ret)
->  			return ret;
-> +		while (!valid) {
-> +			/* Valid bit is 0 for 6 AHB clock cycles.
-> +			 * At 19.2MHz, 1 AHB clock is ~60ns.
-> +			 * We should enter this loop very, very rarely.
-> +			 */
-> +			ndelay(400);
-> +			ret = regmap_field_read(priv->rf[valid_idx], &valid);
-> +			if (ret)
-> +				return ret;
-> +		}
->  	}
->  
->  	/* Valid bit is set, OK to read the temperature */
-> @@ -608,15 +628,29 @@ int get_temp_common(const struct tsens_sensor *s, int *temp)
->  {
->  	struct tsens_priv *priv = s->priv;
->  	int hw_id = s->hw_id;
-> -	int last_temp = 0, ret;
-> +	int last_temp = 0, ret, trdy;
-> +	unsigned long timeout;
->  
-> -	ret = regmap_field_read(priv->rf[LAST_TEMP_0 + hw_id], &last_temp);
-> -	if (ret)
-> -		return ret;
-> +	timeout = jiffies + usecs_to_jiffies(TIMEOUT_US);
-> +	do {
-> +		if (priv->rf[TRDY]) {
-> +			ret = regmap_field_read(priv->rf[TRDY], &trdy);
-> +			if (ret)
-> +				return ret;
-> +			if (!trdy)
-> +				continue;
-> +		}
-> +
-> +		ret = regmap_field_read(priv->rf[LAST_TEMP_0 + hw_id], &last_temp);
-> +		if (ret)
-> +			return ret;
->  
-> -	*temp = code_to_degc(last_temp, s) * 1000;
-> +		*temp = code_to_degc(last_temp, s) * 1000;
->  
-> -	return 0;
-> +		return 0;
-> +	} while (time_before(jiffies, timeout));
-> +
-> +	return -ETIMEDOUT;
->  }
->  
->  #ifdef CONFIG_DEBUG_FS
-> @@ -738,19 +772,31 @@ int __init init_common(struct tsens_priv *priv)
->  		priv->tm_offset = 0x1000;
->  	}
->  
-> -	res = platform_get_resource(op, IORESOURCE_MEM, 0);
-> -	tm_base = devm_ioremap_resource(dev, res);
-> -	if (IS_ERR(tm_base)) {
-> -		ret = PTR_ERR(tm_base);
-> -		goto err_put_device;
-> +	if (tsens_version(priv) >= VER_0_1) {
-> +		res = platform_get_resource(op, IORESOURCE_MEM, 0);
-> +		tm_base = devm_ioremap_resource(dev, res);
-> +		if (IS_ERR(tm_base)) {
-> +			ret = PTR_ERR(tm_base);
-> +			goto err_put_device;
-> +		}
-> +
-> +		priv->tm_map = devm_regmap_init_mmio(dev, tm_base, &tsens_config);
-> +	} else { /* VER_0 share the same gcc regs using a syscon */
-> +		struct device *parent = priv->dev->parent;
-> +
-> +		if (parent)
-> +			priv->tm_map = syscon_node_to_regmap(parent->of_node);
->  	}
->  
-> -	priv->tm_map = devm_regmap_init_mmio(dev, tm_base, &tsens_config);
-> -	if (IS_ERR(priv->tm_map)) {
-> +	if (IS_ERR_OR_NULL(priv->tm_map)) {
->  		ret = PTR_ERR(priv->tm_map);
->  		goto err_put_device;
->  	}
->  
-> +	/* VER_0 have only tm_map */
-> +	if (!priv->srot_map)
-> +		priv->srot_map = priv->tm_map;
-> +
->  	if (tsens_version(priv) > VER_0_1) {
->  		for (i = VER_MAJOR; i <= VER_STEP; i++) {
->  			priv->rf[i] = devm_regmap_field_alloc(dev, priv->srot_map,
-> @@ -769,6 +815,10 @@ int __init init_common(struct tsens_priv *priv)
->  		ret = PTR_ERR(priv->rf[TSENS_EN]);
->  		goto err_put_device;
->  	}
-> +	/* in VER_0 TSENS need to be explicitly enabled */
-> +	if (tsens_version(priv) == VER_0)
-> +		regmap_field_write(priv->rf[TSENS_EN], 1);
-> +
->  	ret = regmap_field_read(priv->rf[TSENS_EN], &enabled);
->  	if (ret)
->  		goto err_put_device;
-> @@ -791,6 +841,66 @@ int __init init_common(struct tsens_priv *priv)
->  		goto err_put_device;
->  	}
->  
-> +	priv->rf[TSENS_EN] = devm_regmap_field_alloc(dev, priv->tm_map,
-> +						     priv->fields[TSENS_EN]);
-> +	if (IS_ERR(priv->rf[TSENS_EN])) {
-> +		ret = PTR_ERR(priv->rf[TSENS_EN]);
-> +		goto err_put_device;
-> +	}
-> +
-> +	priv->rf[TSENS_SW_RST] = devm_regmap_field_alloc(
-> +		dev, priv->tm_map, priv->fields[TSENS_EN]);
-> +	if (IS_ERR(priv->rf[TSENS_EN])) {
-> +		ret = PTR_ERR(priv->rf[TSENS_EN]);
-> +		goto err_put_device;
-> +	}
-> +
-> +	priv->rf[LOW_INT_CLEAR_0] = devm_regmap_field_alloc(
-> +		dev, priv->tm_map, priv->fields[LOW_INT_CLEAR_0]);
-> +	if (IS_ERR(priv->rf[LOW_INT_CLEAR_0])) {
-> +		ret = PTR_ERR(priv->rf[LOW_INT_CLEAR_0]);
-> +		goto err_put_device;
-> +	}
-> +
-> +	priv->rf[UP_INT_CLEAR_0] = devm_regmap_field_alloc(
-> +		dev, priv->tm_map, priv->fields[UP_INT_CLEAR_0]);
-> +	if (IS_ERR(priv->rf[UP_INT_CLEAR_0])) {
-> +		ret = PTR_ERR(priv->rf[UP_INT_CLEAR_0]);
-> +		goto err_put_device;
-> +	}
-> +
-> +	/* VER_0 require to set MIN and MAX THRESH
-> +	 * These 2 regs are set using the:
-> +	 * - CRIT_THRESH_0 for MAX THRESH hardcoded to 120°C
-> +	 * - CRIT_THRESH_1 for MIN THRESH hardcoded to   0°C
-> +	 */
-> +	if (tsens_version(priv) < VER_0_1) {
-> +		priv->rf[CRIT_THRESH_0] = devm_regmap_field_alloc(
-> +			dev, priv->tm_map, priv->fields[CRIT_THRESH_0]);
-> +		if (IS_ERR(priv->rf[CRIT_THRESH_0])) {
-> +			ret = PTR_ERR(priv->rf[CRIT_THRESH_0]);
-> +			goto err_put_device;
-> +		}
-> +		regmap_field_write(priv->rf[CRIT_THRESH_0],
-> +				   tsens_mC_to_hw(priv->sensor, 120000));
-> +
-> +		priv->rf[CRIT_THRESH_1] = devm_regmap_field_alloc(
-> +			dev, priv->tm_map, priv->fields[CRIT_THRESH_1]);
-> +		if (IS_ERR(priv->rf[CRIT_THRESH_1])) {
-> +			ret = PTR_ERR(priv->rf[CRIT_THRESH_1]);
-> +			goto err_put_device;
-> +		}
-> +		regmap_field_write(priv->rf[CRIT_THRESH_1],
-> +				   tsens_mC_to_hw(priv->sensor, 0));
-> +	}
-> +
-> +	priv->rf[TRDY] =
-> +		devm_regmap_field_alloc(dev, priv->tm_map, priv->fields[TRDY]);
-> +	if (IS_ERR(priv->rf[TRDY])) {
-> +		ret = PTR_ERR(priv->rf[TRDY]);
-> +		goto err_put_device;
-> +	}
-> +
->  	/* This loop might need changes if enum regfield_ids is reordered */
->  	for (j = LAST_TEMP_0; j <= UP_THRESH_15; j += 16) {
->  		for (i = 0; i < priv->feat->max_sensors; i++) {
-> @@ -844,7 +954,11 @@ int __init init_common(struct tsens_priv *priv)
->  	}
->  
->  	spin_lock_init(&priv->ul_lock);
-> -	tsens_enable_irq(priv);
-> +
-> +	/* VER_0 interrupt doesn't need to be enabled */
-> +	if (tsens_version(priv) >= VER_0_1)
-> +		tsens_enable_irq(priv);
-> +
->  	tsens_debug_init(op);
->  
->  err_put_device:
-> @@ -930,7 +1044,7 @@ static int tsens_register_irq(struct tsens_priv *priv, char *irqname,
->  			      irq_handler_t thread_fn)
->  {
->  	struct platform_device *pdev;
-> -	int ret, irq;
-> +	int ret, irq, irq_type = IRQF_ONESHOT;
->  
->  	pdev = of_find_device_by_node(priv->dev->of_node);
->  	if (!pdev)
-> @@ -943,9 +1057,12 @@ static int tsens_register_irq(struct tsens_priv *priv, char *irqname,
->  		if (irq == -ENXIO)
->  			ret = 0;
->  	} else {
-> -		ret = devm_request_threaded_irq(&pdev->dev, irq,
-> -						NULL, thread_fn,
-> -						IRQF_ONESHOT,
-> +		/* VER_0 interrupt is TRIGGER_RISING, VER_0_1 and up is ONESHOT */
-> +		if (tsens_version(priv) == VER_0)
-> +			irq_type = IRQF_TRIGGER_RISING;
-> +
-> +		ret = devm_request_threaded_irq(&pdev->dev, irq, thread_fn,
-> +						NULL, irq_type,
->  						dev_name(&pdev->dev), priv);
->  		if (ret)
->  			dev_err(&pdev->dev, "%s: failed to get irq\n",
-> diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
-> index f40b625f897e..8e6c1fd3ccf5 100644
-> --- a/drivers/thermal/qcom/tsens.h
-> +++ b/drivers/thermal/qcom/tsens.h
-> @@ -13,6 +13,7 @@
->  #define CAL_DEGC_PT2		120
->  #define SLOPE_FACTOR		1000
->  #define SLOPE_DEFAULT		3200
-> +#define TIMEOUT_US		100
->  #define THRESHOLD_MAX_ADC_CODE	0x3ff
->  #define THRESHOLD_MIN_ADC_CODE	0x0
->  
-> @@ -25,7 +26,8 @@ struct tsens_priv;
->  
->  /* IP version numbers in ascending order */
->  enum tsens_ver {
-> -	VER_0_1 = 0,
-> +	VER_0 = 0,
-> +	VER_0_1,
->  	VER_1_X,
->  	VER_2_X,
->  };
+> Is it worth warning in the core function that the subdevice should
+> support LINK_FREQ and if we fallback to use PIXEL_RATE the calculation
+> result might not be accurate ?
+
+Yes, this might be useful. I'll add a separate patch for that in v2.
+
+>> Calls to camss_get_pixel_clock() from vfe_[check,set]_clock_rates()
+>> are left intact as it looks like this VFE clock does depend on the
+>> rate the pixel samples comes out of the camera sensor, not on the
+>> frequency at which the link between the sensor and the CSI receiver
+>> operates.
+>>
+>> Signed-off-by: Andrey Konovalov <andrey.konovalov@linaro.org>
+>> ---
+>>   .../media/platform/qcom/camss/camss-csid.c    | 22 ++++++------
+>>   .../qcom/camss/camss-csiphy-2ph-1-0.c         | 22 ++++++------
+>>   .../qcom/camss/camss-csiphy-3ph-1-0.c         | 22 ++++++------
+>>   .../media/platform/qcom/camss/camss-csiphy.c  | 36 +++++++++----------
+>>   .../media/platform/qcom/camss/camss-csiphy.h  |  2 +-
+>>   drivers/media/platform/qcom/camss/camss.c     | 23 ++++++++++++
+>>   drivers/media/platform/qcom/camss/camss.h     |  2 ++
+>>   7 files changed, 73 insertions(+), 56 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
+>> index be3fe76f3dc3..b2cbf4b65949 100644
+>> --- a/drivers/media/platform/qcom/camss/camss-csid.c
+>> +++ b/drivers/media/platform/qcom/camss/camss-csid.c
+>> @@ -462,13 +462,19 @@ static irqreturn_t csid_isr(int irq, void *dev)
+>>   static int csid_set_clock_rates(struct csid_device *csid)
+>>   {
+>>   	struct device *dev = csid->camss->dev;
+>> -	u32 pixel_clock;
+>> +	s64 link_freq;
+>>   	int i, j;
+>>   	int ret;
+>>
+>> -	ret = camss_get_pixel_clock(&csid->subdev.entity, &pixel_clock);
+>> -	if (ret)
+>> -		pixel_clock = 0;
+>> +	const struct csid_format *f = csid_get_fmt_entry(
+>> +		csid->formats,
+>> +		csid->nformats,
+>> +		csid->fmt[MSM_CSIPHY_PAD_SINK].code);
 > 
+> Weird indent :/
 
+This part was in this driver before - I've just moved it a few lines up.
+But it doesn't look very nice, agreed.
 
--- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+> I would either keep the arguments on one line or align after the open
+> ( if it doesn't go past 80-cols
 
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+- as far as I can see, the "csid->fmt[MSM_CSIPHY_PAD_SINK].code);" wouldn't
+fit into 80-cols either way.
+
+I'll try to think something out in v2.
+
+>> +	u8 num_lanes = csid->phy.lane_cnt;
+>> +	link_freq = camss_get_link_freq(&csid->subdev.entity, f->bpp,
+> 
+> Empy line maybe ?
+
+Ack. checkpatch suggests the same.
+
+>> +					2 * num_lanes);
+> 
+> I see you pass in 2 * num_lanes and I assume it's for CSI-2 DDR.
+
+Right.
+
+> Can't this be handled in camss_get_link_freq() so that you here only
+> pass in the actual number of lanes ?
+
+OK, this should look more clear. Will do that in v2.
+
+>> +	if (link_freq < 0)
+>> +		link_freq = 0;
+> 
+> I don't know this driver, but I wonder if it wouldn't be better to
+> fail instead of defaulting to 0, which might be dangerous if used as a
+> divider.
+
+This is in accordance with the logic implemented in the current driver:
+
+-----8<-----
+			u64 min_rate = link_freq / 4;
+<snip>
+			camss_add_clock_margin(&min_rate);
+<if min_rate is 0, camss_add_clock_margin() leaves min_rate as 0>
+<snip>
+			/* if sensor pixel clock is not available */
+			/* set highest possible CSID clock rate */
+			if (min_rate == 0)
+				j = clock->nfreqs - 1;
+-----8<-----
+
+>>
+>>   	for (i = 0; i < csid->nclocks; i++) {
+>>   		struct camss_clock *clock = &csid->clock[i];
+>> @@ -477,13 +483,7 @@ static int csid_set_clock_rates(struct csid_device *csid)
+>>   		    !strcmp(clock->name, "csi1") ||
+>>   		    !strcmp(clock->name, "csi2") ||
+>>   		    !strcmp(clock->name, "csi3")) {
+>> -			const struct csid_format *f = csid_get_fmt_entry(
+>> -				csid->formats,
+>> -				csid->nformats,
+>> -				csid->fmt[MSM_CSIPHY_PAD_SINK].code);
+>> -			u8 num_lanes = csid->phy.lane_cnt;
+>> -			u64 min_rate = pixel_clock * f->bpp /
+>> -							(2 * num_lanes * 4);
+>> +			u64 min_rate = link_freq / 4;
+> 
+> Why 4 ? :)
+
+min_rate = (pixel_clock * f->bpp / (2 * num_lanes)) / 4;
+But (pixel_clock * f->bpp / (2 * num_lanes)) equals link_freq.
+Actually the "APQ8016E Technical Reference Manual", LM80-P0436-100 Rev. D [1] at page 960
+says exactly that:
+	"F(GCC_CAMSS_CSIx_CLK) >= F(DDR_CLK)/4"
+
+[1] https://developer.qualcomm.com/download/sd410/snapdragon-410e-technical-reference-manual.pdf
+
+>>   			long rate;
+>>
+>>   			camss_add_clock_margin(&min_rate);
+>> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-2ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-2ph-1-0.c
+>> index 12bce391d71f..30b454c369ab 100644
+>> --- a/drivers/media/platform/qcom/camss/camss-csiphy-2ph-1-0.c
+>> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-2ph-1-0.c
+>> @@ -51,16 +51,13 @@ static void csiphy_reset(struct csiphy_device *csiphy)
+>>    *
+>>    * Helper function to calculate settle count value. This is
+>>    * based on the CSI2 T_hs_settle parameter which in turn
+>> - * is calculated based on the CSI2 transmitter pixel clock
+>> - * frequency.
+>> + * is calculated based on the CSI2 transmitter link frequency.
+>>    *
+>> - * Return settle count value or 0 if the CSI2 pixel clock
+>> - * frequency is not available
+>> + * Return settle count value or 0 if the CSI2 link frequency
+>> + * is not available
+>>    */
+>> -static u8 csiphy_settle_cnt_calc(u32 pixel_clock, u8 bpp, u8 num_lanes,
+>> -				 u32 timer_clk_rate)
+>> +static u8 csiphy_settle_cnt_calc(s64 link_freq, u32 timer_clk_rate)
+>>   {
+>> -	u32 mipi_clock; /* Hz */
+>>   	u32 ui; /* ps */
+>>   	u32 timer_period; /* ps */
+>>   	u32 t_hs_prepare_max; /* ps */
+>> @@ -68,8 +65,10 @@ static u8 csiphy_settle_cnt_calc(u32 pixel_clock, u8 bpp, u8 num_lanes,
+>>   	u32 t_hs_settle; /* ps */
+>>   	u8 settle_cnt;
+>>
+>> -	mipi_clock = pixel_clock * bpp / (2 * num_lanes);
+>> -	ui = div_u64(1000000000000LL, mipi_clock);
+>> +	if (link_freq <= 0)
+>> +		return 0;
+> 
+> If you error out if the link frequency cannot be calculated, can this
+> be skipped ?
+
+Do you mean removing the "if (link_freq <= 0) return 0;" from csiphy_settle_cnt_calc(), and
+making the caller of csiphy_settle_cnt_calc() to do this check?
+
+>> +
+>> +	ui = div_u64(1000000000000LL, link_freq);
+>>   	ui /= 2;
+>>   	t_hs_prepare_max = 85000 + 6 * ui;
+>>   	t_hs_prepare_zero_min = 145000 + 10 * ui;
+>> @@ -83,15 +82,14 @@ static u8 csiphy_settle_cnt_calc(u32 pixel_clock, u8 bpp, u8 num_lanes,
+>>
+>>   static void csiphy_lanes_enable(struct csiphy_device *csiphy,
+>>   				struct csiphy_config *cfg,
+>> -				u32 pixel_clock, u8 bpp, u8 lane_mask)
+>> +				s64 link_freq, u8 lane_mask)
+>>   {
+>>   	struct csiphy_lanes_cfg *c = &cfg->csi2->lane_cfg;
+>>   	u8 settle_cnt;
+>>   	u8 val, l = 0;
+>>   	int i = 0;
+>>
+>> -	settle_cnt = csiphy_settle_cnt_calc(pixel_clock, bpp, c->num_data,
+>> -					    csiphy->timer_clk_rate);
+>> +	settle_cnt = csiphy_settle_cnt_calc(link_freq, csiphy->timer_clk_rate);
+>>
+>>   	writel_relaxed(0x1, csiphy->base +
+>>   		       CAMSS_CSI_PHY_GLBL_T_INIT_CFG0);
+>> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+>> index 97cb9de85031..da7c3d3f9a10 100644
+>> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+>> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+>> @@ -107,24 +107,23 @@ static irqreturn_t csiphy_isr(int irq, void *dev)
+>>    *
+>>    * Helper function to calculate settle count value. This is
+>>    * based on the CSI2 T_hs_settle parameter which in turn
+>> - * is calculated based on the CSI2 transmitter pixel clock
+>> - * frequency.
+>> + * is calculated based on the CSI2 transmitter link frequency.
+>>    *
+>> - * Return settle count value or 0 if the CSI2 pixel clock
+>> - * frequency is not available
+>> + * Return settle count value or 0 if the CSI2 link frequency
+>> + * is not available
+>>    */
+>> -static u8 csiphy_settle_cnt_calc(u32 pixel_clock, u8 bpp, u8 num_lanes,
+>> -				 u32 timer_clk_rate)
+>> +static u8 csiphy_settle_cnt_calc(s64 link_freq, u32 timer_clk_rate)
+>>   {
+>> -	u32 mipi_clock; /* Hz */
+>>   	u32 ui; /* ps */
+>>   	u32 timer_period; /* ps */
+>>   	u32 t_hs_prepare_max; /* ps */
+>>   	u32 t_hs_settle; /* ps */
+>>   	u8 settle_cnt;
+>>
+>> -	mipi_clock = pixel_clock * bpp / (2 * num_lanes);
+>> -	ui = div_u64(1000000000000LL, mipi_clock);
+>> +	if (link_freq <= 0)
+>> +		return 0;
+>> +
+>> +	ui = div_u64(1000000000000LL, link_freq);
+>>   	ui /= 2;
+>>   	t_hs_prepare_max = 85000 + 6 * ui;
+>>   	t_hs_settle = t_hs_prepare_max;
+>> @@ -137,15 +136,14 @@ static u8 csiphy_settle_cnt_calc(u32 pixel_clock, u8 bpp, u8 num_lanes,
+>>
+>>   static void csiphy_lanes_enable(struct csiphy_device *csiphy,
+>>   				struct csiphy_config *cfg,
+>> -				u32 pixel_clock, u8 bpp, u8 lane_mask)
+>> +				s64 link_freq, u8 lane_mask)
+>>   {
+>>   	struct csiphy_lanes_cfg *c = &cfg->csi2->lane_cfg;
+>>   	u8 settle_cnt;
+>>   	u8 val, l = 0;
+>>   	int i;
+>>
+>> -	settle_cnt = csiphy_settle_cnt_calc(pixel_clock, bpp, c->num_data,
+>> -					    csiphy->timer_clk_rate);
+>> +	settle_cnt = csiphy_settle_cnt_calc(link_freq, csiphy->timer_clk_rate);
+>>
+>>   	val = BIT(c->clk.pos);
+>>   	for (i = 0; i < c->num_data; i++)
+>> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
+>> index 509c9a59c09c..9b5fe6fc7664 100644
+>> --- a/drivers/media/platform/qcom/camss/camss-csiphy.c
+>> +++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
+>> @@ -102,23 +102,23 @@ static u8 csiphy_get_bpp(const struct csiphy_format *formats,
+>>   static int csiphy_set_clock_rates(struct csiphy_device *csiphy)
+>>   {
+>>   	struct device *dev = csiphy->camss->dev;
+>> -	u32 pixel_clock;
+>> +	s64 link_freq;
+>>   	int i, j;
+>>   	int ret;
+>>
+>> -	ret = camss_get_pixel_clock(&csiphy->subdev.entity, &pixel_clock);
+>> -	if (ret)
+>> -		pixel_clock = 0;
+>> +	u8 bpp = csiphy_get_bpp(csiphy->formats, csiphy->nformats,
+>> +				csiphy->fmt[MSM_CSIPHY_PAD_SINK].code);
+>> +	u8 num_lanes = csiphy->cfg.csi2->lane_cfg.num_data;
+>> +	link_freq = camss_get_link_freq(&csiphy->subdev.entity, bpp,
+>> +					2 * num_lanes);
+>> +	if (link_freq < 0)
+>> +		link_freq  = 0;
+>>
+>>   	for (i = 0; i < csiphy->nclocks; i++) {
+>>   		struct camss_clock *clock = &csiphy->clock[i];
+>>
+>>   		if (csiphy->rate_set[i]) {
+>> -			u8 bpp = csiphy_get_bpp(csiphy->formats,
+>> -					csiphy->nformats,
+>> -					csiphy->fmt[MSM_CSIPHY_PAD_SINK].code);
+>> -			u8 num_lanes = csiphy->cfg.csi2->lane_cfg.num_data;
+>> -			u64 min_rate = pixel_clock * bpp / (2 * num_lanes * 4);
+>> +			u64 min_rate = link_freq / 4;
+>>   			long round_rate;
+>>
+>>   			camss_add_clock_margin(&min_rate);
+>> @@ -238,22 +238,18 @@ static u8 csiphy_get_lane_mask(struct csiphy_lanes_cfg *lane_cfg)
+>>   static int csiphy_stream_on(struct csiphy_device *csiphy)
+>>   {
+>>   	struct csiphy_config *cfg = &csiphy->cfg;
+>> -	u32 pixel_clock;
+>> +	s64 link_freq;
+>>   	u8 lane_mask = csiphy_get_lane_mask(&cfg->csi2->lane_cfg);
+>>   	u8 bpp = csiphy_get_bpp(csiphy->formats, csiphy->nformats,
+>>   				csiphy->fmt[MSM_CSIPHY_PAD_SINK].code);
+>> +	u8 num_lanes = csiphy->cfg.csi2->lane_cfg.num_data;
+>>   	u8 val;
+>> -	int ret;
+>>
+>> -	ret = camss_get_pixel_clock(&csiphy->subdev.entity, &pixel_clock);
+>> -	if (ret) {
+>> -		dev_err(csiphy->camss->dev,
+>> -			"Cannot get CSI2 transmitter's pixel clock\n");
+>> -		return -EINVAL;
+>> -	}
+>> -	if (!pixel_clock) {
+>> +	link_freq = camss_get_link_freq(&csiphy->subdev.entity, bpp,
+>> +					2 * num_lanes);
+>> +	if (link_freq < 0) {
+>>   		dev_err(csiphy->camss->dev,
+>> -			"Got pixel clock == 0, cannot continue\n");
+>> +			"Cannot get CSI2 transmitter's link frequency\n");
+>>   		return -EINVAL;
+>>   	}
+>>
+>> @@ -268,7 +264,7 @@ static int csiphy_stream_on(struct csiphy_device *csiphy)
+>>   	writel_relaxed(val, csiphy->base_clk_mux);
+>>   	wmb();
+>>
+>> -	csiphy->ops->lanes_enable(csiphy, cfg, pixel_clock, bpp, lane_mask);
+>> +	csiphy->ops->lanes_enable(csiphy, cfg, link_freq, lane_mask);
+>>
+>>   	return 0;
+>>   }
+>> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.h b/drivers/media/platform/qcom/camss/camss-csiphy.h
+>> index f7967ef836dc..d71b8bc6ec00 100644
+>> --- a/drivers/media/platform/qcom/camss/camss-csiphy.h
+>> +++ b/drivers/media/platform/qcom/camss/camss-csiphy.h
+>> @@ -50,7 +50,7 @@ struct csiphy_hw_ops {
+>>   	void (*reset)(struct csiphy_device *csiphy);
+>>   	void (*lanes_enable)(struct csiphy_device *csiphy,
+>>   			     struct csiphy_config *cfg,
+>> -			     u32 pixel_clock, u8 bpp, u8 lane_mask);
+>> +			     s64 link_freq, u8 lane_mask);
+>>   	void (*lanes_disable)(struct csiphy_device *csiphy,
+>>   			      struct csiphy_config *cfg);
+>>   	irqreturn_t (*isr)(int irq, void *dev);
+>> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+>> index 7c0f669f8aa6..2888c7ef2303 100644
+>> --- a/drivers/media/platform/qcom/camss/camss.c
+>> +++ b/drivers/media/platform/qcom/camss/camss.c
+>> @@ -548,6 +548,29 @@ struct media_entity *camss_find_sensor(struct media_entity *entity)
+>>   	}
+>>   }
+>>
+>> +/**
+>> + * camss_get_link_freq - Get link frequency from sensor
+>> + * @entity: Media entity in the current pipeline
+>> + * @bpp: Number of bits per pixel for the current format
+>> + * @lanes: Number of lanes in the link to the sensor
+>> + *
+>> + * Return link frequency on success or a negative error code otherwise
+>> + */
+>> +s64 camss_get_link_freq(struct media_entity *entity, unsigned int bpp,
+>> +			unsigned int lanes)
+>> +{
+>> +	struct media_entity *sensor;
+>> +	struct v4l2_subdev *subdev;
+>> +
+>> +	sensor = camss_find_sensor(entity);
+>> +	if (!sensor)
+>> +		return -ENODEV;
+> 
+> Can this happen ?
+
+In general case yes, it could.
+This would definitely happen if we used camss_get_link_freq() with the vfe
+entities when there is no sensor accessible from the given vfe entity via
+the enabled links.
+But as for the vfe entities we call camss_get_pixel_clock() instead,
+it looks like camss_get_link_freq() should not fail to find the sensor.
+Does it hurts, and isn't this safer to check the return value of
+camss_find_sensor() in camss_get_link_freq() as well (just in case)?
+
+Thanks,
+Andrey
+
+> Thanks
+>    j
+> 
+>> +
+>> +	subdev = media_entity_to_v4l2_subdev(sensor);
+>> +
+>> +	return v4l2_get_link_freq(subdev->ctrl_handler, bpp, lanes);
+>> +}
+>> +
+>>   /*
+>>    * camss_get_pixel_clock - Get pixel clock rate from sensor
+>>    * @entity: Media entity in the current pipeline
+>> diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
+>> index 3a0484683cd6..86cdc25189eb 100644
+>> --- a/drivers/media/platform/qcom/camss/camss.h
+>> +++ b/drivers/media/platform/qcom/camss/camss.h
+>> @@ -108,6 +108,8 @@ int camss_enable_clocks(int nclocks, struct camss_clock *clock,
+>>   			struct device *dev);
+>>   void camss_disable_clocks(int nclocks, struct camss_clock *clock);
+>>   struct media_entity *camss_find_sensor(struct media_entity *entity);
+>> +s64 camss_get_link_freq(struct media_entity *entity, unsigned int bpp,
+>> +			unsigned int lanes);
+>>   int camss_get_pixel_clock(struct media_entity *entity, u32 *pixel_clock);
+>>   int camss_pm_domain_on(struct camss *camss, int id);
+>>   void camss_pm_domain_off(struct camss *camss, int id);
+>> --
+>> 2.17.1
+>>
