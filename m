@@ -2,76 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2755131BF07
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Feb 2021 17:24:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 04E3F31BF0B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Feb 2021 17:25:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231699AbhBOQXk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Feb 2021 11:23:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48548 "EHLO
+        id S231705AbhBOQX5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Feb 2021 11:23:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231751AbhBOQUq (ORCPT
+        with ESMTP id S232284AbhBOQVK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Feb 2021 11:20:46 -0500
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9986C06178B
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Feb 2021 08:16:43 -0800 (PST)
-Received: by mail-qk1-x72a.google.com with SMTP id 81so6839822qkf.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Feb 2021 08:16:43 -0800 (PST)
+        Mon, 15 Feb 2021 11:21:10 -0500
+Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCB6AC061794
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Feb 2021 08:16:44 -0800 (PST)
+Received: by mail-qk1-x729.google.com with SMTP id b14so6866353qkk.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Feb 2021 08:16:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=marek-ca.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=VFjJmq0Au97vKEfgrOVE/VaVkFx8gpBh2nvbd9qF3qo=;
-        b=tl4w+PPzBhdOn4ABfS5co/4PLj5I7a39ayMvxYtyAKY29aSkATAGmUnCbFEyoN+d9c
-         BbInmUFjXKrcg8WajAeEK/RDzoiwQnW00blY6ZN+WVWgBNkZ6wJCdn6V3b4iqXal2ZzW
-         VxF5HhjdhqCATOi4TxcO8Kpuq0TzaUfefL/vrTM5qBgdBnkmXCRJjiMRIzggxgcOis2P
-         BRFYEfwKBY46LJXlVevZx8cN7MEJ5/UX+EoNTa5rugqGNPO3Rxthn1kXLPfXHsHqVnMb
-         eSC7wO/b1sxjBMcjzNnkRxEzbKSOchDfWZuCUBX3/FBct5k7+iqKY67kHTDtcBIc9IMF
-         /bBw==
+        bh=kj5RYWMStNtaZP0xbHAzdpdla7U4CbWpMCjfpqO3Muw=;
+        b=Ro/tnvtkBFbFHRzdDRU/kYg/kM/nhwfgJ+U+9OlbaMxkSjiVfunT2tAAUSmHe+5FnI
+         ISoIdoGYFxVo5b0H68oa4gLoEarvUKrNAg0f1MrAwdYS10EaeiDN+KOTZ+nXAJ8p2uZC
+         4oaLhYwnrYUDYaN0tDq8RbEB4GuX34S5DC5j/BbQasPGoysPgPtIRsAboatOtDTTDPEX
+         uVH6HbZELpPZ9UWTsco30tQuVNHYtV4dV03qIvFkUmAZQn72/PaIDeedIIq5giKndAZ7
+         EF+bEOYVNHptG1mP5G+1Sz6B/+bTlv5mxhpCXQvC7CQR/smY9oH6LLF3jf07C4kc2KHC
+         1Mtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=VFjJmq0Au97vKEfgrOVE/VaVkFx8gpBh2nvbd9qF3qo=;
-        b=eds6VRQxNKti0yMZ7+99wMfv2Jh1oTW6rubOHvHyyvdDcMtJp8zyJFZBBG6P/pVMbT
-         5KIcI73yjGNA2Q5Xcendv/qRDhUucIgbGE8EikEn42tuArO/ca7X6AG3nz88cYIRSBfj
-         P1b6mm5y8cO/oagiBHN6yk0VZgGETx7GHmDyHX162f1uPAlOBiOMYL1AfbebZfqn7TLJ
-         VWCGq+fsPF3TTvlBMLulQpN5htsHyVOZnVhlft7taRvCxOkHYPboJ1u0jKOulYuJsU9Z
-         /CXFo3uRSSH6qT5jRLc81+k+ow5NFuuFRbGiBbQQQFzBu2X3riOHMEvxnROeFWKbQ3dl
-         wYuQ==
-X-Gm-Message-State: AOAM531Wbm2re3zzUppUZGqOib5N2kGtCdyrY2i4/phId9/YFE0qoXE8
-        eTBvwuTvMhUKgP1trhvos+MNIfaw0CioWbdcrok=
-X-Google-Smtp-Source: ABdhPJxyETNNT3979AkpXipAech5eZPrp9lur8P4ZhLUWsa6ZiqwiqWuwCh6/NsbKt1UY3V4t38Kvg==
-X-Received: by 2002:a05:620a:227:: with SMTP id u7mr15801746qkm.226.1613405802624;
-        Mon, 15 Feb 2021 08:16:42 -0800 (PST)
+        bh=kj5RYWMStNtaZP0xbHAzdpdla7U4CbWpMCjfpqO3Muw=;
+        b=KI3sVoMuX/IgewJPC8Z7VFj7vy6CabTxpfm36Lls3ZdoOj2U6bI13rClYWj/U6jDos
+         ZJeuTrFeJ/NGCICUuY9HmlNnPIL3ainYZjmqd4TPPtfYodF5N3Wzjz3/G2dDYCjPpdER
+         RocM24Ef8HVMkNakCq/8Vy7UKfZsyBGFwSu2SxC+/5WVNomkRBHZWZOsph6dBSxTaH10
+         H3ws+zyG6HcU/16r4WZzFU8d9aF+pgFf+7uurDLJ7k1LxAjhyrM5MOdsP4A8D84XHwPt
+         HwLx6seyemKed9cP+Ju/ij+f9R/VyQs9smlpCMiNDFKdgwVC8sGoFyOTIByJsqjFq+EQ
+         Gisg==
+X-Gm-Message-State: AOAM533jfeUubYkXBvrv65KwHO9OZnqUl87jZghLz98KxvNcfmevNciJ
+        HVGpNNZ+K6TeONWEgrA1ddzPSIHuqw7BLlmd
+X-Google-Smtp-Source: ABdhPJytoZNNizkftzSXutfU2BKPN7HNcFzzW4dr/jO9DQ7Kx907xNvWLMwq3O28SwjC799g+wisng==
+X-Received: by 2002:a05:620a:102a:: with SMTP id a10mr15830136qkk.324.1613405803880;
+        Mon, 15 Feb 2021 08:16:43 -0800 (PST)
 Received: from localhost.localdomain (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
-        by smtp.gmail.com with ESMTPSA id j124sm12225227qkf.113.2021.02.15.08.16.41
+        by smtp.gmail.com with ESMTPSA id j124sm12225227qkf.113.2021.02.15.08.16.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Feb 2021 08:16:42 -0800 (PST)
+        Mon, 15 Feb 2021 08:16:43 -0800 (PST)
 From:   Jonathan Marek <jonathan@marek.ca>
 To:     linux-arm-msm@vger.kernel.org
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Eric Anholt <eric@anholt.net>,
-        Tanmay Shah <tanmay@codeaurora.org>,
-        Drew Davenport <ddavenport@chromium.org>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        tongtiangen <tongtiangen@huawei.com>,
-        Qinglang Miao <miaoqinglang@huawei.com>,
-        dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU),
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
         DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2 1/2] drm/msm: add compatibles for sm8150/sm8250 display
-Date:   Mon, 15 Feb 2021 11:15:33 -0500
-Message-Id: <20210215161537.14696-2-jonathan@marek.ca>
+Subject: [PATCH v2 2/2] arm64: dts: qcom: sm8250: fix display nodes
+Date:   Mon, 15 Feb 2021 11:15:34 -0500
+Message-Id: <20210215161537.14696-3-jonathan@marek.ca>
 X-Mailer: git-send-email 2.26.1
 In-Reply-To: <20210215161537.14696-1-jonathan@marek.ca>
 References: <20210215161537.14696-1-jonathan@marek.ca>
@@ -81,78 +68,92 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The driver already has support for sm8150/sm8250, but the compatibles were
-never added.
+Apply these fixes to the newly added sm8250 display ndoes
+ - Use sm8250 compatibles instead of sdm845 compatibles
+ - Remove "notused" interconnect (which apparently was blindly copied from
+   my old patches)
+ - Use dispcc node example from dt-bindings, removing clocks which aren't
+   documented or used by the driver and fixing the region size.
 
-Also inverse the non-mdp4 condition in add_display_components() to avoid
-having to check every new compatible in the condition.
-
+Fixes: 7c1dffd471b1 ("arm64: dts: qcom: sm8250.dtsi: add display system nodes")
 Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 ---
- Documentation/devicetree/bindings/display/msm/dpu.txt | 4 ++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c               | 2 ++
- drivers/gpu/drm/msm/msm_drv.c                         | 6 +++---
- 3 files changed, 7 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 33 ++++++++--------------------
+ 1 file changed, 9 insertions(+), 24 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/dpu.txt b/Documentation/devicetree/bindings/display/msm/dpu.txt
-index 551ae26f60da..5763f43200a0 100644
---- a/Documentation/devicetree/bindings/display/msm/dpu.txt
-+++ b/Documentation/devicetree/bindings/display/msm/dpu.txt
-@@ -8,7 +8,7 @@ The DPU display controller is found in SDM845 SoC.
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index 947e1accae3a..35f45f5e1c76 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -2323,14 +2323,13 @@ usb_2_dwc3: dwc3@a800000 {
+ 		};
  
- MDSS:
- Required properties:
--- compatible:  "qcom,sdm845-mdss", "qcom,sc7180-mdss"
-+- compatible:  "qcom,sdm845-mdss", "qcom,sc7180-mdss", "qcom,sm8150-mdss", "qcom,sm8250-mdss"
- - reg: physical base address and length of contoller's registers.
- - reg-names: register region names. The following region is required:
-   * "mdss"
-@@ -41,7 +41,7 @@ Optional properties:
+ 		mdss: mdss@ae00000 {
+-			compatible = "qcom,sdm845-mdss";
++			compatible = "qcom,sm8250-mdss";
+ 			reg = <0 0x0ae00000 0 0x1000>;
+ 			reg-names = "mdss";
  
- MDP:
- Required properties:
--- compatible: "qcom,sdm845-dpu", "qcom,sc7180-dpu"
-+- compatible: "qcom,sdm845-dpu", "qcom,sc7180-dpu", "qcom,sm8150-dpu", "qcom,sm8250-dpu"
- - reg: physical base address and length of controller's registers.
- - reg-names : register region names. The following region is required:
-   * "mdp"
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 5a8e3e1fc48c..fff12a4c8bfc 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -1219,6 +1219,8 @@ static const struct dev_pm_ops dpu_pm_ops = {
- static const struct of_device_id dpu_dt_match[] = {
- 	{ .compatible = "qcom,sdm845-dpu", },
- 	{ .compatible = "qcom,sc7180-dpu", },
-+	{ .compatible = "qcom,sm8150-dpu", },
-+	{ .compatible = "qcom,sm8250-dpu", },
- 	{}
- };
- MODULE_DEVICE_TABLE(of, dpu_dt_match);
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 94525ac76d4e..928f13d4bfbc 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -1185,9 +1185,7 @@ static int add_display_components(struct device *dev,
- 	 * Populate the children devices, find the MDP5/DPU node, and then add
- 	 * the interfaces to our components list.
- 	 */
--	if (of_device_is_compatible(dev->of_node, "qcom,mdss") ||
--	    of_device_is_compatible(dev->of_node, "qcom,sdm845-mdss") ||
--	    of_device_is_compatible(dev->of_node, "qcom,sc7180-mdss")) {
-+	if (!of_device_is_compatible(dev->of_node, "qcom,mdp4")) {
- 		ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
- 		if (ret) {
- 			DRM_DEV_ERROR(dev, "failed to populate children devices\n");
-@@ -1320,6 +1318,8 @@ static const struct of_device_id dt_match[] = {
- 	{ .compatible = "qcom,mdss", .data = (void *)KMS_MDP5 },
- 	{ .compatible = "qcom,sdm845-mdss", .data = (void *)KMS_DPU },
- 	{ .compatible = "qcom,sc7180-mdss", .data = (void *)KMS_DPU },
-+	{ .compatible = "qcom,sm8150-mdss", .data = (void *)KMS_DPU },
-+	{ .compatible = "qcom,sm8250-mdss", .data = (void *)KMS_DPU },
- 	{}
- };
- MODULE_DEVICE_TABLE(of, dt_match);
+-			interconnects = <&gem_noc MASTER_AMPSS_M0 &config_noc SLAVE_DISPLAY_CFG>,
+-					<&mmss_noc MASTER_MDP_PORT0 &mc_virt SLAVE_EBI_CH0>,
++			interconnects = <&mmss_noc MASTER_MDP_PORT0 &mc_virt SLAVE_EBI_CH0>,
+ 					<&mmss_noc MASTER_MDP_PORT1 &mc_virt SLAVE_EBI_CH0>;
+-			interconnect-names = "notused", "mdp0-mem", "mdp1-mem";
++			interconnect-names = "mdp0-mem", "mdp1-mem";
+ 
+ 			power-domains = <&dispcc MDSS_GDSC>;
+ 
+@@ -2356,7 +2355,7 @@ mdss: mdss@ae00000 {
+ 			ranges;
+ 
+ 			mdss_mdp: mdp@ae01000 {
+-				compatible = "qcom,sdm845-dpu";
++				compatible = "qcom,sm8250-dpu";
+ 				reg = <0 0x0ae01000 0 0x8f000>,
+ 				      <0 0x0aeb0000 0 0x2008>;
+ 				reg-names = "mdp", "vbif";
+@@ -2580,36 +2579,22 @@ opp-358000000 {
+ 
+ 		dispcc: clock-controller@af00000 {
+ 			compatible = "qcom,sm8250-dispcc";
+-			reg = <0 0x0af00000 0 0x20000>;
++			reg = <0 0x0af00000 0 0x10000>;
+ 			mmcx-supply = <&mmcx_reg>;
+ 			clocks = <&rpmhcc RPMH_CXO_CLK>,
+ 				 <&dsi0_phy 0>,
+ 				 <&dsi0_phy 1>,
+ 				 <&dsi1_phy 0>,
+ 				 <&dsi1_phy 1>,
+-				 <0>,
+-				 <0>,
+-				 <0>,
+-				 <0>,
+-				 <0>,
+-				 <0>,
+-				 <0>,
+-				 <0>,
+-				 <&sleep_clk>;
++				 <&dp_phy 0>,
++				 <&dp_phy 1>;
+ 			clock-names = "bi_tcxo",
+ 				      "dsi0_phy_pll_out_byteclk",
+ 				      "dsi0_phy_pll_out_dsiclk",
+ 				      "dsi1_phy_pll_out_byteclk",
+ 				      "dsi1_phy_pll_out_dsiclk",
+-				      "dp_link_clk_divsel_ten",
+-				      "dp_vco_divided_clk_src_mux",
+-				      "dptx1_phy_pll_link_clk",
+-				      "dptx1_phy_pll_vco_div_clk",
+-				      "dptx2_phy_pll_link_clk",
+-				      "dptx2_phy_pll_vco_div_clk",
+-				      "edp_phy_pll_link_clk",
+-				      "edp_phy_pll_vco_div_clk",
+-				      "sleep_clk";
++				      "dp_phy_pll_link_clk",
++				      "dp_phy_pll_vco_div_clk";
+ 			#clock-cells = <1>;
+ 			#reset-cells = <1>;
+ 			#power-domain-cells = <1>;
 -- 
 2.26.1
 
