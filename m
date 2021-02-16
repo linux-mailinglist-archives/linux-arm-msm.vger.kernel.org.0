@@ -2,209 +2,264 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7080B31C7AE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Feb 2021 09:59:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 10B7E31C7BE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Feb 2021 10:06:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229771AbhBPI7Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Feb 2021 03:59:25 -0500
-Received: from lb1-smtp-cloud9.xs4all.net ([194.109.24.22]:34295 "EHLO
-        lb1-smtp-cloud9.xs4all.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229695AbhBPI7Z (ORCPT
+        id S229889AbhBPJFS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Feb 2021 04:05:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38458 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229896AbhBPJE4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Feb 2021 03:59:25 -0500
-Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
-        by smtp-cloud9.xs4all.net with ESMTPA
-        id BwBnl0ykwZvk6BwBrl4Jfw; Tue, 16 Feb 2021 09:58:40 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s2;
-        t=1613465920; bh=pBx+Qke923HfqOcaKzS2ABpma4SzvMPEpVSGK4JxA9Q=;
-        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
-         Subject;
-        b=m7OlgFhgPECo9S8zXXrpLtSuGOGJqPSRn63NQZAzvyDVlhLUeJPXeQ3ndyzEigLSd
-         xG7JgMYS3IJ02iFmNswAtl8O1QP91vPtJoWZpAlScdclAYybf5bK+lprFjiXQK0pAf
-         hkrgRumps+RCaZlFVkhmNHrr0jLHkmIAgJ2HillKobOEzG27nSyu1Ki2ugN+oujll9
-         nw+JAMkikDUi5yFpK9gVJBSlRMYToP8sO2KgXJI2q7PeRCwPNnu/gxLSyuzr4lYxfs
-         UCcfeAE3hLIKmQSwEgVkT+wVQswnEoQ5/beVtDafvt+AHtO7O+cdh/0kpLnag51YkC
-         9sAny4RLkKp3Q==
-Subject: Re: [PATCH 1/2] v4l2-ctrl: Add decoder conceal color control
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20210209094527.2173690-1-stanimir.varbanov@linaro.org>
- <20210209094527.2173690-2-stanimir.varbanov@linaro.org>
- <cccae00e-e30e-6691-d954-27379a104115@xs4all.nl>
- <489f1417-085d-4057-f2e8-1cc8db0ed161@linaro.org>
- <70c04719-39ac-9ba7-cd2f-6c5b9d5f2275@xs4all.nl>
- <12b37304-84d1-63fe-1d85-60268502d8bc@linaro.org>
-From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Message-ID: <eb410d2c-9650-2251-cff8-4306663f41f9@xs4all.nl>
-Date:   Tue, 16 Feb 2021 09:58:35 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.0
+        Tue, 16 Feb 2021 04:04:56 -0500
+Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0D0CC061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Feb 2021 01:03:58 -0800 (PST)
+Received: by mail-yb1-xb2f.google.com with SMTP id r127so374317ybr.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Feb 2021 01:03:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=9ad5fJQsjFqBClERhvuISieSOy+7o471fO8R0Iulcc0=;
+        b=tI1AQ4QUYL9AKy2+hFDhM63f4PhTt6pzL4oPEXi8AP1xAAO7W6+34oR+1eZwLIvWKu
+         q4SOZf8TqlpZVj9kV/08KQkoQDElVe18yoga8MerOz5ebDwvFeSHeRFeLdeub2RyC40V
+         akatORZ3e+EvviH5abGtlz8jLWpNY0+WdvAxJ5RMUIyPU/Zu38Ik4rW8ryV4iySD3g7V
+         0UzDEhP+4v28eMLMSvu+ROWAC7C6omAeytlQeqMx0i+uVo3blhgosYqb0BQ2/3eVgdFC
+         eFpe9NFQZ9fEATlkNUxJBQWbeted93hWgvv5G8EEjuPCN2nsdiu6DsJ4KVnZ+nzu7bUJ
+         qraQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=9ad5fJQsjFqBClERhvuISieSOy+7o471fO8R0Iulcc0=;
+        b=QgtbHegq19rDd42QPsueVCZILaLWEvNsDZHT6JYk/zQ4yIUyqI863vc/Dydsv9SKFC
+         liDK8pwyRxa5T6YCTQycDQWjdn+IlassgkWsQZWwKsEtUT9pzQYzfRBx/dULPb0wzPnF
+         gxhuHwR+Pc/ExLq9LUuJFxo7ykYiJ41J2nZuna8uS/sYP0ZYGDr6unxdJXb/X4SM91uO
+         R+TWFytbN9YK1fmXAtixS/jz2S4YvY388AP+dM3V3vz3CuWJlzYLPKSXaV2Y/aBAsucH
+         TIM17qlx+0nAbpyRqkQoFwg64YNr8T5fw3PGm7ZRta3IO5C7TTrmyBHSaBsDxD/Tttgm
+         0Cwg==
+X-Gm-Message-State: AOAM530LaLMjiAFDQlXLaLc2LXPnjdXZ/4rH2SHMglUEcD5d81P3qy9M
+        +v90FPcZcTNMORLansoFYdcgpWXkBDP8w4UvZ5NgZ+fjNOsHsA==
+X-Google-Smtp-Source: ABdhPJwammnRdHCaAXy66yT+gsk2paFjDZX3yE3axqzSh4Thxpdsqj+jmOe3mzLIcD9v1AUhX1gtYvtxzp3lPE+IObs=
+X-Received: by 2002:a25:68cf:: with SMTP id d198mr29003255ybc.258.1613466237931;
+ Tue, 16 Feb 2021 01:03:57 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <12b37304-84d1-63fe-1d85-60268502d8bc@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfKNfOOXNsqqd8CdqBPGXXyfXGAYFbE8Of9vkvtBLbAzMdNT4XwpIwN/tsjl4F2gs5hUXrmUgNn43vP6IBP64NuNebNz95IN863L/TiFzR8whaEfqRbVh
- 0zeJ/d1VQMDIc8/LooNhX+dgf5bRzpNC1YJLJwvOU3NFNUnvpaPaGRKDcWVuAY04Hw/+W/q9LFUg8XevC0pSPoeIR/49SC5ppPLPPvwLlpn1iQLrmi06oqB9
- XfklOwwZxywzdJKrCuHOCc+qL7IfQVHuu3rIv3MKM/IkRWfqgDr0JEYT0PVEtt3FV5uwx3FSymiWMjaw39XyjDAujovDkKDVd73hn/tDWiY=
+References: <1612945128-23174-1-git-send-email-amit.pundir@linaro.org>
+ <13bd5e9d-3f3b-0b97-aa48-9a7bc551ddf6@somainline.org> <CAMi1Hd3d8krtQHv-3LuiCcgCWSgL1L0UeSYWJp27KToyW338gw@mail.gmail.com>
+ <b8618ac4-85aa-5f7f-8550-07f7eec6cc08@somainline.org>
+In-Reply-To: <b8618ac4-85aa-5f7f-8550-07f7eec6cc08@somainline.org>
+From:   Amit Pundir <amit.pundir@linaro.org>
+Date:   Tue, 16 Feb 2021 14:33:22 +0530
+Message-ID: <CAMi1Hd0jb_BrXzZp=L_qZ39wBYc7iFHQbzPa_nQaQ44SohvcQg@mail.gmail.com>
+Subject: Re: [PATCH v3] arm64: dts: qcom: sdm845-xiaomi-beryllium: Add DSI and
+ panel bits
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>, phone-devel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/02/2021 09:56, Stanimir Varbanov wrote:
-> 
-> 
-> On 2/15/21 1:57 PM, Hans Verkuil wrote:
->> On 15/02/2021 12:32, Stanimir Varbanov wrote:
->>>
->>>
->>> On 2/9/21 1:05 PM, Hans Verkuil wrote:
->>>> On 09/02/2021 10:45, Stanimir Varbanov wrote:
->>>>> Add decoder v4l2 control to set conceal color.
->>>>>
->>>>> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
->>>>> ---
->>>>>  .../media/v4l/ext-ctrls-codec.rst             | 20 +++++++++++++++++++
->>>>>  drivers/media/v4l2-core/v4l2-ctrls.c          |  9 +++++++++
->>>>>  include/uapi/linux/v4l2-controls.h            |  1 +
->>>>>  3 files changed, 30 insertions(+)
->>>>>
->>>>> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
->>>>> index 00944e97d638..994650052333 100644
->>>>> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
->>>>> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
->>>>> @@ -674,6 +674,26 @@ enum v4l2_mpeg_video_frame_skip_mode -
->>>>>      is currently displayed (decoded). This value is reset to 0 whenever
->>>>>      the decoder is started.
->>>>>  
->>>>> +``V4L2_CID_MPEG_VIDEO_DEC_CONCEAL_COLOR (integer64)``
->>>>> +    This control sets conceal color in YUV color space. It describes the
->>>>> +    client preference of error conceal color in case of error where
->>>>> +    reference frame is missing. The decoder would paint the reference
->>>>> +    buffer with preferred color and use it for future decoding.
->>>>> +    Applicable to decoders.
->>>>
->>>> You should mention explicitly that this is using 16-bit color components
->>>> and expects Limited Range.
->>>
->>> I don't want to limit the client to Limited range only. I'll mention in
->>> the description that both ranges are valid.
->>
->> OK, but then you need to describe what the color format depends on. See more
->> below.
->>
->>>
->>>>
->>>>> +
->>>>> +.. flat-table::
->>>>> +    :header-rows:  0
->>>>> +    :stub-columns: 0
->>>>> +
->>>>> +    * - Bit 0:15
->>>>> +      - Y luminance
->>>>> +    * - Bit 16:31
->>>>> +      - Cb chrominance
->>>>> +    * - Bit 32:47
->>>>> +      - Cr chrominance
->>>>> +    * - Bit 48:63
->>>>> +      - Must be zero
->>>>> +
-> 
-> The table how the bits are spread into int64.
-> 
->>>>>  ``V4L2_CID_MPEG_VIDEO_DECODER_SLICE_INTERFACE (boolean)``
->>>>>      If enabled the decoder expects to receive a single slice per buffer,
->>>>>      otherwise the decoder expects a single frame in per buffer.
->>>>> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
->>>>> index 016cf6204cbb..a3b9d28a00b7 100644
->>>>> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
->>>>> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
->>>>> @@ -945,6 +945,7 @@ const char *v4l2_ctrl_get_name(u32 id)
->>>>>  	case V4L2_CID_MPEG_VIDEO_VBV_SIZE:			return "VBV Buffer Size";
->>>>>  	case V4L2_CID_MPEG_VIDEO_DEC_PTS:			return "Video Decoder PTS";
->>>>>  	case V4L2_CID_MPEG_VIDEO_DEC_FRAME:			return "Video Decoder Frame Count";
->>>>> +	case V4L2_CID_MPEG_VIDEO_DEC_CONCEAL_COLOR:		return "Video Decoder Conceal Color";
->>>>>  	case V4L2_CID_MPEG_VIDEO_VBV_DELAY:			return "Initial Delay for VBV Control";
->>>>>  	case V4L2_CID_MPEG_VIDEO_MV_H_SEARCH_RANGE:		return "Horizontal MV Search Range";
->>>>>  	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:		return "Vertical MV Search Range";
->>>>> @@ -1430,6 +1431,14 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
->>>>>  		*max = 0x7fffffffffffffffLL;
->>>>>  		*step = 1;
->>>>>  		break;
->>>>> +	case V4L2_CID_MPEG_VIDEO_DEC_CONCEAL_COLOR:
->>>>> +		*type = V4L2_CTRL_TYPE_INTEGER64;
->>>>> +		*min = 0;
->>>>> +		/* default for 8bit black, luma is 16, chroma is 128 */
->>>>
->>>> Since this is 16 bit the actual default luma value for black is 4096 and for chroma use
->>>> 32768 (i.e. both values are times 256).
->>>
->>> If we follow this for pixel format with 10bit per channel we have to
->>> multiply by 64?
->>
->> No, you multiply by 4. 12 bit depth will multiple by 16, and 16 bit depth by 256.
->>
->> But how do you format this? Using bits 29-0? Or use 9-0 for one color component,
->> 25-16 for another and 41-32 for the last component?
-> 
-> I described this in the table above:
-> 
-> Bit  0:15 - Y luminance
-> Bit 16:31 - Cb chrominance
-> Bit 32:47 - Cr chrominance
-> Bit 48:63 - Must be zero
-> 
-> So depending on the bit depth of the current pixel format:
-> 
->  8bit - 0:7  Y', 16:23 Cb, 32:39 Cr
-> 10bit - 0:9  Y', 16:25 Cb, 32:41 Cr
-> 12bit - 0:11 Y', 16:27 Cb, 32:43 Cr
+Hi,
 
-Apologies, I missed that table!
+On Fri, 12 Feb 2021 at 23:11, AngeloGioacchino Del Regno
+<angelogioacchino.delregno@somainline.org> wrote:
+>
+> Il 12/02/21 10:24, Amit Pundir ha scritto:
+> > Hi,
+> >
+> > On Thu, 11 Feb 2021 at 00:25, AngeloGioacchino Del Regno
+> > <angelogioacchino.delregno@somainline.org> wrote:
+> >>
+> >> Il 10/02/21 09:18, Amit Pundir ha scritto:
+> >>> From: Sumit Semwal <sumit.semwal@linaro.org>
+> >>>
+> >>> Enabling the Display panel for beryllium requires DSI
+> >>> labibb regulators and panel dts nodes to be added.
+> >>> It is also required to keep some of the regulators as
+> >>> always-on.
+> >>>
+> >>> Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
+> >>> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+> >>> ---
+> >>
+> >> Hello!
+> >> Your patch looks good, however, I have a few concerns...
+> >>
+> >>> v3: Addressed Konrad's concerns. Configured labibb regulators
+> >>>       explicitly based on downstream microvolt values. Display
+> >>>       comes up fine with default discharge-resistor-kohms and
+> >>>       soft-start-us properties, so didn't touch them.
+> >>>       Smoke tested on next-20210209.
+> >>> v2: Rebased to mainline (v5.11-rc6) and fixed build warnings.
+> >>>
+> >>>    .../boot/dts/qcom/sdm845-xiaomi-beryllium.dts      | 64 ++++++++++++++++++++++
+> >>>    1 file changed, 64 insertions(+)
+> >>>
+> >>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+> >>> index 86cbae63eaf7..5ac049a247e1 100644
+> >>> --- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+> >>> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+> >>> @@ -157,6 +157,14 @@
+> >>>                        regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> >>>                };
+> >>>
+> >>> +             vreg_l14a_1p8: ldo14 {
+> >>> +                     regulator-min-microvolt = <1800000>;
+> >>> +                     regulator-max-microvolt = <1800000>;
+> >>> +                     regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> >>> +                     regulator-boot-on;
+> >>> +                     regulator-always-on;
+> >>> +             };
+> >>> +
+> >>>                vreg_l17a_1p3: ldo17 {
+> >>>                        regulator-min-microvolt = <1304000>;
+> >>>                        regulator-max-microvolt = <1304000>;
+> >>> @@ -191,6 +199,7 @@
+> >>>                        regulator-min-microvolt = <1200000>;
+> >>>                        regulator-max-microvolt = <1200000>;
+> >>>                        regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> >>> +                     regulator-boot-on;
+> >>>                };
+> >>>        };
+> >>>    };
+> >>> @@ -200,6 +209,43 @@
+> >>>        firmware-name = "qcom/sdm845/cdsp.mdt";
+> >>>    };
+> >>>
+> >>> +&dsi0 {
+> >>> +     status = "okay";
+> >>> +     vdda-supply = <&vreg_l26a_1p2>;
+> >>> +
+> >>> +     #address-cells = <1>;
+> >>> +     #size-cells = <0>;
+> >>> +
+> >>> +     panel@0 {
+> >>> +             compatible = "tianma,fhd-video";
+> >>> +             reg = <0>;
+> >>> +             vddi0-supply = <&vreg_l14a_1p8>;
+> >>> +             vddpos-supply = <&lab>;
+> >>> +             vddneg-supply = <&ibb>;
+> >>> +
+> >>> +             #address-cells = <1>;
+> >>> +             #size-cells = <0>;
+> >>> +
+> >>> +             reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
+> >>> +
+> >>> +             port {
+> >>> +                     tianma_nt36672a_in_0: endpoint {
+> >>> +                             remote-endpoint = <&dsi0_out>;
+> >>> +                     };
+> >>> +             };
+> >>> +     };
+> >>> +};
+> >>> +
+> >>> +&dsi0_out {
+> >>> +     remote-endpoint = <&tianma_nt36672a_in_0>;
+> >>> +     data-lanes = <0 1 2 3>;
+> >>> +};
+> >>> +
+> >>> +&dsi0_phy {
+> >>> +     status = "okay";
+> >>> +     vdds-supply = <&vreg_l1a_0p875>;
+> >>> +};
+> >>> +
+> >>>    &gcc {
+> >>>        protected-clocks = <GCC_QSPI_CORE_CLK>,
+> >>>                           <GCC_QSPI_CORE_CLK_SRC>,
+> >>> @@ -215,6 +261,24 @@
+> >>>        };
+> >>>    };
+> >>>
+> >>> +&ibb {
+> >>> +     regulator-min-microvolt = <4600000>;
+> >>> +     regulator-max-microvolt = <6000000>;
+> >>> +};
+> >>> +
+> >>
+> >> I think you want to also configure overvoltage and overcurrent
+> >> protection values for both LAB and IBB, as these regulators may be a bit
+> >> dangerous if used without.
+> >
+> > Can you point me to the relevant DT properties please. I didn't find
+> > any DT properties which set the over voltage/current protection
+> > properties explicitly in upstream as well as in downstream kernel.
+> > Plus I also do not see "regulator-min/max-microamp" values set
+> > downstream, otherwise I'd have used that as well atleast.
+> >
+>
+> The regulator-{min/max}-microamp is the equivalent of the downstream
+> "qcom,qpnp-lab-limit-maximum-current" and
+> "qcom,qpnp-ibb-limit-maximum-current.
 
-Regards,
+Thank you for the information.
 
-	Hans
+>
+> I am sorry if we haven't sent our patch series that will introduce the
+> Sony MSM8998 Yoshino and SDM630/636 Nile and Ganges platforms, which
+> are actually using the driver that I've sent fully, as these would have
+> been a nice reference for you.
+>
+> In any case, I can point you at our public repositories and their
+> downstream equivalents...
+>
+> Here you find the downstream configuration for LAB/IBB:
+> https://github.com/sonyxperiadev/kernel/blob/aosp/LA.UM.7.1.r1/arch/arm64/boot/dts/qcom/msm8998-yoshino-common.dtsi#L3158
+>
+> ...And here you find the SoMainline upstream stuff for the same:
+> https://github.com/SoMainline/linux/blob/SoMainline/v5.11-rc4/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi#L332
+>
+> https://github.com/SoMainline/linux/blob/SoMainline/v5.11-rc4/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino-maple.dts#L50
+>
+> I hope that clears out your doubts and difficulties about implementing
+> the protections on labibb.
 
-> 
->>
->> Also missing is an explanation of which bits are for Y', which for Cb and which for Cr.
->>
->> It is surprisingly hard to provide an unambiguous description of this :-)
->>
->> Regards,
->>
->> 	Hans
->>
->>>
->>>>
->>>>> +		*def = 0x8000800010LL;
->>>>> +		*max = 0xffffffffffffLL;
->>>>> +		*step = 1;
->>>>> +		break;
->>>>>  	case V4L2_CID_PIXEL_RATE:
->>>>>  		*type = V4L2_CTRL_TYPE_INTEGER64;
->>>>>  		*flags |= V4L2_CTRL_FLAG_READ_ONLY;
->>>>> diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
->>>>> index 039c0d7add1b..5e5a3068be2d 100644
->>>>> --- a/include/uapi/linux/v4l2-controls.h
->>>>> +++ b/include/uapi/linux/v4l2-controls.h
->>>>> @@ -428,6 +428,7 @@ enum v4l2_mpeg_video_multi_slice_mode {
->>>>>  #define V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE		(V4L2_CID_CODEC_BASE+228)
->>>>>  #define V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME		(V4L2_CID_CODEC_BASE+229)
->>>>>  #define V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITY_ID	(V4L2_CID_CODEC_BASE+230)
->>>>> +#define V4L2_CID_MPEG_VIDEO_DEC_CONCEAL_COLOR		(V4L2_CID_CODEC_BASE+231)
->>>>>  
->>>>>  /* CIDs for the MPEG-2 Part 2 (H.262) codec */
->>>>>  #define V4L2_CID_MPEG_VIDEO_MPEG2_LEVEL			(V4L2_CID_CODEC_BASE+270)
->>>>>
->>>>
->>>> Regards,
->>>>
->>>> 	Hans
->>>>
->>>
->>
-> 
+Exactly what I was looking for. Thanks again.
 
+>
+> Yours,
+> -- Angelo
+>
+> > Regards,
+> > Amit Pundir
+> >
+> >> Besides that, even if it wouldn't be that dangerous, since the
+> >> protection features are present, it would be nice to configure them
+> >> properly as in the rare event that something bad happens, you would be
+> >> able to save the hardware (or at least have a chance to!).
+> >>
+> >>> +&lab {
+> >>> +     regulator-min-microvolt = <4600000>;
+> >>> +     regulator-max-microvolt = <6000000>;
+> >>> +};
+> >>> +
+> >>
+> >> Same here.
+> >>
+> >> Yours,
+> >> -- Angelo
+> >>
+> >>> +&mdss {
+> >>> +     status = "okay";
+> >>> +};
+> >>> +
+> >>> +&mdss_mdp {
+> >>> +     status = "okay";
+> >>> +};
+> >>> +
+> >>>    &mss_pil {
+> >>>        status = "okay";
+> >>>        firmware-name = "qcom/sdm845/mba.mbn", "qcom/sdm845/modem.mdt";
+> >>>
+> >>
+>
