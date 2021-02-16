@@ -2,92 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B78A931C869
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Feb 2021 10:52:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DD64C31C976
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Feb 2021 12:14:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230207AbhBPJvc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Feb 2021 04:51:32 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:18492 "EHLO z11.mailgun.us"
+        id S230019AbhBPLNm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Feb 2021 06:13:42 -0500
+Received: from mail.kernel.org ([198.145.29.99]:36392 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230234AbhBPJt2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Feb 2021 04:49:28 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1613468928; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=/GqGl64iQZ+DsEvShC4NvVoVZYZNaumYiuIS3vgP4os=; b=btPPip4t1xTLNFRlZ7s4/KWHZXl8WER+p2UVJOrWNbOsRXYKnNzoTvrqYxJzw8SZR9s0rc5h
- qLcT4aNBEvq40Z9pUmWrZOxda8h/QMOentldGXDQOUSmrjFWrxQNIbd9UtkcFhgpRs92r8WA
- W3aZ+MRGHZ1xIPELK3NiYjV/AjQ=
-X-Mailgun-Sending-Ip: 104.130.96.11
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 602b94e67bd8735272689e62 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 16 Feb 2021 09:48:22
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 61232C43462; Tue, 16 Feb 2021 09:48:22 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B1C5EC433C6;
-        Tue, 16 Feb 2021 09:48:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B1C5EC433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCH 3/3] arm64: dts: qcom: sm8250: Fix timer interrupt to specify EL2 physical timer
-Date:   Tue, 16 Feb 2021 15:17:49 +0530
-Message-Id: <744e58f725d279eb2b049a7da42b0f09189f4054.1613468366.git.saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.29.0
-In-Reply-To: <cover.1613468366.git.saiprakash.ranjan@codeaurora.org>
-References: <cover.1613468366.git.saiprakash.ranjan@codeaurora.org>
+        id S229958AbhBPLNl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 16 Feb 2021 06:13:41 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id D60B164DA1;
+        Tue, 16 Feb 2021 11:12:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1613473981;
+        bh=U/9Xwrg8bAM2A5MgFUI0Cfy5+k8D9Ryv+uAjX8R5bJc=;
+        h=From:To:Cc:Subject:Date:From;
+        b=EL9Vm+9ChSDdG5fjYVCPwkyPUDDjSSq5lq33Yb7r4Fgka+MaEcYgR9NcjdQkEH52a
+         E81VRuJsw7LAnC2ytlqxnIybr8vPtu23pUES+KN9WWRuXmOHlz1tbXLm5k0vz9j9TT
+         qZkfZUDo5P5H3UeMFAGbeuarm3CKzErWoLEl28piSh5who7BNxuu5BDrX39TVDyj0F
+         eRLwxkPaQNoYY6HwzwYOrKPCpWs2gThBrUdRQ6IY3Gg9qPBScEqAwoF4XD+0f7I4aS
+         yLSU1/89bMfyD1ep74tW1KypH3mKi8oWXBig+luvW5Z46RDOe0Us+rCJg25c40GAlU
+         a6EDbW2/PuFKA==
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Rob Herring <robh+dt@kernel.org>, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] dt-bindings: cpufreq: cpufreq-qcom-hw: Document SM8350 CPUfreq compatible
+Date:   Tue, 16 Feb 2021 16:42:51 +0530
+Message-Id: <20210216111251.1838149-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-ARM architected timer interrupts DT property specifies EL2/HYP
-physical interrupt and not EL2/HYP virtual interrupt for the 4th
-interrupt property. As per interrupt documentation for SM8250 SoC,
-the EL2/HYP physical timer interrupt is 10 and EL2/HYP virtual timer
-interrupt is 12, so fix the 4th timer interrupt to be EL2 physical
-timer interrupt (10 in this case).
+Add the CPUfreq compatible for SM8350 SoC along with note for using the
+specific compatible for SoCs
 
-Fixes: 60378f1a171e ("arm64: dts: qcom: sm8250: Add sm8250 dts file")
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 1864c459a563..3232ac6253bb 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -3754,7 +3754,7 @@ timer {
- 				(GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
- 			     <GIC_PPI 11
- 				(GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
--			     <GIC_PPI 12
-+			     <GIC_PPI 10
- 				(GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
- 	};
+diff --git a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt
+index 9299028ee712..3eb3cee59d79 100644
+--- a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt
++++ b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt
+@@ -8,7 +8,9 @@ Properties:
+ - compatible
+ 	Usage:		required
+ 	Value type:	<string>
+-	Definition:	must be "qcom,cpufreq-hw" or "qcom,cpufreq-epss".
++	Definition:	must be "qcom,cpufreq-hw" or "qcom,cpufreq-epss"
++			along with SoC specific compatible:
++			  "qcom,sm8350-cpufreq-epss", "qcom,cpufreq-epss"
  
+ - clocks
+ 	Usage:		required
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.26.2
 
