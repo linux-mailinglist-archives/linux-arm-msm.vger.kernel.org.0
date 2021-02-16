@@ -2,86 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 972D531D06E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Feb 2021 19:51:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EA9831D162
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Feb 2021 21:11:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229628AbhBPSti (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Feb 2021 13:49:38 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:33517 "EHLO z11.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231128AbhBPSth (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Feb 2021 13:49:37 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1613501358; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=Pb0hKrjVbeVdNBX7WUNigUUMUVY9PmyJcEcq7WklVWc=; b=h0HgQINHcNDEnwMDsJix+p0+EzTzBPtv+SMyE54lTjQtfFdjGOK30Jqig7PnLF5nTpHFApBy
- 04sSkd7Kb+Ec9GsrcGkoT6SIOTBWgM8T/iTQL0C5/06gP/QNMxtVtWkuOX+VfCLjfAr/MjEW
- nLTsbwC17MCe9/pp2m+E/0F1jWs=
-X-Mailgun-Sending-Ip: 104.130.96.11
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 602c138c8848eb952a1b343e (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 16 Feb 2021 18:48:44
- GMT
-Sender: jhugo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id CBD5BC43461; Tue, 16 Feb 2021 18:48:44 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from jhugo-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7E778C433CA;
-        Tue, 16 Feb 2021 18:48:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7E778C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
-Cc:     bbhatt@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Fan Wu <wufan@codeaurora.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>
-Subject: [PATCH] mhi_bus: core: Return EBUSY if MHI ring is full
-Date:   Tue, 16 Feb 2021 11:48:34 -0700
-Message-Id: <1613501314-2392-1-git-send-email-jhugo@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S229628AbhBPULO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Feb 2021 15:11:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40192 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229572AbhBPULM (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 16 Feb 2021 15:11:12 -0500
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54648C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Feb 2021 12:10:32 -0800 (PST)
+Received: by mail-qt1-x82a.google.com with SMTP id d3so7961967qtr.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Feb 2021 12:10:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NKwlbcTtgnB6BisI4Bvy7S6GuugskOb7r/1I3tSO040=;
+        b=Fwl1w0m1yyz+DUSfQ+nlbFIh9wxR18vvObIsEy0qzWgUdgqJGtnC9sOxTr8SCTD9aP
+         66sIMMCN3NX1kJMC2FelE5qc7mO1YvdAR8UDTULWi0w1uUFtDPwcrwJrCdUD8Bd1H2RD
+         ce3CYes027o9rz0lBqy9FMu1rJXSbFPANa8l0U2XazTDJVAKB7Xx+t2CkaaVR/AsGl6x
+         Gt9fDIFh4os3sf+Wmx+Zxd4XcTG83lwVhc63v/f1GKq480aLQuyO5eya3GABj+ffsfrA
+         8oDIl9Grj7LZlSxJBEtTnKeJm+pkYd23mNw5cd0+xGKnR4WQpd//b6q7BfOJe3JXMO4T
+         U7VQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NKwlbcTtgnB6BisI4Bvy7S6GuugskOb7r/1I3tSO040=;
+        b=leiv0DynnmQkpBccmSyjjUq/DW7lX+GEsxx/VcadQUBHuAGlZzj9Vn+APkjA+wD7GH
+         WaKcHsMSAA350z2YJ4u/i1aFzVSIJQusPgCVii8Z/bduPHa25+p1/Sdw8B7EAGaWLgKV
+         M5RAQMfhuYMdOG6nw502DMBNn+kKuTaRrfzi+hngzvIlr6Xh+EV+GXOIwkYM3k1KecbJ
+         bfFxw5163ovL+jhJLPJYAGQffIeGcxv5wOWv3l30HLxO0W7ZntxWbFVpfkN/IDvMKfGQ
+         Bt2QKeUAPkRPHbn8f3jM95evwKG8e4tNodZvxUiOGRw8E2f8LwQgfiucQvGXqpEft/5s
+         fRxw==
+X-Gm-Message-State: AOAM5302u6xzXEd/4gLRM+1yAoEdtN2ofoyvXRcjoFlNc4algPal6YLA
+        ellRkg95ZnsV9vALU1uZHoKj9w==
+X-Google-Smtp-Source: ABdhPJx0vhTIMA5ITSYJJ7UNmZPzb2lwEoYHxSg9A1Z0cAvYN5MflzYoDldlCk79CRVDHsPiwZ9t1g==
+X-Received: by 2002:ac8:7383:: with SMTP id t3mr19902693qtp.242.1613506231455;
+        Tue, 16 Feb 2021 12:10:31 -0800 (PST)
+Received: from localhost.localdomain (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
+        by smtp.gmail.com with ESMTPSA id 16sm13451423qtp.38.2021.02.16.12.10.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Feb 2021 12:10:30 -0800 (PST)
+From:   Jonathan Marek <jonathan@marek.ca>
+To:     freedreno@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Eric Anholt <eric@anholt.net>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm/a6xx: fix for kernels without CONFIG_NVMEM
+Date:   Tue, 16 Feb 2021 15:09:07 -0500
+Message-Id: <20210216200909.19039-1-jonathan@marek.ca>
+X-Mailer: git-send-email 2.26.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Fan Wu <wufan@codeaurora.org>
+Ignore nvmem_cell_get() EOPNOTSUPP error in the same way as a ENOENT error,
+to fix the case where the kernel was compiled without CONFIG_NVMEM.
 
-Currently ENOMEM is returned when MHI ring is full. This error code is
-very misleading. Change to EBUSY instead.
-
-Signed-off-by: Fan Wu <wufan@codeaurora.org>
-Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+Fixes: fe7952c629da ("drm/msm: Add speed-bin support to a618 gpu")
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 ---
- drivers/bus/mhi/core/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-index f182736..21eb5fc 100644
---- a/drivers/bus/mhi/core/main.c
-+++ b/drivers/bus/mhi/core/main.c
-@@ -996,7 +996,7 @@ static int mhi_queue(struct mhi_device *mhi_dev, struct mhi_buf_info *buf_info,
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index ba8e9d3cf0fe..7fe5d97606aa 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1356,10 +1356,10 @@ static int a6xx_set_supported_hw(struct device *dev, struct a6xx_gpu *a6xx_gpu,
  
- 	ret = mhi_is_ring_full(mhi_cntrl, tre_ring);
- 	if (unlikely(ret)) {
--		ret = -ENOMEM;
-+		ret = -EBUSY;
- 		goto exit_unlock;
- 	}
- 
+ 	cell = nvmem_cell_get(dev, "speed_bin");
+ 	/*
+-	 * -ENOENT means that the platform doesn't support speedbin which is
+-	 * fine
++	 * -ENOENT means no speed bin in device tree,
++	 * -EOPNOTSUPP means kernel was built without CONFIG_NVMEM
+ 	 */
+-	if (PTR_ERR(cell) == -ENOENT)
++	if (PTR_ERR(cell) == -ENOENT || PTR_ERR(cell) == -EOPNOTSUPP)
+ 		return 0;
+ 	else if (IS_ERR(cell)) {
+ 		DRM_DEV_ERROR(dev,
 -- 
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+2.26.1
 
