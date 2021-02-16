@@ -2,129 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E2EFC31D165
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Feb 2021 21:12:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D164531D184
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Feb 2021 21:23:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229796AbhBPUMM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Feb 2021 15:12:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40412 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229811AbhBPUML (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Feb 2021 15:12:11 -0500
-Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E3D2C061756
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Feb 2021 12:11:31 -0800 (PST)
-Received: by mail-qv1-xf2a.google.com with SMTP id a1so5226399qvd.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Feb 2021 12:11:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ESU2v6PnWuuqrc3aBtGPRviCIYxee3TEkKh6dRFK5uo=;
-        b=Gb3bXHKRAg/D7IARf3bWgbaQnVZPbDzZXMaW8ftiH2UDhv1Dze7XbrejZTpAghSOJQ
-         eyJwEDlW3onw3k29tSH3mp7Ab2RBOAVYpkhTeomnvz0+WRqmFiEa5Uf0WP9eVB2v3eFB
-         P3u29V2HepHJuKqgSy4HGcf1kukKcKKI/xlR/iebsRLPSajCIHprbjaNCv1U4uiep05H
-         sk2rs4bfStcQI7IsirbvbBxXst6SYAMgjx1T7nkNS3mV41BBC0IKs6E6iPIulBL6GHKE
-         iCEFPAilq4jv9bbsQ4ncj0asisko/+/Hnmc0C7OmIEv2drTF3exVkTNjX+LkxJBONs80
-         42aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ESU2v6PnWuuqrc3aBtGPRviCIYxee3TEkKh6dRFK5uo=;
-        b=uS4zVULkz/ypwdchydQDTGbjNN5+9A5O7L0VnC5zXJC9gEUW0Rm/mpoeg/yU1EsOAp
-         3LLcPznQgYXge7ZSPSdFMTVXvWO1KQ2xCm0FqWufbaVe3F0EvP1kvK3fahs5hN2mlFkx
-         5tj0+QeI8WyUDivQ0qyco7cv6g6aVRdHPaAJ1xdqWcI9Bj4V8aqLA56sl/tiP4paBeLp
-         DGEjYqMJkNWUrBdCf/EJAU/Vm9PVIi1DE+etz58R5eE3rwmj3OBEE2yM2ba8QonzPjd9
-         wMQ5D5H1kLGPgu5t/Ozz5yfXW8t3SiUSV1qOfWJcjwexTkLAbuYsjBDyI8vf0aFWcAWD
-         o5KQ==
-X-Gm-Message-State: AOAM530nQD16PO8yjPC7EayXd8obsKBHOQkU7Tu2Esbls1aJphFQlC1l
-        JW2aozfrahXYy1uPiNVuJdK0pG05XEEYzxrp
-X-Google-Smtp-Source: ABdhPJzqz6Fnqc3dQq6MdJJTrMD4jpD2ItrVRYu0DaxtvxmCIOqvdeZ2BWlz+1iyg+y1MS2V463oRQ==
-X-Received: by 2002:a05:6214:16cf:: with SMTP id d15mr21451336qvz.32.1613506289989;
-        Tue, 16 Feb 2021 12:11:29 -0800 (PST)
-Received: from localhost.localdomain (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
-        by smtp.gmail.com with ESMTPSA id t6sm13790761qti.2.2021.02.16.12.11.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Feb 2021 12:11:29 -0800 (PST)
-From:   Jonathan Marek <jonathan@marek.ca>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        linux-pm@vger.kernel.org (open list:OPERATING PERFORMANCE POINTS (OPP)),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] opp: fix dev_pm_opp_set_rate for different frequency at the same opp level
-Date:   Tue, 16 Feb 2021 15:10:29 -0500
-Message-Id: <20210216201030.19152-1-jonathan@marek.ca>
-X-Mailer: git-send-email 2.26.1
+        id S230179AbhBPUXs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Feb 2021 15:23:48 -0500
+Received: from m42-2.mailgun.net ([69.72.42.2]:44010 "EHLO m42-2.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230142AbhBPUXo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 16 Feb 2021 15:23:44 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1613506998; h=Message-ID: References: In-Reply-To: Reply-To:
+ Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=AyqM1PnVjT5CoC9vJ/A6wEyIQ2zpS7UZjSRc7C5kgNA=;
+ b=ipbYlu6njXMjZ97HhQJhVucM84mKyhlNIyoD96PPEwV8MQh5VAf4hU86+M6Jg3sbF4narDFZ
+ PoihR83QxMqHobHT300GBbp+JJNdJGB+1fuvwDWqMzBp1Flrr+EtIvkQLi7UpW4E+FsU9H+b
+ Aj9Yk7zdDSqbrdLjj8Yr1KzI/94=
+X-Mailgun-Sending-Ip: 69.72.42.2
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 602c299c59e278015920a17e (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 16 Feb 2021 20:22:52
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id BBFBCC433CA; Tue, 16 Feb 2021 20:22:51 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 20A4EC433C6;
+        Tue, 16 Feb 2021 20:22:51 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 16 Feb 2021 12:22:51 -0800
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     Jeffrey Hugo <jhugo@codeaurora.org>
+Cc:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Fan Wu <wufan@codeaurora.org>,
+        jhugo=codeaurora.org@codeaurora.org
+Subject: Re: [PATCH] mhi_bus: core: Return EBUSY if MHI ring is full
+Organization: Qualcomm Innovation Center, Inc.
+Reply-To: bbhatt@codeaurora.org
+Mail-Reply-To: bbhatt@codeaurora.org
+In-Reply-To: <1613501314-2392-1-git-send-email-jhugo@codeaurora.org>
+References: <1613501314-2392-1-git-send-email-jhugo@codeaurora.org>
+Message-ID: <e3b0dd23ea461ac76a61266b4c657d83@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is not "nothing to do" when the opp is the same. The frequency can
-be different from opp->rate.
+On 2021-02-16 10:48 AM, Jeffrey Hugo wrote:
+> From: Fan Wu <wufan@codeaurora.org>
+> 
+> Currently ENOMEM is returned when MHI ring is full. This error code is
+> very misleading. Change to EBUSY instead.
+> 
+> Signed-off-by: Fan Wu <wufan@codeaurora.org>
+> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+> ---
+>  drivers/bus/mhi/core/main.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> index f182736..21eb5fc 100644
+> --- a/drivers/bus/mhi/core/main.c
+> +++ b/drivers/bus/mhi/core/main.c
+> @@ -996,7 +996,7 @@ static int mhi_queue(struct mhi_device *mhi_dev,
+> struct mhi_buf_info *buf_info,
+> 
+>  	ret = mhi_is_ring_full(mhi_cntrl, tre_ring);
+>  	if (unlikely(ret)) {
+> -		ret = -ENOMEM;
+> +		ret = -EBUSY;
+>  		goto exit_unlock;
+>  	}
 
-Fixes: 81c4d8a3c414 ("opp: Keep track of currently programmed OPP")
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+ENOMEM is descriptive of the state of the ring since you basically 
+cannot queue any
+more packets as no memory is currently available.
+
+But I agree, it can be misleading for this API. How about EAGAIN in 
+place of EBUSY,
+which tells the user to try the queue attempt again implying memory 
+should become
+available as more elements are consumed by the device/client?
+
+Thanks,
+Bhaumik
 ---
- drivers/opp/core.c | 7 +++++--
- drivers/opp/opp.h  | 1 +
- 2 files changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/opp/core.c b/drivers/opp/core.c
-index c3f3d9249cc5..f82cf72f433e 100644
---- a/drivers/opp/core.c
-+++ b/drivers/opp/core.c
-@@ -986,6 +986,7 @@ static int _set_opp(struct device *dev, struct opp_table *opp_table,
- 		    struct dev_pm_opp *opp, unsigned long freq)
- {
- 	struct dev_pm_opp *old_opp;
-+	unsigned long old_freq;
- 	int scaling_down, ret;
- 
- 	if (unlikely(!opp))
-@@ -996,15 +997,16 @@ static int _set_opp(struct device *dev, struct opp_table *opp_table,
- 		_find_current_opp(dev, opp_table);
- 
- 	old_opp = opp_table->current_opp;
-+	old_freq = opp_table->current_freq;
- 
- 	/* Return early if nothing to do */
--	if (opp_table->enabled && old_opp == opp) {
-+	if (opp_table->enabled && old_opp == opp && old_freq == freq) {
- 		dev_dbg(dev, "%s: OPPs are same, nothing to do\n", __func__);
- 		return 0;
- 	}
- 
- 	dev_dbg(dev, "%s: switching OPP: Freq %lu -> %lu Hz, Level %u -> %u, Bw %u -> %u\n",
--		__func__, old_opp->rate, freq, old_opp->level, opp->level,
-+		__func__, old_freq, freq, old_opp->level, opp->level,
- 		old_opp->bandwidth ? old_opp->bandwidth[0].peak : 0,
- 		opp->bandwidth ? opp->bandwidth[0].peak : 0);
- 
-@@ -1061,6 +1063,7 @@ static int _set_opp(struct device *dev, struct opp_table *opp_table,
- 	/* Make sure current_opp doesn't get freed */
- 	dev_pm_opp_get(opp);
- 	opp_table->current_opp = opp;
-+	opp_table->current_freq = freq;
- 
- 	return ret;
- }
-diff --git a/drivers/opp/opp.h b/drivers/opp/opp.h
-index 9b9daf83b074..9f1d9c877380 100644
---- a/drivers/opp/opp.h
-+++ b/drivers/opp/opp.h
-@@ -186,6 +186,7 @@ struct opp_table {
- 	enum opp_table_access shared_opp;
- 	struct dev_pm_opp *current_opp;
- 	struct dev_pm_opp *suspend_opp;
-+	unsigned long current_freq;
- 
- 	struct mutex genpd_virt_dev_lock;
- 	struct device **genpd_virt_devs;
--- 
-2.26.1
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
+a Linux Foundation Collaborative Project
