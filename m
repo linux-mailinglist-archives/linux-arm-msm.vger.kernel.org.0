@@ -2,94 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1641031DAB3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Feb 2021 14:35:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B93931DA88
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Feb 2021 14:34:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233137AbhBQNei (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Feb 2021 08:34:38 -0500
-Received: from mx07-00178001.pphosted.com ([185.132.182.106]:47119 "EHLO
-        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233115AbhBQNcr (ORCPT
+        id S233028AbhBQNbc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Feb 2021 08:31:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35856 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233057AbhBQNbN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Feb 2021 08:32:47 -0500
-Received: from pps.filterd (m0046668.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id 11HDS2Ze026032;
-        Wed, 17 Feb 2021 14:31:59 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=selector1;
- bh=CRnSbQdFwvKmyMc039keRokTHONUmSL8dsL/yTFkE0w=;
- b=DSef1EykTWXbQKXEkRUowgzcLAMtb/V4v2KJMScqU7BEvPVA+8zmBFbF/LDLxqcs+ID/
- pvqjfVLszTMveOwN6hhaFD+4X1fgFO8IcCurctgaMXyAo1wJUEpeH8vwiGCc4EKtuj9D
- COwumNzXdbfNcaX4B0Cs8tBsQWblZLnQdrasw5fZBB7bbU0og4kXAmqUJuIujkMCdDyO
- SJECRr4+xex0omxWGW/zbATFpYfHUp0w6c9eILqxmIMjKW5fFjDXXBrOMg3Knp+2GszI
- ky7MWCSTpKW4LpNWdV1GZs/1no9HzjQzyipdulg4MDelOoyhpUZ14/Mj+89z/DcOt+vR 8g== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com with ESMTP id 36p547p3wu-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 17 Feb 2021 14:31:59 +0100
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 0C99710002A;
-        Wed, 17 Feb 2021 14:31:59 +0100 (CET)
-Received: from Webmail-eu.st.com (sfhdag2node3.st.com [10.75.127.6])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id F3F982370CE;
-        Wed, 17 Feb 2021 14:31:58 +0100 (CET)
-Received: from localhost (10.75.127.44) by SFHDAG2NODE3.st.com (10.75.127.6)
- with Microsoft SMTP Server (TLS) id 15.0.1473.3; Wed, 17 Feb 2021 14:31:58
- +0100
-From:   Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Andy Gross <agross@kernel.org>
-CC:     <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-msm@vger.kernel.org>, <arnaud.pouliquen@foss.st.com>
-Subject: [PATCH v4 16/16] rpmsg: char: return an error if device already open
-Date:   Wed, 17 Feb 2021 14:29:05 +0100
-Message-ID: <20210217132905.1485-17-arnaud.pouliquen@foss.st.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20210217132905.1485-1-arnaud.pouliquen@foss.st.com>
-References: <20210217132905.1485-1-arnaud.pouliquen@foss.st.com>
+        Wed, 17 Feb 2021 08:31:13 -0500
+Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC6A2C061756
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Feb 2021 05:30:32 -0800 (PST)
+Received: by mail-qt1-x82d.google.com with SMTP id w20so9473183qta.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Feb 2021 05:30:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=9KvlBXWE9H1CeowlMEMLTPIl6Q9OVw73HzJ2aa5ZmGg=;
+        b=vA5plzml7tzyib+hGFxVRbODs0ykXI8/JjG5qU3MkU5IcmOjw6MZ3XD5lKJBOZeDSv
+         jOfJT+4h563NBykjv6VMmsNE//0tc+OawkhxvM8OJh633rGvQKFH8upmKZWEzJ0hj/b8
+         iTFiNhYg62B7KEB8lwb4xi2KgY+f713Ywjsegh4Bm/nY2ZeuBQV1EsU2lqXoUvRjspGM
+         A1y+r74E+oEXTC67qTFJsYBEJRO7Rzg3kVVnu8CXOFPcvDR6fadB/3RM8D3otxdMO+uK
+         LIvgfB9a3f8v3bcww0R/NeUd00qCTnzezOhDbhTrH5UDvNOpsMjU45kI2/IsElxJFhUf
+         HikA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=9KvlBXWE9H1CeowlMEMLTPIl6Q9OVw73HzJ2aa5ZmGg=;
+        b=BsN3q7QSde8fEXwr62mZWdlyizGDblUyfR7gP+U4IjXzl/o3KebmxNA50AwPXuyQ3S
+         FpB6teHfoMYz7Nh2knVENgw/0FUDPi667WwX2snAA+8S1X0GB4OfHIvFx8XcrpiQ5h/J
+         M0y0rMbWSxc7U87Fq0CiO2gGAjzHcoKwMXxjJ3Hv/mmUZ0RCNaSIY5AXd5gb++JAAVgI
+         +s1+YgdDC7vrxKw4sywqe1snBhoX/8RwWPphxLkV8cktTOzICxEaEKZIYZybEo2QMjEC
+         4ckMkrpndJ9k+ePIIGfJq013YrZ1sJ/EocKSS2iI0MNq+VL1zgXe+j4gzHQt1Cy3LVrg
+         SEeQ==
+X-Gm-Message-State: AOAM5332adpFweYAFntZFa+e92sTbZfGo5hRWjVpYj7EQ2jOl2g4oGyl
+        9Lhm03KwpIpLgpFyRVtKaPc12Q==
+X-Google-Smtp-Source: ABdhPJyUzFF6WeMX4sFQFQgyNcl6ORc08DpDDsdCdLs2jTqDrjcn2QGP394cLkzhNsofkTrDLzaRWQ==
+X-Received: by 2002:ac8:47d6:: with SMTP id d22mr22147384qtr.44.1613568631867;
+        Wed, 17 Feb 2021 05:30:31 -0800 (PST)
+Received: from [192.168.0.189] (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
+        by smtp.gmail.com with ESMTPSA id n8sm1097761qta.61.2021.02.17.05.30.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 Feb 2021 05:30:31 -0800 (PST)
+Subject: Re: [PATCH] opp: fix dev_pm_opp_set_rate for different frequency at
+ the same opp level
+To:     Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, Viresh Kumar <vireshk@kernel.org>,
+        Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>,
+        "open list:OPERATING PERFORMANCE POINTS (OPP)" 
+        <linux-pm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20210216201030.19152-1-jonathan@marek.ca>
+ <20210217045310.thfl7ckxzfiqjlu6@vireshk-i7>
+From:   Jonathan Marek <jonathan@marek.ca>
+Message-ID: <88b0c110-78fb-cbb0-dd2b-5c4ffb5bc930@marek.ca>
+Date:   Wed, 17 Feb 2021 08:29:43 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.75.127.44]
-X-ClientProxiedBy: SFHDAG2NODE2.st.com (10.75.127.5) To SFHDAG2NODE3.st.com
- (10.75.127.6)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369,18.0.761
- definitions=2021-02-17_11:2021-02-16,2021-02-17 signatures=0
+In-Reply-To: <20210217045310.thfl7ckxzfiqjlu6@vireshk-i7>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The rpmsg_create_ept function is invoked when the device is opened.
-As only one endpoint must be created per device. It is not possible to
-open the same device twice. But there is nothing to prevent multi open.
-Return -EBUSY when device is already opened to have a generic error
-instead of relying on the back-end to potentially detect the error.
+On 2/16/21 11:53 PM, Viresh Kumar wrote:
+> On 16-02-21, 15:10, Jonathan Marek wrote:
+>> There is not "nothing to do" when the opp is the same. The frequency can
+>> be different from opp->rate.
+> 
+> I am sorry but I am not sure what are you trying to fix here and what exactly is
+> broken here. Can you provide a usecase for your platform where this doesn't work
+> like it used to ?
+> 
 
-Without this patch for instance the GLINK driver return -EBUSY while
-the virtio bus return -ENOSPC.
+The specific case is this opp table:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/qcom/sm8250.dtsi#n439
 
-Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
----
- drivers/rpmsg/rpmsg_char.c | 3 +++
- 1 file changed, 3 insertions(+)
+It does not define every possible clock frequency, it only defines the 
+rates at which a higher rpmhpd level must be used. Which is the intended 
+use of opp.
 
-diff --git a/drivers/rpmsg/rpmsg_char.c b/drivers/rpmsg/rpmsg_char.c
-index 0b0a6b7c0c9a..2eacddb83e29 100644
---- a/drivers/rpmsg/rpmsg_char.c
-+++ b/drivers/rpmsg/rpmsg_char.c
-@@ -116,6 +116,9 @@ static int rpmsg_eptdev_open(struct inode *inode, struct file *filp)
- 	struct device *dev = &eptdev->dev;
- 	u32 addr = eptdev->chinfo.src;
- 
-+	if (eptdev->ept)
-+		return -EBUSY;
-+
- 	get_device(dev);
- 
- 	/*
--- 
-2.17.1
+Your change broke this completely: the clock rate change can be silently 
+ignored because the opp level is the same. In particular it breaks 
+bluetooth for this platform.
 
+>> Fixes: 81c4d8a3c414 ("opp: Keep track of currently programmed OPP")
+>> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+>> ---
+>>   drivers/opp/core.c | 7 +++++--
+>>   drivers/opp/opp.h  | 1 +
+>>   2 files changed, 6 insertions(+), 2 deletions(-)
+> 
