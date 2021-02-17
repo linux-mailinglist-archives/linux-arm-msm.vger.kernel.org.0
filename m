@@ -2,128 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 06DCC31E1FB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Feb 2021 23:23:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C26C31E250
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Feb 2021 23:33:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233543AbhBQWV2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Feb 2021 17:21:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36758 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232106AbhBQWVT (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Feb 2021 17:21:19 -0500
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 761B7C0613D6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Feb 2021 14:20:39 -0800 (PST)
-Received: by mail-oi1-x232.google.com with SMTP id 18so16732851oiz.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Feb 2021 14:20:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=1p7xR+x/Ax3QtXp7hvf7+knlfVhECl9PbNNQU3Wa5CY=;
-        b=TFEYl9E2ZTFElf1eNyDDZQVG5utiIcCQZoQZpzqazKcomE0pvgDmX9ehhPAPthH0kL
-         eOrW4djT+f3uvJWG1IVolbo5/MfAf4MAPoAJfiixWxt0l10vgncALueCF6MXGO3/YIcJ
-         Ppb/0eoG/QV16TsDEXo+MX1zJiM2wpEPqpeDry8Y/rdWTF9E7klQ/9rriTOU3o0M+GsE
-         DIep3ZWbDimjvunJVihTONjhBJ4oE/UMkV9gLqShlMYN/3ryMvnMOQWAlJapxF+tfgaf
-         hp4tpBZSqEYH1HsguLIkESuUUs2OkggcxnWkqM6wbXjiIn3BR2ULmxvcOtSCjlbQz6bo
-         /apw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=1p7xR+x/Ax3QtXp7hvf7+knlfVhECl9PbNNQU3Wa5CY=;
-        b=nkhTZcqg/WD5hmA/k39Xr26vhM4lyD5pfihKJj9FY75WtOo9oAFYyNLtUOgn0wvADI
-         79/LDv2D8CAIa7bhMGqumrWetOHVI2BfLalz4yfKjjEl4BdDGChbmn27zs3utOiAY2WH
-         sAJe8VlhK5GpmZ7by9TY5D5FTjmfDXpWG5q4uswaa4F2+mtXU9eY1978kjNEorXZBe2V
-         9xVPRqefN9WWSNRAUg6SUsL2MJVK31nviW1D39V7y7CI/R1Dq3E4umqaGhNxY3XYX8Yt
-         S2b65g+XbL39lfOOfVoNPJ/72hUrAWLi/672agjQjM7TUA7BRFJAo5MxPftRSvSJ1B03
-         lx0A==
-X-Gm-Message-State: AOAM532KfnGXNu0XQEdJ846p1VQDsDQR+/FpOJdQruU5HJran5nYLuSW
-        sJewha+rRwbXKr1zAuwF9mUM8j7WhkBQkQ==
-X-Google-Smtp-Source: ABdhPJz9Tp7sfz49yJeFgIVsuHF6V75Yrbkk3I0fz/SY85kLex9Fdy3o3FOxKrkkqD8QeVWuBwCzUw==
-X-Received: by 2002:a05:6808:30e:: with SMTP id i14mr706537oie.50.1613600438791;
-        Wed, 17 Feb 2021 14:20:38 -0800 (PST)
-Received: from blackbox.Home ([2806:10b7:2:8299::3])
-        by smtp.gmail.com with ESMTPSA id f22sm669028otl.10.2021.02.17.14.20.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Feb 2021 14:20:38 -0800 (PST)
-From:   =?UTF-8?q?An=C3=ADbal=20Lim=C3=B3n?= <anibal.limon@linaro.org>
-To:     bjorn.andersson@linaro.org
-Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        mark.rutland@arm.com, ohad@wizery.com, robh+dt@kernel.org,
-        =?UTF-8?q?An=C3=ADbal=20Lim=C3=B3n?= <anibal.limon@linaro.org>
-Subject: [PATCH] remoteproc: qcom: wcnss: Allow specifying firmware-name
-Date:   Wed, 17 Feb 2021 16:20:06 -0600
-Message-Id: <20210217222006.1419164-1-anibal.limon@linaro.org>
-X-Mailer: git-send-email 2.30.0
-In-Reply-To: <20200108055252.639791-1-bjorn.andersson@linaro.org>
-References: <20200108055252.639791-1-bjorn.andersson@linaro.org>
+        id S234116AbhBQWcP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Feb 2021 17:32:15 -0500
+Received: from m42-2.mailgun.net ([69.72.42.2]:51174 "EHLO m42-2.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233981AbhBQWam (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 17 Feb 2021 17:30:42 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1613601013; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=LcpeerQwr9nnsJvjmhs5Td+khk4yX/3Qw+1ErsogUrI=; b=q958X7SSOi5AuKQ7D9QEeEIon5q5whQVkTp4rHbLKwTaFUuXgcz8Aal+sdcLGD4g0dJf+s/u
+ fAXMVya7oBaln7ZP/SyFxdxRLAxFI2+lkFO9C4pzDZUPKbcy5eG/bq03YS5h4u3kZr30e+6h
+ y/8sLoGk6dtYdCBROG7rX668tRs=
+X-Mailgun-Sending-Ip: 69.72.42.2
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 602d98db3af8a933044237a5 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 17 Feb 2021 22:29:47
+ GMT
+Sender: asutoshd=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 23FE9C43467; Wed, 17 Feb 2021 22:29:47 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from stor-presley.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: asutoshd)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5B456C433CA;
+        Wed, 17 Feb 2021 22:29:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5B456C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=asutoshd@codeaurora.org
+Date:   Wed, 17 Feb 2021 14:29:40 -0800
+From:   Asutosh Das <asutoshd@codeaurora.org>
+To:     Avri Altman <Avri.Altman@wdc.com>
+Cc:     "cang@codeaurora.org" <cang@codeaurora.org>,
+        "martin.petersen@oracle.com" <martin.petersen@oracle.com>,
+        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "stern@rowland.harvard.edu" <stern@rowland.harvard.edu>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Ingo Molnar <mingo@redhat.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Jaegeuk Kim <jaegeuk@kernel.org>,
+        Kiwoong Kim <kwmad.kim@samsung.com>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Satya Tangirala <satyat@google.com>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [RFC PATCH v3 1/1] scsi: ufs: Enable power management for wlun
+Message-ID: <20210217222940.GA18897@stor-presley.qualcomm.com>
+References: <cover.1613070911.git.asutoshd@codeaurora.org>
+ <eed327cdace40d1e1d706da5b0fa64ea4ee99422.1613070912.git.asutoshd@codeaurora.org>
+ <DM6PR04MB65758E0EBF4171FD6E1CF0CFFC8A9@DM6PR04MB6575.namprd04.prod.outlook.com>
+ <20210216173646.GA35819@stor-presley.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20210216173646.GA35819@stor-presley.qualcomm.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bjorn Andersson <bjorn.andersson@linaro.org>
+On Tue, Feb 16 2021 at 09:44 -0800, Asutosh Das wrote:
+>On Sat, Feb 13 2021 at 13:37 -0800, Avri Altman wrote:
+>>>+       } else {
+>>Is it possible to get here?
+>>Scsi_scan_host is called only after successful add_wluns
+>
+>It looks so.
+>scsi 0:0:0:49488: Link setup for lun - ufshcd_setup_links
+>[...]
+>Call trace:
+>dump_backtrace+0x0/0x1d4
+>show_stack+0x18/0x24
+>dump_stack+0xc4/0x144
+>ufshcd_setup_links+0xd8/0x100
+>ufshcd_slave_alloc+0x134/0x1a0
+>scsi_alloc_sdev+0x1c0/0x230
+>scsi_probe_and_add_lun+0xc0/0xd48
+>__scsi_add_device+0xc0/0x138
+>ufshcd_scsi_add_wlus+0x30/0x1c0
+>ufshcd_async_scan+0x58/0x240
+>async_run_entry_fn+0x48/0x128
+>process_one_work+0x1f0/0x470
+>worker_thread+0x26c/0x4c8
+>kthread+0x13c/0x320
+>ret_from_fork+0x10/0x18
+>
+>>
+>>>+               /* device wlun is probed */
+>>>+               hba->luns_avail--;
+>>>+       }
+>>>+}
+>>>+
+>>
+>>
+>>>
+>>> /**
+>>>@@ -7254,6 +7312,14 @@ static int ufshcd_scsi_add_wlus(struct ufs_hba
+>>>*hba)
+>>>                goto out;
+>>>        }
+>>>        ufshcd_blk_pm_runtime_init(hba->sdev_ufs_device);
+>>>+       /*
+>>>+        * A pm_runtime_put_sync is invoked when this device enables
+>>>blk_pm_runtime
+>>>+        * & would suspend the device-wlun upon timer expiry.
+>>>+        * But suspending device wlun _may_ put the ufs device in the pre-defined
+>>>+        * low power mode (SSU <rpm_lvl>). Probing of other luns may fail then.
+>>>+        * Don't allow this suspend until all the luns have been probed.
+>>Maybe add one more sentence: see pm_runtime_mark_last_busy in ufshcd_setup_links
+>Done.
+>
+>>
+>>
+>>
+>>>-       ufshcd_clear_ua_wluns(hba);
+>>Are there any callers left to ufshcd_clear_ua_wluns?
+>>Can it be removed?
+>Let me check.
+>
+I don't think this can be removed.
+The reasoning behind this call as per the commit message indicates that if
+there's a reset this request_sense is needed to clear uac.
 
-Introduce a firmware-name property, in order to be able to support
-device/platform specific firmware for the wireless connectivity
-subsystem; in line with other Qualcomm remoteproc drivers.
+In pm level 5, the reset would still happen. So I guess this is needed.
+Please let me know if I'm missing something here.
+The commit message didn't have much details otherwise.
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Tested-by: Aníbal Limón <anibal.limon@linaro.org>
----
- .../devicetree/bindings/remoteproc/qcom,wcnss-pil.txt     | 6 ++++++
- drivers/remoteproc/qcom_wcnss.c                           | 8 +++++++-
- 2 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.txt b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.txt
-index d420f84ddfb0..00844a5d2ccf 100644
---- a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.txt
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.txt
-@@ -34,6 +34,12 @@ on the Qualcomm WCNSS core.
- 	Definition: should be "wdog", "fatal", optionally followed by "ready",
- 		    "handover", "stop-ack"
- 
-+- firmware-name:
-+	Usage: optional
-+	Value type: <string>
-+	Definition: must list the relative firmware image path for the
-+		    WCNSS core.
-+
- - vddmx-supply:
- - vddcx-supply:
- - vddpx-supply:
-diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
-index e2573f79a137..ef80f5b8f20b 100644
---- a/drivers/remoteproc/qcom_wcnss.c
-+++ b/drivers/remoteproc/qcom_wcnss.c
-@@ -465,6 +465,7 @@ static int wcnss_alloc_memory_region(struct qcom_wcnss *wcnss)
- 
- static int wcnss_probe(struct platform_device *pdev)
- {
-+	const char *fw_name = WCNSS_FIRMWARE_NAME;
- 	const struct wcnss_data *data;
- 	struct qcom_wcnss *wcnss;
- 	struct resource *res;
-@@ -482,8 +483,13 @@ static int wcnss_probe(struct platform_device *pdev)
- 		return -ENXIO;
- 	}
- 
-+	ret = of_property_read_string(pdev->dev.of_node, "firmware-name",
-+				      &fw_name);
-+	if (ret < 0 && ret != -EINVAL)
-+		return ret;
-+
- 	rproc = rproc_alloc(&pdev->dev, pdev->name, &wcnss_ops,
--			    WCNSS_FIRMWARE_NAME, sizeof(*wcnss));
-+			    fw_name, sizeof(*wcnss));
- 	if (!rproc) {
- 		dev_err(&pdev->dev, "unable to allocate remoteproc\n");
- 		return -ENOMEM;
--- 
-2.30.0
 
+>
+>>
+>>>+       if (hba->wlun_dev_clr_ua)
+>>>+               ufshcd_clear_ua_wlun(hba, UFS_UPIU_UFS_DEVICE_WLUN);
+>>>
+>>>        cmd[4] = pwr_mode << 4;
