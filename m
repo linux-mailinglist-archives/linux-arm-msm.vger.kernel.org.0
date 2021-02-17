@@ -2,88 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C93431DC15
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Feb 2021 16:23:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 727DC31DC24
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Feb 2021 16:31:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233634AbhBQPV4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Feb 2021 10:21:56 -0500
-Received: from m42-2.mailgun.net ([69.72.42.2]:32996 "EHLO m42-2.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233524AbhBQPTm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Feb 2021 10:19:42 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1613575158; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=MB1xt0p4slOEmh+2v55474jFBlsMaNDqj0+2lVtrvKs=; b=ZlyrTkr3Bjq58KpPg1552kLW7+cK2J7y//4ZcRk8xlmevAGaj0S9J+2a4reAbjiFVjwMYPYF
- E+yNkHLtEoGrhRpS5+DLzrs5LrUIzKdI61PCuDUn1o1ISahEfGMJQs8OpD+OKLQybvoZisQr
- 4ZJS1e2cFFBKa10t5R3ZYyLzYW4=
-X-Mailgun-Sending-Ip: 69.72.42.2
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 602d310a98fd902dc27373df (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 17 Feb 2021 15:06:50
- GMT
-Sender: jhugo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E47ADC43461; Wed, 17 Feb 2021 15:06:49 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B41B1C433CA;
-        Wed, 17 Feb 2021 15:06:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B41B1C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH] mhi_bus: core: Return EBUSY if MHI ring is full
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Fan Wu <wufan@codeaurora.org>
-References: <1613501314-2392-1-git-send-email-jhugo@codeaurora.org>
- <CAMZdPi9S5OnWs_QFnf+xVM+jLve6cpdvi_vpC_KdEbUUaqoFYg@mail.gmail.com>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <eb873085-4120-7ec4-1f18-1c768ed741bd@codeaurora.org>
-Date:   Wed, 17 Feb 2021 08:06:48 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.0
+        id S233476AbhBQP3m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Feb 2021 10:29:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60412 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233661AbhBQP0B (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 17 Feb 2021 10:26:01 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05176C06178A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Feb 2021 07:25:09 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id o15so2438439wmq.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Feb 2021 07:25:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=L1KI8A+esma4hYflQM0uYd5scP6Sr2iapwP5fLA1M88=;
+        b=K4WS0WEUXE4BeMhWzkYflapBGnzfJ1xAh9rL80pOUhnFB5/y9YsL1LJxEsJ8/5n4Vo
+         9/8IJYHuqP3jIxwW4x4Sk7N4TG1Ks/wj8HsrjvGZp4m92NXynoLCrOeb7LT9IZHWdU2R
+         0FA2t5JPDxagcgiTWb6iWHEln84zQsBMg7x1Q4uQa/Dc80u4jfb+CmR3QDfLTor/AIiO
+         hFhE/+bCpBk9f/pC97UjWtowej/LemnAvb5E7xt4FMn2xDDwRBk5SvqS/a8QR79J6rbl
+         daxlIz2NEBFuXXaiC9+QKS+wjeBM0pXqMDiDj0mYvmzKWDgi1fhuiR9MToKAZXkvG0lT
+         GruQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=L1KI8A+esma4hYflQM0uYd5scP6Sr2iapwP5fLA1M88=;
+        b=ufZwf4tAmxIRbZR+uEjGfOFNLiDrGewZvwlgnFZFPM/Cd1ly882ApR+iz1YVY+LGNJ
+         s2D9OyWoNlVsZvT2teQax/PHJFEMS6dVKxF/1YGIa3heCSQuJBrCFZIhxev5GJ0uKUiS
+         vb0jYM4BuOdGe82EkXSTb2wD82TlBnVKU0nalYWmzHACK340V99/+rXIRpmT4XxJWG/n
+         WdAe7XwT78XXHOAx49OyOnS37b5xbiwdv668Ke1fkrkUWJZVrAc2gTOhCb7hN4bzuEWh
+         GqoawCnnLw/YpWh8zHpBS2UrOW6SZMmYHWQnK5ANHV4WE3a7uA+W86M5lxMomTE4BuHs
+         1Dlg==
+X-Gm-Message-State: AOAM532RUiMY8GuAjpQ+ZZNBSoP0RBqD72f8f2/U4Gn0NOc1XjJZF0q/
+        j1PdxS6LNqgDspTq4TS7dJBl1A==
+X-Google-Smtp-Source: ABdhPJzCteElT5TSbtiywRK8dhgOWzv0eEsBXQs82eXWAoWxR63R59cXkLga0PGbkrXHQ4dl1sGTmQ==
+X-Received: by 2002:a1c:e402:: with SMTP id b2mr7639705wmh.122.1613575500979;
+        Wed, 17 Feb 2021 07:25:00 -0800 (PST)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id z5sm4511910wrn.8.2021.02.17.07.24.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Feb 2021 07:24:58 -0800 (PST)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     robh+dt@kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, stanimir.varbanov@linaro.org,
+        agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     bryan.odonoghue@linaro.org, jonathan@marek.ca,
+        dikshita@qti.qualcomm.com
+Subject: [PATCH 0/2] dts: qcom: sm8250: Enable venus related DT nodes
+Date:   Wed, 17 Feb 2021 15:26:19 +0000
+Message-Id: <20210217152621.1714814-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-In-Reply-To: <CAMZdPi9S5OnWs_QFnf+xVM+jLve6cpdvi_vpC_KdEbUUaqoFYg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/17/2021 8:02 AM, Loic Poulain wrote:
-> On Tue, 16 Feb 2021 at 19:50, Jeffrey Hugo <jhugo@codeaurora.org> wrote:
->>
->> From: Fan Wu <wufan@codeaurora.org>
->>
->> Currently ENOMEM is returned when MHI ring is full. This error code is
->> very misleading. Change to EBUSY instead.
-> 
-> Well, there is no space left in the ring, so it's no so misleading.
+Adds
+- videocc
+  The clock controller for the Venus core and codec blocks
 
-ENOMEM is typically a memory allocation failure which is not what a 
-client is going to think of regarding the ring, and it's not a unique 
-failure code in this case.  gen_tre can also return ENOMEM, which makes 
-it difficult for the client to know if there is some significant 
-failure, or they might just need to wait (assuming that is something the 
-client can do).
+- venus
+  The SoC DT description for the core, encoder, decoder + associated
+
+The second patch is contingent on application of this pending patch
+https://www.spinics.net/lists/linux-arm-msm/msg80960.html
+
+Bryan O'Donoghue (1):
+  arm64: dts: qcom: sm8250: Add venus DT node
+
+Jonathan Marek (1):
+  arm64: dts: qcom: sm8250: Add videocc DT node
+
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 73 ++++++++++++++++++++++++++++
+ 1 file changed, 73 insertions(+)
 
 -- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+2.29.2
+
