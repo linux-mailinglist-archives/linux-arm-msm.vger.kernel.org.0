@@ -2,130 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FA7831E32F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Feb 2021 00:46:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 051F231E399
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Feb 2021 01:57:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232917AbhBQXpD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Feb 2021 18:45:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54608 "EHLO
+        id S230095AbhBRA47 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Feb 2021 19:56:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232191AbhBQXpC (ORCPT
+        with ESMTP id S229806AbhBRA46 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Feb 2021 18:45:02 -0500
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE65BC061756
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Feb 2021 15:44:21 -0800 (PST)
-Received: by mail-pf1-x435.google.com with SMTP id m6so52590pfk.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Feb 2021 15:44:21 -0800 (PST)
+        Wed, 17 Feb 2021 19:56:58 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EF75C061574;
+        Wed, 17 Feb 2021 16:56:18 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id 7so812877wrz.0;
+        Wed, 17 Feb 2021 16:56:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=PqTK2asE5Pm0G1XwTNldGeSNxyz+U3YMDodiNkSaEFM=;
-        b=lrepYEvD+DGdM9L3CQikCjNFhA6vT3lgF22RN5cNbY1Jurn6s1Zjnwl5zrfzei/IZx
-         oHan1v0OZl1gy3wQ0q53vHTzakuGIlWNsvYM8u6gKrbk8vMVbzavu5tU4VViONTGCYVu
-         pehRNsGa/AUwhxFmWWboE7IggKpkKbqIEN7xo=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FCJCzhNXbsE4bF7PN36Quy90Qz5EMXU0oUIaA6ESrcM=;
+        b=YmLXRhQRekT3mB2ptuUP4hRa08NhT5i1HSwvLXJ7ARaRMbgnCa88/DlTVydybrs3kh
+         zJRxGQo43U8Cwnxic7D0HJOcquf8iu3/BX7uGjlHrC7vXfVTwOs9j3Ao1uyy9t0S7z23
+         FcPlk1mozIQBnV+mGaQOv0RYoNZdFVjvCLVA7gSQ+oKFLAJ0UpN85wM7N82JThViZLM8
+         ylnKgQNYuGDSjMH9Q6W9DIajF3VoT4X9w1y11G2P2Y29srbIfVjivsCTYWtfb3Gkisul
+         kEJC4n5YvVAY93/e02t0jjGllbKmIaFRrPwUjatsDeqeXluzR/vB6rTT4UcFf4/hva/P
+         WJYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=PqTK2asE5Pm0G1XwTNldGeSNxyz+U3YMDodiNkSaEFM=;
-        b=QJe2T8y4AEqX2/xHTIRi5/4aLb/zcnqgY4N/oMyhJDHwokdpwuqoXmkQTaiIjWpcua
-         gwWBf3NoCUi1Tek59mcC+u7urtcD2XUHvlKoHNtEddfL9pS+IgQ60q0wnH3uajc6XwsP
-         9jXPsVVhG9ycDQRgmHNItpcm1NTH+oRmpRy2sIjkOCG7iiz2lB7KhLDxWmQPq9cOZa61
-         Eq+NqK81XeJhXsocpflc2hvK4Nk87wTRYw6rDT4QkSbJbqArWZgIH4cufeXnLGyuLWLK
-         l6spP8Q6gGpiY1LVSdM6Sw9vz7ePFHKRK4rWX13wOP+RYi3si6DbJKrI0MkqbBsXSpQ7
-         phyA==
-X-Gm-Message-State: AOAM531dYbfmGB5HEPPGHCvSLfyUL/iYYZjOZPxSQlfkkZI+7FT3gqIt
-        rIsR2Q0ujLl22BSeLnICFmIEug==
-X-Google-Smtp-Source: ABdhPJxCD7mhiaN4h0nKY9qB4dTxH7maWpkjGIJyIc7l8y/Twj++X2M3xwrtywbDup2VgSc5IvPErw==
-X-Received: by 2002:a63:5301:: with SMTP id h1mr1618756pgb.180.1613605438147;
-        Wed, 17 Feb 2021 15:43:58 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:201:ec84:ed2b:a796:b756])
-        by smtp.gmail.com with ESMTPSA id d12sm3342971pgm.83.2021.02.17.15.43.56
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FCJCzhNXbsE4bF7PN36Quy90Qz5EMXU0oUIaA6ESrcM=;
+        b=T947pzpy8/8z4pZcavTHoxaFOIZrnfdHuqsB72eTZO6Q5mc0cghuLrS+WE6tvAiOMg
+         HGSCPFYKSM/8DxUdCJP/wJIHSwsLov3CIEsIDZbM0CYryse1cPV40p2krIMnsf5Qh50V
+         HASb+vSqmFFhEd+aVYBtrzqLCNKbKEA5vaai1xpUL1fxhtLuJNbElJgLveJCfAqWWVWv
+         Mk7DzU9hs+yHuUHsAazv4/Z/bw9Dc2fnR/y2ChcX2kCZERYSjgqkJNzrpo5kFg4jpZKY
+         65nq4ZE8RZIOZ8jy+Cfsj2TzdJOKoGEmKrWRBi50OGpWiOWfUfNVOKj0E1r+tBz1sAPE
+         BjFw==
+X-Gm-Message-State: AOAM532FTPnHwC9mOwCjtuyREyEgVWdnPtPaGFDYgMO2wwutojW3BKzW
+        M4CkiHeMQkA2exDXY88HqSE=
+X-Google-Smtp-Source: ABdhPJyEVLjnNSU2GQPKOvP97m9VOz2iLdhA5PWONmhpJWv1YDfZedTwSdqq+9mj8EbAt8E+PU9fdA==
+X-Received: by 2002:adf:f543:: with SMTP id j3mr1685936wrp.203.1613609776999;
+        Wed, 17 Feb 2021 16:56:16 -0800 (PST)
+Received: from Ansuel-xps.localdomain (host-87-11-13-110.retail.telecomitalia.it. [87.11.13.110])
+        by smtp.googlemail.com with ESMTPSA id t16sm6336079wrp.87.2021.02.17.16.56.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Feb 2021 15:43:56 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
+        Wed, 17 Feb 2021 16:56:16 -0800 (PST)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Amit Kucheria <amitk@kernel.org>
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v10 0/8] Add support for ipq8064 tsens
+Date:   Wed, 17 Feb 2021 20:40:02 +0100
+Message-Id: <20210217194011.22649-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.30.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1613604031-27798-1-git-send-email-khsieh@codeaurora.org>
-References: <1613604031-27798-1-git-send-email-khsieh@codeaurora.org>
-Subject: Re: [PATCH 1/2] phy/qualcomm: add hbr3_hbr2 voltage and premphasis swing table
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     tanmay@codeaurora.org, abhinavk@codeaurora.org,
-        aravindh@codeaurora.org, khsieh@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-To:     Kuogee Hsieh <khsieh@codeaurora.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, robdclark@gmail.com, sean@poorly.run,
-        vkoul@kernel.org
-Date:   Wed, 17 Feb 2021 15:43:55 -0800
-Message-ID: <161360543514.1254594.14314447256582277276@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2021-02-17 15:20:31)
-> Add hbr3_hbr2 voltage and premphasis swing table to support
-> HBR3 link rate.
->=20
-> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp.c | 23 +++++++++++++++++++++--
->  1 file changed, 21 insertions(+), 2 deletions(-)
->=20
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/p=
-hy-qcom-qmp.c
-> index 0939a9e..c920143 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> @@ -2965,6 +2965,20 @@ static void qcom_qmp_phy_dp_aux_init(struct qmp_ph=
-y *qphy)
->                qphy->pcs + QSERDES_V3_DP_PHY_AUX_INTERRUPT_MASK);
->  }
-> =20
-> +static const u8 qmp_dp_v3_pre_emphasis_hbr3_hbr2[4][4] =3D {
-> +        { 0x00, 0x0C, 0x15, 0x1A },
-> +        { 0x02, 0x0E, 0x16, 0xFF },
-> +        { 0x02, 0x11, 0xFF, 0xFF },
-> +        { 0x04, 0xFF, 0xFF, 0xFF }
+This patchset convert msm8960 to reg_filed, use int_common instead 
+of a custom function and fix wrong tsens get_temp function for msm8960.
+Ipq8064 SoCs tsens driver is based on 8960 tsens driver. Ipq8064 needs
+to be registered as a gcc child as the tsens regs on this platform are
+shared with the controller.
+This is based on work and code here
+https://git.linaro.org/people/amit.kucheria/kernel.git/log/?h=wrk3/tsens-8960-breakage
 
-Lowercase hex please.
+v10:
+* Fix wrong tsens init for ver_0 (crit_trips needs to be set in tsens_register)
+v9:
+* Fix warning from Documentation bot
+v8:
+* Drop MIN and MAX THRESH and use CRIT_THRESH instead
+* Fix broken documentation patch
+v7:
+* Rework calibrate function to use get_temp_common
+* Fix wrong required in the Documentation for ipq8064
+* Fix hardware bug in sensor enable function
+v6:
+* Fix spelling error (can't find the problem with variable misallignment)
+* Rework big if-else
+* Remove extra comments
+* Add description about different interrupts
+v5:
+* Conver driver to use reg_fiedl
+* Use init_common 
+* Drop custom set_trip and set_interrupt
+* Use common set_trip and set_interrupt
+* Fix bad get_temp function
+* Add missing hardcoded slope
+v4:
+* Fix compilation error and warning reported by the bot
+v3:
+* Change driver to register as child instead of use phandle
+v2:
+* Fix dt-bindings problems
 
-> +};
-> +
-> +static const u8 qmp_dp_v3_voltage_swing_hbr3_hbr2[4][4] =3D {
-> +        { 0x02, 0x12, 0x16, 0x1A },
-> +        { 0x09, 0x19, 0x1F, 0xFF },
-> +        { 0x10, 0x1F, 0xFF, 0xFF },
-> +        { 0x1F, 0xFF, 0xFF, 0xFF }
-> +};
+Ansuel Smith (8):
+  drivers: thermal: tsens: Add VER_0 tsens version
+  drivers: thermal: tsens: Don't hardcode sensor slope
+  drivers: thermal: tsens: Convert msm8960 to reg_field
+  drivers: thermal: tsens: Use init_common for msm8960
+  drivers: thermal: tsens: Fix bug in sensor enable for msm8960
+  drivers: thermal: tsens: Use get_temp_common for msm8960
+  drivers: thermal: tsens: Add support for ipq8064-tsens
+  dt-bindings: thermal: tsens: Document ipq8064 bindings
 
-Lowercase hex please.
+ .../bindings/thermal/qcom-tsens.yaml          |  56 ++++-
+ drivers/thermal/qcom/tsens-8960.c             | 203 ++++++++++--------
+ drivers/thermal/qcom/tsens.c                  | 181 +++++++++++++---
+ drivers/thermal/qcom/tsens.h                  |   4 +-
+ 4 files changed, 314 insertions(+), 130 deletions(-)
 
-> +
->  static const u8 qmp_dp_v3_pre_emphasis_hbr_rbr[4][4] =3D {
->         { 0x00, 0x0c, 0x14, 0x19 },
->         { 0x00, 0x0b, 0x12, 0xff },
-> @@ -3000,8 +3014,13 @@ static void qcom_qmp_phy_configure_dp_tx(struct qm=
-p_phy *qphy)
->                 drvr_en =3D 0x10;
->         }
-> =20
-> -       voltage_swing_cfg =3D qmp_dp_v3_voltage_swing_hbr_rbr[v_level][p_=
-level];
-> -       pre_emphasis_cfg =3D qmp_dp_v3_pre_emphasis_hbr_rbr[v_level][p_le=
-vel];
-> +       if (dp_opts->link_rate <=3D 2700) {
-> +               voltage_swing_cfg =3D qmp_dp_v3_voltage_swing_hbr_rbr[v_l=
-evel][p_level];
-> +               pre_emphasis_cfg =3D qmp_dp_v3_pre_emphasis_hbr_rbr[v_lev=
-el][p_level];
-> +       } else {
-> +               voltage_swing_cfg =3D qmp_dp_v3_voltage_swing_hbr3_hbr2[v=
-_level][p_level];
-> +               pre_emphasis_cfg =3D qmp_dp_v3_pre_emphasis_hbr3_hbr2[v_l=
-evel][p_level];
-> +       }
->
+-- 
+2.30.0
+
