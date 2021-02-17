@@ -2,113 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 91E5331D2E1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Feb 2021 23:59:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B943131D335
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Feb 2021 01:07:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231309AbhBPW66 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Feb 2021 17:58:58 -0500
-Received: from m42-2.mailgun.net ([69.72.42.2]:51580 "EHLO m42-2.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231308AbhBPW65 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Feb 2021 17:58:57 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1613516318; h=Message-ID: References: In-Reply-To: Reply-To:
- Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=xufzHw9jEo/iWIDfIpIw4U4Wbd5Ej3k0WcIimpzscVM=;
- b=vYp/Lo06QYXEBkbCAfr2X0ZuYWMr2Cpwu172OCE/aAbwGImed+MUSwpD1z0Ino5clafouHoX
- Njyo4tRNfmKs+xg0oryqU6N1cVe+oRzU4MdD6UBxJT6FhE/2kjw3WWEUHSJKguXIcvVS2jyO
- 5vhnOgk0wHk0x0ycK77bvQFBLgE=
-X-Mailgun-Sending-Ip: 69.72.42.2
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 602c4dfd9f8fd267c23dd4a1 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 16 Feb 2021 22:58:05
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D5DF7C433CA; Tue, 16 Feb 2021 22:58:04 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2D975C433C6;
-        Tue, 16 Feb 2021 22:58:04 +0000 (UTC)
+        id S230236AbhBQAAz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Feb 2021 19:00:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32846 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229722AbhBQAAz (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 16 Feb 2021 19:00:55 -0500
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3069DC06174A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Feb 2021 16:00:15 -0800 (PST)
+Received: by mail-qk1-x72e.google.com with SMTP id t63so11289947qkc.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Feb 2021 16:00:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=7pgxfLYtB4b4dqlNRuCkDcBYdwrqTW32/gAXyaE8lXM=;
+        b=i2C77GrEYhmSVsDSIlvbowp1+1tIWUO2pPflB6TfUO8/UZuZTeEOCS0o0LAV6JxHUz
+         JO6YOis2IlNULxuxeACG5HlZwd0bXumgAgC2u7sFkVwlOeCuaofn+dBSRezXRLb1iPRf
+         gvvXlFUs75h56CtGgoG2PHUdJOZmPvfPUKQyB5Qhp2d6Bit6nJsjSjWa8fxkA4t81ZEO
+         oJJgV0rM+midM4o+RxU57dzfgmjSeNEumY5/TskkrCz4pGTCW1suJUN+JAH3KbbRnkai
+         dMazmQgMxWmwRUwtKLvIt0tN4EsQP0ZiKLzAIiirrNre3dQKNBxCxZozHYRJ0CuMFJhc
+         Hm5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=7pgxfLYtB4b4dqlNRuCkDcBYdwrqTW32/gAXyaE8lXM=;
+        b=BM/0MAJQcRoorc646h3Pw24Aq2FBy03LbBf87VU2sNXku5BW27JlQhpuTF6UfPfqgq
+         w7S9JJQvMpzmh2/4ku3dYBb8FzUoWwX0oYGSCyvwHjD9deadWXTD7XYS2RWYtIfXZa+T
+         3vkDCQyKkr4SuRVUWqIgzDZtHqjz9q1LSkkc2a8mTYw06ucl1gCJaBfs15WIs8TSXlln
+         2jFxlj4zuBoXE22+7IFNCvkr9mWhXMKP4fPhZqIvpmk5VOAere/n5UOQ7JSpoesfp1Z3
+         /yyIbpVz+WjhoiXkUng57wBKzzj54ktL6+ORZ++/yvwv11pG4+tQh6z2OvtblPXOaO4G
+         PBXw==
+X-Gm-Message-State: AOAM53147gKaRSQHfLfOjToAIjAtYyKKPXvtqHINTQUz1EC2bWFswQ/4
+        BBGboNodzByDR+23MZu2s4EJ0Q==
+X-Google-Smtp-Source: ABdhPJykqFxNudS+GmqRQWf8wikxvlbLHS4VcisT2qH/HdTqsT2hMFYTRhK64deqnxhel8d6Oygj2A==
+X-Received: by 2002:a05:620a:1435:: with SMTP id k21mr17977868qkj.289.1613520014253;
+        Tue, 16 Feb 2021 16:00:14 -0800 (PST)
+Received: from pop-os.fios-router.home (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.googlemail.com with ESMTPSA id g21sm94091qtv.68.2021.02.16.16.00.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Feb 2021 16:00:13 -0800 (PST)
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+To:     rjw@rjwysocki.net, viresh.kumar@linaro.org
+Cc:     bjorn.andersson@linaro.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH] cpufreq: exclude boost frequencies from valid count if not enabled
+Date:   Tue, 16 Feb 2021 19:00:13 -0500
+Message-Id: <20210217000013.4063289-1-thara.gopinath@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 16 Feb 2021 14:58:04 -0800
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        jhugo=codeaurora.org@codeaurora.org
-Subject: Re: [PATCH] mhi_bus: core: Check state before processing power_down
-Organization: Qualcomm Innovation Center, Inc.
-Reply-To: bbhatt@codeaurora.org
-Mail-Reply-To: bbhatt@codeaurora.org
-In-Reply-To: <1613511496-22271-1-git-send-email-jhugo@codeaurora.org>
-References: <1613511496-22271-1-git-send-email-jhugo@codeaurora.org>
-Message-ID: <6ed2bb4fb04ac47b86ff4bacab1d3b15@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-02-16 01:38 PM, Jeffrey Hugo wrote:
-> We cannot process a power_down if the power state is DISABLED.  There 
-> is
-> no valid mhi_ctxt in that case, so attepting to process the power_down
-> will likely result in a null pointer dereference.  If the power state 
-> is
-> DISABLED, there is nothing to do anyways, so just bail early.
-> 
-> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
-> ---
->  drivers/bus/mhi/core/pm.c | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
-> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-> index 56ba3ab..dc69074 100644
-> --- a/drivers/bus/mhi/core/pm.c
-> +++ b/drivers/bus/mhi/core/pm.c
-> @@ -1144,6 +1144,7 @@ int mhi_async_power_up(struct mhi_controller 
-> *mhi_cntrl)
->  		mhi_deinit_dev_ctxt(mhi_cntrl);
-> 
->  error_dev_ctxt:
-> +	mhi_cntrl->pm_state = MHI_PM_DISABLE;
->  	mutex_unlock(&mhi_cntrl->pm_mutex);
-> 
->  	return ret;
-> @@ -1155,6 +1156,12 @@ void mhi_power_down(struct mhi_controller
-> *mhi_cntrl, bool graceful)
->  	enum mhi_pm_state cur_state, transition_state;
->  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-> 
-> +	mutex_lock(&mhi_cntrl->pm_mutex);
-> +	cur_state = mhi_cntrl->pm_state;
-> +	mutex_unlock(&mhi_cntrl->pm_mutex);
-> +	if (cur_state == MHI_PM_DISABLE)
-Let's unlock the mutex here and not at the top. We acquire it below 
-anyway.
-> +		return; /* Already powered down */
-> +
->  	/* If it's not a graceful shutdown, force MHI to linkdown state */
->  	transition_state = (graceful) ? MHI_PM_SHUTDOWN_PROCESS :
->  			   MHI_PM_LD_ERR_FATAL_DETECT;
+This is a fix for a regression observed on db845 platforms with 5.7-rc11
+kernel.  On these platforms running stress tests with 5.11-rc7 kernel
+causes big cpus to overheat and ultimately shutdown the system due to
+hitting critical temperature (thermal throttling does not happen and
+cur_state of cpufreq cooling device for big cpus remain stuck at 0 or max
+frequency).
 
-Thanks,
-Bhaumik
+This platform has boost opp defined for big cpus but boost mode itself is
+disabled in the cpufreq driver. Hence the initial max frequency request
+from cpufreq cooling device(cur_state) for big cpus is for boost
+frequency(2803200) where as initial max frequency request from cpufreq
+driver itself is for the highest non boost frequency (2649600). qos
+framework collates these two requests and puts the max frequency of big
+cpus to 2649600 which the thermal framework is unaware of. Now during an
+over heat event, with step-wise policy governor, thermal framework tries to
+throttle the cpu and places a restriction on max frequency of the cpu to
+cur_state - 1 which in this case 2649600. qos framework in turn tells the
+cpufreq cooling device that max frequency of the cpu is already at 2649600
+and the cooling device driver returns doing nothing(cur_state of the
+cooling device remains unchanged). Thus thermal remains stuck in a loop and
+never manages to actually throttle the cpu frequency. This ultimately leads
+to system shutdown in case of a thermal overheat event on big cpus.
+
+There are multiple possible fixes for this issue. Fundamentally,it is wrong
+for cpufreq driver and cpufreq cooling device driver to show different
+maximum possible state/frequency for a cpu. Hence fix this issue by
+ensuring that the max state of cpufreq cooling device is in sync with the
+maximum frequency of the cpu in cpufreq driver.
+cpufreq_table_count_valid_entries is used to retrieve max level/max
+frequency of a cpu by cpufreq_cooling_device during initialization. Add
+check in this api to ignore boost frequencies if boost mode is not enabled
+thus keeping the max state of cpufreq cooling device in sync with the
+maximum frequency of the cpu in cpufreq driver.
+cpufreq_frequency_table_cpuinfo that calculates the maximum frequency of a
+cpu for cpufreq driver already has such a check in place.
+
+Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
 ---
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
+ include/linux/cpufreq.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/include/linux/cpufreq.h b/include/linux/cpufreq.h
+index 9c8b7437b6cd..fe52892e0812 100644
+--- a/include/linux/cpufreq.h
++++ b/include/linux/cpufreq.h
+@@ -1006,8 +1006,11 @@ static inline int cpufreq_table_count_valid_entries(const struct cpufreq_policy
+ 	if (unlikely(!policy->freq_table))
+ 		return 0;
+ 
+-	cpufreq_for_each_valid_entry(pos, policy->freq_table)
++	cpufreq_for_each_valid_entry(pos, policy->freq_table) {
++		if (!cpufreq_boost_enabled() && (pos->flags & CPUFREQ_BOOST_FREQ))
++			continue;
+ 		count++;
++	}
+ 
+ 	return count;
+ }
+-- 
+2.25.1
+
