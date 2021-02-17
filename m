@@ -2,170 +2,255 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3700631DC4A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Feb 2021 16:35:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E19B031DD01
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Feb 2021 17:12:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233774AbhBQPeW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Feb 2021 10:34:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33806 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233775AbhBQPdX (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Feb 2021 10:33:23 -0500
-Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E318C0613D6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Feb 2021 07:32:42 -0800 (PST)
-Received: by mail-qt1-x834.google.com with SMTP id g24so7266906qts.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Feb 2021 07:32:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=iCNwmZhWZAWkw9lmubfy3Ctrt4GVRNHAO0fjrQG+z70=;
-        b=K7XhU7BCJNi7/Km2X5hifC75VEEjDwXIINfNpjT8aMJZecj/NE0rRTuoy3sNMp8fB1
-         KTaxnDT2kurODW77ZPkg4j89ophmKvoPQKqyBbn1+kBkl7pkQLajB0xVcUf/4+bVg82m
-         VD1ij0jLVKod10+gUZlx76ymqBLMwiHRUvUfRwxvt6fGrqIJz+jEoR99HapRyMqa+O8p
-         So1G+QUivb7t1a1+9sgRSLKEvJL5PfwAPYLnI8V9h0Gqd9lNtHRwKl/QasnfX7QKqy48
-         Tz8zGa9q/c3xU0nDgKh5qMZ5x9M99S5kCRJQcPf3XlQfTyckCOTp+2t+ekotQuR6B+NY
-         YZiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=iCNwmZhWZAWkw9lmubfy3Ctrt4GVRNHAO0fjrQG+z70=;
-        b=YEky6DNChKnlk9q421IvZUU6kVpnaPWj88DUzqBUjVltu192O3Z/3lBIIhPfcoz0i2
-         QDgNWuzJPYsdT+U08srj0gOb86vwv+5LZxvsYoLMSFUQkb8CVSYmTy6Wgaeb+LIW0FSm
-         UeyqrszFZTyrTIFNnRWAWpXB6iUNuxFP3AsAl6tgnuBIJIIla1f+3Eb64I2HpYJAnT9c
-         DVCaRE0fbRYLN8Jj4NeyxwgqnnpozSDEHEHKeluyDLEFILf77nCDmspteIz7zP2FmqC8
-         v/sNpZ0CFLCP5K8qqQGwxrzJga1vp489KteX4gPeFJCRSBmnd/fERmleavaRbbNu76Oy
-         z8NA==
-X-Gm-Message-State: AOAM533JHvaZBvPp5Iya4DPs8YJx6D5Y+ynbOxou83KfqJCYtDaHCHtN
-        Mrpvopz0hep9lW8B4q9wXIY01aqhs0gCAA==
-X-Google-Smtp-Source: ABdhPJzI+kSwjLRo2M5K5Vwk1Dg2soKjc4+KPmHsDbzklvoB72bf2QBgKx4M9bDqrixDGSOrhRhTtw==
-X-Received: by 2002:ac8:110e:: with SMTP id c14mr23911588qtj.78.1613575959225;
-        Wed, 17 Feb 2021 07:32:39 -0800 (PST)
-Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.gmail.com with ESMTPSA id f78sm1845446qke.71.2021.02.17.07.32.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Feb 2021 07:32:38 -0800 (PST)
-Subject: Re: [PATCH] cpufreq: exclude boost frequencies from valid count if
- not enabled
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     rjw@rjwysocki.net, bjorn.andersson@linaro.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20210217000013.4063289-1-thara.gopinath@linaro.org>
- <20210217055029.a25wjsyoosxageti@vireshk-i7>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <4c9d9d44-5fa5-3ae1-e9bb-45cf6521b764@linaro.org>
-Date:   Wed, 17 Feb 2021 10:32:38 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S234027AbhBQQLv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Feb 2021 11:11:51 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:19383 "EHLO z11.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234049AbhBQQLm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 17 Feb 2021 11:11:42 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1613578278; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=U8Z4sq17MZxEZbn8xWLO7meIIHA9hE8Uv9NohLheFCw=; b=p1xPdoBAIYFusLxsKwRoh5404MZeOmpSfBjRUkfzq4fLBAs9XbTCicCSi5/A9CnPDQ+Z2Xuh
+ S+8oEuj3ay7SU+nIolu+Oo9C4Iezn/Kk1nOfRif4oDUKUcSOjyeU+geoKqj8yCbaqbL5YWeE
+ L58nkcyD3y9CUiMlLi8pBQa1odA=
+X-Mailgun-Sending-Ip: 104.130.96.11
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 602d4003a294c935b7c220a8 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 17 Feb 2021 16:10:43
+ GMT
+Sender: jhugo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 7AA91C43462; Wed, 17 Feb 2021 16:10:42 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from jhugo-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 337DAC433ED;
+        Wed, 17 Feb 2021 16:10:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 337DAC433ED
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
+Cc:     bbhatt@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Jeffrey Hugo <jhugo@codeaurora.org>
+Subject: [PATCH] mhi_bus: core: Sanity check values from remote device before use
+Date:   Wed, 17 Feb 2021 09:10:32 -0700
+Message-Id: <1613578232-15229-1-git-send-email-jhugo@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-In-Reply-To: <20210217055029.a25wjsyoosxageti@vireshk-i7>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+When parsing the structures in the shared memory, there are values which
+come from the remote device.  For example, a transfer completion event
+will have a pointer to the tre in the relevant channel's transfer ring.
+Such values should be considered to be untrusted, and validated before
+use.  If we blindly use such values, we may access invalid data or crash
+if the values are corrupted.
 
+If validation fails, drop the relevant event.
 
-On 2/17/21 12:50 AM, Viresh Kumar wrote:
-> Hi Thara,
-> 
-> On 16-02-21, 19:00, Thara Gopinath wrote:
->> This is a fix for a regression observed on db845 platforms with 5.7-rc11
->> kernel.  On these platforms running stress tests with 5.11-rc7 kernel
->> causes big cpus to overheat and ultimately shutdown the system due to
->> hitting critical temperature (thermal throttling does not happen and
->> cur_state of cpufreq cooling device for big cpus remain stuck at 0 or max
->> frequency).
->>
->> This platform has boost opp defined for big cpus but boost mode itself is
->> disabled in the cpufreq driver. Hence the initial max frequency request
->> from cpufreq cooling device(cur_state) for big cpus is for boost
->> frequency(2803200) where as initial max frequency request from cpufreq
->> driver itself is for the highest non boost frequency (2649600).
-> 
-> Okay.
-> 
->> qos
->> framework collates these two requests and puts the max frequency of big
->> cpus to 2649600 which the thermal framework is unaware of.
-> 
-> It doesn't need to be aware of that. It sets its max frequency and other
-> frameworks can put their own requests and the lowest one wins. In this case the
-> other constraint came from cpufreq-core, which is fine.
+Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+---
+ drivers/bus/mhi/core/main.c | 81 +++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 74 insertions(+), 7 deletions(-)
 
-Yes. the qos behavior is correct here.
-
-> 
->> Now during an
->> over heat event, with step-wise policy governor, thermal framework tries to
->> throttle the cpu and places a restriction on max frequency of the cpu to
->> cur_state - 1
-> 
-> Actually it is cur_state + 1 as the values are inversed here, cooling state 0
-> refers to highest frequency :)
-
-yes. it does indeed!
-
-> 
->> which in this case 2649600. qos framework in turn tells the
->> cpufreq cooling device that max frequency of the cpu is already at 2649600
->> and the cooling device driver returns doing nothing(cur_state of the
->> cooling device remains unchanged).
-> 
-> And that's where the bug lies, I have sent proper fix for that now.
-
-Like I mention below there are multiple possible fixes for this issue!
-More on mismatch of frequencies below.
-> 
->> Thus thermal remains stuck in a loop and
->> never manages to actually throttle the cpu frequency. This ultimately leads
->> to system shutdown in case of a thermal overheat event on big cpus.
->   
->> There are multiple possible fixes for this issue. Fundamentally,it is wrong
->> for cpufreq driver and cpufreq cooling device driver to show different
->> maximum possible state/frequency for a cpu.
-> 
-> Not actually, cpufreq core changes the max supported frequency at runtime based
-> on the availability of boost frequencies.
-
-First of all, I am still unable to find this setting in the sysfs space.
-Irrespective the ideal behavior here will be to change the cpufreq 
-cooling dev max state when this happens. I say this for two reasons
-1. The cooling device max state will reflect the correct highest 
-frequency as reported by cpufreq core. These are interfaces exposed to
-user space and they should not be showing two different things.
-2. More importantly, thermal will not waste valuable cycles attempting 
-to throttle down from an non-existing high frequency. In the case of 
-sdm845 we have only one boost opp in the opp table and hence the first 
-time thermal tries to throttle via the cpufreq cooling device(with the 
-step policy governor), it will return back saying that the state is 
-already achieved and then will retry again because overheating has not 
-stopped. But let us a platform has 5 such opps in the table and boost 
-mode not enabled. cpufreq cooling device will have to attempt 5 times 
-before any actual cooling action happens.
-
-> 
-> cpufreq_table_count_valid_entries() is used at different places and it is
-> implemented correctly.
-
-It is used in one other place which is for statistics count. Boost 
-statistics need not be considered if boost mode is not enabled. And like 
-I mentioned before as in the case of cpufreq cooling device correct 
-behavior will be to reflect this as and when boost is enabled. But then 
-again for statistics purpose it is not much of an issue if the entry 
-itself is present with the count showing 0 if boost modes are not 
-enabled. In this case, we should have another api or cpufreq cooling 
-device not use cpufreq_table_count_valid_entries to get the max state.
-
-> 
-
+diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+index c043574..1eb2fd3 100644
+--- a/drivers/bus/mhi/core/main.c
++++ b/drivers/bus/mhi/core/main.c
+@@ -242,6 +242,11 @@ static void mhi_del_ring_element(struct mhi_controller *mhi_cntrl,
+ 	smp_wmb();
+ }
+ 
++static bool is_valid_ring_ptr(struct mhi_ring *ring, dma_addr_t addr)
++{
++	return addr >= ring->iommu_base && addr < ring->iommu_base + ring->len;
++}
++
+ int mhi_destroy_device(struct device *dev, void *data)
+ {
+ 	struct mhi_device *mhi_dev;
+@@ -383,7 +388,16 @@ irqreturn_t mhi_irq_handler(int irq_number, void *dev)
+ 	struct mhi_event_ctxt *er_ctxt =
+ 		&mhi_cntrl->mhi_ctxt->er_ctxt[mhi_event->er_index];
+ 	struct mhi_ring *ev_ring = &mhi_event->ring;
+-	void *dev_rp = mhi_to_virtual(ev_ring, er_ctxt->rp);
++	dma_addr_t ptr = er_ctxt->rp;
++	void *dev_rp;
++
++	if (!is_valid_ring_ptr(ev_ring, ptr)) {
++		dev_err(&mhi_cntrl->mhi_dev->dev,
++			"Event ring rp points outside of the event ring\n");
++		return IRQ_HANDLED;
++	}
++
++	dev_rp = mhi_to_virtual(ev_ring, ptr);
+ 
+ 	/* Only proceed if event ring has pending events */
+ 	if (ev_ring->rp == dev_rp)
+@@ -536,6 +550,11 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
+ 		struct mhi_buf_info *buf_info;
+ 		u16 xfer_len;
+ 
++		if (!is_valid_ring_ptr(tre_ring, ptr)) {
++			dev_err(&mhi_cntrl->mhi_dev->dev,
++				"Event element points outside of the tre ring\n");
++			break;
++		}
+ 		/* Get the TRB this event points to */
+ 		ev_tre = mhi_to_virtual(tre_ring, ptr);
+ 
+@@ -695,6 +714,12 @@ static void mhi_process_cmd_completion(struct mhi_controller *mhi_cntrl,
+ 	struct mhi_chan *mhi_chan;
+ 	u32 chan;
+ 
++	if (!is_valid_ring_ptr(mhi_ring, ptr)) {
++		dev_err(&mhi_cntrl->mhi_dev->dev,
++			"Event element points outside of the cmd ring\n");
++		return;
++	}
++
+ 	cmd_pkt = mhi_to_virtual(mhi_ring, ptr);
+ 
+ 	chan = MHI_TRE_GET_CMD_CHID(cmd_pkt);
+@@ -719,6 +744,7 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
+ 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+ 	u32 chan;
+ 	int count = 0;
++	dma_addr_t ptr = er_ctxt->rp;
+ 
+ 	/*
+ 	 * This is a quick check to avoid unnecessary event processing
+@@ -728,7 +754,13 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
+ 	if (unlikely(MHI_EVENT_ACCESS_INVALID(mhi_cntrl->pm_state)))
+ 		return -EIO;
+ 
+-	dev_rp = mhi_to_virtual(ev_ring, er_ctxt->rp);
++	if (!is_valid_ring_ptr(ev_ring, ptr)) {
++		dev_err(&mhi_cntrl->mhi_dev->dev,
++			"Event ring rp points outside of the event ring\n");
++		return -EIO;
++	}
++
++	dev_rp = mhi_to_virtual(ev_ring, ptr);
+ 	local_rp = ev_ring->rp;
+ 
+ 	while (dev_rp != local_rp) {
+@@ -834,6 +866,8 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
+ 			 */
+ 			if (chan < mhi_cntrl->max_chan) {
+ 				mhi_chan = &mhi_cntrl->mhi_chan[chan];
++				if (!mhi_chan->configured)
++					break;
+ 				parse_xfer_event(mhi_cntrl, local_rp, mhi_chan);
+ 				event_quota--;
+ 			}
+@@ -845,7 +879,15 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
+ 
+ 		mhi_recycle_ev_ring_element(mhi_cntrl, ev_ring);
+ 		local_rp = ev_ring->rp;
+-		dev_rp = mhi_to_virtual(ev_ring, er_ctxt->rp);
++
++		ptr = er_ctxt->rp;
++		if (!is_valid_ring_ptr(ev_ring, ptr)) {
++			dev_err(&mhi_cntrl->mhi_dev->dev,
++				"Event ring rp points outside of the event ring\n");
++			return -EIO;
++		}
++
++		dev_rp = mhi_to_virtual(ev_ring, ptr);
+ 		count++;
+ 	}
+ 
+@@ -868,11 +910,18 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
+ 	int count = 0;
+ 	u32 chan;
+ 	struct mhi_chan *mhi_chan;
++	dma_addr_t ptr = er_ctxt->rp;
+ 
+ 	if (unlikely(MHI_EVENT_ACCESS_INVALID(mhi_cntrl->pm_state)))
+ 		return -EIO;
+ 
+-	dev_rp = mhi_to_virtual(ev_ring, er_ctxt->rp);
++	if (!is_valid_ring_ptr(ev_ring, ptr)) {
++		dev_err(&mhi_cntrl->mhi_dev->dev,
++			"Event ring rp points outside of the event ring\n");
++		return -EIO;
++	}
++
++	dev_rp = mhi_to_virtual(ev_ring, ptr);
+ 	local_rp = ev_ring->rp;
+ 
+ 	while (dev_rp != local_rp && event_quota > 0) {
+@@ -886,7 +935,8 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
+ 		 * Only process the event ring elements whose channel
+ 		 * ID is within the maximum supported range.
+ 		 */
+-		if (chan < mhi_cntrl->max_chan) {
++		if (chan < mhi_cntrl->max_chan &&
++		    mhi_cntrl->mhi_chan[chan].configured) {
+ 			mhi_chan = &mhi_cntrl->mhi_chan[chan];
+ 
+ 			if (likely(type == MHI_PKT_TYPE_TX_EVENT)) {
+@@ -900,7 +950,15 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
+ 
+ 		mhi_recycle_ev_ring_element(mhi_cntrl, ev_ring);
+ 		local_rp = ev_ring->rp;
+-		dev_rp = mhi_to_virtual(ev_ring, er_ctxt->rp);
++
++		ptr = er_ctxt->rp;
++		if (!is_valid_ring_ptr(ev_ring, ptr)) {
++			dev_err(&mhi_cntrl->mhi_dev->dev,
++				"Event ring rp points outside of the event ring\n");
++			return -EIO;
++		}
++
++		dev_rp = mhi_to_virtual(ev_ring, ptr);
+ 		count++;
+ 	}
+ 	read_lock_bh(&mhi_cntrl->pm_lock);
+@@ -1365,6 +1423,7 @@ static void mhi_mark_stale_events(struct mhi_controller *mhi_cntrl,
+ 	struct mhi_ring *ev_ring;
+ 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+ 	unsigned long flags;
++	dma_addr_t ptr;
+ 
+ 	dev_dbg(dev, "Marking all events for chan: %d as stale\n", chan);
+ 
+@@ -1372,7 +1431,15 @@ static void mhi_mark_stale_events(struct mhi_controller *mhi_cntrl,
+ 
+ 	/* mark all stale events related to channel as STALE event */
+ 	spin_lock_irqsave(&mhi_event->lock, flags);
+-	dev_rp = mhi_to_virtual(ev_ring, er_ctxt->rp);
++
++	ptr = er_ctxt->rp;
++	if (!is_valid_ring_ptr(ev_ring, ptr)) {
++		dev_err(&mhi_cntrl->mhi_dev->dev,
++			"Event ring rp points outside of the event ring\n");
++		dev_rp = ev_ring->rp;
++	} else {
++		dev_rp = mhi_to_virtual(ev_ring, ptr);
++	}
+ 
+ 	local_rp = ev_ring->rp;
+ 	while (dev_rp != local_rp) {
 -- 
-Warm Regards
-Thara
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
+
