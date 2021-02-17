@@ -2,134 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F8D031E1D7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Feb 2021 23:14:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 06DCC31E1FB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Feb 2021 23:23:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233099AbhBQWNi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Feb 2021 17:13:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35094 "EHLO
+        id S233543AbhBQWV2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Feb 2021 17:21:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233118AbhBQWNg (ORCPT
+        with ESMTP id S232106AbhBQWVT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Feb 2021 17:13:36 -0500
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BA93C0617A7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Feb 2021 14:12:33 -0800 (PST)
-Received: by mail-lj1-x22a.google.com with SMTP id j6so18715854ljo.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Feb 2021 14:12:33 -0800 (PST)
+        Wed, 17 Feb 2021 17:21:19 -0500
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 761B7C0613D6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Feb 2021 14:20:39 -0800 (PST)
+Received: by mail-oi1-x232.google.com with SMTP id 18so16732851oiz.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Feb 2021 14:20:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=mikpPCKqiawoZCyFMz/JZszyNAgG2MWQqRABlKUmtPE=;
-        b=TVpir0Uzqact4w7vvs9olQi66cswijB6qLToexaRGf73aHJ3lYbj9NvdtWJD3RSvC6
-         FyA4+Bki02V+V2bFmNLug/6UpZdy5q02fVL175bEP/vcHnX60Usp0/MwIK4FWpLatUau
-         EewiYeUk1P8OHbYu3fXyNIPyHltOhiKAwZ/131wvQgDg5BpObIrr4tG4EnF2MInw1HxW
-         mHNwqfFRaAyieDUi3N6QmyewLN6Q16dUV9dZC8P46sMGaP0PMvy3cwt14UK4dMrvs5s7
-         PAbfJtwAY+6gWk9J45jVB7kv4STrXwoHeDnT9ce15p80c6ylEC3TkBQ28aOfQuNllx0q
-         WS7A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=1p7xR+x/Ax3QtXp7hvf7+knlfVhECl9PbNNQU3Wa5CY=;
+        b=TFEYl9E2ZTFElf1eNyDDZQVG5utiIcCQZoQZpzqazKcomE0pvgDmX9ehhPAPthH0kL
+         eOrW4djT+f3uvJWG1IVolbo5/MfAf4MAPoAJfiixWxt0l10vgncALueCF6MXGO3/YIcJ
+         Ppb/0eoG/QV16TsDEXo+MX1zJiM2wpEPqpeDry8Y/rdWTF9E7klQ/9rriTOU3o0M+GsE
+         DIep3ZWbDimjvunJVihTONjhBJ4oE/UMkV9gLqShlMYN/3ryMvnMOQWAlJapxF+tfgaf
+         hp4tpBZSqEYH1HsguLIkESuUUs2OkggcxnWkqM6wbXjiIn3BR2ULmxvcOtSCjlbQz6bo
+         /apw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=mikpPCKqiawoZCyFMz/JZszyNAgG2MWQqRABlKUmtPE=;
-        b=OGiMQrXK4hth3B/KexLhcrwDzuzZnMAVjhyM+Ls0gD05XLjzTboWigh5I9C2+2msEW
-         3tKnF4BylvdbjjWcHjdVau6dShqg3WqBL3jYbpN9frkOvRYdE9FVwUOeILRIp/gA5Hvn
-         G9yJTA4bj91ml2eU+U9701vKJIfLenr+zdQ5pfROsRZxhQ+crp0qaXU5DxGNVfpiw1dT
-         e0xbxDNRpkvePM3JWf09bEQTwrubsYOS34G6E9fUYAEX9xEzlsFlY2yiiVVcI6J452Jn
-         5tQSbnPC9FGPjhenxwwP24QwRZvq3vJxrXp42ccF9QYX6y37zPbRT66IFqsQO6Q1v0ZY
-         09dQ==
-X-Gm-Message-State: AOAM5325VhJop7WZw2moED0sjC5UomwT9dIZszDso0PtiNdkxtLQ9IGK
-        aMbg7IOkrACR8jIJLQND4MZuNw==
-X-Google-Smtp-Source: ABdhPJw4uHFM3vmsULvaYVI0JFQBIxOUVhijUlrrGPEhW2wZxBsAVU4ZhCpbc0JNnOqjm2hHcZEIbg==
-X-Received: by 2002:a2e:505d:: with SMTP id v29mr694438ljd.393.1613599944665;
-        Wed, 17 Feb 2021 14:12:24 -0800 (PST)
-Received: from localhost.localdomain ([85.249.43.69])
-        by smtp.googlemail.com with ESMTPSA id b7sm382926ljk.52.2021.02.17.14.12.23
+         :references:mime-version:content-transfer-encoding;
+        bh=1p7xR+x/Ax3QtXp7hvf7+knlfVhECl9PbNNQU3Wa5CY=;
+        b=nkhTZcqg/WD5hmA/k39Xr26vhM4lyD5pfihKJj9FY75WtOo9oAFYyNLtUOgn0wvADI
+         79/LDv2D8CAIa7bhMGqumrWetOHVI2BfLalz4yfKjjEl4BdDGChbmn27zs3utOiAY2WH
+         sAJe8VlhK5GpmZ7by9TY5D5FTjmfDXpWG5q4uswaa4F2+mtXU9eY1978kjNEorXZBe2V
+         9xVPRqefN9WWSNRAUg6SUsL2MJVK31nviW1D39V7y7CI/R1Dq3E4umqaGhNxY3XYX8Yt
+         S2b65g+XbL39lfOOfVoNPJ/72hUrAWLi/672agjQjM7TUA7BRFJAo5MxPftRSvSJ1B03
+         lx0A==
+X-Gm-Message-State: AOAM532KfnGXNu0XQEdJ846p1VQDsDQR+/FpOJdQruU5HJran5nYLuSW
+        sJewha+rRwbXKr1zAuwF9mUM8j7WhkBQkQ==
+X-Google-Smtp-Source: ABdhPJz9Tp7sfz49yJeFgIVsuHF6V75Yrbkk3I0fz/SY85kLex9Fdy3o3FOxKrkkqD8QeVWuBwCzUw==
+X-Received: by 2002:a05:6808:30e:: with SMTP id i14mr706537oie.50.1613600438791;
+        Wed, 17 Feb 2021 14:20:38 -0800 (PST)
+Received: from blackbox.Home ([2806:10b7:2:8299::3])
+        by smtp.gmail.com with ESMTPSA id f22sm669028otl.10.2021.02.17.14.20.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Feb 2021 14:12:23 -0800 (PST)
-From:   Andrey Konovalov <andrey.konovalov@linaro.org>
-To:     junak.pub@gmail.com, robert.foss@linaro.org,
-        sakari.ailus@linux.intel.com
-Cc:     todor.too@gmail.com, agross@kernel.org, bjorn.andersson@linaro.org,
-        mchehab@kernel.org, laurent.pinchart@ideasonboard.com,
-        jacopo@jmondi.org, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andrey Konovalov <andrey.konovalov@linaro.org>
-Subject: [PATCH v2 3/3] media: qcom: camss: Fix overflows in clock rate calculations
-Date:   Thu, 18 Feb 2021 01:11:34 +0300
-Message-Id: <20210217221134.2606-4-andrey.konovalov@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20210217221134.2606-1-andrey.konovalov@linaro.org>
-References: <20210217221134.2606-1-andrey.konovalov@linaro.org>
+        Wed, 17 Feb 2021 14:20:38 -0800 (PST)
+From:   =?UTF-8?q?An=C3=ADbal=20Lim=C3=B3n?= <anibal.limon@linaro.org>
+To:     bjorn.andersson@linaro.org
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        mark.rutland@arm.com, ohad@wizery.com, robh+dt@kernel.org,
+        =?UTF-8?q?An=C3=ADbal=20Lim=C3=B3n?= <anibal.limon@linaro.org>
+Subject: [PATCH] remoteproc: qcom: wcnss: Allow specifying firmware-name
+Date:   Wed, 17 Feb 2021 16:20:06 -0600
+Message-Id: <20210217222006.1419164-1-anibal.limon@linaro.org>
+X-Mailer: git-send-email 2.30.0
+In-Reply-To: <20200108055252.639791-1-bjorn.andersson@linaro.org>
+References: <20200108055252.639791-1-bjorn.andersson@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Vladimir Lypak <junak.pub@gmail.com>
+From: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Because of u32 type being used to store pixel clock rate, expression used
-to calculate pipeline clocks (pixel_clock * bpp) produces wrong value due
-to integer overflow. This patch changes data type used to store, pass and
-retrieve pixel_clock from u32 to u64 to make this mistake less likely to
-be repeated in the future.
+Introduce a firmware-name property, in order to be able to support
+device/platform specific firmware for the wireless connectivity
+subsystem; in line with other Qualcomm remoteproc drivers.
 
-Signed-off-by: Vladimir Lypak <junak.pub@gmail.com>
-Acked-by: Robert Foss <robert.foss@linaro.org>
-Signed-off-by: Andrey Konovalov <andrey.konovalov@linaro.org>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Tested-by: Aníbal Limón <anibal.limon@linaro.org>
 ---
- drivers/media/platform/qcom/camss/camss-vfe.c | 4 ++--
- drivers/media/platform/qcom/camss/camss.c     | 2 +-
- drivers/media/platform/qcom/camss/camss.h     | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ .../devicetree/bindings/remoteproc/qcom,wcnss-pil.txt     | 6 ++++++
+ drivers/remoteproc/qcom_wcnss.c                           | 8 +++++++-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-index fae2b513b2f9..b2c95b46ce66 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-@@ -1112,7 +1112,7 @@ static inline void vfe_isr_halt_ack(struct vfe_device *vfe)
- static int vfe_set_clock_rates(struct vfe_device *vfe)
- {
- 	struct device *dev = vfe->camss->dev;
--	u32 pixel_clock[MSM_VFE_LINE_NUM];
-+	u64 pixel_clock[MSM_VFE_LINE_NUM];
- 	int i, j;
- 	int ret;
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.txt b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.txt
+index d420f84ddfb0..00844a5d2ccf 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.txt
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.txt
+@@ -34,6 +34,12 @@ on the Qualcomm WCNSS core.
+ 	Definition: should be "wdog", "fatal", optionally followed by "ready",
+ 		    "handover", "stop-ack"
  
-@@ -1194,7 +1194,7 @@ static int vfe_set_clock_rates(struct vfe_device *vfe)
-  */
- static int vfe_check_clock_rates(struct vfe_device *vfe)
- {
--	u32 pixel_clock[MSM_VFE_LINE_NUM];
-+	u64 pixel_clock[MSM_VFE_LINE_NUM];
- 	int i, j;
- 	int ret;
++- firmware-name:
++	Usage: optional
++	Value type: <string>
++	Definition: must list the relative firmware image path for the
++		    WCNSS core.
++
+ - vddmx-supply:
+ - vddcx-supply:
+ - vddpx-supply:
+diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
+index e2573f79a137..ef80f5b8f20b 100644
+--- a/drivers/remoteproc/qcom_wcnss.c
++++ b/drivers/remoteproc/qcom_wcnss.c
+@@ -465,6 +465,7 @@ static int wcnss_alloc_memory_region(struct qcom_wcnss *wcnss)
  
-diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-index eb8fb8c34acd..d82bbc2213a6 100644
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -578,7 +578,7 @@ s64 camss_get_link_freq(struct media_entity *entity, unsigned int bpp,
-  *
-  * Return 0 on success or a negative error code otherwise
-  */
--int camss_get_pixel_clock(struct media_entity *entity, u32 *pixel_clock)
-+int camss_get_pixel_clock(struct media_entity *entity, u64 *pixel_clock)
+ static int wcnss_probe(struct platform_device *pdev)
  {
- 	struct media_entity *sensor;
- 	struct v4l2_subdev *subdev;
-diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
-index 86cdc25189eb..e29466d07ad2 100644
---- a/drivers/media/platform/qcom/camss/camss.h
-+++ b/drivers/media/platform/qcom/camss/camss.h
-@@ -110,7 +110,7 @@ void camss_disable_clocks(int nclocks, struct camss_clock *clock);
- struct media_entity *camss_find_sensor(struct media_entity *entity);
- s64 camss_get_link_freq(struct media_entity *entity, unsigned int bpp,
- 			unsigned int lanes);
--int camss_get_pixel_clock(struct media_entity *entity, u32 *pixel_clock);
-+int camss_get_pixel_clock(struct media_entity *entity, u64 *pixel_clock);
- int camss_pm_domain_on(struct camss *camss, int id);
- void camss_pm_domain_off(struct camss *camss, int id);
- void camss_delete(struct camss *camss);
++	const char *fw_name = WCNSS_FIRMWARE_NAME;
+ 	const struct wcnss_data *data;
+ 	struct qcom_wcnss *wcnss;
+ 	struct resource *res;
+@@ -482,8 +483,13 @@ static int wcnss_probe(struct platform_device *pdev)
+ 		return -ENXIO;
+ 	}
+ 
++	ret = of_property_read_string(pdev->dev.of_node, "firmware-name",
++				      &fw_name);
++	if (ret < 0 && ret != -EINVAL)
++		return ret;
++
+ 	rproc = rproc_alloc(&pdev->dev, pdev->name, &wcnss_ops,
+-			    WCNSS_FIRMWARE_NAME, sizeof(*wcnss));
++			    fw_name, sizeof(*wcnss));
+ 	if (!rproc) {
+ 		dev_err(&pdev->dev, "unable to allocate remoteproc\n");
+ 		return -ENOMEM;
 -- 
-2.17.1
+2.30.0
 
