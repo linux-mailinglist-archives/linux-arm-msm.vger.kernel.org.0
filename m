@@ -2,158 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0CAD931E38C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Feb 2021 01:51:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 680E531E474
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Feb 2021 04:20:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229880AbhBRAuq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Feb 2021 19:50:46 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:27941 "EHLO z11.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229812AbhBRAuo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Feb 2021 19:50:44 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1613609419; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=FnKVk3kaZBaRiyYEVXIKZGXX4o/DMyHVFd+yjupU7+g=; b=Vpd1MQc3mV8SJ7Y4AAWxbQBWGekajJTKuuAIXQNbXoYKE5t9Psx5thXn6RKB+WNTpIPvOSrR
- zAHb9K3e9yzDwQhb1CeAdfgXvdRu3UhYk15T5KdDyqCM4J/p4/QQiecV2yBF8Uo0aPIE2llJ
- 3RxU5XM8pVfTFFqSS4/Y2NFe00o=
-X-Mailgun-Sending-Ip: 104.130.96.11
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 602db9ab666e232b38d48494 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 18 Feb 2021 00:49:47
- GMT
-Sender: wcheng=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 96A70C43462; Thu, 18 Feb 2021 00:49:47 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.110.74.71] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: wcheng)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 126B3C433CA;
-        Thu, 18 Feb 2021 00:49:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 126B3C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=wcheng@codeaurora.org
-Subject: Re: [PATCH v7 4/5] usb: dwc3: dwc3-qcom: Enable tx-fifo-resize
- property by default
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     agross@kernel.org, balbi@kernel.org, gregkh@linuxfoundation.org,
-        robh+dt@kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org
-References: <1611895604-4496-1-git-send-email-wcheng@codeaurora.org>
- <1611895604-4496-5-git-send-email-wcheng@codeaurora.org>
- <YBl8aszdk1xgbg1i@builder.lan>
-From:   Wesley Cheng <wcheng@codeaurora.org>
-Message-ID: <cd0b5e53-af48-3fd6-bad6-1e165a4f8fb8@codeaurora.org>
-Date:   Wed, 17 Feb 2021 16:49:44 -0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.1
+        id S229946AbhBRDU0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Feb 2021 22:20:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44266 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229806AbhBRDUZ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 17 Feb 2021 22:20:25 -0500
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2663C061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Feb 2021 19:19:45 -0800 (PST)
+Received: by mail-pf1-x435.google.com with SMTP id j12so320859pfj.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Feb 2021 19:19:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=lIwLTWpFfTb+ihzsW/9wLdIaJe4pMyN+ZO5MNliYpAE=;
+        b=m3q7oHJu84c0Rk+ZlkrBNvC31lbLIomW0XayA0xyuyTuav2MtPj/jDcLP8BMexom2A
+         yks06/8/Z6O3H+STY8VVLJ4aZgl9If3l/2faziNgf/0j7hENFSvHoQpASTSjMxa9fQjy
+         ogsjm/FoZAOE7kAIQs2ZdLMyWkgtESjd4VxbCEZiLlHUdvnh654LiDxKZrY12EoOCwMl
+         3BV1YnNvItE5CobWM6bJVgPMS8Ja9gonXSYCAKqDMY/rPTiVBhxT+UGcubm8pLh/Bm93
+         RI9mgjKhTe94oRNvbuZ/DIjjYpGDJfxbg9fQNcEzkHP2kHijUwf9mkrOHOurKuf4nmZS
+         kqHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=lIwLTWpFfTb+ihzsW/9wLdIaJe4pMyN+ZO5MNliYpAE=;
+        b=YTC4F8K3inDLvQ7j53ZV9rBEIpTSiD/+h3GLbeaQXtC3thSJsd/wjNR3eqDQvJ6bw3
+         KWcrazprg/rqApl6yUKoDMlQGjZzHLlNcpBbQhEAga9/Wbzw9iBk7ywFZn1S4388kftI
+         J4SO1yFY1vzqzoaTSXPAZ7oAPpk1kbimpsBSsNmvThd6dX9JrXf4/XpDbZlFPYaEE91E
+         iTJLjOF+KVpwLYE0vt/F2zJRijLDnz9GiuZN+vZZ7PLsgiP0fXlpo8xG9q/vWtwDbpLN
+         ZyPHUKlkYwkNBJuTthVIq0nDCIt0uwBJOUSWomnlHX86P9/UCTeei5Lj2BJkacenLhU7
+         4O5w==
+X-Gm-Message-State: AOAM533zlXc2rA+J1ZBAa3fZ9Jn7YgHT1px92yNR1q3EBFKPdSLCYZxp
+        DoD5R87WtLQZKVrlX++E2c6AbA==
+X-Google-Smtp-Source: ABdhPJxMK20NHMbdmubKYukaXunAItm7pjSb+jla1VGcLZldEyDGwqsFQiC5pXQvJXOin6BPg6+BkQ==
+X-Received: by 2002:aa7:8c59:0:b029:1db:48a9:be70 with SMTP id e25-20020aa78c590000b02901db48a9be70mr2386550pfd.68.1613618385159;
+        Wed, 17 Feb 2021 19:19:45 -0800 (PST)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id f18sm3383827pjq.53.2021.02.17.19.19.42
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 17 Feb 2021 19:19:44 -0800 (PST)
+Date:   Thu, 18 Feb 2021 11:19:38 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     Ionela Voinescu <ionela.voinescu@arm.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Steev Klimaszewski <steev@kali.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2] cpufreq: qcom-hw: drop devm_xxx() calls from
+ init/exit hooks
+Message-ID: <20210218031938.GA7127@dragon>
+References: <20210119023925.22724-1-shawn.guo@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <YBl8aszdk1xgbg1i@builder.lan>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210119023925.22724-1-shawn.guo@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 2/2/2021 8:23 AM, Bjorn Andersson wrote:
-> On Thu 28 Jan 22:46 CST 2021, Wesley Cheng wrote:
+On Tue, Jan 19, 2021 at 10:39:25AM +0800, Shawn Guo wrote:
+> Commit f17b3e44320b ("cpufreq: qcom-hw: Use
+> devm_platform_ioremap_resource() to simplify code") introduces
+> a regression on platforms using the driver, by failing to initialise
+> a policy, when one is created post hotplug.
 > 
->> In order to take advantage of the TX fifo resizing logic, manually add
->> these properties to the DWC3 child node by default.  This will allow
->> the DWC3 gadget to resize the TX fifos for the IN endpoints, which
->> help with performance.
->>
->> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
->> ---
->>  drivers/usb/dwc3/dwc3-qcom.c | 10 ++++++++++
->>  1 file changed, 10 insertions(+)
->>
->> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
->> index d803ee9..4ea6be3 100644
->> --- a/drivers/usb/dwc3/dwc3-qcom.c
->> +++ b/drivers/usb/dwc3/dwc3-qcom.c
->> @@ -564,6 +564,7 @@ static int dwc3_qcom_clk_init(struct dwc3_qcom *qcom, int count)
->>  
->>  static const struct property_entry dwc3_qcom_acpi_properties[] = {
->>  	PROPERTY_ENTRY_STRING("dr_mode", "host"),
->> +	PROPERTY_ENTRY_BOOL("tx-fifo-resize"),
+> When all the CPUs of a policy are hoptplugged out, the call to .exit()
+> and later to devm_iounmap() does not release the memory region that was
+> requested during devm_platform_ioremap_resource().  Therefore,
+> a subsequent call to .init() will result in the following error, which
+> will prevent a new policy to be initialised:
 > 
-> I checked the ACPI tables for Lenovo Miix 630, Yoga C630 and Flex 5G and
-> neither one has this property specified. So while we could just add this
-> here, it would have to be done in collaboration with the people who
-> actually define these. And as said before, I believe we want this to
-> always be enabled.
+> [ 3395.915416] CPU4: shutdown
+> [ 3395.938185] psci: CPU4 killed (polled 0 ms)
+> [ 3399.071424] CPU5: shutdown
+> [ 3399.094316] psci: CPU5 killed (polled 0 ms)
+> [ 3402.139358] CPU6: shutdown
+> [ 3402.161705] psci: CPU6 killed (polled 0 ms)
+> [ 3404.742939] CPU7: shutdown
+> [ 3404.765592] psci: CPU7 killed (polled 0 ms)
+> [ 3411.492274] Detected VIPT I-cache on CPU4
+> [ 3411.492337] GICv3: CPU4: found redistributor 400 region 0:0x0000000017ae0000
+> [ 3411.492448] CPU4: Booted secondary processor 0x0000000400 [0x516f802d]
+> [ 3411.503654] qcom-cpufreq-hw 17d43000.cpufreq: can't request region for resource [mem 0x17d45800-0x17d46bff]
 > 
->>  	{}
->>  };
->>  
->> @@ -634,6 +635,7 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
->>  	struct dwc3_qcom	*qcom = platform_get_drvdata(pdev);
->>  	struct device_node	*np = pdev->dev.of_node, *dwc3_np;
->>  	struct device		*dev = &pdev->dev;
->> +	struct property		*prop;
->>  	int			ret;
->>  
->>  	dwc3_np = of_get_child_by_name(np, "dwc3");
->> @@ -642,6 +644,14 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
->>  		return -ENODEV;
->>  	}
->>  
->> +	prop = kzalloc(sizeof(*prop), GFP_KERNEL);
->> +	if (prop) {
->> +		prop->name = "tx-fifo-resize";
->> +		ret = of_add_property(dwc3_np, prop);
+> With that being said, the original code was tricky and skipping memory
+> region request intentionally to hide this issue.  The true cause is that
+> those devm_xxx() device managed functions shouldn't be used for cpufreq
+> init/exit hooks, because &pdev->dev is alive across the hooks and will
+> not trigger auto resource free-up.  Let's drop the use of device managed
+> functions and manually allocate/free resources, so that the issue can be
+> fixed properly.
 > 
-> Can't we come up with a way where the platform driver enables this on
-> the core driver without modifying DT?
-> 
-> Regards,
-> Bjorn
+> Fixes: f17b3e44320b ("cpufreq: qcom-hw: Use devm_platform_ioremap_resource() to simplify code")
+> Suggested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
 
-Hi Bjorn,
+Hi Viresh,
 
-Sorry for the late response.  As you know, its a little difficult to
-access the DWC3 core device during DWC3 qcom probe time, as the DWC3
-core will likely return deferred probe due to the PHY devices not being
-ready.
+What happened on this patch?  I thought we would have it in 5.11
+release, but ...
 
-This is why I went with the approach to modify the DWC3 node here, so
-that when the DWC3 core is eventually probed, it wouldn't miss this
-property setting.  If I tried to set this dynamically, say in
-dwc3_qcom_vbus_override() (with proper NULL checks), then I'd miss this
-setting for the first enumeration, but if cable plug out/in logic is
-present, the setting would kick in on subsequent cable events.
-
-Thanks
-Wesley Cheng
-
-> 
->> +		if (ret < 0)
->> +			dev_info(dev, "unable to add tx-fifo-resize prop\n");
->> +	}
->> +
->>  	ret = of_platform_populate(np, NULL, NULL, dev);
->>  	if (ret) {
->>  		dev_err(dev, "failed to register dwc3 core - %d\n", ret);
->> -- 
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
->> a Linux Foundation Collaborative Project
->>
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Shawn
