@@ -2,571 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7559331E646
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Feb 2021 07:26:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6379531E647
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Feb 2021 07:26:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229900AbhBRGVz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Feb 2021 01:21:55 -0500
-Received: from mail-dm6nam12on2113.outbound.protection.outlook.com ([40.107.243.113]:23711
-        "EHLO NAM12-DM6-obe.outbound.protection.outlook.com"
+        id S230336AbhBRGWP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Feb 2021 01:22:15 -0500
+Received: from mail-vi1eur05on2068.outbound.protection.outlook.com ([40.107.21.68]:64800
+        "EHLO EUR05-VI1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S230321AbhBRGP5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Feb 2021 01:15:57 -0500
+        id S230412AbhBRGS2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 18 Feb 2021 01:18:28 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=gqZCty/sgouCxkFt4J89mJsntrk/ye7JGT7YI/dKf3ZirMsvcgkQB71VzGUcLwbey4ShEe5+wp5YL240ZIhGo/S0aZPc+hO675iufJ1Oley7PJF11GoEbOl9ybZRll7SGmDoXUA8iWkFRV64dm7/nhIOYvY6hukcl52Fy6Ny8Tx39zeQjhliqW2UYVl+3yQapE8M1FwqXYR/nZauqwZIr3NBT6vm7c4fqSYM8ZrhKnwCrLLatTxREUzX0S8mg9G7TKoPfmBZaEU3UUqxxARx/CBSVvflH/4L84unr6j5Y4jE3ivEKE90Gp9Es/GmC4iJEFWgNbbKjCj/p1mhds/WnQ==
+ b=TS9aY5nmhiVyyTPZAAY3YoDeoRLn/hpekyJr/0zMyA4SUnn7H8PbNiWAlR4bOJaNHpuddLL7ZH+/ZNOUgH6flOqxoaKKeHxO2YFTtmHSv3x7FLdgCancc5KZPJcKeSJxnEMLz2D8gM/DudxnpeWEuSfaMfyjyMt5de9PEcPrzoiHFoX654CGae5/cvuRRq+BTEYY81dWKbDw6+svVvmCUuO1aKYAQ1S8TncUtIcqF9QSmLBuMWcEAyNMvSjvPNV8A1Cj+ktVb7RP9G2U0RXk49YoYha5EabIRdjrrBg5H9fefKO1NQnV9j6JzqOXoQV0p/uIxJibfU3WclaLonpkqg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8OIgwm4b5XHCNcj7lxCf/bFY2GDHYy5EsgZc6EsLYD4=;
- b=D2JSebvsAX3c7eTb+aYzDlifv/c0ystt74uTrfrcDmL/bzLp57IylzPgssAcL0kdaKbPpBKLdCY1UL0tqD1rl26Kjj8FOgDqgAulEqk/YMlc/BEyhbqJYaz0bDZBDByVhAlUSepU5uc1PRb22QCGG7sVLNfkXZFulAbYSGLZkL0o8EjdqkSZpJZ7QmJP/sUZGe9X7UYPRzMhkm3ydLbyBfMIS1zmmFEOFXDba/bzGWoXC8I8T40yDKyYynswPPSygqNavHP/6y97+q0tLUzilmxlKny8ABfUBkQfsPh3KcGvUWVC7fS0KS1MN4FrEgVXnh5pAEFQejz6JNbUV8QyVw==
+ bh=1wO7KS9jECSiDQ8Sa15S9PhUQSlEKm4qvcCiPnCIjyU=;
+ b=V8cjTFhJIj6WVy5Wf+oYKq61qMBCAzsfo6PyVPDiQwDmXrgXJyz8z1yUVqxl5tCD0acEtBHwW9VJ9Vi8Iq/IhsGls78x6T0XJsqy9hU28Ed3y6VepopYwjCyPvNTqV/kkdHET5u9WbDaiukwwGnTF2CFnCjT8d+aHpJXhN7zvObYCNd17yYnme/WNx6L6QOq8atYeou8W8YpYyBprDgY1TDCtzDE94DoqVbN+HA7S6zcxVSZz/5U3gxS3QBicOutLKXqI9NlzbbPHnRmMiTkumT04tW4qcQSVeTheL9qhv2461YwgdAC3/M690XeOjlRJlEmsNP2gv7h0mxectQtng==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=analogixsemi.com; dmarc=pass action=none
- header.from=analogixsemi.com; dkim=pass header.d=analogixsemi.com; arc=none
+ smtp.mailfrom=fi.rohmeurope.com; dmarc=pass action=none
+ header.from=fi.rohmeurope.com; dkim=pass header.d=fi.rohmeurope.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=Analogixsemi.onmicrosoft.com; s=selector2-Analogixsemi-onmicrosoft-com;
+ d=rohmsemiconductoreurope.onmicrosoft.com;
+ s=selector1-rohmsemiconductoreurope-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8OIgwm4b5XHCNcj7lxCf/bFY2GDHYy5EsgZc6EsLYD4=;
- b=JEzOK7S7dgC2dxPSyuj19e+z/jhcbrlCGKzmN2NTts4M+666h5rWsJ9snxjKGGIgsGOCtzYy6nX6wwkLaxfiNl+mnkHt2AwQZrwbxIXPjhTi1vEc0osNhaaX6mU0M1Ldsem8QX4+X4nlQ7B95sIGmUIRebDjqejDJCHIuyOpuPs=
-Authentication-Results: vger.kernel.org; dkim=none (message not signed)
- header.d=none;vger.kernel.org; dmarc=none action=none
- header.from=analogixsemi.com;
-Received: from BY5PR04MB6739.namprd04.prod.outlook.com (2603:10b6:a03:229::8)
- by BYAPR04MB5269.namprd04.prod.outlook.com (2603:10b6:a03:cb::27) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3846.26; Thu, 18 Feb
- 2021 06:14:20 +0000
-Received: from BY5PR04MB6739.namprd04.prod.outlook.com
- ([fe80::6481:f617:8105:491f]) by BY5PR04MB6739.namprd04.prod.outlook.com
- ([fe80::6481:f617:8105:491f%2]) with mapi id 15.20.3846.038; Thu, 18 Feb 2021
- 06:14:20 +0000
-Date:   Thu, 18 Feb 2021 14:14:13 +0800
-From:   Xin Ji <xji@analogixsemi.com>
-To:     Nicolas Boichat <drinkcat@chromium.org>
-Cc:     Andrzej Hajda <a.hajda@samsung.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Nicolas Boichat <drinkcat@chromium.org>,
-        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Emil Velikov <emil.velikov@collabora.com>,
-        Inki Dae <inki.dae@samsung.com>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Rikard Falkeborn <rikard.falkeborn@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>, Sean Paul <sean@poorly.run>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Xin Ji <xji@analogixsemi.com>, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Subject: Re: [PATCH] drm/dsi: Add _NO_ to MIPI_DSI_* flags disabling features
-Message-ID: <20210218061413.GC2891@zhaomy-pc>
-References: <20210211113309.1.I629b2366a6591410359c7fcf6d385b474b705ca2@changeid>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210211113309.1.I629b2366a6591410359c7fcf6d385b474b705ca2@changeid>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Originating-IP: [61.148.116.10]
-X-ClientProxiedBy: HK2PR02CA0148.apcprd02.prod.outlook.com
- (2603:1096:202:16::32) To BY5PR04MB6739.namprd04.prod.outlook.com
- (2603:10b6:a03:229::8)
+ bh=1wO7KS9jECSiDQ8Sa15S9PhUQSlEKm4qvcCiPnCIjyU=;
+ b=GxZDCXxbhSX2BL3xzULiVK7X8naIMcXKTZakfu47BYwxa0cPf/p8lYfEL+0L/aJUYRqbeXDfWBPBOKCB/vUQyukbSuO+LQwQ3TEgt7e0u9EKv9LLI8UAATmNNwIRRlVLQBbUerXqVxPQvXqH/FMHPQUAJ5G1fq75S+a2ZvgYgo4=
+Received: from HE1PR03MB3162.eurprd03.prod.outlook.com (2603:10a6:7:55::20) by
+ HE1PR0301MB2396.eurprd03.prod.outlook.com (2603:10a6:3:67::17) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3868.27; Thu, 18 Feb 2021 06:15:37 +0000
+Received: from HE1PR03MB3162.eurprd03.prod.outlook.com
+ ([fe80::c18c:4a01:ca24:78c1]) by HE1PR03MB3162.eurprd03.prod.outlook.com
+ ([fe80::c18c:4a01:ca24:78c1%5]) with mapi id 15.20.3846.038; Thu, 18 Feb 2021
+ 06:15:37 +0000
+From:   "Vaittinen, Matti" <Matti.Vaittinen@fi.rohmeurope.com>
+To:     "robh@kernel.org" <robh@kernel.org>
+CC:     "agross@kernel.org" <agross@kernel.org>,
+        "broonie@kernel.org" <broonie@kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        linux-power <linux-power@fi.rohmeurope.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-renesas-soc@vger.kernel.org" 
+        <linux-renesas-soc@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        "lgirdwood@gmail.com" <lgirdwood@gmail.com>
+Subject: Re: [RFC PATCH 5/7] dt-bindings: regulator: bd9576 add FET
+ ON-resistance for OCW
+Thread-Topic: [RFC PATCH 5/7] dt-bindings: regulator: bd9576 add FET
+ ON-resistance for OCW
+Thread-Index: AQHXAHJu3Svdke5q00WPonJJusD7Qqpc6F4AgACRrgA=
+Date:   Thu, 18 Feb 2021 06:15:36 +0000
+Message-ID: <2060c166226c2bd18d240ae266d5fae813d18294.camel@fi.rohmeurope.com>
+References: <cover.1613042245.git.matti.vaittinen@fi.rohmeurope.com>
+         <b7025d14fc8eb0eac95437ac62e74f64a7cf2b4c.1613042245.git.matti.vaittinen@fi.rohmeurope.com>
+         <20210217213412.GA2800178@robh.at.kernel.org>
+In-Reply-To: <20210217213412.GA2800178@robh.at.kernel.org>
+Reply-To: "Vaittinen, Matti" <Matti.Vaittinen@fi.rohmeurope.com>
+Accept-Language: fi-FI, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Evolution 3.34.4 (3.34.4-1.fc31) 
+authentication-results: kernel.org; dkim=none (message not signed)
+ header.d=none;kernel.org; dmarc=none action=none
+ header.from=fi.rohmeurope.com;
+x-originating-ip: [213.255.186.46]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 0fa75f9c-51f4-4e34-3337-08d8d3d49bb3
+x-ms-traffictypediagnostic: HE1PR0301MB2396:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <HE1PR0301MB2396DC46351769D0C7C25BDBAD859@HE1PR0301MB2396.eurprd03.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:9508;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: YPYXL0hudR9lSobAddx7u1EDyJNiGHMxyagoVGlp2iDY+9K5wNMrE4O01gjbilQYOGXSkB5p2HcGEx5snyePR8vaXJUqqt+hMA85lKykjnRPudg7K7RpQwMtKp5y92+kYzpDxMuJl9edG21gQe4i8PoJdeYSi92imipLhKIKWcIrPCCqP88Psm8gAewtIRIm+8g/7dCvW0ojpcpRXSVZENYWxvW5BaPyd4M4pt5ocQqD9FK2j7Fgnhe1l2P/B2OfsYHTvKK11X/4sodOnIisurpoZ/NFab/6ITac0ZxfmVnSeMVzZwfdFuVzVBGe2tnk58LHA1K2L3K4W9D0rYOPTmX37Geg3M0p5WMem0wk/Bc6ovzV/RZ3ddlcJE0AzJBpZ1PkXTbGwEd0yHHIipf25zyWXSxoOzTHvh3uUhrghUhLijPTKuVCR6wrXCIKkf4Wvu/el/ZpmNGHjcOptGZx3pYTOvocgIU8Q9ylNHqy9W9pXRMqvjUjygjf7d3vZQSO/IO+Wtl988rnDulNf9lh1Q==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:HE1PR03MB3162.eurprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(376002)(366004)(136003)(396003)(39840400004)(346002)(5660300002)(66556008)(66446008)(66946007)(6506007)(6512007)(66476007)(64756008)(6916009)(83380400001)(76116006)(71200400001)(54906003)(316002)(186003)(3450700001)(2616005)(4326008)(478600001)(26005)(6486002)(86362001)(2906002)(8936002)(8676002);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata: =?utf-8?B?dCswNTJlMVNic0RhWW1kdU1vdmQ4dFJZZE5nWndGOUgxRXgxdVJJUnY1ajJ4?=
+ =?utf-8?B?ajVaemNXM1R6U3NwRi9IbnhlSVBpOE56NXAraGRSa0JwOE1lM1FOTU90TVRu?=
+ =?utf-8?B?cDAveWZ2dWZ1WWZMSncyWWg0d09zcWFWcnEyMjU5MlJKUDRIb2JvU1VQWjNn?=
+ =?utf-8?B?SjduaEYwU0JuQ09wL1VxelhockVYa1dOREFRTStHOWY1Sll5WnhJQ1YxY2FR?=
+ =?utf-8?B?NU8yTVlJWElaWGlDT2tiRCtQOUtqSXVPUnZFTUtsVUFFUm9ZQjdYaWp1Q1Zv?=
+ =?utf-8?B?dU0vMjh1UDFzSWFrT1BhUDVyVThpUkRZWFo3MmJPY3NwT01STmhqSEZxK0ho?=
+ =?utf-8?B?Y2NqSFhZb1ZaV1pFVTJWUUNhRnlCV0ZzcGpqT3c2VXRtUUZJbitiY1lZSnZn?=
+ =?utf-8?B?ek9iV1FzYitoYVpSYXl4aWsyODVyVDlRaHptZDhIV1BRTERxMGRvMkNabm1n?=
+ =?utf-8?B?M3Q0VG5UYmNUTldYZmVNVER4cEJoU1pxNElJZEN6OE0yMWs0VFE0eW5iU2M4?=
+ =?utf-8?B?KythWnBuR1VUajlRanF2MTNnc3RORzZGTjhuRk84RTlYaSsvTjhCWkY5T1p0?=
+ =?utf-8?B?S1BrMGpmRU10aktISnhVTVd4ZlVuaGI5L01NdE5WZENBTCtUVER3VkxXdEtP?=
+ =?utf-8?B?NnZEMy9uTUVOMVZVYXJjMDFnUUR3aFVJRTZyN2FlcTBNZGFCanJFQmt6WWtW?=
+ =?utf-8?B?T2RvVkhDWHVBVXh2emNNMTlML1VGN1hQTTFnMkNQQndJRE9ydmd1UGVQMU5W?=
+ =?utf-8?B?a0M1Z3JBUzI0bHJBbTRRS2FPWG5mdUR2enVIT3l2c2hsVzh3QWNPZHhvYmI3?=
+ =?utf-8?B?Wnh1TS91SkxYYTY5NkgzNzdBUDVmbHBFTW81a3JNK0ZEdEFHWHd5cmNQMHFE?=
+ =?utf-8?B?VEt3elo0QzE5dmNoTVRHZkQxcWxOMzJxQTkrOC9PWWQ0aFNTK0E5aUZpa1di?=
+ =?utf-8?B?cEZSM0ZYOS84Wk05SkhTdUdacG0ycUdnZ203U0hRUXJ1LzBxMlVWY1p6c0d2?=
+ =?utf-8?B?OVJhcy9kc3dBVkVsNGFoK1ZFc3VrOTlWbmtrWkQrSTlzb2JDeHlBWXVmMUhS?=
+ =?utf-8?B?K0hSQjA3TkFQTXB2a1hSYlhRbnVTdkFieWVGRUhMTUIxWlJIL2gvOXk2SStY?=
+ =?utf-8?B?QmF4SG4wMlJaMkRSVmtYL001dVlJYXlJVFlwRjcrcjdvWHlIaWFLMzRaOEIz?=
+ =?utf-8?B?OU82SURjV0ZYUTBQZ2JiNmx5NHB1M1ZGcVJtTHBGNWQ3T2dlK2cvMDAzcDRL?=
+ =?utf-8?B?OUJMeW9DbnRIVUNjZGJ2eWFRaHFiNGUwZUdkL3NJdHIvYndOdjc5cjh2bWw2?=
+ =?utf-8?B?ejMyaWQxSzloUUFxMGF6Z3FHSWNaUGNrNFV3K25tMUN5ZEVBT2RobXZBTlFP?=
+ =?utf-8?B?djZOUCtwcittT2V0RVNDODkwcG02cFFiRG0wSGZ1UmplZUJTRzFIemVvckk4?=
+ =?utf-8?B?RjhYQ1J3R3VWV0hKVHRyTENsY0dHZkhQbVNFSDBoWXcrZXdaMTNEeWNFZVZj?=
+ =?utf-8?B?Vmd2WFhBaTRrQTMzSkNFa2plc0R3RUt2N0p5TDFsY1ZuaHJ3Z2pXWm5CVmhF?=
+ =?utf-8?B?dC9pL0xOa1VnaUxnb1NRbHNScVFEaUQzSXZXWko4eGJzekdaSUJlajhaU3pU?=
+ =?utf-8?B?M3dHTHdPZi9rblR0d1lEdGF3YWdxMEJsOWlSN1hmbTBJd2JWaFlncllyajQx?=
+ =?utf-8?B?a1JzWEg0cHo4eEYrMjVPSVd2TWJ5QUgrcEs1aUJKWEdNNFIrWHFHaWxIb0FL?=
+ =?utf-8?B?UWtaNkJHM1NWU3VnMTBLNXYxRDdTalVUYURuRXB2UFE4aW5MWU91cXE0ckZ4?=
+ =?utf-8?B?K2szb24yRldEaHRTYllWUT09?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <D218D037C4A1BF40B5F3310D9F972CD3@eurprd03.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from zhaomy-pc (61.148.116.10) by HK2PR02CA0148.apcprd02.prod.outlook.com (2603:1096:202:16::32) with Microsoft SMTP Server (version=TLS1_0, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA) id 15.20.3868.27 via Frontend Transport; Thu, 18 Feb 2021 06:14:19 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 56a76e68-8183-4139-180b-08d8d3d46d63
-X-MS-TrafficTypeDiagnostic: BYAPR04MB5269:
-X-MS-Exchange-Transport-Forked: True
-X-Microsoft-Antispam-PRVS: <BYAPR04MB5269757616E47F2EBC595C5CC7859@BYAPR04MB5269.namprd04.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:172;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 4IBXxoKl0flHAEdhkW8haGWjLDFkRmoWEC8R2q56wzIvnkYBm1jOPeZ1rom3e/71CBmtNhNXjFu0CZ8K1DAXFBKppK0GXKHx2CAa/5do2Vv7NtaeOPPuVMVHiOTGwtgiEs1jwa6juzl8ghYLG0WtmaUN3yAoq9XhDzuyBV9PpLLAJ9FKUwwQaT39HgYMvEmgKC/F3QngTLW46BOu6ErDv10r+4gVUlnQyiT+1316zjQR0CKuQvLPs17XBLMtu2Ki9Ymosk6uYtB33OmVL7zgLhiC6Ny4YND5G0q/Rwx+FEx8MbTTDcdFehG1/ggTdqrWglNVyZWyg7fd+xFBvxLAEa+JZGBnsWdz6Cx2WEn8DxUOMWCsKzYe3aPgPwhFAiZeic0hHiytnjXGWQ24tX7Li0UT1p+OMa4xvQRDh+mngDIcXNvZpZcyAUv3JYpZfa1c/Xc9MOWfswUP/nD5/VjWXD/xG4KQ5AtBRoYG5zS8tiqFztusDu0jWnsyIgaiMv0nV0GloD0s1JvAEOh8mo6UMNiRzYH/qMvoJhBl507mnti8RhCEnfx0gVPvwWG9JAdn4ZBOGJengC84zg3p987fig==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BY5PR04MB6739.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(346002)(366004)(396003)(376002)(39840400004)(136003)(2906002)(55016002)(9686003)(66556008)(6916009)(478600001)(26005)(186003)(52116002)(6496006)(66946007)(6666004)(16526019)(33716001)(66476007)(4326008)(83380400001)(8936002)(30864003)(956004)(54906003)(33656002)(86362001)(8676002)(1076003)(5660300002)(7406005)(7416002)(316002)(16060500005);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData: =?us-ascii?Q?36aof7kjtcmp5KxssX+KxnQVJhpv5xHfMN6LHzC+oVZhzP2OTfnVwig6R5D0?=
- =?us-ascii?Q?QnxzozctqBjZOfQ/zk6LVZjn6myLrfW/WNau8YZMMgrqha5pvwU6oUAWcw5p?=
- =?us-ascii?Q?Mu5eKabRaqw/AAcjKqnydb0SRX3g5Q77ZQXbS+tRAGRg/SGOZ3Ic3HlyGqV3?=
- =?us-ascii?Q?mgnSFVpHVGp8bRHZqN9s9plM9SvKYnWpxm6Fb3l5qfncEjy9GEduQHtmj0te?=
- =?us-ascii?Q?Wb9d3FwVS3zoL80/ZSs3tFVVvH3V1oRPQnzO2PGHCVMZJL0ivUiA/tLAKMcJ?=
- =?us-ascii?Q?FX0CLAdF0a6ZrfP0G4wZM66zxOULmthpVUFWNA6euduGYQvNZtQClNRr0nMw?=
- =?us-ascii?Q?+DDN8RO8Q5vNHZro1mBkJ7EJEXVKD+uQp0hOiYPRwRgQwp7JCgHbZLBeI9v/?=
- =?us-ascii?Q?Pt5BSyAt7cZY4nSYt930HcqHAwkTTOS0gewluSjSu/sOtwQsBoR3PHOPkE49?=
- =?us-ascii?Q?p3bnGNjRNEqtjr5x78ZreiWl8hPpg8WS677NnVjeIUtcxn3KVi+/brOe3GDD?=
- =?us-ascii?Q?6e6pSDRsqia3eRlveHNtHwnlgDN+l44bJoU1b5qc4Qt1s3/V9aLSTmW7Nm35?=
- =?us-ascii?Q?QYPFFPoOSvayzqLqHv9I8/bHWmy+FmlGq+3b1pxgFaL5JAldOiAX20CALJ+w?=
- =?us-ascii?Q?2OU2l67BJsjP79KmpXC4j3TYZzYHor1ESh0RlpUYzoXMKq+3cPD8mvMfZp+O?=
- =?us-ascii?Q?JRZpW/keQWM++xvKg/yajq7XLfFXn3dTMuDy0oOg3DwKgDULfJW/GrKLmLO7?=
- =?us-ascii?Q?d/vob367nc9Smi9CXUunEq3MPTV08i6dpxaKajckvKKmOgzlVDbqehWmJJU2?=
- =?us-ascii?Q?AUpb4h7n82QCzjt6Eg0Cn/1LfF9LnsxfCD/bYm2otam5iT1NPnhqjTxnymOZ?=
- =?us-ascii?Q?s/fxqTqTkr//bn+U7kfOHV988/Zj7e6zFgA4LF7VGigZU75scloJ30/DMwO6?=
- =?us-ascii?Q?CXUiH8BxViOVpqA5lc9GzvJJeiv40huCkriM8V4dxXCU38Xlo5efO/Nt1axF?=
- =?us-ascii?Q?bOpRM8JjEEwXCS2wwuPNhdppRYTbz4ueGBMOM5UAZ2NcrJoeOCGrD8Inx5eh?=
- =?us-ascii?Q?CBRoT0U7kHUxuN/4XeC1RO5z5XUzvDMKy5CsHd95+BTWG2XcRzhVltbh43X2?=
- =?us-ascii?Q?jJLw0is3pHG7o2K9pS7HSjbMnS7iyBqmJXCV3C44mRJaZM0OlxERHcR0w1jC?=
- =?us-ascii?Q?eWr/WRlCHXMCuOqcpnF9wMcO/Peu/XWm6SrJBumcifmyjjncCnjowFLbSIFv?=
- =?us-ascii?Q?ns9lzD5222Kv3f1jS7gjbVdYW5umLqhHDuR9oWbrahGNit7jopeY3H8Ar+f1?=
- =?us-ascii?Q?grHTF34qFk0d8ygBXJoglD61?=
-X-OriginatorOrg: analogixsemi.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 56a76e68-8183-4139-180b-08d8d3d46d63
-X-MS-Exchange-CrossTenant-AuthSource: BY5PR04MB6739.namprd04.prod.outlook.com
+X-OriginatorOrg: fi.rohmeurope.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Feb 2021 06:14:20.1453
+X-MS-Exchange-CrossTenant-AuthSource: HE1PR03MB3162.eurprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0fa75f9c-51f4-4e34-3337-08d8d3d49bb3
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Feb 2021 06:15:37.0875
  (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: b099b0b4-f26c-4cf5-9a0f-d5be9acab205
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: PF+1Qqnr6rM4x6WQl3sOu/Ee0i5o8DtStTBzK0IUsUFPYaIYjVzPAnwde0ZH9wczQ7K/Y852ZPJQhk4AHzk7Rw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR04MB5269
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 94f2c475-a538-4112-b5dd-63f17273d67a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 0CHQKB0IKEzYFqJc6x8BJWvRQX6KlOCfbEX2wLjtai1QurfIi4sHZJqbEe3/e0/ureVgKQPgblm/qKvXdn0AxmdYTHrmGg2fp79TBvQT2sclCYb6UqAbhjhfOrwGlQO3
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HE1PR0301MB2396
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Nicolas,
-
-On Thu, Feb 11, 2021 at 11:33:55AM +0800, Nicolas Boichat wrote:
-> Many of the DSI flags have names opposite to their actual effects,
-> e.g. MIPI_DSI_MODE_EOT_PACKET means that EoT packets will actually
-> be disabled. Fix this by including _NO_ in the flag names, e.g.
-> MIPI_DSI_MODE_NO_EOT_PACKET.
-
-It is OK for anx7625.c part, Please add my r-b.
-
-Reviewed-by: Xin Ji <xji@analogixsemi.com>
-
-> 
-> Signed-off-by: Nicolas Boichat <drinkcat@chromium.org>
-> ---
-> I considered adding _DISABLE_ instead, but that'd make the
-> flag names a big too long.
-> 
-> Generated with:
-> flag=MIPI_DSI_MODE_VIDEO_HFP; git grep $flag | cut -f1 -d':' | \
->   xargs -I{} sed -i -e "s/$flag/MIPI_DSI_MODE_VIDEO_NO_HFP/" {}
-> flag=MIPI_DSI_MODE_VIDEO_HBP; git grep $flag | cut -f1 -d':' | \
->   xargs -I{} sed -i -e "s/$flag/MIPI_DSI_MODE_VIDEO_NO_HBP/" {}
-> flag=MIPI_DSI_MODE_VIDEO_HSA; git grep $flag | cut -f1 -d':' | \
->   xargs -I{} sed -i -e "s/$flag/MIPI_DSI_MODE_VIDEO_NO_HSA/" {}
-> flag=MIPI_DSI_MODE_EOT_PACKET; git grep $flag | cut -f1 -d':' | \
->   xargs -I{} sed -i -e "s/$flag/MIPI_DSI_MODE_NO_EOT_PACKET/" {}
-> (then minor format changes)
-> 
->  drivers/gpu/drm/bridge/adv7511/adv7533.c             | 2 +-
->  drivers/gpu/drm/bridge/analogix/anx7625.c            | 2 +-
->  drivers/gpu/drm/bridge/cdns-dsi.c                    | 4 ++--
->  drivers/gpu/drm/bridge/tc358768.c                    | 2 +-
->  drivers/gpu/drm/exynos/exynos_drm_dsi.c              | 8 ++++----
->  drivers/gpu/drm/mcde/mcde_dsi.c                      | 2 +-
->  drivers/gpu/drm/mediatek/mtk_dsi.c                   | 2 +-
->  drivers/gpu/drm/msm/dsi/dsi_host.c                   | 8 ++++----
->  drivers/gpu/drm/panel/panel-asus-z00t-tm5p5-n35596.c | 2 +-
->  drivers/gpu/drm/panel/panel-dsi-cm.c                 | 2 +-
->  drivers/gpu/drm/panel/panel-elida-kd35t133.c         | 2 +-
->  drivers/gpu/drm/panel/panel-khadas-ts050.c           | 2 +-
->  drivers/gpu/drm/panel/panel-leadtek-ltk050h3146w.c   | 2 +-
->  drivers/gpu/drm/panel/panel-leadtek-ltk500hd1829.c   | 2 +-
->  drivers/gpu/drm/panel/panel-novatek-nt35510.c        | 2 +-
->  drivers/gpu/drm/panel/panel-osd-osd101t2587-53ts.c   | 2 +-
->  drivers/gpu/drm/panel/panel-samsung-s6d16d0.c        | 2 +-
->  drivers/gpu/drm/panel/panel-samsung-s6e63j0x03.c     | 2 +-
->  drivers/gpu/drm/panel/panel-samsung-s6e63m0-dsi.c    | 2 +-
->  drivers/gpu/drm/panel/panel-samsung-s6e8aa0.c        | 4 ++--
->  drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c      | 2 +-
->  drivers/gpu/drm/panel/panel-simple.c                 | 2 +-
->  drivers/gpu/drm/panel/panel-sony-acx424akp.c         | 2 +-
->  drivers/gpu/drm/panel/panel-xinpeng-xpp055c272.c     | 2 +-
->  include/drm/drm_mipi_dsi.h                           | 8 ++++----
->  25 files changed, 36 insertions(+), 36 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/bridge/adv7511/adv7533.c b/drivers/gpu/drm/bridge/adv7511/adv7533.c
-> index aa19d5a40e31..59d718bde8c4 100644
-> --- a/drivers/gpu/drm/bridge/adv7511/adv7533.c
-> +++ b/drivers/gpu/drm/bridge/adv7511/adv7533.c
-> @@ -165,7 +165,7 @@ int adv7533_attach_dsi(struct adv7511 *adv)
->  	dsi->lanes = adv->num_dsi_lanes;
->  	dsi->format = MIPI_DSI_FMT_RGB888;
->  	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_SYNC_PULSE |
-> -			  MIPI_DSI_MODE_EOT_PACKET | MIPI_DSI_MODE_VIDEO_HSE;
-> +			  MIPI_DSI_MODE_NO_EOT_PACKET | MIPI_DSI_MODE_VIDEO_HSE;
->  
->  	ret = mipi_dsi_attach(dsi);
->  	if (ret < 0) {
-> diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c b/drivers/gpu/drm/bridge/analogix/anx7625.c
-> index 65cc05982f82..beecfe6bf359 100644
-> --- a/drivers/gpu/drm/bridge/analogix/anx7625.c
-> +++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
-> @@ -1334,7 +1334,7 @@ static int anx7625_attach_dsi(struct anx7625_data *ctx)
->  	dsi->format = MIPI_DSI_FMT_RGB888;
->  	dsi->mode_flags = MIPI_DSI_MODE_VIDEO	|
->  		MIPI_DSI_MODE_VIDEO_SYNC_PULSE	|
-> -		MIPI_DSI_MODE_EOT_PACKET	|
-> +		MIPI_DSI_MODE_NO_EOT_PACKET	|
->  		MIPI_DSI_MODE_VIDEO_HSE;
->  
->  	if (mipi_dsi_attach(dsi) < 0) {
-> diff --git a/drivers/gpu/drm/bridge/cdns-dsi.c b/drivers/gpu/drm/bridge/cdns-dsi.c
-> index 76373e31df92..34aa24269a57 100644
-> --- a/drivers/gpu/drm/bridge/cdns-dsi.c
-> +++ b/drivers/gpu/drm/bridge/cdns-dsi.c
-> @@ -829,7 +829,7 @@ static void cdns_dsi_bridge_enable(struct drm_bridge *bridge)
->  	tmp = DIV_ROUND_UP(dsi_cfg.htotal, nlanes) -
->  	      DIV_ROUND_UP(dsi_cfg.hsa, nlanes);
->  
-> -	if (!(output->dev->mode_flags & MIPI_DSI_MODE_EOT_PACKET))
-> +	if (!(output->dev->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET))
->  		tmp -= DIV_ROUND_UP(DSI_EOT_PKT_SIZE, nlanes);
->  
->  	tx_byte_period = DIV_ROUND_DOWN_ULL((u64)NSEC_PER_SEC * 8,
-> @@ -902,7 +902,7 @@ static void cdns_dsi_bridge_enable(struct drm_bridge *bridge)
->  	tmp = readl(dsi->regs + MCTL_MAIN_DATA_CTL);
->  	tmp &= ~(IF_VID_SELECT_MASK | HOST_EOT_GEN | IF_VID_MODE);
->  
-> -	if (!(output->dev->mode_flags & MIPI_DSI_MODE_EOT_PACKET))
-> +	if (!(output->dev->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET))
->  		tmp |= HOST_EOT_GEN;
->  
->  	if (output->dev->mode_flags & MIPI_DSI_MODE_VIDEO)
-> diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
-> index 8ed8302d6bbb..320f95ae6077 100644
-> --- a/drivers/gpu/drm/bridge/tc358768.c
-> +++ b/drivers/gpu/drm/bridge/tc358768.c
-> @@ -825,7 +825,7 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
->  	if (!(dsi_dev->mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS))
->  		val |= TC358768_DSI_CONTROL_HSCKMD;
->  
-> -	if (dsi_dev->mode_flags & MIPI_DSI_MODE_EOT_PACKET)
-> +	if (dsi_dev->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET)
->  		val |= TC358768_DSI_CONTROL_EOTDIS;
->  
->  	tc358768_write(priv, TC358768_DSI_CONFW, val);
-> diff --git a/drivers/gpu/drm/exynos/exynos_drm_dsi.c b/drivers/gpu/drm/exynos/exynos_drm_dsi.c
-> index 83ab6b343f51..99249d0da330 100644
-> --- a/drivers/gpu/drm/exynos/exynos_drm_dsi.c
-> +++ b/drivers/gpu/drm/exynos/exynos_drm_dsi.c
-> @@ -809,15 +809,15 @@ static int exynos_dsi_init_link(struct exynos_dsi *dsi)
->  			reg |= DSIM_AUTO_MODE;
->  		if (dsi->mode_flags & MIPI_DSI_MODE_VIDEO_HSE)
->  			reg |= DSIM_HSE_MODE;
-> -		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_HFP))
-> +		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HFP))
->  			reg |= DSIM_HFP_MODE;
-> -		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_HBP))
-> +		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HBP))
->  			reg |= DSIM_HBP_MODE;
-> -		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_HSA))
-> +		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HSA))
->  			reg |= DSIM_HSA_MODE;
->  	}
->  
-> -	if (!(dsi->mode_flags & MIPI_DSI_MODE_EOT_PACKET))
-> +	if (!(dsi->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET))
->  		reg |= DSIM_EOT_DISABLE;
->  
->  	switch (dsi->format) {
-> diff --git a/drivers/gpu/drm/mcde/mcde_dsi.c b/drivers/gpu/drm/mcde/mcde_dsi.c
-> index 2314c8122992..f4cdc3cfd7d0 100644
-> --- a/drivers/gpu/drm/mcde/mcde_dsi.c
-> +++ b/drivers/gpu/drm/mcde/mcde_dsi.c
-> @@ -760,7 +760,7 @@ static void mcde_dsi_start(struct mcde_dsi *d)
->  		DSI_MCTL_MAIN_DATA_CTL_BTA_EN |
->  		DSI_MCTL_MAIN_DATA_CTL_READ_EN |
->  		DSI_MCTL_MAIN_DATA_CTL_REG_TE_EN;
-> -	if (d->mdsi->mode_flags & MIPI_DSI_MODE_EOT_PACKET)
-> +	if (d->mdsi->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET)
->  		val |= DSI_MCTL_MAIN_DATA_CTL_HOST_EOT_GEN;
->  	writel(val, d->regs + DSI_MCTL_MAIN_DATA_CTL);
->  
-> diff --git a/drivers/gpu/drm/mediatek/mtk_dsi.c b/drivers/gpu/drm/mediatek/mtk_dsi.c
-> index a1ff152ef468..5c0c9180273a 100644
-> --- a/drivers/gpu/drm/mediatek/mtk_dsi.c
-> +++ b/drivers/gpu/drm/mediatek/mtk_dsi.c
-> @@ -402,7 +402,7 @@ static void mtk_dsi_rxtx_control(struct mtk_dsi *dsi)
->  	}
->  
->  	tmp_reg |= (dsi->mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS) << 6;
-> -	tmp_reg |= (dsi->mode_flags & MIPI_DSI_MODE_EOT_PACKET) >> 3;
-> +	tmp_reg |= (dsi->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET) >> 3;
->  
->  	writel(tmp_reg, dsi->regs + DSI_TXRX_CTRL);
->  }
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index ab281cba0f08..a97a7822e596 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -850,11 +850,11 @@ static void dsi_ctrl_config(struct msm_dsi_host *msm_host, bool enable,
->  	if (flags & MIPI_DSI_MODE_VIDEO) {
->  		if (flags & MIPI_DSI_MODE_VIDEO_HSE)
->  			data |= DSI_VID_CFG0_PULSE_MODE_HSA_HE;
-> -		if (flags & MIPI_DSI_MODE_VIDEO_HFP)
-> +		if (flags & MIPI_DSI_MODE_VIDEO_NO_HFP)
->  			data |= DSI_VID_CFG0_HFP_POWER_STOP;
-> -		if (flags & MIPI_DSI_MODE_VIDEO_HBP)
-> +		if (flags & MIPI_DSI_MODE_VIDEO_NO_HBP)
->  			data |= DSI_VID_CFG0_HBP_POWER_STOP;
-> -		if (flags & MIPI_DSI_MODE_VIDEO_HSA)
-> +		if (flags & MIPI_DSI_MODE_VIDEO_NO_HSA)
->  			data |= DSI_VID_CFG0_HSA_POWER_STOP;
->  		/* Always set low power stop mode for BLLP
->  		 * to let command engine send packets
-> @@ -909,7 +909,7 @@ static void dsi_ctrl_config(struct msm_dsi_host *msm_host, bool enable,
->  			  DSI_T_CLK_PRE_EXTEND_INC_BY_2_BYTECLK);
->  
->  	data = 0;
-> -	if (!(flags & MIPI_DSI_MODE_EOT_PACKET))
-> +	if (!(flags & MIPI_DSI_MODE_NO_EOT_PACKET))
->  		data |= DSI_EOT_PACKET_CTRL_TX_EOT_APPEND;
->  	dsi_write(msm_host, REG_DSI_EOT_PACKET_CTRL, data);
->  
-> diff --git a/drivers/gpu/drm/panel/panel-asus-z00t-tm5p5-n35596.c b/drivers/gpu/drm/panel/panel-asus-z00t-tm5p5-n35596.c
-> index e95bc9f60b3f..44674ebedf59 100644
-> --- a/drivers/gpu/drm/panel/panel-asus-z00t-tm5p5-n35596.c
-> +++ b/drivers/gpu/drm/panel/panel-asus-z00t-tm5p5-n35596.c
-> @@ -302,7 +302,7 @@ static int tm5p5_nt35596_probe(struct mipi_dsi_device *dsi)
->  	dsi->lanes = 4;
->  	dsi->format = MIPI_DSI_FMT_RGB888;
->  	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
-> -			  MIPI_DSI_MODE_VIDEO_HSE | MIPI_DSI_MODE_EOT_PACKET |
-> +			  MIPI_DSI_MODE_VIDEO_HSE | MIPI_DSI_MODE_NO_EOT_PACKET |
->  			  MIPI_DSI_CLOCK_NON_CONTINUOUS | MIPI_DSI_MODE_LPM;
->  
->  	drm_panel_init(&ctx->panel, dev, &tm5p5_nt35596_panel_funcs,
-> diff --git a/drivers/gpu/drm/panel/panel-dsi-cm.c b/drivers/gpu/drm/panel/panel-dsi-cm.c
-> index af381d756ac1..178abfb1737c 100644
-> --- a/drivers/gpu/drm/panel/panel-dsi-cm.c
-> +++ b/drivers/gpu/drm/panel/panel-dsi-cm.c
-> @@ -571,7 +571,7 @@ static int dsicm_probe(struct mipi_dsi_device *dsi)
->  	dsi->lanes = 2;
->  	dsi->format = MIPI_DSI_FMT_RGB888;
->  	dsi->mode_flags = MIPI_DSI_CLOCK_NON_CONTINUOUS |
-> -			  MIPI_DSI_MODE_EOT_PACKET;
-> +			  MIPI_DSI_MODE_NO_EOT_PACKET;
->  	dsi->hs_rate = ddata->panel_data->max_hs_rate;
->  	dsi->lp_rate = ddata->panel_data->max_lp_rate;
->  
-> diff --git a/drivers/gpu/drm/panel/panel-elida-kd35t133.c b/drivers/gpu/drm/panel/panel-elida-kd35t133.c
-> index bc36aa3c1123..ae3361ccccd5 100644
-> --- a/drivers/gpu/drm/panel/panel-elida-kd35t133.c
-> +++ b/drivers/gpu/drm/panel/panel-elida-kd35t133.c
-> @@ -265,7 +265,7 @@ static int kd35t133_probe(struct mipi_dsi_device *dsi)
->  	dsi->lanes = 1;
->  	dsi->format = MIPI_DSI_FMT_RGB888;
->  	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
-> -			  MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_EOT_PACKET;
-> +			  MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_NO_EOT_PACKET;
->  
->  	drm_panel_init(&ctx->panel, &dsi->dev, &kd35t133_funcs,
->  		       DRM_MODE_CONNECTOR_DSI);
-> diff --git a/drivers/gpu/drm/panel/panel-khadas-ts050.c b/drivers/gpu/drm/panel/panel-khadas-ts050.c
-> index 8f6ac1a40c31..a3ec4cbdbf7a 100644
-> --- a/drivers/gpu/drm/panel/panel-khadas-ts050.c
-> +++ b/drivers/gpu/drm/panel/panel-khadas-ts050.c
-> @@ -809,7 +809,7 @@ static int khadas_ts050_panel_probe(struct mipi_dsi_device *dsi)
->  	dsi->lanes = 4;
->  	dsi->format = MIPI_DSI_FMT_RGB888;
->  	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
-> -			  MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_EOT_PACKET;
-> +			  MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_NO_EOT_PACKET;
->  
->  	khadas_ts050 = devm_kzalloc(&dsi->dev, sizeof(*khadas_ts050),
->  				    GFP_KERNEL);
-> diff --git a/drivers/gpu/drm/panel/panel-leadtek-ltk050h3146w.c b/drivers/gpu/drm/panel/panel-leadtek-ltk050h3146w.c
-> index ed0d5f959037..a5a414920430 100644
-> --- a/drivers/gpu/drm/panel/panel-leadtek-ltk050h3146w.c
-> +++ b/drivers/gpu/drm/panel/panel-leadtek-ltk050h3146w.c
-> @@ -593,7 +593,7 @@ static int ltk050h3146w_probe(struct mipi_dsi_device *dsi)
->  	dsi->lanes = 4;
->  	dsi->format = MIPI_DSI_FMT_RGB888;
->  	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
-> -			  MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_EOT_PACKET;
-> +			  MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_NO_EOT_PACKET;
->  
->  	drm_panel_init(&ctx->panel, &dsi->dev, &ltk050h3146w_funcs,
->  		       DRM_MODE_CONNECTOR_DSI);
-> diff --git a/drivers/gpu/drm/panel/panel-leadtek-ltk500hd1829.c b/drivers/gpu/drm/panel/panel-leadtek-ltk500hd1829.c
-> index 3c00e4f8f803..21e48923836d 100644
-> --- a/drivers/gpu/drm/panel/panel-leadtek-ltk500hd1829.c
-> +++ b/drivers/gpu/drm/panel/panel-leadtek-ltk500hd1829.c
-> @@ -442,7 +442,7 @@ static int ltk500hd1829_probe(struct mipi_dsi_device *dsi)
->  	dsi->lanes = 4;
->  	dsi->format = MIPI_DSI_FMT_RGB888;
->  	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
-> -			  MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_EOT_PACKET;
-> +			  MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_NO_EOT_PACKET;
->  
->  	drm_panel_init(&ctx->panel, &dsi->dev, &ltk500hd1829_funcs,
->  		       DRM_MODE_CONNECTOR_DSI);
-> diff --git a/drivers/gpu/drm/panel/panel-novatek-nt35510.c b/drivers/gpu/drm/panel/panel-novatek-nt35510.c
-> index b9a0e56f33e2..9d9334656803 100644
-> --- a/drivers/gpu/drm/panel/panel-novatek-nt35510.c
-> +++ b/drivers/gpu/drm/panel/panel-novatek-nt35510.c
-> @@ -899,7 +899,7 @@ static int nt35510_probe(struct mipi_dsi_device *dsi)
->  	dsi->hs_rate = 349440000;
->  	dsi->lp_rate = 9600000;
->  	dsi->mode_flags = MIPI_DSI_CLOCK_NON_CONTINUOUS |
-> -		MIPI_DSI_MODE_EOT_PACKET;
-> +		MIPI_DSI_MODE_NO_EOT_PACKET;
->  
->  	/*
->  	 * Every new incarnation of this display must have a unique
-> diff --git a/drivers/gpu/drm/panel/panel-osd-osd101t2587-53ts.c b/drivers/gpu/drm/panel/panel-osd-osd101t2587-53ts.c
-> index 45b975dee587..198493a6eb6a 100644
-> --- a/drivers/gpu/drm/panel/panel-osd-osd101t2587-53ts.c
-> +++ b/drivers/gpu/drm/panel/panel-osd-osd101t2587-53ts.c
-> @@ -184,7 +184,7 @@ static int osd101t2587_panel_probe(struct mipi_dsi_device *dsi)
->  	dsi->mode_flags = MIPI_DSI_MODE_VIDEO |
->  			  MIPI_DSI_MODE_VIDEO_BURST |
->  			  MIPI_DSI_MODE_VIDEO_SYNC_PULSE |
-> -			  MIPI_DSI_MODE_EOT_PACKET;
-> +			  MIPI_DSI_MODE_NO_EOT_PACKET;
->  
->  	osd101t2587 = devm_kzalloc(&dsi->dev, sizeof(*osd101t2587), GFP_KERNEL);
->  	if (!osd101t2587)
-> diff --git a/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c b/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
-> index 4aac0d1573dd..b04b9975e9b2 100644
-> --- a/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
-> +++ b/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
-> @@ -186,7 +186,7 @@ static int s6d16d0_probe(struct mipi_dsi_device *dsi)
->  	 */
->  	dsi->mode_flags =
->  		MIPI_DSI_CLOCK_NON_CONTINUOUS |
-> -		MIPI_DSI_MODE_EOT_PACKET;
-> +		MIPI_DSI_MODE_NO_EOT_PACKET;
->  
->  	s6->supply = devm_regulator_get(dev, "vdd1");
->  	if (IS_ERR(s6->supply))
-> diff --git a/drivers/gpu/drm/panel/panel-samsung-s6e63j0x03.c b/drivers/gpu/drm/panel/panel-samsung-s6e63j0x03.c
-> index b962c817fb30..ccc8ed6fe3ae 100644
-> --- a/drivers/gpu/drm/panel/panel-samsung-s6e63j0x03.c
-> +++ b/drivers/gpu/drm/panel/panel-samsung-s6e63j0x03.c
-> @@ -446,7 +446,7 @@ static int s6e63j0x03_probe(struct mipi_dsi_device *dsi)
->  
->  	dsi->lanes = 1;
->  	dsi->format = MIPI_DSI_FMT_RGB888;
-> -	dsi->mode_flags = MIPI_DSI_MODE_EOT_PACKET;
-> +	dsi->mode_flags = MIPI_DSI_MODE_NO_EOT_PACKET;
->  
->  	ctx->supplies[0].supply = "vdd3";
->  	ctx->supplies[1].supply = "vci";
-> diff --git a/drivers/gpu/drm/panel/panel-samsung-s6e63m0-dsi.c b/drivers/gpu/drm/panel/panel-samsung-s6e63m0-dsi.c
-> index eec74c10ddda..77289967d3e5 100644
-> --- a/drivers/gpu/drm/panel/panel-samsung-s6e63m0-dsi.c
-> +++ b/drivers/gpu/drm/panel/panel-samsung-s6e63m0-dsi.c
-> @@ -97,7 +97,7 @@ static int s6e63m0_dsi_probe(struct mipi_dsi_device *dsi)
->  	dsi->hs_rate = 349440000;
->  	dsi->lp_rate = 9600000;
->  	dsi->mode_flags = MIPI_DSI_MODE_VIDEO |
-> -		MIPI_DSI_MODE_EOT_PACKET |
-> +		MIPI_DSI_MODE_NO_EOT_PACKET |
->  		MIPI_DSI_MODE_VIDEO_BURST;
->  
->  	ret = s6e63m0_probe(dev, s6e63m0_dsi_dcs_read, s6e63m0_dsi_dcs_write,
-> diff --git a/drivers/gpu/drm/panel/panel-samsung-s6e8aa0.c b/drivers/gpu/drm/panel/panel-samsung-s6e8aa0.c
-> index 527371120266..9b3599d6d2de 100644
-> --- a/drivers/gpu/drm/panel/panel-samsung-s6e8aa0.c
-> +++ b/drivers/gpu/drm/panel/panel-samsung-s6e8aa0.c
-> @@ -990,8 +990,8 @@ static int s6e8aa0_probe(struct mipi_dsi_device *dsi)
->  	dsi->lanes = 4;
->  	dsi->format = MIPI_DSI_FMT_RGB888;
->  	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST
-> -		| MIPI_DSI_MODE_VIDEO_HFP | MIPI_DSI_MODE_VIDEO_HBP
-> -		| MIPI_DSI_MODE_VIDEO_HSA | MIPI_DSI_MODE_EOT_PACKET
-> +		| MIPI_DSI_MODE_VIDEO_NO_HFP | MIPI_DSI_MODE_VIDEO_NO_HBP
-> +		| MIPI_DSI_MODE_VIDEO_NO_HSA | MIPI_DSI_MODE_NO_EOT_PACKET
->  		| MIPI_DSI_MODE_VSYNC_FLUSH | MIPI_DSI_MODE_VIDEO_AUTO_VERT;
->  
->  	ret = s6e8aa0_parse_dt(ctx);
-> diff --git a/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c b/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c
-> index 16dbf0f353ed..b937e24dac8e 100644
-> --- a/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c
-> +++ b/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c
-> @@ -282,7 +282,7 @@ static int sharp_nt_panel_probe(struct mipi_dsi_device *dsi)
->  	dsi->mode_flags = MIPI_DSI_MODE_VIDEO |
->  			MIPI_DSI_MODE_VIDEO_HSE |
->  			MIPI_DSI_CLOCK_NON_CONTINUOUS |
-> -			MIPI_DSI_MODE_EOT_PACKET;
-> +			MIPI_DSI_MODE_NO_EOT_PACKET;
->  
->  	sharp_nt = devm_kzalloc(&dsi->dev, sizeof(*sharp_nt), GFP_KERNEL);
->  	if (!sharp_nt)
-> diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-> index 4e2dad314c79..babc7a7f6844 100644
-> --- a/drivers/gpu/drm/panel/panel-simple.c
-> +++ b/drivers/gpu/drm/panel/panel-simple.c
-> @@ -4745,7 +4745,7 @@ static const struct panel_desc_dsi osd101t2045_53ts = {
->  	},
->  	.flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
->  		 MIPI_DSI_MODE_VIDEO_SYNC_PULSE |
-> -		 MIPI_DSI_MODE_EOT_PACKET,
-> +		 MIPI_DSI_MODE_NO_EOT_PACKET,
->  	.format = MIPI_DSI_FMT_RGB888,
->  	.lanes = 4,
->  };
-> diff --git a/drivers/gpu/drm/panel/panel-sony-acx424akp.c b/drivers/gpu/drm/panel/panel-sony-acx424akp.c
-> index 065efae213f5..6b706cbf2f9c 100644
-> --- a/drivers/gpu/drm/panel/panel-sony-acx424akp.c
-> +++ b/drivers/gpu/drm/panel/panel-sony-acx424akp.c
-> @@ -450,7 +450,7 @@ static int acx424akp_probe(struct mipi_dsi_device *dsi)
->  	else
->  		dsi->mode_flags =
->  			MIPI_DSI_CLOCK_NON_CONTINUOUS |
-> -			MIPI_DSI_MODE_EOT_PACKET;
-> +			MIPI_DSI_MODE_NO_EOT_PACKET;
->  
->  	acx->supply = devm_regulator_get(dev, "vddi");
->  	if (IS_ERR(acx->supply))
-> diff --git a/drivers/gpu/drm/panel/panel-xinpeng-xpp055c272.c b/drivers/gpu/drm/panel/panel-xinpeng-xpp055c272.c
-> index 55172d63a922..d17aae8b71d7 100644
-> --- a/drivers/gpu/drm/panel/panel-xinpeng-xpp055c272.c
-> +++ b/drivers/gpu/drm/panel/panel-xinpeng-xpp055c272.c
-> @@ -311,7 +311,7 @@ static int xpp055c272_probe(struct mipi_dsi_device *dsi)
->  	dsi->lanes = 4;
->  	dsi->format = MIPI_DSI_FMT_RGB888;
->  	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
-> -			  MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_EOT_PACKET;
-> +			  MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_NO_EOT_PACKET;
->  
->  	drm_panel_init(&ctx->panel, &dsi->dev, &xpp055c272_funcs,
->  		       DRM_MODE_CONNECTOR_DSI);
-> diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
-> index 360e6377e84b..ba91cf22af51 100644
-> --- a/include/drm/drm_mipi_dsi.h
-> +++ b/include/drm/drm_mipi_dsi.h
-> @@ -119,15 +119,15 @@ struct mipi_dsi_host *of_find_mipi_dsi_host_by_node(struct device_node *node);
->  /* enable hsync-end packets in vsync-pulse and v-porch area */
->  #define MIPI_DSI_MODE_VIDEO_HSE		BIT(4)
->  /* disable hfront-porch area */
-> -#define MIPI_DSI_MODE_VIDEO_HFP		BIT(5)
-> +#define MIPI_DSI_MODE_VIDEO_NO_HFP	BIT(5)
->  /* disable hback-porch area */
-> -#define MIPI_DSI_MODE_VIDEO_HBP		BIT(6)
-> +#define MIPI_DSI_MODE_VIDEO_NO_HBP	BIT(6)
->  /* disable hsync-active area */
-> -#define MIPI_DSI_MODE_VIDEO_HSA		BIT(7)
-> +#define MIPI_DSI_MODE_VIDEO_NO_HSA	BIT(7)
->  /* flush display FIFO on vsync pulse */
->  #define MIPI_DSI_MODE_VSYNC_FLUSH	BIT(8)
->  /* disable EoT packets in HS mode */
-> -#define MIPI_DSI_MODE_EOT_PACKET	BIT(9)
-> +#define MIPI_DSI_MODE_NO_EOT_PACKET	BIT(9)
->  /* device supports non-continuous clock behavior (DSI spec 5.6.1) */
->  #define MIPI_DSI_CLOCK_NON_CONTINUOUS	BIT(10)
->  /* transmit data in low power */
-> -- 
-> 2.30.0.478.g8a0d178c01-goog
+TW9ybmluZyBSb2IsDQoNCk9uIFdlZCwgMjAyMS0wMi0xNyBhdCAxNTozNCAtMDYwMCwgUm9iIEhl
+cnJpbmcgd3JvdGU6DQo+IE9uIFRodSwgRmViIDExLCAyMDIxIGF0IDAyOjM1OjQxUE0gKzAyMDAs
+IE1hdHRpIFZhaXR0aW5lbiB3cm90ZToNCj4gPiBCRDk1NzZNVUYgcHJvdmlkZXMgb3Zlci1jdXJy
+ZW50IHByb3RlY3Rpb24gYW5kIGRldGVjdGlvbi4gQ3VycmVudA0KPiA+IGlzDQo+ID4gbWVhc3Vy
+ZWQgYXMgdm9sdGFnZSBsb3NzIG92ZXIgZXh0ZXJuYWwgRkVULiBBbGxvdyBzcGVjaWZ5aW5nIEZF
+VCdzDQo+ID4gb24NCj4gPiByZXNpc3RhbmNlIHNvIGN1cnJlbnQgbW9uaXRvcmluZyBsaW1pdHMg
+Y2FuIGJlIGNvbnZlcnRlZCB0bw0KPiA+IHZvbHRhZ2VzLg0KPiA+IA0KPiA+IFNpZ25lZC1vZmYt
+Ynk6IE1hdHRpIFZhaXR0aW5lbiA8bWF0dGkudmFpdHRpbmVuQGZpLnJvaG1ldXJvcGUuY29tPg0K
+PiA+IC0tLQ0KPiA+ICAuLi4vZGV2aWNldHJlZS9iaW5kaW5ncy9yZWd1bGF0b3Ivcm9obSxiZDk1
+NzYtcmVndWxhdG9yLnlhbWwgfCA1DQo+ID4gKysrKysNCj4gPiAgMSBmaWxlIGNoYW5nZWQsIDUg
+aW5zZXJ0aW9ucygrKQ0KPiA+IA0KPiA+IGRpZmYgLS1naXQNCj4gPiBhL0RvY3VtZW50YXRpb24v
+ZGV2aWNldHJlZS9iaW5kaW5ncy9yZWd1bGF0b3Ivcm9obSxiZDk1NzYtDQo+ID4gcmVndWxhdG9y
+LnlhbWwNCj4gPiBiL0RvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9yZWd1bGF0b3Iv
+cm9obSxiZDk1NzYtDQo+ID4gcmVndWxhdG9yLnlhbWwNCj4gPiBpbmRleCBiNjUxNWEwY2VlNjIu
+LmFkM2Y1N2U5Y2Q5YiAxMDA2NDQNCj4gPiAtLS0gYS9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUv
+YmluZGluZ3MvcmVndWxhdG9yL3JvaG0sYmQ5NTc2LQ0KPiA+IHJlZ3VsYXRvci55YW1sDQo+ID4g
+KysrIGIvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL3JlZ3VsYXRvci9yb2htLGJk
+OTU3Ni0NCj4gPiByZWd1bGF0b3IueWFtbA0KPiA+IEBAIC0yNyw2ICsyNywxMSBAQCBwYXR0ZXJu
+UHJvcGVydGllczoNCj4gPiAgICAgICAgUHJvcGVydGllcyBmb3Igc2luZ2xlIHJlZ3VsYXRvci4N
+Cj4gPiAgICAgICRyZWY6ICJyZWd1bGF0b3IueWFtbCMiDQo+ID4gIA0KPiA+ICsgICAgcHJvcGVy
+dGllczoNCj4gPiArICAgICAgcm9obSxvY3ctZmV0LXJvbi1taWxsaW9obXM6DQo+IA0KPiBXZSBo
+YXZlICctb2htcycgYW5kICctbWljcm8tb2htcycgYWxyZWFkeS4gTmVpdGhlciByYW5nZSB3b3Jr
+cyBmb3INCj4geW91Pw0KDQpUaGFua3MgZm9yIHRha2luZyBhIGxvb2sgYXQgdGhpcyA6KQ0KDQpJ
+IGV4cGVjdCB2YWx1ZXMgdG8gYmUgbWFnbml0dWRlIG9mIGZldyBodW5kcmVkIG1pbGxpb2htcyAt
+IHdoaWNoIG1lYW5zDQptaWNyby1vaG1zIHNob3VsZCBiZSB1c2FibGUuIEknbGwgdHJ5IHRvIHN0
+aWxsIGNoZWNrIHRoaXMgYXMgSSBhbSBmYXINCmZyb20gYmVpbmcgSFctZXhwZXJ0LiBJIHByb2Jh
+Ymx5IGNhbiBjb252ZXJ0IHRoaXMgdG8gbWljcm8tb2htcyBmb3IgdjIuDQoNCkJlc3QgUmVnYXJk
+cw0KCU1hdHRpIFZhaXR0aW5lbg0KDQotLQ0KTWF0dGkgVmFpdHRpbmVuLCBMaW51eCBkZXZpY2Ug
+ZHJpdmVycw0KUk9ITSBTZW1pY29uZHVjdG9ycywgRmlubGFuZA0KU1dEQw0KS2l2aWhhcmp1bmxl
+bmtraSAxRQ0KOTAyMjAgT1VMVQ0KRklOTEFORA0KDQp+fn4gIkkgZG9uJ3QgdGhpbmsgc28sIiBz
+YWlkIFJlbmUgRGVzY2FydGVzLiBKdXN0IHRoZW4gaGUgdmFuaXNoZWQgfn5+DQoNClNpbW9uIHNh
+eXMgLSBpbiBMYXRpbiBwbGVhc2UuDQoibm9uIGNvZ2l0byBtZSIgZGl4aXQgUmVuZSBEZXNjYXJ0
+ZSwgZGVpbmRlIGV2YW5lc2Nhdml0DQoNCihUaGFua3MgZm9yIHRoZSB0cmFuc2xhdGlvbiBTaW1v
+bikNCg0K
