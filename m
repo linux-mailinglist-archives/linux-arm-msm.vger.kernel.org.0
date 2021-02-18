@@ -2,81 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E250D31ED98
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Feb 2021 18:48:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FF1131ED99
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Feb 2021 18:48:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234650AbhBRRra (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Feb 2021 12:47:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34150 "EHLO
+        id S234651AbhBRRre (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Feb 2021 12:47:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232410AbhBRPqq (ORCPT
+        with ESMTP id S232695AbhBRPtQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Feb 2021 10:46:46 -0500
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0FB5C0613D6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Feb 2021 07:46:03 -0800 (PST)
-Received: by mail-pg1-x52d.google.com with SMTP id m2so1382073pgq.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Feb 2021 07:46:03 -0800 (PST)
+        Thu, 18 Feb 2021 10:49:16 -0500
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80C6AC06178B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Feb 2021 07:48:24 -0800 (PST)
+Received: by mail-pj1-x1033.google.com with SMTP id fa16so1583586pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Feb 2021 07:48:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=Cn9DcIA9AN/PH1bnsLrw3E0sYTBmikm1mlLSEa4gBbY=;
-        b=w4jPWHfJ0axD3jdPfZ9w/vGksv0PG41cYknVMb5Jus1JbW12FWeQDJF2+pcApVebQj
-         jyHew4Ef8fcUlkrdj3IVLE5kg6FpM46q/z9aWvU84UJ4Wx+2BBvc/QSpVUoN1iZCBpfm
-         xzrQyRp4cJ0n6k1CeV47QfXgzbe4MefUQ+rmuCdVvndjKGlQ189yhZP7JLd22vxdVvn4
-         aeue3o/8M9lnnPjCuhQ7EswLzE/ey/HI56ScZ1VKKmFMpt78hr8jWperxv/IH+iu2xNm
-         r1sfE9+w5X7ZC8eJfEq40J6SMm+EAiUU5XnwHEtUCnCcyfpMgiXYZE65KDMheWZmcaJj
-         ouxA==
+        bh=5mSfxBVOBRi8bFJ8AYZZL4d/aLlm22/JZaKwGPrt9j0=;
+        b=JA7rzsD5N+KAByAnY3zLVeBOz6mJmi6OxbPaVhkgubiURsywlbrD4mT4gLNrxjkqn0
+         CnM5eHHDy7ZnvvTLu3KvSB2PAnxLms7rMnm5wRR3XyIsGfwwQl2vlqPUndXBfhL/n0AQ
+         q/wwUBtvq3wwQ1kCA9AQa1Vp3sdgzR0CO/GqDhqRhh8VBUHiHRuRELCpExKdTh4GuBO/
+         0aS3fiYlfpHW3+qa1Xi63c2XmJkQDSB6YmNgz4ezKjar0RFC19X1jbpGH7oErcBsMjH1
+         F5GaaWkj/y0C8HVnCuy0ioIWQGZ0LIZpTvAXBG9x0ZU7UFcnFFNpCWoL+cjH0GlaTXAf
+         rvXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Cn9DcIA9AN/PH1bnsLrw3E0sYTBmikm1mlLSEa4gBbY=;
-        b=SefMaAyrr/3KglcDJL/BLOVtd01nFJcQvxuyQbOf+UbTdiSTT8Lo9uEMCVUGcKXjcc
-         qbyT58CgDVWH5NsMXlYoLoZD6Sf+bgFuX3YyG30baBf6Ukok9Tx2AL2nXCWEaE7beFLQ
-         hLL/Q4EotfLj9BZkEuG2H4BwjB9uEBU40Pam28XPI3EXJPp3lN7aE9A9xaamhKeabr5/
-         FAN32R5+poUQJ2Z0ec7THRUzFd3KtGZ7BM+HRk2DH517KFBCQc2RBWG77GE5l88Kgw1J
-         DEvNz2AcrxDMC6J4IjH9bWlSioOVynGyGVclFTkXdMGj1ZxgJgxw6BPbI4yn8Fiduwo/
-         U+Fw==
-X-Gm-Message-State: AOAM532LQHS+SYJX2yRqLX2lNKXwiOETGeczxl72mTxCJxAD5r00BEqP
-        NCJ4JledwOXHSX40h2xFIMjINw==
-X-Google-Smtp-Source: ABdhPJy/ov6x/wJtjo+ZianbOXvKUJce+395QEvFvkq0/j4Yxe2OmzzygjWihqYA9y/RhdpiovURug==
-X-Received: by 2002:a63:2947:: with SMTP id p68mr2677635pgp.113.1613663163320;
-        Thu, 18 Feb 2021 07:46:03 -0800 (PST)
+        bh=5mSfxBVOBRi8bFJ8AYZZL4d/aLlm22/JZaKwGPrt9j0=;
+        b=KkHvS/bRFJrmE5ijmlx7vvLkX2sCVWkX/++6PrIqkdg4tK6Pwn+5jpWTp5rqt098xq
+         faARRQNr8+nVpk4Hv7pOGbSu4TJq3/GBRi+9xLxdxZXpfAabBM4z++Zv8Qrsu5Uqx0wZ
+         8vfanci6kaus2R+64171Gv8gOKMlynn0Bnr3SQMdA54/ESnOxYfTC3YPN4Rq71zL/BX+
+         kTqnEjHtqxTUH8+GI6KcUsTVlJVfGbXqXwAaI0SsKTtDf44hw1JjJE17pDiyg7Dp75ZU
+         dFOIG/b9i4Hi3k4r9nbWQpPFTeLZjwnJHHX1BMFO5o79R54dGLFmCvanPL+z6a8fxiv7
+         XrRg==
+X-Gm-Message-State: AOAM5311j7sL02AOa15NaGu9PQgM3jccYC6tkFSjAFQMLL0Ab9UIbT4C
+        FvFfvPrYJhIClzEeJTqjISnvqA==
+X-Google-Smtp-Source: ABdhPJxdSuV3c8mgl+2RGLWQJpA00YGVg4kYZ0W+FXCpcFGoA2E9jl8z0IOGc+JTMSxOXJBmJSyWBw==
+X-Received: by 2002:a17:902:403:b029:e3:6b9b:9fd6 with SMTP id 3-20020a1709020403b02900e36b9b9fd6mr4563585ple.54.1613663303995;
+        Thu, 18 Feb 2021 07:48:23 -0800 (PST)
 Received: from localhost ([122.172.59.240])
-        by smtp.gmail.com with ESMTPSA id s22sm6484397pfe.133.2021.02.18.07.46.01
+        by smtp.gmail.com with ESMTPSA id g6sm6618819pfi.15.2021.02.18.07.48.23
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 18 Feb 2021 07:46:01 -0800 (PST)
-Date:   Thu, 18 Feb 2021 21:15:58 +0530
+        Thu, 18 Feb 2021 07:48:23 -0800 (PST)
+Date:   Thu, 18 Feb 2021 21:18:20 +0530
 From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     rjw@rjwysocki.net, bjorn.andersson@linaro.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] cpufreq: exclude boost frequencies from valid count if
- not enabled
-Message-ID: <20210218154558.zrcymny7y64y3raz@vireshk-i7>
-References: <20210217000013.4063289-1-thara.gopinath@linaro.org>
- <20210217055029.a25wjsyoosxageti@vireshk-i7>
- <4c9d9d44-5fa5-3ae1-e9bb-45cf6521b764@linaro.org>
- <20210218084847.743rttqwlmwyx6pz@vireshk-i7>
- <d693d999-7734-3e69-edb9-9e03fd2f0d1a@linaro.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Rob Herring <robh+dt@kernel.org>, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: cpufreq: cpufreq-qcom-hw: Document SM8350
+ CPUfreq compatible
+Message-ID: <20210218154820.lkcut7a657s6aqeg@vireshk-i7>
+References: <20210216111251.1838149-1-vkoul@kernel.org>
+ <20210217044955.qmbpd43wis7xtjoj@vireshk-i7>
+ <20210218124457.GW2774@vkoul-mobl.Dlink>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <d693d999-7734-3e69-edb9-9e03fd2f0d1a@linaro.org>
+In-Reply-To: <20210218124457.GW2774@vkoul-mobl.Dlink>
 User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18-02-21, 10:03, Thara Gopinath wrote:
-> Scheduling a notifier for max frequency change from the qos framework should
-> do the work, right?
+On 18-02-21, 18:14, Vinod Koul wrote:
+> On 17-02-21, 10:19, Viresh Kumar wrote:
+> > On 16-02-21, 16:42, Vinod Koul wrote:
+> > > Add the CPUfreq compatible for SM8350 SoC along with note for using the
+> > > specific compatible for SoCs
+> > > 
+> > > Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> > > ---
+> > >  Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt | 4 +++-
+> > >  1 file changed, 3 insertions(+), 1 deletion(-)
+> > > 
+> > > diff --git a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt
+> > > index 9299028ee712..3eb3cee59d79 100644
+> > > --- a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt
+> > > +++ b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt
+> > > @@ -8,7 +8,9 @@ Properties:
+> > >  - compatible
+> > >  	Usage:		required
+> > >  	Value type:	<string>
+> > > -	Definition:	must be "qcom,cpufreq-hw" or "qcom,cpufreq-epss".
+> > > +	Definition:	must be "qcom,cpufreq-hw" or "qcom,cpufreq-epss"
+> > > +			along with SoC specific compatible:
+> > > +			  "qcom,sm8350-cpufreq-epss", "qcom,cpufreq-epss"
+> > 
+> > And why is SoC specific compatible required here ? Is the implementation on
+> > sm8350 any different than the ones using "qcom,cpufreq-epss" compatible ?
+> > 
+> > FWIW, the same compatible string must be reused until the time there is
+> > difference in the hardware. The compatible string must be considered as a marker
+> > for a particular version of the hardware.
+> 
+> Rob has indicated that we should use a SoC specific compatible and I
+> agree with that. We are using both soc and generic one here and driver
+> will be loaded for generic one.
 
-Not that, but we need to increase/decrease cooling states at run time,
-create sysfs files/directories, etc. It isn't worth it.
+I am not sure of the context, lets see what Rob has to say on this. I
+believe we only need 1 compatible string here (whatever it is), as
+this is just one version of the hardware we are talking about. We
+already have 2 somehow and you are trying to add one more and I don't
+fell good about it. :(
 
 -- 
 viresh
