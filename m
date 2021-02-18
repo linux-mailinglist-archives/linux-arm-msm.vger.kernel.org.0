@@ -2,209 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D493231F27A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Feb 2021 23:46:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4614F31F29C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Feb 2021 23:56:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229691AbhBRWqY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Feb 2021 17:46:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39798 "EHLO
+        id S229787AbhBRW4M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Feb 2021 17:56:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229649AbhBRWqX (ORCPT
+        with ESMTP id S229535AbhBRW4L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Feb 2021 17:46:23 -0500
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1668C061756
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Feb 2021 14:45:42 -0800 (PST)
-Received: by mail-ot1-x332.google.com with SMTP id s6so3431877otk.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Feb 2021 14:45:42 -0800 (PST)
+        Thu, 18 Feb 2021 17:56:11 -0500
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DB45C061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Feb 2021 14:55:31 -0800 (PST)
+Received: by mail-pj1-x102b.google.com with SMTP id cx11so266517pjb.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Feb 2021 14:55:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Q8iqMVx6Dg74exXv38GXyFaVv7jsBPfbgKsDTdg0Ea0=;
-        b=m64ezNhmQzoOpqlHl6GmRZUY3QWJKK6fjiZS77ie20BbqGiMHf0PRa7wu00aBiBXds
-         /85WgVSoxforV6x9Y3tu7cJkpMNSHer/d2dZU0yhhde2RZPFUUpSe4S3KHNpo6edZVvY
-         shbpdhe7pTQ8izs+CqWV6hu8SXMBlVc27Vrumiz5w0/IY/vHs/nDq877Pl7IFTJEuZoH
-         xHgFR39pYGiUw3kZ9OLd20EO4J/Sycwc6yl/txchCAa+1e9tf8f6hIltYU9wZPxTA5LY
-         HfKQAsxlkbbKvPYXpmef9Q5ko0Amy4mRckwX28c4VzSX7WRfdK9BvNqzXpe1alw//OQ+
-         gcGw==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mJsWZPsjAvkS9M4UJZDTVheggzJRLXODUCXr3rDhMIc=;
+        b=mBtZCpmyFyj/HF1O+hiWaHTGDHtbjFm/eK7texjxvjVDQl/gGnW2sAY580Tcj1p0hC
+         OkM4uMIHAY5i3KlmV5I7oVdR/anPUeSbeBoqkDSknnB/S35Og858yCBZwvfLH6qYfQqt
+         peraHOGjdEpScSwHFV/ZboaiHeyteolD8z7TA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Q8iqMVx6Dg74exXv38GXyFaVv7jsBPfbgKsDTdg0Ea0=;
-        b=Gt0oEuC90K2ZPH92BmgznGDYnhGlPtTmg/dFl6MN7PMB8PAhWeq63+cBUhcR2TESJv
-         Z5JYzFj+tfJpq1DxNuKcD1Mb4BfSFUasLN7W2QrBA4cex0meaSQ5abuyQH7lPDIauA+A
-         pXBN7OE9C55uzLpj3gNiEzx3mi2zvXa/Ly6Le/TXZdfupSlDT4XQqavNYufbJ3R5cBCO
-         38CEvgFKMaELvopQTCgl5FyhBHWHg2SA9+mj32Jc5jym483VRKKV/LHvMav2noVYaVTO
-         D5sfjSGmss/fD9pj/SrZA5YYrsGwcoJ5ODNjZ0ZEziID9S+oIjFVKgaD0USE9kZePzoy
-         w+eA==
-X-Gm-Message-State: AOAM530khUWpAPzqPZqMD19QMHtnXF5rdbkzQ5JKECnaanNXCOnMzmbZ
-        XVKR2vq348xPL0yWLzkpwA3QRQ==
-X-Google-Smtp-Source: ABdhPJzY/4W2jwoAlMKtsJ34nQ1f1e77HuZhCMBT8SuZtSCu8kW5k9jIy5Cs9QxoJapykP6wapXcsw==
-X-Received: by 2002:a9d:705e:: with SMTP id x30mr4637067otj.168.1613688341938;
-        Thu, 18 Feb 2021 14:45:41 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id w10sm1324973ote.29.2021.02.18.14.45.41
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mJsWZPsjAvkS9M4UJZDTVheggzJRLXODUCXr3rDhMIc=;
+        b=ZvAczPpDLaUZ/Dy3K+XMXCuNgSzkd6oWcnJ1sxR3D/cTMKKkzM8BJ6NNlA6mmcki16
+         +/fb17oIOJu/Nj1Qouuw/BONfKwb0fwUuVdqN9Lj3qlO7WFEMgokBhyCn9sBIeS5UXet
+         D2sSpiapzGlgxbbGOaCHy9d+U0w6MpcAo4Yc0cchOrsyqWZuS3eIE6qFXENiJgjyVQUd
+         7BJGbigkra34T5XoLOBqGZ+/ew6mKPtB7zW+ZQs1YyLL65+pPDOH9kxL4Ztx6InV+86G
+         QQWSNrGxyEx14PyWWnVUTs50/2hnooncfgr0sZpawgKXMoPSlZ6v2Yr86SQwLH8WOm5Y
+         zcWQ==
+X-Gm-Message-State: AOAM530/bwFhlGvTgBPMClOEqmyKoU2MAGVR7Or2QZCGmTykR0lJgV3p
+        gxg7k9PewhctbM4K7wEuv6Z4fA==
+X-Google-Smtp-Source: ABdhPJxrFexxJr1zX/X/iHVI3+f5tp6DY/SUfCp54QUf91xqTsVNxyqry+UTpv3W1GOZGtk/H85PJQ==
+X-Received: by 2002:a17:90a:654a:: with SMTP id f10mr6027043pjs.202.1613688931007;
+        Thu, 18 Feb 2021 14:55:31 -0800 (PST)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:91a:d4d0:d2d0:9d1c])
+        by smtp.gmail.com with ESMTPSA id x15sm6483563pjq.47.2021.02.18.14.55.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Feb 2021 14:45:41 -0800 (PST)
-Date:   Thu, 18 Feb 2021 16:45:39 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Kuogee Hsieh <khsieh@codeaurora.org>
-Cc:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
-        tanmay@codeaurora.org, abhinavk@codeaurora.org,
-        aravindh@codeaurora.org, airlied@linux.ie, daniel@ffwll.ch,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] drm/msm/dp: add supported max link rate specified
- from dtsi
-Message-ID: <YC7uE2L3TPPQhAfS@builder.lan>
-References: <1613681704-12539-1-git-send-email-khsieh@codeaurora.org>
+        Thu, 18 Feb 2021 14:55:30 -0800 (PST)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        swboyd@chromium.org, Douglas Anderson <dianders@chromium.org>,
+        Akash Asthana <akashast@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sc7180: Avoid glitching SPI CS at bootup on trogdor
+Date:   Thu, 18 Feb 2021 14:55:09 -0800
+Message-Id: <20210218145456.1.I1da01a075dd86e005152f993b2d5d82dd9686238@changeid>
+X-Mailer: git-send-email 2.30.0.617.g56c4b15f3c-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1613681704-12539-1-git-send-email-khsieh@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 18 Feb 14:55 CST 2021, Kuogee Hsieh wrote:
+At boot time the following happens:
+1. Device core gets ready to probe our SPI driver.
+2. Device core applies SPI controller's "default" pinctrl.
+3. Device core calls the SPI driver's probe() function which will
+   eventually setup the chip select GPIO as "unasserted".
 
-> Allow supported link rate to be limited to the value specified at
-> dtsi. If it is not specified, then link rate is derived from dpcd
-> directly. Below are examples,
-> link-rate = <162000> for max link rate limited at 1.62G
-> link-rate = <270000> for max link rate limited at 2.7G
-> link-rate = <540000> for max link rate limited at 5.4G
-> link-rate = <810000> for max link rate limited at 8.1G
-> 
-> Changes in V2:
-> -- allow supported max link rate specified from dtsi
-> 
-> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
-> ---
->  drivers/gpu/drm/msm/dp/dp_display.c |  1 +
->  drivers/gpu/drm/msm/dp/dp_panel.c   |  7 ++++---
->  drivers/gpu/drm/msm/dp/dp_panel.h   |  1 +
->  drivers/gpu/drm/msm/dp/dp_parser.c  | 13 +++++++++++++
->  drivers/gpu/drm/msm/dp/dp_parser.h  |  1 +
->  5 files changed, 20 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 5a39da6..f633ba6 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -322,6 +322,7 @@ static int dp_display_process_hpd_high(struct dp_display_private *dp)
->  	struct edid *edid;
->  
->  	dp->panel->max_dp_lanes = dp->parser->max_dp_lanes;
-> +	dp->panel->max_link_rate = dp->parser->max_link_rate;
->  
->  	rc = dp_panel_read_sink_caps(dp->panel, dp->dp_display.connector);
->  	if (rc)
-> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
-> index 9cc8166..be7f102 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-> @@ -76,9 +76,10 @@ static int dp_panel_read_dpcd(struct dp_panel *dp_panel)
->  	if (link_info->num_lanes > dp_panel->max_dp_lanes)
->  		link_info->num_lanes = dp_panel->max_dp_lanes;
->  
-> -	/* Limit support upto HBR2 until HBR3 support is added */
-> -	if (link_info->rate >= (drm_dp_bw_code_to_link_rate(DP_LINK_BW_5_4)))
-> -		link_info->rate = drm_dp_bw_code_to_link_rate(DP_LINK_BW_5_4);
-> +	/* Limit support of ink rate if specified */
-> +	if (dp_panel->max_link_rate &&
+Thinking about the above, we can find:
+a) For SPI devices that the BIOS inits (Cr50 and EC), the BIOS would
+   have had them configured as "GENI" pins and not as "GPIO" pins.
+b) It turns out that our BIOS also happens to init these pins as
+   "output" (even though it doesn't need to since they're not muxed as
+   GPIO) but leaves them at the default state of "low".
+c) As soon as we apply the "default" chip select it'll switch the
+   function to GPIO and stop driving the chip select high (which is
+   how "GENI" was driving it) and start driving it low.
+d) As of commit 9378f46040be ("UPSTREAM: spi: spi-geni-qcom: Use the
+   new method of gpio CS control"), when the SPI core inits things it
+   inits the GPIO to be "deasserted".  Prior to that commit the GPIO
+   was left untouched until first use.
+e) When the first transaction happens we'll assert the chip select and
+   then deassert it after done.
 
-Make the parser always initialize max_link_rate to something reasonable
-and just compare against that here.
+So before the commit to change us to use gpio descriptors we used to
+have a _really long_ assertion of chip select before our first
+transaction (because it got pulled down and then the first "assert"
+was a no-op).  That wasn't great but (apparently) didn't cause any
+real harm.
 
-> +			(link_info->rate > dp_panel->max_link_rate))
+After the commit to change us to use gpio descriptors we end up
+glitching the chip select line during probe.  It would go low and then
+high with no data transferred.  The other side ought to be robust
+against this, but it certainly could cause some confusion.  It's known
+to at least cause an error message on the EC console and it's believed
+that, under certain timing conditions, it could be getting the EC into
+a confused state causing the EC driver to fail to probe.
 
-No need for the (), nor for line breaking this.
+Let's fix things to avoid the glitch.  We'll add an extra pinctrl
+entry that sets the value of the pin to output high (CS deasserted)
+before doing anything else.  We'll do this in its own pinctrl node
+that comes before the normal pinctrl entries to ensure that the order
+is correct and that this gets applied before the mux change.
 
-> +		link_info->rate = dp_panel->max_link_rate;
->  
->  	DRM_DEBUG_DP("version: %d.%d\n", major, minor);
->  	DRM_DEBUG_DP("link_rate=%d\n", link_info->rate);
-> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
-> index 9023e5b..1876f5e 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_panel.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_panel.h
-> @@ -51,6 +51,7 @@ struct dp_panel {
->  	u32 vic;
->  	u32 max_pclk_khz;
->  	u32 max_dp_lanes;
-> +	u32 max_link_rate;
->  
->  	u32 max_bw_code;
->  };
-> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
-> index 0519dd3..d8b6898 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_parser.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_parser.c
-> @@ -87,6 +87,8 @@ static int dp_parser_misc(struct dp_parser *parser)
->  	struct device_node *of_node = parser->pdev->dev.of_node;
->  	int len = 0;
->  	const char *data_lane_property = "data-lanes";
-> +	const char *link_rate_property = "link-rate";
+This change is in the trogdor board file rather than in the SoC dtsi
+file because chip select polarity can be different depending on what's
+hooked up and it doesn't feel worth it to spam the SoC dtsi file with
+both options.  The board file would need to pick the right one anyway.
 
-There's no reason for stashing these in local variables.
+Fixes: cfbb97fde694 ("arm64: dts: qcom: Switch sc7180-trogdor to control SPI CS via GPIO")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
 
-> +	u32 rate = 0;
->  
->  	len = of_property_count_elems_of_size(of_node,
->  			 data_lane_property, sizeof(u32));
-> @@ -97,6 +99,17 @@ static int dp_parser_misc(struct dp_parser *parser)
->  	}
->  
->  	parser->max_dp_lanes = len;
-> +
-> +	len = of_property_count_elems_of_size(of_node,
-> +			 link_rate_property, sizeof(u32));
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 27 +++++++++++++++++---
+ 1 file changed, 24 insertions(+), 3 deletions(-)
 
-I'm afraid I don't see the reason for this, simply rely on the return
-value of of_property_read_u32(), i.e.
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index 07c8b2c926c0..e6c58d12dacd 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -768,17 +768,17 @@ &sdhc_2 {
+ };
+ 
+ &spi0 {
+-	pinctrl-0 = <&qup_spi0_cs_gpio>;
++	pinctrl-0 = <&qup_spi0_cs_gpio_init_high>, <&qup_spi0_cs_gpio>;
+ 	cs-gpios = <&tlmm 37 GPIO_ACTIVE_LOW>;
+ };
+ 
+ &spi6 {
+-	pinctrl-0 = <&qup_spi6_cs_gpio>;
++	pinctrl-0 = <&qup_spi6_cs_gpio_init_high>, <&qup_spi6_cs_gpio>;
+ 	cs-gpios = <&tlmm 62 GPIO_ACTIVE_LOW>;
+ };
+ 
+ ap_spi_fp: &spi10 {
+-	pinctrl-0 = <&qup_spi10_cs_gpio>;
++	pinctrl-0 = <&qup_spi10_cs_gpio_init_high>, <&qup_spi10_cs_gpio>;
+ 	cs-gpios = <&tlmm 89 GPIO_ACTIVE_LOW>;
+ 
+ 	cros_ec_fp: ec@0 {
+@@ -1339,6 +1339,27 @@ pinconf {
+ 		};
+ 	};
+ 
++	qup_spi0_cs_gpio_init_high: qup-spi0-cs-gpio-init-high {
++		pinconf {
++			pins = "gpio37";
++			output-high;
++		};
++	};
++
++	qup_spi6_cs_gpio_init_high: qup-spi6-cs-gpio-init-high {
++		pinconf {
++			pins = "gpio62";
++			output-high;
++		};
++	};
++
++	qup_spi10_cs_gpio_init_high: qup-spi10-cs-gpio-init-high {
++		pinconf {
++			pins = "gpio89";
++			output-high;
++		};
++	};
++
+ 	qup_uart3_sleep: qup-uart3-sleep {
+ 		pinmux {
+ 			pins = "gpio38", "gpio39",
+-- 
+2.30.0.617.g56c4b15f3c-goog
 
-	ret = of_property_read_u32(node, "link-rate", &rate);
-	if (!ret)
-		parser->max_link_rate = rate;
-
-Or if you want to give it some default value:
-
-	rate = 1234;
-	of_property_read_u32(node, "link-rate", &rate);
-	
-Which either will overwrite the rate with the value of the property, or
-leave it untouched.
-
-Regards,
-Bjorn
-
-> +
-> +	if (len == 1) {
-> +		of_property_read_u32_index(of_node,
-> +				link_rate_property, 0, &rate);
-> +
-> +		parser->max_link_rate = rate;
-> +	}
-> +
->  	return 0;
->  }
->  
-> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.h b/drivers/gpu/drm/msm/dp/dp_parser.h
-> index 34b4962..7046fce 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_parser.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_parser.h
-> @@ -116,6 +116,7 @@ struct dp_parser {
->  	struct dp_display_data disp_data;
->  	const struct dp_regulator_cfg *regulator_cfg;
->  	u32 max_dp_lanes;
-> +	u32 max_link_rate;
->  
->  	int (*parse)(struct dp_parser *parser);
->  };
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
