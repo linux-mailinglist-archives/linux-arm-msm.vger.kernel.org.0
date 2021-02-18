@@ -2,422 +2,688 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CCE1931E954
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Feb 2021 12:55:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C2B6A31EAE4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Feb 2021 15:24:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230119AbhBRLvn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Feb 2021 06:51:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46724 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232465AbhBRKJM (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Feb 2021 05:09:12 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EF8AC061786
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Feb 2021 01:45:17 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id v30so5422062lfq.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Feb 2021 01:45:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=lOT726GDeTkYBDL+U26+dhOVVZeOxNE7ULxcRqH6fuo=;
-        b=Sn56qbT33vAvmQB9rn3Wcex2GtvsIAm52SbuuqCwOs7vlUxFHuQsgxpnWTY9MIlDoG
-         JSyhN9z3MOTRf556ohcL/stgep22CxK7oDDQ1QRSWWezQJ7QgYvVAhG/eCuyalmc85PY
-         1FPPVM6OiFFSKqFZO230z36bXDvnjOS0BGtRdmTxDvj4RViwlxPoG0jSurPQhV2xJ6iB
-         XO09ew9a3gsg/Pt93l2KttIdeVSjS9nHcDt7gZtcv5f9Fl9fn5A4REqISL9D/yM5jhlw
-         ZP+aACK15JyTEGDKXPU0Za6nlmjUSYDure9plt/OzMrSOe5peXUF88JtWvqa6LHXRPSx
-         ZdGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=lOT726GDeTkYBDL+U26+dhOVVZeOxNE7ULxcRqH6fuo=;
-        b=Nn9E+ghADdKxdEHI5LH3hCtODgh0iIA+oNmVvML0ASd2MB9qh9n5MQ4jpANjgQ1sjC
-         FdTdByt8i0rWFCt5e2C+99vunUcLRnymfXo9OKuGJ4eseQfkK87xq868YvHjXYlhCozM
-         BQt729l3lWiIHxnBUBZcSr7N6ryWAG7cc1V4ghPNu/90C2lQoke3+TKwb21yenYyl2XJ
-         DUnXEoYG+zqxFLW+CtWorUd6pEQJamPcTmf9qFbXrFn+6kfoY7IQldK77XOzVy1TWATG
-         H9clpa9ycJupPYoVFbAdjMnJXvEmo8D/jBFbBA45Jt+dFxMCNzr/oSkhTPnCxxw0sSlR
-         35wA==
-X-Gm-Message-State: AOAM532K9Sktxd+7R6Jz8XGOcFz+VPhwXNRv2On6N8r0BH3aK9P3RGWF
-        WUw/djFlwZCUc108H4xtKac/7A==
-X-Google-Smtp-Source: ABdhPJzKYEukz/vS4+3+kq5CGm2D6q1FjuII6GbIYlf1EoFX+MuMFTttQO1XHa3zIONlT8PjczdFsg==
-X-Received: by 2002:a05:6512:388c:: with SMTP id n12mr2022121lft.357.1613641515742;
-        Thu, 18 Feb 2021 01:45:15 -0800 (PST)
-Received: from [192.168.118.216] ([85.249.43.69])
-        by smtp.gmail.com with ESMTPSA id x24sm545563lfu.206.2021.02.18.01.45.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Feb 2021 01:45:15 -0800 (PST)
-Subject: Re: [PATCH v2 2/3] media: camss: use v4l2_get_link_freq() to
- calculate the relevant clocks
-To:     Jacopo Mondi <jacopo@jmondi.org>
-Cc:     junak.pub@gmail.com, robert.foss@linaro.org,
-        sakari.ailus@linux.intel.com, todor.too@gmail.com,
-        agross@kernel.org, bjorn.andersson@linaro.org, mchehab@kernel.org,
-        laurent.pinchart@ideasonboard.com, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20210217221134.2606-1-andrey.konovalov@linaro.org>
- <20210217221134.2606-3-andrey.konovalov@linaro.org>
- <20210218080738.6ett5j2ca2peof3g@uno.localdomain>
-From:   Andrey Konovalov <andrey.konovalov@linaro.org>
-Message-ID: <e3a9d7d2-8c01-3b2a-21ed-883cb47a4946@linaro.org>
-Date:   Thu, 18 Feb 2021 12:45:13 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S229752AbhBROXL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Feb 2021 09:23:11 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:37789 "EHLO z11.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230465AbhBRLxB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 18 Feb 2021 06:53:01 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1613649145; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=0BpJCvNz5u2Fsr5nrvwowLd7MOweWhUjizn/9vy9guk=;
+ b=PMKRzctPEpmXegIt/gRCwmV7mapi/vf4r3h3RlDgboXT5GBgvVbb0b6R/TosQmVdNUaoSjIH
+ U2Di3qhoE6toZbUvVZzMTYGQdITmkECP9vd/Hc2N78LSRe1Bp4AI5p3vqebMDwJs2frNOc7R
+ +v4hDAb2CTaGox+udeUXhnD5VIM=
+X-Mailgun-Sending-Ip: 104.130.96.11
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 602e54d9eb4f89cdf8be5ee2 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 18 Feb 2021 11:51:53
+ GMT
+Sender: schowdhu=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id CF4ECC433CA; Thu, 18 Feb 2021 11:51:52 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: schowdhu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 00604C433CA;
+        Thu, 18 Feb 2021 11:51:50 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20210218080738.6ett5j2ca2peof3g@uno.localdomain>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Thu, 18 Feb 2021 17:21:50 +0530
+From:   schowdhu@codeaurora.org
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: Re: [PATCH V0 3/6] soc: qcom: dcc:Add driver support for Data Capture
+ and Compare unit(DCC)
+In-Reply-To: <20210218065912.GV2774@vkoul-mobl.Dlink>
+References: <cover.1613541226.git.schowdhu@codeaurora.org>
+ <f182b10f318db7cb09216c0176a5b26656d9ef49.1613541226.git.schowdhu@codeaurora.org>
+ <20210218065912.GV2774@vkoul-mobl.Dlink>
+Message-ID: <80a0bc496ede7c55893ad3eb41837bef@codeaurora.org>
+X-Sender: schowdhu@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jacopo,
+On 2021-02-18 12:29, Vinod Koul wrote:
+> On 17-02-21, 12:18, Souradeep Chowdhury wrote:
+>> The DCC is a DMA Engine designed to capture and store data
+>> during system crash or software triggers.The DCC operates
+>                                         ^^^
+> Space after . (quite a few here, pls fix them)
 
-On 18.02.2021 11:07, Jacopo Mondi wrote:
-> Hi Andrey,
+Ack
+
 > 
-> On Thu, Feb 18, 2021 at 01:11:33AM +0300, Andrey Konovalov wrote:
->> There are places in the camss driver where camss_get_pixel_clock() is
->> called to get the pixel rate (using V4L2_CID_PIXEL_RATE control) and to
->> calculate the link frequency from it. There is a case when this would
->> not work: when V4L2_CID_PIXEL_RATE gets the rate at which the pixels are
->> read (sampled) from the sensor's pixel array, and this rate is different
->> from the pixel transmission rate over the CSI link, the link frequency
->> value can't be calculated from the pixel rate. One needs to use
->> V4L2_CID_LINK_FREQ to get the link frequency in this case.
->>
->> Replace such calls to camss_get_pixel_clock() with calls to a wrapper
->> around v4l2_get_link_freq(). v4l2_get_link_freq() tries V4L2_CID_LINK_FREQ
->> first, and if it is not implemented by the camera sensor driver, falls
->> back to V4L2_CID_PIXEL_RATE to calculate the link frequency value from.
+>> based on link list entries which provides it with data and
+>> addresses and the function it needs to perform.These functions
+>> are read,write and loop.Added the basic driver in this patch
+>> which contains a probe method which instantiates all the link
+>> list data specific to a SoC.Methods have also been added to
+>> handle all the functionalities specific to a linked list.Each
+>> DCC has it's own SRAM which needs to be instantiated at probe
+>> time as well.
 > 
-> That's nice
+> So help me understand, in case of system crash how will this be used..?
+
+In case of system crashes like secure WDog bite, the DCC hardware 
+captures
+and stores the values at the configured register addresses in it's 
+dedicated SRAM.
+The driver only enables the DCC hardware during probe time and 
+configures
+register addresses via user space.
+
 > 
->>
->> Calls to camss_get_pixel_clock() from vfe_[check,set]_clock_rates()
->> are left intact as it looks like this VFE clock does depend on the
->> rate the pixel samples comes out of the camera sensor, not on the
->> frequency at which the link between the sensor and the CSI receiver
->> operates.
-> 
-> Out of curiosity, you have any idea why this happens ?
-
-Unfortunately no.
-There are no any details in the public datasheet on that - just
-the formula itself (less than 1 line of text).
-
-> The patch looks good, fwiw given I don't know the platform:
-> Reviewed-by: Jacopo Mondi <jacopo@jmondi.org>
-
-Thanks!
-
--- Andrey
-
-> Thanks
->     j
->>
->> Signed-off-by: Andrey Konovalov <andrey.konovalov@linaro.org>
->> Acked-by: Robert Foss <robert.foss@linaro.org>
+>> 
+>> Signed-off-by: Souradeep Chowdhury <schowdhu@codeaurora.org>
 >> ---
->>   .../media/platform/qcom/camss/camss-csid.c    | 20 +++++------
->>   .../qcom/camss/camss-csiphy-2ph-1-0.c         | 22 ++++++------
->>   .../qcom/camss/camss-csiphy-3ph-1-0.c         | 22 ++++++------
->>   .../media/platform/qcom/camss/camss-csiphy.c  | 36 +++++++++----------
->>   .../media/platform/qcom/camss/camss-csiphy.h  |  2 +-
->>   drivers/media/platform/qcom/camss/camss.c     | 23 ++++++++++++
->>   drivers/media/platform/qcom/camss/camss.h     |  2 ++
->>   7 files changed, 71 insertions(+), 56 deletions(-)
->>
->> diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
->> index be3fe76f3dc3..cff9759c9158 100644
->> --- a/drivers/media/platform/qcom/camss/camss-csid.c
->> +++ b/drivers/media/platform/qcom/camss/camss-csid.c
->> @@ -462,13 +462,17 @@ static irqreturn_t csid_isr(int irq, void *dev)
->>   static int csid_set_clock_rates(struct csid_device *csid)
->>   {
->>   	struct device *dev = csid->camss->dev;
->> -	u32 pixel_clock;
->> +	const struct csid_format *fmt;
->> +	s64 link_freq;
->>   	int i, j;
->>   	int ret;
->>
->> -	ret = camss_get_pixel_clock(&csid->subdev.entity, &pixel_clock);
->> -	if (ret)
->> -		pixel_clock = 0;
->> +	fmt = csid_get_fmt_entry(csid->formats, csid->nformats,
->> +				 csid->fmt[MSM_CSIPHY_PAD_SINK].code);
->> +	link_freq = camss_get_link_freq(&csid->subdev.entity, fmt->bpp,
->> +					csid->phy.lane_cnt);
->> +	if (link_freq < 0)
->> +		link_freq = 0;
->>
->>   	for (i = 0; i < csid->nclocks; i++) {
->>   		struct camss_clock *clock = &csid->clock[i];
->> @@ -477,13 +481,7 @@ static int csid_set_clock_rates(struct csid_device *csid)
->>   		    !strcmp(clock->name, "csi1") ||
->>   		    !strcmp(clock->name, "csi2") ||
->>   		    !strcmp(clock->name, "csi3")) {
->> -			const struct csid_format *f = csid_get_fmt_entry(
->> -				csid->formats,
->> -				csid->nformats,
->> -				csid->fmt[MSM_CSIPHY_PAD_SINK].code);
->> -			u8 num_lanes = csid->phy.lane_cnt;
->> -			u64 min_rate = pixel_clock * f->bpp /
->> -							(2 * num_lanes * 4);
->> +			u64 min_rate = link_freq / 4;
->>   			long rate;
->>
->>   			camss_add_clock_margin(&min_rate);
->> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-2ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-2ph-1-0.c
->> index 12bce391d71f..30b454c369ab 100644
->> --- a/drivers/media/platform/qcom/camss/camss-csiphy-2ph-1-0.c
->> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-2ph-1-0.c
->> @@ -51,16 +51,13 @@ static void csiphy_reset(struct csiphy_device *csiphy)
->>    *
->>    * Helper function to calculate settle count value. This is
->>    * based on the CSI2 T_hs_settle parameter which in turn
->> - * is calculated based on the CSI2 transmitter pixel clock
->> - * frequency.
->> + * is calculated based on the CSI2 transmitter link frequency.
->>    *
->> - * Return settle count value or 0 if the CSI2 pixel clock
->> - * frequency is not available
->> + * Return settle count value or 0 if the CSI2 link frequency
->> + * is not available
->>    */
->> -static u8 csiphy_settle_cnt_calc(u32 pixel_clock, u8 bpp, u8 num_lanes,
->> -				 u32 timer_clk_rate)
->> +static u8 csiphy_settle_cnt_calc(s64 link_freq, u32 timer_clk_rate)
->>   {
->> -	u32 mipi_clock; /* Hz */
->>   	u32 ui; /* ps */
->>   	u32 timer_period; /* ps */
->>   	u32 t_hs_prepare_max; /* ps */
->> @@ -68,8 +65,10 @@ static u8 csiphy_settle_cnt_calc(u32 pixel_clock, u8 bpp, u8 num_lanes,
->>   	u32 t_hs_settle; /* ps */
->>   	u8 settle_cnt;
->>
->> -	mipi_clock = pixel_clock * bpp / (2 * num_lanes);
->> -	ui = div_u64(1000000000000LL, mipi_clock);
->> +	if (link_freq <= 0)
->> +		return 0;
+>>  drivers/soc/qcom/Kconfig  |    8 +
+>>  drivers/soc/qcom/Makefile |    1 +
+>>  drivers/soc/qcom/dcc.c    | 1055 
+>> +++++++++++++++++++++++++++++++++++++++++++++
+>>  3 files changed, 1064 insertions(+)
+>>  create mode 100644 drivers/soc/qcom/dcc.c
+>> 
+>> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+>> index 79b568f..8819e0b 100644
+>> --- a/drivers/soc/qcom/Kconfig
+>> +++ b/drivers/soc/qcom/Kconfig
+>> @@ -69,6 +69,14 @@ config QCOM_LLCC
+>>  	  SDM845. This provides interfaces to clients that use the LLCC.
+>>  	  Say yes here to enable LLCC slice driver.
+>> 
+>> +config QCOM_DCC
+>> +	tristate "Qualcomm Technologies, Inc. Data Capture and Compare 
+>> engine driver"
+>> +	depends on ARCH_QCOM || COMPILE_TEST
+>> +	help
+>> +	  This option enables driver for Data Capture and Compare engine. 
+>> DCC
+>> +	  driver provides interface to configure DCC block and read back
+>> +	  captured data from DCC's internal SRAM.
 >> +
->> +	ui = div_u64(1000000000000LL, link_freq);
->>   	ui /= 2;
->>   	t_hs_prepare_max = 85000 + 6 * ui;
->>   	t_hs_prepare_zero_min = 145000 + 10 * ui;
->> @@ -83,15 +82,14 @@ static u8 csiphy_settle_cnt_calc(u32 pixel_clock, u8 bpp, u8 num_lanes,
->>
->>   static void csiphy_lanes_enable(struct csiphy_device *csiphy,
->>   				struct csiphy_config *cfg,
->> -				u32 pixel_clock, u8 bpp, u8 lane_mask)
->> +				s64 link_freq, u8 lane_mask)
->>   {
->>   	struct csiphy_lanes_cfg *c = &cfg->csi2->lane_cfg;
->>   	u8 settle_cnt;
->>   	u8 val, l = 0;
->>   	int i = 0;
->>
->> -	settle_cnt = csiphy_settle_cnt_calc(pixel_clock, bpp, c->num_data,
->> -					    csiphy->timer_clk_rate);
->> +	settle_cnt = csiphy_settle_cnt_calc(link_freq, csiphy->timer_clk_rate);
->>
->>   	writel_relaxed(0x1, csiphy->base +
->>   		       CAMSS_CSI_PHY_GLBL_T_INIT_CFG0);
->> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
->> index 97cb9de85031..da7c3d3f9a10 100644
->> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
->> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
->> @@ -107,24 +107,23 @@ static irqreturn_t csiphy_isr(int irq, void *dev)
->>    *
->>    * Helper function to calculate settle count value. This is
->>    * based on the CSI2 T_hs_settle parameter which in turn
->> - * is calculated based on the CSI2 transmitter pixel clock
->> - * frequency.
->> + * is calculated based on the CSI2 transmitter link frequency.
->>    *
->> - * Return settle count value or 0 if the CSI2 pixel clock
->> - * frequency is not available
->> + * Return settle count value or 0 if the CSI2 link frequency
->> + * is not available
->>    */
->> -static u8 csiphy_settle_cnt_calc(u32 pixel_clock, u8 bpp, u8 num_lanes,
->> -				 u32 timer_clk_rate)
->> +static u8 csiphy_settle_cnt_calc(s64 link_freq, u32 timer_clk_rate)
->>   {
->> -	u32 mipi_clock; /* Hz */
->>   	u32 ui; /* ps */
->>   	u32 timer_period; /* ps */
->>   	u32 t_hs_prepare_max; /* ps */
->>   	u32 t_hs_settle; /* ps */
->>   	u8 settle_cnt;
->>
->> -	mipi_clock = pixel_clock * bpp / (2 * num_lanes);
->> -	ui = div_u64(1000000000000LL, mipi_clock);
->> +	if (link_freq <= 0)
->> +		return 0;
->> +
->> +	ui = div_u64(1000000000000LL, link_freq);
->>   	ui /= 2;
->>   	t_hs_prepare_max = 85000 + 6 * ui;
->>   	t_hs_settle = t_hs_prepare_max;
->> @@ -137,15 +136,14 @@ static u8 csiphy_settle_cnt_calc(u32 pixel_clock, u8 bpp, u8 num_lanes,
->>
->>   static void csiphy_lanes_enable(struct csiphy_device *csiphy,
->>   				struct csiphy_config *cfg,
->> -				u32 pixel_clock, u8 bpp, u8 lane_mask)
->> +				s64 link_freq, u8 lane_mask)
->>   {
->>   	struct csiphy_lanes_cfg *c = &cfg->csi2->lane_cfg;
->>   	u8 settle_cnt;
->>   	u8 val, l = 0;
->>   	int i;
->>
->> -	settle_cnt = csiphy_settle_cnt_calc(pixel_clock, bpp, c->num_data,
->> -					    csiphy->timer_clk_rate);
->> +	settle_cnt = csiphy_settle_cnt_calc(link_freq, csiphy->timer_clk_rate);
->>
->>   	val = BIT(c->clk.pos);
->>   	for (i = 0; i < c->num_data; i++)
->> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
->> index 509c9a59c09c..40384d7ca78c 100644
->> --- a/drivers/media/platform/qcom/camss/camss-csiphy.c
->> +++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
->> @@ -102,23 +102,23 @@ static u8 csiphy_get_bpp(const struct csiphy_format *formats,
->>   static int csiphy_set_clock_rates(struct csiphy_device *csiphy)
->>   {
->>   	struct device *dev = csiphy->camss->dev;
->> -	u32 pixel_clock;
->> +	s64 link_freq;
->>   	int i, j;
->>   	int ret;
->>
->> -	ret = camss_get_pixel_clock(&csiphy->subdev.entity, &pixel_clock);
->> -	if (ret)
->> -		pixel_clock = 0;
->> +	u8 bpp = csiphy_get_bpp(csiphy->formats, csiphy->nformats,
->> +				csiphy->fmt[MSM_CSIPHY_PAD_SINK].code);
->> +	u8 num_lanes = csiphy->cfg.csi2->lane_cfg.num_data;
->> +
->> +	link_freq = camss_get_link_freq(&csiphy->subdev.entity, bpp, num_lanes);
->> +	if (link_freq < 0)
->> +		link_freq  = 0;
->>
->>   	for (i = 0; i < csiphy->nclocks; i++) {
->>   		struct camss_clock *clock = &csiphy->clock[i];
->>
->>   		if (csiphy->rate_set[i]) {
->> -			u8 bpp = csiphy_get_bpp(csiphy->formats,
->> -					csiphy->nformats,
->> -					csiphy->fmt[MSM_CSIPHY_PAD_SINK].code);
->> -			u8 num_lanes = csiphy->cfg.csi2->lane_cfg.num_data;
->> -			u64 min_rate = pixel_clock * bpp / (2 * num_lanes * 4);
->> +			u64 min_rate = link_freq / 4;
->>   			long round_rate;
->>
->>   			camss_add_clock_margin(&min_rate);
->> @@ -238,22 +238,18 @@ static u8 csiphy_get_lane_mask(struct csiphy_lanes_cfg *lane_cfg)
->>   static int csiphy_stream_on(struct csiphy_device *csiphy)
->>   {
->>   	struct csiphy_config *cfg = &csiphy->cfg;
->> -	u32 pixel_clock;
->> +	s64 link_freq;
->>   	u8 lane_mask = csiphy_get_lane_mask(&cfg->csi2->lane_cfg);
->>   	u8 bpp = csiphy_get_bpp(csiphy->formats, csiphy->nformats,
->>   				csiphy->fmt[MSM_CSIPHY_PAD_SINK].code);
->> +	u8 num_lanes = csiphy->cfg.csi2->lane_cfg.num_data;
->>   	u8 val;
->> -	int ret;
->>
->> -	ret = camss_get_pixel_clock(&csiphy->subdev.entity, &pixel_clock);
->> -	if (ret) {
->> -		dev_err(csiphy->camss->dev,
->> -			"Cannot get CSI2 transmitter's pixel clock\n");
->> -		return -EINVAL;
->> -	}
->> -	if (!pixel_clock) {
->> +	link_freq = camss_get_link_freq(&csiphy->subdev.entity, bpp, num_lanes);
->> +
->> +	if (link_freq < 0) {
->>   		dev_err(csiphy->camss->dev,
->> -			"Got pixel clock == 0, cannot continue\n");
->> +			"Cannot get CSI2 transmitter's link frequency\n");
->>   		return -EINVAL;
->>   	}
->>
->> @@ -268,7 +264,7 @@ static int csiphy_stream_on(struct csiphy_device *csiphy)
->>   	writel_relaxed(val, csiphy->base_clk_mux);
->>   	wmb();
->>
->> -	csiphy->ops->lanes_enable(csiphy, cfg, pixel_clock, bpp, lane_mask);
->> +	csiphy->ops->lanes_enable(csiphy, cfg, link_freq, lane_mask);
->>
->>   	return 0;
->>   }
->> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.h b/drivers/media/platform/qcom/camss/camss-csiphy.h
->> index f7967ef836dc..d71b8bc6ec00 100644
->> --- a/drivers/media/platform/qcom/camss/camss-csiphy.h
->> +++ b/drivers/media/platform/qcom/camss/camss-csiphy.h
->> @@ -50,7 +50,7 @@ struct csiphy_hw_ops {
->>   	void (*reset)(struct csiphy_device *csiphy);
->>   	void (*lanes_enable)(struct csiphy_device *csiphy,
->>   			     struct csiphy_config *cfg,
->> -			     u32 pixel_clock, u8 bpp, u8 lane_mask);
->> +			     s64 link_freq, u8 lane_mask);
->>   	void (*lanes_disable)(struct csiphy_device *csiphy,
->>   			      struct csiphy_config *cfg);
->>   	irqreturn_t (*isr)(int irq, void *dev);
->> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
->> index 7c0f669f8aa6..eb8fb8c34acd 100644
->> --- a/drivers/media/platform/qcom/camss/camss.c
->> +++ b/drivers/media/platform/qcom/camss/camss.c
->> @@ -548,6 +548,29 @@ struct media_entity *camss_find_sensor(struct media_entity *entity)
->>   	}
->>   }
->>
->> +/**
->> + * camss_get_link_freq - Get link frequency from sensor
->> + * @entity: Media entity in the current pipeline
->> + * @bpp: Number of bits per pixel for the current format
->> + * @lanes: Number of lanes in the link to the sensor
->> + *
->> + * Return link frequency on success or a negative error code otherwise
+>>  config QCOM_KRYO_L2_ACCESSORS
+>>  	bool
+>>  	depends on ARCH_QCOM && ARM64 || COMPILE_TEST
+>> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+>> index ad675a6..1b00870 100644
+>> --- a/drivers/soc/qcom/Makefile
+>> +++ b/drivers/soc/qcom/Makefile
+>> @@ -26,3 +26,4 @@ obj-$(CONFIG_QCOM_LLCC) += llcc-qcom.o
+>>  obj-$(CONFIG_QCOM_RPMHPD) += rpmhpd.o
+>>  obj-$(CONFIG_QCOM_RPMPD) += rpmpd.o
+>>  obj-$(CONFIG_QCOM_KRYO_L2_ACCESSORS) +=	kryo-l2-accessors.o
+>> +obj-$(CONFIG_QCOM_DCC) += dcc.o
+>> diff --git a/drivers/soc/qcom/dcc.c b/drivers/soc/qcom/dcc.c
+>> new file mode 100644
+>> index 0000000..d67452b
+>> --- /dev/null
+>> +++ b/drivers/soc/qcom/dcc.c
+>> @@ -0,0 +1,1055 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2015-2021, The Linux Foundation. All rights 
+>> reserved.
 >> + */
->> +s64 camss_get_link_freq(struct media_entity *entity, unsigned int bpp,
->> +			unsigned int lanes)
+>> +
+>> +#include <linux/bitops.h>
+>> +#include <linux/cdev.h>
+>> +#include <linux/delay.h>
+>> +#include <linux/fs.h>
+>> +#include <linux/io.h>
+>> +#include <linux/iopoll.h>
+>> +#include <linux/module.h>
+>> +#include <linux/of.h>
+>> +#include <linux/of_device.h>
+>> +#include <linux/platform_device.h>
+>> +#include <linux/slab.h>
+>> +#include <linux/uaccess.h>
+>> +
+>> +#define TIMEOUT_US		100
+>> +
+>> +#define BM(lsb, msb)		((BIT(msb) - BIT(lsb)) + BIT(msb))
+>> +#define BMVAL(val, lsb, msb)	((val & BM(lsb, msb)) >> lsb)
+>> +#define BVAL(val, n)		((val & BIT(n)) >> n)
+> 
+> Pls use macros available in bitfield.h rather than inventing your own..
+
+Ack
+
+> 
+>> +
+>> +#define dcc_writel(drvdata, val, off)					\
+>> +	writel((val), drvdata->base + dcc_offset_conv(drvdata, off))
+>> +#define dcc_readl(drvdata, off)						\
+>> +	readl(drvdata->base + dcc_offset_conv(drvdata, off))
+>> +
+>> +#define dcc_sram_readl(drvdata, off)					\
+>> +	readl(drvdata->ram_base + off)
+>> +
+>> +/* DCC registers */
+>> +#define DCC_HW_INFO					0x04
+>> +#define DCC_LL_NUM_INFO					0x10
+>> +#define DCC_STATUS					0x1C
+>> +#define DCC_LL_LOCK(m)					(0x34 + 0x80 * m)
+>> +#define DCC_LL_CFG(m)					(0x38 + 0x80 * m)
+>> +#define DCC_LL_BASE(m)					(0x3c + 0x80 * m)
+>> +#define DCC_FD_BASE(m)					(0x40 + 0x80 * m)
+>> +#define DCC_LL_TIMEOUT(m)				(0x44 + 0x80 * m)
+>> +#define DCC_LL_INT_ENABLE(m)				(0x4C + 0x80 * m)
+>> +#define DCC_LL_INT_STATUS(m)				(0x50 + 0x80 * m)
+>> +#define DCC_LL_SW_TRIGGER(m)				(0x60 + 0x80 * m)
+>> +#define DCC_LL_BUS_ACCESS_STATUS(m)			(0x64 + 0x80 * m)
+>> +
+>> +#define DCC_MAP_LEVEL1			0x18
+>> +#define DCC_MAP_LEVEL2			0x34
+>> +#define DCC_MAP_LEVEL3			0x4C
+>> +
+>> +#define DCC_MAP_OFFSET1			0x10
+>> +#define DCC_MAP_OFFSET2			0x18
+>> +#define DCC_MAP_OFFSET3			0x1C
+>> +#define DCC_MAP_OFFSET4			0x8
+>> +
+>> +#define DCC_FIX_LOOP_OFFSET		16
+>> +#define DCC_VER_INFO_BIT		9
+>> +
+>> +#define DCC_READ        0
+>> +#define DCC_WRITE       1
+>> +#define DCC_LOOP        2
+>> +#define DCC_READ_WRITE  3
+>> +
+>> +#define MAX_DCC_OFFSET				(0xFF * 4)
+>> +#define MAX_DCC_LEN				0x7F
+>> +#define MAX_LOOP_CNT				0xFF
+>> +
+>> +#define DCC_ADDR_DESCRIPTOR			0x00
+>> +#define DCC_LOOP_DESCRIPTOR			(BIT(30))
+>> +#define DCC_RD_MOD_WR_DESCRIPTOR		(BIT(31))
+>> +#define DCC_LINK_DESCRIPTOR			(BIT(31) | BIT(30))
+> 
+> we have GENMASK() for this
+
+Ack
+
+> 
+>> +
+>> +#define DCC_READ_IND				0x00
+>> +#define DCC_WRITE_IND				(BIT(28))
+>> +
+>> +#define DCC_AHB_IND				0x00
+>> +#define DCC_APB_IND				BIT(29)
+>> +
+>> +#define DCC_MAX_LINK_LIST			8
+>> +#define DCC_INVALID_LINK_LIST			0xFF
+>> +
+>> +#define DCC_VER_MASK1				0x7F
+>> +#define DCC_VER_MASK2				0x3F
+> 
+> Genmask for these too...
+
+Ack
+
+> 
+>> +
+>> +#define DCC_RD_MOD_WR_ADDR                      0xC105E
+>> +
+>> +struct qcom_dcc_config {
+>> +	const int dcc_ram_offset;
+>> +};
+>> +
+>> +static const struct qcom_dcc_config sm8150_cfg = {
+>> +	.dcc_ram_offset				= 0x5000,
+>> +};
+> 
+> maybe move it down near compatible table?
+
+Ack
+
+> 
+>> +
+>> +enum dcc_descriptor_type {
+>> +	DCC_ADDR_TYPE,
+>> +	DCC_LOOP_TYPE,
+>> +	DCC_READ_WRITE_TYPE,
+>> +	DCC_WRITE_TYPE
+>> +};
+>> +
+>> +enum dcc_mem_map_ver {
+>> +	DCC_MEM_MAP_VER1,
+>> +	DCC_MEM_MAP_VER2,
+>> +	DCC_MEM_MAP_VER3
+>> +};
+>> +
+>> +struct dcc_config_entry {
+>> +	u32				base;
+>> +	u32				offset;
+>> +	u32				len;
+>> +	u32				index;
+>> +	u32				loop_cnt;
+>> +	u32				write_val;
+>> +	u32				mask;
+>> +	bool				apb_bus;
+>> +	enum dcc_descriptor_type	desc_type;
+>> +	struct list_head		list;
+>> +};
+>> +
+>> +struct dcc_drvdata {
+>> +	void __iomem		*base;
+>> +	u32			reg_size;
+>> +	struct device		*dev;
+>> +	struct mutex		mutex;
+>> +	void __iomem		*ram_base;
+>> +	u32			ram_size;
+>> +	u32			ram_offset;
+>> +	enum dcc_mem_map_ver	mem_map_ver;
+>> +	u32			ram_cfg;
+>> +	u32			ram_start;
+>> +	bool			*enable;
+>> +	bool			*configured;
+>> +	bool			interrupt_disable;
+>> +	char			*sram_node;
+>> +	struct cdev		sram_dev;
+>> +	struct class		*sram_class;
+>> +	struct list_head	*cfg_head;
+>> +	u32			*nr_config;
+>> +	u32			nr_link_list;
+>> +	u8			curr_list;
+>> +	u8			loopoff;
+>> +};
+>> +
+>> +struct dcc_cfg_attr {
+>> +	u32	addr;
+>> +	u32	prev_addr;
+>> +	u32	prev_off;
+>> +	u32	link;
+>> +	u32	sram_offset;
+>> +};
+>> +
+>> +struct dcc_cfg_loop_attr {
+>> +	u32	loop;
+>> +	bool	loop_start;
+>> +	u32	loop_cnt;
+>> +	u32	loop_len;
+>> +	u32	loop_off;
+>> +};
+>> +
+>> +static u32 dcc_offset_conv(struct dcc_drvdata *drvdata, u32 off)
 >> +{
->> +	struct media_entity *sensor;
->> +	struct v4l2_subdev *subdev;
->> +
->> +	sensor = camss_find_sensor(entity);
->> +	if (!sensor)
->> +		return -ENODEV;
->> +
->> +	subdev = media_entity_to_v4l2_subdev(sensor);
->> +
->> +	return v4l2_get_link_freq(subdev->ctrl_handler, bpp, 2 * lanes);
+>> +	if (drvdata->mem_map_ver == DCC_MEM_MAP_VER1) {
+>> +		if ((off & DCC_VER_MASK1) >= DCC_MAP_LEVEL3)
+>> +			return (off - DCC_MAP_OFFSET3);
+>> +		if ((off & DCC_VER_MASK1) >= DCC_MAP_LEVEL2)
+>> +			return (off - DCC_MAP_OFFSET2);
+>> +		else if ((off & DCC_VER_MASK1) >= DCC_MAP_LEVEL1)
+>> +			return (off - DCC_MAP_OFFSET1);
+>> +	} else if (drvdata->mem_map_ver == DCC_MEM_MAP_VER2) {
+>> +		if ((off & DCC_VER_MASK1) >= DCC_MAP_LEVEL2)
+>> +			return (off - DCC_MAP_OFFSET4);
+>> +	}
+>> +	return off;
 >> +}
 >> +
->>   /*
->>    * camss_get_pixel_clock - Get pixel clock rate from sensor
->>    * @entity: Media entity in the current pipeline
->> diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
->> index 3a0484683cd6..86cdc25189eb 100644
->> --- a/drivers/media/platform/qcom/camss/camss.h
->> +++ b/drivers/media/platform/qcom/camss/camss.h
->> @@ -108,6 +108,8 @@ int camss_enable_clocks(int nclocks, struct camss_clock *clock,
->>   			struct device *dev);
->>   void camss_disable_clocks(int nclocks, struct camss_clock *clock);
->>   struct media_entity *camss_find_sensor(struct media_entity *entity);
->> +s64 camss_get_link_freq(struct media_entity *entity, unsigned int bpp,
->> +			unsigned int lanes);
->>   int camss_get_pixel_clock(struct media_entity *entity, u32 *pixel_clock);
->>   int camss_pm_domain_on(struct camss *camss, int id);
->>   void camss_pm_domain_off(struct camss *camss, int id);
->> --
->> 2.17.1
->>
+>> +static int dcc_sram_writel(struct dcc_drvdata *drvdata,
+>> +					u32 val, u32 off)
+>> +{
+>> +	if (unlikely(off > (drvdata->ram_size - 4)))
+>> +		return -EINVAL;
+>> +
+>> +	writel((val), drvdata->ram_base + off);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int _dcc_ll_cfg_read_write(struct dcc_drvdata *drvdata,
+>> +struct dcc_config_entry *entry, struct dcc_cfg_attr *cfg)
+> 
+> this looks a bit hard to read, can you make it better (also you can go
+> upto 100 chars now), do you checkpatch with --strict option to get
+> better alignment of code
+
+Ack
+
+> 
+> 
+>> +{
+>> +	int ret = 0;
+> 
+> Superfluous init?
+
+Ack
+
+> 
+>> +
+>> +	if (cfg->link) {
+>> +		/* write new offset = 1 to continue
+>> +		 * processing the list
+> 
+> kernel uses:
+>         /*
+>          * this is a
+>          * multi line comment style
+>          */
+
+Ack
+
+> 
+>> +		 */
+>> +
+>> +		ret = dcc_sram_writel(drvdata, cfg->link, cfg->sram_offset);
+>> +		if (ret)
+>> +			return ret;
+>> +		cfg->sram_offset += 4;
+>> +		/* Reset link and prev_off */
+>> +		cfg->addr = 0x00;
+>> +		cfg->link = 0;
+>> +		cfg->prev_off = 0;
+> 
+> memset cfg first?
+
+Ack
+
+> 
+>> +		cfg->prev_addr = cfg->addr;
+>> +	}
+>> +
+>> +	cfg->addr = DCC_RD_MOD_WR_DESCRIPTOR;
+>> +
+>> +	ret = dcc_sram_writel(drvdata, cfg->addr, cfg->sram_offset);
+>> +
+> 
+> drop this empty line
+
+Ack
+
+> 
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	cfg->sram_offset += 4;
+>> +
+>> +	ret = dcc_sram_writel(drvdata, entry->mask, cfg->sram_offset);
+>> +
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	cfg->sram_offset += 4;
+>> +
+>> +	ret = dcc_sram_writel(drvdata, entry->write_val, cfg->sram_offset);
+>> +
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	cfg->sram_offset += 4;
+>> +
+>> +	cfg->addr = 0;
+>> +
+>> +	return ret;
+>> +}
+>> +
+>> +static int _dcc_ll_cfg_loop(struct dcc_drvdata *drvdata, struct 
+>> dcc_config_entry *entry,
+>> +struct dcc_cfg_attr *cfg, struct dcc_cfg_loop_attr *cfg_loop, u32 
+>> *total_len)
+> 
+> here as well
+
+Ack
+
+> 
+>> +{
+>> +
+>> +	int ret = 0;
+>> +
+>> +	/* Check if we need to write link of prev entry */
+>> +	if (cfg->link) {
+>> +		ret = dcc_sram_writel(drvdata, cfg->link, cfg->sram_offset);
+>> +		if (ret)
+>> +			return ret;
+>> +		cfg->sram_offset += 4;
+>> +	}
+>> +
+>> +	if (cfg_loop->loop_start) {
+>> +		cfg_loop->loop = (cfg->sram_offset - cfg_loop->loop_off) / 4;
+>> +		cfg_loop->loop |= (cfg_loop->loop_cnt << drvdata->loopoff) &
+>> +		BM(drvdata->loopoff, 27);
+>> +		cfg_loop->loop |= DCC_LOOP_DESCRIPTOR;
+>> +		*total_len += (*total_len - cfg_loop->loop_len) * 
+>> cfg_loop->loop_cnt;
+>> +
+>> +		ret = dcc_sram_writel(drvdata, cfg_loop->loop, cfg->sram_offset);
+>> +
+>> +		if (ret)
+>> +			return ret;
+>> +		cfg->sram_offset += 4;
+>> +
+>> +		cfg_loop->loop_start = false;
+>> +		cfg_loop->loop_len = 0;
+>> +		cfg_loop->loop_off = 0;
+> 
+> seems quite similar to last one..? Maybe a helper for common code
+
+Ack
+
+> 
+>> +	} else {
+>> +		cfg_loop->loop_start = true;
+>> +		cfg_loop->loop_cnt = entry->loop_cnt - 1;
+>> +		cfg_loop->loop_len = *total_len;
+>> +		cfg_loop->loop_off = cfg->sram_offset;
+>> +	}
+>> +
+>> +	/* Reset link and prev_off */
+>> +
+>> +	cfg->addr = 0x00;
+>> +	cfg->link = 0;
+>> +	cfg->prev_off = 0;
+>> +	cfg->prev_addr = cfg->addr;
+>> +
+>> +	return ret;
+>> +}
+>> +
+>> +static int _dcc_ll_cfg_write(struct dcc_drvdata *drvdata,
+>> +struct dcc_config_entry *entry, struct dcc_cfg_attr *cfg, u32 
+>> *total_len)
+>> +{
+>> +	u32 off;
+>> +	int ret = 0;
+>> +
+>> +	if (cfg->link) {
+>> +		/* write new offset = 1 to continue
+>> +		 * processing the list
+>> +		 */
+>> +		ret = dcc_sram_writel(drvdata, cfg->link, cfg->sram_offset);
+>> +
+>> +		if (ret)
+>> +			return ret;
+>> +
+>> +		cfg->sram_offset += 4;
+>> +		/* Reset link and prev_off */
+>> +		cfg->addr = 0x00;
+>> +		cfg->prev_off = 0;
+>> +		cfg->prev_addr = cfg->addr;
+>> +	}
+>> +
+>> +	off = entry->offset/4;
+>> +	/* write new offset-length pair to correct position */
+>> +	cfg->link |= ((off & BM(0, 7)) | BIT(15) | ((entry->len << 8) & 
+>> BM(8, 14)));
+>> +	cfg->link |= DCC_LINK_DESCRIPTOR;
+>> +
+>> +	/* Address type */
+>> +	cfg->addr = (entry->base >> 4) & BM(0, 27);
+>> +	if (entry->apb_bus)
+>> +		cfg->addr |= DCC_ADDR_DESCRIPTOR | DCC_WRITE_IND | DCC_APB_IND;
+>> +	else
+>> +		cfg->addr |= DCC_ADDR_DESCRIPTOR | DCC_WRITE_IND | DCC_AHB_IND;
+>> +	ret = dcc_sram_writel(drvdata, cfg->addr, cfg->sram_offset);
+>> +
+>> +	if (ret)
+>> +		return ret;
+>> +	cfg->sram_offset += 4;
+>> +
+>> +	ret = dcc_sram_writel(drvdata, cfg->link, cfg->sram_offset);
+>> +	if (ret)
+>> +		return ret;
+>> +	cfg->sram_offset += 4;
+>> +
+>> +	ret = dcc_sram_writel(drvdata, entry->write_val, cfg->sram_offset);
+>> +
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	cfg->sram_offset += 4;
+>> +	cfg->addr = 0x00;
+>> +	cfg->link = 0;
+>> +	return ret;
+>> +}
+>> +
+>> +static int _dcc_ll_cfg_default(struct dcc_drvdata *drvdata,
+>> +struct dcc_config_entry *entry, struct dcc_cfg_attr *cfg, u32 *pos, 
+>> u32 *total_len)
+>> +{
+>> +	int ret = 0;
+>> +	u32 off;
+>> +
+>> +	cfg->addr = (entry->base >> 4) & BM(0, 27);
+>> +
+>> +	if (entry->apb_bus)
+>> +		cfg->addr |= DCC_ADDR_DESCRIPTOR | DCC_READ_IND | DCC_APB_IND;
+>> +	else
+>> +		cfg->addr |= DCC_ADDR_DESCRIPTOR | DCC_READ_IND | DCC_AHB_IND;
+>> +
+>> +	off = entry->offset/4;
+>> +
+>> +	*total_len += entry->len * 4;
+>> +
+>> +	if (!cfg->prev_addr || cfg->prev_addr != cfg->addr || cfg->prev_off 
+>> > off) {
+>> +		/* Check if we need to write prev link entry */
+>> +		if (cfg->link) {
+>> +			ret = dcc_sram_writel(drvdata, cfg->link, cfg->sram_offset);
+>> +			if (ret)
+>> +				return ret;
+>> +				cfg->sram_offset += 4;
+>> +		}
+>> +		dev_dbg(drvdata->dev, "DCC: sram address 0x%x\n", 
+>> cfg->sram_offset);
+>> +
+>> +		/* Write address */
+>> +		ret = dcc_sram_writel(drvdata, cfg->addr, cfg->sram_offset);
+>> +
+>> +		if (ret)
+>> +			return ret;
+>> +
+>> +		cfg->sram_offset += 4;
+>> +
+>> +		/* Reset link and prev_off */
+>> +		cfg->link = 0;
+>> +		cfg->prev_off = 0;
+>> +	}
+>> +
+>> +	if ((off - cfg->prev_off) > 0xFF || entry->len > MAX_DCC_LEN) {
+>> +		dev_err(drvdata->dev, "DCC: Programming error Base: 0x%x, offset 
+>> 0x%x\n",
+>> +		entry->base, entry->offset);
+>> +		ret = -EINVAL;
+>> +		return ret;
+>> +	}
+>> +
+>> +	if (cfg->link) {
+>> +		/*
+>> +		 * link already has one offset-length so new
+>> +		 * offset-length needs to be placed at
+>> +		 * bits [29:15]
+>> +		 */
+>> +		*pos = 15;
+>> +
+>> +		/* Clear bits [31:16] */
+>> +		cfg->link &= BM(0, 14);
+>> +	} else {
+>> +		/*
+>> +		 * link is empty, so new offset-length needs
+>> +		 * to be placed at bits [15:0]
+>> +		 */
+>> +		*pos = 0;
+>> +		cfg->link = 1 << 15;
+>> +	}
+>> +
+>> +	/* write new offset-length pair to correct position */
+>> +	cfg->link |= (((off-cfg->prev_off) & BM(0, 7)) | ((entry->len << 8) 
+>> & BM(8, 14))) << *pos;
+>> +
+>> +	cfg->link |= DCC_LINK_DESCRIPTOR;
+>> +
+>> +	if (*pos) {
+>> +		ret = dcc_sram_writel(drvdata, cfg->link, cfg->sram_offset);
+>> +		if (ret)
+>> +			return ret;
+>> +		cfg->sram_offset += 4;
+>> +		cfg->link = 0;
+>> +	}
+>> +
+>> +	cfg->prev_off  = off + entry->len - 1;
+>> +	cfg->prev_addr = cfg->addr;
+>> +	return ret;
+>> +}
+>> +
+>> +static int __dcc_ll_cfg(struct dcc_drvdata *drvdata, int curr_list)
+>> +{
+>> +	int ret = 0;
+>> +	u32 total_len, pos;
+>> +	struct dcc_config_entry *entry;
+>> +	struct dcc_cfg_attr cfg;
+>> +	struct dcc_cfg_loop_attr cfg_loop;
+>> +
+>> +	cfg.sram_offset = drvdata->ram_cfg * 4;
+>> +	cfg.prev_off = 0;
+>> +	cfg_loop.loop_off = 0;
+>> +	total_len = 0;
+>> +	cfg_loop.loop_len = 0;
+>> +	cfg_loop.loop_cnt = 0;
+>> +	cfg_loop.loop_start = false;
+>> +	cfg.prev_addr = 0;
+>> +	cfg.addr = 0;
+>> +	cfg.link = 0;
+> 
+> again use memset for these
+
+Ack
+
+> 
+>> +
+>> +	list_for_each_entry(entry, &drvdata->cfg_head[curr_list], list) {
+>> +		switch (entry->desc_type) {
+>> +		case DCC_READ_WRITE_TYPE:
+>> +		{
+> 
+> checkpatch should have told you this is not typical kernel style, pls
+> fix this and many other things before we process further
+
+Checkpatch with --strict option has been run for these patches but it 
+seems to
+be not detecting these. They have been fixed now.
+
