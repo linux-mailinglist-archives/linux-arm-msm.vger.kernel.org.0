@@ -2,570 +2,652 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BCD431F06F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Feb 2021 20:51:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ADCAB31F086
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Feb 2021 20:57:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231765AbhBRTul (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Feb 2021 14:50:41 -0500
-Received: from m42-2.mailgun.net ([69.72.42.2]:52093 "EHLO m42-2.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230187AbhBRTgw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Feb 2021 14:36:52 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1613676988; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=vxi/zdS6Z/ELKd/8pzfkzZ8Lu20JccrUqYhWNPx+Rd8=;
- b=GQqw9JbTQkwU4MeMNA33bV/No0PBaMuSCwQcr2dtJAN/+6pesnCvJ9Og2nfCPF5xAmiwOLdL
- uDfEkHq5PAY29p+ff+d8er7EwHkJBf/PxsJ3HoqwIuxAJigpT5WhLojUVN9ePsnNwvphpBzS
- TiFBhVBXC4PRkV85hThILdXj3V4=
-X-Mailgun-Sending-Ip: 69.72.42.2
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 602ec1a2e87943df30512b28 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 18 Feb 2021 19:36:02
- GMT
-Sender: abhinavk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 975DBC43463; Thu, 18 Feb 2021 19:36:01 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 16056C43461;
-        Thu, 18 Feb 2021 19:35:53 +0000 (UTC)
+        id S231371AbhBRTym (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Feb 2021 14:54:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58382 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230505AbhBRTuI (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 18 Feb 2021 14:50:08 -0500
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53876C061788
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Feb 2021 11:49:26 -0800 (PST)
+Received: by mail-lj1-x231.google.com with SMTP id y7so5628649lji.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Feb 2021 11:49:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=IotU9WQlawBcSdu4zPf45v9ZpoF/uPKn5cMPb2mqX1c=;
+        b=GAnwDmlSaNQ/1NsVRodEIgP3cS8R7bqKGQvtHt6Qogpq4Q3EA0LXHJCZgFh/V4/fJw
+         w5TS96Q8nVK7sMrran/Pfg9K3kueW4elLVVs17phNk8J75ZTGsH8KQgoRVl++Jwz8ma4
+         LBWuS6rfbcm99zOVla2dea73NrDfM00SNVxhEwUZgjFhJRDxsto+z1sJKVqoHKlP5YMg
+         2TzmimUCrK5qoXHPuv8mOJ17C9MU88P9OumKvainjZE1Md+YU0sDQkoNC8NTf9g7mEbx
+         jgGGHdCZRJC/G1GqOeccIVbWav2b8I4wX5wxUkqwtKfw/SaLqjfumKUJGY3f8L4jxZJe
+         uy6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=IotU9WQlawBcSdu4zPf45v9ZpoF/uPKn5cMPb2mqX1c=;
+        b=nqvlZar21IjX0aP+8zeFaOpE1lh18Rw/oQcvLDGIGhr3Kcyzeep29NNgQTyb5INHEv
+         pMX890Mv5ANPg1EVNDKJrG4/kVnZStMD2Dp0eDejlYyevJAS4Bmwg7Y70SZAHmqK7pt7
+         JpQksRcgMp82Wp7pF6eyc6HH7suh7WXhoOVH7PpOwMlcCuQnRw4k5uhhlonRjjasSLRX
+         RAbmEaia/NF1xXsKSIOErP4/Zck+kVadZ1QZp8bK+DAyMchZOUFjKj9igDKpP59SRuhK
+         OakRrTDNUHw6PuBCnoqsXs4IVOmGd/ouJxhb3CSlGYYz8+67nHtGqzf5w0yB69ERh3Xk
+         Rl6Q==
+X-Gm-Message-State: AOAM532X+/wnrLr5OCdqjbUIQeJ8HmrV/DWEAzYXCpDs/uAi/vSUasMJ
+        tui1e/toLjKvdgMoiOwR/1us/g==
+X-Google-Smtp-Source: ABdhPJxCjZ5eqLKgrLIfNVVCwtTphauHgn4o2DzwPpurkZEM3YlXU70UaU7BmESRkHVu2BAjP4VQpg==
+X-Received: by 2002:a2e:9841:: with SMTP id e1mr1862813ljj.206.1613677764473;
+        Thu, 18 Feb 2021 11:49:24 -0800 (PST)
+Received: from [192.168.118.216] ([85.249.43.69])
+        by smtp.gmail.com with ESMTPSA id n26sm715561ljj.94.2021.02.18.11.49.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 Feb 2021 11:49:23 -0800 (PST)
+Subject: Re: [PATCH v5 05/22] media: camss: Make ISPIF subdevice optional
+To:     Robert Foss <robert.foss@linaro.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, todor.too@gmail.com,
+        mchehab@kernel.org, robh+dt@kernel.org,
+        angelogioacchino.delregno@somainline.org,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Sakari Ailus <sakari.ailus@iki.fi>,
+        Nicolas Boichat <drinkcat@chromium.org>
+Cc:     Rob Herring <robh@kernel.org>, Tomasz Figa <tfiga@chromium.org>,
+        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
+        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Jonathan Marek <jonathan@marek.ca>
+References: <20210217112122.424236-1-robert.foss@linaro.org>
+ <20210217112122.424236-6-robert.foss@linaro.org>
+From:   Andrey Konovalov <andrey.konovalov@linaro.org>
+Message-ID: <63fd1382-6b50-3594-69fc-0da4ef006ebc@linaro.org>
+Date:   Thu, 18 Feb 2021 22:49:20 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 18 Feb 2021 11:35:52 -0800
-From:   abhinavk@codeaurora.org
-To:     Nicolas Boichat <drinkcat@chromium.org>
-Cc:     Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        David Airlie <airlied@linux.ie>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        dri-devel@lists.freedesktop.org,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Emil Velikov <emil.velikov@collabora.com>,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Jonas Karlman <jonas@kwiboo.se>, linux-arm-msm@vger.kernel.org,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Inki Dae <inki.dae@samsung.com>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        linux-samsung-soc@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        Rikard Falkeborn <rikard.falkeborn@gmail.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Sean Paul <sean@poorly.run>, Xin Ji <xji@analogixsemi.com>,
-        linux-arm-kernel@lists.infradead.org,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        linux-kernel@vger.kernel.org, Robert Foss <robert.foss@linaro.org>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        freedreno@lists.freedesktop.org
-Subject: Re: [Freedreno] [PATCH] drm/dsi: Add _NO_ to MIPI_DSI_* flags
- disabling features
-In-Reply-To: <20210211113309.1.I629b2366a6591410359c7fcf6d385b474b705ca2@changeid>
-References: <20210211113309.1.I629b2366a6591410359c7fcf6d385b474b705ca2@changeid>
-Message-ID: <a5f7e6e1da69a2bcf5c98bd4c78e5267@codeaurora.org>
-X-Sender: abhinavk@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+In-Reply-To: <20210217112122.424236-6-robert.foss@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Nicolas
+Hi Robert,
 
-On 2021-02-10 19:33, Nicolas Boichat wrote:
-> Many of the DSI flags have names opposite to their actual effects,
-> e.g. MIPI_DSI_MODE_EOT_PACKET means that EoT packets will actually
-> be disabled. Fix this by including _NO_ in the flag names, e.g.
-> MIPI_DSI_MODE_NO_EOT_PACKET.
+On 17.02.2021 14:21, Robert Foss wrote:
+> This driver supports multiple architecture versions of the Qualcomm ISP.
+> The CAMSS architecure which this driver is name after, and with the
+> introduction of this series, the Titan architecture.
 > 
-> Signed-off-by: Nicolas Boichat <drinkcat@chromium.org>
+> The ISPIF is an IP-block that is only present in the CAMSS generation of
+> the architecture. In order to support the Titan generation, make the
+> ISPIF an optional subdevice.
+> 
+> Signed-off-by: Robert Foss <robert.foss@linaro.org>
 
-For the msm/dsi/ part, please feel free to add :
-Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
+Reviewed-by: Andrey Konovalov <andrey.konovalov@linaro.org>
+
+Thanks,
+Andrey
+
 > ---
-> I considered adding _DISABLE_ instead, but that'd make the
-> flag names a big too long.
 > 
-> Generated with:
-> flag=MIPI_DSI_MODE_VIDEO_HFP; git grep $flag | cut -f1 -d':' | \
->   xargs -I{} sed -i -e "s/$flag/MIPI_DSI_MODE_VIDEO_NO_HFP/" {}
-> flag=MIPI_DSI_MODE_VIDEO_HBP; git grep $flag | cut -f1 -d':' | \
->   xargs -I{} sed -i -e "s/$flag/MIPI_DSI_MODE_VIDEO_NO_HBP/" {}
-> flag=MIPI_DSI_MODE_VIDEO_HSA; git grep $flag | cut -f1 -d':' | \
->   xargs -I{} sed -i -e "s/$flag/MIPI_DSI_MODE_VIDEO_NO_HSA/" {}
-> flag=MIPI_DSI_MODE_EOT_PACKET; git grep $flag | cut -f1 -d':' | \
->   xargs -I{} sed -i -e "s/$flag/MIPI_DSI_MODE_NO_EOT_PACKET/" {}
-> (then minor format changes)
 > 
->  drivers/gpu/drm/bridge/adv7511/adv7533.c             | 2 +-
->  drivers/gpu/drm/bridge/analogix/anx7625.c            | 2 +-
->  drivers/gpu/drm/bridge/cdns-dsi.c                    | 4 ++--
->  drivers/gpu/drm/bridge/tc358768.c                    | 2 +-
->  drivers/gpu/drm/exynos/exynos_drm_dsi.c              | 8 ++++----
->  drivers/gpu/drm/mcde/mcde_dsi.c                      | 2 +-
->  drivers/gpu/drm/mediatek/mtk_dsi.c                   | 2 +-
->  drivers/gpu/drm/msm/dsi/dsi_host.c                   | 8 ++++----
->  drivers/gpu/drm/panel/panel-asus-z00t-tm5p5-n35596.c | 2 +-
->  drivers/gpu/drm/panel/panel-dsi-cm.c                 | 2 +-
->  drivers/gpu/drm/panel/panel-elida-kd35t133.c         | 2 +-
->  drivers/gpu/drm/panel/panel-khadas-ts050.c           | 2 +-
->  drivers/gpu/drm/panel/panel-leadtek-ltk050h3146w.c   | 2 +-
->  drivers/gpu/drm/panel/panel-leadtek-ltk500hd1829.c   | 2 +-
->  drivers/gpu/drm/panel/panel-novatek-nt35510.c        | 2 +-
->  drivers/gpu/drm/panel/panel-osd-osd101t2587-53ts.c   | 2 +-
->  drivers/gpu/drm/panel/panel-samsung-s6d16d0.c        | 2 +-
->  drivers/gpu/drm/panel/panel-samsung-s6e63j0x03.c     | 2 +-
->  drivers/gpu/drm/panel/panel-samsung-s6e63m0-dsi.c    | 2 +-
->  drivers/gpu/drm/panel/panel-samsung-s6e8aa0.c        | 4 ++--
->  drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c      | 2 +-
->  drivers/gpu/drm/panel/panel-simple.c                 | 2 +-
->  drivers/gpu/drm/panel/panel-sony-acx424akp.c         | 2 +-
->  drivers/gpu/drm/panel/panel-xinpeng-xpp055c272.c     | 2 +-
->  include/drm/drm_mipi_dsi.h                           | 8 ++++----
->  25 files changed, 36 insertions(+), 36 deletions(-)
+> Changes since v1:
+>   - Björn: Improved commit message
+>   - Björn: Use local 'dev' ptr instead of 'camss->dev'
+>   - Björn: Remove res/ispif NULL checks
+>   - Björn: Remove ispif NULL checks before calling
+>     msm_ispif_unregister_entities()
+>   - Andrey: Fixed incorrect allocation size
 > 
-> diff --git a/drivers/gpu/drm/bridge/adv7511/adv7533.c
-> b/drivers/gpu/drm/bridge/adv7511/adv7533.c
-> index aa19d5a40e31..59d718bde8c4 100644
-> --- a/drivers/gpu/drm/bridge/adv7511/adv7533.c
-> +++ b/drivers/gpu/drm/bridge/adv7511/adv7533.c
-> @@ -165,7 +165,7 @@ int adv7533_attach_dsi(struct adv7511 *adv)
->  	dsi->lanes = adv->num_dsi_lanes;
->  	dsi->format = MIPI_DSI_FMT_RGB888;
->  	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | 
-> MIPI_DSI_MODE_VIDEO_SYNC_PULSE |
-> -			  MIPI_DSI_MODE_EOT_PACKET | MIPI_DSI_MODE_VIDEO_HSE;
-> +			  MIPI_DSI_MODE_NO_EOT_PACKET | MIPI_DSI_MODE_VIDEO_HSE;
+> Changes since v4:
+>   - Andrey: Remove !camss->ispif conditional from camss.c
+>   - Andrey: Fix !camss->ispif in camss-ispif.c
+>   - Move !camss->ispif check to msm_ispif_subdev_init()
 > 
->  	ret = mipi_dsi_attach(dsi);
->  	if (ret < 0) {
-> diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c
-> b/drivers/gpu/drm/bridge/analogix/anx7625.c
-> index 65cc05982f82..beecfe6bf359 100644
-> --- a/drivers/gpu/drm/bridge/analogix/anx7625.c
-> +++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
-> @@ -1334,7 +1334,7 @@ static int anx7625_attach_dsi(struct anx7625_data 
-> *ctx)
->  	dsi->format = MIPI_DSI_FMT_RGB888;
->  	dsi->mode_flags = MIPI_DSI_MODE_VIDEO	|
->  		MIPI_DSI_MODE_VIDEO_SYNC_PULSE	|
-> -		MIPI_DSI_MODE_EOT_PACKET	|
-> +		MIPI_DSI_MODE_NO_EOT_PACKET	|
->  		MIPI_DSI_MODE_VIDEO_HSE;
 > 
->  	if (mipi_dsi_attach(dsi) < 0) {
-> diff --git a/drivers/gpu/drm/bridge/cdns-dsi.c
-> b/drivers/gpu/drm/bridge/cdns-dsi.c
-> index 76373e31df92..34aa24269a57 100644
-> --- a/drivers/gpu/drm/bridge/cdns-dsi.c
-> +++ b/drivers/gpu/drm/bridge/cdns-dsi.c
-> @@ -829,7 +829,7 @@ static void cdns_dsi_bridge_enable(struct
-> drm_bridge *bridge)
->  	tmp = DIV_ROUND_UP(dsi_cfg.htotal, nlanes) -
->  	      DIV_ROUND_UP(dsi_cfg.hsa, nlanes);
+>   .../media/platform/qcom/camss/camss-ispif.c   | 119 +++++++++++-------
+>   .../media/platform/qcom/camss/camss-ispif.h   |   3 +-
+>   drivers/media/platform/qcom/camss/camss.c     |  99 ++++++++++-----
+>   drivers/media/platform/qcom/camss/camss.h     |   2 +-
+>   4 files changed, 139 insertions(+), 84 deletions(-)
 > 
-> -	if (!(output->dev->mode_flags & MIPI_DSI_MODE_EOT_PACKET))
-> +	if (!(output->dev->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET))
->  		tmp -= DIV_ROUND_UP(DSI_EOT_PKT_SIZE, nlanes);
+> diff --git a/drivers/media/platform/qcom/camss/camss-ispif.c b/drivers/media/platform/qcom/camss/camss-ispif.c
+> index adeb92808998..fc121da4ab0c 100644
+> --- a/drivers/media/platform/qcom/camss/camss-ispif.c
+> +++ b/drivers/media/platform/qcom/camss/camss-ispif.c
+> @@ -161,6 +161,7 @@ static const u32 ispif_formats_8x96[] = {
+>   static irqreturn_t ispif_isr_8x96(int irq, void *dev)
+>   {
+>   	struct ispif_device *ispif = dev;
+> +	struct camss *camss = ispif->camss;
+>   	u32 value0, value1, value2, value3, value4, value5;
+>   
+>   	value0 = readl_relaxed(ispif->base + ISPIF_VFE_m_IRQ_STATUS_0(0));
+> @@ -186,34 +187,34 @@ static irqreturn_t ispif_isr_8x96(int irq, void *dev)
+>   		complete(&ispif->reset_complete[1]);
+>   
+>   	if (unlikely(value0 & ISPIF_VFE_m_IRQ_STATUS_0_PIX0_OVERFLOW))
+> -		dev_err_ratelimited(to_device(ispif), "VFE0 pix0 overflow\n");
+> +		dev_err_ratelimited(camss->dev, "VFE0 pix0 overflow\n");
+>   
+>   	if (unlikely(value0 & ISPIF_VFE_m_IRQ_STATUS_0_RDI0_OVERFLOW))
+> -		dev_err_ratelimited(to_device(ispif), "VFE0 rdi0 overflow\n");
+> +		dev_err_ratelimited(camss->dev, "VFE0 rdi0 overflow\n");
+>   
+>   	if (unlikely(value1 & ISPIF_VFE_m_IRQ_STATUS_1_PIX1_OVERFLOW))
+> -		dev_err_ratelimited(to_device(ispif), "VFE0 pix1 overflow\n");
+> +		dev_err_ratelimited(camss->dev, "VFE0 pix1 overflow\n");
+>   
+>   	if (unlikely(value1 & ISPIF_VFE_m_IRQ_STATUS_1_RDI1_OVERFLOW))
+> -		dev_err_ratelimited(to_device(ispif), "VFE0 rdi1 overflow\n");
+> +		dev_err_ratelimited(camss->dev, "VFE0 rdi1 overflow\n");
+>   
+>   	if (unlikely(value2 & ISPIF_VFE_m_IRQ_STATUS_2_RDI2_OVERFLOW))
+> -		dev_err_ratelimited(to_device(ispif), "VFE0 rdi2 overflow\n");
+> +		dev_err_ratelimited(camss->dev, "VFE0 rdi2 overflow\n");
+>   
+>   	if (unlikely(value3 & ISPIF_VFE_m_IRQ_STATUS_0_PIX0_OVERFLOW))
+> -		dev_err_ratelimited(to_device(ispif), "VFE1 pix0 overflow\n");
+> +		dev_err_ratelimited(camss->dev, "VFE1 pix0 overflow\n");
+>   
+>   	if (unlikely(value3 & ISPIF_VFE_m_IRQ_STATUS_0_RDI0_OVERFLOW))
+> -		dev_err_ratelimited(to_device(ispif), "VFE1 rdi0 overflow\n");
+> +		dev_err_ratelimited(camss->dev, "VFE1 rdi0 overflow\n");
+>   
+>   	if (unlikely(value4 & ISPIF_VFE_m_IRQ_STATUS_1_PIX1_OVERFLOW))
+> -		dev_err_ratelimited(to_device(ispif), "VFE1 pix1 overflow\n");
+> +		dev_err_ratelimited(camss->dev, "VFE1 pix1 overflow\n");
+>   
+>   	if (unlikely(value4 & ISPIF_VFE_m_IRQ_STATUS_1_RDI1_OVERFLOW))
+> -		dev_err_ratelimited(to_device(ispif), "VFE1 rdi1 overflow\n");
+> +		dev_err_ratelimited(camss->dev, "VFE1 rdi1 overflow\n");
+>   
+>   	if (unlikely(value5 & ISPIF_VFE_m_IRQ_STATUS_2_RDI2_OVERFLOW))
+> -		dev_err_ratelimited(to_device(ispif), "VFE1 rdi2 overflow\n");
+> +		dev_err_ratelimited(camss->dev, "VFE1 rdi2 overflow\n");
+>   
+>   	return IRQ_HANDLED;
+>   }
+> @@ -228,6 +229,7 @@ static irqreturn_t ispif_isr_8x96(int irq, void *dev)
+>   static irqreturn_t ispif_isr_8x16(int irq, void *dev)
+>   {
+>   	struct ispif_device *ispif = dev;
+> +	struct camss *camss = ispif->camss;
+>   	u32 value0, value1, value2;
+>   
+>   	value0 = readl_relaxed(ispif->base + ISPIF_VFE_m_IRQ_STATUS_0(0));
+> @@ -244,30 +246,32 @@ static irqreturn_t ispif_isr_8x16(int irq, void *dev)
+>   		complete(&ispif->reset_complete[0]);
+>   
+>   	if (unlikely(value0 & ISPIF_VFE_m_IRQ_STATUS_0_PIX0_OVERFLOW))
+> -		dev_err_ratelimited(to_device(ispif), "VFE0 pix0 overflow\n");
+> +		dev_err_ratelimited(camss->dev, "VFE0 pix0 overflow\n");
+>   
+>   	if (unlikely(value0 & ISPIF_VFE_m_IRQ_STATUS_0_RDI0_OVERFLOW))
+> -		dev_err_ratelimited(to_device(ispif), "VFE0 rdi0 overflow\n");
+> +		dev_err_ratelimited(camss->dev, "VFE0 rdi0 overflow\n");
+>   
+>   	if (unlikely(value1 & ISPIF_VFE_m_IRQ_STATUS_1_PIX1_OVERFLOW))
+> -		dev_err_ratelimited(to_device(ispif), "VFE0 pix1 overflow\n");
+> +		dev_err_ratelimited(camss->dev, "VFE0 pix1 overflow\n");
+>   
+>   	if (unlikely(value1 & ISPIF_VFE_m_IRQ_STATUS_1_RDI1_OVERFLOW))
+> -		dev_err_ratelimited(to_device(ispif), "VFE0 rdi1 overflow\n");
+> +		dev_err_ratelimited(camss->dev, "VFE0 rdi1 overflow\n");
+>   
+>   	if (unlikely(value2 & ISPIF_VFE_m_IRQ_STATUS_2_RDI2_OVERFLOW))
+> -		dev_err_ratelimited(to_device(ispif), "VFE0 rdi2 overflow\n");
+> +		dev_err_ratelimited(camss->dev, "VFE0 rdi2 overflow\n");
+>   
+>   	return IRQ_HANDLED;
+>   }
+>   
+>   static int ispif_vfe_reset(struct ispif_device *ispif, u8 vfe_id)
+>   {
+> +	struct camss *camss = ispif->camss;
+> +
+>   	unsigned long time;
+>   	u32 val;
+>   
+> -	if (vfe_id > (to_camss(ispif)->vfe_num - 1)) {
+> -		dev_err(to_device(ispif),
+> +	if (vfe_id > (camss->vfe_num - 1)) {
+> +		dev_err(camss->dev,
+>   			"Error: asked reset for invalid VFE%d\n", vfe_id);
+>   		return -ENOENT;
+>   	}
+> @@ -300,7 +304,7 @@ static int ispif_vfe_reset(struct ispif_device *ispif, u8 vfe_id)
+>   	time = wait_for_completion_timeout(&ispif->reset_complete[vfe_id],
+>   		msecs_to_jiffies(ISPIF_RESET_TIMEOUT_MS));
+>   	if (!time) {
+> -		dev_err(to_device(ispif),
+> +		dev_err(camss->dev,
+>   			"ISPIF for VFE%d reset timeout\n", vfe_id);
+>   		return -EIO;
+>   	}
+> @@ -316,30 +320,31 @@ static int ispif_vfe_reset(struct ispif_device *ispif, u8 vfe_id)
+>    */
+>   static int ispif_reset(struct ispif_device *ispif, u8 vfe_id)
+>   {
+> +	struct camss *camss = ispif->camss;
+>   	int ret;
+>   
+> -	ret = camss_pm_domain_on(to_camss(ispif), PM_DOMAIN_VFE0);
+> +	ret = camss_pm_domain_on(camss, PM_DOMAIN_VFE0);
+>   	if (ret < 0)
+>   		return ret;
+>   
+> -	ret = camss_pm_domain_on(to_camss(ispif), PM_DOMAIN_VFE1);
+> +	ret = camss_pm_domain_on(camss, PM_DOMAIN_VFE1);
+>   	if (ret < 0)
+>   		return ret;
+>   
+>   	ret = camss_enable_clocks(ispif->nclocks_for_reset,
+>   				  ispif->clock_for_reset,
+> -				  to_device(ispif));
+> +				  camss->dev);
+>   	if (ret < 0)
+>   		return ret;
+>   
+>   	ret = ispif_vfe_reset(ispif, vfe_id);
+>   	if (ret)
+> -		dev_dbg(to_device(ispif), "ISPIF Reset failed\n");
+> +		dev_dbg(camss->dev, "ISPIF Reset failed\n");
+>   
+>   	camss_disable_clocks(ispif->nclocks_for_reset, ispif->clock_for_reset);
+>   
+> -	camss_pm_domain_off(to_camss(ispif), PM_DOMAIN_VFE0);
+> -	camss_pm_domain_off(to_camss(ispif), PM_DOMAIN_VFE1);
+> +	camss_pm_domain_off(camss, PM_DOMAIN_VFE0);
+> +	camss_pm_domain_off(camss, PM_DOMAIN_VFE1);
+>   
+>   	return ret;
+>   }
+> @@ -355,7 +360,7 @@ static int ispif_set_power(struct v4l2_subdev *sd, int on)
+>   {
+>   	struct ispif_line *line = v4l2_get_subdevdata(sd);
+>   	struct ispif_device *ispif = line->ispif;
+> -	struct device *dev = to_device(ispif);
+> +	struct device *dev = ispif->camss->dev;
+>   	int ret = 0;
+>   
+>   	mutex_lock(&ispif->power_lock);
+> @@ -505,7 +510,7 @@ static int ispif_validate_intf_status(struct ispif_device *ispif,
+>   	}
+>   
+>   	if ((val & 0xf) != 0xf) {
+> -		dev_err(to_device(ispif), "%s: ispif is busy: 0x%x\n",
+> +		dev_err(ispif->camss->dev, "%s: ispif is busy: 0x%x\n",
+>   			__func__, val);
+>   		ret = -EBUSY;
+>   	}
+> @@ -552,7 +557,7 @@ static int ispif_wait_for_stop(struct ispif_device *ispif,
+>   				 ISPIF_TIMEOUT_SLEEP_US,
+>   				 ISPIF_TIMEOUT_ALL_US);
+>   	if (ret < 0)
+> -		dev_err(to_device(ispif), "%s: ispif stop timeout\n",
+> +		dev_err(ispif->camss->dev, "%s: ispif stop timeout\n",
+>   			__func__);
+>   
+>   	return ret;
+> @@ -800,6 +805,7 @@ static int ispif_set_stream(struct v4l2_subdev *sd, int enable)
+>   {
+>   	struct ispif_line *line = v4l2_get_subdevdata(sd);
+>   	struct ispif_device *ispif = line->ispif;
+> +	struct camss *camss = ispif->camss;
+>   	enum ispif_intf intf = line->interface;
+>   	u8 csid = line->csid_id;
+>   	u8 vfe = line->vfe_id;
+> @@ -825,8 +831,8 @@ static int ispif_set_stream(struct v4l2_subdev *sd, int enable)
+>   		ispif_select_csid(ispif, intf, csid, vfe, 1);
+>   		ispif_select_cid(ispif, intf, cid, vfe, 1);
+>   		ispif_config_irq(ispif, intf, vfe, 1);
+> -		if (to_camss(ispif)->version == CAMSS_8x96 ||
+> -		    to_camss(ispif)->version == CAMSS_660)
+> +		if (camss->version == CAMSS_8x96 ||
+> +		    camss->version == CAMSS_660)
+>   			ispif_config_pack(ispif,
+>   					  line->fmt[MSM_ISPIF_PAD_SINK].code,
+>   					  intf, cid, vfe, 1);
+> @@ -843,8 +849,8 @@ static int ispif_set_stream(struct v4l2_subdev *sd, int enable)
+>   			return ret;
+>   
+>   		mutex_lock(&ispif->config_lock);
+> -		if (to_camss(ispif)->version == CAMSS_8x96 ||
+> -		    to_camss(ispif)->version == CAMSS_660)
+> +		if (camss->version == CAMSS_8x96 ||
+> +		    camss->version == CAMSS_660)
+>   			ispif_config_pack(ispif,
+>   					  line->fmt[MSM_ISPIF_PAD_SINK].code,
+>   					  intf, cid, vfe, 0);
+> @@ -1088,26 +1094,32 @@ static int ispif_init_formats(struct v4l2_subdev *sd, struct v4l2_subdev_fh *fh)
+>    *
+>    * Return 0 on success or a negative error code otherwise
+>    */
+> -int msm_ispif_subdev_init(struct ispif_device *ispif,
+> +int msm_ispif_subdev_init(struct camss *camss,
+>   			  const struct resources_ispif *res)
+>   {
+> -	struct device *dev = to_device(ispif);
+> +	struct device *dev = camss->dev;
+> +	struct ispif_device *ispif = camss->ispif;
+>   	struct platform_device *pdev = to_platform_device(dev);
+>   	struct resource *r;
+>   	int i;
+>   	int ret;
+>   
+> +	if (!camss->ispif)
+> +		return 0;
+> +
+> +	ispif->camss = camss;
+> +
+>   	/* Number of ISPIF lines - same as number of CSID hardware modules */
+> -	if (to_camss(ispif)->version == CAMSS_8x16)
+> +	if (camss->version == CAMSS_8x16)
+>   		ispif->line_num = 2;
+> -	else if (to_camss(ispif)->version == CAMSS_8x96 ||
+> -		 to_camss(ispif)->version == CAMSS_660)
+> +	else if (camss->version == CAMSS_8x96 ||
+> +		 camss->version == CAMSS_660)
+>   		ispif->line_num = 4;
+>   	else
+>   		return -EINVAL;
+>   
+> -	ispif->line = devm_kcalloc(dev, ispif->line_num, sizeof(*ispif->line),
+> -				   GFP_KERNEL);
+> +	ispif->line = devm_kcalloc(dev, ispif->line_num,
+> +			sizeof(*ispif->line), GFP_KERNEL);
+>   	if (!ispif->line)
+>   		return -ENOMEM;
+>   
+> @@ -1115,12 +1127,12 @@ int msm_ispif_subdev_init(struct ispif_device *ispif,
+>   		ispif->line[i].ispif = ispif;
+>   		ispif->line[i].id = i;
+>   
+> -		if (to_camss(ispif)->version == CAMSS_8x16) {
+> +		if (camss->version == CAMSS_8x16) {
+>   			ispif->line[i].formats = ispif_formats_8x16;
+>   			ispif->line[i].nformats =
+>   					ARRAY_SIZE(ispif_formats_8x16);
+> -		} else if (to_camss(ispif)->version == CAMSS_8x96 ||
+> -			   to_camss(ispif)->version == CAMSS_660) {
+> +		} else if (camss->version == CAMSS_8x96 ||
+> +			   camss->version == CAMSS_660) {
+>   			ispif->line[i].formats = ispif_formats_8x96;
+>   			ispif->line[i].nformats =
+>   					ARRAY_SIZE(ispif_formats_8x96);
+> @@ -1157,15 +1169,16 @@ int msm_ispif_subdev_init(struct ispif_device *ispif,
+>   	ispif->irq = r->start;
+>   	snprintf(ispif->irq_name, sizeof(ispif->irq_name), "%s_%s",
+>   		 dev_name(dev), MSM_ISPIF_NAME);
+> -	if (to_camss(ispif)->version == CAMSS_8x16)
+> +	if (camss->version == CAMSS_8x16)
+>   		ret = devm_request_irq(dev, ispif->irq, ispif_isr_8x16,
+>   			       IRQF_TRIGGER_RISING, ispif->irq_name, ispif);
+> -	else if (to_camss(ispif)->version == CAMSS_8x96 ||
+> -		 to_camss(ispif)->version == CAMSS_660)
+> +	else if (camss->version == CAMSS_8x96 ||
+> +		 camss->version == CAMSS_660)
+>   		ret = devm_request_irq(dev, ispif->irq, ispif_isr_8x96,
+>   			       IRQF_TRIGGER_RISING, ispif->irq_name, ispif);
+>   	else
+>   		ret = -EINVAL;
+> +
+>   	if (ret < 0) {
+>   		dev_err(dev, "request_irq failed: %d\n", ret);
+>   		return ret;
+> @@ -1331,10 +1344,15 @@ static const struct media_entity_operations ispif_media_ops = {
+>   int msm_ispif_register_entities(struct ispif_device *ispif,
+>   				struct v4l2_device *v4l2_dev)
+>   {
+> -	struct device *dev = to_device(ispif);
+> +	struct camss *camss;
+>   	int ret;
+>   	int i;
+>   
+> +	if (!ispif)
+> +		return 0;
+> +
+> +	camss = ispif->camss;
+> +
+>   	for (i = 0; i < ispif->line_num; i++) {
+>   		struct v4l2_subdev *sd = &ispif->line[i].subdev;
+>   		struct media_pad *pads = ispif->line[i].pads;
+> @@ -1348,7 +1366,7 @@ int msm_ispif_register_entities(struct ispif_device *ispif,
+>   
+>   		ret = ispif_init_formats(sd, NULL);
+>   		if (ret < 0) {
+> -			dev_err(dev, "Failed to init format: %d\n", ret);
+> +			dev_err(camss->dev, "Failed to init format: %d\n", ret);
+>   			goto error;
+>   		}
+>   
+> @@ -1360,13 +1378,15 @@ int msm_ispif_register_entities(struct ispif_device *ispif,
+>   		ret = media_entity_pads_init(&sd->entity, MSM_ISPIF_PADS_NUM,
+>   					     pads);
+>   		if (ret < 0) {
+> -			dev_err(dev, "Failed to init media entity: %d\n", ret);
+> +			dev_err(camss->dev, "Failed to init media entity: %d\n",
+> +				ret);
+>   			goto error;
+>   		}
+>   
+>   		ret = v4l2_device_register_subdev(v4l2_dev, sd);
+>   		if (ret < 0) {
+> -			dev_err(dev, "Failed to register subdev: %d\n", ret);
+> +			dev_err(camss->dev, "Failed to register subdev: %d\n",
+> +				ret);
+>   			media_entity_cleanup(&sd->entity);
+>   			goto error;
+>   		}
+> @@ -1393,6 +1413,9 @@ void msm_ispif_unregister_entities(struct ispif_device *ispif)
+>   {
+>   	int i;
+>   
+> +	if (!ispif)
+> +		return;
+> +
+>   	mutex_destroy(&ispif->power_lock);
+>   	mutex_destroy(&ispif->config_lock);
+>   
+> diff --git a/drivers/media/platform/qcom/camss/camss-ispif.h b/drivers/media/platform/qcom/camss/camss-ispif.h
+> index 4132174f7ea1..fdf28e68cc7d 100644
+> --- a/drivers/media/platform/qcom/camss/camss-ispif.h
+> +++ b/drivers/media/platform/qcom/camss/camss-ispif.h
+> @@ -63,11 +63,12 @@ struct ispif_device {
+>   	struct mutex config_lock;
+>   	unsigned int line_num;
+>   	struct ispif_line *line;
+> +	struct camss *camss;
+>   };
+>   
+>   struct resources_ispif;
+>   
+> -int msm_ispif_subdev_init(struct ispif_device *ispif,
+> +int msm_ispif_subdev_init(struct camss *camss,
+>   			  const struct resources_ispif *res);
+>   
+>   int msm_ispif_register_entities(struct ispif_device *ispif,
+> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+> index 7c0f669f8aa6..5ac2dfc67c8b 100644
+> --- a/drivers/media/platform/qcom/camss/camss.c
+> +++ b/drivers/media/platform/qcom/camss/camss.c
+> @@ -745,10 +745,10 @@ static int camss_init_subdevices(struct camss *camss)
+>   		}
+>   	}
+>   
+> -	ret = msm_ispif_subdev_init(&camss->ispif, ispif_res);
+> +	ret = msm_ispif_subdev_init(camss, ispif_res);
+>   	if (ret < 0) {
+>   		dev_err(camss->dev, "Failed to init ispif sub-device: %d\n",
+> -			ret);
+> +		ret);
+>   		return ret;
+>   	}
+>   
+> @@ -798,10 +798,11 @@ static int camss_register_entities(struct camss *camss)
+>   		}
+>   	}
+>   
+> -	ret = msm_ispif_register_entities(&camss->ispif, &camss->v4l2_dev);
+> +	ret = msm_ispif_register_entities(camss->ispif,
+> +					  &camss->v4l2_dev);
+>   	if (ret < 0) {
+>   		dev_err(camss->dev, "Failed to register ispif entities: %d\n",
+> -			ret);
+> +		ret);
+>   		goto err_reg_ispif;
+>   	}
+>   
+> @@ -835,43 +836,64 @@ static int camss_register_entities(struct camss *camss)
+>   		}
+>   	}
+>   
+> -	for (i = 0; i < camss->csid_num; i++) {
+> -		for (j = 0; j < camss->ispif.line_num; j++) {
+> -			ret = media_create_pad_link(
+> -				&camss->csid[i].subdev.entity,
+> -				MSM_CSID_PAD_SRC,
+> -				&camss->ispif.line[j].subdev.entity,
+> -				MSM_ISPIF_PAD_SINK,
+> -				0);
+> -			if (ret < 0) {
+> -				dev_err(camss->dev,
+> -					"Failed to link %s->%s entities: %d\n",
+> -					camss->csid[i].subdev.entity.name,
+> -					camss->ispif.line[j].subdev.entity.name,
+> -					ret);
+> -				goto err_link;
+> -			}
+> -		}
+> -	}
+> -
+> -	for (i = 0; i < camss->ispif.line_num; i++)
+> -		for (k = 0; k < camss->vfe_num; k++)
+> -			for (j = 0; j < ARRAY_SIZE(camss->vfe[k].line); j++) {
+> +	if (camss->ispif) {
+> +		for (i = 0; i < camss->csid_num; i++) {
+> +			for (j = 0; j < camss->ispif->line_num; j++) {
+>   				ret = media_create_pad_link(
+> -					&camss->ispif.line[i].subdev.entity,
+> -					MSM_ISPIF_PAD_SRC,
+> -					&camss->vfe[k].line[j].subdev.entity,
+> -					MSM_VFE_PAD_SINK,
+> +					&camss->csid[i].subdev.entity,
+> +					MSM_CSID_PAD_SRC,
+> +					&camss->ispif->line[j].subdev.entity,
+> +					MSM_ISPIF_PAD_SINK,
+>   					0);
+>   				if (ret < 0) {
+>   					dev_err(camss->dev,
+>   						"Failed to link %s->%s entities: %d\n",
+> -						camss->ispif.line[i].subdev.entity.name,
+> -						camss->vfe[k].line[j].subdev.entity.name,
+> +						camss->csid[i].subdev.entity.name,
+> +						camss->ispif->line[j].subdev.entity.name,
+>   						ret);
+>   					goto err_link;
+>   				}
+>   			}
+> +		}
+> +
+> +		for (i = 0; i < camss->ispif->line_num; i++)
+> +			for (k = 0; k < camss->vfe_num; k++)
+> +				for (j = 0; j < ARRAY_SIZE(camss->vfe[k].line); j++) {
+> +					ret = media_create_pad_link(
+> +						&camss->ispif->line[i].subdev.entity,
+> +						MSM_ISPIF_PAD_SRC,
+> +						&camss->vfe[k].line[j].subdev.entity,
+> +						MSM_VFE_PAD_SINK,
+> +						0);
+> +					if (ret < 0) {
+> +						dev_err(camss->dev,
+> +							"Failed to link %s->%s entities: %d\n",
+> +							camss->ispif->line[i].subdev.entity.name,
+> +							camss->vfe[k].line[j].subdev.entity.name,
+> +							ret);
+> +						goto err_link;
+> +					}
+> +				}
+> +	} else {
+> +		for (i = 0; i < camss->csid_num; i++)
+> +			for (k = 0; k < camss->vfe_num; k++)
+> +				for (j = 0; j < ARRAY_SIZE(camss->vfe[k].line); j++) {
+> +					ret = media_create_pad_link(
+> +						&camss->csid[i].subdev.entity,
+> +						MSM_CSID_PAD_SRC,
+> +						&camss->vfe[k].line[j].subdev.entity,
+> +						MSM_VFE_PAD_SINK,
+> +						0);
+> +					if (ret < 0) {
+> +						dev_err(camss->dev,
+> +							"Failed to link %s->%s entities: %d\n",
+> +							camss->csid[i].subdev.entity.name,
+> +							camss->vfe[k].line[j].subdev.entity.name,
+> +							ret);
+> +						goto err_link;
+> +					}
+> +				}
+> +	}
+>   
+>   	return 0;
+>   
+> @@ -881,8 +903,8 @@ static int camss_register_entities(struct camss *camss)
+>   	for (i--; i >= 0; i--)
+>   		msm_vfe_unregister_entities(&camss->vfe[i]);
+>   
+> -	msm_ispif_unregister_entities(&camss->ispif);
+>   err_reg_ispif:
+> +	msm_ispif_unregister_entities(camss->ispif);
+>   
+>   	i = camss->csid_num;
+>   err_reg_csid:
+> @@ -913,7 +935,7 @@ static void camss_unregister_entities(struct camss *camss)
+>   	for (i = 0; i < camss->csid_num; i++)
+>   		msm_csid_unregister_entity(&camss->csid[i]);
+>   
+> -	msm_ispif_unregister_entities(&camss->ispif);
+> +	msm_ispif_unregister_entities(camss->ispif);
+>   
+>   	for (i = 0; i < camss->vfe_num; i++)
+>   		msm_vfe_unregister_entities(&camss->vfe[i]);
+> @@ -1044,6 +1066,15 @@ static int camss_probe(struct platform_device *pdev)
+>   		goto err_free;
+>   	}
+>   
+> +	if (camss->version == CAMSS_8x16 ||
+> +	    camss->version == CAMSS_8x96) {
+> +		camss->ispif = devm_kcalloc(dev, 1, sizeof(*camss->ispif), GFP_KERNEL);
+> +		if (!camss->ispif) {
+> +			ret = -ENOMEM;
+> +			goto err_free;
+> +		}
+> +	}
+> +
+>   	camss->vfe = devm_kcalloc(dev, camss->vfe_num, sizeof(*camss->vfe),
+>   				  GFP_KERNEL);
+>   	if (!camss->vfe) {
+> diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
+> index 46e986452824..b7ad8e9f68a8 100644
+> --- a/drivers/media/platform/qcom/camss/camss.h
+> +++ b/drivers/media/platform/qcom/camss/camss.h
+> @@ -79,7 +79,7 @@ struct camss {
+>   	struct csiphy_device *csiphy;
+>   	int csid_num;
+>   	struct csid_device *csid;
+> -	struct ispif_device ispif;
+> +	struct ispif_device *ispif;
+>   	int vfe_num;
+>   	struct vfe_device *vfe;
+>   	atomic_t ref_count;
 > 
->  	tx_byte_period = DIV_ROUND_DOWN_ULL((u64)NSEC_PER_SEC * 8,
-> @@ -902,7 +902,7 @@ static void cdns_dsi_bridge_enable(struct
-> drm_bridge *bridge)
->  	tmp = readl(dsi->regs + MCTL_MAIN_DATA_CTL);
->  	tmp &= ~(IF_VID_SELECT_MASK | HOST_EOT_GEN | IF_VID_MODE);
-> 
-> -	if (!(output->dev->mode_flags & MIPI_DSI_MODE_EOT_PACKET))
-> +	if (!(output->dev->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET))
->  		tmp |= HOST_EOT_GEN;
-> 
->  	if (output->dev->mode_flags & MIPI_DSI_MODE_VIDEO)
-> diff --git a/drivers/gpu/drm/bridge/tc358768.c
-> b/drivers/gpu/drm/bridge/tc358768.c
-> index 8ed8302d6bbb..320f95ae6077 100644
-> --- a/drivers/gpu/drm/bridge/tc358768.c
-> +++ b/drivers/gpu/drm/bridge/tc358768.c
-> @@ -825,7 +825,7 @@ static void tc358768_bridge_pre_enable(struct
-> drm_bridge *bridge)
->  	if (!(dsi_dev->mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS))
->  		val |= TC358768_DSI_CONTROL_HSCKMD;
-> 
-> -	if (dsi_dev->mode_flags & MIPI_DSI_MODE_EOT_PACKET)
-> +	if (dsi_dev->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET)
->  		val |= TC358768_DSI_CONTROL_EOTDIS;
-> 
->  	tc358768_write(priv, TC358768_DSI_CONFW, val);
-> diff --git a/drivers/gpu/drm/exynos/exynos_drm_dsi.c
-> b/drivers/gpu/drm/exynos/exynos_drm_dsi.c
-> index 83ab6b343f51..99249d0da330 100644
-> --- a/drivers/gpu/drm/exynos/exynos_drm_dsi.c
-> +++ b/drivers/gpu/drm/exynos/exynos_drm_dsi.c
-> @@ -809,15 +809,15 @@ static int exynos_dsi_init_link(struct exynos_dsi 
-> *dsi)
->  			reg |= DSIM_AUTO_MODE;
->  		if (dsi->mode_flags & MIPI_DSI_MODE_VIDEO_HSE)
->  			reg |= DSIM_HSE_MODE;
-> -		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_HFP))
-> +		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HFP))
->  			reg |= DSIM_HFP_MODE;
-> -		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_HBP))
-> +		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HBP))
->  			reg |= DSIM_HBP_MODE;
-> -		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_HSA))
-> +		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HSA))
->  			reg |= DSIM_HSA_MODE;
->  	}
-> 
-> -	if (!(dsi->mode_flags & MIPI_DSI_MODE_EOT_PACKET))
-> +	if (!(dsi->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET))
->  		reg |= DSIM_EOT_DISABLE;
-> 
->  	switch (dsi->format) {
-> diff --git a/drivers/gpu/drm/mcde/mcde_dsi.c 
-> b/drivers/gpu/drm/mcde/mcde_dsi.c
-> index 2314c8122992..f4cdc3cfd7d0 100644
-> --- a/drivers/gpu/drm/mcde/mcde_dsi.c
-> +++ b/drivers/gpu/drm/mcde/mcde_dsi.c
-> @@ -760,7 +760,7 @@ static void mcde_dsi_start(struct mcde_dsi *d)
->  		DSI_MCTL_MAIN_DATA_CTL_BTA_EN |
->  		DSI_MCTL_MAIN_DATA_CTL_READ_EN |
->  		DSI_MCTL_MAIN_DATA_CTL_REG_TE_EN;
-> -	if (d->mdsi->mode_flags & MIPI_DSI_MODE_EOT_PACKET)
-> +	if (d->mdsi->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET)
->  		val |= DSI_MCTL_MAIN_DATA_CTL_HOST_EOT_GEN;
->  	writel(val, d->regs + DSI_MCTL_MAIN_DATA_CTL);
-> 
-> diff --git a/drivers/gpu/drm/mediatek/mtk_dsi.c
-> b/drivers/gpu/drm/mediatek/mtk_dsi.c
-> index a1ff152ef468..5c0c9180273a 100644
-> --- a/drivers/gpu/drm/mediatek/mtk_dsi.c
-> +++ b/drivers/gpu/drm/mediatek/mtk_dsi.c
-> @@ -402,7 +402,7 @@ static void mtk_dsi_rxtx_control(struct mtk_dsi 
-> *dsi)
->  	}
-> 
->  	tmp_reg |= (dsi->mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS) << 6;
-> -	tmp_reg |= (dsi->mode_flags & MIPI_DSI_MODE_EOT_PACKET) >> 3;
-> +	tmp_reg |= (dsi->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET) >> 3;
-> 
->  	writel(tmp_reg, dsi->regs + DSI_TXRX_CTRL);
->  }
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index ab281cba0f08..a97a7822e596 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -850,11 +850,11 @@ static void dsi_ctrl_config(struct msm_dsi_host
-> *msm_host, bool enable,
->  	if (flags & MIPI_DSI_MODE_VIDEO) {
->  		if (flags & MIPI_DSI_MODE_VIDEO_HSE)
->  			data |= DSI_VID_CFG0_PULSE_MODE_HSA_HE;
-> -		if (flags & MIPI_DSI_MODE_VIDEO_HFP)
-> +		if (flags & MIPI_DSI_MODE_VIDEO_NO_HFP)
->  			data |= DSI_VID_CFG0_HFP_POWER_STOP;
-> -		if (flags & MIPI_DSI_MODE_VIDEO_HBP)
-> +		if (flags & MIPI_DSI_MODE_VIDEO_NO_HBP)
->  			data |= DSI_VID_CFG0_HBP_POWER_STOP;
-> -		if (flags & MIPI_DSI_MODE_VIDEO_HSA)
-> +		if (flags & MIPI_DSI_MODE_VIDEO_NO_HSA)
->  			data |= DSI_VID_CFG0_HSA_POWER_STOP;
->  		/* Always set low power stop mode for BLLP
->  		 * to let command engine send packets
-> @@ -909,7 +909,7 @@ static void dsi_ctrl_config(struct msm_dsi_host
-> *msm_host, bool enable,
->  			  DSI_T_CLK_PRE_EXTEND_INC_BY_2_BYTECLK);
-> 
->  	data = 0;
-> -	if (!(flags & MIPI_DSI_MODE_EOT_PACKET))
-> +	if (!(flags & MIPI_DSI_MODE_NO_EOT_PACKET))
->  		data |= DSI_EOT_PACKET_CTRL_TX_EOT_APPEND;
->  	dsi_write(msm_host, REG_DSI_EOT_PACKET_CTRL, data);
-> 
-> diff --git a/drivers/gpu/drm/panel/panel-asus-z00t-tm5p5-n35596.c
-> b/drivers/gpu/drm/panel/panel-asus-z00t-tm5p5-n35596.c
-> index e95bc9f60b3f..44674ebedf59 100644
-> --- a/drivers/gpu/drm/panel/panel-asus-z00t-tm5p5-n35596.c
-> +++ b/drivers/gpu/drm/panel/panel-asus-z00t-tm5p5-n35596.c
-> @@ -302,7 +302,7 @@ static int tm5p5_nt35596_probe(struct 
-> mipi_dsi_device *dsi)
->  	dsi->lanes = 4;
->  	dsi->format = MIPI_DSI_FMT_RGB888;
->  	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
-> -			  MIPI_DSI_MODE_VIDEO_HSE | MIPI_DSI_MODE_EOT_PACKET |
-> +			  MIPI_DSI_MODE_VIDEO_HSE | MIPI_DSI_MODE_NO_EOT_PACKET |
->  			  MIPI_DSI_CLOCK_NON_CONTINUOUS | MIPI_DSI_MODE_LPM;
-> 
->  	drm_panel_init(&ctx->panel, dev, &tm5p5_nt35596_panel_funcs,
-> diff --git a/drivers/gpu/drm/panel/panel-dsi-cm.c
-> b/drivers/gpu/drm/panel/panel-dsi-cm.c
-> index af381d756ac1..178abfb1737c 100644
-> --- a/drivers/gpu/drm/panel/panel-dsi-cm.c
-> +++ b/drivers/gpu/drm/panel/panel-dsi-cm.c
-> @@ -571,7 +571,7 @@ static int dsicm_probe(struct mipi_dsi_device *dsi)
->  	dsi->lanes = 2;
->  	dsi->format = MIPI_DSI_FMT_RGB888;
->  	dsi->mode_flags = MIPI_DSI_CLOCK_NON_CONTINUOUS |
-> -			  MIPI_DSI_MODE_EOT_PACKET;
-> +			  MIPI_DSI_MODE_NO_EOT_PACKET;
->  	dsi->hs_rate = ddata->panel_data->max_hs_rate;
->  	dsi->lp_rate = ddata->panel_data->max_lp_rate;
-> 
-> diff --git a/drivers/gpu/drm/panel/panel-elida-kd35t133.c
-> b/drivers/gpu/drm/panel/panel-elida-kd35t133.c
-> index bc36aa3c1123..ae3361ccccd5 100644
-> --- a/drivers/gpu/drm/panel/panel-elida-kd35t133.c
-> +++ b/drivers/gpu/drm/panel/panel-elida-kd35t133.c
-> @@ -265,7 +265,7 @@ static int kd35t133_probe(struct mipi_dsi_device 
-> *dsi)
->  	dsi->lanes = 1;
->  	dsi->format = MIPI_DSI_FMT_RGB888;
->  	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
-> -			  MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_EOT_PACKET;
-> +			  MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_NO_EOT_PACKET;
-> 
->  	drm_panel_init(&ctx->panel, &dsi->dev, &kd35t133_funcs,
->  		       DRM_MODE_CONNECTOR_DSI);
-> diff --git a/drivers/gpu/drm/panel/panel-khadas-ts050.c
-> b/drivers/gpu/drm/panel/panel-khadas-ts050.c
-> index 8f6ac1a40c31..a3ec4cbdbf7a 100644
-> --- a/drivers/gpu/drm/panel/panel-khadas-ts050.c
-> +++ b/drivers/gpu/drm/panel/panel-khadas-ts050.c
-> @@ -809,7 +809,7 @@ static int khadas_ts050_panel_probe(struct
-> mipi_dsi_device *dsi)
->  	dsi->lanes = 4;
->  	dsi->format = MIPI_DSI_FMT_RGB888;
->  	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
-> -			  MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_EOT_PACKET;
-> +			  MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_NO_EOT_PACKET;
-> 
->  	khadas_ts050 = devm_kzalloc(&dsi->dev, sizeof(*khadas_ts050),
->  				    GFP_KERNEL);
-> diff --git a/drivers/gpu/drm/panel/panel-leadtek-ltk050h3146w.c
-> b/drivers/gpu/drm/panel/panel-leadtek-ltk050h3146w.c
-> index ed0d5f959037..a5a414920430 100644
-> --- a/drivers/gpu/drm/panel/panel-leadtek-ltk050h3146w.c
-> +++ b/drivers/gpu/drm/panel/panel-leadtek-ltk050h3146w.c
-> @@ -593,7 +593,7 @@ static int ltk050h3146w_probe(struct 
-> mipi_dsi_device *dsi)
->  	dsi->lanes = 4;
->  	dsi->format = MIPI_DSI_FMT_RGB888;
->  	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
-> -			  MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_EOT_PACKET;
-> +			  MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_NO_EOT_PACKET;
-> 
->  	drm_panel_init(&ctx->panel, &dsi->dev, &ltk050h3146w_funcs,
->  		       DRM_MODE_CONNECTOR_DSI);
-> diff --git a/drivers/gpu/drm/panel/panel-leadtek-ltk500hd1829.c
-> b/drivers/gpu/drm/panel/panel-leadtek-ltk500hd1829.c
-> index 3c00e4f8f803..21e48923836d 100644
-> --- a/drivers/gpu/drm/panel/panel-leadtek-ltk500hd1829.c
-> +++ b/drivers/gpu/drm/panel/panel-leadtek-ltk500hd1829.c
-> @@ -442,7 +442,7 @@ static int ltk500hd1829_probe(struct 
-> mipi_dsi_device *dsi)
->  	dsi->lanes = 4;
->  	dsi->format = MIPI_DSI_FMT_RGB888;
->  	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
-> -			  MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_EOT_PACKET;
-> +			  MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_NO_EOT_PACKET;
-> 
->  	drm_panel_init(&ctx->panel, &dsi->dev, &ltk500hd1829_funcs,
->  		       DRM_MODE_CONNECTOR_DSI);
-> diff --git a/drivers/gpu/drm/panel/panel-novatek-nt35510.c
-> b/drivers/gpu/drm/panel/panel-novatek-nt35510.c
-> index b9a0e56f33e2..9d9334656803 100644
-> --- a/drivers/gpu/drm/panel/panel-novatek-nt35510.c
-> +++ b/drivers/gpu/drm/panel/panel-novatek-nt35510.c
-> @@ -899,7 +899,7 @@ static int nt35510_probe(struct mipi_dsi_device 
-> *dsi)
->  	dsi->hs_rate = 349440000;
->  	dsi->lp_rate = 9600000;
->  	dsi->mode_flags = MIPI_DSI_CLOCK_NON_CONTINUOUS |
-> -		MIPI_DSI_MODE_EOT_PACKET;
-> +		MIPI_DSI_MODE_NO_EOT_PACKET;
-> 
->  	/*
->  	 * Every new incarnation of this display must have a unique
-> diff --git a/drivers/gpu/drm/panel/panel-osd-osd101t2587-53ts.c
-> b/drivers/gpu/drm/panel/panel-osd-osd101t2587-53ts.c
-> index 45b975dee587..198493a6eb6a 100644
-> --- a/drivers/gpu/drm/panel/panel-osd-osd101t2587-53ts.c
-> +++ b/drivers/gpu/drm/panel/panel-osd-osd101t2587-53ts.c
-> @@ -184,7 +184,7 @@ static int osd101t2587_panel_probe(struct
-> mipi_dsi_device *dsi)
->  	dsi->mode_flags = MIPI_DSI_MODE_VIDEO |
->  			  MIPI_DSI_MODE_VIDEO_BURST |
->  			  MIPI_DSI_MODE_VIDEO_SYNC_PULSE |
-> -			  MIPI_DSI_MODE_EOT_PACKET;
-> +			  MIPI_DSI_MODE_NO_EOT_PACKET;
-> 
->  	osd101t2587 = devm_kzalloc(&dsi->dev, sizeof(*osd101t2587), 
-> GFP_KERNEL);
->  	if (!osd101t2587)
-> diff --git a/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
-> b/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
-> index 4aac0d1573dd..b04b9975e9b2 100644
-> --- a/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
-> +++ b/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
-> @@ -186,7 +186,7 @@ static int s6d16d0_probe(struct mipi_dsi_device 
-> *dsi)
->  	 */
->  	dsi->mode_flags =
->  		MIPI_DSI_CLOCK_NON_CONTINUOUS |
-> -		MIPI_DSI_MODE_EOT_PACKET;
-> +		MIPI_DSI_MODE_NO_EOT_PACKET;
-> 
->  	s6->supply = devm_regulator_get(dev, "vdd1");
->  	if (IS_ERR(s6->supply))
-> diff --git a/drivers/gpu/drm/panel/panel-samsung-s6e63j0x03.c
-> b/drivers/gpu/drm/panel/panel-samsung-s6e63j0x03.c
-> index b962c817fb30..ccc8ed6fe3ae 100644
-> --- a/drivers/gpu/drm/panel/panel-samsung-s6e63j0x03.c
-> +++ b/drivers/gpu/drm/panel/panel-samsung-s6e63j0x03.c
-> @@ -446,7 +446,7 @@ static int s6e63j0x03_probe(struct mipi_dsi_device 
-> *dsi)
-> 
->  	dsi->lanes = 1;
->  	dsi->format = MIPI_DSI_FMT_RGB888;
-> -	dsi->mode_flags = MIPI_DSI_MODE_EOT_PACKET;
-> +	dsi->mode_flags = MIPI_DSI_MODE_NO_EOT_PACKET;
-> 
->  	ctx->supplies[0].supply = "vdd3";
->  	ctx->supplies[1].supply = "vci";
-> diff --git a/drivers/gpu/drm/panel/panel-samsung-s6e63m0-dsi.c
-> b/drivers/gpu/drm/panel/panel-samsung-s6e63m0-dsi.c
-> index eec74c10ddda..77289967d3e5 100644
-> --- a/drivers/gpu/drm/panel/panel-samsung-s6e63m0-dsi.c
-> +++ b/drivers/gpu/drm/panel/panel-samsung-s6e63m0-dsi.c
-> @@ -97,7 +97,7 @@ static int s6e63m0_dsi_probe(struct mipi_dsi_device 
-> *dsi)
->  	dsi->hs_rate = 349440000;
->  	dsi->lp_rate = 9600000;
->  	dsi->mode_flags = MIPI_DSI_MODE_VIDEO |
-> -		MIPI_DSI_MODE_EOT_PACKET |
-> +		MIPI_DSI_MODE_NO_EOT_PACKET |
->  		MIPI_DSI_MODE_VIDEO_BURST;
-> 
->  	ret = s6e63m0_probe(dev, s6e63m0_dsi_dcs_read, s6e63m0_dsi_dcs_write,
-> diff --git a/drivers/gpu/drm/panel/panel-samsung-s6e8aa0.c
-> b/drivers/gpu/drm/panel/panel-samsung-s6e8aa0.c
-> index 527371120266..9b3599d6d2de 100644
-> --- a/drivers/gpu/drm/panel/panel-samsung-s6e8aa0.c
-> +++ b/drivers/gpu/drm/panel/panel-samsung-s6e8aa0.c
-> @@ -990,8 +990,8 @@ static int s6e8aa0_probe(struct mipi_dsi_device 
-> *dsi)
->  	dsi->lanes = 4;
->  	dsi->format = MIPI_DSI_FMT_RGB888;
->  	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST
-> -		| MIPI_DSI_MODE_VIDEO_HFP | MIPI_DSI_MODE_VIDEO_HBP
-> -		| MIPI_DSI_MODE_VIDEO_HSA | MIPI_DSI_MODE_EOT_PACKET
-> +		| MIPI_DSI_MODE_VIDEO_NO_HFP | MIPI_DSI_MODE_VIDEO_NO_HBP
-> +		| MIPI_DSI_MODE_VIDEO_NO_HSA | MIPI_DSI_MODE_NO_EOT_PACKET
->  		| MIPI_DSI_MODE_VSYNC_FLUSH | MIPI_DSI_MODE_VIDEO_AUTO_VERT;
-> 
->  	ret = s6e8aa0_parse_dt(ctx);
-> diff --git a/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c
-> b/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c
-> index 16dbf0f353ed..b937e24dac8e 100644
-> --- a/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c
-> +++ b/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c
-> @@ -282,7 +282,7 @@ static int sharp_nt_panel_probe(struct 
-> mipi_dsi_device *dsi)
->  	dsi->mode_flags = MIPI_DSI_MODE_VIDEO |
->  			MIPI_DSI_MODE_VIDEO_HSE |
->  			MIPI_DSI_CLOCK_NON_CONTINUOUS |
-> -			MIPI_DSI_MODE_EOT_PACKET;
-> +			MIPI_DSI_MODE_NO_EOT_PACKET;
-> 
->  	sharp_nt = devm_kzalloc(&dsi->dev, sizeof(*sharp_nt), GFP_KERNEL);
->  	if (!sharp_nt)
-> diff --git a/drivers/gpu/drm/panel/panel-simple.c
-> b/drivers/gpu/drm/panel/panel-simple.c
-> index 4e2dad314c79..babc7a7f6844 100644
-> --- a/drivers/gpu/drm/panel/panel-simple.c
-> +++ b/drivers/gpu/drm/panel/panel-simple.c
-> @@ -4745,7 +4745,7 @@ static const struct panel_desc_dsi 
-> osd101t2045_53ts = {
->  	},
->  	.flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
->  		 MIPI_DSI_MODE_VIDEO_SYNC_PULSE |
-> -		 MIPI_DSI_MODE_EOT_PACKET,
-> +		 MIPI_DSI_MODE_NO_EOT_PACKET,
->  	.format = MIPI_DSI_FMT_RGB888,
->  	.lanes = 4,
->  };
-> diff --git a/drivers/gpu/drm/panel/panel-sony-acx424akp.c
-> b/drivers/gpu/drm/panel/panel-sony-acx424akp.c
-> index 065efae213f5..6b706cbf2f9c 100644
-> --- a/drivers/gpu/drm/panel/panel-sony-acx424akp.c
-> +++ b/drivers/gpu/drm/panel/panel-sony-acx424akp.c
-> @@ -450,7 +450,7 @@ static int acx424akp_probe(struct mipi_dsi_device 
-> *dsi)
->  	else
->  		dsi->mode_flags =
->  			MIPI_DSI_CLOCK_NON_CONTINUOUS |
-> -			MIPI_DSI_MODE_EOT_PACKET;
-> +			MIPI_DSI_MODE_NO_EOT_PACKET;
-> 
->  	acx->supply = devm_regulator_get(dev, "vddi");
->  	if (IS_ERR(acx->supply))
-> diff --git a/drivers/gpu/drm/panel/panel-xinpeng-xpp055c272.c
-> b/drivers/gpu/drm/panel/panel-xinpeng-xpp055c272.c
-> index 55172d63a922..d17aae8b71d7 100644
-> --- a/drivers/gpu/drm/panel/panel-xinpeng-xpp055c272.c
-> +++ b/drivers/gpu/drm/panel/panel-xinpeng-xpp055c272.c
-> @@ -311,7 +311,7 @@ static int xpp055c272_probe(struct mipi_dsi_device 
-> *dsi)
->  	dsi->lanes = 4;
->  	dsi->format = MIPI_DSI_FMT_RGB888;
->  	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
-> -			  MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_EOT_PACKET;
-> +			  MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_NO_EOT_PACKET;
-> 
->  	drm_panel_init(&ctx->panel, &dsi->dev, &xpp055c272_funcs,
->  		       DRM_MODE_CONNECTOR_DSI);
-> diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
-> index 360e6377e84b..ba91cf22af51 100644
-> --- a/include/drm/drm_mipi_dsi.h
-> +++ b/include/drm/drm_mipi_dsi.h
-> @@ -119,15 +119,15 @@ struct mipi_dsi_host
-> *of_find_mipi_dsi_host_by_node(struct device_node *node);
->  /* enable hsync-end packets in vsync-pulse and v-porch area */
->  #define MIPI_DSI_MODE_VIDEO_HSE		BIT(4)
->  /* disable hfront-porch area */
-> -#define MIPI_DSI_MODE_VIDEO_HFP		BIT(5)
-> +#define MIPI_DSI_MODE_VIDEO_NO_HFP	BIT(5)
->  /* disable hback-porch area */
-> -#define MIPI_DSI_MODE_VIDEO_HBP		BIT(6)
-> +#define MIPI_DSI_MODE_VIDEO_NO_HBP	BIT(6)
->  /* disable hsync-active area */
-> -#define MIPI_DSI_MODE_VIDEO_HSA		BIT(7)
-> +#define MIPI_DSI_MODE_VIDEO_NO_HSA	BIT(7)
->  /* flush display FIFO on vsync pulse */
->  #define MIPI_DSI_MODE_VSYNC_FLUSH	BIT(8)
->  /* disable EoT packets in HS mode */
-> -#define MIPI_DSI_MODE_EOT_PACKET	BIT(9)
-> +#define MIPI_DSI_MODE_NO_EOT_PACKET	BIT(9)
->  /* device supports non-continuous clock behavior (DSI spec 5.6.1) */
->  #define MIPI_DSI_CLOCK_NON_CONTINUOUS	BIT(10)
->  /* transmit data in low power */
