@@ -2,131 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 40D6931E517
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Feb 2021 05:15:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A238431E51D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Feb 2021 05:20:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230233AbhBREPE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Feb 2021 23:15:04 -0500
-Received: from mail.kernel.org ([198.145.29.99]:48088 "EHLO mail.kernel.org"
+        id S230063AbhBREUW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Feb 2021 23:20:22 -0500
+Received: from mail.kernel.org ([198.145.29.99]:48542 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230470AbhBREPA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Feb 2021 23:15:00 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 1600160C40;
-        Thu, 18 Feb 2021 04:14:17 +0000 (UTC)
+        id S229752AbhBREUV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 17 Feb 2021 23:20:21 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 32B2E64E28;
+        Thu, 18 Feb 2021 04:19:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1613621659;
-        bh=KZqCNysaKUxYDBTFhnyoUzBwd6wRpQem0qnWTk5rvC4=;
+        s=k20201202; t=1613621981;
+        bh=GFaBtKmcknpiGdoo8JBOGy+CIuH6tMaUPNstbP+H9zA=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=mrO6b+qe960a1bhW86+pSm8oCnN6gXl8AKSeqKXOFSjqF9FwuJGcy3/LL4L/iAhZD
-         7VRbaD/kDq7R5mmCZxLuVy21jIGsamaZwKrjueom/WCTpZyL/Pr0Jo1UyztkZw+x/q
-         S3BzoY2CgvaCn3e8ikg17iTVmi4ojWKBSQq1VaVGPUJ8eoCrlgOtdfSD/oTZzavD25
-         aj5qIyBhvGKyExXeWzN2OfRC52ogyerDOmmIsAXpxaNqmCjoos0oiZrf7mvJvFK+p7
-         nweGSFBdSMjjTsw2oNd8CzkKAxRHmzkOIGuKsZ1YOinwdvKy0GLlT92i6/qvVp1pWq
-         zJ9+fCeD4oXDg==
-Date:   Thu, 18 Feb 2021 09:44:14 +0530
+        b=Y2DUNduYpbRZIzO/Ltb7rfB+SOSLd+hh30GKWbyqDQagaHGMa5pXT7C+ov7vws064
+         c6x2I6eA6vgaH0736X8YZpGVOC9HNvV0CihcdKRdSk8X4xaOdosCJbV64Ay/i4FwIV
+         +K5Kd5sm1LH8wSYFQPTkl/XJTlfSZ5aie6FXv9V6zXmPHyBFwaGpAOPWM0Glz2E1cY
+         qrESh82cMYliyy+IWkNp0EsPq+jr2mxHw7kbIoukOyMMRx3kG1ZwetE9cxpIyl9xPw
+         sCYCt0JGbojFTM13Q7S6wFdwFT8J494soDpbt7GPiTYaIo6bRkyw+KlOQv5eo2DBLh
+         r+mSWBabv41Kw==
+Date:   Thu, 18 Feb 2021 09:49:37 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Kuogee Hsieh <khsieh@codeaurora.org>, robdclark@gmail.com,
-        sean@poorly.run, tanmay@codeaurora.org, abhinavk@codeaurora.org,
-        aravindh@codeaurora.org, airlied@linux.ie, daniel@ffwll.ch,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/dp: add support of HBR3 link rate
-Message-ID: <20210218041414.GT2774@vkoul-mobl.Dlink>
-References: <1613581122-8473-1-git-send-email-khsieh@codeaurora.org>
- <161358337887.1254594.12898848287081049541@swboyd.mtv.corp.google.com>
+To:     =?iso-8859-1?Q?An=EDbal_Lim=F3n?= <anibal.limon@linaro.org>
+Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: db410c: Update firmware-name for wcnss
+ and mpss
+Message-ID: <20210218041937.GU2774@vkoul-mobl.Dlink>
+References: <20200108055735.660475-1-bjorn.andersson@linaro.org>
+ <20210217223406.1422005-1-anibal.limon@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <161358337887.1254594.12898848287081049541@swboyd.mtv.corp.google.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210217223406.1422005-1-anibal.limon@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17-02-21, 09:36, Stephen Boyd wrote:
-> Quoting Kuogee Hsieh (2021-02-17 08:58:42)
-> > Add hbr3_hbr2 voltage and pre-emphasis swing table to support
-> > HBR3 link rate
-> > 
-> > Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
-> > ---
-> >  drivers/gpu/drm/msm/dp/dp_panel.c   |  4 ----
-> >  drivers/phy/qualcomm/phy-qcom-qmp.c | 24 ++++++++++++++++++++++--
+On 17-02-21, 16:34, Aníbal Limón wrote:
+> From: Bjorn Andersson <bjorn.andersson@linaro.org>
 > 
-> This spans to subsystems so at least you should run get_maintainers and
-> include phy maintainers. Maybe it should be split into two patches too
-> so it can go via different trees.
+> Enable the mpss remoteproc node and specify the firmware-name for this
+> and the wcnss remoteproc on the Dragonboard 410c.
+> 
+> Link: https://lore.kernel.org/r/20200108055735.660475-1-bjorn.andersson@linaro.org
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> [rebased and moved to use pronto label]
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> Tested-by: Aníbal Limón <anibal.limon@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+> index 3c7f97539390..8f1ada75d3ed 100644
+> --- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+> @@ -301,6 +301,11 @@ &lpass {
+>  	status = "okay";
+>  };
+>  
+> +&mpss {
+> +	status = "okay";
+> +	firmware-name = "qcom/msm8916/mba.mbn", "qcom/msm8916/modem.mdt";
 
-different patches for different subsytem unless we risk breaking bisect
-should be general approach...
+Shouldn't this one be mba.mdt?
 
-> 
-> >  2 files changed, 22 insertions(+), 6 deletions(-)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
-> > index 9cc8166..63112fa 100644
-> > --- a/drivers/gpu/drm/msm/dp/dp_panel.c
-> > +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-> > @@ -76,10 +76,6 @@ static int dp_panel_read_dpcd(struct dp_panel *dp_panel)
-> >         if (link_info->num_lanes > dp_panel->max_dp_lanes)
-> >                 link_info->num_lanes = dp_panel->max_dp_lanes;
-> >  
-> > -       /* Limit support upto HBR2 until HBR3 support is added */
-> > -       if (link_info->rate >= (drm_dp_bw_code_to_link_rate(DP_LINK_BW_5_4)))
-> > -               link_info->rate = drm_dp_bw_code_to_link_rate(DP_LINK_BW_5_4);
-> > -
-> >         DRM_DEBUG_DP("version: %d.%d\n", major, minor);
-> >         DRM_DEBUG_DP("link_rate=%d\n", link_info->rate);
-> >         DRM_DEBUG_DP("lane_count=%d\n", link_info->num_lanes);
-> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> > index 0939a9e..cc5ef59 100644
-> > --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> > @@ -2965,6 +2965,21 @@ static void qcom_qmp_phy_dp_aux_init(struct qmp_phy *qphy)
-> >                qphy->pcs + QSERDES_V3_DP_PHY_AUX_INTERRUPT_MASK);
-> >  }
-> >  
-> > +
-> > +static u8 const qmp_dp_v3_pre_emphasis_hbr3_hbr2[4][4] = {
-> 
-> Should be static const u8 qmp_dp...
-> 
-> > +        {0x00, 0x0C, 0x15, 0x1A},
-> > +        {0x02, 0x0E, 0x16, 0xFF},
-> > +        {0x02, 0x11, 0xFF, 0xFF},
-> > +        {0x04, 0xFF, 0xFF, 0xFF}
-> > +};
-> > +
-> > +static u8 const qmp_dp_v3_voltage_swing_hbr3_hbr2[4][4] = {
-> 
-> Same.
-> 
-> > +        {0x02, 0x12, 0x16, 0x1A},
-> 
-> Please add a space after { and before } and use lowercase hex to match
-> the qmp_dp_v3_pre_emphasis_hbr_rbr design.
-> 
-> > +        {0x09, 0x19, 0x1F, 0xFF},
-> > +        {0x10, 0x1F, 0xFF, 0xFF},
-> > +        {0x1F, 0xFF, 0xFF, 0xFF}
-> > +};
-> > +
-> >  static const u8 qmp_dp_v3_pre_emphasis_hbr_rbr[4][4] = {
-> >         { 0x00, 0x0c, 0x14, 0x19 },
-> >         { 0x00, 0x0b, 0x12, 0xff },
-> > @@ -3000,8 +3015,13 @@ static void qcom_qmp_phy_configure_dp_tx(struct qmp_phy *qphy)
-> >                 drvr_en = 0x10;
-> >         }
-> >  
-> > -       voltage_swing_cfg = qmp_dp_v3_voltage_swing_hbr_rbr[v_level][p_level];
-> > -       pre_emphasis_cfg = qmp_dp_v3_pre_emphasis_hbr_rbr[v_level][p_level];
-> > +       if (dp_opts->link_rate <= 2700) {
-> > +               voltage_swing_cfg = qmp_dp_v3_voltage_swing_hbr_rbr[v_level][p_level];
-> > +               pre_emphasis_cfg = qmp_dp_v3_pre_emphasis_hbr_rbr[v_level][p_level];
-> > +       } else {
-> > +               voltage_swing_cfg = qmp_dp_v3_voltage_swing_hbr3_hbr2[v_level][p_level];
-> > +               pre_emphasis_cfg = qmp_dp_v3_pre_emphasis_hbr3_hbr2[v_level][p_level];
-> > +       }
+> +};
+> +
+>  &pm8916_resin {
+>  	status = "okay";
+>  	linux,code = <KEY_VOLUMEDOWN>;
+> @@ -308,6 +313,7 @@ &pm8916_resin {
+>  
+>  &pronto {
+>  	status = "okay";
+> +	firmware-name = "qcom/msm8916/wcnss.mdt";
+>  };
+>  
+>  &sdhc_1 {
+> -- 
+> 2.30.0
 
 -- 
 ~Vinod
