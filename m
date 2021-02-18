@@ -2,82 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1861931EAEC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Feb 2021 15:25:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 22B1231EAEE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Feb 2021 15:25:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230290AbhBROY2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Feb 2021 09:24:28 -0500
-Received: from jabberwock.ucw.cz ([46.255.230.98]:33732 "EHLO
-        jabberwock.ucw.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231379AbhBRNpC (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Feb 2021 08:45:02 -0500
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-        id 543681C0B96; Thu, 18 Feb 2021 14:43:47 +0100 (CET)
-Date:   Thu, 18 Feb 2021 14:43:47 +0100
-From:   Pavel Machek <pavel@ucw.cz>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Gustave Monce <gustave.monce@outlook.com>
-Subject: Re: [PATCH 12/18] arm64: dts: qcom: msm8994-octagon: Configure
- Lattice iCE40 FPGA
-Message-ID: <20210218134347.GB14087@duo.ucw.cz>
-References: <20210131013853.55810-1-konrad.dybcio@somainline.org>
- <20210131013853.55810-13-konrad.dybcio@somainline.org>
+        id S230017AbhBROYo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Feb 2021 09:24:44 -0500
+Received: from m42-2.mailgun.net ([69.72.42.2]:10753 "EHLO m42-2.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233688AbhBRORN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 18 Feb 2021 09:17:13 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1613657789; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=tJX4rE8ABtqKQQqunHr79YkB0O9cnHpfxeT03CsiSsw=;
+ b=xYql7m0wveN6HgE8N5lzRNbNzoGulY5sG7Yw0//0odI4+yYhdl7S/1sDqZAJo++Y+vcegoiW
+ XWtvJUMvEJW4UCruhimwzPkd81h7tuG1NIKLYjzlVyRTLbWsUC8eKBpo8tp2hBdfu4qPiGBD
+ hqqnbvQePqpRrRD8dhmcP8dySAg=
+X-Mailgun-Sending-Ip: 69.72.42.2
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 602e76769946643859a1b07e (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 18 Feb 2021 14:15:18
+ GMT
+Sender: rojay=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 104D2C43462; Thu, 18 Feb 2021 14:15:18 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: rojay)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 78746C433C6;
+        Thu, 18 Feb 2021 14:15:17 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-        protocol="application/pgp-signature"; boundary="7iMSBzlTiPOCCT2k"
-Content-Disposition: inline
-In-Reply-To: <20210131013853.55810-13-konrad.dybcio@somainline.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 18 Feb 2021 19:45:17 +0530
+From:   rojay@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     wsa@kernel.org, dianders@chromium.org,
+        saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
+        mka@chromium.org, akashast@codeaurora.org,
+        msavaliy@qti.qualcomm.com, skakit@codeaurora.org,
+        rnayak@codeaurora.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+        sumit.semwal@linaro.org, linux-media@vger.kernel.org
+Subject: Re: [PATCH V8 1/1] i2c: i2c-qcom-geni: Add shutdown callback for i2c
+In-Reply-To: <161052087940.3661239.14609415796697267628@swboyd.mtv.corp.google.com>
+References: <20210108150545.2018-1-rojay@codeaurora.org>
+ <20210108150545.2018-2-rojay@codeaurora.org>
+ <161052087940.3661239.14609415796697267628@swboyd.mtv.corp.google.com>
+Message-ID: <9ec10130df230a0ff078d9eec47e94b2@codeaurora.org>
+X-Sender: rojay@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Stephen,
 
---7iMSBzlTiPOCCT2k
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 2021-01-13 12:24, Stephen Boyd wrote:
+> Quoting Roja Rani Yarubandi (2021-01-08 07:05:45)
+>> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c 
+>> b/drivers/i2c/busses/i2c-qcom-geni.c
+>> index 214b4c913a13..c3f584795911 100644
+>> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+>> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+>> @@ -375,6 +375,32 @@ static void geni_i2c_tx_msg_cleanup(struct 
+>> geni_i2c_dev *gi2c,
+>>         }
+>>  }
+>> 
+>> +static void geni_i2c_stop_xfer(struct geni_i2c_dev *gi2c)
+>> +{
+>> +       int ret;
+>> +       u32 geni_status;
+>> +       struct i2c_msg *cur;
+>> +
+>> +       /* Resume device, as runtime suspend can happen anytime during 
+>> transfer */
+>> +       ret = pm_runtime_get_sync(gi2c->se.dev);
+>> +       if (ret < 0) {
+>> +               dev_err(gi2c->se.dev, "Failed to resume device: %d\n", 
+>> ret);
+>> +               return;
+>> +       }
+>> +
+>> +       geni_status = readl_relaxed(gi2c->se.base + SE_GENI_STATUS);
+>> +       if (geni_status & M_GENI_CMD_ACTIVE) {
+>> +               cur = gi2c->cur;
+> 
+> Why don't we need to hold the spinlock gi2c::lock here?
+> 
 
-On Sun 2021-01-31 02:38:43, Konrad Dybcio wrote:
-> From: Gustave Monce <gustave.monce@outlook.com>
->=20
-> Octagon devices have a Lattice iCE40 FPGA connected over SPI.
-> Configure it.
+I am not seeing any race here. May I know which race are you suspecting 
+here?
 
-> +	status =3D "okay";
-> +
-> +	/*
-> +	 * This device is a Lattice UC120 USB-C PD PHY.
-> +	 * It is actually a Lattice iCE40 FPGA pre-programmed by
-> +	 * the device firmware with a specific bitstream
-> +	 * enabling USB Type C PHY functionality.
-> +	 * Communication is done via a proprietary protocol over SPI.
-> +	 *
-
-Wow. That's interesting hardware design. Someone should put RISC-V CPU
-in there!
-
-Best regards,
-									Pavel
-								=09
---=20
-http://www.livejournal.com/~pavelmachek
-
---7iMSBzlTiPOCCT2k
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCYC5vEwAKCRAw5/Bqldv6
-8hkMAJ9j/OMHKcPuiOpUVyyiQeZ1hkCKhgCfZQaNIWK576MCUcmH4AjveKZAs10=
-=3Cbc
------END PGP SIGNATURE-----
-
---7iMSBzlTiPOCCT2k--
+>> +               geni_i2c_abort_xfer(gi2c);
+>> +               if (cur->flags & I2C_M_RD)
+>> +                       geni_i2c_rx_msg_cleanup(gi2c, cur);
+>> +               else
+>> +                       geni_i2c_tx_msg_cleanup(gi2c, cur);
+>> +       }
+>> +
+>> +       pm_runtime_put_sync_suspend(gi2c->se.dev);
+>> +}
+>> +
+>>  static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct 
+>> i2c_msg *msg,
+>>                                 u32 m_param)
+>>  {
