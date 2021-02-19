@@ -2,129 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B92B631F762
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Feb 2021 11:38:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D2E8C31F78D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Feb 2021 11:47:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229959AbhBSKgu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Feb 2021 05:36:50 -0500
-Received: from mail-lj1-f181.google.com ([209.85.208.181]:38274 "EHLO
-        mail-lj1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229527AbhBSKgl (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Feb 2021 05:36:41 -0500
-Received: by mail-lj1-f181.google.com with SMTP id j6so17651396ljo.5;
-        Fri, 19 Feb 2021 02:36:23 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:reply-to:to:cc
-         :in-reply-to:references:mime-version:date:user-agent
-         :content-transfer-encoding;
-        bh=nTn6ZavwiX+iUA/fKHbxz6oGLOlCA6cVyQWgY9ZgZLg=;
-        b=QOxCjO3HH+ADPyELPS+QSf9+cI77RXwHBMsIBsKkHVDB365VpD5Uuok1Qfiv4bMpwB
-         HEe3djJNrFMYB9dTScQbG4C5Ct+SpT0YxxK3lPo+C3VXugWnqh5ygmnEcmbSFYKDH/rH
-         HXhXKtbxq9j7LE+8EdpvO/rP4w4747SdT/D80t1AzypXTSz16XrSwIiHWtyjmBd0QNHn
-         lh4bsc2viQa1MGo6BOLSo2BpkkdrFvBC+rexNHGLgJP5mz/U+xwhZCKvDKhwvOmk9pJh
-         VNfFCMsp6nk3vdxWbOL8E65r5WWIxjH5AQvQn5S5ckOQ7te3fGn0nW1IuaGfIt6X+I9y
-         8KDw==
-X-Gm-Message-State: AOAM531kmq5iyUW/yLN/BbtHuU4uNSrs3eNHj2sJt2saEZpouWt9w7/N
-        9fzjFuShVF/0R4gaHhVcqSw=
-X-Google-Smtp-Source: ABdhPJzG0M58qPNdOEK8XmQmqu0DNkflmATorE93w4HYy6twMvFdiFngo70LAkHDlEnw10M77EQnCA==
-X-Received: by 2002:a2e:7c02:: with SMTP id x2mr5110440ljc.247.1613730958187;
-        Fri, 19 Feb 2021 02:35:58 -0800 (PST)
-Received: from dc7vkhyyyyyyyyyyyyycy-3.rev.dnainternet.fi (dc7vkhyyyyyyyyyyyyycy-3.rev.dnainternet.fi. [2001:14ba:16e2:8300::4])
-        by smtp.gmail.com with ESMTPSA id q3sm882433ljb.64.2021.02.19.02.35.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Feb 2021 02:35:57 -0800 (PST)
-Message-ID: <468a5c7820a510b8a12c10b1b8a107fb41e9d26c.camel@fi.rohmeurope.com>
-Subject: Re: [RFC PATCH 0/7] Add managed version of delayed work init
-From:   Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-Reply-To: matti.vaittinen@fi.rohmeurope.com
-To:     mgross@linux.intel.com
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jean Delvare <jdelvare@suse.com>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Sebastian Reichel <sre@kernel.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Joerg Roedel <jroedel@suse.de>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-hwmon@vger.kernel.org, platform-driver-x86@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-watchdog@vger.kernel.org
-In-Reply-To: <20210218162821.GP154917@linux.intel.com>
-References: <cover.1613216412.git.matti.vaittinen@fi.rohmeurope.com>
-         <20210218162821.GP154917@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S229498AbhBSKps (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Feb 2021 05:45:48 -0500
+Received: from m42-2.mailgun.net ([69.72.42.2]:17613 "EHLO m42-2.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229726AbhBSKpr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 19 Feb 2021 05:45:47 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1613731522; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=PHtSozV1wqFYDIra8avEfQv4FUHfL153zH8ugwPj86E=; b=vYleUM/xWqtJhoaj60NlEyp3nbgq5IhepXk1GSa5v+OhBhwro2hvmItAKMcC+iDCdgSu6rDc
+ yrjrcvqsaQJsMq12lq26PmZeyICgTsys4isx/e5HlwqXgHPfLNCrFULEZIc7WN4Y6ioFwUVl
+ /qqV71IAmGxRZCMLbGIF+GsFTEk=
+X-Mailgun-Sending-Ip: 69.72.42.2
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 602f969bba086638301ea861 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 19 Feb 2021 10:44:43
+ GMT
+Sender: akhilpo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id CAB43C43469; Fri, 19 Feb 2021 10:44:41 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.1.105] (unknown [117.217.236.24])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akhilpo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0D5F1C433ED;
+        Fri, 19 Feb 2021 10:44:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0D5F1C433ED
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
+Subject: Re: [PATCH] drm/msm/a6xx: fix for kernels without CONFIG_NVMEM
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Jonathan Marek <jonathan@marek.ca>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Eric Anholt <eric@anholt.net>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20210216200909.19039-1-jonathan@marek.ca>
+ <CAF6AEGv53nnzqMgTfSA6t2YpHx1dDW8UqnH9Gw0w3p8bf0mTLw@mail.gmail.com>
+ <775436ba-c94a-ab22-d65b-b2391047ec65@codeaurora.org>
+ <20210217190820.GA2229@jcrouse1-lnx.qualcomm.com>
+ <CAF6AEGsHws23ozeJ8G23LFQ8J=CVVrx5xvkSgBuE_uSwT4YurQ@mail.gmail.com>
+ <74d1277e-295f-0996-91c3-05cfce8d3a0e@marek.ca>
+ <e4b62857-bd4d-cca6-0d6b-b9cc960b52a2@codeaurora.org>
+ <CAF6AEGsWCrkOgMVxnx53k8b_o7xy3KWv9VaNRoY44+4GfXtWdg@mail.gmail.com>
+From:   Akhil P Oommen <akhilpo@codeaurora.org>
+Message-ID: <757b557a-b5f6-6018-caa4-34bffb1b60b7@codeaurora.org>
+Date:   Fri, 19 Feb 2021 16:14:34 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-Date:   Fri, 19 Feb 2021 12:35:51 +0200
-User-Agent: Evolution 3.34.4 (3.34.4-1.fc31) 
+In-Reply-To: <CAF6AEGsWCrkOgMVxnx53k8b_o7xy3KWv9VaNRoY44+4GfXtWdg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Mark,
+On 2/18/2021 9:41 PM, Rob Clark wrote:
+> On Thu, Feb 18, 2021 at 4:28 AM Akhil P Oommen <akhilpo@codeaurora.org> wrote:
+>>
+>> On 2/18/2021 2:05 AM, Jonathan Marek wrote:
+>>> On 2/17/21 3:18 PM, Rob Clark wrote:
+>>>> On Wed, Feb 17, 2021 at 11:08 AM Jordan Crouse
+>>>> <jcrouse@codeaurora.org> wrote:
+>>>>>
+>>>>> On Wed, Feb 17, 2021 at 07:14:16PM +0530, Akhil P Oommen wrote:
+>>>>>> On 2/17/2021 8:36 AM, Rob Clark wrote:
+>>>>>>> On Tue, Feb 16, 2021 at 12:10 PM Jonathan Marek <jonathan@marek.ca>
+>>>>>>> wrote:
+>>>>>>>>
+>>>>>>>> Ignore nvmem_cell_get() EOPNOTSUPP error in the same way as a
+>>>>>>>> ENOENT error,
+>>>>>>>> to fix the case where the kernel was compiled without CONFIG_NVMEM.
+>>>>>>>>
+>>>>>>>> Fixes: fe7952c629da ("drm/msm: Add speed-bin support to a618 gpu")
+>>>>>>>> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+>>>>>>>> ---
+>>>>>>>>    drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 6 +++---
+>>>>>>>>    1 file changed, 3 insertions(+), 3 deletions(-)
+>>>>>>>>
+>>>>>>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>>>>>>>> b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>>>>>>>> index ba8e9d3cf0fe..7fe5d97606aa 100644
+>>>>>>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>>>>>>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>>>>>>>> @@ -1356,10 +1356,10 @@ static int a6xx_set_supported_hw(struct
+>>>>>>>> device *dev, struct a6xx_gpu *a6xx_gpu,
+>>>>>>>>
+>>>>>>>>           cell = nvmem_cell_get(dev, "speed_bin");
+>>>>>>>>           /*
+>>>>>>>> -        * -ENOENT means that the platform doesn't support
+>>>>>>>> speedbin which is
+>>>>>>>> -        * fine
+>>>>>>>> +        * -ENOENT means no speed bin in device tree,
+>>>>>>>> +        * -EOPNOTSUPP means kernel was built without CONFIG_NVMEM
+>>>>>>>
+>>>>>>> very minor nit, it would be nice to at least preserve the gist of the
+>>>>>>> "which is fine" (ie. some variation of "this is an optional thing and
+>>>>>>> things won't catch fire without it" ;-))
+>>>>>>>
+>>>>>>> (which is, I believe, is true, hopefully Akhil could confirm.. if not
+>>>>>>> we should have a harder dependency on CONFIG_NVMEM..)
+>>>>>> IIRC, if the gpu opp table in the DT uses the 'opp-supported-hw'
+>>>>>> property,
+>>>>>> we will see some error during boot up if we don't call
+>>>>>> dev_pm_opp_set_supported_hw(). So calling "nvmem_cell_get(dev,
+>>>>>> "speed_bin")"
+>>>>>> is a way to test this.
+>>>>>>
+>>>>>> If there is no other harm, we can put a hard dependency on
+>>>>>> CONFIG_NVMEM.
+>>>>>
+>>>>> I'm not sure if we want to go this far given the squishiness about
+>>>>> module
+>>>>> dependencies. As far as I know we are the only driver that uses this
+>>>>> seriously
+>>>>> on QCOM SoCs and this is only needed for certain targets. I don't
+>>>>> know if we
+>>>>> want to force every target to build NVMEM and QFPROM on our behalf.
+>>>>> But maybe
+>>>>> I'm just saying that because Kconfig dependencies tend to break my
+>>>>> brain (and
+>>>>> then Arnd has to send a patch to fix it).
+>>>>>
+>>>>
+>>>> Hmm, good point.. looks like CONFIG_NVMEM itself doesn't have any
+>>>> other dependencies, so I suppose it wouldn't be the end of the world
+>>>> to select that.. but I guess we don't want to require QFPROM
+>>>>
+>>>> I guess at the end of the day, what is the failure mode if you have a
+>>>> speed-bin device, but your kernel config misses QFPROM (and possibly
+>>>> NVMEM)?  If the result is just not having the highest clk rate(s)
+>>
+>> Atleast on sc7180's gpu, using an unsupported FMAX breaks gmu. It won't
+>> be very obvious what went wrong when this happens!
+> 
+> Ugg, ok..
+> 
+> I suppose we could select NVMEM, but not QFPROM, and then the case
+> where QFPROM is not enabled on platforms that have the speed-bin field
+> in DT will fail gracefully and all other platforms would continue on
+> happily?
+> 
+> BR,
+> -R
 
-Thanks for taking a look at the series! This is the first time anyone
-has been commenting on a cover-letter which is likely to fade away and
-never be looked at again. Guess you are a thorough person :)
+Sounds good to me.
 
-On Thu, 2021-02-18 at 08:28 -0800, mark gross wrote:
-> On Sat, Feb 13, 2021 at 01:58:17PM +0200, Matti Vaittinen wrote:
-> > It's not rare that device drivers need delayed work.
-> > It's not rare that this work needs driver's data.
-> > 
-> > Often this means that driver must ensure the work is not queued
-> > when
-> > driver exits. Usually this is done by ensuring new work is not
-> > added and
-> > then calling cancel_delayed_work_sync() at remove(). In many cases
-> > this
-> > may also require cleanup at probe error path - which is easy to
-> > forget.
-> > 
-> > It might be helpful for (a) few drivers if there was a work init
->  why the (a) and not just a?
+-Akhil.
 
-I am not sure how many drivers are needed to change it from 'few' to 'a
-few'. Additionally, this series converted only the drivers which I
-found could easily get rid of the .remove() - I did not analyze how
-many drivers would benefit from this by getting rid of mixed
-devm/manual resource management.
-
-So to sum up - I don't know how many drivers will benefit and what
-people think makes 'few' to turn to 'a few'. '(a) few' leaves this
-decision to readers - and (a) few of them know the drivers better than
-I do.
-
-> > Main reson why this is RFC is that I had hard time deciding where
-> > this
-> > function should be introduced. It's not nice to include all device
-> > stuff
-> > in workqueue - because many workqueue users are not interested in
-> > devices. In same way, not all of the devices are interested in WQs.
-> > OTOH, adding own file just for this sounds like an overkill.
-> s/own/one
-
-Hm. The 'own file for XXX' does not make sense for native English
-speakers? Didn't now that. Thanks for pointing it out.
-
-I will edit the cover letter when I respin this rebased on v5.12-rc1 -
-and it is likely the series v2 will add this function inlined in a new
-header dedicated for devm-helpers (as was suggested by Hans de Goede).
-
-Best Regards
---Matti
+> 
+>>
+>>>> available, that isn't the end of the world.  But if it makes things
+>>>> not-work, that is sub-optimal.  Generally, especially on ARM, kconfig
+>>>> seems to be way harder than it should be to build a kernel that works,
+>>>> if we could somehow not add to that problem (for both people with a6xx
+>>>> and older gens) that would be nice ;-)
+>>>>
+>>>
+>>> There is a "imply" kconfig option which solves exactly this problem.
+>>> (you would "imply NVMEM" instead of "select NVMEM". then it would be
+>>> possible to disable NVMEM but it would get enabled by default)
+>>>
+>>>> BR,
+>>>> -R
+>>>>
+>>> _______________________________________________
+>>> dri-devel mailing list
+>>> dri-devel@lists.freedesktop.org
+>>> https://lists.freedesktop.org/mailman/listinfo/dri-devel
+>>
 
