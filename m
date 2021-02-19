@@ -2,91 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8233431F2BC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Feb 2021 00:03:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B87431F377
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Feb 2021 01:57:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229953AbhBRXDN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Feb 2021 18:03:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43394 "EHLO
+        id S229639AbhBSA4e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Feb 2021 19:56:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229535AbhBRXDN (ORCPT
+        with ESMTP id S229553AbhBSA42 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Feb 2021 18:03:13 -0500
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1787C061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Feb 2021 15:02:32 -0800 (PST)
-Received: by mail-pf1-x42a.google.com with SMTP id u143so2440877pfc.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Feb 2021 15:02:32 -0800 (PST)
+        Thu, 18 Feb 2021 19:56:28 -0500
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4006EC061756
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Feb 2021 16:55:48 -0800 (PST)
+Received: by mail-qk1-x731.google.com with SMTP id v206so4148497qkb.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Feb 2021 16:55:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=vapw8v9gd6gzUZfgZWeHcnI7BY6UOi1UlhquxFwuYA8=;
-        b=myyxUgL8UCCIqyF9TebzT62kDycJr1y+iVGqSe8euO0ZH6L0wL44ljB1lRBO2DwHFa
-         pvcC4/CkIpCKc+n23ZHRreytCuqUSGCi268XsZZ6pRIUauZYc4IdG4pv6tWXXocLUIaW
-         H918ZYZifVJj+zdvqTI+5BJzJUa91CWz8qH3s=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=apjhumUat3NAbjLhxDf0sfvDj5HYfNoWzUP7Ib3pj2w=;
+        b=NNzBm8KEm527LO5xCGrc89inWBErH3vti2O/scd9JQfr4RVY/LeJBzHUByDjYNxzoi
+         e23cAEeErnY5SK0FknxEM28oWILkuJpsMX6f5Npqea6xND5MUOrdisuDmS4rOzLeQCUW
+         T9E6YAI9b5Qi3FPkXPoV/fakGz/MDW5PFv+QI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=vapw8v9gd6gzUZfgZWeHcnI7BY6UOi1UlhquxFwuYA8=;
-        b=Xi0n2A+Zqn3FdGp8sKJ5+rwlv6GRpjpxX2g8rgSWsSiqZNoFmoGf4fGcRJx3ZrVzdz
-         F8AWqNoATl9q0f+SHED0Nk/675pJpfysi155xzvxr87ZuwQMgW8ftw2NPtJ+Lo9gys6Y
-         NEOloICVQ/edW7YAmGW09mQhcZFimPbt/s1+0iLR7ai1FWRNdt0lllX1xBHPneOPnnaK
-         8v0VczrbYssSTcb6EVRkLLtP9LbIPVXdyWLxQbZ6598MdEfE4ydDHrlyI/x3re2S323l
-         XENHeewuXMp8vUkQX7LKMDoWxo9oQkDC2omq2qkw5CsCZE6XR7cXx1D3HdmL89eSxmHL
-         b5rQ==
-X-Gm-Message-State: AOAM530LRUEkHoy7XEZM3wwUIaMMJTnQKLcqkvviUv9aHMYx0ANXp4Bb
-        AhUS3BdgyUFIS/CDQITPkr+u9Q==
-X-Google-Smtp-Source: ABdhPJy9l/n+BZwpzPMU732tYNzMsXY8ijKjjyCt211yBXiRCWRp4d87GdOMQSntjHwy7ERugFHcDg==
-X-Received: by 2002:a63:1409:: with SMTP id u9mr5796112pgl.312.1613689352388;
-        Thu, 18 Feb 2021 15:02:32 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:201:e561:d87c:c8df:56e2])
-        by smtp.gmail.com with ESMTPSA id c18sm6566737pgm.88.2021.02.18.15.02.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Feb 2021 15:02:31 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=apjhumUat3NAbjLhxDf0sfvDj5HYfNoWzUP7Ib3pj2w=;
+        b=mFpK+d2S+DNq8wfhMXJQ4c/Gjkj5CGjsLruItOum74a1Y+duCWp5iQUWzbHNqe4LYu
+         b79Y4Uh2CLfmElEFOU7rTjIa6asZFjSU7RurZjsk2sScoc804lnH+Ozy6PIwpzIMCT/g
+         XgPF0N1v4U9CAMczVrxFp/tTFVpeK/s2NAVbwvrIC1a6Nj412e238unnGVHuysVJ+/qM
+         yCcOFnRvOYuwgv9j7IYGRn5ParpwlTR+INqCS2+ig19yWNzw6z+TEDtG5vFo7jw/DuRI
+         5ShhsgDVO68EPIWfmaaXzAX7/y/TF8DzuoCEi+SuEckPzBpnJxyVmxbWUi+X/0XXkrsK
+         vGow==
+X-Gm-Message-State: AOAM531DaXdi0mx7gshZxb2YOJVkrBhFbzfctsQHUKj7Njyy0GcXvhRM
+        O7oCQtsd3z+b/XYrGRuPKLN0GPubMyHVAw==
+X-Google-Smtp-Source: ABdhPJzOBxqWr/diJHmSRLyVrsOBg+W5gGqxdEOWt08UkK/bOXnPcuGgzoSUh6Pp3eoTxqJd+6z5WA==
+X-Received: by 2002:a05:620a:14af:: with SMTP id x15mr7490709qkj.392.1613696147329;
+        Thu, 18 Feb 2021 16:55:47 -0800 (PST)
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com. [209.85.219.170])
+        by smtp.gmail.com with ESMTPSA id q12sm4982377qki.91.2021.02.18.16.55.46
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 Feb 2021 16:55:46 -0800 (PST)
+Received: by mail-yb1-f170.google.com with SMTP id m9so4006322ybk.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Feb 2021 16:55:46 -0800 (PST)
+X-Received: by 2002:a25:b74d:: with SMTP id e13mr10284347ybm.405.1613696146315;
+ Thu, 18 Feb 2021 16:55:46 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1613681704-12539-1-git-send-email-khsieh@codeaurora.org>
-References: <1613681704-12539-1-git-send-email-khsieh@codeaurora.org>
-Subject: Re: [PATCH v2 2/2] drm/msm/dp: add supported max link rate specified from dtsi
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     tanmay@codeaurora.org, abhinavk@codeaurora.org,
-        aravindh@codeaurora.org, khsieh@codeaurora.org, airlied@linux.ie,
-        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-To:     Kuogee Hsieh <khsieh@codeaurora.org>, robdclark@gmail.com,
-        sean@poorly.run
-Date:   Thu, 18 Feb 2021 15:02:30 -0800
-Message-ID: <161368935031.1254594.14384765673800900954@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+References: <20210218145456.1.I1da01a075dd86e005152f993b2d5d82dd9686238@changeid>
+In-Reply-To: <20210218145456.1.I1da01a075dd86e005152f993b2d5d82dd9686238@changeid>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 18 Feb 2021 16:55:33 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=Xh5foM_RYCneVUJZmX39KPt22guopVyZpzLWHSt4T+Ww@mail.gmail.com>
+Message-ID: <CAD=FV=Xh5foM_RYCneVUJZmX39KPt22guopVyZpzLWHSt4T+Ww@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Avoid glitching SPI CS at
+ bootup on trogdor
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Akash Asthana <akashast@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2021-02-18 12:55:04)
-> Allow supported link rate to be limited to the value specified at
-> dtsi. If it is not specified, then link rate is derived from dpcd
-> directly. Below are examples,
-> link-rate =3D <162000> for max link rate limited at 1.62G
-> link-rate =3D <270000> for max link rate limited at 2.7G
-> link-rate =3D <540000> for max link rate limited at 5.4G
-> link-rate =3D <810000> for max link rate limited at 8.1G
->=20
-> Changes in V2:
-> -- allow supported max link rate specified from dtsi
+Hi,
 
-Please don't roll this into the patch that removes the limit. The
-previous version of this patch was fine. The part that lowers the limit
-back down should be another patch.
+On Thu, Feb 18, 2021 at 2:55 PM Douglas Anderson <dianders@chromium.org> wrote:
+>
+> it's believed
+> that, under certain timing conditions, it could be getting the EC into
+> a confused state causing the EC driver to fail to probe.
 
-We rejected link-rate in DT before and we should reject it upstream
-again. As far as I can tell, the maximum link rate should be determined
-based on the panel or the type-c port on the board. The dp controller
-can always achieve HBR3, so limiting it at the dp controller is
-incorrect. The driver should query the endpoints to figure out if they
-want to limit the link rate. Is that done automatically sometimes by
-intercepting the DPCD?
+Believed => confirmed
+
+I _think_ <https://issuetracker.google.com/180655198> is public.  It
+explains why this was causing the EC driver to fail to prove.  In
+short: it turns out that when we glitched the EC it printed to its
+console.  If the EC's uptime was long enough then it would spend
+enough time printing the timestamp for this error message (a bunch of
+64-bit divide by 10) that it wouldn't be ready for the message we sent
+to it.  Doh!
+
+-Doug
