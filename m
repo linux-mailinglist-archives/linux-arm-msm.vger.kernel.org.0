@@ -2,194 +2,201 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D2E8C31F78D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Feb 2021 11:47:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 55FFD31F7D6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Feb 2021 12:03:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229498AbhBSKps (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Feb 2021 05:45:48 -0500
-Received: from m42-2.mailgun.net ([69.72.42.2]:17613 "EHLO m42-2.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229726AbhBSKpr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Feb 2021 05:45:47 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1613731522; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=PHtSozV1wqFYDIra8avEfQv4FUHfL153zH8ugwPj86E=; b=vYleUM/xWqtJhoaj60NlEyp3nbgq5IhepXk1GSa5v+OhBhwro2hvmItAKMcC+iDCdgSu6rDc
- yrjrcvqsaQJsMq12lq26PmZeyICgTsys4isx/e5HlwqXgHPfLNCrFULEZIc7WN4Y6ioFwUVl
- /qqV71IAmGxRZCMLbGIF+GsFTEk=
-X-Mailgun-Sending-Ip: 69.72.42.2
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 602f969bba086638301ea861 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 19 Feb 2021 10:44:43
- GMT
-Sender: akhilpo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id CAB43C43469; Fri, 19 Feb 2021 10:44:41 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.1.105] (unknown [117.217.236.24])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akhilpo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0D5F1C433ED;
-        Fri, 19 Feb 2021 10:44:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0D5F1C433ED
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
-Subject: Re: [PATCH] drm/msm/a6xx: fix for kernels without CONFIG_NVMEM
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Jonathan Marek <jonathan@marek.ca>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Eric Anholt <eric@anholt.net>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20210216200909.19039-1-jonathan@marek.ca>
- <CAF6AEGv53nnzqMgTfSA6t2YpHx1dDW8UqnH9Gw0w3p8bf0mTLw@mail.gmail.com>
- <775436ba-c94a-ab22-d65b-b2391047ec65@codeaurora.org>
- <20210217190820.GA2229@jcrouse1-lnx.qualcomm.com>
- <CAF6AEGsHws23ozeJ8G23LFQ8J=CVVrx5xvkSgBuE_uSwT4YurQ@mail.gmail.com>
- <74d1277e-295f-0996-91c3-05cfce8d3a0e@marek.ca>
- <e4b62857-bd4d-cca6-0d6b-b9cc960b52a2@codeaurora.org>
- <CAF6AEGsWCrkOgMVxnx53k8b_o7xy3KWv9VaNRoY44+4GfXtWdg@mail.gmail.com>
-From:   Akhil P Oommen <akhilpo@codeaurora.org>
-Message-ID: <757b557a-b5f6-6018-caa4-34bffb1b60b7@codeaurora.org>
-Date:   Fri, 19 Feb 2021 16:14:34 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.1
+        id S230362AbhBSLCu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Feb 2021 06:02:50 -0500
+Received: from jabberwock.ucw.cz ([46.255.230.98]:48004 "EHLO
+        jabberwock.ucw.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229535AbhBSLCV (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 19 Feb 2021 06:02:21 -0500
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+        id 0C7721C0B80; Fri, 19 Feb 2021 12:01:22 +0100 (CET)
+Date:   Fri, 19 Feb 2021 12:01:21 +0100
+From:   Pavel Machek <pavel@ucw.cz>
+To:     =?iso-8859-1?Q?N=EDcolas_F=2E_R=2E_A=2E?= Prado 
+        <nfraprado@protonmail.com>
+Cc:     Dan Murphy <dmurphy@ti.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, linux-leds@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Brian Masney <masneyb@onstation.org>,
+        Luca Weiss <luca@z3ntu.xyz>,
+        Russell King <linux@armlinux.org.uk>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        lkcamp@lists.libreplanetbr.org, andrealmeid@collabora.com
+Subject: Re: [PATCH v2 2/4] leds: Add driver for QCOM SPMI Flash LEDs
+Message-ID: <20210219110121.GF19207@duo.ucw.cz>
+References: <20210126140240.1517044-1-nfraprado@protonmail.com>
+ <20210126140240.1517044-3-nfraprado@protonmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAF6AEGsWCrkOgMVxnx53k8b_o7xy3KWv9VaNRoY44+4GfXtWdg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+        protocol="application/pgp-signature"; boundary="8JPrznbw0YAQ/KXy"
+Content-Disposition: inline
+In-Reply-To: <20210126140240.1517044-3-nfraprado@protonmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/18/2021 9:41 PM, Rob Clark wrote:
-> On Thu, Feb 18, 2021 at 4:28 AM Akhil P Oommen <akhilpo@codeaurora.org> wrote:
->>
->> On 2/18/2021 2:05 AM, Jonathan Marek wrote:
->>> On 2/17/21 3:18 PM, Rob Clark wrote:
->>>> On Wed, Feb 17, 2021 at 11:08 AM Jordan Crouse
->>>> <jcrouse@codeaurora.org> wrote:
->>>>>
->>>>> On Wed, Feb 17, 2021 at 07:14:16PM +0530, Akhil P Oommen wrote:
->>>>>> On 2/17/2021 8:36 AM, Rob Clark wrote:
->>>>>>> On Tue, Feb 16, 2021 at 12:10 PM Jonathan Marek <jonathan@marek.ca>
->>>>>>> wrote:
->>>>>>>>
->>>>>>>> Ignore nvmem_cell_get() EOPNOTSUPP error in the same way as a
->>>>>>>> ENOENT error,
->>>>>>>> to fix the case where the kernel was compiled without CONFIG_NVMEM.
->>>>>>>>
->>>>>>>> Fixes: fe7952c629da ("drm/msm: Add speed-bin support to a618 gpu")
->>>>>>>> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
->>>>>>>> ---
->>>>>>>>    drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 6 +++---
->>>>>>>>    1 file changed, 3 insertions(+), 3 deletions(-)
->>>>>>>>
->>>>>>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>>>>>>> b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>>>>>>> index ba8e9d3cf0fe..7fe5d97606aa 100644
->>>>>>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>>>>>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>>>>>>> @@ -1356,10 +1356,10 @@ static int a6xx_set_supported_hw(struct
->>>>>>>> device *dev, struct a6xx_gpu *a6xx_gpu,
->>>>>>>>
->>>>>>>>           cell = nvmem_cell_get(dev, "speed_bin");
->>>>>>>>           /*
->>>>>>>> -        * -ENOENT means that the platform doesn't support
->>>>>>>> speedbin which is
->>>>>>>> -        * fine
->>>>>>>> +        * -ENOENT means no speed bin in device tree,
->>>>>>>> +        * -EOPNOTSUPP means kernel was built without CONFIG_NVMEM
->>>>>>>
->>>>>>> very minor nit, it would be nice to at least preserve the gist of the
->>>>>>> "which is fine" (ie. some variation of "this is an optional thing and
->>>>>>> things won't catch fire without it" ;-))
->>>>>>>
->>>>>>> (which is, I believe, is true, hopefully Akhil could confirm.. if not
->>>>>>> we should have a harder dependency on CONFIG_NVMEM..)
->>>>>> IIRC, if the gpu opp table in the DT uses the 'opp-supported-hw'
->>>>>> property,
->>>>>> we will see some error during boot up if we don't call
->>>>>> dev_pm_opp_set_supported_hw(). So calling "nvmem_cell_get(dev,
->>>>>> "speed_bin")"
->>>>>> is a way to test this.
->>>>>>
->>>>>> If there is no other harm, we can put a hard dependency on
->>>>>> CONFIG_NVMEM.
->>>>>
->>>>> I'm not sure if we want to go this far given the squishiness about
->>>>> module
->>>>> dependencies. As far as I know we are the only driver that uses this
->>>>> seriously
->>>>> on QCOM SoCs and this is only needed for certain targets. I don't
->>>>> know if we
->>>>> want to force every target to build NVMEM and QFPROM on our behalf.
->>>>> But maybe
->>>>> I'm just saying that because Kconfig dependencies tend to break my
->>>>> brain (and
->>>>> then Arnd has to send a patch to fix it).
->>>>>
->>>>
->>>> Hmm, good point.. looks like CONFIG_NVMEM itself doesn't have any
->>>> other dependencies, so I suppose it wouldn't be the end of the world
->>>> to select that.. but I guess we don't want to require QFPROM
->>>>
->>>> I guess at the end of the day, what is the failure mode if you have a
->>>> speed-bin device, but your kernel config misses QFPROM (and possibly
->>>> NVMEM)?  If the result is just not having the highest clk rate(s)
->>
->> Atleast on sc7180's gpu, using an unsupported FMAX breaks gmu. It won't
->> be very obvious what went wrong when this happens!
-> 
-> Ugg, ok..
-> 
-> I suppose we could select NVMEM, but not QFPROM, and then the case
-> where QFPROM is not enabled on platforms that have the speed-bin field
-> in DT will fail gracefully and all other platforms would continue on
-> happily?
-> 
-> BR,
-> -R
 
-Sounds good to me.
+--8JPrznbw0YAQ/KXy
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--Akhil.
+On Tue 2021-01-26 14:05:54, N=EDcolas F. R. A. Prado wrote:
+> Add driver for the Qualcomm SPMI Flash LEDs. These are controlled
+> through an SPMI bus and are part of the PM8941 PMIC. There are two LEDs
+> present in the chip, and can be used independently as camera flash or
+> together in torch mode to act as a lantern.
 
-> 
->>
->>>> available, that isn't the end of the world.  But if it makes things
->>>> not-work, that is sub-optimal.  Generally, especially on ARM, kconfig
->>>> seems to be way harder than it should be to build a kernel that works,
->>>> if we could somehow not add to that problem (for both people with a6xx
->>>> and older gens) that would be nice ;-)
->>>>
->>>
->>> There is a "imply" kconfig option which solves exactly this problem.
->>> (you would "imply NVMEM" instead of "select NVMEM". then it would be
->>> possible to disable NVMEM but it would get enabled by default)
->>>
->>>> BR,
->>>> -R
->>>>
->>> _______________________________________________
->>> dri-devel mailing list
->>> dri-devel@lists.freedesktop.org
->>> https://lists.freedesktop.org/mailman/listinfo/dri-devel
->>
+>  drivers/leds/Kconfig                |    8 +
+>  drivers/leds/Makefile               |    1 +
+>  drivers/leds/leds-qcom-spmi-flash.c | 1153 +++++++++++++++++++++++++++
+>  3 files changed, 1162 insertions(+)
 
+Ok, please make this go to drivers/leds/flash/
+
+
+> +static int qcom_flash_fled_regulator_operate(struct qcom_flash_device *l=
+eds_dev,
+> +					     bool on)
+> +{
+> +	int rc;
+> +
+> +	if (!on)
+> +		goto regulator_turn_off;
+> +
+> +	if (!leds_dev->flash_regulator_on) {
+> +		if (leds_dev->flash_boost_reg) {
+> +			rc =3D regulator_enable(leds_dev->flash_boost_reg);
+> +			if (rc) {
+> +				dev_err(&leds_dev->pdev->dev,
+> +					"Regulator enable failed(%d)\n", rc);
+> +				return rc;
+> +			}
+> +			leds_dev->flash_regulator_on =3D true;
+> +		}
+> +	}
+> +
+> +	return 0;
+> +
+> +regulator_turn_off:
+> +	if (leds_dev->flash_regulator_on) {
+> +		if (leds_dev->flash_boost_reg) {
+> +			rc =3D qcom_flash_masked_write(leds_dev,
+> +				FLASH_ENABLE_CONTROL,
+> +				FLASH_ENABLE_MASK,
+> +				FLASH_DISABLE_ALL);
+> +			if (rc)
+> +				dev_err(&leds_dev->pdev->dev,
+> +					"Enable reg write failed(%d)\n", rc);
+> +
+> +			rc =3D regulator_disable(leds_dev->flash_boost_reg);
+> +			if (rc) {
+> +				dev_err(&leds_dev->pdev->dev,
+> +					"Regulator disable failed(%d)\n", rc);
+> +				return rc;
+> +			}
+> +			leds_dev->flash_regulator_on =3D false;
+> +		}
+> +	}
+> +
+> +	return 0;
+> +}
+
+Try to find a way to write this without gotos and with less
+indentation. Separate functions may be useful.
+
+> +static int qcom_flash_fled_set(struct qcom_flash_led *led, bool on)
+> +{
+> +	int rc, error;
+> +	u8 curr;
+> +	struct qcom_flash_device *leds_dev =3D led_to_leds_dev(led);
+> +	struct device *dev =3D &leds_dev->pdev->dev;
+> +
+> +	/* dump flash registers */
+> +	pr_debug("Regdump before\n");
+> +	qcom_flash_dump_regs(leds_dev, flash_debug_regs,
+> +			     ARRAY_SIZE(flash_debug_regs));
+
+I believe this kind of debugging is not needed for production.
+
+> +	/* Set led current */
+> +	if (on) {
+> +		if (led->torch_enable)
+> +			curr =3D qcom_flash_current_to_reg(led->cdev.led_cdev.brightness);
+> +		else
+> +			curr =3D qcom_flash_current_to_reg(led->cdev.brightness.val);
+> +
+> +		if (led->torch_enable) {
+> +			if (leds_dev->peripheral_subtype =3D=3D FLASH_SUBTYPE_DUAL) {
+> +				rc =3D qcom_flash_torch_regulator_operate(leds_dev, true);
+> +				if (rc) {
+> +					dev_err(dev,
+> +					"Torch regulator operate failed(%d)\n",
+> +					rc);
+> +					return rc;
+> +				}
+
+No need to goto here?
+
+> +			} else if (leds_dev->peripheral_subtype =3D=3D FLASH_SUBTYPE_SINGLE) {
+> +				rc =3D qcom_flash_fled_regulator_operate(leds_dev, true);
+> +				if (rc) {
+> +					dev_err(dev,
+> +					"Flash regulator operate failed(%d)\n",
+> +					rc);
+> +					goto error_flash_set;
+> +				}
+> +
+> +				/*
+> +				 * Write 0x80 to MODULE_ENABLE before writing
+> +				 * 0xE0 in order to avoid a hardware bug caused
+> +				 * by register value going from 0x00 to 0xE0.
+> +				 */
+> +				rc =3D qcom_flash_masked_write(leds_dev,
+> +					FLASH_ENABLE_CONTROL,
+> +					FLASH_ENABLE_MODULE_MASK,
+> +					FLASH_ENABLE_MODULE);
+> +				if (rc) {
+> +					dev_err(dev,
+> +						"Enable reg write failed(%d)\n",
+> +						rc);
+> +					return rc;
+> +				}
+> +			}
+
+Anyway, pleae find a way to split this function so that it is less
+indented.
+
+> +		/* TODO try to not busy wait*/
+> +		mdelay(2);
+> +		udelay(160);
+
+What?
+
+Best regards,
+								Pavel
+
+--=20
+http://www.livejournal.com/~pavelmachek
+
+--8JPrznbw0YAQ/KXy
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCYC+agQAKCRAw5/Bqldv6
+8pTEAKCHeRtdc2eT9XTnIYULLKer2Fp9vQCeP6NEUSRKyZZ3nHkxzeK++yowHTg=
+=KYTA
+-----END PGP SIGNATURE-----
+
+--8JPrznbw0YAQ/KXy--
