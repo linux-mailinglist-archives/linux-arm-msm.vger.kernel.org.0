@@ -2,158 +2,208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 22EB831FB71
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Feb 2021 15:56:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B5B731FBBC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Feb 2021 16:13:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229623AbhBSO41 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Feb 2021 09:56:27 -0500
-Received: from m42-2.mailgun.net ([69.72.42.2]:55472 "EHLO m42-2.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229594AbhBSO40 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Feb 2021 09:56:26 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1613746563; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=8FZEp2OZfVO47LVdb5u4zBEqXzFcNcGsWdEeX5D0hk4=; b=qOGAPlhR682y5siot1x+tXoNIikzCgTO3lb9kUzOmUsxQEmLhfGhbx3spVHzLGRgpsbFGiXo
- tFcEo4ZzHSXlPU8/fH7EU4pRxdVRqU6Do62pYEbVoNDwp9DfNgIvSZS3s3EhW19bMq2y2zSc
- gIKCTFKBghhsByFRIN4s43iiscM=
-X-Mailgun-Sending-Ip: 69.72.42.2
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 602fd1654511108a8105d4c2 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 19 Feb 2021 14:55:33
- GMT
-Sender: jhugo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BD97BC433C6; Fri, 19 Feb 2021 14:55:32 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 36D14C433C6;
-        Fri, 19 Feb 2021 14:55:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 36D14C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH] bus: mhi: core: Move to polling method to wait for MHI
- ready
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        linux-kernel@vger.kernel.org, loic.poulain@linaro.org,
-        carl.yin@quectel.com, naveen.kumar@quectel.com
-References: <1613701126-38995-1-git-send-email-bbhatt@codeaurora.org>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <3071a65e-8ab2-8e88-e87e-50c71602904c@codeaurora.org>
-Date:   Fri, 19 Feb 2021 07:55:30 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.0
+        id S229598AbhBSPN3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Feb 2021 10:13:29 -0500
+Received: from new3-smtp.messagingengine.com ([66.111.4.229]:39349 "EHLO
+        new3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229498AbhBSPN2 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 19 Feb 2021 10:13:28 -0500
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+        by mailnew.nyi.internal (Postfix) with ESMTP id 93E225801D8;
+        Fri, 19 Feb 2021 10:12:41 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Fri, 19 Feb 2021 10:12:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=
+        date:from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm2; bh=Emd+iGXCpjhCIuGJ6kINzMtdOjP
+        Vb1dtj8cLvd3w9uQ=; b=NGfSf1xCTv59Q/62lzFrQUe3OfzHicY7PdlXFseZ+fo
+        CXaps5k96MCo/y6dXa/ePCUiVr/+yd+bY0z6zZBYrTTK2YzzxM1J8iqD3y6W62cZ
+        rXBdZ7f2+aX04uHfX4St/hRD2mvVDoQ+/wu5mb+Q5x907WZ9caEJ8KHfdT1nr2yD
+        JLP64gaaabo7m5fSkBVWV9SDIr/uh0mJgEZZlhBIJuPlE67fksWmT4qsGXSXnPqG
+        CKVo2kTnbLrkMB9P1EmlLJdgH0orL2bJxv6jphPeJpe+zESq+2OJKnDQBxs0UL06
+        x/1RFeKzSAsBixLgniCd+pZnvp+IstVDQldHmokucVA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=Emd+iG
+        XCpjhCIuGJ6kINzMtdOjPVb1dtj8cLvd3w9uQ=; b=YkCuJYja0uX4TkD2rzV21h
+        g8ng0jTMGlNLgjp3ibUk89EXpzsGrxEJjWRxIIHh3CLNVbOWazk2yrYzBXJ23kBR
+        4wFbAgUarW3c96/qt+aEbZfVXEvUxH9PdikMlzxmtt9xyHWiVQpqsVbo6jcEa6iJ
+        S5ASjZRNk11V2LP36XYPaue+cGDQy5dTRhUanBnB/KPmSuAVAvVr8FxbpG1DM4QP
+        EabMeDUOtfQ6sWdaKB/kFRqXUJOra2iCGagkBurhMfRmM3t0wgIxbfA3h4kbSzIy
+        MuzVRTwFasgPMG+HDe+aFmQxFNJJYD06GCyMfq7EAN1LPbPmuQhzaHFugwqkspHQ
+        ==
+X-ME-Sender: <xms:ZtUvYPGywbwb_W_X_rHD8PzuY-T32APXk_hW92aAe8msQObxCrKUFQ>
+    <xme:ZtUvYMXSX6H4Zazn71SMqbZfKo75Xu2WSlL0lAD23b9Owys2Pdmw7rhPL-VpNd91z
+    4S9PFdrk7Wctr0bo40>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrjeeigdejfecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomhepofgrgihimhgv
+    ucftihhprghrugcuoehmrgigihhmvgestggvrhhnohdrthgvtghhqeenucggtffrrghtth
+    gvrhhnpeelkeeghefhuddtleejgfeljeffheffgfeijefhgfeufefhtdevteegheeiheeg
+    udenucfkphepledtrdekledrieekrdejieenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehmrgigihhmvgestggvrhhnohdrthgvtghh
+X-ME-Proxy: <xmx:ZtUvYBIUJuioxxraj3nflffP1AzbRkhnaIOVnlX3XwS9zmyHZ2byOg>
+    <xmx:ZtUvYNEjum8w0L68Xo84cpFdfo-7BdSTnTSZf3vOsIFddzRi7AVUcg>
+    <xmx:ZtUvYFXKXk3ywwLCh1ihNeDgTUlKEVDBbKVFdkJQ50WK-22UnG9MHg>
+    <xmx:adUvYGbtXseOPET8eQPCaGa5NONIe4S195vIixBTbFd4se4gga4qQA>
+Received: from localhost (lfbn-tou-1-1502-76.w90-89.abo.wanadoo.fr [90.89.68.76])
+        by mail.messagingengine.com (Postfix) with ESMTPA id C72DF1080057;
+        Fri, 19 Feb 2021 10:12:37 -0500 (EST)
+Date:   Fri, 19 Feb 2021 16:12:35 +0100
+From:   Maxime Ripard <maxime@cerno.tech>
+To:     Thomas Zimmermann <tzimmermann@suse.de>
+Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        David Airlie <airlied@linux.ie>,
+        dri-devel@lists.freedesktop.org,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Harry Wentland <harry.wentland@amd.com>,
+        Leo Li <sunpeng.li@amd.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        "James (Qian) Wang" <james.qian.wang@arm.com>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Mihail Atanassov <mihail.atanassov@arm.com>,
+        Brian Starkey <brian.starkey@arm.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Dave Airlie <airlied@redhat.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Stefan Agner <stefan@agner.ch>,
+        Alison Wang <alison.wang@nxp.com>,
+        Xinliang Liu <xinliang.liu@linaro.org>,
+        Tian Tao <tiantao6@hisilicon.com>,
+        John Stultz <john.stultz@linaro.org>,
+        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+        Chen Feng <puck.chen@hisilicon.com>,
+        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Anitha Chrisanthus <anitha.chrisanthus@intel.com>,
+        Edmund Dea <edmund.j.dea@intel.com>,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Ben Skeggs <bskeggs@redhat.com>,
+        Tomi Valkeinen <tomba@kernel.org>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+        Sandy Huang <hjc@rock-chips.com>,
+        Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>,
+        Benjamin Gaignard <benjamin.gaignard@linaro.org>,
+        Vincent Abriou <vincent.abriou@st.com>,
+        Yannick Fertre <yannick.fertre@st.com>,
+        Philippe Cornu <philippe.cornu@st.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@st.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jyri Sarha <jyri.sarha@iki.fi>, Eric Anholt <eric@anholt.net>,
+        Rodrigo Siqueira <rodrigosiqueiramelo@gmail.com>,
+        Melissa Wen <melissa.srw@gmail.com>,
+        Haneen Mohammed <hamohammed.sa@gmail.com>,
+        VMware Graphics <linux-graphics-maintainer@vmware.com>,
+        Roland Scheidegger <sroland@vmware.com>,
+        Zack Rusin <zackr@vmware.com>,
+        Hyun Kwon <hyun.kwon@xilinx.com>,
+        Michal Simek <michal.simek@xilinx.com>,
+        amd-gfx@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-mips@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        virtualization@lists.linux-foundation.org,
+        spice-devel@lists.freedesktop.org,
+        linux-renesas-soc@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-tegra@vger.kernel.org
+Subject: Re: [PATCH v3 02/11] drm: Rename plane atomic_check state names
+Message-ID: <20210219151235.dsv4mujqyrzndhsn@gilmour>
+References: <20210219120032.260676-1-maxime@cerno.tech>
+ <20210219120032.260676-2-maxime@cerno.tech>
+ <51bb5aaf-f771-020b-9a48-77d8679de6a2@suse.de>
 MIME-Version: 1.0
-In-Reply-To: <1613701126-38995-1-git-send-email-bbhatt@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="x6inkztb7pnxs2gu"
+Content-Disposition: inline
+In-Reply-To: <51bb5aaf-f771-020b-9a48-77d8679de6a2@suse.de>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/18/2021 7:18 PM, Bhaumik Bhatt wrote:
-> In certain devices, it is likely that there is no incoming MHI
-> interrupt for a transition to MHI READY state. One such example
-> is the move from Pass Through to an SBL or AMSS execution
-> environment. In order to facilitate faster bootup times as there
-> is no need to wait until timeout_ms completes, MHI host can poll
-> every 25 milliseconds to check if device has entered MHI READY
-> until a maximum timeout of twice the timeout_ms is reached.
-> 
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> ---
->   drivers/bus/mhi/core/pm.c | 32 ++++++++++++++++----------------
->   1 file changed, 16 insertions(+), 16 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-> index 65ebca8..ec0060c 100644
-> --- a/drivers/bus/mhi/core/pm.c
-> +++ b/drivers/bus/mhi/core/pm.c
-> @@ -9,6 +9,7 @@
->   #include <linux/dma-direction.h>
->   #include <linux/dma-mapping.h>
->   #include <linux/interrupt.h>
-> +#include <linux/iopoll.h>
->   #include <linux/list.h>
->   #include <linux/mhi.h>
->   #include <linux/module.h>
-> @@ -157,30 +158,29 @@ int mhi_ready_state_transition(struct mhi_controller *mhi_cntrl)
->   	struct mhi_event *mhi_event;
->   	enum mhi_pm_state cur_state;
->   	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-> -	u32 reset = 1, ready = 0;
-> +	u32 reset, ready;
->   	int ret, i;
->   
-> -	/* Wait for RESET to be cleared and READY bit to be set by the device */
-> -	wait_event_timeout(mhi_cntrl->state_event,
-> -			   MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state) ||
-> -			   mhi_read_reg_field(mhi_cntrl, base, MHICTRL,
-> -					      MHICTRL_RESET_MASK,
-> -					      MHICTRL_RESET_SHIFT, &reset) ||
-> -			   mhi_read_reg_field(mhi_cntrl, base, MHISTATUS,
-> -					      MHISTATUS_READY_MASK,
-> -					      MHISTATUS_READY_SHIFT, &ready) ||
-> -			   (!reset && ready),
-> -			   msecs_to_jiffies(mhi_cntrl->timeout_ms));
-> -
->   	/* Check if device entered error state */
->   	if (MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state)) {
->   		dev_err(dev, "Device link is not accessible\n");
->   		return -EIO;
->   	}
->   
-> -	/* Timeout if device did not transition to ready state */
-> -	if (reset || !ready) {
-> -		dev_err(dev, "Device Ready timeout\n");
-> +	/* Wait for RESET to be cleared and READY bit to be set by the device */
-> +	ret = readl_relaxed_poll_timeout(base + MHICTRL, reset,
-> +					 !(reset & MHICTRL_RESET_MASK), 25000,
-> +					 mhi_cntrl->timeout_ms * 1000);
-> +	if (ret) {
-> +		dev_err(dev, "Device failed to clear MHI Reset\n");
-> +		return -ETIMEDOUT;
-> +	}
-> +
-> +	ret = readl_relaxed_poll_timeout(base + MHISTATUS, ready,
-> +					 (ready & MHISTATUS_READY_MASK), 25000,
-> +					 mhi_cntrl->timeout_ms * 1000);
-> +	if (ret) {
-> +		dev_err(dev, "Device failed to enter MHI Ready\n");
->   		return -ETIMEDOUT;
->   	}
->   
-> 
 
-I think this gets a NACK from me.
+--x6inkztb7pnxs2gu
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-mhi_read_reg_field() uses the controller defined accessor method 
-read_reg().  readl_relaxed_poll_timeout() does not.  If, say, MHI was 
-implemented over I2C, direct readl() accesses wouldn't be valid, and 
-this would break.
+Hi Thomas,
 
-Also, if the link ever goes down in the middle if the timeout, the 
-controller read_reg() should detect that, but 
-readl_relaxed_poll_timeout() would not.
+Thanks for your review!
 
-I'm fine with this concept, but I think the implementation needs to be 
-adjusted.
+On Fri, Feb 19, 2021 at 03:49:22PM +0100, Thomas Zimmermann wrote:
+> > diff --git a/drivers/gpu/drm/imx/ipuv3-plane.c b/drivers/gpu/drm/imx/ip=
+uv3-plane.c
+> > index 075508051b5f..1873a155bb26 100644
+> > --- a/drivers/gpu/drm/imx/ipuv3-plane.c
+> > +++ b/drivers/gpu/drm/imx/ipuv3-plane.c
+> > @@ -337,12 +337,12 @@ static const struct drm_plane_funcs ipu_plane_fun=
+cs =3D {
+> >   };
+> >   static int ipu_plane_atomic_check(struct drm_plane *plane,
+> > -				  struct drm_plane_state *state)
+> > +				  struct drm_plane_state *new_state)
+>=20
+> This function uses a different naming convention then the others?
+>=20
+> >   {
+> >   	struct drm_plane_state *old_state =3D plane->state;
 
--- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+So, the function already had a variable named old_state, so I was
+actually trying to make the drivers consistent here: having one variable
+with old_state and new_plane_state felt weird.
+
+The heuristic is thus to use the convention of the driver if one exists
+already, and if there's none pick new_plane_state.
+
+It makes it indeed inconsistent across drivers, but it felt more natural
+to be consistent within a single driver.
+
+Maxime
+
+--x6inkztb7pnxs2gu
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCYC/VYwAKCRDj7w1vZxhR
+xXb7AP9dLYZ0ol4FnTyS9ndvGPPXpijdNPtrfZDs40BKL//eEgEA8HMiYKjgufNK
+Zn4QIsaErGpt9UM9/IC6ZwJ7lvoIrQ0=
+=ygPX
+-----END PGP SIGNATURE-----
+
+--x6inkztb7pnxs2gu--
