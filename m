@@ -2,510 +2,412 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CE187320C77
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Feb 2021 19:18:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 36355320C82
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Feb 2021 19:22:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230117AbhBUSSX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 21 Feb 2021 13:18:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54616 "EHLO
+        id S230079AbhBUSWR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 21 Feb 2021 13:22:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229999AbhBUSSW (ORCPT
+        with ESMTP id S229985AbhBUSWQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 21 Feb 2021 13:18:22 -0500
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96246C061574
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Feb 2021 10:17:41 -0800 (PST)
-Received: by mail-lj1-x235.google.com with SMTP id c17so51791939ljn.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Feb 2021 10:17:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Tatb66V17i/V8QqqjKl/5lap4EvQJ7B8LrmX1Bb8JDA=;
-        b=H8ZFF8mz9IevKV8PlVOLe9IgWhPlvmxTiSHQ0brSwJV4dcTbkSQ8HiLz8UOTUpBZHE
-         EGc7wG2pCIw/1aRtvS3LJBu+Em8z/TMsTqqcyeELOqNA0rNCIc0awe+HBNJlK6RqbVsG
-         Jmiwmv4E7KNMUviPBm5lvziBmRm5fD3FXM9epDbUGSZtDp0ccbh+4+45CqQCcpa0SwtK
-         WlBtZeZWbzZ0wrjmUbPV8cCR4s7IKkkyE3hUxtjLKoJM1EMrFKDHcAWgj3f5dXKWziPc
-         CJ5ks04mjtIYKB5k1vXU2e6asMiqb7pzb2l4yierwtAxEFYWbEbw5Xu6A8tPltGHGnta
-         /Y8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Tatb66V17i/V8QqqjKl/5lap4EvQJ7B8LrmX1Bb8JDA=;
-        b=kbd1vyq/Xo8cPAXYo1iQsyERnbkGubKn9XGcdguiJ0OT2uQ5+3mOHcFlExhbCY5rkn
-         W6gyTJ5xi5GL5/5TJWpE8U//FLCwwzPEa1wJ8Zli42ynCmTOZZUbzQ2mzR9WPW6OosVg
-         1xCR6aDpyhsF3IM6gyGy4nGs9cMQZfSkhm4XD1n7dHUrp5lrzQqKP/Q8xYYE+rowYGyL
-         3n2DFDf1gijPWJDYGUZfwnXSNGo21m++NaSXgEkKbIQGN6q5Q8malvsUtCqXuN9RIVAu
-         L+f3SA6jf6nsRUqMlUCsCY+aVbbjckt1IRfKO5Cyc1axocrod4ofTD7YdbuKbwEMp91X
-         XBpw==
-X-Gm-Message-State: AOAM530UaxBE9qdmoMzB04PUwqo2mBu2l5Tf9rZhj9RS0bdLFkELUEKm
-        Mg9xCPaSgYf3WTilFR5YEaqj4w==
-X-Google-Smtp-Source: ABdhPJwfEHQL/IaNtef6bWRT2MnGE7kRgs4VZyfURl/UKRGnZb36RNl4DD89Pr4ipKr3V8BaPA0ytQ==
-X-Received: by 2002:a05:651c:102c:: with SMTP id w12mr12018702ljm.432.1613931459928;
-        Sun, 21 Feb 2021 10:17:39 -0800 (PST)
-Received: from [192.168.118.216] ([85.249.43.69])
-        by smtp.gmail.com with ESMTPSA id v72sm1629085lfa.77.2021.02.21.10.17.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 21 Feb 2021 10:17:39 -0800 (PST)
-Subject: Re: [PATCH v5 11/22] media: camss: Add support for CSIPHY hardware
- version Titan 170
-To:     Robert Foss <robert.foss@linaro.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, todor.too@gmail.com,
-        mchehab@kernel.org, robh+dt@kernel.org,
-        angelogioacchino.delregno@somainline.org,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Sakari Ailus <sakari.ailus@iki.fi>,
-        Nicolas Boichat <drinkcat@chromium.org>
-Cc:     Rob Herring <robh@kernel.org>, Tomasz Figa <tfiga@chromium.org>,
-        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
-        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Jonathan Marek <jonathan@marek.ca>
-References: <20210217112122.424236-1-robert.foss@linaro.org>
- <20210217112122.424236-12-robert.foss@linaro.org>
-From:   Andrey Konovalov <andrey.konovalov@linaro.org>
-Message-ID: <73691f16-a7e7-71e4-1ffc-5c28805493d2@linaro.org>
-Date:   Sun, 21 Feb 2021 21:17:36 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Sun, 21 Feb 2021 13:22:16 -0500
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63A75C061574;
+        Sun, 21 Feb 2021 10:21:36 -0800 (PST)
+Received: from pendragon.ideasonboard.com (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 59FA7EF;
+        Sun, 21 Feb 2021 19:21:34 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1613931694;
+        bh=GrTgQ2aab5eBCzMDahXFKzsgqhR0cCzd4d93CPbsd74=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=S7py4GN1+mpKFxaItm5BBufzjOGkqLdjNQ2MgSfbxdQj+51l9D2t3BC2YyeQEmWI7
+         XeNseMhQGrt8folLYb5Ub+y60aver4uMxtfEEWxsp3I0QdkeEcogpgL/qx0R3cZL50
+         Jf4yp7Vzr3b+VPBGRGqLdh/UMEIwSFyVwm8rczfQ=
+Date:   Sun, 21 Feb 2021 20:21:08 +0200
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To:     Lyude Paul <lyude@redhat.com>
+Cc:     intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        amd-gfx@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Harry Wentland <harry.wentland@amd.com>,
+        Leo Li <sunpeng.li@amd.com>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Ben Skeggs <bskeggs@redhat.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Hyun Kwon <hyun.kwon@xilinx.com>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Luben Tuikov <luben.tuikov@amd.com>,
+        Oleg Vasilev <oleg.vasilev@intel.com>,
+        Emil Velikov <emil.velikov@collabora.com>,
+        Mikita Lipski <mikita.lipski@amd.com>,
+        Eryk Brol <eryk.brol@amd.com>,
+        Rodrigo Siqueira <rodrigosiqueiramelo@gmail.com>,
+        "Jerry (Fangzhi) Zuo" <Jerry.Zuo@amd.com>,
+        Chris Park <Chris.Park@amd.com>,
+        Pankaj Bharadiya <pankaj.laxminarayan.bharadiya@intel.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Boris Brezillon <boris.brezillon@collabora.com>,
+        Torsten Duwe <duwe@lst.de>,
+        Vasily Khoruzhick <anarsoul@gmail.com>,
+        Joe Perches <joe@perches.com>, Icenowy Zheng <icenowy@aosc.io>,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Swapnil Jakhade <sjakhade@cadence.com>,
+        Yuti Amonkar <yamonkar@cadence.com>,
+        Julia Lawall <Julia.Lawall@inria.fr>,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>,
+        "open list:DRM DRIVERS FOR NVIDIA TEGRA" 
+        <linux-tegra@vger.kernel.org>,
+        "moderated list:ARM/ZYNQ ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>
+Subject: Re: [PATCH 15/30] drm/dp: Add backpointer to drm_device in drm_dp_aux
+Message-ID: <YDKklI3grZjn3dde@pendragon.ideasonboard.com>
+References: <20210219215326.2227596-1-lyude@redhat.com>
+ <20210219215326.2227596-16-lyude@redhat.com>
 MIME-Version: 1.0
-In-Reply-To: <20210217112122.424236-12-robert.foss@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20210219215326.2227596-16-lyude@redhat.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Robert,
+Hi Lyude,
 
-Thank you for your patch!
+Thank you for the patch.
 
-On 17.02.2021 14:21, Robert Foss wrote:
-> Add register definitions for version 170 of the Titan architecture
-> and implement support for the CSIPHY subdevice.
+On Fri, Feb 19, 2021 at 04:53:11PM -0500, Lyude Paul wrote:
+> This is something that we've wanted for a while now: the ability to
+> actually look up the respective drm_device for a given drm_dp_aux struct.
+> This will also allow us to transition over to using the drm_dbg_*() helpers
+> for debug message printing, as we'll finally have a drm_device to reference
+> for doing so.
+
+Isn't it better to use the existing dev field ? If you have multiple DP
+outputs for one DRM device, using the DRM device name in debug messages
+won't tell which output the message corresponds to.
+
+> Note that there is one limitation with this - because some DP AUX adapters
+> exist as platform devices which are initialized independently of their
+> respective DRM devices, one cannot rely on drm_dp_aux->drm_dev to always be
+> non-NULL until drm_dp_aux_register() has been called. We make sure to point
+> this out in the documentation for struct drm_dp_aux.
 > 
-> Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> Signed-off-by: Lyude Paul <lyude@redhat.com>
 > ---
+>  drivers/gpu/drm/amd/amdgpu/atombios_dp.c                 | 1 +
+>  .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c  | 1 +
+>  drivers/gpu/drm/bridge/analogix/analogix-anx6345.c       | 1 +
+>  drivers/gpu/drm/bridge/analogix/analogix-anx78xx.c       | 1 +
+>  drivers/gpu/drm/bridge/analogix/analogix_dp_core.c       | 1 +
+>  drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c      | 1 +
+>  drivers/gpu/drm/bridge/tc358767.c                        | 1 +
+>  drivers/gpu/drm/bridge/ti-sn65dsi86.c                    | 1 +
+>  drivers/gpu/drm/drm_dp_aux_dev.c                         | 6 ++++++
+>  drivers/gpu/drm/drm_dp_mst_topology.c                    | 1 +
+>  drivers/gpu/drm/i915/display/intel_dp_aux.c              | 1 +
+>  drivers/gpu/drm/msm/edp/edp.h                            | 3 +--
+>  drivers/gpu/drm/msm/edp/edp_aux.c                        | 5 +++--
+>  drivers/gpu/drm/msm/edp/edp_ctrl.c                       | 2 +-
+>  drivers/gpu/drm/nouveau/nouveau_connector.c              | 1 +
+>  drivers/gpu/drm/radeon/atombios_dp.c                     | 1 +
+>  drivers/gpu/drm/tegra/dpaux.c                            | 1 +
+>  drivers/gpu/drm/xlnx/zynqmp_dp.c                         | 1 +
+>  include/drm/drm_dp_helper.h                              | 9 ++++++++-
+>  19 files changed, 33 insertions(+), 6 deletions(-)
 > 
-> Changes since v3
->   - Sakari: Make variable const
-> 
-> Changes since v4
->   - kernel test robot: Fix warning related to const
-> 
-> 
->   .../qcom/camss/camss-csiphy-3ph-1-0.c         | 182 ++++++++++++++++--
->   .../media/platform/qcom/camss/camss-csiphy.c  |  66 +++++--
->   drivers/media/platform/qcom/camss/camss.c     |  74 +++++++
->   3 files changed, 290 insertions(+), 32 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-> index 97cb9de85031..f350c0c92362 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-> @@ -47,6 +47,105 @@
->   #define CSIPHY_3PH_CMN_CSI_COMMON_CTRL6_SHOW_REV_ID	BIT(1)
->   #define CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(n)	(0x8b0 + 0x4 * (n))
->   
-> +#define CSIPHY_DEFAULT_PARAMS            0
-> +#define CSIPHY_LANE_ENABLE               1
-> +#define CSIPHY_SETTLE_CNT_LOWER_BYTE     2
-> +#define CSIPHY_SETTLE_CNT_HIGHER_BYTE    3
-> +#define CSIPHY_DNP_PARAMS                4
-> +#define CSIPHY_2PH_REGS                  5
-> +#define CSIPHY_3PH_REGS                  6
+> diff --git a/drivers/gpu/drm/amd/amdgpu/atombios_dp.c b/drivers/gpu/drm/amd/amdgpu/atombios_dp.c
+> index a3ba9ca11e98..6d35da65e09f 100644
+> --- a/drivers/gpu/drm/amd/amdgpu/atombios_dp.c
+> +++ b/drivers/gpu/drm/amd/amdgpu/atombios_dp.c
+> @@ -188,6 +188,7 @@ void amdgpu_atombios_dp_aux_init(struct amdgpu_connector *amdgpu_connector)
+>  {
+>  	amdgpu_connector->ddc_bus->rec.hpd = amdgpu_connector->hpd.hpd;
+>  	amdgpu_connector->ddc_bus->aux.transfer = amdgpu_atombios_dp_aux_transfer;
+> +	amdgpu_connector->ddc_bus->aux.drm_dev = amdgpu_connector->base.dev;
+>  	drm_dp_aux_init(&amdgpu_connector->ddc_bus->aux);
+>  	amdgpu_connector->ddc_bus->has_aux = true;
+>  }
+> diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+> index 41b09ab22233..163641b44339 100644
+> --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+> +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+> @@ -431,6 +431,7 @@ void amdgpu_dm_initialize_dp_connector(struct amdgpu_display_manager *dm,
+>  			  link_index);
+>  	aconnector->dm_dp_aux.aux.transfer = dm_dp_aux_transfer;
+>  	aconnector->dm_dp_aux.ddc_service = aconnector->dc_link->ddc;
+> +	aconnector->dm_dp_aux.aux.drm_dev = dm->ddev;
+>  
+>  	drm_dp_aux_init(&aconnector->dm_dp_aux.aux);
+>  	drm_dp_cec_register_connector(&aconnector->dm_dp_aux.aux,
+> diff --git a/drivers/gpu/drm/bridge/analogix/analogix-anx6345.c b/drivers/gpu/drm/bridge/analogix/analogix-anx6345.c
+> index aa6cda458eb9..e33cd077595a 100644
+> --- a/drivers/gpu/drm/bridge/analogix/analogix-anx6345.c
+> +++ b/drivers/gpu/drm/bridge/analogix/analogix-anx6345.c
+> @@ -537,6 +537,7 @@ static int anx6345_bridge_attach(struct drm_bridge *bridge,
+>  	/* Register aux channel */
+>  	anx6345->aux.name = "DP-AUX";
+>  	anx6345->aux.dev = &anx6345->client->dev;
+> +	anx6345->aux.drm_dev = bridge->dev;
+>  	anx6345->aux.transfer = anx6345_aux_transfer;
+>  
+>  	err = drm_dp_aux_register(&anx6345->aux);
+> diff --git a/drivers/gpu/drm/bridge/analogix/analogix-anx78xx.c b/drivers/gpu/drm/bridge/analogix/analogix-anx78xx.c
+> index f20558618220..5e6a0ed39199 100644
+> --- a/drivers/gpu/drm/bridge/analogix/analogix-anx78xx.c
+> +++ b/drivers/gpu/drm/bridge/analogix/analogix-anx78xx.c
+> @@ -905,6 +905,7 @@ static int anx78xx_bridge_attach(struct drm_bridge *bridge,
+>  	/* Register aux channel */
+>  	anx78xx->aux.name = "DP-AUX";
+>  	anx78xx->aux.dev = &anx78xx->client->dev;
+> +	anx78xx->aux.drm_dev = bridge->dev;
+>  	anx78xx->aux.transfer = anx78xx_aux_transfer;
+>  
+>  	err = drm_dp_aux_register(&anx78xx->aux);
+> diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+> index f115233b1cb9..550814ca2139 100644
+> --- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+> +++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+> @@ -1765,6 +1765,7 @@ int analogix_dp_bind(struct analogix_dp_device *dp, struct drm_device *drm_dev)
+>  	dp->aux.name = "DP-AUX";
+>  	dp->aux.transfer = analogix_dpaux_transfer;
+>  	dp->aux.dev = dp->dev;
+> +	dp->aux.drm_dev = drm_dev;
+>  
+>  	ret = drm_dp_aux_register(&dp->aux);
+>  	if (ret)
+> diff --git a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
+> index d966a33743b5..fe821ad628ec 100644
+> --- a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
+> +++ b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
+> @@ -1674,6 +1674,7 @@ static int cdns_mhdp_attach(struct drm_bridge *bridge,
+>  
+>  	dev_dbg(mhdp->dev, "%s\n", __func__);
+>  
+> +	mhdp->aux.drm_dev = bridge->dev;
+>  	ret = drm_dp_aux_register(&mhdp->aux);
+>  	if (ret < 0)
+>  		return ret;
+> diff --git a/drivers/gpu/drm/bridge/tc358767.c b/drivers/gpu/drm/bridge/tc358767.c
+> index da89922721ed..23a6f90b694b 100644
+> --- a/drivers/gpu/drm/bridge/tc358767.c
+> +++ b/drivers/gpu/drm/bridge/tc358767.c
+> @@ -1414,6 +1414,7 @@ static int tc_bridge_attach(struct drm_bridge *bridge,
+>  	if (flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR)
+>  		return 0;
+>  
+> +	tc->aux.drm_dev = drm;
+>  	ret = drm_dp_aux_register(&tc->aux);
+>  	if (ret < 0)
+>  		return ret;
+> diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> index 88df4dd0f39d..8e24272bbf00 100644
+> --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> @@ -362,6 +362,7 @@ static int ti_sn_bridge_attach(struct drm_bridge *bridge,
+>  		return -EINVAL;
+>  	}
+>  
+> +	pdata->aux.drm_dev = bridge->dev;
+>  	ret = drm_dp_aux_register(&pdata->aux);
+>  	if (ret < 0) {
+>  		drm_err(bridge->dev, "Failed to register DP AUX channel: %d\n", ret);
+> diff --git a/drivers/gpu/drm/drm_dp_aux_dev.c b/drivers/gpu/drm/drm_dp_aux_dev.c
+> index e25181bf2c48..06b374cae956 100644
+> --- a/drivers/gpu/drm/drm_dp_aux_dev.c
+> +++ b/drivers/gpu/drm/drm_dp_aux_dev.c
+> @@ -278,6 +278,12 @@ void drm_dp_aux_unregister_devnode(struct drm_dp_aux *aux)
+>  	if (!aux_dev) /* attach must have failed */
+>  		return;
+>  
+> +	/*
+> +	 * As some AUX adapters may exist as platform devices which outlive their respective DRM
+> +	 * devices, we clear drm_dev to ensure that we never accidentally reference a stale pointer
+> +	 */
+> +	aux->drm_dev = NULL;
 > +
-> +struct csiphy_reg_t {
-> +	int32_t  reg_addr;
-> +	int32_t  reg_data;
-> +	int32_t  delay;
-> +	uint32_t csiphy_param_type;
-> +};
-> +
-> +static const struct
-> +csiphy_reg_t lane_regs_sdm845[5][14] = {
-> +	{
-> +		{0x0004, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x002C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0034, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x001C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0014, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0028, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> +		{0x003C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0000, 0x91, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0008, 0x00, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
-> +		{0x000c, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> +		{0x0010, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0038, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0060, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0064, 0x7F, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	},
-> +	{
-> +		{0x0704, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x072C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0734, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x071C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0714, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0728, 0x04, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x073C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0700, 0x80, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0708, 0x14, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
-> +		{0x070C, 0xA5, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0710, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0738, 0x1F, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0760, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0764, 0x7F, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	},
-> +	{
-> +		{0x0204, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x022C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0234, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x021C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0214, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0228, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> +		{0x023C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0200, 0x91, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0208, 0x00, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
-> +		{0x020C, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> +		{0x0210, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0238, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0260, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0264, 0x7F, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	},
-> +	{
-> +		{0x0404, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x042C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0434, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x041C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0414, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0428, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> +		{0x043C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0400, 0x91, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0408, 0x00, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
-> +		{0x040C, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> +		{0x0410, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0438, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0460, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0464, 0x7F, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	},
-> +	{
-> +		{0x0604, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x062C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0634, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x061C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0614, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0628, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> +		{0x063C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0600, 0x91, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0608, 0x00, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
-> +		{0x060C, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> +		{0x0610, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0638, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0660, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +		{0x0664, 0x7F, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	},
-> +};
-> +
->   static void csiphy_hw_version_read(struct csiphy_device *csiphy,
->   				   struct device *dev)
->   {
-> @@ -135,26 +234,13 @@ static u8 csiphy_settle_cnt_calc(u32 pixel_clock, u8 bpp, u8 num_lanes,
->   	return settle_cnt;
->   }
->   
-> -static void csiphy_lanes_enable(struct csiphy_device *csiphy,
-> -				struct csiphy_config *cfg,
-> -				u32 pixel_clock, u8 bpp, u8 lane_mask)
-> +static void csiphy_gen1_config_lanes(struct csiphy_device *csiphy,
-> +				     struct csiphy_config *cfg,
-> +				     u8 settle_cnt)
->   {
->   	struct csiphy_lanes_cfg *c = &cfg->csi2->lane_cfg;
-> -	u8 settle_cnt;
-> -	u8 val, l = 0;
-> -	int i;
-> -
-> -	settle_cnt = csiphy_settle_cnt_calc(pixel_clock, bpp, c->num_data,
-> -					    csiphy->timer_clk_rate);
-> -
-> -	val = BIT(c->clk.pos);
-> -	for (i = 0; i < c->num_data; i++)
-> -		val |= BIT(c->data[i].pos * 2);
-> -
-> -	writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(5));
-> -
-> -	val = CSIPHY_3PH_CMN_CSI_COMMON_CTRL6_COMMON_PWRDN_B;
-> -	writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(6));
-> +	int i, l = 0;
-> +	u8 val;
->   
->   	for (i = 0; i <= c->num_data; i++) {
->   		if (i == c->num_data)
-> @@ -208,6 +294,66 @@ static void csiphy_lanes_enable(struct csiphy_device *csiphy,
->   
->   	val = CSIPHY_3PH_LNn_MISC1_IS_CLKLANE;
->   	writel_relaxed(val, csiphy->base + CSIPHY_3PH_LNn_MISC1(l));
-> +}
-> +
-> +static void csiphy_gen2_config_lanes(struct csiphy_device *csiphy,
-> +				     u8 settle_cnt)
-> +{
-> +	int i, l;
-> +	u32 val;
-> +
-> +	for (l = 0; l < 5; l++) {
-> +		for (i = 0; i < 14; i++) {
-> +			const struct csiphy_reg_t *r = &lane_regs_sdm845[l][i];
-> +
-> +			switch (r->csiphy_param_type) {
-> +			case CSIPHY_SETTLE_CNT_LOWER_BYTE:
-> +				val = settle_cnt & 0xff;
-> +				break;
-> +			case CSIPHY_DNP_PARAMS:
-> +				continue;
-> +			default:
-> +				val = r->reg_data;
-> +				break;
-> +			}
-> +			writel_relaxed(val, csiphy->base + r->reg_addr);
-> +		}
-> +	}
-> +}
-> +
-> +static void csiphy_lanes_enable(struct csiphy_device *csiphy,
-> +				struct csiphy_config *cfg,
-> +				u32 pixel_clock, u8 bpp, u8 lane_mask)
-> +{
-> +	struct csiphy_lanes_cfg *c = &cfg->csi2->lane_cfg;
-> +	u8 settle_cnt;
-> +	u8 val;
-> +	int i;
-> +
-> +	settle_cnt = csiphy_settle_cnt_calc(pixel_clock, bpp, c->num_data,
-> +					    csiphy->timer_clk_rate);
-> +
-> +	val = BIT(c->clk.pos);
-> +	for (i = 0; i < c->num_data; i++)
-> +		val |= BIT(c->data[i].pos * 2);
+>  	mutex_lock(&aux_idr_mutex);
+>  	idr_remove(&aux_idr, aux_dev->index);
+>  	mutex_unlock(&aux_idr_mutex);
+> diff --git a/drivers/gpu/drm/drm_dp_mst_topology.c b/drivers/gpu/drm/drm_dp_mst_topology.c
+> index 932c4641ec3e..cf4f2f85711e 100644
+> --- a/drivers/gpu/drm/drm_dp_mst_topology.c
+> +++ b/drivers/gpu/drm/drm_dp_mst_topology.c
+> @@ -2349,6 +2349,7 @@ drm_dp_mst_add_port(struct drm_device *dev,
+>  	port->aux.is_remote = true;
+>  
+>  	/* initialize the MST downstream port's AUX crc work queue */
+> +	port->aux.drm_dev = dev;
+>  	drm_dp_remote_aux_init(&port->aux);
+>  
+>  	/*
+> diff --git a/drivers/gpu/drm/i915/display/intel_dp_aux.c b/drivers/gpu/drm/i915/display/intel_dp_aux.c
+> index eaebf123310a..0571c0794226 100644
+> --- a/drivers/gpu/drm/i915/display/intel_dp_aux.c
+> +++ b/drivers/gpu/drm/i915/display/intel_dp_aux.c
+> @@ -675,6 +675,7 @@ void intel_dp_aux_init(struct intel_dp *intel_dp)
+>  	else
+>  		intel_dp->get_aux_send_ctl = g4x_get_aux_send_ctl;
+>  
+> +	intel_dp->aux.drm_dev = &dev_priv->drm;
+>  	drm_dp_aux_init(&intel_dp->aux);
+>  
+>  	/* Failure to allocate our preferred name is not critical */
+> diff --git a/drivers/gpu/drm/msm/edp/edp.h b/drivers/gpu/drm/msm/edp/edp.h
+> index eb34243dad53..8590f2ce274d 100644
+> --- a/drivers/gpu/drm/msm/edp/edp.h
+> +++ b/drivers/gpu/drm/msm/edp/edp.h
+> @@ -46,8 +46,7 @@ void edp_bridge_destroy(struct drm_bridge *bridge);
+>  struct drm_connector *msm_edp_connector_init(struct msm_edp *edp);
+>  
+>  /* AUX */
+> -void *msm_edp_aux_init(struct device *dev, void __iomem *regbase,
+> -			struct drm_dp_aux **drm_aux);
+> +void *msm_edp_aux_init(struct msm_edp *edp, void __iomem *regbase, struct drm_dp_aux **drm_aux);
+>  void msm_edp_aux_destroy(struct device *dev, struct edp_aux *aux);
+>  irqreturn_t msm_edp_aux_irq(struct edp_aux *aux, u32 isr);
+>  void msm_edp_aux_ctrl(struct edp_aux *aux, int enable);
+> diff --git a/drivers/gpu/drm/msm/edp/edp_aux.c b/drivers/gpu/drm/msm/edp/edp_aux.c
+> index df10a0196d94..e3d85c622cfb 100644
+> --- a/drivers/gpu/drm/msm/edp/edp_aux.c
+> +++ b/drivers/gpu/drm/msm/edp/edp_aux.c
+> @@ -184,9 +184,9 @@ static ssize_t edp_aux_transfer(struct drm_dp_aux *drm_aux,
+>  	return ret;
+>  }
+>  
+> -void *msm_edp_aux_init(struct device *dev, void __iomem *regbase,
+> -	struct drm_dp_aux **drm_aux)
+> +void *msm_edp_aux_init(struct msm_edp *edp, void __iomem *regbase, struct drm_dp_aux **drm_aux)
+>  {
+> +	struct device *dev = &edp->pdev->dev;
+>  	struct edp_aux *aux = NULL;
+>  	int ret;
+>  
+> @@ -201,6 +201,7 @@ void *msm_edp_aux_init(struct device *dev, void __iomem *regbase,
+>  
+>  	aux->drm_aux.name = "msm_edp_aux";
+>  	aux->drm_aux.dev = dev;
+> +	aux->drm_aux.drm_dev = edp->dev;
+>  	aux->drm_aux.transfer = edp_aux_transfer;
+>  	ret = drm_dp_aux_register(&aux->drm_aux);
+>  	if (ret) {
+> diff --git a/drivers/gpu/drm/msm/edp/edp_ctrl.c b/drivers/gpu/drm/msm/edp/edp_ctrl.c
+> index 0d9657cc70db..57af3d8b6699 100644
+> --- a/drivers/gpu/drm/msm/edp/edp_ctrl.c
+> +++ b/drivers/gpu/drm/msm/edp/edp_ctrl.c
+> @@ -1153,7 +1153,7 @@ int msm_edp_ctrl_init(struct msm_edp *edp)
+>  	}
+>  
+>  	/* Init aux and phy */
+> -	ctrl->aux = msm_edp_aux_init(dev, ctrl->base, &ctrl->drm_aux);
+> +	ctrl->aux = msm_edp_aux_init(edp, ctrl->base, &ctrl->drm_aux);
+>  	if (!ctrl->aux || !ctrl->drm_aux) {
+>  		pr_err("%s:failed to init aux\n", __func__);
+>  		return -ENOMEM;
+> diff --git a/drivers/gpu/drm/nouveau/nouveau_connector.c b/drivers/gpu/drm/nouveau/nouveau_connector.c
+> index bfce762adcf0..d1b49508ecb9 100644
+> --- a/drivers/gpu/drm/nouveau/nouveau_connector.c
+> +++ b/drivers/gpu/drm/nouveau/nouveau_connector.c
+> @@ -1355,6 +1355,7 @@ nouveau_connector_create(struct drm_device *dev,
+>  	case DRM_MODE_CONNECTOR_DisplayPort:
+>  	case DRM_MODE_CONNECTOR_eDP:
+>  		nv_connector->aux.dev = connector->kdev;
+> +		nv_connector->aux.drm_dev = dev;
+>  		nv_connector->aux.transfer = nouveau_connector_aux_xfer;
+>  		snprintf(aux_name, sizeof(aux_name), "sor-%04x-%04x",
+>  			 dcbe->hasht, dcbe->hashm);
+> diff --git a/drivers/gpu/drm/radeon/atombios_dp.c b/drivers/gpu/drm/radeon/atombios_dp.c
+> index 15b00a347560..c50c504bad50 100644
+> --- a/drivers/gpu/drm/radeon/atombios_dp.c
+> +++ b/drivers/gpu/drm/radeon/atombios_dp.c
+> @@ -232,6 +232,7 @@ void radeon_dp_aux_init(struct radeon_connector *radeon_connector)
+>  
+>  	radeon_connector->ddc_bus->rec.hpd = radeon_connector->hpd.hpd;
+>  	radeon_connector->ddc_bus->aux.dev = radeon_connector->base.kdev;
+> +	radeon_connector->ddc_bus->aux.drm_dev = radeon_connector->base.dev;
+>  	if (ASIC_IS_DCE5(rdev)) {
+>  		if (radeon_auxch)
+>  			radeon_connector->ddc_bus->aux.transfer = radeon_dp_aux_transfer_native;
+> diff --git a/drivers/gpu/drm/tegra/dpaux.c b/drivers/gpu/drm/tegra/dpaux.c
+> index ea56c6ec25e4..7d7cc90b6fc9 100644
+> --- a/drivers/gpu/drm/tegra/dpaux.c
+> +++ b/drivers/gpu/drm/tegra/dpaux.c
+> @@ -719,6 +719,7 @@ int drm_dp_aux_attach(struct drm_dp_aux *aux, struct tegra_output *output)
+>  	unsigned long timeout;
+>  	int err;
+>  
+> +	aux->drm_dev = output->connector.dev;
+>  	err = drm_dp_aux_register(aux);
+>  	if (err < 0)
+>  		return err;
+> diff --git a/drivers/gpu/drm/xlnx/zynqmp_dp.c b/drivers/gpu/drm/xlnx/zynqmp_dp.c
+> index 99158ee67d02..8272eee03adc 100644
+> --- a/drivers/gpu/drm/xlnx/zynqmp_dp.c
+> +++ b/drivers/gpu/drm/xlnx/zynqmp_dp.c
+> @@ -1069,6 +1069,7 @@ static int zynqmp_dp_aux_init(struct zynqmp_dp *dp)
+>  
+>  	dp->aux.name = "ZynqMP DP AUX";
+>  	dp->aux.dev = dp->dev;
+> +	dp->aux.drm_dev = dp->drm;
+>  	dp->aux.transfer = zynqmp_dp_aux_transfer;
+>  
+>  	return drm_dp_aux_register(&dp->aux);
+> diff --git a/include/drm/drm_dp_helper.h b/include/drm/drm_dp_helper.h
+> index b35a1c1339e8..45ec74862212 100644
+> --- a/include/drm/drm_dp_helper.h
+> +++ b/include/drm/drm_dp_helper.h
+> @@ -1833,13 +1833,19 @@ struct drm_dp_aux_cec {
+>   * @name: user-visible name of this AUX channel and the I2C-over-AUX adapter
+>   * @ddc: I2C adapter that can be used for I2C-over-AUX communication
+>   * @dev: pointer to struct device that is the parent for this AUX channel
+> + * @drm_dev: pointer to the &drm_device that owns this AUX channel. Beware, this may be %NULL
+> + * before drm_dp_aux_register() has been called.
+>   * @crtc: backpointer to the crtc that is currently using this AUX channel
+>   * @hw_mutex: internal mutex used for locking transfers
+>   * @crc_work: worker that captures CRCs for each frame
+>   * @crc_count: counter of captured frame CRCs
+>   * @transfer: transfers a message representing a single AUX transaction
+>   *
+> - * The @dev field should be set to a pointer to the device that implements the AUX channel.
+> + * The @dev field should be set to a pointer to the device that implements the AUX channel. As well,
+> + * the @drm_dev field should be set to the &drm_device that will be using this AUX channel as early
+> + * as possible. For many graphics drivers this should happen before drm_dp_aux_init(), however it's
+> + * perfectly fine to set this field later so long as it's assigned before calling
+> + * drm_dp_aux_register().
+>   *
+>   * The @name field may be used to specify the name of the I2C adapter. If set to %NULL, dev_name()
+>   * of @dev will be used.
+> @@ -1866,6 +1872,7 @@ struct drm_dp_aux {
+>  	const char *name;
+>  	struct i2c_adapter ddc;
+>  	struct device *dev;
+> +	struct drm_device *drm_dev;
+>  	struct drm_crtc *crtc;
+>  	struct mutex hw_mutex;
+>  	struct work_struct crc_work;
 
-- before your patch this "val" was written to the CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(5)
-   register.
-   In your patch you are overwriting it with the below hardcoded number:
+-- 
+Regards,
 
-> +
-> +	val = 0xd5;
-
-- why?
-
-Thanks,
-Andrey
-
-> +	writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(5));
-> +
-> +	val = 1;
-> +	writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(6));
-> +
-> +	val = 0x02;
-> +	writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(7));
-> +
-> +	val = 0x00;
-> +	writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(0));
-> +
-> +	if (csiphy->camss->version == CAMSS_8x16 ||
-> +	    csiphy->camss->version == CAMSS_8x96)
-> +		csiphy_gen1_config_lanes(csiphy, cfg, settle_cnt);
-> +	else if (csiphy->camss->version == CAMSS_845)
-> +		csiphy_gen2_config_lanes(csiphy, settle_cnt);
->   
->   	val = 0xff;
->   	writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(11));
-> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
-> index 509c9a59c09c..e3fdc268050c 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csiphy.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
-> @@ -73,6 +73,30 @@ static const struct csiphy_format csiphy_formats_8x96[] = {
->   	{ MEDIA_BUS_FMT_Y10_1X10, 10 },
->   };
->   
-> +static const struct csiphy_format csiphy_formats_sdm845[] = {
-> +	{ MEDIA_BUS_FMT_UYVY8_2X8, 8 },
-> +	{ MEDIA_BUS_FMT_VYUY8_2X8, 8 },
-> +	{ MEDIA_BUS_FMT_YUYV8_2X8, 8 },
-> +	{ MEDIA_BUS_FMT_YVYU8_2X8, 8 },
-> +	{ MEDIA_BUS_FMT_SBGGR8_1X8, 8 },
-> +	{ MEDIA_BUS_FMT_SGBRG8_1X8, 8 },
-> +	{ MEDIA_BUS_FMT_SGRBG8_1X8, 8 },
-> +	{ MEDIA_BUS_FMT_SRGGB8_1X8, 8 },
-> +	{ MEDIA_BUS_FMT_SBGGR10_1X10, 10 },
-> +	{ MEDIA_BUS_FMT_SGBRG10_1X10, 10 },
-> +	{ MEDIA_BUS_FMT_SGRBG10_1X10, 10 },
-> +	{ MEDIA_BUS_FMT_SRGGB10_1X10, 10 },
-> +	{ MEDIA_BUS_FMT_SBGGR12_1X12, 12 },
-> +	{ MEDIA_BUS_FMT_SGBRG12_1X12, 12 },
-> +	{ MEDIA_BUS_FMT_SGRBG12_1X12, 12 },
-> +	{ MEDIA_BUS_FMT_SRGGB12_1X12, 12 },
-> +	{ MEDIA_BUS_FMT_SBGGR14_1X14, 14 },
-> +	{ MEDIA_BUS_FMT_SGBRG14_1X14, 14 },
-> +	{ MEDIA_BUS_FMT_SGRBG14_1X14, 14 },
-> +	{ MEDIA_BUS_FMT_SRGGB14_1X14, 14 },
-> +	{ MEDIA_BUS_FMT_Y10_1X10, 10 },
-> +};
-> +
->   /*
->    * csiphy_get_bpp - map media bus format to bits per pixel
->    * @formats: supported media bus formats array
-> @@ -257,16 +281,20 @@ static int csiphy_stream_on(struct csiphy_device *csiphy)
->   		return -EINVAL;
->   	}
->   
-> -	val = readl_relaxed(csiphy->base_clk_mux);
-> -	if (cfg->combo_mode && (lane_mask & 0x18) == 0x18) {
-> -		val &= ~0xf0;
-> -		val |= cfg->csid_id << 4;
-> -	} else {
-> -		val &= ~0xf;
-> -		val |= cfg->csid_id;
-> +	if (csiphy->base_clk_mux) {
-> +		val = readl_relaxed(csiphy->base_clk_mux);
-> +		if (cfg->combo_mode && (lane_mask & 0x18) == 0x18) {
-> +			val &= ~0xf0;
-> +			val |= cfg->csid_id << 4;
-> +		} else {
-> +			val &= ~0xf;
-> +			val |= cfg->csid_id;
-> +		}
-> +		writel_relaxed(val, csiphy->base_clk_mux);
-> +
-> +		/* Enforce reg write ordering between clk mux & lane enabling */
-> +		wmb();
->   	}
-> -	writel_relaxed(val, csiphy->base_clk_mux);
-> -	wmb();
->   
->   	csiphy->ops->lanes_enable(csiphy, cfg, pixel_clock, bpp, lane_mask);
->   
-> @@ -557,6 +585,10 @@ int msm_csiphy_subdev_init(struct camss *camss,
->   		csiphy->ops = &csiphy_ops_3ph_1_0;
->   		csiphy->formats = csiphy_formats_8x96;
->   		csiphy->nformats = ARRAY_SIZE(csiphy_formats_8x96);
-> +	} else if (camss->version == CAMSS_845) {
-> +		csiphy->ops = &csiphy_ops_3ph_1_0;
-> +		csiphy->formats = csiphy_formats_sdm845;
-> +		csiphy->nformats = ARRAY_SIZE(csiphy_formats_sdm845);
->   	} else {
->   		return -EINVAL;
->   	}
-> @@ -570,11 +602,17 @@ int msm_csiphy_subdev_init(struct camss *camss,
->   		return PTR_ERR(csiphy->base);
->   	}
->   
-> -	r = platform_get_resource_byname(pdev, IORESOURCE_MEM, res->reg[1]);
-> -	csiphy->base_clk_mux = devm_ioremap_resource(dev, r);
-> -	if (IS_ERR(csiphy->base_clk_mux)) {
-> -		dev_err(dev, "could not map memory\n");
-> -		return PTR_ERR(csiphy->base_clk_mux);
-> +	if (camss->version == CAMSS_8x16 ||
-> +	    camss->version == CAMSS_8x96) {
-> +		r = platform_get_resource_byname(pdev, IORESOURCE_MEM,
-> +			res->reg[1]);
-> +		csiphy->base_clk_mux = devm_ioremap_resource(dev, r);
-> +		if (IS_ERR(csiphy->base_clk_mux)) {
-> +			dev_err(dev, "could not map memory\n");
-> +			return PTR_ERR(csiphy->base_clk_mux);
-> +		}
-> +	} else {
-> +		csiphy->base_clk_mux = NULL;
->   	}
->   
->   	/* Interrupt */
-> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-> index 0b1693c34fbc..5d0479b5589c 100644
-> --- a/drivers/media/platform/qcom/camss/camss.c
-> +++ b/drivers/media/platform/qcom/camss/camss.c
-> @@ -465,6 +465,80 @@ static const struct resources vfe_res_660[] = {
->   	}
->   };
->   
-> +static const struct resources csiphy_res_845[] = {
-> +	/* CSIPHY0 */
-> +	{
-> +		.regulator = { NULL },
-> +		.clock = { "camnoc_axi", "soc_ahb", "slow_ahb_src",
-> +				"cpas_ahb", "cphy_rx_src", "csiphy0",
-> +				"csiphy0_timer_src", "csiphy0_timer" },
-> +		.clock_rate = { { 0 },
-> +				{ 0 },
-> +				{ 0 },
-> +				{ 0 },
-> +				{ 0 },
-> +				{ 0 },
-> +				{ 0 },
-> +				{ 19200000, 240000000, 269333333 } },
-> +		.reg = { "csiphy0" },
-> +		.interrupt = { "csiphy0" }
-> +	},
-> +
-> +	/* CSIPHY1 */
-> +	{
-> +		.regulator = { NULL },
-> +		.clock = { "camnoc_axi", "soc_ahb", "slow_ahb_src",
-> +				"cpas_ahb", "cphy_rx_src", "csiphy1",
-> +				"csiphy1_timer_src", "csiphy1_timer" },
-> +		.clock_rate = { { 0 },
-> +				{ 0 },
-> +				{ 0 },
-> +				{ 0 },
-> +				{ 0 },
-> +				{ 0 },
-> +				{ 0 },
-> +				{ 19200000, 240000000, 269333333 } },
-> +		.reg = { "csiphy1" },
-> +		.interrupt = { "csiphy1" }
-> +	},
-> +
-> +	/* CSIPHY2 */
-> +	{
-> +		.regulator = { NULL },
-> +		.clock = { "camnoc_axi", "soc_ahb", "slow_ahb_src",
-> +				"cpas_ahb", "cphy_rx_src", "csiphy2",
-> +				"csiphy2_timer_src", "csiphy2_timer" },
-> +		.clock_rate = { { 0 },
-> +				{ 0 },
-> +				{ 0 },
-> +				{ 0 },
-> +				{ 0 },
-> +				{ 0 },
-> +				{ 0 },
-> +				{ 19200000, 240000000, 269333333 } },
-> +		.reg = { "csiphy2" },
-> +		.interrupt = { "csiphy2" }
-> +	},
-> +
-> +	/* CSIPHY3 */
-> +	{
-> +		.regulator = { NULL },
-> +		.clock = { "camnoc_axi", "soc_ahb", "slow_ahb_src",
-> +				"cpas_ahb", "cphy_rx_src", "csiphy3",
-> +				"csiphy3_timer_src", "csiphy3_timer" },
-> +		.clock_rate = { { 0 },
-> +				{ 0 },
-> +				{ 0 },
-> +				{ 0 },
-> +				{ 0 },
-> +				{ 0 },
-> +				{ 0 },
-> +				{ 19200000, 240000000, 269333333 } },
-> +		.reg = { "csiphy3" },
-> +		.interrupt = { "csiphy3" }
-> +	}
-> +};
-> +
->   static const struct resources csid_res_845[] = {
->   	/* CSID0 */
->   	{
-> 
+Laurent Pinchart
