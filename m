@@ -2,269 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B0292320C92
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Feb 2021 19:25:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 88678320C9A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Feb 2021 19:33:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230107AbhBUSYr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 21 Feb 2021 13:24:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55996 "EHLO
+        id S230172AbhBUSdK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 21 Feb 2021 13:33:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229807AbhBUSYp (ORCPT
+        with ESMTP id S230162AbhBUSdJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 21 Feb 2021 13:24:45 -0500
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81F85C061574;
-        Sun, 21 Feb 2021 10:24:05 -0800 (PST)
-Received: from pendragon.ideasonboard.com (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id ECBD2BB2;
-        Sun, 21 Feb 2021 19:24:03 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1613931844;
-        bh=orousB+kOMLJsWZCvVHsBnccCXT5Cw7mZo7av0LIF8o=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=wB6H8dAsvUMP7HUZKu5ZvNAtM49Zsy6DTGALbPMQh/6+5lMdTGFsls0KeJEunQtTR
-         FfcpXAHVstN1ruLTTrBcJ+H+8KIZybo2eBjmomtz0W0uGx0Ta+t0mWvC/dCtlr6ofs
-         kAJ90Er6X6Qjeru1iqmShQf2cRm/lCsfN5Fikndw=
-Date:   Sun, 21 Feb 2021 20:23:37 +0200
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Lyude Paul <lyude@redhat.com>
-Cc:     intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org, nouveau@lists.freedesktop.org,
-        Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Hyun Kwon <hyun.kwon@xilinx.com>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Luben Tuikov <luben.tuikov@amd.com>,
-        Jeevan B <jeevan.b@intel.com>,
-        Emil Velikov <emil.velikov@collabora.com>,
-        Oleg Vasilev <oleg.vasilev@intel.com>,
-        Imre Deak <imre.deak@intel.com>,
-        Manasi Navare <manasi.d.navare@intel.com>,
-        =?utf-8?B?Sm9zw6k=?= Roberto de Souza <jose.souza@intel.com>,
-        Kuogee Hsieh <khsieh@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Tanmay Shah <tanmay@codeaurora.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>,
-        "moderated list:ARM/ZYNQ ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCH 20/30] drm/dp: Pass drm_dp_aux to
- drm_dp*_link_train_channel_eq_delay()
-Message-ID: <YDKlKXoDKI4P/aNb@pendragon.ideasonboard.com>
-References: <20210219215326.2227596-1-lyude@redhat.com>
- <20210219215326.2227596-21-lyude@redhat.com>
+        Sun, 21 Feb 2021 13:33:09 -0500
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16205C06178A
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Feb 2021 10:32:29 -0800 (PST)
+Received: by mail-lj1-x234.google.com with SMTP id u4so51773620ljh.6
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Feb 2021 10:32:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=KnNvc8EPgAx6SFv/2GAEQjKe2GV3xaTl29BVLyaHG1A=;
+        b=sPxaFy2teHxek9ZwAYyQLq4BAN2yriXneA6XqSIUakBHus4R2fWf2VAx+DpiKVqcOg
+         BYWjVm6Dq4AJwskJjhqMGg+jDYvGQl0nIe44dAg7ujBRMtGHXC5+V+mo7ba/1xKwpkZg
+         LN7wi6imAENmzxuy7pNMHTP551UtRy+ZP00YxUo1/TIasZJ1kT6im4w6zET+N7+Q7kVS
+         PqgeEb56Qa6rFBPrx6Ypai1JWoZIDUR5WhOROfG2IP0mXaSR9CM2l8+E7vdWzox9c/hV
+         4ht3Gb2snTnVKCbD34Yhzs779GijQcWDvOmgHhTZP48vJ+58EQDeatLNx1UNVyXZInk6
+         tNkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=KnNvc8EPgAx6SFv/2GAEQjKe2GV3xaTl29BVLyaHG1A=;
+        b=dow+zCeKYI3NvHfaUDkeuTTYwHSKUQICNVN34EmXLFB4mPdTnWUvx083v9287vDR42
+         kce0t6aMsKM2oSHLXe2Ue1gAuiOFyrXPOt5qTI0puqPelTfb2cOBQmH+chWUCwMmDjTb
+         NQKkBH0702+EpWbDXXkLW0tRdJ2yyVTiYiD5uCUF8oYNqcBBSqLKWM1eYXzy8FnvHNAj
+         wiYXRmZoeqx1Qg2QbN4TKj3jlEtqGu3iyrRqoBZ8NLkcL+B0h7T84eMmOlLidywmok6B
+         c4Vf4SH52SYsaFzgK3l2G4moh/5Ai1PtG1E9mq9MMLnvUFoDv4teFpYsLALosZlVQMtQ
+         AL7g==
+X-Gm-Message-State: AOAM533mcRXunJo/rRTlK+dzjS5N7YRbylU8wWAru4oWTSyY3YgYN0IW
+        j0GEVYruGUj/Olwce7A3fYVgPQ==
+X-Google-Smtp-Source: ABdhPJyO9wGxLPfW83lUqa6KMxZJgDCDIcYL2eNHDXQJVCxLHga07ApWXios5psvXhrtUroVBJr6Gw==
+X-Received: by 2002:a2e:9e17:: with SMTP id e23mr12317090ljk.501.1613932347509;
+        Sun, 21 Feb 2021 10:32:27 -0800 (PST)
+Received: from [192.168.118.216] ([85.249.43.69])
+        by smtp.gmail.com with ESMTPSA id t7sm1635563lfl.141.2021.02.21.10.32.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 21 Feb 2021 10:32:27 -0800 (PST)
+Subject: Re: [PATCH v5 13/22] media: camss: Enable SDM845
+To:     Robert Foss <robert.foss@linaro.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, todor.too@gmail.com,
+        mchehab@kernel.org, robh+dt@kernel.org,
+        angelogioacchino.delregno@somainline.org,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Sakari Ailus <sakari.ailus@iki.fi>,
+        Nicolas Boichat <drinkcat@chromium.org>
+Cc:     Rob Herring <robh@kernel.org>, Tomasz Figa <tfiga@chromium.org>,
+        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
+        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Jonathan Marek <jonathan@marek.ca>
+References: <20210217112122.424236-1-robert.foss@linaro.org>
+ <20210217112122.424236-14-robert.foss@linaro.org>
+From:   Andrey Konovalov <andrey.konovalov@linaro.org>
+Message-ID: <b13ef7b5-9830-3a25-c8fc-3fb71bf74381@linaro.org>
+Date:   Sun, 21 Feb 2021 21:32:25 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20210219215326.2227596-21-lyude@redhat.com>
+In-Reply-To: <20210217112122.424236-14-robert.foss@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Lyude,
+Hi Robert,
 
-Thank you for the patch.
+Thank you for your patch!
 
-On Fri, Feb 19, 2021 at 04:53:16PM -0500, Lyude Paul wrote:
-> So that we can start using drm_dbg_*() for
-> drm_dp_link_train_channel_eq_delay() and
-> drm_dp_lttpr_link_train_channel_eq_delay().
+Reviewed-by: Andrey Konovalov <andrey.konovalov@linaro.org>
+
+Thanks,
+Andrey
+
+On 17.02.2021 14:21, Robert Foss wrote:
+> Enable support for SDM845 based Titan 170 ISPs.
 > 
-> Signed-off-by: Lyude Paul <lyude@redhat.com>
-
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-
+> Signed-off-by: Robert Foss <robert.foss@linaro.org>
 > ---
->  drivers/gpu/drm/amd/amdgpu/atombios_dp.c           |  2 +-
->  drivers/gpu/drm/drm_dp_helper.c                    | 14 +++++++++-----
->  .../gpu/drm/i915/display/intel_dp_link_training.c  |  4 ++--
->  drivers/gpu/drm/msm/dp/dp_ctrl.c                   |  4 ++--
->  drivers/gpu/drm/msm/edp/edp_ctrl.c                 |  4 ++--
->  drivers/gpu/drm/radeon/atombios_dp.c               |  2 +-
->  drivers/gpu/drm/xlnx/zynqmp_dp.c                   |  2 +-
->  include/drm/drm_dp_helper.h                        |  6 ++++--
->  8 files changed, 22 insertions(+), 16 deletions(-)
+>   drivers/media/platform/qcom/camss/camss.c | 17 +++++++++++++++++
+>   drivers/media/platform/qcom/camss/camss.h |  6 ++++--
+>   2 files changed, 21 insertions(+), 2 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/amd/amdgpu/atombios_dp.c b/drivers/gpu/drm/amd/amdgpu/atombios_dp.c
-> index 4468f9d6b4dd..59ce6f620fdc 100644
-> --- a/drivers/gpu/drm/amd/amdgpu/atombios_dp.c
-> +++ b/drivers/gpu/drm/amd/amdgpu/atombios_dp.c
-> @@ -676,7 +676,7 @@ amdgpu_atombios_dp_link_train_ce(struct amdgpu_atombios_dp_link_train_info *dp_i
->  	dp_info->tries = 0;
->  	channel_eq = false;
->  	while (1) {
-> -		drm_dp_link_train_channel_eq_delay(dp_info->dpcd);
-> +		drm_dp_link_train_channel_eq_delay(dp_info->aux, dp_info->dpcd);
->  
->  		if (drm_dp_dpcd_read_link_status(dp_info->aux,
->  						 dp_info->link_status) <= 0) {
-> diff --git a/drivers/gpu/drm/drm_dp_helper.c b/drivers/gpu/drm/drm_dp_helper.c
-> index ce08eb3bface..a9316c1ecb52 100644
-> --- a/drivers/gpu/drm/drm_dp_helper.c
-> +++ b/drivers/gpu/drm/drm_dp_helper.c
-> @@ -151,7 +151,8 @@ void drm_dp_link_train_clock_recovery_delay(const struct drm_dp_aux *aux,
->  }
->  EXPORT_SYMBOL(drm_dp_link_train_clock_recovery_delay);
->  
-> -static void __drm_dp_link_train_channel_eq_delay(unsigned long rd_interval)
-> +static void __drm_dp_link_train_channel_eq_delay(const struct drm_dp_aux *aux,
-> +						 unsigned long rd_interval)
->  {
->  	if (rd_interval > 4)
->  		DRM_DEBUG_KMS("AUX interval %lu, out of range (max 4)\n",
-> @@ -165,9 +166,11 @@ static void __drm_dp_link_train_channel_eq_delay(unsigned long rd_interval)
->  	usleep_range(rd_interval, rd_interval * 2);
->  }
->  
-> -void drm_dp_link_train_channel_eq_delay(const u8 dpcd[DP_RECEIVER_CAP_SIZE])
-> +void drm_dp_link_train_channel_eq_delay(const struct drm_dp_aux *aux,
-> +					const u8 dpcd[DP_RECEIVER_CAP_SIZE])
->  {
-> -	__drm_dp_link_train_channel_eq_delay(dpcd[DP_TRAINING_AUX_RD_INTERVAL] &
-> +	__drm_dp_link_train_channel_eq_delay(aux,
-> +					     dpcd[DP_TRAINING_AUX_RD_INTERVAL] &
->  					     DP_TRAINING_AUX_RD_MASK);
->  }
->  EXPORT_SYMBOL(drm_dp_link_train_channel_eq_delay);
-> @@ -183,13 +186,14 @@ static u8 dp_lttpr_phy_cap(const u8 phy_cap[DP_LTTPR_PHY_CAP_SIZE], int r)
->  	return phy_cap[r - DP_TRAINING_AUX_RD_INTERVAL_PHY_REPEATER1];
->  }
->  
-> -void drm_dp_lttpr_link_train_channel_eq_delay(const u8 phy_cap[DP_LTTPR_PHY_CAP_SIZE])
-> +void drm_dp_lttpr_link_train_channel_eq_delay(const struct drm_dp_aux *aux,
-> +					      const u8 phy_cap[DP_LTTPR_PHY_CAP_SIZE])
->  {
->  	u8 interval = dp_lttpr_phy_cap(phy_cap,
->  				       DP_TRAINING_AUX_RD_INTERVAL_PHY_REPEATER1) &
->  		      DP_TRAINING_AUX_RD_MASK;
->  
-> -	__drm_dp_link_train_channel_eq_delay(interval);
-> +	__drm_dp_link_train_channel_eq_delay(aux, interval);
->  }
->  EXPORT_SYMBOL(drm_dp_lttpr_link_train_channel_eq_delay);
->  
-> diff --git a/drivers/gpu/drm/i915/display/intel_dp_link_training.c b/drivers/gpu/drm/i915/display/intel_dp_link_training.c
-> index 222073d46bdb..fe8b5a5d9d1a 100644
-> --- a/drivers/gpu/drm/i915/display/intel_dp_link_training.c
-> +++ b/drivers/gpu/drm/i915/display/intel_dp_link_training.c
-> @@ -593,11 +593,11 @@ intel_dp_link_training_channel_equalization_delay(struct intel_dp *intel_dp,
->  						  enum drm_dp_phy dp_phy)
->  {
->  	if (dp_phy == DP_PHY_DPRX) {
-> -		drm_dp_link_train_channel_eq_delay(intel_dp->dpcd);
-> +		drm_dp_link_train_channel_eq_delay(&intel_dp->aux, intel_dp->dpcd);
->  	} else {
->  		const u8 *phy_caps = intel_dp_lttpr_phy_caps(intel_dp, dp_phy);
->  
-> -		drm_dp_lttpr_link_train_channel_eq_delay(phy_caps);
-> +		drm_dp_lttpr_link_train_channel_eq_delay(&intel_dp->aux, phy_caps);
->  	}
->  }
->  
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> index 2501a6b326a3..33df288dd4eb 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> @@ -1184,7 +1184,7 @@ static int dp_ctrl_link_lane_down_shift(struct dp_ctrl_private *ctrl)
->  static void dp_ctrl_clear_training_pattern(struct dp_ctrl_private *ctrl)
->  {
->  	dp_ctrl_train_pattern_set(ctrl, DP_TRAINING_PATTERN_DISABLE);
-> -	drm_dp_link_train_channel_eq_delay(ctrl->panel->dpcd);
-> +	drm_dp_link_train_channel_eq_delay(ctrl->aux, ctrl->panel->dpcd);
->  }
->  
->  static int dp_ctrl_link_train_2(struct dp_ctrl_private *ctrl,
-> @@ -1215,7 +1215,7 @@ static int dp_ctrl_link_train_2(struct dp_ctrl_private *ctrl,
->  	dp_ctrl_train_pattern_set(ctrl, pattern | DP_RECOVERED_CLOCK_OUT_EN);
->  
->  	for (tries = 0; tries <= maximum_retries; tries++) {
-> -		drm_dp_link_train_channel_eq_delay(ctrl->panel->dpcd);
-> +		drm_dp_link_train_channel_eq_delay(ctrl->aux, ctrl->panel->dpcd);
->  
->  		ret = dp_ctrl_read_link_status(ctrl, link_status);
->  		if (ret)
-> diff --git a/drivers/gpu/drm/msm/edp/edp_ctrl.c b/drivers/gpu/drm/msm/edp/edp_ctrl.c
-> index 6501598448b4..4fb397ee7c84 100644
-> --- a/drivers/gpu/drm/msm/edp/edp_ctrl.c
-> +++ b/drivers/gpu/drm/msm/edp/edp_ctrl.c
-> @@ -665,7 +665,7 @@ static int edp_start_link_train_2(struct edp_ctrl *ctrl)
->  		return ret;
->  
->  	while (1) {
-> -		drm_dp_link_train_channel_eq_delay(ctrl->dpcd);
-> +		drm_dp_link_train_channel_eq_delay(ctrl->drm_aux, ctrl->dpcd);
->  
->  		rlen = drm_dp_dpcd_read_link_status(ctrl->drm_aux, link_status);
->  		if (rlen < DP_LINK_STATUS_SIZE) {
-> @@ -743,7 +743,7 @@ static int edp_clear_training_pattern(struct edp_ctrl *ctrl)
->  
->  	ret = edp_train_pattern_set_write(ctrl, 0);
->  
-> -	drm_dp_link_train_channel_eq_delay(ctrl->dpcd);
-> +	drm_dp_link_train_channel_eq_delay(ctrl->drm_aux, ctrl->dpcd);
->  
->  	return ret;
->  }
-> diff --git a/drivers/gpu/drm/radeon/atombios_dp.c b/drivers/gpu/drm/radeon/atombios_dp.c
-> index 299b9d8da376..4c1e551d9714 100644
-> --- a/drivers/gpu/drm/radeon/atombios_dp.c
-> +++ b/drivers/gpu/drm/radeon/atombios_dp.c
-> @@ -743,7 +743,7 @@ static int radeon_dp_link_train_ce(struct radeon_dp_link_train_info *dp_info)
->  	dp_info->tries = 0;
->  	channel_eq = false;
->  	while (1) {
-> -		drm_dp_link_train_channel_eq_delay(dp_info->dpcd);
-> +		drm_dp_link_train_channel_eq_delay(dp_info->aux, dp_info->dpcd);
->  
->  		if (drm_dp_dpcd_read_link_status(dp_info->aux,
->  						 dp_info->link_status) <= 0) {
-> diff --git a/drivers/gpu/drm/xlnx/zynqmp_dp.c b/drivers/gpu/drm/xlnx/zynqmp_dp.c
-> index 5cc295d8ba9f..f6f2293db18d 100644
-> --- a/drivers/gpu/drm/xlnx/zynqmp_dp.c
-> +++ b/drivers/gpu/drm/xlnx/zynqmp_dp.c
-> @@ -778,7 +778,7 @@ static int zynqmp_dp_link_train_ce(struct zynqmp_dp *dp)
->  		if (ret)
->  			return ret;
->  
-> -		drm_dp_link_train_channel_eq_delay(dp->dpcd);
-> +		drm_dp_link_train_channel_eq_delay(&dp->aux, dp->dpcd);
->  		ret = drm_dp_dpcd_read_link_status(&dp->aux, link_status);
->  		if (ret < 0)
->  			return ret;
-> diff --git a/include/drm/drm_dp_helper.h b/include/drm/drm_dp_helper.h
-> index e4681665231e..2151aeb6c279 100644
-> --- a/include/drm/drm_dp_helper.h
-> +++ b/include/drm/drm_dp_helper.h
-> @@ -1479,8 +1479,10 @@ u8 drm_dp_get_adjust_request_post_cursor(const u8 link_status[DP_LINK_STATUS_SIZ
->  void drm_dp_link_train_clock_recovery_delay(const struct drm_dp_aux *aux,
->  					    const u8 dpcd[DP_RECEIVER_CAP_SIZE]);
->  void drm_dp_lttpr_link_train_clock_recovery_delay(void);
-> -void drm_dp_link_train_channel_eq_delay(const u8 dpcd[DP_RECEIVER_CAP_SIZE]);
-> -void drm_dp_lttpr_link_train_channel_eq_delay(const u8 caps[DP_LTTPR_PHY_CAP_SIZE]);
-> +void drm_dp_link_train_channel_eq_delay(const struct drm_dp_aux *aux,
-> +					const u8 dpcd[DP_RECEIVER_CAP_SIZE]);
-> +void drm_dp_lttpr_link_train_channel_eq_delay(const struct drm_dp_aux *aux,
-> +					      const u8 caps[DP_LTTPR_PHY_CAP_SIZE]);
->  
->  u8 drm_dp_link_rate_to_bw_code(int link_rate);
->  int drm_dp_bw_code_to_link_rate(u8 link_bw);
-
--- 
-Regards,
-
-Laurent Pinchart
+> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+> index 3c45537b2cfb..3bd3153b7905 100644
+> --- a/drivers/media/platform/qcom/camss/camss.c
+> +++ b/drivers/media/platform/qcom/camss/camss.c
+> @@ -894,6 +894,12 @@ static int camss_init_subdevices(struct camss *camss)
+>   		csid_res = csid_res_660;
+>   		ispif_res = &ispif_res_660;
+>   		vfe_res = vfe_res_660;
+> +	}  else if (camss->version == CAMSS_845) {
+> +		csiphy_res = csiphy_res_845;
+> +		csid_res = csid_res_845;
+> +		/* Titan VFEs don't have an ISPIF  */
+> +		ispif_res = NULL;
+> +		vfe_res = vfe_res_845;
+>   	} else {
+>   		return -EINVAL;
+>   	}
+> @@ -1196,6 +1202,8 @@ static int camss_configure_pd(struct camss *camss)
+>   	if (camss->version == CAMSS_8x96 ||
+>   	    camss->version == CAMSS_660)
+>   		nbr_pm_domains = PM_DOMAIN_CAMSS_COUNT;
+> +	else if (camss->version == CAMSS_845)
+> +		nbr_pm_domains = PM_DOMAIN_TITAN_COUNT;
+>   
+>   	for (i = 0; i < nbr_pm_domains; i++) {
+>   		camss->genpd[i] = dev_pm_domain_attach_by_id(camss->dev, i);
+> @@ -1264,6 +1272,12 @@ static int camss_probe(struct platform_device *pdev)
+>   		camss->csiphy_num = 3;
+>   		camss->csid_num = 4;
+>   		camss->vfe_num = 2;
+> +	} else if (of_device_is_compatible(dev->of_node,
+> +					   "qcom,sdm845-camss")) {
+> +		camss->version = CAMSS_845;
+> +		camss->csiphy_num = 4;
+> +		camss->csid_num = 3;
+> +		camss->vfe_num = 3;
+>   	} else {
+>   		ret = -EINVAL;
+>   		goto err_free;
+> @@ -1395,6 +1409,8 @@ void camss_delete(struct camss *camss)
+>   	if (camss->version == CAMSS_8x96 ||
+>   	    camss->version == CAMSS_660)
+>   		nbr_pm_domains = PM_DOMAIN_CAMSS_COUNT;
+> +	else if (camss->version == CAMSS_845)
+> +		nbr_pm_domains = PM_DOMAIN_TITAN_COUNT;
+>   
+>   	for (i = 0; i < nbr_pm_domains; i++) {
+>   		device_link_del(camss->genpd_link[i]);
+> @@ -1428,6 +1444,7 @@ static const struct of_device_id camss_dt_match[] = {
+>   	{ .compatible = "qcom,msm8916-camss" },
+>   	{ .compatible = "qcom,msm8996-camss" },
+>   	{ .compatible = "qcom,sdm660-camss" },
+> +	{ .compatible = "qcom,sdm845-camss" },
+>   	{ }
+>   };
+>   
+> diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
+> index 7560d85b3352..2f853557ed16 100644
+> --- a/drivers/media/platform/qcom/camss/camss.h
+> +++ b/drivers/media/platform/qcom/camss/camss.h
+> @@ -60,6 +60,8 @@ enum pm_domain {
+>   	PM_DOMAIN_VFE0 = 0,
+>   	PM_DOMAIN_VFE1 = 1,
+>   	PM_DOMAIN_CAMSS_COUNT = 2,	/* CAMSS series of ISPs */
+> +	PM_DOMAIN_VFELITE = 2,		/* VFELITE / TOP GDSC */
+> +	PM_DOMAIN_TITAN_COUNT = 3,	/* Titan series of ISPs */
+>   };
+>   
+>   enum camss_version {
+> @@ -83,8 +85,8 @@ struct camss {
+>   	int vfe_num;
+>   	struct vfe_device *vfe;
+>   	atomic_t ref_count;
+> -	struct device *genpd[PM_DOMAIN_CAMSS_COUNT];
+> -	struct device_link *genpd_link[PM_DOMAIN_CAMSS_COUNT];
+> +	struct device *genpd[PM_DOMAIN_TITAN_COUNT];
+> +	struct device_link *genpd_link[PM_DOMAIN_TITAN_COUNT];
+>   };
+>   
+>   struct camss_camera_interface {
+> 
