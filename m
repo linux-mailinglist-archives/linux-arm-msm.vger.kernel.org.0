@@ -2,190 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7434B321BC9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Feb 2021 16:48:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 23473321C0B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Feb 2021 17:03:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230036AbhBVPqr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Feb 2021 10:46:47 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:36386 "EHLO z11.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230072AbhBVPqo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Feb 2021 10:46:44 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1614008781; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=asa9kp6uP1fJ1Sa9rpHMwvSsBmLN0SjGdb4bzNCCcf0=; b=YmZ3M7OJkq1HWfNx3u0ToamhP84XulHkQd3EduNmDpE+IQ0J9p7BSeztSJhNzjMpWtmMbw2k
- KO1PvtyGXWiEf+4+Rd5BCQqJYmq+A4DuFIvyw1VYQPsVJI7jkkMRgsikDQF7BDuQJww4INK7
- KFYg2s8D8jGJZcHhIRSfhIa2UHE=
-X-Mailgun-Sending-Ip: 104.130.96.11
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 6033d1ad4511108a81db4d6b (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 22 Feb 2021 15:45:49
- GMT
-Sender: akhilpo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id AA689C433C6; Mon, 22 Feb 2021 15:45:48 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.1.105] (unknown [117.217.233.114])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akhilpo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 77F5DC433CA;
-        Mon, 22 Feb 2021 15:45:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 77F5DC433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
-Subject: Re: [PATCH] drm/msm/a6xx: fix for kernels without CONFIG_NVMEM
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Jonathan Marek <jonathan@marek.ca>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Eric Anholt <eric@anholt.net>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20210216200909.19039-1-jonathan@marek.ca>
- <CAF6AEGv53nnzqMgTfSA6t2YpHx1dDW8UqnH9Gw0w3p8bf0mTLw@mail.gmail.com>
- <775436ba-c94a-ab22-d65b-b2391047ec65@codeaurora.org>
- <20210217190820.GA2229@jcrouse1-lnx.qualcomm.com>
- <CAF6AEGsHws23ozeJ8G23LFQ8J=CVVrx5xvkSgBuE_uSwT4YurQ@mail.gmail.com>
- <74d1277e-295f-0996-91c3-05cfce8d3a0e@marek.ca>
- <e4b62857-bd4d-cca6-0d6b-b9cc960b52a2@codeaurora.org>
- <CAF6AEGsWCrkOgMVxnx53k8b_o7xy3KWv9VaNRoY44+4GfXtWdg@mail.gmail.com>
- <757b557a-b5f6-6018-caa4-34bffb1b60b7@codeaurora.org>
- <CAF6AEGv-A5=4z7ZO-SytmivZTfKPYxhAjmRLVsQnrT7_pYCDtQ@mail.gmail.com>
-From:   Akhil P Oommen <akhilpo@codeaurora.org>
-Message-ID: <0f057c99-ec94-f3e3-796f-b73a609f735d@codeaurora.org>
-Date:   Mon, 22 Feb 2021 21:15:39 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.1
+        id S230071AbhBVQCX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Feb 2021 11:02:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50504 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230207AbhBVQCS (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 22 Feb 2021 11:02:18 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2069C061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 08:01:37 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id r3so7987261wro.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 08:01:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=9tiKYSNVVxvrJJec/EA3lPH66CJHgRPb1f0eRGNilkQ=;
+        b=wt/Z6QMd2HHnKxPYMSZ7bXm3dKEnIixS61HVHe4/kPYDk+UoKWJ47qgpQOsTVoJ0SY
+         IfzK6ky4z0K5iDi+f6x9VacVTiL2u2BdzpN3HTzCAcM/Tb/Z2mUljTy9yAWiu3/2Usc1
+         bCG2h+U/HUFqtI+c5OT3cV2zCSATEIRagnQHcj/bnnzNYX76ka5WiQFmjCHzCBOGFylo
+         cwCS/BCJ+6cD78Et+DwqLum3AfZsRe3x1MDRgG8GDoVnz/CSR6+FqyNtoMG97a8vfMOW
+         D25w0CxyKN1STNYB806nuWI7dsHWtJPT+qKemOwxTWhWjRUuOGUWxgeneZKqtzOG5Ebw
+         sW2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=9tiKYSNVVxvrJJec/EA3lPH66CJHgRPb1f0eRGNilkQ=;
+        b=oF3bERPuIHJI0QsKYmPitv0vygrlZUECp+rx4DoAifwEirKdfQG7N+96uKxBXEEYG2
+         pgQfhWTizvDM8Epl5Txanna92Q2uU7pU9e/gj/5JkGmuu8U43YhW0p9/jR3AhGRdmM0D
+         U/ZLyA8cx52FxSiZO/x3vCt/j3gduCujn13CsuR0bYgGIG+fCfpJIMTbXsCuXlqJ3SE0
+         nHUkyJnay75seJic/00UtDsVuKBkschqMU4/sebT01QycvClfX0SBjXspRCz7aUIUSS5
+         JffvJxMacrN3UMfCRhOgCVmTpseLZUA+2vjipxyQGQ7wRteQ5P4nYur6N/mEn3GVhz4Z
+         ioXg==
+X-Gm-Message-State: AOAM532unN39bs3NwHeK7umNaHPwRrgIDimVlcTKhmoMqSzqgJ/zfPtS
+        1fU6hsFR692KHonpXPqcdIDasw==
+X-Google-Smtp-Source: ABdhPJxVf5oDvjHbwsXFeYp+QxlKOisDByOEJ26N/KkqCIiXSF4F4y+UL02CSTBQiFW8hdA0lFYi1g==
+X-Received: by 2002:a5d:6b42:: with SMTP id x2mr21834165wrw.117.1614009696665;
+        Mon, 22 Feb 2021 08:01:36 -0800 (PST)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id c3sm7373697wrw.80.2021.02.22.08.01.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Feb 2021 08:01:36 -0800 (PST)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     stanimir.varbanov@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, mchehab@kernel.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     bryan.odonoghue@linaro.org, dikshita@codeaurora.org,
+        jonathan@marek.ca, vgarodia@codeaurora.org
+Subject: [PATCH 00/25] media: venus: Enable 6xx support
+Date:   Mon, 22 Feb 2021 16:02:35 +0000
+Message-Id: <20210222160300.1811121-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-In-Reply-To: <CAF6AEGv-A5=4z7ZO-SytmivZTfKPYxhAjmRLVsQnrT7_pYCDtQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/19/2021 9:30 PM, Rob Clark wrote:
-> On Fri, Feb 19, 2021 at 2:44 AM Akhil P Oommen <akhilpo@codeaurora.org> wrote:
->>
->> On 2/18/2021 9:41 PM, Rob Clark wrote:
->>> On Thu, Feb 18, 2021 at 4:28 AM Akhil P Oommen <akhilpo@codeaurora.org> wrote:
->>>>
->>>> On 2/18/2021 2:05 AM, Jonathan Marek wrote:
->>>>> On 2/17/21 3:18 PM, Rob Clark wrote:
->>>>>> On Wed, Feb 17, 2021 at 11:08 AM Jordan Crouse
->>>>>> <jcrouse@codeaurora.org> wrote:
->>>>>>>
->>>>>>> On Wed, Feb 17, 2021 at 07:14:16PM +0530, Akhil P Oommen wrote:
->>>>>>>> On 2/17/2021 8:36 AM, Rob Clark wrote:
->>>>>>>>> On Tue, Feb 16, 2021 at 12:10 PM Jonathan Marek <jonathan@marek.ca>
->>>>>>>>> wrote:
->>>>>>>>>>
->>>>>>>>>> Ignore nvmem_cell_get() EOPNOTSUPP error in the same way as a
->>>>>>>>>> ENOENT error,
->>>>>>>>>> to fix the case where the kernel was compiled without CONFIG_NVMEM.
->>>>>>>>>>
->>>>>>>>>> Fixes: fe7952c629da ("drm/msm: Add speed-bin support to a618 gpu")
->>>>>>>>>> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
->>>>>>>>>> ---
->>>>>>>>>>     drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 6 +++---
->>>>>>>>>>     1 file changed, 3 insertions(+), 3 deletions(-)
->>>>>>>>>>
->>>>>>>>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>>>>>>>>> b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>>>>>>>>> index ba8e9d3cf0fe..7fe5d97606aa 100644
->>>>>>>>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>>>>>>>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>>>>>>>>> @@ -1356,10 +1356,10 @@ static int a6xx_set_supported_hw(struct
->>>>>>>>>> device *dev, struct a6xx_gpu *a6xx_gpu,
->>>>>>>>>>
->>>>>>>>>>            cell = nvmem_cell_get(dev, "speed_bin");
->>>>>>>>>>            /*
->>>>>>>>>> -        * -ENOENT means that the platform doesn't support
->>>>>>>>>> speedbin which is
->>>>>>>>>> -        * fine
->>>>>>>>>> +        * -ENOENT means no speed bin in device tree,
->>>>>>>>>> +        * -EOPNOTSUPP means kernel was built without CONFIG_NVMEM
->>>>>>>>>
->>>>>>>>> very minor nit, it would be nice to at least preserve the gist of the
->>>>>>>>> "which is fine" (ie. some variation of "this is an optional thing and
->>>>>>>>> things won't catch fire without it" ;-))
->>>>>>>>>
->>>>>>>>> (which is, I believe, is true, hopefully Akhil could confirm.. if not
->>>>>>>>> we should have a harder dependency on CONFIG_NVMEM..)
->>>>>>>> IIRC, if the gpu opp table in the DT uses the 'opp-supported-hw'
->>>>>>>> property,
->>>>>>>> we will see some error during boot up if we don't call
->>>>>>>> dev_pm_opp_set_supported_hw(). So calling "nvmem_cell_get(dev,
->>>>>>>> "speed_bin")"
->>>>>>>> is a way to test this.
->>>>>>>>
->>>>>>>> If there is no other harm, we can put a hard dependency on
->>>>>>>> CONFIG_NVMEM.
->>>>>>>
->>>>>>> I'm not sure if we want to go this far given the squishiness about
->>>>>>> module
->>>>>>> dependencies. As far as I know we are the only driver that uses this
->>>>>>> seriously
->>>>>>> on QCOM SoCs and this is only needed for certain targets. I don't
->>>>>>> know if we
->>>>>>> want to force every target to build NVMEM and QFPROM on our behalf.
->>>>>>> But maybe
->>>>>>> I'm just saying that because Kconfig dependencies tend to break my
->>>>>>> brain (and
->>>>>>> then Arnd has to send a patch to fix it).
->>>>>>>
->>>>>>
->>>>>> Hmm, good point.. looks like CONFIG_NVMEM itself doesn't have any
->>>>>> other dependencies, so I suppose it wouldn't be the end of the world
->>>>>> to select that.. but I guess we don't want to require QFPROM
->>>>>>
->>>>>> I guess at the end of the day, what is the failure mode if you have a
->>>>>> speed-bin device, but your kernel config misses QFPROM (and possibly
->>>>>> NVMEM)?  If the result is just not having the highest clk rate(s)
->>>>
->>>> Atleast on sc7180's gpu, using an unsupported FMAX breaks gmu. It won't
->>>> be very obvious what went wrong when this happens!
->>>
->>> Ugg, ok..
->>>
->>> I suppose we could select NVMEM, but not QFPROM, and then the case
->>> where QFPROM is not enabled on platforms that have the speed-bin field
->>> in DT will fail gracefully and all other platforms would continue on
->>> happily?
->>>
->>> BR,
->>> -R
->>
->> Sounds good to me.
->>
-> 
-> You probably should do a quick test with NVMEM enabled but QFPROM
-> disabled to confirm my theory, but I *think* that should work
-> 
-> BR,
-> -R
-> 
+This series enables support for 6xx venus encode/decode as found on the
+sm8250.
 
-I tried it on an sc7180 device. The suggested combo (CONFIG_NVMEM + no 
-CONFIG_QCOM_QFPROM) makes the gpu probe fail with error "failed to read 
-speed-bin. Some OPPs may not be supported by hardware". This is good 
-enough clue for the developer that he should fix the broken speedbin 
-detection.
+The new silicon has different base addresses for existing functional blocks
+within the venus address space. We add a base address offset mechanism to
+handle this. The offsetting mechanism has been validated on 6xx and 4xx
+hardware.
 
--Akhil.
+The sm8250 supports:
+
+- h264
+- h265
+- vp8
+- vp9
+
+The driver changes are contingent on yaml and dts patches already
+in-flight.
+
+yaml: pending
+https://www.spinics.net/lists/devicetree/msg406892.html
+
+dts: pending
+https://lore.kernel.org/linux-arm-msm/20210222132817.1807788-1-bryan.odonoghue@linaro.org/T/#t
+
+clk: applied
+https://kernel.googlesource.com/pub/scm/linux/kernel/git/clk/linux/+/clk-next
+
+Applies on top of 
+
+https://git.linuxtv.org/svarbanov/media_tree.git / venus-for-next-v5.12-part2
+
+Bryan O'Donoghue (11):
+  media: venus: Update v6 buffer descriptors
+  media: venus: core: add sm8250 DT compatible and resource data
+  media: venus: core: Add io base variables for each block
+  media: venus: hfi,pm,firmware: Convert to block relative addressing
+  media: venus: core: Add differentiator IS_V6(core)
+  media: venus: core: Add an io base for TZ wrapper regs
+  media: venus: core: Add an io base for AON regs
+  media: venus: core: Hook to V6 base registers when appropriate
+  media: venus: hfi: Read WRAPPER_TZ_CPU_STATUS_V6 on 6xx
+  media: venus: hfi, vdec: v6 Add IS_V6() to existing IS_V4() if
+    locations
+  media: venus: pm: Hook 6xx pm ops into 4xx pm ops
+
+Dikshita Agarwal (12):
+  media: venus: core,pm: Vote for min clk freq during venus boot
+  media: venus: hfi: Define block offsets for V6 hardware
+  media: venus: hfi: Define additional 6xx registers
+  media: venus: hfi: Add a 6xx boot logic
+  media: venus: hfi: Add 6xx interrupt support
+  media: venus: hfi: Add 6xx AXI halt logic
+  media: venus: pm: Toggle 6xx wrapper power in vcodec_control
+  media: venus: firmware: Do not toggle WRAPPER_A9SS_SW_RESET on 6xx
+  media: venus: helpers: Add internal buffer list for v6
+  media: venus: helpers, hfi, vdec: Set actual plane constraints to FW
+  media: venus: hfi: Increase plat_buf_v6 o/p buffer count.
+  media: venus: helper: Decide work mode
+
+Stanimir Varbanov (2):
+  media: venus: core,pm: Add handling for resets
+  media: venus: vdec: Fix decoder cmd STOP issue
+
+ drivers/media/platform/qcom/venus/core.c      |  78 ++++++++
+ drivers/media/platform/qcom/venus/core.h      |  19 ++
+ drivers/media/platform/qcom/venus/firmware.c  |  34 ++--
+ drivers/media/platform/qcom/venus/helpers.c   |  80 +++++++-
+ drivers/media/platform/qcom/venus/helpers.h   |   3 +-
+ drivers/media/platform/qcom/venus/hfi_cmds.c  |  15 +-
+ .../media/platform/qcom/venus/hfi_helper.h    |   9 +-
+ .../platform/qcom/venus/hfi_plat_bufs_v6.c    |   2 +-
+ .../platform/qcom/venus/hfi_platform_v6.c     | 138 +++++++-------
+ drivers/media/platform/qcom/venus/hfi_venus.c | 177 +++++++++++++-----
+ .../media/platform/qcom/venus/hfi_venus_io.h  | 118 ++++++++----
+ .../media/platform/qcom/venus/pm_helpers.c    |  92 ++++++++-
+ drivers/media/platform/qcom/venus/vdec.c      |  14 +-
+ drivers/media/platform/qcom/venus/venc.c      |   2 +-
+ 14 files changed, 584 insertions(+), 197 deletions(-)
+
+-- 
+2.29.2
+
