@@ -2,121 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1EB4B3220C2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Feb 2021 21:22:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BA4953220BE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Feb 2021 21:21:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232500AbhBVUVs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Feb 2021 15:21:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50418 "EHLO
+        id S230184AbhBVUUr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Feb 2021 15:20:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232040AbhBVUVs (ORCPT
+        with ESMTP id S231716AbhBVUUq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Feb 2021 15:21:48 -0500
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E30C8C061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 12:21:07 -0800 (PST)
-Received: by mail-qk1-x734.google.com with SMTP id x124so2875634qkc.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 12:21:07 -0800 (PST)
+        Mon, 22 Feb 2021 15:20:46 -0500
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7F1DC061786
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 12:20:06 -0800 (PST)
+Received: by mail-pf1-x42d.google.com with SMTP id z6so7324573pfq.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 12:20:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=na2/RnRgnH/8w2EWhU1MCTH0hcdu6Lj44empnumnDy4=;
-        b=Y5bCllchHHbP8XBCtGC46iSxTXUj3JkmfFo1TORkiyAIROLZ7UB51MkUUfXoyqLfc5
-         dQ4ChFamfDNB9SUiwQi4k3N/CEIPf5ryloDp6GwHQ2kwl/iy7hdcZeEZNHCQ5fibbKKf
-         Iy58IGl2dVvuYfrd1ISKuhPSzulYZDYDJtCIE=
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=0FFaqD7lFmkmLvbd+lboGqMsUtUT1GYSLYTzpM80sYA=;
+        b=NCXyTI6lmqK/udlKoKih+/PYp0H7ycjuoK9TM9yUIGAMJFXuSOmgzKBVljSbBHeJRb
+         TAimZgL4GeLVvLsvYDVoI7UiabnKX/Vn5fcNR5k2rfICZRLVl+UCcXLSNOLwL5e3vhGo
+         4ar21RtaFSAzJB7+jnOuUXomEcr9gCYVMX/Bg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=na2/RnRgnH/8w2EWhU1MCTH0hcdu6Lj44empnumnDy4=;
-        b=narDdNBYij6IfxV4buJ7hbVJNJl7FYfpY99NpLGtvdimJ7f0omVBTcUIuZWFlahfL1
-         mkKXpowqg+r7QeXZdUW33Dd6B0NzETwMK+ts6bxZQdeE4p5cdnLoFRCUyVZWdFE6godY
-         II9JdaXTTCrknBOK2kurv8iVN4qEk43xAHlQMhFe4jqKyoY5iCikqGtd3Jq3LUixZf2D
-         b3zjYly6vqFHDzoZILdMsdSgg/FrOUBYk6muX7RCajnAz5EhRG8CTJyKxsEfbW2sB86J
-         Xq7fUU4Dj/Gi3c77inYzHW5iroKej6xFZpo/k3VI2faXxR7cUuYIkMyKnnmOuNTiPOJ/
-         lfbQ==
-X-Gm-Message-State: AOAM530t2B7etXbg37MdPLO2/Pmx1vO3DExUn3TlI2vPPk+B30j408t2
-        AmJiaKjhnm3SrIAO4i60rBp4Uno04KecNA==
-X-Google-Smtp-Source: ABdhPJyfpJhu9AnKo/PPTuN6JXziG0OGFMaHhbdO09vPpqJ3g70oCr4/5aEiM8HBA+c3sD3C0MU6sw==
-X-Received: by 2002:a05:620a:152f:: with SMTP id n15mr23280542qkk.268.1614025266906;
-        Mon, 22 Feb 2021 12:21:06 -0800 (PST)
-Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com. [209.85.219.177])
-        by smtp.gmail.com with ESMTPSA id n67sm13103117qkb.35.2021.02.22.12.21.06
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Feb 2021 12:21:06 -0800 (PST)
-Received: by mail-yb1-f177.google.com with SMTP id x19so14231370ybe.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 12:21:06 -0800 (PST)
-X-Received: by 2002:a25:aa43:: with SMTP id s61mr37800696ybi.32.1614024875145;
- Mon, 22 Feb 2021 12:14:35 -0800 (PST)
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=0FFaqD7lFmkmLvbd+lboGqMsUtUT1GYSLYTzpM80sYA=;
+        b=pIoNDdv/nBJG+4B8wz8tz4nfba/KdyhtPtSYdaxgO9ZbH2F0O4bgqwrbEbxFDapLa2
+         NwAubpvwgKSoaAQ51fF91ir7OcuFqJOUI1gdlvvE+VPjmFeCvYtd7U8tSbTmjewPIpOD
+         6JVqCZi6QgNDke8Y2HdUGJ95LRGJbFyxmeINRx+Iir3qMwryOJ8ZAPtbp7M6DFxn9uCu
+         K3PSafSAmbJEJb1VKy0cHrpPlWKG7GKdpBb6h2U1tU/Ku29tgMJt2xDaFabgJVJIkuFf
+         5RtfsxsSRiuGEiBr0+nD1CygrssdJQbk39wHTVBTDt2THKV5kNsYJb6ELTwT6+f467PY
+         0zEA==
+X-Gm-Message-State: AOAM530oEAYBRWfgjC6z4anfHXYRHx4e0+IM7vp6TNnI4AXvAQG+G4Iy
+        TZrFlTmyW9pX/vf1RQJxMLvXiLaT3yQPGQ==
+X-Google-Smtp-Source: ABdhPJz7LNu3WobrzpHT2ReKlSV8zjPxqwuYpwdA7y4fqn39IxkviJVKNzg+78dHtTGTxbwtU9JpFw==
+X-Received: by 2002:a63:f311:: with SMTP id l17mr21490461pgh.349.1614025206019;
+        Mon, 22 Feb 2021 12:20:06 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:201:a878:327b:a10a:e189])
+        by smtp.gmail.com with ESMTPSA id j1sm19928859pfr.78.2021.02.22.12.20.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Feb 2021 12:20:05 -0800 (PST)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <cover.1611909025.git.saiprakash.ranjan@codeaurora.org> <5d063d6035ff079b10e34cee110a26b856957ebe.1611909025.git.saiprakash.ranjan@codeaurora.org>
-In-Reply-To: <5d063d6035ff079b10e34cee110a26b856957ebe.1611909025.git.saiprakash.ranjan@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 22 Feb 2021 12:14:23 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=WUxPrFYGWbTAUYMC1nuPSHT3fk=fcE-fGVveHpr1KPhQ@mail.gmail.com>
-Message-ID: <CAD=FV=WUxPrFYGWbTAUYMC1nuPSHT3fk=fcE-fGVveHpr1KPhQ@mail.gmail.com>
-Subject: Re: [PATCH 3/4] coresight: etm4x: Add support to exclude kernel mode tracing
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Peter Zijlstra <peterz@infradead.org>,
-        Ingo Molnar <mingo@redhat.com>,
-        Arnaldo Carvalho de Melo <acme@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Jiri Olsa <jolsa@redhat.com>,
-        Namhyung Kim <namhyung@kernel.org>,
-        Leo Yan <leo.yan@linaro.org>, coresight@lists.linaro.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Denis Nikitin <denik@chromium.org>,
-        Mattias Nissler <mnissler@chromium.org>,
-        Al Grant <al.grant@arm.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20210219181032.3.Ia4c1022191d09fe8c56a16486b77796b83ffcae4@changeid>
+References: <20210219181032.1.I23e12818c4a841ba9c37c60b3ba8cfeeb048285f@changeid> <20210219181032.3.Ia4c1022191d09fe8c56a16486b77796b83ffcae4@changeid>
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: sc7180: Delete charger thermal zone and ADC channel for lazor <= rev3
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        devicetree@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>
+Date:   Mon, 22 Feb 2021 12:20:04 -0800
+Message-ID: <161402520418.1254594.7435679604383921403@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Quoting Matthias Kaehlcke (2021-02-19 18:10:59)
+> Lazor rev3 and older are stuffed with a 47k NTC as thermistor for
+> the charger temperature which currently isn't supported by the
+> PM6150 ADC driver. Delete the charger thermal zone and ADC channel
+> to avoid the use of bogus temperature values.
+>=20
+> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> ---
+>=20
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts | 9 +++++++++
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts | 9 +++++++++
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts | 9 +++++++++
+>  3 files changed, 27 insertions(+)
+>=20
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts b/arch/=
+arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
+> index 30e3e769d2b4..0974dbd424e1 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
+> @@ -14,6 +14,15 @@ / {
+>         compatible =3D "google,lazor-rev0", "qcom,sc7180";
+>  };
+> =20
+> +/*
+> + * rev <=3D 3 are stuffed with a 47k NTC as charger thermistor which is =
+currently
+> + * not supported by the PM6150 ADC driver. Delete the thermal zone and A=
+DC
+> + * channel to avoid the use of bogus temperature values.
+> + */
+> +/delete-node/ &charger_thermal;
+> +/delete-node/ &pm6150_adc_charger_thm;
+> +/delete-node/ &pm6150_adc_tm_charger_thm;
 
-On Fri, Jan 29, 2021 at 11:08 AM Sai Prakash Ranjan
-<saiprakash.ranjan@codeaurora.org> wrote:
->
-> @@ -1202,6 +1207,13 @@ void etm4_config_trace_mode(struct etmv4_config *config)
->         /* excluding kernel AND user space doesn't make sense */
->         WARN_ON_ONCE(mode == (ETM_MODE_EXCL_KERN | ETM_MODE_EXCL_USER));
->
-> +       if (!(mode & ETM_MODE_EXCL_KERN) && IS_ENABLED(CONFIG_EXCLUDE_KERNEL_HW_ITRACE)) {
-> +               dev_err(&drvdata->csdev->dev,
-> +                       "Kernel mode tracing is not allowed, check your kernel config\n");
-> +               config->mode |= ETM_MODE_EXCL_KERN;
-> +               return;
+Can we disable pm6150_adc_tm instead on <=3D rev3 boards? It would be the
+same number of lines, but is simpler to reason about disabled nodes vs.
+deleted nodes usually.
 
-So I'm not an expert on this code, but the above looks suspicious to
-me.  Specifically you are still modifying "config->mode" even though
-printing an "error" (dev_err, not dev_warn) and then skipping the rest
-of this function.  Since you're skipping the rest of this function
-you're not applying the access, right?  Naively I'd have expected one
-of these:
-
-1. Maybe the "dev_err" should be a "dev_warn" and then you shouldn't
-"return".  In this case you're just implicitly adding
-"ETM_MODE_EXCL_KERN" (and shouting) but then making things work.  Of
-course, then what happens if the user already specified
-"ETM_MODE_EXCL_USER" too?  As per the comment above that "doesn't make
-sense".  ...so maybe the code wouldn't behave properly...
-
-2. Maybe you should be modifying this function to return an error code.
-
-3. Maybe you should just be updating the one caller of this function
-to error check this right at the beginning of the function and then
-fail the sysfs write if the user did the wrong thing.  Then in
-etm4_config_trace_mode you could just have a WARN_ON_ONCE if the
-kernel wasn't excluded...
-
--Doug
+> +
+>  &pp3300_hub {
+>         /* pp3300_l7c is used to power the USB hub */
+>         /delete-property/regulator-always-on;
