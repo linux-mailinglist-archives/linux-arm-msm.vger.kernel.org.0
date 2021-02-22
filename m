@@ -2,66 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 576753222A0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Feb 2021 00:27:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 441563222A2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Feb 2021 00:27:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231203AbhBVX0J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Feb 2021 18:26:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33326 "EHLO
+        id S231267AbhBVX0t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Feb 2021 18:26:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231184AbhBVX0H (ORCPT
+        with ESMTP id S231156AbhBVX0r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Feb 2021 18:26:07 -0500
-Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4170C06174A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 15:25:27 -0800 (PST)
-Received: by mail-qv1-xf2c.google.com with SMTP id 2so6994241qvd.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 15:25:27 -0800 (PST)
+        Mon, 22 Feb 2021 18:26:47 -0500
+Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27F66C06178B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 15:26:07 -0800 (PST)
+Received: by mail-qk1-x733.google.com with SMTP id x124so3402321qkc.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 15:26:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=/oxheRV/zYlSYJgiTUORu/R/sZ9O15RX0FoUHQXYP0A=;
-        b=L1VU0bgJMRWAPIlu7JlvZYs4sMFK0Rfgee/BaMVitzOXQEwyOFVTGmvIIrHp87Zs7C
-         fTS9WDZmca6Q5MhVf143lkSoEVlBN3I/MrosQ/zRKY6Sb5suIx5R6V7ne6HhGZ2Mtge8
-         WkDfz0uMBGptMDbjLSvoscg5PrfoGfwwNffrs=
+        bh=la9ZqTZwDD/fbHYVkOWiL/ZTGoQj4SgcB++IQ81k71M=;
+        b=FUztHfmx7VQcHhA2XN3r0/uBNhN4l0szMZEAOVqXPdfPSQoulotBk12hS+SQl3/ucZ
+         2HJI0qAE3+YETwEcWJw/jEZa3W5IS5wKXmwkGso5kGtdL5hOz/Vf8nMT9zr40Sl1zyzo
+         9JMlIiXnNMi33uHXuaCJPDwoR8KGCOr+UUeus=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=/oxheRV/zYlSYJgiTUORu/R/sZ9O15RX0FoUHQXYP0A=;
-        b=NZq6rYBsD+zoOaVTBVVe69fNAggdOpmoPF828t8WXDSOnUjNyoRiZx1fr+JTq9vmF+
-         Zgzcqk3MCPYoCAGS9X7Hvk3sA0nCoH5Jcefmx2eM7c8SQeppQPL0pS7USAwQ8k1zVCKv
-         kcjNEz8t/nzEO0eUYdd1blhW3K8O4lWyvhJgoGl5bYmc6R348scGVUzRf1QN8SW17gLZ
-         qHJc7saBwizDsRgSmNnTktHmdoL3kntdoc+GGJ61ZaC/ktovkr2PshXm3v4Cwo2gAq/b
-         CuPPMyal5Bptk4TNvVQBYkaBlkTiBynB/eAaiJdaVu3UE//3GpP4nSHqD7wukBWcbw4s
-         olQg==
-X-Gm-Message-State: AOAM5311Cq9scbXW9JUq2z9ALg18fZL1CK96PHd2q1Z6FJleGEJUhl6Z
-        utodwNXp9ipGOjsb9roKkO01Z20wHeaejA==
-X-Google-Smtp-Source: ABdhPJypu5arp8fjH9luA+8/kkkfMA8ywRrgRiQ7c0b7j+ODb5N7n3vHobstczedzCqkQPmbTJWEAQ==
-X-Received: by 2002:a0c:b66c:: with SMTP id q44mr15462289qvf.3.1614036326664;
-        Mon, 22 Feb 2021 15:25:26 -0800 (PST)
-Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com. [209.85.219.173])
-        by smtp.gmail.com with ESMTPSA id c191sm10500286qke.1.2021.02.22.15.25.26
+        bh=la9ZqTZwDD/fbHYVkOWiL/ZTGoQj4SgcB++IQ81k71M=;
+        b=Lz/AzYP0qTHdR6Eg6L/INgljCUfsodhscpGWE//L281gO5ggS3+iudmcFu3l8DbTve
+         BFXpLz2Q0Ftuc0u7OIfoJA55ySOG6UkfOT2oMCOD/MSCWI0qnf/6PsRNTJKPG6czvf1Q
+         t+FJgKImcxxOnkwt4obe21F+7kpOqTndIHPq6tZai3lcQZs3h09sQ2n7HiCtU+lAu7hD
+         XI6lkNISK6UMTsou/utLu+K6k3dXmM3vAdeJUyS+kOGI7tDuvfv9CFwp8/vugUn1HvxT
+         4lywvP5Jo8nGPwG8rTd7kWEOkiLhEpp+Te2omOhIUww6rynDEqY6L+VWpHHL1T2zPkUk
+         hJpA==
+X-Gm-Message-State: AOAM5319sv+05SGcHdbj/6jXL+rJInpnWqWsIdzqlM/EKE7AE8Aug/wy
+        dfwrgsf/oGvCKCFLusXPIU4CklHxKCvFoA==
+X-Google-Smtp-Source: ABdhPJzR7QBS20FhG7LJ8CfQShw1wRJs9yVE6/hZsG3mVmum7DdNzjhuUdZzMGbFVzAATlxHlNZpcg==
+X-Received: by 2002:a05:620a:4016:: with SMTP id h22mr23860161qko.491.1614036366063;
+        Mon, 22 Feb 2021 15:26:06 -0800 (PST)
+Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com. [209.85.219.174])
+        by smtp.gmail.com with ESMTPSA id d198sm13609728qke.69.2021.02.22.15.26.05
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Feb 2021 15:25:26 -0800 (PST)
-Received: by mail-yb1-f173.google.com with SMTP id m188so14608032yba.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 15:25:26 -0800 (PST)
-X-Received: by 2002:a25:aa43:: with SMTP id s61mr38889621ybi.32.1614036325816;
- Mon, 22 Feb 2021 15:25:25 -0800 (PST)
+        Mon, 22 Feb 2021 15:26:05 -0800 (PST)
+Received: by mail-yb1-f174.google.com with SMTP id 133so14657493ybd.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 15:26:05 -0800 (PST)
+X-Received: by 2002:a25:4e83:: with SMTP id c125mr6137757ybb.343.1614036365019;
+ Mon, 22 Feb 2021 15:26:05 -0800 (PST)
 MIME-Version: 1.0
 References: <20210219181032.1.I23e12818c4a841ba9c37c60b3ba8cfeeb048285f@changeid>
- <20210219181032.2.I6a426324db3d98d6cfae8adf2598831bb30bba74@changeid>
-In-Reply-To: <20210219181032.2.I6a426324db3d98d6cfae8adf2598831bb30bba74@changeid>
+ <20210219181032.3.Ia4c1022191d09fe8c56a16486b77796b83ffcae4@changeid>
+ <161402520418.1254594.7435679604383921403@swboyd.mtv.corp.google.com>
+ <YDQWVresOGZGLL6N@google.com> <161402672369.1254594.14091287979440332862@swboyd.mtv.corp.google.com>
+In-Reply-To: <161402672369.1254594.14091287979440332862@swboyd.mtv.corp.google.com>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 22 Feb 2021 15:25:14 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=W7W9RT3SjGChP16o1Mz4_EwCJ=t8nNFYiS5QvK6E27OA@mail.gmail.com>
-Message-ID: <CAD=FV=W7W9RT3SjGChP16o1Mz4_EwCJ=t8nNFYiS5QvK6E27OA@mail.gmail.com>
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: sc7180: trogdor: Add labels to
- charger thermal zone and ADC channel
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
+Date:   Mon, 22 Feb 2021 15:25:54 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=WdpEozoQjDo3s1+mrLD0tSk8DQsEAg3yw099nn=SoX3g@mail.gmail.com>
+Message-ID: <CAD=FV=WdpEozoQjDo3s1+mrLD0tSk8DQsEAg3yw099nn=SoX3g@mail.gmail.com>
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: sc7180: Delete charger thermal zone
+ and ADC channel for lazor <= rev3
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Matthias Kaehlcke <mka@chromium.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
@@ -75,18 +78,57 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Fri, Feb 19, 2021 at 6:11 PM Matthias Kaehlcke <mka@chromium.org> wrote:
+On Mon, Feb 22, 2021 at 12:45 PM Stephen Boyd <swboyd@chromium.org> wrote:
 >
-> Some revisions of trogdor boards use a thermistor for the charger
-> temperature which currently isn't supported by the PM6150 ADC
-> driver. Add labels for the charger thermal zone and ADC channel
-> to allow the removal of these nodes from affected boards and
-> avoid the use of bogus temperature values.
+> Quoting Matthias Kaehlcke (2021-02-22 12:38:46)
+> > On Mon, Feb 22, 2021 at 12:20:04PM -0800, Stephen Boyd wrote:
+> > > Quoting Matthias Kaehlcke (2021-02-19 18:10:59)
+> > > > Lazor rev3 and older are stuffed with a 47k NTC as thermistor for
+> > > > the charger temperature which currently isn't supported by the
+> > > > PM6150 ADC driver. Delete the charger thermal zone and ADC channel
+> > > > to avoid the use of bogus temperature values.
+> > > >
+> > > > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> > > > ---
+> > > >
+> > > >  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts | 9 +++++++++
+> > > >  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts | 9 +++++++++
+> > > >  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts | 9 +++++++++
+> > > >  3 files changed, 27 insertions(+)
+> > > >
+> > > > diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
+> > > > index 30e3e769d2b4..0974dbd424e1 100644
+> > > > --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
+> > > > +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
+> > > > @@ -14,6 +14,15 @@ / {
+> > > >         compatible = "google,lazor-rev0", "qcom,sc7180";
+> > > >  };
+> > > >
+> > > > +/*
+> > > > + * rev <= 3 are stuffed with a 47k NTC as charger thermistor which is currently
+> > > > + * not supported by the PM6150 ADC driver. Delete the thermal zone and ADC
+> > > > + * channel to avoid the use of bogus temperature values.
+> > > > + */
+> > > > +/delete-node/ &charger_thermal;
+> > > > +/delete-node/ &pm6150_adc_charger_thm;
+> > > > +/delete-node/ &pm6150_adc_tm_charger_thm;
+> > >
+> > > Can we disable pm6150_adc_tm instead on <= rev3 boards? It would be the
+> > > same number of lines, but is simpler to reason about disabled nodes vs.
+> > > deleted nodes usually.
+> >
+> > For Lazor theoretically this could be done since it doesn't use other ADC
+> > channels, however it won't work for other trogdor devices that will be
+> > upstreamed eventually. Some of these boards have the same problem, however
+> > they have other thermistors connected to the ADC. One could argue that it's
+> > preferable to do things in a uniform way, but I'm open to do it either way
+> > for Lazor.
+> >
 >
-> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> ---
->
->  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+> I see. Can the thermal-zone be disabled then vs. deleting three nodes? I
+> think the thermal driver uses for_each_available_child_of_node() so that
+> would work?
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+FWIW: +1 to what Stephen suggests assuming it works.
+
+-Doug
