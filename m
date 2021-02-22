@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A6A09321C38
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Feb 2021 17:07:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 30CF2321C35
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Feb 2021 17:07:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231124AbhBVQEg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Feb 2021 11:04:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50668 "EHLO
+        id S231169AbhBVQE0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Feb 2021 11:04:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231281AbhBVQDf (ORCPT
+        with ESMTP id S231293AbhBVQDi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Feb 2021 11:03:35 -0500
+        Mon, 22 Feb 2021 11:03:38 -0500
 Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73BC9C061A2D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 08:01:55 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id l13so5316087wmg.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 08:01:55 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87680C061A30
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 08:01:56 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id n10so14875224wmq.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 08:01:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=PezLYwUJemK5YD1XfzJtDVf4NCDS101gBrfpO/EAkMg=;
-        b=isCjhUtg+Q2fze4zFP2qOO6AzXCSyk2KIa2d/NzB9Kc2oR76hjz8PuCHoviDMu/i0Q
-         7gMnJHRSGhiuSn7nxKqDKWic7ArX4JLnWm3ZkksNuUXbPGbPvDlW7KYd+c9+ku9FS1wf
-         z/XlJ2Dec2hPS9SaoMDcMfnWVf7MTG0k/5wYMT0uT7jCR2gtmwg0qzLo0cVRoupHVPXX
-         SO/W++vcHbJ6Lx2RkKVghFqNiP7S1ADDP50eTM2wYD4LBGEEYeO1/U5d67bCGabe7V5s
-         ra9qKTztlALtvs9cXNNDaFG8E8PBLtk12e9yvDLDldQ9G2EQzH6WnNZQ+vwrB3zoBs0s
-         ijYA==
+        bh=enj8xcGxi5Ilg6e5Y2toHN1/uzGSCB2GzovsHLJELfo=;
+        b=BNqcpR7UH7IooZSMfPQPKzXh8VupQJkQqPzbC3V5vull8v8+HugN/UfS5G3at5GKeV
+         y2Thn50sV5S3wom8gnQcYnx4nEGbsFNmk5vzhrMpBfs3YBetc+9YsdhUHvrNPX/BekDf
+         qxP8lGG1mkvh69eOfmUoBzz9X382eSShSts4UY2k7qzXbzIzagRsblB6+JGFAXOR8Frn
+         eWuJbqaUtJbswGRM5d3ygh0cRzpUNFQ74UC2DfJv6s9BVQyk031hn/q1vWZDJBcF6U7a
+         m+kjLCzMb12PZrp4SwagYy9mLvQCxI1P0nnczSXDGA1wNQZeVZ8p+t7hJqmwnEbohwJ7
+         CxYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=PezLYwUJemK5YD1XfzJtDVf4NCDS101gBrfpO/EAkMg=;
-        b=oQj31OKtqxAJ9lWLey/OCawhH3ZqFmXxN6PuZkfnjeswE+gtidPO/HoGpykY02txhC
-         DleWASkGEwyz/NtG3zOjG7UrR029pIg+xT52lfoJ1tV5Z/XFPY4Wm7SgWRHSxuDTbd3j
-         ul+e4aBaZJQRPJ+oriMa0uEW+FBZV85IhFMExa87lpLtyNhjYDUJuWp4s7b1XqdYAXKb
-         tVbWtaKfv8KPWX2eKUPpwOzfm4aYWT5jxJriWo3te2HGn0GSPMnNJmFMbzYhxi6uwb6w
-         kiUvPlEPMC89T0SDE0AB+N87SFogmtPOJmklShqFhVJu7FqWeMzTKqEPyvQXrzVb+Tfx
-         hYAQ==
-X-Gm-Message-State: AOAM532X0YxRAdO/T/3kFoR26BL4r1Gj7zNz0E527yGPamyjIZ3qB7bz
-        qli8WY0846wcCD2StKwmhmNfyw==
-X-Google-Smtp-Source: ABdhPJwKmciyk3kiAt7sJzDvtnTKH/P6jyjDmSvai0cn8GbtvFnJZShYaYJVkkFWj2OZ/3DoTgYMcQ==
-X-Received: by 2002:a1c:2311:: with SMTP id j17mr20701210wmj.38.1614009714303;
-        Mon, 22 Feb 2021 08:01:54 -0800 (PST)
+        bh=enj8xcGxi5Ilg6e5Y2toHN1/uzGSCB2GzovsHLJELfo=;
+        b=ZK1WDxQjFcnjimHBQLUP4x6+rIMp4RIWFlSSqr2U/G91/f7GmKkB6XL9or1hwEIzpI
+         rwRbTnhGYLMwqfuVu+pMyspTQoJ+9cumiVdvSgiSASnrZbidyhRaOIS4ObIqKiyeYHtK
+         Sq8VHVPzmcrk+T5dQbmuTJU5zCKfWmsMdR4345HgHXRDfoyF6BY4J/oGR/f2yRICuHKJ
+         NtSHbzegLVfxT+SaDKDisH3ovBpWRW+8z30Y0KR6Jld7I+EYRRKaDiIPrKQmldE9G1bc
+         F380aMlhy4tHrP5reo3V7CAgLp+ixZaqkFH1/szij8Isn/UICn+KBPQgnrDC/30r0HjL
+         exRg==
+X-Gm-Message-State: AOAM53312ovkfZ6CsWMjTqNx7uYnDR/EAscou/zQDvWQvNmW0ekMrbzH
+        9vqM7/FW9d21FKglGcJjOReROQ==
+X-Google-Smtp-Source: ABdhPJwP2MH2BlCn6tufX2leF664LJdc0pNUhLjGMFJYxiqukh7AO/D3SzXTPcbzdBkfeEvgIjXIiQ==
+X-Received: by 2002:a05:600c:35c2:: with SMTP id r2mr19396665wmq.54.1614009715270;
+        Mon, 22 Feb 2021 08:01:55 -0800 (PST)
 Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id c3sm7373697wrw.80.2021.02.22.08.01.53
+        by smtp.gmail.com with ESMTPSA id c3sm7373697wrw.80.2021.02.22.08.01.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Feb 2021 08:01:53 -0800 (PST)
+        Mon, 22 Feb 2021 08:01:54 -0800 (PST)
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 To:     stanimir.varbanov@linaro.org, agross@kernel.org,
         bjorn.andersson@linaro.org, mchehab@kernel.org,
         linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
 Cc:     bryan.odonoghue@linaro.org, dikshita@codeaurora.org,
         jonathan@marek.ca, vgarodia@codeaurora.org
-Subject: [PATCH 17/25] media: venus: pm: Hook 6xx pm ops into 4xx pm ops
-Date:   Mon, 22 Feb 2021 16:02:52 +0000
-Message-Id: <20210222160300.1811121-18-bryan.odonoghue@linaro.org>
+Subject: [PATCH 18/25] media: venus: hfi: Add 6xx AXI halt logic
+Date:   Mon, 22 Feb 2021 16:02:53 +0000
+Message-Id: <20210222160300.1811121-19-bryan.odonoghue@linaro.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210222160300.1811121-1-bryan.odonoghue@linaro.org>
 References: <20210222160300.1811121-1-bryan.odonoghue@linaro.org>
@@ -66,26 +66,84 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-At this time there is no need to differentiate between the two, we can
-reuse the 4xx pm ops callback structure for 6xx.
+From: Dikshita Agarwal <dikshita@codeaurora.org>
 
+This patch takes the downstream AXI halt routine and applies it when
+IS_V6() is true.
+
+bod: Converted to readl_poll_timeout()
+     Converted LPI update timeout to dev_dbg. In practice this register
+     never appears to update with the value 0x07. Discussing with contacts
+     in qcom video team, this toggle only pertains to low-power mode.
+     Keeping the write for the sake of fidelity with downstream.
+
+Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+Co-developed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
- drivers/media/platform/qcom/venus/pm_helpers.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/platform/qcom/venus/hfi_venus.c | 45 +++++++++++++++++++
+ 1 file changed, 45 insertions(+)
 
-diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-index ea08b4d71e39..f163526c3f83 100644
---- a/drivers/media/platform/qcom/venus/pm_helpers.c
-+++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-@@ -1119,6 +1119,7 @@ const struct venus_pm_ops *venus_pm_get(enum hfi_version version)
- 	case HFI_VERSION_3XX:
- 		return &pm_ops_v3;
- 	case HFI_VERSION_4XX:
-+	case HFI_VERSION_6XX:
- 		return &pm_ops_v4;
- 	}
+diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
+index 24cf20f76e7f..01c100db07d3 100644
+--- a/drivers/media/platform/qcom/venus/hfi_venus.c
++++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+@@ -541,10 +541,55 @@ static int venus_halt_axi(struct venus_hfi_device *hdev)
+ {
+ 	void __iomem *wrapper_base = hdev->core->wrapper_base;
+ 	void __iomem *vbif_base = hdev->core->vbif_base;
++	void __iomem *cpu_cs_base = hdev->core->cpu_cs_base;
++	void __iomem *aon_base = hdev->core->aon_base;
+ 	struct device *dev = hdev->core->dev;
+ 	u32 val;
++	u32 mask_val;
+ 	int ret;
  
++	if (IS_V6(hdev->core)) {
++		writel(0x3, cpu_cs_base + CPU_CS_X2RPMH_V6);
++
++		writel(0x1, aon_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
++		ret = readl_poll_timeout(aon_base + AON_WRAPPER_MVP_NOC_LPI_STATUS,
++					 val,
++					 val & BIT(0),
++					 POLL_INTERVAL_US,
++					 VBIF_AXI_HALT_ACK_TIMEOUT_US);
++		if (ret) {
++			dev_err(dev, "NOC not in qaccept status %x\n", val);
++			return -ETIMEDOUT;
++		}
++
++		/* HPG 6.1.2 Step 3, debug bridge to low power */
++		mask_val = (BIT(2) | BIT(1) | BIT(0));
++		writel(mask_val, wrapper_base + WRAPPER_DEBUG_BRIDGE_LPI_CONTROL_V6);
++
++		ret = readl_poll_timeout(wrapper_base + WRAPPER_DEBUG_BRIDGE_LPI_STATUS_V6,
++					 val,
++					 (val & mask_val) == mask_val,
++					 POLL_INTERVAL_US,
++					 VBIF_AXI_HALT_ACK_TIMEOUT_US);
++
++		if (ret)
++			dev_dbg(dev, "DBLP Set: status %x\n", val);
++
++		/* HPG 6.1.2 Step 4, debug bridge to lpi release */
++		writel(0x00, wrapper_base + WRAPPER_DEBUG_BRIDGE_LPI_CONTROL_V6);
++		ret = readl_poll_timeout(wrapper_base + WRAPPER_DEBUG_BRIDGE_LPI_STATUS_V6,
++					 val,
++					 val == 0,
++					 POLL_INTERVAL_US,
++					 VBIF_AXI_HALT_ACK_TIMEOUT_US);
++
++		if (ret) {
++			dev_err(dev, "DBLP Release: lpi_status %x\n", val);
++			return -ETIMEDOUT;
++		}
++		return 0;
++	}
++
+ 	if (IS_V4(hdev->core)) {
+ 		val = readl(wrapper_base + WRAPPER_CPU_AXI_HALT);
+ 		val |= WRAPPER_CPU_AXI_HALT_HALT;
 -- 
 2.29.2
 
