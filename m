@@ -2,159 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C82DB3218B2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Feb 2021 14:29:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C8ED32197A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Feb 2021 14:55:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231186AbhBVN26 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Feb 2021 08:28:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45598 "EHLO
+        id S231292AbhBVNzR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Feb 2021 08:55:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231849AbhBVN1y (ORCPT
+        with ESMTP id S231577AbhBVNzA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Feb 2021 08:27:54 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CF92C061797
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 05:26:59 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id l30so3392064wrb.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 05:26:58 -0800 (PST)
+        Mon, 22 Feb 2021 08:55:00 -0500
+Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5EC8C061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 05:54:19 -0800 (PST)
+Received: by mail-qk1-x72b.google.com with SMTP id f17so12568261qkl.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 05:54:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=kRfV3hfQKkV0JmhY14xIQXKr8DaLA+3gSz4spFlJxTo=;
-        b=bdyAHoZFEtYAZMYMT7f7v+2NVLl6gqRn541+ejwo3t/AFjmO2iiyT8s1VAjmvMJguw
-         72jL77tHS4P5tZ4G6na07GQ8m8SqcU7t/7mi/O19EJzgcLwmONNAOVasx13m7XFTw7YQ
-         MWp+WpxSQbr8PIE0wsF+/jeDSgB4pTPx84DXg3vsFIUzNFQu61z1HT6HG2Y0tM3MqZDx
-         UCIWvtxQuhg4ML/RZPBbaoHON4BVQ+qjLUvOhFc9cNVj7f628P793jbb+KlBtorxT6Ru
-         Q5niSl+T6mYfDYjHtv+2mZKvQ+SCNrGc6gtWk+Yo/EEuOoUCDm2mHyBE2QB4k1uddTBD
-         RPCQ==
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=VS1uCxsWaVilHSWQLWzKvqKOZiAU0WU2yxAA9RpL/c0=;
+        b=Z+KR4S7gV0fXuSykElAqDeqMUe9jKg9pfUKRXrc6MunV0THzthsxBra0PKaSMzrVn3
+         N5ZnXtfZVkjINMlWtBRBxl3P433+m9uKOQ35C9nh7tm35GPi/QquSo7zZc3khPk30Xs1
+         XcnONlusrw5tUQa4cVyo8n0Z+JaBubkgfq8mQCaJ6kM3KBnexLBagMyz5cAF+7uVNBAH
+         R4nIjDJ7FouotOW2kjTQynetZMKfBazOsK98tsQgSaCWixFrl6JQeYRDKIy4DltnIBOv
+         rUN0ZBHON+5XNIvdAf5NN9f1O/qGuywhOPI1F91hfD1OvZA7KvJHjiZIaxHmBD8+tM1h
+         JC1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=kRfV3hfQKkV0JmhY14xIQXKr8DaLA+3gSz4spFlJxTo=;
-        b=mIy/gGl3SGWZanGEl1hZh96iZBsbSrI876uTLHq1dsj4ZlqTUmrapcwVjJWcS2bLjZ
-         RnAdxJvkdw7H6zEmX25nXoIowF8+7Y0oxAIknCLCO5628SM3XpKfXAhKjU6conVKUmtb
-         WQSEbcCEB6THcZqc9odQpaLdXAXgC3foDzsw8YIjHuSWXwGBjCtSxjp/osJfl7ozsJnH
-         PE/0prYOiFeIGn+SfHVy+hQTVKS1wB9pra6NDgctrDmXR24EmXhMwrIzOGXiy/HXc+YT
-         WPrBH/vyffxLqMvx0dRMYpuJy0OynIsipihub/DZ/hoZV/cWQ3pu/UTzR7lN9uEG8K8J
-         tzpw==
-X-Gm-Message-State: AOAM531puP9tLS9d5oNCpoPECQtH8Rl5YPSKlkb9Zx/DAGstRDjEPNr1
-        ATSxxInEr8sT78pevg50COt0rg==
-X-Google-Smtp-Source: ABdhPJwbbLUhq3173hcjozPlKXo6kXjJD8FrRIuuP0n9/6v8Yt9ubx+xgkwWJFqMGkxCWdoeF+TXTg==
-X-Received: by 2002:adf:b611:: with SMTP id f17mr21010880wre.8.1614000417860;
-        Mon, 22 Feb 2021 05:26:57 -0800 (PST)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id t7sm3079918wmq.44.2021.02.22.05.26.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Feb 2021 05:26:57 -0800 (PST)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     robh+dt@kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, stanimir.varbanov@linaro.org,
-        agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     bryan.odonoghue@linaro.org, jonathan@marek.ca,
-        dikshita@qti.qualcomm.com
-Subject: [PATCH v2 3/3] arm64: dts: qcom: sm8250: Add venus DT node
-Date:   Mon, 22 Feb 2021 13:28:17 +0000
-Message-Id: <20210222132817.1807788-4-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210222132817.1807788-1-bryan.odonoghue@linaro.org>
-References: <20210222132817.1807788-1-bryan.odonoghue@linaro.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=VS1uCxsWaVilHSWQLWzKvqKOZiAU0WU2yxAA9RpL/c0=;
+        b=h2k/OhscI2l9nTPCydWoXxIqGaJxgg4/jjRSJUsVJaXmWDBUbccvlQvRSkPN6t6D6i
+         +a1GRkJd62nMSr31j4RP2JUWd2wsDGEj/q6uRMAY08tyZHAOJKG6CxJR/KDn87R55Gox
+         cy9Vw/KFU8Owxf5l7rSi1bo4tinLpQ8O/EFByd42c33AZ3iTFh+e551QIUGCE2/+1pQT
+         s/wCC6jdACybEgyO5McoNMxQSsEgmP7IvBPhngmPb+34rpFWmrRaCvEo0+1RdwLEVL/b
+         6enXDOW0XZ61xGDm8nl0bUDaN1l84i2tBsSUrc3uKBuVDb2yLb0hwUBWy4GwqUNTdKeG
+         HKzA==
+X-Gm-Message-State: AOAM533KpEkKK/3ZEmTt1Tlj+HQGmIQ5EahHocvp8fT7lbe7KSEHl54e
+        pcQHaQd2g0K/wTvI4Xf1RkkNBhTEeqDV9yb/
+X-Google-Smtp-Source: ABdhPJwYPrXA6xdc4ibfHhqwX32rHtCdgIVve5gfRyjL7cmibmPzvg6CIis4fH2S8Y0oa9dnnEjVww==
+X-Received: by 2002:a37:628e:: with SMTP id w136mr20831297qkb.46.1614002059116;
+        Mon, 22 Feb 2021 05:54:19 -0800 (PST)
+Received: from [192.168.0.189] (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
+        by smtp.gmail.com with ESMTPSA id r17sm10937838qta.78.2021.02.22.05.54.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Feb 2021 05:54:18 -0800 (PST)
+Subject: Re: [PATCH 3/3] fastrpc: remove redundant fastrpc_map_create() call
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+Cc:     Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20210218032055.28247-1-jonathan@marek.ca>
+ <20210218032055.28247-4-jonathan@marek.ca>
+ <58e361e0-441e-fd71-362a-398dcb84f888@linaro.org>
+From:   Jonathan Marek <jonathan@marek.ca>
+Message-ID: <66afb839-7cd9-875c-72ea-f3236678f9f9@marek.ca>
+Date:   Mon, 22 Feb 2021 08:53:29 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
+In-Reply-To: <58e361e0-441e-fd71-362a-398dcb84f888@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add DT entries for the sm8250 venus encoder/decoder.
+On 2/22/21 7:37 AM, Srinivas Kandagatla wrote:
+> 
+> 
+> On 18/02/2021 03:20, Jonathan Marek wrote:
+>> fastrpc_internal_invoke() will call fastrpc_map_create, so there is no
+>> point in having it called here. This does change the behavior somewhat as
+>> fastrpc_internal_invoke() will release the map afterwards, but that's 
+>> what
+>> we want to happen in this case.
+> 
+> This will crash the DSP as you will be freeing the init process memory 
+> while it is actively using it!
+> 
+> The shell/init process is created as part of user process and it should 
+> be valid until the user process is valid! We can not free it when the 
+> invoke is finished/acked as we normally do for other invoke context!
+> 
+> In some firmwares the shell process is statically built into the DSP 
+> firmware which might work! But other normal cases are totally broken by 
+> this patch!
+> 
+> --srini
+> 
 
-Co-developed-by: Jonathan Marek <jonathan@marek.ca>
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-Co-developed-by: Dikshita Agarwal <dikshita@qti.qualcomm.com>
-Signed-off-by: Dikshita Agarwal <dikshita@qti.qualcomm.com>
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 60 ++++++++++++++++++++++++++++
- 1 file changed, 60 insertions(+)
+I am not using the static guest process, I am using the 
+FASTRPC_IOCTL_INIT_CREATE to load a fastrpc shell process. It doesn't crash.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 3639792411ce..6b6993995eca 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -14,6 +14,7 @@
- #include <dt-bindings/soc/qcom,rpmh-rsc.h>
- #include <dt-bindings/thermal/thermal.h>
- #include <dt-bindings/clock/qcom,videocc-sm8250.h>
-+#include <dt-bindings/interconnect/qcom,sm8250.h>
- 
- / {
- 	interrupt-parent = <&intc>;
-@@ -1811,6 +1812,65 @@ usb_2_dwc3: dwc3@a800000 {
- 			};
- 		};
- 
-+		venus: video-codec@aa00000 {
-+			compatible = "qcom,sm8250-venus";
-+			reg = <0 0x0aa00000 0 0x100000>;
-+			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
-+			power-domains = <&videocc MVS0C_GDSC>,
-+					<&videocc MVS0_GDSC>,
-+					<&rpmhpd SM8250_MX>;
-+			power-domain-names = "venus", "vcodec0", "mx";
-+			operating-points-v2 = <&venus_opp_table>;
-+
-+			clocks = <&gcc GCC_VIDEO_AXI0_CLK>,
-+				 <&videocc VIDEO_CC_MVS0C_CLK>,
-+				 <&videocc VIDEO_CC_MVS0_CLK>;
-+			clock-names = "iface", "core", "vcodec0_core";
-+
-+			interconnects = <&gem_noc MASTER_AMPSS_M0 &config_noc SLAVE_VENUS_CFG>,
-+					<&mmss_noc MASTER_VIDEO_P0 &mc_virt SLAVE_EBI_CH0>;
-+			interconnect-names = "cpu-cfg", "video-mem";
-+
-+			iommus = <&apps_smmu 0x2100 0x0400>;
-+			memory-region = <&video_mem>;
-+
-+			resets = <&gcc GCC_VIDEO_AXI0_CLK_ARES>,
-+				 <&videocc VIDEO_CC_MVS0C_CLK_ARES>;
-+			reset-names = "bus", "core";
-+
-+			video-decoder {
-+				compatible = "venus-decoder";
-+			};
-+
-+			video-encoder {
-+				compatible = "venus-encoder";
-+			};
-+
-+			venus_opp_table: venus-opp-table {
-+				compatible = "operating-points-v2";
-+
-+				opp-720000000 {
-+					opp-hz = /bits/ 64 <720000000>;
-+					required-opps = <&rpmhpd_opp_low_svs>;
-+				};
-+
-+				opp-1014000000 {
-+					opp-hz = /bits/ 64 <1014000000>;
-+					required-opps = <&rpmhpd_opp_svs>;
-+				};
-+
-+				opp-1098000000 {
-+					opp-hz = /bits/ 64 <1098000000>;
-+					required-opps = <&rpmhpd_opp_svs_l1>;
-+				};
-+
-+				opp-1332000000 {
-+					opp-hz = /bits/ 64 <1332000000>;
-+					required-opps = <&rpmhpd_opp_nom>;
-+				};
-+			};
-+		};
-+
- 		videocc: clock-controller@abf0000 {
- 			compatible = "qcom,sm8250-videocc";
- 			reg = <0 0x0abf0000 0 0x10000>;
--- 
-2.29.2
+AFAIK the DSP does not need the process memory after the process 
+creation - this would allow userspace to modify the executable after the 
+DSP verifies the hash/signature. So the DSP absolutely needs to make a 
+copy of it before verifying it (otherwise this would be a pretty serious 
+and obvious security flaw in qcom's fastrpc system. but I wouldn't be 
+surprised!).
 
+>>
+>> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+>> ---
+>>   drivers/misc/fastrpc.c | 12 +-----------
+>>   1 file changed, 1 insertion(+), 11 deletions(-)
+>>
+>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+>> index 170352b43ab6..ccad9f5f5e2f 100644
+>> --- a/drivers/misc/fastrpc.c
+>> +++ b/drivers/misc/fastrpc.c
+>> @@ -1013,7 +1013,6 @@ static int fastrpc_init_create_process(struct 
+>> fastrpc_user *fl,
+>>       struct fastrpc_init_create init;
+>>       struct fastrpc_invoke_args *args;
+>>       struct fastrpc_phy_page pages[1];
+>> -    struct fastrpc_map *map = NULL;
+>>       struct fastrpc_buf *imem = NULL;
+>>       int memlen;
+>>       int err;
+>> @@ -1049,18 +1048,12 @@ static int fastrpc_init_create_process(struct 
+>> fastrpc_user *fl,
+>>       inbuf.siglen = init.siglen;
+>>       fl->pd = USER_PD;
+>> -    if (init.filelen && init.filefd) {
+>> -        err = fastrpc_map_create(fl, init.filefd, init.filelen, &map);
+>> -        if (err)
+>> -            goto err;
+>> -    }
+>> - >       memlen = ALIGN(max(INIT_FILELEN_MAX, (int)init.filelen * 4),
+>>                  1024 * 1024);
+>>       err = fastrpc_buf_alloc(fl, fl->sctx->dev, memlen,
+>>                   &imem);
+>>       if (err)
+>> -        goto err_alloc;
+>> +        goto err;
+>>       fl->init_mem = imem;
+>>       args[0].ptr = (u64)(uintptr_t)&inbuf;
+>> @@ -1106,9 +1099,6 @@ static int fastrpc_init_create_process(struct 
+>> fastrpc_user *fl,
+>>   err_invoke:
+>>       fl->init_mem = NULL;
+>>       fastrpc_buf_free(imem);
+>> -err_alloc:
+>> -    if (map)
+>> -        fastrpc_map_put(map);
+>>   err:
+>>       kfree(args);
+>>
