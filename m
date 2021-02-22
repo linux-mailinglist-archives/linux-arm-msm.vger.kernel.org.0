@@ -2,153 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C28AB322288
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Feb 2021 00:07:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E42E4322296
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Feb 2021 00:22:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230333AbhBVXGW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Feb 2021 18:06:22 -0500
-Received: from labrats.qualcomm.com ([199.106.110.90]:8655 "EHLO
-        labrats.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230281AbhBVXGS (ORCPT
+        id S230105AbhBVXVs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Feb 2021 18:21:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60638 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230062AbhBVXVr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Feb 2021 18:06:18 -0500
-IronPort-SDR: V3I16CyZWiREKGwp6fhbfQhk9MNhHLLliIplRjGsMYy9Lx808ShkoDKbEPunmMGdVlDLxfnRrC
- CxA/aHmqG+avR5UZPafnbyughJJcbiNMcQ6fqPLuFvjXUUNmkmj/ooG2okLENb0qszi2L1PxZz
- lMzD+L25Vz6vdocqdu5EPf0UjF4NcC8Wndb1bUNmDnVPuiIhGJ+pPeMRH5DfikpCm6UiPcjykN
- sd++mA8X4nBKtWARit4XwQryYMWrwAbocQwMg/jXmH92/a8OrBV7Ku8YI4UIfR20A6a4HYQ3XZ
- N9g=
-X-IronPort-AV: E=Sophos;i="5.81,198,1610438400"; 
-   d="scan'208";a="47786236"
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by labrats.qualcomm.com with ESMTP; 22 Feb 2021 15:05:12 -0800
-X-QCInternal: smtphost
-Received: from stor-presley.qualcomm.com ([192.168.140.85])
-  by ironmsg03-sd.qualcomm.com with ESMTP; 22 Feb 2021 15:05:12 -0800
-Received: by stor-presley.qualcomm.com (Postfix, from userid 92687)
-        id 28C9F21A19; Mon, 22 Feb 2021 15:05:11 -0800 (PST)
-From:   Asutosh Das <asutoshd@codeaurora.org>
-To:     cang@codeaurora.org, martin.petersen@oracle.com,
-        linux-scsi@vger.kernel.org
-Cc:     Asutosh Das <asutoshd@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Bean Huo <beanhuo@micron.com>,
-        Nitin Rawat <nitirawa@codeaurora.org>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v4 2/2] ufs: sysfs: Resume the proper scsi device
-Date:   Mon, 22 Feb 2021 15:04:50 -0800
-Message-Id: <36ce2b552b5aecc046c0937cc00561ebb41e5b31.1614034213.git.asutoshd@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1614034213.git.asutoshd@codeaurora.org>
-References: <cover.1614034213.git.asutoshd@codeaurora.org>
-In-Reply-To: <cover.1614034213.git.asutoshd@codeaurora.org>
-References: <cover.1614034213.git.asutoshd@codeaurora.org>
+        Mon, 22 Feb 2021 18:21:47 -0500
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CEA2C061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 15:21:07 -0800 (PST)
+Received: by mail-qk1-x730.google.com with SMTP id h8so14493384qkk.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 15:21:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ybR/H+gUTqhJdpoNFGs25EuY0u+4Z7psGbVETIdp3Zw=;
+        b=WwY7R23PimrGZfgiernMgYsaxnGb7SMGCKSp9DIfZdWYP7geL+f52q5m/yUUhcLldL
+         0+rlDgGKDSqWkXb4akKNJYruzKwC9VD0eNybpo5jqdTZ4Cg0kZNNxIKI6oddIuLZd9e+
+         RRwYrSHQYsEauYTOlOop9qIoQvizpD1Yb9LCo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ybR/H+gUTqhJdpoNFGs25EuY0u+4Z7psGbVETIdp3Zw=;
+        b=VR9N9J6bamgeunlHJtFaGVsp6eYSKR2JBxz4jcqwT2PAuhwDlLuFBKajCpzjKaUu9M
+         SQYx6wWu0vrfLRHFOk/WT7KaGEpDvfCvGKS0QPxr5M2NrdMauC5l+b2ZdU87jpQhXpZD
+         m5gBG5HASXQ6NG9TpzTV/MKTO5qXEXBgkj0OofTfC0rFw8tp/M60CkCzo5lQjVVp8ItK
+         iWhMA0qEsCTZWK6BrAdzihxonE2/buT2wEIeaHbA4oTvepaiVF3KsSeUpvnJ127qL2SM
+         ZJNxRWlY/ntCNkLYz/CoKv9jKAo/BqZXIo0n7MstddBPidS+1kT9uYYN39cgF3qOkh0S
+         9Kqw==
+X-Gm-Message-State: AOAM530qpkxd/KHqg1N79xoDCZADp3+c9m5eMA5HJLN6d1PwTiygJ3ls
+        0vA77QK9aq4Ek6gg0WePHfGNvXGPffSsyA==
+X-Google-Smtp-Source: ABdhPJw4pxW0ga/gQyMGG8k4qGV1De2nfAFEYy1TNL+ZhTB0mr6ArOp7lrv/npWU/x/zF8/LPUyc9Q==
+X-Received: by 2002:a37:7744:: with SMTP id s65mr23000754qkc.357.1614036066131;
+        Mon, 22 Feb 2021 15:21:06 -0800 (PST)
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com. [209.85.219.171])
+        by smtp.gmail.com with ESMTPSA id s60sm12316946qtd.16.2021.02.22.15.21.05
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Feb 2021 15:21:05 -0800 (PST)
+Received: by mail-yb1-f171.google.com with SMTP id d9so5734880ybq.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 15:21:05 -0800 (PST)
+X-Received: by 2002:a5b:84f:: with SMTP id v15mr34421582ybq.79.1614036064956;
+ Mon, 22 Feb 2021 15:21:04 -0800 (PST)
+MIME-Version: 1.0
+References: <20210219181032.1.I23e12818c4a841ba9c37c60b3ba8cfeeb048285f@changeid>
+In-Reply-To: <20210219181032.1.I23e12818c4a841ba9c37c60b3ba8cfeeb048285f@changeid>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 22 Feb 2021 15:20:53 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=Vcsu1JREUgtEH1zXB7Ph8QWWYMVO2ioqqVYj9Dd79JDg@mail.gmail.com>
+Message-ID: <CAD=FV=Vcsu1JREUgtEH1zXB7Ph8QWWYMVO2ioqqVYj9Dd79JDg@mail.gmail.com>
+Subject: Re: [PATCH 1/3] arm64: dts: qcom: sc7180: Add lazor rev4
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Resumes the actual scsi device the unit descriptor of which
-is being accessed instead of the hba alone.
+Hi,
 
-Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
----
- drivers/scsi/ufs/ufs-sysfs.c | 26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+On Fri, Feb 19, 2021 at 6:11 PM Matthias Kaehlcke <mka@chromium.org> wrote:
+>
+> Lazor rev3 and older are stuffed with a 47k NTC thermistor for the
+> charger temperature which currently isn't supported by the PM6150 ADC
+> driver. A supported thermistor is used in rev4 and later revisions.
+> Add rev4 .dts files to be able to account for this.
+>
+> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> ---
+>
+>  arch/arm64/boot/dts/qcom/Makefile             |  3 ++
+>  .../dts/qcom/sc7180-trogdor-lazor-r3-kb.dts   |  4 +--
+>  .../dts/qcom/sc7180-trogdor-lazor-r3-lte.dts  |  4 +--
+>  .../boot/dts/qcom/sc7180-trogdor-lazor-r3.dts |  4 +--
+>  .../dts/qcom/sc7180-trogdor-lazor-r4-kb.dts   | 20 +++++++++++++
+>  .../dts/qcom/sc7180-trogdor-lazor-r4-lte.dts  | 28 +++++++++++++++++++
+>  .../boot/dts/qcom/sc7180-trogdor-lazor-r4.dts | 16 +++++++++++
+>  7 files changed, 73 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/scsi/ufs/ufs-sysfs.c b/drivers/scsi/ufs/ufs-sysfs.c
-index acc54f5..34481e3 100644
---- a/drivers/scsi/ufs/ufs-sysfs.c
-+++ b/drivers/scsi/ufs/ufs-sysfs.c
-@@ -297,10 +297,10 @@ static ssize_t ufs_sysfs_read_desc_param(struct ufs_hba *hba,
- 		goto out;
- 	}
- 
--	pm_runtime_get_sync(hba->dev);
-+	scsi_autopm_get_device(hba->sdev_ufs_device);
- 	ret = ufshcd_read_desc_param(hba, desc_id, desc_index,
- 				param_offset, desc_buf, param_size);
--	pm_runtime_put_sync(hba->dev);
-+	scsi_autopm_put_device(hba->sdev_ufs_device);
- 	if (ret) {
- 		ret = -EINVAL;
- 		goto out;
-@@ -678,7 +678,7 @@ static ssize_t _name##_show(struct device *dev,				\
- 		up(&hba->host_sem);					\
- 		return -ENOMEM;						\
- 	}								\
--	pm_runtime_get_sync(hba->dev);					\
-+	scsi_autopm_get_device(hba->sdev_ufs_device);			\
- 	ret = ufshcd_query_descriptor_retry(hba,			\
- 		UPIU_QUERY_OPCODE_READ_DESC, QUERY_DESC_IDN_DEVICE,	\
- 		0, 0, desc_buf, &desc_len);				\
-@@ -695,7 +695,7 @@ static ssize_t _name##_show(struct device *dev,				\
- 		goto out;						\
- 	ret = sysfs_emit(buf, "%s\n", desc_buf);			\
- out:									\
--	pm_runtime_put_sync(hba->dev);					\
-+	scsi_autopm_put_device(hba->sdev_ufs_device);			\
- 	kfree(desc_buf);						\
- 	up(&hba->host_sem);						\
- 	return ret;							\
-@@ -744,10 +744,10 @@ static ssize_t _name##_show(struct device *dev,				\
- 	}								\
- 	if (ufshcd_is_wb_flags(QUERY_FLAG_IDN##_uname))			\
- 		index = ufshcd_wb_get_query_index(hba);			\
--	pm_runtime_get_sync(hba->dev);					\
-+	scsi_autopm_get_device(hba->sdev_ufs_device);			\
- 	ret = ufshcd_query_flag(hba, UPIU_QUERY_OPCODE_READ_FLAG,	\
- 		QUERY_FLAG_IDN##_uname, index, &flag);			\
--	pm_runtime_put_sync(hba->dev);					\
-+	scsi_autopm_put_device(hba->sdev_ufs_device);			\
- 	if (ret) {							\
- 		ret = -EINVAL;						\
- 		goto out;						\
-@@ -813,10 +813,10 @@ static ssize_t _name##_show(struct device *dev,				\
- 	}								\
- 	if (ufshcd_is_wb_attrs(QUERY_ATTR_IDN##_uname))			\
- 		index = ufshcd_wb_get_query_index(hba);			\
--	pm_runtime_get_sync(hba->dev);					\
-+	scsi_autopm_get_device(hba->sdev_ufs_device);			\
- 	ret = ufshcd_query_attr(hba, UPIU_QUERY_OPCODE_READ_ATTR,	\
- 		QUERY_ATTR_IDN##_uname, index, 0, &value);		\
--	pm_runtime_put_sync(hba->dev);					\
-+	scsi_autopm_put_device(hba->sdev_ufs_device);			\
- 	if (ret) {							\
- 		ret = -EINVAL;						\
- 		goto out;						\
-@@ -899,11 +899,15 @@ static ssize_t _pname##_show(struct device *dev,			\
- 	struct scsi_device *sdev = to_scsi_device(dev);			\
- 	struct ufs_hba *hba = shost_priv(sdev->host);			\
- 	u8 lun = ufshcd_scsi_to_upiu_lun(sdev->lun);			\
-+	int ret;							\
- 	if (!ufs_is_valid_unit_desc_lun(&hba->dev_info, lun,		\
- 				_duname##_DESC_PARAM##_puname))		\
- 		return -EINVAL;						\
--	return ufs_sysfs_read_desc_param(hba, QUERY_DESC_IDN_##_duname,	\
-+	scsi_autopm_get_device(sdev);					\
-+	ret = ufs_sysfs_read_desc_param(hba, QUERY_DESC_IDN_##_duname,	\
- 		lun, _duname##_DESC_PARAM##_puname, buf, _size);	\
-+	scsi_autopm_put_device(sdev);					\
-+	return ret;							\
- }									\
- static DEVICE_ATTR_RO(_pname)
- 
-@@ -964,10 +968,10 @@ static ssize_t dyn_cap_needed_attribute_show(struct device *dev,
- 		goto out;
- 	}
- 
--	pm_runtime_get_sync(hba->dev);
-+	scsi_autopm_get_device(hba->sdev_ufs_device);
- 	ret = ufshcd_query_attr(hba, UPIU_QUERY_OPCODE_READ_ATTR,
- 		QUERY_ATTR_IDN_DYN_CAP_NEEDED, lun, 0, &value);
--	pm_runtime_put_sync(hba->dev);
-+	scsi_autopm_put_device(hba->sdev_ufs_device);
- 	if (ret) {
- 		ret = -EINVAL;
- 		goto out;
--- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+From what I can see in the latest discussions -r4 _won't_ get stuffed
+with the 100K resistor.  Thus we can just treat -r4 as the same as all
+the other revisoins now, right?
 
+-Doug
