@@ -2,388 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 443B7321C67
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Feb 2021 17:10:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E750C321CF3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Feb 2021 17:29:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231754AbhBVQIM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Feb 2021 11:08:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51494 "EHLO
+        id S230471AbhBVQ2c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Feb 2021 11:28:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231667AbhBVQHJ (ORCPT
+        with ESMTP id S231727AbhBVQ1o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Feb 2021 11:07:09 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0851DC061786;
-        Mon, 22 Feb 2021 08:06:02 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id b3so19640316wrj.5;
-        Mon, 22 Feb 2021 08:06:01 -0800 (PST)
+        Mon, 22 Feb 2021 11:27:44 -0500
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55355C06178A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 08:26:59 -0800 (PST)
+Received: by mail-lj1-x22e.google.com with SMTP id u4so59632572ljh.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 08:26:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nbAcmhlGdjKSXvwOTcRLldAj5yGwOd44DYbhKMd4N98=;
-        b=rbaSKiu1dCcBLjobCvCLJk5Wyfoqo2Q9/mjM0yBMS2aIEwlCJ2geyVEqoY3uPIY4F+
-         +XiarhhQcXnHgnvAfR+uEh15t5Sqw3t7TEo3HJiT8pkbOFrbDZLR/xEAg3QbqvuxC5Fu
-         mmJaXIQ3R+xvh4pbU72lEnHplzR5fMSVCS0mxa+uut8d2tZY9Neq8tPYh1i/Q/o5IWrh
-         PDLmGDDtHWT9b16yvp+YWKkqMyedwBTODRZULViwiM+LZcW0/ZSnhs7uzFEIQRQsYISJ
-         ET0e2xN4awPAFpTipJGEs2dmrPOHoTX0AXtVTYwPAZMYumEM6l+PI2amluSorouQmzFE
-         qwdg==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=mp2QQ7MvrV5zUofeFKg73RhwyazD5hfojtJwL2lbSOo=;
+        b=CQ5BSYE17bAMylBR6D/q2/HIcfSBxLJksn3AmOzI1DfO+18D98Ie5GrJoA5Gk4DGp1
+         kMW0MOxFH8THlXa0hbZqRbS7iAD4SShoL+OWC89YNpbuFje1X8hsrnvdUqz+vq1Qizfj
+         22ukhqqfzvcTWqdLsG0xzJdj5tbX1PVM77aDzCpQQ3v6HC8OCEr68vIlwTVXvFS76flt
+         /Aj4M34J6IJdI2rEvhixZEbR9f9U+WwBucJLpx8VEIMqorvIyY+yx2U8J/7MRbQaGjow
+         l82Jn0VaVyEew4UcIE2y9D6pGcgYkWY5wQT0vqFgMt5m/O5oetsf/PIX97iNZT1m7Hi8
+         repw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nbAcmhlGdjKSXvwOTcRLldAj5yGwOd44DYbhKMd4N98=;
-        b=N1MfPs3uwUEWcEkbihfS1loDrJ2qdtuAY2HWaiZCf0mNb3KYzIG59IkgomiMTLrDgF
-         5YCk/npq+eqI/H0uvVp16dbPkF9AwIFF5NMylQWKRq5PvXSIaj62fwqR+C3PCUk147GD
-         EsSLv2yCwI16+PolN1jhbaCVYzPkfkkbKC62NVa2NloWK/EovBs75zmVKF79CUCmU6vf
-         GknnGFqDxU/b3HJWbe3b0FooN0hg93uFYXM86bEY1zPoGfYtRKDnfIYlEP3+0559w7OY
-         05G33EzJWuoygzANnPXJiwHHrmZppa3jxr3WS7m4Pmb2LoN6TFFr1MJhN8BYXNUzHfp5
-         Lh6w==
-X-Gm-Message-State: AOAM5304vJAfL0PxXH8URaSeWWQiZjzqNfqG1Q6cV+6cZbBIKwCBRoRB
-        lHPFCkBeBo7RL166O32HRooIj+vIMHnvJQE8N1U=
-X-Google-Smtp-Source: ABdhPJyHopO6mHb5EqDxulpT9Kha5K6c7fkNDS9RDfIbaq/fasNvz9dIU6/yCZ0mtcRfR7Y+jsJJYiajcjUQhBWEM9k=
-X-Received: by 2002:adf:dd44:: with SMTP id u4mr4590975wrm.327.1614009960544;
- Mon, 22 Feb 2021 08:06:00 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=mp2QQ7MvrV5zUofeFKg73RhwyazD5hfojtJwL2lbSOo=;
+        b=kDkxqvuKZULOCM33mHbaanKvoQ61NP6jAn9TIK+DbKYg06b60fWc106FghC8uRnXcS
+         0clhh3Qsv1hIrNiGYyWlh3GeqJglzs1Piv5PP1tL59P4hp4fDVTEgnSt2U4FzZAVFXFs
+         lxgQTCmhRnXU8oAnwAOTzzMdAcYX/CiL2zD1l6t/EdAWEume9e3kp4PWZggYS7rnOse5
+         tR+AigUTMWIMVpvujwYAADyABV0wDb8DkaX9AYQks52f3sKPKRFr15hghBoPTxy7yVns
+         hZvU4Ro4kmYoVZzp25xP8uXnifoqJp20JuytExS6frsnXGJtYddHR8M7dK24fTkRqfM6
+         bD8A==
+X-Gm-Message-State: AOAM5328JGJWsJ/MjaabIm+aS5kWScaqAYOeL1cNWgJeawMHoyWcANOK
+        O8eaWwBh/raNUM0AJ1RiSezIGw==
+X-Google-Smtp-Source: ABdhPJxGwceBPuVjmyf18Mdqo1hgQf9u3FDMoPxiBpD6nJuwxSs7K8ql3RXClACX9VwKUk2lVHWFyQ==
+X-Received: by 2002:a2e:9cc2:: with SMTP id g2mr14144873ljj.348.1614011217845;
+        Mon, 22 Feb 2021 08:26:57 -0800 (PST)
+Received: from [192.168.118.216] ([85.249.43.69])
+        by smtp.gmail.com with ESMTPSA id a6sm1087926ljp.135.2021.02.22.08.26.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Feb 2021 08:26:57 -0800 (PST)
+Subject: Re: [PATCH v5 08/22] media: camss: Add missing format identifiers
+To:     Robert Foss <robert.foss@linaro.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, todor.too@gmail.com,
+        mchehab@kernel.org, robh+dt@kernel.org,
+        angelogioacchino.delregno@somainline.org,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Sakari Ailus <sakari.ailus@iki.fi>,
+        Nicolas Boichat <drinkcat@chromium.org>
+Cc:     Rob Herring <robh@kernel.org>, Tomasz Figa <tfiga@chromium.org>,
+        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
+        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Jonathan Marek <jonathan@marek.ca>
+References: <20210217112122.424236-1-robert.foss@linaro.org>
+ <20210217112122.424236-9-robert.foss@linaro.org>
+From:   Andrey Konovalov <andrey.konovalov@linaro.org>
+Message-ID: <3e8eced2-de18-5def-c25e-b819e17b9c22@linaro.org>
+Date:   Mon, 22 Feb 2021 19:26:55 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-References: <1613651746-12783-1-git-send-email-kalyan_t@codeaurora.org>
-In-Reply-To: <1613651746-12783-1-git-send-email-kalyan_t@codeaurora.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 22 Feb 2021 08:08:58 -0800
-Message-ID: <CAF6AEGuyGf2qXK-obqVfj8utKUh5uKVn8Pc-4Uk7h0S3eZme5g@mail.gmail.com>
-Subject: Re: [v4] drm/msm/disp/dpu1: turn off vblank irqs aggressively in dpu driver
-To:     Kalyan Thota <kalyan_t@codeaurora.org>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Krishna Manikandan <mkrishn@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Drew Davenport <ddavenport@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20210217112122.424236-9-robert.foss@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Feb 18, 2021 at 4:36 AM Kalyan Thota <kalyan_t@codeaurora.org> wrote:
->
-> Set the flag vblank_disable_immediate = true to turn off vblank irqs
-> immediately as soon as drm_vblank_put is requested so that there are
-> no irqs triggered during idle state. This will reduce cpu wakeups
-> and help in power saving.
->
-> To enable vblank_disable_immediate flag the underlying KMS driver
-> needs to support high precision vblank timestamping and also a
-> reliable way of providing vblank counter which is incrementing
-> at the leading edge of vblank.
->
-> This patch also brings in changes to support vblank_disable_immediate
-> requirement in dpu driver.
->
-> Changes in v1:
->  - Specify reason to add vblank timestamp support. (Rob).
->  - Add changes to provide vblank counter from dpu driver.
->
-> Changes in v2:
->  - Fix warn stack reported by Rob Clark with v2 patch.
->
-> Changes in v3:
->  - Move back to HW frame counter (Rob).
->
+Hi Robert,
 
-could you let me know what the delta was in v4?  (No need to resend
-yet, if needed I can amend the commit msg when applying)
+Thank you for your patch!
 
-BR,
--R
-
->  Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
+On 17.02.2021 14:21, Robert Foss wrote:
+> The CSI-2 spec defines the following types:
+>   - Data Type - Often abbreviated DT
+>   - Decode Format - Often abbreviated as DF
+>   - Encode Format
+> 
+> These definitions are as far as I can tell complete for CSI-2.
+> 
+> Additionally the Qualcomm internal type describing Plain Formats
+> has been added. Plain formats describe the size of the pixels
+> written by the RDI units to memory. PLAIN8 for example has the size
+> 8 bits, and PLAIN32 32 bits. The appropriate Plain Format is
+> determined by the Decode Format used. The smallest Plain Format
+> that is able to contain a pixel of the used Decode Format is the
+> appropriate one to use.
+> 
+> Signed-off-by: Robert Foss <robert.foss@linaro.org>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c           | 80 ++++++++++++++++++++++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        | 30 ++++++++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h        | 11 +++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h   |  1 +
->  .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   | 26 +++++++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        |  1 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h        |  1 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |  5 ++
->  8 files changed, 155 insertions(+)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index d4662e8..9a80981 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -65,6 +65,83 @@ static void dpu_crtc_destroy(struct drm_crtc *crtc)
->         kfree(dpu_crtc);
->  }
->
-> +static struct drm_encoder *get_encoder_from_crtc(struct drm_crtc *crtc)
-> +{
-> +       struct drm_device *dev = crtc->dev;
-> +       struct drm_encoder *encoder;
+>   .../media/platform/qcom/camss/camss-csid.h    | 50 +++++++++++++++++++
+>   1 file changed, 50 insertions(+)
+> 
+> diff --git a/drivers/media/platform/qcom/camss/camss-csid.h b/drivers/media/platform/qcom/camss/camss-csid.h
+> index 1824b3745e10..02fc34ee8a41 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csid.h
+> +++ b/drivers/media/platform/qcom/camss/camss-csid.h
+> @@ -21,6 +21,56 @@
+>   #define MSM_CSID_PAD_SRC 1
+>   #define MSM_CSID_PADS_NUM 2
+>   
+> +#define DATA_TYPE_EMBEDDED_DATA_8BIT	0x12
+> +#define DATA_TYPE_YUV420_8BIT		0x18
+> +#define DATA_TYPE_YUV420_10BIT		0x19
+> +#define DATA_TYPE_YUV420_8BIT_LEGACY	0x1a
+> +#define DATA_TYPE_YUV420_8BIT_SHIFTED	0x1c /* Chroma Shifted Pixel Sampling */
+> +#define DATA_TYPE_YUV420_10BIT_SHIFTED	0x1d /* Chroma Shifted Pixel Sampling */
+> +#define DATA_TYPE_YUV422_8BIT		0x1e
+> +#define DATA_TYPE_YUV422_10BIT		0x1f
+> +#define DATA_TYPE_RGB444		0x20
+> +#define DATA_TYPE_RGB555		0x21
+> +#define DATA_TYPE_RGB565		0x22
+> +#define DATA_TYPE_RGB666		0x23
+> +#define DATA_TYPE_RGB888		0x24
+> +#define DATA_TYPE_RAW_24BIT		0x27
+> +#define DATA_TYPE_RAW_6BIT		0x28
+> +#define DATA_TYPE_RAW_7BIT		0x29
+> +#define DATA_TYPE_RAW_8BIT		0x2a
+> +#define DATA_TYPE_RAW_10BIT		0x2b
+> +#define DATA_TYPE_RAW_12BIT		0x2c
+> +#define DATA_TYPE_RAW_14BIT		0x2d
+> +#define DATA_TYPE_RAW_16BIT		0x2e
+> +#define DATA_TYPE_RAW_20BIT		0x2f
+
+- these look OK for me (the old MIPI spec draft I have doesn't have
+   some of the data types listed above).
+
+   As these are generic values from the MIPI standard, it could probably make
+   sense to create a common header file for that someday.
+   E.g. the very similar defines (same values, different names) are present in
+   drivers/staging/media/atomisp/pci/isp_capture_defs.h
+   But it looks like most of the current drivers don't need the MIPI data type
+   defines, so not a problem at the moment.
+
 > +
-> +       drm_for_each_encoder(encoder, dev)
-> +               if (encoder->crtc == crtc)
-> +                       return encoder;
+> +#define DECODE_FORMAT_UNCOMPRESSED_6_BIT	0x0
+> +#define DECODE_FORMAT_UNCOMPRESSED_8_BIT	0x1
+> +#define DECODE_FORMAT_UNCOMPRESSED_10_BIT	0x2
+> +#define DECODE_FORMAT_UNCOMPRESSED_12_BIT	0x3
+> +#define DECODE_FORMAT_UNCOMPRESSED_14_BIT	0x4
+> +#define DECODE_FORMAT_UNCOMPRESSED_16_BIT	0x5
+> +#define DECODE_FORMAT_UNCOMPRESSED_20_BIT	0x6
+> +#define DECODE_FORMAT_DPCM_10_6_10		0x7
+> +#define DECODE_FORMAT_DPCM_10_8_10		0x8
+> +#define DECODE_FORMAT_DPCM_12_6_12		0x9
+> +#define DECODE_FORMAT_DPCM_12_8_12		0xA
+> +#define DECODE_FORMAT_DPCM_14_8_14		0xB
+> +#define DECODE_FORMAT_DPCM_14_10_14		0xC
+> +#define DECODE_FORMAT_USER_DEFINED		0xE
+> +#define DECODE_FORMAT_PAYLOAD_ONLY		0xF
+
+- interesting that the subset of the DECODE_FORMAT's used in
+   camss-csid-4-1.c (the first four formats above - UNCOMPRESSED_6_BIT
+   to UNCOMPRESSED_12_BIT ones) has the same values as the corresponding
+   field in the CSID_CID_n_CFG registers - according to the public
+   "APQ8016E Technical Reference Manual" [1]. So these exact DECODE_FORMAT_*
+   values are written into the bits 7:4 of the hw register.
+   But in [1] the values of DPCM_10_6_10 to DPCM_12_8_12 are 0x4 to 0x7
+   (as the camss-csid-4-1.c doesn't support DPCM this is not an issue).
+   Are the DECODE_FORMAT_* values above defined in the MIPI standard, or did
+   they come from the datasheet for a particular SOC?
+
+[1] https://developer.qualcomm.com/download/sd410/snapdragon-410e-technical-reference-manual.pdf
+     page 990
 > +
-> +       return NULL;
-> +}
+> +#define ENCODE_FORMAT_RAW_8_BIT		0x1
+> +#define ENCODE_FORMAT_RAW_10_BIT	0x2
+> +#define ENCODE_FORMAT_RAW_12_BIT	0x3
+> +#define ENCODE_FORMAT_RAW_14_BIT	0x4
+> +#define ENCODE_FORMAT_RAW_16_BIT	0x5
+
+- the ENCODE_FORMAT_* defines are not used in the driver.
+
 > +
-> +static u32 dpu_crtc_get_vblank_counter(struct drm_crtc *crtc)
-> +{
-> +       struct drm_encoder *encoder;
+> +#define PLAIN_FORMAT_PLAIN8	0x0 /* supports DPCM, UNCOMPRESSED_6/8_BIT */
+> +#define PLAIN_FORMAT_PLAIN16	0x1 /* supports DPCM, UNCOMPRESSED_10/16_BIT */
+> +#define PLAIN_FORMAT_PLAIN32	0x2 /* supports UNCOMPRESSED_20_BIT */
+
+- the PLAIN_FORMAT_* defines are not used in the driver, but
+   camss-csid-4-1.c and camss-csid-4-7.c do define there own
+   CAMSS_CSID_CID_n_CFG_PLAIN_FORMAT_8 and CAMSS_CSID_CID_n_CFG_PLAIN_FORMAT_16
+   (without relying on PLAIN_FORMAT_PLAIN8 or PLAIN_FORMAT_PLAIN16).
+
+Thanks,
+Andrey
+
 > +
-> +       encoder = get_encoder_from_crtc(crtc);
-> +       if (!encoder) {
-> +               DRM_ERROR("no encoder found for crtc %d\n", crtc->index);
-> +               return false;
-> +       }
 > +
-> +       return dpu_encoder_get_frame_count(encoder);
-> +}
-> +
-> +static bool dpu_crtc_get_scanout_position(struct drm_crtc *crtc,
-> +                                          bool in_vblank_irq,
-> +                                          int *vpos, int *hpos,
-> +                                          ktime_t *stime, ktime_t *etime,
-> +                                          const struct drm_display_mode *mode)
-> +{
-> +       unsigned int pipe = crtc->index;
-> +       struct drm_encoder *encoder;
-> +       int line, vsw, vbp, vactive_start, vactive_end, vfp_end;
-> +
-> +       encoder = get_encoder_from_crtc(crtc);
-> +       if (!encoder) {
-> +               DRM_ERROR("no encoder found for crtc %d\n", pipe);
-> +               return false;
-> +       }
-> +
-> +       vsw = mode->crtc_vsync_end - mode->crtc_vsync_start;
-> +       vbp = mode->crtc_vtotal - mode->crtc_vsync_end;
-> +
-> +       /*
-> +        * the line counter is 1 at the start of the VSYNC pulse and VTOTAL at
-> +        * the end of VFP. Translate the porch values relative to the line
-> +        * counter positions.
-> +        */
-> +
-> +       vactive_start = vsw + vbp + 1;
-> +       vactive_end = vactive_start + mode->crtc_vdisplay;
-> +
-> +       /* last scan line before VSYNC */
-> +       vfp_end = mode->crtc_vtotal;
-> +
-> +       if (stime)
-> +               *stime = ktime_get();
-> +
-> +       line = dpu_encoder_get_linecount(encoder);
-> +
-> +       if (line < vactive_start)
-> +               line -= vactive_start;
-> +       else if (line > vactive_end)
-> +               line = line - vfp_end - vactive_start;
-> +       else
-> +               line -= vactive_start;
-> +
-> +       *vpos = line;
-> +       *hpos = 0;
-> +
-> +       if (etime)
-> +               *etime = ktime_get();
-> +
-> +       return true;
-> +}
-> +
->  static void _dpu_crtc_setup_blend_cfg(struct dpu_crtc_mixer *mixer,
->                 struct dpu_plane_state *pstate, struct dpu_format *format)
->  {
-> @@ -1243,6 +1320,8 @@ static const struct drm_crtc_funcs dpu_crtc_funcs = {
->         .early_unregister = dpu_crtc_early_unregister,
->         .enable_vblank  = msm_crtc_enable_vblank,
->         .disable_vblank = msm_crtc_disable_vblank,
-> +       .get_vblank_timestamp = drm_crtc_vblank_helper_get_vblank_timestamp,
-> +       .get_vblank_counter = dpu_crtc_get_vblank_counter,
->  };
->
->  static const struct drm_crtc_helper_funcs dpu_crtc_helper_funcs = {
-> @@ -1251,6 +1330,7 @@ static const struct drm_crtc_helper_funcs dpu_crtc_helper_funcs = {
->         .atomic_check = dpu_crtc_atomic_check,
->         .atomic_begin = dpu_crtc_atomic_begin,
->         .atomic_flush = dpu_crtc_atomic_flush,
-> +       .get_scanout_position = dpu_crtc_get_scanout_position,
->  };
->
->  /* initialize crtc */
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index f7f5c25..5cd3f31 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -425,6 +425,36 @@ int dpu_encoder_helper_unregister_irq(struct dpu_encoder_phys *phys_enc,
->         return 0;
->  }
->
-> +int dpu_encoder_get_frame_count(struct drm_encoder *drm_enc)
-> +{
-> +       struct dpu_encoder_virt *dpu_enc;
-> +       struct dpu_encoder_phys *phys;
-> +       int framecount = 0;
-> +
-> +       dpu_enc = to_dpu_encoder_virt(drm_enc);
-> +       phys = dpu_enc ? dpu_enc->cur_master : NULL;
-> +
-> +       if (phys && phys->ops.get_frame_count)
-> +               framecount = phys->ops.get_frame_count(phys);
-> +
-> +       return framecount;
-> +}
-> +
-> +int dpu_encoder_get_linecount(struct drm_encoder *drm_enc)
-> +{
-> +       struct dpu_encoder_virt *dpu_enc;
-> +       struct dpu_encoder_phys *phys;
-> +       int linecount = 0;
-> +
-> +       dpu_enc = to_dpu_encoder_virt(drm_enc);
-> +       phys = dpu_enc ? dpu_enc->cur_master : NULL;
-> +
-> +       if (phys && phys->ops.get_line_count)
-> +               linecount = phys->ops.get_line_count(phys);
-> +
-> +       return linecount;
-> +}
-> +
->  void dpu_encoder_get_hw_resources(struct drm_encoder *drm_enc,
->                                   struct dpu_encoder_hw_resources *hw_res)
->  {
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> index b491346..99a5d73 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> @@ -156,5 +156,16 @@ void dpu_encoder_prepare_commit(struct drm_encoder *drm_enc);
->   */
->  void dpu_encoder_set_idle_timeout(struct drm_encoder *drm_enc,
->                                                         u32 idle_timeout);
-> +/**
-> + * dpu_encoder_get_linecount - get interface line count for the encoder.
-> + * @drm_enc:    Pointer to previously created drm encoder structure
-> + */
-> +int dpu_encoder_get_linecount(struct drm_encoder *drm_enc);
-> +
-> +/**
-> + * dpu_encoder_get_frame_count - get interface frame count for the encoder.
-> + * @drm_enc:    Pointer to previously created drm encoder structure
-> + */
-> +int dpu_encoder_get_frame_count(struct drm_encoder *drm_enc);
->
->  #endif /* __DPU_ENCODER_H__ */
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-> index f8f2515..ecbc4be 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-> @@ -143,6 +143,7 @@ struct dpu_encoder_phys_ops {
->         void (*prepare_idle_pc)(struct dpu_encoder_phys *phys_enc);
->         void (*restore)(struct dpu_encoder_phys *phys);
->         int (*get_line_count)(struct dpu_encoder_phys *phys);
-> +       int (*get_frame_count)(struct dpu_encoder_phys *phys);
->  };
->
->  /**
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> index 9a69fad..0e06b7e 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> @@ -658,6 +658,31 @@ static int dpu_encoder_phys_vid_get_line_count(
->         return phys_enc->hw_intf->ops.get_line_count(phys_enc->hw_intf);
->  }
->
-> +static int dpu_encoder_phys_vid_get_frame_count(
-> +               struct dpu_encoder_phys *phys_enc)
-> +{
-> +       struct intf_status s = {0};
-> +       u32 fetch_start = 0;
-> +       struct drm_display_mode mode = phys_enc->cached_mode;
-> +
-> +       if (!dpu_encoder_phys_vid_is_master(phys_enc))
-> +               return -EINVAL;
-> +
-> +       if (!phys_enc->hw_intf || !phys_enc->hw_intf->ops.get_status)
-> +               return -EINVAL;
-> +
-> +       phys_enc->hw_intf->ops.get_status(phys_enc->hw_intf, &s);
-> +
-> +       if (s.is_prog_fetch_en && s.is_en) {
-> +               fetch_start = mode.vtotal - (mode.vsync_start - mode.vdisplay);
-> +               if ((s.line_count > fetch_start) &&
-> +                       (s.line_count <= mode.vtotal))
-> +                       return s.frame_count + 1;
-> +       }
-> +
-> +       return s.frame_count;
-> +}
-> +
->  static void dpu_encoder_phys_vid_init_ops(struct dpu_encoder_phys_ops *ops)
->  {
->         ops->is_master = dpu_encoder_phys_vid_is_master;
-> @@ -676,6 +701,7 @@ static void dpu_encoder_phys_vid_init_ops(struct dpu_encoder_phys_ops *ops)
->         ops->handle_post_kickoff = dpu_encoder_phys_vid_handle_post_kickoff;
->         ops->needs_single_flush = dpu_encoder_phys_vid_needs_single_flush;
->         ops->get_line_count = dpu_encoder_phys_vid_get_line_count;
-> +       ops->get_frame_count = dpu_encoder_phys_vid_get_frame_count;
->  }
->
->  struct dpu_encoder_phys *dpu_encoder_phys_vid_init(
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> index 6f0f545..717178b 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> @@ -256,6 +256,7 @@ static void dpu_hw_intf_get_status(
->         struct dpu_hw_blk_reg_map *c = &intf->hw;
->
->         s->is_en = DPU_REG_READ(c, INTF_TIMING_ENGINE_EN);
-> +       s->is_prog_fetch_en = !!(DPU_REG_READ(c, INTF_CONFIG) & BIT(31));
->         if (s->is_en) {
->                 s->frame_count = DPU_REG_READ(c, INTF_FRAME_COUNT);
->                 s->line_count = DPU_REG_READ(c, INTF_LINE_COUNT);
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-> index 0ead64d..3568be8 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-> @@ -40,6 +40,7 @@ struct intf_prog_fetch {
->
->  struct intf_status {
->         u8 is_en;               /* interface timing engine is enabled or not */
-> +       u8 is_prog_fetch_en;    /* interface prog fetch counter is enabled or not */
->         u32 frame_count;        /* frame count since timing engine enabled */
->         u32 line_count;         /* current line count including blanking */
->  };
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 374b0e8..ed636f1 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -14,6 +14,7 @@
->
->  #include <drm/drm_crtc.h>
->  #include <drm/drm_file.h>
-> +#include <drm/drm_vblank.h>
->
->  #include "msm_drv.h"
->  #include "msm_mmu.h"
-> @@ -1020,6 +1021,10 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
->          */
->         dev->mode_config.allow_fb_modifiers = true;
->
-> +       dev->max_vblank_count = 0xffffffff;
-> +       /* Disable vblank irqs aggressively for power-saving */
-> +       dev->vblank_disable_immediate = true;
-> +
->         /*
->          * _dpu_kms_drm_obj_init should create the DRM related objects
->          * i.e. CRTCs, planes, encoders, connectors and so forth
-> --
-> 2.7.4
->
+>   enum csid_payload_mode {
+>   	CSID_PAYLOAD_MODE_INCREMENTING = 0,
+>   	CSID_PAYLOAD_MODE_ALTERNATING_55_AA = 1,
+> 
