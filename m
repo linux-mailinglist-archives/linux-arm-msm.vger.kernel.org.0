@@ -2,381 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B7E23212E0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Feb 2021 10:15:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D86132147E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Feb 2021 11:55:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230315AbhBVJOT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Feb 2021 04:14:19 -0500
-Received: from mx2.suse.de ([195.135.220.15]:43032 "EHLO mx2.suse.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230100AbhBVJNi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Feb 2021 04:13:38 -0500
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.221.27])
-        by mx2.suse.de (Postfix) with ESMTP id A0DFEAD6B;
-        Mon, 22 Feb 2021 09:12:55 +0000 (UTC)
-Subject: Re: [PATCH v3 06/11] drm: Use state helper instead of plane state
- pointer in atomic_check
-To:     Maxime Ripard <maxime@cerno.tech>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        David Airlie <airlied@linux.ie>
-Cc:     dri-devel@lists.freedesktop.org,
-        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Jyri Sarha <jyri.sarha@iki.fi>,
-        Tomi Valkeinen <tomba@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-mips@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org
-References: <20210219120032.260676-1-maxime@cerno.tech>
- <20210219120032.260676-6-maxime@cerno.tech>
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-Message-ID: <e6e8191d-08d9-7144-bb1a-ddaa6c21eccb@suse.de>
-Date:   Mon, 22 Feb 2021 10:12:49 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.1
+        id S230428AbhBVKwW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Feb 2021 05:52:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40498 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230419AbhBVKwV (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 22 Feb 2021 05:52:21 -0500
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01904C061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 02:51:41 -0800 (PST)
+Received: by mail-pj1-x1032.google.com with SMTP id d2so8769496pjs.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 02:51:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Lkr5dLB81IFIdhy/pc7K0qClWqgFlqG2/UfbKnqJ/Mc=;
+        b=QCiiwxLXYga89au9LkJdz/Is5odVu9UG1SSkl44ZNcl81AGd6NHHVgfaFFArnLlYHB
+         3F4uGoL/hy/wbnt1r+zpy6ZHJbooU2zRW3X9udEu2o4TnCA5pwAffx9DbCLEYuVKeKM6
+         Ejr53M0RaucEG8HWEs7aUCgO8i88X3atiDP5gx5ipextCj6TIi7vN8olyMC76OaLxbsA
+         ADl+tdz4hEIR5CZgqbwE52E99x11oPncRx+AbZRoiadhPeqAu3Bkb+JjyVG0j52Rfq3u
+         9dfgyvdYaEer/4Ll0SWOiF5FGoZfWG5vmlmql3pRw7ADgsX4pkS2HqdOjldRvOM1uxyl
+         /Fhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Lkr5dLB81IFIdhy/pc7K0qClWqgFlqG2/UfbKnqJ/Mc=;
+        b=PUl2yUPNQFuGKESkFytyYSkUggOl9rUN7SnylxyZtimgzKbjTqiARJRwPDFrXOt54n
+         zK1n1Ve/4wYOaDMHvgODoK9GbXRntMoupz3XofeZ8blcOcwuFB1REFj5pas7yv3lGb+u
+         cDqZWpydD8v6E8UlOLtqJgl3CitQklhSxOQwyuVAlLmYb6q+maKquAKvGfj0ngwLCV/q
+         uuimS5Qs9Q35XMMSKXJA1FUcQ7x+7kXaOyU1eoRCKB9qVEQih9jEbrIlx3UkGm3G51Bp
+         V0YxGpr+ja0uDnhN/Jg7ED8VvJt2YOVyKP8UllZMd5xzmsgz/cNCDaIJZSwx9JFWURaV
+         2Xwg==
+X-Gm-Message-State: AOAM532OOcYj2LdJq8pM3tPOCnu4wTzmn65uku+v7g+LkXbqINu2IIqx
+        mmZYXJWFjEGJZnnhmKum8MpOfuihTPYHo6qtUGd24g==
+X-Google-Smtp-Source: ABdhPJw4LMP0wd3rtHSJG+Yixa6wpQx6JYuOQu44s0vFN6qaW+pwWtVIYdWrY3lPccnJdJlaB4FpZ6rQLmMMhDM/DY4=
+X-Received: by 2002:a17:902:b610:b029:e3:2b1e:34ff with SMTP id
+ b16-20020a170902b610b02900e32b1e34ffmr14279977pls.69.1613991100602; Mon, 22
+ Feb 2021 02:51:40 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20210219120032.260676-6-maxime@cerno.tech>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="bA4SvHs6ElR5ovhly3dcssOpYX97W9uHZ"
+References: <20210217112122.424236-1-robert.foss@linaro.org>
+ <20210217112122.424236-2-robert.foss@linaro.org> <39f17656195110cc5298f53840ca02f790d7e4af.camel@ndufresne.ca>
+In-Reply-To: <39f17656195110cc5298f53840ca02f790d7e4af.camel@ndufresne.ca>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Mon, 22 Feb 2021 11:51:29 +0100
+Message-ID: <CAG3jFyvNigAZrwAEQOvKac2Sdu5rjtBDWrMjwhXkMmDpZXBUDg@mail.gmail.com>
+Subject: Re: [PATCH v5 01/22] media: camss: Fix vfe_isr_comp_done() documentation
+To:     Nicolas Dufresne <nicolas@ndufresne.ca>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Todor Tomov <todor.too@gmail.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        angelogioacchino.delregno@somainline.org,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        linux-media <linux-media@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Sakari Ailus <sakari.ailus@iki.fi>,
+        Andrey Konovalov <andrey.konovalov@linaro.org>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
+        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Jonathan Marek <jonathan@marek.ca>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---bA4SvHs6ElR5ovhly3dcssOpYX97W9uHZ
-Content-Type: multipart/mixed; boundary="T21ZT6yBrcVRcvT4wXPsDlU1t0XHXxb84";
- protected-headers="v1"
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: Maxime Ripard <maxime@cerno.tech>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Daniel Vetter <daniel.vetter@intel.com>, David Airlie <airlied@linux.ie>
-Cc: dri-devel@lists.freedesktop.org,
- =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
- Philipp Zabel <p.zabel@pengutronix.de>, Daniel Vetter <daniel@ffwll.ch>,
- Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>, NXP Linux Team <linux-imx@nxp.com>,
- Paul Cercueil <paul@crapouillou.net>, Rob Clark <robdclark@gmail.com>,
- Sean Paul <sean@poorly.run>, Jyri Sarha <jyri.sarha@iki.fi>,
- Tomi Valkeinen <tomba@kernel.org>, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org, linux-mips@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Message-ID: <e6e8191d-08d9-7144-bb1a-ddaa6c21eccb@suse.de>
-Subject: Re: [PATCH v3 06/11] drm: Use state helper instead of plane state
- pointer in atomic_check
-References: <20210219120032.260676-1-maxime@cerno.tech>
- <20210219120032.260676-6-maxime@cerno.tech>
-In-Reply-To: <20210219120032.260676-6-maxime@cerno.tech>
+On Fri, 19 Feb 2021 at 22:05, Nicolas Dufresne <nicolas@ndufresne.ca> wrote=
+:
+>
+> Hi Robert,
+>
+> not really a review, but I noticed ....
+>
+> Le mercredi 17 f=C3=A9vrier 2021 =C3=A0 12:21 +0100, Robert Foss a =C3=A9=
+crit :
+> > Function name is comment is wrong, and was changed to be
+>
+>                 in
 
---T21ZT6yBrcVRcvT4wXPsDlU1t0XHXxb84
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+Thanks bud!
 
-
-
-Am 19.02.21 um 13:00 schrieb Maxime Ripard:
-> Many drivers reference the plane->state pointer in order to get the
-> current plane state in their atomic_check hook, which would be the old
-> plane state in the global atomic state since _swap_state hasn't happene=
-d
-> when atomic_check is run.
->=20
-> Use the drm_atomic_get_old_plane_state helper to get that state to make=
-
-> it more obvious.
->=20
-> This was made using the coccinelle script below:
->=20
-> @ plane_atomic_func @
-> identifier helpers;
-> identifier func;
-> @@
->=20
-> static struct drm_plane_helper_funcs helpers =3D {
-> 	...,
-> 	.atomic_check =3D func,
-> 	...,
-> };
->=20
-> @ replaces_old_state @
-> identifier plane_atomic_func.func;
-> identifier plane, state, plane_state;
-> @@
->=20
->   func(struct drm_plane *plane, struct drm_atomic_state *state) {
->   	...
-> -	struct drm_plane_state *plane_state =3D plane->state;
-> +	struct drm_plane_state *plane_state =3D drm_atomic_get_old_plane_stat=
-e(state, plane);
->   	...
->   }
->=20
-> @@
-> identifier plane_atomic_func.func;
-> identifier plane, state, plane_state;
-> @@
->=20
->   func(struct drm_plane *plane, struct drm_atomic_state *state) {
->   	struct drm_plane_state *plane_state =3D drm_atomic_get_old_plane_sta=
-te(state, plane);
->   	<...
-> -	plane->state
-> +	plane_state
->   	...>
->   }
->=20
-> @ adds_old_state @
-> identifier plane_atomic_func.func;
-> identifier plane, state;
-> @@
->=20
->   func(struct drm_plane *plane, struct drm_atomic_state *state) {
-> +	struct drm_plane_state *old_plane_state =3D drm_atomic_get_old_plane_=
-state(state, plane);
->   	<...
-> -	plane->state
-> +	old_plane_state
->   	...>
->   }
->=20
-> @ include depends on adds_old_state || replaces_old_state @
-> @@
->=20
->   #include <drm/drm_atomic.h>
->=20
-> @ no_include depends on !include && (adds_old_state || replaces_old_sta=
-te) @
-> @@
->=20
-> + #include <drm/drm_atomic.h>
->    #include <drm/...>
->=20
-> Reviewed-by: Ville Syrj=C3=A4l=C3=A4 <ville.syrjala@linux.intel.com>
-> Signed-off-by: Maxime Ripard <maxime@cerno.tech>
-
-Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
-
-However, I find 'old plane state' somewhat confusing in this context,=20
-because it's actually the current plane state. Would it make sense to=20
-use drm_atomic_get_existing_plane_state() instead?
-
-Best regards
-Thomas
-
->=20
-> ---
->=20
-> Changes from v2:
->    - s/.../<.../ in the coccinelle script as suggested by Ville
-> ---
->   drivers/gpu/drm/imx/ipuv3-plane.c          |  3 ++-
->   drivers/gpu/drm/ingenic/ingenic-drm-drv.c  | 16 +++++++++-------
->   drivers/gpu/drm/ingenic/ingenic-ipu.c      |  8 +++++---
->   drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c |  4 +++-
->   drivers/gpu/drm/tilcdc/tilcdc_plane.c      |  3 ++-
->   5 files changed, 21 insertions(+), 13 deletions(-)
->=20
-> diff --git a/drivers/gpu/drm/imx/ipuv3-plane.c b/drivers/gpu/drm/imx/ip=
-uv3-plane.c
-> index b5f6123850bb..6484592e3f86 100644
-> --- a/drivers/gpu/drm/imx/ipuv3-plane.c
-> +++ b/drivers/gpu/drm/imx/ipuv3-plane.c
-> @@ -341,7 +341,8 @@ static int ipu_plane_atomic_check(struct drm_plane =
-*plane,
->   {
->   	struct drm_plane_state *new_state =3D drm_atomic_get_new_plane_state=
-(state,
->   									   plane);
-> -	struct drm_plane_state *old_state =3D plane->state;
-> +	struct drm_plane_state *old_state =3D drm_atomic_get_old_plane_state(=
-state,
-> +									   plane);
->   	struct drm_crtc_state *crtc_state;
->   	struct device *dev =3D plane->dev->dev;
->   	struct drm_framebuffer *fb =3D new_state->fb;
-> diff --git a/drivers/gpu/drm/ingenic/ingenic-drm-drv.c b/drivers/gpu/dr=
-m/ingenic/ingenic-drm-drv.c
-> index e6d7d0a04ddb..c022d9f1e737 100644
-> --- a/drivers/gpu/drm/ingenic/ingenic-drm-drv.c
-> +++ b/drivers/gpu/drm/ingenic/ingenic-drm-drv.c
-> @@ -361,11 +361,13 @@ static void ingenic_drm_crtc_atomic_flush(struct =
-drm_crtc *crtc,
->   static int ingenic_drm_plane_atomic_check(struct drm_plane *plane,
->   					  struct drm_atomic_state *state)
->   {
-> +	struct drm_plane_state *old_plane_state =3D drm_atomic_get_old_plane_=
-state(state,
-> +										 plane);
->   	struct drm_plane_state *new_plane_state =3D drm_atomic_get_new_plane=
-_state(state,
->   										 plane);
->   	struct ingenic_drm *priv =3D drm_device_get_priv(plane->dev);
->   	struct drm_crtc_state *crtc_state;
-> -	struct drm_crtc *crtc =3D new_plane_state->crtc ?: plane->state->crtc=
-;
-> +	struct drm_crtc *crtc =3D new_plane_state->crtc ?: old_plane_state->c=
-rtc;
->   	int ret;
->  =20
->   	if (!crtc)
-> @@ -399,12 +401,12 @@ static int ingenic_drm_plane_atomic_check(struct =
-drm_plane *plane,
->   	 * its position, size or depth.
->   	 */
->   	if (priv->soc_info->has_osd &&
-> -	    (!plane->state->fb || !new_plane_state->fb ||
-> -	     plane->state->crtc_x !=3D new_plane_state->crtc_x ||
-> -	     plane->state->crtc_y !=3D new_plane_state->crtc_y ||
-> -	     plane->state->crtc_w !=3D new_plane_state->crtc_w ||
-> -	     plane->state->crtc_h !=3D new_plane_state->crtc_h ||
-> -	     plane->state->fb->format->format !=3D new_plane_state->fb->forma=
-t->format))
-> +	    (!old_plane_state->fb || !new_plane_state->fb ||
-> +	     old_plane_state->crtc_x !=3D new_plane_state->crtc_x ||
-> +	     old_plane_state->crtc_y !=3D new_plane_state->crtc_y ||
-> +	     old_plane_state->crtc_w !=3D new_plane_state->crtc_w ||
-> +	     old_plane_state->crtc_h !=3D new_plane_state->crtc_h ||
-> +	     old_plane_state->fb->format->format !=3D new_plane_state->fb->fo=
-rmat->format))
->   		crtc_state->mode_changed =3D true;
->  =20
->   	return 0;
-> diff --git a/drivers/gpu/drm/ingenic/ingenic-ipu.c b/drivers/gpu/drm/in=
-genic/ingenic-ipu.c
-> index 1e1b0fe095bd..3d072b25e1c4 100644
-> --- a/drivers/gpu/drm/ingenic/ingenic-ipu.c
-> +++ b/drivers/gpu/drm/ingenic/ingenic-ipu.c
-> @@ -516,11 +516,13 @@ static void ingenic_ipu_plane_atomic_update(struc=
-t drm_plane *plane,
->   static int ingenic_ipu_plane_atomic_check(struct drm_plane *plane,
->   					  struct drm_atomic_state *state)
->   {
-> +	struct drm_plane_state *old_plane_state =3D drm_atomic_get_old_plane_=
-state(state,
-> +										 plane);
->   	struct drm_plane_state *new_plane_state =3D drm_atomic_get_new_plane=
-_state(state,
->   										 plane);
->   	unsigned int num_w, denom_w, num_h, denom_h, xres, yres, max_w, max_=
-h;
->   	struct ingenic_ipu *ipu =3D plane_to_ingenic_ipu(plane);
-> -	struct drm_crtc *crtc =3D new_plane_state->crtc ?: plane->state->crtc=
-;
-> +	struct drm_crtc *crtc =3D new_plane_state->crtc ?: old_plane_state->c=
-rtc;
->   	struct drm_crtc_state *crtc_state;
->  =20
->   	if (!crtc)
-> @@ -531,7 +533,7 @@ static int ingenic_ipu_plane_atomic_check(struct dr=
-m_plane *plane,
->   		return -EINVAL;
->  =20
->   	/* Request a full modeset if we are enabling or disabling the IPU. *=
-/
-> -	if (!plane->state->crtc ^ !new_plane_state->crtc)
-> +	if (!old_plane_state->crtc ^ !new_plane_state->crtc)
->   		crtc_state->mode_changed =3D true;
->  =20
->   	if (!new_plane_state->crtc ||
-> @@ -552,7 +554,7 @@ static int ingenic_ipu_plane_atomic_check(struct dr=
-m_plane *plane,
->   	if (((new_plane_state->src_w >> 16) & 1) || (new_plane_state->crtc_w=
- & 1))
->   		return -EINVAL;
->  =20
-> -	if (!osd_changed(new_plane_state, plane->state))
-> +	if (!osd_changed(new_plane_state, old_plane_state))
->   		return 0;
->  =20
->   	crtc_state->mode_changed =3D true;
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c b/drivers/gpu/d=
-rm/msm/disp/mdp5/mdp5_plane.c
-> index 4aac6217a5ad..6ce6ce09fecc 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-> @@ -406,12 +406,14 @@ static int mdp5_plane_atomic_check_with_state(str=
-uct drm_crtc_state *crtc_state,
->   static int mdp5_plane_atomic_check(struct drm_plane *plane,
->   				   struct drm_atomic_state *state)
->   {
-> +	struct drm_plane_state *old_plane_state =3D drm_atomic_get_old_plane_=
-state(state,
-> +										 plane);
->   	struct drm_plane_state *new_plane_state =3D drm_atomic_get_new_plane=
-_state(state,
->   										 plane);
->   	struct drm_crtc *crtc;
->   	struct drm_crtc_state *crtc_state;
->  =20
-> -	crtc =3D new_plane_state->crtc ? new_plane_state->crtc : plane->state=
-->crtc;
-> +	crtc =3D new_plane_state->crtc ? new_plane_state->crtc : old_plane_st=
-ate->crtc;
->   	if (!crtc)
->   		return 0;
->  =20
-> diff --git a/drivers/gpu/drm/tilcdc/tilcdc_plane.c b/drivers/gpu/drm/ti=
-lcdc/tilcdc_plane.c
-> index ebdd42dcaf82..c86258132432 100644
-> --- a/drivers/gpu/drm/tilcdc/tilcdc_plane.c
-> +++ b/drivers/gpu/drm/tilcdc/tilcdc_plane.c
-> @@ -26,7 +26,8 @@ static int tilcdc_plane_atomic_check(struct drm_plane=
- *plane,
->   	struct drm_plane_state *new_state =3D drm_atomic_get_new_plane_state=
-(state,
->   									   plane);
->   	struct drm_crtc_state *crtc_state;
-> -	struct drm_plane_state *old_state =3D plane->state;
-> +	struct drm_plane_state *old_state =3D drm_atomic_get_old_plane_state(=
-state,
-> +									   plane);
->   	unsigned int pitch;
->  =20
->   	if (!new_state->crtc)
->=20
-
---=20
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
-(HRB 36809, AG N=C3=BCrnberg)
-Gesch=C3=A4ftsf=C3=BChrer: Felix Imend=C3=B6rffer
-
-
---T21ZT6yBrcVRcvT4wXPsDlU1t0XHXxb84--
-
---bA4SvHs6ElR5ovhly3dcssOpYX97W9uHZ
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
-
------BEGIN PGP SIGNATURE-----
-
-wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmAzdZIFAwAAAAAACgkQlh/E3EQov+Bt
-3RAAuzu2QHRjNFDr4YQycCsXHtjg+DRC0mXzgKji6uZ2SI9+V0lohPR7dPKiHnxNa31Ubl64UItO
-BiLZzhjWa7VDJ51FEs7AdLjK0cKoG9LxtpNwxE4JwZzaX0GvTHN3R50nZCvSMFbNRfB3iVIwHJOA
-x9+SprTyBISsO8xTQVho2WMrDs7Nt0dTZBnrOIqBOnvhKcCx85T0VPgxzhIt7fB0O0xp8Bzb9wwT
-56HOPcrsL8ef40bEtnvr5+VrY4dkUV57kshq28scPAimL2hZF+JyncOxlmi9viuM4z63iB5lCJRA
-8RqttH1sQUxtzL5UhqTPkvQPcCpsl2czblAdyPlHYm5Sns3oL+n9mnG3l0GwEFlW/QYHFKhEXM+t
-rgleR1VspJon8k7mipoD4/b/me5AFhgpPEYHk8/iO5h+i45ChBaTbUk7BL+wSuSFRUMayAZvG+tx
-9d22LMMPIhiKK1WhDaVFetLvyIPzrh4sAa6WBAIoMFqo24jqHNxGddojGxGwN+BfYufOfyvF3kv7
-cRtjTOgmDSqSqsHvD114bf+t96jBjkmF2SghKNb0Yc/bkdqkLANhO6H2BLEp6QNzBhtfEzyLKvAb
-ZwuxN+q4I0CNUhmha5inPZ514kJoovXIzXfvxlOY7p+RgF/ETY6waru/KKzgQ3bgHqiV4hyZskXl
-8TQ=
-=wrum
------END PGP SIGNATURE-----
-
---bA4SvHs6ElR5ovhly3dcssOpYX97W9uHZ--
+>
+> > the same as the actual function name.
+> >
+> > The comment was changed to kerneldoc format.
+> >
+> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> > ---
+> >
+> > Changes since v1
+> >  - Bjorn: Fix function doc name & use kerneldoc format
+> >
+> >
+> >  drivers/media/platform/qcom/camss/camss-vfe.c | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c
+> > b/drivers/media/platform/qcom/camss/camss-vfe.c
+> > index fae2b513b2f9..94c9ca7d5cbb 100644
+> > --- a/drivers/media/platform/qcom/camss/camss-vfe.c
+> > +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+> > @@ -1076,8 +1076,8 @@ static void vfe_isr_wm_done(struct vfe_device *vf=
+e, u8
+> > wm)
+> >         spin_unlock_irqrestore(&vfe->output_lock, flags);
+> >  }
+> >
+> > -/*
+> > - * vfe_isr_wm_done - Process composite image done interrupt
+> > +/**
+> > + * vfe_isr_comp_done() - Process composite image done interrupt
+> >   * @vfe: VFE Device
+> >   * @comp: Composite image id
+> >   */
+>
+>
