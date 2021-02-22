@@ -2,88 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A3FB320FAA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Feb 2021 04:15:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F182321079
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Feb 2021 06:33:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229961AbhBVDPP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 21 Feb 2021 22:15:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56020 "EHLO
+        id S229983AbhBVFcP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Feb 2021 00:32:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229889AbhBVDPP (ORCPT
+        with ESMTP id S229967AbhBVFcJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 21 Feb 2021 22:15:15 -0500
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A592C061786
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Feb 2021 19:14:34 -0800 (PST)
-Received: by mail-pj1-x102f.google.com with SMTP id d2so8081888pjs.4
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Feb 2021 19:14:34 -0800 (PST)
+        Mon, 22 Feb 2021 00:32:09 -0500
+Received: from mail-ua1-x932.google.com (mail-ua1-x932.google.com [IPv6:2607:f8b0:4864:20::932])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A70CC06178A
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Feb 2021 21:31:29 -0800 (PST)
+Received: by mail-ua1-x932.google.com with SMTP id r19so3663595uak.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Feb 2021 21:31:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=10bX1LhmHSABq3rbCwkHCGHgOoQb7s54OEYN7cNndl8=;
-        b=oZJqsucUqFBnbwkux6q7xR7iW8JRFoFlP2voZ/7qmTu2mtTE1Ru98lvxoVv7H+bH/L
-         QDE4ETm+Dmui4I79hJVV5d0wjpBvNxTx7xoK0JBEGWn9hEyZOyQYtMRewHv/S+ilJ03i
-         JfDuOj2oCCFBgCoUCEm4NBxMHot8b5cvMXJdo=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Gu/fKr3GRAQ+ErLkQJBUlVQcwe14YTdgKKhXg0Cv4l4=;
+        b=nKDy+b2+V7fS2f7mnoG/Ss5+uvRYBQnercKoIeTycpfWKJxx6kOPPx2ZeMe5ucP5Iv
+         50sS1bwNYdUpsm04AudIWrPnD+CNDRIBtKgv/9JUPjkbQlh1RAybhdP7pPk7uV3lZTxy
+         I4/U2OZz5f4aafI7BWCv88whwJWIfvn83D3IM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=10bX1LhmHSABq3rbCwkHCGHgOoQb7s54OEYN7cNndl8=;
-        b=dnowSN6aPgMPbUO4ymBaDriZqJt9O0TktYwhuWNE2qLY+kXdVRZ4WW7yq/7BT7BvhN
-         1hE86zCOBMrb2BObPWI5ssw1bz9luIjdGE9CfI+Wu4Mbof6aimumjasN2+mOf3gYxl7E
-         P+2QzWVEdJaL2z+Z4zk+AOn34KlFnH3kp92tp7fK+4OY8GuSBW41BWrXIgRTmIIhAiz3
-         Ryv6OdYUkqBwfLA/NCSniqkiJaXbLftKusQrToP9ati08dy7936HbbUIjy2WwvYOEvb+
-         h8u7deNLm1e9C49lvl+jrY0x9AurTuja+m1sR58PuGlIbfYi5xLe6fqh3yYpM2MEYBE5
-         ZAqA==
-X-Gm-Message-State: AOAM533eXJjBBTJMPAv7OVT9ePo8iE042KZ0OfwsJlAeoG7YPnleP24N
-        fzb1hNFd2J4bB2PapAqoz2myOg==
-X-Google-Smtp-Source: ABdhPJzoAPCyKrDvByjNGAdAC6zmE40zXki8pi+kP+MAnLlrgwKxW1wkS1B0WbUCZPPvvsTFo5aF/w==
-X-Received: by 2002:a17:90b:2382:: with SMTP id mr2mr21322836pjb.190.1613963673547;
-        Sun, 21 Feb 2021 19:14:33 -0800 (PST)
-Received: from smtp.gmail.com ([2620:15c:202:201:a878:327b:a10a:e189])
-        by smtp.gmail.com with ESMTPSA id e8sm12460450pgb.35.2021.02.21.19.14.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 21 Feb 2021 19:14:33 -0800 (PST)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Elliot Berman <eberman@codeaurora.org>
-Subject: [PATCH] firmware: qcom_scm: Mark string array const
-Date:   Sun, 21 Feb 2021 19:14:31 -0800
-Message-Id: <20210222031431.3831189-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.30.0.617.g56c4b15f3c-goog
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Gu/fKr3GRAQ+ErLkQJBUlVQcwe14YTdgKKhXg0Cv4l4=;
+        b=lSKLIAS2FjLGDW2D4j7VXu6ksx38gzJxDbkUrUluY7Mgl4SycB+rvMyD9zR6JUxtXX
+         jjEMv50AClVCX/2zMn45cIGAUraiHjt58TtVTJwSTOiFSd3z5jt1RF9j2en8N0QwQn/P
+         h+YovNK5bhmRqc+erWph6/Bx314EydaZna9kgfuKxM8VaJdbOFw57DX4zsBbZj1bx1n6
+         xmONPj1/27ftyNcxbK7W1hObPcWA+dyAg5NyyP0t4VK4QHn9KafOx9C0rXi1YE2rRllq
+         Vo7mJCn884uVXJl/ru9MwIo+y8m83H0E5ItpQtEkmfMANnjCyy1vLf6DKiIUXIv19iv4
+         dhtw==
+X-Gm-Message-State: AOAM531Eq6m8vfXvvxo7egccyJ3vkn7NEwX9iT65ZWFNkkACT5EOgh5c
+        XyEvBlVC4vXNcUmlXfNpWucqLLG9c4uRbEpcsb72yA==
+X-Google-Smtp-Source: ABdhPJys5c+rCVxUlnAkJ7c+Jss6rAjW1MoFOcoVaCF3S96QpX3HiNwsT/MLRIitrpXf+DKZerK3D3cbUQdqljXKnGs=
+X-Received: by 2002:ab0:1052:: with SMTP id g18mr3262401uab.74.1613971888653;
+ Sun, 21 Feb 2021 21:31:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20210211113309.1.I629b2366a6591410359c7fcf6d385b474b705ca2@changeid>
+ <YDKvm1QmdJtJbaN6@pendragon.ideasonboard.com>
+In-Reply-To: <YDKvm1QmdJtJbaN6@pendragon.ideasonboard.com>
+From:   Nicolas Boichat <drinkcat@chromium.org>
+Date:   Mon, 22 Feb 2021 13:31:17 +0800
+Message-ID: <CANMq1KALq+C2GD2uRohKpwvkDC05-fHyo=_WoHwnsKNjgcSfEQ@mail.gmail.com>
+Subject: Re: [PATCH] drm/dsi: Add _NO_ to MIPI_DSI_* flags disabling features
+To:     Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Cc:     Andrzej Hajda <a.hajda@samsung.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Emil Velikov <emil.velikov@collabora.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Rikard Falkeborn <rikard.falkeborn@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>, Sean Paul <sean@poorly.run>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Xin Ji <xji@analogixsemi.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno@lists.freedesktop.org,
+        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm@vger.kernel.org, lkml <linux-kernel@vger.kernel.org>,
+        "moderated list:ARM/Mediatek SoC support" 
+        <linux-mediatek@lists.infradead.org>,
+        linux-samsung-soc@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Mark the qcom_scm_convention_names[] array const as it isn't changed.
+On Mon, Feb 22, 2021 at 3:08 AM Laurent Pinchart
+<laurent.pinchart@ideasonboard.com> wrote:
+>
+> Hi Nicolas,
+>
+> Thank you for the patch.
+>
+> On Thu, Feb 11, 2021 at 11:33:55AM +0800, Nicolas Boichat wrote:
+> > Many of the DSI flags have names opposite to their actual effects,
+> > e.g. MIPI_DSI_MODE_EOT_PACKET means that EoT packets will actually
+> > be disabled. Fix this by including _NO_ in the flag names, e.g.
+> > MIPI_DSI_MODE_NO_EOT_PACKET.
+> >
+> > Signed-off-by: Nicolas Boichat <drinkcat@chromium.org>
+>
+> This looks good to me, it increases readability.
+>
+> Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+>
+> Please however see the end of the mail for a comment.
+>
+> > ---
+> > I considered adding _DISABLE_ instead, but that'd make the
+> > flag names a big too long.
+> >
+> > Generated with:
+> > flag=MIPI_DSI_MODE_VIDEO_HFP; git grep $flag | cut -f1 -d':' | \
+> >   xargs -I{} sed -i -e "s/$flag/MIPI_DSI_MODE_VIDEO_NO_HFP/" {}
+> > flag=MIPI_DSI_MODE_VIDEO_HBP; git grep $flag | cut -f1 -d':' | \
+> >   xargs -I{} sed -i -e "s/$flag/MIPI_DSI_MODE_VIDEO_NO_HBP/" {}
+> > flag=MIPI_DSI_MODE_VIDEO_HSA; git grep $flag | cut -f1 -d':' | \
+> >   xargs -I{} sed -i -e "s/$flag/MIPI_DSI_MODE_VIDEO_NO_HSA/" {}
+> > flag=MIPI_DSI_MODE_EOT_PACKET; git grep $flag | cut -f1 -d':' | \
+> >   xargs -I{} sed -i -e "s/$flag/MIPI_DSI_MODE_NO_EOT_PACKET/" {}
+> > (then minor format changes)
+>
+> Ever tried coccinelle ? :-)
 
-Cc: Elliot Berman <eberman@codeaurora.org>
-Fixes: 9a434cee773a ("firmware: qcom_scm: Dynamically support SMCCC and legacy conventions")
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/firmware/qcom_scm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Fun project for next time ,-)
 
-diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-index 7be48c1bec96..8e8e9f7fcea5 100644
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -71,7 +71,7 @@ static struct qcom_scm_wb_entry qcom_scm_wb[] = {
- 	{ .flag = QCOM_SCM_FLAG_WARMBOOT_CPU3 },
- };
- 
--static const char *qcom_scm_convention_names[] = {
-+static const char * const qcom_scm_convention_names[] = {
- 	[SMC_CONVENTION_UNKNOWN] = "unknown",
- 	[SMC_CONVENTION_ARM_32] = "smc arm 32",
- 	[SMC_CONVENTION_ARM_64] = "smc arm 64",
+>
+> >  drivers/gpu/drm/bridge/adv7511/adv7533.c             | 2 +-
+> >  drivers/gpu/drm/bridge/analogix/anx7625.c            | 2 +-
+> >  drivers/gpu/drm/bridge/cdns-dsi.c                    | 4 ++--
+> >  drivers/gpu/drm/bridge/tc358768.c                    | 2 +-
+> >  drivers/gpu/drm/exynos/exynos_drm_dsi.c              | 8 ++++----
+> >  drivers/gpu/drm/mcde/mcde_dsi.c                      | 2 +-
+> >  drivers/gpu/drm/mediatek/mtk_dsi.c                   | 2 +-
+> >  drivers/gpu/drm/msm/dsi/dsi_host.c                   | 8 ++++----
+> >  drivers/gpu/drm/panel/panel-asus-z00t-tm5p5-n35596.c | 2 +-
+> >  drivers/gpu/drm/panel/panel-dsi-cm.c                 | 2 +-
+> >  drivers/gpu/drm/panel/panel-elida-kd35t133.c         | 2 +-
+> >  drivers/gpu/drm/panel/panel-khadas-ts050.c           | 2 +-
+> >  drivers/gpu/drm/panel/panel-leadtek-ltk050h3146w.c   | 2 +-
+> >  drivers/gpu/drm/panel/panel-leadtek-ltk500hd1829.c   | 2 +-
+> >  drivers/gpu/drm/panel/panel-novatek-nt35510.c        | 2 +-
+> >  drivers/gpu/drm/panel/panel-osd-osd101t2587-53ts.c   | 2 +-
+> >  drivers/gpu/drm/panel/panel-samsung-s6d16d0.c        | 2 +-
+> >  drivers/gpu/drm/panel/panel-samsung-s6e63j0x03.c     | 2 +-
+> >  drivers/gpu/drm/panel/panel-samsung-s6e63m0-dsi.c    | 2 +-
+> >  drivers/gpu/drm/panel/panel-samsung-s6e8aa0.c        | 4 ++--
+> >  drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c      | 2 +-
+> >  drivers/gpu/drm/panel/panel-simple.c                 | 2 +-
+> >  drivers/gpu/drm/panel/panel-sony-acx424akp.c         | 2 +-
+> >  drivers/gpu/drm/panel/panel-xinpeng-xpp055c272.c     | 2 +-
+> >  include/drm/drm_mipi_dsi.h                           | 8 ++++----
+> >  25 files changed, 36 insertions(+), 36 deletions(-)
+> >
+> > []
+> > diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
+> > index 360e6377e84b..ba91cf22af51 100644
+> > --- a/include/drm/drm_mipi_dsi.h
+> > +++ b/include/drm/drm_mipi_dsi.h
+> > @@ -119,15 +119,15 @@ struct mipi_dsi_host *of_find_mipi_dsi_host_by_node(struct device_node *node);
+> >  /* enable hsync-end packets in vsync-pulse and v-porch area */
+> >  #define MIPI_DSI_MODE_VIDEO_HSE              BIT(4)
+>
+> We're mixing bits that enable a feature and bits that disable a feature.
+> Are these bits defined in the DSI spec, or internal to DRM ? In the
+> latter case, would it make sense to standardize on one "polarity" ? That
+> would be a more intrusive change in drivers though.
 
-base-commit: f40ddce88593482919761f74910f42f4b84c004b
--- 
-https://chromeos.dev
+Yes, that'd require auditing every single code path and reverse the
+logic as needed. I'm not volunteering for that ,-P (hopefully the
+current change is still an improvement).
 
+Hopefully real DSI experts can comment (Andrzej?), I think the default
+are sensible settings?
+
+
+>
+> >  /* disable hfront-porch area */
+> > -#define MIPI_DSI_MODE_VIDEO_HFP              BIT(5)
+> > +#define MIPI_DSI_MODE_VIDEO_NO_HFP   BIT(5)
+> >  /* disable hback-porch area */
+> > -#define MIPI_DSI_MODE_VIDEO_HBP              BIT(6)
+> > +#define MIPI_DSI_MODE_VIDEO_NO_HBP   BIT(6)
+> >  /* disable hsync-active area */
+> > -#define MIPI_DSI_MODE_VIDEO_HSA              BIT(7)
+> > +#define MIPI_DSI_MODE_VIDEO_NO_HSA   BIT(7)
+> >  /* flush display FIFO on vsync pulse */
+> >  #define MIPI_DSI_MODE_VSYNC_FLUSH    BIT(8)
+> >  /* disable EoT packets in HS mode */
+> > -#define MIPI_DSI_MODE_EOT_PACKET     BIT(9)
+> > +#define MIPI_DSI_MODE_NO_EOT_PACKET  BIT(9)
+> >  /* device supports non-continuous clock behavior (DSI spec 5.6.1) */
+> >  #define MIPI_DSI_CLOCK_NON_CONTINUOUS        BIT(10)
+> >  /* transmit data in low power */
+>
+> --
+> Regards,
+>
+> Laurent Pinchart
