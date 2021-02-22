@@ -2,205 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E750C321CF3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Feb 2021 17:29:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D448A321D0D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Feb 2021 17:34:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230471AbhBVQ2c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Feb 2021 11:28:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56046 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231727AbhBVQ1o (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Feb 2021 11:27:44 -0500
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55355C06178A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 08:26:59 -0800 (PST)
-Received: by mail-lj1-x22e.google.com with SMTP id u4so59632572ljh.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 08:26:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=mp2QQ7MvrV5zUofeFKg73RhwyazD5hfojtJwL2lbSOo=;
-        b=CQ5BSYE17bAMylBR6D/q2/HIcfSBxLJksn3AmOzI1DfO+18D98Ie5GrJoA5Gk4DGp1
-         kMW0MOxFH8THlXa0hbZqRbS7iAD4SShoL+OWC89YNpbuFje1X8hsrnvdUqz+vq1Qizfj
-         22ukhqqfzvcTWqdLsG0xzJdj5tbX1PVM77aDzCpQQ3v6HC8OCEr68vIlwTVXvFS76flt
-         /Aj4M34J6IJdI2rEvhixZEbR9f9U+WwBucJLpx8VEIMqorvIyY+yx2U8J/7MRbQaGjow
-         l82Jn0VaVyEew4UcIE2y9D6pGcgYkWY5wQT0vqFgMt5m/O5oetsf/PIX97iNZT1m7Hi8
-         repw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=mp2QQ7MvrV5zUofeFKg73RhwyazD5hfojtJwL2lbSOo=;
-        b=kDkxqvuKZULOCM33mHbaanKvoQ61NP6jAn9TIK+DbKYg06b60fWc106FghC8uRnXcS
-         0clhh3Qsv1hIrNiGYyWlh3GeqJglzs1Piv5PP1tL59P4hp4fDVTEgnSt2U4FzZAVFXFs
-         lxgQTCmhRnXU8oAnwAOTzzMdAcYX/CiL2zD1l6t/EdAWEume9e3kp4PWZggYS7rnOse5
-         tR+AigUTMWIMVpvujwYAADyABV0wDb8DkaX9AYQks52f3sKPKRFr15hghBoPTxy7yVns
-         hZvU4Ro4kmYoVZzp25xP8uXnifoqJp20JuytExS6frsnXGJtYddHR8M7dK24fTkRqfM6
-         bD8A==
-X-Gm-Message-State: AOAM5328JGJWsJ/MjaabIm+aS5kWScaqAYOeL1cNWgJeawMHoyWcANOK
-        O8eaWwBh/raNUM0AJ1RiSezIGw==
-X-Google-Smtp-Source: ABdhPJxGwceBPuVjmyf18Mdqo1hgQf9u3FDMoPxiBpD6nJuwxSs7K8ql3RXClACX9VwKUk2lVHWFyQ==
-X-Received: by 2002:a2e:9cc2:: with SMTP id g2mr14144873ljj.348.1614011217845;
-        Mon, 22 Feb 2021 08:26:57 -0800 (PST)
-Received: from [192.168.118.216] ([85.249.43.69])
-        by smtp.gmail.com with ESMTPSA id a6sm1087926ljp.135.2021.02.22.08.26.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Feb 2021 08:26:57 -0800 (PST)
-Subject: Re: [PATCH v5 08/22] media: camss: Add missing format identifiers
-To:     Robert Foss <robert.foss@linaro.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, todor.too@gmail.com,
-        mchehab@kernel.org, robh+dt@kernel.org,
-        angelogioacchino.delregno@somainline.org,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Sakari Ailus <sakari.ailus@iki.fi>,
-        Nicolas Boichat <drinkcat@chromium.org>
-Cc:     Rob Herring <robh@kernel.org>, Tomasz Figa <tfiga@chromium.org>,
-        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
-        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Jonathan Marek <jonathan@marek.ca>
-References: <20210217112122.424236-1-robert.foss@linaro.org>
- <20210217112122.424236-9-robert.foss@linaro.org>
-From:   Andrey Konovalov <andrey.konovalov@linaro.org>
-Message-ID: <3e8eced2-de18-5def-c25e-b819e17b9c22@linaro.org>
-Date:   Mon, 22 Feb 2021 19:26:55 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S230008AbhBVQdU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Feb 2021 11:33:20 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:22527 "EHLO z11.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231179AbhBVQcW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 22 Feb 2021 11:32:22 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1614011524; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=dCdhlnGttsQALHTe0ST0kOVHzzKLcqYwXO4t7pO+g9g=;
+ b=uoFBlcQzifiCeZyusjPFj4J+I3uKycQ4Ye4pZscKvlkHNwDmLZRSBsvk33UumK/rb+Gwv2hs
+ v2fKepV9H6RiuMI/dU1kRLj+kizsJz6rjivh0ukPk6TYmfr2m0oO8mmHaCQUhFp6EEWbNxXu
+ GtleHrKSIZjj6aEsskDc05yKOJQ=
+X-Mailgun-Sending-Ip: 104.130.96.11
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 6033dc42090a7742877fd43f (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 22 Feb 2021 16:30:58
+ GMT
+Sender: khsieh=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8D43DC433ED; Mon, 22 Feb 2021 16:30:58 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: khsieh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A3707C433C6;
+        Mon, 22 Feb 2021 16:30:57 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20210217112122.424236-9-robert.foss@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Mon, 22 Feb 2021 08:30:57 -0800
+From:   khsieh@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     robdclark@gmail.com, sean@poorly.run, tanmay@codeaurora.org,
+        abhinavk@codeaurora.org, aravindh@codeaurora.org, airlied@linux.ie,
+        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] drm/msm/dp: add supported max link rate specified
+ from dtsi
+In-Reply-To: <161377480166.1254594.16557636343276220817@swboyd.mtv.corp.google.com>
+References: <1613681704-12539-1-git-send-email-khsieh@codeaurora.org>
+ <161368935031.1254594.14384765673800900954@swboyd.mtv.corp.google.com>
+ <7af07dcacd5b68087cc61e467e9c57ea@codeaurora.org>
+ <161377480166.1254594.16557636343276220817@swboyd.mtv.corp.google.com>
+Message-ID: <1782d03506bebe7751d33ae12a38d21c@codeaurora.org>
+X-Sender: khsieh@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Robert,
-
-Thank you for your patch!
-
-On 17.02.2021 14:21, Robert Foss wrote:
-> The CSI-2 spec defines the following types:
->   - Data Type - Often abbreviated DT
->   - Decode Format - Often abbreviated as DF
->   - Encode Format
+On 2021-02-19 14:46, Stephen Boyd wrote:
+> Quoting khsieh@codeaurora.org (2021-02-19 08:39:38)
+>> On 2021-02-18 15:02, Stephen Boyd wrote:
+>> > Quoting Kuogee Hsieh (2021-02-18 12:55:04)
+>> >> Allow supported link rate to be limited to the value specified at
+>> >> dtsi. If it is not specified, then link rate is derived from dpcd
+>> >> directly. Below are examples,
+>> >> link-rate = <162000> for max link rate limited at 1.62G
+>> >> link-rate = <270000> for max link rate limited at 2.7G
+>> >> link-rate = <540000> for max link rate limited at 5.4G
+>> >> link-rate = <810000> for max link rate limited at 8.1G
+>> >>
+>> >> Changes in V2:
+>> >> -- allow supported max link rate specified from dtsi
+>> >
+>> > Please don't roll this into the patch that removes the limit. The
+>> > previous version of this patch was fine. The part that lowers the limit
+>> > back down should be another patch.
+>> >
+>> > We rejected link-rate in DT before and we should reject it upstream
+>> > again. As far as I can tell, the maximum link rate should be determined
+>> > based on the panel or the type-c port on the board. The dp controller
+>> > can always achieve HBR3, so limiting it at the dp controller is
+>> > incorrect. The driver should query the endpoints to figure out if they
+>> > want to limit the link rate. Is that done automatically sometimes by
+>> > intercepting the DPCD?
+>> 
+>> ok, i will roll back to original patch and add the second patch for 
+>> max
+>> link rate limited purpose.
+>> panel dpcd specified max link rate it supported.
+>> At driver, link rate is derived from dpcd directly since driver will 
+>> try
+>> to use the maximum supported link rate and less lane to save power.
+>> Therefore it is not possible that limit link rate base on dpcd.
+>> AS i understand we are going to do max link rate limitation is due to
+>> old redriver chip can not support HBR3.
+>> How can I acquire which type-c port on the board so that I can trigger
+>> max link rate limitation?
+>> 
+>> 
 > 
-> These definitions are as far as I can tell complete for CSI-2.
-> 
-> Additionally the Qualcomm internal type describing Plain Formats
-> has been added. Plain formats describe the size of the pixels
-> written by the RDI units to memory. PLAIN8 for example has the size
-> 8 bits, and PLAIN32 32 bits. The appropriate Plain Format is
-> determined by the Decode Format used. The smallest Plain Format
-> that is able to contain a pixel of the used Decode Format is the
-> appropriate one to use.
-> 
-> Signed-off-by: Robert Foss <robert.foss@linaro.org>
-> ---
->   .../media/platform/qcom/camss/camss-csid.h    | 50 +++++++++++++++++++
->   1 file changed, 50 insertions(+)
-> 
-> diff --git a/drivers/media/platform/qcom/camss/camss-csid.h b/drivers/media/platform/qcom/camss/camss-csid.h
-> index 1824b3745e10..02fc34ee8a41 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csid.h
-> +++ b/drivers/media/platform/qcom/camss/camss-csid.h
-> @@ -21,6 +21,56 @@
->   #define MSM_CSID_PAD_SRC 1
->   #define MSM_CSID_PADS_NUM 2
->   
-> +#define DATA_TYPE_EMBEDDED_DATA_8BIT	0x12
-> +#define DATA_TYPE_YUV420_8BIT		0x18
-> +#define DATA_TYPE_YUV420_10BIT		0x19
-> +#define DATA_TYPE_YUV420_8BIT_LEGACY	0x1a
-> +#define DATA_TYPE_YUV420_8BIT_SHIFTED	0x1c /* Chroma Shifted Pixel Sampling */
-> +#define DATA_TYPE_YUV420_10BIT_SHIFTED	0x1d /* Chroma Shifted Pixel Sampling */
-> +#define DATA_TYPE_YUV422_8BIT		0x1e
-> +#define DATA_TYPE_YUV422_10BIT		0x1f
-> +#define DATA_TYPE_RGB444		0x20
-> +#define DATA_TYPE_RGB555		0x21
-> +#define DATA_TYPE_RGB565		0x22
-> +#define DATA_TYPE_RGB666		0x23
-> +#define DATA_TYPE_RGB888		0x24
-> +#define DATA_TYPE_RAW_24BIT		0x27
-> +#define DATA_TYPE_RAW_6BIT		0x28
-> +#define DATA_TYPE_RAW_7BIT		0x29
-> +#define DATA_TYPE_RAW_8BIT		0x2a
-> +#define DATA_TYPE_RAW_10BIT		0x2b
-> +#define DATA_TYPE_RAW_12BIT		0x2c
-> +#define DATA_TYPE_RAW_14BIT		0x2d
-> +#define DATA_TYPE_RAW_16BIT		0x2e
-> +#define DATA_TYPE_RAW_20BIT		0x2f
+> The driver already seems to support lowering the link rate during link
+> training. Can't we try to train at the highest rate and then downgrade
+> the link speed until it trains properly? I sort of fail to see why we
+> need to introduce a bunch of complexity around limiting the link rate 
+> on
+> certain boards if the driver can figure out that link training doesn't
+> work at HBR3 so it should try to train at HBR2 instead.
 
-- these look OK for me (the old MIPI spec draft I have doesn't have
-   some of the data types listed above).
+yes, dp driver did support down grade link rate during link training 
+procedure.
+But link training is kind of setting up agreement between host and panel 
+with assumption that there are no other limitations in between.
+The problem we are discussing here is the limitation of usb re driver 
+link rate support.
+Since we do not know how usb re driver behavior, I am not sure link 
+training will work appropriately for this case.
+It may end up link status keep toggling up and down.
 
-   As these are generic values from the MIPI standard, it could probably make
-   sense to create a common header file for that someday.
-   E.g. the very similar defines (same values, different names) are present in
-   drivers/staging/media/atomisp/pci/isp_capture_defs.h
-   But it looks like most of the current drivers don't need the MIPI data type
-   defines, so not a problem at the moment.
+Both link-lane and link-rate specified at dtsi are for the limitation of 
+Trogdor hardware platform.
+Both link-lane and link-rate specified at dtsi are NOT for panel since 
+panel have specified its capability at its DPCD.
 
-> +
-> +#define DECODE_FORMAT_UNCOMPRESSED_6_BIT	0x0
-> +#define DECODE_FORMAT_UNCOMPRESSED_8_BIT	0x1
-> +#define DECODE_FORMAT_UNCOMPRESSED_10_BIT	0x2
-> +#define DECODE_FORMAT_UNCOMPRESSED_12_BIT	0x3
-> +#define DECODE_FORMAT_UNCOMPRESSED_14_BIT	0x4
-> +#define DECODE_FORMAT_UNCOMPRESSED_16_BIT	0x5
-> +#define DECODE_FORMAT_UNCOMPRESSED_20_BIT	0x6
-> +#define DECODE_FORMAT_DPCM_10_6_10		0x7
-> +#define DECODE_FORMAT_DPCM_10_8_10		0x8
-> +#define DECODE_FORMAT_DPCM_12_6_12		0x9
-> +#define DECODE_FORMAT_DPCM_12_8_12		0xA
-> +#define DECODE_FORMAT_DPCM_14_8_14		0xB
-> +#define DECODE_FORMAT_DPCM_14_10_14		0xC
-> +#define DECODE_FORMAT_USER_DEFINED		0xE
-> +#define DECODE_FORMAT_PAYLOAD_ONLY		0xF
 
-- interesting that the subset of the DECODE_FORMAT's used in
-   camss-csid-4-1.c (the first four formats above - UNCOMPRESSED_6_BIT
-   to UNCOMPRESSED_12_BIT ones) has the same values as the corresponding
-   field in the CSID_CID_n_CFG registers - according to the public
-   "APQ8016E Technical Reference Manual" [1]. So these exact DECODE_FORMAT_*
-   values are written into the bits 7:4 of the hw register.
-   But in [1] the values of DPCM_10_6_10 to DPCM_12_8_12 are 0x4 to 0x7
-   (as the camss-csid-4-1.c doesn't support DPCM this is not an issue).
-   Are the DECODE_FORMAT_* values above defined in the MIPI standard, or did
-   they come from the datasheet for a particular SOC?
 
-[1] https://developer.qualcomm.com/download/sd410/snapdragon-410e-technical-reference-manual.pdf
-     page 990
-> +
-> +#define ENCODE_FORMAT_RAW_8_BIT		0x1
-> +#define ENCODE_FORMAT_RAW_10_BIT	0x2
-> +#define ENCODE_FORMAT_RAW_12_BIT	0x3
-> +#define ENCODE_FORMAT_RAW_14_BIT	0x4
-> +#define ENCODE_FORMAT_RAW_16_BIT	0x5
 
-- the ENCODE_FORMAT_* defines are not used in the driver.
 
-> +
-> +#define PLAIN_FORMAT_PLAIN8	0x0 /* supports DPCM, UNCOMPRESSED_6/8_BIT */
-> +#define PLAIN_FORMAT_PLAIN16	0x1 /* supports DPCM, UNCOMPRESSED_10/16_BIT */
-> +#define PLAIN_FORMAT_PLAIN32	0x2 /* supports UNCOMPRESSED_20_BIT */
 
-- the PLAIN_FORMAT_* defines are not used in the driver, but
-   camss-csid-4-1.c and camss-csid-4-7.c do define there own
-   CAMSS_CSID_CID_n_CFG_PLAIN_FORMAT_8 and CAMSS_CSID_CID_n_CFG_PLAIN_FORMAT_16
-   (without relying on PLAIN_FORMAT_PLAIN8 or PLAIN_FORMAT_PLAIN16).
 
-Thanks,
-Andrey
 
-> +
-> +
->   enum csid_payload_mode {
->   	CSID_PAYLOAD_MODE_INCREMENTING = 0,
->   	CSID_PAYLOAD_MODE_ALTERNATING_55_AA = 1,
-> 
