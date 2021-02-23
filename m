@@ -2,227 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 19421322F93
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Feb 2021 18:26:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5EF6C322FEC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Feb 2021 18:48:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233605AbhBWR0j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Feb 2021 12:26:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38916 "EHLO
+        id S233813AbhBWRqn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Feb 2021 12:46:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232786AbhBWR0i (ORCPT
+        with ESMTP id S233819AbhBWRqc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Feb 2021 12:26:38 -0500
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE6EEC061574
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Feb 2021 09:25:58 -0800 (PST)
-Received: by mail-pg1-x529.google.com with SMTP id t11so12787003pgu.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Feb 2021 09:25:58 -0800 (PST)
+        Tue, 23 Feb 2021 12:46:32 -0500
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3535C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Feb 2021 09:45:51 -0800 (PST)
+Received: by mail-pg1-x533.google.com with SMTP id t25so12842594pga.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Feb 2021 09:45:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Hnn82o/x55u6O8a4VECdJRbx2ZSa2s+2SGdAvFWwwkM=;
-        b=vv533DA1PVESicRmSXFU1iJ0nXcwruJw+gbsz82EKnEf8HQPp2H4GeQwo23sU2sAOG
-         AZopg1toY/d5V6EOmrzAlqwC+pLrjtGkRBWev6JDmwXRnQ5vN7L0b/6dGPBUeO//6Oup
-         KvDsZQUIWUAsK5RQB0IOMI5jy+z4NmmAPugpSY/AY8cUBImN06g9ZXdhe/9PHOJgvAkh
-         d21d/etqrW065G+wU7YWnbHHtuJluCPvu+MQ/xDzpE0la858TqtIBp7udUiEKCTd659k
-         oXD+zyVSKfKZZSyl2Wh0YLW51SqcK16/grQzc0lMEkAgTXM/75Lx7Bc/Ko6frgWXBckj
-         EJ4A==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=VyGG3ok5+hvim2EHZCOhmqRAJkjtLpgTA1iWhCaD6x0=;
+        b=FqgAcuUSeyzDfUyHurWW7F4mjvfwNy68igadpk1ez352+ZeNULvxkGYibJLLplgkO5
+         q3u1ZNHMEqO2G5UraZTEoq5G/0cXD6Bnt5aCjqvctqqn4Nfj2xY5vtamgJs6kBcBLxvh
+         uvGOoGECAvPXZIkB4fJeawVGE/r0GSiUVcwab4GfCDNrmlsmC5Rv1CW6dkG0OdIsUu7Q
+         9IkjFszTrePyCmHnq2SDyrQgYzgucohC2ZtZY1g0k6Ac4t+QygwV9rNtekYPvicm7dOb
+         /hIptnnmW77v/TTchOjx20VRMTFiQv5CkrQqtuZN0ZsOI0TvimfyuQmyWemfDy4eriyz
+         CkdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Hnn82o/x55u6O8a4VECdJRbx2ZSa2s+2SGdAvFWwwkM=;
-        b=U+MNZOv89meTVjsAdJ4OtHTTbe+BmJSsXwxqJ3HnAlpp0DluYJhZkGyiWlzoqK/L34
-         GORgbPelJjqysDkRhYE/co6v761guRKJZh/imOJbQBmFQR6CtFzMdYqhMOVq2hBK+crX
-         olZo3KbAGIBlVfF4bGrRmli3JBiTbX7qhoqW3bgHVwKazNdSxZMdzPgyFrouqC2NT3bS
-         x8FHKE7/9YDz64AJDQKOO+045NzACgpTal1HVOzMf0WnFvelVzerYUClqFv8HnuJCV8t
-         /LFf/Fo7qRSXSlxVsZydHPznY6095n/KJOQxrBK6FklrU+LJJwugCwsMzWF+uoK651W3
-         3G1A==
-X-Gm-Message-State: AOAM530uoLJIo6Wo7Eegm74MGPHJ5GHbYrxoJU+VCES55dUfOqecL0Us
-        JyGKhe32W1Wg/2xmgInVZ8kUtSKRN6Br6wjF1GGR6Q==
-X-Google-Smtp-Source: ABdhPJySYZH337U89meM6P+DBTi2Qq01DBa60P7T5B5OPsPrxVULifhDPzCX312b7DmpJoGgkBScROX1hZN0E/gPyKI=
-X-Received: by 2002:a65:654e:: with SMTP id a14mr25356386pgw.265.1614101158112;
- Tue, 23 Feb 2021 09:25:58 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=VyGG3ok5+hvim2EHZCOhmqRAJkjtLpgTA1iWhCaD6x0=;
+        b=XX4Xx84IW71qtepl8vto1byOo+gR539cZMwSBb0MvVXOZVyRJAHwPM9h+N5tTIFJbm
+         s77EfjIEBrG+In9apiB2KSbssRVv1KY6fMklNbCGjHslvpjxT78Utr/nKP0lhCFYY5fD
+         bk8t40HLRss5BpKVsGik1StqBMIvcN/Xf7gc3p97ItA5q3hS34EqPvg1PY7ZHPU9hrVc
+         XI79Ad/db15cNcJfsJUp5MHPn+MGSTjcwAxWayo09CkxLdFM7HklpDbWU5HZUXejHjdh
+         Vhd7bNZ8TRr53GK38GBY2c/XeXcCeFDbnQ/l5hYpMLCvqWuuFL93r/kPoEmara4f+38M
+         kdMQ==
+X-Gm-Message-State: AOAM531m2yxMT+ooumB2rWMF1y3JI/DhhSqCFvbAU7KouyU6XVpGle52
+        2nZK2tmAOV6E5MF35ISQwOEW
+X-Google-Smtp-Source: ABdhPJzA7fHOoHjX3O7xgr26Ckw+I6nd4J989A7PeyvQ1mbO3Fz+HGL78AX7076LEi4TPjBHYyTQLQ==
+X-Received: by 2002:a65:654e:: with SMTP id a14mr25432204pgw.265.1614102351464;
+        Tue, 23 Feb 2021 09:45:51 -0800 (PST)
+Received: from work ([103.66.79.25])
+        by smtp.gmail.com with ESMTPSA id s27sm117050pgk.77.2021.02.23.09.45.48
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 23 Feb 2021 09:45:50 -0800 (PST)
+Date:   Tue, 23 Feb 2021 23:15:46 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Miquel Raynal <miquel.raynal@bootlin.com>
+Cc:     richard@nod.at, vigneshr@ti.com, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-mtd@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        boris.brezillon@collabora.com
+Subject: Re: [PATCH 2/3] dt-bindings: mtd: Add a property to declare secure
+ regions in Qcom NANDc
+Message-ID: <20210223174546.GA27945@work>
+References: <20210222120259.94465-1-manivannan.sadhasivam@linaro.org>
+ <20210222120259.94465-3-manivannan.sadhasivam@linaro.org>
+ <20210223174922.052f9776@xps13>
 MIME-Version: 1.0
-References: <20210217112122.424236-1-robert.foss@linaro.org>
- <20210217112122.424236-9-robert.foss@linaro.org> <3e8eced2-de18-5def-c25e-b819e17b9c22@linaro.org>
-In-Reply-To: <3e8eced2-de18-5def-c25e-b819e17b9c22@linaro.org>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Tue, 23 Feb 2021 18:25:46 +0100
-Message-ID: <CAG3jFyvpCHzGz3Q-o-gnLumPjyhs+mqXcRgFB1_HZOHGsN4zWg@mail.gmail.com>
-Subject: Re: [PATCH v5 08/22] media: camss: Add missing format identifiers
-To:     Andrey Konovalov <andrey.konovalov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        angelogioacchino.delregno@somainline.org,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        linux-media <linux-media@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Sakari Ailus <sakari.ailus@iki.fi>,
-        Nicolas Boichat <drinkcat@chromium.org>,
-        Rob Herring <robh@kernel.org>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
-        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Jonathan Marek <jonathan@marek.ca>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210223174922.052f9776@xps13>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 22 Feb 2021 at 17:26, Andrey Konovalov
-<andrey.konovalov@linaro.org> wrote:
->
-> Hi Robert,
->
-> Thank you for your patch!
->
-> On 17.02.2021 14:21, Robert Foss wrote:
-> > The CSI-2 spec defines the following types:
-> >   - Data Type - Often abbreviated DT
-> >   - Decode Format - Often abbreviated as DF
-> >   - Encode Format
-> >
-> > These definitions are as far as I can tell complete for CSI-2.
-> >
-> > Additionally the Qualcomm internal type describing Plain Formats
-> > has been added. Plain formats describe the size of the pixels
-> > written by the RDI units to memory. PLAIN8 for example has the size
-> > 8 bits, and PLAIN32 32 bits. The appropriate Plain Format is
-> > determined by the Decode Format used. The smallest Plain Format
-> > that is able to contain a pixel of the used Decode Format is the
-> > appropriate one to use.
-> >
-> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
+Hi Miquel,
+
+On Tue, Feb 23, 2021 at 05:49:22PM +0100, Miquel Raynal wrote:
+> Hi Manivannan,
+> 
+> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote on Mon,
+> 22 Feb 2021 17:32:58 +0530:
+> 
+> > On a typical end product, a vendor may choose to secure some regions in
+> > the NAND memory which are supposed to stay intact between FW upgrades.
+> > The access to those regions will be blocked by a secure element like
+> > Trustzone. So the normal world software like Linux kernel should not
+> > touch these regions (including reading).
+> > 
+> > So let's add a property for declaring such secure regions so that the
+> > driver can skip touching them.
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > > ---
-> >   .../media/platform/qcom/camss/camss-csid.h    | 50 +++++++++++++++++++
-> >   1 file changed, 50 insertions(+)
-> >
-> > diff --git a/drivers/media/platform/qcom/camss/camss-csid.h b/drivers/media/platform/qcom/camss/camss-csid.h
-> > index 1824b3745e10..02fc34ee8a41 100644
-> > --- a/drivers/media/platform/qcom/camss/camss-csid.h
-> > +++ b/drivers/media/platform/qcom/camss/camss-csid.h
-> > @@ -21,6 +21,56 @@
-> >   #define MSM_CSID_PAD_SRC 1
-> >   #define MSM_CSID_PADS_NUM 2
-> >
-> > +#define DATA_TYPE_EMBEDDED_DATA_8BIT 0x12
-> > +#define DATA_TYPE_YUV420_8BIT                0x18
-> > +#define DATA_TYPE_YUV420_10BIT               0x19
-> > +#define DATA_TYPE_YUV420_8BIT_LEGACY 0x1a
-> > +#define DATA_TYPE_YUV420_8BIT_SHIFTED        0x1c /* Chroma Shifted Pixel Sampling */
-> > +#define DATA_TYPE_YUV420_10BIT_SHIFTED       0x1d /* Chroma Shifted Pixel Sampling */
-> > +#define DATA_TYPE_YUV422_8BIT                0x1e
-> > +#define DATA_TYPE_YUV422_10BIT               0x1f
-> > +#define DATA_TYPE_RGB444             0x20
-> > +#define DATA_TYPE_RGB555             0x21
-> > +#define DATA_TYPE_RGB565             0x22
-> > +#define DATA_TYPE_RGB666             0x23
-> > +#define DATA_TYPE_RGB888             0x24
-> > +#define DATA_TYPE_RAW_24BIT          0x27
-> > +#define DATA_TYPE_RAW_6BIT           0x28
-> > +#define DATA_TYPE_RAW_7BIT           0x29
-> > +#define DATA_TYPE_RAW_8BIT           0x2a
-> > +#define DATA_TYPE_RAW_10BIT          0x2b
-> > +#define DATA_TYPE_RAW_12BIT          0x2c
-> > +#define DATA_TYPE_RAW_14BIT          0x2d
-> > +#define DATA_TYPE_RAW_16BIT          0x2e
-> > +#define DATA_TYPE_RAW_20BIT          0x2f
->
-> - these look OK for me (the old MIPI spec draft I have doesn't have
->    some of the data types listed above).
->
->    As these are generic values from the MIPI standard, it could probably make
->    sense to create a common header file for that someday.
->    E.g. the very similar defines (same values, different names) are present in
->    drivers/staging/media/atomisp/pci/isp_capture_defs.h
->    But it looks like most of the current drivers don't need the MIPI data type
->    defines, so not a problem at the moment.
+> >  Documentation/devicetree/bindings/mtd/qcom,nandc.yaml | 7 +++++++
+> >  1 file changed, 7 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+> > index 84ad7ff30121..7500e20da9c1 100644
+> > --- a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+> > +++ b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+> > @@ -48,6 +48,13 @@ patternProperties:
+> >          enum:
+> >            - 512
+> >  
+> > +      qcom,secure-regions:
+> > +        $ref: /schemas/types.yaml#/definitions/uint32-array
+> > +        description:
+> > +          Regions in the NAND memory which are protected using a secure element
+> > +          like Trustzone. This property contains the start address and size of
+> > +          the secure regions present (optional).
+> 
+> What does this "(optional)" means? If you mean the property is optional
+> then it should be described accordingly in the yaml file, or am I
+> missing something?
+> 
 
-Both for the DTs and the DF/EF/PFs I figured it would be nice to have
-as much of these variables listed somewhere as they aren't always so
-easy to find a reference for.
+IIUC, if a property is not listed under "required" section then it is
+optional. But I've added the quote here to just make it explicit.
 
->
+> I wonder if it wouldn't be better to make this a NAND chip node
+> property. I don't think a qcom prefix is needed as potentially many
+> other SoCs might have the same "feature".
+> 
+> I'm fine adding support for it in the qcom driver only though.
+> 
+
+Hmm, sounds good to me.
+
+Thanks,
+Mani
+
 > > +
-> > +#define DECODE_FORMAT_UNCOMPRESSED_6_BIT     0x0
-> > +#define DECODE_FORMAT_UNCOMPRESSED_8_BIT     0x1
-> > +#define DECODE_FORMAT_UNCOMPRESSED_10_BIT    0x2
-> > +#define DECODE_FORMAT_UNCOMPRESSED_12_BIT    0x3
-> > +#define DECODE_FORMAT_UNCOMPRESSED_14_BIT    0x4
-> > +#define DECODE_FORMAT_UNCOMPRESSED_16_BIT    0x5
-> > +#define DECODE_FORMAT_UNCOMPRESSED_20_BIT    0x6
-> > +#define DECODE_FORMAT_DPCM_10_6_10           0x7
-> > +#define DECODE_FORMAT_DPCM_10_8_10           0x8
-> > +#define DECODE_FORMAT_DPCM_12_6_12           0x9
-> > +#define DECODE_FORMAT_DPCM_12_8_12           0xA
-> > +#define DECODE_FORMAT_DPCM_14_8_14           0xB
-> > +#define DECODE_FORMAT_DPCM_14_10_14          0xC
-> > +#define DECODE_FORMAT_USER_DEFINED           0xE
-> > +#define DECODE_FORMAT_PAYLOAD_ONLY           0xF
->
-> - interesting that the subset of the DECODE_FORMAT's used in
->    camss-csid-4-1.c (the first four formats above - UNCOMPRESSED_6_BIT
->    to UNCOMPRESSED_12_BIT ones) has the same values as the corresponding
->    field in the CSID_CID_n_CFG registers - according to the public
->    "APQ8016E Technical Reference Manual" [1]. So these exact DECODE_FORMAT_*
->    values are written into the bits 7:4 of the hw register.
->    But in [1] the values of DPCM_10_6_10 to DPCM_12_8_12 are 0x4 to 0x7
->    (as the camss-csid-4-1.c doesn't support DPCM this is not an issue).
->    Are the DECODE_FORMAT_* values above defined in the MIPI standard, or did
->    they come from the datasheet for a particular SOC?
-
-DF & EFs are a part of the MIPI spec, but the identifier is SOC/vendor specific.
-PFs are not a part of the MIPI spec at all, but rather a Qcom specific term.
-
-Having looked over the DFs again, there are some incompatible
-differences between Gen1 & Gen2. I think the way forward is moving
-DF/EF/PFs to Gen 1/2 specific headers.
-
->
-> [1] https://developer.qualcomm.com/download/sd410/snapdragon-410e-technical-reference-manual.pdf
->      page 990
-> > +
-> > +#define ENCODE_FORMAT_RAW_8_BIT              0x1
-> > +#define ENCODE_FORMAT_RAW_10_BIT     0x2
-> > +#define ENCODE_FORMAT_RAW_12_BIT     0x3
-> > +#define ENCODE_FORMAT_RAW_14_BIT     0x4
-> > +#define ENCODE_FORMAT_RAW_16_BIT     0x5
->
-> - the ENCODE_FORMAT_* defines are not used in the driver.
-
-That's intentional, collecting this information somewhere for future
-use seemed like a good idea. But I'm happy to remove it if that's a
-bad idea.
-
->
-> > +
-> > +#define PLAIN_FORMAT_PLAIN8  0x0 /* supports DPCM, UNCOMPRESSED_6/8_BIT */
-> > +#define PLAIN_FORMAT_PLAIN16 0x1 /* supports DPCM, UNCOMPRESSED_10/16_BIT */
-> > +#define PLAIN_FORMAT_PLAIN32 0x2 /* supports UNCOMPRESSED_20_BIT */
->
-> - the PLAIN_FORMAT_* defines are not used in the driver, but
->    camss-csid-4-1.c and camss-csid-4-7.c do define there own
->    CAMSS_CSID_CID_n_CFG_PLAIN_FORMAT_8 and CAMSS_CSID_CID_n_CFG_PLAIN_FORMAT_16
->    (without relying on PLAIN_FORMAT_PLAIN8 or PLAIN_FORMAT_PLAIN16).
-
-I missed this duplication, I'll fix this in the next version.
-
->
+> >  allOf:
+> >    - $ref: "nand-controller.yaml#"
+> >  
+> 
 > Thanks,
-> Andrey
->
-> > +
-> > +
-> >   enum csid_payload_mode {
-> >       CSID_PAYLOAD_MODE_INCREMENTING = 0,
-> >       CSID_PAYLOAD_MODE_ALTERNATING_55_AA = 1,
-> >
+> Miquèl
