@@ -2,63 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 044E7322340
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Feb 2021 01:43:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E2703322671
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Feb 2021 08:38:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231419AbhBWAnd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Feb 2021 19:43:33 -0500
-Received: from mail.kernel.org ([198.145.29.99]:33272 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231223AbhBWAnc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Feb 2021 19:43:32 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 2C40964E4D;
-        Tue, 23 Feb 2021 00:42:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1614040972;
-        bh=ilCT5oYh23ohebSk42NoBcvnet+XpmhjryKDTDePABI=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=U34BdGm8NO7+enm4vnEBHaCAAVSNRBPVcS911G3MNviKTU3q2ARDnQPOmZ7XWMKnp
-         tAPI2j41kmIjttg0pfbvb8cWmS5so/qlFB0Aub9cQ8kM+gxxFndF+LxGHWMsj+bNyz
-         mXBEcQh5ePnFcGfldZj5DTB9WdBo3iT1no/p6SfahsIPZsCgJ5TRPErQ+3f3DDHy/5
-         vX9+0uDAH4z9JnKOgZgVgFuSMRf/Aq8ymFeMdAfYo4hm7omNKMQfRltXTo/YF5wYCW
-         DuYrpfVhQx539h7/Fiukn2yTb+uFtL1LNyb/pAn4cyALkUji1PYM6jJrB1JyHgxlE2
-         j8PVa8AeA1CjA==
+        id S230466AbhBWHiY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Feb 2021 02:38:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53886 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230008AbhBWHiV (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 23 Feb 2021 02:38:21 -0500
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7680EC061786
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 23:37:41 -0800 (PST)
+Received: by mail-pj1-x1035.google.com with SMTP id o6so1292315pjf.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Feb 2021 23:37:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=u2B3IIIwkE3tgEdHTrqZs1u7oe4Q82f/4lKWEp4CuHk=;
+        b=YG/IfjbXpTPsLkY//1Oq66u1FSpP8z6m6pLikJX/OBt2hLZFSnbhCOwKPzH9kHYpWk
+         8Lulk03729p0ljUjIArcVFp7KKXyYs5PDtqmigRavM4Lef5Gna0DHqRvpFys+SBZzHJh
+         UnqdD9exrv2WshbPxk0NU2X6/gg7Qv8Xuzltw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=u2B3IIIwkE3tgEdHTrqZs1u7oe4Q82f/4lKWEp4CuHk=;
+        b=S42rNiBfirROkZKQe2f6LcZpKPxcYlNTUR5tfmVosinOGAlB4B+Sk6nnl4vjqcW5qs
+         /OKScMV+xmVT1es6bQyVHSeCIy4SfJamiOQNqa+L7DVzRuTGqE79l25YZtlWDF2hTlTn
+         gz1J/cdy2EA3omQ4ULa5HkRU/OnCUtTytM2RYAFX9h0a2Jb0zqeFuPhuuHlU26dyrVwP
+         M/VkHHOg3GhPd70/ho0t1f0GolE/C7mTCMUhikDp9tPTZJg3uaSdOfwoq/LepbF3RST/
+         3j5fCQkrSknH1xDtJzPbmMz4XG7skIuY+UpJ1m7wUv3qqUKtFL+tEX202Jr6eNdPv9of
+         IE/A==
+X-Gm-Message-State: AOAM530xKmJGUiB49cj6BN+TWQGih1sd8pr9tv9DPMLBeQQR8cXqTGvr
+        B7cCgQT6pGAHF/HT3MJagACFazPBLNb9nA==
+X-Google-Smtp-Source: ABdhPJwq6E7Y5lLL0pkr+fRs1hZCScUZO3u6xiQIT8tahHLwG7WQlsyJtQniukFlG4b2jpQGya0PYA==
+X-Received: by 2002:a17:902:68:b029:e3:c8ea:a562 with SMTP id 95-20020a1709020068b02900e3c8eaa562mr18463103pla.23.1614065860847;
+        Mon, 22 Feb 2021 23:37:40 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:201:68e6:d68b:3887:f216])
+        by smtp.gmail.com with ESMTPSA id 25sm22560084pfh.199.2021.02.22.23.37.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Feb 2021 23:37:40 -0800 (PST)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20210220155618.176559-6-konrad.dybcio@somainline.org>
-References: <20210220155618.176559-1-konrad.dybcio@somainline.org> <20210220155618.176559-6-konrad.dybcio@somainline.org>
-Subject: Re: [PATCH 6/6] clk: qcom: gcc-sdm660: Add CLK_SET_RATE_PARENT where applicable
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Craig Tatlor <ctatlor97@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        phone-devel@vger.kernel.org
-Date:   Mon, 22 Feb 2021 16:42:50 -0800
-Message-ID: <161404097084.1254594.16485341937086704738@swboyd.mtv.corp.google.com>
+In-Reply-To: <1613114930-1661-4-git-send-email-rnayak@codeaurora.org>
+References: <1613114930-1661-1-git-send-email-rnayak@codeaurora.org> <1613114930-1661-4-git-send-email-rnayak@codeaurora.org>
+Subject: Re: [PATCH 03/13] arm64: dts: sc7280: Add basic dts/dtsi files for SC7280 soc
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Rajendra Nayak <rnayak@codeaurora.org>
+To:     Rajendra Nayak <rnayak@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh+dt@kernel.org
+Date:   Mon, 22 Feb 2021 23:37:38 -0800
+Message-ID: <161406585892.1254594.9748953968478715173@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Konrad Dybcio (2021-02-20 07:56:17)
-> Some branch clocks should explicitly set this flag to make sure
-> they inherit their frequencies from the parent clock.
-
-This flag doesn't have anything to do with inheriting the rate from the
-parent.
-
+Quoting Rajendra Nayak (2021-02-11 23:28:40)
+> Add initial device tree support for the SC7280 SoC and the IDP
+> boards based on this SoC
 >=20
-> Fixes: f2a76a2955c0 ("clk: qcom: Add Global Clock controller (GCC) driver=
- for SDM660")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> ---
+
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dt=
+s/qcom/sc7280-idp.dts
+> new file mode 100644
+> index 0000000..428f863
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+> @@ -0,0 +1,47 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * sc7280 IDP board device tree source
+
+Is it capitalized or not capitalized for SC?
+
+> + *
+> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "sc7280.dtsi"
+> +
+> +/ {
+> +       model =3D "Qualcomm Technologies, Inc. SC7280 IDP platform";
+
+Because it is capitalized here.
