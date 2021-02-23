@@ -2,568 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DAC0E32336C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Feb 2021 22:49:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 13CC6323465
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Feb 2021 00:52:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232658AbhBWVrR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Feb 2021 16:47:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38656 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232469AbhBWVrH (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Feb 2021 16:47:07 -0500
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A203BC061356
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Feb 2021 13:45:48 -0800 (PST)
-Received: by mail-pj1-x1030.google.com with SMTP id d2so2897292pjs.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Feb 2021 13:45:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=bQ82+4Wlyq0DnXwmZdyFqiZHcz3GXFSdD4dVY14TJHw=;
-        b=mxw6A/EXyvW/djy8xMHHCGfgykW6egYLebpF+cywRSNzN9MxAMDtiUKKUbdP3uf9yK
-         Qow7e/nppWyTe0CMIiAnpsRu72u7jSsaI0Ba+07/d7gn0MVdtRGUOLGXx5fbTF3dJqA0
-         Yqp7eM48ZRkEOWDTKCYUTGp59YzIlvMIGLmfs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=bQ82+4Wlyq0DnXwmZdyFqiZHcz3GXFSdD4dVY14TJHw=;
-        b=iabYUfYJB88CLMOFfPhoRpsresHeCOAn1tA5JpRsp4+2TdoQBSZzN4oXSPkzGF7xyZ
-         fLpUJ6MyUaQE2lHCqJldw0rYl8XBlzge5wML8dhpsNJjidUTbcpiKWArHo9H49EKBPbZ
-         qUtKEOUf8pMlw14i7rvqdJL4ONx11yJQZdc8kla9TYLladd8Z6yfAzVnKC8BHLkMrOC8
-         dMjTQGZpb6NjDJwKIdFV7ME3p0d1tc3SNHGHBGkl0NhBiqgdEKJSJOrSGeQ1129beqjv
-         ZrJj0tdpOb7niAhoK/aNSYVzb6gU8Q17O9zRohGbo5eDrfZ4Sh8x4bTvdufSgd3wHoWP
-         MtOQ==
-X-Gm-Message-State: AOAM531ikemGmKmMmx59XbtAGTyKTG9Cnm2VUVEWY5iQUj6QVimdt/2z
-        /2+bd8J6ZlTHSOSKmHCf9kpK3g==
-X-Google-Smtp-Source: ABdhPJwH/vZYxpmUX0wFXzI8odTIUydTmfuBNr0O1IX+Ecaj2dfweQ2toW/8srxEtSazl5DKLXqY0Q==
-X-Received: by 2002:a17:90a:4cc6:: with SMTP id k64mr823487pjh.162.1614116748161;
-        Tue, 23 Feb 2021 13:45:48 -0800 (PST)
-Received: from smtp.gmail.com ([2620:15c:202:201:68e6:d68b:3887:f216])
-        by smtp.gmail.com with ESMTPSA id r68sm137951pfc.49.2021.02.23.13.45.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Feb 2021 13:45:47 -0800 (PST)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
+        id S232557AbhBWXrd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Feb 2021 18:47:33 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:31996 "EHLO z11.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233654AbhBWXj7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 23 Feb 2021 18:39:59 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1614123560; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=yGLSBwHnyIykQ5h2PxlcYuvkg18nQYW34O01Qcy7Fxs=; b=PeC5aIB3d+WNmcIQ2C97NbbPc0ux5X7bBpsr6h0mA5FskmOpiaWo4sX+bU4aOr3MejOZFS/P
+ j49P1I5N+onAd9s7tCufrmqC2TbMkXjxKd4691P52IOO4LXqu8tFUT7v50Zdc3FafrtdItzK
+ KXz4/cmpDdUC6jLAF/HnOvoz3cs=
+X-Mailgun-Sending-Ip: 104.130.96.11
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 60359201090a774287980e87 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 23 Feb 2021 23:38:41
+ GMT
+Sender: jhugo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 36812C43462; Tue, 23 Feb 2021 23:38:41 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 57E42C433ED;
+        Tue, 23 Feb 2021 23:38:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 57E42C433ED
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH 3/6] firmware: qcom_scm: Workaround lack of "is available"
+ call on SC7180
+To:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Elliot Berman <eberman@codeaurora.org>,
         Brian Masney <masneyb@onstation.org>,
         Stephan Gerhold <stephan@gerhold.net>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
         Douglas Anderson <dianders@chromium.org>
-Subject: [PATCH 6/6] firmware: qcom_scm: Only compile legacy calls on ARM
-Date:   Tue, 23 Feb 2021 13:45:39 -0800
-Message-Id: <20210223214539.1336155-7-swboyd@chromium.org>
-X-Mailer: git-send-email 2.30.0.617.g56c4b15f3c-goog
-In-Reply-To: <20210223214539.1336155-1-swboyd@chromium.org>
 References: <20210223214539.1336155-1-swboyd@chromium.org>
+ <20210223214539.1336155-4-swboyd@chromium.org>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <c7fd9642-7dcb-42bc-18e9-6fd86d8f5be8@codeaurora.org>
+Date:   Tue, 23 Feb 2021 16:38:38 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210223214539.1336155-4-swboyd@chromium.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-These scm calls are never used outside of legacy ARMv7 based platforms.
-That's because PSCI, mandated on arm64, implements them for modern SoCs
-via the PSCI spec. Let's move them to the legacy file and only compile
-the legacy file into the kernel when CONFIG_ARM=y. Otherwise provide
-stubs and fail the calls. This saves a little bit of space in an
-arm64 allmodconfig.
+On 2/23/2021 2:45 PM, Stephen Boyd wrote:
+> Some SC7180 firmwares don't implement the QCOM_SCM_INFO_IS_CALL_AVAIL
+> API, so we can't probe the calling convention. We detect the legacy
+> calling convention on these firmwares, because the availability call
+> always fails and legacy is the fallback. This leads to problems where
+> the rmtfs driver fails to probe, because it tries to assign memory with
+> a bad calling convention, which then leads to modem failing to load and
+> all networking, even wifi, to fail. Ouch!
+> 
+> Let's force the calling convention to be what it always is on this SoC,
+> i.e. arm64. Of course, the calling convention is not the same thing as
+> implementing the QCOM_SCM_INFO_IS_CALL_AVAIL API. The absence of the "is
+> this call available" API from the firmware means that any call to
+> __qcom_scm_is_call_available() fails. This is OK for now though because
+> none of the calls that are checked for existence are implemented on
+> firmware running on sc7180. If such a call needs to be checked for
+> existence in the future, we presume that firmware will implement this
+> API and then things will "just work".
+> 
+> Cc: Elliot Berman <eberman@codeaurora.org>
+> Cc: Brian Masney <masneyb@onstation.org>
+> Cc: Stephan Gerhold <stephan@gerhold.net>
+> Cc: Jeffrey Hugo <jhugo@codeaurora.org>
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Fixes: 9a434cee773a ("firmware: qcom_scm: Dynamically support SMCCC and legacy conventions")
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>   drivers/firmware/qcom_scm.c | 18 ++++++++++++++++--
+>   1 file changed, 16 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> index 21e07a464bd9..9ac84b5d6ce0 100644
+> --- a/drivers/firmware/qcom_scm.c
+> +++ b/drivers/firmware/qcom_scm.c
+> @@ -131,6 +131,7 @@ static enum qcom_scm_convention __get_convention(void)
+>   	struct qcom_scm_res res;
+>   	enum qcom_scm_convention probed_convention;
+>   	int ret;
+> +	bool forced = false;
+>   
+>   	if (likely(qcom_scm_convention != SMC_CONVENTION_UNKNOWN))
+>   		return qcom_scm_convention;
+> @@ -144,6 +145,18 @@ static enum qcom_scm_convention __get_convention(void)
+>   	if (!ret && res.result[0] == 1)
+>   		goto found;
+>   
+> +	/*
+> +	 * Some SC7180 firmwares didn't implement the
+> +	 * QCOM_SCM_INFO_IS_CALL_AVAIL call, so we fallback to forcing ARM_64
+> +	 * calling conventions on these firmwares. Luckily we don't make any
+> +	 * early calls into the firmware on these SoCs so the device pointer
+> +	 * will be valid here to check if the compatible matches.
+> +	 */
+> +	if (of_device_is_compatible(__scm ? __scm->dev->of_node : NULL, "qcom,scm-sc7180")) {
+> +		forced = true;
+> +		goto found;
+> +	}
 
- $ ./scripts/bloat-o-meter vmlinux.before vmlinux.after
- add/remove: 0/8 grow/shrink: 5/7 up/down: 509/-4405 (-3896)
- Function                                     old     new   delta
- __qcom_scm_set_dload_mode.constprop          312     452    +140
- qcom_scm_qsmmu500_wait_safe_toggle           288     416    +128
- qcom_scm_io_writel                           288     408    +120
- qcom_scm_io_readl                            376     492    +116
- __param_str_download_mode                     23      28      +5
- __warned                                    4327    4326      -1
- qcom_iommu_init                              272     268      -4
- e843419@0b3f_00010432_324                      8       -      -8
- qcom_scm_call                                228     208     -20
- CSWTCH                                      5925    5877     -48
- _sub_I_65535_1                            163100  163040     -60
- _sub_D_65535_0                            163100  163040     -60
- qcom_scm_wb                                   64       -     -64
- qcom_scm_lock                                320     160    -160
- qcom_scm_call_atomic                         212       -    -212
- qcom_scm_cpu_power_down                      308       -    -308
- scm_legacy_call_atomic                       520       -    -520
- qcom_scm_set_warm_boot_addr                  720       -    -720
- qcom_scm_set_cold_boot_addr                  728       -    -728
- scm_legacy_call                             1492       -   -1492
- Total: Before=66737642, After=66733746, chg -0.01%
+All SC7180 targets run DT?  None have ACPI?
 
-Commit 9a434cee773a ("firmware: qcom_scm: Dynamically support SMCCC and
-legacy conventions") didn't mention any motivating factors for keeping
-the legacy code around on arm64 kernels, i.e. presumably that commit
-wasn't trying to support these legacy APIs on arm64 kernels.
-
-Cc: Elliot Berman <eberman@codeaurora.org>
-Cc: Brian Masney <masneyb@onstation.org>
-Cc: Stephan Gerhold <stephan@gerhold.net>
-Cc: Jeffrey Hugo <jhugo@codeaurora.org>
-Cc: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/firmware/Makefile          |   4 +-
- drivers/firmware/qcom_scm-legacy.c | 133 ++++++++++++++++++++++++++
- drivers/firmware/qcom_scm.c        | 145 +----------------------------
- drivers/firmware/qcom_scm.h        |  33 +++++++
- include/linux/qcom_scm.h           |  21 +++--
- 5 files changed, 183 insertions(+), 153 deletions(-)
-
-diff --git a/drivers/firmware/Makefile b/drivers/firmware/Makefile
-index 5e013b6a3692..0b7b35555a6c 100644
---- a/drivers/firmware/Makefile
-+++ b/drivers/firmware/Makefile
-@@ -17,7 +17,9 @@ obj-$(CONFIG_ISCSI_IBFT)	+= iscsi_ibft.o
- obj-$(CONFIG_FIRMWARE_MEMMAP)	+= memmap.o
- obj-$(CONFIG_RASPBERRYPI_FIRMWARE) += raspberrypi.o
- obj-$(CONFIG_FW_CFG_SYSFS)	+= qemu_fw_cfg.o
--obj-$(CONFIG_QCOM_SCM)		+= qcom_scm.o qcom_scm-smc.o qcom_scm-legacy.o
-+obj-$(CONFIG_QCOM_SCM)		+= qcom_scm_objs.o
-+qcom_scm_objs-$(CONFIG_ARM)	+= qcom_scm-legacy.o
-+qcom_scm_objs-$(CONFIG_QCOM_SCM) += qcom_scm.o qcom_scm-smc.o
- obj-$(CONFIG_TI_SCI_PROTOCOL)	+= ti_sci.o
- obj-$(CONFIG_TRUSTED_FOUNDATIONS) += trusted_foundations.o
- obj-$(CONFIG_TURRIS_MOX_RWTM)	+= turris-mox-rwtm.o
-diff --git a/drivers/firmware/qcom_scm-legacy.c b/drivers/firmware/qcom_scm-legacy.c
-index 1829ba220576..d909fa2716bc 100644
---- a/drivers/firmware/qcom_scm-legacy.c
-+++ b/drivers/firmware/qcom_scm-legacy.c
-@@ -3,6 +3,7 @@
-  * Copyright (C) 2015 Linaro Ltd.
-  */
- 
-+#include <linux/cpumask.h>
- #include <linux/slab.h>
- #include <linux/io.h>
- #include <linux/module.h>
-@@ -240,3 +241,135 @@ int scm_legacy_call_atomic(struct device *unused,
- 
- 	return smc_res.a0;
- }
-+
-+#define QCOM_SCM_FLAG_COLDBOOT_CPU0	0x00
-+#define QCOM_SCM_FLAG_COLDBOOT_CPU1	0x01
-+#define QCOM_SCM_FLAG_COLDBOOT_CPU2	0x08
-+#define QCOM_SCM_FLAG_COLDBOOT_CPU3	0x20
-+
-+#define QCOM_SCM_FLAG_WARMBOOT_CPU0	0x04
-+#define QCOM_SCM_FLAG_WARMBOOT_CPU1	0x02
-+#define QCOM_SCM_FLAG_WARMBOOT_CPU2	0x10
-+#define QCOM_SCM_FLAG_WARMBOOT_CPU3	0x40
-+
-+struct qcom_scm_wb_entry {
-+	int flag;
-+	void *entry;
-+};
-+
-+static struct qcom_scm_wb_entry qcom_scm_wb[] = {
-+	{ .flag = QCOM_SCM_FLAG_WARMBOOT_CPU0 },
-+	{ .flag = QCOM_SCM_FLAG_WARMBOOT_CPU1 },
-+	{ .flag = QCOM_SCM_FLAG_WARMBOOT_CPU2 },
-+	{ .flag = QCOM_SCM_FLAG_WARMBOOT_CPU3 },
-+};
-+
-+/**
-+ * qcom_scm_set_warm_boot_addr() - Set the warm boot address for cpus
-+ * @entry: Entry point function for the cpus
-+ * @cpus: The cpumask of cpus that will use the entry point
-+ *
-+ * Set the Linux entry point for the SCM to transfer control to when coming
-+ * out of a power down. CPU power down may be executed on cpuidle or hotplug.
-+ */
-+int qcom_scm_set_warm_boot_addr(void *entry, const cpumask_t *cpus)
-+{
-+	int ret;
-+	int flags = 0;
-+	int cpu;
-+	struct qcom_scm_desc desc = {
-+		.svc = QCOM_SCM_SVC_BOOT,
-+		.cmd = QCOM_SCM_BOOT_SET_ADDR,
-+		.arginfo = QCOM_SCM_ARGS(2),
-+	};
-+
-+	/*
-+	 * Reassign only if we are switching from hotplug entry point
-+	 * to cpuidle entry point or vice versa.
-+	 */
-+	for_each_cpu(cpu, cpus) {
-+		if (entry == qcom_scm_wb[cpu].entry)
-+			continue;
-+		flags |= qcom_scm_wb[cpu].flag;
-+	}
-+
-+	/* No change in entry function */
-+	if (!flags)
-+		return 0;
-+
-+	desc.args[0] = flags;
-+	desc.args[1] = virt_to_phys(entry);
-+
-+	ret = scm_legacy_call(__scm->dev, &desc, NULL);
-+	if (!ret) {
-+		for_each_cpu(cpu, cpus)
-+			qcom_scm_wb[cpu].entry = entry;
-+	}
-+
-+	return ret;
-+}
-+EXPORT_SYMBOL(qcom_scm_set_warm_boot_addr);
-+
-+/**
-+ * qcom_scm_set_cold_boot_addr() - Set the cold boot address for cpus
-+ * @entry: Entry point function for the cpus
-+ * @cpus: The cpumask of cpus that will use the entry point
-+ *
-+ * Set the cold boot address of the cpus. Any cpu outside the supported
-+ * range would be removed from the cpu present mask.
-+ */
-+int qcom_scm_set_cold_boot_addr(void *entry, const cpumask_t *cpus)
-+{
-+	int flags = 0;
-+	int cpu;
-+	int scm_cb_flags[] = {
-+		QCOM_SCM_FLAG_COLDBOOT_CPU0,
-+		QCOM_SCM_FLAG_COLDBOOT_CPU1,
-+		QCOM_SCM_FLAG_COLDBOOT_CPU2,
-+		QCOM_SCM_FLAG_COLDBOOT_CPU3,
-+	};
-+	struct qcom_scm_desc desc = {
-+		.svc = QCOM_SCM_SVC_BOOT,
-+		.cmd = QCOM_SCM_BOOT_SET_ADDR,
-+		.arginfo = QCOM_SCM_ARGS(2),
-+		.owner = ARM_SMCCC_OWNER_SIP,
-+	};
-+
-+	if (!cpus || (cpus && cpumask_empty(cpus)))
-+		return -EINVAL;
-+
-+	for_each_cpu(cpu, cpus) {
-+		if (cpu < ARRAY_SIZE(scm_cb_flags))
-+			flags |= scm_cb_flags[cpu];
-+		else
-+			set_cpu_present(cpu, false);
-+	}
-+
-+	desc.args[0] = flags;
-+	desc.args[1] = virt_to_phys(entry);
-+
-+	return scm_legacy_call_atomic(NULL, &desc, NULL);
-+}
-+EXPORT_SYMBOL(qcom_scm_set_cold_boot_addr);
-+
-+/**
-+ * qcom_scm_cpu_power_down() - Power down the cpu
-+ * @flags - Flags to flush cache
-+ *
-+ * This is an end point to power down cpu. If there was a pending interrupt,
-+ * the control would return from this function, otherwise, the cpu jumps to the
-+ * warm boot entry point set for this cpu upon reset.
-+ */
-+void qcom_scm_cpu_power_down(u32 flags)
-+{
-+	struct qcom_scm_desc desc = {
-+		.svc = QCOM_SCM_SVC_BOOT,
-+		.cmd = QCOM_SCM_BOOT_TERMINATE_PC,
-+		.args[0] = flags & QCOM_SCM_FLUSH_FLAG_MASK,
-+		.arginfo = QCOM_SCM_ARGS(1),
-+		.owner = ARM_SMCCC_OWNER_SIP,
-+	};
-+
-+	scm_legacy_call_atomic(NULL, &desc, NULL);
-+}
-+EXPORT_SYMBOL(qcom_scm_cpu_power_down);
-diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-index ee9cb545e73b..29bce83f8a25 100644
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -4,7 +4,6 @@
-  */
- #include <linux/platform_device.h>
- #include <linux/init.h>
--#include <linux/cpumask.h>
- #include <linux/export.h>
- #include <linux/dma-mapping.h>
- #include <linux/module.h>
-@@ -26,16 +25,6 @@ module_param(download_mode, bool, 0);
- #define SCM_HAS_IFACE_CLK	BIT(1)
- #define SCM_HAS_BUS_CLK		BIT(2)
- 
--struct qcom_scm {
--	struct device *dev;
--	struct clk *core_clk;
--	struct clk *iface_clk;
--	struct clk *bus_clk;
--	struct reset_controller_dev reset;
--
--	u64 dload_mode_addr;
--};
--
- struct qcom_scm_current_perm_info {
- 	__le32 vmid;
- 	__le32 perm;
-@@ -49,28 +38,6 @@ struct qcom_scm_mem_map_info {
- 	__le64 mem_size;
- };
- 
--#define QCOM_SCM_FLAG_COLDBOOT_CPU0	0x00
--#define QCOM_SCM_FLAG_COLDBOOT_CPU1	0x01
--#define QCOM_SCM_FLAG_COLDBOOT_CPU2	0x08
--#define QCOM_SCM_FLAG_COLDBOOT_CPU3	0x20
--
--#define QCOM_SCM_FLAG_WARMBOOT_CPU0	0x04
--#define QCOM_SCM_FLAG_WARMBOOT_CPU1	0x02
--#define QCOM_SCM_FLAG_WARMBOOT_CPU2	0x10
--#define QCOM_SCM_FLAG_WARMBOOT_CPU3	0x40
--
--struct qcom_scm_wb_entry {
--	int flag;
--	void *entry;
--};
--
--static struct qcom_scm_wb_entry qcom_scm_wb[] = {
--	{ .flag = QCOM_SCM_FLAG_WARMBOOT_CPU0 },
--	{ .flag = QCOM_SCM_FLAG_WARMBOOT_CPU1 },
--	{ .flag = QCOM_SCM_FLAG_WARMBOOT_CPU2 },
--	{ .flag = QCOM_SCM_FLAG_WARMBOOT_CPU3 },
--};
--
- static const char *qcom_scm_convention_names[] = {
- 	[SMC_CONVENTION_UNKNOWN] = "unknown",
- 	[SMC_CONVENTION_ARM_32] = "smc arm 32",
-@@ -78,7 +45,7 @@ static const char *qcom_scm_convention_names[] = {
- 	[SMC_CONVENTION_LEGACY] = "smc legacy",
- };
- 
--static struct qcom_scm *__scm;
-+struct qcom_scm *__scm;
- 
- static int qcom_scm_clk_enable(void)
- {
-@@ -260,116 +227,6 @@ static bool __qcom_scm_is_call_available(struct device *dev, u32 svc_id,
- 	return ret ? false : !!res.result[0];
- }
- 
--/**
-- * qcom_scm_set_warm_boot_addr() - Set the warm boot address for cpus
-- * @entry: Entry point function for the cpus
-- * @cpus: The cpumask of cpus that will use the entry point
-- *
-- * Set the Linux entry point for the SCM to transfer control to when coming
-- * out of a power down. CPU power down may be executed on cpuidle or hotplug.
-- */
--int qcom_scm_set_warm_boot_addr(void *entry, const cpumask_t *cpus)
--{
--	int ret;
--	int flags = 0;
--	int cpu;
--	struct qcom_scm_desc desc = {
--		.svc = QCOM_SCM_SVC_BOOT,
--		.cmd = QCOM_SCM_BOOT_SET_ADDR,
--		.arginfo = QCOM_SCM_ARGS(2),
--	};
--
--	/*
--	 * Reassign only if we are switching from hotplug entry point
--	 * to cpuidle entry point or vice versa.
--	 */
--	for_each_cpu(cpu, cpus) {
--		if (entry == qcom_scm_wb[cpu].entry)
--			continue;
--		flags |= qcom_scm_wb[cpu].flag;
--	}
--
--	/* No change in entry function */
--	if (!flags)
--		return 0;
--
--	desc.args[0] = flags;
--	desc.args[1] = virt_to_phys(entry);
--
--	ret = qcom_scm_call(__scm->dev, &desc, NULL);
--	if (!ret) {
--		for_each_cpu(cpu, cpus)
--			qcom_scm_wb[cpu].entry = entry;
--	}
--
--	return ret;
--}
--EXPORT_SYMBOL(qcom_scm_set_warm_boot_addr);
--
--/**
-- * qcom_scm_set_cold_boot_addr() - Set the cold boot address for cpus
-- * @entry: Entry point function for the cpus
-- * @cpus: The cpumask of cpus that will use the entry point
-- *
-- * Set the cold boot address of the cpus. Any cpu outside the supported
-- * range would be removed from the cpu present mask.
-- */
--int qcom_scm_set_cold_boot_addr(void *entry, const cpumask_t *cpus)
--{
--	int flags = 0;
--	int cpu;
--	int scm_cb_flags[] = {
--		QCOM_SCM_FLAG_COLDBOOT_CPU0,
--		QCOM_SCM_FLAG_COLDBOOT_CPU1,
--		QCOM_SCM_FLAG_COLDBOOT_CPU2,
--		QCOM_SCM_FLAG_COLDBOOT_CPU3,
--	};
--	struct qcom_scm_desc desc = {
--		.svc = QCOM_SCM_SVC_BOOT,
--		.cmd = QCOM_SCM_BOOT_SET_ADDR,
--		.arginfo = QCOM_SCM_ARGS(2),
--		.owner = ARM_SMCCC_OWNER_SIP,
--	};
--
--	if (!cpus || (cpus && cpumask_empty(cpus)))
--		return -EINVAL;
--
--	for_each_cpu(cpu, cpus) {
--		if (cpu < ARRAY_SIZE(scm_cb_flags))
--			flags |= scm_cb_flags[cpu];
--		else
--			set_cpu_present(cpu, false);
--	}
--
--	desc.args[0] = flags;
--	desc.args[1] = virt_to_phys(entry);
--
--	return qcom_scm_call_atomic(__scm ? __scm->dev : NULL, &desc, NULL);
--}
--EXPORT_SYMBOL(qcom_scm_set_cold_boot_addr);
--
--/**
-- * qcom_scm_cpu_power_down() - Power down the cpu
-- * @flags - Flags to flush cache
-- *
-- * This is an end point to power down cpu. If there was a pending interrupt,
-- * the control would return from this function, otherwise, the cpu jumps to the
-- * warm boot entry point set for this cpu upon reset.
-- */
--void qcom_scm_cpu_power_down(u32 flags)
--{
--	struct qcom_scm_desc desc = {
--		.svc = QCOM_SCM_SVC_BOOT,
--		.cmd = QCOM_SCM_BOOT_TERMINATE_PC,
--		.args[0] = flags & QCOM_SCM_FLUSH_FLAG_MASK,
--		.arginfo = QCOM_SCM_ARGS(1),
--		.owner = ARM_SMCCC_OWNER_SIP,
--	};
--
--	qcom_scm_call_atomic(__scm ? __scm->dev : NULL, &desc, NULL);
--}
--EXPORT_SYMBOL(qcom_scm_cpu_power_down);
--
- int qcom_scm_set_remote_state(u32 state, u32 id)
- {
- 	struct qcom_scm_desc desc = {
-diff --git a/drivers/firmware/qcom_scm.h b/drivers/firmware/qcom_scm.h
-index 632fe3142462..be23f96557da 100644
---- a/drivers/firmware/qcom_scm.h
-+++ b/drivers/firmware/qcom_scm.h
-@@ -4,6 +4,24 @@
- #ifndef __QCOM_SCM_INT_H
- #define __QCOM_SCM_INT_H
- 
-+#include <linux/types.h>
-+#include <linux/reset-controller.h>
-+
-+struct clk;
-+struct device;
-+
-+struct qcom_scm {
-+	struct device *dev;
-+	struct clk *core_clk;
-+	struct clk *iface_clk;
-+	struct clk *bus_clk;
-+	struct reset_controller_dev reset;
-+
-+	u64 dload_mode_addr;
-+};
-+
-+extern struct qcom_scm *__scm;
-+
- enum qcom_scm_convention {
- 	SMC_CONVENTION_UNKNOWN,
- 	SMC_CONVENTION_LEGACY,
-@@ -68,11 +86,26 @@ extern int __scm_smc_call(struct device *dev, const struct qcom_scm_desc *desc,
- 	__scm_smc_call((dev), (desc), qcom_scm_convention, (res), (atomic))
- 
- #define SCM_LEGACY_FNID(s, c)	(((s) << 10) | ((c) & 0x3ff))
-+#if IS_ENABLED(CONFIG_ARM)
- extern int scm_legacy_call_atomic(struct device *dev,
- 				  const struct qcom_scm_desc *desc,
- 				  struct qcom_scm_res *res);
- extern int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
- 			   struct qcom_scm_res *res);
-+#else
-+static inline int scm_legacy_call_atomic(struct device *dev,
-+					 const struct qcom_scm_desc *desc,
-+					 struct qcom_scm_res *res)
-+{
-+	return -EINVAL;
-+}
-+
-+static inline int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
-+				  struct qcom_scm_res *res)
-+{
-+	return -EINVAL;
-+}
-+#endif
- 
- #define QCOM_SCM_SVC_BOOT		0x01
- #define QCOM_SCM_BOOT_SET_ADDR		0x01
-diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
-index 0165824c5128..0ec905d56e1a 100644
---- a/include/linux/qcom_scm.h
-+++ b/include/linux/qcom_scm.h
-@@ -64,9 +64,6 @@ enum qcom_scm_ice_cipher {
- #if IS_ENABLED(CONFIG_QCOM_SCM)
- extern bool qcom_scm_is_available(void);
- 
--extern int qcom_scm_set_cold_boot_addr(void *entry, const cpumask_t *cpus);
--extern int qcom_scm_set_warm_boot_addr(void *entry, const cpumask_t *cpus);
--extern void qcom_scm_cpu_power_down(u32 flags);
- extern int qcom_scm_set_remote_state(u32 state, u32 id);
- 
- extern int qcom_scm_pas_init_image(u32 peripheral, const void *metadata,
-@@ -115,11 +112,6 @@ extern int qcom_scm_qsmmu500_wait_safe_toggle(bool en);
- 
- static inline bool qcom_scm_is_available(void) { return false; }
- 
--static inline int qcom_scm_set_cold_boot_addr(void *entry,
--		const cpumask_t *cpus) { return -ENODEV; }
--static inline int qcom_scm_set_warm_boot_addr(void *entry,
--		const cpumask_t *cpus) { return -ENODEV; }
--static inline void qcom_scm_cpu_power_down(u32 flags) {}
- static inline u32 qcom_scm_set_remote_state(u32 state,u32 id)
- 		{ return -ENODEV; }
- 
-@@ -171,4 +163,17 @@ static inline int qcom_scm_hdcp_req(struct qcom_scm_hdcp_req *req, u32 req_cnt,
- static inline int qcom_scm_qsmmu500_wait_safe_toggle(bool en)
- 		{ return -ENODEV; }
- #endif
-+
-+#if IS_ENABLED(CONFIG_ARM) && IS_ENABLED(CONFIG_QCOM_SCM)
-+extern int qcom_scm_set_cold_boot_addr(void *entry, const cpumask_t *cpus);
-+extern int qcom_scm_set_warm_boot_addr(void *entry, const cpumask_t *cpus);
-+extern void qcom_scm_cpu_power_down(u32 flags);
-+#else
-+static inline int qcom_scm_set_cold_boot_addr(void *entry,
-+		const cpumask_t *cpus) { return -ENODEV; }
-+static inline int qcom_scm_set_warm_boot_addr(void *entry,
-+		const cpumask_t *cpus) { return -ENODEV; }
-+static inline void qcom_scm_cpu_power_down(u32 flags) {}
-+#endif
-+
- #endif
 -- 
-https://chromeos.dev
-
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
