@@ -2,92 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 84451322BAF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Feb 2021 14:49:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C326322CA4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Feb 2021 15:44:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232196AbhBWNsu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Feb 2021 08:48:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48462 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232101AbhBWNst (ORCPT
+        id S232642AbhBWOmX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Feb 2021 09:42:23 -0500
+Received: from new1-smtp.messagingengine.com ([66.111.4.221]:36871 "EHLO
+        new1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S232424AbhBWOmO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Feb 2021 08:48:49 -0500
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25FBCC061786
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Feb 2021 05:48:09 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id n1so25973504edv.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Feb 2021 05:48:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=pcdzTD1mQUpMxVbu7Yow7YjbJsL+FPj0nXyj14+JGA4=;
-        b=JzspRlBxu5Ejd8AsD23/j+PjMTd/Exz24W+zl1qnmgR97nVKZwfAdppvQhWm9Xt+cD
-         dEAdSiMjQE2vXwCwSkEFfGx9b7q3v9vyQKmTUgh36vZ5PtAhvGpTERVp8Tm/AvHZdbaN
-         HES5Siqx/VNvD8+g+ZnllJ863XkWORTQXQUiM4kIiFEDTaYi7jWiVJJml9C5yHAJmnYW
-         T0sTA4col8KMZWYMLRp7BTfwJAJHBj/prgcp2RPTJtA73c/LV7gv8U8Y9T0NKCFdkjuK
-         vB0essXpfmfCL5+DFdalqykTYfbQZf5C/7CT0z0CuNX7/T567yevFK2ZCGowU+++62yM
-         SfPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=pcdzTD1mQUpMxVbu7Yow7YjbJsL+FPj0nXyj14+JGA4=;
-        b=DJC1+oaHGiG9skkfMkFlTbfaZ28QWrCwbJgognXeWSdBMhgenu3QjQ+w65egAmi27f
-         ZqhMdjpVJ3JusFXXuMJOlsHIodK7bevkjF7SEzzHKcAGpTndtLnnLacuc45a7XQkWZAE
-         6PM0lN/ANLZFQU55XO2EO+nF0n5bMNWqvGHu5nBuuq3Da3MkBfwHHNFgLuDoYD6tpo0i
-         RZy7Sq/kJVOMN2k/+jk8KCm+zPKAYAhVV8kXkTSUKe9f02aHVS8vEuEQJTYwdBEUC6Dv
-         BxYzqmB7plSrOlmu/zVXKXiaBvoidaH5pqZFsmg5+8sCbSfMi993Ekc0z3Aq2rfDlmGL
-         18FA==
-X-Gm-Message-State: AOAM531FG9tA156jnL9C7Wq6FK3CxkkvwJB1O2z9dXstFkvGeHzv73wE
-        4gLw25Sx2wqiUv72sfT7GvFAsw==
-X-Google-Smtp-Source: ABdhPJydkB2QqinC1dMaDgpVymT2bnxc0nfwaqDMPejrUa1A6QqByOG5kFL86py7Lp5Pvvrzm5JWMQ==
-X-Received: by 2002:a50:9d0b:: with SMTP id v11mr28994310ede.308.1614088087831;
-        Tue, 23 Feb 2021 05:48:07 -0800 (PST)
-Received: from [192.168.0.4] ([84.238.208.199])
-        by smtp.googlemail.com with ESMTPSA id gc17sm6929778ejb.89.2021.02.23.05.48.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Feb 2021 05:48:07 -0800 (PST)
-Subject: Re: [PATCH 03/25] media: venus: core: add sm8250 DT compatible and
- resource data
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, mchehab@kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     dikshita@codeaurora.org, jonathan@marek.ca, vgarodia@codeaurora.org
-References: <20210222160300.1811121-1-bryan.odonoghue@linaro.org>
- <20210222160300.1811121-4-bryan.odonoghue@linaro.org>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <99f9acb0-8c54-0f95-9c8c-e3729cdd7d8c@linaro.org>
-Date:   Tue, 23 Feb 2021 15:48:06 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.1
+        Tue, 23 Feb 2021 09:42:14 -0500
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+        by mailnew.nyi.internal (Postfix) with ESMTP id 8A11E580292;
+        Tue, 23 Feb 2021 09:41:22 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Tue, 23 Feb 2021 09:41:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=
+        date:from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm2; bh=W5Ow9fvH75ZU0EulrQV4vENorU9
+        mrOKzv5PjfArajy8=; b=GU22XeFWKMGcAZu6NWqRYgkFYnXryfc3+rlB2tk1nhN
+        zH1yO4BroV86D8Wj+siHaUgnYeJECPYuoxUrrb83MoTFpzJSJphB7CNYaw5EteJZ
+        Rfe2uUFGY6BHcoPSg4DF4SQKrsvwPDYYdobiTIUwMYND4GTIu0kbe2QDQrUJz9Ys
+        XL+8v06HcJxiYtSVO/5pD1twtzjjYfm8ikS3vacu5DbMHaCdJ/0Bb0eQOCqUJ+xJ
+        NIaaer0XVasP54dsztAiOD81TbYaNwUKzT83ztyWAR6aGwJqfbXvuoSxWKtBKTYP
+        sX/HgxIZrBTwnzz8GG1ss6/7GOr1ivxZ14BClrGyHWQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=W5Ow9f
+        vH75ZU0EulrQV4vENorU9mrOKzv5PjfArajy8=; b=qgr4AecZXNy49Pwwcr3zO7
+        TdV+JR/XzKNcIDbvGOHn1gyMulZmqUgjZE15uY4QiiJDSs5yNTNDlDvrT8aqmBBw
+        m+TXy7tppkYi/athZQuOT688uMOAKQ7dD0wKr2fATxKmEcNhGq/hRsEf67pAYWel
+        CW2ClVZEj/WtvMd8w9vOaLZF4/vbQKAGVKEf5TRK7VzsxG4xPY/90O6t9lIKeVT/
+        1DcSLdifDN3mbzrRQzXSpVMVk4u14TpKcyvkgpa1j+tLel53b9ATvGlQIXWSFb9A
+        HU6MQUGYedLJ6xeOJ9x1CoCFAY6BRqNMM/TVvqlknPHnkpZPBT690jCUju/aYCIQ
+        ==
+X-ME-Sender: <xms:DxQ1YHcwLkacrL4buHESnYHKnUzjsYIPVVlJYBMfFvRDM6MqeiMrAw>
+    <xme:DxQ1YNINX6ny7m8oyXghU1wTT_mRfZ_k9-vxor2IQNCD8oH5QjnGopn2JvmXfufFs
+    FrwJdNAWEr_OSJSzjU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrkeehgdeijecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvuffkfhggtggujgesghdtreertddtudenucfhrhhomhepofgrgihimhgv
+    ucftihhprghrugcuoehmrgigihhmvgestggvrhhnohdrthgvtghhqeenucggtffrrghtth
+    gvrhhnpeduvdduhfekkeehgffftefflefgffdtheffudffgeevteffheeuiedvvdejvdfg
+    veenucfkphepledtrdekledrieekrdejieenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehmrgigihhmvgestggvrhhnohdrthgvtghh
+X-ME-Proxy: <xmx:DxQ1YNaDoP46QK6II2Npge5z11oEm9Qdi527yfK1TS9XQKwgMuLiVQ>
+    <xmx:DxQ1YAtTvX9P0b2VSBPnZpGywjzTaKaYjRz8OjAsZ4ZT-xr086WGuA>
+    <xmx:DxQ1YCtHW6OQizQezuGIpR8i1BG7bAFrv_z_qt-lNwGn9thFMHtHFQ>
+    <xmx:EhQ1YGbmP5bQbsmz_bNtZPrY7XxwA4fy1g0NHauspJh91sPMYVo-bw>
+Received: from localhost (lfbn-tou-1-1502-76.w90-89.abo.wanadoo.fr [90.89.68.76])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 74C8124005D;
+        Tue, 23 Feb 2021 09:41:19 -0500 (EST)
+Date:   Tue, 23 Feb 2021 15:41:17 +0100
+From:   Maxime Ripard <maxime@cerno.tech>
+To:     Thomas Zimmermann <tzimmermann@suse.de>
+Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        David Airlie <airlied@linux.ie>,
+        dri-devel@lists.freedesktop.org,
+        Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Jyri Sarha <jyri.sarha@iki.fi>,
+        Tomi Valkeinen <tomba@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-mips@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v3 06/11] drm: Use state helper instead of plane state
+ pointer in atomic_check
+Message-ID: <20210223144117.6lhuizr2zrutbkzi@gilmour>
+References: <20210219120032.260676-1-maxime@cerno.tech>
+ <20210219120032.260676-6-maxime@cerno.tech>
+ <e6e8191d-08d9-7144-bb1a-ddaa6c21eccb@suse.de>
 MIME-Version: 1.0
-In-Reply-To: <20210222160300.1811121-4-bryan.odonoghue@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="etokcv6rtvultpe4"
+Content-Disposition: inline
+In-Reply-To: <e6e8191d-08d9-7144-bb1a-ddaa6c21eccb@suse.de>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Could you move this patch at the end of the series where the support for
-v6xx will be fully functional?
 
-On 2/22/21 6:02 PM, Bryan O'Donoghue wrote:
-> Adds an sm8250 compatible binding to the venus core.
-> 
-> Co-developed-by: Jonathan Marek <jonathan@marek.ca>
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> Co-developed-by: Dikshita Agarwal <dikshita@codeaurora.org>
-> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->  drivers/media/platform/qcom/venus/core.c | 54 ++++++++++++++++++++++++
->  1 file changed, 54 insertions(+)
+--etokcv6rtvultpe4
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Acked-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Hi Thomas,
 
--- 
-regards,
-Stan
+On Mon, Feb 22, 2021 at 10:12:49AM +0100, Thomas Zimmermann wrote:
+> Am 19.02.21 um 13:00 schrieb Maxime Ripard:
+> > Many drivers reference the plane->state pointer in order to get the
+> > current plane state in their atomic_check hook, which would be the old
+> > plane state in the global atomic state since _swap_state hasn't happened
+> > when atomic_check is run.
+> >=20
+> > Use the drm_atomic_get_old_plane_state helper to get that state to make
+> > it more obvious.
+> >=20
+> > This was made using the coccinelle script below:
+> >=20
+> > @ plane_atomic_func @
+> > identifier helpers;
+> > identifier func;
+> > @@
+> >=20
+> > static struct drm_plane_helper_funcs helpers =3D {
+> > 	...,
+> > 	.atomic_check =3D func,
+> > 	...,
+> > };
+> >=20
+> > @ replaces_old_state @
+> > identifier plane_atomic_func.func;
+> > identifier plane, state, plane_state;
+> > @@
+> >=20
+> >   func(struct drm_plane *plane, struct drm_atomic_state *state) {
+> >   	...
+> > -	struct drm_plane_state *plane_state =3D plane->state;
+> > +	struct drm_plane_state *plane_state =3D drm_atomic_get_old_plane_stat=
+e(state, plane);
+> >   	...
+> >   }
+> >=20
+> > @@
+> > identifier plane_atomic_func.func;
+> > identifier plane, state, plane_state;
+> > @@
+> >=20
+> >   func(struct drm_plane *plane, struct drm_atomic_state *state) {
+> >   	struct drm_plane_state *plane_state =3D drm_atomic_get_old_plane_sta=
+te(state, plane);
+> >   	<...
+> > -	plane->state
+> > +	plane_state
+> >   	...>
+> >   }
+> >=20
+> > @ adds_old_state @
+> > identifier plane_atomic_func.func;
+> > identifier plane, state;
+> > @@
+> >=20
+> >   func(struct drm_plane *plane, struct drm_atomic_state *state) {
+> > +	struct drm_plane_state *old_plane_state =3D drm_atomic_get_old_plane_=
+state(state, plane);
+> >   	<...
+> > -	plane->state
+> > +	old_plane_state
+> >   	...>
+> >   }
+> >=20
+> > @ include depends on adds_old_state || replaces_old_state @
+> > @@
+> >=20
+> >   #include <drm/drm_atomic.h>
+> >=20
+> > @ no_include depends on !include && (adds_old_state || replaces_old_sta=
+te) @
+> > @@
+> >=20
+> > + #include <drm/drm_atomic.h>
+> >    #include <drm/...>
+> >=20
+> > Reviewed-by: Ville Syrj=E4l=E4 <ville.syrjala@linux.intel.com>
+> > Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+>=20
+> Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+>=20
+> However, I find 'old plane state' somewhat confusing in this context,
+> because it's actually the current plane state. Would it make sense to use
+> drm_atomic_get_existing_plane_state() instead?
+
+drm_atomic_get_existing_plane_state is deprecated nowadays, in favour of ei=
+ther
+drm_atomic_get_old_plane_state or drm_atomic_get_new_plane_state
+
+Maxime
+
+--etokcv6rtvultpe4
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCYDUUDQAKCRDj7w1vZxhR
+xRvbAP9dHjMFrJJN6sPJ07XtwTqAGn3EfEWhkDvhKpwZr1R6KQEAq1fU0dcu291f
+xFwjCPWCaX5tqUHCQKox185muDdxKgU=
+=fkaC
+-----END PGP SIGNATURE-----
+
+--etokcv6rtvultpe4--
