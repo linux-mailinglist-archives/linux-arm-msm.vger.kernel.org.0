@@ -2,60 +2,329 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A0F63229C0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Feb 2021 12:54:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B6730322B45
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Feb 2021 14:14:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232520AbhBWLxv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Feb 2021 06:53:51 -0500
-Received: from mail.jvpinto.com ([65.49.11.60]:49930 "EHLO mail.JVPinto.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232495AbhBWLxB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Feb 2021 06:53:01 -0500
-Received: from RW-EXC1.JVPinto.com (2002:ac20:10d::ac20:10d) by
- RW-EXC1.JVPinto.com (2002:ac20:10d::ac20:10d) with Microsoft SMTP Server
- (TLS) id 15.0.1497.2; Tue, 23 Feb 2021 03:52:13 -0800
-Received: from User (52.231.198.195) by RW-EXC1.JVPinto.com (172.32.1.13) with
- Microsoft SMTP Server id 15.0.1497.2 via Frontend Transport; Tue, 23 Feb 2021
- 03:51:59 -0800
-Reply-To: <ms.reem@yandex.com>
-From:   "Ms. Reem" <johnpinto@jvpinto.com>
-Subject: Hello okay
-Date:   Tue, 23 Feb 2021 11:52:12 +0000
+        id S232748AbhBWNMR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Feb 2021 08:12:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40642 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232727AbhBWNMQ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 23 Feb 2021 08:12:16 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC886C06174A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Feb 2021 05:11:35 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id g5so34513550ejt.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Feb 2021 05:11:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=SDlvrGnCHB2gcAG2v5au9NkVTCAf1HHArWaYqJ1nq/s=;
+        b=Jtnkx97FM1vOzeukdCBAIBSO7rVdCPYyBOqC09yATd4VmMmz1rh16Wl9n6YGPBzp9y
+         Gq6M7pvyS1KAQdS/jKw/T8X1UFrP/1yqhM3tbnicdGSIG55QbR7cYUxD5drwTsrWZohC
+         L12xeFyvz/I0bUCxJEZ9qT/KjfPS2mcKduoPrCo7bZjeuhZQZRIOhMlZ3oREsrJpEjiv
+         vz9ec5bRff1CHSh+cPf7s4Rl6hkk+gVButR5p8Mz1X+szkLf31Rd5bM3MbtFgE9AZVDE
+         nblo+Q85uvj18lCbO7R5vIGkFgIRTAj4lGhjXIQmZo7b33bVkvRauZuga2rhIMeSNN2S
+         slxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=SDlvrGnCHB2gcAG2v5au9NkVTCAf1HHArWaYqJ1nq/s=;
+        b=M/lGNvFPbi4onkRP1eI1qkMZg3ijRprfMChMsLu39tdgpgTZ6E0c8T8VZZ9ceaOLi0
+         G32jmdf0P2sxJ9PO9ICspRsE/XZO7J7FtEOZKd1DfpWhwFpVxpr60G+uUmzRgpK9Tw1i
+         SV6n88swemxiBYapDyvFDCOYSMfjQ+RgfKD9zXwgobFmuLSkP4X6FVIzT3u+QFK7m1cw
+         JmpAFliMDwMb7JgCI/fzKiGs3YLfyEwpA3tSRGTi2pLb+eeUl0D3Zm7rlfDa3IntOeGd
+         JFORqrOntfi6p0Wf7knT55fGMoXh1WU2QKhJw9R5pGq5wj0s2adsHe9w68iURRd9IqWr
+         C2+g==
+X-Gm-Message-State: AOAM532qHpA/Z9X8d9IMHjnArMmIVOeQ93ZglXAxQxK1bxDEnQBeHTpj
+        imjCZIPaPg1kL5p8WZ8uXD6NPg==
+X-Google-Smtp-Source: ABdhPJxR79BAUIRT+V26BFQoUTXFbqN0+uLygvvA8Jy0B5ngyGWS8MNv1suHbWg2Z9Zq/DzJ4j4DEQ==
+X-Received: by 2002:a17:906:d146:: with SMTP id br6mr10235766ejb.552.1614085894696;
+        Tue, 23 Feb 2021 05:11:34 -0800 (PST)
+Received: from [192.168.0.4] (hst-208-222.medicom.bg. [84.238.208.222])
+        by smtp.googlemail.com with ESMTPSA id t13sm12198837edr.17.2021.02.23.05.11.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 23 Feb 2021 05:11:34 -0800 (PST)
+Subject: Re: [PATCH 01/25] media: venus: Update v6 buffer descriptors
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, mchehab@kernel.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     dikshita@codeaurora.org, jonathan@marek.ca, vgarodia@codeaurora.org
+References: <20210222160300.1811121-1-bryan.odonoghue@linaro.org>
+ <20210222160300.1811121-2-bryan.odonoghue@linaro.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <07d114d8-6d49-3918-ea1d-6140065b396f@linaro.org>
+Date:   Tue, 23 Feb 2021 15:11:33 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="Windows-1251"
+In-Reply-To: <20210222160300.1811121-2-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2600.0000
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
-Message-ID: <a979b4e3f4df4cf8baf7c5db5d0603cc@RW-EXC1.JVPinto.com>
-To:     Undisclosed recipients:;
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
 
-My name is Ms. Reem Ebrahim Al-Hashimi, I am the "Minister of state
-and Petroleum" also "Minister of State for International Cooperation"
-in UAE. I write to you on behalf of my other "three (3) colleagues"
-who has approved me to solicit for your "partnership in claiming of
-{us$47=Million}" from a Financial Home in Cambodia on their behalf and
-for our "Mutual Benefits".
 
-The Fund {us$47=Million} is our share from the (over-invoiced) Oil/Gas
-deal with Cambodian/Vietnam Government within 2013/2014, however, we
-don't want our government to know about the fund. If this proposal
-interests you, let me know, by sending me an email and I will send to
-you detailed information on how this business would be successfully
-transacted. Be informed that nobody knows about the secret of this
-fund except us, and we know how to carry out the entire transaction.
-So I am compelled to ask, that you will stand on our behalf and
-receive this fund into any account that is solely controlled by you.
+On 2/22/21 6:02 PM, Bryan O'Donoghue wrote:
+> Currently hfi_platform_v6.c adds a bunch of capability parameters.
+> Reviewing downstream we can see a number of these need to be updated.
+> 
+> techpack/video/msm/vidc/msm_vidc_platform.c :: kona_capabilities[]
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  .../platform/qcom/venus/hfi_platform_v6.c     | 138 +++++++++---------
+>  1 file changed, 69 insertions(+), 69 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/hfi_platform_v6.c b/drivers/media/platform/qcom/venus/hfi_platform_v6.c
+> index 2278be13cb90..6fa80353bcce 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_platform_v6.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_platform_v6.c
+> @@ -9,15 +9,15 @@ static const struct hfi_plat_caps caps[] = {
+>  	.codec = HFI_VIDEO_CODEC_H264,
+>  	.domain = VIDC_SESSION_TYPE_DEC,
+>  	.cap_bufs_mode_dynamic = true,
+> -	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 5760, 1},
+> -	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 5760, 1},
+> +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 8192, 1},
+> +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 8192, 1},
+>  	/* ((5760 * 2880) / 256) */
+> -	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 36, 64800, 1},
+> -	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 200000000, 1},
+> +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 138240, 1},
+> +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 22000000, 1},
 
-We will compensate you with 15% of the total amount involved as
-gratification for being our partner in this transaction. Reply to:
-ms.reem@yandex.com
+s/22000000/220000000
 
-Regards,
-Ms. Reem.
+>  	.caps[4] = {HFI_CAPABILITY_SCALE_X, 65536, 65536, 1},
+>  	.caps[5] = {HFI_CAPABILITY_SCALE_Y, 65536, 65536, 1},
+> -	.caps[6] = {HFI_CAPABILITY_MBS_PER_SECOND, 36, 1958400, 1},
+> -	.caps[7] = {HFI_CAPABILITY_FRAMERATE, 1, 480, 1},
+> +	.caps[6] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 7833600, 1},
+> +	.caps[7] = {HFI_CAPABILITY_FRAMERATE, 1, 960, 1},
+>  	.caps[8] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
+>  	.num_caps = 9,
+>  	.pl[0] = {HFI_H264_PROFILE_BASELINE, HFI_H264_LEVEL_52},
+> @@ -35,15 +35,15 @@ static const struct hfi_plat_caps caps[] = {
+>  	.codec = HFI_VIDEO_CODEC_HEVC,
+>  	.domain = VIDC_SESSION_TYPE_DEC,
+>  	.cap_bufs_mode_dynamic = true,
+> -	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 1},
+> -	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 1},
+> -	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 1, 36864, 1},
+> -	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 120000000, 1},
+> -	.caps[4] = {HFI_CAPABILITY_SCALE_X, 4096, 65536, 1},
+> -	.caps[5] = {HFI_CAPABILITY_SCALE_Y, 4096, 65536, 1},
+> -	.caps[6] = {HFI_CAPABILITY_MBS_PER_SECOND, 1, 2073600, 1},
+> -	.caps[7] = {HFI_CAPABILITY_FRAMERATE, 1, 480, 1},
+> -	.caps[8] = {HFI_CAPABILITY_MAX_VIDEOCORES, 1, 2, 1},
+> +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 8192, 1},
+> +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 8192, 1},
+> +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 138240, 1},
+> +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 22000000, 1},
+
+s/22000000/220000000
+
+> +	.caps[4] = {HFI_CAPABILITY_SCALE_X, 65536, 65536, 1},
+> +	.caps[5] = {HFI_CAPABILITY_SCALE_Y, 65536, 65536, 1},
+> +	.caps[6] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 7833600, 1},
+> +	.caps[7] = {HFI_CAPABILITY_FRAMERATE, 1, 960, 1},
+> +	.caps[8] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
+>  	.caps[9] = {HFI_CAPABILITY_MAX_WORKMODES, 1, 3, 1},
+>  	.num_caps = 10,
+>  	.pl[0] = {HFI_HEVC_PROFILE_MAIN, HFI_HEVC_LEVEL_6 | HFI_HEVC_TIER_HIGH0},
+> @@ -61,15 +61,15 @@ static const struct hfi_plat_caps caps[] = {
+>  	.codec = HFI_VIDEO_CODEC_VP8,
+>  	.domain = VIDC_SESSION_TYPE_DEC,
+>  	.cap_bufs_mode_dynamic = true,
+> -	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 1},
+> -	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 1},
+> -	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 1, 36864, 1},
+> -	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 120000000, 1},
+> -	.caps[4] = {HFI_CAPABILITY_SCALE_X, 4096, 65536, 1},
+> -	.caps[5] = {HFI_CAPABILITY_SCALE_Y, 4096, 65536, 1},
+> -	.caps[6] = {HFI_CAPABILITY_MBS_PER_SECOND, 1, 2073600, 1},
+> -	.caps[7] = {HFI_CAPABILITY_FRAMERATE, 1, 480, 1},
+> -	.caps[8] = {HFI_CAPABILITY_MAX_VIDEOCORES, 1, 2, 1},
+> +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 4096, 1},
+> +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 4096, 1},
+> +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 36864, 1},
+> +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 100000000, 1},
+> +	.caps[4] = {HFI_CAPABILITY_SCALE_X, 65536, 65536, 1},
+> +	.caps[5] = {HFI_CAPABILITY_SCALE_Y, 65536, 65536, 1},
+> +	.caps[6] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 4423680, 1},
+> +	.caps[7] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
+> +	.caps[8] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
+>  	.caps[9] = {HFI_CAPABILITY_MAX_WORKMODES, 1, 3, 1},
+>  	.num_caps = 10,
+>  	.pl[0] = {HFI_VPX_PROFILE_MAIN, HFI_VPX_LEVEL_VERSION_0},
+> @@ -86,15 +86,15 @@ static const struct hfi_plat_caps caps[] = {
+>  	.codec = HFI_VIDEO_CODEC_VP9,
+>  	.domain = VIDC_SESSION_TYPE_DEC,
+>  	.cap_bufs_mode_dynamic = true,
+> -	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 1},
+> -	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 1},
+> -	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 1, 36864, 1},
+> -	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 120000000, 1},
+> -	.caps[4] = {HFI_CAPABILITY_SCALE_X, 4096, 65536, 1},
+> -	.caps[5] = {HFI_CAPABILITY_SCALE_Y, 4096, 65536, 1},
+> -	.caps[6] = {HFI_CAPABILITY_MBS_PER_SECOND, 1, 2073600, 1},
+> -	.caps[7] = {HFI_CAPABILITY_FRAMERATE, 1, 480, 1},
+> -	.caps[8] = {HFI_CAPABILITY_MAX_VIDEOCORES, 1, 2, 1},
+> +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 8192, 1},
+> +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 8192, 1},
+> +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 138240, 1},
+> +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 22000000, 1},
+
+s/22000000/220000000
+
+> +	.caps[4] = {HFI_CAPABILITY_SCALE_X, 65536, 65536, 1},
+> +	.caps[5] = {HFI_CAPABILITY_SCALE_Y, 65536, 65536, 1},
+> +	.caps[6] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 7833600, 1},
+> +	.caps[7] = {HFI_CAPABILITY_FRAMERATE, 1, 960, 1},
+> +	.caps[8] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
+>  	.caps[9] = {HFI_CAPABILITY_MAX_WORKMODES, 1, 3, 1},
+>  	.num_caps = 10,
+>  	.pl[0] = {HFI_VP9_PROFILE_P0, 200},
+> @@ -112,15 +112,15 @@ static const struct hfi_plat_caps caps[] = {
+>  	.codec = HFI_VIDEO_CODEC_MPEG2,
+>  	.domain = VIDC_SESSION_TYPE_DEC,
+>  	.cap_bufs_mode_dynamic = true,
+> -	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 1920, 1},
+> -	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 1920, 1},
+> -	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 1, 8160, 1},
+> +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
+> +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1920, 1},
+> +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
+>  	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 40000000, 1},
+> -	.caps[4] = {HFI_CAPABILITY_SCALE_X, 4096, 65536, 1},
+> -	.caps[5] = {HFI_CAPABILITY_SCALE_Y, 4096, 65536, 1},
+> -	.caps[6] = {HFI_CAPABILITY_MBS_PER_SECOND, 1, 244800, 1},
+> +	.caps[4] = {HFI_CAPABILITY_SCALE_X, 65536, 65536, 1},
+> +	.caps[5] = {HFI_CAPABILITY_SCALE_Y, 65536, 65536, 1},
+> +	.caps[6] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 7833600, 1},
+
+this should be 64 - 244800.
+
+>  	.caps[7] = {HFI_CAPABILITY_FRAMERATE, 1, 30, 1},
+> -	.caps[8] = {HFI_CAPABILITY_MAX_VIDEOCORES, 1, 2, 1},
+> +	.caps[8] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
+>  	.caps[9] = {HFI_CAPABILITY_MAX_WORKMODES, 1, 1, 1},
+>  	.num_caps = 10,
+>  	.pl[0] = {HFI_MPEG2_PROFILE_SIMPLE, HFI_MPEG2_LEVEL_H14},
+> @@ -135,21 +135,21 @@ static const struct hfi_plat_caps caps[] = {
+>  	.codec = HFI_VIDEO_CODEC_H264,
+>  	.domain = VIDC_SESSION_TYPE_ENC,
+>  	.cap_bufs_mode_dynamic = true,
+> -	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 16},
+> -	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 16},
+> -	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 1, 36864, 1},
+> -	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 120000000, 1},
+> +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 8192, 1},
+> +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 8192, 1},
+> +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 138240, 1},
+> +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 22000000, 1},
+
+s/22000000/220000000
+
+>  	.caps[4] = {HFI_CAPABILITY_SCALE_X, 8192, 65536, 1},
+>  	.caps[5] = {HFI_CAPABILITY_SCALE_Y, 8192, 65536, 1},
+> -	.caps[6] = {HFI_CAPABILITY_MBS_PER_SECOND, 1, 1036800, 1},
+> -	.caps[7] = {HFI_CAPABILITY_FRAMERATE, 1, 480, 1},
+> -	.caps[8] = {HFI_CAPABILITY_MAX_VIDEOCORES, 1, 3, 1},
+> +	.caps[6] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 7833600, 1},
+> +	.caps[7] = {HFI_CAPABILITY_FRAMERATE, 1, 960, 1},
+> +	.caps[8] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
+>  	.caps[9] = {HFI_CAPABILITY_PEAKBITRATE, 32000, 160000000, 1},
+> -	.caps[10] = {HFI_CAPABILITY_HIER_P_NUM_ENH_LAYERS, 0, 5, 1},
+> -	.caps[11] = {HFI_CAPABILITY_ENC_LTR_COUNT, 0, 4, 1},
+> +	.caps[10] = {HFI_CAPABILITY_HIER_P_NUM_ENH_LAYERS, 0, 6, 1},
+> +	.caps[11] = {HFI_CAPABILITY_ENC_LTR_COUNT, 0, 2, 1},
+>  	.caps[12] = {HFI_CAPABILITY_LCU_SIZE, 16, 16, 1},
+>  	.caps[13] = {HFI_CAPABILITY_BFRAME, 0, 1, 1},
+> -	.caps[14] = {HFI_CAPABILITY_HIER_P_HYBRID_NUM_ENH_LAYERS, 0, 5, 1},
+> +	.caps[14] = {HFI_CAPABILITY_HIER_P_HYBRID_NUM_ENH_LAYERS, 0, 6, 1},
+>  	.caps[15] = {HFI_CAPABILITY_I_FRAME_QP, 0, 51, 1},
+>  	.caps[16] = {HFI_CAPABILITY_P_FRAME_QP, 0, 51, 1},
+>  	.caps[17] = {HFI_CAPABILITY_B_FRAME_QP, 0, 51, 1},
+> @@ -172,24 +172,24 @@ static const struct hfi_plat_caps caps[] = {
+>  	.codec = HFI_VIDEO_CODEC_HEVC,
+>  	.domain = VIDC_SESSION_TYPE_ENC,
+>  	.cap_bufs_mode_dynamic = true,
+> -	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 16},
+> -	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 16},
+> -	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 1, 36864, 1},
+> -	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 120000000, 1},
+> +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 8192, 16},
+> +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 8192, 16},
+> +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 138240, 1},
+> +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 160000000, 1},
+>  	.caps[4] = {HFI_CAPABILITY_SCALE_X, 8192, 65536, 1},
+>  	.caps[5] = {HFI_CAPABILITY_SCALE_Y, 8192, 65536, 1},
+> -	.caps[6] = {HFI_CAPABILITY_MBS_PER_SECOND, 1, 1036800, 1},
+> -	.caps[7] = {HFI_CAPABILITY_FRAMERATE, 1, 480, 1},
+> -	.caps[8] = {HFI_CAPABILITY_MAX_VIDEOCORES, 1, 3, 1},
+> +	.caps[6] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 7833600, 1},
+> +	.caps[7] = {HFI_CAPABILITY_FRAMERATE, 1, 960, 1},
+> +	.caps[8] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
+>  	.caps[9] = {HFI_CAPABILITY_PEAKBITRATE, 32000, 160000000, 1},
+>  	.caps[10] = {HFI_CAPABILITY_HIER_P_NUM_ENH_LAYERS, 0, 5, 1},
+> -	.caps[11] = {HFI_CAPABILITY_ENC_LTR_COUNT, 0, 4, 1},
+> +	.caps[11] = {HFI_CAPABILITY_ENC_LTR_COUNT, 0, 2, 1},
+>  	.caps[12] = {HFI_CAPABILITY_LCU_SIZE, 32, 32, 1},
+>  	.caps[13] = {HFI_CAPABILITY_BFRAME, 0, 1, 1},
+>  	.caps[14] = {HFI_CAPABILITY_HIER_P_HYBRID_NUM_ENH_LAYERS, 0, 5, 1},
+> -	.caps[15] = {HFI_CAPABILITY_I_FRAME_QP, 0, 63, 1},
+> -	.caps[16] = {HFI_CAPABILITY_P_FRAME_QP, 0, 63, 1},
+> -	.caps[17] = {HFI_CAPABILITY_B_FRAME_QP, 0, 63, 1},
+> +	.caps[15] = {HFI_CAPABILITY_I_FRAME_QP, 0, 51, 1},
+> +	.caps[16] = {HFI_CAPABILITY_P_FRAME_QP, 0, 51, 1},
+> +	.caps[17] = {HFI_CAPABILITY_B_FRAME_QP, 0, 51, 1},
+>  	.caps[18] = {HFI_CAPABILITY_MAX_WORKMODES, 1, 2, 1},
+>  	.caps[19] = {HFI_CAPABILITY_RATE_CONTROL_MODES, 0x1000001, 0x1000005, 1},
+>  	.caps[20] = {HFI_CAPABILITY_COLOR_SPACE_CONVERSION, 0, 2, 1},
+> @@ -209,20 +209,20 @@ static const struct hfi_plat_caps caps[] = {
+>  	.codec = HFI_VIDEO_CODEC_VP8,
+>  	.domain = VIDC_SESSION_TYPE_ENC,
+>  	.cap_bufs_mode_dynamic = true,
+> -	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 16},
+> -	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 16},
+> -	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 1, 36864, 1},
+> -	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 120000000, 1},
+> +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 4096, 16},
+> +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 4096, 16},
+> +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 36864, 1},
+> +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 74000000, 1},
+>  	.caps[4] = {HFI_CAPABILITY_SCALE_X, 8192, 65536, 1},
+>  	.caps[5] = {HFI_CAPABILITY_SCALE_Y, 8192, 65536, 1},
+> -	.caps[6] = {HFI_CAPABILITY_MBS_PER_SECOND, 1, 1036800, 1},
+> -	.caps[7] = {HFI_CAPABILITY_FRAMERATE, 1, 240, 1},
+> -	.caps[8] = {HFI_CAPABILITY_MAX_VIDEOCORES, 1, 3, 1},
+> +	.caps[6] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 4423680, 1},
+> +	.caps[7] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
+
+s/120/60
+
+> +	.caps[8] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
+>  	.caps[9] = {HFI_CAPABILITY_PEAKBITRATE, 32000, 160000000, 1},
+>  	.caps[10] = {HFI_CAPABILITY_HIER_P_NUM_ENH_LAYERS, 0, 3, 1},
+>  	.caps[11] = {HFI_CAPABILITY_ENC_LTR_COUNT, 0, 2, 1},
+>  	.caps[12] = {HFI_CAPABILITY_LCU_SIZE, 16, 16, 1},
+> -	.caps[13] = {HFI_CAPABILITY_BFRAME, 0, 1, 1},
+> +	.caps[13] = {HFI_CAPABILITY_BFRAME, 0, 0, 1},
+
+>  	.caps[14] = {HFI_CAPABILITY_HIER_P_HYBRID_NUM_ENH_LAYERS, 0, 5, 1},
+>  	.caps[15] = {HFI_CAPABILITY_I_FRAME_QP, 0, 127, 1},
+>  	.caps[16] = {HFI_CAPABILITY_P_FRAME_QP, 0, 127, 1},
+> 
+
+-- 
+regards,
+Stan
