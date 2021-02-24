@@ -2,88 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 29E7A3242CF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Feb 2021 18:03:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 71C743242FA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Feb 2021 18:13:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236016AbhBXRBK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Feb 2021 12:01:10 -0500
-Received: from mail.kernel.org ([198.145.29.99]:47328 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236104AbhBXQ7v (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Feb 2021 11:59:51 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 855D264F0B;
-        Wed, 24 Feb 2021 16:59:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1614185950;
-        bh=+Ui4SGs2u3B4NnHzGVlGF+aHvhazAJ+LpD5ghDfbZbc=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=bOi0riYoBxCrsDCEUmP5eEjqNTgXlU5Zmsk2KzVuZGLW8FzOwLGJ6nUuEtZueEorc
-         hOrZaXGIo0J5Qfn1qYxqqjJYlJFxX9PBsOmYAaUP8rK0M4mIdF9vmE5ZrZ6HsOFSot
-         IxnXWh5aeXhNI541r/nOydQtHAGduK460UJCoGeN8ALoPZntkD4DQyCn6f0bW1ReSB
-         J2UTfit9dLL4uHCyRvMzikL8eRoYJIuPDX6AZjB519vjWQt0nQNYVoIKepz31U+hmr
-         tlwXshmWwm123W2eKyuaNuSoz/SlX+YNiT8HDgdwFkW1mTnrWNiKFBqroNgTMRMAYA
-         OfqaffFpIoWJQ==
-From:   Mark Brown <broonie@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        satya priya <skakit@codeaurora.org>
-Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        rnayak@codeaurora.org, Rob Herring <robh+dt@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-msm@vger.kernel.org, kgunda@codeaurora.org
-In-Reply-To: <1614155592-14060-1-git-send-email-skakit@codeaurora.org>
-References: <1614155592-14060-1-git-send-email-skakit@codeaurora.org>
-Subject: Re: (subset) [PATCH 0/7] Add PM7325/PM8350C/PMR735A regulator support
-Message-Id: <161418588691.2546.13874123016197949820.b4-ty@kernel.org>
-Date:   Wed, 24 Feb 2021 16:58:06 +0000
+        id S234654AbhBXRNC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Feb 2021 12:13:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34286 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231840AbhBXRM5 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 24 Feb 2021 12:12:57 -0500
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD993C061786
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Feb 2021 09:12:16 -0800 (PST)
+Received: by mail-pg1-x529.google.com with SMTP id e6so1864796pgk.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Feb 2021 09:12:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=miL1G96DLlMS5QA+pTrA9NtlqcqBwLFfkCCcFZY5vqs=;
+        b=nX12R12OGc/BV5IKrHJEZsqW/kYe3QDsGgyLcPHydyI/28eWbx3f0HGgTllZg36iAm
+         XU5x4JI6XOghYs9UdNYT95rR0EfP+ehIyyOO5CiQzZbxbm+2rZlCGuYCCsC/VYFDXSS8
+         zQaEh3fMLmILGFYGQk5iO2Rz0bfKWhcelMmew=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=miL1G96DLlMS5QA+pTrA9NtlqcqBwLFfkCCcFZY5vqs=;
+        b=hqihih3HPjC99t9bS+p//GhTxz3F7oJxoUgaWFDFcAEVBg99B8d5NY4yD/ysrHkT/V
+         TorxY9aBMUGChcYz4iDWTCxXWnToZJa/zqAKinEgVm9jIPZm3/s1J+duHzuX+ZtPxJqw
+         +QPYm25D95R4y8qWcLGLLDoSigV3t8VU6IjPhVz8mVA048au/kAx2SKShX526jYobQ99
+         iA/B98a5n/npBfPRHk9cN8idagz2YY1bqKMRT3XxOqJGr+emzTPPAOLlw4ojMfTRLLGr
+         3rFXLP03sthQLfO9FT/XAVlo0ax+oJbHHfN6Ojg0PnMXlOKqqUvC0mT2jdkO6QRhNNp0
+         w2Yg==
+X-Gm-Message-State: AOAM533b0UVdU2UWj1d+hxV7YFZU7vfwkG5gT549Eaof5O2pyXbX8Gmm
+        WVoT+vlMrqNYQ80E/Av04MCaBA==
+X-Google-Smtp-Source: ABdhPJy+EGZZ4NMW6hFKoCq/WX/IfEvWFWWiI5jbyNuO3QSZds8vyR4RYUNd8BKzNzfC5lT2w3OpTQ==
+X-Received: by 2002:a63:1b1b:: with SMTP id b27mr28616898pgb.377.1614186736208;
+        Wed, 24 Feb 2021 09:12:16 -0800 (PST)
+Received: from localhost ([2620:15c:202:1:9f5:1448:883f:b01])
+        by smtp.gmail.com with UTF8SMTPSA id d12sm2806501pgm.83.2021.02.24.09.12.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 Feb 2021 09:12:15 -0800 (PST)
+Date:   Wed, 24 Feb 2021 09:12:13 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: sc7180: Delete charger thermal
+ zone and ADC channel for lazor <= rev3
+Message-ID: <YDaI7RZLb0r/MfwM@google.com>
+References: <20210219181032.1.I23e12818c4a841ba9c37c60b3ba8cfeeb048285f@changeid>
+ <20210219181032.3.Ia4c1022191d09fe8c56a16486b77796b83ffcae4@changeid>
+ <161402520418.1254594.7435679604383921403@swboyd.mtv.corp.google.com>
+ <YDQWVresOGZGLL6N@google.com>
+ <161402672369.1254594.14091287979440332862@swboyd.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <161402672369.1254594.14091287979440332862@swboyd.mtv.corp.google.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 24 Feb 2021 14:03:05 +0530, satya priya wrote:
-> This series is dependent on below series which adds DT files for SC7280 SoC
-> https://lore.kernel.org/patchwork/project/lkml/list/?series=484757
+On Mon, Feb 22, 2021 at 12:45:23PM -0800, Stephen Boyd wrote:
+> Quoting Matthias Kaehlcke (2021-02-22 12:38:46)
+> > On Mon, Feb 22, 2021 at 12:20:04PM -0800, Stephen Boyd wrote:
+> > > Quoting Matthias Kaehlcke (2021-02-19 18:10:59)
+> > > > Lazor rev3 and older are stuffed with a 47k NTC as thermistor for
+> > > > the charger temperature which currently isn't supported by the
+> > > > PM6150 ADC driver. Delete the charger thermal zone and ADC channel
+> > > > to avoid the use of bogus temperature values.
+> > > > 
+> > > > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> > > > ---
+> > > > 
+> > > >  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts | 9 +++++++++
+> > > >  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts | 9 +++++++++
+> > > >  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts | 9 +++++++++
+> > > >  3 files changed, 27 insertions(+)
+> > > > 
+> > > > diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
+> > > > index 30e3e769d2b4..0974dbd424e1 100644
+> > > > --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
+> > > > +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
+> > > > @@ -14,6 +14,15 @@ / {
+> > > >         compatible = "google,lazor-rev0", "qcom,sc7180";
+> > > >  };
+> > > >  
+> > > > +/*
+> > > > + * rev <= 3 are stuffed with a 47k NTC as charger thermistor which is currently
+> > > > + * not supported by the PM6150 ADC driver. Delete the thermal zone and ADC
+> > > > + * channel to avoid the use of bogus temperature values.
+> > > > + */
+> > > > +/delete-node/ &charger_thermal;
+> > > > +/delete-node/ &pm6150_adc_charger_thm;
+> > > > +/delete-node/ &pm6150_adc_tm_charger_thm;
+> > > 
+> > > Can we disable pm6150_adc_tm instead on <= rev3 boards? It would be the
+> > > same number of lines, but is simpler to reason about disabled nodes vs.
+> > > deleted nodes usually.
+> > 
+> > For Lazor theoretically this could be done since it doesn't use other ADC
+> > channels, however it won't work for other trogdor devices that will be
+> > upstreamed eventually. Some of these boards have the same problem, however
+> > they have other thermistors connected to the ADC. One could argue that it's
+> > preferable to do things in a uniform way, but I'm open to do it either way
+> > for Lazor.
+> > 
 > 
-> satya priya (7):
->   dt-bindings: regulator: Convert regulator bindings to YAML
->   dt-bindings: regulator: Add compatibles for PM7325/PMR735A
->   regulator: qcom-rpmh: Correct the pmic5_hfsmps515 buck
->   regulator: qcom-rpmh: Add pmic5_ftsmps520 buck
->   regulator: qcom-rpmh: Add PM7325/PMR735A regulator support
->   regulator: qcom-rpmh: Use correct buck for S1C regulator
->   arm64: dts: qcom: sc7280: Add RPMh regulators for sc7280-idp
-> 
-> [...]
+> I see. Can the thermal-zone be disabled then vs. deleting three nodes? I
+> think the thermal driver uses for_each_available_child_of_node() so that
+> would work?
 
-Applied to
-
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
-
-Thanks!
-
-[3/7] regulator: qcom-rpmh: Correct the pmic5_hfsmps515 buck
-      commit: 62861a478e06d87dbfbb0ed3684056ba19a9886e
-[6/7] regulator: qcom-rpmh: Use correct buck for S1C regulator
-      commit: 8fb4acb880e9467adca913e51adf5c1f96fbbeb9
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+Yes, that would work. I also deleted the ADC/TM nodes to remove the bogus
+temperature completely from the system, but one could argue that it does
+no harm to keep it as long as it isn't used.
