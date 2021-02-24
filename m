@@ -2,110 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A83E4323629
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Feb 2021 04:47:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 095D2323636
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Feb 2021 04:50:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233497AbhBXDpr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Feb 2021 22:45:47 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:50933 "EHLO z11.mailgun.us"
+        id S233036AbhBXDtl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Feb 2021 22:49:41 -0500
+Received: from m42-2.mailgun.net ([69.72.42.2]:42931 "EHLO m42-2.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233488AbhBXDpm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Feb 2021 22:45:42 -0500
+        id S233387AbhBXDti (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 23 Feb 2021 22:49:38 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1614138323; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=j3NUwmTK/pbfK8BEVL2cNN0vDqDRZb25xA6TMv12HJk=; b=NwPMbkoDQHPu89n9VBItxHLR0HbL/dlswVO5RBrsa2VPLrhXRH0gBY5xOz0tRMY9kFN0+8be
- ly7agSVCffxyr4kuazJcMr+cVGSE27PhnA48W37/uOdXdarwoNezTcyw493S68b6/4+c+Y8T
- hA4njWyO6/RydaLf30ctv0aU5yU=
-X-Mailgun-Sending-Ip: 104.130.96.11
+ s=smtp; t=1614138553; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=Gz/nJPrGJP7gB6ntnx6Dmk5y7Vmp4Se23+LdipuUkhg=;
+ b=L9VPKG4UwF8x3dF4hISJId3SScTilNH7A0VbOsgpzFZMEG7WlxoRy2M6FKEf2gf5F9kD3coB
+ BtK4Og0szQdBNTGl0UCJCbPQ/G22PbfLEc4TGp5BX918wNzuSWOZFyGS5T3K61UK+AnwS+Ca
+ V0eiJrG4vew7uRgfiJXQ4ImxI6I=
+X-Mailgun-Sending-Ip: 69.72.42.2
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 6035cba82a8ee88ea51eca03 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 24 Feb 2021 03:44:40
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 6035ccb0e87943df308e77ab (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 24 Feb 2021 03:49:04
  GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Sender: kgunda=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0ED4CC433CA; Wed, 24 Feb 2021 03:44:40 +0000 (UTC)
+        id C295AC43463; Wed, 24 Feb 2021 03:49:03 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 441BAC43463;
-        Wed, 24 Feb 2021 03:44:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 441BAC43463
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        loic.poulain@linaro.org, carl.yin@quectel.com,
-        naveen.kumar@quectel.com, Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: [PATCH v3 3/3] bus: mhi: core: Use poll register read API for RDDM download
-Date:   Tue, 23 Feb 2021 19:44:30 -0800
-Message-Id: <1614138270-2374-4-git-send-email-bbhatt@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1614138270-2374-1-git-send-email-bbhatt@codeaurora.org>
-References: <1614138270-2374-1-git-send-email-bbhatt@codeaurora.org>
+        (Authenticated sender: kgunda)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 44506C433C6;
+        Wed, 24 Feb 2021 03:49:03 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 24 Feb 2021 09:19:03 +0530
+From:   kgunda@codeaurora.org
+To:     Pavel Machek <pavel@ucw.cz>
+Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
+        lee.jones@linaro.org, b.zolnierkie@samsung.com,
+        dri-devel@lists.freedesktop.org, daniel.thompson@linaro.org,
+        jacek.anaszewski@gmail.com, robh+dt@kernel.org,
+        mark.rutland@arm.com, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH V1 0/2] Fix WLED FSC Sync and brightness Sync settings
+In-Reply-To: <20210219180839.GB8596@duo.ucw.cz>
+References: <1613743659-4726-1-git-send-email-kgunda@codeaurora.org>
+ <20210219180839.GB8596@duo.ucw.cz>
+Message-ID: <1fcacbe5de8dd7d3a0df2b6108d734f6@codeaurora.org>
+X-Sender: kgunda@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Make use of mhi_poll_reg_field() API in order to poll for RDDM
-download in panic path to employ a common approach throughout the
-driver.
-
-Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
----
- drivers/bus/mhi/core/boot.c | 20 ++++++--------------
- 1 file changed, 6 insertions(+), 14 deletions(-)
-
-diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
-index c2546bf..b9c44e0 100644
---- a/drivers/bus/mhi/core/boot.c
-+++ b/drivers/bus/mhi/core/boot.c
-@@ -60,7 +60,6 @@ static int __mhi_download_rddm_in_panic(struct mhi_controller *mhi_cntrl)
- 	u32 rx_status;
- 	enum mhi_ee_type ee;
- 	const u32 delayus = 2000;
--	u32 retry = (mhi_cntrl->timeout_ms * 1000) / delayus;
- 	const u32 rddm_timeout_us = 200000;
- 	int rddm_retry = rddm_timeout_us / delayus;
- 	void __iomem *base = mhi_cntrl->bhie;
-@@ -125,19 +124,12 @@ static int __mhi_download_rddm_in_panic(struct mhi_controller *mhi_cntrl)
- 		"Waiting for RDDM image download via BHIe, current EE:%s\n",
- 		TO_MHI_EXEC_STR(ee));
- 
--	while (retry--) {
--		ret = mhi_read_reg_field(mhi_cntrl, base, BHIE_RXVECSTATUS_OFFS,
--					 BHIE_RXVECSTATUS_STATUS_BMSK,
--					 BHIE_RXVECSTATUS_STATUS_SHFT,
--					 &rx_status);
--		if (ret)
--			return -EIO;
--
--		if (rx_status == BHIE_RXVECSTATUS_STATUS_XFER_COMPL)
--			return 0;
--
--		udelay(delayus);
--	}
-+	ret = mhi_poll_reg_field(mhi_cntrl, base, BHIE_RXVECSTATUS_OFFS,
-+				 BHIE_RXVECSTATUS_STATUS_BMSK,
-+				 BHIE_RXVECSTATUS_STATUS_SHFT,
-+				 BHIE_RXVECSTATUS_STATUS_XFER_COMPL, delayus);
-+	if (!ret)
-+		return 0;
- 
- 	ee = mhi_get_exec_env(mhi_cntrl);
- 	ret = mhi_read_reg(mhi_cntrl, base, BHIE_RXVECSTATUS_OFFS, &rx_status);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+On 2021-02-19 23:38, Pavel Machek wrote:
+> Hi!
+> 
+>> The FSC (Full scale current) setting is not updated properly due to 
+>> the
+>> wrong register toggling for WLED5. Also the ILED_SYNC toggle and 
+>> MOD_SYNC
+>> toggle sequence is updated as per the hardware team recommendation to 
+>> fix
+>> the FSC update and brightness update issue.
+> 
+> If this is phone hardware, it might make sense to cc:
+> phone-devel@vger...
+> 
+Yes. it is for phone hardware. Will cc the email.
+> Best regards,
+> 									Pavel
