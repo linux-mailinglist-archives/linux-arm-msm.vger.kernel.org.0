@@ -2,75 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DA65E3245CA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Feb 2021 22:31:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D457324707
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Feb 2021 23:43:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233068AbhBXVay (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Feb 2021 16:30:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33108 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235969AbhBXVax (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Feb 2021 16:30:53 -0500
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CE60C061756
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Feb 2021 13:30:13 -0800 (PST)
-Received: by mail-pl1-x62c.google.com with SMTP id w18so1980316plc.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Feb 2021 13:30:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=ZHx27pOMJAsTZfND76S3gLtE0vCulSpgoAxR/wb0mHM=;
-        b=DMf4ILIQ6FR21Ou34McWcetzRVq66u7xwyd7+IvZZpQtkAby5lDLBvGcZ9WXx3IM1K
-         ymJ2+lfc+yRVMlAjEoNmSdR61NrOMxv4/nhXTGmKIv09LBHk9X0tWU+DnR1ygj1R0K35
-         VczyiXuSALOGpSS3BOoip6rPjgwAQW4d5YYDM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=ZHx27pOMJAsTZfND76S3gLtE0vCulSpgoAxR/wb0mHM=;
-        b=ud4CLYnEnqVO9cgQd5Su8i2rL3BjoDUrr/KIo2OhY3D7ee1FsZKJyTXsqFs/4pMsF/
-         VOGmMr4tJNeW0FcCKd1+5P7YQ7W0SBrtim56rhxSWdmbHUBP0yg0MjVELJixrd9xQu31
-         jv1gJEwY1XIoXhxyHZjioo1H1qFIFRWCu61iFn4I4BLCF0xa/a9dUCJmtpo2Oc53gVtE
-         tE5fFcLQopMSysNZc72I+1n311Pmi2I+12oKDvrFRWK2C4Yg30HVFqYfnyrs4Z0/DGPS
-         8GuuDxQvGxNeCbnOkdcTJVwl9qiL0PM7rtEp/SqAevuQkoO1qNFb0grNB3NeZaYuOCV1
-         lb6Q==
-X-Gm-Message-State: AOAM5314RgmKHlIFuxrRR6GZ3kvdskhVSdtcSSPMIeWhpekgypwPA4ZV
-        mQQJ1Qy70i8iUQYJP98rpqzlfJvA6WGgQA==
-X-Google-Smtp-Source: ABdhPJypgzLK8LHJx99gN4kS43bvBbYnCdqG1NOQ1EbxdZ5qeohGxXrfSI/UTJyqcqA0gB8K2GqbmQ==
-X-Received: by 2002:a17:90a:1b0d:: with SMTP id q13mr6569870pjq.211.1614202212777;
-        Wed, 24 Feb 2021 13:30:12 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:201:933:e73c:97ad:add3])
-        by smtp.gmail.com with ESMTPSA id d26sm3756125pfq.175.2021.02.24.13.30.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Feb 2021 13:30:12 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
+        id S235699AbhBXWmu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Feb 2021 17:42:50 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:42826 "EHLO z11.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235688AbhBXWmt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 24 Feb 2021 17:42:49 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1614206549; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=WczKGquSJgnZUlXASNkqZ5WkLYrasNUrNCB5kZMcP5A=;
+ b=AmJHl/QWrafEKD9qIwb73ZOIlIpAg3srm5/43RXByg/PdJQvUhh8YyE2BCopCS406L/nf6Ei
+ oJXXWg88hoT1YJdreattgaon2pcKiLqhMx9unaVCxkRt3czd3vNuT3emHcdtBm0mB/dY5Z/V
+ iylo7HrN0p+zHy62QG1qfj5wMYo=
+X-Mailgun-Sending-Ip: 104.130.96.11
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 6036d64cba08663830550c3d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 24 Feb 2021 22:42:20
+ GMT
+Sender: khsieh=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 1DF91C43462; Wed, 24 Feb 2021 22:42:20 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: khsieh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 70688C433CA;
+        Wed, 24 Feb 2021 22:42:19 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20210224092313.2238-1-wsa@kernel.org>
-References: <20210224092313.2238-1-wsa@kernel.org>
-Subject: Re: [PATCH] Revert "i2c: i2c-qcom-geni: Add shutdown callback for i2c"
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Roja Rani Yarubandi <rojay@codeaurora.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, Wolfram Sang <wsa@kernel.org>
-To:     Wolfram Sang <wsa@kernel.org>, linux-i2c@vger.kernel.org
-Date:   Wed, 24 Feb 2021 13:30:10 -0800
-Message-ID: <161420221033.1254594.10844143129299520684@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 24 Feb 2021 14:42:19 -0800
+From:   khsieh@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robdclark@gmail.com,
+        sean@poorly.run, vkoul@kernel.org, tanmay@codeaurora.org,
+        abhinavk@codeaurora.org, aravindh@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] phy/qualcomm: add hbr3_hbr2 voltage and premphasis
+ swing table
+In-Reply-To: <161419558963.1254594.762999750680493756@swboyd.mtv.corp.google.com>
+References: <1613667070-27613-1-git-send-email-khsieh@codeaurora.org>
+ <161367397738.1254594.12158219605796616035@swboyd.mtv.corp.google.com>
+ <161419558963.1254594.762999750680493756@swboyd.mtv.corp.google.com>
+Message-ID: <3fac13ae8e800f5283fb13cbafac2b21@codeaurora.org>
+X-Sender: khsieh@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Wolfram Sang (2021-02-24 01:23:13)
-> This reverts commit e0371298ddc51761be257698554ea507ac8bf831. It was
-> accidently applied despite discussion still going on.
->=20
-> Signed-off-by: Wolfram Sang <wsa@kernel.org>
-> ---
-
-Thanks
-
-Acked-by: Stephen Boyd <swboyd@chromium.org>
+On 2021-02-24 11:39, Stephen Boyd wrote:
+> Quoting Stephen Boyd (2021-02-18 10:46:17)
+>> Quoting Kuogee Hsieh (2021-02-18 08:51:10)
+>> > Add hbr3_hbr2 voltage and premphasis swing table to support
+>> > HBR3 link rate.
+>> >
+>> > Changes in V2:
+>> > -- replaced upper case with lower case at hbr3_hbr2 table
+>> >
+>> > Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+>> > ---
+>> 
+>> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+>> 
+>> BTW, the DP driver already set rates for HBR2, so does that mean this 
+>> is
+>> fixing the voltage and preemphasis settings for HBR2? If so we should
+>> backport this to stable trees and mark it as fixing commit 
+>> 52e013d0bffa
+>> ("phy: qcom-qmp: Add support for DP in USB3+DP combo phy").
+> 
+> Yes? No?
+yes
