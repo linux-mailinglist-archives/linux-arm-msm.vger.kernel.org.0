@@ -2,91 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B3C1324759
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 00:06:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B099324778
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 00:25:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235522AbhBXXGM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Feb 2021 18:06:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53466 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234645AbhBXXGL (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Feb 2021 18:06:11 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7938DC061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Feb 2021 15:05:31 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id w36so5654367lfu.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Feb 2021 15:05:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=RlKikzIt/rONQFY4pZWTu3Ycq1cfYGrrRaic2XmO02k=;
-        b=MzOp94cSmfjpzUawBnjMSye+NAvtXmGFYcpJw12vAjojlYfUUv0Wv2wWyXZBP9Yjg0
-         7cJ1Pj76XmGaR9u5QOaIk4Dqh9IhMnY0PJEt356JmFijQQrVlYXs1/hNfZdVSxI7KHLZ
-         ZILg+3nxMnwA+TmLtEvlcoQQOmfGSb0BAcpzszhRRp4TnNsrpJYbtOMirN4A7StPWcyV
-         Nd1hpgpA7KOjz25aRlKhTowffmA1PnWOyGLsJBCGri9khSEYrO6dclcx5i/xv+Y/1z9S
-         upXNXFQSy4bOrUZ12V6ebgkH0ToFg5OkyA5jIHWkImj9KKH8e7Mj+8OCiTKQbb7nmFF7
-         nQsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=RlKikzIt/rONQFY4pZWTu3Ycq1cfYGrrRaic2XmO02k=;
-        b=iH65gz0p9Ix8mqUccB+XSsXtzUtj7+akxkOC5V0ENcCXNZgyabB56WsnFpmjBmo4Qt
-         656msuZ7Bho6PlA8uKaPR0dcRsaANz5sT6s1yCRsGiipy2H0FntHmoJ5YCQ1uFwDoPds
-         BwKSAcwnzy6bjaI767M0dRp+toloq5DJgMFfLkxmZyxHisKGjmcJ00EURxCOk04BJ50E
-         93SYtk+CIl9T3rpSBxN+19nbJ6oRveud3dxW3aiYH3ZpcA2QSc7dvR0ZEVrcoQVvSI+0
-         U0xYbVvYCiOaG2Ps+1j7pAEnKUmPW/Ow1Wx1ESW3wJLc/nNVfc67n9rQZhnYoD+w6e22
-         Zqwg==
-X-Gm-Message-State: AOAM531NBLKN00shBVC7Qna05Gn8K/5xLrXM3z5+0en4Pyd2RGuqSvcF
-        byBvHGpFbsMZiKLuDaaTX+Y6Vg==
-X-Google-Smtp-Source: ABdhPJwUERX5nQ+xjx77ee9XxWTPYrpU0fvjarXhqh4xrXuFrfdFUwpDWEC4dmNfM9rI7Tn8uVFbBQ==
-X-Received: by 2002:a19:ca01:: with SMTP id a1mr186246lfg.372.1614207930020;
-        Wed, 24 Feb 2021 15:05:30 -0800 (PST)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id b28sm776114lfo.190.2021.02.24.15.05.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Feb 2021 15:05:29 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH] drm/msm/dsi_pll_7nm: Fix variable usage for pll_lockdet_rate
-Date:   Thu, 25 Feb 2021 02:05:28 +0300
-Message-Id: <20210224230528.1216677-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.30.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S236276AbhBXXYH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Feb 2021 18:24:07 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:30246 "EHLO z11.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236220AbhBXXYD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 24 Feb 2021 18:24:03 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1614209017; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=fyuTlAO3vB+Mn96a0UMu0l9OIZLkZw2lfkiewOW3LhY=; b=eyskfTcpJOoW20bh32I2ARKQKatRBayYdMX3dSb5zdjTQT2cTWgVnZln+s42U2794o/6PK3L
+ T5xP9y+32zGAvUxzRVbjFmvtWtTlFf/GwtBSnyq85Mwbn9kza9bnx/CKg0drs25mt0typtFR
+ jYrTIshyMd8V1iowlS67PLmUSic=
+X-Mailgun-Sending-Ip: 104.130.96.11
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 6036dfe0ba0866383071de12 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 24 Feb 2021 23:23:12
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id F1BB5C43464; Wed, 24 Feb 2021 23:23:11 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CA05CC433ED;
+        Wed, 24 Feb 2021 23:23:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CA05CC433ED
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
+        loic.poulain@linaro.org, carl.yin@quectel.com,
+        naveen.kumar@quectel.com, Bhaumik Bhatt <bbhatt@codeaurora.org>
+Subject: [PATCH v6 0/4] Serialize execution environment changes for MHI
+Date:   Wed, 24 Feb 2021 15:23:01 -0800
+Message-Id: <1614208985-20851-1-git-send-email-bbhatt@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The PLL_LOCKDET_RATE_1 was being programmed with a hardcoded value
-directly, but the same value was also being specified in the
-dsi_pll_regs struct pll_lockdet_rate variable: let's use it!
+v6:
+-Add patch to improve debug message
+-Fix switch-case fall through warning for EE serialization patch
+-Address review comments and update commit text
 
-Based on 362cadf34b9f ("drm/msm/dsi_pll_10nm: Fix variable usage for
-pll_lockdet_rate")
+v5:
+-Update commit text for "clear devices when moving execution environments" patch
+-Added test platform details that were missed out in the cover letter
+-Merged two if checks in to a single one for EE serialization patch
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+v4:
+-Addressed review comments for additional info logging for EE movements
+-Updated switch case for EE handling in mhi_intvec_threaded_handler()
 
-diff --git a/drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c b/drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c
-index 0458eda15114..e29b3bfd63d1 100644
---- a/drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c
-+++ b/drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c
-@@ -325,7 +325,7 @@ static void dsi_pll_commit(struct dsi_pll_7nm *pll)
- 	pll_write(base + REG_DSI_7nm_PHY_PLL_FRAC_DIV_START_LOW_1, reg->frac_div_start_low);
- 	pll_write(base + REG_DSI_7nm_PHY_PLL_FRAC_DIV_START_MID_1, reg->frac_div_start_mid);
- 	pll_write(base + REG_DSI_7nm_PHY_PLL_FRAC_DIV_START_HIGH_1, reg->frac_div_start_high);
--	pll_write(base + REG_DSI_7nm_PHY_PLL_PLL_LOCKDET_RATE_1, 0x40);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_PLL_LOCKDET_RATE_1, reg->pll_lockdet_rate);
- 	pll_write(base + REG_DSI_7nm_PHY_PLL_PLL_LOCK_DELAY, 0x06);
- 	pll_write(base + REG_DSI_7nm_PHY_PLL_CMODE_1, 0x10); /* TODO: 0x00 for CPHY */
- 	pll_write(base + REG_DSI_7nm_PHY_PLL_CLOCK_INVERTERS, reg->pll_clock_inverters);
+v3:
+-Update commit text to accurately reflect changes and reasoning based on reviews
+
+v2:
+-Add patch to clear devices when moving execution environments
+
+Note: This patch is first in series of execution environment related changes.
+
+During full boot chain firmware download, the PM state worker downloads the AMSS
+image after waiting for the SBL execution environment change in PBL mode itself.
+Since getting rid of the firmware load worker thread, this design needs to
+change and MHI host must download the AMSS image from the SBL mode of PM state
+worker thread instead of blocking waits for SBL EE in PBL transition processing.
+
+Ensure that EE changes are handled only from appropriate places and occur
+one after another and handle only PBL or RDDM EE changes as critical events
+directly from the interrupt handler and the status callback is given to the
+controller drivers promptly.
+
+When moving from SBL to AMSS EE, clear SBL specific client devices by calling
+remove callbacks for them so they are not left opened in a different execution
+environment.
+
+This patchset was tested on ARM64.
+
+Bhaumik Bhatt (4):
+  bus: mhi: core: Destroy SBL devices when moving to mission mode
+  bus: mhi: core: Download AMSS image from appropriate function
+  bus: mhi: core: Process execution environment changes serially
+  bus: mhi: core: Update debug prints to include local device state
+
+ drivers/bus/mhi/core/boot.c     | 51 +++++++++++++--------------
+ drivers/bus/mhi/core/internal.h |  1 +
+ drivers/bus/mhi/core/main.c     | 76 +++++++++++++++++++++++++++--------------
+ drivers/bus/mhi/core/pm.c       | 10 ++++--
+ 4 files changed, 83 insertions(+), 55 deletions(-)
+
 -- 
-2.30.0
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
