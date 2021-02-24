@@ -2,130 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 63C3A323A7A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Feb 2021 11:26:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 74AF9323B2F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Feb 2021 12:18:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232475AbhBXK0I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Feb 2021 05:26:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59636 "EHLO
+        id S234963AbhBXLR6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Feb 2021 06:17:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232560AbhBXK0B (ORCPT
+        with ESMTP id S235069AbhBXLP5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Feb 2021 05:26:01 -0500
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD8EFC061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Feb 2021 02:25:20 -0800 (PST)
-Received: by mail-pg1-x535.google.com with SMTP id o38so1147629pgm.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Feb 2021 02:25:20 -0800 (PST)
+        Wed, 24 Feb 2021 06:15:57 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDE13C061794
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Feb 2021 03:15:11 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id w11so1479252wrr.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Feb 2021 03:15:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=6zEjknucr9elP+ydtyngud8wtITgLH3Mt7MahX/VoD4=;
-        b=C4mWvnUDAckqeOK9M/vqYnzAK3BXpw35g0You47lsCmvbU02kbv0uYL5hUp3L4W08S
-         LbZwMW9TofNYCljuqdJxmzS2gs1wuCJGhMBAKytbEdTSNRj+GfaBD2Li/kc/8OanRU+B
-         iBfIhN4J54kq8PbVRWUgtnNvMAKDBN7Vtdu4MejJo1J2TDJTTdfkAWj5YL2fPdPpV35g
-         UtADqRIBZUt8z4fXkrtFC8dX+eX/uj+YDrsv8PfE4j5IOOvd2Hb69bIgcPB1hl/jtRtE
-         snnx7M+7DeBCzVUc4yZUOAN+XWXH08DOMCtaSgcQCJ5pXrVQGL7s6FjVvakErgH7/KhQ
-         xrFQ==
+         :content-disposition:in-reply-to;
+        bh=1Sa2i3Pn6JxJlmatuBNKl5Y5BjCnyJIbLhbxIWmo9lc=;
+        b=zw/BWEU0xhJRMzGN2rcc+fgUFZsCzZoDNy6lsWAB9x7tAbPp8i0CRbRm+YVcISXG9/
+         MWonpJ6Lf/XtDZsIX13obTjg2Uk0bCmlS8XbphLCPO54verJ0hAzuybYSQXno+ILB0We
+         mM7WMClnWxAyBbqqvKsdhr89PBbGPVcQORbkfnVxqmera39IlDNWIQbe5BLajOPOrUyk
+         MWW7RR+Q0BUMtqK/kOEGTtzZhyRqv4LSP8EdfvdABqevYVTR1bisEZoYvUM5U5Qgn9Iv
+         rdi0vFChJ89xJW7xqj28o+kDArTNRk1q2NVKWlkVKLkoqNOuihqJ0xyaHM8wTsk9RzZm
+         1Pew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=6zEjknucr9elP+ydtyngud8wtITgLH3Mt7MahX/VoD4=;
-        b=Bshl6ql4RpLns2wotnbRR/nzj7LpiRTxvjRE8tH/Yv3EvJ9NVaGz8oCCP2CWdEAQLU
-         2raS3stYIysh+NnjFUEMxQAVQQQEpkLHN/1U+q4lPU/GRwOTshq/DIDxjMNf92KE3ByG
-         oO3rytAJvKgJHgsYRdt7RcnGLK40Fcz4wzok91I0wV5EwwyfgpUSL9Y8MbjAV34bsDKz
-         F1dEPmSfpqcklm/HxGdehViiO6VqtH/C6AizXxDYdrm5SCqtESSkWCNSxK4lO9I1vTXv
-         FyF8nzNSpmjgt9rVo2JTJiU9+Cc1GJV30vSWgUCgUDgsLGKSOWatlp0fp8kLjxNdOHV2
-         vnig==
-X-Gm-Message-State: AOAM533USVnNHi+EN7oS6YRlVT2/6IjZ//VcH1PuYe+EEd1F/28c2ui2
-        q2+zO/X5D7a2myeQfD5b/s2947RbG2Vu
-X-Google-Smtp-Source: ABdhPJxuT8sC2csKNnK+T1lYLoJDrlE1cW26Nw9gepYWBGzI0vLBtpBLp9XS/1WI1UzI4ELZdq24ng==
-X-Received: by 2002:a63:4761:: with SMTP id w33mr28504189pgk.118.1614162320324;
-        Wed, 24 Feb 2021 02:25:20 -0800 (PST)
-Received: from work ([103.66.79.25])
-        by smtp.gmail.com with ESMTPSA id c29sm1952617pgb.58.2021.02.24.02.25.17
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 24 Feb 2021 02:25:19 -0800 (PST)
-Date:   Wed, 24 Feb 2021 15:55:16 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        bbhatt@codeaurora.org
-Subject: Re: [PATCH] mhi: pci_generic: Remove WQ_MEM_RECLAIM flag from state
- workqueue
-Message-ID: <20210224102516.GW27945@work>
-References: <1614161930-8513-1-git-send-email-loic.poulain@linaro.org>
+         :mime-version:content-disposition:in-reply-to;
+        bh=1Sa2i3Pn6JxJlmatuBNKl5Y5BjCnyJIbLhbxIWmo9lc=;
+        b=A/z8DbIH2+W37YASzbhKG/syxCvNs9bs82i1nSqza/H7ljv35urj59OFjHY++ZW1Ve
+         Wgo0yqArzaZnnUvyZh/mKHhlCg2TWZTdKsWMyH0jRTgQctrcn4dJf3KE3sorvSdLLjsf
+         EQ2E5BUJz5J2qCwvZZz99OBeq1YVoMqPB6Wk3pMIXJwr3NRZGltU8RsDhnRIaJhJMdFt
+         3f2UbtT2IxxuzzIqdAlc/slfAL7t1075uKLoQ/P2DgRWIIu+7tG3eo5pXRydNNxqduYf
+         ik/o2SMnAVFQ1LvhIT8aa7sr6CCgvJ3kmrGPsEoE4Z/htvQDnoB7pwUWMZQqDlZT6uVw
+         09RQ==
+X-Gm-Message-State: AOAM532zpL6acYJPN6pWoil/XRexKsOIYAoUZiGMGgGCLovIj/o9J0Fu
+        Q0ddVrgdv0kYnku7kkSLTyricQ==
+X-Google-Smtp-Source: ABdhPJy47KpFwjh6a9va/BqTgn6xTBovOwYIYWXdTXCSHwrc0OG6hfQ8/1Yjz2BCbty1uAxRn957OQ==
+X-Received: by 2002:adf:cc88:: with SMTP id p8mr14587033wrj.169.1614165310424;
+        Wed, 24 Feb 2021 03:15:10 -0800 (PST)
+Received: from maple.lan (cpc141216-aztw34-2-0-cust174.18-1.cable.virginm.net. [80.7.220.175])
+        by smtp.gmail.com with ESMTPSA id o20sm2176733wmq.30.2021.02.24.03.15.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Feb 2021 03:15:09 -0800 (PST)
+Date:   Wed, 24 Feb 2021 11:15:05 +0000
+From:   Daniel Thompson <daniel.thompson@linaro.org>
+To:     Kiran Gunda <kgunda@codeaurora.org>
+Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
+        lee.jones@linaro.org, b.zolnierkie@samsung.com,
+        dri-devel@lists.freedesktop.org, jacek.anaszewski@gmail.com,
+        pavel@ucw.cz, robh+dt@kernel.org, mark.rutland@arm.com,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org,
+        phone-devel@vger.kernel.org
+Subject: Re: [PATCH V1 1/2] backlight: qcom-wled: Fix FSC update issue for
+ WLED5
+Message-ID: <20210224111505.37t5aq25iszg23iv@maple.lan>
+References: <1614138648-2963-1-git-send-email-kgunda@codeaurora.org>
+ <1614138648-2963-2-git-send-email-kgunda@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1614161930-8513-1-git-send-email-loic.poulain@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <1614138648-2963-2-git-send-email-kgunda@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 24, 2021 at 11:18:50AM +0100, Loic Poulain wrote:
-> A recent change created a dedicated workqueue for the state-change work
-> with WQ_HIGHPRI (no strong reason for that) and WQ_MEM_RECLAIM flags,
-> but the state-change work (mhi_pm_st_worker) does not guarantee forward
-> progress under memory pressure, and will even wait on various memory
-> allocations when e.g. creating devices, loading firmware, etc... The
-> work is then not part of a memory reclaim path...
-> 
-> Moreover, this causes a warning in check_flush_dependency() since we end
-> up in code that flushes a non-reclaim workqueue:
-> 
-> [   40.969601] workqueue: WQ_MEM_RECLAIM mhi_hiprio_wq:mhi_pm_st_worker [mhi] is flushing !WQ_MEM_RECLAIM events_highpri:flush_backlog
-> [   40.969612] WARNING: CPU: 4 PID: 158 at kernel/workqueue.c:2607 check_flush_dependency+0x11c/0x140
-> [   40.969733] Call Trace:
-> [   40.969740]  __flush_work+0x97/0x1d0
-> [   40.969745]  ? wake_up_process+0x15/0x20
-> [   40.969749]  ? insert_work+0x70/0x80
-> [   40.969750]  ? __queue_work+0x14a/0x3e0
-> [   40.969753]  flush_work+0x10/0x20
-> [   40.969756]  rollback_registered_many+0x1c9/0x510
-> [   40.969759]  unregister_netdevice_queue+0x94/0x120
-> [   40.969761]  unregister_netdev+0x1d/0x30
-> [   40.969765]  mhi_net_remove+0x1a/0x40 [mhi_net]
-> [   40.969770]  mhi_driver_remove+0x124/0x250 [mhi]
-> [   40.969776]  device_release_driver_internal+0xf0/0x1d0
-> [   40.969778]  device_release_driver+0x12/0x20
-> [   40.969782]  bus_remove_device+0xe1/0x150
-> [   40.969786]  device_del+0x17b/0x3e0
-> [   40.969791]  mhi_destroy_device+0x9a/0x100 [mhi]
-> [   40.969796]  ? mhi_unmap_single_use_bb+0x50/0x50 [mhi]
-> [   40.969799]  device_for_each_child+0x5e/0xa0
-> [   40.969804]  mhi_pm_st_worker+0x921/0xf50 [mhi]
-> 
-> Fixes: 8f7039787687 ("bus: mhi: core: Move to using high priority workqueue")
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+On Wed, Feb 24, 2021 at 09:20:47AM +0530, Kiran Gunda wrote:
+> Currently, for WLED5, after FSC register update MOD_SYNC_BIT
+> is toggled instead of SYNC_BIT. MOD_SYNC_BIT has to be toggled
+> after the brightness update and SYNC_BIT has to be toggled after
+> FSC update for WLED5. Fix it.
 
-Fix looks good to me but I want Bhaumik to share his review since he
-authored the offending patch.
+Code looks fine but the description is a difficult to read (which makes
+mining the history difficult).
 
-Thanks,
-Mani
+Basically the descriptions here are very hard to read without the
+context in PATCH 0/2. Since PATCH 0/2 won't enter the version history
+that means these descriptions need to integrate some of the text from
+what is currently PATCH 0/2.
 
+I would expect this to be more like. It is basically joining together
+text from PATCH 0 and PATCH 1 (I also switched to plural form for SYNC
+bits... the code in the driver has mask generation based on the number
+of strings, is that right?):
+
+~~~
+Currently, for WLED5, the FSC (Full scale current) setting is not
+updated properly due to driver toggling the wrong register after an FSC
+update.
+
+On WLED5 we should only toggle the MOD_SYNC bit after a brightness
+update. For an FSC update we need to toggle the SYNC bits instead.
+
+Fix it by adopting the common wled3_sync_toggle() for WLED5 and
+introducing new code to the brightness update path to
+compensate.
+~~~
+
+
+Daniel.
+
+
+
+> 
+> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
 > ---
->  drivers/bus/mhi/core/init.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
+>  drivers/video/backlight/qcom-wled.c | 25 +++++++++++++++++++------
+>  1 file changed, 19 insertions(+), 6 deletions(-)
 > 
-> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-> index 32eb90f..03ddd6e 100644
-> --- a/drivers/bus/mhi/core/init.c
-> +++ b/drivers/bus/mhi/core/init.c
-> @@ -890,8 +890,7 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
->  	INIT_WORK(&mhi_cntrl->st_worker, mhi_pm_st_worker);
->  	init_waitqueue_head(&mhi_cntrl->state_event);
+> diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
+> index 3bc7800..aef52b9 100644
+> --- a/drivers/video/backlight/qcom-wled.c
+> +++ b/drivers/video/backlight/qcom-wled.c
+> @@ -348,7 +348,7 @@ static int wled3_sync_toggle(struct wled *wled)
+>  	return rc;
+>  }
 >  
-> -	mhi_cntrl->hiprio_wq = alloc_ordered_workqueue
-> -				("mhi_hiprio_wq", WQ_MEM_RECLAIM | WQ_HIGHPRI);
-> +	mhi_cntrl->hiprio_wq = alloc_ordered_workqueue("mhi_hiprio_wq", WQ_HIGHPRI);
->  	if (!mhi_cntrl->hiprio_wq) {
->  		dev_err(mhi_cntrl->cntrl_dev, "Failed to allocate workqueue\n");
->  		ret = -ENOMEM;
+> -static int wled5_sync_toggle(struct wled *wled)
+> +static int wled5_mod_sync_toggle(struct wled *wled)
+>  {
+>  	int rc;
+>  	u8 val;
+> @@ -445,10 +445,23 @@ static int wled_update_status(struct backlight_device *bl)
+>  			goto unlock_mutex;
+>  		}
+>  
+> -		rc = wled->wled_sync_toggle(wled);
+> -		if (rc < 0) {
+> -			dev_err(wled->dev, "wled sync failed rc:%d\n", rc);
+> -			goto unlock_mutex;
+> +		if (wled->version < 5) {
+> +			rc = wled->wled_sync_toggle(wled);
+> +			if (rc < 0) {
+> +				dev_err(wled->dev, "wled sync failed rc:%d\n", rc);
+> +				goto unlock_mutex;
+> +			}
+> +		} else {
+> +			/*
+> +			 * For WLED5 toggling the MOD_SYNC_BIT updates the
+> +			 * brightness
+> +			 */
+> +			rc = wled5_mod_sync_toggle(wled);
+> +			if (rc < 0) {
+> +				dev_err(wled->dev, "wled mod sync failed rc:%d\n",
+> +					rc);
+> +				goto unlock_mutex;
+> +			}
+>  		}
+>  	}
+>  
+> @@ -1459,7 +1472,7 @@ static int wled_configure(struct wled *wled)
+>  		size = ARRAY_SIZE(wled5_opts);
+>  		*cfg = wled5_config_defaults;
+>  		wled->wled_set_brightness = wled5_set_brightness;
+> -		wled->wled_sync_toggle = wled5_sync_toggle;
+> +		wled->wled_sync_toggle = wled3_sync_toggle;
+>  		wled->wled_cabc_config = wled5_cabc_config;
+>  		wled->wled_ovp_delay = wled5_ovp_delay;
+>  		wled->wled_auto_detection_required =
 > -- 
-> 2.7.4
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+>  a Linux Foundation Collaborative Project
 > 
