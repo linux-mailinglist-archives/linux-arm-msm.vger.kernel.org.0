@@ -2,191 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A386324346
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Feb 2021 18:44:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 02DAE324350
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Feb 2021 18:47:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229594AbhBXRnf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Feb 2021 12:43:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40824 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233159AbhBXRnd (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Feb 2021 12:43:33 -0500
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1BDCC06174A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Feb 2021 09:42:52 -0800 (PST)
-Received: by mail-pj1-x102e.google.com with SMTP id s23so1827329pji.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Feb 2021 09:42:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=9wRP5DLkWCzCh+T0vNbWrMthPSfCeaaDqG66jAHUycU=;
-        b=RIjjpYYwNMgz101kT8oIKdx1uRLRXETEKM6Tdp5yGLjckq/XC7caP8TrwFwf0EMMNd
-         bWr9OweNiqfYBO+X9rdV0g1tIMDzDLrhU/fofuFyx9Hb7PSFqj4PUc5evd7rn+yqc3na
-         X9PJbSVUQtKaGdY99MQXs42EQ9adPT0REmKdbrSCgl+LJUwczu3oXgP8Rs3EhEReVDrN
-         cUSpZ0EU5nmkXnm5k+04yxyUveqWThCf765+qiDIOOpaeQWrjzASw0+i1siirkr1PJqL
-         fmYJxo6mnzptX2otjiYW1Ph6v68zrtwdTwyJpXMqa7NOl6r2A+5RcuSINOQ0iQCpvdw8
-         XGXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9wRP5DLkWCzCh+T0vNbWrMthPSfCeaaDqG66jAHUycU=;
-        b=Rp7ChwEjJwbuMTCNbIKPfGc6QluLxvNhSfOQNtLTrFN0PFJYrOf2CRSGwsyHmKV2KY
-         tZBFODtdvfUL2ZECEk6UnWU+TFVPyFaKuOh3epvp3ST2EL6TQ3h5Ozn7FOMC/z5nAttb
-         AwjC3HDe6LnRvYJ9OHR4G/AZbbQv1cEjAz9zMnZJlXDOFBkxL0woMSJpGb/330V3flYi
-         FdCoXaAz2mhORA+aoTCt7RzdjHTVtQx+VZ+ck9TRP84L0btVsJD3+01Rasz/CHRW7XAw
-         6J77nBZEfy5nkMrVTCI3ZYxe3s8vYqK3WSCfqvGVgJj4BnyIOrqEpYjURY//9wB/gkat
-         9OUg==
-X-Gm-Message-State: AOAM531fFC7EH/wBM1ZGjxlvfS3p84YjBLwBzrEphqIUWzEBJNMTRp2y
-        y/MVdG0vk2szOyZNI1NVV30X
-X-Google-Smtp-Source: ABdhPJzWfqoO2VFDQJVcOdJZFhkDWr/ysdgBxSmrvlzxJdQ75+KKIh6Ba13mZ2WtX9WUuv3N+LesNw==
-X-Received: by 2002:a17:902:ec83:b029:e3:ec1f:9dfe with SMTP id x3-20020a170902ec83b02900e3ec1f9dfemr18714579plg.59.1614188572140;
-        Wed, 24 Feb 2021 09:42:52 -0800 (PST)
-Received: from work ([103.66.79.25])
-        by smtp.gmail.com with ESMTPSA id p26sm3553361pfn.127.2021.02.24.09.42.49
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 24 Feb 2021 09:42:51 -0800 (PST)
-Date:   Wed, 24 Feb 2021 23:12:48 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] bus: mhi: core: Sanity check values from remote
- device before use
-Message-ID: <20210224174248.GY27945@work>
-References: <1613578822-18614-1-git-send-email-jhugo@codeaurora.org>
- <20210224094749.GP27945@work>
- <4745a9eb-0690-3f19-1046-5032ac9482dc@codeaurora.org>
+        id S234716AbhBXRrQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Feb 2021 12:47:16 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:20645 "EHLO z11.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230001AbhBXRrM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 24 Feb 2021 12:47:12 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1614188807; h=Message-ID: References: In-Reply-To: Reply-To:
+ Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=WAFHMhDviNgazdoyHLOnjKjtFroHVRcONHq8aRYAeDI=;
+ b=lmsM+eXIGiAamJLDuSOgHX0S3W21SL6AwumFp/B5/ziMLS3BvjqUAjfyUbSD/o2if7xyj4lc
+ 3R23WTmQ90PBQPfEaxIBJLTXIb+nf51sWcMeDD1SXL7gkXhOlJ0lx5dzZttR1GfpDSn5hhUw
+ bT5Iu2LIgdm2RB1ZGLjYSulrxjM=
+X-Mailgun-Sending-Ip: 104.130.96.11
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 60369104e9080d5ff781f90d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 24 Feb 2021 17:46:44
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B92CBC43461; Wed, 24 Feb 2021 17:46:43 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3E550C433ED;
+        Wed, 24 Feb 2021 17:46:43 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4745a9eb-0690-3f19-1046-5032ac9482dc@codeaurora.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 24 Feb 2021 09:46:43 -0800
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Loic Poulain <loic.poulain@linaro.org>, hemantk@codeaurora.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] mhi: pci_generic: Remove WQ_MEM_RECLAIM flag from state
+ workqueue
+Organization: Qualcomm Innovation Center, Inc.
+Reply-To: bbhatt@codeaurora.org
+Mail-Reply-To: bbhatt@codeaurora.org
+In-Reply-To: <20210224102516.GW27945@work>
+References: <1614161930-8513-1-git-send-email-loic.poulain@linaro.org>
+ <20210224102516.GW27945@work>
+Message-ID: <e6a1b0b928dbd2b9addd617e9c72e80f@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 24, 2021 at 08:10:06AM -0700, Jeffrey Hugo wrote:
-> On 2/24/2021 2:47 AM, Manivannan Sadhasivam wrote:
-> > On Wed, Feb 17, 2021 at 09:20:22AM -0700, Jeffrey Hugo wrote:
-> > > When parsing the structures in the shared memory, there are values which
-> > > come from the remote device.  For example, a transfer completion event
-> > > will have a pointer to the tre in the relevant channel's transfer ring.
-> > > Such values should be considered to be untrusted, and validated before
-> > > use.  If we blindly use such values, we may access invalid data or crash
-> > > if the values are corrupted.
-> > > 
-> > > If validation fails, drop the relevant event.
-> > > 
-> > > Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
-> > > ---
-> > > 
-> > > v2: Fix subject
-> > > 
-> > >   drivers/bus/mhi/core/main.c | 81 +++++++++++++++++++++++++++++++++++++++++----
-> > >   1 file changed, 74 insertions(+), 7 deletions(-)
-> > > 
-> > > diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> > > index c043574..1eb2fd3 100644
-> > > --- a/drivers/bus/mhi/core/main.c
-> > > +++ b/drivers/bus/mhi/core/main.c
-> > > @@ -242,6 +242,11 @@ static void mhi_del_ring_element(struct mhi_controller *mhi_cntrl,
-> > >   	smp_wmb();
-> > >   }
-> > > +static bool is_valid_ring_ptr(struct mhi_ring *ring, dma_addr_t addr)
-> > > +{
-> > > +	return addr >= ring->iommu_base && addr < ring->iommu_base + ring->len;
-> > > +}
-> > > +
-> > >   int mhi_destroy_device(struct device *dev, void *data)
-> > >   {
-> > >   	struct mhi_device *mhi_dev;
-> > > @@ -383,7 +388,16 @@ irqreturn_t mhi_irq_handler(int irq_number, void *dev)
-> > >   	struct mhi_event_ctxt *er_ctxt =
-> > >   		&mhi_cntrl->mhi_ctxt->er_ctxt[mhi_event->er_index];
-> > >   	struct mhi_ring *ev_ring = &mhi_event->ring;
-> > > -	void *dev_rp = mhi_to_virtual(ev_ring, er_ctxt->rp);
-> > > +	dma_addr_t ptr = er_ctxt->rp;
-> > > +	void *dev_rp;
-> > > +
-> > > +	if (!is_valid_ring_ptr(ev_ring, ptr)) {
-> > > +		dev_err(&mhi_cntrl->mhi_dev->dev,
-> > > +			"Event ring rp points outside of the event ring\n");
-> > > +		return IRQ_HANDLED;
-> > > +	}
-> > > +
-> > > +	dev_rp = mhi_to_virtual(ev_ring, ptr);
-> > >   	/* Only proceed if event ring has pending events */
-> > >   	if (ev_ring->rp == dev_rp)
-> > > @@ -536,6 +550,11 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
-> > >   		struct mhi_buf_info *buf_info;
-> > >   		u16 xfer_len;
-> > > +		if (!is_valid_ring_ptr(tre_ring, ptr)) {
-> > > +			dev_err(&mhi_cntrl->mhi_dev->dev,
-> > > +				"Event element points outside of the tre ring\n");
-> > > +			break;
-> > > +		}
-> > >   		/* Get the TRB this event points to */
-> > >   		ev_tre = mhi_to_virtual(tre_ring, ptr);
-> > > @@ -695,6 +714,12 @@ static void mhi_process_cmd_completion(struct mhi_controller *mhi_cntrl,
-> > >   	struct mhi_chan *mhi_chan;
-> > >   	u32 chan;
-> > > +	if (!is_valid_ring_ptr(mhi_ring, ptr)) {
-> > > +		dev_err(&mhi_cntrl->mhi_dev->dev,
-> > > +			"Event element points outside of the cmd ring\n");
-> > > +		return;
-> > > +	}
-> > > +
-> > >   	cmd_pkt = mhi_to_virtual(mhi_ring, ptr);
-> > >   	chan = MHI_TRE_GET_CMD_CHID(cmd_pkt);
-> > > @@ -719,6 +744,7 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
-> > >   	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-> > >   	u32 chan;
-> > >   	int count = 0;
-> > > +	dma_addr_t ptr = er_ctxt->rp;
-> > >   	/*
-> > >   	 * This is a quick check to avoid unnecessary event processing
-> > > @@ -728,7 +754,13 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
-> > >   	if (unlikely(MHI_EVENT_ACCESS_INVALID(mhi_cntrl->pm_state)))
-> > >   		return -EIO;
-> > > -	dev_rp = mhi_to_virtual(ev_ring, er_ctxt->rp);
-> > > +	if (!is_valid_ring_ptr(ev_ring, ptr)) {
-> > > +		dev_err(&mhi_cntrl->mhi_dev->dev,
-> > > +			"Event ring rp points outside of the event ring\n");
-> > > +		return -EIO;
-> > > +	}
-> > > +
-> > > +	dev_rp = mhi_to_virtual(ev_ring, ptr);
-> > >   	local_rp = ev_ring->rp;
-> > >   	while (dev_rp != local_rp) {
-> > > @@ -834,6 +866,8 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
-> > >   			 */
-> > >   			if (chan < mhi_cntrl->max_chan) {
-> > >   				mhi_chan = &mhi_cntrl->mhi_chan[chan];
-> > > +				if (!mhi_chan->configured)
-> > > +					break;
-> > 
-> > This change is not part of this patch I believe.
-> 
-> It is.  The remote device specified an event on a channel.  We already check
-> to see that the specified channel value doesn't exceed the maximum number of
-> channels, but we don't check to see that it is a valid channel within the
-> range of channels.  If its not a valid channel (say 0-5 and 7-10 are valid,
-> max is 10, but the remote end specified 6), bad things could happen because
-> we are implicitly trusting the value before fully checking its validity.
-> 
-> This is still a sanity check of a value from the remote end.
-> 
+On 2021-02-24 02:25 AM, Manivannan Sadhasivam wrote:
+> On Wed, Feb 24, 2021 at 11:18:50AM +0100, Loic Poulain wrote:
+>> A recent change created a dedicated workqueue for the state-change 
+>> work
+>> with WQ_HIGHPRI (no strong reason for that) and WQ_MEM_RECLAIM flags,
+>> but the state-change work (mhi_pm_st_worker) does not guarantee 
+>> forward
+>> progress under memory pressure, and will even wait on various memory
+>> allocations when e.g. creating devices, loading firmware, etc... The
+>> work is then not part of a memory reclaim path...
+>> 
+>> Moreover, this causes a warning in check_flush_dependency() since we 
+>> end
+>> up in code that flushes a non-reclaim workqueue:
+>> 
+>> [   40.969601] workqueue: WQ_MEM_RECLAIM 
+>> mhi_hiprio_wq:mhi_pm_st_worker [mhi] is flushing !WQ_MEM_RECLAIM 
+>> events_highpri:flush_backlog
+>> [   40.969612] WARNING: CPU: 4 PID: 158 at kernel/workqueue.c:2607 
+>> check_flush_dependency+0x11c/0x140
+>> [   40.969733] Call Trace:
+>> [   40.969740]  __flush_work+0x97/0x1d0
+>> [   40.969745]  ? wake_up_process+0x15/0x20
+>> [   40.969749]  ? insert_work+0x70/0x80
+>> [   40.969750]  ? __queue_work+0x14a/0x3e0
+>> [   40.969753]  flush_work+0x10/0x20
+>> [   40.969756]  rollback_registered_many+0x1c9/0x510
+>> [   40.969759]  unregister_netdevice_queue+0x94/0x120
+>> [   40.969761]  unregister_netdev+0x1d/0x30
+>> [   40.969765]  mhi_net_remove+0x1a/0x40 [mhi_net]
+>> [   40.969770]  mhi_driver_remove+0x124/0x250 [mhi]
+>> [   40.969776]  device_release_driver_internal+0xf0/0x1d0
+>> [   40.969778]  device_release_driver+0x12/0x20
+>> [   40.969782]  bus_remove_device+0xe1/0x150
+>> [   40.969786]  device_del+0x17b/0x3e0
+>> [   40.969791]  mhi_destroy_device+0x9a/0x100 [mhi]
+>> [   40.969796]  ? mhi_unmap_single_use_bb+0x50/0x50 [mhi]
+>> [   40.969799]  device_for_each_child+0x5e/0xa0
+>> [   40.969804]  mhi_pm_st_worker+0x921/0xf50 [mhi]
+>> 
+>> Fixes: 8f7039787687 ("bus: mhi: core: Move to using high priority 
+>> workqueue")
+>> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 
-Okay. Please mention it in the commit message. Currently it mentions
-only the tre pointer.
+Reviewed-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+
+> 
+> Fix looks good to me but I want Bhaumik to share his review since he
+> authored the offending patch.
+> 
+We have seen this internally as well. I agree this patch needs to go in.
+
+We had previously seen issues using global workqueue hence decided to 
+move to a
+dedicated one with WQ_HIGHPRI in order to speed up execution of the 
+worker when
+a certain task is queued. For example, handling SBL or power down needs 
+to be
+done promptly.
+
+> Thanks,
+> Mani
+> 
+>> ---
+>>  drivers/bus/mhi/core/init.c | 3 +--
+>>  1 file changed, 1 insertion(+), 2 deletions(-)
+>> 
+>> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+>> index 32eb90f..03ddd6e 100644
+>> --- a/drivers/bus/mhi/core/init.c
+>> +++ b/drivers/bus/mhi/core/init.c
+>> @@ -890,8 +890,7 @@ int mhi_register_controller(struct mhi_controller 
+>> *mhi_cntrl,
+>>  	INIT_WORK(&mhi_cntrl->st_worker, mhi_pm_st_worker);
+>>  	init_waitqueue_head(&mhi_cntrl->state_event);
+>> 
+>> -	mhi_cntrl->hiprio_wq = alloc_ordered_workqueue
+>> -				("mhi_hiprio_wq", WQ_MEM_RECLAIM | WQ_HIGHPRI);
+>> +	mhi_cntrl->hiprio_wq = alloc_ordered_workqueue("mhi_hiprio_wq", 
+>> WQ_HIGHPRI);
+>>  	if (!mhi_cntrl->hiprio_wq) {
+>>  		dev_err(mhi_cntrl->cntrl_dev, "Failed to allocate workqueue\n");
+>>  		ret = -ENOMEM;
+>> --
+>> 2.7.4
+>> 
 
 Thanks,
-Mani
-
-> -- 
-> Jeffrey Hugo
-> Qualcomm Technologies, Inc. is a member of the
-> Code Aurora Forum, a Linux Foundation Collaborative Project.
+Bhaumik
+---
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
+a Linux Foundation Collaborative Project
