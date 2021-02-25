@@ -2,30 +2,30 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0469C325A3A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 00:37:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B52E2325A3D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 00:38:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229491AbhBYXhb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Feb 2021 18:37:31 -0500
-Received: from labrats.qualcomm.com ([199.106.110.90]:14970 "EHLO
+        id S231925AbhBYXiT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Feb 2021 18:38:19 -0500
+Received: from labrats.qualcomm.com ([199.106.110.90]:39803 "EHLO
         labrats.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229571AbhBYXha (ORCPT
+        with ESMTP id S231591AbhBYXiT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Feb 2021 18:37:30 -0500
-IronPort-SDR: s6tLHlwsEenhfIMerK/oN/qeKnVgjrYjaEsBvVB9gNIRKJqWBx9oRYHDwZKA6oXW7RuGRi7KjR
- 2KrBvwVm6pGgMWXA8a0U0nXg4+rrKTPIEbcyHHDVAmpmAmtUiwUZ2e0rPa6bk+WTmSgiCQOPT9
- egcHk/wuke4YJ5MLo9+0kgHZDV6zMmYTmOI7jhOG5gYyrqkGJQ1Icyir0akMzySlqemshCeGZc
- fxUTVhF7AdXzdH/3UHX5qDGzmEaD6dNsM039sBPx8LZaBKT46Sqbt3Zo0ox/6v3VuaYCweJ465
- gr0=
+        Thu, 25 Feb 2021 18:38:19 -0500
+IronPort-SDR: 8ZKnWHuV6wdP9AY/ZuI0iI39Qz52MGEQXTGWf6cKvsbeMzYyR/GkwpNy4AE4B+FhHLvigkE8P4
+ Y8TG/fq3tWLPGwaHbdNPx0A6sEVC9SQvkopV2PSw2lh2kDqzHPqZcGl88au3UX/7qnQ4N02kUQ
+ dRrnW+CRWlsXNIvGCgk65DNSO8kTUk2jrjhQQa6Xd1tsk7I+oFAtWmG9X1NvhxJMiTaqeLsCSo
+ cvtafwzPQPHhOGJADThOxRfRil0/PS23icqSDYxrCJh7lp1Bs9ilGwqo+bqAPPJ6xImnJu2aCj
+ K7o=
 X-IronPort-AV: E=Sophos;i="5.81,207,1610438400"; 
-   d="scan'208";a="47791152"
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by labrats.qualcomm.com with ESMTP; 25 Feb 2021 15:36:50 -0800
+   d="scan'208";a="47791155"
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by labrats.qualcomm.com with ESMTP; 25 Feb 2021 15:37:39 -0800
 X-QCInternal: smtphost
-Received: from stor-presley.qualcomm.com ([192.168.140.85])
-  by ironmsg04-sd.qualcomm.com with ESMTP; 25 Feb 2021 15:36:49 -0800
+Received: from wsp769891wss.qualcomm.com (HELO stor-presley.qualcomm.com) ([192.168.140.85])
+  by ironmsg01-sd.qualcomm.com with ESMTP; 25 Feb 2021 15:37:38 -0800
 Received: by stor-presley.qualcomm.com (Postfix, from userid 92687)
-        id 153AE21A25; Thu, 25 Feb 2021 15:36:49 -0800 (PST)
+        id 5ABE121A25; Thu, 25 Feb 2021 15:37:38 -0800 (PST)
 From:   Asutosh Das <asutoshd@codeaurora.org>
 To:     cang@codeaurora.org, martin.petersen@oracle.com,
         adrian.hunter@intel.com, linux-scsi@vger.kernel.org
@@ -37,7 +37,7 @@ Cc:     Asutosh Das <asutoshd@codeaurora.org>,
         linux-mediatek@lists.infradead.org (moderated list:ARM/Mediatek SoC
         support)
 Subject: [PATCH v8 0/2] Enable power management for ufs wlun
-Date:   Thu, 25 Feb 2021 15:36:45 -0800
+Date:   Thu, 25 Feb 2021 15:37:32 -0800
 Message-Id: <cover.1614295674.git.asutoshd@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 Precedence: bulk
