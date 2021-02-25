@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B08F1325966
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 23:17:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A73E9325968
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 23:17:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234490AbhBYWPv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Feb 2021 17:15:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40694 "EHLO
+        id S233162AbhBYWP4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Feb 2021 17:15:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234409AbhBYWO6 (ORCPT
+        with ESMTP id S231787AbhBYWPB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Feb 2021 17:14:58 -0500
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06428C061797
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 14:13:42 -0800 (PST)
-Received: by mail-pg1-x52f.google.com with SMTP id l2so4779562pgb.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 14:13:42 -0800 (PST)
+        Thu, 25 Feb 2021 17:15:01 -0500
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E01BC0617AB
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 14:13:43 -0800 (PST)
+Received: by mail-pl1-x632.google.com with SMTP id s16so3971560plr.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 14:13:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=dZZPUphwhGg2xXbRQl4BmeZhTTdyb8m8Owkqn4y9NNs=;
-        b=bVU2P6jyIFZz0DCWzpDkeRk2VWaldPbbj9l6PTLI4f5+EX767iO0KlmwesT59WsQw7
-         j3rukQtgsRJth/tpHAwa4kjEPrL5Kce4oLasq1zFujWL74temdjkjt42WjejSHJsI/UN
-         ftg1yi4e0lwb8LrI1hiCSV5JOeCl+QRk1WI3w=
+        bh=I+OMtc3EHQkwIh9DKEWd2RBYBgfx+51DyxK3fF4WBeM=;
+        b=kiw7n7Dnnn83YAr1BmCPiOcuuQnQP+A9ZtnQR0udKtLu/gW47ZtLvwdvtBRm84HXPp
+         RxALb1P1GQYwYHgqjvKppQxRpTZS0iM3AFVcfYP8oR4yxbRKTA4x78/9mmfvQ6RQOQjo
+         Rtj3ZQeoMvT1pupbphgw5XS7FY5PMeO59xQZs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=dZZPUphwhGg2xXbRQl4BmeZhTTdyb8m8Owkqn4y9NNs=;
-        b=rPDkQIV6jyVPJ4e+22ojWXF+ChTeSVrOHf1GRtrJCHArXlVnxmf89m1Gcf85YqQ3EG
-         u60NsIweseJ3caXXdGiOWNFnoUJsCRcxQPear7ErA7JfGYUifxEFCb+Lhx06kcDN9hTA
-         +GxfiG7UYSKUGCEZ6pmTefUYmdzw6Dl8/MRXbo7PMXDtkPN8KAqeohoz5SDoWSh1oyXZ
-         tGursi9EY8k/MdEq/amUdVUbAHfSMeV+Opjf0jkLYNplsaHY9FLCULwXkz2krUMzXOZn
-         HQxcOu3xmoX2rABHYPRf28p+tHG2u/dU5XOaZcOXMzuCAIe2WZxGYsB+UItr/qJ+VTII
-         UmOQ==
-X-Gm-Message-State: AOAM533HF1uByV3M8AiVH76Zdrw4ncFO7ge7pAQ0lGVbnsG9Y4WN+Q4b
-        uEJ+Qw0wJUhrJRuniFz6LeRLiQ==
-X-Google-Smtp-Source: ABdhPJy/Soin/DbVqgiOZAuiU4VbFtMpI+/Vu0PShjlpgOld4qXK3IZ43J2YhOOC+aXLBU11BtZkwA==
-X-Received: by 2002:a63:4b0a:: with SMTP id y10mr56958pga.144.1614291221626;
-        Thu, 25 Feb 2021 14:13:41 -0800 (PST)
+        bh=I+OMtc3EHQkwIh9DKEWd2RBYBgfx+51DyxK3fF4WBeM=;
+        b=Kl/1wHAmXzxgCXTQwl2YzzxiveDyGuVlqTRaFVsonijWfSfg0xRumZ5yWasW+bYAxO
+         gpKZcqXFjQ3AL0jFdvDR3/grafIvjHSS+pI6m8tqHzg3HQUirrRhUEAqtGFxKLBXLRHt
+         YK9ooov8z1H1gi4vDg70+Ib11Y0dM86bb/7HkXIjlFvUeiBgVY2QY7JuramY2DCsEDF1
+         R9cIxBxboyTgVJEBxnFaba5VMkakqH0Jv+PQ8RexCbPvehkl8ty4R3/eqfKPc6tsENMU
+         FnDxvhT2R7b/G3Fpl/36OY0qs4DM79tWkD1HC1f+wbX+j2X7fXX9K772eaJJudripDwK
+         baGQ==
+X-Gm-Message-State: AOAM531HKw5bF3oUJcXqAMF8UAFX+Drv19VPA592VaDqgMZ5sCzD86Jj
+        +For+vJDa+G5fC4BjbZLnsIkDQ==
+X-Google-Smtp-Source: ABdhPJyfBR/Ngo+oYUnU9QMvuceErgy8+K0e73IP/Mz4GhYbulstVOd6dDZFwEZD6/AtiZq8VKaJ3A==
+X-Received: by 2002:a17:90a:5b0c:: with SMTP id o12mr66243pji.68.1614291222942;
+        Thu, 25 Feb 2021 14:13:42 -0800 (PST)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:8414:45a5:94c4:d35d])
-        by smtp.gmail.com with ESMTPSA id jt21sm6713301pjb.51.2021.02.25.14.13.40
+        by smtp.gmail.com with ESMTPSA id jt21sm6713301pjb.51.2021.02.25.14.13.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Feb 2021 14:13:41 -0800 (PST)
+        Thu, 25 Feb 2021 14:13:42 -0800 (PST)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Stephen Boyd <swboyd@chromium.org>,
@@ -55,9 +55,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 03/13] arm64: dts: qcom: Prep sc7180-trogdor trackpad IRQ for new boards
-Date:   Thu, 25 Feb 2021 14:13:00 -0800
-Message-Id: <20210225141022.3.Iddf6dc8102aa4fbc3847936226fc7bf2e2cd315c@changeid>
+Subject: [PATCH 04/13] arm64: dts: qcom: Unify the sc7180-trogdor panel nodes
+Date:   Thu, 25 Feb 2021 14:13:01 -0800
+Message-Id: <20210225141022.4.I1483fac4c5ae4b2d7660290ff85d69945292618f@changeid>
 X-Mailer: git-send-email 2.30.1.766.gb4fecdf3b7-goog
 In-Reply-To: <20210225221310.1939599-1-dianders@chromium.org>
 References: <20210225221310.1939599-1-dianders@chromium.org>
@@ -67,118 +67,119 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The trackpad interrupt got renamed and also moved to a new GPIO on
-newer boards.  Let's do the move in the "trogdor.dtsi" file and then
-undo it in the two old boards.
-
-NOTE: since none of the new boards have device trees yet, this change
-looks silly on its own but it will make sense after more boards are
-supported.
+Let's avoid a bit of duplication by pushing this up to the trogdor.dtsi
+file.
 
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
 
- .../boot/dts/qcom/sc7180-trogdor-lazor.dtsi      | 14 ++++++++++++++
- arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts   | 16 ++++++++++++++++
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi     | 14 ++++++++------
- 3 files changed, 38 insertions(+), 6 deletions(-)
+ .../boot/dts/qcom/sc7180-trogdor-lazor.dtsi   | 21 ++++---------------
+ .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts | 19 ++++-------------
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 15 +++++++++++++
+ 3 files changed, 23 insertions(+), 32 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-index 89e5cd29ec09..11269522da50 100644
+index 11269522da50..5efa04d0d256 100644
 --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-@@ -58,8 +58,22 @@ ap_ts: touchscreen@10 {
+@@ -12,23 +12,6 @@
+ 
+ #include "sc7180-trogdor.dtsi"
+ 
+-/ {
+-	panel: panel {
+-		compatible = "boe,nv133fhm-n62";
+-		power-supply = <&pp3300_dx_edp>;
+-		backlight = <&backlight>;
+-		hpd-gpios = <&sn65dsi86_bridge 2 GPIO_ACTIVE_HIGH>;
+-
+-		ports {
+-			port {
+-				panel_in_edp: endpoint {
+-					remote-endpoint = <&sn65dsi86_out>;
+-				};
+-			};
+-		};
+-	};
+-};
+-
+ &ap_sar_sensor {
+ 	semtech,cs0-ground;
+ 	semtech,combined-sensors = <3>;
+@@ -58,6 +41,10 @@ ap_ts: touchscreen@10 {
  	};
  };
  
-+&trackpad {
-+	interrupts = <58 IRQ_TYPE_EDGE_FALLING>;
++&panel {
++	compatible = "boe,nv133fhm-n62";
 +};
 +
- /* PINCTRL - modifications to sc7180-trogdor.dtsi */
- 
-+&trackpad_int_1v8_odl {
-+	pinmux {
-+		pins = "gpio58";
-+	};
-+
-+	pinconf {
-+		pins = "gpio58";
-+	};
-+};
-+
- &ts_reset_l {
- 	pinconf {
- 		/* This pin is not connected on -rev0, pull up to park. */
+ &trackpad {
+ 	interrupts = <58 IRQ_TYPE_EDGE_FALLING>;
+ };
 diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-index 2cb522d6962e..bd2c783e0f2f 100644
+index bd2c783e0f2f..2b522f9e0d8f 100644
 --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
 +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-@@ -68,6 +68,22 @@ &sdhc_2 {
- 	status = "okay";
+@@ -17,21 +17,6 @@
+ / {
+ 	model = "Google Trogdor (rev1+)";
+ 	compatible = "google,trogdor", "qcom,sc7180";
+-
+-	panel: panel {
+-		compatible = "auo,b116xa01";
+-		power-supply = <&pp3300_dx_edp>;
+-		backlight = <&backlight>;
+-		hpd-gpios = <&sn65dsi86_bridge 2 GPIO_ACTIVE_HIGH>;
+-
+-		ports {
+-			port {
+-				panel_in_edp: endpoint {
+-					remote-endpoint = <&sn65dsi86_out>;
+-				};
+-			};
+-		};
+-	};
  };
  
-+&trackpad {
-+	interrupts = <58 IRQ_TYPE_EDGE_FALLING>;
-+};
-+
-+/* PINCTRL - modifications to sc7180-trogdor.dtsi */
-+
-+&trackpad_int_1v8_odl {
-+	pinmux {
-+		pins = "gpio58";
-+	};
-+
-+	pinconf {
-+		pins = "gpio58";
-+	};
-+};
-+
- /* PINCTRL - board-specific pinctrl */
+ ap_ts_pen_1v8: &i2c4 {
+@@ -53,6 +38,10 @@ ap_ts: touchscreen@10 {
+ 	};
+ };
  
- &tlmm {
++&panel {
++	compatible = "auo,b116xa01";
++};
++
+ &pp3300_hub {
+ 	/* pp3300_l7c is used to power the USB hub */
+ 	/delete-property/regulator-always-on;
 diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index 25ab6572f9cf..4ad27b5c34d1 100644
+index 4ad27b5c34d1..9fcb19a0501f 100644
 --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -642,14 +642,14 @@ ap_tp_i2c: &i2c7 {
- 	status = "okay";
- 	clock-frequency = <400000>;
- 
--	trackpad@15 {
-+	trackpad: trackpad@15 {
- 		compatible = "elan,ekth3000";
- 		reg = <0x15>;
- 		pinctrl-names = "default";
--		pinctrl-0 = <&trackpad_int_1v8_odl>;
-+		pinctrl-0 = <&tp_int_odl>;
- 
- 		interrupt-parent = <&tlmm>;
--		interrupts = <58 IRQ_TYPE_EDGE_FALLING>;
-+		interrupts = <0 IRQ_TYPE_EDGE_FALLING>;
- 
- 		vcc-supply = <&pp3300_fp_tp>;
- 
-@@ -1410,14 +1410,16 @@ pinconf-rx {
- 		};
+@@ -255,6 +255,21 @@ max98357a: audio-codec-0 {
+ 		#sound-dai-cells = <0>;
  	};
  
--	trackpad_int_1v8_odl: trackpad-int-1v8-odl {
-+	/* Named trackpad_int_1v8_odl on earlier revision schematics */
-+	trackpad_int_1v8_odl:
-+	tp_int_odl: tp-int-odl {
- 		pinmux {
--			pins = "gpio58";
-+			pins = "gpio0";
- 			function = "gpio";
- 		};
- 
- 		pinconf {
--			pins = "gpio58";
-+			pins = "gpio0";
- 
- 			/* Has external pullup */
- 			bias-disable;
++	panel: panel {
++		/* Compatible will be filled in per-board */
++		power-supply = <&pp3300_dx_edp>;
++		backlight = <&backlight>;
++		hpd-gpios = <&sn65dsi86_bridge 2 GPIO_ACTIVE_HIGH>;
++
++		ports {
++			port {
++				panel_in_edp: endpoint {
++					remote-endpoint = <&sn65dsi86_out>;
++				};
++			};
++		};
++	};
++
+ 	pwmleds {
+ 		compatible = "pwm-leds";
+ 		keyboard_backlight: keyboard-backlight {
 -- 
 2.30.1.766.gb4fecdf3b7-goog
 
