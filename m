@@ -2,114 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0DB3A3259CA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 23:48:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 27A583259FA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 23:58:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229993AbhBYWsG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Feb 2021 17:48:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47860 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229800AbhBYWsG (ORCPT
+        id S233016AbhBYW4z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Feb 2021 17:56:55 -0500
+Received: from relay01.th.seeweb.it ([5.144.164.162]:57553 "EHLO
+        relay01.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231822AbhBYW4m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Feb 2021 17:48:06 -0500
-Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51ADCC061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 14:47:26 -0800 (PST)
-Received: by mail-qv1-xf32.google.com with SMTP id cw15so2918354qvb.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 14:47:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=i3sYXoLcesLS9Els77G1CR101OeDy0tTrMofvec1ABk=;
-        b=obFjMpH0gN/9LZsXrZ/mDhUy6SbZodXzAQ0MImC48CTEv/WBF8ZhSS/5nYOlgdGNiu
-         dry76yH2mQNJH4D/zyHfJoJylw47pjDS9kUfnx/aVwwbR8PUBiy+WRfw+XM7ejl97HA8
-         RwULEa1hr4sU1lhvVd28oC0Uavl6+JF7QfbYA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=i3sYXoLcesLS9Els77G1CR101OeDy0tTrMofvec1ABk=;
-        b=DvbtQ/8oPRD0JujRKvBe4XySHsXP+6261RZ+xkDpFgjAzzzkD/YOsg9jLLbGuJ8MNY
-         gDVdodnRfLgA21UJD+ZM7Fw+gTtirX4KStiX2YjOkTwZzxUcXpQFOU9BASHdLMLkSXiW
-         4hXXSM7ef8MBLjMeYXVz88BtWfUGWQEcYZot4nrjqZ0f8exFg0LvbrwO8NgD+1IUkOaH
-         rkx3QOsG0fEe553YXD8I3QWGovCed2g3AmMlsu0S0NG4NTPcfD3MCQ3QtkFW0eecax/6
-         2zVZsFw7DZeEPecYRHz+YJ+XqTWFBNo4HzjUx9pdU7wr8BnEbhdJX6vzWWEWK8qAVNgG
-         tTuw==
-X-Gm-Message-State: AOAM532P1YfnvB8SA4dWPtO48yFAvtw8YH7e7v1P1u7ECAqsOTJuRj/7
-        JEawfsK2AUShuDStjV6ciJRSfXdKqDn10Q==
-X-Google-Smtp-Source: ABdhPJyf+Kw9b8Ssj9ay+QQ8H3/H0+OSxfyoRFVI1ZaD8c2yhcNaZiCHuSZgDUH/7waokcux40oW6w==
-X-Received: by 2002:a0c:eac9:: with SMTP id y9mr4109938qvp.58.1614293245347;
-        Thu, 25 Feb 2021 14:47:25 -0800 (PST)
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com. [209.85.219.181])
-        by smtp.gmail.com with ESMTPSA id e14sm4447581qte.18.2021.02.25.14.47.24
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Feb 2021 14:47:25 -0800 (PST)
-Received: by mail-yb1-f181.google.com with SMTP id m188so7026472yba.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 14:47:24 -0800 (PST)
-X-Received: by 2002:a25:d3c5:: with SMTP id e188mr181614ybf.345.1614293244387;
- Thu, 25 Feb 2021 14:47:24 -0800 (PST)
+        Thu, 25 Feb 2021 17:56:42 -0500
+Received: from [192.168.1.101] (abab236.neoplus.adsl.tpnet.pl [83.6.165.236])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 8CE63201BA;
+        Thu, 25 Feb 2021 23:55:41 +0100 (CET)
+Subject: Re: [PATCH 02/13] arm64: dts: qcom: Move sc7180 MI2S config to board
+ files and make pulldown
+To:     Douglas Anderson <dianders@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Alexandru M Stan <amstan@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Rob Clark <robdclark@chromium.org>,
+        V Sujith Kumar Reddy <vsujithk@codeaurora.org>,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        Tzung-Bi Shih <tzungbi@chromium.org>,
+        Judy Hsiao <judyhsiao@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20210225221310.1939599-1-dianders@chromium.org>
+ <20210225141022.2.Id27e7e6f90c29bf623fa4880e18a14ba1dffd2d2@changeid>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+Message-ID: <a4a83576-9d95-80eb-0090-62526eba9095@somainline.org>
+Date:   Thu, 25 Feb 2021 23:55:40 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-References: <20210225103330.v2.1.I6a426324db3d98d6cfae8adf2598831bb30bba74@changeid>
- <20210225103330.v2.3.Ife7768b6b4765026c9d233ad4982da0e365ddbca@changeid>
-In-Reply-To: <20210225103330.v2.3.Ife7768b6b4765026c9d233ad4982da0e365ddbca@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 25 Feb 2021 14:47:12 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=UYZuoiFRCZS+L8aWJXfXHr5H8xDnzAN9xH07yZaoVRew@mail.gmail.com>
-Message-ID: <CAD=FV=UYZuoiFRCZS+L8aWJXfXHr5H8xDnzAN9xH07yZaoVRew@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: sc7180: trogdor: Fix trip point
- config of charger thermal zone
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Antony Wang <antony_wang@compal.corp-partner.google.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20210225141022.2.Id27e7e6f90c29bf623fa4880e18a14ba1dffd2d2@changeid>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Thu, Feb 25, 2021 at 10:33 AM Matthias Kaehlcke <mka@chromium.org> wrote:
->
-> The trip point configuration of the charger thermal zone for trogdor
-> is missing a node for the critical trip point. Add the missing node.
->
-> Fixes: bb06eb3607e9 ("arm64: qcom: sc7180: trogdor: Add ADC nodes and thermal zone for charger thermistor")
-> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> ---
->
-> Changes in v2:
-> - patch added to the series
->
->  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> index bda983da4eaf..ab4efaece5cb 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> @@ -22,9 +22,11 @@ charger_thermal: charger-thermal {
->                         thermal-sensors = <&pm6150_adc_tm 1>;
->
->                         trips {
-> -                               temperature = <125000>;
-> -                               hysteresis = <1000>;
-> -                               type = "critical";
-> +                               charger-crit {
 
-If you happen to spin for some other reason, it might not hurt to add
-a label to this node.  Best case it'll save a patch in the future when
-some OEM decides that they need to adjust this temperature and worst
-case it doesn't hurt.
+>  
+> +&pri_mi2s_active {
+> +	pinconf {
+> +		pins = "gpio53", "gpio54", "gpio55", "gpio56";
+> +		drive-strength = <2>;
+> +		bias-pull-down;
+> +	};
+> +};
+> +
 
-In any case:
+You can omit pinconf{}, so the outcome would be:
+&pri_mi2s_active {
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+    pins = ...
+
+    ...
+
+};
+
+
+This makes the DTs ever so shorter and is the style that's currently used for new submissions.
+
+Same goes for the nodes that are being referenced.
+
+
+> +&pri_mi2s_mclk_active {
+> +	pinconf {
+> +		pins = "gpio57";
+> +		drive-strength = <2>;
+> +		bias-pull-down;
+> +	};
+> +};
+> +
+>  &qspi_cs0 {
+>  	pinconf {
+>  		pins = "gpio68";
+> @@ -1015,6 +1031,14 @@ pinconf-rx {
+>  	};
+>  };
+>  
+> +&sec_mi2s_active {
+> +	pinconf {
+> +		pins = "gpio49", "gpio50", "gpio51";
+> +		drive-strength = <2>;
+> +		bias-pull-down;
+> +	};
+> +};
+> +
+>  /* PINCTRL - board-specific pinctrl */
+>  
+>  &pm6150_gpio {
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 60248a6757d8..5040923a9f7c 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -1856,12 +1856,6 @@ pinmux {
+>  					pins = "gpio49", "gpio50", "gpio51";
+>  					function = "mi2s_1";
+>  				};
+> -
+> -				pinconf {
+> -					pins = "gpio49", "gpio50", "gpio51";
+> -					drive-strength = <8>;
+> -					bias-pull-up;
+> -				};
+>  			};
+>  
+>  			pri_mi2s_active: pri-mi2s-active {
+> @@ -1869,12 +1863,6 @@ pinmux {
+>  					pins = "gpio53", "gpio54", "gpio55", "gpio56";
+>  					function = "mi2s_0";
+>  				};
+> -
+> -				pinconf {
+> -					pins = "gpio53", "gpio54", "gpio55", "gpio56";
+> -					drive-strength = <8>;
+> -					bias-pull-up;
+> -				};
+>  			};
+>  
+>  			pri_mi2s_mclk_active: pri-mi2s-mclk-active {
+> @@ -1882,12 +1870,6 @@ pinmux {
+>  					pins = "gpio57";
+>  					function = "lpass_ext";
+>  				};
+> -
+> -				pinconf {
+> -					pins = "gpio57";
+> -					drive-strength = <8>;
+> -					bias-pull-up;
+> -				};
+>  			};
+>  
+>  			sdc1_on: sdc1-on {
+>
+Applies to all ^.
+
+
+Konrad
+
+
