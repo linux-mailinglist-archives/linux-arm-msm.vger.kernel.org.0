@@ -2,154 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2393E32490B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 04:01:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 15BAB3249AC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 05:13:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236897AbhBYDBW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Feb 2021 22:01:22 -0500
-Received: from labrats.qualcomm.com ([199.106.110.90]:22187 "EHLO
-        labrats.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236898AbhBYDBW (ORCPT
+        id S234429AbhBYEMW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Feb 2021 23:12:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34286 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234111AbhBYEMU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Feb 2021 22:01:22 -0500
-IronPort-SDR: A2p3YEObhS82c1WeKUAT+iVO3yw4sCqT63Kxd3oXH25fUejGwdeVKKASdE0G5eP4RRwgqks5wn
- CZmK870h8qkRJZJg4lG3fB7HGUpXqqVzc+H3XIgWxqGOezji6d8cgTBFyk4oR2pW8pgO7hLMuP
- U/uXFve3xiI0r50cyvtCuTau+pz74mJVz/o9ZXw2vtTHIHH6Uu1TN4M3YLmz4TVlUk3VSAe9GU
- nz3wMsmMtsHtoCWqwZ8A7/mAg30fund9R8sXN0+HMalDi3ii5sWchH6jDTOHnawyawsAdYCPKB
- Vd0=
-X-IronPort-AV: E=Sophos;i="5.81,203,1610438400"; 
-   d="scan'208";a="47789821"
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by labrats.qualcomm.com with ESMTP; 24 Feb 2021 19:00:39 -0800
-X-QCInternal: smtphost
-Received: from wsp769891wss.qualcomm.com (HELO stor-presley.qualcomm.com) ([192.168.140.85])
-  by ironmsg02-sd.qualcomm.com with ESMTP; 24 Feb 2021 19:00:38 -0800
-Received: by stor-presley.qualcomm.com (Postfix, from userid 92687)
-        id 555E821A29; Wed, 24 Feb 2021 19:00:38 -0800 (PST)
-From:   Asutosh Das <asutoshd@codeaurora.org>
-To:     cang@codeaurora.org, martin.petersen@oracle.com,
-        adrian.hunter@intel.com, linux-scsi@vger.kernel.org
-Cc:     Asutosh Das <asutoshd@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Bean Huo <beanhuo@micron.com>,
-        "Bao D. Nguyen" <nguyenb@codeaurora.org>,
-        Nitin Rawat <nitirawa@codeaurora.org>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v7 2/2] ufs: sysfs: Resume the proper scsi device
-Date:   Wed, 24 Feb 2021 19:00:15 -0800
-Message-Id: <d9ea5dd3bea11e51d7feeee531aad7025298a9c1.1614221843.git.asutoshd@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1614221843.git.asutoshd@codeaurora.org>
-References: <cover.1614221843.git.asutoshd@codeaurora.org>
-In-Reply-To: <cover.1614221843.git.asutoshd@codeaurora.org>
-References: <cover.1614221843.git.asutoshd@codeaurora.org>
+        Wed, 24 Feb 2021 23:12:20 -0500
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88186C061756
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Feb 2021 20:11:40 -0800 (PST)
+Received: by mail-pj1-x1029.google.com with SMTP id gm18so2721972pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Feb 2021 20:11:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=kWvndBzAFJbUCgudW2fOtKqRm0n+8przz6MQZbJUpfg=;
+        b=z4pBsimnaBnUQtZQfOxFmngvwePpdxMwoFXUQNzRUF6W57v0QRDbUckzNug5MJjice
+         Ylc/0iP8yBDCx3i4li2GTnuEVaMOmwZBn7cxpoL6epUvjJlWDYCBAatTBs3BPyAguiJJ
+         O6IggNMCEvlkIyPl0oaqW5mVKwsqr/ChMHMiL2HT+0+Luea5yXgjgADE8BxuTStQFk4i
+         nBgUiYciwvHWE66gHpQcCFHhF1QJlcdjWLxEZUxwBIC/vUNwS7wBHDF1Ui62lPgDDbQ6
+         fpMMPa9xBndwbaCSTG53HrFm5gb3XF/lAbz2TT/0Wp3PK8mNHGOrIIjZANC4Kj8dFJzz
+         8D0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=kWvndBzAFJbUCgudW2fOtKqRm0n+8przz6MQZbJUpfg=;
+        b=rzmzLRoIpAyNO2qbMC+YX4tLwFSuKVBSswwXl9vd3D3v+ZjHqMrar9lIytXAarN1MH
+         h5gAEBn2r59lIZ2PmVlVr2DK6gA6oOdM+bGwpD2TRyNmOr5WvD2nn88sSPvCVr2UCJZE
+         k0xFpGsO0J/XgMWJ8xmfQhP9Lls7IyuZ0ngxI5yauyY0cVzFqK3SlgFtphRIrAbZ5ucg
+         jok3j/tMCsXdSVxw0FXUWcGDMhVsibTM5n7drXvpaeTkmXg75mo26+I9zVlUxDFJ3Nva
+         6zVOTmo1U8DvvNZPP1RNNchUK0xqpVafGZ11f2LFqyISQaHJo0HOR9LvhTyPbJsw9cnn
+         2Rvw==
+X-Gm-Message-State: AOAM531Uei6mUMrnYJwWCakR8+f2C+nwFyde2MedajJcLCgcOxwbK8ga
+        ugoQGR3qoVRDIiU31qiDWb87
+X-Google-Smtp-Source: ABdhPJxjzQUHOO9pmE1ewQkHZu3Xe9wtIoxLEISh0thnwTBmC8+3r4lMS1sM7XmWKFQW+4N+4+6qoQ==
+X-Received: by 2002:a17:90a:cc02:: with SMTP id b2mr1240825pju.115.1614226299834;
+        Wed, 24 Feb 2021 20:11:39 -0800 (PST)
+Received: from localhost.localdomain ([103.66.79.45])
+        by smtp.gmail.com with ESMTPSA id c12sm4155494pjq.48.2021.02.24.20.11.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Feb 2021 20:11:39 -0800 (PST)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
+        robh+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-mtd@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        boris.brezillon@collabora.com, Daniele.Palmas@telit.com,
+        bjorn.andersson@linaro.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v2 0/3] Add support for secure regions in Qcom NANDc driver
+Date:   Thu, 25 Feb 2021 09:41:26 +0530
+Message-Id: <20210225041129.58576-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Resumes the actual scsi device the unit descriptor of which
-is being accessed instead of the hba alone.
+On a typical end product, a vendor may choose to secure some regions in
+the NAND memory which are supposed to stay intact between FW upgrades.
+The access to those regions will be blocked by a secure element like
+Trustzone. So the normal world software like Linux kernel should not
+touch these regions (including reading).
 
-Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
----
- drivers/scsi/ufs/ufs-sysfs.c | 26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+So this series adds a property for declaring such secure regions in DT
+so that the driver can skip touching them. While at it, the Qcom NANDc
+DT binding is also converted to YAML format.
 
-diff --git a/drivers/scsi/ufs/ufs-sysfs.c b/drivers/scsi/ufs/ufs-sysfs.c
-index acc54f5..34481e3 100644
---- a/drivers/scsi/ufs/ufs-sysfs.c
-+++ b/drivers/scsi/ufs/ufs-sysfs.c
-@@ -297,10 +297,10 @@ static ssize_t ufs_sysfs_read_desc_param(struct ufs_hba *hba,
- 		goto out;
- 	}
- 
--	pm_runtime_get_sync(hba->dev);
-+	scsi_autopm_get_device(hba->sdev_ufs_device);
- 	ret = ufshcd_read_desc_param(hba, desc_id, desc_index,
- 				param_offset, desc_buf, param_size);
--	pm_runtime_put_sync(hba->dev);
-+	scsi_autopm_put_device(hba->sdev_ufs_device);
- 	if (ret) {
- 		ret = -EINVAL;
- 		goto out;
-@@ -678,7 +678,7 @@ static ssize_t _name##_show(struct device *dev,				\
- 		up(&hba->host_sem);					\
- 		return -ENOMEM;						\
- 	}								\
--	pm_runtime_get_sync(hba->dev);					\
-+	scsi_autopm_get_device(hba->sdev_ufs_device);			\
- 	ret = ufshcd_query_descriptor_retry(hba,			\
- 		UPIU_QUERY_OPCODE_READ_DESC, QUERY_DESC_IDN_DEVICE,	\
- 		0, 0, desc_buf, &desc_len);				\
-@@ -695,7 +695,7 @@ static ssize_t _name##_show(struct device *dev,				\
- 		goto out;						\
- 	ret = sysfs_emit(buf, "%s\n", desc_buf);			\
- out:									\
--	pm_runtime_put_sync(hba->dev);					\
-+	scsi_autopm_put_device(hba->sdev_ufs_device);			\
- 	kfree(desc_buf);						\
- 	up(&hba->host_sem);						\
- 	return ret;							\
-@@ -744,10 +744,10 @@ static ssize_t _name##_show(struct device *dev,				\
- 	}								\
- 	if (ufshcd_is_wb_flags(QUERY_FLAG_IDN##_uname))			\
- 		index = ufshcd_wb_get_query_index(hba);			\
--	pm_runtime_get_sync(hba->dev);					\
-+	scsi_autopm_get_device(hba->sdev_ufs_device);			\
- 	ret = ufshcd_query_flag(hba, UPIU_QUERY_OPCODE_READ_FLAG,	\
- 		QUERY_FLAG_IDN##_uname, index, &flag);			\
--	pm_runtime_put_sync(hba->dev);					\
-+	scsi_autopm_put_device(hba->sdev_ufs_device);			\
- 	if (ret) {							\
- 		ret = -EINVAL;						\
- 		goto out;						\
-@@ -813,10 +813,10 @@ static ssize_t _name##_show(struct device *dev,				\
- 	}								\
- 	if (ufshcd_is_wb_attrs(QUERY_ATTR_IDN##_uname))			\
- 		index = ufshcd_wb_get_query_index(hba);			\
--	pm_runtime_get_sync(hba->dev);					\
-+	scsi_autopm_get_device(hba->sdev_ufs_device);			\
- 	ret = ufshcd_query_attr(hba, UPIU_QUERY_OPCODE_READ_ATTR,	\
- 		QUERY_ATTR_IDN##_uname, index, 0, &value);		\
--	pm_runtime_put_sync(hba->dev);					\
-+	scsi_autopm_put_device(hba->sdev_ufs_device);			\
- 	if (ret) {							\
- 		ret = -EINVAL;						\
- 		goto out;						\
-@@ -899,11 +899,15 @@ static ssize_t _pname##_show(struct device *dev,			\
- 	struct scsi_device *sdev = to_scsi_device(dev);			\
- 	struct ufs_hba *hba = shost_priv(sdev->host);			\
- 	u8 lun = ufshcd_scsi_to_upiu_lun(sdev->lun);			\
-+	int ret;							\
- 	if (!ufs_is_valid_unit_desc_lun(&hba->dev_info, lun,		\
- 				_duname##_DESC_PARAM##_puname))		\
- 		return -EINVAL;						\
--	return ufs_sysfs_read_desc_param(hba, QUERY_DESC_IDN_##_duname,	\
-+	scsi_autopm_get_device(sdev);					\
-+	ret = ufs_sysfs_read_desc_param(hba, QUERY_DESC_IDN_##_duname,	\
- 		lun, _duname##_DESC_PARAM##_puname, buf, _size);	\
-+	scsi_autopm_put_device(sdev);					\
-+	return ret;							\
- }									\
- static DEVICE_ATTR_RO(_pname)
- 
-@@ -964,10 +968,10 @@ static ssize_t dyn_cap_needed_attribute_show(struct device *dev,
- 		goto out;
- 	}
- 
--	pm_runtime_get_sync(hba->dev);
-+	scsi_autopm_get_device(hba->sdev_ufs_device);
- 	ret = ufshcd_query_attr(hba, UPIU_QUERY_OPCODE_READ_ATTR,
- 		QUERY_ATTR_IDN_DYN_CAP_NEEDED, lun, 0, &value);
--	pm_runtime_put_sync(hba->dev);
-+	scsi_autopm_put_device(hba->sdev_ufs_device);
- 	if (ret) {
- 		ret = -EINVAL;
- 		goto out;
+Thanks,
+Mani
+
+Changes in v2:
+
+* Moved the secure-regions property to generic NAND binding as a NAND
+  chip property and renamed it as "nand-secure-regions".
+
+Manivannan Sadhasivam (3):
+  dt-bindings: mtd: Convert Qcom NANDc binding to YAML
+  dt-bindings: mtd: Add a property to declare secure regions in NAND
+    chips
+  mtd: rawnand: qcom: Add support for secure regions in NAND memory
+
+ .../bindings/mtd/nand-controller.yaml         |   7 +
+ .../devicetree/bindings/mtd/qcom,nandc.yaml   | 196 ++++++++++++++++++
+ .../devicetree/bindings/mtd/qcom_nandc.txt    | 142 -------------
+ drivers/mtd/nand/raw/qcom_nandc.c             |  72 ++++++-
+ 4 files changed, 266 insertions(+), 151 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+ delete mode 100644 Documentation/devicetree/bindings/mtd/qcom_nandc.txt
+
 -- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+2.25.1
 
