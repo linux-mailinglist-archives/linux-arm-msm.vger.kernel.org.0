@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A73E9325968
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 23:17:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4594832596A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 23:17:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233162AbhBYWP4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Feb 2021 17:15:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40714 "EHLO
+        id S231787AbhBYWQD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Feb 2021 17:16:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231787AbhBYWPB (ORCPT
+        with ESMTP id S234498AbhBYWPM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Feb 2021 17:15:01 -0500
+        Thu, 25 Feb 2021 17:15:12 -0500
 Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E01BC0617AB
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 14:13:43 -0800 (PST)
-Received: by mail-pl1-x632.google.com with SMTP id s16so3971560plr.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 14:13:43 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D56E7C06121F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 14:13:44 -0800 (PST)
+Received: by mail-pl1-x632.google.com with SMTP id w18so3964608plc.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 14:13:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=I+OMtc3EHQkwIh9DKEWd2RBYBgfx+51DyxK3fF4WBeM=;
-        b=kiw7n7Dnnn83YAr1BmCPiOcuuQnQP+A9ZtnQR0udKtLu/gW47ZtLvwdvtBRm84HXPp
-         RxALb1P1GQYwYHgqjvKppQxRpTZS0iM3AFVcfYP8oR4yxbRKTA4x78/9mmfvQ6RQOQjo
-         Rtj3ZQeoMvT1pupbphgw5XS7FY5PMeO59xQZs=
+        bh=H5b91dJajF33xxo9l/aRFZJ84kBvFyWZYIGCDgJLm2M=;
+        b=kXqumZKVap5IGXkcHq8EQRiRDEivmBp5ubI5Z5+ZC0MGFgsI/4GxHNxn9dRAtOU2WT
+         SrgKxPziCADwHOxfUsSFQOY4lswFf8r3BA0lU5xgM9K5EAcRUEdg01kCsPeNk+IxqYKX
+         QTAOCUFFZvkA6fEEcw4Hxmjn5iy891P29K48A=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=I+OMtc3EHQkwIh9DKEWd2RBYBgfx+51DyxK3fF4WBeM=;
-        b=Kl/1wHAmXzxgCXTQwl2YzzxiveDyGuVlqTRaFVsonijWfSfg0xRumZ5yWasW+bYAxO
-         gpKZcqXFjQ3AL0jFdvDR3/grafIvjHSS+pI6m8tqHzg3HQUirrRhUEAqtGFxKLBXLRHt
-         YK9ooov8z1H1gi4vDg70+Ib11Y0dM86bb/7HkXIjlFvUeiBgVY2QY7JuramY2DCsEDF1
-         R9cIxBxboyTgVJEBxnFaba5VMkakqH0Jv+PQ8RexCbPvehkl8ty4R3/eqfKPc6tsENMU
-         FnDxvhT2R7b/G3Fpl/36OY0qs4DM79tWkD1HC1f+wbX+j2X7fXX9K772eaJJudripDwK
-         baGQ==
-X-Gm-Message-State: AOAM531HKw5bF3oUJcXqAMF8UAFX+Drv19VPA592VaDqgMZ5sCzD86Jj
-        +For+vJDa+G5fC4BjbZLnsIkDQ==
-X-Google-Smtp-Source: ABdhPJyfBR/Ngo+oYUnU9QMvuceErgy8+K0e73IP/Mz4GhYbulstVOd6dDZFwEZD6/AtiZq8VKaJ3A==
-X-Received: by 2002:a17:90a:5b0c:: with SMTP id o12mr66243pji.68.1614291222942;
-        Thu, 25 Feb 2021 14:13:42 -0800 (PST)
+        bh=H5b91dJajF33xxo9l/aRFZJ84kBvFyWZYIGCDgJLm2M=;
+        b=BcSRJ7GpmtImtpqoN8xN2xDHhTffHW8TwF09KIMcvSSRPKkl0cBHuzGz3QSs5uajGB
+         J4M1OLHLR1bFtwawMY9G3VnqIDRV8Xp7NrmPeglJxy/gVaTbYTg4UyhGB29vFiJddBRW
+         +5Vb1x8MbpcMK0SiG1bE4b5W2KIxK8yg88GdKK/XmYzXK2oQpaRZYyO6/f0mvIgw3fZl
+         FoOdrn8RBi0eaWrFT/KeHTuldKUejZRjKdaYR0DzOzBMdA9vTazPb4tki1DbObJuEti2
+         1q//5j8pHs7/gfANAQYKvkNkWHwktVxtqOCkqE8krxEI0KmEFwjpRumS/QGGEX7DKhaz
+         6mTg==
+X-Gm-Message-State: AOAM533B3SdBcAIa4xxyAXCUZPH+XhSNVn43kijo24ixHK6qPOMztJZQ
+        mR72YElnA6zY6hgltJTZroqybg==
+X-Google-Smtp-Source: ABdhPJzeu8QR7HJTjp9bPcxbThSTxgsYKAfEOI6xejaNIiTJcQTe1P5y+NmmdBDDdb9LouPQUshAgw==
+X-Received: by 2002:a17:90a:b28a:: with SMTP id c10mr37085pjr.39.1614291224463;
+        Thu, 25 Feb 2021 14:13:44 -0800 (PST)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:8414:45a5:94c4:d35d])
-        by smtp.gmail.com with ESMTPSA id jt21sm6713301pjb.51.2021.02.25.14.13.41
+        by smtp.gmail.com with ESMTPSA id jt21sm6713301pjb.51.2021.02.25.14.13.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Feb 2021 14:13:42 -0800 (PST)
+        Thu, 25 Feb 2021 14:13:44 -0800 (PST)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Stephen Boyd <swboyd@chromium.org>,
@@ -55,9 +55,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 04/13] arm64: dts: qcom: Unify the sc7180-trogdor panel nodes
-Date:   Thu, 25 Feb 2021 14:13:01 -0800
-Message-Id: <20210225141022.4.I1483fac4c5ae4b2d7660290ff85d69945292618f@changeid>
+Subject: [PATCH 05/13] arm64: dts: qcom: trogdor: Only wakeup from pen eject
+Date:   Thu, 25 Feb 2021 14:13:02 -0800
+Message-Id: <20210225141022.5.Ib9672bfbe639c96c85408d6f0217a2609eb0b70f@changeid>
 X-Mailer: git-send-email 2.30.1.766.gb4fecdf3b7-goog
 In-Reply-To: <20210225221310.1939599-1-dianders@chromium.org>
 References: <20210225221310.1939599-1-dianders@chromium.org>
@@ -67,119 +67,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Let's avoid a bit of duplication by pushing this up to the trogdor.dtsi
-file.
+From: Stephen Boyd <swboyd@chromium.org>
 
+Configure the pen to be a wakeup source only when the pen is ejected
+instead of both when the pen is ejected and inserted. This corresponds
+to wake source requirements.
+
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
 
- .../boot/dts/qcom/sc7180-trogdor-lazor.dtsi   | 21 ++++---------------
- .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts | 19 ++++-------------
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 15 +++++++++++++
- 3 files changed, 23 insertions(+), 32 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-index 11269522da50..5efa04d0d256 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-@@ -12,23 +12,6 @@
- 
- #include "sc7180-trogdor.dtsi"
- 
--/ {
--	panel: panel {
--		compatible = "boe,nv133fhm-n62";
--		power-supply = <&pp3300_dx_edp>;
--		backlight = <&backlight>;
--		hpd-gpios = <&sn65dsi86_bridge 2 GPIO_ACTIVE_HIGH>;
--
--		ports {
--			port {
--				panel_in_edp: endpoint {
--					remote-endpoint = <&sn65dsi86_out>;
--				};
--			};
--		};
--	};
--};
--
- &ap_sar_sensor {
- 	semtech,cs0-ground;
- 	semtech,combined-sensors = <3>;
-@@ -58,6 +41,10 @@ ap_ts: touchscreen@10 {
- 	};
- };
- 
-+&panel {
-+	compatible = "boe,nv133fhm-n62";
-+};
-+
- &trackpad {
- 	interrupts = <58 IRQ_TYPE_EDGE_FALLING>;
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-index bd2c783e0f2f..2b522f9e0d8f 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-@@ -17,21 +17,6 @@
- / {
- 	model = "Google Trogdor (rev1+)";
- 	compatible = "google,trogdor", "qcom,sc7180";
--
--	panel: panel {
--		compatible = "auo,b116xa01";
--		power-supply = <&pp3300_dx_edp>;
--		backlight = <&backlight>;
--		hpd-gpios = <&sn65dsi86_bridge 2 GPIO_ACTIVE_HIGH>;
--
--		ports {
--			port {
--				panel_in_edp: endpoint {
--					remote-endpoint = <&sn65dsi86_out>;
--				};
--			};
--		};
--	};
- };
- 
- ap_ts_pen_1v8: &i2c4 {
-@@ -53,6 +38,10 @@ ap_ts: touchscreen@10 {
- 	};
- };
- 
-+&panel {
-+	compatible = "auo,b116xa01";
-+};
-+
- &pp3300_hub {
- 	/* pp3300_l7c is used to power the USB hub */
- 	/delete-property/regulator-always-on;
 diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index 4ad27b5c34d1..9fcb19a0501f 100644
+index 9fcb19a0501f..f3a99c801582 100644
 --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -255,6 +255,21 @@ max98357a: audio-codec-0 {
- 		#sound-dai-cells = <0>;
- 	};
+@@ -6,6 +6,7 @@
+  */
  
-+	panel: panel {
-+		/* Compatible will be filled in per-board */
-+		power-supply = <&pp3300_dx_edp>;
-+		backlight = <&backlight>;
-+		hpd-gpios = <&sn65dsi86_bridge 2 GPIO_ACTIVE_HIGH>;
-+
-+		ports {
-+			port {
-+				panel_in_edp: endpoint {
-+					remote-endpoint = <&sn65dsi86_out>;
-+				};
-+			};
-+		};
-+	};
-+
- 	pwmleds {
- 		compatible = "pwm-leds";
- 		keyboard_backlight: keyboard-backlight {
+ #include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/input/gpio-keys.h>
+ #include <dt-bindings/input/input.h>
+ #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+ 
+@@ -243,6 +244,7 @@ pen_insert: pen-insert {
+ 			gpios = <&tlmm 52 GPIO_ACTIVE_LOW>;
+ 			linux,code = <SW_PEN_INSERTED>;
+ 			linux,input-type = <EV_SW>;
++			wakeup-event-action = <EV_ACT_DEASSERTED>;
+ 			wakeup-source;
+ 		};
+ 	};
 -- 
 2.30.1.766.gb4fecdf3b7-goog
 
