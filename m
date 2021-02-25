@@ -2,199 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C65C324DDB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 11:21:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CEC61324DA4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 11:09:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234606AbhBYKQs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Feb 2021 05:16:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55364 "EHLO
+        id S232296AbhBYKIb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Feb 2021 05:08:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234478AbhBYKO2 (ORCPT
+        with ESMTP id S233805AbhBYKFY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Feb 2021 05:14:28 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90CEDC06178C
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 02:12:23 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id w11so4631103wrr.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 02:12:23 -0800 (PST)
+        Thu, 25 Feb 2021 05:05:24 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7068C06174A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 02:04:42 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id g11so399787wmh.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 02:04:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=Vn11HK/QHBg9CE9WbeXOr9LshINBA4CLu+MxA7Mzfr8=;
-        b=ARngZ/D3Nv0+1s9emEGhMEfClMcW9kRfI/HDZnEbj0gN0Qizegn6IxEOdYvRKfaiFe
-         ESoncKtaNWD/tJee02gmhCWvSei3s08zNq4ACeYQzncAyYQtRy1cevgY8P8LRm0BAaAX
-         qBzn95S0ueYmqmuoJ8kkLiPeEqUmGNreEaP+C1NRUgpD+SWkGzcbhOLKw8ZtKTt1biii
-         zNRtV8+qHYzymc/suBEvQV7JstsmuXgW764ZXnxlGNLQhTXAIb69lxlQL2FTsImnM3tk
-         eY9MgEYt17ltmUas4CcP5seoaIgX/jr6Or9D1pa67bHmaIpxQZrM8qJB2v1VLC6gQnWO
-         SEeg==
+        h=from:to:cc:subject:date:message-id;
+        bh=gaa+HntJuQ6rmQhc7jzPfrBWIm/FecwgprQWh1KwhLg=;
+        b=Ktq5TQBkxnsDBwxrRDmcizGhWh/xIHYmNZBSoG700gjSLL7K8HP+xd3JYLXCnzxlGo
+         TeDoO2WvnxDyEtbKTXfud6L3AcYrog/iqmP4BDdiIh2AU/NsSmUfWtT9qjxKk6m3Si75
+         HBG80pHnzlxUx4o/CznbhxR6u06q6xTJEzm4HwtDJKnSO9+cs1LPt/wnTCcmrvKzu05g
+         mNK/IbqnV9H1Dvr24/2UjbBcGF1TtKA1rYnenlvoMzv2O7nlNMSfhqhGtaJ17n2pvVVt
+         MaVsT5AFMGmQ55USgaR4nMTJeP84v2RkvhrIYWXtQQq2ru5HoScdKqJIlagg760hr7YZ
+         aQXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Vn11HK/QHBg9CE9WbeXOr9LshINBA4CLu+MxA7Mzfr8=;
-        b=nHNwVlRfr9puR+1o1sbmN3yR3lP5ldm9A9UTSZ8HVdwMvcELBzMdbXYSdCzGH6Gxip
-         M6g40Fy+QuQ05PRec8PjJfraulKSuVGvb8Gj3DybsPEWExf2Ne4Vo0MxA+ZhTVWMfN2v
-         eT9jUwJrz2sds3AxDfIyQac3WOhzw7zyYFOsl/auPNZaCo7dgXOGvOlIzV1kKav31UMH
-         sohC2LqpNoDO0yASp+rTyTIpwaUrDMu6ixlzMTT6e2QmcMy5a30g71YtWy4jDL4knMKr
-         lBiIbx1FyQ6sx3Vufo2IkcRc4oemfgdReLl8cKUvBlSvUyi+6V9nP3zJSUxhW/ohkDQq
-         bciQ==
-X-Gm-Message-State: AOAM530fB49OPyed6sFz15TdVB1nNAVMcG+BUXmcHVerf4KXNIwIgl/q
-        eMKA1Lz2q6Cla8HDdCieAL+zojwTDFVVRLc3
-X-Google-Smtp-Source: ABdhPJw9oXOdq41JUnkKdXWSKCNJgCwMqYBDMRm14Ga8eqPrv9ZLgU8NeKG4wBtwX06W7igRUEsxmQ==
-X-Received: by 2002:a5d:658a:: with SMTP id q10mr2634713wru.285.1614247942139;
-        Thu, 25 Feb 2021 02:12:22 -0800 (PST)
-Received: from [192.168.0.4] (hst-221-21.medicom.bg. [84.238.221.21])
-        by smtp.googlemail.com with ESMTPSA id l7sm8292289wrn.11.2021.02.25.02.12.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Feb 2021 02:12:21 -0800 (PST)
-Subject: Re: [PATCH 1/2] v4l2-ctrl: Add decoder conceal color control
-To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20210209094527.2173690-1-stanimir.varbanov@linaro.org>
- <20210209094527.2173690-2-stanimir.varbanov@linaro.org>
- <cccae00e-e30e-6691-d954-27379a104115@xs4all.nl>
- <489f1417-085d-4057-f2e8-1cc8db0ed161@linaro.org>
- <70c04719-39ac-9ba7-cd2f-6c5b9d5f2275@xs4all.nl>
- <12b37304-84d1-63fe-1d85-60268502d8bc@linaro.org>
- <eb410d2c-9650-2251-cff8-4306663f41f9@xs4all.nl>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <4e85add8-3ddf-1d36-f1ab-2866aa9327f8@linaro.org>
-Date:   Thu, 25 Feb 2021 12:12:20 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.1
-MIME-Version: 1.0
-In-Reply-To: <eb410d2c-9650-2251-cff8-4306663f41f9@xs4all.nl>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=gaa+HntJuQ6rmQhc7jzPfrBWIm/FecwgprQWh1KwhLg=;
+        b=qepdNwrMvJKtujH/Ck7oe9uzZwfW7XY7D2yQiKopB6Thabfv3Krmu1Hsljmp/DfUKW
+         MqUg6bq7gBMy390K5DZaii7Ize9bEY2d+QFNOMym8wgBOYn6ClAhjt7YjGfpV02jQ+HZ
+         c9fX+ggasPudf58kJ5eq56inUctWf7BuUtcCBOE8OshxmDwoCGnrzsbcXqUufUPRk5BT
+         D94F1RCw5dGUg81Aapo4AmaEbJvByhIdKTqNkEImxsh4oHm/W1KMTO/JsVPogumIHIoo
+         hs+jGBAGgxC7tP8RalDoPXT+QRJligVzJ4FxZqoI9PiEjmSmfkwA+H5y5r1wsp9wvBNZ
+         l8vw==
+X-Gm-Message-State: AOAM5311vMckWl6XwXQ5modZOFwI1jyuuKtdqnEuHa9UjT5/eAmwdO5Y
+        3yovXqWGJt4AsBQsNMVfZBoKM34HuvZ05def
+X-Google-Smtp-Source: ABdhPJyRlLaQORMVINndcQX4Ij1hdWM20vmSslORNNM1YQ2rEE3ppK9EKyeCPjbPsM6t03w+IAF6Jw==
+X-Received: by 2002:a05:600c:3516:: with SMTP id h22mr2437851wmq.35.1614247481513;
+        Thu, 25 Feb 2021 02:04:41 -0800 (PST)
+Received: from localhost.localdomain ([2a01:e0a:82c:5f0:6732:e420:1382:85f4])
+        by smtp.gmail.com with ESMTPSA id z82sm5163373wmg.19.2021.02.25.02.04.40
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 25 Feb 2021 02:04:41 -0800 (PST)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH] mhi: Fix invalid error returning in mhi_queue
+Date:   Thu, 25 Feb 2021 11:13:00 +0100
+Message-Id: <1614247980-1776-1-git-send-email-loic.poulain@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+mhi_queue returns an error when the doorbell is not accessible in
+the current state. This can happen when the device is in non M0
+state, like M3, and needs to be waken-up prior ringing the DB. this
+case is manager earlier by triggering an asynchronous M3 exit via
+controller resume/suspend callbacks, that in turn will cause M0
+transition and DB update.
 
+So, since it's not an error but just delaying of doorbell update do not
+return an error.
 
-On 2/16/21 10:58 AM, Hans Verkuil wrote:
-> On 16/02/2021 09:56, Stanimir Varbanov wrote:
->>
->>
->> On 2/15/21 1:57 PM, Hans Verkuil wrote:
->>> On 15/02/2021 12:32, Stanimir Varbanov wrote:
->>>>
->>>>
->>>> On 2/9/21 1:05 PM, Hans Verkuil wrote:
->>>>> On 09/02/2021 10:45, Stanimir Varbanov wrote:
->>>>>> Add decoder v4l2 control to set conceal color.
->>>>>>
->>>>>> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
->>>>>> ---
->>>>>>  .../media/v4l/ext-ctrls-codec.rst             | 20 +++++++++++++++++++
->>>>>>  drivers/media/v4l2-core/v4l2-ctrls.c          |  9 +++++++++
->>>>>>  include/uapi/linux/v4l2-controls.h            |  1 +
->>>>>>  3 files changed, 30 insertions(+)
->>>>>>
->>>>>> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
->>>>>> index 00944e97d638..994650052333 100644
->>>>>> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
->>>>>> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
->>>>>> @@ -674,6 +674,26 @@ enum v4l2_mpeg_video_frame_skip_mode -
->>>>>>      is currently displayed (decoded). This value is reset to 0 whenever
->>>>>>      the decoder is started.
->>>>>>  
->>>>>> +``V4L2_CID_MPEG_VIDEO_DEC_CONCEAL_COLOR (integer64)``
->>>>>> +    This control sets conceal color in YUV color space. It describes the
->>>>>> +    client preference of error conceal color in case of error where
->>>>>> +    reference frame is missing. The decoder would paint the reference
->>>>>> +    buffer with preferred color and use it for future decoding.
->>>>>> +    Applicable to decoders.
->>>>>
->>>>> You should mention explicitly that this is using 16-bit color components
->>>>> and expects Limited Range.
->>>>
->>>> I don't want to limit the client to Limited range only. I'll mention in
->>>> the description that both ranges are valid.
->>>
->>> OK, but then you need to describe what the color format depends on. See more
->>> below.
->>>
->>>>
->>>>>
->>>>>> +
->>>>>> +.. flat-table::
->>>>>> +    :header-rows:  0
->>>>>> +    :stub-columns: 0
->>>>>> +
->>>>>> +    * - Bit 0:15
->>>>>> +      - Y luminance
->>>>>> +    * - Bit 16:31
->>>>>> +      - Cb chrominance
->>>>>> +    * - Bit 32:47
->>>>>> +      - Cr chrominance
->>>>>> +    * - Bit 48:63
->>>>>> +      - Must be zero
->>>>>> +
->>
->> The table how the bits are spread into int64.
->>
->>>>>>  ``V4L2_CID_MPEG_VIDEO_DECODER_SLICE_INTERFACE (boolean)``
->>>>>>      If enabled the decoder expects to receive a single slice per buffer,
->>>>>>      otherwise the decoder expects a single frame in per buffer.
->>>>>> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
->>>>>> index 016cf6204cbb..a3b9d28a00b7 100644
->>>>>> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
->>>>>> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
->>>>>> @@ -945,6 +945,7 @@ const char *v4l2_ctrl_get_name(u32 id)
->>>>>>  	case V4L2_CID_MPEG_VIDEO_VBV_SIZE:			return "VBV Buffer Size";
->>>>>>  	case V4L2_CID_MPEG_VIDEO_DEC_PTS:			return "Video Decoder PTS";
->>>>>>  	case V4L2_CID_MPEG_VIDEO_DEC_FRAME:			return "Video Decoder Frame Count";
->>>>>> +	case V4L2_CID_MPEG_VIDEO_DEC_CONCEAL_COLOR:		return "Video Decoder Conceal Color";
->>>>>>  	case V4L2_CID_MPEG_VIDEO_VBV_DELAY:			return "Initial Delay for VBV Control";
->>>>>>  	case V4L2_CID_MPEG_VIDEO_MV_H_SEARCH_RANGE:		return "Horizontal MV Search Range";
->>>>>>  	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:		return "Vertical MV Search Range";
->>>>>> @@ -1430,6 +1431,14 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
->>>>>>  		*max = 0x7fffffffffffffffLL;
->>>>>>  		*step = 1;
->>>>>>  		break;
->>>>>> +	case V4L2_CID_MPEG_VIDEO_DEC_CONCEAL_COLOR:
->>>>>> +		*type = V4L2_CTRL_TYPE_INTEGER64;
->>>>>> +		*min = 0;
->>>>>> +		/* default for 8bit black, luma is 16, chroma is 128 */
->>>>>
->>>>> Since this is 16 bit the actual default luma value for black is 4096 and for chroma use
->>>>> 32768 (i.e. both values are times 256).
->>>>
->>>> If we follow this for pixel format with 10bit per channel we have to
->>>> multiply by 64?
->>>
->>> No, you multiply by 4. 12 bit depth will multiple by 16, and 16 bit depth by 256.
->>>
->>> But how do you format this? Using bits 29-0? Or use 9-0 for one color component,
->>> 25-16 for another and 41-32 for the last component?
->>
->> I described this in the table above:
->>
->> Bit  0:15 - Y luminance
->> Bit 16:31 - Cb chrominance
->> Bit 32:47 - Cr chrominance
->> Bit 48:63 - Must be zero
->>
->> So depending on the bit depth of the current pixel format:
->>
->>  8bit - 0:7  Y', 16:23 Cb, 32:39 Cr
->> 10bit - 0:9  Y', 16:25 Cb, 32:41 Cr
->> 12bit - 0:11 Y', 16:27 Cb, 32:43 Cr
+That also fix a use after free error for skb case, indeed a caller
+queuing skb will try to free the skb if the queueing fails, but in
+that case queueing has been done.
 
-^^^^
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+---
+ drivers/bus/mhi/core/main.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-> 
-> Apologies, I missed that table!
-
-Hans, do you want me to update with the above ^^^^ components bits or
-something else?
-
+diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+index 7fc2482..c780234 100644
+--- a/drivers/bus/mhi/core/main.c
++++ b/drivers/bus/mhi/core/main.c
+@@ -1031,12 +1031,8 @@ static int mhi_queue(struct mhi_device *mhi_dev, struct mhi_buf_info *buf_info,
+ 	if (mhi_chan->dir == DMA_TO_DEVICE)
+ 		atomic_inc(&mhi_cntrl->pending_pkts);
+ 
+-	if (unlikely(!MHI_DB_ACCESS_VALID(mhi_cntrl))) {
+-		ret = -EIO;
+-		goto exit_unlock;
+-	}
+-
+-	mhi_ring_chan_db(mhi_cntrl, mhi_chan);
++	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)))
++		mhi_ring_chan_db(mhi_cntrl, mhi_chan);
+ 
+ exit_unlock:
+ 	read_unlock_irqrestore(&mhi_cntrl->pm_lock, flags);
 -- 
-regards,
-Stan
+2.7.4
+
