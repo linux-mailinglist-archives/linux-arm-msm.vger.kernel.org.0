@@ -2,113 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 293BC324B7E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 08:48:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 39084324B9C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 09:00:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235114AbhBYHr4 convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Feb 2021 02:47:56 -0500
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:40379 "EHLO
-        relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233137AbhBYHrz (ORCPT
+        id S233958AbhBYH5v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Feb 2021 02:57:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54174 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231326AbhBYH5u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Feb 2021 02:47:55 -0500
-X-Originating-IP: 86.250.253.134
-Received: from xps13 (lfbn-tou-1-813-134.w86-250.abo.wanadoo.fr [86.250.253.134])
-        (Authenticated sender: miquel.raynal@bootlin.com)
-        by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id CF320E0005;
-        Thu, 25 Feb 2021 07:47:03 +0000 (UTC)
-Date:   Thu, 25 Feb 2021 08:47:02 +0100
-From:   Miquel Raynal <miquel.raynal@bootlin.com>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     richard@nod.at, vigneshr@ti.com, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-mtd@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        boris.brezillon@collabora.com, Daniele.Palmas@telit.com,
-        bjorn.andersson@linaro.org
-Subject: Re: [PATCH v2 3/3] mtd: rawnand: qcom: Add support for secure
- regions in NAND memory
-Message-ID: <20210225084702.2c753b99@xps13>
-In-Reply-To: <20210225041129.58576-4-manivannan.sadhasivam@linaro.org>
-References: <20210225041129.58576-1-manivannan.sadhasivam@linaro.org>
-        <20210225041129.58576-4-manivannan.sadhasivam@linaro.org>
-Organization: Bootlin
-X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+        Thu, 25 Feb 2021 02:57:50 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0431FC061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Feb 2021 23:57:10 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id w7so3830237wmb.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Feb 2021 23:57:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=l+5iV5n0qHwjkMtgJqVQPPvPdtwWHOlD3QMo3oFzzWQ=;
+        b=zYuXNEYUSXufkFZf5h8jBfqPNEgpvAQAyPno43ytP/QEU+k7f6HdgTgXOoUCg6wiq0
+         vJg3Vsm8xyY31CqmzHQZZQ00Kt5Hs1jRP6Xu5EIrsqBCn2+wDA2rmopT+zP/AQNVOq2o
+         IvCGLWJJSOCzlTHAb5wvLxayWfYFM68LALpTnLC8hp59wz7G2qNlPxnwQZ56JwHYXz6s
+         LhbynJqQfrJrtH18xl5gzSL55KGyJUXgDIls386KKuf4N4PcKsKnlpt9/ubkokhT+Pc4
+         2cHA5bEj0mkvSJ+ht6aZgSBRainznNp+b0I6akYJ+vWtDPWsMYyB++pn8K62fzlKV4yF
+         cA/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=l+5iV5n0qHwjkMtgJqVQPPvPdtwWHOlD3QMo3oFzzWQ=;
+        b=ONgijwdNG1+TiQNMgBTvTJnFkU5BgvPLQIbVc+YOWAVMKw+jjAmrAMAJug/kxRF+D1
+         zRhpxeKptog4FDQM2SV617o+z3JnOaE+v/ovFYvrJLQA4aUWEsVxxg77YY29nBw04taQ
+         lpnVaqSWEPrgwWxAT/PcDAny1IH2UO5hIaqjN7PhleeJjw9eOjm3u2mrgkMIqUEaswV6
+         u3EjkfkCL6wECveCEyfDm+pmFulCPqp1X+zm8Tu5urdj/T5zyAk0fViptapw9mXRSDbS
+         BB5v8KEWsA88ehGkLdp2y1Ie4uHb0neUOEL7yZYOCVNT7iOPntRv+c+j6oMM1XmrHvkK
+         Qqkg==
+X-Gm-Message-State: AOAM531BuqreRDBkzZZsgd14y5LJ4GcORDupzImMdiRLFWAytqcg7srI
+        thxAtgTAZT+g2m2wkn1qIHEjpw==
+X-Google-Smtp-Source: ABdhPJyVgTf+jGac9xNd9sLePhqDjQa/zV2y+TNey6wHydE8at9QTVIvwr4K+pzG3pkwG6zGxggdIw==
+X-Received: by 2002:a05:600c:2cc5:: with SMTP id l5mr1871648wmc.108.1614239828765;
+        Wed, 24 Feb 2021 23:57:08 -0800 (PST)
+Received: from [192.168.0.4] (hst-221-11.medicom.bg. [84.238.221.11])
+        by smtp.googlemail.com with ESMTPSA id a131sm6689498wmc.48.2021.02.24.23.57.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 Feb 2021 23:57:08 -0800 (PST)
+Subject: Re: [PATCH 21/25] media: venus: helpers: Add internal buffer list for
+ v6
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        stanimir.varbanov@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, mchehab@kernel.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     dikshita@codeaurora.org, jonathan@marek.ca, vgarodia@codeaurora.org
+References: <20210222160300.1811121-1-bryan.odonoghue@linaro.org>
+ <20210222160300.1811121-22-bryan.odonoghue@linaro.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <0f756d2c-ea7b-2d46-0cc9-d3d6bc66d6f5@linaro.org>
+Date:   Thu, 25 Feb 2021 09:57:07 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+In-Reply-To: <20210222160300.1811121-22-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Manivannan,
 
-Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote on Thu,
-25 Feb 2021 09:41:29 +0530:
 
-> On a typical end product, a vendor may choose to secure some regions in
-> the NAND memory which are supposed to stay intact between FW upgrades.
-> The access to those regions will be blocked by a secure element like
-> Trustzone. So the normal world software like Linux kernel should not
-> touch these regions (including reading).
+On 2/22/21 6:02 PM, Bryan O'Donoghue wrote:
+> From: Dikshita Agarwal <dikshita@codeaurora.org>
 > 
-> The regions are declared using a NAND chip DT property,
-> "nand-secure-regions". So let's make use of this property and skip
-> access to the secure regions present in a system.
+> - Internal buffers required by v6 are different than v4,
+>   add new list of internal buffers for v6.
+> - Differentiate encoder/decoder buffers for 6xx
 > 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
-
-[...]
-
->  	config_nand_page_write(nandc);
-> @@ -2830,7 +2865,8 @@ static int qcom_nand_host_init_and_register(struct qcom_nand_controller *nandc,
->  	struct nand_chip *chip = &host->chip;
->  	struct mtd_info *mtd = nand_to_mtd(chip);
->  	struct device *dev = nandc->dev;
-> -	int ret;
-> +	struct property *prop;
-> +	int ret, length, nr_elem;
+>  drivers/media/platform/qcom/venus/helpers.c   | 23 ++++++++++++++++++-
+>  .../media/platform/qcom/venus/hfi_helper.h    |  9 +++++---
+>  2 files changed, 28 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+> index 2515a2225614..f0413236a56f 100644
+> --- a/drivers/media/platform/qcom/venus/helpers.c
+> +++ b/drivers/media/platform/qcom/venus/helpers.c
+> @@ -279,13 +279,34 @@ static const unsigned int intbuf_types_4xx[] = {
+>  	HFI_BUFFER_INTERNAL_PERSIST_1,
+>  };
 >  
->  	ret = of_property_read_u32(dn, "reg", &host->cs);
->  	if (ret) {
-> @@ -2886,6 +2922,24 @@ static int qcom_nand_host_init_and_register(struct qcom_nand_controller *nandc,
->  		}
->  	}
+> +static const unsigned int intbuf_types_6xx_enc[] = {
+> +	HFI_BUFFER_INTERNAL_SCRATCH(HFI_VERSION_6XX),
+> +	HFI_BUFFER_INTERNAL_SCRATCH_1(HFI_VERSION_6XX),
+> +	HFI_BUFFER_INTERNAL_SCRATCH_2(HFI_VERSION_6XX),
+> +	HFI_BUFFER_INTERNAL_PERSIST,
+> +};
+> +
+> +static const unsigned int intbuf_types_6xx_dec[] = {
+> +	HFI_BUFFER_INTERNAL_SCRATCH(HFI_VERSION_6XX),
+> +	HFI_BUFFER_INTERNAL_SCRATCH_1(HFI_VERSION_6XX),
+> +	HFI_BUFFER_INTERNAL_PERSIST_1,
+> +};
+> +
+
+This division of decoder and encoder internal buffers smells like a
+problem in hfi_plat_bufs_v6.c. I think we can modify the extracting of
+buffer requirements in hfi_plat_bufs_v6.c so that they return
+buffer_size as zero for internal buffer types which are not applicable
+to the current session type. After this this intbuf_type_6xx will
+combine both session types and will look like v1 and v4.
+
+>  int venus_helper_intbufs_alloc(struct venus_inst *inst)
+>  {
+>  	const unsigned int *intbuf;
+>  	size_t arr_sz, i;
+>  	int ret;
 >  
-> +	/*
-> +	 * Look for secure regions in the NAND chip. These regions are supposed
-> +	 * to be protected by a secure element like Trustzone. So the read/write
-> +	 * accesses to these regions will be blocked in the runtime by this
-> +	 * driver.
-> +	 */
-> +	prop = of_find_property(dn, "nand-secure-regions", &length);
+> -	if (IS_V4(inst->core)) {
+> +	if (IS_V6(inst->core)) {
+> +		if (inst->session_type == VIDC_SESSION_TYPE_DEC) {
+> +			arr_sz = ARRAY_SIZE(intbuf_types_6xx_dec);
+> +			intbuf = intbuf_types_6xx_dec;
+> +		} else {
+> +			arr_sz = ARRAY_SIZE(intbuf_types_6xx_enc);
+> +			intbuf = intbuf_types_6xx_enc;
+> +		}
+> +	} else if (IS_V4(inst->core)) {
+>  		arr_sz = ARRAY_SIZE(intbuf_types_4xx);
+>  		intbuf = intbuf_types_4xx;
+>  	} else {
+> diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
+> index 6b524c7cde5f..f367f43c9fb7 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_helper.h
+> +++ b/drivers/media/platform/qcom/venus/hfi_helper.h
+> @@ -395,11 +395,14 @@
+>  #define HFI_BUFFER_INTERNAL_PERSIST		0x4
+>  #define HFI_BUFFER_INTERNAL_PERSIST_1		0x5
+>  #define HFI_BUFFER_INTERNAL_SCRATCH(ver)	\
+> -	(((ver) == HFI_VERSION_4XX) ? 0x6 : 0x1000001)
+> +	(((ver) == HFI_VERSION_4XX ||		\
+> +	(ver) == HFI_VERSION_6XX) ? 0x6 : 0x1000001)
+>  #define HFI_BUFFER_INTERNAL_SCRATCH_1(ver)	\
+> -	(((ver) == HFI_VERSION_4XX) ? 0x7 : 0x1000005)
+> +	(((ver) == HFI_VERSION_4XX ||		\
+> +	(ver) == HFI_VERSION_6XX) ? 0x7 : 0x1000005)
+>  #define HFI_BUFFER_INTERNAL_SCRATCH_2(ver)	\
+> -	(((ver) == HFI_VERSION_4XX) ? 0x8 : 0x1000006)
+> +	(((ver) == HFI_VERSION_4XX ||		\
+> +	(ver) == HFI_VERSION_6XX) ? 0x8 : 0x1000006)
+>  #define HFI_BUFFER_EXTRADATA_INPUT(ver)		\
+>  	(((ver) == HFI_VERSION_4XX) ? 0xc : 0x1000002)
+>  #define HFI_BUFFER_EXTRADATA_OUTPUT(ver)	\
+> 
 
-I'm not sure the nand- prefix on this property is needed here, but
-whatever.
-
-> +	if (prop) {
-> +		nr_elem = length / sizeof(u32);
-> +		host->nr_sec_regions = nr_elem / 2;
-> +
-> +		host->sec_regions = devm_kcalloc(dev, nr_elem, sizeof(u32), GFP_KERNEL);
-> +		if (!host->sec_regions)
-> +			return -ENOMEM;
-> +
-> +		of_property_read_u32_array(dn, "nand-secure-regions", host->sec_regions, nr_elem);
-> +	}
-> +
-
-I would move this before nand_scan().
-
-If you don't, you should bail out with a nand_cleanup() upon error.
-
->  	ret = mtd_device_parse_register(mtd, probes, NULL, NULL, 0);
->  	if (ret)
->  		nand_cleanup(chip);
-
-
-Otherwise lgtm.
-
-Thanks,
-Miquèl
+-- 
+regards,
+Stan
