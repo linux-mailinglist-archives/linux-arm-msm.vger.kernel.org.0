@@ -2,19 +2,19 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A90D3258B7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 22:36:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DD8F13258BD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 22:37:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233815AbhBYVgB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Feb 2021 16:36:01 -0500
-Received: from relay03.th.seeweb.it ([5.144.164.164]:40319 "EHLO
-        relay03.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233403AbhBYVgB (ORCPT
+        id S231895AbhBYVhA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Feb 2021 16:37:00 -0500
+Received: from relay02.th.seeweb.it ([5.144.164.163]:49677 "EHLO
+        relay02.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233974AbhBYVgx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Feb 2021 16:36:01 -0500
+        Thu, 25 Feb 2021 16:36:53 -0500
 Received: from localhost.localdomain (abab236.neoplus.adsl.tpnet.pl [83.6.165.236])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 624012019E;
-        Thu, 25 Feb 2021 22:35:18 +0100 (CET)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 69C381F630;
+        Thu, 25 Feb 2021 22:36:10 +0100 (CET)
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 To:     phone-devel@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
@@ -23,12 +23,12 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH] qcom: spmi-regulator: Add support for ULT LV_P50 and ULT P300
-Date:   Thu, 25 Feb 2021 22:35:13 +0100
-Message-Id: <20210225213514.117031-1-konrad.dybcio@somainline.org>
+Subject: [PATCH 1/2] pinctrl: pmic-mpp: Add missing dt-bindings mpp function defs
+Date:   Thu, 25 Feb 2021 22:36:04 +0100
+Message-Id: <20210225213605.117201-1-konrad.dybcio@somainline.org>
 X-Mailer: git-send-email 2.30.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -38,34 +38,35 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 
-The ULT LV_P50 shares the same configuration as the other ULT LV_Pxxx
-and the ULT P300 shares the same as the other ULT Pxxx.
+The pinctrl-spmi-mpp driver supports setting more mpp functions
+than the ones defined in the dt-bindings header, specifically,
+digital, analog and sink.
 
-These two regulator types are found on PM8950 and its variants.
+To follow the current way of specifying the function config
+in Device-Tree, add the missing three definitions in the
+appropriate dt-bindings header as:
+GPIO_MPP_FUNC_{DIGITAL,ANALOG,SINK}.
 
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
- drivers/regulator/qcom_spmi-regulator.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/dt-bindings/pinctrl/qcom,pmic-mpp.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
-index e62e1d72d943..00e1d8e9637e 100644
---- a/drivers/regulator/qcom_spmi-regulator.c
-+++ b/drivers/regulator/qcom_spmi-regulator.c
-@@ -1522,10 +1522,12 @@ static const struct spmi_regulator_mapping supported_regulators[] = {
- 	SPMI_VREG(ULT_LDO, N600_ST, 0, INF, ULT_LDO, ult_ldo, ult_nldo, 10000),
- 	SPMI_VREG(ULT_LDO, N900_ST, 0, INF, ULT_LDO, ult_ldo, ult_nldo, 10000),
- 	SPMI_VREG(ULT_LDO, N1200_ST, 0, INF, ULT_LDO, ult_ldo, ult_nldo, 10000),
-+	SPMI_VREG(ULT_LDO, LV_P50,   0, INF, ULT_LDO, ult_ldo, ult_pldo, 10000),
- 	SPMI_VREG(ULT_LDO, LV_P150,  0, INF, ULT_LDO, ult_ldo, ult_pldo, 10000),
- 	SPMI_VREG(ULT_LDO, LV_P300,  0, INF, ULT_LDO, ult_ldo, ult_pldo, 10000),
- 	SPMI_VREG(ULT_LDO, LV_P450,  0, INF, ULT_LDO, ult_ldo, ult_pldo, 10000),
- 	SPMI_VREG(ULT_LDO, P600,     0, INF, ULT_LDO, ult_ldo, ult_pldo, 10000),
-+	SPMI_VREG(ULT_LDO, P300,     0, INF, ULT_LDO, ult_ldo, ult_pldo, 10000),
- 	SPMI_VREG(ULT_LDO, P150,     0, INF, ULT_LDO, ult_ldo, ult_pldo, 10000),
- 	SPMI_VREG(ULT_LDO, P50,     0, INF, ULT_LDO, ult_ldo, ult_pldo, 5000),
- };
+diff --git a/include/dt-bindings/pinctrl/qcom,pmic-mpp.h b/include/dt-bindings/pinctrl/qcom,pmic-mpp.h
+index 32e66ee7e830..3cdca7ee1b3f 100644
+--- a/include/dt-bindings/pinctrl/qcom,pmic-mpp.h
++++ b/include/dt-bindings/pinctrl/qcom,pmic-mpp.h
+@@ -98,6 +98,9 @@
+ /* To be used with "function" */
+ #define PMIC_MPP_FUNC_NORMAL		"normal"
+ #define PMIC_MPP_FUNC_PAIRED		"paired"
++#define PMIC_MPP_FUNC_DIGITAL		"digital"
++#define PMIC_MPP_FUNC_ANALOG		"analog"
++#define PMIC_MPP_FUNC_SINK		"sink"
+ #define PMIC_MPP_FUNC_DTEST1		"dtest1"
+ #define PMIC_MPP_FUNC_DTEST2		"dtest2"
+ #define PMIC_MPP_FUNC_DTEST3		"dtest3"
 -- 
 2.30.1
 
