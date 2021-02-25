@@ -2,184 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E2ACC32594F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 23:15:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D3C3325951
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 23:15:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233365AbhBYWOS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Feb 2021 17:14:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40534 "EHLO
+        id S232746AbhBYWOW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Feb 2021 17:14:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232137AbhBYWOR (ORCPT
+        with ESMTP id S233615AbhBYWOT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Feb 2021 17:14:17 -0500
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7B85C061756
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 14:13:37 -0800 (PST)
-Received: by mail-pj1-x1031.google.com with SMTP id d2so4420283pjs.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 14:13:37 -0800 (PST)
+        Thu, 25 Feb 2021 17:14:19 -0500
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2948FC061788
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 14:13:39 -0800 (PST)
+Received: by mail-pj1-x102c.google.com with SMTP id u12so4184146pjr.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 14:13:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=BGyHjBouNSnLUG2Lzfuc7WYlrAHiqSHJ6DI2sOQjym4=;
-        b=S4Vi4cVffwjxP1q3GBRpmePU3bNnosfOHW0493up4vtbefnaDjXNrkFPVOOc1kLROO
-         wTqoIXJGHgcH4ixg60PUwcK/Wjfuel0+BGx/ZQ1sY6Xg4upWMYLTdshYL+RaNFaOQggR
-         Dtsd3kLgKbPKNANEi48PZT4tdnwy/82fvgD/w=
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Jxci9NB9PoDi1kBNkXRYrYZzM4CQpeK7H6k3GMylSl0=;
+        b=WhcFciKo3SxlUUF7CBiZeGofPWnKIlIdEDekP+ZF8izCJclNv3ecxg9DdGXAMxV0/X
+         cjN36Xwws892QSRBoB3bMx6ffB2foE7ozdyStOr2r+fWSM0RDYjggnYoPIGQSuP0T4YO
+         7We4ZQXpch1eqSB0seaxyZFxA0z4oNDDrVHO8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=BGyHjBouNSnLUG2Lzfuc7WYlrAHiqSHJ6DI2sOQjym4=;
-        b=eNnLek58DTF0Ts62VBeVLiPVEp6TGk5CZHMtqgzRUyCPYW6xCZfOa9VuN6+e9BsXxP
-         D+WrKlpF277dDkr9vRaT1qlhPWqIZEaBV+FA6A/DEtLW08a2rn7E64XVhT311gj2kk0V
-         /lFtVn1Xm3Xl4czvxUsQgE+nmVe7s26vWeVEIhoy2sRYEanTtZGR8x8Xu7xc5qrLaMAP
-         FxVZllhRqYbpRKTdVQf1wGNfOsYuh/lHSP6nq8nT5RahHZ1SaJVbQROoSMs/NMJt5S6o
-         X1j251GXNF+4uE20EJreUvLlm1X26h9WG9G6DT616YVdDvk1SlEu+ZeFof/+/xkZr7aM
-         n1kQ==
-X-Gm-Message-State: AOAM5331XU2RRoXrBHseCtpZoRB6B48GxucDGLkpeT4UjErs86QVdRBH
-        iemyfl10gD0+rm5cN8R0B4tAqg==
-X-Google-Smtp-Source: ABdhPJzRmpl0rRj+D2HGkH0+imXRHUlA3DDnhKov+B+ipXusLMCdPyxG853CyK9kQXZD/AfQjokxIA==
-X-Received: by 2002:a17:902:be06:b029:e3:7031:bef with SMTP id r6-20020a170902be06b02900e370310befmr178907pls.19.1614291217144;
-        Thu, 25 Feb 2021 14:13:37 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Jxci9NB9PoDi1kBNkXRYrYZzM4CQpeK7H6k3GMylSl0=;
+        b=swfPwybVWdlAqEwWLGKrZjVeUJ/X68upCtKuMRf8CeCOWQHB+QXgFFVPN6e+ZQVr6X
+         DTjv+1u/wZmO1AGzsHxznsGjMjZfUYR1RUCtjhgohs8xV7ZKHYF5srj+pfWQ84hTANNy
+         lT0eK6ijHQzyW+1mqOj8rldO+GwAcDCfDgXkkOBKQPHFI69dj8Ec19zVhZoXk0C3E6yt
+         r8RDzVltHlJoU1O7FJvmPdPVeYhvot920amZm+i2hp/XZRi5Ibex4X3ZKtv0hm0EVrth
+         HHL/VcoJfD5Mx+7lWD+LiKqN22YURJSe7xIKQiRPwDgu0khEgRXALEXBeKEerBYj6g6y
+         EueQ==
+X-Gm-Message-State: AOAM533MHl/sx5CP9XH/ANvs3mH92G+42h2wptlRHdiszOl0gmUPuWu6
+        hfUY3PNcysxvIY3W0qYpUcqPIw==
+X-Google-Smtp-Source: ABdhPJzUuWgsnRO9H3H/Fh9A2mdLkg/7tJEbTcK/d39TyDZGRPoN0EcxSpoaUVsDnBuxcSBhQYFzIw==
+X-Received: by 2002:a17:90a:d149:: with SMTP id t9mr31892pjw.43.1614291218709;
+        Thu, 25 Feb 2021 14:13:38 -0800 (PST)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:8414:45a5:94c4:d35d])
-        by smtp.gmail.com with ESMTPSA id jt21sm6713301pjb.51.2021.02.25.14.13.36
+        by smtp.gmail.com with ESMTPSA id jt21sm6713301pjb.51.2021.02.25.14.13.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Feb 2021 14:13:36 -0800 (PST)
+        Thu, 25 Feb 2021 14:13:38 -0800 (PST)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Stephen Boyd <swboyd@chromium.org>,
         Alexandru M Stan <amstan@chromium.org>,
         Matthias Kaehlcke <mka@chromium.org>,
         Rob Clark <robdclark@chromium.org>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        Vara Reddy <varar@codeaurora.org>,
+        Tanmay Shah <tanmay@codeaurora.org>,
         Douglas Anderson <dianders@chromium.org>,
         Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 00/13] arm64: dts: qcom: Update sc7180-trogdor variants from downstream
-Date:   Thu, 25 Feb 2021 14:12:57 -0800
-Message-Id: <20210225221310.1939599-1-dianders@chromium.org>
+Subject: [PATCH 01/13] arm64: dts: qcom: sc7180: Update dts for DP phy inside QMP phy
+Date:   Thu, 25 Feb 2021 14:12:58 -0800
+Message-Id: <20210225141022.1.Iad06142ceb8426ce5492737bf3d9162ed0dd2b55@changeid>
 X-Mailer: git-send-email 2.30.1.766.gb4fecdf3b7-goog
+In-Reply-To: <20210225221310.1939599-1-dianders@chromium.org>
+References: <20210225221310.1939599-1-dianders@chromium.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The point of this series is to catch upstream up to what we have
-downstream in terms of sc7180-trogdor variants.  Notably:
-- It incorporates minor changes that snuck into the trogdor and lazor
-  device tree files since they were posted upstream.
-- It adds the "Limozeen" SKU variant of Lazor.
-- It adds support the Pompom and CoachZ type trogdor boards.
+From: Stephen Boyd <swboyd@chromium.org>
 
-This series was tested on mainline Linux instead of the Qualcomm tree
-since mainline has important bugfixes that are not in the current
-Qualcomm tree. Given the current state of the merge window mainline
-has all of the relevant Qualcomm device tree files anyway. For
-testing, I picked these atop mainline:
-- Commit fe7952c629da ("drm/msm: Add speed-bin support to a618 gpu")
-  to keep the GPU from crashing due to the fact that commit
-  20fd3b37285b ("arm64: dts: qcom: sc7180: Add support for gpu fuse")
-  is in mainline.  This commit is in msm-next.
-- The patch ("arm64: dts: qcom: sc7180: Use pdc interrupts for USB
-  instead of GIC interrupts") [1] just because it reduced diffs and
-  seemed ready to go.
-- The patch ("arm64: dts: qcom: sc7180: Avoid glitching SPI CS at
-  bootup on trogdor") [2] because that's an important bugfix.
+Drop the old node and add the new one in its place.
 
-With all these changes things are in pretty good shape. Looking at
-diffs compared to downstream w/ a few patches [3]:
-- I haven't tried to resolve "sound" with upstream, instead stripping
-  / leaving as-is any audio related nodes.  Someone with more
-  knowledge of the current state of audio needs to take a pass here.
-- I haven't tried to resolve DP with upstream.  It's basically not
-  there.  Someone who works on this: please help!
-- We have a downstream patch to manage power for USB hubs.  Without
-  that we have to keep power on all the time for USB.  Matthias is
-  still working on trying to get an agreement for how that should
-  work.
-- Downstream we have an early version of the "sleep stats" driver
-  landed.  I believe this is in Maulik's court to re-post.
+Cc: Stephen Boyd <swboyd@chromium.org>
+Cc: Jeykumar Sankaran <jsanka@codeaurora.org>
+Cc: Chandan Uddaraju <chandanu@codeaurora.org>
+Cc: Vara Reddy <varar@codeaurora.org>
+Cc: Tanmay Shah <tanmay@codeaurora.org>
+Cc: Rob Clark <robdclark@chromium.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+[dianders: Adjusted due to DP not itself not in upstream dts yet]
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
 
-I have tested this series on "lazor", "lazor-limozeen", "pompom" and
-"coachz".  All of them boot to the web browser with this patch series.
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
-I have confirmed that Matthias's recent charger series [4] applies
-atop this with no conflicts, though I haven't looked at exactly which
-revs of coachz / pompom need a similar change.  It might be easiest to
-just follow up once both series land and we get final confirmation
-about exactly which revs will have exactly which thermistor.
-
-[1] https://lore.kernel.org/r/1594235417-23066-4-git-send-email-sanm@codeaurora.org
-[2] https://lore.kernel.org/r/20210218145456.1.I1da01a075dd86e005152f993b2d5d82dd9686238@changeid
-[3] https://chromium.googlesource.com/chromiumos/third_party/kernel/+log/refs/sandbox/dianders/210225-downstream-dts
-[4] https://lore.kernel.org/linux-arm-msm/20210225103330.v2.1.I6a426324db3d98d6cfae8adf2598831bb30bba74@changeid/
-
-
-Abhishek Kumar (1):
-  arm64: dts: qcom: sc7180: add GO_LAZOR variant property for lazor
-
-Alexandru M Stan (1):
-  arm64: dts: qcom: sc7180-trogdor: Remove fp control pins in prep for
-    coachz
-
-Douglas Anderson (6):
-  arm64: dts: qcom: Move sc7180 MI2S config to board files and make
-    pulldown
-  arm64: dts: qcom: Prep sc7180-trogdor trackpad IRQ for new boards
-  arm64: dts: qcom: Unify the sc7180-trogdor panel nodes
-  arm64: dts: qcom: Add sc7180-lazor-limozeen skus
-  arm64: dts: qcom: Add sc7180-lazor-pompom skus
-  arm64: dts: qcom: Add sc7180-lazor-coachz skus
-
-Matthias Kaehlcke (1):
-  arm64: dts: qcom: sc7180: Set up lazor r3+ as sc7180-lite SKUs
-
-Stephen Boyd (3):
-  arm64: dts: qcom: sc7180: Update dts for DP phy inside QMP phy
-  arm64: dts: qcom: trogdor: Only wakeup from pen eject
-  arm64: dts: qcom: Disable camera clk on sc7180-trogdor devices by
-    default
-
-Venkata Lakshmi Narayana Gubba (1):
-  arm64: dts: qcom: sc7180: Remove clock for bluetooth on Trogdor
-
- arch/arm64/boot/dts/qcom/Makefile             |  11 +
- .../dts/qcom/sc7180-trogdor-coachz-r1-lte.dts |  18 ++
- .../dts/qcom/sc7180-trogdor-coachz-r1.dts     | 154 ++++++++++
- .../dts/qcom/sc7180-trogdor-coachz-r2-lte.dts |  18 ++
- .../dts/qcom/sc7180-trogdor-coachz-r2.dts     |  15 +
- .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi  | 249 +++++++++++++++
- .../sc7180-trogdor-lazor-limozeen-nots-r4.dts |  34 +++
- .../sc7180-trogdor-lazor-limozeen-nots.dts    |  26 ++
- .../qcom/sc7180-trogdor-lazor-limozeen.dts    |  42 +++
- .../dts/qcom/sc7180-trogdor-lazor-r3-kb.dts   |   5 +-
- .../dts/qcom/sc7180-trogdor-lazor-r3-lte.dts  |   4 +-
- .../boot/dts/qcom/sc7180-trogdor-lazor-r3.dts |   1 +
- .../boot/dts/qcom/sc7180-trogdor-lazor.dtsi   |  39 +--
- .../dts/qcom/sc7180-trogdor-pompom-r1-lte.dts |  14 +
- .../dts/qcom/sc7180-trogdor-pompom-r1.dts     |  26 ++
- .../dts/qcom/sc7180-trogdor-pompom-r2-lte.dts |  14 +
- .../dts/qcom/sc7180-trogdor-pompom-r2.dts     |  44 +++
- .../boot/dts/qcom/sc7180-trogdor-pompom.dtsi  | 288 ++++++++++++++++++
- .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts |  35 ++-
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 105 +++----
- arch/arm64/boot/dts/qcom/sc7180.dtsi          |  41 +--
- 21 files changed, 1073 insertions(+), 110 deletions(-)
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1-lte.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r2-lte.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r2.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1-lte.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2-lte.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 1ea3344ab62c..60248a6757d8 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -2770,12 +2770,11 @@ usb_1_hsphy: phy@88e3000 {
+ 		};
+ 
+ 		usb_1_qmpphy: phy-wrapper@88e9000 {
+-			compatible = "qcom,sc7180-qmp-usb3-phy";
++			compatible = "qcom,sc7180-qmp-usb3-dp-phy";
+ 			reg = <0 0x088e9000 0 0x18c>,
+-			      <0 0x088e8000 0 0x38>;
+-			reg-names = "reg-base", "dp_com";
++			      <0 0x088e8000 0 0x38>,
++			      <0 0x088ea000 0 0x40>;
+ 			status = "disabled";
+-			#clock-cells = <1>;
+ 			#address-cells = <2>;
+ 			#size-cells = <2>;
+ 			ranges;
+@@ -2790,7 +2789,7 @@ usb_1_qmpphy: phy-wrapper@88e9000 {
+ 				 <&gcc GCC_USB3_DP_PHY_PRIM_BCR>;
+ 			reset-names = "phy", "common";
+ 
+-			usb_1_ssphy: phy@88e9200 {
++			usb_1_ssphy: usb3-phy@88e9200 {
+ 				reg = <0 0x088e9200 0 0x128>,
+ 				      <0 0x088e9400 0 0x200>,
+ 				      <0 0x088e9c00 0 0x218>,
+@@ -2803,6 +2802,16 @@ usb_1_ssphy: phy@88e9200 {
+ 				clock-names = "pipe0";
+ 				clock-output-names = "usb3_phy_pipe_clk_src";
+ 			};
++
++			dp_phy: dp-phy@88ea200 {
++				reg = <0 0x088ea200 0 0x200>,
++				      <0 0x088ea400 0 0x200>,
++				      <0 0x088eaa00 0 0x200>,
++				      <0 0x088ea600 0 0x200>,
++				      <0 0x088ea800 0 0x200>;
++				#clock-cells = <1>;
++				#phy-cells = <0>;
++			};
+ 		};
+ 
+ 		dc_noc: interconnect@9160000 {
+@@ -3166,8 +3175,8 @@ dispcc: clock-controller@af00000 {
+ 				 <&gcc GCC_DISP_GPLL0_CLK_SRC>,
+ 				 <&dsi_phy 0>,
+ 				 <&dsi_phy 1>,
+-				 <0>,
+-				 <0>;
++				 <&dp_phy 0>,
++				 <&dp_phy 1>;
+ 			clock-names = "bi_tcxo",
+ 				      "gcc_disp_gpll0_clk_src",
+ 				      "dsi0_phy_pll_out_byteclk",
 -- 
 2.30.1.766.gb4fecdf3b7-goog
 
