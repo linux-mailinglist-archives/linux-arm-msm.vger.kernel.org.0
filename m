@@ -2,171 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2597D324B41
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 08:30:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 293BC324B7E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 08:48:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233780AbhBYHan (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Feb 2021 02:30:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48346 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232600AbhBYHah (ORCPT
+        id S235114AbhBYHr4 convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Feb 2021 02:47:56 -0500
+Received: from relay4-d.mail.gandi.net ([217.70.183.196]:40379 "EHLO
+        relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233137AbhBYHrz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Feb 2021 02:30:37 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16ECCC061756
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Feb 2021 23:29:56 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id d11so4187820wrj.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Feb 2021 23:29:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Qrxjqx6QwxdiXpoZqofbvviJ6L0ltdVQ20iRAin6ViU=;
-        b=FuEtSzSm2Yboa0DHaH5WOS0fGtOtpzEeMc8aSNmroaRgwsYaw3AHg58hMj1p1zxYgV
-         Q/hbLmaHwK3fPjEcqeEO9OUkb7yrdhY4v8thWxxAcX51vd1y6eb+T2lw5i5fgdnt6ffW
-         q8s0EuhCdhQ0p/8pm228xoCNEeyTmofpVhLdy0fXcFbEe1ocbNTS9n2Dcu5F2ZQFY84d
-         SQBLTTnSEu6SnLKWXCpw6L504+mNVKeXkyGVbwij2lvw5IRRnigTCRbRsUcoF72GdipP
-         MPAnep2NEcChnq82bG3+9Jm+fie0TCu9UjvIJR7no48018N5IbudUOinZLirO4XZivT7
-         we+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Qrxjqx6QwxdiXpoZqofbvviJ6L0ltdVQ20iRAin6ViU=;
-        b=j/+2a0sBGWJnYcRFVy23E5JyDqgLxziSCXtDwG380MY6/8zlR9UtLknZ3AXMQoOIzb
-         ohtT3aD+v1aUohat3AtDOX45Yl0Ns8H4kKIAXko0CkaFrA/fljU2gPykazkUx8oUq7w+
-         SPeZ9ZKFrKOMUTLV9hnJEFkawSnvD077Ao0V+xeutU32UvXT5Ij9BiqDslsLY42GcDqI
-         AX+QhXm3u3n/4HBwtZpcXP5ViZ2aSpf70tlr/SJH1Cyt0+jq59lrxD91GWqc7Bdkw1gF
-         aS6pYJ4ndKzFA3VQc3ZtKRNJQ6fuWIP9hM4AMoh05HrnZZs4Wj7OlWkzJcHJKZRhuuEW
-         lPQw==
-X-Gm-Message-State: AOAM530pMf+kPgzf64/7cL2LpJAg+zQaONThcZmAW03X6O2tYnL8JMpb
-        K/1cAqWrlLfx1TSeDBENYgGjSG28iRv6LfgW
-X-Google-Smtp-Source: ABdhPJxOebH73cxp10bgi9hRmEqtQR9a8Pqpf+XvDnT7Re9pnUPauMX9MAUAAgxwgq2mqD17l0IB4w==
-X-Received: by 2002:a5d:4441:: with SMTP id x1mr1999570wrr.56.1614238194680;
-        Wed, 24 Feb 2021 23:29:54 -0800 (PST)
-Received: from [192.168.0.4] (hst-221-18.medicom.bg. [84.238.221.18])
-        by smtp.googlemail.com with ESMTPSA id l4sm7133552wrt.42.2021.02.24.23.29.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Feb 2021 23:29:54 -0800 (PST)
-Subject: Re: [PATCH 18/25] media: venus: hfi: Add 6xx AXI halt logic
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        stanimir.varbanov@linaro.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, mchehab@kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     dikshita@codeaurora.org, jonathan@marek.ca, vgarodia@codeaurora.org
-References: <20210222160300.1811121-1-bryan.odonoghue@linaro.org>
- <20210222160300.1811121-19-bryan.odonoghue@linaro.org>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <5b4c2717-c640-2a03-feee-d6849ca3dfb6@linaro.org>
-Date:   Thu, 25 Feb 2021 09:29:52 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.1
+        Thu, 25 Feb 2021 02:47:55 -0500
+X-Originating-IP: 86.250.253.134
+Received: from xps13 (lfbn-tou-1-813-134.w86-250.abo.wanadoo.fr [86.250.253.134])
+        (Authenticated sender: miquel.raynal@bootlin.com)
+        by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id CF320E0005;
+        Thu, 25 Feb 2021 07:47:03 +0000 (UTC)
+Date:   Thu, 25 Feb 2021 08:47:02 +0100
+From:   Miquel Raynal <miquel.raynal@bootlin.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     richard@nod.at, vigneshr@ti.com, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-mtd@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        boris.brezillon@collabora.com, Daniele.Palmas@telit.com,
+        bjorn.andersson@linaro.org
+Subject: Re: [PATCH v2 3/3] mtd: rawnand: qcom: Add support for secure
+ regions in NAND memory
+Message-ID: <20210225084702.2c753b99@xps13>
+In-Reply-To: <20210225041129.58576-4-manivannan.sadhasivam@linaro.org>
+References: <20210225041129.58576-1-manivannan.sadhasivam@linaro.org>
+        <20210225041129.58576-4-manivannan.sadhasivam@linaro.org>
+Organization: Bootlin
+X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-In-Reply-To: <20210222160300.1811121-19-bryan.odonoghue@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Manivannan,
 
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote on Thu,
+25 Feb 2021 09:41:29 +0530:
 
-On 2/22/21 6:02 PM, Bryan O'Donoghue wrote:
-> From: Dikshita Agarwal <dikshita@codeaurora.org>
+> On a typical end product, a vendor may choose to secure some regions in
+> the NAND memory which are supposed to stay intact between FW upgrades.
+> The access to those regions will be blocked by a secure element like
+> Trustzone. So the normal world software like Linux kernel should not
+> touch these regions (including reading).
 > 
-> This patch takes the downstream AXI halt routine and applies it when
-> IS_V6() is true.
+> The regions are declared using a NAND chip DT property,
+> "nand-secure-regions". So let's make use of this property and skip
+> access to the secure regions present in a system.
 > 
-> bod: Converted to readl_poll_timeout()
->      Converted LPI update timeout to dev_dbg. In practice this register
->      never appears to update with the value 0x07. Discussing with contacts
->      in qcom video team, this toggle only pertains to low-power mode.
->      Keeping the write for the sake of fidelity with downstream.
-> 
-> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
-> Co-developed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
->  drivers/media/platform/qcom/venus/hfi_venus.c | 45 +++++++++++++++++++
->  1 file changed, 45 insertions(+)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
-> index 24cf20f76e7f..01c100db07d3 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-> @@ -541,10 +541,55 @@ static int venus_halt_axi(struct venus_hfi_device *hdev)
->  {
->  	void __iomem *wrapper_base = hdev->core->wrapper_base;
->  	void __iomem *vbif_base = hdev->core->vbif_base;
-> +	void __iomem *cpu_cs_base = hdev->core->cpu_cs_base;
-> +	void __iomem *aon_base = hdev->core->aon_base;
->  	struct device *dev = hdev->core->dev;
->  	u32 val;
-> +	u32 mask_val;
->  	int ret;
+
+[...]
+
+>  	config_nand_page_write(nandc);
+> @@ -2830,7 +2865,8 @@ static int qcom_nand_host_init_and_register(struct qcom_nand_controller *nandc,
+>  	struct nand_chip *chip = &host->chip;
+>  	struct mtd_info *mtd = nand_to_mtd(chip);
+>  	struct device *dev = nandc->dev;
+> -	int ret;
+> +	struct property *prop;
+> +	int ret, length, nr_elem;
 >  
-> +	if (IS_V6(hdev->core)) {
-> +		writel(0x3, cpu_cs_base + CPU_CS_X2RPMH_V6);
+>  	ret = of_property_read_u32(dn, "reg", &host->cs);
+>  	if (ret) {
+> @@ -2886,6 +2922,24 @@ static int qcom_nand_host_init_and_register(struct qcom_nand_controller *nandc,
+>  		}
+>  	}
+>  
+> +	/*
+> +	 * Look for secure regions in the NAND chip. These regions are supposed
+> +	 * to be protected by a secure element like Trustzone. So the read/write
+> +	 * accesses to these regions will be blocked in the runtime by this
+> +	 * driver.
+> +	 */
+> +	prop = of_find_property(dn, "nand-secure-regions", &length);
+
+I'm not sure the nand- prefix on this property is needed here, but
+whatever.
+
+> +	if (prop) {
+> +		nr_elem = length / sizeof(u32);
+> +		host->nr_sec_regions = nr_elem / 2;
 > +
-> +		writel(0x1, aon_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
-> +		ret = readl_poll_timeout(aon_base + AON_WRAPPER_MVP_NOC_LPI_STATUS,
-> +					 val,
-> +					 val & BIT(0),
-> +					 POLL_INTERVAL_US,
-> +					 VBIF_AXI_HALT_ACK_TIMEOUT_US);
-> +		if (ret) {
-> +			dev_err(dev, "NOC not in qaccept status %x\n", val);
-
-Could you drop this error msg. I don't see any valuable information in it.
-
-> +			return -ETIMEDOUT;
-> +		}
+> +		host->sec_regions = devm_kcalloc(dev, nr_elem, sizeof(u32), GFP_KERNEL);
+> +		if (!host->sec_regions)
+> +			return -ENOMEM;
 > +
-> +		/* HPG 6.1.2 Step 3, debug bridge to low power */
-
-This comment does not add any information, please drop it.
-
-> +		mask_val = (BIT(2) | BIT(1) | BIT(0));
-> +		writel(mask_val, wrapper_base + WRAPPER_DEBUG_BRIDGE_LPI_CONTROL_V6);
-> +
-> +		ret = readl_poll_timeout(wrapper_base + WRAPPER_DEBUG_BRIDGE_LPI_STATUS_V6,
-> +					 val,
-> +					 (val & mask_val) == mask_val,
-> +					 POLL_INTERVAL_US,
-> +					 VBIF_AXI_HALT_ACK_TIMEOUT_US);
-> +
-> +		if (ret)
-> +			dev_dbg(dev, "DBLP Set: status %x\n", val);
-
-Do we need this as well? From what I can see this always timeouts and
-increase the time of module loading.
-
-> +
-> +		/* HPG 6.1.2 Step 4, debug bridge to lpi release */
-
-ditto
-
-> +		writel(0x00, wrapper_base + WRAPPER_DEBUG_BRIDGE_LPI_CONTROL_V6);
-> +		ret = readl_poll_timeout(wrapper_base + WRAPPER_DEBUG_BRIDGE_LPI_STATUS_V6,
-> +					 val,
-> +					 val == 0,
-> +					 POLL_INTERVAL_US,
-> +					 VBIF_AXI_HALT_ACK_TIMEOUT_US);
-> +
-> +		if (ret) {
-> +			dev_err(dev, "DBLP Release: lpi_status %x\n", val);
-> +			return -ETIMEDOUT;
-> +		}
-> +		return 0;
+> +		of_property_read_u32_array(dn, "nand-secure-regions", host->sec_regions, nr_elem);
 > +	}
 > +
->  	if (IS_V4(hdev->core)) {
->  		val = readl(wrapper_base + WRAPPER_CPU_AXI_HALT);
->  		val |= WRAPPER_CPU_AXI_HALT_HALT;
-> 
 
--- 
-regards,
-Stan
+I would move this before nand_scan().
+
+If you don't, you should bail out with a nand_cleanup() upon error.
+
+>  	ret = mtd_device_parse_register(mtd, probes, NULL, NULL, 0);
+>  	if (ret)
+>  		nand_cleanup(chip);
+
+
+Otherwise lgtm.
+
+Thanks,
+Miquèl
