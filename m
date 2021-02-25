@@ -2,66 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D3C3325951
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 23:15:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 809F9325964
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 23:17:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232746AbhBYWOW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Feb 2021 17:14:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40544 "EHLO
+        id S233720AbhBYWPs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Feb 2021 17:15:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233615AbhBYWOT (ORCPT
+        with ESMTP id S234375AbhBYWO6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Feb 2021 17:14:19 -0500
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2948FC061788
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 14:13:39 -0800 (PST)
-Received: by mail-pj1-x102c.google.com with SMTP id u12so4184146pjr.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 14:13:39 -0800 (PST)
+        Thu, 25 Feb 2021 17:14:58 -0500
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5EC5C061794
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 14:13:40 -0800 (PST)
+Received: by mail-pj1-x1036.google.com with SMTP id t5so5690948pjd.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 14:13:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Jxci9NB9PoDi1kBNkXRYrYZzM4CQpeK7H6k3GMylSl0=;
-        b=WhcFciKo3SxlUUF7CBiZeGofPWnKIlIdEDekP+ZF8izCJclNv3ecxg9DdGXAMxV0/X
-         cjN36Xwws892QSRBoB3bMx6ffB2foE7ozdyStOr2r+fWSM0RDYjggnYoPIGQSuP0T4YO
-         7We4ZQXpch1eqSB0seaxyZFxA0z4oNDDrVHO8=
+        bh=BUl3aZ3O4LXFi8NN7830ax+M9BVmxwxmci3H0NHFBWA=;
+        b=ShrzWoNxvJcEJoJCJALthG8BjrCcyXMB0sfwa6zFSIkBeOW6Hq9lKmBTcB+F8zBrvC
+         rZ357K04oiT0xlSepXW8xul3DoaRC2KSso0u+uHbAdT7sZSDzHnD/XgqzT3Nyn10LiaN
+         xZrtu+fGm3pOYHtJe5vbUI8wkSBPNdORq9gyU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Jxci9NB9PoDi1kBNkXRYrYZzM4CQpeK7H6k3GMylSl0=;
-        b=swfPwybVWdlAqEwWLGKrZjVeUJ/X68upCtKuMRf8CeCOWQHB+QXgFFVPN6e+ZQVr6X
-         DTjv+1u/wZmO1AGzsHxznsGjMjZfUYR1RUCtjhgohs8xV7ZKHYF5srj+pfWQ84hTANNy
-         lT0eK6ijHQzyW+1mqOj8rldO+GwAcDCfDgXkkOBKQPHFI69dj8Ec19zVhZoXk0C3E6yt
-         r8RDzVltHlJoU1O7FJvmPdPVeYhvot920amZm+i2hp/XZRi5Ibex4X3ZKtv0hm0EVrth
-         HHL/VcoJfD5Mx+7lWD+LiKqN22YURJSe7xIKQiRPwDgu0khEgRXALEXBeKEerBYj6g6y
-         EueQ==
-X-Gm-Message-State: AOAM533MHl/sx5CP9XH/ANvs3mH92G+42h2wptlRHdiszOl0gmUPuWu6
-        hfUY3PNcysxvIY3W0qYpUcqPIw==
-X-Google-Smtp-Source: ABdhPJzUuWgsnRO9H3H/Fh9A2mdLkg/7tJEbTcK/d39TyDZGRPoN0EcxSpoaUVsDnBuxcSBhQYFzIw==
-X-Received: by 2002:a17:90a:d149:: with SMTP id t9mr31892pjw.43.1614291218709;
-        Thu, 25 Feb 2021 14:13:38 -0800 (PST)
+        bh=BUl3aZ3O4LXFi8NN7830ax+M9BVmxwxmci3H0NHFBWA=;
+        b=YP3EqOXncgekJsK6F2+RDMAwGfUIkOlb/U93UvMZwJ9+JfFibWZ5EB5/6/OaLie9Rj
+         q7XIIZsmCTR7fPUJnHTIkto2PDO17ckbmMSvbLny3pdQQfiSc5Oo8zytpdJJ1xiGki4U
+         suwQtO1RhS5dMAzM5SRRGuXPoraBnD9XUQwhDAG6sC/MjW1G5BHTBtZcrD6KWLrwJ8E3
+         qZZKSv1SLJF8sl/xENPDKpNbgATFMHLfEFbRQ9Uzo6Du0LmOYM+d+Aiy0R73LWuDatx7
+         pDO+yVdov+wBns+1CxhcJblqQDuTunTlyDiu+AvVGTGE5iuoTtUzRJjjswodPhsgC+2/
+         xqpg==
+X-Gm-Message-State: AOAM531GxQ8KOZ9C/tN10hoOma+z4BeGAVbJwroLahNfHipj0HQwi6hx
+        YkU6pSEW33DWaRkCQgnlY0u+jg==
+X-Google-Smtp-Source: ABdhPJzRZhB6hLfPocxitIiG9SZg5ond610o1Oh17YW/TWxwLUlDLBl0L5MUo0EJO49/RXbesVskMg==
+X-Received: by 2002:a17:90a:5505:: with SMTP id b5mr46917pji.194.1614291220352;
+        Thu, 25 Feb 2021 14:13:40 -0800 (PST)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:8414:45a5:94c4:d35d])
-        by smtp.gmail.com with ESMTPSA id jt21sm6713301pjb.51.2021.02.25.14.13.37
+        by smtp.gmail.com with ESMTPSA id jt21sm6713301pjb.51.2021.02.25.14.13.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Feb 2021 14:13:38 -0800 (PST)
+        Thu, 25 Feb 2021 14:13:39 -0800 (PST)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Stephen Boyd <swboyd@chromium.org>,
         Alexandru M Stan <amstan@chromium.org>,
         Matthias Kaehlcke <mka@chromium.org>,
         Rob Clark <robdclark@chromium.org>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        Vara Reddy <varar@codeaurora.org>,
-        Tanmay Shah <tanmay@codeaurora.org>,
         Douglas Anderson <dianders@chromium.org>,
+        V Sujith Kumar Reddy <vsujithk@codeaurora.org>,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        Tzung-Bi Shih <tzungbi@chromium.org>,
+        Judy Hsiao <judyhsiao@chromium.org>,
         Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 01/13] arm64: dts: qcom: sc7180: Update dts for DP phy inside QMP phy
-Date:   Thu, 25 Feb 2021 14:12:58 -0800
-Message-Id: <20210225141022.1.Iad06142ceb8426ce5492737bf3d9162ed0dd2b55@changeid>
+Subject: [PATCH 02/13] arm64: dts: qcom: Move sc7180 MI2S config to board files and make pulldown
+Date:   Thu, 25 Feb 2021 14:12:59 -0800
+Message-Id: <20210225141022.2.Id27e7e6f90c29bf623fa4880e18a14ba1dffd2d2@changeid>
 X-Mailer: git-send-email 2.30.1.766.gb4fecdf3b7-goog
 In-Reply-To: <20210225221310.1939599-1-dianders@chromium.org>
 References: <20210225221310.1939599-1-dianders@chromium.org>
@@ -71,81 +71,110 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Stephen Boyd <swboyd@chromium.org>
+In general pinconf belongs in board files, not SoC files.  Move it to
+the only current user (trogdor).  Also adjust the drive strengths and
+pulls.
 
-Drop the old node and add the new one in its place.
-
-Cc: Stephen Boyd <swboyd@chromium.org>
-Cc: Jeykumar Sankaran <jsanka@codeaurora.org>
-Cc: Chandan Uddaraju <chandanu@codeaurora.org>
-Cc: Vara Reddy <varar@codeaurora.org>
-Cc: Tanmay Shah <tanmay@codeaurora.org>
-Cc: Rob Clark <robdclark@chromium.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-[dianders: Adjusted due to DP not itself not in upstream dts yet]
+Cc: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+Cc: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Cc: Tzung-Bi Shih <tzungbi@chromium.org>
+Cc: Judy Hsiao <judyhsiao@chromium.org>
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
+This should replace the patch ("Asoc: qcom: dts: Change MI2S GPIO
+configuration to pulldown") [1].
 
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 23 ++++++++++++++++-------
- 1 file changed, 16 insertions(+), 7 deletions(-)
+[1] https://lore.kernel.org/r/1605526408-15671-1-git-send-email-srivasam@codeaurora.org
 
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 24 ++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7180.dtsi         | 18 ---------------
+ 2 files changed, 24 insertions(+), 18 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index 07c8b2c926c0..25ab6572f9cf 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -875,6 +875,22 @@ pinconf {
+ 	};
+ };
+ 
++&pri_mi2s_active {
++	pinconf {
++		pins = "gpio53", "gpio54", "gpio55", "gpio56";
++		drive-strength = <2>;
++		bias-pull-down;
++	};
++};
++
++&pri_mi2s_mclk_active {
++	pinconf {
++		pins = "gpio57";
++		drive-strength = <2>;
++		bias-pull-down;
++	};
++};
++
+ &qspi_cs0 {
+ 	pinconf {
+ 		pins = "gpio68";
+@@ -1015,6 +1031,14 @@ pinconf-rx {
+ 	};
+ };
+ 
++&sec_mi2s_active {
++	pinconf {
++		pins = "gpio49", "gpio50", "gpio51";
++		drive-strength = <2>;
++		bias-pull-down;
++	};
++};
++
+ /* PINCTRL - board-specific pinctrl */
+ 
+ &pm6150_gpio {
 diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 1ea3344ab62c..60248a6757d8 100644
+index 60248a6757d8..5040923a9f7c 100644
 --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -2770,12 +2770,11 @@ usb_1_hsphy: phy@88e3000 {
- 		};
- 
- 		usb_1_qmpphy: phy-wrapper@88e9000 {
--			compatible = "qcom,sc7180-qmp-usb3-phy";
-+			compatible = "qcom,sc7180-qmp-usb3-dp-phy";
- 			reg = <0 0x088e9000 0 0x18c>,
--			      <0 0x088e8000 0 0x38>;
--			reg-names = "reg-base", "dp_com";
-+			      <0 0x088e8000 0 0x38>,
-+			      <0 0x088ea000 0 0x40>;
- 			status = "disabled";
--			#clock-cells = <1>;
- 			#address-cells = <2>;
- 			#size-cells = <2>;
- 			ranges;
-@@ -2790,7 +2789,7 @@ usb_1_qmpphy: phy-wrapper@88e9000 {
- 				 <&gcc GCC_USB3_DP_PHY_PRIM_BCR>;
- 			reset-names = "phy", "common";
- 
--			usb_1_ssphy: phy@88e9200 {
-+			usb_1_ssphy: usb3-phy@88e9200 {
- 				reg = <0 0x088e9200 0 0x128>,
- 				      <0 0x088e9400 0 0x200>,
- 				      <0 0x088e9c00 0 0x218>,
-@@ -2803,6 +2802,16 @@ usb_1_ssphy: phy@88e9200 {
- 				clock-names = "pipe0";
- 				clock-output-names = "usb3_phy_pipe_clk_src";
+@@ -1856,12 +1856,6 @@ pinmux {
+ 					pins = "gpio49", "gpio50", "gpio51";
+ 					function = "mi2s_1";
+ 				};
+-
+-				pinconf {
+-					pins = "gpio49", "gpio50", "gpio51";
+-					drive-strength = <8>;
+-					bias-pull-up;
+-				};
  			};
-+
-+			dp_phy: dp-phy@88ea200 {
-+				reg = <0 0x088ea200 0 0x200>,
-+				      <0 0x088ea400 0 0x200>,
-+				      <0 0x088eaa00 0 0x200>,
-+				      <0 0x088ea600 0 0x200>,
-+				      <0 0x088ea800 0 0x200>;
-+				#clock-cells = <1>;
-+				#phy-cells = <0>;
-+			};
- 		};
  
- 		dc_noc: interconnect@9160000 {
-@@ -3166,8 +3175,8 @@ dispcc: clock-controller@af00000 {
- 				 <&gcc GCC_DISP_GPLL0_CLK_SRC>,
- 				 <&dsi_phy 0>,
- 				 <&dsi_phy 1>,
--				 <0>,
--				 <0>;
-+				 <&dp_phy 0>,
-+				 <&dp_phy 1>;
- 			clock-names = "bi_tcxo",
- 				      "gcc_disp_gpll0_clk_src",
- 				      "dsi0_phy_pll_out_byteclk",
+ 			pri_mi2s_active: pri-mi2s-active {
+@@ -1869,12 +1863,6 @@ pinmux {
+ 					pins = "gpio53", "gpio54", "gpio55", "gpio56";
+ 					function = "mi2s_0";
+ 				};
+-
+-				pinconf {
+-					pins = "gpio53", "gpio54", "gpio55", "gpio56";
+-					drive-strength = <8>;
+-					bias-pull-up;
+-				};
+ 			};
+ 
+ 			pri_mi2s_mclk_active: pri-mi2s-mclk-active {
+@@ -1882,12 +1870,6 @@ pinmux {
+ 					pins = "gpio57";
+ 					function = "lpass_ext";
+ 				};
+-
+-				pinconf {
+-					pins = "gpio57";
+-					drive-strength = <8>;
+-					bias-pull-up;
+-				};
+ 			};
+ 
+ 			sdc1_on: sdc1-on {
 -- 
 2.30.1.766.gb4fecdf3b7-goog
 
