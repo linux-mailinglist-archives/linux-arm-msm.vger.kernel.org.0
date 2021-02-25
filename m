@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DD6AE3256D3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 20:39:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B35323256D9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 20:40:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233964AbhBYTiG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Feb 2021 14:38:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34700 "EHLO
+        id S232770AbhBYTkB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Feb 2021 14:40:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234083AbhBYTgC (ORCPT
+        with ESMTP id S233681AbhBYTiO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Feb 2021 14:36:02 -0500
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B200C06174A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 11:35:21 -0800 (PST)
-Received: by mail-pl1-x62f.google.com with SMTP id ba1so3785507plb.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 11:35:21 -0800 (PST)
+        Thu, 25 Feb 2021 14:38:14 -0500
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B32BC06178B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 11:37:34 -0800 (PST)
+Received: by mail-pf1-x42f.google.com with SMTP id j12so4276736pfj.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 11:37:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:content-transfer-encoding:in-reply-to:references
          :subject:from:cc:to:date:message-id:user-agent;
-        bh=r6wJvxB68vEymZci/szX9i/8klOR69G6A/W2Bpg+cp4=;
-        b=nR9lCpX8XpkcvjIOmCara3uYiZ0lbn61xFo4C6F0Bs7EEf4jYjCeW2+fnj5qI3G6qH
-         jGg2x/a4oChUVdBcmXH/Iwgjmglc+Hn8Czx8sSNYPr2jWYL94xZlsKLRwc3C0GIQdNpl
-         W2c8M3fwHo2htxJvsNVv0ORyIYh0rpoLp5jEI=
+        bh=XOHcNIofRwvSB3gcnVVgijvZlcqRnOPyM4E4Yd9sOi4=;
+        b=bUGZ0X9gMDBqrvmAPT5fq9Kg9MLC8Hdvczlyir5R17UeuE1mhNrd9p+/X9S+hBsOVv
+         dl/tx/gOTlrN3iMRk7pQORAPFmhWlogYkfg30/4TMaevZayVpQiiCg7EVNppdnlUHfdr
+         3O3Jtg0hkI0OlamZ1RCsVbo2QmW8SN5RvyFdM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:content-transfer-encoding
          :in-reply-to:references:subject:from:cc:to:date:message-id
          :user-agent;
-        bh=r6wJvxB68vEymZci/szX9i/8klOR69G6A/W2Bpg+cp4=;
-        b=SL1UB/M0SNVpSUhClVCFhRbjHUVrPl2+1C5JY/6kbjic2Go3xSq99GEpQW3bjaKlIF
-         OO5Bfw2oqNx9ip0VZ+9B7xqwK1sX42ws4uSOVNTIFxVnMe2y3lVWJ3FKjaKMfRhz8pLP
-         awq0lW6+MdOa0n8RnM8IxRq6PFW3kSA+grVQuO/Q9vnxmECgEOPz3AyvjeEd/+3UUkp5
-         /moDgRLUAFspMO0WnucXeMrv9Lw5vYNyMPH5B5kOlPsduco+XKa+vd//vHptejrVnjb0
-         uTM1gUVFmKiSKMJAyGPFvb2tpWw8fbxyNvkAMHScoZ3SigxdhRm3kZrpPA/YMNtGisju
-         177g==
-X-Gm-Message-State: AOAM531dQ3ydd81OAPqCK1L9w/UBT2vzdCcuPwKwH52+JaE/bBO2o/MB
-        USwSuAgT0ZZuG3aFmGCixOahoA==
-X-Google-Smtp-Source: ABdhPJyskkONjLaGupEVZE1oDumXRSl08agvlDUkTMsRlO97Qz2/uswJYrl8oGCMV8rpq45ys5GPiw==
-X-Received: by 2002:a17:902:ac82:b029:e3:bca2:cca7 with SMTP id h2-20020a170902ac82b02900e3bca2cca7mr4333204plr.43.1614281721158;
-        Thu, 25 Feb 2021 11:35:21 -0800 (PST)
+        bh=XOHcNIofRwvSB3gcnVVgijvZlcqRnOPyM4E4Yd9sOi4=;
+        b=rSAeFEvUP87QYlW7ObEqhbwtOEqcEcSwgtZ21Or+WAkKSifn1DIT7g0ybTJVRDQ6rK
+         D4tRpDYRvIobF2HYtT+r5PZ/LQaKMuWcldISbPMdJAz4oKb93JhJPMrHT5asDZnvfBsI
+         kdBq1P/C+pRMrrOCpQ1zbLpyahHuqBnmVg3lDZO1rkPS+77qb4gi0eGWeKNwlm3/LH2z
+         QzeIbu3wC7MHkMAHg3zrIm3mykIUjtjx8yL/yt9yTsriAiwo3PDxKNei8CQ6mAHrPInb
+         mK/1TPIlJfyCNKzOwe9JUToyXAwQvHRsMYh+5OqleL2HL597q1K0Z6cHxaA7uGS/jhMW
+         HW6w==
+X-Gm-Message-State: AOAM5338rAmhcwM99xqHWdUUFQV6+C34t3xaQ8eoqoSbisv1mbTt/Agl
+        /V4M6x03oGORhUGo1ig1TMg1hw==
+X-Google-Smtp-Source: ABdhPJwEbjhrK46+Vn8tAPouIhP77JPq9NOLpq6Nrj1LQCzfQz04Bu6+O8IxCxPLN1pbhCbhamtj6A==
+X-Received: by 2002:a63:1723:: with SMTP id x35mr4441170pgl.393.1614281853418;
+        Thu, 25 Feb 2021 11:37:33 -0800 (PST)
 Received: from chromium.org ([2620:15c:202:201:b942:93a8:e68d:5a90])
-        by smtp.gmail.com with ESMTPSA id g15sm6841549pfb.30.2021.02.25.11.35.20
+        by smtp.gmail.com with ESMTPSA id gg11sm6899868pjb.17.2021.02.25.11.37.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Feb 2021 11:35:20 -0800 (PST)
+        Thu, 25 Feb 2021 11:37:32 -0800 (PST)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <f3b32d437d7c1165a74ceec2cd52ff56b496e5a3.1614244789.git.saiprakash.ranjan@codeaurora.org>
-References: <cover.1614244789.git.saiprakash.ranjan@codeaurora.org> <f3b32d437d7c1165a74ceec2cd52ff56b496e5a3.1614244789.git.saiprakash.ranjan@codeaurora.org>
-Subject: Re: [PATCH 1/9] dt-bindings: arm: msm: Add LLCC for SC7280
+In-Reply-To: <c4b7ae4dd009f563e6786f4a41f09efa38636fb6.1614244789.git.saiprakash.ranjan@codeaurora.org>
+References: <cover.1614244789.git.saiprakash.ranjan@codeaurora.org> <c4b7ae4dd009f563e6786f4a41f09efa38636fb6.1614244789.git.saiprakash.ranjan@codeaurora.org>
+Subject: Re: [PATCH 3/9] arm64: dts: qcom: sc7280: Add device tree node for LLCC
 From:   Stephen Boyd <swboyd@chromium.org>
 Cc:     devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
@@ -61,17 +61,22 @@ Cc:     devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Date:   Thu, 25 Feb 2021 11:35:18 -0800
-Message-ID: <161428171894.1254594.5730779825217339020@swboyd.mtv.corp.google.com>
+Date:   Thu, 25 Feb 2021 11:37:31 -0800
+Message-ID: <161428185152.1254594.1426736986245389798@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sai Prakash Ranjan (2021-02-25 01:30:17)
-> Add LLCC compatible for SC7280 SoC.
+Quoting Sai Prakash Ranjan (2021-02-25 01:30:19)
+> Add a DT node for Last level cache (aka. system cache)
+> controller which provides control over the last level
+> cache present on SC7280 SoC.
 >=20
 > Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 > ---
 
 Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+
+Should add system-cache-controller to the devicetree spec. Or just use
+cache-controller for the node name.
