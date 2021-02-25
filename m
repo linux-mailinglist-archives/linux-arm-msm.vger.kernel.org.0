@@ -2,72 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9784E325985
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 23:20:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7908C3259A3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 23:27:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233952AbhBYWTK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Feb 2021 17:19:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40934 "EHLO
+        id S231375AbhBYW07 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Feb 2021 17:26:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233219AbhBYWRz (ORCPT
+        with ESMTP id S232596AbhBYW0i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Feb 2021 17:17:55 -0500
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E06F6C061786
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 14:16:59 -0800 (PST)
-Received: by mail-qt1-x833.google.com with SMTP id v64so5361607qtd.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 14:16:59 -0800 (PST)
+        Thu, 25 Feb 2021 17:26:38 -0500
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48B71C061356
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 14:25:58 -0800 (PST)
+Received: by mail-qt1-x831.google.com with SMTP id d11so4654827qtx.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 14:25:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=/28pMZEAxPunJv3VDFxY9qRg4v622m5ASv9egU51f+c=;
-        b=MQqIRfSbdfNH5JT7Cx56a6oYyOuCTo5vwJnGQX1ixbtEe2ZnSFKMyks+3R0hidOSsU
-         5y11pQl7qRHZFSnlriBPtKO4SsalOauMyCuLbf7loI2mdGba3ibmGSkhzjgjXEXIFb/v
-         7J7ZoUcOwTarrmA3X5j1xmeQYemg69GihSM58=
+        bh=Me2HC60f89+mn3gIrURmnveAllc/VNfG/ARjgNilBjU=;
+        b=O+YTgENdNKlhUO4AF61qqfAJWicWg0RCmp9Q0lQaYoFhKk0sKvX6Cd9+Eabc+3yiU9
+         RTto+/seiFf8c3gPNU+wn99b7nasmetXy5qZ2Oyten1aB0zj8oIHLvH0jYWiw4buYNHp
+         smusLla9tdxLJE15JC2IyiEKkR/PImG4oxte4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=/28pMZEAxPunJv3VDFxY9qRg4v622m5ASv9egU51f+c=;
-        b=eIAxdbmDnRqrZxHLY91T1hljnMNQ0CJJi9bBOIPguJjEjTN6B/bwnPfXgVojlgUiqd
-         QWFTKPAoUD/k1PFgPac9CgUvuxpfvuMN5Ki6LMcsd5dgWoWKVrkBcaI5Nj9lSdHieDkJ
-         aLEeteWkeCN4VsRbkvh/TDa77n8lKPf3sQdzUIkkuoRdim8hY6nAxqjchiO3uT5sSfoC
-         DZeFLEV1JiG3bfQ0E+MfHIMKDGEjWHf/Sr3BqLYQDWI4zVUCZ9TIh/sdluos3zPHXPBL
-         /Cwn7BSouMCX0+f7stUtKH/FX/amOq0hq05smX217pB80hxR3gJq9zivIhmEcMfEaAdT
-         PWTw==
-X-Gm-Message-State: AOAM533xOC1EiBsrjVyq1/e2Lci6LKaiOLlGwUBhk+S2r/A271dQEf6D
-        3HX0PvbHh+PYIzAeVzJ6Ljhdw5I2cf06KQ==
-X-Google-Smtp-Source: ABdhPJwSlgPgO0l701q+70Y13MQRB/phAOoFjj2P7KV634zw0PkXT0+cRjwuj7lf/1aLAYnGe9Bmiw==
-X-Received: by 2002:ac8:1415:: with SMTP id k21mr238478qtj.181.1614291418919;
-        Thu, 25 Feb 2021 14:16:58 -0800 (PST)
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com. [209.85.219.178])
-        by smtp.gmail.com with ESMTPSA id x15sm4950544qka.53.2021.02.25.14.16.57
+        bh=Me2HC60f89+mn3gIrURmnveAllc/VNfG/ARjgNilBjU=;
+        b=juUYHrYvO6SQJWxZEb5cj1p06mEoTCuRK4nKQijWOMiRtLn5KAvr/kfh2AHXUtm3qZ
+         ViqWRLuiT9MzeGCOFWSwo5c86vnYM1TI5dwBw6mOINkMk/0RPPeIg2cFVSrfzom8op5p
+         D9EUFjE1mGcBzLR/pJT6BwuSNZ3QDtVzHtAMl0NvhdYQrveDZkCSrXuHT6tplymYWRMo
+         4TbarbUVUVlTZ0KmWqRZ97qfDBoY24yeluxBVbNElbeCE70q9VpSj7AYfVCT6k8oJ1hB
+         P1M3tnbqqHxBqwSQi4hh0Zm0/H+fRBvhZfwb09MtuXlkpCR6MAVioZGEKHy/JYZeyxl7
+         X9KQ==
+X-Gm-Message-State: AOAM532YcCqkJ39QyBK2qHclTsXbgnwYpUFUI0cjH1OxbkQ5HxpsCEeH
+        y5wBNmPYSzTxfike+6WKdi+1xrL3jJnfNg==
+X-Google-Smtp-Source: ABdhPJxdlfNdRxOoFjaGe8U9FpydP3fsjhy5BbwzlOz2Mb6cwytiMo0DLNk5XoIqffkUHEk61Zrg/w==
+X-Received: by 2002:ac8:37c8:: with SMTP id e8mr280257qtc.29.1614291957434;
+        Thu, 25 Feb 2021 14:25:57 -0800 (PST)
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com. [209.85.219.176])
+        by smtp.gmail.com with ESMTPSA id i13sm4441927qtv.95.2021.02.25.14.25.55
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Feb 2021 14:16:58 -0800 (PST)
-Received: by mail-yb1-f178.google.com with SMTP id 133so6989311ybd.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 14:16:57 -0800 (PST)
-X-Received: by 2002:a25:ab54:: with SMTP id u78mr101535ybi.276.1614291417357;
- Thu, 25 Feb 2021 14:16:57 -0800 (PST)
+        Thu, 25 Feb 2021 14:25:56 -0800 (PST)
+Received: by mail-yb1-f176.google.com with SMTP id d9so7033083ybq.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 14:25:55 -0800 (PST)
+X-Received: by 2002:a25:cf88:: with SMTP id f130mr116461ybg.476.1614291955422;
+ Thu, 25 Feb 2021 14:25:55 -0800 (PST)
 MIME-Version: 1.0
-References: <1605526408-15671-1-git-send-email-srivasam@codeaurora.org>
-In-Reply-To: <1605526408-15671-1-git-send-email-srivasam@codeaurora.org>
+References: <20210225221310.1939599-1-dianders@chromium.org> <20210225141022.12.If93a01b30d20dccacbad4be8ddc519dc20a51a1e@changeid>
+In-Reply-To: <20210225141022.12.If93a01b30d20dccacbad4be8ddc519dc20a51a1e@changeid>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 25 Feb 2021 14:16:45 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=VipGLw+wqzb-ies2LK8esP3=PfFjpxubH2YYONQt5jCA@mail.gmail.com>
-Message-ID: <CAD=FV=VipGLw+wqzb-ies2LK8esP3=PfFjpxubH2YYONQt5jCA@mail.gmail.com>
-Subject: Re: [PATCH] Asoc: qcom: dts: Change MI2S GPIO configuration to pulldown
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+Date:   Thu, 25 Feb 2021 14:25:44 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=WGoSv13Rpa+e3Z+u3mQRoe1a7OnS=e2GsFn5fzHHL2Qg@mail.gmail.com>
+Message-ID: <CAD=FV=WGoSv13Rpa+e3Z+u3mQRoe1a7OnS=e2GsFn5fzHHL2Qg@mail.gmail.com>
+Subject: Re: [PATCH 12/13] arm64: dts: qcom: Add sc7180-lazor-pompom skus
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Alexandru M Stan <amstan@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Philip Chen <philipchen@google.com>,
+        Tzung-Bi Shih <tzungbi@chromium.org>,
+        Judy Hsiao <judyhsiao@chromium.org>,
+        Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -75,26 +79,48 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Mon, Nov 16, 2020 at 3:35 AM Srinivasa Rao Mandadapu
-<srivasam@codeaurora.org> wrote:
+On Thu, Feb 25, 2021 at 2:13 PM Douglas Anderson <dianders@chromium.org> wrote:
 >
-> From: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+> This is a trogdor variant.  This is mostly a grab from the downstream
+> tree with notable exceptions:
+> - I skip -rev0.  This was a super early build and there's no advantage
+>   of long term support.
+> - In -rev1 I translate the handling of the USB hub like is done for
+>   similar boards.  See the difference between the downstream and
+>   upstream 'sc7180-trogdor-lazor-r0.dts' for an example.  This will
+>   need to be resolved when proper support for the USB hub is figured
+>   out upstream.
+> - I remove sound node since sound hasn't landed upstream yet.
+> - In incorporate the pending <https://crrev.com/c/2719075> for the
+>   keyboard.
 >
-> Change LPASS MI2S gpio configuration to pull down from pull up.
->
-> Fixes: 9b72f4e6a3f8 (arm64: dts: qcom: sc7180: Add lpass cpu node for I2S driver)
->
-> Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+> Cc: Philip Chen <philipchen@google.com>
+> Cc: Matthias Kaehlcke <mka@chromium.org>
+> Cc: Stephen Boyd <swboyd@chromium.org>
+> Cc: Tzung-Bi Shih <tzungbi@chromium.org>
+> Cc: Judy Hsiao <judyhsiao@chromium.org>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
+>
+>  arch/arm64/boot/dts/qcom/Makefile             |   4 +
+>  .../dts/qcom/sc7180-trogdor-pompom-r1-lte.dts |  14 +
+>  .../dts/qcom/sc7180-trogdor-pompom-r1.dts     |  26 ++
+>  .../dts/qcom/sc7180-trogdor-pompom-r2-lte.dts |  14 +
+>  .../dts/qcom/sc7180-trogdor-pompom-r2.dts     |  44 +++
+>  .../boot/dts/qcom/sc7180-trogdor-pompom.dtsi  | 288 ++++++++++++++++++
+>  6 files changed, 390 insertions(+)
 
-Should be replaced with:
+As always I see a typo right after I hit send.  ${SUBJECT} should be
+"trogdor-pompom", not "lazor-pompom" for this and the next patch.  I
+copy/pastad from the previous patch (limozeen _is_ actually a lazor)
+and didn't adjust properly.
 
-[PATCH 02/13] arm64: dts: qcom: Move sc7180 MI2S config to board files
-and make pulldown
+I'm happy with any:
+* to spin a -r2
+* for Bjorn to fix when landing
+* for this just to land since it's a harmless typo.
 
-https://lore.kernel.org/r/20210225141022.2.Id27e7e6f90c29bf623fa4880e18a14ba1dffd2d2@changeid
+In any case I won't spin for now but I wanted to reply so if I do spin
+for another reason I'll won't forget.  ;-)
 
 -Doug
