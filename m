@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F182B324CEA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 10:35:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DABF1324CF1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Feb 2021 10:35:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236400AbhBYJcI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Feb 2021 04:32:08 -0500
-Received: from m42-2.mailgun.net ([69.72.42.2]:34886 "EHLO m42-2.mailgun.net"
+        id S236379AbhBYJcy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Feb 2021 04:32:54 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:20348 "EHLO z11.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236392AbhBYJb5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Feb 2021 04:31:57 -0500
+        id S236404AbhBYJcK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 25 Feb 2021 04:32:10 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1614245497; h=Content-Transfer-Encoding: MIME-Version:
+ s=smtp; t=1614245513; h=Content-Transfer-Encoding: MIME-Version:
  References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=9xYCqsx5A2zFAXdM9EdSwrFqjQKdJzHEIVd/EnyYFHM=; b=kLErTXP8hGO4YDFs+rxX/ntI75MKN2VSB3k8lKZix3lyWP02cUOhLoioU3jLvln5RNGlR+KG
- HFo7khQ2JLQxJY1o0Gkw64Ih7oPksuIAbKTOfkzkLqNyznEYk41w/E7nnINqbRzHW6X4XlO9
- 8f9JOJts2hRgzvdAepmwTcFZsZY=
-X-Mailgun-Sending-Ip: 69.72.42.2
+ Sender; bh=Zy/1sw710EYSbX9HunAyoi/mAGLEDyntkBgng3WzWjU=; b=ggKTyz+1SX6glZ4UXfKCxD6EIHUlRL6Ywo5qqYmWWMShyaHM37RwrVlU1Ws9V+kx8QvjvRb8
+ W6/L9jvSHYVo+udkpOytOFg0GT992wiPHKD1hOnyY1IP8mrqlt4MM7VkQQcsMkWNKTQY4fBl
+ 958Q9thCEEKSwj9A45tASgYSf+I=
+X-Mailgun-Sending-Ip: 104.130.96.11
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 60376e5e6ba9d8a92b83d7a6 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 25 Feb 2021 09:31:10
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 60376e64ba1dc15780329cdb (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 25 Feb 2021 09:31:16
  GMT
 Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9BFB1C43463; Thu, 25 Feb 2021 09:31:09 +0000 (UTC)
+        id EE4DCC43464; Thu, 25 Feb 2021 09:31:15 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,9 +37,9 @@ Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Out
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1091DC433ED;
-        Thu, 25 Feb 2021 09:31:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1091DC433ED
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 614E2C433ED;
+        Thu, 25 Feb 2021 09:31:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 614E2C433ED
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
 From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
@@ -51,9 +51,9 @@ Cc:     devicetree@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
         Rajendra Nayak <rnayak@codeaurora.org>,
         Sibi Sankar <sibis@codeaurora.org>,
         Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCH 2/9] soc: qcom: llcc: Add configuration data for SC7280
-Date:   Thu, 25 Feb 2021 15:00:18 +0530
-Message-Id: <348fcb76ea837c043f2e493c6df8aa5ebb182c92.1614244789.git.saiprakash.ranjan@codeaurora.org>
+Subject: [PATCH 3/9] arm64: dts: qcom: sc7280: Add device tree node for LLCC
+Date:   Thu, 25 Feb 2021 15:00:19 +0530
+Message-Id: <c4b7ae4dd009f563e6786f4a41f09efa38636fb6.1614244789.git.saiprakash.ranjan@codeaurora.org>
 X-Mailer: git-send-email 2.29.0
 In-Reply-To: <cover.1614244789.git.saiprakash.ranjan@codeaurora.org>
 References: <cover.1614244789.git.saiprakash.ranjan@codeaurora.org>
@@ -63,57 +63,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add LLCC configuration data for SC7280 SoC.
+Add a DT node for Last level cache (aka. system cache)
+controller which provides control over the last level
+cache present on SC7280 SoC.
 
 Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 ---
- drivers/soc/qcom/llcc-qcom.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index 8403a77b59fe..15a36dcab990 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -109,6 +109,18 @@ static const struct llcc_slice_config sc7180_data[] =  {
- 	{ LLCC_GPU,      12, 128, 1, 0, 0xf, 0x0, 0, 0, 0, 1, 0 },
- };
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 3b86052b78bc..aeeb47c70c3a 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -338,6 +338,13 @@ uart5: serial@994000 {
+ 			};
+ 		};
  
-+static const struct llcc_slice_config sc7280_data[] =  {
-+	{ LLCC_CPUSS,    1,  768, 1, 0, 0x3f, 0x0, 0, 0, 0, 1, 1, 0},
-+	{ LLCC_MDMHPGRW, 7,  512, 2, 1, 0x3f, 0x0, 0, 0, 0, 1, 0, 0},
-+	{ LLCC_CMPT,     10, 768, 1, 1, 0x3f, 0x0, 0, 0, 0, 1, 0, 0},
-+	{ LLCC_GPUHTW,   11, 256, 1, 1, 0x3f, 0x0, 0, 0, 0, 1, 0, 0},
-+	{ LLCC_GPU,      12, 512, 1, 0, 0x3f, 0x0, 0, 0, 0, 1, 0, 0},
-+	{ LLCC_MMUHWT,   13, 256, 1, 1, 0x3f, 0x0, 0, 0, 0, 1, 1, 0},
-+	{ LLCC_MDMPNG,   21, 768, 0, 1, 0x3f, 0x0, 0, 0, 0, 1, 0, 0},
-+	{ LLCC_WLHW,     24, 256, 1, 1, 0x3f, 0x0, 0, 0, 0, 1, 0, 0},
-+	{ LLCC_MODPE,    29, 64,  1, 1, 0x3f, 0x0, 0, 0, 0, 1, 0, 0},
-+};
++		system-cache-controller@9200000 {
++			compatible = "qcom,sc7280-llcc";
++			reg = <0 0x09200000 0 0xd0000>, <0 0x09600000 0 0x50000>;
++			reg-names = "llcc_base", "llcc_broadcast_base";
++			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
++		};
 +
- static const struct llcc_slice_config sdm845_data[] =  {
- 	{ LLCC_CPUSS,    1,  2816, 1, 0, 0xffc, 0x2,   0, 0, 1, 1, 1 },
- 	{ LLCC_VIDSC0,   2,  512,  2, 1, 0x0,   0x0f0, 0, 0, 1, 1, 0 },
-@@ -179,6 +191,12 @@ static const struct qcom_llcc_config sc7180_cfg = {
- 	.need_llcc_cfg	= true,
- };
- 
-+static const struct qcom_llcc_config sc7280_cfg = {
-+	.sct_data	= sc7280_data,
-+	.size		= ARRAY_SIZE(sc7280_data),
-+	.need_llcc_cfg	= true,
-+};
-+
- static const struct qcom_llcc_config sdm845_cfg = {
- 	.sct_data	= sdm845_data,
- 	.size		= ARRAY_SIZE(sdm845_data),
-@@ -606,6 +624,7 @@ static int qcom_llcc_probe(struct platform_device *pdev)
- 
- static const struct of_device_id qcom_llcc_of_match[] = {
- 	{ .compatible = "qcom,sc7180-llcc", .data = &sc7180_cfg },
-+	{ .compatible = "qcom,sc7280-llcc", .data = &sc7280_cfg },
- 	{ .compatible = "qcom,sdm845-llcc", .data = &sdm845_cfg },
- 	{ .compatible = "qcom,sm8150-llcc", .data = &sm8150_cfg },
- 	{ .compatible = "qcom,sm8250-llcc", .data = &sm8250_cfg },
+ 		pdc: interrupt-controller@b220000 {
+ 			compatible = "qcom,sc7280-pdc", "qcom,pdc";
+ 			reg = <0 0xb220000 0 0x30000>;
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
