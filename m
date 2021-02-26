@@ -2,118 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E5FB325FFC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 10:27:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 24CDE326056
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 10:44:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230347AbhBZJZw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Feb 2021 04:25:52 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:60023 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230153AbhBZJXt (ORCPT
+        id S230241AbhBZJmL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Feb 2021 04:42:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45838 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230416AbhBZJkN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Feb 2021 04:23:49 -0500
-Received: from ironmsg07-lv.qualcomm.com (HELO ironmsg07-lv.qulacomm.com) ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 26 Feb 2021 01:21:19 -0800
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg07-lv.qulacomm.com with ESMTP/TLS/AES256-SHA; 26 Feb 2021 01:21:17 -0800
-X-QCInternal: smtphost
-Received: from gokulsri-linux.qualcomm.com ([10.201.2.207])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 26 Feb 2021 14:51:04 +0530
-Received: by gokulsri-linux.qualcomm.com (Postfix, from userid 432570)
-        id 8EC2320E23; Fri, 26 Feb 2021 14:51:05 +0530 (IST)
-From:   Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
-To:     linux-arm-msm@vger.kernel.org, inux-kernel@vger.kernel.org
-Cc:     manivannan.sadhasivam@linaro.org, jhugo@codeaurora.org,
-        hemantk@codeaurora.org, sricharan@codeaurora.org,
-        gokulsri@codeaurora.org
-Subject: [PATCH v2] bus: mhi: core: Add unique qrtr node id support
-Date:   Fri, 26 Feb 2021 14:49:59 +0530
-Message-Id: <1614331199-11420-2-git-send-email-gokulsri@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1614331199-11420-1-git-send-email-gokulsri@codeaurora.org>
-References: <1614331199-11420-1-git-send-email-gokulsri@codeaurora.org>
+        Fri, 26 Feb 2021 04:40:13 -0500
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4712EC06178A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 01:39:33 -0800 (PST)
+Received: by mail-pf1-x42f.google.com with SMTP id d12so3360555pfo.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 01:39:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=6Q2ywN2R3ak+BqAXmcN6VqsaqAp1UIip6HaT6G1aoFQ=;
+        b=A3MjwjZfT9YMbhxf0FUmQWGwW/vXnarvkPAQZp7e0UticZ2jJffk32Nl+M6hkqAvFe
+         KxwMjl/S9XHXSSofYA1UQ5DgFs9du6SkNySTiyOnU2Q4EnUA89lhWlpHfREG9htvWUfW
+         qT2iTjeQQooOhAjMorh7L9H/p08/9CtUqT/lOkHUdLBpqXn3ooh4R67f8SveKXP1SZhF
+         aSUHjkChUuwNAxnl7JnEMbx4SpH8rYj1Ol/rsDO4uvO34qSwqSJnPMQHtX8h78gYcvMO
+         76WdomZQaCromx/zpuD0B6UkmTBx1AxZWoMctK4H7GuuLE5AvESlFy7nBBPjHVqSniSw
+         pYQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=6Q2ywN2R3ak+BqAXmcN6VqsaqAp1UIip6HaT6G1aoFQ=;
+        b=i3cwr0NSxZiLxxyPIeWErZWSzHCXBrGGJJmngi86ldPTlxCXXf3x29a1AGCfYZqfEY
+         LOHWf8G1W2PlcUhgIpCRAIykgqPX8G0kvdz4MRkwaG6RMluuPNoLeOrFOUF9LaHro/ri
+         pBCh8EnMXWYnRLwcNOCnMWEIGPqd29+u7UTfcPh7fNe9dSe/kqGXzboD0Kegd2KsMTFN
+         fRGiAh7ECVOri53L1OWf3/mLLJpZYqSU0trFWInH6izTkHkCCTH7EWGTd9nOJaLLlSuq
+         aDGelkRmPUdIO2zYfsGJYK4JB0ZTpy2l5RrA2vS5Adiuu/A/BNYfBYOSHsPlg2EfYV6g
+         5BlA==
+X-Gm-Message-State: AOAM533Pjmopo+SlhLrP0gqkSXdFQ9fl/7qILEZpccgzMHLzDZljpUKy
+        JK1bVdQReg2T44Nn/QSEhc9dECheWgjUEw==
+X-Google-Smtp-Source: ABdhPJy1OL4awEUmEgaKzNy7Bucg2w6a5Q0pKhipwehQ5zkcwkfNafWiKOGLq7kzCfRZMu1WFcbIFQ==
+X-Received: by 2002:a05:6a00:c1:b029:1ee:1add:baf8 with SMTP id e1-20020a056a0000c1b02901ee1addbaf8mr2462253pfj.64.1614332372724;
+        Fri, 26 Feb 2021 01:39:32 -0800 (PST)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id s138sm9650794pfc.135.2021.02.26.01.39.30
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 26 Feb 2021 01:39:32 -0800 (PST)
+Date:   Fri, 26 Feb 2021 17:39:26 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Andy Shevchenko <andy.shevchenko@gmail.com>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Mika Westerberg <mika.westerberg@linux.intel.com>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] gpiolib: acpi: support override broken GPIO number in
+ ACPI table
+Message-ID: <20210226093925.GA24428@dragon>
+References: <20210226033919.8871-1-shawn.guo@linaro.org>
+ <CAHp75Vcb=NO9OWjSpBeVC4c+9=aXE=yiDWVBwLD1DnzwdgFD6Q@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHp75Vcb=NO9OWjSpBeVC4c+9=aXE=yiDWVBwLD1DnzwdgFD6Q@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On platforms with two or more identical mhi
-devices, qmi service will run with identical
-qrtr-node-id. Because of this identical ID,
-host qrtr-lookup cannot register more than one
-qmi service with identical node ID. Ultimately,
-only one qmi service will be avilable for the
-underlying drivers to communicate with.
+On Fri, Feb 26, 2021 at 11:12:07AM +0200, Andy Shevchenko wrote:
+> On Fri, Feb 26, 2021 at 5:42 AM Shawn Guo <shawn.guo@linaro.org> wrote:
+> >
+> > Running kernel with ACPI on Lenovo Flex 5G laptop, touchpad is just
+> > not working.  That's because the GpioInt number of TSC2 node in ACPI
+> > table is simply wrong, and the number even exceeds the maximum GPIO
+> > lines.  As the touchpad works fine with Windows on the same machine,
+> > presumably this is something Windows-ism.  Although it's obviously
+> > a specification violation, believe of that Microsoft will fix this in
+> > the near future is not really realistic.
+> >
+> > It adds the support of overriding broken GPIO number in ACPI table
+> > on particular machines, which are matched using DMI info.  Such
+> > mechanism for fixing up broken firmware and ACPI table is not uncommon
+> > in kernel.  And hopefully it can be useful for other machines that get
+> > broken GPIO number coded in ACPI table.
+> 
+> Thanks for the report and patch.
+> 
+> First of all, have you reported the issue to Lenovo? At least they
+> will know that they did wrong.
 
-On QCN9000, it implements a unique qrtr-node-id
-and qmi instance ID using a unique instance ID
-written to a debug register from host driver
-soon after SBL is loaded.
+Yes, we are reporting this to Lenovo, but to be honest, we are not sure
+how much they will care about it, as they are shipping the laptop with
+Windows only.
 
-This change generates a unique instance ID from
-PCIe domain number and bus number, writes to the
-given debug register just after SBL is loaded so
-that it is available for FW when the QMI service
-is spawned.
+> Second, is it possible to have somewhere output of `acpidump -o
+> flex5g.dat` (the flex5g.dat file)?
 
-sample:
-root@OpenWrt:/# qrtr-lookup
-  Service Version Instance Node  Port
-       15       1        0    8     1 Test service
-       69       1        8    8     2 ATH10k WLAN firmware service
-       15       1        0   24     1 Test service
-       69       1       24   24     2 ATH10k WLAN firmware service
+https://raw.githubusercontent.com/aarch64-laptops/build/master/misc/lenovo-flex-5g/dsdt.dsl
 
-Here 8 and 24 on column 3 (QMI Instance ID)
-and 4 (QRTR Node ID) are the node IDs that
-is unique per mhi device.
+> And as Mika said once to one of mine patches "since you know the
+> number ahead there is no need to pollute GPIO ACPI library core with
+> this quirk". But in any case I would like to see the ACPI tables
+> first.
 
-Signed-off-by: Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
----
- drivers/bus/mhi/core/boot.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+Oh, so you had something similar already?  Could you point me to the
+patch and discussion?
 
-diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
-index c2546bf..5e5dad5 100644
---- a/drivers/bus/mhi/core/boot.c
-+++ b/drivers/bus/mhi/core/boot.c
-@@ -16,8 +16,12 @@
- #include <linux/random.h>
- #include <linux/slab.h>
- #include <linux/wait.h>
-+#include <linux/pci.h>
- #include "internal.h"
- 
-+#define QRTR_INSTANCE_MASK	0x000000FF
-+#define QRTR_INSTANCE_SHIFT	0
-+
- /* Setup RDDM vector table for RDDM transfer and program RXVEC */
- void mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
- 		      struct image_info *img_info)
-@@ -391,6 +395,9 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
- 	const struct firmware *firmware = NULL;
- 	struct image_info *image_info;
- 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-+	struct pci_dev *pci_dev = to_pci_dev(mhi_cntrl->cntrl_dev);
-+	struct pci_bus *bus = pci_dev->bus;
-+	uint32_t instance;
- 	const char *fw_name;
- 	void *buf;
- 	dma_addr_t dma_addr;
-@@ -466,6 +473,13 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
- 		return;
- 	}
- 
-+	instance = ((pci_domain_nr(bus) & 0xF) << 4) | (bus->number & 0xF);
-+	instance &= QRTR_INSTANCE_MASK;
-+
-+	mhi_write_reg_field(mhi_cntrl, mhi_cntrl->bhi,
-+			    BHI_ERRDBG2, QRTR_INSTANCE_MASK,
-+			    QRTR_INSTANCE_SHIFT, instance);
-+
- 	write_lock_irq(&mhi_cntrl->pm_lock);
- 	mhi_cntrl->dev_state = MHI_STATE_RESET;
- 	write_unlock_irq(&mhi_cntrl->pm_lock);
--- 
-2.7.4
-
+Shawn
