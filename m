@@ -2,33 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C69CE325DD3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 08:01:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 18171325E77
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 08:53:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229622AbhBZHAM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Feb 2021 02:00:12 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:53614 "EHLO z11.mailgun.us"
+        id S229586AbhBZHvt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Feb 2021 02:51:49 -0500
+Received: from m42-2.mailgun.net ([69.72.42.2]:11792 "EHLO m42-2.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229550AbhBZHAJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Feb 2021 02:00:09 -0500
+        id S229550AbhBZHvt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 26 Feb 2021 02:51:49 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1614322792; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1614325888; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=hAhoz3D6d2Kk6jyvUqWPj14y7zKa/ypo+MS/MSezQXk=;
- b=k7LGf5VjQJ9Fyc3y/Ba6Nkq1KKPXk2zOcVOQk28Y3g374/sCrXDcxa9S4y1yvqfNH3YV4Klj
- pp/ZEWxXlxY9OwdkGoKEX7F3Ns20ndzGVB2P3CUQHFk4b3Suk2VFXGAzcpKo2aizrV0mZve2
- cchSYPpd7K0lAuVFsCvh0c2/Xe0=
-X-Mailgun-Sending-Ip: 104.130.96.11
+ MIME-Version: Sender; bh=r8ceqRaD6vKp+3sEIocnghQuW8k5dUvRT7WlMB6q6bw=;
+ b=XdwT8BcdmkKiCmPCgZJ32xlSJn8ucPjkS4BdsnVhzPsdu9AVqI0FKbpYSnfCYUuhF3QfhMiP
+ 3y8SsMTzHCsVORgZqn5Ju1MH+0xoNOLFg5G5kI+PG2Kns0JeUv7K559yVOBR+wbvMoviN9gY
+ jyowCCN32+l9JtgukmTwfTWhP8g=
+X-Mailgun-Sending-Ip: 69.72.42.2
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 60389c5bba1dc157807a59fb (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 26 Feb 2021 06:59:39
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 6038a865ea793fa303212752 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 26 Feb 2021 07:51:01
  GMT
-Sender: skakit=codeaurora.org@mg.codeaurora.org
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2BF95C43463; Fri, 26 Feb 2021 06:59:39 +0000 (UTC)
+        id 17073C43462; Fri, 26 Feb 2021 07:51:01 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,86 +37,98 @@ X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
 Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: skakit)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4DB2EC433CA;
-        Fri, 26 Feb 2021 06:59:38 +0000 (UTC)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4B4FFC433C6;
+        Fri, 26 Feb 2021 07:51:00 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Fri, 26 Feb 2021 12:29:38 +0530
-From:   skakit@codeaurora.org
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 26 Feb 2021 13:21:00 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Stephen Boyd <swboyd@chromium.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, rnayak@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, kgunda@codeaurora.org
-Subject: Re: [PATCH 3/7] regulator: qcom-rpmh: Correct the pmic5_hfsmps515
- buck
-In-Reply-To: <50151f4b-298c-f0ee-a88f-7bdd945ad249@linaro.org>
-References: <1614155592-14060-1-git-send-email-skakit@codeaurora.org>
- <1614155592-14060-4-git-send-email-skakit@codeaurora.org>
- <50151f4b-298c-f0ee-a88f-7bdd945ad249@linaro.org>
-Message-ID: <51390b828a5d534e308460098f1b9af0@codeaurora.org>
-X-Sender: skakit@codeaurora.org
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>
+Subject: Re: [PATCH 8/9] arm64: dts: qcom: sc7280: Add AOSS QMP node
+In-Reply-To: <161428210272.1254594.16034240343090747878@swboyd.mtv.corp.google.com>
+References: <cover.1614244789.git.saiprakash.ranjan@codeaurora.org>
+ <463a45f2c3e4a91430c006fa1637c7f4f124185e.1614244789.git.saiprakash.ranjan@codeaurora.org>
+ <161428210272.1254594.16034240343090747878@swboyd.mtv.corp.google.com>
+Message-ID: <dc3be32a3f8197d3138fe1ef6c24316a@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On 2021-02-25 16:39, Dmitry Baryshkov wrote:
-> On 24/02/2021 11:33, satya priya wrote:
->> Correct the REGULATOR_LINEAR_RANGE and n_voltges for
->> pmic5_hfsmps515 buck.
+On 2021-02-26 01:11, Stephen Boyd wrote:
+> Quoting Sai Prakash Ranjan (2021-02-25 01:30:24)
+>> Add a DT node for the AOSS QMP on SC7280 SoC.
 >> 
->> Signed-off-by: satya priya <skakit@codeaurora.org>
+>> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 >> ---
->>   drivers/regulator/qcom-rpmh-regulator.c | 4 ++--
->>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 14 ++++++++++++++
+>>  1 file changed, 14 insertions(+)
 >> 
->> diff --git a/drivers/regulator/qcom-rpmh-regulator.c 
->> b/drivers/regulator/qcom-rpmh-regulator.c
->> index 79a554f..36542c3 100644
->> --- a/drivers/regulator/qcom-rpmh-regulator.c
->> +++ b/drivers/regulator/qcom-rpmh-regulator.c
->> @@ -726,8 +726,8 @@ static const struct rpmh_vreg_hw_data 
->> pmic5_ftsmps510 = {
->>   static const struct rpmh_vreg_hw_data pmic5_hfsmps515 = {
->>   	.regulator_type = VRM,
->>   	.ops = &rpmh_regulator_vrm_ops,
->> -	.voltage_range = REGULATOR_LINEAR_RANGE(2800000, 0, 4, 16000),
->> -	.n_voltages = 5,
->> +	.voltage_range = REGULATOR_LINEAR_RANGE(320000, 0, 235, 16000),
->> +	.n_voltages = 236,
-> 
-> I've checked the docs for pm8009, the chip which also uses hfsmps515
-> regulators. The pdf clearly states that the 'Output voltage operating
-> range' is from 2.8 V to 2.85 V.
-> 
-> So we'd probably need to define different versions of HFS515 regulator
-> data (like I had to create for pm8009-1).
-> 
-> 
-
-The min-max voltages for S1C (PM8350c) regulator are 2190000-2210000uV 
-for sc7280(kodiak), so we had to modify this buck to support this 
-regulator.
-
-AFAIK, this struct defines the HW constraints of a regulator, but the 
-platform specific min-max values can be controlled from DT files. So, 
-can't we modify it like above instead of adding a new definition? the 
-new min_uV value (32000) is anyway not exceeding the old value (2800000) 
-right? please correct me if wrong.
-
->>   	.pmic_mode_map = pmic_mode_map_pmic5_smps,
->>   	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
->>   };
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi 
+>> b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> index 65c1e0f2fb56..cbd567ccc04e 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> @@ -9,6 +9,7 @@
+>>  #include <dt-bindings/clock/qcom,rpmh.h>
+>>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+>>  #include <dt-bindings/mailbox/qcom-ipcc.h>
+>> +#include <dt-bindings/power/qcom-aoss-qmp.h>
+>>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
 >> 
+>>  / {
+>> @@ -368,6 +369,19 @@ pdc: interrupt-controller@b220000 {
+>>                         interrupt-controller;
+>>                 };
+>> 
+>> +               aoss_qmp: qmp@c300000 {
+> 
+> power-domain-controller@c300000? power-controller@c300000?
+> 
+
+Its an AOSS message RAM and all other SM* SoCs have as qmp@
+and the dt binding as well, I see only SM8150 with power-controller,
+that should probably be fixed?
+
+>> +                       compatible = "qcom,sc7280-aoss-qmp";
+>> +                       reg = <0 0x0c300000 0 0x100000>;
+>> +                       interrupts-extended = <&ipcc IPCC_CLIENT_AOP
+>> +                                                    
+>> IPCC_MPROC_SIGNAL_GLINK_QMP
+>> +                                                    
+>> IRQ_TYPE_EDGE_RISING>;
+>> +                       mboxes = <&ipcc IPCC_CLIENT_AOP
+>> +                                       IPCC_MPROC_SIGNAL_GLINK_QMP>;
+>> +
+>> +                       #clock-cells = <0>;
+>> +                       #power-domain-cells = <1>;
+>> +               };
+>> +
+>>                 spmi_bus: qcom,spmi@c440000 {
+> 
+> Ick, should be spmi@
+> 
+
+Not introduced by this patch but I'll pass on the comment.
+
+>>                         compatible = "qcom,spmi-pmic-arb";
+>>                         reg = <0 0x0c440000 0 0x1100>,
+
 
 Thanks,
-Satya Priya
+Sai
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
