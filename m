@@ -2,167 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AE4C1326798
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 20:59:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E3FB32679B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 20:59:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230018AbhBZTzB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Feb 2021 14:55:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36510 "EHLO
+        id S230090AbhBZTzY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Feb 2021 14:55:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229698AbhBZTzA (ORCPT
+        with ESMTP id S230083AbhBZTzV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Feb 2021 14:55:00 -0500
-Received: from mail-io1-xd42.google.com (mail-io1-xd42.google.com [IPv6:2607:f8b0:4864:20::d42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09787C06174A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 11:54:20 -0800 (PST)
-Received: by mail-io1-xd42.google.com with SMTP id u20so10880889iot.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 11:54:20 -0800 (PST)
+        Fri, 26 Feb 2021 14:55:21 -0500
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4269CC061788
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 11:54:41 -0800 (PST)
+Received: by mail-pg1-x52c.google.com with SMTP id o63so6853545pgo.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 11:54:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cosmicpenguin-net.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=JIP7pj2bII2YYqVDvOr4T8XZtG0IKAlZ5S5uVeQftY8=;
-        b=ReNrLHuTcYMc5CV8DYEubwqgUp8OLflDGEY3KtfN43gOeixyXRxztxX99MgxHh0g5d
-         64KTNKWWxXh2DgacpC4Wr91I7A5c/DV52KLxiNYe3/k3tSnFScQqUEYqVhFnrqyAJPCv
-         OU7V7jy/7u93j2hDr4MzeddvDsi7nOAxg/L86PTHJhXfrSfMy5J+Wj6K1fp0e7IsjMFI
-         b9S9V8UPPqDvUV/hcyBozDp+3fFJuK3M6drZly2dsWbnlnimNN39KgKUgcUMs0xLzOhb
-         rRqpiSFSTrSfDaJo77cGfE9CpNFM0cy4knvulCrmTuoZeplJi6wi92xK1eRB97L/Vr6b
-         duKg==
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=eAEBqCOJkxJ1r1F8GhCGJ0TIz6UVggh6SIZaIVvLlPE=;
+        b=ljJ2Fuy7+hY05J2HY4PheVlwKxZ4hwOhsJ4ThJZ+cBMA0mtKtzlfCW/QCoJVz+CufQ
+         rkiJELrxJaxvp5GUEFQOUX01lErTgBFZOishaWk8PL+LV2u6PKJRwfPCxyFdjD5WkVOf
+         4Nl9aQ4RGoFAhTrIfvEStC3L9/G+GfOjIr7Ek=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mail-followup-to
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=JIP7pj2bII2YYqVDvOr4T8XZtG0IKAlZ5S5uVeQftY8=;
-        b=SDb7qJfda70eAO9r5pT7YH5RKVBZeVtTWC7COJUetIxxBc4uEPSQzpOY27VFuoWlRk
-         mHr4pbPqJi/MZk1+y/XLpumwydFCGmGgDYfjaCMrdaf0ekR0S+W45do8krKjifnyHAui
-         X0lj/QtKHVDLhqlovPdfs+laNbWs6GsSYFwwxRDHV4IMlkF+kZP41Q3/oDiKrVHqCFY9
-         gZrv46NhTemODdVT9r0OV4s6nUmfHv8gpkmipz9jLOyz3T2P2hF8nf4GgMedlxC94UW4
-         MCOIkN5l388lPKCcC1xso+W/vblNLL9LrzWvYVJJsAc3hL0Uc7IEZm7oCanSEeC5S7Rp
-         4uOw==
-X-Gm-Message-State: AOAM530QS4H6Ptbi3KmkHvpDQOzidLQDjNgIKQ8nwc8Ny8eetWSrW2D7
-        XK0aOgLNsUPExRT1ZDlrcQb2zuN1A4cc6WHf
-X-Google-Smtp-Source: ABdhPJxT3JMfcN7o0fe55mwMhIvwoQjsrhAEaDedA6b09+t1iIJRi3Lvanp7xOpZX4iPzsgu8QnT+Q==
-X-Received: by 2002:a02:3541:: with SMTP id y1mr4532704jae.66.1614369259483;
-        Fri, 26 Feb 2021 11:54:19 -0800 (PST)
-Received: from cosmicpenguin.net (c-71-237-100-236.hsd1.co.comcast.net. [71.237.100.236])
-        by smtp.gmail.com with ESMTPSA id u14sm5012109ilv.0.2021.02.26.11.54.18
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=eAEBqCOJkxJ1r1F8GhCGJ0TIz6UVggh6SIZaIVvLlPE=;
+        b=SpN7DuaTA+w42mlnmAIz3tbJUu+NxN151H2OsU7PEMQ6vFpuRZ4qDfhgKhKFh09vjU
+         UZndPr/FfBZeCkCyqQg9qxT/h6+seOAXLc9lY9jKWPb1ZWLPg3azdztaElnrshOOeHyP
+         0US16/ICQHOTnGSBWNhRiXvMc3nRgYGrK9jyeqCKYRm/QQ6INuu1hIzFlDi6SBH7pqF0
+         p9Rs8+Cfx5VH8YOW4IVupmsbWgk+tnCKQ+YqiBtpS4xvXxFMji6V1bkX7OQAsPne0V4u
+         /kUaYVl4JgtgHswqLLE9Vpfzp5X8HLkLFi3TM0A2HU1zVkZJprUmON/kKnkpHPGqtOPK
+         FwSQ==
+X-Gm-Message-State: AOAM532pos/rlNMc1GokkBi6RGMxDNVhl9EzASAhvi1YkFKOgsopb7mo
+        kTTf8wpExOwe0ajkRnRPYEZWvw==
+X-Google-Smtp-Source: ABdhPJx/iwqYnKdkJ8ZTifEcGMD50vYTwI/+zx3Z1QESFaLFTJKemPk4WhkwNFXpnj5ttDyMgSbk2Q==
+X-Received: by 2002:a62:194f:0:b029:1ee:5078:23a8 with SMTP id 76-20020a62194f0000b02901ee507823a8mr665462pfz.70.1614369280793;
+        Fri, 26 Feb 2021 11:54:40 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:201:e8bb:5726:f58b:4e37])
+        by smtp.gmail.com with ESMTPSA id 14sm10503282pfy.55.2021.02.26.11.54.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Feb 2021 11:54:19 -0800 (PST)
-Date:   Fri, 26 Feb 2021 12:54:16 -0700
-From:   Jordan Crouse <jordan@cosmicpenguin.net>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Will Deacon <will@kernel.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, Robin Murphy <robin.murphy@arm.com>,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCHv2 2/2] iommu/arm-smmu-qcom: Move the adreno smmu specific
- impl earlier
-Message-ID: <20210226195416.7dzyln7v6lke6ssr@cosmicpenguin.net>
-Mail-Followup-To: Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Will Deacon <will@kernel.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, Robin Murphy <robin.murphy@arm.com>,
-        linux-arm-kernel@lists.infradead.org
-References: <cover.1614332994.git.saiprakash.ranjan@codeaurora.org>
- <c607d71eb0fe507c8b83cc0ea9b393777f22149a.1614332994.git.saiprakash.ranjan@codeaurora.org>
- <YDku5PFQZetP4iG8@builder.lan>
- <20210226184813.t6ohkh3gxeseev2j@cosmicpenguin.net>
+        Fri, 26 Feb 2021 11:54:40 -0800 (PST)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210226184813.t6ohkh3gxeseev2j@cosmicpenguin.net>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1613127000-3015-4-git-send-email-mkrishn@codeaurora.org>
+References: <1613127000-3015-1-git-send-email-mkrishn@codeaurora.org> <1613127000-3015-4-git-send-email-mkrishn@codeaurora.org>
+Subject: Re: [PATCH v12 4/4] dt-bindings: msm/dp: Add bindings of MSM DisplayPort controller
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
+        kalyan_t@codeaurora.org, tanmay@codeaurora.org,
+        abhinavk@codeaurora.org, robdclark@gmail.com,
+        bjorn.andersson@linaro.org, vinod.koul@linaro.org,
+        rnayak@codeaurora.org, dianders@chromium.org, sibis@codeaurora.org,
+        khsieh@codeaurora.org, Chandan Uddaraju <chandanu@codeaurora.org>,
+        Vara Reddy <varar@codeaurora.org>
+To:     Krishna Manikandan <mkrishn@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org
+Date:   Fri, 26 Feb 2021 11:54:38 -0800
+Message-ID: <161436927893.1254594.14208287911778577764@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Feb 26, 2021 at 11:48:13AM -0700, Jordan Crouse wrote:
-> On Fri, Feb 26, 2021 at 11:24:52AM -0600, Bjorn Andersson wrote:
-> > On Fri 26 Feb 03:55 CST 2021, Sai Prakash Ranjan wrote:
-> > 
-> > > Adreno(GPU) SMMU and APSS(Application Processor SubSystem) SMMU
-> > > both implement "arm,mmu-500" in some QTI SoCs and to run through
-> > > adreno smmu specific implementation such as enabling split pagetables
-> > > support, we need to match the "qcom,adreno-smmu" compatible first
-> > > before apss smmu or else we will be running apps smmu implementation
-> > > for adreno smmu and the additional features for adreno smmu is never
-> > > set. For ex: we have "qcom,sc7280-smmu-500" compatible for both apps
-> > > and adreno smmu implementing "arm,mmu-500", so the adreno smmu
-> > > implementation is never reached because the current sequence checks
-> > > for apps smmu compatible(qcom,sc7280-smmu-500) first and runs that
-> > > specific impl and we never reach adreno smmu specific implementation.
-> > > 
-> > 
-> > So you're saying that you have a single SMMU instance that's compatible
-> > with both an entry in qcom_smmu_impl_of_match[] and "qcom,adreno-smmu"?
-> > 
-> > Per your proposed change we will pick the adreno ops _only_ for this
-> > component, essentially disabling the non-Adreno quirks selected by the
-> > qcom impl. As such keeping the non-adreno compatible in the
-> > qcom_smmu_impl_init[] seems to only serve to obfuscate the situation.
-> > 
-> > Don't we somehow need the combined set of quirks? (At least if we're
-> > running this with a standard UEFI based boot flow?)
-> 
-> We *do* need the combined set of quirks, so there has to be an adreno-smmu
-> impelmentation that matches the "generic" implementation with a few extra
-> function hooks added on. I'm not sure if there is a clever way to figure out how
-> to meld the implementation hooks at runtime but the alternative is to just make
-> sure that the adreno-smmu static struct calls the same quirks as its generic
-> partner.
+Quoting Krishna Manikandan (2021-02-12 02:50:00)
+> Add bindings for Snapdragon DisplayPort controller driver.
+>=20
+> Signed-off-by: Chandan Uddaraju <chandanu@codeaurora.org>
+> Signed-off-by: Vara Reddy <varar@codeaurora.org>
+> Signed-off-by: Tanmay Shah <tanmay@codeaurora.org>
+> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+> Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
+>=20
+> Changes in V2:
+> -Provide details about sel-gpio
+>=20
+> Changes in V4:
+> -Provide details about max dp lanes
+> -Change the commit text
+>=20
+> Changes in V5:
+> -moved dp.txt to yaml file
+>=20
+> Changes in v6:
+> - Squash all AUX LUT properties into one pattern Property
+> - Make aux-cfg[0-9]-settings properties optional
+> - Remove PLL/PHY bindings from DP controller dts
+> - Add DP clocks description
+> - Remove _clk suffix from clock names
+> - Rename pixel clock to stream_pixel
+> - Remove redundant bindings (GPIO, PHY, HDCP clock, etc..)
+> - Fix indentation
+> - Add Display Port as interface of DPU in DPU bindings
+>   and add port mapping accordingly.
+>=20
+> Chages in v7:
+> - Add dp-controller.yaml file common between multiple SOC
+> - Rename dp-sc7180.yaml to dp-controller-sc7180.yaml
+> - change compatible string and add SOC name to it.
+> - Remove Root clock generator for pixel clock
+> - Add assigned-clocks and assigned-clock-parents bindings
+> - Remove redundant properties, descriptions and blank lines
+> - Add DP port in DPU bindings
+> - Update depends-on tag in commit message and rebase change accordingly
+>=20
+> Changes in v8:
+> - Add MDSS AHB clock in bindings
+>=20
+> Changes in v9:
+> - Remove redundant reg-name property
+> - Change assigned-clocks and assigned-clocks-parents counts to 2
+> - Use IRQ flags in example dts
+>=20
+> Changes in v10:
+> - Change title of this patch as it does not contain PLL bindings anymore
+> - Remove redundant properties
+> - Remove use of IRQ flag
+> - Fix ports property
+>=20
+> Changes in v11:
+> - add ports required of both #address-cells and  #size-cells
+> - add required operating-points-v2
+> - add required #sound-dai-cells
+> - add required power-domains
+> - update maintainer list
+> ---
+>  .../bindings/display/msm/dp-controller.yaml        | 152 +++++++++++++++=
+++++++
+>  .../bindings/display/msm/dpu-sc7180.yaml           |  10 ++
 
-To clarify, the gpu-smmu doesn't strictly need the s2cr handoff or the cfg_probe
-though it wouldn't hurt to have them since they would be essentially
-passthroughs for the GPU. We do need to capture errata like the
-sdm845_smmu500_reset which is already part of the upstream adreno
-implementation.
+Can this dpu-sc7180.yaml update be split away from this patch and put
+into the patch that introduces that yaml file?
 
-I think the main takeaway is that if a new errata or quirk is added
-for main mmu500 it needs to be considered for adreno-smmu too.
+>  2 files changed, 162 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dp-cont=
+roller.yaml
+>=20
 
-Jordan
+Otherwise
 
-> > > Suggested-by: Akhil P Oommen <akhilpo@codeaurora.org>
-> > > Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> > > ---
-> > >  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 12 +++++++++---
-> > >  1 file changed, 9 insertions(+), 3 deletions(-)
-> > > 
-> > > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> > > index bea3ee0dabc2..03f048aebb80 100644
-> > > --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> > > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> > > @@ -345,11 +345,17 @@ struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
-> > >  {
-> > >  	const struct device_node *np = smmu->dev->of_node;
-> > >  
-> > > -	if (of_match_node(qcom_smmu_impl_of_match, np))
-> > > -		return qcom_smmu_create(smmu, &qcom_smmu_impl);
-> > > -
-> > > +	/*
-> > > +	 * Do not change this order of implementation, i.e., first adreno
-> > > +	 * smmu impl and then apss smmu since we can have both implementing
-> > > +	 * arm,mmu-500 in which case we will miss setting adreno smmu specific
-> > > +	 * features if the order is changed.
-> > > +	 */
-> > >  	if (of_device_is_compatible(np, "qcom,adreno-smmu"))
-> > >  		return qcom_smmu_create(smmu, &qcom_adreno_smmu_impl);
-> > >  
-> > > +	if (of_match_node(qcom_smmu_impl_of_match, np))
-> > > +		return qcom_smmu_create(smmu, &qcom_smmu_impl);
-> > > +
-> > >  	return smmu;
-> > >  }
-> > > -- 
-> > > QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> > > of Code Aurora Forum, hosted by The Linux Foundation
-> > > 
-> > _______________________________________________
-> > iommu mailing list
-> > iommu@lists.linux-foundation.org
-> > https://lists.linuxfoundation.org/mailman/listinfo/iommu
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
