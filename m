@@ -2,134 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 229EC32674F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 20:16:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E34D0326774
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 20:33:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230183AbhBZTPh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Feb 2021 14:15:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56306 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229571AbhBZTPh (ORCPT
+        id S229745AbhBZTda (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Feb 2021 14:33:30 -0500
+Received: from youngberry.canonical.com ([91.189.89.112]:57725 "EHLO
+        youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229545AbhBZTd3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Feb 2021 14:15:37 -0500
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3C94C061574
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 11:14:56 -0800 (PST)
-Received: by mail-ot1-x32f.google.com with SMTP id h22so10057429otr.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 11:14:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=rdjUcLxk2QvpLN9cIgDlB2j3H6R/HkQpTGOCpOO1Kzc=;
-        b=mkm2dkX4Y+Z734KK7R323V1DAZfdISDSI0DyUExHe3MEfmafJkwFgjh/MTITPaACIx
-         6ri8ig6m2bvOCL6L5Vlj2iD5X04ZxDr7tMQYc+Vl09dTP5tcXLzXZP4enTSGazUZ8WUT
-         9jo8+oA2bc4w/7CQ1305a0+MIWEVgGfzw/gBlGvjFRDkrZjYkh1LipSMxOxUqoRuzjnh
-         3F2SpdqnJdHkzxXCh/DwUKJGbMPlGENG8X+95/t66ABEPVttZ8DvUR4BYhcWwuM8E2Ga
-         bMT64Tv03tP5ceB2fLJJO8qqQctHge9YmIawYoxZN6PXA239Et13LGoTpuh6sg0BHgRC
-         Tbbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=rdjUcLxk2QvpLN9cIgDlB2j3H6R/HkQpTGOCpOO1Kzc=;
-        b=IGO6zgoT/Bf9F8wb0KbdQt8frxJPfSi/ZGTbcalrhGYBp/4O48lwYV0trnA7nKqR0t
-         DXaYHSJfpPVRGlLQQt8wDSYopx2Dd3wwkn2gLZFdYUHT/FzovyX6sR80F0yNFzohg7fO
-         iGNmI5EFSdnpaONRSovoH64r2RQd24ewNC+sEzsPpOxwI+uel5EyYmL57WLKJu3WNxab
-         +eu+XdfRWF9YYvYWvKcyMz/nav48ePBh/zB3OA0P5K9xGcBuv+kiZwhyAnPNKhOxDEfl
-         Q8UrqlJZ6ah/HROFAu5bbYvpjCi5RvWZh11GYnpBXdAkP/9L7Y+iBP5Ajxz1gZ3m+7Eo
-         ATNQ==
-X-Gm-Message-State: AOAM533dCjCvWFGcV3gCDXi//7eCtMx+OCo1bAPeleH/pUj9lUPm/50z
-        H2AgI+1lsW7+2KwhCBqbaBHNQQ==
-X-Google-Smtp-Source: ABdhPJxzYAfho+QsHxzw0qLDDKe+oOdenr7TqRA2BY16Q3eGFcAz2SSEe8X4Q7pgZcv10c+yJEjeAg==
-X-Received: by 2002:a9d:ec8:: with SMTP id 66mr3553224otj.217.1614366896253;
-        Fri, 26 Feb 2021 11:14:56 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 64sm1965824otl.5.2021.02.26.11.14.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Feb 2021 11:14:55 -0800 (PST)
-Date:   Fri, 26 Feb 2021 13:14:54 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCHv2 2/2] iommu/arm-smmu-qcom: Move the adreno smmu specific
- impl earlier
-Message-ID: <YDlIrjkfv16o4Nu3@builder.lan>
-References: <cover.1614332994.git.saiprakash.ranjan@codeaurora.org>
- <c607d71eb0fe507c8b83cc0ea9b393777f22149a.1614332994.git.saiprakash.ranjan@codeaurora.org>
- <YDku5PFQZetP4iG8@builder.lan>
- <CAF6AEGvJF19JA5hNps37urMrF5r03y90XgvO4FtT6wFPD6UZcA@mail.gmail.com>
+        Fri, 26 Feb 2021 14:33:29 -0500
+Received: from 1.general.cking.uk.vpn ([10.172.193.212])
+        by youngberry.canonical.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        (Exim 4.86_2)
+        (envelope-from <colin.king@canonical.com>)
+        id 1lFir2-0003gr-59; Fri, 26 Feb 2021 19:32:48 +0000
+To:     AngeloGioacchino Del Regno <kholk11@gmail.com>
+Cc:     Amit Kucheria <amit.kucheria@linaro.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
+From:   Colin Ian King <colin.king@canonical.com>
+Subject: qcom: tsens-v1: MSM8976 base1 setting
+Message-ID: <54dc93e2-9105-0dcf-3d12-af5e29b30afd@canonical.com>
+Date:   Fri, 26 Feb 2021 19:32:47 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAF6AEGvJF19JA5hNps37urMrF5r03y90XgvO4FtT6wFPD6UZcA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 26 Feb 12:23 CST 2021, Rob Clark wrote:
+Hi there,
 
-> On Fri, Feb 26, 2021 at 9:24 AM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> >
-> > On Fri 26 Feb 03:55 CST 2021, Sai Prakash Ranjan wrote:
-> >
-> > > Adreno(GPU) SMMU and APSS(Application Processor SubSystem) SMMU
-> > > both implement "arm,mmu-500" in some QTI SoCs and to run through
-> > > adreno smmu specific implementation such as enabling split pagetables
-> > > support, we need to match the "qcom,adreno-smmu" compatible first
-> > > before apss smmu or else we will be running apps smmu implementation
-> > > for adreno smmu and the additional features for adreno smmu is never
-> > > set. For ex: we have "qcom,sc7280-smmu-500" compatible for both apps
-> > > and adreno smmu implementing "arm,mmu-500", so the adreno smmu
-> > > implementation is never reached because the current sequence checks
-> > > for apps smmu compatible(qcom,sc7280-smmu-500) first and runs that
-> > > specific impl and we never reach adreno smmu specific implementation.
-> > >
-> >
-> > So you're saying that you have a single SMMU instance that's compatible
-> > with both an entry in qcom_smmu_impl_of_match[] and "qcom,adreno-smmu"?
-> >
-> > Per your proposed change we will pick the adreno ops _only_ for this
-> > component, essentially disabling the non-Adreno quirks selected by the
-> > qcom impl. As such keeping the non-adreno compatible in the
-> > qcom_smmu_impl_init[] seems to only serve to obfuscate the situation.
-> >
-> > Don't we somehow need the combined set of quirks? (At least if we're
-> > running this with a standard UEFI based boot flow?)
-> >
-> 
-> are you thinking of the apps-smmu handover of display context bank?
-> That shouldn't change, the only thing that changes is that gpu-smmu
-> becomes an mmu-500, whereas previously only apps-smmu was..
-> 
+Static analysis with Coverity has found a potential issue in the
+following commit:
 
-The current logic picks one of:
-1) is the compatible mentioned in qcom_smmu_impl_of_match[]
-2) is the compatible an adreno
-3) no quirks needed
+commit 0e580290170dfb438d911c306b27d89d5b99c1d9
+Author: AngeloGioacchino Del Regno <kholk11@gmail.com>
+Date:   Sat Oct 5 12:41:31 2019 +0200
 
-The change flips the order of these, so the only way I can see this
-change affecting things is if we expected a match on #2, but we got one
-on #1.
+    thermal: qcom: tsens-v1: Add support for MSM8956 and MSM8976
 
-Which implies that the instance that we want to act according to the
-adreno impl was listed in qcom_smmu_impl_of_match[] - which either is
-wrong, or there's a single instance that needs both behaviors.
+The analysis is as follows on function calibrate_8976 in
+drivers/thermal/qcom/tsens-v1.c:
 
-(And I believe Jordan's answer confirms the latter - there's a single
-SMMU instance that needs all them quirks at once)
+249        switch (mode) {
+250        case TWO_PT_CALIB:
 
-Regards,
-Bjorn
+Operands don't affect result (CONSTANT_EXPRESSION_RESULT)
+
+result_independent_of_operands: (qfprom_cdata[2] & 255) >> 8 is 0
+regardless of the values of its operands. This occurs as the operand of
+assignment.
+
+251                base1 = (qfprom_cdata[2] & MSM8976_BASE1_MASK) >>
+MSM8976_BASE1_SHIFT;
+
+MSM8976_BASE1_MASK is 0xff, MSM8976_BASE1_SHIFT is 8, so base1 is always
+going to end up as zero no matter what value in qfprom_cdata[2] is. I
+don't have any data sheet for this hardware, so I'm not sure of the
+exact intention, but I think MSM8976_BASE1_MASK should be 0xff00 - hence
+I'm reaching out to report this issue with my understanding of the issue.
+
+Colin
