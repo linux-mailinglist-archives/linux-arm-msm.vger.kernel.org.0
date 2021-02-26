@@ -2,121 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 79E08326270
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 13:15:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 78E60326409
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 15:25:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230147AbhBZMOD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Feb 2021 07:14:03 -0500
-Received: from m42-2.mailgun.net ([69.72.42.2]:30908 "EHLO m42-2.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230188AbhBZMNy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Feb 2021 07:13:54 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1614341616; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=eu6z2kcT31mkhRofy2D9EtXByOz0EiNCdl00jqY/V+I=; b=Iw4v3yL6bNIjyEwZYCtj242MbPntIG6IRDdCsDB23v4/qLT3jwdPurdkZZ3kpi1PhLPNsYne
- PLu5kS9uNedyDjOM4cyTiP9beoy41NJ5Ku9nUgfgTMyepW1rg6l3hYR6E/Nhfh3NOIFO3nDS
- ySY/sMB/EmkLaDS6x0affTgrQh8=
-X-Mailgun-Sending-Ip: 69.72.42.2
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 6038e5d0cc1f7d7e95ed4653 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 26 Feb 2021 12:13:04
- GMT
-Sender: kgunda=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 77F56C433ED; Fri, 26 Feb 2021 12:13:04 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from kgunda-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: kgunda)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 08297C433CA;
-        Fri, 26 Feb 2021 12:12:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 08297C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kgunda@codeaurora.org
-From:   Kiran Gunda <kgunda@codeaurora.org>
-To:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
-        lee.jones@linaro.org, b.zolnierkie@samsung.com,
-        dri-devel@lists.freedesktop.org, daniel.thompson@linaro.org,
-        jacek.anaszewski@gmail.com, pavel@ucw.cz, robh+dt@kernel.org,
-        mark.rutland@arm.com, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-fbdev@vger.kernel.org
-Cc:     phone-devel@vger.kernel.org, Kiran Gunda <kgunda@codeaurora.org>
-Subject: [PATCH V2 2/2] backlight: qcom-wled: Correct the sync_toggle sequence
-Date:   Fri, 26 Feb 2021 17:42:24 +0530
-Message-Id: <1614341544-5306-3-git-send-email-kgunda@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1614341544-5306-1-git-send-email-kgunda@codeaurora.org>
-References: <1614341544-5306-1-git-send-email-kgunda@codeaurora.org>
+        id S229752AbhBZOZC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Feb 2021 09:25:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50578 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230153AbhBZOYr (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 26 Feb 2021 09:24:47 -0500
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62C25C06174A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 06:24:06 -0800 (PST)
+Received: by mail-pf1-x434.google.com with SMTP id q20so6342739pfu.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 06:24:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=DAaGVb7r/TvUsy8AGyqpjJMg3/kOQ92bLhl4QPZ8jWQ=;
+        b=ThkH0JGDreGtf7pDodavSruoyKWVlP6UhhqIi8iEzROkRM4R1TxDRFn7N6oIPdSOMH
+         cArjbf+V7/Aku9RZ1LwYtBXKEkSdAW5YGyf20rTPm8P24SsV0HMgmolhHVfSNZnIiw7c
+         U2hdFI8462mUBWSvLStzw7wlUyKascYNVarK9VtWQMJ1csUQ9oDBVYCBu5tbXLx6gN99
+         bLXUszavhYF4cHmsXph/Ctp2hcSuEg0bk+Sbx5XEmW1V0MgUZ0dscPqfEiDdSiRwAq3b
+         96z5Y3xlLudUdPwmvQjETW/eBZJNYuluwknAT7SR1yOlRYm4jS2tXSkJBzzwGG80sjJW
+         8l3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=DAaGVb7r/TvUsy8AGyqpjJMg3/kOQ92bLhl4QPZ8jWQ=;
+        b=MAn4uO4pAwnm2CsFXRWoidVjeM2UWiOop2XRyEDW3lpmeLRwYTReJ26+PAkY/yvigS
+         G0V+WLL2Vtn+y+vBopQSLJ47mej9kq3z+PN2BYNIW7KATve9ZgehP6QGwzKkjoZDFu6Q
+         tjTrMMN88UqCsb2Q8jrvZ7m+aNM0lXZb7MmVs263BpaBtqVEv5UpnbtbtuYok+WdA+Dr
+         RVxgfvT5qcT4tNk8FhRdfghpkYBfC+sQdYujc1xeznTpDwZT8RPat1NOz1sI20yWtI/r
+         9zIHcpdFcyIzC/IRUrPLpL3gT8tZCkL+Nrkx1Y+dQW3SFh9bxL49sGq5HhERtoMy9qAg
+         vDfQ==
+X-Gm-Message-State: AOAM5309PepQkkyE/epRB1W/gWNjIZV85oHoh9jhHFX4D/9RfB/Qrk+r
+        0kQ1gzxXBi9xDatYP6UqcI5d3wMsNf3S
+X-Google-Smtp-Source: ABdhPJxrQR7OSm5JKfZUozWBCsMpp2KpH5Gu5fLdAUV4qHKqKFXV4f7Va/ZfzQNmj0/CNr2VR+24UQ==
+X-Received: by 2002:a05:6a00:1681:b029:1ec:c756:7ec3 with SMTP id k1-20020a056a001681b02901ecc7567ec3mr3497302pfc.13.1614349445812;
+        Fri, 26 Feb 2021 06:24:05 -0800 (PST)
+Received: from thinkpad ([103.66.79.124])
+        by smtp.gmail.com with ESMTPSA id u3sm10703006pfm.144.2021.02.26.06.24.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Feb 2021 06:24:05 -0800 (PST)
+Date:   Fri, 26 Feb 2021 19:54:01 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     hemantk@codeaurora.org, jhugo@codeaurora.org,
+        bbhatt@codeaurora.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2] mhi: Fix invalid error returning in mhi_queue
+Message-ID: <20210226142401.GA70936@thinkpad>
+References: <1614336782-5809-1-git-send-email-loic.poulain@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1614336782-5809-1-git-send-email-loic.poulain@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As per the current implementation, after FSC (Full Scale Current)
-and brightness update the sync bits are transitioned from 1 to 0.
-But, the FSC and brightness sync takes place during a 0 to 1
-transition of the sync bits. So the hardware team recommends a
-clear-then-set approach in order to guarantee such a transition
-regardless of the previous register state.
+On Fri, Feb 26, 2021 at 11:53:02AM +0100, Loic Poulain wrote:
+> mhi_queue returns an error when the doorbell is not accessible in
+> the current state. This can happen when the device is in non M0
+> state, like M3, and needs to be waken-up prior ringing the DB. This
+> case is managed earlier by triggering an asynchronous M3 exit via
+> controller resume/suspend callbacks, that in turn will cause M0
+> transition and DB update.
+> 
+> So, since it's not an error but just delaying of doorbell update, there
+> is no reason to return an error.
+> 
+> This also fixes a use after free error for skb case, indeed a caller
+> queuing skb will try to free the skb if the queueing fails, but in
+> that case queueing has been done.
+> 
+> Fixes: a8f75cb348fd ("mhi: core: Factorize mhi queuing")
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
+> Reviewed-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 
-Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
----
- drivers/video/backlight/qcom-wled.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
-index aef52b9..19f83ac 100644
---- a/drivers/video/backlight/qcom-wled.c
-+++ b/drivers/video/backlight/qcom-wled.c
-@@ -337,13 +337,13 @@ static int wled3_sync_toggle(struct wled *wled)
- 
- 	rc = regmap_update_bits(wled->regmap,
- 				wled->ctrl_addr + WLED3_SINK_REG_SYNC,
--				mask, mask);
-+				mask, WLED3_SINK_REG_SYNC_CLEAR);
- 	if (rc < 0)
- 		return rc;
- 
- 	rc = regmap_update_bits(wled->regmap,
- 				wled->ctrl_addr + WLED3_SINK_REG_SYNC,
--				mask, WLED3_SINK_REG_SYNC_CLEAR);
-+				mask, mask);
- 
- 	return rc;
- }
-@@ -353,17 +353,17 @@ static int wled5_mod_sync_toggle(struct wled *wled)
- 	int rc;
- 	u8 val;
- 
--	val = (wled->cfg.mod_sel == MOD_A) ? WLED5_SINK_REG_SYNC_MOD_A_BIT :
--					     WLED5_SINK_REG_SYNC_MOD_B_BIT;
- 	rc = regmap_update_bits(wled->regmap,
- 				wled->sink_addr + WLED5_SINK_REG_MOD_SYNC_BIT,
--				WLED5_SINK_REG_SYNC_MASK, val);
-+				WLED5_SINK_REG_SYNC_MASK, 0);
- 	if (rc < 0)
- 		return rc;
- 
-+	val = (wled->cfg.mod_sel == MOD_A) ? WLED5_SINK_REG_SYNC_MOD_A_BIT :
-+					     WLED5_SINK_REG_SYNC_MOD_B_BIT;
- 	return regmap_update_bits(wled->regmap,
- 				  wled->sink_addr + WLED5_SINK_REG_MOD_SYNC_BIT,
--				  WLED5_SINK_REG_SYNC_MASK, 0);
-+				  WLED5_SINK_REG_SYNC_MASK, val);
- }
- 
- static int wled_ovp_fault_status(struct wled *wled, bool *fault_set)
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
- a Linux Foundation Collaborative Project
+Thanks,
+Mani
 
+> ---
+>  v2: - Fix/reword commit message
+>      - Add Fixes tag
+> 
+>  drivers/bus/mhi/core/main.c | 8 ++------
+>  1 file changed, 2 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> index 7fc2482..c780234 100644
+> --- a/drivers/bus/mhi/core/main.c
+> +++ b/drivers/bus/mhi/core/main.c
+> @@ -1031,12 +1031,8 @@ static int mhi_queue(struct mhi_device *mhi_dev, struct mhi_buf_info *buf_info,
+>  	if (mhi_chan->dir == DMA_TO_DEVICE)
+>  		atomic_inc(&mhi_cntrl->pending_pkts);
+>  
+> -	if (unlikely(!MHI_DB_ACCESS_VALID(mhi_cntrl))) {
+> -		ret = -EIO;
+> -		goto exit_unlock;
+> -	}
+> -
+> -	mhi_ring_chan_db(mhi_cntrl, mhi_chan);
+> +	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)))
+> +		mhi_ring_chan_db(mhi_cntrl, mhi_chan);
+>  
+>  exit_unlock:
+>  	read_unlock_irqrestore(&mhi_cntrl->pm_lock, flags);
+> -- 
+> 2.7.4
+> 
