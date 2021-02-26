@@ -2,22 +2,22 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A18632682A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 21:21:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 17A213268A4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 21:42:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230475AbhBZULo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Feb 2021 15:11:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40100 "EHLO
+        id S230095AbhBZUYR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Feb 2021 15:24:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230459AbhBZULc (ORCPT
+        with ESMTP id S231193AbhBZUVG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Feb 2021 15:11:32 -0500
-Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 592D8C06178C
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 12:07:42 -0800 (PST)
+        Fri, 26 Feb 2021 15:21:06 -0500
+Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D036EC061A2A;
+        Fri, 26 Feb 2021 12:06:16 -0800 (PST)
 Received: from localhost.localdomain (abab236.neoplus.adsl.tpnet.pl [83.6.165.236])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 6C11F1F69E;
-        Fri, 26 Feb 2021 21:07:37 +0100 (CET)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id DFC6D1FC51;
+        Fri, 26 Feb 2021 21:06:12 +0100 (CET)
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 To:     phone-devel@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
@@ -32,9 +32,9 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 41/41] arm64: dts: qcom: sdm630: Add DMA to I2C hosts
-Date:   Fri, 26 Feb 2021 21:04:11 +0100
-Message-Id: <20210226200414.167762-42-konrad.dybcio@somainline.org>
+Subject: [PATCH 22/41] arm64: dts: qcom: pm660l: Add WLED support
+Date:   Fri, 26 Feb 2021 21:03:52 +0100
+Message-Id: <20210226200414.167762-23-konrad.dybcio@somainline.org>
 X-Mailer: git-send-email 2.30.1
 In-Reply-To: <20210226200414.167762-1-konrad.dybcio@somainline.org>
 References: <20210226200414.167762-1-konrad.dybcio@somainline.org>
@@ -44,89 +44,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add DMA properties to I2C hosts to allow for DMA transfers.
+This will enable backlight control on WLED-enabled devices.
 
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
- arch/arm64/boot/dts/qcom/sdm630.dtsi | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ arch/arm64/boot/dts/qcom/pm660l.dtsi | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index fccfc4e9f69d..0ec070fea034 100644
---- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -1805,6 +1805,8 @@ blsp_i2c1: i2c@c175000 {
- 					<&gcc GCC_BLSP1_AHB_CLK>;
- 			clock-names = "core", "iface";
- 			clock-frequency = <400000>;
-+			dmas = <&blsp1_dma 4>, <&blsp1_dma 5>;
-+			dma-names = "tx", "rx";
+diff --git a/arch/arm64/boot/dts/qcom/pm660l.dtsi b/arch/arm64/boot/dts/qcom/pm660l.dtsi
+index edba6de02084..83cc92ba441d 100644
+--- a/arch/arm64/boot/dts/qcom/pm660l.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm660l.dtsi
+@@ -31,6 +31,23 @@ pmic@3 {
+ 		reg = <0x3 SPMI_USID>;
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
++
++		pm660l_wled: leds@d800 {
++			compatible = "qcom,pm660l-wled";
++			reg = <0xd800 0xd900>;
++			interrupts = <0x3 0xd8 0x1 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "ovp";
++			label = "backlight";
++
++			qcom,switching-freq = <800>;
++			qcom,ovp-millivolt = <29600>;
++			qcom,current-boost-limit = <970>;
++			qcom,current-limit-microamp = <20000>;
++			qcom,num-strings = <2>;
++			qcom,enabled-strings = <0 1>;
++
++			status = "disabled";
++		};
+ 	};
+ };
  
- 			pinctrl-names = "default", "sleep";
- 			pinctrl-0 = <&i2c1_default>;
-@@ -1823,6 +1825,8 @@ blsp_i2c2: i2c@c176000 {
- 				 <&gcc GCC_BLSP1_AHB_CLK>;
- 			clock-names = "core", "iface";
- 			clock-frequency = <400000>;
-+			dmas = <&blsp1_dma 6>, <&blsp1_dma 7>;
-+			dma-names = "tx", "rx";
- 
- 			pinctrl-names = "default", "sleep";
- 			pinctrl-0 = <&i2c2_default>;
-@@ -1841,6 +1845,8 @@ blsp_i2c3: i2c@c177000 {
- 				 <&gcc GCC_BLSP1_AHB_CLK>;
- 			clock-names = "core", "iface";
- 			clock-frequency = <400000>;
-+			dmas = <&blsp1_dma 8>, <&blsp1_dma 9>;
-+			dma-names = "tx", "rx";
- 
- 			pinctrl-names = "default", "sleep";
- 			pinctrl-0 = <&i2c3_default>;
-@@ -1859,6 +1865,8 @@ blsp_i2c4: i2c@c178000 {
- 				 <&gcc GCC_BLSP1_AHB_CLK>;
- 			clock-names = "core", "iface";
- 			clock-frequency = <400000>;
-+			dmas = <&blsp1_dma 10>, <&blsp1_dma 11>;
-+			dma-names = "tx", "rx";
- 
- 			pinctrl-names = "default", "sleep";
- 			pinctrl-0 = <&i2c4_default>;
-@@ -1905,6 +1913,8 @@ blsp_i2c5: i2c@c1b5000 {
- 				 <&gcc GCC_BLSP2_AHB_CLK>;
- 			clock-names = "core", "iface";
- 			clock-frequency = <400000>;
-+			dmas = <&blsp2_dma 4>, <&blsp2_dma 5>;
-+			dma-names = "tx", "rx";
- 
- 			pinctrl-names = "default", "sleep";
- 			pinctrl-0 = <&i2c5_default>;
-@@ -1923,6 +1933,8 @@ blsp_i2c6: i2c@c1b6000 {
- 				 <&gcc GCC_BLSP2_AHB_CLK>;
- 			clock-names = "core", "iface";
- 			clock-frequency = <400000>;
-+			dmas = <&blsp2_dma 6>, <&blsp2_dma 7>;
-+			dma-names = "tx", "rx";
- 
- 			pinctrl-names = "default", "sleep";
- 			pinctrl-0 = <&i2c6_default>;
-@@ -1941,6 +1953,8 @@ blsp_i2c7: i2c@c1b7000 {
- 				 <&gcc GCC_BLSP2_AHB_CLK>;
- 			clock-names = "core", "iface";
- 			clock-frequency = <400000>;
-+			dmas = <&blsp2_dma 8>, <&blsp2_dma 9>;
-+			dma-names = "tx", "rx";
- 
- 			pinctrl-names = "default", "sleep";
- 			pinctrl-0 = <&i2c7_default>;
-@@ -1959,6 +1973,8 @@ blsp_i2c8: i2c@c1b8000 {
- 				 <&gcc GCC_BLSP2_AHB_CLK>;
- 			clock-names = "core", "iface";
- 			clock-frequency = <400000>;
-+			dmas = <&blsp2_dma 10>, <&blsp2_dma 11>;
-+			dma-names = "tx", "rx";
- 
- 			pinctrl-names = "default", "sleep";
- 			pinctrl-0 = <&i2c8_default>;
 -- 
 2.30.1
 
