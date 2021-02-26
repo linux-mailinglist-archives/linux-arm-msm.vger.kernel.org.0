@@ -2,22 +2,22 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B64F2326816
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 21:21:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B1FAB326820
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 21:21:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230396AbhBZULJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Feb 2021 15:11:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39074 "EHLO
+        id S230452AbhBZULb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Feb 2021 15:11:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230403AbhBZUKy (ORCPT
+        with ESMTP id S230416AbhBZUK7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Feb 2021 15:10:54 -0500
-Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1812EC061D7E;
-        Fri, 26 Feb 2021 12:07:06 -0800 (PST)
+        Fri, 26 Feb 2021 15:10:59 -0500
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E947DC0698C0;
+        Fri, 26 Feb 2021 12:07:09 -0800 (PST)
 Received: from localhost.localdomain (abab236.neoplus.adsl.tpnet.pl [83.6.165.236])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 5A8211FEE0;
-        Fri, 26 Feb 2021 21:07:03 +0100 (CET)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 7B8A11FABA;
+        Fri, 26 Feb 2021 21:07:07 +0100 (CET)
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 To:     phone-devel@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
@@ -32,9 +32,9 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 33/41] arm64: dts: qcom: sdm630-nile: Add Volume up key
-Date:   Fri, 26 Feb 2021 21:04:03 +0100
-Message-Id: <20210226200414.167762-34-konrad.dybcio@somainline.org>
+Subject: [PATCH 34/41] arm64: dts: qcom: sdm630-nile: Configure WCN3990 Bluetooth
+Date:   Fri, 26 Feb 2021 21:04:04 +0100
+Message-Id: <20210226200414.167762-35-konrad.dybcio@somainline.org>
 X-Mailer: git-send-email 2.30.1
 In-Reply-To: <20210226200414.167762-1-konrad.dybcio@somainline.org>
 References: <20210226200414.167762-1-konrad.dybcio@somainline.org>
@@ -44,34 +44,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Let's get loud!
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 
+Add a node for WCN3990 HCIUART Bluetooth.
+
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
- arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ .../boot/dts/qcom/sdm630-sony-xperia-nile.dtsi      | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
-index e17a0f0b1e06..1a8e179cba73 100644
+index 1a8e179cba73..0da6dddd5768 100644
 --- a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
-@@ -191,6 +191,16 @@ &blsp2_uart1 {
- 	/* HCI Bluetooth */
- };
- 
-+&pon {
-+	volup {
-+		compatible = "qcom,pm8941-resin";
-+		interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_BOTH>;
-+		debounce = <15625>;
-+		bias-pull-up;
-+		linux,code = <KEY_VOLUMEUP>;
-+	};
-+};
-+
- &qusb2phy {
+@@ -188,7 +188,18 @@ &blsp1_uart2 {
+ &blsp2_uart1 {
  	status = "okay";
  
+-	/* HCI Bluetooth */
++	bluetooth: wcn3990-bt {
++		compatible = "qcom,wcn3998-bt";
++
++		vddio-supply = <&vreg_l13a_1p8>;
++		vddxo-suppky = <&vreg_l9a_1p8>;
++		vddrf-supply = <&vreg_l6a_1p3>;
++		vddch0-supply = <&vreg_l19a_3p3>;
++
++		max-speed = <3200000>;
++
++		clocks = <&rpmcc RPM_SMD_RF_CLK1_PIN>;
++	};
+ };
+ 
+ &pon {
 -- 
 2.30.1
 
