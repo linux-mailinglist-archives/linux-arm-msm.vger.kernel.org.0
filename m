@@ -2,107 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 984B0326185
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 11:46:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 929513261A5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 12:00:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230411AbhBZKp1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Feb 2021 05:45:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59892 "EHLO
+        id S230083AbhBZK6f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Feb 2021 05:58:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230225AbhBZKpZ (ORCPT
+        with ESMTP id S229556AbhBZK6d (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Feb 2021 05:45:25 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E438C06174A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 02:44:45 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id d11so8102378wrj.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 02:44:45 -0800 (PST)
+        Fri, 26 Feb 2021 05:58:33 -0500
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3C32C06174A;
+        Fri, 26 Feb 2021 02:57:53 -0800 (PST)
+Received: by mail-pj1-x102d.google.com with SMTP id t9so5770294pjl.5;
+        Fri, 26 Feb 2021 02:57:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=7HALyY2ifHn/k7fFULMjlEOjm1DZlnSUzh1SWVAsV20=;
-        b=DI1q+fVgO2eOlwKPZhxbMIbCNPQflbbJSu+ROuCr5jQEt/LMZu6ARS8TPXQobmeGIH
-         wEGFxeEbtQGo5L1LQxOX45WQJNNYXjvizyC7YjvvecMcb/2ITcON08VWa1yqjvTUixuf
-         CN2PakjBw2BoCqGQ3GVJS8W/2jFq7azeg3ydOyVKSmGpU9z56OibbLmZLxf1mXDsplEr
-         sm1kUFEcPq+4nYK59PxXp6ZTUGfstFZJA6CT/NxTT2bGJuWs5MP5abU/H+4jQqyJPqQK
-         2osa7q4Sku0yB1O2iXKkQeKK8aRHo2O/FuPPmlELXgJLL2bjvzMA3/LhpHNc35Ogytba
-         cqaQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=EpfHHnCLi9iPuaB4OGPWMTLPFj9UeNNtDCviBs376xc=;
+        b=jZgixpWvGPjT5HjoD9Rd0j1Kh5l1dz/YQqqDtfPMT8NEeEhiy/jpEFYktybpvQ+TT5
+         TO+PM4fzWy1Xxf7T3hdnGeKGzS8LBcXlqoXE0XeDg5v5o0ISpcE6Fjz+kelax6rZGP/p
+         UGzjhY5UTYibDNW8VkFPR34Bw3Cy/P7FrpqP1baQPVcHF/Ud8H/wdxR5gHqIbLtFAZ+M
+         bfncN2NIgxWIT2Eghl4rJWdfxYlBXyGBhUr7qt1PCMxHWE7tsunlCjP75gEWEDDt/o/q
+         2Ql3W8mmWCQH9KVs45R86EPD71e5DgHoSLRF0p0MIaolHGYdzAHau5BLztE/ycLzfjLt
+         CusQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=7HALyY2ifHn/k7fFULMjlEOjm1DZlnSUzh1SWVAsV20=;
-        b=czlY8tPtTWap5r1srdoo5g45/DF76toWaWx0ce17lsLIu2I/Oa9IHKVNLy3v76YDhh
-         M61KxBSt/mc97JlUNg501TN4+6zs7nbVAjO5maVk3d5kEivOEna5ibKvVFxHbj5G2KMt
-         zISR09R3ZXhFudcDjpDCLLDLn9ukjLeA9L1/XFEpnp/bBedILn9PVoDWHaxDDNllNlqv
-         SGpc8dlcUaLYwUmH4fy2hgAVcsTpMjiH9GVJfBsvvcNZ0YYN5jrj6UEZz21VDDQgWum1
-         EwhT5/Z5s9TPev9a0rluThb4oLZqjvEWUa4kyyRU6eNAgRKagr7UXdTSXKyzF0UOYYrE
-         emlQ==
-X-Gm-Message-State: AOAM530jZnfIJfY9rMvsZtixCpVIU7RVvdx/l59pgB+l8hAyqEZTRKrD
-        YsoTjuI9DgFuHL7vhgOQhpDpnI7gpHNhnxFT
-X-Google-Smtp-Source: ABdhPJya0MVA8zU0lXFBzSBHbi0ES7sFQc1+2g+zwrYWuPyDZ/b9NYfgTkkj+2avPy7HUJxw4RYFPg==
-X-Received: by 2002:a5d:610a:: with SMTP id v10mr2583942wrt.334.1614336284248;
-        Fri, 26 Feb 2021 02:44:44 -0800 (PST)
-Received: from localhost.localdomain ([2a01:e0a:82c:5f0:75f7:3502:b280:80de])
-        by smtp.gmail.com with ESMTPSA id o129sm11652205wme.21.2021.02.26.02.44.43
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 26 Feb 2021 02:44:43 -0800 (PST)
-From:   Loic Poulain <loic.poulain@linaro.org>
-To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
-Cc:     jhugo@codeaurora.org, bbhatt@codeaurora.org,
-        linux-arm-msm@vger.kernel.org,
-        Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH v2] mhi: Fix invalid error returning in mhi_queue
-Date:   Fri, 26 Feb 2021 11:53:02 +0100
-Message-Id: <1614336782-5809-1-git-send-email-loic.poulain@linaro.org>
-X-Mailer: git-send-email 2.7.4
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=EpfHHnCLi9iPuaB4OGPWMTLPFj9UeNNtDCviBs376xc=;
+        b=W4X9zw+6en/AoxPcjGw9Z3AEJDKSNA4m6qEDU6eHR67/FBQxGp2vqANoALAPROWniR
+         5ejJ82EnHhQovhjmosb4+LBzXXHzayQ/FTV1cJf4J8Zsc2upn0P0zGx0MW+SyHJmHoQV
+         hEKYB7DJ7q4SpwAxVRdUkXZHFAdwDv7S2lcO2I/drH4nKCvRwACkUTjSEdWrdWdLmNIU
+         VY9GdIuPRAOwtLyfED7JFZcROtLxVgjbv/0z9kZ1VflTQw1QgCd24c7p98OmEV+fTg6U
+         vOSXrL3yiKl8V6eJ28pC5HiZeTv2Ohecp0gEK9LXJXJhF7KdEl8YHeLk1AAzrCJTnLW/
+         hytA==
+X-Gm-Message-State: AOAM533vR1EjAx/58AeoyxLuvDYnTC3cXUWaI6C+mlDGMEzfQtaNfaQc
+        OvDs7Qhr0imqIROFbKeqxLNprsjg4GUKGnxTr9w=
+X-Google-Smtp-Source: ABdhPJx+Hg4T6GvTNVL4bu0uHoGoTpne0ZfecBn9XtQ9Zc4z6j6s84PnSVUTkGV7R/GbdUskQDstsiCIQbjjeDdKcYY=
+X-Received: by 2002:a17:90a:db49:: with SMTP id u9mr2956161pjx.181.1614337073187;
+ Fri, 26 Feb 2021 02:57:53 -0800 (PST)
+MIME-Version: 1.0
+References: <20210226033919.8871-1-shawn.guo@linaro.org> <CAHp75Vcb=NO9OWjSpBeVC4c+9=aXE=yiDWVBwLD1DnzwdgFD6Q@mail.gmail.com>
+ <20210226093925.GA24428@dragon>
+In-Reply-To: <20210226093925.GA24428@dragon>
+From:   Andy Shevchenko <andy.shevchenko@gmail.com>
+Date:   Fri, 26 Feb 2021 12:57:37 +0200
+Message-ID: <CAHp75Vc6xYv+197SOrSefQHD2h4Xy_N20gQajW4uF2PU=sJfLg@mail.gmail.com>
+Subject: Re: [PATCH] gpiolib: acpi: support override broken GPIO number in
+ ACPI table
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Mika Westerberg <mika.westerberg@linux.intel.com>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-mhi_queue returns an error when the doorbell is not accessible in
-the current state. This can happen when the device is in non M0
-state, like M3, and needs to be waken-up prior ringing the DB. This
-case is managed earlier by triggering an asynchronous M3 exit via
-controller resume/suspend callbacks, that in turn will cause M0
-transition and DB update.
+On Fri, Feb 26, 2021 at 11:39 AM Shawn Guo <shawn.guo@linaro.org> wrote:
+>
+> On Fri, Feb 26, 2021 at 11:12:07AM +0200, Andy Shevchenko wrote:
+> > On Fri, Feb 26, 2021 at 5:42 AM Shawn Guo <shawn.guo@linaro.org> wrote:
+> > >
+> > > Running kernel with ACPI on Lenovo Flex 5G laptop, touchpad is just
+> > > not working.  That's because the GpioInt number of TSC2 node in ACPI
+> > > table is simply wrong, and the number even exceeds the maximum GPIO
+> > > lines.  As the touchpad works fine with Windows on the same machine,
+> > > presumably this is something Windows-ism.  Although it's obviously
+> > > a specification violation, believe of that Microsoft will fix this in
+> > > the near future is not really realistic.
+> > >
+> > > It adds the support of overriding broken GPIO number in ACPI table
+> > > on particular machines, which are matched using DMI info.  Such
+> > > mechanism for fixing up broken firmware and ACPI table is not uncommon
+> > > in kernel.  And hopefully it can be useful for other machines that get
+> > > broken GPIO number coded in ACPI table.
+> >
+> > Thanks for the report and patch.
+> >
+> > First of all, have you reported the issue to Lenovo? At least they
+> > will know that they did wrong.
+>
+> Yes, we are reporting this to Lenovo, but to be honest, we are not sure
+> how much they will care about it, as they are shipping the laptop with
+> Windows only.
+>
+> > Second, is it possible to have somewhere output of `acpidump -o
+> > flex5g.dat` (the flex5g.dat file)?
+>
+> https://raw.githubusercontent.com/aarch64-laptops/build/master/misc/lenovo-flex-5g/dsdt.dsl
+>
+> > And as Mika said once to one of mine patches "since you know the
+> > number ahead there is no need to pollute GPIO ACPI library core with
+> > this quirk". But in any case I would like to see the ACPI tables
+> > first.
+>
+> Oh, so you had something similar already?  Could you point me to the
+> patch and discussion?
 
-So, since it's not an error but just delaying of doorbell update, there
-is no reason to return an error.
+Similar, but might be not the same:
+ - patches in the upstream [1] (v3 applied), discussion [2]
+ - new version with some additional fixes [3]
 
-This also fixes a use after free error for skb case, indeed a caller
-queuing skb will try to free the skb if the queueing fails, but in
-that case queueing has been done.
+[1]: ba8c90c61847 ("gpio: pca953x: Override IRQ for one of the
+expanders on Galileo Gen 2")
+[2]: https://lore.kernel.org/linux-gpio/20200520211916.25727-1-andriy.shevchenko@linux.intel.com/T/#u
+[3]: https://lore.kernel.org/linux-gpio/20210225163320.71267-1-andriy.shevchenko@linux.intel.com/T/#u
 
-Fixes: a8f75cb348fd ("mhi: core: Factorize mhi queuing")
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
-Reviewed-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
----
- v2: - Fix/reword commit message
-     - Add Fixes tag
 
- drivers/bus/mhi/core/main.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-index 7fc2482..c780234 100644
---- a/drivers/bus/mhi/core/main.c
-+++ b/drivers/bus/mhi/core/main.c
-@@ -1031,12 +1031,8 @@ static int mhi_queue(struct mhi_device *mhi_dev, struct mhi_buf_info *buf_info,
- 	if (mhi_chan->dir == DMA_TO_DEVICE)
- 		atomic_inc(&mhi_cntrl->pending_pkts);
- 
--	if (unlikely(!MHI_DB_ACCESS_VALID(mhi_cntrl))) {
--		ret = -EIO;
--		goto exit_unlock;
--	}
--
--	mhi_ring_chan_db(mhi_cntrl, mhi_chan);
-+	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)))
-+		mhi_ring_chan_db(mhi_cntrl, mhi_chan);
- 
- exit_unlock:
- 	read_unlock_irqrestore(&mhi_cntrl->pm_lock, flags);
+
+
 -- 
-2.7.4
-
+With Best Regards,
+Andy Shevchenko
