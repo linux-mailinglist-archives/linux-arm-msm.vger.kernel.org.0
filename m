@@ -2,118 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A348732617F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 11:45:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 984B0326185
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 11:46:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231199AbhBZKn4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Feb 2021 05:43:56 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:45850 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230347AbhBZKny (ORCPT
+        id S230411AbhBZKp1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Feb 2021 05:45:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59892 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230225AbhBZKpZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Feb 2021 05:43:54 -0500
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 26 Feb 2021 02:43:12 -0800
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 26 Feb 2021 02:43:11 -0800
-X-QCInternal: smtphost
-Received: from gokulsri-linux.qualcomm.com ([10.201.2.207])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 26 Feb 2021 16:12:52 +0530
-Received: by gokulsri-linux.qualcomm.com (Postfix, from userid 432570)
-        id 6DAFE20E7E; Fri, 26 Feb 2021 16:12:52 +0530 (IST)
-From:   Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
-To:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     manivannan.sadhasivam@linaro.org, jhugo@codeaurora.org,
-        hemantk@codeaurora.org, sricharan@codeaurora.org,
-        gokulsri@codeaurora.org
-Subject: [PATCH v2] bus: mhi: core: Add unique qrtr node id support
-Date:   Fri, 26 Feb 2021 16:12:49 +0530
-Message-Id: <1614336169-31467-2-git-send-email-gokulsri@codeaurora.org>
+        Fri, 26 Feb 2021 05:45:25 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E438C06174A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 02:44:45 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id d11so8102378wrj.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 02:44:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=7HALyY2ifHn/k7fFULMjlEOjm1DZlnSUzh1SWVAsV20=;
+        b=DI1q+fVgO2eOlwKPZhxbMIbCNPQflbbJSu+ROuCr5jQEt/LMZu6ARS8TPXQobmeGIH
+         wEGFxeEbtQGo5L1LQxOX45WQJNNYXjvizyC7YjvvecMcb/2ITcON08VWa1yqjvTUixuf
+         CN2PakjBw2BoCqGQ3GVJS8W/2jFq7azeg3ydOyVKSmGpU9z56OibbLmZLxf1mXDsplEr
+         sm1kUFEcPq+4nYK59PxXp6ZTUGfstFZJA6CT/NxTT2bGJuWs5MP5abU/H+4jQqyJPqQK
+         2osa7q4Sku0yB1O2iXKkQeKK8aRHo2O/FuPPmlELXgJLL2bjvzMA3/LhpHNc35Ogytba
+         cqaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=7HALyY2ifHn/k7fFULMjlEOjm1DZlnSUzh1SWVAsV20=;
+        b=czlY8tPtTWap5r1srdoo5g45/DF76toWaWx0ce17lsLIu2I/Oa9IHKVNLy3v76YDhh
+         M61KxBSt/mc97JlUNg501TN4+6zs7nbVAjO5maVk3d5kEivOEna5ibKvVFxHbj5G2KMt
+         zISR09R3ZXhFudcDjpDCLLDLn9ukjLeA9L1/XFEpnp/bBedILn9PVoDWHaxDDNllNlqv
+         SGpc8dlcUaLYwUmH4fy2hgAVcsTpMjiH9GVJfBsvvcNZ0YYN5jrj6UEZz21VDDQgWum1
+         EwhT5/Z5s9TPev9a0rluThb4oLZqjvEWUa4kyyRU6eNAgRKagr7UXdTSXKyzF0UOYYrE
+         emlQ==
+X-Gm-Message-State: AOAM530jZnfIJfY9rMvsZtixCpVIU7RVvdx/l59pgB+l8hAyqEZTRKrD
+        YsoTjuI9DgFuHL7vhgOQhpDpnI7gpHNhnxFT
+X-Google-Smtp-Source: ABdhPJya0MVA8zU0lXFBzSBHbi0ES7sFQc1+2g+zwrYWuPyDZ/b9NYfgTkkj+2avPy7HUJxw4RYFPg==
+X-Received: by 2002:a5d:610a:: with SMTP id v10mr2583942wrt.334.1614336284248;
+        Fri, 26 Feb 2021 02:44:44 -0800 (PST)
+Received: from localhost.localdomain ([2a01:e0a:82c:5f0:75f7:3502:b280:80de])
+        by smtp.gmail.com with ESMTPSA id o129sm11652205wme.21.2021.02.26.02.44.43
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 26 Feb 2021 02:44:43 -0800 (PST)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
+Cc:     jhugo@codeaurora.org, bbhatt@codeaurora.org,
+        linux-arm-msm@vger.kernel.org,
+        Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH v2] mhi: Fix invalid error returning in mhi_queue
+Date:   Fri, 26 Feb 2021 11:53:02 +0100
+Message-Id: <1614336782-5809-1-git-send-email-loic.poulain@linaro.org>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1614336169-31467-1-git-send-email-gokulsri@codeaurora.org>
-References: <1614336169-31467-1-git-send-email-gokulsri@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On platforms with two or more identical mhi
-devices, qmi service will run with identical
-qrtr-node-id. Because of this identical ID,
-host qrtr-lookup cannot register more than one
-qmi service with identical node ID. Ultimately,
-only one qmi service will be avilable for the
-underlying drivers to communicate with.
+mhi_queue returns an error when the doorbell is not accessible in
+the current state. This can happen when the device is in non M0
+state, like M3, and needs to be waken-up prior ringing the DB. This
+case is managed earlier by triggering an asynchronous M3 exit via
+controller resume/suspend callbacks, that in turn will cause M0
+transition and DB update.
 
-On QCN9000, it implements a unique qrtr-node-id
-and qmi instance ID using a unique instance ID
-written to a debug register from host driver
-soon after SBL is loaded.
+So, since it's not an error but just delaying of doorbell update, there
+is no reason to return an error.
 
-This change generates a unique instance ID from
-PCIe domain number and bus number, writes to the
-given debug register just after SBL is loaded so
-that it is available for FW when the QMI service
-is spawned.
+This also fixes a use after free error for skb case, indeed a caller
+queuing skb will try to free the skb if the queueing fails, but in
+that case queueing has been done.
 
-sample:
-root@OpenWrt:/# qrtr-lookup
-  Service Version Instance Node  Port
-       15       1        0    8     1 Test service
-       69       1        8    8     2 ATH10k WLAN firmware service
-       15       1        0   24     1 Test service
-       69       1       24   24     2 ATH10k WLAN firmware service
-
-Here 8 and 24 on column 3 (QMI Instance ID)
-and 4 (QRTR Node ID) are the node IDs that
-is unique per mhi device.
-
-Signed-off-by: Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
+Fixes: a8f75cb348fd ("mhi: core: Factorize mhi queuing")
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
+Reviewed-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 ---
- drivers/bus/mhi/core/boot.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ v2: - Fix/reword commit message
+     - Add Fixes tag
 
-diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
-index c2546bf..5e5dad5 100644
---- a/drivers/bus/mhi/core/boot.c
-+++ b/drivers/bus/mhi/core/boot.c
-@@ -16,8 +16,12 @@
- #include <linux/random.h>
- #include <linux/slab.h>
- #include <linux/wait.h>
-+#include <linux/pci.h>
- #include "internal.h"
+ drivers/bus/mhi/core/main.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+index 7fc2482..c780234 100644
+--- a/drivers/bus/mhi/core/main.c
++++ b/drivers/bus/mhi/core/main.c
+@@ -1031,12 +1031,8 @@ static int mhi_queue(struct mhi_device *mhi_dev, struct mhi_buf_info *buf_info,
+ 	if (mhi_chan->dir == DMA_TO_DEVICE)
+ 		atomic_inc(&mhi_cntrl->pending_pkts);
  
-+#define QRTR_INSTANCE_MASK	0x000000FF
-+#define QRTR_INSTANCE_SHIFT	0
-+
- /* Setup RDDM vector table for RDDM transfer and program RXVEC */
- void mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
- 		      struct image_info *img_info)
-@@ -391,6 +395,9 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
- 	const struct firmware *firmware = NULL;
- 	struct image_info *image_info;
- 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-+	struct pci_dev *pci_dev = to_pci_dev(mhi_cntrl->cntrl_dev);
-+	struct pci_bus *bus = pci_dev->bus;
-+	uint32_t instance;
- 	const char *fw_name;
- 	void *buf;
- 	dma_addr_t dma_addr;
-@@ -466,6 +473,13 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
- 		return;
- 	}
+-	if (unlikely(!MHI_DB_ACCESS_VALID(mhi_cntrl))) {
+-		ret = -EIO;
+-		goto exit_unlock;
+-	}
+-
+-	mhi_ring_chan_db(mhi_cntrl, mhi_chan);
++	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)))
++		mhi_ring_chan_db(mhi_cntrl, mhi_chan);
  
-+	instance = ((pci_domain_nr(bus) & 0xF) << 4) | (bus->number & 0xF);
-+	instance &= QRTR_INSTANCE_MASK;
-+
-+	mhi_write_reg_field(mhi_cntrl, mhi_cntrl->bhi,
-+			    BHI_ERRDBG2, QRTR_INSTANCE_MASK,
-+			    QRTR_INSTANCE_SHIFT, instance);
-+
- 	write_lock_irq(&mhi_cntrl->pm_lock);
- 	mhi_cntrl->dev_state = MHI_STATE_RESET;
- 	write_unlock_irq(&mhi_cntrl->pm_lock);
+ exit_unlock:
+ 	read_unlock_irqrestore(&mhi_cntrl->pm_lock, flags);
 -- 
 2.7.4
 
