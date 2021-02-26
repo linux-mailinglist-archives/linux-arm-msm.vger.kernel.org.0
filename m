@@ -2,22 +2,22 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A76A3267D2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 21:08:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 264A03267F8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 21:20:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229949AbhBZUHr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Feb 2021 15:07:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38722 "EHLO
+        id S230366AbhBZUIb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Feb 2021 15:08:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230304AbhBZUHN (ORCPT
+        with ESMTP id S230374AbhBZUHu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Feb 2021 15:07:13 -0500
+        Fri, 26 Feb 2021 15:07:50 -0500
 Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E387C061223
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 12:05:39 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58EA7C061226
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 12:05:44 -0800 (PST)
 Received: from localhost.localdomain (abab236.neoplus.adsl.tpnet.pl [83.6.165.236])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 8196D1FAD9;
-        Fri, 26 Feb 2021 21:05:37 +0100 (CET)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 971B91FAB6;
+        Fri, 26 Feb 2021 21:05:41 +0100 (CET)
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 To:     phone-devel@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
@@ -32,9 +32,9 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 14/41] arm64: dts: qcom: sdm630: Add qcom,adreno-smmu compatible
-Date:   Fri, 26 Feb 2021 21:03:44 +0100
-Message-Id: <20210226200414.167762-15-konrad.dybcio@somainline.org>
+Subject: [PATCH 15/41] arm64: dts: qcom: sdm630: Add TSENS node
+Date:   Fri, 26 Feb 2021 21:03:45 +0100
+Message-Id: <20210226200414.167762-16-konrad.dybcio@somainline.org>
 X-Mailer: git-send-email 2.30.1
 In-Reply-To: <20210226200414.167762-1-konrad.dybcio@somainline.org>
 References: <20210226200414.167762-1-konrad.dybcio@somainline.org>
@@ -44,30 +44,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-
-The Adreno SMMU in SDM630 needs this compatible string for proper
-context handling and split pagetables support.
+This will enable temperature reporting for various SoC
+components.
 
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
- arch/arm64/boot/dts/qcom/sdm630.dtsi | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../devicetree/bindings/thermal/qcom-tsens.yaml       |  1 +
+ arch/arm64/boot/dts/qcom/sdm630.dtsi                  | 11 +++++++++++
+ 2 files changed, 12 insertions(+)
 
+diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+index 95462e071ab4..cdc2ab662436 100644
+--- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
++++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+@@ -40,6 +40,7 @@ properties:
+               - qcom,msm8996-tsens
+               - qcom,msm8998-tsens
+               - qcom,sc7180-tsens
++              - qcom,sdm630-tsens
+               - qcom,sdm845-tsens
+               - qcom,sm8150-tsens
+               - qcom,sm8250-tsens
 diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index 9e50c9adada6..deeb1237e67a 100644
+index deeb1237e67a..2f35415cefed 100644
 --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -910,7 +910,8 @@ pinconf-sd-cd {
+@@ -627,6 +627,17 @@ mnoc: interconnect@1745000 {
+ 				 <&mmcc AHB_CLK_SRC>;
  		};
  
- 		kgsl_smmu: iommu@5040000 {
--			compatible = "qcom,sdm630-smmu-v2", "qcom,smmu-v2";
-+			compatible = "qcom,sdm630-smmu-v2",
-+				     "qcom,adreno-smmu", "qcom,smmu-v2";
- 			reg = <0x05040000 0x10000>;
- 
- 			/*
++		tsens: thermal-sensor@10ae000 {
++			compatible = "qcom,sdm630-tsens", "qcom,tsens-v2";
++			reg = <0x010ae000 0x1000>, /* TM */
++				  <0x010ad000 0x1000>; /* SROT */
++			#qcom,sensors = <12>;
++			interrupts = <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>,
++					 <GIC_SPI 430 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "uplow", "critical";
++			#thermal-sensor-cells = <1>;
++		};
++
+ 		tcsr_mutex_regs: syscon@1f40000 {
+ 			compatible = "syscon";
+ 			reg = <0x01f40000 0x20000>;
 -- 
 2.30.1
 
