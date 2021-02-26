@@ -2,147 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E3FB32679B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 20:59:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B21B13267B2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 21:07:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230090AbhBZTzY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Feb 2021 14:55:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36588 "EHLO
+        id S230095AbhBZUF2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Feb 2021 15:05:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230083AbhBZTzV (ORCPT
+        with ESMTP id S230083AbhBZUF1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Feb 2021 14:55:21 -0500
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4269CC061788
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 11:54:41 -0800 (PST)
-Received: by mail-pg1-x52c.google.com with SMTP id o63so6853545pgo.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 11:54:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=eAEBqCOJkxJ1r1F8GhCGJ0TIz6UVggh6SIZaIVvLlPE=;
-        b=ljJ2Fuy7+hY05J2HY4PheVlwKxZ4hwOhsJ4ThJZ+cBMA0mtKtzlfCW/QCoJVz+CufQ
-         rkiJELrxJaxvp5GUEFQOUX01lErTgBFZOishaWk8PL+LV2u6PKJRwfPCxyFdjD5WkVOf
-         4Nl9aQ4RGoFAhTrIfvEStC3L9/G+GfOjIr7Ek=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=eAEBqCOJkxJ1r1F8GhCGJ0TIz6UVggh6SIZaIVvLlPE=;
-        b=SpN7DuaTA+w42mlnmAIz3tbJUu+NxN151H2OsU7PEMQ6vFpuRZ4qDfhgKhKFh09vjU
-         UZndPr/FfBZeCkCyqQg9qxT/h6+seOAXLc9lY9jKWPb1ZWLPg3azdztaElnrshOOeHyP
-         0US16/ICQHOTnGSBWNhRiXvMc3nRgYGrK9jyeqCKYRm/QQ6INuu1hIzFlDi6SBH7pqF0
-         p9Rs8+Cfx5VH8YOW4IVupmsbWgk+tnCKQ+YqiBtpS4xvXxFMji6V1bkX7OQAsPne0V4u
-         /kUaYVl4JgtgHswqLLE9Vpfzp5X8HLkLFi3TM0A2HU1zVkZJprUmON/kKnkpHPGqtOPK
-         FwSQ==
-X-Gm-Message-State: AOAM532pos/rlNMc1GokkBi6RGMxDNVhl9EzASAhvi1YkFKOgsopb7mo
-        kTTf8wpExOwe0ajkRnRPYEZWvw==
-X-Google-Smtp-Source: ABdhPJx/iwqYnKdkJ8ZTifEcGMD50vYTwI/+zx3Z1QESFaLFTJKemPk4WhkwNFXpnj5ttDyMgSbk2Q==
-X-Received: by 2002:a62:194f:0:b029:1ee:5078:23a8 with SMTP id 76-20020a62194f0000b02901ee507823a8mr665462pfz.70.1614369280793;
-        Fri, 26 Feb 2021 11:54:40 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:201:e8bb:5726:f58b:4e37])
-        by smtp.gmail.com with ESMTPSA id 14sm10503282pfy.55.2021.02.26.11.54.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Feb 2021 11:54:40 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
+        Fri, 26 Feb 2021 15:05:27 -0500
+Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B57AAC061756
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 12:04:31 -0800 (PST)
+Received: from localhost.localdomain (abab236.neoplus.adsl.tpnet.pl [83.6.165.236])
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id E30FF1F995;
+        Fri, 26 Feb 2021 21:04:25 +0100 (CET)
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+To:     phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 00/41] SDM630/636/660/Nile&Ganges DT feature enablement
+Date:   Fri, 26 Feb 2021 21:03:30 +0100
+Message-Id: <20210226200414.167762-1-konrad.dybcio@somainline.org>
+X-Mailer: git-send-email 2.30.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1613127000-3015-4-git-send-email-mkrishn@codeaurora.org>
-References: <1613127000-3015-1-git-send-email-mkrishn@codeaurora.org> <1613127000-3015-4-git-send-email-mkrishn@codeaurora.org>
-Subject: Re: [PATCH v12 4/4] dt-bindings: msm/dp: Add bindings of MSM DisplayPort controller
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
-        kalyan_t@codeaurora.org, tanmay@codeaurora.org,
-        abhinavk@codeaurora.org, robdclark@gmail.com,
-        bjorn.andersson@linaro.org, vinod.koul@linaro.org,
-        rnayak@codeaurora.org, dianders@chromium.org, sibis@codeaurora.org,
-        khsieh@codeaurora.org, Chandan Uddaraju <chandanu@codeaurora.org>,
-        Vara Reddy <varar@codeaurora.org>
-To:     Krishna Manikandan <mkrishn@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org
-Date:   Fri, 26 Feb 2021 11:54:38 -0800
-Message-ID: <161436927893.1254594.14208287911778577764@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Krishna Manikandan (2021-02-12 02:50:00)
-> Add bindings for Snapdragon DisplayPort controller driver.
->=20
-> Signed-off-by: Chandan Uddaraju <chandanu@codeaurora.org>
-> Signed-off-by: Vara Reddy <varar@codeaurora.org>
-> Signed-off-by: Tanmay Shah <tanmay@codeaurora.org>
-> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
-> Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
->=20
-> Changes in V2:
-> -Provide details about sel-gpio
->=20
-> Changes in V4:
-> -Provide details about max dp lanes
-> -Change the commit text
->=20
-> Changes in V5:
-> -moved dp.txt to yaml file
->=20
-> Changes in v6:
-> - Squash all AUX LUT properties into one pattern Property
-> - Make aux-cfg[0-9]-settings properties optional
-> - Remove PLL/PHY bindings from DP controller dts
-> - Add DP clocks description
-> - Remove _clk suffix from clock names
-> - Rename pixel clock to stream_pixel
-> - Remove redundant bindings (GPIO, PHY, HDCP clock, etc..)
-> - Fix indentation
-> - Add Display Port as interface of DPU in DPU bindings
->   and add port mapping accordingly.
->=20
-> Chages in v7:
-> - Add dp-controller.yaml file common between multiple SOC
-> - Rename dp-sc7180.yaml to dp-controller-sc7180.yaml
-> - change compatible string and add SOC name to it.
-> - Remove Root clock generator for pixel clock
-> - Add assigned-clocks and assigned-clock-parents bindings
-> - Remove redundant properties, descriptions and blank lines
-> - Add DP port in DPU bindings
-> - Update depends-on tag in commit message and rebase change accordingly
->=20
-> Changes in v8:
-> - Add MDSS AHB clock in bindings
->=20
-> Changes in v9:
-> - Remove redundant reg-name property
-> - Change assigned-clocks and assigned-clocks-parents counts to 2
-> - Use IRQ flags in example dts
->=20
-> Changes in v10:
-> - Change title of this patch as it does not contain PLL bindings anymore
-> - Remove redundant properties
-> - Remove use of IRQ flag
-> - Fix ports property
->=20
-> Changes in v11:
-> - add ports required of both #address-cells and  #size-cells
-> - add required operating-points-v2
-> - add required #sound-dai-cells
-> - add required power-domains
-> - update maintainer list
-> ---
->  .../bindings/display/msm/dp-controller.yaml        | 152 +++++++++++++++=
-++++++
->  .../bindings/display/msm/dpu-sc7180.yaml           |  10 ++
+Hi!
 
-Can this dpu-sc7180.yaml update be split away from this patch and put
-into the patch that introduces that yaml file?
+In this *mammoth* series we finally wire up things that
+have been ready for far too long.. We weren't able to
+send most of them earlier though, as CLK and ICC review
+took quite some time..
 
->  2 files changed, 162 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dp-cont=
-roller.yaml
->=20
+Speaking of ICC.. the defines are substituted by numbers,
+so as to allow merging independent of icc-next (Georgi Djakov stated
+the driver would be pulled in for 5.13).
 
-Otherwise
+AngeloGioacchino Del Regno (14):
+  arm64: dts: qcom: sdm630: Rewrite memory map
+  arm64: dts: qcom: sdm630: Add qfprom subnodes
+  arm64: dts: qcom: sdm630: Fix TLMM node and pinctrl configuration
+  arm64: dts: qcom: sdm630: Add SDHCI2 node
+  arm64: dts: qcom: sdm630: Add interconnect and opp table to sdhc_1
+  arm64: dts: qcom: sdm630: Add GPU Clock Controller node
+  arm64: dts: qcom: sdm630: Add clocks and power domains to SMMU nodes
+  arm64: dts: qcom: sdm630: Add qcom,adreno-smmu compatible
+  arm64: dts: qcom: sdm630: Add Adreno 508 GPU configuration
+  arm64: dts: qcom: pm660: Support SPMI regulators on PMIC sid 1
+  arm64: dts: qcom: pm660l: Support SPMI regulators on PMIC sid 3
+  arm64: dts: qcom: sdm630: Configure the camera subsystem
+  arm64: dts: qcom: sdm630-xperia-nile: Add all RPM and fixed regulators
+  arm64: dts: qcom: sdm630-nile: Configure WCN3990 Bluetooth
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Konrad Dybcio (27):
+  arm64: dts: qcom: sdm630: Add RPMPD nodes
+  arm64: dts: qcom: sdm630: Add MMCC node
+  arm64: dts: qcom: sdm630: Add interconnect provider nodes
+  arm64: dts: qcom: sdm630: Add MDSS nodes
+  arm64: dts: qcom: sdm630: Fix intc reg indentation
+  arm64: dts: qcom: sdm630: Add USB configuration
+  arm64: dts: qcom: sdm630: Add TSENS node
+  arm64: dts: qcom: sdm630: Add modem/ADSP SMP2P nodes
+  arm64: dts: qcom: sdm630: Add thermal-zones configuration
+  arm64: dts: qcom: sdm630: Add ADSP remoteproc configuration
+  arm64: dts: qcom: sdm630: Raise tcsr_mutex_regs size
+  arm64: dts: qcom: pm660l: Add WLED support
+  arm64: dts: qcom: pm660(l): Add VADC and temp alarm nodes
+  arm64: dts: qcom: sdm660: Make the DTS an overlay on top of 630
+  arm64: dts: qcom: Add device tree for SDM636
+  arm64: dts: qcom: sdm630: Add IMEM node
+  arm64: dts: qcom: sdm660: Add required nodes for DSI1
+  arm64: dts: qcom: sdm630-nile: Use &labels
+  arm64: dts: qcom: sdm630-nile: Add USB
+  arm64: dts: qcom: sdm630-nile: Add Volume up key
+  arm64: dts: qcom: sdm630-xperia: Retire sdm630-sony-xperia-ganges.dtsi
+  arm64: dts: qcom: sdm630-nile: Add Synaptics touchscreen.
+  arm64: dts: qcom: sdm630-nile: Specify ADSP firmware name
+  arm64: dts: qcom: sdm630-nile: Enable uSD card slot
+  arm64: dts: qcom: sdm630-nile: Remove gpio-keys autorepeat
+  arm64: dts: qcom: sdm630: Add I2C functions to I2C pins
+  arm64: dts: qcom: sdm630: Add DMA to I2C hosts
+
+ .../bindings/thermal/qcom-tsens.yaml          |    1 +
+ arch/arm64/boot/dts/qcom/pm660.dtsi           |  133 ++
+ arch/arm64/boot/dts/qcom/pm660l.dtsi          |   54 +
+ .../qcom/sdm630-sony-xperia-ganges-kirin.dts  |   14 +-
+ .../dts/qcom/sdm630-sony-xperia-ganges.dtsi   |   40 -
+ .../sdm630-sony-xperia-nile-discovery.dts     |    1 +
+ .../qcom/sdm630-sony-xperia-nile-pioneer.dts  |    1 +
+ .../qcom/sdm630-sony-xperia-nile-voyager.dts  |    1 +
+ .../dts/qcom/sdm630-sony-xperia-nile.dtsi     |  538 +++++-
+ arch/arm64/boot/dts/qcom/sdm630.dtsi          | 1446 +++++++++++++++--
+ .../sdm636-sony-xperia-ganges-mermaid.dts     |   14 +-
+ arch/arm64/boot/dts/qcom/sdm636.dtsi          |   23 +
+ .../boot/dts/qcom/sdm660-xiaomi-lavender.dts  |    2 -
+ arch/arm64/boot/dts/qcom/sdm660.dtsi          |  519 +++---
+ 14 files changed, 2292 insertions(+), 495 deletions(-)
+ delete mode 100644 arch/arm64/boot/dts/qcom/sdm630-sony-xperia-ganges.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm636.dtsi
+
+-- 
+2.30.1
+
