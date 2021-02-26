@@ -2,145 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C3537325B81
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 03:14:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D3660325C0B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 04:40:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230100AbhBZCON (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Feb 2021 21:14:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35450 "EHLO
+        id S229849AbhBZDkJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Feb 2021 22:40:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230010AbhBZCOL (ORCPT
+        with ESMTP id S229492AbhBZDkI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Feb 2021 21:14:11 -0500
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F5EDC061756
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 18:13:31 -0800 (PST)
-Received: by mail-pj1-x1033.google.com with SMTP id i14so3480394pjz.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 18:13:31 -0800 (PST)
+        Thu, 25 Feb 2021 22:40:08 -0500
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC68DC061756
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 19:39:28 -0800 (PST)
+Received: by mail-pj1-x1029.google.com with SMTP id l18so5296108pji.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Feb 2021 19:39:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=eCQDyjSjrPOnC5kBdIWB+6uWOY9PLaOhvG7UuaHLMBs=;
-        b=hzQEPy6po5uMlNt0Zt2fNrmKhe+2t6IXQjWLf9e9fSsIRAxq8g77yMUNBKK5YQVDqH
-         Gi419EyzG4KPVI0SMS5MzP4bw48wj3nB9IWmuOSspMiQiS36aaxomlYQ6WVOSxTcCCmi
-         nyMp5RNbCQDDnG7ygq/7HxOd0y8fssESR9iks=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=56AvynNCW+THTU4NZfS3buEv8VRRSK5XT9Dy1cT1dG0=;
+        b=jwEATEoiOzi9h1cD0myiw5d+wV2Z5W/u+/HD4cM8CnQ1KsAdrHM6JaOSISnTR53npk
+         Q/9QZh3BXBy8sdxFH/EDLVC59zt2ml6IGBXPZK/3fupx189ZMHXu0s8ugQgSMyR6G2VK
+         EQ0AWWqDIjyWJtlihLosQXslYvQmoh3Elj6U3Rs5yDx4eHXT7ObC+GxDqzExl0lLEwRG
+         nOGSbcXMgcUygUL7NM5zhG3MrjK8V2DmUZKFNGovKQouHHJw+pYEPy13O0zzTqVjHxGp
+         7y7ekLmc4gwmSJCm9fGYCI1kK+aFO2LA5nNRkY3Ri7Yk6bsei3LhBIjDf4dsHYTpJSwO
+         EJcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=eCQDyjSjrPOnC5kBdIWB+6uWOY9PLaOhvG7UuaHLMBs=;
-        b=JNBaiFmKA8gUi/9klhGZMdbzqHcVMkP6wOe3Q5+zqcGwCMTZ6EOuIZ62wnXgrk+j4R
-         94tgPV5NUFO1noGDV+IPxYukflKVZcWwpkrpYyyKmZyS0CRve84thOsPIGkWB94V+dga
-         ag0rWJomFM/isS98e4uJZ5wseZVOnEE7VdgyT9zAjegAePs9zwavkGEdCoCtU/2HaXBC
-         ibY9EfDjMfdfJdTsbprasMQURYwG9ynsbtbp8ByHZBEhFy7ANwAhkEz4eEn0fBr8wRcs
-         9smvyjOIwbfLPT+s1R/Ujtdmz08ISusCbGZOFlLq7bR3QLzTBh1C49Xt6dP0naUh+UHj
-         0u+Q==
-X-Gm-Message-State: AOAM530oj9BfhFobg9zMwt3qg8S4Em108vTMacvU+iqPN3UeASCEY/p/
-        bFSZWjKHeWASN7e15viUIJ+g3g==
-X-Google-Smtp-Source: ABdhPJxbCC7G//bSUsPbyD6uOE13QyYXQG2FJO0dCZ69QsD+hhc3QGnvoJBGzIwOGDsY4l9xpjlXdw==
-X-Received: by 2002:a17:90a:7405:: with SMTP id a5mr936844pjg.13.1614305610829;
-        Thu, 25 Feb 2021 18:13:30 -0800 (PST)
-Received: from localhost ([2620:15c:202:1:1d8:8d0c:f75e:edd8])
-        by smtp.gmail.com with UTF8SMTPSA id w24sm7119977pgl.19.2021.02.25.18.13.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Feb 2021 18:13:30 -0800 (PST)
-Date:   Thu, 25 Feb 2021 18:13:28 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Alexandru M Stan <amstan@chromium.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Philip Chen <philipchen@google.com>,
-        Tzung-Bi Shih <tzungbi@chromium.org>,
-        Judy Hsiao <judyhsiao@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 12/13] arm64: dts: qcom: Add sc7180-lazor-pompom skus
-Message-ID: <YDhZSAd0XLgdHEEm@google.com>
-References: <20210225221310.1939599-1-dianders@chromium.org>
- <20210225141022.12.If93a01b30d20dccacbad4be8ddc519dc20a51a1e@changeid>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20210225141022.12.If93a01b30d20dccacbad4be8ddc519dc20a51a1e@changeid>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=56AvynNCW+THTU4NZfS3buEv8VRRSK5XT9Dy1cT1dG0=;
+        b=VTX0O9p9XUoAwF8GmMrYGvEyqR3Xlfsz7p2Zcyx4ilt/52+bPbOsJTTMc4IbyI2zV0
+         6cyIkeAgNMYL6jIvurfZbdcQJYJ6glECJ+wNfm5hp/Rwbmu/2H9+ds9R/2lubsQYYfV6
+         R8+zA+koCs7nWc+UPOYUnIXs2BzkVY/48rGFw7OFzaEg9G0Ui6qiPDF2ZBYwFb9UoNF0
+         ezQFd5otAhAtTQU5b+HfZuaSJsy1y78SQOtq2Iqb9+7MhuiYJuWkDIR9Zlq3zPN/ehPx
+         xLiZlVZ2cWILoNSSgMvHfaxgazQYElcIgi1dWiUNPvDbWX1MkqyCVzr2aWVNF+AkyCKm
+         KILg==
+X-Gm-Message-State: AOAM531eGZbIljI3y94H4nu0r0t6C2DyjdiEGmJDvRUAMjrciUHO5bWq
+        fsamfGecY+KaAU8Q8hCFe9FV8vDPKz3mRQ==
+X-Google-Smtp-Source: ABdhPJyzrNlyAHTtcjisJZbKIWjUhRki2mKrjHFgvleVW4ikML/lSQFIihGeog6hcS6fdhGH9VrS5w==
+X-Received: by 2002:a17:902:6b43:b029:df:fb48:aecf with SMTP id g3-20020a1709026b43b02900dffb48aecfmr1260629plt.67.1614310768092;
+        Thu, 25 Feb 2021 19:39:28 -0800 (PST)
+Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id e22sm4950987pgk.56.2021.02.25.19.39.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Feb 2021 19:39:27 -0800 (PST)
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Mika Westerberg <mika.westerberg@linux.intel.com>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-gpio@vger.kernel.org, linux-acpi@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>
+Subject: [PATCH] gpiolib: acpi: support override broken GPIO number in ACPI table
+Date:   Fri, 26 Feb 2021 11:39:19 +0800
+Message-Id: <20210226033919.8871-1-shawn.guo@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Feb 25, 2021 at 02:13:09PM -0800, Douglas Anderson wrote:
-> This is a trogdor variant.  This is mostly a grab from the downstream
-> tree with notable exceptions:
-> - I skip -rev0.  This was a super early build and there's no advantage
->   of long term support.
-> - In -rev1 I translate the handling of the USB hub like is done for
->   similar boards.  See the difference between the downstream and
->   upstream 'sc7180-trogdor-lazor-r0.dts' for an example.  This will
->   need to be resolved when proper support for the USB hub is figured
->   out upstream.
-> - I remove sound node since sound hasn't landed upstream yet.
-> - In incorporate the pending <https://crrev.com/c/2719075> for the
->   keyboard.
-> 
-> Cc: Philip Chen <philipchen@google.com>
-> Cc: Matthias Kaehlcke <mka@chromium.org>
-> Cc: Stephen Boyd <swboyd@chromium.org>
-> Cc: Tzung-Bi Shih <tzungbi@chromium.org>
-> Cc: Judy Hsiao <judyhsiao@chromium.org>
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Running kernel with ACPI on Lenovo Flex 5G laptop, touchpad is just
+not working.  That's because the GpioInt number of TSC2 node in ACPI
+table is simply wrong, and the number even exceeds the maximum GPIO
+lines.  As the touchpad works fine with Windows on the same machine,
+presumably this is something Windows-ism.  Although it's obviously
+a specification violation, believe of that Microsoft will fix this in
+the near future is not really realistic.
 
-<snip>
+It adds the support of overriding broken GPIO number in ACPI table
+on particular machines, which are matched using DMI info.  Such
+mechanism for fixing up broken firmware and ACPI table is not uncommon
+in kernel.  And hopefully it can be useful for other machines that get
+broken GPIO number coded in ACPI table.
 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-> new file mode 100644
-> index 000000000000..8f1596b8e90a
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-> @@ -0,0 +1,288 @@
-> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-> +/*
-> + * Google Pompom board device tree source
-> + *
-> + * Copyright 2020 Google LLC.
-> + */
-> +
-> +#include "sc7180.dtsi"
-> +
-> +ap_ec_spi: &spi6 {};
-> +ap_h1_spi: &spi0 {};
-> +
-> +#include "sc7180-trogdor.dtsi"
-> +
-> +/ {
-> +	thermal-zones {
-> +		5v-choke-thermal {
-> +			polling-delay-passive = <0>;
-> +			polling-delay = <250>;
-> +
-> +			thermal-sensors = <&pm6150_adc_tm 0>;
+Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+---
+ drivers/gpio/gpiolib-acpi.c | 63 ++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 62 insertions(+), 1 deletion(-)
 
-This is fine with how things are currently configured for trogdor, however be
-aware that in the ADC thermal monitor config your patch is racing with 'arm64:
-dts: qcom: sc7180: trogdor: Use ADC TM channel 0 instead of 1 for charger
-temperature' (https://lore.kernel.org/patchwork/patch/1384514/). That patch
-changes the charger thermistor for all trogdor boards to ADC TM channel 0,
-so the 5v-choke thermistor would have to move to another channel (most
-likely 1).
+diff --git a/drivers/gpio/gpiolib-acpi.c b/drivers/gpio/gpiolib-acpi.c
+index e37a57d0a2f0..30a5c5a954fa 100644
+--- a/drivers/gpio/gpiolib-acpi.c
++++ b/drivers/gpio/gpiolib-acpi.c
+@@ -93,6 +93,63 @@ static DEFINE_MUTEX(acpi_gpio_deferred_req_irqs_lock);
+ static LIST_HEAD(acpi_gpio_deferred_req_irqs_list);
+ static bool acpi_gpio_deferred_req_irqs_done;
+ 
++struct acpi_gpio_pin_fixup {
++	int pin_broken;
++	int pin_correct;
++};
++
++struct acpi_gpio_pin_override {
++	const struct acpi_gpio_pin_fixup *fixups;
++	int num;
++};
++
++static const struct acpi_gpio_pin_fixup lenovo_flex_5g_fixups[] = {
++	{
++		/* GpioInt of Touchpad (TSC2) */
++		.pin_broken = 0x0280,
++		.pin_correct = 0x0018,
++	},
++};
++
++static const struct acpi_gpio_pin_override lenovo_flex_5g_override = {
++	.fixups = lenovo_flex_5g_fixups,
++	.num = ARRAY_SIZE(lenovo_flex_5g_fixups),
++};
++
++static const struct dmi_system_id acpi_gpio_pin_override_table[] = {
++	{
++		.ident = "Lenovo Flex 5G",
++		.matches = {
++			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_FAMILY, "Flex 5G 14Q8CX05"),
++		},
++		.driver_data = (void *)&lenovo_flex_5g_override,
++	},
++	{ } /* terminator */
++};
++
++static int acpi_gpio_pin_override(int pin)
++{
++	const struct acpi_gpio_pin_override *override;
++	const struct acpi_gpio_pin_fixup *fixup;
++	const struct dmi_system_id *system_id;
++	int i;
++
++	system_id = dmi_first_match(acpi_gpio_pin_override_table);
++	if (!system_id)
++		return pin;
++
++	override = system_id->driver_data;
++
++	for (i = 0; i < override->num; i++) {
++		fixup = &override->fixups[i];
++		if (pin == fixup->pin_broken)
++			return fixup->pin_correct;
++	}
++
++	return pin;
++}
++
+ static int acpi_gpiochip_find(struct gpio_chip *gc, void *data)
+ {
+ 	if (!gc->parent)
+@@ -125,7 +182,11 @@ static struct gpio_desc *acpi_get_gpiod(char *path, int pin)
+ 	if (!chip)
+ 		return ERR_PTR(-EPROBE_DEFER);
+ 
+-	return gpiochip_get_desc(chip, pin);
++	/*
++	 * Give it a chance to correct the broken GPIO pin number in ACPI
++	 * table of particular machines.
++	 */
++	return gpiochip_get_desc(chip, acpi_gpio_pin_override(pin));
+ }
+ 
+ static irqreturn_t acpi_gpio_irq_handler(int irq, void *data)
+-- 
+2.17.1
 
-<snip>
-
-> +&pm6150_adc_tm {
-> +	status = "okay";
-> +
-> +	5v-choke-thermistor@0 {
-> +		reg = <0>;
-
-s/0/1/ in the two lines above if 'arm64: dts: qcom: sc7180: trogdor: Use ADC
-TM channel 0 instead of 1 for charger temperature' lands before this patch.
-
-The other deltas with downstream are mentioned in the commit message, as long
-as we keep the change of the ADC TM channel in mind this looks good to me.
-
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
