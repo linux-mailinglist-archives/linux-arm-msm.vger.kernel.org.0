@@ -2,189 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B86F0325F12
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 09:33:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B079325FD0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 10:16:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230112AbhBZIbG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Feb 2021 03:31:06 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:60875 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229449AbhBZIbD (ORCPT
+        id S230224AbhBZJPN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Feb 2021 04:15:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40040 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230264AbhBZJNE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Feb 2021 03:31:03 -0500
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 26 Feb 2021 00:30:02 -0800
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 26 Feb 2021 00:29:59 -0800
-X-QCInternal: smtphost
-Received: from gokulsri-linux.qualcomm.com ([10.201.2.207])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 26 Feb 2021 13:59:52 +0530
-Received: by gokulsri-linux.qualcomm.com (Postfix, from userid 432570)
-        id 65E5F20E0E; Fri, 26 Feb 2021 13:59:51 +0530 (IST)
-From:   Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
-To:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        manivannan.sadhasivam@linaro.org, robh+dt@kernel.org,
-        sboyd@kernel.org, sricharan@codeaurora.org,
-        Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
-Subject: [PATCH v5] arm64: dts: Add board support for HK10
-Date:   Fri, 26 Feb 2021 13:58:30 +0530
-Message-Id: <1614328110-28866-2-git-send-email-gokulsri@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1614328110-28866-1-git-send-email-gokulsri@codeaurora.org>
-References: <1614328110-28866-1-git-send-email-gokulsri@codeaurora.org>
+        Fri, 26 Feb 2021 04:13:04 -0500
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA0C2C061574;
+        Fri, 26 Feb 2021 01:12:23 -0800 (PST)
+Received: by mail-pf1-x432.google.com with SMTP id w18so5855559pfu.9;
+        Fri, 26 Feb 2021 01:12:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=lPqrvGOM/KxlTUCjatUeX0M7ibWEjhxXFLOE1+buRlw=;
+        b=FlXECRlidF8uQU1OVc4FL5J8KoAoHk0AcktARnXgD8JBow3qyJuUJv8KICmQSlcwWS
+         TsIYau0oCOC9iiq6ki9hNHqylgKM5UyoVnFbQbI5ycyKYg5auT4k63mbaUuuHEm98VBJ
+         7OGYxN5pYziCqMMeBQGyDo0PfBjGxFQ8mVNKVqkn1PrclFXaqPil0XzDd5DdnHIqa5U1
+         xd8XgK/fTMxrrONXjIw53wDjK3V6/+k6WZOFWycX+cN7LTABVi7srJdJjH+qy5iRTaI5
+         xNR3ZL+t5IiH+jYl7uSkJv4msP/2huv5e6ub4cmwv77EfLJA8z59Aqb98gKbkNVZozbQ
+         J7Gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=lPqrvGOM/KxlTUCjatUeX0M7ibWEjhxXFLOE1+buRlw=;
+        b=EDUr9GBlHHB4yL9ieA0JJoqge+MHij5q4E/rKBq4s6KNo5EsZmoXz+ziTwi6Bqvi+X
+         PXxWAZGhChSwHqqBSHGpwMFqftZoXyCRWwycdE8nArw7WV7EgbLx3PG0EtboON3DTCHx
+         R6FfuqXqP4wG7mu0i2HClVKryClt48TZGR1aon9uuxxwQyCqjnphg6emXHndsUMcevjZ
+         fOYwKm9omrqukapzKrbzlIlRDjbvjKsR/O9BOHk3mbAYiOE1Uc/QqESqc/Gx66Gzq4JQ
+         /Bf+DDsi8KcHkgujfkBP2ygMYlrWTelKIPglonviGAS5P914afD8bU19OpSa1bHIN3H/
+         X0Bg==
+X-Gm-Message-State: AOAM531BT5OFMTbUpFIx4f+e7jYmwOcjnXds96f5NMZbdCmxWXFHKZXI
+        fhKymaqitHzdR2C3j0sF3n/GTECZKKdEo7DGCGw=
+X-Google-Smtp-Source: ABdhPJxwO1ID0hD4wYchNm1wqsK9bAJ9S/d7SSGeo4uTlTzk7T6IsMtspmU31Jmkqfao9k087+w9AHj28sCckRxseWk=
+X-Received: by 2002:a05:6a00:854:b029:1b7:6233:c5f with SMTP id
+ q20-20020a056a000854b02901b762330c5fmr2463442pfk.73.1614330743282; Fri, 26
+ Feb 2021 01:12:23 -0800 (PST)
+MIME-Version: 1.0
+References: <20210226033919.8871-1-shawn.guo@linaro.org>
+In-Reply-To: <20210226033919.8871-1-shawn.guo@linaro.org>
+From:   Andy Shevchenko <andy.shevchenko@gmail.com>
+Date:   Fri, 26 Feb 2021 11:12:07 +0200
+Message-ID: <CAHp75Vcb=NO9OWjSpBeVC4c+9=aXE=yiDWVBwLD1DnzwdgFD6Q@mail.gmail.com>
+Subject: Re: [PATCH] gpiolib: acpi: support override broken GPIO number in
+ ACPI table
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Mika Westerberg <mika.westerberg@linux.intel.com>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add initial support for IPQ8074 SoC based HK10-C1
-and HK10-C2 evaluation boards.
+On Fri, Feb 26, 2021 at 5:42 AM Shawn Guo <shawn.guo@linaro.org> wrote:
+>
+> Running kernel with ACPI on Lenovo Flex 5G laptop, touchpad is just
+> not working.  That's because the GpioInt number of TSC2 node in ACPI
+> table is simply wrong, and the number even exceeds the maximum GPIO
+> lines.  As the touchpad works fine with Windows on the same machine,
+> presumably this is something Windows-ism.  Although it's obviously
+> a specification violation, believe of that Microsoft will fix this in
+> the near future is not really realistic.
+>
+> It adds the support of overriding broken GPIO number in ACPI table
+> on particular machines, which are matched using DMI info.  Such
+> mechanism for fixing up broken firmware and ACPI table is not uncommon
+> in kernel.  And hopefully it can be useful for other machines that get
+> broken GPIO number coded in ACPI table.
 
-Signed-off-by: Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/Makefile            |  2 +
- arch/arm64/boot/dts/qcom/ipq8074-hk10-c1.dts | 11 ++++
- arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dts | 14 +++++
- arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi   | 76 ++++++++++++++++++++++++++++
- 4 files changed, 103 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/ipq8074-hk10-c1.dts
- create mode 100644 arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dts
- create mode 100644 arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
+Thanks for the report and patch.
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 5113fac..4098c5e 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -4,6 +4,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-ifc6640.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= ipq6018-cp01-c1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk01.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk10-c1.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk10-c2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-longcheer-l8150.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-a3u-eur.dtb
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074-hk10-c1.dts b/arch/arm64/boot/dts/qcom/ipq8074-hk10-c1.dts
-new file mode 100644
-index 00000000..2bfcf42
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/ipq8074-hk10-c1.dts
-@@ -0,0 +1,11 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/* Copyright (c) 2020 The Linux Foundation. All rights reserved.
-+ */
-+/dts-v1/;
-+
-+#include "ipq8074-hk10.dtsi"
-+
-+/ {
-+	model = "Qualcomm Technologies, Inc. IPQ8074/AP-HK10-C1";
-+	compatible = "qcom,ipq8074-hk10-c1", "qcom,ipq8074";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dts b/arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dts
-new file mode 100644
-index 00000000..1897e96
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dts
-@@ -0,0 +1,14 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/dts-v1/;
-+/* Copyright (c) 2020 The Linux Foundation. All rights reserved.
-+ */
-+#include "ipq8074-hk10.dtsi"
-+
-+/ {
-+	model = "Qualcomm Technologies, Inc. IPQ8074/AP-HK10-C2";
-+	compatible = "qcom,ipq8074-hk10-c2", "qcom,ipq8074";
-+};
-+
-+&q6v5_wcss {
-+	status = "disabled";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi b/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
-new file mode 100644
-index 00000000..0827055
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
-@@ -0,0 +1,76 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2020, The Linux Foundation. All rights reserved.
-+ */
-+/dts-v1/;
-+
-+#include "ipq8074.dtsi"
-+
-+/ {
-+	#address-cells = <0x2>;
-+	#size-cells = <0x2>;
-+
-+	interrupt-parent = <&intc>;
-+
-+	aliases {
-+		serial0 = &blsp1_uart5;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0";
-+	};
-+
-+	memory {
-+		device_type = "memory";
-+		reg = <0x0 0x40000000 0x0 0x20000000>;
-+	};
-+};
-+
-+&blsp1_spi1 {
-+	status = "ok";
-+
-+	m25p80@0 {
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		compatible = "jedec,spi-nor";
-+		reg = <0>;
-+		spi-max-frequency = <50000000>;
-+	};
-+};
-+
-+&blsp1_uart5 {
-+	status = "ok";
-+};
-+
-+&pcie0 {
-+	status = "ok";
-+	perst-gpio = <&tlmm 58 0x1>;
-+};
-+
-+&pcie1 {
-+	status = "ok";
-+	perst-gpio = <&tlmm 61 0x1>;
-+};
-+
-+&qmp_pcie_phy0 {
-+	status = "ok";
-+};
-+
-+&qmp_pcie_phy1 {
-+	status = "ok";
-+};
-+
-+&qpic_bam {
-+	status = "ok";
-+};
-+
-+&qpic_nand {
-+	status = "ok";
-+
-+	nand@0 {
-+		reg = <0>;
-+		nand-ecc-strength = <4>;
-+		nand-ecc-step-size = <512>;
-+		nand-bus-width = <8>;
-+	};
-+};
+First of all, have you reported the issue to Lenovo? At least they
+will know that they did wrong.
+Second, is it possible to have somewhere output of `acpidump -o
+flex5g.dat` (the flex5g.dat file)?
+
+And as Mika said once to one of mine patches "since you know the
+number ahead there is no need to pollute GPIO ACPI library core with
+this quirk". But in any case I would like to see the ACPI tables
+first.
+
 -- 
-2.7.4
-
+With Best Regards,
+Andy Shevchenko
