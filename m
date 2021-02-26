@@ -2,22 +2,22 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F1741326877
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 21:22:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BAF28326866
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 21:21:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230022AbhBZUSR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Feb 2021 15:18:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41294 "EHLO
+        id S231284AbhBZUQY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Feb 2021 15:16:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231320AbhBZURC (ORCPT
+        with ESMTP id S231282AbhBZUPY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Feb 2021 15:17:02 -0500
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 498A0C0611C3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 12:06:02 -0800 (PST)
+        Fri, 26 Feb 2021 15:15:24 -0500
+Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C943CC0611BD
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 12:06:06 -0800 (PST)
 Received: from localhost.localdomain (abab236.neoplus.adsl.tpnet.pl [83.6.165.236])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 8D4CD1FABC;
-        Fri, 26 Feb 2021 21:05:58 +0100 (CET)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 969751FAC6;
+        Fri, 26 Feb 2021 21:06:03 +0100 (CET)
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 To:     phone-devel@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
@@ -32,9 +32,9 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 19/41] arm64: dts: qcom: sdm630: Raise tcsr_mutex_regs size
-Date:   Fri, 26 Feb 2021 21:03:49 +0100
-Message-Id: <20210226200414.167762-20-konrad.dybcio@somainline.org>
+Subject: [PATCH 20/41] arm64: dts: qcom: sdm630: Add Adreno 508 GPU configuration
+Date:   Fri, 26 Feb 2021 21:03:50 +0100
+Message-Id: <20210226200414.167762-21-konrad.dybcio@somainline.org>
 X-Mailer: git-send-email 2.30.1
 In-Reply-To: <20210226200414.167762-1-konrad.dybcio@somainline.org>
 References: <20210226200414.167762-1-konrad.dybcio@somainline.org>
@@ -44,27 +44,118 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enlarge the size to make sure all relevant registers can be reached.
-This will be required to support the modem.
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 
+The SDM630 SoC features an Adreno 508.0 GPU with a minimum frequency
+of 160MHz and a maximum of (depending on the speed-bin) 775MHz.
+
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
- arch/arm64/boot/dts/qcom/sdm630.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sdm630.dtsi | 84 +++++++++++++++++++++++++++-
+ 1 file changed, 83 insertions(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index f6abb2e79407..d4dd8624cac5 100644
+index d4dd8624cac5..1da9b8aa5c0f 100644
 --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -857,7 +857,7 @@ tsens: thermal-sensor@10ae000 {
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: BSD-3-Clause
+ /*
+- * Copyright (c) 2020, Konrad Dybcio
++ * Copyright (c) 2020, Konrad Dybcio <konradybcio@gmail.com>
++ * Copyright (c) 2020, AngeloGioacchino Del Regno <kholk11@gmail.com>
+  */
  
- 		tcsr_mutex_regs: syscon@1f40000 {
- 			compatible = "syscon";
--			reg = <0x01f40000 0x20000>;
-+			reg = <0x01f40000 0x40000>;
+ #include <dt-bindings/clock/qcom,gcc-sdm660.h>
+@@ -1137,6 +1138,87 @@ pinconf-sd-cd {
+ 			};
  		};
  
- 		tlmm: pinctrl@3100000 {
++		adreno_gpu: gpu@5000000 {
++			compatible = "qcom,adreno-508.0", "qcom,adreno";
++			#stream-id-cells = <16>;
++
++			reg = <0x05000000 0x40000>;
++			reg-names = "kgsl_3d0_reg_memory";
++
++			interrupts = <0 300 IRQ_TYPE_LEVEL_HIGH>;
++
++			clocks = <&gcc GCC_GPU_CFG_AHB_CLK>,
++				<&gpucc GPUCC_RBBMTIMER_CLK>,
++				<&gcc GCC_BIMC_GFX_CLK>,
++				<&gcc GCC_GPU_BIMC_GFX_CLK>,
++				<&gpucc GPUCC_RBCPR_CLK>,
++				<&gpucc GPUCC_GFX3D_CLK>;
++
++			clock-names = "iface",
++				"rbbmtimer",
++				"mem",
++				"mem_iface",
++				"rbcpr",
++				"core";
++
++			power-domains = <&rpmpd SDM660_VDDMX>;
++			iommus = <&kgsl_smmu 0>;
++
++			nvmem-cells = <&gpu_speed_bin>;
++			nvmem-cell-names = "speed_bin";
++
++			interconnects = <&gnoc 1 &bimc 5>;
++			interconnect-names = "gfx-mem";
++
++			operating-points-v2 = <&gpu_sdm630_opp_table>;
++
++			gpu_sdm630_opp_table: opp-table {
++				compatible  = "operating-points-v2";
++				opp-775000000 {
++					opp-hz = /bits/ 64 <775000000>;
++					opp-level = <RPM_SMD_LEVEL_TURBO>;
++					opp-peak-kBps = <5412000>;
++					opp-supported-hw = <0xA2>;
++				};
++				opp-647000000 {
++					opp-hz = /bits/ 64 <647000000>;
++					opp-level = <RPM_SMD_LEVEL_NOM_PLUS>;
++					opp-peak-kBps = <4068000>;
++					opp-supported-hw = <0xFF>;
++				};
++				opp-588000000 {
++					opp-hz = /bits/ 64 <588000000>;
++					opp-level = <RPM_SMD_LEVEL_NOM>;
++					opp-peak-kBps = <3072000>;
++					opp-supported-hw = <0xFF>;
++				};
++				opp-465000000 {
++					opp-hz = /bits/ 64 <465000000>;
++					opp-level = <RPM_SMD_LEVEL_SVS_PLUS>;
++					opp-peak-kBps = <2724000>;
++					opp-supported-hw = <0xFF>;
++				};
++				opp-370000000 {
++					opp-hz = /bits/ 64 <370000000>;
++					opp-level = <RPM_SMD_LEVEL_SVS>;
++					opp-peak-kBps = <2188000>;
++					opp-supported-hw = <0xFF>;
++				};
++				opp-240000000 {
++					opp-hz = /bits/ 64 <240000000>;
++					opp-level = <RPM_SMD_LEVEL_LOW_SVS>;
++					opp-peak-kBps = <1648000>;
++					opp-supported-hw = <0xFF>;
++				};
++				opp-160000000 {
++					opp-hz = /bits/ 64 <160000000>;
++					opp-level = <RPM_SMD_LEVEL_MIN_SVS>;
++					opp-peak-kBps = <1200000>;
++					opp-supported-hw = <0xFF>;
++				};
++			};
++		};
++
+ 		kgsl_smmu: iommu@5040000 {
+ 			compatible = "qcom,sdm630-smmu-v2",
+ 				     "qcom,adreno-smmu", "qcom,smmu-v2";
 -- 
 2.30.1
 
