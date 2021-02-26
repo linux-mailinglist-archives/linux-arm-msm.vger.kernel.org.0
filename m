@@ -2,99 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B079325FD0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 10:16:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F2772325FED
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 10:24:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230224AbhBZJPN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Feb 2021 04:15:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40040 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230264AbhBZJNE (ORCPT
+        id S230209AbhBZJXb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Feb 2021 04:23:31 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:60023 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230144AbhBZJWA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Feb 2021 04:13:04 -0500
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA0C2C061574;
-        Fri, 26 Feb 2021 01:12:23 -0800 (PST)
-Received: by mail-pf1-x432.google.com with SMTP id w18so5855559pfu.9;
-        Fri, 26 Feb 2021 01:12:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=lPqrvGOM/KxlTUCjatUeX0M7ibWEjhxXFLOE1+buRlw=;
-        b=FlXECRlidF8uQU1OVc4FL5J8KoAoHk0AcktARnXgD8JBow3qyJuUJv8KICmQSlcwWS
-         TsIYau0oCOC9iiq6ki9hNHqylgKM5UyoVnFbQbI5ycyKYg5auT4k63mbaUuuHEm98VBJ
-         7OGYxN5pYziCqMMeBQGyDo0PfBjGxFQ8mVNKVqkn1PrclFXaqPil0XzDd5DdnHIqa5U1
-         xd8XgK/fTMxrrONXjIw53wDjK3V6/+k6WZOFWycX+cN7LTABVi7srJdJjH+qy5iRTaI5
-         xNR3ZL+t5IiH+jYl7uSkJv4msP/2huv5e6ub4cmwv77EfLJA8z59Aqb98gKbkNVZozbQ
-         J7Gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=lPqrvGOM/KxlTUCjatUeX0M7ibWEjhxXFLOE1+buRlw=;
-        b=EDUr9GBlHHB4yL9ieA0JJoqge+MHij5q4E/rKBq4s6KNo5EsZmoXz+ziTwi6Bqvi+X
-         PXxWAZGhChSwHqqBSHGpwMFqftZoXyCRWwycdE8nArw7WV7EgbLx3PG0EtboON3DTCHx
-         R6FfuqXqP4wG7mu0i2HClVKryClt48TZGR1aon9uuxxwQyCqjnphg6emXHndsUMcevjZ
-         fOYwKm9omrqukapzKrbzlIlRDjbvjKsR/O9BOHk3mbAYiOE1Uc/QqESqc/Gx66Gzq4JQ
-         /Bf+DDsi8KcHkgujfkBP2ygMYlrWTelKIPglonviGAS5P914afD8bU19OpSa1bHIN3H/
-         X0Bg==
-X-Gm-Message-State: AOAM531BT5OFMTbUpFIx4f+e7jYmwOcjnXds96f5NMZbdCmxWXFHKZXI
-        fhKymaqitHzdR2C3j0sF3n/GTECZKKdEo7DGCGw=
-X-Google-Smtp-Source: ABdhPJxwO1ID0hD4wYchNm1wqsK9bAJ9S/d7SSGeo4uTlTzk7T6IsMtspmU31Jmkqfao9k087+w9AHj28sCckRxseWk=
-X-Received: by 2002:a05:6a00:854:b029:1b7:6233:c5f with SMTP id
- q20-20020a056a000854b02901b762330c5fmr2463442pfk.73.1614330743282; Fri, 26
- Feb 2021 01:12:23 -0800 (PST)
-MIME-Version: 1.0
-References: <20210226033919.8871-1-shawn.guo@linaro.org>
-In-Reply-To: <20210226033919.8871-1-shawn.guo@linaro.org>
-From:   Andy Shevchenko <andy.shevchenko@gmail.com>
-Date:   Fri, 26 Feb 2021 11:12:07 +0200
-Message-ID: <CAHp75Vcb=NO9OWjSpBeVC4c+9=aXE=yiDWVBwLD1DnzwdgFD6Q@mail.gmail.com>
-Subject: Re: [PATCH] gpiolib: acpi: support override broken GPIO number in
- ACPI table
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Fri, 26 Feb 2021 04:22:00 -0500
+Received: from ironmsg07-lv.qualcomm.com (HELO ironmsg07-lv.qulacomm.com) ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 26 Feb 2021 01:21:18 -0800
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg07-lv.qulacomm.com with ESMTP/TLS/AES256-SHA; 26 Feb 2021 01:21:16 -0800
+X-QCInternal: smtphost
+Received: from gokulsri-linux.qualcomm.com ([10.201.2.207])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 26 Feb 2021 14:50:55 +0530
+Received: by gokulsri-linux.qualcomm.com (Postfix, from userid 432570)
+        id E6D1320E23; Fri, 26 Feb 2021 14:50:56 +0530 (IST)
+From:   Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
+To:     linux-arm-msm@vger.kernel.org, inux-kernel@vger.kernel.org
+Cc:     manivannan.sadhasivam@linaro.org, jhugo@codeaurora.org,
+        hemantk@codeaurora.org, sricharan@codeaurora.org,
+        gokulsri@codeaurora.org
+Subject: [PATCH RFC v2] mhi: Enable unique QRTR node ID support
+Date:   Fri, 26 Feb 2021 14:49:58 +0530
+Message-Id: <1614331199-11420-1-git-send-email-gokulsri@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Feb 26, 2021 at 5:42 AM Shawn Guo <shawn.guo@linaro.org> wrote:
->
-> Running kernel with ACPI on Lenovo Flex 5G laptop, touchpad is just
-> not working.  That's because the GpioInt number of TSC2 node in ACPI
-> table is simply wrong, and the number even exceeds the maximum GPIO
-> lines.  As the touchpad works fine with Windows on the same machine,
-> presumably this is something Windows-ism.  Although it's obviously
-> a specification violation, believe of that Microsoft will fix this in
-> the near future is not really realistic.
->
-> It adds the support of overriding broken GPIO number in ACPI table
-> on particular machines, which are matched using DMI info.  Such
-> mechanism for fixing up broken firmware and ACPI table is not uncommon
-> in kernel.  And hopefully it can be useful for other machines that get
-> broken GPIO number coded in ACPI table.
+On multi-mhi platforms, host WiFi driver and
+QMI test driver needs to differntiate between
+QMI packets received from multiple mhi devices.
 
-Thanks for the report and patch.
+With QCN9000 PCI cards, once SBL gets loaded, we
+utilize ERRDBG2 register to write a unique value
+per mhi device from device-tree that the device
+utilizes to set a unique QRTR node ID and
+instance ID for the QMI service. This helps QRTR
+stack in differenting the packets in a multi-mhi
+environment and can route them accordingly.
 
-First of all, have you reported the issue to Lenovo? At least they
-will know that they did wrong.
-Second, is it possible to have somewhere output of `acpidump -o
-flex5g.dat` (the flex5g.dat file)?
+sample:
+root@OpenWrt:/# qrtr-lookup
+  Service Version Instance Node  Port
+       15       1        0    8     1 Test service
+       69       1        8    8     2 ATH10k WLAN firmware service
+       15       1        0   24     1 Test service
+       69       1       24   24     2 ATH10k WLAN firmware service
 
-And as Mika said once to one of mine patches "since you know the
-number ahead there is no need to pollute GPIO ACPI library core with
-this quirk". But in any case I would like to see the ACPI tables
-first.
+Here 8 and 24 on column 3 (QMI Instance ID)
+and 4 (QRTR Node ID) are the node IDs that
+is unique per mhi device.
+
+Changes since v1:
+ - Addressed review comments by Jeffrey Hugo.
+
+Gokul Sriram Palanisamy (1):
+  bus: mhi: core: Add unique qrtr node id support
+
+ drivers/bus/mhi/core/boot.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 -- 
-With Best Regards,
-Andy Shevchenko
+2.7.4
+
