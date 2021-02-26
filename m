@@ -2,33 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 82917325E9D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 09:09:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 59087325EA1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 09:09:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230164AbhBZIFR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Feb 2021 03:05:17 -0500
-Received: from m42-2.mailgun.net ([69.72.42.2]:64521 "EHLO m42-2.mailgun.net"
+        id S230045AbhBZIHG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Feb 2021 03:07:06 -0500
+Received: from m42-2.mailgun.net ([69.72.42.2]:48587 "EHLO m42-2.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230146AbhBZIFP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Feb 2021 03:05:15 -0500
+        id S229996AbhBZIHD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 26 Feb 2021 03:07:03 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1614326696; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1614326800; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=fbNvhhKzdpXJJ0I5AN1rDrugUmvG1VlpDxjACOCxKlM=;
- b=ccb06bMr++hF8t1Ck8GrjAnUKzxJRcFoIImis9A1LeLfNhiNobYRaIVBVZzxFuwKWn8EbmzC
- 8lbHQbrnu3ne+04EdAdwMSIokb0H6LIYKbfFcNwchO5nnAZ38B6A50qJksg7SHGoY+byHamc
- srz6GIkV4vzW0mg+4F/v+pyVQEU=
+ MIME-Version: Sender; bh=suGyscuJaBSINRblbI0tkgmdetepJU5RPn17qcvFJFQ=;
+ b=hc9i6wIk/jKsHz0cPFQ3Qss9xsBT0ZrL2AH6BnYtc2/xqWnd5MZ2m9KqvKFHoKMEB218kMXg
+ rm6c7saSDy2ItZN0OG6YEA0Twi2CNTZ4+A0VBDe3zTsRnWK+sFsqeKZjtULSDN6Gn2AspDN0
+ MOqLGipQJl+52DDFdBe+8We3Pko=
 X-Mailgun-Sending-Ip: 69.72.42.2
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 6038ab8d7ea222fbf5083147 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 26 Feb 2021 08:04:29
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 6038ac0a4ba4640b2b3b43de (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 26 Feb 2021 08:06:34
  GMT
 Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B69EAC433CA; Fri, 26 Feb 2021 08:04:28 +0000 (UTC)
+        id 8FE3CC43464; Fri, 26 Feb 2021 08:06:34 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -38,55 +38,87 @@ Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 057AAC433ED;
-        Fri, 26 Feb 2021 08:04:27 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 96856C433CA;
+        Fri, 26 Feb 2021 08:06:33 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Fri, 26 Feb 2021 13:34:27 +0530
+Date:   Fri, 26 Feb 2021 13:36:33 +0530
 From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Jordan Crouse <jordan@cosmicpenguin.net>,
+        Jordan Crouse <jcrouse@codeaurora.org>
+Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>
-Subject: Re: [PATCH 3/9] arm64: dts: qcom: sc7280: Add device tree node for
- LLCC
-In-Reply-To: <161428185152.1254594.1426736986245389798@swboyd.mtv.corp.google.com>
-References: <cover.1614244789.git.saiprakash.ranjan@codeaurora.org>
- <c4b7ae4dd009f563e6786f4a41f09efa38636fb6.1614244789.git.saiprakash.ranjan@codeaurora.org>
- <161428185152.1254594.1426736986245389798@swboyd.mtv.corp.google.com>
-Message-ID: <a35e6dcba758be4af3d111fe92cfbcd6@codeaurora.org>
+        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH 2/2] iommu/arm-smmu-qcom: Move the adreno smmu specific
+ impl earlier
+In-Reply-To: <20210225180652.zwhyjhff3jxm7hcw@cosmicpenguin.net>
+References: <cover.1614247752.git.saiprakash.ranjan@codeaurora.org>
+ <ed9bedef1546879c5b5e9f0f3f6d4667ec6b4fc4.1614247752.git.saiprakash.ranjan@codeaurora.org>
+ <20210225180652.zwhyjhff3jxm7hcw@cosmicpenguin.net>
+Message-ID: <22bbfd6bb27491adeed18f5d24c42b70@codeaurora.org>
 X-Sender: saiprakash.ranjan@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-02-26 01:07, Stephen Boyd wrote:
-> Quoting Sai Prakash Ranjan (2021-02-25 01:30:19)
->> Add a DT node for Last level cache (aka. system cache)
->> controller which provides control over the last level
->> cache present on SC7280 SoC.
+On 2021-02-25 23:36, Jordan Crouse wrote:
+> On Thu, Feb 25, 2021 at 03:54:10PM +0530, Sai Prakash Ranjan wrote:
+>> Adreno(GPU) SMMU and APSS(Application Processor SubSystem) SMMU
+>> both implement "arm,mmu-500" in some QTI SoCs and to run through
+>> adreno smmu specific implementation such as enabling split pagetables
+>> support, we need to match the "qcom,adreno-smmu" compatible first
+>> before apss smmu or else we will be running apps smmu implementation
+>> for adreno smmu and the additional features for adreno smmu is never
+>> set. For ex: we have "qcom,sc7280-smmu-500" compatible for both apps
+>> and adreno smmu implementing "arm,mmu-500", so the adreno smmu
+>> implementation is never reached because the current sequence checks
+>> for apps smmu compatible(qcom,sc7280-smmu-500) first and runs that
+>> specific impl and we never reach adreno smmu specific implementation.
 >> 
+>> Suggested-by: Akhil P Oommen <akhilpo@codeaurora.org>
 >> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 >> ---
+>> 
+>> Its either this or we add a new compatible for adreno smmu 
+>> implementing
+>> arm,mmu-500 like "qcom,sc7280-adreno-smmu-500".
+>> 
+>> ---
+>>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 6 +++---
+>>  1 file changed, 3 insertions(+), 3 deletions(-)
+>> 
+>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c 
+>> b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>> index bea3ee0dabc2..7d0fc2c8e72f 100644
+>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>> @@ -345,11 +345,11 @@ struct arm_smmu_device 
+>> *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
+>>  {
+>>  	const struct device_node *np = smmu->dev->of_node;
+>> 
+>> -	if (of_match_node(qcom_smmu_impl_of_match, np))
+>> -		return qcom_smmu_create(smmu, &qcom_smmu_impl);
+>> -
+>>  	if (of_device_is_compatible(np, "qcom,adreno-smmu"))
+>>  		return qcom_smmu_create(smmu, &qcom_adreno_smmu_impl);
+>> 
+>> +	if (of_match_node(qcom_smmu_impl_of_match, np))
+>> +		return qcom_smmu_create(smmu, &qcom_smmu_impl);
+>> +
 > 
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> It would be good to add a comment here explaining the order here so we
+> don't accidentally reorganize ourselves back into a problem later.
 > 
-> Should add system-cache-controller to the devicetree spec. Or just use
-> cache-controller for the node name.
 
-This was as per discussion in [1][2] where dt-schema throws an error
-since it expects cache-level to be associated with cache-controller.
-
-[1] 
-https://lore.kernel.org/lkml/5dcd8588.1c69fb81.2528a.3460@mx.google.com/
-[2] 
-https://lore.kernel.org/lkml/cover.1573814758.git.saiprakash.ranjan@codeaurora.org/
+Sure its better, will add it.
 
 Thanks,
 Sai
