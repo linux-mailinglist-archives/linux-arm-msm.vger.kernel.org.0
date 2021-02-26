@@ -2,177 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2339332665C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 18:33:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DF443266DD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 19:24:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230135AbhBZRcg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Feb 2021 12:32:36 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:44564 "EHLO z11.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229586AbhBZRce (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Feb 2021 12:32:34 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1614360732; h=Message-ID: References: In-Reply-To: Reply-To:
- Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=M7HvRPiSZ2xSbCT1WOfPlcHl519+4Bp5gCcSHWi5Dtk=;
- b=CWYa2fTdKzsgUZNiAQsg0zhqbT8Z4ANtEZc5iUu8JVuv6RuQnKFppNVQFvkzqCUnWOT8m+Du
- /HUB4Eet2zk3R1qP9KyBhSOp+uJY3dos+utI8XOi/c7EDuaVlRuOewszj1RlJ5f0B/LA5qeC
- tNgeUxAjX7QK8HBSEepe5Z8mJHo=
-X-Mailgun-Sending-Ip: 104.130.96.11
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 6039306d9e950d0db1367b46 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 26 Feb 2021 17:31:25
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7BE07C433CA; Fri, 26 Feb 2021 17:31:24 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 09078C433C6;
-        Fri, 26 Feb 2021 17:31:23 +0000 (UTC)
+        id S229571AbhBZSYW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Feb 2021 13:24:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45382 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229566AbhBZSYW (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 26 Feb 2021 13:24:22 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE718C061574;
+        Fri, 26 Feb 2021 10:23:41 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id k66so8631587wmf.1;
+        Fri, 26 Feb 2021 10:23:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=+if41+OOIdTEnjXmNHOorURwzXxyDnY3DpTEWUu3DAU=;
+        b=Tqtnj1MFHSpc1FQCK2N/CCWbj9CtLdzVblqJKfGWGJ5IUfajvAkCXyiEqAYVCxHNVL
+         uZO8z/3ZVDrUjGqZG0qInL91G1v7+ppWG1Gk4KXHSAgbxpEy2jlBbp4HTUC5v4MIAjTn
+         fTFtbOrC+rABvac0fwLi8Bd2Oj4dZR0laGAdgLZ/DYei1UYBgYnG1ugMCghuVN2LLp8F
+         dEE46iC3ez7ye+881OPToutE8LG1fXjr3Qmk8Ky0p+sYeKElX8gPyPzBkDc0E2xme+8y
+         FylDUQzKOtxlAAhX3hK3erL0W4+JR5xjXg1HG6faM7KC8ys/GJ+KwA2qokx3q/6SkusN
+         RqaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+if41+OOIdTEnjXmNHOorURwzXxyDnY3DpTEWUu3DAU=;
+        b=nCCDpJej+ndNkGSEZolLffJVqVHbKQSJmwYgiG6DgxazKJA6LUWHciAOJY28ZDV60I
+         7N5VflMMx19HbAymVjwCC9S5lmasYy++sQiy9b/isdkCVyeaFaf/yS6/LNVIO/SkT5B6
+         7qX2O6vmUj4NC9JOa3+Rftwyb8op9B9dSKQGfuuYjTJP0GsQ4rq97sm2/hkKBm4VySYc
+         Q5CVxnkMljyku2iAvx8xEQ411QcSEtH1rMkp7zzHEGCmmgRpxZJdfm40mTUD+3568p1S
+         X2oIK+VeRDxTP53fVW3JzHyOTAJRX58KKp2DQBbMKRsUdzXHFDHKuxmEwrbNq3c84Moe
+         0HWA==
+X-Gm-Message-State: AOAM532POlBKzBmBNZs9lfZq1CcmktNIj4mtCsBfnoVcK8XpOcN8e7Io
+        i/MQ6A3kpV47d2oMwv40Gv1YXksrsMmSv57c3Qc=
+X-Google-Smtp-Source: ABdhPJxgrMe0mZZyxBO0ola6cjhlCi4j2IxQKxy4A06JD5sd+FlxIa4WTLYGrTX1znn9Z+cNAcbd5kGORqMGIWA9SlE=
+X-Received: by 2002:a05:600c:cc:: with SMTP id u12mr4204438wmm.49.1614363820563;
+ Fri, 26 Feb 2021 10:23:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 26 Feb 2021 09:31:23 -0800
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        jhugo@codeaurora.org, hemantk@codeaurora.org,
-        sricharan@codeaurora.org
-Subject: Re: [PATCH v2] bus: mhi: core: Add unique qrtr node id support
-Organization: Qualcomm Innovation Center, Inc.
-Reply-To: bbhatt@codeaurora.org
-Mail-Reply-To: bbhatt@codeaurora.org
-In-Reply-To: <20210226145245.GB70936@thinkpad>
-References: <1614336169-31467-1-git-send-email-gokulsri@codeaurora.org>
- <1614336169-31467-2-git-send-email-gokulsri@codeaurora.org>
- <20210226145245.GB70936@thinkpad>
-Message-ID: <ee9edb7c59a20e5ea2af59de21e815ee@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <cover.1614332994.git.saiprakash.ranjan@codeaurora.org>
+ <c607d71eb0fe507c8b83cc0ea9b393777f22149a.1614332994.git.saiprakash.ranjan@codeaurora.org>
+ <YDku5PFQZetP4iG8@builder.lan>
+In-Reply-To: <YDku5PFQZetP4iG8@builder.lan>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Fri, 26 Feb 2021 10:23:28 -0800
+Message-ID: <CAF6AEGvJF19JA5hNps37urMrF5r03y90XgvO4FtT6wFPD6UZcA@mail.gmail.com>
+Subject: Re: [PATCHv2 2/2] iommu/arm-smmu-qcom: Move the adreno smmu specific
+ impl earlier
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-02-26 06:52 AM, Manivannan Sadhasivam wrote:
-> On Fri, Feb 26, 2021 at 04:12:49PM +0530, Gokul Sriram Palanisamy 
-> wrote:
->> On platforms with two or more identical mhi
->> devices, qmi service will run with identical
->> qrtr-node-id. Because of this identical ID,
->> host qrtr-lookup cannot register more than one
->> qmi service with identical node ID. Ultimately,
->> only one qmi service will be avilable for the
->> underlying drivers to communicate with.
->> 
->> On QCN9000, it implements a unique qrtr-node-id
->> and qmi instance ID using a unique instance ID
->> written to a debug register from host driver
->> soon after SBL is loaded.
->> 
->> This change generates a unique instance ID from
->> PCIe domain number and bus number, writes to the
->> given debug register just after SBL is loaded so
->> that it is available for FW when the QMI service
->> is spawned.
->> 
->> sample:
->> root@OpenWrt:/# qrtr-lookup
->>   Service Version Instance Node  Port
->>        15       1        0    8     1 Test service
->>        69       1        8    8     2 ATH10k WLAN firmware service
->>        15       1        0   24     1 Test service
->>        69       1       24   24     2 ATH10k WLAN firmware service
->> 
->> Here 8 and 24 on column 3 (QMI Instance ID)
->> and 4 (QRTR Node ID) are the node IDs that
->> is unique per mhi device.
->> 
->> Signed-off-by: Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
->> ---
->>  drivers/bus/mhi/core/boot.c | 14 ++++++++++++++
->>  1 file changed, 14 insertions(+)
->> 
->> diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
->> index c2546bf..5e5dad5 100644
->> --- a/drivers/bus/mhi/core/boot.c
->> +++ b/drivers/bus/mhi/core/boot.c
->> @@ -16,8 +16,12 @@
->>  #include <linux/random.h>
->>  #include <linux/slab.h>
->>  #include <linux/wait.h>
->> +#include <linux/pci.h>
->>  #include "internal.h"
->> 
->> +#define QRTR_INSTANCE_MASK	0x000000FF
->> +#define QRTR_INSTANCE_SHIFT	0
->> +
->>  /* Setup RDDM vector table for RDDM transfer and program RXVEC */
->>  void mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
->>  		      struct image_info *img_info)
->> @@ -391,6 +395,9 @@ void mhi_fw_load_handler(struct mhi_controller 
->> *mhi_cntrl)
->>  	const struct firmware *firmware = NULL;
->>  	struct image_info *image_info;
->>  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
->> +	struct pci_dev *pci_dev = to_pci_dev(mhi_cntrl->cntrl_dev);
->> +	struct pci_bus *bus = pci_dev->bus;
->> +	uint32_t instance;
->>  	const char *fw_name;
->>  	void *buf;
->>  	dma_addr_t dma_addr;
->> @@ -466,6 +473,13 @@ void mhi_fw_load_handler(struct mhi_controller 
->> *mhi_cntrl)
->>  		return;
->>  	}
->> 
->> +	instance = ((pci_domain_nr(bus) & 0xF) << 4) | (bus->number & 0xF);
->> +	instance &= QRTR_INSTANCE_MASK;
->> +
->> +	mhi_write_reg_field(mhi_cntrl, mhi_cntrl->bhi,
->> +			    BHI_ERRDBG2, QRTR_INSTANCE_MASK,
->> +			    QRTR_INSTANCE_SHIFT, instance);
-> 
-> You cannot not do this in MHI stack. Why can't you do this in the MHI 
-> controller
-> specific to QCN9000? And btw, is QCN9000 supported in mainline?
-> 
-> Thanks,
-> Mani
-> 
->> +
->>  	write_lock_irq(&mhi_cntrl->pm_lock);
->>  	mhi_cntrl->dev_state = MHI_STATE_RESET;
->>  	write_unlock_irq(&mhi_cntrl->pm_lock);
->> --
->> 2.7.4
->> 
+On Fri, Feb 26, 2021 at 9:24 AM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Fri 26 Feb 03:55 CST 2021, Sai Prakash Ranjan wrote:
+>
+> > Adreno(GPU) SMMU and APSS(Application Processor SubSystem) SMMU
+> > both implement "arm,mmu-500" in some QTI SoCs and to run through
+> > adreno smmu specific implementation such as enabling split pagetables
+> > support, we need to match the "qcom,adreno-smmu" compatible first
+> > before apss smmu or else we will be running apps smmu implementation
+> > for adreno smmu and the additional features for adreno smmu is never
+> > set. For ex: we have "qcom,sc7280-smmu-500" compatible for both apps
+> > and adreno smmu implementing "arm,mmu-500", so the adreno smmu
+> > implementation is never reached because the current sequence checks
+> > for apps smmu compatible(qcom,sc7280-smmu-500) first and runs that
+> > specific impl and we never reach adreno smmu specific implementation.
+> >
+>
+> So you're saying that you have a single SMMU instance that's compatible
+> with both an entry in qcom_smmu_impl_of_match[] and "qcom,adreno-smmu"?
+>
+> Per your proposed change we will pick the adreno ops _only_ for this
+> component, essentially disabling the non-Adreno quirks selected by the
+> qcom impl. As such keeping the non-adreno compatible in the
+> qcom_smmu_impl_init[] seems to only serve to obfuscate the situation.
+>
+> Don't we somehow need the combined set of quirks? (At least if we're
+> running this with a standard UEFI based boot flow?)
+>
 
-As others have stated, please refrain from adding protocol specific code 
-(such as PCIe)
-in the MHI core driver. Please have this change in your controller.
+are you thinking of the apps-smmu handover of display context bank?
+That shouldn't change, the only thing that changes is that gpu-smmu
+becomes an mmu-500, whereas previously only apps-smmu was..
 
-If there is access to BHI registers required prior to power up from MHI 
-core, it is not
-exposed right now. We can talk about how you can  achieve that, so you 
-can do this write
-in your controller after mhi_prepare_for_power_up().
-
-Thanks,
-Bhaumik
----
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
+BR,
+-R
