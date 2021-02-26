@@ -2,107 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 28349326718
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 19:47:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 80E3032671E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 19:49:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230212AbhBZSra (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Feb 2021 13:47:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50298 "EHLO
+        id S230019AbhBZStA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Feb 2021 13:49:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231208AbhBZSrZ (ORCPT
+        with ESMTP id S230211AbhBZSs5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Feb 2021 13:47:25 -0500
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F735C061788
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 10:46:45 -0800 (PST)
-Received: by mail-pl1-x631.google.com with SMTP id k22so5764880pll.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 10:46:45 -0800 (PST)
+        Fri, 26 Feb 2021 13:48:57 -0500
+Received: from mail-io1-xd42.google.com (mail-io1-xd42.google.com [IPv6:2607:f8b0:4864:20::d42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34470C061756
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 10:48:16 -0800 (PST)
+Received: by mail-io1-xd42.google.com with SMTP id 81so7014444iou.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 10:48:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=WTRxkaBkVRFH3msZClfA4ctqASFuiuF4nHoUGuxUFRw=;
-        b=DULndB44xMpW5FmQr3j59vwHz+xCcshyplfC2lmH8WZ+AYnQBJA7lB9Nc4TH6X/ZMe
-         dCQRelabv2/yLUu2HJdGB9kaLTk3NS2IvWdK0DuJ7bEh6FmwuLq8Jn+ZcXUxf2ng/qTG
-         flv0yORCbhtSGWxmFKwofCZk2f0i44JA4sLZU=
+        d=cosmicpenguin-net.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=dFlVFMXR6zkeSmTa+VmhKZsBr7CDjQVvbvNL54kRIqM=;
+        b=lPOMa+8pvfomnNffVsiwlHQ22Eqfsox3m5BrPOt8XmAT8QMELdsaOcKmDKK4NyC0IH
+         yarH4QuwPNfNLn7Aj1q1GrIYyz4DHgoe8Z4hAPa8GgjS+ca1x4/18xaUDxHQ942fDHMd
+         43PaWg5k76d9y84bYv64IkqR0sIM1PxDLH9LpEwMBgt0Qg8jB7vVgO1998dOItGkAAS1
+         xclYdZjvB+A8QuGH6HlT5f36+Fio8F/CmWEw63mIIYpR0mhJXiXBmR1h+mDs+WESU6OS
+         Pm6d34hPOoT1mV0Jfg5H73VoRPyHWcnx0KRlMsmb3ZhVd7IKBqJA6hvNDcIf+zaOemba
+         pX4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=WTRxkaBkVRFH3msZClfA4ctqASFuiuF4nHoUGuxUFRw=;
-        b=EZ8qQLQLIvyY6Mq2LdNnvhzNyCIc4non03E54CHBV4daXz81r6Y28BR6+S5evvcfRA
-         809qIVcr3rcNRiyRUid8giB2dwoKvsb6Za6vPO5RIBy/sETpkG2kVkRTh20/t8zmtTAd
-         QLoQSK7vkCaidtcnI8tjIULBx0W8N+QoPzLM91UsrnNVWHhH/OuHHo/hJC3OaB6cJHo6
-         4SY4DeHRlWF9cfNucR2ral+QnBdiUoES6TZg9hZ/nSelhqL5BWmCHGmNfNGjISk+mglx
-         7AkQan8xLrXj9f7nWfi8RV1DjcxbeajBY7iNMeCcs6CipICOTuaRy6g0oIWPihO8h0Ma
-         P0cA==
-X-Gm-Message-State: AOAM532tLtvFdU/s8/F1dpWDLoz+FS5ChIARjGlscGFACbf3xBUw8ZsZ
-        wB2lHftPxe3UysWDVzuOsVmqVA==
-X-Google-Smtp-Source: ABdhPJzjopObfqH49jbYa7PNj+ATiajhT4+w27fwpeYPVDXYz5jx3hEOIuldAgKaqba4R/bx4vzyMA==
-X-Received: by 2002:a17:902:b089:b029:e3:28:b8ee with SMTP id p9-20020a170902b089b02900e30028b8eemr4547538plr.84.1614365204929;
-        Fri, 26 Feb 2021 10:46:44 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:201:e8bb:5726:f58b:4e37])
-        by smtp.gmail.com with ESMTPSA id j125sm11024188pfd.27.2021.02.26.10.46.44
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=dFlVFMXR6zkeSmTa+VmhKZsBr7CDjQVvbvNL54kRIqM=;
+        b=d2JQ0AjXz4v2wKP2q6L6UIM5A1Tr70krSHgiLS0HaW02q/dxRk4MPmpRJI4uP0SJfa
+         MnYnGqYVu2SGLXcEq4SijkhLbCpsGMFbwHBe8NvBDWSnIa60EO02kTS9O09KY0ExuWNg
+         MOk7t+S6GeTKUSj68yJAlZHxl351FGLj2sTesFX1VehiNdbHAhj/gn/AYEI74EzUYU6m
+         /gbdH03nTrlXrSeQlAAr/pEMWVc3m+UJhnfJKeHeU5ZBTYQ4vYEW0jyxtkzEsivq31is
+         AkIU01O5no9BO6BFX0dNGyfTmVdgKNSMVOVHDUvPK+7W9MjFAD/Z3pfyfeFTxoZTOL0M
+         TikA==
+X-Gm-Message-State: AOAM533kIkOEh1wvMmIMjMRSYfvTLJW8MVLfhEnACSnQ2ttgDkSFscMB
+        BedoN1jNW+pLk6zSfghMYOEvZw==
+X-Google-Smtp-Source: ABdhPJzz6Vy+v1BXGIBBrGM1fsQ0mK/bOWqRSOpsYqFZq6XCJvNZFJP25EUBTuUjZXnR7EaojvuObQ==
+X-Received: by 2002:a6b:fe13:: with SMTP id x19mr1661589ioh.73.1614365295679;
+        Fri, 26 Feb 2021 10:48:15 -0800 (PST)
+Received: from cosmicpenguin.net (c-71-237-100-236.hsd1.co.comcast.net. [71.237.100.236])
+        by smtp.gmail.com with ESMTPSA id h23sm4744598ila.15.2021.02.26.10.48.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Feb 2021 10:46:44 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
+        Fri, 26 Feb 2021 10:48:15 -0800 (PST)
+Date:   Fri, 26 Feb 2021 11:48:13 -0700
+From:   Jordan Crouse <jordan@cosmicpenguin.net>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Will Deacon <will@kernel.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, Robin Murphy <robin.murphy@arm.com>,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCHv2 2/2] iommu/arm-smmu-qcom: Move the adreno smmu specific
+ impl earlier
+Message-ID: <20210226184813.t6ohkh3gxeseev2j@cosmicpenguin.net>
+Mail-Followup-To: Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Will Deacon <will@kernel.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, Robin Murphy <robin.murphy@arm.com>,
+        linux-arm-kernel@lists.infradead.org
+References: <cover.1614332994.git.saiprakash.ranjan@codeaurora.org>
+ <c607d71eb0fe507c8b83cc0ea9b393777f22149a.1614332994.git.saiprakash.ranjan@codeaurora.org>
+ <YDku5PFQZetP4iG8@builder.lan>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <dc3be32a3f8197d3138fe1ef6c24316a@codeaurora.org>
-References: <cover.1614244789.git.saiprakash.ranjan@codeaurora.org> <463a45f2c3e4a91430c006fa1637c7f4f124185e.1614244789.git.saiprakash.ranjan@codeaurora.org> <161428210272.1254594.16034240343090747878@swboyd.mtv.corp.google.com> <dc3be32a3f8197d3138fe1ef6c24316a@codeaurora.org>
-Subject: Re: [PATCH 8/9] arm64: dts: qcom: sc7280: Add AOSS QMP node
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Date:   Fri, 26 Feb 2021 10:46:42 -0800
-Message-ID: <161436520297.1254594.4348845199981053890@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YDku5PFQZetP4iG8@builder.lan>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sai Prakash Ranjan (2021-02-25 23:51:00)
-> On 2021-02-26 01:11, Stephen Boyd wrote:
-> > Quoting Sai Prakash Ranjan (2021-02-25 01:30:24)
-> >> Add a DT node for the AOSS QMP on SC7280 SoC.
-> >>=20
-> >> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> >> ---
-> >>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 14 ++++++++++++++
-> >>  1 file changed, 14 insertions(+)
-> >>=20
-> >> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi=20
-> >> b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> >> index 65c1e0f2fb56..cbd567ccc04e 100644
-> >> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> >> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> >> @@ -9,6 +9,7 @@
-> >>  #include <dt-bindings/clock/qcom,rpmh.h>
-> >>  #include <dt-bindings/interrupt-controller/arm-gic.h>
-> >>  #include <dt-bindings/mailbox/qcom-ipcc.h>
-> >> +#include <dt-bindings/power/qcom-aoss-qmp.h>
-> >>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
-> >>=20
-> >>  / {
-> >> @@ -368,6 +369,19 @@ pdc: interrupt-controller@b220000 {
-> >>                         interrupt-controller;
-> >>                 };
-> >>=20
-> >> +               aoss_qmp: qmp@c300000 {
-> >=20
-> > power-domain-controller@c300000? power-controller@c300000?
-> >=20
->=20
-> Its an AOSS message RAM and all other SM* SoCs have as qmp@
-> and the dt binding as well, I see only SM8150 with power-controller,
-> that should probably be fixed?
+On Fri, Feb 26, 2021 at 11:24:52AM -0600, Bjorn Andersson wrote:
+> On Fri 26 Feb 03:55 CST 2021, Sai Prakash Ranjan wrote:
+> 
+> > Adreno(GPU) SMMU and APSS(Application Processor SubSystem) SMMU
+> > both implement "arm,mmu-500" in some QTI SoCs and to run through
+> > adreno smmu specific implementation such as enabling split pagetables
+> > support, we need to match the "qcom,adreno-smmu" compatible first
+> > before apss smmu or else we will be running apps smmu implementation
+> > for adreno smmu and the additional features for adreno smmu is never
+> > set. For ex: we have "qcom,sc7280-smmu-500" compatible for both apps
+> > and adreno smmu implementing "arm,mmu-500", so the adreno smmu
+> > implementation is never reached because the current sequence checks
+> > for apps smmu compatible(qcom,sc7280-smmu-500) first and runs that
+> > specific impl and we never reach adreno smmu specific implementation.
+> > 
+> 
+> So you're saying that you have a single SMMU instance that's compatible
+> with both an entry in qcom_smmu_impl_of_match[] and "qcom,adreno-smmu"?
+> 
+> Per your proposed change we will pick the adreno ops _only_ for this
+> component, essentially disabling the non-Adreno quirks selected by the
+> qcom impl. As such keeping the non-adreno compatible in the
+> qcom_smmu_impl_init[] seems to only serve to obfuscate the situation.
+> 
+> Don't we somehow need the combined set of quirks? (At least if we're
+> running this with a standard UEFI based boot flow?)
 
-Node name should be generic while still being meaningful. Nobody knows
-what qmp is, but power-controller makes sense. Can you fix this and the
-others to be power-controller?
+We *do* need the combined set of quirks, so there has to be an adreno-smmu
+impelmentation that matches the "generic" implementation with a few extra
+function hooks added on. I'm not sure if there is a clever way to figure out how
+to meld the implementation hooks at runtime but the alternative is to just make
+sure that the adreno-smmu static struct calls the same quirks as its generic
+partner.
+
+Jordan
+
+> > Suggested-by: Akhil P Oommen <akhilpo@codeaurora.org>
+> > Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> > ---
+> >  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 12 +++++++++---
+> >  1 file changed, 9 insertions(+), 3 deletions(-)
+> > 
+> > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> > index bea3ee0dabc2..03f048aebb80 100644
+> > --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> > @@ -345,11 +345,17 @@ struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
+> >  {
+> >  	const struct device_node *np = smmu->dev->of_node;
+> >  
+> > -	if (of_match_node(qcom_smmu_impl_of_match, np))
+> > -		return qcom_smmu_create(smmu, &qcom_smmu_impl);
+> > -
+> > +	/*
+> > +	 * Do not change this order of implementation, i.e., first adreno
+> > +	 * smmu impl and then apss smmu since we can have both implementing
+> > +	 * arm,mmu-500 in which case we will miss setting adreno smmu specific
+> > +	 * features if the order is changed.
+> > +	 */
+> >  	if (of_device_is_compatible(np, "qcom,adreno-smmu"))
+> >  		return qcom_smmu_create(smmu, &qcom_adreno_smmu_impl);
+> >  
+> > +	if (of_match_node(qcom_smmu_impl_of_match, np))
+> > +		return qcom_smmu_create(smmu, &qcom_smmu_impl);
+> > +
+> >  	return smmu;
+> >  }
+> > -- 
+> > QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> > of Code Aurora Forum, hosted by The Linux Foundation
+> > 
+> _______________________________________________
+> iommu mailing list
+> iommu@lists.linux-foundation.org
+> https://lists.linuxfoundation.org/mailman/listinfo/iommu
