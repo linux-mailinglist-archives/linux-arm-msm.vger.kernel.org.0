@@ -2,109 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C622A3261E7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 12:21:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A10A0326263
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Feb 2021 13:13:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229990AbhBZLVL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Feb 2021 06:21:11 -0500
-Received: from mga05.intel.com ([192.55.52.43]:57150 "EHLO mga05.intel.com"
+        id S229618AbhBZMNT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Feb 2021 07:13:19 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:43093 "EHLO z11.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229953AbhBZLVL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Feb 2021 06:21:11 -0500
-IronPort-SDR: eq8TQKIHt8BaYcgGkLSSSDYAejYzp2FfrDylH7nJgoTQk8Uv9Xx+MiV3lAQVrat4seHkHGcqMM
- OyJEUo+YHA7g==
-X-IronPort-AV: E=McAfee;i="6000,8403,9906"; a="270825411"
-X-IronPort-AV: E=Sophos;i="5.81,208,1610438400"; 
-   d="scan'208";a="270825411"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Feb 2021 03:19:25 -0800
-IronPort-SDR: C+sOiyLfHDwfPB2K10E4qIB6ygfMiKj2tLfOb8p/mMp3BdxlHBJZ2rBjt0k+jaauTTPCX0QM1F
- 7a8GA2qvSeGw==
-X-IronPort-AV: E=Sophos;i="5.81,208,1610438400"; 
-   d="scan'208";a="393552309"
-Received: from smile.fi.intel.com (HELO smile) ([10.237.68.40])
-  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Feb 2021 03:19:23 -0800
-Received: from andy by smile with local (Exim 4.94)
-        (envelope-from <andriy.shevchenko@linux.intel.com>)
-        id 1lFb9V-008KI9-1K; Fri, 26 Feb 2021 13:19:21 +0200
-Date:   Fri, 26 Feb 2021 13:19:21 +0200
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] gpiolib: acpi: support override broken GPIO number in
- ACPI table
-Message-ID: <YDjZOU+VMWasjzUb@smile.fi.intel.com>
-References: <20210226033919.8871-1-shawn.guo@linaro.org>
- <CAHp75Vcb=NO9OWjSpBeVC4c+9=aXE=yiDWVBwLD1DnzwdgFD6Q@mail.gmail.com>
- <20210226093925.GA24428@dragon>
- <CAHp75Vc6xYv+197SOrSefQHD2h4Xy_N20gQajW4uF2PU=sJfLg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHp75Vc6xYv+197SOrSefQHD2h4Xy_N20gQajW4uF2PU=sJfLg@mail.gmail.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+        id S229526AbhBZMNS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 26 Feb 2021 07:13:18 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1614341578; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=Cmqghx6zhcQDDabwf+FgyE0f9AAgFN3Iix4YVts5sgY=; b=TUVJmWngVebUzpvvvObolvl97Brs95c0RgfyXNk/WHf5dBPLcX7rgpE9rQZTzGJxMzraYlkO
+ wmuqyqT94qxDcCXAjh7yULZAerzlshLBFhPTvBvU/legvwN5BCnHPCiIjDCg+wV/vmwYGJTB
+ yim2TxGx0KXl/yfVy1wox/RCM2o=
+X-Mailgun-Sending-Ip: 104.130.96.11
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 6038e5c59a7cefa92a6a6f31 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 26 Feb 2021 12:12:53
+ GMT
+Sender: kgunda=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8635AC43463; Fri, 26 Feb 2021 12:12:52 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from kgunda-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: kgunda)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3F910C433CA;
+        Fri, 26 Feb 2021 12:12:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3F910C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kgunda@codeaurora.org
+From:   Kiran Gunda <kgunda@codeaurora.org>
+To:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
+        lee.jones@linaro.org, b.zolnierkie@samsung.com,
+        dri-devel@lists.freedesktop.org, daniel.thompson@linaro.org,
+        jacek.anaszewski@gmail.com, pavel@ucw.cz, robh+dt@kernel.org,
+        mark.rutland@arm.com, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
+        Kiran Gunda <kgunda@codeaurora.org>
+Subject: [PATCH V2 0/2]  Fix WLED FSC Sync and brightness Sync settings
+Date:   Fri, 26 Feb 2021 17:42:22 +0530
+Message-Id: <1614341544-5306-1-git-send-email-kgunda@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Feb 26, 2021 at 12:57:37PM +0200, Andy Shevchenko wrote:
-> On Fri, Feb 26, 2021 at 11:39 AM Shawn Guo <shawn.guo@linaro.org> wrote:
-> > On Fri, Feb 26, 2021 at 11:12:07AM +0200, Andy Shevchenko wrote:
-> > > On Fri, Feb 26, 2021 at 5:42 AM Shawn Guo <shawn.guo@linaro.org> wrote:
-> > > > Running kernel with ACPI on Lenovo Flex 5G laptop, touchpad is just
-> > > > not working.  That's because the GpioInt number of TSC2 node in ACPI
-> > > > table is simply wrong, and the number even exceeds the maximum GPIO
-> > > > lines.  As the touchpad works fine with Windows on the same machine,
-> > > > presumably this is something Windows-ism.  Although it's obviously
-> > > > a specification violation, believe of that Microsoft will fix this in
-> > > > the near future is not really realistic.
-> > > >
-> > > > It adds the support of overriding broken GPIO number in ACPI table
-> > > > on particular machines, which are matched using DMI info.  Such
-> > > > mechanism for fixing up broken firmware and ACPI table is not uncommon
-> > > > in kernel.  And hopefully it can be useful for other machines that get
-> > > > broken GPIO number coded in ACPI table.
-> > >
-> > > Thanks for the report and patch.
-> > >
-> > > First of all, have you reported the issue to Lenovo? At least they
-> > > will know that they did wrong.
-> >
-> > Yes, we are reporting this to Lenovo, but to be honest, we are not sure
-> > how much they will care about it, as they are shipping the laptop with
-> > Windows only.
-> >
-> > > Second, is it possible to have somewhere output of `acpidump -o
-> > > flex5g.dat` (the flex5g.dat file)?
-> >
-> > https://raw.githubusercontent.com/aarch64-laptops/build/master/misc/lenovo-flex-5g/dsdt.dsl
+This patch series has the following two WLED fixes
+ 1. As per the current implementation, for WLED5, after
+    the FSC (Full Scale Current) update the driver is incorrectly
+    toggling the MOD_SYNC register instead of toggling the SYNC register.
+    The patch 1/2 fixes this by toggling the SYNC register after
+    FSC update.
 
-Looking into DSDT I think the problem is much worse. First of all there are
-many cases where pins like 0x140, 0x1c0, etc are being used. On top of that
-there is no GPIO driver in the upstream (as far as I can see by HID, perhaps
-there is a driver but for different HID. And I see that GPIO device consumes a
-lot of Interrupts from GIC as well (it's ARM platfrom as far as I understand).
+ 2. Currently, the sync bits are transitioned from 1 to 0
+    after FSC and brightness update. As per hardware team recommendation
+    the FSC and brightness sync takes place from 0 to 1 transition.
+    The patch 2/2 fies this issue.
 
-Looking at the Microsoft brain damaged way of understanding GPIOs and hardware
-[1], I am afraid you really want to have a specific GPIO driver for this. So,
-for now until we have better picture of what's going on, NAK to this patch.
 
-[1]: https://docs.microsoft.com/en-us/windows-hardware/drivers/bringup/general-purpose-i-o--gpio-
+Changes from V1:
+   1. Updated the cover letter.
+   2. Updated the description of the patches as per Daniel's suggestion.
 
-  "...All banks have the same number of pins, except for the last bank, which
-   might have fewer."
 
-They added completely unnecessary mapping layer and brought a lot of confusion
-to everybody (developers, users, etc).
+Kiran Gunda (2):
+  backlight: qcom-wled: Fix FSC update issue for WLED5
+  backlight: qcom-wled: Correct the sync_toggle sequence
+
+ drivers/video/backlight/qcom-wled.c | 37 +++++++++++++++++++++++++------------
+ 1 file changed, 25 insertions(+), 12 deletions(-)
 
 -- 
-With Best Regards,
-Andy Shevchenko
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+ a Linux Foundation Collaborative Project
 
