@@ -2,134 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3374F326D46
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Feb 2021 14:54:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3AADD326D4A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Feb 2021 14:57:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230079AbhB0Nyk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 27 Feb 2021 08:54:40 -0500
-Received: from m42-2.mailgun.net ([69.72.42.2]:46056 "EHLO m42-2.mailgun.net"
+        id S230178AbhB0N42 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 27 Feb 2021 08:56:28 -0500
+Received: from m42-2.mailgun.net ([69.72.42.2]:46752 "EHLO m42-2.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230014AbhB0Nyj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 27 Feb 2021 08:54:39 -0500
+        id S230165AbhB0N4Z (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 27 Feb 2021 08:56:25 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1614434055; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=DgtWfT+ggYoDBm8woYV9yvXhaOPvGJGBMdZaWUjPB3U=; b=ICCh58YbhrF1AVKN6wamRIH1dd7wDTsxWp+3ydG3lvsF7CqNer2lbGktHEWbuccCmZWyrlOj
- 2s7t8NLeNVAWU6urlT3ZQJRfhlnkOWOBaSy2R9juSDI5m7HDfBtNQt0/B2FrFyTqbj3rtmCP
- G20Eq9dm3ixInaBEs2rbsmITuUU=
+ s=smtp; t=1614434164; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=EmDgNHN3ZYfCjkpOGYl55fojHvz/cYCq0lJ8kPRF08k=;
+ b=HioMYjLojwVCav/V0lTCuXppOOvcR01ZGAVL9lmuMElFY+I4NOAUPpNtYm9xd6JPsj3Akzjb
+ gDcWZzQSadPZo2KdgxYoPOSh1JorHDrAlKut6w10G3hONzI8ok3bfuF4D2s9sC+vZ9qAHQxx
+ n6Vkm4GksaOpQ5Yp30yZqPtR+6Q=
 X-Mailgun-Sending-Ip: 69.72.42.2
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 603a4ee67aa94c52e7ecf898 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 27 Feb 2021 13:53:42
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 603a4f7416ba74520197a6d8 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 27 Feb 2021 13:56:04
  GMT
 Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 34ABEC43464; Sat, 27 Feb 2021 13:53:42 +0000 (UTC)
+        id 7D0C2C433C6; Sat, 27 Feb 2021 13:56:03 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0E411C433CA;
-        Sat, 27 Feb 2021 13:53:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0E411C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     bjorn.andersson@linaro.org
-Cc:     akhilpo@codeaurora.org, iommu@lists.linux-foundation.org,
-        jcrouse@codeaurora.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        robdclark@gmail.com, robin.murphy@arm.com, will@kernel.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: Re: [PATCHv2 2/2] iommu/arm-smmu-qcom: Move the adreno smmu specific impl earlier
-Date:   Sat, 27 Feb 2021 19:23:21 +0530
-Message-Id: <20210227135321.420-1-saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.29.0
-In-Reply-To: <YDlIrjkfv16o4Nu3@builder.lan>
-References: <YDlIrjkfv16o4Nu3@builder.lan>
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B82DEC433CA;
+        Sat, 27 Feb 2021 13:56:02 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Sat, 27 Feb 2021 19:26:02 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     devicetree@vger.kernel.org, Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH 8/9] arm64: dts: qcom: sc7280: Add AOSS QMP node
+In-Reply-To: <161436520297.1254594.4348845199981053890@swboyd.mtv.corp.google.com>
+References: <cover.1614244789.git.saiprakash.ranjan@codeaurora.org>
+ <463a45f2c3e4a91430c006fa1637c7f4f124185e.1614244789.git.saiprakash.ranjan@codeaurora.org>
+ <161428210272.1254594.16034240343090747878@swboyd.mtv.corp.google.com>
+ <dc3be32a3f8197d3138fe1ef6c24316a@codeaurora.org>
+ <161436520297.1254594.4348845199981053890@swboyd.mtv.corp.google.com>
+Message-ID: <5cf5692ef7d348ec361081d0341f1254@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
-
-On 2021-02-27 00:44, Bjorn Andersson wrote:
-> On Fri 26 Feb 12:23 CST 2021, Rob Clark wrote:
+On 2021-02-27 00:16, Stephen Boyd wrote:
+> Quoting Sai Prakash Ranjan (2021-02-25 23:51:00)
+>> On 2021-02-26 01:11, Stephen Boyd wrote:
+>> > Quoting Sai Prakash Ranjan (2021-02-25 01:30:24)
+>> >> Add a DT node for the AOSS QMP on SC7280 SoC.
+>> >>
+>> >> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+>> >> ---
+>> >>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 14 ++++++++++++++
+>> >>  1 file changed, 14 insertions(+)
+>> >>
+>> >> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> >> b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> >> index 65c1e0f2fb56..cbd567ccc04e 100644
+>> >> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> >> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> >> @@ -9,6 +9,7 @@
+>> >>  #include <dt-bindings/clock/qcom,rpmh.h>
+>> >>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+>> >>  #include <dt-bindings/mailbox/qcom-ipcc.h>
+>> >> +#include <dt-bindings/power/qcom-aoss-qmp.h>
+>> >>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+>> >>
+>> >>  / {
+>> >> @@ -368,6 +369,19 @@ pdc: interrupt-controller@b220000 {
+>> >>                         interrupt-controller;
+>> >>                 };
+>> >>
+>> >> +               aoss_qmp: qmp@c300000 {
+>> >
+>> > power-domain-controller@c300000? power-controller@c300000?
+>> >
+>> 
+>> Its an AOSS message RAM and all other SM* SoCs have as qmp@
+>> and the dt binding as well, I see only SM8150 with power-controller,
+>> that should probably be fixed?
 > 
-> 
-> The current logic picks one of:
-> 1) is the compatible mentioned in qcom_smmu_impl_of_match[]
-> 2) is the compatible an adreno
-> 3) no quirks needed
-> 
-> The change flips the order of these, so the only way I can see this
-> change affecting things is if we expected a match on #2, but we got one
-> on #1.
-> 
-> Which implies that the instance that we want to act according to the
-> adreno impl was listed in qcom_smmu_impl_of_match[] - which either is
-> wrong, or there's a single instance that needs both behaviors.
-> 
-> (And I believe Jordan's answer confirms the latter - there's a single
-> SMMU instance that needs all them quirks at once)
+> Node name should be generic while still being meaningful. Nobody knows
+> what qmp is, but power-controller makes sense. Can you fix this and the
+> others to be power-controller?
 > 
 
-Let me go through the problem statement in case my commit message wasn't
-clear. There are two SMMUs (APSS and GPU) on SC7280 and both are SMMU500
-(ARM SMMU IP).
-
-APSS SMMU compatible - ("qcom,sc7280-smmu-500", "arm,mmu-500")
-GPU SMMU compatible - ("qcom,sc7280-smmu-500", "qcom,adreno-smmu", "arm,mmu-500")
-
-Now if we take SC7180 as an example, GPU SMMU was QSMMU(QCOM SMMU IP)
-and APSS SMMU was SMMU500(ARM SMMU IP).
-
-APSS SMMU compatible - ("qcom,sc7180-smmu-500", "arm,mmu-500")
-GPU SMMU compatible - ("qcom,sc7180-smmu-v2", "qcom,adreno-smmu", "qcom,smmu-v2")
-
-Current code sequence without this patch,
-
-if (of_match_node(qcom_smmu_impl_of_match, np))
-                 return qcom_smmu_create(smmu, &qcom_smmu_impl);
-
-if (of_device_is_compatible(np, "qcom,adreno-smmu"))
-        return qcom_smmu_create(smmu, &qcom_adreno_smmu_impl);
-
-Now if we look at the compatible for SC7180, there is no problem because
-the APSS SMMU will match the one in qcom_smmu_impl_of_match[] and GPU SMMU
-will match "qcom,adreno-smmu" because the compatible strings are different.
-But for SC7280, both the APSS SMMU and GPU SMMU compatible("qcom,sc7280-smmu-500")
-are same. So GPU SMMU will match with the one in qcom_smmu_impl_of_match[]
-i.e.., "qcom,sc7280-smmu-500" which functionally doesn't cause any problem
-but we will miss settings for split pagetables which are part of GPU SMMU
-specific implementation.
-
-We can avoid this with yet another new compatible for GPU SMMU something like
-"qcom,sc7280-adreno-smmu-500" but since we can handle this easily in the
-driver and since the IPs are same, meaning if there was a hardware quirk
-required, then we would need to apply to both of them and would this additional
-compatible be of any help?
-
-Coming to the part of quirks now, you are right saying both SMMUs will need
-to have the same quirks in SC7280 and similar others where both are based on
-same IPs but those should probably be *hardware quirks* and if they are
-software based like the S2CR quirk depending on the firmware, then it might
-not be applicable to both. In case if it is applicable, then as Jordan mentioned,
-we can add the same quirks in GPU SMMU implementation.
+Ok makes sense, I will post changing others as well and see if we get
+any comments there.
 
 Thanks,
 Sai
 
---
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
 of Code Aurora Forum, hosted by The Linux Foundation
