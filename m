@@ -2,136 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 817F3326B79
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Feb 2021 04:47:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9AEF9326C3B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Feb 2021 09:29:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229989AbhB0Dr3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Feb 2021 22:47:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52752 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229915AbhB0Dr3 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Feb 2021 22:47:29 -0500
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC8CAC06174A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 19:46:48 -0800 (PST)
-Received: by mail-pj1-x1032.google.com with SMTP id s23so7269503pji.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Feb 2021 19:46:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=pHwELUqccdBmAIg0m7n6Box0vpJWKPugDvgpP9sWbf0=;
-        b=rw0XRB//u/XUtHFfv7BWAKOST6LsTCfGebmh8LKkSjXiN3EiI6oazPQnZBX1ad/3nh
-         Au0zZ7y4KQybuklU8FXDb1QGW+QLM9ilrpIUi1iClplzJi0dPsaLYNLgcrzQhZHZvBXa
-         NOrAczMeuEMsfvjJPcdRjX0LhwjMl5iBsxjHIEZXP3rxL3HxExKlvQ5SEdrUBrbBWRmj
-         lXspdBrLL4DYf7z9vlKhjX82zOlt+Nc6tUcREcv68kIryI1Nw9nLfy77JjUpPN2IA/0W
-         AsNeZr55fgu9XuEbHxZA5G56swtcS+c5a4pJfY3MhBOPp6gnfzRpZRu1ma52tsCAaxbB
-         YSXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=pHwELUqccdBmAIg0m7n6Box0vpJWKPugDvgpP9sWbf0=;
-        b=tFwxEcUMHqPYo6JKDWUOEdkEE4OiO0cFDn7uXkavcKv6wd7+FiuoW66QBvR75PK/Ic
-         GOA1z40YW78YlPAlXg9w0PE7c0BKnxER4L1Y8Cc6vcP1rivG/sdW3p3FNj3v+RoD9n0L
-         C3EQXboJoFLwUNpMWxfvgfVSD6hJNi0iYo/ACe72196/SYFRHVjF3OTADA00e72pSc3w
-         r3MUIJGe6Jvh134O7rvHv8iQNULyvPOL+ztdYQ8H9JwUFCvojmCuNwTpQ7qPg8RxuTwW
-         g/7W4HtqQigI3V7PBsqFtm+gQXt+DZftg6JO/jhCfQa0rxqveiJPpZMHWAtD60fnkzh5
-         tzkQ==
-X-Gm-Message-State: AOAM530d2ZafB8mAyY9QH8h0n+GypCWV7qILAwl17SJk038zGLjZaeWl
-        bUzpZB+P8Ez3g8eM7a3jo1ZVVw==
-X-Google-Smtp-Source: ABdhPJxVo5cZ8UZ7+ZQdCP6vhhTjoRIDuAhSLuizUutQNwf977e+WstSfxUjh6j8GvVH0KqJ4inRrA==
-X-Received: by 2002:a17:90a:a10a:: with SMTP id s10mr6642891pjp.36.1614397608212;
-        Fri, 26 Feb 2021 19:46:48 -0800 (PST)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id 72sm10568295pfv.5.2021.02.26.19.46.45
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 26 Feb 2021 19:46:47 -0800 (PST)
-Date:   Sat, 27 Feb 2021 11:46:42 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Andy Shevchenko <andy.shevchenko@gmail.com>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] gpiolib: acpi: support override broken GPIO number in
- ACPI table
-Message-ID: <20210227034641.GC24428@dragon>
-References: <20210226033919.8871-1-shawn.guo@linaro.org>
- <CAHp75Vcb=NO9OWjSpBeVC4c+9=aXE=yiDWVBwLD1DnzwdgFD6Q@mail.gmail.com>
- <20210226093925.GA24428@dragon>
- <CAHp75Vc6xYv+197SOrSefQHD2h4Xy_N20gQajW4uF2PU=sJfLg@mail.gmail.com>
+        id S229989AbhB0I0F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 27 Feb 2021 03:26:05 -0500
+Received: from m42-2.mailgun.net ([69.72.42.2]:33267 "EHLO m42-2.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229835AbhB0I0E (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 27 Feb 2021 03:26:04 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1614414345; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=vTSvXCBTxMLKclBkDKtSO8OPYx3V4W4y9TZ3gbaKO4g=;
+ b=I/aKktcJ4Dtk8dXNRzPRuTVqjUmBSRGxgb7k1KmHLVXUGkVqN0JR3PGrK8VaXlEnoSiKVFgt
+ iX8LbQ0dtHoJyzvWs0HOle0WU5lHspIb018JIr5nYM9CVYrBAFsm+IhoaLZ52hdhVjVzq7SB
+ g512wrEJym/qM+JW9llxr+oo0fg=
+X-Mailgun-Sending-Ip: 69.72.42.2
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 603a01ea8f0d5ba6c5e9b77a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 27 Feb 2021 08:25:14
+ GMT
+Sender: gokulsri=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id BBCACC43461; Sat, 27 Feb 2021 08:25:13 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: gokulsri)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D83BDC433CA;
+        Sat, 27 Feb 2021 08:25:12 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHp75Vc6xYv+197SOrSefQHD2h4Xy_N20gQajW4uF2PU=sJfLg@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Sat, 27 Feb 2021 13:55:12 +0530
+From:   gokulsri@codeaurora.org
+To:     bbhatt@codeaurora.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        jhugo@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        hemantk@codeaurora.org, sricharan@codeaurora.org,
+        bjorn.andersson@linaro.org
+Subject: Re: [PATCH v2] bus: mhi: core: Add unique qrtr node id support
+In-Reply-To: <ee9edb7c59a20e5ea2af59de21e815ee@codeaurora.org>
+References: <1614336169-31467-1-git-send-email-gokulsri@codeaurora.org>
+ <1614336169-31467-2-git-send-email-gokulsri@codeaurora.org>
+ <20210226145245.GB70936@thinkpad>
+ <ee9edb7c59a20e5ea2af59de21e815ee@codeaurora.org>
+Message-ID: <444e646b9781e24f9e2f95f7db85fcbd@codeaurora.org>
+X-Sender: gokulsri@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Feb 26, 2021 at 12:57:37PM +0200, Andy Shevchenko wrote:
-> On Fri, Feb 26, 2021 at 11:39 AM Shawn Guo <shawn.guo@linaro.org> wrote:
-> >
-> > On Fri, Feb 26, 2021 at 11:12:07AM +0200, Andy Shevchenko wrote:
-> > > On Fri, Feb 26, 2021 at 5:42 AM Shawn Guo <shawn.guo@linaro.org> wrote:
-> > > >
-> > > > Running kernel with ACPI on Lenovo Flex 5G laptop, touchpad is just
-> > > > not working.  That's because the GpioInt number of TSC2 node in ACPI
-> > > > table is simply wrong, and the number even exceeds the maximum GPIO
-> > > > lines.  As the touchpad works fine with Windows on the same machine,
-> > > > presumably this is something Windows-ism.  Although it's obviously
-> > > > a specification violation, believe of that Microsoft will fix this in
-> > > > the near future is not really realistic.
-> > > >
-> > > > It adds the support of overriding broken GPIO number in ACPI table
-> > > > on particular machines, which are matched using DMI info.  Such
-> > > > mechanism for fixing up broken firmware and ACPI table is not uncommon
-> > > > in kernel.  And hopefully it can be useful for other machines that get
-> > > > broken GPIO number coded in ACPI table.
-> > >
-> > > Thanks for the report and patch.
-> > >
-> > > First of all, have you reported the issue to Lenovo? At least they
-> > > will know that they did wrong.
-> >
-> > Yes, we are reporting this to Lenovo, but to be honest, we are not sure
-> > how much they will care about it, as they are shipping the laptop with
-> > Windows only.
-> >
-> > > Second, is it possible to have somewhere output of `acpidump -o
-> > > flex5g.dat` (the flex5g.dat file)?
-> >
-> > https://raw.githubusercontent.com/aarch64-laptops/build/master/misc/lenovo-flex-5g/dsdt.dsl
-> >
-> > > And as Mika said once to one of mine patches "since you know the
-> > > number ahead there is no need to pollute GPIO ACPI library core with
-> > > this quirk". But in any case I would like to see the ACPI tables
-> > > first.
-> >
-> > Oh, so you had something similar already?  Could you point me to the
-> > patch and discussion?
+  Hi
+On 2021-02-26 23:01, Bhaumik Bhatt wrote:
+> On 2021-02-26 06:52 AM, Manivannan Sadhasivam wrote:
+>> On Fri, Feb 26, 2021 at 04:12:49PM +0530, Gokul Sriram Palanisamy 
+>> wrote:
+>>> On platforms with two or more identical mhi
+>>> devices, qmi service will run with identical
+>>> qrtr-node-id. Because of this identical ID,
+>>> host qrtr-lookup cannot register more than one
+>>> qmi service with identical node ID. Ultimately,
+>>> only one qmi service will be avilable for the
+>>> underlying drivers to communicate with.
+>>> 
+>>> On QCN9000, it implements a unique qrtr-node-id
+>>> and qmi instance ID using a unique instance ID
+>>> written to a debug register from host driver
+>>> soon after SBL is loaded.
+>>> 
+>>> This change generates a unique instance ID from
+>>> PCIe domain number and bus number, writes to the
+>>> given debug register just after SBL is loaded so
+>>> that it is available for FW when the QMI service
+>>> is spawned.
+>>> 
+>>> sample:
+>>> root@OpenWrt:/# qrtr-lookup
+>>>   Service Version Instance Node  Port
+>>>        15       1        0    8     1 Test service
+>>>        69       1        8    8     2 ATH10k WLAN firmware service
+>>>        15       1        0   24     1 Test service
+>>>        69       1       24   24     2 ATH10k WLAN firmware service
+>>> 
+>>> Here 8 and 24 on column 3 (QMI Instance ID)
+>>> and 4 (QRTR Node ID) are the node IDs that
+>>> is unique per mhi device.
+>>> 
+>>> Signed-off-by: Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
+>>> ---
+>>>  drivers/bus/mhi/core/boot.c | 14 ++++++++++++++
+>>>  1 file changed, 14 insertions(+)
+>>> 
+>>> diff --git a/drivers/bus/mhi/core/boot.c 
+>>> b/drivers/bus/mhi/core/boot.c
+>>> index c2546bf..5e5dad5 100644
+>>> --- a/drivers/bus/mhi/core/boot.c
+>>> +++ b/drivers/bus/mhi/core/boot.c
+>>> @@ -16,8 +16,12 @@
+>>>  #include <linux/random.h>
+>>>  #include <linux/slab.h>
+>>>  #include <linux/wait.h>
+>>> +#include <linux/pci.h>
+>>>  #include "internal.h"
+>>> 
+>>> +#define QRTR_INSTANCE_MASK	0x000000FF
+>>> +#define QRTR_INSTANCE_SHIFT	0
+>>> +
+>>>  /* Setup RDDM vector table for RDDM transfer and program RXVEC */
+>>>  void mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
+>>>  		      struct image_info *img_info)
+>>> @@ -391,6 +395,9 @@ void mhi_fw_load_handler(struct mhi_controller 
+>>> *mhi_cntrl)
+>>>  	const struct firmware *firmware = NULL;
+>>>  	struct image_info *image_info;
+>>>  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+>>> +	struct pci_dev *pci_dev = to_pci_dev(mhi_cntrl->cntrl_dev);
+>>> +	struct pci_bus *bus = pci_dev->bus;
+>>> +	uint32_t instance;
+>>>  	const char *fw_name;
+>>>  	void *buf;
+>>>  	dma_addr_t dma_addr;
+>>> @@ -466,6 +473,13 @@ void mhi_fw_load_handler(struct mhi_controller 
+>>> *mhi_cntrl)
+>>>  		return;
+>>>  	}
+>>> 
+>>> +	instance = ((pci_domain_nr(bus) & 0xF) << 4) | (bus->number & 0xF);
+>>> +	instance &= QRTR_INSTANCE_MASK;
+>>> +
+>>> +	mhi_write_reg_field(mhi_cntrl, mhi_cntrl->bhi,
+>>> +			    BHI_ERRDBG2, QRTR_INSTANCE_MASK,
+>>> +			    QRTR_INSTANCE_SHIFT, instance);
+>> 
+>> You cannot not do this in MHI stack. Why can't you do this in the MHI 
+>> controller
+>> specific to QCN9000? And btw, is QCN9000 supported in mainline?
+>> 
+>> Thanks,
+>> Mani
+>> 
+>>> +
+>>>  	write_lock_irq(&mhi_cntrl->pm_lock);
+>>>  	mhi_cntrl->dev_state = MHI_STATE_RESET;
+>>>  	write_unlock_irq(&mhi_cntrl->pm_lock);
+>>> --
+>>> 2.7.4
+>>> 
 > 
-> Similar, but might be not the same:
->  - patches in the upstream [1] (v3 applied), discussion [2]
->  - new version with some additional fixes [3]
+> As others have stated, please refrain from adding protocol specific
+> code (such as PCIe)
+> in the MHI core driver. Please have this change in your controller.
+> 
+> If there is access to BHI registers required prior to power up from
+> MHI core, it is not
+> exposed right now. We can talk about how you can  achieve that, so you
+> can do this write
+> in your controller after mhi_prepare_for_power_up().
+> 
+> Thanks,
+> Bhaumik
+> ---
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+> Forum,
+> a Linux Foundation Collaborative Project
+  Thank you Jeffrey, Manivannan and Bhaumik.
+  Adding Bjorn for his review and suggestions.
 
-Thanks for all the pointers.  It looks to me that it's the same problem
-- the GPIO number in ACPI table is broken and needs an override from
-kernel.  So I think what we need is a generic solution to a problem
-not uncommon.  Rather than asking all different drivers to resolve the
-same problem all over the kernel, I believe GPIO ACPI library is just
-the right place.
-
-Looking at your platform and problem, I realise that to be a generic
-solution, my patch needs an additional device identification matching,
-as one GPIO number that is broken for one device could be correct for
-another.  I will improve it, so that your problem can be resolved by
-simply adding a new entry to acpi_gpio_pin_override_table[].
-
-Shawn
+  Thanks,
+  Gokul
