@@ -2,19 +2,19 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C8E75327264
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Feb 2021 14:12:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A6C132725C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Feb 2021 14:10:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230460AbhB1NKO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 28 Feb 2021 08:10:14 -0500
-Received: from relay03.th.seeweb.it ([5.144.164.164]:41985 "EHLO
-        relay03.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230425AbhB1NKJ (ORCPT
+        id S230200AbhB1NJm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 28 Feb 2021 08:09:42 -0500
+Received: from relay04.th.seeweb.it ([5.144.164.165]:37359 "EHLO
+        relay04.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230395AbhB1NJj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 28 Feb 2021 08:10:09 -0500
+        Sun, 28 Feb 2021 08:09:39 -0500
 Received: from localhost.localdomain (abab236.neoplus.adsl.tpnet.pl [83.6.165.236])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 2C2DB1F568;
-        Sun, 28 Feb 2021 14:08:54 +0100 (CET)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 06C5D1F571;
+        Sun, 28 Feb 2021 14:08:56 +0100 (CET)
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 To:     phone-devel@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
@@ -26,9 +26,9 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 07/11] arm64: dts: qcom: msm8996: Disable Venus by default
-Date:   Sun, 28 Feb 2021 14:08:25 +0100
-Message-Id: <20210228130831.203765-7-konrad.dybcio@somainline.org>
+Subject: [PATCH 08/11] arm64: dts: qcom: pm8994: Add RESIN node
+Date:   Sun, 28 Feb 2021 14:08:26 +0100
+Message-Id: <20210228130831.203765-8-konrad.dybcio@somainline.org>
 X-Mailer: git-send-email 2.30.1
 In-Reply-To: <20210228130831.203765-1-konrad.dybcio@somainline.org>
 References: <20210228130831.203765-1-konrad.dybcio@somainline.org>
@@ -38,66 +38,78 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Disable Venus by default to allow booting without closed firmware and
-enable it on the boards that didn't previously disable it. This commit
-brings no functional difference.
+Add a RESIN node to support RESIN-connected buttons on some
+devices.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
- arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi | 4 ++++
- arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts | 4 ++++
- arch/arm64/boot/dts/qcom/msm8996.dtsi        | 4 ++--
- 3 files changed, 10 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi | 19 +++++--------------
+ arch/arm64/boot/dts/qcom/pm8994.dtsi         |  8 +++++++-
+ 2 files changed, 12 insertions(+), 15 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-index 63c7cd0ad2ee..e6ef76971c31 100644
+index e6ef76971c31..d2a5fb0c8df1 100644
 --- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
 +++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-@@ -1093,6 +1093,10 @@ &usb3phy {
- 
+@@ -249,6 +249,11 @@ &mmcc {
+ 	vdd-gfx-supply = <&vdd_gfx>;
  };
  
-+&venus {
++&pm8994_resin {
 +	status = "okay";
++	linux,code = <KEY_VOLUMEDOWN>;
 +};
 +
- &wcd9335 {
- 	clock-names = "mclk", "slimbus";
- 	clocks = <&div1_mclk>,
-diff --git a/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts b/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
-index c6d7c6250de4..8c7a27e972b7 100644
---- a/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
-+++ b/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
-@@ -391,3 +391,7 @@ &ufsphy {
- 	vdda-phy-max-microamp = <18380>;
- 	vdda-pll-max-microamp = <9440>;
+ &tlmm {
+ 	gpio-line-names =
+ 		"[SPI0_DOUT]", /* GPIO_0, BLSP1_SPI_MOSI, LSEC pin 14 */
+@@ -1030,20 +1035,6 @@ codec {
+ 	};
  };
-+
-+&venus {
-+	status = "okay";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index e0f042cf8295..d557fd5b9f82 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -1624,7 +1624,7 @@ adreno_smmu: iommu@b40000 {
- 			power-domains = <&mmcc GPU_GDSC>;
+ 
+-&spmi_bus {
+-	pmic@0 {
+-		pon@800 {
+-			resin {
+-				compatible = "qcom,pm8941-resin";
+-				interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_BOTH>;
+-				debounce = <15625>;
+-				bias-pull-up;
+-				linux,code = <KEY_VOLUMEDOWN>;
+-			};
+-		};
+-	};
+-};
+-
+ &ufsphy {
+ 	status = "okay";
+ 
+diff --git a/arch/arm64/boot/dts/qcom/pm8994.dtsi b/arch/arm64/boot/dts/qcom/pm8994.dtsi
+index c3876c82c874..ad19016df047 100644
+--- a/arch/arm64/boot/dts/qcom/pm8994.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm8994.dtsi
+@@ -45,7 +45,6 @@ rtc@6000 {
+ 
+ 		pm8994_pon: pon@800 {
+ 			compatible = "qcom,pm8916-pon";
+-
+ 			reg = <0x800>;
+ 			mode-bootloader = <0x2>;
+ 			mode-recovery = <0x1>;
+@@ -58,6 +57,13 @@ pwrkey {
+ 				linux,code = <KEY_POWER>;
+ 			};
+ 
++			pm8994_resin: resin {
++				compatible = "qcom,pm8941-resin";
++				interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_BOTH>;
++				debounce = <15625>;
++				bias-pull-up;
++				status = "disabled";
++			};
  		};
  
--		video-codec@c00000 {
-+		venus: video-codec@c00000 {
- 			compatible = "qcom,msm8996-venus";
- 			reg = <0x00c00000 0xff000>;
- 			interrupts = <GIC_SPI 287 IRQ_TYPE_LEVEL_HIGH>;
-@@ -1655,7 +1655,7 @@ video-codec@c00000 {
- 				 <&venus_smmu 0x2d>,
- 				 <&venus_smmu 0x31>;
- 			memory-region = <&venus_region>;
--			status = "okay";
-+			status = "disabled";
- 
- 			video-decoder {
- 				compatible = "venus-decoder";
+ 		pm8994_temp: temp-alarm@2400 {
 -- 
 2.30.1
 
