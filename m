@@ -2,60 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F0513326F31
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Feb 2021 23:34:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 612CD32701D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Feb 2021 03:54:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230063AbhB0WeO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 27 Feb 2021 17:34:14 -0500
-Received: from mail.jvpinto.com ([65.49.11.60]:31864 "EHLO mail.JVPinto.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230001AbhB0WeN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 27 Feb 2021 17:34:13 -0500
-Received: from RW-EXC1.JVPinto.com (2002:ac20:10d::ac20:10d) by
- RW-EXC1.JVPinto.com (2002:ac20:10d::ac20:10d) with Microsoft SMTP Server
- (TLS) id 15.0.1497.2; Sat, 27 Feb 2021 14:33:24 -0800
-Received: from User (52.231.198.195) by RW-EXC1.JVPinto.com (172.32.1.13) with
- Microsoft SMTP Server id 15.0.1497.2 via Frontend Transport; Sat, 27 Feb 2021
- 14:33:10 -0800
-Reply-To: <ms.reem@yandex.com>
-From:   "Ms. Reem" <johnpinto@jvpinto.com>
-Subject: Hello okay
-Date:   Sat, 27 Feb 2021 22:33:24 +0000
-MIME-Version: 1.0
-Content-Type: text/plain; charset="Windows-1251"
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2600.0000
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
-Message-ID: <e015761ecb9a47878030ad9f447dbf5c@RW-EXC1.JVPinto.com>
-To:     Undisclosed recipients:;
+        id S230090AbhB1Cxh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 27 Feb 2021 21:53:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36218 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230063AbhB1Cxg (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 27 Feb 2021 21:53:36 -0500
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D723C061756
+        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Feb 2021 18:52:56 -0800 (PST)
+Received: by mail-pl1-x631.google.com with SMTP id e9so7468388plh.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Feb 2021 18:52:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=vpdHEyJD7sn/0eeQxVrrnQwX5J7unyGFY9KXLtypecU=;
+        b=egll23z+9j/zwj+FnnZEYgh9EoAkYvB3s/oloXSjkGOy9G/Ho2O2KtcALQ1aziXUHC
+         PlCQE7JC4+PgnFu8tqTIgyxISn+IwXg6i94bNWWQTq1KfbXDME3cw6GA21juzkk5fWEg
+         fniZFmCir4lgV1BsWZF2pHFuaZt17Ay45Dqb6Ue7PgoaCJsG5zC52UOjj/dgxHnN8glu
+         1H1HloI6R6a9q+B9RaHMbirIY8+W2J2fCrfoDI9dk94VB7zoHZt0Fg+rMx56Bbpy2RT6
+         2GORwpvwSNjmCe7Lghv4GUOHBuqMfYVyHTmAnDSm1Q5aC7vlOkcKEhFgCWvmQyiCfW31
+         hHHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=vpdHEyJD7sn/0eeQxVrrnQwX5J7unyGFY9KXLtypecU=;
+        b=aKN1TCTev/vxxmcUiEcFuD7IqSa7axm3l1rx1mHI6zYQ8nhSxdh6kl68Jp7dNNqhl0
+         4b069V7On/ERMUNwEmTPlbtvztGE2OxKbAcjPSA6yjjBjacbzfzP1K7Qr/32ZFG1S3Xk
+         K5VqgFiY2H+gzwYvKPAinRvN3Iq2sognOwLXDl/dMr9Y+vbQ+GXMuGU/tXchjsLg2OY5
+         hH1IYviuzE2Xi9TYvwcNL3EseKluuLS8oK8JBAYd5mIFrRrHFzrDBZk10P4EAq899sH5
+         EMA4f+U2VQdRq8CoQLUfJ4pHwcUM8o3Ixo3Bm7fMxvnuWCZ0VmxsfT/rYC8mC8LP9eWk
+         DnEA==
+X-Gm-Message-State: AOAM532stnJ4XiqVlKEYgJGZB0ErPCTXTzMKfFirR+cy6Dg+FYy6Q21Z
+        hkb+F0WBh0WaTjqS45d/MIXk7cEXMAVq8A==
+X-Google-Smtp-Source: ABdhPJxFfmHYbTNUaIm1IEocF7TulwE2CGRD1aqjvgfJssSGShoGeSpf8A09vbZEvdH2Y8t6eifC3Q==
+X-Received: by 2002:a17:902:fe96:b029:e4:2f39:9083 with SMTP id x22-20020a170902fe96b02900e42f399083mr9684729plm.47.1614480775497;
+        Sat, 27 Feb 2021 18:52:55 -0800 (PST)
+Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id s4sm7329527pji.2.2021.02.27.18.52.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 27 Feb 2021 18:52:55 -0800 (PST)
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Shawn Guo <shawn.guo@linaro.org>
+Subject: [PATCH] pinctrl: qcom: support gpio_chip .set_config call
+Date:   Sun, 28 Feb 2021 10:52:49 +0800
+Message-Id: <20210228025249.19684-1-shawn.guo@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
+In case of ACPI boot, GPIO core does the right thing to parse GPIO pin
+configs from ACPI table, and call into gpio_chip's .set_config hook for
+setting them up.  It enables such support on qcom platform by using
+generic config function, which in turn calls into .pin_config_set of
+pinconf for setting up hardware.  For qcom platform, it's possible to
+reuse pin group config functions for pin config hooks, because every pin
+is maintained as a single group.
 
-My name is Ms. Reem Ebrahim Al-Hashimi, I am the "Minister of state
-and Petroleum" also "Minister of State for International Cooperation"
-in UAE. I write to you on behalf of my other "three (3) colleagues"
-who has approved me to solicit for your "partnership in claiming of
-{us$47=Million}" from a Financial Home in Cambodia on their behalf and
-for our "Mutual Benefits".
+This change fixes the problem that Touchpad of Lenovo Flex 5G laptop
+doesn't work with ACPI boot, because PullUp config of Touchpad GpioInt
+pin is not set up by kernel driver.
 
-The Fund {us$47=Million} is our share from the (over-invoiced) Oil/Gas
-deal with Cambodian/Vietnam Government within 2013/2014, however, we
-don't want our government to know about the fund. If this proposal
-interests you, let me know, by sending me an email and I will send to
-you detailed information on how this business would be successfully
-transacted. Be informed that nobody knows about the secret of this
-fund except us, and we know how to carry out the entire transaction.
-So I am compelled to ask, that you will stand on our behalf and
-receive this fund into any account that is solely controlled by you.
+Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+---
+ drivers/pinctrl/qcom/pinctrl-msm.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-We will compensate you with 15% of the total amount involved as
-gratification for being our partner in this transaction. Reply to:
-ms.reem@yandex.com
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+index a591be9f380a..2526f299bdce 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -493,6 +493,8 @@ static const struct pinconf_ops msm_pinconf_ops = {
+ 	.is_generic		= true,
+ 	.pin_config_group_get	= msm_config_group_get,
+ 	.pin_config_group_set	= msm_config_group_set,
++	.pin_config_get		= msm_config_group_get,
++	.pin_config_set		= msm_config_group_set,
+ };
+ 
+ static int msm_gpio_direction_input(struct gpio_chip *chip, unsigned offset)
+@@ -717,6 +719,7 @@ static const struct gpio_chip msm_gpio_template = {
+ 	.get_direction    = msm_gpio_get_direction,
+ 	.get              = msm_gpio_get,
+ 	.set              = msm_gpio_set,
++	.set_config       = gpiochip_generic_config,
+ 	.request          = gpiochip_generic_request,
+ 	.free             = gpiochip_generic_free,
+ 	.dbg_show         = msm_gpio_dbg_show,
+-- 
+2.17.1
 
-Regards,
-Ms. Reem.
