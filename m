@@ -2,188 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 85E69327C17
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 11:29:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F32D327C60
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 11:39:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234260AbhCAK2C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 05:28:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43544 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234317AbhCAK0z (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 05:26:55 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CAEEC061788
-        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Mar 2021 02:26:15 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id v13so3493367edw.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Mar 2021 02:26:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=CYgM1id2R9zJf1hAsjLZUpdxdqZwVIb1y9Uy/sRW0so=;
-        b=CqxH24y/MrPZHHCE5raF4mqb78avr5nCEtykSXmHyTa/LYFNhP+XnA02Py1yA6JA7y
-         +iHmBjFq4xV1APtK2uXFFrkF7te1zdNEAbWJgKxlMn9SvDZWP/9N+OxDNbA4hWGnC9Qu
-         35dCWeLietcgJzR8A7YZX4vBp/gqpgVyWE0qY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=CYgM1id2R9zJf1hAsjLZUpdxdqZwVIb1y9Uy/sRW0so=;
-        b=D6ub3g8niH5ExmPpohyilih00baQvVGHjsTbOOJQ2zNLTAt51sFBBVsteXRAReUX/b
-         TaG4ABkyUvIS4DHQmiHMlHWa2qlhCXg9j0XorP4xI0GNWgiyL17SQHBZOKYxkZeqUKYe
-         sysqNNS1y4wZ+q8UCTm152evZeXMylLLr24QTheur3YeDW4oBzWMO07XRUmfyzFuzBlq
-         ++NAnQRkaAb9GD3KHhqkCpoVNhva/e9/auvQRAAqVDurfF48HoF3O4bQw2un6EJXd4JO
-         ascu6svpgpDzXy2DpBFLFCcs36HyMpufN3psJJ740mHVSlaKxotGVP8oZn5cJBUEpRyt
-         t1Pw==
-X-Gm-Message-State: AOAM531FKdxhCV3I2vGrmlxLz7aFfB8O+tjp+dvIX4nt/CiW6WNE6sc/
-        8gomqU/ueh5GM+bAh7JjvBYkJKiBHuzlBw==
-X-Google-Smtp-Source: ABdhPJywoQPm6KVRJRjxwPD2etzqnBZP7ED4RAiMsjZ0aQ63VUmWVsex23FUMIxPMUXHTuGeQW5Ecw==
-X-Received: by 2002:aa7:db91:: with SMTP id u17mr15523805edt.71.1614594373548;
-        Mon, 01 Mar 2021 02:26:13 -0800 (PST)
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com. [209.85.128.53])
-        by smtp.gmail.com with ESMTPSA id v7sm4445845edt.90.2021.03.01.02.26.12
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 Mar 2021 02:26:13 -0800 (PST)
-Received: by mail-wm1-f53.google.com with SMTP id i9so12695773wml.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Mar 2021 02:26:12 -0800 (PST)
-X-Received: by 2002:a7b:c119:: with SMTP id w25mr14771835wmi.127.1614594372464;
- Mon, 01 Mar 2021 02:26:12 -0800 (PST)
+        id S234566AbhCAKjl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 05:39:41 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:11411 "EHLO z11.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234638AbhCAKiq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Mar 2021 05:38:46 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1614595095; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=UuL0BOjtDtKcRXGevI47fgBoklaY+LeRSCj/Sg93jHw=;
+ b=T0bq4+Jd1EJ2KFzgAcrdk32Keo/yuxwQzYAImVyvTmr5KzJ7DtaGpEsR7MbyznpNYsPHq/aV
+ xg04qCaBo7lFXlblPoCvrZ8kO2mVO0OOUML3T8091c+jOoNOL+n7XFWWljN8TgFmlMZ/MlFt
+ m0eb25bIdCfQDV+CJ3RnjVZ6wQQ=
+X-Mailgun-Sending-Ip: 104.130.96.11
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 603cc3fe75e4458f08fe03ae (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 01 Mar 2021 10:37:50
+ GMT
+Sender: skakit=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C48F5C43462; Mon,  1 Mar 2021 10:37:49 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: skakit)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3C913C433ED;
+        Mon,  1 Mar 2021 10:37:49 +0000 (UTC)
 MIME-Version: 1.0
-References: <20201214125703.866998-1-acourbot@chromium.org>
- <5319c101-f4a4-9c99-b15d-4999366f7a63@linaro.org> <CAAFQd5AQ8VHiRYkzkd5ZJBPT5_5WO0tyQrwqBEfnMVKYiTugTA@mail.gmail.com>
- <b5d35bbd-ae50-7a09-9edf-ca23d1a4b168@linaro.org> <bc42c936d7a67609b9dc4212b5a34b0d761676ed.camel@ndufresne.ca>
- <CAAFQd5BQv2vu_FSxJjVZLpgcuFi1WHVem_O-0x-vkG1KZJi0eA@mail.gmail.com>
- <CAAFQd5BAT2Xe+_swAe+hMqm_cQVbWJUzkH3dS+8-QHknV=KTjw@mail.gmail.com> <b62575fd-7aac-57fe-b6f7-cf1e94f909f2@linaro.org>
-In-Reply-To: <b62575fd-7aac-57fe-b6f7-cf1e94f909f2@linaro.org>
-From:   Tomasz Figa <tfiga@chromium.org>
-Date:   Mon, 1 Mar 2021 19:26:01 +0900
-X-Gmail-Original-Message-ID: <CAAFQd5DYtmWna91HYYJP_8_xEGm9faggM7ejPC7sbbPso=xvow@mail.gmail.com>
-Message-ID: <CAAFQd5DYtmWna91HYYJP_8_xEGm9faggM7ejPC7sbbPso=xvow@mail.gmail.com>
-Subject: Re: [PATCH] media: venus: use contig vb2 ops
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     Alexandre Courbot <acourbot@chromium.org>,
-        Fritz Koenig <frkoenig@chromium.org>,
-        Linux Media Mailing List <linux-media@vger.kernel.org>,
-        Nicolas Dufresne <nicolas@ndufresne.ca>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Date:   Mon, 01 Mar 2021 16:07:49 +0530
+From:   skakit@codeaurora.org
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, kgunda@codeaurora.org
+Subject: Re: [PATCH 3/7] regulator: qcom-rpmh: Correct the pmic5_hfsmps515
+ buck
+In-Reply-To: <CAA8EJpqN-jb3b3yHTHwrQQj_h3M-yxAvX7Hz7bNSV3_NBCJEwQ@mail.gmail.com>
+References: <1614155592-14060-1-git-send-email-skakit@codeaurora.org>
+ <1614155592-14060-4-git-send-email-skakit@codeaurora.org>
+ <50151f4b-298c-f0ee-a88f-7bdd945ad249@linaro.org>
+ <51390b828a5d534e308460098f1b9af0@codeaurora.org>
+ <CAA8EJpqN-jb3b3yHTHwrQQj_h3M-yxAvX7Hz7bNSV3_NBCJEwQ@mail.gmail.com>
+Message-ID: <da15c05877c345f2aeb51649c075a95c@codeaurora.org>
+X-Sender: skakit@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 1, 2021 at 7:22 PM Stanimir Varbanov
-<stanimir.varbanov@linaro.org> wrote:
->
->
->
-> On 3/1/21 11:23 AM, Tomasz Figa wrote:
-> > Hi Alex, Stanimir,
-> >
-> > On Wed, Dec 16, 2020 at 12:15 PM Tomasz Figa <tfiga@chromium.org> wrote=
-:
-> >>
-> >> On Wed, Dec 16, 2020 at 4:21 AM Nicolas Dufresne <nicolas@ndufresne.ca=
-> wrote:
-> >>>
-> >>> Le mardi 15 d=C3=A9cembre 2020 =C3=A0 15:54 +0200, Stanimir Varbanov =
-a =C3=A9crit :
-> >>>> Hi Tomasz,
-> >>>>
-> >>>> On 12/15/20 1:47 PM, Tomasz Figa wrote:
-> >>>>> On Tue, Dec 15, 2020 at 8:16 PM Stanimir Varbanov
-> >>>>> <stanimir.varbanov@linaro.org> wrote:
-> >>>>>>
-> >>>>>> Hi,
-> >>>>>>
-> >>>>>> Cc: Robin
-> >>>>>>
-> >>>>>> On 12/14/20 2:57 PM, Alexandre Courbot wrote:
-> >>>>>>> This driver uses the SG vb2 ops, but effectively only ever access=
-es the
-> >>>>>>> first entry of the SG table, indicating that it expects a flat la=
-yout.
-> >>>>>>> Switch it to use the contiguous ops to make sure this expected in=
-variant
-> >>>>>>
-> >>>>>> Under what circumstances the sg table will has nents > 1? I came d=
-own to
-> >>>>>> [1] but not sure I got it right.
-> >>>>>>
-> >>>>>> I'm afraid that for systems with low amount of system memory and w=
-hen
-> >>>>>> the memory become fragmented, the driver will not work. That's why=
- I
-> >>>>>> started with sg allocator.
-> >>>>>
-> >>>>> It is exactly the opposite. The vb2-dma-contig allocator is "contig=
-"
-> >>>>> in terms of the DMA (aka IOVA) address space. In other words, it
-> >>>>> guarantees that having one DMA address and length fully describes t=
-he
-> >>>>
-> >>>> Ahh, I missed that part. Looks like I misunderstood videobu2 contig
-> >>>> allocator.
-> >>>
-> >>> I'm learning everyday too, but I'm surprised I don't see a call to
-> >>> vb2_dma_contig_set_max_seg_size() in this driver (I could also just h=
-ave missed
-> >>> a patch when overlooking this thread) ?
-> >>>
-> >>> The reason I'm asking, doc says it should be called by driver support=
-ing IOMMU,
-> >>> which seems to be the case for such drivers (MFC, exynos4-is, exynos-=
-gsc, mtk-
-> >>> mdp, s5p-g2d, hantro, rkvdec, zoran, ti-vpe, ..). I posting it, worst=
- case it's
-> >>> all covered and we are good, otherwise perhaps a downstream patch did=
-n't make it
-> >>> ?
-> >>>
-> >>> /**
-> >>>  * vb2_dma_contig_set_max_seg_size() - configure DMA max segment size
-> >>>  * @dev:        device for configuring DMA parameters
-> >>>  * @size:       size of DMA max segment size to set
-> >>>  *
-> >>>  * To allow mapping the scatter-list into a single chunk in the DMA
-> >>>  * address space, the device is required to have the DMA max segment
-> >>>  * size parameter set to a value larger than the buffer size. Otherwi=
-se,
-> >>>  * the DMA-mapping subsystem will split the mapping into max segment
-> >>>  * size chunks. This function sets the DMA max segment size
-> >>>  * parameter to let DMA-mapping map a buffer as a single chunk in DMA
-> >>>  * address space.
-> >>>  * This code assumes that the DMA-mapping subsystem will merge all
-> >>>  * scatterlist segments if this is really possible (for example when
-> >>>  * an IOMMU is available and enabled).
-> >>>  * Ideally, this parameter should be set by the generic bus code, but=
- it
-> >>>  * is left with the default 64KiB value due to historical litmiations=
- in
-> >>>  * other subsystems (like limited USB host drivers) and there no good
-> >>>  * place to set it to the proper value.
-> >>>  * This function should be called from the drivers, which are known t=
-o
-> >>>  * operate on platforms with IOMMU and provide access to shared buffe=
-rs
-> >>>  * (either USERPTR or DMABUF). This should be done before initializin=
-g
-> >>>  * videobuf2 queue.
-> >>>  */
-> >>
-> >> It does call dma_set_max_seg_size() directly:
-> >> https://elixir.bootlin.com/linux/latest/source/drivers/media/platform/=
-qcom/venus/core.c#L230
-> >>
-> >> Actually, why do we even need a vb2 helper for this?
-> >>
-> >
-> > What's the plan for this patch?
->
-> It will be part of v5.12.
+On 2021-02-26 15:57, Dmitry Baryshkov wrote:
+> On Fri, 26 Feb 2021 at 09:59, <skakit@codeaurora.org> wrote:
+>> 
+>> Hi,
+>> 
+>> On 2021-02-25 16:39, Dmitry Baryshkov wrote:
+>> > On 24/02/2021 11:33, satya priya wrote:
+>> >> Correct the REGULATOR_LINEAR_RANGE and n_voltges for
+>> >> pmic5_hfsmps515 buck.
+>> >>
+>> >> Signed-off-by: satya priya <skakit@codeaurora.org>
+>> >> ---
+>> >>   drivers/regulator/qcom-rpmh-regulator.c | 4 ++--
+>> >>   1 file changed, 2 insertions(+), 2 deletions(-)
+>> >>
+>> >> diff --git a/drivers/regulator/qcom-rpmh-regulator.c
+>> >> b/drivers/regulator/qcom-rpmh-regulator.c
+>> >> index 79a554f..36542c3 100644
+>> >> --- a/drivers/regulator/qcom-rpmh-regulator.c
+>> >> +++ b/drivers/regulator/qcom-rpmh-regulator.c
+>> >> @@ -726,8 +726,8 @@ static const struct rpmh_vreg_hw_data
+>> >> pmic5_ftsmps510 = {
+>> >>   static const struct rpmh_vreg_hw_data pmic5_hfsmps515 = {
+>> >>      .regulator_type = VRM,
+>> >>      .ops = &rpmh_regulator_vrm_ops,
+>> >> -    .voltage_range = REGULATOR_LINEAR_RANGE(2800000, 0, 4, 16000),
+>> >> -    .n_voltages = 5,
+>> >> +    .voltage_range = REGULATOR_LINEAR_RANGE(320000, 0, 235, 16000),
+>> >> +    .n_voltages = 236,
+>> >
+>> > I've checked the docs for pm8009, the chip which also uses hfsmps515
+>> > regulators. The pdf clearly states that the 'Output voltage operating
+>> > range' is from 2.8 V to 2.85 V.
+>> >
+>> > So we'd probably need to define different versions of HFS515 regulator
+>> > data (like I had to create for pm8009-1).
+>> >
+>> >
+>> 
+>> The min-max voltages for S1C (PM8350c) regulator are 2190000-2210000uV
+>> for sc7280(kodiak), so we had to modify this buck to support this
+>> regulator.
+>> 
+>> AFAIK, this struct defines the HW constraints of a regulator, but the
+>> platform specific min-max values can be controlled from DT files. So,
+>> can't we modify it like above instead of adding a new definition? the
+>> new min_uV value (32000) is anyway not exceeding the old value 
+>> (2800000)
+>> right? please correct me if wrong.
+> 
+> As far as I understand for other regulators we put 'output voltage
+> limitations' from the docs into the regulator definition and further
+> constrain it by the platform device tree. Please correct me if I'm
+> wrong.
 
-Great, thanks!
+I see that for most of the regulators, these specifications are specific 
+to regulator buck (like HFS515) but not chipset specific, we set the 
+chipset specific(like pm8009/pm8350c) requirements from DT files.
+
+For example:
+pmic5_nldo regulator spec mentions LLIMIT= 0.32V and ULIMIT =1.304V with 
+step 8mV
+
+.voltage_range = REGULATOR_LINEAR_RANGE(320000, 0, 123, 8000),
+max output voltage supported by this regulator is 123*8000 + 320000 = 
+1304000mV which is same as mentioned in the regulator spec.
+
+> For pm8009 the data from the datasheet matches the regulators defined
+> in the source file. Unfortunately I don't have kodiak specs at hand.
+
+ From the HFS515 spec I got below info
+"HFS510 and lower max output voltage is limited to 2.04V max, and 
+Yoda(pm8009) requirement was 2.4V for IOT PA and 2.85V for camera 
+application.  Hence, HFS515 added a new register and corresponding HW 
+changes to support the higher voltage.  Table 5‑24 shows the new 
+FB_RANGE bit.  When configured to 0 the buck works as earlier where Vout 
+max = 2.04V in 8mV steps, but when configured to 1 the buck range 
+doubles and can now support a Vout max = 4.08V in 16mV steps."
+
+As per above, the max output voltage supported by HFS515 buck is 4.08V 
+(which is kodiak pm8350c pmic's requirement).
+So, we have modified the buck data to support pm8350c(palani) along with 
+pm8009(yoda).
+
+Thanks,
+Satya Priya
