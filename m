@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 653EB32927B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 21:49:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 40A35329288
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 21:49:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238876AbhCAUqU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 15:46:20 -0500
-Received: from mail.kernel.org ([198.145.29.99]:54486 "EHLO mail.kernel.org"
+        id S240252AbhCAUrA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 15:47:00 -0500
+Received: from mail.kernel.org ([198.145.29.99]:54740 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238859AbhCAUnX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 15:43:23 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id B144A64DE8;
+        id S240892AbhCAUoS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Mar 2021 15:44:18 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id F334C64E99;
         Mon,  1 Mar 2021 19:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1614628782;
-        bh=11Cv2FpbVESjtnk92HczRDDoFKijWqmnGEHh8/oGn88=;
+        s=k20201202; t=1614628783;
+        bh=TR02CmUoeI+OC8y0+Wzj+wTZY749h1L9jAxD25UHfiU=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=bT9JUbCw40HWwzDpugwrW4865ZBNwMmQq/rkpELIzZueQ0V7W/XDlerB6OUw4Mvlv
-         hXA8AhC2tGUslsNjwWQQVQln3uKgTIcUjUz8d6Uo44P+kElb/qXgS7hWT7tDJaDJ33
-         DLTxJgKVOpMtwMlOHTihvJfGGyZm1Z2H0/iloIld5n/agsdGoKXrYvtsFhf1r75Qix
-         WXO1qRiOD5OuEQKlg/9Y5Drt7op2Be/ZHwk23wiE/gyMGcElJCuxqJTZ6WVkzSIGqF
-         qN9C2CEJlgvG1LrFJkTIG51qFnbJ1GvKYDE0kyXN+V4Qv/58MytIMJYTPjUyDmBi6o
-         yPVFjSLqjobdQ==
+        b=dfSuXDZJYN7v13v0hphn8kCKHRHJgzBNjRgpzZRTYFMY6MupFu907fnzc2da0G/pk
+         IY09gNRC5bJB9PM5qiPX6Vth155UgP7t20asVZ+hY5M09E2TNmMk2cUm+LwozljwrH
+         qEwWSoyQHJhgUKgYDShEQCRMWnlhM8MqTSAN6CDAitXHpRz+ADQVWAKeA1fkgbon4X
+         PRi+OLVK5M0cGUJk10tB8idhuCflw2env6cM9lM7jTjyUGxliKuKWuuW22cjPB4+24
+         sDU7rppVxkH++7S6t+KwAKzgUe7zGvkKokE3A/XewqRbDTJUrdTByDcN5hHXAFP40p
+         O4TDYX8FrJtGA==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id ADE0660C25;
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id EF94960C26;
         Mon,  1 Mar 2021 19:59:42 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 1/2] dt-bindings: phy: qcom,qmp: Add SC8180X USB phy
+Subject: Re: [PATCH v2] mhi: Fix double dma free
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <161462878270.6187.4140654780394236111.git-patchwork-notify@kernel.org>
+Message-Id: <161462878297.6187.5027331494557486161.git-patchwork-notify@kernel.org>
 Date:   Mon, 01 Mar 2021 19:59:42 +0000
-References: <20210121014339.1612525-1-bjorn.andersson@linaro.org>
-In-Reply-To: <20210121014339.1612525-1-bjorn.andersson@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+References: <1612894264-15956-1-git-send-email-loic.poulain@linaro.org>
+In-Reply-To: <1612894264-15956-1-git-send-email-loic.poulain@linaro.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -43,22 +43,27 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hello:
 
-This series was applied to qcom/linux.git (refs/heads/for-next):
+This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Wed, 20 Jan 2021 17:43:38 -0800 you wrote:
-> Add compatibles for the Qualcomm QMP PHY binding for the SuperSpeed USB
-> phys found in the SC8180x platform.
+On Tue,  9 Feb 2021 19:11:04 +0100 you wrote:
+> mhi_deinit_chan_ctxt functionthat takes care of unitializing channel
+> resources, including unmapping coherent MHI areas, can be called
+> from different path in case of controller unregistering/removal:
+>  - From a client driver remove callback, via mhi_unprepare_channel
+>  - From mhi_driver_remove that unitialize all channels
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 1 +
->  1 file changed, 1 insertion(+)
+> mhi_driver_remove()
+> |-> driver->remove()
+> |    |-> mhi_unprepare_channel()
+> |        |-> mhi_deinit_chan_ctxt()
+> |...
+> |-> mhi_deinit_chan_ctxt()
+> 
+> [...]
 
 Here is the summary with links:
-  - [1/2] dt-bindings: phy: qcom,qmp: Add SC8180X USB phy
-    https://git.kernel.org/qcom/c/4dd8c1c7f2bd
-  - [2/2] phy: qcom-qmp: Add SC8180X USB phy
-    https://git.kernel.org/qcom/c/4d1a6404e91e
+  - [v2] mhi: Fix double dma free
+    https://git.kernel.org/qcom/c/db4e8de1935b
 
 You are awesome, thank you!
 --
