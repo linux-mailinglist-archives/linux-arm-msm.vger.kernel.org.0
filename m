@@ -2,221 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A8C6328CD8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 20:01:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A4DF9328D6B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 20:12:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240094AbhCATAR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 14:00:17 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:24852 "EHLO z11.mailgun.us"
+        id S238214AbhCATKz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 14:10:55 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:36025 "EHLO z11.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S240798AbhCAS6B (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 13:58:01 -0500
+        id S240898AbhCATFh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Mar 2021 14:05:37 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1614625052; h=Message-ID: References: In-Reply-To: Reply-To:
- Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=BWk43ZFWyb8uTChKPh44k6+sSYpbD1HwdQ8/aJZG5+A=;
- b=ONHtehLmz6vCsgU2pFv0DUjVW3McoMuDQsjktF7kbAXvQCVZ0kO1/EOEdnVIObZuK48Ou5fJ
- TzozQ5amksFA9JNjd6q4VjvsELAEax9VqYjnPtZwUw1D8gxL8REGTwRMkoH/GXquGYraaKDE
- zlWUBDvFEcZQjzftSbv+LbeeqJE=
+ s=smtp; t=1614625520; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=TvkfVde19wsy/9yIspcvXBHomEB+eqMNq0i1mBuIphk=; b=j5emB1NC2zgUZ5qJSnfu7Uk/aH+PAhrT9l0WhqbQaBWD+21hFsb1cT+cTwda7thEFrGMRlxk
+ Lce2m5+kOFb1KwzwoHZ2e8FAIal1rbOqkYceRPcoNa6dA+eEolyKbwdPOje6ZMrm0atDt/j4
+ 1Le2sVTQ4knZDYOAqjocH1FmTTI=
 X-Mailgun-Sending-Ip: 104.130.96.11
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 603d38fb12935cdcee0ea330 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 01 Mar 2021 18:56:59
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 603d3acd1defdc70ae2b9b01 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 01 Mar 2021 19:04:45
  GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 28C76C43461; Mon,  1 Mar 2021 18:56:59 +0000 (UTC)
+        id 9CEDAC43469; Mon,  1 Mar 2021 19:04:44 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6D148C433ED;
-        Mon,  1 Mar 2021 18:56:57 +0000 (UTC)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D9675C433C6;
+        Mon,  1 Mar 2021 19:04:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D9675C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Peter Zijlstra <peterz@infradead.org>,
+        Ingo Molnar <mingo@redhat.com>,
+        Arnaldo Carvalho de Melo <acme@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Leo Yan <leo.yan@linaro.org>
+Cc:     Jiri Olsa <jolsa@redhat.com>, Namhyung Kim <namhyung@kernel.org>,
+        coresight@lists.linaro.org, Stephen Boyd <swboyd@chromium.org>,
+        Denis Nikitin <denik@chromium.org>,
+        Mattias Nissler <mnissler@chromium.org>,
+        Al Grant <al.grant@arm.com>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCHv2 0/4] perf/core: Add support to exclude kernel mode PMU tracing 
+Date:   Tue,  2 Mar 2021 00:34:14 +0530
+Message-Id: <cover.1614624041.git.saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.29.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 01 Mar 2021 10:56:57 -0800
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     Kalle Valo <kvalo@codeaurora.org>
-Cc:     jhugo@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Gokul Sriram Palanisamy <gokulsri@codeaurora.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        hemantk@codeaurora.org, sricharan@codeaurora.org,
-        ath11k@lists.infradead.org
-Subject: Re: [PATCH v2] bus: mhi: core: Add unique qrtr node id support
-Organization: Qualcomm Innovation Center, Inc.
-Reply-To: bbhatt@codeaurora.org
-Mail-Reply-To: bbhatt@codeaurora.org
-In-Reply-To: <87o8g291d1.fsf@codeaurora.org>
-References: <1614336169-31467-1-git-send-email-gokulsri@codeaurora.org>
- <1614336169-31467-2-git-send-email-gokulsri@codeaurora.org>
- <20210226145245.GB70936@thinkpad> <87k0qrceih.fsf@tynnyri.adurom.net>
- <10e511e8dfa8d393ec4c4765668fe229@codeaurora.org>
- <87o8g291d1.fsf@codeaurora.org>
-Message-ID: <e1ee69381ff328712fa010a3de44f70a@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Kalle,
+Hardware assisted tracing families such as ARM Coresight, Intel PT
+provides rich tracing capabilities including instruction level
+tracing and accurate timestamps which are very useful for profiling
+and also pose a significant security risk. One such example of
+security risk is when kernel mode tracing is not excluded and these
+hardware assisted tracing can be used to analyze cryptographic code
+execution. In this case, even the root user must not be able to infer
+anything.
 
-On 2021-03-01 10:26 AM, Kalle Valo wrote:
-> Bhaumik Bhatt <bbhatt@codeaurora.org> writes:
-> 
->> On 2021-03-01 03:14 AM, Kalle Valo wrote:
->>> + ath11k list
->>> 
->>> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
->>> 
->>>> On Fri, Feb 26, 2021 at 04:12:49PM +0530, Gokul Sriram Palanisamy
->>>> wrote:
->>>>> On platforms with two or more identical mhi
->>>>> devices, qmi service will run with identical
->>>>> qrtr-node-id. Because of this identical ID,
->>>>> host qrtr-lookup cannot register more than one
->>>>> qmi service with identical node ID. Ultimately,
->>>>> only one qmi service will be avilable for the
->>>>> underlying drivers to communicate with.
->>>>> 
->>>>> On QCN9000, it implements a unique qrtr-node-id
->>>>> and qmi instance ID using a unique instance ID
->>>>> written to a debug register from host driver
->>>>> soon after SBL is loaded.
->>>>> 
->>>>> This change generates a unique instance ID from
->>>>> PCIe domain number and bus number, writes to the
->>>>> given debug register just after SBL is loaded so
->>>>> that it is available for FW when the QMI service
->>>>> is spawned.
->>>>> 
->>>>> sample:
->>>>> root@OpenWrt:/# qrtr-lookup
->>>>>   Service Version Instance Node  Port
->>>>>        15       1        0    8     1 Test service
->>>>>        69       1        8    8     2 ATH10k WLAN firmware service
->>>>>        15       1        0   24     1 Test service
->>>>>        69       1       24   24     2 ATH10k WLAN firmware service
->>>>> 
->>>>> Here 8 and 24 on column 3 (QMI Instance ID)
->>>>> and 4 (QRTR Node ID) are the node IDs that
->>>>> is unique per mhi device.
->>>>> 
->>>>> Signed-off-by: Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
->>>>> ---
->>>>>  drivers/bus/mhi/core/boot.c | 14 ++++++++++++++
->>>>>  1 file changed, 14 insertions(+)
->>>>> 
->>>>> diff --git a/drivers/bus/mhi/core/boot.c
->>>>> b/drivers/bus/mhi/core/boot.c
->>>>> index c2546bf..5e5dad5 100644
->>>>> --- a/drivers/bus/mhi/core/boot.c
->>>>> +++ b/drivers/bus/mhi/core/boot.c
->>>>> @@ -16,8 +16,12 @@
->>>>>  #include <linux/random.h>
->>>>>  #include <linux/slab.h>
->>>>>  #include <linux/wait.h>
->>>>> +#include <linux/pci.h>
->>>>>  #include "internal.h"
->>>>> 
->>>>> +#define QRTR_INSTANCE_MASK	0x000000FF
->>>>> +#define QRTR_INSTANCE_SHIFT	0
->>>>> +
->>>>>  /* Setup RDDM vector table for RDDM transfer and program RXVEC */
->>>>>  void mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
->>>>>  		      struct image_info *img_info)
->>>>> @@ -391,6 +395,9 @@ void mhi_fw_load_handler(struct mhi_controller
->>>>> *mhi_cntrl)
->>>>>  	const struct firmware *firmware = NULL;
->>>>>  	struct image_info *image_info;
->>>>>  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
->>>>> +	struct pci_dev *pci_dev = to_pci_dev(mhi_cntrl->cntrl_dev);
->>>>> +	struct pci_bus *bus = pci_dev->bus;
->>>>> +	uint32_t instance;
->>>>>  	const char *fw_name;
->>>>>  	void *buf;
->>>>>  	dma_addr_t dma_addr;
->>>>> @@ -466,6 +473,13 @@ void mhi_fw_load_handler(struct
->>>>> mhi_controller *mhi_cntrl)
->>>>>  		return;
->>>>>  	}
->>>>> 
->>>>> +	instance = ((pci_domain_nr(bus) & 0xF) << 4) | (bus->number & 
->>>>> 0xF);
->>>>> +	instance &= QRTR_INSTANCE_MASK;
->>>>> +
->>>>> +	mhi_write_reg_field(mhi_cntrl, mhi_cntrl->bhi,
->>>>> +			    BHI_ERRDBG2, QRTR_INSTANCE_MASK,
->>>>> +			    QRTR_INSTANCE_SHIFT, instance);
->>>> 
->>>> You cannot not do this in MHI stack. Why can't you do this in the
->>>> MHI controller
->>>> specific to QCN9000? And btw, is QCN9000 supported in mainline?
->>> 
->>> I'm not sure what QCN9000 means but I'm guessing it's QCN9074. We 
->>> have
->>> initial QCN9074 support in ath11k but there are some issues still so
->>> it's not enabled by default (yet):
->>> 
->>> https://git.kernel.org/pub/scm/linux/kernel/git/kvalo/ath.git/commit/?h=ath-next&id=4e80946197a83a6115e308334618449b77696d6a
->>> 
->>> And I suspect we have this same qrtr issue with any ath11k PCI 
->>> device,
->>> including QCA6390, so this is not a QCN9074 specific problem.
->>> 
->>> BTW Gokul, please always CC the ath11k list when submitting patches
->>> which are related to ath11k.
->> 
->> QRTR sits on top of MHI so shouldn't this be handled outside of MHI
->> after MHI is operational? We cannot allow PCI code in MHI core driver
->> but this can be handled pre or post MHI power-up in whatever way you
->> desire that does not have to directly involve MHI.
-> 
-> Sure, makes sense. I was just replying to Mani's question about status
-> of QCN9000 upstream support.
-> 
-> So should we handle this within ath11k, is that the right approach? I
-> also suspect that for QCN9074 and QCA6390 we have to do this a bit
-> differently, so it would be easier to handle the differences between
-> devices (and firmware versions) inside ath11k.
+To explain it more clearly in the words of a security team member
+(credits: Mattias Nissler),
 
-Yes, I feel it would be better handled within ath11k. AFAIK, device 
-(QCA/QCN)
-populates the BHI ERRDBG registers when it wants to communicate a 
-certain
-problem/status to the host and it should not be used the other way 
-round,
-where host writes a configuration cookie for the device to boot-up in a
-particular way. It feels hacky as of now unless an actual configuration
-register is used.
+"Consider a system where disk contents are encrypted and the encryption
+key is set up by the user when mounting the file system. From that point
+on the encryption key resides in the kernel. It seems reasonable to
+expect that the disk encryption key be protected from exfiltration even
+if the system later suffers a root compromise (or even against insiders
+that have root access), at least as long as the attacker doesn't
+manage to compromise the kernel."
 
-As per BHI specification, these registers are permitted to be read-only 
-for
-the host and Read/Write for device only. I also don't see any BHI
-configuration or general purpose registers that can be used to notify 
-this
-cookie. If one is found, we can talk about how to use them and can 
-introduce
-MHI patches for those.
+Here the idea is to protect such important information from all users
+including root users since root privileges does not have to mean full
+control over the kernel [1] and root compromise does not have to be
+the end of the world.
 
-I suggest exploring alternatives to this. I think Hemant and are in 
-agreement
-on this.
+But "Peter said even the regular counters can be used for full branch trace,
+the information isn't as accurate as PT and friends and not easier but
+is good enough to infer plenty". This would mean that a global tunable
+config for all kernel mode pmu tracing is more appropriate than the one
+targeting the hardware assisted instruction tracing.
 
-Thanks,
-Bhaumik
----
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
+Currently we can exclude kernel mode tracing via perf_event_paranoid
+sysctl but it has following limitations,
+
+ * No option to restrict kernel mode instruction tracing by the
+   root user.
+ * Not possible to restrict kernel mode instruction tracing when the
+   hardware assisted tracing IPs like ARM Coresight ETMs use an
+   additional interface via sysfs for tracing in addition to perf
+   interface.
+
+So introduce a new config CONFIG_EXCLUDE_KERNEL_PMU_TRACE to exclude
+kernel mode pmu tracing for all users including root which will be
+generic and applicable to all hardware tracing families and which
+can also be used with other interfaces like sysfs in case of ETMs.
+
+Patch 1 adds this new config and the support in perf core to exclude
+all kernel mode PMU tracing.
+
+Patch 2 adds the perf evsel warning message when the perf tool users
+attempt to perform a kernel mode trace with the config enabled to
+exclude the kernel mode tracing.
+
+Patch 3 and Patch 4 adds the support for excluding kernel mode for
+ARM Coresight ETM{4,3}XX sysfs mode using the newly introduced generic
+config.
+
+[1] https://lwn.net/Articles/796866/
+
+Changes in v2:
+ * Move from kernel mode instruction tracing to all kernel level PMU tracing (Peter)
+ * Move the check and warning to the caller mode_store() (Doug)
+
+Sai Prakash Ranjan (4):
+  perf/core: Add support to exclude kernel mode PMU tracing
+  perf evsel: Print warning for excluding kernel mode instruction
+    tracing
+  coresight: etm4x: Add support to exclude kernel mode tracing
+  coresight: etm3x: Add support to exclude kernel mode tracing
+
+ drivers/hwtracing/coresight/coresight-etm3x-core.c  |  3 +++
+ drivers/hwtracing/coresight/coresight-etm3x-sysfs.c |  6 ++++++
+ drivers/hwtracing/coresight/coresight-etm4x-core.c  |  6 +++++-
+ drivers/hwtracing/coresight/coresight-etm4x-sysfs.c |  6 ++++++
+ init/Kconfig                                        | 11 +++++++++++
+ kernel/events/core.c                                |  3 +++
+ tools/perf/util/evsel.c                             |  3 ++-
+ 7 files changed, 36 insertions(+), 2 deletions(-)
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
