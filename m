@@ -2,94 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E24A32812B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 15:45:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 563D2328339
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 17:16:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236506AbhCAOpG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 09:45:06 -0500
-Received: from mail-oi1-f174.google.com ([209.85.167.174]:42953 "EHLO
-        mail-oi1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236463AbhCAOpE (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 09:45:04 -0500
-Received: by mail-oi1-f174.google.com with SMTP id l64so18222221oig.9;
-        Mon, 01 Mar 2021 06:44:48 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=PKi7bPCvLLJYTrOHV7hFTTu/5jhFGP5klWwVnr6aieA=;
-        b=DlbcMpf1w1ALcKDnNlSPFbKh3MnQIIbv+kXu5mYw/nZvyVpFVE4s48FLydh5Ss65mK
-         +umm9DIYyjtAvYPV3gwm8N9qWDhwnTFcenRec0BcRMZfvRr2OqrThLSqteBk7FdsVI6h
-         mERbSfA5ZI4dRH3qJKrUeUrRnPVNjil/AR3WYkqfxyEO3XczdCC6NSC1AU1Gn+Hxj/Vx
-         dlezBBXX0fURqeGQSAz1tixDNqSNrI7kjahtXCVngdcxAQufi5M2UMY5BfmyhTE3zuSq
-         +hiE0TonCxhwZ9PApd5hPlvaRy7InvNgZw1enNz74k/TeOqnC/iwpyP6oyhD7MdXNvxK
-         r51g==
-X-Gm-Message-State: AOAM5338mSGdxCUIlkdiNEUBbfQWY95QDH7kw0KzfCUIiiTwjob4LlIT
-        uZT1s7Njfs1Xe/DnF92dPg==
-X-Google-Smtp-Source: ABdhPJz46z7d74LZoVxgX9NXWDklqW6EA0EXTh0H73eMk1VHLAMfqSG+D8d8AdmHSpqh1RU04a/wQw==
-X-Received: by 2002:a05:6808:1383:: with SMTP id c3mr11689377oiw.153.1614609862895;
-        Mon, 01 Mar 2021 06:44:22 -0800 (PST)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id i20sm1878550otf.17.2021.03.01.06.44.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Mar 2021 06:44:22 -0800 (PST)
-Received: (nullmailer pid 37859 invoked by uid 1000);
-        Mon, 01 Mar 2021 14:44:21 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     satya priya <skakit@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Mark Brown <broonie@kernel.org>, linux-kernel@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>, kgunda@codeaurora.org,
-        rnayak@codeaurora.org, devicetree@vger.kernel.org
-In-Reply-To: <1614155592-14060-2-git-send-email-skakit@codeaurora.org>
-References: <1614155592-14060-1-git-send-email-skakit@codeaurora.org> <1614155592-14060-2-git-send-email-skakit@codeaurora.org>
-Subject: Re: [PATCH 1/7] dt-bindings: regulator: Convert regulator bindings to YAML format
-Date:   Mon, 01 Mar 2021 08:44:21 -0600
-Message-Id: <1614609861.067266.37858.nullmailer@robh.at.kernel.org>
+        id S236952AbhCAQOo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 11:14:44 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:30412 "EHLO z11.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237621AbhCAQLS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Mar 2021 11:11:18 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1614615047; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=o09V222UbtF+m7URYAndN7kvp3AxBbab4TCWrtmYtDo=; b=GiiieCXyxnFTq0mMHh42fm1Rey18kArXXUpWJDwZcE4kClt8SCFsfhnLFPZf1dakdHOVkISP
+ Gjo/Kd6mbMwFFr+Tyi3ZOeskEzEjKYrbaSXN9UPGHN/gTN2UR2tJL6LIKFygAogu/CfmXj7T
+ pE3d67ZnpZSWSzFjtl4MudHMLd4=
+X-Mailgun-Sending-Ip: 104.130.96.11
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 603d12076bfdd67a00fd4ebb (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 01 Mar 2021 16:10:47
+ GMT
+Sender: kgunda=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 34096C43466; Mon,  1 Mar 2021 16:10:47 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from kgunda-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: kgunda)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E958AC433C6;
+        Mon,  1 Mar 2021 16:10:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E958AC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kgunda@codeaurora.org
+From:   Kiran Gunda <kgunda@codeaurora.org>
+To:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
+        lee.jones@linaro.org, b.zolnierkie@samsung.com,
+        dri-devel@lists.freedesktop.org, daniel.thompson@linaro.org,
+        jacek.anaszewski@gmail.com, pavel@ucw.cz, robh+dt@kernel.org,
+        mark.rutland@arm.com, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
+        Kiran Gunda <kgunda@codeaurora.org>
+Subject: [PATCH V4 0/2] Fix WLED FSC Sync and brightness Sync settings
+Date:   Mon,  1 Mar 2021 21:40:28 +0530
+Message-Id: <1614615030-12703-1-git-send-email-kgunda@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 24 Feb 2021 14:03:06 +0530, satya priya wrote:
-> Convert regulator bindings from .txt to .yaml format.
-> 
-> Signed-off-by: satya priya <skakit@codeaurora.org>
-> ---
->  .../bindings/regulator/qcom,rpmh-regulator.txt     | 180 ---------------------
->  .../bindings/regulator/qcom,rpmh-regulator.yaml    | 147 +++++++++++++++++
->  2 files changed, 147 insertions(+), 180 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt
->  create mode 100644 Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
-> 
+This patch series has the following two WLED fixes
+ 1. As per the current implementation, for WLED5, after
+    the FSC (Full Scale Current) update the driver is incorrectly
+    toggling the MOD_SYNC register instead of toggling the SYNC register.
+    The patch 1/2 fixes this by toggling the SYNC register after
+    FSC update.
 
-My bot found errors running 'make dt_binding_check' on your patch:
+ 2. Currently, the sync bits are set-then-cleared after FSC and brightness
+    update. As per hardware team recommendation the FSC and brightness sync
+    takes place from clear-then-set transition of the sync bits.
+    The patch 2/2 fies this issue.
 
-yamllint warnings/errors:
-./Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml:13:5: [warning] wrong indentation: expected 2 but found 4 (indentation)
-./Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml:48:5: [warning] wrong indentation: expected 2 but found 4 (indentation)
-./Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml:49:9: [warning] wrong indentation: expected 6 but found 8 (indentation)
-./Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml:50:13: [warning] wrong indentation: expected 10 but found 12 (indentation)
-./Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml:64:9: [warning] wrong indentation: expected 6 but found 8 (indentation)
-./Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml:69:9: [warning] wrong indentation: expected 6 but found 8 (indentation)
-./Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml:83:6: [warning] wrong indentation: expected 6 but found 5 (indentation)
-./Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml:89:6: [warning] wrong indentation: expected 6 but found 5 (indentation)
-./Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml:95:2: [warning] wrong indentation: expected 2 but found 1 (indentation)
+Changes from V3:
+  1. Updated the patch description as per Daneil's suggestion.
+  2. Added Daniel's "Reviewed-by" tag for patch 2/2.
+  3. Updated the cover letter to use "set" and "clear" properly.
+ 
+Changes from V2:
+  1. Added Daniel's "Reviewed-by" tag for patch 1/2.
+  2. Updated the patch 2/2 description with "set" and "clear"
+     terminology instead of "1" and "0".
+  3. Updated the cover letter with "set" and "clear" terminology
+     instead of "1" and "0".
 
-dtschema/dtc warnings/errors:
+Changes from V1:
+  1. Updated the cover letter.
+  2. Updated the description of the patches as per Daniel's suggestion.
 
-See https://patchwork.ozlabs.org/patch/1443748
+Kiran Gunda (2):
+  backlight: qcom-wled: Fix FSC update issue for WLED5
+  backlight: qcom-wled: Correct the sync_toggle sequence
 
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
+ drivers/video/backlight/qcom-wled.c | 37 +++++++++++++++++++++++++------------
+ 1 file changed, 25 insertions(+), 12 deletions(-)
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+ a Linux Foundation Collaborative Project
 
