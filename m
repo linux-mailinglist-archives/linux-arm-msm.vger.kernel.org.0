@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8AEA83292A2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 21:49:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D7A13292AA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 21:49:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243091AbhCAUtT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 15:49:19 -0500
-Received: from mail.kernel.org ([198.145.29.99]:55300 "EHLO mail.kernel.org"
+        id S243593AbhCAUta (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 15:49:30 -0500
+Received: from mail.kernel.org ([198.145.29.99]:54738 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S241032AbhCAUqe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S241933AbhCAUqe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 1 Mar 2021 15:46:34 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id 7FF9F64EDF;
+Received: by mail.kernel.org (Postfix) with ESMTPS id A834264EE6;
         Mon,  1 Mar 2021 19:59:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1614628783;
-        bh=hO8Dd83pLbkL/aGe2KUFKVi+BGypSLU4XWvIrdNIGmU=;
+        bh=jFdDthBJJ1tWwfRY2Vnc0CwuOR+291WRAB5+665Z0bw=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=PcqdUoyaeWLU3wwIka4ZOj4V3WjlJROYFS6+HiaSvVjcFTYRLDSw7zTNZLyGbWu48
-         1ThZrs1xhhS9AEGDXoWhuPcETxlLKNMp2WlbeXQFZAtyVlDjLVnAZIwk0iYKBI7hfL
-         +rK4SbGB9+oUSHMfNSWAvIFuquB7hz5SzN5QRDv0jZYrrEK55kVYbyZBtnc5Q8XxE9
-         1T4sndaP1SUvm58zOMUpV3fE4SysKdX6CfCs4QGtDEQCjXxUlCqnj50hF2gyqmUfcG
-         h9EmB3aEJI06W31lFmOEtlrHV1GJA+zt3iDESEgtdW4/pR/+wbBxk7uRejzaGJjiYa
-         OOqyosyvgbJjw==
+        b=L33YDytA5kfi1tLtBEU17dyoEikCvx0qHmcQkfijtlfiw6ChVV2gZU0Urlqx5xsKP
+         Gx2erPyu77zngutN1q6edYYQVXAIslpOAFerFLhW31eh3/ys+60eiNM1+2wIqY1CE6
+         EwLqHCcQj5dAHfhzWngu8ohTZYZ5Zs9ND2wRQxU7B73NuBKx57PlSlju4zvEar7F7P
+         b+pEK9ema/HTvnd9rH+26BWhgmaLxtbV2ROb4UWEBl401dFjvHNr1c8n12gCcNfCUR
+         2ovED9LiqSMH/IwvjyM6ZaUysekNp0v2+cgzA1hUskwG7p2zCQlg4y2isNz9uJ539d
+         VtGI0FNi5n3Xg==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 7C7B260A1B;
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id A4D8D60C26;
         Mon,  1 Mar 2021 19:59:43 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] dma/qcom/gpi: Fixes a format mismatch
+Subject: Re: [PATCH 1/2] dt-bindings: mailbox: qcom: Add SC8180X APCS compatible
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <161462878350.6187.31131978443400450.git-patchwork-notify@kernel.org>
+Message-Id: <161462878367.6187.11902369696917115622.git-patchwork-notify@kernel.org>
 Date:   Mon, 01 Mar 2021 19:59:43 +0000
-References: <20201218104137.59200-1-nixiaoming@huawei.com>
-In-Reply-To: <20201218104137.59200-1-nixiaoming@huawei.com>
-To:     Xiaoming Ni <nixiaoming@huawei.com>
+References: <20210121014130.1612454-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20210121014130.1612454-1-bjorn.andersson@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -43,27 +43,22 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hello:
 
-This patch was applied to qcom/linux.git (refs/heads/for-next):
+This series was applied to qcom/linux.git (refs/heads/for-next):
 
-On Fri, 18 Dec 2020 18:41:37 +0800 you wrote:
-> drivers/dma/qcom/gpi.c:1419:3: warning: format '%lu' expects argument of
->  type 'long unsigned int', but argument 8 has type 'size_t {aka unsigned
->  int}' [-Wformat=]
-> drivers/dma/qcom/gpi.c:1427:31: warning: format '%lu' expects argument of
->  type 'long unsigned int', but argument 3 has type 'size_t {aka unsigned
->  int}' [-Wformat=]
-> drivers/dma/qcom/gpi.c:1447:3: warning: format '%llx' expects argument of
->  type 'long long unsigned int', but argument 4 has type 'dma_addr_t {aka
->  unsigned int}' [-Wformat=]
-> drivers/dma/qcom/gpi.c:1447:3: warning: format '%llx' expects argument of
->  type 'long long unsigned int', but argument 5 has type 'phys_addr_t {aka
->  unsigned int}' [-Wformat=]
+On Wed, 20 Jan 2021 17:41:29 -0800 you wrote:
+> Add compatible for the Qualcomm SC8180x APCS block to the Qualcomm APCS
+> binding.
 > 
-> [...]
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  .../devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml       | 1 +
+>  1 file changed, 1 insertion(+)
 
 Here is the summary with links:
-  - dma/qcom/gpi: Fixes a format mismatch
-    https://git.kernel.org/qcom/c/8fb28795fb64
+  - [1/2] dt-bindings: mailbox: qcom: Add SC8180X APCS compatible
+    https://git.kernel.org/qcom/c/114c93bf2859
+  - [2/2] mailbox: qcom: Add SC8180X apcs compatible
+    https://git.kernel.org/qcom/c/d10c851f25f3
 
 You are awesome, thank you!
 --
