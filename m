@@ -2,41 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A6E5932927F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 21:49:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E61632926A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 21:46:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240755AbhCAUqh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 15:46:37 -0500
-Received: from mail.kernel.org ([198.145.29.99]:53304 "EHLO mail.kernel.org"
+        id S238996AbhCAUpL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 15:45:11 -0500
+Received: from mail.kernel.org ([198.145.29.99]:53312 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237515AbhCAUnn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 15:43:43 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id E249464E90;
+        id S243480AbhCAUl5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Mar 2021 15:41:57 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id 79E4164E51;
         Mon,  1 Mar 2021 19:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1614628782;
-        bh=Lc8tQhBvbK3KnY51WD7K1KAXOId7ZyrB4FToVBgGTBY=;
+        bh=CXOOJ9gDHqNBmQUwdxqM84p0ZfvqAATfl/cObW57R34=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=JPqa/y43jjknLLfyBOkv/6Xn7vVNZ+Z1JQNdDZlwo1bsDDmn3sTqzAHOg4cy8NlKe
-         HHYCfJqBL9p+Oabct0zK9iBe0T2e51hIDKdSY7+AwkfEY92hWU1oEwFH2hijGRzgH9
-         Y0hqQy+APprSbJ5oWAYXlrPZTqIZlG0qBwVXOYt9eCSf16kWa7+yMX8mNg5tutFzM2
-         b2Yl8yxt19NbqDbi6ODTpwXv+PJhqMCTIjT1fUjZXisfjrZ+VbmxOcJti1SjkwQJiQ
-         AOitGwS903WEaHJQaVGCAjdoaf90oWVCL+xMEFOhIPyE32IRiptiTk0B6a26jHncy5
-         HuZ8OerQFnCtA==
+        b=cwhlKh85da+NpktAErlCnT2VU9myPOMDXIcF8sd7XEEERQeaQXeZXkSCW7aStYZHA
+         QiTzutEPqOEy5E18IeLbNUnXNVWh/2QI8qF4kDbroYVbScpqJHCbvqkKqDXN7eSsvq
+         ilA4a00q5Am9Ijc7MqI6Xj7kbDMfKVKxGTmQM5Xw63cJSk4R/IFusIvPXa5P5FFCis
+         4aACDAAI6i/jhSUDFHfAFi37eiGtUEC7SY0SekDVFYo4Rq/H7JjTwcQrCvUFyo+sij
+         uaKkRGjb0LlkHfIUkc5Nfiml65lSc2D1SmqM6y0aKx5Xk7Ipr4eUmg9fpmPk9G5KES
+         ILRFbKqN9dmRw==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id DE9F660C27;
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 7606360C26;
         Mon,  1 Mar 2021 19:59:42 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] drm/msm/a5xx: Allow all patchid for A540 chip
+Subject: Re: [PATCH v2] spi: spi-qcom-qspi: Use irq trigger flags from firmware
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <161462878290.6187.13847163788331389875.git-patchwork-notify@kernel.org>
+Message-Id: <161462878248.6187.18386305830141776057.git-patchwork-notify@kernel.org>
 Date:   Mon, 01 Mar 2021 19:59:42 +0000
-References: <20210109134044.144458-1-angelogioacchino.delregno@somainline.org>
-In-Reply-To: <20210109134044.144458-1-angelogioacchino.delregno@somainline.org>
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
+References: <20210112001301.687628-1-swboyd@chromium.org>
+In-Reply-To: <20210112001301.687628-1-swboyd@chromium.org>
+To:     Stephen Boyd <swboyd@chromium.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -46,23 +45,21 @@ Hello:
 
 This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Sat,  9 Jan 2021 14:40:44 +0100 you wrote:
-> On at least MSM8998 it's possible to find Adreno 540.0 and 540.1
-> but I have never found any 540.2. In any case, the patchids 0-1
-> for A540 are completely supported by this driver and there is no
-> reason to disallow probing them (as they also share the same
-> firmware names).
+On Mon, 11 Jan 2021 16:13:01 -0800 you wrote:
+> We don't need to force this to be trigger high here, as the firmware
+> properly configures the irq flags already. Drop it to save a line.
 > 
-> Besides that, the patchid number is also used in the a5xx_power.c
-> function a540_lm_setup to disable the battery current limiter,
-> which makes faking the Adreno patchid to .2 (which would anyway
-> be sad) useless and even producing breakages.
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Cc: Rajendra Nayak <rnayak@codeaurora.org>
+> Cc: Mukesh Kumar Savaliya <msavaliy@codeaurora.org>
+> Cc: Akash Asthana <akashast@codeaurora.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 > 
 > [...]
 
 Here is the summary with links:
-  - drm/msm/a5xx: Allow all patchid for A540 chip
-    https://git.kernel.org/qcom/c/4f2cf99d542c
+  - [v2] spi: spi-qcom-qspi: Use irq trigger flags from firmware
+    https://git.kernel.org/qcom/c/eaecba876783
 
 You are awesome, thank you!
 --
