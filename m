@@ -2,125 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C1171328D6C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 20:12:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A7667328DE0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 20:19:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238176AbhCATLF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 14:11:05 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:24343 "EHLO z11.mailgun.us"
+        id S241279AbhCATSz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 14:18:55 -0500
+Received: from mga17.intel.com ([192.55.52.151]:64757 "EHLO mga17.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235067AbhCATFy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 14:05:54 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1614625530; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=Ba6OQaTorWDoty4vE97fErAm92Zsz5cMQKE02H+Mmlk=; b=sMOZfZG8q/hkP4gZMtBm3ZfmYXbs99KRIF4fonSYiPSS9AmlmgjgSkq3DDuHipE11JhZgdrj
- XGFpI+4+qo4607VkLy4Ywe28MZ6hvcilB4WRyOR9gbeZsaNqCOfOscNBjlp07vony32FX06k
- Bgl9ZCUvQ7jYwh33G/qF7Ev2ZUc=
-X-Mailgun-Sending-Ip: 104.130.96.11
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 603d3aee1d4da3b75d0a4386 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 01 Mar 2021 19:05:18
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C110CC433CA; Mon,  1 Mar 2021 19:05:17 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6EC70C433C6;
-        Mon,  1 Mar 2021 19:05:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6EC70C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Peter Zijlstra <peterz@infradead.org>,
+        id S241003AbhCATQX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Mar 2021 14:16:23 -0500
+IronPort-SDR: GsTuTHm/5rWl3aL4agKeKtchqZauU35HTE88xwdsskHBeJaD8FYmrAvBWElWr1EGcAmyZsGoKI
+ 1rADKJnWZaiQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9910"; a="166449034"
+X-IronPort-AV: E=Sophos;i="5.81,215,1610438400"; 
+   d="scan'208";a="166449034"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Mar 2021 11:12:48 -0800
+IronPort-SDR: IZHeAmha3J9FNGeaDMx1ISJgDn1JHd6fmIBKO6IXMHwxa3XdT+30OgfhOr/VVZJb8UIdH4/w7G
+ turhYFrDusDQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.81,215,1610438400"; 
+   d="scan'208";a="585603646"
+Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.76]) ([10.237.72.76])
+  by orsmga005.jf.intel.com with ESMTP; 01 Mar 2021 11:12:42 -0800
+Subject: Re: [PATCH v8 1/2] scsi: ufs: Enable power management for wlun
+To:     Asutosh Das <asutoshd@codeaurora.org>
+Cc:     cang@codeaurora.org, martin.petersen@oracle.com,
+        linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Pedro Sousa <pedrom.sousa@synopsys.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
         Ingo Molnar <mingo@redhat.com>,
-        Arnaldo Carvalho de Melo <acme@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Leo Yan <leo.yan@linaro.org>
-Cc:     Jiri Olsa <jolsa@redhat.com>, Namhyung Kim <namhyung@kernel.org>,
-        coresight@lists.linaro.org, Stephen Boyd <swboyd@chromium.org>,
-        Denis Nikitin <denik@chromium.org>,
-        Mattias Nissler <mnissler@chromium.org>,
-        Al Grant <al.grant@arm.com>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCHv2 4/4] coresight: etm3x: Add support to exclude kernel mode tracing
-Date:   Tue,  2 Mar 2021 00:34:18 +0530
-Message-Id: <0b165b2608eed1a61240539f4b812bd80b6ad1bd.1614624041.git.saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.29.0
-In-Reply-To: <cover.1614624041.git.saiprakash.ranjan@codeaurora.org>
-References: <cover.1614624041.git.saiprakash.ranjan@codeaurora.org>
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Kiwoong Kim <kwmad.kim@samsung.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Wei Yongjun <weiyongjun1@huawei.com>,
+        Jaegeuk Kim <jaegeuk@kernel.org>,
+        Satya Tangirala <satyat@google.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        "moderated list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "open list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
+        <linux-samsung-soc@vger.kernel.org>,
+        "moderated list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
+        <linux-mediatek@lists.infradead.org>
+References: <cover.1614295674.git.asutoshd@codeaurora.org>
+ <c861385023f8592a63e3edf8119af89511741c9a.1614295674.git.asutoshd@codeaurora.org>
+ <e10cd03d-12cd-3d73-b9ed-a542e0b2b83c@intel.com>
+ <20210301181014.GF12147@stor-presley.qualcomm.com>
+From:   Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+Message-ID: <3b085cd7-529f-51b8-6a2f-6aa397e1acd3@intel.com>
+Date:   Mon, 1 Mar 2021 21:12:55 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.0
 MIME-Version: 1.0
+In-Reply-To: <20210301181014.GF12147@stor-presley.qualcomm.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On production systems with ETMs enabled, it is preferred to exclude
-kernel mode(NS EL1) tracing for security concerns and support only
-userspace(NS EL0) tracing. Perf subsystem interface uses the newly
-introduced kernel config CONFIG_EXCLUDE_KERNEL_PMU_TRACE to exclude
-kernel mode tracing, but there is an additional interface
-via sysfs for ETMs which also needs to be handled to exclude kernel
-mode tracing. So we use this same generic kernel config to handle
-the sysfs mode of tracing. This config is disabled by default and
-would not affect the current configuration which has both kernel and
-userspace tracing enabled by default.
+On 1/03/21 8:10 pm, Asutosh Das wrote:
+> On Mon, Mar 01 2021 at 05:23 -0800, Adrian Hunter wrote:
+>> On 26/02/21 1:37 am, Asutosh Das wrote:
+>>> @@ -8901,43 +9125,14 @@ static int ufshcd_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+>>>              goto vendor_suspend;
+>>>      }
+>>
+>> The ufshcd_reset_and_restore() in ufshcd_resume() will also change the power
+>> mode of the UFS device to active.  Until the UFS device is also resumed and
+>> then suspended, it will not return to a low power mode.
+>>
+>>
+> Umm, sorry, I didn't understand this comment.
+> Say, the UFS device was reset in ufshcd_reset_and_restore() it'd be a hardware
+> reset and the UFS device would move to Powered On mode and then to Active power
+> mode, when it is ready to begin initialization. And from this state it should
+> move to all other legal states.
+> Before entering system suspend ufshcd_system_suspend(), the ufs device is
+> runtime resumed in ufshcd_suspend_prepare().
+> 
+> Please can you explain a bit more on this issue that you see?
 
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
----
- drivers/hwtracing/coresight/coresight-etm3x-core.c  | 3 +++
- drivers/hwtracing/coresight/coresight-etm3x-sysfs.c | 6 ++++++
- 2 files changed, 9 insertions(+)
+Say you runtime resume the host controller, and
+ufshcd_reset_and_restore() makes the UFS device active,
+but the UFS device is still runtime suspended.
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm3x-core.c b/drivers/hwtracing/coresight/coresight-etm3x-core.c
-index cf64ce73a741..d94f6b01ca09 100644
---- a/drivers/hwtracing/coresight/coresight-etm3x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm3x-core.c
-@@ -195,6 +195,9 @@ void etm_set_default(struct etm_config *config)
- 	if (WARN_ON_ONCE(!config))
- 		return;
- 
-+	if (IS_ENABLED(CONFIG_EXCLUDE_KERNEL_PMU_TRACE))
-+		config->mode |= ETM_MODE_EXCL_KERN;
-+
- 	/*
- 	 * Taken verbatim from the TRM:
- 	 *
-diff --git a/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c b/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c
-index e8c7649f123e..f522fc2e01b3 100644
---- a/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c
-+++ b/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c
-@@ -116,6 +116,12 @@ static ssize_t mode_store(struct device *dev,
- 	if (ret)
- 		return ret;
- 
-+	if (IS_ENABLED(CONFIG_EXCLUDE_KERNEL_PMU_TRACE) && (!(val & ETM_MODE_EXCL_KERN))) {
-+		dev_warn(dev,
-+			"Kernel mode tracing is not allowed, check your kernel config\n");
-+		return -EACCES;
-+	}
-+
- 	spin_lock(&drvdata->spinlock);
- 	config->mode = val & ETM_MODE_ALL;
- 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
 
+Example:
+
+Add a debugfs file to show the current power mode:
+
+diff --git a/drivers/scsi/ufs/ufs-debugfs.c b/drivers/scsi/ufs/ufs-debugfs.c
+index dee98dc72d29..700b88df0866 100644
+--- a/drivers/scsi/ufs/ufs-debugfs.c
++++ b/drivers/scsi/ufs/ufs-debugfs.c
+@@ -48,6 +48,7 @@ void ufs_debugfs_hba_init(struct ufs_hba *hba)
+ {
+        hba->debugfs_root = debugfs_create_dir(dev_name(hba->dev), ufs_debugfs_root);
+        debugfs_create_file("stats", 0400, hba->debugfs_root, hba, &ufs_debugfs_stats_fops);
++       debugfs_create_u32("curr_dev_pwr_mode", 0400, hba->debugfs_root, (u32 *)&hba->curr_dev_pwr_mode);
+ }
+
+ void ufs_debugfs_hba_exit(struct ufs_hba *hba)
+
+
+# grep -H . /sys/bus/pci/drivers/ufshcd/0000\:00\:12.5/rpm*
+/sys/bus/pci/drivers/ufshcd/0000:00:12.5/rpm_lvl:6
+/sys/bus/pci/drivers/ufshcd/0000:00:12.5/rpm_target_dev_state:DEEPSLEEP
+/sys/bus/pci/drivers/ufshcd/0000:00:12.5/rpm_target_link_state:OFF
+# cat /sys/kernel/debug/ufshcd/0000\:00\:12.5/curr_dev_pwr_mode
+4
+# echo on > /sys/devices/pci0000:00/0000:00:12.5/power/control
+# cat /sys/kernel/debug/ufshcd/0000\:00\:12.5/curr_dev_pwr_mode
+1
+# grep -H . /sys/bus/pci/drivers/ufshcd/0000\:00\:12.5/host*/target*/*/power/runtime_status
+/sys/bus/pci/drivers/ufshcd/0000:00:12.5/host1/target1:0:0/1:0:0:0/power/runtime_status:suspended
+/sys/bus/pci/drivers/ufshcd/0000:00:12.5/host1/target1:0:0/1:0:0:49456/power/runtime_status:suspended
+/sys/bus/pci/drivers/ufshcd/0000:00:12.5/host1/target1:0:0/1:0:0:49476/power/runtime_status:suspended
+/sys/bus/pci/drivers/ufshcd/0000:00:12.5/host1/target1:0:0/1:0:0:49488/power/runtime_status:suspended
+
+So UFS devices is runtime suspended and should in DeepSleep, but it is active.
