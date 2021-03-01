@@ -2,122 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3095132833D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 17:16:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8620C328370
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 17:19:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237607AbhCAQOu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 11:14:50 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:44771 "EHLO z11.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237638AbhCAQMF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 11:12:05 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1614615086; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=d2M7jL2ITNFrQj2XHMVqUr+DoAAmOGNM+DSXrrc8dwI=; b=VYR+syYtwBckxgLnBgneToPMjS8Xqfw2CLde+wO302ugLwCGnc2/8+zb6FtsfNOzRa4qHcvM
- +8HVhJzGk3Ab9nvSFy42NoG9k7EUCVB4JNZTJMlK/zBLNRsHbBRcOMrxdnDK1ETOpNwwKT8D
- J14XYtsouox7bDqB+PrJe3dW0Og=
-X-Mailgun-Sending-Ip: 104.130.96.11
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 603d12131defdc70ae74cc70 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 01 Mar 2021 16:10:59
- GMT
-Sender: kgunda=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C1563C43464; Mon,  1 Mar 2021 16:10:58 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from kgunda-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: kgunda)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EDE3FC43461;
-        Mon,  1 Mar 2021 16:10:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EDE3FC43461
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kgunda@codeaurora.org
-From:   Kiran Gunda <kgunda@codeaurora.org>
-To:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
-        lee.jones@linaro.org, b.zolnierkie@samsung.com,
-        dri-devel@lists.freedesktop.org, daniel.thompson@linaro.org,
-        jacek.anaszewski@gmail.com, pavel@ucw.cz, robh+dt@kernel.org,
-        mark.rutland@arm.com, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-fbdev@vger.kernel.org
-Cc:     phone-devel@vger.kernel.org, Kiran Gunda <kgunda@codeaurora.org>
-Subject: [PATCH V4 2/2] backlight: qcom-wled: Correct the sync_toggle sequence
-Date:   Mon,  1 Mar 2021 21:40:30 +0530
-Message-Id: <1614615030-12703-3-git-send-email-kgunda@codeaurora.org>
+        id S237703AbhCAQSo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 11:18:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34296 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237620AbhCAQRq (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Mar 2021 11:17:46 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FC7CC061756
+        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Mar 2021 08:16:59 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id n4so16786582wrx.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Mar 2021 08:16:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=vaQb7S7VE33lCI9REO8er+62IGQEtBq+HCe1GdHTW2Q=;
+        b=iCiWAkcuYHDNc6+4whGvEdBgSekAIeuNVCFXT5tFks48JfgS8ew1fyMNss/HjoVnkS
+         iTXiT4Wqg08i/b3fNKqMUiOSlC0jm/SigjF9btXJjxryv83u5hyI7/OfZrbuDLqHBmo4
+         5iUUHKlYW1EzYiJkLMRMeQis1jWiYVu+D0F8DOKSCwlwA2/yDX4SWF/osyic6w/hSXSC
+         luJ/8takMKvrlDeoli9iNK9V/n3emYWEzbH9az0GNRy5XrG8GqBT2l8egl1S18NoPJxV
+         RjHWMEoDmm1Jo604XR2pOdcnYHn7p14vJMlCgm+xzuecb2A6f/szXYbRQkCwh3w8ei+u
+         VN3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=vaQb7S7VE33lCI9REO8er+62IGQEtBq+HCe1GdHTW2Q=;
+        b=qKpjWvBHOavMuAUSEVfL30iYWgS1HOdzePom/Mq4jmSaibOhEmqYs3cubcqm/ltleW
+         WgIdF1CrwJraRxtMTEVLDiWJIxxnRlxsibi85ab2TD4QcVhdFiKq8pb5ESBQOPbAncIj
+         eZf48pim+ypPqEVuAwxTeerFwElt1wGtjGqGP/bcyeNuCdcYnqfrvR08tR2ZKi+wC3lV
+         b244B+pfl3pvhPLJ9kETWia9asVEAzLwr8DRX9IY8mXi+R3s+Wp0wto38MXdbHKAeyh5
+         og+rhWOEiNBwi0JYzGGlscMSDx2lUaqQZg4WNY8eo52R2sb+iLoY1jj/c93SpfBwOhIN
+         6glw==
+X-Gm-Message-State: AOAM531c1gcdKd5L584TLDg7978eYC1jHN4JOCYokjNloZ79PYnG5ElE
+        GAIvuKT9L0N1mrTFjW/eFBUqew==
+X-Google-Smtp-Source: ABdhPJz8Au13zwmEf6RTicHWgxcwQ2hQqjYwYojPywhAyfJH2Dvh0AuLP1w8Lx1/neZ+ePkwN4eing==
+X-Received: by 2002:a5d:5050:: with SMTP id h16mr17299474wrt.186.1614615418028;
+        Mon, 01 Mar 2021 08:16:58 -0800 (PST)
+Received: from localhost.localdomain ([2a01:e0a:82c:5f0:5a20:c00c:6ec3:cc84])
+        by smtp.gmail.com with ESMTPSA id w6sm3919789wrl.49.2021.03.01.08.16.57
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 01 Mar 2021 08:16:57 -0800 (PST)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH 1/6] mhi: pci_generic: Parametrable element count for events
+Date:   Mon,  1 Mar 2021 17:25:06 +0100
+Message-Id: <1614615911-18794-1-git-send-email-loic.poulain@linaro.org>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1614615030-12703-1-git-send-email-kgunda@codeaurora.org>
-References: <1614615030-12703-1-git-send-email-kgunda@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As per the current implementation, after FSC (Full Scale Current)
-and brightness update the sync bits are set-then-cleared.
-But, the FSC and brightness sync takes place when the sync bits are
-set (e.g. on a rising edge). So the hardware team recommends a
-clear-then-set approach in order to guarantee such a transition
-regardless of the previous register state.
+Not all hardwares need to use the same number of event ring elements.
+This change makes this parametrable.
 
-Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
-Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 ---
- drivers/video/backlight/qcom-wled.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/bus/mhi/pci_generic.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
-index aef52b9..19f83ac 100644
---- a/drivers/video/backlight/qcom-wled.c
-+++ b/drivers/video/backlight/qcom-wled.c
-@@ -337,13 +337,13 @@ static int wled3_sync_toggle(struct wled *wled)
+diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+index 8187fcf..c58bf96 100644
+--- a/drivers/bus/mhi/pci_generic.c
++++ b/drivers/bus/mhi/pci_generic.c
+@@ -71,9 +71,9 @@ struct mhi_pci_dev_info {
+ 		.doorbell_mode_switch = false,		\
+ 	}
  
- 	rc = regmap_update_bits(wled->regmap,
- 				wled->ctrl_addr + WLED3_SINK_REG_SYNC,
--				mask, mask);
-+				mask, WLED3_SINK_REG_SYNC_CLEAR);
- 	if (rc < 0)
- 		return rc;
+-#define MHI_EVENT_CONFIG_CTRL(ev_ring)		\
++#define MHI_EVENT_CONFIG_CTRL(ev_ring, el_count) \
+ 	{					\
+-		.num_elements = 64,		\
++		.num_elements = el_count,	\
+ 		.irq_moderation_ms = 0,		\
+ 		.irq = (ev_ring) + 1,		\
+ 		.priority = 1,			\
+@@ -114,9 +114,9 @@ struct mhi_pci_dev_info {
+ 		.doorbell_mode_switch = true,		\
+ 	}
  
- 	rc = regmap_update_bits(wled->regmap,
- 				wled->ctrl_addr + WLED3_SINK_REG_SYNC,
--				mask, WLED3_SINK_REG_SYNC_CLEAR);
-+				mask, mask);
+-#define MHI_EVENT_CONFIG_DATA(ev_ring)		\
++#define MHI_EVENT_CONFIG_DATA(ev_ring, el_count) \
+ 	{					\
+-		.num_elements = 128,		\
++		.num_elements = el_count,	\
+ 		.irq_moderation_ms = 5,		\
+ 		.irq = (ev_ring) + 1,		\
+ 		.priority = 1,			\
+@@ -127,9 +127,9 @@ struct mhi_pci_dev_info {
+ 		.offload_channel = false,	\
+ 	}
  
- 	return rc;
- }
-@@ -353,17 +353,17 @@ static int wled5_mod_sync_toggle(struct wled *wled)
- 	int rc;
- 	u8 val;
+-#define MHI_EVENT_CONFIG_HW_DATA(ev_ring, ch_num) \
++#define MHI_EVENT_CONFIG_HW_DATA(ev_ring, el_count, ch_num) \
+ 	{					\
+-		.num_elements = 2048,		\
++		.num_elements = el_count,	\
+ 		.irq_moderation_ms = 1,		\
+ 		.irq = (ev_ring) + 1,		\
+ 		.priority = 1,			\
+@@ -156,12 +156,12 @@ static const struct mhi_channel_config modem_qcom_v1_mhi_channels[] = {
  
--	val = (wled->cfg.mod_sel == MOD_A) ? WLED5_SINK_REG_SYNC_MOD_A_BIT :
--					     WLED5_SINK_REG_SYNC_MOD_B_BIT;
- 	rc = regmap_update_bits(wled->regmap,
- 				wled->sink_addr + WLED5_SINK_REG_MOD_SYNC_BIT,
--				WLED5_SINK_REG_SYNC_MASK, val);
-+				WLED5_SINK_REG_SYNC_MASK, 0);
- 	if (rc < 0)
- 		return rc;
+ static struct mhi_event_config modem_qcom_v1_mhi_events[] = {
+ 	/* first ring is control+data ring */
+-	MHI_EVENT_CONFIG_CTRL(0),
++	MHI_EVENT_CONFIG_CTRL(0, 64),
+ 	/* DIAG dedicated event ring */
+-	MHI_EVENT_CONFIG_DATA(1),
++	MHI_EVENT_CONFIG_DATA(1, 128),
+ 	/* Hardware channels request dedicated hardware event rings */
+-	MHI_EVENT_CONFIG_HW_DATA(2, 100),
+-	MHI_EVENT_CONFIG_HW_DATA(3, 101)
++	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
++	MHI_EVENT_CONFIG_HW_DATA(3, 2048, 101)
+ };
  
-+	val = (wled->cfg.mod_sel == MOD_A) ? WLED5_SINK_REG_SYNC_MOD_A_BIT :
-+					     WLED5_SINK_REG_SYNC_MOD_B_BIT;
- 	return regmap_update_bits(wled->regmap,
- 				  wled->sink_addr + WLED5_SINK_REG_MOD_SYNC_BIT,
--				  WLED5_SINK_REG_SYNC_MASK, 0);
-+				  WLED5_SINK_REG_SYNC_MASK, val);
- }
- 
- static int wled_ovp_fault_status(struct wled *wled, bool *fault_set)
+ static struct mhi_controller_config modem_qcom_v1_mhiv_config = {
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
- a Linux Foundation Collaborative Project
+2.7.4
 
