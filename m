@@ -2,33 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D7325328CAA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 19:57:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A8C6328CD8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 20:01:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238039AbhCAS4p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 13:56:45 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:18598 "EHLO z11.mailgun.us"
+        id S240094AbhCATAR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 14:00:17 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:24852 "EHLO z11.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S240279AbhCASyd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 13:54:33 -0500
+        id S240798AbhCAS6B (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Mar 2021 13:58:01 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1614624854; h=Message-ID: References: In-Reply-To: Reply-To:
+ s=smtp; t=1614625052; h=Message-ID: References: In-Reply-To: Reply-To:
  Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=KSg5oH4X6//QQtRCFOsAbFS/Ie1r+zQNgZC5L1HJUJE=;
- b=dBDBEhu340loPcJPuayl1PVdVh8FvLBD3++aBUhct0wQciegkXcxVLBo3PMRyoZibhdvhDEU
- 5IjotKqv2OD3fcyOHkxLr7Y2Bn3932GAlLYDeX2bykp4V6db/xT450UCxF08H0YdXApZTw5b
- y5LFclvjqeSabv4nZS5MjNukC4E=
+ MIME-Version: Sender; bh=BWk43ZFWyb8uTChKPh44k6+sSYpbD1HwdQ8/aJZG5+A=;
+ b=ONHtehLmz6vCsgU2pFv0DUjVW3McoMuDQsjktF7kbAXvQCVZ0kO1/EOEdnVIObZuK48Ou5fJ
+ TzozQ5amksFA9JNjd6q4VjvsELAEax9VqYjnPtZwUw1D8gxL8REGTwRMkoH/GXquGYraaKDE
+ zlWUBDvFEcZQjzftSbv+LbeeqJE=
 X-Mailgun-Sending-Ip: 104.130.96.11
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
  smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 603d383512935cdcee091d8b (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 01 Mar 2021 18:53:41
+ 603d38fb12935cdcee0ea330 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 01 Mar 2021 18:56:59
  GMT
 Sender: bbhatt=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B2996C433C6; Mon,  1 Mar 2021 18:53:40 +0000 (UTC)
+        id 28C76C43461; Mon,  1 Mar 2021 18:56:59 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -38,13 +38,13 @@ Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 985D2C433CA;
-        Mon,  1 Mar 2021 18:53:39 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6D148C433ED;
+        Mon,  1 Mar 2021 18:56:57 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Mon, 01 Mar 2021 10:53:39 -0800
+Date:   Mon, 01 Mar 2021 10:56:57 -0800
 From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
 To:     Kalle Valo <kvalo@codeaurora.org>
 Cc:     jhugo@codeaurora.org, linux-arm-msm@vger.kernel.org,
@@ -52,7 +52,7 @@ Cc:     jhugo@codeaurora.org, linux-arm-msm@vger.kernel.org,
         Gokul Sriram Palanisamy <gokulsri@codeaurora.org>,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         hemantk@codeaurora.org, sricharan@codeaurora.org,
-        ath11k@lists.infradead.org, kvalo=codeaurora.org@codeaurora.org
+        ath11k@lists.infradead.org
 Subject: Re: [PATCH v2] bus: mhi: core: Add unique qrtr node id support
 Organization: Qualcomm Innovation Center, Inc.
 Reply-To: bbhatt@codeaurora.org
@@ -63,12 +63,14 @@ References: <1614336169-31467-1-git-send-email-gokulsri@codeaurora.org>
  <20210226145245.GB70936@thinkpad> <87k0qrceih.fsf@tynnyri.adurom.net>
  <10e511e8dfa8d393ec4c4765668fe229@codeaurora.org>
  <87o8g291d1.fsf@codeaurora.org>
-Message-ID: <f23d6a9a331aa76fbe9b8afb5ecc6dd2@codeaurora.org>
+Message-ID: <e1ee69381ff328712fa010a3de44f70a@codeaurora.org>
 X-Sender: bbhatt@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
+
+Hi Kalle,
 
 On 2021-03-01 10:26 AM, Kalle Valo wrote:
 > Bhaumik Bhatt <bbhatt@codeaurora.org> writes:
