@@ -2,40 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BB643292C2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 21:52:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 72FE73292B5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 21:52:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243766AbhCAUv5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 15:51:57 -0500
-Received: from mail.kernel.org ([198.145.29.99]:55878 "EHLO mail.kernel.org"
+        id S243624AbhCAUuO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 15:50:14 -0500
+Received: from mail.kernel.org ([198.145.29.99]:55416 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S243800AbhCAUsV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 15:48:21 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id E676D64EF1;
+        id S243668AbhCAUrL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Mar 2021 15:47:11 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id B6E4B64EE8;
         Mon,  1 Mar 2021 19:59:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1614628783;
-        bh=Mna8gaiZj0uWt9DMzN7SxT/qhL+e5cvPl8+5shy8+cM=;
+        bh=+ss4p5nVMYgwtaziRSMi8zT1CY6YpOoYoyqDSc+Sx9w=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=NeFsLfeueJtiXgqZaSs6sEzKLZTpK77NN2oenUyrLrVMZ6CA4lzpj6GszqI8Utmzy
-         X3Qq/ssrMgTbkxEvm6Lfh65HH8xizq7VM1hTUxcV8zYwYWgiPKpnlQixnAGzBg6R+g
-         Fe43cIo6MRnVzJOMVInOnnQLD+4OtkAizh/0oUkge9v8xy63LKDBKsIVqS2yCD4BzB
-         FIqgtzC7fyHvxiLWH7eqnD3UcExXGY3di/rim9qYIFPG/I3QAlJKvqlOeth0GvzjI2
-         YsetEcL1g0yZlMv25T0Lsl4Vo5LTLEu2yKiytpr51H/LhqmcmBnSY6n4GOazJYvpfY
-         rZO1WsgFef8DQ==
+        b=t+kxrYYHoUZlZDh0tm4h2024IhmR6MGYiwwspv6DYReFB0Eqvw3FK1smALzQtiWhe
+         lcdnQpTLQxLV8gHMr+0a7SK2Qr0Iv3dCQTBkAnRcyt2UGIB+s3WAu8KwS1/yBaNdoy
+         u+vIRuCaPAiJpnBa2XMpeYQXTZan6WMn7E9j3xQ33cRnLGefSesbFZKy8DH5Pk1pRb
+         fEyHbWI1whiaiASYGmR7RhYeRLA9PYfqqA7aWthsco5onRmwtpKXt7AHjPKrxpyoSN
+         lvACzlB7BswPMBySQYorbtg1Dp6Lr05txLttTrM6d/NljKdaJf+5ZVpLMoZBfn1see
+         4hGkjWrFYqhUg==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id E301460C27;
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id B374360C27;
         Mon,  1 Mar 2021 19:59:43 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v9 0/2] Better domain idle from device wakeup patterns
+Subject: Re: [PATCH v3 0/3] drm/msm: fix for "Timeout waiting for GMU OOB set
+ GPU_SET: 0x0"
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <161462878392.6187.10202632532389303810.git-patchwork-notify@kernel.org>
+Message-Id: <161462878373.6187.1748332752540063152.git-patchwork-notify@kernel.org>
 Date:   Mon, 01 Mar 2021 19:59:43 +0000
-References: <20210120155042.28975-1-ilina@codeaurora.org>
-In-Reply-To: <20210120155042.28975-1-ilina@codeaurora.org>
-To:     Lina Iyer <ilina@codeaurora.org>
+References: <20210128210332.1690609-1-eric@anholt.net>
+In-Reply-To: <20210128210332.1690609-1-eric@anholt.net>
+To:     Eric Anholt <eric@anholt.net>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -45,21 +46,23 @@ Hello:
 
 This series was applied to qcom/linux.git (refs/heads/for-next):
 
-On Wed, 20 Jan 2021 08:50:40 -0700 you wrote:
-> Changes since v8 [8]:
-> - Check if device is attached to genpd
+On Thu, 28 Jan 2021 13:03:29 -0800 you wrote:
+> Updated commit messages over v2, no code changes.
 > 
-> Changes since v7 [7]:
-> - Whitespace and comment fixes
-> - Add Reviewed-by tags
+> Eric Anholt (3):
+>   drm/msm: Fix race of GPU init vs timestamp power management.
+>   drm/msm: Fix races managing the OOB state for timestamp vs timestamps.
+>   drm/msm: Clean up GMU OOB set/clear handling.
 > 
 > [...]
 
 Here is the summary with links:
-  - [v9,1/2] PM / domains: inform PM domain of a device's next wakeup
-    https://git.kernel.org/qcom/c/67e3242ee280
-  - [v9,2/2] PM / Domains: use device's next wakeup to determine domain idle state
-    https://git.kernel.org/qcom/c/c79aa080fb0f
+  - [v3,1/3] drm/msm: Fix race of GPU init vs timestamp power management.
+    https://git.kernel.org/qcom/c/7a7cbf2a8197
+  - [v3,2/3] drm/msm: Fix races managing the OOB state for timestamp vs timestamps.
+    https://git.kernel.org/qcom/c/5f98b33b04c0
+  - [v3,3/3] drm/msm: Clean up GMU OOB set/clear handling.
+    https://git.kernel.org/qcom/c/555c50a4a19b
 
 You are awesome, thank you!
 --
