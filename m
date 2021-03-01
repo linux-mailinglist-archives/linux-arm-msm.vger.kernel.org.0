@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A9314329266
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 21:46:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EB44329256
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 21:43:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243407AbhCAUow (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 15:44:52 -0500
-Received: from mail.kernel.org ([198.145.29.99]:54062 "EHLO mail.kernel.org"
+        id S237399AbhCAUnV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 15:43:21 -0500
+Received: from mail.kernel.org ([198.145.29.99]:53288 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S240066AbhCAUlh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 15:41:37 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id 248CD64E37;
+        id S241878AbhCAUko (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Mar 2021 15:40:44 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id 1594064E22;
         Mon,  1 Mar 2021 19:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1614628782;
-        bh=xW8z2qUm2uP9e8X+3HPeyGEthfyEVYNok7Cn4mM8BVA=;
+        bh=vQ2mGQMo+Zrmc5lpfitTPx3AOKTrQkcH4VRDhQkT410=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=f0LYRsdR70ITjc1tjn4Q3/FG3ElyBba5/AS4EjcL9f+97qS41HgoGqH37pgczajR8
-         C6au5NhVLtxGULHuBfJmTjLyFimTqhc8SY85km9hZrA35vMXzgPM/ZYIAcQixx5ZRx
-         VBrOjpEif/dMcxphk39h+383TLZlj2yC0S7RGRm0hzY6O9prPy3NaLXXz52BLy3XsJ
-         OX6RJgxk/xeFSN7pWCBlEcSu80RdUcLO6ebyRHNZHxrH4v88LG9gHVXCcpASYUVl2u
-         rnBZyrELdn6It6uRJuyOv3Nbo6l4o7HsBssdT1vN90MRrN2TXPfoQ04Xn4Tro0ooRY
-         aqutViFCgn+Tw==
+        b=akBuTlTUbhPyovFEkW8T+rIzvdfJ6QrPQLt9Yca7gcbroQHxjV8VFMHyu23nwNIRp
+         c/dzYICNOyK3Vl1Q8pTomceTwwkLQurPSvAKk37quFztSV5m+TstIt0yZKpk0pQkwx
+         DsEEMou3Y3dZbNkx9QSgf5dFPO5lJDirUPkVdDDKtGEntwHlgXO4YwHKYxkXXEzQ3V
+         bxwrtkqNmct5g8k2/cRY/GfznpBIyl5o1a27JE3sNwvQ+GsnkbGetdsYryvvQEMsbb
+         YwIKh+0t8SrzmqkYQBLQsv40fWG5SmtB5w6iZNOClZMePGWjLZbexyjIZdsXwei9zs
+         Js1PBbNMXn5fA==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 2080760C27;
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 1213060997;
         Mon,  1 Mar 2021 19:59:42 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 0/4] ASoC: qcom: Minor code cleanups for lpass-cpu
+Subject: Re: [PATCH v4 0/4] Add support for Qcom SMEM based NAND parser
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <161462878212.6187.906083607879719166.git-patchwork-notify@kernel.org>
+Message-Id: <161462878207.6187.9141025376218818279.git-patchwork-notify@kernel.org>
 Date:   Mon, 01 Mar 2021 19:59:42 +0000
-References: <20210115034327.617223-1-swboyd@chromium.org>
-In-Reply-To: <20210115034327.617223-1-swboyd@chromium.org>
-To:     Stephen Boyd <swboyd@chromium.org>
+References: <20210104041137.113075-1-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20210104041137.113075-1-manivannan.sadhasivam@linaro.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -45,29 +45,27 @@ Hello:
 
 This series was applied to qcom/linux.git (refs/heads/for-next):
 
-On Thu, 14 Jan 2021 19:43:23 -0800 you wrote:
-> Here's some minor code cleanups for the lpass-cpu driver. I noticed that
-> it casts away const from the driver data from DT. That's not great but
-> fixing it is a little more involved. I'll get to it later. There's also
-> some questionable clk_get() usage that should probably be
-> clk_get_optional(). For now this should help a little.
+On Mon,  4 Jan 2021 09:41:33 +0530 you wrote:
+> Hello,
 > 
-> Cc: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-> Cc: Srinivasa Rao <srivasam@codeaurora.org>
-> Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> Cc: Cheng-Yi Chiang <cychiang@chromium.org>
+> This series adds support for parsing the partitions defined in Shared
+> Memory (SMEM) of the Qualcomm platforms supporting NAND interface.
+> Current parser only supports V3 and V4 of the partition tables.
+> 
+> This series has been tested on SDX55 MTP board which has an onboard NAND
+> device.
 > 
 > [...]
 
 Here is the summary with links:
-  - [1/4] ASoC: qcom: Remove useless debug print
-    https://git.kernel.org/qcom/c/16117beb16f0
-  - [2/4] ASoC: qcom: Add some names to regmap configs
-    https://git.kernel.org/qcom/c/03b49bf9a92b
-  - [3/4] ASoC: qcom: Stop casting away __iomem for error pointers
-    https://git.kernel.org/qcom/c/e697df66876c
-  - [4/4] ASoC: qcom: Remove duplicate error messages on ioremap
-    https://git.kernel.org/qcom/c/4e15f5060d34
+  - [v4,1/4] dt-bindings: mtd: partitions: Add binding for Qcom SMEM parser
+    https://git.kernel.org/qcom/c/5f327f08192e
+  - [v4,2/4] mtd: parsers: Add Qcom SMEM parser
+    https://git.kernel.org/qcom/c/803eb124e1a6
+  - [v4,3/4] mtd: rawnand: qcom: Add support for Qcom SMEM parser
+    https://git.kernel.org/qcom/c/82bfd11f1b03
+  - [v4,4/4] mtd: parsers: afs: Fix freeing the part name memory in failure
+    https://git.kernel.org/qcom/c/7b844cf445f0
 
 You are awesome, thank you!
 --
