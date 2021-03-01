@@ -2,91 +2,188 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F0841328663
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 18:10:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B20C4328810
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 18:36:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236254AbhCARJL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 12:09:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45102 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237257AbhCARIB (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 12:08:01 -0500
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0122C061788;
-        Mon,  1 Mar 2021 09:07:19 -0800 (PST)
-Received: by mail-pj1-x102e.google.com with SMTP id l18so12305760pji.3;
-        Mon, 01 Mar 2021 09:07:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=meNzHvtojOauHTFuv2tlbQj0jLwkt/JOAjAHzaQmqk8=;
-        b=szav/lCXU50Ov+1kbs32stTAAELOjuwRA/XKCcqZhrRIN8XE48XQ8Z7GfTI7Jb6AR1
-         juYoMz6Uv0S8JGEZOapL6c6K0Jx43h2dx7K+C9aQf/hOoTHSgHVsyYSYi3f3nxS1jUEo
-         oqt46EP4l2r4ih7GdZGuAFQdmX05W2Pe4pY99QrGUsWtAmrYCxbsaLHIBE65+87piyQ7
-         sLEC2nsc1B7puKD+KnmcQAz62wbN5r99AbRZvGalNfczRhTmGaM2x/VPMuyOJ+Dd6psG
-         zK9oSJXHjY8U+xxZyp+J001VpwwNSH4kA8LcLMuaaX1thrSuz143bJW8o7m1H7FlgYk3
-         7JRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=meNzHvtojOauHTFuv2tlbQj0jLwkt/JOAjAHzaQmqk8=;
-        b=UetyWwX+sTg9vi7rVpqW3hlPWOHBzLoL2IcGMd0lsJgNz1QfLEOecT4fnSApqt3U7d
-         2/m/dDEK7yAo3znMpPwo+elAuEWrpgDXxEHR+4hdBcnLcjkNGyza6SeDJnPu+xwLIsNH
-         LcvZHUZaoUW4ZWLX877uNMq+vmpQTJZECXm1keE96Qy3iE6XznQSFIUcux05fdTtXMZP
-         /GeDMUZrhAtT5xaPGl5siiNxSIggxcxm46I5daVtgkxok0OxmCiLnGoLQ9fUMbX0uXMR
-         /jE7jGdTFUt0vlR5pUueBin2XxTSKvQbjhsk3vyoDbgaScBo9+ewKeS8/yVZZGuGgI/7
-         b4GA==
-X-Gm-Message-State: AOAM530GBgw2lHwYzEcPwgNXbBHbX+CR2nNJDC1ktDwin2l2POgfDdJD
-        rqmqmpKlzpZUCGvjnpuTT/TIg/iFqTk86aorg96Xo6ckRWhKBw==
-X-Google-Smtp-Source: ABdhPJyTz5m/LfpTlTfgkKE9j3dztp2H8TrqvolgESP/XfKPuZoB0I9Py2CtdVxQleB39ET2oI6Q0DoGfm3tjc3NkU0=
-X-Received: by 2002:a17:902:a710:b029:e3:b18:7e5b with SMTP id
- w16-20020a170902a710b02900e30b187e5bmr16204877plq.17.1614618439007; Mon, 01
- Mar 2021 09:07:19 -0800 (PST)
+        id S236712AbhCARcf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 12:32:35 -0500
+Received: from m42-2.mailgun.net ([69.72.42.2]:64892 "EHLO m42-2.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S238449AbhCAR2F (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Mar 2021 12:28:05 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1614619665; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=N0yPR1LTqutQsyaII3SXK9Z8MBYFKevcJKndMzoVQCk=; b=LxxScubkBwwSNZHOUVXGcgeR2JmqysJ4WybZAXS1ZWs2T0rMiKpcXu5VwK5SKggt66rfPeJV
+ 2yLrh2QaBEpIWusDnVTAVVhps7/yJTvBmXQQTpxRzowan11ZSRYzuYShi/JqkhjWQ2wSCdCF
+ 5sj1QRErITbwCbpXK2j7fuNnVzI=
+X-Mailgun-Sending-Ip: 69.72.42.2
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 603d23f1fee96fcaf40c19d9 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 01 Mar 2021 17:27:13
+ GMT
+Sender: tdas=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 48381C433C6; Mon,  1 Mar 2021 17:27:13 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [192.168.0.110] (unknown [49.204.182.166])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: tdas)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B8090C433C6;
+        Mon,  1 Mar 2021 17:27:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B8090C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=tdas@codeaurora.org
+Subject: Re: [PATCH 06/13] arm64: dts: qcom: SC7280: Add rpmhcc clock
+ controller node
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1613114930-1661-1-git-send-email-rnayak@codeaurora.org>
+ <1613114930-1661-7-git-send-email-rnayak@codeaurora.org>
+ <161406618557.1254594.15985584772106947706@swboyd.mtv.corp.google.com>
+From:   Taniya Das <tdas@codeaurora.org>
+Message-ID: <f58070ee-ff00-f8c5-6459-782562e903e5@codeaurora.org>
+Date:   Mon, 1 Mar 2021 22:57:06 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-References: <20210228025249.19684-1-shawn.guo@linaro.org>
-In-Reply-To: <20210228025249.19684-1-shawn.guo@linaro.org>
-From:   Andy Shevchenko <andy.shevchenko@gmail.com>
-Date:   Mon, 1 Mar 2021 19:07:03 +0200
-Message-ID: <CAHp75Vdi1WuZxhBKqGS7xnVzZpBrKwNbXbp5k0Y5ibZ4aAyBrg@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: qcom: support gpio_chip .set_config call
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <161406618557.1254594.15985584772106947706@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Feb 28, 2021 at 4:55 AM Shawn Guo <shawn.guo@linaro.org> wrote:
+Hello Stephen,
+
+Thanks for the review.
+
+On 2/23/2021 1:13 PM, Stephen Boyd wrote:
+> Quoting Rajendra Nayak (2021-02-11 23:28:43)
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> index 7848e88..10851e7 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> @@ -6,6 +6,7 @@
+>>    */
+>>   
+>>   #include <dt-bindings/clock/qcom,gcc-sc7280.h>
+>> +#include <dt-bindings/clock/qcom,rpmh.h>
+>>   #include <dt-bindings/interrupt-controller/arm-gic.h>
+>>   #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+>>   
+>> @@ -29,6 +30,42 @@
+>>                          clock-frequency = <32000>;
+>>                          #clock-cells = <0>;
+>>                  };
+>> +
+>> +               pcie_0_pipe_clk: pcie-0-pipe-clk {
+>> +                       compatible = "fixed-clock";
+>> +                       clock-frequency = <1000>;
+>> +                       #clock-cells = <0>;
+>> +               };
+>> +
+>> +               pcie_1_pipe_clk: pcie-1-pipe-clk {
+>> +                       compatible = "fixed-clock";
+>> +                       clock-frequency = <1000>;
+>> +                       #clock-cells = <0>;
+>> +               };
+>> +
+>> +               ufs_phy_rx_symbol_0_clk: ufs-phy-rx-symbol-0-clk {
+>> +                       compatible = "fixed-clock";
+>> +                       clock-frequency = <1000>;
+>> +                       #clock-cells = <0>;
+>> +               };
+>> +
+>> +               ufs_phy_rx_symbol_1_clk: ufs-phy-rx-symbol-1-clk {
+>> +                       compatible = "fixed-clock";
+>> +                       clock-frequency = <1000>;
+>> +                       #clock-cells = <0>;
+>> +               };
+>> +
+>> +               ufs_phy_tx_symbol_0_clk: ufs-phy-tx-symbol-0-clk {
+>> +                       compatible = "fixed-clock";
+>> +                       clock-frequency = <1000>;
+>> +                       #clock-cells = <0>;
+>> +               };
+>> +
+>> +               usb3_phy_wrapper_gcc_usb30_pipe_clk: usb3-phy-wrapper-gcc-usb30-pipe-clk {
+>> +                       compatible = "fixed-clock";
+>> +                       clock-frequency = <1000>;
+>> +                       #clock-cells = <0>;
+>> +               };
+> 
+> Shouldn't these come from the phys? Why are they being added here?
+> 
+
+Once the phys are added, these could be replaced, that was the reason to 
+add them.
+
+>>          };
+>>   
+>>          reserved_memory: reserved-memory {
+>> @@ -174,6 +211,17 @@
+>>                  gcc: clock-controller@100000 {
+>>                          compatible = "qcom,gcc-sc7280";
+>>                          reg = <0 0x00100000 0 0x1f0000>;
+>> +                       clocks = <&rpmhcc RPMH_CXO_CLK>,
+>> +                                <&rpmhcc RPMH_CXO_CLK_A>, <&sleep_clk>,
+>> +                                <&pcie_0_pipe_clk>, <&pcie_1_pipe_clk>,
+>> +                                <&ufs_phy_rx_symbol_0_clk>, <&ufs_phy_rx_symbol_1_clk>,
+>> +                                <&ufs_phy_tx_symbol_0_clk>,
+>> +                                <&usb3_phy_wrapper_gcc_usb30_pipe_clk>;
+> 
+> If the phys aren't ready then <0> should work. Unless something goes
+> wrong?
 >
-> In case of ACPI boot, GPIO core does the right thing to parse GPIO pin
-> configs from ACPI table, and call into gpio_chip's .set_config hook for
-> setting them up.  It enables such support on qcom platform by using
-> generic config function, which in turn calls into .pin_config_set of
-> pinconf for setting up hardware.  For qcom platform, it's possible to
-> reuse pin group config functions for pin config hooks, because every pin
-> is maintained as a single group.
->
-> This change fixes the problem that Touchpad of Lenovo Flex 5G laptop
-> doesn't work with ACPI boot, because PullUp config of Touchpad GpioInt
-> pin is not set up by kernel driver.
 
-by the kernel
+Nothing would go wrong if we add <0>, but wanted them to be replaced 
+once the support is added.
 
-...
 
->         .pin_config_group_get   = msm_config_group_get,
->         .pin_config_group_set   = msm_config_group_set,
-> +       .pin_config_get         = msm_config_group_get,
-> +       .pin_config_set         = msm_config_group_set,
+>> +                       clock-names = "bi_tcxo", "bi_tcxo_ao", "sleep_clk",
+>> +                                     "pcie_0_pipe_clk", "pcie_1_pipe-clk",
+>> +                                     "ufs_phy_rx_symbol_0_clk", "ufs_phy_rx_symbol_1_clk",
+>> +                                     "ufs_phy_tx_symbol_0_clk",
+>> +                                     "usb3_phy_wrapper_gcc_usb30_pipe_clk";
+>>                          #clock-cells = <1>;
+>>                          #reset-cells = <1>;
+>>                          #power-domain-cells = <1>;
+>> @@ -325,6 +373,13 @@
+>>                                            <SLEEP_TCS   3>,
+>>                                            <WAKE_TCS    3>,
+>>                                            <CONTROL_TCS 1>;
+>> +
+>> +                       rpmhcc: qcom,rpmhcc {
+> 
+> rpmhcc: clock-controller {
+> 
 
-This can't be right. They have different semantics.
+Will update in the next patch.
+
+>> +                               compatible = "qcom,sc7280-rpmh-clk";
+>> +                               clocks = <&xo_board>;
+>> +                               clock-names = "xo";
+>> +                               #clock-cells = <1>;
+>> +                       };
+>>                  };
+>>          };
+>>
 
 -- 
-With Best Regards,
-Andy Shevchenko
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation.
+
+--
