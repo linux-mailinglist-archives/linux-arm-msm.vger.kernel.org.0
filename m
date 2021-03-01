@@ -2,151 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B4164329412
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 22:51:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D4CA32A04B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Mar 2021 14:17:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241302AbhCAVqZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 16:46:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47232 "EHLO
+        id S231902AbhCBECJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 23:02:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244258AbhCAVnS (ORCPT
+        with ESMTP id S1344146AbhCAWuE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 16:43:18 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8C7FC061793
-        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Mar 2021 13:41:54 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id v5so27895358lft.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Mar 2021 13:41:54 -0800 (PST)
+        Mon, 1 Mar 2021 17:50:04 -0500
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2683C061793
+        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Mar 2021 14:49:04 -0800 (PST)
+Received: by mail-ot1-x32e.google.com with SMTP id d9so18107368ote.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Mar 2021 14:49:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=y0nwR1AwY5pVQ0Nz4+ZuZuQPwcfLVnsZ3mxhVOAYPs4=;
-        b=HNBZInMzcEaCJA5KlSiW+cWsrJhdPO/K+qNFUyDf3+MPRBgbG+/Qt+7+XRLNhfkgwh
-         XGTUJUybeocqQ46oRrHvBvxTFFE/NRTW50bdplFT8faFHhKpCpwbUrtdvYK0xwuqYnEj
-         7UNi7bc3uB8QNX5QUta5AZRpdwfCd6h9j4u6kms0PLrXrRg7BH+rWJjUdGSxv2Vv3cup
-         hEccxzasX/M0hcrIcVwiflf1tMaNA59cs01WdjIhSFtV0F8tSXQjlf29nQydcljlr6LP
-         1howDRoiRaCUiXWU0O9uvPpsOWaeBvXbEfVR3zJ4pWb1KxNTEhhINnqp2ObLBcwy+ou3
-         JEGQ==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=lod5AV9stobf9YNREve+YsqCj5E/GdBeQLdaIwH06w8=;
+        b=J+1SzQlP7bzH6srtUJ5VsXzAJWbsJC91YMbGucsxFWtvOoqjiUQJuvFiOKPPGAFbZn
+         uBGKb2TP1MBkakw/ZKMPRyJkNQwAYQHx5IaBzczl+N4CdBPVv2HgVh+WLOvUWGXMTwUQ
+         7T997WUnCUbqgoyxLmeMmGEH//xMy3QoEfirU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=y0nwR1AwY5pVQ0Nz4+ZuZuQPwcfLVnsZ3mxhVOAYPs4=;
-        b=eUtz9PxvnDXwYGgyMo0zGlJvsiWVSr7R0BjGhGsXTQssjkKY7QrLFxWhcs8pHRidTU
-         6feSVFGdAJOdJM92AjIXegv+kn7jWxmJJAlAdDgtLOeIipokOy9mJTVSDUVe0nF7e5TD
-         LrND39XUxMWjpHVL2gXLuo//zioGautlBUqQXEaEV1CfszZm/Ikut2EqHOuk2KYv0gRY
-         63rtzh1e5Lu5xEYdYlLD4792UwQHqHnP4DuZGZI2Z9QUsv7TAa7IZG77ZUdtQKORH3G5
-         Ly0B1YbAFWvFT9Ngci2TifX96v3v5/upqyD47lDxtG5iwrIIiZ6ahnwAine9+99AhYnA
-         jtEQ==
-X-Gm-Message-State: AOAM533Zu4g6vb2rqH25D9x6MwGWPyeOcQCTUA5YB1V3Hwp80IxLOPoO
-        LgaeTIdsBkhAR/GBwpgjWiaYGw==
-X-Google-Smtp-Source: ABdhPJyX81jFiRjQbjDhw5btDlV5Bw8oqfTNPQamCrTmQPFNBvX3ObXJGLFIG3CJ9eFW+n2q4cW63A==
-X-Received: by 2002:a05:6512:2356:: with SMTP id p22mr10073795lfu.3.1614634913192;
-        Mon, 01 Mar 2021 13:41:53 -0800 (PST)
-Received: from umbar.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id 197sm167575ljf.70.2021.03.01.13.41.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Mar 2021 13:41:52 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Jonathan Marek <jonathan@marek.ca>
-Cc:     Stephen Boyd <sboyd@kernel.org>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH] gpu/drm/msm: fix shutdown hook in case GPU components failed to bind
-Date:   Tue,  2 Mar 2021 00:41:52 +0300
-Message-Id: <20210301214152.1805737-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.30.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=lod5AV9stobf9YNREve+YsqCj5E/GdBeQLdaIwH06w8=;
+        b=sxN9jJUl+ofGxrvucbCkFj6SHwsfzWsgsAdni4Cg2Vhl07nYBFUyVIkUsVh8scxkzg
+         bKc9YERpvubG1sMXIUOlOqwPaWlyiy07A/iVVoWzVdNVBgF4VUnpbu4S69ygGSvQuQt1
+         AYqbJ4LfBe9pArYXRqZ+XLer2WZ84cy8MfjtgY7wHS18XPL97eODzGxwolR2uDWafZC1
+         FkhA33djfTH+A/R2osk7CwB/foit0jMXVtbXxdNxGwoBYDk3fW94HgQLWlBAAEuHMXe0
+         j/T8RSga22Q/tTUkTJ91eJOuUFRtT96QwVBTRtvgX3km1U+mPSzwVgW52bFp1Al5wq12
+         G7hw==
+X-Gm-Message-State: AOAM531QGQ4XwxxGgjMxa/vP6r0YYfbVbNLhxGUYKjdqQ/iNYPhj/SJg
+        HnEgJ8E0Nxc6ds3dBMLObzwhJa6n97AOAw==
+X-Google-Smtp-Source: ABdhPJwUOo++neB0BP/4q3CHEHVHNTA4eY41BNy1m9/MkWGCUn7HU7QGyfuu81nIDU4pnRtOVC26Hg==
+X-Received: by 2002:a9d:7459:: with SMTP id p25mr15230204otk.316.1614638943891;
+        Mon, 01 Mar 2021 14:49:03 -0800 (PST)
+Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com. [209.85.210.53])
+        by smtp.gmail.com with ESMTPSA id 109sm3891280otj.8.2021.03.01.14.49.03
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 01 Mar 2021 14:49:03 -0800 (PST)
+Received: by mail-ot1-f53.google.com with SMTP id v12so17039589ott.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Mar 2021 14:49:03 -0800 (PST)
+X-Received: by 2002:a25:ab54:: with SMTP id u78mr27378505ybi.276.1614638632804;
+ Mon, 01 Mar 2021 14:43:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <cover.1614624041.git.saiprakash.ranjan@codeaurora.org> <defd34e2a8744fc93404abdaad2d429fa3f69850.1614624041.git.saiprakash.ranjan@codeaurora.org>
+In-Reply-To: <defd34e2a8744fc93404abdaad2d429fa3f69850.1614624041.git.saiprakash.ranjan@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 1 Mar 2021 14:43:41 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=XCi_+yW6DPeUYmtjMhn-qpjMiB0E4_Qkz6d_e6G-CoVA@mail.gmail.com>
+Message-ID: <CAD=FV=XCi_+yW6DPeUYmtjMhn-qpjMiB0E4_Qkz6d_e6G-CoVA@mail.gmail.com>
+Subject: Re: [PATCHv2 3/4] coresight: etm4x: Add support to exclude kernel
+ mode tracing
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Peter Zijlstra <peterz@infradead.org>,
+        Ingo Molnar <mingo@redhat.com>,
+        Arnaldo Carvalho de Melo <acme@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Leo Yan <leo.yan@linaro.org>, Jiri Olsa <jolsa@redhat.com>,
+        Namhyung Kim <namhyung@kernel.org>, coresight@lists.linaro.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Denis Nikitin <denik@chromium.org>,
+        Mattias Nissler <mnissler@chromium.org>,
+        Al Grant <al.grant@arm.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-if GPU components have failed to bind, shutdown callback would fail with
-the following backtrace. Add safeguard check to stop that oops from
-happening and allow the board to reboot.
+Hi,
 
-[   66.617046] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-[   66.626066] Mem abort info:
-[   66.628939]   ESR = 0x96000006
-[   66.632088]   EC = 0x25: DABT (current EL), IL = 32 bits
-[   66.637542]   SET = 0, FnV = 0
-[   66.640688]   EA = 0, S1PTW = 0
-[   66.643924] Data abort info:
-[   66.646889]   ISV = 0, ISS = 0x00000006
-[   66.650832]   CM = 0, WnR = 0
-[   66.653890] user pgtable: 4k pages, 48-bit VAs, pgdp=0000000107f81000
-[   66.660505] [0000000000000000] pgd=0000000100bb2003, p4d=0000000100bb2003, pud=0000000100897003, pmd=0000000000000000
-[   66.671398] Internal error: Oops: 96000006 [#1] PREEMPT SMP
-[   66.677115] Modules linked in:
-[   66.680261] CPU: 6 PID: 352 Comm: reboot Not tainted 5.11.0-rc2-00309-g79e3faa756b2 #38
-[   66.688473] Hardware name: Qualcomm Technologies, Inc. Robotics RB5 (DT)
-[   66.695347] pstate: 60400005 (nZCv daif +PAN -UAO -TCO BTYPE=--)
-[   66.701507] pc : msm_atomic_commit_tail+0x78/0x4e0
-[   66.706437] lr : commit_tail+0xa4/0x184
-[   66.710381] sp : ffff8000108f3af0
-[   66.713791] x29: ffff8000108f3af0 x28: ffff418c44337000
-[   66.719242] x27: 0000000000000000 x26: ffff418c40a24490
-[   66.724693] x25: ffffd3a842a4f1a0 x24: 0000000000000008
-[   66.730146] x23: ffffd3a84313f030 x22: ffff418c444ce000
-[   66.735598] x21: ffff418c408a4980 x20: 0000000000000000
-[   66.741049] x19: 0000000000000000 x18: ffff800010710fbc
-[   66.746500] x17: 000000000000000c x16: 0000000000000001
-[   66.751954] x15: 0000000000010008 x14: 0000000000000068
-[   66.757405] x13: 0000000000000001 x12: 0000000000000000
-[   66.762855] x11: 0000000000000001 x10: 00000000000009b0
-[   66.768306] x9 : ffffd3a843192000 x8 : ffff418c44337000
-[   66.773757] x7 : 0000000000000000 x6 : 00000000a401b34e
-[   66.779210] x5 : 00ffffffffffffff x4 : 0000000000000000
-[   66.784660] x3 : 0000000000000000 x2 : ffff418c444ce000
-[   66.790111] x1 : ffffd3a841dce530 x0 : ffff418c444cf000
-[   66.795563] Call trace:
-[   66.798075]  msm_atomic_commit_tail+0x78/0x4e0
-[   66.802633]  commit_tail+0xa4/0x184
-[   66.806217]  drm_atomic_helper_commit+0x160/0x390
-[   66.811051]  drm_atomic_commit+0x4c/0x60
-[   66.815082]  drm_atomic_helper_disable_all+0x1f4/0x210
-[   66.820355]  drm_atomic_helper_shutdown+0x80/0x130
-[   66.825276]  msm_pdev_shutdown+0x14/0x20
-[   66.829303]  platform_shutdown+0x28/0x40
-[   66.833330]  device_shutdown+0x158/0x330
-[   66.837357]  kernel_restart+0x40/0xa0
-[   66.841122]  __do_sys_reboot+0x228/0x250
-[   66.845148]  __arm64_sys_reboot+0x28/0x34
-[   66.849264]  el0_svc_common.constprop.0+0x74/0x190
-[   66.854187]  do_el0_svc+0x24/0x90
-[   66.857595]  el0_svc+0x14/0x20
-[   66.860739]  el0_sync_handler+0x1a4/0x1b0
-[   66.864858]  el0_sync+0x174/0x180
-[   66.868269] Code: 1ac020a0 2a000273 eb02007f 54ffff01 (f9400285)
-[   66.874525] ---[ end trace 20dedb2a3229fec8 ]---
+On Mon, Mar 1, 2021 at 11:05 AM Sai Prakash Ranjan
+<saiprakash.ranjan@codeaurora.org> wrote:
+>
+> On production systems with ETMs enabled, it is preferred to exclude
+> kernel mode(NS EL1) tracing for security concerns and support only
+> userspace(NS EL0) tracing. Perf subsystem interface uses the newly
+> introduced kernel config CONFIG_EXCLUDE_KERNEL_PMU_TRACE to exclude
+> kernel mode tracing, but there is an additional interface via sysfs
+> for ETMs which also needs to be handled to exclude kernel
+> mode tracing. So we use this same generic kernel config to handle
+> the sysfs mode of tracing. This config is disabled by default and
+> would not affect the current configuration which has both kernel and
+> userspace tracing enabled by default.
+>
+> Tested-by: Denis Nikitin <denik@chromium.org>
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> ---
+>  drivers/hwtracing/coresight/coresight-etm4x-core.c  | 6 +++++-
+>  drivers/hwtracing/coresight/coresight-etm4x-sysfs.c | 6 ++++++
+>  2 files changed, 11 insertions(+), 1 deletion(-)
 
-Fixes: 9d5cbf5fe46e ("drm/msm: add shutdown support for display platform_driver")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/msm_atomic.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+Not that I'm an expert in the perf subsystem, but the concern I had
+with v1 is now addressed.  FWIW this seems fine to me now.
 
-diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
-index 6a326761dc4a..2fd0cf6421ad 100644
---- a/drivers/gpu/drm/msm/msm_atomic.c
-+++ b/drivers/gpu/drm/msm/msm_atomic.c
-@@ -207,7 +207,12 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
- 	struct msm_kms *kms = priv->kms;
- 	struct drm_crtc *async_crtc = NULL;
- 	unsigned crtc_mask = get_crtc_mask(state);
--	bool async = kms->funcs->vsync_time &&
-+	bool async;
-+
-+	if (!kms)
-+		return;
-+
-+	async = kms->funcs->vsync_time &&
- 			can_do_async(state, &async_crtc);
- 
- 	trace_msm_atomic_commit_tail_start(async, crtc_mask);
--- 
-2.30.1
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
+
+> --- a/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
+> +++ b/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
+> @@ -296,6 +296,12 @@ static ssize_t mode_store(struct device *dev,
+>         if (kstrtoul(buf, 16, &val))
+>                 return -EINVAL;
+>
+> +       if (IS_ENABLED(CONFIG_EXCLUDE_KERNEL_PMU_TRACE) && (!(val & ETM_MODE_EXCL_KERN))) {
+> +               dev_warn(dev,
+> +                       "Kernel mode tracing is not allowed, check your kernel config\n");
+
+slight nit that I think your string needs to be indented by 1 space.  ;-)
