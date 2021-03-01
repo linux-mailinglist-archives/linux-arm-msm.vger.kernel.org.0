@@ -2,63 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D4CA32A04B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Mar 2021 14:17:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5233532A0EB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Mar 2021 14:30:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231902AbhCBECJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 23:02:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33748 "EHLO
+        id S235221AbhCBEkt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 23:40:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344146AbhCAWuE (ORCPT
+        with ESMTP id S1344187AbhCAWvB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 17:50:04 -0500
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2683C061793
-        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Mar 2021 14:49:04 -0800 (PST)
-Received: by mail-ot1-x32e.google.com with SMTP id d9so18107368ote.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Mar 2021 14:49:04 -0800 (PST)
+        Mon, 1 Mar 2021 17:51:01 -0500
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7407C06178A
+        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Mar 2021 14:43:04 -0800 (PST)
+Received: by mail-qk1-x72e.google.com with SMTP id z128so18369033qkc.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Mar 2021 14:43:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=lod5AV9stobf9YNREve+YsqCj5E/GdBeQLdaIwH06w8=;
-        b=J+1SzQlP7bzH6srtUJ5VsXzAJWbsJC91YMbGucsxFWtvOoqjiUQJuvFiOKPPGAFbZn
-         uBGKb2TP1MBkakw/ZKMPRyJkNQwAYQHx5IaBzczl+N4CdBPVv2HgVh+WLOvUWGXMTwUQ
-         7T997WUnCUbqgoyxLmeMmGEH//xMy3QoEfirU=
+        bh=xA2EiPMtYi+Gfmg1Yc47LmxZNfLbHszPXKAA6vPAIh8=;
+        b=jYofzajioBOR03n4mCqbrDpH6/uBSr/aENM4iC5Q2rRptMDrqaVIPX0nIF14iyLROZ
+         0RJhJQi0W1CELV1slYYaWGBnwqyUQmUjzRgurOCryijZ4pLbPkuTw2H4JAGuFs9fL/kW
+         iirv9/cgEYCYikSJ/JtOiSHuDX0WkB5obllmQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=lod5AV9stobf9YNREve+YsqCj5E/GdBeQLdaIwH06w8=;
-        b=sxN9jJUl+ofGxrvucbCkFj6SHwsfzWsgsAdni4Cg2Vhl07nYBFUyVIkUsVh8scxkzg
-         bKc9YERpvubG1sMXIUOlOqwPaWlyiy07A/iVVoWzVdNVBgF4VUnpbu4S69ygGSvQuQt1
-         AYqbJ4LfBe9pArYXRqZ+XLer2WZ84cy8MfjtgY7wHS18XPL97eODzGxwolR2uDWafZC1
-         FkhA33djfTH+A/R2osk7CwB/foit0jMXVtbXxdNxGwoBYDk3fW94HgQLWlBAAEuHMXe0
-         j/T8RSga22Q/tTUkTJ91eJOuUFRtT96QwVBTRtvgX3km1U+mPSzwVgW52bFp1Al5wq12
-         G7hw==
-X-Gm-Message-State: AOAM531QGQ4XwxxGgjMxa/vP6r0YYfbVbNLhxGUYKjdqQ/iNYPhj/SJg
-        HnEgJ8E0Nxc6ds3dBMLObzwhJa6n97AOAw==
-X-Google-Smtp-Source: ABdhPJwUOo++neB0BP/4q3CHEHVHNTA4eY41BNy1m9/MkWGCUn7HU7QGyfuu81nIDU4pnRtOVC26Hg==
-X-Received: by 2002:a9d:7459:: with SMTP id p25mr15230204otk.316.1614638943891;
-        Mon, 01 Mar 2021 14:49:03 -0800 (PST)
-Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com. [209.85.210.53])
-        by smtp.gmail.com with ESMTPSA id 109sm3891280otj.8.2021.03.01.14.49.03
+        bh=xA2EiPMtYi+Gfmg1Yc47LmxZNfLbHszPXKAA6vPAIh8=;
+        b=EweFj5QL4ZKNeUssRRi7ZM5d9CEYtTiVO/jz4DltFJCevk3edymsFzAqAkKyS5sLaF
+         Lhfo4NA4f8Jp92XJeKlDPxl+LWg6T+eTPIv+v7aAqbbqv4UL63EkpEVczm0tuAGvIl2j
+         pwjX9NSs0OC7RGLjFbZ1WOf5BzyGbW/GsvHPgfuKxBnXuU7aAdeW5/u7azNKCIZ4CB0o
+         fUzZyXGLbWGFDBNcNcq57yPP3idtTinMEb8nadEEp8dIg50vloiA2xeeJ2OQcQL7xUVm
+         3gF8h0X/nC/ifVrZqSdtScTduFDeFZOztRAc0OwABs+yJJAD7yukHq3HLSE3zU/MmZh/
+         ewBQ==
+X-Gm-Message-State: AOAM530x4HmBpps4OzrEKn9A5AnJhhepgiXCOqIuQvyuBQmlHSAF+VPt
+        tFIjNbambRHvMQ9IxlF/SrV1Q6Q9M+zSKQ==
+X-Google-Smtp-Source: ABdhPJxhus1tPxu58y6pd0/LlD8QZlvsVpXtirCoqXixBEalrHwshe/c0Ks36LVt251tAIajfLucJA==
+X-Received: by 2002:a37:8544:: with SMTP id h65mr16821013qkd.200.1614638583426;
+        Mon, 01 Mar 2021 14:43:03 -0800 (PST)
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com. [209.85.219.170])
+        by smtp.gmail.com with ESMTPSA id f27sm7558463qkh.118.2021.03.01.14.43.02
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 Mar 2021 14:49:03 -0800 (PST)
-Received: by mail-ot1-f53.google.com with SMTP id v12so17039589ott.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Mar 2021 14:49:03 -0800 (PST)
-X-Received: by 2002:a25:ab54:: with SMTP id u78mr27378505ybi.276.1614638632804;
- Mon, 01 Mar 2021 14:43:52 -0800 (PST)
+        Mon, 01 Mar 2021 14:43:02 -0800 (PST)
+Received: by mail-yb1-f170.google.com with SMTP id l8so18623646ybe.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Mar 2021 14:43:02 -0800 (PST)
+X-Received: by 2002:a25:4e83:: with SMTP id c125mr24079401ybb.343.1614638581776;
+ Mon, 01 Mar 2021 14:43:01 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1614624041.git.saiprakash.ranjan@codeaurora.org> <defd34e2a8744fc93404abdaad2d429fa3f69850.1614624041.git.saiprakash.ranjan@codeaurora.org>
-In-Reply-To: <defd34e2a8744fc93404abdaad2d429fa3f69850.1614624041.git.saiprakash.ranjan@codeaurora.org>
+References: <cover.1614624041.git.saiprakash.ranjan@codeaurora.org> <def1a6b37cbb54cb15329765266ed90c2f7aa24e.1614624041.git.saiprakash.ranjan@codeaurora.org>
+In-Reply-To: <def1a6b37cbb54cb15329765266ed90c2f7aa24e.1614624041.git.saiprakash.ranjan@codeaurora.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 1 Mar 2021 14:43:41 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=XCi_+yW6DPeUYmtjMhn-qpjMiB0E4_Qkz6d_e6G-CoVA@mail.gmail.com>
-Message-ID: <CAD=FV=XCi_+yW6DPeUYmtjMhn-qpjMiB0E4_Qkz6d_e6G-CoVA@mail.gmail.com>
-Subject: Re: [PATCHv2 3/4] coresight: etm4x: Add support to exclude kernel
- mode tracing
+Date:   Mon, 1 Mar 2021 14:42:50 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=UzhLX4bdRV5gEXZgsbnQW9ViZxC9Vs2TXeSxXu72Dagg@mail.gmail.com>
+Message-ID: <CAD=FV=UzhLX4bdRV5gEXZgsbnQW9ViZxC9Vs2TXeSxXu72Dagg@mail.gmail.com>
+Subject: Re: [PATCHv2 1/4] perf/core: Add support to exclude kernel mode PMU tracing
 To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
         Suzuki K Poulose <suzuki.poulose@arm.com>,
@@ -87,38 +86,66 @@ Hi,
 On Mon, Mar 1, 2021 at 11:05 AM Sai Prakash Ranjan
 <saiprakash.ranjan@codeaurora.org> wrote:
 >
-> On production systems with ETMs enabled, it is preferred to exclude
-> kernel mode(NS EL1) tracing for security concerns and support only
-> userspace(NS EL0) tracing. Perf subsystem interface uses the newly
-> introduced kernel config CONFIG_EXCLUDE_KERNEL_PMU_TRACE to exclude
-> kernel mode tracing, but there is an additional interface via sysfs
-> for ETMs which also needs to be handled to exclude kernel
-> mode tracing. So we use this same generic kernel config to handle
-> the sysfs mode of tracing. This config is disabled by default and
-> would not affect the current configuration which has both kernel and
-> userspace tracing enabled by default.
+> Hardware assisted tracing families such as ARM Coresight, Intel PT
+> provides rich tracing capabilities including instruction level
+> tracing and accurate timestamps which are very useful for profiling
+> and also pose a significant security risk. One such example of
+> security risk is when kernel mode tracing is not excluded and these
+> hardware assisted tracing can be used to analyze cryptographic code
+> execution. In this case, even the root user must not be able to infer
+> anything.
 >
+> To explain it more clearly in the words of a security team member
+> (credits: Mattias Nissler),
+>
+> "Consider a system where disk contents are encrypted and the encryption
+> key is set up by the user when mounting the file system. From that point
+> on the encryption key resides in the kernel. It seems reasonable to
+> expect that the disk encryption key be protected from exfiltration even
+> if the system later suffers a root compromise (or even against insiders
+> that have root access), at least as long as the attacker doesn't
+> manage to compromise the kernel."
+>
+> Here the idea is to protect such important information from all users
+> including root users since root privileges does not have to mean full
+> control over the kernel [1] and root compromise does not have to be
+> the end of the world.
+>
+> But "Peter said even the regular counters can be used for full branch
+> trace, the information isn't as accurate as PT and friends and not easier
+> but is good enough to infer plenty". This would mean that a global tunable
+> config for all kernel mode pmu tracing is more appropriate than the one
+> targeting the hardware assisted instruction tracing.
+>
+> Currently we can exclude kernel mode tracing via perf_event_paranoid
+> sysctl but it has following limitations,
+>
+>  * No option to restrict kernel mode instruction tracing by the
+>    root user.
+>  * Not possible to restrict kernel mode instruction tracing when the
+>    hardware assisted tracing IPs like ARM Coresight ETMs use an
+>    additional interface via sysfs for tracing in addition to perf
+>    interface.
+>
+> So introduce a new config CONFIG_EXCLUDE_KERNEL_PMU_TRACE to exclude
+> kernel mode pmu tracing which will be generic and applicable to all
+> hardware tracing families and which can also be used with other
+> interfaces like sysfs in case of ETMs.
+>
+> [1] https://lwn.net/Articles/796866/
+>
+> Suggested-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+> Suggested-by: Al Grant <al.grant@arm.com>
 > Tested-by: Denis Nikitin <denik@chromium.org>
+> Link: https://lore.kernel.org/lkml/20201015124522.1876-1-saiprakash.ranjan@codeaurora.org/
 > Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 > ---
->  drivers/hwtracing/coresight/coresight-etm4x-core.c  | 6 +++++-
->  drivers/hwtracing/coresight/coresight-etm4x-sysfs.c | 6 ++++++
->  2 files changed, 11 insertions(+), 1 deletion(-)
+>  init/Kconfig         | 11 +++++++++++
+>  kernel/events/core.c |  3 +++
+>  2 files changed, 14 insertions(+)
 
-Not that I'm an expert in the perf subsystem, but the concern I had
-with v1 is now addressed.  FWIW this seems fine to me now.
+I'm not really knowledgeable at all about the perf subsystem so my
+review doesn't hold a lot of weight.  However, Sai's patch seems sane
+to me.
 
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
-
-
-> --- a/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
-> +++ b/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
-> @@ -296,6 +296,12 @@ static ssize_t mode_store(struct device *dev,
->         if (kstrtoul(buf, 16, &val))
->                 return -EINVAL;
->
-> +       if (IS_ENABLED(CONFIG_EXCLUDE_KERNEL_PMU_TRACE) && (!(val & ETM_MODE_EXCL_KERN))) {
-> +               dev_warn(dev,
-> +                       "Kernel mode tracing is not allowed, check your kernel config\n");
-
-slight nit that I think your string needs to be indented by 1 space.  ;-)
