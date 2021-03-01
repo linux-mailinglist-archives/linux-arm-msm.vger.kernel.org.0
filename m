@@ -2,192 +2,375 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CF5C327A51
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 10:03:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EB839327AAA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 10:25:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233744AbhCAJBw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 04:01:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53202 "EHLO
+        id S233852AbhCAJYs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 04:24:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233775AbhCAJA2 (ORCPT
+        with ESMTP id S233712AbhCAJY2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 04:00:28 -0500
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FBD5C061786
-        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Mar 2021 00:59:48 -0800 (PST)
-Received: by mail-lj1-x22f.google.com with SMTP id a17so18501376ljq.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Mar 2021 00:59:48 -0800 (PST)
+        Mon, 1 Mar 2021 04:24:28 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 819C4C061786
+        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Mar 2021 01:23:48 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id w1so26885752ejf.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Mar 2021 01:23:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=AYs79IPnRt3qtzNnShKWZ7vyowWc2VUelHvdooVHnZg=;
-        b=kcf6kcitYZpg70CypoUp8KXILwBgfW62DpbNjWslqlp4qw62fI7tzmXjPZQCmQxMc8
-         y7E4AtX2Fmm4bNLcfXcEPW4KygtdDIAQoh7/Gppn2wuQW/GKYs0Umn4Wm46XccGHSmBe
-         jy7uA45XkN8GMGoDoJDciHZsVQhSFIR5XDAoh0rW972s2s04adtjid+35nHXnoln8MA8
-         FxCO26S/5xLKeLnx947E7nXZn0Rnap1zKbmn2OkkQ+VOi8uxBgu0gE1sSxomW3gthjJM
-         ufu7iyDDX3VZgWZtHNc17YGxcgin7Xk21+hnZeVkHrui+fqknKWQ+8YcQvAzXeWUB5vl
-         a9WQ==
+         :cc:content-transfer-encoding;
+        bh=2dy7/E8HSGfJiqqdxi761X4q+2hMNs1FHArXFkc+7Lk=;
+        b=Hvzar0bi8ZtMKWVof9tAX71NYajdUzeaQEycJkNH1QL2OuHhPvk/W9qwEQCgpIAohM
+         Gr3o8LEoLnXYUW8+acvNLlOZfQuJQHIHlLEgOFrB8BUDF0HEaeiwfWFagCNIZWYVvqyJ
+         +XkhRhxG2VcBA74LtU8QhBcpltTJuZPOxIPA4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AYs79IPnRt3qtzNnShKWZ7vyowWc2VUelHvdooVHnZg=;
-        b=uiJ5IKstq9otewjaZhLdkt8muWBxoO+zGuNtt3Aqaa3E4+CHh98dg/03oAi14gs2WR
-         Dl7T0m2zNxctJAISllfN4SZyguxH7Yeu8MtdLGR3nR97UUFZSvKJb1umju0trxCN34LL
-         O+jVwz9XyMVqQCG3k7aTnklVPuNKSAB6DiR7W2n+/EQ0hvSQ5zpjPn5owKNo0zY4heEo
-         RQy/6dbLCy5XqpEw+qAyOTLbyt4K8YW1Dp9U+QOTTjzSr6j4+kGH6gxINdvu2NWh+LtV
-         CMcPfE5RYit/W/wpyVOHN6a0oG7FbFp2Mlp3yhVwWfEZ1yDjs5P1owJwFudmtjI84YaD
-         txFQ==
-X-Gm-Message-State: AOAM532DU58jzyAo1W5/BjTBuqZ/u6szPVfnA1YSYXwEQsQDzmoJ6EHp
-        r16Gbh8Q6OPQglGfMNyN45AqA6z4JN8Mz0QgWGJ9xw==
-X-Google-Smtp-Source: ABdhPJyj3pw+C0NXHPjoJdDWHXn0vLK/WBMS4zWE5j9GGEZHyMLzxq+OeogebxlDuBb2zgJuFq1OMvgpJB8dxst6o6c=
-X-Received: by 2002:a2e:9754:: with SMTP id f20mr6463797ljj.200.1614589186573;
- Mon, 01 Mar 2021 00:59:46 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=2dy7/E8HSGfJiqqdxi761X4q+2hMNs1FHArXFkc+7Lk=;
+        b=DoMYxV3HEptoSSDAtdMvKKQ1xxTXH2q6WsWGgTSyRG66nx0pFzq7Ptn2reDOVpn5Iu
+         NrWTRAjKz7UgfAXti6aUuuTnKJ2PUSXDpAaCbQji7Po+LB5wBHzOu0p3azoTmGIIbAU0
+         d7rkcnia/6OhQLRfmecUvUFvWGjzLnxX5+hiDM9JyBu+g/1JL1Hgt8Cb/bncAkY6rKqf
+         Xk3Q2DSyCMs++4kSvnG4rra0NqzREXSAG9e8yIpZBnFrUyU64WbxbDFfHbjfTd91wTJv
+         obRGvm98GqUgaSgUg0ppaiRY0UWm827tGQFB7qZL6XjhGRdu22LQECJv56HE9PsfxevF
+         KNJg==
+X-Gm-Message-State: AOAM532DLGcL/ceRNgQNsZ9YOWHDZti5ze2/FYejZiQM83XoMlqf003O
+        42F2MPJ1oEpEvRpoiD7qFawVf3X+4U3J3A==
+X-Google-Smtp-Source: ABdhPJymraTVRSoar4dj7Wl+YE+P4zhrDDUWfArExWdC8QC4eOfxRhb/BrOfpN5iIwA76OeRmy0AZw==
+X-Received: by 2002:a17:906:53d7:: with SMTP id p23mr15299966ejo.140.1614590626852;
+        Mon, 01 Mar 2021 01:23:46 -0800 (PST)
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com. [209.85.221.47])
+        by smtp.gmail.com with ESMTPSA id r11sm14298537edt.58.2021.03.01.01.23.45
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 01 Mar 2021 01:23:46 -0800 (PST)
+Received: by mail-wr1-f47.google.com with SMTP id v15so15318159wrx.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Mar 2021 01:23:45 -0800 (PST)
+X-Received: by 2002:adf:e412:: with SMTP id g18mr15968814wrm.159.1614590625114;
+ Mon, 01 Mar 2021 01:23:45 -0800 (PST)
 MIME-Version: 1.0
-References: <20210211113309.1.I629b2366a6591410359c7fcf6d385b474b705ca2@changeid>
-In-Reply-To: <20210211113309.1.I629b2366a6591410359c7fcf6d385b474b705ca2@changeid>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Mon, 1 Mar 2021 09:59:35 +0100
-Message-ID: <CACRpkdbQa3BZwgtp3=061cu+y+4qkMqtXQhXH_VuHB3KcLyDCA@mail.gmail.com>
-Subject: Re: [PATCH] drm/dsi: Add _NO_ to MIPI_DSI_* flags disabling features
-To:     Nicolas Boichat <drinkcat@chromium.org>
-Cc:     Andrzej Hajda <a.hajda@samsung.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Emil Velikov <emil.velikov@collabora.com>,
-        Inki Dae <inki.dae@samsung.com>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Rikard Falkeborn <rikard.falkeborn@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>, Sean Paul <sean@poorly.run>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Xin Ji <xji@analogixsemi.com>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-mediatek@lists.infradead.org>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>
+References: <20201214125703.866998-1-acourbot@chromium.org>
+ <5319c101-f4a4-9c99-b15d-4999366f7a63@linaro.org> <CAAFQd5AQ8VHiRYkzkd5ZJBPT5_5WO0tyQrwqBEfnMVKYiTugTA@mail.gmail.com>
+ <b5d35bbd-ae50-7a09-9edf-ca23d1a4b168@linaro.org> <bc42c936d7a67609b9dc4212b5a34b0d761676ed.camel@ndufresne.ca>
+ <CAAFQd5BQv2vu_FSxJjVZLpgcuFi1WHVem_O-0x-vkG1KZJi0eA@mail.gmail.com>
+In-Reply-To: <CAAFQd5BQv2vu_FSxJjVZLpgcuFi1WHVem_O-0x-vkG1KZJi0eA@mail.gmail.com>
+From:   Tomasz Figa <tfiga@chromium.org>
+Date:   Mon, 1 Mar 2021 18:23:33 +0900
+X-Gmail-Original-Message-ID: <CAAFQd5BAT2Xe+_swAe+hMqm_cQVbWJUzkH3dS+8-QHknV=KTjw@mail.gmail.com>
+Message-ID: <CAAFQd5BAT2Xe+_swAe+hMqm_cQVbWJUzkH3dS+8-QHknV=KTjw@mail.gmail.com>
+Subject: Re: [PATCH] media: venus: use contig vb2 ops
+To:     Alexandre Courbot <acourbot@chromium.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     Fritz Koenig <frkoenig@chromium.org>,
+        Linux Media Mailing List <linux-media@vger.kernel.org>,
+        Nicolas Dufresne <nicolas@ndufresne.ca>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Feb 11, 2021 at 4:34 AM Nicolas Boichat <drinkcat@chromium.org> wrote:
+Hi Alex, Stanimir,
 
-> Many of the DSI flags have names opposite to their actual effects,
-> e.g. MIPI_DSI_MODE_EOT_PACKET means that EoT packets will actually
-> be disabled. Fix this by including _NO_ in the flag names, e.g.
-> MIPI_DSI_MODE_NO_EOT_PACKET.
+On Wed, Dec 16, 2020 at 12:15 PM Tomasz Figa <tfiga@chromium.org> wrote:
+>
+> On Wed, Dec 16, 2020 at 4:21 AM Nicolas Dufresne <nicolas@ndufresne.ca> w=
+rote:
+> >
+> > Le mardi 15 d=C3=A9cembre 2020 =C3=A0 15:54 +0200, Stanimir Varbanov a =
+=C3=A9crit :
+> > > Hi Tomasz,
+> > >
+> > > On 12/15/20 1:47 PM, Tomasz Figa wrote:
+> > > > On Tue, Dec 15, 2020 at 8:16 PM Stanimir Varbanov
+> > > > <stanimir.varbanov@linaro.org> wrote:
+> > > > >
+> > > > > Hi,
+> > > > >
+> > > > > Cc: Robin
+> > > > >
+> > > > > On 12/14/20 2:57 PM, Alexandre Courbot wrote:
+> > > > > > This driver uses the SG vb2 ops, but effectively only ever acce=
+sses the
+> > > > > > first entry of the SG table, indicating that it expects a flat =
+layout.
+> > > > > > Switch it to use the contiguous ops to make sure this expected =
+invariant
+> > > > >
+> > > > > Under what circumstances the sg table will has nents > 1? I came =
+down to
+> > > > > [1] but not sure I got it right.
+> > > > >
+> > > > > I'm afraid that for systems with low amount of system memory and =
+when
+> > > > > the memory become fragmented, the driver will not work. That's wh=
+y I
+> > > > > started with sg allocator.
+> > > >
+> > > > It is exactly the opposite. The vb2-dma-contig allocator is "contig=
+"
+> > > > in terms of the DMA (aka IOVA) address space. In other words, it
+> > > > guarantees that having one DMA address and length fully describes t=
+he
+> > >
+> > > Ahh, I missed that part. Looks like I misunderstood videobu2 contig
+> > > allocator.
+> >
+> > I'm learning everyday too, but I'm surprised I don't see a call to
+> > vb2_dma_contig_set_max_seg_size() in this driver (I could also just hav=
+e missed
+> > a patch when overlooking this thread) ?
+> >
+> > The reason I'm asking, doc says it should be called by driver supportin=
+g IOMMU,
+> > which seems to be the case for such drivers (MFC, exynos4-is, exynos-gs=
+c, mtk-
+> > mdp, s5p-g2d, hantro, rkvdec, zoran, ti-vpe, ..). I posting it, worst c=
+ase it's
+> > all covered and we are good, otherwise perhaps a downstream patch didn'=
+t make it
+> > ?
+> >
+> > /**
+> >  * vb2_dma_contig_set_max_seg_size() - configure DMA max segment size
+> >  * @dev:        device for configuring DMA parameters
+> >  * @size:       size of DMA max segment size to set
+> >  *
+> >  * To allow mapping the scatter-list into a single chunk in the DMA
+> >  * address space, the device is required to have the DMA max segment
+> >  * size parameter set to a value larger than the buffer size. Otherwise=
+,
+> >  * the DMA-mapping subsystem will split the mapping into max segment
+> >  * size chunks. This function sets the DMA max segment size
+> >  * parameter to let DMA-mapping map a buffer as a single chunk in DMA
+> >  * address space.
+> >  * This code assumes that the DMA-mapping subsystem will merge all
+> >  * scatterlist segments if this is really possible (for example when
+> >  * an IOMMU is available and enabled).
+> >  * Ideally, this parameter should be set by the generic bus code, but i=
+t
+> >  * is left with the default 64KiB value due to historical litmiations i=
+n
+> >  * other subsystems (like limited USB host drivers) and there no good
+> >  * place to set it to the proper value.
+> >  * This function should be called from the drivers, which are known to
+> >  * operate on platforms with IOMMU and provide access to shared buffers
+> >  * (either USERPTR or DMABUF). This should be done before initializing
+> >  * videobuf2 queue.
+> >  */
+>
+> It does call dma_set_max_seg_size() directly:
+> https://elixir.bootlin.com/linux/latest/source/drivers/media/platform/qco=
+m/venus/core.c#L230
+>
+> Actually, why do we even need a vb2 helper for this?
+>
 
-Unless someone like me interpreted it literally...
+What's the plan for this patch?
 
-Like in these:
+Best regards,
+Tomasz
 
->  drivers/gpu/drm/mcde/mcde_dsi.c                      | 2 +-
->  drivers/gpu/drm/panel/panel-novatek-nt35510.c        | 2 +-
->  drivers/gpu/drm/panel/panel-samsung-s6d16d0.c        | 2 +-
->  drivers/gpu/drm/panel/panel-sony-acx424akp.c         | 2 +-
-
-> diff --git a/drivers/gpu/drm/mcde/mcde_dsi.c b/drivers/gpu/drm/mcde/mcde_dsi.c
-> index 2314c8122992..f4cdc3cfd7d0 100644
-> --- a/drivers/gpu/drm/mcde/mcde_dsi.c
-> +++ b/drivers/gpu/drm/mcde/mcde_dsi.c
-> @@ -760,7 +760,7 @@ static void mcde_dsi_start(struct mcde_dsi *d)
->                 DSI_MCTL_MAIN_DATA_CTL_BTA_EN |
->                 DSI_MCTL_MAIN_DATA_CTL_READ_EN |
->                 DSI_MCTL_MAIN_DATA_CTL_REG_TE_EN;
-> -       if (d->mdsi->mode_flags & MIPI_DSI_MODE_EOT_PACKET)
-> +       if (d->mdsi->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET)
->                 val |= DSI_MCTL_MAIN_DATA_CTL_HOST_EOT_GEN;
-
-If you read the code you can see that this is interpreted as inserting
-an EOT packet, so here you need to change the logic such:
-
-if (!d->mdsi->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET)
-    val |= DSI_MCTL_MAIN_DATA_CTL_HOST_EOT_GEN;
-
-This will make sure the host generates the EOT packet in HS mode
-*unless* the flag is set.
-
-(I checked the data sheet.)
-
-> diff --git a/drivers/gpu/drm/panel/panel-novatek-nt35510.c b/drivers/gpu/drm/panel/panel-novatek-nt35510.c
-> index b9a0e56f33e2..9d9334656803 100644
-> --- a/drivers/gpu/drm/panel/panel-novatek-nt35510.c
-> +++ b/drivers/gpu/drm/panel/panel-novatek-nt35510.c
-> @@ -899,7 +899,7 @@ static int nt35510_probe(struct mipi_dsi_device *dsi)
->         dsi->hs_rate = 349440000;
->         dsi->lp_rate = 9600000;
->         dsi->mode_flags = MIPI_DSI_CLOCK_NON_CONTINUOUS |
-> -               MIPI_DSI_MODE_EOT_PACKET;
-> +               MIPI_DSI_MODE_NO_EOT_PACKET;
-
-Here you should just delete the MIPI_DSI_MODE_EOT_PACKET
-flag because this was used with the MCDE driver which interpret the
-flag literally.
-
-> diff --git a/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c b/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
-> index 4aac0d1573dd..b04b9975e9b2 100644
-> --- a/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
-> +++ b/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
-> @@ -186,7 +186,7 @@ static int s6d16d0_probe(struct mipi_dsi_device *dsi)
->          */
->         dsi->mode_flags =
->                 MIPI_DSI_CLOCK_NON_CONTINUOUS |
-> -               MIPI_DSI_MODE_EOT_PACKET;
-> +               MIPI_DSI_MODE_NO_EOT_PACKET;
-
-Same, just delete the flag.
-
-> --- a/drivers/gpu/drm/panel/panel-samsung-s6e63m0-dsi.c
-> +++ b/drivers/gpu/drm/panel/panel-samsung-s6e63m0-dsi.c
-> @@ -97,7 +97,7 @@ static int s6e63m0_dsi_probe(struct mipi_dsi_device *dsi)
->         dsi->hs_rate = 349440000;
->         dsi->lp_rate = 9600000;
->         dsi->mode_flags = MIPI_DSI_MODE_VIDEO |
-> -               MIPI_DSI_MODE_EOT_PACKET |
-> +               MIPI_DSI_MODE_NO_EOT_PACKET |
->                 MIPI_DSI_MODE_VIDEO_BURST;
-
-Same, just delete the flag.
-
-> diff --git a/drivers/gpu/drm/panel/panel-sony-acx424akp.c b/drivers/gpu/drm/panel/panel-sony-acx424akp.c
-> index 065efae213f5..6b706cbf2f9c 100644
-> --- a/drivers/gpu/drm/panel/panel-sony-acx424akp.c
-> +++ b/drivers/gpu/drm/panel/panel-sony-acx424akp.c
-> @@ -450,7 +450,7 @@ static int acx424akp_probe(struct mipi_dsi_device *dsi)
->         else
->                 dsi->mode_flags =
->                         MIPI_DSI_CLOCK_NON_CONTINUOUS |
-> -                       MIPI_DSI_MODE_EOT_PACKET;
-> +                       MIPI_DSI_MODE_NO_EOT_PACKET;
-
-Same, just delete the flag.
-
-These are all just semantic bugs due to the ambiguity of the flags, it is
-possible to provide a Fixes: flag for each file using this flag the wrong way
-but I dunno if it's worth it.
-
-Yours,
-Linus Walleij
+> >
+> > regards,
+> > Nicolas
+> >
+> > >
+> > > > buffer. This seems to be the requirement of the hardware/firmware
+> > > > handled by the venus driver. If the device is behind an IOMMU, whic=
+h
+> > > > is the case for the SoCs in question, the underlying DMA ops will
+> > > > actually allocate a discontiguous set of pages, so it has nothing t=
+o
+> > > > do to system memory amount or fragmentation. If for some reason the
+> > > > IOMMU can't be used, there is no way around, the memory needs to be
+> > > > contiguous because of the hardware/firmware/driver expectation.
+> > > >
+> > > > On the other hand, the vb2-dma-sg allocator doesn't have any
+> > > > continuity guarantees for the DMA, or any other, address space. The
+> > > > current code works fine, because it calls dma_map_sg() on the whole
+> > > > set of pages and that ends up mapping it contiguously in the IOVA
+> > > > space, but that's just an implementation detail, not an API guarant=
+ee.
+> > >
+> > > It was good to know. Thanks for the explanation.
+> > >
+> > > >
+> > > > Best regards,
+> > > > Tomasz
+> > > >
+> > > > >
+> > > > > [1]
+> > > > > https://elixir.bootlin.com/linux/v5.10.1/source/drivers/iommu/dma=
+-iommu.c#L782
+> > > > >
+> > > > > > is always enforced. Since the device is supposed to be behind a=
+n IOMMU
+> > > > > > this should have little to none practical consequences beyond m=
+aking the
+> > > > > > driver not rely on a particular behavior of the SG implementati=
+on.
+> > > > > >
+> > > > > > Reported-by: Tomasz Figa <tfiga@chromium.org>
+> > > > > > Signed-off-by: Alexandre Courbot <acourbot@chromium.org>
+> > > > > > ---
+> > > > > > Hi everyone,
+> > > > > >
+> > > > > > It probably doesn't hurt to fix this issue before some actual i=
+ssue
+> > > > > > happens.
+> > > > > > I have tested this patch on Chrome OS and playback was just as =
+fine as
+> > > > > > with
+> > > > > > the SG ops.
+> > > > > >
+> > > > > >  drivers/media/platform/Kconfig              | 2 +-
+> > > > > >  drivers/media/platform/qcom/venus/helpers.c | 9 ++-------
+> > > > > >  drivers/media/platform/qcom/venus/vdec.c    | 6 +++---
+> > > > > >  drivers/media/platform/qcom/venus/venc.c    | 6 +++---
+> > > > > >  4 files changed, 9 insertions(+), 14 deletions(-)
+> > > > > >
+> > > > > > diff --git a/drivers/media/platform/Kconfig
+> > > > > > b/drivers/media/platform/Kconfig
+> > > > > > index 35a18d388f3f..d9d7954111f2 100644
+> > > > > > --- a/drivers/media/platform/Kconfig
+> > > > > > +++ b/drivers/media/platform/Kconfig
+> > > > > > @@ -533,7 +533,7 @@ config VIDEO_QCOM_VENUS
+> > > > > >       depends on INTERCONNECT || !INTERCONNECT
+> > > > > >       select QCOM_MDT_LOADER if ARCH_QCOM
+> > > > > >       select QCOM_SCM if ARCH_QCOM
+> > > > > > -     select VIDEOBUF2_DMA_SG
+> > > > > > +     select VIDEOBUF2_DMA_CONTIG
+> > > > > >       select V4L2_MEM2MEM_DEV
+> > > > > >       help
+> > > > > >         This is a V4L2 driver for Qualcomm Venus video accelera=
+tor
+> > > > > > diff --git a/drivers/media/platform/qcom/venus/helpers.c
+> > > > > > b/drivers/media/platform/qcom/venus/helpers.c
+> > > > > > index 50439eb1ffea..859d260f002b 100644
+> > > > > > --- a/drivers/media/platform/qcom/venus/helpers.c
+> > > > > > +++ b/drivers/media/platform/qcom/venus/helpers.c
+> > > > > > @@ -7,7 +7,7 @@
+> > > > > >  #include <linux/mutex.h>
+> > > > > >  #include <linux/slab.h>
+> > > > > >  #include <linux/kernel.h>
+> > > > > > -#include <media/videobuf2-dma-sg.h>
+> > > > > > +#include <media/videobuf2-dma-contig.h>
+> > > > > >  #include <media/v4l2-mem2mem.h>
+> > > > > >  #include <asm/div64.h>
+> > > > > >
+> > > > > > @@ -1284,14 +1284,9 @@ int venus_helper_vb2_buf_init(struct vb2=
+_buffer
+> > > > > > *vb)
+> > > > > >       struct venus_inst *inst =3D vb2_get_drv_priv(vb->vb2_queu=
+e);
+> > > > > >       struct vb2_v4l2_buffer *vbuf =3D to_vb2_v4l2_buffer(vb);
+> > > > > >       struct venus_buffer *buf =3D to_venus_buffer(vbuf);
+> > > > > > -     struct sg_table *sgt;
+> > > > > > -
+> > > > > > -     sgt =3D vb2_dma_sg_plane_desc(vb, 0);
+> > > > > > -     if (!sgt)
+> > > > > > -             return -EFAULT;
+> > > > > >
+> > > > > >       buf->size =3D vb2_plane_size(vb, 0);
+> > > > > > -     buf->dma_addr =3D sg_dma_address(sgt->sgl);
+> > > > >
+> > > > > Can we do it:
+> > > > >
+> > > > >         if (WARN_ON(sgt->nents > 1))
+> > > > >                 return -EFAULT;
+> > > > >
+> > > > > I understand that logically using dma-sg when the flat layout is
+> > > > > expected by the hardware is wrong, but I haven't seen issues unti=
+l now.
+> > > > >
+> > > > > > +     buf->dma_addr =3D vb2_dma_contig_plane_dma_addr(vb, 0);
+> > > > > >
+> > > > > >       if (vb->type =3D=3D V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE)
+> > > > > >               list_add_tail(&buf->reg_list, &inst->registeredbu=
+fs);
+> > > > > > diff --git a/drivers/media/platform/qcom/venus/vdec.c
+> > > > > > b/drivers/media/platform/qcom/venus/vdec.c
+> > > > > > index 8488411204c3..3fb277c81aca 100644
+> > > > > > --- a/drivers/media/platform/qcom/venus/vdec.c
+> > > > > > +++ b/drivers/media/platform/qcom/venus/vdec.c
+> > > > > > @@ -13,7 +13,7 @@
+> > > > > >  #include <media/v4l2-event.h>
+> > > > > >  #include <media/v4l2-ctrls.h>
+> > > > > >  #include <media/v4l2-mem2mem.h>
+> > > > > > -#include <media/videobuf2-dma-sg.h>
+> > > > > > +#include <media/videobuf2-dma-contig.h>
+> > > > > >
+> > > > > >  #include "hfi_venus_io.h"
+> > > > > >  #include "hfi_parser.h"
+> > > > > > @@ -1461,7 +1461,7 @@ static int m2m_queue_init(void *priv, str=
+uct
+> > > > > > vb2_queue *src_vq,
+> > > > > >       src_vq->io_modes =3D VB2_MMAP | VB2_DMABUF;
+> > > > > >       src_vq->timestamp_flags =3D V4L2_BUF_FLAG_TIMESTAMP_COPY;
+> > > > > >       src_vq->ops =3D &vdec_vb2_ops;
+> > > > > > -     src_vq->mem_ops =3D &vb2_dma_sg_memops;
+> > > > > > +     src_vq->mem_ops =3D &vb2_dma_contig_memops;
+> > > > > >       src_vq->drv_priv =3D inst;
+> > > > > >       src_vq->buf_struct_size =3D sizeof(struct venus_buffer);
+> > > > > >       src_vq->allow_zero_bytesused =3D 1;
+> > > > > > @@ -1475,7 +1475,7 @@ static int m2m_queue_init(void *priv, str=
+uct
+> > > > > > vb2_queue *src_vq,
+> > > > > >       dst_vq->io_modes =3D VB2_MMAP | VB2_DMABUF;
+> > > > > >       dst_vq->timestamp_flags =3D V4L2_BUF_FLAG_TIMESTAMP_COPY;
+> > > > > >       dst_vq->ops =3D &vdec_vb2_ops;
+> > > > > > -     dst_vq->mem_ops =3D &vb2_dma_sg_memops;
+> > > > > > +     dst_vq->mem_ops =3D &vb2_dma_contig_memops;
+> > > > > >       dst_vq->drv_priv =3D inst;
+> > > > > >       dst_vq->buf_struct_size =3D sizeof(struct venus_buffer);
+> > > > > >       dst_vq->allow_zero_bytesused =3D 1;
+> > > > > > diff --git a/drivers/media/platform/qcom/venus/venc.c
+> > > > > > b/drivers/media/platform/qcom/venus/venc.c
+> > > > > > index 1c61602c5de1..a09550cd1dba 100644
+> > > > > > --- a/drivers/media/platform/qcom/venus/venc.c
+> > > > > > +++ b/drivers/media/platform/qcom/venus/venc.c
+> > > > > > @@ -10,7 +10,7 @@
+> > > > > >  #include <linux/pm_runtime.h>
+> > > > > >  #include <linux/slab.h>
+> > > > > >  #include <media/v4l2-mem2mem.h>
+> > > > > > -#include <media/videobuf2-dma-sg.h>
+> > > > > > +#include <media/videobuf2-dma-contig.h>
+> > > > > >  #include <media/v4l2-ioctl.h>
+> > > > > >  #include <media/v4l2-event.h>
+> > > > > >  #include <media/v4l2-ctrls.h>
+> > > > > > @@ -1001,7 +1001,7 @@ static int m2m_queue_init(void *priv, str=
+uct
+> > > > > > vb2_queue *src_vq,
+> > > > > >       src_vq->io_modes =3D VB2_MMAP | VB2_USERPTR | VB2_DMABUF;
+> > > > > >       src_vq->timestamp_flags =3D V4L2_BUF_FLAG_TIMESTAMP_COPY;
+> > > > > >       src_vq->ops =3D &venc_vb2_ops;
+> > > > > > -     src_vq->mem_ops =3D &vb2_dma_sg_memops;
+> > > > > > +     src_vq->mem_ops =3D &vb2_dma_contig_memops;
+> > > > > >       src_vq->drv_priv =3D inst;
+> > > > > >       src_vq->buf_struct_size =3D sizeof(struct venus_buffer);
+> > > > > >       src_vq->allow_zero_bytesused =3D 1;
+> > > > > > @@ -1017,7 +1017,7 @@ static int m2m_queue_init(void *priv, str=
+uct
+> > > > > > vb2_queue *src_vq,
+> > > > > >       dst_vq->io_modes =3D VB2_MMAP | VB2_USERPTR | VB2_DMABUF;
+> > > > > >       dst_vq->timestamp_flags =3D V4L2_BUF_FLAG_TIMESTAMP_COPY;
+> > > > > >       dst_vq->ops =3D &venc_vb2_ops;
+> > > > > > -     dst_vq->mem_ops =3D &vb2_dma_sg_memops;
+> > > > > > +     dst_vq->mem_ops =3D &vb2_dma_contig_memops;
+> > > > > >       dst_vq->drv_priv =3D inst;
+> > > > > >       dst_vq->buf_struct_size =3D sizeof(struct venus_buffer);
+> > > > > >       dst_vq->allow_zero_bytesused =3D 1;
+> > > > > >
+> > > > >
+> > > > > --
+> > > > > regards,
+> > > > > Stan
+> > >
+> >
+> >
