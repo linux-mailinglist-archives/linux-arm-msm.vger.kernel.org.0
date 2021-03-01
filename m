@@ -2,40 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D11F329258
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 21:45:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C31A32928A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 21:49:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240324AbhCAUnY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 15:43:24 -0500
-Received: from mail.kernel.org ([198.145.29.99]:53286 "EHLO mail.kernel.org"
+        id S233823AbhCAUr2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 15:47:28 -0500
+Received: from mail.kernel.org ([198.145.29.99]:53308 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S239828AbhCAUkf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 15:40:35 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id 0F0CE64E2E;
+        id S234767AbhCAUnm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Mar 2021 15:43:42 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id DA37F64E89;
         Mon,  1 Mar 2021 19:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1614628782;
-        bh=sZrfa145X1mEMelYo996ASY5vcLk4k1k/RT/QX8nyHQ=;
+        bh=+UuFqsn5FfTfo5CpOsmiwFe3PvrwCU2XUye9QvUrKnw=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=Y1rd+190dbqZRdMG39M3PUvS71aINSPmijMkEhxtmgTMYPgHdTRfpV6BOMeta2eoB
-         eHJVfDI7U+A/jtFgVvyMfsAi3rfJb9LSvZFrTOTcuR1zzZH0SrEPvvyOeMPWe0161v
-         HAU6ZMMyVG7tXjBBgT6RqD7Lw5fS1VH7F4ob5FN9IY0mu0fqlG2qSb5TLwWY/cPjOw
-         vcHeOYzKBIiqz+KwhZQT80tysuqfY1TwsuDssdHeKeRFA14w9Ti1+2X1XtzF84l4Fm
-         RIZXngsvQPy9tvB+QuI+IEguz58euGV+C0uRCfr7YVjcJNSHPfR0LNRY1IWxKCLSa4
-         CV2/69wPtyhxw==
+        b=PqzCSbT7eDll8XbsfIQYlyI7UCr1D+lQeuwfROf+h3MxE/dgMTr2uYOjv1VmYpmpf
+         Zj1mSuepj2aKfDyO2P0l7jKMHCwb4BbfOKEP2vkLA9d6LCuE30A+/8U4Bne0q6tUEA
+         Y55ny8M8TXZMoJ7YeVch/tR0RUYGlgzcZ/WD2QThjBCMIQVpt+3Xd9ITkWUFXlfeCV
+         bj7tNBB4ip5xBIlKjssQrA5AovD5QJpEg4UnMscVIPj45JcT28lqu6sBnyP4tM/MmJ
+         1MlfcQAq8OZinPfyo3Td0YR3oum1X8zUXPkVGRkUHcIllh/OouFqsrobrE897gD1j7
+         Be4ES1SadnzTg==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 0B9F760C26;
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id D6A9F60C25;
         Mon,  1 Mar 2021 19:59:42 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 0/4] drivers/perf: Constify static struct attribute_group
+Subject: Re: [PATCH v3 1/4] spi: spi-geni-qcom: Fix geni_spi_isr() NULL
+ dereference in timeout case
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <161462878204.6187.10960868173520973782.git-patchwork-notify@kernel.org>
+Message-Id: <161462878287.6187.10711169453453083059.git-patchwork-notify@kernel.org>
 Date:   Mon, 01 Mar 2021 19:59:42 +0000
-References: <20210117212847.21319-1-rikard.falkeborn@gmail.com>
-In-Reply-To: <20210117212847.21319-1-rikard.falkeborn@gmail.com>
-To:     Rikard Falkeborn <rikard.falkeborn@gmail.com>
+References: <20201217142842.v3.1.I99ee04f0cb823415df59bd4f550d6ff5756e43d6@changeid>
+In-Reply-To: <20201217142842.v3.1.I99ee04f0cb823415df59bd4f550d6ff5756e43d6@changeid>
+To:     Doug Anderson <dianders@chromium.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -45,27 +46,26 @@ Hello:
 
 This series was applied to qcom/linux.git (refs/heads/for-next):
 
-On Sun, 17 Jan 2021 22:28:43 +0100 you wrote:
-> Thie series makes a number of static struct attribute_group const. The
-> only usage of the structs is to put their address in an array of pointers
-> to const struct * attribute_group. With this series applied, all but two
-> static struct attribute_group in drivers/perf are const (and the two
-> remaining are modified at runtime and can't be const).
+On Thu, 17 Dec 2020 14:29:11 -0800 you wrote:
+> In commit 7ba9bdcb91f6 ("spi: spi-geni-qcom: Don't keep a local state
+> variable") we changed handle_fifo_timeout() so that we set
+> "mas->cur_xfer" to NULL to make absolutely sure that we don't mess
+> with the buffers from the previous transfer in the timeout case.
 > 
-> Patches are independent and split based on output from get_maintainers.pl.
-> I can of course split differently if that's desired.
+> Unfortunately, this caused the IRQ handler to dereference NULL in some
+> cases.  One case:
 > 
 > [...]
 
 Here is the summary with links:
-  - [1/4] perf: qcom: Constify static struct attribute_group
-    https://git.kernel.org/qcom/c/30b34c4833ea
-  - [2/4] perf/imx_ddr: Constify static struct attribute_group
-    https://git.kernel.org/qcom/c/3cb7d2da183f
-  - [3/4] perf: hisi: Constify static struct attribute_group
-    https://git.kernel.org/qcom/c/c2c4d5c051b2
-  - [4/4] perf: Constify static struct attribute_group
-    https://git.kernel.org/qcom/c/f0c140481d1b
+  - [v3,1/4] spi: spi-geni-qcom: Fix geni_spi_isr() NULL dereference in timeout case
+    https://git.kernel.org/qcom/c/4aa1464acbe3
+  - [v3,2/4] spi: spi-geni-qcom: Fail new xfers if xfer/cancel/abort pending
+    https://git.kernel.org/qcom/c/690d8b917bbe
+  - [v3,3/4] spi: spi-geni-qcom: Don't try to set CS if an xfer is pending
+    https://git.kernel.org/qcom/c/3d7d916f9bc9
+  - [v3,4/4] spi: spi-geni-qcom: Print an error when we timeout setting the CS
+    https://git.kernel.org/qcom/c/17fa81aa702e
 
 You are awesome, thank you!
 --
