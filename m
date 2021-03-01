@@ -2,173 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 604023284FD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 17:50:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D472A3286DA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 18:17:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233824AbhCAQrI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 11:47:08 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:54002 "EHLO z11.mailgun.us"
+        id S238007AbhCARQc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 12:16:32 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:54294 "EHLO z11.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235172AbhCAQnN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 11:43:13 -0500
+        id S237132AbhCAROP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Mar 2021 12:14:15 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1614616972; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=WRPpZ9qj4Um6MCvFHhN5ctHaT2j5wddCNIfkDkOakl8=;
- b=D1P4yHPVIV96XNUM5HfpMJ7Cg/ooxrPirDvCOcaFnIHYhw3LePzyJL/XPlKOjhrIPXC3dYeh
- efn5+eBIIEpKRIN8MZaWTtV+aZyzSKQFcVr+vo4mkUKvxNhstW26H6IRq40uNuGT9xIf3OrX
- C3tAezk+R2lQwuu69l0otHwVuRg=
+ s=smtp; t=1614618823; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=BfVrcOWVRzGvz+Dbm8uCXcC2vuzUg8HrSEaSSdN8Zi8=; b=TO4WGtFjq3PDk0Ssjpn0YaiHwmlmLeOMaq18ZrLOtEx80Ih288fUAWCF5U6Xcm/vW9Ad0D9L
+ aPsJRZZlGCUX0CczmYJbuePSCoOsUcGcKhfxlr7Vfi5lGlAsIm+SHlvTzB5Q9sVt5D5uK4H2
+ dmaPSeo8stUyN2IXe79VWFyczw0=
 X-Mailgun-Sending-Ip: 104.130.96.11
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
  smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 603d196f832f19b9ef81d4fb (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 01 Mar 2021 16:42:23
+ 603d1db6832f19b9ef925433 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 01 Mar 2021 17:00:38
  GMT
-Sender: kgunda=codeaurora.org@mg.codeaurora.org
+Sender: tdas=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id EB70FC43464; Mon,  1 Mar 2021 16:42:22 +0000 (UTC)
+        id 954D6C43465; Mon,  1 Mar 2021 17:00:38 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [192.168.0.110] (unknown [49.204.182.166])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: kgunda)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E6927C433C6;
-        Mon,  1 Mar 2021 16:42:21 +0000 (UTC)
+        (Authenticated sender: tdas)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D4055C433CA;
+        Mon,  1 Mar 2021 17:00:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D4055C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=tdas@codeaurora.org
+Subject: Re: [PATCH] clk: qcom: gcc-sc7180: Use floor ops for the correct
+ sdcc1 clk
+To:     Douglas Anderson <dianders@chromium.org>, sboyd@kernel.org
+Cc:     vbadigan@codeaurora.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20210224095013.1.I2e2ba4978cfca06520dfb5d757768f9c42140f7c@changeid>
+From:   Taniya Das <tdas@codeaurora.org>
+Message-ID: <3b972d6d-15df-ddf6-c57f-9e1ad08564db@codeaurora.org>
+Date:   Mon, 1 Mar 2021 22:30:31 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <20210224095013.1.I2e2ba4978cfca06520dfb5d757768f9c42140f7c@changeid>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Date:   Mon, 01 Mar 2021 22:12:21 +0530
-From:   kgunda@codeaurora.org
-To:     Daniel Thompson <daniel.thompson@linaro.org>
-Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
-        lee.jones@linaro.org, b.zolnierkie@samsung.com,
-        dri-devel@lists.freedesktop.org, jacek.anaszewski@gmail.com,
-        pavel@ucw.cz, robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org,
-        phone-devel@vger.kernel.org
-Subject: Re: [PATCH V3 2/2] backlight: qcom-wled: Correct the sync_toggle
- sequence
-In-Reply-To: <20210301100239.orbt7km6lgjwvzii@maple.lan>
-References: <1614590916-27070-1-git-send-email-kgunda@codeaurora.org>
- <1614590916-27070-3-git-send-email-kgunda@codeaurora.org>
- <20210301100239.orbt7km6lgjwvzii@maple.lan>
-Message-ID: <f25a2c8b1bf0eae63a2fe9a31c824f1e@codeaurora.org>
-X-Sender: kgunda@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-03-01 15:32, Daniel Thompson wrote:
-> On Mon, Mar 01, 2021 at 02:58:36PM +0530, Kiran Gunda wrote:
->> As per the current implementation, after FSC (Full Scale Current)
->> and brightness update the sync bits are transitioned from 
->> set-then-clear.
+Reviewed-by: Taniya Das <tdas@codeaurora.org>
+
+On 2/24/2021 11:20 PM, Douglas Anderson wrote:
+> While picking commit a8cd989e1a57 ("mmc: sdhci-msm: Warn about
+> overclocking SD/MMC") back to my tree I was surprised that it was
+> reporting warnings.  I thought I fixed those!  Looking closer at the
+> fix, I see that I totally bungled it (or at least I halfway bungled
+> it).  The SD card clock got fixed (and that was the one I was really
+> focused on fixing), but I totally adjusted the wrong clock for eMMC.
+> Sigh.  Let's fix my dumb mistake.
 > 
-> This does not makes sense since there are too many verbs. Set and clear
-> are both verbs so in this context: "the code will set the bit and then
-> the code will clear the bit".
+> Now both SD and eMMC have floor for the "apps" clock.
 > 
-> Either:
+> This doesn't matter a lot for the final clock rate for HS400 eMMC but
+> could matter if someone happens to put some slower eMMC on a sc7180.
+> We also transition through some of these lower rates sometimes and
+> having them wrong could cause problems during these transitions.
+> These were the messages I was seeing at boot:
+>    mmc1: Card appears overclocked; req 52000000 Hz, actual 100000000 Hz
+>    mmc1: Card appears overclocked; req 52000000 Hz, actual 100000000 Hz
+>    mmc1: Card appears overclocked; req 104000000 Hz, actual 192000000 Hz
 > 
-> s/transitioned from set-then-clear/set-then-cleared/.
+> Fixes: 6d37a8d19283 ("clk: qcom: gcc-sc7180: Use floor ops for sdcc clks")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
 > 
-> Or:
+>   drivers/clk/qcom/gcc-sc7180.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> s/transitioned from set-then-clear/using a set-then-clear approach/.
+> diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-sc7180.c
+> index c5c2e93bda8e..5cacd20a31b3 100644
+> --- a/drivers/clk/qcom/gcc-sc7180.c
+> +++ b/drivers/clk/qcom/gcc-sc7180.c
+> @@ -620,7 +620,7 @@ static struct clk_rcg2 gcc_sdcc1_apps_clk_src = {
+>   		.name = "gcc_sdcc1_apps_clk_src",
+>   		.parent_data = gcc_parent_data_1,
+>   		.num_parents = 5,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_floor_ops,
+>   	},
+>   };
+>   
+> @@ -642,7 +642,7 @@ static struct clk_rcg2 gcc_sdcc1_ice_core_clk_src = {
+>   		.name = "gcc_sdcc1_ice_core_clk_src",
+>   		.parent_data = gcc_parent_data_0,
+>   		.num_parents = 4,
+> -		.ops = &clk_rcg2_floor_ops,
+> +		.ops = &clk_rcg2_ops,
+>   	},
+>   };
+>   
 > 
->> But, the FSC and brightness sync takes place during a clear-then-set
->> transition of the sync bits.
-> 
-> Likewise this no longer makes sense and had also become misleading.
-> Two changes of state, clear and then set, do not usually result in a
-> single transition.
-> 
-> Either:
-> 
-> s/clear-then-set/0 to 1/
-> 
-> Alternatively, if you want to stick exclusively to the set/clear
-> terminology then replace the whole quoted section with:
-> 
->   But, the FSC and brightness sync takes place when the sync bits are
->   set (e.g. on a rising edge).
-> 
-> 
->> So the hardware team recommends a
->> clear-then-set approach in order to guarantee such a transition
->> regardless of the previous register state.
->> 
->> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
-> 
-> With one of each of the changes proposed above:
-> Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
-> 
-> 
-> Daniel.
-> 
-Apologies for the mistake. I have corrected and submitted the
-V4 series with the "reviewed-by" tag.
-> 
->> ---
->>  drivers/video/backlight/qcom-wled.c | 12 ++++++------
->>  1 file changed, 6 insertions(+), 6 deletions(-)
->> 
->> diff --git a/drivers/video/backlight/qcom-wled.c 
->> b/drivers/video/backlight/qcom-wled.c
->> index aef52b9..19f83ac 100644
->> --- a/drivers/video/backlight/qcom-wled.c
->> +++ b/drivers/video/backlight/qcom-wled.c
->> @@ -337,13 +337,13 @@ static int wled3_sync_toggle(struct wled *wled)
->> 
->>  	rc = regmap_update_bits(wled->regmap,
->>  				wled->ctrl_addr + WLED3_SINK_REG_SYNC,
->> -				mask, mask);
->> +				mask, WLED3_SINK_REG_SYNC_CLEAR);
->>  	if (rc < 0)
->>  		return rc;
->> 
->>  	rc = regmap_update_bits(wled->regmap,
->>  				wled->ctrl_addr + WLED3_SINK_REG_SYNC,
->> -				mask, WLED3_SINK_REG_SYNC_CLEAR);
->> +				mask, mask);
->> 
->>  	return rc;
->>  }
->> @@ -353,17 +353,17 @@ static int wled5_mod_sync_toggle(struct wled 
->> *wled)
->>  	int rc;
->>  	u8 val;
->> 
->> -	val = (wled->cfg.mod_sel == MOD_A) ? WLED5_SINK_REG_SYNC_MOD_A_BIT :
->> -					     WLED5_SINK_REG_SYNC_MOD_B_BIT;
->>  	rc = regmap_update_bits(wled->regmap,
->>  				wled->sink_addr + WLED5_SINK_REG_MOD_SYNC_BIT,
->> -				WLED5_SINK_REG_SYNC_MASK, val);
->> +				WLED5_SINK_REG_SYNC_MASK, 0);
->>  	if (rc < 0)
->>  		return rc;
->> 
->> +	val = (wled->cfg.mod_sel == MOD_A) ? WLED5_SINK_REG_SYNC_MOD_A_BIT :
->> +					     WLED5_SINK_REG_SYNC_MOD_B_BIT;
->>  	return regmap_update_bits(wled->regmap,
->>  				  wled->sink_addr + WLED5_SINK_REG_MOD_SYNC_BIT,
->> -				  WLED5_SINK_REG_SYNC_MASK, 0);
->> +				  WLED5_SINK_REG_SYNC_MASK, val);
->>  }
->> 
->>  static int wled_ovp_fault_status(struct wled *wled, bool *fault_set)
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
->> Forum,
->>  a Linux Foundation Collaborative Project
->> 
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation.
+
+--
