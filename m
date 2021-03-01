@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 808F0328D73
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 20:12:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 71B48328D71
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 20:12:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241040AbhCATL0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 14:11:26 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:47655 "EHLO z11.mailgun.us"
+        id S240869AbhCATLS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 14:11:18 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:59106 "EHLO z11.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S240638AbhCATGD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S240915AbhCATGD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 1 Mar 2021 14:06:03 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1614625537; h=Content-Transfer-Encoding: MIME-Version:
+ s=smtp; t=1614625547; h=Content-Transfer-Encoding: MIME-Version:
  References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=ULVELyq7nHvV0LfXa0HUzIZDmjd8NX9VXsFLlG6f5fY=; b=qDlW4PYnk+oWdpHSYSCFUaNaSuVNK+V1jWUqCjUU/zmIqFX4zYvaljzjeBoslryCkZAsF84o
- R8GoS80hQqm0fxURaU777bAz4SuaKgf4J0ou2rmnpUWWrkIqRqR44AjG8AfmKMMdeoudMXs8
- VSSGr0DItTkmWKFs3HyHhqVM+EU=
+ Sender; bh=KSTg/iMAFnE3tGluW86ejokWeue2G0X6gpc2LUi/L5o=; b=d9SBYUp+fMuIEQcjU/ar7ekuMZMD8505NolesDKC1X8jhTnUjNcHnnDzu8o3wR8D4JZ+VW8+
+ kgA4UIRulvMltd3ZCNU3O5Qzhnqby3ypkh+NKfeRsd26ZkGLiaUm5JJPnVkbDo6ipI3IRtp/
+ HGTiTyL3sszb6gGSiyt6GtSnMYY=
 X-Mailgun-Sending-Ip: 104.130.96.11
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 603d3ad7608e0b56532754d8 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 01 Mar 2021 19:04:55
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 603d3ae19d2570c9fef61f9f (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 01 Mar 2021 19:05:05
  GMT
 Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5824AC433ED; Mon,  1 Mar 2021 19:04:55 +0000 (UTC)
+        id 7B4E2C433ED; Mon,  1 Mar 2021 19:05:05 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,9 +37,9 @@ Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Out
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 57961C433CA;
-        Mon,  1 Mar 2021 19:04:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 57961C433CA
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CB947C433C6;
+        Mon,  1 Mar 2021 19:04:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CB947C433C6
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
 From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
@@ -60,9 +60,9 @@ Cc:     Jiri Olsa <jolsa@redhat.com>, Namhyung Kim <namhyung@kernel.org>,
         linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         Douglas Anderson <dianders@chromium.org>,
         Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCHv2 1/4] perf/core: Add support to exclude kernel mode PMU tracing
-Date:   Tue,  2 Mar 2021 00:34:15 +0530
-Message-Id: <def1a6b37cbb54cb15329765266ed90c2f7aa24e.1614624041.git.saiprakash.ranjan@codeaurora.org>
+Subject: [PATCHv2 2/4] perf evsel: Print warning for excluding kernel mode instruction tracing
+Date:   Tue,  2 Mar 2021 00:34:16 +0530
+Message-Id: <523a5af43615b804aa1211a3f27e06226d7159bc.1614624041.git.saiprakash.ranjan@codeaurora.org>
 X-Mailer: git-send-email 2.29.0
 In-Reply-To: <cover.1614624041.git.saiprakash.ranjan@codeaurora.org>
 References: <cover.1614624041.git.saiprakash.ranjan@codeaurora.org>
@@ -72,100 +72,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hardware assisted tracing families such as ARM Coresight, Intel PT
-provides rich tracing capabilities including instruction level
-tracing and accurate timestamps which are very useful for profiling
-and also pose a significant security risk. One such example of
-security risk is when kernel mode tracing is not excluded and these
-hardware assisted tracing can be used to analyze cryptographic code
-execution. In this case, even the root user must not be able to infer
-anything.
+Add a warning message to check CONFIG_EXCLUDE_KERNEL_HW_ITRACE kernel
+config which excludes kernel mode instruction tracing to help perf tool
+users identify the perf event open failure when they attempt kernel mode
+tracing with this config enabled.
 
-To explain it more clearly in the words of a security team member
-(credits: Mattias Nissler),
-
-"Consider a system where disk contents are encrypted and the encryption
-key is set up by the user when mounting the file system. From that point
-on the encryption key resides in the kernel. It seems reasonable to
-expect that the disk encryption key be protected from exfiltration even
-if the system later suffers a root compromise (or even against insiders
-that have root access), at least as long as the attacker doesn't
-manage to compromise the kernel."
-
-Here the idea is to protect such important information from all users
-including root users since root privileges does not have to mean full
-control over the kernel [1] and root compromise does not have to be
-the end of the world.
-
-But "Peter said even the regular counters can be used for full branch
-trace, the information isn't as accurate as PT and friends and not easier
-but is good enough to infer plenty". This would mean that a global tunable
-config for all kernel mode pmu tracing is more appropriate than the one
-targeting the hardware assisted instruction tracing.
-
-Currently we can exclude kernel mode tracing via perf_event_paranoid
-sysctl but it has following limitations,
-
- * No option to restrict kernel mode instruction tracing by the
-   root user.
- * Not possible to restrict kernel mode instruction tracing when the
-   hardware assisted tracing IPs like ARM Coresight ETMs use an
-   additional interface via sysfs for tracing in addition to perf
-   interface.
-
-So introduce a new config CONFIG_EXCLUDE_KERNEL_PMU_TRACE to exclude
-kernel mode pmu tracing which will be generic and applicable to all
-hardware tracing families and which can also be used with other
-interfaces like sysfs in case of ETMs.
-
-[1] https://lwn.net/Articles/796866/
-
-Suggested-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Suggested-by: Al Grant <al.grant@arm.com>
 Tested-by: Denis Nikitin <denik@chromium.org>
-Link: https://lore.kernel.org/lkml/20201015124522.1876-1-saiprakash.ranjan@codeaurora.org/
 Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 ---
- init/Kconfig         | 11 +++++++++++
- kernel/events/core.c |  3 +++
- 2 files changed, 14 insertions(+)
+ tools/perf/util/evsel.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/init/Kconfig b/init/Kconfig
-index 22946fe5ded9..34d9b7587d2e 100644
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -1848,6 +1848,17 @@ config DEBUG_PERF_USE_VMALLOC
- 
- endmenu
- 
-+config EXCLUDE_KERNEL_PMU_TRACE
-+	bool "Exclude Kernel mode PMU tracing"
-+	depends on PERF_EVENTS
-+	help
-+	  Exclude Kernel mode PMU tracing for all users.
-+
-+	  This option allows to disable kernel mode tracing for all
-+	  users(including root) which is especially useful in production
-+	  systems where only userspace tracing might be preferred for
-+	  security reasons.
-+
- config VM_EVENT_COUNTERS
- 	default y
- 	bool "Enable VM event counters for /proc/vmstat" if EXPERT
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 0aeca5f3c0ac..241cc9640483 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -11770,6 +11770,9 @@ SYSCALL_DEFINE5(perf_event_open,
- 	if (err)
- 		return err;
- 
-+	if (IS_ENABLED(CONFIG_EXCLUDE_KERNEL_PMU_TRACE) && !attr.exclude_kernel)
-+		return -EACCES;
-+
- 	if (!attr.exclude_kernel) {
- 		err = perf_allow_kernel(&attr);
- 		if (err)
+diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
+index 1bf76864c4f2..3f584128a590 100644
+--- a/tools/perf/util/evsel.c
++++ b/tools/perf/util/evsel.c
+@@ -2672,7 +2672,8 @@ int evsel__open_strerror(struct evsel *evsel, struct target *target,
+ 		 ">= 1: Disallow CPU event access\n"
+ 		 ">= 2: Disallow kernel profiling\n"
+ 		 "To make the adjusted perf_event_paranoid setting permanent preserve it\n"
+-		 "in /etc/sysctl.conf (e.g. kernel.perf_event_paranoid = <setting>)",
++		 "in /etc/sysctl.conf (e.g. kernel.perf_event_paranoid = <setting>)\n\n"
++		 "Also check CONFIG_EXCLUDE_KERNEL_PMU_TRACE if kernel mode tracing is allowed.",
+ 		 perf_event_paranoid());
+ 	case ENOENT:
+ 		return scnprintf(msg, size, "The %s event is not supported.", evsel__name(evsel));
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
