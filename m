@@ -2,41 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9CA3C329281
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 21:49:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F27123292B2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 21:52:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239882AbhCAUqn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 15:46:43 -0500
-Received: from mail.kernel.org ([198.145.29.99]:54078 "EHLO mail.kernel.org"
+        id S243607AbhCAUtr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 15:49:47 -0500
+Received: from mail.kernel.org ([198.145.29.99]:55336 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S239812AbhCAUn7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 15:43:59 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id 1589864EBE;
+        id S243624AbhCAUqp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Mar 2021 15:46:45 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id 9A08364EE4;
         Mon,  1 Mar 2021 19:59:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1614628783;
-        bh=geOxr52a+RRXIBA0MqkH/4GNrPXq0VopPZ4iGc5UKOQ=;
+        bh=DdJBme8mXr1Mcgpi4F50SirR042ehBDzCujKNycXm8Y=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=EZOdY0eCx06g4xPdzVqxI6990jkm+AOULeRFx6ltJt8aVJcB7eLCyNdaT3/+E+4vK
-         mZKf5yb79WyisXsEDlUCa7MKiWcBgajfgVP5fW/AElFBAic8XBlGCnq9eUpzScOAB+
-         uSFVZny4r4OOGH5uVamfO1U2rHVNxgIONPK1k/DbwqAF1fqhrHub0LDBYZZLT90dJv
-         aypo2GORK1pk4jzEWgQIElGeAhhB5MtpYCaDFadniquMeJgXwMIiYK1kRYj6iBndTg
-         x5PLQu3SNetinlcw2Wznwyd0J6+opJCehCcHDvZqdJOaCRlN6/0NywxFHeKxjaxWZm
-         XA/HTFAio9DDA==
+        b=X7Nmv7nvpcANI9uEJZe5QnmwK/nn3tI+jwL5B4YToiGpQlA9ovBN6JTBMeAqy/qOA
+         n4nzx+0tqi1k/tOPWvyNss7u6C7kMzbu9M+ucFXFknX8oEn6Gf4VmQe6oIRXGka0Ja
+         FYpDTr0YH70KpiM/YHTljrpLtOK7sMPBWBBThKXWCjgB+o06dkQIpFEDiuYJkzTueo
+         6Q9wvXhM6FVMEon89XTcRxCTAr5Uv6NAO/2kHccR5ASfgOFl047RujinwFZumrLLEZ
+         kSXb5m1wlTLbvFl6DUV93emxF66W2tpOo9aZRil84+p/qQRKYC8mbrCrseXtsxKUlv
+         uW/0F095eqLRg==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 1225260A1B;
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 951AB60C27;
         Mon,  1 Mar 2021 19:59:43 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v6 0/2] Platform driver update to support playback recover
- after resume
+Subject: Re: [PATCH 1/2] [REPOST] dt-bindings: qcom,pdc: Add compatible for SM8250
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <161462878307.6187.8991698056133795742.git-patchwork-notify@kernel.org>
+Message-Id: <161462878360.6187.2247423788355381184.git-patchwork-notify@kernel.org>
 Date:   Mon, 01 Mar 2021 19:59:43 +0000
-References: <1608192514-29695-1-git-send-email-srivasam@codeaurora.org>
-In-Reply-To: <1608192514-29695-1-git-send-email-srivasam@codeaurora.org>
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+References: <20210115090941.2289416-1-vkoul@kernel.org>
+In-Reply-To: <20210115090941.2289416-1-vkoul@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -46,28 +45,21 @@ Hello:
 
 This series was applied to qcom/linux.git (refs/heads/for-next):
 
-On Thu, 17 Dec 2020 13:38:32 +0530 you wrote:
-> This patch set is to add support for playback recover after hard suspend and resume.
-> It includes:
-> 1. Reverting part of previous commit, which is for handling registers invalid state
-> after hard suspend.
-> 2. Adding pm ops in component driver and do regcache sync.
-> Changes Since v1 and v2:
->   -- Subject lines changed
-> Changes Since v3:
->   -- Patch is splitted into 2 patches
-> Changes Since v4:
->   -- Subject lines changed
-> Changes Since v5:
->   -- Removed redundant initialization of map variable in lpass-platform.c
+On Fri, 15 Jan 2021 14:39:40 +0530 you wrote:
+> Add the compatible string for SM8250 SoC from Qualcomm. This compatible
+> is used already in DTS files but not documented yet
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Acked-by: Rob Herring <robh@kernel.org>
 > 
 > [...]
 
 Here is the summary with links:
-  - [v6,1/2] ASoC: qcom: Fix incorrect volatile registers
-    https://git.kernel.org/qcom/c/315fbe4cef98
-  - [v6,2/2] ASoC: qcom: Add support for playback recover after resume
-    https://git.kernel.org/qcom/c/8d1bfc04c974
+  - [1/2,REPOST] dt-bindings: qcom,pdc: Add compatible for SM8250
+    https://git.kernel.org/qcom/c/e6f93c0115cb
+  - [2/2] dt-bindings: qcom,pdc: Add compatible for SM8350
+    https://git.kernel.org/qcom/c/9eaad15e5a40
 
 You are awesome, thank you!
 --
