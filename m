@@ -2,162 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 47E52327CE7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 12:15:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C522B327E27
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 13:20:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231684AbhCALPf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 06:15:35 -0500
-Received: from m42-2.mailgun.net ([69.72.42.2]:55265 "EHLO m42-2.mailgun.net"
+        id S234193AbhCAMTD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 07:19:03 -0500
+Received: from mga05.intel.com ([192.55.52.43]:62084 "EHLO mga05.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231473AbhCALPa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 06:15:30 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1614597309; h=Content-Type: MIME-Version: Message-ID:
- In-Reply-To: Date: References: Subject: Cc: To: From: Sender;
- bh=+MIq16Ym9wWPNOeiUqUDLShHL7b+FQRIUIsXH27WoAs=; b=woos8iIyzlz1kmaItZ+Z9WXULpVUpzhcvJie0/Qhu/WxXhb87mhsTeK0H8XsgLv6Bq0nNTlC
- otHJ9mPCOzVY24WxuAFyb+/sPjxx8bMl7gOz+tY9nSHrKCx1pIRVReCQ1wqeaRWHcUsaGy+I
- 5vmAyOwGNVquS2w0LLWtiBCDaNE=
-X-Mailgun-Sending-Ip: 69.72.42.2
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 603ccc8f8f0d5ba6c593a35e (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 01 Mar 2021 11:14:23
- GMT
-Sender: kvalo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 84147C433CA; Mon,  1 Mar 2021 11:14:22 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from tynnyri.adurom.net (tynnyri.adurom.net [51.15.11.48])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: kvalo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D52D2C433C6;
-        Mon,  1 Mar 2021 11:14:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D52D2C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kvalo@codeaurora.org
-From:   Kalle Valo <kvalo@codeaurora.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Gokul Sriram Palanisamy <gokulsri@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        jhugo@codeaurora.org, hemantk@codeaurora.org,
-        sricharan@codeaurora.org, ath11k@lists.infradead.org
-Subject: Re: [PATCH v2] bus: mhi: core: Add unique qrtr node id support
-References: <1614336169-31467-1-git-send-email-gokulsri@codeaurora.org>
-        <1614336169-31467-2-git-send-email-gokulsri@codeaurora.org>
-        <20210226145245.GB70936@thinkpad>
-Date:   Mon, 01 Mar 2021 13:14:14 +0200
-In-Reply-To: <20210226145245.GB70936@thinkpad> (Manivannan Sadhasivam's
-        message of "Fri, 26 Feb 2021 20:22:45 +0530")
-Message-ID: <87k0qrceih.fsf@tynnyri.adurom.net>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S232733AbhCAMS6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Mar 2021 07:18:58 -0500
+IronPort-SDR: UVnu96fTdB1w98Rm7S4fW4kpWcVVYQRXe4zIME3oWkPIkm5ZdMzJEadWOZgavPRv8mGdeDgk+3
+ oQllrRAbp6qg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9909"; a="271442092"
+X-IronPort-AV: E=Sophos;i="5.81,215,1610438400"; 
+   d="scan'208";a="271442092"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Mar 2021 04:17:10 -0800
+IronPort-SDR: uoLQ3LIexQD/N9JNBk1/NZbIaneCouxYK75P8gTIqqE5GTWILcoOib49yu4SgDfPhC+ylf8ufq
+ 5BL0XNjeH65w==
+X-IronPort-AV: E=Sophos;i="5.81,215,1610438400"; 
+   d="scan'208";a="505042740"
+Received: from smile.fi.intel.com (HELO smile) ([10.237.68.40])
+  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Mar 2021 04:17:08 -0800
+Received: from andy by smile with local (Exim 4.94)
+        (envelope-from <andriy.shevchenko@linux.intel.com>)
+        id 1lGhU2-0098ZB-DO; Mon, 01 Mar 2021 14:17:06 +0200
+Date:   Mon, 1 Mar 2021 14:17:06 +0200
+From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Mika Westerberg <mika.westerberg@linux.intel.com>,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] gpiolib: acpi: support override broken GPIO number in
+ ACPI table
+Message-ID: <YDzbQqHspfvpYS7Z@smile.fi.intel.com>
+References: <20210226033919.8871-1-shawn.guo@linaro.org>
+ <CAHp75Vcb=NO9OWjSpBeVC4c+9=aXE=yiDWVBwLD1DnzwdgFD6Q@mail.gmail.com>
+ <20210226093925.GA24428@dragon>
+ <CAHp75Vc6xYv+197SOrSefQHD2h4Xy_N20gQajW4uF2PU=sJfLg@mail.gmail.com>
+ <YDjZOU+VMWasjzUb@smile.fi.intel.com>
+ <20210227031944.GB24428@dragon>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210227031944.GB24428@dragon>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+ ath11k list
+On Sat, Feb 27, 2021 at 11:19:45AM +0800, Shawn Guo wrote:
+> On Fri, Feb 26, 2021 at 01:19:21PM +0200, Andy Shevchenko wrote:
+> > On Fri, Feb 26, 2021 at 12:57:37PM +0200, Andy Shevchenko wrote:
+> > > On Fri, Feb 26, 2021 at 11:39 AM Shawn Guo <shawn.guo@linaro.org> wrote:
+> > > > On Fri, Feb 26, 2021 at 11:12:07AM +0200, Andy Shevchenko wrote:
+> > > > > On Fri, Feb 26, 2021 at 5:42 AM Shawn Guo <shawn.guo@linaro.org> wrote:
+> > > > > > Running kernel with ACPI on Lenovo Flex 5G laptop, touchpad is just
+> > > > > > not working.  That's because the GpioInt number of TSC2 node in ACPI
+> > > > > > table is simply wrong, and the number even exceeds the maximum GPIO
+> > > > > > lines.  As the touchpad works fine with Windows on the same machine,
+> > > > > > presumably this is something Windows-ism.  Although it's obviously
+> > > > > > a specification violation, believe of that Microsoft will fix this in
+> > > > > > the near future is not really realistic.
+> > > > > >
+> > > > > > It adds the support of overriding broken GPIO number in ACPI table
+> > > > > > on particular machines, which are matched using DMI info.  Such
+> > > > > > mechanism for fixing up broken firmware and ACPI table is not uncommon
+> > > > > > in kernel.  And hopefully it can be useful for other machines that get
+> > > > > > broken GPIO number coded in ACPI table.
+> > > > >
+> > > > > Thanks for the report and patch.
+> > > > >
+> > > > > First of all, have you reported the issue to Lenovo? At least they
+> > > > > will know that they did wrong.
+> > > >
+> > > > Yes, we are reporting this to Lenovo, but to be honest, we are not sure
+> > > > how much they will care about it, as they are shipping the laptop with
+> > > > Windows only.
+> > > >
+> > > > > Second, is it possible to have somewhere output of `acpidump -o
+> > > > > flex5g.dat` (the flex5g.dat file)?
+> > > >
+> > > > https://raw.githubusercontent.com/aarch64-laptops/build/master/misc/lenovo-flex-5g/dsdt.dsl
+> > 
+> > Looking into DSDT I think the problem is much worse. First of all there are
+> > many cases where pins like 0x140, 0x1c0, etc are being used. On top of that
+> > there is no GPIO driver in the upstream (as far as I can see by HID, perhaps
+> > there is a driver but for different HID. And I see that GPIO device consumes a
+> > lot of Interrupts from GIC as well (it's ARM platfrom as far as I understand).
+> 
+> Yes, it's a laptop built on Qualcomm Snapdragon SC8180X SoC.  The GPIO
+> driver is generic for all Snapdragon SoCs, and has been available in
+> upstream for many years (for DT though). It can be found as the gpio_chip
+> implementation in MSM pinctrl driver [1].  The SC8180X specific part can
+> be found as pinctrl-sc8180x.c [2], and it's already working for DT boot.
+> The only missing piece is to add "QCOM040D" as the acpi_device_id to
+> support ACPI boot, and it will be submitted after 5.12-rc1 comes out.
+> 
+> > Looking at the Microsoft brain damaged way of understanding GPIOs and hardware
+> > [1], I am afraid you really want to have a specific GPIO driver for this. So,
+> > for now until we have better picture of what's going on, NAK to this patch.
+> 
+> Thanks for the pointer to Microsoft document.  On Snapdragon, we have
+> only one GPIO instance that accommodates all GPIO pins, so I'm not sure
+> that Microsoft GPIOs mapping layer is relevant here at all.
+> 
+> Please take a look at the GPIO driver, and feel free to let me know if
+> you need any further information to understand what's going on.
 
-Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
+Yes, I looked into the driver and see that it has 3 blocks of GPIOs (we call
+them communities, but in the driver the term 'tiles' is used) AFAIU (correct me
+if I'm wrong). And who knows how many banks in each of them.
 
-> On Fri, Feb 26, 2021 at 04:12:49PM +0530, Gokul Sriram Palanisamy wrote:
->> On platforms with two or more identical mhi
->> devices, qmi service will run with identical
->> qrtr-node-id. Because of this identical ID,
->> host qrtr-lookup cannot register more than one
->> qmi service with identical node ID. Ultimately,
->> only one qmi service will be avilable for the
->> underlying drivers to communicate with.
->> 
->> On QCN9000, it implements a unique qrtr-node-id
->> and qmi instance ID using a unique instance ID
->> written to a debug register from host driver
->> soon after SBL is loaded.
->> 
->> This change generates a unique instance ID from
->> PCIe domain number and bus number, writes to the
->> given debug register just after SBL is loaded so
->> that it is available for FW when the QMI service
->> is spawned.
->> 
->> sample:
->> root@OpenWrt:/# qrtr-lookup
->>   Service Version Instance Node  Port
->>        15       1        0    8     1 Test service
->>        69       1        8    8     2 ATH10k WLAN firmware service
->>        15       1        0   24     1 Test service
->>        69       1       24   24     2 ATH10k WLAN firmware service
->> 
->> Here 8 and 24 on column 3 (QMI Instance ID)
->> and 4 (QRTR Node ID) are the node IDs that
->> is unique per mhi device.
->> 
->> Signed-off-by: Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
->> ---
->>  drivers/bus/mhi/core/boot.c | 14 ++++++++++++++
->>  1 file changed, 14 insertions(+)
->> 
->> diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
->> index c2546bf..5e5dad5 100644
->> --- a/drivers/bus/mhi/core/boot.c
->> +++ b/drivers/bus/mhi/core/boot.c
->> @@ -16,8 +16,12 @@
->>  #include <linux/random.h>
->>  #include <linux/slab.h>
->>  #include <linux/wait.h>
->> +#include <linux/pci.h>
->>  #include "internal.h"
->>  
->> +#define QRTR_INSTANCE_MASK	0x000000FF
->> +#define QRTR_INSTANCE_SHIFT	0
->> +
->>  /* Setup RDDM vector table for RDDM transfer and program RXVEC */
->>  void mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
->>  		      struct image_info *img_info)
->> @@ -391,6 +395,9 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
->>  	const struct firmware *firmware = NULL;
->>  	struct image_info *image_info;
->>  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
->> +	struct pci_dev *pci_dev = to_pci_dev(mhi_cntrl->cntrl_dev);
->> +	struct pci_bus *bus = pci_dev->bus;
->> +	uint32_t instance;
->>  	const char *fw_name;
->>  	void *buf;
->>  	dma_addr_t dma_addr;
->> @@ -466,6 +473,13 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
->>  		return;
->>  	}
->>  
->> +	instance = ((pci_domain_nr(bus) & 0xF) << 4) | (bus->number & 0xF);
->> +	instance &= QRTR_INSTANCE_MASK;
->> +
->> +	mhi_write_reg_field(mhi_cntrl, mhi_cntrl->bhi,
->> +			    BHI_ERRDBG2, QRTR_INSTANCE_MASK,
->> +			    QRTR_INSTANCE_SHIFT, instance);
->
-> You cannot not do this in MHI stack. Why can't you do this in the MHI controller
-> specific to QCN9000? And btw, is QCN9000 supported in mainline?
+I'm afraid that MS does on his way and not yours.
 
-I'm not sure what QCN9000 means but I'm guessing it's QCN9074. We have
-initial QCN9074 support in ath11k but there are some issues still so
-it's not enabled by default (yet):
+Can we have TRM for GPIO IP used there and any evidence / document from
+firmware team about the implementation of the GPIO numbering in the ACPI
+(at Intel we have so called BIOS Writers Guide that is given to the customers
+where such info can be found)?
 
-https://git.kernel.org/pub/scm/linux/kernel/git/kvalo/ath.git/commit/?h=ath-next&id=4e80946197a83a6115e308334618449b77696d6a
-
-And I suspect we have this same qrtr issue with any ath11k PCI device,
-including QCA6390, so this is not a QCN9074 specific problem.
-
-BTW Gokul, please always CC the ath11k list when submitting patches
-which are related to ath11k.
+> [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/pinctrl/qcom/pinctrl-msm.c#n713
+> [2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/pinctrl/qcom/pinctrl-sc8180x.c
 
 -- 
-https://patchwork.kernel.org/project/linux-wireless/list/
+With Best Regards,
+Andy Shevchenko
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+
