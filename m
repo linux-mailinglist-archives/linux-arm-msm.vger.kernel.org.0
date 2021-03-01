@@ -2,152 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BDD973279D5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 09:49:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CF5C327A51
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 10:03:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233535AbhCAIrZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 03:47:25 -0500
-Received: from m42-2.mailgun.net ([69.72.42.2]:13415 "EHLO m42-2.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233444AbhCAIqO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 03:46:14 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1614588348; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=Cey4WVl7LtaCP6MJNq4HJn9FVmHktZGEEAE5nLQ/M8A=;
- b=msX9yDzfT02Z7rRyMhfib8r0n4Lfa3NDw3tpSA9FRrZUFzG0yF4s9bqq5UL0pU/8RCNDLCuH
- TQ6kcwh03FGvP6rlM3yFBjXaAHmMCLFkXpGs3Np83hqJyNY0eYiIxxrCoCK/tjNRFtw6TPBq
- iqDShotS/dqqEkX4YVu7zPQGdl0=
-X-Mailgun-Sending-Ip: 69.72.42.2
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 603ca9997aa94c52e7f31702 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 01 Mar 2021 08:45:13
- GMT
-Sender: kgunda=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C8F33C43463; Mon,  1 Mar 2021 08:45:13 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: kgunda)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EA03EC43462;
-        Mon,  1 Mar 2021 08:45:12 +0000 (UTC)
+        id S233744AbhCAJBw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 04:01:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53202 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233775AbhCAJA2 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Mar 2021 04:00:28 -0500
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FBD5C061786
+        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Mar 2021 00:59:48 -0800 (PST)
+Received: by mail-lj1-x22f.google.com with SMTP id a17so18501376ljq.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Mar 2021 00:59:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=AYs79IPnRt3qtzNnShKWZ7vyowWc2VUelHvdooVHnZg=;
+        b=kcf6kcitYZpg70CypoUp8KXILwBgfW62DpbNjWslqlp4qw62fI7tzmXjPZQCmQxMc8
+         y7E4AtX2Fmm4bNLcfXcEPW4KygtdDIAQoh7/Gppn2wuQW/GKYs0Umn4Wm46XccGHSmBe
+         jy7uA45XkN8GMGoDoJDciHZsVQhSFIR5XDAoh0rW972s2s04adtjid+35nHXnoln8MA8
+         FxCO26S/5xLKeLnx947E7nXZn0Rnap1zKbmn2OkkQ+VOi8uxBgu0gE1sSxomW3gthjJM
+         ufu7iyDDX3VZgWZtHNc17YGxcgin7Xk21+hnZeVkHrui+fqknKWQ+8YcQvAzXeWUB5vl
+         a9WQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=AYs79IPnRt3qtzNnShKWZ7vyowWc2VUelHvdooVHnZg=;
+        b=uiJ5IKstq9otewjaZhLdkt8muWBxoO+zGuNtt3Aqaa3E4+CHh98dg/03oAi14gs2WR
+         Dl7T0m2zNxctJAISllfN4SZyguxH7Yeu8MtdLGR3nR97UUFZSvKJb1umju0trxCN34LL
+         O+jVwz9XyMVqQCG3k7aTnklVPuNKSAB6DiR7W2n+/EQ0hvSQ5zpjPn5owKNo0zY4heEo
+         RQy/6dbLCy5XqpEw+qAyOTLbyt4K8YW1Dp9U+QOTTjzSr6j4+kGH6gxINdvu2NWh+LtV
+         CMcPfE5RYit/W/wpyVOHN6a0oG7FbFp2Mlp3yhVwWfEZ1yDjs5P1owJwFudmtjI84YaD
+         txFQ==
+X-Gm-Message-State: AOAM532DU58jzyAo1W5/BjTBuqZ/u6szPVfnA1YSYXwEQsQDzmoJ6EHp
+        r16Gbh8Q6OPQglGfMNyN45AqA6z4JN8Mz0QgWGJ9xw==
+X-Google-Smtp-Source: ABdhPJyj3pw+C0NXHPjoJdDWHXn0vLK/WBMS4zWE5j9GGEZHyMLzxq+OeogebxlDuBb2zgJuFq1OMvgpJB8dxst6o6c=
+X-Received: by 2002:a2e:9754:: with SMTP id f20mr6463797ljj.200.1614589186573;
+ Mon, 01 Mar 2021 00:59:46 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 01 Mar 2021 14:15:12 +0530
-From:   kgunda@codeaurora.org
-To:     Daniel Thompson <daniel.thompson@linaro.org>
-Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
-        lee.jones@linaro.org, b.zolnierkie@samsung.com,
-        dri-devel@lists.freedesktop.org, jacek.anaszewski@gmail.com,
-        pavel@ucw.cz, robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org,
-        phone-devel@vger.kernel.org
-Subject: Re: [PATCH V2 2/2] backlight: qcom-wled: Correct the sync_toggle
- sequence
-In-Reply-To: <20210226172601.aknj2d4hghkkqjol@maple.lan>
-References: <1614341544-5306-1-git-send-email-kgunda@codeaurora.org>
- <1614341544-5306-3-git-send-email-kgunda@codeaurora.org>
- <20210226172601.aknj2d4hghkkqjol@maple.lan>
-Message-ID: <0cca377c2a7648c5f1606e38ba1b7d4d@codeaurora.org>
-X-Sender: kgunda@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <20210211113309.1.I629b2366a6591410359c7fcf6d385b474b705ca2@changeid>
+In-Reply-To: <20210211113309.1.I629b2366a6591410359c7fcf6d385b474b705ca2@changeid>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Mon, 1 Mar 2021 09:59:35 +0100
+Message-ID: <CACRpkdbQa3BZwgtp3=061cu+y+4qkMqtXQhXH_VuHB3KcLyDCA@mail.gmail.com>
+Subject: Re: [PATCH] drm/dsi: Add _NO_ to MIPI_DSI_* flags disabling features
+To:     Nicolas Boichat <drinkcat@chromium.org>
+Cc:     Andrzej Hajda <a.hajda@samsung.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Emil Velikov <emil.velikov@collabora.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Rikard Falkeborn <rikard.falkeborn@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>, Sean Paul <sean@poorly.run>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Xin Ji <xji@analogixsemi.com>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "moderated list:ARM/Mediatek SoC support" 
+        <linux-mediatek@lists.infradead.org>,
+        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-02-26 22:56, Daniel Thompson wrote:
-> On Fri, Feb 26, 2021 at 05:42:24PM +0530, Kiran Gunda wrote:
->> As per the current implementation, after FSC (Full Scale Current)
->> and brightness update the sync bits are transitioned from 1 to 0.
-> 
-> This still seems to incorrectly describe the current behaviour.
-> 
-> Surely in most cases (i.e. every time except the first) the value of 
-> the
-> sync bit is 0 when the function is called and we get both a 0 to 1
-> and then a 1 to 0 transition.
-> 
-> That is why I recommended set-then-clear terminology to describe the
-> current behaviour. It is concise and correct.
-> 
-> 
-> Daniel.
-> 
-> 
-> 
-Okay. Actually I have mentioned the "clear-and-set" in explaining the 
-fix.
-Let me modify the same terminology in explaining the problem case also.
+On Thu, Feb 11, 2021 at 4:34 AM Nicolas Boichat <drinkcat@chromium.org> wrote:
 
->> But, the FSC and brightness sync takes place during a 0 to 1
->> transition of the sync bits. So the hardware team recommends a
->> clear-then-set approach in order to guarantee such a transition
->> regardless of the previous register state.
->> 
->> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
->> ---
->>  drivers/video/backlight/qcom-wled.c | 12 ++++++------
->>  1 file changed, 6 insertions(+), 6 deletions(-)
->> 
->> diff --git a/drivers/video/backlight/qcom-wled.c 
->> b/drivers/video/backlight/qcom-wled.c
->> index aef52b9..19f83ac 100644
->> --- a/drivers/video/backlight/qcom-wled.c
->> +++ b/drivers/video/backlight/qcom-wled.c
->> @@ -337,13 +337,13 @@ static int wled3_sync_toggle(struct wled *wled)
->> 
->>  	rc = regmap_update_bits(wled->regmap,
->>  				wled->ctrl_addr + WLED3_SINK_REG_SYNC,
->> -				mask, mask);
->> +				mask, WLED3_SINK_REG_SYNC_CLEAR);
->>  	if (rc < 0)
->>  		return rc;
->> 
->>  	rc = regmap_update_bits(wled->regmap,
->>  				wled->ctrl_addr + WLED3_SINK_REG_SYNC,
->> -				mask, WLED3_SINK_REG_SYNC_CLEAR);
->> +				mask, mask);
->> 
->>  	return rc;
->>  }
->> @@ -353,17 +353,17 @@ static int wled5_mod_sync_toggle(struct wled 
->> *wled)
->>  	int rc;
->>  	u8 val;
->> 
->> -	val = (wled->cfg.mod_sel == MOD_A) ? WLED5_SINK_REG_SYNC_MOD_A_BIT :
->> -					     WLED5_SINK_REG_SYNC_MOD_B_BIT;
->>  	rc = regmap_update_bits(wled->regmap,
->>  				wled->sink_addr + WLED5_SINK_REG_MOD_SYNC_BIT,
->> -				WLED5_SINK_REG_SYNC_MASK, val);
->> +				WLED5_SINK_REG_SYNC_MASK, 0);
->>  	if (rc < 0)
->>  		return rc;
->> 
->> +	val = (wled->cfg.mod_sel == MOD_A) ? WLED5_SINK_REG_SYNC_MOD_A_BIT :
->> +					     WLED5_SINK_REG_SYNC_MOD_B_BIT;
->>  	return regmap_update_bits(wled->regmap,
->>  				  wled->sink_addr + WLED5_SINK_REG_MOD_SYNC_BIT,
->> -				  WLED5_SINK_REG_SYNC_MASK, 0);
->> +				  WLED5_SINK_REG_SYNC_MASK, val);
->>  }
->> 
->>  static int wled_ovp_fault_status(struct wled *wled, bool *fault_set)
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
->> Forum,
->>  a Linux Foundation Collaborative Project
->> 
+> Many of the DSI flags have names opposite to their actual effects,
+> e.g. MIPI_DSI_MODE_EOT_PACKET means that EoT packets will actually
+> be disabled. Fix this by including _NO_ in the flag names, e.g.
+> MIPI_DSI_MODE_NO_EOT_PACKET.
+
+Unless someone like me interpreted it literally...
+
+Like in these:
+
+>  drivers/gpu/drm/mcde/mcde_dsi.c                      | 2 +-
+>  drivers/gpu/drm/panel/panel-novatek-nt35510.c        | 2 +-
+>  drivers/gpu/drm/panel/panel-samsung-s6d16d0.c        | 2 +-
+>  drivers/gpu/drm/panel/panel-sony-acx424akp.c         | 2 +-
+
+> diff --git a/drivers/gpu/drm/mcde/mcde_dsi.c b/drivers/gpu/drm/mcde/mcde_dsi.c
+> index 2314c8122992..f4cdc3cfd7d0 100644
+> --- a/drivers/gpu/drm/mcde/mcde_dsi.c
+> +++ b/drivers/gpu/drm/mcde/mcde_dsi.c
+> @@ -760,7 +760,7 @@ static void mcde_dsi_start(struct mcde_dsi *d)
+>                 DSI_MCTL_MAIN_DATA_CTL_BTA_EN |
+>                 DSI_MCTL_MAIN_DATA_CTL_READ_EN |
+>                 DSI_MCTL_MAIN_DATA_CTL_REG_TE_EN;
+> -       if (d->mdsi->mode_flags & MIPI_DSI_MODE_EOT_PACKET)
+> +       if (d->mdsi->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET)
+>                 val |= DSI_MCTL_MAIN_DATA_CTL_HOST_EOT_GEN;
+
+If you read the code you can see that this is interpreted as inserting
+an EOT packet, so here you need to change the logic such:
+
+if (!d->mdsi->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET)
+    val |= DSI_MCTL_MAIN_DATA_CTL_HOST_EOT_GEN;
+
+This will make sure the host generates the EOT packet in HS mode
+*unless* the flag is set.
+
+(I checked the data sheet.)
+
+> diff --git a/drivers/gpu/drm/panel/panel-novatek-nt35510.c b/drivers/gpu/drm/panel/panel-novatek-nt35510.c
+> index b9a0e56f33e2..9d9334656803 100644
+> --- a/drivers/gpu/drm/panel/panel-novatek-nt35510.c
+> +++ b/drivers/gpu/drm/panel/panel-novatek-nt35510.c
+> @@ -899,7 +899,7 @@ static int nt35510_probe(struct mipi_dsi_device *dsi)
+>         dsi->hs_rate = 349440000;
+>         dsi->lp_rate = 9600000;
+>         dsi->mode_flags = MIPI_DSI_CLOCK_NON_CONTINUOUS |
+> -               MIPI_DSI_MODE_EOT_PACKET;
+> +               MIPI_DSI_MODE_NO_EOT_PACKET;
+
+Here you should just delete the MIPI_DSI_MODE_EOT_PACKET
+flag because this was used with the MCDE driver which interpret the
+flag literally.
+
+> diff --git a/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c b/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
+> index 4aac0d1573dd..b04b9975e9b2 100644
+> --- a/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
+> +++ b/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
+> @@ -186,7 +186,7 @@ static int s6d16d0_probe(struct mipi_dsi_device *dsi)
+>          */
+>         dsi->mode_flags =
+>                 MIPI_DSI_CLOCK_NON_CONTINUOUS |
+> -               MIPI_DSI_MODE_EOT_PACKET;
+> +               MIPI_DSI_MODE_NO_EOT_PACKET;
+
+Same, just delete the flag.
+
+> --- a/drivers/gpu/drm/panel/panel-samsung-s6e63m0-dsi.c
+> +++ b/drivers/gpu/drm/panel/panel-samsung-s6e63m0-dsi.c
+> @@ -97,7 +97,7 @@ static int s6e63m0_dsi_probe(struct mipi_dsi_device *dsi)
+>         dsi->hs_rate = 349440000;
+>         dsi->lp_rate = 9600000;
+>         dsi->mode_flags = MIPI_DSI_MODE_VIDEO |
+> -               MIPI_DSI_MODE_EOT_PACKET |
+> +               MIPI_DSI_MODE_NO_EOT_PACKET |
+>                 MIPI_DSI_MODE_VIDEO_BURST;
+
+Same, just delete the flag.
+
+> diff --git a/drivers/gpu/drm/panel/panel-sony-acx424akp.c b/drivers/gpu/drm/panel/panel-sony-acx424akp.c
+> index 065efae213f5..6b706cbf2f9c 100644
+> --- a/drivers/gpu/drm/panel/panel-sony-acx424akp.c
+> +++ b/drivers/gpu/drm/panel/panel-sony-acx424akp.c
+> @@ -450,7 +450,7 @@ static int acx424akp_probe(struct mipi_dsi_device *dsi)
+>         else
+>                 dsi->mode_flags =
+>                         MIPI_DSI_CLOCK_NON_CONTINUOUS |
+> -                       MIPI_DSI_MODE_EOT_PACKET;
+> +                       MIPI_DSI_MODE_NO_EOT_PACKET;
+
+Same, just delete the flag.
+
+These are all just semantic bugs due to the ambiguity of the flags, it is
+possible to provide a Fixes: flag for each file using this flag the wrong way
+but I dunno if it's worth it.
+
+Yours,
+Linus Walleij
