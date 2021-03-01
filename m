@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BE43A329261
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 21:46:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 99280329274
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 21:46:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241878AbhCAUoU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 15:44:20 -0500
-Received: from mail.kernel.org ([198.145.29.99]:53300 "EHLO mail.kernel.org"
+        id S236647AbhCAUpo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 15:45:44 -0500
+Received: from mail.kernel.org ([198.145.29.99]:54452 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S243294AbhCAUlN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 15:41:13 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id 36EFB64E3F;
+        id S243684AbhCAUnL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Mar 2021 15:43:11 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id 9525664E56;
         Mon,  1 Mar 2021 19:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1614628782;
-        bh=fwpEttIRBmIFlyc1Z95lKP31uJyU6JzYtsnUHV1Ys2E=;
+        bh=lOHnpPghpqZCQdEMQCC/qLeFl1xV8u1OnBkKfBTJE5U=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=J+71PtdSXcxwr/OKNGuWRBMfzKIqk4BK+rTIs6Rew11ths/vCmc/mNKSeKm1b4caq
-         iLnOfDCVYFQRJno/YoqoG85mB3/S2Intb0rSStGJIIH8JVVcE6w2D5dyI00BUmuxhs
-         5QoS+yhcbLED3munyzHdR9MIdrGdEGB5W3ULyiED+C4219RCXDmRkfeXR8Xh591X+S
-         iThqtWqYA4xSYP1KceVQSL7Syoc8mYVuo710mAqPWaGhyU6warm2kIDBZXv9OKJRrk
-         1nZj8WPM7PO8R64a6tSVDRFr6u/cfiqyhnZkLHujeykqRQlLD1LceaZEc56fcZwoGc
-         /zPKp/VPN/Fpw==
+        b=pZ0+TYRVQ0Z3ZAsgDkp2Fs6z4anxYKOa9djhsE5Xm+QlWNHWQ27HEElQDfeTj4zt0
+         3oa3RCmZLI789YU6d4Mqx1Zx//4bjvlER3BzsqtQgKMHggQN3K8JlrtDEwCGHnlmN/
+         wf44b8VQd65fu51sUH/ZOchm3MSPybumSaTC13N/l9Xwe5e0reKFXG9Rm+cF+7/sYf
+         UHs1Yn4BvieNHhwn+R8PAzoAoAV38tojaFt50GQrx3jyyi1pkLECsVAnmV/HEQk0Rg
+         mrPu/2/5CRLxx5Lo54aNLzscNvw9L+ZZ5jU7qFvTkMZxXpHEFqfGkanmsMm9wwdFP9
+         0nsLozvzyWS+w==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 3365460997;
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 8EA0560C25;
         Mon,  1 Mar 2021 19:59:42 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 1/2] drm/msm: Call msm_init_vram before binding the gpu
+Subject: Re: [PATCH v2] soc: qcom: geni: shield geni_icc_get() for ACPI boot
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <161462878220.6187.2782278560020089147.git-patchwork-notify@kernel.org>
+Message-Id: <161462878258.6187.4441233170588505674.git-patchwork-notify@kernel.org>
 Date:   Mon, 01 Mar 2021 19:59:42 +0000
-References: <20201230152944.3635488-1-iskren.chernev@gmail.com>
-In-Reply-To: <20201230152944.3635488-1-iskren.chernev@gmail.com>
-To:     Iskren Chernev <iskren.chernev@gmail.com>
+References: <20210114112928.11368-1-shawn.guo@linaro.org>
+In-Reply-To: <20210114112928.11368-1-shawn.guo@linaro.org>
+To:     Shawn Guo <shawn.guo@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -43,23 +43,21 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hello:
 
-This series was applied to qcom/linux.git (refs/heads/for-next):
+This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Wed, 30 Dec 2020 17:29:42 +0200 you wrote:
-> From: Craig Tatlor <ctatlor97@gmail.com>
-> 
-> vram.size is needed when binding a gpu without an iommu and is defined
-> in msm_init_vram(), so run that before binding it.
-> 
-> Signed-off-by: Craig Tatlor <ctatlor97@gmail.com>
+On Thu, 14 Jan 2021 19:29:28 +0800 you wrote:
+> Currently, GENI devices like i2c-qcom-geni fails to probe in ACPI boot,
+> if interconnect support is enabled.  That's because interconnect driver
+> only supports DT right now.  As interconnect is not necessarily required
+> for basic function of GENI devices, let's shield geni_icc_get() call,
+> and then all other ICC calls become nop due to NULL icc_path, so that
+> GENI devices keep working for ACPI boot.
 > 
 > [...]
 
 Here is the summary with links:
-  - [1/2] drm/msm: Call msm_init_vram before binding the gpu
-    https://git.kernel.org/qcom/c/d863f0c7b536
-  - [2/2] drm/msm: Add modparam to allow vram carveout
-    https://git.kernel.org/qcom/c/3f7759e7b758
+  - [v2] soc: qcom: geni: shield geni_icc_get() for ACPI boot
+    https://git.kernel.org/qcom/c/ee23057b4d6f
 
 You are awesome, thank you!
 --
