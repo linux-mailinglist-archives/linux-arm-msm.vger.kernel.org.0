@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D11A13292B8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 21:52:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B5173292DE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 21:54:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242912AbhCAUu0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 15:50:26 -0500
-Received: from mail.kernel.org ([198.145.29.99]:55056 "EHLO mail.kernel.org"
+        id S235256AbhCAUyW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 15:54:22 -0500
+Received: from mail.kernel.org ([198.145.29.99]:55300 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S242827AbhCAUro (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 15:47:44 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id D851E64EEE;
-        Mon,  1 Mar 2021 19:59:43 +0000 (UTC)
+        id S243682AbhCAUup (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Mar 2021 15:50:45 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id E44EC64F1C;
+        Mon,  1 Mar 2021 19:59:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1614628783;
-        bh=hr+5sZCnsErnOnpY5LBXkzgEJlWY/c+yeeWl5ldwZjo=;
+        s=k20201202; t=1614628784;
+        bh=4aZAdcYbYknOguy/+684DgW5sgDKmShy1uRUzvfnp1c=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=hPhpIhsrUJNrbZL+O3SFuLVbN9wuj6oE51DsEUkDUnT1npEnWPZbpwEUkcg+fnrDl
-         +5VuRouwmdyvPFQUjEzM68ytdMBGJuzTQQXutNIuXmqQrwXn6cXSjuQcLTRVQNtAoI
-         0oGaDzUj2CbodvgvWy6GWxtDbKSsu/OIcMQauHcgnzZ5AL1UcgxyHfJBYJJBmPDMAE
-         X7Dp5R1aY+secf6YiEnSdG7311mvO7p/qCZYh1QQSzkLQpqALJrphhKo47uaU5nPUR
-         YskRgwQ5SgII4kITsTA0XcQIEK+I/1J9OwFEAEvD8h5oh8nyvna3KER3HaS8A6zAxm
-         JOK6uwmCt7M4Q==
+        b=pQ7fMD+3SmN00UIo4pgB9R8Lb9+wjf5GMswWi4k6Z8JXIE0bt2z+looOUbg5Iq3J7
+         JgpJk7fSyv5ALehBHKtYz+lyID1lXG+fDcyvSayEGARDONDetD/PaC+kIaOH0zguzr
+         sZRjvHS4DQFMBW3WE38nSD3BIU9wZQVjQgmb2it/PzYQEa50PtctStEsBRRwwHVAlb
+         nVLgxKakFfMt5mc3Ggk+WUtqGdPwGfyl/QG2Ek/5XApJy6WKklt7PS1j/FhDF9mfo6
+         T127zFijsKBykafS5nE+vYAaoO3+gXWoz5NSXVcvJ6q0/7CgWESdkLcjC7lsyeqck6
+         4XS//VC1LlFZA==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id D452760C26;
-        Mon,  1 Mar 2021 19:59:43 +0000 (UTC)
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id DF3CF60A1B;
+        Mon,  1 Mar 2021 19:59:44 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] drm/msm/dp: remove unneeded semicolon
+Subject: Re: [PATCH] clk: qcom: gcc-sm8350: add gdsc
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <161462878386.6187.12559417934027688802.git-patchwork-notify@kernel.org>
-Date:   Mon, 01 Mar 2021 19:59:43 +0000
-References: <1608983080-53515-1-git-send-email-tiantao6@hisilicon.com>
-In-Reply-To: <1608983080-53515-1-git-send-email-tiantao6@hisilicon.com>
-To:     Tian Tao <tiantao6@hisilicon.com>
+Message-Id: <161462878491.6187.9923500746756366403.git-patchwork-notify@kernel.org>
+Date:   Mon, 01 Mar 2021 19:59:44 +0000
+References: <20210210161649.431741-1-vkoul@kernel.org>
+In-Reply-To: <20210210161649.431741-1-vkoul@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -45,18 +45,18 @@ Hello:
 
 This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Sat, 26 Dec 2020 19:44:40 +0800 you wrote:
-> Fix the following warning:
-> drivers/gpu/drm/msm/dp/dp_ctrl.c:1161:2-3: Unneeded semicolon
+On Wed, 10 Feb 2021 21:46:49 +0530 you wrote:
+> Add the GDSC found in GCC for SM8350 SoC
 > 
-> Signed-off-by: Tian Tao <tiantao6@hisilicon.com>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 > ---
->  drivers/gpu/drm/msm/dp/dp_ctrl.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  drivers/clk/qcom/gcc-sm8350.c               | 100 ++++++++++++++++++++
+>  include/dt-bindings/clock/qcom,gcc-sm8350.h |  12 +++
+>  2 files changed, 112 insertions(+)
 
 Here is the summary with links:
-  - drm/msm/dp: remove unneeded semicolon
-    https://git.kernel.org/qcom/c/a014abfec541
+  - clk: qcom: gcc-sm8350: add gdsc
+    https://git.kernel.org/qcom/c/3fade948fbb3
 
 You are awesome, thank you!
 --
