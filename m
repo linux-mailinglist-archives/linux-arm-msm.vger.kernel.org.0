@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 70772329305
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 21:58:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DE1163292EB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 21:57:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243805AbhCAU5P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 15:57:15 -0500
-Received: from mail.kernel.org ([198.145.29.99]:56914 "EHLO mail.kernel.org"
+        id S236494AbhCAUze (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 15:55:34 -0500
+Received: from mail.kernel.org ([198.145.29.99]:55336 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S243873AbhCAUxI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 15:53:08 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id 43BEC64F2B;
+        id S237550AbhCAUvG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Mar 2021 15:51:06 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id 1490E64F23;
         Mon,  1 Mar 2021 19:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1614628785;
-        bh=H60K1nZunVTMPv8rHSluhgszb2xU2WQ3XeE+zoh3IMY=;
+        bh=vLjCuWXR6XVeerIBncozaiq25XbwGySwJ0WzJVT7liY=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=SnxyJAAZWHNDoQjH5lEc5bPpmRj3VCEOxaL3BEHYiVWgDhuVrfXn2hc9Hs1xACMp8
-         Py4fIdzMqZEVj0n5qO08kvDFo4nYaWcKcVFb/dzIFoEVoCu1Cb0BLanf+B8dyncdDN
-         wIUjyOMN6KXQo2QjWS7AMDnlkbpXiHKq5HRheykLy2M3iTR+J60xnT1zlmygu7qx0F
-         /047ZxloYjjU3hyhY8zg1f8DDtye3gtgF0Xg+etzgHzlXn353zU5EAsQFON8p1LOUR
-         IKi5L5nkdmPJF4qp8PbZBlqOi0lEXttgpmQa1ZIB6vfkXmtS4WsKJdi2OT7w+CMpOf
-         gLNXOB6bFluQA==
+        b=jsbqtsN6Nl2C6GGnSsg91oEtkBjQ/Ah1WiyvTI9H74217yCJBs0jXGkF/5WezmQKG
+         80TQWKHN2xqYrrx4hkMLWCh9/Wed4E896f1fiE7pjhdLgOwbDbHH6Dnzub+zTJRlRs
+         OSLDkrxkSlqbDZbjyWOYG7C7cESwvAPyfwWlcc1IByOkA/9gAV3M3SxEUJWNhMB8Pj
+         nkVZe9rCfdq04JJguLgszXkXLvBpiSHM0jTmBqkayIzaLdg8ZAJQX+u14/8YUjfkKS
+         KJrPqhu3ap2rxIMC8LO6LUJqc3m4dyZCgA1L74XWcorU06nK+4xS1Na+NfrkrW0YNx
+         BH3QIMfWwSvKQ==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 4083560C25;
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 10E6760C27;
         Mon,  1 Mar 2021 19:59:45 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2] mhi: pci_generic: Print warning in case of firmware crash
+Subject: Re: [PATCH v6 0/2] pinctrl: qcom: Add SM8350 pinctrl support
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <161462878526.6187.1577690332258140339.git-patchwork-notify@kernel.org>
+Message-Id: <161462878506.6187.10985745577123473830.git-patchwork-notify@kernel.org>
 Date:   Mon, 01 Mar 2021 19:59:45 +0000
-References: <1612370382-21643-1-git-send-email-loic.poulain@linaro.org>
-In-Reply-To: <1612370382-21643-1-git-send-email-loic.poulain@linaro.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
+References: <20210205140132.274242-1-vkoul@kernel.org>
+In-Reply-To: <20210205140132.274242-1-vkoul@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -43,21 +43,25 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hello:
 
-This patch was applied to qcom/linux.git (refs/heads/for-next):
+This series was applied to qcom/linux.git (refs/heads/for-next):
 
-On Wed,  3 Feb 2021 17:39:42 +0100 you wrote:
-> Print warning when MHI detects sys error.
+On Fri,  5 Feb 2021 19:31:30 +0530 you wrote:
+> This adds binding and driver for TLMM block found in SM8350 SoC
 > 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> ---
->  v2: remove useless fallthough & unused mhi_pdev variable
+> The binding is dependent on TLMM common binding from Bjorn:
+>  https://lore.kernel.org/linux-arm-msm/20210126042650.1725176-1-bjorn.andersson@linaro.org
 > 
->  drivers/bus/mhi/pci_generic.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
+> Changes in v6:
+>  - Add rob and bjorn r-b
+>  - removed quotes around 'defs' and drop the phandle for binding
+> 
+> [...]
 
 Here is the summary with links:
-  - [v2] mhi: pci_generic: Print warning in case of firmware crash
-    https://git.kernel.org/qcom/c/1e2f29ba83c5
+  - [v6,1/2] dt-bindings: pinctrl: qcom: Add SM8350 pinctrl bindings
+    https://git.kernel.org/qcom/c/432e10330c39
+  - [v6,2/2] pinctrl: qcom: Add SM8350 pinctrl driver
+    https://git.kernel.org/qcom/c/d5d348a3271f
 
 You are awesome, thank you!
 --
