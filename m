@@ -2,124 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D472A3286DA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 18:17:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F0841328663
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 18:10:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238007AbhCARQc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 12:16:32 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:54294 "EHLO z11.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237132AbhCAROP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 12:14:15 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1614618823; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=BfVrcOWVRzGvz+Dbm8uCXcC2vuzUg8HrSEaSSdN8Zi8=; b=TO4WGtFjq3PDk0Ssjpn0YaiHwmlmLeOMaq18ZrLOtEx80Ih288fUAWCF5U6Xcm/vW9Ad0D9L
- aPsJRZZlGCUX0CczmYJbuePSCoOsUcGcKhfxlr7Vfi5lGlAsIm+SHlvTzB5Q9sVt5D5uK4H2
- dmaPSeo8stUyN2IXe79VWFyczw0=
-X-Mailgun-Sending-Ip: 104.130.96.11
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 603d1db6832f19b9ef925433 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 01 Mar 2021 17:00:38
- GMT
-Sender: tdas=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 954D6C43465; Mon,  1 Mar 2021 17:00:38 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [192.168.0.110] (unknown [49.204.182.166])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: tdas)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D4055C433CA;
-        Mon,  1 Mar 2021 17:00:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D4055C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=tdas@codeaurora.org
-Subject: Re: [PATCH] clk: qcom: gcc-sc7180: Use floor ops for the correct
- sdcc1 clk
-To:     Douglas Anderson <dianders@chromium.org>, sboyd@kernel.org
-Cc:     vbadigan@codeaurora.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20210224095013.1.I2e2ba4978cfca06520dfb5d757768f9c42140f7c@changeid>
-From:   Taniya Das <tdas@codeaurora.org>
-Message-ID: <3b972d6d-15df-ddf6-c57f-9e1ad08564db@codeaurora.org>
-Date:   Mon, 1 Mar 2021 22:30:31 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.1
+        id S236254AbhCARJL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 12:09:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45102 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237257AbhCARIB (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Mar 2021 12:08:01 -0500
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0122C061788;
+        Mon,  1 Mar 2021 09:07:19 -0800 (PST)
+Received: by mail-pj1-x102e.google.com with SMTP id l18so12305760pji.3;
+        Mon, 01 Mar 2021 09:07:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=meNzHvtojOauHTFuv2tlbQj0jLwkt/JOAjAHzaQmqk8=;
+        b=szav/lCXU50Ov+1kbs32stTAAELOjuwRA/XKCcqZhrRIN8XE48XQ8Z7GfTI7Jb6AR1
+         juYoMz6Uv0S8JGEZOapL6c6K0Jx43h2dx7K+C9aQf/hOoTHSgHVsyYSYi3f3nxS1jUEo
+         oqt46EP4l2r4ih7GdZGuAFQdmX05W2Pe4pY99QrGUsWtAmrYCxbsaLHIBE65+87piyQ7
+         sLEC2nsc1B7puKD+KnmcQAz62wbN5r99AbRZvGalNfczRhTmGaM2x/VPMuyOJ+Dd6psG
+         zK9oSJXHjY8U+xxZyp+J001VpwwNSH4kA8LcLMuaaX1thrSuz143bJW8o7m1H7FlgYk3
+         7JRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=meNzHvtojOauHTFuv2tlbQj0jLwkt/JOAjAHzaQmqk8=;
+        b=UetyWwX+sTg9vi7rVpqW3hlPWOHBzLoL2IcGMd0lsJgNz1QfLEOecT4fnSApqt3U7d
+         2/m/dDEK7yAo3znMpPwo+elAuEWrpgDXxEHR+4hdBcnLcjkNGyza6SeDJnPu+xwLIsNH
+         LcvZHUZaoUW4ZWLX877uNMq+vmpQTJZECXm1keE96Qy3iE6XznQSFIUcux05fdTtXMZP
+         /GeDMUZrhAtT5xaPGl5siiNxSIggxcxm46I5daVtgkxok0OxmCiLnGoLQ9fUMbX0uXMR
+         /jE7jGdTFUt0vlR5pUueBin2XxTSKvQbjhsk3vyoDbgaScBo9+ewKeS8/yVZZGuGgI/7
+         b4GA==
+X-Gm-Message-State: AOAM530GBgw2lHwYzEcPwgNXbBHbX+CR2nNJDC1ktDwin2l2POgfDdJD
+        rqmqmpKlzpZUCGvjnpuTT/TIg/iFqTk86aorg96Xo6ckRWhKBw==
+X-Google-Smtp-Source: ABdhPJyTz5m/LfpTlTfgkKE9j3dztp2H8TrqvolgESP/XfKPuZoB0I9Py2CtdVxQleB39ET2oI6Q0DoGfm3tjc3NkU0=
+X-Received: by 2002:a17:902:a710:b029:e3:b18:7e5b with SMTP id
+ w16-20020a170902a710b02900e30b187e5bmr16204877plq.17.1614618439007; Mon, 01
+ Mar 2021 09:07:19 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20210224095013.1.I2e2ba4978cfca06520dfb5d757768f9c42140f7c@changeid>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20210228025249.19684-1-shawn.guo@linaro.org>
+In-Reply-To: <20210228025249.19684-1-shawn.guo@linaro.org>
+From:   Andy Shevchenko <andy.shevchenko@gmail.com>
+Date:   Mon, 1 Mar 2021 19:07:03 +0200
+Message-ID: <CAHp75Vdi1WuZxhBKqGS7xnVzZpBrKwNbXbp5k0Y5ibZ4aAyBrg@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: qcom: support gpio_chip .set_config call
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Reviewed-by: Taniya Das <tdas@codeaurora.org>
+On Sun, Feb 28, 2021 at 4:55 AM Shawn Guo <shawn.guo@linaro.org> wrote:
+>
+> In case of ACPI boot, GPIO core does the right thing to parse GPIO pin
+> configs from ACPI table, and call into gpio_chip's .set_config hook for
+> setting them up.  It enables such support on qcom platform by using
+> generic config function, which in turn calls into .pin_config_set of
+> pinconf for setting up hardware.  For qcom platform, it's possible to
+> reuse pin group config functions for pin config hooks, because every pin
+> is maintained as a single group.
+>
+> This change fixes the problem that Touchpad of Lenovo Flex 5G laptop
+> doesn't work with ACPI boot, because PullUp config of Touchpad GpioInt
+> pin is not set up by kernel driver.
 
-On 2/24/2021 11:20 PM, Douglas Anderson wrote:
-> While picking commit a8cd989e1a57 ("mmc: sdhci-msm: Warn about
-> overclocking SD/MMC") back to my tree I was surprised that it was
-> reporting warnings.  I thought I fixed those!  Looking closer at the
-> fix, I see that I totally bungled it (or at least I halfway bungled
-> it).  The SD card clock got fixed (and that was the one I was really
-> focused on fixing), but I totally adjusted the wrong clock for eMMC.
-> Sigh.  Let's fix my dumb mistake.
-> 
-> Now both SD and eMMC have floor for the "apps" clock.
-> 
-> This doesn't matter a lot for the final clock rate for HS400 eMMC but
-> could matter if someone happens to put some slower eMMC on a sc7180.
-> We also transition through some of these lower rates sometimes and
-> having them wrong could cause problems during these transitions.
-> These were the messages I was seeing at boot:
->    mmc1: Card appears overclocked; req 52000000 Hz, actual 100000000 Hz
->    mmc1: Card appears overclocked; req 52000000 Hz, actual 100000000 Hz
->    mmc1: Card appears overclocked; req 104000000 Hz, actual 192000000 Hz
-> 
-> Fixes: 6d37a8d19283 ("clk: qcom: gcc-sc7180: Use floor ops for sdcc clks")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
-> 
->   drivers/clk/qcom/gcc-sc7180.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-sc7180.c
-> index c5c2e93bda8e..5cacd20a31b3 100644
-> --- a/drivers/clk/qcom/gcc-sc7180.c
-> +++ b/drivers/clk/qcom/gcc-sc7180.c
-> @@ -620,7 +620,7 @@ static struct clk_rcg2 gcc_sdcc1_apps_clk_src = {
->   		.name = "gcc_sdcc1_apps_clk_src",
->   		.parent_data = gcc_parent_data_1,
->   		.num_parents = 5,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_floor_ops,
->   	},
->   };
->   
-> @@ -642,7 +642,7 @@ static struct clk_rcg2 gcc_sdcc1_ice_core_clk_src = {
->   		.name = "gcc_sdcc1_ice_core_clk_src",
->   		.parent_data = gcc_parent_data_0,
->   		.num_parents = 4,
-> -		.ops = &clk_rcg2_floor_ops,
-> +		.ops = &clk_rcg2_ops,
->   	},
->   };
->   
-> 
+by the kernel
+
+...
+
+>         .pin_config_group_get   = msm_config_group_get,
+>         .pin_config_group_set   = msm_config_group_set,
+> +       .pin_config_get         = msm_config_group_get,
+> +       .pin_config_set         = msm_config_group_set,
+
+This can't be right. They have different semantics.
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation.
-
---
+With Best Regards,
+Andy Shevchenko
