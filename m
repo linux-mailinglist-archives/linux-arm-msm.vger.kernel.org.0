@@ -2,157 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8420C327A03
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 09:54:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BDD973279D5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 09:49:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233382AbhCAIwZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 03:52:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50920 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233346AbhCAIuG (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 03:50:06 -0500
-Received: from casper.infradead.org (casper.infradead.org [IPv6:2001:8b0:10b:1236::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69E18C0617A7;
-        Mon,  1 Mar 2021 00:49:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=casper.20170209; h=Content-Transfer-Encoding:MIME-Version:
-        References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:
-        Content-Type:Content-ID:Content-Description;
-        bh=xjnrpEXxWqN295Q5FQN/MKyM59zP4it+2k/oCX23gCw=; b=GUTHjhjVLRbJTH2y8N0f5pXfQt
-        BpcjyqebHUSqkrTfxo9sNnMxsXXi553XjQV00V9WvEhU+FZoA+NR+7JFRo7V+AcJrTEM2A0/NWoUY
-        UQcG1jJvPEvJ62t0+skQ3GOQwTgz9bkJrgJ5bnVxZaxWSLvpKWL69ICJDko8VZPR7xnOkfCwL79i7
-        gSKcArm/UWJvBLWZ3LQ2LKR9uhK0zIeUIiMijW/QfWAXEvydnu+GXr4VH9gDQxN7matDN8yNDTwzc
-        mzOmEyht23pCYSJg+mpQkr9XEd1UDX2UeQck2jKCZcJqclZ3cNse2Oooee5h2NDsQSuznxuuEfST1
-        vhs+o1kA==;
-Received: from [2001:4bb8:19b:e4b7:cdf9:733f:4874:8eb4] (helo=localhost)
-        by casper.infradead.org with esmtpsa (Exim 4.94 #2 (Red Hat Linux))
-        id 1lGeES-00FUwW-Vk; Mon, 01 Mar 2021 08:48:50 +0000
-From:   Christoph Hellwig <hch@lst.de>
-To:     Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Li Yang <leoyang.li@nxp.com>
-Cc:     Michael Ellerman <mpe@ellerman.id.au>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        linuxppc-dev@lists.ozlabs.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
-        virtualization@lists.linux-foundation.org, netdev@vger.kernel.org
-Subject: [PATCH 17/17] iommu: remove iommu_domain_set_attr
-Date:   Mon,  1 Mar 2021 09:42:57 +0100
-Message-Id: <20210301084257.945454-18-hch@lst.de>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210301084257.945454-1-hch@lst.de>
-References: <20210301084257.945454-1-hch@lst.de>
+        id S233535AbhCAIrZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 03:47:25 -0500
+Received: from m42-2.mailgun.net ([69.72.42.2]:13415 "EHLO m42-2.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233444AbhCAIqO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Mar 2021 03:46:14 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1614588348; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=Cey4WVl7LtaCP6MJNq4HJn9FVmHktZGEEAE5nLQ/M8A=;
+ b=msX9yDzfT02Z7rRyMhfib8r0n4Lfa3NDw3tpSA9FRrZUFzG0yF4s9bqq5UL0pU/8RCNDLCuH
+ TQ6kcwh03FGvP6rlM3yFBjXaAHmMCLFkXpGs3Np83hqJyNY0eYiIxxrCoCK/tjNRFtw6TPBq
+ iqDShotS/dqqEkX4YVu7zPQGdl0=
+X-Mailgun-Sending-Ip: 69.72.42.2
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 603ca9997aa94c52e7f31702 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 01 Mar 2021 08:45:13
+ GMT
+Sender: kgunda=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C8F33C43463; Mon,  1 Mar 2021 08:45:13 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: kgunda)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id EA03EC43462;
+        Mon,  1 Mar 2021 08:45:12 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by casper.infradead.org. See http://www.infradead.org/rpr.html
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 01 Mar 2021 14:15:12 +0530
+From:   kgunda@codeaurora.org
+To:     Daniel Thompson <daniel.thompson@linaro.org>
+Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
+        lee.jones@linaro.org, b.zolnierkie@samsung.com,
+        dri-devel@lists.freedesktop.org, jacek.anaszewski@gmail.com,
+        pavel@ucw.cz, robh+dt@kernel.org, mark.rutland@arm.com,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org,
+        phone-devel@vger.kernel.org
+Subject: Re: [PATCH V2 2/2] backlight: qcom-wled: Correct the sync_toggle
+ sequence
+In-Reply-To: <20210226172601.aknj2d4hghkkqjol@maple.lan>
+References: <1614341544-5306-1-git-send-email-kgunda@codeaurora.org>
+ <1614341544-5306-3-git-send-email-kgunda@codeaurora.org>
+ <20210226172601.aknj2d4hghkkqjol@maple.lan>
+Message-ID: <0cca377c2a7648c5f1606e38ba1b7d4d@codeaurora.org>
+X-Sender: kgunda@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
----
- drivers/iommu/iommu.c | 17 -----------------
- include/linux/iommu.h | 27 ---------------------------
- 2 files changed, 44 deletions(-)
+On 2021-02-26 22:56, Daniel Thompson wrote:
+> On Fri, Feb 26, 2021 at 05:42:24PM +0530, Kiran Gunda wrote:
+>> As per the current implementation, after FSC (Full Scale Current)
+>> and brightness update the sync bits are transitioned from 1 to 0.
+> 
+> This still seems to incorrectly describe the current behaviour.
+> 
+> Surely in most cases (i.e. every time except the first) the value of 
+> the
+> sync bit is 0 when the function is called and we get both a 0 to 1
+> and then a 1 to 0 transition.
+> 
+> That is why I recommended set-then-clear terminology to describe the
+> current behaviour. It is concise and correct.
+> 
+> 
+> Daniel.
+> 
+> 
+> 
+Okay. Actually I have mentioned the "clear-and-set" in explaining the 
+fix.
+Let me modify the same terminology in explaining the problem case also.
 
-diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-index 8490aefd4b41f8..b04e6cefe8520d 100644
---- a/drivers/iommu/iommu.c
-+++ b/drivers/iommu/iommu.c
-@@ -2668,23 +2668,6 @@ bool iommu_dma_use_flush_queue(struct iommu_domain *domain)
- }
- EXPORT_SYMBOL_GPL(iommu_dma_use_flush_queue);
- 
--int iommu_domain_set_attr(struct iommu_domain *domain,
--			  enum iommu_attr attr, void *data)
--{
--	int ret = 0;
--
--	switch (attr) {
--	default:
--		if (domain->ops->domain_set_attr == NULL)
--			return -EINVAL;
--
--		ret = domain->ops->domain_set_attr(domain, attr, data);
--	}
--
--	return ret;
--}
--EXPORT_SYMBOL_GPL(iommu_domain_set_attr);
--
- int iommu_domain_enable_nesting(struct iommu_domain *domain)
- {
- 	if (!domain->ops->domain_enable_nesting)
-diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-index 39d3ed4d2700ac..62535f563aa491 100644
---- a/include/linux/iommu.h
-+++ b/include/linux/iommu.h
-@@ -97,20 +97,6 @@ enum iommu_cap {
- 	IOMMU_CAP_NOEXEC,		/* IOMMU_NOEXEC flag */
- };
- 
--/*
-- * Following constraints are specifc to FSL_PAMUV1:
-- *  -aperture must be power of 2, and naturally aligned
-- *  -number of windows must be power of 2, and address space size
-- *   of each window is determined by aperture size / # of windows
-- *  -the actual size of the mapped region of a window must be power
-- *   of 2 starting with 4KB and physical address must be naturally
-- *   aligned.
-- */
--
--enum iommu_attr {
--	DOMAIN_ATTR_MAX,
--};
--
- /* These are the possible reserved region types */
- enum iommu_resv_type {
- 	/* Memory regions which must be mapped 1:1 at all times */
-@@ -194,7 +180,6 @@ struct iommu_iotlb_gather {
-  * @device_group: find iommu group for a particular device
-  * @dma_use_flush_queue: Returns %true if a DMA flush queue is used
-  * @dma_enable_flush_queue: Try to enable the DMA flush queue
-- * @domain_set_attr: Change domain attributes
-  * @domain_enable_nesting: Enable nesting
-  * @domain_set_pgtable_attr: Set io page table attributes
-  * @get_resv_regions: Request list of reserved regions for a device
-@@ -247,8 +232,6 @@ struct iommu_ops {
- 	struct iommu_group *(*device_group)(struct device *dev);
- 	bool (*dma_use_flush_queue)(struct iommu_domain *domain);
- 	void (*dma_enable_flush_queue)(struct iommu_domain *domain);
--	int (*domain_set_attr)(struct iommu_domain *domain,
--			       enum iommu_attr attr, void *data);
- 	int (*domain_enable_nesting)(struct iommu_domain *domain);
- 	int (*domain_set_pgtable_attr)(struct iommu_domain *domain,
- 			struct io_pgtable_domain_attr *pgtbl_cfg);
-@@ -498,11 +481,7 @@ extern struct iommu_domain *iommu_group_default_domain(struct iommu_group *);
- bool iommu_dma_use_flush_queue(struct iommu_domain *domain);
- int iommu_domain_set_pgtable_attr(struct iommu_domain *domain,
- 		struct io_pgtable_domain_attr *pgtbl_cfg);
--extern int iommu_domain_set_attr(struct iommu_domain *domain, enum iommu_attr,
--				 void *data);
- int iommu_domain_enable_nesting(struct iommu_domain *domain);
--int iommu_domain_set_pgtable_attr(struct iommu_domain *domain,
--		struct io_pgtable_domain_attr *pgtbl_cfg);
- 
- extern int report_iommu_fault(struct iommu_domain *domain, struct device *dev,
- 			      unsigned long iova, int flags);
-@@ -869,12 +848,6 @@ static inline int iommu_group_id(struct iommu_group *group)
- 	return -ENODEV;
- }
- 
--static inline int iommu_domain_set_attr(struct iommu_domain *domain,
--					enum iommu_attr attr, void *data)
--{
--	return -EINVAL;
--}
--
- static inline int  iommu_device_register(struct iommu_device *iommu)
- {
- 	return -ENODEV;
--- 
-2.29.2
-
+>> But, the FSC and brightness sync takes place during a 0 to 1
+>> transition of the sync bits. So the hardware team recommends a
+>> clear-then-set approach in order to guarantee such a transition
+>> regardless of the previous register state.
+>> 
+>> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
+>> ---
+>>  drivers/video/backlight/qcom-wled.c | 12 ++++++------
+>>  1 file changed, 6 insertions(+), 6 deletions(-)
+>> 
+>> diff --git a/drivers/video/backlight/qcom-wled.c 
+>> b/drivers/video/backlight/qcom-wled.c
+>> index aef52b9..19f83ac 100644
+>> --- a/drivers/video/backlight/qcom-wled.c
+>> +++ b/drivers/video/backlight/qcom-wled.c
+>> @@ -337,13 +337,13 @@ static int wled3_sync_toggle(struct wled *wled)
+>> 
+>>  	rc = regmap_update_bits(wled->regmap,
+>>  				wled->ctrl_addr + WLED3_SINK_REG_SYNC,
+>> -				mask, mask);
+>> +				mask, WLED3_SINK_REG_SYNC_CLEAR);
+>>  	if (rc < 0)
+>>  		return rc;
+>> 
+>>  	rc = regmap_update_bits(wled->regmap,
+>>  				wled->ctrl_addr + WLED3_SINK_REG_SYNC,
+>> -				mask, WLED3_SINK_REG_SYNC_CLEAR);
+>> +				mask, mask);
+>> 
+>>  	return rc;
+>>  }
+>> @@ -353,17 +353,17 @@ static int wled5_mod_sync_toggle(struct wled 
+>> *wled)
+>>  	int rc;
+>>  	u8 val;
+>> 
+>> -	val = (wled->cfg.mod_sel == MOD_A) ? WLED5_SINK_REG_SYNC_MOD_A_BIT :
+>> -					     WLED5_SINK_REG_SYNC_MOD_B_BIT;
+>>  	rc = regmap_update_bits(wled->regmap,
+>>  				wled->sink_addr + WLED5_SINK_REG_MOD_SYNC_BIT,
+>> -				WLED5_SINK_REG_SYNC_MASK, val);
+>> +				WLED5_SINK_REG_SYNC_MASK, 0);
+>>  	if (rc < 0)
+>>  		return rc;
+>> 
+>> +	val = (wled->cfg.mod_sel == MOD_A) ? WLED5_SINK_REG_SYNC_MOD_A_BIT :
+>> +					     WLED5_SINK_REG_SYNC_MOD_B_BIT;
+>>  	return regmap_update_bits(wled->regmap,
+>>  				  wled->sink_addr + WLED5_SINK_REG_MOD_SYNC_BIT,
+>> -				  WLED5_SINK_REG_SYNC_MASK, 0);
+>> +				  WLED5_SINK_REG_SYNC_MASK, val);
+>>  }
+>> 
+>>  static int wled_ovp_fault_status(struct wled *wled, bool *fault_set)
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+>> Forum,
+>>  a Linux Foundation Collaborative Project
+>> 
