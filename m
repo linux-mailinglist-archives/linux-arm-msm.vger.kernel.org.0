@@ -2,40 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F9DB32929F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 21:49:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D8D03292A6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 21:49:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241649AbhCAUtE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 15:49:04 -0500
-Received: from mail.kernel.org ([198.145.29.99]:54540 "EHLO mail.kernel.org"
+        id S243529AbhCAUt1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 15:49:27 -0500
+Received: from mail.kernel.org ([198.145.29.99]:55302 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238861AbhCAUqI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 15:46:08 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id 8818364EE0;
+        id S241779AbhCAUqe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Mar 2021 15:46:34 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id 7834B64EDE;
         Mon,  1 Mar 2021 19:59:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1614628783;
-        bh=0QgcD4KhSGeSxcA4MTKzgxFmaiy5Mhm1KiJyshvHwJQ=;
+        bh=IU2X/T4Znt8tWk/mZzMFsQ9IiJY/97Hlig6ye5PZ/00=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=bM85dJqDnlsAn8G/dn5D/M+VHBjegO9NGPpTxP/4zSRCR4jiwW8fgLEgRauJwjJ4E
-         Kb9XoNTi1tkMWFo1pKtFPVSRMtEK7tW6uhQCOM3D6cx5Q6K7wlqWAyLzxpk4hppjk/
-         8Fej7jpYePDx2HlELh1Pcfyhet1hCbg9iD1GcSHOuZgkWcpr19qLcoSt6NSH0/kqx6
-         bo/pGTkmCgMzNYlqzlJSEozOXlA7xkgdvs9FC7Gp/z7Jhdt1Zt7XmEYSYMBcKht0kM
-         EUv+izgLNZFza4Y66F+PGz6X7R/RFZ/7xuUgWmcETCnycYk20apI3jjueNclxzLP9g
-         MRqqkZfGbXV+Q==
+        b=t2OUmOdjTlkZjdWs3YWcFEa1fvwJFrOK5EonyUiY7xREKodM3ZfynaCB4LlgQd/9d
+         oRIpRZOFWEv6JrxIaqOqmx9AITJh4jMt0MvaVHLX1r3rv9f+3S4oFqj8XsPqGN0zsA
+         xug0fBd/iepR6PgXPbkd+NzqIiA34EJWdi2XkSpoYD/fRnq23QD9OHB6DDG4D2ca+d
+         5VBjcGaZG9Q8ne/y6hkJLEJ8jeOrw6MeQbM2c90EQB11aC1I5ll2LpNGxo+OGtPqcX
+         Xr2Kj5q1Hv1E3jSBrnQ4thimyW6TWdHfVnmC5KqFPkgcnEFwF047nHjm8IZo3sTN+Y
+         HI/zSx+3UnvYQ==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 8463B60C26;
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 74E1D60997;
         Mon,  1 Mar 2021 19:59:43 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 1/2] dt-bindings: clock: Add SC8180x GCC binding
+Subject: Re: [PATCH v14 0/2] thermal: qcom: add support for adc-tm5 PMIC thermal
+ monitor
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <161462878353.6187.11090103671136012298.git-patchwork-notify@kernel.org>
+Message-Id: <161462878347.6187.8477583760563789077.git-patchwork-notify@kernel.org>
 Date:   Mon, 01 Mar 2021 19:59:43 +0000
-References: <20210120223556.1610214-1-bjorn.andersson@linaro.org>
-In-Reply-To: <20210120223556.1610214-1-bjorn.andersson@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+References: <20210205000118.493610-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20210205000118.493610-1-dmitry.baryshkov@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -45,23 +46,21 @@ Hello:
 
 This series was applied to qcom/linux.git (refs/heads/for-next):
 
-On Wed, 20 Jan 2021 14:35:55 -0800 you wrote:
-> Add devicetree binding for the global clock controller found in the
-> Qualcomm SC8180x platform.
+On Fri,  5 Feb 2021 03:01:16 +0300 you wrote:
+> This patch serie adds support for thermal monitoring block on Qualcomm's
+> PMIC5 chips. PM8150{,b,l}, qrb5165-rb5 board and sm8250-mtp board device
+> trees are extended to support thermal zones provided by this thermal
+> monitoring block.  Unlike the rest of PMIC thermal senses, these thermal
+> zones describe particular thermistors, which differ between from board
+> to board.
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  .../bindings/clock/qcom,gcc-sc8180x.yaml      |  76 +++++
->  include/dt-bindings/clock/qcom,gcc-sc8180x.h  | 309 ++++++++++++++++++
->  2 files changed, 385 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sc8180x.yaml
->  create mode 100644 include/dt-bindings/clock/qcom,gcc-sc8180x.h
+> [...]
 
 Here is the summary with links:
-  - [1/2] dt-bindings: clock: Add SC8180x GCC binding
-    https://git.kernel.org/qcom/c/0fadcdfdcf57
-  - [2/2] clk: qcom: rpmhcc: Add sc8180x rpmh clocks
-    https://git.kernel.org/qcom/c/8a1f7fb17569
+  - [v14,1/2] dt-bindings: thermal: qcom: add adc-thermal monitor bindings
+    https://git.kernel.org/qcom/c/e8ffd6c0756b
+  - [v14,2/2] thermal: qcom: add support for adc-tm5 PMIC thermal monitor
+    https://git.kernel.org/qcom/c/ca66dca5eda6
 
 You are awesome, thank you!
 --
