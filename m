@@ -2,41 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F289E329304
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 21:58:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E7BF13292F9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 21:57:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243756AbhCAU45 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 15:56:57 -0500
-Received: from mail.kernel.org ([198.145.29.99]:56480 "EHLO mail.kernel.org"
+        id S242856AbhCAU4b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 15:56:31 -0500
+Received: from mail.kernel.org ([198.145.29.99]:56448 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S243851AbhCAUxE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 15:53:04 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id 7082B64F20;
+        id S243808AbhCAUwr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Mar 2021 15:52:47 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id 579C564F2F;
         Mon,  1 Mar 2021 19:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1614628785;
-        bh=KE/31qFA5VSZ/aMBjJ22wiKAo+RUuo38+WmdwnNQF4M=;
+        bh=Uaz8KgK9oD/ZX8qgifhX6/vxnRWrwPt/2O2Lbw00dTM=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=ughciS03mMBB1wrQJ4Th1b4R2ljCh4SM6Wa0gr3tdDATTc7/wQoe1zmGYMRJVTiIH
-         B/HcFEYowkT1ucEnIPd8o9EyliO/SRomZTuNFZtLlQFqAXR72niM2Rvoi5v/sAqmi4
-         YRsRNisOnu0ZmLrVjCBY70+HG/qJYR/JOehmqEjv312h4uyezOFMVPntbBLlLzXCgK
-         1CcWYd8IfD8cyODavGj8cYNwcklgnO72Zd1wJhFbGmrouKojxcdO72SbXPQBTFwqUw
-         E9hOxV5HuU0ZZGSC3OexwW8gcYmjgCnT6cY//SIz05CCj77cFh23+RXFtg+Gw+VKCe
-         hdwW4pPDOocgA==
+        b=VR5TzLTcrOyD4KrNzKhds2uH3xNPWyT8YUbb0RwTerImglRGBDvf7l9cYoFF0R3+A
+         E/PJxfhem2cwTGUVJBWg5M1ptuAd4CSPhbwJjQ6VvUPX222HPBlWHpzWPSox2uU7GZ
+         eC3q7CZXF79fseXFZL6K9Z/5LuiBRPKa3iJRZ1yAkLY4OkmgMGRSOgLKIFGBxAZ3c2
+         ZBFrdbDPR4hvcJtCtoayjz+k9f33sR8fXA5ltjpAJ1sFSs5d7y/dcDetnGmgWlEjlI
+         xybpU5guEjaONF8zqE7xISOqbNIkh0DLtYdifrJGu7nmvjdoxMUXiuPWP6QHdexVSS
+         O5cULWj3T32dg==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 6CC4560A1B;
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 5430D60997;
         Mon,  1 Mar 2021 19:59:45 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] phy: qcom-qmp: make a const array static,
- makes object smaller
+Subject: Re: [PATCH] pinctrl: qcom: spmi-mpp: Add PM8019 compatible
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <161462878544.6187.18387891783679205589.git-patchwork-notify@kernel.org>
+Message-Id: <161462878534.6187.1400163567202113630.git-patchwork-notify@kernel.org>
 Date:   Mon, 01 Mar 2021 19:59:45 +0000
-References: <20210204180313.108876-1-colin.king@canonical.com>
-In-Reply-To: <20210204180313.108876-1-colin.king@canonical.com>
-To:     Colin King <colin.king@canonical.com>
+References: <20210115171115.123155-2-konrad.dybcio@somainline.org>
+In-Reply-To: <20210115171115.123155-2-konrad.dybcio@somainline.org>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -46,21 +45,18 @@ Hello:
 
 This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Thu,  4 Feb 2021 18:03:13 +0000 you wrote:
-> From: Colin Ian King <colin.king@canonical.com>
+On Fri, 15 Jan 2021 18:11:14 +0100 you wrote:
+> PM8019 provides 6 MPPs. Add a compatible to support them.
 > 
-> Don't populate the const array cfg1_settings on the stack but instead make
-> it static. Makes the object code smaller by 24 bytes:
-> 
-> Before:
->    text	   data	    bss	    dec	    hex	filename
->   73585	  20240	     64	  93889	  16ec1	drivers/phy/qualcomm/phy-qcom-qmp.o
-> 
-> [...]
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> ---
+>  Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.txt | 1 +
+>  drivers/pinctrl/qcom/pinctrl-spmi-mpp.c                     | 1 +
+>  2 files changed, 2 insertions(+)
 
 Here is the summary with links:
-  - phy: qcom-qmp: make a const array static, makes object smaller
-    https://git.kernel.org/qcom/c/43851904cbd7
+  - pinctrl: qcom: spmi-mpp: Add PM8019 compatible
+    https://git.kernel.org/qcom/c/564272718686
 
 You are awesome, thank you!
 --
