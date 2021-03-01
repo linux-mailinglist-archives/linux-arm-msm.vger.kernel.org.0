@@ -2,137 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 097D4327341
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Feb 2021 16:54:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C98733275E7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 02:44:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230429AbhB1Pxb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 28 Feb 2021 10:53:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60390 "EHLO
+        id S231336AbhCABoW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 28 Feb 2021 20:44:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230207AbhB1Px3 (ORCPT
+        with ESMTP id S230084AbhCABoW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 28 Feb 2021 10:53:29 -0500
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FBE5C061786
-        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Feb 2021 07:52:49 -0800 (PST)
-Received: by mail-pl1-x634.google.com with SMTP id k22so8308740pll.6
-        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Feb 2021 07:52:49 -0800 (PST)
+        Sun, 28 Feb 2021 20:44:22 -0500
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30B35C061756
+        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Feb 2021 17:43:42 -0800 (PST)
+Received: by mail-pg1-x52e.google.com with SMTP id t25so10505558pga.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Feb 2021 17:43:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=+MDVsqFDrX74IRsp1myuYu41HQaFKHLL77DDnEB1Fqk=;
-        b=QFt4hidHZE4BfKl25fDDfoXQ5/4d4UZEpkGApT7taJp9DlVTsH/3YgSE+WtqZm+r/R
-         ahteSvZNOLUtbll6//Hx/6QHnM9QFDT3ocjQtNbUxVbeTL3zZ2hG1qWX4vd+UipKMsep
-         Pmg9QIp9LQ58rwLbo05hzNHJbCXnkaYWdNcUQtA44CKw/H/A1ErZwjbN07Gz4KQdrYUJ
-         aieFypSsfr6BF/jp872hanyTO8CrLEHMxxxXeOCVBJNhMGc9gcr19ZQ27c1vHg7TFGe6
-         BI+2eEKYHQAgVQEODsnclaXDloWogLAMNU+dGHuJkHjrLO0RY8Sp+ec+tOwN2KkThrd1
-         q/oA==
+        h=from:to:cc:subject:date:message-id;
+        bh=aF7j0WJJpO1/nGRHIYUOrG0PcSrwpElNSBQzShtOxAg=;
+        b=bT78xFJS6n2mVcxgbK9YAyfzCLv/nSxP+uWW9aDb5nsRgJWIBdhfCJ5fe+PANgjfvF
+         ponw9GJMlSsLrDgIdQNrU8KF7yYbhezfuZDYNZrGfOR4OmN586mdN3JVIfqJd1n3DhSi
+         DRAtyDU309NALtPdotC+3QXfP+jgooq+o3g/AytgMLW5ulBzv4cLvk/h8+JA1x0ZT/Nf
+         +lsoMYpaOkRs61eDNv9R9MP8HyUi4nDxt1FD6Glw8S+G1SFRz2lNWqjmfrmEh3ZZYEoX
+         tM48jzWfFzyyFUtXi8VmAN01ivKsAdvoXyClkKJlm9unRZUNfHnb+jvUcz+WgJaDqmqd
+         SV0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=+MDVsqFDrX74IRsp1myuYu41HQaFKHLL77DDnEB1Fqk=;
-        b=qBcxE9t8LTyju+3YSSRd51EJ/5xjHbiVbK1smb2NMOx2/xTeiHMOWE2W+QPxo96FVv
-         nBnj5CHwrCAQq93leid7J6nYSJsCIptj2LHCCqz//1zDFlqLswXWcfpvIyhtDU9GEpX2
-         aWGrcyProLfA2ki/hP3x5sFXD6riGwqEqNyfZpc9VaO7zovZV2TGSp/RfsxFLGrxARr4
-         9zlKlGYkvF6YjA3aBPjALb/EkRX2SxWaI7lVwCDU6X1vP+poQIJA4cRl8FWTltmluUT9
-         KstMERwParPyglcpjBpm5sg1u9m8VA9IM5hXhrup7Z1QozebU49X+R8YTs4f6SudKDDh
-         zxYw==
-X-Gm-Message-State: AOAM530H3eM7JVXugA3CxoaKcQ7azelLxjs7nTScmYKom4eXhCLncGdx
-        zdLneO1PcBfz6fgD4RFykE7S
-X-Google-Smtp-Source: ABdhPJwnbT7D4+J5kaM+lK5Oa96bxgW7RFnZGoENJR/wCg5zoTWrXJrYf4oM6h1msGStQUy0MD7XSw==
-X-Received: by 2002:a17:90a:67ca:: with SMTP id g10mr12617629pjm.166.1614527568432;
-        Sun, 28 Feb 2021 07:52:48 -0800 (PST)
-Received: from thinkpad ([2409:4072:630a:43e1:8418:10a8:7c13:a7a3])
-        by smtp.gmail.com with ESMTPSA id q3sm15303413pfn.14.2021.02.28.07.52.39
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=aF7j0WJJpO1/nGRHIYUOrG0PcSrwpElNSBQzShtOxAg=;
+        b=NPli0bC14f2SN4WWWUYr8Yp7nX6RPmDzF2FAL0lo38N2N2fYA3tOGD0jUKQbFVvlQO
+         Mm1q8ohApvkXTzjWts2q3GTnsYHxIS2g/v0ZAHX/fIVy54BYiIMQQvUwBACDbmxmGuhN
+         8t8hKZ11RMR+UfgBDhSYqbxjgR+oRTfGdmtVlOyWbgfYbYXU63phih1PCVKKhCwjOux8
+         ZBwW32f0uu5uWyUmtMp6xOcgRvHw6VbWzxgvE4v7rcmiD24rIs/H1CkaaaeCQLL2j+ck
+         Fh8yywrUsGhtYwyuXK59bbYnzpjZPClCMXaZv/fDaGvNVxiUZNPnbMd+rAwIYOe4pp2Z
+         7Gmg==
+X-Gm-Message-State: AOAM532UVEjT1lHJyyHHdX7GhPSNDg5L9XaqSjbyD+BOV3gegtQSyQbi
+        NoO4W7+wz+XA8zkjeCFjI4KCPQ==
+X-Google-Smtp-Source: ABdhPJw3/E6zl8DmW/nnkUG85leryZ2eVLWGElEWlfGFPnwDiv+6AEtx2veUoVjka/WkOw+Q2HHR0A==
+X-Received: by 2002:a63:2948:: with SMTP id p69mr11778549pgp.15.1614563021729;
+        Sun, 28 Feb 2021 17:43:41 -0800 (PST)
+Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id q95sm5641080pjq.20.2021.02.28.17.43.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Feb 2021 07:52:47 -0800 (PST)
-Date:   Sun, 28 Feb 2021 21:22:36 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Aleksander Morgado <aleksander@aleksander.es>
-Cc:     Jakub Kicinski <kuba@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Greg KH <gregkh@linuxfoundation.org>,
-        David Miller <davem@davemloft.net>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        Network Development <netdev@vger.kernel.org>
-Subject: Re: [RESEND PATCH v18 0/3] userspace MHI client interface driver
-Message-ID: <20210228155236.GA54373@thinkpad>
-References: <20210202042208.GB840@work>
- <20210202201008.274209f9@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <835B2E08-7B84-4A02-B82F-445467D69083@linaro.org>
- <20210203100508.1082f73e@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <CAMZdPi8o44RPTGcLSvP0nptmdUEmJWFO4HkCB_kjJvfPDgchhQ@mail.gmail.com>
- <20210203104028.62d41962@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <CAAP7ucLZ5jKbKriSp39OtDLotbv72eBWKFCfqCbAF854kCBU8w@mail.gmail.com>
- <20210209081744.43eea7b5@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <20210210062531.GA13668@work>
- <CAAP7uc+Q=ToKVNz4wDv0JWHK4NTniSLE1QwMbP0eXEqVMTUwwQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAAP7uc+Q=ToKVNz4wDv0JWHK4NTniSLE1QwMbP0eXEqVMTUwwQ@mail.gmail.com>
+        Sun, 28 Feb 2021 17:43:40 -0800 (PST)
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Shawn Guo <shawn.guo@linaro.org>
+Subject: [PATCH 0/2] Add ACPI support for SC8180X pinctrl driver
+Date:   Mon,  1 Mar 2021 09:43:27 +0800
+Message-Id: <20210301014329.30104-1-shawn.guo@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Feb 28, 2021 at 03:12:42PM +0100, Aleksander Morgado wrote:
-> Hey Manivannan, Jakub & all,
-> 
-> >
-> > So please let us know the path forward on this series. We are open to
-> > any suggestions but you haven't provided one till now.
-> >
-> 
-> I just found out that Sierra Wireless also provides their own version
-> of mhi-net and mhi-uci in precompiled binaries for several Ubuntu
-> kernel versions and other setups; and that made me extremely unhappy.
-> They're not the only manufacturer doing that; most of them are doing
-> it, because we don't have yet a common solution in upstream Linux. Not
-> the first time we've seen this either, see the per-vendor GobiNet
-> implementations vs the upstream qmi_wwan one. I was hoping we could
-> avoid that mess again with the newer Qualcomm modules! :)
-> 
-> In ModemManager we've always *forced* all manufacturers we interact
-> with to first do the work in upstream Linux, and then we integrate
-> support in MM for those drivers. We've never accepted support for
-> vendor-specific proprietary kernel drivers, and that's something I
-> would personally like to keep on doing. The sad status right now is
-> that any user that wants to use the newer 5G modules with Qualcomm
-> chipsets, they need to go look for manufacturer-built precompiled
-> drivers for their specific kernel, and also then patch ModemManager
-> and the tools themselves. Obviously almost no one is doing all that,
-> except for some company with resources or a lot of interest. Some of
-> these new 5G modules are PCIe-only by default, unless some pin in the
-> chipset is brought up and then some of them may switch to USB support.
-> No one is really doing that either, as tampering with the hardware
-> voids warranty.
-> 
-> The iosm driver is also stalled in the mailing list and there doesn't
-> seem to be a lot of real need for a new common wwan subsystem to
-> rework everything...
-> 
-> I'm not involved with the mhi-uci driver development at all, and I
-> also don't have anything to say on what goes in the upstream kernel
-> and what doesn't. But as one of the ModemManager/libqmi/libmbim
-> maintainers I would like to represent all the users of these modules
-> that are right now forced to look for shady binary precompiled drivers
-> out there... that is no better solution than this proposed mhi-uci
-> common driver.
-> 
-> Manivannan, are you attempting to rework the mhi-uci driver in a
-> different way, or have you given up? Is there anything I could help
-> with?
-> 
+This is a couple of patches that enable ACPI probe for SC8180X pinctrl
+driver.  The msm core driver needs a bit change to handle tiles mapping
+differently between DT and ACPI.
 
-Hemant is currently in-charge of the MHI UCI development effort. We were
-thinking about doing "mhi-wwan" driver which just exposes the channels needed
-for WWAN as Jakub said "you can move forward on purpose build drivers
-(e.g. for WWAN)." But we are open to other suggestions also.
+Shawn Guo (2):
+  pinctrl: qcom: handle tiles for ACPI boot
+  pinctrl: qcom: sc8180x: add ACPI probe support
 
-Thanks,
-Mani
+ drivers/pinctrl/qcom/Kconfig           |  2 +-
+ drivers/pinctrl/qcom/pinctrl-msm.c     | 18 +++++++---
+ drivers/pinctrl/qcom/pinctrl-msm.h     |  1 +
+ drivers/pinctrl/qcom/pinctrl-sc8180x.c | 48 +++++++++++++++++++++++++-
+ 4 files changed, 63 insertions(+), 6 deletions(-)
+
+-- 
+2.17.1
+
