@@ -2,97 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 34C8B3276A5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 05:23:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 134EE327857
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 08:41:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233271AbhCAEWl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 28 Feb 2021 23:22:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50282 "EHLO
+        id S232481AbhCAHkG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 02:40:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233379AbhCAEWf (ORCPT
+        with ESMTP id S232539AbhCAHjv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 28 Feb 2021 23:22:35 -0500
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC1B4C061786
-        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Feb 2021 20:21:54 -0800 (PST)
-Received: by mail-pj1-x102c.google.com with SMTP id t9so10212184pjl.5
-        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Feb 2021 20:21:54 -0800 (PST)
+        Mon, 1 Mar 2021 02:39:51 -0500
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 756AFC06178B
+        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Feb 2021 23:40:30 -0800 (PST)
+Received: by mail-pl1-x633.google.com with SMTP id g20so9329312plo.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Feb 2021 23:40:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=NjN8Uc4qcy6FksZqQ1QHgGaJrHny90tByxw9vbwCOUo=;
-        b=PfsZPlWhBn8pZsUVWOFcD20gH5ailRvQvDC6DSLnpucjO8Hn5TM6j7hAxblpnxh/ww
-         h19tg/qridAAO0JbIjYEqlPjlq1M2aUsyn5Xtx2azr7AZwaHOgP4D8t9TnL0gshPQprl
-         IVliQU0Wp2qRY0XqD+/6i8P0dUy5LqmFSGF/4=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=U1gpWsvGyBC5E6Jh4WcIRAYp0x0ZA6uSR3HnwYKMrgg=;
+        b=iX1ByBKQaJbVS89EmpIaqn6Jn+50kfPrUmnYX93T/Oao91ktUiEPoNVmoiS3mzMly3
+         iDeXtXmASnToxBa+Zx4Yb/Sz5ZNZMyiV625hv74V7QAzhSKf43vTYo23di+aN3F5a7DQ
+         DZ8rqOPUdFUiMP2uNSvsW/rYWGMuHJB3lI9rNCpO/5CHB1mvIMIgAEhAZ6/odfAY90Ku
+         rU3cKAOzN9AM92xc3ltY8mJ73NkfxwqUecl+4pSsms7O227mUBMoD5ZzlS6YnHDfTELj
+         9xjN2AHp34Nnkr3VTCUdjidJwY9lahOxS0tCZ/3ljvW9H+yrYVtTaW+0Uo5xAp9SgzyH
+         Q/cA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=NjN8Uc4qcy6FksZqQ1QHgGaJrHny90tByxw9vbwCOUo=;
-        b=SZ6KtfKyUM34yghh0x/Y/9JEihPovanjNXKfVuwJ6bwDcKsc8k00GD0tKIZrGxVOwv
-         pjGEDaWzlY5S6Vv4UX7qSdxk50g3T09zst1VFjmwn2sNQPvtbW1ime9njQQi7SdI+xqM
-         U8mXjLvScocPGJ2poasq+wMDyGQ2Qf0oVdWSMsPCJLORXAgw0gJ+GUWJ0kAodS18JuYb
-         Qv3geL181ZXw1LfkFKNzsaVMC+UwkMF/UYq4290LmzWiTFviheiBiBuo8CoGrVucN4Gj
-         2j0sflrk6AHk/yZrp1MYXmC23MutXFVChcfuaXcvKPhTuw6S+deZ4nbR8nywPcxNL9UG
-         4fNQ==
-X-Gm-Message-State: AOAM531FtkCZHDwoog3VoJMTi5y0Re5H3uXeIEt6vyEe6jAFSAyyqf6r
-        1qbMVZHT6U0wdehbpkiTG3amuuGaU4jZqw==
-X-Google-Smtp-Source: ABdhPJwkJzEI6yu3W1UgBfWt0bhhbDNa9CtCsRIPj1jn7oK8x+Mt6RNsDO6AOQ4URYdLK9AzZjnIpg==
-X-Received: by 2002:a17:90a:31cf:: with SMTP id j15mr5674186pjf.41.1614572514205;
-        Sun, 28 Feb 2021 20:21:54 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:201:3c20:df33:e36:93df])
-        by smtp.gmail.com with ESMTPSA id i22sm8751971pjz.56.2021.02.28.20.21.53
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=U1gpWsvGyBC5E6Jh4WcIRAYp0x0ZA6uSR3HnwYKMrgg=;
+        b=DrdXANuCfAUOQpxaO/660HR1WOuErlk3yDDyYmlvPWTWiY1FEbRKfg//E0gYa4GMwa
+         0kq8lCQctGX2QcIpjWcihdmC3JyRK+t8uy85uZOflXRn0691/On5nhXOWE6ob2S2ffAl
+         v4x+xjOrjklcjYTEHTC/WtkbaMSi7PK2W3QuAsnzM+BTde/ZmmMPXnFKLUQnY4pffiVT
+         lhfOBgrMCDRUFcYHQ44bKZKJgO8p9GxwgWho4/dNU+xrQDBmptagvIVFzOsWG6T1AsWK
+         uqZAzBAopsrWQ4xs4pPazoV0qCw9Yexg5JXd/lIZog0sQmxjlN4FpdE7Ohkgw22ul2SX
+         Pkdw==
+X-Gm-Message-State: AOAM532Qfo9tLlzXQmJdsigUhZiiyQlEy+qqXWlFpQYr26ewhx/qOQ92
+        uDqL4CLEDoiv085rN715LM/4cg==
+X-Google-Smtp-Source: ABdhPJwmn7Yt2qQ/FjR4R62H2dp1v7EH6erGPRR9C3XMgQrZM+NxNLsfwIKPIFlp9cPlaF8ynjskqw==
+X-Received: by 2002:a17:90b:4a89:: with SMTP id lp9mr16249508pjb.170.1614584430113;
+        Sun, 28 Feb 2021 23:40:30 -0800 (PST)
+Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id z3sm4203566pfn.7.2021.02.28.23.40.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Feb 2021 20:21:53 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <48278c3db41c3f46eac8892d1383444c@codeaurora.org>
-References: <cover.1614244789.git.saiprakash.ranjan@codeaurora.org> <c4b7ae4dd009f563e6786f4a41f09efa38636fb6.1614244789.git.saiprakash.ranjan@codeaurora.org> <161428185152.1254594.1426736986245389798@swboyd.mtv.corp.google.com> <a35e6dcba758be4af3d111fe92cfbcd6@codeaurora.org> <161436514295.1254594.2789904935200051795@swboyd.mtv.corp.google.com> <48278c3db41c3f46eac8892d1383444c@codeaurora.org>
-Subject: Re: [PATCH 3/9] arm64: dts: qcom: sc7280: Add device tree node for LLCC
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Sun, 28 Feb 2021 23:40:29 -0800 (PST)
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Will Deacon <will@kernel.org>
+Cc:     Robin Murphy <robin.murphy@arm.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Date:   Sun, 28 Feb 2021 20:21:52 -0800
-Message-ID: <161457251211.1254594.17265407085456881480@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>
+Subject: [PATCH] iommu/arm-smmu-qcom: create qcom_smmu_impl for ACPI boot
+Date:   Mon,  1 Mar 2021 15:40:21 +0800
+Message-Id: <20210301074021.20059-1-shawn.guo@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sai Prakash Ranjan (2021-02-27 05:58:25)
-> On 2021-02-27 00:15, Stephen Boyd wrote:
-> > Quoting Sai Prakash Ranjan (2021-02-26 00:04:27)
-> >> On 2021-02-26 01:07, Stephen Boyd wrote:
-> >> > Quoting Sai Prakash Ranjan (2021-02-25 01:30:19)
-> >> >> Add a DT node for Last level cache (aka. system cache)
-> >> >> controller which provides control over the last level
-> >> >> cache present on SC7280 SoC.
-> >> >>
-> >> >> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> >> >> ---
-> >> >
-> >> > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> >> >
-> >> > Should add system-cache-controller to the devicetree spec. Or just u=
-se
-> >> > cache-controller for the node name.
-> >>=20
-> >> This was as per discussion in [1][2] where dt-schema throws an error
-> >> since it expects cache-level to be associated with cache-controller.
-> >>=20
-> >=20
-> > Ah right. Can you add system-cache-controller to the dt spec?
->=20
-> Sure, I'll add it. Hopefully that won't have to block this change?
-> Because I might need some time to get permissions to add it there.
->=20
+Though qcom_adreno_smmu_impl is not used by ACPI boot right now,
+qcom_smmu_impl is already required at least to boot up Lenovo Flex 5G
+laptop.  Let's check asl_compiler_id in IORT header to ensure we are
+running a QCOM SMMU and create qcom_smmu_impl for it.
 
-Doesn't block it for me.
+!np is used to check ACPI boot, because fwnode of SMMU device is
+a static allocation and thus has_acpi_companion() doesn't work here.
+
+Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+---
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 33 ++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
+
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+index 98b3a1c2a181..5e8779483367 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -3,6 +3,7 @@
+  * Copyright (c) 2019, The Linux Foundation. All rights reserved.
+  */
+ 
++#include <linux/acpi_iort.h>
+ #include <linux/adreno-smmu-priv.h>
+ #include <linux/of_device.h>
+ #include <linux/qcom_scm.h>
+@@ -339,10 +340,42 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
+ 	{ }
+ };
+ 
++#ifdef CONFIG_ACPI
++static bool is_qcom_iort(struct arm_smmu_device *smmu)
++{
++	struct acpi_table_header *iort;
++	acpi_status status;
++	bool ret = false;
++
++	status = acpi_get_table(ACPI_SIG_IORT, 0, &iort);
++	if (ACPI_FAILURE(status)) {
++		dev_err(smmu->dev, "failed to get IORT\n");
++		goto done;
++	}
++
++	if (strncmp(iort->asl_compiler_id, "QCOM", 4) == 0) {
++		ret = true;
++		goto done;
++	}
++
++done:
++	acpi_put_table(iort);
++	return ret;
++}
++#else
++static bool is_qcom_iort(struct arm_smmu_device *smmu)
++{
++	return false;
++}
++#endif
++
+ struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
+ {
+ 	const struct device_node *np = smmu->dev->of_node;
+ 
++	if (!np && is_qcom_iort(smmu))
++		return qcom_smmu_create(smmu, &qcom_smmu_impl);
++
+ 	if (of_match_node(qcom_smmu_impl_of_match, np))
+ 		return qcom_smmu_create(smmu, &qcom_smmu_impl);
+ 
+-- 
+2.17.1
+
