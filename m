@@ -2,63 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E46243280CA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 15:28:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 522633280F6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Mar 2021 15:34:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236323AbhCAO2V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 09:28:21 -0500
-Received: from m-r1.th.seeweb.it ([5.144.164.170]:35197 "EHLO
-        m-r1.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236311AbhCAO2K (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 09:28:10 -0500
-Received: from [192.168.1.101] (abab236.neoplus.adsl.tpnet.pl [83.6.165.236])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id D0EFC1F695;
-        Mon,  1 Mar 2021 15:27:06 +0100 (CET)
-Subject: Re: [PATCH] qcom: spmi-regulator: Add support for ULT LV_P50 and ULT
- P300
-To:     Mark Brown <broonie@kernel.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, Andy Gross <agross@kernel.org>,
+        id S234880AbhCAOdq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 09:33:46 -0500
+Received: from mga03.intel.com ([134.134.136.65]:19020 "EHLO mga03.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234539AbhCAOdN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Mar 2021 09:33:13 -0500
+IronPort-SDR: uO2IGYlRc/bEro12TNlENJnVvIgj5296WKeqr6iKbGNPY4C8HqM9Uh/Eyq5uF4UQMsOFJ9Wx0n
+ L7oVb73aw6lw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9909"; a="186534371"
+X-IronPort-AV: E=Sophos;i="5.81,215,1610438400"; 
+   d="scan'208";a="186534371"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Mar 2021 06:32:27 -0800
+IronPort-SDR: sA9RXhcZpguchMlxPgLDjvWKyQnRUZykTF3H4euXJkx84yUyq83b8tCbfZDgcJJ8VjLeAeudx9
+ ZIGKpfywiptg==
+X-IronPort-AV: E=Sophos;i="5.81,215,1610438400"; 
+   d="scan'208";a="397746960"
+Received: from smile.fi.intel.com (HELO smile) ([10.237.68.40])
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Mar 2021 06:32:25 -0800
+Received: from andy by smile with local (Exim 4.94)
+        (envelope-from <andriy.shevchenko@intel.com>)
+        id 1lGjax-0099yN-FA; Mon, 01 Mar 2021 16:32:23 +0200
+Date:   Mon, 1 Mar 2021 16:32:23 +0200
+From:   Andy Shevchenko <andriy.shevchenko@intel.com>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20210225213514.117031-1-konrad.dybcio@somainline.org>
- <20210301142359.GA20302@sirena.org.uk>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-Message-ID: <eff6b950-45fa-9a1e-8596-1646916f25f7@somainline.org>
-Date:   Mon, 1 Mar 2021 15:27:05 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.1
+        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 0/2] Add ACPI support for SC8180X pinctrl driver
+Message-ID: <YDz693ftIEJ+v1OE@smile.fi.intel.com>
+References: <20210301014329.30104-1-shawn.guo@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <20210301142359.GA20302@sirena.org.uk>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210301014329.30104-1-shawn.guo@linaro.org>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Mar 01, 2021 at 09:43:27AM +0800, Shawn Guo wrote:
+> This is a couple of patches that enable ACPI probe for SC8180X pinctrl
+> driver.  The msm core driver needs a bit change to handle tiles mapping
+> differently between DT and ACPI.
 
-On 01.03.2021 15:23, Mark Brown wrote:
-> On Thu, Feb 25, 2021 at 10:35:13PM +0100, Konrad Dybcio wrote:
->> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
->>
->> The ULT LV_P50 shares the same configuration as the other ULT LV_Pxxx
->> and the ULT P300 shares the same as the other ULT Pxxx.
-> Please submit patches using subject lines reflecting the style for the
-> subsystem, this makes it easier for people to identify relevant patches.
-> Look at what existing commits in the area you're changing are doing and
-> make sure your subject lines visually resemble what they're doing.
-> There's no need to resubmit to fix this alone.
+Please, Cc me for this series.
 
-Yeah, sorry for that.. We've had these changes for a veery long time and it now the fact that the commit title was sub-optimal went under our radar.. Hopefully won't happen again!
+Meanwhile I think we have to understand the numbering scheme used by ACPI
+firmware on the machine in question.
 
+-- 
+With Best Regards,
+Andy Shevchenko
 
-Konrad
 
