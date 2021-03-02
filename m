@@ -2,87 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 612FF32B2C5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Mar 2021 04:49:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E3F0232B2C0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Mar 2021 04:49:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242244AbhCCBPn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Mar 2021 20:15:43 -0500
-Received: from foss.arm.com ([217.140.110.172]:50850 "EHLO foss.arm.com"
+        id S242235AbhCCBPm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Mar 2021 20:15:42 -0500
+Received: from mga04.intel.com ([192.55.52.120]:28234 "EHLO mga04.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1350767AbhCBMub (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Mar 2021 07:50:31 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 858D212FC;
-        Tue,  2 Mar 2021 04:17:30 -0800 (PST)
-Received: from [10.57.48.219] (unknown [10.57.48.219])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 79C8C3F766;
-        Tue,  2 Mar 2021 04:17:29 -0800 (PST)
-Subject: Re: [PATCH v3 1/3] iommu/arm-smmu: Add support for driver IOMMU fault
- handlers
-To:     Jordan Crouse <jcrouse@codeaurora.org>,
+        id S1350685AbhCBMXb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Mar 2021 07:23:31 -0500
+IronPort-SDR: 178IsVga0rbNAJ9jzCHiDL90xCqDStKbo6IBjGTmJpVTyh9ROyQyUXi4tivfpshAZKf2RHbMrP
+ 7FtHi+Pqy8Eg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9910"; a="184358985"
+X-IronPort-AV: E=Sophos;i="5.81,216,1610438400"; 
+   d="scan'208";a="184358985"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Mar 2021 04:21:28 -0800
+IronPort-SDR: uElB7C+qz7NzFA4Ca9Y93eJ+gdGGpwoEfVqCanWoLOz1VjHoww6HX/HnSnX7neIBs683UrirCR
+ LlSvT0VCJo8w==
+X-IronPort-AV: E=Sophos;i="5.81,216,1610438400"; 
+   d="scan'208";a="506307518"
+Received: from smile.fi.intel.com (HELO smile) ([10.237.68.40])
+  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Mar 2021 04:21:26 -0800
+Received: from andy by smile with local (Exim 4.94)
+        (envelope-from <andriy.shevchenko@linux.intel.com>)
+        id 1lH41j-009NUH-Hi; Tue, 02 Mar 2021 14:21:23 +0200
+Date:   Tue, 2 Mar 2021 14:21:23 +0200
+From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Jeffrey Hugo <jhugo@codeaurora.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Mika Westerberg <mika.westerberg@linux.intel.com>,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
         linux-arm-msm@vger.kernel.org
-Cc:     iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-        Will Deacon <will@kernel.org>,
-        linux-arm-kernel@lists.infradead.org
-References: <20210225175135.91922-1-jcrouse@codeaurora.org>
- <20210225175135.91922-2-jcrouse@codeaurora.org>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <2d3c7595-0186-7231-96dc-ae52414480ee@arm.com>
-Date:   Tue, 2 Mar 2021 12:17:24 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
- Thunderbird/78.7.1
+Subject: Re: [PATCH] gpiolib: acpi: support override broken GPIO number in
+ ACPI table
+Message-ID: <YD4twyAGvDDOCv+n@smile.fi.intel.com>
+References: <20210226033919.8871-1-shawn.guo@linaro.org>
+ <CAHp75Vcb=NO9OWjSpBeVC4c+9=aXE=yiDWVBwLD1DnzwdgFD6Q@mail.gmail.com>
+ <20210226093925.GA24428@dragon>
+ <CAHp75Vc6xYv+197SOrSefQHD2h4Xy_N20gQajW4uF2PU=sJfLg@mail.gmail.com>
+ <YDjZOU+VMWasjzUb@smile.fi.intel.com>
+ <20210227031944.GB24428@dragon>
+ <YDzbQqHspfvpYS7Z@smile.fi.intel.com>
+ <20210302002725.GE24428@dragon>
 MIME-Version: 1.0
-In-Reply-To: <20210225175135.91922-2-jcrouse@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210302002725.GE24428@dragon>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-02-25 17:51, Jordan Crouse wrote:
-> Call report_iommu_fault() to allow upper-level drivers to register their
-> own fault handlers.
+On Tue, Mar 02, 2021 at 08:27:26AM +0800, Shawn Guo wrote:
+> On Mon, Mar 01, 2021 at 02:17:06PM +0200, Andy Shevchenko wrote:
+> > On Sat, Feb 27, 2021 at 11:19:45AM +0800, Shawn Guo wrote:
+> > > On Fri, Feb 26, 2021 at 01:19:21PM +0200, Andy Shevchenko wrote:
+> > > > On Fri, Feb 26, 2021 at 12:57:37PM +0200, Andy Shevchenko wrote:
+> > > > > On Fri, Feb 26, 2021 at 11:39 AM Shawn Guo <shawn.guo@linaro.org> wrote:
+> > > > > > On Fri, Feb 26, 2021 at 11:12:07AM +0200, Andy Shevchenko wrote:
+> > > > > > > On Fri, Feb 26, 2021 at 5:42 AM Shawn Guo <shawn.guo@linaro.org> wrote:
+> > > > > > > > Running kernel with ACPI on Lenovo Flex 5G laptop, touchpad is just
+> > > > > > > > not working.  That's because the GpioInt number of TSC2 node in ACPI
+> > > > > > > > table is simply wrong, and the number even exceeds the maximum GPIO
+> > > > > > > > lines.  As the touchpad works fine with Windows on the same machine,
+> > > > > > > > presumably this is something Windows-ism.  Although it's obviously
+> > > > > > > > a specification violation, believe of that Microsoft will fix this in
+> > > > > > > > the near future is not really realistic.
+> > > > > > > >
+> > > > > > > > It adds the support of overriding broken GPIO number in ACPI table
+> > > > > > > > on particular machines, which are matched using DMI info.  Such
+> > > > > > > > mechanism for fixing up broken firmware and ACPI table is not uncommon
+> > > > > > > > in kernel.  And hopefully it can be useful for other machines that get
+> > > > > > > > broken GPIO number coded in ACPI table.
+> > > > > > >
+> > > > > > > Thanks for the report and patch.
+> > > > > > >
+> > > > > > > First of all, have you reported the issue to Lenovo? At least they
+> > > > > > > will know that they did wrong.
+> > > > > >
+> > > > > > Yes, we are reporting this to Lenovo, but to be honest, we are not sure
+> > > > > > how much they will care about it, as they are shipping the laptop with
+> > > > > > Windows only.
+> > > > > >
+> > > > > > > Second, is it possible to have somewhere output of `acpidump -o
+> > > > > > > flex5g.dat` (the flex5g.dat file)?
+> > > > > >
+> > > > > > https://raw.githubusercontent.com/aarch64-laptops/build/master/misc/lenovo-flex-5g/dsdt.dsl
+> > > > 
+> > > > Looking into DSDT I think the problem is much worse. First of all there are
+> > > > many cases where pins like 0x140, 0x1c0, etc are being used. On top of that
+> > > > there is no GPIO driver in the upstream (as far as I can see by HID, perhaps
+> > > > there is a driver but for different HID. And I see that GPIO device consumes a
+> > > > lot of Interrupts from GIC as well (it's ARM platfrom as far as I understand).
+> > > 
+> > > Yes, it's a laptop built on Qualcomm Snapdragon SC8180X SoC.  The GPIO
+> > > driver is generic for all Snapdragon SoCs, and has been available in
+> > > upstream for many years (for DT though). It can be found as the gpio_chip
+> > > implementation in MSM pinctrl driver [1].  The SC8180X specific part can
+> > > be found as pinctrl-sc8180x.c [2], and it's already working for DT boot.
+> > > The only missing piece is to add "QCOM040D" as the acpi_device_id to
+> > > support ACPI boot, and it will be submitted after 5.12-rc1 comes out.
+> > > 
+> > > > Looking at the Microsoft brain damaged way of understanding GPIOs and hardware
+> > > > [1], I am afraid you really want to have a specific GPIO driver for this. So,
+> > > > for now until we have better picture of what's going on, NAK to this patch.
+> > > 
+> > > Thanks for the pointer to Microsoft document.  On Snapdragon, we have
+> > > only one GPIO instance that accommodates all GPIO pins, so I'm not sure
+> > > that Microsoft GPIOs mapping layer is relevant here at all.
+> > > 
+> > > Please take a look at the GPIO driver, and feel free to let me know if
+> > > you need any further information to understand what's going on.
+> > 
+> > Yes, I looked into the driver and see that it has 3 blocks of GPIOs (we call
+> > them communities, but in the driver the term 'tiles' is used) AFAIU (correct me
+> > if I'm wrong). And who knows how many banks in each of them.
 > 
-> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
-> ---
-> 
->   drivers/iommu/arm/arm-smmu/arm-smmu.c | 9 +++++++--
->   1 file changed, 7 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> index d8c6bfde6a61..0f3a9b5f3284 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> @@ -408,6 +408,7 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
->   	struct arm_smmu_domain *smmu_domain = to_smmu_domain(domain);
->   	struct arm_smmu_device *smmu = smmu_domain->smmu;
->   	int idx = smmu_domain->cfg.cbndx;
-> +	int ret;
->   
->   	fsr = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSR);
->   	if (!(fsr & ARM_SMMU_FSR_FAULT))
-> @@ -417,8 +418,12 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
->   	iova = arm_smmu_cb_readq(smmu, idx, ARM_SMMU_CB_FAR);
->   	cbfrsynra = arm_smmu_gr1_read(smmu, ARM_SMMU_GR1_CBFRSYNRA(idx));
->   
-> -	dev_err_ratelimited(smmu->dev,
-> -	"Unhandled context fault: fsr=0x%x, iova=0x%08lx, fsynr=0x%x, cbfrsynra=0x%x, cb=%d\n",
-> +	ret = report_iommu_fault(domain, dev, iova,
+> I'm not sure that the 3 'tiles' means 3 blocks of GPIOs.  Maybe, @Bjorn
+> can help clarify.  But the ACPI table shows that there is only 'GIO0'
+> with 'QCOM040D' HID.
 
-Beware that "dev" here is not a struct device, so this isn't right. I'm 
-not entirely sure what we *should* be passing here, since we can't 
-easily attribute a context fault to a specific client device, and 
-passing the IOMMU device seems a bit dubious too, so maybe just NULL?
+Yeah, I already got that ACPI there is screwed up...
 
-Robin.
-
-> +		fsynr & ARM_SMMU_FSYNR0_WNR ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ);
-> +
-> +	if (ret == -ENOSYS)
-> +		dev_err_ratelimited(smmu->dev,
-> +		"Unhandled context fault: fsr=0x%x, iova=0x%08lx, fsynr=0x%x, cbfrsynra=0x%x, cb=%d\n",
->   			    fsr, iova, fsynr, cbfrsynra, idx);
->   
->   	arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, fsr);
+> > I'm afraid that MS does on his way and not yours.
+> > 
+> > Can we have TRM for GPIO IP used there and any evidence / document from
+> > firmware team about the implementation of the GPIO numbering in the ACPI
+> > (at Intel we have so called BIOS Writers Guide that is given to the customers
+> > where such info can be found)?
 > 
+> Unfortunately, I do not have the access to any sort of these documents.
+> But I looped in Jeffrey who is part of Qualcomm kernel/firmware team,
+> and should be able to help clarify GPIO numbering in the ACPI table.
+
+Thanks! Will wait for new information then.
+
+> > > [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/pinctrl/qcom/pinctrl-msm.c#n713
+> > > [2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/pinctrl/qcom/pinctrl-sc8180x.c
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
