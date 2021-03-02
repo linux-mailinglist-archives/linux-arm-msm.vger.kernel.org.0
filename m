@@ -2,55 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 69FA232B1A5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Mar 2021 04:47:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C9FA332B1C3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Mar 2021 04:47:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241668AbhCCBMy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Mar 2021 20:12:54 -0500
-Received: from mail.kernel.org ([198.145.29.99]:50858 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1347891AbhCBHHi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Mar 2021 02:07:38 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 6251664DE8;
-        Tue,  2 Mar 2021 07:06:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1614668817;
-        bh=ItaVA5vziWmClkiksaDSYnEouJv6GwojNAFqFBPiXes=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=1ODLC2rr+tyH27A8uwjpsYgX8dCBX+SGLrD2fDTTKGcnIi6fhghRHzRa9F2CEw+xv
-         FUIUZ50OtS98ymF1A+/5H41qbv8iRVhp1T54wt3t5Hb6rionc05fPS89iTCzDOjOrW
-         l1gvFUwhdpfTCsPdRlqxPlh4mMqIO7ahMgeJX/qo=
-Date:   Tue, 2 Mar 2021 08:06:54 +0100
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Lee Jones <lee.jones@linaro.org>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] usb: dwc3: qcom: Honor wakeup enabled/disabled state
-Message-ID: <YD3kDrDTGKC4vGGj@kroah.com>
-References: <20200915123123.1.I44954d9e1169f2cf5c44e6454d357c75ddfa99a2@changeid>
- <20200915235032.GB1893@yoga>
- <YDU5ujJy5xiDXAJ3@google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YDU5ujJy5xiDXAJ3@google.com>
+        id S241774AbhCCBOA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Mar 2021 20:14:00 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:19692 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1376334AbhCBHRG (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Mar 2021 02:17:06 -0500
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 01 Mar 2021 23:10:36 -0800
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 01 Mar 2021 23:10:34 -0800
+X-QCInternal: smtphost
+Received: from mdalam-linux.qualcomm.com ([10.201.2.71])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 02 Mar 2021 12:40:15 +0530
+Received: by mdalam-linux.qualcomm.com (Postfix, from userid 466583)
+        id 55B2320EB6; Tue,  2 Mar 2021 12:40:15 +0530 (IST)
+From:   Md Sadre Alam <mdalam@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, broonie@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Md Sadre Alam <mdalam@codeaurora.org>
+Subject: [PATCH] spi: qup: Change usleep_range to udelay
+Date:   Tue,  2 Mar 2021 12:40:13 +0530
+Message-Id: <1614669013-1755-1-git-send-email-mdalam@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 23, 2021 at 09:22:02AM -0800, Matthias Kaehlcke wrote:
-> ping
-> 
-> I noticed this was never picked up, can it be landed or are there any
-> concerns with this patch?
+Change usleep_range() to udelay(). Since delay request
+for 1 to 2 usec so we have to use udelay() instead of
+usleep_range() as per kernel documentation.
 
-No idea, try resending it.
+Signed-off-by: Md Sadre Alam <mdalam@codeaurora.org>
+---
+ drivers/spi/spi-qup.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-thanks,
+diff --git a/drivers/spi/spi-qup.c b/drivers/spi/spi-qup.c
+index 8dcb2e7..37b013f 100644
+--- a/drivers/spi/spi-qup.c
++++ b/drivers/spi/spi-qup.c
+@@ -189,7 +189,7 @@ static int spi_qup_set_state(struct spi_qup *controller, u32 state)
+ 	loop = 0;
+ 	while (!spi_qup_is_valid_state(controller)) {
+ 
+-		usleep_range(SPI_DELAY_THRESHOLD, SPI_DELAY_THRESHOLD * 2);
++		udelay(SPI_DELAY_THRESHOLD);
+ 
+ 		if (++loop > SPI_DELAY_RETRY)
+ 			return -EIO;
+@@ -217,7 +217,7 @@ static int spi_qup_set_state(struct spi_qup *controller, u32 state)
+ 	loop = 0;
+ 	while (!spi_qup_is_valid_state(controller)) {
+ 
+-		usleep_range(SPI_DELAY_THRESHOLD, SPI_DELAY_THRESHOLD * 2);
++		udelay(SPI_DELAY_THRESHOLD);
+ 
+ 		if (++loop > SPI_DELAY_RETRY)
+ 			return -EIO;
+-- 
+2.7.4
 
-greg k-h
