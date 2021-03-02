@@ -2,71 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4AD2732B0C0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Mar 2021 04:45:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 92FC832B109
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Mar 2021 04:46:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233582AbhCCA66 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Mar 2021 19:58:58 -0500
-Received: from mail-02.mail-europe.com ([51.89.119.103]:47294 "EHLO
-        mail-02.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1575149AbhCBDxp (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Mar 2021 22:53:45 -0500
-Date:   Tue, 02 Mar 2021 03:51:10 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1614657077;
-        bh=6Lqc99WHAgZVxNlrSG4NdxKORMThqAvTsVgRaszZvUo=;
-        h=Date:To:From:Cc:Reply-To:Subject:From;
-        b=pow8k2LzpEfvSdv7fU6cmpTWqEofb0PWomerf42KjWf3J8T22fCLi8lmo4lWdxDAi
-         ZycHNc0ron5tWGsZzdiVy1eK/8AydwarBaJ5NviNecVV5jpx/79a8A1PQ13toUDY6Z
-         +8BZxztIVuYF7xqzg30eBqCxeV7axv0aWTngpjDE=
-To:     "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "phone-devel@vger.kernel.org" <phone-devel@vger.kernel.org>
-From:   Yassine Oudjana <y.oudjana@protonmail.com>
-Cc:     "agross@kernel.org" <agross@kernel.org>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        "robh+dt@kernel.org" <robh+dt@kernel.org>,
-        "konrad.dybcio@somainline.org" <konrad.dybcio@somainline.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
-Subject: [PATCH] arm64: dts: qcom: msm8996: Add usb3 interrupts
-Message-ID: <dvfyYKA9vnJdunbQ1CL-dgjXtv_1wYpRnezdc3PHoCyrgmfi5KP0Dn4MtaumQEpHIQAHL9tTdqcaCK7YJWyrdWXCrPeGd4uMh-nFeu7xQYw=@protonmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+        id S234842AbhCCBHi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Mar 2021 20:07:38 -0500
+Received: from m42-2.mailgun.net ([69.72.42.2]:48992 "EHLO m42-2.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1576956AbhCBFfO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Mar 2021 00:35:14 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1614663293; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=AY3VRhsh6oeLwdSW8cR2a9Vwno0w8GpexKTVBZaE/8s=; b=pL+dQsOassdf2ZvsaNezl7bREhXr94Ezl/orGOf4tGDsRWSCxS2r5PvYpEMh1kDXqgOR8RQ2
+ yM9kV4nkqtlXkfv1NGrXaTbkZqI/32fRi37t7tEI7E/F+SHG5kjPCTzkz8eU51H3wAntC22h
+ DqO6H6l4OGPwjq1t5U8fvlQ6awg=
+X-Mailgun-Sending-Ip: 69.72.42.2
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 603dcb881d4da3b75dcc814c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 02 Mar 2021 05:22:16
+ GMT
+Sender: rnayak=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 48B33C433ED; Tue,  2 Mar 2021 05:22:15 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.4 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        SORTED_RECIPS,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 56A58C433C6;
+        Tue,  2 Mar 2021 05:22:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 56A58C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=rnayak@codeaurora.org
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        linus.walleij@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Rajendra Nayak <rnayak@codeaurora.org>
+Subject: [PATCH 1/2] pinctrl: qcom: sc7280: Fix SDC_QDSD_PINGROUP and UFS_RESET offsets
+Date:   Tue,  2 Mar 2021 10:51:50 +0530
+Message-Id: <1614662511-26519-1-git-send-email-rnayak@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add hs_phy_irq and ss_phy_irq to usb3.
+The offsets for SDC_QDSD_PINGROUP and UFS_RESET were off by 0x100000
+due to an issue in the scripts generating the data.
 
-Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
+Fixes: ecb454594c43: ("pinctrl: qcom: Add sc7280 pinctrl driver")
+
+Reported-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/pinctrl/qcom/pinctrl-sc7280.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qc=
-om/msm8996.dtsi
-index 7eef07e73e25..b4b8d6305a05 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -1754,6 +1754,10 @@ usb3: usb@6af8800 {
- =09=09=09#size-cells =3D <1>;
- =09=09=09ranges;
-
-+=09=09=09interrupts =3D <GIC_SPI 347 IRQ_TYPE_LEVEL_HIGH>,
-+=09=09=09=09     <GIC_SPI 243 IRQ_TYPE_LEVEL_HIGH>;
-+=09=09=09interrupt-names =3D "hs_phy_irq", "ss_phy_irq";
-+
- =09=09=09clocks =3D <&gcc GCC_SYS_NOC_USB3_AXI_CLK>,
- =09=09=09=09<&gcc GCC_USB30_MASTER_CLK>,
- =09=09=09=09<&gcc GCC_AGGRE2_USB3_AXI_CLK>,
---
-2.30.1
+diff --git a/drivers/pinctrl/qcom/pinctrl-sc7280.c b/drivers/pinctrl/qcom/pinctrl-sc7280.c
+index 8daccd5..49c4347 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sc7280.c
++++ b/drivers/pinctrl/qcom/pinctrl-sc7280.c
+@@ -1439,14 +1439,14 @@ static const struct msm_pingroup sc7280_groups[] = {
+ 	[172] = PINGROUP(172, qdss, _, _, _, _, _, _, _, _),
+ 	[173] = PINGROUP(173, qdss, _, _, _, _, _, _, _, _),
+ 	[174] = PINGROUP(174, qdss, _, _, _, _, _, _, _, _),
+-	[175] = UFS_RESET(ufs_reset, 0x1be000),
+-	[176] = SDC_QDSD_PINGROUP(sdc1_rclk, 0x1b3000, 15, 0),
+-	[177] = SDC_QDSD_PINGROUP(sdc1_clk, 0x1b3000, 13, 6),
+-	[178] = SDC_QDSD_PINGROUP(sdc1_cmd, 0x1b3000, 11, 3),
+-	[179] = SDC_QDSD_PINGROUP(sdc1_data, 0x1b3000, 9, 0),
+-	[180] = SDC_QDSD_PINGROUP(sdc2_clk, 0x1b4000, 14, 6),
+-	[181] = SDC_QDSD_PINGROUP(sdc2_cmd, 0x1b4000, 11, 3),
+-	[182] = SDC_QDSD_PINGROUP(sdc2_data, 0x1b4000, 9, 0),
++	[175] = UFS_RESET(ufs_reset, 0xbe000),
++	[176] = SDC_QDSD_PINGROUP(sdc1_rclk, 0xb3000, 15, 0),
++	[177] = SDC_QDSD_PINGROUP(sdc1_clk, 0xb3000, 13, 6),
++	[178] = SDC_QDSD_PINGROUP(sdc1_cmd, 0xb3000, 11, 3),
++	[179] = SDC_QDSD_PINGROUP(sdc1_data, 0xb3000, 9, 0),
++	[180] = SDC_QDSD_PINGROUP(sdc2_clk, 0xb4000, 14, 6),
++	[181] = SDC_QDSD_PINGROUP(sdc2_cmd, 0xb4000, 11, 3),
++	[182] = SDC_QDSD_PINGROUP(sdc2_data, 0xb4000, 9, 0),
+ };
+ 
+ static const struct msm_pinctrl_soc_data sc7280_pinctrl = {
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
