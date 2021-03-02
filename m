@@ -2,153 +2,252 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D188732B2EE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Mar 2021 04:49:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0125132B2F2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Mar 2021 04:49:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242552AbhCCBQW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Mar 2021 20:16:22 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:58140 "EHLO z11.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1580062AbhCBRWz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Mar 2021 12:22:55 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1614705725; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=i6HWitAvfuibUOrEhE9hWqjcYM7rHuJywCh3nQMG6cA=; b=P75gxfee+KISkKX+PZOFiiOXExoVsZKAIrb60kOGrIpSWi/2M+lVQlcDcVfpyZzmA7jaLXx7
- OxFCLiIkhHrjD16hLyzxb22RZnJVqij+na/mKSQo01eTCaX/AxS4HbNyJiQr/qBLtJLb+iui
- eTwNWuKCAJHyt7AHHVfzmXNy61Y=
-X-Mailgun-Sending-Ip: 104.130.96.11
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 603e65bf4fd7814d5f8c7565 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 02 Mar 2021 16:20:15
- GMT
-Sender: asutoshd=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BC0CCC4346F; Tue,  2 Mar 2021 16:20:14 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from stor-presley.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: asutoshd)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1E9ACC433C6;
-        Tue,  2 Mar 2021 16:20:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1E9ACC433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=asutoshd@codeaurora.org
-Date:   Tue, 2 Mar 2021 08:20:10 -0800
-From:   Asutosh Das <asutoshd@codeaurora.org>
-To:     Adrian Hunter <adrian.hunter@intel.com>
-Cc:     cang@codeaurora.org, martin.petersen@oracle.com,
-        linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Pedro Sousa <pedrom.sousa@synopsys.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Stanley Chu <stanley.chu@mediatek.com>,
+        id S242587AbhCCBQZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Mar 2021 20:16:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56312 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1347486AbhCBSHF (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Mar 2021 13:07:05 -0500
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73095C061221
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Mar 2021 09:57:05 -0800 (PST)
+Received: by mail-pl1-x62c.google.com with SMTP id k22so12466288pll.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Mar 2021 09:57:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=XZv1luet9j7TnZYm7Gox6kRSD9fWpPc1LUY0U6nOa5s=;
+        b=Y+h9s4snrD/QHKXvqv+wG3eyoISyFrn0nHCU03dBFCu4kWrSxrqR+GKZ5JfysTORMG
+         MH8rvIDadTd/v5GVH1qTkG4L6F+NL6UXnSe0HkQhGGIlf+OzX9FUUKpZ4u583YvETHZi
+         DhYOTLffSolLB90COxzoR36lseOVvxRRXC7Y5X07q7tOrIorLcxOK9lmGNfsU4cvpgi8
+         gSd+/C9V1atQernhfZgMrtKUAEJY5IUnFbolqEoyo6Yuh4BC77TEdptTze/jyLB4oqbe
+         Tj+J7zuo1PHekHvyxyUD9SVE6bOyVjrEGqCt/XbbSMbHqDCyrex4VFcZ2wQJ+MWlXWNQ
+         meLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=XZv1luet9j7TnZYm7Gox6kRSD9fWpPc1LUY0U6nOa5s=;
+        b=sYmcIEyntiYc2kBmrpH87k1nri1oSehjxf6MYfG/c09jlt7P+5pKUx9OJkQgt/BDbe
+         btxLKKfM+l+HZE1SkUAGjbYgiPAlN/GOSZBx361Oo043Kth+JVtrap3LQINvgH1XLkhb
+         NollUbdhQS01MzczcAfvUocLgpKe/jcL4ugHsp26GjDxwsRTMLfbcVbD9lsuu7+8iAvH
+         gwLXEVv8srjDc9L/xpPOK/ecBRdVuMsx+nKpCdPOgZHL1F4joqmneiYEOeGr27+0k0cL
+         C9HmzhljnYhfgU6l1FwNVZ7HhIyuOdZMIA0JUNsLL5iuHMb03ScH2cm7X0sXh1CKpoKT
+         2UEw==
+X-Gm-Message-State: AOAM532uEA4I96udK7+eb3TeDx6hIF8os5ga90jTGy72LyuBl4o3a70a
+        grOcujL0DyOMX5nzaj0D8JxFdg==
+X-Google-Smtp-Source: ABdhPJzhE3kmzqmnRAdBHhvi8PKjBDxeIyYMxd8MW1Xbh5UIAuhxNlntYswLfIUB9Ai5UTENrKKy6Q==
+X-Received: by 2002:a17:902:ff0d:b029:e4:a497:fdad with SMTP id f13-20020a170902ff0db02900e4a497fdadmr12476777plj.33.1614707824846;
+        Tue, 02 Mar 2021 09:57:04 -0800 (PST)
+Received: from xps15 (S0106889e681aac74.cg.shawcable.net. [68.147.0.187])
+        by smtp.gmail.com with ESMTPSA id u2sm3277561pjy.14.2021.03.02.09.57.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Mar 2021 09:57:04 -0800 (PST)
+Date:   Tue, 2 Mar 2021 10:57:02 -0700
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Ingo Molnar <mingo@redhat.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Kiwoong Kim <kwmad.kim@samsung.com>,
-        Bean Huo <beanhuo@micron.com>,
-        Wei Yongjun <weiyongjun1@huawei.com>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Jaegeuk Kim <jaegeuk@kernel.org>,
-        Satya Tangirala <satyat@google.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        "moderated list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "open list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "moderated list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
-        <linux-mediatek@lists.infradead.org>
-Subject: Re: [PATCH v9 1/2] scsi: ufs: Enable power management for wlun
-Message-ID: <20210302162010.GH12147@stor-presley.qualcomm.com>
-References: <cover.1614655058.git.asutoshd@codeaurora.org>
- <b291bb65fadc9c828cbcb4ffb81cfa1ee47b82be.1614655058.git.asutoshd@codeaurora.org>
- <d17e52e0-cb50-50ee-accb-458b318014e5@intel.com>
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v5 04/16] rpmsg: char: export eptdev create an destroy
+ functions
+Message-ID: <20210302175702.GA3791957@xps15>
+References: <20210219111501.14261-1-arnaud.pouliquen@foss.st.com>
+ <20210219111501.14261-5-arnaud.pouliquen@foss.st.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <d17e52e0-cb50-50ee-accb-458b318014e5@intel.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20210219111501.14261-5-arnaud.pouliquen@foss.st.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 02 2021 at 06:14 -0800, Adrian Hunter wrote:
->On 2/03/21 5:21 am, Asutosh Das wrote:
->> During runtime-suspend of ufs host, the scsi devices are
->> already suspended and so are the queues associated with them.
->> But the ufs host sends SSU to wlun during its runtime-suspend.
->> During the process blk_queue_enter checks if the queue is not in
->> suspended state. If so, it waits for the queue to resume, and never
->> comes out of it.
->> The commit
->> (d55d15a33: scsi: block: Do not accept any requests while suspended)
->> adds the check if the queue is in suspended state in blk_queue_enter().
->>
->> Call trace:
->>  __switch_to+0x174/0x2c4
->>  __schedule+0x478/0x764
->>  schedule+0x9c/0xe0
->>  blk_queue_enter+0x158/0x228
->>  blk_mq_alloc_request+0x40/0xa4
->>  blk_get_request+0x2c/0x70
->>  __scsi_execute+0x60/0x1c4
->>  ufshcd_set_dev_pwr_mode+0x124/0x1e4
->>  ufshcd_suspend+0x208/0x83c
->>  ufshcd_runtime_suspend+0x40/0x154
->>  ufshcd_pltfrm_runtime_suspend+0x14/0x20
->>  pm_generic_runtime_suspend+0x28/0x3c
->>  __rpm_callback+0x80/0x2a4
->>  rpm_suspend+0x308/0x614
->>  rpm_idle+0x158/0x228
->>  pm_runtime_work+0x84/0xac
->>  process_one_work+0x1f0/0x470
->>  worker_thread+0x26c/0x4c8
->>  kthread+0x13c/0x320
->>  ret_from_fork+0x10/0x18
->>
->> Fix this by registering ufs device wlun as a scsi driver and
->> registering it for block runtime-pm. Also make this as a
->> supplier for all other luns. That way, this device wlun
->> suspends after all the consumers and resumes after
->> hba resumes.
->>
->> Co-developed-by: Can Guo <cang@codeaurora.org>
->> Signed-off-by: Can Guo <cang@codeaurora.org>
->> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
->> ---
->
->Now we need either to move the suspend/resume vops from
->ufshcd_suspend/resume to __ufshcd_wl_suspend/resume, assuming that
->would work for existing implementations of those callbacks,
->or otherwise create new vops ->wl_suspend() / ->wl_resume(), and
->then split the existing implementations of those callbacks.
->
->ufs_intel_resume() now needs to be invoked from __ufshcd_wl_resume().
->I am not sure about the others:
->
->	exynos_ufs_suspend()
->	exynos_ufs_resume()
->	ufs_hisi_suspend()
->	ufs_hisi_resume()
->	ufs_mtk_suspend()
->	ufs_mtk_resume()
->	ufs_qcom_suspend()
->	ufs_qcom_resume()
->
+Good morning,
 
-Thanks. I'll change this in the next version.
+I have started to review this set - comments will be staggered over several
+days.
 
--asd
+On Fri, Feb 19, 2021 at 12:14:49PM +0100, Arnaud Pouliquen wrote:
+> To prepare the split code related to the control and the endpoint
+> devices in separate files:
+> - suppress the dependency with the rpmsg_ctrldev struct,
+> - rename and export the functions in rpmsg_char.h.
+> 
+> Suggested-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+> Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
+> ---
+>  drivers/rpmsg/rpmsg_char.c | 22 ++++++++++------
+>  drivers/rpmsg/rpmsg_char.h | 51 ++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 66 insertions(+), 7 deletions(-)
+>  create mode 100644 drivers/rpmsg/rpmsg_char.h
+> 
+> diff --git a/drivers/rpmsg/rpmsg_char.c b/drivers/rpmsg/rpmsg_char.c
+> index 9e33b53bbf56..78a6d19fdf82 100644
+> --- a/drivers/rpmsg/rpmsg_char.c
+> +++ b/drivers/rpmsg/rpmsg_char.c
+> @@ -1,5 +1,6 @@
+>  // SPDX-License-Identifier: GPL-2.0
+>  /*
+> + * Copyright (C) 2021, STMicroelectronics
+>   * Copyright (c) 2016, Linaro Ltd.
+>   * Copyright (c) 2012, Michal Simek <monstr@monstr.eu>
+>   * Copyright (c) 2012, PetaLogix
+> @@ -22,6 +23,7 @@
+>  #include <linux/uaccess.h>
+>  #include <uapi/linux/rpmsg.h>
+>  
+> +#include "rpmsg_char.h"
+>  #include "rpmsg_internal.h"
+>  
+>  #define RPMSG_DEV_MAX	(MINORMASK + 1)
+> @@ -78,7 +80,7 @@ struct rpmsg_eptdev {
+>  	wait_queue_head_t readq;
+>  };
+>  
+> -static int rpmsg_eptdev_destroy(struct device *dev, void *data)
+> +static int rpmsg_eptdev_destroy(struct device *dev)
+>  {
+>  	struct rpmsg_eptdev *eptdev = dev_to_eptdev(dev);
+>  
+> @@ -277,7 +279,7 @@ static long rpmsg_eptdev_ioctl(struct file *fp, unsigned int cmd,
+>  	if (cmd != RPMSG_DESTROY_EPT_IOCTL)
+>  		return -EINVAL;
+>  
+> -	return rpmsg_eptdev_destroy(&eptdev->dev, NULL);
+> +	return rpmsg_eptdev_destroy(&eptdev->dev);
+>  }
+>  
+>  static const struct file_operations rpmsg_eptdev_fops = {
+> @@ -336,10 +338,15 @@ static void rpmsg_eptdev_release_device(struct device *dev)
+>  	kfree(eptdev);
+>  }
+>  
+> -static int rpmsg_eptdev_create(struct rpmsg_ctrldev *ctrldev,
+> +int rpmsg_chrdev_eptdev_destroy(struct device *dev, void *data)
+> +{
+> +	return rpmsg_eptdev_destroy(dev);
+> +}
+> +EXPORT_SYMBOL(rpmsg_chrdev_eptdev_destroy);
+
+Below we have rpmsg_chrdev_create_eptdev() so it would make sense to have
+rpmsg_chrdev_destroy_ept().
+
+I would also rename rpmsg_eptdev_destroy() to rpmsg_chrdev_destroy_ept() and
+export that symbol rather than introducing a function that only calls another
+one.  You did exactly that for rpmsg_chrdev_create_eptdev().
+
+> +
+> +int rpmsg_chrdev_create_eptdev(struct rpmsg_device *rpdev, struct device *parent,
+>  			       struct rpmsg_channel_info chinfo)
+>  {
+> -	struct rpmsg_device *rpdev = ctrldev->rpdev;
+>  	struct rpmsg_eptdev *eptdev;
+>  	struct device *dev;
+>  	int ret;
+> @@ -359,7 +366,7 @@ static int rpmsg_eptdev_create(struct rpmsg_ctrldev *ctrldev,
+>  
+>  	device_initialize(dev);
+>  	dev->class = rpmsg_class;
+> -	dev->parent = &ctrldev->dev;
+> +	dev->parent = parent;
+>  	dev->groups = rpmsg_eptdev_groups;
+>  	dev_set_drvdata(dev, eptdev);
+>  
+> @@ -402,6 +409,7 @@ static int rpmsg_eptdev_create(struct rpmsg_ctrldev *ctrldev,
+>  
+>  	return ret;
+>  }
+> +EXPORT_SYMBOL(rpmsg_chrdev_create_eptdev);
+>  
+>  static int rpmsg_ctrldev_open(struct inode *inode, struct file *filp)
+>  {
+> @@ -441,7 +449,7 @@ static long rpmsg_ctrldev_ioctl(struct file *fp, unsigned int cmd,
+>  	chinfo.src = eptinfo.src;
+>  	chinfo.dst = eptinfo.dst;
+>  
+> -	return rpmsg_eptdev_create(ctrldev, chinfo);
+> +	return rpmsg_chrdev_create_eptdev(ctrldev->rpdev, &ctrldev->dev, chinfo);
+
+Not sure why we have to change the signature of rpmsg_eptdev_create() but I may
+find an answer to that question later on in the patchset.
+
+>  };
+>  
+>  static const struct file_operations rpmsg_ctrldev_fops = {
+> @@ -527,7 +535,7 @@ static void rpmsg_chrdev_remove(struct rpmsg_device *rpdev)
+>  	int ret;
+>  
+>  	/* Destroy all endpoints */
+> -	ret = device_for_each_child(&ctrldev->dev, NULL, rpmsg_eptdev_destroy);
+> +	ret = device_for_each_child(&ctrldev->dev, NULL, rpmsg_chrdev_eptdev_destroy);
+>  	if (ret)
+>  		dev_warn(&rpdev->dev, "failed to nuke endpoints: %d\n", ret);
+>  
+> diff --git a/drivers/rpmsg/rpmsg_char.h b/drivers/rpmsg/rpmsg_char.h
+> new file mode 100644
+> index 000000000000..0feb3ea9445c
+> --- /dev/null
+> +++ b/drivers/rpmsg/rpmsg_char.h
+> @@ -0,0 +1,51 @@
+> +/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
+> +/*
+> + * Copyright (C) STMicroelectronics 2021.
+> + */
+> +
+> +#ifndef __RPMSG_CHRDEV_H__
+> +#define __RPMSG_CHRDEV_H__
+> +
+> +#if IS_ENABLED(CONFIG_RPMSG_CHAR)
+> +/**
+> + * rpmsg_chrdev_create_eptdev() - register char device based on an endpoint
+> + * @rpdev:  prepared rpdev to be used for creating endpoints
+> + * @parent: parent device
+> + * @chinfo: assiated endpoint channel information.
+> + *
+> + * This function create a new rpmsg char endpoint device to instantiate a new
+> + * endpoint based on chinfo information.
+> + */
+> +int rpmsg_chrdev_create_eptdev(struct rpmsg_device *rpdev, struct device *parent,
+> +			       struct rpmsg_channel_info chinfo);
+> +
+> +/**
+> + * rpmsg_chrdev_eptdev_destroy() - destroy created char device
+> + * @data: parent device
+> + * @chinfo: assiated endpoint channel information.
+> + *
+> + * This function create a new rpmsg char endpoint device to instantiate a new
+> + * endpoint based on chinfo information.
+> + */
+> +int rpmsg_chrdev_eptdev_destroy(struct device *dev, void *data);
+> +
+> +#else  /*IS_ENABLED(CONFIG_RPMSG_CHAR) */
+> +
+> +static inline int rpmsg_chrdev_create_eptdev(struct rpmsg_device *rpdev,
+> +					     struct device *parent,
+> +					     struct rpmsg_channel_info chinfo)
+> +{
+> +	return -EINVAL;
+> +}
+> +
+> +static inline int rpmsg_chrdev_eptdev_destroy(struct device *dev, void *data)
+> +{
+> +	/* This shouldn't be possible */
+> +	WARN_ON(1);
+> +
+> +	return 0;
+> +}
+> +
+> +#endif /*IS_ENABLED(CONFIG_RPMSG_CHAR) */
+> +
+> +#endif /*__RPMSG_CHRDEV_H__ */
+> -- 
+> 2.17.1
+> 
