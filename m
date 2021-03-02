@@ -2,109 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DB26E32B2DD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Mar 2021 04:49:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F30532B2E5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Mar 2021 04:49:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242299AbhCCBPx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Mar 2021 20:15:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53032 "EHLO
+        id S242353AbhCCBQA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Mar 2021 20:16:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1446819AbhCBN3B (ORCPT
+        with ESMTP id S1447518AbhCBNl1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Mar 2021 08:29:01 -0500
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09904C061A28
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Mar 2021 05:28:21 -0800 (PST)
-Received: by mail-pl1-x633.google.com with SMTP id c16so2562094ply.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Mar 2021 05:28:21 -0800 (PST)
+        Tue, 2 Mar 2021 08:41:27 -0500
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85C0CC061756;
+        Tue,  2 Mar 2021 05:40:38 -0800 (PST)
+Received: by mail-lf1-x129.google.com with SMTP id q25so11076955lfc.8;
+        Tue, 02 Mar 2021 05:40:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=PqPgRtzVantKyRNR1zZk8EcuOOdksOMCXe9nMbpmH0o=;
-        b=KhrvHfmW54YOdVY/n36ESd9/pdRvnND7vy94ZX7v6gkP5vQBdXGN/2dndp3CXxob3O
-         0xMeF80owgoInE0hQvw9eGl03YK8+P0PKUT2rXNJ3ONhuXnfOSMmTf3VtvCO/ptCPAqb
-         DXKMCse35CkVmQeA78HmSuIAQyPaFWs2nNBIa9NbaKLdp4jgWp5zpPvrVYoBl7C5Vk6w
-         j2pEp/wBwj6eTOtiFQEqb6jkJ/lxD2E5PA884lKxkGRlbTegtYSV4Ui6eCJOCyMFbsEp
-         2VYrcxUAv3oRz+zpM1sbFxRvZnaXWtaDXrr5JyKx5Jh+CDdC61bYY6SslLIX8dgWxt8H
-         2BhA==
+        d=gmail.com; s=20161025;
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=sy2937whkD36NnxmnEnOHu/2WmMpJHhESVIp923Q2ms=;
+        b=WR417b2TXL4XluWU3Q62QUJQT2KHPwbcPUhvSl9ZQVrVxjti1bnY0rVY28lskvQOQ9
+         Wd4ONpWLQsrq2U9ZfDpZJ9FfQ0enFUDeq957Rh8PhHNklfHjRCfh4w3CGHcGpKedn3JL
+         JU325/yJb/LyWrSRbGakExDJSSgUVg+qczoU+PFZZ2dZHklZkgt4nYBqwUHa/sX6A7Vq
+         KcMVXJKg88SR6oBSveZT8yEuJBNqlxOaa9sbDxhpRkGsJXaBT3wgy8o8QOEuUJEnZHii
+         cNSLUqZnaK/Zmp1Gtp5hNnFenxB8+j+e6Auapc+QBS0WcKBPGyzm5C2dO3+rub2odxvy
+         Guzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=PqPgRtzVantKyRNR1zZk8EcuOOdksOMCXe9nMbpmH0o=;
-        b=s3OwOU25TPqi3zyg0QXzkN+iAM+ovBOj/V+uLSfOYUSuO5eqKKkc29JBNIAzmfhcBH
-         /eNMVpA0qWleIRUf5ze5cTLcEj3y8grRUW7u6pVsN2M+vlOLrZzgt/UQfZxSxJVl8jiU
-         SbEsj6gtMMYIj30hWG+wdk43gbjJoK4olpF08sgx1TinvFKzmhOaXfNlC5UfsZLJ5jX7
-         q580pm/I/OGb1MtbpPqYSxCdZKzTAl3iTKrMLPcFeNKo1mjuy3/1yRjM5WOte7fuLii2
-         l8j7GGwcZWWpN3ErRWWq9yZvtN8y4dDDKovrnOA5lM8ey+zJyDJXCje5Gd/+CldAoO9x
-         mt0Q==
-X-Gm-Message-State: AOAM533GpLppTXYsk6yF65PDQ/THYpSk6Kwn11/kySL6kxkO6JB6F0pR
-        nDNxhr4zodpohrCH0kTGs2Xc
-X-Google-Smtp-Source: ABdhPJzNqdjp6LlEtRCSQEo3DvznilMTpm/AJqjpAuo55QQR78RWQNlHDHM1hfTHqDgBvPVLQF71kg==
-X-Received: by 2002:a17:90a:e2ca:: with SMTP id fr10mr4533637pjb.18.1614691700590;
-        Tue, 02 Mar 2021 05:28:20 -0800 (PST)
-Received: from localhost.localdomain ([103.66.79.74])
-        by smtp.gmail.com with ESMTPSA id w1sm13027454pgs.15.2021.03.02.05.28.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Mar 2021 05:28:20 -0800 (PST)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com
-Cc:     linux-arm-msm@vger.kernel.org, linux-mtd@lists.infradead.org,
-        linux-kernel@vger.kernel.org, boris.brezillon@collabora.com,
-        Daniele.Palmas@telit.com, bjorn.andersson@linaro.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 2/2] mtd: rawnand: qcom: Return actual error code instead of -ENODEV
-Date:   Tue,  2 Mar 2021 18:57:57 +0530
-Message-Id: <20210302132757.225395-3-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210302132757.225395-1-manivannan.sadhasivam@linaro.org>
-References: <20210302132757.225395-1-manivannan.sadhasivam@linaro.org>
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=sy2937whkD36NnxmnEnOHu/2WmMpJHhESVIp923Q2ms=;
+        b=EhoMuAQ7DKnyEuzgvbgptxDcLLMmpunXnYHxlPxyQYlBX0OjfsollGtZPKjopFc4Lg
+         40uNKjaP3JVWNk8+DhBnFwh+LBgGeIjsGt1KOGWWPQ6QdlGquhp9IGcyncV8+zJ9+2f5
+         G8iTj7VRvZcK7Q2lH57ZD6t4xt7SuCdvGwj+LwntDW857ylrcIbL/0VPpgQHQjkEYJta
+         5Lo7y4tW9K19X3AOCHs7IMsOarZG9apGXTnCmJi+bn106t5rMpMZinFyvug+/mNeArqF
+         njguiz5NpnMpZqLrAVnYeMA/vQhlwJ7Ba2xQkbipd1eT1OAM52UoQc7J32a3skK9648c
+         92eQ==
+X-Gm-Message-State: AOAM531ECC0QCVft70Sjj/KRUzLAwuj20RwAe+0fj/VW89xsh5eOzvau
+        65n4IeFIMCeoXganNFUiRbwUBmbuuUo=
+X-Google-Smtp-Source: ABdhPJxRPWPVr1JuoC8bNRBtDqyUDprT1LYGiwQlldtoe/FBCoxaKt0EfpMAr+/aLHyNPv+Ih4vpaQ==
+X-Received: by 2002:ac2:4ecd:: with SMTP id p13mr5165188lfr.421.1614692436754;
+        Tue, 02 Mar 2021 05:40:36 -0800 (PST)
+Received: from [192.168.2.145] (109-252-193-52.dynamic.spd-mgts.ru. [109.252.193.52])
+        by smtp.googlemail.com with ESMTPSA id 192sm2462749ljj.95.2021.03.02.05.40.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Mar 2021 05:40:36 -0800 (PST)
+Subject: Re: [PATCH 00/31] Introduce devm_pm_opp_* API
+From:   Dmitry Osipenko <digetx@gmail.com>
+To:     Yangtao Li <tiny.windzz@gmail.com>, myungjoo.ham@samsung.com,
+        kyungmin.park@samsung.com, cw00.choi@samsung.com, krzk@kernel.org,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
+        festevam@gmail.com, linux-imx@nxp.com, thierry.reding@gmail.com,
+        jonathanh@nvidia.com, yuq825@gmail.com, airlied@linux.ie,
+        daniel@ffwll.ch, robdclark@gmail.com, sean@poorly.run,
+        robh@kernel.org, tomeu.vizoso@collabora.com, steven.price@arm.com,
+        alyssa.rosenzweig@collabora.com, stanimir.varbanov@linaro.org,
+        agross@kernel.org, bjorn.andersson@linaro.org, mchehab@kernel.org,
+        lukasz.luba@arm.com, adrian.hunter@intel.com,
+        ulf.hansson@linaro.org, vireshk@kernel.org, nm@ti.com,
+        sboyd@kernel.org, broonie@kernel.org, gregkh@linuxfoundation.org,
+        jirislaby@kernel.org, rjw@rjwysocki.net, jcrouse@codeaurora.org,
+        hoegsberg@google.com, eric@anholt.net, tzimmermann@suse.de,
+        marijn.suijten@somainline.org, gustavoars@kernel.org,
+        emil.velikov@collabora.com, jonathan@marek.ca,
+        akhilpo@codeaurora.org, smasetty@codeaurora.org,
+        airlied@redhat.com, masneyb@onstation.org, kalyan_t@codeaurora.org,
+        tanmay@codeaurora.org, ddavenport@chromium.org,
+        jsanka@codeaurora.org, rnayak@codeaurora.org,
+        tongtiangen@huawei.com, miaoqinglang@huawei.com,
+        khsieh@codeaurora.org, abhinavk@codeaurora.org,
+        chandanu@codeaurora.org, groeck@chromium.org, varar@codeaurora.org,
+        mka@chromium.org, harigovi@codeaurora.org,
+        rikard.falkeborn@gmail.com, natechancellor@gmail.com,
+        georgi.djakov@linaro.org, akashast@codeaurora.org,
+        parashar@codeaurora.org, dianders@chromium.org
+Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, lima@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        linux-media@vger.kernel.org, linux-mmc@vger.kernel.org,
+        linux-spi@vger.kernel.org, linux-serial@vger.kernel.org
+References: <20210101165507.19486-1-tiny.windzz@gmail.com>
+ <6bd6730c-6f4e-df93-65cd-93fa4785a8d8@gmail.com>
+Message-ID: <c7a246a4-ab25-a193-f74a-98351780135e@gmail.com>
+Date:   Tue, 2 Mar 2021 16:40:34 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.2
 MIME-Version: 1.0
+In-Reply-To: <6bd6730c-6f4e-df93-65cd-93fa4785a8d8@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In qcom_probe_nand_devices() function, the error code returned by
-qcom_nand_host_init_and_register() is converted to -ENODEV in the case
-of failure. This poses issue if -EPROBE_DEFER is returned when the
-dependency is not available for a component like parser.
+20.01.2021 19:01, Dmitry Osipenko пишет:
+> 01.01.2021 19:54, Yangtao Li пишет:
+>> Hi,
+>>
+>> This patchset add devm_pm_opp_set_clkname, devm_pm_opp_put_clkname,
+>> devm_pm_opp_set_regulators, devm_pm_opp_put_regulators,
+>> devm_pm_opp_set_supported_hw, devm_pm_opp_of_add_table and
+>> devm_pm_opp_register_notifier.
+> 
+> Hello Yangtao,
+> 
+> Thank you for your effort, looking forward to v2!
 
-So let's restructure the error handling logic a bit and return the
-actual error code in case of qcom_nand_host_init_and_register() failure.
-
-Fixes: c76b78d8ec05 ("mtd: nand: Qualcomm NAND controller driver")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/mtd/nand/raw/qcom_nandc.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-index c2dc99c1b2f1..54230f2c1a3f 100644
---- a/drivers/mtd/nand/raw/qcom_nandc.c
-+++ b/drivers/mtd/nand/raw/qcom_nandc.c
-@@ -2952,7 +2952,7 @@ static int qcom_probe_nand_devices(struct qcom_nand_controller *nandc)
- 	struct device *dev = nandc->dev;
- 	struct device_node *dn = dev->of_node, *child;
- 	struct qcom_nand_host *host;
--	int ret;
-+	int ret = -ENODEV;
- 
- 	for_each_available_child_of_node(dn, child) {
- 		host = devm_kzalloc(dev, sizeof(*host), GFP_KERNEL);
-@@ -2970,10 +2970,7 @@ static int qcom_probe_nand_devices(struct qcom_nand_controller *nandc)
- 		list_add_tail(&host->node, &nandc->host_list);
- 	}
- 
--	if (list_empty(&nandc->host_list))
--		return -ENODEV;
--
--	return 0;
-+	return ret;
- }
- 
- /* parse custom DT properties here */
--- 
-2.25.1
-
+Yangtao, could you please let me know what is the status of this series?
+Will you be able to make a v2 anytime soon?
