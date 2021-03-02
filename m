@@ -2,102 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C81AF32B136
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Mar 2021 04:46:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E518232B150
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Mar 2021 04:46:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232713AbhCCBJ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Mar 2021 20:09:27 -0500
-Received: from m42-2.mailgun.net ([69.72.42.2]:13298 "EHLO m42-2.mailgun.net"
+        id S237910AbhCCBKA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Mar 2021 20:10:00 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:29007 "EHLO z11.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1347613AbhCBFtj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Mar 2021 00:49:39 -0500
+        id S1344710AbhCBGm4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Mar 2021 01:42:56 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1614664153; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=Ybi3GMTHSC3dMvQ1EPDjrYqQVz6WecFKeNUwjqK0ZuM=; b=vdJnUenMiJkpcCzyWIKGxzn+fwLUm/VVGvTfVKzdoGG+2UKc4KE2YH+FLbg5/XqObyUeuU27
- dFJfWPevOOYyhqgnDZ10mXMPT3sI4ZmD2bi7pwT75wZRUtfUrEGmLGKVniOu3aOv0GskydOZ
- GdlzL5oOMMrqLgO0nfNdfEiEvoU=
-X-Mailgun-Sending-Ip: 69.72.42.2
+ s=smtp; t=1614667331; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=CD5VoQD8VG4Us5TJXJZUUc9y5YoUCLPBIN88rpUoz5A=;
+ b=XOvmye1rfuAJWApL2NmYgBu1BorhLyHa1aj0cNKhgN5v0UFjDv6+fU+y9jKvmJQSVL48qBhT
+ 3/+Sx+h0Qc6n/F5T2UWFUyNdhiuyCRXReiob6ldwoO28tPVIuHKOq1CIJyUn14PEAYXDlHFH
+ J21zfIlFymk4oTNkPyFqLWUfrmI=
+X-Mailgun-Sending-Ip: 104.130.96.11
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 603dd1b512935cdcee4da29e (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 02 Mar 2021 05:48:37
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 603dde23fee96fcaf477a126 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 02 Mar 2021 06:41:39
  GMT
-Sender: rnayak=codeaurora.org@mg.codeaurora.org
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A1B97C43463; Tue,  2 Mar 2021 05:48:36 +0000 (UTC)
+        id EC648C43465; Tue,  2 Mar 2021 06:41:38 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BB623C43461;
-        Tue,  2 Mar 2021 05:48:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BB623C43461
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=rnayak@codeaurora.org
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Rajendra Nayak <rnayak@codeaurora.org>
-Subject: [PATCH 2/2] soc: qcom: rpmhpd: Add sc7280 powerdomains
-Date:   Tue,  2 Mar 2021 11:18:12 +0530
-Message-Id: <1614664092-9394-2-git-send-email-rnayak@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1614664092-9394-1-git-send-email-rnayak@codeaurora.org>
-References: <1614664092-9394-1-git-send-email-rnayak@codeaurora.org>
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BDBE0C433CA;
+        Tue,  2 Mar 2021 06:41:37 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 02 Mar 2021 12:11:37 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Mark Rutland <mark.rutland@arm.com>, Al Grant <al.grant@arm.com>,
+        Denis Nikitin <denik@chromium.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Peter Zijlstra <peterz@infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        coresight@lists.linaro.org,
+        Mattias Nissler <mnissler@chromium.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Arnaldo Carvalho de Melo <acme@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Ingo Molnar <mingo@redhat.com>, Leo Yan <leo.yan@linaro.org>,
+        Namhyung Kim <namhyung@kernel.org>,
+        Jiri Olsa <jolsa@redhat.com>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Mike Leach <mike.leach@linaro.org>
+Subject: Re: [PATCHv2 3/4] coresight: etm4x: Add support to exclude kernel
+ mode tracing
+In-Reply-To: <CAD=FV=XCi_+yW6DPeUYmtjMhn-qpjMiB0E4_Qkz6d_e6G-CoVA@mail.gmail.com>
+References: <cover.1614624041.git.saiprakash.ranjan@codeaurora.org>
+ <defd34e2a8744fc93404abdaad2d429fa3f69850.1614624041.git.saiprakash.ranjan@codeaurora.org>
+ <CAD=FV=XCi_+yW6DPeUYmtjMhn-qpjMiB0E4_Qkz6d_e6G-CoVA@mail.gmail.com>
+Message-ID: <2da60c28dcaecfc2cb7bcd25840ffcbe@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the power domains exposed by RPMH in the Qualcomm Technologies Inc
-sc7280 platform
+On 2021-03-02 04:13, Doug Anderson wrote:
+> Hi,
+> 
+> On Mon, Mar 1, 2021 at 11:05 AM Sai Prakash Ranjan
+> <saiprakash.ranjan@codeaurora.org> wrote:
+>> 
+>> On production systems with ETMs enabled, it is preferred to exclude
+>> kernel mode(NS EL1) tracing for security concerns and support only
+>> userspace(NS EL0) tracing. Perf subsystem interface uses the newly
+>> introduced kernel config CONFIG_EXCLUDE_KERNEL_PMU_TRACE to exclude
+>> kernel mode tracing, but there is an additional interface via sysfs
+>> for ETMs which also needs to be handled to exclude kernel
+>> mode tracing. So we use this same generic kernel config to handle
+>> the sysfs mode of tracing. This config is disabled by default and
+>> would not affect the current configuration which has both kernel and
+>> userspace tracing enabled by default.
+>> 
+>> Tested-by: Denis Nikitin <denik@chromium.org>
+>> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+>> ---
+>>  drivers/hwtracing/coresight/coresight-etm4x-core.c  | 6 +++++-
+>>  drivers/hwtracing/coresight/coresight-etm4x-sysfs.c | 6 ++++++
+>>  2 files changed, 11 insertions(+), 1 deletion(-)
+> 
+> Not that I'm an expert in the perf subsystem, but the concern I had
+> with v1 is now addressed.  FWIW this seems fine to me now.
+> 
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> 
 
-Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
----
- drivers/soc/qcom/rpmhpd.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+Thanks Doug.
 
-diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
-index 7ce0635..2a0c55f 100644
---- a/drivers/soc/qcom/rpmhpd.c
-+++ b/drivers/soc/qcom/rpmhpd.c
-@@ -217,8 +217,27 @@ static const struct rpmhpd_desc sc7180_desc = {
- 	.num_pds = ARRAY_SIZE(sc7180_rpmhpds),
- };
- 
-+/* SC7280 RPMH powerdomains */
-+static struct rpmhpd *sc7280_rpmhpds[] = {
-+	[SC7280_CX] = &sdm845_cx,
-+	[SC7280_CX_AO] = &sdm845_cx_ao,
-+	[SC7280_EBI] = &sdm845_ebi,
-+	[SC7280_GFX] = &sdm845_gfx,
-+	[SC7280_MX] = &sdm845_mx,
-+	[SC7280_MX_AO] = &sdm845_mx_ao,
-+	[SC7280_LMX] = &sdm845_lmx,
-+	[SC7280_LCX] = &sdm845_lcx,
-+	[SC7280_MSS] = &sdm845_mss,
-+};
-+
-+static const struct rpmhpd_desc sc7280_desc = {
-+	.rpmhpds = sc7280_rpmhpds,
-+	.num_pds = ARRAY_SIZE(sc7280_rpmhpds),
-+};
-+
- static const struct of_device_id rpmhpd_match_table[] = {
- 	{ .compatible = "qcom,sc7180-rpmhpd", .data = &sc7180_desc },
-+	{ .compatible = "qcom,sc7280-rpmhpd", .data = &sc7280_desc },
- 	{ .compatible = "qcom,sdm845-rpmhpd", .data = &sdm845_desc },
- 	{ .compatible = "qcom,sdx55-rpmhpd", .data = &sdx55_desc},
- 	{ .compatible = "qcom,sm8150-rpmhpd", .data = &sm8150_desc },
+> 
+>> --- a/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
+>> +++ b/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
+>> @@ -296,6 +296,12 @@ static ssize_t mode_store(struct device *dev,
+>>         if (kstrtoul(buf, 16, &val))
+>>                 return -EINVAL;
+>> 
+>> +       if (IS_ENABLED(CONFIG_EXCLUDE_KERNEL_PMU_TRACE) && (!(val & 
+>> ETM_MODE_EXCL_KERN))) {
+>> +               dev_warn(dev,
+>> +                       "Kernel mode tracing is not allowed, check 
+>> your kernel config\n");
+> 
+> slight nit that I think your string needs to be indented by 1 space.  
+> ;-)
+> 
+
+Ah yes, I will have to post v3 anyways to fix commit message in Patch 2
+after I get few more feedback for other patches, I will fix this up as 
+well.
+
+Thanks,
+Sai
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
 of Code Aurora Forum, hosted by The Linux Foundation
-
