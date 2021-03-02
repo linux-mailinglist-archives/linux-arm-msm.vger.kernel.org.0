@@ -2,81 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EDAA432B2E3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Mar 2021 04:49:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BD5E32B2CC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Mar 2021 04:49:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242323AbhCCBPz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Mar 2021 20:15:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53490 "EHLO
+        id S242260AbhCCBPq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Mar 2021 20:15:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351106AbhCBNbJ (ORCPT
+        with ESMTP id S1446272AbhCBN2y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Mar 2021 08:31:09 -0500
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6A06C061222
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Mar 2021 05:16:28 -0800 (PST)
-Received: by mail-lj1-x22e.google.com with SMTP id 2so19335752ljr.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Mar 2021 05:16:28 -0800 (PST)
+        Tue, 2 Mar 2021 08:28:54 -0500
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C8FBC0611BC
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Mar 2021 05:28:12 -0800 (PST)
+Received: by mail-pf1-x429.google.com with SMTP id r5so13809925pfh.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Mar 2021 05:28:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=w7TMxO/D7a8csr+JUQ9kpEy7RKNnYl515YUs0lqH6AQ=;
-        b=kpyPJ/xL4he3UejKB1Yg7LMDZ/4N3d/Jv8MsH0eBoX2a1nhUMsqMFENsdePu8i8v+I
-         VKgI+BsBfJ3yjbJBWjTlGF1C+bUNJMKawxkz4QqEEA1+AM3gMTxKdknG+MszyKQ/E9kj
-         luKyQvs0eSzodLiUNIqS0autQAuSluYfSKIE6+bQ+Fa7ZMqFvc10KYLCQrSxOQnD99Mn
-         QYmkKscHuLjwB52OY073RDQS11o0xFLv5vodbmQMPkyMShWhBF2Z5OPFZJ3BzQplrQlI
-         X2tBmvi975yCX94IjdKTQpTXQN+ouCCZhH5E2HwsyZhxuUfxYnNhUzshisz2/UYUqQpy
-         yzTQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=E4Ad7Ent8cof3XMClRVgB8zjonCBcH2IrC0ql/TQI38=;
+        b=l8tRrWapgbJRkYaus/ItyDv82nTfHZpF6+OqBUdkRkJI7yPujxRr2oz/pyWwuB8LuF
+         //zcr6Dk9KA3KMvAtldOErs+j2sgJbzfR2yDp7RauZIsKXoe8xtRbxZwQnAzxmHNvyC4
+         8axFWG+9e4S5+caDu3lcpvNs9YuC6VAQynPgBD40VHbDb2pVUzccAipV9LvCHJiSaKbH
+         /Da7k8vN/ABqvhg8itwiPFEhpSsjLjJBfVUrfHwyfF4m2KOkhP/7DeOHdanrtrwR8PhX
+         u/veZdXSs9qUcc5HiZEbuOwS+jaw0P8j2QfBX/ET4aGv0UdSPM1ggTdbi87MyeuUWUTd
+         SnxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=w7TMxO/D7a8csr+JUQ9kpEy7RKNnYl515YUs0lqH6AQ=;
-        b=e/g7OZacTlcwTTeX0yMTN5J0zc1EVPbeqLp1osy0xRmatfybhrnFLNY+7FuX/Ld5RF
-         FMaKKGkxCNdMkAoAeUkIedgaa2sj6sPl/So0Otkakw7GMb4gvZRa8OM8t7wf/1nzTKXT
-         45pNlSI9NBN6XFYIraaGCfGcs2uA2xVvY8TLY1Zoj5c8rucdeaV1hz6sV0CzqlY26DvE
-         4sUandt+1T3ArzZ6eiffi91ibphxPwfx/7KB0WCgL+0D4nm1HWlgQNnoa0VwLpuGYAxS
-         FJBLMlkIZ6ftzo042e561pRH/etr8bDJagiS4LKEky6Ph94YsK5i2IR+dPkbjUR4ZURy
-         ou5w==
-X-Gm-Message-State: AOAM532i1dgvQBsJgpyIptE7SffVXpAKN6OqBTd8a4zNTM9Ncn9BnrmV
-        b0Jnt/qNXUnXchJ42mLqfSLmHdNhUNKw5nLnchIvPw==
-X-Google-Smtp-Source: ABdhPJwLz47BG52rBTGPeD1OfU09SQGX018BFmLiaSkLzxHfaN66OaFtwRNIy6YfAjwqwAxOmn5sbqQHJadbpIbGXUI=
-X-Received: by 2002:a2e:9754:: with SMTP id f20mr9797729ljj.200.1614690987196;
- Tue, 02 Mar 2021 05:16:27 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=E4Ad7Ent8cof3XMClRVgB8zjonCBcH2IrC0ql/TQI38=;
+        b=kIyzcpjl8SayhSBuTQHvrMePUvomx3r4+oCRX2gs9kOyR2nEHmLIeniRE6G6PZ1uOe
+         /Cxa6VgUAN3cMm/jfaOjhuGXOC5IdXbMTaJ3j/7Npb6NtMx0VRwsKiItmHfmtRRai2oI
+         70LwbbW2P9nX5MOf2M86OgX8vRzUCvvL869oFpo7rGmETN9E+VIDGgxZ0zDrJfC/l0s3
+         xH9vgPxmMb78/FcZa8emabwa0oxMhtCDNp1UyzuxyWVQ62Vr7lyrmjeibtTVd2GmjBGX
+         +rZ1sTXF5yxenENZXCDRK0thK5GEIZD/xbF4OrjIP7gJ8udwciyCwSwQvv0rf0+9RYLj
+         al9g==
+X-Gm-Message-State: AOAM531oYCqFP8dcBSA7EaraXQT1XX6wxr5xtoLgBl3nmQocpKd48fcB
+        w2B2Pm8CPUQOKcwARQXoKMApXDJ4ES7K
+X-Google-Smtp-Source: ABdhPJzLbkWTyQk4y0GRM9ZfbaZuf3I4UEKB1ioFKcMq2eC/YLMqWeWZ1I05pt+w1IBSL89+7tvGTg==
+X-Received: by 2002:aa7:9182:0:b029:1de:e96f:a866 with SMTP id x2-20020aa791820000b02901dee96fa866mr3292765pfa.67.1614691692127;
+        Tue, 02 Mar 2021 05:28:12 -0800 (PST)
+Received: from localhost.localdomain ([103.66.79.74])
+        by smtp.gmail.com with ESMTPSA id w1sm13027454pgs.15.2021.03.02.05.28.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Mar 2021 05:28:11 -0800 (PST)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com
+Cc:     linux-arm-msm@vger.kernel.org, linux-mtd@lists.infradead.org,
+        linux-kernel@vger.kernel.org, boris.brezillon@collabora.com,
+        Daniele.Palmas@telit.com, bjorn.andersson@linaro.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 0/2] Handle probe defer properly in MTD core
+Date:   Tue,  2 Mar 2021 18:57:55 +0530
+Message-Id: <20210302132757.225395-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <1613105974-28181-1-git-send-email-rnayak@codeaurora.org>
-In-Reply-To: <1613105974-28181-1-git-send-email-rnayak@codeaurora.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Tue, 2 Mar 2021 14:16:16 +0100
-Message-ID: <CACRpkdbJ=4pctwDX9CSurkQC37TGF9KdUOkvTicspsqqS43kfA@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: qcom: sc7280: Add GPIO wakeup interrupt map
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Maulik Shah <mkshah@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Feb 12, 2021 at 6:00 AM Rajendra Nayak <rnayak@codeaurora.org> wrote:
+Hello,
 
-> From: Maulik Shah <mkshah@codeaurora.org>
->
-> GPIOs that can be configured as wakeup sources, have their
-> interrupt lines routed to PDC interrupt controller.
->
-> Provide the interrupt map of the GPIO to its wakeup capable
-> interrupt parent.
->
-> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+These two patches aims at fixing the -EPROBE_DEFER handling in the MTD
+core and also in the Qcom nand driver. The "qcomsmem" parser depends on
+the QCOM_SMEM driver to parse the partitions defined in the shared
+memory. Due to the DT layout, the SMEM driver might probe after the NAND
+driver. In that case, the -EPROBE_DEFER returned by qcom_smem_get() in
+the parser will fail to propagate till the driver core. So this will
+result in the partitions not getting parsed even after the SMEM driver is
+available.
 
-Patch applied.
+So fix this issue by handling the -EPROBE_DEFER error properly in both
+MTD core and in the Qcom nand driver. This issue is observed on Qcom SDX55
+based Telit FN980 EVB and in SDX55-MTP.
 
-Yours,
-Linus Walleij
+Thanks,
+Mani
+
+Manivannan Sadhasivam (2):
+  mtd: Handle possible -EPROBE_DEFER from parse_mtd_partitions()
+  mtd: rawnand: qcom: Return actual error code instead of -ENODEV
+
+ drivers/mtd/mtdcore.c             | 3 +++
+ drivers/mtd/nand/raw/qcom_nandc.c | 7 ++-----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+-- 
+2.25.1
+
