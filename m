@@ -2,116 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F30532B2E5
+	by mail.lfdr.de (Postfix) with ESMTP id F078232B2E6
 	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Mar 2021 04:49:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242353AbhCCBQA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Mar 2021 20:16:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55672 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1447518AbhCBNl1 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Mar 2021 08:41:27 -0500
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85C0CC061756;
-        Tue,  2 Mar 2021 05:40:38 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id q25so11076955lfc.8;
-        Tue, 02 Mar 2021 05:40:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=sy2937whkD36NnxmnEnOHu/2WmMpJHhESVIp923Q2ms=;
-        b=WR417b2TXL4XluWU3Q62QUJQT2KHPwbcPUhvSl9ZQVrVxjti1bnY0rVY28lskvQOQ9
-         Wd4ONpWLQsrq2U9ZfDpZJ9FfQ0enFUDeq957Rh8PhHNklfHjRCfh4w3CGHcGpKedn3JL
-         JU325/yJb/LyWrSRbGakExDJSSgUVg+qczoU+PFZZ2dZHklZkgt4nYBqwUHa/sX6A7Vq
-         KcMVXJKg88SR6oBSveZT8yEuJBNqlxOaa9sbDxhpRkGsJXaBT3wgy8o8QOEuUJEnZHii
-         cNSLUqZnaK/Zmp1Gtp5hNnFenxB8+j+e6Auapc+QBS0WcKBPGyzm5C2dO3+rub2odxvy
-         Guzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=sy2937whkD36NnxmnEnOHu/2WmMpJHhESVIp923Q2ms=;
-        b=EhoMuAQ7DKnyEuzgvbgptxDcLLMmpunXnYHxlPxyQYlBX0OjfsollGtZPKjopFc4Lg
-         40uNKjaP3JVWNk8+DhBnFwh+LBgGeIjsGt1KOGWWPQ6QdlGquhp9IGcyncV8+zJ9+2f5
-         G8iTj7VRvZcK7Q2lH57ZD6t4xt7SuCdvGwj+LwntDW857ylrcIbL/0VPpgQHQjkEYJta
-         5Lo7y4tW9K19X3AOCHs7IMsOarZG9apGXTnCmJi+bn106t5rMpMZinFyvug+/mNeArqF
-         njguiz5NpnMpZqLrAVnYeMA/vQhlwJ7Ba2xQkbipd1eT1OAM52UoQc7J32a3skK9648c
-         92eQ==
-X-Gm-Message-State: AOAM531ECC0QCVft70Sjj/KRUzLAwuj20RwAe+0fj/VW89xsh5eOzvau
-        65n4IeFIMCeoXganNFUiRbwUBmbuuUo=
-X-Google-Smtp-Source: ABdhPJxRPWPVr1JuoC8bNRBtDqyUDprT1LYGiwQlldtoe/FBCoxaKt0EfpMAr+/aLHyNPv+Ih4vpaQ==
-X-Received: by 2002:ac2:4ecd:: with SMTP id p13mr5165188lfr.421.1614692436754;
-        Tue, 02 Mar 2021 05:40:36 -0800 (PST)
-Received: from [192.168.2.145] (109-252-193-52.dynamic.spd-mgts.ru. [109.252.193.52])
-        by smtp.googlemail.com with ESMTPSA id 192sm2462749ljj.95.2021.03.02.05.40.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Mar 2021 05:40:36 -0800 (PST)
-Subject: Re: [PATCH 00/31] Introduce devm_pm_opp_* API
-From:   Dmitry Osipenko <digetx@gmail.com>
-To:     Yangtao Li <tiny.windzz@gmail.com>, myungjoo.ham@samsung.com,
-        kyungmin.park@samsung.com, cw00.choi@samsung.com, krzk@kernel.org,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
-        festevam@gmail.com, linux-imx@nxp.com, thierry.reding@gmail.com,
-        jonathanh@nvidia.com, yuq825@gmail.com, airlied@linux.ie,
-        daniel@ffwll.ch, robdclark@gmail.com, sean@poorly.run,
-        robh@kernel.org, tomeu.vizoso@collabora.com, steven.price@arm.com,
-        alyssa.rosenzweig@collabora.com, stanimir.varbanov@linaro.org,
-        agross@kernel.org, bjorn.andersson@linaro.org, mchehab@kernel.org,
-        lukasz.luba@arm.com, adrian.hunter@intel.com,
-        ulf.hansson@linaro.org, vireshk@kernel.org, nm@ti.com,
-        sboyd@kernel.org, broonie@kernel.org, gregkh@linuxfoundation.org,
-        jirislaby@kernel.org, rjw@rjwysocki.net, jcrouse@codeaurora.org,
-        hoegsberg@google.com, eric@anholt.net, tzimmermann@suse.de,
-        marijn.suijten@somainline.org, gustavoars@kernel.org,
-        emil.velikov@collabora.com, jonathan@marek.ca,
-        akhilpo@codeaurora.org, smasetty@codeaurora.org,
-        airlied@redhat.com, masneyb@onstation.org, kalyan_t@codeaurora.org,
-        tanmay@codeaurora.org, ddavenport@chromium.org,
-        jsanka@codeaurora.org, rnayak@codeaurora.org,
-        tongtiangen@huawei.com, miaoqinglang@huawei.com,
-        khsieh@codeaurora.org, abhinavk@codeaurora.org,
-        chandanu@codeaurora.org, groeck@chromium.org, varar@codeaurora.org,
-        mka@chromium.org, harigovi@codeaurora.org,
-        rikard.falkeborn@gmail.com, natechancellor@gmail.com,
-        georgi.djakov@linaro.org, akashast@codeaurora.org,
-        parashar@codeaurora.org, dianders@chromium.org
-Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, lima@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-media@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-spi@vger.kernel.org, linux-serial@vger.kernel.org
-References: <20210101165507.19486-1-tiny.windzz@gmail.com>
- <6bd6730c-6f4e-df93-65cd-93fa4785a8d8@gmail.com>
-Message-ID: <c7a246a4-ab25-a193-f74a-98351780135e@gmail.com>
-Date:   Tue, 2 Mar 2021 16:40:34 +0300
+        id S242480AbhCCBQO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Mar 2021 20:16:14 -0500
+Received: from mga02.intel.com ([134.134.136.20]:44265 "EHLO mga02.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1351349AbhCBORT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Mar 2021 09:17:19 -0500
+IronPort-SDR: pMHKt0AAko+IUB3LODBkcdV1Kj17ZuZz3QB2U6Q/VlxuZy+MyFW16N8jRhTKWlUo/Kfb1Eaht7
+ PJEbDI915WSQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9910"; a="173964363"
+X-IronPort-AV: E=Sophos;i="5.81,216,1610438400"; 
+   d="scan'208";a="173964363"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Mar 2021 06:14:19 -0800
+IronPort-SDR: XsTTl1bvinkrhr7HkvJW8Mx35RMJU4Z9LNHPZV1ptjWnpLJg2E517DX3NDo03/LbzpRIqg94RZ
+ tEFORZFpH4ZA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.81,216,1610438400"; 
+   d="scan'208";a="399037378"
+Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.76]) ([10.237.72.76])
+  by fmsmga008.fm.intel.com with ESMTP; 02 Mar 2021 06:14:10 -0800
+Subject: Re: [PATCH v9 1/2] scsi: ufs: Enable power management for wlun
+To:     Asutosh Das <asutoshd@codeaurora.org>, cang@codeaurora.org,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Pedro Sousa <pedrom.sousa@synopsys.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Ingo Molnar <mingo@redhat.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Kiwoong Kim <kwmad.kim@samsung.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Wei Yongjun <weiyongjun1@huawei.com>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Jaegeuk Kim <jaegeuk@kernel.org>,
+        Satya Tangirala <satyat@google.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        "moderated list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "open list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
+        <linux-samsung-soc@vger.kernel.org>,
+        "moderated list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
+        <linux-mediatek@lists.infradead.org>
+References: <cover.1614655058.git.asutoshd@codeaurora.org>
+ <b291bb65fadc9c828cbcb4ffb81cfa1ee47b82be.1614655058.git.asutoshd@codeaurora.org>
+From:   Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+Message-ID: <d17e52e0-cb50-50ee-accb-458b318014e5@intel.com>
+Date:   Tue, 2 Mar 2021 16:14:23 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.2
+ Thunderbird/78.8.0
 MIME-Version: 1.0
-In-Reply-To: <6bd6730c-6f4e-df93-65cd-93fa4785a8d8@gmail.com>
+In-Reply-To: <b291bb65fadc9c828cbcb4ffb81cfa1ee47b82be.1614655058.git.asutoshd@codeaurora.org>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-20.01.2021 19:01, Dmitry Osipenko пишет:
-> 01.01.2021 19:54, Yangtao Li пишет:
->> Hi,
->>
->> This patchset add devm_pm_opp_set_clkname, devm_pm_opp_put_clkname,
->> devm_pm_opp_set_regulators, devm_pm_opp_put_regulators,
->> devm_pm_opp_set_supported_hw, devm_pm_opp_of_add_table and
->> devm_pm_opp_register_notifier.
+On 2/03/21 5:21 am, Asutosh Das wrote:
+> During runtime-suspend of ufs host, the scsi devices are
+> already suspended and so are the queues associated with them.
+> But the ufs host sends SSU to wlun during its runtime-suspend.
+> During the process blk_queue_enter checks if the queue is not in
+> suspended state. If so, it waits for the queue to resume, and never
+> comes out of it.
+> The commit
+> (d55d15a33: scsi: block: Do not accept any requests while suspended)
+> adds the check if the queue is in suspended state in blk_queue_enter().
 > 
-> Hello Yangtao,
+> Call trace:
+>  __switch_to+0x174/0x2c4
+>  __schedule+0x478/0x764
+>  schedule+0x9c/0xe0
+>  blk_queue_enter+0x158/0x228
+>  blk_mq_alloc_request+0x40/0xa4
+>  blk_get_request+0x2c/0x70
+>  __scsi_execute+0x60/0x1c4
+>  ufshcd_set_dev_pwr_mode+0x124/0x1e4
+>  ufshcd_suspend+0x208/0x83c
+>  ufshcd_runtime_suspend+0x40/0x154
+>  ufshcd_pltfrm_runtime_suspend+0x14/0x20
+>  pm_generic_runtime_suspend+0x28/0x3c
+>  __rpm_callback+0x80/0x2a4
+>  rpm_suspend+0x308/0x614
+>  rpm_idle+0x158/0x228
+>  pm_runtime_work+0x84/0xac
+>  process_one_work+0x1f0/0x470
+>  worker_thread+0x26c/0x4c8
+>  kthread+0x13c/0x320
+>  ret_from_fork+0x10/0x18
 > 
-> Thank you for your effort, looking forward to v2!
+> Fix this by registering ufs device wlun as a scsi driver and
+> registering it for block runtime-pm. Also make this as a
+> supplier for all other luns. That way, this device wlun
+> suspends after all the consumers and resumes after
+> hba resumes.
+> 
+> Co-developed-by: Can Guo <cang@codeaurora.org>
+> Signed-off-by: Can Guo <cang@codeaurora.org>
+> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
+> ---
 
-Yangtao, could you please let me know what is the status of this series?
-Will you be able to make a v2 anytime soon?
+Now we need either to move the suspend/resume vops from
+ufshcd_suspend/resume to __ufshcd_wl_suspend/resume, assuming that
+would work for existing implementations of those callbacks,
+or otherwise create new vops ->wl_suspend() / ->wl_resume(), and
+then split the existing implementations of those callbacks.
+
+ufs_intel_resume() now needs to be invoked from __ufshcd_wl_resume().
+I am not sure about the others:
+
+	exynos_ufs_suspend()
+	exynos_ufs_resume()
+	ufs_hisi_suspend()
+	ufs_hisi_resume()
+	ufs_mtk_suspend()
+	ufs_mtk_resume()
+	ufs_qcom_suspend()
+	ufs_qcom_resume()
