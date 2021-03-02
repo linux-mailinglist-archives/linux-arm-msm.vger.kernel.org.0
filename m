@@ -2,89 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D201A32B22B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Mar 2021 04:48:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 35B9E32B245
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Mar 2021 04:48:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241992AbhCCBPD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Mar 2021 20:15:03 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:31668 "EHLO z11.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1381420AbhCBH3z (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Mar 2021 02:29:55 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1614670154; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=xCqULhFsswWVslRRHaZI+wDDrCorOVLIGVsbtvtGnLA=; b=cWj6d1FbgmZhRBf4Rq8o+UCk9gT+d+trlSGC5SlQxT4AmESsFtlhMOzYg/KFsly0VO0S1W30
- r8d6zZl0dALAOYI5FG00HS3/JoJzle4RzN9KG/eQmjf46boGgRkcwZ3n1Xdi91E6NPwoe5rq
- yddWUvrdrloqNOhLqd2/iuVHNYU=
-X-Mailgun-Sending-Ip: 104.130.96.11
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 603de922fee96fcaf4910ada (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 02 Mar 2021 07:28:34
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8898CC43461; Tue,  2 Mar 2021 07:28:34 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 792E1C433CA;
-        Tue,  2 Mar 2021 07:28:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 792E1C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>
-Cc:     devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCH 4/4] arm64: dts: qcom: sm8350: Rename the qmp node to power-controller
-Date:   Tue,  2 Mar 2021 12:58:04 +0530
-Message-Id: <15005f1441594670adcd60a300c88e41d79cad27.1614669585.git.saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.29.0
-In-Reply-To: <cover.1614669585.git.saiprakash.ranjan@codeaurora.org>
-References: <cover.1614669585.git.saiprakash.ranjan@codeaurora.org>
+        id S242048AbhCCBPO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Mar 2021 20:15:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35034 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1577804AbhCBJym (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Mar 2021 04:54:42 -0500
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50AECC06178A
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Mar 2021 01:54:01 -0800 (PST)
+Received: by mail-ej1-x62a.google.com with SMTP id jt13so34097894ejb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Mar 2021 01:54:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=7j7OEM/ymaPJfAqZdVgfn2Lno1HYW5rb20Fl48M4KC0=;
+        b=w0I0jEwBaURpdTtjfwqPY8SsrsFt+1IbGa5hPfPk1jVQHD7a3HTGX31iApDo+WzAcb
+         U2QaNp8FsSNSbBdiK2MgKweKoE9+rmH0tc8AXXlTxIYE24bpEiPdEr+InxUgfoE62KEc
+         Kb/mY+A8zsW4GP7lnOH+yRSo0WUDiuF+sfGz07AoiY4cPp5uLV7RylttFiBNqAh6cf/P
+         4i8uqf6ARpAAtEYkeS8JqNgyjQ38ASJcXr3YN56PVgC9PiscS3k/KHbdzwZ8Hdv1pn06
+         QrG1Csf9vhF+OM6QRvVHXuEzNXT3vgtvR5l15A6KWkES+Y8MzBlh1wbBlP5AQ8/mp3hI
+         m7wQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=7j7OEM/ymaPJfAqZdVgfn2Lno1HYW5rb20Fl48M4KC0=;
+        b=KtSUUHO8O/M9FBCPkjqjfB1cZH3E0VoRS3DqUfnopZ5IuaPtataLd4O7So8bPwInk0
+         QnEbvxInZqvUWa1KNiDO0bc+ewwSazWf0rCK6kbRpbMSqFBlzDeyGbk9etjziONs9zPX
+         t+0TOg4+nHsu1/TQ3autaZ4v6tMhIQAEqax9WnYRmo13uqldVtm387eP17uFzp5jXboC
+         tDC3d8pzDzXS9VCjJHIGeb7gXyPKLDFHDRGccnG6rYCkd6SYFv8deCZuUvLx+VUyZ10y
+         zF5VdQOfCL0sQVvpC2TS4l0EUZ4u3Y1/yATC0+OEBd26a3+ZF38bCH0ox1VODG2wEgyV
+         mJdw==
+X-Gm-Message-State: AOAM531W1mW45bbq5pBSGbOf/fi7HX4ZiBYvsBdlI6VRtDt+4nnmPdKT
+        kGnvokI1QHeQ8gzJwPLVhpcjIA==
+X-Google-Smtp-Source: ABdhPJwGnIWYOZ6GGtyYRsVQX+UxoCX2/f1dF03MVr81u2TRpqq9+TEauPF2Vd6h1fUkxC2H/resAQ==
+X-Received: by 2002:a17:906:780b:: with SMTP id u11mr20085171ejm.492.1614678839966;
+        Tue, 02 Mar 2021 01:53:59 -0800 (PST)
+Received: from localhost.localdomain (hst-208-217.medicom.bg. [84.238.208.217])
+        by smtp.gmail.com with ESMTPSA id be27sm2530535edb.47.2021.03.02.01.53.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Mar 2021 01:53:59 -0800 (PST)
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     Ezequiel Garcia <ezequiel@collabora.com>,
+        nicolas.dufresne@collabora.com,
+        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Subject: [PATCH v3 0/2] Intra-refresh period control
+Date:   Tue,  2 Mar 2021 11:53:38 +0200
+Message-Id: <20210302095340.3584204-1-stanimir.varbanov@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use the generic DT node name "power-controller" for AOSS message ram
-instead of the protocol name QMP(Qualcomm Messaging Protocol) since
-it is used for power management requests.
+Hi,
 
-Suggested-by: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+This series add a new intra-refresh period control for encoders. The
+series is a continuation of [1]. Comments addressed:
+ * A typo in .rst (Hans)
+ * Clarified the relationship with CYCLIC_INTRA_REFRESH_MB (Hans)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index 5ef460458f5c..617bc1993217 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -363,7 +363,7 @@ pdc: interrupt-controller@b220000 {
- 			interrupt-controller;
- 		};
- 
--		aoss_qmp: qmp@c300000 {
-+		aoss_qmp: power-controller@c300000 {
- 			compatible = "qcom,sm8350-aoss-qmp";
- 			reg = <0 0x0c300000 0 0x100000>;
- 			interrupts-extended = <&ipcc IPCC_CLIENT_AOP IPCC_MPROC_SIGNAL_GLINK_QMP
+Comments are welcome!
+
+regards,
+Stan
+
+[1] https://www.spinics.net/lists/linux-media/msg183019.html
+
+Stanimir Varbanov (2):
+  media: v4l2-ctrls: Add intra-refresh period control
+  venus: venc: Add support for intra-refresh period
+
+ .../media/v4l/ext-ctrls-codec.rst             | 12 ++++++++
+ drivers/media/platform/qcom/venus/core.h      |  1 +
+ drivers/media/platform/qcom/venus/venc.c      | 28 +++++++++++++++++++
+ .../media/platform/qcom/venus/venc_ctrls.c    | 13 ++++-----
+ drivers/media/v4l2-core/v4l2-ctrls.c          |  2 ++
+ include/uapi/linux/v4l2-controls.h            |  1 +
+ 6 files changed, 50 insertions(+), 7 deletions(-)
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.25.1
 
