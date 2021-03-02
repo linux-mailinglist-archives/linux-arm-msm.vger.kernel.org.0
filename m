@@ -2,96 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 23A9932A128
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Mar 2021 14:45:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A6EBD32A127
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Mar 2021 14:45:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1381224AbhCBEto (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Mar 2021 23:49:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47704 "EHLO
+        id S1381221AbhCBEtn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Mar 2021 23:49:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241392AbhCBCFx (ORCPT
+        with ESMTP id S241386AbhCBCFx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 1 Mar 2021 21:05:53 -0500
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A8FFC06178A
-        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Mar 2021 18:04:58 -0800 (PST)
-Received: by mail-pj1-x1031.google.com with SMTP id s23so882069pji.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Mar 2021 18:04:58 -0800 (PST)
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B465C06178C
+        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Mar 2021 18:05:00 -0800 (PST)
+Received: by mail-io1-xd2e.google.com with SMTP id o9so5157121iow.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Mar 2021 18:05:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=cfBUaem/oDb9AtUTDLIpGK44OwPrInZVTprLTb3i7+E=;
-        b=BNk0ZnzxInRjqgIZeavfWChSeR7SfwzdsUyGAsLmmpQ+Le1ssXouf2fxDvuayDev+n
-         BzBgkc5X62xVlRUeVLUJPn2FLHov8VEZltRiBfMXTUYQo9gphrz0SEu4C00+S88wP69/
-         HouJqeQVb9yduzZAzAOxNMqy9N9t8TY/XsGMEXp2nzvBBFTFrgmxuAUora/wJiIVLRhF
-         G1HP56FD3mUG63236N/1wbSyPDt2rfhEQ1JRAzDWEN9cIpb7l8E4tm0VvoPUjDTusOkA
-         z+bMKMGrCnmmpyRPxGqASWvQpHQRHBqpuzCq8Vxb0+gCz38VDfyXHWhTbp6M6Sb+R/Gk
-         tqZg==
+        d=ieee.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=HqdANY9y5AYuxPx3w0i4b01BDqKwut4FMsN/JKnUcuc=;
+        b=c8XyROxhXBKl6A8mXQRLlLxvJ0tuIYYMr/dShL9FDdsJKDJK/IZGqRn4rQXGWWzGrm
+         I4ImzBkN7G1t4I9UedzctqyupAUYh+vEjM0gZUXLyU0GVpe9Xtj5YiUGxuHJNbZrKSD5
+         r0PKWZYDii0ZFrIg+qZZLTXmHynkl4SBDZ1Nw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=cfBUaem/oDb9AtUTDLIpGK44OwPrInZVTprLTb3i7+E=;
-        b=ZepwMkML5zZI7212iIy/IhwRrR196ZfX9YxugH5OZssMD9796xl5qlPvUbZI+hNITE
-         3xu2/+/mx0qRlttbN4FGBZpUvyBCv2jDdPBIQj3ChcQZlxdVlFyUWYDOcxzIaZ0X7kRm
-         ptmgerOyNd78HocDDhJ0Pulnv+hxuUSPvLO+7+P9fN3qVwDFSnLbrs0qlBGVnPs7DKrB
-         ex7D+MIfsLx7+I5iwEmdmRuS0bv13Q3QAr2V5xKVQ153dN4yzeCfpvBEA4KCYZw9jvxa
-         mon9AFz/GeUYoAlJydL0osGhYBkNj2b0xE83EgBoBB0uKE04MKqmvneRjIZItryvYQB4
-         6aVw==
-X-Gm-Message-State: AOAM530DcKolsNIL/2Pl2Q7nvoxOv7tkL9V1cTsRtwEZsVyjwUgTaWqu
-        4F6eXhZ+bTHK7RkxQSiePTx6a6fe2+B+8Q==
-X-Google-Smtp-Source: ABdhPJwN8ikdz/frtsatifL8zwrRzwvNsh4ytvyCAXlV7Jz5ChF5TtDM5Tnil/9ckMWKtiWdqrBsBQ==
-X-Received: by 2002:a17:902:9e81:b029:e4:a69:2f92 with SMTP id e1-20020a1709029e81b02900e40a692f92mr18249572plq.83.1614650698084;
-        Mon, 01 Mar 2021 18:04:58 -0800 (PST)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id gf20sm777315pjb.39.2021.03.01.18.04.56
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 01 Mar 2021 18:04:57 -0800 (PST)
-Date:   Tue, 2 Mar 2021 10:04:53 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] cpufreq: qcom-hw: enable boost support
-Message-ID: <20210302020452.GI24428@dragon>
-References: <20210113065241.23829-1-shawn.guo@linaro.org>
- <161462878276.6187.3475113742956110878.git-patchwork-notify@kernel.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=HqdANY9y5AYuxPx3w0i4b01BDqKwut4FMsN/JKnUcuc=;
+        b=SDP/E9TggT/6yT06BsyzFNwNtALRTym4UVqSBOPxE1JTmyNh1s8wbcpbV5dPg8TeH3
+         z3JqmEP9wAuUJ34DI5+dDgjw48ZwGVJzq58U3xETwV/5wOGWZcBw2btx8Ck5AmUGGB3t
+         OE8BhXQSX0Eq/Ih+MM2z4PmeTVrvatBA1IOFn1o6ik4fmM2J1hiUQx+av/obTJeKUoZ6
+         CYUxMunXqx4kSNb4zqikniLghhBCTfXiA2ODdkhjZEsjOIQ9WdP9zwYDbQjirPSOD3LR
+         PzS9uF+NgImnWIR928C4U+TQZ2qKb9mNbaRpVoQQ8++TNHk96ZxTxzQ9e/cEwWRbQiF6
+         Axlw==
+X-Gm-Message-State: AOAM532pRrfFoOU1umBXHfH/4T/L71tv/LVxynM3OVDOns3Hf5bDeZRB
+        VpR2z8NAwiGPnAZUIZhgbCduLA==
+X-Google-Smtp-Source: ABdhPJzval9M2rcD/DMvSv6RLyCovCuBjN9rV6e0uf/10cBzJxxODj0S+DS288YKJTPfS7N9+FhpDQ==
+X-Received: by 2002:a6b:6618:: with SMTP id a24mr4088209ioc.100.1614650699771;
+        Mon, 01 Mar 2021 18:04:59 -0800 (PST)
+Received: from [172.22.22.26] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.googlemail.com with ESMTPSA id k23sm11086143ior.12.2021.03.01.18.04.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 01 Mar 2021 18:04:59 -0800 (PST)
+Subject: Re: [PATCH v1 0/7] Add support for IPA v3.1, GSI v1.0, MSM8998 IPA
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>, elder@kernel.org
+Cc:     bjorn.andersson@linaro.org, agross@kernel.org, davem@davemloft.net,
+        kuba@kernel.org, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
+        marijn.suijten@somainline.org, phone-devel@vger.kernel.org
+References: <20210211175015.200772-1-angelogioacchino.delregno@somainline.org>
+From:   Alex Elder <elder@ieee.org>
+Message-ID: <d47de177-e7ef-d39f-902e-1888968c0085@ieee.org>
+Date:   Mon, 1 Mar 2021 20:04:58 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <161462878276.6187.3475113742956110878.git-patchwork-notify@kernel.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20210211175015.200772-1-angelogioacchino.delregno@somainline.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 01, 2021 at 07:59:42PM +0000, patchwork-bot+linux-arm-msm@kernel.org wrote:
-> Hello:
+On 2/11/21 11:50 AM, AngeloGioacchino Del Regno wrote:
+> Hey all!
 > 
-> This patch was applied to qcom/linux.git (refs/heads/for-next):
+> This time around I thought that it would be nice to get some modem
+> action going on. We have it, it's working (ish), so just.. why not.
 > 
-> On Wed, 13 Jan 2021 14:52:41 +0800 you wrote:
-> > At least on sdm850, the 2956800 khz is detected as a boost frequency in
-> > function qcom_cpufreq_hw_read_lut().  Let's enable boost support by
-> > calling cpufreq_enable_boost_support(), so that we can get the boost
-> > frequency by switching it on via 'boost' sysfs entry like below.
-> > 
-> >  $ echo 1 > /sys/devices/system/cpu/cpufreq/boost
-> > 
-> > [...]
-> 
-> Here is the summary with links:
->   - cpufreq: qcom-hw: enable boost support
->     https://git.kernel.org/qcom/c/266991721c15
-> 
-> You are awesome, thank you!
-> --
-> Deet-doot-dot, I am a bot.
-> https://korg.docs.kernel.org/patchwork/pwbot.html
+> This series adds support for IPA v3.1 (featuring GSI v1.0) and also
+> takes account for some bits that are shared with other unimplemented
+> IPA v3 variants and it is specifically targeting MSM8998, for which
+> support is added.
 
-Bjorn,
+It was more like "next month" rather than "next week," but I
+finally took some more time to look at this today.
 
-Why do I keep receiving such bot message on patches that had already
-landed mainline?
+Again I think it's surprising how little code you had
+to implement to get something that seems is at least
+modestly functional.
 
-Shawn
+FYI I have undertaken an effort to make the upstream code
+suitable for use for any IPA version (3.0-4.11) in the
+past few months.  Most of what I've done is in line with
+the things you found were necessary for IPA v3.1 support.
+Early on I got most of the support for IPA v4.5 upstream,
+and have been holding off trying to get other similar
+changes out for review for other versions until I've had
+more of a chance to test some of what's new in IPA v4.5.
+
+In the coming weeks I will start posting more of this
+work for review.  You'll see that I'm modifying many
+things you do in your series (such as making version
+checks not assume only v3.5.1 and v4.2 are supported).
+My priority is on newer versions, but I want the code
+to be (at least) correct for IPA v3.0, v3.1, and v3.5
+as well.
+
+What might be best is for you to consider using the
+patches when I send them out.  I'll gladly give you some
+credit when I do if you like (suggested-by, reviewed-by,
+tested-by, whatever you feel is appropriate).  Please
+let me know if you would like to be on the Cc list for
+this sort of change.
+
+> Since the userspace isn't entirely ready (as far as I can see) for
+> data connection (3g/lte/whatever) through the modem, it was possible
+> to only partially test this series.
+
+Yes we're still figuring out how the upstream tools need
+to interact with the kernel for configuration.
+
+> Specifically, loading the IPA firmware and setting up the interface
+> went just fine, along with a basic setup of the network interface
+> that got exposed by this driver.
+
+This is great to hear.
+
+> With this series, the benefits that I see are:
+>  1. The modem doesn't crash anymore when trying to setup a data
+>     connection, as now the modem firmware seems to be happy with
+>     having IPA initialized and ready;
+>  2. Other random modem crashes while picking up LTE home network
+>     signal (even just for calling, nothing fancy) seem to be gone.
+> 
+> These are the reasons why I think that this series is ready for
+> upstream action. It's *at least* stabilizing the platform when
+> the modem is up.
+> 
+> This was tested on the F(x)Tec Pro 1 (MSM8998) smartphone.
+
+I unfortunately can't promise you you'll have the full
+connection up and running, but we can probably get very
+close.
+
+It would be very helpful for you (someone other than me,
+that is) to participate in validating the changes I am
+now finalizing.  I hope you're willing.
+
+I'll offer a few more specific comments on each of your
+patches.
+
+					-Alex
+
+
+> AngeloGioacchino Del Regno (7):
+>   net: ipa: Add support for IPA v3.1 with GSI v1.0
+>   net: ipa: endpoint: Don't read unexistant register on IPAv3.1
+>   net: ipa: gsi: Avoid some writes during irq setup for older IPA
+>   net: ipa: gsi: Use right masks for GSI v1.0 channels hw param
+>   net: ipa: Add support for IPA on MSM8998
+>   dt-bindings: net: qcom-ipa: Document qcom,sc7180-ipa compatible
+>   dt-bindings: net: qcom-ipa: Document qcom,msm8998-ipa compatible
+> 
+>  .../devicetree/bindings/net/qcom,ipa.yaml     |   7 +-
+>  drivers/net/ipa/Makefile                      |   3 +-
+>  drivers/net/ipa/gsi.c                         |  33 +-
+>  drivers/net/ipa/gsi_reg.h                     |   5 +
+>  drivers/net/ipa/ipa_data-msm8998.c            | 407 ++++++++++++++++++
+>  drivers/net/ipa/ipa_data.h                    |   5 +
+>  drivers/net/ipa/ipa_endpoint.c                |  26 +-
+>  drivers/net/ipa/ipa_main.c                    |  12 +-
+>  drivers/net/ipa/ipa_reg.h                     |   3 +
+>  drivers/net/ipa/ipa_version.h                 |   1 +
+>  10 files changed, 480 insertions(+), 22 deletions(-)
+>  create mode 100644 drivers/net/ipa/ipa_data-msm8998.c
+> 
+
