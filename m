@@ -2,166 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 10C7532B2FB
+	by mail.lfdr.de (Postfix) with ESMTP id 821B332B2FC
 	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Mar 2021 04:49:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242729AbhCCBQi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Mar 2021 20:16:38 -0500
-Received: from labrats.qualcomm.com ([199.106.110.90]:21524 "EHLO
-        labrats.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2360926AbhCBWyA (ORCPT
+        id S242760AbhCCBQl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Mar 2021 20:16:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46792 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233643AbhCBXyn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Mar 2021 17:54:00 -0500
-IronPort-SDR: xei4uRtz6IiGsbh+1qQsY43qcPsfjRY5Pvm4gryk40E9yoGtaZwZpQBegC9gk6x0ntuH4gppxg
- C9OCkY2dKa0e8dQG4R4aEjNwBSFR18mhAPWxpn8d4rgB5vJ9WYTZNv1CT9ma4nTBynuN1sCD5g
- 6UYu68xe4s0mqscQJxiNadIPQBwQd0IdHCMDMP3aRbxuN7noOysHdcA3arL7rGeX8TM2cjx+9/
- rLk0iEXUiVRL5fp9e+bnio1O3jnThMNCqyw22LsIwH9DVNpcksMRCZu7pRz3iAVtWNN320psFA
- yd0=
-X-IronPort-AV: E=Sophos;i="5.81,218,1610438400"; 
-   d="scan'208";a="29681799"
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by labrats.qualcomm.com with ESMTP; 02 Mar 2021 14:53:02 -0800
-X-QCInternal: smtphost
-Received: from stor-presley.qualcomm.com ([192.168.140.85])
-  by ironmsg03-sd.qualcomm.com with ESMTP; 02 Mar 2021 14:53:02 -0800
-Received: by stor-presley.qualcomm.com (Postfix, from userid 92687)
-        id 13AF221A50; Tue,  2 Mar 2021 14:53:02 -0800 (PST)
-From:   Asutosh Das <asutoshd@codeaurora.org>
-To:     cang@codeaurora.org, martin.petersen@oracle.com,
-        adrian.hunter@intel.com, linux-scsi@vger.kernel.org
-Cc:     Asutosh Das <asutoshd@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Bean Huo <beanhuo@micron.com>,
-        Jaegeuk Kim <jaegeuk@kernel.org>,
-        Nitin Rawat <nitirawa@codeaurora.org>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v10 2/2] ufs: sysfs: Resume the proper scsi device
-Date:   Tue,  2 Mar 2021 14:52:35 -0800
-Message-Id: <5d7c0cd1ff4bc5295015244f057d252fe9040993.1614725302.git.asutoshd@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1614725302.git.asutoshd@codeaurora.org>
-References: <cover.1614725302.git.asutoshd@codeaurora.org>
-In-Reply-To: <cover.1614725302.git.asutoshd@codeaurora.org>
-References: <cover.1614725302.git.asutoshd@codeaurora.org>
+        Tue, 2 Mar 2021 18:54:43 -0500
+X-Greylist: delayed 530 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 02 Mar 2021 15:53:39 PST
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E397C06178C
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Mar 2021 15:53:39 -0800 (PST)
+Received: from Marijn-Arch-PC.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id F157E3ED8B;
+        Wed,  3 Mar 2021 00:42:36 +0100 (CET)
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        angelogioacchino.delregno@somainline.org,
+        konrad.dybcio@somainline.org, martin.botka@somainline.org,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] clk: qcom: rcg2: Rectify clk_gfx3d rate rounding without mux division
+Date:   Wed,  3 Mar 2021 00:41:06 +0100
+Message-Id: <20210302234106.3418665-1-marijn.suijten@somainline.org>
+X-Mailer: git-send-email 2.30.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Resumes the actual scsi device the unit descriptor of which
-is being accessed instead of the hba alone.
+In case the mux is not divided parent_req was mistakenly not assigned to
+leading __clk_determine_rate to determine the best frequency setting for
+a requested rate of 0, resulting in the msm8996 platform not booting.
+Rectify this by refactoring the logic to unconditionally assign to
+parent_req.rate with the clock rate the caller is expecting.
 
-Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
+Fixes: 7cbb78a99db6 ("clk: qcom: rcg2: Stop hardcoding gfx3d pingpong parent numbers")
+Reported-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Tested-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Reviewed-By: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 ---
- drivers/scsi/ufs/ufs-sysfs.c | 30 +++++++++++++++++-------------
- 1 file changed, 17 insertions(+), 13 deletions(-)
+ drivers/clk/qcom/clk-rcg2.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/scsi/ufs/ufs-sysfs.c b/drivers/scsi/ufs/ufs-sysfs.c
-index acc54f5..3fc182b 100644
---- a/drivers/scsi/ufs/ufs-sysfs.c
-+++ b/drivers/scsi/ufs/ufs-sysfs.c
-@@ -245,9 +245,9 @@ static ssize_t wb_on_store(struct device *dev, struct device_attribute *attr,
- 		goto out;
+diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+index 42f13a2d1cc1..05ff3b0d233e 100644
+--- a/drivers/clk/qcom/clk-rcg2.c
++++ b/drivers/clk/qcom/clk-rcg2.c
+@@ -730,7 +730,8 @@ static int clk_gfx3d_determine_rate(struct clk_hw *hw,
+ 	struct clk_rate_request parent_req = { };
+ 	struct clk_rcg2_gfx3d *cgfx = to_clk_rcg2_gfx3d(hw);
+ 	struct clk_hw *xo, *p0, *p1, *p2;
+-	unsigned long request, p0_rate;
++	unsigned long p0_rate;
++	u8 mux_div = cgfx->div;
+ 	int ret;
+ 
+ 	p0 = cgfx->hws[0];
+@@ -750,14 +751,15 @@ static int clk_gfx3d_determine_rate(struct clk_hw *hw,
+ 		return 0;
  	}
  
--	pm_runtime_get_sync(hba->dev);
-+	scsi_autopm_get_device(hba->sdev_ufs_device);
- 	res = ufshcd_wb_ctrl(hba, wb_enable);
--	pm_runtime_put_sync(hba->dev);
-+	scsi_autopm_put_device(hba->sdev_ufs_device);
- out:
- 	up(&hba->host_sem);
- 	return res < 0 ? res : count;
-@@ -297,10 +297,10 @@ static ssize_t ufs_sysfs_read_desc_param(struct ufs_hba *hba,
- 		goto out;
- 	}
+-	request = req->rate;
+-	if (cgfx->div > 1)
+-		parent_req.rate = request = request * cgfx->div;
++	if (mux_div == 0)
++		mux_div = 1;
++
++	parent_req.rate = req->rate * mux_div;
  
--	pm_runtime_get_sync(hba->dev);
-+	scsi_autopm_get_device(hba->sdev_ufs_device);
- 	ret = ufshcd_read_desc_param(hba, desc_id, desc_index,
- 				param_offset, desc_buf, param_size);
--	pm_runtime_put_sync(hba->dev);
-+	scsi_autopm_put_device(hba->sdev_ufs_device);
- 	if (ret) {
- 		ret = -EINVAL;
- 		goto out;
-@@ -678,7 +678,7 @@ static ssize_t _name##_show(struct device *dev,				\
- 		up(&hba->host_sem);					\
- 		return -ENOMEM;						\
- 	}								\
--	pm_runtime_get_sync(hba->dev);					\
-+	scsi_autopm_get_device(hba->sdev_ufs_device);			\
- 	ret = ufshcd_query_descriptor_retry(hba,			\
- 		UPIU_QUERY_OPCODE_READ_DESC, QUERY_DESC_IDN_DEVICE,	\
- 		0, 0, desc_buf, &desc_len);				\
-@@ -695,7 +695,7 @@ static ssize_t _name##_show(struct device *dev,				\
- 		goto out;						\
- 	ret = sysfs_emit(buf, "%s\n", desc_buf);			\
- out:									\
--	pm_runtime_put_sync(hba->dev);					\
-+	scsi_autopm_put_device(hba->sdev_ufs_device);			\
- 	kfree(desc_buf);						\
- 	up(&hba->host_sem);						\
- 	return ret;							\
-@@ -744,10 +744,10 @@ static ssize_t _name##_show(struct device *dev,				\
- 	}								\
- 	if (ufshcd_is_wb_flags(QUERY_FLAG_IDN##_uname))			\
- 		index = ufshcd_wb_get_query_index(hba);			\
--	pm_runtime_get_sync(hba->dev);					\
-+	scsi_autopm_get_device(hba->sdev_ufs_device);			\
- 	ret = ufshcd_query_flag(hba, UPIU_QUERY_OPCODE_READ_FLAG,	\
- 		QUERY_FLAG_IDN##_uname, index, &flag);			\
--	pm_runtime_put_sync(hba->dev);					\
-+	scsi_autopm_put_device(hba->sdev_ufs_device);			\
- 	if (ret) {							\
- 		ret = -EINVAL;						\
- 		goto out;						\
-@@ -813,10 +813,10 @@ static ssize_t _name##_show(struct device *dev,				\
- 	}								\
- 	if (ufshcd_is_wb_attrs(QUERY_ATTR_IDN##_uname))			\
- 		index = ufshcd_wb_get_query_index(hba);			\
--	pm_runtime_get_sync(hba->dev);					\
-+	scsi_autopm_get_device(hba->sdev_ufs_device);			\
- 	ret = ufshcd_query_attr(hba, UPIU_QUERY_OPCODE_READ_ATTR,	\
- 		QUERY_ATTR_IDN##_uname, index, 0, &value);		\
--	pm_runtime_put_sync(hba->dev);					\
-+	scsi_autopm_put_device(hba->sdev_ufs_device);			\
- 	if (ret) {							\
- 		ret = -EINVAL;						\
- 		goto out;						\
-@@ -899,11 +899,15 @@ static ssize_t _pname##_show(struct device *dev,			\
- 	struct scsi_device *sdev = to_scsi_device(dev);			\
- 	struct ufs_hba *hba = shost_priv(sdev->host);			\
- 	u8 lun = ufshcd_scsi_to_upiu_lun(sdev->lun);			\
-+	int ret;							\
- 	if (!ufs_is_valid_unit_desc_lun(&hba->dev_info, lun,		\
- 				_duname##_DESC_PARAM##_puname))		\
- 		return -EINVAL;						\
--	return ufs_sysfs_read_desc_param(hba, QUERY_DESC_IDN_##_duname,	\
-+	scsi_autopm_get_device(sdev);					\
-+	ret = ufs_sysfs_read_desc_param(hba, QUERY_DESC_IDN_##_duname,	\
- 		lun, _duname##_DESC_PARAM##_puname, buf, _size);	\
-+	scsi_autopm_put_device(sdev);					\
-+	return ret;							\
- }									\
- static DEVICE_ATTR_RO(_pname)
+ 	/* This has to be a fixed rate PLL */
+ 	p0_rate = clk_hw_get_rate(p0);
  
-@@ -964,10 +968,10 @@ static ssize_t dyn_cap_needed_attribute_show(struct device *dev,
- 		goto out;
- 	}
+-	if (request == p0_rate) {
++	if (parent_req.rate == p0_rate) {
+ 		req->rate = req->best_parent_rate = p0_rate;
+ 		req->best_parent_hw = p0;
+ 		return 0;
+@@ -765,7 +767,7 @@ static int clk_gfx3d_determine_rate(struct clk_hw *hw,
  
--	pm_runtime_get_sync(hba->dev);
-+	scsi_autopm_get_device(hba->sdev_ufs_device);
- 	ret = ufshcd_query_attr(hba, UPIU_QUERY_OPCODE_READ_ATTR,
- 		QUERY_ATTR_IDN_DYN_CAP_NEEDED, lun, 0, &value);
--	pm_runtime_put_sync(hba->dev);
-+	scsi_autopm_put_device(hba->sdev_ufs_device);
- 	if (ret) {
- 		ret = -EINVAL;
- 		goto out;
+ 	if (req->best_parent_hw == p0) {
+ 		/* Are we going back to a previously used rate? */
+-		if (clk_hw_get_rate(p2) == request)
++		if (clk_hw_get_rate(p2) == parent_req.rate)
+ 			req->best_parent_hw = p2;
+ 		else
+ 			req->best_parent_hw = p1;
+@@ -780,8 +782,7 @@ static int clk_gfx3d_determine_rate(struct clk_hw *hw,
+ 		return ret;
+ 
+ 	req->rate = req->best_parent_rate = parent_req.rate;
+-	if (cgfx->div > 1)
+-		req->rate /= cgfx->div;
++	req->rate /= mux_div;
+ 
+ 	return 0;
+ }
 -- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+2.30.1
 
