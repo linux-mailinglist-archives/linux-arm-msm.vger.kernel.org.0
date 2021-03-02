@@ -2,207 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F23232B293
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Mar 2021 04:48:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 612FF32B2C5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Mar 2021 04:49:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242182AbhCCBPb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Mar 2021 20:15:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58944 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350010AbhCBLpa (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Mar 2021 06:45:30 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 858D5C0617A9
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Mar 2021 03:44:37 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id s8so24792253edd.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Mar 2021 03:44:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=fSiros/bpA33DrxLIopBprg2PSwxl41ia1ZrqmhCZho=;
-        b=CNiOAB/aDlzJx9jbByOgDWXCKNWzh8AJzgEz0m4qj5XspiYYDgtMl9nEejj/Y+v5oS
-         qLbKQ9CvJaJ3+NrID6Tu+BUBGvcrrc61b8jK6nSFt830rNnGPFwzLYfYSdxzpq4LWwar
-         DYgblksxROekZQeRoThk7ywNOChEPN5LiWDmF4Tdl+ahUIdLsHg6SaGnyGTi7qvaA+kI
-         HYb4d+9Wwq4GT+nu7qnZSuTaqdje8i9mougNcFj0RpGnJLuummJovJ7CtGOBS+A6arNt
-         NQ7UkYoZrRjFmnfN2VSGxYUOlugz2BY0hu+krFNXB5UbUbbxpRYAGhK11g9d5eCYxgkM
-         /xDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=fSiros/bpA33DrxLIopBprg2PSwxl41ia1ZrqmhCZho=;
-        b=k1UQ5n6iasBuqHVaOdi+Wvpm2ajK5gm4LQ+93jT4+G0pZ515tQlWWGpizDNag7w7H0
-         dczhYdc21NQf9TvKGqDhf21CBvpH9vDT0jPTEKcwcSd1XGjtaW6UQ7jFZHXiClV47Cux
-         nqry0TNR6/Eepwncz2yEsdXtQ2yApwlydteeCCXZMZg/iPw2EXmDWaITApU9SuANR4nA
-         Ghr1OtkfluRir6kkwcHVsAzKnS3lqZyE+s2xxqiMTmBImXmo1DhUbcothGlr0aXN+gZX
-         PTeAgYbTDWptnn7d5fNzrqOe/gtHHN4c8qHc3dP057rvhyrrHgA8GP7EGOIJ+Se03vsK
-         kCUg==
-X-Gm-Message-State: AOAM5336a8o1dnKiuXT+4tMPAyUzOM513rRrphHqa3gP5o+a9o78g5E5
-        QMbJEYBnh1EgUKPdnOH1QvhWfA==
-X-Google-Smtp-Source: ABdhPJwbHuuQPFtmc38SU8zyIEd/Ak7lLBGY51qRk27BvP/2szHwIi3IGa1Jqg5gpAWhRYaJTOXQnQ==
-X-Received: by 2002:aa7:dc4e:: with SMTP id g14mr1337280edu.114.1614685476271;
-        Tue, 02 Mar 2021 03:44:36 -0800 (PST)
-Received: from localhost.localdomain (hst-208-217.medicom.bg. [84.238.208.217])
-        by smtp.gmail.com with ESMTPSA id x17sm18494897edq.42.2021.03.02.03.44.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Mar 2021 03:44:36 -0800 (PST)
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        id S242244AbhCCBPn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Mar 2021 20:15:43 -0500
+Received: from foss.arm.com ([217.140.110.172]:50850 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1350767AbhCBMub (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Mar 2021 07:50:31 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 858D212FC;
+        Tue,  2 Mar 2021 04:17:30 -0800 (PST)
+Received: from [10.57.48.219] (unknown [10.57.48.219])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 79C8C3F766;
+        Tue,  2 Mar 2021 04:17:29 -0800 (PST)
+Subject: Re: [PATCH v3 1/3] iommu/arm-smmu: Add support for driver IOMMU fault
+ handlers
+To:     Jordan Crouse <jcrouse@codeaurora.org>,
         linux-arm-msm@vger.kernel.org
-Cc:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH v2 2/2] venus: vdec: Add support for conceal control
-Date:   Tue,  2 Mar 2021 13:44:30 +0200
-Message-Id: <20210302114430.3594475-3-stanimir.varbanov@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210302114430.3594475-1-stanimir.varbanov@linaro.org>
-References: <20210302114430.3594475-1-stanimir.varbanov@linaro.org>
+Cc:     iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+        Will Deacon <will@kernel.org>,
+        linux-arm-kernel@lists.infradead.org
+References: <20210225175135.91922-1-jcrouse@codeaurora.org>
+ <20210225175135.91922-2-jcrouse@codeaurora.org>
+From:   Robin Murphy <robin.murphy@arm.com>
+Message-ID: <2d3c7595-0186-7231-96dc-ae52414480ee@arm.com>
+Date:   Tue, 2 Mar 2021 12:17:24 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210225175135.91922-2-jcrouse@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Adds support for decoder conceal color control.
+On 2021-02-25 17:51, Jordan Crouse wrote:
+> Call report_iommu_fault() to allow upper-level drivers to register their
+> own fault handlers.
+> 
+> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+> ---
+> 
+>   drivers/iommu/arm/arm-smmu/arm-smmu.c | 9 +++++++--
+>   1 file changed, 7 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> index d8c6bfde6a61..0f3a9b5f3284 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> @@ -408,6 +408,7 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
+>   	struct arm_smmu_domain *smmu_domain = to_smmu_domain(domain);
+>   	struct arm_smmu_device *smmu = smmu_domain->smmu;
+>   	int idx = smmu_domain->cfg.cbndx;
+> +	int ret;
+>   
+>   	fsr = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSR);
+>   	if (!(fsr & ARM_SMMU_FSR_FAULT))
+> @@ -417,8 +418,12 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
+>   	iova = arm_smmu_cb_readq(smmu, idx, ARM_SMMU_CB_FAR);
+>   	cbfrsynra = arm_smmu_gr1_read(smmu, ARM_SMMU_GR1_CBFRSYNRA(idx));
+>   
+> -	dev_err_ratelimited(smmu->dev,
+> -	"Unhandled context fault: fsr=0x%x, iova=0x%08lx, fsynr=0x%x, cbfrsynra=0x%x, cb=%d\n",
+> +	ret = report_iommu_fault(domain, dev, iova,
 
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
----
- drivers/media/platform/qcom/venus/core.h       |  1 +
- drivers/media/platform/qcom/venus/hfi_cmds.c   | 18 ++++++++++++++++--
- drivers/media/platform/qcom/venus/hfi_helper.h | 10 ++++++++++
- drivers/media/platform/qcom/venus/vdec.c       | 11 ++++++++++-
- drivers/media/platform/qcom/venus/vdec_ctrls.c |  7 +++++++
- 5 files changed, 44 insertions(+), 3 deletions(-)
+Beware that "dev" here is not a struct device, so this isn't right. I'm 
+not entirely sure what we *should* be passing here, since we can't 
+easily attribute a context fault to a specific client device, and 
+passing the IOMMU device seems a bit dubious too, so maybe just NULL?
 
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index a252ed32cc14..b70ff14e5a5b 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -172,6 +172,7 @@ struct vdec_controls {
- 	u32 post_loop_deb_mode;
- 	u32 profile;
- 	u32 level;
-+	u64 conceal_color;
- };
- 
- struct venc_controls {
-diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
-index 4f7565834469..884339aae6a7 100644
---- a/drivers/media/platform/qcom/venus/hfi_cmds.c
-+++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
-@@ -760,7 +760,9 @@ static int pkt_session_set_property_1x(struct hfi_session_set_property_pkt *pkt,
- 		struct hfi_conceal_color *color = prop_data;
- 		u32 *in = pdata;
- 
--		color->conceal_color = *in;
-+		color->conceal_color = *in & 0xff;
-+		color->conceal_color |= ((*in >> 10) & 0xff) << 8;
-+		color->conceal_color |= ((*in >> 20) & 0xff) << 16;
- 		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*color);
- 		break;
- 	}
-@@ -1255,7 +1257,19 @@ pkt_session_set_property_6xx(struct hfi_session_set_property_pkt *pkt,
- 		cq->frame_quality = in->frame_quality;
- 		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*cq);
- 		break;
--	} default:
-+	}
-+	case HFI_PROPERTY_PARAM_VDEC_CONCEAL_COLOR: {
-+		struct hfi_conceal_color_v4 *color = prop_data;
-+		u32 *in = pdata;
-+
-+		color->conceal_color_8bit = *in & 0xff;
-+		color->conceal_color_8bit |= ((*in >> 10) & 0xff) << 8;
-+		color->conceal_color_8bit |= ((*in >> 20) & 0xff) << 16;
-+		color->conceal_color_10bit = *in;
-+		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*color);
-+		break;
-+	}
-+	default:
- 		return pkt_session_set_property_4xx(pkt, cookie, ptype, pdata);
- 	}
- 
-diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
-index 6b524c7cde5f..fa49b49170b7 100644
---- a/drivers/media/platform/qcom/venus/hfi_helper.h
-+++ b/drivers/media/platform/qcom/venus/hfi_helper.h
-@@ -685,10 +685,20 @@ struct hfi_vc1e_perf_cfg_type {
- 	u32 search_range_y_subsampled[3];
- };
- 
-+/*
-+ * 0 - 7bit -> Luma (def: 16)
-+ * 8 - 15bit -> Chroma (def: 128)
-+ * format is valid up to v4
-+ */
- struct hfi_conceal_color {
- 	u32 conceal_color;
- };
- 
-+struct hfi_conceal_color_v4 {
-+	u32 conceal_color_8bit;
-+	u32 conceal_color_10bit;
-+};
-+
- struct hfi_intra_period {
- 	u32 pframes;
- 	u32 bframes;
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index e4dc97f00fc3..8d98fca55db1 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -620,7 +620,7 @@ static int vdec_set_properties(struct venus_inst *inst)
- {
- 	struct vdec_controls *ctr = &inst->controls.dec;
- 	struct hfi_enable en = { .enable = 1 };
--	u32 ptype;
-+	u32 ptype, conceal;
- 	int ret;
- 
- 	if (ctr->post_loop_deb_mode) {
-@@ -630,6 +630,15 @@ static int vdec_set_properties(struct venus_inst *inst)
- 			return ret;
- 	}
- 
-+	ptype = HFI_PROPERTY_PARAM_VDEC_CONCEAL_COLOR;
-+	conceal = ctr->conceal_color & 0xffff;
-+	conceal |= ((ctr->conceal_color >> 16) & 0xffff) << 10;
-+	conceal |= ((ctr->conceal_color >> 32) & 0xffff) << 20;
-+
-+	ret = hfi_session_set_property(inst, ptype, &conceal);
-+	if (ret)
-+		return ret;
-+
- 	return 0;
- }
- 
-diff --git a/drivers/media/platform/qcom/venus/vdec_ctrls.c b/drivers/media/platform/qcom/venus/vdec_ctrls.c
-index 974110b75b93..9ff3db1c4a0f 100644
---- a/drivers/media/platform/qcom/venus/vdec_ctrls.c
-+++ b/drivers/media/platform/qcom/venus/vdec_ctrls.c
-@@ -30,6 +30,9 @@ static int vdec_op_s_ctrl(struct v4l2_ctrl *ctrl)
- 	case V4L2_CID_MPEG_VIDEO_VP9_LEVEL:
- 		ctr->level = ctrl->val;
- 		break;
-+	case V4L2_CID_MPEG_VIDEO_DEC_CONCEAL_COLOR:
-+		ctr->conceal_color = *ctrl->p_new.p_s64;
-+		break;
- 	default:
- 		return -EINVAL;
- 	}
-@@ -158,6 +161,10 @@ int vdec_ctrl_init(struct venus_inst *inst)
- 	if (ctrl)
- 		ctrl->flags |= V4L2_CTRL_FLAG_VOLATILE;
- 
-+	v4l2_ctrl_new_std(&inst->ctrl_handler, &vdec_ctrl_ops,
-+			  V4L2_CID_MPEG_VIDEO_DEC_CONCEAL_COLOR, 0,
-+			  0xffffffffffffLL, 1, 0x8000800010LL);
-+
- 	ret = inst->ctrl_handler.error;
- 	if (ret) {
- 		v4l2_ctrl_handler_free(&inst->ctrl_handler);
--- 
-2.25.1
+Robin.
 
+> +		fsynr & ARM_SMMU_FSYNR0_WNR ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ);
+> +
+> +	if (ret == -ENOSYS)
+> +		dev_err_ratelimited(smmu->dev,
+> +		"Unhandled context fault: fsr=0x%x, iova=0x%08lx, fsynr=0x%x, cbfrsynra=0x%x, cb=%d\n",
+>   			    fsr, iova, fsynr, cbfrsynra, idx);
+>   
+>   	arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, fsr);
+> 
