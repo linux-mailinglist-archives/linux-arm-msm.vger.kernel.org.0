@@ -2,129 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6035232B2ED
+	by mail.lfdr.de (Postfix) with ESMTP id D188732B2EE
 	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Mar 2021 04:49:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242533AbhCCBQU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Mar 2021 20:16:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56424 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1838896AbhCBPzJ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Mar 2021 10:55:09 -0500
-Received: from mail-il1-x143.google.com (mail-il1-x143.google.com [IPv6:2607:f8b0:4864:20::143])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D8D2C061788
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Mar 2021 07:54:26 -0800 (PST)
-Received: by mail-il1-x143.google.com with SMTP id e2so18401418ilu.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Mar 2021 07:54:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cosmicpenguin-net.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=4YmTDrctAKsG8cdbZH7XiMulPHMmL+Exyv4xwBQWD5M=;
-        b=x2eE6P8J5KaO4DD0hNyzGz7Bru3WjGacf4IWFcF96JbCi3uflZJ3KWwSD3mb8vBH8Y
-         a+6uictKWrojWO3H0XIV7GkIWxXJj8H/PIPNZorNQlkt6nuV7LxoNdwPgRDoAI/Gs6k/
-         vltvTCdwZe0e8BxrWARFh4IgpX5RvemqQjmiLruck622jgL4pwslhEMGk8nrZ+T7bVaH
-         j90QXNGuFzpXHZCd5Z/KHbfqh5zk14zaSDsGL+aCNySc+X9JAtxAwpSF32Dmozx8TFS4
-         cGaxFEfZ245lWW5UEgzedysJtgECdzW7klS6VkJoGydEc00k/b3sBm0j7V/JHYD4iRes
-         JH+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=4YmTDrctAKsG8cdbZH7XiMulPHMmL+Exyv4xwBQWD5M=;
-        b=AGB2qTNN/RI/U8LMhKW4udf+OCppoK1GcCs3KCz1PLmmP0bVJ1xxRL00Uh5DIz8DwT
-         bpU6Q5JmPAhtZWHKKEB6Nka3FJ1MCjoy3Ve/CiXwUAnpIDI7s7X4d6H1nTYY4ILNOyLx
-         GEcwJQQvpGZveLUfy3qRSwTnyL3fPyDjVJte+CfNn1iDWsrLUulH/V0slkYidn0tjfGR
-         MsRUXvGPF4Cx5QYfzMzGDCB9vRcKjrk0nLH2uW0akz1Zdr63S7uN5wNN1ILqU3zObkBF
-         n1GqJ+Wr1rP+91yTnSEYWL3DGSEXoJNoYV95OsPiJiLqQL4NGXpox6N3BKFZ7aH6jNBP
-         ExWQ==
-X-Gm-Message-State: AOAM5323CF/e1q4+KwriM5t8EF2PrQcB5Lcp2Sp0qUtJyvuC0aTx8kBJ
-        W6hM/lyh+mFFwRs0x+I9QouSAA==
-X-Google-Smtp-Source: ABdhPJxklLSBBngic8Uzfbl/eBdoqe4frY99R/xM56OTzhIiYdli7cBeVq1FMv0i41nQlHiUfRCgwg==
-X-Received: by 2002:a92:c54e:: with SMTP id a14mr18413282ilj.285.1614700465998;
-        Tue, 02 Mar 2021 07:54:25 -0800 (PST)
-Received: from cosmicpenguin.net (c-71-237-100-236.hsd1.co.comcast.net. [71.237.100.236])
-        by smtp.gmail.com with ESMTPSA id k23sm11935810iol.36.2021.03.02.07.54.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Mar 2021 07:54:25 -0800 (PST)
-Date:   Tue, 2 Mar 2021 08:54:23 -0700
-From:   Jordan Crouse <jordan@cosmicpenguin.net>
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     Jordan Crouse <jcrouse@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
-        Will Deacon <will@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v3 1/3] iommu/arm-smmu: Add support for driver IOMMU
- fault handlers
-Message-ID: <20210302155423.3e7xlal3phcz26bh@cosmicpenguin.net>
-Mail-Followup-To: Robin Murphy <robin.murphy@arm.com>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
-        Will Deacon <will@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20210225175135.91922-1-jcrouse@codeaurora.org>
- <20210225175135.91922-2-jcrouse@codeaurora.org>
- <2d3c7595-0186-7231-96dc-ae52414480ee@arm.com>
+        id S242552AbhCCBQW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Mar 2021 20:16:22 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:58140 "EHLO z11.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1580062AbhCBRWz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Mar 2021 12:22:55 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1614705725; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=i6HWitAvfuibUOrEhE9hWqjcYM7rHuJywCh3nQMG6cA=; b=P75gxfee+KISkKX+PZOFiiOXExoVsZKAIrb60kOGrIpSWi/2M+lVQlcDcVfpyZzmA7jaLXx7
+ OxFCLiIkhHrjD16hLyzxb22RZnJVqij+na/mKSQo01eTCaX/AxS4HbNyJiQr/qBLtJLb+iui
+ eTwNWuKCAJHyt7AHHVfzmXNy61Y=
+X-Mailgun-Sending-Ip: 104.130.96.11
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 603e65bf4fd7814d5f8c7565 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 02 Mar 2021 16:20:15
+ GMT
+Sender: asutoshd=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id BC0CCC4346F; Tue,  2 Mar 2021 16:20:14 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from stor-presley.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: asutoshd)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1E9ACC433C6;
+        Tue,  2 Mar 2021 16:20:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1E9ACC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=asutoshd@codeaurora.org
+Date:   Tue, 2 Mar 2021 08:20:10 -0800
+From:   Asutosh Das <asutoshd@codeaurora.org>
+To:     Adrian Hunter <adrian.hunter@intel.com>
+Cc:     cang@codeaurora.org, martin.petersen@oracle.com,
+        linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Pedro Sousa <pedrom.sousa@synopsys.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Ingo Molnar <mingo@redhat.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Kiwoong Kim <kwmad.kim@samsung.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Wei Yongjun <weiyongjun1@huawei.com>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Jaegeuk Kim <jaegeuk@kernel.org>,
+        Satya Tangirala <satyat@google.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        "moderated list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "open list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
+        <linux-samsung-soc@vger.kernel.org>,
+        "moderated list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
+        <linux-mediatek@lists.infradead.org>
+Subject: Re: [PATCH v9 1/2] scsi: ufs: Enable power management for wlun
+Message-ID: <20210302162010.GH12147@stor-presley.qualcomm.com>
+References: <cover.1614655058.git.asutoshd@codeaurora.org>
+ <b291bb65fadc9c828cbcb4ffb81cfa1ee47b82be.1614655058.git.asutoshd@codeaurora.org>
+ <d17e52e0-cb50-50ee-accb-458b318014e5@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <2d3c7595-0186-7231-96dc-ae52414480ee@arm.com>
+In-Reply-To: <d17e52e0-cb50-50ee-accb-458b318014e5@intel.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 02, 2021 at 12:17:24PM +0000, Robin Murphy wrote:
-> On 2021-02-25 17:51, Jordan Crouse wrote:
-> > Call report_iommu_fault() to allow upper-level drivers to register their
-> > own fault handlers.
-> > 
-> > Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
-> > ---
-> > 
-> >   drivers/iommu/arm/arm-smmu/arm-smmu.c | 9 +++++++--
-> >   1 file changed, 7 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> > index d8c6bfde6a61..0f3a9b5f3284 100644
-> > --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> > @@ -408,6 +408,7 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
-> >   	struct arm_smmu_domain *smmu_domain = to_smmu_domain(domain);
-> >   	struct arm_smmu_device *smmu = smmu_domain->smmu;
-> >   	int idx = smmu_domain->cfg.cbndx;
-> > +	int ret;
-> >   	fsr = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSR);
-> >   	if (!(fsr & ARM_SMMU_FSR_FAULT))
-> > @@ -417,8 +418,12 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
-> >   	iova = arm_smmu_cb_readq(smmu, idx, ARM_SMMU_CB_FAR);
-> >   	cbfrsynra = arm_smmu_gr1_read(smmu, ARM_SMMU_GR1_CBFRSYNRA(idx));
-> > -	dev_err_ratelimited(smmu->dev,
-> > -	"Unhandled context fault: fsr=0x%x, iova=0x%08lx, fsynr=0x%x, cbfrsynra=0x%x, cb=%d\n",
-> > +	ret = report_iommu_fault(domain, dev, iova,
-> 
-> Beware that "dev" here is not a struct device, so this isn't right. I'm not
-> entirely sure what we *should* be passing here, since we can't easily
-> attribute a context fault to a specific client device, and passing the IOMMU
-> device seems a bit dubious too, so maybe just NULL?
+On Tue, Mar 02 2021 at 06:14 -0800, Adrian Hunter wrote:
+>On 2/03/21 5:21 am, Asutosh Das wrote:
+>> During runtime-suspend of ufs host, the scsi devices are
+>> already suspended and so are the queues associated with them.
+>> But the ufs host sends SSU to wlun during its runtime-suspend.
+>> During the process blk_queue_enter checks if the queue is not in
+>> suspended state. If so, it waits for the queue to resume, and never
+>> comes out of it.
+>> The commit
+>> (d55d15a33: scsi: block: Do not accept any requests while suspended)
+>> adds the check if the queue is in suspended state in blk_queue_enter().
+>>
+>> Call trace:
+>>  __switch_to+0x174/0x2c4
+>>  __schedule+0x478/0x764
+>>  schedule+0x9c/0xe0
+>>  blk_queue_enter+0x158/0x228
+>>  blk_mq_alloc_request+0x40/0xa4
+>>  blk_get_request+0x2c/0x70
+>>  __scsi_execute+0x60/0x1c4
+>>  ufshcd_set_dev_pwr_mode+0x124/0x1e4
+>>  ufshcd_suspend+0x208/0x83c
+>>  ufshcd_runtime_suspend+0x40/0x154
+>>  ufshcd_pltfrm_runtime_suspend+0x14/0x20
+>>  pm_generic_runtime_suspend+0x28/0x3c
+>>  __rpm_callback+0x80/0x2a4
+>>  rpm_suspend+0x308/0x614
+>>  rpm_idle+0x158/0x228
+>>  pm_runtime_work+0x84/0xac
+>>  process_one_work+0x1f0/0x470
+>>  worker_thread+0x26c/0x4c8
+>>  kthread+0x13c/0x320
+>>  ret_from_fork+0x10/0x18
+>>
+>> Fix this by registering ufs device wlun as a scsi driver and
+>> registering it for block runtime-pm. Also make this as a
+>> supplier for all other luns. That way, this device wlun
+>> suspends after all the consumers and resumes after
+>> hba resumes.
+>>
+>> Co-developed-by: Can Guo <cang@codeaurora.org>
+>> Signed-off-by: Can Guo <cang@codeaurora.org>
+>> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
+>> ---
+>
+>Now we need either to move the suspend/resume vops from
+>ufshcd_suspend/resume to __ufshcd_wl_suspend/resume, assuming that
+>would work for existing implementations of those callbacks,
+>or otherwise create new vops ->wl_suspend() / ->wl_resume(), and
+>then split the existing implementations of those callbacks.
+>
+>ufs_intel_resume() now needs to be invoked from __ufshcd_wl_resume().
+>I am not sure about the others:
+>
+>	exynos_ufs_suspend()
+>	exynos_ufs_resume()
+>	ufs_hisi_suspend()
+>	ufs_hisi_resume()
+>	ufs_mtk_suspend()
+>	ufs_mtk_resume()
+>	ufs_qcom_suspend()
+>	ufs_qcom_resume()
+>
 
-Agreed. The GPU doesn't use it and I doubt anything else would either since the
-SMMU device is opaque to the leaf driver.
+Thanks. I'll change this in the next version.
 
-Jordan
-
-> Robin.
-> 
-> > +		fsynr & ARM_SMMU_FSYNR0_WNR ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ);
-> > +
-> > +	if (ret == -ENOSYS)
-> > +		dev_err_ratelimited(smmu->dev,
-> > +		"Unhandled context fault: fsr=0x%x, iova=0x%08lx, fsynr=0x%x, cbfrsynra=0x%x, cb=%d\n",
-> >   			    fsr, iova, fsynr, cbfrsynra, idx);
-> >   	arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, fsr);
-> > 
-> _______________________________________________
-> iommu mailing list
-> iommu@lists.linux-foundation.org
-> https://lists.linuxfoundation.org/mailman/listinfo/iommu
+-asd
