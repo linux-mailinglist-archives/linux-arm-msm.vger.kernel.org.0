@@ -2,191 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1442D32B25A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Mar 2021 04:48:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A58C32B271
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Mar 2021 04:48:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242117AbhCCBP1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Mar 2021 20:15:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35050 "EHLO
+        id S242139AbhCCBP2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Mar 2021 20:15:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1577809AbhCBJyn (ORCPT
+        with ESMTP id S235316AbhCBK3L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Mar 2021 04:54:43 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B74EEC0617A7
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Mar 2021 01:54:02 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id dx17so6483578ejb.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Mar 2021 01:54:02 -0800 (PST)
+        Tue, 2 Mar 2021 05:29:11 -0500
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DC38C061756;
+        Tue,  2 Mar 2021 02:28:14 -0800 (PST)
+Received: by mail-pl1-x62a.google.com with SMTP id g20so11785605plo.2;
+        Tue, 02 Mar 2021 02:28:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=EdJzhp+FqGbnwXajAcOWTyezJi1vdCAgMV7g3U64BvE=;
-        b=YgQInyUWTvGwp8jPCKBjOeGiWJ+75shBSiz2A4QcgVDROuE+TlXwnjpMluW1PmEwla
-         n8+hC4No+gAM/JwGTfV7pfnKgiQqBlcI0L+rDNOlYbS/wcX3Bx1F6G2H9MCKc/pFM+KE
-         QAlPtlHmGRmBLZydwere7wXRkYhlTVE5o3G5ruEKCQ1q7HS2R7YHbbN39Bwpyh2iigm7
-         8amWvGgi94kxuHupxsiKm0IV3vfe3hmoX4vz1WiYL1rBVNz2P/A82IYnx8DQou/Xu1pL
-         uj267aAhg+TXRFgNxVo/tiGyFjqqFMcmY2w4Z0SrobsjltTnO1ZPavsA527EtokJf9iD
-         Y1pA==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=pZBuFiSFvwZwFfJYWsagpR2A6eSeQpZJ/5fg5LnhiZU=;
+        b=ZIcyDpEBF2JC+ZxX2HNiwAv6Qi/1JKPSg9rXbiUi6omEvd14LzkWWa+3adkH6097bN
+         6sQYVGK9mQd8VbqE6IKl2eFVqEwJtzkhER+T4NDDJKV1IJT4c1EbEA6M0S/xixfDu5H+
+         CbeWPSz7a2Ncm1b6FW4rRMd8196c24o3oTn77qSLcwpu1nChOb1hRNONuNOocO+TdUgx
+         qMTxvEnaB1WSJSntX5z1hWtqJPlOfnxKDLbG6pKpOwMyd+4VpTKA1jVE6hxEcCFN15Wu
+         rnN/PiQOGANrTSEeh9sU+nkJbTBtgbtnGAoDBbaL30clcO8AfNn73YUnAzF6mRMoNzv8
+         YyHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=EdJzhp+FqGbnwXajAcOWTyezJi1vdCAgMV7g3U64BvE=;
-        b=bQfgFGjm02fXmT96i/gO7GjhdbLFx2Mryml62DtITMtS3g9lc17my+trAefx5n7wwd
-         ewt/aOJbnZCl5Wa3T3oPW66e3gy6H3Uo9dbMfcEX7KQvIB+ZAD3P/dYI9t6O/BdO00uW
-         wvnb9yIZKi6ABzutXQm8ybGcS7yTagVkkS6hc7/FYIizzYecKPmaHka0PPDHn9PD9hAr
-         4CJS0Sjx4NGxviGV7JOl2L8dPVs1P28m2od1dQN1kyHLFsNimF9zgKdm007gUs87JLGf
-         QOThCbcKOIS7sewSn+aOXeUQAChK3NJ0KNknHhi8TRMHcjH3Ijd5n5OrnQsy2S+M3ekP
-         +Ctg==
-X-Gm-Message-State: AOAM530L5r0Xnl3qVJrQ1Y15T7Mj4etoW2BXPdoCmKXymy26Axb7bxQH
-        b3gLW6lAav5nSY0EEUTsBcu566IeruAOJBAt
-X-Google-Smtp-Source: ABdhPJws8QMOHgtX0hmI2FudbbSYVTTdds5QWLCsp+oFND6r5MnM2K9QLLygahCAJqS28wkudoOfnQ==
-X-Received: by 2002:a17:906:4d44:: with SMTP id b4mr17521325ejv.338.1614678841487;
-        Tue, 02 Mar 2021 01:54:01 -0800 (PST)
-Received: from localhost.localdomain (hst-208-217.medicom.bg. [84.238.208.217])
-        by smtp.gmail.com with ESMTPSA id be27sm2530535edb.47.2021.03.02.01.54.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Mar 2021 01:54:01 -0800 (PST)
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     Ezequiel Garcia <ezequiel@collabora.com>,
-        nicolas.dufresne@collabora.com,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH v3 2/2] venus: venc: Add support for intra-refresh period
-Date:   Tue,  2 Mar 2021 11:53:40 +0200
-Message-Id: <20210302095340.3584204-3-stanimir.varbanov@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210302095340.3584204-1-stanimir.varbanov@linaro.org>
-References: <20210302095340.3584204-1-stanimir.varbanov@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=pZBuFiSFvwZwFfJYWsagpR2A6eSeQpZJ/5fg5LnhiZU=;
+        b=Y9zVvhXnYT5w1UDQyT/OgxDXCI36DNLdTFOMpiza98mzNsimksCSw9URd+/exqhUCq
+         73WOvwZH5VjzJBXxyQaZD0rY593bk6Rev31GuiAPjfQvPVhu3GM3X50FwkDweLw8oGHL
+         iDPb8PSei1uusEiynlz1IEtgN0TrYRcv3oKBkb3MXC9qSer3VDN5b6zbqaQGf6X+7QzC
+         427R/3idueab7172YyTgJ0aLv1BCLUr46/2bsaZpnCoO1q/xjGZZMpWhxG09Y06abj8h
+         Wc1AA3ZKc/gJUA+Yts2MjpfueNZ7bE7DIdBPQwuQ8ufpongqMLcusOIOBJqxSVWgPq09
+         1PzA==
+X-Gm-Message-State: AOAM532z1f60JAb7Whr39VNuoLtFe00aKviZgIlqEv15V0V8BTCsTuhO
+        wHprx0AhUscndhpfaSGt9PVpLT6eR7QoX1PSe9A=
+X-Google-Smtp-Source: ABdhPJxl6bjNLv3qtf+ATmlXlF4Bblbnnx+M4xfgVaqJyt16Me8SRd6tl3F0P1TjcGoDrKmliuZQIiLA828MYoZ3n/A=
+X-Received: by 2002:a17:90a:db49:: with SMTP id u9mr3813149pjx.181.1614680893555;
+ Tue, 02 Mar 2021 02:28:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20210228025249.19684-1-shawn.guo@linaro.org> <CAHp75Vdi1WuZxhBKqGS7xnVzZpBrKwNbXbp5k0Y5ibZ4aAyBrg@mail.gmail.com>
+ <20210302010225.GG24428@dragon>
+In-Reply-To: <20210302010225.GG24428@dragon>
+From:   Andy Shevchenko <andy.shevchenko@gmail.com>
+Date:   Tue, 2 Mar 2021 12:27:57 +0200
+Message-ID: <CAHp75VcDF+i1fwEWDFD_6+AgZn6uenobg7RXs-+uc3SSALMDOw@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: qcom: support gpio_chip .set_config call
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for intra-refresh period v4l2 control and drop
-cyclic intra-refresh macroblock control in the same time.
+On Tue, Mar 2, 2021 at 3:02 AM Shawn Guo <shawn.guo@linaro.org> wrote:
+>
+> On Mon, Mar 01, 2021 at 07:07:03PM +0200, Andy Shevchenko wrote:
+> > On Sun, Feb 28, 2021 at 4:55 AM Shawn Guo <shawn.guo@linaro.org> wrote:
+> > >
+> > > In case of ACPI boot, GPIO core does the right thing to parse GPIO pin
+> > > configs from ACPI table, and call into gpio_chip's .set_config hook for
+> > > setting them up.  It enables such support on qcom platform by using
+> > > generic config function, which in turn calls into .pin_config_set of
+> > > pinconf for setting up hardware.  For qcom platform, it's possible to
+> > > reuse pin group config functions for pin config hooks, because every pin
+> > > is maintained as a single group.
+> > >
+> > > This change fixes the problem that Touchpad of Lenovo Flex 5G laptop
+> > > doesn't work with ACPI boot, because PullUp config of Touchpad GpioInt
+> > > pin is not set up by kernel driver.
+> >
+> > by the kernel
+> >
+> > ...
+> >
+> > >         .pin_config_group_get   = msm_config_group_get,
+> > >         .pin_config_group_set   = msm_config_group_set,
+> > > +       .pin_config_get         = msm_config_group_get,
+> > > +       .pin_config_set         = msm_config_group_set,
+> >
+> > This can't be right. They have different semantics.
+>
+> As mentioned in the commit log, this works considering every pin is
+> maintained as a single group on Qualcomm platform.  So configuring one
+> pin is essentially to configure the group containing the pin.  I can do
+> something like below, if you think that's easier to understand.
 
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
----
- drivers/media/platform/qcom/venus/core.h      |  1 +
- drivers/media/platform/qcom/venus/venc.c      | 28 +++++++++++++++++++
- .../media/platform/qcom/venus/venc_ctrls.c    | 13 ++++-----
- 3 files changed, 35 insertions(+), 7 deletions(-)
+Yes, in your case you must have a selector == # of a pin for each
+individual pin (not just declared that you have enough selectors to
+cover the amount of pins and beyond).
 
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index a252ed32cc14..8602b7af6a6f 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -222,6 +222,7 @@ struct venc_controls {
- 	u32 multi_slice_max_mb;
- 
- 	u32 header_mode;
-+	u32 intra_refresh_period;
- 
- 	struct {
- 		u32 h264;
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index 6976ed553647..dcc9bd3475bf 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -546,6 +546,7 @@ static int venc_set_properties(struct venus_inst *inst)
- 	struct hfi_quantization quant;
- 	struct hfi_quantization_range quant_range;
- 	struct hfi_enable en;
-+	struct hfi_intra_refresh intra_refresh = {};
- 	u32 ptype, rate_control, bitrate;
- 	u32 profile, level;
- 	int ret;
-@@ -754,6 +755,33 @@ static int venc_set_properties(struct venus_inst *inst)
- 	if (ret)
- 		return ret;
- 
-+	if ((inst->fmt_cap->pixfmt == V4L2_PIX_FMT_H264 ||
-+	     inst->fmt_cap->pixfmt == V4L2_PIX_FMT_HEVC) &&
-+	    (rate_control == HFI_RATE_CONTROL_CBR_VFR ||
-+	     rate_control == HFI_RATE_CONTROL_CBR_CFR)) {
-+		intra_refresh.mode = HFI_INTRA_REFRESH_NONE;
-+		intra_refresh.cir_mbs = 0;
-+
-+		if (ctr->intra_refresh_period) {
-+			u32 mbs;
-+
-+			mbs = ALIGN(inst->width, 16) * ALIGN(inst->height, 16);
-+			mbs /= 16 * 16;
-+			if (mbs % ctr->intra_refresh_period)
-+				mbs++;
-+			mbs /= ctr->intra_refresh_period;
-+
-+			intra_refresh.mode = HFI_INTRA_REFRESH_RANDOM;
-+			intra_refresh.cir_mbs = mbs;
-+		}
-+
-+		ptype = HFI_PROPERTY_PARAM_VENC_INTRA_REFRESH;
-+
-+		ret = hfi_session_set_property(inst, ptype, &intra_refresh);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	return 0;
- }
- 
-diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
-index a52b80055173..6909426882ac 100644
---- a/drivers/media/platform/qcom/venus/venc_ctrls.c
-+++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
-@@ -17,7 +17,6 @@
- #define SLICE_BYTE_SIZE_MAX	1024
- #define SLICE_BYTE_SIZE_MIN	1024
- #define SLICE_MB_SIZE_MAX	300
--#define INTRA_REFRESH_MBS_MAX	300
- #define AT_SLICE_BOUNDARY	\
- 	V4L2_MPEG_VIDEO_H264_LOOP_FILTER_MODE_DISABLED_AT_SLICE_BOUNDARY
- 
-@@ -224,8 +223,6 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
- 		}
- 		mutex_unlock(&inst->lock);
- 		break;
--	case V4L2_CID_MPEG_VIDEO_CYCLIC_INTRA_REFRESH_MB:
--		break;
- 	case V4L2_CID_MPEG_VIDEO_GOP_SIZE:
- 		ret = venc_calc_bpframes(ctrl->val, ctr->num_b_frames, &bframes,
- 					 &ctr->num_p_frames);
-@@ -276,6 +273,9 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
- 	case V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITY_ID:
- 		ctr->base_priority_id = ctrl->val;
- 		break;
-+	case V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD:
-+		ctr->intra_refresh_period = ctrl->val;
-+		break;
- 	default:
- 		return -EINVAL;
- 	}
-@@ -459,10 +459,6 @@ int venc_ctrl_init(struct venus_inst *inst)
- 	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
- 		V4L2_CID_MPEG_VIDEO_H264_LOOP_FILTER_BETA, -6, 6, 1, 0);
- 
--	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
--		V4L2_CID_MPEG_VIDEO_CYCLIC_INTRA_REFRESH_MB,
--		0, INTRA_REFRESH_MBS_MAX, 1, 0);
--
- 	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
- 		V4L2_CID_MPEG_VIDEO_GOP_SIZE, 0, (1 << 16) - 1, 1, 30);
- 
-@@ -497,6 +493,9 @@ int venc_ctrl_init(struct venus_inst *inst)
- 	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
- 			  V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITY_ID, 0,
- 			  6, 1, 0);
-+	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
-+			  V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD, 0,
-+			  ((4096 * 2304) >> 8), 1, 0);
- 
- 	ret = inst->ctrl_handler.error;
- 	if (ret)
+If there is such a requirement, go with it.
+
 -- 
-2.25.1
-
+With Best Regards,
+Andy Shevchenko
