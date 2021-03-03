@@ -2,78 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 844E832C235
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 01:04:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B09A432C238
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 01:04:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1389805AbhCCVrL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Mar 2021 16:47:11 -0500
-Received: from mga03.intel.com ([134.134.136.65]:26126 "EHLO mga03.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1574868AbhCCReY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Mar 2021 12:34:24 -0500
-IronPort-SDR: OwyyyKoV+wBPHpl/+PeB08mFPMt89LEoQSZOT9xNqiw0ZKnyIeU7Hvk5BdQa2XJZFBf04rXfG1
- yjjIvJR8zGGA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9912"; a="187301053"
-X-IronPort-AV: E=Sophos;i="5.81,220,1610438400"; 
-   d="scan'208";a="187301053"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2021 09:32:34 -0800
-IronPort-SDR: zMj+V3njivalQjcn+UbeH+euTLkcj4GIal1DDurCNWWScfNNHUCDBBTOA9CWqdiymks9ovkx8c
- RDmg/pxkgMsw==
-X-IronPort-AV: E=Sophos;i="5.81,220,1610438400"; 
-   d="scan'208";a="367686672"
-Received: from smile.fi.intel.com (HELO smile) ([10.237.68.40])
-  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2021 09:32:31 -0800
-Received: from andy by smile with local (Exim 4.94)
-        (envelope-from <andriy.shevchenko@linux.intel.com>)
-        id 1lHVMK-009h2t-Rl; Wed, 03 Mar 2021 19:32:28 +0200
-Date:   Wed, 3 Mar 2021 19:32:28 +0200
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Jeffrey Hugo <jhugo@codeaurora.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] gpiolib: acpi: support override broken GPIO number in
- ACPI table
-Message-ID: <YD/ILDHaJ5uG2Htx@smile.fi.intel.com>
-References: <CAHp75Vc6xYv+197SOrSefQHD2h4Xy_N20gQajW4uF2PU=sJfLg@mail.gmail.com>
- <YDjZOU+VMWasjzUb@smile.fi.intel.com>
- <20210227031944.GB24428@dragon>
- <YDzbQqHspfvpYS7Z@smile.fi.intel.com>
- <20210302002725.GE24428@dragon>
- <YD4twyAGvDDOCv+n@smile.fi.intel.com>
- <abbfcdfa-c287-3828-ed6f-bc1e1f13c6b2@codeaurora.org>
- <20210303094300.GB17424@dragon>
- <41593c7e-368b-cfb8-b24a-2e4dca48b465@codeaurora.org>
- <YD+yBmPrKm1n8Tjm@builder.lan>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YD+yBmPrKm1n8Tjm@builder.lan>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+        id S1389807AbhCCVrP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Mar 2021 16:47:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48350 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243072AbhCCRoX (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 3 Mar 2021 12:44:23 -0500
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C957C061760
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Mar 2021 09:43:15 -0800 (PST)
+Received: by mail-lj1-x22f.google.com with SMTP id u4so29780859ljh.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Mar 2021 09:43:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=+dhB3YrJVlTSxFCA6Z/e42UCJspJWfH2abZXmJ1XC4M=;
+        b=i7iOOBQrYR1nHjFHl9efeWLvpEwwqWdbDME3Hb1qx60ZFDs24dYf79cH5Dh7sQgXx3
+         i2djTXa+lgkuwyUjYXCCfpehzZO5T5Hsc6n42jFgT2iZwXDO5DUaxBuE3LerIEPGnUIN
+         rprCzy8t4HugYBS5SeJoK4TuGQS7mcciQh3spAy0rAv/rGOiQylsDqM0xhgT7iX4ScyN
+         hbbFtDROXGZC9mLCWtPfEUEh/srEC+WnKIxms9E+udmlNtcl9uwdQENHAOYNogEpfZVu
+         G9mgyRF1tn0XH1GG64WSYaZJz0woNEhbBmVokhLvmP8rJlUg69N3BTfthYXW97klvqub
+         GBcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=+dhB3YrJVlTSxFCA6Z/e42UCJspJWfH2abZXmJ1XC4M=;
+        b=bpYPXZHLSVOu7bomX4dKQoniFuiziGAFaN3iKMaWShBtOZk4qZz9FsDY1ru6MIpkPd
+         NlW903Tyr/JtYekS13S/97TjaZ2kukNbvvlF90d97AzQl6kkSZDMOsVtPonLKsSlmN5L
+         5YR5otOygaHfDqhbZtFHejWlEzh4bx0rDBfgHSHyKfPx6dCj5zU8jw/LhDP5F9oN8aB2
+         IZO4fQk/OtzQ21fAW0ErDP+wpvkSGmUv0kXo6Kn6LZcNCv0GGjnIdy3rWyvH67JLR2aJ
+         /OS+inFRbV64o/R+0zHZokrWApFLRk0L5qajhiEbw8fNf5V/5u+lYE/WJslg83IExmLr
+         mH+w==
+X-Gm-Message-State: AOAM530s/rSBenywHfUhGq26PQPnmm7CrC3KSC+cJwot+XRmf719BBFz
+        sIpi763Y5Jk9GwqO3tYLDNLNvQ==
+X-Google-Smtp-Source: ABdhPJzuDUOJRhDvWgdy8lAlBYZ0zeNkinZA/knIsk7X9BzWhHaJ1dZ8YYTA5DmS6Eg7a4h8cRYlcQ==
+X-Received: by 2002:a2e:9047:: with SMTP id n7mr15373ljg.291.1614793393677;
+        Wed, 03 Mar 2021 09:43:13 -0800 (PST)
+Received: from localhost.localdomain ([85.249.43.69])
+        by smtp.googlemail.com with ESMTPSA id s7sm2101441lfi.140.2021.03.03.09.43.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Mar 2021 09:43:12 -0800 (PST)
+From:   Andrey Konovalov <andrey.konovalov@linaro.org>
+To:     junak.pub@gmail.com, robert.foss@linaro.org,
+        sakari.ailus@linux.intel.com
+Cc:     todor.too@gmail.com, agross@kernel.org, bjorn.andersson@linaro.org,
+        mchehab@kernel.org, laurent.pinchart@ideasonboard.com,
+        jacopo@jmondi.org, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v3 0/3] media: qcom: camss: V4L2_CID_PIXEL_RATE/LINK_FREQ fixes
+Date:   Wed,  3 Mar 2021 20:42:47 +0300
+Message-Id: <20210303174250.11405-1-andrey.konovalov@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 03, 2021 at 09:57:58AM -0600, Bjorn Andersson wrote:
-> On Wed 03 Mar 09:10 CST 2021, Jeffrey Hugo wrote:
+The first patch adds printing a warning in v4l2_get_link_freq() if
+V4L2_CID_LINK_FREQ isn't implemented (this is a mandatory control for
+CSI-2 transmitter drivers [1], but many sensor drivers don't have it
+currently).
 
-...
+The second patch is the start of the work discussed in the "[RFC] Repurpose
+V4L2_CID_PIXEL_RATE for the sampling rate in the pixel array" thread [2].
+I'll send the similar patches for the rest of CSI receiver drivers which
+use V4L2_CID_PIXEL_RATE to calculate the link frequency as a separate
+patchset following this one: I don't have the hardware to test the changes
+to these drivers, so the second patchset will be build tested only.
 
-> I added the table in the driver, see sc8180x_pdc_map[], and it has gpio
-> 14 at position 7, with the 14th entry being gpio 38 - which seems like
-> an unlikely change from the reference schematics.
+The third patch in this series is the patch by Vladimir Lypak [3] rebased
+onto the changes done by the second patch. By replacing getting the pixel
+clock with v4l2_get_link_freq() the second patch also fixes the integer
+overflow which Vladimir's patch addresses. So the third patch only needs
+to fix drivers/media/platform/qcom/camss/camss-vfe.c which the second patch
+doesn't touch.
 
-It means for the certain platform this table should be altered (perhaps simply
-another table based on IDs or so can be provided).
+The resulting patchset is free from the "undefined reference to `__udivdi3'"
+issue [4] as the u64 value is only divided by a power of 2, which doesn't
+need do_div().
 
--- 
-With Best Regards,
-Andy Shevchenko
+This patchset has been tested on db410c board with imx219 and ov5647
+sensors (RPi camera modules v2 and v1) attached to AISTARVISION MIPI
+Adapter V2.0.
+
+[1] https://linuxtv.org/downloads/v4l-dvb-apis-new/driver-api/csi2.html
+[2] https://www.spinics.net/lists/linux-media/msg183183.html
+[3] https://www.spinics.net/lists/linux-media/msg186875.html
+[4] https://www.spinics.net/lists/linux-media/msg186918.html
+
+Changes in v2:
+
+* Added [PATCH 1/3] v4l: common: v4l2_get_link_freq: add printing a warning
+
+* camss_get_link_freq() changed to take the actual number of lanes as the
+  third arg vs the number of lanes multiplied by 2 in the first version
+
+* Fixed checkpatch warnings and bad indentation
+
+Changes in v3:
+
+* The warning message in v4l2_get_link_freq() improved as suggested by
+  Jacopo Mondi
 
 
