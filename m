@@ -2,225 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4154732C160
+	by mail.lfdr.de (Postfix) with ESMTP id 9838132C164
 	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 01:02:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1389107AbhCCVcm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Mar 2021 16:32:42 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:22676 "EHLO z11.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234744AbhCCFEd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Mar 2021 00:04:33 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1614747802; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=DgHG6UchEqSuAHgA1YD7PCkIm0DL6U3dowHnKc88aKA=; b=UDtRIfhlFmvhWZJ5VxXRv9q97vl+VmDSpVrgywa1A46ADQn/6Er1F8jinvRpzwjj/b4WPVRs
- Czzyt/pSY+R5em8Q/HOHikuO7wHvGnSBSNg8xEjvvQN3WRevzNBjClr7x+lAaxaFpC0NpKkC
- ycoGYa9hG0zNa2Lg1TnQPBBFyIM=
-X-Mailgun-Sending-Ip: 104.130.96.11
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 603f187cc008ffc73a20c719 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 03 Mar 2021 05:02:52
- GMT
-Sender: jhugo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9D42EC43463; Wed,  3 Mar 2021 05:02:52 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B7C57C433C6;
-        Wed,  3 Mar 2021 05:02:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B7C57C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH] gpiolib: acpi: support override broken GPIO number in
- ACPI table
-To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Shawn Guo <shawn.guo@linaro.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        id S1389130AbhCCVdp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Mar 2021 16:33:45 -0500
+Received: from esa4.hgst.iphmx.com ([216.71.154.42]:54582 "EHLO
+        esa4.hgst.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1449277AbhCCHTo (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 3 Mar 2021 02:19:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
+  t=1614755983; x=1646291983;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=jFOYEqUOOAnl/kpNcNpzWfTSVq4huD+CdsdbzSAz/Lo=;
+  b=l1Q6zo/K/2jox6IT24XpeCbwLA0tzHeOWgI9HCz2XwehMqqb721K6y8D
+   M1Jl9MCywld3KXRp9VnBoOiOhyZDaWeDGWn4W2D5pMktKsHbhK87XQ+pZ
+   ZAZhuB/IzRnTA8Vk5TShCnAKLB53y+AoyZdTHWOW2Ndt8mnoN083YAHZc
+   VpdvgMu+bPigQ/GDvZxWbddH29dfdrmgHg/mB9875GhMc9oeQSDD56Xyh
+   jf3ZjPEAuujFnEnp5S0oeaHlTQhI0kdgh9mWpOBbswNFRbhSiRzgpMCkh
+   NJpeYTOr0r9ZJ/HWcnEECaFms3XhFxgQZ7K1jNIYYRyCCb7Nf5Hv9gcZA
+   A==;
+IronPort-SDR: CY42w2rmYCAIHPoQSuCA28e00dKF92hEq8ziF1WJPfKZcYGhNEyvcN2AEKj1BtVsguKPLx0r3W
+ xoxaSNwMKstcEjPONWauY2yYN4HwJtUHnDnXeq028W84cyYRFqVVZuHUPbuj7o3Z5zZ1YKmLQQ
+ HDfopSYzdcBWWB/HzfgJHk/FvRiD8Oqp6ZpiM5ZRkwnS6cC3h+Hi3DRRMOMo5vUdkF6q76MNEz
+ jVLk7OXdvPbmO5CKVtfyBDALWFDKrUscu5YXaNT8NXXnFMnqQySI6IiSKvj6T8RKNWPWN4EZP8
+ kYY=
+X-IronPort-AV: E=Sophos;i="5.81,219,1610380800"; 
+   d="scan'208";a="161220462"
+Received: from mail-sn1nam02lp2052.outbound.protection.outlook.com (HELO NAM02-SN1-obe.outbound.protection.outlook.com) ([104.47.36.52])
+  by ob1.hgst.iphmx.com with ESMTP; 03 Mar 2021 15:18:31 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=LKRIsF9d1wAPznnGj0Qji45aR5Uyjvx44ZHOvkIWKfFZhSBjX/yTidJkUG4wgPGKkqJNzjXez0ySIUEwkZdVfL8mifnNRNm+MVp26oXavthpgRPKYvZFFj0ZGia5rzag5CT3w6JV0rPwIX3iED7qWM+6aoSFOHqIA09A+NP7ROfacYdWmMZ6o7rV5ozxgP6zUMXkiglYpldRafy3PCxIp7lmav3D9NkZbuwzGoQcTBO7BCKy/ic6ofTfQor2VTK1/bp7eyxHKOPgaN+5C50RRuQx6do1mULziclerZMrqLwqYW04WPHsqS2slOSLElkFQDf4zSJ9/BKeb3f0u96Bgw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=GGHC02C/c2A9biw8oqaOfs0Or4YxxSNiDbVSBxlTZdE=;
+ b=UIdwaXZx7FMsGqmOG6KU67NUPoF7gqJoFybXtNYc7STkX1ZMGs7RvOZNk0iKqQl5C6CpNviaT62ENBtlOooAZLNY1f8ilS9l8HsN6ltKgvmHIb0BDAGoX+tO3GFHtJqAl0LPgTx7Ppt38VMztMHrtqjQP5kKX7TzjxyVeUMbv1U0YzTUHPh1Bo32bNxjKZibdGfz07JxbWaCyx+lHwt64suLSv1OzGLMkHx3qBIXfAzdyzUH3fDCcGf/gSQlUjE2LwuFQzkZt/x37zkhxOqP/JRqg27uXv4fK/FeizW10U91SHsIgK/vXq//9OWjpQymabynmdrMu0HgGSH1Yz7tCQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
+ header.d=wdc.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=GGHC02C/c2A9biw8oqaOfs0Or4YxxSNiDbVSBxlTZdE=;
+ b=EoBZ+XT2pv0n0c0RNpliTW+Tt/jWuEFngOYirazcxxxdaq5M/U5s/z4Xd/zCk97QbEl+FpYQkc/NjWk5Ns7Dn/vJNYb9JGZR4OffDeK9h9sfbCUvpy+KXi4sozkOJBHi5j/SRODkPxaKmgeTrXxGlpS4572N7wrVkXntsNc6aUU=
+Received: from DM6PR04MB6575.namprd04.prod.outlook.com (2603:10b6:5:1b7::7) by
+ DM5PR04MB0970.namprd04.prod.outlook.com (2603:10b6:4:47::28) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3890.19; Wed, 3 Mar 2021 07:18:29 +0000
+Received: from DM6PR04MB6575.namprd04.prod.outlook.com
+ ([fe80::e824:f31b:38cf:ef66]) by DM6PR04MB6575.namprd04.prod.outlook.com
+ ([fe80::e824:f31b:38cf:ef66%3]) with mapi id 15.20.3890.030; Wed, 3 Mar 2021
+ 07:18:29 +0000
+From:   Avri Altman <Avri.Altman@wdc.com>
+To:     Can Guo <cang@codeaurora.org>
+CC:     "asutoshd@codeaurora.org" <asutoshd@codeaurora.org>,
+        "nguyenb@codeaurora.org" <nguyenb@codeaurora.org>,
+        "hongwus@codeaurora.org" <hongwus@codeaurora.org>,
+        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
+        "kernel-team@android.com" <kernel-team@android.com>,
+        Nitin Rawat <nitirawa@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org
-References: <20210226033919.8871-1-shawn.guo@linaro.org>
- <CAHp75Vcb=NO9OWjSpBeVC4c+9=aXE=yiDWVBwLD1DnzwdgFD6Q@mail.gmail.com>
- <20210226093925.GA24428@dragon>
- <CAHp75Vc6xYv+197SOrSefQHD2h4Xy_N20gQajW4uF2PU=sJfLg@mail.gmail.com>
- <YDjZOU+VMWasjzUb@smile.fi.intel.com> <20210227031944.GB24428@dragon>
- <YDzbQqHspfvpYS7Z@smile.fi.intel.com> <20210302002725.GE24428@dragon>
- <YD4twyAGvDDOCv+n@smile.fi.intel.com>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <abbfcdfa-c287-3828-ed6f-bc1e1f13c6b2@codeaurora.org>
-Date:   Tue, 2 Mar 2021 22:02:49 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.0
-MIME-Version: 1.0
-In-Reply-To: <YD4twyAGvDDOCv+n@smile.fi.intel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: RE: [PATCH v2 2/3] scsi: ufs-qcom: Disable interrupt in reset path
+Thread-Topic: [PATCH v2 2/3] scsi: ufs-qcom: Disable interrupt in reset path
+Thread-Index: AQHXCm8WN+YhHnByLUS9jf8kgHZH/KptpKGwgAQL7YCAADUxUA==
+Date:   Wed, 3 Mar 2021 07:18:29 +0000
+Message-ID: <DM6PR04MB65756A436EF1004976E183B3FC989@DM6PR04MB6575.namprd04.prod.outlook.com>
+References: <1614145010-36079-1-git-send-email-cang@codeaurora.org>
+ <1614145010-36079-3-git-send-email-cang@codeaurora.org>
+ <DM6PR04MB65753665BA9BF63ABF20656FFC9B9@DM6PR04MB6575.namprd04.prod.outlook.com>
+ <96fbfe6fba7a7cd4d2d764186bb8650b@codeaurora.org>
+In-Reply-To: <96fbfe6fba7a7cd4d2d764186bb8650b@codeaurora.org>
+Accept-Language: en-US
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: codeaurora.org; dkim=none (message not signed)
+ header.d=none;codeaurora.org; dmarc=none action=none header.from=wdc.com;
+x-originating-ip: [212.25.79.133]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-ht: Tenant
+x-ms-office365-filtering-correlation-id: 904914db-84da-4e01-feee-08d8de148ba7
+x-ms-traffictypediagnostic: DM5PR04MB0970:
+x-microsoft-antispam-prvs: <DM5PR04MB0970ED452C25F8AF578085CFFC989@DM5PR04MB0970.namprd04.prod.outlook.com>
+wdcipoutbound: EOP-TRUE
+x-ms-oob-tlc-oobclassifiers: OLM:1122;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: M3bqmIjxlnboofYLGl4FStcZCLVmPcydHgfkWsx2TQx2G4v+7tX+VdyKAaswn08rfNbc+ivwe7RodYxjVqIPFWGK8qI0VgstQ4EwF7SIeAik9uqyBwI8PKR0lqQo5yCIpka6q33f1FS1AAN5jW7JGuxXAW7Jf4sxUoGAVLgvkjcO5Ga/51Wl/Sh+XNjgaw2yGcRUGvbHMYVfqIXDYWlcUG79BcJyWziVGe6yWd7zgy0WIvYM82lWncNQw2UYxTUHk1iJM4YXqkXqu6u15c1n9jTpZu+sm0bVLVj9KPIE7ZsBLdurdEHT5JYAAu8HGMB75VA4k0mMRpLOMfcwUc5885gRMSqlTEROR+Il8nlRsdIN3YVOf0WHovRqeYqepscrhH4PbkytFOydUyBjTlHCsUAaLpp2+THrZKtGuGl/ZI4AsXvFN/eqQRjhQPqj7lnr72RRlDBchkZh7qUVrJgWEczCsuVbVqOyeR79yuIZx/mkBibLVU2Iw3EdL0vLij0ryiMdu91fkfhlezb517HhAw==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR04MB6575.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(346002)(39860400002)(396003)(376002)(366004)(136003)(71200400001)(54906003)(7416002)(26005)(6506007)(86362001)(52536014)(186003)(53546011)(8936002)(9686003)(2906002)(5660300002)(8676002)(55016002)(64756008)(7696005)(33656002)(6916009)(66476007)(4326008)(66446008)(316002)(478600001)(66946007)(76116006)(66556008)(83380400001);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata: =?us-ascii?Q?ROQyXtLvxZy5VHGnkEEMj6WoWQC+5zc93FLBDL56wUlSYYwRDr0zydjNet/u?=
+ =?us-ascii?Q?k0As3/vBAdeqWhXS0/ueCyVF7f0HdSTKjPtifiCbjiPenzWf+yHAu/QmX7kj?=
+ =?us-ascii?Q?m7dcS6+beLi/tEfKHcalOuvJRESvLdwk/yuesEHEKYxmtBUYsBMfEU7H0izo?=
+ =?us-ascii?Q?zjGIONw3iH65PnlHDwnfmWNNMTQmBc0h45y/3BZGVDqLWFcogKO5UFupy3/e?=
+ =?us-ascii?Q?CYP2bRh54Pmnog9vyYiUlMj7nfaV6CZdwGf3B1EFJ/eXUjsZynoNDwzQlQ6U?=
+ =?us-ascii?Q?b5e3XDqGnd/d4PYUWr3jT5zb2s9QIyokXvs8efzBIuyNePIE5Iw6BCGO6JQH?=
+ =?us-ascii?Q?XXf/jXBqpu6gu1c8FTMbJu20IjyAGAdBvzGcoYzJH8Th/bHqMp5Ia798mff8?=
+ =?us-ascii?Q?Bv1toYR9p/Rl8iwTnkL5sNjfiSF8kRHXkDtQ/zNgAVXQqrD2se0PA69j8tGf?=
+ =?us-ascii?Q?agwu1prjyvNsvyx0BlrqtIqLo831DmZXtro1ATx+7QpS1Wqjkb3UJ7hsk5VJ?=
+ =?us-ascii?Q?HDRqU1/XCzZhfTSjN2InNfCwdK6vvnq4Bp2U34COucJsBS6RLn+sWbrlPu8J?=
+ =?us-ascii?Q?Yt3s0ra57QNPwTXoXhdiAIdCV/iJEdurfJmSKOEVwYOdi8vpNGACzOGZb6nO?=
+ =?us-ascii?Q?oNFukBON1cofiSnLswctCu0edEweyjPJDNowdJaW6Vf+QoMOaRE4G27AkENe?=
+ =?us-ascii?Q?FE7YIfXZKmRFhPZQ376H9K1wNFZMw1Pepdb8W0VxdpgygHzpV5qSRkDpNGBF?=
+ =?us-ascii?Q?FgkLgbzCFMznnNyWKAJz0eu+ud3bXEeUYN6A3XDXKtIXNWHx6pwYu//7c/4T?=
+ =?us-ascii?Q?wW65jsXtuZyRfhvLG8XdLvO9WbfwfQRF+32OK+dN1IVdjhJuQuhdZFF3kWwK?=
+ =?us-ascii?Q?Vi9yB5/yzvK0IMaCW8QP4hWJ3fwbkzChSKMQSZ3EZayKfK6dCldw7S2AZksF?=
+ =?us-ascii?Q?BVxrTAHlI9CtEijIZaTiYQ1cWX6F06eJz85VXUZidRRZf+IR2uqLZTKcIorD?=
+ =?us-ascii?Q?qrK7E2Scb/vzGSmVzWuOUp9JtcUCBovgzkv2bf8rNxEDanT33r7G4eKHkZV0?=
+ =?us-ascii?Q?f1dFrIusqxG2mme9ZZfU5x7y1edYY/1dziVvFBglMjxvsKaz27tET7G2u6LZ?=
+ =?us-ascii?Q?i6T2NaZ7I7tIk99JgkStvgDBo7G2h56GOuFZHk14HzqJhWFeE3Gua3vKQV6q?=
+ =?us-ascii?Q?k8FBBxOjZ8fBJR/XUE8gdxjwDUlRxu7TXIJuvp/C9A4m7Oi9u7ndqSsHpcLZ?=
+ =?us-ascii?Q?cjLYSXLNv537ymZ82F7wAELZnqjEKLlGExOckyVovJkJ1RCkCFBpl5X3mL5Y?=
+ =?us-ascii?Q?Z/6PHIoSpPNZCTxDDNI61Snv?=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: wdc.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR04MB6575.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 904914db-84da-4e01-feee-08d8de148ba7
+X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Mar 2021 07:18:29.5196
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 4n0Sne9eynFrcZOYIz0wCQm1C+Wwi1xBkWFmBHwkhDO3fePWhEPZLFmYvnNdj85ZrWncyXpijUncbO4WJICuZA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR04MB0970
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/2/2021 5:21 AM, Andy Shevchenko wrote:
-> On Tue, Mar 02, 2021 at 08:27:26AM +0800, Shawn Guo wrote:
->> On Mon, Mar 01, 2021 at 02:17:06PM +0200, Andy Shevchenko wrote:
->>> On Sat, Feb 27, 2021 at 11:19:45AM +0800, Shawn Guo wrote:
->>>> On Fri, Feb 26, 2021 at 01:19:21PM +0200, Andy Shevchenko wrote:
->>>>> On Fri, Feb 26, 2021 at 12:57:37PM +0200, Andy Shevchenko wrote:
->>>>>> On Fri, Feb 26, 2021 at 11:39 AM Shawn Guo <shawn.guo@linaro.org> wrote:
->>>>>>> On Fri, Feb 26, 2021 at 11:12:07AM +0200, Andy Shevchenko wrote:
->>>>>>>> On Fri, Feb 26, 2021 at 5:42 AM Shawn Guo <shawn.guo@linaro.org> wrote:
->>>>>>>>> Running kernel with ACPI on Lenovo Flex 5G laptop, touchpad is just
->>>>>>>>> not working.  That's because the GpioInt number of TSC2 node in ACPI
->>>>>>>>> table is simply wrong, and the number even exceeds the maximum GPIO
->>>>>>>>> lines.  As the touchpad works fine with Windows on the same machine,
->>>>>>>>> presumably this is something Windows-ism.  Although it's obviously
->>>>>>>>> a specification violation, believe of that Microsoft will fix this in
->>>>>>>>> the near future is not really realistic.
->>>>>>>>>
->>>>>>>>> It adds the support of overriding broken GPIO number in ACPI table
->>>>>>>>> on particular machines, which are matched using DMI info.  Such
->>>>>>>>> mechanism for fixing up broken firmware and ACPI table is not uncommon
->>>>>>>>> in kernel.  And hopefully it can be useful for other machines that get
->>>>>>>>> broken GPIO number coded in ACPI table.
->>>>>>>>
->>>>>>>> Thanks for the report and patch.
->>>>>>>>
->>>>>>>> First of all, have you reported the issue to Lenovo? At least they
->>>>>>>> will know that they did wrong.
->>>>>>>
->>>>>>> Yes, we are reporting this to Lenovo, but to be honest, we are not sure
->>>>>>> how much they will care about it, as they are shipping the laptop with
->>>>>>> Windows only.
->>>>>>>
->>>>>>>> Second, is it possible to have somewhere output of `acpidump -o
->>>>>>>> flex5g.dat` (the flex5g.dat file)?
->>>>>>>
->>>>>>> https://raw.githubusercontent.com/aarch64-laptops/build/master/misc/lenovo-flex-5g/dsdt.dsl
->>>>>
->>>>> Looking into DSDT I think the problem is much worse. First of all there are
->>>>> many cases where pins like 0x140, 0x1c0, etc are being used. On top of that
->>>>> there is no GPIO driver in the upstream (as far as I can see by HID, perhaps
->>>>> there is a driver but for different HID. And I see that GPIO device consumes a
->>>>> lot of Interrupts from GIC as well (it's ARM platfrom as far as I understand).
->>>>
->>>> Yes, it's a laptop built on Qualcomm Snapdragon SC8180X SoC.  The GPIO
->>>> driver is generic for all Snapdragon SoCs, and has been available in
->>>> upstream for many years (for DT though). It can be found as the gpio_chip
->>>> implementation in MSM pinctrl driver [1].  The SC8180X specific part can
->>>> be found as pinctrl-sc8180x.c [2], and it's already working for DT boot.
->>>> The only missing piece is to add "QCOM040D" as the acpi_device_id to
->>>> support ACPI boot, and it will be submitted after 5.12-rc1 comes out.
->>>>
->>>>> Looking at the Microsoft brain damaged way of understanding GPIOs and hardware
->>>>> [1], I am afraid you really want to have a specific GPIO driver for this. So,
->>>>> for now until we have better picture of what's going on, NAK to this patch.
->>>>
->>>> Thanks for the pointer to Microsoft document.  On Snapdragon, we have
->>>> only one GPIO instance that accommodates all GPIO pins, so I'm not sure
->>>> that Microsoft GPIOs mapping layer is relevant here at all.
->>>>
->>>> Please take a look at the GPIO driver, and feel free to let me know if
->>>> you need any further information to understand what's going on.
->>>
->>> Yes, I looked into the driver and see that it has 3 blocks of GPIOs (we call
->>> them communities, but in the driver the term 'tiles' is used) AFAIU (correct me
->>> if I'm wrong). And who knows how many banks in each of them.
->>
->> I'm not sure that the 3 'tiles' means 3 blocks of GPIOs.  Maybe, @Bjorn
->> can help clarify.  But the ACPI table shows that there is only 'GIO0'
->> with 'QCOM040D' HID.
-> 
-> Yeah, I already got that ACPI there is screwed up...
-> 
->>> I'm afraid that MS does on his way and not yours.
->>>
->>> Can we have TRM for GPIO IP used there and any evidence / document from
->>> firmware team about the implementation of the GPIO numbering in the ACPI
->>> (at Intel we have so called BIOS Writers Guide that is given to the customers
->>> where such info can be found)?
->>
->> Unfortunately, I do not have the access to any sort of these documents.
->> But I looped in Jeffrey who is part of Qualcomm kernel/firmware team,
->> and should be able to help clarify GPIO numbering in the ACPI table.
-> 
-> Thanks! Will wait for new information then.
-
-Sorry, just joining the thread now.  Hopefully I'm addressing everything 
-targeted at me.
-
-I used to do kernel work on MSMs, then kernel work on server CPUs, but 
-now I do kernel work on AI accelerators.  Never was on the firmware 
-team, but I have a lot of contacts in those areas.  On my own time, I 
-support Linux on the Qualcomm laptops.
-
-Its not MS that needs to fix things (although there is plenty of things 
-I could point to that MS could fix), its the Qualcomm Windows FW folks. 
-  They have told me a while ago they were planning on fixing this issue 
-on some future chipset, but apparently that hasn't happened yet.  Sadly, 
-once these laptops ship, they are in a frozen maintenance mode.
-
-In my opinion, MS has allowed Qualcomm to get away with doing bad things 
-in ACPI on the Qualcomm laptops.  The ACPI is not a true hardware 
-description that is OS agnostic as it should be, and probably violates 
-the spec in many ways.  Instead, the ACPI is written against the Windows 
-drivers, and has a lot of OS driver crap pushed into it.
-
-The GPIO description is one such thing.
-
-As I understand it, any particular SoC will have a number of GPIOs 
-supported by the TLMM.  0 - N.  Linux understands this.  However, in the 
-ACPI of the Qualcomm Windows laptops, you will likely find atleast one 
-GPIO number which exceeds this N.  These are "virtual" GPIOs, and are a 
-construct of the Windows Qualcomm TLMM driver and how it interfaces with 
-the frameworks within Windows.
-
-Some GPIO lines can be configured as wakeup sources by routing them to a 
-specific hardware block in the SoC (which block it is varies from SoC to 
-SoC).  Windows has a specific weird way of handling this which requires 
-a unique "GPIO chip" to handle.  GPIO chips in Windows contain 32 GPIOs, 
-so for each wakeup GPIO, the TLMM driver creates a GPIO chip 
-(essentially creating 32 GPIOs), and assigns the added GPIOs numbers 
-which exceed N.  The TLMM driver has an internal mapping of which 
-virtual GPIO number corresponds to which real GPIO.
-
-So, ACPI says that some peripheral has GPIO N+X, which is not a real 
-GPIO.  That peripheral goes and requests that GPIO, which gets routed to 
-the TLMM driver, and the TLMM driver translates that number to the real 
-GPIO, and provides the reference back to the peripheral, while also 
-setting up the special wakeup hardware.
-
-So, N+1 is the first supported wakup GPIO, N+1+32 is the next one, then 
-N+1+32+32, and so on.
-
-I see how this creates a nice mess for running Linux on these laptops, 
-but I don't have a good idea how to work around it.  Per SoC, you'd need 
-to know the mapping and translate it for ACPI when running the Windows 
-version of the FW (yes most Qualcomm MSMs have OS specific firmware), 
-but reject such gpio numbers when running other firmware, or I guess on 
-different targets.
-
-> 
->>>> [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/pinctrl/qcom/pinctrl-msm.c#n713
->>>> [2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/pinctrl/qcom/pinctrl-sc8180x.c
-> 
+>=20
+> On 2021-02-28 22:23, Avri Altman wrote:
+> >>
+> >> From: Nitin Rawat <nitirawa@codeaurora.org>
+> >>
+> >> Disable interrupt in reset path to flush pending IRQ handler in order
+> >> to
+> >> avoid possible NoC issues.
+> >>
+> >> Signed-off-by: Nitin Rawat <nitirawa@codeaurora.org>
+> >> Signed-off-by: Can Guo <cang@codeaurora.org>
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
 
 
--- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+> >> ---
+> >>  drivers/scsi/ufs/ufs-qcom.c | 10 ++++++++++
+> >>  1 file changed, 10 insertions(+)
+> >>
+> >> diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+> >> index f97d7b0..a9dc8d7 100644
+> >> --- a/drivers/scsi/ufs/ufs-qcom.c
+> >> +++ b/drivers/scsi/ufs/ufs-qcom.c
+> >> @@ -253,12 +253,17 @@ static int ufs_qcom_host_reset(struct ufs_hba
+> >> *hba)
+> >>  {
+> >>         int ret =3D 0;
+> >>         struct ufs_qcom_host *host =3D ufshcd_get_variant(hba);
+> >> +       bool reenable_intr =3D false;
+> >>
+> >>         if (!host->core_reset) {
+> >>                 dev_warn(hba->dev, "%s: reset control not set\n",
+> >> __func__);
+> >>                 goto out;
+> >>         }
+> >>
+> >> +       reenable_intr =3D hba->is_irq_enabled;
+> >> +       disable_irq(hba->irq);
+> >> +       hba->is_irq_enabled =3D false;
+> >> +
+> >>         ret =3D reset_control_assert(host->core_reset);
+> >>         if (ret) {
+> >>                 dev_err(hba->dev, "%s: core_reset assert failed, err =
+=3D
+> >> %d\n",
+> >> @@ -280,6 +285,11 @@ static int ufs_qcom_host_reset(struct ufs_hba
+> >> *hba)
+> >>
+> >>         usleep_range(1000, 1100);
+> >>
+> >> +       if (reenable_intr) {
+> >> +               enable_irq(hba->irq);
+> >> +               hba->is_irq_enabled =3D true;
+> >> +       }
+> >> +
+> > If in the future, you will enable UFSHCI_QUIRK_BROKEN_HCE on your
+> > platform (currently only for Exynos),
+> > Will this code still work?
+>=20
+> Yes, it still works.
+>=20
+> Thanks,
+> Can Guo.
