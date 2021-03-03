@@ -2,90 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DF82F32C196
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 01:02:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CD2432C19A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 01:03:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1389477AbhCCVh7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Mar 2021 16:37:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42726 "EHLO
+        id S1389482AbhCCViI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Mar 2021 16:38:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377925AbhCCIUs (ORCPT
+        with ESMTP id S1842940AbhCCKWp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Mar 2021 03:20:48 -0500
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BCFBC06121D
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Mar 2021 00:20:07 -0800 (PST)
-Received: by mail-pj1-x1030.google.com with SMTP id s23so3863782pji.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Mar 2021 00:20:07 -0800 (PST)
+        Wed, 3 Mar 2021 05:22:45 -0500
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02E2CC061793
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Mar 2021 00:21:29 -0800 (PST)
+Received: by mail-pg1-x52e.google.com with SMTP id b21so15800048pgk.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Mar 2021 00:21:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:content-transfer-encoding:in-reply-to:references
          :subject:from:cc:to:date:message-id:user-agent;
-        bh=AwiOUOhuW6EnFueyj5x786yWZvf8VJgxR6bk+bVje3E=;
-        b=kx71mWOK5eWW6fp8ZhJtKANfnVGfTfg0iIEdrNdepDNYMPlJZjwB0CNV0nPVukJiCA
-         DuX6R2KPw1f6N4VZo6IPa2Dym+ZA7tGSA0ufAGP5lKilaoQh+Pl/f+Q/2lXuusIvlCHh
-         ribXlaW5wW9MfBiA+ZGvRPl4Fb2p3Ouegrdhw=
+        bh=5sgzs+e2k+RgTtqJplWFR6KEm78SgZsm88oW5JzXnRk=;
+        b=Gsh5aV+FHnmKZJ7JbbY6hJOLx1kU0QPS/64NpmYMgkKRUjfeKdK8rR7Tz03hZ4xIOe
+         WIsEzbhGzKOUdvlB8rscszrMSYgPhidSFK6E3q6aAods6EOnKRn2BLFGsaFmiJWU2GDK
+         +nRtEB8GzY9NirzzrljR/cWUXKjbduPs/18lE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:content-transfer-encoding
          :in-reply-to:references:subject:from:cc:to:date:message-id
          :user-agent;
-        bh=AwiOUOhuW6EnFueyj5x786yWZvf8VJgxR6bk+bVje3E=;
-        b=LbDUdbb4tcXJOjci9PIHVJIfCpWNajXXzmFOV3Aslb7wCY/x12hjzCGrEJE+keunNA
-         OyMBvLGmmUWgWg4gsURVgWcBWf9rDjYdz8F5HX2LLBWVaTAFd6cQH6zlTihvQF84HFPo
-         QgCtUbWyfoKtRrxEg21ovYksBjRL5PB4jf83uFtU7yKiHDUxVEOT1H++N3mj05EXznqV
-         KsCR7CSmsxCtl1/2sDg6qqRlLdVBW+kg44ID5Dcfx377LrYydsmlRwCoz4B2RV1qNoD6
-         ou5ODupHKTuZZ+1DQ0CzFCqR7ZCF9lSwVvguVGUGvKAkW2lYPH9tEi4ljltW4N305Pm9
-         8PMw==
-X-Gm-Message-State: AOAM533V64ZZw9mt/UWJ4cvqI0TOKe9O8bA5TnD8GiM8MVftM6fp0/iw
-        Cu5th75rFpV2/TUixjKNT8oJiQ==
-X-Google-Smtp-Source: ABdhPJyjAUMDV1wD5FKXN7q7V936rQC9rZcj2ZaH71aZcprTlyXEx2AOKVqi73/ddsFayGMzHLpeqQ==
-X-Received: by 2002:a17:90a:ff05:: with SMTP id ce5mr8434898pjb.156.1614759606898;
-        Wed, 03 Mar 2021 00:20:06 -0800 (PST)
+        bh=5sgzs+e2k+RgTtqJplWFR6KEm78SgZsm88oW5JzXnRk=;
+        b=Q0jxMe86EZaH8RSN9gNNfRwpfpZFbcprlpRBzMkxoYvWpFvbVrgBzYJnqZGz5d0paX
+         fe6jWLpwtNavoQX74tM8MnmEeUfPvHuvG9lvYZaiD9JOED5L38uPTKUWuCZoUzxHZLAE
+         4m5l+C1s9jPkl4lchBW5PiB/RiaUtyAOHsujJPj2Pq8ZkTDFbbRkKhjJY0d1wpolbLE7
+         XG0Dq/Oqwipb7u85pOFSdS6FAKUAzxMriMIy1G0dZhq7vorrPvhVtZih6BT8H6r8P6RS
+         YLGuiex4LzoyjwVdFhiLMZ/fd5wEUOCI+wCfz1iEMwMjfrutM3Pni/XV+0LQLynqQP6h
+         xAdg==
+X-Gm-Message-State: AOAM531hTKnppQH4T6leYRJZLf6yCS06IEowi1XWdT8SLeVRd4zhinuX
+        a6T1RmSXeJBnxsyOrm0C4h9HdqW+fvgNfQ==
+X-Google-Smtp-Source: ABdhPJzjVSYkQQnQXjf65ZJvtnHkb8n8lOPDn88s8QzhuX1Q+AGEXMCx5CKjZ7KQJh3JojpQLon70Q==
+X-Received: by 2002:a63:dc50:: with SMTP id f16mr6809504pgj.16.1614759688410;
+        Wed, 03 Mar 2021 00:21:28 -0800 (PST)
 Received: from chromium.org ([2620:15c:202:201:2510:ab07:78a:7d78])
-        by smtp.gmail.com with ESMTPSA id m12sm5751554pjk.47.2021.03.03.00.20.06
+        by smtp.gmail.com with ESMTPSA id q15sm6726694pje.28.2021.03.03.00.21.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Mar 2021 00:20:06 -0800 (PST)
+        Wed, 03 Mar 2021 00:21:27 -0800 (PST)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20210301133318.v2.13.I3d1f5f8a3bf31e8014229df0d4cfdff20e9cc90f@changeid>
-References: <20210301213437.4165775-1-dianders@chromium.org> <20210301133318.v2.13.I3d1f5f8a3bf31e8014229df0d4cfdff20e9cc90f@changeid>
-Subject: Re: [PATCH v2 13/13] arm64: dts: qcom: Add sc7180-trogdor-coachz skus
+In-Reply-To: <f58070ee-ff00-f8c5-6459-782562e903e5@codeaurora.org>
+References: <1613114930-1661-1-git-send-email-rnayak@codeaurora.org> <1613114930-1661-7-git-send-email-rnayak@codeaurora.org> <161406618557.1254594.15985584772106947706@swboyd.mtv.corp.google.com> <f58070ee-ff00-f8c5-6459-782562e903e5@codeaurora.org>
+Subject: Re: [PATCH 06/13] arm64: dts: qcom: SC7280: Add rpmhcc clock controller node
 From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Alexandru M Stan <amstan@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Gwendal Grignou <gwendal@chromium.org>,
-        Tzung-Bi Shih <tzungbi@chromium.org>,
-        Judy Hsiao <judyhsiao@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>
-Date:   Wed, 03 Mar 2021 00:20:05 -0800
-Message-ID: <161475960503.1478170.3435043996618334113@swboyd.mtv.corp.google.com>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+To:     Rajendra Nayak <rnayak@codeaurora.org>,
+        Taniya Das <tdas@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh+dt@kernel.org
+Date:   Wed, 03 Mar 2021 00:21:25 -0800
+Message-ID: <161475968509.1478170.5248506718236838205@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2021-03-01 13:34:37)
-> This is a trogdor variant.  This is mostly a grab from the downstream
-> tree with notable exceptions:
-> - I skip -rev0.  This was a super early build and there's no advantage
->   of long term support.
-> - I remove sound node since sound hasn't landed upstream yet.
+Quoting Taniya Das (2021-03-01 09:27:06)
+> On 2/23/2021 1:13 PM, Stephen Boyd wrote:
+> > Quoting Rajendra Nayak (2021-02-11 23:28:43)
+> >> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dt=
+s/qcom/sc7280.dtsi
+> >> +               usb3_phy_wrapper_gcc_usb30_pipe_clk: usb3-phy-wrapper-=
+gcc-usb30-pipe-clk {
+> >> +                       compatible =3D "fixed-clock";
+> >> +                       clock-frequency =3D <1000>;
+> >> +                       #clock-cells =3D <0>;
+> >> +               };
+> >=20
+> > Shouldn't these come from the phys? Why are they being added here?
+> >=20
 >=20
-> Cc: Gwendal Grignou <gwendal@chromium.org>
-> Cc: Matthias Kaehlcke <mka@chromium.org>
-> Cc: Stephen Boyd <swboyd@chromium.org>
-> Cc: Tzung-Bi Shih <tzungbi@chromium.org>
-> Cc: Judy Hsiao <judyhsiao@chromium.org>
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-> ---
+> Once the phys are added, these could be replaced, that was the reason to =
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> add them.
+>=20
+> >>          };
+> >>  =20
+> >>          reserved_memory: reserved-memory {
+> >> @@ -174,6 +211,17 @@
+> >>                  gcc: clock-controller@100000 {
+> >>                          compatible =3D "qcom,gcc-sc7280";
+> >>                          reg =3D <0 0x00100000 0 0x1f0000>;
+> >> +                       clocks =3D <&rpmhcc RPMH_CXO_CLK>,
+> >> +                                <&rpmhcc RPMH_CXO_CLK_A>, <&sleep_clk=
+>,
+> >> +                                <&pcie_0_pipe_clk>, <&pcie_1_pipe_clk=
+>,
+> >> +                                <&ufs_phy_rx_symbol_0_clk>, <&ufs_phy=
+_rx_symbol_1_clk>,
+> >> +                                <&ufs_phy_tx_symbol_0_clk>,
+> >> +                                <&usb3_phy_wrapper_gcc_usb30_pipe_clk=
+>;
+> >=20
+> > If the phys aren't ready then <0> should work. Unless something goes
+> > wrong?
+> >
+>=20
+> Nothing would go wrong if we add <0>, but wanted them to be replaced=20
+> once the support is added.
+
+Please use <0> to indicate that it's missing. Otherwise we may never
+realize that we should connect it up later.
