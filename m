@@ -2,86 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A99A732C17B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 01:02:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2717332C17E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 01:02:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1389349AbhCCVhP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Mar 2021 16:37:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41370 "EHLO
+        id S1389355AbhCCVhR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Mar 2021 16:37:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1842903AbhCCIOl (ORCPT
+        with ESMTP id S238076AbhCCIPH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Mar 2021 03:14:41 -0500
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0551C061794
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Mar 2021 00:14:00 -0800 (PST)
-Received: by mail-pg1-x52d.google.com with SMTP id a4so15760072pgc.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Mar 2021 00:14:00 -0800 (PST)
+        Wed, 3 Mar 2021 03:15:07 -0500
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F04CCC0617A9
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Mar 2021 00:14:25 -0800 (PST)
+Received: by mail-pf1-x436.google.com with SMTP id t29so15709546pfg.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Mar 2021 00:14:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:content-transfer-encoding:in-reply-to:references
          :subject:from:cc:to:date:message-id:user-agent;
-        bh=wUWoOU42RDaUQRgBnINOK3TjMzgm4jJFMlkGac7+hJM=;
-        b=besseKDVD0/72X5vEHIyIQldUQrP21NI6g+K8EFhJsh+4l3gZ/0iFDZWOHmIGzw8Yz
-         wmO648VkjuiQx5lubMTk6cLsoVFBHWDXviYg2U9Q99/fHI5CAgH6XjTAjd7EyI5iyxlg
-         mYMzoeii/ThoPpW+OzhlMHUu7kGQhc98kPnI0=
+        bh=P1dtltEjETKu3sTEniyo9zPnCTLC+x4yGC+jPDmiEdE=;
+        b=DFjBbYW4i7nCNY+8nO3JLdXqK6DlITs2S/fUluYL7jQmvOks/+LOnBODIJkfkcbrr3
+         WQ/a9PQ72NTSPxepkYLKTr7fwq61U1oCn9Gq9Dd/KfASm/mJc9Rmw2JQzDL234Q9TQP1
+         tmUSLG/OQQXqYjZ58xZTB9603sXSqWsQy0rqo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:content-transfer-encoding
          :in-reply-to:references:subject:from:cc:to:date:message-id
          :user-agent;
-        bh=wUWoOU42RDaUQRgBnINOK3TjMzgm4jJFMlkGac7+hJM=;
-        b=LkTmFXd7Pz7deY7AoE/IU35j1nG8AvcIUul+vrdGUU8lPTUJEWtFV4GRPCmjtbjXID
-         TqA37fRjeO8zDCpFIcSxyLCGem9/kBsC0Gn9NBm6vnr/rzEX39DJtqZYgPIcEFfXtoaK
-         ADDk/EMT9oLTzqyM/KzIoIvlCyAhjm4PUinx1nS36/Vlq4srga3Oxom+AAZc2r05b+Az
-         3TxxVH+S0iXoBVE+XEEba27heQqghY9nGhOceCjtA2y54HmsgoKGOtNlL5mj9RIMULFv
-         8H5W4BMJRWIY1EhtoLs95Yf/cEjMA+6GrTBkfGPzWAzW3oHNMY5DAxQhVQh3pITDnDFT
-         St5g==
-X-Gm-Message-State: AOAM531KuxrhRWYdcNZv6wFFvMCgx/aACbU3xhLocLo6kGUHChe9yvP9
-        x9ZboYk5UQIdwlq2erNapjKmDw==
-X-Google-Smtp-Source: ABdhPJwacCK6UzxWBwUK7UBjLx+1WJXa4U024sIxMGyTVhwIGytlidXCoHil9Qnw2mtpa3vQpxzvuA==
-X-Received: by 2002:a05:6a00:1a44:b029:1d6:4170:ee0b with SMTP id h4-20020a056a001a44b02901d64170ee0bmr23592003pfv.57.1614759240448;
-        Wed, 03 Mar 2021 00:14:00 -0800 (PST)
+        bh=P1dtltEjETKu3sTEniyo9zPnCTLC+x4yGC+jPDmiEdE=;
+        b=GsLMBVvA7brmCLAhkhZty3zXUj8Wl6RJMjvD+9vKm7mmqZIAqSShvmdI16aaEip1tG
+         XlmP7EN0YlZzM23g7uwxPSft8NhU9jipBv0HlKhTQcJbq51AYPg4CEjxFbjpvi410fCP
+         eMrwiRwj6bsxBFYeGxEGqnmR5J898jRKqrq5nP4+hFfKEegzL8goUtiKdZwjhYkpc8ky
+         hKqjFNA7nZE5IP1BEkPqXA24OWCcRLTprlNasB/wlTwRAoiQxG59BCD3X2un2/EcQm9/
+         SRMGssk9joSyT8q0fjXc6AhHPlTgSDv3eOc5Rx4H51RDzYoUpITeMu9lpnXcZfLEdrR6
+         5peQ==
+X-Gm-Message-State: AOAM5326i17SaAp14c3uLUWEQpL5th7bPbZrjs+va9TelqMmUgkUljw8
+        PlVWk81SuhJJHwob/Qs0FwvQVw==
+X-Google-Smtp-Source: ABdhPJxNhzZMc6gB6O8kxv/u+g9OfQs7Cdr1qTVz0+CIRmAneXjymSzwnIP3u80l2INlse/RgyrUJg==
+X-Received: by 2002:aa7:87d5:0:b029:1ed:b85b:1420 with SMTP id i21-20020aa787d50000b02901edb85b1420mr2004823pfo.17.1614759265611;
+        Wed, 03 Mar 2021 00:14:25 -0800 (PST)
 Received: from chromium.org ([2620:15c:202:201:2510:ab07:78a:7d78])
-        by smtp.gmail.com with ESMTPSA id mm12sm5518594pjb.49.2021.03.03.00.13.59
+        by smtp.gmail.com with ESMTPSA id r31sm16414439pgm.11.2021.03.03.00.14.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Mar 2021 00:14:00 -0800 (PST)
+        Wed, 03 Mar 2021 00:14:25 -0800 (PST)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20210301133318.v2.2.Id27e7e6f90c29bf623fa4880e18a14ba1dffd2d2@changeid>
-References: <20210301213437.4165775-1-dianders@chromium.org> <20210301133318.v2.2.Id27e7e6f90c29bf623fa4880e18a14ba1dffd2d2@changeid>
-Subject: Re: [PATCH v2 02/13] arm64: dts: qcom: Move sc7180 MI2S config to board files and make pulldown
+In-Reply-To: <20210301133318.v2.3.Iddf6dc8102aa4fbc3847936226fc7bf2e2cd315c@changeid>
+References: <20210301213437.4165775-1-dianders@chromium.org> <20210301133318.v2.3.Iddf6dc8102aa4fbc3847936226fc7bf2e2cd315c@changeid>
+Subject: Re: [PATCH v2 03/13] arm64: dts: qcom: Prep sc7180-trogdor trackpad IRQ for new boards
 From:   Stephen Boyd <swboyd@chromium.org>
 Cc:     Rob Clark <robdclark@chromium.org>,
         Alexandru M Stan <amstan@chromium.org>,
         Matthias Kaehlcke <mka@chromium.org>,
         Douglas Anderson <dianders@chromium.org>,
-        V Sujith Kumar Reddy <vsujithk@codeaurora.org>,
-        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        Tzung-Bi Shih <tzungbi@chromium.org>,
-        Judy Hsiao <judyhsiao@chromium.org>,
         Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Douglas Anderson <dianders@chromium.org>
-Date:   Wed, 03 Mar 2021 00:13:58 -0800
-Message-ID: <161475923860.1478170.14358924571540114935@swboyd.mtv.corp.google.com>
+Date:   Wed, 03 Mar 2021 00:14:23 -0800
+Message-ID: <161475926359.1478170.7064077548869689969@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2021-03-01 13:34:26)
-> In general pinconf belongs in board files, not SoC files.  Move it to
-> the only current user (trogdor).  Also adjust the drive strengths and
-> pulls.
+Quoting Douglas Anderson (2021-03-01 13:34:27)
+> The trackpad interrupt got renamed and also moved to a new GPIO on
+> newer boards.  Let's do the move in the "trogdor.dtsi" file and then
+> undo it in the two old boards.
 >=20
-> Cc: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-> Cc: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-> Cc: Tzung-Bi Shih <tzungbi@chromium.org>
-> Cc: Judy Hsiao <judyhsiao@chromium.org>
+> NOTE: since none of the new boards have device trees yet, this change
+> looks silly on its own but it will make sense after more boards are
+> supported.
+>=20
 > Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
 > ---
