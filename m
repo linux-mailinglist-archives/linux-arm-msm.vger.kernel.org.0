@@ -2,76 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D81032C103
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 01:01:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D2B7632C14B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 01:02:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232578AbhCCVQ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Mar 2021 16:16:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36944 "EHLO
+        id S230192AbhCCV0D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Mar 2021 16:26:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1443528AbhCCDb7 (ORCPT
+        with ESMTP id S1443551AbhCCDcB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Mar 2021 22:31:59 -0500
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C046C06178B
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Mar 2021 19:31:19 -0800 (PST)
-Received: by mail-pg1-x535.google.com with SMTP id g4so15340840pgj.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Mar 2021 19:31:19 -0800 (PST)
+        Tue, 2 Mar 2021 22:32:01 -0500
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 136AFC06178C
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Mar 2021 19:31:21 -0800 (PST)
+Received: by mail-pf1-x42a.google.com with SMTP id q20so15272630pfu.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Mar 2021 19:31:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=TrHkNSQOlv9q7R5nxD4jC1j0AhQTtaA5dulHYHyT0QY=;
-        b=xNJRL2a0L8fBrIqOtmCsK+xaAtG9Gt0rdLOf65kHV/qYD1hEvdC+g47J10vpq/3k7N
-         mWqD27IiAxxdLq7x0r5fCLjnwWnM//8JeQCM530k4vRyOSqPN9Xm1z07HGEK0FVTsfPj
-         U5IrrfqFxCmWj8f+QkA8k+xDnqROqY4fTJLerUjF7Cnsdh92OCpZWIhSNa+vftYTyY3R
-         TrL9NowCAiJO3elN+8IkMwfTxH+H670tTPOYF3RXOqRBn59eYqqNJNQcp/OKFOJCQC3V
-         8PuC41xkKvCXk5O1X9EbOpjwW5p0ftcLHhlyj4XbVBcifwMqDj/h39xr6lSZjBjYRyGh
-         M+UA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=CX7nnUJDVRP42eJky/cZ0aCMDizljES0o4MdBwQ4CMk=;
+        b=gDz1yEByWLsYs+FakH5QYXl3lFXx/nNsv8zzvRVrSC5DKraer8E6LQHZ1nrxtHaZMf
+         aNBFHCc59ulsidmWvF5vMSrkQXVc30OToKjjOQWgKDvxX85yGexEZcJVgQvZVl5A75zC
+         UCn4dsjSYAH24tiiY+8jBgfda5qf6MofxPw5GI3+mA7sjkBfErqlyoE/hFTivbixch/e
+         3oCIcsGWNz23PTDwQbuEsMZ4SJG1ttid+5d2Gg0tzQTHKdUF9U6gQQll+6da81fBNm5Y
+         TW0lSuYiB1yq240WosvVhzmHY9cNKHHrUGJ+z4JS3AjOftXcQYOeOLo7ylmaA5rpNU2m
+         ek1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=TrHkNSQOlv9q7R5nxD4jC1j0AhQTtaA5dulHYHyT0QY=;
-        b=uWOzsYScnIwTLB6jLG8oDFEALRf/+KcxAycPnjblpkwD4l6OuiRre4rhi9JDQKiyjQ
-         0cUSEgHorlNhi/pU0LFUC+4XRMdrVc5PPj3MszUrJzcIEiYDdWyRKWS/7Sbk2Hm+XdRt
-         pbbsTjg+G7Qfqhgn7sb/pm+mv4ml16R79HypLSAv3d96YnOsf95JXHGtrHQ4shcfHMBF
-         L3a5qpZG1FoORhSuYBnH6rh9aDa5O19SqskOdAulfzI1agNeprBsbu+8MLAxthLwwEuh
-         gRP5zuRKvytZE0pdcVjGCSZIkazmEc2brC+rDMrLyYYI1Vt2SkeZmbMS8QY32FTXMMH0
-         A3kw==
-X-Gm-Message-State: AOAM532PJw0HXne9d7HI2gtTXB9qnyVmRoJFOI4FKNtMwIrlaAzFE8Qy
-        M7oe6hqBroQqLIHATQUMrxloyA==
-X-Google-Smtp-Source: ABdhPJydIDlN6PNzjowMAxMaAY+IMqwEQg8fRaW9q9JhURzhd1S/bRZJ8vm1K8BgSU8foIkC5WLwiQ==
-X-Received: by 2002:a65:5a09:: with SMTP id y9mr20435981pgs.243.1614742278508;
-        Tue, 02 Mar 2021 19:31:18 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=CX7nnUJDVRP42eJky/cZ0aCMDizljES0o4MdBwQ4CMk=;
+        b=PPG8OgGONdXxnlDvZB3Ti/hP+KaxTG0bpr64bZoS3DSCAKsP+ZnIy8sqTOiYGIbXp7
+         yPaw65E5WceqGdJwdJb/zWtJXmVfyV+J3lO/XwHKW0UsKfj/jeMlYUHPiQyDhx7fHK3r
+         CTETLW3zbnNZbAaF4cv8S93C5cJkm/BUbmrlV1aycYr4LVQkys9tlwP/ANKHn47YgM67
+         E0DdIcGWiqW+QN9UcX+r0VIaz6IpnBsaN+nQvkz8aBfkgkd+bdtMqdiF9SkP3+RVncmw
+         oSi3FXqCJblDZQ1gIsKr4u8CAwEohwwDjj2R3Vqp1l/LcXhXOmfmxXyibf4NzkRaQQOL
+         YU7Q==
+X-Gm-Message-State: AOAM533PX/nQ3cmRXbGhvP1WKPvOE2mMa4IeM8sMo8ExTiV97Pt7GSPu
+        c9nySBQR7iGEcF+rGznLsVhrjr70xiMZLg==
+X-Google-Smtp-Source: ABdhPJz54Js3NgB/rnRs/fbaJHzlKjghBfEkgYhhhwSk+5Pv1NyxIsdzCP8iJS8j/buOEXtGRU0shg==
+X-Received: by 2002:a62:6005:0:b029:1d9:ce00:26cf with SMTP id u5-20020a6260050000b02901d9ce0026cfmr1309226pfb.7.1614742280695;
+        Tue, 02 Mar 2021 19:31:20 -0800 (PST)
 Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id c4sm16057511pfo.2.2021.03.02.19.31.16
+        by smtp.gmail.com with ESMTPSA id c4sm16057511pfo.2.2021.03.02.19.31.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Mar 2021 19:31:17 -0800 (PST)
+        Tue, 02 Mar 2021 19:31:20 -0800 (PST)
 From:   Shawn Guo <shawn.guo@linaro.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     devicetree@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>
-Subject: [PATCH 0/4] Fix number of pins in 'gpio-ranges'
-Date:   Wed,  3 Mar 2021 11:31:02 +0800
-Message-Id: <20210303033106.549-1-shawn.guo@linaro.org>
+        linux-arm-msm@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>,
+        Evan Green <evgreen@chromium.org>
+Subject: [PATCH 1/4] arm64: dts: qcom: sdm845: fix number of pins in 'gpio-ranges'
+Date:   Wed,  3 Mar 2021 11:31:03 +0800
+Message-Id: <20210303033106.549-2-shawn.guo@linaro.org>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20210303033106.549-1-shawn.guo@linaro.org>
+References: <20210303033106.549-1-shawn.guo@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The fixes are split per SoC to ease the stable kernel pick-up.
+The last cell of 'gpio-ranges' should be number of GPIO pins, and in
+case of qcom platform it should match msm_pinctrl_soc_data.ngpio rather
+than msm_pinctrl_soc_data.ngpio - 1.
 
-Shawn Guo (4):
-  arm64: dts: qcom: sdm845: fix number of pins in 'gpio-ranges'
-  arm64: dts: qcom: sm8150: fix number of pins in 'gpio-ranges'
-  arm64: dts: qcom: sm8250: fix number of pins in 'gpio-ranges'
-  arm64: dts: qcom: sm8350: fix number of pins in 'gpio-ranges'
+This fixes the problem that when the last GPIO pin in the range is
+configured with the following call sequence, it always fails with
+-EPROBE_DEFER.
 
+    pinctrl_gpio_set_config()
+        pinctrl_get_device_gpio_range()
+            pinctrl_match_gpio_range()
+
+Fixes: bc2c806293c6 ("arm64: dts: qcom: sdm845: Add gpio-ranges to TLMM node")
+Cc: Evan Green <evgreen@chromium.org>
+Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+---
  arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 +-
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 2 +-
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 454f794af547..6a2ed02d383d 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -2382,7 +2382,7 @@
+ 			#gpio-cells = <2>;
+ 			interrupt-controller;
+ 			#interrupt-cells = <2>;
+-			gpio-ranges = <&tlmm 0 0 150>;
++			gpio-ranges = <&tlmm 0 0 151>;
+ 			wakeup-parent = <&pdc_intc>;
+ 
+ 			cci0_default: cci0-default {
 -- 
 2.17.1
 
