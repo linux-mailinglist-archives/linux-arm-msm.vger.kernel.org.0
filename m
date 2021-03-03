@@ -2,157 +2,256 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B90932C230
+	by mail.lfdr.de (Postfix) with ESMTP id B868A32C232
 	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 01:04:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1389720AbhCCVqe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Mar 2021 16:46:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39082 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241179AbhCCRDn (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Mar 2021 12:03:43 -0500
-Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C886C0613DD
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Mar 2021 09:01:34 -0800 (PST)
-Received: by mail-pg1-x52a.google.com with SMTP id t26so16846198pgv.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Mar 2021 09:01:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=NS5lTDaGXttSrOQ5MHO4aoL/JPMPWoX9kViqNvHNTVw=;
-        b=VsTPW062qCBbmWlJ6C89JwMPfX2rDXIXP6PJpEDWU5cAcLYJV//2F9SQV7xbWGyQ6t
-         N/Rrr+z55FyTSfysrWPPFGBI9GzuwfbuCLjvmLihq1RUVnJaIoexXJkZqixLZeCccfIt
-         qgu8mRlb9Glv1h6/OEu5+c6Xh/SwIKfMpq2/E0JcnV1pqjbdfki1j1vR/5H3xQ2moPQI
-         v0WAlKnK9Y3T6+iwkwiLboG/ZK2GiXhnegwLcW4zGDaCuqubIh953KIf0nquF0PWc+0T
-         br0mTrp+RzZOS3Gp9zTRIYGKyfqgWoc9vCbsN2yl3IhVr3pdWDrUGArTIAcV8rFiyJD8
-         yGsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=NS5lTDaGXttSrOQ5MHO4aoL/JPMPWoX9kViqNvHNTVw=;
-        b=moPU+GFre8vTUWjuI0w53oBfy0ToKsQ7s3yBjeKbUWa7cGfOsDGCZsbPE2pi4QMrLw
-         0ddEPMRS8bb98KuBU7qtyV30iGyBC2Gsx5oPPVQbgc0JFfCDiK3MXuzzmOI78NwCbMnQ
-         caakI739d665FOXp+ZdbHkgGZ3M4lCtOw/convXVgu5f5NIY1CYN1alhSLRYgxuXKaBS
-         vY0W1Rgw2ngWlr4mdD9UAIsDKNUK4RfhP+mBg/16oJJhW5T29jG5Pj4V+JaGrxrnR0vG
-         YJUJr8TbEq0r8lrcTBIGeyPYYX+J94OnM0AD0CclJoIHFAKfqmXtuIwTMIfATr045bxw
-         DewA==
-X-Gm-Message-State: AOAM533b1kumqaxK7LuVY9X00zG3zees0Y++5yPDxPOOMTzCyifxFzzg
-        lw6GbRV9ge7bK/vMQ8mRDWeBhQ==
-X-Google-Smtp-Source: ABdhPJwnSJtlw+7CYzN3TJ1B9S6jcmKYC9LYLbDS05Ed7kcO8bdthFTmHZaaIeoVlr9rJGVEnmxWAQ==
-X-Received: by 2002:a63:4a44:: with SMTP id j4mr23741977pgl.199.1614790893689;
-        Wed, 03 Mar 2021 09:01:33 -0800 (PST)
-Received: from xps15 (S0106889e681aac74.cg.shawcable.net. [68.147.0.187])
-        by smtp.gmail.com with ESMTPSA id 132sm3438070pfu.158.2021.03.03.09.01.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Mar 2021 09:01:31 -0800 (PST)
-Date:   Wed, 3 Mar 2021 10:01:30 -0700
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Andy Gross <agross@kernel.org>,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
+        id S1389796AbhCCVq7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Mar 2021 16:46:59 -0500
+Received: from m42-2.mailgun.net ([69.72.42.2]:22611 "EHLO m42-2.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1385278AbhCCRJn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 3 Mar 2021 12:09:43 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1614791359; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=5gVFGhN3kjXbLw6dHVZHsN4KVWjxcJ36O+89sssQExc=; b=Txt69IuKbOCLO6ovwR0YZE6SRZ8Z7Z2E9rHyxKENj7hTH8ge0xtE0L7OXRny2x5x/yv9cPzN
+ f2fA7EIB81dRfEvgyoDIc9r2d0CxFvtJJunI9zJIfZGSOKdwf5+N4WbMD/jPGRTFfX09C/i5
+ bEc5Pw5fogSn+gaxCFheg+myB6w=
+X-Mailgun-Sending-Ip: 69.72.42.2
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 603fc28dc862e1b9fd818ab7 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 03 Mar 2021 17:08:29
+ GMT
+Sender: jhugo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 16CB1C433ED; Wed,  3 Mar 2021 17:08:29 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 572D4C433C6;
+        Wed,  3 Mar 2021 17:08:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 572D4C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH] gpiolib: acpi: support override broken GPIO number in
+ ACPI table
+To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc:     Shawn Guo <shawn.guo@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Mika Westerberg <mika.westerberg@linux.intel.com>,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
         linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v5 07/16] rpmsg: update rpmsg_chrdev_register_device
- function
-Message-ID: <20210303170130.GC3817330@xps15>
-References: <20210219111501.14261-1-arnaud.pouliquen@foss.st.com>
- <20210219111501.14261-8-arnaud.pouliquen@foss.st.com>
+References: <20210226033919.8871-1-shawn.guo@linaro.org>
+ <CAHp75Vcb=NO9OWjSpBeVC4c+9=aXE=yiDWVBwLD1DnzwdgFD6Q@mail.gmail.com>
+ <20210226093925.GA24428@dragon>
+ <CAHp75Vc6xYv+197SOrSefQHD2h4Xy_N20gQajW4uF2PU=sJfLg@mail.gmail.com>
+ <YDjZOU+VMWasjzUb@smile.fi.intel.com> <20210227031944.GB24428@dragon>
+ <YDzbQqHspfvpYS7Z@smile.fi.intel.com> <20210302002725.GE24428@dragon>
+ <YD4twyAGvDDOCv+n@smile.fi.intel.com>
+ <abbfcdfa-c287-3828-ed6f-bc1e1f13c6b2@codeaurora.org>
+ <YD9DnWC4ht7AYjb/@smile.fi.intel.com>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <b1290f31-fc56-ab10-46df-58c15db18f4c@codeaurora.org>
+Date:   Wed, 3 Mar 2021 10:08:26 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210219111501.14261-8-arnaud.pouliquen@foss.st.com>
+In-Reply-To: <YD9DnWC4ht7AYjb/@smile.fi.intel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Feb 19, 2021 at 12:14:52PM +0100, Arnaud Pouliquen wrote:
-> As driver is now the rpmsg_ioctl, rename the function.
-> In addition, initialize the rpdev addresses to RPMSG_ADDR_ANY as not
-> defined.
+On 3/3/2021 1:06 AM, Andy Shevchenko wrote:
+> On Tue, Mar 02, 2021 at 10:02:49PM -0700, Jeffrey Hugo wrote:
+>> On 3/2/2021 5:21 AM, Andy Shevchenko wrote:
+>>> On Tue, Mar 02, 2021 at 08:27:26AM +0800, Shawn Guo wrote:
+>>>> On Mon, Mar 01, 2021 at 02:17:06PM +0200, Andy Shevchenko wrote:
+>>>>> On Sat, Feb 27, 2021 at 11:19:45AM +0800, Shawn Guo wrote:
+>>>>>> On Fri, Feb 26, 2021 at 01:19:21PM +0200, Andy Shevchenko wrote:
+>>>>>>> On Fri, Feb 26, 2021 at 12:57:37PM +0200, Andy Shevchenko wrote:
+>>>>>>>> On Fri, Feb 26, 2021 at 11:39 AM Shawn Guo <shawn.guo@linaro.org> wrote:
+>>>>>>>>> On Fri, Feb 26, 2021 at 11:12:07AM +0200, Andy Shevchenko wrote:
+>>>>>>>>>> On Fri, Feb 26, 2021 at 5:42 AM Shawn Guo <shawn.guo@linaro.org> wrote:
+>>>>>>>>>>> Running kernel with ACPI on Lenovo Flex 5G laptop, touchpad is just
+>>>>>>>>>>> not working.  That's because the GpioInt number of TSC2 node in ACPI
+>>>>>>>>>>> table is simply wrong, and the number even exceeds the maximum GPIO
+>>>>>>>>>>> lines.  As the touchpad works fine with Windows on the same machine,
+>>>>>>>>>>> presumably this is something Windows-ism.  Although it's obviously
+>>>>>>>>>>> a specification violation, believe of that Microsoft will fix this in
+>>>>>>>>>>> the near future is not really realistic.
+>>>>>>>>>>>
+>>>>>>>>>>> It adds the support of overriding broken GPIO number in ACPI table
+>>>>>>>>>>> on particular machines, which are matched using DMI info.  Such
+>>>>>>>>>>> mechanism for fixing up broken firmware and ACPI table is not uncommon
+>>>>>>>>>>> in kernel.  And hopefully it can be useful for other machines that get
+>>>>>>>>>>> broken GPIO number coded in ACPI table.
+>>>>>>>>>>
+>>>>>>>>>> Thanks for the report and patch.
+>>>>>>>>>>
+>>>>>>>>>> First of all, have you reported the issue to Lenovo? At least they
+>>>>>>>>>> will know that they did wrong.
+>>>>>>>>>
+>>>>>>>>> Yes, we are reporting this to Lenovo, but to be honest, we are not sure
+>>>>>>>>> how much they will care about it, as they are shipping the laptop with
+>>>>>>>>> Windows only.
+>>>>>>>>>
+>>>>>>>>>> Second, is it possible to have somewhere output of `acpidump -o
+>>>>>>>>>> flex5g.dat` (the flex5g.dat file)?
+>>>>>>>>>
+>>>>>>>>> https://raw.githubusercontent.com/aarch64-laptops/build/master/misc/lenovo-flex-5g/dsdt.dsl
+>>>>>>>
+>>>>>>> Looking into DSDT I think the problem is much worse. First of all there are
+>>>>>>> many cases where pins like 0x140, 0x1c0, etc are being used. On top of that
+>>>>>>> there is no GPIO driver in the upstream (as far as I can see by HID, perhaps
+>>>>>>> there is a driver but for different HID. And I see that GPIO device consumes a
+>>>>>>> lot of Interrupts from GIC as well (it's ARM platfrom as far as I understand).
+>>>>>>
+>>>>>> Yes, it's a laptop built on Qualcomm Snapdragon SC8180X SoC.  The GPIO
+>>>>>> driver is generic for all Snapdragon SoCs, and has been available in
+>>>>>> upstream for many years (for DT though). It can be found as the gpio_chip
+>>>>>> implementation in MSM pinctrl driver [1].  The SC8180X specific part can
+>>>>>> be found as pinctrl-sc8180x.c [2], and it's already working for DT boot.
+>>>>>> The only missing piece is to add "QCOM040D" as the acpi_device_id to
+>>>>>> support ACPI boot, and it will be submitted after 5.12-rc1 comes out.
+>>>>>>
+>>>>>>> Looking at the Microsoft brain damaged way of understanding GPIOs and hardware
+>>>>>>> [1], I am afraid you really want to have a specific GPIO driver for this. So,
+>>>>>>> for now until we have better picture of what's going on, NAK to this patch.
+>>>>>>
+>>>>>> Thanks for the pointer to Microsoft document.  On Snapdragon, we have
+>>>>>> only one GPIO instance that accommodates all GPIO pins, so I'm not sure
+>>>>>> that Microsoft GPIOs mapping layer is relevant here at all.
+>>>>>>
+>>>>>> Please take a look at the GPIO driver, and feel free to let me know if
+>>>>>> you need any further information to understand what's going on.
+>>>>>
+>>>>> Yes, I looked into the driver and see that it has 3 blocks of GPIOs (we call
+>>>>> them communities, but in the driver the term 'tiles' is used) AFAIU (correct me
+>>>>> if I'm wrong). And who knows how many banks in each of them.
+>>>>
+>>>> I'm not sure that the 3 'tiles' means 3 blocks of GPIOs.  Maybe, @Bjorn
+>>>> can help clarify.  But the ACPI table shows that there is only 'GIO0'
+>>>> with 'QCOM040D' HID.
+>>>
+>>> Yeah, I already got that ACPI there is screwed up...
+>>>
+>>>>> I'm afraid that MS does on his way and not yours.
+>>>>>
+>>>>> Can we have TRM for GPIO IP used there and any evidence / document from
+>>>>> firmware team about the implementation of the GPIO numbering in the ACPI
+>>>>> (at Intel we have so called BIOS Writers Guide that is given to the customers
+>>>>> where such info can be found)?
+>>>>
+>>>> Unfortunately, I do not have the access to any sort of these documents.
+>>>> But I looped in Jeffrey who is part of Qualcomm kernel/firmware team,
+>>>> and should be able to help clarify GPIO numbering in the ACPI table.
+>>>
+>>> Thanks! Will wait for new information then.
+>>
+>> Sorry, just joining the thread now.  Hopefully I'm addressing everything
+>> targeted at me.
+>>
+>> I used to do kernel work on MSMs, then kernel work on server CPUs, but now I
+>> do kernel work on AI accelerators.  Never was on the firmware team, but I
+>> have a lot of contacts in those areas.  On my own time, I support Linux on
+>> the Qualcomm laptops.
+>>
+>> Its not MS that needs to fix things (although there is plenty of things I
+>> could point to that MS could fix), its the Qualcomm Windows FW folks.  They
+>> have told me a while ago they were planning on fixing this issue on some
+>> future chipset, but apparently that hasn't happened yet.  Sadly, once these
+>> laptops ship, they are in a frozen maintenance mode.
+> 
+> I see. MS indeed loves Linux then :-)
+> 
+>> In my opinion, MS has allowed Qualcomm to get away with doing bad things in
+>> ACPI on the Qualcomm laptops.  The ACPI is not a true hardware description
+>> that is OS agnostic as it should be, and probably violates the spec in many
+>> ways.  Instead, the ACPI is written against the Windows drivers, and has a
+>> lot of OS driver crap pushed into it.
+> 
+> You meant "ACPI" -> "DSDT on the certain platform" I hope.
 
-This patch works but the changelog needs a rework.  The title reflects the
-essence of changes but the text of the changelog doesn't.
+Sorry for the ambiguity.  Yes, I was referring to the ACPI tables 
+written for the specific platform, of which the DSDT is relevant to this 
+discussion.  I did not mean to imply that ACPI as a Spec or concept 
+itself was Windows specific.  I used to be on the ASWG (ACPI Spec 
+Working Group) and have personal knowledge that no OS or architecture is 
+a "second class citizen" as far as the ACPI spec is concerned.
 
 > 
-> Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
-> ---
->  drivers/rpmsg/qcom_glink_native.c |  2 +-
->  drivers/rpmsg/qcom_smd.c          |  2 +-
->  drivers/rpmsg/rpmsg_ctrl.c        |  2 +-
->  drivers/rpmsg/rpmsg_internal.h    | 10 ++++++----
->  4 files changed, 9 insertions(+), 7 deletions(-)
+>> The GPIO description is one such thing.
+>>
+>> As I understand it, any particular SoC will have a number of GPIOs supported
+>> by the TLMM.  0 - N.  Linux understands this.  However, in the ACPI of the
+>> Qualcomm Windows laptops, you will likely find atleast one GPIO number which
+>> exceeds this N.  These are "virtual" GPIOs, and are a construct of the
+>> Windows Qualcomm TLMM driver and how it interfaces with the frameworks
+>> within Windows.
+>>
+>> Some GPIO lines can be configured as wakeup sources by routing them to a
+>> specific hardware block in the SoC (which block it is varies from SoC to
+>> SoC).  Windows has a specific weird way of handling this which requires a
+>> unique "GPIO chip" to handle.  GPIO chips in Windows contain 32 GPIOs, so
+>> for each wakeup GPIO, the TLMM driver creates a GPIO chip (essentially
+>> creating 32 GPIOs), and assigns the added GPIOs numbers which exceed N.  The
+>> TLMM driver has an internal mapping of which virtual GPIO number corresponds
+>> to which real GPIO.
+>>
+>> So, ACPI says that some peripheral has GPIO N+X, which is not a real GPIO.
+>> That peripheral goes and requests that GPIO, which gets routed to the TLMM
+>> driver, and the TLMM driver translates that number to the real GPIO, and
+>> provides the reference back to the peripheral, while also setting up the
+>> special wakeup hardware.
+>>
+>> So, N+1 is the first supported wakup GPIO, N+1+32 is the next one, then
+>> N+1+32+32, and so on.
+>>
+>> I see how this creates a nice mess for running Linux on these laptops, but I
+>> don't have a good idea how to work around it.  Per SoC, you'd need to know
+>> the mapping and translate it for ACPI when running the Windows version of
+>> the FW (yes most Qualcomm MSMs have OS specific firmware), but reject such
+>> gpio numbers when running other firmware, or I guess on different targets.
 > 
-> diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-> index 27a05167c18c..d4e4dd482614 100644
-> --- a/drivers/rpmsg/qcom_glink_native.c
-> +++ b/drivers/rpmsg/qcom_glink_native.c
-> @@ -1625,7 +1625,7 @@ static int qcom_glink_create_chrdev(struct qcom_glink *glink)
->  	rpdev->dev.parent = glink->dev;
->  	rpdev->dev.release = qcom_glink_device_release;
->  
-> -	return rpmsg_chrdev_register_device(rpdev);
-> +	return rpmsg_ctrl_register_device(rpdev);
->  }
->  
->  struct qcom_glink *qcom_glink_native_probe(struct device *dev,
-> diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
-> index 19903de6268d..40a1c415c775 100644
-> --- a/drivers/rpmsg/qcom_smd.c
-> +++ b/drivers/rpmsg/qcom_smd.c
-> @@ -1097,7 +1097,7 @@ static int qcom_smd_create_chrdev(struct qcom_smd_edge *edge)
->  	qsdev->rpdev.dev.parent = &edge->dev;
->  	qsdev->rpdev.dev.release = qcom_smd_release_device;
->  
-> -	return rpmsg_chrdev_register_device(&qsdev->rpdev);
-> +	return rpmsg_ctrl_register_device(&qsdev->rpdev);
->  }
->  
->  /*
-> diff --git a/drivers/rpmsg/rpmsg_ctrl.c b/drivers/rpmsg/rpmsg_ctrl.c
-> index fa05b67d24da..2e43b4096aa8 100644
-> --- a/drivers/rpmsg/rpmsg_ctrl.c
-> +++ b/drivers/rpmsg/rpmsg_ctrl.c
-> @@ -180,7 +180,7 @@ static struct rpmsg_driver rpmsg_ctrl_driver = {
->  	.probe = rpmsg_ctrl_probe,
->  	.remove = rpmsg_ctrl_remove,
->  	.drv = {
-> -		.name = "rpmsg_chrdev",
-> +		.name = KBUILD_MODNAME,
->  	},
->  };
->  
-> diff --git a/drivers/rpmsg/rpmsg_internal.h b/drivers/rpmsg/rpmsg_internal.h
-> index a76c344253bf..7428f4465d17 100644
-> --- a/drivers/rpmsg/rpmsg_internal.h
-> +++ b/drivers/rpmsg/rpmsg_internal.h
-> @@ -82,16 +82,18 @@ struct rpmsg_device *rpmsg_create_channel(struct rpmsg_device *rpdev,
->  int rpmsg_release_channel(struct rpmsg_device *rpdev,
->  			  struct rpmsg_channel_info *chinfo);
->  /**
-> - * rpmsg_chrdev_register_device() - register chrdev device based on rpdev
-> + * rpmsg_ctrl_register_device() - register a char device for control based on rpdev
->   * @rpdev:	prepared rpdev to be used for creating endpoints
->   *
->   * This function wraps rpmsg_register_device() preparing the rpdev for use as
->   * basis for the rpmsg chrdev.
->   */
-> -static inline int rpmsg_chrdev_register_device(struct rpmsg_device *rpdev)
-> +static inline int rpmsg_ctrl_register_device(struct rpmsg_device *rpdev)
->  {
-> -	strcpy(rpdev->id.name, "rpmsg_chrdev");
-> -	rpdev->driver_override = "rpmsg_chrdev";
-> +	strcpy(rpdev->id.name, "rpmsg_ctrl");
-> +	rpdev->driver_override = "rpmsg_ctrl";
-> +	rpdev->src = RPMSG_ADDR_ANY;
-> +	rpdev->dst = RPMSG_ADDR_ANY;
->  
->  	return rpmsg_register_device(rpdev);
->  }
-> -- 
-> 2.17.1
+> Thank, this makes a lot of sense to me and (unfortunately) I'm familiar with
+> this concept on some of x86 cheap tablets.
 > 
+> Since the mapping of those wake IRQs is totally platform specific, it needs a
+> platform driver. On above mentioned x86 platforms we have a one you may take as
+> an example (good or bad it's another story):
+> drivers/platform/x86/intel_int0002_vgpio.c.
+> 
+> I think you will need something like this somewhere in ARM platform
+> infrastructure in the Linux kernel.
+> 
+> That said, I don't see that those numbers are "broken", they have their own
+> meaning and specific mapping to the real GPIOs and it's so platform specific,
+> that we can't treat it as a quirk.
+> 
+> Thanks, Jeffrey, it is helpful!
+> 
+>>>>>> [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/pinctrl/qcom/pinctrl-msm.c#n713
+>>>>>> [2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/pinctrl/qcom/pinctrl-sc8180x.c
+> 
+
+
+-- 
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
