@@ -2,31 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 53B8632C1B4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 01:03:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A076D32C1B8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 01:03:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1389505AbhCCVie (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Mar 2021 16:38:34 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:63569 "EHLO z11.mailgun.us"
+        id S1389509AbhCCVik (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Mar 2021 16:38:40 -0500
+Received: from m42-2.mailgun.net ([69.72.42.2]:12215 "EHLO m42-2.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237197AbhCCMVz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Mar 2021 07:21:55 -0500
+        id S1352050AbhCCMWJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 3 Mar 2021 07:22:09 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1614774091; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=arIjeh1oJBbBzDIaWsXKQ4a2CukVItpaCqWDSq2ybZo=; b=coRkfrcuRWFuqiD/21F0fcUiiMC+JJi3sehOmhjc/I5bsXJhQEp9K7/SFRjKLA+HdxjclKjn
- CL2FqbjS0phb9z0Bi0TuY29tMTYJj7F4/S/DkF7qdc4R1ZdGSGnU5s7DAlacGkJ2KfpaPwaW
- bYvI2vIFf0PhW/UydqACMoKsh1w=
-X-Mailgun-Sending-Ip: 104.130.96.11
+ s=smtp; t=1614774107; h=References: In-Reply-To: Message-Id: Date:
+ Subject: Cc: To: From: Sender;
+ bh=0Mc1HNkrjRoD5vfjPvjjg0IvFV/ypXXufzztwtwB55c=; b=lhqt5n1lkGEW+zJo3YcnQ3llgD1Sue46bfU4kqQUN/ym+21c/5e/FBFIxahuHvhsL3AXgg0+
+ L+BJHLlxpoCdgH7fSmLzdYUCywQiy9sm2/t2PeOVmixqnTBJ3/zxA/P47n+qlsC6Jmg1ZHcD
+ hRFfdByQYI4R3Iitc61Wjw+sJY0=
+X-Mailgun-Sending-Ip: 69.72.42.2
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 603f7f2f4fd7814d5f40594b (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 03 Mar 2021 12:21:03
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 603f7f3284ab6e6c86b9d12d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 03 Mar 2021 12:21:06
  GMT
 Sender: rnayak=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BDDABC433ED; Wed,  3 Mar 2021 12:21:02 +0000 (UTC)
+        id C33E9C43462; Wed,  3 Mar 2021 12:21:05 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -36,9 +37,9 @@ Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Out
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D18BBC433CA;
-        Wed,  3 Mar 2021 12:20:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D18BBC433CA
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CE9FAC43461;
+        Wed,  3 Mar 2021 12:21:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CE9FAC43461
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=rnayak@codeaurora.org
 From:   Rajendra Nayak <rnayak@codeaurora.org>
@@ -46,51 +47,48 @@ To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, swboyd@chromium.org,
         Rajendra Nayak <rnayak@codeaurora.org>
-Subject: [PATCH v2 00/14] Add binding updates and DT files for SC7280 SoC
-Date:   Wed,  3 Mar 2021 17:47:44 +0530
-Message-Id: <1614773878-8058-1-git-send-email-rnayak@codeaurora.org>
+Subject: [PATCH v2 01/14] dt-bindings: arm: qcom: Document sc7280 SoC and board
+Date:   Wed,  3 Mar 2021 17:47:45 +0530
+Message-Id: <1614773878-8058-2-git-send-email-rnayak@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1614773878-8058-1-git-send-email-rnayak@codeaurora.org>
+References: <1614773878-8058-1-git-send-email-rnayak@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series includes a few minor binding updates and base device tree
-files (to boot to shell) for SC7280 SoC and the IDP board using this SoC.
+Document the sc7280 SoC and the IDP board bindings
 
-Maulik Shah (3):
-  arm64: dts: qcom: sc7280: Add RSC and PDC devices
-  arm64: dts: qcom: Add reserved memory for fw
-  arm64: dts: qcom: sc7280: Add cpuidle states
+Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+---
+ Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Rajendra Nayak (6):
-  dt-bindings: arm: qcom: Document sc7280 SoC and board
-  dt-bindings: firmware: scm: Add sc7280 support
-  arm64: dts: sc7280: Add basic dts/dtsi files for sc7280 soc
-  dt-bindings: qcom,pdc: Add compatible for sc7280
-  arm64: dts: qcom: SC7280: Add rpmhcc clock controller node
-  arm64: dts: qcom: sc7280: Add rpmh power-domain node
-
-Sai Prakash Ranjan (4):
-  dt-bindings: arm-smmu: Add compatible for SC7280 SoC
-  arm64: dts: qcom: sc7280: Add device node for APPS SMMU
-  dt-bindings: watchdog: Add compatible for SC7280 SoC
-  arm64: dts: qcom: sc7280: Add APSS watchdog node
-
-satya priya (1):
-  arm64: dts: qcom: sc7280: Add SPMI PMIC arbiter device for SC7280
-
- Documentation/devicetree/bindings/arm/qcom.yaml    |   6 +
- .../devicetree/bindings/firmware/qcom,scm.txt      |   1 +
- .../bindings/interrupt-controller/qcom,pdc.txt     |   1 +
- .../devicetree/bindings/iommu/arm,smmu.yaml        |   1 +
- .../devicetree/bindings/watchdog/qcom-wdt.yaml     |   1 +
- arch/arm64/boot/dts/qcom/Makefile                  |   1 +
- arch/arm64/boot/dts/qcom/sc7280-idp.dts            |  47 ++
- arch/arm64/boot/dts/qcom/sc7280.dtsi               | 609 +++++++++++++++++++++
- 8 files changed, 667 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sc7280-idp.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7280.dtsi
-
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 174134f..847f102 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -37,6 +37,7 @@ description: |
+         msm8994
+         msm8996
+         sc7180
++        sc7280
+         sdm630
+         sdm660
+         sdm845
+@@ -166,6 +167,11 @@ properties:
+ 
+       - items:
+           - enum:
++              - qcom,sc7280-idp
++          - const: qcom,sc7280
++
++      - items:
++          - enum:
+               - xiaomi,lavender
+           - const: qcom,sdm660
+ 
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
