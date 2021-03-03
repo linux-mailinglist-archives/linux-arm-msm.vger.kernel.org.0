@@ -2,88 +2,203 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 000D332C24B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 01:04:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 21F3332C24D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 01:04:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1389869AbhCCVsU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Mar 2021 16:48:20 -0500
-Received: from mail-ed1-f42.google.com ([209.85.208.42]:33531 "EHLO
-        mail-ed1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244018AbhCCSmb (ORCPT
+        id S1389872AbhCCVsY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Mar 2021 16:48:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33038 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1383252AbhCCSoa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Mar 2021 13:42:31 -0500
-Received: by mail-ed1-f42.google.com with SMTP id c6so31446669ede.0;
-        Wed, 03 Mar 2021 10:41:12 -0800 (PST)
+        Wed, 3 Mar 2021 13:44:30 -0500
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06186C061760
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Mar 2021 10:43:48 -0800 (PST)
+Received: by mail-pj1-x102c.google.com with SMTP id d2so4914013pjs.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Mar 2021 10:43:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=gVzR7oLstl6ac4ZTkA4CIGL1WR32C+kvWFg+bT72InI=;
+        b=Kdp0z6TouC9vsp6Gaa4T0X4l/lsXsHfBSgHsbjgBgBPnZs72XvLOn3wMnlX2wWvV+U
+         zAMijtl3Db+skGKokSbjFctHPeDghD+JPckIzTRM+Fx2LFOFfIymQelQrxwLgZlOYD4j
+         YO2yBXWtCdBIUxFcBE1BbMM/MVUOP60rUwUdqaOe9MTiaIxQZBVKN3o3iJyV5pEm3h1U
+         pz+M9M2KJbAiQoZiDGGSSqkcchEre8O5f/3u2SuaFDxXZBbBV4J74E4O05bgZTa54tad
+         9oD8BVbYvPaWNc7HCsQkWiYbEST7gerlhWe9ONUT1GMXJcWy7IjXVQfVNn3IHTPjp0rS
+         lpjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=i+wsmGB3nPUNErG75HhRRgO2R+I8z7au1VtRNGbI3kU=;
-        b=USTmclFUCtO+GoKg8ArxNL9oWlx7aRioRC08snJnSxPNBZqPhGsyaFh1iSPCry7Fi7
-         0vOKdY/jK6CYzS9xj9d1PFkaNoJh9fYBcqWvQka0+BcgcS1pfj4mnTevIwoGWT9zzheu
-         YGQWdXy3bvvkQsPJNEOBRIZ5P5xzHgp+mTbuss+WlBX9Xhk1ATXZxby71E+G9aoF2NhQ
-         XHXjXrhZBgrRi2PdeHgnmjuCVuzW2WmoQXH5ubR6/G+UraDr/YaErGLj6kbJQTK5/5Cr
-         VvMF87ZEeAmLek1cEAux26YYSxNtoGSWPinIWFI+ei88vDBMWEr/jgWcM88pZ3n5+2mo
-         bzUg==
-X-Gm-Message-State: AOAM532HsOujRyieeXaH9xP4Z3LWfCO5ko90HSgFiMJnSqtuKxWxqU9w
-        n0EFDX8c2ZS/yFHyEnLH+l/D6NMWzCs=
-X-Google-Smtp-Source: ABdhPJzXlIPSof8TuEU/xmd9uwKvcnqjSaqVZ9KBEX0z0xFsdcZ3JuEcemsbVzh06mpoU6nkjncGFQ==
-X-Received: by 2002:adf:c40b:: with SMTP id v11mr28144512wrf.320.1614795584154;
-        Wed, 03 Mar 2021 10:19:44 -0800 (PST)
-Received: from kozik-lap (adsl-84-226-167-205.adslplus.ch. [84.226.167.205])
-        by smtp.googlemail.com with ESMTPSA id m14sm6511797wmi.27.2021.03.03.10.19.42
+        bh=gVzR7oLstl6ac4ZTkA4CIGL1WR32C+kvWFg+bT72InI=;
+        b=MxyZTBL9gB5PKlf/e7xN9rrTyqnxX7dxV4S5iRQJ3f4g+j7+gb9sq8vhil/DpRaajY
+         7mMGR0nO1Im/3+ks90upi3FGaYigLiDVDuzjfBilZMVSu8T/prs8oWusAZSTO65mHgMZ
+         5BxvfNPwz7wTf94RvxvgbL/Zn1B//6RN5jp928sHrAXkArLXqrgVK1Dox5oO6FQK3k0e
+         e01h7yxB5kPowGyQaYJauKleosaryy3LLIRoPa+BPafkvA4lVi7zcEwGN2CqRmdX1bDX
+         7w0jP2LZxuG2WlZeQPu1m6ZYyCPZkqssqul5aUA84KdFufXEdvAoUr4NoffaAhv0BcCF
+         QGKA==
+X-Gm-Message-State: AOAM533iaxegFjQYTFElTQ09w7IblIGohzPYNwJeCt4kIMcLz3Dx+eft
+        YeXSFm73P/I3ZkVvga13dmSX5Q==
+X-Google-Smtp-Source: ABdhPJyaZX7NAFW2wCjv1k35xfC/hJogQ35MtOZEOH1TxdzZzw44BBaFYPLSKZlYUZq4CWNEHQPUwQ==
+X-Received: by 2002:a17:90a:4882:: with SMTP id b2mr474911pjh.69.1614797028306;
+        Wed, 03 Mar 2021 10:43:48 -0800 (PST)
+Received: from xps15 (S0106889e681aac74.cg.shawcable.net. [68.147.0.187])
+        by smtp.gmail.com with ESMTPSA id v126sm23944372pfv.163.2021.03.03.10.43.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Mar 2021 10:19:43 -0800 (PST)
-Date:   Wed, 3 Mar 2021 19:19:41 +0100
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Chanwoo Choi <cw00.choi@samsung.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
+        Wed, 03 Mar 2021 10:43:47 -0800 (PST)
+Date:   Wed, 3 Mar 2021 11:43:45 -0700
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-rtc@vger.kernel.org
-Cc:     Iskren Chernev <iskren.chernev@gmail.com>,
-        Matheus Castello <matheus@castello.eng.br>,
-        Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
-        Angus Ainslie <angus@akkea.ca>,
-        Hans de Goede <hdegoede@redhat.com>
-Subject: Re: [PATCH 01/18] ARM: dts: exynos: correct fuel gauge interrupt
- trigger level on GT-I9100
-Message-ID: <20210303181941.yercebdxswdetf3q@kozik-lap>
-References: <20201210212534.216197-1-krzk@kernel.org>
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v5 11/16] rpmsg: virtio: register the rpmsg_ctrl device
+Message-ID: <20210303184345.GD3817330@xps15>
+References: <20210219111501.14261-1-arnaud.pouliquen@foss.st.com>
+ <20210219111501.14261-12-arnaud.pouliquen@foss.st.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201210212534.216197-1-krzk@kernel.org>
+In-Reply-To: <20210219111501.14261-12-arnaud.pouliquen@foss.st.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 10, 2020 at 10:25:17PM +0100, Krzysztof Kozlowski wrote:
-> The Maxim fuel gauge datasheets describe the interrupt line as active
-> low with a requirement of acknowledge from the CPU.  The falling edge
-> interrupt will mostly work but it's not correct.
+On Fri, Feb 19, 2021 at 12:14:56PM +0100, Arnaud Pouliquen wrote:
+> Instantiate the rpmsg_ioctl device on virtio RPMsg bus creation.
+
+s/rpmsg_ioctl/rpmsg_ctrl
+
+Now I understand what you meant in patch 05.
+
+> This provides the possibility to expose the RPMSG_CREATE_EPT_IOCTL
+> to create RPMsg chdev endpoints.
+
+You mean RPMSG device endpoints, i.e rpmsg_eptdev?  If so I think it should be
+added to the changelog.  Otherwiser someone could be tempted to look for "chdev"
+and find anything but a rpmsg_eptdev.
+
 > 
-> Fixes: 8620cc2f99b7 ("ARM: dts: exynos: Add devicetree file for the Galaxy S2")
-> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+> Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
+> 
 > ---
->  arch/arm/boot/dts/exynos4210-i9100.dts | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> V5:
+> Fix compilation issue
+> Reported-by: kernel test robot <lkp@intel.com>
+> Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+> ---
+>  drivers/rpmsg/virtio_rpmsg_bus.c | 57 +++++++++++++++++++++++++++++---
+>  1 file changed, 52 insertions(+), 5 deletions(-)
 > 
+> diff --git a/drivers/rpmsg/virtio_rpmsg_bus.c b/drivers/rpmsg/virtio_rpmsg_bus.c
+> index e87d4cf926eb..2e6b34084012 100644
+> --- a/drivers/rpmsg/virtio_rpmsg_bus.c
+> +++ b/drivers/rpmsg/virtio_rpmsg_bus.c
+> @@ -813,14 +813,52 @@ static void rpmsg_xmit_done(struct virtqueue *svq)
+>  	wake_up_interruptible(&vrp->sendq);
+>  }
+>  
+> +static struct rpmsg_device *rpmsg_virtio_add_ctrl_dev(struct virtio_device *vdev)
+> +{
+> +	struct virtproc_info *vrp = vdev->priv;
+> +	struct virtio_rpmsg_channel *vch;
+> +	struct rpmsg_device *rpdev_ctrl;
+> +	int err = 0;
+> +
+> +	vch = kzalloc(sizeof(*vch), GFP_KERNEL);
+> +	if (!vch)
+> +		return ERR_PTR(-ENOMEM);
+> +
+> +	/* Link the channel to the vrp */
+> +	vch->vrp = vrp;
+> +
+> +	/* Assign public information to the rpmsg_device */
+> +	rpdev_ctrl = &vch->rpdev;
+> +	rpdev_ctrl->ops = &virtio_rpmsg_ops;
+> +
+> +	rpdev_ctrl->dev.parent = &vrp->vdev->dev;
+> +	rpdev_ctrl->dev.release = virtio_rpmsg_release_device;
+> +	rpdev_ctrl->little_endian = virtio_is_little_endian(vrp->vdev);
+> +
+> +	err = rpmsg_ctrl_register_device(rpdev_ctrl);
+> +	if (err) {
+> +		kfree(vch);
+> +		return ERR_PTR(err);
+> +	}
+> +
+> +	return rpdev_ctrl;
+> +}
+> +
+> +static void rpmsg_virtio_del_ctrl_dev(struct rpmsg_device *rpdev_ctrl)
+> +{
+> +	if (!rpdev_ctrl)
+> +		return;
+> +	kfree(to_virtio_rpmsg_channel(rpdev_ctrl));
+> +}
+> +
+>  static int rpmsg_probe(struct virtio_device *vdev)
+>  {
+>  	vq_callback_t *vq_cbs[] = { rpmsg_recv_done, rpmsg_xmit_done };
+>  	static const char * const names[] = { "input", "output" };
+>  	struct virtqueue *vqs[2];
+>  	struct virtproc_info *vrp;
+> -	struct virtio_rpmsg_channel *vch;
+> -	struct rpmsg_device *rpdev_ns;
+> +	struct virtio_rpmsg_channel *vch = NULL;
+> +	struct rpmsg_device *rpdev_ns = NULL, *rpdev_ctrl;
 
-Applied 1-10 (Exynos and S5P dts patches).
+As far as I can tell @rpdev_ns doesn't have to be initialized.
 
-Best regards,
-Krzysztof
+>  	void *bufs_va;
+>  	int err = 0, i;
+>  	size_t total_buf_space;
+> @@ -894,12 +932,18 @@ static int rpmsg_probe(struct virtio_device *vdev)
+>  
+>  	vdev->priv = vrp;
+>  
+> +	rpdev_ctrl = rpmsg_virtio_add_ctrl_dev(vdev);
+> +	if (IS_ERR(rpdev_ctrl)) {
+> +		err = PTR_ERR(rpdev_ctrl);
+> +		goto free_coherent;
+> +	}
+> +
+>  	/* if supported by the remote processor, enable the name service */
+>  	if (virtio_has_feature(vdev, VIRTIO_RPMSG_F_NS)) {
+>  		vch = kzalloc(sizeof(*vch), GFP_KERNEL);
+>  		if (!vch) {
+>  			err = -ENOMEM;
+> -			goto free_coherent;
+> +			goto free_ctrldev;
+>  		}
+>  
+>  		/* Link the channel to our vrp */
+> @@ -915,7 +959,7 @@ static int rpmsg_probe(struct virtio_device *vdev)
+>  
+>  		err = rpmsg_ns_register_device(rpdev_ns);
+>  		if (err)
+> -			goto free_coherent;
+> +			goto free_vch;
+>  	}
+>  
+>  	/*
+> @@ -939,8 +983,11 @@ static int rpmsg_probe(struct virtio_device *vdev)
+>  
+>  	return 0;
+>  
+> -free_coherent:
+> +free_vch:
+>  	kfree(vch);
+> +free_ctrldev:
+> +	rpmsg_virtio_del_ctrl_dev(rpdev_ctrl);
+> +free_coherent:
+>  	dma_free_coherent(vdev->dev.parent, total_buf_space,
+>  			  bufs_va, vrp->bufs_dma);
+>  vqs_del:
+> -- 
+> 2.17.1
+> 
