@@ -2,193 +2,225 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DF4932C15C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 01:02:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4154732C160
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 01:02:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1388981AbhCCVbv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Mar 2021 16:31:51 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:56504 "EHLO z11.mailgun.us"
+        id S1389107AbhCCVcm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Mar 2021 16:32:42 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:22676 "EHLO z11.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1840732AbhCCEch (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Mar 2021 23:32:37 -0500
+        id S234744AbhCCFEd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 3 Mar 2021 00:04:33 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1614745937; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=8de6SU8LERMt+uXN76aXoq2VfDor2GQ9K83y5pTYVaM=;
- b=K9SRgoJ+xpqDdbuav7e/sxjmLaE/6TXbn8VeCYCexj/an/SVIqp8ooqICbdfoQ0PyRcXPUgd
- YOlM/xyRNkqMygtAEUe/urr+r09ErjqM8zAeIIYTlB6S/yehASQHzx9afJGHScSeLnms/SLN
- 2XAtirW9ae9WSoXqr1R7kf1oReE=
+ s=smtp; t=1614747802; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=DgHG6UchEqSuAHgA1YD7PCkIm0DL6U3dowHnKc88aKA=; b=UDtRIfhlFmvhWZJ5VxXRv9q97vl+VmDSpVrgywa1A46ADQn/6Er1F8jinvRpzwjj/b4WPVRs
+ Czzyt/pSY+R5em8Q/HOHikuO7wHvGnSBSNg8xEjvvQN3WRevzNBjClr7x+lAaxaFpC0NpKkC
+ ycoGYa9hG0zNa2Lg1TnQPBBFyIM=
 X-Mailgun-Sending-Ip: 104.130.96.11
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 603f11346639e8e6857ec706 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 03 Mar 2021 04:31:48
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 603f187cc008ffc73a20c719 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 03 Mar 2021 05:02:52
  GMT
-Sender: cang=codeaurora.org@mg.codeaurora.org
+Sender: jhugo=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id EFE5BC43462; Wed,  3 Mar 2021 04:31:47 +0000 (UTC)
+        id 9D42EC43463; Wed,  3 Mar 2021 05:02:52 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: cang)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D871DC433C6;
-        Wed,  3 Mar 2021 04:31:46 +0000 (UTC)
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B7C57C433C6;
+        Wed,  3 Mar 2021 05:02:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B7C57C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH] gpiolib: acpi: support override broken GPIO number in
+ ACPI table
+To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Shawn Guo <shawn.guo@linaro.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Mika Westerberg <mika.westerberg@linux.intel.com>,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+References: <20210226033919.8871-1-shawn.guo@linaro.org>
+ <CAHp75Vcb=NO9OWjSpBeVC4c+9=aXE=yiDWVBwLD1DnzwdgFD6Q@mail.gmail.com>
+ <20210226093925.GA24428@dragon>
+ <CAHp75Vc6xYv+197SOrSefQHD2h4Xy_N20gQajW4uF2PU=sJfLg@mail.gmail.com>
+ <YDjZOU+VMWasjzUb@smile.fi.intel.com> <20210227031944.GB24428@dragon>
+ <YDzbQqHspfvpYS7Z@smile.fi.intel.com> <20210302002725.GE24428@dragon>
+ <YD4twyAGvDDOCv+n@smile.fi.intel.com>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <abbfcdfa-c287-3828-ed6f-bc1e1f13c6b2@codeaurora.org>
+Date:   Tue, 2 Mar 2021 22:02:49 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <YD4twyAGvDDOCv+n@smile.fi.intel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Date:   Wed, 03 Mar 2021 12:31:46 +0800
-From:   Can Guo <cang@codeaurora.org>
-To:     Asutosh Das <asutoshd@codeaurora.org>
-Cc:     martin.petersen@oracle.com, adrian.hunter@intel.com,
-        linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Bean Huo <beanhuo@micron.com>,
-        Jaegeuk Kim <jaegeuk@kernel.org>,
-        Nitin Rawat <nitirawa@codeaurora.org>,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v10 2/2] ufs: sysfs: Resume the proper scsi device
-In-Reply-To: <5d7c0cd1ff4bc5295015244f057d252fe9040993.1614725302.git.asutoshd@codeaurora.org>
-References: <cover.1614725302.git.asutoshd@codeaurora.org>
- <5d7c0cd1ff4bc5295015244f057d252fe9040993.1614725302.git.asutoshd@codeaurora.org>
-Message-ID: <61ea8834f91d4582c93608d18352686a@codeaurora.org>
-X-Sender: cang@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-03-03 06:52, Asutosh Das wrote:
-> Resumes the actual scsi device the unit descriptor of which
-> is being accessed instead of the hba alone.
+On 3/2/2021 5:21 AM, Andy Shevchenko wrote:
+> On Tue, Mar 02, 2021 at 08:27:26AM +0800, Shawn Guo wrote:
+>> On Mon, Mar 01, 2021 at 02:17:06PM +0200, Andy Shevchenko wrote:
+>>> On Sat, Feb 27, 2021 at 11:19:45AM +0800, Shawn Guo wrote:
+>>>> On Fri, Feb 26, 2021 at 01:19:21PM +0200, Andy Shevchenko wrote:
+>>>>> On Fri, Feb 26, 2021 at 12:57:37PM +0200, Andy Shevchenko wrote:
+>>>>>> On Fri, Feb 26, 2021 at 11:39 AM Shawn Guo <shawn.guo@linaro.org> wrote:
+>>>>>>> On Fri, Feb 26, 2021 at 11:12:07AM +0200, Andy Shevchenko wrote:
+>>>>>>>> On Fri, Feb 26, 2021 at 5:42 AM Shawn Guo <shawn.guo@linaro.org> wrote:
+>>>>>>>>> Running kernel with ACPI on Lenovo Flex 5G laptop, touchpad is just
+>>>>>>>>> not working.  That's because the GpioInt number of TSC2 node in ACPI
+>>>>>>>>> table is simply wrong, and the number even exceeds the maximum GPIO
+>>>>>>>>> lines.  As the touchpad works fine with Windows on the same machine,
+>>>>>>>>> presumably this is something Windows-ism.  Although it's obviously
+>>>>>>>>> a specification violation, believe of that Microsoft will fix this in
+>>>>>>>>> the near future is not really realistic.
+>>>>>>>>>
+>>>>>>>>> It adds the support of overriding broken GPIO number in ACPI table
+>>>>>>>>> on particular machines, which are matched using DMI info.  Such
+>>>>>>>>> mechanism for fixing up broken firmware and ACPI table is not uncommon
+>>>>>>>>> in kernel.  And hopefully it can be useful for other machines that get
+>>>>>>>>> broken GPIO number coded in ACPI table.
+>>>>>>>>
+>>>>>>>> Thanks for the report and patch.
+>>>>>>>>
+>>>>>>>> First of all, have you reported the issue to Lenovo? At least they
+>>>>>>>> will know that they did wrong.
+>>>>>>>
+>>>>>>> Yes, we are reporting this to Lenovo, but to be honest, we are not sure
+>>>>>>> how much they will care about it, as they are shipping the laptop with
+>>>>>>> Windows only.
+>>>>>>>
+>>>>>>>> Second, is it possible to have somewhere output of `acpidump -o
+>>>>>>>> flex5g.dat` (the flex5g.dat file)?
+>>>>>>>
+>>>>>>> https://raw.githubusercontent.com/aarch64-laptops/build/master/misc/lenovo-flex-5g/dsdt.dsl
+>>>>>
+>>>>> Looking into DSDT I think the problem is much worse. First of all there are
+>>>>> many cases where pins like 0x140, 0x1c0, etc are being used. On top of that
+>>>>> there is no GPIO driver in the upstream (as far as I can see by HID, perhaps
+>>>>> there is a driver but for different HID. And I see that GPIO device consumes a
+>>>>> lot of Interrupts from GIC as well (it's ARM platfrom as far as I understand).
+>>>>
+>>>> Yes, it's a laptop built on Qualcomm Snapdragon SC8180X SoC.  The GPIO
+>>>> driver is generic for all Snapdragon SoCs, and has been available in
+>>>> upstream for many years (for DT though). It can be found as the gpio_chip
+>>>> implementation in MSM pinctrl driver [1].  The SC8180X specific part can
+>>>> be found as pinctrl-sc8180x.c [2], and it's already working for DT boot.
+>>>> The only missing piece is to add "QCOM040D" as the acpi_device_id to
+>>>> support ACPI boot, and it will be submitted after 5.12-rc1 comes out.
+>>>>
+>>>>> Looking at the Microsoft brain damaged way of understanding GPIOs and hardware
+>>>>> [1], I am afraid you really want to have a specific GPIO driver for this. So,
+>>>>> for now until we have better picture of what's going on, NAK to this patch.
+>>>>
+>>>> Thanks for the pointer to Microsoft document.  On Snapdragon, we have
+>>>> only one GPIO instance that accommodates all GPIO pins, so I'm not sure
+>>>> that Microsoft GPIOs mapping layer is relevant here at all.
+>>>>
+>>>> Please take a look at the GPIO driver, and feel free to let me know if
+>>>> you need any further information to understand what's going on.
+>>>
+>>> Yes, I looked into the driver and see that it has 3 blocks of GPIOs (we call
+>>> them communities, but in the driver the term 'tiles' is used) AFAIU (correct me
+>>> if I'm wrong). And who knows how many banks in each of them.
+>>
+>> I'm not sure that the 3 'tiles' means 3 blocks of GPIOs.  Maybe, @Bjorn
+>> can help clarify.  But the ACPI table shows that there is only 'GIO0'
+>> with 'QCOM040D' HID.
 > 
-> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
+> Yeah, I already got that ACPI there is screwed up...
+> 
+>>> I'm afraid that MS does on his way and not yours.
+>>>
+>>> Can we have TRM for GPIO IP used there and any evidence / document from
+>>> firmware team about the implementation of the GPIO numbering in the ACPI
+>>> (at Intel we have so called BIOS Writers Guide that is given to the customers
+>>> where such info can be found)?
+>>
+>> Unfortunately, I do not have the access to any sort of these documents.
+>> But I looped in Jeffrey who is part of Qualcomm kernel/firmware team,
+>> and should be able to help clarify GPIO numbering in the ACPI table.
+> 
+> Thanks! Will wait for new information then.
 
-Reviewed-by: Can Guo <cang@codeaurora.org>
+Sorry, just joining the thread now.  Hopefully I'm addressing everything 
+targeted at me.
 
-> ---
->  drivers/scsi/ufs/ufs-sysfs.c | 30 +++++++++++++++++-------------
->  1 file changed, 17 insertions(+), 13 deletions(-)
+I used to do kernel work on MSMs, then kernel work on server CPUs, but 
+now I do kernel work on AI accelerators.  Never was on the firmware 
+team, but I have a lot of contacts in those areas.  On my own time, I 
+support Linux on the Qualcomm laptops.
+
+Its not MS that needs to fix things (although there is plenty of things 
+I could point to that MS could fix), its the Qualcomm Windows FW folks. 
+  They have told me a while ago they were planning on fixing this issue 
+on some future chipset, but apparently that hasn't happened yet.  Sadly, 
+once these laptops ship, they are in a frozen maintenance mode.
+
+In my opinion, MS has allowed Qualcomm to get away with doing bad things 
+in ACPI on the Qualcomm laptops.  The ACPI is not a true hardware 
+description that is OS agnostic as it should be, and probably violates 
+the spec in many ways.  Instead, the ACPI is written against the Windows 
+drivers, and has a lot of OS driver crap pushed into it.
+
+The GPIO description is one such thing.
+
+As I understand it, any particular SoC will have a number of GPIOs 
+supported by the TLMM.  0 - N.  Linux understands this.  However, in the 
+ACPI of the Qualcomm Windows laptops, you will likely find atleast one 
+GPIO number which exceeds this N.  These are "virtual" GPIOs, and are a 
+construct of the Windows Qualcomm TLMM driver and how it interfaces with 
+the frameworks within Windows.
+
+Some GPIO lines can be configured as wakeup sources by routing them to a 
+specific hardware block in the SoC (which block it is varies from SoC to 
+SoC).  Windows has a specific weird way of handling this which requires 
+a unique "GPIO chip" to handle.  GPIO chips in Windows contain 32 GPIOs, 
+so for each wakeup GPIO, the TLMM driver creates a GPIO chip 
+(essentially creating 32 GPIOs), and assigns the added GPIOs numbers 
+which exceed N.  The TLMM driver has an internal mapping of which 
+virtual GPIO number corresponds to which real GPIO.
+
+So, ACPI says that some peripheral has GPIO N+X, which is not a real 
+GPIO.  That peripheral goes and requests that GPIO, which gets routed to 
+the TLMM driver, and the TLMM driver translates that number to the real 
+GPIO, and provides the reference back to the peripheral, while also 
+setting up the special wakeup hardware.
+
+So, N+1 is the first supported wakup GPIO, N+1+32 is the next one, then 
+N+1+32+32, and so on.
+
+I see how this creates a nice mess for running Linux on these laptops, 
+but I don't have a good idea how to work around it.  Per SoC, you'd need 
+to know the mapping and translate it for ACPI when running the Windows 
+version of the FW (yes most Qualcomm MSMs have OS specific firmware), 
+but reject such gpio numbers when running other firmware, or I guess on 
+different targets.
+
 > 
-> diff --git a/drivers/scsi/ufs/ufs-sysfs.c 
-> b/drivers/scsi/ufs/ufs-sysfs.c
-> index acc54f5..3fc182b 100644
-> --- a/drivers/scsi/ufs/ufs-sysfs.c
-> +++ b/drivers/scsi/ufs/ufs-sysfs.c
-> @@ -245,9 +245,9 @@ static ssize_t wb_on_store(struct device *dev,
-> struct device_attribute *attr,
->  		goto out;
->  	}
+>>>> [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/pinctrl/qcom/pinctrl-msm.c#n713
+>>>> [2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/pinctrl/qcom/pinctrl-sc8180x.c
 > 
-> -	pm_runtime_get_sync(hba->dev);
-> +	scsi_autopm_get_device(hba->sdev_ufs_device);
->  	res = ufshcd_wb_ctrl(hba, wb_enable);
-> -	pm_runtime_put_sync(hba->dev);
-> +	scsi_autopm_put_device(hba->sdev_ufs_device);
->  out:
->  	up(&hba->host_sem);
->  	return res < 0 ? res : count;
-> @@ -297,10 +297,10 @@ static ssize_t ufs_sysfs_read_desc_param(struct
-> ufs_hba *hba,
->  		goto out;
->  	}
-> 
-> -	pm_runtime_get_sync(hba->dev);
-> +	scsi_autopm_get_device(hba->sdev_ufs_device);
->  	ret = ufshcd_read_desc_param(hba, desc_id, desc_index,
->  				param_offset, desc_buf, param_size);
-> -	pm_runtime_put_sync(hba->dev);
-> +	scsi_autopm_put_device(hba->sdev_ufs_device);
->  	if (ret) {
->  		ret = -EINVAL;
->  		goto out;
-> @@ -678,7 +678,7 @@ static ssize_t _name##_show(struct device 
-> *dev,				\
->  		up(&hba->host_sem);					\
->  		return -ENOMEM;						\
->  	}								\
-> -	pm_runtime_get_sync(hba->dev);					\
-> +	scsi_autopm_get_device(hba->sdev_ufs_device);			\
->  	ret = ufshcd_query_descriptor_retry(hba,			\
->  		UPIU_QUERY_OPCODE_READ_DESC, QUERY_DESC_IDN_DEVICE,	\
->  		0, 0, desc_buf, &desc_len);				\
-> @@ -695,7 +695,7 @@ static ssize_t _name##_show(struct device 
-> *dev,				\
->  		goto out;						\
->  	ret = sysfs_emit(buf, "%s\n", desc_buf);			\
->  out:									\
-> -	pm_runtime_put_sync(hba->dev);					\
-> +	scsi_autopm_put_device(hba->sdev_ufs_device);			\
->  	kfree(desc_buf);						\
->  	up(&hba->host_sem);						\
->  	return ret;							\
-> @@ -744,10 +744,10 @@ static ssize_t _name##_show(struct device 
-> *dev,				\
->  	}								\
->  	if (ufshcd_is_wb_flags(QUERY_FLAG_IDN##_uname))			\
->  		index = ufshcd_wb_get_query_index(hba);			\
-> -	pm_runtime_get_sync(hba->dev);					\
-> +	scsi_autopm_get_device(hba->sdev_ufs_device);			\
->  	ret = ufshcd_query_flag(hba, UPIU_QUERY_OPCODE_READ_FLAG,	\
->  		QUERY_FLAG_IDN##_uname, index, &flag);			\
-> -	pm_runtime_put_sync(hba->dev);					\
-> +	scsi_autopm_put_device(hba->sdev_ufs_device);			\
->  	if (ret) {							\
->  		ret = -EINVAL;						\
->  		goto out;						\
-> @@ -813,10 +813,10 @@ static ssize_t _name##_show(struct device 
-> *dev,				\
->  	}								\
->  	if (ufshcd_is_wb_attrs(QUERY_ATTR_IDN##_uname))			\
->  		index = ufshcd_wb_get_query_index(hba);			\
-> -	pm_runtime_get_sync(hba->dev);					\
-> +	scsi_autopm_get_device(hba->sdev_ufs_device);			\
->  	ret = ufshcd_query_attr(hba, UPIU_QUERY_OPCODE_READ_ATTR,	\
->  		QUERY_ATTR_IDN##_uname, index, 0, &value);		\
-> -	pm_runtime_put_sync(hba->dev);					\
-> +	scsi_autopm_put_device(hba->sdev_ufs_device);			\
->  	if (ret) {							\
->  		ret = -EINVAL;						\
->  		goto out;						\
-> @@ -899,11 +899,15 @@ static ssize_t _pname##_show(struct device 
-> *dev,			\
->  	struct scsi_device *sdev = to_scsi_device(dev);			\
->  	struct ufs_hba *hba = shost_priv(sdev->host);			\
->  	u8 lun = ufshcd_scsi_to_upiu_lun(sdev->lun);			\
-> +	int ret;							\
->  	if (!ufs_is_valid_unit_desc_lun(&hba->dev_info, lun,		\
->  				_duname##_DESC_PARAM##_puname))		\
->  		return -EINVAL;						\
-> -	return ufs_sysfs_read_desc_param(hba, QUERY_DESC_IDN_##_duname,	\
-> +	scsi_autopm_get_device(sdev);					\
-> +	ret = ufs_sysfs_read_desc_param(hba, QUERY_DESC_IDN_##_duname,	\
->  		lun, _duname##_DESC_PARAM##_puname, buf, _size);	\
-> +	scsi_autopm_put_device(sdev);					\
-> +	return ret;							\
->  }									\
->  static DEVICE_ATTR_RO(_pname)
-> 
-> @@ -964,10 +968,10 @@ static ssize_t
-> dyn_cap_needed_attribute_show(struct device *dev,
->  		goto out;
->  	}
-> 
-> -	pm_runtime_get_sync(hba->dev);
-> +	scsi_autopm_get_device(hba->sdev_ufs_device);
->  	ret = ufshcd_query_attr(hba, UPIU_QUERY_OPCODE_READ_ATTR,
->  		QUERY_ATTR_IDN_DYN_CAP_NEEDED, lun, 0, &value);
-> -	pm_runtime_put_sync(hba->dev);
-> +	scsi_autopm_put_device(hba->sdev_ufs_device);
->  	if (ret) {
->  		ret = -EINVAL;
->  		goto out;
+
+
+-- 
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
