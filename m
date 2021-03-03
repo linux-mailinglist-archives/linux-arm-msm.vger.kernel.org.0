@@ -2,139 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ADC7A32C1AA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 01:03:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 53B8632C1B4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 01:03:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1389497AbhCCVi2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Mar 2021 16:38:28 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:43913 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357596AbhCCLLB (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Mar 2021 06:11:01 -0500
-Received: from ironmsg07-lv.qualcomm.com (HELO ironmsg07-lv.qulacomm.com) ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 03 Mar 2021 03:10:19 -0800
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg07-lv.qulacomm.com with ESMTP/TLS/AES256-SHA; 03 Mar 2021 03:10:16 -0800
-X-QCInternal: smtphost
-Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 03 Mar 2021 16:40:09 +0530
-Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
-        id 2540F21308; Wed,  3 Mar 2021 16:40:08 +0530 (IST)
-From:   Dikshita Agarwal <dikshita@codeaurora.org>
-To:     linux-media@vger.kernel.org, hverkuil-cisco@xs4all.nl,
-        stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, Dikshita Agarwal <dikshita@codeaurora.org>
-Subject: [PATCH v7 2/2] venus: venc: Add support for Long Term Reference (LTR) controls
-Date:   Wed,  3 Mar 2021 16:39:47 +0530
-Message-Id: <1614769787-26922-3-git-send-email-dikshita@codeaurora.org>
+        id S1389505AbhCCVie (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Mar 2021 16:38:34 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:63569 "EHLO z11.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237197AbhCCMVz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 3 Mar 2021 07:21:55 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1614774091; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=arIjeh1oJBbBzDIaWsXKQ4a2CukVItpaCqWDSq2ybZo=; b=coRkfrcuRWFuqiD/21F0fcUiiMC+JJi3sehOmhjc/I5bsXJhQEp9K7/SFRjKLA+HdxjclKjn
+ CL2FqbjS0phb9z0Bi0TuY29tMTYJj7F4/S/DkF7qdc4R1ZdGSGnU5s7DAlacGkJ2KfpaPwaW
+ bYvI2vIFf0PhW/UydqACMoKsh1w=
+X-Mailgun-Sending-Ip: 104.130.96.11
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 603f7f2f4fd7814d5f40594b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 03 Mar 2021 12:21:03
+ GMT
+Sender: rnayak=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id BDDABC433ED; Wed,  3 Mar 2021 12:21:02 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D18BBC433CA;
+        Wed,  3 Mar 2021 12:20:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D18BBC433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=rnayak@codeaurora.org
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        Rajendra Nayak <rnayak@codeaurora.org>
+Subject: [PATCH v2 00/14] Add binding updates and DT files for SC7280 SoC
+Date:   Wed,  3 Mar 2021 17:47:44 +0530
+Message-Id: <1614773878-8058-1-git-send-email-rnayak@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1614769787-26922-1-git-send-email-dikshita@codeaurora.org>
-References: <1614769787-26922-1-git-send-email-dikshita@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for below LTR controls in encoder:
-- V4L2_CID_MPEG_VIDEO_LTR_COUNT
-- V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX
-- V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES
+This series includes a few minor binding updates and base device tree
+files (to boot to shell) for SC7280 SoC and the IDP board using this SoC.
 
-Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
----
- drivers/media/platform/qcom/venus/venc_ctrls.c | 49 +++++++++++++++++++++++++-
- 1 file changed, 48 insertions(+), 1 deletion(-)
+Maulik Shah (3):
+  arm64: dts: qcom: sc7280: Add RSC and PDC devices
+  arm64: dts: qcom: Add reserved memory for fw
+  arm64: dts: qcom: sc7280: Add cpuidle states
 
-diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
-index a52b800..2e7a69b 100644
---- a/drivers/media/platform/qcom/venus/venc_ctrls.c
-+++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
-@@ -20,6 +20,7 @@
- #define INTRA_REFRESH_MBS_MAX	300
- #define AT_SLICE_BOUNDARY	\
- 	V4L2_MPEG_VIDEO_H264_LOOP_FILTER_MODE_DISABLED_AT_SLICE_BOUNDARY
-+#define MAX_LTR_FRAME_COUNT 4
- 
- static int venc_calc_bpframes(u32 gop_size, u32 conseq_b, u32 *bf, u32 *pf)
- {
-@@ -72,6 +73,9 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
- 	struct venc_controls *ctr = &inst->controls.enc;
- 	struct hfi_enable en = { .enable = 1 };
- 	struct hfi_bitrate brate;
-+	struct hfi_ltr_use ltr_use;
-+	struct hfi_ltr_mark ltr_mark;
-+	struct hfi_ltr_mode ltr_mode;
- 	u32 bframes;
- 	u32 ptype;
- 	int ret;
-@@ -276,6 +280,37 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
- 	case V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITY_ID:
- 		ctr->base_priority_id = ctrl->val;
- 		break;
-+	case V4L2_CID_MPEG_VIDEO_LTR_COUNT:
-+		ptype = HFI_PROPERTY_PARAM_VENC_LTRMODE;
-+		ltr_mode.ltr_count = ctrl->val;
-+		ltr_mode.ltr_mode = HFI_LTR_MODE_MANUAL;
-+		ltr_mode.trust_mode = 1;
-+		ret = hfi_session_set_property(inst, ptype, &ltr_mode);
-+		if (ret) {
-+			mutex_unlock(&inst->lock);
-+			return ret;
-+		}
-+		break;
-+	case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:
-+		ptype = HFI_PROPERTY_CONFIG_VENC_MARKLTRFRAME;
-+		ltr_mark.mark_frame = ctrl->val;
-+		ret = hfi_session_set_property(inst, ptype, &ltr_mark);
-+		if (ret) {
-+			mutex_unlock(&inst->lock);
-+			return ret;
-+		}
-+		break;
-+	case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES:
-+		ptype = HFI_PROPERTY_CONFIG_VENC_USELTRFRAME;
-+		ltr_use.ref_ltr = ctrl->val;
-+		ltr_use.use_constrnt = true;
-+		ltr_use.frames = 0;
-+		ret = hfi_session_set_property(inst, ptype, &ltr_use);
-+		if (ret) {
-+			mutex_unlock(&inst->lock);
-+			return ret;
-+		}
-+		break;
- 	default:
- 		return -EINVAL;
- 	}
-@@ -291,7 +326,7 @@ int venc_ctrl_init(struct venus_inst *inst)
- {
- 	int ret;
- 
--	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 51);
-+	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 54);
- 	if (ret)
- 		return ret;
- 
-@@ -498,6 +533,18 @@ int venc_ctrl_init(struct venus_inst *inst)
- 			  V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITY_ID, 0,
- 			  6, 1, 0);
- 
-+	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
-+			  V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES, 0,
-+			  (MAX_LTR_FRAME_COUNT - 1), 1, 0);
-+
-+	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
-+			  V4L2_CID_MPEG_VIDEO_LTR_COUNT, 0,
-+			  MAX_LTR_FRAME_COUNT, 1, 0);
-+
-+	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
-+			  V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX, 0,
-+			  (MAX_LTR_FRAME_COUNT - 1), 1, 0);
-+
- 	ret = inst->ctrl_handler.error;
- 	if (ret)
- 		goto err;
+Rajendra Nayak (6):
+  dt-bindings: arm: qcom: Document sc7280 SoC and board
+  dt-bindings: firmware: scm: Add sc7280 support
+  arm64: dts: sc7280: Add basic dts/dtsi files for sc7280 soc
+  dt-bindings: qcom,pdc: Add compatible for sc7280
+  arm64: dts: qcom: SC7280: Add rpmhcc clock controller node
+  arm64: dts: qcom: sc7280: Add rpmh power-domain node
+
+Sai Prakash Ranjan (4):
+  dt-bindings: arm-smmu: Add compatible for SC7280 SoC
+  arm64: dts: qcom: sc7280: Add device node for APPS SMMU
+  dt-bindings: watchdog: Add compatible for SC7280 SoC
+  arm64: dts: qcom: sc7280: Add APSS watchdog node
+
+satya priya (1):
+  arm64: dts: qcom: sc7280: Add SPMI PMIC arbiter device for SC7280
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   6 +
+ .../devicetree/bindings/firmware/qcom,scm.txt      |   1 +
+ .../bindings/interrupt-controller/qcom,pdc.txt     |   1 +
+ .../devicetree/bindings/iommu/arm,smmu.yaml        |   1 +
+ .../devicetree/bindings/watchdog/qcom-wdt.yaml     |   1 +
+ arch/arm64/boot/dts/qcom/Makefile                  |   1 +
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts            |  47 ++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               | 609 +++++++++++++++++++++
+ 8 files changed, 667 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-idp.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280.dtsi
+
 -- 
-2.7.4
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
