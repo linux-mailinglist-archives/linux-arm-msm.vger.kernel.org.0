@@ -2,184 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AFD8132C219
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 01:03:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DD6A32C21D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 01:03:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232525AbhCCVmg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Mar 2021 16:42:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53904 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344484AbhCCP6o (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Mar 2021 10:58:44 -0500
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE395C061761
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Mar 2021 07:58:01 -0800 (PST)
-Received: by mail-oi1-x235.google.com with SMTP id l133so26462439oib.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Mar 2021 07:58:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=zhVr6K8r2z3/ZhGqFoxBH1FeHeZIi/F72+oBarEiB3k=;
-        b=R3XSi8RRCP7cWEkBhtOnB6s+tSUjGfn7qu4k9MPRMFcBrKr2JMNcSd1m1/eCi5hALz
-         +VIdhI4eddycL5AVJYfCkbU2CDPRqa2yx9TAZg98pMEtaEuLfvx8PQy+ZilUECuKxvRo
-         PnAMqOuBVoF/NZ5Utk9I8NiOspiAryZXLXN44VgxiXGcSLIVAjsGGa59RtlLNlXEqLnb
-         z8wCCS/Ib9OqUGX5+o7VrK50PsCYX8sUmvtof/uZV4XU0v/A668yJtQbFXexepAUKrYq
-         n05au0P2g8pLk5M4lj868L7yTg9j609h7iQ1dvy9KlOYdVNGkklMhSmveyW3T/V06Plu
-         2K3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=zhVr6K8r2z3/ZhGqFoxBH1FeHeZIi/F72+oBarEiB3k=;
-        b=AFqxaGoXjtOjAK/9W1PpbSog4ratiFE5QaIHhyyyR4sU5qLzEMLOv/lT282eDAM7CX
-         uIK71KXMuf1bdzsKwQdKp56leWYU+z2B21jN5H8r24cKabBbqOg18NuQ/7Xnlv4Lbrsi
-         Bqr+3CsBbrI8L218NJRNRvHrrmjD/kNrEKtWXXYjQYvLupGxsDVLHbV2oV2pwCHpHbxj
-         1pUsixY7zw17cFMWODN9WO6Fk/BYdAMaHeZX9Y4jE4VrlTSHgIAY68zHJLZYlHu1ExyG
-         9USVuJZhRIZ8L6sY+K22+yDqd8RAHLx2UtiLOXgn6CD/++63G3ZF7WVuHNncI4sAzQMg
-         DzFQ==
-X-Gm-Message-State: AOAM5324bxFjmRMELgqf7CsuODrACysJ0ctqwIon12G+tUSLO6NCb4No
-        ZJY3L0ac3H67Kgr4I2/BFy1Tew==
-X-Google-Smtp-Source: ABdhPJwflt5EacJvsf71Ng2vkB1o2dwBvAXm7b8Y/L3vy6Om6bfpgOP+bEnyr+ddS9MnA6/YObV0xw==
-X-Received: by 2002:aca:3285:: with SMTP id y127mr7674441oiy.98.1614787081022;
-        Wed, 03 Mar 2021 07:58:01 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id w9sm4711161oia.46.2021.03.03.07.58.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Mar 2021 07:58:00 -0800 (PST)
-Date:   Wed, 3 Mar 2021 09:57:58 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     Shawn Guo <shawn.guo@linaro.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] gpiolib: acpi: support override broken GPIO number in
- ACPI table
-Message-ID: <YD+yBmPrKm1n8Tjm@builder.lan>
-References: <20210226093925.GA24428@dragon>
- <CAHp75Vc6xYv+197SOrSefQHD2h4Xy_N20gQajW4uF2PU=sJfLg@mail.gmail.com>
- <YDjZOU+VMWasjzUb@smile.fi.intel.com>
- <20210227031944.GB24428@dragon>
- <YDzbQqHspfvpYS7Z@smile.fi.intel.com>
- <20210302002725.GE24428@dragon>
- <YD4twyAGvDDOCv+n@smile.fi.intel.com>
- <abbfcdfa-c287-3828-ed6f-bc1e1f13c6b2@codeaurora.org>
- <20210303094300.GB17424@dragon>
- <41593c7e-368b-cfb8-b24a-2e4dca48b465@codeaurora.org>
+        id S1352315AbhCCVmt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Mar 2021 16:42:49 -0500
+Received: from mga06.intel.com ([134.134.136.31]:45588 "EHLO mga06.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1345603AbhCCQRC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 3 Mar 2021 11:17:02 -0500
+IronPort-SDR: +fY9EY1RT8j4SqWvBwDCMEm/dH+On6pY8U966gZKACt4IiVaHuWEwTZPoitXSY3AdMUwM4Ip3I
+ FsVXfgSxrclA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9912"; a="248628677"
+X-IronPort-AV: E=Sophos;i="5.81,220,1610438400"; 
+   d="scan'208";a="248628677"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2021 08:14:12 -0800
+IronPort-SDR: KeNVribgt6OPFS/r6x2VT9fOQLwW7PQrUc2NanSBrGfBMUnOXnkCranScDzRJT4c0pAOF6LxFL
+ ifzvU3Xo3POA==
+X-IronPort-AV: E=Sophos;i="5.81,220,1610438400"; 
+   d="scan'208";a="407302046"
+Received: from smile.fi.intel.com (HELO smile) ([10.237.68.40])
+  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2021 08:14:11 -0800
+Received: from andy by smile with local (Exim 4.94)
+        (envelope-from <andriy.shevchenko@intel.com>)
+        id 1lHU8X-009g2a-3m; Wed, 03 Mar 2021 18:14:09 +0200
+Date:   Wed, 3 Mar 2021 18:14:09 +0200
+From:   Andy Shevchenko <andriy.shevchenko@intel.com>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] pinctrl: qcom: handle tiles for ACPI boot
+Message-ID: <YD+10cmeWfppgj0I@smile.fi.intel.com>
+References: <20210303132622.4115-1-shawn.guo@linaro.org>
+ <20210303132622.4115-2-shawn.guo@linaro.org>
+ <YD+YSS/s79gqwEpS@smile.fi.intel.com>
+ <20210303144526.GC17424@dragon>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <41593c7e-368b-cfb8-b24a-2e4dca48b465@codeaurora.org>
+In-Reply-To: <20210303144526.GC17424@dragon>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 03 Mar 09:10 CST 2021, Jeffrey Hugo wrote:
-
-> On 3/3/2021 2:43 AM, Shawn Guo wrote:
-> > On Tue, Mar 02, 2021 at 10:02:49PM -0700, Jeffrey Hugo wrote:
-> > > Sorry, just joining the thread now.  Hopefully I'm addressing everything
-> > > targeted at me.
-> > > 
-> > > I used to do kernel work on MSMs, then kernel work on server CPUs, but now I
-> > > do kernel work on AI accelerators.  Never was on the firmware team, but I
-> > > have a lot of contacts in those areas.  On my own time, I support Linux on
-> > > the Qualcomm laptops.
-> > > 
-> > > Its not MS that needs to fix things (although there is plenty of things I
-> > > could point to that MS could fix), its the Qualcomm Windows FW folks.  They
-> > > have told me a while ago they were planning on fixing this issue on some
-> > > future chipset, but apparently that hasn't happened yet.  Sadly, once these
-> > > laptops ship, they are in a frozen maintenance mode.
-> > > 
-> > > In my opinion, MS has allowed Qualcomm to get away with doing bad things in
-> > > ACPI on the Qualcomm laptops.  The ACPI is not a true hardware description
-> > > that is OS agnostic as it should be, and probably violates the spec in many
-> > > ways.  Instead, the ACPI is written against the Windows drivers, and has a
-> > > lot of OS driver crap pushed into it.
-> > > 
-> > > The GPIO description is one such thing.
-> > > 
-> > > As I understand it, any particular SoC will have a number of GPIOs supported
-> > > by the TLMM.  0 - N.  Linux understands this.  However, in the ACPI of the
-> > > Qualcomm Windows laptops, you will likely find atleast one GPIO number which
-> > > exceeds this N.  These are "virtual" GPIOs, and are a construct of the
-> > > Windows Qualcomm TLMM driver and how it interfaces with the frameworks
-> > > within Windows.
-> > > 
-> > > Some GPIO lines can be configured as wakeup sources by routing them to a
-> > > specific hardware block in the SoC (which block it is varies from SoC to
-> > > SoC).  Windows has a specific weird way of handling this which requires a
-> > > unique "GPIO chip" to handle.  GPIO chips in Windows contain 32 GPIOs, so
-> > > for each wakeup GPIO, the TLMM driver creates a GPIO chip (essentially
-> > > creating 32 GPIOs), and assigns the added GPIOs numbers which exceed N.  The
-> > > TLMM driver has an internal mapping of which virtual GPIO number corresponds
-> > > to which real GPIO.
-> > > 
-> > > So, ACPI says that some peripheral has GPIO N+X, which is not a real GPIO.
-> > > That peripheral goes and requests that GPIO, which gets routed to the TLMM
-> > > driver, and the TLMM driver translates that number to the real GPIO, and
-> > > provides the reference back to the peripheral, while also setting up the
-> > > special wakeup hardware.
-> > > 
-> > > So, N+1 is the first supported wakup GPIO, N+1+32 is the next one, then
-> > > N+1+32+32, and so on.
+On Wed, Mar 03, 2021 at 10:45:27PM +0800, Shawn Guo wrote:
+> On Wed, Mar 03, 2021 at 04:08:09PM +0200, Andy Shevchenko wrote:
+> > On Wed, Mar 03, 2021 at 09:26:21PM +0800, Shawn Guo wrote:
+> > > It's not always the case that DT and ACPI describe hardware resource in
+> > > the same schema, even for a single platform.  For example, on SC8180X,
+> > > DT uses the tiles schema while ACPI describe memory resource as a single
+> > > region.  It patches msm_pinctrl_probe() function to map tiles regions
+> > > only for DT.  While for ACPI, it maps the single memory resource and
+> > > calculate tile bases with offsets passed from SoC data.
 > > 
-> > Jeffrey,
+> > ...
 > > 
-> > Thanks so much for these great information!
+> > > +#include <linux/acpi.h>
 > > 
-> > May I ask a bit more about how the virtual number N+1+32*n maps back to
-> > the real number (R)?  For example of touchpad GPIO on Flex 5G, I think
-> > we have:
+> > There are at least two possibilities to avoid this:
+> 
+> So could you explain why we should avoid including this header?
+
+Here you can include it, but it's quite huge in order to have just one little
+function out of it. But main point is it seems that relying on firmware type
+for the tiles support is fragile.
+
+> >  - use is_of_node(dev_fwnode(dev)), or in case you need board files support,
+> >    !(fwnode && is_of_fwnode(fwnode))
+> >  - provide the tiles support directly from the driver thru internal data structures
 > > 
-> >    N+1+32*n = 0x0280
-> >    N = 191
+> >  And to me the second approach seems better, because there is no guarantee that
+> >  tiles support is only defined by the fwnode type.
 
-There's 190 GPIOs on SC8180x, but then the math doesn't add up to a
-whole number...
+-- 
+With Best Regards,
+Andy Shevchenko
 
-> >    R = 24
-> > 
-> > If my math not bad, n = 14.  How does 14 map to 24?
-> 
-> 
-> So, if this was 845, the wakeup hardware would be the PDC.  Only a specific
-> number of GPIOs are routed to the PDC.  When the TLMM is powered off in
-> suspend, the PDC pays attention to the GPIOs that are routed to it, and are
-> configured in the PDC as wakeup sources.  When the GPIO is asserted, the
-> signal to the TLMM gets lost, but the PDC catches it.  The PDC will kick the
-> CPU/SoC out of suspend, and then once the wakup process is complete, replay
-> the GPIO so that the TLMM has the signal.
-> 
 
-SC8180x has the same hardware design.
-
-> In your example, 14 would be the 14th GPIO that is routed to the PDC. You
-> would need SoC hardware documentation to know the mapping from PDC line 14
-> to GPIO line X.  This is going to be SoC specific, so 845 documentation is
-> not going to help you for SC8XXX.
-> 
-> Chances are, you are going to need to get this documentation from Qualcomm
-> (I don't know if its in IPCatalog or not), and put SoC specific lookup
-> tables in the TLMM driver.
-> 
-
-I added the table in the driver, see sc8180x_pdc_map[], and it has gpio
-14 at position 7, with the 14th entry being gpio 38 - which seems like
-an unlikely change from the reference schematics.
-
-> Does that make sense, or did I not answer the question you were actually
-> asking?
-> 
-
-It does.
-
-Regards,
-Bjorn
