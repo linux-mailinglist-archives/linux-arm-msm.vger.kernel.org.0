@@ -2,571 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BE8B32C213
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 01:03:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3001A32C217
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 01:03:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232766AbhCCVkh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Mar 2021 16:40:37 -0500
-Received: from mx08-00178001.pphosted.com ([91.207.212.93]:9234 "EHLO
-        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1359814AbhCCPAe (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Mar 2021 10:00:34 -0500
-Received: from pps.filterd (m0046660.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id 123Ew12m007034;
-        Wed, 3 Mar 2021 15:59:36 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=subject : to : cc :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=selector1;
- bh=92T9jk1GqeaNdUj7VE7tM3zOJWrXiP55EaybpQYEma8=;
- b=s0XgAapWiw5d6J7WEhcn1yGiHWcuz0Bu8HSk+cZ8l3krhN/mfT1OmcGuWU7WbjW5rb/C
- 9Il390mWfMpeuqGGK5rwG9hsDfaeuTRdqX+MwzJyQMgdeh3mVAsMhhHRvzbVakwO2qBu
- q1dtdkxrX71cawrRikhila1rAp6Kb/aB3CA+CdeEVC9y0RgOVtz+z2BdhNqBe8bWPU6t
- JtLJerTRMhGfj4sZwr+Dk1AbgltSKibZH13W1ZfbR+wlr9efeRg4uYy6Ekv/BDyMa34x
- T3yhAOuINmG4x7vYKRiT3jWIFjw4widG8ciH48H/T0Lcu/RAyGTkjlz9wVj+0FctWoir XQ== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com with ESMTP id 36yfdy9h74-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 03 Mar 2021 15:59:36 +0100
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id A039110002A;
-        Wed,  3 Mar 2021 15:59:35 +0100 (CET)
-Received: from Webmail-eu.st.com (sfhdag2node3.st.com [10.75.127.6])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 92B0B244F58;
-        Wed,  3 Mar 2021 15:59:35 +0100 (CET)
-Received: from lmecxl0889.lme.st.com (10.75.127.46) by SFHDAG2NODE3.st.com
- (10.75.127.6) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Wed, 3 Mar
- 2021 15:59:34 +0100
-Subject: Re: [PATCH v5 06/16] rpmsg: move the rpmsg control device from
- rpmsg_char to rpmsg_ctrl
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>
-CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Andy Gross <agross@kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20210219111501.14261-1-arnaud.pouliquen@foss.st.com>
- <20210219111501.14261-7-arnaud.pouliquen@foss.st.com>
- <20210302183516.GC3791957@xps15>
-From:   Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
-Message-ID: <64760ba3-5b23-bf74-6961-b77813919abc@foss.st.com>
-Date:   Wed, 3 Mar 2021 15:59:34 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S235135AbhCCVlv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Mar 2021 16:41:51 -0500
+Received: from m42-2.mailgun.net ([69.72.42.2]:32154 "EHLO m42-2.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S244839AbhCCPMG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 3 Mar 2021 10:12:06 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1614784324; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=sRQIESzJzYRECzNj+RqCqmuf8C0lz4OU1zfKTclwppQ=; b=ne46ckctwNViNTWjXUWlJCCJfP2pp5MKiKvjpaSxV2Je/q5MXlMySk5sm+2/9fBTdqnF8mc/
+ /+Nzi+lE3ZxvqLZ8famf7wEsopY97W6OvODDLhwozW9g/+RXgm8YMBsS5jYxfC5kl8Ab3MG/
+ /wTvpXhLskYR/7NUOQukOW4Fifk=
+X-Mailgun-Sending-Ip: 69.72.42.2
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 603fa6ffc862e1b9fdd2a74c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 03 Mar 2021 15:10:55
+ GMT
+Sender: jhugo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 47FB3C43463; Wed,  3 Mar 2021 15:10:55 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A73D8C433C6;
+        Wed,  3 Mar 2021 15:10:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A73D8C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH] gpiolib: acpi: support override broken GPIO number in
+ ACPI table
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Mika Westerberg <mika.westerberg@linux.intel.com>,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+References: <20210226033919.8871-1-shawn.guo@linaro.org>
+ <CAHp75Vcb=NO9OWjSpBeVC4c+9=aXE=yiDWVBwLD1DnzwdgFD6Q@mail.gmail.com>
+ <20210226093925.GA24428@dragon>
+ <CAHp75Vc6xYv+197SOrSefQHD2h4Xy_N20gQajW4uF2PU=sJfLg@mail.gmail.com>
+ <YDjZOU+VMWasjzUb@smile.fi.intel.com> <20210227031944.GB24428@dragon>
+ <YDzbQqHspfvpYS7Z@smile.fi.intel.com> <20210302002725.GE24428@dragon>
+ <YD4twyAGvDDOCv+n@smile.fi.intel.com>
+ <abbfcdfa-c287-3828-ed6f-bc1e1f13c6b2@codeaurora.org>
+ <20210303094300.GB17424@dragon>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <41593c7e-368b-cfb8-b24a-2e4dca48b465@codeaurora.org>
+Date:   Wed, 3 Mar 2021 08:10:52 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.0
 MIME-Version: 1.0
-In-Reply-To: <20210302183516.GC3791957@xps15>
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20210303094300.GB17424@dragon>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.75.127.46]
-X-ClientProxiedBy: SFHDAG3NODE1.st.com (10.75.127.7) To SFHDAG2NODE3.st.com
- (10.75.127.6)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369,18.0.761
- definitions=2021-03-03_04:2021-03-03,2021-03-03 signatures=0
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 3/2/21 7:35 PM, Mathieu Poirier wrote:
-> On Fri, Feb 19, 2021 at 12:14:51PM +0100, Arnaud Pouliquen wrote:
->> Move the code related to the rpmsg_ctrl char device to the new
->> rpmsg_ctrl.c module.
->> Manage the dependency in the kconfig.
+On 3/3/2021 2:43 AM, Shawn Guo wrote:
+> On Tue, Mar 02, 2021 at 10:02:49PM -0700, Jeffrey Hugo wrote:
+>> Sorry, just joining the thread now.  Hopefully I'm addressing everything
+>> targeted at me.
 >>
->> Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
->> ---
->>  drivers/rpmsg/Kconfig      |   9 ++
->>  drivers/rpmsg/Makefile     |   1 +
->>  drivers/rpmsg/rpmsg_char.c | 163 ----------------------------
->>  drivers/rpmsg/rpmsg_ctrl.c | 216 +++++++++++++++++++++++++++++++++++++
->>  4 files changed, 226 insertions(+), 163 deletions(-)
->>  create mode 100644 drivers/rpmsg/rpmsg_ctrl.c
+>> I used to do kernel work on MSMs, then kernel work on server CPUs, but now I
+>> do kernel work on AI accelerators.  Never was on the firmware team, but I
+>> have a lot of contacts in those areas.  On my own time, I support Linux on
+>> the Qualcomm laptops.
 >>
->> diff --git a/drivers/rpmsg/Kconfig b/drivers/rpmsg/Kconfig
->> index 0b4407abdf13..2d0cd7fdd710 100644
->> --- a/drivers/rpmsg/Kconfig
->> +++ b/drivers/rpmsg/Kconfig
->> @@ -10,11 +10,20 @@ config RPMSG_CHAR
->>  	tristate "RPMSG device interface"
->>  	depends on RPMSG
->>  	depends on NET
->> +	select RPMSG_CTRL
->>  	help
->>  	  Say Y here to export rpmsg endpoints as device files, usually found
->>  	  in /dev. They make it possible for user-space programs to send and
->>  	  receive rpmsg packets.
->>  
->> +config RPMSG_CTRL
->> +	tristate "RPMSG control interface"
->> +	depends on RPMSG
->> +	help
->> +	  Say Y here to enable the support of the /dev/rpmsg_ctlX API. This API
-> 
-> s/rpmsg_ctlX/rpmsg_ctrlX
-
-Good catch!
-
-> 
->> +	  allows user-space programs to create endpoints with specific service name,
->> +	  source and destination addresses.
->> +
->>  config RPMSG_NS
->>  	tristate "RPMSG name service announcement"
->>  	depends on RPMSG
->> diff --git a/drivers/rpmsg/Makefile b/drivers/rpmsg/Makefile
->> index 8d452656f0ee..58e3b382e316 100644
->> --- a/drivers/rpmsg/Makefile
->> +++ b/drivers/rpmsg/Makefile
->> @@ -1,6 +1,7 @@
->>  # SPDX-License-Identifier: GPL-2.0
->>  obj-$(CONFIG_RPMSG)		+= rpmsg_core.o
->>  obj-$(CONFIG_RPMSG_CHAR)	+= rpmsg_char.o
->> +obj-$(CONFIG_RPMSG_CTRL)	+= rpmsg_ctrl.o
->>  obj-$(CONFIG_RPMSG_NS)		+= rpmsg_ns.o
->>  obj-$(CONFIG_RPMSG_MTK_SCP)	+= mtk_rpmsg.o
->>  qcom_glink-objs			:= qcom_glink_native.o qcom_glink_ssr.o
->> diff --git a/drivers/rpmsg/rpmsg_char.c b/drivers/rpmsg/rpmsg_char.c
->> index 23e369a00531..83c10b39b139 100644
->> --- a/drivers/rpmsg/rpmsg_char.c
->> +++ b/drivers/rpmsg/rpmsg_char.c
->> @@ -31,28 +31,12 @@
->>  static dev_t rpmsg_major;
->>  static struct class *rpmsg_class;
->>  
->> -static DEFINE_IDA(rpmsg_ctrl_ida);
->>  static DEFINE_IDA(rpmsg_ept_ida);
->>  static DEFINE_IDA(rpmsg_minor_ida);
->>  
->>  #define dev_to_eptdev(dev) container_of(dev, struct rpmsg_eptdev, dev)
->>  #define cdev_to_eptdev(i_cdev) container_of(i_cdev, struct rpmsg_eptdev, cdev)
->>  
->> -#define dev_to_ctrldev(dev) container_of(dev, struct rpmsg_ctrldev, dev)
->> -#define cdev_to_ctrldev(i_cdev) container_of(i_cdev, struct rpmsg_ctrldev, cdev)
->> -
->> -/**
->> - * struct rpmsg_ctrldev - control device for instantiating endpoint devices
->> - * @rpdev:	underlaying rpmsg device
->> - * @cdev:	cdev for the ctrl device
->> - * @dev:	device for the ctrl device
->> - */
->> -struct rpmsg_ctrldev {
->> -	struct rpmsg_device *rpdev;
->> -	struct cdev cdev;
->> -	struct device dev;
->> -};
-> 
-> This showed up in rpmsg_ctrl.c as rpmsg_ctrl.  The same goes for many functions
-> names - they are removed here and re-introduced under a different name, which
-> makes it very hard to follow.  What ends up in the new file should be a carbon
-> copy of what was moved.
-
-Ok i will split it in 2 steps.
-
-Thanks
-Arnaud
-
-> 
-> I'm out of time for today, more comments tomorrow.
-> 
-> Thanks,
-> Mathieu
-> 
->> -
->>  /**
->>   * struct rpmsg_eptdev - endpoint device context
->>   * @dev:	endpoint device
->> @@ -411,145 +395,6 @@ int rpmsg_chrdev_create_eptdev(struct rpmsg_device *rpdev, struct device *parent
->>  }
->>  EXPORT_SYMBOL(rpmsg_chrdev_create_eptdev);
->>  
->> -static int rpmsg_ctrldev_open(struct inode *inode, struct file *filp)
->> -{
->> -	struct rpmsg_ctrldev *ctrldev = cdev_to_ctrldev(inode->i_cdev);
->> -
->> -	get_device(&ctrldev->dev);
->> -	filp->private_data = ctrldev;
->> -
->> -	return 0;
->> -}
->> -
->> -static int rpmsg_ctrldev_release(struct inode *inode, struct file *filp)
->> -{
->> -	struct rpmsg_ctrldev *ctrldev = cdev_to_ctrldev(inode->i_cdev);
->> -
->> -	put_device(&ctrldev->dev);
->> -
->> -	return 0;
->> -}
->> -
->> -static long rpmsg_ctrldev_ioctl(struct file *fp, unsigned int cmd,
->> -				unsigned long arg)
->> -{
->> -	struct rpmsg_ctrldev *ctrldev = fp->private_data;
->> -	void __user *argp = (void __user *)arg;
->> -	struct rpmsg_endpoint_info eptinfo;
->> -	struct rpmsg_channel_info chinfo;
->> -
->> -	if (cmd != RPMSG_CREATE_EPT_IOCTL)
->> -		return -EINVAL;
->> -
->> -	if (copy_from_user(&eptinfo, argp, sizeof(eptinfo)))
->> -		return -EFAULT;
->> -
->> -	memcpy(chinfo.name, eptinfo.name, RPMSG_NAME_SIZE);
->> -	chinfo.name[RPMSG_NAME_SIZE-1] = '\0';
->> -	chinfo.src = eptinfo.src;
->> -	chinfo.dst = eptinfo.dst;
->> -
->> -	return rpmsg_chrdev_create_eptdev(ctrldev->rpdev, &ctrldev->dev, chinfo);
->> -};
->> -
->> -static const struct file_operations rpmsg_ctrldev_fops = {
->> -	.owner = THIS_MODULE,
->> -	.open = rpmsg_ctrldev_open,
->> -	.release = rpmsg_ctrldev_release,
->> -	.unlocked_ioctl = rpmsg_ctrldev_ioctl,
->> -	.compat_ioctl = compat_ptr_ioctl,
->> -};
->> -
->> -static void rpmsg_ctrldev_release_device(struct device *dev)
->> -{
->> -	struct rpmsg_ctrldev *ctrldev = dev_to_ctrldev(dev);
->> -
->> -	ida_simple_remove(&rpmsg_ctrl_ida, dev->id);
->> -	ida_simple_remove(&rpmsg_minor_ida, MINOR(dev->devt));
->> -	cdev_del(&ctrldev->cdev);
->> -	kfree(ctrldev);
->> -}
->> -
->> -static int rpmsg_chrdev_probe(struct rpmsg_device *rpdev)
->> -{
->> -	struct rpmsg_ctrldev *ctrldev;
->> -	struct device *dev;
->> -	int ret;
->> -
->> -	ctrldev = kzalloc(sizeof(*ctrldev), GFP_KERNEL);
->> -	if (!ctrldev)
->> -		return -ENOMEM;
->> -
->> -	ctrldev->rpdev = rpdev;
->> -
->> -	dev = &ctrldev->dev;
->> -	device_initialize(dev);
->> -	dev->parent = &rpdev->dev;
->> -
->> -	cdev_init(&ctrldev->cdev, &rpmsg_ctrldev_fops);
->> -	ctrldev->cdev.owner = THIS_MODULE;
->> -
->> -	ret = ida_simple_get(&rpmsg_minor_ida, 0, RPMSG_DEV_MAX, GFP_KERNEL);
->> -	if (ret < 0)
->> -		goto free_ctrldev;
->> -	dev->devt = MKDEV(MAJOR(rpmsg_major), ret);
->> -
->> -	ret = ida_simple_get(&rpmsg_ctrl_ida, 0, 0, GFP_KERNEL);
->> -	if (ret < 0)
->> -		goto free_minor_ida;
->> -	dev->id = ret;
->> -	dev_set_name(&ctrldev->dev, "rpmsg_ctrl%d", ret);
->> -
->> -	ret = cdev_add(&ctrldev->cdev, dev->devt, 1);
->> -	if (ret)
->> -		goto free_ctrl_ida;
->> -
->> -	/* We can now rely on the release function for cleanup */
->> -	dev->release = rpmsg_ctrldev_release_device;
->> -
->> -	ret = device_add(dev);
->> -	if (ret) {
->> -		dev_err(&rpdev->dev, "device_add failed: %d\n", ret);
->> -		put_device(dev);
->> -	}
->> -
->> -	dev_set_drvdata(&rpdev->dev, ctrldev);
->> -
->> -	return ret;
->> -
->> -free_ctrl_ida:
->> -	ida_simple_remove(&rpmsg_ctrl_ida, dev->id);
->> -free_minor_ida:
->> -	ida_simple_remove(&rpmsg_minor_ida, MINOR(dev->devt));
->> -free_ctrldev:
->> -	put_device(dev);
->> -	kfree(ctrldev);
->> -
->> -	return ret;
->> -}
->> -
->> -static void rpmsg_chrdev_remove(struct rpmsg_device *rpdev)
->> -{
->> -	struct rpmsg_ctrldev *ctrldev = dev_get_drvdata(&rpdev->dev);
->> -	int ret;
->> -
->> -	/* Destroy all endpoints */
->> -	ret = device_for_each_child(&ctrldev->dev, NULL, rpmsg_chrdev_eptdev_destroy);
->> -	if (ret)
->> -		dev_warn(&rpdev->dev, "failed to nuke endpoints: %d\n", ret);
->> -
->> -	device_del(&ctrldev->dev);
->> -	put_device(&ctrldev->dev);
->> -}
->> -
->> -static struct rpmsg_driver rpmsg_chrdev_driver = {
->> -	.probe = rpmsg_chrdev_probe,
->> -	.remove = rpmsg_chrdev_remove,
->> -	.drv = {
->> -		.name = "rpmsg_chrdev",
->> -	},
->> -};
->> -
->>  static int rpmsg_chrdev_init(void)
->>  {
->>  	int ret;
->> @@ -567,20 +412,12 @@ static int rpmsg_chrdev_init(void)
->>  		return PTR_ERR(rpmsg_class);
->>  	}
->>  
->> -	ret = register_rpmsg_driver(&rpmsg_chrdev_driver);
->> -	if (ret < 0) {
->> -		pr_err("rpmsgchr: failed to register rpmsg driver\n");
->> -		class_destroy(rpmsg_class);
->> -		unregister_chrdev_region(rpmsg_major, RPMSG_DEV_MAX);
->> -	}
->> -
->>  	return ret;
->>  }
->>  postcore_initcall(rpmsg_chrdev_init);
->>  
->>  static void rpmsg_chrdev_exit(void)
->>  {
->> -	unregister_rpmsg_driver(&rpmsg_chrdev_driver);
->>  	class_destroy(rpmsg_class);
->>  	unregister_chrdev_region(rpmsg_major, RPMSG_DEV_MAX);
->>  }
->> diff --git a/drivers/rpmsg/rpmsg_ctrl.c b/drivers/rpmsg/rpmsg_ctrl.c
->> new file mode 100644
->> index 000000000000..fa05b67d24da
->> --- /dev/null
->> +++ b/drivers/rpmsg/rpmsg_ctrl.c
->> @@ -0,0 +1,216 @@
->> +// SPDX-License-Identifier: GPL-2.0
->> +/*
->> + * Copyright (C) 2021, STMicroelectronics
->> + * Copyright (c) 2016, Linaro Ltd.
->> + * Copyright (c) 2012, Michal Simek <monstr@monstr.eu>
->> + * Copyright (c) 2012, PetaLogix
->> + * Copyright (c) 2011, Texas Instruments, Inc.
->> + * Copyright (c) 2011, Google, Inc.
->> + *
->> + * Based on rpmsg performance statistics driver by Michal Simek, which in turn
->> + * was based on TI & Google OMX rpmsg driver.
->> + */
->> +#include <linux/cdev.h>
->> +#include <linux/device.h>
->> +#include <linux/fs.h>
->> +#include <linux/idr.h>
->> +#include <linux/kernel.h>
->> +#include <linux/module.h>
->> +#include <linux/rpmsg.h>
->> +#include <linux/slab.h>
->> +#include <uapi/linux/rpmsg.h>
->> +
->> +#include "rpmsg_char.h"
->> +#include "rpmsg_internal.h"
->> +
->> +#define RPMSG_DEV_MAX	(MINORMASK + 1)
->> +
->> +static dev_t rpmsg_major;
->> +
->> +static DEFINE_IDA(rpmsg_ctrl_ida);
->> +static DEFINE_IDA(rpmsg_minor_ida);
->> +
->> +#define dev_to_ctrldev(dev) container_of(dev, struct rpmsg_ctrl, dev)
->> +#define cdev_to_ctrldev(i_cdev) container_of(i_cdev, struct rpmsg_ctrl, cdev)
->> +
->> +/**
->> + * struct rpmsg_ctrl - control device for instantiating endpoint devices
->> + * @rpdev:	underlaying rpmsg device
->> + * @cdev:	cdev for the ctrl device
->> + * @dev:	device for the ctrl device
->> + */
->> +struct rpmsg_ctrl {
->> +	struct rpmsg_device *rpdev;
->> +	struct cdev cdev;
->> +	struct device dev;
->> +};
->> +
->> +static int rpmsg_ctrl_open(struct inode *inode, struct file *filp)
->> +{
->> +	struct rpmsg_ctrl *ctrldev = cdev_to_ctrldev(inode->i_cdev);
->> +
->> +	get_device(&ctrldev->dev);
->> +	filp->private_data = ctrldev;
->> +
->> +	return 0;
->> +}
->> +
->> +static int rpmsg_ctrl_release(struct inode *inode, struct file *filp)
->> +{
->> +	struct rpmsg_ctrl *ctrldev = cdev_to_ctrldev(inode->i_cdev);
->> +
->> +	put_device(&ctrldev->dev);
->> +
->> +	return 0;
->> +}
->> +
->> +static long rpmsg_ctrl_ioctl(struct file *fp, unsigned int cmd, unsigned long arg)
->> +{
->> +	struct rpmsg_ctrl *ctrldev = fp->private_data;
->> +	void __user *argp = (void __user *)arg;
->> +	struct rpmsg_endpoint_info eptinfo;
->> +	struct rpmsg_channel_info chinfo;
->> +
->> +	if (cmd != RPMSG_CREATE_EPT_IOCTL)
->> +		return -EINVAL;
->> +
->> +	if (copy_from_user(&eptinfo, argp, sizeof(eptinfo)))
->> +		return -EFAULT;
->> +
->> +	memcpy(chinfo.name, eptinfo.name, RPMSG_NAME_SIZE);
->> +	chinfo.name[RPMSG_NAME_SIZE - 1] = '\0';
->> +	chinfo.src = eptinfo.src;
->> +	chinfo.dst = eptinfo.dst;
->> +
->> +	return rpmsg_chrdev_create_eptdev(ctrldev->rpdev, &ctrldev->dev, chinfo);
->> +};
->> +
->> +static const struct file_operations rpmsg_ctrl_fops = {
->> +	.owner = THIS_MODULE,
->> +	.open = rpmsg_ctrl_open,
->> +	.release = rpmsg_ctrl_release,
->> +	.unlocked_ioctl = rpmsg_ctrl_ioctl,
->> +	.compat_ioctl = compat_ptr_ioctl,
->> +};
->> +
->> +static void rpmsg_ctrl_release_device(struct device *dev)
->> +{
->> +	struct rpmsg_ctrl *ctrldev = dev_to_ctrldev(dev);
->> +
->> +	ida_simple_remove(&rpmsg_ctrl_ida, dev->id);
->> +	ida_simple_remove(&rpmsg_minor_ida, MINOR(dev->devt));
->> +	cdev_del(&ctrldev->cdev);
->> +	kfree(ctrldev);
->> +}
->> +
->> +static int rpmsg_ctrl_probe(struct rpmsg_device *rpdev)
->> +{
->> +	struct rpmsg_ctrl *ctrldev;
->> +	struct device *dev;
->> +	int ret;
->> +
->> +	ctrldev = kzalloc(sizeof(*ctrldev), GFP_KERNEL);
->> +	if (!ctrldev)
->> +		return -ENOMEM;
->> +
->> +	ctrldev->rpdev = rpdev;
->> +
->> +	dev = &ctrldev->dev;
->> +	device_initialize(dev);
->> +	dev->parent = &rpdev->dev;
->> +
->> +	cdev_init(&ctrldev->cdev, &rpmsg_ctrl_fops);
->> +	ctrldev->cdev.owner = THIS_MODULE;
->> +
->> +	ret = ida_simple_get(&rpmsg_minor_ida, 0, RPMSG_DEV_MAX, GFP_KERNEL);
->> +	if (ret < 0)
->> +		goto free_ctrldev;
->> +	dev->devt = MKDEV(MAJOR(rpmsg_major), ret);
->> +
->> +	ret = ida_simple_get(&rpmsg_ctrl_ida, 0, 0, GFP_KERNEL);
->> +	if (ret < 0)
->> +		goto free_minor_ida;
->> +	dev->id = ret;
->> +	dev_set_name(&ctrldev->dev, "rpmsg_ctrl%d", ret);
->> +
->> +	ret = cdev_add(&ctrldev->cdev, dev->devt, 1);
->> +	if (ret)
->> +		goto free_ctrl_ida;
->> +
->> +	/* We can now rely on the release function for cleanup */
->> +	dev->release = rpmsg_ctrl_release_device;
->> +
->> +	ret = device_add(dev);
->> +	if (ret) {
->> +		dev_err(&rpdev->dev, "device_add failed: %d\n", ret);
->> +		put_device(dev);
->> +	}
->> +
->> +	dev_set_drvdata(&rpdev->dev, ctrldev);
->> +
->> +	return ret;
->> +
->> +free_ctrl_ida:
->> +	ida_simple_remove(&rpmsg_ctrl_ida, dev->id);
->> +free_minor_ida:
->> +	ida_simple_remove(&rpmsg_minor_ida, MINOR(dev->devt));
->> +free_ctrldev:
->> +	put_device(dev);
->> +	kfree(ctrldev);
->> +
->> +	return ret;
->> +}
->> +
->> +static void rpmsg_ctrl_remove(struct rpmsg_device *rpdev)
->> +{
->> +	struct rpmsg_ctrl *ctrldev = dev_get_drvdata(&rpdev->dev);
->> +	int ret;
->> +
->> +	/* Destroy all endpoints */
->> +	ret = device_for_each_child(&ctrldev->dev, NULL,
->> +				    rpmsg_chrdev_eptdev_destroy);
->> +	if (ret)
->> +		dev_warn(&rpdev->dev, "failed to nuke endpoints: %d\n", ret);
->> +
->> +	device_del(&ctrldev->dev);
->> +	put_device(&ctrldev->dev);
->> +}
->> +
->> +static struct rpmsg_driver rpmsg_ctrl_driver = {
->> +	.probe = rpmsg_ctrl_probe,
->> +	.remove = rpmsg_ctrl_remove,
->> +	.drv = {
->> +		.name = "rpmsg_chrdev",
->> +	},
->> +};
->> +
->> +static int rpmsg_ctrl_init(void)
->> +{
->> +	int ret;
->> +
->> +	ret = alloc_chrdev_region(&rpmsg_major, 0, RPMSG_DEV_MAX, "rpmsg");
->> +	if (ret < 0) {
->> +		pr_err("rpmsg: failed to allocate char dev region\n");
->> +		return ret;
->> +	}
->> +
->> +	ret = register_rpmsg_driver(&rpmsg_ctrl_driver);
->> +	if (ret < 0) {
->> +		pr_err("rpmsg ctrl: failed to register rpmsg driver\n");
->> +		unregister_chrdev_region(rpmsg_major, RPMSG_DEV_MAX);
->> +	}
->> +
->> +	return ret;
->> +}
->> +postcore_initcall(rpmsg_ctrl_init);
->> +
->> +static void rpmsg_ctrl_exit(void)
->> +{
->> +	unregister_rpmsg_driver(&rpmsg_ctrl_driver);
->> +	unregister_chrdev_region(rpmsg_major, RPMSG_DEV_MAX);
->> +}
->> +module_exit(rpmsg_ctrl_exit);
->> +
->> +MODULE_DESCRIPTION("rpmsg control interface");
->> +MODULE_ALIAS("rpmsg:" KBUILD_MODNAME);
->> +MODULE_LICENSE("GPL v2");
->> -- 
->> 2.17.1
+>> Its not MS that needs to fix things (although there is plenty of things I
+>> could point to that MS could fix), its the Qualcomm Windows FW folks.  They
+>> have told me a while ago they were planning on fixing this issue on some
+>> future chipset, but apparently that hasn't happened yet.  Sadly, once these
+>> laptops ship, they are in a frozen maintenance mode.
 >>
+>> In my opinion, MS has allowed Qualcomm to get away with doing bad things in
+>> ACPI on the Qualcomm laptops.  The ACPI is not a true hardware description
+>> that is OS agnostic as it should be, and probably violates the spec in many
+>> ways.  Instead, the ACPI is written against the Windows drivers, and has a
+>> lot of OS driver crap pushed into it.
+>>
+>> The GPIO description is one such thing.
+>>
+>> As I understand it, any particular SoC will have a number of GPIOs supported
+>> by the TLMM.  0 - N.  Linux understands this.  However, in the ACPI of the
+>> Qualcomm Windows laptops, you will likely find atleast one GPIO number which
+>> exceeds this N.  These are "virtual" GPIOs, and are a construct of the
+>> Windows Qualcomm TLMM driver and how it interfaces with the frameworks
+>> within Windows.
+>>
+>> Some GPIO lines can be configured as wakeup sources by routing them to a
+>> specific hardware block in the SoC (which block it is varies from SoC to
+>> SoC).  Windows has a specific weird way of handling this which requires a
+>> unique "GPIO chip" to handle.  GPIO chips in Windows contain 32 GPIOs, so
+>> for each wakeup GPIO, the TLMM driver creates a GPIO chip (essentially
+>> creating 32 GPIOs), and assigns the added GPIOs numbers which exceed N.  The
+>> TLMM driver has an internal mapping of which virtual GPIO number corresponds
+>> to which real GPIO.
+>>
+>> So, ACPI says that some peripheral has GPIO N+X, which is not a real GPIO.
+>> That peripheral goes and requests that GPIO, which gets routed to the TLMM
+>> driver, and the TLMM driver translates that number to the real GPIO, and
+>> provides the reference back to the peripheral, while also setting up the
+>> special wakeup hardware.
+>>
+>> So, N+1 is the first supported wakup GPIO, N+1+32 is the next one, then
+>> N+1+32+32, and so on.
+> 
+> Jeffrey,
+> 
+> Thanks so much for these great information!
+> 
+> May I ask a bit more about how the virtual number N+1+32*n maps back to
+> the real number (R)?  For example of touchpad GPIO on Flex 5G, I think
+> we have:
+> 
+>    N+1+32*n = 0x0280
+>    N = 191
+>    R = 24
+> 
+> If my math not bad, n = 14.  How does 14 map to 24?
+
+
+So, if this was 845, the wakeup hardware would be the PDC.  Only a 
+specific number of GPIOs are routed to the PDC.  When the TLMM is 
+powered off in suspend, the PDC pays attention to the GPIOs that are 
+routed to it, and are configured in the PDC as wakeup sources.  When the 
+GPIO is asserted, the signal to the TLMM gets lost, but the PDC catches 
+it.  The PDC will kick the CPU/SoC out of suspend, and then once the 
+wakup process is complete, replay the GPIO so that the TLMM has the signal.
+
+In your example, 14 would be the 14th GPIO that is routed to the PDC. 
+You would need SoC hardware documentation to know the mapping from PDC 
+line 14 to GPIO line X.  This is going to be SoC specific, so 845 
+documentation is not going to help you for SC8XXX.
+
+Chances are, you are going to need to get this documentation from 
+Qualcomm (I don't know if its in IPCatalog or not), and put SoC specific 
+lookup tables in the TLMM driver.
+
+Does that make sense, or did I not answer the question you were actually 
+asking?
+
+-- 
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
