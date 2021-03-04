@@ -2,112 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3464132CA26
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 02:45:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0625632CA73
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 03:27:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234439AbhCDBoT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Mar 2021 20:44:19 -0500
-Received: from mail.kernel.org ([198.145.29.99]:39466 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234869AbhCDBoI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Mar 2021 20:44:08 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 573EB65072;
-        Thu,  4 Mar 2021 01:43:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1614822208;
-        bh=t4UmCxBr0X2rFT5RYkjjWlB4rSuRDWHeLK2SBF9Cr+E=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=mxAYAMI/FEuWndjbzSX4Ev8GWdjc+XrkVbydbnW/Y1eR49qRYQdWine9eJhb3jHtZ
-         b5Igry/3FTgo+JBAAxnfXoPEOQqGGlyKwNEZjhZCC26FUsinzRhp4e+S5Ln0tqdhJU
-         BLdSZNDAdRabtNAvhMXHwvNSzkHPdE7DcubdDO4WCEi8Hqb7cznOEZQkeQh3Itxdif
-         u15BXy9emmfJNZCpM1ub6nAVDEV/Oo1ShLd+rA0NgQWPvZWAj7zbBYXertRE4KTtAr
-         /uZJUW90xqYPLbL9m7KdH6e/CbgqAFOswgX1yiH48XX/Q5byvBEPqw6uFA0C3sGHkB
-         av0TWT3JhUBUQ==
-Date:   Wed, 3 Mar 2021 19:43:25 -0600
-From:   "Gustavo A. R. Silva" <gustavoars@kernel.org>
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
-Subject: Re: [PATCH][next] media: venus: hfi_msgs.h: Replace one-element
- arrays with flexible-array members
-Message-ID: <20210304014325.GB43221@embeddedor>
-References: <20210211001044.GA69612@embeddedor>
+        id S230445AbhCDCZw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Mar 2021 21:25:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47678 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230416AbhCDCZq (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 3 Mar 2021 21:25:46 -0500
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DF4CC061756
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Mar 2021 18:25:06 -0800 (PST)
+Received: by mail-pl1-x62b.google.com with SMTP id z7so15248966plk.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Mar 2021 18:25:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=aRTindZj5rFMg3BpBmEABxaVuwreQ5iWx3kEwidtz5c=;
+        b=AIwjAv4SC8Wdveml/iI74PmqC97boTcPuk5Vs6MXvLJxAK++SPNq4MnoLgbi7WCk0I
+         IHf3ZN8m3JPvvpSepTI5mVC9GJakxgl0OFhge0gvxOXINYZeGqokYUhINh04y+2CiJAq
+         9qajfPCU5modCmp2Pqsmvo4KHtjlWtVFbXgABhwPAh6tfFmay8ioOwPq0TZQVuUB3URM
+         Kpp5N8eIVvamT6FT+XeIy5Qa3desRVASDohBEOhdgVhyEtGxziTxD0qACtFJ/nOM77bH
+         6vYtOOg0YtGowl6llimjBSHDcoXG9rvPnwX2NiFg03IlxPtUqew7ddmHH3ABVS7Q+30n
+         MOVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=aRTindZj5rFMg3BpBmEABxaVuwreQ5iWx3kEwidtz5c=;
+        b=HPUJng8bt1RIrMFVG43HvSeBCmkhYu6fvfmsqPG4yUtBXQa6t3+XY/y3ekbtrxsUcW
+         oHJJnxwOUBjOzpWGTgfeewqYE7ioTxQi7q/A28UZfc2PMEEZxCCWV/g0CD/6BKHCgmVP
+         H14HHaHbRhy0MsxEeVObTmXKv9bhhy0hqjBVzqjlz2EfCMi2GqOjiJoRgDSzy/4zdbKX
+         rGFcN/UHoH047NyqsNITNisNkW5jYIHe5CipVQkF9Kt+iWfC2lOxlmmXDxWYxQWgc9lN
+         nDmQvAF4T9hK0eG2gz5gGBgZkDrGjBhcdJEDvbkRvF1sXwuCT4Mk1wH8ptcNcuNgrz6C
+         8MqA==
+X-Gm-Message-State: AOAM5301aECaYI/nw932zR2LHil9HbBZkgojtPyZvdv7V7lZiXe5tyxy
+        0ThVcYLkkORZ4gmM/jLnftBeBw==
+X-Google-Smtp-Source: ABdhPJwqSBieGEVi5vqu+pd9RNJljBzo4yi5v6PPVaSomtsnxZGz7tN40ZQh8v2xIk1pzCeMNJ+9lQ==
+X-Received: by 2002:a17:903:2082:b029:e3:df7c:f30 with SMTP id d2-20020a1709032082b02900e3df7c0f30mr1901724plc.71.1614824705655;
+        Wed, 03 Mar 2021 18:25:05 -0800 (PST)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id j3sm23933278pgk.24.2021.03.03.18.25.04
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 03 Mar 2021 18:25:05 -0800 (PST)
+Date:   Thu, 4 Mar 2021 10:24:59 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Andy Shevchenko <andriy.shevchenko@intel.com>,
+        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2] pinctrl: qcom: support gpio_chip .set_config call
+Message-ID: <20210304022459.GD17424@dragon>
+References: <20210303131858.3976-1-shawn.guo@linaro.org>
+ <YD+iWuLS/9knWLFb@builder.lan>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210211001044.GA69612@embeddedor>
+In-Reply-To: <YD+iWuLS/9knWLFb@builder.lan>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi all,
+On Wed, Mar 03, 2021 at 08:51:06AM -0600, Bjorn Andersson wrote:
+> > @@ -717,6 +731,7 @@ static const struct gpio_chip msm_gpio_template = {
+> >  	.get_direction    = msm_gpio_get_direction,
+> >  	.get              = msm_gpio_get,
+> >  	.set              = msm_gpio_set,
+> > +	.set_config       = gpiochip_generic_config,
+> 
+> Generally the pinconf/pinmux part of the driver deals with groups, and
+> the gpio_chip deals with gpio numbers. So I think that either
+> gpiochip_generic_config() should somehow do the translation, or we
+> should use a different function that does it (even though there's no
+> translation).
 
-Friendly ping: who can take this, please?
+The transition from GPIO to PINCTRL world is being done by
+pinctrl_gpio_set_config() which is wrapped by gpiochip_generic_config().
+This is nothing new from gpiochip_generic_request() and
+gpiochip_generic_free() right below.
 
-Thanks
---
-Gustavo
+> >  	.request          = gpiochip_generic_request,
+> >  	.free             = gpiochip_generic_free,
+> >  	.dbg_show         = msm_gpio_dbg_show,
 
-On Wed, Feb 10, 2021 at 06:10:44PM -0600, Gustavo A. R. Silva wrote:
-> There is a regular need in the kernel to provide a way to declare having
-> a dynamically sized set of trailing elements in a structure. Kernel code
-> should always use “flexible array members”[1] for these cases. The older
-> style of one-element or zero-length arrays should no longer be used[2].
-> 
-> Use flexible-array members in struct hfi_msg_sys_property_info_pkt and
-> hfi_msg_session_property_info_pkt instead of one-element arrays.
-> 
-> Also, this helps with the ongoing efforts to enable -Warray-bounds by
-> fixing the following warnings:
-> 
->   CC [M]  drivers/media/platform/qcom/venus/hfi_msgs.o
-> drivers/media/platform/qcom/venus/hfi_msgs.c: In function ‘hfi_sys_property_info’:
-> drivers/media/platform/qcom/venus/hfi_msgs.c:246:35: warning: array subscript 1 is above array bounds of ‘u32[1]’ {aka ‘unsigned int[1]’} [-Warray-bounds]
->   246 |  if (req_bytes < 128 || !pkt->data[1] || pkt->num_properties > 1)
->       |                          ~~~~~~~~~^~~
-> drivers/media/platform/qcom/venus/hfi_msgs.c: In function ‘hfi_session_prop_info’:
-> drivers/media/platform/qcom/venus/hfi_msgs.c:342:62: warning: array subscript 1 is above array bounds of ‘u32[1]’ {aka ‘unsigned int[1]’} [-Warray-bounds]
->   342 |  if (!req_bytes || req_bytes % sizeof(*buf_req) || !pkt->data[1])
->       |                                                     ~~~~~~~~~^~~
-> 
-> [1] https://en.wikipedia.org/wiki/Flexible_array_member
-> [2] https://www.kernel.org/doc/html/v5.9/process/deprecated.html#zero-length-and-one-element-arrays
-> 
-> Link: https://github.com/KSPP/linux/issues/79
-> Link: https://github.com/KSPP/linux/issues/109
-> Build-tested-by: <lkp@intel.com>
-> Link: https://lore.kernel.org/lkml/6023dd80.MmTeFf8SzwX0iK7%2F%25lkp@intel.com/
-> Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-> ---
->  drivers/media/platform/qcom/venus/hfi_msgs.h | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.h b/drivers/media/platform/qcom/venus/hfi_msgs.h
-> index 526d9f5b487b..e2d2ccfbdd24 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_msgs.h
-> +++ b/drivers/media/platform/qcom/venus/hfi_msgs.h
-> @@ -113,7 +113,7 @@ struct hfi_msg_sys_ping_ack_pkt {
->  struct hfi_msg_sys_property_info_pkt {
->  	struct hfi_pkt_hdr hdr;
->  	u32 num_properties;
-> -	u32 data[1];
-> +	u32 data[];
->  };
->  
->  struct hfi_msg_session_load_resources_done_pkt {
-> @@ -233,7 +233,7 @@ struct hfi_msg_session_parse_sequence_header_done_pkt {
->  struct hfi_msg_session_property_info_pkt {
->  	struct hfi_session_hdr_pkt shdr;
->  	u32 num_properties;
-> -	u32 data[1];
-> +	u32 data[];
->  };
->  
->  struct hfi_msg_session_release_resources_done_pkt {
-> -- 
-> 2.27.0
-> 
+Shawn
