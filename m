@@ -2,106 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7AE4C32CBBA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 06:07:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D9B7632CBFE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 06:26:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229687AbhCDFGb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Mar 2021 00:06:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54358 "EHLO
+        id S234112AbhCDFZn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Mar 2021 00:25:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229673AbhCDFGF (ORCPT
+        with ESMTP id S234127AbhCDFZY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Mar 2021 00:06:05 -0500
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46C9BC061756
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Mar 2021 21:05:25 -0800 (PST)
-Received: by mail-oi1-x233.google.com with SMTP id s73so2992677oie.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Mar 2021 21:05:25 -0800 (PST)
+        Thu, 4 Mar 2021 00:25:24 -0500
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83033C061574
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Mar 2021 21:24:44 -0800 (PST)
+Received: by mail-pl1-x62b.google.com with SMTP id u11so15451423plg.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Mar 2021 21:24:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=6HGZ0WK2qAddwQzRzoqcSS6KSsx7wj5H1uzTNx3pDvU=;
-        b=MvQZdKA+2dXHhKDVpUNMuZxALRvF+KJ57uzjymQPNDJi49g67kn7Qx+5/XIfPRRVxH
-         jCXz1pnM24guQtQyWEOdBFROJdGTlWpVpvzkqyf1cWlM9lh9mcnH3wzeRA/j9MHJPqMG
-         /ui1QuHyNiv/B7v4hXFOwojPcn+rRxjkta6UQ62UzywxuoSACBZzRjkksh+Z2KL5gBbl
-         XUl6mmilvSEgyEo5Nh6/Rqnje13wP0WKZU9cyQ7sWK52uRFcvtv3POpZwuHDK9qshcte
-         qSSu4ruBWEeeoWUQJpEpobWQLttJu2PyygkkC5E0a8Y7s3of0dbiSv5ZO6zzUXcAqED/
-         Ai/Q==
+         :content-disposition:in-reply-to:user-agent;
+        bh=eF3ouK2tt5RggVqVE4tZ8JPzVe8Y7mIM7tF/ZggEiY8=;
+        b=hdbTIegP1vwRxV46VZzfJgU0cNqGnWP/UjMRcKYRZAClQyp6SYjuMkVrndTK/7la7g
+         SVTk1mlp92vWAyNIMQDgjfWTfUsWjjK85sErjxdCivQBnqnWBR8iUKiDl8iRcdOk85gB
+         EqFuVgnVJrhrdRsUGuOJkOz4ZcYufuzk/MpfkaNAaX1d3qrR+0fKRewIyUD+A7aHozpW
+         5iVQsdw89sqMPGVwXKX5PwRia3b7TDHYQsf7OQebhleK9M+4nltG3IKVRSHmRw43la/U
+         81+o/e795XL8UizwJ7D9/9t2O6RZV8sQBXJF70YpAIeJZwbsEDeBndSQzsBVVv8jKZir
+         psRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=6HGZ0WK2qAddwQzRzoqcSS6KSsx7wj5H1uzTNx3pDvU=;
-        b=D96cEklLN2Q6aDzGh26vfadk20O8fNv4nQllpKBYfCY6oDciymwI6SdqWQqI/22KOq
-         auYkCUTfdo9zBao4jrQpoVN0IVpOc1aUaT1pgzvT7iJWhDXQ9avyNgytGQ4OEH0Je634
-         7gccszWLs19hfx4EkxdiVTQ2TPVSZ+6uXZsjTLPf30mhsSsnLgEithid5ZVI5/MgZXCg
-         cvFPofrex/7Er90YGY1KRv1CAl1e8eRURihECCGeEKcurKI8UncD8SgJA7xWfNaLSZVb
-         WpsdfRDizRvxAs+F2fyEVcypAR4rOALtTrVtuUlbGr1iSPXTDMMUY0P6Q3TPK+7SVi5R
-         W2Bw==
-X-Gm-Message-State: AOAM533+YWdxCaXKslGz3WXe/xvw8GUdyG4l2exqMa9G7nmat06U4mXR
-        zxOKf7TrwctHb3I1B39M4nHh5g==
-X-Google-Smtp-Source: ABdhPJw/f7Y1QbK5Q/CLbd7YgYq4xEyl8QnvDGyXJvCA2ts+oC6w6oURHHFufgSnr+gZQC4EllCKHg==
-X-Received: by 2002:aca:4bc5:: with SMTP id y188mr1797036oia.135.1614834324673;
-        Wed, 03 Mar 2021 21:05:24 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id r81sm1043568oie.2.2021.03.03.21.05.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Mar 2021 21:05:24 -0800 (PST)
-Date:   Wed, 3 Mar 2021 23:05:22 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Shawn Guo <shawn.guo@linaro.org>
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=eF3ouK2tt5RggVqVE4tZ8JPzVe8Y7mIM7tF/ZggEiY8=;
+        b=YPLCvUEJQhxC8HVlFkUlFEdZbX3j0XXn9o69Bu4YHCIH8Hw43RG3ZjPx2ah8YtJW+B
+         n0j+OgE6SbYXeusDKMbKG6XjOVmpvJW+Dap6hpj9WFPd8VXSLEHjuu0I0tBwfgGxkDuC
+         tK6pbe1afjq8nOC8cuufmIC0qO3sXUTVdKiARPyDeLqlsmIclDElAqJku75vR1DkaTLQ
+         ZqUUNlpmESMj6zulg4iksGaJ0no8ILnsmUgJbQSbUW4kfFoG6V+eUFkEaj14ui8zBoqO
+         w5zmVYVmTNcco5T/AYXlNKiCLAkvLuWc3hPnBP2X/MgY2zfIRBTSxmAzJwKTMTrQbRrZ
+         Oyww==
+X-Gm-Message-State: AOAM532cpJypz1MCHxPWfoSTRRM/qwZnBgerAyRoub96KBfEeo4U7vgT
+        NzISC0NmAdQhoUHwQl59rPT7gA==
+X-Google-Smtp-Source: ABdhPJwV+8E5f6x7ijD6rKI2G4thN4e1CZ83qzpkuhoNGfzMuhUCHk7GJ8ZPHqExxqf273LGRIEASw==
+X-Received: by 2002:a17:90a:d585:: with SMTP id v5mr2716351pju.206.1614835484122;
+        Wed, 03 Mar 2021 21:24:44 -0800 (PST)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id x9sm8261323pjp.3.2021.03.03.21.24.42
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 03 Mar 2021 21:24:43 -0800 (PST)
+Date:   Thu, 4 Mar 2021 13:24:38 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Andy Shevchenko <andriy.shevchenko@intel.com>
 Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Andy Shevchenko <andriy.shevchenko@intel.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2] pinctrl: qcom: support gpio_chip .set_config call
-Message-ID: <YEBqktwx3uYAJR9O@builder.lan>
-References: <20210303131858.3976-1-shawn.guo@linaro.org>
- <YD+iWuLS/9knWLFb@builder.lan>
- <20210304022459.GD17424@dragon>
+Subject: Re: [PATCH v2 1/2] pinctrl: qcom: handle tiles for ACPI boot
+Message-ID: <20210304052437.GE17424@dragon>
+References: <20210303132622.4115-1-shawn.guo@linaro.org>
+ <20210303132622.4115-2-shawn.guo@linaro.org>
+ <YD+YSS/s79gqwEpS@smile.fi.intel.com>
+ <20210303144526.GC17424@dragon>
+ <YD+10cmeWfppgj0I@smile.fi.intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210304022459.GD17424@dragon>
+In-Reply-To: <YD+10cmeWfppgj0I@smile.fi.intel.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 03 Mar 20:24 CST 2021, Shawn Guo wrote:
-
-> On Wed, Mar 03, 2021 at 08:51:06AM -0600, Bjorn Andersson wrote:
-> > > @@ -717,6 +731,7 @@ static const struct gpio_chip msm_gpio_template = {
-> > >  	.get_direction    = msm_gpio_get_direction,
-> > >  	.get              = msm_gpio_get,
-> > >  	.set              = msm_gpio_set,
-> > > +	.set_config       = gpiochip_generic_config,
+On Wed, Mar 03, 2021 at 06:14:09PM +0200, Andy Shevchenko wrote:
+> On Wed, Mar 03, 2021 at 10:45:27PM +0800, Shawn Guo wrote:
+> > On Wed, Mar 03, 2021 at 04:08:09PM +0200, Andy Shevchenko wrote:
+> > > On Wed, Mar 03, 2021 at 09:26:21PM +0800, Shawn Guo wrote:
+> > > > It's not always the case that DT and ACPI describe hardware resource in
+> > > > the same schema, even for a single platform.  For example, on SC8180X,
+> > > > DT uses the tiles schema while ACPI describe memory resource as a single
+> > > > region.  It patches msm_pinctrl_probe() function to map tiles regions
+> > > > only for DT.  While for ACPI, it maps the single memory resource and
+> > > > calculate tile bases with offsets passed from SoC data.
+> > > 
+> > > ...
+> > > 
+> > > > +#include <linux/acpi.h>
+> > > 
+> > > There are at least two possibilities to avoid this:
 > > 
-> > Generally the pinconf/pinmux part of the driver deals with groups, and
-> > the gpio_chip deals with gpio numbers. So I think that either
-> > gpiochip_generic_config() should somehow do the translation, or we
-> > should use a different function that does it (even though there's no
-> > translation).
+> > So could you explain why we should avoid including this header?
 > 
-> The transition from GPIO to PINCTRL world is being done by
-> pinctrl_gpio_set_config() which is wrapped by gpiochip_generic_config().
-> This is nothing new from gpiochip_generic_request() and
-> gpiochip_generic_free() right below.
-> 
+> Here you can include it, but it's quite huge in order to have just one little
+> function out of it. But main point is it seems that relying on firmware type
+> for the tiles support is fragile.
 
-You're right, this seems analog to the two other gpiochip_generic_*
-helpers used below, I should have made this comment on the previous
-hunk.
+Okay, I'm not entirely happy about the tiles checking for so many
+conditions, so looked for other way around.  It turns out that
+pinctrl-sdm845 driver sets an example for not using tiles at all.  I
+will send v3 to drop this tiles thing completely.
 
-I don't think it's right to have the driver implement both group based
-and pin based pin_conf_set/get functions (at least not for the same
-entities), but I've not found the time to review the core code to
-determine if this would cause any issues.
-
-Regards,
-Bjorn
-
-> > >  	.request          = gpiochip_generic_request,
-> > >  	.free             = gpiochip_generic_free,
-> > >  	.dbg_show         = msm_gpio_dbg_show,
-> 
-> Shawn
+Shawn
