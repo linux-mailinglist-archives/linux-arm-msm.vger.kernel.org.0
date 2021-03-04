@@ -2,195 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6584632CCE6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 07:39:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1791232CD2D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 07:50:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235320AbhCDGiY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Mar 2021 01:38:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45916 "EHLO
+        id S235754AbhCDGsc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Mar 2021 01:48:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235313AbhCDGiG (ORCPT
+        with ESMTP id S235780AbhCDGsX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Mar 2021 01:38:06 -0500
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C083EC06175F
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Mar 2021 22:37:19 -0800 (PST)
-Received: by mail-pj1-x102f.google.com with SMTP id e9so5895721pjs.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Mar 2021 22:37:19 -0800 (PST)
+        Thu, 4 Mar 2021 01:48:23 -0500
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94DFFC061574
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Mar 2021 22:47:42 -0800 (PST)
+Received: by mail-pf1-x432.google.com with SMTP id r5so18208046pfh.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Mar 2021 22:47:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=DcBwSRYXwJgh73TAHGnFm4EDcUGNqvcxJAKsIbZgreY=;
-        b=St5xIRnflDz/K+jN2ygevVUdjx/uGuut94oNGw0svvyhspYOOk1Vt0ZfdS4MpwPvqo
-         noVforIO9Bh0Fs6VoCvdQJi7kJrnj7pOU8/7c5jvQjajZx/cpif2YA9r2heDcIGd4FXn
-         q4cg7LtYHdNO94y3Hl3KizP8t9mKCLPm3o/MfT/LobHE4pv6bxpK4KsQuskcb/yZkCkx
-         fvqa6xkNTgNF/L3Bbtyu/sFtfcV4dCS8YItxp8Ol10KzRkx5HlirpacYOoOcxO0+8v9t
-         vssSyIDQtK58bOeTWSejORuhaXBRQWquRVmhQxAEDfWOzHH616fMUEq/7HSC8v7v6cgg
-         ZFWQ==
+         :content-disposition:in-reply-to;
+        bh=WJlz68ojBlmeUdaZp6yVhRosKs8vkySnTS7B6Umwy7Q=;
+        b=IlNwkoAt/6Ye4KB/eT+XH6kUpMRP3ghQFWod3H9JlpcPoDDqC96ZBLUqnbGwb6Eo8d
+         SOl/j/ZTwlGQx3QTgdSt8J/XrBONqZNvLL11Ujrmt8RpawUQ36TC6q634eTtPqR3wib7
+         88c/9JABI6f+dTJ3c4leNydhjhNHkFwDb3s8BnArVfBeep6KCpKEzI+Y8eL01i8sB56H
+         d+1TP60HGyIb4FbbcA2GqXsx8DN9Ik48f7c0s338ZqJ/XkZ7WXlxl7Q4qrnPcIslvHEA
+         qaFjoRponHGLuCxakCKDRrYCwGqKUrvefEmu0yv/okQjGV6uwU1YySyRbFvWTZz5XPLQ
+         rNEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=DcBwSRYXwJgh73TAHGnFm4EDcUGNqvcxJAKsIbZgreY=;
-        b=n72qU8uUhLItouzybVXG9NlGeafNCgFjsY5dXDttMYO9typE5wP3vf2UvZDcL8m+WL
-         jVEoZuhMIRfbf4VSwkjNxwYVAItrhHZlrarT4fYvp4rVEYjef46jjuLp5Kjx/OQFaXSR
-         VfzowZQ3+2xKDXL9UXmG+6vdqFdgvGb51nELkxEagwRZR6u9iLZyVntA9dBLB7OXVv0k
-         K2oVlh0L5zelVjJo6lkzJ5ijGA781nPUWR5mgLnoXp4o+bw788DBQkw4pJ1O952UyUGr
-         4jXKldZEd9zCmPlEQvb1/mIBsetNkmXk5TELajGZa/JD5YCsrKpT2pqZ8ZfIqN0yIC99
-         cEaA==
-X-Gm-Message-State: AOAM531V3wwvuc+/Q64Wza1sQMdp6xKKEqQM9R7foaLe6fBJD/pCr5cD
-        ScCO2e4M/EpaNvOzDlExdjw+8g==
-X-Google-Smtp-Source: ABdhPJxYvDMRvNIVVUpHDhVH2zFVimjOWMbu8V6B7Pvx4Ez+nmm/+HVSHqEFj28W9qYQ+CnSXeSDhA==
-X-Received: by 2002:a17:902:a412:b029:e5:d7dd:9e41 with SMTP id p18-20020a170902a412b02900e5d7dd9e41mr2655188plq.78.1614839839141;
-        Wed, 03 Mar 2021 22:37:19 -0800 (PST)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id 67sm27421739pfw.92.2021.03.03.22.37.16
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 03 Mar 2021 22:37:18 -0800 (PST)
-Date:   Thu, 4 Mar 2021 14:37:12 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Jeffrey Hugo <jhugo@codeaurora.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] gpiolib: acpi: support override broken GPIO number in
- ACPI table
-Message-ID: <20210304063711.GF17424@dragon>
-References: <CAHp75Vc6xYv+197SOrSefQHD2h4Xy_N20gQajW4uF2PU=sJfLg@mail.gmail.com>
- <YDjZOU+VMWasjzUb@smile.fi.intel.com>
- <20210227031944.GB24428@dragon>
- <YDzbQqHspfvpYS7Z@smile.fi.intel.com>
- <20210302002725.GE24428@dragon>
- <YD4twyAGvDDOCv+n@smile.fi.intel.com>
- <abbfcdfa-c287-3828-ed6f-bc1e1f13c6b2@codeaurora.org>
- <20210303094300.GB17424@dragon>
- <41593c7e-368b-cfb8-b24a-2e4dca48b465@codeaurora.org>
- <YD+yBmPrKm1n8Tjm@builder.lan>
+         :mime-version:content-disposition:in-reply-to;
+        bh=WJlz68ojBlmeUdaZp6yVhRosKs8vkySnTS7B6Umwy7Q=;
+        b=i6u/R+pPUb/WuINR6VFynr82nDMI5HVBgJRUA7cGTXoO21dj24jMW6QE/LxxD322Wv
+         BWIcRtGmWptlnDaivioGlho/IsR9LSMIv1s1Q1v8iOf19NlzmdPzSeyVFDgrVmZEDb/k
+         bEKj2og0m+C//RW6b4F0JTjyAR6V4Y/xutQptESS4VMC4ZVzhH0re4bKpmgQDXQlMWhb
+         c+kcf3ZzIPVFemBnGUnbB/rADo48IMBkccBuYFSU5ZEVEuBUT6TI/bEkauaZqn631c6L
+         YibnmM81GQJxPAK7Xt1QQlo81yFPw611ISpKd3jCXHdiH4jMsgLJQmLD8SKKW9/rcvyR
+         XwvA==
+X-Gm-Message-State: AOAM532aRqItZ1Hpu1GrUv2ToEjrnw1vbdpRPFxq/d2uMl6w4IdA9pgJ
+        7MUvq4VsX2MiguBh7EG3RkEtiYF8lZJV
+X-Google-Smtp-Source: ABdhPJx6+9NM6mdvJ9mreqeqb3gaLc7xCmq5aNPyVKiOTeXZqCWWFw059IHb+jkqRuYUXXEUlMJHnw==
+X-Received: by 2002:aa7:80cc:0:b029:1da:689d:2762 with SMTP id a12-20020aa780cc0000b02901da689d2762mr2612042pfn.3.1614840462083;
+        Wed, 03 Mar 2021 22:47:42 -0800 (PST)
+Received: from thinkpad ([2409:4072:80b:705f:ce40:2a5f:bf1e:b205])
+        by smtp.gmail.com with ESMTPSA id a23sm14915635pfa.142.2021.03.03.22.47.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Mar 2021 22:47:41 -0800 (PST)
+Date:   Thu, 4 Mar 2021 12:17:36 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 4/6] mhi: pci_generic: No-Op for device_wake operations
+Message-ID: <20210304064736.GD3363@thinkpad>
+References: <1614615911-18794-1-git-send-email-loic.poulain@linaro.org>
+ <1614615911-18794-4-git-send-email-loic.poulain@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YD+yBmPrKm1n8Tjm@builder.lan>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <1614615911-18794-4-git-send-email-loic.poulain@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 03, 2021 at 09:57:58AM -0600, Bjorn Andersson wrote:
-> On Wed 03 Mar 09:10 CST 2021, Jeffrey Hugo wrote:
+On Mon, Mar 01, 2021 at 05:25:09PM +0100, Loic Poulain wrote:
+> The wake_db register presence is highly speculative and can fuze MHI
+> devices. Indeed, currently the wake_db register address is defined at
+> entry 127 of the 'Channel doorbell array', thus writing to this address
+> is equivalent to ringing the doorbell for channel 127, causing trouble
+> with some device that get an unexpected channel 127 doorbell interrupt.
 > 
-> > On 3/3/2021 2:43 AM, Shawn Guo wrote:
-> > > On Tue, Mar 02, 2021 at 10:02:49PM -0700, Jeffrey Hugo wrote:
-> > > > Sorry, just joining the thread now.  Hopefully I'm addressing everything
-> > > > targeted at me.
-> > > > 
-> > > > I used to do kernel work on MSMs, then kernel work on server CPUs, but now I
-> > > > do kernel work on AI accelerators.  Never was on the firmware team, but I
-> > > > have a lot of contacts in those areas.  On my own time, I support Linux on
-> > > > the Qualcomm laptops.
-> > > > 
-> > > > Its not MS that needs to fix things (although there is plenty of things I
-> > > > could point to that MS could fix), its the Qualcomm Windows FW folks.  They
-> > > > have told me a while ago they were planning on fixing this issue on some
-> > > > future chipset, but apparently that hasn't happened yet.  Sadly, once these
-> > > > laptops ship, they are in a frozen maintenance mode.
-> > > > 
-> > > > In my opinion, MS has allowed Qualcomm to get away with doing bad things in
-> > > > ACPI on the Qualcomm laptops.  The ACPI is not a true hardware description
-> > > > that is OS agnostic as it should be, and probably violates the spec in many
-> > > > ways.  Instead, the ACPI is written against the Windows drivers, and has a
-> > > > lot of OS driver crap pushed into it.
-> > > > 
-> > > > The GPIO description is one such thing.
-> > > > 
-> > > > As I understand it, any particular SoC will have a number of GPIOs supported
-> > > > by the TLMM.  0 - N.  Linux understands this.  However, in the ACPI of the
-> > > > Qualcomm Windows laptops, you will likely find atleast one GPIO number which
-> > > > exceeds this N.  These are "virtual" GPIOs, and are a construct of the
-> > > > Windows Qualcomm TLMM driver and how it interfaces with the frameworks
-> > > > within Windows.
-> > > > 
-> > > > Some GPIO lines can be configured as wakeup sources by routing them to a
-> > > > specific hardware block in the SoC (which block it is varies from SoC to
-> > > > SoC).  Windows has a specific weird way of handling this which requires a
-> > > > unique "GPIO chip" to handle.  GPIO chips in Windows contain 32 GPIOs, so
-> > > > for each wakeup GPIO, the TLMM driver creates a GPIO chip (essentially
-> > > > creating 32 GPIOs), and assigns the added GPIOs numbers which exceed N.  The
-> > > > TLMM driver has an internal mapping of which virtual GPIO number corresponds
-> > > > to which real GPIO.
-> > > > 
-> > > > So, ACPI says that some peripheral has GPIO N+X, which is not a real GPIO.
-> > > > That peripheral goes and requests that GPIO, which gets routed to the TLMM
-> > > > driver, and the TLMM driver translates that number to the real GPIO, and
-> > > > provides the reference back to the peripheral, while also setting up the
-> > > > special wakeup hardware.
-> > > > 
-> > > > So, N+1 is the first supported wakup GPIO, N+1+32 is the next one, then
-> > > > N+1+32+32, and so on.
-> > > 
-> > > Jeffrey,
-> > > 
-> > > Thanks so much for these great information!
-> > > 
-> > > May I ask a bit more about how the virtual number N+1+32*n maps back to
-> > > the real number (R)?  For example of touchpad GPIO on Flex 5G, I think
-> > > we have:
-> > > 
-> > >    N+1+32*n = 0x0280
-> > >    N = 191
+
+what are those "some" devices?
+
+> This change fixes that issue by setting wake get/put as no-op for
+> pci_generic devices. The wake device sideband mechanism seems really
+> specific to each device, and is AFAIK no defined by the MHI spec.
 > 
-> There's 190 GPIOs on SC8180x, but then the math doesn't add up to a
-> whole number...
 
-In pinctrl-sc8180x driver you wrote, it has sc8180x_pinctrl.ngpios = 191.
-Which one of you should I listen to :)
+s/no/not
 
-BTW, if you read this number from DTS, I already sent you a series to
-fix them.
-
-https://lore.kernel.org/linux-gpio/20210303033106.549-1-shawn.guo@linaro.org/
-
+> It also removes zeroing initialization of wake_db register during MMIO
+> initialization, the register being set via wake_get/put accessors few
+> cycles later during M0 transition.
 > 
-> > >    R = 24
-> > > 
-> > > If my math not bad, n = 14.  How does 14 map to 24?
-> > 
-> > 
-> > So, if this was 845, the wakeup hardware would be the PDC.  Only a specific
-> > number of GPIOs are routed to the PDC.  When the TLMM is powered off in
-> > suspend, the PDC pays attention to the GPIOs that are routed to it, and are
-> > configured in the PDC as wakeup sources.  When the GPIO is asserted, the
-> > signal to the TLMM gets lost, but the PDC catches it.  The PDC will kick the
-> > CPU/SoC out of suspend, and then once the wakup process is complete, replay
-> > the GPIO so that the TLMM has the signal.
-> > 
+
+IIUC, the DEVICE_WAKE specified in the MHI spec corresponds to the wake doorbell
+register. But in some cases, this rather happens to be a #WAKE sideband GPIO as
+in PCIe.
+
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> ---
+>  drivers/bus/mhi/core/init.c   |  2 --
+>  drivers/bus/mhi/pci_generic.c | 18 ++++++++++++++++++
+>  2 files changed, 18 insertions(+), 2 deletions(-)
 > 
-> SC8180x has the same hardware design.
+> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+> index 2159dbc..32eb90f 100644
+> --- a/drivers/bus/mhi/core/init.c
+> +++ b/drivers/bus/mhi/core/init.c
+> @@ -510,8 +510,6 @@ int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
+>  
+>  	/* Setup wake db */
+>  	mhi_cntrl->wake_db = base + val + (8 * MHI_DEV_WAKE_DB);
+> -	mhi_write_reg(mhi_cntrl, mhi_cntrl->wake_db, 4, 0);
+> -	mhi_write_reg(mhi_cntrl, mhi_cntrl->wake_db, 0, 0);
+
+I need comment from Hemant/Bhaumik on this change since I don't exactly know if
+this is really required or not.
+
+Thanks,
+Mani
+
+>  	mhi_cntrl->wake_set = false;
+>  
+>  	/* Setup channel db address for each channel in tre_ring */
+> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+> index 87bab93..8423293 100644
+> --- a/drivers/bus/mhi/pci_generic.c
+> +++ b/drivers/bus/mhi/pci_generic.c
+> @@ -312,6 +312,21 @@ static void mhi_pci_status_cb(struct mhi_controller *mhi_cntrl,
+>  	}
+>  }
+>  
+> +static void mhi_pci_wake_get_nop(struct mhi_controller *mhi_cntrl, bool force)
+> +{
+> +	/* no-op */
+> +}
+> +
+> +static void mhi_pci_wake_put_nop(struct mhi_controller *mhi_cntrl, bool override)
+> +{
+> +	/* no-op */
+> +}
+> +
+> +static void mhi_pci_wake_toggle_nop(struct mhi_controller *mhi_cntrl)
+> +{
+> +	/* no-op */
+> +}
+> +
+>  static bool mhi_pci_is_alive(struct mhi_controller *mhi_cntrl)
+>  {
+>  	struct pci_dev *pdev = to_pci_dev(mhi_cntrl->cntrl_dev);
+> @@ -515,6 +530,9 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+>  	mhi_cntrl->status_cb = mhi_pci_status_cb;
+>  	mhi_cntrl->runtime_get = mhi_pci_runtime_get;
+>  	mhi_cntrl->runtime_put = mhi_pci_runtime_put;
+> +	mhi_cntrl->wake_get = mhi_pci_wake_get_nop;
+> +	mhi_cntrl->wake_put = mhi_pci_wake_put_nop;
+> +	mhi_cntrl->wake_toggle = mhi_pci_wake_toggle_nop;
+>  
+>  	err = mhi_pci_claim(mhi_cntrl, info->bar_num, DMA_BIT_MASK(info->dma_data_width));
+>  	if (err)
+> -- 
+> 2.7.4
 > 
-> > In your example, 14 would be the 14th GPIO that is routed to the PDC. You
-> > would need SoC hardware documentation to know the mapping from PDC line 14
-> > to GPIO line X.  This is going to be SoC specific, so 845 documentation is
-> > not going to help you for SC8XXX.
-> > 
-> > Chances are, you are going to need to get this documentation from Qualcomm
-> > (I don't know if its in IPCatalog or not), and put SoC specific lookup
-> > tables in the TLMM driver.
-> > 
-> 
-> I added the table in the driver, see sc8180x_pdc_map[], and it has gpio
-> 14 at position 7, with the 14th entry being gpio 38 - which seems like
-> an unlikely change from the reference schematics.
-
-As it's clear that the real GPIO number is 24, and the only possible map
-in sc8180x_pdc_map[] is:
-
-	{ .gpio = 24, wakeirq = 37 }
-
-So we need to understand how 14 turns to 37.
-
-Shawn
