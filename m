@@ -2,167 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C130032D86B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 18:14:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A455132D885
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 18:23:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239076AbhCDRN4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Mar 2021 12:13:56 -0500
-Received: from foss.arm.com ([217.140.110.172]:41858 "EHLO foss.arm.com"
+        id S231717AbhCDRW2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Mar 2021 12:22:28 -0500
+Received: from m42-2.mailgun.net ([69.72.42.2]:20812 "EHLO m42-2.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S239072AbhCDRNZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Mar 2021 12:13:25 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6110231B;
-        Thu,  4 Mar 2021 09:12:38 -0800 (PST)
-Received: from [10.57.19.206] (unknown [10.57.19.206])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 427663F7D7;
-        Thu,  4 Mar 2021 09:12:34 -0800 (PST)
-Subject: Re: [PATCH] devfreq: Register devfreq as a cooling device
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc:     cwchoi00@gmail.com, kyungmin.park@samsung.com,
-        myungjoo.ham@samsung.com, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Chanwoo Choi <cw00.choi@samsung.com>,
-        Qiang Yu <yuq825@gmail.com>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Rob Herring <robh@kernel.org>,
-        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
-        Steven Price <steven.price@arm.com>,
-        Alyssa Rosenzweig <alyssa.rosenzweig@collabora.com>,
-        "open list:DRM DRIVERS FOR LIMA" <dri-devel@lists.freedesktop.org>,
-        "moderated list:DRM DRIVERS FOR LIMA" <lima@lists.freedesktop.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>
-References: <20210304125034.28404-1-daniel.lezcano@linaro.org>
- <5f06e0c5-b2d9-5e11-01b6-fdd0dac635a7@arm.com>
- <8d153937-c5fc-1de2-d510-d3f91f7a9724@linaro.org>
-From:   Lukasz Luba <lukasz.luba@arm.com>
-Message-ID: <71bc8b07-ea0e-17a9-8c7f-d20669e9da12@arm.com>
-Date:   Thu, 4 Mar 2021 17:12:32 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S231294AbhCDRV7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 4 Mar 2021 12:21:59 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1614878500; h=Content-Type: MIME-Version: Message-ID:
+ In-Reply-To: Date: References: Subject: Cc: To: From: Sender;
+ bh=ktAWgMbXCvDZwWNBGkjqcNePucXjOUTQyk0mtbVGRoM=; b=SwmEaJNnrZ2u8nIY0xAW+bsR3xYetgdOdNvAqnhOGMcVSaUWiFRIIgCmd1ecOvbJYAn7DB8x
+ QHC3YAt8pS0l/d4XiSE0zz3Hv9HZrDWgruwjEGUXq0NAMNbSug37GHDrTOmXra6xPSRXqBFy
+ 3QRQawOA2BnuSAI8v88A5O8kug4=
+X-Mailgun-Sending-Ip: 69.72.42.2
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 60411711f7ec0ea57cd0869e (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 04 Mar 2021 17:21:21
+ GMT
+Sender: kvalo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id ABF14C43461; Thu,  4 Mar 2021 17:21:20 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from potku.adurom.net (88-114-240-156.elisa-laajakaista.fi [88.114.240.156])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: kvalo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 70726C433CA;
+        Thu,  4 Mar 2021 17:21:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 70726C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kvalo@codeaurora.org
+From:   Kalle Valo <kvalo@codeaurora.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Hemant Kumar <hemantk@codeaurora.org>,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, ath11k@lists.infradead.org
+Subject: Re: [regression] mhi: mhi_pm_st_worker blocked for more than 61 seconds.
+References: <87im6755ii.fsf@codeaurora.org> <20210304151004.GA29563@work>
+Date:   Thu, 04 Mar 2021 19:21:16 +0200
+In-Reply-To: <20210304151004.GA29563@work> (Manivannan Sadhasivam's message of
+        "Thu, 4 Mar 2021 20:40:04 +0530")
+Message-ID: <87blby6dir.fsf@codeaurora.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <8d153937-c5fc-1de2-d510-d3f91f7a9724@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
 
+> Hi Kalle,
+>
+> On Thu, Mar 04, 2021 at 04:59:33PM +0200, Kalle Valo wrote:
+>> Hi MHI folks,
+>> 
+>> I upgraded my QCA6390 x86 test box to v5.12-rc1 and started seeing
+>> kernel crashes when testing ath11k. I don't recall seeing this on v5.11
+>> so it looks like a new problem, but I cannot be 100% sure. Netconsole
+>> output is below. I have most of the kernel debug functionality enabled
+>> (KASAN etc).
+>> 
+>> I can fairly easy reproduce this by looping insmod and rmmod of mhi,
+>> wireless and ath11k modules. It does not happen every time, but I would
+>> say I can reproduce the problem within 10 test loops or so.
+>> 
+>> Any ideas what could cause this? I have not bisected this due to lack of
+>> time, but I can test patches etc.
+>> 
+>
+> Not sure if this is related, Loic sent a patch which fixes an issue with
+> "mhi_pm_state_worker":
+>
+> https://patchwork.kernel.org/project/linux-arm-msm/patch/1614161930-8513-1-git-send-email-loic.poulain@linaro.org/
+>
+> Can you please test see if it fixes your issue also?
 
-On 3/4/21 4:53 PM, Daniel Lezcano wrote:
-> 
-> Hi Lukasz,
-> 
-> thanks for commenting this patch,
-> 
-> On 04/03/2021 14:47, Lukasz Luba wrote:
->> Hi Daniel,
->>
->> On 3/4/21 12:50 PM, Daniel Lezcano wrote:
->>> Currently the default behavior is to manually having the devfreq
->>> backend to register themselves as a devfreq cooling device.
->>>
->>> There are no so many and actually it makes more sense to register the
->>> devfreq device when adding it.
->>>
->>> Consequently, every devfreq becomes a cooling device like cpufreq is.
->>>
->>> Having a devfreq being registered as a cooling device can not mitigate
->>> a thermal zone if it is not bound to this one. Thus, the current
->>> configurations are not impacted by this change.
->>
->> There are also different type of devices, which register into devfreq
->> framework like NoC buses, UFS/eMMC, jpeg and video accelerators, ISP,
->> etc.
->> In some platforms there are plenty of those devices and they all would
->> occupy memory due to private freq_table in devfreq_cooling, function:
->> devfreq_cooling_gen_tables().
->>
->> IIRC in OdroidXU4 there are ~20 devfreq devs for NoC buses.
-> 
-> I'm curious, do you have a pointer to such kernels having all those
-> devfreq ?
+Thanks for the link, but unfortunately not :( I was able to reproduce
+the issue just after 3 insmod/rmmod loops.
 
-Sure, it's mainline code, you can build it with exynos_defconfig.
-You can check the DT files to find them arch/arm/boot/dts/exynos*.
-(this particular OdroidXU4 is Exynos5422, but it grabs some generic dt
-files).
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
 
-Here is the mainline kernel content of /sys/class/devfreq/
-----------------------------------------------------------
-sys/class/devfreq /
-10c20000.memory-controller  soc:bus-g2d          soc:bus-mfc
-11800000.gpu                soc:bus-g2d-acp      soc:bus-mscl
-soc:bus-disp1               soc:bus-gen          soc:bus-noc
-soc:bus-disp1-fimd          soc:bus-gscl-scaler  soc:bus-peri
-soc:bus-fsys-apb            soc:bus-jpeg         soc:bus-wcore
-soc:bus-fsys2               soc:bus-jpeg-apb
-----------------------------------------------------------
-
-IIRC some Odroid kernel maintained by Hardkernel had more devices
-in this dir.
-
-
-Here is how these bus devices print themselves during boot:
-----------------------------------------------------------
-[    8.674840] exynos-bus: new bus device registered: soc:bus-wcore ( 
-88700 KHz ~ 532000 KHz)
-[    8.686412] exynos-bus: new bus device registered: soc:bus-noc ( 
-66600 KHz ~ 111000 KHz)
-[    8.696080] exynos-bus: new bus device registered: soc:bus-fsys-apb 
-(111000 KHz ~ 222000 KHz)
-[    8.706590] exynos-bus: new bus device registered: soc:bus-fsys2 ( 
-75000 KHz ~ 200000 KHz)
-[    8.717661] exynos-bus: new bus device registered: soc:bus-mfc ( 
-83250 KHz ~ 333000 KHz)
-[    8.728139] exynos-bus: new bus device registered: soc:bus-gen ( 
-88700 KHz ~ 266000 KHz)
-[    8.737551] exynos-bus: new bus device registered: soc:bus-peri ( 
-66600 KHz ~  66600 KHz)
-[    8.748625] exynos-bus: new bus device registered: soc:bus-g2d ( 
-83250 KHz ~ 333000 KHz)
-[    8.759427] exynos-bus: new bus device registered: soc:bus-g2d-acp ( 
-66500 KHz ~ 266000 KHz)
-[    8.770366] exynos-bus: new bus device registered: soc:bus-jpeg ( 
-75000 KHz ~ 300000 KHz)
-[    8.781135] exynos-bus: new bus device registered: soc:bus-jpeg-apb ( 
-83250 KHz ~ 166500 KHz)
-[    8.791366] exynos-bus: new bus device registered: soc:bus-disp1-fimd 
-(120000 KHz ~ 200000 KHz)
-[    8.802418] exynos-bus: new bus device registered: soc:bus-disp1 
-(120000 KHz ~ 300000 KHz)
-[    8.813050] exynos-bus: new bus device registered: 
-soc:bus-gscl-scaler (150000 KHz ~ 300000 KHz)
-[    8.825308] exynos-bus: new bus device registered: soc:bus-mscl ( 
-84000 KHz ~ 666000 KHz)
-
-----------------------------------------------------------
-
-
-> 
->> It's true that they will not affect thermal zones, but unnecessarily,
->> they all will show up in the /sys/class/thermal/ as
->> thermal-devfreq-X
->>
->>
->> IMO the devfreq shouldn't be tight with devfreq cooling thermal.
-> 
-> The energy model is tied with a cooling device initialization.
-> 
-> So if we want to do power limitation, the energy model must be
-> initialized with the device, thus the cooling device also.
-> 
-> That is the reason why I'm ending up with this change. Chanwoo
-> suggestion makes sense and that will allow to move the initialization to
-> devfreq which is more sane but it does not solve the initial problem
-> with the energy model.
-
-Make sense, the 'is_cooling_device' does the job.
-
-Regards,
-Lukasz
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
