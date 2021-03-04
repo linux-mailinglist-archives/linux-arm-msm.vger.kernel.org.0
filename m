@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D681332D286
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 13:09:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 66D5232D28F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 13:09:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240214AbhCDMHV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Mar 2021 07:07:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60014 "EHLO
+        id S239986AbhCDMHW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Mar 2021 07:07:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240105AbhCDMHD (ORCPT
+        with ESMTP id S240118AbhCDMHH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Mar 2021 07:07:03 -0500
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD873C06121F
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Mar 2021 04:06:07 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id jt13so48959502ejb.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Mar 2021 04:06:07 -0800 (PST)
+        Thu, 4 Mar 2021 07:07:07 -0500
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DA33C0611A3
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Mar 2021 04:06:09 -0800 (PST)
+Received: by mail-ej1-x62c.google.com with SMTP id mj10so28804847ejb.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Mar 2021 04:06:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=45F+RVQGNOeOIqHAD42S1RQW90kRIpbUumPYEAuK2qw=;
-        b=YbaOEWimUScRLtMtmVudJlYtARyqJDuzL0rzBNhn7Exjbmm5rh0ATdHRSXPgI1AO+o
-         d0sPkSaxndAbEJsGrLZ4OmA0yxXh7haRztLEmNv0g9YNdkOvz/6+9MJnJjrdwRVftrIC
-         UeQg2pApUq668NeWCEv6TvUHS6rD1EOVAJD8QI5AssEA10/1c5vuTEzIq9LrTnOsoMR1
-         YPvZ4NU+laCR30aVOBSwQtV/5a4m6SdazuY9T5fvfpPhDZGxQZXdMfBinraqph5POU4M
-         5443qpvAy5/AxcvACAvMNCOTafjxi6lD5uFoTIc1qr2dPjhhaLxHzYDQxfADyvMEyhzY
-         oyhA==
+        bh=L6kqHVgRXcGTejXZV+UwM9uyGX3tx7DzRfC3/Q/v2WM=;
+        b=A8YAAwJbPf/mDfZEPle56kQyjHalh7PJYSM0ijYG4qQwZk5lPRSAhvvIx8CWCahSIr
+         gjPmVtDOkfy7eOaiDJfdJLdI2yhdyKVVTKAbNZLT9Mg4EyD9G6S2fXRT9zxqfwp9jpYT
+         2IXKAiwfWaucGDGv1F4q5l++eipR134GvwLn1s2Rfh0TYSFsqI0pUTDd3LSBozATZHwS
+         XfH7ThGKIG5bAQ20eFxqutHCbtBOXiCaNYezOBt/y++QHLXO440cGmL5AAajQ2xN5c+S
+         dN3UiLcXw1P4sMUEqyp7Ml1leVxPUx/YFhLYp0c8xT2cJ1gUAt6xdOlzfRLXltLeMxJg
+         NZJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=45F+RVQGNOeOIqHAD42S1RQW90kRIpbUumPYEAuK2qw=;
-        b=iw3SQNcT2DwKHEybPNjciwrt8fHyfEjMUS3XYjlvhWTFBjfDUGdhGMH960XHRl0VW7
-         Bp4+TqezSC0D6LML0mKXdA3jjvL0/YpEZ316v3jEI/o3x7fhsGk1rToHPJQTej7t0V4h
-         VmFM0hgHvm5vYGKulDwrA/B0PhN4gL4IP9TKDTXBZRy+bfeJdq4lScXi1O/NcE1RjmqF
-         eZtskvx/3ftjTYHDMHJV8QrDOVFlxhj8vZvvfV0krgQ5DfNYD2DXFINz8eY+t8Km9R8H
-         zT1XaBDM8jycAOlAEj/1ZBL2k4aynYIKZ6Lt0AY0Mc1QIvq2icfhc/nHT/Ulp4669jc4
-         hVXw==
-X-Gm-Message-State: AOAM530244JDxAJw9XB335q7kAwDqD3WL+9EQ6RJmYYkxiayAaoEw00q
-        bM4GXH4EX5EP3J/ruNUqw8SkFw==
-X-Google-Smtp-Source: ABdhPJzW3QIh+CAEbIAYrDqqYMaGNPCc7KvAEOxiPd+BpOa8ivSgimxSb4CWVwosCOvnKUejs28biQ==
-X-Received: by 2002:a17:906:13c4:: with SMTP id g4mr3920304ejc.390.1614859566562;
-        Thu, 04 Mar 2021 04:06:06 -0800 (PST)
+        bh=L6kqHVgRXcGTejXZV+UwM9uyGX3tx7DzRfC3/Q/v2WM=;
+        b=YffNgirfMChduFVBFnPO/IYO1JSpU7loyigxDoJd2lDwLzbxME763PiR9RhcyQzJPP
+         +pVmd1cqK2QS5xB5syIbVzlWCCaAs/28Y4GGXEh2u6bHeF2e2ADtmxREnUGkbjjWpoAs
+         4VwRjwo4dpkvS2DwdGpAwnNZhikL9BZVXbX4SU2IkZCMTCzcz9469mzQKQH8UofJ9Xfy
+         dOiasoKM6qlP2+xrlZLVwxhAkwEiVmjhRQGAxxNTAICblcd5resB2PTw/iD5pu1av3Ca
+         LZeaKXQQiul6BsmjpQXRkAmPDUuBRGYUyYPU68Cu9EPL0nltp0i3K3Hs+WRK6uSYkxgC
+         0v6w==
+X-Gm-Message-State: AOAM531SRFkGmoQRliH8xBGlg0j3FIWm5Da4BqTQDyMZRKheYx/wSORr
+        XIb0joe1Q0dy3Gow3ojXbXxJ1Q==
+X-Google-Smtp-Source: ABdhPJxZkDF6mr/G1/aQr7MK5ipPu4ir8YUy583pJz1UQL5iuV/1jAqlQga3cHnYIh9ezZKtKH6fwA==
+X-Received: by 2002:a17:906:f9db:: with SMTP id lj27mr3881177ejb.399.1614859568051;
+        Thu, 04 Mar 2021 04:06:08 -0800 (PST)
 Received: from localhost.localdomain ([2a02:2450:102f:d6a:470a:340b:1b:29dd])
-        by smtp.gmail.com with ESMTPSA id cf6sm20464447edb.92.2021.03.04.04.06.05
+        by smtp.gmail.com with ESMTPSA id cf6sm20464447edb.92.2021.03.04.04.06.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Mar 2021 04:06:06 -0800 (PST)
+        Thu, 04 Mar 2021 04:06:07 -0800 (PST)
 From:   Robert Foss <robert.foss@linaro.org>
 To:     agross@kernel.org, bjorn.andersson@linaro.org,
         robert.foss@linaro.org, todor.too@gmail.com, mchehab@kernel.org,
@@ -62,9 +62,9 @@ Cc:     Rob Herring <robh@kernel.org>, Tomasz Figa <tfiga@chromium.org>,
         Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
         Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
         Jonathan Marek <jonathan@marek.ca>
-Subject: [PATCH v6 21/22] arm64: dts: sdm845-db845c: Configure regulators for camss node
-Date:   Thu,  4 Mar 2021 13:03:27 +0100
-Message-Id: <20210304120326.153966-22-robert.foss@linaro.org>
+Subject: [PATCH v6 22/22] arm64: dts: sdm845-db845c: Enable ov8856 sensor and connect to ISP
+Date:   Thu,  4 Mar 2021 13:03:28 +0100
+Message-Id: <20210304120326.153966-23-robert.foss@linaro.org>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20210304120326.153966-1-robert.foss@linaro.org>
 References: <20210304120326.153966-1-robert.foss@linaro.org>
@@ -74,7 +74,7 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add regulator to camss device tree node.
+Enable camss & ov8856 DT nodes.
 
 Signed-off-by: Robert Foss <robert.foss@linaro.org>
 Reviewed-by: Andrey Konovalov <andrey.konovalov@linaro.org>
@@ -83,26 +83,56 @@ Reviewed-by: Andrey Konovalov <andrey.konovalov@linaro.org>
 
 Changes since v5
  - Andrey: Add r-b
+ - Change CSI clock & data pins
 
 
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index a943b3f353ce..5842ab65789c 100644
+index 5842ab65789c..ca00be42fe67 100644
 --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
 +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -1106,6 +1106,10 @@ &cci {
- 	status = "okay";
+@@ -1108,6 +1108,21 @@ &cci {
+ 
+ &camss {
+ 	vdda-supply = <&vreg_l1a_0p875>;
++
++	status = "ok";
++
++	ports {
++		#address-cells = <1>;
++		#size-cells = <0>;
++		port@0 {
++			reg = <0>;
++			csiphy0_ep: endpoint {
++				clock-lanes = <7>;
++				data-lanes = <0 1 2 3>;
++				remote-endpoint = <&ov8856_ep>;
++			};
++		};
++	};
  };
  
-+&camss {
-+	vdda-supply = <&vreg_l1a_0p875>;
-+};
-+
  &cci_i2c0 {
- 	camera@10 {
- 		compatible = "ovti,ov8856";
+@@ -1139,7 +1154,7 @@ camera@10 {
+ 		avdd-supply = <&cam0_avdd_2v8>;
+ 		dvdd-supply = <&cam0_dvdd_1v2>;
+ 
+-		status = "disable";
++		status = "ok";
+ 
+ 		port {
+ 			ov8856_ep: endpoint {
+@@ -1147,7 +1162,7 @@ ov8856_ep: endpoint {
+ 				link-frequencies = /bits/ 64
+ 					<360000000 180000000>;
+ 				data-lanes = <1 2 3 4>;
+-//				remote-endpoint = <&csiphy0_ep>;
++				remote-endpoint = <&csiphy0_ep>;
+ 			};
+ 		};
+ 	};
 -- 
 2.27.0
 
