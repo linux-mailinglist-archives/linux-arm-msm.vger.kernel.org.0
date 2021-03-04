@@ -2,157 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 273CB32CC52
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 07:07:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F51C32CC7F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 07:16:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234011AbhCDGHV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Mar 2021 01:07:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39226 "EHLO
+        id S234795AbhCDGOt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Mar 2021 01:14:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233609AbhCDGGx (ORCPT
+        with ESMTP id S234554AbhCDGOn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Mar 2021 01:06:53 -0500
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59D20C061762
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Mar 2021 22:05:37 -0800 (PST)
-Received: by mail-pj1-x1029.google.com with SMTP id l18so6116105pji.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Mar 2021 22:05:37 -0800 (PST)
+        Thu, 4 Mar 2021 01:14:43 -0500
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BF8DC061574
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Mar 2021 22:14:03 -0800 (PST)
+Received: by mail-pl1-x636.google.com with SMTP id d8so5113866plg.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Mar 2021 22:14:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=16vaBi9BzoVqThTIqrJL3mXUcHy/6vtFy3wsh3+qlT8=;
-        b=X838cOPDjzVEHor9a7b5sUbkiMytH23o4H1juAyRZQ6FNdMCsCEXwGizeWS5VuI664
-         YE37gQsJumgrhtwXodPuRFyt2QkI+4fdjQEl+PSW2BVW9USrSB6kEPeb/t7J7aL/AwuJ
-         YrNY6dg3aWU84S3oE0QNNZWPev1AcwCiWNvXSUJFsV1KH/JyObJyk9Y2EXjnKjU7mRC7
-         +GAefOg7bxy7I9gs12C5jxeygmknKvk0p0UR1r4fgd2k9uqvfoIi+1f1p8deRsgewIqm
-         YbomJD+59jGPAlBI5tFI/DnM/mPiOf/a8aN7C2Kxgl1Lc+rPRslTJhqdRBxrJdvwJWKM
-         PHgg==
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=JMf0oYw54Ty2bOfPG3m/Nvn4kAT7uR9ncRyApQL8Vyo=;
+        b=b44nBrdqOAU6EGHYgU7UpgTvqXfZ61tr9FyNRS5LeLSzIAk3tZ3ikMbRkdVTihrPup
+         6PSzrWF6far8bQ01TE1GOcuf+gxMvsFEln5XiWkgX0mh1yA4Y3PyJQc3MnJV9C/A+b+9
+         gc3SqlF6FdnJJOxXgH2oG4zXfgjsTuCqhDAXI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=16vaBi9BzoVqThTIqrJL3mXUcHy/6vtFy3wsh3+qlT8=;
-        b=dv0wAXTOKdrIweBfnkASr0fhlN19gomoCFwxChfbYGsRf0ToR2T3ScGXy+tCRAc5ym
-         EyJyyqO/esNF98QGlimW+WkSKE7rCE3vT/jUUCmoMFQqJbXkSvEaqakpIYOYNTxZCOYq
-         xiSdgJ3MjhR0aAE7L1Hx8fM7l7tqG9F8diO9Z4UE2AtnruLxymtZIA4QGzjWgg2lRalL
-         qgw6o4ApY3/iWfIKWHUimUvliHvFhq28zNmj3SnhNmB9TsHKAl4S18D9pMpBcFtzzZ+G
-         RaqU7y1wDL+1fK7pAmOpfNftG0LTvhunNRDRaaz5ksrWeh5PVobjAAs4WFOXlJZpsQSY
-         Rdnw==
-X-Gm-Message-State: AOAM531hPnUSQfYK2Q/3D2ylJ8seYU81FuVQsJ8sH314O4dhesBq8eq+
-        Y1fyhew0KyF+T+LKySNaJbKmig==
-X-Google-Smtp-Source: ABdhPJzWThjcg6/XGdAPC5RnsuCrKT9Ry/YqvJLaJvOSjKtR9zn1XMOAp1n9dGZxRQwpbNTHYvd9FA==
-X-Received: by 2002:a17:90a:4a8c:: with SMTP id f12mr2836821pjh.71.1614837936954;
-        Wed, 03 Mar 2021 22:05:36 -0800 (PST)
-Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id j2sm776386pgh.39.2021.03.03.22.05.34
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=JMf0oYw54Ty2bOfPG3m/Nvn4kAT7uR9ncRyApQL8Vyo=;
+        b=LXTC3zAg5B63YpD0gnFZlviJSzfgCEYHcP2u7+g7wZ4mpm2+6YjK7S1HzAPJ/4inxi
+         FeGvSKRFhyoODMeNVjhcjKNvMQigAKkeHQuBeTVdpZ6Mq+wAdh2I/55yDh2zi0gDrhHQ
+         eH5QM5gwBfz2FvnDg+E7Wi4wIoxvzCsecPeoUizUX/3CZojFf/YdC7CluHq5cs+F/86D
+         KTB5+U3bJuWsoCyGI7xM8l00glZTz9Y5S1GCqmEZObL7rr8+Ii8EQJbQhjxnyshO0EXR
+         4u6KIux0A42AJ2vtQNa+VYsGBWp4x7W7nvZ/siUAb+tJeBcaYIfpCCirr6zwClO1mSv6
+         nTRw==
+X-Gm-Message-State: AOAM5316PdtzbG+UQN14FDkA2ShGBo9DgG8YK1cluPtWaoT76T6MPSfB
+        pL2cw93j1g4ZAsoWlYjztjQLsw==
+X-Google-Smtp-Source: ABdhPJyfuEDJrfmm6azs2dCtl+S62mzbbw8Dy6nnA5zhX9Lr/9Bijk3lGv0K7z2QMyH8l9fxdBUDvg==
+X-Received: by 2002:a17:90a:ea96:: with SMTP id h22mr2628625pjz.24.1614838443190;
+        Wed, 03 Mar 2021 22:14:03 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:201:2510:ab07:78a:7d78])
+        by smtp.gmail.com with ESMTPSA id w1sm7952784pjq.38.2021.03.03.22.14.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Mar 2021 22:05:36 -0800 (PST)
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Shevchenko <andriy.shevchenko@intel.com>,
-        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Shawn Guo <shawn.guo@linaro.org>
-Subject: [PATCH v3 2/2] pinctrl: qcom: sc8180x: add ACPI probe support
-Date:   Thu,  4 Mar 2021 14:05:20 +0800
-Message-Id: <20210304060520.24975-3-shawn.guo@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20210304060520.24975-1-shawn.guo@linaro.org>
-References: <20210304060520.24975-1-shawn.guo@linaro.org>
+        Wed, 03 Mar 2021 22:14:02 -0800 (PST)
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <b9174acc-9826-eb82-b399-ed95f7e83085@codeaurora.org>
+References: <20210223214539.1336155-1-swboyd@chromium.org> <20210223214539.1336155-7-swboyd@chromium.org> <b9174acc-9826-eb82-b399-ed95f7e83085@codeaurora.org>
+Subject: Re: [PATCH 6/6] firmware: qcom_scm: Only compile legacy calls on ARM
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Brian Masney <masneyb@onstation.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Elliot Berman <eberman@codeaurora.org>
+Date:   Wed, 03 Mar 2021 22:14:00 -0800
+Message-ID: <161483844056.1478170.8701629037531614722@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It adds ACPI probe support for pinctrl-sc8180x driver.
+Quoting Elliot Berman (2021-03-03 19:35:08)
+>=20
+> On 2/23/2021 1:45 PM, Stephen Boyd wrote:
+> > These scm calls are never used outside of legacy ARMv7 based platforms.
+> > That's because PSCI, mandated on arm64, implements them for modern SoCs
+> > via the PSCI spec. Let's move them to the legacy file and only compile
+> > the legacy file into the kernel when CONFIG_ARM=3Dy. Otherwise provide
+> > stubs and fail the calls. This saves a little bit of space in an
+> > arm64 allmodconfig >
+> >   $ ./scripts/bloat-o-meter vmlinux.before vmlinux.after
+> >   add/remove: 0/8 grow/shrink: 5/7 up/down: 509/-4405 (-3896)
+> >   Function                                     old     new   delta
+> >   __qcom_scm_set_dload_mode.constprop          312     452    +140
+> >   qcom_scm_qsmmu500_wait_safe_toggle           288     416    +128
+> >   qcom_scm_io_writel                           288     408    +120
+> >   qcom_scm_io_readl                            376     492    +116
+> >   __param_str_download_mode                     23      28      +5
+> >   __warned                                    4327    4326      -1
+> >   qcom_iommu_init                              272     268      -4
+> >   e843419@0b3f_00010432_324                      8       -      -8
+> >   qcom_scm_call                                228     208     -20
+> >   CSWTCH                                      5925    5877     -48
+> >   _sub_I_65535_1                            163100  163040     -60
+> >   _sub_D_65535_0                            163100  163040     -60
+> >   qcom_scm_wb                                   64       -     -64
+> >   qcom_scm_lock                                320     160    -160
+> >   qcom_scm_call_atomic                         212       -    -212
+> >   qcom_scm_cpu_power_down                      308       -    -308
+> >   scm_legacy_call_atomic                       520       -    -520
+> >   qcom_scm_set_warm_boot_addr                  720       -    -720
+> >   qcom_scm_set_cold_boot_addr                  728       -    -728
+> >   scm_legacy_call                             1492       -   -1492
+> >   Total: Before=3D66737642, After=3D66733746, chg -0.01%
+> >=20
+> > Commit 9a434cee773a ("firmware: qcom_scm: Dynamically support SMCCC and
+> > legacy conventions") didn't mention any motivating factors for keeping
+> > the legacy code around on arm64 kernels, i.e. presumably that commit
+> > wasn't trying to support these legacy APIs on arm64 kernels.
+>=20
+> There are arm targets which support SMCCC convention and use some of=20
+> these removed functions. Can these functions be kept in qcom-scm.c and=20
+> wrapped with #if IS_ENABLED(CONFIG_ARM)?
+>=20
 
-Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
----
- drivers/pinctrl/qcom/Kconfig           |  2 +-
- drivers/pinctrl/qcom/pinctrl-sc8180x.c | 39 ++++++++++++++++++++++++--
- 2 files changed, 38 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
-index 6853a896c476..9f0218c4f9b3 100644
---- a/drivers/pinctrl/qcom/Kconfig
-+++ b/drivers/pinctrl/qcom/Kconfig
-@@ -222,7 +222,7 @@ config PINCTRL_SC7280
- 
- config PINCTRL_SC8180X
- 	tristate "Qualcomm Technologies Inc SC8180x pin controller driver"
--	depends on GPIOLIB && OF
-+	depends on GPIOLIB && (OF || ACPI)
- 	select PINCTRL_MSM
- 	help
- 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
-diff --git a/drivers/pinctrl/qcom/pinctrl-sc8180x.c b/drivers/pinctrl/qcom/pinctrl-sc8180x.c
-index 66f76ed22200..45ecb4a022ca 100644
---- a/drivers/pinctrl/qcom/pinctrl-sc8180x.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sc8180x.c
-@@ -1546,6 +1546,13 @@ static const struct msm_pingroup sc8180x_groups[] = {
- 	[193] = SDC_QDSD_PINGROUP(sdc2_data, 0x4b2000, 9, 0),
- };
- 
-+static const int sc8180x_acpi_reserved_gpios[] = {
-+	0, 1, 2, 3,
-+	47, 48, 49, 50,
-+	126, 127, 128, 129,
-+	-1 /* terminator */
-+};
-+
- static const struct msm_gpio_wakeirq_map sc8180x_pdc_map[] = {
- 	{ 3, 31 }, { 5, 32 }, { 8, 33 }, { 9, 34 }, { 10, 100 }, { 12, 104 },
- 	{ 24, 37 }, { 26, 38 }, { 27, 41 }, { 28, 42 }, { 30, 39 }, { 36, 43 },
-@@ -1575,13 +1582,40 @@ static struct msm_pinctrl_soc_data sc8180x_pinctrl = {
- 	.nwakeirq_map = ARRAY_SIZE(sc8180x_pdc_map),
- };
- 
-+static const struct msm_pinctrl_soc_data sc8180x_acpi_pinctrl = {
-+	.pins = sc8180x_pins,
-+	.npins = ARRAY_SIZE(sc8180x_pins),
-+	.groups = sc8180x_groups,
-+	.ngroups = ARRAY_SIZE(sc8180x_groups),
-+	.reserved_gpios = sc8180x_acpi_reserved_gpios,
-+	.ngpios = 191,
-+};
-+
- static int sc8180x_pinctrl_probe(struct platform_device *pdev)
- {
--	return msm_pinctrl_probe(pdev, &sc8180x_pinctrl);
-+	const struct msm_pinctrl_soc_data *soc_data;
-+
-+	soc_data = device_get_match_data(&pdev->dev);
-+	if (!soc_data)
-+		return -EINVAL;
-+
-+	return msm_pinctrl_probe(pdev, soc_data);
- }
- 
-+static const struct acpi_device_id sc8180x_pinctrl_acpi_match[] = {
-+	{
-+		.id = "QCOM040D",
-+		.driver_data = (kernel_ulong_t) &sc8180x_acpi_pinctrl,
-+	},
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(acpi, sc8180x_pinctrl_acpi_match);
-+
- static const struct of_device_id sc8180x_pinctrl_of_match[] = {
--	{ .compatible = "qcom,sc8180x-tlmm", },
-+	{
-+		.compatible = "qcom,sc8180x-tlmm",
-+		.data = &sc8180x_pinctrl,
-+	},
- 	{ },
- };
- MODULE_DEVICE_TABLE(of, sc8180x_pinctrl_of_match);
-@@ -1590,6 +1624,7 @@ static struct platform_driver sc8180x_pinctrl_driver = {
- 	.driver = {
- 		.name = "sc8180x-pinctrl",
- 		.of_match_table = sc8180x_pinctrl_of_match,
-+		.acpi_match_table = sc8180x_pinctrl_acpi_match,
- 	},
- 	.probe = sc8180x_pinctrl_probe,
- 	.remove = msm_pinctrl_remove,
--- 
-2.17.1
-
+It can be wrapped in qcom-scm.c, but why? It's all the same object file
+so I'm lost why it matters. I suppose it would make it so the struct
+doesn't have to be moved around and declared in the header? Any other
+reason? I moved it to the legacy file so that it was very obvious that
+the API wasn't to be used except for "legacy" platforms that don't use
+PSCI.
