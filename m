@@ -2,77 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E609932D10F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 11:44:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CC76F32D195
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 12:11:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238889AbhCDKnn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Mar 2021 05:43:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42148 "EHLO
+        id S239438AbhCDLKz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Mar 2021 06:10:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238891AbhCDKnQ (ORCPT
+        with ESMTP id S238448AbhCDLKw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Mar 2021 05:43:16 -0500
-Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC6A4C06175F
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Mar 2021 02:42:35 -0800 (PST)
-Received: by mail-io1-xd31.google.com with SMTP id p16so29186190ioj.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Mar 2021 02:42:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=e3WJ8tkB0vH/2/UrMdjK19WTqOngozUVR61JEO5HLN0=;
-        b=CTjCdwIMxemme7/QRWNuatcdETXi0CFXLRQxW1l3H3bKZWkWi5s9osWWgnd+B1dRzv
-         2tOIInvdv0s9rmqtIlWYZr98HXY2ghcB2r5savwVfnypuTyLvgg3+e19U1pPLbILT1HO
-         fGtm1kJcYUyqexIPaHAdvdDnwzFjxE5ELcPDjS5XJOPBwASRcdg+lAVJNpH0rzN8LpH+
-         Pd2+btvgQWQdATEe/l4YNC7JTiPGDIVAXzz+HAG7myDEjzcDV7QGzcc3vRYHhPuo7Pni
-         aVAFjkne2BVqhdI2HpecUKWvSXQbtpiAgI3SiwiSF414OS8LZqx+G3/kmqeXf2egIqkL
-         XJCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=e3WJ8tkB0vH/2/UrMdjK19WTqOngozUVR61JEO5HLN0=;
-        b=Lh/hobQwPrzZsTgdKHv/xIy09Vo72Z8WzLs0DVkGDauwHF0NmnmRJReRm+W3MjyzmD
-         nnQr+eCvNYTPAQCYswhf6i3iZxWGvn+bO4SKJs2JwmJp7BCJOAb+rvggLZD/1JM1fvjO
-         NULutlWjCmhdJR7pIVX3xouUlSwIo5aFwC+gPXlePrCTNunDqPgPLUlI93BYFoURtg5n
-         IDhmq7DJt79jIEZ0QC1N23pGYh1vwAgEmsQA6Bl2oaVbytJZUTh9qWK5Aakcl9DgchjZ
-         DleFpH1oacp11jY2Mo/4TPuadLwPMFfBj8mD84/VuhIQSjoY5wnzoQlBZPSkfq2rBWrc
-         hA9A==
-X-Gm-Message-State: AOAM531xrf4gLtCZq1MhFnLu2Q0FUxq8Eg/b0S8/hLjbLkCeUcJQ7z8i
-        eUUc50PyMp/WDQKCHclKLqESo98JZ+aiCBCy4rNWLHNU6JqoLg==
-X-Google-Smtp-Source: ABdhPJxKHmLVlEgGIs6hMVDFl/gJXhdBnMkF2p6k9BAgjYOmmXW2nJuF6zqOktPQtrSkWEDnLaN14i5Gt71tJsNw51k=
-X-Received: by 2002:a02:9645:: with SMTP id c63mr3421813jai.84.1614854555410;
- Thu, 04 Mar 2021 02:42:35 -0800 (PST)
+        Thu, 4 Mar 2021 06:10:52 -0500
+Received: from theia.8bytes.org (8bytes.org [IPv6:2a01:238:4383:600:38bc:a715:4b6d:a889])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE631C061574;
+        Thu,  4 Mar 2021 03:10:11 -0800 (PST)
+Received: by theia.8bytes.org (Postfix, from userid 1000)
+        id A5EF3321; Thu,  4 Mar 2021 12:10:08 +0100 (CET)
+Date:   Thu, 4 Mar 2021 12:10:04 +0100
+From:   Joerg Roedel <joro@8bytes.org>
+To:     Christoph Hellwig <hch@lst.de>
+Cc:     Will Deacon <will@kernel.org>, Li Yang <leoyang.li@nxp.com>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Lu Baolu <baolu.lu@linux.intel.com>,
+        linuxppc-dev@lists.ozlabs.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
+        virtualization@lists.linux-foundation.org, netdev@vger.kernel.org
+Subject: Re: cleanup unused or almost unused IOMMU APIs and the FSL PAMU
+ driver
+Message-ID: <20210304111004.GA26414@8bytes.org>
+References: <20210301084257.945454-1-hch@lst.de>
 MIME-Version: 1.0
-References: <20210304100423.3856265-1-weiyongjun1@huawei.com>
-In-Reply-To: <20210304100423.3856265-1-weiyongjun1@huawei.com>
-From:   Shawn Guo <shawn.guo@linaro.org>
-Date:   Thu, 4 Mar 2021 18:42:24 +0800
-Message-ID: <CAAQ0ZWToj9Fq5bRce-f+JUnO6iPPdJEU=P9n5k+-zmyUfKPE_w@mail.gmail.com>
-Subject: Re: [PATCH -next] cpufreq: qcom-hw: Fix return value check in qcom_cpufreq_hw_cpu_init()
-To:     "'Wei Yongjun" <weiyongjun1@huawei.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-pm@vger.kernel.org, Hulk Robot <hulkci@huawei.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210301084257.945454-1-hch@lst.de>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 4, 2021 at 5:55 PM 'Wei Yongjun <weiyongjun1@huawei.com> wrote:
->
-> From: Wei Yongjun <weiyongjun1@huawei.com>
->
-> In case of error, the function ioremap() returns NULL pointer
-> not ERR_PTR(). The IS_ERR() test in the return value check
-> should be replaced with NULL test.
->
-> Fixes: 67fc209b527d ("cpufreq: qcom-hw: drop devm_xxx() calls from init/exit hooks")
-> Reported-by: Hulk Robot <hulkci@huawei.com>
-> Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
+On Mon, Mar 01, 2021 at 09:42:40AM +0100, Christoph Hellwig wrote:
+> Diffstat:
+>  arch/powerpc/include/asm/fsl_pamu_stash.h   |   12 
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.c     |    2 
+>  drivers/iommu/amd/iommu.c                   |   23 
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |   85 ---
+>  drivers/iommu/arm/arm-smmu/arm-smmu.c       |  122 +---
+>  drivers/iommu/dma-iommu.c                   |    8 
+>  drivers/iommu/fsl_pamu.c                    |  264 ----------
+>  drivers/iommu/fsl_pamu.h                    |   10 
+>  drivers/iommu/fsl_pamu_domain.c             |  694 ++--------------------------
+>  drivers/iommu/fsl_pamu_domain.h             |   46 -
+>  drivers/iommu/intel/iommu.c                 |   55 --
+>  drivers/iommu/iommu.c                       |   75 ---
+>  drivers/soc/fsl/qbman/qman_portal.c         |   56 --
+>  drivers/vfio/vfio_iommu_type1.c             |   31 -
+>  drivers/vhost/vdpa.c                        |   10 
+>  include/linux/iommu.h                       |   81 ---
+>  16 files changed, 214 insertions(+), 1360 deletions(-)
 
-Acked-by: Shawn Guo <shawn.guo@linaro.org>
+Nice cleanup, thanks. The fsl_pamu driver and interface has always been
+a little bit of an alien compared to other IOMMU drivers. I am inclined
+to merge this after -rc3 is out, given some reviews. Can you also please
+add changelogs to the last three patches?
+
+Thanks,
+
+	Joerg
