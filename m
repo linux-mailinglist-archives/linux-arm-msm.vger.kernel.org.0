@@ -2,89 +2,259 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 23F2232DCCE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 23:14:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5259C32DD92
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 00:08:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231131AbhCDWOW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Mar 2021 17:14:22 -0500
-Received: from m42-2.mailgun.net ([69.72.42.2]:38009 "EHLO m42-2.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230486AbhCDWOV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Mar 2021 17:14:21 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1614896061; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=5xQNWGzpOBIi5UGcFmdKOWjQb0d9Q/YSE/meDTlP+2k=; b=Yc4pNfwEoxzta/qYEzJWQUZuH6zpZvbJidyqCijyqQILHhbwMYc+9nAja/IF0hrmYtGln0e9
- V8SuMIYkNy1V8OL+O5ytyZ9t28cWVL9oS6xaxodXrf3nACyY6NJZBleezDgctvr16U0dX8ru
- 7nf4OVXTXUAq4kw0g7x0zZ984OA=
-X-Mailgun-Sending-Ip: 69.72.42.2
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 60415bb9c862e1b9fd2a8428 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 04 Mar 2021 22:14:17
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id F078BC4322F; Thu,  4 Mar 2021 22:14:16 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id F3A9BC4322A;
-        Thu,  4 Mar 2021 22:14:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org F3A9BC4322A
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        loic.poulain@linaro.org, carl.yin@quectel.com,
-        naveen.kumar@quectel.com, Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: [PATCH v2] bus: mhi: core: Add missing checks for MMIO register entries
-Date:   Thu,  4 Mar 2021 14:14:09 -0800
-Message-Id: <1614896049-15912-1-git-send-email-bbhatt@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S231633AbhCDXIG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Mar 2021 18:08:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34298 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230403AbhCDXIF (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 4 Mar 2021 18:08:05 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 697BBC061574;
+        Thu,  4 Mar 2021 15:08:05 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id w7so50188wmb.5;
+        Thu, 04 Mar 2021 15:08:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=lQRVhb2fmLqsoyQKjRe8fitm837n7i4zwyHsvEUN5wY=;
+        b=CjrbQ7ensaU3nJzPwcF60nDPqPyQwKRA5UV3tDsTfIbOIK3rlvXZsNs103APDKPR76
+         JzLJraxoeDzc/nWGwfKg4s12kZrbK3OeYc+SZB+NLUau4dRPfrKzUmkzA5zhd62eO7/A
+         00B766rIAtduV/tL7dzB6sPYXyL9ZZHpnwGUQ6wlrkbmj8uwcSVEEBWkYhw66uFk8g0T
+         QH8r/nJhs+BatRQIVO3EAkyh9M7OZfJRZ1PSPUuCwWsMy2PNie9AhKp4upVCH2tR7ijY
+         Sb+ALvIV7rKcK3nYHb4t6Kgj2RqR7gEvSx6EGrxzWEk+qsjRyTtgE37byGeEoSY0q4bi
+         pX/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=lQRVhb2fmLqsoyQKjRe8fitm837n7i4zwyHsvEUN5wY=;
+        b=aULnmfu+zJ71RmQiray/CPFIC2Cd8x9x6zv/MG5BntLuIHGdxqNow/rZZ4ObwcA4PK
+         P0elEioltrWTncr328ITuDVImKO6wyt1aYw4LVpAfTL0JI/3xFj8lbepWapeFfHuJoIa
+         CY0zOBBiRf7n3GY7u3wgrls5MWkKa1XwISg8iBwjZdLPL2ACab8ps36/mFMXLnoGW8PE
+         I8nztyjN6auNKsvh9UwkjCgiQ1iBZYkCXlz4KzwRNM0xY7XEsOui4Jd58GFfKWIP0Mvo
+         V+TtcFrRmFpHeNPmAJ1d8GMedq+uE1VzH1PBK737arh5Yo8MPBpNh061s9KJCCP8KPIn
+         qH0w==
+X-Gm-Message-State: AOAM532XZKgltuwFcWHe685A5RrUEnBSj+bdG+z6Rwu/KBJ0DBezc4dd
+        nVJY08V5wi+zlIIfTSaP6Xs96MUu8VFnvEYOM9q/URDiOvA=
+X-Google-Smtp-Source: ABdhPJxVVQPsgq02I2Ff4zRkoRoPzpsOHVRQGGML6KsK4Xb0ofpQyl7vPhx80DEtc9/2caqtEQQ6e2eh6wtKc9RJyl8=
+X-Received: by 2002:a1c:4b15:: with SMTP id y21mr6168367wma.94.1614899283195;
+ Thu, 04 Mar 2021 15:08:03 -0800 (PST)
+MIME-Version: 1.0
+References: <20210301084257.945454-1-hch@lst.de> <20210301084257.945454-17-hch@lst.de>
+ <d567ad5c-5f89-effa-7260-88c6d86b4695@arm.com>
+In-Reply-To: <d567ad5c-5f89-effa-7260-88c6d86b4695@arm.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Thu, 4 Mar 2021 15:11:08 -0800
+Message-ID: <CAF6AEGtTs-=aO-Ntp0Qn6mYDSv4x0-q3y217QxU7kZ6H1b1fiQ@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH 16/17] iommu: remove DOMAIN_ATTR_IO_PGTABLE_CFG
+To:     Robin Murphy <robin.murphy@arm.com>
+Cc:     Christoph Hellwig <hch@lst.de>, Joerg Roedel <joro@8bytes.org>,
+        Will Deacon <will@kernel.org>, Li Yang <leoyang.li@nxp.com>,
+        kvm@vger.kernel.org, Michael Ellerman <mpe@ellerman.id.au>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linuxppc-dev <linuxppc-dev@lists.ozlabs.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        virtualization@lists.linux-foundation.org,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        netdev@vger.kernel.org,
+        freedreno <freedreno@lists.freedesktop.org>,
+        David Woodhouse <dwmw2@infradead.org>,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As per documentation, fields marked as (required) in an MHI
-controller structure need to be populated by the controller driver
-before calling mhi_register_controller(). Ensure all required
-pointers and non-zero fields are present in the controller before
-proceeding with registration.
+On Thu, Mar 4, 2021 at 7:48 AM Robin Murphy <robin.murphy@arm.com> wrote:
+>
+> On 2021-03-01 08:42, Christoph Hellwig wrote:
+> > Signed-off-by: Christoph Hellwig <hch@lst.de>
+>
+> Moreso than the previous patch, where the feature is at least relatively
+> generic (note that there's a bunch of in-flight development around
+> DOMAIN_ATTR_NESTING), I'm really not convinced that it's beneficial to
+> bloat the generic iommu_ops structure with private driver-specific
+> interfaces. The attribute interface is a great compromise for these
+> kinds of things, and you can easily add type-checked wrappers around it
+> for external callers (maybe even make the actual attributes internal
+> between the IOMMU core and drivers) if that's your concern.
 
-Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
----
- drivers/bus/mhi/core/init.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+I suppose if this is *just* for the GPU we could move it into adreno_smmu_priv..
 
-diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-index 272f350..fed8a25 100644
---- a/drivers/bus/mhi/core/init.c
-+++ b/drivers/bus/mhi/core/init.c
-@@ -879,10 +879,9 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
- 	u32 soc_info;
- 	int ret, i;
- 
--	if (!mhi_cntrl)
--		return -EINVAL;
--
--	if (!mhi_cntrl->runtime_get || !mhi_cntrl->runtime_put ||
-+	if (!mhi_cntrl || !mhi_cntrl->cntrl_dev || !mhi_cntrl->regs ||
-+	    !mhi_cntrl->fw_image || !mhi_cntrl->irq ||
-+	    !mhi_cntrl->runtime_get || !mhi_cntrl->runtime_put ||
- 	    !mhi_cntrl->status_cb || !mhi_cntrl->read_reg ||
- 	    !mhi_cntrl->write_reg || !mhi_cntrl->nr_irqs)
- 		return -EINVAL;
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+But one thing I'm not sure about is whether
+IO_PGTABLE_QUIRK_ARM_OUTER_WBWA is something that other devices
+*should* be using as well, but just haven't gotten around to yet.
 
+BR,
+-R
+
+> Robin.
+>
+> > ---
+> >   drivers/gpu/drm/msm/adreno/adreno_gpu.c |  2 +-
+> >   drivers/iommu/arm/arm-smmu/arm-smmu.c   | 40 +++++++------------------
+> >   drivers/iommu/iommu.c                   |  9 ++++++
+> >   include/linux/iommu.h                   |  9 +++++-
+> >   4 files changed, 29 insertions(+), 31 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> > index 0f184c3dd9d9ec..78d98ab2ee3a68 100644
+> > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> > @@ -191,7 +191,7 @@ void adreno_set_llc_attributes(struct iommu_domain *iommu)
+> >       struct io_pgtable_domain_attr pgtbl_cfg;
+> >
+> >       pgtbl_cfg.quirks = IO_PGTABLE_QUIRK_ARM_OUTER_WBWA;
+> > -     iommu_domain_set_attr(iommu, DOMAIN_ATTR_IO_PGTABLE_CFG, &pgtbl_cfg);
+> > +     iommu_domain_set_pgtable_attr(iommu, &pgtbl_cfg);
+> >   }
+> >
+> >   struct msm_gem_address_space *
+> > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> > index 2e17d990d04481..2858999c86dfd1 100644
+> > --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> > @@ -1515,40 +1515,22 @@ static int arm_smmu_domain_enable_nesting(struct iommu_domain *domain)
+> >       return ret;
+> >   }
+> >
+> > -static int arm_smmu_domain_set_attr(struct iommu_domain *domain,
+> > -                                 enum iommu_attr attr, void *data)
+> > +static int arm_smmu_domain_set_pgtable_attr(struct iommu_domain *domain,
+> > +             struct io_pgtable_domain_attr *pgtbl_cfg)
+> >   {
+> > -     int ret = 0;
+> >       struct arm_smmu_domain *smmu_domain = to_smmu_domain(domain);
+> > +     int ret = -EPERM;
+> >
+> > -     mutex_lock(&smmu_domain->init_mutex);
+> > -
+> > -     switch(domain->type) {
+> > -     case IOMMU_DOMAIN_UNMANAGED:
+> > -             switch (attr) {
+> > -             case DOMAIN_ATTR_IO_PGTABLE_CFG: {
+> > -                     struct io_pgtable_domain_attr *pgtbl_cfg = data;
+> > -
+> > -                     if (smmu_domain->smmu) {
+> > -                             ret = -EPERM;
+> > -                             goto out_unlock;
+> > -                     }
+> > +     if (domain->type != IOMMU_DOMAIN_UNMANAGED)
+> > +             return -EINVAL;
+> >
+> > -                     smmu_domain->pgtbl_cfg = *pgtbl_cfg;
+> > -                     break;
+> > -             }
+> > -             default:
+> > -                     ret = -ENODEV;
+> > -             }
+> > -             break;
+> > -     case IOMMU_DOMAIN_DMA:
+> > -             ret = -ENODEV;
+> > -             break;
+> > -     default:
+> > -             ret = -EINVAL;
+> > +     mutex_lock(&smmu_domain->init_mutex);
+> > +     if (!smmu_domain->smmu) {
+> > +             smmu_domain->pgtbl_cfg = *pgtbl_cfg;
+> > +             ret = 0;
+> >       }
+> > -out_unlock:
+> >       mutex_unlock(&smmu_domain->init_mutex);
+> > +
+> >       return ret;
+> >   }
+> >
+> > @@ -1609,7 +1591,7 @@ static struct iommu_ops arm_smmu_ops = {
+> >       .device_group           = arm_smmu_device_group,
+> >       .dma_use_flush_queue    = arm_smmu_dma_use_flush_queue,
+> >       .dma_enable_flush_queue = arm_smmu_dma_enable_flush_queue,
+> > -     .domain_set_attr        = arm_smmu_domain_set_attr,
+> > +     .domain_set_pgtable_attr = arm_smmu_domain_set_pgtable_attr,
+> >       .domain_enable_nesting  = arm_smmu_domain_enable_nesting,
+> >       .of_xlate               = arm_smmu_of_xlate,
+> >       .get_resv_regions       = arm_smmu_get_resv_regions,
+> > diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+> > index 2e9e058501a953..8490aefd4b41f8 100644
+> > --- a/drivers/iommu/iommu.c
+> > +++ b/drivers/iommu/iommu.c
+> > @@ -2693,6 +2693,15 @@ int iommu_domain_enable_nesting(struct iommu_domain *domain)
+> >   }
+> >   EXPORT_SYMBOL_GPL(iommu_domain_enable_nesting);
+> >
+> > +int iommu_domain_set_pgtable_attr(struct iommu_domain *domain,
+> > +             struct io_pgtable_domain_attr *pgtbl_cfg)
+> > +{
+> > +     if (!domain->ops->domain_set_pgtable_attr)
+> > +             return -EINVAL;
+> > +     return domain->ops->domain_set_pgtable_attr(domain, pgtbl_cfg);
+> > +}
+> > +EXPORT_SYMBOL_GPL(iommu_domain_set_pgtable_attr);
+> > +
+> >   void iommu_get_resv_regions(struct device *dev, struct list_head *list)
+> >   {
+> >       const struct iommu_ops *ops = dev->bus->iommu_ops;
+> > diff --git a/include/linux/iommu.h b/include/linux/iommu.h
+> > index aed88aa3bd3edf..39d3ed4d2700ac 100644
+> > --- a/include/linux/iommu.h
+> > +++ b/include/linux/iommu.h
+> > @@ -40,6 +40,7 @@ struct iommu_domain;
+> >   struct notifier_block;
+> >   struct iommu_sva;
+> >   struct iommu_fault_event;
+> > +struct io_pgtable_domain_attr;
+> >
+> >   /* iommu fault flags */
+> >   #define IOMMU_FAULT_READ    0x0
+> > @@ -107,7 +108,6 @@ enum iommu_cap {
+> >    */
+> >
+> >   enum iommu_attr {
+> > -     DOMAIN_ATTR_IO_PGTABLE_CFG,
+> >       DOMAIN_ATTR_MAX,
+> >   };
+> >
+> > @@ -196,6 +196,7 @@ struct iommu_iotlb_gather {
+> >    * @dma_enable_flush_queue: Try to enable the DMA flush queue
+> >    * @domain_set_attr: Change domain attributes
+> >    * @domain_enable_nesting: Enable nesting
+> > + * @domain_set_pgtable_attr: Set io page table attributes
+> >    * @get_resv_regions: Request list of reserved regions for a device
+> >    * @put_resv_regions: Free list of reserved regions for a device
+> >    * @apply_resv_region: Temporary helper call-back for iova reserved ranges
+> > @@ -249,6 +250,8 @@ struct iommu_ops {
+> >       int (*domain_set_attr)(struct iommu_domain *domain,
+> >                              enum iommu_attr attr, void *data);
+> >       int (*domain_enable_nesting)(struct iommu_domain *domain);
+> > +     int (*domain_set_pgtable_attr)(struct iommu_domain *domain,
+> > +                     struct io_pgtable_domain_attr *pgtbl_cfg);
+> >
+> >       /* Request/Free a list of reserved regions for a device */
+> >       void (*get_resv_regions)(struct device *dev, struct list_head *list);
+> > @@ -493,9 +496,13 @@ extern int iommu_group_id(struct iommu_group *group);
+> >   extern struct iommu_domain *iommu_group_default_domain(struct iommu_group *);
+> >
+> >   bool iommu_dma_use_flush_queue(struct iommu_domain *domain);
+> > +int iommu_domain_set_pgtable_attr(struct iommu_domain *domain,
+> > +             struct io_pgtable_domain_attr *pgtbl_cfg);
+> >   extern int iommu_domain_set_attr(struct iommu_domain *domain, enum iommu_attr,
+> >                                void *data);
+> >   int iommu_domain_enable_nesting(struct iommu_domain *domain);
+> > +int iommu_domain_set_pgtable_attr(struct iommu_domain *domain,
+> > +             struct io_pgtable_domain_attr *pgtbl_cfg);
+> >
+> >   extern int report_iommu_fault(struct iommu_domain *domain, struct device *dev,
+> >                             unsigned long iova, int flags);
+> >
+> _______________________________________________
+> Freedreno mailing list
+> Freedreno@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/freedreno
