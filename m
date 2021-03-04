@@ -2,120 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A90F32CD3E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 08:01:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 31A9332CDE8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 08:47:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235860AbhCDHAN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Mar 2021 02:00:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50566 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235850AbhCDG7t (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Mar 2021 01:59:49 -0500
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63C13C06175F
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Mar 2021 22:59:09 -0800 (PST)
-Received: by mail-pf1-x430.google.com with SMTP id q204so17187198pfq.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Mar 2021 22:59:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ac277n3ZrkHIRZxuyFl78biK5VyfUxsH6zY1xmEkn98=;
-        b=xnK/SkiVQJ8Ao+QegudNcTAOfdoMCzMIVIezonR6l0Lc1xts4eVHkpV1LU8YX6puby
-         KbU43CtpXKBm2Fl/YX24B0YElYGpT6La+GLlpFFUhvvclRtefpZIrnaI+MoVMpO7/e0T
-         RGxhCA+YD+Lyof0CFC5WOHqyI5WPBFVNl52hMFJy8u+nDlHm3+R1yUKYezIFaiMcVVCW
-         u3JwR2ZTWoSGQoHQOvITq+n7/DwxYiLXb4zzBUWZi0qnI7T2onfGRV+rOgJ83whIGkpu
-         7hd9RuaenBQUC9GVTUzPbRYHaGMisWZWUxj86wQEvzpjOD+xM8wQe4FuopWOkpKbWXc8
-         LlPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ac277n3ZrkHIRZxuyFl78biK5VyfUxsH6zY1xmEkn98=;
-        b=n3OrDTZCT2tlQSeYJV8EzPiSewm6FE/QalHpR5HBHO0HgXEl+C1Keb25NvYe7bcMa4
-         YjN12UdKlitBSo4yRk5eHU64Gpu2r2TVdFg3JiBJAhRQWODfpPmMb3EnmC/GNVLlpH8D
-         TOSeGiZF4NnoGG0MpKJYJGSbQvOIaes6MghH7aowovPTuJExqYBi9jxV/9nm8u+ICSfM
-         u0HYd+fMK/e89xrHY3aRO1XNEOySFAeVTe1cGq5k1BSKbn+seZdRU9j3t79FvpmpoiiM
-         iODx/qZSF3hFbkI71Ohxl0XiYzl0fNMXgdYnVmnwojzEK8J78Egv+nbP+SkzRf69QDRd
-         ttVw==
-X-Gm-Message-State: AOAM531gLkBxlT/E2hvY9FXKKv3qFQ4dMeZs/AqHp1J5wflXV5n47ngf
-        GeS5sW/4axveoSpvFkAnUr90yg==
-X-Google-Smtp-Source: ABdhPJzLgn7hvNrVRNMHuJ9lO5Yi/W/8jx2zl8kl40TqAfNsnxhLQgBNFoVpTesqvdF8J+dFymghhQ==
-X-Received: by 2002:aa7:91cf:0:b029:1cb:1c6f:b77d with SMTP id z15-20020aa791cf0000b02901cb1c6fb77dmr2799377pfa.74.1614841148716;
-        Wed, 03 Mar 2021 22:59:08 -0800 (PST)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id d24sm6339121pjw.37.2021.03.03.22.59.06
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 03 Mar 2021 22:59:08 -0800 (PST)
-Date:   Thu, 4 Mar 2021 14:59:03 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Jeffrey Hugo <jhugo@codeaurora.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] gpiolib: acpi: support override broken GPIO number in
- ACPI table
-Message-ID: <20210304065902.GG17424@dragon>
-References: <YDjZOU+VMWasjzUb@smile.fi.intel.com>
- <20210227031944.GB24428@dragon>
- <YDzbQqHspfvpYS7Z@smile.fi.intel.com>
- <20210302002725.GE24428@dragon>
- <YD4twyAGvDDOCv+n@smile.fi.intel.com>
- <abbfcdfa-c287-3828-ed6f-bc1e1f13c6b2@codeaurora.org>
- <20210303094300.GB17424@dragon>
- <41593c7e-368b-cfb8-b24a-2e4dca48b465@codeaurora.org>
- <YD+yBmPrKm1n8Tjm@builder.lan>
- <20210304063711.GF17424@dragon>
+        id S234661AbhCDHqh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Mar 2021 02:46:37 -0500
+Received: from mga09.intel.com ([134.134.136.24]:9626 "EHLO mga09.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233784AbhCDHqK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 4 Mar 2021 02:46:10 -0500
+IronPort-SDR: o08KycUjwuDIKeDJ8nDczSjBdROl5NW+aj9Qy/ldRW16qN76kfHKHZmGtH/xro0cL9sdiR/IOF
+ /XerZ4uU1spg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9912"; a="187474885"
+X-IronPort-AV: E=Sophos;i="5.81,222,1610438400"; 
+   d="scan'208";a="187474885"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2021 23:45:30 -0800
+IronPort-SDR: hkY77I0G+KUTEO604Z8Tm2pPYH4M5J4u+v9DAEWK93PyUI6UcFSjKovoamnImrgpXtNRD1ASTN
+ YyZuu9fQLw5w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.81,222,1610438400"; 
+   d="scan'208";a="406765459"
+Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.76]) ([10.237.72.76])
+  by orsmga007.jf.intel.com with ESMTP; 03 Mar 2021 23:45:25 -0800
+Subject: Re: [PATCH v10 2/2] ufs: sysfs: Resume the proper scsi device
+To:     Asutosh Das <asutoshd@codeaurora.org>, cang@codeaurora.org,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Jaegeuk Kim <jaegeuk@kernel.org>,
+        Nitin Rawat <nitirawa@codeaurora.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <cover.1614725302.git.asutoshd@codeaurora.org>
+ <5d7c0cd1ff4bc5295015244f057d252fe9040993.1614725302.git.asutoshd@codeaurora.org>
+From:   Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+Message-ID: <9edf7047-4845-5bb5-3307-fa6e11e5c923@intel.com>
+Date:   Thu, 4 Mar 2021 09:45:37 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210304063711.GF17424@dragon>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <5d7c0cd1ff4bc5295015244f057d252fe9040993.1614725302.git.asutoshd@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 04, 2021 at 02:37:12PM +0800, Shawn Guo wrote:
-> > > > May I ask a bit more about how the virtual number N+1+32*n maps back to
-> > > > the real number (R)?  For example of touchpad GPIO on Flex 5G, I think
-> > > > we have:
-> > > > 
-> > > >    N+1+32*n = 0x0280
-> > > >    N = 191
-...
-> > > >    R = 24
-> > > > 
-> > > > If my math not bad, n = 14.  How does 14 map to 24?
-...
-> > > In your example, 14 would be the 14th GPIO that is routed to the PDC. You
-> > > would need SoC hardware documentation to know the mapping from PDC line 14
-> > > to GPIO line X.  This is going to be SoC specific, so 845 documentation is
-> > > not going to help you for SC8XXX.
-> > > 
-> > > Chances are, you are going to need to get this documentation from Qualcomm
-> > > (I don't know if its in IPCatalog or not), and put SoC specific lookup
-> > > tables in the TLMM driver.
-> > > 
-> > 
-> > I added the table in the driver, see sc8180x_pdc_map[], and it has gpio
-> > 14 at position 7, with the 14th entry being gpio 38 - which seems like
-> > an unlikely change from the reference schematics.
-> 
-> As it's clear that the real GPIO number is 24, and the only possible map
-> in sc8180x_pdc_map[] is:
-> 
-> 	{ .gpio = 24, wakeirq = 37 }
-> 
-> So we need to understand how 14 turns to 37.
+On 3/03/21 12:52 am, Asutosh Das wrote:
+> Resumes the actual scsi device the unit descriptor of which
+> is being accessed instead of the hba alone.
 
-Oh, if I should look at the index in sc8180x_pdc_map[], { .gpio = 24, .wakeirq = 37 }
-sits on 6 or 7 depending on indexing starts from 0 or 1.  Then question
-becomes how 14 turns to 6 or 7.
-
-Shawn
+Since "scsi: ufs: ufs-debugfs: Add user-defined exception_event_mask"
+is now in linux-next, a similar change is needed for ufs-debugfs.c.
+Probably best it is a separate patch though.
