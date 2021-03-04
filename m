@@ -2,126 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A84832D972
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 19:29:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B531932D989
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 19:41:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234222AbhCDS22 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Mar 2021 13:28:28 -0500
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:55142 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S234559AbhCDS20 (ORCPT
+        id S233662AbhCDSlX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Mar 2021 13:41:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60434 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233638AbhCDSlV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Mar 2021 13:28:26 -0500
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 04 Mar 2021 10:27:36 -0800
-X-QCInternal: smtphost
-Received: from gurus-linux.qualcomm.com ([10.46.162.81])
-  by ironmsg05-sd.qualcomm.com with ESMTP; 04 Mar 2021 10:27:35 -0800
-Received: by gurus-linux.qualcomm.com (Postfix, from userid 383780)
-        id CD0E9174F; Thu,  4 Mar 2021 10:27:35 -0800 (PST)
-Date:   Thu, 4 Mar 2021 10:27:35 -0800
-From:   Guru Das Srinagesh <gurus@codeaurora.org>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Markus Elfring <Markus.Elfring@web.de>,
-        Lee Jones <lee.jones@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg KH <gregkh@linuxfoundation.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Joe Perches <joe@perches.com>,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
-        David Collins <collinsd@codeaurora.org>,
-        Anirudh Ghayal <aghayal@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 1/3] regmap-irq: Add support for peripheral offsets
-Message-ID: <20210304182735.GA31587@codeaurora.org>
-References: <cover.1603402280.git.gurus@codeaurora.org>
- <40581a58bd16442f03db1abea014ca1eedc94d3c.1603402280.git.gurus@codeaurora.org>
- <20201112193312.GE4742@sirena.org.uk>
+        Thu, 4 Mar 2021 13:41:21 -0500
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF23AC06175F
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Mar 2021 10:40:40 -0800 (PST)
+Received: by mail-pf1-x42d.google.com with SMTP id 192so12568231pfv.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Mar 2021 10:40:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=iOyXuDvcxIJx0fWVVx3P/498/pkanhShN/F9x63Eql0=;
+        b=Wuo6av27VDcEVAtYW39edz6pHWrLzKoZG4gc3DHdSiXT0pBgzFxK4Qhxja0uIrZrDf
+         EKcShlOVP8HvDiKbOJCahNHqBlO4rpO17GmgaO/KB3/HJhx+MrWbBf5n/ieH8TRFxDyg
+         2GC+ACuHebskaqyXCnvBUAjHpQ+hgvViHN5AJSsqeOdQK9jYWmJs/iNb2EtSXqLYRgUw
+         gJGBKR7CFO06PZj9TQlD/nTCGKodGlFjJ9y4VL/S53qR+m2nI+eomG3A4NfY/+68g9HO
+         2n1WEyFwGkY4srHwUxtFpVVp3Hqm36rm+rYkn5Q3EjoFyE6MWb4NSql7XTcXCicxQfVC
+         ptFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=iOyXuDvcxIJx0fWVVx3P/498/pkanhShN/F9x63Eql0=;
+        b=SXEg7UxOW7HeXV2AbHwhE52NnIfxX6ho3zwAoNvsqeHSCZjiM3cz9WyuDbHpfLsZsY
+         B461EWzDPteltAhaTboaOw3KAwROyT+5ucwZ1pJztBC08TFwQnWuD/5pqN3uT/nE9OOG
+         uc/U4Ckdsm/HyoFW6VfqPg6qqFZIAjb42jqpz9hzd8B8TrCFkvO9z+B7zSOUX04b2GN5
+         wtOiD98voVoN1jEZyhb+368s+qYohZOmNvEk/QXj15Cph3I59zEUXfJpbOT/3NJAOC/c
+         OPgrJnSeCVajencinkrog0EaRya2B6uJsMu/qq3gkZlakzYgdqasws48rU7ndO6Te/8w
+         o3Tg==
+X-Gm-Message-State: AOAM530vgmqqqN+zeVLKcF/MFZNLveZx7BkJCMGnqHqsVzHCPuYprChv
+        oMzwcpeGv0eLZQI50t451iOgKA==
+X-Google-Smtp-Source: ABdhPJzwkhYn2cMBistrs8Pz3+urfuo6UpVT529eTD4hB8ctm0CobSvjPpPE3fffwBuYBUSQaLsr4Q==
+X-Received: by 2002:a63:140b:: with SMTP id u11mr4792170pgl.436.1614883240211;
+        Thu, 04 Mar 2021 10:40:40 -0800 (PST)
+Received: from xps15 (S0106889e681aac74.cg.shawcable.net. [68.147.0.187])
+        by smtp.gmail.com with ESMTPSA id 25sm107673pfh.199.2021.03.04.10.40.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Mar 2021 10:40:36 -0800 (PST)
+Date:   Thu, 4 Mar 2021 11:40:34 -0700
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Andy Gross <agross@kernel.org>,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v5 15/16] rpmsg: char: no dynamic endpoint management for
+ the default one
+Message-ID: <20210304184034.GA3854911@xps15>
+References: <20210219111501.14261-1-arnaud.pouliquen@foss.st.com>
+ <20210219111501.14261-16-arnaud.pouliquen@foss.st.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201112193312.GE4742@sirena.org.uk>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20210219111501.14261-16-arnaud.pouliquen@foss.st.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mark,
+There has to be a capital letter at the start of the title:
 
-Sorry for the delay in my response.
+rpmsg: char: No dynamic endpoint management for the default one
 
-On Thu, Nov 12, 2020 at 07:33:12PM +0000, Mark Brown wrote:
-> It is difficult to follow what this change is supposed to do, in part
-> because it looks like this is in fact two separate changes, one adding
-> the _base feature and another adding the polarity feature.  These should
-> each be in a separate patch if that is the case, and I think each needs
-> a clearer changelog - I'm not entirely sure what the polarity feature is
-> supposed to do.  Nothing here says what POLARITY_HI and POLARITY_LO are,
-> how they interact or anything.
+Please fix for all the patches.
 
-Sure, I can split this into two patches for easier review.
+On Fri, Feb 19, 2021 at 12:15:00PM +0100, Arnaud Pouliquen wrote:
+> Do not dynamically manage the default endpoint. The ept address must
+> not change.
+> This update is needed to manage the RPMSG_CREATE_DEV_IOCTL. In this
+> case a default endpoint is used and it's address must not change or
+> been reused by another service.
 
-The POLARITY_HI and POLARITY_LO registers were described very briefly in
-the cover letter. If an interrupt is already configured as either edge-
-or level-triggered, setting the corresponding bit for it in the
-POLARITY_HI register further configures it as rising-edge or level-high
-triggered (as the case may be), while setting the same bit in
-POLARITY_LO further configures it as falling-edge or level-low
-triggered. I could certainly add this information to the commit message
-as well.
+The above is very difficult to understand.  I am not sure about introducing
+RPMSG_CREATE_DEV_IOCTL in this patchset.  More on that in an upcoming comment.
 
 > 
-> For the address offsets I'm not sure that this is the best way to
-> represent things.  It looks like the hardware this is trying to describe
-> is essentially a bunch of separate interrupt controllers that happen to
-> share an upstream interrupt
-
-Sorry but isn't this essentially the same as what the framework already knows as
-the "sub-irq" concept, with the key difference that the register stride
-is not fixed? Everything else is the same (except for a couple of minor
-points noted below) - a main IRQ register that indicates sub-irq blocks
-that have unhandled interrupts, as well as interrupt handling and
-servicing.
-
-The two minor differences are:
-  - type_buf handling in regmap_irq_set_type() for IRQ_TYPE_LEVEL_HIGH and
-    IRQ_TYPE_LEVEL_LOW
-  - Two extra registers: POLARITY_HI and POLARITY_LO
-
-> clearer if at least the implementation looked like this.  Instead of
-> having to check for this array of offsets at every use point (which is
-> going to be rarely used and hence prone to bugs)
-
-Well, using irq_reg_stride already does exactly this - calculating the
-right register to access at every use point, as an offset from the _base
-register (status, ack, type, et c.). Peripheral offsets would just be
-another way of calculating the right register, that's all. And we could
-have a macro as well.
-
-> we'd have a set of separate regmap-irqs and then we'd mostly only have
-> to loop through them on handling, the bulk of the implementation
-> wouldn't have to worry about this special case.
+> Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
+> ---
+>  drivers/rpmsg/rpmsg_char.c | 28 +++++++++++++++++++++-------
+>  1 file changed, 21 insertions(+), 7 deletions(-)
 > 
-> Historically genirq didn't support sharing threaded interrupts, if
-> that's not changed we'd need to open code everything inside regmap-irq
-> but it would be doable, or ideally genirq could grow this feature.  If
-> it's done inside regmap you'd have a separate API that took an array of
-> regmap-irq configurations instead of just one and then when an interrupt
-> is delivered just loops through all of them handling it.  A quick scan
-> through the interrupt code suggests it might be able to cope with shared
-> IRQs now though which would make life easier.
+> diff --git a/drivers/rpmsg/rpmsg_char.c b/drivers/rpmsg/rpmsg_char.c
+> index c98b0e69679b..8d3f9d6c20ad 100644
+> --- a/drivers/rpmsg/rpmsg_char.c
+> +++ b/drivers/rpmsg/rpmsg_char.c
+> @@ -114,14 +114,23 @@ static int rpmsg_eptdev_open(struct inode *inode, struct file *filp)
+>  	struct rpmsg_endpoint *ept;
+>  	struct rpmsg_device *rpdev = eptdev->rpdev;
+>  	struct device *dev = &eptdev->dev;
+> +	u32 addr = eptdev->chinfo.src;
+>  
+>  	get_device(dev);
+>  
+> -	ept = rpmsg_create_ept(rpdev, rpmsg_ept_cb, eptdev, eptdev->chinfo);
+> -	if (!ept) {
+> -		dev_err(dev, "failed to open %s\n", eptdev->chinfo.name);
+> -		put_device(dev);
+> -		return -EINVAL;
+> +	/*
+> +	 * The RPMsg device can has been created by a ns announcement. In this
+> +	 * case a default endpoint has been created. Reuse it to avoid to manage
+> +	 * a new address on each open close.
+> +	 */
 
-Sure, I can look into how this approach would look like, but given that
-the QCOM register arrangement of main vs sub-irq is essentially the same
-as what the framework currently understands, couldn't we simply have a
-macro to change the way the right register offset is calculated
-(irq_reg_stride vs. peripheral offsets)?
+Here too it is very difficult to understand because the comment
+doesn't not describe what the code does.  The code creates an enpoint if it
+has not been created, which means /dev/rpmsgX was created from the ioctl. 
 
-Also, could you elaborate more on the genirq route? I'm not sure where
-to start looking to evaluate one route vs the other.
-
-Thank you.
-
-Guru Das.
+> +	ept = rpdev->ept;
+> +	if (!ept || addr != ept->addr) {
+> +		ept = rpmsg_create_ept(rpdev, rpmsg_ept_cb, eptdev, eptdev->chinfo);
+> +		if (!ept) {
+> +			dev_err(dev, "failed to open %s\n", eptdev->chinfo.name);
+> +			put_device(dev);
+> +			return -EINVAL;
+> +		}
+>  	}
+>  
+>  	eptdev->ept = ept;
+> @@ -133,12 +142,17 @@ static int rpmsg_eptdev_open(struct inode *inode, struct file *filp)
+>  static int rpmsg_eptdev_release(struct inode *inode, struct file *filp)
+>  {
+>  	struct rpmsg_eptdev *eptdev = cdev_to_eptdev(inode->i_cdev);
+> +	struct rpmsg_device *rpdev = eptdev->rpdev;
+>  	struct device *dev = &eptdev->dev;
+>  
+> -	/* Close the endpoint, if it's not already destroyed by the parent */
+> +	/*
+> +	 * Close the endpoint, if it's not already destroyed by the parent and it is not the
+> +	 * default one.
+> +	 */
+>  	mutex_lock(&eptdev->ept_lock);
+>  	if (eptdev->ept) {
+> -		rpmsg_destroy_ept(eptdev->ept);
+> +		if (eptdev->ept != rpdev->ept)
+> +			rpmsg_destroy_ept(eptdev->ept);
+>  		eptdev->ept = NULL;
+>  	}
+>  	mutex_unlock(&eptdev->ept_lock);
+> -- 
+> 2.17.1
+> 
