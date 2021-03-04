@@ -2,111 +2,195 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 09A6932CCE0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 07:34:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6584632CCE6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 07:39:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235314AbhCDGeI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Mar 2021 01:34:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44988 "EHLO
+        id S235320AbhCDGiY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Mar 2021 01:38:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235220AbhCDGdj (ORCPT
+        with ESMTP id S235313AbhCDGiG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Mar 2021 01:33:39 -0500
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C29B5C061574
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Mar 2021 22:32:59 -0800 (PST)
-Received: by mail-pj1-x102c.google.com with SMTP id s23so6171579pji.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Mar 2021 22:32:59 -0800 (PST)
+        Thu, 4 Mar 2021 01:38:06 -0500
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C083EC06175F
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Mar 2021 22:37:19 -0800 (PST)
+Received: by mail-pj1-x102f.google.com with SMTP id e9so5895721pjs.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Mar 2021 22:37:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ZVaNWV5ZzTWzGwBVUC0VbXcKnh2dD33whJJzQnJQNaI=;
-        b=Wchw87X6sNmsdVMCRW5Qlpl0cUb3evWrAXhdN77vx7uOA25FpP3SKRdm/JwDfo6pkF
-         Uv3FuBoeDwvPZdpKtktEjSkXzcJxHbwKjsPCRYLI1Wt+AqyJCbVFlr9K0IjEVO+rHHpY
-         zxs7gf7LbjoEEbDMSAcDqKInPz4jSw0TK3kuqE3OPpMD5plj0/n3IHuM4+Vn88UTjQyC
-         HR0ovbZNx5p7o6lo82UPH5bfhqpTRPq4kus1fVGajwiHi2WJCsvLeTghpfHWSEjGrTk/
-         DrkHkapqMUqwkosSVkrQ9/vF7DY1VWRzDdgY4Vl1k71WPjBBuaTuC+7Ob+njR6aGEeJM
-         4dsA==
+         :content-disposition:in-reply-to:user-agent;
+        bh=DcBwSRYXwJgh73TAHGnFm4EDcUGNqvcxJAKsIbZgreY=;
+        b=St5xIRnflDz/K+jN2ygevVUdjx/uGuut94oNGw0svvyhspYOOk1Vt0ZfdS4MpwPvqo
+         noVforIO9Bh0Fs6VoCvdQJi7kJrnj7pOU8/7c5jvQjajZx/cpif2YA9r2heDcIGd4FXn
+         q4cg7LtYHdNO94y3Hl3KizP8t9mKCLPm3o/MfT/LobHE4pv6bxpK4KsQuskcb/yZkCkx
+         fvqa6xkNTgNF/L3Bbtyu/sFtfcV4dCS8YItxp8Ol10KzRkx5HlirpacYOoOcxO0+8v9t
+         vssSyIDQtK58bOeTWSejORuhaXBRQWquRVmhQxAEDfWOzHH616fMUEq/7HSC8v7v6cgg
+         ZFWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ZVaNWV5ZzTWzGwBVUC0VbXcKnh2dD33whJJzQnJQNaI=;
-        b=dFHfwQJ62kJSB1Ac6t0WJFXOXMSilS0YWp5PRVV/4MCBtLdnKV/dGTdkMBcRFLNWH/
-         ZT8w08bwcIzJ7BWs9tWAr4CH7/8mSLqcq6juDGbOd0kKnQL3N1GZhXeiAm/wuJKQ1TkY
-         vNDEAqFAQdA1rjUkrX5mEIWR0GRgjG8FffI34j5qoIhZhCkkuOJdQDwUMTFBaOYyjiF2
-         h9epixMUkooU/7tp2I1FUugseVmpgAjZuwMtynXtD35OT3ZcFiBmaqD+Zn7ukEUsWV5o
-         84Akehuu415TqHQuR3GnvRx6SeGdSokjUcwwSmBfBouOZ/QUqVxz1lb9bAmA8nxEQprp
-         z7cA==
-X-Gm-Message-State: AOAM532XgQ/zXcAKu8Y8AFCZZYJg8WM0dtIg8PJ6IcwxDc1fe9BURqnG
-        Hr6itRNoFw1skFwaxIPQQmHL
-X-Google-Smtp-Source: ABdhPJymWpwtlqdPzs+1im5N29ns7ccms70hJ2x5e0frx+0uPWaYb3DqJBqijW6FO/wLBgLVAcW9KA==
-X-Received: by 2002:a17:90a:a481:: with SMTP id z1mr2915558pjp.161.1614839579305;
-        Wed, 03 Mar 2021 22:32:59 -0800 (PST)
-Received: from thinkpad ([2409:4072:80b:705f:ce40:2a5f:bf1e:b205])
-        by smtp.gmail.com with ESMTPSA id l22sm8678958pjy.6.2021.03.03.22.32.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Mar 2021 22:32:58 -0800 (PST)
-Date:   Thu, 4 Mar 2021 12:02:53 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 3/6] mhi: pci_generic: Add SDX24 based modem support
-Message-ID: <20210304063253.GC3363@thinkpad>
-References: <1614615911-18794-1-git-send-email-loic.poulain@linaro.org>
- <1614615911-18794-3-git-send-email-loic.poulain@linaro.org>
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=DcBwSRYXwJgh73TAHGnFm4EDcUGNqvcxJAKsIbZgreY=;
+        b=n72qU8uUhLItouzybVXG9NlGeafNCgFjsY5dXDttMYO9typE5wP3vf2UvZDcL8m+WL
+         jVEoZuhMIRfbf4VSwkjNxwYVAItrhHZlrarT4fYvp4rVEYjef46jjuLp5Kjx/OQFaXSR
+         VfzowZQ3+2xKDXL9UXmG+6vdqFdgvGb51nELkxEagwRZR6u9iLZyVntA9dBLB7OXVv0k
+         K2oVlh0L5zelVjJo6lkzJ5ijGA781nPUWR5mgLnoXp4o+bw788DBQkw4pJ1O952UyUGr
+         4jXKldZEd9zCmPlEQvb1/mIBsetNkmXk5TELajGZa/JD5YCsrKpT2pqZ8ZfIqN0yIC99
+         cEaA==
+X-Gm-Message-State: AOAM531V3wwvuc+/Q64Wza1sQMdp6xKKEqQM9R7foaLe6fBJD/pCr5cD
+        ScCO2e4M/EpaNvOzDlExdjw+8g==
+X-Google-Smtp-Source: ABdhPJxYvDMRvNIVVUpHDhVH2zFVimjOWMbu8V6B7Pvx4Ez+nmm/+HVSHqEFj28W9qYQ+CnSXeSDhA==
+X-Received: by 2002:a17:902:a412:b029:e5:d7dd:9e41 with SMTP id p18-20020a170902a412b02900e5d7dd9e41mr2655188plq.78.1614839839141;
+        Wed, 03 Mar 2021 22:37:19 -0800 (PST)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id 67sm27421739pfw.92.2021.03.03.22.37.16
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 03 Mar 2021 22:37:18 -0800 (PST)
+Date:   Thu, 4 Mar 2021 14:37:12 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Jeffrey Hugo <jhugo@codeaurora.org>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Mika Westerberg <mika.westerberg@linux.intel.com>,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] gpiolib: acpi: support override broken GPIO number in
+ ACPI table
+Message-ID: <20210304063711.GF17424@dragon>
+References: <CAHp75Vc6xYv+197SOrSefQHD2h4Xy_N20gQajW4uF2PU=sJfLg@mail.gmail.com>
+ <YDjZOU+VMWasjzUb@smile.fi.intel.com>
+ <20210227031944.GB24428@dragon>
+ <YDzbQqHspfvpYS7Z@smile.fi.intel.com>
+ <20210302002725.GE24428@dragon>
+ <YD4twyAGvDDOCv+n@smile.fi.intel.com>
+ <abbfcdfa-c287-3828-ed6f-bc1e1f13c6b2@codeaurora.org>
+ <20210303094300.GB17424@dragon>
+ <41593c7e-368b-cfb8-b24a-2e4dca48b465@codeaurora.org>
+ <YD+yBmPrKm1n8Tjm@builder.lan>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1614615911-18794-3-git-send-email-loic.poulain@linaro.org>
+In-Reply-To: <YD+yBmPrKm1n8Tjm@builder.lan>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 01, 2021 at 05:25:08PM +0100, Loic Poulain wrote:
-> Add generic info for SDX24 based modems. Also add the FIREHOSE channels
-> used by the flash-programmer firmware loaded in EDL mode.
+On Wed, Mar 03, 2021 at 09:57:58AM -0600, Bjorn Andersson wrote:
+> On Wed 03 Mar 09:10 CST 2021, Jeffrey Hugo wrote:
 > 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-Thanks,
-Mani
-
-> ---
->  drivers/bus/mhi/pci_generic.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
+> > On 3/3/2021 2:43 AM, Shawn Guo wrote:
+> > > On Tue, Mar 02, 2021 at 10:02:49PM -0700, Jeffrey Hugo wrote:
+> > > > Sorry, just joining the thread now.  Hopefully I'm addressing everything
+> > > > targeted at me.
+> > > > 
+> > > > I used to do kernel work on MSMs, then kernel work on server CPUs, but now I
+> > > > do kernel work on AI accelerators.  Never was on the firmware team, but I
+> > > > have a lot of contacts in those areas.  On my own time, I support Linux on
+> > > > the Qualcomm laptops.
+> > > > 
+> > > > Its not MS that needs to fix things (although there is plenty of things I
+> > > > could point to that MS could fix), its the Qualcomm Windows FW folks.  They
+> > > > have told me a while ago they were planning on fixing this issue on some
+> > > > future chipset, but apparently that hasn't happened yet.  Sadly, once these
+> > > > laptops ship, they are in a frozen maintenance mode.
+> > > > 
+> > > > In my opinion, MS has allowed Qualcomm to get away with doing bad things in
+> > > > ACPI on the Qualcomm laptops.  The ACPI is not a true hardware description
+> > > > that is OS agnostic as it should be, and probably violates the spec in many
+> > > > ways.  Instead, the ACPI is written against the Windows drivers, and has a
+> > > > lot of OS driver crap pushed into it.
+> > > > 
+> > > > The GPIO description is one such thing.
+> > > > 
+> > > > As I understand it, any particular SoC will have a number of GPIOs supported
+> > > > by the TLMM.  0 - N.  Linux understands this.  However, in the ACPI of the
+> > > > Qualcomm Windows laptops, you will likely find atleast one GPIO number which
+> > > > exceeds this N.  These are "virtual" GPIOs, and are a construct of the
+> > > > Windows Qualcomm TLMM driver and how it interfaces with the frameworks
+> > > > within Windows.
+> > > > 
+> > > > Some GPIO lines can be configured as wakeup sources by routing them to a
+> > > > specific hardware block in the SoC (which block it is varies from SoC to
+> > > > SoC).  Windows has a specific weird way of handling this which requires a
+> > > > unique "GPIO chip" to handle.  GPIO chips in Windows contain 32 GPIOs, so
+> > > > for each wakeup GPIO, the TLMM driver creates a GPIO chip (essentially
+> > > > creating 32 GPIOs), and assigns the added GPIOs numbers which exceed N.  The
+> > > > TLMM driver has an internal mapping of which virtual GPIO number corresponds
+> > > > to which real GPIO.
+> > > > 
+> > > > So, ACPI says that some peripheral has GPIO N+X, which is not a real GPIO.
+> > > > That peripheral goes and requests that GPIO, which gets routed to the TLMM
+> > > > driver, and the TLMM driver translates that number to the real GPIO, and
+> > > > provides the reference back to the peripheral, while also setting up the
+> > > > special wakeup hardware.
+> > > > 
+> > > > So, N+1 is the first supported wakup GPIO, N+1+32 is the next one, then
+> > > > N+1+32+32, and so on.
+> > > 
+> > > Jeffrey,
+> > > 
+> > > Thanks so much for these great information!
+> > > 
+> > > May I ask a bit more about how the virtual number N+1+32*n maps back to
+> > > the real number (R)?  For example of touchpad GPIO on Flex 5G, I think
+> > > we have:
+> > > 
+> > >    N+1+32*n = 0x0280
+> > >    N = 191
 > 
-> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-> index 00a0410..87bab93 100644
-> --- a/drivers/bus/mhi/pci_generic.c
-> +++ b/drivers/bus/mhi/pci_generic.c
-> @@ -212,6 +212,14 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
->  	.dma_data_width = 32
->  };
->  
-> +static const struct mhi_pci_dev_info mhi_qcom_sdx24_info = {
-> +	.name = "qcom-sdx24",
-> +	.edl = "qcom/prog_firehose_sdx24.mbn",
-> +	.config = &modem_qcom_v1_mhiv_config,
-> +	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-> +	.dma_data_width = 32
-> +};
-> +
->  static const struct mhi_channel_config mhi_quectel_em1xx_channels[] = {
->  	MHI_CHANNEL_CONFIG_UL(0, "NMEA", 32, 0),
->  	MHI_CHANNEL_CONFIG_DL(1, "NMEA", 32, 0),
-> @@ -254,6 +262,8 @@ static const struct mhi_pci_dev_info mhi_quectel_em1xx_info = {
->  static const struct pci_device_id mhi_pci_id_table[] = {
->  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0306),
->  		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx55_info },
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0304),
-> +		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx24_info },
->  	{ PCI_DEVICE(0x1eac, 0x1001), /* EM120R-GL (sdx24) */
->  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
->  	{ PCI_DEVICE(0x1eac, 0x1002), /* EM160R-GL (sdx24) */
-> -- 
-> 2.7.4
+> There's 190 GPIOs on SC8180x, but then the math doesn't add up to a
+> whole number...
+
+In pinctrl-sc8180x driver you wrote, it has sc8180x_pinctrl.ngpios = 191.
+Which one of you should I listen to :)
+
+BTW, if you read this number from DTS, I already sent you a series to
+fix them.
+
+https://lore.kernel.org/linux-gpio/20210303033106.549-1-shawn.guo@linaro.org/
+
 > 
+> > >    R = 24
+> > > 
+> > > If my math not bad, n = 14.  How does 14 map to 24?
+> > 
+> > 
+> > So, if this was 845, the wakeup hardware would be the PDC.  Only a specific
+> > number of GPIOs are routed to the PDC.  When the TLMM is powered off in
+> > suspend, the PDC pays attention to the GPIOs that are routed to it, and are
+> > configured in the PDC as wakeup sources.  When the GPIO is asserted, the
+> > signal to the TLMM gets lost, but the PDC catches it.  The PDC will kick the
+> > CPU/SoC out of suspend, and then once the wakup process is complete, replay
+> > the GPIO so that the TLMM has the signal.
+> > 
+> 
+> SC8180x has the same hardware design.
+> 
+> > In your example, 14 would be the 14th GPIO that is routed to the PDC. You
+> > would need SoC hardware documentation to know the mapping from PDC line 14
+> > to GPIO line X.  This is going to be SoC specific, so 845 documentation is
+> > not going to help you for SC8XXX.
+> > 
+> > Chances are, you are going to need to get this documentation from Qualcomm
+> > (I don't know if its in IPCatalog or not), and put SoC specific lookup
+> > tables in the TLMM driver.
+> > 
+> 
+> I added the table in the driver, see sc8180x_pdc_map[], and it has gpio
+> 14 at position 7, with the 14th entry being gpio 38 - which seems like
+> an unlikely change from the reference schematics.
+
+As it's clear that the real GPIO number is 24, and the only possible map
+in sc8180x_pdc_map[] is:
+
+	{ .gpio = 24, wakeirq = 37 }
+
+So we need to understand how 14 turns to 37.
+
+Shawn
