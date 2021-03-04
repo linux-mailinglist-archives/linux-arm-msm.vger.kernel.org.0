@@ -2,110 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 564EE32C903
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 02:17:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3CB6B32C905
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 02:17:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245581AbhCDBBP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Mar 2021 20:01:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46322 "EHLO
+        id S238690AbhCDBBQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Mar 2021 20:01:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1388681AbhCDAMP (ORCPT
+        with ESMTP id S1392370AbhCDAOe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Mar 2021 19:12:15 -0500
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DFC2C0613D9
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Mar 2021 16:07:26 -0800 (PST)
-Received: by mail-pj1-x102f.google.com with SMTP id e9so5255456pjs.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Mar 2021 16:07:26 -0800 (PST)
+        Wed, 3 Mar 2021 19:14:34 -0500
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8C31C0613DC
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Mar 2021 16:12:15 -0800 (PST)
+Received: by mail-pf1-x431.google.com with SMTP id l7so13299368pfd.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Mar 2021 16:12:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:content-transfer-encoding:in-reply-to:references
          :subject:from:cc:to:date:message-id:user-agent;
-        bh=asxjJNgiUNw6MBg0pakth/o8lvjiDAUFUUQ/6Pge5+4=;
-        b=PanXJgzyeHwpKblWdhocuodYjQLVlYm2M3uMk2kp4ryZrfrAwH4WsPXGUAJpUo4Tyy
-         Dp03+piJ4ksc7zysNHDbgSvTt8mc5nucEYtSdSRvIvx/AgnGhVAd05Sr7JYDss1+ET8i
-         LteG+cwShMGQslPkg92g+HCoOjw9epjuUlkmU=
+        bh=zrZaRySN+9uvnnWf26Ar1YrONmr8qtTnIcY5RCO/cMw=;
+        b=AFbG0vNF10pAZ+e9ePDz/jZ+K2PhqZIKN0imVriWbB//y+kS5qAaLe5oNaVfbLvJOQ
+         T3pzSHyGp3wWwnGKn211iWlN1nChhHj3tL59KvZ6s0RQAYDcqgJbqxsCTD4S23eMlXHf
+         ItteAgk3+sC14VDZ0g9+Z81t451nCxJBZsA9k=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:content-transfer-encoding
          :in-reply-to:references:subject:from:cc:to:date:message-id
          :user-agent;
-        bh=asxjJNgiUNw6MBg0pakth/o8lvjiDAUFUUQ/6Pge5+4=;
-        b=FwvaA6l/PkgrNDZCB1b11ZBM3qU/JfApfWorYPA+QSAqPWVgvDtRXKsFGVJIfBof+x
-         cfVLvTSp+RLtAFIFZ5H+SJi9X7+BGZLI2/xDzQTgbQOtODCHCHhWWQf0wMFkPuwgG/FO
-         aQ0NVkQx+4DXe6G3UGivsEY7igEfJxw8SOPHj8eb+7oN+5dwl1f495dJjz80Vf14/84H
-         NbOlYS9k3vR2TRT/bvJantaIWviG4CTsz4ANr26Lo47wP9W1Wmncq2UDIGZSI4ce63VG
-         DaDUHoFlEDpGFv/067PwHLyEnH11kEjU8fHzf7D37oj+B8yAG3UFcAb3pXup3m66eb4m
-         i/mw==
-X-Gm-Message-State: AOAM533ayUBy/IUefZGTeHRpU9U2LjroljULHWY9TKi0Xh3tiEAuAB6x
-        7JSrrxSktR/vg3WZmu87J5nQtgFEr6VvMw==
-X-Google-Smtp-Source: ABdhPJyNosMbuHpBvBydLjVSSE8esDc/JfjeFRizDQLAXL2Ze61VIO+s7BDsLjCZ7drglIe+1gpCog==
-X-Received: by 2002:a17:90b:116:: with SMTP id p22mr1507427pjz.161.1614816445612;
-        Wed, 03 Mar 2021 16:07:25 -0800 (PST)
+        bh=zrZaRySN+9uvnnWf26Ar1YrONmr8qtTnIcY5RCO/cMw=;
+        b=IRifhto6G72m0fYlE/IownbLuRREJ9XaE8MKPPVCwqq3tUN6eC9yq/gQt07sT5tdpF
+         ajpBFNvlvEEWH5n/naWMgQ1tHDDEs/T2djrz3E7SqwLKiZRtrxUbCCYFAJRD1Cd1Ls6w
+         AnAmZ2XPxkiq+8EiS4XCaXKuukryckOnbRJ97f+rPTDLqzVE0yvgGMx2AvSXynEaCHV3
+         bz33bFki8s9ZeBcriv/e8hJJjsT7BccF5kYt8k7S2F0fkpPchKXsOO//N7rqj9XgG47b
+         qeEaZpIXQ2Dp4m+HcK9vv1Zps3wkRiXCnH02Pt6Otmb1EyP8/QpD8XbXtwbD5N1eL8RR
+         d+og==
+X-Gm-Message-State: AOAM532lLrUBwkF3tddt+GgrT7bXLuSzBIFV0Fd9r9rk0vDb+bWZOSbF
+        YJgUgEuQ/JjRsxiRAmCixofWjucn4oekWA==
+X-Google-Smtp-Source: ABdhPJzPaqYplfJzoHe2p00Q429Svrwvd0rrUs/LcKn5Qok0Uf0FqCrAMwhWaI4VItI1BmUuFtyAKw==
+X-Received: by 2002:a05:6a00:15cc:b029:1ba:5282:3ab8 with SMTP id o12-20020a056a0015ccb02901ba52823ab8mr1268929pfu.77.1614816734882;
+        Wed, 03 Mar 2021 16:12:14 -0800 (PST)
 Received: from chromium.org ([2620:15c:202:201:2510:ab07:78a:7d78])
-        by smtp.gmail.com with ESMTPSA id s10sm25538883pgl.90.2021.03.03.16.07.24
+        by smtp.gmail.com with ESMTPSA id o4sm25339685pfg.107.2021.03.03.16.12.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Mar 2021 16:07:25 -0800 (PST)
+        Wed, 03 Mar 2021 16:12:14 -0800 (PST)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1614773878-8058-4-git-send-email-rnayak@codeaurora.org>
-References: <1614773878-8058-1-git-send-email-rnayak@codeaurora.org> <1614773878-8058-4-git-send-email-rnayak@codeaurora.org>
-Subject: Re: [PATCH v2 03/14] arm64: dts: sc7280: Add basic dts/dtsi files for sc7280 soc
+In-Reply-To: <1614773878-8058-13-git-send-email-rnayak@codeaurora.org>
+References: <1614773878-8058-1-git-send-email-rnayak@codeaurora.org> <1614773878-8058-13-git-send-email-rnayak@codeaurora.org>
+Subject: Re: [PATCH v2 12/14] arm64: dts: qcom: sc7280: Add SPMI PMIC arbiter device for SC7280
 From:   Stephen Boyd <swboyd@chromium.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
+        linux-kernel@vger.kernel.org, satya priya <skakit@codeaurora.org>,
         Rajendra Nayak <rnayak@codeaurora.org>
 To:     Rajendra Nayak <rnayak@codeaurora.org>, agross@kernel.org,
         bjorn.andersson@linaro.org, robh+dt@kernel.org
-Date:   Wed, 03 Mar 2021 16:07:23 -0800
-Message-ID: <161481644369.1478170.2626772524314654990@swboyd.mtv.corp.google.com>
+Date:   Wed, 03 Mar 2021 16:12:12 -0800
+Message-ID: <161481673286.1478170.13034581527644587648@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Rajendra Nayak (2021-03-03 04:17:47)
+Quoting Rajendra Nayak (2021-03-03 04:17:56)
 > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/q=
 com/sc7280.dtsi
-> new file mode 100644
-> index 0000000..4a56d9c
-> --- /dev/null
+> index fe4fdb9..aa6f847 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
 > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -0,0 +1,299 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * sc7280 SoC device tree source
-> + *
-> + * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#include <dt-bindings/clock/qcom,gcc-sc7280.h>
-> +#include <dt-bindings/interrupt-controller/arm-gic.h>
-> +
-> +/ {
-> +       interrupt-parent =3D <&intc>;
-> +
-> +       #address-cells =3D <2>;
-> +       #size-cells =3D <2>;
-> +
-> +       chosen { };
-> +
-> +       clocks {
-> +               xo_board: xo-board {
-> +                       compatible =3D "fixed-clock";
-> +                       clock-frequency =3D <76800000>;
+> @@ -239,6 +239,25 @@
+>                         interrupt-controller;
+>                 };
+> =20
+> +               spmi_bus: spmi@c440000 {
+> +                       compatible =3D "qcom,spmi-pmic-arb";
+> +                       reg =3D <0 0x0c440000 0 0x1100>,
+> +                             <0 0x0c600000 0 0x2000000>,
+> +                             <0 0x0e600000 0 0x100000>,
+> +                             <0 0x0e700000 0 0xa0000>,
+> +                             <0 0x0c40a000 0 0x26000>;
+> +                       reg-names =3D "core", "chnls", "obsrvr", "intr", =
+"cnfg";
+> +                       interrupt-names =3D "periph_irq";
+> +                       interrupts-extended =3D <&pdc 1 IRQ_TYPE_LEVEL_HI=
+GH>;
+> +                       qcom,ee =3D <0>;
+> +                       qcom,channel =3D <0>;
+> +                       #address-cells =3D <1>;
+> +                       #size-cells =3D <1>;
 
-If this is the correct frequency I think we need to update the rpmh clk
-driver to use the correct divider? Right now I think it is a 2 when it
-should be 4?
+I see the binding says these should be 2 instead of 1 but I suspect that
+is incorrect.
 
-> +                       #clock-cells =3D <0>;
+> +                       interrupt-controller;
+> +                       #interrupt-cells =3D <4>;
+> +                       cell-index =3D <0>;
+
+Is cell-index used? Please remove as I don't see it used anywhere and
+not in the binding.
+
 > +               };
 > +
-> +               sleep_clk: sleep-clk {
-> +                       compatible =3D "fixed-clock";
-> +                       clock-frequency =3D <32000>;
-> +                       #clock-cells =3D <0>;
-> +               };
-> +       };
+>                 tlmm: pinctrl@f100000 {
+>                         compatible =3D "qcom,sc7280-pinctrl";
+>                         reg =3D <0 0x0f100000 0 0x1000000>;
