@@ -2,81 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 16D7332CFE4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 10:43:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CFAD732D03D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 10:57:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237805AbhCDJlv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Mar 2021 04:41:51 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:61791 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237769AbhCDJlk (ORCPT
+        id S231357AbhCDJ4r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Mar 2021 04:56:47 -0500
+Received: from szxga04-in.huawei.com ([45.249.212.190]:13125 "EHLO
+        szxga04-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231248AbhCDJ4R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Mar 2021 04:41:40 -0500
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 04 Mar 2021 01:41:00 -0800
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 04 Mar 2021 01:40:58 -0800
-X-QCInternal: smtphost
-Received: from kalyant-linux.qualcomm.com ([10.204.66.210])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 04 Mar 2021 15:10:31 +0530
-Received: by kalyant-linux.qualcomm.com (Postfix, from userid 94428)
-        id C62D63D38; Thu,  4 Mar 2021 01:40:31 -0800 (PST)
-From:   Kalyan Thota <kalyan_t@codeaurora.org>
-To:     y@qualcomm.com, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org
-Cc:     Kalyan Thota <kalyan_t@codeaurora.org>,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        dianders@chromium.org, mkrishn@codeaurora.org,
-        dan.carpenter@oracle.com
-Subject: [v1] drm/msm/disp/dpu1: fix warning reported by kernel bot in dpu driver
-Date:   Thu,  4 Mar 2021 01:40:29 -0800
-Message-Id: <1614850829-31802-1-git-send-email-kalyan_t@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <y>
-References: <y>
+        Thu, 4 Mar 2021 04:56:17 -0500
+Received: from DGGEMS402-HUB.china.huawei.com (unknown [172.30.72.58])
+        by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4DrmR44DrQz16GLg;
+        Thu,  4 Mar 2021 17:53:52 +0800 (CST)
+Received: from localhost.localdomain (10.175.102.38) by
+ DGGEMS402-HUB.china.huawei.com (10.3.19.202) with Microsoft SMTP Server id
+ 14.3.498.0; Thu, 4 Mar 2021 17:55:25 +0800
+From:   'Wei Yongjun <weiyongjun1@huawei.com>
+To:     <weiyongjun1@huawei.com>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        "Viresh Kumar" <viresh.kumar@linaro.org>,
+        Shawn Guo <shawn.guo@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        Hulk Robot <hulkci@huawei.com>
+Subject: [PATCH -next] cpufreq: qcom-hw: Fix return value check in qcom_cpufreq_hw_cpu_init()
+Date:   Thu, 4 Mar 2021 10:04:23 +0000
+Message-ID: <20210304100423.3856265-1-weiyongjun1@huawei.com>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Type:   text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-Originating-IP: [10.175.102.38]
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix a warning, pointing to an early deference of a variable before
-check. This bug was introduced in the following commit.
+From: Wei Yongjun <weiyongjun1@huawei.com>
 
-commit 4259ff7ae509
-("drm/msm/dpu: add support for pcc color block in dpu driver")
+In case of error, the function ioremap() returns NULL pointer
+not ERR_PTR(). The IS_ERR() test in the return value check
+should be replaced with NULL test.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
+Fixes: 67fc209b527d ("cpufreq: qcom-hw: drop devm_xxx() calls from init/exit hooks")
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/cpufreq/qcom-cpufreq-hw.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
-index a7a2453..0f9974c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
-@@ -26,10 +26,16 @@ static void dpu_setup_dspp_pcc(struct dpu_hw_dspp *ctx,
- 		struct dpu_hw_pcc_cfg *cfg)
- {
- 
--	u32 base = ctx->cap->sblk->pcc.base;
-+	u32 base;
- 
--	if (!ctx || !base) {
--		DRM_ERROR("invalid ctx %pK pcc base 0x%x\n", ctx, base);
-+	if (!ctx) {
-+		DRM_ERROR("invalid dspp ctx %pK\n", ctx);
-+		return;
-+	}
-+
-+	base = ctx->cap->sblk->pcc.base;
-+	if (!base) {
-+		DRM_ERROR("invalid pcc base 0x%x\n", base);
- 		return;
+diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+index d3c23447b892..6e59ec4fb564 100644
+--- a/drivers/cpufreq/qcom-cpufreq-hw.c
++++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+@@ -317,9 +317,9 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
  	}
  
--- 
-2.7.4
+ 	base = ioremap(res->start, resource_size(res));
+-	if (IS_ERR(base)) {
++	if (!base) {
+ 		dev_err(dev, "failed to map resource %pR\n", res);
+-		ret = PTR_ERR(base);
++		ret = -ENOMEM;
+ 		goto release_region;
+ 	}
+ 
 
