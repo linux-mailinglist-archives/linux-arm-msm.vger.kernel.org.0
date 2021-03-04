@@ -2,142 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8ED4332DC9F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 22:59:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 23F2232DCCE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 23:14:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241203AbhCDV7H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Mar 2021 16:59:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47410 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241201AbhCDV6z (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Mar 2021 16:58:55 -0500
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F40AC061756
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Mar 2021 13:58:15 -0800 (PST)
-Received: by mail-qk1-x734.google.com with SMTP id b130so17947719qkc.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Mar 2021 13:58:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Nbze8gCMaDI1IAu3LD9VNB/zoM+54xD6O96EqggyI0s=;
-        b=IZjJYUNqOQbo9CYLDbRcg72SwHxQPuq2eSOygLV6vR9RtY3wNlxNYVh7g26gKTKvwt
-         mWsJwGMFB7TO7XflIEjcWFfm/NPylMEMCkH8H+qLhwFm6dCZPQgfedOIaxv7Oi/qHF9G
-         UacVXBbyE4YNwNWxWnRgCfpPy7asBHKc3MKUrS2v8aRqxsBEsuxZSIQCnr7Bj6GufwhE
-         lcSyInQxYjODsYO8xzmJGu/1eMh7n5OXVx2P9O4WZ8deWyiseVdDrjewmZrgtv9+ngRK
-         2Fe2o29USbcfSyaXBORZ0igeMGXa7jrQWX5OlF3GYx3qseMIhhl8rCNdikmCBNITh6Hg
-         AYLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Nbze8gCMaDI1IAu3LD9VNB/zoM+54xD6O96EqggyI0s=;
-        b=r/9PZExrcNvjzUvxbpRxpzv6cW2K+MjW7Djjz4EkVDM/jEWfaEBOx+JeYJ0mhwXWI2
-         BU9ZkTtsn9YgghC7DIKpBRAluZlOvFvJASnIVTMUcb5S4qVvdHOQsT0l2o1BrERgQsFQ
-         gox+Xb8o2Qli3dCYGZSBjlN5uRuphr8Era3MZz7BGgIb9a5/5gk6TcdvrKAW49HavXVe
-         39/OC+948NXh0Z3X7PU/UOyoC1FDqEpuEvUaI6VjTqsNm73kC78AsP7ywIfkZD3hZ9y+
-         BHUdbcBy7sTCDYmQgk7WeZ+fU881jIBVHiSQkqSjQA6oI13ev24+OZ/2y2O5F6B6YTnx
-         CTHg==
-X-Gm-Message-State: AOAM530wYZJTkcO6Z9IDr6UrZWPELcM0D4I2ywuVTmCLuIwq5ZRRjaVf
-        wVycH/ulGlTnuxq80U2RoaATt0+Wx7gTpggU
-X-Google-Smtp-Source: ABdhPJyFUWcvnNRd82OokzjaRJTgmmSWE/c7ZWKgoh6oN5NNeHBtiFc/KvFGUxbGcE3941wMNT/0Cg==
-X-Received: by 2002:a37:9f91:: with SMTP id i139mr6270897qke.72.1614895093854;
-        Thu, 04 Mar 2021 13:58:13 -0800 (PST)
-Received: from localhost.localdomain (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
-        by smtp.gmail.com with ESMTPSA id m21sm460478qka.28.2021.03.04.13.58.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Mar 2021 13:58:13 -0800 (PST)
-From:   Jonathan Marek <jonathan@marek.ca>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>,
-        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        alsa-devel@alsa-project.org (moderated list:QCOM AUDIO (ASoC) DRIVERS),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] ASoC: codecs: lpass-va-macro: mute/unmute all active decimators
-Date:   Thu,  4 Mar 2021 16:56:46 -0500
-Message-Id: <20210304215646.17956-1-jonathan@marek.ca>
-X-Mailer: git-send-email 2.26.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S231131AbhCDWOW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Mar 2021 17:14:22 -0500
+Received: from m42-2.mailgun.net ([69.72.42.2]:38009 "EHLO m42-2.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230486AbhCDWOV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 4 Mar 2021 17:14:21 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1614896061; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=5xQNWGzpOBIi5UGcFmdKOWjQb0d9Q/YSE/meDTlP+2k=; b=Yc4pNfwEoxzta/qYEzJWQUZuH6zpZvbJidyqCijyqQILHhbwMYc+9nAja/IF0hrmYtGln0e9
+ V8SuMIYkNy1V8OL+O5ytyZ9t28cWVL9oS6xaxodXrf3nACyY6NJZBleezDgctvr16U0dX8ru
+ 7nf4OVXTXUAq4kw0g7x0zZ984OA=
+X-Mailgun-Sending-Ip: 69.72.42.2
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 60415bb9c862e1b9fd2a8428 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 04 Mar 2021 22:14:17
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id F078BC4322F; Thu,  4 Mar 2021 22:14:16 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id F3A9BC4322A;
+        Thu,  4 Mar 2021 22:14:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org F3A9BC4322A
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
+        loic.poulain@linaro.org, carl.yin@quectel.com,
+        naveen.kumar@quectel.com, Bhaumik Bhatt <bbhatt@codeaurora.org>
+Subject: [PATCH v2] bus: mhi: core: Add missing checks for MMIO register entries
+Date:   Thu,  4 Mar 2021 14:14:09 -0800
+Message-Id: <1614896049-15912-1-git-send-email-bbhatt@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-An interface can have multiple decimators enabled, so loop over all active
-decimators. Otherwise only one channel will be unmuted, and other channels
-will be zero. This fixes recording from dual DMIC as a single two channel
-stream.
+As per documentation, fields marked as (required) in an MHI
+controller structure need to be populated by the controller driver
+before calling mhi_register_controller(). Ensure all required
+pointers and non-zero fields are present in the controller before
+proceeding with registration.
 
-Also remove the now unused "active_decimator" field.
-
-Fixes: 908e6b1df26e ("ASoC: codecs: lpass-va-macro: Add support to VA Macro")
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 ---
- sound/soc/codecs/lpass-va-macro.c | 28 +++++++++++++---------------
- 1 file changed, 13 insertions(+), 15 deletions(-)
+ drivers/bus/mhi/core/init.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro.c
-index 91e6890d6efcb..3d6976a3d9e42 100644
---- a/sound/soc/codecs/lpass-va-macro.c
-+++ b/sound/soc/codecs/lpass-va-macro.c
-@@ -189,7 +189,6 @@ struct va_macro {
- 	struct device *dev;
- 	unsigned long active_ch_mask[VA_MACRO_MAX_DAIS];
- 	unsigned long active_ch_cnt[VA_MACRO_MAX_DAIS];
--	unsigned long active_decimator[VA_MACRO_MAX_DAIS];
- 	u16 dmic_clk_div;
+diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+index 272f350..fed8a25 100644
+--- a/drivers/bus/mhi/core/init.c
++++ b/drivers/bus/mhi/core/init.c
+@@ -879,10 +879,9 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
+ 	u32 soc_info;
+ 	int ret, i;
  
- 	int dec_mode[VA_MACRO_NUM_DECIMATORS];
-@@ -549,11 +548,9 @@ static int va_macro_tx_mixer_put(struct snd_kcontrol *kcontrol,
- 	if (enable) {
- 		set_bit(dec_id, &va->active_ch_mask[dai_id]);
- 		va->active_ch_cnt[dai_id]++;
--		va->active_decimator[dai_id] = dec_id;
- 	} else {
- 		clear_bit(dec_id, &va->active_ch_mask[dai_id]);
- 		va->active_ch_cnt[dai_id]--;
--		va->active_decimator[dai_id] = -1;
- 	}
- 
- 	snd_soc_dapm_mixer_update_power(widget->dapm, kcontrol, enable, update);
-@@ -880,18 +877,19 @@ static int va_macro_digital_mute(struct snd_soc_dai *dai, int mute, int stream)
- 	struct va_macro *va = snd_soc_component_get_drvdata(component);
- 	u16 tx_vol_ctl_reg, decimator;
- 
--	decimator = va->active_decimator[dai->id];
+-	if (!mhi_cntrl)
+-		return -EINVAL;
 -
--	tx_vol_ctl_reg = CDC_VA_TX0_TX_PATH_CTL +
--				VA_MACRO_TX_PATH_OFFSET * decimator;
--	if (mute)
--		snd_soc_component_update_bits(component, tx_vol_ctl_reg,
--					      CDC_VA_TX_PATH_PGA_MUTE_EN_MASK,
--					      CDC_VA_TX_PATH_PGA_MUTE_EN);
--	else
--		snd_soc_component_update_bits(component, tx_vol_ctl_reg,
--					      CDC_VA_TX_PATH_PGA_MUTE_EN_MASK,
--					      CDC_VA_TX_PATH_PGA_MUTE_DISABLE);
-+	for_each_set_bit(decimator, &va->active_ch_mask[dai->id],
-+			 VA_MACRO_DEC_MAX) {
-+		tx_vol_ctl_reg = CDC_VA_TX0_TX_PATH_CTL +
-+					VA_MACRO_TX_PATH_OFFSET * decimator;
-+		if (mute)
-+			snd_soc_component_update_bits(component, tx_vol_ctl_reg,
-+					CDC_VA_TX_PATH_PGA_MUTE_EN_MASK,
-+					CDC_VA_TX_PATH_PGA_MUTE_EN);
-+		else
-+			snd_soc_component_update_bits(component, tx_vol_ctl_reg,
-+					CDC_VA_TX_PATH_PGA_MUTE_EN_MASK,
-+					CDC_VA_TX_PATH_PGA_MUTE_DISABLE);
-+	}
- 
- 	return 0;
- }
+-	if (!mhi_cntrl->runtime_get || !mhi_cntrl->runtime_put ||
++	if (!mhi_cntrl || !mhi_cntrl->cntrl_dev || !mhi_cntrl->regs ||
++	    !mhi_cntrl->fw_image || !mhi_cntrl->irq ||
++	    !mhi_cntrl->runtime_get || !mhi_cntrl->runtime_put ||
+ 	    !mhi_cntrl->status_cb || !mhi_cntrl->read_reg ||
+ 	    !mhi_cntrl->write_reg || !mhi_cntrl->nr_irqs)
+ 		return -EINVAL;
 -- 
-2.26.1
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
