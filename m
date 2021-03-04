@@ -2,135 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 12D2D32CD36
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 07:58:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A90F32CD3E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 08:01:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232208AbhCDG5z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Mar 2021 01:57:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50066 "EHLO
+        id S235860AbhCDHAN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Mar 2021 02:00:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231932AbhCDG5a (ORCPT
+        with ESMTP id S235850AbhCDG7t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Mar 2021 01:57:30 -0500
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 939F3C061574
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Mar 2021 22:56:49 -0800 (PST)
-Received: by mail-pf1-x42d.google.com with SMTP id r5so18222723pfh.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Mar 2021 22:56:49 -0800 (PST)
+        Thu, 4 Mar 2021 01:59:49 -0500
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63C13C06175F
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Mar 2021 22:59:09 -0800 (PST)
+Received: by mail-pf1-x430.google.com with SMTP id q204so17187198pfq.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Mar 2021 22:59:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=h2fZSgSbbuRf3w1cxcGcTdK99xpV68VkpJy/VFz8+JA=;
-        b=bZ3nUljrz4E111yEGADBt+RKnupMHO38hm1euxT26aIN7m0QWEgwnwXyTA2C4g7543
-         LRD/LCT5HyLR/ou7HZtVJPxlItAjEuIt+U33IFtbg66lMAQOptWwlViGXbUcTxshKeXQ
-         U9pwHtApyLPlAgKuHl//S2iff6GXx85RPKgtFEO/IPHIy94uoV6bCpeCVu4axSjcDcax
-         /6DdvT9sF9MvG+9PyepsOS6rB7lZe9/maSn9OPURHVHyOwD7lwAgUwvQLz8JN7pb5Ke1
-         HEqvXgnPpyknO1VKmyKjWXTAkfy7AW7G6Lu5sOTko78zt7oyHBx5d76oi80aEoQRqBEn
-         DMGA==
+         :content-disposition:in-reply-to:user-agent;
+        bh=ac277n3ZrkHIRZxuyFl78biK5VyfUxsH6zY1xmEkn98=;
+        b=xnK/SkiVQJ8Ao+QegudNcTAOfdoMCzMIVIezonR6l0Lc1xts4eVHkpV1LU8YX6puby
+         KbU43CtpXKBm2Fl/YX24B0YElYGpT6La+GLlpFFUhvvclRtefpZIrnaI+MoVMpO7/e0T
+         RGxhCA+YD+Lyof0CFC5WOHqyI5WPBFVNl52hMFJy8u+nDlHm3+R1yUKYezIFaiMcVVCW
+         u3JwR2ZTWoSGQoHQOvITq+n7/DwxYiLXb4zzBUWZi0qnI7T2onfGRV+rOgJ83whIGkpu
+         7hd9RuaenBQUC9GVTUzPbRYHaGMisWZWUxj86wQEvzpjOD+xM8wQe4FuopWOkpKbWXc8
+         LlPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=h2fZSgSbbuRf3w1cxcGcTdK99xpV68VkpJy/VFz8+JA=;
-        b=fzL+PFjzcMdNKxtexzkVoCzIN9i3LbB4HtKCPJzgTEAGlsnOir0OaWX+tNap56KrtB
-         94EglKijexe9Hm89Vsv4acaWi6dDKBOlOifUqyYS30JpT6spnx7UXmQS7Tm0/2T81AaN
-         TN31jQ9J4PuA8I7QdPTCBE9hf+HZeEfzVL2O8v+zsIhNwSa8xCGuHkiTBdpvo0Ku0a8b
-         DM8DxZsXQyuAWBvIVTVitiIZ9XsWjaMJWJJtQYR9U4vV4JwSYzb1xzVVPCe7RLPxkYxR
-         j329MyvTMSSuo3vVoK/pQrrGzD3KRB9gfx8/duvkeKvqiN5rIRZdBTmah22i0er+LFPK
-         /6Gg==
-X-Gm-Message-State: AOAM532WxROj3E3DAndwOukJb1EQer/8kbLlKJNau6uw5TBOOn4m05lP
-        c0xTkYmQobrRrfUu4oyZUyNrBtJI+zfg
-X-Google-Smtp-Source: ABdhPJxPzB2eChUImctZV6/XpehhW86A969/4DCwCBPqvc5NBSOZQD5hanRCrSJeKeIs8j2zny/QQQ==
-X-Received: by 2002:a63:e1b:: with SMTP id d27mr2514337pgl.135.1614841008961;
-        Wed, 03 Mar 2021 22:56:48 -0800 (PST)
-Received: from thinkpad ([2409:4072:80b:705f:ce40:2a5f:bf1e:b205])
-        by smtp.gmail.com with ESMTPSA id d124sm26750039pfa.149.2021.03.03.22.56.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Mar 2021 22:56:48 -0800 (PST)
-Date:   Thu, 4 Mar 2021 12:26:43 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 5/6] mhi: pci_generic: Use generic PCI power management
-Message-ID: <20210304065643.GE3363@thinkpad>
-References: <1614615911-18794-1-git-send-email-loic.poulain@linaro.org>
- <1614615911-18794-5-git-send-email-loic.poulain@linaro.org>
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ac277n3ZrkHIRZxuyFl78biK5VyfUxsH6zY1xmEkn98=;
+        b=n3OrDTZCT2tlQSeYJV8EzPiSewm6FE/QalHpR5HBHO0HgXEl+C1Keb25NvYe7bcMa4
+         YjN12UdKlitBSo4yRk5eHU64Gpu2r2TVdFg3JiBJAhRQWODfpPmMb3EnmC/GNVLlpH8D
+         TOSeGiZF4NnoGG0MpKJYJGSbQvOIaes6MghH7aowovPTuJExqYBi9jxV/9nm8u+ICSfM
+         u0HYd+fMK/e89xrHY3aRO1XNEOySFAeVTe1cGq5k1BSKbn+seZdRU9j3t79FvpmpoiiM
+         iODx/qZSF3hFbkI71Ohxl0XiYzl0fNMXgdYnVmnwojzEK8J78Egv+nbP+SkzRf69QDRd
+         ttVw==
+X-Gm-Message-State: AOAM531gLkBxlT/E2hvY9FXKKv3qFQ4dMeZs/AqHp1J5wflXV5n47ngf
+        GeS5sW/4axveoSpvFkAnUr90yg==
+X-Google-Smtp-Source: ABdhPJzLgn7hvNrVRNMHuJ9lO5Yi/W/8jx2zl8kl40TqAfNsnxhLQgBNFoVpTesqvdF8J+dFymghhQ==
+X-Received: by 2002:aa7:91cf:0:b029:1cb:1c6f:b77d with SMTP id z15-20020aa791cf0000b02901cb1c6fb77dmr2799377pfa.74.1614841148716;
+        Wed, 03 Mar 2021 22:59:08 -0800 (PST)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id d24sm6339121pjw.37.2021.03.03.22.59.06
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 03 Mar 2021 22:59:08 -0800 (PST)
+Date:   Thu, 4 Mar 2021 14:59:03 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Jeffrey Hugo <jhugo@codeaurora.org>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Mika Westerberg <mika.westerberg@linux.intel.com>,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] gpiolib: acpi: support override broken GPIO number in
+ ACPI table
+Message-ID: <20210304065902.GG17424@dragon>
+References: <YDjZOU+VMWasjzUb@smile.fi.intel.com>
+ <20210227031944.GB24428@dragon>
+ <YDzbQqHspfvpYS7Z@smile.fi.intel.com>
+ <20210302002725.GE24428@dragon>
+ <YD4twyAGvDDOCv+n@smile.fi.intel.com>
+ <abbfcdfa-c287-3828-ed6f-bc1e1f13c6b2@codeaurora.org>
+ <20210303094300.GB17424@dragon>
+ <41593c7e-368b-cfb8-b24a-2e4dca48b465@codeaurora.org>
+ <YD+yBmPrKm1n8Tjm@builder.lan>
+ <20210304063711.GF17424@dragon>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1614615911-18794-5-git-send-email-loic.poulain@linaro.org>
+In-Reply-To: <20210304063711.GF17424@dragon>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 01, 2021 at 05:25:10PM +0100, Loic Poulain wrote:
-> The PCI core can take care of proper PCI suspend/resume operations, but
-> this is discarded when the driver saves PCI state by its own. This
-> currently prevents the PCI core to enable PME (for modem initiated
-> D3 exit) which is requested for proper runtime pm support.
+On Thu, Mar 04, 2021 at 02:37:12PM +0800, Shawn Guo wrote:
+> > > > May I ask a bit more about how the virtual number N+1+32*n maps back to
+> > > > the real number (R)?  For example of touchpad GPIO on Flex 5G, I think
+> > > > we have:
+> > > > 
+> > > >    N+1+32*n = 0x0280
+> > > >    N = 191
+...
+> > > >    R = 24
+> > > > 
+> > > > If my math not bad, n = 14.  How does 14 map to 24?
+...
+> > > In your example, 14 would be the 14th GPIO that is routed to the PDC. You
+> > > would need SoC hardware documentation to know the mapping from PDC line 14
+> > > to GPIO line X.  This is going to be SoC specific, so 845 documentation is
+> > > not going to help you for SC8XXX.
+> > > 
+> > > Chances are, you are going to need to get this documentation from Qualcomm
+> > > (I don't know if its in IPCatalog or not), and put SoC specific lookup
+> > > tables in the TLMM driver.
+> > > 
+> > 
+> > I added the table in the driver, see sc8180x_pdc_map[], and it has gpio
+> > 14 at position 7, with the 14th entry being gpio 38 - which seems like
+> > an unlikely change from the reference schematics.
 > 
-> This change deletes explicit PCI state-saving and state-set from
-> suspend callback, letting the PCI doing the appropriate work.
+> As it's clear that the real GPIO number is 24, and the only possible map
+> in sc8180x_pdc_map[] is:
 > 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> ---
->  drivers/bus/mhi/pci_generic.c | 14 +++++++-------
->  1 file changed, 7 insertions(+), 7 deletions(-)
+> 	{ .gpio = 24, wakeirq = 37 }
 > 
-> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-> index 8423293..2a66f80 100644
-> --- a/drivers/bus/mhi/pci_generic.c
-> +++ b/drivers/bus/mhi/pci_generic.c
-> @@ -544,9 +544,12 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
->  
->  	pci_set_drvdata(pdev, mhi_pdev);
->  
-> -	/* Have stored pci confspace at hand for restore in sudden PCI error */
-> +	/* Have stored pci confspace at hand for restore in sudden PCI error.
-> +	 * cache the state locally and discard the PCI core one.
-> +	 */
->  	pci_save_state(pdev);
->  	mhi_pdev->pci_state = pci_store_saved_state(pdev);
-> +	pci_load_saved_state(pdev, NULL);
+> So we need to understand how 14 turns to 37.
 
-Why do you need to load the state here?
+Oh, if I should look at the index in sc8180x_pdc_map[], { .gpio = 24, .wakeirq = 37 }
+sits on 6 or 7 depending on indexing starts from 0 or 1.  Then question
+becomes how 14 turns to 6 or 7.
 
-Thanks,
-Mani
-
->  
->  	pci_enable_pcie_error_reporting(pdev);
->  
-> @@ -717,10 +720,8 @@ static int  __maybe_unused mhi_pci_suspend(struct device *dev)
->  	/* Transition to M3 state */
->  	mhi_pm_suspend(mhi_cntrl);
->  
-> -	pci_save_state(pdev);
->  	pci_disable_device(pdev);
->  	pci_wake_from_d3(pdev, true);
-> -	pci_set_power_state(pdev, PCI_D3hot);
->  
->  	return 0;
->  }
-> @@ -732,14 +733,13 @@ static int __maybe_unused mhi_pci_resume(struct device *dev)
->  	struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
->  	int err;
->  
-> -	pci_set_power_state(pdev, PCI_D0);
-> -	pci_restore_state(pdev);
-> -	pci_set_master(pdev);
-> -
->  	err = pci_enable_device(pdev);
->  	if (err)
->  		goto err_recovery;
->  
-> +	pci_set_master(pdev);
-> +	pci_wake_from_d3(pdev, false);
-> +
->  	/* Exit M3, transition to M0 state */
->  	err = mhi_pm_resume(mhi_cntrl);
->  	if (err) {
-> -- 
-> 2.7.4
-> 
+Shawn
