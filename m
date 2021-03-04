@@ -2,91 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0625632CA73
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 03:27:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B87832CADD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 04:37:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230445AbhCDCZw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Mar 2021 21:25:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47678 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230416AbhCDCZq (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Mar 2021 21:25:46 -0500
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DF4CC061756
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Mar 2021 18:25:06 -0800 (PST)
-Received: by mail-pl1-x62b.google.com with SMTP id z7so15248966plk.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Mar 2021 18:25:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=aRTindZj5rFMg3BpBmEABxaVuwreQ5iWx3kEwidtz5c=;
-        b=AIwjAv4SC8Wdveml/iI74PmqC97boTcPuk5Vs6MXvLJxAK++SPNq4MnoLgbi7WCk0I
-         IHf3ZN8m3JPvvpSepTI5mVC9GJakxgl0OFhge0gvxOXINYZeGqokYUhINh04y+2CiJAq
-         9qajfPCU5modCmp2Pqsmvo4KHtjlWtVFbXgABhwPAh6tfFmay8ioOwPq0TZQVuUB3URM
-         Kpp5N8eIVvamT6FT+XeIy5Qa3desRVASDohBEOhdgVhyEtGxziTxD0qACtFJ/nOM77bH
-         6vYtOOg0YtGowl6llimjBSHDcoXG9rvPnwX2NiFg03IlxPtUqew7ddmHH3ABVS7Q+30n
-         MOVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=aRTindZj5rFMg3BpBmEABxaVuwreQ5iWx3kEwidtz5c=;
-        b=HPUJng8bt1RIrMFVG43HvSeBCmkhYu6fvfmsqPG4yUtBXQa6t3+XY/y3ekbtrxsUcW
-         oHJJnxwOUBjOzpWGTgfeewqYE7ioTxQi7q/A28UZfc2PMEEZxCCWV/g0CD/6BKHCgmVP
-         H14HHaHbRhy0MsxEeVObTmXKv9bhhy0hqjBVzqjlz2EfCMi2GqOjiJoRgDSzy/4zdbKX
-         rGFcN/UHoH047NyqsNITNisNkW5jYIHe5CipVQkF9Kt+iWfC2lOxlmmXDxWYxQWgc9lN
-         nDmQvAF4T9hK0eG2gz5gGBgZkDrGjBhcdJEDvbkRvF1sXwuCT4Mk1wH8ptcNcuNgrz6C
-         8MqA==
-X-Gm-Message-State: AOAM5301aECaYI/nw932zR2LHil9HbBZkgojtPyZvdv7V7lZiXe5tyxy
-        0ThVcYLkkORZ4gmM/jLnftBeBw==
-X-Google-Smtp-Source: ABdhPJwqSBieGEVi5vqu+pd9RNJljBzo4yi5v6PPVaSomtsnxZGz7tN40ZQh8v2xIk1pzCeMNJ+9lQ==
-X-Received: by 2002:a17:903:2082:b029:e3:df7c:f30 with SMTP id d2-20020a1709032082b02900e3df7c0f30mr1901724plc.71.1614824705655;
-        Wed, 03 Mar 2021 18:25:05 -0800 (PST)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id j3sm23933278pgk.24.2021.03.03.18.25.04
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 03 Mar 2021 18:25:05 -0800 (PST)
-Date:   Thu, 4 Mar 2021 10:24:59 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Andy Shevchenko <andriy.shevchenko@intel.com>,
-        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2] pinctrl: qcom: support gpio_chip .set_config call
-Message-ID: <20210304022459.GD17424@dragon>
-References: <20210303131858.3976-1-shawn.guo@linaro.org>
- <YD+iWuLS/9knWLFb@builder.lan>
+        id S232518AbhCDDg3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Mar 2021 22:36:29 -0500
+Received: from m42-2.mailgun.net ([69.72.42.2]:30711 "EHLO m42-2.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232439AbhCDDgD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 3 Mar 2021 22:36:03 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1614828938; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: References: Cc: To:
+ Subject: From: Sender; bh=pYHprIq1cj2b9eWi8f6XWlXtmT7SshWJ34swi6hZK/o=;
+ b=sKgT3qBa1d42yqTbIVIjowmCQ9jgkjjxC04wN+kOpbucmN+vHEcEYERU/3beUHZmHx8+M8eu
+ IMLhYOdE0yAIU8EaykYtZ9oid255yVTHISAOLdrGFT5zO5DnzMZT8dalXK61br9det2lcu0B
+ mH6nAptbd48s3FaU7yFxXosbc1g=
+X-Mailgun-Sending-Ip: 69.72.42.2
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 6040557060050cf4d0d541b2 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 04 Mar 2021 03:35:12
+ GMT
+Sender: eberman=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 87257C43461; Thu,  4 Mar 2021 03:35:12 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [192.168.1.70] (cpe-76-167-231-33.san.res.rr.com [76.167.231.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: eberman)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AF30AC433C6;
+        Thu,  4 Mar 2021 03:35:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AF30AC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=eberman@codeaurora.org
+From:   Elliot Berman <eberman@codeaurora.org>
+Subject: Re: [PATCH 6/6] firmware: qcom_scm: Only compile legacy calls on ARM
+To:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Brian Masney <masneyb@onstation.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>
+References: <20210223214539.1336155-1-swboyd@chromium.org>
+ <20210223214539.1336155-7-swboyd@chromium.org>
+Message-ID: <b9174acc-9826-eb82-b399-ed95f7e83085@codeaurora.org>
+Date:   Wed, 3 Mar 2021 19:35:08 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YD+iWuLS/9knWLFb@builder.lan>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20210223214539.1336155-7-swboyd@chromium.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 03, 2021 at 08:51:06AM -0600, Bjorn Andersson wrote:
-> > @@ -717,6 +731,7 @@ static const struct gpio_chip msm_gpio_template = {
-> >  	.get_direction    = msm_gpio_get_direction,
-> >  	.get              = msm_gpio_get,
-> >  	.set              = msm_gpio_set,
-> > +	.set_config       = gpiochip_generic_config,
+
+On 2/23/2021 1:45 PM, Stephen Boyd wrote:
+> These scm calls are never used outside of legacy ARMv7 based platforms.
+> That's because PSCI, mandated on arm64, implements them for modern SoCs
+> via the PSCI spec. Let's move them to the legacy file and only compile
+> the legacy file into the kernel when CONFIG_ARM=y. Otherwise provide
+> stubs and fail the calls. This saves a little bit of space in an
+> arm64 allmodconfig >
+>   $ ./scripts/bloat-o-meter vmlinux.before vmlinux.after
+>   add/remove: 0/8 grow/shrink: 5/7 up/down: 509/-4405 (-3896)
+>   Function                                     old     new   delta
+>   __qcom_scm_set_dload_mode.constprop          312     452    +140
+>   qcom_scm_qsmmu500_wait_safe_toggle           288     416    +128
+>   qcom_scm_io_writel                           288     408    +120
+>   qcom_scm_io_readl                            376     492    +116
+>   __param_str_download_mode                     23      28      +5
+>   __warned                                    4327    4326      -1
+>   qcom_iommu_init                              272     268      -4
+>   e843419@0b3f_00010432_324                      8       -      -8
+>   qcom_scm_call                                228     208     -20
+>   CSWTCH                                      5925    5877     -48
+>   _sub_I_65535_1                            163100  163040     -60
+>   _sub_D_65535_0                            163100  163040     -60
+>   qcom_scm_wb                                   64       -     -64
+>   qcom_scm_lock                                320     160    -160
+>   qcom_scm_call_atomic                         212       -    -212
+>   qcom_scm_cpu_power_down                      308       -    -308
+>   scm_legacy_call_atomic                       520       -    -520
+>   qcom_scm_set_warm_boot_addr                  720       -    -720
+>   qcom_scm_set_cold_boot_addr                  728       -    -728
+>   scm_legacy_call                             1492       -   -1492
+>   Total: Before=66737642, After=66733746, chg -0.01%
 > 
-> Generally the pinconf/pinmux part of the driver deals with groups, and
-> the gpio_chip deals with gpio numbers. So I think that either
-> gpiochip_generic_config() should somehow do the translation, or we
-> should use a different function that does it (even though there's no
-> translation).
+> Commit 9a434cee773a ("firmware: qcom_scm: Dynamically support SMCCC and
+> legacy conventions") didn't mention any motivating factors for keeping
+> the legacy code around on arm64 kernels, i.e. presumably that commit
+> wasn't trying to support these legacy APIs on arm64 kernels.
 
-The transition from GPIO to PINCTRL world is being done by
-pinctrl_gpio_set_config() which is wrapped by gpiochip_generic_config().
-This is nothing new from gpiochip_generic_request() and
-gpiochip_generic_free() right below.
+There are arm targets which support SMCCC convention and use some of 
+these removed functions. Can these functions be kept in qcom-scm.c and 
+wrapped with #if IS_ENABLED(CONFIG_ARM)?
 
-> >  	.request          = gpiochip_generic_request,
-> >  	.free             = gpiochip_generic_free,
-> >  	.dbg_show         = msm_gpio_dbg_show,
-
-Shawn
