@@ -2,71 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CC76F32D195
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 12:11:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2707A32D23A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 13:06:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239438AbhCDLKz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Mar 2021 06:10:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48086 "EHLO
+        id S231519AbhCDMFh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Mar 2021 07:05:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238448AbhCDLKw (ORCPT
+        with ESMTP id S239855AbhCDMFS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Mar 2021 06:10:52 -0500
-Received: from theia.8bytes.org (8bytes.org [IPv6:2a01:238:4383:600:38bc:a715:4b6d:a889])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE631C061574;
-        Thu,  4 Mar 2021 03:10:11 -0800 (PST)
-Received: by theia.8bytes.org (Postfix, from userid 1000)
-        id A5EF3321; Thu,  4 Mar 2021 12:10:08 +0100 (CET)
-Date:   Thu, 4 Mar 2021 12:10:04 +0100
-From:   Joerg Roedel <joro@8bytes.org>
-To:     Christoph Hellwig <hch@lst.de>
-Cc:     Will Deacon <will@kernel.org>, Li Yang <leoyang.li@nxp.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        linuxppc-dev@lists.ozlabs.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
-        virtualization@lists.linux-foundation.org, netdev@vger.kernel.org
-Subject: Re: cleanup unused or almost unused IOMMU APIs and the FSL PAMU
- driver
-Message-ID: <20210304111004.GA26414@8bytes.org>
-References: <20210301084257.945454-1-hch@lst.de>
+        Thu, 4 Mar 2021 07:05:18 -0500
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84C84C061764
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Mar 2021 04:04:38 -0800 (PST)
+Received: by mail-ej1-x635.google.com with SMTP id mj10so28795280ejb.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Mar 2021 04:04:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=QP1/x9snU1LCNLiXpn1pwFVJ6HIyLKKcgrv8t9uRcMA=;
+        b=sZQl+ZfwumBEN/b0V5Cwzdr7c8DnvJ5cSx23o6sRg4m2wp9RGSHXUZKfxJ+TIb8fY7
+         Kg3GFO8AOgHPyiLjQKKhtWTN8r3aPmNYjFlyRWhFl4d5RKO2pFDWheecELAC6U2hx0Vn
+         S0mGZdtPZxAmsuXtMVvudzeW3MbbH08O8ezgMndduj/x4jmolCQlu/wJv9JyBBXrjT0U
+         ery436XJTjKT6B2UYB+EynATfhlZIcpuo39LM43eLMWQvYqxySqRhBBriXwxL8das9ON
+         HvccqQhMu8vBRSCwWUo55Br6fd8w6KQJPDe+Gq3dKH0VLGGDPgusvN13tlVxHzE4V6HL
+         Z1dA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=QP1/x9snU1LCNLiXpn1pwFVJ6HIyLKKcgrv8t9uRcMA=;
+        b=eJyM3djfk8IfhfnMilusW9CQE3A4p0pgpPpKViDJamrQDl//7yMRLAoVa7EMm1NREC
+         TbvvWUMp6V1WtJ84FA/Kskl0TctQGJB3BqMvkf1M32Z2q/oDSiXqpzAhzCnLS/6+EQo7
+         fm6IAB43Js2TLYz7h+crwAwXNlRVnwxYYnPEUVZyDDABh0t8w6wc1pLG79uvdYwAGqIp
+         8ofWrSdW4EHzkPdXVaL4cNJcmaHg1GCYmNQYtP2fnEJQZPu606OD4k6PUk884MQnoKJX
+         s8M3sJaJ4+ypdX3bHqMPtK7/xN7rUTuVqho8Lr35n5UQeIL2zqtBF0jShAuDogceXOZX
+         qkqw==
+X-Gm-Message-State: AOAM530IGp4UH5ed+WEW4NbzVMfUFpNJ6gnHZ5WM3Kl4EzCMA0Rz1qf1
+        xi/GHRayynJralCH4/q7x4scZA==
+X-Google-Smtp-Source: ABdhPJy5JL98ENBeRN4iUzbVNg92fq+Vrvr6LSt3mSOAulrZLrLSZEAAHb4HxZSSsF/1bDugH6/vLg==
+X-Received: by 2002:a17:907:3e8b:: with SMTP id hs11mr3799113ejc.117.1614859477033;
+        Thu, 04 Mar 2021 04:04:37 -0800 (PST)
+Received: from localhost.localdomain ([2a02:2450:102f:d6a:470a:340b:1b:29dd])
+        by smtp.gmail.com with ESMTPSA id cf6sm20464447edb.92.2021.03.04.04.04.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Mar 2021 04:04:36 -0800 (PST)
+From:   Robert Foss <robert.foss@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        robert.foss@linaro.org, todor.too@gmail.com, mchehab@kernel.org,
+        robh+dt@kernel.org, angelogioacchino.delregno@somainline.org,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Sakari Ailus <sakari.ailus@iki.fi>,
+        Andrey Konovalov <andrey.konovalov@linaro.org>
+Cc:     Rob Herring <robh@kernel.org>, Tomasz Figa <tfiga@chromium.org>,
+        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
+        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Jonathan Marek <jonathan@marek.ca>
+Subject: [PATCH v6 00/22] Add support for the SDM845 Camera Subsystem
+Date:   Thu,  4 Mar 2021 13:03:05 +0100
+Message-Id: <20210304120326.153966-1-robert.foss@linaro.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210301084257.945454-1-hch@lst.de>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 01, 2021 at 09:42:40AM +0100, Christoph Hellwig wrote:
-> Diffstat:
->  arch/powerpc/include/asm/fsl_pamu_stash.h   |   12 
->  drivers/gpu/drm/msm/adreno/adreno_gpu.c     |    2 
->  drivers/iommu/amd/iommu.c                   |   23 
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |   85 ---
->  drivers/iommu/arm/arm-smmu/arm-smmu.c       |  122 +---
->  drivers/iommu/dma-iommu.c                   |    8 
->  drivers/iommu/fsl_pamu.c                    |  264 ----------
->  drivers/iommu/fsl_pamu.h                    |   10 
->  drivers/iommu/fsl_pamu_domain.c             |  694 ++--------------------------
->  drivers/iommu/fsl_pamu_domain.h             |   46 -
->  drivers/iommu/intel/iommu.c                 |   55 --
->  drivers/iommu/iommu.c                       |   75 ---
->  drivers/soc/fsl/qbman/qman_portal.c         |   56 --
->  drivers/vfio/vfio_iommu_type1.c             |   31 -
->  drivers/vhost/vdpa.c                        |   10 
->  include/linux/iommu.h                       |   81 ---
->  16 files changed, 214 insertions(+), 1360 deletions(-)
+This series implements support for the camera subsystem found in
+the SDM845 SOCs and the Titan 170 ISP. The support is partial
+in that it implements CSIPHY, CSID, and partial VFE support.
 
-Nice cleanup, thanks. The fsl_pamu driver and interface has always been
-a little bit of an alien compared to other IOMMU drivers. I am inclined
-to merge this after -rc3 is out, given some reviews. Can you also please
-add changelogs to the last three patches?
+The Titan generation of the ISP diverges a fair amount from the
+design of the previous architecture generation, CAMSS. As a result
+some pretty invasive refactoring is done in this series. It also
+means that at this time we're unable to implement support for all
+of the IP blocks contained. This is due to a combination of legal
+considerations with respect to the IP and its owner Qualcomm and
+time & man hour constrains on the Linaro side.
 
-Thanks,
+The CSIPHY (CSI Physical Layer) & CSID (CSI Decoder) support is
+complete, but the VFE (Video Front End, which is referred to as IFE
+(Image Front End) in the Titan generation of ISPs) only has support
+for the RDI (Raw Dump Interface) which allows the raw output of
+the CSID to be written to memory.
 
-	Joerg
+The 2nd interface implemented in the VFE silicon is the PIX
+interface, and camss does not support it for this generation of ISPs.
+The reason for this is that the PIX interface is used for sending
+image data to the BPS (Bayer Processing Section) & IPE (Image
+Processing Engine), but both of these units are beyond the scope
+of enabling basic ISP functionality for the SDM845.
+
+Since the Titan architecture generation diverges quite a bit from
+the CAMSS generation, a lot of pretty major refactoring is carried
+out in this series. Both the CSID & VFE core paths are made more
+general and hardware version specific parts are broken out.
+The CSIPHY didn't require quite as radical changes and therefore
+keeps its current form.
+
+Tested on:
+ - Qcom RB3 / db845c + camera mezzanine, which is SDM845 based
+ - db410c + D3 Camera mezzanine, which is APQ8016 based
+ 
+Branch:
+ - https://git.linaro.org/people/robert.foss/linux.git/log/?h=camss_sdm845_v1
+ - https://git.linaro.org/people/robert.foss/linux.git/log/?h=camss_sdm845_v2
+ - https://git.linaro.org/people/robert.foss/linux.git/log/?h=camss_sdm845_v3
+ - https://git.linaro.org/people/robert.foss/linux.git/log/?h=camss_sdm845_v4
+ - https://git.linaro.org/people/robert.foss/linux.git/log/?h=camss_sdm845_v5
+ - https://git.linaro.org/people/robert.foss/linux.git/log/?h=camss_sdm845_v6
+
+
+Due to the dt-bindings supporting sdm660-camss, this series depends
+the sdm660 clock driver being upstreamed. I've linked this series below.
+
+SDM630/660 Multimedia and GPU clock controllers
+https://patchwork.kernel.org/project/linux-arm-msm/list/?series=366077
+
+
+Robert Foss (22):
+  media: camss: Fix vfe_isr_comp_done() documentation
+  media: camss: Fix vfe_isr comment typo
+  media: camss: Replace trace_printk() with dev_dbg()
+  media: camss: Add CAMSS_845 camss version
+  media: camss: Make ISPIF subdevice optional
+  media: camss: Refactor VFE HW version support
+  media: camss: Add support for VFE hardware version Titan 170
+  media: camss: Add missing format identifiers
+  media: camss: Refactor CSID HW version support
+  media: camss: Add support for CSID hardware version Titan 170
+  media: camss: Add support for CSIPHY hardware version Titan 170
+  media: camss: Remove per VFE power domain toggling
+  media: camss: Enable SDM845
+  dt-bindings: media: camss: Add qcom,msm8916-camss binding
+  dt-bindings: media: camss: Add qcom,msm8996-camss binding
+  dt-bindings: media: camss: Add qcom,sdm660-camss binding
+  dt-bindings: media: camss: Add qcom,sdm845-camss binding
+  MAINTAINERS: Change CAMSS documentation to use dtschema bindings
+  media: dt-bindings: media: Remove qcom,camss documentation
+  arm64: dts: sdm845: Add CAMSS ISP node
+  arm64: dts: sdm845-db845c: Configure regulators for camss node
+  arm64: dts: sdm845-db845c: Enable ov8856 sensor and connect to ISP
+
+ .../devicetree/bindings/media/qcom,camss.txt  |  236 ----
+ .../bindings/media/qcom,msm8916-camss.yaml    |  256 ++++
+ .../bindings/media/qcom,msm8996-camss.yaml    |  387 ++++++
+ .../bindings/media/qcom,sdm660-camss.yaml     |  398 ++++++
+ .../bindings/media/qcom,sdm845-camss.yaml     |  371 +++++
+ MAINTAINERS                                   |    2 +-
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts    |   23 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  135 ++
+ drivers/media/platform/qcom/camss/Makefile    |    6 +
+ .../platform/qcom/camss/camss-csid-170.c      |  601 +++++++++
+ .../platform/qcom/camss/camss-csid-4-1.c      |  329 +++++
+ .../platform/qcom/camss/camss-csid-4-7.c      |  405 ++++++
+ .../platform/qcom/camss/camss-csid-gen1.h     |   27 +
+ .../platform/qcom/camss/camss-csid-gen2.h     |   39 +
+ .../media/platform/qcom/camss/camss-csid.c    |  621 +--------
+ .../media/platform/qcom/camss/camss-csid.h    |  165 ++-
+ .../qcom/camss/camss-csiphy-3ph-1-0.c         |  181 ++-
+ .../media/platform/qcom/camss/camss-csiphy.c  |   66 +-
+ .../media/platform/qcom/camss/camss-ispif.c   |  119 +-
+ .../media/platform/qcom/camss/camss-ispif.h   |    3 +-
+ .../media/platform/qcom/camss/camss-vfe-170.c |  806 +++++++++++
+ .../media/platform/qcom/camss/camss-vfe-4-1.c |  144 +-
+ .../media/platform/qcom/camss/camss-vfe-4-7.c |  277 ++--
+ .../media/platform/qcom/camss/camss-vfe-4-8.c | 1200 +++++++++++++++++
+ .../platform/qcom/camss/camss-vfe-gen1.c      |  763 +++++++++++
+ .../platform/qcom/camss/camss-vfe-gen1.h      |  110 ++
+ drivers/media/platform/qcom/camss/camss-vfe.c |  847 +-----------
+ drivers/media/platform/qcom/camss/camss-vfe.h |  129 +-
+ .../media/platform/qcom/camss/camss-video.c   |   52 +
+ drivers/media/platform/qcom/camss/camss.c     |  407 +++++-
+ drivers/media/platform/qcom/camss/camss.h     |   15 +-
+ 31 files changed, 7071 insertions(+), 2049 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/media/qcom,camss.txt
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
+ create mode 100644 drivers/media/platform/qcom/camss/camss-csid-170.c
+ create mode 100644 drivers/media/platform/qcom/camss/camss-csid-4-1.c
+ create mode 100644 drivers/media/platform/qcom/camss/camss-csid-4-7.c
+ create mode 100644 drivers/media/platform/qcom/camss/camss-csid-gen1.h
+ create mode 100644 drivers/media/platform/qcom/camss/camss-csid-gen2.h
+ create mode 100644 drivers/media/platform/qcom/camss/camss-vfe-170.c
+ create mode 100644 drivers/media/platform/qcom/camss/camss-vfe-4-8.c
+ create mode 100644 drivers/media/platform/qcom/camss/camss-vfe-gen1.c
+ create mode 100644 drivers/media/platform/qcom/camss/camss-vfe-gen1.h
+
+-- 
+2.27.0
+
