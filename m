@@ -2,57 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7962D32CE97
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 09:37:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 13BAD32CE9B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Mar 2021 09:39:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235829AbhCDIhR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Mar 2021 03:37:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43170 "EHLO
+        id S236125AbhCDIiV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Mar 2021 03:38:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235910AbhCDIgz (ORCPT
+        with ESMTP id S236131AbhCDIiK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Mar 2021 03:36:55 -0500
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E16DC061760
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Mar 2021 00:36:14 -0800 (PST)
-Received: by mail-pf1-x435.google.com with SMTP id y67so530857pfb.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Mar 2021 00:36:14 -0800 (PST)
+        Thu, 4 Mar 2021 03:38:10 -0500
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FC2FC061574
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Mar 2021 00:37:30 -0800 (PST)
+Received: by mail-pg1-x52d.google.com with SMTP id h4so18410440pgf.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Mar 2021 00:37:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=tyImSAmUouBU0h3BNJjpkZEX4MBw++5drbgZz8hDIGU=;
-        b=NUQWaSsj93C5Ky69q4BObjnxtVE2K7CfrahBU5OpyXBpZGhEEZc3annbEsYt8PUuOq
-         SNjF04wsEOQEoee/uZtjDXy9SSzLuQLgT1LEnmpm9RiFQ98T89VISksoM+jESqSIcaqG
-         XYygQ0iPMmr0lKh8ZOdgWOBowFf42hsTt82UTZ0DHxxC8OnUNj3Ju/Xvu9NBuu8lsG7y
-         IZV5Ztyjmn6pqM6N8NT45aN3Btil4faQLRcjKOA2kuiAnoQA4Zy4Cd2aW0TJlc9+mkC/
-         Z6wyrI0xk+YFTKiSoFRPRyyqpDZKvXrsmtOl0bPiHTfWUDEQARg2Mbb8P1EwvBObLiWZ
-         gGTQ==
+        bh=keh6OiRMgDYdb2Jzt12hTBHP6AvsQSIJUPBUhidAE5E=;
+        b=q0rmadOj3+os+jAn+FFEx2+UnH86CtD/4Mw0Fx0bhYACOOADZLOy9w9orLYUuh0SoT
+         075x376LmAqhfGRWhbIcflFuuOtO28qSXSJXkN2YhxZcsuhYitwmPwTlfQ7tGoRExiKj
+         t4Hkmcg+6rd+UVx5P3BDfOMUxhmCI6/PErw2AAB17pYLEh0cLmLy2B8N+1vm7HoagBPw
+         TzEW/RfjlB+2RlL4C2onY9vI4hAv40TpbEqU+o+8Hv6x1/5BRzmAT9AhVeG54Fta4OY/
+         SQPQEV/UfapL994gVfHMx1mJ17G8+hVQfKhZ17xdPAijCEOtmf4nS4+sdEXlxv/jd6lz
+         yaoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=tyImSAmUouBU0h3BNJjpkZEX4MBw++5drbgZz8hDIGU=;
-        b=mmpdyoNCgpOCv2tbJYBJUXsCHOIzfcKEWwouJW+pf/a+Cz0+vsfUvjcLjmZhkOUwRd
-         uY77opMoCKu73tEZBRxPQs0c6/IiaxwhieQvtI6c8izmoGTCStR8nAZmXVZ7npDZ8D/9
-         y24x/0/iNP9gENwo3sykSyuStD4VLENQUhsf8n/xq/XPaX4Rlrzwh0p0d1Rr93YkkkVp
-         LqkfKG88UG40JxmG3c2Aj58Nzvjpr5csynp/WOY+kxc91cI1CXhyyw2w2DlKMQYjCXOg
-         5E0eeEy/SYT0ZCnTCytbMO2ZUd0G/Kh4oQh4uhk2LGkDE0CVXxbj8IhzCCu4UYKWJO7I
-         70LQ==
-X-Gm-Message-State: AOAM5339a+0J8pS8BoOKQoXwYXqhM1TI75502moSGwRfvJWGCqnjGiku
-        w8R+GM1nb5Ty0MwmCmBUtM6F19pZfcv9KNXo0MaHOg==
-X-Google-Smtp-Source: ABdhPJxQBtHw1i4ZPvEiZS8wmBt6nb5GXv5qS2vqBe355hz5013lm6CPp/mZXzgMk6I3KU5CiyHwJ/LJ9BgS22v8lQI=
-X-Received: by 2002:aa7:9341:0:b029:1ee:ee87:643a with SMTP id
- 1-20020aa793410000b02901eeee87643amr2868608pfn.55.1614846973885; Thu, 04 Mar
- 2021 00:36:13 -0800 (PST)
+        bh=keh6OiRMgDYdb2Jzt12hTBHP6AvsQSIJUPBUhidAE5E=;
+        b=qdvhCWIyl5xxVbw0PkUAolIft8a5L6RepOo4oO9TDzmpjKfs7U5e6pOzxc414YX7h6
+         8LWWlYZ5+OYvdUdz0EJnMW2JNY301vtK6ASFDh6p46zCsCrFOT3cTs0UC9uONHwLSyBx
+         8gH9wJIvJJqfHNaga014Fx0AOahiVFsXc6vZGwcL6SqI4XASLgH1Q4RfmIOVbPW4X8wD
+         yF4qZa+YsruiGJbgfWFhw2cxRJn9lNYFxKes+znHQ0TM3fHgObn+L+vEQtPlPiUTgGjf
+         W5D7bv6mMJLThprsF/jCq2ZjlkX/U+LH+rUXdUN0bRfduStcuAMkruAhsGlT/1IYQL88
+         XNZg==
+X-Gm-Message-State: AOAM532Qc8XuohLb6IdiWaLTzjqrec03CExAHtPsPZAu4fQTZVZ5lgvY
+        gSRdb5CSZ2R7IzL1O85SAZPlnXePzJVBg43uBZ2Qkw==
+X-Google-Smtp-Source: ABdhPJxADAz1pIyFAKke1f6Dq/YG/J8D4tBhi0KWLFosqYQFUcv///dPEIuKgJ913D6vRXuDgkv1wxwLMbxv+n2LRNs=
+X-Received: by 2002:a65:6a02:: with SMTP id m2mr2699051pgu.443.1614847049718;
+ Thu, 04 Mar 2021 00:37:29 -0800 (PST)
 MIME-Version: 1.0
-References: <1614208985-20851-1-git-send-email-bbhatt@codeaurora.org> <1614208985-20851-4-git-send-email-bbhatt@codeaurora.org>
-In-Reply-To: <1614208985-20851-4-git-send-email-bbhatt@codeaurora.org>
+References: <1614208985-20851-1-git-send-email-bbhatt@codeaurora.org> <1614208985-20851-5-git-send-email-bbhatt@codeaurora.org>
+In-Reply-To: <1614208985-20851-5-git-send-email-bbhatt@codeaurora.org>
 From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Thu, 4 Mar 2021 09:43:52 +0100
-Message-ID: <CAMZdPi8s8Sp1eaqjTbxUtqiNgDXFa5a+GJnp-LmrDc-8ORCOtw@mail.gmail.com>
-Subject: Re: [PATCH v6 3/4] bus: mhi: core: Process execution environment
- changes serially
+Date:   Thu, 4 Mar 2021 09:45:08 +0100
+Message-ID: <CAMZdPi8dk24Taq4GNvdFdE93-xUnAceTa-kuN2dOsmsnKko+vg@mail.gmail.com>
+Subject: Re: [PATCH v6 4/4] bus: mhi: core: Update debug prints to include
+ local device state
 To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
 Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
@@ -68,29 +67,10 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Thu, 25 Feb 2021 at 00:23, Bhaumik Bhatt <bbhatt@codeaurora.org> wrote:
 >
-> In current design, whenever the BHI interrupt is fired, the
-> execution environment is updated. This can cause race conditions
-> and impede ongoing power up/down processing. For example, if a
-> power down is in progress, MHI host updates to a local "disabled"
-> execution environment. If a BHI interrupt fires later, that value
-> gets replaced with one from the BHI EE register. This impacts the
-> controller as it does not expect multiple RDDM execution
-> environment change status callbacks as an example. Another issue
-> would be that the device can enter mission mode and the execution
-> environment is updated, while device creation for SBL channels is
-> still going on due to slower PM state worker thread run, leading
-> to multiple attempts at opening the same channel.
->
-> Ensure that EE changes are handled only from appropriate places
-> and occur one after another and handle only PBL modes or RDDM EE
-> changes as critical events directly from the interrupt handler.
-> Simplify handling by waiting for SYS ERROR before handling RDDM.
-> This also makes sure that we use the correct execution environment
-> to notify the controller driver when the device resets to one of
-> the PBL execution environments.
+> Update debug prints to include local device in the BHI interrupt
+> handler. This helps show transitions better between MHI states.
 >
 > Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-
-Looking good now
+> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
