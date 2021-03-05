@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EB1B232E1BB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 06:42:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 66CB732E1C7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 06:44:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229446AbhCEFmp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Mar 2021 00:42:45 -0500
-Received: from m42-2.mailgun.net ([69.72.42.2]:50145 "EHLO m42-2.mailgun.net"
+        id S229569AbhCEFoP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Mar 2021 00:44:15 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:28186 "EHLO z11.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229458AbhCEFmo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Mar 2021 00:42:44 -0500
+        id S229494AbhCEFoO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 5 Mar 2021 00:44:14 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1614922964; h=Content-Transfer-Encoding: Content-Type:
+ s=smtp; t=1614923054; h=Content-Transfer-Encoding: Content-Type:
  In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=0uoPBJmy/4ZLXlf3wRY+ebAvgbPioQVtuD66JRul31E=; b=kFfqijeQ47XLgi706ZklnfpijXj9bID7BnQ7t22JjOLoo8+tocAWZptEBiciOTk5DA3GyUmr
- bVOC3SFpT32IXnHGMmrQ5Gv11+6HJTIf6mU9cROFhzersj235Ri5vnJAycaFsLCjGIuz3GJO
- UEsPgm8T1hPK/PM9DTDFRuPhNIg=
-X-Mailgun-Sending-Ip: 69.72.42.2
+ Subject: Sender; bh=o0lfkEy5cq/+OBYKxf4Aev5Vks1o41I/U3+bhq9lQI0=; b=mNuzRhSG0JF/yP5Q+3pm9Xd6xiC4NUp1JbBZa33ry8c2GBaHhqN7zLU4bG9U2/sAb4tdAOu8
+ WkOKWshG6Yq/Yoi4RknDddJzPxrdxVCMsKgxqK5wQzjlaywUg7wcD9eFODRyiWkeWNURF4q2
+ vIjDhXRWcDNXEI5bTP33Wy6wP/k=
+X-Mailgun-Sending-Ip: 104.130.96.11
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 6041c4d4c862e1b9fd50b0d4 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 05 Mar 2021 05:42:44
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 6041c52ee5eea4c43b7eabda (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 05 Mar 2021 05:44:14
  GMT
 Sender: rnayak=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0E33CC433ED; Fri,  5 Mar 2021 05:42:44 +0000 (UTC)
+        id F2D9DC43462; Fri,  5 Mar 2021 05:44:13 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,27 +37,27 @@ Received: from [192.168.1.102] (unknown [49.207.203.158])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 79D78C433C6;
-        Fri,  5 Mar 2021 05:42:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 79D78C433C6
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0C5FAC43461;
+        Fri,  5 Mar 2021 05:44:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0C5FAC43461
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH v2 05/14] arm64: dts: qcom: sc7280: Add RSC and PDC
- devices
+Subject: Re: [PATCH v2 12/14] arm64: dts: qcom: sc7280: Add SPMI PMIC arbiter
+ device for SC7280
 To:     Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
         bjorn.andersson@linaro.org, robh+dt@kernel.org
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Maulik Shah <mkshah@codeaurora.org>
+        linux-kernel@vger.kernel.org, satya priya <skakit@codeaurora.org>
 References: <1614773878-8058-1-git-send-email-rnayak@codeaurora.org>
- <1614773878-8058-6-git-send-email-rnayak@codeaurora.org>
- <161481625091.1478170.8810587061043612400@swboyd.mtv.corp.google.com>
+ <1614773878-8058-13-git-send-email-rnayak@codeaurora.org>
+ <161481673286.1478170.13034581527644587648@swboyd.mtv.corp.google.com>
 From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <31bf64c5-26a4-dc23-3769-df7a7559083b@codeaurora.org>
-Date:   Fri, 5 Mar 2021 11:12:37 +0530
+Message-ID: <1a78ad4a-bb6c-cb68-019d-d6de54c2dc38@codeaurora.org>
+Date:   Fri, 5 Mar 2021 11:14:08 +0530
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.7.1
 MIME-Version: 1.0
-In-Reply-To: <161481625091.1478170.8810587061043612400@swboyd.mtv.corp.google.com>
+In-Reply-To: <161481673286.1478170.13034581527644587648@swboyd.mtv.corp.google.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -66,75 +66,53 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 3/4/2021 5:34 AM, Stephen Boyd wrote:
-> Quoting Rajendra Nayak (2021-03-03 04:17:49)
+
+On 3/4/2021 5:42 AM, Stephen Boyd wrote:
+> Quoting Rajendra Nayak (2021-03-03 04:17:56)
 >> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> index 4a56d9c..21c2399 100644
+>> index fe4fdb9..aa6f847 100644
 >> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
 >> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> @@ -30,6 +31,18 @@
->>                  };
->>          };
->>   
->> +       reserved_memory: reserved-memory {
-> 
-> Do we plan to use this label at any point? I'd prefer we remove this
-> until it becomes useful.
-
-sure, i'll drop it
-
-> 
->> +               #address-cells = <2>;
->> +               #size-cells = <2>;
->> +               ranges;
->> +
->> +               aop_cmd_db_mem: memory@80860000 {
->> +                       reg = <0x0 0x80860000 0x0 0x20000>;
->> +                       compatible = "qcom,cmd-db";
->> +                       no-map;
->> +               };
->> +       };
->> +
->>          cpus {
->>                  #address-cells = <2>;
->>                  #size-cells = <0>;
->> @@ -203,6 +229,7 @@
+>> @@ -239,6 +239,25 @@
 >>                          interrupt-controller;
->>                          #interrupt-cells = <2>;
->>                          gpio-ranges = <&tlmm 0 0 175>;
->> +                       wakeup-parent = <&pdc>;
->>   
->>                          qup_uart5_default: qup-uart5-default {
->>                                  pins = "gpio46", "gpio47";
->> @@ -287,6 +314,23 @@
->>                                  status = "disabled";
->>                          };
 >>                  };
->> +
->> +               apps_rsc: rsc@18200000 {
+>>   
+>> +               spmi_bus: spmi@c440000 {
+>> +                       compatible = "qcom,spmi-pmic-arb";
+>> +                       reg = <0 0x0c440000 0 0x1100>,
+>> +                             <0 0x0c600000 0 0x2000000>,
+>> +                             <0 0x0e600000 0 0x100000>,
+>> +                             <0 0x0e700000 0 0xa0000>,
+>> +                             <0 0x0c40a000 0 0x26000>;
+>> +                       reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
+>> +                       interrupt-names = "periph_irq";
+>> +                       interrupts-extended = <&pdc 1 IRQ_TYPE_LEVEL_HIGH>;
+>> +                       qcom,ee = <0>;
+>> +                       qcom,channel = <0>;
+>> +                       #address-cells = <1>;
+>> +                       #size-cells = <1>;
 > 
-> Any better name than 'rsc'? Maybe 'power-controller'?
+> I see the binding says these should be 2 instead of 1 but I suspect that
+> is incorrect.
 
-hmm, Maulik, any thoughts? This would perhaps need the bindings docs
-to be updated as well (and maybe the existing platform DTs using rsc too)
+yeah looks like the bindings need to be fixed
 
 > 
->> +                       compatible = "qcom,rpmh-rsc";
->> +                       reg = <0 0x18200000 0 0x10000>,
->> +                             <0 0x18210000 0 0x10000>,
->> +                             <0 0x18220000 0 0x10000>;
->> +                       reg-names = "drv-0", "drv-1", "drv-2";
->> +                       interrupts = <GIC_SPI 3 IRQ_TYPE_LEVEL_HIGH>,
->> +                                    <GIC_SPI 4 IRQ_TYPE_LEVEL_HIGH>,
->> +                                    <GIC_SPI 5 IRQ_TYPE_LEVEL_HIGH>;
->> +                       qcom,tcs-offset = <0xd00>;
->> +                       qcom,drv-id = <2>;
->> +                       qcom,tcs-config = <ACTIVE_TCS  2>,
->> +                                         <SLEEP_TCS   3>,
->> +                                         <WAKE_TCS    3>,
->> +                                         <CONTROL_TCS 1>;
+>> +                       interrupt-controller;
+>> +                       #interrupt-cells = <4>;
+>> +                       cell-index = <0>;
+> 
+> Is cell-index used? Please remove as I don't see it used anywhere and
+> not in the binding.
+
+I'll drop it. thanks
+
+> 
 >> +               };
->>          };
+>> +
+>>                  tlmm: pinctrl@f100000 {
+>>                          compatible = "qcom,sc7280-pinctrl";
+>>                          reg = <0 0x0f100000 0 0x1000000>;
 
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
