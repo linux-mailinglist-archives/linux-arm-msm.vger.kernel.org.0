@@ -2,112 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AA65032E2AD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 08:01:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 616C832E2E1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 08:24:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229517AbhCEHBP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Mar 2021 02:01:15 -0500
-Received: from mail.kernel.org ([198.145.29.99]:56928 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229446AbhCEHBP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Mar 2021 02:01:15 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id D24EE65014;
-        Fri,  5 Mar 2021 07:01:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1614927674;
-        bh=eXkrZkJ98MHNE6BvmwiOljMvfAc93gK82Qwlwqej264=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=tmS0V+qaY90TpmSgnLz+1hKkmfVMPWgkcfvckt4c5/Lyyja0IRKqMWSslr/SAliyS
-         YZFjJ9h4Bbfi7/fAucyKH+cRVYMIUNpbhTtPsAy4FRB0Sda3h+UVJAb16e0gpjbAqW
-         XKerD/q660D0l0m9z++oQMu6csEgYa40zxqmVEFGdXlScBFZmM37Wu9M9d+gAL4tqL
-         84y0kHt+zA6MlGC2XYwOsh8mtarBYiF0YL3FcTSkcwhfdzWQqzI+VL+K16ng5jf3h2
-         KlTyosTHp543B+vtGFK4PT4AjQseMeRZRB+mH8AFPRy/gDiaQ7cDQVatZ6YHOVBkwm
-         O8tOZ2dQFMPLA==
-Received: by mail-oi1-f179.google.com with SMTP id i21so1464899oii.2;
-        Thu, 04 Mar 2021 23:01:14 -0800 (PST)
-X-Gm-Message-State: AOAM532QCVNNvrLYCFgolvdIx3M6Kdk3+zXGGHSH2wyAWKzxvxmplBon
-        NUJytvnwtTSQbgY1PqodQOZjgpwvA7P6sMIqDMM=
-X-Google-Smtp-Source: ABdhPJxpF/tAkdurycugCv3x/Oht9U9JosAvtaHXk6yC2SfnhJEMcNRrhD3wr+nlWySke1BZAi00K7PYfsyGu/tnD7s=
-X-Received: by 2002:aca:538c:: with SMTP id h134mr5916199oib.174.1614927674146;
- Thu, 04 Mar 2021 23:01:14 -0800 (PST)
+        id S229458AbhCEHYK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Mar 2021 02:24:10 -0500
+Received: from userp2120.oracle.com ([156.151.31.85]:42448 "EHLO
+        userp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229488AbhCEHYJ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 5 Mar 2021 02:24:09 -0500
+Received: from pps.filterd (userp2120.oracle.com [127.0.0.1])
+        by userp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 1257K2HL190956;
+        Fri, 5 Mar 2021 07:24:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
+ : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=corp-2020-01-29;
+ bh=uWmflhu+h7bxWvzYHXWilSvhq8wM4VlKGBtw0ZO98GE=;
+ b=Co5n8q5d4nCOFDtoCmJEao6xe7PnBVNddOxTgwpaGTg131MA86/8QfODNy1pq06yV+S9
+ L1likEHoa3PofpwhKYe2TpwZ3zpaUOvcm/gtxFvGwO/Pnxp4uqvsRUtLTz2oTR1PPRhO
+ GDuueCMRTEV5rBBX3Hpu3rQoH416qO2f2H9bukNb1LKszcy/c0QVEtPwyvLqDwWWRjOQ
+ oivhCtl2S2PA6WGQCpHIrUfVfdvToC6j7EFWpEtWjUHw/Mi7mLMJezJHxK/hlNTxLyme
+ 459SRTutzM4asoP9NLOzFlSXf8/+Snuj4dsGQzMHUnZxyfAC1CA31s363jgxCjhNmy5W CQ== 
+Received: from userp3030.oracle.com (userp3030.oracle.com [156.151.31.80])
+        by userp2120.oracle.com with ESMTP id 36yeqn9f0g-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Fri, 05 Mar 2021 07:24:03 +0000
+Received: from pps.filterd (userp3030.oracle.com [127.0.0.1])
+        by userp3030.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 1257F9CT130759;
+        Fri, 5 Mar 2021 07:24:02 GMT
+Received: from userv0122.oracle.com (userv0122.oracle.com [156.151.31.75])
+        by userp3030.oracle.com with ESMTP id 370011wara-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Fri, 05 Mar 2021 07:24:02 +0000
+Received: from abhmp0010.oracle.com (abhmp0010.oracle.com [141.146.116.16])
+        by userv0122.oracle.com (8.14.4/8.14.4) with ESMTP id 1257O0Hp017150;
+        Fri, 5 Mar 2021 07:24:00 GMT
+Received: from kadam (/102.36.221.92)
+        by default (Oracle Beehive Gateway v4.0)
+        with ESMTP ; Thu, 04 Mar 2021 23:23:59 -0800
+Date:   Fri, 5 Mar 2021 10:23:50 +0300
+From:   Dan Carpenter <dan.carpenter@oracle.com>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, robdclark@gmail.com,
+        seanpaul@chromium.org, nganji@codeaurora.org,
+        aravindh@codeaurora.org, tanmay@codeaurora.org,
+        khsieh@codeaurora.org
+Subject: Re: [PATCH] drm/msm/dp: Fix warnings reported by kbot in DP driver
+Message-ID: <20210305072350.GF2222@kadam>
+References: <1614907912-6880-1-git-send-email-abhinavk@codeaurora.org>
+ <161492735848.1478170.885416005935439120@swboyd.mtv.corp.google.com>
 MIME-Version: 1.0
-References: <20210305065120.11355-1-shawn.guo@linaro.org>
-In-Reply-To: <20210305065120.11355-1-shawn.guo@linaro.org>
-From:   Ard Biesheuvel <ardb@kernel.org>
-Date:   Fri, 5 Mar 2021 08:01:02 +0100
-X-Gmail-Original-Message-ID: <CAMj1kXHOXOX6V735tLPxcVUAAM0AeZkLKyOUDKTPvazLjjrQ6Q@mail.gmail.com>
-Message-ID: <CAMj1kXHOXOX6V735tLPxcVUAAM0AeZkLKyOUDKTPvazLjjrQ6Q@mail.gmail.com>
-Subject: Re: [PATCH] arm64: efi: add check for broken efi poweroff
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-efi <linux-efi@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <161492735848.1478170.885416005935439120@swboyd.mtv.corp.google.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Proofpoint-IMR: 1
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=9913 signatures=668683
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 mlxscore=0 phishscore=0
+ malwarescore=0 spamscore=0 mlxlogscore=999 suspectscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
+ definitions=main-2103050033
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=9913 signatures=668683
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 lowpriorityscore=0 clxscore=1011
+ priorityscore=1501 mlxlogscore=999 suspectscore=0 malwarescore=0
+ impostorscore=0 bulkscore=0 adultscore=0 mlxscore=0 phishscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2103050033
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 5 Mar 2021 at 07:51, Shawn Guo <shawn.guo@linaro.org> wrote:
->
-> Poweroff via UEFI Runtime Services doesn't always work on every single
-> arm64 machine.  For example, on Lenovo Flex 5G laptop, it results in
-> a system reboot rather than shutdown.  Add a DMI check to keep such
-> system stay with the original poweroff method (PSCI).
->
-> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+On Thu, Mar 04, 2021 at 10:55:58PM -0800, Stephen Boyd wrote:
+> > @@ -368,44 +368,21 @@ static int dp_debug_init(struct dp_debug *dp_debug, struct drm_minor *minor)
+> >         int rc = 0;
+> >         struct dp_debug_private *debug = container_of(dp_debug,
+> >                         struct dp_debug_private, dp_debug);
+> > -       struct dentry *file;
+> > -       struct dentry *test_active;
+> > -       struct dentry *test_data, *test_type;
+> >  
+> > -       file = debugfs_create_file("dp_debug", 0444, minor->debugfs_root,
+> > +       debugfs_create_file("dp_debug", 0444, minor->debugfs_root,
+> >                         debug, &dp_debug_fops);
+> > -       if (IS_ERR_OR_NULL(file)) {
+> > -               rc = PTR_ERR(file);
+> > -               DRM_ERROR("[%s] debugfs create file failed, rc=%d\n",
+> > -                                 DEBUG_NAME, rc);
+> > -       }
+> >  
+> > -       test_active = debugfs_create_file("msm_dp_test_active", 0444,
+> > +       debugfs_create_file("msm_dp_test_active", 0444,
+> >                         minor->debugfs_root,
+> >                         debug, &test_active_fops);
+> > -       if (IS_ERR_OR_NULL(test_active)) {
+> > -               rc = PTR_ERR(test_active);
+> > -               DRM_ERROR("[%s] debugfs test_active failed, rc=%d\n",
+> > -                                 DEBUG_NAME, rc);
+> > -       }
+> >  
+> > -       test_data = debugfs_create_file("msm_dp_test_data", 0444,
+> > +       debugfs_create_file("msm_dp_test_data", 0444,
+> >                         minor->debugfs_root,
+> >                         debug, &dp_test_data_fops);
+> > -       if (IS_ERR_OR_NULL(test_data)) {
+> > -               rc = PTR_ERR(test_data);
+> > -               DRM_ERROR("[%s] debugfs test_data failed, rc=%d\n",
+> > -                                 DEBUG_NAME, rc);
+> > -       }
+> >  
+> > -       test_type = debugfs_create_file("msm_dp_test_type", 0444,
+> > +       debugfs_create_file("msm_dp_test_type", 0444,
+> >                         minor->debugfs_root,
+> >                         debug, &dp_test_type_fops);
+> > -       if (IS_ERR_OR_NULL(test_type)) {
+> > -               rc = PTR_ERR(test_type);
+> > -               DRM_ERROR("[%s] debugfs test_type failed, rc=%d\n",
+> > -                                 DEBUG_NAME, rc);
+> > -       }
+> 
+> Debugfs failures.
 
-What is the point of using EFI runtime services on this machine if
-poweroff doesn't work either? Can't we just boot this thing with
-efi=noruntime?
+[ Update.  I misunderstood what you were saying, and initially thought
+  you were critiquing the patch instead of the commit message.  The
+  patch looks okay.  Probably a lot of maintainers would prefer it
+  broken multiple chunks with one patch per class of warning.  But I
+  already wrote this email and I love the sound of my own voice so I'm
+  sending it.  - dan ]
 
+The Smatch warning for this was that the error handling was slightly
+off because debugfs_create_file() doesn't return NULL these days.  But
+really these functions are not supposed to be error checked in the
+normal case.
 
-> ---
->  arch/arm64/kernel/efi.c | 15 +++++++++++++++
->  1 file changed, 15 insertions(+)
->
-> diff --git a/arch/arm64/kernel/efi.c b/arch/arm64/kernel/efi.c
-> index fa02efb28e88..8ae0002c72f1 100644
-> --- a/arch/arm64/kernel/efi.c
-> +++ b/arch/arm64/kernel/efi.c
-> @@ -7,6 +7,7 @@
->   * Copyright (C) 2013, 2014 Linaro Ltd.
->   */
->
-> +#include <linux/dmi.h>
->  #include <linux/efi.h>
->  #include <linux/init.h>
->
-> @@ -113,12 +114,26 @@ int __init efi_set_mapping_permissions(struct mm_struct *mm,
->                                    set_permissions, md);
->  }
->
-> +static const struct dmi_system_id efi_reboot_broken_table[] = {
-> +       {
-> +               .ident = "Lenovo Flex 5G",
-> +               .matches = {
-> +                       DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-> +                       DMI_MATCH(DMI_PRODUCT_FAMILY, "Flex 5G"),
-> +               },
-> +       },
-> +       { } /* terminator */
-> +};
-> +
->  /*
->   * UpdateCapsule() depends on the system being shutdown via
->   * ResetSystem().
->   */
->  bool efi_poweroff_required(void)
->  {
-> +       if (dmi_check_system(efi_reboot_broken_table))
-> +               return false;
-> +
->         return efi_enabled(EFI_RUNTIME_SERVICES);
->  }
->
-> --
-> 2.17.1
->
+If you do a `git grep -w debugfs_create_file` there are 1472 callers
+and only 192 check.  This is partly because Greg went through and did a
+mass delete of error handling.
+
+The way that debugfs works is if you fail to create a directory then
+the debugfs_create_file will check if the root is an error pointer.  So
+passing it "handles" errors itself.
+
+The one time where I've seen that checking for errors is essential is
+if they driver dereferences the "test_data" dentry itself.  That's
+pretty uncommon.
+
+[ So probably the commit message for this chunk should be:
+
+  Delete unnecessary debugfs error handling
+
+  Debugfs functions are not supposed to be checked in the normal case
+  so delete this code.  Also it silences a Smatch warning that we're
+  checking for NULL when these functions only return error pointers.  ]
+
+regards,
+dan carpenter
+
