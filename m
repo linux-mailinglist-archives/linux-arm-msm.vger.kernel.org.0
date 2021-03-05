@@ -2,121 +2,203 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 473C032E5E3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 11:13:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 538A032E655
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 11:28:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229573AbhCEKNG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Mar 2021 05:13:06 -0500
-Received: from mga11.intel.com ([192.55.52.93]:52518 "EHLO mga11.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229562AbhCEKMm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Mar 2021 05:12:42 -0500
-IronPort-SDR: ZdKzOiMTCvu16SNshCgH+r2+6VV1tZPQyl2JK5c5NNKjrVIBLsBuVflbG8Huhcir3H1vVJrNIb
- /AXj1O4YwGLg==
-X-IronPort-AV: E=McAfee;i="6000,8403,9913"; a="184242538"
-X-IronPort-AV: E=Sophos;i="5.81,224,1610438400"; 
-   d="scan'208";a="184242538"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Mar 2021 02:12:41 -0800
-IronPort-SDR: wFhqOxGqKqmoavtlDlkvVI75iAOh7xndAFPBvn+C1pebG08EIdvwPCyYTHp0zO172HDaYuRHYx
- 3pwvyRpVNDOA==
-X-IronPort-AV: E=Sophos;i="5.81,224,1610438400"; 
-   d="scan'208";a="436559788"
-Received: from smile.fi.intel.com (HELO smile) ([10.237.68.40])
-  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Mar 2021 02:10:35 -0800
-Received: from andy by smile with local (Exim 4.94)
-        (envelope-from <andriy.shevchenko@linux.intel.com>)
-        id 1lI7PY-00A5vm-7v; Fri, 05 Mar 2021 12:10:20 +0200
-Date:   Fri, 5 Mar 2021 12:10:20 +0200
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Hans de Goede <hdegoede@redhat.com>
-Cc:     Shawn Guo <shawn.guo@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        id S229528AbhCEK2P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Mar 2021 05:28:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39074 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229589AbhCEK15 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 5 Mar 2021 05:27:57 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE82CC061574
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 02:27:56 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id v15so1496631wrx.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 02:27:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=5+hSVXn8OdsmYs+09+Ki3tAAGmQxr3aimu+yu1IZzog=;
+        b=nq0CPl8WkxhRL+s3j1tsQCm2IUp84gSynRl1cuXrEBxEceST5WUXbyroMGHh3iHTiK
+         BPjnLAS1cAYORKO+2EHmk0gJ0Pr9l0Cy7ph8Tb6U5rKdoJhhpfIgJ7GIEL1l+MxoUUV+
+         fnY7xTWUlVY/rx0kSCNme0b8qitL8rH53V0I/usU99xafLwgcSZo9RUQH6nvrNiX+Ij/
+         EMJGNWe/WLbzlZv0CoTj2Rtcc8h18GdsogJkYcJEl+y4pxc200pxxefB6gVtX4amrDn5
+         /n+loylU4GZlDhwyZp4IPvUlpnNOBmDTteby1MUrB//ChMje4QW48cNBgLuHSvIJltYE
+         eBMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=5+hSVXn8OdsmYs+09+Ki3tAAGmQxr3aimu+yu1IZzog=;
+        b=aZbZKZnYOveCfrTUEUkMwQIIrL3pU/ewwBU/7sPpMaeRYfwb4rRpx3PrD1gyCgdxIi
+         ZS/tYiS8omU2DBdxWFl2rS3YfYlHl72YMrnXKZXHqLUZdTC69uHQl5oUCFQBkgUFkCrg
+         p9bhqOakC0iSn0tTwjkXeofhyfM0Pdpllo3Gb3nmzOaTobgSu+4nrl0CPaLJoAZJgtbb
+         DIQDtVPeXtkZjblVNxlhDlYSlotiSRTxUR9VawmZdX4h+QF4rAxXqFwVlu/R4kE7i4Mp
+         6Uu119WK0njB1d5Mexe9By1GpJatRm//hVz6bBWm2lIx7UmoVuYwGjuDjjTwl4F95Amd
+         ENKg==
+X-Gm-Message-State: AOAM532S4EMlLfEEqB+bO6zhWEaPdtAkdTGrghlULu71dv3YpBOipPZP
+        OUL1lPJDXGTqHKukjS+PKWbuciU+bqqayg==
+X-Google-Smtp-Source: ABdhPJwpNClB22cY56RvIY7cKySG3TkjKyVfZwgsD+zENzMOkLlKGJGCS3v+hS1Vnb5IvgkhhWHReQ==
+X-Received: by 2002:adf:dd4f:: with SMTP id u15mr8773309wrm.260.1614940075591;
+        Fri, 05 Mar 2021 02:27:55 -0800 (PST)
+Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
+        by smtp.googlemail.com with ESMTPSA id s23sm3652107wmc.29.2021.03.05.02.27.54
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 05 Mar 2021 02:27:55 -0800 (PST)
+Subject: Re: [PATCH 2/3] nvmem: core: Allow nvmem_cell_read_u16/32/64 to read
+ smaller cells
+To:     Douglas Anderson <dianders@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Jordan Crouse <jcrouse@codeaurora.org>
+Cc:     Niklas Cassel <niklas.cassel@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        linux-gpio@vger.kernel.org, linux-acpi@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] gpiolib: acpi: support override broken GPIO number in
- ACPI table
-Message-ID: <YEIDjF7B/1gEyuUe@smile.fi.intel.com>
-References: <20210226033919.8871-1-shawn.guo@linaro.org>
- <YD9bQXBD+9k3Lf/4@smile.fi.intel.com>
- <2ed0d4dc-2756-9a55-3f54-1377732e35fc@redhat.com>
- <20210305011429.GH17424@dragon>
- <f7aa417e-42b5-0c42-6f59-7311b060384f@redhat.com>
- <YEIDNJXlmBbVtLa3@smile.fi.intel.com>
+        swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
+        linux-kernel@vger.kernel.org
+References: <20210227002603.3260599-1-dianders@chromium.org>
+ <20210226162521.2.I7c9190630cf9131b42d521aa1c5b97135012a734@changeid>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <6537aec4-7f6e-ede9-12ea-e84bab738d7b@linaro.org>
+Date:   Fri, 5 Mar 2021 10:27:54 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YEIDNJXlmBbVtLa3@smile.fi.intel.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+In-Reply-To: <20210226162521.2.I7c9190630cf9131b42d521aa1c5b97135012a734@changeid>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 05, 2021 at 12:08:52PM +0200, Andy Shevchenko wrote:
-> On Fri, Mar 05, 2021 at 10:10:50AM +0100, Hans de Goede wrote:
-> > On 3/5/21 2:14 AM, Shawn Guo wrote:
-> > > On Thu, Mar 04, 2021 at 08:32:14PM +0100, Hans de Goede wrote:
-> > >> On 3/3/21 10:47 AM, Andy Shevchenko wrote:
-> 
-> ...
-> 
-> > > So we reach a consensus that this is not the right solution for Lenovo
-> > > Flex 5G. But what about for Andy's Galileo Gen 2 case, where the GPIO
-> > > number in ACPI is truly broken?
-> > 
-> > Well if the ACPI table truely simply has a wrong number in it, like in
-> > this case, then we clearly need a workaround.
-> > 
-> > >   ba8c90c61847 ("gpio: pca953x: Override IRQ for one of the expanders on Galileo Gen 2")
-> > 
-> > And we have one in place, so I'm not sure what the question is?
-> > 
-> > I guess the question is of your generic GPIO renumber patch would not
-> > be a better answer to that ?
-> > 
-> > IMHO no, we want to keep quirks out of the core as much as possible,
-> > for example the code which Andy added a quirk to is build as a module
-> > in the generic Fedora distro kernel, so for most users the code will
-> > not be loaded into memory. Where as if we add it to the core it would
-> > use up extra memory for everyone.
-> 
-> I guess Shawn is referring to my rework of that quirk [1] due to found a flaw
-> in the upstreamed variant. I agree, that this is not ideal, but TL;DR: it less
-> invasive even to the upstreamed approach and it has no use of any hard coded
-> numbering schemes. The Galileo Gen 2 is "broken" in an *understandable* way,
-> i.e. ACPI designers put an absolute GPIO numbers (there are two SoC based GPIO
-> controllers: SCH and DesignWare which numbers starts at 0) instead of be
-
-"...at 0 and 8 respectively)"
-
-> relative. For the time being only one device has a driver that needs such GPIO
-> number, but as I explained in the cover letter, to support it as a quirk I have
-> to copy ~10% of the existing (in gpiolib-acpi.c) code.
-> 
-> I'm all ears for better approach!
-> 
-> [1]: https://lore.kernel.org/linux-gpio/20210225163320.71267-1-andriy.shevchenko@linux.intel.com/T/#u
-> 
-> > Also if, in the future, we were to ever add a generic GPIO renumber quirk
-> > mechanism to the core, then your code would need more work. Because to be
-> > truely generic it would need to remap one gpiochip-name:pin-number on
-> > another gpiochip-name:pin-number pair. There might very well be a case
-> > with multiple gpiochips with pin number 32 being referenced in the DSDT
-> > and where we need to remap one of those 32-s to a different number
-> > (or possibly even to a different chip + number).
-> 
-> -- 
-> With Best Regards,
-> Andy Shevchenko
-> 
-> 
-
--- 
-With Best Regards,
-Andy Shevchenko
 
 
+On 27/02/2021 00:26, Douglas Anderson wrote:
+> The current way that cell "length" is specified for nvmem cells is a
+> little fuzzy. For instance, let's look at the gpu speed bin currently
+> in sc7180.dtsi:
+> 
+>    gpu_speed_bin: gpu_speed_bin@1d2 {
+>      reg = <0x1d2 0x2>;
+>      bits = <5 8>;
+>    };
+> 
+> This is an 8-bit value (as specified by the "bits" field). However,
+> it has a "length" of 2 (bytes), presumably because the value spans
+> across two bytes.
+> 
+> When querying this value right now, it's hard for a client to know if
+> they should be calling nvmem_cell_read_u16() or nvmem_cell_read_u8().
+> Today they must call nvmem_cell_read_u16() because the "length" of the
+> cell was 2 (bytes). However, if a later SoC ever came around and
+> didn't span across 2 bytes it would be unclear.  If a later Soc
+> specified, for instance:
+> 
+>    gpu_speed_bin: gpu_speed_bin@100 {
+>      reg = <0x100 0x1>;
+>      bits = <0 8>;
+>    };
+> 
+> ...then the caller would need to change to try calling
+> nvmem_cell_read_u8() because the u16 version would fail.
+> 
+
+If the consumer driver is expecting the sizes to span around byte to 
+many bytes, then, Why not just call nvmem_cell_read() which should also 
+return you how many bytes it has read!
+
+
+> Let's solve this by allowing clients to read a "larger" value. We'll
+> just fill it in with 0. 
+
+That is misleading the consumer! If the consumer is expecting a u16 or 
+u32, cell size should be of that size!!
+
+--srini
+
+If a client truly wants to know exactly how
+> big the cell was they can fall back to calling nvmem_cell_read()
+> directly.
+> 
+> NOTE: current implementation assumes that cells are little endian when
+> up-casting the size, but that's already pretty implicit in the way
+> nvmem works now anyway. See nvmem_shift_read_buffer_in_place(). Let's
+> document this but not do any auto-conversions just in case there was
+> an instance where someone was using this API to read big endian data
+> on a big endian machine and it happened to be working because there
+> was no bit offset.
+> 
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+> I will freely admit that I always end up thinking in circles and
+> getting dizzy when I think too much about endian considerations. If
+> anyone has better intuition than I do and see that I've goofed this up
+> then please yell.
+> 
+>   drivers/nvmem/core.c | 21 +++++++++++++++++++--
+>   1 file changed, 19 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/nvmem/core.c b/drivers/nvmem/core.c
+> index a5ab1e0c74cf..8602390bb124 100644
+> --- a/drivers/nvmem/core.c
+> +++ b/drivers/nvmem/core.c
+> @@ -1534,12 +1534,14 @@ static int nvmem_cell_read_common(struct device *dev, const char *cell_id,
+>   		nvmem_cell_put(cell);
+>   		return PTR_ERR(buf);
+>   	}
+> -	if (len != count) {
+> +	if (len > count) {
+>   		kfree(buf);
+>   		nvmem_cell_put(cell);
+>   		return -EINVAL;
+> +	} else if (len != count) {
+> +		memset(val + len, 0, count - len);
+>   	}
+> -	memcpy(val, buf, count);
+> +	memcpy(val, buf, len);
+>   	kfree(buf);
+>   	nvmem_cell_put(cell);
+>   
+> @@ -1564,6 +1566,11 @@ EXPORT_SYMBOL_GPL(nvmem_cell_read_u8);
+>   /**
+>    * nvmem_cell_read_u16() - Read a cell value as a u16
+>    *
+> + * This function can be used to read any cell value 16-bits or less.  If
+> + * this function needs to upcast (or if the cell was stored in nvmem with
+> + * a bit offset) it will assume that the cell is little endian.  Clients
+> + * should generally call le16_to_cpu() on the returned value.
+> + *
+>    * @dev: Device that requests the nvmem cell.
+>    * @cell_id: Name of nvmem cell to read.
+>    * @val: pointer to output value.
+> @@ -1579,6 +1586,11 @@ EXPORT_SYMBOL_GPL(nvmem_cell_read_u16);
+>   /**
+>    * nvmem_cell_read_u32() - Read a cell value as a u32
+>    *
+> + * This function can be used to read any cell value 32-bits or less.  If
+> + * this function needs to upcast (or if the cell was stored in nvmem with
+> + * a bit offset) it will assume that the cell is little endian.  Clients
+> + * should generally call le32_to_cpu() on the returned value.
+> + *
+>    * @dev: Device that requests the nvmem cell.
+>    * @cell_id: Name of nvmem cell to read.
+>    * @val: pointer to output value.
+> @@ -1594,6 +1606,11 @@ EXPORT_SYMBOL_GPL(nvmem_cell_read_u32);
+>   /**
+>    * nvmem_cell_read_u64() - Read a cell value as a u64
+>    *
+> + * This function can be used to read any cell value 64-bits or less.  If
+> + * this function needs to upcast (or if the cell was stored in nvmem with
+> + * a bit offset) it will assume that the cell is little endian.  Clients
+> + * should generally call le64_to_cpu() on the returned value.
+> + *
+>    * @dev: Device that requests the nvmem cell.
+>    * @cell_id: Name of nvmem cell to read.
+>    * @val: pointer to output value.
+> 
