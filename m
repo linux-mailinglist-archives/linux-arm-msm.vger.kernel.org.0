@@ -2,58 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1606532EAB0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 13:40:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 30F3F32EAB3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 13:40:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233186AbhCEMjv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Mar 2021 07:39:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38976 "EHLO
+        id S233190AbhCEMjw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Mar 2021 07:39:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229901AbhCEMjf (ORCPT
+        with ESMTP id S232921AbhCEMjg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Mar 2021 07:39:35 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4D86C061756
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 04:39:34 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id k66so1341013wmf.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 04:39:34 -0800 (PST)
+        Fri, 5 Mar 2021 07:39:36 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D36FFC061574
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 04:39:35 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id u187so1307550wmg.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 04:39:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Qg19vffoErDUVCue7avEWam1BJicCB7smRgVL/qfkzg=;
-        b=AD4E7JpX3LBKmWzsl8qMhe6+GNP9GOE9kSWutymwKtiu03pvBbcuvqHwV9HxbVgOIU
-         wRkRf8mhCWs8H+r6KPbKW3p89h5ILyOOTKEoXNtPS0bGay3inl5M2n40efVtdmEgS5cE
-         5PrYSmtqrn+JmpTUHNwhaUpeQZI9s6LAIHQHHC8z8QDZQHnQMui4fb9zjPWFzsF0X90o
-         gmFo/yTVJfBhxNptAD++RjWZVeQJjfSs44gY3lPyzahYQOnCbmKmRWtExYGgd49Hp7HW
-         P0nOrB4W2Nym/DtupUJiGCgBApHWBK/AFlnxTQHko8PeTMP8oMVrpHX+EM0U5/XIGBBu
-         sBFQ==
+        bh=VLQJiK7FJqZgMOFQh0WIw0zvyjcVmsT0CUIB/62ZpXA=;
+        b=bnvPo/8KQ7cd9IGJlQI0ldBNgHBIgiZ3jZjyinBqlqnyxUuYR3eH1zQ+AgN5cFUbkM
+         GGoSeRqSYnM8fC9pYngNf72ckriBzKgpSuc6nkAb/wvG6KOq5qQQq10lnvxMVmldR0yi
+         +WCsCkSP90ERWJZNNq292pVi1NmlBAYc0Uqmjvujx5h4saDhQF1j40iMP+Ha9kKmo9Fx
+         HX8zewV0tafenQCcolXxJ3UY2DAI8z/ie87Xcji75ROV1lKBUbJte77XE/4QoGUhecAK
+         2YOX42Dgx8AfS+C8Px0rG07+4L1fJD2h6g5X1tc69PvGPqONkbp2yMG28+3nj0uTEumB
+         XF+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Qg19vffoErDUVCue7avEWam1BJicCB7smRgVL/qfkzg=;
-        b=BsQ5cDDkRXpedDN7At0IOpGzlwylmAKZzSz46i6j7U2VuHWhtthqO+xXgYW7p4WhCD
-         6LV7MShqH0VeeQ5QnbrQQ/RLZxUsrW6NLV6Hzflp65NC3HmmXpqouE7Cc32dZhWLatIB
-         5W5C2WsPv/Y2ZVR/xiQCffx+zjTf8cCrEyuKa/vFCzPTyCunB+CQlIoRlYnjIrtlRePk
-         hJkKqPKz1zVTJgBcSpG0ZbvBcIkRIIFQ7qNzr8JYIn/x6btra5qDWwtYLtf6QQlV+q9B
-         wHR5i4/D4HFQqbZsopPfzXIwEltC/Y9FXne1JQ7hWDGpVCbldKPBKNhOOX2fIFG/w405
-         /WPg==
-X-Gm-Message-State: AOAM531DoIwsgiughIbvvz/Oo1QH7IrLr1UU/pCOsKk4bFa0USRdmP00
-        mGiIVxRBSs0/8DHOWZXxgu49p4XDofmS63FK
-X-Google-Smtp-Source: ABdhPJz/JwSYbhhsw/VgCa/qCBc0axC7vHmWCmj17OFG/DKY3FQ2aO7Q2KZcJo2ySQTEZG72j3tvfQ==
-X-Received: by 2002:a05:600c:198c:: with SMTP id t12mr8480670wmq.183.1614947973407;
-        Fri, 05 Mar 2021 04:39:33 -0800 (PST)
+        bh=VLQJiK7FJqZgMOFQh0WIw0zvyjcVmsT0CUIB/62ZpXA=;
+        b=spLwS7kGujH0WkpdCCsJdTwE0eZzo8WaKdczIk1kMfTUbj5nKB3tCHZuP4vxAJX/Zt
+         FHXblzTGxHo8ipU6tOJyWx9unSfjGO4iu/Kb+OO1+y/IVh678NWnT9L61BISfmqlctig
+         Ro5fml0KV29O4J2qYcpf+SgkheHKTAU0V6vv4m5hLGIHi9oIUseDY/bUlKogOES8U84c
+         hAJe3mSzukvyG5OiTTqNUTXdln/SBq7EbdnhZ1irx5klcIkTrX9YdYyFWJJHAFJAuy81
+         wjSCABlbXWkeHmb5MZGYSa/ud7w36s2kV4NSyp2Lv/q6gru+Mr4RKd9wDLUi/YwogZ2n
+         Cpcw==
+X-Gm-Message-State: AOAM530LBliqOEJhguAFhmvJMZw3PnBxY4R+O3QiZ7qx62iGokv9WK1f
+        9AzUoFCN0MEGTvF58T9CdWVgjg==
+X-Google-Smtp-Source: ABdhPJxENwo+YTSXFrTA4ZvfzqserVh3Z1O55zqV9Vyk4jL9Bv+wWLbTfG2nbLw8wQb/pLz74ZPtOw==
+X-Received: by 2002:a05:600c:4150:: with SMTP id h16mr7138191wmm.120.1614947974483;
+        Fri, 05 Mar 2021 04:39:34 -0800 (PST)
 Received: from localhost.localdomain ([2a01:e0a:82c:5f0:55da:a740:2edb:1c7e])
-        by smtp.gmail.com with ESMTPSA id f5sm4173256wrx.39.2021.03.05.04.39.32
+        by smtp.gmail.com with ESMTPSA id f5sm4173256wrx.39.2021.03.05.04.39.33
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 05 Mar 2021 04:39:32 -0800 (PST)
+        Fri, 05 Mar 2021 04:39:34 -0800 (PST)
 From:   Loic Poulain <loic.poulain@linaro.org>
 To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
 Cc:     linux-arm-msm@vger.kernel.org,
         Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH v2 3/6] mhi: pci_generic: Add SDX24 based modem support
-Date:   Fri,  5 Mar 2021 13:47:55 +0100
-Message-Id: <1614948478-2284-3-git-send-email-loic.poulain@linaro.org>
+Subject: [PATCH v2 4/6] mhi: pci_generic: No-Op for device_wake operations
+Date:   Fri,  5 Mar 2021 13:47:56 +0100
+Message-Id: <1614948478-2284-4-git-send-email-loic.poulain@linaro.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1614948478-2284-1-git-send-email-loic.poulain@linaro.org>
 References: <1614948478-2284-1-git-send-email-loic.poulain@linaro.org>
@@ -61,45 +61,78 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add generic info for SDX24 based modems. Also add the FIREHOSE channels
-used by the flash-programmer firmware loaded in EDL mode.
+The wake_db register presence is highly speculative and can fuze MHI
+devices. Indeed, currently the wake_db register address is defined at
+entry 127 of the 'Channel doorbell array', thus writing to this address
+is equivalent to ringing the doorbell for channel 127, causing trouble
+with some devics (e.g. SDX24 based modems) that get an unexpected
+channel 127 doorbell interrupt.
+
+This change fixes that issue by setting wake get/put as no-op for
+pci_generic devices. The wake device sideband mechanism seems really
+specific to each device, and is AFAIK not defined by the MHI spec.
+
+It also removes zeroing initialization of wake_db register during MMIO
+initialization, the register being set via wake_get/put accessors few
+cycles later during M0 transition.
 
 Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- v2: no change
+ v2: reword commit message
 
- drivers/bus/mhi/pci_generic.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/bus/mhi/core/init.c   |  2 --
+ drivers/bus/mhi/pci_generic.c | 18 ++++++++++++++++++
+ 2 files changed, 18 insertions(+), 2 deletions(-)
 
+diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+index 2159dbc..32eb90f 100644
+--- a/drivers/bus/mhi/core/init.c
++++ b/drivers/bus/mhi/core/init.c
+@@ -510,8 +510,6 @@ int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
+ 
+ 	/* Setup wake db */
+ 	mhi_cntrl->wake_db = base + val + (8 * MHI_DEV_WAKE_DB);
+-	mhi_write_reg(mhi_cntrl, mhi_cntrl->wake_db, 4, 0);
+-	mhi_write_reg(mhi_cntrl, mhi_cntrl->wake_db, 0, 0);
+ 	mhi_cntrl->wake_set = false;
+ 
+ 	/* Setup channel db address for each channel in tre_ring */
 diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-index 45d0cf2..c274e65 100644
+index c274e65..4685a83 100644
 --- a/drivers/bus/mhi/pci_generic.c
 +++ b/drivers/bus/mhi/pci_generic.c
-@@ -212,6 +212,14 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
- 	.dma_data_width = 32
- };
+@@ -312,6 +312,21 @@ static void mhi_pci_status_cb(struct mhi_controller *mhi_cntrl,
+ 	}
+ }
  
-+static const struct mhi_pci_dev_info mhi_qcom_sdx24_info = {
-+	.name = "qcom-sdx24",
-+	.edl = "qcom/prog_firehose_sdx24.mbn",
-+	.config = &modem_qcom_v1_mhiv_config,
-+	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-+	.dma_data_width = 32
-+};
++static void mhi_pci_wake_get_nop(struct mhi_controller *mhi_cntrl, bool force)
++{
++	/* no-op */
++}
 +
- static const struct mhi_channel_config mhi_quectel_em1xx_channels[] = {
- 	MHI_CHANNEL_CONFIG_UL(0, "NMEA", 32, 0),
- 	MHI_CHANNEL_CONFIG_DL(1, "NMEA", 32, 0),
-@@ -254,6 +262,8 @@ static const struct mhi_pci_dev_info mhi_quectel_em1xx_info = {
- static const struct pci_device_id mhi_pci_id_table[] = {
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0306),
- 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx55_info },
-+	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0304),
-+		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx24_info },
- 	{ PCI_DEVICE(0x1eac, 0x1001), /* EM120R-GL (sdx24) */
- 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
- 	{ PCI_DEVICE(0x1eac, 0x1002), /* EM160R-GL (sdx24) */
++static void mhi_pci_wake_put_nop(struct mhi_controller *mhi_cntrl, bool override)
++{
++	/* no-op */
++}
++
++static void mhi_pci_wake_toggle_nop(struct mhi_controller *mhi_cntrl)
++{
++	/* no-op */
++}
++
+ static bool mhi_pci_is_alive(struct mhi_controller *mhi_cntrl)
+ {
+ 	struct pci_dev *pdev = to_pci_dev(mhi_cntrl->cntrl_dev);
+@@ -515,6 +530,9 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	mhi_cntrl->status_cb = mhi_pci_status_cb;
+ 	mhi_cntrl->runtime_get = mhi_pci_runtime_get;
+ 	mhi_cntrl->runtime_put = mhi_pci_runtime_put;
++	mhi_cntrl->wake_get = mhi_pci_wake_get_nop;
++	mhi_cntrl->wake_put = mhi_pci_wake_put_nop;
++	mhi_cntrl->wake_toggle = mhi_pci_wake_toggle_nop;
+ 
+ 	err = mhi_pci_claim(mhi_cntrl, info->bar_num, DMA_BIT_MASK(info->dma_data_width));
+ 	if (err)
 -- 
 2.7.4
 
