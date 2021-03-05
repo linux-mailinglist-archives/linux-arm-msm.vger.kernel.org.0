@@ -2,165 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BA10532E3D1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 09:39:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3143E32E463
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 10:11:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229469AbhCEIio (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Mar 2021 03:38:44 -0500
-Received: from lb1-smtp-cloud9.xs4all.net ([194.109.24.22]:60097 "EHLO
-        lb1-smtp-cloud9.xs4all.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229458AbhCEIid (ORCPT
+        id S229597AbhCEJK2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Mar 2021 04:10:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50580 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229464AbhCEJKV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Mar 2021 03:38:33 -0500
-Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
-        by smtp-cloud9.xs4all.net with ESMTPA
-        id I5yeljBlEC40pI5yhlzevf; Fri, 05 Mar 2021 09:38:32 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s2;
-        t=1614933512; bh=rrCr5i77vT7K5PZvamm6XqegHyDg0Ba2Eh/g9DTXWQ0=;
-        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
-         Subject;
-        b=TBsmLh6DLJgs1x9UI3ximdL1yheOEMccCFwfLQ16OI7NkILV9q+ks0W0J3vScJ/NU
-         l/suEmJrFi7nzXSvk/0Li6PO3y1iYEG4cczP/JL7harsiGcqBvdaxIGA3oSWWT6N20
-         0L49xWsYpsULc4RAH6Rsuw6mIKhueh0NaWPlgJFGgaIuO0jSwtfGPuC7dFFAfAFnpE
-         cqrsu9GWqVvRf1VozOnPXdNugZA7+w4hAV5pmxcFA84YHFug27/43KvDQiVY5OazdF
-         5TPGz1QOphepw6IEFri04pxo3pbafTzEuVo/UBl2HqAPXym9VzUUWOuGjFamRyxCX0
-         40g/v+Do90k1Q==
-Subject: Re: [PATCH v7 1/2] media: v4l2-ctrl: add controls for long term
- reference.
-To:     Dikshita Agarwal <dikshita@codeaurora.org>,
-        linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org
-References: <1614769787-26922-1-git-send-email-dikshita@codeaurora.org>
- <1614769787-26922-2-git-send-email-dikshita@codeaurora.org>
-From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Message-ID: <d3309b63-4816-5fc3-cc38-0f78f2affc04@xs4all.nl>
-Date:   Fri, 5 Mar 2021 09:38:28 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Firefox/78.0 Thunderbird/78.7.1
+        Fri, 5 Mar 2021 04:10:21 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAE31C061574
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 01:10:19 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id d11so1233406wrj.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 01:10:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=63BZTwf3MLMQAkn2BdrHZ1xTK2bwmRKITVezIt3sV9k=;
+        b=qIhQjiqOP57bI/hD1kFs2/6tOxvCVgreYU6SWkrNvwDFlxQwEnv3kFFVIEiRAtV0bs
+         ghqevsOeKImy2rOLICgbeqWEThfUBb62WD98f6OLGoRbJPi+3ECHQTjzD7T09L6iNH1X
+         oAm7OJWf/W0mgFiXr47BHOFHjWLpDx1yqdw07vCbJeqMn/SZ6et48VCP9iSh47jL2RrG
+         gVVStZeH/O8pcqGXOJ9EMd4F8njNQwNN9alPkOkaB3F9hedHZi9ivpiK4dy/1O75s2EC
+         b80SYjFrOOr3XHujkCejze9BNQcAsrZT3Cpqt9O3cmDicy//qO7rhTZOo3V9VbGlcI9b
+         TE4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=63BZTwf3MLMQAkn2BdrHZ1xTK2bwmRKITVezIt3sV9k=;
+        b=C3Os3PO5kBj12pCGlRWSni2fA0vHwnL3qYFBXyS4sGUqrWjbnYdiAbbpKffYBZUAiv
+         AwlSgrT2uhio8juakiI2C+Zm86pblrjx59m9S1snUlKimPurKN63e3FbMAPe1ggdszjj
+         cHAoUNYV6mOGURllN07MMq1YSIuMAiZNwHjOp34e7kmwLAYTlqAiksfz0AUXiZ6FShyV
+         9VUk0w3w8VsJ7KKeckdPr72N3HgN74SniUE85OGjbNXG8TG/aJQBoFuwjG2NLSznt+Nf
+         5+0C1ijFf1qMy6GsxEgjlTqDvkU5EMRVZAgKK2NUD94vTJ0oSKDDfWvG7bknmd5BRyVj
+         aYEA==
+X-Gm-Message-State: AOAM532N1hfm3BBW8hsdU3cRF0fOBF7AdM5SeL6VNYX3cby8j6SZEOoa
+        vAr78OuKeCSN5037lDldiymnKw==
+X-Google-Smtp-Source: ABdhPJwGPV9w/pRUAVZfWeOAHCnQFfI/8tinbzeWQre8iQkJRqLUzFYfp3bIvMhEWSuLcWlSXdr0MQ==
+X-Received: by 2002:a5d:5411:: with SMTP id g17mr8376871wrv.194.1614935418378;
+        Fri, 05 Mar 2021 01:10:18 -0800 (PST)
+Received: from [192.168.0.41] (lns-bzn-59-82-252-144-192.adsl.proxad.net. [82.252.144.192])
+        by smtp.googlemail.com with ESMTPSA id 36sm3695411wrh.94.2021.03.05.01.10.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 05 Mar 2021 01:10:17 -0800 (PST)
+Subject: Re: [PATCH] devfreq: Register devfreq as a cooling device
+To:     Steven Price <steven.price@arm.com>, cwchoi00@gmail.com,
+        kyungmin.park@samsung.com, myungjoo.ham@samsung.com
+Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Qiang Yu <yuq825@gmail.com>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Rob Herring <robh@kernel.org>,
+        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
+        Alyssa Rosenzweig <alyssa.rosenzweig@collabora.com>,
+        "open list:DRM DRIVERS FOR LIMA" <dri-devel@lists.freedesktop.org>,
+        "moderated list:DRM DRIVERS FOR LIMA" <lima@lists.freedesktop.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>
+References: <20210304125034.28404-1-daniel.lezcano@linaro.org>
+ <23db1b13-9418-91f5-4871-f45b983f6e3c@arm.com>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+Message-ID: <e8c5f550-0ca5-b4e4-1113-3af760d2780e@linaro.org>
+Date:   Fri, 5 Mar 2021 10:10:16 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-In-Reply-To: <1614769787-26922-2-git-send-email-dikshita@codeaurora.org>
+In-Reply-To: <23db1b13-9418-91f5-4871-f45b983f6e3c@arm.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfDJYJ3SEbAGCh1SI/PEAt31WBOYbIzQQJwxRDgChfzOmJ87R8Sasx/ClboepzAaoH3uUq3j35Aljc1OF67R/lqRQHaCZC/Y1ntcyY6gMIv15iQaw6pEz
- 7htJ8Xe94ypCW2iFFKjFXzmxYqRvqES3VoEPtX8PBX607fNjzwzlXB8NLJRzwbKFKoEel2SYhUtXFw7cRSp553Sx2V0GAjqect1EZ1K/Dz9sN9xw2Hx5T+cY
- boNG2NrCI1aISf4E4HQYVFSYnbtMfapLV6PgDdzaIAVJarLmt594PVCFlI2ekfwIjdzu0D7NUxwcSOrdcjVCXkV8hQKf/qeqdkcjfOCFLpP87UQl/QE46D7D
- 8mq9p9PieV1I5dHUmyf5bKOvAW4M0olVpXYYdsKs3miDEBGLjfU=
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dikshita,
+On 05/03/2021 09:12, Steven Price wrote:
+> On 04/03/2021 12:50, Daniel Lezcano wrote:
+>> Currently the default behavior is to manually having the devfreq
+>> backend to register themselves as a devfreq cooling device.
+>>
+>> There are no so many and actually it makes more sense to register the
+>> devfreq device when adding it.
+>>
+>> Consequently, every devfreq becomes a cooling device like cpufreq is.
+>>
+>> Having a devfreq being registered as a cooling device can not mitigate
+>> a thermal zone if it is not bound to this one. Thus, the current
+>> configurations are not impacted by this change.
+>>
+>> Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+>> ---
 
-On 03/03/2021 12:09, Dikshita Agarwal wrote:
-> Long Term Reference (LTR) frames are the frames that are encoded
-> sometime in the past and stored in the DPB buffer list to be used
-> as reference to encode future frames.
-> This change adds controls to enable this feature.
+[ ... ]
+
+>>       if (pfdevfreq->opp_of_table_added) {
+>>           dev_pm_opp_of_remove_table(&pfdev->pdev->dev);
+>>           pfdevfreq->opp_of_table_added = false;
 > 
-> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
-> ---
->  .../userspace-api/media/v4l/ext-ctrls-codec.rst         | 17 +++++++++++++++++
->  drivers/media/v4l2-core/v4l2-ctrls.c                    | 14 ++++++++++++++
->  include/uapi/linux/v4l2-controls.h                      |  3 +++
->  3 files changed, 34 insertions(+)
-> 
-> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> index 00944e9..21fa9a5 100644
-> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> @@ -3646,3 +3646,20 @@ enum v4l2_mpeg_video_hevc_size_of_length_field -
->      so this has to come from client.
->      This is applicable to H264 and valid Range is from 0 to 63.
->      Source Rec. ITU-T H.264 (06/2019); G.7.4.1.1, G.8.8.1.
-> +
-> +``V4L2_CID_MPEG_VIDEO_LTR_COUNT (integer)``
-> +    Specifies the maximum number of Long Term Reference (LTR) frames at any
-> +    given time that the encoder can keep.
-> +    This is applicable to the H264 and HEVC encoders.
-> +
-> +``V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX (integer)``
-> +    The current frame is marked as a Long Term Reference (LTR) frame
+> You've removed all references to pfdevfreq->cooling, so please also
+> remove the member from struct panfrost_devfreq (as already done with
+> lima and msm).
 
-You mentioned earlier in a reply to me that:
+Sure, thanks for spotting this.
 
-"The driver implementation ensures that whenever the LTR control is
-received, it applies to the frame received after that. Not to frame which would be
-encoded next."
 
-That behavior is not clear from the text.
+-- 
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
 
-Wouldn't this be a better text:
-
-"After setting this control the frame that will be queued next
- will be marked as a Long Term Reference (LTR) frame"
-
-"current frame" isn't precise enough.
-
-> +    and given this LTR index which ranges from 0 to LTR_COUNT-1.
-> +    This is applicable to the H264 and HEVC encoders.
-> +    Source Rec. ITU-T H.264 (06/2019); Table 7.9
-> +
-> +``V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES (bitmask)``
-> +    Specifies the Long Term Reference (LTR) frame(s) to be used for
-> +    encoding the current frame.
-
-Same here. I assume that here too this control applies to the next queued
-frame.
-
-> +    This provides a bitmask which consists of bits [0, LTR_COUNT-1].
-> +    This is applicable to the H264 and HEVC encoders.
-
-Regards,
-
-	Hans
-
-> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
-> index 016cf62..4d444de 100644
-> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
-> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
-> @@ -951,6 +951,9 @@ const char *v4l2_ctrl_get_name(u32 id)
->  	case V4L2_CID_MPEG_VIDEO_REPEAT_SEQ_HEADER:		return "Repeat Sequence Header";
->  	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:		return "Force Key Frame";
->  	case V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITY_ID:		return "Base Layer Priority ID";
-> +	case V4L2_CID_MPEG_VIDEO_LTR_COUNT:			return "LTR Count";
-> +	case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:		return "Frame LTR Index";
-> +	case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES:		return "Use LTR Frames";
->  	case V4L2_CID_MPEG_VIDEO_MPEG2_SLICE_PARAMS:		return "MPEG-2 Slice Parameters";
->  	case V4L2_CID_MPEG_VIDEO_MPEG2_QUANTIZATION:		return "MPEG-2 Quantization Matrices";
->  	case V4L2_CID_FWHT_I_FRAME_QP:				return "FWHT I-Frame QP Value";
-> @@ -1278,6 +1281,17 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
->  	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:
->  		*type = V4L2_CTRL_TYPE_INTEGER;
->  		break;
-> +	case V4L2_CID_MPEG_VIDEO_LTR_COUNT:
-> +		*type = V4L2_CTRL_TYPE_INTEGER;
-> +		break;
-> +	case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:
-> +		*type = V4L2_CTRL_TYPE_INTEGER;
-> +		*flags |= V4L2_CTRL_FLAG_EXECUTE_ON_WRITE;
-> +		break;
-> +	case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES:
-> +		*type = V4L2_CTRL_TYPE_BITMASK;
-> +		*flags |= V4L2_CTRL_FLAG_EXECUTE_ON_WRITE;
-> +		break;
->  	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:
->  	case V4L2_CID_PAN_RESET:
->  	case V4L2_CID_TILT_RESET:
-> diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
-> index 039c0d7..fedbb54 100644
-> --- a/include/uapi/linux/v4l2-controls.h
-> +++ b/include/uapi/linux/v4l2-controls.h
-> @@ -428,6 +428,9 @@ enum v4l2_mpeg_video_multi_slice_mode {
->  #define V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE		(V4L2_CID_CODEC_BASE+228)
->  #define V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME		(V4L2_CID_CODEC_BASE+229)
->  #define V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITY_ID	(V4L2_CID_CODEC_BASE+230)
-> +#define V4L2_CID_MPEG_VIDEO_LTR_COUNT			(V4L2_CID_CODEC_BASE+231)
-> +#define V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX		(V4L2_CID_CODEC_BASE+232)
-> +#define V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES		(V4L2_CID_CODEC_BASE+233)
->  
->  /* CIDs for the MPEG-2 Part 2 (H.262) codec */
->  #define V4L2_CID_MPEG_VIDEO_MPEG2_LEVEL			(V4L2_CID_CODEC_BASE+270)
-> 
-
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
