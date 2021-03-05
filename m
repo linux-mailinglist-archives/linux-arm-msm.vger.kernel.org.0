@@ -2,107 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 437A832F598
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 22:57:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6968232F5CA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 23:19:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229679AbhCEV5U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Mar 2021 16:57:20 -0500
-Received: from mail-oi1-f174.google.com ([209.85.167.174]:44863 "EHLO
-        mail-oi1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229672AbhCEV5O (ORCPT
+        id S229805AbhCEWSw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Mar 2021 17:18:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50590 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229775AbhCEWSa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Mar 2021 16:57:14 -0500
-Received: by mail-oi1-f174.google.com with SMTP id x20so4111745oie.11;
-        Fri, 05 Mar 2021 13:57:14 -0800 (PST)
+        Fri, 5 Mar 2021 17:18:30 -0500
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4072C06175F
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 14:18:29 -0800 (PST)
+Received: by mail-qk1-x730.google.com with SMTP id z190so3590740qka.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 14:18:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=kEPdvK71SYnnYxU/iYMYQe/u4D1Hboa4Ycom7Yjf1Uw=;
+        b=LAiu13ud2ieteI1GC7oTRufOmHJCXPRSrLKl5fh0T8ZtOH0SD/XlcVSIeqtPxBrL0v
+         iorOjbfWYdI1rWZzDfENDWZx8rWebaQIaZN0iTWtJd+9UisdnfWvF0ZbBMn7/8T5RkXE
+         /BvplMJpUvWr0rMw7G6eU9PvsjcrG7DHhnA8e9G2HaD31Up6Hhrnod7o+pyJem9nXIsv
+         K1CQefEQsOIioZWB7+IYnXZLZkLGu0yxY44HFIDj+BNXPnXLC0BZQT4bOoPA/QB135zk
+         p3SNWX8ZsmJeiCQG6SQZfV52KZp/A/Wi8b9PP/MEeArtw/cAjHY26STc9U0jeXtca+xb
+         H2fQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=MxDQYRpemmvxub9yE7cZIY4oUHqhC/Xcd1pD0uQpZgs=;
-        b=HhYYLtLh/VIqypZ2uM5JrXUTAMOcQ8w45CM+83X+cVX2/1GIqRhQ/5Jr6nyAmGIUsU
-         WNNM4BHXR0NF9jCuU3K0M4TIPoQYnOf4E8x9mi2WfyOl4gSSpSYHNRbiH5+XI7WD7arI
-         ZRwFaRuaZE+bg2PNSzC/Y8U87dTRuMDbLJpkp0+IV7Z0sQRPwt59hxnoTr/H3l0DiVtb
-         rq8UicUEGlok/OnQlgIzeZtrsrfsL7bOOO3s33U1zOo1yfgPtbOIS3qI5mJ7HuxxF0KT
-         38paymmzeUlhSdQxTxyIIDxYMlZmYocvRdUqgiAarKcxavo1yEKzF5KxZwMw67anZ9ek
-         aKuw==
-X-Gm-Message-State: AOAM533edrgobdtB6y4VDpRtFtBD+kskfeFdvzI4MvsTxel9jCvHvfHk
-        RxaVpBIDgN9THdD9+4IpsQ==
-X-Google-Smtp-Source: ABdhPJwUxY21pvbjFVpIIH/mCjRoozUTiukLrG4+o2FKaMdMb9sVM2rZilFqvv8kppGI5rPg2spFyg==
-X-Received: by 2002:aca:1302:: with SMTP id e2mr8517920oii.170.1614981433657;
-        Fri, 05 Mar 2021 13:57:13 -0800 (PST)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id a49sm844234otc.37.2021.03.05.13.57.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Mar 2021 13:57:13 -0800 (PST)
-Received: (nullmailer pid 716064 invoked by uid 1000);
-        Fri, 05 Mar 2021 21:57:12 -0000
-Date:   Fri, 5 Mar 2021 15:57:12 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: cpufreq: cpufreq-qcom-hw: Document SM8350
- CPUfreq compatible
-Message-ID: <20210305215712.GA710574@robh.at.kernel.org>
-References: <20210216111251.1838149-1-vkoul@kernel.org>
- <20210217044955.qmbpd43wis7xtjoj@vireshk-i7>
- <20210218124457.GW2774@vkoul-mobl.Dlink>
- <20210218154820.lkcut7a657s6aqeg@vireshk-i7>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=kEPdvK71SYnnYxU/iYMYQe/u4D1Hboa4Ycom7Yjf1Uw=;
+        b=FE6tW3qQ9tq/w4hnTkpoOyH6cRC4vkgqUJ58vgPT7+03/+4D8DZhMG911qBWvGNmeV
+         HW+zSfBtZRphejToXZ58SHPFhwKNosyWicXnordjAbPWpopvTik8WPaK8jomTOzypEIG
+         TFuTAB+s83PV9rBr3uZed0SV8HtMcS32u8z+Lxy2ujZXhwxJWJ62H3iPsMnW9PGAX13D
+         GC1WZ56bHcTNEhUY7OE1oUHoOXmy4UE7w8qNJm4GPy9hud19G+UW/M6kt9q7F5pRRHbp
+         KpqgmgHt2+5MjZhEdacmU7GXR4tPRcMCEcVnMyAzc6rvGK9RRjjN52Z1N+oq5ksgT8F6
+         Bz/g==
+X-Gm-Message-State: AOAM532pqi4ES/wBd7sEJySCB+1FQwz56KcThbzNmqjiNzhR2gsVecfW
+        Je5QQRglTPVjEVm5wOu7czP8Tw==
+X-Google-Smtp-Source: ABdhPJzQrZBfsrI9YYiNPI9gMDvzV87Lgi/44erfU6o3ciulWwl/Z0QtFrZefcU5AlH8znMSAZt34w==
+X-Received: by 2002:ae9:ef89:: with SMTP id d131mr11080051qkg.214.1614982709146;
+        Fri, 05 Mar 2021 14:18:29 -0800 (PST)
+Received: from [192.168.0.189] (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
+        by smtp.gmail.com with ESMTPSA id z2sm2898711qkg.22.2021.03.05.14.18.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 05 Mar 2021 14:18:28 -0800 (PST)
+Subject: Re: [PATCH] drm/msm/dsi: support CPHY mode for 7nm pll/phy
+To:     Rob Herring <robh@kernel.org>
+Cc:     freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Douglas Anderson <dianders@chromium.org>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        "Kristian H. Kristensen" <hoegsberg@google.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Rikard Falkeborn <rikard.falkeborn@gmail.com>,
+        Emil Velikov <emil.velikov@collabora.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Dave Airlie <airlied@redhat.com>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20210215162805.21481-1-jonathan@marek.ca>
+ <20210305214802.GA701567@robh.at.kernel.org>
+From:   Jonathan Marek <jonathan@marek.ca>
+Message-ID: <cbaf67d2-d5b8-9684-061b-8de9382a438b@marek.ca>
+Date:   Fri, 5 Mar 2021 17:17:10 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210218154820.lkcut7a657s6aqeg@vireshk-i7>
+In-Reply-To: <20210305214802.GA701567@robh.at.kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Feb 18, 2021 at 09:18:20PM +0530, Viresh Kumar wrote:
-> On 18-02-21, 18:14, Vinod Koul wrote:
-> > On 17-02-21, 10:19, Viresh Kumar wrote:
-> > > On 16-02-21, 16:42, Vinod Koul wrote:
-> > > > Add the CPUfreq compatible for SM8350 SoC along with note for using the
-> > > > specific compatible for SoCs
-> > > > 
-> > > > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > > > ---
-> > > >  Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt | 4 +++-
-> > > >  1 file changed, 3 insertions(+), 1 deletion(-)
-> > > > 
-> > > > diff --git a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt
-> > > > index 9299028ee712..3eb3cee59d79 100644
-> > > > --- a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt
-> > > > +++ b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt
-> > > > @@ -8,7 +8,9 @@ Properties:
-> > > >  - compatible
-> > > >  	Usage:		required
-> > > >  	Value type:	<string>
-> > > > -	Definition:	must be "qcom,cpufreq-hw" or "qcom,cpufreq-epss".
-> > > > +	Definition:	must be "qcom,cpufreq-hw" or "qcom,cpufreq-epss"
-> > > > +			along with SoC specific compatible:
-> > > > +			  "qcom,sm8350-cpufreq-epss", "qcom,cpufreq-epss"
-> > > 
-> > > And why is SoC specific compatible required here ? Is the implementation on
-> > > sm8350 any different than the ones using "qcom,cpufreq-epss" compatible ?
-> > > 
-> > > FWIW, the same compatible string must be reused until the time there is
-> > > difference in the hardware. The compatible string must be considered as a marker
-> > > for a particular version of the hardware.
-> > 
-> > Rob has indicated that we should use a SoC specific compatible and I
-> > agree with that. We are using both soc and generic one here and driver
-> > will be loaded for generic one.
+On 3/5/21 4:48 PM, Rob Herring wrote:
+> On Mon, Feb 15, 2021 at 11:27:44AM -0500, Jonathan Marek wrote:
+>> Add the required changes to support 7nm pll/phy in CPHY mode.
+>>
+>> This adds a "qcom,dsi-phy-cphy-mode" property for the PHY node to enable
+>> the CPHY mode.
+>>
+>> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+>> ---
+>>   .../devicetree/bindings/display/msm/dsi.txt   |  1 +
+>>   drivers/gpu/drm/msm/dsi/dsi.c                 | 12 +--
+>>   drivers/gpu/drm/msm/dsi/dsi.h                 |  6 +-
+>>   drivers/gpu/drm/msm/dsi/dsi.xml.h             |  2 +
+>>   drivers/gpu/drm/msm/dsi/dsi_host.c            | 34 +++++--
+>>   drivers/gpu/drm/msm/dsi/phy/dsi_phy.c         | 49 +++++++++-
+>>   drivers/gpu/drm/msm/dsi/phy/dsi_phy.h         |  3 +
+>>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c     | 89 ++++++++++++++-----
+>>   drivers/gpu/drm/msm/dsi/pll/dsi_pll.c         |  4 +-
+>>   drivers/gpu/drm/msm/dsi/pll/dsi_pll.h         |  5 +-
+>>   drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c     | 71 +++++++++------
+>>   11 files changed, 210 insertions(+), 66 deletions(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/display/msm/dsi.txt b/Documentation/devicetree/bindings/display/msm/dsi.txt
+>> index b9a64d3ff184..7ffc86a9816b 100644
+>> --- a/Documentation/devicetree/bindings/display/msm/dsi.txt
+>> +++ b/Documentation/devicetree/bindings/display/msm/dsi.txt
+>> @@ -124,6 +124,7 @@ Required properties:
+>>   Optional properties:
+>>   - qcom,dsi-phy-regulator-ldo-mode: Boolean value indicating if the LDO mode PHY
+>>     regulator is wanted.
+>> +- qcom,dsi-phy-cphy-mode: Boolean value indicating if CPHY mode is wanted.
 > 
-> I am not sure of the context, lets see what Rob has to say on this. I
-> believe we only need 1 compatible string here (whatever it is), as
-> this is just one version of the hardware we are talking about. We
-> already have 2 somehow and you are trying to add one more and I don't
-> fell good about it. :(
+> This is board or SoC dependent? The latter should be implied by an SoC
+> specific compatible.
+> 
 
-The h/w block is the same features and bugs in every single 
-implementation? If not sure, better be safe.
+It is board specific, 7nm dsi phy can operate in either D-PHY or C-PHY mode.
 
-I don't know that I'd go back and add SoC ones for everything though.
-
-Rob
