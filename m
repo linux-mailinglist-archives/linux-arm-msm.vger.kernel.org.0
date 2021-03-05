@@ -2,99 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BE66932F49E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 21:29:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 694DB32F4CD
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 21:56:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229759AbhCEU2e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Mar 2021 15:28:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55268 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229582AbhCEU2X (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Mar 2021 15:28:23 -0500
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64383C061761
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 12:28:23 -0800 (PST)
-Received: by mail-pf1-x435.google.com with SMTP id j12so2824201pfj.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 12:28:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=piAdAlxX6cGUOE8F0JpLHJ9nmpFDMC1HCkTuqOWznxk=;
-        b=ZMfRcZ4TDA8/dEClsxUS/L/u5rgoabu87qxGNj+0yZa6lwgQL/N63UEyBzxVDnJEjx
-         DXNVeoKNIf5KrdFrRI9cQira81+9a6MNvsobpoLqJJddXEESNUp4iHimhrfUFs5l2/0G
-         NY4CCDs4A9g/GCPH//PsA3BIjozH84M+Boneo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=piAdAlxX6cGUOE8F0JpLHJ9nmpFDMC1HCkTuqOWznxk=;
-        b=bI5J6FOy6qkzDObCQNcZPTiGRMesvKwcGF+tz2vT2S2EP8QMZmTnlsEpoELaPDbc8L
-         439b+8qHeRwWeMy8ELw/EAUPOZZU9Kg3sYtcJ4KoGZx+mtWk+nBcd4lupgUEDrXXZe3X
-         HX08k8jcxXIBVVm0LlVDqg5etx1FGdbDndY7MKWaxzbn2CyqETUvkZiiRQKheMGlxxOG
-         7cWOxLpNyiozHZgpplEEpVenssuk48vTMSQ+qOs0iYm2Tlv16Dwt+LN+zUzGuYGhcRDc
-         39SouABRZDwythDMUx0j2zBbUV6XXYT3KwWuhZoPOg0qEBVM2zokeb7riV9i8GP2dxgH
-         DLhg==
-X-Gm-Message-State: AOAM533vpzNrb6Y7fA6f2L8xYpjq4f/yd5R75b9yGRWnM7TfggTiQbJj
-        217Xv0ev2jvobaa5ymhoqiCPxA==
-X-Google-Smtp-Source: ABdhPJwDP89NM72Xmxkxt3+td/+HHTavGdq0RdR0KUyjCNPkQps+ga54WgNdcBG9JtaZDqAFts+g2Q==
-X-Received: by 2002:a63:fa4d:: with SMTP id g13mr10282679pgk.201.1614976102793;
-        Fri, 05 Mar 2021 12:28:22 -0800 (PST)
-Received: from localhost ([2620:15c:202:1:2878:25d1:94cb:a547])
-        by smtp.gmail.com with UTF8SMTPSA id i128sm2955938pfe.64.2021.03.05.12.28.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Mar 2021 12:28:22 -0800 (PST)
-Date:   Fri, 5 Mar 2021 12:28:20 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: sc7180: Disable charger thermal
- zone for coachz rev1 and rev2
-Message-ID: <YEKUZI2zfdDLe7mP@google.com>
-References: <20210304180415.1531430-1-mka@chromium.org>
- <20210304100341.4.I95b8a63103b77cab6a7cf9c150f0541db57fda98@changeid>
- <CAD=FV=UQoXsPYqv8a25Kn+=z1pZu4YUKK7VZSm4rq_i9KpD3rQ@mail.gmail.com>
+        id S229517AbhCEUz6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Mar 2021 15:55:58 -0500
+Received: from m42-2.mailgun.net ([69.72.42.2]:30895 "EHLO m42-2.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229446AbhCEUz6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 5 Mar 2021 15:55:58 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1614977758; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=gInvR84J5zzSls5gUh4IJTqqXS5R3fWGt1q9sp+bpFw=; b=EbHSsyfuxdBeGYWGXptIxjZbpHoaSOHqAZavBSFqg4HntUUFCMAc3s4F+WDKf6/UDV0YvOsz
+ 77DCUOeF5/1luVWBo+3cm2hXgUqMV/F10bSUw9OcDcLw39WxpNQt653qEXUi/xlzpVgfWqIe
+ 0v3zdDi/+6TC2s6VdaZCwruF5TA=
+X-Mailgun-Sending-Ip: 69.72.42.2
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 60429ada1a5c93533fd7e306 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 05 Mar 2021 20:55:54
+ GMT
+Sender: hemantk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 94413C433ED; Fri,  5 Mar 2021 20:55:53 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D0C11C433CA;
+        Fri,  5 Mar 2021 20:55:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D0C11C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
+Subject: Re: [PATCH v3 4/6] mhi: pci_generic: No-Op for device_wake operations
+To:     Loic Poulain <loic.poulain@linaro.org>,
+        manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org
+References: <1614971808-22156-1-git-send-email-loic.poulain@linaro.org>
+ <1614971808-22156-4-git-send-email-loic.poulain@linaro.org>
+From:   Hemant Kumar <hemantk@codeaurora.org>
+Message-ID: <6f1c9166-63e9-d3d6-3f93-afc86ce4c021@codeaurora.org>
+Date:   Fri, 5 Mar 2021 12:55:52 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAD=FV=UQoXsPYqv8a25Kn+=z1pZu4YUKK7VZSm4rq_i9KpD3rQ@mail.gmail.com>
+In-Reply-To: <1614971808-22156-4-git-send-email-loic.poulain@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 05, 2021 at 10:50:12AM -0800, Doug Anderson wrote:
-> Hi,
-> 
-> On Thu, Mar 4, 2021 at 10:04 AM Matthias Kaehlcke <mka@chromium.org> wrote:
-> >
-> > CoachZ rev1 and rev2 are stuffed with a 47k NTC as thermistor for the
-> > charger temperature which currently isn't supported by the PM6150 ADC
-> > driver. Disable the charger thermal zone to avoid the use of bogus
-> > temperature values.
-> >
-> > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> > ---
-> >
-> >  arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts | 9 +++++++++
-> >  arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r2.dts | 9 +++++++++
-> >  2 files changed, 18 insertions(+)
-> 
-> I guess this patch is written with the assumption that eventually
-> we'll create a "-r3" or "-r4" that has a proper thermistor stuffed but
-> maybe we're not sure which one?  Right now you're disabling it for
-> both -r1 and -r2+ which is all revisions, so this could go in the
-> coachz.dtsi file...
+Hi Loic,
 
-The proper thermistor should be stuffed in rev3.
+On 3/5/21 11:16 AM, Loic Poulain wrote:
+> The wake_db register presence is highly speculative and can fuze MHI
+> devices. Indeed, currently the wake_db register address is defined at
+> entry 127 of the 'Channel doorbell array', thus writing to this address
+> is equivalent to ringing the doorbell for channel 127, causing trouble
+> with some devics (e.g. SDX24 based modems) that get an unexpected
+> channel 127 doorbell interrupt.
+> 
+> This change fixes that issue by setting wake get/put as no-op for
+> pci_generic devices. The wake device sideband mechanism seems really
+> specific to each device, and is AFAIK not defined by the MHI spec.
+> 
+> It also removes zeroing initialization of wake_db register during MMIO
+> initialization, the register being set via wake_get/put accessors few
+> cycles later during M0 transition.
+> 
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> ---
+>   v2: reword commit message
+>   v3: no change
+> 
+>   drivers/bus/mhi/core/init.c   |  2 --
+>   drivers/bus/mhi/pci_generic.c | 18 ++++++++++++++++++
+>   2 files changed, 18 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+> index 2159dbc..32eb90f 100644
+> --- a/drivers/bus/mhi/core/init.c
+> +++ b/drivers/bus/mhi/core/init.c
+> @@ -510,8 +510,6 @@ int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
+>   
+>   	/* Setup wake db */
+>   	mhi_cntrl->wake_db = base + val + (8 * MHI_DEV_WAKE_DB);
+> -	mhi_write_reg(mhi_cntrl, mhi_cntrl->wake_db, 4, 0);
+> -	mhi_write_reg(mhi_cntrl, mhi_cntrl->wake_db, 0, 0);
+Did you see any issue with host clearing wake DB register. it looks fine 
+to clear it by host without relying on what device had it before, to 
+begin with.
 
-For some reason there was already a -r3 .dts in my mental model,
-probably I created one when I started with a downstream version of
-this series just before you posted your's to bring upstream (mostly)
-in sync with downstream. I'll add it in v2.
+>   	mhi_cntrl->wake_set = false;
+>   
+
+Thanks,
+Hemant
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
