@@ -2,177 +2,278 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ACFB632E707
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 12:10:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 148BB32E733
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 12:27:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229672AbhCELJ4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Mar 2021 06:09:56 -0500
-Received: from mx08-00178001.pphosted.com ([91.207.212.93]:1845 "EHLO
-        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S229637AbhCELJo (ORCPT
+        id S229589AbhCEL0s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Mar 2021 06:26:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51598 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229604AbhCEL0X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Mar 2021 06:09:44 -0500
-Received: from pps.filterd (m0046660.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id 125B2LbZ026897;
-        Fri, 5 Mar 2021 12:09:39 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=subject : to : cc :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=selector1;
- bh=I9/kaJnfjfj1AU6P3K82WCYMuyiaZJhwaAIyQRNbJYA=;
- b=qsIr0VUr8Rv0rpa+5eYHsAi5k4r50zcRY1O0PDBuVUaPYWw2yNUTzA2Mwz7DtCTlQsSW
- CTu7yGv/6c8JxTM2TIqHuvhQQ9+N7XFnXuxnUa2TEowgl6IlzjZqibS+zf9eGd/P8f9I
- avFo13qFqhgfzO3I5u8Vqam/P8jVK/a9qPoXTPvpyP+HCsZDJaQ4RqfR/XVWGo2Uwdck
- RRTx/lnHhqCKb9++GuGV+58LfdHmHAr7hxgGzZjg4PgaMHK3d9y0IaeoP2PvhXKQXTSs
- 2UPWZBxPxd/4y8VbIPZwAPHDp1bUviw0mE/JgzKBdnEjaQwroy+4WNbB4puO4dOTl3Cj vw== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com with ESMTP id 36yfdynt7s-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 05 Mar 2021 12:09:39 +0100
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id BD77110002A;
-        Fri,  5 Mar 2021 12:09:38 +0100 (CET)
-Received: from Webmail-eu.st.com (sfhdag2node3.st.com [10.75.127.6])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id A8DB624A0AD;
-        Fri,  5 Mar 2021 12:09:38 +0100 (CET)
-Received: from lmecxl0889.lme.st.com (10.75.127.50) by SFHDAG2NODE3.st.com
- (10.75.127.6) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Fri, 5 Mar
- 2021 12:09:38 +0100
-Subject: Re: [PATCH v5 15/16] rpmsg: char: no dynamic endpoint management for
- the default one
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>
-CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Andy Gross <agross@kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20210219111501.14261-1-arnaud.pouliquen@foss.st.com>
- <20210219111501.14261-16-arnaud.pouliquen@foss.st.com>
- <20210304184034.GA3854911@xps15>
-From:   Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
-Message-ID: <d5a451e1-3dac-f665-aabd-bd72afc88b75@foss.st.com>
-Date:   Fri, 5 Mar 2021 12:09:37 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Fri, 5 Mar 2021 06:26:23 -0500
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86AF4C061756
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 03:26:23 -0800 (PST)
+Received: by mail-pj1-x102d.google.com with SMTP id jx13so1680150pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 03:26:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=bU2r7z5kvgx1tqlWcZPBYiCcxdrBbMN2IbS+K3yntx0=;
+        b=taPlnCakoVUQcYXRnyQ8JyhG8fzmnNLoORhE3ySpUJSOzfJHLisreta71wdvBg/TLo
+         il452bcpzQHADaw0E6UUOADZHN1vr7Pi09nJYzN/Sc45XpVFEfVseBOyhu1d4/HYsIlj
+         YAnJdZ0XlarMcQcW16GpCWFiZM/NHChnAByRYwZe1K60PMjxA2zxFxMLwA6N4LXWrPp6
+         1CeRYRUVw6f7XWEV5BuaGDCb/l1LdP2r0WzdA0GISQvrgg9ng9VPJhFiO6EztoEEQNv/
+         Yt3DLfyNf8/QXEMBuKv++xFEF/GVZeD2+hbEjaYFGHBzIpD/hJGGQc7njKaUqoSb99Qi
+         ffig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=bU2r7z5kvgx1tqlWcZPBYiCcxdrBbMN2IbS+K3yntx0=;
+        b=puWlgevSs5GE3UzJb52c83WchwdGD2Izy3bLw2uDI2xK+0C1Nste2B7DqJ7Q8y2oAA
+         5dpC9yOHJVHNH1ghJOjx0y2OjKpj9c/I8VYE48CcUsfyCdizEvX9dOIUp/ZqjeWqCfpy
+         z0gwkQJiNH1aNr7x9S7sPfenItmXWyp3MqE5PUj43y5F9Wvzo1sNlsgOf/zA8SOgziOb
+         6ZnCNoi6ezjdBXn/uol0zckndyCyB+zipDbNH9tqgzxP0aB3oDJT8AJV9mdcOCVVxcA9
+         P06CXE+b4rxBXaqu5AMnSusCfXorEP22sd3f89rsBSDp5CI12jAkqZfUYJ6/s9ee8PE+
+         pvbg==
+X-Gm-Message-State: AOAM532Ildw6Zl/poAxYdQPlWO24XlRXzkWECtY127dRh/3pffHZ2suA
+        7DLot4gFE8yHYaha5VtGzBlF67rOf85trA==
+X-Google-Smtp-Source: ABdhPJyaFRPUXJ01KFPSkqVioo9FwGFgTsVm1waulI64soJDvQL48WV5rlm1NuBRS4rkQrzZvkTjRA==
+X-Received: by 2002:a17:90b:3809:: with SMTP id mq9mr9577559pjb.32.1614943582876;
+        Fri, 05 Mar 2021 03:26:22 -0800 (PST)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id d16sm2005762pgb.12.2021.03.05.03.26.20
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 05 Mar 2021 03:26:22 -0800 (PST)
+Date:   Fri, 5 Mar 2021 19:26:16 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Hans de Goede <hdegoede@redhat.com>
+Cc:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Mika Westerberg <mika.westerberg@linux.intel.com>,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        linux-gpio@vger.kernel.org, linux-acpi@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] gpiolib: acpi: support override broken GPIO number in
+ ACPI table
+Message-ID: <20210305112614.GK17424@dragon>
+References: <20210226033919.8871-1-shawn.guo@linaro.org>
+ <YD9bQXBD+9k3Lf/4@smile.fi.intel.com>
+ <2ed0d4dc-2756-9a55-3f54-1377732e35fc@redhat.com>
+ <20210305011429.GH17424@dragon>
+ <f7aa417e-42b5-0c42-6f59-7311b060384f@redhat.com>
 MIME-Version: 1.0
-In-Reply-To: <20210304184034.GA3854911@xps15>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.75.127.50]
-X-ClientProxiedBy: SFHDAG3NODE2.st.com (10.75.127.8) To SFHDAG2NODE3.st.com
- (10.75.127.6)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369,18.0.761
- definitions=2021-03-05_05:2021-03-03,2021-03-05 signatures=0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f7aa417e-42b5-0c42-6f59-7311b060384f@redhat.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 3/4/21 7:40 PM, Mathieu Poirier wrote:
-> There has to be a capital letter at the start of the title:
+On Fri, Mar 05, 2021 at 10:10:50AM +0100, Hans de Goede wrote:
+> > So we reach a consensus that this is not the right solution for Lenovo
+> > Flex 5G. But what about for Andy's Galileo Gen 2 case, where the GPIO
+> > number in ACPI is truly broken?
 > 
-> rpmsg: char: No dynamic endpoint management for the default one
+> Well if the ACPI table truely simply has a wrong number in it, like in
+> this case, then we clearly need a workaround.
 > 
-> Please fix for all the patches.
-
-Ok, I will update the subjects with capital letter in my next revision.
-
-Just for my information, is it a new rule? kernel documentation [1] gives a
-canonical subject and an example without capital letter.
-
-[1]
-https://www.kernel.org/doc/html/v4.17/process/submitting-patches.html#the-canonical-patch-format
-
+> >   ba8c90c61847 ("gpio: pca953x: Override IRQ for one of the expanders on Galileo Gen 2")
 > 
-> On Fri, Feb 19, 2021 at 12:15:00PM +0100, Arnaud Pouliquen wrote:
->> Do not dynamically manage the default endpoint. The ept address must
->> not change.
->> This update is needed to manage the RPMSG_CREATE_DEV_IOCTL. In this
->> case a default endpoint is used and it's address must not change or
->> been reused by another service.
+> And we have one in place, so I'm not sure what the question is?
 > 
-> The above is very difficult to understand.  I am not sure about introducing
-> RPMSG_CREATE_DEV_IOCTL in this patchset.  More on that in an upcoming comment.
+> I guess the question is of your generic GPIO renumber patch would not
+> be a better answer to that ?
+> 
+> IMHO no, we want to keep quirks out of the core as much as possible,
+> for example the code which Andy added a quirk to is build as a module
+> in the generic Fedora distro kernel, so for most users the code will
+> not be loaded into memory. Where as if we add it to the core it would
+> use up extra memory for everyone.
 
-The purpose of this revision was mainly to provide a view of what we could do to
-provide a more generic control interface.
-
-To simplify the review I can remove the RPMSG_CREATE_DEV_IOCTL management and
-send it as a next step, in a separate patchset.
+Fair point. I did not really think of it, because there is already
+gpiolib_acpi_quirks[] in core code.  And on the other side, if there are
+more drivers need such workaround, having each of these drivers copy the
+same code is not ideal either.
 
 > 
->>
->> Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
->> ---
->>  drivers/rpmsg/rpmsg_char.c | 28 +++++++++++++++++++++-------
->>  1 file changed, 21 insertions(+), 7 deletions(-)
->>
->> diff --git a/drivers/rpmsg/rpmsg_char.c b/drivers/rpmsg/rpmsg_char.c
->> index c98b0e69679b..8d3f9d6c20ad 100644
->> --- a/drivers/rpmsg/rpmsg_char.c
->> +++ b/drivers/rpmsg/rpmsg_char.c
->> @@ -114,14 +114,23 @@ static int rpmsg_eptdev_open(struct inode *inode, struct file *filp)
->>  	struct rpmsg_endpoint *ept;
->>  	struct rpmsg_device *rpdev = eptdev->rpdev;
->>  	struct device *dev = &eptdev->dev;
->> +	u32 addr = eptdev->chinfo.src;
->>  
->>  	get_device(dev);
->>  
->> -	ept = rpmsg_create_ept(rpdev, rpmsg_ept_cb, eptdev, eptdev->chinfo);
->> -	if (!ept) {
->> -		dev_err(dev, "failed to open %s\n", eptdev->chinfo.name);
->> -		put_device(dev);
->> -		return -EINVAL;
->> +	/*
->> +	 * The RPMsg device can has been created by a ns announcement. In this
->> +	 * case a default endpoint has been created. Reuse it to avoid to manage
->> +	 * a new address on each open close.
->> +	 */
-> 
-> Here too it is very difficult to understand because the comment
-> doesn't not describe what the code does.  The code creates an enpoint if it
-> has not been created, which means /dev/rpmsgX was created from the ioctl. 
+> Also if, in the future, we were to ever add a generic GPIO renumber quirk
+> mechanism to the core, then your code would need more work. Because to be
+> truely generic it would need to remap one gpiochip-name:pin-number on
+> another gpiochip-name:pin-number pair. There might very well be a case
+> with multiple gpiochips with pin number 32 being referenced in the DSDT
+> and where we need to remap one of those 32-s to a different number
+> (or possibly even to a different chip + number).
 
-Right, not enough explicit
+Yeah, I had already have v2 of my patch, just did not post it as the
+overall direction is not agreed on.  I attach it here for discussion.
+I think with the GPIO consumer specified, it should be good enough to
+locate the broken GPIO number that needs override.  If gpiochip is
+wrong, that means "\\_SB.GIO0" of GpioInt needs an override.  That's
+a different issue.
 
-Thanks,
-Arnaud
+GpioInt (Level, ActiveLow, ExclusiveAndWake, PullUp, 0x0000,
+    "\\_SB.GIO0", 0x00, ResourceConsumer, ,
+    )
+    {   // Pin list
+	0x0280
+    }
 
-> 
->> +	ept = rpdev->ept;
->> +	if (!ept || addr != ept->addr) {
->> +		ept = rpmsg_create_ept(rpdev, rpmsg_ept_cb, eptdev, eptdev->chinfo);
->> +		if (!ept) {
->> +			dev_err(dev, "failed to open %s\n", eptdev->chinfo.name);
->> +			put_device(dev);
->> +			return -EINVAL;
->> +		}
->>  	}
->>  
->>  	eptdev->ept = ept;
->> @@ -133,12 +142,17 @@ static int rpmsg_eptdev_open(struct inode *inode, struct file *filp)
->>  static int rpmsg_eptdev_release(struct inode *inode, struct file *filp)
->>  {
->>  	struct rpmsg_eptdev *eptdev = cdev_to_eptdev(inode->i_cdev);
->> +	struct rpmsg_device *rpdev = eptdev->rpdev;
->>  	struct device *dev = &eptdev->dev;
->>  
->> -	/* Close the endpoint, if it's not already destroyed by the parent */
->> +	/*
->> +	 * Close the endpoint, if it's not already destroyed by the parent and it is not the
->> +	 * default one.
->> +	 */
->>  	mutex_lock(&eptdev->ept_lock);
->>  	if (eptdev->ept) {
->> -		rpmsg_destroy_ept(eptdev->ept);
->> +		if (eptdev->ept != rpdev->ept)
->> +			rpmsg_destroy_ept(eptdev->ept);
->>  		eptdev->ept = NULL;
->>  	}
->>  	mutex_unlock(&eptdev->ept_lock);
->> -- 
->> 2.17.1
->>
+Shawn
+
+
+[PATCH v2] gpiolib: acpi: support override broken GPIO number in ACPI
+
+Running kernel with ACPI on Lenovo Flex 5G laptop, touchpad is just
+not working.  That's because the GpioInt number of TCPD node in ACPI
+table is simply wrong, and the number even exceeds the maximum GPIO
+lines.  As the touchpad works fine with Windows on the same machine,
+presumably this is something Windows-ism.  Although it's obviously
+a specification violation, believe of that Microsoft will fix this in
+the near future is not really realistic.
+
+It adds the support of overriding broken GPIO number in ACPI table
+on particular machines, which are matched using DMI info.  Such
+mechanism for fixing up broken firmware and ACPI table is not uncommon
+in kernel.  And hopefully it can be useful for other machines that get
+broken GPIO number coded in ACPI table.
+
+The signature of acpi_get_gpiod() gets updated to pass over acpi_device
+pointer of consumer device, so that the broken pin can be matched
+precisely with consumer fwnode name.
+
+Changes for v2:
+- Match broken pin with additional consumer fwnode name comparison.
+
+Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+---
+ drivers/gpio/gpiolib-acpi.c | 79 +++++++++++++++++++++++++++++++++++--
+ 1 file changed, 76 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/gpio/gpiolib-acpi.c b/drivers/gpio/gpiolib-acpi.c
+index e37a57d0a2f0..fed045d64a26 100644
+--- a/drivers/gpio/gpiolib-acpi.c
++++ b/drivers/gpio/gpiolib-acpi.c
+@@ -93,6 +93,72 @@ static DEFINE_MUTEX(acpi_gpio_deferred_req_irqs_lock);
+ static LIST_HEAD(acpi_gpio_deferred_req_irqs_list);
+ static bool acpi_gpio_deferred_req_irqs_done;
+ 
++struct acpi_gpio_pin_fixup {
++	const char *consumer;
++	int pin_broken;
++	int pin_correct;
++};
++
++struct acpi_gpio_pin_override {
++	const struct acpi_gpio_pin_fixup *fixups;
++	int num;
++};
++
++static const struct acpi_gpio_pin_fixup lenovo_flex_5g_fixups[] = {
++	{
++		/* GpioInt of Touchpad */
++		.consumer = "\\_SB.I2C8.TCPD",
++		.pin_broken = 0x0280,
++		.pin_correct = 0x0018,
++	},
++};
++
++static const struct acpi_gpio_pin_override lenovo_flex_5g_override = {
++	.fixups = lenovo_flex_5g_fixups,
++	.num = ARRAY_SIZE(lenovo_flex_5g_fixups),
++};
++
++static const struct dmi_system_id acpi_gpio_pin_override_table[] = {
++	{
++		.ident = "Lenovo Flex 5G",
++		.matches = {
++			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_FAMILY, "Flex 5G 14Q8CX05"),
++		},
++		.driver_data = (void *)&lenovo_flex_5g_override,
++	},
++	{ } /* terminator */
++};
++
++static int acpi_gpio_pin_override(struct acpi_device *adev, int pin)
++{
++	const struct acpi_gpio_pin_override *override;
++	const struct dmi_system_id *system_id;
++	char *fwname;
++	int ret = pin;
++	int i;
++
++	system_id = dmi_first_match(acpi_gpio_pin_override_table);
++	if (!system_id)
++		return ret;
++
++	fwname = kasprintf(GFP_KERNEL, "%pfwf", &adev->fwnode);
++	override = system_id->driver_data;
++
++	for (i = 0; i < override->num; i++) {
++		const struct acpi_gpio_pin_fixup *f = &override->fixups[i];
++
++		if (!strcmp(f->consumer, fwname) && pin == f->pin_broken) {
++			ret = f->pin_correct;
++			goto done;
++		}
++	}
++
++done:
++	kfree(fwname);
++	return ret;
++}
++
+ static int acpi_gpiochip_find(struct gpio_chip *gc, void *data)
+ {
+ 	if (!gc->parent)
+@@ -103,6 +169,7 @@ static int acpi_gpiochip_find(struct gpio_chip *gc, void *data)
+ 
+ /**
+  * acpi_get_gpiod() - Translate ACPI GPIO pin to GPIO descriptor usable with GPIO API
++ * @adev:	ACPI device that consumes the GPIO
+  * @path:	ACPI GPIO controller full path name, (e.g. "\\_SB.GPO1")
+  * @pin:	ACPI GPIO pin number (0-based, controller-relative)
+  *
+@@ -111,7 +178,8 @@ static int acpi_gpiochip_find(struct gpio_chip *gc, void *data)
+  * controller does not have GPIO chip registered at the moment. This is to
+  * support probe deferral.
+  */
+-static struct gpio_desc *acpi_get_gpiod(char *path, int pin)
++static struct gpio_desc *acpi_get_gpiod(struct acpi_device *adev,
++					char *path, int pin)
+ {
+ 	struct gpio_chip *chip;
+ 	acpi_handle handle;
+@@ -125,7 +193,11 @@ static struct gpio_desc *acpi_get_gpiod(char *path, int pin)
+ 	if (!chip)
+ 		return ERR_PTR(-EPROBE_DEFER);
+ 
+-	return gpiochip_get_desc(chip, pin);
++	/*
++	 * Give it a chance to correct the broken GPIO pin number in ACPI
++	 * table of particular machines.
++	 */
++	return gpiochip_get_desc(chip, acpi_gpio_pin_override(adev, pin));
+ }
+ 
+ static irqreturn_t acpi_gpio_irq_handler(int irq, void *data)
+@@ -689,7 +761,8 @@ static int acpi_populate_gpio_lookup(struct acpi_resource *ares, void *data)
+ 		if (pin_index >= agpio->pin_table_length)
+ 			return 1;
+ 
+-		lookup->desc = acpi_get_gpiod(agpio->resource_source.string_ptr,
++		lookup->desc = acpi_get_gpiod(lookup->info.adev,
++					      agpio->resource_source.string_ptr,
+ 					      agpio->pin_table[pin_index]);
+ 		lookup->info.pin_config = agpio->pin_config;
+ 		lookup->info.debounce = agpio->debounce_timeout;
+-- 
+2.17.1
+
