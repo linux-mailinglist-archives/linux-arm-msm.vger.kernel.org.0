@@ -2,66 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E6A132F571
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 22:46:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 756F732F577
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 22:47:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229591AbhCEVpp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Mar 2021 16:45:45 -0500
-Received: from mail-oi1-f174.google.com ([209.85.167.174]:33914 "EHLO
-        mail-oi1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229493AbhCEVpO (ORCPT
+        id S229465AbhCEVqu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Mar 2021 16:46:50 -0500
+Received: from mail-oi1-f177.google.com ([209.85.167.177]:35626 "EHLO
+        mail-oi1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229611AbhCEVqT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Mar 2021 16:45:14 -0500
-Received: by mail-oi1-f174.google.com with SMTP id x78so4145521oix.1;
-        Fri, 05 Mar 2021 13:45:14 -0800 (PST)
+        Fri, 5 Mar 2021 16:46:19 -0500
+Received: by mail-oi1-f177.google.com with SMTP id i21so4136369oii.2;
+        Fri, 05 Mar 2021 13:46:19 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=yALU4xXZdf5UdXf3b9EgrSU2qSobCBik+Dcr+B7Cyjk=;
-        b=ir1pX4fwZVI9kxrlSyawBmDjDmccZSAvBfCyO/RMIqN69lYU2mhbp1Opbs8YhVJZvS
-         sZXv+I6+eECo4vB+HPxnAknr7BsUyYlj7w2kJ+uh/zDVEUCrQZyy8Jw2rXuiugTyHQh1
-         BVJxL9Ic36ire08areJZIauNqiRc9/XI7MTWs573D14BTgCSMxLmeRmysJECVFomNs2J
-         Z18jxd3+tDeyH6va/1dDd5eZR9CMP+TgOISJoQ6NWUWdhT2Vke67OJ8TmaVydrqHGGN0
-         xT1QrSS1z8ZrrSStKLcj+jdy4pzdeYJmBgYdcYWdhbBYkoaJsVAKGWC+OAG41KuHBqar
-         0bmg==
-X-Gm-Message-State: AOAM531w0MXaAYiUKxydZnbcFwAINc4PXA78FdZuhQ5z5ysSTYiKnAWr
-        IqxPXN77zM/xiLPuLSF1Z2cNGi6AGg==
-X-Google-Smtp-Source: ABdhPJysYXHIk9eAC9NbCb/g6YwalK7R0/TAtIWVHQDZ8jqNtshjFlkItp8ZtjNkQ1tAkqSgxf7swA==
-X-Received: by 2002:a05:6808:10cd:: with SMTP id s13mr8547967ois.117.1614980714097;
-        Fri, 05 Mar 2021 13:45:14 -0800 (PST)
+        bh=3aXASnehLpAnhE7ybXqztlUJbmoibh1p17DxUSvDDCI=;
+        b=RUwvDuccqg82EIE8yEImwHz6ZBxoufuks3jzUFgpxIUNTtUiU2DMEz4eA7rErndybV
+         8CErdGZrWFLR332iuDFL3nwpnvrjiLJJq1sPZS+jTDQm2eAVVw7/uKXdnuM3HKe3UaEg
+         0JTDIos2zvSYVPt1RQTLLZRhn4y0DM6dup7pzrv0r+UCkyqJWHjiONN1MTzFN4ValAsE
+         sjAZ7FdmvgV8YdsInbmAh4ebNcs93583T4EEmhU93NKIP+sQQvqw+N2yCQGgYippVoBJ
+         MEKZzVElbbc3tBQW12Gck0y77GsaxgXGfVderlnvfyQLekfNqK9i1ZMGLTEgiwQB301u
+         Slnw==
+X-Gm-Message-State: AOAM531n5/izpXhFPB7UAAQwQ24bnQ3qMmZPVkmWGN0+lkZFwKZf1ceo
+        BurUcbrt0JEFPP82GlKvrg==
+X-Google-Smtp-Source: ABdhPJycvVIc1/tf9vzPn8sweFi9jbD9stgDWfMUX+S5uKGI6UR/oPm+RtWtikPpVZbl6ISl77TOUg==
+X-Received: by 2002:aca:6289:: with SMTP id w131mr8562283oib.69.1614980779246;
+        Fri, 05 Mar 2021 13:46:19 -0800 (PST)
 Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id g14sm797304oon.23.2021.03.05.13.45.13
+        by smtp.gmail.com with ESMTPSA id y194sm805855ooa.19.2021.03.05.13.46.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Mar 2021 13:45:13 -0800 (PST)
-Received: (nullmailer pid 699774 invoked by uid 1000);
-        Fri, 05 Mar 2021 21:45:12 -0000
-Date:   Fri, 5 Mar 2021 15:45:12 -0600
+        Fri, 05 Mar 2021 13:46:18 -0800 (PST)
+Received: (nullmailer pid 701367 invoked by uid 1000);
+        Fri, 05 Mar 2021 21:46:17 -0000
+Date:   Fri, 5 Mar 2021 15:46:17 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     devicetree@vger.kernel.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
-        stanimir.varbanov@linaro.org, robh+dt@kernel.org
-Subject: Re: [PATCH v2 2/2] dt-bindings: media: venus: Add sm8250 dt schema
-Message-ID: <20210305214512.GA699723@robh.at.kernel.org>
-References: <20210215160254.1572615-1-bryan.odonoghue@linaro.org>
- <20210215160254.1572615-3-bryan.odonoghue@linaro.org>
+To:     Jonathan Marek <jonathan@marek.ca>
+Cc:     tongtiangen <tongtiangen@huawei.com>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Tanmay Shah <tanmay@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org,
+        open list <linux-kernel@vger.kernel.org>,
+        Qinglang Miao <miaoqinglang@huawei.com>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>,
+        Drew Davenport <ddavenport@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>
+Subject: Re: [PATCH v3 1/2] drm/msm: add compatibles for sm8150/sm8250 display
+Message-ID: <20210305214617.GA701315@robh.at.kernel.org>
+References: <20210215162607.21360-1-jonathan@marek.ca>
+ <20210215162607.21360-2-jonathan@marek.ca>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210215160254.1572615-3-bryan.odonoghue@linaro.org>
+In-Reply-To: <20210215162607.21360-2-jonathan@marek.ca>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 15 Feb 2021 16:02:54 +0000, Bryan O'Donoghue wrote:
-> Add a schema description for the venus video encoder/decoder on the sm8250.
+On Mon, 15 Feb 2021 11:26:04 -0500, Jonathan Marek wrote:
+> The driver already has support for sm8150/sm8250, but the compatibles were
+> never added.
 > 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Also inverse the non-mdp4 condition in add_display_components() to avoid
+> having to check every new compatible in the condition.
+> 
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 > ---
->  .../bindings/media/qcom,sm8250-venus.yaml     | 167 ++++++++++++++++++
->  1 file changed, 167 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml
+>  Documentation/devicetree/bindings/display/msm/dpu.txt | 4 ++--
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c               | 2 ++
+>  drivers/gpu/drm/msm/msm_drv.c                         | 6 +++---
+>  3 files changed, 7 insertions(+), 5 deletions(-)
 > 
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Acked-by: Rob Herring <robh@kernel.org>
