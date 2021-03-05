@@ -2,97 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 42DB332EC26
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 14:31:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 79AEC32ECB2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 15:01:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230401AbhCENaw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Mar 2021 08:30:52 -0500
-Received: from m42-2.mailgun.net ([69.72.42.2]:25899 "EHLO m42-2.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230372AbhCENaZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Mar 2021 08:30:25 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1614951023; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=iAyZKUXQ4XNfheJxhIWXSYGGrXEh7QxL1JenzRX2afY=;
- b=HvrfLAjEIlWBmhRey87wMnqPnle9oyMnsytl22yS5GpYf7mYyak9wDONeW4S+q/gdqJKDgsG
- HnoyfxJw27rny613uCavhSUIWypw2hgypWkwlrIXSmLbFnDBr7Ll6IgTDh0Wr0SQzktJ2z4P
- LllBCvU86mS63Gf/m72B8xM1nSw=
-X-Mailgun-Sending-Ip: 69.72.42.2
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 60423266f7ec0ea57c969d67 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 05 Mar 2021 13:30:14
- GMT
-Sender: mkrishn=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E8F4BC43461; Fri,  5 Mar 2021 13:30:13 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkrishn)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3895BC433C6;
-        Fri,  5 Mar 2021 13:30:13 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 05 Mar 2021 19:00:13 +0530
-From:   mkrishn@codeaurora.org
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, kalyan_t@codeaurora.org,
-        tanmay@codeaurora.org, abhinavk@codeaurora.org,
-        robdclark@gmail.com, bjorn.andersson@linaro.org,
-        vinod.koul@linaro.org, rnayak@codeaurora.org,
-        dianders@chromium.org, sibis@codeaurora.org, khsieh@codeaurora.org
-Subject: Re: [PATCH v12 1/4] dt-bindings: msm: disp: add yaml schemas for DPU
- bindings
-In-Reply-To: <161492718630.1478170.1460276218009944071@swboyd.mtv.corp.google.com>
-References: <1613127000-3015-1-git-send-email-mkrishn@codeaurora.org>
- <161436872955.1254594.2765257503019122275@swboyd.mtv.corp.google.com>
- <5a94b8c4ccb73afdf99bf901ce86acde@codeaurora.org>
- <161492718630.1478170.1460276218009944071@swboyd.mtv.corp.google.com>
-Message-ID: <d769213612ccbde20c19100c7550387c@codeaurora.org>
-X-Sender: mkrishn@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        id S229882AbhCEOBI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Mar 2021 09:01:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56386 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229562AbhCEOAk (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 5 Mar 2021 09:00:40 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA3D9C061574
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 06:00:39 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id n22so1538386wmc.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 06:00:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=MtOIud4TCy9Y7BduyBbPYACEUWKGNNxpzstIW4INW1Q=;
+        b=G9r+DXbyrpSuHCsKN8dOe/k2LEVZAeqz2grzrwF7z/aToUa/KqY/vQ2gAdrVztR2K2
+         KIg011NC4c74l33zUAzvqV/Pp2dw6vlumt2pC/4szyHVxwkgJbHISmrNbwTUfkeaJCTd
+         9Lg9HmxWF41vtunTg42qMwksBhyCKF2C4w0m/ThP/s6dsCMzltcPzQwJ+a82oE/6s9hS
+         IrZA1boWt7XaR22yG5iTsagUjvxzHlEzwhLv+CC7tI4/ywOFz7021xpEv6U5v7w0ZWZI
+         qgfb2YkV1ub7FwN97kLjaLBedPLnnIG0hkvs0CgGL2gg6kbTuf+C00zMU9o6WBZ83bXE
+         1DkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=MtOIud4TCy9Y7BduyBbPYACEUWKGNNxpzstIW4INW1Q=;
+        b=dLbLml2v63A1cTbHvEK11mkf0mdOPIEfJQrFeO13iowNggy7mc8N9O+k0t2VlQMVoB
+         zyt3Zx4lZfkIK6DZkIMcl7DDoHSZsjH+N25P/2sXi2Crsbs5yXWwOAwc97t7v36AU69l
+         wDA59SbjADiPNjRcLZWQ7X8lXzwlFo/IXuFpbJdjot0H171mX0ns+tXfz15rD9BYFHse
+         ymuenL8sTY7O9TFzWVRc1+21HmS+3FHk1FeH9I/e5phN2c4p9z08yvpaDqLozg2Kty2Y
+         Yk7ytZg4tvf+H7Y8YqTrBIzmnZfDySCClQE7hhu8Bo3ppdLzHhpJ1nMPy8qhGCb09iok
+         YsYw==
+X-Gm-Message-State: AOAM532DpzmfipMUQvDprf9xaT10xKArP7dG93V6ZVuEyvvF48DLhBZk
+        DfGtugePyygeoeAXoWd5V+sSBw==
+X-Google-Smtp-Source: ABdhPJzVFFGx94lD/lWbzMZD8sP5tI1JyoSVIEy9s7VmeX9Z4P22ESvU5RQhqQCVScDQU+irQEm1ng==
+X-Received: by 2002:a1c:a5cb:: with SMTP id o194mr8900716wme.129.1614952838517;
+        Fri, 05 Mar 2021 06:00:38 -0800 (PST)
+Received: from localhost.localdomain ([2a01:e0a:82c:5f0:55da:a740:2edb:1c7e])
+        by smtp.gmail.com with ESMTPSA id v9sm4740635wrn.86.2021.03.05.06.00.37
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 05 Mar 2021 06:00:37 -0800 (PST)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH] bus: mhi: pm: Change mhi_pm_resume timeout value
+Date:   Fri,  5 Mar 2021 15:09:07 +0100
+Message-Id: <1614953347-10192-1-git-send-email-loic.poulain@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-03-05 12:23, Stephen Boyd wrote:
-> Quoting mkrishn@codeaurora.org (2021-03-04 04:36:05)
->> On 2021-02-27 01:15, Stephen Boyd wrote:
->> > Quoting Krishna Manikandan (2021-02-12 02:49:57)
->> >> +
->> >> +    soc {
->> >> +      #address-cells = <2>;
->> >> +      #size-cells = <2>;
->> >
->> > I think we can drop the soc node from the examples.
->> Hi Stephen,
->> 
->> In latest dt schema, there is a rule that we have to specify the 
->> address
->> and size cells or else it will take default value of 1 for both. If we
->> use these default values, dt binding check will throw error as display
->> uses 2 address cells and 2 size cells. That's why soc node was added 
->> to
->> specify the values for mdss node.
->> 
-> 
-> Do you need to use both cells in the example? Presumably the second 
-> cell
-> is all zero, so it's useless. The example doesn't have to have both
-> cells in the reg property, that can be fixed up when writing the DT for
-> a particular SoC.
+mhi_cntrl->timeout_ms is set by the controller and indicates the
+maximum amount of time the controller device will take to be ready.
+In case of PCI modems, this value is quite high given modems can take
+up to 15 seconds from cold boot to be ready.
 
-Sure Stephen. I will make the changes in the next patchset.
-Thanks,
-Krishna
+Reusing this value in mhi_pm_resume can cause huge resuming latency
+and delay the whole system resume (in case of system wide suspend/
+resume), leading to bad use experience.
+
+This change adjusts the resume timeout to a fixed 2s value, which is
+more than enough for any MHI device for exiting M3.
+
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+---
+ drivers/bus/mhi/core/pm.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
+index 0cd6445..e2d83a9 100644
+--- a/drivers/bus/mhi/core/pm.c
++++ b/drivers/bus/mhi/core/pm.c
+@@ -17,6 +17,8 @@
+ #include <linux/wait.h>
+ #include "internal.h"
+ 
++#define MHI_PM_RESUME_TIMEOUT_MS 2000
++
+ /*
+  * Not all MHI state transitions are synchronous. Transitions like Linkdown,
+  * SYS_ERR, and shutdown can happen anytime asynchronously. This function will
+@@ -942,7 +944,7 @@ int mhi_pm_resume(struct mhi_controller *mhi_cntrl)
+ 	ret = wait_event_timeout(mhi_cntrl->state_event,
+ 				 mhi_cntrl->dev_state == MHI_STATE_M0 ||
+ 				 MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state),
+-				 msecs_to_jiffies(mhi_cntrl->timeout_ms));
++				 msecs_to_jiffies(MHI_PM_RESUME_TIMEOUT_MS));
+ 
+ 	if (!ret || MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)) {
+ 		dev_err(dev,
+-- 
+2.7.4
+
