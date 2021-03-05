@@ -2,98 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AC43832E50D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 10:41:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FBE232E586
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 11:01:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229589AbhCEJkn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Mar 2021 04:40:43 -0500
-Received: from mail.kernel.org ([198.145.29.99]:41088 "EHLO mail.kernel.org"
+        id S229768AbhCEKAn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Mar 2021 05:00:43 -0500
+Received: from mail.kernel.org ([198.145.29.99]:45354 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229591AbhCEJkm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Mar 2021 04:40:42 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id BC38B64FCF;
-        Fri,  5 Mar 2021 09:40:39 +0000 (UTC)
+        id S229906AbhCEKAT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 5 Mar 2021 05:00:19 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id B9C7C64F56;
+        Fri,  5 Mar 2021 10:00:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1614937242;
-        bh=OcgW7e5dsEfOiRnPlNxRnIX9X+KmlG1lTi/jpkrhSNI=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=B8xpM+GnavnRS83VsT7VFrY32MlID3xQPi/RTLWj61Rh1Qw3R1yxDE86jDyaHAixw
-         U6l/fhwNmbtVU9cgqnqDFXadsRy+5/NfRM+/B8zpBk4XdqM9IVQ09VOfc33WyR+8B7
-         juZTjIoAWDhQhE6Ra4ehSc5J/nfSZI+6AfsVxun3H2t9pdIOdPNpiCBSIXgbOQS477
-         XhR32jG3Bq4rFUDYXOw0D/RJ4jN31lWMOj9HDVbzTs2LfI0F66OW1NFXiUfJjXWAUN
-         NCEZotyLCloVy44Ee6z1VQWuT3patKnQf67LcfGtUomVA7tGfOQHDxuvCHZORBebSP
-         w1rDf1jHIkBrw==
-From:   Ard Biesheuvel <ardb@kernel.org>
-To:     linux-efi@vger.kernel.org
-Cc:     linux-arm-kernel@lists.infradead.org,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Leif Lindholm <leif@nuviainc.com>,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH 1/1] efi: stub: omit SetVirtualAddressMap() if marked unsupported in RT_PROP table
-Date:   Fri,  5 Mar 2021 10:39:58 +0100
-Message-Id: <20210305093958.187358-2-ardb@kernel.org>
-X-Mailer: git-send-email 2.30.1
-In-Reply-To: <20210305093958.187358-1-ardb@kernel.org>
-References: <20210305093958.187358-1-ardb@kernel.org>
+        s=k20201202; t=1614938418;
+        bh=q7+GpxBp+H0eRgTkIdpsEpb4AOMic5EYKdk6TlKfzNU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=VdQgZNulq90gd29Xtg9/oNfQ2d54P/SpjBprppu6WHUCh5dXm1SSl0GGu+C3Db9Uo
+         pzwAKH5nDVAuHW4QcGz/8GQB5Uwy2F1AF4JKaBAKwYloGiPn5yGUdPVMFOmSFrGY4q
+         1BFHvZTVShuR2OJT0m5VHBTe69UQAbmD/qup6iCvMDYVTI30coAfWYG48n1Nx0Zwfg
+         ff6QcANvdoSlC3az1tKSteLjGyz8Je2PCg+wq1tAcIFASs2XSsNRO2eEn2wRIe4a5a
+         tAI98WNSpofbBZCB1IrCBc5S9hoqSYa/Hnq02bUaEneKTqhx6nKn4Ab9WNOF3O7t4d
+         jOwVlaHOUjTTQ==
+Date:   Fri, 5 Mar 2021 10:00:12 +0000
+From:   Will Deacon <will@kernel.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Robin Murphy <robin.murphy@arm.com>,
+        Christoph Hellwig <hch@lst.de>, Joerg Roedel <joro@8bytes.org>,
+        Li Yang <leoyang.li@nxp.com>, kvm@vger.kernel.org,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linuxppc-dev <linuxppc-dev@lists.ozlabs.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        virtualization@lists.linux-foundation.org,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        netdev@vger.kernel.org,
+        freedreno <freedreno@lists.freedesktop.org>,
+        David Woodhouse <dwmw2@infradead.org>,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: Re: [Freedreno] [PATCH 16/17] iommu: remove
+ DOMAIN_ATTR_IO_PGTABLE_CFG
+Message-ID: <20210305100012.GB22536@willie-the-truck>
+References: <20210301084257.945454-1-hch@lst.de>
+ <20210301084257.945454-17-hch@lst.de>
+ <d567ad5c-5f89-effa-7260-88c6d86b4695@arm.com>
+ <CAF6AEGtTs-=aO-Ntp0Qn6mYDSv4x0-q3y217QxU7kZ6H1b1fiQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAF6AEGtTs-=aO-Ntp0Qn6mYDSv4x0-q3y217QxU7kZ6H1b1fiQ@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The EFI_RT_PROPERTIES_TABLE contains a mask of runtime services that are
-available after ExitBootServices(). This mostly does not concern the EFI
-stub at all, given that it runs before that. However, there is one call
-that is made at runtime, which is the call to SetVirtualAddressMap()
-(which is not even callable at boot time to begin with)
+On Thu, Mar 04, 2021 at 03:11:08PM -0800, Rob Clark wrote:
+> On Thu, Mar 4, 2021 at 7:48 AM Robin Murphy <robin.murphy@arm.com> wrote:
+> >
+> > On 2021-03-01 08:42, Christoph Hellwig wrote:
+> > > Signed-off-by: Christoph Hellwig <hch@lst.de>
+> >
+> > Moreso than the previous patch, where the feature is at least relatively
+> > generic (note that there's a bunch of in-flight development around
+> > DOMAIN_ATTR_NESTING), I'm really not convinced that it's beneficial to
+> > bloat the generic iommu_ops structure with private driver-specific
+> > interfaces. The attribute interface is a great compromise for these
+> > kinds of things, and you can easily add type-checked wrappers around it
+> > for external callers (maybe even make the actual attributes internal
+> > between the IOMMU core and drivers) if that's your concern.
+> 
+> I suppose if this is *just* for the GPU we could move it into adreno_smmu_priv..
+> 
+> But one thing I'm not sure about is whether
+> IO_PGTABLE_QUIRK_ARM_OUTER_WBWA is something that other devices
+> *should* be using as well, but just haven't gotten around to yet.
 
-So add the missing handling of the RT_PROP table to ensure that we only
-call SetVirtualAddressMap() if it is not being advertised as unsupported
-by the firmware.
+The intention is certainly that this would be a place to collate per-domain
+pgtable quirks, so I'd prefer not to tie that to the GPU.
 
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
----
- drivers/firmware/efi/libstub/efi-stub.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
-
-diff --git a/drivers/firmware/efi/libstub/efi-stub.c b/drivers/firmware/efi/libstub/efi-stub.c
-index ec2f3985bef3..26e69788f27a 100644
---- a/drivers/firmware/efi/libstub/efi-stub.c
-+++ b/drivers/firmware/efi/libstub/efi-stub.c
-@@ -96,6 +96,18 @@ static void install_memreserve_table(void)
- 		efi_err("Failed to install memreserve config table!\n");
- }
- 
-+static u32 get_supported_rt_services(void)
-+{
-+	const efi_rt_properties_table_t *rt_prop_table;
-+	u32 supported = EFI_RT_SUPPORTED_ALL;
-+
-+	rt_prop_table = get_efi_config_table(EFI_RT_PROPERTIES_TABLE_GUID);
-+	if (rt_prop_table)
-+		supported &= rt_prop_table->runtime_services_supported;
-+
-+	return supported;
-+}
-+
- /*
-  * EFI entry point for the arm/arm64 EFI stubs.  This is the entrypoint
-  * that is described in the PE/COFF header.  Most of the code is the same
-@@ -250,6 +262,10 @@ efi_status_t __efiapi efi_pe_entry(efi_handle_t handle,
- 			  (prop_tbl->memory_protection_attribute &
- 			   EFI_PROPERTIES_RUNTIME_MEMORY_PROTECTION_NON_EXECUTABLE_PE_DATA);
- 
-+	/* force efi_novamap if SetVirtualAddressMap() is unsupported */
-+	efi_novamap |= !(get_supported_rt_services() &
-+			 EFI_RT_SUPPORTED_SET_VIRTUAL_ADDRESS_MAP);
-+
- 	/* hibernation expects the runtime regions to stay in the same place */
- 	if (!IS_ENABLED(CONFIG_HIBERNATION) && !efi_nokaslr && !flat_va_mapping) {
- 		/*
--- 
-2.30.1
-
+Will
