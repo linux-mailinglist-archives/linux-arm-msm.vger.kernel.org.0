@@ -2,84 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FBE232E586
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 11:01:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 82A6E32E58C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 11:01:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229768AbhCEKAn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Mar 2021 05:00:43 -0500
-Received: from mail.kernel.org ([198.145.29.99]:45354 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229906AbhCEKAT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Mar 2021 05:00:19 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id B9C7C64F56;
-        Fri,  5 Mar 2021 10:00:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1614938418;
-        bh=q7+GpxBp+H0eRgTkIdpsEpb4AOMic5EYKdk6TlKfzNU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=VdQgZNulq90gd29Xtg9/oNfQ2d54P/SpjBprppu6WHUCh5dXm1SSl0GGu+C3Db9Uo
-         pzwAKH5nDVAuHW4QcGz/8GQB5Uwy2F1AF4JKaBAKwYloGiPn5yGUdPVMFOmSFrGY4q
-         1BFHvZTVShuR2OJT0m5VHBTe69UQAbmD/qup6iCvMDYVTI30coAfWYG48n1Nx0Zwfg
-         ff6QcANvdoSlC3az1tKSteLjGyz8Je2PCg+wq1tAcIFASs2XSsNRO2eEn2wRIe4a5a
-         tAI98WNSpofbBZCB1IrCBc5S9hoqSYa/Hnq02bUaEneKTqhx6nKn4Ab9WNOF3O7t4d
-         jOwVlaHOUjTTQ==
-Date:   Fri, 5 Mar 2021 10:00:12 +0000
-From:   Will Deacon <will@kernel.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Robin Murphy <robin.murphy@arm.com>,
-        Christoph Hellwig <hch@lst.de>, Joerg Roedel <joro@8bytes.org>,
-        Li Yang <leoyang.li@nxp.com>, kvm@vger.kernel.org,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linuxppc-dev <linuxppc-dev@lists.ozlabs.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        virtualization@lists.linux-foundation.org,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        netdev@vger.kernel.org,
-        freedreno <freedreno@lists.freedesktop.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: Re: [Freedreno] [PATCH 16/17] iommu: remove
- DOMAIN_ATTR_IO_PGTABLE_CFG
-Message-ID: <20210305100012.GB22536@willie-the-truck>
-References: <20210301084257.945454-1-hch@lst.de>
- <20210301084257.945454-17-hch@lst.de>
- <d567ad5c-5f89-effa-7260-88c6d86b4695@arm.com>
- <CAF6AEGtTs-=aO-Ntp0Qn6mYDSv4x0-q3y217QxU7kZ6H1b1fiQ@mail.gmail.com>
+        id S229631AbhCEKBP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Mar 2021 05:01:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33196 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229497AbhCEKAt (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 5 Mar 2021 05:00:49 -0500
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BA4DC061574
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 02:00:49 -0800 (PST)
+Received: by mail-pg1-x532.google.com with SMTP id p21so1020239pgl.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 02:00:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=zM4DqE6Hrw5wtZ/qa2MXCbk3VS7NdIe2/69MXBddOcg=;
+        b=UhHPWUALnp8w+UTOGVhHTQwOsIWoeo15caVdd2UFWdLE2oX5j3HRrNF5GAGfDL4t6c
+         rtJ61SrO+ion4b0P2sixkQXxQno9yV21nd8TTwFSs2TYmHQq0o2toi+GWo9xqJYAlGeG
+         AABaGomoC9TpXIN7T/EnQshVgqlXYQ4j2+VKn4u8gC7QOYsbWJJ26KlgK2DcNUxBbUBP
+         pFAyEV1WaedenkUuj6P0mwXn8IPfo/157McmFzSrSOFfDbEtGYNba2Y6UQO0F3Uy1U88
+         dG7Vutif6Sf1+W7gb98ABw9bAyYo1H5Mw2ciPtesZ3sKC94CNgWczqHg5oKtOzTxG/mm
+         gLFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=zM4DqE6Hrw5wtZ/qa2MXCbk3VS7NdIe2/69MXBddOcg=;
+        b=f/TzkpRTUz+7j+iv/N8CNVXeskrONCsCC6x8wtY/W/nHHv8JrRnyRocaC7djbuLpck
+         4DBtcqeHIyzhlLPEcvPRWdYrvZ8cJXViYqyT1OdPXB1gHe2igODQOJnAmTHE51Eh/HIa
+         P/RZtI9YqGckwYEsgYEUDlwvg1dnM82qC8+9dWX9BWbA6i3oMfG943zGR6vxJVl+hu3N
+         ovipF5T00+ynpfE4vF1f+3E0eVQTFhtWWiav9LAKtCraTYaiHfPxmACYcIfUw9Op0bdg
+         Ya0n2FauTkO5yZb8ia9CeKr8iDBqQu6et5ml5CTxVUVRKomm70S93wMxw6ptrTS6o9Lu
+         co+w==
+X-Gm-Message-State: AOAM531wY29I525DOGDfN1GeevQ3ZuKqctvY94yhCoZGMosaprrveLid
+        sunB7PjZaB30uTPYFpIEVoIGxtQVEaiTw67PwU1beg==
+X-Google-Smtp-Source: ABdhPJz2v5+iIAYVbS0AzdQGii15Z+uI7HWIYl2J0SS9mRh5uPZo3XJVQ5ZGk7+ApYyS4Hnz+Pga/d9jVXFd4i319Do=
+X-Received: by 2002:aa7:9843:0:b029:1ed:cc86:fa0 with SMTP id
+ n3-20020aa798430000b02901edcc860fa0mr8030981pfq.39.1614938448859; Fri, 05 Mar
+ 2021 02:00:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAF6AEGtTs-=aO-Ntp0Qn6mYDSv4x0-q3y217QxU7kZ6H1b1fiQ@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20210304155144.1.Ic9c04f960190faad5290738b2a35d73661862735@changeid>
+In-Reply-To: <20210304155144.1.Ic9c04f960190faad5290738b2a35d73661862735@changeid>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Fri, 5 Mar 2021 11:00:38 +0100
+Message-ID: <CAG3jFyuUodAKJJ2nkQ=JNRgxDPj99jMkJNrCetfbyb_35CWxYA@mail.gmail.com>
+Subject: Re: [PATCH 1/3] drm/bridge: ti-sn65dsi86: Simplify refclk handling
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        MSM <linux-arm-msm@vger.kernel.org>, robdclark@chromium.org,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 04, 2021 at 03:11:08PM -0800, Rob Clark wrote:
-> On Thu, Mar 4, 2021 at 7:48 AM Robin Murphy <robin.murphy@arm.com> wrote:
-> >
-> > On 2021-03-01 08:42, Christoph Hellwig wrote:
-> > > Signed-off-by: Christoph Hellwig <hch@lst.de>
-> >
-> > Moreso than the previous patch, where the feature is at least relatively
-> > generic (note that there's a bunch of in-flight development around
-> > DOMAIN_ATTR_NESTING), I'm really not convinced that it's beneficial to
-> > bloat the generic iommu_ops structure with private driver-specific
-> > interfaces. The attribute interface is a great compromise for these
-> > kinds of things, and you can easily add type-checked wrappers around it
-> > for external callers (maybe even make the actual attributes internal
-> > between the IOMMU core and drivers) if that's your concern.
-> 
-> I suppose if this is *just* for the GPU we could move it into adreno_smmu_priv..
-> 
-> But one thing I'm not sure about is whether
-> IO_PGTABLE_QUIRK_ARM_OUTER_WBWA is something that other devices
-> *should* be using as well, but just haven't gotten around to yet.
+Hey Douglas,
 
-The intention is certainly that this would be a place to collate per-domain
-pgtable quirks, so I'd prefer not to tie that to the GPU.
+Thanks for submitting this cleanup, it looks good to me.
 
-Will
+Reviewed-by: Robert Foss <robert.foss@linaro.org>
+
+
+On Fri, 5 Mar 2021 at 00:53, Douglas Anderson <dianders@chromium.org> wrote:
+>
+> The clock framework makes it simple to deal with an optional clock.
+> You can call clk_get_optional() and if the clock isn't specified it'll
+> just return NULL without complaint. It's valid to pass NULL to
+> enable/disable/prepare/unprepare. Let's make use of this to simplify
+> things a tiny bit.
+>
+> NOTE: this makes things look a tad bit asymmetric now since we check
+> for NULL before clk_prepare_enable() but not for
+> clk_disable_unprepare(). This seemed OK to me. We already have to
+> check for NULL in the enable case anyway so why not avoid the extra
+> call?
+
+I think this is fine. Since the refclk != NULL check in
+ti_sn_bridge_set_refclk_freq is in order to determine other behaviour,
+the asymmetry is required.
+
+>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+>
+>  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 11 +++--------
+>  1 file changed, 3 insertions(+), 8 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> index f27306c51e4d..942019842ff4 100644
+> --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> @@ -1261,14 +1261,9 @@ static int ti_sn_bridge_probe(struct i2c_client *client,
+>                 return ret;
+>         }
+>
+> -       pdata->refclk = devm_clk_get(pdata->dev, "refclk");
+> -       if (IS_ERR(pdata->refclk)) {
+> -               ret = PTR_ERR(pdata->refclk);
+> -               if (ret == -EPROBE_DEFER)
+> -                       return ret;
+> -               DRM_DEBUG_KMS("refclk not found\n");
+> -               pdata->refclk = NULL;
+> -       }
+> +       pdata->refclk = devm_clk_get_optional(pdata->dev, "refclk");
+> +       if (IS_ERR(pdata->refclk))
+> +               return PTR_ERR(pdata->refclk);
+>
+>         ret = ti_sn_bridge_parse_dsi_host(pdata);
+>         if (ret)
+> --
+> 2.30.1.766.gb4fecdf3b7-goog
+>
