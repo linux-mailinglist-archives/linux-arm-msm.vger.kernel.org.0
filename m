@@ -2,192 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0378732F2D8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 19:39:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9171032F2E9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 19:40:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229797AbhCEShW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Mar 2021 13:37:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59568 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230252AbhCEShF (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Mar 2021 13:37:05 -0500
-Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A00DC061574
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 10:37:05 -0800 (PST)
-Received: by mail-qk1-x736.google.com with SMTP id b130so2932197qkc.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 10:37:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=tAzU/ER1YTxKVrtAuXzIX1YVd5lSI8a7UASsaMYtGqY=;
-        b=F6v+gi5njFo02gEo0z1Nd6777zf+xCNjxdwa0X7VeLeXPMrOu1HTtE8AEdqXdq/MBZ
-         v3VsLDdlwbKBVJPztcbzun5R+lehMx0t5bH9SrbuuXC2HAXbGKoeLlQXamfNJCHa13+P
-         R509ASsFL8WM9LRpe9/eBWPPLKwj+LSpaWjv8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tAzU/ER1YTxKVrtAuXzIX1YVd5lSI8a7UASsaMYtGqY=;
-        b=immMvKujYD5blAOfKbI/Nx559xvy2XtNjYHHJNIDQQjJ+Wnoc1f/2Z7R63s2NhfUbn
-         V8BYu0hbWNAA5m7fCE3PnpH2Q/OUtxZwYLqqiKK1xVnVwCW/oigxoAPtw8sZFpJ1TVZK
-         hBoDVnnyFom8s1HsAcKRkDJpq3zKQ8spn3iBcocfwt2NMtLthINR/3vZyTAnmzPHTUqs
-         OKdNpqX1YI7lQF/iF/41vJt8PbCvJfAC4iQ08Gflr2Vbl0HMNNuf8ZfcwmBr13ObhVjQ
-         1kvMUdfx50jVb0NIgzteFeOp0slSJiYuD43aw2ORiDOYk/7M5DVB7yHAIClJspT/B8F2
-         jboQ==
-X-Gm-Message-State: AOAM53164At8eFPPMeDQ14pJdZLvO1Nmt4BUMbuQMiIxIv3HLRFoevbG
-        xTKC8KYEs5EJBfLWqkYZ73c1kz3PbxvnrA==
-X-Google-Smtp-Source: ABdhPJzQqiUEgL8aDhuB+xmq55OJ5dobwClci2f8br8DDwOQQHguFCNI2hsr/5deo4keuK5L/N07EQ==
-X-Received: by 2002:a37:a8cc:: with SMTP id r195mr10023277qke.86.1614969423662;
-        Fri, 05 Mar 2021 10:37:03 -0800 (PST)
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com. [209.85.219.178])
-        by smtp.gmail.com with ESMTPSA id p12sm2390385qtw.27.2021.03.05.10.37.02
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Mar 2021 10:37:02 -0800 (PST)
-Received: by mail-yb1-f178.google.com with SMTP id 133so2956317ybd.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 10:37:02 -0800 (PST)
-X-Received: by 2002:a25:ab54:: with SMTP id u78mr16373727ybi.276.1614969422178;
- Fri, 05 Mar 2021 10:37:02 -0800 (PST)
+        id S229601AbhCESkT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Mar 2021 13:40:19 -0500
+Received: from m42-2.mailgun.net ([69.72.42.2]:12865 "EHLO m42-2.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230078AbhCESjr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 5 Mar 2021 13:39:47 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1614969501; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=osjZTzJLJWcqCLVpSskqeQnmz4nbllh1a3JglbqZKiI=;
+ b=HdyXwSNmkOLkW2MVkadkwzVuHTp4pvZRWuPgdTliw5YXiyJs+kwXhxHRzqZEXmkVXbwkHBrJ
+ AThx5zcyiJ7JaF2yEYkw8TgO4GiXen2ThqwZAaNZyVjvcOyEUmfworAqSEhoYXowx0b8af2U
+ A4D/h1FgyLmGlXp/iE7OK+SsjOM=
+X-Mailgun-Sending-Ip: 69.72.42.2
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 60427a98f7ec0ea57ca2fe31 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 05 Mar 2021 18:38:16
+ GMT
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id BEDE9C433CA; Fri,  5 Mar 2021 18:38:15 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C04E1C433C6;
+        Fri,  5 Mar 2021 18:38:14 +0000 (UTC)
 MIME-Version: 1.0
-References: <20210304180415.1531430-1-mka@chromium.org> <20210304100341.1.I6d587e7ae72a5a47253bb95dfdc3158f8cc8a157@changeid>
-In-Reply-To: <20210304100341.1.I6d587e7ae72a5a47253bb95dfdc3158f8cc8a157@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 5 Mar 2021 10:36:49 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=XKpzSq2GqvoDieuZVZFrwmO0Q2prPaKeJRKXJmxPGWpg@mail.gmail.com>
-Message-ID: <CAD=FV=XKpzSq2GqvoDieuZVZFrwmO0Q2prPaKeJRKXJmxPGWpg@mail.gmail.com>
-Subject: Re: [PATCH 1/4] arm64: dts: qcom: sc7180: lazor: Simplify disabling
- of charger thermal zone
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 05 Mar 2021 10:38:14 -0800
+From:   abhinavk@codeaurora.org
+To:     Dan Carpenter <dan.carpenter@oracle.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>, tanmay@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        khsieh@codeaurora.org, robdclark@gmail.com, nganji@codeaurora.org,
+        seanpaul@chromium.org, aravindh@codeaurora.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [Freedreno] [PATCH] drm/msm/dp: Fix warnings reported by kbot in
+ DP driver
+In-Reply-To: <20210305072350.GF2222@kadam>
+References: <1614907912-6880-1-git-send-email-abhinavk@codeaurora.org>
+ <161492735848.1478170.885416005935439120@swboyd.mtv.corp.google.com>
+ <20210305072350.GF2222@kadam>
+Message-ID: <4dc46ac4940a0c9d070f04088df58c81@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Stephen
 
-On Thu, Mar 4, 2021 at 10:04 AM Matthias Kaehlcke <mka@chromium.org> wrote:
->
-> Commit f73558cc83d1 ("arm64: dts: qcom: sc7180: Disable charger
-> thermal zone for lazor") disables the charger thermal zone for
-> specific lazor revisions due to an unsupported thermistor type.
-> The initial idea was to disable the thermal zone for older
-> revisions and leave it enabled for newer ones that use a
-> supported thermistor. Finally the thermistor won't be changed
-> on newer revisions, hence the thermal zone should be disabled
-> for all lazor (and limozeen) revisions. Instead of disabling
-> it per revision do it once in the shared .dtsi for lazor.
->
-> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> ---
->
->  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts | 9 ---------
->  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts | 9 ---------
->  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts | 9 ---------
->  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi   | 9 +++++++++
->  4 files changed, 9 insertions(+), 27 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
-> index 5c997cd90069..30e3e769d2b4 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
-> @@ -14,15 +14,6 @@ / {
->         compatible = "google,lazor-rev0", "qcom,sc7180";
->  };
->
-> -/*
-> - * Lazor is stuffed with a 47k NTC as charger thermistor which currently is
-> - * not supported by the PM6150 ADC driver. Disable the charger thermal zone
-> - * to avoid using bogus temperature values.
-> - */
-> -&charger_thermal {
-> -       status = "disabled";
-> -};
-> -
->  &pp3300_hub {
->         /* pp3300_l7c is used to power the USB hub */
->         /delete-property/regulator-always-on;
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-> index d9fbcc7bc5bd..c2ef06367baf 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-> @@ -14,15 +14,6 @@ / {
->         compatible = "google,lazor-rev1", "google,lazor-rev2", "qcom,sc7180";
->  };
->
-> -/*
-> - * Lazor is stuffed with a 47k NTC as charger thermistor which currently is
-> - * not supported by the PM6150 ADC driver. Disable the charger thermal zone
-> - * to avoid using bogus temperature values.
-> - */
-> -&charger_thermal {
-> -       status = "disabled";
-> -};
-> -
->  &pp3300_hub {
->         /* pp3300_l7c is used to power the USB hub */
->         /delete-property/regulator-always-on;
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts
-> index 19e69adb9e04..1b9d2f46359e 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts
-> @@ -13,12 +13,3 @@ / {
->         model = "Google Lazor (rev3+)";
->         compatible = "google,lazor", "qcom,sc7180";
->  };
-> -
-> -/*
-> - * Lazor is stuffed with a 47k NTC as charger thermistor which currently is
-> - * not supported by the PM6150 ADC driver. Disable the charger thermal zone
-> - * to avoid using bogus temperature values.
-> - */
-> -&charger_thermal {
-> -       status = "disabled";
-> -};
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-> index 89e5cd29ec09..aa2c4a9098db 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-> @@ -58,6 +58,15 @@ ap_ts: touchscreen@10 {
->         };
->  };
->
-> +/*
-> + * Lazor is stuffed with a 47k NTC as charger thermistor which currently is
-> + * not supported by the PM6150 ADC driver. Disable the charger thermal zone
-> + * to avoid using bogus temperature values.
-> + */
-> +&charger_thermal {
-> +       status = "disabled";
-> +};
-> +
->  /* PINCTRL - modifications to sc7180-trogdor.dtsi */
->
->  &ts_reset_l {
+Thanks for the review.
+I will break this up into patches according to the class of warning to 
+show the warning in the commit text
+and resend the patches.
 
-The idea is right, but I'm having a hard time figuring out what tree
-you posted your patch against. You said you did it atop my "v2" series
-[1], right?  ...but the "sc7180-trogdor-lazor.dtsi" really doesn't
-match. In my tree, for instance, right above the PINCTRL comment
-should be:
-
-&wifi {
-  qcom,ath10k-calibration-variant = "GO_LAZOR";
-};
-
-...but that's definitely not what's there in whatever your patch was
-written against... It seems like you're also missing the panel and
-trackpad nodes...
-
-[1] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=440315
-
-
--Doug
+Abhinav
+On 2021-03-04 23:23, Dan Carpenter wrote:
+> On Thu, Mar 04, 2021 at 10:55:58PM -0800, Stephen Boyd wrote:
+>> > @@ -368,44 +368,21 @@ static int dp_debug_init(struct dp_debug *dp_debug, struct drm_minor *minor)
+>> >         int rc = 0;
+>> >         struct dp_debug_private *debug = container_of(dp_debug,
+>> >                         struct dp_debug_private, dp_debug);
+>> > -       struct dentry *file;
+>> > -       struct dentry *test_active;
+>> > -       struct dentry *test_data, *test_type;
+>> >
+>> > -       file = debugfs_create_file("dp_debug", 0444, minor->debugfs_root,
+>> > +       debugfs_create_file("dp_debug", 0444, minor->debugfs_root,
+>> >                         debug, &dp_debug_fops);
+>> > -       if (IS_ERR_OR_NULL(file)) {
+>> > -               rc = PTR_ERR(file);
+>> > -               DRM_ERROR("[%s] debugfs create file failed, rc=%d\n",
+>> > -                                 DEBUG_NAME, rc);
+>> > -       }
+>> >
+>> > -       test_active = debugfs_create_file("msm_dp_test_active", 0444,
+>> > +       debugfs_create_file("msm_dp_test_active", 0444,
+>> >                         minor->debugfs_root,
+>> >                         debug, &test_active_fops);
+>> > -       if (IS_ERR_OR_NULL(test_active)) {
+>> > -               rc = PTR_ERR(test_active);
+>> > -               DRM_ERROR("[%s] debugfs test_active failed, rc=%d\n",
+>> > -                                 DEBUG_NAME, rc);
+>> > -       }
+>> >
+>> > -       test_data = debugfs_create_file("msm_dp_test_data", 0444,
+>> > +       debugfs_create_file("msm_dp_test_data", 0444,
+>> >                         minor->debugfs_root,
+>> >                         debug, &dp_test_data_fops);
+>> > -       if (IS_ERR_OR_NULL(test_data)) {
+>> > -               rc = PTR_ERR(test_data);
+>> > -               DRM_ERROR("[%s] debugfs test_data failed, rc=%d\n",
+>> > -                                 DEBUG_NAME, rc);
+>> > -       }
+>> >
+>> > -       test_type = debugfs_create_file("msm_dp_test_type", 0444,
+>> > +       debugfs_create_file("msm_dp_test_type", 0444,
+>> >                         minor->debugfs_root,
+>> >                         debug, &dp_test_type_fops);
+>> > -       if (IS_ERR_OR_NULL(test_type)) {
+>> > -               rc = PTR_ERR(test_type);
+>> > -               DRM_ERROR("[%s] debugfs test_type failed, rc=%d\n",
+>> > -                                 DEBUG_NAME, rc);
+>> > -       }
+>> 
+>> Debugfs failures.
+> 
+> [ Update.  I misunderstood what you were saying, and initially thought
+>   you were critiquing the patch instead of the commit message.  The
+>   patch looks okay.  Probably a lot of maintainers would prefer it
+>   broken multiple chunks with one patch per class of warning.  But I
+>   already wrote this email and I love the sound of my own voice so I'm
+>   sending it.  - dan ]
+> 
+> The Smatch warning for this was that the error handling was slightly
+> off because debugfs_create_file() doesn't return NULL these days.  But
+> really these functions are not supposed to be error checked in the
+> normal case.
+> 
+> If you do a `git grep -w debugfs_create_file` there are 1472 callers
+> and only 192 check.  This is partly because Greg went through and did a
+> mass delete of error handling.
+> 
+> The way that debugfs works is if you fail to create a directory then
+> the debugfs_create_file will check if the root is an error pointer.  So
+> passing it "handles" errors itself.
+> 
+> The one time where I've seen that checking for errors is essential is
+> if they driver dereferences the "test_data" dentry itself.  That's
+> pretty uncommon.
+> 
+> [ So probably the commit message for this chunk should be:
+> 
+>   Delete unnecessary debugfs error handling
+> 
+>   Debugfs functions are not supposed to be checked in the normal case
+>   so delete this code.  Also it silences a Smatch warning that we're
+>   checking for NULL when these functions only return error pointers.  ]
+> 
+> regards,
+> dan carpenter
+> 
+> _______________________________________________
+> Freedreno mailing list
+> Freedreno@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/freedreno
