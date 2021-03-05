@@ -2,137 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DB7A332EC22
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 14:30:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 42DB332EC26
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 14:31:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230272AbhCENaW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Mar 2021 08:30:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49790 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230227AbhCEN35 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Mar 2021 08:29:57 -0500
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4443CC061756
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 05:29:57 -0800 (PST)
-Received: by mail-pf1-x433.google.com with SMTP id 192so2205988pfv.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 05:29:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mfYkm+BL2FbXLFwEZ3ZDrP3/MgNwOcEcENSfV05Qjdc=;
-        b=jYQus7fMOi42foxsoGrc7MRHYgV6svCXk6QYw11BMh3GfwwnGOL7gI1uGtHHPL1PPZ
-         1VkCsHplucpoOW5WNGm/MCZuOg1gDrmK9fZ8j6/jDMoj4+NKM8sz5kyWgYgocTDoARXh
-         xvNM2tMeiprZNeDoxGoTDP3Q9xK+b0RM1P2LfcL/a9Sod61jbpIqvNzGgBT3JssB0Nbi
-         4WUbgYZQ2pXufAPML3uIl9cGAlYnoWz06nsMsx0deoT01xgerG0H5L7VzHLc76GG9Yjn
-         iUEKUkQgCw6fCqt/0g20va/6goirBV4bCPa52DVs5Ci2+ehK9SgOGihsmWHVQBm/BNKh
-         KRGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mfYkm+BL2FbXLFwEZ3ZDrP3/MgNwOcEcENSfV05Qjdc=;
-        b=gw5UqihRrDirBpzoZoHYhvU7BAvM/z0HxEgkzrUib4d5SKbi/mmk0+mOb1ZLVNszNR
-         RdOeqLZWtwdvoYpbWnMCiu0CQYMj0uBjasdshUwF8p0zqZD/WGxBxmqsnZgY1cmmzZac
-         km+z/3qMxtnRUrCK/AF/3SzOmMaHrFBd4yS3bWqKeXUqLfTetaQjvAjohGoCX2zHz17g
-         NWYmMGyc7xvaPd9S5PNG1oODJe4BSfC5lKZL1VPFZt/fCjYw6KEu4sfaNohfpLoTgXdl
-         xhsgXc3FJ35LmC+6+c0WgyERYxkMxQWSSVw6vEQRi/YvuHxX3LxRE5GPqDdu2AQRxpzg
-         8l5A==
-X-Gm-Message-State: AOAM530T9I7FOxx0X+pl9159AcFMzLf67hoTDF/W8WT0E7VhREjE6gBY
-        44cYT+oxz3kMX5HfpuHT54yHB+s5BsBPs02FruK7WA==
-X-Google-Smtp-Source: ABdhPJy6d4A+K8v9995VANqIhEfj6XvmEqvEzQWkNGBLTVQn62bqPp0rx1a3sqPoLU1BrmK+vCHlTp1wu+o1gmXiUPg=
-X-Received: by 2002:a62:7a09:0:b029:1f1:5cf4:3fd7 with SMTP id
- v9-20020a627a090000b02901f15cf43fd7mr1689899pfc.66.1614950996685; Fri, 05 Mar
- 2021 05:29:56 -0800 (PST)
+        id S230401AbhCENaw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Mar 2021 08:30:52 -0500
+Received: from m42-2.mailgun.net ([69.72.42.2]:25899 "EHLO m42-2.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230372AbhCENaZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 5 Mar 2021 08:30:25 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1614951023; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=iAyZKUXQ4XNfheJxhIWXSYGGrXEh7QxL1JenzRX2afY=;
+ b=HvrfLAjEIlWBmhRey87wMnqPnle9oyMnsytl22yS5GpYf7mYyak9wDONeW4S+q/gdqJKDgsG
+ HnoyfxJw27rny613uCavhSUIWypw2hgypWkwlrIXSmLbFnDBr7Ll6IgTDh0Wr0SQzktJ2z4P
+ LllBCvU86mS63Gf/m72B8xM1nSw=
+X-Mailgun-Sending-Ip: 69.72.42.2
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 60423266f7ec0ea57c969d67 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 05 Mar 2021 13:30:14
+ GMT
+Sender: mkrishn=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E8F4BC43461; Fri,  5 Mar 2021 13:30:13 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkrishn)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3895BC433C6;
+        Fri,  5 Mar 2021 13:30:13 +0000 (UTC)
 MIME-Version: 1.0
-References: <1614138270-2374-1-git-send-email-bbhatt@codeaurora.org> <1614138270-2374-2-git-send-email-bbhatt@codeaurora.org>
-In-Reply-To: <1614138270-2374-2-git-send-email-bbhatt@codeaurora.org>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Fri, 5 Mar 2021 14:37:51 +0100
-Message-ID: <CAMZdPi9Kg7_tcu1WQMQHzmNQLyBnH4TeJf6Rbq73Q=Ur7RDsqA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] bus: mhi: core: Introduce internal register poll
- helper function
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        =?UTF-8?B?Q2FybCBZaW4o5q635byg5oiQKQ==?= <carl.yin@quectel.com>,
-        Naveen Kumar <naveen.kumar@quectel.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 05 Mar 2021 19:00:13 +0530
+From:   mkrishn@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, kalyan_t@codeaurora.org,
+        tanmay@codeaurora.org, abhinavk@codeaurora.org,
+        robdclark@gmail.com, bjorn.andersson@linaro.org,
+        vinod.koul@linaro.org, rnayak@codeaurora.org,
+        dianders@chromium.org, sibis@codeaurora.org, khsieh@codeaurora.org
+Subject: Re: [PATCH v12 1/4] dt-bindings: msm: disp: add yaml schemas for DPU
+ bindings
+In-Reply-To: <161492718630.1478170.1460276218009944071@swboyd.mtv.corp.google.com>
+References: <1613127000-3015-1-git-send-email-mkrishn@codeaurora.org>
+ <161436872955.1254594.2765257503019122275@swboyd.mtv.corp.google.com>
+ <5a94b8c4ccb73afdf99bf901ce86acde@codeaurora.org>
+ <161492718630.1478170.1460276218009944071@swboyd.mtv.corp.google.com>
+Message-ID: <d769213612ccbde20c19100c7550387c@codeaurora.org>
+X-Sender: mkrishn@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 24 Feb 2021 at 04:44, Bhaumik Bhatt <bbhatt@codeaurora.org> wrote:
->
-> Introduce helper function to allow MHI core driver to poll for
-> a value in a register field. This helps reach a common path to
-> read and poll register values along with a retry time interval.
->
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> ---
->  drivers/bus/mhi/core/internal.h |  3 +++
->  drivers/bus/mhi/core/main.c     | 23 +++++++++++++++++++++++
->  2 files changed, 26 insertions(+)
->
-> diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
-> index 6f80ec3..005286b 100644
-> --- a/drivers/bus/mhi/core/internal.h
-> +++ b/drivers/bus/mhi/core/internal.h
-> @@ -643,6 +643,9 @@ int __must_check mhi_read_reg(struct mhi_controller *mhi_cntrl,
->  int __must_check mhi_read_reg_field(struct mhi_controller *mhi_cntrl,
->                                     void __iomem *base, u32 offset, u32 mask,
->                                     u32 shift, u32 *out);
-> +int __must_check mhi_poll_reg_field(struct mhi_controller *mhi_cntrl,
-> +                                   void __iomem *base, u32 offset, u32 mask,
-> +                                   u32 shift, u32 val, u32 delayus);
->  void mhi_write_reg(struct mhi_controller *mhi_cntrl, void __iomem *base,
->                    u32 offset, u32 val);
->  void mhi_write_reg_field(struct mhi_controller *mhi_cntrl, void __iomem *base,
-> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> index 4e0131b..249ae26 100644
-> --- a/drivers/bus/mhi/core/main.c
-> +++ b/drivers/bus/mhi/core/main.c
-> @@ -4,6 +4,7 @@
->   *
->   */
->
-> +#include <linux/delay.h>
->  #include <linux/device.h>
->  #include <linux/dma-direction.h>
->  #include <linux/dma-mapping.h>
-> @@ -37,6 +38,28 @@ int __must_check mhi_read_reg_field(struct mhi_controller *mhi_cntrl,
->         return 0;
->  }
->
-> +int __must_check mhi_poll_reg_field(struct mhi_controller *mhi_cntrl,
-> +                                   void __iomem *base, u32 offset,
-> +                                   u32 mask, u32 shift, u32 val, u32 delayus)
-> +{
-> +       int ret = -ENOENT;
-> +       u32 out, retry = (mhi_cntrl->timeout_ms * 1000) / delayus;
+On 2021-03-05 12:23, Stephen Boyd wrote:
+> Quoting mkrishn@codeaurora.org (2021-03-04 04:36:05)
+>> On 2021-02-27 01:15, Stephen Boyd wrote:
+>> > Quoting Krishna Manikandan (2021-02-12 02:49:57)
+>> >> +
+>> >> +    soc {
+>> >> +      #address-cells = <2>;
+>> >> +      #size-cells = <2>;
+>> >
+>> > I think we can drop the soc node from the examples.
+>> Hi Stephen,
+>> 
+>> In latest dt schema, there is a rule that we have to specify the 
+>> address
+>> and size cells or else it will take default value of 1 for both. If we
+>> use these default values, dt binding check will throw error as display
+>> uses 2 address cells and 2 size cells. That's why soc node was added 
+>> to
+>> specify the values for mdss node.
+>> 
+> 
+> Do you need to use both cells in the example? Presumably the second 
+> cell
+> is all zero, so it's useless. The example doesn't have to have both
+> cells in the reg property, that can be fixed up when writing the DT for
+> a particular SoC.
 
-Can we get the timeout from parameter, not sure all callers will want
-to wait the controller timeout_ms in the future. In case of PCI the
-mhi_cntrl->timeout_ms can be really huge given the device can take up
-to 15 seconds to completely start.
-
-> +
-> +       while (retry--) {
-> +               ret = mhi_read_reg_field(mhi_cntrl, base, offset, mask, shift,
-> +                                        &out);
-> +               if (ret)
-> +                       return -EIO;
-> +
-> +               if (out == val)
-> +                       return 0;
-> +
-> +               udelay(delayus);
-
-I would use a sleep variant (msleep) and millisecond parameter for the function.
-
-Regards,
-Loic
+Sure Stephen. I will make the changes in the next patchset.
+Thanks,
+Krishna
