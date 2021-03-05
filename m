@@ -2,208 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EF5D032E653
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 11:28:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6FC3E32E6A3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 11:47:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229563AbhCEK2Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Mar 2021 05:28:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39124 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229597AbhCEK2J (ORCPT
+        id S229576AbhCEKq2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Mar 2021 05:46:28 -0500
+Received: from mx07-00178001.pphosted.com ([185.132.182.106]:39589 "EHLO
+        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229558AbhCEKqV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Mar 2021 05:28:09 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1827C061574
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 02:28:08 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id w203-20020a1c49d40000b029010c706d0642so5789769wma.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 02:28:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=508mHarsDAedjeOjCGR9JTna24netIemqOogSJyJGyc=;
-        b=AuS+3HMvYjH51pD/anB6X2/9d1EmQcyRJ40Ww+WTp//AQW7XM1K6F9BZlGyrOu5NgQ
-         +H1W34bc5EYxDvaCuu9CoxlUYl0WW0YrHL8TMIrRw5DCYY3iTQW3YLqcZjyZgLhQaamq
-         wTezvbziWy691ENdKl41IL1CCFzTMo7O+/P3jRZBRaA1au8RpGiNnKSn6UUGLQqvEnGc
-         gvGKjbbDJm+moigBzgL+kqqVbqBFhG2ahLEQjFlJpxQXLdLr0NGYueEJq2vr+BdXf/g5
-         65+n9HWmbJUpq5FLHxsdR1/a+ar8ngz/ZI790dYNEJs9xX9ilgIAL04Q17XOMTdPj0dF
-         dzbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=508mHarsDAedjeOjCGR9JTna24netIemqOogSJyJGyc=;
-        b=BNnTvL60w++NK4G6p0pZP/CJmDOGo1t0WdZrNOQZq3nFi9jNigVjSFp09siAmwIMje
-         f5Z2MGsn3ZFpd7+n2n7iajca/irQltIgoIoKrlhXDtbj+rTWHvT19wthyZmWHYFB6aaK
-         OP/ZpMSJXx0SxVymjZ/Kx0iS0x6IVyqTp3+S6BNIcdGZsEmfiarGQWszaku2FR4+6Isz
-         4Szc0S60DNLvfKU9eXISQnJ8EpURtq8w/T53aWr9uYYR5yJBrao8G9NOsCAPZKoKZeiX
-         B3bNbK93HP8cJClvsPQWAgmE8okiZE8pz43yn3eDu4hKQ4HrOe+k2jIGgLi5FaWmKf7S
-         wENQ==
-X-Gm-Message-State: AOAM530QyCP9Imhjs9TuyjOdbftv8DGT3NhKQLTIcWlhgCwE15vvHZQ/
-        +fihfMHPPimUq82dHRR9FYIySw==
-X-Google-Smtp-Source: ABdhPJztwmHB+341Q2xY064L9OQmgO+DyCD8SsAIe1i9XQUeq0XqSvWUmufvkgY8nJnBed7A9o6NjA==
-X-Received: by 2002:a1c:9854:: with SMTP id a81mr7844507wme.19.1614940087340;
-        Fri, 05 Mar 2021 02:28:07 -0800 (PST)
-Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.googlemail.com with ESMTPSA id s83sm4051271wmf.26.2021.03.05.02.28.06
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 05 Mar 2021 02:28:06 -0800 (PST)
-Subject: Re: [PATCH 1/3] drm/msm: Fix speed-bin support not to access outside
- valid memory
-To:     Douglas Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Jordan Crouse <jcrouse@codeaurora.org>
-Cc:     Niklas Cassel <niklas.cassel@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>, Eric Anholt <eric@anholt.net>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Sean Paul <sean@poorly.run>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-References: <20210227002603.3260599-1-dianders@chromium.org>
- <20210226162521.1.Ib5ae69a80704c3a2992100b9b5bac1a6cc470249@changeid>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <6ce9f5b8-50b4-e655-f6c5-4e095c1d7e19@linaro.org>
-Date:   Fri, 5 Mar 2021 10:28:05 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        Fri, 5 Mar 2021 05:46:21 -0500
+Received: from pps.filterd (m0046668.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id 125AcLOY026340;
+        Fri, 5 Mar 2021 11:46:15 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=selector1;
+ bh=e8RgWyuTLeswgNcGA3ifo/dI3vZUFn59Nt++mY73tcI=;
+ b=VonhnXj3mFxSVt4fitfX6UjULmCRSRubQAuM/KrvVZQYZA2ouOHyqHGFDp1YJ8DEB9ro
+ I0QcpwTClTRndysEA8HG/jmCKXNlxHoyd7LCH/G1z4qX8z85WYmyEAb6qdepctdKo3mQ
+ 88yjp/BA+l36bpxpKuwSTW/Qxyi5M8IwTArCu0e8IQsvq8kU2s1WERqTrjYaKMRRkNTA
+ CFM8txCfIsXKACS9iBZ3BTsn4iiJdZmJgsCWUY7WMvNw7mRr/C3gvAiyHzqpuvVv0pUz
+ RjIJpFqj3Z3/JpnysWjFkKRCNb8WuOP/ELMyanHLuMOvdtVPwgayUcPZXHhL1Xnb+7mU TQ== 
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com with ESMTP id 36yfc4dq0k-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 05 Mar 2021 11:46:15 +0100
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 9D66910002A;
+        Fri,  5 Mar 2021 11:46:14 +0100 (CET)
+Received: from Webmail-eu.st.com (sfhdag2node3.st.com [10.75.127.6])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 85D252425CB;
+        Fri,  5 Mar 2021 11:46:14 +0100 (CET)
+Received: from lmecxl0889.lme.st.com (10.75.127.51) by SFHDAG2NODE3.st.com
+ (10.75.127.6) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Fri, 5 Mar
+ 2021 11:46:13 +0100
+Subject: Re: [PATCH v5 08/16] rpmsg: glink: add sendto and trysendto ops
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>
+CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Andy Gross <agross@kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20210219111501.14261-1-arnaud.pouliquen@foss.st.com>
+ <20210219111501.14261-9-arnaud.pouliquen@foss.st.com>
+ <20210304191129.GE3854911@xps15>
+From:   Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
+Message-ID: <e0f60693-3184-55c1-db67-1725a5f9c24d@foss.st.com>
+Date:   Fri, 5 Mar 2021 11:46:13 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-In-Reply-To: <20210226162521.1.Ib5ae69a80704c3a2992100b9b5bac1a6cc470249@changeid>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <20210304191129.GE3854911@xps15>
+Content-Type: text/plain; charset="utf-8"
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.75.127.51]
+X-ClientProxiedBy: SFHDAG2NODE1.st.com (10.75.127.4) To SFHDAG2NODE3.st.com
+ (10.75.127.6)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369,18.0.761
+ definitions=2021-03-05_05:2021-03-03,2021-03-05 signatures=0
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Mathieu,
 
+On 3/4/21 8:11 PM, Mathieu Poirier wrote:
+> On Fri, Feb 19, 2021 at 12:14:53PM +0100, Arnaud Pouliquen wrote:
+>> Implement the sendto ops to support the future rpmsg_char update for the
+>> vitio backend support.
+> 
+> Add a new line, otherwise it is very easy to read.
+> 
+>> The use of sendto in rpmsg_char is needed as a destination address is
+>> requested at least by the virtio backend.
+> 
+> Same here and throughout the patchset.
+> 
+>> The glink implementation does not need a destination address so ignores it.
+>>
+>> Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
+>> ---
+>>  drivers/rpmsg/qcom_glink_native.c | 16 ++++++++++++++++
+>>  1 file changed, 16 insertions(+)
+>>
+>> diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+>> index d4e4dd482614..ae2c03b59c55 100644
+>> --- a/drivers/rpmsg/qcom_glink_native.c
+>> +++ b/drivers/rpmsg/qcom_glink_native.c
+>> @@ -1332,6 +1332,20 @@ static int qcom_glink_trysend(struct rpmsg_endpoint *ept, void *data, int len)
+>>  	return __qcom_glink_send(channel, data, len, false);
+>>  }
+>>  
+>> +static int qcom_glink_sendto(struct rpmsg_endpoint *ept, void *data, int len, u32 dst)
+>> +{
+>> +	struct glink_channel *channel = to_glink_channel(ept);
+>> +
+>> +	return __qcom_glink_send(channel, data, len, true);
+>> +}
+>> +
+>> +static int qcom_glink_trysendto(struct rpmsg_endpoint *ept, void *data, int len, u32 dst)
+>> +{
+>> +	struct glink_channel *channel = to_glink_channel(ept);
+>> +
+>> +	return __qcom_glink_send(channel, data, len, false);
+>> +}
+> 
+> Just rename send() to sendto() and trysend() to trysendto() and ignore the
+> destination address.  
 
-On 27/02/2021 00:26, Douglas Anderson wrote:
-> When running the latest kernel on an sc7180 with KASAN I got this
-> splat:
->    BUG: KASAN: slab-out-of-bounds in a6xx_gpu_init+0x618/0x644
->    Read of size 4 at addr ffffff8088f36100 by task kworker/7:1/58
->    CPU: 7 PID: 58 Comm: kworker/7:1 Not tainted 5.11.0+ #3
->    Hardware name: Google Lazor (rev1 - 2) with LTE (DT)
->    Workqueue: events deferred_probe_work_func
->    Call trace:
->     dump_backtrace+0x0/0x3a8
->     show_stack+0x24/0x30
->     dump_stack+0x174/0x1e0
->     print_address_description+0x70/0x2e4
->     kasan_report+0x178/0x1bc
->     __asan_report_load4_noabort+0x44/0x50
->     a6xx_gpu_init+0x618/0x644
->     adreno_bind+0x26c/0x438
-> 
-> This is because the speed bin is defined like this:
->    gpu_speed_bin: gpu_speed_bin@1d2 {
->      reg = <0x1d2 0x2>;
->      bits = <5 8>;
->    };
-> 
-> As you can see the "length" is 2 bytes. That means that the nvmem
-> subsystem allocates only 2 bytes. The GPU code, however, was casting
-> the pointer allocated by nvmem to a (u32 *) and dereferencing. That's
-> not so good.
-> 
-> Let's fix this to just use the nvmem_cell_read_u16() accessor function
-> which simplifies things and also gets rid of the splat.
-> 
-> Let's also put an explicit conversion from little endian in place just
-> to make things clear. The nvmem subsystem today is assuming little
-> endian and this makes it clear. Specifically, the way the above sc7180
-> cell is interpreted:
-> 
-> NVMEM:
->   +--------+--------+--------+--------+--------+
->   | ...... | 0x1d3  | 0x1d2  | ...... | 0x000  |
->   +--------+--------+--------+--------+--------+
->                ^       ^
->               msb     lsb
-> 
-> You can see that the least significant data is at the lower address
-> which is little endian.
-> 
-> NOTE: someone who is truly paying attention might wonder about me
-> picking the "u16" version of this accessor instead of the "u8" (since
-> the value is 8 bits big) or the u32 version (just for fun). At the
-> moment you need to pick the accessor that exactly matches the length
-> the cell was specified as in the device tree. Hopefully future
-> patches to the nvmem subsystem will fix this.
-> 
-> Fixes: fe7952c629da ("drm/msm: Add speed-bin support to a618 gpu")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
-> 
->   drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 31 +++++++--------------------
->   1 file changed, 8 insertions(+), 23 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index ba8e9d3cf0fe..0e2024defd79 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -1350,35 +1350,20 @@ static int a6xx_set_supported_hw(struct device *dev, struct a6xx_gpu *a6xx_gpu,
->   		u32 revn)
->   {
->   	struct opp_table *opp_table;
-> -	struct nvmem_cell *cell;
->   	u32 supp_hw = UINT_MAX;
-> -	void *buf;
-> -
-> -	cell = nvmem_cell_get(dev, "speed_bin");
-> -	/*
-> -	 * -ENOENT means that the platform doesn't support speedbin which is
-> -	 * fine
-> -	 */
-> -	if (PTR_ERR(cell) == -ENOENT)
-> -		return 0;
-> -	else if (IS_ERR(cell)) {
-> -		DRM_DEV_ERROR(dev,
-> -				"failed to read speed-bin. Some OPPs may not be supported by hardware");
-> -		goto done;
-> -	}
-> +	u16 speedbin;
-> +	int ret;
->   
-> -	buf = nvmem_cell_read(cell, NULL);
+Function prototypes have to match with rpmsg_endpoint_ops structure defined
+below. So seems to me not possible to just rename the functions.
+Please could you clarify if i missed something?
 
-I think the issue here is not passing len pointer which should return 
-how many bytes the cell is!
+> The same goes for the next patch.  I would fold patch 08
+> and 09 into 10 to help get the big picture.
 
-Then from there we can decide to do le16_to_cpu or le32_to_cpu or not!
-This will also future proof the code to handle speed_bins of different 
-sizes!
+I'm going to squash all in one.
 
---srini
+Thanks,
+Arnaud
 
-> -	if (IS_ERR(buf)) {
-> -		nvmem_cell_put(cell);
-
-> +	ret = nvmem_cell_read_u16(dev, "speed_bin", &speedbin);
-> +	if (ret) {
->   		DRM_DEV_ERROR(dev,
-> -				"failed to read speed-bin. Some OPPs may not be supported by hardware");
-> +			      "failed to read speed-bin (%d). Some OPPs may not be supported by hardware",
-> +			      ret);
->   		goto done;
->   	}
-> +	speedbin = le16_to_cpu(speedbin);
->   
-> -	supp_hw = fuse_to_supp_hw(dev, revn, *((u32 *) buf));
-> -
-> -	kfree(buf);
-> -	nvmem_cell_put(cell);
-> +	supp_hw = fuse_to_supp_hw(dev, revn, speedbin);
->   
->   done:
->   	opp_table = dev_pm_opp_set_supported_hw(dev, &supp_hw, 1);
 > 
+>> +
+>>  /*
+>>   * Finds the device_node for the glink child interested in this channel.
+>>   */
+>> @@ -1364,7 +1378,9 @@ static const struct rpmsg_device_ops glink_device_ops = {
+>>  static const struct rpmsg_endpoint_ops glink_endpoint_ops = {
+>>  	.destroy_ept = qcom_glink_destroy_ept,
+>>  	.send = qcom_glink_send,
+>> +	.sendto = qcom_glink_sendto,
+>>  	.trysend = qcom_glink_trysend,
+>> +	.trysendto = qcom_glink_trysendto,
+>>  };
+>>  
+>>  static void qcom_glink_rpdev_release(struct device *dev)
+>> -- 
+>> 2.17.1
+>>
