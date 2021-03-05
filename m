@@ -2,134 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 62C1732F070
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 17:56:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B78DD32F06A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 17:54:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230035AbhCEQz1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Mar 2021 11:55:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37452 "EHLO
+        id S229813AbhCEQyX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Mar 2021 11:54:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229964AbhCEQzN (ORCPT
+        with ESMTP id S229719AbhCEQx7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Mar 2021 11:55:13 -0500
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B364BC06175F
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 08:55:13 -0800 (PST)
-Received: by mail-pj1-x1035.google.com with SMTP id bj7so2414697pjb.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 08:55:13 -0800 (PST)
+        Fri, 5 Mar 2021 11:53:59 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B35B4C061574
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 08:53:56 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id u187so2034123wmg.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 08:53:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=5oX7JDjpyFM6sShOZapWIE6sOYsNksokkCB2Em8FcMw=;
-        b=EqxN9e8rDjI2I2gJOSPPG/q05JnU5yymLBDDd9p6ny16eovxkKkAUbrCkuQSTOB2WH
-         g6zlxso1OMmg9Ebdk6Nbnx5o4aQNreFt48edMlEaavtiJJ7mCrS65A3BOLEdjVhSZ+mg
-         svQQmF4n7dUqon7+f5JiNK/WxfI40+U7YPB4bBRw/Kp+EaQmtNgMxtI9sp7A7OxE3EjE
-         o7KtladbbuHryn65Vt1m/aXtqDmcRDiV/Bass2bcD0rWOKHvsdb54zCUGsLPAeLZK2Qu
-         kwjtxw9epGtY+6puNn5zLVMj+37z++zRhGSFrBWhgb8EC2qCS0sCjNMal2DihjLtBYY/
-         lBDg==
+        h=from:to:cc:subject:date:message-id;
+        bh=5J70pTkQkyyAAz/WqKWCkdjxdt7PeU6TvREyi5dArPk=;
+        b=wcNkpe9lAi9L5cN2gVk2JDVZ+2XnDz+zQr4SFzDiWx+UoOjlvCPuwM0UDEL2sww61h
+         qZC5xFxbUVgwxNDCEraUFwHt7A4FT1LAe4A8Nb1QsazBZPnGeiBjLWw6uEu8NI1P0x1c
+         /rwP48bxUecfkn46AsP/FcGy7DJJkj0lTUvkiFCgcVmtFhEGvuvmIQf1naBy0POnPeFB
+         CN4GITFggS3upUTriWUKQ+zOmzvzG8B2UhGbBR2b2IHBtCtYtkUrRWwK5SkwfnAPNjqy
+         yOMxA6dmgER1WuCY7C6FSlWNCVfnjUvIr6n6YnuKZ87zCn2tnvSl0asLp73xWU1WEb8c
+         5dKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=5oX7JDjpyFM6sShOZapWIE6sOYsNksokkCB2Em8FcMw=;
-        b=pOruLtGix/e+9wMPG0XUZJRe3mtGLG9erF6bfInDWaHfQgVTrSGHLZ5497DEjGnJxd
-         zh1FYyXyMOSED6i5IL18HSOmp01y9fTJkFrJvDv5JKlpMaPKNj+U4EbI2DRdu6PfXzzf
-         XDs/Kx5d4t4a/vuEkzC+yCrAKg5hhfA/R6faj3/Jai/3/T8Cqh6YB+mFMu2LkmbCvwPF
-         npNK03dYnHcbgrRuvdZbmgGk8v4Su99NVrWUKcRfpcHhrUs25W29QYlZ2KRO6b1+kpzX
-         vZDxbvIvAMIcygK3FKJGJwpXaG5KFyu2ltdss0RnfwtqYVPDomQE00o67elUKuUeux9m
-         VDww==
-X-Gm-Message-State: AOAM531iaYeUgLmLCNl1qh3Fv59l+zViFhVzDjSJ433mrmi9t+hknjZh
-        sPMH5ItlD87sXQ9CG02Y7WDboQ==
-X-Google-Smtp-Source: ABdhPJxstzqvocrEH0wIvecZMQR/AbxctNSmn+OMgpLPNverTVBu8owjd2rr+kRGcTeQBx+lLo4/RQ==
-X-Received: by 2002:a17:90a:4d07:: with SMTP id c7mr11296018pjg.104.1614963313231;
-        Fri, 05 Mar 2021 08:55:13 -0800 (PST)
-Received: from xps15 (S0106889e681aac74.cg.shawcable.net. [68.147.0.187])
-        by smtp.gmail.com with ESMTPSA id mw13sm2794442pjb.42.2021.03.05.08.55.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Mar 2021 08:55:12 -0800 (PST)
-Date:   Fri, 5 Mar 2021 09:55:10 -0700
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Andy Gross <agross@kernel.org>,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v5 08/16] rpmsg: glink: add sendto and trysendto ops
-Message-ID: <20210305165510.GA3885132@xps15>
-References: <20210219111501.14261-1-arnaud.pouliquen@foss.st.com>
- <20210219111501.14261-9-arnaud.pouliquen@foss.st.com>
- <20210304191129.GE3854911@xps15>
- <e0f60693-3184-55c1-db67-1725a5f9c24d@foss.st.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e0f60693-3184-55c1-db67-1725a5f9c24d@foss.st.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=5J70pTkQkyyAAz/WqKWCkdjxdt7PeU6TvREyi5dArPk=;
+        b=WeA3MXIHM3xCa1zjsQNRoYgjl+/TunGJ/MeE6YwQud8i3UeJ6AnvJ0rNI6iXYoZGsU
+         ansNJoE79XgmBq5ntUUMSrcOrfC7EnkCkTSMGcxLPpxMXj1GA8kFcd6jkRUd6Xd/+5ox
+         AT/izdzUBFWL0r5kvn4KgmAqZRLILg+9ZMSTQNqjnT89/rajNyCs3Ox7TAYagXCOt+Hd
+         PdPSd2+a/Tu129ZHIxdF604IWlJmfL2nkuctOF58lLcph3CoF8Pbnz57I5Ri4YTyrHZQ
+         Pc5h1phjDO0moogEQzdLfrzBxhkbdU3mV/aHWVD75l/tN+x5DV5SMrq7/+krnce/EwT8
+         k/2A==
+X-Gm-Message-State: AOAM533KDgGJvabKCC9oT+QkQtceP0J6srMi7Xm4WaLle8LF+Os2UrxI
+        S0Lsyc4v+/JQYkGWSOcekFNqMw==
+X-Google-Smtp-Source: ABdhPJwI67dN2y56EQRdW6U+ATry+Txa/LBPR6Bg1+vlc7VM9Qc9x2ZkNKX3P6QHsOA1UCoqqIaWJw==
+X-Received: by 2002:a1c:4c10:: with SMTP id z16mr4824125wmf.136.1614963235022;
+        Fri, 05 Mar 2021 08:53:55 -0800 (PST)
+Received: from localhost.localdomain ([2a01:e0a:82c:5f0:55da:a740:2edb:1c7e])
+        by smtp.gmail.com with ESMTPSA id c35sm4850414wmp.3.2021.03.05.08.53.54
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 05 Mar 2021 08:53:54 -0800 (PST)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH 1/2] bus: mhi: core: Fix MHI runtime_pm behavior
+Date:   Fri,  5 Mar 2021 18:02:23 +0100
+Message-Id: <1614963744-25962-1-git-send-email-loic.poulain@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[...]
+This change ensures that PM reference is always get during packet
+queueing and released either after queuing completion (RX) or once
+the buffer has been consumed (TX). This guarantees proper update for
+underlying MHI controller runtime status (e.g. last_busy timestamp)
+and prevents suspend to be triggered while TX packets are flying,
+or before we completed update of the RX ring.
 
-> >>  }
-> >>  
-> >> +static int qcom_glink_sendto(struct rpmsg_endpoint *ept, void *data, int len, u32 dst)
-> >> +{
-> >> +	struct glink_channel *channel = to_glink_channel(ept);
-> >> +
-> >> +	return __qcom_glink_send(channel, data, len, true);
-> >> +}
-> >> +
-> >> +static int qcom_glink_trysendto(struct rpmsg_endpoint *ept, void *data, int len, u32 dst)
-> >> +{
-> >> +	struct glink_channel *channel = to_glink_channel(ept);
-> >> +
-> >> +	return __qcom_glink_send(channel, data, len, false);
-> >> +}
-> > 
-> > Just rename send() to sendto() and trysend() to trysendto() and ignore the
-> > destination address.  
-> 
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+---
+ drivers/bus/mhi/core/main.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-Apologies for not being clear.
+diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+index c780234..16b9640 100644
+--- a/drivers/bus/mhi/core/main.c
++++ b/drivers/bus/mhi/core/main.c
+@@ -584,8 +584,11 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
+ 			/* notify client */
+ 			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
+ 
+-			if (mhi_chan->dir == DMA_TO_DEVICE)
++			if (mhi_chan->dir == DMA_TO_DEVICE) {
+ 				atomic_dec(&mhi_cntrl->pending_pkts);
++				/* Release the reference got from mhi_queue() */
++				mhi_cntrl->runtime_put(mhi_cntrl);
++			}
+ 
+ 			/*
+ 			 * Recycle the buffer if buffer is pre-allocated,
+@@ -1021,9 +1024,11 @@ static int mhi_queue(struct mhi_device *mhi_dev, struct mhi_buf_info *buf_info,
+ 	if (unlikely(ret))
+ 		goto exit_unlock;
+ 
+-	/* trigger M3 exit if necessary */
+-	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state))
+-		mhi_trigger_resume(mhi_cntrl);
++	/* Packet is queued, take a usage ref to exit M3 if necessary
++	 * for host->device buffer, balanced put is done on buffer completion
++	 * for device->host buffer, balanced put is after ringing the DB
++	 */
++	mhi_cntrl->runtime_get(mhi_cntrl);
+ 
+ 	/* Assert dev_wake (to exit/prevent M1/M2)*/
+ 	mhi_cntrl->wake_toggle(mhi_cntrl);
+@@ -1034,6 +1039,9 @@ static int mhi_queue(struct mhi_device *mhi_dev, struct mhi_buf_info *buf_info,
+ 	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)))
+ 		mhi_ring_chan_db(mhi_cntrl, mhi_chan);
+ 
++	if (dir == DMA_FROM_DEVICE)
++		mhi_cntrl->runtime_put(mhi_cntrl);
++
+ exit_unlock:
+ 	read_unlock_irqrestore(&mhi_cntrl->pm_lock, flags);
+ 
+@@ -1431,6 +1439,10 @@ static void mhi_reset_data_chan(struct mhi_controller *mhi_cntrl,
+ 			result.buf_addr = buf_info->cb_buf;
+ 			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
+ 		}
++
++		/* Release the reference got from mhi_queue() */
++		if (mhi_chan->dir == DMA_TO_DEVICE)
++			mhi_cntrl->runtime_put(mhi_cntrl);
+ 	}
+ }
+ 
+-- 
+2.7.4
 
-> Function prototypes have to match with rpmsg_endpoint_ops structure defined
-> below. So seems to me not possible to just rename the functions.
-> Please could you clarify if i missed something?
-
-I don't think rproc_ops::send() and rproc_ops::trysend() are used anywhere else.
-So replace them with rproc_ops::sendto() and rproc_ops::trysendto() where the
-destination address would be ingnored.
-
-> 
-> > The same goes for the next patch.  I would fold patch 08
-> > and 09 into 10 to help get the big picture.
-> 
-> I'm going to squash all in one.
-
-Perfect
-
-> 
-> Thanks,
-> Arnaud
-> 
-> > 
-> >> +
-> >>  /*
-> >>   * Finds the device_node for the glink child interested in this channel.
-> >>   */
-> >> @@ -1364,7 +1378,9 @@ static const struct rpmsg_device_ops glink_device_ops = {
-> >>  static const struct rpmsg_endpoint_ops glink_endpoint_ops = {
-> >>  	.destroy_ept = qcom_glink_destroy_ept,
-> >>  	.send = qcom_glink_send,
-> >> +	.sendto = qcom_glink_sendto,
-> >>  	.trysend = qcom_glink_trysend,
-> >> +	.trysendto = qcom_glink_trysendto,
-> >>  };
-> >>  
-> >>  static void qcom_glink_rpdev_release(struct device *dev)
-> >> -- 
-> >> 2.17.1
-> >>
