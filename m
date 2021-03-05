@@ -2,141 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1335332F095
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 18:04:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ED03232F0B0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 18:07:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231386AbhCEREG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Mar 2021 12:04:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39348 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231381AbhCERD5 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Mar 2021 12:03:57 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15E40C061574
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 09:03:57 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id e10so2822883wro.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 09:03:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=RsjSwA8oB0o8PW0ry99uhxTdXQdH9BOaf5mimdTgeO0=;
-        b=oNEKdz6xPt7rWWlY08YTlqJ+lKrJjFhTuySIUMQ0e+4R72ftmlHWkmFwbJE/yj/0L9
-         KQMDY7H55bE4DUmCGgWXZyl+eFIMBmfgbneFavsgAAhHFKhJqgZ0E2SRJFr8EYlYdBX3
-         HLYPLXCO66AqeADhGbMjohltUr1f+KTc3M9FN9QB1IMSKfgOS5XfD/kaKEdd5SRqmln3
-         ckKfK0l4tR15SPjWq+QWJuU49+H+lNH4Fuxx/IhwJfx6LBmYllz+9uOYVE1kgQg8wMgQ
-         DUzBop11GMlwrMWg2owHd0e46fK8c8XFG/ErkGfIy15tj6hntwGkhRBFjr1eyuGxUJT6
-         9Pjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=RsjSwA8oB0o8PW0ry99uhxTdXQdH9BOaf5mimdTgeO0=;
-        b=pD3hmLScStGiDgR44YNmExRtLDjAtaMRGDNoqCNwLd0GM116KVNfuV/lb+2HWoD6sC
-         Pt8PgHvWt/dSlUcB33nlLo8aK1jKbbzODtv96/cUhfhZXv0w1xFhLpWtwo46rIDx42Es
-         8oLHiyTHhV2YH6sowv6V0OHEmrAvWYZQLRPjuCvM6LYJhNQpkAKpcfnc0UcGZWEnO0wo
-         XZb0RBtCjbmk4h2kr9FNkGkQ6R7tQSahDfX4jZ4O/DUpXBb+1ZmO4R1/tnP2iKr6LQ8U
-         HpAuSIesDV8x7zmzbECFfux+mpqYYAcXEzEsMfKl9+9xcIH+n0vLCg62IphT8O86xNwW
-         dL3w==
-X-Gm-Message-State: AOAM530KPJ3LftSPNpYc/w+lsccGkUXQfQfVhQ94eu4FYixOCfvMVb9w
-        fA1FtGGX4oRB+WSdnYL+i+YdIg==
-X-Google-Smtp-Source: ABdhPJydYEppXPz3sewV0+dccHxbmeBJKVjPuVHQAf0k543BYpWsmppZxZNmbBiyB1toc0Djs2GAuA==
-X-Received: by 2002:a5d:68cd:: with SMTP id p13mr10821095wrw.247.1614963833977;
-        Fri, 05 Mar 2021 09:03:53 -0800 (PST)
-Received: from localhost.localdomain (lns-bzn-59-82-252-141-80.adsl.proxad.net. [82.252.141.80])
-        by smtp.gmail.com with ESMTPSA id p17sm4760934wmq.47.2021.03.05.09.03.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Mar 2021 09:03:53 -0800 (PST)
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-To:     cwchoi00@gmail.com
-Cc:     lukasz.luba@arm.com, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, steven.price@arm.com,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU)
-Subject: [PATCH v2 3/4] devfreq/drivers/msm: Use devfreq cooling device registration
-Date:   Fri,  5 Mar 2021 18:03:36 +0100
-Message-Id: <20210305170338.13647-3-daniel.lezcano@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20210305170338.13647-1-daniel.lezcano@linaro.org>
-References: <20210305170338.13647-1-daniel.lezcano@linaro.org>
+        id S230135AbhCERGr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Mar 2021 12:06:47 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:41186 "EHLO z11.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229955AbhCERGm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 5 Mar 2021 12:06:42 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1614964002; h=Message-ID: References: In-Reply-To: Reply-To:
+ Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=4HBFW6C5oMy1oEMtYd0HgO+nbbIQ5m8OeFCam0RueeA=;
+ b=JsNbAtIyIJP2UyE9zB0aQgHkPVWHPInRQU5IgBbaSlg7Pd7CZKKvGOqxUP+U19GD9sH3zWTt
+ k/OU2Q85vfnA+DyytgE0sxuYZD4XTedy5kH79Krk+mNicXv4vfglZ6ddGHgYhj4MIJd73b7o
+ bcLI6QFc1IIfzfDfIpHhfkfuvmc=
+X-Mailgun-Sending-Ip: 104.130.96.11
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 60426514c862e1b9fd3f0e80 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 05 Mar 2021 17:06:28
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 225FAC433CA; Fri,  5 Mar 2021 17:06:28 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 62B50C433C6;
+        Fri,  5 Mar 2021 17:06:27 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 05 Mar 2021 09:06:27 -0800
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        =?UTF-8?Q?Carl_Yin=28=E6=AE=B7?= =?UTF-8?Q?=E5=BC=A0=E6=88=90=29?= 
+        <carl.yin@quectel.com>, Naveen Kumar <naveen.kumar@quectel.com>
+Subject: Re: [PATCH v2] bus: mhi: core: Add missing checks for MMIO register
+ entries
+Organization: Qualcomm Innovation Center, Inc.
+Reply-To: bbhatt@codeaurora.org
+Mail-Reply-To: bbhatt@codeaurora.org
+In-Reply-To: <CAMZdPi88VXV=6BBz=8MRcTVDfpZhC4Cm22qu9H9M7yaKwyZosA@mail.gmail.com>
+References: <1614896049-15912-1-git-send-email-bbhatt@codeaurora.org>
+ <CAMZdPi88VXV=6BBz=8MRcTVDfpZhC4Cm22qu9H9M7yaKwyZosA@mail.gmail.com>
+Message-ID: <13b24e06c99ab497ea1a1af0496b0b7a@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The devfreq core code is able to register the devfreq device as a
-cooling device if the 'is_cooling_device' flag is set in the profile.
+On 2021-03-05 09:11 AM, Loic Poulain wrote:
+> On Thu, 4 Mar 2021 at 23:14, Bhaumik Bhatt <bbhatt@codeaurora.org> 
+> wrote:
+>> 
+>> As per documentation, fields marked as (required) in an MHI
+>> controller structure need to be populated by the controller driver
+>> before calling mhi_register_controller(). Ensure all required
+>> pointers and non-zero fields are present in the controller before
+>> proceeding with registration.
+>> 
+>> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+>> ---
+>>  drivers/bus/mhi/core/init.c | 7 +++----
+>>  1 file changed, 3 insertions(+), 4 deletions(-)
+>> 
+>> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+>> index 272f350..fed8a25 100644
+>> --- a/drivers/bus/mhi/core/init.c
+>> +++ b/drivers/bus/mhi/core/init.c
+>> @@ -879,10 +879,9 @@ int mhi_register_controller(struct mhi_controller 
+>> *mhi_cntrl,
+>>         u32 soc_info;
+>>         int ret, i;
+>> 
+>> -       if (!mhi_cntrl)
+>> -               return -EINVAL;
+>> -
+>> -       if (!mhi_cntrl->runtime_get || !mhi_cntrl->runtime_put ||
+>> +       if (!mhi_cntrl || !mhi_cntrl->cntrl_dev || !mhi_cntrl->regs ||
+>> +           !mhi_cntrl->fw_image || !mhi_cntrl->irq ||
+> 
+> Can we make fw_image optional, not all MHI devices are flashless, some
+> directly boot into AMSS without firmware loading.
+> 
+Haha. Just as I posted this, I thought of the same thing. I agree. v3 
+incoming.
 
-Use this flag and remove the cooling device registering code.
+Also, that patch will be a separate one so I can just remove FW image 
+from here
+and post the patch to make FW image optional.
+>> +           !mhi_cntrl->runtime_get || !mhi_cntrl->runtime_put ||
+>>             !mhi_cntrl->status_cb || !mhi_cntrl->read_reg ||
+>>             !mhi_cntrl->write_reg || !mhi_cntrl->nr_irqs)
+>>                 return -EINVAL;
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+>> Forum,
+>> a Linux Foundation Collaborative Project
+>> 
 
-Tested on dragonboard 845c
-
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Thanks,
+Bhaumik
 ---
- drivers/gpu/drm/msm/msm_gpu.c | 12 +-----------
- drivers/gpu/drm/msm/msm_gpu.h |  2 --
- 2 files changed, 1 insertion(+), 13 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index ab7c167b0623..eade94271a60 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -14,7 +14,6 @@
- #include <generated/utsrelease.h>
- #include <linux/string_helpers.h>
- #include <linux/devfreq.h>
--#include <linux/devfreq_cooling.h>
- #include <linux/devcoredump.h>
- #include <linux/sched/task.h>
- 
-@@ -82,6 +81,7 @@ static struct devfreq_dev_profile msm_devfreq_profile = {
- 	.target = msm_devfreq_target,
- 	.get_dev_status = msm_devfreq_get_dev_status,
- 	.get_cur_freq = msm_devfreq_get_cur_freq,
-+	.is_cooling_device = true,
- };
- 
- static void msm_devfreq_init(struct msm_gpu *gpu)
-@@ -112,14 +112,6 @@ static void msm_devfreq_init(struct msm_gpu *gpu)
- 	}
- 
- 	devfreq_suspend_device(gpu->devfreq.devfreq);
--
--	gpu->cooling = of_devfreq_cooling_register(gpu->pdev->dev.of_node,
--			gpu->devfreq.devfreq);
--	if (IS_ERR(gpu->cooling)) {
--		DRM_DEV_ERROR(&gpu->pdev->dev,
--				"Couldn't register GPU cooling device\n");
--		gpu->cooling = NULL;
--	}
- }
- 
- static int enable_pwrrail(struct msm_gpu *gpu)
-@@ -1056,6 +1048,4 @@ void msm_gpu_cleanup(struct msm_gpu *gpu)
- 	if (gpu->worker) {
- 		kthread_destroy_worker(gpu->worker);
- 	}
--
--	devfreq_cooling_unregister(gpu->cooling);
- }
-diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-index d7cd02cd2109..93419368bac8 100644
---- a/drivers/gpu/drm/msm/msm_gpu.h
-+++ b/drivers/gpu/drm/msm/msm_gpu.h
-@@ -155,8 +155,6 @@ struct msm_gpu {
- 	struct msm_gpu_state *crashstate;
- 	/* True if the hardware supports expanded apriv (a650 and newer) */
- 	bool hw_apriv;
--
--	struct thermal_cooling_device *cooling;
- };
- 
- static inline struct msm_gpu *dev_to_gpu(struct device *dev)
--- 
-2.17.1
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
+a Linux Foundation Collaborative Project
