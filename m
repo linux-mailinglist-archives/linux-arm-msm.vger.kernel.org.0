@@ -2,104 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FC6932F06B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 17:54:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1335332F095
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 18:04:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229848AbhCEQyX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Mar 2021 11:54:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37174 "EHLO
+        id S231386AbhCEREG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Mar 2021 12:04:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229813AbhCEQx7 (ORCPT
+        with ESMTP id S231381AbhCERD5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Mar 2021 11:53:59 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1273AC061756
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 08:53:58 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id d11so2818058wrj.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 08:53:58 -0800 (PST)
+        Fri, 5 Mar 2021 12:03:57 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15E40C061574
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 09:03:57 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id e10so2822883wro.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 09:03:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=O4/mkTL6M9iIF5bbEVObqOvdJSPyd1/G7aJHXSgDKpw=;
-        b=P6zc3Aqk8xXVDHk4SOmN0kixRtIq1PQqeb40LJzZjjPKp9p8kQkIuuyrX+R7VJj+qq
-         JRhXNI2Zq3NLkluzxqWB6jygvesEqJV+wpIVP1a6TD2f0BoZDWsKkbmsP39GIWIafSt5
-         c9MJTkYukxlYiu2QSP6Ni9E91pflM2k15p2OauY5YgsBB84L3oMbvRHD98namkZ1svJS
-         pAV9qDzIoAdj5rt6yq5bvUyJflX4+gIlhkYEY3AP6pmBbXptMe/t1/WRghxAMHZA7HHp
-         xlf5cMBMkQzL0Fc41WrLD8vtbaBa3IvUQt7nXTZUjWMXnDDSHmncmVK2NaaXIG9+Hy9U
-         gzxw==
+        bh=RsjSwA8oB0o8PW0ry99uhxTdXQdH9BOaf5mimdTgeO0=;
+        b=oNEKdz6xPt7rWWlY08YTlqJ+lKrJjFhTuySIUMQ0e+4R72ftmlHWkmFwbJE/yj/0L9
+         KQMDY7H55bE4DUmCGgWXZyl+eFIMBmfgbneFavsgAAhHFKhJqgZ0E2SRJFr8EYlYdBX3
+         HLYPLXCO66AqeADhGbMjohltUr1f+KTc3M9FN9QB1IMSKfgOS5XfD/kaKEdd5SRqmln3
+         ckKfK0l4tR15SPjWq+QWJuU49+H+lNH4Fuxx/IhwJfx6LBmYllz+9uOYVE1kgQg8wMgQ
+         DUzBop11GMlwrMWg2owHd0e46fK8c8XFG/ErkGfIy15tj6hntwGkhRBFjr1eyuGxUJT6
+         9Pjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=O4/mkTL6M9iIF5bbEVObqOvdJSPyd1/G7aJHXSgDKpw=;
-        b=Pt1dZe4CdcfOetUqlhZYpughnVR0yf5WsNIak66RoQwx3iiVgkz5zhheJlyW5GEhxn
-         aa9Rydx2Y0sLl0NwHzy9lrQu0gHkxM6q7FOooXRZhKIzp8R2CqY/BahJ9pc3R6HsGOs5
-         aqt/p2s1eOfkpzTiMuFNKvL9TeAgYePYmt0WQL6n6psQi6idAagcIYTdPLQcDmP7yPuI
-         wm75Dd+yZMAHjYTTHABjWZgzngFszx9NXrRXH9OLGXF9pGYJhKVWkETKPtHbx7M5RORv
-         ktFA4gtdWgJ98lHUtWpsyjuX9CCK4dg4SEQQaUHQscw2XyLQ1l2rgWgfQ7OOmJsCxkXm
-         h4/Q==
-X-Gm-Message-State: AOAM530EmYzAWA9IE44CE8m3H8XqZUjxZ/yUwDtJLNgIhdr3cuxbPSti
-        4ShU6xo3i/aCg6fQ/E9aTqxlYg==
-X-Google-Smtp-Source: ABdhPJwEC8SQvb3vJ3+exHaXbS0PLR2PQzQ6V/D3Ngcqh6a+Ik3eZhUvWhkMbT3JFyBNQntryfAdTg==
-X-Received: by 2002:adf:d217:: with SMTP id j23mr10576262wrh.113.1614963236815;
-        Fri, 05 Mar 2021 08:53:56 -0800 (PST)
-Received: from localhost.localdomain ([2a01:e0a:82c:5f0:55da:a740:2edb:1c7e])
-        by smtp.gmail.com with ESMTPSA id c35sm4850414wmp.3.2021.03.05.08.53.56
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 05 Mar 2021 08:53:56 -0800 (PST)
-From:   Loic Poulain <loic.poulain@linaro.org>
-To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH 2/2] bus: mhi: pm: reduce PM state change verbosity
-Date:   Fri,  5 Mar 2021 18:02:24 +0100
-Message-Id: <1614963744-25962-2-git-send-email-loic.poulain@linaro.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1614963744-25962-1-git-send-email-loic.poulain@linaro.org>
-References: <1614963744-25962-1-git-send-email-loic.poulain@linaro.org>
+        bh=RsjSwA8oB0o8PW0ry99uhxTdXQdH9BOaf5mimdTgeO0=;
+        b=pD3hmLScStGiDgR44YNmExRtLDjAtaMRGDNoqCNwLd0GM116KVNfuV/lb+2HWoD6sC
+         Pt8PgHvWt/dSlUcB33nlLo8aK1jKbbzODtv96/cUhfhZXv0w1xFhLpWtwo46rIDx42Es
+         8oLHiyTHhV2YH6sowv6V0OHEmrAvWYZQLRPjuCvM6LYJhNQpkAKpcfnc0UcGZWEnO0wo
+         XZb0RBtCjbmk4h2kr9FNkGkQ6R7tQSahDfX4jZ4O/DUpXBb+1ZmO4R1/tnP2iKr6LQ8U
+         HpAuSIesDV8x7zmzbECFfux+mpqYYAcXEzEsMfKl9+9xcIH+n0vLCg62IphT8O86xNwW
+         dL3w==
+X-Gm-Message-State: AOAM530KPJ3LftSPNpYc/w+lsccGkUXQfQfVhQ94eu4FYixOCfvMVb9w
+        fA1FtGGX4oRB+WSdnYL+i+YdIg==
+X-Google-Smtp-Source: ABdhPJydYEppXPz3sewV0+dccHxbmeBJKVjPuVHQAf0k543BYpWsmppZxZNmbBiyB1toc0Djs2GAuA==
+X-Received: by 2002:a5d:68cd:: with SMTP id p13mr10821095wrw.247.1614963833977;
+        Fri, 05 Mar 2021 09:03:53 -0800 (PST)
+Received: from localhost.localdomain (lns-bzn-59-82-252-141-80.adsl.proxad.net. [82.252.141.80])
+        by smtp.gmail.com with ESMTPSA id p17sm4760934wmq.47.2021.03.05.09.03.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Mar 2021 09:03:53 -0800 (PST)
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+To:     cwchoi00@gmail.com
+Cc:     lukasz.luba@arm.com, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, steven.price@arm.com,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU),
+        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU)
+Subject: [PATCH v2 3/4] devfreq/drivers/msm: Use devfreq cooling device registration
+Date:   Fri,  5 Mar 2021 18:03:36 +0100
+Message-Id: <20210305170338.13647-3-daniel.lezcano@linaro.org>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20210305170338.13647-1-daniel.lezcano@linaro.org>
+References: <20210305170338.13647-1-daniel.lezcano@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Since M3 can be entered/exited quite a lot when used for runtime PM,
-keep the mhi suspend/resume transitions quiet.
+The devfreq core code is able to register the devfreq device as a
+cooling device if the 'is_cooling_device' flag is set in the profile.
 
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+Use this flag and remove the cooling device registering code.
+
+Tested on dragonboard 845c
+
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 ---
- drivers/bus/mhi/core/pm.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/msm_gpu.c | 12 +-----------
+ drivers/gpu/drm/msm/msm_gpu.h |  2 --
+ 2 files changed, 1 insertion(+), 13 deletions(-)
 
-diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-index edd7794..0cd6445 100644
---- a/drivers/bus/mhi/core/pm.c
-+++ b/drivers/bus/mhi/core/pm.c
-@@ -858,7 +858,7 @@ int mhi_pm_suspend(struct mhi_controller *mhi_cntrl)
- 		return -EBUSY;
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index ab7c167b0623..eade94271a60 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -14,7 +14,6 @@
+ #include <generated/utsrelease.h>
+ #include <linux/string_helpers.h>
+ #include <linux/devfreq.h>
+-#include <linux/devfreq_cooling.h>
+ #include <linux/devcoredump.h>
+ #include <linux/sched/task.h>
+ 
+@@ -82,6 +81,7 @@ static struct devfreq_dev_profile msm_devfreq_profile = {
+ 	.target = msm_devfreq_target,
+ 	.get_dev_status = msm_devfreq_get_dev_status,
+ 	.get_cur_freq = msm_devfreq_get_cur_freq,
++	.is_cooling_device = true,
+ };
+ 
+ static void msm_devfreq_init(struct msm_gpu *gpu)
+@@ -112,14 +112,6 @@ static void msm_devfreq_init(struct msm_gpu *gpu)
  	}
  
--	dev_info(dev, "Allowing M3 transition\n");
-+	dev_dbg(dev, "Allowing M3 transition\n");
- 	new_state = mhi_tryset_pm_state(mhi_cntrl, MHI_PM_M3_ENTER);
- 	if (new_state != MHI_PM_M3_ENTER) {
- 		write_unlock_irq(&mhi_cntrl->pm_lock);
-@@ -872,7 +872,7 @@ int mhi_pm_suspend(struct mhi_controller *mhi_cntrl)
- 	/* Set MHI to M3 and wait for completion */
- 	mhi_set_mhi_state(mhi_cntrl, MHI_STATE_M3);
- 	write_unlock_irq(&mhi_cntrl->pm_lock);
--	dev_info(dev, "Wait for M3 completion\n");
-+	dev_dbg(dev, "Wait for M3 completion\n");
+ 	devfreq_suspend_device(gpu->devfreq.devfreq);
+-
+-	gpu->cooling = of_devfreq_cooling_register(gpu->pdev->dev.of_node,
+-			gpu->devfreq.devfreq);
+-	if (IS_ERR(gpu->cooling)) {
+-		DRM_DEV_ERROR(&gpu->pdev->dev,
+-				"Couldn't register GPU cooling device\n");
+-		gpu->cooling = NULL;
+-	}
+ }
  
- 	ret = wait_event_timeout(mhi_cntrl->state_event,
- 				 mhi_cntrl->dev_state == MHI_STATE_M3 ||
-@@ -906,7 +906,7 @@ int mhi_pm_resume(struct mhi_controller *mhi_cntrl)
- 	enum mhi_pm_state cur_state;
- 	int ret;
+ static int enable_pwrrail(struct msm_gpu *gpu)
+@@ -1056,6 +1048,4 @@ void msm_gpu_cleanup(struct msm_gpu *gpu)
+ 	if (gpu->worker) {
+ 		kthread_destroy_worker(gpu->worker);
+ 	}
+-
+-	devfreq_cooling_unregister(gpu->cooling);
+ }
+diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+index d7cd02cd2109..93419368bac8 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.h
++++ b/drivers/gpu/drm/msm/msm_gpu.h
+@@ -155,8 +155,6 @@ struct msm_gpu {
+ 	struct msm_gpu_state *crashstate;
+ 	/* True if the hardware supports expanded apriv (a650 and newer) */
+ 	bool hw_apriv;
+-
+-	struct thermal_cooling_device *cooling;
+ };
  
--	dev_info(dev, "Entered with PM state: %s, MHI state: %s\n",
-+	dev_dbg(dev, "Entered with PM state: %s, MHI state: %s\n",
- 		 to_mhi_pm_state_str(mhi_cntrl->pm_state),
- 		 TO_MHI_STATE_STR(mhi_cntrl->dev_state));
- 
+ static inline struct msm_gpu *dev_to_gpu(struct device *dev)
 -- 
-2.7.4
+2.17.1
 
