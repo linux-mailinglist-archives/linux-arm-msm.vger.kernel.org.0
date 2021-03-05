@@ -2,134 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C6A4332F249
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 19:19:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0378732F2D8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 19:39:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229631AbhCESSs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Mar 2021 13:18:48 -0500
-Received: from m42-2.mailgun.net ([69.72.42.2]:49433 "EHLO m42-2.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229723AbhCESSN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Mar 2021 13:18:13 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1614968293; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=xsGVThSVpDisnzMOrebDFquS2YIq6W6BzeX6M5wfiLA=; b=c1ztykKT7iBYQPjgtOvOvf2z2/G6rpBNMqptkqoMnTLzn2IwsAzwfm3pX3CCXCCCghGbGYHP
- sbU7vWdpJ0WAWdkfa7MIccaLhiXjYNw4ZmA84h5f4GoBvqGSqQkHJ1l9cbSUrUfyPXtCiLLl
- IqAXccSpQLJ3XcjpFTyzKvSsBL0=
-X-Mailgun-Sending-Ip: 69.72.42.2
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 604275e47b648e2436086874 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 05 Mar 2021 18:18:12
- GMT
-Sender: eberman=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8833CC43463; Fri,  5 Mar 2021 18:18:11 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [192.168.1.70] (cpe-76-167-231-33.san.res.rr.com [76.167.231.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: eberman)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 275E5C433CA;
-        Fri,  5 Mar 2021 18:18:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 275E5C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=eberman@codeaurora.org
-Subject: Re: [PATCH 6/6] firmware: qcom_scm: Only compile legacy calls on ARM
-To:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Brian Masney <masneyb@onstation.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>
-References: <20210223214539.1336155-1-swboyd@chromium.org>
- <20210223214539.1336155-7-swboyd@chromium.org>
- <b9174acc-9826-eb82-b399-ed95f7e83085@codeaurora.org>
- <161483844056.1478170.8701629037531614722@swboyd.mtv.corp.google.com>
-From:   Elliot Berman <eberman@codeaurora.org>
-Message-ID: <5ac262bf-a70a-4ca3-01a8-d1432732d26f@codeaurora.org>
-Date:   Fri, 5 Mar 2021 10:18:09 -0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.0
+        id S229797AbhCEShW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Mar 2021 13:37:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59568 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230252AbhCEShF (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 5 Mar 2021 13:37:05 -0500
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A00DC061574
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 10:37:05 -0800 (PST)
+Received: by mail-qk1-x736.google.com with SMTP id b130so2932197qkc.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 10:37:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=tAzU/ER1YTxKVrtAuXzIX1YVd5lSI8a7UASsaMYtGqY=;
+        b=F6v+gi5njFo02gEo0z1Nd6777zf+xCNjxdwa0X7VeLeXPMrOu1HTtE8AEdqXdq/MBZ
+         v3VsLDdlwbKBVJPztcbzun5R+lehMx0t5bH9SrbuuXC2HAXbGKoeLlQXamfNJCHa13+P
+         R509ASsFL8WM9LRpe9/eBWPPLKwj+LSpaWjv8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=tAzU/ER1YTxKVrtAuXzIX1YVd5lSI8a7UASsaMYtGqY=;
+        b=immMvKujYD5blAOfKbI/Nx559xvy2XtNjYHHJNIDQQjJ+Wnoc1f/2Z7R63s2NhfUbn
+         V8BYu0hbWNAA5m7fCE3PnpH2Q/OUtxZwYLqqiKK1xVnVwCW/oigxoAPtw8sZFpJ1TVZK
+         hBoDVnnyFom8s1HsAcKRkDJpq3zKQ8spn3iBcocfwt2NMtLthINR/3vZyTAnmzPHTUqs
+         OKdNpqX1YI7lQF/iF/41vJt8PbCvJfAC4iQ08Gflr2Vbl0HMNNuf8ZfcwmBr13ObhVjQ
+         1kvMUdfx50jVb0NIgzteFeOp0slSJiYuD43aw2ORiDOYk/7M5DVB7yHAIClJspT/B8F2
+         jboQ==
+X-Gm-Message-State: AOAM53164At8eFPPMeDQ14pJdZLvO1Nmt4BUMbuQMiIxIv3HLRFoevbG
+        xTKC8KYEs5EJBfLWqkYZ73c1kz3PbxvnrA==
+X-Google-Smtp-Source: ABdhPJzQqiUEgL8aDhuB+xmq55OJ5dobwClci2f8br8DDwOQQHguFCNI2hsr/5deo4keuK5L/N07EQ==
+X-Received: by 2002:a37:a8cc:: with SMTP id r195mr10023277qke.86.1614969423662;
+        Fri, 05 Mar 2021 10:37:03 -0800 (PST)
+Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com. [209.85.219.178])
+        by smtp.gmail.com with ESMTPSA id p12sm2390385qtw.27.2021.03.05.10.37.02
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 05 Mar 2021 10:37:02 -0800 (PST)
+Received: by mail-yb1-f178.google.com with SMTP id 133so2956317ybd.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 10:37:02 -0800 (PST)
+X-Received: by 2002:a25:ab54:: with SMTP id u78mr16373727ybi.276.1614969422178;
+ Fri, 05 Mar 2021 10:37:02 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <161483844056.1478170.8701629037531614722@swboyd.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20210304180415.1531430-1-mka@chromium.org> <20210304100341.1.I6d587e7ae72a5a47253bb95dfdc3158f8cc8a157@changeid>
+In-Reply-To: <20210304100341.1.I6d587e7ae72a5a47253bb95dfdc3158f8cc8a157@changeid>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 5 Mar 2021 10:36:49 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=XKpzSq2GqvoDieuZVZFrwmO0Q2prPaKeJRKXJmxPGWpg@mail.gmail.com>
+Message-ID: <CAD=FV=XKpzSq2GqvoDieuZVZFrwmO0Q2prPaKeJRKXJmxPGWpg@mail.gmail.com>
+Subject: Re: [PATCH 1/4] arm64: dts: qcom: sc7180: lazor: Simplify disabling
+ of charger thermal zone
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/3/2021 10:14 PM, Stephen Boyd wrote:
-> Quoting Elliot Berman (2021-03-03 19:35:08)
->>
->> On 2/23/2021 1:45 PM, Stephen Boyd wrote:
->>> These scm calls are never used outside of legacy ARMv7 based platforms.
->>> That's because PSCI, mandated on arm64, implements them for modern SoCs
->>> via the PSCI spec. Let's move them to the legacy file and only compile
->>> the legacy file into the kernel when CONFIG_ARM=y. Otherwise provide
->>> stubs and fail the calls. This saves a little bit of space in an
->>> arm64 allmodconfig >
->>>    $ ./scripts/bloat-o-meter vmlinux.before vmlinux.after
->>>    add/remove: 0/8 grow/shrink: 5/7 up/down: 509/-4405 (-3896)
->>>    Function                                     old     new   delta
->>>    __qcom_scm_set_dload_mode.constprop          312     452    +140
->>>    qcom_scm_qsmmu500_wait_safe_toggle           288     416    +128
->>>    qcom_scm_io_writel                           288     408    +120
->>>    qcom_scm_io_readl                            376     492    +116
->>>    __param_str_download_mode                     23      28      +5
->>>    __warned                                    4327    4326      -1
->>>    qcom_iommu_init                              272     268      -4
->>>    e843419@0b3f_00010432_324                      8       -      -8
->>>    qcom_scm_call                                228     208     -20
->>>    CSWTCH                                      5925    5877     -48
->>>    _sub_I_65535_1                            163100  163040     -60
->>>    _sub_D_65535_0                            163100  163040     -60
->>>    qcom_scm_wb                                   64       -     -64
->>>    qcom_scm_lock                                320     160    -160
->>>    qcom_scm_call_atomic                         212       -    -212
->>>    qcom_scm_cpu_power_down                      308       -    -308
->>>    scm_legacy_call_atomic                       520       -    -520
->>>    qcom_scm_set_warm_boot_addr                  720       -    -720
->>>    qcom_scm_set_cold_boot_addr                  728       -    -728
->>>    scm_legacy_call                             1492       -   -1492
->>>    Total: Before=66737642, After=66733746, chg -0.01%
->>>
->>> Commit 9a434cee773a ("firmware: qcom_scm: Dynamically support SMCCC and
->>> legacy conventions") didn't mention any motivating factors for keeping
->>> the legacy code around on arm64 kernels, i.e. presumably that commit
->>> wasn't trying to support these legacy APIs on arm64 kernels.
->>
->> There are arm targets which support SMCCC convention and use some of
->> these removed functions. Can these functions be kept in qcom-scm.c and
->> wrapped with #if IS_ENABLED(CONFIG_ARM)?
->>
-> 
-> It can be wrapped in qcom-scm.c, but why? It's all the same object file
-> so I'm lost why it matters. I suppose it would make it so the struct
-> doesn't have to be moved around and declared in the header? Any other
-> reason? I moved it to the legacy file so that it was very obvious that
-> the API wasn't to be used except for "legacy" platforms that don't use
-> PSCI.
-> 
+Hi,
 
-There are "legacy" arm platforms that use the SMCCC (scm_smc_call) and 
-use the qcom_scm_set_{warm,cold}_boot_addr and qcom_scm_cpu_power_down 
-functions.
+On Thu, Mar 4, 2021 at 10:04 AM Matthias Kaehlcke <mka@chromium.org> wrote:
+>
+> Commit f73558cc83d1 ("arm64: dts: qcom: sc7180: Disable charger
+> thermal zone for lazor") disables the charger thermal zone for
+> specific lazor revisions due to an unsupported thermistor type.
+> The initial idea was to disable the thermal zone for older
+> revisions and leave it enabled for newer ones that use a
+> supported thermistor. Finally the thermistor won't be changed
+> on newer revisions, hence the thermal zone should be disabled
+> for all lazor (and limozeen) revisions. Instead of disabling
+> it per revision do it once in the shared .dtsi for lazor.
+>
+> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> ---
+>
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts | 9 ---------
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts | 9 ---------
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts | 9 ---------
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi   | 9 +++++++++
+>  4 files changed, 9 insertions(+), 27 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
+> index 5c997cd90069..30e3e769d2b4 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
+> @@ -14,15 +14,6 @@ / {
+>         compatible = "google,lazor-rev0", "qcom,sc7180";
+>  };
+>
+> -/*
+> - * Lazor is stuffed with a 47k NTC as charger thermistor which currently is
+> - * not supported by the PM6150 ADC driver. Disable the charger thermal zone
+> - * to avoid using bogus temperature values.
+> - */
+> -&charger_thermal {
+> -       status = "disabled";
+> -};
+> -
+>  &pp3300_hub {
+>         /* pp3300_l7c is used to power the USB hub */
+>         /delete-property/regulator-always-on;
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
+> index d9fbcc7bc5bd..c2ef06367baf 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
+> @@ -14,15 +14,6 @@ / {
+>         compatible = "google,lazor-rev1", "google,lazor-rev2", "qcom,sc7180";
+>  };
+>
+> -/*
+> - * Lazor is stuffed with a 47k NTC as charger thermistor which currently is
+> - * not supported by the PM6150 ADC driver. Disable the charger thermal zone
+> - * to avoid using bogus temperature values.
+> - */
+> -&charger_thermal {
+> -       status = "disabled";
+> -};
+> -
+>  &pp3300_hub {
+>         /* pp3300_l7c is used to power the USB hub */
+>         /delete-property/regulator-always-on;
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts
+> index 19e69adb9e04..1b9d2f46359e 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts
+> @@ -13,12 +13,3 @@ / {
+>         model = "Google Lazor (rev3+)";
+>         compatible = "google,lazor", "qcom,sc7180";
+>  };
+> -
+> -/*
+> - * Lazor is stuffed with a 47k NTC as charger thermistor which currently is
+> - * not supported by the PM6150 ADC driver. Disable the charger thermal zone
+> - * to avoid using bogus temperature values.
+> - */
+> -&charger_thermal {
+> -       status = "disabled";
+> -};
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
+> index 89e5cd29ec09..aa2c4a9098db 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
+> @@ -58,6 +58,15 @@ ap_ts: touchscreen@10 {
+>         };
+>  };
+>
+> +/*
+> + * Lazor is stuffed with a 47k NTC as charger thermistor which currently is
+> + * not supported by the PM6150 ADC driver. Disable the charger thermal zone
+> + * to avoid using bogus temperature values.
+> + */
+> +&charger_thermal {
+> +       status = "disabled";
+> +};
+> +
+>  /* PINCTRL - modifications to sc7180-trogdor.dtsi */
+>
+>  &ts_reset_l {
 
- > +	desc.args[0] = flags;
- > +	desc.args[1] = virt_to_phys(entry);
- > +
- > +	return scm_legacy_call_atomic(NULL, &desc, NULL);
- > +}
- > +EXPORT_SYMBOL(qcom_scm_set_cold_boot_addr);
+The idea is right, but I'm having a hard time figuring out what tree
+you posted your patch against. You said you did it atop my "v2" series
+[1], right?  ...but the "sc7180-trogdor-lazor.dtsi" really doesn't
+match. In my tree, for instance, right above the PINCTRL comment
+should be:
 
-This should still be qcom_scm_call.
+&wifi {
+  qcom,ath10k-calibration-variant = "GO_LAZOR";
+};
+
+...but that's definitely not what's there in whatever your patch was
+written against... It seems like you're also missing the panel and
+trackpad nodes...
+
+[1] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=440315
+
+
+-Doug
