@@ -2,58 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 30F3F32EAB3
+	by mail.lfdr.de (Postfix) with ESMTP id EF46032EAB5
 	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 13:40:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233190AbhCEMjw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S233238AbhCEMjw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Fri, 5 Mar 2021 07:39:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38984 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232921AbhCEMjg (ORCPT
+        with ESMTP id S232891AbhCEMjh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Mar 2021 07:39:36 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D36FFC061574
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 04:39:35 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id u187so1307550wmg.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 04:39:35 -0800 (PST)
+        Fri, 5 Mar 2021 07:39:37 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2796C061756
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 04:39:36 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id w11so1904296wrr.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 04:39:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=VLQJiK7FJqZgMOFQh0WIw0zvyjcVmsT0CUIB/62ZpXA=;
-        b=bnvPo/8KQ7cd9IGJlQI0ldBNgHBIgiZ3jZjyinBqlqnyxUuYR3eH1zQ+AgN5cFUbkM
-         GGoSeRqSYnM8fC9pYngNf72ckriBzKgpSuc6nkAb/wvG6KOq5qQQq10lnvxMVmldR0yi
-         +WCsCkSP90ERWJZNNq292pVi1NmlBAYc0Uqmjvujx5h4saDhQF1j40iMP+Ha9kKmo9Fx
-         HX8zewV0tafenQCcolXxJ3UY2DAI8z/ie87Xcji75ROV1lKBUbJte77XE/4QoGUhecAK
-         2YOX42Dgx8AfS+C8Px0rG07+4L1fJD2h6g5X1tc69PvGPqONkbp2yMG28+3nj0uTEumB
-         XF+g==
+        bh=a3GgDD69zl4/2/h19pwS+AI+qQbgB4hX4JHShxDn3Xk=;
+        b=dyu2kPYxikI2ZQ6c9dVGbLUqMTGrV3RQ/z7I2gMtxxb1cUDnD0TS/CnoXHRrFT1mo4
+         hO5y2eqx+UcfLsmRn7HCEFsQSr4FqaZkiDsfukrMfZj8IjyFAU4pHFqMsiMsGuUhLLie
+         5UINke1A9hNM1DpNd0XlxG+ccxcSvW/+/gO6rBQh0tE9OfprSRgpreiYUsIolURXKv98
+         v9Ai4Ff0nps+71AFjhki1M664SYNXwDfu/Oe5+ckAZ9fuN+O24QiD1Py5XGPfEMAqiWF
+         30S9egjHzJRtp3E9mLzfHxjp79gSG6QVFMdXjKv3jMAuJfjK9U0ToWdfuVzEq7f5dkOl
+         UONA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=VLQJiK7FJqZgMOFQh0WIw0zvyjcVmsT0CUIB/62ZpXA=;
-        b=spLwS7kGujH0WkpdCCsJdTwE0eZzo8WaKdczIk1kMfTUbj5nKB3tCHZuP4vxAJX/Zt
-         FHXblzTGxHo8ipU6tOJyWx9unSfjGO4iu/Kb+OO1+y/IVh678NWnT9L61BISfmqlctig
-         Ro5fml0KV29O4J2qYcpf+SgkheHKTAU0V6vv4m5hLGIHi9oIUseDY/bUlKogOES8U84c
-         hAJe3mSzukvyG5OiTTqNUTXdln/SBq7EbdnhZ1irx5klcIkTrX9YdYyFWJJHAFJAuy81
-         wjSCABlbXWkeHmb5MZGYSa/ud7w36s2kV4NSyp2Lv/q6gru+Mr4RKd9wDLUi/YwogZ2n
-         Cpcw==
-X-Gm-Message-State: AOAM530LBliqOEJhguAFhmvJMZw3PnBxY4R+O3QiZ7qx62iGokv9WK1f
-        9AzUoFCN0MEGTvF58T9CdWVgjg==
-X-Google-Smtp-Source: ABdhPJxENwo+YTSXFrTA4ZvfzqserVh3Z1O55zqV9Vyk4jL9Bv+wWLbTfG2nbLw8wQb/pLz74ZPtOw==
-X-Received: by 2002:a05:600c:4150:: with SMTP id h16mr7138191wmm.120.1614947974483;
-        Fri, 05 Mar 2021 04:39:34 -0800 (PST)
+        bh=a3GgDD69zl4/2/h19pwS+AI+qQbgB4hX4JHShxDn3Xk=;
+        b=Q67Yi6Ex4TfDcKkX/atmrKIEWCConi1rtOMBAD1I2W9iIkLwLgZTqNixbIn4XmSDhN
+         0oEms3L1pV8p0y+x+W+LbxGTbX9Ez0cqfPbikP0agEV69ghoEGI+6HNW+DeGn8mrbn8g
+         g4dbHT284kkvIvcF1XQzxXncoySxewvoh+JwSzJeft82ppWsyfUicx7M3xxrJV0mTyVU
+         M98oCukAZBWMj/tsF4W9akVYinJLahfJjccAErV+d09uSKo1K2PRJ50unuF7gql+EGvS
+         +tJUxWYnhv9MQbRRfGz7O01gmEkTvv8mtwsq5cNXd/9PptlTATKXZ9aAe1td8mXgIos0
+         o26w==
+X-Gm-Message-State: AOAM532s5EQ8YeuMPuRKBq0ztvTsbA9WnD+fMSJXtI+L5Q5YTJswhxXa
+        L/i39RVFt9DxYfKE18zAL7/QHZupZJTJOl+v
+X-Google-Smtp-Source: ABdhPJx0xsH1tm5TOFEi6Tlwy741oRkl74kAR8zqk3Dh1zgaajaOrULzcaSCW8FZr3jTCTgIwaVwNA==
+X-Received: by 2002:adf:f7cc:: with SMTP id a12mr9226925wrq.54.1614947975429;
+        Fri, 05 Mar 2021 04:39:35 -0800 (PST)
 Received: from localhost.localdomain ([2a01:e0a:82c:5f0:55da:a740:2edb:1c7e])
-        by smtp.gmail.com with ESMTPSA id f5sm4173256wrx.39.2021.03.05.04.39.33
+        by smtp.gmail.com with ESMTPSA id f5sm4173256wrx.39.2021.03.05.04.39.34
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
         Fri, 05 Mar 2021 04:39:34 -0800 (PST)
 From:   Loic Poulain <loic.poulain@linaro.org>
 To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
 Cc:     linux-arm-msm@vger.kernel.org,
         Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH v2 4/6] mhi: pci_generic: No-Op for device_wake operations
-Date:   Fri,  5 Mar 2021 13:47:56 +0100
-Message-Id: <1614948478-2284-4-git-send-email-loic.poulain@linaro.org>
+Subject: [PATCH v2 5/6] mhi: pci_generic: Use generic PCI power management
+Date:   Fri,  5 Mar 2021 13:47:57 +0100
+Message-Id: <1614948478-2284-5-git-send-email-loic.poulain@linaro.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1614948478-2284-1-git-send-email-loic.poulain@linaro.org>
 References: <1614948478-2284-1-git-send-email-loic.poulain@linaro.org>
@@ -61,78 +61,68 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The wake_db register presence is highly speculative and can fuze MHI
-devices. Indeed, currently the wake_db register address is defined at
-entry 127 of the 'Channel doorbell array', thus writing to this address
-is equivalent to ringing the doorbell for channel 127, causing trouble
-with some devics (e.g. SDX24 based modems) that get an unexpected
-channel 127 doorbell interrupt.
+The PCI core can take care of proper PCI suspend/resume operations, but
+this is discarded when the driver saves PCI state by its own. This
+currently prevents the PCI core to enable PME (for modem initiated
+D3 exit) which is requested for proper runtime pm support.
 
-This change fixes that issue by setting wake get/put as no-op for
-pci_generic devices. The wake device sideband mechanism seems really
-specific to each device, and is AFAIK not defined by the MHI spec.
-
-It also removes zeroing initialization of wake_db register during MMIO
-initialization, the register being set via wake_get/put accessors few
-cycles later during M0 transition.
+This change deletes explicit PCI state-saving and state-set from
+suspend callback, letting the PCI doing the appropriate work.
 
 Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 ---
- v2: reword commit message
+ v2: no change
 
- drivers/bus/mhi/core/init.c   |  2 --
- drivers/bus/mhi/pci_generic.c | 18 ++++++++++++++++++
- 2 files changed, 18 insertions(+), 2 deletions(-)
+ drivers/bus/mhi/pci_generic.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-index 2159dbc..32eb90f 100644
---- a/drivers/bus/mhi/core/init.c
-+++ b/drivers/bus/mhi/core/init.c
-@@ -510,8 +510,6 @@ int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
- 
- 	/* Setup wake db */
- 	mhi_cntrl->wake_db = base + val + (8 * MHI_DEV_WAKE_DB);
--	mhi_write_reg(mhi_cntrl, mhi_cntrl->wake_db, 4, 0);
--	mhi_write_reg(mhi_cntrl, mhi_cntrl->wake_db, 0, 0);
- 	mhi_cntrl->wake_set = false;
- 
- 	/* Setup channel db address for each channel in tre_ring */
 diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-index c274e65..4685a83 100644
+index 4685a83..4ab0aa8 100644
 --- a/drivers/bus/mhi/pci_generic.c
 +++ b/drivers/bus/mhi/pci_generic.c
-@@ -312,6 +312,21 @@ static void mhi_pci_status_cb(struct mhi_controller *mhi_cntrl,
- 	}
+@@ -544,9 +544,12 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 
+ 	pci_set_drvdata(pdev, mhi_pdev);
+ 
+-	/* Have stored pci confspace at hand for restore in sudden PCI error */
++	/* Have stored pci confspace at hand for restore in sudden PCI error.
++	 * cache the state locally and discard the PCI core one.
++	 */
+ 	pci_save_state(pdev);
+ 	mhi_pdev->pci_state = pci_store_saved_state(pdev);
++	pci_load_saved_state(pdev, NULL);
+ 
+ 	pci_enable_pcie_error_reporting(pdev);
+ 
+@@ -717,10 +720,8 @@ static int  __maybe_unused mhi_pci_suspend(struct device *dev)
+ 	/* Transition to M3 state */
+ 	mhi_pm_suspend(mhi_cntrl);
+ 
+-	pci_save_state(pdev);
+ 	pci_disable_device(pdev);
+ 	pci_wake_from_d3(pdev, true);
+-	pci_set_power_state(pdev, PCI_D3hot);
+ 
+ 	return 0;
  }
+@@ -732,14 +733,13 @@ static int __maybe_unused mhi_pci_resume(struct device *dev)
+ 	struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
+ 	int err;
  
-+static void mhi_pci_wake_get_nop(struct mhi_controller *mhi_cntrl, bool force)
-+{
-+	/* no-op */
-+}
-+
-+static void mhi_pci_wake_put_nop(struct mhi_controller *mhi_cntrl, bool override)
-+{
-+	/* no-op */
-+}
-+
-+static void mhi_pci_wake_toggle_nop(struct mhi_controller *mhi_cntrl)
-+{
-+	/* no-op */
-+}
-+
- static bool mhi_pci_is_alive(struct mhi_controller *mhi_cntrl)
- {
- 	struct pci_dev *pdev = to_pci_dev(mhi_cntrl->cntrl_dev);
-@@ -515,6 +530,9 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	mhi_cntrl->status_cb = mhi_pci_status_cb;
- 	mhi_cntrl->runtime_get = mhi_pci_runtime_get;
- 	mhi_cntrl->runtime_put = mhi_pci_runtime_put;
-+	mhi_cntrl->wake_get = mhi_pci_wake_get_nop;
-+	mhi_cntrl->wake_put = mhi_pci_wake_put_nop;
-+	mhi_cntrl->wake_toggle = mhi_pci_wake_toggle_nop;
- 
- 	err = mhi_pci_claim(mhi_cntrl, info->bar_num, DMA_BIT_MASK(info->dma_data_width));
+-	pci_set_power_state(pdev, PCI_D0);
+-	pci_restore_state(pdev);
+-	pci_set_master(pdev);
+-
+ 	err = pci_enable_device(pdev);
  	if (err)
+ 		goto err_recovery;
+ 
++	pci_set_master(pdev);
++	pci_wake_from_d3(pdev, false);
++
+ 	/* Exit M3, transition to M0 state */
+ 	err = mhi_pm_resume(mhi_cntrl);
+ 	if (err) {
 -- 
 2.7.4
 
