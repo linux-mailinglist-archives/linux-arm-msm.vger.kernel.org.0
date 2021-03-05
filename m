@@ -2,138 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DCD2E32DEFA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 02:14:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C2C432DF1D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 02:32:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229562AbhCEBOl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Mar 2021 20:14:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33486 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229451AbhCEBOj (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Mar 2021 20:14:39 -0500
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D74F5C061756
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Mar 2021 17:14:39 -0800 (PST)
-Received: by mail-pl1-x632.google.com with SMTP id c16so527628ply.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Mar 2021 17:14:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=XiPQ0qbz5NlheKY3OXWnuwygc2sesfubntE23mumebc=;
-        b=MDZgx3TBuJGboGUsWHzFm1tAX4R92paHV0EMX3tKPE9kImpnk/cColwnE0t7QOulVO
-         HDF8jYCjnfyasp0ouU1RClFN4JzVl7KNBUHWw9Rnj8AZKsUhb42D04tJmiIN/PP4yKWM
-         fGsqbCWsal07kMKfu62FdVF1E5m2kK4yX7Wm7xrf+QAAIRTlyMAsr6AFxQnEMZ9DBX4b
-         Gbw/uQfbAKnEu8LYudLbV+ZDhpN7Z+htNgIK/iQX2wp5p6JLi5ARPE96/+2lFPyw5GSA
-         CIOQf01x9voa0BzEMGOUlUxSRpkuus3TGHbvHF1/4j72UXnuDejWN18nN8t28QnoAiwo
-         BCTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=XiPQ0qbz5NlheKY3OXWnuwygc2sesfubntE23mumebc=;
-        b=fhvlrpXnB8ptW3e1ZaVYTH68azAOJFymoWUmnZcXvPmwynaUMOjoN+VWF1P5RXgUEQ
-         dHbVnPn03xRBkzsnmkbs/KG2iJS5Kb0XJYUM37IRIHBRHRChIQR5p8k/6UksoqRXXI3r
-         J5Dhij7bxe7k2uJe7bUvj6o1OKmiCW3qYYyfqutlCKnoikEETUltnMqVwYPMxcyj56EG
-         u2RAEKUIKn3chFsYUyR5UofL0SlY9Fo1j3GHFnd8H+FR5VfDM7A/6QFTgOZoTUmEFF9b
-         57vOd7qQvz4dpgjkBrTilNdPTTV4TNQooTTtJVIvXWbnXSODiVJ+qV1f15gNor3Jb8ka
-         uMpA==
-X-Gm-Message-State: AOAM533KRnkON0QLtJ2KjT0OBlQ+Ia3LH9hKAJyEvYjvHhunQlbpEbF1
-        L+N6HisP1sm5Wzwx+88SKniJRg==
-X-Google-Smtp-Source: ABdhPJxKzmJ2qx6ZJejZ2IsZUNoZiHysTu4Rj/Gfl2KyGVCeQVE3NeF2zuYwPU2DZAES8IaVH5L57A==
-X-Received: by 2002:a17:90a:c389:: with SMTP id h9mr7464794pjt.226.1614906879427;
-        Thu, 04 Mar 2021 17:14:39 -0800 (PST)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id v3sm495603pff.217.2021.03.04.17.14.36
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 04 Mar 2021 17:14:38 -0800 (PST)
-Date:   Fri, 5 Mar 2021 09:14:32 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Hans de Goede <hdegoede@redhat.com>
-Cc:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        linux-gpio@vger.kernel.org, linux-acpi@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] gpiolib: acpi: support override broken GPIO number in
- ACPI table
-Message-ID: <20210305011429.GH17424@dragon>
-References: <20210226033919.8871-1-shawn.guo@linaro.org>
- <YD9bQXBD+9k3Lf/4@smile.fi.intel.com>
- <2ed0d4dc-2756-9a55-3f54-1377732e35fc@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2ed0d4dc-2756-9a55-3f54-1377732e35fc@redhat.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+        id S229437AbhCEBcO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Mar 2021 20:32:14 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:25074 "EHLO z11.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229436AbhCEBcO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 4 Mar 2021 20:32:14 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1614907934; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=MrBaxd8I1lCJhc1xiJgcuKzJdIqqY481nXmjMo1dSxY=; b=pl76956UOhT7BceqCxnfZ3PzwmGgUL2d054xEWVRZdeZDGEnH+Q7R+tLaGcLdbDrIHbb0WtH
+ mTArvTcPbk4WKF4/eu3imNSQKeejs6QgDs545wULLwCkmG90DsfsVhIFSJjlSv4r2tBDoOoI
+ iZDZ7cPJfZmiSAYyLRr3oxZt+IQ=
+X-Mailgun-Sending-Ip: 104.130.96.11
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 60418a162a5e6d1bfa216026 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 05 Mar 2021 01:32:06
+ GMT
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 435F7C43462; Fri,  5 Mar 2021 01:32:06 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from abhinavk-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A7FCFC433CA;
+        Fri,  5 Mar 2021 01:32:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A7FCFC433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=abhinavk@codeaurora.org
+From:   Abhinav Kumar <abhinavk@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
+        nganji@codeaurora.org, aravindh@codeaurora.org,
+        tanmay@codeaurora.org, khsieh@codeaurora.org,
+        dan.carpenter@oracle.com
+Subject: [PATCH] drm/msm/dp: Fix warnings reported by kbot in DP driver
+Date:   Thu,  4 Mar 2021 17:31:52 -0800
+Message-Id: <1614907912-6880-1-git-send-email-abhinavk@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 04, 2021 at 08:32:14PM +0100, Hans de Goede wrote:
-> Hi,
-> 
-> On 3/3/21 10:47 AM, Andy Shevchenko wrote:
-> > On Fri, Feb 26, 2021 at 11:39:19AM +0800, Shawn Guo wrote:
-> >> Running kernel with ACPI on Lenovo Flex 5G laptop, touchpad is just
-> >> not working.  That's because the GpioInt number of TSC2 node in ACPI
-> >> table is simply wrong, and the number even exceeds the maximum GPIO
-> >> lines.  As the touchpad works fine with Windows on the same machine,
-> >> presumably this is something Windows-ism.  Although it's obviously
-> >> a specification violation, believe of that Microsoft will fix this in
-> >> the near future is not really realistic.
-> >>
-> >> It adds the support of overriding broken GPIO number in ACPI table
-> >> on particular machines, which are matched using DMI info.  Such
-> >> mechanism for fixing up broken firmware and ACPI table is not uncommon
-> >> in kernel.  And hopefully it can be useful for other machines that get
-> >> broken GPIO number coded in ACPI table.
-> > 
-> > 
-> > +Cc: Hans.
-> > 
-> > Hans, would appreciate your opinion on this thread. Maybe I'm mistaken in my
-> > conclusions.
-> 
-> So I've read the entire thread here:
-> https://lore.kernel.org/linux-gpio/20210226033919.8871-1-shawn.guo@linaro.org/T/#u
-> 
-> And I agree wih Andy, this is not something which should be fixed up in the
-> generic gpiolib-acpi code.
-> 
-> Note that we have similar things going on on x86 platforms. There are cases
-> there where there are e.g. holes in the GPIO ranges advertised by the Intel
-> pinctrl drivers. And in the beginning as i2c (and thus GpioIRQ) HID devices
-> started to become more common there were also several rounds of work to make
-> sure that the GPIO numbering (per ACPI-device / island) exported to the rest
-> of the kernel (and thus to gpiolib-acpi) matched with the numbering which
-> the ACPI tables expected (so the numbering which the Windows driver use).
-> 
-> It seems to me, esp. in the light that there are a lot of "crazy high" GPIO
-> indexes in the DSDT of the Lenovo Flex 5G, that the right thing to do here
-> is to fix the qualcom pinctrl/GPIO driver to number its GPIOs in the way
-> expected by these ACPI tables. This will break use of existing devicetrees,
-> so it will likely need to detect if the main firmware of the system is ACPI
-> or DT based and then use 2 different numbering schemes depending on the
-> outcome of that check.
-> 
-> Please also do not try ti fix this with some quirks in e.g. the i2c-hid driver,
-> I will definitely NACK such attempts. From what we can see now any fix clearly
-> should be done inside the qualcom GPIO driver.
+Fix the warnings reported by kbot across MSM DP driver.
 
-Thanks for your opinion on this, Hans.  Yeah, with the information from
-Jeffrey, I now agree with Andy that these high GPIO numbers are not
-broken but have some meaning, and we should map them back to real GPIO
-number in Qualcomm GPIO driver.
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
+---
+ drivers/gpu/drm/msm/dp/dp_debug.c | 33 +++++----------------------------
+ drivers/gpu/drm/msm/dp/dp_hpd.c   |  4 ++--
+ drivers/gpu/drm/msm/dp/dp_power.c |  2 +-
+ 3 files changed, 8 insertions(+), 31 deletions(-)
 
-So we reach a consensus that this is not the right solution for Lenovo
-Flex 5G. But what about for Andy's Galileo Gen 2 case, where the GPIO
-number in ACPI is truly broken?
+diff --git a/drivers/gpu/drm/msm/dp/dp_debug.c b/drivers/gpu/drm/msm/dp/dp_debug.c
+index 84670bc..2f6247e 100644
+--- a/drivers/gpu/drm/msm/dp/dp_debug.c
++++ b/drivers/gpu/drm/msm/dp/dp_debug.c
+@@ -226,7 +226,7 @@ static int dp_test_data_show(struct seq_file *m, void *data)
+ 					debug->link->test_video.test_h_width);
+ 			seq_printf(m, "vdisplay: %d\n",
+ 					debug->link->test_video.test_v_height);
+-					seq_printf(m, "bpc: %u\n",
++			seq_printf(m, "bpc: %u\n",
+ 					dp_link_bit_depth_to_bpc(bpc));
+ 		} else
+ 			seq_puts(m, "0");
+@@ -368,44 +368,21 @@ static int dp_debug_init(struct dp_debug *dp_debug, struct drm_minor *minor)
+ 	int rc = 0;
+ 	struct dp_debug_private *debug = container_of(dp_debug,
+ 			struct dp_debug_private, dp_debug);
+-	struct dentry *file;
+-	struct dentry *test_active;
+-	struct dentry *test_data, *test_type;
+ 
+-	file = debugfs_create_file("dp_debug", 0444, minor->debugfs_root,
++	debugfs_create_file("dp_debug", 0444, minor->debugfs_root,
+ 			debug, &dp_debug_fops);
+-	if (IS_ERR_OR_NULL(file)) {
+-		rc = PTR_ERR(file);
+-		DRM_ERROR("[%s] debugfs create file failed, rc=%d\n",
+-				  DEBUG_NAME, rc);
+-	}
+ 
+-	test_active = debugfs_create_file("msm_dp_test_active", 0444,
++	debugfs_create_file("msm_dp_test_active", 0444,
+ 			minor->debugfs_root,
+ 			debug, &test_active_fops);
+-	if (IS_ERR_OR_NULL(test_active)) {
+-		rc = PTR_ERR(test_active);
+-		DRM_ERROR("[%s] debugfs test_active failed, rc=%d\n",
+-				  DEBUG_NAME, rc);
+-	}
+ 
+-	test_data = debugfs_create_file("msm_dp_test_data", 0444,
++	debugfs_create_file("msm_dp_test_data", 0444,
+ 			minor->debugfs_root,
+ 			debug, &dp_test_data_fops);
+-	if (IS_ERR_OR_NULL(test_data)) {
+-		rc = PTR_ERR(test_data);
+-		DRM_ERROR("[%s] debugfs test_data failed, rc=%d\n",
+-				  DEBUG_NAME, rc);
+-	}
+ 
+-	test_type = debugfs_create_file("msm_dp_test_type", 0444,
++	debugfs_create_file("msm_dp_test_type", 0444,
+ 			minor->debugfs_root,
+ 			debug, &dp_test_type_fops);
+-	if (IS_ERR_OR_NULL(test_type)) {
+-		rc = PTR_ERR(test_type);
+-		DRM_ERROR("[%s] debugfs test_type failed, rc=%d\n",
+-				  DEBUG_NAME, rc);
+-	}
+ 
+ 	debug->root = minor->debugfs_root;
+ 
+diff --git a/drivers/gpu/drm/msm/dp/dp_hpd.c b/drivers/gpu/drm/msm/dp/dp_hpd.c
+index 5b8fe3202..e1c90fa 100644
+--- a/drivers/gpu/drm/msm/dp/dp_hpd.c
++++ b/drivers/gpu/drm/msm/dp/dp_hpd.c
+@@ -34,8 +34,8 @@ int dp_hpd_connect(struct dp_usbpd *dp_usbpd, bool hpd)
+ 
+ 	dp_usbpd->hpd_high = hpd;
+ 
+-	if (!hpd_priv->dp_cb && !hpd_priv->dp_cb->configure
+-				&& !hpd_priv->dp_cb->disconnect) {
++	if (!hpd_priv->dp_cb || !hpd_priv->dp_cb->configure
++				|| !hpd_priv->dp_cb->disconnect) {
+ 		pr_err("hpd dp_cb not initialized\n");
+ 		return -EINVAL;
+ 	}
+diff --git a/drivers/gpu/drm/msm/dp/dp_power.c b/drivers/gpu/drm/msm/dp/dp_power.c
+index 9c4ea00..3961ba4 100644
+--- a/drivers/gpu/drm/msm/dp/dp_power.c
++++ b/drivers/gpu/drm/msm/dp/dp_power.c
+@@ -269,7 +269,7 @@ int dp_power_clk_enable(struct dp_power *dp_power,
+ 		DRM_ERROR("failed to '%s' clks for: %s. err=%d\n",
+ 			enable ? "enable" : "disable",
+ 			dp_parser_pm_name(pm_type), rc);
+-			return rc;
++		return rc;
+ 	}
+ 
+ 	if (pm_type == DP_CORE_PM)
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-  ba8c90c61847 ("gpio: pca953x: Override IRQ for one of the expanders on Galileo Gen 2")
-
-Shawn
