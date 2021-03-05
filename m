@@ -2,115 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 81E4632EFB0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 17:09:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 62C1732F070
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 17:56:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230507AbhCEQIa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Mar 2021 11:08:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55680 "EHLO
+        id S230035AbhCEQz1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Mar 2021 11:55:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229836AbhCEQI3 (ORCPT
+        with ESMTP id S229964AbhCEQzN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Mar 2021 11:08:29 -0500
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 902F0C061574
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 08:08:29 -0800 (PST)
-Received: by mail-pf1-x429.google.com with SMTP id 16so947372pfn.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 08:08:29 -0800 (PST)
+        Fri, 5 Mar 2021 11:55:13 -0500
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B364BC06175F
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 08:55:13 -0800 (PST)
+Received: by mail-pj1-x1035.google.com with SMTP id bj7so2414697pjb.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 08:55:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=lZUrSsflmXrJKzBBajhnta1UCm2xCwUXwlSF9VSLPRY=;
-        b=NNB03kRqRD0W09gfztnMw3F6UhbQU4z/9keZ2v9YSB1yISieuoBTwUBTmeIa1xcE+4
-         rQaKQ1VO7c+6aQjdq5aKxFTfBHj93Epu/cSP3XWx2eoQSn5AcHJBPJpjUbJrmRVO3YnN
-         7L+eUmlJkT6UVpfkRthBoJRAR5+6NrO9GJUngl5BL32W//tq1vXz3AKYfvIOIXvYFB/2
-         eRm/9V1oSDYqPUqElBbLz1aYQahy7+93nGXBIjClmOopzHS+Qin+kbthTbx0eDukxlap
-         8yf1PYrr1YYvr3WmqpIMM8hQQzsCKUQASnYKcEXCgACDcoRN9wowEZteJsZPs+O3o2QK
-         PChA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=5oX7JDjpyFM6sShOZapWIE6sOYsNksokkCB2Em8FcMw=;
+        b=EqxN9e8rDjI2I2gJOSPPG/q05JnU5yymLBDDd9p6ny16eovxkKkAUbrCkuQSTOB2WH
+         g6zlxso1OMmg9Ebdk6Nbnx5o4aQNreFt48edMlEaavtiJJ7mCrS65A3BOLEdjVhSZ+mg
+         svQQmF4n7dUqon7+f5JiNK/WxfI40+U7YPB4bBRw/Kp+EaQmtNgMxtI9sp7A7OxE3EjE
+         o7KtladbbuHryn65Vt1m/aXtqDmcRDiV/Bass2bcD0rWOKHvsdb54zCUGsLPAeLZK2Qu
+         kwjtxw9epGtY+6puNn5zLVMj+37z++zRhGSFrBWhgb8EC2qCS0sCjNMal2DihjLtBYY/
+         lBDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=lZUrSsflmXrJKzBBajhnta1UCm2xCwUXwlSF9VSLPRY=;
-        b=hhJdsBAvU9SGYX6Qw/aKVMNFaBtKMUVL76ZzxLByHllrT38EizX3OWMZLjXBC+DIC8
-         tr3fwdMBq7sd+AsVNJ53RKhdsuaOiRUMzGD9vnNG3Zw8rD/Oy1r2aGFg0WQO0KnpxR6E
-         wUs1cU9pvgI0ECJXr29cd9vrZ8x2GwBvVjmNxDRbf1HSsvyJcTjzoTXWJr2uXVll8i3c
-         bjcQF75jbrL62ALp6+O7acNv2ihDTd+rquAB/Z4naaFY/ukgjTk6E4UgPgEtmMVmIisN
-         7QPaOxnQbYB158siiKqx8uV9VyMlL51QlHK2B/XfUONSqn7Mdr2Wgmw2mQ7QPpLmBgmu
-         2NiA==
-X-Gm-Message-State: AOAM5314t/5vc/1Bek2WwpWF1jKvTPgT6VVbKvBuafeFuV7v60KCF3Qz
-        njiE/TFETnzS735mr3O4m8c5c8gWrkQxgqSKSaDEPQ==
-X-Google-Smtp-Source: ABdhPJyyJFUdLKi5tNCq54S8cplWOuJO3FoPZ7aZQJwnP4RUGHog3RWEeJr8fhZGxijVQPJp6+xQnEWYTMZjvOpa4pE=
-X-Received: by 2002:aa7:9341:0:b029:1ee:ee87:643a with SMTP id
- 1-20020aa793410000b02901eeee87643amr9529479pfn.55.1614960509017; Fri, 05 Mar
- 2021 08:08:29 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=5oX7JDjpyFM6sShOZapWIE6sOYsNksokkCB2Em8FcMw=;
+        b=pOruLtGix/e+9wMPG0XUZJRe3mtGLG9erF6bfInDWaHfQgVTrSGHLZ5497DEjGnJxd
+         zh1FYyXyMOSED6i5IL18HSOmp01y9fTJkFrJvDv5JKlpMaPKNj+U4EbI2DRdu6PfXzzf
+         XDs/Kx5d4t4a/vuEkzC+yCrAKg5hhfA/R6faj3/Jai/3/T8Cqh6YB+mFMu2LkmbCvwPF
+         npNK03dYnHcbgrRuvdZbmgGk8v4Su99NVrWUKcRfpcHhrUs25W29QYlZ2KRO6b1+kpzX
+         vZDxbvIvAMIcygK3FKJGJwpXaG5KFyu2ltdss0RnfwtqYVPDomQE00o67elUKuUeux9m
+         VDww==
+X-Gm-Message-State: AOAM531iaYeUgLmLCNl1qh3Fv59l+zViFhVzDjSJ433mrmi9t+hknjZh
+        sPMH5ItlD87sXQ9CG02Y7WDboQ==
+X-Google-Smtp-Source: ABdhPJxstzqvocrEH0wIvecZMQR/AbxctNSmn+OMgpLPNverTVBu8owjd2rr+kRGcTeQBx+lLo4/RQ==
+X-Received: by 2002:a17:90a:4d07:: with SMTP id c7mr11296018pjg.104.1614963313231;
+        Fri, 05 Mar 2021 08:55:13 -0800 (PST)
+Received: from xps15 (S0106889e681aac74.cg.shawcable.net. [68.147.0.187])
+        by smtp.gmail.com with ESMTPSA id mw13sm2794442pjb.42.2021.03.05.08.55.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Mar 2021 08:55:12 -0800 (PST)
+Date:   Fri, 5 Mar 2021 09:55:10 -0700
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Andy Gross <agross@kernel.org>,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v5 08/16] rpmsg: glink: add sendto and trysendto ops
+Message-ID: <20210305165510.GA3885132@xps15>
+References: <20210219111501.14261-1-arnaud.pouliquen@foss.st.com>
+ <20210219111501.14261-9-arnaud.pouliquen@foss.st.com>
+ <20210304191129.GE3854911@xps15>
+ <e0f60693-3184-55c1-db67-1725a5f9c24d@foss.st.com>
 MIME-Version: 1.0
-References: <1614953347-10192-1-git-send-email-loic.poulain@linaro.org>
- <153fe801-3855-5aa3-8698-ac7fde697255@codeaurora.org> <CAMZdPi_+hpUkzpxKc1+K=xes=WZtkknaVarfgnfnYuP_a=kiBQ@mail.gmail.com>
- <4ea01db5-9bdf-e002-8d1f-e272853edfcd@codeaurora.org> <CAMZdPi82JuqEAj3dWCj03JNRkEtANPW8dcQmkSDqgiVXG6VxOw@mail.gmail.com>
-In-Reply-To: <CAMZdPi82JuqEAj3dWCj03JNRkEtANPW8dcQmkSDqgiVXG6VxOw@mail.gmail.com>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Fri, 5 Mar 2021 17:16:24 +0100
-Message-ID: <CAMZdPi-vn3GSon+QhL+4=qwyO_mnJyPvMpFXTz3_c686VQqXoQ@mail.gmail.com>
-Subject: Re: [PATCH] bus: mhi: pm: Change mhi_pm_resume timeout value
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e0f60693-3184-55c1-db67-1725a5f9c24d@foss.st.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 5 Mar 2021 at 16:34, Loic Poulain <loic.poulain@linaro.org> wrote:
->
-> On Fri, 5 Mar 2021 at 16:09, Jeffrey Hugo <jhugo@codeaurora.org> wrote:
-> >
-> > On 3/5/2021 8:08 AM, Loic Poulain wrote:
-> > > Hi Jeffrey,
-> > >
-> > > On Fri, 5 Mar 2021 at 15:49, Jeffrey Hugo <jhugo@codeaurora.org> wrote:
-> > >>
-> > >> On 3/5/2021 7:09 AM, Loic Poulain wrote:
-> > >>> mhi_cntrl->timeout_ms is set by the controller and indicates the
-> > >>> maximum amount of time the controller device will take to be ready.
-> > >>> In case of PCI modems, this value is quite high given modems can take
-> > >>> up to 15 seconds from cold boot to be ready.
-> > >>>
-> > >>> Reusing this value in mhi_pm_resume can cause huge resuming latency
-> > >>> and delay the whole system resume (in case of system wide suspend/
-> > >>> resume), leading to bad use experience.
-> > >>
-> > >> I think this needs more explanation.  The timeout is a maximum value.
-> > >> You indicate that 2 seconds is more than enough for any MHI device to
-> > >> exit M3 (citation needed), but 15 seconds is too much?  The difference
-> > >> should only be apparent when the device doesn't transition in the timeout.
-> > >>
-> > >> Put another way, this doesn't say why 15 seconds is bad, if every device
-> > >> only needs 2, given that wait_event_timeout() doesn't always wait for
-> > >> the entire timeout value if the event occurs earlier.
-> > >
-> > > Yes, right that deserves an explanation: depending on the platform and
-> > > the suspend type (deep, s2idle), the PCI device may or may not lose
-> > > power. In case power is maintained, there is no problem and the
-> > > controller is successfully moved to M0. But in case of power loss, the
-> > > device is going to restart, and MHI resuming is going to timeout and
-> > > fail since M0 will never be reached. On PCI side we simply
-> > > reinitialize the controller in case of resume failure. So in other
-> > > words, MHI resume is expected to fail in some cases and it should be
-> > > handled with minimal impact on the system.
-> >
-> > Can we detect the power loss in far less than 2 seconds, and abort the
-> > resume process?  Waiting for the entire timeout, regardless of the
-> > value, in the power loss scenario you describe seems less than ideal for
-> > the system impact you are attempting to optimize.
->
-> That's a good question, like checking the state is M3 before trying
-> anything, need to check that.
+[...]
 
-Ok, please discard this patch, I've submitted another change that
-takes care of this more properly.
-Thanks, Jeffrey for challenging this.
+> >>  }
+> >>  
+> >> +static int qcom_glink_sendto(struct rpmsg_endpoint *ept, void *data, int len, u32 dst)
+> >> +{
+> >> +	struct glink_channel *channel = to_glink_channel(ept);
+> >> +
+> >> +	return __qcom_glink_send(channel, data, len, true);
+> >> +}
+> >> +
+> >> +static int qcom_glink_trysendto(struct rpmsg_endpoint *ept, void *data, int len, u32 dst)
+> >> +{
+> >> +	struct glink_channel *channel = to_glink_channel(ept);
+> >> +
+> >> +	return __qcom_glink_send(channel, data, len, false);
+> >> +}
+> > 
+> > Just rename send() to sendto() and trysend() to trysendto() and ignore the
+> > destination address.  
+> 
 
-Loic
+Apologies for not being clear.
+
+> Function prototypes have to match with rpmsg_endpoint_ops structure defined
+> below. So seems to me not possible to just rename the functions.
+> Please could you clarify if i missed something?
+
+I don't think rproc_ops::send() and rproc_ops::trysend() are used anywhere else.
+So replace them with rproc_ops::sendto() and rproc_ops::trysendto() where the
+destination address would be ingnored.
+
+> 
+> > The same goes for the next patch.  I would fold patch 08
+> > and 09 into 10 to help get the big picture.
+> 
+> I'm going to squash all in one.
+
+Perfect
+
+> 
+> Thanks,
+> Arnaud
+> 
+> > 
+> >> +
+> >>  /*
+> >>   * Finds the device_node for the glink child interested in this channel.
+> >>   */
+> >> @@ -1364,7 +1378,9 @@ static const struct rpmsg_device_ops glink_device_ops = {
+> >>  static const struct rpmsg_endpoint_ops glink_endpoint_ops = {
+> >>  	.destroy_ept = qcom_glink_destroy_ept,
+> >>  	.send = qcom_glink_send,
+> >> +	.sendto = qcom_glink_sendto,
+> >>  	.trysend = qcom_glink_trysend,
+> >> +	.trysendto = qcom_glink_trysendto,
+> >>  };
+> >>  
+> >>  static void qcom_glink_rpdev_release(struct device *dev)
+> >> -- 
+> >> 2.17.1
+> >>
