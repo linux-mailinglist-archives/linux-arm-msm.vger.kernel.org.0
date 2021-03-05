@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 538A032E655
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 11:28:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EF5D032E653
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 11:28:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229528AbhCEK2P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Mar 2021 05:28:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39074 "EHLO
+        id S229563AbhCEK2Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Mar 2021 05:28:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229589AbhCEK15 (ORCPT
+        with ESMTP id S229597AbhCEK2J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Mar 2021 05:27:57 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE82CC061574
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 02:27:56 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id v15so1496631wrx.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 02:27:56 -0800 (PST)
+        Fri, 5 Mar 2021 05:28:09 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1827C061574
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 02:28:08 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id w203-20020a1c49d40000b029010c706d0642so5789769wma.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 02:28:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=5+hSVXn8OdsmYs+09+Ki3tAAGmQxr3aimu+yu1IZzog=;
-        b=nq0CPl8WkxhRL+s3j1tsQCm2IUp84gSynRl1cuXrEBxEceST5WUXbyroMGHh3iHTiK
-         BPjnLAS1cAYORKO+2EHmk0gJ0Pr9l0Cy7ph8Tb6U5rKdoJhhpfIgJ7GIEL1l+MxoUUV+
-         fnY7xTWUlVY/rx0kSCNme0b8qitL8rH53V0I/usU99xafLwgcSZo9RUQH6nvrNiX+Ij/
-         EMJGNWe/WLbzlZv0CoTj2Rtcc8h18GdsogJkYcJEl+y4pxc200pxxefB6gVtX4amrDn5
-         /n+loylU4GZlDhwyZp4IPvUlpnNOBmDTteby1MUrB//ChMje4QW48cNBgLuHSvIJltYE
-         eBMg==
+        bh=508mHarsDAedjeOjCGR9JTna24netIemqOogSJyJGyc=;
+        b=AuS+3HMvYjH51pD/anB6X2/9d1EmQcyRJ40Ww+WTp//AQW7XM1K6F9BZlGyrOu5NgQ
+         +H1W34bc5EYxDvaCuu9CoxlUYl0WW0YrHL8TMIrRw5DCYY3iTQW3YLqcZjyZgLhQaamq
+         wTezvbziWy691ENdKl41IL1CCFzTMo7O+/P3jRZBRaA1au8RpGiNnKSn6UUGLQqvEnGc
+         gvGKjbbDJm+moigBzgL+kqqVbqBFhG2ahLEQjFlJpxQXLdLr0NGYueEJq2vr+BdXf/g5
+         65+n9HWmbJUpq5FLHxsdR1/a+ar8ngz/ZI790dYNEJs9xX9ilgIAL04Q17XOMTdPj0dF
+         dzbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=5+hSVXn8OdsmYs+09+Ki3tAAGmQxr3aimu+yu1IZzog=;
-        b=aZbZKZnYOveCfrTUEUkMwQIIrL3pU/ewwBU/7sPpMaeRYfwb4rRpx3PrD1gyCgdxIi
-         ZS/tYiS8omU2DBdxWFl2rS3YfYlHl72YMrnXKZXHqLUZdTC69uHQl5oUCFQBkgUFkCrg
-         p9bhqOakC0iSn0tTwjkXeofhyfM0Pdpllo3Gb3nmzOaTobgSu+4nrl0CPaLJoAZJgtbb
-         DIQDtVPeXtkZjblVNxlhDlYSlotiSRTxUR9VawmZdX4h+QF4rAxXqFwVlu/R4kE7i4Mp
-         6Uu119WK0njB1d5Mexe9By1GpJatRm//hVz6bBWm2lIx7UmoVuYwGjuDjjTwl4F95Amd
-         ENKg==
-X-Gm-Message-State: AOAM532S4EMlLfEEqB+bO6zhWEaPdtAkdTGrghlULu71dv3YpBOipPZP
-        OUL1lPJDXGTqHKukjS+PKWbuciU+bqqayg==
-X-Google-Smtp-Source: ABdhPJwpNClB22cY56RvIY7cKySG3TkjKyVfZwgsD+zENzMOkLlKGJGCS3v+hS1Vnb5IvgkhhWHReQ==
-X-Received: by 2002:adf:dd4f:: with SMTP id u15mr8773309wrm.260.1614940075591;
-        Fri, 05 Mar 2021 02:27:55 -0800 (PST)
+        bh=508mHarsDAedjeOjCGR9JTna24netIemqOogSJyJGyc=;
+        b=BNnTvL60w++NK4G6p0pZP/CJmDOGo1t0WdZrNOQZq3nFi9jNigVjSFp09siAmwIMje
+         f5Z2MGsn3ZFpd7+n2n7iajca/irQltIgoIoKrlhXDtbj+rTWHvT19wthyZmWHYFB6aaK
+         OP/ZpMSJXx0SxVymjZ/Kx0iS0x6IVyqTp3+S6BNIcdGZsEmfiarGQWszaku2FR4+6Isz
+         4Szc0S60DNLvfKU9eXISQnJ8EpURtq8w/T53aWr9uYYR5yJBrao8G9NOsCAPZKoKZeiX
+         B3bNbK93HP8cJClvsPQWAgmE8okiZE8pz43yn3eDu4hKQ4HrOe+k2jIGgLi5FaWmKf7S
+         wENQ==
+X-Gm-Message-State: AOAM530QyCP9Imhjs9TuyjOdbftv8DGT3NhKQLTIcWlhgCwE15vvHZQ/
+        +fihfMHPPimUq82dHRR9FYIySw==
+X-Google-Smtp-Source: ABdhPJztwmHB+341Q2xY064L9OQmgO+DyCD8SsAIe1i9XQUeq0XqSvWUmufvkgY8nJnBed7A9o6NjA==
+X-Received: by 2002:a1c:9854:: with SMTP id a81mr7844507wme.19.1614940087340;
+        Fri, 05 Mar 2021 02:28:07 -0800 (PST)
 Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.googlemail.com with ESMTPSA id s23sm3652107wmc.29.2021.03.05.02.27.54
+        by smtp.googlemail.com with ESMTPSA id s83sm4051271wmf.26.2021.03.05.02.28.06
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 05 Mar 2021 02:27:55 -0800 (PST)
-Subject: Re: [PATCH 2/3] nvmem: core: Allow nvmem_cell_read_u16/32/64 to read
- smaller cells
+        Fri, 05 Mar 2021 02:28:06 -0800 (PST)
+Subject: Re: [PATCH 1/3] drm/msm: Fix speed-bin support not to access outside
+ valid memory
 To:     Douglas Anderson <dianders@chromium.org>,
         Rob Clark <robdclark@gmail.com>,
         Jordan Crouse <jcrouse@codeaurora.org>
@@ -60,16 +60,23 @@ Cc:     Niklas Cassel <niklas.cassel@linaro.org>,
         swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
         Akhil P Oommen <akhilpo@codeaurora.org>,
         Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>, Eric Anholt <eric@anholt.net>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Sean Paul <sean@poorly.run>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         linux-kernel@vger.kernel.org
 References: <20210227002603.3260599-1-dianders@chromium.org>
- <20210226162521.2.I7c9190630cf9131b42d521aa1c5b97135012a734@changeid>
+ <20210226162521.1.Ib5ae69a80704c3a2992100b9b5bac1a6cc470249@changeid>
 From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <6537aec4-7f6e-ede9-12ea-e84bab738d7b@linaro.org>
-Date:   Fri, 5 Mar 2021 10:27:54 +0000
+Message-ID: <6ce9f5b8-50b4-e655-f6c5-4e095c1d7e19@linaro.org>
+Date:   Fri, 5 Mar 2021 10:28:05 +0000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <20210226162521.2.I7c9190630cf9131b42d521aa1c5b97135012a734@changeid>
+In-Reply-To: <20210226162521.1.Ib5ae69a80704c3a2992100b9b5bac1a6cc470249@changeid>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -80,125 +87,123 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 27/02/2021 00:26, Douglas Anderson wrote:
-> The current way that cell "length" is specified for nvmem cells is a
-> little fuzzy. For instance, let's look at the gpu speed bin currently
-> in sc7180.dtsi:
+> When running the latest kernel on an sc7180 with KASAN I got this
+> splat:
+>    BUG: KASAN: slab-out-of-bounds in a6xx_gpu_init+0x618/0x644
+>    Read of size 4 at addr ffffff8088f36100 by task kworker/7:1/58
+>    CPU: 7 PID: 58 Comm: kworker/7:1 Not tainted 5.11.0+ #3
+>    Hardware name: Google Lazor (rev1 - 2) with LTE (DT)
+>    Workqueue: events deferred_probe_work_func
+>    Call trace:
+>     dump_backtrace+0x0/0x3a8
+>     show_stack+0x24/0x30
+>     dump_stack+0x174/0x1e0
+>     print_address_description+0x70/0x2e4
+>     kasan_report+0x178/0x1bc
+>     __asan_report_load4_noabort+0x44/0x50
+>     a6xx_gpu_init+0x618/0x644
+>     adreno_bind+0x26c/0x438
 > 
+> This is because the speed bin is defined like this:
 >    gpu_speed_bin: gpu_speed_bin@1d2 {
 >      reg = <0x1d2 0x2>;
 >      bits = <5 8>;
 >    };
 > 
-> This is an 8-bit value (as specified by the "bits" field). However,
-> it has a "length" of 2 (bytes), presumably because the value spans
-> across two bytes.
+> As you can see the "length" is 2 bytes. That means that the nvmem
+> subsystem allocates only 2 bytes. The GPU code, however, was casting
+> the pointer allocated by nvmem to a (u32 *) and dereferencing. That's
+> not so good.
 > 
-> When querying this value right now, it's hard for a client to know if
-> they should be calling nvmem_cell_read_u16() or nvmem_cell_read_u8().
-> Today they must call nvmem_cell_read_u16() because the "length" of the
-> cell was 2 (bytes). However, if a later SoC ever came around and
-> didn't span across 2 bytes it would be unclear.  If a later Soc
-> specified, for instance:
+> Let's fix this to just use the nvmem_cell_read_u16() accessor function
+> which simplifies things and also gets rid of the splat.
 > 
->    gpu_speed_bin: gpu_speed_bin@100 {
->      reg = <0x100 0x1>;
->      bits = <0 8>;
->    };
+> Let's also put an explicit conversion from little endian in place just
+> to make things clear. The nvmem subsystem today is assuming little
+> endian and this makes it clear. Specifically, the way the above sc7180
+> cell is interpreted:
 > 
-> ...then the caller would need to change to try calling
-> nvmem_cell_read_u8() because the u16 version would fail.
+> NVMEM:
+>   +--------+--------+--------+--------+--------+
+>   | ...... | 0x1d3  | 0x1d2  | ...... | 0x000  |
+>   +--------+--------+--------+--------+--------+
+>                ^       ^
+>               msb     lsb
 > 
+> You can see that the least significant data is at the lower address
+> which is little endian.
+> 
+> NOTE: someone who is truly paying attention might wonder about me
+> picking the "u16" version of this accessor instead of the "u8" (since
+> the value is 8 bits big) or the u32 version (just for fun). At the
+> moment you need to pick the accessor that exactly matches the length
+> the cell was specified as in the device tree. Hopefully future
+> patches to the nvmem subsystem will fix this.
+> 
+> Fixes: fe7952c629da ("drm/msm: Add speed-bin support to a618 gpu")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+> 
+>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 31 +++++++--------------------
+>   1 file changed, 8 insertions(+), 23 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index ba8e9d3cf0fe..0e2024defd79 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -1350,35 +1350,20 @@ static int a6xx_set_supported_hw(struct device *dev, struct a6xx_gpu *a6xx_gpu,
+>   		u32 revn)
+>   {
+>   	struct opp_table *opp_table;
+> -	struct nvmem_cell *cell;
+>   	u32 supp_hw = UINT_MAX;
+> -	void *buf;
+> -
+> -	cell = nvmem_cell_get(dev, "speed_bin");
+> -	/*
+> -	 * -ENOENT means that the platform doesn't support speedbin which is
+> -	 * fine
+> -	 */
+> -	if (PTR_ERR(cell) == -ENOENT)
+> -		return 0;
+> -	else if (IS_ERR(cell)) {
+> -		DRM_DEV_ERROR(dev,
+> -				"failed to read speed-bin. Some OPPs may not be supported by hardware");
+> -		goto done;
+> -	}
+> +	u16 speedbin;
+> +	int ret;
+>   
+> -	buf = nvmem_cell_read(cell, NULL);
 
-If the consumer driver is expecting the sizes to span around byte to 
-many bytes, then, Why not just call nvmem_cell_read() which should also 
-return you how many bytes it has read!
+I think the issue here is not passing len pointer which should return 
+how many bytes the cell is!
 
-
-> Let's solve this by allowing clients to read a "larger" value. We'll
-> just fill it in with 0. 
-
-That is misleading the consumer! If the consumer is expecting a u16 or 
-u32, cell size should be of that size!!
+Then from there we can decide to do le16_to_cpu or le32_to_cpu or not!
+This will also future proof the code to handle speed_bins of different 
+sizes!
 
 --srini
 
-If a client truly wants to know exactly how
-> big the cell was they can fall back to calling nvmem_cell_read()
-> directly.
-> 
-> NOTE: current implementation assumes that cells are little endian when
-> up-casting the size, but that's already pretty implicit in the way
-> nvmem works now anyway. See nvmem_shift_read_buffer_in_place(). Let's
-> document this but not do any auto-conversions just in case there was
-> an instance where someone was using this API to read big endian data
-> on a big endian machine and it happened to be working because there
-> was no bit offset.
-> 
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
-> I will freely admit that I always end up thinking in circles and
-> getting dizzy when I think too much about endian considerations. If
-> anyone has better intuition than I do and see that I've goofed this up
-> then please yell.
-> 
->   drivers/nvmem/core.c | 21 +++++++++++++++++++--
->   1 file changed, 19 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/nvmem/core.c b/drivers/nvmem/core.c
-> index a5ab1e0c74cf..8602390bb124 100644
-> --- a/drivers/nvmem/core.c
-> +++ b/drivers/nvmem/core.c
-> @@ -1534,12 +1534,14 @@ static int nvmem_cell_read_common(struct device *dev, const char *cell_id,
->   		nvmem_cell_put(cell);
->   		return PTR_ERR(buf);
+> -	if (IS_ERR(buf)) {
+> -		nvmem_cell_put(cell);
+
+> +	ret = nvmem_cell_read_u16(dev, "speed_bin", &speedbin);
+> +	if (ret) {
+>   		DRM_DEV_ERROR(dev,
+> -				"failed to read speed-bin. Some OPPs may not be supported by hardware");
+> +			      "failed to read speed-bin (%d). Some OPPs may not be supported by hardware",
+> +			      ret);
+>   		goto done;
 >   	}
-> -	if (len != count) {
-> +	if (len > count) {
->   		kfree(buf);
->   		nvmem_cell_put(cell);
->   		return -EINVAL;
-> +	} else if (len != count) {
-> +		memset(val + len, 0, count - len);
->   	}
-> -	memcpy(val, buf, count);
-> +	memcpy(val, buf, len);
->   	kfree(buf);
->   	nvmem_cell_put(cell);
+> +	speedbin = le16_to_cpu(speedbin);
 >   
-> @@ -1564,6 +1566,11 @@ EXPORT_SYMBOL_GPL(nvmem_cell_read_u8);
->   /**
->    * nvmem_cell_read_u16() - Read a cell value as a u16
->    *
-> + * This function can be used to read any cell value 16-bits or less.  If
-> + * this function needs to upcast (or if the cell was stored in nvmem with
-> + * a bit offset) it will assume that the cell is little endian.  Clients
-> + * should generally call le16_to_cpu() on the returned value.
-> + *
->    * @dev: Device that requests the nvmem cell.
->    * @cell_id: Name of nvmem cell to read.
->    * @val: pointer to output value.
-> @@ -1579,6 +1586,11 @@ EXPORT_SYMBOL_GPL(nvmem_cell_read_u16);
->   /**
->    * nvmem_cell_read_u32() - Read a cell value as a u32
->    *
-> + * This function can be used to read any cell value 32-bits or less.  If
-> + * this function needs to upcast (or if the cell was stored in nvmem with
-> + * a bit offset) it will assume that the cell is little endian.  Clients
-> + * should generally call le32_to_cpu() on the returned value.
-> + *
->    * @dev: Device that requests the nvmem cell.
->    * @cell_id: Name of nvmem cell to read.
->    * @val: pointer to output value.
-> @@ -1594,6 +1606,11 @@ EXPORT_SYMBOL_GPL(nvmem_cell_read_u32);
->   /**
->    * nvmem_cell_read_u64() - Read a cell value as a u64
->    *
-> + * This function can be used to read any cell value 64-bits or less.  If
-> + * this function needs to upcast (or if the cell was stored in nvmem with
-> + * a bit offset) it will assume that the cell is little endian.  Clients
-> + * should generally call le64_to_cpu() on the returned value.
-> + *
->    * @dev: Device that requests the nvmem cell.
->    * @cell_id: Name of nvmem cell to read.
->    * @val: pointer to output value.
+> -	supp_hw = fuse_to_supp_hw(dev, revn, *((u32 *) buf));
+> -
+> -	kfree(buf);
+> -	nvmem_cell_put(cell);
+> +	supp_hw = fuse_to_supp_hw(dev, revn, speedbin);
+>   
+>   done:
+>   	opp_table = dev_pm_opp_set_supported_hw(dev, &supp_hw, 1);
 > 
