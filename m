@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0236C32F47F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 21:12:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 28F6332F486
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Mar 2021 21:18:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229582AbhCEULe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Mar 2021 15:11:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51630 "EHLO
+        id S229576AbhCEUR6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Mar 2021 15:17:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229611AbhCEULP (ORCPT
+        with ESMTP id S229446AbhCEURd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Mar 2021 15:11:15 -0500
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 637B5C061761
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 12:11:15 -0800 (PST)
-Received: by mail-pf1-x431.google.com with SMTP id j12so2791959pfj.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 12:11:15 -0800 (PST)
+        Fri, 5 Mar 2021 15:17:33 -0500
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DD19C06175F
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 12:17:33 -0800 (PST)
+Received: by mail-pg1-x52d.google.com with SMTP id w34so1047819pga.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 12:17:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=XpRWrCpvKq9nt1h78wFpc/rhz9Ju6DpPSZWvCQyczCw=;
-        b=i5inxvA0mUjOzQNjG7ciEg6oz8aIWcIRZsDlhjBbs/19w1v7F2XVzfzADNzTUz9DFI
-         0DATDju49awK+y15gl32BddzbO9uDs5x80mn7xvPdesARvf0Hw2/nQrDTboWADj7jCxo
-         afl7HId/BZeUxy2VwiuwgDoOSJj4LMSERIs5I=
+        bh=5Ww9KevX4ecFSEP5C1OtVbh68e4J22Jsb3/WA7Lbu6o=;
+        b=QFgkXWD8gvYD0A0l41l0VZKkI2x9X2G98Q61A7KXlguppE2aCMh1BfRJEmgtcihmd0
+         8f0KKbDjai78GE6vjayDXtBtY6MkIYGfjcVb23ZtcGqu45i/CLKFEiaQjuv8Dr0WXpCr
+         RjcMRQBy77QZ7f7qYsgjMsEdNeMON9ALg3ZWQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=XpRWrCpvKq9nt1h78wFpc/rhz9Ju6DpPSZWvCQyczCw=;
-        b=t5/KN2v3BhAcEYXCTeYtczbmCoBFNBsNvHB2i8ZaEHHWE1p/1x/yrqjy7x7O5rRteD
-         S+kLKTznJ9p3nsQeSUkLWO8S5Wm9C0lEQ65SR8Gjeejad4IdnBeL7TlrGvTYy9L3RdiO
-         AphYI0u/ynn7fc9ApF7+SGeDpmrhtNNwaz6VktbV/PShAAhdmLchzz+J/ObbbLO+axGy
-         Fb1j0O6/ADRyspo+7obJDW7gYV8da9VFwfiyrPm7/0e5twVU/a33Tkugyi7YrsMDHAvK
-         NKS83eWB7IrDgG57W6MuM2Gr8tVlzavsXF2FiF8UhMHMuwFkT/NGVcOavJkcMte6ulsn
-         gl6g==
-X-Gm-Message-State: AOAM531MEg3jAtBaL4Anw/VO7kIII2zTIT6CRITMmJ1uMBqIEFLu4crA
-        IvEGNYJVh8trZmdfEe+Va7voAw==
-X-Google-Smtp-Source: ABdhPJzp+MS3v5CN7KWxUphZ2+tM3MVGymlJxG+hV9vMQn8t2v+QgGLYQanFrGOnwfplkbU3TPajHA==
-X-Received: by 2002:a63:ee4e:: with SMTP id n14mr10174615pgk.422.1614975074818;
-        Fri, 05 Mar 2021 12:11:14 -0800 (PST)
+        bh=5Ww9KevX4ecFSEP5C1OtVbh68e4J22Jsb3/WA7Lbu6o=;
+        b=gKRsr6goAvx2Y01iMt4bcPlD2nQtxU1j38t8npWc4PjgP4JOUmvmlyB0R/UdISlbHf
+         Spd59azBsa7YBw+yjC8+zOKLonuqnUa/YKuyHSrYoJIFFQdTdMXLzggbkZmwh4IYDyYM
+         KUg7CGx65A2FiB2/YJ7sizT9YjP9zIXa/z2ycIIRXEhUWliDBLTKTaOz8ktmI57Xiv64
+         f4lciSNiaOxY1dfI7+wX/qCR1eHm2hL5MgttIyzrTDCt9TT4n5D2tgeqPTFqhf3DuEO6
+         QycbLmnphpKNriWhBbhubxQhZV21Uww23uaz0yyOFZl+J0qmZnToLqQvFVYQ9xaRtFzx
+         gLmQ==
+X-Gm-Message-State: AOAM532zJcpa3djaaR1l8DjYx6oZvkwhvsI9uRpK81jlha2buzszqHcu
+        tWKt9qgqRiNk5JlDiiu98bW7Lw==
+X-Google-Smtp-Source: ABdhPJzZUzJg4okZiTDkGXQKxjD0TxOKB5Sy6XF4xGLU25JvsLkPjWfe6wIqBxKzngAt/JiM7t/kOA==
+X-Received: by 2002:a63:fb11:: with SMTP id o17mr10162608pgh.282.1614975452774;
+        Fri, 05 Mar 2021 12:17:32 -0800 (PST)
 Received: from localhost ([2620:15c:202:1:2878:25d1:94cb:a547])
-        by smtp.gmail.com with UTF8SMTPSA id x14sm29266pfn.162.2021.03.05.12.11.13
+        by smtp.gmail.com with UTF8SMTPSA id h23sm3223060pfn.118.2021.03.05.12.17.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Mar 2021 12:11:14 -0800 (PST)
-Date:   Fri, 5 Mar 2021 12:11:12 -0800
+        Fri, 05 Mar 2021 12:17:32 -0800 (PST)
+Date:   Fri, 5 Mar 2021 12:17:30 -0800
 From:   Matthias Kaehlcke <mka@chromium.org>
 To:     Doug Anderson <dianders@chromium.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -55,138 +55,162 @@ Cc:     Andy Gross <agross@kernel.org>,
         <devicetree@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/4] arm64: dts: qcom: sc7180: lazor: Simplify disabling
- of charger thermal zone
-Message-ID: <YEKQYPIjisL+V1xH@google.com>
+Subject: Re: [PATCH 2/4] arm64: dts: qcom: sc7180: Add pompom rev3
+Message-ID: <YEKR2hsp6J90vuUt@google.com>
 References: <20210304180415.1531430-1-mka@chromium.org>
- <20210304100341.1.I6d587e7ae72a5a47253bb95dfdc3158f8cc8a157@changeid>
- <CAD=FV=XKpzSq2GqvoDieuZVZFrwmO0Q2prPaKeJRKXJmxPGWpg@mail.gmail.com>
+ <20210304100341.2.I7fef1a0e82bd2f3c1bc35501f8652e027aae4fcc@changeid>
+ <CAD=FV=WwWPJNqZoUPU+opAPLgTAOT5RMJoWx0xg=FTyoaW3_Gg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAD=FV=XKpzSq2GqvoDieuZVZFrwmO0Q2prPaKeJRKXJmxPGWpg@mail.gmail.com>
+In-Reply-To: <CAD=FV=WwWPJNqZoUPU+opAPLgTAOT5RMJoWx0xg=FTyoaW3_Gg@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 05, 2021 at 10:36:49AM -0800, Doug Anderson wrote:
+On Fri, Mar 05, 2021 at 10:48:16AM -0800, Doug Anderson wrote:
 > Hi,
 > 
 > On Thu, Mar 4, 2021 at 10:04 AM Matthias Kaehlcke <mka@chromium.org> wrote:
 > >
-> > Commit f73558cc83d1 ("arm64: dts: qcom: sc7180: Disable charger
-> > thermal zone for lazor") disables the charger thermal zone for
-> > specific lazor revisions due to an unsupported thermistor type.
-> > The initial idea was to disable the thermal zone for older
-> > revisions and leave it enabled for newer ones that use a
-> > supported thermistor. Finally the thermistor won't be changed
-> > on newer revisions, hence the thermal zone should be disabled
-> > for all lazor (and limozeen) revisions. Instead of disabling
-> > it per revision do it once in the shared .dtsi for lazor.
+> > The only kernel visible change with respect to rev2 is that pompom
+> > rev3 changed the charger thermistor from a 47k to a 100k NTC to use
+> > a thermistor which is supported by the PM6150 ADC driver.
 > >
 > > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
 > > ---
 > >
-> >  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts | 9 ---------
-> >  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts | 9 ---------
-> >  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts | 9 ---------
-> >  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi   | 9 +++++++++
-> >  4 files changed, 9 insertions(+), 27 deletions(-)
+> >  .../dts/qcom/sc7180-trogdor-pompom-r2-lte.dts |  4 +-
+> >  .../dts/qcom/sc7180-trogdor-pompom-r2.dts     |  4 +-
+> >  .../dts/qcom/sc7180-trogdor-pompom-r3-lte.dts | 14 ++++++
+> >  .../dts/qcom/sc7180-trogdor-pompom-r3.dts     | 46 +++++++++++++++++++
+> >  4 files changed, 64 insertions(+), 4 deletions(-)
+> >  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3-lte.dts
+> >  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3.dts
 > >
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
-> > index 5c997cd90069..30e3e769d2b4 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
-> > @@ -14,15 +14,6 @@ / {
-> >         compatible = "google,lazor-rev0", "qcom,sc7180";
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2-lte.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2-lte.dts
+> > index 791d496ad046..00e187c08eb9 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2-lte.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2-lte.dts
+> > @@ -9,6 +9,6 @@
+> >  #include "sc7180-trogdor-lte-sku.dtsi"
+> >
+> >  / {
+> > -       model = "Google Pompom (rev2+) with LTE";
+> > -       compatible = "google,pompom-sku0", "qcom,sc7180";
+> > +       model = "Google Pompom (rev2) with LTE";
+> > +       compatible = "google,pompom-rev2-sku0", "qcom,sc7180";
+> >  };
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2.dts
+> > index 984d7337da78..2b2bd906321d 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2.dts
+> > @@ -10,8 +10,8 @@
+> >  #include "sc7180-trogdor-pompom.dtsi"
+> >
+> >  / {
+> > -       model = "Google Pompom (rev2+)";
+> > -       compatible = "google,pompom", "qcom,sc7180";
+> > +       model = "Google Pompom (rev2)";
+> > +       compatible = "google,pompom-rev2", "qcom,sc7180";
 > >  };
 > >
-> > -/*
-> > - * Lazor is stuffed with a 47k NTC as charger thermistor which currently is
-> > - * not supported by the PM6150 ADC driver. Disable the charger thermal zone
-> > - * to avoid using bogus temperature values.
-> > - */
-> > -&charger_thermal {
-> > -       status = "disabled";
-> > -};
-> > -
-> >  &pp3300_hub {
-> >         /* pp3300_l7c is used to power the USB hub */
-> >         /delete-property/regulator-always-on;
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-> > index d9fbcc7bc5bd..c2ef06367baf 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-> > @@ -14,15 +14,6 @@ / {
-> >         compatible = "google,lazor-rev1", "google,lazor-rev2", "qcom,sc7180";
-> >  };
-> >
-> > -/*
-> > - * Lazor is stuffed with a 47k NTC as charger thermistor which currently is
-> > - * not supported by the PM6150 ADC driver. Disable the charger thermal zone
-> > - * to avoid using bogus temperature values.
-> > - */
-> > -&charger_thermal {
-> > -       status = "disabled";
-> > -};
-> > -
-> >  &pp3300_hub {
-> >         /* pp3300_l7c is used to power the USB hub */
-> >         /delete-property/regulator-always-on;
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts
-> > index 19e69adb9e04..1b9d2f46359e 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts
-> > @@ -13,12 +13,3 @@ / {
-> >         model = "Google Lazor (rev3+)";
-> >         compatible = "google,lazor", "qcom,sc7180";
-> >  };
-> > -
-> > -/*
-> > - * Lazor is stuffed with a 47k NTC as charger thermistor which currently is
-> > - * not supported by the PM6150 ADC driver. Disable the charger thermal zone
-> > - * to avoid using bogus temperature values.
-> > - */
-> > -&charger_thermal {
-> > -       status = "disabled";
-> > -};
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-> > index 89e5cd29ec09..aa2c4a9098db 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-> > @@ -58,6 +58,15 @@ ap_ts: touchscreen@10 {
-> >         };
-> >  };
-> >
+> >  &keyboard_controller {
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3-lte.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3-lte.dts
+> > new file mode 100644
+> > index 000000000000..067cb75a011e
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3-lte.dts
+> > @@ -0,0 +1,14 @@
+> > +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 > > +/*
-> > + * Lazor is stuffed with a 47k NTC as charger thermistor which currently is
-> > + * not supported by the PM6150 ADC driver. Disable the charger thermal zone
-> > + * to avoid using bogus temperature values.
+> > + * Google Pompom board device tree source
+> > + *
+> > + * Copyright 2020 Google LLC.
 > > + */
-> > +&charger_thermal {
-> > +       status = "disabled";
+> > +
+> > +#include "sc7180-trogdor-pompom-r3.dts"
+> > +#include "sc7180-trogdor-lte-sku.dtsi"
+> > +
+> > +/ {
+> > +       model = "Google Pompom (rev3+) with LTE";
+> > +       compatible = "google,pompom-sku0", "qcom,sc7180";
+> > +};
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3.dts
+> > new file mode 100644
+> > index 000000000000..12d2d1e8e9e1
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3.dts
+> > @@ -0,0 +1,46 @@
+> > +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+> > +/*
+> > + * Google Pompom board device tree source
+> > + *
+> > + * Copyright 2021 Google LLC.
+> > + */
+> > +
+> > +/dts-v1/;
+> > +
+> > +#include "sc7180-trogdor-pompom.dtsi"
+> > +
+> > +/ {
+> > +       model = "Google Pompom (rev3+)";
+> > +       compatible = "google,pompom", "qcom,sc7180";
 > > +};
 > > +
-> >  /* PINCTRL - modifications to sc7180-trogdor.dtsi */
-> >
-> >  &ts_reset_l {
+> > +&keyboard_controller {
+> > +       function-row-physmap = <
+> > +               MATRIX_KEY(0x00, 0x02, 0)       /* T1 */
+> > +               MATRIX_KEY(0x03, 0x02, 0)       /* T2 */
+> > +               MATRIX_KEY(0x02, 0x02, 0)       /* T3 */
+> > +               MATRIX_KEY(0x01, 0x02, 0)       /* T4 */
+> > +               MATRIX_KEY(0x03, 0x04, 0)       /* T5 */
+> > +               MATRIX_KEY(0x02, 0x04, 0)       /* T6 */
+> > +               MATRIX_KEY(0x01, 0x04, 0)       /* T7 */
+> > +               MATRIX_KEY(0x02, 0x09, 0)       /* T8 */
+> > +               MATRIX_KEY(0x01, 0x09, 0)       /* T9 */
+> > +               MATRIX_KEY(0x00, 0x04, 0)       /* T10 */
+> > +       >;
+> > +       linux,keymap = <
+> > +               MATRIX_KEY(0x00, 0x02, KEY_BACK)
+> > +               MATRIX_KEY(0x03, 0x02, KEY_REFRESH)
+> > +               MATRIX_KEY(0x02, 0x02, KEY_ZOOM)
+> > +               MATRIX_KEY(0x01, 0x02, KEY_SCALE)
+> > +               MATRIX_KEY(0x03, 0x04, KEY_SYSRQ)
+> > +               MATRIX_KEY(0x02, 0x04, KEY_BRIGHTNESSDOWN)
+> > +               MATRIX_KEY(0x01, 0x04, KEY_BRIGHTNESSUP)
+> > +               MATRIX_KEY(0x02, 0x09, KEY_MUTE)
+> > +               MATRIX_KEY(0x01, 0x09, KEY_VOLUMEDOWN)
+> > +               MATRIX_KEY(0x00, 0x04, KEY_VOLUMEUP)
+> > +
+> > +               MATRIX_KEY(0x03, 0x09, KEY_SLEEP)       /* LOCK key */
+> > +
+> > +               CROS_STD_MAIN_KEYMAP
+> > +       >;
+> > +};
 > 
-> The idea is right, but I'm having a hard time figuring out what tree
-> you posted your patch against. You said you did it atop my "v2" series
-> [1], right?  ...but the "sc7180-trogdor-lazor.dtsi" really doesn't
-> match. In my tree, for instance, right above the PINCTRL comment
-> should be:
-> 
-> &wifi {
->   qcom,ath10k-calibration-variant = "GO_LAZOR";
-> };
-> 
-> ...but that's definitely not what's there in whatever your patch was
-> written against... It seems like you're also missing the panel and
-> trackpad nodes...
-> 
-> [1] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=440315
+> I don't love copying all this keymap stuff.  Options I can think of:
 
-You got me! I was too lazy to pick all 13 patches, since most of them are
-irrelevant for this series, but apparently I missed some that are. I guess
-I'll pick them all for v2 ...
+agreed
+
+> 1. Just put it in "-rev3".  Have the "-rev2" dts just include the
+> "-rev3" dts and then override the model/compatible and disable the
+> charger_thermal.
+> 
+> 2. Put the keyboard stuff in the "dtsi" file and then "-rev1" can have
+> something like:
+> 
+> /delete-node/ keyboard_controller;
+> #include <arm/cros-ec-keyboard.dtsi>
+> 
+> In general the preference is that the ugly device trees should get
+> pushed down to earlier revs since (eventually) they can just be
+> dropped.
+
+Thanks, I'll evaluate the options you suggested.
+
+> I'll also mention that I don't see a huge benefit in this being a
+> separate patch from the next one--I'd just squash them together...
+
+It keeps the individual patches simpler by doing one thing at a time,
+but you can certainly go either way.
