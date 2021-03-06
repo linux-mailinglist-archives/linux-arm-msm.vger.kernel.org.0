@@ -2,580 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DA4E432F824
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Mar 2021 04:38:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9587132F89C
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Mar 2021 07:20:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229816AbhCFDi0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Mar 2021 22:38:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34094 "EHLO
+        id S229672AbhCFGSz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 6 Mar 2021 01:18:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229701AbhCFDh5 (ORCPT
+        with ESMTP id S229617AbhCFGSa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Mar 2021 22:37:57 -0500
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12583C06175F
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 19:37:46 -0800 (PST)
-Received: by mail-oi1-x233.google.com with SMTP id x20so4805260oie.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 19:37:46 -0800 (PST)
+        Sat, 6 Mar 2021 01:18:30 -0500
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46EBFC061760
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Mar 2021 22:18:30 -0800 (PST)
+Received: by mail-pj1-x102e.google.com with SMTP id q2-20020a17090a2e02b02900bee668844dso295390pjd.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Mar 2021 22:18:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=rHZ5FvfODielV3865BOdOPXLrgDutB9qVkI03AEdwD0=;
-        b=JUOf9T69RwsyubIa9dd8IAYn+3NTYgb3686aVzJpFzA8fuuUpeY9d+dgaYpAMqvyTp
-         Rvp9Jf2ZtJqVhFjiyslVHY8ohHJ4bPl9XnqjTuCS31KhJ5EA75+Begg/ENDNz7aPr3U5
-         NOsBAvluJoQHqvE+0iCb+MZ224+XamSGlKTQRWG0tP4kXZPMJTSpCQRat2QuSYOCSvs2
-         OPq1Pkjd3AGk/gwFdhHOT26gcVmoPn2ZsK4m+mXa3IF8hI2k1YwUZkJF6xcdH66htuMf
-         YJy+7L74DpEYxDmbWwSSZ/EvAkuT2KCpbxF9WmddyabOvDUY/5+WJVhAInyVt+7Pi1aD
-         Wfpg==
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=uM54gnYDcX3ayLqkvuuLshMpyvf+UdfbwjdQl4fQksU=;
+        b=jusMkiMV2XpMVWXf4fdaCpVmkyYQsGdaVPRxEt0j4uokJWuXOjJ4pucBGg5ea/giCG
+         0jIBY+Ilgmz+b3QxFfFD45zl6e39nHgXE0sAx1STttyzjcktLswDDNMcXtwsDI89oq4K
+         M2W2q26W1UbyUveQP3jgXDh6GmSB85ckxArN4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=rHZ5FvfODielV3865BOdOPXLrgDutB9qVkI03AEdwD0=;
-        b=Mg7JQwTsw0X7MUbkXW2c1MRo/HqJ9q2LUSUnZ/92OO3bDjH3QN6GNuTrjXyUXYqQQt
-         lK+6NRT9SWzsSabq53KwnMk4s8Ll8J1hjpdkWqzV4HNx47rXqxx/pPxIaEmAvroHnOlX
-         T9y/tJILlJJisp/UrfKyurNx0S/HhvHmgn4m8R5RiY0cgjyrISwxGDG6Ru0GI8W4962A
-         Hy4J46I5tkO1KluFhmBHtmRMze5O5zCys6FCtNY6LcZVE+irLIGmdlExkkk/E4Io9z46
-         FFbDv/ikeMmjxmIVJUZUgZMST3k1AVL+oZrXV28KcoY8OaCVWetc5CSy8rZ5UFpTqqJd
-         GH9A==
-X-Gm-Message-State: AOAM5338HlxkKOWt4515UO30rEijIcAblOuiEwGh/pLnJzLHbCEY2LWj
-        GRx1ZNJLz+aQYBq+pq89MRACug==
-X-Google-Smtp-Source: ABdhPJwIkZgBOOpKWfQgb//5e3dgWoueQE0112J073vzGiQvAQbiZqluUYFWF34EYSzhj7QLOGrDIw==
-X-Received: by 2002:aca:ea83:: with SMTP id i125mr9688989oih.18.1615001865201;
-        Fri, 05 Mar 2021 19:37:45 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id u19sm1041795ote.15.2021.03.05.19.37.44
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=uM54gnYDcX3ayLqkvuuLshMpyvf+UdfbwjdQl4fQksU=;
+        b=F6Qs5LhSTOeEjAVWdvgGphIK5stcwDqRr+YM3zO/svtHXLsZwhhryJuGGugloutzvE
+         5JHCw2W8lWlptMF3NNUbzDaqQZNEeMgSf8thDTM7aJgDIpha4Py8rfLnySkFO+6yFc0H
+         g04BBx2Q/sMxccEALXs291smq0qYzFSDAcrsSUsHyOzER/hSA0/xByDjyINxASHf4DR8
+         FQYee7zdq4+9tXX1gmYL/PDHyuXEg57NMkLs0U4phgLZtaPKlfiGwdjpcVRwAj7Ux+s6
+         3YgsIO/jfL500WJb2tHt4ph1goVRIv0leVOJpI97G3y2AodGFa+dBYENwT4iQQ3Ch5Lk
+         8JOA==
+X-Gm-Message-State: AOAM530Dii/dIGbWMHvgqH40PLpL3O7hDvPcrVIkur91GJrG17KkoD5u
+        CuUSuENB1HLNrwJBZvXz3UqPWQ==
+X-Google-Smtp-Source: ABdhPJwLYBbsO6cxKPrHO9dtCkg9yMjXKDuDLSsyN+sbKtfvz4pwp78foLhfr2vQ4/ynQtLRRsXn5Q==
+X-Received: by 2002:a17:90a:bf91:: with SMTP id d17mr13660408pjs.58.1615011509282;
+        Fri, 05 Mar 2021 22:18:29 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:201:a907:cdd3:ab4a:ab44])
+        by smtp.gmail.com with ESMTPSA id 17sm438823pfb.71.2021.03.05.22.18.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Mar 2021 19:37:44 -0800 (PST)
-Date:   Fri, 5 Mar 2021 21:37:42 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Caleb Connolly <caleb@connolly.tech>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: add support for the Pixel 2 XL
-Message-ID: <YEL5BuaivN5LgZyG@builder.lan>
-References: <20210305213235.398252-1-caleb@connolly.tech>
+        Fri, 05 Mar 2021 22:18:28 -0800 (PST)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210305213235.398252-1-caleb@connolly.tech>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <5ac262bf-a70a-4ca3-01a8-d1432732d26f@codeaurora.org>
+References: <20210223214539.1336155-1-swboyd@chromium.org> <20210223214539.1336155-7-swboyd@chromium.org> <b9174acc-9826-eb82-b399-ed95f7e83085@codeaurora.org> <161483844056.1478170.8701629037531614722@swboyd.mtv.corp.google.com> <5ac262bf-a70a-4ca3-01a8-d1432732d26f@codeaurora.org>
+Subject: Re: [PATCH 6/6] firmware: qcom_scm: Only compile legacy calls on ARM
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Brian Masney <masneyb@onstation.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Elliot Berman <eberman@codeaurora.org>
+Date:   Fri, 05 Mar 2021 22:18:27 -0800
+Message-ID: <161501150705.1478170.3739297122787060750@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 05 Mar 15:35 CST 2021, Caleb Connolly wrote:
+Quoting Elliot Berman (2021-03-05 10:18:09)
+> On 3/3/2021 10:14 PM, Stephen Boyd wrote:
+> > Quoting Elliot Berman (2021-03-03 19:35:08)
+> >>
+> >> On 2/23/2021 1:45 PM, Stephen Boyd wrote:
+> >>> These scm calls are never used outside of legacy ARMv7 based platform=
+s.
+> >>> That's because PSCI, mandated on arm64, implements them for modern So=
+Cs
+> >>> via the PSCI spec. Let's move them to the legacy file and only compile
+> >>> the legacy file into the kernel when CONFIG_ARM=3Dy. Otherwise provide
+> >>> stubs and fail the calls. This saves a little bit of space in an
+> >>> arm64 allmodconfig >
+> >>>    $ ./scripts/bloat-o-meter vmlinux.before vmlinux.after
+> >>>    add/remove: 0/8 grow/shrink: 5/7 up/down: 509/-4405 (-3896)
+> >>>    Function                                     old     new   delta
+> >>>    __qcom_scm_set_dload_mode.constprop          312     452    +140
+> >>>    qcom_scm_qsmmu500_wait_safe_toggle           288     416    +128
+> >>>    qcom_scm_io_writel                           288     408    +120
+> >>>    qcom_scm_io_readl                            376     492    +116
+> >>>    __param_str_download_mode                     23      28      +5
+> >>>    __warned                                    4327    4326      -1
+> >>>    qcom_iommu_init                              272     268      -4
+> >>>    e843419@0b3f_00010432_324                      8       -      -8
+> >>>    qcom_scm_call                                228     208     -20
+> >>>    CSWTCH                                      5925    5877     -48
+> >>>    _sub_I_65535_1                            163100  163040     -60
+> >>>    _sub_D_65535_0                            163100  163040     -60
+> >>>    qcom_scm_wb                                   64       -     -64
+> >>>    qcom_scm_lock                                320     160    -160
+> >>>    qcom_scm_call_atomic                         212       -    -212
+> >>>    qcom_scm_cpu_power_down                      308       -    -308
+> >>>    scm_legacy_call_atomic                       520       -    -520
+> >>>    qcom_scm_set_warm_boot_addr                  720       -    -720
+> >>>    qcom_scm_set_cold_boot_addr                  728       -    -728
+> >>>    scm_legacy_call                             1492       -   -1492
+> >>>    Total: Before=3D66737642, After=3D66733746, chg -0.01%
+> >>>
+> >>> Commit 9a434cee773a ("firmware: qcom_scm: Dynamically support SMCCC a=
+nd
+> >>> legacy conventions") didn't mention any motivating factors for keeping
+> >>> the legacy code around on arm64 kernels, i.e. presumably that commit
+> >>> wasn't trying to support these legacy APIs on arm64 kernels.
+> >>
+> >> There are arm targets which support SMCCC convention and use some of
+> >> these removed functions. Can these functions be kept in qcom-scm.c and
+> >> wrapped with #if IS_ENABLED(CONFIG_ARM)?
+> >>
+> >=20
+> > It can be wrapped in qcom-scm.c, but why? It's all the same object file
+> > so I'm lost why it matters. I suppose it would make it so the struct
+> > doesn't have to be moved around and declared in the header? Any other
+> > reason? I moved it to the legacy file so that it was very obvious that
+> > the API wasn't to be used except for "legacy" platforms that don't use
+> > PSCI.
+> >=20
+>=20
+> There are "legacy" arm platforms that use the SMCCC (scm_smc_call) and=20
+> use the qcom_scm_set_{warm,cold}_boot_addr and qcom_scm_cpu_power_down=20
+> functions.
 
-Please add "qcom: " to $subject as well.
+Ah ok. Weird, but I get it. Amazing that SMCCC was adopted there but
+PSCI wasn't!
 
-> Add a minimal devicetree capable of booting on the Pixel 2 XL MSM8998
-> device.
-> 
-> It's currently possible to boot the device into postmarketOS with USB
-> networking, however the display panel depends on Display Stream
-> Compression which is not yet supported in the kernel.
-> 
-> The bootloader also requires that the dtbo partition contains a device
-> tree overlay with a particular id which has to be overlayed onto the
-> existing dtb. It's possible to use a specially crafted dtbo partition to
-> workaround this, more information is available here:
-> 
->     https://gitlab.com/calebccff/dtbo-google-wahoo-mainline
-> 
+>=20
+>  > +    desc.args[0] =3D flags;
+>  > +    desc.args[1] =3D virt_to_phys(entry);
+>  > +
+>  > +    return scm_legacy_call_atomic(NULL, &desc, NULL);
+>  > +}
+>  > +EXPORT_SYMBOL(qcom_scm_set_cold_boot_addr);
+>=20
+> This should still be qcom_scm_call.
 
-So it's not possible to just erase the dto, like on most other devices?
+You mean s/scm_legacy_call_atomic/qcom_scm_call/ right?
 
-> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
-> ---
-> It's possible to get wifi working by running Bjorns diag-router in the
-> background, without this the wifi firmware crashes every 10 seconds or
-> so. This is the same issue encountered on the OnePlus 5.
-> 
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../boot/dts/qcom/msm8998-google-taimen.dts   |  14 +
->  .../boot/dts/qcom/msm8998-google-wahoo.dtsi   | 391 ++++++++++++++++++
->  3 files changed, 406 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8998-google-taimen.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8998-google-wahoo.dtsi
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 5113fac80b7a..d942d3ec3928 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -16,6 +16,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8994-msft-lumia-cityman.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8994-sony-xperia-kitakami-sumire.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-mtp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-asus-novago-tp370ql.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-google-taimen.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-hp-envy-x2.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-lenovo-miix-630.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-mtp.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/msm8998-google-taimen.dts b/arch/arm64/boot/dts/qcom/msm8998-google-taimen.dts
-> new file mode 100644
-> index 000000000000..ffaaafe14037
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/msm8998-google-taimen.dts
-> @@ -0,0 +1,14 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-
-Would you be willing to release these as BSD-3-Clause instead?
-
-> +/*
-> + * Copyright (c) 2020, Caleb Connolly <caleb@connolly.tech>
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "msm8998-google-wahoo.dtsi"
-> +
-> +/ {
-> +	model = "Google Pixel 2 XL";
-> +	compatible = "google,taimen", "google,wahoo", "qcom,msm8998", "qcom,msm8998-mtp";
-> +	qcom,msm-id = <0x124 0x20001>;
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/msm8998-google-wahoo.dtsi b/arch/arm64/boot/dts/qcom/msm8998-google-wahoo.dtsi
-> new file mode 100644
-> index 000000000000..0c221ead2df7
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/msm8998-google-wahoo.dtsi
-> @@ -0,0 +1,391 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/* Copyright (c) 2020 Caleb Connolly <caleb@connolly.tech> */
-> +
-> +#include "msm8998.dtsi"
-> +#include "pm8998.dtsi"
-> +#include "pmi8998.dtsi"
-> +#include "pm8005.dtsi"
-> +
-> +/delete-node/ &mpss_mem;
-> +/delete-node/ &venus_mem;
-> +/delete-node/ &mba_mem;
-> +/delete-node/ &slpi_mem;
-> +
-> +/ {
-> +	aliases {
-> +	};
-> +
-> +	chosen {
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +		ranges;
-> +
-> +		/* Add "earlycon" intended to be used in combination with UART serial console */
-> +		bootargs = "clk_ignore_unused earlycon console=ttyGS0,115200";// loglevel=10 drm.debug=15 debug";
-
-Please drop earlycon from this list (user should be able to add it if
-they care later?) and use stdout-path to set the console, like we do on
-other devices.
-
-> +	};
-> +
-> +	reserved-memory {
-> +		#address-cells = <2>;
-> + 		#size-cells = <2>;
-> + 		ranges;
-> +
-> +		mpss_mem: memory@8cc00000 {
-> +			reg = <0 0x8cc00000 0 0x7800000>;
-> +			no-map;
-> +		};
-> +
-> +		venus_mem: memory@94400000 {
-> +			reg = <0 0x94400000 0 0x500000>;
-> +			no-map;
-> +		};
-> +
-> +		mba_mem: memory@94100000 {
-> +			reg = <0 0x94900000 0 0x200000>;
-> +			no-map;
-> +		};
-> +
-> +		slpi_mem: memory@94b00000 {
-> +			reg = <0 0x94b00000 0 0x700000>;
-> +			no-map;
-> +		};
-> +
-> +		ramoops: ramoops@a1810000 {
-> +			compatible = "ramoops";
-> +			reg = <0 0xa1810000 0 0x200000>;
-> +			record-size = <0x20000>;
-> +			console-size = <0x100000>;
-> +			pmsg-size = <0x80000>;
-> +		};
-> +	};
-> +
-> +	vph_pwr: vph-pwr-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vph_pwr";
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +	};
-> +};
-> +
-> +&blsp1_uart3 {
-> +	status = "disabled";
-> +
-> +	bluetooth {
-> +		compatible = "qcom,wcn3990-bt";
-> +
-> +		vddio-supply = <&vreg_s4a_1p8>;
-> +		vddxo-supply = <&vreg_l7a_1p8>;
-> +		vddrf-supply = <&vreg_l17a_1p3>;
-> +		vddch0-supply = <&vreg_l25a_3p3>;
-> +		max-speed = <3200000>;
-> +	};
-> +};
-> +
-> +&pcie0 {
-> +	status = "disabled";
-
-Isn't &pcie0 already disabled, from msm8998.dtsi?
-
-> +};
-> +
-> +&pm8005_lsid1 {
-> +	pm8005-regulators {
-> +		compatible = "qcom,pm8005-regulators";
-> +
-> +		vdd_s1-supply = <&vph_pwr>;
-> +
-> +		pm8005_s1: s1 { /* VDD_GFX supply */
-> +			regulator-min-microvolt = <524000>;
-> +			regulator-max-microvolt = <1100000>;
-> +			regulator-enable-ramp-delay = <500>;
-> +
-> +			/* hack until we rig up the gpu consumer */
-> +			regulator-always-on;
-> +		};
-> +	};
-> +};
-> +
-> +&qusb2phy {
-> +	status = "okay";
-> +
-> +	vdda-pll-supply = <&vreg_l12a_1p8>;
-> +	vdda-phy-dpdm-supply = <&vreg_l24a_3p075>;
-> +};
-> +
-> +&remoteproc_adsp {
-> +	status = "okay";
-> +
-> +	firmware-name = "qcom/pixel2/adsp.mdt";
-> +};
-> +
-> +&remoteproc_mss {
-> +	firmware-name = "qcom/pixel2/mba.mbn",
-> +	                "qcom/pixel2/modem.mdt";
-> +};
-> +
-> +&remoteproc_slpi {
-> +	status = "okay";
-> +
-> +	firmware-name = "qcom/pixel2/slpi_v2.mdt";
-> +};
-> +
-> +&rpm_requests {
-> +	pm8998-regulators {
-> +		compatible = "qcom,rpm-pm8998-regulators";
-> +
-> +		vdd_s1-supply = <&vph_pwr>;
-> +		vdd_s2-supply = <&vph_pwr>;
-> +		vdd_s3-supply = <&vph_pwr>;
-> +		vdd_s4-supply = <&vph_pwr>;
-> +		vdd_s5-supply = <&vph_pwr>;
-> +		vdd_s6-supply = <&vph_pwr>;
-> +		vdd_s7-supply = <&vph_pwr>;
-> +		vdd_s8-supply = <&vph_pwr>;
-> +		vdd_s9-supply = <&vph_pwr>;
-> +		vdd_s10-supply = <&vph_pwr>;
-> +		vdd_s11-supply = <&vph_pwr>;
-> +		vdd_s12-supply = <&vph_pwr>;
-> +		vdd_s13-supply = <&vph_pwr>;
-> +		vdd_l1_l27-supply = <&vreg_s7a_1p025>;
-> +		vdd_l2_l8_l17-supply = <&vreg_s3a_1p35>;
-> +		vdd_l3_l11-supply = <&vreg_s7a_1p025>;
-> +		vdd_l4_l5-supply = <&vreg_s7a_1p025>;
-> +		vdd_l6-supply = <&vreg_s5a_2p04>;
-> +		vdd_l7_l12_l14_l15-supply = <&vreg_s5a_2p04>;
-> +		vdd_l9-supply = <&vreg_bob>;
-> +		vdd_l10_l23_l25-supply = <&vreg_bob>;
-> +		vdd_l13_l19_l21-supply = <&vreg_bob>;
-> +		vdd_l16_l28-supply = <&vreg_bob>;
-> +		vdd_l18_l22-supply = <&vreg_bob>;
-> +		vdd_l20_l24-supply = <&vreg_bob>;
-> +		vdd_l26-supply = <&vreg_s3a_1p35>;
-> +		vdd_lvs1_lvs2-supply = <&vreg_s4a_1p8>;
-> +
-> +		vreg_s3a_1p35: s3 {
-> +			regulator-min-microvolt = <1352000>;
-> +			regulator-max-microvolt = <1352000>;
-> +		};
-> +		vreg_s4a_1p8: s4 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-allow-set-load;
-> +		};
-> +		vreg_s5a_2p04: s5 {
-> +			regulator-min-microvolt = <1904000>;
-> +			regulator-max-microvolt = <2040000>;
-> +		};
-> +		vreg_s7a_1p025: s7 {
-> +			regulator-min-microvolt = <900000>;
-> +			regulator-max-microvolt = <1028000>;
-> +		};
-> +		vreg_l1a_0p875: l1 {
-> +			regulator-min-microvolt = <880000>;
-> +			regulator-max-microvolt = <880000>;
-> +		};
-> +		vreg_l2a_1p2: l2 {
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1200000>;
-> +		};
-> +		vreg_l3a_1p0: l3 {
-> +			regulator-min-microvolt = <1000000>;
-> +			regulator-max-microvolt = <1000000>;
-> +		};
-> +		vreg_l5a_0p8: l5 {
-> +			regulator-min-microvolt = <800000>;
-> +			regulator-max-microvolt = <800000>;
-> +		};
-> +		vreg_l6a_1p8: l6 {
-> +			regulator-min-microvolt = <1808000>;
-> +			regulator-max-microvolt = <1808000>;
-> +		};
-> +		vreg_l7a_1p8: l7 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +		};
-> +		vreg_l8a_1p2: l8 {
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1200000>;
-> +		};
-> +		vreg_l9a_1p8: l9 {
-> +			regulator-min-microvolt = <1808000>;
-> +			regulator-max-microvolt = <2960000>;
-> +		};
-> +		vreg_l10a_1p8: l10 {
-> +			regulator-min-microvolt = <1808000>;
-> +			regulator-max-microvolt = <2960000>;
-> +		};
-> +		vreg_l11a_1p0: l11 {
-> +			regulator-min-microvolt = <1000000>;
-> +			regulator-max-microvolt = <1000000>;
-> +		};
-> +		vreg_l12a_1p8: l12 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +		};
-> +		vreg_l13a_2p95: l13 {
-> +			regulator-min-microvolt = <1808000>;
-> +			regulator-max-microvolt = <2960000>;
-> +		};
-> +		vreg_l14a_1p88: l14 {
-> +			regulator-min-microvolt = <1880000>;
-> +			regulator-max-microvolt = <1880000>;
-> +		};
-> +		vreg_15a_1p8: l15 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +		};
-> +		vreg_l16a_2p7: l16 {
-> +			regulator-min-microvolt = <2704000>;
-> +			regulator-max-microvolt = <2704000>;
-> +		};
-> +		vreg_l17a_1p3: l17 {
-> +			regulator-min-microvolt = <1304000>;
-> +			regulator-max-microvolt = <1304000>;
-> +		};
-> +		vreg_l18a_2p7: l18 {
-> +			regulator-min-microvolt = <2704000>;
-> +			regulator-max-microvolt = <2704000>;
-> +		};
-> +		vreg_l19a_3p0: l19 {
-> +			regulator-min-microvolt = <3008000>;
-> +			regulator-max-microvolt = <3008000>;
-> +		};
-> +		vreg_l20a_2p95: l20 {
-> +			regulator-min-microvolt = <2960000>;
-> +			regulator-max-microvolt = <2960000>;
-> +			regulator-allow-set-load;
-> +		};
-> +		vreg_l21a_2p95: l21 {
-> +			regulator-min-microvolt = <2960000>;
-> +			regulator-max-microvolt = <2960000>;
-> +			regulator-allow-set-load;
-> +			regulator-system-load = <800000>;
-> +		};
-> +		vreg_l22a_2p85: l22 {
-> +			regulator-min-microvolt = <2864000>;
-> +			regulator-max-microvolt = <2864000>;
-> +		};
-> +		vreg_l23a_3p3: l23 {
-> +			regulator-min-microvolt = <3312000>;
-> +			regulator-max-microvolt = <3312000>;
-> +		};
-> +		vreg_l24a_3p075: l24 {
-> +			regulator-min-microvolt = <3088000>;
-> +			regulator-max-microvolt = <3088000>;
-> +		};
-> +		vreg_l25a_3p3: l25 {
-> +			regulator-min-microvolt = <3104000>;
-> +			regulator-max-microvolt = <3312000>;
-> +		};
-> +		vreg_l26a_1p2: l26 {
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1200000>;
-> +			regulator-allow-set-load;
-> +		};
-> +		vreg_l28_3p0: l28 {
-> +			regulator-min-microvolt = <3008000>;
-> +			regulator-max-microvolt = <3008000>;
-> +		};
-> +
-> +		vreg_lvs1a_1p8: lvs1 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +		};
-> +
-> +		vreg_lvs2a_1p8: lvs2 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +		};
-> +
-> +	};
-> +
-> +	pmi8998-regulators {
-> +		compatible = "qcom,rpm-pmi8998-regulators";
-> +
-> +		vdd_bob-supply = <&vph_pwr>;
-> +
-> +		vreg_bob: bob {
-> +			regulator-min-microvolt = <3312000>;
-> +			regulator-max-microvolt = <3600000>;
-> +		};
-> +	};
-> +};
-> +
-> +&spmi_bus {
-> +	pmic@0 {
-> +		compatible = "qcom,pm8994", "qcom,spmi-pmic";
-
-qcom,pm8994?
-
-Per the include of pm8998.dtsi I think you already have pmic@0 defined,
-with compatible of qcom,pm8998 here (which you override).
-
-> +		reg = <0x0 SPMI_USID>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +		pon@800 {
-
-But pmic@0 already has pon@800 defined as &pm8998_pon, which seems to be
-defined identically to yours.
-
-So I think you should be able to drop this entire &spmi_bus node and its
-children, but perhaps I'm just missing something obvious here?
-
-> +			compatible = "qcom,pm8916-pon";
-> +
-> +			reg = <0x800>;
-> +			mode-bootloader = <0x2>;
-> +			mode-recovery = <0x1>;
-> +
-> +			pwrkey {
-> +				compatible = "qcom,pm8941-pwrkey";
-> +				interrupts = <0x0 0x8 0 IRQ_TYPE_EDGE_BOTH>;
-> +				debounce = <15625>;
-> +				bias-pull-up;
-> +				linux,code = <KEY_POWER>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&tlmm {
-> +	gpio-reserved-ranges = <0 4>, <81 4>;
-> +};
-> +
-> +/*
-> + * The device does contain a USB3 capable type-c port,
-> + * however it doesn't seem to work when superspeed mode is
-> + * enabled.
-> + */
-> +&usb3 {
-> +	status = "okay";
-> +
-> +	/* Operate "GCC_USB30_MASTER_CLK" in HS mode (>=60 MHz) */
-> +	assigned-clock-rates = <19200000>, <60000000>;
-> +
-> +	/* Disable USB3 pipe_clk requirement */
-> +	qcom,select-utmi-as-pipe-clk;
-> +};
-> +
-> +&usb3_dwc3 {
-> +	/* Drop USB 3 SuperSpeed PHY to bring up the "usb0" interface */
-> +	phys = <&qusb2phy>;
-> +	phy-names = "usb2-phy";
-> +
-> +	/* We can only operate at USB 2.0 speeds */
-> +	maximum-speed = "high-speed";
-> +
-> +	/* Force to peripheral until we have Type-C hooked up */
-> +	dr_mode = "peripheral";
-> +};
-> +
-> +&ufshc {
-> +	vcc-supply = <&vreg_l20a_2p95>;
-> +	vccq-supply = <&vreg_l26a_1p2>;
-> +	vccq2-supply = <&vreg_s4a_1p8>;
-> +	vcc-max-microamp = <750000>;
-> +	vccq-max-microamp = <560000>;
-> +	vccq2-max-microamp = <750000>;
-> +};
-> +
-> +&ufsphy {
-> +	vdda-phy-supply = <&vreg_l1a_0p875>;
-> +	vdda-pll-supply = <&vreg_l2a_1p2>;
-> +	vddp-ref-clk-supply = <&vreg_l26a_1p2>;
-> +	vdda-phy-max-microamp = <51400>;
-> +	vdda-pll-max-microamp = <14600>;
-> +	vddp-ref-clk-max-microamp = <100>;
-> +	vddp-ref-clk-always-on;
-> +};
-> +
-> +&wifi {
-> +	status = "okay";
-> +
-
-Can you please disable diag-router and try adding this here instead:
-
-	clocks = <&rpmcc RPM_SMD_RF_CLK2_PIN>, <&rpmcc RPM_SMD_QDSS_CLK>;
-	clock-names = "cxo_ref_clk_pin", "qdss";
-
-What you describe in your comment above seems like what I saw on sm8150,
-that launching diag-router would cause something on the modem side to
-keep the debug subsystem clock on - which in turn caused WiFi not to
-crash during loading.
-
-
-I don't know why this was required, or if it's just working around
-some other issue we're having.
-
-Regards,
-Bjorn
-
-> +	vdd-0.8-cx-mx-supply = <&vreg_l5a_0p8>;
-> +	vdd-1.8-xo-supply = <&vreg_l7a_1p8>;
-> +	vdd-1.3-rfa-supply = <&vreg_l17a_1p3>;
-> +	vdd-3.3-ch0-supply = <&vreg_l25a_3p3>;
-> +};
-> -- 
-> 2.29.2
-> 
-> 
+I don't really want to resend the rest of the patches if this last one
+is the only one that needs an update. This was a semi-RFC anyway so
+maybe it's fine if the first 5 patches get merged and then I can resend
+this one? Otherwise I will resend this again next week or so with less
+diff for this patch.
