@@ -2,102 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A0A532F70C
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Mar 2021 01:04:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2031832F738
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Mar 2021 01:20:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229631AbhCFAEV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Mar 2021 19:04:21 -0500
-Received: from mail-ot1-f50.google.com ([209.85.210.50]:46698 "EHLO
-        mail-ot1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229493AbhCFAD7 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Mar 2021 19:03:59 -0500
-Received: by mail-ot1-f50.google.com with SMTP id 97so3473289otf.13;
-        Fri, 05 Mar 2021 16:03:58 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=FCbBlEEqgxfjPjtQfKvWFaWJOfXoBc2uhQxuYQUH8F0=;
-        b=GO0LtwNWRYb9u4XW25NfkPD3r/RhI52VXi+uLjQZXiRGoxB+UYP/kOBmc04kE4FFYp
-         xQ8TS5N6gQdOD4dDJznuOcZs0SkR1SAqdon/N0PoVEtxASSFJ2iLpH7jvhmmaYFaVAbt
-         nAnLsXtCODcHqzQoDNGsUZUPgFRILYQi29jlfVS5dbIFUOPXGruVY4X5rLIL1tUdaUqs
-         RNk+GeJIAC3wus7jKOFUHHykqyHGAN8tohhg89Ykpg6SBn8AUdHHKl6O2kLXhcm44id3
-         dD5r3s4fYbhvyADD7OenDthaRClQI63h3MSxhSChP33x6zliEG6nyZ6dV4zBbf0DqTad
-         7ZPA==
-X-Gm-Message-State: AOAM532Flxfhqx+QmMTvX64ZHEOPYkiGp3QpkKLpzzPqWCKNLQZzu/Vk
-        xqAIXJJUJQWjNtJ4WUzk36oUbcidzU4uWw==
-X-Google-Smtp-Source: ABdhPJyXvrdIbaJFHWm44DBCGnI1b4zn6+CHh1kzE5vAHgRbojumfT5/HghxSzgA/e0GigtlZ/hwCg==
-X-Received: by 2002:a9d:7ac1:: with SMTP id m1mr6652621otn.186.1614989038139;
-        Fri, 05 Mar 2021 16:03:58 -0800 (PST)
-Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com. [209.85.167.172])
-        by smtp.gmail.com with ESMTPSA id v3sm847536oix.48.2021.03.05.16.03.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Mar 2021 16:03:57 -0800 (PST)
-Received: by mail-oi1-f172.google.com with SMTP id y131so1550429oia.8;
-        Fri, 05 Mar 2021 16:03:56 -0800 (PST)
-X-Received: by 2002:a54:4794:: with SMTP id o20mr9228337oic.51.1614989036851;
- Fri, 05 Mar 2021 16:03:56 -0800 (PST)
+        id S229775AbhCFAUS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Mar 2021 19:20:18 -0500
+Received: from mail.kernel.org ([198.145.29.99]:33610 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229701AbhCFAUI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 5 Mar 2021 19:20:08 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id 949C464E86;
+        Sat,  6 Mar 2021 00:20:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1614990008;
+        bh=nzageHlfJkMYkZnOb+4t7vfAX3KeSze9Z+kqhE4rZZI=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=sPjzltggkgefKQXWEEYgpaWaQmLT5ZAiLaJP8IfEpZZstr2rAjuqz2hVnZUdZHmnj
+         0cIj4j/GMIBpvR533PrOPSM5g49MCbCc81+obFu6r4jA8YEPJJiHqotw1nwhSUpf17
+         5ZfRo/8cQ9Mx70a8w25GDZi1lmzFk1IWBtlX7Q6YGzb+tmsAC3O7Lra3nKheazC1EP
+         0Q04okMwlZiRD5DYdeEo6ONtlWIXbVpbiFtGs1hnP9t8CLDTbzEBOhWlCTk4peNa8a
+         Ybq5VKxfMWf6GbZUbCLYApsqWp6w+H8bdzi2w21CgaXxfiXLerl5vZtQq8I3SV3m/H
+         ZaEBTAdkVptWw==
+Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 88092609D4;
+        Sat,  6 Mar 2021 00:20:08 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20210301084257.945454-1-hch@lst.de>
-In-Reply-To: <20210301084257.945454-1-hch@lst.de>
-From:   Li Yang <leoyang.li@nxp.com>
-Date:   Fri, 5 Mar 2021 18:03:45 -0600
-X-Gmail-Original-Message-ID: <CADRPPNTSzuuqW97_vd3h5cpHe7gOLyw3zCaqapb8YVqPF-rOfA@mail.gmail.com>
-Message-ID: <CADRPPNTSzuuqW97_vd3h5cpHe7gOLyw3zCaqapb8YVqPF-rOfA@mail.gmail.com>
-Subject: Re: cleanup unused or almost unused IOMMU APIs and the FSL PAMU driver
-To:     Christoph Hellwig <hch@lst.de>
-Cc:     Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        freedreno@lists.freedesktop.org, kvm@vger.kernel.org,
-        linuxppc-dev <linuxppc-dev@lists.ozlabs.org>,
-        dri-devel@lists.freedesktop.org,
-        virtualization@lists.linux-foundation.org,
-        Linux IOMMU <iommu@lists.linux-foundation.org>,
-        Netdev <netdev@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH 0/6]: arm64: dts: qcom: sm8350: more device support
+From:   patchwork-bot+linux-arm-msm@kernel.org
+Message-Id: <161499000855.12377.17668563736396464151.git-patchwork-notify@kernel.org>
+Date:   Sat, 06 Mar 2021 00:20:08 +0000
+References: <20210204170907.63545-1-vkoul@kernel.org>
+In-Reply-To: <20210204170907.63545-1-vkoul@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 1, 2021 at 2:44 AM Christoph Hellwig <hch@lst.de> wrote:
->
-> Hi all,
->
-> there are a bunch of IOMMU APIs that are entirely unused, or only used as
-> a private communication channel between the FSL PAMU driver and it's only
-> consumer, the qbman portal driver.
->
-> So this series drops a huge chunk of entirely unused FSL PAMU
-> functionality, then drops all kinds of unused IOMMU APIs, and then
-> replaces what is left of the iommu_attrs with properly typed, smaller
-> and easier to use specific APIs.
+Hello:
 
-It looks like the unused APIs were added for functionality that were
-never completed later on.  So
+This series was applied to qcom/linux.git (refs/heads/for-next):
 
-Acked-by: Li Yang <leoyang.li@nxp.com>
+On Thu,  4 Feb 2021 22:39:01 +0530 you wrote:
+> This series adds more support for smmu, usb and ufs to SM8350 and MTP. This
+> also adds regulator names which is very handy to have while looking at
+> regulators.
+> 
+> Jack Pham (2):
+>   arm64: dts: qcom: sm8350: add USB and PHY device nodes
+>   arm64: dts: qcom: sm8350-mtp: enable USB nodes
+> 
+> [...]
 
->
-> Diffstat:
->  arch/powerpc/include/asm/fsl_pamu_stash.h   |   12
->  drivers/gpu/drm/msm/adreno/adreno_gpu.c     |    2
->  drivers/iommu/amd/iommu.c                   |   23
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |   85 ---
->  drivers/iommu/arm/arm-smmu/arm-smmu.c       |  122 +---
->  drivers/iommu/dma-iommu.c                   |    8
->  drivers/iommu/fsl_pamu.c                    |  264 ----------
->  drivers/iommu/fsl_pamu.h                    |   10
->  drivers/iommu/fsl_pamu_domain.c             |  694 ++--------------------------
->  drivers/iommu/fsl_pamu_domain.h             |   46 -
->  drivers/iommu/intel/iommu.c                 |   55 --
->  drivers/iommu/iommu.c                       |   75 ---
->  drivers/soc/fsl/qbman/qman_portal.c         |   56 --
->  drivers/vfio/vfio_iommu_type1.c             |   31 -
->  drivers/vhost/vdpa.c                        |   10
->  include/linux/iommu.h                       |   81 ---
->  16 files changed, 214 insertions(+), 1360 deletions(-)
+Here is the summary with links:
+  - [1/6] arm64: dts: qcom: Add SM8350 apss_smmu node
+    https://git.kernel.org/qcom/c/c7f1529a6753
+  - [2/6] arm64: dts: qcom: sm8350: add USB and PHY device nodes
+    https://git.kernel.org/qcom/c/82d9f16129b5
+  - [3/6] arm64: dts: qcom: sm8350-mtp: enable USB nodes
+    https://git.kernel.org/qcom/c/59411de54f24
+  - [4/6] arm64: dts: qcom: Add SM8350 UFS nodes
+    https://git.kernel.org/qcom/c/1256d61304d6
+  - [5/6] arm64: dts: qcom: sm8350-mtp: enable UFS nodes
+    https://git.kernel.org/qcom/c/3b0dd979628e
+  - [6/6] arm64: dts: qcom: sm8350-mtp: add regulator names
+    https://git.kernel.org/qcom/c/e568107363e8
+
+You are awesome, thank you!
+--
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
