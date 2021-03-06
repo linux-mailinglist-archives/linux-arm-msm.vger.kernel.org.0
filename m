@@ -2,83 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1079E32FC08
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Mar 2021 17:47:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5663732FC36
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Mar 2021 18:19:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230461AbhCFQrL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 6 Mar 2021 11:47:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33294 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229779AbhCFQqs (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 6 Mar 2021 11:46:48 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FDF8C06174A
-        for <linux-arm-msm@vger.kernel.org>; Sat,  6 Mar 2021 08:46:48 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id b2-20020a7bc2420000b029010be1081172so1179254wmj.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Mar 2021 08:46:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=4jFifCx7yzrzHX+eduGEW6ghoeTTOTuTIMNywZZuNQA=;
-        b=Yf9RCyC+/HYEajVpFI3VFBvy/aYt08b9GbcZzmWzPlFCXgx50Wt5pIdANNyMXI7heq
-         iXwg2y1hviCsf5w7epqsoKW9raF3QQEEbzURg/tO6jqUqngzeVU8NLcPT/tkFMxUqWWa
-         CcjgBjOve2Z8QtXlqf7MxzRhBZ6Wzf8Y0Qy3vtWyHq8MlhZED0XCiiU99YbvN4HYXIrr
-         X/W0/4KmBVFBrNTKx4VMUyaGYZxc03gZiAiwNgYoY/LUGX9wEAUmawoq9zJSdGfhVUne
-         wuUJSmrXkupZw64J33GQXi3pb2ImfQYIw7+NPInl+2wNwc2br95T4Eln5ZixrB+THYm/
-         Sl6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=4jFifCx7yzrzHX+eduGEW6ghoeTTOTuTIMNywZZuNQA=;
-        b=EZ2z0V2HZiAi+x9PXrRTiUer6JMfLL/c8iKwrnJrs+ULbdxPUGKBzDw3lk+eCKWae/
-         WScsup9GM6aGtMCmtk0BxG+nMG0GJr84PPzkqwDT5QSk1jfKWS+/NpgbuyIylomUWSYi
-         wD2smYMx9wrzIqQjCAxl71THvDeR+f/E8VKjXI/rs17JClZSlTIftNX+WUz7/rMWc2PO
-         XzHKeKYfHtW/v0aFGwfkVmAtnLkOCT1jnGam9fzeBF9IhH83qxLEOt4s2LTJUPqPVgP/
-         ucSkAaZNuQyfuKPiWhBMVBmjBruQ8igRwYW4kP7PasUaE+FAE1Ud892DnD7RPEdbxkgw
-         dKyg==
-X-Gm-Message-State: AOAM531qxEsrgN3lBbXN3NkKh2Sc3UBtqpNeqLltwztaTn8pW5fUp90A
-        avLfonBsjTor4Fehq+2PdzPGmw==
-X-Google-Smtp-Source: ABdhPJzRPpyj0Kuzx7M6DUFGJ7UjBSs72yDFF376d3kXOcjwx8mCDZI8tXyxebviRot74bVTVwakXA==
-X-Received: by 2002:a7b:c409:: with SMTP id k9mr14161996wmi.151.1615049206774;
-        Sat, 06 Mar 2021 08:46:46 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id i10sm9034013wrs.11.2021.03.06.08.46.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 06 Mar 2021 08:46:46 -0800 (PST)
-Subject: Re: [PATCH 04/25] media: venus: core,pm: Vote for min clk freq during
- venus boot
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        agross@kernel.org, bjorn.andersson@linaro.org, mchehab@kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     dikshita@codeaurora.org, jonathan@marek.ca, vgarodia@codeaurora.org
-References: <20210222160300.1811121-1-bryan.odonoghue@linaro.org>
- <20210222160300.1811121-5-bryan.odonoghue@linaro.org>
- <21b09fd4-0b4c-3acb-ece2-f1a710bbd3fd@linaro.org>
- <94133e43-d250-7359-6cfe-c4956f5185dc@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Message-ID: <3e259bbd-66ee-f50f-f9eb-e788c9c311af@linaro.org>
-Date:   Sat, 6 Mar 2021 16:48:14 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.1
+        id S230311AbhCFRS4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 6 Mar 2021 12:18:56 -0500
+Received: from mail.kernel.org ([198.145.29.99]:58274 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231183AbhCFRSh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 6 Mar 2021 12:18:37 -0500
+Received: from archlinux (cpc108967-cmbg20-2-0-cust86.5-4.cable.virginm.net [81.101.6.87])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 3EDDC65005;
+        Sat,  6 Mar 2021 17:18:35 +0000 (UTC)
+Date:   Sat, 6 Mar 2021 17:18:31 +0000
+From:   Jonathan Cameron <jic23@kernel.org>
+To:     Dinghao Liu <dinghao.liu@zju.edu.cn>
+Cc:     kjlu@umn.edu, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] iio: adc: Fix error handling in vadc_do_conversion
+Message-ID: <20210306171831.0033fec7@archlinux>
+In-Reply-To: <20210301081622.15696-1-dinghao.liu@zju.edu.cn>
+References: <20210301081622.15696-1-dinghao.liu@zju.edu.cn>
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-In-Reply-To: <94133e43-d250-7359-6cfe-c4956f5185dc@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/03/2021 15:01, Stanimir Varbanov wrote:
-> Confirmed. This produces regressions on db410c (I haven't tested on
-> other platforms yet).
+On Mon,  1 Mar 2021 16:16:22 +0800
+Dinghao Liu <dinghao.liu@zju.edu.cn> wrote:
 
-db410c was broken for me on the reference branch prior to sm8250 
-additions however AFAICT this change was fine on sdm845.
+> There is one vadc_poll_wait_eoc() call in vadc_do_conversion
+> that we have caught its return value but lack further handling.
+> Check and jump to err_disable label just like the other
+> vadc_poll_wait_eoc() in this function.
+> 
+> Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+Looks good to me, but will leave this a little longer for others to review.
+If it looks like I have forgotten it in 2 weeks time, feel free to remind
+me!
 
----
-bod
+Jonathan
+
+> ---
+>  drivers/iio/adc/qcom-spmi-vadc.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/iio/adc/qcom-spmi-vadc.c b/drivers/iio/adc/qcom-spmi-vadc.c
+> index 05ff948372b3..fe36b0ba8273 100644
+> --- a/drivers/iio/adc/qcom-spmi-vadc.c
+> +++ b/drivers/iio/adc/qcom-spmi-vadc.c
+> @@ -324,6 +324,8 @@ static int vadc_do_conversion(struct vadc_priv *vadc,
+>  
+>  	if (vadc->poll_eoc) {
+>  		ret = vadc_poll_wait_eoc(vadc, timeout);
+> +		if (ret)
+> +			goto err_disable;
+>  	} else {
+>  		ret = wait_for_completion_timeout(&vadc->complete, timeout);
+>  		if (!ret) {
+
