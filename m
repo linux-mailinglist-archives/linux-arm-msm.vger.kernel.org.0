@@ -2,120 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CD4F832F9C4
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Mar 2021 12:36:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F10832FADE
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Mar 2021 14:37:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230207AbhCFLfz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 6 Mar 2021 06:35:55 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60552 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230372AbhCFLfZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 6 Mar 2021 06:35:25 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id B727D6501A;
-        Sat,  6 Mar 2021 11:35:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1615030525;
-        bh=kk8KGYHTnMmNSSZ2kd030rR2O8evnLGqDU9Hc8hiXSA=;
-        h=From:To:Cc:Subject:Date:From;
-        b=j/rkqS+MU09Q32u5NjS5ngwglgsflRqw3q+yVymc9EDDPT3r+3nI4s45+zPhhaf/B
-         4gpEbWa/JuKB9tfzG39pWcUrT08bQvkWt09Eh6njSVTjmabX/5nR8W/ftFoocg5w+v
-         68+PZ8Rkk3mABYay5WeyaBXcnAtjdXdH3+GxEcjZBa20vFSycr8I9juo3zRjUzduwM
-         loPfKiTzWkoLuHL9hY5hFXXh0VrfkK/NI9Qs/4hLIuemkuFE46pJoRTCIIgrWw8gQU
-         ZQwL3/LuB6zBmqjMLnfWOv0s32PQgGnoWYhzfiVuFqUM80MIW9vL84clcbzODdAScS
-         717qeWqdGDQrg==
-From:   Ard Biesheuvel <ardb@kernel.org>
-To:     linux-efi@vger.kernel.org
-Cc:     Ard Biesheuvel <ardb@kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Leif Lindholm <leif@nuviainc.com>,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH] efi: stub: override RT_PROP table supported mask based on EFI variable
-Date:   Sat,  6 Mar 2021 12:35:19 +0100
-Message-Id: <20210306113519.294287-1-ardb@kernel.org>
-X-Mailer: git-send-email 2.30.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S230191AbhCFNhU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 6 Mar 2021 08:37:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49068 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230472AbhCFNhE (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 6 Mar 2021 08:37:04 -0500
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58266C06174A;
+        Sat,  6 Mar 2021 05:37:04 -0800 (PST)
+Received: by mail-pj1-x1035.google.com with SMTP id q2-20020a17090a2e02b02900bee668844dso643863pjd.3;
+        Sat, 06 Mar 2021 05:37:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=lsCQCAQNCQuZMTW5LL9WzweLlGjeyMxQVHgG7fBsL1o=;
+        b=nFsDYqlu3hvsMzwin6DRWtl6v0tWFYrc9nJxNuhQ5iTqQBILNm+rFpxCEtEoCmxeb7
+         b4uaQFquEQPTqYTixUg2P5JsTWq4wySzYU3biIp2sWUyeypZbhUKFKLbIyHXm+CishDs
+         0/QpkLjfkeSYcXLIlBWfaidI8Ke2r0Z0kn+rRkChLlh9InnElKSrY9nkpPfuneUbRUdx
+         7dcsAqcnJl27Ct6nT3eMCYTXC+PEFBzoIH5oiboKFQgGcyFrHfv7m8glQcBvtO7d4IRS
+         ZmmX1roTgcOZAEAi0h9ZC/uK4Xm0wmsNtdzsN8pAvCQj1Qr/QHR5fWiJY/+Qk7r7CxrK
+         N1pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=lsCQCAQNCQuZMTW5LL9WzweLlGjeyMxQVHgG7fBsL1o=;
+        b=UhVO9sRqWZDerVR0aBZu2RBHhhPXXubrrTJthdhnF5HktfEQoy5rU0eSOiBpfsVxyB
+         5wm91tKp+UfJw7MeB9RAtpx2jLjyFw0nMOBmD6CvdZDtRyEUri+49I/p9GSWO3fsFlIA
+         8AnPMdxjVEEL56Z1y4JQKj8z35Rq1FL/PCtZrjq285gpCrG5BxarJ2wj6DCAUURrvzHq
+         qIxyYsHLrhaNCtTq+Jw+euvGn/e3Lm6drbMeiWNhC3+FGTs2NO+G7sZvYH9luLiiUsBO
+         bo5fiayqidFlFh0coqd+eL3eZyeENphRSyZqYrbN/QNYpd2iBR8rC6dAiWvxyAzbEA1L
+         CGbA==
+X-Gm-Message-State: AOAM531q+SbCI02nqmUeyVay3/KgI9O9o+1UhL1Y0rY6KuEzzbJHq4Wo
+        6zbyy/aJhqtjDrEVHo02GLM=
+X-Google-Smtp-Source: ABdhPJxQVpxRn+xLx9O/fYjYHEtlI6MKsTvwtMVL469x1+hOq1I8GH0d2vH6RLd9IarUlmPCLJazoA==
+X-Received: by 2002:a17:90a:c20a:: with SMTP id e10mr14798599pjt.221.1615037824035;
+        Sat, 06 Mar 2021 05:37:04 -0800 (PST)
+Received: from localhost.localdomain ([45.135.186.66])
+        by smtp.gmail.com with ESMTPSA id e12sm5345659pjj.23.2021.03.06.05.36.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 06 Mar 2021 05:37:03 -0800 (PST)
+From:   Jia-Ju Bai <baijiaju1990@gmail.com>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, ohad@wizery.com
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Jia-Ju Bai <baijiaju1990@gmail.com>
+Subject: [PATCH] rpmsg: qcom_glink_native: fix error return code of qcom_glink_rx_data()
+Date:   Sat,  6 Mar 2021 05:36:24 -0800
+Message-Id: <20210306133624.17237-1-baijiaju1990@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Allow EFI systems to override the set of supported runtime services
-declared via the RT_PROP table, by checking for the existence of a
-'OverrideSupported' EFI variable of the appropriate size under the
-RT_PROP table GUID, and if it does, combine the supported mask using
-logical AND. (This means the override can only remove support, not
-add it back).
+When idr_find() returns NULL to intent, no error return code of
+qcom_glink_rx_data() is assigned.
+To fix this bug, ret is assigned with -ENOENT in this case.
 
-Cc: Jeffrey Hugo <jhugo@codeaurora.org>,
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Shawn Guo <shawn.guo@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Leif Lindholm <leif@nuviainc.com>
-Cc: linux-arm-msm@vger.kernel.org
-
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Reported-by: TOTE Robot <oslab@tsinghua.edu.cn>
+Signed-off-by: Jia-Ju Bai <baijiaju1990@gmail.com>
 ---
- drivers/firmware/efi/libstub/efi-stub.c | 37 ++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ drivers/rpmsg/qcom_glink_native.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/firmware/efi/libstub/efi-stub.c b/drivers/firmware/efi/libstub/efi-stub.c
-index 26e69788f27a..a23d95039b2a 100644
---- a/drivers/firmware/efi/libstub/efi-stub.c
-+++ b/drivers/firmware/efi/libstub/efi-stub.c
-@@ -96,6 +96,41 @@ static void install_memreserve_table(void)
- 		efi_err("Failed to install memreserve config table!\n");
- }
- 
-+static void check_rt_properties_table_override(void)
-+{
-+	static const efi_guid_t rt_prop_guid = EFI_RT_PROPERTIES_TABLE_GUID;
-+	efi_rt_properties_table_t *table;
-+	unsigned long size = sizeof(u32);
-+	efi_status_t status;
-+	u32 override;
-+
-+	status = get_efi_var(L"OverrideSupported", &rt_prop_guid, NULL, &size, &override);
-+	if (status != EFI_SUCCESS || size != sizeof(override))
-+		return;
-+
-+	table = get_efi_config_table(rt_prop_guid);
-+	if (!table) {
-+		/* no table exists yet - allocate a new one */
-+		status = efi_bs_call(allocate_pool, EFI_RUNTIME_SERVICES_DATA,
-+				     sizeof(*table), (void **)&table);
-+		if (status != EFI_SUCCESS)
-+			return;
-+		table->version = EFI_RT_PROPERTIES_TABLE_VERSION;
-+		table->length = sizeof(*table);
-+		table->runtime_services_supported = EFI_RT_SUPPORTED_ALL;
-+
-+		status = efi_bs_call(install_configuration_table,
-+				     (efi_guid_t *)&rt_prop_guid, table);
-+		if (status != EFI_SUCCESS) {
-+			efi_warn("Failed to install RT_PROP override table\n");
-+			return;
-+		}
-+	}
-+
-+	efi_info("Applying RT_PROP table override from EFI variable\n");
-+	table->runtime_services_supported &= override;
-+}
-+
- static u32 get_supported_rt_services(void)
- {
- 	const efi_rt_properties_table_t *rt_prop_table;
-@@ -210,6 +245,8 @@ efi_status_t __efiapi efi_pe_entry(efi_handle_t handle,
- 
- 	secure_boot = efi_get_secureboot();
- 
-+	check_rt_properties_table_override();
-+
- 	/*
- 	 * Unauthenticated device tree data is a security hazard, so ignore
- 	 * 'dtb=' unless UEFI Secure Boot is disabled.  We assume that secure
+diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+index 27a05167c18c..4840886532ff 100644
+--- a/drivers/rpmsg/qcom_glink_native.c
++++ b/drivers/rpmsg/qcom_glink_native.c
+@@ -857,6 +857,7 @@ static int qcom_glink_rx_data(struct qcom_glink *glink, size_t avail)
+ 			dev_err(glink->dev,
+ 				"no intent found for channel %s intent %d",
+ 				channel->name, liid);
++			ret = -ENOENT;
+ 			goto advance_rx;
+ 		}
+ 	}
 -- 
-2.30.1
+2.17.1
 
