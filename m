@@ -2,232 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4489C32F977
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Mar 2021 11:50:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CD4F832F9C4
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Mar 2021 12:36:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230116AbhCFKtm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 6 Mar 2021 05:49:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41190 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229714AbhCFKtL (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 6 Mar 2021 05:49:11 -0500
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 116A6C06175F
-        for <linux-arm-msm@vger.kernel.org>; Sat,  6 Mar 2021 02:49:11 -0800 (PST)
-Received: from [192.168.1.101] (abac94.neoplus.adsl.tpnet.pl [83.6.166.94])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id E9B223E8B8;
-        Sat,  6 Mar 2021 11:49:06 +0100 (CET)
-Subject: Re: [PATCH] arm64: dts: add support for the Pixel 2 XL
-To:     Caleb Connolly <caleb@connolly.tech>,
-        Andy Gross <agross@kernel.org>,
+        id S230207AbhCFLfz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 6 Mar 2021 06:35:55 -0500
+Received: from mail.kernel.org ([198.145.29.99]:60552 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230372AbhCFLfZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 6 Mar 2021 06:35:25 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id B727D6501A;
+        Sat,  6 Mar 2021 11:35:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1615030525;
+        bh=kk8KGYHTnMmNSSZ2kd030rR2O8evnLGqDU9Hc8hiXSA=;
+        h=From:To:Cc:Subject:Date:From;
+        b=j/rkqS+MU09Q32u5NjS5ngwglgsflRqw3q+yVymc9EDDPT3r+3nI4s45+zPhhaf/B
+         4gpEbWa/JuKB9tfzG39pWcUrT08bQvkWt09Eh6njSVTjmabX/5nR8W/ftFoocg5w+v
+         68+PZ8Rkk3mABYay5WeyaBXcnAtjdXdH3+GxEcjZBa20vFSycr8I9juo3zRjUzduwM
+         loPfKiTzWkoLuHL9hY5hFXXh0VrfkK/NI9Qs/4hLIuemkuFE46pJoRTCIIgrWw8gQU
+         ZQwL3/LuB6zBmqjMLnfWOv0s32PQgGnoWYhzfiVuFqUM80MIW9vL84clcbzODdAScS
+         717qeWqdGDQrg==
+From:   Ard Biesheuvel <ardb@kernel.org>
+To:     linux-efi@vger.kernel.org
+Cc:     Ard Biesheuvel <ardb@kernel.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20210305213235.398252-1-caleb@connolly.tech>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-Message-ID: <2e7178e5-9c97-808e-b2ca-19ef0bb667e3@somainline.org>
-Date:   Sat, 6 Mar 2021 11:49:06 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.0
+        Shawn Guo <shawn.guo@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Leif Lindholm <leif@nuviainc.com>,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH] efi: stub: override RT_PROP table supported mask based on EFI variable
+Date:   Sat,  6 Mar 2021 12:35:19 +0100
+Message-Id: <20210306113519.294287-1-ardb@kernel.org>
+X-Mailer: git-send-email 2.30.1
 MIME-Version: 1.0
-In-Reply-To: <20210305213235.398252-1-caleb@connolly.tech>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Allow EFI systems to override the set of supported runtime services
+declared via the RT_PROP table, by checking for the existence of a
+'OverrideSupported' EFI variable of the appropriate size under the
+RT_PROP table GUID, and if it does, combine the supported mask using
+logical AND. (This means the override can only remove support, not
+add it back).
 
-On 05.03.2021 22:35, Caleb Connolly wrote:
-> Add a minimal devicetree capable of booting on the Pixel 2 XL MSM8998
-> device.
->
-> It's currently possible to boot the device into postmarketOS with USB
-> networking, however the display panel depends on Display Stream
-> Compression which is not yet supported in the kernel.
->
-> The bootloader also requires that the dtbo partition contains a device
-> tree overlay with a particular id which has to be overlayed onto the
-> existing dtb. It's possible to use a specially crafted dtbo partition to
-> workaround this, more information is available here:
->
->     https://gitlab.com/calebccff/dtbo-google-wahoo-mainline
->
-> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
-> ---
-> It's possible to get wifi working by running Bjorns diag-router in the
-> background, without this the wifi firmware crashes every 10 seconds or
-> so. This is the same issue encountered on the OnePlus 5.
->
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../boot/dts/qcom/msm8998-google-taimen.dts   |  14 +
->  .../boot/dts/qcom/msm8998-google-wahoo.dtsi   | 391 ++++++++++++++++++
->  3 files changed, 406 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8998-google-taimen.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8998-google-wahoo.dtsi
->
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 5113fac80b7a..d942d3ec3928 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -16,6 +16,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8994-msft-lumia-cityman.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8994-sony-xperia-kitakami-sumire.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-mtp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-asus-novago-tp370ql.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-google-taimen.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-hp-envy-x2.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-lenovo-miix-630.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-mtp.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/msm8998-google-taimen.dts b/arch/arm64/boot/dts/qcom/msm8998-google-taimen.dts
-> new file mode 100644
-> index 000000000000..ffaaafe14037
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/msm8998-google-taimen.dts
-> @@ -0,0 +1,14 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2020, Caleb Connolly <caleb@connolly.tech>
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "msm8998-google-wahoo.dtsi"
-> +
-> +/ {
-> +	model = "Google Pixel 2 XL";
-> +	compatible = "google,taimen", "google,wahoo", "qcom,msm8998", "qcom,msm8998-mtp";
+Cc: Jeffrey Hugo <jhugo@codeaurora.org>,
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Shawn Guo <shawn.guo@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Leif Lindholm <leif@nuviainc.com>
+Cc: linux-arm-msm@vger.kernel.org
 
-Drop the mtp compatible. Also, afaict wahoo is a shared platform name for P2/2XL, so perhaps using the same naming scheme we used for Xperias/Lumias (soc-vendor-platform-board) would clear up some confusion. In this case, I'm not sure about the wahoo compatible, but I reckon it's fine for it to stay so that it's easier to introduce potential quirks that concern both devices.
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+---
+ drivers/firmware/efi/libstub/efi-stub.c | 37 ++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
-
-> +	qcom,msm-id = <0x124 0x20001>;
-
-Move it to the common dtsi, unless the other Pixel ships with a different SoC revision.
-
-
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/msm8998-google-wahoo.dtsi b/arch/arm64/boot/dts/qcom/msm8998-google-wahoo.dtsi
-> new file mode 100644
-> index 000000000000..0c221ead2df7
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/msm8998-google-wahoo.dtsi
-> @@ -0,0 +1,391 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/* Copyright (c) 2020 Caleb Connolly <caleb@connolly.tech> */
-> +
-> +#include "msm8998.dtsi"
-> +#include "pm8998.dtsi"
-> +#include "pmi8998.dtsi"
-> +#include "pm8005.dtsi"
-> +
-> +/delete-node/ &mpss_mem;
-> +/delete-node/ &venus_mem;
-> +/delete-node/ &mba_mem;
-> +/delete-node/ &slpi_mem;
-> +
-> +/ {
-> +	aliases {
-> +	};
-> +
-> +	chosen {
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +		ranges;
-> +
-> +		/* Add "earlycon" intended to be used in combination with UART serial console */
-> +		bootargs = "clk_ignore_unused earlycon console=ttyGS0,115200";// loglevel=10 drm.debug=15 debug";
-
-clk_ignore_unused is a BIG hack!
-
-You should trace which clocks are important for it to stay alive and fix it on the driver side.
-
-What breaks if it's not there? Does it still happen with Angelo's clk patches that got in for the 5.12
-
-window?
-
-Aside from that, //loglevel... should also go.
-
-
-> +
-> +	vph_pwr: vph-pwr-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vph_pwr";
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +	};
-> +};
-
-Don't you need to specify voltage here?
-
-
-> +
-> +&blsp1_uart3 {
-> +	status = "disabled";
-> +
-> +	bluetooth {
-> +		compatible = "qcom,wcn3990-bt";
-> +
-> +		vddio-supply = <&vreg_s4a_1p8>;
-> +		vddxo-supply = <&vreg_l7a_1p8>;
-> +		vddrf-supply = <&vreg_l17a_1p3>;
-> +		vddch0-supply = <&vreg_l25a_3p3>;
-> +		max-speed = <3200000>;
-> +	};
-> +};
-
-Either enable the UART or rid the bluetooth for now.
-
-
-> +
-> +&pm8005_lsid1 {
-> +	pm8005-regulators {
-> +		compatible = "qcom,pm8005-regulators";
-> +
-> +		vdd_s1-supply = <&vph_pwr>;
-> +
-> +		pm8005_s1: s1 { /* VDD_GFX supply */
-
-regulator-name = "vdd_gfx";
-
-
-> +
-> +&spmi_bus {
-> +	pmic@0 {
-> +		compatible = "qcom,pm8994", "qcom,spmi-pmic";
-> +		reg = <0x0 SPMI_USID>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +		pon@800 {
-> +			compatible = "qcom,pm8916-pon";
-> +
-> +			reg = <0x800>;
-> +			mode-bootloader = <0x2>;
-> +			mode-recovery = <0x1>;
-> +
-> +			pwrkey {
-> +				compatible = "qcom,pm8941-pwrkey";
-> +				interrupts = <0x0 0x8 0 IRQ_TYPE_EDGE_BOTH>;
-> +				debounce = <15625>;
-> +				bias-pull-up;
-> +				linux,code = <KEY_POWER>;
-> +			};
-> +		};
-> +	};
-> +};
-
-That's a lot of indentation, it would be better to add a label: somewhere instead.. Moreover, the exact same pwrkey node is already present in pm8998.dtsi, so you should just drop this.
-
-
-Konrad
+diff --git a/drivers/firmware/efi/libstub/efi-stub.c b/drivers/firmware/efi/libstub/efi-stub.c
+index 26e69788f27a..a23d95039b2a 100644
+--- a/drivers/firmware/efi/libstub/efi-stub.c
++++ b/drivers/firmware/efi/libstub/efi-stub.c
+@@ -96,6 +96,41 @@ static void install_memreserve_table(void)
+ 		efi_err("Failed to install memreserve config table!\n");
+ }
+ 
++static void check_rt_properties_table_override(void)
++{
++	static const efi_guid_t rt_prop_guid = EFI_RT_PROPERTIES_TABLE_GUID;
++	efi_rt_properties_table_t *table;
++	unsigned long size = sizeof(u32);
++	efi_status_t status;
++	u32 override;
++
++	status = get_efi_var(L"OverrideSupported", &rt_prop_guid, NULL, &size, &override);
++	if (status != EFI_SUCCESS || size != sizeof(override))
++		return;
++
++	table = get_efi_config_table(rt_prop_guid);
++	if (!table) {
++		/* no table exists yet - allocate a new one */
++		status = efi_bs_call(allocate_pool, EFI_RUNTIME_SERVICES_DATA,
++				     sizeof(*table), (void **)&table);
++		if (status != EFI_SUCCESS)
++			return;
++		table->version = EFI_RT_PROPERTIES_TABLE_VERSION;
++		table->length = sizeof(*table);
++		table->runtime_services_supported = EFI_RT_SUPPORTED_ALL;
++
++		status = efi_bs_call(install_configuration_table,
++				     (efi_guid_t *)&rt_prop_guid, table);
++		if (status != EFI_SUCCESS) {
++			efi_warn("Failed to install RT_PROP override table\n");
++			return;
++		}
++	}
++
++	efi_info("Applying RT_PROP table override from EFI variable\n");
++	table->runtime_services_supported &= override;
++}
++
+ static u32 get_supported_rt_services(void)
+ {
+ 	const efi_rt_properties_table_t *rt_prop_table;
+@@ -210,6 +245,8 @@ efi_status_t __efiapi efi_pe_entry(efi_handle_t handle,
+ 
+ 	secure_boot = efi_get_secureboot();
+ 
++	check_rt_properties_table_override();
++
+ 	/*
+ 	 * Unauthenticated device tree data is a security hazard, so ignore
+ 	 * 'dtb=' unless UEFI Secure Boot is disabled.  We assume that secure
+-- 
+2.30.1
 
