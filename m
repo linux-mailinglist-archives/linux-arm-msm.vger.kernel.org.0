@@ -2,139 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A8C932FB49
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Mar 2021 16:02:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 39A0732FBC0
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Mar 2021 17:17:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230511AbhCFPBg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 6 Mar 2021 10:01:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38952 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230489AbhCFPB2 (ORCPT
+        id S231138AbhCFQQ0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 6 Mar 2021 11:16:26 -0500
+Received: from netrider.rowland.org ([192.131.102.5]:51039 "HELO
+        netrider.rowland.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with SMTP id S230507AbhCFQQR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 6 Mar 2021 10:01:28 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39950C06174A
-        for <linux-arm-msm@vger.kernel.org>; Sat,  6 Mar 2021 07:01:28 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id l12so7297777edt.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Mar 2021 07:01:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=VpvLVXBiTEsa/PBM9ITTWtxz9hZ9Ki5SE/hgW8uahas=;
-        b=WupEUS+T5692Lf2k8o56FQ/Ey1sxfZkHzh2JKV6EqWrs1H/mI8PmBNBu6bvAp6kb4d
-         ZfKbsP3U1ZXprNVgSKnvK8d4BEkyM+QrCu4GZCESvym5S9Dke7wb7zrzCHE17N9QK1hx
-         e3evHVt7ttrVr27Pe5LXoBfCq/MD3zNoBp0UnIswkAh9k4TNdbFgRDRqIY1adgEgFaOL
-         FjEX4myMCAtTNGiepMGIgvnmsNCMQRU3/qiFYAfO1f0IO6YsDgo4HiUaVo0AXUqfqv7x
-         mxHC7IDbOBtTcuTNPRX9JPUuIfnI05d+qoK8MsHydgFhSn/lFPuYRPxdmImxUrnrRA3M
-         uuLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=VpvLVXBiTEsa/PBM9ITTWtxz9hZ9Ki5SE/hgW8uahas=;
-        b=eBvsDNdKkOLrYTD/kMdTUbinT3+Plw5VRT26sWG3OEOOi0Isx+secMEOs4BLipwSWb
-         V43bptj1DampebEBTtqizZIHGHLP3fw74JxAr44tkbRb+HKTBMD58K5wnY6HdlDmSe9v
-         PoDKFt70RZsFCo8uJaK7i1douav/zmQl5b4Q/ZUbCT0rkHEhd7xDfYNtXLaD4uJnfrqk
-         DhYwclptFj9EKfNTrmovMRH9F7y9Lkk8krYqrsKCe54QAkQYpocAhhViYDXR3f2XJdYq
-         YkP+fjORIhUrkPGbomWwPStIDNeRNNegRn+f6hDleJ4TEjvfKe8Oj9bhGlIs8QXjXOu0
-         zvEw==
-X-Gm-Message-State: AOAM53178F1/2lo5RTUUP/d0fgiv2yxgw6OgYH8Whe9YwbxUmi5ozQTo
-        yt/EIYb9xua0DsnytQKfPuJkbA==
-X-Google-Smtp-Source: ABdhPJxWrifYqmG5mfpo/Uo1XqgTf8zXoRtHqnp8LzjkyC8lptLbBiUg1e3iVJMOelBL4P2EXB55Cw==
-X-Received: by 2002:aa7:c709:: with SMTP id i9mr2293788edq.319.1615042886758;
-        Sat, 06 Mar 2021 07:01:26 -0800 (PST)
-Received: from [192.168.1.16] (95-43-196-84.ip.btc-net.bg. [95.43.196.84])
-        by smtp.googlemail.com with ESMTPSA id t27sm3296256ejc.62.2021.03.06.07.01.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 06 Mar 2021 07:01:26 -0800 (PST)
-Subject: Re: [PATCH 04/25] media: venus: core,pm: Vote for min clk freq during
- venus boot
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, mchehab@kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     dikshita@codeaurora.org, jonathan@marek.ca, vgarodia@codeaurora.org
-References: <20210222160300.1811121-1-bryan.odonoghue@linaro.org>
- <20210222160300.1811121-5-bryan.odonoghue@linaro.org>
- <21b09fd4-0b4c-3acb-ece2-f1a710bbd3fd@linaro.org>
-Message-ID: <94133e43-d250-7359-6cfe-c4956f5185dc@linaro.org>
-Date:   Sat, 6 Mar 2021 17:01:22 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.1
+        Sat, 6 Mar 2021 11:16:17 -0500
+Received: (qmail 74844 invoked by uid 1000); 6 Mar 2021 11:16:16 -0500
+Date:   Sat, 6 Mar 2021 11:16:16 -0500
+From:   Alan Stern <stern@rowland.harvard.edu>
+To:     "Asutosh Das \(asd\)" <asutoshd@codeaurora.org>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Cc:     Adrian Hunter <adrian.hunter@intel.com>, cang@codeaurora.org,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
+        Bart Van Assche <bvanassche@acm.org>,
+        linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Pedro Sousa <pedrom.sousa@synopsys.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Ingo Molnar <mingo@redhat.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Kiwoong Kim <kwmad.kim@samsung.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Wei Yongjun <weiyongjun1@huawei.com>,
+        Dinghao Liu <dinghao.liu@zju.edu.cn>,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        Tomas Winkler <tomas.winkler@intel.com>,
+        Jaegeuk Kim <jaegeuk@kernel.org>,
+        Satya Tangirala <satyat@google.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        "moderated list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "open list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
+        <linux-samsung-soc@vger.kernel.org>,
+        "moderated list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
+        <linux-mediatek@lists.infradead.org>,
+        Linux-PM mailing list <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH v10 1/2] scsi: ufs: Enable power management for wlun
+Message-ID: <20210306161616.GC74411@rowland.harvard.edu>
+References: <cover.1614725302.git.asutoshd@codeaurora.org>
+ <0576d6eae15486740c25767e2d8805f7e94eb79d.1614725302.git.asutoshd@codeaurora.org>
+ <85086647-7292-b0a2-d842-290818bd2858@intel.com>
+ <6e98724d-2e75-d1fe-188f-a7010f86c509@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <21b09fd4-0b4c-3acb-ece2-f1a710bbd3fd@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6e98724d-2e75-d1fe-188f-a7010f86c509@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, Mar 05, 2021 at 06:54:24PM -0800, Asutosh Das (asd) wrote:
 
+> Now during my testing I see a weird issue sometimes (1 in 7).
+> Scenario - bootups
+> 
+> Issue:
+> The supplier 'ufs_device_wlun 0:0:0:49488' goes into runtime suspend even
+> when one/more of its consumers are in RPM_ACTIVE state.
+> 
+> *Log:
+> [   10.056379][  T206] sd 0:0:0:1: [sdb] Synchronizing SCSI cache
+> [   10.062497][  T113] sd 0:0:0:5: [sdf] Synchronizing SCSI cache
+> [   10.356600][   T32] sd 0:0:0:7: [sdh] Synchronizing SCSI cache
+> [   10.362944][  T174] sd 0:0:0:3: [sdd] Synchronizing SCSI cache
+> [   10.696627][   T83] sd 0:0:0:2: [sdc] Synchronizing SCSI cache
+> [   10.704562][  T170] sd 0:0:0:6: [sdg] Synchronizing SCSI cache
+> [   10.980602][    T5] sd 0:0:0:0: [sda] Synchronizing SCSI cache
+> 
+> /** Printing all the consumer nodes of supplier **/
+> [   10.987327][    T5] ufs_device_wlun 0:0:0:49488: usage-count @ suspend: 0
+> <-- this is the usage_count
+> [   10.994440][    T5] ufs_rpmb_wlun 0:0:0:49476: PM state - 2
+> [   11.000402][    T5] scsi 0:0:0:49456: PM state - 2
+> [   11.005453][    T5] sd 0:0:0:0: PM state - 2
+> [   11.009958][    T5] sd 0:0:0:1: PM state - 2
+> [   11.014469][    T5] sd 0:0:0:2: PM state - 2
+> [   11.019072][    T5] sd 0:0:0:3: PM state - 2
+> [   11.023595][    T5] sd 0:0:0:4: PM state - 0 << RPM_ACTIVE
+> [   11.353298][    T5] sd 0:0:0:5: PM state - 2
+> [   11.357726][    T5] sd 0:0:0:6: PM state - 2
+> [   11.362155][    T5] sd 0:0:0:7: PM state - 2
+> [   11.366584][    T5] ufshcd-qcom 1d84000.ufshc: __ufshcd_wl_suspend - 8709
+> [   11.374366][    T5] ufs_device_wlun 0:0:0:49488: __ufshcd_wl_suspend -
+> (0) has rpm_active flags
+> [   11.383376][    T5] ufs_device_wlun 0:0:0:49488:
+> ufshcd_wl_runtime_suspend <-- Supplier suspends fine.
+> [   12.977318][  T174] sd 0:0:0:4: [sde] Synchronizing SCSI cache
+> 
+> And the the suspend of sde is stuck now:
+> schedule+0x9c/0xe0
+> schedule_timeout+0x40/0x128
+> io_schedule_timeout+0x44/0x68
+> wait_for_common_io+0x7c/0x100
+> wait_for_completion_io+0x14/0x20
+> blk_execute_rq+0x90/0xcc
+> __scsi_execute+0x104/0x1c4
+> sd_sync_cache+0xf8/0x2a0
+> sd_suspend_common+0x74/0x11c
+> sd_suspend_runtime+0x14/0x20
+> scsi_runtime_suspend+0x64/0x94
+> __rpm_callback+0x80/0x2a4
+> rpm_suspend+0x308/0x614
+> pm_runtime_work+0x98/0xa8
+> 
+> I added 'DL_FLAG_RPM_ACTIVE' while creating links.
+>       if (hba->sdev_ufs_device) {
+>               link = device_link_add(&sdev->sdev_gendev,
+>                                   &hba->sdev_ufs_device->sdev_gendev,
+>                                  DL_FLAG_PM_RUNTIME|DL_FLAG_RPM_ACTIVE);
+> I didn't expect this to resolve the issue anyway and it didn't.
+> 
+> Another interesting point here is when I resume any of the above suspended
+> consumers, it all goes back to normal, which is kind of expected. I tried
+> resuming the consumer and the supplier is resumed and the supplier is
+> suspended when all the consumers are suspended.
+> 
+> Any pointers on this issue please?
+> 
+> @Bart/@Alan - Do you've any pointers please?
 
-On 2/23/21 3:25 PM, Stanimir Varbanov wrote:
-> 
-> 
-> On 2/22/21 6:02 PM, Bryan O'Donoghue wrote:
->> From: Dikshita Agarwal <dikshita@codeaurora.org>
->>
->> Vote for min clk frequency for core clks during prepare and enable clocks
->> at boot sequence. Without this the controller clock runs at very low value
->> (9.6MHz) which is not sufficient to boot venus.
->>
->> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> ---
->>  drivers/media/platform/qcom/venus/pm_helpers.c | 14 ++++++++++++++
->>  1 file changed, 14 insertions(+)
->>
->> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
->> index 4f5d42662963..767cb00d4b46 100644
->> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
->> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
->> @@ -41,10 +41,24 @@ static int core_clks_get(struct venus_core *core)
->>  static int core_clks_enable(struct venus_core *core)
->>  {
->>  	const struct venus_resources *res = core->res;
->> +	const struct freq_tbl *freq_tbl = NULL;
->> +	unsigned int freq_tbl_size = 0;
->> +	unsigned long freq = 0;
-> 
-> no need to initialize to zero.
-> 
->>  	unsigned int i;
->>  	int ret;
->>  
->> +	freq_tbl = core->res->freq_tbl;
->> +	freq_tbl_size = core->res->freq_tbl_size;
-> 
-> could you initialize those at the variables declaration?
-> 
->> +	if (!freq_tbl)
->> +		return -EINVAL;
->> +
->> +	freq = freq_tbl[freq_tbl_size - 1].freq;
->> +
->>  	for (i = 0; i < res->clks_num; i++) {
->> +		ret = clk_set_rate(core->clks[i], freq);
-> 
-> I'm not sure that we have to set the rate for all core->clks[i] ?
+It's very noticeable that although you seem to have isolated a bug in
+the power management subsystem (supplier goes into runtime suspend
+even when one of its consumers is still active), you did not CC the
+power management maintainer or mailing list.
 
-Confirmed. This produces regressions on db410c (I haven't tested on
-other platforms yet).
+I have added the appropriate CC's.
 
-> 
->> +		if (ret)
->> +			goto err;
->> +
->>  		ret = clk_prepare_enable(core->clks[i]);
->>  		if (ret)
->>  			goto err;
->>
-> 
-
--- 
-regards,
-Stan
+Alan Stern
