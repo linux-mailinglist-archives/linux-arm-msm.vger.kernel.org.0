@@ -2,81 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 238DA330A04
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Mar 2021 10:12:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CCF3330A1C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Mar 2021 10:17:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229551AbhCHJLd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Mar 2021 04:11:33 -0500
-Received: from bhuna.collabora.co.uk ([46.235.227.227]:44016 "EHLO
-        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229904AbhCHJLE (ORCPT
+        id S230002AbhCHJQ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Mar 2021 04:16:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45482 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229757AbhCHJQz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Mar 2021 04:11:04 -0500
-Received: from localhost (unknown [IPv6:2a01:e0a:2c:6930:5cf4:84a1:2763:fe0d])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbrezillon)
-        by bhuna.collabora.co.uk (Postfix) with ESMTPSA id BE6CB1F44CCF;
-        Mon,  8 Mar 2021 09:11:02 +0000 (GMT)
-Date:   Mon, 8 Mar 2021 10:10:59 +0100
-From:   Boris Brezillon <boris.brezillon@collabora.com>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     miquel.raynal@bootlin.com, richard@nod.at, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
-        Daniele.Palmas@telit.com, bjorn.andersson@linaro.org
-Subject: Re: [PATCH v4 2/3] dt-bindings: mtd: Add a property to declare
- secure regions in NAND chips
-Message-ID: <20210308101059.08658fbe@collabora.com>
-In-Reply-To: <20210308054447.28418-3-manivannan.sadhasivam@linaro.org>
-References: <20210308054447.28418-1-manivannan.sadhasivam@linaro.org>
-        <20210308054447.28418-3-manivannan.sadhasivam@linaro.org>
-Organization: Collabora
-X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        Mon, 8 Mar 2021 04:16:55 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DC95C061760
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Mar 2021 01:16:55 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id n22so5584362wmc.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Mar 2021 01:16:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=RsjSwA8oB0o8PW0ry99uhxTdXQdH9BOaf5mimdTgeO0=;
+        b=bmwiWxXQpx0aH8Y1JRfU8sVz6lNXkdW+JYsyQlgEy0bY+Nx1Y22jgkg4FuOS24lhxP
+         Yv1qvhP0veJ0owMDf0OKjWw/tpAAd6Tnll4Gq6wd4f8ClVzRx7AD3x2ugGbYrLDaqXUH
+         h6+0vDlChooXIjty/kPzBjmRgCj1+rEgoA+rBL8b4sCoF2E8CBdt0efAT1EYcBeRQ0jP
+         jMxwwZOSiMIEpkoiK983ccXCgTWdR5nts2w6ebWOKSlmM+XvgGfILljcDBU8L7iOuxTq
+         D+ZQlnIjJJ3GZh1roccD5vjQ8U9/zZx73/HUYMtPSiqB2fsLM0NbtekxiDOT1JlQlxP3
+         pzlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=RsjSwA8oB0o8PW0ry99uhxTdXQdH9BOaf5mimdTgeO0=;
+        b=tVNNCWpfF+QMA+oV2tWvHnNEysVdJTiZf/VD2ovKgDaRzdnB6cRhaVsr46gcqSFL/S
+         tXkPKY4iKLOcGBBgcsuadZlJJQBNmdKlD07i9zPfS6Dqc8d7QCm/8GQVnLia113D/H+4
+         nqdyaJ8dvfNG9lre69g/nc8s/mZuJeDHeNm8/56GhMsEBpmHGEnWfweZ++sAZy5oOt7Y
+         gHCyHjJWOKOXUGSTaYiE5hrybX7EQsHnxFbDzIyRrCjZtui6C/npy7lBImBxQtJtoGbz
+         SeqQwhJs/HHsWdxzMbQmXcFPfht3oQqpvvj5bGmQ+46y5PD+op6NwqOwhLJwTF20MHsD
+         CJKQ==
+X-Gm-Message-State: AOAM532GGIoVUfgrYGVv7um11QbfFMa1+cIr4KWPgjDj4uUeeD/mfQNM
+        zP3/o4iE99yWB/9YKd7oBXLxGsdpgPNFbQ==
+X-Google-Smtp-Source: ABdhPJyXmk/GrvY73uxMs03lrK95AjRrd1DPNUVnKDEIlv4aPEsJZUVLsh7710m12FbolStrlOiCvg==
+X-Received: by 2002:a05:600c:35c1:: with SMTP id r1mr21400665wmq.143.1615195014041;
+        Mon, 08 Mar 2021 01:16:54 -0800 (PST)
+Received: from localhost.localdomain (lns-bzn-59-82-252-141-80.adsl.proxad.net. [82.252.141.80])
+        by smtp.gmail.com with ESMTPSA id i17sm6068135wrp.77.2021.03.08.01.16.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 Mar 2021 01:16:53 -0800 (PST)
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+To:     cwchoi00@gmail.com
+Cc:     lukasz.luba@arm.com, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, steven.price@arm.com,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU),
+        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU)
+Subject: [PATCH v5 2/4] PM / devfreq: msm: Use devfreq cooling device registration
+Date:   Mon,  8 Mar 2021 10:16:43 +0100
+Message-Id: <20210308091646.28096-2-daniel.lezcano@linaro.org>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20210308091646.28096-1-daniel.lezcano@linaro.org>
+References: <20210308091646.28096-1-daniel.lezcano@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon,  8 Mar 2021 11:14:46 +0530
-Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote:
+The devfreq core code is able to register the devfreq device as a
+cooling device if the 'is_cooling_device' flag is set in the profile.
 
-> On a typical end product, a vendor may choose to secure some regions in
-> the NAND memory which are supposed to stay intact between FW upgrades.
-> The access to those regions will be blocked by a secure element like
-> Trustzone. So the normal world software like Linux kernel should not
-> touch these regions (including reading).
-> 
-> So let's add a property for declaring such secure regions so that the
-> drivers can skip touching them.
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  Documentation/devicetree/bindings/mtd/nand-controller.yaml | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/mtd/nand-controller.yaml b/Documentation/devicetree/bindings/mtd/nand-controller.yaml
-> index d0e422f4b3e0..15a674bedca3 100644
-> --- a/Documentation/devicetree/bindings/mtd/nand-controller.yaml
-> +++ b/Documentation/devicetree/bindings/mtd/nand-controller.yaml
-> @@ -143,6 +143,13 @@ patternProperties:
->            Ready/Busy pins. Active state refers to the NAND ready state and
->            should be set to GPIOD_ACTIVE_HIGH unless the signal is inverted.
->  
-> +      secure-regions:
-> +        $ref: /schemas/types.yaml#/definitions/uint32-matrix
-> +        description:
-> +          Regions in the NAND chip which are protected using a secure element
-> +          like Trustzone. This property contains the start address and size of
-> +          the secure regions present.
-> +
+Use this flag and remove the cooling device registering code.
 
-Since you declare this as a generic property, I think it'd be simpler
-to do the check at the core level.
+Tested on dragonboard 845c
 
->      required:
->        - reg
->  
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+---
+ drivers/gpu/drm/msm/msm_gpu.c | 12 +-----------
+ drivers/gpu/drm/msm/msm_gpu.h |  2 --
+ 2 files changed, 1 insertion(+), 13 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index ab7c167b0623..eade94271a60 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -14,7 +14,6 @@
+ #include <generated/utsrelease.h>
+ #include <linux/string_helpers.h>
+ #include <linux/devfreq.h>
+-#include <linux/devfreq_cooling.h>
+ #include <linux/devcoredump.h>
+ #include <linux/sched/task.h>
+ 
+@@ -82,6 +81,7 @@ static struct devfreq_dev_profile msm_devfreq_profile = {
+ 	.target = msm_devfreq_target,
+ 	.get_dev_status = msm_devfreq_get_dev_status,
+ 	.get_cur_freq = msm_devfreq_get_cur_freq,
++	.is_cooling_device = true,
+ };
+ 
+ static void msm_devfreq_init(struct msm_gpu *gpu)
+@@ -112,14 +112,6 @@ static void msm_devfreq_init(struct msm_gpu *gpu)
+ 	}
+ 
+ 	devfreq_suspend_device(gpu->devfreq.devfreq);
+-
+-	gpu->cooling = of_devfreq_cooling_register(gpu->pdev->dev.of_node,
+-			gpu->devfreq.devfreq);
+-	if (IS_ERR(gpu->cooling)) {
+-		DRM_DEV_ERROR(&gpu->pdev->dev,
+-				"Couldn't register GPU cooling device\n");
+-		gpu->cooling = NULL;
+-	}
+ }
+ 
+ static int enable_pwrrail(struct msm_gpu *gpu)
+@@ -1056,6 +1048,4 @@ void msm_gpu_cleanup(struct msm_gpu *gpu)
+ 	if (gpu->worker) {
+ 		kthread_destroy_worker(gpu->worker);
+ 	}
+-
+-	devfreq_cooling_unregister(gpu->cooling);
+ }
+diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+index d7cd02cd2109..93419368bac8 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.h
++++ b/drivers/gpu/drm/msm/msm_gpu.h
+@@ -155,8 +155,6 @@ struct msm_gpu {
+ 	struct msm_gpu_state *crashstate;
+ 	/* True if the hardware supports expanded apriv (a650 and newer) */
+ 	bool hw_apriv;
+-
+-	struct thermal_cooling_device *cooling;
+ };
+ 
+ static inline struct msm_gpu *dev_to_gpu(struct device *dev)
+-- 
+2.17.1
 
