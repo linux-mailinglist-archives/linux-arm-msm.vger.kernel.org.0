@@ -2,112 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 10E95330F58
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Mar 2021 14:35:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4126133123D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Mar 2021 16:33:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229742AbhCHNfH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Mar 2021 08:35:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45142 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230522AbhCHNfA (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Mar 2021 08:35:00 -0500
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2264C06174A
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Mar 2021 05:35:00 -0800 (PST)
-Received: by mail-pf1-x42f.google.com with SMTP id t29so7051793pfg.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Mar 2021 05:35:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=nFq9IUrqTM3+0MdXot9pV1py85hqvVYW3bJyV6Rfqho=;
-        b=PsJDgGkOaOjHNBPvMCcrJCuIHARyjccomzLz5rJzj36YbJgFBR8LX90ZU1gQcAZULC
-         dUmPf9UDI2ZR0T1BxQy2aHqKHXA+2gJoG5FXg9tKYKYCFkP9506fAt6NYMuXiCdBNPaY
-         Awu0WtBMNXhtNEmK+hq7XqZ3ij09532rixoxCtYvGrHe5vgASah7WAK5hBhntYauHiUN
-         vMiIia1+xdW+/IDDi9XSUfTZATNcSd9HwxaFbRVBt+Uu6aM7/FhrDLx/UmFevrZ2IoOu
-         +IDlYvr3dd0FIsZuc57YgWb/UFwNQ3h+bVBN+BDZnRrpD11x7DF38AX0UktkfeRei5RB
-         jlxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=nFq9IUrqTM3+0MdXot9pV1py85hqvVYW3bJyV6Rfqho=;
-        b=OdsZSTouEPj0/cA0naxt5P8sK3+EG9/giu0O6p0WK4qwvyX3s5zPQu1Ft0pzIrYEf5
-         ZD/quircU48D0HxqeFud5SlZpvAqD7WV3BtJOSF52Jr7S0u898WPzRNR0lGHiGea88I4
-         5yLG4iT/fouAL3vKkT18eQ4oo0sx7YxA6Xwjj9FodFccGjAVTUJMOhpJ0aw671h9sdDW
-         wFLGSz1+jfBcNLNaWN+M9F2XNs9f2RrcwSo58RlcXOo4BlpnWYbph5eFBxVW1oiiqwda
-         Q70gEiohNwVlDaxnnsZALXGswciRrS3N15YUo/RiI3V4QOO3AHjtok7SHC8OvN0oUlKn
-         1aqQ==
-X-Gm-Message-State: AOAM533N0Zcu+0kOK5DTBqbEhnNcUcm5d42WGDZhVBaaY4fGvvCRmPWG
-        mqAQNk6hxip+KkWmqOjhV2uK
-X-Google-Smtp-Source: ABdhPJzDVMzIThcvYLdQZZIGll9N0HceTj2bSkrfitIpzskFrFoRjjO+2S0+FEbJyMrq1KLFBMe7Zw==
-X-Received: by 2002:a65:46cd:: with SMTP id n13mr20197023pgr.414.1615210500202;
-        Mon, 08 Mar 2021 05:35:00 -0800 (PST)
-Received: from thinkpad ([2409:4072:638a:aee8:50fe:f77:990e:395b])
-        by smtp.gmail.com with ESMTPSA id c24sm7238618pfi.193.2021.03.08.05.34.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Mar 2021 05:34:59 -0800 (PST)
-Date:   Mon, 8 Mar 2021 19:04:52 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Boris Brezillon <boris.brezillon@collabora.com>
-Cc:     miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
-        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-mtd@lists.infradead.org,
-        linux-kernel@vger.kernel.org, Daniele.Palmas@telit.com,
-        bjorn.andersson@linaro.org
-Subject: Re: [PATCH v4 3/3] mtd: rawnand: qcom: Add support for secure
- regions in NAND memory
-Message-ID: <20210308133452.GE5457@thinkpad>
-References: <20210308054447.28418-1-manivannan.sadhasivam@linaro.org>
- <20210308054447.28418-4-manivannan.sadhasivam@linaro.org>
- <20210308100247.4aba657c@collabora.com>
- <20210308133410.GD5457@thinkpad>
+        id S230200AbhCHPc3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Mar 2021 10:32:29 -0500
+Received: from mail.kernel.org ([198.145.29.99]:60478 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229790AbhCHPcU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 8 Mar 2021 10:32:20 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 041506526A;
+        Mon,  8 Mar 2021 15:32:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1615217539;
+        bh=Q86KQofgOs8LGcTYRssgtJBsRLc5fpn3UtwJj0yn+KM=;
+        h=From:To:Cc:Subject:Date:From;
+        b=kKkxb4vr1CCV3Axd66l/YyiwSjXCNP4S3M6FciIGgAl5BxfVV33+fRcJp0+4t2Upw
+         frdAWTqojIujgU5KhUukBZLrwnuYs6dM85oY/gTFi9SDI+qxmoeKi4uCatcYD5myTZ
+         wazFhaHDh40+SU2lpBzwZzO4Y7LucTG43ZvtjLv/8rFRGosBPm/c8cNZ6vXXrP/Xqn
+         rs6YXIGZxObXZFPrn84gx8w73zXZtsxmS/OAfuxMaYGPuL3pR6fYKEBpLNZBAeQLet
+         YBKiAKp1gQJmC+FrD+/omX2oDqkzXMAmskzKGCmnPsan4hg49oL8LI3txtYGpEIOhq
+         tyWuYC0hcF4ug==
+From:   Arnd Bergmann <arnd@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>
+Cc:     Arnd Bergmann <arnd@arndb.de>, Vinod Koul <vkoul@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] remoteproc: qcom: pil-info: avoid 64-bit division on 32-bit architectures
+Date:   Mon,  8 Mar 2021 16:32:02 +0100
+Message-Id: <20210308153215.2449563-1-arnd@kernel.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210308133410.GD5457@thinkpad>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 08, 2021 at 07:04:17PM +0530, Manivannan Sadhasivam wrote:
-> On Mon, Mar 08, 2021 at 10:02:47AM +0100, Boris Brezillon wrote:
-> > On Mon,  8 Mar 2021 11:14:47 +0530
-> > Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote:
-> > 
-> 
-> [...]
-> 
-> > >  /* helper to configure address register values */
-> > > -static void set_address(struct qcom_nand_host *host, u16 column, int page)
-> > > +static int set_address(struct qcom_nand_host *host, u16 column, int page)
-> > >  {
-> > >  	struct nand_chip *chip = &host->chip;
-> > >  	struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
-> > > +	u32 offs = page << chip->page_shift;
-> > > +	int i, j;
-> > > +
-> > > +	/* Skip touching the secure regions if present */
-> > > +	for (i = 0, j = 0; i < host->nr_sec_regions; i++, j += 2) {
-> > > +		if (offs >= host->sec_regions[j] &&
-> > > +		    (offs <= host->sec_regions[j] + host->sec_regions[j + 1]))
-> > > +			return -EIO;
-> > > +	}
-> > 
-> > Hm, not sure that's a good idea to make this check part of
-> > set_address(). Looks like set_address() can be used for ONFI page
-> > access too, and you definitely don't want to block those
-> > requests. I'd recommend having a separate helper that you can call from
-> > qcom_nandc_{read,write}_{oob,page,page_raw}().
-> > 
-> 
-> Right but I went for the code simplicity :/ Anyway, since you're favoring
-> towards moving this check into code, I'll incorporate your suggestion
+From: Arnd Bergmann <arnd@arndb.de>
 
-s/code/core
+In some randconfig builds, a 64-bit resource_size_t is used even on
+32-bit architectures, which now leads to a link-time error:
 
-> accordingly.
-> 
-> Thanks,
-> Mani
+ERROR: modpost: "__aeabi_uldivmod" [drivers/remoteproc/qcom_pil_info.ko] undefined!
+
+Using the div_u64() helper here. A cast to 32 bits length would also
+work, but for a constant divider there should not be much difference.
+
+Fixes: 549b67da660d ("remoteproc: qcom: Introduce helper to store pil info in IMEM")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+---
+ drivers/remoteproc/qcom_pil_info.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/remoteproc/qcom_pil_info.c b/drivers/remoteproc/qcom_pil_info.c
+index 5521c4437ffa..95b6b7609a87 100644
+--- a/drivers/remoteproc/qcom_pil_info.c
++++ b/drivers/remoteproc/qcom_pil_info.c
+@@ -56,7 +56,8 @@ static int qcom_pil_info_init(void)
+ 	memset_io(base, 0, resource_size(&imem));
+ 
+ 	_reloc.base = base;
+-	_reloc.num_entries = resource_size(&imem) / PIL_RELOC_ENTRY_SIZE;
++	_reloc.num_entries = div_u64(resource_size(&imem),
++				     PIL_RELOC_ENTRY_SIZE);
+ 
+ 	return 0;
+ }
+-- 
+2.29.2
+
