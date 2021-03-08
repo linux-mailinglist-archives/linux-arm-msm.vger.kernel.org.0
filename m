@@ -2,141 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8814D330F43
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Mar 2021 14:34:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D1F6B330F37
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Mar 2021 14:32:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230156AbhCHNda (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Mar 2021 08:33:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44722 "EHLO
+        id S230142AbhCHNby (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Mar 2021 08:31:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230227AbhCHNdI (ORCPT
+        with ESMTP id S230122AbhCHNbr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Mar 2021 08:33:08 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7211C06175F
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Mar 2021 05:33:07 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id 7so11503402wrz.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Mar 2021 05:33:07 -0800 (PST)
+        Mon, 8 Mar 2021 08:31:47 -0500
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05899C06175F
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Mar 2021 05:31:46 -0800 (PST)
+Received: by mail-pj1-x1034.google.com with SMTP id x7-20020a17090a2b07b02900c0ea793940so2982775pjc.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Mar 2021 05:31:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=RsjSwA8oB0o8PW0ry99uhxTdXQdH9BOaf5mimdTgeO0=;
-        b=lWgaqsU8BQOwg9ws+DhQ/BWpAGGUh8wAnGaIk1lwDEofYiLOAhnUDvwTgdcltFd/Uf
-         YsZHPTY6e6kNXalk/rmRj1JzpwNfZBxiP6yn6cwPmGg0Dph1wbF4d3Ul5NSoB4s8GwYD
-         nlH4qfp6V1l53JUThiQx/V0USq4Gt1khL5dGlV8juzFC9xCtxFPTHoTRadWc7zznJ8qw
-         s+gy9jH9Xoq/gFjjgsSjZvcFBW1f1akBVwlFUVL2FLsro5Kb7d78Np120TBRReONbPnQ
-         fZlJimyI9CR1S0CynZOBmLY9R54Zyoa3bAPsezbfw/RyxXar3+qr6KMWSKS7m523eMAW
-         OgUg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=XGoAGNYT6tXYgHeKhW2JDJs/r9xX8kr9hTTKfXjfp84=;
+        b=WigFhTulHneEufHF8nv8vUutVojLFmgJDTeNXtaWIU6BPb8zOYLtrlP6k9KxCz7upK
+         WM+rXJTkMx5jSH6Dnskkvn1o6moP8tLlEMZJCi7YrJ0k939ChwsqstpuQR7lnUAxzxBl
+         ucee8leMGI/ko/e3O64fAxTffuba/YrwHSJXqCHntP10EbeqbbbbliijiU1IoFBtmZXe
+         Q/J53WiSAsl9wqEppvQqc4ozTiJcKnSqkvrpPi20tb8KkqDmbyBVxlhsitw6Cw5Xwh/8
+         T3teg/0t8/tMtTV9Rf9vAtYZVx24Zr/hgmlvXknmO9/URPDL4zAr6pXjJ1caln+exoXS
+         /qMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=RsjSwA8oB0o8PW0ry99uhxTdXQdH9BOaf5mimdTgeO0=;
-        b=ng8ogJLxSwxJ4ArPkBY3XroF0PEVn4Bj47lj0UIdsy2psZMcT4JiUQHijnRqKD0lXS
-         9+gJlCg75vXTXLsX807ZfIS4baTdy54dX3ewjwC/1mtdeCgYNOc3CR6s/+dxRMr/8gpE
-         /Vy6LhrInogQuqnzPCIkH8Q9QptmRoaHfq5OtGHnVaWMbIn1J9isOBHJkLPhwl/dSe4h
-         mrlZVXiMmjsT5zAvLThUfyNyAK5R1+Xeo3fovG5KC7BwojihUt1rq1guWasXq3M8HLKb
-         kYaAD56bKLUH9lQ1Xm48woRve3n0THWv/gdaqCyt8ieD6Ao/VDwDfpwewDh9L17eN0wf
-         TSNg==
-X-Gm-Message-State: AOAM530PeM6zqMVEtHuGrJNtfihrwWjCs+6xf9iaWgLTtsucFd4fPmNv
-        j7Kn7FQHglVhYsJhXH2wGRik6w==
-X-Google-Smtp-Source: ABdhPJw3x/ONzAujdJQrvrdWPrHpTxgLjwa+71+eZDx0LcFQ+0Bvu7wMMD+q/fjcOPEFvjgfd2vEMw==
-X-Received: by 2002:adf:b609:: with SMTP id f9mr22017714wre.223.1615210386308;
-        Mon, 08 Mar 2021 05:33:06 -0800 (PST)
-Received: from localhost.localdomain (lns-bzn-59-82-252-141-80.adsl.proxad.net. [82.252.141.80])
-        by smtp.gmail.com with ESMTPSA id m11sm18942665wrz.40.2021.03.08.05.33.05
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=XGoAGNYT6tXYgHeKhW2JDJs/r9xX8kr9hTTKfXjfp84=;
+        b=kQmmr4s1vKd76OB435eGCl1jfxEB5By1iE7dKfTC/X8KmizhFPt8dUJdcKgIozNKns
+         XWS+sl8ImCWqyOHCCmQZa+EvjRgFVj2aq4ctUeDWvKKUKcwNz62B3Hr12Iwsaf3mrADQ
+         PeH43rpenBn/yQPX/vJboyEhaxZUUUQDhPsNrdq647J8M5qQN0li+ugQO5CA5nSMzYzf
+         H2uTbatU1NzlzEetFIF5yemDKOnc8nEO1l45NJMoTPnTlfeLdBnkFvOxbYy3Mg5k5Hct
+         vWAQQZW4cABlFZPC2TE+ZS+brvrp2IcdzECU/WbyRQm08QaGwQesZa550gwbEFevVGc9
+         4eXg==
+X-Gm-Message-State: AOAM531q20QFcc1tpirUTjOvgIhXznJn770trpDaCUScyAoJRciw46Jn
+        u1wD6HgkIuWxARcGsVt4Zhwq
+X-Google-Smtp-Source: ABdhPJwn8ZZ3Vko9jfDjEVdgsQIgjWmAgHZxLJB3qCJ/IroL6/2uU4WCwC0b9b9enVnZRNsno+6JbA==
+X-Received: by 2002:a17:90a:1485:: with SMTP id k5mr24582282pja.103.1615210306421;
+        Mon, 08 Mar 2021 05:31:46 -0800 (PST)
+Received: from thinkpad ([2409:4072:638a:aee8:50fe:f77:990e:395b])
+        by smtp.gmail.com with ESMTPSA id i1sm10449641pfo.160.2021.03.08.05.31.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Mar 2021 05:33:05 -0800 (PST)
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-To:     cwchoi00@gmail.com
-Cc:     lukasz.luba@arm.com, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, steven.price@arm.com,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU)
-Subject: [PATCH v6 2/4] PM / devfreq: msm: Use devfreq cooling device registration
-Date:   Mon,  8 Mar 2021 14:30:38 +0100
-Message-Id: <20210308133041.10516-2-daniel.lezcano@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20210308133041.10516-1-daniel.lezcano@linaro.org>
-References: <20210308133041.10516-1-daniel.lezcano@linaro.org>
+        Mon, 08 Mar 2021 05:31:45 -0800 (PST)
+Date:   Mon, 8 Mar 2021 19:01:34 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Boris Brezillon <boris.brezillon@collabora.com>
+Cc:     miquel.raynal@bootlin.com, richard@nod.at, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
+        Daniele.Palmas@telit.com, bjorn.andersson@linaro.org
+Subject: Re: [PATCH v4 2/3] dt-bindings: mtd: Add a property to declare
+ secure regions in NAND chips
+Message-ID: <20210308133134.GC5457@thinkpad>
+References: <20210308054447.28418-1-manivannan.sadhasivam@linaro.org>
+ <20210308054447.28418-3-manivannan.sadhasivam@linaro.org>
+ <20210308101059.08658fbe@collabora.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210308101059.08658fbe@collabora.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The devfreq core code is able to register the devfreq device as a
-cooling device if the 'is_cooling_device' flag is set in the profile.
+On Mon, Mar 08, 2021 at 10:10:59AM +0100, Boris Brezillon wrote:
+> On Mon,  8 Mar 2021 11:14:46 +0530
+> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote:
+> 
+> > On a typical end product, a vendor may choose to secure some regions in
+> > the NAND memory which are supposed to stay intact between FW upgrades.
+> > The access to those regions will be blocked by a secure element like
+> > Trustzone. So the normal world software like Linux kernel should not
+> > touch these regions (including reading).
+> > 
+> > So let's add a property for declaring such secure regions so that the
+> > drivers can skip touching them.
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  Documentation/devicetree/bindings/mtd/nand-controller.yaml | 7 +++++++
+> >  1 file changed, 7 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/mtd/nand-controller.yaml b/Documentation/devicetree/bindings/mtd/nand-controller.yaml
+> > index d0e422f4b3e0..15a674bedca3 100644
+> > --- a/Documentation/devicetree/bindings/mtd/nand-controller.yaml
+> > +++ b/Documentation/devicetree/bindings/mtd/nand-controller.yaml
+> > @@ -143,6 +143,13 @@ patternProperties:
+> >            Ready/Busy pins. Active state refers to the NAND ready state and
+> >            should be set to GPIOD_ACTIVE_HIGH unless the signal is inverted.
+> >  
+> > +      secure-regions:
+> > +        $ref: /schemas/types.yaml#/definitions/uint32-matrix
+> > +        description:
+> > +          Regions in the NAND chip which are protected using a secure element
+> > +          like Trustzone. This property contains the start address and size of
+> > +          the secure regions present.
+> > +
+> 
+> Since you declare this as a generic property, I think it'd be simpler
+> to do the check at the core level.
+> 
 
-Use this flag and remove the cooling device registering code.
+Hmm, so have the parsing logic in qcom driver and check in core or both parsing
+and check in core?
 
-Tested on dragonboard 845c
+I don't think the first one makes sense.
 
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
----
- drivers/gpu/drm/msm/msm_gpu.c | 12 +-----------
- drivers/gpu/drm/msm/msm_gpu.h |  2 --
- 2 files changed, 1 insertion(+), 13 deletions(-)
+Thanks,
+Mani
 
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index ab7c167b0623..eade94271a60 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -14,7 +14,6 @@
- #include <generated/utsrelease.h>
- #include <linux/string_helpers.h>
- #include <linux/devfreq.h>
--#include <linux/devfreq_cooling.h>
- #include <linux/devcoredump.h>
- #include <linux/sched/task.h>
- 
-@@ -82,6 +81,7 @@ static struct devfreq_dev_profile msm_devfreq_profile = {
- 	.target = msm_devfreq_target,
- 	.get_dev_status = msm_devfreq_get_dev_status,
- 	.get_cur_freq = msm_devfreq_get_cur_freq,
-+	.is_cooling_device = true,
- };
- 
- static void msm_devfreq_init(struct msm_gpu *gpu)
-@@ -112,14 +112,6 @@ static void msm_devfreq_init(struct msm_gpu *gpu)
- 	}
- 
- 	devfreq_suspend_device(gpu->devfreq.devfreq);
--
--	gpu->cooling = of_devfreq_cooling_register(gpu->pdev->dev.of_node,
--			gpu->devfreq.devfreq);
--	if (IS_ERR(gpu->cooling)) {
--		DRM_DEV_ERROR(&gpu->pdev->dev,
--				"Couldn't register GPU cooling device\n");
--		gpu->cooling = NULL;
--	}
- }
- 
- static int enable_pwrrail(struct msm_gpu *gpu)
-@@ -1056,6 +1048,4 @@ void msm_gpu_cleanup(struct msm_gpu *gpu)
- 	if (gpu->worker) {
- 		kthread_destroy_worker(gpu->worker);
- 	}
--
--	devfreq_cooling_unregister(gpu->cooling);
- }
-diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-index d7cd02cd2109..93419368bac8 100644
---- a/drivers/gpu/drm/msm/msm_gpu.h
-+++ b/drivers/gpu/drm/msm/msm_gpu.h
-@@ -155,8 +155,6 @@ struct msm_gpu {
- 	struct msm_gpu_state *crashstate;
- 	/* True if the hardware supports expanded apriv (a650 and newer) */
- 	bool hw_apriv;
--
--	struct thermal_cooling_device *cooling;
- };
- 
- static inline struct msm_gpu *dev_to_gpu(struct device *dev)
--- 
-2.17.1
-
+> >      required:
+> >        - reg
+> >  
+> 
