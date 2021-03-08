@@ -2,120 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D1F6B330F37
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Mar 2021 14:32:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EDF1330F55
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Mar 2021 14:35:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230142AbhCHNby (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Mar 2021 08:31:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44418 "EHLO
+        id S229757AbhCHNef (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Mar 2021 08:34:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230122AbhCHNbr (ORCPT
+        with ESMTP id S229742AbhCHNeS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Mar 2021 08:31:47 -0500
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05899C06175F
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Mar 2021 05:31:46 -0800 (PST)
-Received: by mail-pj1-x1034.google.com with SMTP id x7-20020a17090a2b07b02900c0ea793940so2982775pjc.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Mar 2021 05:31:46 -0800 (PST)
+        Mon, 8 Mar 2021 08:34:18 -0500
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1B29C06175F
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Mar 2021 05:34:17 -0800 (PST)
+Received: by mail-pf1-x430.google.com with SMTP id 18so7165521pfo.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Mar 2021 05:34:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=XGoAGNYT6tXYgHeKhW2JDJs/r9xX8kr9hTTKfXjfp84=;
-        b=WigFhTulHneEufHF8nv8vUutVojLFmgJDTeNXtaWIU6BPb8zOYLtrlP6k9KxCz7upK
-         WM+rXJTkMx5jSH6Dnskkvn1o6moP8tLlEMZJCi7YrJ0k939ChwsqstpuQR7lnUAxzxBl
-         ucee8leMGI/ko/e3O64fAxTffuba/YrwHSJXqCHntP10EbeqbbbbliijiU1IoFBtmZXe
-         Q/J53WiSAsl9wqEppvQqc4ozTiJcKnSqkvrpPi20tb8KkqDmbyBVxlhsitw6Cw5Xwh/8
-         T3teg/0t8/tMtTV9Rf9vAtYZVx24Zr/hgmlvXknmO9/URPDL4zAr6pXjJ1caln+exoXS
-         /qMQ==
+        bh=Jy+hRDRm2a3VhiF/cs63pR4L32THWqr6aYcveYB2mrQ=;
+        b=bObl2OR2UbbO1eDS8jfL7Hky/K4KNAyBpwniRxvXmAERkH1cRZ4GPve3nPTy8aCs2f
+         Yj8apeib6trmavOAMKqQIhSb85BQQTlp6p8LdII6sBAXtO8vlOj4MIHs71rkVInqWoe5
+         q5kKtR2uHBb8PZZ7Y7e+/o3dg42SYAp3z4i99bYLZsWPYc5ejiRE8uLU8kWIhIpxf65f
+         WrEO3Pjd1Ajkz68YvBYRQOlQrAgCuMjIeRU0V8A38J6tQhu4VLLLzm80QuXbZofCDP7y
+         6A55D8HaMhXHbpFpQDP5VJA/29Gdf0yk5bTaf9rz5P1Ofry2pvbEUplzeNZdk3euxIVS
+         mDVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=XGoAGNYT6tXYgHeKhW2JDJs/r9xX8kr9hTTKfXjfp84=;
-        b=kQmmr4s1vKd76OB435eGCl1jfxEB5By1iE7dKfTC/X8KmizhFPt8dUJdcKgIozNKns
-         XWS+sl8ImCWqyOHCCmQZa+EvjRgFVj2aq4ctUeDWvKKUKcwNz62B3Hr12Iwsaf3mrADQ
-         PeH43rpenBn/yQPX/vJboyEhaxZUUUQDhPsNrdq647J8M5qQN0li+ugQO5CA5nSMzYzf
-         H2uTbatU1NzlzEetFIF5yemDKOnc8nEO1l45NJMoTPnTlfeLdBnkFvOxbYy3Mg5k5Hct
-         vWAQQZW4cABlFZPC2TE+ZS+brvrp2IcdzECU/WbyRQm08QaGwQesZa550gwbEFevVGc9
-         4eXg==
-X-Gm-Message-State: AOAM531q20QFcc1tpirUTjOvgIhXznJn770trpDaCUScyAoJRciw46Jn
-        u1wD6HgkIuWxARcGsVt4Zhwq
-X-Google-Smtp-Source: ABdhPJwn8ZZ3Vko9jfDjEVdgsQIgjWmAgHZxLJB3qCJ/IroL6/2uU4WCwC0b9b9enVnZRNsno+6JbA==
-X-Received: by 2002:a17:90a:1485:: with SMTP id k5mr24582282pja.103.1615210306421;
-        Mon, 08 Mar 2021 05:31:46 -0800 (PST)
+        bh=Jy+hRDRm2a3VhiF/cs63pR4L32THWqr6aYcveYB2mrQ=;
+        b=LgDOjaavVU8LRp7eTEJ2eBeiDy14+/+Z8/vkD/C6lVZWUsag5935CQWNDDEQ50kNZx
+         6wfO4n/9Whz32QiSNYwvn2Ll0bmZ3Ibl62FvH95sbTSJF7d9qJE+viCEv0u7k9UOeCJV
+         OR3Jo8WJJKuGnEN2ep9ifq8+yVccZ7unl+W2JsVbBpud9MQjodmhs2XH66CXmRPs+a4Z
+         PX+vXyQ7UcroYfytoe0/Q4XQkv+JxpHcBbktgAuPDnzElChw2U48XhAasIlo1uTYa6cI
+         ViJuElu+Ck/2OPvYeanBOSr6N5XXxIoWjsSKXxCpqOEuFkPTtVCETUKL751CTTBnGPx1
+         1jdQ==
+X-Gm-Message-State: AOAM530FNxcfmvK8sR1UBJkHVeALwD3RRig+0LOWb56tNrfY4dg4LZny
+        FIdeoHy1l8/VKLBUF63/n/Vc
+X-Google-Smtp-Source: ABdhPJyP8D/RldetyJSotxDhgrg6Y9E/d7Zz09BvAbcE0LiRJPFsyFWc8VbdLCp3yaiSAiipxO1rzQ==
+X-Received: by 2002:aa7:9182:0:b029:1de:e96f:a866 with SMTP id x2-20020aa791820000b02901dee96fa866mr20695396pfa.67.1615210457298;
+        Mon, 08 Mar 2021 05:34:17 -0800 (PST)
 Received: from thinkpad ([2409:4072:638a:aee8:50fe:f77:990e:395b])
-        by smtp.gmail.com with ESMTPSA id i1sm10449641pfo.160.2021.03.08.05.31.37
+        by smtp.gmail.com with ESMTPSA id i22sm11439401pjz.56.2021.03.08.05.34.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Mar 2021 05:31:45 -0800 (PST)
-Date:   Mon, 8 Mar 2021 19:01:34 +0530
+        Mon, 08 Mar 2021 05:34:16 -0800 (PST)
+Date:   Mon, 8 Mar 2021 19:04:10 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Boris Brezillon <boris.brezillon@collabora.com>
-Cc:     miquel.raynal@bootlin.com, richard@nod.at, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
-        Daniele.Palmas@telit.com, bjorn.andersson@linaro.org
-Subject: Re: [PATCH v4 2/3] dt-bindings: mtd: Add a property to declare
- secure regions in NAND chips
-Message-ID: <20210308133134.GC5457@thinkpad>
+Cc:     miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
+        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-mtd@lists.infradead.org,
+        linux-kernel@vger.kernel.org, Daniele.Palmas@telit.com,
+        bjorn.andersson@linaro.org
+Subject: Re: [PATCH v4 3/3] mtd: rawnand: qcom: Add support for secure
+ regions in NAND memory
+Message-ID: <20210308133410.GD5457@thinkpad>
 References: <20210308054447.28418-1-manivannan.sadhasivam@linaro.org>
- <20210308054447.28418-3-manivannan.sadhasivam@linaro.org>
- <20210308101059.08658fbe@collabora.com>
+ <20210308054447.28418-4-manivannan.sadhasivam@linaro.org>
+ <20210308100247.4aba657c@collabora.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210308101059.08658fbe@collabora.com>
+In-Reply-To: <20210308100247.4aba657c@collabora.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 08, 2021 at 10:10:59AM +0100, Boris Brezillon wrote:
-> On Mon,  8 Mar 2021 11:14:46 +0530
+On Mon, Mar 08, 2021 at 10:02:47AM +0100, Boris Brezillon wrote:
+> On Mon,  8 Mar 2021 11:14:47 +0530
 > Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote:
 > 
-> > On a typical end product, a vendor may choose to secure some regions in
-> > the NAND memory which are supposed to stay intact between FW upgrades.
-> > The access to those regions will be blocked by a secure element like
-> > Trustzone. So the normal world software like Linux kernel should not
-> > touch these regions (including reading).
-> > 
-> > So let's add a property for declaring such secure regions so that the
-> > drivers can skip touching them.
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  Documentation/devicetree/bindings/mtd/nand-controller.yaml | 7 +++++++
-> >  1 file changed, 7 insertions(+)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/mtd/nand-controller.yaml b/Documentation/devicetree/bindings/mtd/nand-controller.yaml
-> > index d0e422f4b3e0..15a674bedca3 100644
-> > --- a/Documentation/devicetree/bindings/mtd/nand-controller.yaml
-> > +++ b/Documentation/devicetree/bindings/mtd/nand-controller.yaml
-> > @@ -143,6 +143,13 @@ patternProperties:
-> >            Ready/Busy pins. Active state refers to the NAND ready state and
-> >            should be set to GPIOD_ACTIVE_HIGH unless the signal is inverted.
-> >  
-> > +      secure-regions:
-> > +        $ref: /schemas/types.yaml#/definitions/uint32-matrix
-> > +        description:
-> > +          Regions in the NAND chip which are protected using a secure element
-> > +          like Trustzone. This property contains the start address and size of
-> > +          the secure regions present.
+
+[...]
+
+> >  /* helper to configure address register values */
+> > -static void set_address(struct qcom_nand_host *host, u16 column, int page)
+> > +static int set_address(struct qcom_nand_host *host, u16 column, int page)
+> >  {
+> >  	struct nand_chip *chip = &host->chip;
+> >  	struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
+> > +	u32 offs = page << chip->page_shift;
+> > +	int i, j;
 > > +
+> > +	/* Skip touching the secure regions if present */
+> > +	for (i = 0, j = 0; i < host->nr_sec_regions; i++, j += 2) {
+> > +		if (offs >= host->sec_regions[j] &&
+> > +		    (offs <= host->sec_regions[j] + host->sec_regions[j + 1]))
+> > +			return -EIO;
+> > +	}
 > 
-> Since you declare this as a generic property, I think it'd be simpler
-> to do the check at the core level.
+> Hm, not sure that's a good idea to make this check part of
+> set_address(). Looks like set_address() can be used for ONFI page
+> access too, and you definitely don't want to block those
+> requests. I'd recommend having a separate helper that you can call from
+> qcom_nandc_{read,write}_{oob,page,page_raw}().
 > 
 
-Hmm, so have the parsing logic in qcom driver and check in core or both parsing
-and check in core?
-
-I don't think the first one makes sense.
+Right but I went for the code simplicity :/ Anyway, since you're favoring
+towards moving this check into code, I'll incorporate your suggestion
+accordingly.
 
 Thanks,
 Mani
-
-> >      required:
-> >        - reg
-> >  
-> 
