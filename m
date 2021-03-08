@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C72F6330BBE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Mar 2021 11:53:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F3444330BC4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Mar 2021 11:53:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231532AbhCHKwk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S231594AbhCHKwk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 8 Mar 2021 05:52:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37832 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231539AbhCHKw2 (ORCPT
+        with ESMTP id S231562AbhCHKw3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Mar 2021 05:52:28 -0500
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C140CC06175F
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Mar 2021 02:52:27 -0800 (PST)
-Received: by mail-ed1-x531.google.com with SMTP id w9so13958065edc.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Mar 2021 02:52:27 -0800 (PST)
+        Mon, 8 Mar 2021 05:52:29 -0500
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83A08C061760
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Mar 2021 02:52:28 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id h10so13995298edl.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Mar 2021 02:52:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=mq2bNlOS5Jw/xNPQTz8uc9sf4/Pi/bHXqeAAfOe3FVo=;
-        b=B3/CEv3mHHdgJCsQtXoMb0eBAr+GG6/Y9BFIPpz9x/hrGMBoJAPJaxrjz5QI3XSL+u
-         E3HUSkYkKbziV10c744WNS7MARvQ/03sK4XdRxPDaZvsr4FsYRt7/raGp2sZbjtDa6Ds
-         YUE8O+1HrAa5mVKu5S4IYFTAj9GLVnMSV2hU2akfGtAqR9BJSyTrb83WE8qNAk75fNZ/
-         VwJ9UJD6M94l5WndVBKN/RcJRhNsvsHAF+RStQsyWKSTsZEE8tgs2XeDitZUIAqNLaQU
-         StBkw/NlMjRu8SbVtBSLH0VO38ueTWWh7Sx8qWHos6mExIL2t15MQntr3nKLKXu3ncB7
-         9uzw==
+        bh=ed2ZmyjgMuArkep/x+pkAPo7evPjB1BAFOc6v5tfSJ4=;
+        b=i5DDN26Aj7bY9aXwfNceG+NhoTZBh+NU6hUF/EKYDC6mCxMGzFyBmTzQESYeydRhCA
+         uSppQ2DS3VpD/t8ejN/f5KIMxoOycbCeLS7IaBOgNqXDUgugs+voyYawCtnzH67M/ljq
+         gTXTmn3PPxpyM59Z2m+JcIR1DnUMZHx18wo2nCpUbnSkTytm9ZiSTbUb911czkyVzO67
+         DANktJwG/D6nddWMppt8f8xEVQUNV/sUlvpDceE5Mp8koEzSsUU5hbke/Ic3bJWOGSl2
+         TjanvsUTbskjUfVkwh7k/Si2eOOI7kZWsy7e16I/bOwNHsb5mKhdiKVsUi2FYTpI2v4i
+         mLVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=mq2bNlOS5Jw/xNPQTz8uc9sf4/Pi/bHXqeAAfOe3FVo=;
-        b=QVSac05Spvygm3ERWRKx0+y6JbS+n9kNpkPeXCRU5DVeMSynPgBXHy0zBb60mlfg1V
-         2W5ZInU55IVOuC2wnL4wZvBRDUYwi7fe2QrHCHSFbei1NLNYLCaDrUhZQ8eR5dx6nH3/
-         M7PcYrKXXe4f+WDdl0G5xCrIJOjy7DK/3Xl96s5AYTRKCx/E5/SOPS1fm2mD+k9g7Elk
-         8XzEKMcHC0TPEWoFyNBKXWqe+2NvgABqGyC6i21jq8I2ZsIDUdzPcx3arHqzCN+UxWUR
-         sb14H73bNANRdnzM7LAVEBTsWt+edq17wjqi7Pl1pA5Tu/Jg9dU6edfO+MiGL2EZSrA0
-         CJAA==
-X-Gm-Message-State: AOAM532EDp0NNC3bEodVecz6BAmFOHepW13XbQmPajDTz8TVIG4B1Cke
-        6fLYzC64fgayzATbWK1mRyLSFg==
-X-Google-Smtp-Source: ABdhPJyOZIcI62WDUpXXqFZiTJ3osRWWB+/yVSWqdZfpOPJT7COdN9pv+PRDKpaTdbDB13CljdftWA==
-X-Received: by 2002:a50:81c5:: with SMTP id 63mr22261809ede.356.1615200746576;
-        Mon, 08 Mar 2021 02:52:26 -0800 (PST)
+        bh=ed2ZmyjgMuArkep/x+pkAPo7evPjB1BAFOc6v5tfSJ4=;
+        b=e3xwXuMaNrQ2kekWsgLcDbwvizALE0UY1sYBrOcN3ZXt4Z1grW1LF8w16AYGbbc0NQ
+         HaXoohs+awHm15xyI8RkmjR1cjDFDWea0EJK+4DC+7rvVmmI5gkeetCJ8vjy0Jwj1DrS
+         +NEc3cyoY/ImDWriJ7kFVnxBcu6xAjXejfFg715D4DtsaHMW4WrdjlCsAGjdHi0TST6b
+         AKeEhN6KTrhcJ7Ux1bFpiRVYrJEG4VXBT4sLwdTk7q0Sfnw3njZO5PCzz7GiuYCiSfri
+         8RZDH6POpvStUWY4q334oyVf/pVJ04pLvE9IzOh0K4CVvOD8A+eg9KhDmjxB5be2NQi5
+         Urkw==
+X-Gm-Message-State: AOAM5315xK7UF8TRV3xg3F9/sQbIjWNEHi5oq4JHvissnYBIHM8mc5zj
+        8UgXTz2CNF86hvTZvUmY3cbD+Q==
+X-Google-Smtp-Source: ABdhPJyA2a7BfNZBhViBq6dW6JSDMhqhNtugGFPTO4MeabFG/qITeFF3eCs6Tg/FY40GGWPkVRMnow==
+X-Received: by 2002:a05:6402:254f:: with SMTP id l15mr2366106edb.189.1615200747272;
+        Mon, 08 Mar 2021 02:52:27 -0800 (PST)
 Received: from localhost.localdomain (95-43-196-84.ip.btc-net.bg. [95.43.196.84])
-        by smtp.gmail.com with ESMTPSA id y9sm6386297ejd.110.2021.03.08.02.52.25
+        by smtp.gmail.com with ESMTPSA id y9sm6386297ejd.110.2021.03.08.02.52.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Mar 2021 02:52:26 -0800 (PST)
+        Mon, 08 Mar 2021 02:52:27 -0800 (PST)
 From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
 To:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     bryan.odonoghue@linaro.org,
         Stanimir Varbanov <stanimir.varbanov@linaro.org>,
         stable@vger.kernel.org
-Subject: [PATCH 4/5] venus: venc_ctrls: Change default header mode
-Date:   Mon,  8 Mar 2021 12:52:04 +0200
-Message-Id: <20210308105205.445148-5-stanimir.varbanov@linaro.org>
+Subject: [PATCH 5/5] venus: hfi_cmds: Support plane-actual-info property from v1
+Date:   Mon,  8 Mar 2021 12:52:05 +0200
+Message-Id: <20210308105205.445148-6-stanimir.varbanov@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20210308105205.445148-1-stanimir.varbanov@linaro.org>
 References: <20210308105205.445148-1-stanimir.varbanov@linaro.org>
@@ -66,30 +66,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It is observed that on Venus v1 the default header-mode is producing
-a bitstream which is not playble. Change the default header-mode to
-joined with 1st frame.
+The property is supported from v1 and upwards. So move it to
+set_property_1x.
 
-Fixes: 002c22bd360e ("media: venus: venc: set inband mode property to FW.")
+Fixes: 01e869e78756 ("media: venus: venc: fix handlig of S_SELECTION and G_SELECTION")
 Cc: stable@vger.kernel.org # v5.12+
 Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 ---
- drivers/media/platform/qcom/venus/venc_ctrls.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/qcom/venus/hfi_cmds.c | 24 ++++++++++----------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
-index a52b80055173..abef0037bf55 100644
---- a/drivers/media/platform/qcom/venus/venc_ctrls.c
-+++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
-@@ -359,7 +359,7 @@ int venc_ctrl_init(struct venus_inst *inst)
- 		V4L2_MPEG_VIDEO_HEADER_MODE_JOINED_WITH_1ST_FRAME,
- 		~((1 << V4L2_MPEG_VIDEO_HEADER_MODE_SEPARATE) |
- 		(1 << V4L2_MPEG_VIDEO_HEADER_MODE_JOINED_WITH_1ST_FRAME)),
--		V4L2_MPEG_VIDEO_HEADER_MODE_SEPARATE);
-+		V4L2_MPEG_VIDEO_HEADER_MODE_JOINED_WITH_1ST_FRAME);
+diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
+index 4f7565834469..558510a8dfc8 100644
+--- a/drivers/media/platform/qcom/venus/hfi_cmds.c
++++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
+@@ -1039,6 +1039,18 @@ static int pkt_session_set_property_1x(struct hfi_session_set_property_pkt *pkt,
+ 		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*hierp);
+ 		break;
+ 	}
++	case HFI_PROPERTY_PARAM_UNCOMPRESSED_PLANE_ACTUAL_INFO: {
++		struct hfi_uncompressed_plane_actual_info *in = pdata;
++		struct hfi_uncompressed_plane_actual_info *info = prop_data;
++
++		info->buffer_type = in->buffer_type;
++		info->num_planes = in->num_planes;
++		info->plane_format[0] = in->plane_format[0];
++		if (in->num_planes > 1)
++			info->plane_format[1] = in->plane_format[1];
++		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*info);
++		break;
++	}
  
- 	v4l2_ctrl_new_std_menu(&inst->ctrl_handler, &venc_ctrl_ops,
- 		V4L2_CID_MPEG_VIDEO_MULTI_SLICE_MODE,
+ 	/* FOLLOWING PROPERTIES ARE NOT IMPLEMENTED IN CORE YET */
+ 	case HFI_PROPERTY_CONFIG_BUFFER_REQUIREMENTS:
+@@ -1205,18 +1217,6 @@ pkt_session_set_property_4xx(struct hfi_session_set_property_pkt *pkt,
+ 		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*cu);
+ 		break;
+ 	}
+-	case HFI_PROPERTY_PARAM_UNCOMPRESSED_PLANE_ACTUAL_INFO: {
+-		struct hfi_uncompressed_plane_actual_info *in = pdata;
+-		struct hfi_uncompressed_plane_actual_info *info = prop_data;
+-
+-		info->buffer_type = in->buffer_type;
+-		info->num_planes = in->num_planes;
+-		info->plane_format[0] = in->plane_format[0];
+-		if (in->num_planes > 1)
+-			info->plane_format[1] = in->plane_format[1];
+-		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*info);
+-		break;
+-	}
+ 	case HFI_PROPERTY_CONFIG_VENC_MAX_BITRATE:
+ 	case HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER:
+ 	case HFI_PROPERTY_PARAM_BUFFER_ALLOC_MODE:
 -- 
 2.25.1
 
