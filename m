@@ -2,287 +2,243 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 522FE33099F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Mar 2021 09:42:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 891883309DE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Mar 2021 10:03:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231815AbhCHImJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Mar 2021 03:42:09 -0500
-Received: from mail-lj1-f169.google.com ([209.85.208.169]:38118 "EHLO
-        mail-lj1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232285AbhCHIlu (ORCPT
+        id S229494AbhCHJDR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Mar 2021 04:03:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42466 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229892AbhCHJCy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Mar 2021 03:41:50 -0500
-Received: by mail-lj1-f169.google.com with SMTP id 2so15039006ljr.5;
-        Mon, 08 Mar 2021 00:41:49 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=yNHMbYhXYTuAKxP9i1xwQyQREgRd6XRSSDqTIHsn6qA=;
-        b=oWcpp84zCCZeR9jN9IDxeoxr4BuTpH7e6ZLVY1A26MmMOYdSokdMmfO39eDMOzz4Ov
-         UDTzr0my+L9OVAmP+y1iNoRi0Aocjhph5t9Gvy4tX7cGEoaxScTNBtFaDCEEr/efZuAW
-         cT3VTMvRcbBNQDC/+d5u2j09biygCt0HN5AxrPTscLipwfoNqbJChXZwPEHuOBnHsXNF
-         e+kx/UYZtsAo0IiISQhgE0Fu+qywE9eUtd/zLad6FP+N8wszTShrn/nCtEFK0oa6K0eY
-         4g13Wcbc07+L5BIiYEPTXwIoF69QBvubqo316hmRhrsHh+aKS5LXVLhQlcLQtU9LEwbh
-         eMNA==
-X-Gm-Message-State: AOAM531hA4OP4cwmRtv6uxCzAJae5W/kJYPd7nhJ3rvq7JE68y6pz3XR
-        xfA0rGwXz4erRsQjSXc4xx0=
-X-Google-Smtp-Source: ABdhPJxxJYwPEatTEqoNV7r1QTHh+FfYBSStOdEinM7L9rqqf3WCdh+NL9d2vhaANtH3jmK5xhK2Lw==
-X-Received: by 2002:a2e:b7c1:: with SMTP id p1mr13068513ljo.198.1615192908801;
-        Mon, 08 Mar 2021 00:41:48 -0800 (PST)
-Received: from localhost.localdomain (dc7vkhyyyyyyyyyyyyycy-3.rev.dnainternet.fi. [2001:14ba:16e2:8300::4])
-        by smtp.gmail.com with ESMTPSA id c27sm1282633lfh.146.2021.03.08.00.41.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Mar 2021 00:41:48 -0800 (PST)
-Date:   Mon, 8 Mar 2021 10:41:41 +0200
-From:   Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-To:     matti.vaittinen@fi.rohmeurope.com, mazziesaccount@gmail.com
-Cc:     MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Mark Gross <mgross@linux.intel.com>,
-        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
-        gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org
-Subject: [RFC PATCH v2 3/8] extconn: Clean-up few drivers by using managed
- work init
-Message-ID: <9aa7661da4b54929a35b6635693807102d99684b.1615187284.git.matti.vaittinen@fi.rohmeurope.com>
-References: <cover.1615187284.git.matti.vaittinen@fi.rohmeurope.com>
+        Mon, 8 Mar 2021 04:02:54 -0500
+Received: from bhuna.collabora.co.uk (bhuna.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e3e3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6E77C06174A;
+        Mon,  8 Mar 2021 01:02:53 -0800 (PST)
+Received: from localhost (unknown [IPv6:2a01:e0a:2c:6930:5cf4:84a1:2763:fe0d])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbrezillon)
+        by bhuna.collabora.co.uk (Postfix) with ESMTPSA id 661831F4500B;
+        Mon,  8 Mar 2021 09:02:51 +0000 (GMT)
+Date:   Mon, 8 Mar 2021 10:02:47 +0100
+From:   Boris Brezillon <boris.brezillon@collabora.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
+        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-mtd@lists.infradead.org,
+        linux-kernel@vger.kernel.org, Daniele.Palmas@telit.com,
+        bjorn.andersson@linaro.org
+Subject: Re: [PATCH v4 3/3] mtd: rawnand: qcom: Add support for secure
+ regions in NAND memory
+Message-ID: <20210308100247.4aba657c@collabora.com>
+In-Reply-To: <20210308054447.28418-4-manivannan.sadhasivam@linaro.org>
+References: <20210308054447.28418-1-manivannan.sadhasivam@linaro.org>
+        <20210308054447.28418-4-manivannan.sadhasivam@linaro.org>
+Organization: Collabora
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1615187284.git.matti.vaittinen@fi.rohmeurope.com>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Few drivers implement remove call-back only for ensuring a delayed
-work gets cancelled prior driver removal. Clean-up these by switching
-to use devm_delayed_work_autocancel() instead.
+On Mon,  8 Mar 2021 11:14:47 +0530
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote:
 
-Additionally, this helps avoiding mixing devm and manual resource
-management and cleans up a (theoretical?) bug from extconn-palmas.c
-and extcon-qcom-spmi-misc.c where (devm managed)IRQ might schedule
-new work item after wq was cleaned at remove().
+> On a typical end product, a vendor may choose to secure some regions in
+> the NAND memory which are supposed to stay intact between FW upgrades.
+> The access to those regions will be blocked by a secure element like
+> Trustzone. So the normal world software like Linux kernel should not
+> touch these regions (including reading).
+> 
+> The regions are declared using a NAND chip DT property,
+> "secure-regions". So let's make use of this property and skip
+> access to the secure regions present in a system.
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  drivers/mtd/nand/raw/qcom_nandc.c | 72 +++++++++++++++++++++++++++----
+>  1 file changed, 63 insertions(+), 9 deletions(-)
+> 
+> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
+> index 87c23bb320bf..8027f7cb32be 100644
+> --- a/drivers/mtd/nand/raw/qcom_nandc.c
+> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
+> @@ -431,6 +431,11 @@ struct qcom_nand_controller {
+>   * @cfg0, cfg1, cfg0_raw..:	NANDc register configurations needed for
+>   *				ecc/non-ecc mode for the current nand flash
+>   *				device
+> + *
+> + * @sec_regions:		Array representing the secure regions in the
+> + *				NAND chip
+> + *
+> + * @nr_sec_regions:		Number of secure regions in the NAND chip
+>   */
+>  struct qcom_nand_host {
+>  	struct nand_chip chip;
+> @@ -453,6 +458,9 @@ struct qcom_nand_host {
+>  	u32 ecc_bch_cfg;
+>  	u32 clrflashstatus;
+>  	u32 clrreadstatus;
+> +
+> +	u32 *sec_regions;
+> +	u8 nr_sec_regions;
+>  };
+>  
+>  /*
+> @@ -662,16 +670,27 @@ static void nandc_set_reg(struct qcom_nand_controller *nandc, int offset,
+>  }
+>  
+>  /* helper to configure address register values */
+> -static void set_address(struct qcom_nand_host *host, u16 column, int page)
+> +static int set_address(struct qcom_nand_host *host, u16 column, int page)
+>  {
+>  	struct nand_chip *chip = &host->chip;
+>  	struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
+> +	u32 offs = page << chip->page_shift;
+> +	int i, j;
+> +
+> +	/* Skip touching the secure regions if present */
+> +	for (i = 0, j = 0; i < host->nr_sec_regions; i++, j += 2) {
+> +		if (offs >= host->sec_regions[j] &&
+> +		    (offs <= host->sec_regions[j] + host->sec_regions[j + 1]))
+> +			return -EIO;
+> +	}
 
-This change is compile-tested only. All testing is appreciated.
+Hm, not sure that's a good idea to make this check part of
+set_address(). Looks like set_address() can be used for ONFI page
+access too, and you definitely don't want to block those
+requests. I'd recommend having a separate helper that you can call from
+qcom_nandc_{read,write}_{oob,page,page_raw}().
 
-Signed-off-by: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
----
- drivers/extcon/extcon-gpio.c           | 15 ++++-----------
- drivers/extcon/extcon-intel-int3496.c  | 16 ++++------------
- drivers/extcon/extcon-palmas.c         | 17 ++++++-----------
- drivers/extcon/extcon-qcom-spmi-misc.c | 17 ++++++-----------
- 4 files changed, 20 insertions(+), 45 deletions(-)
+>  
+>  	if (chip->options & NAND_BUSWIDTH_16)
+>  		column >>= 1;
+>  
+>  	nandc_set_reg(nandc, NAND_ADDR0, page << 16 | column);
+>  	nandc_set_reg(nandc, NAND_ADDR1, page >> 16 & 0xff);
+> +
+> +	return 0;
+>  }
+>  
+>  /*
+> @@ -1491,13 +1510,13 @@ static void qcom_nandc_command(struct nand_chip *chip, unsigned int command,
+>  		WARN_ON(column != 0);
+>  
+>  		host->use_ecc = true;
+> -		set_address(host, 0, page_addr);
+> +		ret = set_address(host, 0, page_addr);
+>  		update_rw_regs(host, ecc->steps, true);
+>  		break;
+>  
+>  	case NAND_CMD_SEQIN:
+>  		WARN_ON(column != 0);
+> -		set_address(host, 0, page_addr);
+> +		ret = set_address(host, 0, page_addr);
+>  		break;
+>  
+>  	case NAND_CMD_PAGEPROG:
+> @@ -1615,7 +1634,10 @@ qcom_nandc_read_cw_raw(struct mtd_info *mtd, struct nand_chip *chip,
+>  	host->use_ecc = false;
+>  
+>  	clear_bam_transaction(nandc);
+> -	set_address(host, host->cw_size * cw, page);
+> +	ret = set_address(host, host->cw_size * cw, page);
+> +	if (ret)
+> +		return ret;
+> +
+>  	update_rw_regs(host, 1, true);
+>  	config_nand_page_read(nandc);
+>  
+> @@ -1943,7 +1965,10 @@ static int copy_last_cw(struct qcom_nand_host *host, int page)
+>  	/* prepare a clean read buffer */
+>  	memset(nandc->data_buffer, 0xff, size);
+>  
+> -	set_address(host, host->cw_size * (ecc->steps - 1), page);
+> +	ret = set_address(host, host->cw_size * (ecc->steps - 1), page);
+> +	if (ret)
+> +		return ret;
+> +
+>  	update_rw_regs(host, 1, true);
+>  
+>  	config_nand_single_cw_page_read(nandc, host->use_ecc);
+> @@ -2005,12 +2030,16 @@ static int qcom_nandc_read_oob(struct nand_chip *chip, int page)
+>  	struct qcom_nand_host *host = to_qcom_nand_host(chip);
+>  	struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
+>  	struct nand_ecc_ctrl *ecc = &chip->ecc;
+> +	int ret;
+>  
+>  	clear_read_regs(nandc);
+>  	clear_bam_transaction(nandc);
+>  
+>  	host->use_ecc = true;
+> -	set_address(host, 0, page);
+> +	ret = set_address(host, 0, page);
+> +	if (ret)
+> +		return ret;
+> +
+>  	update_rw_regs(host, ecc->steps, true);
+>  
+>  	return read_page_ecc(host, NULL, chip->oob_poi, page);
+> @@ -2188,7 +2217,10 @@ static int qcom_nandc_write_oob(struct nand_chip *chip, int page)
+>  	mtd_ooblayout_get_databytes(mtd, nandc->data_buffer + data_size, oob,
+>  				    0, mtd->oobavail);
+>  
+> -	set_address(host, host->cw_size * (ecc->steps - 1), page);
+> +	ret = set_address(host, host->cw_size * (ecc->steps - 1), page);
+> +	if (ret)
+> +		return ret;
+> +
+>  	update_rw_regs(host, 1, false);
+>  
+>  	config_nand_page_write(nandc);
+> @@ -2267,7 +2299,10 @@ static int qcom_nandc_block_markbad(struct nand_chip *chip, loff_t ofs)
+>  
+>  	/* prepare write */
+>  	host->use_ecc = false;
+> -	set_address(host, host->cw_size * (ecc->steps - 1), page);
+> +	ret = set_address(host, host->cw_size * (ecc->steps - 1), page);
+> +	if (ret)
+> +		return ret;
+> +
+>  	update_rw_regs(host, 1, false);
+>  
+>  	config_nand_page_write(nandc);
+> @@ -2830,7 +2865,8 @@ static int qcom_nand_host_init_and_register(struct qcom_nand_controller *nandc,
+>  	struct nand_chip *chip = &host->chip;
+>  	struct mtd_info *mtd = nand_to_mtd(chip);
+>  	struct device *dev = nandc->dev;
+> -	int ret;
+> +	struct property *prop;
+> +	int ret, length, nr_elem;
+>  
+>  	ret = of_property_read_u32(dn, "reg", &host->cs);
+>  	if (ret) {
+> @@ -2872,6 +2908,24 @@ static int qcom_nand_host_init_and_register(struct qcom_nand_controller *nandc,
+>  	/* set up initial status value */
+>  	host->status = NAND_STATUS_READY | NAND_STATUS_WP;
+>  
+> +	/*
+> +	 * Look for secure regions in the NAND chip. These regions are supposed
+> +	 * to be protected by a secure element like Trustzone. So the read/write
+> +	 * accesses to these regions will be blocked in the runtime by this
+> +	 * driver.
+> +	 */
+> +	prop = of_find_property(dn, "secure-regions", &length);
+> +	if (prop) {
+> +		nr_elem = length / sizeof(u32);
+> +		host->nr_sec_regions = nr_elem / 2;
+> +
+> +		host->sec_regions = devm_kcalloc(dev, nr_elem, sizeof(u32), GFP_KERNEL);
+> +		if (!host->sec_regions)
+> +			return -ENOMEM;
+> +
+> +		of_property_read_u32_array(dn, "secure-regions", host->sec_regions, nr_elem);
+> +	}
+> +
+>  	ret = nand_scan(chip, 1);
+>  	if (ret)
+>  		return ret;
 
-diff --git a/drivers/extcon/extcon-gpio.c b/drivers/extcon/extcon-gpio.c
-index c211222f5d0c..4105df74f2b0 100644
---- a/drivers/extcon/extcon-gpio.c
-+++ b/drivers/extcon/extcon-gpio.c
-@@ -9,6 +9,7 @@
-  * (originally switch class is supported)
-  */
- 
-+#include <linux/devm-helpers.h>
- #include <linux/extcon-provider.h>
- #include <linux/gpio/consumer.h>
- #include <linux/init.h>
-@@ -112,7 +113,9 @@ static int gpio_extcon_probe(struct platform_device *pdev)
- 	if (ret < 0)
- 		return ret;
- 
--	INIT_DELAYED_WORK(&data->work, gpio_extcon_work);
-+	ret = devm_delayed_work_autocancel(dev, &data->work, gpio_extcon_work);
-+	if (ret)
-+		return ret;
- 
- 	/*
- 	 * Request the interrupt of gpio to detect whether external connector
-@@ -131,15 +134,6 @@ static int gpio_extcon_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int gpio_extcon_remove(struct platform_device *pdev)
--{
--	struct gpio_extcon_data *data = platform_get_drvdata(pdev);
--
--	cancel_delayed_work_sync(&data->work);
--
--	return 0;
--}
--
- #ifdef CONFIG_PM_SLEEP
- static int gpio_extcon_resume(struct device *dev)
- {
-@@ -158,7 +152,6 @@ static SIMPLE_DEV_PM_OPS(gpio_extcon_pm_ops, NULL, gpio_extcon_resume);
- 
- static struct platform_driver gpio_extcon_driver = {
- 	.probe		= gpio_extcon_probe,
--	.remove		= gpio_extcon_remove,
- 	.driver		= {
- 		.name	= "extcon-gpio",
- 		.pm	= &gpio_extcon_pm_ops,
-diff --git a/drivers/extcon/extcon-intel-int3496.c b/drivers/extcon/extcon-intel-int3496.c
-index 80c9abcc3f97..fb527c23639e 100644
---- a/drivers/extcon/extcon-intel-int3496.c
-+++ b/drivers/extcon/extcon-intel-int3496.c
-@@ -11,6 +11,7 @@
-  */
- 
- #include <linux/acpi.h>
-+#include <linux/devm-helpers.h>
- #include <linux/extcon-provider.h>
- #include <linux/gpio/consumer.h>
- #include <linux/interrupt.h>
-@@ -101,7 +102,9 @@ static int int3496_probe(struct platform_device *pdev)
- 		return -ENOMEM;
- 
- 	data->dev = dev;
--	INIT_DELAYED_WORK(&data->work, int3496_do_usb_id);
-+	ret = devm_delayed_work_autocancel(dev, &data->work, int3496_do_usb_id);
-+	if (ret)
-+		return ret;
- 
- 	data->gpio_usb_id = devm_gpiod_get(dev, "id", GPIOD_IN);
- 	if (IS_ERR(data->gpio_usb_id)) {
-@@ -155,16 +158,6 @@ static int int3496_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int int3496_remove(struct platform_device *pdev)
--{
--	struct int3496_data *data = platform_get_drvdata(pdev);
--
--	devm_free_irq(&pdev->dev, data->usb_id_irq, data);
--	cancel_delayed_work_sync(&data->work);
--
--	return 0;
--}
--
- static const struct acpi_device_id int3496_acpi_match[] = {
- 	{ "INT3496" },
- 	{ }
-@@ -177,7 +170,6 @@ static struct platform_driver int3496_driver = {
- 		.acpi_match_table = int3496_acpi_match,
- 	},
- 	.probe = int3496_probe,
--	.remove = int3496_remove,
- };
- 
- module_platform_driver(int3496_driver);
-diff --git a/drivers/extcon/extcon-palmas.c b/drivers/extcon/extcon-palmas.c
-index a2852bcc5f0d..d2c1a8b89c08 100644
---- a/drivers/extcon/extcon-palmas.c
-+++ b/drivers/extcon/extcon-palmas.c
-@@ -9,6 +9,7 @@
-  * Author: Hema HK <hemahk@ti.com>
-  */
- 
-+#include <linux/devm-helpers.h>
- #include <linux/module.h>
- #include <linux/interrupt.h>
- #include <linux/platform_device.h>
-@@ -237,7 +238,11 @@ static int palmas_usb_probe(struct platform_device *pdev)
- 			palmas_usb->sw_debounce_jiffies = msecs_to_jiffies(debounce);
- 	}
- 
--	INIT_DELAYED_WORK(&palmas_usb->wq_detectid, palmas_gpio_id_detect);
-+	status = devm_delayed_work_autocancel(&pdev->dev,
-+					      &palmas_usb->wq_detectid,
-+					      palmas_gpio_id_detect);
-+	if (status)
-+		return status;
- 
- 	palmas->usb = palmas_usb;
- 	palmas_usb->palmas = palmas;
-@@ -359,15 +364,6 @@ static int palmas_usb_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int palmas_usb_remove(struct platform_device *pdev)
--{
--	struct palmas_usb *palmas_usb = platform_get_drvdata(pdev);
--
--	cancel_delayed_work_sync(&palmas_usb->wq_detectid);
--
--	return 0;
--}
--
- #ifdef CONFIG_PM_SLEEP
- static int palmas_usb_suspend(struct device *dev)
- {
-@@ -422,7 +418,6 @@ static const struct of_device_id of_palmas_match_tbl[] = {
- 
- static struct platform_driver palmas_usb_driver = {
- 	.probe = palmas_usb_probe,
--	.remove = palmas_usb_remove,
- 	.driver = {
- 		.name = "palmas-usb",
- 		.of_match_table = of_palmas_match_tbl,
-diff --git a/drivers/extcon/extcon-qcom-spmi-misc.c b/drivers/extcon/extcon-qcom-spmi-misc.c
-index 6b836ae62176..74d57d951b68 100644
---- a/drivers/extcon/extcon-qcom-spmi-misc.c
-+++ b/drivers/extcon/extcon-qcom-spmi-misc.c
-@@ -7,6 +7,7 @@
-  * Stephen Boyd <stephen.boyd@linaro.org>
-  */
- 
-+#include <linux/devm-helpers.h>
- #include <linux/extcon-provider.h>
- #include <linux/init.h>
- #include <linux/interrupt.h>
-@@ -80,7 +81,11 @@ static int qcom_usb_extcon_probe(struct platform_device *pdev)
- 	}
- 
- 	info->debounce_jiffies = msecs_to_jiffies(USB_ID_DEBOUNCE_MS);
--	INIT_DELAYED_WORK(&info->wq_detcable, qcom_usb_extcon_detect_cable);
-+
-+	ret = devm_delayed_work_autocancel(dev, &info->wq_detcable,
-+					   qcom_usb_extcon_detect_cable);
-+	if (ret)
-+		return ret;
- 
- 	info->irq = platform_get_irq_byname(pdev, "usb_id");
- 	if (info->irq < 0)
-@@ -105,15 +110,6 @@ static int qcom_usb_extcon_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int qcom_usb_extcon_remove(struct platform_device *pdev)
--{
--	struct qcom_usb_extcon_info *info = platform_get_drvdata(pdev);
--
--	cancel_delayed_work_sync(&info->wq_detcable);
--
--	return 0;
--}
--
- #ifdef CONFIG_PM_SLEEP
- static int qcom_usb_extcon_suspend(struct device *dev)
- {
-@@ -149,7 +145,6 @@ MODULE_DEVICE_TABLE(of, qcom_usb_extcon_dt_match);
- 
- static struct platform_driver qcom_usb_extcon_driver = {
- 	.probe		= qcom_usb_extcon_probe,
--	.remove		= qcom_usb_extcon_remove,
- 	.driver		= {
- 		.name	= "extcon-pm8941-misc",
- 		.pm	= &qcom_usb_extcon_pm_ops,
--- 
-2.25.4
-
-
--- 
-Matti Vaittinen, Linux device drivers
-ROHM Semiconductors, Finland SWDC
-Kiviharjunlenkki 1E
-90220 OULU
-FINLAND
-
-~~~ "I don't think so," said Rene Descartes. Just then he vanished ~~~
-Simon says - in Latin please.
-~~~ "non cogito me" dixit Rene Descarte, deinde evanescavit ~~~
-Thanks to Simon Glass for the translation =] 
