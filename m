@@ -2,109 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EFDEA330A2D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Mar 2021 10:20:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B88F8330AB2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Mar 2021 10:59:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229757AbhCHJTj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Mar 2021 04:19:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46068 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229754AbhCHJTi (ORCPT
+        id S231343AbhCHJ6f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Mar 2021 04:58:35 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([216.205.24.124]:46732 "EHLO
+        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231389AbhCHJ6L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Mar 2021 04:19:38 -0500
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCEF3C06174A
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Mar 2021 01:19:37 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id c76-20020a1c9a4f0000b029010c94499aedso3335769wme.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Mar 2021 01:19:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=hEOGgoBFFfBcRYu8R+ZFzD5oTYtm/qga63LL53Ov/bU=;
-        b=evLEsiqayrflm8/aMCMFF1KGm9tCqy5TgmLozN1pf5OV8v3XOrrOZ7dusez6ueByqx
-         QbfNJbn3Tb6TelmwrFWDd4WHxalQui+FvvMLcnchyO2FEC0WH66rXpO7Bg5MqXxBzX+Z
-         cc9Pr7PgNkEy1bM1xcbTqIIGCmKoaS4GNgx3Ck/1lpofYRw8U2M/EjDO4iJe0z6SkwP7
-         NEfv8QFCktFfq07V+8oK+WYbUu5K7JfqkfwOCUZH8ZfaC1XQzqb4v836tecMta/an5NF
-         q1zYSc8uWIE/dnLOv0rAgqCp8RZ+/3Pe/2mlOOfPdm/KIfJDoR0E3DqxqFiDR11IYcOx
-         uh1A==
+        Mon, 8 Mar 2021 04:58:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1615197491;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=lHjTxRwBzXntJjnY0Ab0qNZeR7P16kUC/t+zvNtECvA=;
+        b=Ktasm3kyUnY8L0r6l81BV9N+xqgZiXrcCzV/yLIt4e3YLooRPjhWzfE+xD5Bbg7cYH1uTJ
+        yjBbb5SW/AwpbJ2qqlC0g2OlGocnVKQjVhAwSAjtklO/pkcvmEOtycYUCrTZpeppcLpdQ/
+        V3calKFIE0JNBjcYdE2vJECBkBmb9cA=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-509-InMu4ZiMO9uxKSUXBjCu3g-1; Mon, 08 Mar 2021 04:58:08 -0500
+X-MC-Unique: InMu4ZiMO9uxKSUXBjCu3g-1
+Received: by mail-ej1-f71.google.com with SMTP id di5so3848442ejc.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Mar 2021 01:58:08 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=hEOGgoBFFfBcRYu8R+ZFzD5oTYtm/qga63LL53Ov/bU=;
-        b=lxisGzEyF3hf08NPchaTd7YqxZH/EFgqzxCmTNoxNqQklftFAz3vwe3n7RKenAk/qD
-         Rz773dxgi+Vq4nnP8Jhk7Q96SK0Ut+FFQ99XnbTt8gvC9AGLYQmUcrsY9MPJpfzAo9lF
-         zEBQzbX4rE0eWar0cWNnUKuKsJ2rl1Bz9/COkh2s0eK4fSLHkRe/t/CN36piHkTfa9vm
-         7VRq9rRviaE2aTvhL2rZBn0OqqMEmpJuwA/GP4QITG7yZK8qM7xkk49CzyIhMd5atDfq
-         Y5Us4Bky+ieBieTLPpHlujBfehrR18+iKq3zIzxfqaU3JjEQzlf7HZABXeHEH2Yoh60D
-         qMJg==
-X-Gm-Message-State: AOAM532drVjmDcesrbv1j2wC9T4ziMAltGH2OAmZJo6g/40XyRv394uZ
-        xadHNZJUV/aSq5pwrermEGL1gg==
-X-Google-Smtp-Source: ABdhPJySpXzmJ3MCPU31zc4PaUGqi7NmkyvQv0pK/pj0WvYnEHQRAY6VwjmHVQ6JfBzbPkybjDafLg==
-X-Received: by 2002:a1c:400b:: with SMTP id n11mr20979920wma.167.1615195176468;
-        Mon, 08 Mar 2021 01:19:36 -0800 (PST)
-Received: from dell ([91.110.221.130])
-        by smtp.gmail.com with ESMTPSA id i11sm17599389wro.53.2021.03.08.01.19.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Mar 2021 01:19:35 -0800 (PST)
-Date:   Mon, 8 Mar 2021 09:19:32 +0000
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Roland Scheidegger <sroland@vmware.com>
-Cc:     linux-kernel@vger.kernel.org,
-        Alex Deucher <alexander.deucher@amd.com>,
-        amd-gfx@lists.freedesktop.org, Anthony Koo <Anthony.Koo@amd.com>,
-        Ben Skeggs <bskeggs@redhat.com>,
-        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Dave Airlie <airlied@redhat.com>,
-        David Airlie <airlied@linux.ie>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Harry Wentland <harry.wentland@amd.com>,
-        Jeremy Kolb <jkolb@brandeis.edu>,
-        Kuogee Hsieh <khsieh@codeaurora.org>,
-        Leo Li <sunpeng.li@amd.com>, linaro-mm-sig@lists.linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        Lyude Paul <lyude@redhat.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        nouveau@lists.freedesktop.org,
-        Qinglang Miao <miaoqinglang@huawei.com>,
-        Rob Clark <rob.clark@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        VMware Graphics <linux-graphics-maintainer@vmware.com>,
-        Zack Rusin <zackr@vmware.com>
-Subject: Re: [RESEND 00/53] Rid GPU from W=1 warnings
-Message-ID: <20210308091932.GB4931@dell>
-References: <20210303134319.3160762-1-lee.jones@linaro.org>
- <16d4300e-bf29-1e85-317b-53d257890cb9@vmware.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=lHjTxRwBzXntJjnY0Ab0qNZeR7P16kUC/t+zvNtECvA=;
+        b=gpHZiZqPi2OxFK2vTrV24qKY1z2F2s8rD4ypxdiPNenx6DL5cF6poiWAY6+7Sl8FAx
+         sEqap8o4HhRkHPlb0EJNOGk9iQSFsf/Pj2yTAGhKp66EMjg2b8ctb5IHQHttprgJtsEa
+         nREYwb6dNIwd0eAOZbtGe1QwQ6q9SQAH+0jVMQOKgJWWCtcpu+DatMDEN7drQ1HMETyv
+         gLtMLBYNGGKIXJFxxlwQyjCvsba2chGc1VKZekNy6AVuBC2aGLYTjGxUlbNKQ7v9/tGi
+         fDPUUDxmjaTmOVkocZ41uzhTYkZaGe4Z23abou/kT5IUXDTbLIaCMLmcQe5RG82MIUFQ
+         gzlw==
+X-Gm-Message-State: AOAM5314OGLmqaVAsbMexXrZRqc0Q0WygOl95C6COh184V92jY/2NdPg
+        RhJn5cUNM3Tzmu3aNQ+iG/JO7xTZcB4JDGTQgs+DdGQcuVeAwHimypAbT4KWrgyACXSxC+tszsO
+        LpAMGdLSudcuLMFfcH9f3pDcn7g==
+X-Received: by 2002:a05:6402:254f:: with SMTP id l15mr2161737edb.189.1615197487652;
+        Mon, 08 Mar 2021 01:58:07 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJwZ6fQefjQyWn03VsnOaZl1Am51qstz49gLS1yCwyNiMnlnimfXdBtL7FsXaaQ/90rp9JZYFg==
+X-Received: by 2002:a05:6402:254f:: with SMTP id l15mr2161713edb.189.1615197487533;
+        Mon, 08 Mar 2021 01:58:07 -0800 (PST)
+Received: from x1.localdomain (2001-1c00-0c1e-bf00-1054-9d19-e0f0-8214.cable.dynamic.v6.ziggo.nl. [2001:1c00:c1e:bf00:1054:9d19:e0f0:8214])
+        by smtp.gmail.com with ESMTPSA id b6sm6075855ejb.8.2021.03.08.01.58.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Mar 2021 01:58:07 -0800 (PST)
+Subject: Re: [RFC PATCH v2 2/8] MAINTAINERS: Add entry for devm helpers
+To:     Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
+        mazziesaccount@gmail.com
+Cc:     MyungJoo Ham <myungjoo.ham@samsung.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jean Delvare <jdelvare@suse.com>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Mark Gross <mgross@linux.intel.com>,
+        Sebastian Reichel <sre@kernel.org>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-hwmon@vger.kernel.org,
+        platform-driver-x86@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-watchdog@vger.kernel.org
+References: <cover.1615187284.git.matti.vaittinen@fi.rohmeurope.com>
+ <c9119c0a8d4daebff0221c67830b54314fc9e0f6.1615187284.git.matti.vaittinen@fi.rohmeurope.com>
+From:   Hans de Goede <hdegoede@redhat.com>
+Message-ID: <c40d1454-836d-cbf2-d2de-232e5b39b9e9@redhat.com>
+Date:   Mon, 8 Mar 2021 10:58:06 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.0
 MIME-Version: 1.0
+In-Reply-To: <c9119c0a8d4daebff0221c67830b54314fc9e0f6.1615187284.git.matti.vaittinen@fi.rohmeurope.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <16d4300e-bf29-1e85-317b-53d257890cb9@vmware.com>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 05 Mar 2021, Roland Scheidegger wrote:
+Hi,
 
-> The vmwgfx ones look all good to me, so for
-> 23-53: Reviewed-by: Roland Scheidegger <sroland@vmware.com>
-> That said, they were already signed off by Zack, so not sure what
-> happened here.
+On 3/8/21 9:14 AM, Matti Vaittinen wrote:
+> Devm helper header containing small inline helpers was added.
+> Hans promised to maintain it.
 
-Yes, they were accepted at one point, then dropped without a reason.
+Yes I did promise that, didn't I?  FWIW going this route is still
+fine by me, assuming that having someone else maintain this makes
+this easier on / more acceptable to Greg.
 
-Since I rebased onto the latest -next, I had to pluck them back out of
-a previous one.
+This is still going to need an Ack from Greg though.
 
--- 
-Lee Jones [李琼斯]
-Senior Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
+Regards,
+
+Hans
+
+
+
+> 
+> Add Hans as maintainer and myself as designated reviewer.
+> 
+> Signed-off-by: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
+> ---
+>  MAINTAINERS | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index d92f85ca831d..ffcb00006e14 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -5169,6 +5169,12 @@ M:	Torben Mathiasen <device@lanana.org>
+>  S:	Maintained
+>  W:	http://lanana.org/docs/device-list/index.html
+>  
+> +DEVICE RESOURCE MANAGEMENT HELPERS
+> +M:	Hans de Goede <hdegoede@redhat.com>
+> +R:	Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
+> +S:	Maintained
+> +F:	include/linux/devm-helpers.h
+> +
+>  DEVICE-MAPPER  (LVM)
+>  M:	Alasdair Kergon <agk@redhat.com>
+>  M:	Mike Snitzer <snitzer@redhat.com>
+> 
+
