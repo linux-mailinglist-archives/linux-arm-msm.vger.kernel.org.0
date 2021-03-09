@@ -2,96 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C1F83332B3E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Mar 2021 16:57:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 39CBF332BC3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Mar 2021 17:20:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232022AbhCIP4z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Mar 2021 10:56:55 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:45016 "EHLO z11.mailgun.us"
+        id S231703AbhCIQUI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Mar 2021 11:20:08 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:31122 "EHLO z11.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232033AbhCIP4m (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Mar 2021 10:56:42 -0500
+        id S231909AbhCIQCC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 9 Mar 2021 11:02:02 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1615305402; h=Content-Transfer-Encoding: Content-Type:
+ s=smtp; t=1615305722; h=Content-Transfer-Encoding: Content-Type:
  In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=/m2KFCZftUzumg8DPFWYqFDdMycSz9cl+cIGSvANNXM=; b=dbIGf1TcIw76uYoGYQqrAKHmUxd/VpQq+XHni252MORXn0n0njVvEiKGnwXD+tcCjGJ1pzpb
- m2hK4lI0lEeADPtHvG8vQ49+gQ7ppP5ct4CxvQG27Zd+UKnCHBOa5tmSEjA9nOql01ZYHuZS
- pr9+4dmDjk6PEDslmI2HeVnrkG8=
+ Subject: Sender; bh=6nM4CiFYWoQ6ihBekMmL11g5A+bwckuWJnmYt27toeE=; b=CzCa93HoeAd6fhjbH+DuksZbKWi32b2zaTRxJlOKAmMP5Pr6FzMCU+IuEwobQc2YzP6xwTrN
+ 9Caxw1lAL3lBrjGTqf0WEGdWjQIjVZBZtIsFrRmMXQmXTTWcha+k58crnPcZgqRVZr3lnkFz
+ 72eDqxzE/B+1SMYMJLPOLkPqwEE=
 X-Mailgun-Sending-Ip: 104.130.96.11
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
  smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 60479ab3b2591bd568ff3b53 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 09 Mar 2021 15:56:35
+ 60479bcab2591bd56802f8e2 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 09 Mar 2021 16:01:14
  GMT
-Sender: asutoshd=codeaurora.org@mg.codeaurora.org
+Sender: jhugo=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1E885C43478; Tue,  9 Mar 2021 15:56:34 +0000 (UTC)
+        id 57A6FC433C6; Tue,  9 Mar 2021 16:01:14 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
         NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [192.168.8.168] (cpe-70-95-149-85.san.res.rr.com [70.95.149.85])
+Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: asutoshd)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0D314C433CA;
-        Tue,  9 Mar 2021 15:56:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0D314C433CA
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 91F94C433CA;
+        Tue,  9 Mar 2021 16:01:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 91F94C433CA
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=asutoshd@codeaurora.org
-Subject: Re: [PATCH v10 1/2] scsi: ufs: Enable power management for wlun
-To:     "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     Alan Stern <stern@rowland.harvard.edu>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Adrian Hunter <adrian.hunter@intel.com>, cang@codeaurora.org,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        "open list:TARGET SUBSYSTEM" <linux-scsi@vger.kernel.org>,
-        Bart Van Assche <bvanassche@acm.org>,
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH net-next v3] net: Add Qcom WWAN control driver
+To:     Greg KH <gregkh@linuxfoundation.org>,
+        Loic Poulain <loic.poulain@linaro.org>
+Cc:     Jakub Kicinski <kuba@kernel.org>,
+        David Miller <davem@davemloft.net>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Ingo Molnar <mingo@redhat.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Kiwoong Kim <kwmad.kim@samsung.com>,
-        Bean Huo <beanhuo@micron.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Wei Yongjun <weiyongjun1@huawei.com>,
-        Dinghao Liu <dinghao.liu@zju.edu.cn>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        Tomas Winkler <tomas.winkler@intel.com>,
-        Jaegeuk Kim <jaegeuk@kernel.org>,
-        Satya Tangirala <satyat@google.com>,
+        Aleksander Morgado <aleksander@aleksander.es>,
         open list <linux-kernel@vger.kernel.org>,
-        "moderated list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "open list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "moderated list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
-        <linux-mediatek@lists.infradead.org>,
-        Linux-PM mailing list <linux-pm@vger.kernel.org>
-References: <cover.1614725302.git.asutoshd@codeaurora.org>
- <0576d6eae15486740c25767e2d8805f7e94eb79d.1614725302.git.asutoshd@codeaurora.org>
- <85086647-7292-b0a2-d842-290818bd2858@intel.com>
- <6e98724d-2e75-d1fe-188f-a7010f86c509@codeaurora.org>
- <20210306161616.GC74411@rowland.harvard.edu>
- <CAJZ5v0ihJe8rNjWRwNic_BQUvKbALNcjx8iiPAh5nxLhOV9duw@mail.gmail.com>
- <CAJZ5v0iJ4yqRTt=mTCC930HULNFNTgvO4f9ToVO6pNz53kxFkw@mail.gmail.com>
-From:   "Asutosh Das (asd)" <asutoshd@codeaurora.org>
-Message-ID: <f1e9b21d-1722-d20b-4bae-df7e6ce50bbc@codeaurora.org>
-Date:   Tue, 9 Mar 2021 07:56:30 -0800
+        Network Development <netdev@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Hemant Kumar <hemantk@codeaurora.org>
+References: <1615279336-27227-1-git-send-email-loic.poulain@linaro.org>
+ <YEdBfHAYkTGI8sE4@kroah.com>
+ <CAMZdPi9dCzH9ufSoRK_szOaVnSsySk-kC5fu2Rb+wy-6snow0Q@mail.gmail.com>
+ <YEdO47NAWpO886DC@kroah.com>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <69126b2b-8138-60a3-1383-d06c30671499@codeaurora.org>
+Date:   Tue, 9 Mar 2021 09:01:11 -0700
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.0
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-In-Reply-To: <CAJZ5v0iJ4yqRTt=mTCC930HULNFNTgvO4f9ToVO6pNz53kxFkw@mail.gmail.com>
+In-Reply-To: <YEdO47NAWpO886DC@kroah.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -99,106 +72,184 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/8/2021 9:17 AM, Rafael J. Wysocki wrote:
-> On Mon, Mar 8, 2021 at 5:21 PM Rafael J. Wysocki <rafael@kernel.org> wrote:
+On 3/9/2021 3:33 AM, Greg KH wrote:
+> On Tue, Mar 09, 2021 at 11:28:49AM +0100, Loic Poulain wrote:
+>> Hi Greg,
 >>
->> On Sat, Mar 6, 2021 at 5:17 PM Alan Stern <stern@rowland.harvard.edu> wrote:
+>> On Tue, 9 Mar 2021 at 10:35, Greg KH <gregkh@linuxfoundation.org> wrote:
 >>>
->>> On Fri, Mar 05, 2021 at 06:54:24PM -0800, Asutosh Das (asd) wrote:
+>>> On Tue, Mar 09, 2021 at 09:42:16AM +0100, Loic Poulain wrote:
+>>>> The MHI WWWAN control driver allows MHI Qcom based modems to expose
+>>>> different modem control protocols/ports to userspace, so that userspace
+>>>> modem tools or daemon (e.g. ModemManager) can control WWAN config
+>>>> and state (APN config, SMS, provider selection...). A Qcom based
+>>>> modem can expose one or several of the following protocols:
+>>>> - AT: Well known AT commands interactive protocol (microcom, minicom...)
+>>>> - MBIM: Mobile Broadband Interface Model (libmbim, mbimcli)
+>>>> - QMI: Qcom MSM/Modem Interface (libqmi, qmicli)
+>>>> - QCDM: Qcom Modem diagnostic interface (libqcdm)
+>>>> - FIREHOSE: XML-based protocol for Modem firmware management
+>>>>          (qmi-firmware-update)
+>>>>
+>>>> The different interfaces are exposed as character devices, in the same
+>>>> way as for USB modem variants (known as modem 'ports').
+>>>>
+>>>> Note that this patch is mostly a rework of the earlier MHI UCI
+>>>> tentative that was a generic interface for accessing MHI bus from
+>>>> userspace. As suggested, this new version is WWAN specific and is
+>>>> dedicated to only expose channels used for controlling a modem, and
+>>>> for which related opensource user support exist. Other MHI channels
+>>>> not fitting the requirements will request either to be plugged to
+>>>> the right Linux subsystem (when available) or to be discussed as a
+>>>> new MHI driver (e.g AI accelerator, WiFi debug channels, etc...).
+>>>>
+>>>> This change introduces a new drivers/net/wwan directory, aiming to
+>>>> be the common place for WWAN drivers.
+>>>>
+>>>> Co-developed-by: Hemant Kumar <hemantk@codeaurora.org>
+>>>> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
+>>>> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+>>>> ---
+>>>>   v2: update copyright (2021)
+>>>>   v3: Move driver to dedicated drivers/net/wwan directory
+>>>>
+>>>>   drivers/net/Kconfig              |   2 +
+>>>>   drivers/net/Makefile             |   1 +
+>>>>   drivers/net/wwan/Kconfig         |  26 ++
+>>>>   drivers/net/wwan/Makefile        |   6 +
+>>>>   drivers/net/wwan/mhi_wwan_ctrl.c | 559 +++++++++++++++++++++++++++++++++++++++
+>>>>   5 files changed, 594 insertions(+)
+>>>>   create mode 100644 drivers/net/wwan/Kconfig
+>>>>   create mode 100644 drivers/net/wwan/Makefile
+>>>>   create mode 100644 drivers/net/wwan/mhi_wwan_ctrl.c
+>>>>
+>>>> diff --git a/drivers/net/Kconfig b/drivers/net/Kconfig
+>>>> index 1ebb4b9..28b18f2 100644
+>>>> --- a/drivers/net/Kconfig
+>>>> +++ b/drivers/net/Kconfig
+>>>> @@ -501,6 +501,8 @@ source "drivers/net/wan/Kconfig"
+>>>>
+>>>>   source "drivers/net/ieee802154/Kconfig"
+>>>>
+>>>> +source "drivers/net/wwan/Kconfig"
+>>>> +
+>>>>   config XEN_NETDEV_FRONTEND
+>>>>        tristate "Xen network device frontend driver"
+>>>>        depends on XEN
+>>>> diff --git a/drivers/net/Makefile b/drivers/net/Makefile
+>>>> index f4990ff..5da6424 100644
+>>>> --- a/drivers/net/Makefile
+>>>> +++ b/drivers/net/Makefile
+>>>> @@ -68,6 +68,7 @@ obj-$(CONFIG_SUNGEM_PHY) += sungem_phy.o
+>>>>   obj-$(CONFIG_WAN) += wan/
+>>>>   obj-$(CONFIG_WLAN) += wireless/
+>>>>   obj-$(CONFIG_IEEE802154) += ieee802154/
+>>>> +obj-$(CONFIG_WWAN) += wwan/
+>>>>
+>>>>   obj-$(CONFIG_VMXNET3) += vmxnet3/
+>>>>   obj-$(CONFIG_XEN_NETDEV_FRONTEND) += xen-netfront.o
+>>>> diff --git a/drivers/net/wwan/Kconfig b/drivers/net/wwan/Kconfig
+>>>> new file mode 100644
+>>>> index 0000000..643aa10
+>>>> --- /dev/null
+>>>> +++ b/drivers/net/wwan/Kconfig
+>>>> @@ -0,0 +1,26 @@
+>>>> +# SPDX-License-Identifier: GPL-2.0-only
+>>>> +#
+>>>> +# Wireless WAN device configuration
+>>>> +#
+>>>> +
+>>>> +menuconfig WWAN
+>>>> +       bool "Wireless WAN"
+>>>> +       help
+>>>> +         This section contains Wireless WAN driver configurations.
+>>>> +
+>>>> +if WWAN
+>>>> +
+>>>> +config MHI_WWAN_CTRL
+>>>> +     tristate "MHI WWAN control driver for QCOM based PCIe modems"
+>>>> +     depends on MHI_BUS
+>>>> +     help
+>>>> +       MHI WWAN CTRL allow QCOM based PCIe modems to expose different modem
+>>>> +       control protocols/ports to userspace, including AT, MBIM, QMI, DIAG
+>>>> +       and FIREHOSE. These protocols can be accessed directly from userspace
+>>>> +       (e.g. AT commands) or via libraries/tools (e.g. libmbim, libqmi,
+>>>> +       libqcdm...).
+>>>> +
+>>>> +       To compile this driver as a module, choose M here: the module will be
+>>>> +       called mhi_wwan_ctrl.
+>>>> +
+>>>> +endif # WWAN
+>>>> diff --git a/drivers/net/wwan/Makefile b/drivers/net/wwan/Makefile
+>>>> new file mode 100644
+>>>> index 0000000..994a80b
+>>>> --- /dev/null
+>>>> +++ b/drivers/net/wwan/Makefile
+>>>> @@ -0,0 +1,6 @@
+>>>> +# SPDX-License-Identifier: GPL-2.0
+>>>> +#
+>>>> +# Makefile for the Linux WWAN device drivers.
+>>>> +#
+>>>> +
+>>>> +obj-$(CONFIG_MHI_WWAN_CTRL) += mhi_wwan_ctrl.o
+>>>> diff --git a/drivers/net/wwan/mhi_wwan_ctrl.c b/drivers/net/wwan/mhi_wwan_ctrl.c
+>>>> new file mode 100644
+>>>> index 0000000..3904cd0
+>>>> --- /dev/null
+>>>> +++ b/drivers/net/wwan/mhi_wwan_ctrl.c
+>>>> @@ -0,0 +1,559 @@
+>>>> +// SPDX-License-Identifier: GPL-2.0-only
+>>>> +/* Copyright (c) 2018-2021, The Linux Foundation. All rights reserved.*/
+>>>> +
+>>>> +#include <linux/kernel.h>
+>>>> +#include <linux/mhi.h>
+>>>> +#include <linux/mod_devicetable.h>
+>>>> +#include <linux/module.h>
+>>>> +#include <linux/poll.h>
+>>>> +
+>>>> +#define MHI_WWAN_CTRL_DRIVER_NAME "mhi_wwan_ctrl"
 >>>
->>>> Now during my testing I see a weird issue sometimes (1 in 7).
->>>> Scenario - bootups
->>>>
->>>> Issue:
->>>> The supplier 'ufs_device_wlun 0:0:0:49488' goes into runtime suspend even
->>>> when one/more of its consumers are in RPM_ACTIVE state.
->>>>
->>>> *Log:
->>>> [   10.056379][  T206] sd 0:0:0:1: [sdb] Synchronizing SCSI cache
->>>> [   10.062497][  T113] sd 0:0:0:5: [sdf] Synchronizing SCSI cache
->>>> [   10.356600][   T32] sd 0:0:0:7: [sdh] Synchronizing SCSI cache
->>>> [   10.362944][  T174] sd 0:0:0:3: [sdd] Synchronizing SCSI cache
->>>> [   10.696627][   T83] sd 0:0:0:2: [sdc] Synchronizing SCSI cache
->>>> [   10.704562][  T170] sd 0:0:0:6: [sdg] Synchronizing SCSI cache
->>>> [   10.980602][    T5] sd 0:0:0:0: [sda] Synchronizing SCSI cache
->>>>
->>>> /** Printing all the consumer nodes of supplier **/
->>>> [   10.987327][    T5] ufs_device_wlun 0:0:0:49488: usage-count @ suspend: 0
->>>> <-- this is the usage_count
->>>> [   10.994440][    T5] ufs_rpmb_wlun 0:0:0:49476: PM state - 2
->>>> [   11.000402][    T5] scsi 0:0:0:49456: PM state - 2
->>>> [   11.005453][    T5] sd 0:0:0:0: PM state - 2
->>>> [   11.009958][    T5] sd 0:0:0:1: PM state - 2
->>>> [   11.014469][    T5] sd 0:0:0:2: PM state - 2
->>>> [   11.019072][    T5] sd 0:0:0:3: PM state - 2
->>>> [   11.023595][    T5] sd 0:0:0:4: PM state - 0 << RPM_ACTIVE
->>>> [   11.353298][    T5] sd 0:0:0:5: PM state - 2
->>>> [   11.357726][    T5] sd 0:0:0:6: PM state - 2
->>>> [   11.362155][    T5] sd 0:0:0:7: PM state - 2
->>>> [   11.366584][    T5] ufshcd-qcom 1d84000.ufshc: __ufshcd_wl_suspend - 8709
->>>> [   11.374366][    T5] ufs_device_wlun 0:0:0:49488: __ufshcd_wl_suspend -
->>>> (0) has rpm_active flags
+>>> So a driver name is the same as the class that is being created?
+>>>
+>>> That feels wrong, shouldn't the "class" be wwan?
 >>
->> Do you mean that rpm_active of the link between the consumer and the
->> supplier is greater than 0 at this point and the consumer is
+>> The driver does not aim to be THE wwan implementation, given the
+>> heterogeneity of WWAN interfaces, so 'wwan' is probably too generic
+>> for this bus/vendor specific driver. But since we create a new wwan
+>> subdir, maybe we should create a minimal wwan_sysfs.c, that would
+>> initially just offer a common class for all WWAN devices (wwan or
+>> wwan-ports), as a first step to if not standardize, at least group
+>> such devices under the same hat. Otherwise, we can just use the misc
+>> class... Any thoughts?
 > 
-> I mean is rpm_active of the link greater than 1 (because 1 means "no
-> active references to the supplier")?
-Hi Rafael:
-No - it is not greater than 1.
-
-I'm trying to understand what's going on in it; will update when I've 
-something.
-
+> Why isn't this a good api for all wwan devices?  Do you think that this
+> will not work for others?
 > 
->> RPM_ACTIVE, but the supplier suspends successfully nevertheless?
->>
->>>> [   11.383376][    T5] ufs_device_wlun 0:0:0:49488:
->>>> ufshcd_wl_runtime_suspend <-- Supplier suspends fine.
->>>> [   12.977318][  T174] sd 0:0:0:4: [sde] Synchronizing SCSI cache
->>>>
->>>> And the the suspend of sde is stuck now:
->>>> schedule+0x9c/0xe0
->>>> schedule_timeout+0x40/0x128
->>>> io_schedule_timeout+0x44/0x68
->>>> wait_for_common_io+0x7c/0x100
->>>> wait_for_completion_io+0x14/0x20
->>>> blk_execute_rq+0x90/0xcc
->>>> __scsi_execute+0x104/0x1c4
->>>> sd_sync_cache+0xf8/0x2a0
->>>> sd_suspend_common+0x74/0x11c
->>>> sd_suspend_runtime+0x14/0x20
->>>> scsi_runtime_suspend+0x64/0x94
->>>> __rpm_callback+0x80/0x2a4
->>>> rpm_suspend+0x308/0x614
->>>> pm_runtime_work+0x98/0xa8
->>>>
->>>> I added 'DL_FLAG_RPM_ACTIVE' while creating links.
->>>>        if (hba->sdev_ufs_device) {
->>>>                link = device_link_add(&sdev->sdev_gendev,
->>>>                                    &hba->sdev_ufs_device->sdev_gendev,
->>>>                                   DL_FLAG_PM_RUNTIME|DL_FLAG_RPM_ACTIVE);
->>>> I didn't expect this to resolve the issue anyway and it didn't.
->>>>
->>>> Another interesting point here is when I resume any of the above suspended
->>>> consumers, it all goes back to normal, which is kind of expected. I tried
->>>> resuming the consumer and the supplier is resumed and the supplier is
->>>> suspended when all the consumers are suspended.
->>>>
->>>> Any pointers on this issue please?
->>>>
->>>> @Bart/@Alan - Do you've any pointers please?
->>>
->>> It's very noticeable that although you seem to have isolated a bug in
->>> the power management subsystem (supplier goes into runtime suspend
->>> even when one of its consumers is still active), you did not CC the
->>> power management maintainer or mailing list.
->>>
->>> I have added the appropriate CC's.
->>
->> Thanks Alan!
+> A common class would be good, if they all work the same with regards to
+> a user/kernel api, otherwise it's pointless and not needed :)
+> 
+> And if we are back to the "custom user/kernel api just for this one
+> driver", then yes, the misc api is the easiest and simplest to use, but
+> I would wish for better than that for the first wwan driver...
 
+I'm thinking this doesn't fit with the misc api due to the number of 
+device minors that could be expected to be consumed.
+
+Each device supported by this driver is going to create 2-5 chardevs. 
+Having two devices in a system is common for "endusers".  Development, 
+manufacturing, and test (including the community, not just talking 
+Qualcomm here) commonly have 12+ of these devices in a system.  12 * 5 = 
+60.  Thats a lot of misc minor numbers to chew up just from one driver 
+given that the limit of dynamic minors is 128.  Looking at a random x86 
+server that I have which could be used for such a usecase already has 30 
+misc minor numbers used, and this particular server has a fresh distro 
+install on it.  I would expect that number to go up as it gets 
+provisioned for use.
+
+I guess, the question to you is, how many misc minor numbers is "too 
+much" for a single driver to expect to consume?
 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-Linux Foundation Collaborative Project
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
