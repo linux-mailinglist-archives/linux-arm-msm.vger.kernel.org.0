@@ -2,238 +2,223 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BA318332C35
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Mar 2021 17:36:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DBCC6332C73
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Mar 2021 17:44:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230435AbhCIQfn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Mar 2021 11:35:43 -0500
-Received: from mail.kernel.org ([198.145.29.99]:42904 "EHLO mail.kernel.org"
+        id S230303AbhCIQoS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Mar 2021 11:44:18 -0500
+Received: from m42-2.mailgun.net ([69.72.42.2]:18666 "EHLO m42-2.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230491AbhCIQfd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Mar 2021 11:35:33 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id D337C651BB;
-        Tue,  9 Mar 2021 16:35:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1615307733;
-        bh=grr/P7NPP84yLHqtN3qxlbFVwjldJuBPEeFJE3cAnfk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=M68JjTx3ETj0c7QF1rI/9FBAQCY3vTzxziVbGFb9SOfUTvfddVm1/E23rjASznp+f
-         bpg1fgQCNH4JLujFO6/FhAP7zGmrOrcachiMXI+gk7HCPo7NpYm4RJb+rMFD9t/Wnk
-         fkVcObMZ4GnRATSqv7//wEf3KiI8SfaNf+WBC4ws=
-Date:   Tue, 9 Mar 2021 17:35:30 +0100
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     Loic Poulain <loic.poulain@linaro.org>,
-        Jakub Kicinski <kuba@kernel.org>,
-        David Miller <davem@davemloft.net>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Aleksander Morgado <aleksander@aleksander.es>,
-        open list <linux-kernel@vger.kernel.org>,
-        Network Development <netdev@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Hemant Kumar <hemantk@codeaurora.org>
-Subject: Re: [PATCH net-next v3] net: Add Qcom WWAN control driver
-Message-ID: <YEej0uAjjMqb0VVW@kroah.com>
-References: <1615279336-27227-1-git-send-email-loic.poulain@linaro.org>
- <YEdBfHAYkTGI8sE4@kroah.com>
- <CAMZdPi9dCzH9ufSoRK_szOaVnSsySk-kC5fu2Rb+wy-6snow0Q@mail.gmail.com>
- <YEdO47NAWpO886DC@kroah.com>
- <69126b2b-8138-60a3-1383-d06c30671499@codeaurora.org>
+        id S230150AbhCIQoQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 9 Mar 2021 11:44:16 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1615308256; h=Content-Type: MIME-Version: Message-ID:
+ In-Reply-To: Date: References: Subject: Cc: To: From: Sender;
+ bh=1fSVIh5EXxPn36xIZwKFO2lOSLwOP2U8a9bxpnqzJZg=; b=ALExuafuyTULIVGzerfcVXhYqh6lUfDSqDj2oopbp78EmBmdkP5XTEAnv57+gR4uZ6525Gow
+ 2sBhoRT9XCQsEBeACWaCFgXjGbWETXvBKbubnGaKhMxAwIy6WKjOQyaAsKT5FX00CrJt7vYG
+ suSYQfnLX/ycUAf0wquSpjKI5Aw=
+X-Mailgun-Sending-Ip: 69.72.42.2
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 6047a5d9a6850484a6149855 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 09 Mar 2021 16:44:09
+ GMT
+Sender: kvalo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D55B0C43461; Tue,  9 Mar 2021 16:44:08 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from potku.adurom.net (88-114-240-156.elisa-laajakaista.fi [88.114.240.156])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: kvalo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5F28AC433C6;
+        Tue,  9 Mar 2021 16:44:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5F28AC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kvalo@codeaurora.org
+From:   Kalle Valo <kvalo@codeaurora.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Hemant Kumar <hemantk@codeaurora.org>,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, ath11k@lists.infradead.org
+Subject: Re: [regression] mhi: mhi_pm_st_worker blocked for more than 61 seconds.
+References: <87im6755ii.fsf@codeaurora.org> <20210304151004.GA29563@work>
+        <87blby6dir.fsf@codeaurora.org>
+Date:   Tue, 09 Mar 2021 18:44:04 +0200
+In-Reply-To: <87blby6dir.fsf@codeaurora.org> (Kalle Valo's message of "Thu, 04
+        Mar 2021 19:21:16 +0200")
+Message-ID: <87k0qgz38r.fsf@codeaurora.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <69126b2b-8138-60a3-1383-d06c30671499@codeaurora.org>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 09, 2021 at 09:01:11AM -0700, Jeffrey Hugo wrote:
-> On 3/9/2021 3:33 AM, Greg KH wrote:
-> > On Tue, Mar 09, 2021 at 11:28:49AM +0100, Loic Poulain wrote:
-> > > Hi Greg,
-> > > 
-> > > On Tue, 9 Mar 2021 at 10:35, Greg KH <gregkh@linuxfoundation.org> wrote:
-> > > > 
-> > > > On Tue, Mar 09, 2021 at 09:42:16AM +0100, Loic Poulain wrote:
-> > > > > The MHI WWWAN control driver allows MHI Qcom based modems to expose
-> > > > > different modem control protocols/ports to userspace, so that userspace
-> > > > > modem tools or daemon (e.g. ModemManager) can control WWAN config
-> > > > > and state (APN config, SMS, provider selection...). A Qcom based
-> > > > > modem can expose one or several of the following protocols:
-> > > > > - AT: Well known AT commands interactive protocol (microcom, minicom...)
-> > > > > - MBIM: Mobile Broadband Interface Model (libmbim, mbimcli)
-> > > > > - QMI: Qcom MSM/Modem Interface (libqmi, qmicli)
-> > > > > - QCDM: Qcom Modem diagnostic interface (libqcdm)
-> > > > > - FIREHOSE: XML-based protocol for Modem firmware management
-> > > > >          (qmi-firmware-update)
-> > > > > 
-> > > > > The different interfaces are exposed as character devices, in the same
-> > > > > way as for USB modem variants (known as modem 'ports').
-> > > > > 
-> > > > > Note that this patch is mostly a rework of the earlier MHI UCI
-> > > > > tentative that was a generic interface for accessing MHI bus from
-> > > > > userspace. As suggested, this new version is WWAN specific and is
-> > > > > dedicated to only expose channels used for controlling a modem, and
-> > > > > for which related opensource user support exist. Other MHI channels
-> > > > > not fitting the requirements will request either to be plugged to
-> > > > > the right Linux subsystem (when available) or to be discussed as a
-> > > > > new MHI driver (e.g AI accelerator, WiFi debug channels, etc...).
-> > > > > 
-> > > > > This change introduces a new drivers/net/wwan directory, aiming to
-> > > > > be the common place for WWAN drivers.
-> > > > > 
-> > > > > Co-developed-by: Hemant Kumar <hemantk@codeaurora.org>
-> > > > > Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
-> > > > > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> > > > > ---
-> > > > >   v2: update copyright (2021)
-> > > > >   v3: Move driver to dedicated drivers/net/wwan directory
-> > > > > 
-> > > > >   drivers/net/Kconfig              |   2 +
-> > > > >   drivers/net/Makefile             |   1 +
-> > > > >   drivers/net/wwan/Kconfig         |  26 ++
-> > > > >   drivers/net/wwan/Makefile        |   6 +
-> > > > >   drivers/net/wwan/mhi_wwan_ctrl.c | 559 +++++++++++++++++++++++++++++++++++++++
-> > > > >   5 files changed, 594 insertions(+)
-> > > > >   create mode 100644 drivers/net/wwan/Kconfig
-> > > > >   create mode 100644 drivers/net/wwan/Makefile
-> > > > >   create mode 100644 drivers/net/wwan/mhi_wwan_ctrl.c
-> > > > > 
-> > > > > diff --git a/drivers/net/Kconfig b/drivers/net/Kconfig
-> > > > > index 1ebb4b9..28b18f2 100644
-> > > > > --- a/drivers/net/Kconfig
-> > > > > +++ b/drivers/net/Kconfig
-> > > > > @@ -501,6 +501,8 @@ source "drivers/net/wan/Kconfig"
-> > > > > 
-> > > > >   source "drivers/net/ieee802154/Kconfig"
-> > > > > 
-> > > > > +source "drivers/net/wwan/Kconfig"
-> > > > > +
-> > > > >   config XEN_NETDEV_FRONTEND
-> > > > >        tristate "Xen network device frontend driver"
-> > > > >        depends on XEN
-> > > > > diff --git a/drivers/net/Makefile b/drivers/net/Makefile
-> > > > > index f4990ff..5da6424 100644
-> > > > > --- a/drivers/net/Makefile
-> > > > > +++ b/drivers/net/Makefile
-> > > > > @@ -68,6 +68,7 @@ obj-$(CONFIG_SUNGEM_PHY) += sungem_phy.o
-> > > > >   obj-$(CONFIG_WAN) += wan/
-> > > > >   obj-$(CONFIG_WLAN) += wireless/
-> > > > >   obj-$(CONFIG_IEEE802154) += ieee802154/
-> > > > > +obj-$(CONFIG_WWAN) += wwan/
-> > > > > 
-> > > > >   obj-$(CONFIG_VMXNET3) += vmxnet3/
-> > > > >   obj-$(CONFIG_XEN_NETDEV_FRONTEND) += xen-netfront.o
-> > > > > diff --git a/drivers/net/wwan/Kconfig b/drivers/net/wwan/Kconfig
-> > > > > new file mode 100644
-> > > > > index 0000000..643aa10
-> > > > > --- /dev/null
-> > > > > +++ b/drivers/net/wwan/Kconfig
-> > > > > @@ -0,0 +1,26 @@
-> > > > > +# SPDX-License-Identifier: GPL-2.0-only
-> > > > > +#
-> > > > > +# Wireless WAN device configuration
-> > > > > +#
-> > > > > +
-> > > > > +menuconfig WWAN
-> > > > > +       bool "Wireless WAN"
-> > > > > +       help
-> > > > > +         This section contains Wireless WAN driver configurations.
-> > > > > +
-> > > > > +if WWAN
-> > > > > +
-> > > > > +config MHI_WWAN_CTRL
-> > > > > +     tristate "MHI WWAN control driver for QCOM based PCIe modems"
-> > > > > +     depends on MHI_BUS
-> > > > > +     help
-> > > > > +       MHI WWAN CTRL allow QCOM based PCIe modems to expose different modem
-> > > > > +       control protocols/ports to userspace, including AT, MBIM, QMI, DIAG
-> > > > > +       and FIREHOSE. These protocols can be accessed directly from userspace
-> > > > > +       (e.g. AT commands) or via libraries/tools (e.g. libmbim, libqmi,
-> > > > > +       libqcdm...).
-> > > > > +
-> > > > > +       To compile this driver as a module, choose M here: the module will be
-> > > > > +       called mhi_wwan_ctrl.
-> > > > > +
-> > > > > +endif # WWAN
-> > > > > diff --git a/drivers/net/wwan/Makefile b/drivers/net/wwan/Makefile
-> > > > > new file mode 100644
-> > > > > index 0000000..994a80b
-> > > > > --- /dev/null
-> > > > > +++ b/drivers/net/wwan/Makefile
-> > > > > @@ -0,0 +1,6 @@
-> > > > > +# SPDX-License-Identifier: GPL-2.0
-> > > > > +#
-> > > > > +# Makefile for the Linux WWAN device drivers.
-> > > > > +#
-> > > > > +
-> > > > > +obj-$(CONFIG_MHI_WWAN_CTRL) += mhi_wwan_ctrl.o
-> > > > > diff --git a/drivers/net/wwan/mhi_wwan_ctrl.c b/drivers/net/wwan/mhi_wwan_ctrl.c
-> > > > > new file mode 100644
-> > > > > index 0000000..3904cd0
-> > > > > --- /dev/null
-> > > > > +++ b/drivers/net/wwan/mhi_wwan_ctrl.c
-> > > > > @@ -0,0 +1,559 @@
-> > > > > +// SPDX-License-Identifier: GPL-2.0-only
-> > > > > +/* Copyright (c) 2018-2021, The Linux Foundation. All rights reserved.*/
-> > > > > +
-> > > > > +#include <linux/kernel.h>
-> > > > > +#include <linux/mhi.h>
-> > > > > +#include <linux/mod_devicetable.h>
-> > > > > +#include <linux/module.h>
-> > > > > +#include <linux/poll.h>
-> > > > > +
-> > > > > +#define MHI_WWAN_CTRL_DRIVER_NAME "mhi_wwan_ctrl"
-> > > > 
-> > > > So a driver name is the same as the class that is being created?
-> > > > 
-> > > > That feels wrong, shouldn't the "class" be wwan?
-> > > 
-> > > The driver does not aim to be THE wwan implementation, given the
-> > > heterogeneity of WWAN interfaces, so 'wwan' is probably too generic
-> > > for this bus/vendor specific driver. But since we create a new wwan
-> > > subdir, maybe we should create a minimal wwan_sysfs.c, that would
-> > > initially just offer a common class for all WWAN devices (wwan or
-> > > wwan-ports), as a first step to if not standardize, at least group
-> > > such devices under the same hat. Otherwise, we can just use the misc
-> > > class... Any thoughts?
-> > 
-> > Why isn't this a good api for all wwan devices?  Do you think that this
-> > will not work for others?
-> > 
-> > A common class would be good, if they all work the same with regards to
-> > a user/kernel api, otherwise it's pointless and not needed :)
-> > 
-> > And if we are back to the "custom user/kernel api just for this one
-> > driver", then yes, the misc api is the easiest and simplest to use, but
-> > I would wish for better than that for the first wwan driver...
-> 
-> I'm thinking this doesn't fit with the misc api due to the number of device
-> minors that could be expected to be consumed.
+Kalle Valo <kvalo@codeaurora.org> writes:
 
-That's why I asked how many minors do you need :)
+> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
+>
+>> Hi Kalle,
+>>
+>> On Thu, Mar 04, 2021 at 04:59:33PM +0200, Kalle Valo wrote:
+>>> Hi MHI folks,
+>>> 
+>>> I upgraded my QCA6390 x86 test box to v5.12-rc1 and started seeing
+>>> kernel crashes when testing ath11k. I don't recall seeing this on v5.11
+>>> so it looks like a new problem, but I cannot be 100% sure. Netconsole
+>>> output is below. I have most of the kernel debug functionality enabled
+>>> (KASAN etc).
+>>> 
+>>> I can fairly easy reproduce this by looping insmod and rmmod of mhi,
+>>> wireless and ath11k modules. It does not happen every time, but I would
+>>> say I can reproduce the problem within 10 test loops or so.
+>>> 
+>>> Any ideas what could cause this? I have not bisected this due to lack of
+>>> time, but I can test patches etc.
+>>> 
+>>
+>> Not sure if this is related, Loic sent a patch which fixes an issue with
+>> "mhi_pm_state_worker":
+>>
+>> https://patchwork.kernel.org/project/linux-arm-msm/patch/1614161930-8513-1-git-send-email-loic.poulain@linaro.org/
+>>
+>> Can you please test see if it fixes your issue also?
+>
+> Thanks for the link, but unfortunately not :( I was able to reproduce
+> the issue just after 3 insmod/rmmod loops.
 
-> Each device supported by this driver is going to create 2-5 chardevs. Having
-> two devices in a system is common for "endusers".  Development,
-> manufacturing, and test (including the community, not just talking Qualcomm
-> here) commonly have 12+ of these devices in a system.  12 * 5 = 60.  Thats a
-> lot of misc minor numbers to chew up just from one driver given that the
-> limit of dynamic minors is 128.  Looking at a random x86 server that I have
-> which could be used for such a usecase already has 30 misc minor numbers
-> used, and this particular server has a fresh distro install on it.  I would
-> expect that number to go up as it gets provisioned for use.
+I investigated this a bit more, I was actually able to reproduce this in
+v5.11 as well. So this is not a new regression. The reason why I started
+seeing this until now is that I enable more debug options in the kernel,
+the diff below. Without those changes I don't see the problem.
 
-Look at a phone these days, I see way more misc devices used than just
-"30" :(
+I also found a workround, if I add sleep(1) after insmod ath11k_pci in
+my test script I see 200 loops without crashes. But when I removed the
+sleep the test script crashed only after 19 loops. So there definitely
+is a race condition somewhere, just don't know where. I don't have time
+to investigate this more, so I'll just use the workaround for the time
+being.
 
-> I guess, the question to you is, how many misc minor numbers is "too much"
-> for a single driver to expect to consume?
+--- ../configs/nuc-debug-5.11	2021-02-21 08:55:53.836061988 +0200
++++ .config	2021-03-09 16:22:53.598684524 +0200
+@@ -12,6 +12,7 @@
+ CONFIG_CC_CAN_LINK_STATIC=y
+ CONFIG_CC_HAS_ASM_GOTO=y
+ CONFIG_CC_HAS_ASM_INLINE=y
++CONFIG_CONSTRUCTORS=y
+ CONFIG_IRQ_WORK=y
+ CONFIG_BUILDTIME_TABLE_SORT=y
+ CONFIG_THREAD_INFO_IN_TASK=y
+@@ -280,6 +281,7 @@
+ CONFIG_ARCH_WANT_GENERAL_HUGETLB=y
+ CONFIG_ZONE_DMA32=y
+ CONFIG_AUDIT_ARCH=y
++CONFIG_KASAN_SHADOW_OFFSET=0xdffffc0000000000
+ CONFIG_HAVE_INTEL_TXT=y
+ CONFIG_X86_64_SMP=y
+ CONFIG_ARCH_SUPPORTS_UPROBES=y
+@@ -748,8 +750,7 @@
+ # CONFIG_MODULE_SIG is not set
+ # CONFIG_MODULE_COMPRESS is not set
+ # CONFIG_MODULE_ALLOW_MISSING_NAMESPACE_IMPORTS is not set
+-# CONFIG_UNUSED_SYMBOLS is not set
+-# CONFIG_TRIM_UNUSED_KSYMS is not set
++CONFIG_UNUSED_SYMBOLS=y
+ CONFIG_MODULES_TREE_LOOKUP=y
+ CONFIG_BLOCK=y
+ CONFIG_BLK_SCSI_REQUEST=y
+@@ -1164,7 +1165,6 @@
+ # CONFIG_NET_NCSI is not set
+ CONFIG_RPS=y
+ CONFIG_RFS_ACCEL=y
+-CONFIG_SOCK_RX_QUEUE_MAPPING=y
+ CONFIG_XPS=y
+ # CONFIG_CGROUP_NET_PRIO is not set
+ # CONFIG_CGROUP_NET_CLASSID is not set
+@@ -1685,7 +1685,6 @@
+ #
+ # Distributed Switch Architecture drivers
+ #
+-# CONFIG_NET_DSA_MV88E6XXX_PTP is not set
+ # end of Distributed Switch Architecture drivers
+ 
+ CONFIG_ETHERNET=y
+@@ -1700,6 +1699,7 @@
+ # CONFIG_NET_VENDOR_AQUANTIA is not set
+ # CONFIG_NET_VENDOR_ARC is not set
+ # CONFIG_NET_VENDOR_ATHEROS is not set
++# CONFIG_NET_VENDOR_AURORA is not set
+ # CONFIG_NET_VENDOR_BROADCOM is not set
+ CONFIG_NET_VENDOR_BROCADE=y
+ # CONFIG_BNA is not set
+@@ -1914,7 +1914,6 @@
+ # CONFIG_MT7615E is not set
+ # CONFIG_MT7663U is not set
+ # CONFIG_MT7915E is not set
+-# CONFIG_MT7921E is not set
+ # CONFIG_WLAN_VENDOR_MICROCHIP is not set
+ CONFIG_WLAN_VENDOR_RALINK=y
+ # CONFIG_RT2X00 is not set
+@@ -4500,7 +4499,7 @@
+ CONFIG_DEBUG_INFO_COMPRESSED=y
+ # CONFIG_DEBUG_INFO_SPLIT is not set
+ # CONFIG_DEBUG_INFO_DWARF4 is not set
+-# CONFIG_GDB_SCRIPTS is not set
++CONFIG_GDB_SCRIPTS=y
+ CONFIG_FRAME_WARN=2048
+ # CONFIG_STRIP_ASM_SYMS is not set
+ # CONFIG_READABLE_ASM is not set
+@@ -4540,13 +4539,13 @@
+ CONFIG_DEBUG_PAGEALLOC_ENABLE_DEFAULT=y
+ CONFIG_PAGE_OWNER=y
+ CONFIG_PAGE_POISONING=y
+-# CONFIG_DEBUG_PAGE_REF is not set
++CONFIG_DEBUG_PAGE_REF=y
+ # CONFIG_DEBUG_RODATA_TEST is not set
+ CONFIG_ARCH_HAS_DEBUG_WX=y
+ CONFIG_DEBUG_WX=y
+ CONFIG_GENERIC_PTDUMP=y
+ CONFIG_PTDUMP_CORE=y
+-# CONFIG_PTDUMP_DEBUGFS is not set
++CONFIG_PTDUMP_DEBUGFS=y
+ CONFIG_DEBUG_OBJECTS=y
+ # CONFIG_DEBUG_OBJECTS_SELFTEST is not set
+ CONFIG_DEBUG_OBJECTS_FREE=y
+@@ -4568,8 +4567,8 @@
+ CONFIG_ARCH_HAS_DEBUG_VM_PGTABLE=y
+ CONFIG_DEBUG_VM=y
+ CONFIG_DEBUG_VM_VMACACHE=y
+-# CONFIG_DEBUG_VM_RB is not set
+-# CONFIG_DEBUG_VM_PGFLAGS is not set
++CONFIG_DEBUG_VM_RB=y
++CONFIG_DEBUG_VM_PGFLAGS=y
+ CONFIG_DEBUG_VM_PGTABLE=y
+ CONFIG_ARCH_HAS_DEBUG_VIRTUAL=y
+ CONFIG_DEBUG_VIRTUAL=y
+@@ -4581,7 +4580,13 @@
+ CONFIG_HAVE_ARCH_KASAN_VMALLOC=y
+ CONFIG_CC_HAS_KASAN_GENERIC=y
+ CONFIG_CC_HAS_WORKING_NOSANITIZE_ADDRESS=y
+-# CONFIG_KASAN is not set
++CONFIG_KASAN=y
++CONFIG_KASAN_GENERIC=y
++# CONFIG_KASAN_OUTLINE is not set
++CONFIG_KASAN_INLINE=y
++CONFIG_KASAN_STACK=1
++CONFIG_KASAN_VMALLOC=y
++# CONFIG_TEST_KASAN_MODULE is not set
+ # end of Memory Debugging
+ 
+ CONFIG_DEBUG_SHIRQ=y
 
-If you expect more than 10, I would say to use a real major number.  But
-be explicit as to what you are expecting here, it was not obvious at
-all.
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
 
-thanks,
-
-greg k-h
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
