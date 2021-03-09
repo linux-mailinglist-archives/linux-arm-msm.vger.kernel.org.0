@@ -2,181 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A8BD633247B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Mar 2021 12:52:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A6CD332483
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Mar 2021 12:56:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230269AbhCILwO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Mar 2021 06:52:14 -0500
-Received: from m42-2.mailgun.net ([69.72.42.2]:37753 "EHLO m42-2.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230198AbhCILvw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Mar 2021 06:51:52 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1615290712; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=V5L3WVB1qXI2HbP+qKoMQF6jfFpfX1gMX6BTozK6W1k=; b=lrvMlAvxaeEQzwlWROHwH5DBSr3H6CMKCUsYmeOjeB6vGB5U+62081ZZF6e0o65ibLtC7Ilq
- 8ugUnQSelDLVRN9WnfmLAKHsCnhePNW4AH0MyGzUdzjFo8DMtMH32q/aAU3jXORpf31939ov
- cWXl2eYcvTyob86ryZARp6NlboU=
-X-Mailgun-Sending-Ip: 69.72.42.2
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 60476158106ec1d906c1d8f8 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 09 Mar 2021 11:51:52
- GMT
-Sender: okukatla=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7EE69C43461; Tue,  9 Mar 2021 11:51:51 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from okukatla1-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: okukatla)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7FFBEC433C6;
-        Tue,  9 Mar 2021 11:51:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7FFBEC433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=okukatla@codeaurora.org
-From:   Odelu Kukatla <okukatla@codeaurora.org>
-To:     georgi.djakov@linaro.org, bjorn.andersson@linaro.org,
-        evgreen@google.com, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     sboyd@kernel.org, ilina@codeaurora.org, seansw@qti.qualcomm.com,
-        elder@linaro.org, linux-pm@vger.kernel.org,
-        linux-arm-msm-owner@vger.kernel.org,
-        Odelu Kukatla <okukatla@codeaurora.org>
-Subject: [3/3] arm64: dts: sc7280: Add interconnect provider DT nodes
-Date:   Tue,  9 Mar 2021 17:20:09 +0530
-Message-Id: <1615290609-21009-4-git-send-email-okukatla@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1615290609-21009-1-git-send-email-okukatla@codeaurora.org>
-References: <1615290609-21009-1-git-send-email-okukatla@codeaurora.org>
+        id S229881AbhCILz1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Mar 2021 06:55:27 -0500
+Received: from mail-40131.protonmail.ch ([185.70.40.131]:45786 "EHLO
+        mail-40131.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229599AbhCILzS (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 9 Mar 2021 06:55:18 -0500
+Date:   Tue, 09 Mar 2021 11:55:13 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
+        s=protonmail; t=1615290916;
+        bh=VAaoHzPUuviXWZuHpXivJNsABEQ935p5HTpQ7ZaoB2w=;
+        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
+        b=qNXClnM7sU1Zna0Jl+6S/Fl/ZQzw22kdzuprFtmzzwtcj9PQWUev6tICt2R4yCBv7
+         UZjzcBlV88lGdVAj05iFQ9XHzMjYbrUC2724b1smet0oWqfbq/TGiTw6aUmlrz8A8L
+         kehRn1eRykeuB9AiAHHSDDmcrS6ZbnBhWzDeXl4o=
+To:     caleb@connolly.tech, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>
+From:   Caleb Connolly <caleb@connolly.tech>
+Cc:     ejb@linux.ibm.com, stanley.chu@mediatek.com, cang@codeaurora.org,
+        beanhuo@micron.com, jaegeuk@kernel.org, asutoshd@codeaurora.org,
+        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Reply-To: Caleb Connolly <caleb@connolly.tech>
+Subject: [PATCH v2 2/3] scsi: ufs: qcom: use ufshci_version function
+Message-ID: <20210309115336.117206-3-caleb@connolly.tech>
+In-Reply-To: <20210309115336.117206-1-caleb@connolly.tech>
+References: <20210309115336.117206-1-caleb@connolly.tech>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF shortcircuit=no
+        autolearn=disabled version=3.4.4
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
+        mailout.protonmail.ch
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the DT nodes for the network-on-chip interconnect buses found
-on sc7280-based platforms.
+Replace the UFSHCI_VERSION_xy macros.
 
-Signed-off-by: Odelu Kukatla <okukatla@codeaurora.org>
+Signed-off-by: Caleb Connolly <caleb@connolly.tech>
 ---
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 88 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 88 insertions(+)
+ drivers/scsi/ufs/ufs-qcom.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 8af6d77..ecb2a77 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -7,6 +7,7 @@
- 
- #include <dt-bindings/clock/qcom,gcc-sc7280.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
-+#include <dt-bindings/interconnect/qcom,sc7280.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/power/qcom-rpmpd.h>
- #include <dt-bindings/soc/qcom,rpmh-rsc.h>
-@@ -596,6 +597,93 @@
- 				clock-names = "xo";
- 				#clock-cells = <1>;
- 			};
-+
-+			apps_bcm_voter: bcm_voter {
-+				compatible = "qcom,bcm-voter";
-+			};
-+		};
-+
-+		clk_virt: interconnect {
-+			compatible = "qcom,sc7280-clk-virt";
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		cnoc2: interconnect@1500000 {
-+			reg = <0 0x1500000 0 0x1000>;
-+			compatible = "qcom,sc7280-cnoc2";
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		cnoc3: interconnect@1502000 {
-+			reg = <0 0x1502000 0 0x1000>;
-+			compatible = "qcom,sc7280-cnoc3";
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		mc_virt: interconnect@1580000 {
-+			reg = <0 0x1580000 0 0x4>;
-+			compatible = "qcom,sc7280-mc-virt";
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		system_noc: interconnect@1680000 {
-+			reg = <0 0x1680000 0 0x15480>;
-+			compatible = "qcom,sc7280-system-noc";
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		aggre1_noc: interconnect@16e0000 {
-+			compatible = "qcom,sc7280-aggre1-noc";
-+			reg = <0 0x016e0000 0 0x1c080>;
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		aggre2_noc: interconnect@1700000 {
-+			reg = <0 0x1700000 0 0x2b080>;
-+			compatible = "qcom,sc7280-aggre2-noc";
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		mmss_noc: interconnect@1740000 {
-+			reg = <0 0x1740000 0 0x1e080>;
-+			compatible = "qcom,sc7280-mmss-noc";
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		lpass_ag_noc: interconnect@3c40000 {
-+			reg = <0 0x03c40000 0 0xf080>;
-+			compatible = "qcom,sc7280-lpass-ag-noc";
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		dc_noc: interconnect@90e0000 {
-+			reg = <0 0x90e0000 0 0x5080>;
-+			compatible = "qcom,sc7280-dc-noc";
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		gem_noc: interconnect@9100000 {
-+			reg = <0 0x9100000 0 0xe2200>;
-+			compatible = "qcom,sc7280-gem-noc";
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		nsp_noc: interconnect@a0c0000 {
-+			reg = <0 0x0a0c0000 0 0x10000>;
-+			compatible = "qcom,sc7280-nsp-noc";
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
- 		};
- 	};
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+index f97d7b0ae3b6..2d54dce0eeda 100644
+--- a/drivers/scsi/ufs/ufs-qcom.c
++++ b/drivers/scsi/ufs/ufs-qcom.c
+@@ -809,9 +809,9 @@ static u32 ufs_qcom_get_ufs_hci_version(struct ufs_hba =
+*hba)
+ =09struct ufs_qcom_host *host =3D ufshcd_get_variant(hba);
+=20
+ =09if (host->hw_ver.major =3D=3D 0x1)
+-=09=09return UFSHCI_VERSION_11;
++=09=09return ufshci_version(1, 1);
+ =09else
+-=09=09return UFSHCI_VERSION_20;
++=09=09return ufshci_version(2, 0);
+ }
+=20
+ /**
+--=20
+2.29.2
+
 
