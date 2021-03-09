@@ -2,85 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A49F0332E7D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Mar 2021 19:47:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2AF85332E82
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Mar 2021 19:48:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230299AbhCISrZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Mar 2021 13:47:25 -0500
-Received: from m42-2.mailgun.net ([69.72.42.2]:54801 "EHLO m42-2.mailgun.net"
+        id S230266AbhCISr5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Mar 2021 13:47:57 -0500
+Received: from mail.kernel.org ([198.145.29.99]:44618 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229948AbhCISrL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Mar 2021 13:47:11 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1615315631; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=kd1Ffw1WhovB5jD2lsj6ZMBLtQBBMzh9IO33J9y/sJA=; b=Gdqwiaz+adkWkvSvm4qb8UpioQ6KWz+ypKeI6bshqa5JSV+zjyEsaJu4mXz+Po+ZAnFrmUtf
- RcMAEEbFlgKmIXtmXkC5Bn8xnaHSt3fwJaerBckfsTvb/EEWA+JgsHYxOY4oxpXaJTi4NDKF
- ZIvfY/AsjrG7T1hwCVrk3grbsWw=
-X-Mailgun-Sending-Ip: 69.72.42.2
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 6047c2a5bb6300df75fba423 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 09 Mar 2021 18:47:01
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5835CC43461; Tue,  9 Mar 2021 18:47:01 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 30923C433CA;
-        Tue,  9 Mar 2021 18:47:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 30923C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        carl.yin@quectel.com, naveen.kumar@quectel.com,
-        loic.poulain@linaro.org, Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: [PATCH] bus: mhi: Make firmware image optional for controller
-Date:   Tue,  9 Mar 2021 10:46:35 -0800
-Message-Id: <1615315595-37750-1-git-send-email-bbhatt@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S230084AbhCISri (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 9 Mar 2021 13:47:38 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id D9CE265235;
+        Tue,  9 Mar 2021 18:47:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1615315657;
+        bh=7H+tcSHJt3q+GbterfsgeBgpXEyQMLgO9zuQ1i9IlhE=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=V4PEmBzOwuNAY/KxXD4tj23iEknwrTeoRzkviNUYRVbUK/xmAtDMxHhMz3BH5SLY6
+         flCNifGAk9AmOoTRpRZXdFxvvAJG7s0uriWeLfXEqN9NxJUcXhI9GgkogK4eHte/0W
+         u563Xp49TrQoclaxXu/g3UWX2ditQM0Q4BVYwjIZkLl4EJYITDgxSPsBSc87XL9NG9
+         q5GcJs2aVvHmUZS/aYURTHH3IDuxNSe1aE87xBc2J1Sg5QbTmkoX3g1y2gNWvrHWNc
+         2W0tTv8HBP2OKbn/kZCAoUk/9VEJt/C1qg0hdsHra1mV1W+1XhgUxv+Q9C8njViFZc
+         58US7bHuzw1cw==
+Received: by mail-oi1-f182.google.com with SMTP id w65so16058194oie.7;
+        Tue, 09 Mar 2021 10:47:37 -0800 (PST)
+X-Gm-Message-State: AOAM530FPf33Wpa7I6t5GUpXRqcHWCEKsGOqDwT7BNH/Obb8WhZOyfhN
+        +9yz09V8/OppwNoRZ/2V+hFe3KbwEqhoUEM0zrI=
+X-Google-Smtp-Source: ABdhPJyip5I6fdAzo99YAoAxZ1dTa4R18w6uJecoBQybDwAUcwhTG3sg9NcyVBwtaD6nrv541UbhkTTZXGRd2LxUtMI=
+X-Received: by 2002:a05:6808:10ca:: with SMTP id s10mr4021041ois.33.1615315657244;
+ Tue, 09 Mar 2021 10:47:37 -0800 (PST)
+MIME-Version: 1.0
+References: <20210306113519.294287-1-ardb@kernel.org> <20210307110228.GP17424@dragon>
+ <CAMj1kXFiqXwCqJE9Wxu-tc3HYSh1qCqPLL_Csc=gW6SOYrweWw@mail.gmail.com>
+ <20210309032248.GR17424@dragon> <CAF6AEGu6ZpfFK5FnQjtE33kkYL_t63J=yJLeK70_46FaLPq7eQ@mail.gmail.com>
+In-Reply-To: <CAF6AEGu6ZpfFK5FnQjtE33kkYL_t63J=yJLeK70_46FaLPq7eQ@mail.gmail.com>
+From:   Ard Biesheuvel <ardb@kernel.org>
+Date:   Tue, 9 Mar 2021 19:47:25 +0100
+X-Gmail-Original-Message-ID: <CAMj1kXGwhx9Z-JCw2NvWBYtHbzVb=EmJn_Jfd97wGzDYNQG2Lw@mail.gmail.com>
+Message-ID: <CAMj1kXGwhx9Z-JCw2NvWBYtHbzVb=EmJn_Jfd97wGzDYNQG2Lw@mail.gmail.com>
+Subject: Re: [PATCH] efi: stub: override RT_PROP table supported mask based on
+ EFI variable
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Shawn Guo <shawn.guo@linaro.org>,
+        linux-efi <linux-efi@vger.kernel.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Leif Lindholm <leif@nuviainc.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some controllers can opt to not have MHI download a firmware
-image to have the device bootup and can find the device in a
-pass through execution environment, ready to go. Thus, MHI
-controllers for those devices do not need fw_image defined.
-Make it optional to accommodate different bootup modes.
+On Tue, 9 Mar 2021 at 19:10, Rob Clark <robdclark@gmail.com> wrote:
+>
+> On Mon, Mar 8, 2021 at 7:22 PM Shawn Guo <shawn.guo@linaro.org> wrote:
+> >
+> > On Mon, Mar 08, 2021 at 02:34:48PM +0100, Ard Biesheuvel wrote:
+> > > On Sun, 7 Mar 2021 at 12:02, Shawn Guo <shawn.guo@linaro.org> wrote:
+> > > >
+> > > > On Sat, Mar 06, 2021 at 12:35:19PM +0100, Ard Biesheuvel wrote:
+> > > > > Allow EFI systems to override the set of supported runtime services
+> > > > > declared via the RT_PROP table, by checking for the existence of a
+> > > > > 'OverrideSupported' EFI variable of the appropriate size under the
+> > > > > RT_PROP table GUID, and if it does, combine the supported mask using
+> > > > > logical AND. (This means the override can only remove support, not
+> > > > > add it back).
+> > > > >
+> > > > > Cc: Jeffrey Hugo <jhugo@codeaurora.org>,
+> > > > > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > > > > Cc: Shawn Guo <shawn.guo@linaro.org>
+> > > > > Cc: Rob Clark <robdclark@gmail.com>
+> > > > > Cc: Leif Lindholm <leif@nuviainc.com>
+> > > > > Cc: linux-arm-msm@vger.kernel.org
+> > > > >
+> > > > > Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+> > > >
+> > > > Awesome, Ard!  On both Lenovo Yoga C630 and Flex 5G latops:
+> > > >
+> > > > Tested-by: Shawn Guo <shawn.guo@linaro.org>
+> > > >
+> > > > With 'OverrideSupported' EFI variable added from UEFI Shell, we can drop
+> > > > 'efi=novamap' kernel cmdline and get around the broken poweroff runtime
+> > > > services nicely.  Thanks!
+> > > >
+> > >
+> > > Thanks for confirming.
+> > >
+> > > However, I am not going to merge this without some justification, and
+> > > hopefully some input from other folks (Leif?)
+> > >
+> > > RTPROP already provides what we need on all platforms that use
+> > > DtbLoader, and the patch for that is queued up for v5.12-rcX, with a
+> > > cc:stable to v5.10. This allows any RT service to be marked as
+> > > disabled, including SetVirtualAddressMap().
+> > >
+> > > So afaict, that means that this patch would be a special case for
+> > > Flex5G, right?
+> >
+> > It's for all Snapdragon based laptops, as we need to disable
+> > SetVirtualAddressMap runtime services on all of them.
+> >
+> > > So how are platforms such as this one going to load the
+> > > DTB? If some loader will be involved (or even just GRUB),
+> >
+> > Yes, GRUB.
+> >
+> > > shouldn't it
+> > > be that component that sets RTPROP like DtbLoader will, not the kernel
+> > > itself.
+> > >
+> > > Btw I don't think ACPI boot is a use case here. I don't see a software
+> > > framebuffer with no wifi support as a usage mode that justifies
+> > > carrying EFI stub hacks for everyone.
+> >
+> > Okay.  I'm fine to carry it as an out-of-tree patch until someday you
+> > consider ACPI boot is useful for everyone.  But I do boot these laptops
+> > with ACPI at daily basis right now as arm64 native build machine, with
+> > USB Ethernet adapter.
+>
+> fwiw, the valid use-case for ACPI boot on these things is for distro
+> installer.. it might not be the shiny accelerated experience, but you
+> want to be able to get thru the installer and then install updates to
+> get latest kernel/dtb/etc
+>
+> it is a small use-case, but kinda an important step ;-)
+>
 
-Suggested-by: Loic Poulain <loic.poulain@linaro.org>
-Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
----
- include/linux/mhi.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+That is a fair point. However, as I understand it, we need this to work around
+- the need to pass efi=novamap
+- broken poweroff on Flex5g
 
-diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-index 56c4c52..838a3c4 100644
---- a/include/linux/mhi.h
-+++ b/include/linux/mhi.h
-@@ -296,7 +296,7 @@ struct mhi_controller_config {
-  * @wake_db: MHI WAKE doorbell register address
-  * @iova_start: IOMMU starting address for data (required)
-  * @iova_stop: IOMMU stop address for data (required)
-- * @fw_image: Firmware image name for normal booting (required)
-+ * @fw_image: Firmware image name for normal booting (optional)
-  * @edl_image: Firmware image name for emergency download mode (optional)
-  * @rddm_size: RAM dump size that host should allocate for debugging purpose
-  * @sbl_size: SBL image size downloaded through BHIe (optional)
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+So an installer either needs to set the EFI variable, or pass
+efi=novamap on the first boot. Note that there are no arm64 EFI
+systems known where efi=novamap causes problems. In fact, I would
+prefer to stop using SetVirtualAddressMap() altogether, as it does not
+provide any benefit whatsoever. So perhaps we should make efi=novamap
+the default and be done with it.
 
+Broken poweroff is hardly a showstopper for an installer, given that
+we cannot even install GRUB correctly.
+
+In summary, I am more than happy to collaborate constructively on this
+(which is why I wrote the patch), but I don't think we're at a point
+yet where this is the only thing standing in our way when it comes to
+a smooth out-of-the-box Linux installation experience.
