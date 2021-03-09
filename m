@@ -2,193 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 92FF6331C0A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Mar 2021 02:08:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AE8CD331D2F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Mar 2021 03:56:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230127AbhCIBIU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Mar 2021 20:08:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54500 "EHLO
+        id S230328AbhCIC4M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Mar 2021 21:56:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230234AbhCIBID (ORCPT
+        with ESMTP id S229520AbhCIC4L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Mar 2021 20:08:03 -0500
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5A33C06175F
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Mar 2021 17:08:03 -0800 (PST)
-Received: by mail-oi1-x22f.google.com with SMTP id z126so13130338oiz.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Mar 2021 17:08:03 -0800 (PST)
+        Mon, 8 Mar 2021 21:56:11 -0500
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77A8AC06174A
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Mar 2021 18:56:11 -0800 (PST)
+Received: by mail-pg1-x52b.google.com with SMTP id n10so7773135pgl.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Mar 2021 18:56:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=p3FtObQwLktZn8aGqaqTkJigyXLtVopswNVQ613mjEs=;
-        b=F/wLpEFLMVCgh30TqSmJNK7jOsg34EkzybIDqUdNCB9R8eE4pELbqQDpb+tBV/Lsqs
-         lYtzP+qx/g1MhqOCejSome/hzPXVGHfgbNnOneeuTnW/dfBzyaOZN9piieWhcACbC8QZ
-         lmKII0J5GCK5BrSxy19wj+eRPjsbEJtC+ZfJRxL5tFJH/Jb7ybb9pdKY6Jb804SatAz2
-         JF0dF/CtdssCbCKW9ih6OQDx9qHwcgPqg1wlTFcC4gDFZMFWIW4WRAeOsSOc7GoO1Z2/
-         FFeSkzy4lAiiJT1IWh3BGD5CXrfcO1vXYgnxMHtNsdSYTpzWV/AByQb09HUKmsX34ABD
-         +EwQ==
+         :content-disposition:in-reply-to:user-agent;
+        bh=MTVRu5yw/uigruS/X6nQpYJMpGUlZBH0fqHFAAjdGBk=;
+        b=QVGUGB5wW80JZiTEWVUJ1QjWJprQu9OwtqDNCJ4x9a31PT/+mPZuefl6gkIQV0v7zb
+         2cZZL9JROl8aQD6lFxbKJhsv51lQKiqS9xRMKXtABItJCWHYzSEkaghs7Ld3WcYtKL+A
+         bAZjphIu7tOOud4/LT8KVvDD8/tVCxQ9AC8Uz8FfoywQ8IVVAnGD90IeoLFNPDG2xL6V
+         vcIKgAET+1VX0IBuMa9HHLFzzuVBIUZmLZBktchtB0/tPJSoE9sftcPkz9KXGwmTtBk4
+         yJf9h4WpnBUpuwce3AicZ3st40Hw8BrsgDXUbOY2dcm4BkVTuo7VZFrZTZURv2ByLPge
+         4NKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=p3FtObQwLktZn8aGqaqTkJigyXLtVopswNVQ613mjEs=;
-        b=q9spYHnfa3rwtSWmEu3nRZa84qLdeUNx0xGCK2AsDWqpSnZ81VDEyt1EWfIggUfNgL
-         ZCEV3QSoeWuTVWA42w4z/uo5x8oNfMKifMynM0sfwOqcHONHkAISMGdMS7tVozOdsrCN
-         AZCwktuEJ5vdkGafFPXrUHc1mzafq3XfJdMCHIVvhHx8ipKzRznVelPbZuOnQttUw3JG
-         zzlKVp8c/QyOJQgHIaUwgxhPgf0VDvAyjw9WOC1RXPfbZ+x+puc9b3X1SBp6i0IYEgUq
-         P1GO+HQgo1xAoRD4A5Qqa/TvLAgxMsfwPcpLYYGQBWrn8l4/nqUwO4OwJbj1mXXzRF4v
-         m4yQ==
-X-Gm-Message-State: AOAM532/OYdAbvABgPPhokEZg5YQES8KMsS2hP+DtYk6pt18YMC7ml50
-        6DxcuYeyBDiPUF+8q9u+jbzU1w==
-X-Google-Smtp-Source: ABdhPJxUjhGkfg0WWy4n+xEDcOrT1Nsu4/Gt2YWOB2KFJ2vxFBmaKzTzlsHGsvzivkpCust6ujKr6Q==
-X-Received: by 2002:aca:d6d3:: with SMTP id n202mr1222707oig.175.1615252083045;
-        Mon, 08 Mar 2021 17:08:03 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id s125sm693278oif.56.2021.03.08.17.08.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Mar 2021 17:08:02 -0800 (PST)
-Date:   Mon, 8 Mar 2021 19:08:00 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Shawn Guo <shawn.guo@linaro.org>
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=MTVRu5yw/uigruS/X6nQpYJMpGUlZBH0fqHFAAjdGBk=;
+        b=hEtpD3SqBehycbXp8TkfNAHHQ4jz7yKZ/w632g0l7TfCaldwpEBVgys4Q8T3V7W8X8
+         Q/mUjn7riLpcPoKL54BUemyXKCX8ATM5E/KGM/ClpueV7pCAHpuWk/mB5H3HiLPr0Sxh
+         aDcFUsLNdALgLkD0Ub8QxopYPD1Vwl0JfY/xRWvZYS+44b9ui7T8BMrYean4LuUranCn
+         +Yh6RcU9MZW/QICw4NcpYvvY25EZ0jaEtdUATNi+8z1FfRKiwqQUDHDYZdXHH7uH0xvc
+         +bmNSIlx2NWFb/BWA1LAeu6XcENALXH9igJmUbXsdIeHpQyR796Msg+qB5dr2KNLj064
+         L/1Q==
+X-Gm-Message-State: AOAM530tMF089wrhsNS8ygQXNkbuRdXk0yXjU3DqeAbFN4RNV2N55O8o
+        srvJ0Dt1aMX3wvbJMOPL+Q2eOw==
+X-Google-Smtp-Source: ABdhPJw+2mldQAb6JMJ35KRdSOcpZPGxbTNkRRYgTRtl6NnFsp2B5a8DfrCGyMIVthwps542geKkig==
+X-Received: by 2002:a63:cb0e:: with SMTP id p14mr23065574pgg.370.1615258571020;
+        Mon, 08 Mar 2021 18:56:11 -0800 (PST)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id mu6sm644585pjb.35.2021.03.08.18.56.09
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 08 Mar 2021 18:56:10 -0800 (PST)
+Date:   Tue, 9 Mar 2021 10:56:05 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Linus Walleij <linus.walleij@linaro.org>,
         Andy Shevchenko <andriy.shevchenko@intel.com>,
         linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org
 Subject: Re: [PATCH v3 1/2] pinctrl: qcom: sc8180x: drop the use of tiles
-Message-ID: <YEbKcOwr/c1fPFLQ@builder.lan>
+Message-ID: <20210309025604.GQ17424@dragon>
 References: <20210304060520.24975-1-shawn.guo@linaro.org>
  <20210304060520.24975-2-shawn.guo@linaro.org>
+ <YEbKcOwr/c1fPFLQ@builder.lan>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210304060520.24975-2-shawn.guo@linaro.org>
+In-Reply-To: <YEbKcOwr/c1fPFLQ@builder.lan>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 04 Mar 00:05 CST 2021, Shawn Guo wrote:
-
-> To support both ACPI and DT, it makes more sense to not use tiles for
-> pinctrl-sc8180x driver, as ACPI table describes TLMM block with one
-> single memory resource.  Since DTS of SC8180X hasn't landed, there is
-> still chance to align DT description with ACPI.
+On Mon, Mar 08, 2021 at 07:08:00PM -0600, Bjorn Andersson wrote:
+> On Thu 04 Mar 00:05 CST 2021, Shawn Guo wrote:
 > 
-
-I don't like the idea that we make up addresses to put in the DT to fit
-what was put in the DSDT. It is 3 different memory regions, with things
-in-between that Linux shouldn't touch.
-
-Isn't it possible to during ACPI probe take reg 0 and register the 3
-named regions instead?
-
-Regards,
-Bjorn
-
-> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-> ---
->  drivers/pinctrl/qcom/pinctrl-sc8180x.c | 41 +++++++++-----------------
->  1 file changed, 14 insertions(+), 27 deletions(-)
+> > To support both ACPI and DT, it makes more sense to not use tiles for
+> > pinctrl-sc8180x driver, as ACPI table describes TLMM block with one
+> > single memory resource.  Since DTS of SC8180X hasn't landed, there is
+> > still chance to align DT description with ACPI.
+> > 
 > 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-sc8180x.c b/drivers/pinctrl/qcom/pinctrl-sc8180x.c
-> index b765bf667574..66f76ed22200 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-sc8180x.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-sc8180x.c
-> @@ -11,17 +11,9 @@
->  
->  #include "pinctrl-msm.h"
->  
-> -static const char * const sc8180x_tiles[] = {
-> -	"south",
-> -	"east",
-> -	"west"
-> -};
-> -
-> -enum {
-> -	SOUTH,
-> -	EAST,
-> -	WEST
-> -};
-> +#define WEST	0x00100000
-> +#define EAST	0x00500000
-> +#define SOUTH	0x00d00000
->  
->  #define FUNCTION(fname)					\
->  	[msm_mux_##fname] = {				\
-> @@ -31,7 +23,7 @@ enum {
->  	}
->  
->  #define REG_SIZE 0x1000
-> -#define PINGROUP_OFFSET(id, _tile, offset, f1, f2, f3, f4, f5, f6, f7, f8, f9)	\
-> +#define PINGROUP_OFFSET(id, base, offset, f1, f2, f3, f4, f5, f6, f7, f8, f9)	\
->  	{						\
->  		.name = "gpio" #id,			\
->  		.pins = gpio##id##_pins,		\
-> @@ -49,12 +41,11 @@ enum {
->  			msm_mux_##f9			\
->  		},					\
->  		.nfuncs = 10,				\
-> -		.ctl_reg = REG_SIZE * id + offset,	\
-> -		.io_reg = REG_SIZE * id + 0x4 + offset,	\
-> -		.intr_cfg_reg = REG_SIZE * id + 0x8 + offset,	\
-> -		.intr_status_reg = REG_SIZE * id + 0xc + offset,\
-> -		.intr_target_reg = REG_SIZE * id + 0x8 + offset,\
-> -		.tile = _tile,				\
-> +		.ctl_reg = base + REG_SIZE * id + offset,		\
-> +		.io_reg = base + REG_SIZE * id + 0x4 + offset,		\
-> +		.intr_cfg_reg = base + REG_SIZE * id + 0x8 + offset,	\
-> +		.intr_status_reg = base + REG_SIZE * id + 0xc + offset,	\
-> +		.intr_target_reg = base + REG_SIZE * id + 0x8 + offset,	\
->  		.mux_bit = 2,				\
->  		.pull_bit = 0,				\
->  		.drv_bit = 6,				\
-> @@ -71,20 +62,19 @@ enum {
->  		.intr_detection_width = 2,		\
->  	}
->  
-> -#define PINGROUP(id, _tile, f1, f2, f3, f4, f5, f6, f7, f8, f9)	\
-> -	PINGROUP_OFFSET(id, _tile, 0x0, f1, f2, f3, f4, f5, f6, f7, f8, f9)
-> +#define PINGROUP(id, base, f1, f2, f3, f4, f5, f6, f7, f8, f9)	\
-> +	PINGROUP_OFFSET(id, base, 0x0, f1, f2, f3, f4, f5, f6, f7, f8, f9)
->  
->  #define SDC_QDSD_PINGROUP(pg_name, ctl, pull, drv)	\
->  	{						\
->  		.name = #pg_name,			\
->  		.pins = pg_name##_pins,			\
->  		.npins = (unsigned int)ARRAY_SIZE(pg_name##_pins),	\
-> -		.ctl_reg = ctl,				\
-> +		.ctl_reg = EAST + ctl,			\
->  		.io_reg = 0,				\
->  		.intr_cfg_reg = 0,			\
->  		.intr_status_reg = 0,			\
->  		.intr_target_reg = 0,			\
-> -		.tile = EAST,				\
->  		.mux_bit = -1,				\
->  		.pull_bit = pull,			\
->  		.drv_bit = drv,				\
-> @@ -105,12 +95,11 @@ enum {
->  		.name = #pg_name,			\
->  		.pins = pg_name##_pins,			\
->  		.npins = (unsigned int)ARRAY_SIZE(pg_name##_pins),	\
-> -		.ctl_reg = 0xb6000,			\
-> -		.io_reg = 0xb6004,			\
-> +		.ctl_reg = SOUTH + 0xb6000,		\
-> +		.io_reg = SOUTH + 0xb6004,		\
->  		.intr_cfg_reg = 0,			\
->  		.intr_status_reg = 0,			\
->  		.intr_target_reg = 0,			\
-> -		.tile = SOUTH,				\
->  		.mux_bit = -1,				\
->  		.pull_bit = 3,				\
->  		.drv_bit = 0,				\
-> @@ -1575,8 +1564,6 @@ static const struct msm_gpio_wakeirq_map sc8180x_pdc_map[] = {
->  };
->  
->  static struct msm_pinctrl_soc_data sc8180x_pinctrl = {
-> -	.tiles = sc8180x_tiles,
-> -	.ntiles = ARRAY_SIZE(sc8180x_tiles),
->  	.pins = sc8180x_pins,
->  	.npins = ARRAY_SIZE(sc8180x_pins),
->  	.functions = sc8180x_functions,
-> -- 
-> 2.17.1
-> 
+> I don't like the idea that we make up addresses to put in the DT to fit
+> what was put in the DSDT. It is 3 different memory regions, with things
+> in-between that Linux shouldn't touch.
+
+This is not a new idea but something pinctrl-sdm845 has been doing for
+years.  And IMHO, it's not a bad idea but a reasonable compromise.
+
+> Isn't it possible to during ACPI probe take reg 0 and register the 3
+> named regions instead?
+
+It is possible.  But let's see what it takes.  We will need to have some
+quirk handling in the ACPI core to detect TLMM device on Flex 5G
+machine, and then override the memory resource registration for that
+device.  Myself is not even convinced this is a good solution, not
+mentioning whether ACPI maintainers will accept it.
+
+Shawn
