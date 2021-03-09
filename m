@@ -2,24 +2,24 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A6CD332483
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Mar 2021 12:56:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F25CD3324A6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Mar 2021 13:04:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229881AbhCILz1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Mar 2021 06:55:27 -0500
-Received: from mail-40131.protonmail.ch ([185.70.40.131]:45786 "EHLO
-        mail-40131.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229599AbhCILzS (ORCPT
+        id S230449AbhCIMDg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Mar 2021 07:03:36 -0500
+Received: from mail-40134.protonmail.ch ([185.70.40.134]:52185 "EHLO
+        mail-40134.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230425AbhCIMDF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Mar 2021 06:55:18 -0500
-Date:   Tue, 09 Mar 2021 11:55:13 +0000
+        Tue, 9 Mar 2021 07:03:05 -0500
+Date:   Tue, 09 Mar 2021 12:02:58 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1615290916;
+        s=protonmail; t=1615291384;
         bh=VAaoHzPUuviXWZuHpXivJNsABEQ935p5HTpQ7ZaoB2w=;
         h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=qNXClnM7sU1Zna0Jl+6S/Fl/ZQzw22kdzuprFtmzzwtcj9PQWUev6tICt2R4yCBv7
-         UZjzcBlV88lGdVAj05iFQ9XHzMjYbrUC2724b1smet0oWqfbq/TGiTw6aUmlrz8A8L
-         kehRn1eRykeuB9AiAHHSDDmcrS6ZbnBhWzDeXl4o=
+        b=dml3LGZyeSkN3ieSDygpByB9UfG4IpSme5l+dJFUoiSqgr8nC+D3S6xdcHDXTr3sm
+         RRsiUftt4r9RB0nHGZlin5Nj6PrIjNg3PRyz0q3ZZs2SvvfY+LB2fg2hqBJM/E5cQl
+         q7sqf/GAyHkWaDdFGzWtwmeRlW/loSLflx21qfOk=
 To:     caleb@connolly.tech, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Alim Akhtar <alim.akhtar@samsung.com>,
@@ -32,10 +32,10 @@ Cc:     ejb@linux.ibm.com, stanley.chu@mediatek.com, cang@codeaurora.org,
         linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
 Reply-To: Caleb Connolly <caleb@connolly.tech>
-Subject: [PATCH v2 2/3] scsi: ufs: qcom: use ufshci_version function
-Message-ID: <20210309115336.117206-3-caleb@connolly.tech>
-In-Reply-To: <20210309115336.117206-1-caleb@connolly.tech>
-References: <20210309115336.117206-1-caleb@connolly.tech>
+Subject: [RESEND PATCH v2 2/3] scsi: ufs: qcom: use ufshci_version function
+Message-ID: <20210309120212.119451-3-caleb@connolly.tech>
+In-Reply-To: <20210309120212.119451-1-caleb@connolly.tech>
+References: <20210309120212.119451-1-caleb@connolly.tech>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
