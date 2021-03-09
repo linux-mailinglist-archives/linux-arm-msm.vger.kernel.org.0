@@ -2,99 +2,225 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 43C8C3322DA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Mar 2021 11:21:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8550E3322DD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Mar 2021 11:22:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229878AbhCIKU5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Mar 2021 05:20:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32838 "EHLO
+        id S230142AbhCIKVb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Mar 2021 05:21:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229656AbhCIKUw (ORCPT
+        with ESMTP id S229625AbhCIKU7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Mar 2021 05:20:52 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDA6BC06174A
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Mar 2021 02:20:51 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id y124-20020a1c32820000b029010c93864955so5577237wmy.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Mar 2021 02:20:51 -0800 (PST)
+        Tue, 9 Mar 2021 05:20:59 -0500
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7E91C06174A
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Mar 2021 02:20:58 -0800 (PST)
+Received: by mail-pg1-x532.google.com with SMTP id n9so7497859pgi.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Mar 2021 02:20:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=4Ja9Ic3TL2OIWlc+akAnIVOY3PQa7HJDAI9iNG2O7tg=;
-        b=CBl1RutLjVO06dsddUBm1LyGvDkB9emZwNK4aryNixf9G3nJte05bK8osMJ0aRpXuD
-         jedgVpD7irPY/aisQJ5IqE9JbW7dPsotIiqtcY+rO4ZlrrfTS5umd7zy8jqWwBZcUC4i
-         al7Y2fBP0U44fyQmcA7wpIlD46oNZZhg2FX1xXCGOBOD56qIy0LHooCUhCR9a0ttmcev
-         E06D1kUMMweToMMN1qT51EfOYXm3lnUiAMtwHMVjB86QXt3HcWu+Uu4hsmWYf8hKUIWl
-         OIFPSiSgsEyP+Bg87SzK9xYJZdw/VAgb+C40eLS12LZhQV2g7S4vx+kPzBEMR+K2pjqY
-         S5yQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=pNSjqyK0LPyqyWQYbvZumKo7SJVV4crx1fZyzzPnaNs=;
+        b=T+yUcoxevbEmJNoONa0+BBenPFuWKB7cpD1e63zw63BwE7IaMGrco3KARQiF5ASc6r
+         q2sPxAUery7rTfptxjG6h3jquKPfeM2M0mep0jJUVQvqVbI3ELYUhFUjCXJuMDs+Cq//
+         p0RxOgl85MzOYeD2usqDzl3nRc+5qiCMk0Xl7DjtyQusnEka//n7FdLsadc9qkepYMx+
+         2NBOX/6h+ACrmWc9PO75l6Iq7lGuqnWLnnE0Mi3s+C+nXUJPgthkBNOnZdJ6s/SWu/cP
+         sTKJiwl6huvrv78eNYiYB6poFZOWcKX+Pz9Js+PuTbOi9DtAfiK8aaB3wCXSMgX0cpoa
+         X/Vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=4Ja9Ic3TL2OIWlc+akAnIVOY3PQa7HJDAI9iNG2O7tg=;
-        b=ZDtvHyeJF76/q8fxD5sZpvH/ITOwAKR9XzrEwJaStx1TmlEcV9guTqnlzHXrmJxRVT
-         urs9T3vKNnVX94xQWtLiT4TuS2k3vVf3PoMUOy5kqcL/LVjrGpJLuX2m6DaVayS5LLga
-         qNJ3/QLd484sKXy3sIuaW8QyNF0uQTruNNbNbWw19ll1qDWzAPBrsSrHa+jIaO2h+90L
-         C8f7Qf0RuU7J1L1+JiujcC4ftyees0QqKDqjTzG86izdMCuVfpwjcPptBLNjZKmMaH3c
-         xOnyHLSGGMHNc4mJMDT1STfjmNrzJC05l0CymPVcT9wdA2Sc6asdswJO9nE2tj9TNulC
-         sgwA==
-X-Gm-Message-State: AOAM530wvNzKxRKhkgurhX9OEqbvGSOb6/h5+u8piljZO5x1ycc7DPMq
-        GoRZxWuFcpXHbAzW94q15Xx0Tg==
-X-Google-Smtp-Source: ABdhPJwjXgLlRTBp5I92BLBRZK7xXvPem5xmee1vAJ+jj2dbyhbZRCIyKIh8r2efK9gKsHunJF8aXA==
-X-Received: by 2002:a1c:1d82:: with SMTP id d124mr3252207wmd.1.1615285250725;
-        Tue, 09 Mar 2021 02:20:50 -0800 (PST)
-Received: from srini-hackbox.lan (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.gmail.com with ESMTPSA id o20sm3421133wmq.5.2021.03.09.02.20.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Mar 2021 02:20:50 -0800 (PST)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        john.stultz@linaro.org, amit.pundir@linaro.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH] arm64: dts: qcom: db845c: fix correct powerdown pin for WSA881x
-Date:   Tue,  9 Mar 2021 10:20:25 +0000
-Message-Id: <20210309102025.28405-1-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.21.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=pNSjqyK0LPyqyWQYbvZumKo7SJVV4crx1fZyzzPnaNs=;
+        b=N5hbMfJYYydyQF042I4Lg81nb/IMZK/HbuBQj42ChIrCMJBMwO41QPAtkkLtXhjCKK
+         ZKS0LgZ10vpacUQ5OVLmLfNz722OPHnVVMj+TNhTg0G0B0HcUY5WUREA8Vz/yyvv053R
+         agu1mw4naWX5ALOraWMji8o1o2Z99sm7YGiZUMzBwuq4B3Z5LIOpi3x2fvh0Bc6xVIHa
+         O1eGzEgSOUfV/QbZAQyX2gf31j44zKNU5gyOy4mIMa7J2gekUNV+mD3Ll3Q+0hsupNhj
+         FYFCFjutHvYwH+kCj29GPFRCQvtEotwo4C7wgA9rA8ha+uw6RZYT1pC9R56oc+8D2I+y
+         du6g==
+X-Gm-Message-State: AOAM533soOYCObDOjZQ4pVLyocf7beC37SUwv/fshTEtXMF2HsE6lXj4
+        uPVxAhOBIFChn15UNEqKmiWTlx58+9kq7kKcRUCDfg==
+X-Google-Smtp-Source: ABdhPJxi2zpk7PcFQnet3iZZhhQfYdqsYJ5OppLqfcYaWWQ4QbAI4RXP49wyGJ4MslA4plTSMWHpB1/Ue0TATKHKyPg=
+X-Received: by 2002:aa7:86d9:0:b029:1ef:4f40:4bba with SMTP id
+ h25-20020aa786d90000b02901ef4f404bbamr21859345pfo.54.1615285258264; Tue, 09
+ Mar 2021 02:20:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <1615279336-27227-1-git-send-email-loic.poulain@linaro.org> <YEdBfHAYkTGI8sE4@kroah.com>
+In-Reply-To: <YEdBfHAYkTGI8sE4@kroah.com>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Tue, 9 Mar 2021 11:28:49 +0100
+Message-ID: <CAMZdPi9dCzH9ufSoRK_szOaVnSsySk-kC5fu2Rb+wy-6snow0Q@mail.gmail.com>
+Subject: Re: [PATCH net-next v3] net: Add Qcom WWAN control driver
+To:     Greg KH <gregkh@linuxfoundation.org>
+Cc:     Jakub Kicinski <kuba@kernel.org>,
+        David Miller <davem@davemloft.net>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Aleksander Morgado <aleksander@aleksander.es>,
+        open list <linux-kernel@vger.kernel.org>,
+        Network Development <netdev@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Hemant Kumar <hemantk@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-WSA881x powerdown pin is connected to GPIO1 not gpio2, so correct this.
-This was working so far due to a shift bug in gpio driver, however
-once that is fixed this will stop working, so fix this!
+Hi Greg,
 
-Fixes: 89a32a4e769cc ("arm64: dts: qcom: db845c: add analog audio support")
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+On Tue, 9 Mar 2021 at 10:35, Greg KH <gregkh@linuxfoundation.org> wrote:
+>
+> On Tue, Mar 09, 2021 at 09:42:16AM +0100, Loic Poulain wrote:
+> > The MHI WWWAN control driver allows MHI Qcom based modems to expose
+> > different modem control protocols/ports to userspace, so that userspace
+> > modem tools or daemon (e.g. ModemManager) can control WWAN config
+> > and state (APN config, SMS, provider selection...). A Qcom based
+> > modem can expose one or several of the following protocols:
+> > - AT: Well known AT commands interactive protocol (microcom, minicom...)
+> > - MBIM: Mobile Broadband Interface Model (libmbim, mbimcli)
+> > - QMI: Qcom MSM/Modem Interface (libqmi, qmicli)
+> > - QCDM: Qcom Modem diagnostic interface (libqcdm)
+> > - FIREHOSE: XML-based protocol for Modem firmware management
+> >         (qmi-firmware-update)
+> >
+> > The different interfaces are exposed as character devices, in the same
+> > way as for USB modem variants (known as modem 'ports').
+> >
+> > Note that this patch is mostly a rework of the earlier MHI UCI
+> > tentative that was a generic interface for accessing MHI bus from
+> > userspace. As suggested, this new version is WWAN specific and is
+> > dedicated to only expose channels used for controlling a modem, and
+> > for which related opensource user support exist. Other MHI channels
+> > not fitting the requirements will request either to be plugged to
+> > the right Linux subsystem (when available) or to be discussed as a
+> > new MHI driver (e.g AI accelerator, WiFi debug channels, etc...).
+> >
+> > This change introduces a new drivers/net/wwan directory, aiming to
+> > be the common place for WWAN drivers.
+> >
+> > Co-developed-by: Hemant Kumar <hemantk@codeaurora.org>
+> > Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
+> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> > ---
+> >  v2: update copyright (2021)
+> >  v3: Move driver to dedicated drivers/net/wwan directory
+> >
+> >  drivers/net/Kconfig              |   2 +
+> >  drivers/net/Makefile             |   1 +
+> >  drivers/net/wwan/Kconfig         |  26 ++
+> >  drivers/net/wwan/Makefile        |   6 +
+> >  drivers/net/wwan/mhi_wwan_ctrl.c | 559 +++++++++++++++++++++++++++++++++++++++
+> >  5 files changed, 594 insertions(+)
+> >  create mode 100644 drivers/net/wwan/Kconfig
+> >  create mode 100644 drivers/net/wwan/Makefile
+> >  create mode 100644 drivers/net/wwan/mhi_wwan_ctrl.c
+> >
+> > diff --git a/drivers/net/Kconfig b/drivers/net/Kconfig
+> > index 1ebb4b9..28b18f2 100644
+> > --- a/drivers/net/Kconfig
+> > +++ b/drivers/net/Kconfig
+> > @@ -501,6 +501,8 @@ source "drivers/net/wan/Kconfig"
+> >
+> >  source "drivers/net/ieee802154/Kconfig"
+> >
+> > +source "drivers/net/wwan/Kconfig"
+> > +
+> >  config XEN_NETDEV_FRONTEND
+> >       tristate "Xen network device frontend driver"
+> >       depends on XEN
+> > diff --git a/drivers/net/Makefile b/drivers/net/Makefile
+> > index f4990ff..5da6424 100644
+> > --- a/drivers/net/Makefile
+> > +++ b/drivers/net/Makefile
+> > @@ -68,6 +68,7 @@ obj-$(CONFIG_SUNGEM_PHY) += sungem_phy.o
+> >  obj-$(CONFIG_WAN) += wan/
+> >  obj-$(CONFIG_WLAN) += wireless/
+> >  obj-$(CONFIG_IEEE802154) += ieee802154/
+> > +obj-$(CONFIG_WWAN) += wwan/
+> >
+> >  obj-$(CONFIG_VMXNET3) += vmxnet3/
+> >  obj-$(CONFIG_XEN_NETDEV_FRONTEND) += xen-netfront.o
+> > diff --git a/drivers/net/wwan/Kconfig b/drivers/net/wwan/Kconfig
+> > new file mode 100644
+> > index 0000000..643aa10
+> > --- /dev/null
+> > +++ b/drivers/net/wwan/Kconfig
+> > @@ -0,0 +1,26 @@
+> > +# SPDX-License-Identifier: GPL-2.0-only
+> > +#
+> > +# Wireless WAN device configuration
+> > +#
+> > +
+> > +menuconfig WWAN
+> > +       bool "Wireless WAN"
+> > +       help
+> > +         This section contains Wireless WAN driver configurations.
+> > +
+> > +if WWAN
+> > +
+> > +config MHI_WWAN_CTRL
+> > +     tristate "MHI WWAN control driver for QCOM based PCIe modems"
+> > +     depends on MHI_BUS
+> > +     help
+> > +       MHI WWAN CTRL allow QCOM based PCIe modems to expose different modem
+> > +       control protocols/ports to userspace, including AT, MBIM, QMI, DIAG
+> > +       and FIREHOSE. These protocols can be accessed directly from userspace
+> > +       (e.g. AT commands) or via libraries/tools (e.g. libmbim, libqmi,
+> > +       libqcdm...).
+> > +
+> > +       To compile this driver as a module, choose M here: the module will be
+> > +       called mhi_wwan_ctrl.
+> > +
+> > +endif # WWAN
+> > diff --git a/drivers/net/wwan/Makefile b/drivers/net/wwan/Makefile
+> > new file mode 100644
+> > index 0000000..994a80b
+> > --- /dev/null
+> > +++ b/drivers/net/wwan/Makefile
+> > @@ -0,0 +1,6 @@
+> > +# SPDX-License-Identifier: GPL-2.0
+> > +#
+> > +# Makefile for the Linux WWAN device drivers.
+> > +#
+> > +
+> > +obj-$(CONFIG_MHI_WWAN_CTRL) += mhi_wwan_ctrl.o
+> > diff --git a/drivers/net/wwan/mhi_wwan_ctrl.c b/drivers/net/wwan/mhi_wwan_ctrl.c
+> > new file mode 100644
+> > index 0000000..3904cd0
+> > --- /dev/null
+> > +++ b/drivers/net/wwan/mhi_wwan_ctrl.c
+> > @@ -0,0 +1,559 @@
+> > +// SPDX-License-Identifier: GPL-2.0-only
+> > +/* Copyright (c) 2018-2021, The Linux Foundation. All rights reserved.*/
+> > +
+> > +#include <linux/kernel.h>
+> > +#include <linux/mhi.h>
+> > +#include <linux/mod_devicetable.h>
+> > +#include <linux/module.h>
+> > +#include <linux/poll.h>
+> > +
+> > +#define MHI_WWAN_CTRL_DRIVER_NAME "mhi_wwan_ctrl"
+>
+> So a driver name is the same as the class that is being created?
+>
+> That feels wrong, shouldn't the "class" be wwan?
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index 0040e138df67..5adf9dcbce2e 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -1015,7 +1015,7 @@
- 		left_spkr: wsa8810-left{
- 			compatible = "sdw10217201000";
- 			reg = <0 1>;
--			powerdown-gpios = <&wcdgpio 2 GPIO_ACTIVE_HIGH>;
-+			powerdown-gpios = <&wcdgpio 1 GPIO_ACTIVE_HIGH>;
- 			#thermal-sensor-cells = <0>;
- 			sound-name-prefix = "SpkrLeft";
- 			#sound-dai-cells = <0>;
-@@ -1023,7 +1023,7 @@
- 
- 		right_spkr: wsa8810-right{
- 			compatible = "sdw10217201000";
--			powerdown-gpios = <&wcdgpio 2 GPIO_ACTIVE_HIGH>;
-+			powerdown-gpios = <&wcdgpio 1 GPIO_ACTIVE_HIGH>;
- 			reg = <0 2>;
- 			#thermal-sensor-cells = <0>;
- 			sound-name-prefix = "SpkrRight";
--- 
-2.21.0
+The driver does not aim to be THE wwan implementation, given the
+heterogeneity of WWAN interfaces, so 'wwan' is probably too generic
+for this bus/vendor specific driver. But since we create a new wwan
+subdir, maybe we should create a minimal wwan_sysfs.c, that would
+initially just offer a common class for all WWAN devices (wwan or
+wwan-ports), as a first step to if not standardize, at least group
+such devices under the same hat. Otherwise, we can just use the misc
+class... Any thoughts?
 
+>
+> > +#define MHI_WWAN_CTRL_MAX_MINORS 128
+>
+> Why so many?
+
+Right, it's not valid anymore, I'm going to change that.
+
+Thanks,
+Loic
