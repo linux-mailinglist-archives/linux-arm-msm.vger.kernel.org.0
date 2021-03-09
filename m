@@ -2,115 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AB0C2331DB4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Mar 2021 04:50:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DE6CC331ECE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Mar 2021 06:53:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230058AbhCIDuI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Mar 2021 22:50:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33246 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230056AbhCIDuC (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Mar 2021 22:50:02 -0500
-Received: from desiato.infradead.org (desiato.infradead.org [IPv6:2001:8b0:10b:1:d65d:64ff:fe57:4e05])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27A8EC06174A
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Mar 2021 19:50:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=desiato.20200630; h=Content-Transfer-Encoding:Content-Type
-        :In-Reply-To:MIME-Version:Date:Message-ID:From:References:To:Subject:Sender:
-        Reply-To:Cc:Content-ID:Content-Description;
-        bh=Em4tvMXPYiKF+oE0u3rKmZiyAST6rAz5Klub7t+/W7M=; b=YEqs2goCzBzS0Yv463fKAS301P
-        Whw1OwIr1UePKLqymmcuWudg00fP6m4gVEEQaUt7OFvFrINXeysLV5MHGCGnJt5GEQ/VRWJZtNmXx
-        NTCJT82iOTDI95+OyK4xlTSdd8RHF0yNukTjwV52BmrtjxtzMx0Wk3K82yphxQyqmJySh8uDDqyDQ
-        QEJZk1FqpVd/+wERyzA0/3RRO4QyEvbXLrhpkogkuUhQFk2K1fgQg+C6Re51NzI4dhP6peuj1CEKC
-        mka6bwV/PeVBDsLPft8KXF6nfF+RotUE1/1vnAaxPo0bq6HJfP8TD1OqEFMXATP5IXX5LgCcjYsM4
-        y7ThAQcA==;
-Received: from merlin.infradead.org ([2001:8b0:10b:1234::107])
-        by desiato.infradead.org with esmtps (Exim 4.94 #2 (Red Hat Linux))
-        id 1lJTNg-003iO5-9D
-        for linux-arm-msm@vger.kernel.org; Tue, 09 Mar 2021 03:50:00 +0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=merlin.20170209; h=Content-Transfer-Encoding:Content-Type:
-        In-Reply-To:MIME-Version:Date:Message-ID:From:References:To:Subject:Sender:
-        Reply-To:Cc:Content-ID:Content-Description;
-        bh=Em4tvMXPYiKF+oE0u3rKmZiyAST6rAz5Klub7t+/W7M=; b=KTNOWwIYqzDsSmXgVPJcvClkl7
-        mcJ8iGITlOTpKzIUp1tsuwr6UYPEd+Icwq7HRb22ih2+WpsYczs5sKpGCNH8v5q2lxhgjQFZb2IKy
-        0CJgs6JTMQxKPSGwp/gtJN88jyTucD+vBigTRgY4mK53W2RPr2QeAOn4oAxtLh5VQh2PQP5kJJAkk
-        VDGtUN13AoRnGcnTzVw56GHq9HN4yu+lcnI+f6o9Kn+vS/XzfAaLwbUXzXsNd1XKPWRhnrQXfnzLd
-        fBR4ArtG2U1eq3tkgI2WETdwtoiKaAo4k6SXAe3gGhGwslMUT/9nU5hr6c4ATlhcLNxyFSuU2fYWv
-        CjIUM20w==;
-Received: from [2601:1c0:6280:3f0::3ba4]
-        by merlin.infradead.org with esmtpsa (Exim 4.94 #2 (Red Hat Linux))
-        id 1lJTNb-000bxU-CO; Tue, 09 Mar 2021 03:49:56 +0000
-Subject: Re: [PATCH] soc: qcom: Fix typos in the file qmi_encdec.c
-To:     Bhaskar Chowdhury <unixbhaskar@gmail.com>, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20210306213542.19413-1-unixbhaskar@gmail.com>
-From:   Randy Dunlap <rdunlap@infradead.org>
-Message-ID: <080d15f5-6f91-68fe-a135-87269b722a3d@infradead.org>
-Date:   Mon, 8 Mar 2021 19:49:52 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.0
-MIME-Version: 1.0
-In-Reply-To: <20210306213542.19413-1-unixbhaskar@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        id S229929AbhCIFwj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Mar 2021 00:52:39 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:54565 "EHLO z11.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229872AbhCIFwR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 9 Mar 2021 00:52:17 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1615269136; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=GnXT3CMbghQtyRJZBgCfodavscSOdiLXWyQmtmjzkks=; b=Tko7x++ENGSpffCUEKycxx75XFPCx3eq7cDL/au1Z5ju0fm5OJMXUbuKCOVv4BorrGyoxFkM
+ IdVLUIZitLr1gculZuyJINJmL1JJCv8aI4bPsao+FViFVMzlqiX/NP8wvpPMUBRIhMjBXSjm
+ Hah2aZKFr13QS/9QLPfP7DQTQu8=
+X-Mailgun-Sending-Ip: 104.130.96.11
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 60470d07c862e1b9fdd5806f (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 09 Mar 2021 05:52:07
+ GMT
+Sender: sibis=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id AC30DC43462; Tue,  9 Mar 2021 05:52:07 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 38D3FC433CA;
+        Tue,  9 Mar 2021 05:52:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 38D3FC433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sibis@codeaurora.org
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     p.zabel@pengutronix.de, robh+dt@kernel.org,
+        bjorn.andersson@linaro.org
+Cc:     agross@kernel.org, mani@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        sboyd@kernel.org, Sibi Sankar <sibis@codeaurora.org>
+Subject: [PATCH 0/6] Enable miscellaneous hardware blocks to boot WPSS
+Date:   Tue,  9 Mar 2021 11:21:45 +0530
+Message-Id: <1615269111-25559-1-git-send-email-sibis@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/6/21 1:35 PM, Bhaskar Chowdhury wrote:
-> 
-> Rudimentory spelling fixes throughout the file.
-> 
-> s/descibing/describing/
-> s/inforation/information/
-> 
-> Signed-off-by: Bhaskar Chowdhury <unixbhaskar@gmail.com>
+This series enables miscellaneous hardware blocks to boot Wireless
+Processor Subsystem (WPSS) on SC7280 SoC.
 
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
+[1] https://lore.kernel.org/patchwork/cover/1389010/
+The series depends on ^^
 
+Sibi Sankar (6):
+  soc: qcom: smem: Update max processor count
+  dt-bindings: mailbox: Add WPSS client index to IPCC
+  dt-bindings: reset: aoss: Add AOSS reset controller binding
+  dt-bindings: reset: pdc: Add PDC Global bindings
+  reset: qcom: Add PDC Global reset signals for WPSS
+  arm64: dts: qcom: sc7280: Add nodes to boot WPSS
 
-> ---
->  drivers/soc/qcom/qmi_encdec.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/soc/qcom/qmi_encdec.c b/drivers/soc/qcom/qmi_encdec.c
-> index 3aaab71d1b2c..328cc8237191 100644
-> --- a/drivers/soc/qcom/qmi_encdec.c
-> +++ b/drivers/soc/qcom/qmi_encdec.c
-> @@ -451,11 +451,11 @@ static int qmi_decode_basic_elem(void *buf_dst, const void *buf_src,
-> 
->  /**
->   * qmi_decode_struct_elem() - Decodes elements of struct data type
-> - * @ei_array: Struct info array descibing the struct element.
-> + * @ei_array: Struct info array describing the struct element.
->   * @buf_dst: Buffer to store the decoded element.
->   * @buf_src: Buffer containing the elements in QMI wire format.
->   * @elem_len: Number of elements to be decoded.
-> - * @tlv_len: Total size of the encoded inforation corresponding to
-> + * @tlv_len: Total size of the encoded information corresponding to
->   *           this struct element.
->   * @dec_level: Depth of the nested structure from the main structure.
->   *
-> @@ -499,10 +499,10 @@ static int qmi_decode_struct_elem(struct qmi_elem_info *ei_array,
-> 
->  /**
->   * qmi_decode_string_elem() - Decodes elements of string data type
-> - * @ei_array: Struct info array descibing the string element.
-> + * @ei_array: Struct info array describing the string element.
->   * @buf_dst: Buffer to store the decoded element.
->   * @buf_src: Buffer containing the elements in QMI wire format.
-> - * @tlv_len: Total size of the encoded inforation corresponding to
-> + * @tlv_len: Total size of the encoded information corresponding to
->   *           this string element.
->   * @dec_level: Depth of the string element from the main structure.
->   *
-> --
-
+ .../devicetree/bindings/reset/qcom,aoss-reset.yaml |   5 +
+ .../devicetree/bindings/reset/qcom,pdc-global.yaml |   4 +
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               | 143 +++++++++++++++++++++
+ drivers/reset/reset-qcom-pdc.c                     |  62 +++++++--
+ drivers/soc/qcom/smem.c                            |   2 +-
+ include/dt-bindings/mailbox/qcom-ipcc.h            |   1 +
+ include/dt-bindings/reset/qcom,sdm845-pdc.h        |   2 +
+ 7 files changed, 207 insertions(+), 12 deletions(-)
 
 -- 
-~Randy
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
