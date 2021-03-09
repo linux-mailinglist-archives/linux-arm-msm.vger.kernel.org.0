@@ -2,96 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5910B333050
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Mar 2021 21:54:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F012D3330B9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Mar 2021 22:16:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231560AbhCIUxq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Mar 2021 15:53:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57514 "EHLO
+        id S231788AbhCIVQW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Mar 2021 16:16:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231804AbhCIUxm (ORCPT
+        with ESMTP id S231657AbhCIVQO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Mar 2021 15:53:42 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1346C06175F
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Mar 2021 12:53:41 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id u14so18478792wri.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Mar 2021 12:53:41 -0800 (PST)
+        Tue, 9 Mar 2021 16:16:14 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EE2FC06174A;
+        Tue,  9 Mar 2021 13:16:14 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id v15so18623738wrx.4;
+        Tue, 09 Mar 2021 13:16:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=3I/q3EG/IHI7OWLh5V7u8JYHe3VN4NygFslGDCdX/wI=;
-        b=TYF5YWMpU+aB46Sbxy5ULNmv5TcDAaJAXT85t3pxPJ9pjgt6rjmKNawbfL3ykGdrqb
-         rMe2+vdbcPy6v8gk9YQW2OYNkS8LgY7KHkCQChqXeOmzUuwcE5YfVA81L2CshrqZDbBL
-         IWC5Ityp6hZCP7h9PolZBK81l0g2qx9N1/t5Z2khTmpmPu1nZ53JpaHxAZztIqMjb3VM
-         MK2gzRBj6AUlByiiTzzzAWo5rA/kvCLDPbBbkBmE0CbxA+M/6Gs2X55P/Wck/eG96Dg0
-         8bhFjzSe4nQ+JvilP2K8lXEy82Oobiav6HmCPhjHvg3DNDo2eXa97ovFtzvH0SY2Q6/f
-         uJaQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=7lQjUAuZrBubvY73c7vHN9cBJdm4pKkA1MVN2AKU/c4=;
+        b=PeWH6MgI5dt1Wjua3ckKta6G/BQEtJ+7XweOAFy6C2ytpCVjIhRTs/Tz2ipwSde4jJ
+         LnKG6S2Url+XraMAaT3a608l6JvEtid2v91Y4iEHbD4HkVWV/obcJH8jQq3bLfuIUolL
+         ybWUUQDpq9dj0Bfp4810QUgTuBUqSQBb2zXi4rGbY+hu4hC9sy3bbW3g8jFN+Loh1P9C
+         vYV85gsI0/hsbyQLcBS5+FYO6/3YkLQLSbM/fNCnymmzB5/aSwi8HWxSwD8NPfIHBP+M
+         3iQYSwTcgGq4wG67YiMb7UiV6bz5F/pdpzm42/y0wSu9/hmsVtYIIwFbyEEOGP/6TWYq
+         aDIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=3I/q3EG/IHI7OWLh5V7u8JYHe3VN4NygFslGDCdX/wI=;
-        b=N3bkElq8G3oIwuUTzH4cfoMNWLbkhZs7DlAdanwbAOizq1IAjHA3VSx/8csLKoDliT
-         h5xl7hGwmWybaKdOjH668+89JRR5LdTUFZvnlcb0JYLSHy10Ux5UXPKq220+NPL7kWDJ
-         QVyYoeogf3PSt5W93sM9bGJcLv39oa9xKLjS9/AyZwDcVWcMIYDhGljE13atHsKjQcop
-         mNa8ZFgbiYWbR6/xdY/WU7HqSFTYRChWS6ZvDrXJLnC+YuKDqgoog8k/WYy3plnmRP5z
-         7Yg61IfWayBNGo6Zdwr+OPBbDxqg2Lqr8iIJ2g+ZgvaclLPzIqCkmYiHrXrCzcm5HMLs
-         9e5Q==
-X-Gm-Message-State: AOAM530SVSbCdrTzBn9occJQsXZZJ3ktc/fMBAoipJS5uD4Qb2GC9fDf
-        3cnRTAZQeK9PRaib9jOzq/8Hlg==
-X-Google-Smtp-Source: ABdhPJzUPVAEd/6qItSD+NPDdAmk1NXcohdkKkks7iXoEtO3anZObHaPtVkFnPJVDbaHX5l6vQKaoA==
-X-Received: by 2002:a5d:63d2:: with SMTP id c18mr30149368wrw.277.1615323220628;
-        Tue, 09 Mar 2021 12:53:40 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id h20sm5615246wmm.19.2021.03.09.12.53.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Mar 2021 12:53:39 -0800 (PST)
-Subject: Re: [PATCH 0/5] Venus msm8916 fixes
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20210308105205.445148-1-stanimir.varbanov@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Message-ID: <315c062f-04df-af09-6987-6845862eb40a@linaro.org>
-Date:   Tue, 9 Mar 2021 20:55:09 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=7lQjUAuZrBubvY73c7vHN9cBJdm4pKkA1MVN2AKU/c4=;
+        b=ist9evG0pFVwcNna435j5OeTVxwHpfhyFN5kgLyB2bEaP431NzGw4Z/FPenduIxVvw
+         S21vhVtDRQ71tBztI2lUAWV7vXjsnlmSflX8XPp4EUNwOrKL3hEZUQtb7Jg5gmf1Vba/
+         PRAPIVh0f8uFvc4JBPYULrT80H7py5PUMtDjHj1buJctnvPQ9eZqi0+HVgSQkP38E9UQ
+         vk4ajUFIxV19irPA78LqRjMPhnwNdwyfasgOfhqdiqAfMa+40f9u3vafTD1V6/vEJmHA
+         ej6Xtbtf4B34Qqp73OvE10AV9cXOjjyqFZg1ryDZz0H2bIzVAi/JzXkZwDuGxmjwrRnN
+         CIRA==
+X-Gm-Message-State: AOAM533Xv6cvo7sErqtkTTuU6CcqvBHpTNOBLEX6R5kjVCGFvn/MYo6t
+        zFp84QA1A9zNZo/EiaYqEKPqWaxBiJxhKzXoM4Z/W3kU2II=
+X-Google-Smtp-Source: ABdhPJwEeJvrulxRpS9Lj9xsUhlNElSBzee6JYuQMFp6z/lclGE93Jf2ZHUTtLNRh7VniOfS7DLP+AEGUic2do6RUto=
+X-Received: by 2002:a5d:4e52:: with SMTP id r18mr32055260wrt.28.1615324572875;
+ Tue, 09 Mar 2021 13:16:12 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20210308105205.445148-1-stanimir.varbanov@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20210306113519.294287-1-ardb@kernel.org> <20210307110228.GP17424@dragon>
+ <CAMj1kXFiqXwCqJE9Wxu-tc3HYSh1qCqPLL_Csc=gW6SOYrweWw@mail.gmail.com>
+ <20210309032248.GR17424@dragon> <CAF6AEGu6ZpfFK5FnQjtE33kkYL_t63J=yJLeK70_46FaLPq7eQ@mail.gmail.com>
+ <CAMj1kXGwhx9Z-JCw2NvWBYtHbzVb=EmJn_Jfd97wGzDYNQG2Lw@mail.gmail.com>
+In-Reply-To: <CAMj1kXGwhx9Z-JCw2NvWBYtHbzVb=EmJn_Jfd97wGzDYNQG2Lw@mail.gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Tue, 9 Mar 2021 13:19:20 -0800
+Message-ID: <CAF6AEGur_68YTQ4Op8i3kRsNmv=BVHCk8brOvDNq-zAUcw1zoQ@mail.gmail.com>
+Subject: Re: [PATCH] efi: stub: override RT_PROP table supported mask based on
+ EFI variable
+To:     Ard Biesheuvel <ardb@kernel.org>
+Cc:     Shawn Guo <shawn.guo@linaro.org>,
+        linux-efi <linux-efi@vger.kernel.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Leif Lindholm <leif@nuviainc.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/03/2021 10:52, Stanimir Varbanov wrote:
-> Hello,
-> 
-> Here are few fixes for msm8916 (Venus v1x):
->   * Two fixes in hfi_parser
->   * One fix related to opp_set_clk_rate
->   * Default header-mode for encoder is changed to join-with-1st-frame
->   * Added support for actual-plane-info for v1x too
-> 
-> regards,
-> Stan
-> 
-> Stanimir Varbanov (5):
->    venus: hfi_parser: Don't initialize parser on v1
->    venus: hfi_parser: Check for instance after hfi platform get
->    venus: pm_helpers: Set opp clock name for v1
->    venus: venc_ctrls: Change default header mode
->    venus: hfi_cmds: Support plane-actual-info property from v1
-> 
->   drivers/media/platform/qcom/venus/hfi_cmds.c  | 24 +++++++++----------
->   .../media/platform/qcom/venus/hfi_parser.c    | 12 ++++++----
->   .../media/platform/qcom/venus/pm_helpers.c    | 20 +++++++++++++++-
->   .../media/platform/qcom/venus/venc_ctrls.c    |  2 +-
->   4 files changed, 39 insertions(+), 19 deletions(-)
-> 
+On Tue, Mar 9, 2021 at 10:47 AM Ard Biesheuvel <ardb@kernel.org> wrote:
+>
+> On Tue, 9 Mar 2021 at 19:10, Rob Clark <robdclark@gmail.com> wrote:
+> >
+> > On Mon, Mar 8, 2021 at 7:22 PM Shawn Guo <shawn.guo@linaro.org> wrote:
+> > >
+> > > On Mon, Mar 08, 2021 at 02:34:48PM +0100, Ard Biesheuvel wrote:
+> > > > On Sun, 7 Mar 2021 at 12:02, Shawn Guo <shawn.guo@linaro.org> wrote:
+> > > > >
+> > > > > On Sat, Mar 06, 2021 at 12:35:19PM +0100, Ard Biesheuvel wrote:
+> > > > > > Allow EFI systems to override the set of supported runtime services
+> > > > > > declared via the RT_PROP table, by checking for the existence of a
+> > > > > > 'OverrideSupported' EFI variable of the appropriate size under the
+> > > > > > RT_PROP table GUID, and if it does, combine the supported mask using
+> > > > > > logical AND. (This means the override can only remove support, not
+> > > > > > add it back).
+> > > > > >
+> > > > > > Cc: Jeffrey Hugo <jhugo@codeaurora.org>,
+> > > > > > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > > > > > Cc: Shawn Guo <shawn.guo@linaro.org>
+> > > > > > Cc: Rob Clark <robdclark@gmail.com>
+> > > > > > Cc: Leif Lindholm <leif@nuviainc.com>
+> > > > > > Cc: linux-arm-msm@vger.kernel.org
+> > > > > >
+> > > > > > Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+> > > > >
+> > > > > Awesome, Ard!  On both Lenovo Yoga C630 and Flex 5G latops:
+> > > > >
+> > > > > Tested-by: Shawn Guo <shawn.guo@linaro.org>
+> > > > >
+> > > > > With 'OverrideSupported' EFI variable added from UEFI Shell, we can drop
+> > > > > 'efi=novamap' kernel cmdline and get around the broken poweroff runtime
+> > > > > services nicely.  Thanks!
+> > > > >
+> > > >
+> > > > Thanks for confirming.
+> > > >
+> > > > However, I am not going to merge this without some justification, and
+> > > > hopefully some input from other folks (Leif?)
+> > > >
+> > > > RTPROP already provides what we need on all platforms that use
+> > > > DtbLoader, and the patch for that is queued up for v5.12-rcX, with a
+> > > > cc:stable to v5.10. This allows any RT service to be marked as
+> > > > disabled, including SetVirtualAddressMap().
+> > > >
+> > > > So afaict, that means that this patch would be a special case for
+> > > > Flex5G, right?
+> > >
+> > > It's for all Snapdragon based laptops, as we need to disable
+> > > SetVirtualAddressMap runtime services on all of them.
+> > >
+> > > > So how are platforms such as this one going to load the
+> > > > DTB? If some loader will be involved (or even just GRUB),
+> > >
+> > > Yes, GRUB.
+> > >
+> > > > shouldn't it
+> > > > be that component that sets RTPROP like DtbLoader will, not the kernel
+> > > > itself.
+> > > >
+> > > > Btw I don't think ACPI boot is a use case here. I don't see a software
+> > > > framebuffer with no wifi support as a usage mode that justifies
+> > > > carrying EFI stub hacks for everyone.
+> > >
+> > > Okay.  I'm fine to carry it as an out-of-tree patch until someday you
+> > > consider ACPI boot is useful for everyone.  But I do boot these laptops
+> > > with ACPI at daily basis right now as arm64 native build machine, with
+> > > USB Ethernet adapter.
+> >
+> > fwiw, the valid use-case for ACPI boot on these things is for distro
+> > installer.. it might not be the shiny accelerated experience, but you
+> > want to be able to get thru the installer and then install updates to
+> > get latest kernel/dtb/etc
+> >
+> > it is a small use-case, but kinda an important step ;-)
+> >
+>
+> That is a fair point. However, as I understand it, we need this to work around
+> - the need to pass efi=novamap
+> - broken poweroff on Flex5g
+>
+> So an installer either needs to set the EFI variable, or pass
+> efi=novamap on the first boot. Note that there are no arm64 EFI
+> systems known where efi=novamap causes problems. In fact, I would
+> prefer to stop using SetVirtualAddressMap() altogether, as it does not
+> provide any benefit whatsoever. So perhaps we should make efi=novamap
+> the default and be done with it.
+>
+> Broken poweroff is hardly a showstopper for an installer, given that
+> we cannot even install GRUB correctly.
+>
+> In summary, I am more than happy to collaborate constructively on this
+> (which is why I wrote the patch), but I don't think we're at a point
+> yet where this is the only thing standing in our way when it comes to
+> a smooth out-of-the-box Linux installation experience.
 
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Fair, it was less of an argument for/against the patch, and more just
+reminding folks that there is an ACPI boot use case ;-)
+
+BR,
+-R
