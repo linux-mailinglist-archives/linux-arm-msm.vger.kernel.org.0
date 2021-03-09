@@ -2,140 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 87DCD332DE3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Mar 2021 19:11:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EF798332E77
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Mar 2021 19:45:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231922AbhCISKe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Mar 2021 13:10:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50282 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231911AbhCISKQ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Mar 2021 13:10:16 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E3B1C06174A;
-        Tue,  9 Mar 2021 10:10:16 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id u16so17516321wrt.1;
-        Tue, 09 Mar 2021 10:10:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=SzNzOMmL3LWxNFZWZ4MjuPE4IoBxhndH+OpOnMvFnFM=;
-        b=XJpqnTCcD3rJKzTtEjCLK3L/1Eav0uY8rGGdlCYiKKUB+gNQB08xzfQR4hGT+d894n
-         dPC0fitBR86mE0VK1AsNBpc6cwi1NKicxU6hH2yRqklx3E7CyqlYYCQ8jeMU97ED/uo9
-         RTVGVpo7EsR8yF7kwy3MYXbQgon85qmaOZlo/uiuOn9JEpY4QF4mQkigKpHaBEcB09n7
-         6Gi58gNkL8QpNNXgDgxGvnvI+rEkTYs/ZF3Hsgxc1MRfP9BHwHWlaq0xgFRwT1BPncCe
-         qjnJWEzELT1xBGsgeKXAKor/MGQpfC/xdeJMl/lR+49PO/+/kNwlluRIJWygHidLXR2w
-         TM3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=SzNzOMmL3LWxNFZWZ4MjuPE4IoBxhndH+OpOnMvFnFM=;
-        b=hGCpkTRCUgA5Uwcc5BC8KK5K/mp6n2eXBSGyxxwowN3PJpATf1IAHz/GCxsjtrnk41
-         1a1Ab3Q+XqY++LgP580UDteYi+XuYzZ+J0roThz+Ba8rexEmcR3jY7W11Zt/zg+c1BkV
-         P4eI9ygMpGEPSOuZc0DQKRjP3fZVpFubvWoSle0E74szQv6fXbjzpXhmo/9RHI8Niykk
-         zpCRUQuCt45FlTk/e1S7LmIvK8lKnracNLehC42r1eTHYi8gudaZ2GjDw6h9A06LsK7N
-         E8M69wbyjulp0lKJTx1vmVmNfLwvzRPBfRFDOQ0UpHSg6QvoxlvtUAkHOdNjbPqTBr0m
-         ADaQ==
-X-Gm-Message-State: AOAM533ZoHzDyx5PJbOLWHpp3/tLrp5aofqML5wqBA+AQXqb4KTWE3I4
-        GAV1pj0+XMEiL215EKBP/50YMrY5iiM6gSKFtErgezLShWY=
-X-Google-Smtp-Source: ABdhPJwE3ScQ1bpw69IoW/E49g+COZlQQ8p/WEAkLFTH9EauMwzuIfQQWf7WzBfc6ok6k0hJsW637cSOvBIdtVRlvdo=
-X-Received: by 2002:a5d:4e52:: with SMTP id r18mr31318206wrt.28.1615313415017;
- Tue, 09 Mar 2021 10:10:15 -0800 (PST)
-MIME-Version: 1.0
-References: <20210306113519.294287-1-ardb@kernel.org> <20210307110228.GP17424@dragon>
- <CAMj1kXFiqXwCqJE9Wxu-tc3HYSh1qCqPLL_Csc=gW6SOYrweWw@mail.gmail.com> <20210309032248.GR17424@dragon>
-In-Reply-To: <20210309032248.GR17424@dragon>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 9 Mar 2021 10:13:22 -0800
-Message-ID: <CAF6AEGu6ZpfFK5FnQjtE33kkYL_t63J=yJLeK70_46FaLPq7eQ@mail.gmail.com>
-Subject: Re: [PATCH] efi: stub: override RT_PROP table supported mask based on
- EFI variable
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Ard Biesheuvel <ardb@kernel.org>,
-        linux-efi <linux-efi@vger.kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Leif Lindholm <leif@nuviainc.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S230433AbhCISpN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Mar 2021 13:45:13 -0500
+Received: from m42-2.mailgun.net ([69.72.42.2]:19932 "EHLO m42-2.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230425AbhCISpI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 9 Mar 2021 13:45:08 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1615315508; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=UAKjo8zZG7M277bUe+2k6g6UgShDJnZ1RTTp42M0xWY=; b=qQ1CDFOwdYlJhRn+frs/X2bkapqYU98bqcNLt+RZrWKedJOp0q5jcj5Qclys/rvQyjRL51lP
+ eI/tmeVF8WgWiBirR1TyYQf2WBKsIghhJnxsf/XVCSVWmnc5QFofprHNT7m3RxOzNBbSLpda
+ IDAEyPIdcxAlimw4GGtqthOkBaA=
+X-Mailgun-Sending-Ip: 69.72.42.2
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 6047c22aa6850484a681f29f (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 09 Mar 2021 18:44:58
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 31575C433CA; Tue,  9 Mar 2021 18:44:58 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 02BE0C433CA;
+        Tue,  9 Mar 2021 18:44:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 02BE0C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
+        carl.yin@quectel.com, naveen.kumar@quectel.com,
+        loic.poulain@linaro.org, Bhaumik Bhatt <bbhatt@codeaurora.org>
+Subject: [PATCH v3] bus: mhi: core: Add missing checks for MMIO register entries
+Date:   Tue,  9 Mar 2021 10:44:50 -0800
+Message-Id: <1615315490-36017-1-git-send-email-bbhatt@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 8, 2021 at 7:22 PM Shawn Guo <shawn.guo@linaro.org> wrote:
->
-> On Mon, Mar 08, 2021 at 02:34:48PM +0100, Ard Biesheuvel wrote:
-> > On Sun, 7 Mar 2021 at 12:02, Shawn Guo <shawn.guo@linaro.org> wrote:
-> > >
-> > > On Sat, Mar 06, 2021 at 12:35:19PM +0100, Ard Biesheuvel wrote:
-> > > > Allow EFI systems to override the set of supported runtime services
-> > > > declared via the RT_PROP table, by checking for the existence of a
-> > > > 'OverrideSupported' EFI variable of the appropriate size under the
-> > > > RT_PROP table GUID, and if it does, combine the supported mask using
-> > > > logical AND. (This means the override can only remove support, not
-> > > > add it back).
-> > > >
-> > > > Cc: Jeffrey Hugo <jhugo@codeaurora.org>,
-> > > > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > > Cc: Shawn Guo <shawn.guo@linaro.org>
-> > > > Cc: Rob Clark <robdclark@gmail.com>
-> > > > Cc: Leif Lindholm <leif@nuviainc.com>
-> > > > Cc: linux-arm-msm@vger.kernel.org
-> > > >
-> > > > Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-> > >
-> > > Awesome, Ard!  On both Lenovo Yoga C630 and Flex 5G latops:
-> > >
-> > > Tested-by: Shawn Guo <shawn.guo@linaro.org>
-> > >
-> > > With 'OverrideSupported' EFI variable added from UEFI Shell, we can drop
-> > > 'efi=novamap' kernel cmdline and get around the broken poweroff runtime
-> > > services nicely.  Thanks!
-> > >
-> >
-> > Thanks for confirming.
-> >
-> > However, I am not going to merge this without some justification, and
-> > hopefully some input from other folks (Leif?)
-> >
-> > RTPROP already provides what we need on all platforms that use
-> > DtbLoader, and the patch for that is queued up for v5.12-rcX, with a
-> > cc:stable to v5.10. This allows any RT service to be marked as
-> > disabled, including SetVirtualAddressMap().
-> >
-> > So afaict, that means that this patch would be a special case for
-> > Flex5G, right?
->
-> It's for all Snapdragon based laptops, as we need to disable
-> SetVirtualAddressMap runtime services on all of them.
->
-> > So how are platforms such as this one going to load the
-> > DTB? If some loader will be involved (or even just GRUB),
->
-> Yes, GRUB.
->
-> > shouldn't it
-> > be that component that sets RTPROP like DtbLoader will, not the kernel
-> > itself.
-> >
-> > Btw I don't think ACPI boot is a use case here. I don't see a software
-> > framebuffer with no wifi support as a usage mode that justifies
-> > carrying EFI stub hacks for everyone.
->
-> Okay.  I'm fine to carry it as an out-of-tree patch until someday you
-> consider ACPI boot is useful for everyone.  But I do boot these laptops
-> with ACPI at daily basis right now as arm64 native build machine, with
-> USB Ethernet adapter.
+As per documentation, fields marked as (required) in an MHI
+controller structure need to be populated by the controller driver
+before calling mhi_register_controller(). Ensure all required
+pointers and non-zero fields are present in the controller before
+proceeding with the registration.
 
-fwiw, the valid use-case for ACPI boot on these things is for distro
-installer.. it might not be the shiny accelerated experience, but you
-want to be able to get thru the installer and then install updates to
-get latest kernel/dtb/etc
+Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+---
+ v3: removed fw_image as not all controllers require it
+ v2: removed iova_start and iova_stop as they can be zero
 
-it is a small use-case, but kinda an important step ;-)
+ drivers/bus/mhi/core/init.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-BR,
--R
+diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+index 272f350..d8882b3 100644
+--- a/drivers/bus/mhi/core/init.c
++++ b/drivers/bus/mhi/core/init.c
+@@ -879,12 +879,10 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
+ 	u32 soc_info;
+ 	int ret, i;
+ 
+-	if (!mhi_cntrl)
+-		return -EINVAL;
+-
+-	if (!mhi_cntrl->runtime_get || !mhi_cntrl->runtime_put ||
++	if (!mhi_cntrl || !mhi_cntrl->cntrl_dev || !mhi_cntrl->regs ||
++	    !mhi_cntrl->runtime_get || !mhi_cntrl->runtime_put ||
+ 	    !mhi_cntrl->status_cb || !mhi_cntrl->read_reg ||
+-	    !mhi_cntrl->write_reg || !mhi_cntrl->nr_irqs)
++	    !mhi_cntrl->write_reg || !mhi_cntrl->nr_irqs || !mhi_cntrl->irq)
+ 		return -EINVAL;
+ 
+ 	ret = parse_config(mhi_cntrl, config);
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
