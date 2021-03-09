@@ -2,48 +2,193 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B911F331BB0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Mar 2021 01:34:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 92FF6331C0A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Mar 2021 02:08:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230460AbhCIAeO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Mar 2021 19:34:14 -0500
-Received: from mail.kernel.org ([198.145.29.99]:50728 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229730AbhCIAdq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Mar 2021 19:33:46 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 59D576527A;
-        Tue,  9 Mar 2021 00:33:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1615250025;
-        bh=1zIZ36SUoA3WcvIfkwns7M5pVMeogu0E9xYGKWlnvx0=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=dYeW7/38Iez7QGnuvaL5QcZ28f5m7s7Pdj4X26eeej27xN3NDszi0HDe1UajzJS9H
-         l4LUDUQuuVbbC4FoW7i6NRJ+795RlA3u1oeuxVM8klhKOCjZ4U61dryeIk3tTgaN4F
-         AS7gfzYUPGc/eUcuudufYbouyYclzCMKL0bccJv+WAqUu8kStBGaPf+a691CygLiD9
-         8epWx/ZscM3DbNmrdSYrt9/tIqc2M//aBj3dvvvAiNhY8W+h0QsryHC1isHowqZer9
-         dvy1Kecvlro7Ip39yVA3+8VOLtVlsGn2HH/6Gw41Pk3NBwP+Ks1KPJTM6ErfV23Qba
-         u61AqJe8rqfJA==
-Date:   Mon, 8 Mar 2021 16:33:44 -0800
-From:   Jakub Kicinski <kuba@kernel.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
-        gregkh@linuxfoundation.org, linux-arm-msm@vger.kernel.org,
-        aleksander@aleksander.es, linux-kernel@vger.kernel.org,
-        davem@davemloft.net, netdev@vger.kernel.org,
-        bjorn.andersson@linaro.org
-Subject: Re: [PATCH v2] bus: mhi: Add Qcom WWAN control driver
-Message-ID: <20210308163344.3b69fae4@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-In-Reply-To: <1615237167-19969-1-git-send-email-loic.poulain@linaro.org>
-References: <1615237167-19969-1-git-send-email-loic.poulain@linaro.org>
+        id S230127AbhCIBIU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Mar 2021 20:08:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54500 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230234AbhCIBID (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 8 Mar 2021 20:08:03 -0500
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5A33C06175F
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Mar 2021 17:08:03 -0800 (PST)
+Received: by mail-oi1-x22f.google.com with SMTP id z126so13130338oiz.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Mar 2021 17:08:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=p3FtObQwLktZn8aGqaqTkJigyXLtVopswNVQ613mjEs=;
+        b=F/wLpEFLMVCgh30TqSmJNK7jOsg34EkzybIDqUdNCB9R8eE4pELbqQDpb+tBV/Lsqs
+         lYtzP+qx/g1MhqOCejSome/hzPXVGHfgbNnOneeuTnW/dfBzyaOZN9piieWhcACbC8QZ
+         lmKII0J5GCK5BrSxy19wj+eRPjsbEJtC+ZfJRxL5tFJH/Jb7ybb9pdKY6Jb804SatAz2
+         JF0dF/CtdssCbCKW9ih6OQDx9qHwcgPqg1wlTFcC4gDFZMFWIW4WRAeOsSOc7GoO1Z2/
+         FFeSkzy4lAiiJT1IWh3BGD5CXrfcO1vXYgnxMHtNsdSYTpzWV/AByQb09HUKmsX34ABD
+         +EwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=p3FtObQwLktZn8aGqaqTkJigyXLtVopswNVQ613mjEs=;
+        b=q9spYHnfa3rwtSWmEu3nRZa84qLdeUNx0xGCK2AsDWqpSnZ81VDEyt1EWfIggUfNgL
+         ZCEV3QSoeWuTVWA42w4z/uo5x8oNfMKifMynM0sfwOqcHONHkAISMGdMS7tVozOdsrCN
+         AZCwktuEJ5vdkGafFPXrUHc1mzafq3XfJdMCHIVvhHx8ipKzRznVelPbZuOnQttUw3JG
+         zzlKVp8c/QyOJQgHIaUwgxhPgf0VDvAyjw9WOC1RXPfbZ+x+puc9b3X1SBp6i0IYEgUq
+         P1GO+HQgo1xAoRD4A5Qqa/TvLAgxMsfwPcpLYYGQBWrn8l4/nqUwO4OwJbj1mXXzRF4v
+         m4yQ==
+X-Gm-Message-State: AOAM532/OYdAbvABgPPhokEZg5YQES8KMsS2hP+DtYk6pt18YMC7ml50
+        6DxcuYeyBDiPUF+8q9u+jbzU1w==
+X-Google-Smtp-Source: ABdhPJxUjhGkfg0WWy4n+xEDcOrT1Nsu4/Gt2YWOB2KFJ2vxFBmaKzTzlsHGsvzivkpCust6ujKr6Q==
+X-Received: by 2002:aca:d6d3:: with SMTP id n202mr1222707oig.175.1615252083045;
+        Mon, 08 Mar 2021 17:08:03 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id s125sm693278oif.56.2021.03.08.17.08.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 Mar 2021 17:08:02 -0800 (PST)
+Date:   Mon, 8 Mar 2021 19:08:00 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Andy Shevchenko <andriy.shevchenko@intel.com>,
+        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3 1/2] pinctrl: qcom: sc8180x: drop the use of tiles
+Message-ID: <YEbKcOwr/c1fPFLQ@builder.lan>
+References: <20210304060520.24975-1-shawn.guo@linaro.org>
+ <20210304060520.24975-2-shawn.guo@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210304060520.24975-2-shawn.guo@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon,  8 Mar 2021 21:59:27 +0100 Loic Poulain wrote:
-> ---
->  v2: update copyright (2021)
+On Thu 04 Mar 00:05 CST 2021, Shawn Guo wrote:
 
-Please look again at my reply to your v1.
+> To support both ACPI and DT, it makes more sense to not use tiles for
+> pinctrl-sc8180x driver, as ACPI table describes TLMM block with one
+> single memory resource.  Since DTS of SC8180X hasn't landed, there is
+> still chance to align DT description with ACPI.
+> 
+
+I don't like the idea that we make up addresses to put in the DT to fit
+what was put in the DSDT. It is 3 different memory regions, with things
+in-between that Linux shouldn't touch.
+
+Isn't it possible to during ACPI probe take reg 0 and register the 3
+named regions instead?
+
+Regards,
+Bjorn
+
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> ---
+>  drivers/pinctrl/qcom/pinctrl-sc8180x.c | 41 +++++++++-----------------
+>  1 file changed, 14 insertions(+), 27 deletions(-)
+> 
+> diff --git a/drivers/pinctrl/qcom/pinctrl-sc8180x.c b/drivers/pinctrl/qcom/pinctrl-sc8180x.c
+> index b765bf667574..66f76ed22200 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-sc8180x.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-sc8180x.c
+> @@ -11,17 +11,9 @@
+>  
+>  #include "pinctrl-msm.h"
+>  
+> -static const char * const sc8180x_tiles[] = {
+> -	"south",
+> -	"east",
+> -	"west"
+> -};
+> -
+> -enum {
+> -	SOUTH,
+> -	EAST,
+> -	WEST
+> -};
+> +#define WEST	0x00100000
+> +#define EAST	0x00500000
+> +#define SOUTH	0x00d00000
+>  
+>  #define FUNCTION(fname)					\
+>  	[msm_mux_##fname] = {				\
+> @@ -31,7 +23,7 @@ enum {
+>  	}
+>  
+>  #define REG_SIZE 0x1000
+> -#define PINGROUP_OFFSET(id, _tile, offset, f1, f2, f3, f4, f5, f6, f7, f8, f9)	\
+> +#define PINGROUP_OFFSET(id, base, offset, f1, f2, f3, f4, f5, f6, f7, f8, f9)	\
+>  	{						\
+>  		.name = "gpio" #id,			\
+>  		.pins = gpio##id##_pins,		\
+> @@ -49,12 +41,11 @@ enum {
+>  			msm_mux_##f9			\
+>  		},					\
+>  		.nfuncs = 10,				\
+> -		.ctl_reg = REG_SIZE * id + offset,	\
+> -		.io_reg = REG_SIZE * id + 0x4 + offset,	\
+> -		.intr_cfg_reg = REG_SIZE * id + 0x8 + offset,	\
+> -		.intr_status_reg = REG_SIZE * id + 0xc + offset,\
+> -		.intr_target_reg = REG_SIZE * id + 0x8 + offset,\
+> -		.tile = _tile,				\
+> +		.ctl_reg = base + REG_SIZE * id + offset,		\
+> +		.io_reg = base + REG_SIZE * id + 0x4 + offset,		\
+> +		.intr_cfg_reg = base + REG_SIZE * id + 0x8 + offset,	\
+> +		.intr_status_reg = base + REG_SIZE * id + 0xc + offset,	\
+> +		.intr_target_reg = base + REG_SIZE * id + 0x8 + offset,	\
+>  		.mux_bit = 2,				\
+>  		.pull_bit = 0,				\
+>  		.drv_bit = 6,				\
+> @@ -71,20 +62,19 @@ enum {
+>  		.intr_detection_width = 2,		\
+>  	}
+>  
+> -#define PINGROUP(id, _tile, f1, f2, f3, f4, f5, f6, f7, f8, f9)	\
+> -	PINGROUP_OFFSET(id, _tile, 0x0, f1, f2, f3, f4, f5, f6, f7, f8, f9)
+> +#define PINGROUP(id, base, f1, f2, f3, f4, f5, f6, f7, f8, f9)	\
+> +	PINGROUP_OFFSET(id, base, 0x0, f1, f2, f3, f4, f5, f6, f7, f8, f9)
+>  
+>  #define SDC_QDSD_PINGROUP(pg_name, ctl, pull, drv)	\
+>  	{						\
+>  		.name = #pg_name,			\
+>  		.pins = pg_name##_pins,			\
+>  		.npins = (unsigned int)ARRAY_SIZE(pg_name##_pins),	\
+> -		.ctl_reg = ctl,				\
+> +		.ctl_reg = EAST + ctl,			\
+>  		.io_reg = 0,				\
+>  		.intr_cfg_reg = 0,			\
+>  		.intr_status_reg = 0,			\
+>  		.intr_target_reg = 0,			\
+> -		.tile = EAST,				\
+>  		.mux_bit = -1,				\
+>  		.pull_bit = pull,			\
+>  		.drv_bit = drv,				\
+> @@ -105,12 +95,11 @@ enum {
+>  		.name = #pg_name,			\
+>  		.pins = pg_name##_pins,			\
+>  		.npins = (unsigned int)ARRAY_SIZE(pg_name##_pins),	\
+> -		.ctl_reg = 0xb6000,			\
+> -		.io_reg = 0xb6004,			\
+> +		.ctl_reg = SOUTH + 0xb6000,		\
+> +		.io_reg = SOUTH + 0xb6004,		\
+>  		.intr_cfg_reg = 0,			\
+>  		.intr_status_reg = 0,			\
+>  		.intr_target_reg = 0,			\
+> -		.tile = SOUTH,				\
+>  		.mux_bit = -1,				\
+>  		.pull_bit = 3,				\
+>  		.drv_bit = 0,				\
+> @@ -1575,8 +1564,6 @@ static const struct msm_gpio_wakeirq_map sc8180x_pdc_map[] = {
+>  };
+>  
+>  static struct msm_pinctrl_soc_data sc8180x_pinctrl = {
+> -	.tiles = sc8180x_tiles,
+> -	.ntiles = ARRAY_SIZE(sc8180x_tiles),
+>  	.pins = sc8180x_pins,
+>  	.npins = ARRAY_SIZE(sc8180x_pins),
+>  	.functions = sc8180x_functions,
+> -- 
+> 2.17.1
+> 
