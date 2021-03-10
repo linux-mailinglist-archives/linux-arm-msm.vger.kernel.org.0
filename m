@@ -2,118 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A5CF33490E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 21:43:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C447F334910
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 21:44:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232122AbhCJUmy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Mar 2021 15:42:54 -0500
+        id S230173AbhCJUn7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Mar 2021 15:43:59 -0500
 Received: from m42-2.mailgun.net ([69.72.42.2]:37034 "EHLO m42-2.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232067AbhCJUmc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Mar 2021 15:42:32 -0500
+        id S231670AbhCJUni (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Mar 2021 15:43:38 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1615408952; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=y9dG7dshC+k0sBZNCdzBkLkCPX7Wmt3l2cPIISsNooE=; b=WaQOi2bccZapIvLzWIWRdv67Z0/d911rL4xM5qm7hWbdR3R2V0ZjQUNTRB0c9PbPfzzjY4C+
- LJv0UFPcww3BoXvfAXzbQK5SI3VuvKPc5Bdpus5hqrVcGAVlbTTHOGnBjB5Ku8tWsPnJ/bW+
- we6TibLgpDlAVip2PMb63hPmzXM=
+ s=smtp; t=1615409017; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=M79y3CBZviledyDDkXZO8CcvgmfIqJFxp+oIh/1uzyc=; b=av88rA0K09mdCN3GU+XTo43iTkWDqRNuENMiVJ0l6WmQoT3MzRWDX9eu79aQDSaOFrAcbj2K
+ 4A24yOFJrKY7+D+AzNmU/tR0I3b3XaP0sBGIFYgczrNdlGAqpHXfpYj+bXL0jCYo6tOobMs/
+ 5UvlDzfrRV1hrf1WpC8QUy0odR0=
 X-Mailgun-Sending-Ip: 69.72.42.2
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 60492f236e1c22bc8d55257f (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 10 Mar 2021 20:42:11
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 60492f72af1d9a68ad2b5959 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 10 Mar 2021 20:43:30
  GMT
-Sender: jhugo=codeaurora.org@mg.codeaurora.org
+Sender: hemantk=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 74BBCC43461; Wed, 10 Mar 2021 20:42:11 +0000 (UTC)
+        id 58CE8C43461; Wed, 10 Mar 2021 20:43:29 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from jhugo-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 26331C433C6;
-        Wed, 10 Mar 2021 20:42:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 26331C433C6
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A730CC43462;
+        Wed, 10 Mar 2021 20:43:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A730CC43462
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
-Cc:     bbhatt@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Jeffrey Hugo <jhugo@codeaurora.org>
-Subject: [PATCH v2 RESEND] bus: mhi: core: Wait for ready state after reset
-Date:   Wed, 10 Mar 2021 13:41:58 -0700
-Message-Id: <1615408918-7242-1-git-send-email-jhugo@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
+Subject: Re: [PATCH] bus: mhi: Command completion workaround
+To:     Loic Poulain <loic.poulain@linaro.org>,
+        manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org
+References: <1615376308-1941-1-git-send-email-loic.poulain@linaro.org>
+From:   Hemant Kumar <hemantk@codeaurora.org>
+Message-ID: <a24bb3a0-30f8-a32c-dcde-849725b38ebd@codeaurora.org>
+Date:   Wed, 10 Mar 2021 12:43:28 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
+In-Reply-To: <1615376308-1941-1-git-send-email-loic.poulain@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-After the device has signaled the end of reset by clearing the reset bit,
-it will automatically reinit MHI and the internal device structures.  Once
-That is done, the device will signal it has entered the ready state.
+Hi Loic,
 
-Signaling the ready state involves sending an interrupt (MSI) to the host
-which might cause IOMMU faults if it occurs at the wrong time.
+On 3/10/21 3:38 AM, Loic Poulain wrote:
+> Some buggy hardwares (e.g sdx24) may report the current command
+> ring wp pointer instead of the command completion pointer. It's
+> obviously wrong, causing completion timeout. We can however deal
+> with that situation by completing the cmd n-1 element, which is
+> what the device actually completes.
+> 
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> ---
+>   drivers/bus/mhi/core/main.c | 18 ++++++++++++++++++
+>   1 file changed, 18 insertions(+)
+> 
+> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> index 16b9640..3e3c520 100644
+> --- a/drivers/bus/mhi/core/main.c
+> +++ b/drivers/bus/mhi/core/main.c
+> @@ -707,6 +707,7 @@ static void mhi_process_cmd_completion(struct mhi_controller *mhi_cntrl,
+>   {
+>   	dma_addr_t ptr = MHI_TRE_GET_EV_PTR(tre);
+>   	struct mhi_cmd *cmd_ring = &mhi_cntrl->mhi_cmd[PRIMARY_CMD_RING];
+> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+>   	struct mhi_ring *mhi_ring = &cmd_ring->ring;
+>   	struct mhi_tre *cmd_pkt;
+>   	struct mhi_chan *mhi_chan;
+> @@ -714,6 +715,23 @@ static void mhi_process_cmd_completion(struct mhi_controller *mhi_cntrl,
+>   
+>   	cmd_pkt = mhi_to_virtual(mhi_ring, ptr);
+>   
+> +	if (unlikely(cmd_pkt == mhi_ring->wp)) {
+As per spec : The location of the command ring read pointer is reported 
+to the host on the command completion events in the primary event ring.
 
-If the controller is being powered down, and possibly removed, then the
-reset flow would only wait for the end of reset.  At which point, the host
-and device would start a race.  The host may complete its reset work, and
-remove the interrupt handler, which would cause the interrupt to be
-disabled in the IOMMU.  If that occurs before the device signals the ready
-state, then the IOMMU will fault since it blocked an interrupt.  While
-harmless, the fault would appear like a serious issue has occurred so let's
-silence it by making sure the device hits the ready state before the host
-completes its reset processing.
+If device is buggy and updates with WP instead of Rp, we should not 
+workaround it by processing Wp - 1. We can print a warning if cmd_pkt != 
+mhi_ring->rp and let the command completion timeout. This needs to be 
+fixed by device. We can not accommodate device side bug in host side.
 
-Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
----
- drivers/bus/mhi/core/pm.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+> +		/* Some buggy hardwares (e.g sdx24) sometimes report the current
+> +		 * command ring wp pointer instead of the command completion
+> +		 * pointer. It's obviously wrong, causing completion timeout. We
+> +		 * can however deal with that situation by completing the cmd
+> +		 * n-1 element.
+> +		 */
+> +		void *ring_ptr = (void *)cmd_pkt - mhi_ring->el_size;
+> +
+> +		if (ring_ptr < mhi_ring->base)
+> +			ring_ptr += mhi_ring->len;
+> +
+> +		cmd_pkt = ring_ptr;
+> +
+> +		dev_warn(dev, "Bad completion pointer (ptr == ring_wp)\n");
+> +	}
+> +
+>   	chan = MHI_TRE_GET_CMD_CHID(cmd_pkt);
+>   	mhi_chan = &mhi_cntrl->mhi_chan[chan];
+>   	write_lock_bh(&mhi_chan->lock);
+> 
 
-diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-index adb0e80..414da4f 100644
---- a/drivers/bus/mhi/core/pm.c
-+++ b/drivers/bus/mhi/core/pm.c
-@@ -467,7 +467,7 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
- 
- 	/* Trigger MHI RESET so that the device will not access host memory */
- 	if (!MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state)) {
--		u32 in_reset = -1;
-+		u32 in_reset = -1, ready = 0;
- 		unsigned long timeout = msecs_to_jiffies(mhi_cntrl->timeout_ms);
- 
- 		dev_dbg(dev, "Triggering MHI Reset in device\n");
-@@ -490,6 +490,21 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
- 		 * hence re-program it
- 		 */
- 		mhi_write_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_INTVEC, 0);
-+
-+		if (!MHI_IN_PBL(mhi_get_exec_env(mhi_cntrl))) {
-+			/* wait for ready to be set */
-+			ret = wait_event_timeout(mhi_cntrl->state_event,
-+						 mhi_read_reg_field(mhi_cntrl,
-+							mhi_cntrl->regs,
-+							MHISTATUS,
-+							MHISTATUS_READY_MASK,
-+							MHISTATUS_READY_SHIFT,
-+							&ready)
-+						 || ready, timeout);
-+			if (!ret || !ready)
-+				dev_warn(dev,
-+					"Device failed to enter READY state\n");
-+		}
- 	}
- 
- 	dev_dbg(dev,
+Hi Mani,
+
+What do you think about this workaround ?
+
+Thanks,
+Hemant
 -- 
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
