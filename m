@@ -2,137 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3AA6133465C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 19:13:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 13B8133467E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 19:19:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232828AbhCJSNQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Mar 2021 13:13:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51996 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232624AbhCJSNH (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Mar 2021 13:13:07 -0500
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E48E9C061761
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 10:13:06 -0800 (PST)
-Received: by mail-ot1-x335.google.com with SMTP id r24so9180967otp.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 10:13:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=pHWXTwbw9p9uf8ft6VKP7REHTpiAGXpesgcV8HDhEdc=;
-        b=rQ4z0maaHQrOGoltyEtGi+HBeho+EyAB0vE97faSaA9m8+shVlUUHmeeozrjMXp9su
-         BuPo2Bh4A/fvXda9mixvifOAV9qCKZs9EsjR1//Nn4sZBA9b8Q8TSMopxHpeCfZqCELn
-         EKab7qBAIFfWf6JkcV+PmvtG4oWmw3FBKijBkqgZd0sqkp3Q1M57pVD/Q1pw7DUTkaCU
-         qzWzWUETOIYecznvO/oN9cobPvIXL4whx1UWIMK2o/OSlyIerx/+lJeUw29yiXiU48X3
-         mwwz9dKYTyQJ6wDFziYUKbZe8qoI8QXnGCHCtJ3erjdmnDcMKn6Ny2+mgQH1vdhiGQx4
-         Ahxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=pHWXTwbw9p9uf8ft6VKP7REHTpiAGXpesgcV8HDhEdc=;
-        b=K2ijFvmVqoingdYyegq3rV2zmmlB6yvg8qYZTRVmND7mlyvphV2ZLjc6xp78gzDKa1
-         AK/iyplOQXFLAQew3TfG5LMit+lIFKlu7Hrefrgi14kseJOyJsdI7vlkgezvQ8zAqZnA
-         m+AjI9HhlIRcZXOQFBKTWa8lJW4n1j1jogRv/uHq4eM3Zu4mWKgTqNRistii2Q5sH3VS
-         PwrdjO4I64u+4e0k9Wg6kOlBY0J2MvPNyhU5AwbpDoVCWfTGwY1chmCZPV0UfyAh8NAc
-         6PlsXVFKx6ZC+bl55kL29klRJjxMeHkqNoZ9554i+lIGjvh2t9fyh8jWJ+B/7G1w6nc6
-         nx1A==
-X-Gm-Message-State: AOAM533kxFipn18v6SId8TURjg2sH/ZY+5GHlILM7AB9lDXeUrTorcb5
-        m9m6EDYKspih2dDJZnljRg6/QA==
-X-Google-Smtp-Source: ABdhPJzdjuvepmnxQb7O5JaPX1+qMlv8VGrocqBj0XnMpha7kZXxtTo+hL1f1I+OtfGYaMriPDcLqQ==
-X-Received: by 2002:a9d:3f6:: with SMTP id f109mr3471150otf.187.1615399986315;
-        Wed, 10 Mar 2021 10:13:06 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id v7sm70768otq.62.2021.03.10.10.13.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Mar 2021 10:13:05 -0800 (PST)
-Date:   Wed, 10 Mar 2021 12:13:04 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Andy Shevchenko <andriy.shevchenko@intel.com>,
-        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2] pinctrl: qcom: support gpio_chip .set_config call
-Message-ID: <YEkMMIkSAe1yA7KN@builder.lan>
-References: <20210303131858.3976-1-shawn.guo@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210303131858.3976-1-shawn.guo@linaro.org>
+        id S232824AbhCJSTJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Mar 2021 13:19:09 -0500
+Received: from m42-2.mailgun.net ([69.72.42.2]:31178 "EHLO m42-2.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233569AbhCJSSg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Mar 2021 13:18:36 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1615400316; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=Oe2A04ooxiUiKh+2PZjPlM+r01T98GTea9DKcUo6+Cs=; b=HOVDFTp6Crl4vsCsSFZWDHpEt6VE7tQCtuWi4KAJKY8e8SZ6bhaWlvPDEpTfNleWgaSuWOrL
+ GLq4hLtmahlyO/mJKWKgqMX2/7uvi6YNbqwFJqGhKGMMVSGvKzUGTiAZ9LdnCpqY19dR9cX4
+ pKwFdoflisSVyOaynyIGytYbYB0=
+X-Mailgun-Sending-Ip: 69.72.42.2
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 60490d64155a7cd234a868db (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 10 Mar 2021 18:18:12
+ GMT
+Sender: tdas=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id DC086C43461; Wed, 10 Mar 2021 18:18:12 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from tdas-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: tdas)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AB3A0C433ED;
+        Wed, 10 Mar 2021 18:18:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AB3A0C433ED
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=tdas@codeaurora.org
+From:   Taniya Das <tdas@codeaurora.org>
+To:     Stephen Boyd <sboyd@kernel.org>,
+        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+Subject: [PATCH v1] clk: qcom: rpmh: Update the XO clock source for SC7280
+Date:   Wed, 10 Mar 2021 23:48:03 +0530
+Message-Id: <1615400283-20100-1-git-send-email-tdas@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 03 Mar 07:18 CST 2021, Shawn Guo wrote:
+The bi_tcxo clock source for SC7280 requires a div 4 to derive 19.2MHz
+from the xo_board. Thus update the same.
 
-> In case of ACPI boot, GPIO core does the right thing to parse GPIO pin
-> configs from ACPI table, and call into gpio_chip's .set_config hook for
-> setting them up.  It enables such support on qcom platform by using
-> generic config function, which in turn calls into .pin_config_set of
-> pinconf for setting up hardware.  For qcom platform, it's possible to
-> reuse pin group config functions for pin config hooks, because every pin
-> is maintained as a single group.
-> 
-> This change fixes the problem that Touchpad of Lenovo Flex 5G laptop
-> doesn't work with ACPI boot, because PullUp config of Touchpad GpioInt
-> pin is not set up by the kernel.
-> 
+Fixes: fff2b9a65162 ("clk: qcom: rpmh: Add support for RPMH clocks on SC7280")
+Signed-off-by: Taniya Das <tdas@codeaurora.org>
+---
+ drivers/clk/qcom/clk-rpmh.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-Per Linus comment that this is how others are doing it, I guess we can
-do it too...
+diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
+index 91dc390..c623ce9 100644
+--- a/drivers/clk/qcom/clk-rpmh.c
++++ b/drivers/clk/qcom/clk-rpmh.c
+@@ -510,9 +510,12 @@ static const struct clk_rpmh_desc clk_rpmh_sm8350 = {
+ 	.num_clks = ARRAY_SIZE(sm8350_rpmh_clocks),
+ };
 
-Acked-by: Bjorn Andersson <bjorn.andersson@linaro.org>
++/* Resource name must match resource id present in cmd-db */
++DEFINE_CLK_RPMH_ARC(sc7280, bi_tcxo, bi_tcxo_ao, "xo.lvl", 0x3, 4);
++
+ static struct clk_hw *sc7280_rpmh_clocks[] = {
+-	[RPMH_CXO_CLK]      = &sdm845_bi_tcxo.hw,
+-	[RPMH_CXO_CLK_A]    = &sdm845_bi_tcxo_ao.hw,
++	[RPMH_CXO_CLK]      = &sc7280_bi_tcxo.hw,
++	[RPMH_CXO_CLK_A]    = &sc7280_bi_tcxo_ao.hw,
+ 	[RPMH_LN_BB_CLK2]   = &sdm845_ln_bb_clk2.hw,
+ 	[RPMH_LN_BB_CLK2_A] = &sdm845_ln_bb_clk2_ao.hw,
+ 	[RPMH_RF_CLK1]      = &sdm845_rf_clk1.hw,
+--
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+of the Code Aurora Forum, hosted by the  Linux Foundation.
 
-Regards,
-Bjorn
-
-> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-> ---
-> Changes for v2:
-> - Add pin config functions that simply call into group config ones.
-> 
->  drivers/pinctrl/qcom/pinctrl-msm.c | 15 +++++++++++++++
->  1 file changed, 15 insertions(+)
-> 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-> index af6ed7f43058..a59bb4cbd97e 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-> @@ -489,10 +489,24 @@ static int msm_config_group_set(struct pinctrl_dev *pctldev,
->  	return 0;
->  }
->  
-> +static int msm_config_pin_get(struct pinctrl_dev *pctldev, unsigned int pin,
-> +			      unsigned long *config)
-> +{
-> +	return msm_config_group_get(pctldev, pin, config);
-> +}
-> +
-> +static int msm_config_pin_set(struct pinctrl_dev *pctldev, unsigned pin,
-> +			      unsigned long *configs, unsigned num_configs)
-> +{
-> +	return msm_config_group_set(pctldev, pin, configs, num_configs);
-> +}
-> +
->  static const struct pinconf_ops msm_pinconf_ops = {
->  	.is_generic		= true,
->  	.pin_config_group_get	= msm_config_group_get,
->  	.pin_config_group_set	= msm_config_group_set,
-> +	.pin_config_get		= msm_config_pin_get,
-> +	.pin_config_set		= msm_config_pin_set,
->  };
->  
->  static int msm_gpio_direction_input(struct gpio_chip *chip, unsigned offset)
-> @@ -717,6 +731,7 @@ static const struct gpio_chip msm_gpio_template = {
->  	.get_direction    = msm_gpio_get_direction,
->  	.get              = msm_gpio_get,
->  	.set              = msm_gpio_set,
-> +	.set_config       = gpiochip_generic_config,
->  	.request          = gpiochip_generic_request,
->  	.free             = gpiochip_generic_free,
->  	.dbg_show         = msm_gpio_dbg_show,
-> -- 
-> 2.17.1
-> 
