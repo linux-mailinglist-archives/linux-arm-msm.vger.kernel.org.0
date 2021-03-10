@@ -2,169 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F012D3330B9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Mar 2021 22:16:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E8DE333326
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 03:33:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231788AbhCIVQW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Mar 2021 16:16:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34208 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231657AbhCIVQO (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Mar 2021 16:16:14 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EE2FC06174A;
-        Tue,  9 Mar 2021 13:16:14 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id v15so18623738wrx.4;
-        Tue, 09 Mar 2021 13:16:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7lQjUAuZrBubvY73c7vHN9cBJdm4pKkA1MVN2AKU/c4=;
-        b=PeWH6MgI5dt1Wjua3ckKta6G/BQEtJ+7XweOAFy6C2ytpCVjIhRTs/Tz2ipwSde4jJ
-         LnKG6S2Url+XraMAaT3a608l6JvEtid2v91Y4iEHbD4HkVWV/obcJH8jQq3bLfuIUolL
-         ybWUUQDpq9dj0Bfp4810QUgTuBUqSQBb2zXi4rGbY+hu4hC9sy3bbW3g8jFN+Loh1P9C
-         vYV85gsI0/hsbyQLcBS5+FYO6/3YkLQLSbM/fNCnymmzB5/aSwi8HWxSwD8NPfIHBP+M
-         3iQYSwTcgGq4wG67YiMb7UiV6bz5F/pdpzm42/y0wSu9/hmsVtYIIwFbyEEOGP/6TWYq
-         aDIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7lQjUAuZrBubvY73c7vHN9cBJdm4pKkA1MVN2AKU/c4=;
-        b=ist9evG0pFVwcNna435j5OeTVxwHpfhyFN5kgLyB2bEaP431NzGw4Z/FPenduIxVvw
-         S21vhVtDRQ71tBztI2lUAWV7vXjsnlmSflX8XPp4EUNwOrKL3hEZUQtb7Jg5gmf1Vba/
-         PRAPIVh0f8uFvc4JBPYULrT80H7py5PUMtDjHj1buJctnvPQ9eZqi0+HVgSQkP38E9UQ
-         vk4ajUFIxV19irPA78LqRjMPhnwNdwyfasgOfhqdiqAfMa+40f9u3vafTD1V6/vEJmHA
-         ej6Xtbtf4B34Qqp73OvE10AV9cXOjjyqFZg1ryDZz0H2bIzVAi/JzXkZwDuGxmjwrRnN
-         CIRA==
-X-Gm-Message-State: AOAM533Xv6cvo7sErqtkTTuU6CcqvBHpTNOBLEX6R5kjVCGFvn/MYo6t
-        zFp84QA1A9zNZo/EiaYqEKPqWaxBiJxhKzXoM4Z/W3kU2II=
-X-Google-Smtp-Source: ABdhPJwEeJvrulxRpS9Lj9xsUhlNElSBzee6JYuQMFp6z/lclGE93Jf2ZHUTtLNRh7VniOfS7DLP+AEGUic2do6RUto=
-X-Received: by 2002:a5d:4e52:: with SMTP id r18mr32055260wrt.28.1615324572875;
- Tue, 09 Mar 2021 13:16:12 -0800 (PST)
+        id S231835AbhCJCdJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Mar 2021 21:33:09 -0500
+Received: from mail.kernel.org ([198.145.29.99]:36936 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231235AbhCJCcm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 9 Mar 2021 21:32:42 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 7BFF364F84;
+        Wed, 10 Mar 2021 02:32:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1615343561;
+        bh=69DUFNK2JB2JKzdkRdZ/XlWLEjG3ef1b4VxLgCOxoqw=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=f8gpp9VdmwuPyoTT2fK7F+6mxLEzG+ejIftSJP3u2iiOdZhqnv8BsLbw6mvVTySiQ
+         v82H9IFxBO06JOWtZwGPAQhXGmOFVszRwG8/3uCMNhie0bfuRfrjhuYGpXpQRJ5hR+
+         Ay0ZeVv0/neMnICME4IC0vcWL9w9fdaGw8PGYCEupzWSepPFUjQ1do6ySHq/0S10Bh
+         4h2L6PpngO7nw98bmzThF3id5nwvfyCKNT81qEwhOfqUI3bU3X/5g3bN2x7C5jnTLR
+         EL+eljAwZ0NqjJcBWJu0z/YNVej/jEgpVR1XtlTX9+H5AC+jkSFCthAHtKhXqsnAQO
+         EhMwHzTEgpUxA==
+Received: by mail-ed1-f48.google.com with SMTP id m9so24949298edd.5;
+        Tue, 09 Mar 2021 18:32:41 -0800 (PST)
+X-Gm-Message-State: AOAM530VXa8s3FdBzPDQNHk1yc/9DLWibKa+T9jdPtQ1WJaLZ8iykRUF
+        CAzqztTov9qTwRSgn5msC0GlIPlZeXAQPFSA9Q==
+X-Google-Smtp-Source: ABdhPJwHjeFbPXpi7Hx1kJl/4EAmKe+MyBlw8ijIqRC+kYtRQvVW/TFyZN4qAshKdQQHueTyJWZ6Stlr1V0uk9El3Ag=
+X-Received: by 2002:a05:6402:c88:: with SMTP id cm8mr699106edb.62.1615343560077;
+ Tue, 09 Mar 2021 18:32:40 -0800 (PST)
 MIME-Version: 1.0
-References: <20210306113519.294287-1-ardb@kernel.org> <20210307110228.GP17424@dragon>
- <CAMj1kXFiqXwCqJE9Wxu-tc3HYSh1qCqPLL_Csc=gW6SOYrweWw@mail.gmail.com>
- <20210309032248.GR17424@dragon> <CAF6AEGu6ZpfFK5FnQjtE33kkYL_t63J=yJLeK70_46FaLPq7eQ@mail.gmail.com>
- <CAMj1kXGwhx9Z-JCw2NvWBYtHbzVb=EmJn_Jfd97wGzDYNQG2Lw@mail.gmail.com>
-In-Reply-To: <CAMj1kXGwhx9Z-JCw2NvWBYtHbzVb=EmJn_Jfd97wGzDYNQG2Lw@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 9 Mar 2021 13:19:20 -0800
-Message-ID: <CAF6AEGur_68YTQ4Op8i3kRsNmv=BVHCk8brOvDNq-zAUcw1zoQ@mail.gmail.com>
-Subject: Re: [PATCH] efi: stub: override RT_PROP table supported mask based on
- EFI variable
-To:     Ard Biesheuvel <ardb@kernel.org>
-Cc:     Shawn Guo <shawn.guo@linaro.org>,
-        linux-efi <linux-efi@vger.kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Leif Lindholm <leif@nuviainc.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+References: <20210222120259.94465-1-manivannan.sadhasivam@linaro.org>
+ <20210222120259.94465-3-manivannan.sadhasivam@linaro.org> <20210305233657.GA839767@robh.at.kernel.org>
+ <20210308053140.GA5457@thinkpad>
+In-Reply-To: <20210308053140.GA5457@thinkpad>
+From:   Rob Herring <robh@kernel.org>
+Date:   Tue, 9 Mar 2021 19:32:28 -0700
+X-Gmail-Original-Message-ID: <CAL_JsqKOfQ8v=Adp_3k64-WW-YXan_1kCG9mab6rE62VkSwmhQ@mail.gmail.com>
+Message-ID: <CAL_JsqKOfQ8v=Adp_3k64-WW-YXan_1kCG9mab6rE62VkSwmhQ@mail.gmail.com>
+Subject: Re: [PATCH 2/3] dt-bindings: mtd: Add a property to declare secure
+ regions in Qcom NANDc
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     =?UTF-8?Q?Miqu=C3=A8l_Raynal?= <miquel.raynal@bootlin.com>,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh R <vigneshr@ti.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        MTD Maling List <linux-mtd@lists.infradead.org>,
+        devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Boris Brezillon <boris.brezillon@collabora.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 9, 2021 at 10:47 AM Ard Biesheuvel <ardb@kernel.org> wrote:
+On Sun, Mar 7, 2021 at 10:31 PM Manivannan Sadhasivam
+<manivannan.sadhasivam@linaro.org> wrote:
 >
-> On Tue, 9 Mar 2021 at 19:10, Rob Clark <robdclark@gmail.com> wrote:
+> On Fri, Mar 05, 2021 at 05:36:57PM -0600, Rob Herring wrote:
+> > On Mon, Feb 22, 2021 at 05:32:58PM +0530, Manivannan Sadhasivam wrote:
+> > > On a typical end product, a vendor may choose to secure some regions in
+> > > the NAND memory which are supposed to stay intact between FW upgrades.
+> > > The access to those regions will be blocked by a secure element like
+> > > Trustzone. So the normal world software like Linux kernel should not
+> > > touch these regions (including reading).
+> > >
+> > > So let's add a property for declaring such secure regions so that the
+> > > driver can skip touching them.
+> > >
+> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > ---
+> > >  Documentation/devicetree/bindings/mtd/qcom,nandc.yaml | 7 +++++++
+> > >  1 file changed, 7 insertions(+)
+> > >
+> > > diff --git a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+> > > index 84ad7ff30121..7500e20da9c1 100644
+> > > --- a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+> > > +++ b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+> > > @@ -48,6 +48,13 @@ patternProperties:
+> > >          enum:
+> > >            - 512
+> > >
+> > > +      qcom,secure-regions:
+> > > +        $ref: /schemas/types.yaml#/definitions/uint32-array
 > >
-> > On Mon, Mar 8, 2021 at 7:22 PM Shawn Guo <shawn.guo@linaro.org> wrote:
-> > >
-> > > On Mon, Mar 08, 2021 at 02:34:48PM +0100, Ard Biesheuvel wrote:
-> > > > On Sun, 7 Mar 2021 at 12:02, Shawn Guo <shawn.guo@linaro.org> wrote:
-> > > > >
-> > > > > On Sat, Mar 06, 2021 at 12:35:19PM +0100, Ard Biesheuvel wrote:
-> > > > > > Allow EFI systems to override the set of supported runtime services
-> > > > > > declared via the RT_PROP table, by checking for the existence of a
-> > > > > > 'OverrideSupported' EFI variable of the appropriate size under the
-> > > > > > RT_PROP table GUID, and if it does, combine the supported mask using
-> > > > > > logical AND. (This means the override can only remove support, not
-> > > > > > add it back).
-> > > > > >
-> > > > > > Cc: Jeffrey Hugo <jhugo@codeaurora.org>,
-> > > > > > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > > > > Cc: Shawn Guo <shawn.guo@linaro.org>
-> > > > > > Cc: Rob Clark <robdclark@gmail.com>
-> > > > > > Cc: Leif Lindholm <leif@nuviainc.com>
-> > > > > > Cc: linux-arm-msm@vger.kernel.org
-> > > > > >
-> > > > > > Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-> > > > >
-> > > > > Awesome, Ard!  On both Lenovo Yoga C630 and Flex 5G latops:
-> > > > >
-> > > > > Tested-by: Shawn Guo <shawn.guo@linaro.org>
-> > > > >
-> > > > > With 'OverrideSupported' EFI variable added from UEFI Shell, we can drop
-> > > > > 'efi=novamap' kernel cmdline and get around the broken poweroff runtime
-> > > > > services nicely.  Thanks!
-> > > > >
-> > > >
-> > > > Thanks for confirming.
-> > > >
-> > > > However, I am not going to merge this without some justification, and
-> > > > hopefully some input from other folks (Leif?)
-> > > >
-> > > > RTPROP already provides what we need on all platforms that use
-> > > > DtbLoader, and the patch for that is queued up for v5.12-rcX, with a
-> > > > cc:stable to v5.10. This allows any RT service to be marked as
-> > > > disabled, including SetVirtualAddressMap().
-> > > >
-> > > > So afaict, that means that this patch would be a special case for
-> > > > Flex5G, right?
-> > >
-> > > It's for all Snapdragon based laptops, as we need to disable
-> > > SetVirtualAddressMap runtime services on all of them.
-> > >
-> > > > So how are platforms such as this one going to load the
-> > > > DTB? If some loader will be involved (or even just GRUB),
-> > >
-> > > Yes, GRUB.
-> > >
-> > > > shouldn't it
-> > > > be that component that sets RTPROP like DtbLoader will, not the kernel
-> > > > itself.
-> > > >
-> > > > Btw I don't think ACPI boot is a use case here. I don't see a software
-> > > > framebuffer with no wifi support as a usage mode that justifies
-> > > > carrying EFI stub hacks for everyone.
-> > >
-> > > Okay.  I'm fine to carry it as an out-of-tree patch until someday you
-> > > consider ACPI boot is useful for everyone.  But I do boot these laptops
-> > > with ACPI at daily basis right now as arm64 native build machine, with
-> > > USB Ethernet adapter.
-> >
-> > fwiw, the valid use-case for ACPI boot on these things is for distro
-> > installer.. it might not be the shiny accelerated experience, but you
-> > want to be able to get thru the installer and then install updates to
-> > get latest kernel/dtb/etc
-> >
-> > it is a small use-case, but kinda an important step ;-)
+> > Don't you need 64-bit regions potentially? Though 4GB should be enough
+> > for anyone.
 > >
 >
-> That is a fair point. However, as I understand it, we need this to work around
-> - the need to pass efi=novamap
-> - broken poweroff on Flex5g
->
-> So an installer either needs to set the EFI variable, or pass
-> efi=novamap on the first boot. Note that there are no arm64 EFI
-> systems known where efi=novamap causes problems. In fact, I would
-> prefer to stop using SetVirtualAddressMap() altogether, as it does not
-> provide any benefit whatsoever. So perhaps we should make efi=novamap
-> the default and be done with it.
->
-> Broken poweroff is hardly a showstopper for an installer, given that
-> we cannot even install GRUB correctly.
->
-> In summary, I am more than happy to collaborate constructively on this
-> (which is why I wrote the patch), but I don't think we're at a point
-> yet where this is the only thing standing in our way when it comes to
-> a smooth out-of-the-box Linux installation experience.
+> Yes, given the size of current NAND based systems around, I thought 32 bit is
+> enough.
 
-Fair, it was less of an argument for/against the patch, and more just
-reminding folks that there is an ACPI boot use case ;-)
+Huh!? I was joking. 4GB is small nowadays. Make this 64-bit.
 
-BR,
--R
+Rob
