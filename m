@@ -2,83 +2,287 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B9CE2334784
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 20:06:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 802E83347DC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 20:25:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229741AbhCJTFV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Mar 2021 14:05:21 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:15956 "EHLO z11.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233946AbhCJTEx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Mar 2021 14:04:53 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1615403093; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=htoy8yKGwAD8dB7kcdJ7tVWxsq9YupayEeTj2BKzHqQ=; b=KsQhnJqPTatyCQB7mCJ3y5FBGChChMWJuf2iuMg7562z5sJ4G297l5qt8FG2mjTCGGD5bRli
- Q7qDZQPvapPMe6S+Fx8qh/jOGvFhuwXb9vx82i0+MToFzUz2yyp/x5/CN5scJPk9oLuWEG0p
- ky/T/9KRAcHUOrmrGzVpvPfl0+o=
-X-Mailgun-Sending-Ip: 104.130.96.11
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 60491837af1d9a68add8ce86 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 10 Mar 2021 19:04:23
- GMT
-Sender: jhugo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3754FC43463; Wed, 10 Mar 2021 19:04:23 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1EE97C43462;
-        Wed, 10 Mar 2021 19:04:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1EE97C43462
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH v3 3/3] bus: mhi: core: Use poll register read API for
- RDDM download
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        linux-kernel@vger.kernel.org, loic.poulain@linaro.org,
-        carl.yin@quectel.com, naveen.kumar@quectel.com
-References: <1614138270-2374-1-git-send-email-bbhatt@codeaurora.org>
- <1614138270-2374-4-git-send-email-bbhatt@codeaurora.org>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <7ff6f0b8-c800-18c1-810d-32af4b0eda10@codeaurora.org>
-Date:   Wed, 10 Mar 2021 12:04:21 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.1
+        id S230173AbhCJTZT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Mar 2021 14:25:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39334 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233652AbhCJTYw (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Mar 2021 14:24:52 -0500
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F26E1C061761
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 11:24:51 -0800 (PST)
+Received: by mail-ot1-x331.google.com with SMTP id r24so10443134otq.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 11:24:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=CjpbMJJc7Jhsth7Nu5mOMRezmaAnho+/4H+iLJ3/HtY=;
+        b=VlnyGp7qUhW/33R6cuJrj6mgiQMnZRA17mvizMG2yMlc3yUBIja5P1h7yiUHpaeYEu
+         xIgifDNKjUiooRGX1Rpbpcj5LAfaOcHx03vMU4Pj2q/d6a1+yabJ5+HYlSavXYDMpJzK
+         ZPJhH6fxBIbvZSLj1PyJv2SN0WVJh1gWG+/IrPl4yN5AjGPzsL38paaCwUZprKTiVslV
+         mo50Fdu8/b2g4ZwmF5b9r2MLhMzv539HzLogSgjkSiVTvD+WQiK5vLp5uPAdwNnDK19l
+         WI42TFJn2oslEHso6eH2MczSDN7HnlTFzqb2sfXVc7I2SdbszBn042P7CzC8TSdsrtXX
+         lvxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=CjpbMJJc7Jhsth7Nu5mOMRezmaAnho+/4H+iLJ3/HtY=;
+        b=g5ij5NXNTPeVBTbkqHbZRMlB2+IjgyAyqykEKSJp+sXOPS9HLLpUIwN+trIy/z7m7M
+         3mBkJ5KOu688Yske+VVeGOoweKMLwgB/FcrUjjrV3JxFHyWbKuqtWjKLr2RSHsSnONZB
+         2asEwzYOL/Rc08FdAE8a17MsGvnmq/qg8Q41WylJu/m5CtmoJSFn1k9EQ7yvaY6Dzn/C
+         B1fbJ+n2W8WkYIZpqlWvJEhORHeP3+r/jkRbJhkp6MCP8glZk8bLAsL+V9IEk1o2G9IU
+         s3q2CEfDzum25MtGOSthqZeL/k2T5f/wYriica6WqmBsvs5zniVYNaJ3GH8Hk426tVmC
+         Cl3Q==
+X-Gm-Message-State: AOAM531qbcYMB+Ni4KLNitJHMP1mC2kKAxrltK6eCnmbXqorYFpfHKaw
+        A5+PzH5CpDAm10qtnaObKzN3ag==
+X-Google-Smtp-Source: ABdhPJxFXMVY3AdGBMsBB8ZTFarimJuHh6xluUGp/x/AUbiAHb8l2XoQfTNPuY1aRRtKhiRa2ZvPTQ==
+X-Received: by 2002:a9d:23a1:: with SMTP id t30mr3709295otb.65.1615404291144;
+        Wed, 10 Mar 2021 11:24:51 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id e82sm34220oob.37.2021.03.10.11.24.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Mar 2021 11:24:50 -0800 (PST)
+Date:   Wed, 10 Mar 2021 13:24:49 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Andy Shevchenko <andriy.shevchenko@intel.com>,
+        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v4] pinctrl: qcom: sc8180x: add ACPI probe support
+Message-ID: <YEkdAbWC8/Vszvba@builder.lan>
+References: <20210310111210.1232-1-shawn.guo@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <1614138270-2374-4-git-send-email-bbhatt@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210310111210.1232-1-shawn.guo@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/23/2021 8:44 PM, Bhaumik Bhatt wrote:
-> Make use of mhi_poll_reg_field() API in order to poll for RDDM
-> download in panic path to employ a common approach throughout the
-> driver.
+On Wed 10 Mar 05:12 CST 2021, Shawn Guo wrote:
+
+> It adds ACPI probe support for pinctrl-sc8180x driver.  We have one
+> problem with ACPI table, i.e. GIO0 (TLMM) block has one single memory
+> resource to cover 3 tiles defined by SC8180X.  To follow the hardware
+> layout of 3 tiles which is already supported DT probe, it adds one
+> function to replace the original single memory resource with 3 named
+> ones for tiles.  With that, We can map memory for ACPI in the same way
+> as DT.
 > 
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> ---
+> Changes for 4:
+>  - Add sc8180x_pinctrl_add_tile_resources() to massage memory resource
+>    for ACPI probe.
+> 
+> Changes for v3:
+> - Remove the use of tiles completely.
+> - Drop unneed include of acpi.h.
+> 
+> Changes for v2:
+> - Pass soc_data pointer via .driver_data.
+> - Drop use of CONFIG_ACPI and ACPI_PTR().
+> - Add comment for sc8180x_acpi_reserved_gpios[] terminator.
+> 
+>  drivers/pinctrl/qcom/Kconfig           |   2 +-
+>  drivers/pinctrl/qcom/pinctrl-sc8180x.c | 119 ++++++++++++++++++++++++-
+>  2 files changed, 118 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
+> index 6853a896c476..9f0218c4f9b3 100644
+> --- a/drivers/pinctrl/qcom/Kconfig
+> +++ b/drivers/pinctrl/qcom/Kconfig
+> @@ -222,7 +222,7 @@ config PINCTRL_SC7280
+>  
+>  config PINCTRL_SC8180X
+>  	tristate "Qualcomm Technologies Inc SC8180x pin controller driver"
+> -	depends on GPIOLIB && OF
+> +	depends on GPIOLIB && (OF || ACPI)
+>  	select PINCTRL_MSM
+>  	help
+>  	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+> diff --git a/drivers/pinctrl/qcom/pinctrl-sc8180x.c b/drivers/pinctrl/qcom/pinctrl-sc8180x.c
+> index b765bf667574..4ff80a7a1221 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-sc8180x.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-sc8180x.c
+> @@ -23,6 +23,21 @@ enum {
+>  	WEST
+>  };
+>  
+> +/*
+> + * ACPI DSDT has one single memory resource for TLMM.  The offsets below are
+> + * used to locate different tiles for ACPI probe.
+> + */
+> +struct tile_info {
+> +	u32 offset;
+> +	u32 size;
+> +};
+> +
+> +static const struct tile_info sc8180x_tile_info[] = {
+> +	{ 0x00d00000, 0x00300000, },
+> +	{ 0x00500000, 0x00700000, },
+> +	{ 0x00100000, 0x00300000, },
+> +};
+> +
+>  #define FUNCTION(fname)					\
+>  	[msm_mux_##fname] = {				\
+>  		.name = #fname,				\
+> @@ -1557,6 +1572,13 @@ static const struct msm_pingroup sc8180x_groups[] = {
+>  	[193] = SDC_QDSD_PINGROUP(sdc2_data, 0x4b2000, 9, 0),
+>  };
+>  
+> +static const int sc8180x_acpi_reserved_gpios[] = {
+> +	0, 1, 2, 3,
+> +	47, 48, 49, 50,
+> +	126, 127, 128, 129,
+> +	-1 /* terminator */
+> +};
+> +
+>  static const struct msm_gpio_wakeirq_map sc8180x_pdc_map[] = {
+>  	{ 3, 31 }, { 5, 32 }, { 8, 33 }, { 9, 34 }, { 10, 100 }, { 12, 104 },
+>  	{ 24, 37 }, { 26, 38 }, { 27, 41 }, { 28, 42 }, { 30, 39 }, { 36, 43 },
+> @@ -1588,13 +1610,105 @@ static struct msm_pinctrl_soc_data sc8180x_pinctrl = {
+>  	.nwakeirq_map = ARRAY_SIZE(sc8180x_pdc_map),
+>  };
+>  
+> +static const struct msm_pinctrl_soc_data sc8180x_acpi_pinctrl = {
+> +	.tiles = sc8180x_tiles,
+> +	.ntiles = ARRAY_SIZE(sc8180x_tiles),
+> +	.pins = sc8180x_pins,
+> +	.npins = ARRAY_SIZE(sc8180x_pins),
+> +	.groups = sc8180x_groups,
+> +	.ngroups = ARRAY_SIZE(sc8180x_groups),
+> +	.reserved_gpios = sc8180x_acpi_reserved_gpios,
+> +	.ngpios = 191,
 
-Seems ok to me.
+As I said before, there really only is 190 things called "GPIO" on this
+platform - the 191 thing is a hack of mine, but it's inclusion here
+should depend on how the ACPI system would reset the UFS device - if it
+does so at all.
 
-Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
+> +};
+> +
+
+A comment describing the purpose of this function (to split the
+IORESOURCE_MEM into three) would be in its place.
+
+> +static int sc8180x_pinctrl_add_tile_resources(struct platform_device *pdev)
+> +{
+> +	int nres_num = pdev->num_resources + ARRAY_SIZE(sc8180x_tiles) - 1;
+> +	struct resource *mres, *nres, *res;
+> +	int i, ret;
+> +
+> +	/*
+> +	 * DT already has tiles defined properly, so nothing needs to be done
+> +	 * for DT probe.
+> +	 */
+> +	if (pdev->dev.of_node)
+> +		return 0;
+> +
+> +	/* Allocate for new resources */
+> +	nres = devm_kzalloc(&pdev->dev, sizeof(*nres) * nres_num, GFP_KERNEL);
+> +	if (!nres)
+> +		return -ENOMEM;
+> +
+> +	res = nres;
+> +
+> +	for (i = 0; i < pdev->num_resources; i++) {
+> +		struct resource *r = &pdev->resource[i];
+> +
+> +		/* Save memory resource and copy others */
+> +		if (resource_type(r) == IORESOURCE_MEM)
+> +			mres = r;
+> +		else
+> +			*res++ = *r;
+> +	}
+> +
+> +	/* Append tile memory resources */
+> +	for (i = 0; i < ARRAY_SIZE(sc8180x_tiles); i++, res++) {
+> +		const struct tile_info *info = &sc8180x_tile_info[i];
+> +
+> +		res->start = mres->start + info->offset;
+> +		res->end = mres->start + info->offset + info->size - 1;
+> +		res->flags = mres->flags;
+> +		res->name = sc8180x_tiles[i];
+> +
+> +		/* Add new MEM to resource tree */
+> +		insert_resource(mres->parent, res);
+> +	}
+> +
+> +	/* Remove old MEM from resource tree */
+> +	remove_resource(mres);
+> +
+> +	/* Free old resources and install new ones */
+> +	ret = platform_device_add_resources(pdev, nres, nres_num);
+> +	if (ret) {
+> +		dev_err(&pdev->dev, "failed to add new resources: %d\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+>  static int sc8180x_pinctrl_probe(struct platform_device *pdev)
+>  {
+> -	return msm_pinctrl_probe(pdev, &sc8180x_pinctrl);
+> +	const struct msm_pinctrl_soc_data *soc_data;
+> +	int ret;
+> +
+> +	soc_data = device_get_match_data(&pdev->dev);
+> +	if (!soc_data)
+> +		return -EINVAL;
+> +
+> +	ret = sc8180x_pinctrl_add_tile_resources(pdev);
+> +	if (ret) {
+> +		dev_err(&pdev->dev, "failed to add tile resources: %d\n", ret);
+
+sc8180x_pinctrl_add_tile_resources() already printed an error when we
+get here, so no need to print another one.
 
 
--- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+Other than that, I think this looks good!
+
+Regards,
+Bjorn
+
+> +		return ret;
+> +	}
+> +
+> +	return msm_pinctrl_probe(pdev, soc_data);
+>  }
+>  
+> +static const struct acpi_device_id sc8180x_pinctrl_acpi_match[] = {
+> +	{
+> +		.id = "QCOM040D",
+> +		.driver_data = (kernel_ulong_t) &sc8180x_acpi_pinctrl,
+> +	},
+> +	{ }
+> +};
+> +MODULE_DEVICE_TABLE(acpi, sc8180x_pinctrl_acpi_match);
+> +
+>  static const struct of_device_id sc8180x_pinctrl_of_match[] = {
+> -	{ .compatible = "qcom,sc8180x-tlmm", },
+> +	{
+> +		.compatible = "qcom,sc8180x-tlmm",
+> +		.data = &sc8180x_pinctrl,
+> +	},
+>  	{ },
+>  };
+>  MODULE_DEVICE_TABLE(of, sc8180x_pinctrl_of_match);
+> @@ -1603,6 +1717,7 @@ static struct platform_driver sc8180x_pinctrl_driver = {
+>  	.driver = {
+>  		.name = "sc8180x-pinctrl",
+>  		.of_match_table = sc8180x_pinctrl_of_match,
+> +		.acpi_match_table = sc8180x_pinctrl_acpi_match,
+>  	},
+>  	.probe = sc8180x_pinctrl_probe,
+>  	.remove = msm_pinctrl_remove,
+> -- 
+> 2.17.1
+> 
