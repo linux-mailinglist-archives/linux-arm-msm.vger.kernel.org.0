@@ -2,89 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E9E47333405
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 04:56:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E1C98333423
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 05:05:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231955AbhCJD4K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Mar 2021 22:56:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35496 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232213AbhCJD4E (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Mar 2021 22:56:04 -0500
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 879D8C061760
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Mar 2021 19:56:04 -0800 (PST)
-Received: by mail-ot1-x329.google.com with SMTP id 75so11836429otn.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Mar 2021 19:56:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=aj082LGyMZQ2YsFd832Lo5lJGIXrMT5Ar9DshQA3/sk=;
-        b=Dj+0sOU+MbYoauDvAP07KkIx6pmGSWkLXPRzUcrQjximqSfd+n+7zXqCY3qBtauSnd
-         dfRfqS/BIDqGiDsPCNHwhzmNG09wiMKeut2wUiW4jGy2HOlysH64wyms9tI1yiiw8LNb
-         MxG6vB4FrMe2zIjADrpqY4gRO6JjGAzyceh8j1QiTUxQ0F3bDdkYcXBbm8Qq2tiqohqY
-         wjdbVs6JSIM57TJM5f4nBAvVQxjGtBsijshFpWxMdX9I3dh6w2OKbdMSMI84Pyj6Aq4D
-         7k9mgd9qCw1OGjGs0Z6k8gdycBnYf9Ra1EjFeaD42fmCkgvmTTtrOyZjdFZGbjn7Owf6
-         V3iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=aj082LGyMZQ2YsFd832Lo5lJGIXrMT5Ar9DshQA3/sk=;
-        b=R0LRF8bRa3RJztQA1vLdj1fb5MPTB4OjOdL+1dlTZbK74iZB1ZWBhjgx/ZX0PGmDPo
-         FuC0rvoNupqJJ0ZDp2wIiemBSHoVK7Ma+nAtzqBeaEmqr8MbUyMx0QfF2gCmhJCemcRj
-         XkZYS6EoMfyzCKPf5IVx/kgaDfePynYUAV2LBYGxdRFec27qjAREcmYl0UeUtXIc1V6Y
-         cmXhOiRBEEJuiA0SvdG0s1gX4m8bySiGNy7Fo3EM/et0PYl+MmJqSKkZjCwwXjuLE/kJ
-         VLKPDjGPVAcYDOri7Sk43dCEzDsZbinrUi3tDrwQMJEOpJglqGrUXZjxQuYxQ0QbF7f2
-         G0Ug==
-X-Gm-Message-State: AOAM533eHWHM1pa50/OTAgAwbMgg8oyhRMcvPOL4ilbtf7AltGgM1iXh
-        +i4OF9f8Pvf4HganaPwx4Yu1Ug==
-X-Google-Smtp-Source: ABdhPJzQxsC9ytUE5OK5+wQiR0umi1d24NiVdAVQ72mHUzWKWceak8ugpN5CWA2DMB51CZ9qs5grJQ==
-X-Received: by 2002:a9d:404b:: with SMTP id o11mr1114244oti.342.1615348563866;
-        Tue, 09 Mar 2021 19:56:03 -0800 (PST)
-Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id t22sm2658012otl.49.2021.03.09.19.56.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Mar 2021 19:56:03 -0800 (PST)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        id S232289AbhCJEF2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Mar 2021 23:05:28 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:53610 "EHLO z11.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232276AbhCJEE7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 9 Mar 2021 23:04:59 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1615349099; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=ZHa7iIF6f1BAN5sS7dr1WZt2PGRaGrl4ziVtXJN3He8=; b=FbXvLrKEpvj+QjN0dQnt5JwkX0wpV+AiimYBND9XpH5wSWBoXYUsnnU8kmAgvTGNdXmndWho
+ TaqVqrw7MB9IxuNMz8RtijEG5tQjHkCFASbd+T5tVi1rj9rmk5wSbx22SBrmGJywKYY3K1qm
+ QAt9kz6VsUzJObgLR2vmfDRL1RA=
+X-Mailgun-Sending-Ip: 104.130.96.11
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 6048456ad3a53bc38fedb799 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 10 Mar 2021 04:04:58
+ GMT
+Sender: asutoshd=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8C4B0C4346D; Wed, 10 Mar 2021 04:04:57 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [192.168.8.168] (cpe-70-95-149-85.san.res.rr.com [70.95.149.85])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: asutoshd)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 79864C433C6;
+        Wed, 10 Mar 2021 04:04:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 79864C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=asutoshd@codeaurora.org
+Subject: Re: [PATCH v10 1/2] scsi: ufs: Enable power management for wlun
+To:     Alan Stern <stern@rowland.harvard.edu>
+Cc:     Bart Van Assche <bvanassche@acm.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>, cang@codeaurora.org,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        "open list:TARGET SUBSYSTEM" <linux-scsi@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH] dt-bindings: arm: qcom: Add SM8350 HDK
-Date:   Tue,  9 Mar 2021 19:57:10 -0800
-Message-Id: <20210310035710.2816699-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.29.2
+        Steven Rostedt <rostedt@goodmis.org>,
+        Ingo Molnar <mingo@redhat.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Kiwoong Kim <kwmad.kim@samsung.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Wei Yongjun <weiyongjun1@huawei.com>,
+        Dinghao Liu <dinghao.liu@zju.edu.cn>,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        Tomas Winkler <tomas.winkler@intel.com>,
+        Jaegeuk Kim <jaegeuk@kernel.org>,
+        Satya Tangirala <satyat@google.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        "moderated list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "open list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
+        <linux-samsung-soc@vger.kernel.org>,
+        "moderated list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
+        <linux-mediatek@lists.infradead.org>,
+        Linux-PM mailing list <linux-pm@vger.kernel.org>
+References: <cover.1614725302.git.asutoshd@codeaurora.org>
+ <0576d6eae15486740c25767e2d8805f7e94eb79d.1614725302.git.asutoshd@codeaurora.org>
+ <85086647-7292-b0a2-d842-290818bd2858@intel.com>
+ <6e98724d-2e75-d1fe-188f-a7010f86c509@codeaurora.org>
+ <20210306161616.GC74411@rowland.harvard.edu>
+ <CAJZ5v0ihJe8rNjWRwNic_BQUvKbALNcjx8iiPAh5nxLhOV9duw@mail.gmail.com>
+ <CAJZ5v0iJ4yqRTt=mTCC930HULNFNTgvO4f9ToVO6pNz53kxFkw@mail.gmail.com>
+ <f1e9b21d-1722-d20b-4bae-df7e6ce50bbc@codeaurora.org>
+ <2bd90336-18a9-9acd-5abb-5b52b27fc535@codeaurora.org>
+ <20210310031438.GB203516@rowland.harvard.edu>
+From:   "Asutosh Das (asd)" <asutoshd@codeaurora.org>
+Message-ID: <6b985880-f23a-adb3-8b7a-7ee1b56e6fa7@codeaurora.org>
+Date:   Tue, 9 Mar 2021 20:04:53 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210310031438.GB203516@rowland.harvard.edu>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the SM8350 Hardware Development Kit (HDK).
+On 3/9/2021 7:14 PM, Alan Stern wrote:
+> On Tue, Mar 09, 2021 at 07:04:34PM -0800, Asutosh Das (asd) wrote:
+>> Hello
+>> I & Can (thanks CanG) debugged this further:
+>>
+>> Looks like this issue can occur if the sd probe is asynchronous.
+>>
+>> Essentially, the sd_probe() is done asynchronously and driver_probe_device()
+>> invokes pm_runtime_get_suppliers() before invoking sd_probe().
+>>
+>> But scsi_probe_and_add_lun() runs in a separate context.
+>> So the scsi_autopm_put_device() invoked from scsi_scan_host() context
+>> reduces the link->rpm_active to 1. And sd_probe() invokes
+>> scsi_autopm_put_device() and starts a timer. And then driver_probe_device()
+>> invoked from __device_attach_async_helper context reduces the
+>> link->rpm_active to 1 thus enabling the supplier to suspend before the
+>> consumer suspends.
+> 
+>> I don't see a way around this. Please let me know if you
+>> (@Alan/@Bart/@Adrian) have any thoughts on this.
+> 
+> How about changing the SCSI core so that it does a runtime_get before
+> starting an async probe, and the async probe routine does a
+> runtime_put when it is finished?  In other words, don't allow a device
+> to go into runtime suspend while it is waiting to be probed.
+> 
+> I don't think that would be too intrusive.
+> 
+> Alan Stern
+> 
 
-Reported-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
- 1 file changed, 1 insertion(+)
+Hi Alan
+Thanks for the suggestion.
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index 174134f920e1..9d8acf6f6152 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -187,6 +187,7 @@ properties:
- 
-       - items:
-           - enum:
-+              - qcom,sm8350-hdk
-               - qcom,sm8350-mtp
-           - const: qcom,sm8350
- 
+Am trying to understand:
+
+Do you mean something like this:
+
+int scsi_sysfs_add_sdev(struct scsi_device *sdev)
+{
+	
+	scsi_autopm_get_device(sdev);
+	pm_runtime_get_noresume(&sdev->sdev_gendev);
+	[...]
+	scsi_autopm_put_device(sdev);
+	[...]
+}
+
+static int sd_probe(struct device *dev)
+{
+	[...]
+	pm_runtime_put_noidle(dev);
+	scsi_autopm_put_device(sdp);
+	[...]
+}
+
+This may work (I'm limited by my imagination in scsi layer :) ).
+
+But the pm_runtime_put_noidle() would have to be added to all registered 
+scsi_driver{}, perhaps? Or may be I can check for sdp->type?
+
+-asd
+
 -- 
-2.29.2
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+Linux Foundation Collaborative Project
