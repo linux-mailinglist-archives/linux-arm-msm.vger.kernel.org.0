@@ -2,161 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 56FCC334C15
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 23:59:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 24E5E334C26
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Mar 2021 00:04:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233069AbhCJW7L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Mar 2021 17:59:11 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:38449 "EHLO z11.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232133AbhCJW7A (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Mar 2021 17:59:00 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1615417140; h=Message-ID: References: In-Reply-To: Reply-To:
- Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=NZPFVKOhoarmXo1gvuFRbDFcPH5WTj7PPL72LKMrY3Q=;
- b=xR8Cv34BN42CQdQfMMJA5DY+i8/FB/xBxHJFya9KHEedk16I16z/KtXErPpa4mBYO+HwotEC
- UMzPUI00FHzEZ38duvq7tLvwCwEU/sesG6+ooaPH8gfqzGWGvljbnvVEDL6gWHeaZ+wzvbRR
- JojbhcR2//6rDu6Wck78+VQe9Tw=
-X-Mailgun-Sending-Ip: 104.130.96.11
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 60494f20e90f410d8892ca1a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 10 Mar 2021 22:58:40
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id EED9AC433ED; Wed, 10 Mar 2021 22:58:39 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 22269C433CA;
-        Wed, 10 Mar 2021 22:58:39 +0000 (UTC)
+        id S233455AbhCJXEA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Mar 2021 18:04:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58404 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233150AbhCJXD4 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Mar 2021 18:03:56 -0500
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33316C061760
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 15:03:56 -0800 (PST)
+Received: by mail-lj1-x235.google.com with SMTP id q14so27851282ljp.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 15:03:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=QG64oKR42MkQh059e94QTjCnOsjF0zPHrCBWKfuY/L8=;
+        b=VA7i8iW77Cf/Okhv+E/UI8ZCHnh9QaZhS0ZqNab9EGe+bED0re5FyrYzLlTwGtRWtX
+         n21SkfRwVR5LJJPutChLWJ8kIX1UD2tERVie6vGZfV75sJEDFbXotp6rKOWhCKFPVCj2
+         MCqTyGlBf+T4NvKTdZe7Panjm39Ft2pKVg7/pj9z82F5pAQDWOC9Cg0AtK/T9xqFyPpH
+         RLMF16blDj6r+vn09l1n7dNuR6Hy8V9NBJQOrWTlYRCnrVnaoAONymBMgdNSQNcRiNj+
+         PYhxTdBtzX05MMgn00eQnQS6UcbnVOkMrcsoaheoBCDQJDy7rpv4Cv0/v0ShDV3sRdWl
+         /G+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=QG64oKR42MkQh059e94QTjCnOsjF0zPHrCBWKfuY/L8=;
+        b=Gut9k4CAwj2Yaeos+qTbzA3ImXpBYZlCo+YqN8H1edekKlF73cYlwHlfIA0qvEOGc5
+         AZll1T64AfhE5CHP2sNy7nkMi141mOvgWkAg/+z7rjGpVPL6bM5Np4/rsOrlGTMv1qfO
+         yp9dW1beB55r/jXCiRnzDB5vxBX9MMtWdinVuZzDJhL5CZQHpFVx74nIvVIdvYRd1y6f
+         4DP8pjC8tORy2XUX1fDWixxFFw2pJXSjra6OzzFFmBfYue+p27sjiItCXizcQY7pQAFa
+         bapQvFu9+nTeC8+BsDAW+71vyT875SA+Hs+Uu+5TtNG0+a6SQSZsMwAFde88Wd9NqzPJ
+         /2Vw==
+X-Gm-Message-State: AOAM5321nV99Q9PunvtpAAW8KGiI2QvJ2GMXbhdPN9dzig1Cdbj/bwYy
+        K6GuWiQLXru+Q39Np9weDMVxN2epCiDXJf3IDxb4BQ==
+X-Google-Smtp-Source: ABdhPJyX7oLLwopBBH+uTI6oA2UtPWQL+42vpvThnDl1xS8oR19DDR2RCeB8rs6+ktXle9KZkxqn6YBbH8lvOuXH3L4=
+X-Received: by 2002:a2e:700a:: with SMTP id l10mr3126198ljc.368.1615417434192;
+ Wed, 10 Mar 2021 15:03:54 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 10 Mar 2021 14:58:39 -0800
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
-        hemantk@codeaurora.org, linux-kernel@vger.kernel.org,
-        loic.poulain@linaro.org, carl.yin@quectel.com,
-        naveen.kumar@quectel.com
-Subject: Re: [PATCH v3 2/3] bus: mhi: core: Move to polling method to wait for
- MHI ready
-Organization: Qualcomm Innovation Center, Inc.
-Reply-To: bbhatt@codeaurora.org
-Mail-Reply-To: bbhatt@codeaurora.org
-In-Reply-To: <df566e64-8335-2ab2-85c8-bed4ec5b649d@codeaurora.org>
-References: <1614138270-2374-1-git-send-email-bbhatt@codeaurora.org>
- <1614138270-2374-3-git-send-email-bbhatt@codeaurora.org>
- <df566e64-8335-2ab2-85c8-bed4ec5b649d@codeaurora.org>
-Message-ID: <7c4abd2122178ec1db4ee69c1188be06@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <20210303131858.3976-1-shawn.guo@linaro.org>
+In-Reply-To: <20210303131858.3976-1-shawn.guo@linaro.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Thu, 11 Mar 2021 00:03:43 +0100
+Message-ID: <CACRpkdZp7m0s+6Fgzq4ScftAr-CtEPtAbz3jGCvKTzdqXJtfAA@mail.gmail.com>
+Subject: Re: [PATCH v2] pinctrl: qcom: support gpio_chip .set_config call
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Shevchenko <andriy.shevchenko@intel.com>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-03-10 11:02 AM, Jeffrey Hugo wrote:
-> On 2/23/2021 8:44 PM, Bhaumik Bhatt wrote:
->> In certain devices, it is likely that there is no incoming MHI
->> interrupt for a transition to MHI READY state. One such example
->> is the move from Pass Through to an SBL or AMSS execution
->> environment. In order to facilitate faster bootup times as there
->> is no need to wait until timeout_ms completes, MHI host can poll
->> every 25 milliseconds to check if device has entered MHI READY
->> until a maximum timeout of twice the timeout_ms is reached.
->> 
->> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
->> ---
->>   drivers/bus/mhi/core/pm.c | 31 ++++++++++++++-----------------
->>   1 file changed, 14 insertions(+), 17 deletions(-)
->> 
->> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
->> index 681960c..5fe33d4 100644
->> --- a/drivers/bus/mhi/core/pm.c
->> +++ b/drivers/bus/mhi/core/pm.c
->> @@ -153,34 +153,31 @@ static void mhi_toggle_dev_wake(struct 
->> mhi_controller *mhi_cntrl)
->>   /* Handle device ready state transition */
->>   int mhi_ready_state_transition(struct mhi_controller *mhi_cntrl)
->>   {
->> -	void __iomem *base = mhi_cntrl->regs;
->>   	struct mhi_event *mhi_event;
->>   	enum mhi_pm_state cur_state;
->>   	struct device *dev = &mhi_cntrl->mhi_dev->dev;
->> -	u32 reset = 1, ready = 0;
->>   	int ret, i;
->>   -	/* Wait for RESET to be cleared and READY bit to be set by the 
->> device */
->> -	wait_event_timeout(mhi_cntrl->state_event,
->> -			   MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state) ||
->> -			   mhi_read_reg_field(mhi_cntrl, base, MHICTRL,
->> -					      MHICTRL_RESET_MASK,
->> -					      MHICTRL_RESET_SHIFT, &reset) ||
->> -			   mhi_read_reg_field(mhi_cntrl, base, MHISTATUS,
->> -					      MHISTATUS_READY_MASK,
->> -					      MHISTATUS_READY_SHIFT, &ready) ||
->> -			   (!reset && ready),
->> -			   msecs_to_jiffies(mhi_cntrl->timeout_ms));
->> -
->>   	/* Check if device entered error state */
->>   	if (MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state)) {
->>   		dev_err(dev, "Device link is not accessible\n");
->>   		return -EIO;
->>   	}
->>   -	/* Timeout if device did not transition to ready state */
->> -	if (reset || !ready) {
->> -		dev_err(dev, "Device Ready timeout\n");
->> +	/* Wait for RESET to be cleared and READY bit to be set by the 
->> device */
->> +	ret = mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs, MHICTRL,
->> +				 MHICTRL_RESET_MASK, MHICTRL_RESET_SHIFT, 0,
->> +				 25000);
->> +	if (ret) {
->> +		dev_err(dev, "Device failed to clear MHI Reset\n");
->> +		return -ETIMEDOUT;
->> +	}
->> +
->> +	ret = mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs, MHISTATUS,
->> +				 MHISTATUS_READY_MASK, MHISTATUS_READY_SHIFT, 1,
->> +				 25000);
-> 
-> You use the magic number "25000" twice here.  Its my understanding
-> that the preference is to inline a magic number if its used in one
-> spot, but use a macro if its used more than that.
-> 
-> Both uses are confined to this function, and in close proximity, so
-> chances that one gets updated without the other seem minimal, so this
-> feels like a borderline case.  I don't know if Mani has an opinion
-> here.
-> 
-> I'd probably err on the side of making a macro or a single variable.
-> If not, I think some comments explaining the value are warranted
-> (should comment the macro as well).
-> 
-I think just using a variable would be good enough here. I can add a 
-comment
-when defining the interval variable.
->> +	if (ret) {
->> +		dev_err(dev, "Device failed to enter MHI Ready\n");
->>   		return -ETIMEDOUT;
->>   	}
->> 
+On Wed, Mar 3, 2021 at 2:19 PM Shawn Guo <shawn.guo@linaro.org> wrote:
 
-Thanks,
-Bhaumik
----
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
+> In case of ACPI boot, GPIO core does the right thing to parse GPIO pin
+> configs from ACPI table, and call into gpio_chip's .set_config hook for
+> setting them up.  It enables such support on qcom platform by using
+> generic config function, which in turn calls into .pin_config_set of
+> pinconf for setting up hardware.  For qcom platform, it's possible to
+> reuse pin group config functions for pin config hooks, because every pin
+> is maintained as a single group.
+>
+> This change fixes the problem that Touchpad of Lenovo Flex 5G laptop
+> doesn't work with ACPI boot, because PullUp config of Touchpad GpioInt
+> pin is not set up by the kernel.
+>
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> ---
+> Changes for v2:
+> - Add pin config functions that simply call into group config ones.
+
+Patch applied!
+
+Yours,
+Linus Walleij
