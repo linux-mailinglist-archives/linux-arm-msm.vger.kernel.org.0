@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C5026333517
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 06:26:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BC6B6333515
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 06:26:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229927AbhCJFZo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Mar 2021 00:25:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54688 "EHLO
+        id S232143AbhCJFZq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Mar 2021 00:25:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232182AbhCJFZY (ORCPT
+        with ESMTP id S232204AbhCJFZa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Mar 2021 00:25:24 -0500
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE31CC061763
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Mar 2021 21:25:24 -0800 (PST)
-Received: by mail-pj1-x102d.google.com with SMTP id x7-20020a17090a2b07b02900c0ea793940so6581719pjc.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Mar 2021 21:25:24 -0800 (PST)
+        Wed, 10 Mar 2021 00:25:30 -0500
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE546C061763
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Mar 2021 21:25:30 -0800 (PST)
+Received: by mail-pf1-x42a.google.com with SMTP id t29so11138976pfg.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Mar 2021 21:25:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=lmRk4W9psPWHB+/Q1B7Q6YGKf/tXK67nMAE63UGJDWU=;
-        b=HmOgRJjIG7OX0jjpBPFCcoNkZGVp9FjfUwR4gDs5cpJzHgHyQqkNjqE0q+5vj2gZsS
-         xIumY9RzZ1zZlRXqP6McPi2HXAu1tVO6Xq/DfxMyAIofnQVm0L0qMgjMD744Sw8Ds1w8
-         gCRUBY6d43wawzhoccso9X5MNTO3vutxcjzkH96MziYlSU2MLnBI+Gxnx8EEf5CDdz+Q
-         3lqgTCsMHmoIotfQjaFu6+q30yU86HXDVblHD8iB26pm2btY5ejtRfVtdAnNaSKZMwdC
-         96x1dpmFIthR4PShQrUCXo34CYDkeD6vsiqEBs152t4Hy95P86fsrTjb7D9RoKBUDm20
-         /Tbw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=00Qj3y18Y6HEZTQemqqh4Pl0Lyv+swPhAM+M8xYZg30=;
+        b=HQ9BQEzxD10uSnjlp0tQau1zqNP1/AQG2ieW3xcPQZMFBQ/AFgIqZJfNBJkIztjKqH
+         JsVzZvt7BWvGKJIH8CjXAK/fj6QVO03l/F6wKZZeCFpskXmHneQEI375vKdWp9xUqsxq
+         g+VOFQOX8E2Fu4milwd7D3xnb/VVbd7cN88GuHts5IF03WVSiUmKeZM3TupXr2roB9oT
+         TGBQXafPfOpVIuzxQvGRYluaBk6qt+XUEEX5QHn0FkTm/ya3EbPm5gw/Gvgj3hXC8Sek
+         E+whyWF9itbCwqV91MF+ecgyCS5cqxG52nWHZ5524H/2xxKPJI47s9oaZ9mgPOZJcXIS
+         TZ3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=lmRk4W9psPWHB+/Q1B7Q6YGKf/tXK67nMAE63UGJDWU=;
-        b=HBuAYfXj/Gx0uI2TQb2XdRwe006lO9HJnOq71m4bE+vgJ3jduesPzqzUroDUI6k8pz
-         4Cs47fN6XtBxBmDGVJ7KXZtrD8d3OHbotM9s8Z5LSFOk27mqwGVOIhjy6vkrSEfVaihz
-         RIfbDebF8avtTQuj2SKQTqTI7+Kj0yVLyD9bOehwtDgDilY/Jgn5MhUStMp+eiwb0dSU
-         CJY1TsfeObMVGZ7cOgqK/VjuecPcfIx2ONWfqgOrDwW8q5aevPGkHUl2X/CyPMn3Fy+3
-         ETN/jOuMILTdYIVx3wcjA2ZI8wjncAGRktgjeRwXGqr2YT2PP1KIjwXp9zXoPlwz6CUy
-         h78g==
-X-Gm-Message-State: AOAM532Yms37ec53fltQOoXaCbhmh0jRkZM6Yw78lGFOMnnlvJTnP9px
-        qKaO/VQJrIo4LVyH5FUQV3Bvh4mOf4N7gE1XkY4=
-X-Google-Smtp-Source: ABdhPJyPBZ8rYvr2UCW1gOkvSX4hRlcWea4qu2bNh7MA1mhWDB3UAODRk9IL8RPxRR16pSQuHPo7vw==
-X-Received: by 2002:a17:90a:c257:: with SMTP id d23mr1734557pjx.102.1615353924025;
-        Tue, 09 Mar 2021 21:25:24 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=00Qj3y18Y6HEZTQemqqh4Pl0Lyv+swPhAM+M8xYZg30=;
+        b=VyFI8dm66cIIKpFAH0aKwkNVMVQvdCjG3Bhyp05PPdg/x7di7aZJG2HEOngMGD15aG
+         iTTr1Eb1IugnfjPeK2yJK9qF+29qD5/wN2QwwAhUwFiAfxk6fMHFY6l6ICd2DjYFZbM0
+         lyMsvVwwGF3Jn2xKV+WiGZYKWaAPE7cWK7BtQQjzSWfcKzYxaDUL16xcNtAF04vpEy/w
+         ok3vTZ0tyPjAjCxAADDJNIlLAvpBElQJlMMIy03OrHE1d+9tDp5l0DmmjSv37426Odlw
+         qGkq8E3JX+Cg2Cj/zQlaREDcb1RV7CmV8SCRaxP2LMG+Bh+k90Ng8MmOoOqKDl+vOLZ8
+         4Wyg==
+X-Gm-Message-State: AOAM532xcFMWCjENmLUyepBVrm5BcP0rMP//LbC/FXm2JSAgabGY7tvf
+        xp+GWXl1dcI3KySPQSqmPxoyNGL562B2lRAHwBk=
+X-Google-Smtp-Source: ABdhPJwfyJA7R9hJ6TqvcQhg8m3LL00lMVdevq2ilYQbeQdkIkW5NLWx+2xHXbaKD10ANJEyIvRakg==
+X-Received: by 2002:a63:207:: with SMTP id 7mr1298617pgc.346.1615353930118;
+        Tue, 09 Mar 2021 21:25:30 -0800 (PST)
 Received: from localhost.localdomain ([2402:3a80:9f4:a436:21bd:7573:25c0:73a0])
-        by smtp.gmail.com with ESMTPSA id g7sm13915224pgb.10.2021.03.09.21.25.17
+        by smtp.gmail.com with ESMTPSA id g7sm13915224pgb.10.2021.03.09.21.25.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Mar 2021 21:25:23 -0800 (PST)
+        Tue, 09 Mar 2021 21:25:29 -0800 (PST)
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     bhupesh.sharma@linaro.org,
@@ -62,25 +62,22 @@ Cc:     bhupesh.sharma@linaro.org,
         linux-clk@vger.kernel.org, linux-crypto@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         bhupesh.linux@gmail.com
-Subject: [PATCH 0/8] Enable Qualcomm Crypto Engine on sm8250
-Date:   Wed, 10 Mar 2021 10:54:55 +0530
-Message-Id: <20210310052503.3618486-1-bhupesh.sharma@linaro.org>
+Subject: [PATCH 1/8] dt-bindings: qcom-qce: Add 'iommus' to required properties
+Date:   Wed, 10 Mar 2021 10:54:56 +0530
+Message-Id: <20210310052503.3618486-2-bhupesh.sharma@linaro.org>
 X-Mailer: git-send-email 2.29.2
+In-Reply-To: <20210310052503.3618486-1-bhupesh.sharma@linaro.org>
+References: <20210310052503.3618486-1-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Qualcomm crypto engine is also available on sm8250 SoC.
-It supports hardware accelerated algorithms for encryption
-and authentication. It also provides support for aes, des, 3des
-encryption algorithms and sha1, sha256, hmac(sha1), hmac(sha256)
-authentication algorithms.
+This patch adds the missing required property - 'iommus' to the
+device-tree binding documentation for qcom-qce crypto IP.
 
-While at it, also make a minor fix in 'sdm845.dtsi', to make
-sure it confirms with the other .dtsi files which expose
-crypto nodes on qcom SoCs.
+This property describes the phandle(s) to apps_smmu node with sid mask.
 
 Cc: Thara Gopinath <thara.gopinath@linaro.org>
 Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
@@ -95,27 +92,23 @@ Cc: linux-crypto@vger.kernel.org
 Cc: devicetree@vger.kernel.org
 Cc: linux-kernel@vger.kernel.org
 Cc: bhupesh.linux@gmail.com
+Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+---
+ Documentation/devicetree/bindings/crypto/qcom-qce.txt | 1 +
+ 1 file changed, 1 insertion(+)
 
-Bhupesh Sharma (8):
-  dt-bindings: qcom-qce: Add 'iommus' to required properties
-  dt-bindings: crypto : Add new compatible strings for qcom-qce
-  arm64/dts: qcom: sdm845: Use RPMH_CE_CLK macro directly
-  dt-bindings/clock: qcom: sm8250: Add gcc clocks for sm8250 crypto
-    block
-  clk: qcom: clk-rpmh: Add CE clock on sm8250
-  clk: qcom: Add gcc clocks for crypto block on sm8250
-  drivers: crypto: qce: Enable support for crypto engine on sm8250.
-  arm64/dts: qcom: sm8250: Add dt entries to support crypto engine.
-
- .../devicetree/bindings/crypto/qcom-qce.txt   |  7 ++-
- arch/arm64/boot/dts/qcom/sdm845.dtsi          |  4 +-
- arch/arm64/boot/dts/qcom/sm8250.dtsi          | 36 +++++++++++++++
- drivers/clk/qcom/clk-rpmh.c                   |  1 +
- drivers/clk/qcom/gcc-sm8250.c                 | 44 +++++++++++++++++++
- drivers/crypto/qce/core.c                     |  1 +
- include/dt-bindings/clock/qcom,gcc-sm8250.h   |  3 ++
- 7 files changed, 93 insertions(+), 3 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/crypto/qcom-qce.txt b/Documentation/devicetree/bindings/crypto/qcom-qce.txt
+index fdd53b184ba8..07ee1b12000b 100644
+--- a/Documentation/devicetree/bindings/crypto/qcom-qce.txt
++++ b/Documentation/devicetree/bindings/crypto/qcom-qce.txt
+@@ -11,6 +11,7 @@ Required properties:
+ - dmas        : DMA specifiers for tx and rx dma channels. For more see
+                 Documentation/devicetree/bindings/dma/dma.txt
+ - dma-names   : DMA request names should be "rx" and "tx"
++- iommus      : phandle to apps_smmu node with sid mask
+ 
+ Example:
+ 	crypto@fd45a000 {
 -- 
 2.29.2
 
