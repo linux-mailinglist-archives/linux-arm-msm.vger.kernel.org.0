@@ -2,24 +2,24 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CB5C4334312
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 17:32:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 24F9B33430F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 17:32:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231519AbhCJQbp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S232489AbhCJQbp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Wed, 10 Mar 2021 11:31:45 -0500
-Received: from mail1.protonmail.ch ([185.70.40.18]:22217 "EHLO
-        mail1.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229790AbhCJQbe (ORCPT
+Received: from mail-40133.protonmail.ch ([185.70.40.133]:18922 "EHLO
+        mail-40133.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230421AbhCJQbi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Mar 2021 11:31:34 -0500
-Date:   Wed, 10 Mar 2021 16:31:21 +0000
+        Wed, 10 Mar 2021 11:31:38 -0500
+Date:   Wed, 10 Mar 2021 16:31:28 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1615393892;
-        bh=T/uujJvcIAww74op8dtevNJmAnCZhQyRCNeuhVJ5+y8=;
+        s=protonmail; t=1615393897;
+        bh=1w9g8UPSYWUFEG4mnn/+/PQ6Nlg5fhcUX1MDEdc8uNo=;
         h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=og6Zc3DZGoxdH1E4dmX8lHPV0NSAStHJB+6L1FR9iHEx5Ty5911pZTEAPSZyzn7PY
-         gyQ1NgQzbr+MrSXAtrlbKfS8bbdc+J3ney40k/X58NWj4N+A/yEyz2ZG4M70nIQ9ok
-         rlE247/m51PRI+T9mzw+BmvkXGu33OEf16Ijn8F4=
+        b=JWFVdP6byPQhBv9V0SWh5LDJ/pkV7guJ+yAF0jTD4NwhSr66TrlNhSx7zZugT1Hcp
+         LoscplDCfEZt6OTtsiiB45hRlGA12TTHqSEnrxc24GAq8hLQAVUlxUUv0H4KEtN87M
+         GhUafpyYneiQjr5J4vwlitF6yWrC/HGb4ScWX+0w=
 To:     caleb@connolly.tech, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>
@@ -28,8 +28,8 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Reply-To: Caleb Connolly <caleb@connolly.tech>
-Subject: [PATCH 1/3] arm64: dts: qcom: sm8150: add other QUP nodes
-Message-ID: <20210310163024.393578-2-caleb@connolly.tech>
+Subject: [PATCH 2/3] arm64: dts: qcom: sm8150: add iommus to qups
+Message-ID: <20210310163024.393578-3-caleb@connolly.tech>
 In-Reply-To: <20210310163024.393578-1-caleb@connolly.tech>
 References: <20210310163024.393578-1-caleb@connolly.tech>
 MIME-Version: 1.0
@@ -44,58 +44,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the first and third qupv3 nodes used to hook
-up peripherals on some devices.
+Hook up the SMMU for doing DMA over i2c. Some peripherals like
+touchscreens easily exceed 32-bytes per transfer, causing errors and
+lockups without this.
 
 Signed-off-by: Caleb Connolly <caleb@connolly.tech>
 ---
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+Fixes i2c on the OnePlus 7, without this touching the screen with more
+than 4 fingers causes the device to lock up and reboot.
+---
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qco=
 m/sm8150.dtsi
-index e5bb17bc2f46..03e05d98daf2 100644
+index 03e05d98daf2..543417d74216 100644
 --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -577,6 +577,18 @@ gcc: clock-controller@100000 {
- =09=09=09=09 <&sleep_clk>;
- =09=09};
-=20
-+=09=09qupv3_id_0: geniqup@8c0000 {
-+=09=09=09compatible =3D "qcom,geni-se-qup";
-+=09=09=09reg =3D <0x0 0x008c0000 0x0 0x6000>;
-+=09=09=09clock-names =3D "m-ahb", "s-ahb";
-+=09=09=09clocks =3D <&gcc GCC_QUPV3_WRAP_0_M_AHB_CLK>,
-+=09=09=09=09 <&gcc GCC_QUPV3_WRAP_0_S_AHB_CLK>;
-+=09=09=09#address-cells =3D <2>;
-+=09=09=09#size-cells =3D <2>;
-+=09=09=09ranges;
-+=09=09=09status =3D "disabled";
-+=09=09};
-+
- =09=09qupv3_id_1: geniqup@ac0000 {
- =09=09=09compatible =3D "qcom,geni-se-qup";
- =09=09=09reg =3D <0x0 0x00ac0000 0x0 0x6000>;
-@@ -598,6 +610,19 @@ uart2: serial@a90000 {
- =09=09=09};
- =09=09};
-=20
-+=09=09qupv3_id_2: geniqup@cc0000 {
-+=09=09=09compatible =3D "qcom,geni-se-qup";
-+=09=09=09reg =3D <0x0 0x00cc0000 0x0 0x6000>;
-+
-+=09=09=09clock-names =3D "m-ahb", "s-ahb";
-+=09=09=09clocks =3D <&gcc GCC_QUPV3_WRAP_2_M_AHB_CLK>,
-+=09=09=09=09 <&gcc GCC_QUPV3_WRAP_2_S_AHB_CLK>;
-+=09=09=09#address-cells =3D <2>;
-+=09=09=09#size-cells =3D <2>;
-+=09=09=09ranges;
-+=09=09=09status =3D "disabled";
-+=09=09};
-+
- =09=09config_noc: interconnect@1500000 {
- =09=09=09compatible =3D "qcom,sm8150-config-noc";
- =09=09=09reg =3D <0 0x01500000 0 0x7400>;
+@@ -583,6 +583,7 @@ qupv3_id_0: geniqup@8c0000 {
+ =09=09=09clock-names =3D "m-ahb", "s-ahb";
+ =09=09=09clocks =3D <&gcc GCC_QUPV3_WRAP_0_M_AHB_CLK>,
+ =09=09=09=09 <&gcc GCC_QUPV3_WRAP_0_S_AHB_CLK>;
++=09=09=09iommus =3D <&apps_smmu 0xc3 0x0>;
+ =09=09=09#address-cells =3D <2>;
+ =09=09=09#size-cells =3D <2>;
+ =09=09=09ranges;
+@@ -595,6 +596,7 @@ qupv3_id_1: geniqup@ac0000 {
+ =09=09=09clock-names =3D "m-ahb", "s-ahb";
+ =09=09=09clocks =3D <&gcc GCC_QUPV3_WRAP_1_M_AHB_CLK>,
+ =09=09=09=09 <&gcc GCC_QUPV3_WRAP_1_S_AHB_CLK>;
++=09=09=09iommus =3D <&apps_smmu 0x603 0x0>;
+ =09=09=09#address-cells =3D <2>;
+ =09=09=09#size-cells =3D <2>;
+ =09=09=09ranges;
+@@ -617,6 +619,7 @@ qupv3_id_2: geniqup@cc0000 {
+ =09=09=09clock-names =3D "m-ahb", "s-ahb";
+ =09=09=09clocks =3D <&gcc GCC_QUPV3_WRAP_2_M_AHB_CLK>,
+ =09=09=09=09 <&gcc GCC_QUPV3_WRAP_2_S_AHB_CLK>;
++=09=09=09iommus =3D <&apps_smmu 0x7a3 0x0>;
+ =09=09=09#address-cells =3D <2>;
+ =09=09=09#size-cells =3D <2>;
+ =09=09=09ranges;
 --=20
 2.29.2
 
