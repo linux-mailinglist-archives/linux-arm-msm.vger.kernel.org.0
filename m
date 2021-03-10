@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5066C333FA2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 14:52:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C764333FAC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 14:54:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232265AbhCJNv6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Mar 2021 08:51:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51968 "EHLO
+        id S232778AbhCJNxe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Mar 2021 08:53:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231519AbhCJNvu (ORCPT
+        with ESMTP id S231532AbhCJNxH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Mar 2021 08:51:50 -0500
-Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2317C061760
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 05:51:50 -0800 (PST)
-Received: by mail-pg1-x531.google.com with SMTP id n10so11448315pgl.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 05:51:50 -0800 (PST)
+        Wed, 10 Mar 2021 08:53:07 -0500
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9919CC061760
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 05:53:07 -0800 (PST)
+Received: by mail-pj1-x1033.google.com with SMTP id kk2-20020a17090b4a02b02900c777aa746fso7518469pjb.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 05:53:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=X5tC2Q2Mgd4xeS1P2G/D3ZsBHgb7pQQku+/Xa9vdroE=;
-        b=IzrtVVwpFhu3zRWczCd8AWhwxOpHEvd7iiEQYaSj8eZXbnf16kagqYDORkOdlEyLro
-         ibCxfjOJzYGG4zi52Aap/EUEGu3bZr83SZdOX90yJiTm6v1HIFfjnItgLK6vsF3luZhC
-         j7Q3XGTuAo5B/v3LEagZGf+D9yV8FXfGScU7lgppdIi7JpPthP9XlysOTvdHwV0IFhEF
-         Ybuo4ciE9ez4oq3GhdJckCW50yIKAg4j0/xeddTDhf+vbFUk6xJeHf3mTY2i3fx8GC+g
-         0d8qEgEjHIZuRJIm49jfsLRh7tM8W4SWecpL+/WvKVLKHUJZRdOC1MfcgGQd4dO9IPRP
-         8trg==
+        bh=InN9m7hIprfWWBkDrI24e5tae9R+vk+vV3+IqqJrTHk=;
+        b=hley0yp994m20s7olEdzr4zUvmgmfA+s3wM2zyc1EsCKyEFbeVDRMjl/LyikTjjb2/
+         GSakKCGengIIeWFNg9Zu7w5qmL09Gvx6hxOgmFNtm7dS03pNPbz2PEf8fvaBnTH1bFsl
+         VsV+soMSWTd7HlfHpZIqcCmtcDvcb9bRcqXG+e+vnLJIlDq588Ynbt1IXUtTftYDHClX
+         Vq29xJHDW0eS2QxXGTAeBtczP6p6nVXj/zWCoA6vBXv56MhWBp4VFZ/RCkX7xZ8+/vez
+         GmK009YmJxv/TsI0Xh2Yvce/E0QIJrRr+2gjxRDKXMceum117T+mAtFiHfptINans96K
+         ejpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=X5tC2Q2Mgd4xeS1P2G/D3ZsBHgb7pQQku+/Xa9vdroE=;
-        b=XmOHjuDPgAcHL90aBONDtIrV6q1S3GHGq6ISAINELK54wLBG4F6SSDLGh67E5jSDVh
-         Oov0LOR9g9WMU6kHSAL9tEUXLK5+/5CS/Zv6Go1HFlyk5mZA/o9Ceswam2QIMY/Gzgm4
-         ZsXtcbqKi3y00uY6kIstak8ezTeHsaYCmbpayqmlWQ5pB6ikPFsXB3fp0fgbVN09XMo6
-         9xYnkRGcQxuCkF84fvnDquuE+JDyR3rvWKxcejxDEY2wjIr5xcboPxdB4LMFznII7Rlz
-         POA4NR+/W384wpkLH6Fy40bx79782l8O2Mn1aMLHdXptkAvYmqE8z73bnSi6X/wP5eM0
-         qt+w==
-X-Gm-Message-State: AOAM531nNDPmnmgHBiDIkE4wZbJgLN0RNq+O1XiNwE2KSD/RPiPoRqgW
-        touvtl/D/5eWvMCpDyETxqKW
-X-Google-Smtp-Source: ABdhPJwrlt/66sTaD0Wszt9Lr1/5EnGE6QG2yKtSG3bVEzxmh8bWPSGFSvQU3fuV8bs9YCMm4lLczQ==
-X-Received: by 2002:a65:5bca:: with SMTP id o10mr3014262pgr.248.1615384310081;
-        Wed, 10 Mar 2021 05:51:50 -0800 (PST)
+        bh=InN9m7hIprfWWBkDrI24e5tae9R+vk+vV3+IqqJrTHk=;
+        b=gXLEuL7AeuM3CubCLK6gVz42Vc7zJgJiEPU9H2jv8PzFdsWvIFh0teUbVG3HF/FYzP
+         100tm584I1uRDQ2w68JQJLWGwesrax5NA77iFqReLphBG+HRVeSbnWt2gPJIk0ty4pVE
+         NFlUYWTM2EyCBz62eZ8xB7siiLoReTBZp4V8YkrAd7mumRJQ7690aD65Mp6wSzFD86Ri
+         nomcDdcwQbphDgBKFPNmuwcjea+bbo3gaUmCPgIqKiEK/T2hBwxFunGYA+aEa81jdudb
+         pb/v2PGcor0C76XNoE6jQ68+PMdKsNvvvjqmi9WiHFKOtO8rbdzpUMBByOHsdWlK7yVK
+         Sf+A==
+X-Gm-Message-State: AOAM533ZdKIwtGCKesntab88k2vND/dO7hd2yo7FX3temdOICkFEZFUd
+        xlJJBc0YERcHzL0Q3flte6HT
+X-Google-Smtp-Source: ABdhPJy9D3b4xRKPH7Fw5bprufQUEXAOSRHXuKvGxwnap5Z9PaIf4V/bUoxe86dq6v+VfzZuHYbHZA==
+X-Received: by 2002:a17:90a:7182:: with SMTP id i2mr3666760pjk.111.1615384387119;
+        Wed, 10 Mar 2021 05:53:07 -0800 (PST)
 Received: from thinkpad ([103.66.79.59])
-        by smtp.gmail.com with ESMTPSA id k67sm10597262pgk.28.2021.03.10.05.51.46
+        by smtp.gmail.com with ESMTPSA id 35sm16050113pgr.14.2021.03.10.05.53.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Mar 2021 05:51:49 -0800 (PST)
-Date:   Wed, 10 Mar 2021 19:21:44 +0530
+        Wed, 10 Mar 2021 05:53:06 -0800 (PST)
+Date:   Wed, 10 Mar 2021 19:23:01 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
 Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
@@ -57,7 +57,7 @@ Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
         loic.poulain@linaro.org
 Subject: Re: [PATCH v3] bus: mhi: core: Add missing checks for MMIO register
  entries
-Message-ID: <20210310135144.GM30275@thinkpad>
+Message-ID: <20210310135301.GN30275@thinkpad>
 References: <1615315490-36017-1-git-send-email-bbhatt@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -76,7 +76,7 @@ On Tue, Mar 09, 2021 at 10:44:50AM -0800, Bhaumik Bhatt wrote:
 > 
 > Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Applied to mhi-next!
 
 Thanks,
 Mani
