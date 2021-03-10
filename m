@@ -2,39 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 237C2333D4F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 14:09:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 11355333D51
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 14:09:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230414AbhCJNIa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Mar 2021 08:08:30 -0500
-Received: from mail-lf1-f43.google.com ([209.85.167.43]:36401 "EHLO
-        mail-lf1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232088AbhCJNIN (ORCPT
+        id S232659AbhCJNJB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Mar 2021 08:09:01 -0500
+Received: from mail-lf1-f51.google.com ([209.85.167.51]:46896 "EHLO
+        mail-lf1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232088AbhCJNId (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Mar 2021 08:08:13 -0500
-Received: by mail-lf1-f43.google.com with SMTP id f1so33355024lfu.3;
-        Wed, 10 Mar 2021 05:08:12 -0800 (PST)
+        Wed, 10 Mar 2021 08:08:33 -0500
+Received: by mail-lf1-f51.google.com with SMTP id r3so25155430lfc.13;
+        Wed, 10 Mar 2021 05:08:32 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=KrANCoS0fCxeFOR+CSK04kMbdL9AaU/jYXkEl2MWB7Q=;
-        b=Irdg9YtWxPOZpUTk8v6aI6CoHBawtE+BsG34Oh2/OWzlmrDTTbfMejFhHmxIx/1Sz+
-         xr2PJz/XwXian+RZZQtjPmZHXH4hQZzaIBBPkEEeXwE5esbi6dQK2SNi5sNRIPnEnP+b
-         44BXpNRjnWQHixTEE/uI7hvmelD9/i1MDltYkzUC+TzzOGfb6nUQir6lum/yghinsRy/
-         YAms/7k7sebtJNlURgSSUbljdiMnsjzNkJ9dzTYq6fXi2dvqwWkkCcg2ifVYhFQtzdvw
-         PD9m1X/GF6gjW88JukA0Br/0VWdbDc1LTB4oIFaIDXwNxazRpFX66AdkDEvcD/STJCIV
-         zwyA==
-X-Gm-Message-State: AOAM532zrA8wy+qgzsQZCSFSvBzhBtf9TTwVhZyYE3dE/DwvLOKTzBfg
-        asMBH74f7mSWrVkDFzW2yJg=
-X-Google-Smtp-Source: ABdhPJw94cPVW0Dg62i0SqOPGampwNMKErOs/XS2YPQK+DDeShi/3hC5lBmzU2hicdjZJAXiuz07+A==
-X-Received: by 2002:a19:6557:: with SMTP id c23mr2067164lfj.422.1615381691418;
-        Wed, 10 Mar 2021 05:08:11 -0800 (PST)
+        bh=IDSJEhR3nj5vbJCjgS5WrWjZtxX52Thgjco29XIGLgY=;
+        b=JT8ejpoxgIz50uEJkFDHHBBgmZLtL58201nGKz7lZvn7BPHm1MXClOepL2hgwABjht
+         fFYM1SwdZ6b8h/bmBcukQfqD2voQ+ij5CpwG/YVZAsN76tnEDpDFk6b1K8aAgT5h3w57
+         Ul0nQ+l1bQ1bH72ZAs3HfEUu9bbA++nUhQTERoSqcg7AUtbEVkFA8QFaJ2YSWHVgESdT
+         MqutPH0lV0lLV1IFWyd7W/sO0Ta/54tqb/lxlCSVfoM7a6ifTFLuKa+JYXyjYUrpeQmy
+         belXHU8t0DYs/bH8PQuJh6L8VIgohSJ3SwF2WIpr6ido78+1eeZ9jOI094KtmiAV68oQ
+         NVkQ==
+X-Gm-Message-State: AOAM5315Cqa7dquYRIV83asLPVQ9V4uqlzMWJ6/FYY99uPNTv2nRdWoo
+        46nUezMqOEflK4ZlUcKm+6g=
+X-Google-Smtp-Source: ABdhPJwfQ0bt5y8RwlLFpXp+rNneUOk7FdAyE1c/hGg5LRZAlzot2uD8ixavdxwaSp3DLs+cK6wDew==
+X-Received: by 2002:a19:4147:: with SMTP id o68mr2161232lfa.295.1615381711228;
+        Wed, 10 Mar 2021 05:08:31 -0800 (PST)
 Received: from localhost.localdomain (dc7vkhyyyyyyyyyyyyycy-3.rev.dnainternet.fi. [2001:14ba:16e2:8300::4])
-        by smtp.gmail.com with ESMTPSA id k13sm2851156lfg.192.2021.03.10.05.08.10
+        by smtp.gmail.com with ESMTPSA id x31sm2934474lfu.10.2021.03.10.05.08.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Mar 2021 05:08:10 -0800 (PST)
-Date:   Wed, 10 Mar 2021 15:08:04 +0200
+        Wed, 10 Mar 2021 05:08:30 -0800 (PST)
+Date:   Wed, 10 Mar 2021 15:08:24 +0200
 From:   Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
 To:     mazziesaccount@gmail.com, matti.vaittinen@fi.rohmeurope.com
 Cc:     Liam Girdwood <lgirdwood@gmail.com>,
@@ -45,8 +45,8 @@ Cc:     Liam Girdwood <lgirdwood@gmail.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
         linux-power@fi.rohmeurope.com, linux-arm-msm@vger.kernel.org
-Subject: [RFC PATCH v2 1/7] dt_bindings: Add protection limit properties
-Message-ID: <63a0101f2e9daf9c0f10f2b97a8468b108ce7d0b.1615367099.git.matti.vaittinen@fi.rohmeurope.com>
+Subject: [RFC PATCH v2 2/7] regulator: add warning flags
+Message-ID: <2a89e9208164b44b8179abe8719dc16100da4848.1615367099.git.matti.vaittinen@fi.rohmeurope.com>
 References: <cover.1615367099.git.matti.vaittinen@fi.rohmeurope.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -56,119 +56,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Support specifying protection/error/warning limits for regulator
-over current, over temperature and over/under voltage.
+Add 'warning' level events and error flags to regulator core.
+Current regulator core notifications are used to inform consumers
+about errors where HW is misbehaving in such way it is assumed to
+be broken/unrecoverable.
 
-Most of the PMICs support only "protection" feature but few
-setups do also support error/warning level indications.
+There are PMICs which are designed for system(s) that may have use
+for regulator indications sent before HW is damaged so that some
+board/consumer specific recovery-event can be performed while
+continuing most of the normal operations.
 
-On many ICs most of the protection limits can't actually be set.
-But for example the ampere limit for over-current protection on ROHM
-BD9576 can be configured - or feature can be completely disabled.
-
-Provide limit setting for all protections/errors for the sake of
-the completeness and do that using own properties for all so that
-not all users would need to set all levels when only one or few are
-supported.
+Add new WARNING level events and notifications to be used for
+that purpose.
 
 Signed-off-by: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
 ---
- .../bindings/regulator/regulator.yaml         | 82 +++++++++++++++++++
- 1 file changed, 82 insertions(+)
+ include/linux/regulator/consumer.h | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/regulator/regulator.yaml b/Documentation/devicetree/bindings/regulator/regulator.yaml
-index 6d0bc9cd4040..a6ae9ecae5cc 100644
---- a/Documentation/devicetree/bindings/regulator/regulator.yaml
-+++ b/Documentation/devicetree/bindings/regulator/regulator.yaml
-@@ -117,6 +117,88 @@ properties:
-     description: Enable over current protection.
-     type: boolean
+diff --git a/include/linux/regulator/consumer.h b/include/linux/regulator/consumer.h
+index 20e84a84fb77..f72ca73631be 100644
+--- a/include/linux/regulator/consumer.h
++++ b/include/linux/regulator/consumer.h
+@@ -119,6 +119,16 @@ struct regulator_dev;
+ #define REGULATOR_EVENT_PRE_DISABLE		0x400
+ #define REGULATOR_EVENT_ABORT_DISABLE		0x800
+ #define REGULATOR_EVENT_ENABLE			0x1000
++/*
++ * Following notifications should be emitted only if detected condition
++ * is such that the HW is likely to still be working but consumers should
++ * take a recovery action to prevent problems esacalating into errors.
++ */
++#define REGULATOR_EVENT_UNDER_VOLTAGE_WARN	0x2000
++#define REGULATOR_EVENT_OVER_CURRENT_WARN	0x4000
++#define REGULATOR_EVENT_OVER_VOLTAGE_WARN	0x8000
++#define REGULATOR_EVENT_OVER_TEMP_WARN		0x10000
++#define REGULATOR_EVENT_WARN_MASK		0x1E000
  
-+  regulator-oc-protection-microamp:
-+    description: Set over current protection limit. This is a limit where
-+      hardware performs emergency shutdown. Zero can be passed to disable
-+      protection and value '1' indicates that protection should be enabled but
-+      limit setting can be omitted.
-+
-+  regulator-oc-error-microamp:
-+    description: Set over current error limit. This is a limit where part of
-+      the hardware propably is malfunctional and damage prevention is requested.
-+      Zero can be passed to disable error detection and value '1' indicates
-+      that detection should be enabled but limit setting can be omitted.
-+
-+  regulator-oc-warn-microamp:
-+    description: Set over current warning limit. This is a limit where hardware
-+      is assumed still to be functional but approaching limit where it gets
-+      damaged. Recovery actions should be initiated. Zero can be passed to
-+      disable detection and value '1' indicates that detection should
-+      be enabled but limit setting can be omitted.
-+
-+  regulator-ov-protection-microvolt:
-+    description: Set over voltage protection limit. This is a limit where
-+      hardware performs emergency shutdown. Zero can be passed to disable
-+      protection and value '1' indicates that protection should be enabled but
-+      limit setting can be omitted. Limit is given as microvolt offset from
-+      voltage set to regulator.
-+
-+  regulator-ov-error-microvolt:
-+    description: Set over voltage error limit. This is a limit where part of
-+      the hardware propably is malfunctional and damage prevention is requested
-+      Zero can be passed to disable error detection and value '1' indicates
-+      that detection should be enabled but limit setting can be omitted. Limit
-+      is given as microvolt offset from voltage set to regulator.
-+
-+  regulator-ov-warn-microvolt:
-+    description: Set over voltage warning limit. This is a limit where hardware
-+      is assumed still to be functional but approaching limit where it gets
-+      damaged. Recovery actions should be initiated. Zero can be passed to
-+      disable detection and value '1' indicates that detection should
-+      be enabled but limit setting can be omitted. Limit is given as microvolt
-+      offset from voltage set to regulator.
-+
-+  regulator-uv-protection-microvolt:
-+    description: Set over under voltage protection limit. This is a limit where
-+      hardware performs emergency shutdown. Zero can be passed to disable
-+      protection and value '1' indicates that protection should be enabled but
-+      limit setting can be omitted. Limit is given as microvolt offset from
-+      voltage set to regulator.
-+
-+  regulator-uv-error-microvolt:
-+    description: Set under voltage error limit. This is a limit where part of
-+      the hardware propably is malfunctional and damage prevention is requested
-+      Zero can be passed to disable error detection and value '1' indicates
-+      that detection should be enabled but limit setting can be omitted. Limit
-+      is given as microvolt offset from voltage set to regulator.
-+
-+  regulator-uv-warn-microvolt:
-+    description: Set over under voltage warning limit. This is a limit where
-+      hardware is assumed still to be functional but approaching limit where
-+      it gets damaged. Recovery actions should be initiated. Zero can be passed
-+      to disable detection and value '1' indicates that detection should
-+      be enabled but limit setting can be omitted. Limit is given as microvolt
-+      offset from voltage set to regulator.
-+
-+  regulator-temp-protection-kelvin:
-+    description: Set over temperature protection limit. This is a limit where
-+      hardware performs emergency shutdown. Zero can be passed to disable
-+      protection and value '1' indicates that protection should be enabled but
-+      limit setting can be omitted.
-+
-+  regulator-temp-error-kelvin:
-+    description: Set over temperature error limit. This is a limit where part of
-+      the hardware propably is malfunctional and damage prevention is requested
-+      Zero can be passed to disable error detection and value '1' indicates
-+      that detection should be enabled but limit setting can be omitted.
-+
-+  regulator-temp-warn-kelvin:
-+    description: Set over temperature warning limit. This is a limit where
-+      hardware is assumed still to be functional but approaching limit where it
-+      gets damaged. Recovery actions should be initiated. Zero can be passed to
-+      disable detection and value '1' indicates that detection should
-+      be enabled but limit setting can be omitted.
-+
-   regulator-active-discharge:
-     description: |
-       tristate, enable/disable active discharge of regulators. The values are:
+ /*
+  * Regulator errors that can be queried using regulator_get_error_flags
+@@ -138,6 +148,10 @@ struct regulator_dev;
+ #define REGULATOR_ERROR_FAIL			BIT(4)
+ #define REGULATOR_ERROR_OVER_TEMP		BIT(5)
+ 
++#define REGULATOR_ERROR_UNDER_VOLTAGE_WARN	BIT(6)
++#define REGULATOR_ERROR_OVER_CURRENT_WARN	BIT(7)
++#define REGULATOR_ERROR_OVER_VOLTAGE_WARN	BIT(8)
++#define REGULATOR_ERROR_OVER_TEMP_WARN		BIT(9)
+ 
+ /**
+  * struct pre_voltage_change_data - Data sent with PRE_VOLTAGE_CHANGE event
 -- 
 2.25.4
 
