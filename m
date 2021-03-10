@@ -2,260 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D4BE6333B26
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 12:13:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D5B12333B74
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 12:31:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231161AbhCJLMa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Mar 2021 06:12:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45326 "EHLO
+        id S231696AbhCJLaf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Mar 2021 06:30:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232746AbhCJLMY (ORCPT
+        with ESMTP id S232735AbhCJLaD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Mar 2021 06:12:24 -0500
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3A68C061760
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 03:12:24 -0800 (PST)
-Received: by mail-pl1-x62f.google.com with SMTP id j6so8309073plx.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 03:12:24 -0800 (PST)
+        Wed, 10 Mar 2021 06:30:03 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52234C06174A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 03:29:56 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id n22so6887445wmc.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 03:29:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id;
-        bh=t910xUfCo6T+ccp2jGbLlVuf2Stz9bRKAHK4MexjvP4=;
-        b=JrhHNXK8eRDOMg1GJwNvuWVcLKbP8SoaSrHwtAa6PX2twCsHLRa67HP5tdaxuNbTQ5
-         3rUD6VOCBg3ov2hsic3zdCHUbbYmGlX79fBGf0zNcSp7v0IehcYP+8HXq3HkCbYRAgh6
-         uNaR1WRZ1yGbgIPDmjGOBy+L5mgVjxdMVJWy5JKfJAR1HCj95VI4qUCmQpUrNJLy5ABS
-         QFCjXyj8VZN8oc/tmxDGg0tyruoi/5niM2eKNL5kKYLen96quxK2Nz4Ji+c/5vcoIKzi
-         GdfaIUS6hTTYHp8UaWRfgCY0xXHSXaE/gLC97eigYbyv80xOI5SMHJ6kLo5VLoAWmhTY
-         rELw==
+        bh=/bhWoPiGy1P6sOdpSnQcWMITpyete28UGsPz1h+/i80=;
+        b=UQ9B1CPVR8ZjfsaXVu+caNPNwoU7A9psRAL81WHFF4Gq2SC+6a9q5uUGLh0Gpm6meg
+         3jFZgrFkvD9NZaeR5c2FlWH1NRv4G4slYUWb2y3IRfKhaLHS4f2ZoRRPfI7cTA64cyNb
+         VXDCU58FPDzGQUkZfXnRd1ac/rs9SGhNfOOLM8hKn2UL/ECVZJLdiZDmSqsveKHysu8R
+         o99Kz1TtxKAgnK3DRmZsN81BHPehQrxHSxuGQFc11r+n0GO3HKBsJwrsZn7dlFmopT59
+         wjqaGX0mHbSR1Ksd6zGaaseljlU/HW+Zd0TFD6ObuqMILvP5Dq3aV42B3vasp9XF5ebn
+         Djfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=t910xUfCo6T+ccp2jGbLlVuf2Stz9bRKAHK4MexjvP4=;
-        b=Wj7wpKCHtuwkfA0VcHoepTE0eA8FbfDk7zXwGzXP2UDFf2q26Z7XoT7tWYAF7SXaZk
-         Zi53MH8xUuT1dZXFSCYFP3OJUYDt99A69sdViZ2lcw8pL82gKhcVCAWRLxRl2IKIMtfq
-         cYhCy0QkWMWPuu8olSaJOWRv23zXJX0T+04/12JfsZrqEA4VoX16tVXxJrSbrsVhnOko
-         CPLGeXDacew5T/73Mc2hyvQRTSUgmIMCACSrNpF2EKM4c4Ue08lg0YL8sYMnsNaIlOWx
-         gjqyV/TGfBW0+mY+WEeHfv1euyCleVUYesqtuNWMykUVqapv4FgScMwEyjo9023pyKXu
-         4ZzQ==
-X-Gm-Message-State: AOAM5324m1QrYYcDIDPCGAuVBG1QM7HrEeqM2PEWdw7ZPZpitEAYsh4N
-        U9xiyqTVSq0+d8AGoUS6HyAwFw==
-X-Google-Smtp-Source: ABdhPJxwulw1rtb3ToIDxi3BzfVOPmCIGJWC9rRqF/XqaPik8kekfVkVyQDfS4Q7DsxA8d+uwkNhxw==
-X-Received: by 2002:a17:903:31c4:b029:e1:8840:8ab9 with SMTP id v4-20020a17090331c4b02900e188408ab9mr2543712ple.70.1615374744416;
-        Wed, 10 Mar 2021 03:12:24 -0800 (PST)
-Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id i20sm15446949pgg.65.2021.03.10.03.12.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Mar 2021 03:12:23 -0800 (PST)
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Shevchenko <andriy.shevchenko@intel.com>,
-        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Shawn Guo <shawn.guo@linaro.org>
-Subject: [PATCH v4] pinctrl: qcom: sc8180x: add ACPI probe support
-Date:   Wed, 10 Mar 2021 19:12:10 +0800
-Message-Id: <20210310111210.1232-1-shawn.guo@linaro.org>
-X-Mailer: git-send-email 2.17.1
+        bh=/bhWoPiGy1P6sOdpSnQcWMITpyete28UGsPz1h+/i80=;
+        b=mYMEIKF+6ID62085GdJyhyGLwLwLbXMv4nI8E4bHZk/TPHQfeaN8njxqA/HDawBABI
+         fkpR/XCEYpHgm9oVMKAGS2E0WMPTogkEXqw9MmIZoQ/lNr0MMDTlhXGfhR+gW0tOdZ4v
+         N42/o6HNXwGw2r0mFSUnoV7Sc4KpYSGec61bmve/sct6OAXd188d6BvozJ+zodmkDV1f
+         NK3OMlk3+GtXt/WBUL1R1DFtxodG8dWNSXZ7boi0wuMvTHFpjMEvOz91pcRdpj7imIt0
+         3K8ZlSH5IN/M7XSSon/yebN96nJNokdrfqyLbddz44hlFqpoYGHjM+XPdjhJUn1LRrJq
+         biOQ==
+X-Gm-Message-State: AOAM531PJRpANmGg4sr2yYqN540+KMk5gVSj6gvM4U53LoaUhXtYXXlQ
+        cmCt6ZL0FAAOx6Q53xxyS5RgeA==
+X-Google-Smtp-Source: ABdhPJzEC+z0SYiF+moDHo3czj/c1SoqMY575rMc+Tedm2hogiccluglOD/h9xCcOnqB7vnJP9xv4A==
+X-Received: by 2002:a05:600c:4fd0:: with SMTP id o16mr2908624wmq.123.1615375794708;
+        Wed, 10 Mar 2021 03:29:54 -0800 (PST)
+Received: from localhost.localdomain ([2a01:e0a:82c:5f0:46d1:ffa8:9938:224a])
+        by smtp.gmail.com with ESMTPSA id o20sm8899888wmq.5.2021.03.10.03.29.53
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 10 Mar 2021 03:29:53 -0800 (PST)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH] bus: mhi: Command completion workaround
+Date:   Wed, 10 Mar 2021 12:38:28 +0100
+Message-Id: <1615376308-1941-1-git-send-email-loic.poulain@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It adds ACPI probe support for pinctrl-sc8180x driver.  We have one
-problem with ACPI table, i.e. GIO0 (TLMM) block has one single memory
-resource to cover 3 tiles defined by SC8180X.  To follow the hardware
-layout of 3 tiles which is already supported DT probe, it adds one
-function to replace the original single memory resource with 3 named
-ones for tiles.  With that, We can map memory for ACPI in the same way
-as DT.
+Some buggy hardwares (e.g sdx24) may report the current command
+ring wp pointer instead of the command completion pointer. It's
+obviously wrong, causing completion timeout. We can however deal
+with that situation by completing the cmd n-1 element, which is
+what the device actually completes.
 
-Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 ---
-Changes for 4:
- - Add sc8180x_pinctrl_add_tile_resources() to massage memory resource
-   for ACPI probe.
+ drivers/bus/mhi/core/main.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-Changes for v3:
-- Remove the use of tiles completely.
-- Drop unneed include of acpi.h.
-
-Changes for v2:
-- Pass soc_data pointer via .driver_data.
-- Drop use of CONFIG_ACPI and ACPI_PTR().
-- Add comment for sc8180x_acpi_reserved_gpios[] terminator.
-
- drivers/pinctrl/qcom/Kconfig           |   2 +-
- drivers/pinctrl/qcom/pinctrl-sc8180x.c | 119 ++++++++++++++++++++++++-
- 2 files changed, 118 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
-index 6853a896c476..9f0218c4f9b3 100644
---- a/drivers/pinctrl/qcom/Kconfig
-+++ b/drivers/pinctrl/qcom/Kconfig
-@@ -222,7 +222,7 @@ config PINCTRL_SC7280
- 
- config PINCTRL_SC8180X
- 	tristate "Qualcomm Technologies Inc SC8180x pin controller driver"
--	depends on GPIOLIB && OF
-+	depends on GPIOLIB && (OF || ACPI)
- 	select PINCTRL_MSM
- 	help
- 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
-diff --git a/drivers/pinctrl/qcom/pinctrl-sc8180x.c b/drivers/pinctrl/qcom/pinctrl-sc8180x.c
-index b765bf667574..4ff80a7a1221 100644
---- a/drivers/pinctrl/qcom/pinctrl-sc8180x.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sc8180x.c
-@@ -23,6 +23,21 @@ enum {
- 	WEST
- };
- 
-+/*
-+ * ACPI DSDT has one single memory resource for TLMM.  The offsets below are
-+ * used to locate different tiles for ACPI probe.
-+ */
-+struct tile_info {
-+	u32 offset;
-+	u32 size;
-+};
-+
-+static const struct tile_info sc8180x_tile_info[] = {
-+	{ 0x00d00000, 0x00300000, },
-+	{ 0x00500000, 0x00700000, },
-+	{ 0x00100000, 0x00300000, },
-+};
-+
- #define FUNCTION(fname)					\
- 	[msm_mux_##fname] = {				\
- 		.name = #fname,				\
-@@ -1557,6 +1572,13 @@ static const struct msm_pingroup sc8180x_groups[] = {
- 	[193] = SDC_QDSD_PINGROUP(sdc2_data, 0x4b2000, 9, 0),
- };
- 
-+static const int sc8180x_acpi_reserved_gpios[] = {
-+	0, 1, 2, 3,
-+	47, 48, 49, 50,
-+	126, 127, 128, 129,
-+	-1 /* terminator */
-+};
-+
- static const struct msm_gpio_wakeirq_map sc8180x_pdc_map[] = {
- 	{ 3, 31 }, { 5, 32 }, { 8, 33 }, { 9, 34 }, { 10, 100 }, { 12, 104 },
- 	{ 24, 37 }, { 26, 38 }, { 27, 41 }, { 28, 42 }, { 30, 39 }, { 36, 43 },
-@@ -1588,13 +1610,105 @@ static struct msm_pinctrl_soc_data sc8180x_pinctrl = {
- 	.nwakeirq_map = ARRAY_SIZE(sc8180x_pdc_map),
- };
- 
-+static const struct msm_pinctrl_soc_data sc8180x_acpi_pinctrl = {
-+	.tiles = sc8180x_tiles,
-+	.ntiles = ARRAY_SIZE(sc8180x_tiles),
-+	.pins = sc8180x_pins,
-+	.npins = ARRAY_SIZE(sc8180x_pins),
-+	.groups = sc8180x_groups,
-+	.ngroups = ARRAY_SIZE(sc8180x_groups),
-+	.reserved_gpios = sc8180x_acpi_reserved_gpios,
-+	.ngpios = 191,
-+};
-+
-+static int sc8180x_pinctrl_add_tile_resources(struct platform_device *pdev)
-+{
-+	int nres_num = pdev->num_resources + ARRAY_SIZE(sc8180x_tiles) - 1;
-+	struct resource *mres, *nres, *res;
-+	int i, ret;
-+
-+	/*
-+	 * DT already has tiles defined properly, so nothing needs to be done
-+	 * for DT probe.
-+	 */
-+	if (pdev->dev.of_node)
-+		return 0;
-+
-+	/* Allocate for new resources */
-+	nres = devm_kzalloc(&pdev->dev, sizeof(*nres) * nres_num, GFP_KERNEL);
-+	if (!nres)
-+		return -ENOMEM;
-+
-+	res = nres;
-+
-+	for (i = 0; i < pdev->num_resources; i++) {
-+		struct resource *r = &pdev->resource[i];
-+
-+		/* Save memory resource and copy others */
-+		if (resource_type(r) == IORESOURCE_MEM)
-+			mres = r;
-+		else
-+			*res++ = *r;
-+	}
-+
-+	/* Append tile memory resources */
-+	for (i = 0; i < ARRAY_SIZE(sc8180x_tiles); i++, res++) {
-+		const struct tile_info *info = &sc8180x_tile_info[i];
-+
-+		res->start = mres->start + info->offset;
-+		res->end = mres->start + info->offset + info->size - 1;
-+		res->flags = mres->flags;
-+		res->name = sc8180x_tiles[i];
-+
-+		/* Add new MEM to resource tree */
-+		insert_resource(mres->parent, res);
-+	}
-+
-+	/* Remove old MEM from resource tree */
-+	remove_resource(mres);
-+
-+	/* Free old resources and install new ones */
-+	ret = platform_device_add_resources(pdev, nres, nres_num);
-+	if (ret) {
-+		dev_err(&pdev->dev, "failed to add new resources: %d\n", ret);
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
- static int sc8180x_pinctrl_probe(struct platform_device *pdev)
+diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+index 16b9640..3e3c520 100644
+--- a/drivers/bus/mhi/core/main.c
++++ b/drivers/bus/mhi/core/main.c
+@@ -707,6 +707,7 @@ static void mhi_process_cmd_completion(struct mhi_controller *mhi_cntrl,
  {
--	return msm_pinctrl_probe(pdev, &sc8180x_pinctrl);
-+	const struct msm_pinctrl_soc_data *soc_data;
-+	int ret;
+ 	dma_addr_t ptr = MHI_TRE_GET_EV_PTR(tre);
+ 	struct mhi_cmd *cmd_ring = &mhi_cntrl->mhi_cmd[PRIMARY_CMD_RING];
++	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+ 	struct mhi_ring *mhi_ring = &cmd_ring->ring;
+ 	struct mhi_tre *cmd_pkt;
+ 	struct mhi_chan *mhi_chan;
+@@ -714,6 +715,23 @@ static void mhi_process_cmd_completion(struct mhi_controller *mhi_cntrl,
+ 
+ 	cmd_pkt = mhi_to_virtual(mhi_ring, ptr);
+ 
++	if (unlikely(cmd_pkt == mhi_ring->wp)) {
++		/* Some buggy hardwares (e.g sdx24) sometimes report the current
++		 * command ring wp pointer instead of the command completion
++		 * pointer. It's obviously wrong, causing completion timeout. We
++		 * can however deal with that situation by completing the cmd
++		 * n-1 element.
++		 */
++		void *ring_ptr = (void *)cmd_pkt - mhi_ring->el_size;
 +
-+	soc_data = device_get_match_data(&pdev->dev);
-+	if (!soc_data)
-+		return -EINVAL;
++		if (ring_ptr < mhi_ring->base)
++			ring_ptr += mhi_ring->len;
 +
-+	ret = sc8180x_pinctrl_add_tile_resources(pdev);
-+	if (ret) {
-+		dev_err(&pdev->dev, "failed to add tile resources: %d\n", ret);
-+		return ret;
++		cmd_pkt = ring_ptr;
++
++		dev_warn(dev, "Bad completion pointer (ptr == ring_wp)\n");
 +	}
 +
-+	return msm_pinctrl_probe(pdev, soc_data);
- }
- 
-+static const struct acpi_device_id sc8180x_pinctrl_acpi_match[] = {
-+	{
-+		.id = "QCOM040D",
-+		.driver_data = (kernel_ulong_t) &sc8180x_acpi_pinctrl,
-+	},
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(acpi, sc8180x_pinctrl_acpi_match);
-+
- static const struct of_device_id sc8180x_pinctrl_of_match[] = {
--	{ .compatible = "qcom,sc8180x-tlmm", },
-+	{
-+		.compatible = "qcom,sc8180x-tlmm",
-+		.data = &sc8180x_pinctrl,
-+	},
- 	{ },
- };
- MODULE_DEVICE_TABLE(of, sc8180x_pinctrl_of_match);
-@@ -1603,6 +1717,7 @@ static struct platform_driver sc8180x_pinctrl_driver = {
- 	.driver = {
- 		.name = "sc8180x-pinctrl",
- 		.of_match_table = sc8180x_pinctrl_of_match,
-+		.acpi_match_table = sc8180x_pinctrl_acpi_match,
- 	},
- 	.probe = sc8180x_pinctrl_probe,
- 	.remove = msm_pinctrl_remove,
+ 	chan = MHI_TRE_GET_CMD_CHID(cmd_pkt);
+ 	mhi_chan = &mhi_cntrl->mhi_chan[chan];
+ 	write_lock_bh(&mhi_chan->lock);
 -- 
-2.17.1
+2.7.4
 
