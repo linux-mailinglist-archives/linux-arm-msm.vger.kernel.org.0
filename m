@@ -2,43 +2,44 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CB39334C8E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Mar 2021 00:32:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DC875334C95
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Mar 2021 00:32:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231935AbhCJXbe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Mar 2021 18:31:34 -0500
-Received: from m42-2.mailgun.net ([69.72.42.2]:51485 "EHLO m42-2.mailgun.net"
+        id S233178AbhCJXcH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Mar 2021 18:32:07 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:44679 "EHLO z11.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233862AbhCJXbb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Mar 2021 18:31:31 -0500
+        id S233928AbhCJXbr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Mar 2021 18:31:47 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1615419090; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=fJgSNAtNOSQYHxSkDAEXaeZo3asWJynHwNzFn3+wiL0=; b=vH2DmNIPfNPQVzhMpTPPgqr2vg5bVY/w6LeAMO6xc2HRUFH9k396fv3z3Zmdz+e4+pROeoKj
- pMU3ejWpCDMycH1YjNitPeaWIHnxlEjBXPQzdm6WbKpmU5WyOxQE2GouCK8+PHB8cvhlQgl3
- DQYC76DZwPX1Wnde+HLwXz9HwwM=
-X-Mailgun-Sending-Ip: 69.72.42.2
+ s=smtp; t=1615419107; h=References: In-Reply-To: Message-Id: Date:
+ Subject: Cc: To: From: Sender;
+ bh=7ju+k5O+g46JVXx3bckF9QMASzIzv/AQGrr/48ujmEQ=; b=ImABhP6UeQMMXOkHdqLNx8yglbRVZEQ772twHOxyvX/lQ0x5Xyx4wTL8XFvKou7igalsYrmx
+ 94SzL850Sd8o1pP2/hw/9DkJa7SyR6R9N+Wid+8BzZmUoJfkzTdUtZ1taOjfPU5q/aNYf2U7
+ Udk5HvVcmDXx8/OLxCbPxYSQn54=
+X-Mailgun-Sending-Ip: 104.130.96.11
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 604956d2b2591bd5687579ac (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 10 Mar 2021 23:31:30
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 604956d3b86af9bf23eba266 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 10 Mar 2021 23:31:31
  GMT
 Sender: bbhatt=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 354F9C433C6; Wed, 10 Mar 2021 23:31:30 +0000 (UTC)
+        id F143DC433C6; Wed, 10 Mar 2021 23:31:30 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 66DD1C433CA;
-        Wed, 10 Mar 2021 23:31:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 66DD1C433CA
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 15B30C433ED;
+        Wed, 10 Mar 2021 23:31:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 15B30C433ED
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
 From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
@@ -47,51 +48,81 @@ Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
         jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
         carl.yin@quectel.com, naveen.kumar@quectel.com,
         loic.poulain@linaro.org, Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: [PATCH v4 0/3] Polling for MHI ready
-Date:   Wed, 10 Mar 2021 15:31:17 -0800
-Message-Id: <1615419080-26540-1-git-send-email-bbhatt@codeaurora.org>
+Subject: [PATCH v4 1/3] bus: mhi: core: Introduce internal register poll helper function
+Date:   Wed, 10 Mar 2021 15:31:18 -0800
+Message-Id: <1615419080-26540-2-git-send-email-bbhatt@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1615419080-26540-1-git-send-email-bbhatt@codeaurora.org>
+References: <1615419080-26540-1-git-send-email-bbhatt@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-v4:
--Added reviewed-by tag
--Return appropriate error code from mhi_poll_reg_field()
--Fixed bug where mhi_poll_reg_field() returns success if polling times out
--Added an interval_us variable in mhi_ready_state_transition()
+Introduce helper function to allow MHI core driver to poll for
+a value in a register field. This helps reach a common path to
+read and poll register values along with a retry time interval.
 
-v3:
--Removed config changes that crept in in the first patch
-
-v2:
--Addressed review comments
--Introduce new patch for to use controller defined read_reg() for polling
--Add usage in RDDM download panic path as well
-
-Use polling instead of interrupt driven approach to wait for MHI ready state.
-
-In certain devices, it is likely that there is no incoming MHI
-interrupt for a transition to MHI READY state. One such example
-is the move from Pass Through to an SBL or AMSS execution
-environment. In order to facilitate faster bootup times as there
-is no need to wait until timeout_ms completes, MHI host can poll
-every 25 milliseconds to check if device has entered MHI READY
-until a maximum timeout of twice the timeout_ms is reached.
-
-This patch series has been tested on an arm64 device.
-
-Bhaumik Bhatt (3):
-  bus: mhi: core: Introduce internal register poll helper function
-  bus: mhi: core: Move to polling method to wait for MHI ready
-  bus: mhi: core: Use poll register read API for RDDM download
-
- drivers/bus/mhi/core/boot.c     | 20 ++++++--------------
+Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+---
  drivers/bus/mhi/core/internal.h |  3 +++
  drivers/bus/mhi/core/main.c     | 23 +++++++++++++++++++++++
- drivers/bus/mhi/core/pm.c       | 32 +++++++++++++++-----------------
- 4 files changed, 47 insertions(+), 31 deletions(-)
+ 2 files changed, 26 insertions(+)
 
+diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
+index 6f80ec3..005286b 100644
+--- a/drivers/bus/mhi/core/internal.h
++++ b/drivers/bus/mhi/core/internal.h
+@@ -643,6 +643,9 @@ int __must_check mhi_read_reg(struct mhi_controller *mhi_cntrl,
+ int __must_check mhi_read_reg_field(struct mhi_controller *mhi_cntrl,
+ 				    void __iomem *base, u32 offset, u32 mask,
+ 				    u32 shift, u32 *out);
++int __must_check mhi_poll_reg_field(struct mhi_controller *mhi_cntrl,
++				    void __iomem *base, u32 offset, u32 mask,
++				    u32 shift, u32 val, u32 delayus);
+ void mhi_write_reg(struct mhi_controller *mhi_cntrl, void __iomem *base,
+ 		   u32 offset, u32 val);
+ void mhi_write_reg_field(struct mhi_controller *mhi_cntrl, void __iomem *base,
+diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+index 4e0131b..7c7f41a 100644
+--- a/drivers/bus/mhi/core/main.c
++++ b/drivers/bus/mhi/core/main.c
+@@ -4,6 +4,7 @@
+  *
+  */
+ 
++#include <linux/delay.h>
+ #include <linux/device.h>
+ #include <linux/dma-direction.h>
+ #include <linux/dma-mapping.h>
+@@ -37,6 +38,28 @@ int __must_check mhi_read_reg_field(struct mhi_controller *mhi_cntrl,
+ 	return 0;
+ }
+ 
++int __must_check mhi_poll_reg_field(struct mhi_controller *mhi_cntrl,
++				    void __iomem *base, u32 offset,
++				    u32 mask, u32 shift, u32 val, u32 delayus)
++{
++	int ret;
++	u32 out, retry = (mhi_cntrl->timeout_ms * 1000) / delayus;
++
++	while (retry--) {
++		ret = mhi_read_reg_field(mhi_cntrl, base, offset, mask, shift,
++					 &out);
++		if (ret)
++			return ret;
++
++		if (out == val)
++			return 0;
++
++		udelay(delayus);
++	}
++
++	return -ENOENT;
++}
++
+ void mhi_write_reg(struct mhi_controller *mhi_cntrl, void __iomem *base,
+ 		   u32 offset, u32 val)
+ {
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
