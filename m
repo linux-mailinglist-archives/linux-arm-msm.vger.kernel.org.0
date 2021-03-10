@@ -2,119 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AA8663348C4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 21:21:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4869F3348D3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 21:23:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231321AbhCJUVH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Mar 2021 15:21:07 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:25578 "EHLO z11.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231231AbhCJUUw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Mar 2021 15:20:52 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1615407652; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=dxtZkfJ5IYq7cEqVuScsgqcXnLuYpfjLDBXSw8+MHek=; b=ZwyCTnJZCRdCM6hXPgye2esaaFnF9pqCUF2MqGUXZ0L0JqgmX2J30Ho+rvzfXog8WMBzGrU2
- btmaZf6jKVn7GLW4i83lzNawxUmWA7HA0GVtSFWDg45lFLYWeK0pEotwCUg3X7w1zhMDzNqC
- fiziQL40EsyvgjDbYQ06iA87fBs=
-X-Mailgun-Sending-Ip: 104.130.96.11
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 60492a05d3a53bc38f144a6e (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 10 Mar 2021 20:20:21
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 14BF2C43465; Wed, 10 Mar 2021 20:20:21 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A1C96C433C6;
-        Wed, 10 Mar 2021 20:20:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A1C96C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        linux-watchdog@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCH] watchdog: qcom: Move suspend/resume to suspend_late/resume_early
-Date:   Thu, 11 Mar 2021 01:50:04 +0530
-Message-Id: <20210310202004.1436-1-saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.29.0
+        id S231891AbhCJUXU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Mar 2021 15:23:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51936 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229687AbhCJUWr (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Mar 2021 15:22:47 -0500
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 901A9C061760
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 12:22:47 -0800 (PST)
+Received: by mail-oi1-x22c.google.com with SMTP id w195so13931156oif.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 12:22:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=D8SkSZfMGXJVIfaUeTUQvpEkKL8sz28snPjNoCNenZw=;
+        b=qpWz1LjPnx1hSMJDBB6JANgDDazEE0rhaF7aZ5rQOkzH+3UH7AM6sZeWEm4dNvhJ+5
+         S9RISrPfsCXsBQW5BgyNPEubQ9XPzeiKeQQP7fIWldv4M/MuLyoLJ+H6W0Q+fruqen8q
+         FGgsIFz9M5VU/kq3rZU7r4Y/e8vgLqLVdtXZBtKVWkULiuPl9mb9joJpuvLKsTHIyZZg
+         VS9QrdlK6GotbQH6rFMZ0/4lNYrS4yEtdmTNC0IQQhGT0vUA6b1DT10ujkzFE7S9nByO
+         fNt5sqo2DSVLhM8kcoWC1bDhY4wBJKjrEF+QRXvAtTlUj85jxIcJEr39573JvVbNEPGj
+         glEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=D8SkSZfMGXJVIfaUeTUQvpEkKL8sz28snPjNoCNenZw=;
+        b=U1wMZrrxsZ+NWTIFipGMHtp+n87HyjTviEe54qdl346iZEmo3nxvzYkKCjXO3s9jQA
+         NKBj6/Soc5typcLjOPlZKB92X2LVjIS8I6RWdqZXVm8WSpoi7lFbm1VRpqc/WrHEX3kT
+         vu9M8N4pxBuqNIrZIMga4Cs11MGSCXhWnEwbdBT7TFyktroH+p9tlC0B/1DBo118BIQH
+         vUYLLkPt+1SFnPy/wyWNVSVZU8lZxRqeLc9fNOuTejpFAXcEsJBNAewMfEd9pfNwUP57
+         hZhtjmz1C7+f6lqLcWIHYBtnwCPI+1PtzcO/Xr+Oh71KJhxRRKvYrb++RWydZH+q8ezw
+         tOPw==
+X-Gm-Message-State: AOAM533zncN9sit6Mn3AJ81q3XeEX6HU1WR+OYic2mX2gHgBWvi/8MJ6
+        FspaUQlbFGEd/dYh5Ny8nByLAQ==
+X-Google-Smtp-Source: ABdhPJwuhQf/CiQdQHwfndVeox8BnSom2fzRXWd5x+FWfd7FNm2K7HDiZpZA43HCAyWedtQrMYAtsA==
+X-Received: by 2002:a05:6808:10d3:: with SMTP id s19mr3709652ois.70.1615407766960;
+        Wed, 10 Mar 2021 12:22:46 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id v66sm174506otb.16.2021.03.10.12.22.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Mar 2021 12:22:46 -0800 (PST)
+Date:   Wed, 10 Mar 2021 14:22:44 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Souradeep Chowdhury <schowdhu@codeaurora.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        sibis@codeaurora.org, saiprakash.ranjan@codeaurora.org,
+        Rajendra Nayak <rnayak@codeaurora.org>, vkoul@kernel.org
+Subject: Re: [PATCH V1 1/6] dt-bindings: Added the yaml bindings for DCC
+Message-ID: <YEkqlIuphaEe3+8h@builder.lan>
+References: <cover.1615393454.git.schowdhu@codeaurora.org>
+ <e33318b1b216bb0cb0a854e8d9cdd18dd5faca97.1615393454.git.schowdhu@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e33318b1b216bb0cb0a854e8d9cdd18dd5faca97.1615393454.git.schowdhu@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-During suspend/resume usecases and tests, it is common to see issues
-such as lockups either in suspend path or resume path because of the
-bugs in the corresponding device driver pm handling code. In such cases,
-it is important that watchdog is active to make sure that we either
-receive a watchdog pretimeout notification or a bite causing reset
-instead of a hang causing us to hard reset the machine.
+On Wed 10 Mar 10:46 CST 2021, Souradeep Chowdhury wrote:
 
-There are good reasons as to why we need this because:
+> Documentation for Data Capture and Compare(DCC) device tree bindings
+> in yaml format.
+> 
+> Signed-off-by: Souradeep Chowdhury <schowdhu@codeaurora.org>
+> ---
+>  .../devicetree/bindings/arm/msm/qcom,dcc.yaml      | 49 ++++++++++++++++++++++
+>  1 file changed, 49 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,dcc.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,dcc.yaml b/Documentation/devicetree/bindings/arm/msm/qcom,dcc.yaml
+> new file mode 100644
+> index 0000000..b8e9998
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/arm/msm/qcom,dcc.yaml
+> @@ -0,0 +1,49 @@
+> +# SPDX-License-Identifier: (GPL-2.0-or-later OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/arm/msm/qcom,dcc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Data Capture and Compare
+> +
+> +maintainers:
+> +  - Souradeep Chowdhury <schowdhu@codeaurora.org>
+> +
+> +description: |
+> +    DCC (Data Capture and Compare) is a DMA engine which is used to save
+> +    configuration data or system memory contents during catastrophic failure
+> +    or SW trigger. DCC is used to capture and store data for debugging purpose
+> +
+> +
+> +properties:
+> +  compatible:
+> +    items:
+> +      - enum:
+> +          - qcom,sm8150-dcc
+> +      - const: qcom,dcc
+> +
+> +  reg:
+> +    items:
+> +      - description: DCC base register region
+> +      - description: DCC RAM base register region
+> +
+> +  reg-names:
+> +    items:
+> +      - const: dcc-base
+> +      - const: dcc-ram-base
 
-* We can have a watchdog pretimeout governor set to panic in which
-  case we can have a backtrace which would help identify the issue
-  with the particular driver and cause a normal reboot.
+Please omit the "-base" suffix from the reg-names.
 
-* Even in case where there is no pretimeout support, a watchdog
-  bite is still useful because some firmware has debug support to dump
-  CPU core context on watchdog bite for post-mortem analysis.
+Regards,
+Bjorn
 
-* One more usecase which comes to mind is of warm reboot. In case we
-  hard reset the target, a cold reboot could be induced resulting in
-  lose of ddr contents thereby losing all the debug info.
-
-Currently, the watchdog pm callback just invokes the usual suspend
-and resume callback which do not have any special ordering in the
-sense that a watchdog can be suspended before the buggy device driver
-suspend callback and watchdog resume can happen after the buggy device
-driver resume callback. This would mean that the watchdog will not be
-active when the buggy driver cause the lockups thereby hanging the
-system. So to make sure this doesn't happen, move the watchdog pm to
-use late/early system pm callbacks which will ensure that the watchdog
-is suspended late and resumed early so that it can catch such issues.
-
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
----
- drivers/watchdog/qcom-wdt.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
-index e38a87ffe5f5..0d2209c5eaca 100644
---- a/drivers/watchdog/qcom-wdt.c
-+++ b/drivers/watchdog/qcom-wdt.c
-@@ -329,7 +329,9 @@ static int __maybe_unused qcom_wdt_resume(struct device *dev)
- 	return 0;
- }
- 
--static SIMPLE_DEV_PM_OPS(qcom_wdt_pm_ops, qcom_wdt_suspend, qcom_wdt_resume);
-+static const struct dev_pm_ops qcom_wdt_pm_ops = {
-+	SET_LATE_SYSTEM_SLEEP_PM_OPS(qcom_wdt_suspend, qcom_wdt_resume)
-+};
- 
- static const struct of_device_id qcom_wdt_of_table[] = {
- 	{ .compatible = "qcom,kpss-timer", .data = &match_data_apcs_tmr },
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
-
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - reg-names
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    dcc@10a2000{
+> +                compatible = "qcom,sm8150-dcc","qcom,dcc";
+> +                reg = <0x010a2000  0x1000>,
+> +                      <0x010ad000  0x2000>;
+> +                reg-names = "dcc-base", "dcc-ram-base";
+> +    };
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
+> 
