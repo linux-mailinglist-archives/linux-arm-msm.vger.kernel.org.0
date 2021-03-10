@@ -2,69 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B845333F5D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 14:38:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D81B8333F6A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 14:42:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232984AbhCJNgo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Mar 2021 08:36:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48590 "EHLO
+        id S229503AbhCJNiF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Mar 2021 08:38:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233103AbhCJNgP (ORCPT
+        with ESMTP id S233325AbhCJNho (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Mar 2021 08:36:15 -0500
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E7E8C061760
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 05:36:15 -0800 (PST)
-Received: by mail-pg1-x52f.google.com with SMTP id v14so4500431pgq.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 05:36:15 -0800 (PST)
+        Wed, 10 Mar 2021 08:37:44 -0500
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08848C061760
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 05:37:44 -0800 (PST)
+Received: by mail-pj1-x102d.google.com with SMTP id ga23-20020a17090b0397b02900c0b81bbcd4so7247733pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 05:37:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=uiMm4wIjQXCaEe2IhMovjUnt7D4lsf/xrs0EWBySwE8=;
-        b=WDAfMRRmRHOFsZbXiB/KGlo4Ioe5MdZ5RJKXuFppYBtlGvMBIXN6/bjKGg+L6cyyMD
-         L8lngmbs5HJzTsZ8Tc+7nHQyIiUIWc9yOh7zmc6Ooa8p95pkQlC7kB5HJK77v1NODJVT
-         PxtQR4neeWZ8zjVrlxuGahKZEPXetzW4Q+g9UcQqo8g9+T3/w/zuAW6HG3UvmX+GeTtH
-         P2QfnYO2s4h31+GjDrqRez4CoFGJlJBQqcvYPQRjHqcsmLo6YW1kg0bybWxYctbWup4D
-         b5uEqTlBoc7cwZF6SGd9/mGB1VDSwsOBj0uaGsKajMiK/0VcQ/7KXAE0cdrHoXl6svRG
-         x91w==
+        bh=g3TM2U/VrI0QDsaMYXzNAdTpAoOLLGwfKy03c6eGsbY=;
+        b=pDuXhYqyRP/S6zH4rtR0/T4UmN1rxe0UMp3LYwmjaXDKr1QwnJJuqXKIaHoRRUY0O4
+         bnoNZKGt546BTYo9Rbejg2uXXFi68HFXMGRWEslnfZ5oIGejmq3pL8+g1TGC47nQskqp
+         MNCoubYdvyn2ilcITzL/kxSANDQPHvEePIZtbKja8dBrEaRTX1uuiD0FbuNf/dWtfLTr
+         AoaVuz8N9+bMBgF+4Q7bLpy6U8UHa+FWuknTmul7bCcCMVfRKyOyvCG3YT4pUShW5JWz
+         d1MUs6bBmqpTZOecmN/2UQP21In7z9v5W1lgHdra+q1bn8xt4YdWOiH6Y0cvUjiH3MA5
+         6OvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=uiMm4wIjQXCaEe2IhMovjUnt7D4lsf/xrs0EWBySwE8=;
-        b=ItwgpD+sVhGrWGMJg0JCgWmK8CENCogSj+y8Jxs84aNCUdVVNl84VJb7YzrrT5fXG6
-         2P9z7Xb2cIQE0P8EwZox/aSLFJCccPWBcwzKocFmvm0GBUiVgiYojWmRCCWddDQrPlnz
-         Jsy2ZygPPK4grq1VzmbPu/ycD8WzZC9LBw931MdEdEXdsbiQeceuBweMT+rkUv6tog6l
-         k3fbTdFiM82II3MpeEbYoxj6qckbpt81nuvuItAiHiw00Jv00awWkdMJXfy9ORnejpD/
-         UZztOsfY7Gh0zoSpBB6Bc0U/zy3VhxQwk9s3uqOVeE51LByxstZh0niIKA+EBcFkBVUI
-         Wq7Q==
-X-Gm-Message-State: AOAM533lCGGg3Z3+BKkinlM/wkAyuxddlQiN1Gp/VOfmG6efZSm0b0OH
-        X6KmiVJ6LDGHRq8UI1l1vwVxe+pUKS9lRVQ=
-X-Google-Smtp-Source: ABdhPJz1UhAnh4q9J2FnlEq5w5Mjth8EnxZuqqxMvJhg7fDUnAlVDjLy6sOYL53KVAl8kdvZwF01Ww==
-X-Received: by 2002:a63:4462:: with SMTP id t34mr2770062pgk.389.1615383374902;
-        Wed, 10 Mar 2021 05:36:14 -0800 (PST)
+        bh=g3TM2U/VrI0QDsaMYXzNAdTpAoOLLGwfKy03c6eGsbY=;
+        b=eCv7Rb9QE8DU2dK3NvcHtGWvkPuC3s9MuTiUu1guYAXz6s7PhcPOVl8/IDTOEYtb2P
+         7dStqLoGd0bu3c5J5ZGApRXx7hwBDK1Z3iFx9KU+HeS+gTlCeIT0PMS382iqYQId+dXj
+         nwC7Lc6TdpKtYZ3PnsiqX0m22dmmVOdK9k4v1gsQymu/anxknPExpZPjkVwcix78cMfq
+         FiUd0cNpPZGfj0Oq40YOUg8i4pKDIh6kjjr1qzv0HrOqUVJm33seWmojkeSA4litzI3S
+         jB8C872hEvK1wn8zt6fLZarnykumbgBVOFLwHdV/WqneCBmqDHqGIr2HEajZTvfL8WUq
+         ZXZg==
+X-Gm-Message-State: AOAM532hhbTK3lfc+RSC26bh59yTyQbV/E+NUKGc5bHixO16M70CbkKZ
+        brlZTP5Vr8Dx9NEnF+M3BJ3+BlNahMz0ppI=
+X-Google-Smtp-Source: ABdhPJy3iQCznr2ItkRG4AN+40h/wF/PpI0fYYkYCC5GZNXFYRsW+Vs2SDBYWlkqBUny4nslbeQLlw==
+X-Received: by 2002:a17:90b:46d0:: with SMTP id jx16mr3700493pjb.3.1615383463541;
+        Wed, 10 Mar 2021 05:37:43 -0800 (PST)
 Received: from thinkpad ([103.66.79.59])
-        by smtp.gmail.com with ESMTPSA id g7sm15493810pgb.10.2021.03.10.05.36.12
+        by smtp.gmail.com with ESMTPSA id 2sm16207827pfi.116.2021.03.10.05.37.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Mar 2021 05:36:14 -0800 (PST)
-Date:   Wed, 10 Mar 2021 19:06:10 +0530
+        Wed, 10 Mar 2021 05:37:42 -0800 (PST)
+Date:   Wed, 10 Mar 2021 19:07:39 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Loic Poulain <loic.poulain@linaro.org>
 Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 4/6] mhi: pci_generic: No-Op for device_wake operations
-Message-ID: <20210310133610.GE30275@thinkpad>
-References: <1614948478-2284-1-git-send-email-loic.poulain@linaro.org>
- <1614948478-2284-4-git-send-email-loic.poulain@linaro.org>
+Subject: Re: [PATCH v3 4/6] mhi: pci_generic: No-Op for device_wake operations
+Message-ID: <20210310133739.GF30275@thinkpad>
+References: <1614971808-22156-1-git-send-email-loic.poulain@linaro.org>
+ <1614971808-22156-4-git-send-email-loic.poulain@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1614948478-2284-4-git-send-email-loic.poulain@linaro.org>
+In-Reply-To: <1614971808-22156-4-git-send-email-loic.poulain@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 05, 2021 at 01:47:56PM +0100, Loic Poulain wrote:
+On Fri, Mar 05, 2021 at 08:16:46PM +0100, Loic Poulain wrote:
 > The wake_db register presence is highly speculative and can fuze MHI
 > devices. Indeed, currently the wake_db register address is defined at
 > entry 127 of the 'Channel doorbell array', thus writing to this address
@@ -89,6 +89,7 @@ Mani
 
 > ---
 >  v2: reword commit message
+>  v3: no change
 > 
 >  drivers/bus/mhi/core/init.c   |  2 --
 >  drivers/bus/mhi/pci_generic.c | 18 ++++++++++++++++++
