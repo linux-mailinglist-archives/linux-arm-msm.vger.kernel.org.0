@@ -2,206 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CB04E333FE8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 15:05:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A10A333FF4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 15:09:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230477AbhCJOFV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Mar 2021 09:05:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54836 "EHLO
+        id S232814AbhCJOIg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Mar 2021 09:08:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231272AbhCJOFB (ORCPT
+        with ESMTP id S232808AbhCJOID (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Mar 2021 09:05:01 -0500
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3D18C061760
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 06:05:00 -0800 (PST)
-Received: by mail-pf1-x436.google.com with SMTP id l7so12152945pfd.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 06:05:00 -0800 (PST)
+        Wed, 10 Mar 2021 09:08:03 -0500
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50C74C061760
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 06:08:03 -0800 (PST)
+Received: by mail-pg1-x534.google.com with SMTP id x29so11479946pgk.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 06:08:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=bMmn9tK2G3tNQK5+Bb15Q1LRKE3FMdZLlIAdd2bodSk=;
-        b=Uw5VNNN8UHbeTBKeSy8Z8NS5sJtPCn0r8fYmJ9Mk7oog5Yt2hS89kqv3I8U5PImFoh
-         +Th5zkhxTYFuTmvna7Bq4aNXG4+C/o+jSCbKh6CrE756AezWejrpP+OgHrkgJEggS2GS
-         r5z4LSnUYcwId7ZuTTH4eCzQH4PJY78OoxTMtwz8LUplJjQN5puyR5cmL4TkPMERsFDe
-         beE6bUOTbk3wpAs2HupMxxy0b1UtODR2zhUCL8xbXHRkTn5ShdDlYwg+jryUndMKmu7S
-         JSAgMtX0bn9QKvemcGsnJ/4/7ZyxP0+WlaXoSkk4HiEpCvVwEd5eiahbjn7+x9DcnAtF
-         rCYw==
+        bh=1dnlnnG6guD+k60v0FjgIQ9Tl0jScXDP+aIyOD9ZKPM=;
+        b=GjngrHxG9FWe61VRrJrlxC4tkNTga3gHgNntUI85TOQDpxUl7QniRLvNaTEunqxIpq
+         YelY/uEze7X1rZIqJq00Ty4RcWMrwkb4Mf2wl23W9+VRqoo2fYofBnQ/MLENGCEi7r/7
+         tP1gXGhPhmuPHhYqL4fpBYfX1Cn0K7iuqbeejI0Nu9zI1B9t3Y+E+bJ31rWeAdMuVq4r
+         52elek1Osb+ui0lAavWCzYXIE5HrUleeiAU9KYnqSR2GIX4YW34UY74okWeuA8dHQbLg
+         pEdP1MvMY9dtj/mWCz3lNFkBGC5M1OlzYbFWhj+LjIldCGOBJgnw+z6gh1wzI2FgP3NC
+         1nhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=bMmn9tK2G3tNQK5+Bb15Q1LRKE3FMdZLlIAdd2bodSk=;
-        b=T1gC5GPMYEzMK1CqRXyIZK94eKb3qnq7EdCiC0XfQ8vlg9YbI+sfgjHO6EF6n6li0G
-         7dZ1yHwkjNlbvTCFuUn7HMiOG2fDvjQzPVlv4I2gJpIlr/EqgOID+neF0ow2kfS1YuB+
-         9k5yLzdIW8oQX4D2uRNPodWGc0Uzz5yf6yono6YAFpTyeu54RRJw2swIT08TdG2gwc45
-         n7cEjXQiHMwKQDFsBybQjmp7sXgdeOWJVKrrYXBIurZ3ybgut/jyOY7BK+MIc+HcJz3S
-         vKK5ELkMXqPypovKzfdpt97oThsLDJ2ZRIYP+08tZ1rLL8tXck44rxDAhOZmh7gvIeFa
-         SdyA==
-X-Gm-Message-State: AOAM530V8kMPUxiSBWGLYifDRv7irzqbtKFFlCtqNFaugpPeDUsCLTTI
-        NMEkc/99vJUU4MD1TOpi336K
-X-Google-Smtp-Source: ABdhPJxz2oECrFEcow7Juaq8CaqWFW8+llY+ObxPt57GI9okMNNfCTPVqgiQDjS3c2HyCoTcFWFZSg==
-X-Received: by 2002:a63:5c63:: with SMTP id n35mr2928225pgm.26.1615385100430;
-        Wed, 10 Mar 2021 06:05:00 -0800 (PST)
+        bh=1dnlnnG6guD+k60v0FjgIQ9Tl0jScXDP+aIyOD9ZKPM=;
+        b=G2Yt3Wq+5Dfw7kYiY0uaVzk2HF9j7sbQHjQ1vHANWZZgyF+gTuWOyko/8Nb3fr4gqe
+         rGVpftYFiFFM1XQR3zceCi9ImipD79wfOhVpdl6SyWNlK+7CYFouKEb2yhWI9MawQffB
+         QBaFN8SLFg2vF2kxcwk5j5NrnjekaL2TZKsqqUUtBlmMxkEv7PiIaX4+wh6jlo5V5Ewf
+         zcPvjvdn1zTfDK7gjmjXUALQcz/cwdvJO58D/f05pDeWfQzTK8+zjHPCU9an3ZAy+8po
+         j4nD4MpnADbgSU3OXvbRwHDBHtWIVKLFVdn09GftJRo8OqOFTmH4bA7687j8NW2/haor
+         a2HA==
+X-Gm-Message-State: AOAM532R8Ff9ijWyQBbQy7fdLLbM7whLpmNHiOpjF4AFAt2Hhi1B9qav
+        hrexO3ZfxDhl1HcyTo6xZogi
+X-Google-Smtp-Source: ABdhPJzB3BEVU7GeZTLogAHSOrU0BB2nEVrffSEQzYG+GiguZDb0u64v6wwiRKp1s7M67qmah8Wlfw==
+X-Received: by 2002:aa7:9989:0:b029:1f5:aa05:94af with SMTP id k9-20020aa799890000b02901f5aa0594afmr3045232pfh.34.1615385282806;
+        Wed, 10 Mar 2021 06:08:02 -0800 (PST)
 Received: from thinkpad ([103.66.79.59])
-        by smtp.gmail.com with ESMTPSA id v18sm8566910pfn.117.2021.03.10.06.04.56
+        by smtp.gmail.com with ESMTPSA id m3sm15895961pgk.47.2021.03.10.06.07.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Mar 2021 06:04:59 -0800 (PST)
-Date:   Wed, 10 Mar 2021 19:34:54 +0530
+        Wed, 10 Mar 2021 06:08:02 -0800 (PST)
+Date:   Wed, 10 Mar 2021 19:37:56 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
 Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
         jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
         loic.poulain@linaro.org, carl.yin@quectel.com,
         naveen.kumar@quectel.com
-Subject: Re: [PATCH v6 3/4] bus: mhi: core: Process execution environment
- changes serially
-Message-ID: <20210310140454.GQ30275@thinkpad>
+Subject: Re: [PATCH v6 0/4] Serialize execution environment changes for MHI
+Message-ID: <20210310140756.GR30275@thinkpad>
 References: <1614208985-20851-1-git-send-email-bbhatt@codeaurora.org>
- <1614208985-20851-4-git-send-email-bbhatt@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1614208985-20851-4-git-send-email-bbhatt@codeaurora.org>
+In-Reply-To: <1614208985-20851-1-git-send-email-bbhatt@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 24, 2021 at 03:23:04PM -0800, Bhaumik Bhatt wrote:
-> In current design, whenever the BHI interrupt is fired, the
-> execution environment is updated. This can cause race conditions
-> and impede ongoing power up/down processing. For example, if a
-> power down is in progress, MHI host updates to a local "disabled"
-> execution environment. If a BHI interrupt fires later, that value
-> gets replaced with one from the BHI EE register. This impacts the
-> controller as it does not expect multiple RDDM execution
-> environment change status callbacks as an example. Another issue
-> would be that the device can enter mission mode and the execution
-> environment is updated, while device creation for SBL channels is
-> still going on due to slower PM state worker thread run, leading
-> to multiple attempts at opening the same channel.
+On Wed, Feb 24, 2021 at 03:23:01PM -0800, Bhaumik Bhatt wrote:
+> v6:
+> -Add patch to improve debug message
+> -Fix switch-case fall through warning for EE serialization patch
+> -Address review comments and update commit text
 > 
-> Ensure that EE changes are handled only from appropriate places
-> and occur one after another and handle only PBL modes or RDDM EE
-> changes as critical events directly from the interrupt handler.
-> Simplify handling by waiting for SYS ERROR before handling RDDM.
-> This also makes sure that we use the correct execution environment
-> to notify the controller driver when the device resets to one of
-> the PBL execution environments.
+> v5:
+> -Update commit text for "clear devices when moving execution environments" patch
+> -Added test platform details that were missed out in the cover letter
+> -Merged two if checks in to a single one for EE serialization patch
 > 
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> v4:
+> -Addressed review comments for additional info logging for EE movements
+> -Updated switch case for EE handling in mhi_intvec_threaded_handler()
+> 
+> v3:
+> -Update commit text to accurately reflect changes and reasoning based on reviews
+> 
+> v2:
+> -Add patch to clear devices when moving execution environments
+> 
+> Note: This patch is first in series of execution environment related changes.
+> 
+> During full boot chain firmware download, the PM state worker downloads the AMSS
+> image after waiting for the SBL execution environment change in PBL mode itself.
+> Since getting rid of the firmware load worker thread, this design needs to
+> change and MHI host must download the AMSS image from the SBL mode of PM state
+> worker thread instead of blocking waits for SBL EE in PBL transition processing.
+> 
+> Ensure that EE changes are handled only from appropriate places and occur
+> one after another and handle only PBL or RDDM EE changes as critical events
+> directly from the interrupt handler and the status callback is given to the
+> controller drivers promptly.
+> 
+> When moving from SBL to AMSS EE, clear SBL specific client devices by calling
+> remove callbacks for them so they are not left opened in a different execution
+> environment.
+> 
+> This patchset was tested on ARM64.
+> 
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Series applied to mhi-next!
 
 Thanks,
 Mani
 
-> ---
->  drivers/bus/mhi/core/main.c | 40 +++++++++++++++++++++-------------------
->  drivers/bus/mhi/core/pm.c   |  7 ++++---
->  2 files changed, 25 insertions(+), 22 deletions(-)
+> Bhaumik Bhatt (4):
+>   bus: mhi: core: Destroy SBL devices when moving to mission mode
+>   bus: mhi: core: Download AMSS image from appropriate function
+>   bus: mhi: core: Process execution environment changes serially
+>   bus: mhi: core: Update debug prints to include local device state
 > 
-> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> index 7a2e98c..9715f51 100644
-> --- a/drivers/bus/mhi/core/main.c
-> +++ b/drivers/bus/mhi/core/main.c
-> @@ -430,7 +430,7 @@ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
->  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
->  	enum mhi_state state = MHI_STATE_MAX;
->  	enum mhi_pm_state pm_state = 0;
-> -	enum mhi_ee_type ee = 0;
-> +	enum mhi_ee_type ee = MHI_EE_MAX;
->  
->  	write_lock_irq(&mhi_cntrl->pm_lock);
->  	if (!MHI_REG_ACCESS_VALID(mhi_cntrl->pm_state)) {
-> @@ -439,8 +439,7 @@ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
->  	}
->  
->  	state = mhi_get_mhi_state(mhi_cntrl);
-> -	ee = mhi_cntrl->ee;
-> -	mhi_cntrl->ee = mhi_get_exec_env(mhi_cntrl);
-> +	ee = mhi_get_exec_env(mhi_cntrl);
->  	dev_dbg(dev, "local ee:%s device ee:%s dev_state:%s\n",
->  		TO_MHI_EXEC_STR(mhi_cntrl->ee), TO_MHI_EXEC_STR(ee),
->  		TO_MHI_STATE_STR(state));
-> @@ -452,27 +451,30 @@ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
->  	}
->  	write_unlock_irq(&mhi_cntrl->pm_lock);
->  
-> -	 /* If device supports RDDM don't bother processing SYS error */
-> -	if (mhi_cntrl->rddm_image) {
-> -		/* host may be performing a device power down already */
-> -		if (!mhi_is_active(mhi_cntrl))
-> -			goto exit_intvec;
-> +	if (pm_state != MHI_PM_SYS_ERR_DETECT || ee == mhi_cntrl->ee)
-> +		goto exit_intvec;
->  
-> -		if (mhi_cntrl->ee == MHI_EE_RDDM && mhi_cntrl->ee != ee) {
-> +	switch (ee) {
-> +	case MHI_EE_RDDM:
-> +		/* proceed if power down is not already in progress */
-> +		if (mhi_cntrl->rddm_image && mhi_is_active(mhi_cntrl)) {
->  			mhi_cntrl->status_cb(mhi_cntrl, MHI_CB_EE_RDDM);
-> +			mhi_cntrl->ee = ee;
->  			wake_up_all(&mhi_cntrl->state_event);
->  		}
-> -		goto exit_intvec;
-> -	}
-> -
-> -	if (pm_state == MHI_PM_SYS_ERR_DETECT) {
-> +		break;
-> +	case MHI_EE_PBL:
-> +	case MHI_EE_EDL:
-> +	case MHI_EE_PTHRU:
-> +		mhi_cntrl->status_cb(mhi_cntrl, MHI_CB_FATAL_ERROR);
-> +		mhi_cntrl->ee = ee;
->  		wake_up_all(&mhi_cntrl->state_event);
-> -
-> -		/* For fatal errors, we let controller decide next step */
-> -		if (MHI_IN_PBL(ee))
-> -			mhi_cntrl->status_cb(mhi_cntrl, MHI_CB_FATAL_ERROR);
-> -		else
-> -			mhi_pm_sys_err_handler(mhi_cntrl);
-> +		mhi_pm_sys_err_handler(mhi_cntrl);
-> +		break;
-> +	default:
-> +		wake_up_all(&mhi_cntrl->state_event);
-> +		mhi_pm_sys_err_handler(mhi_cntrl);
-> +		break;
->  	}
->  
->  exit_intvec:
-> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-> index c09ec13..c870fa8 100644
-> --- a/drivers/bus/mhi/core/pm.c
-> +++ b/drivers/bus/mhi/core/pm.c
-> @@ -377,21 +377,22 @@ static int mhi_pm_mission_mode_transition(struct mhi_controller *mhi_cntrl)
->  {
->  	struct mhi_event *mhi_event;
->  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-> -	enum mhi_ee_type current_ee = mhi_cntrl->ee;
-> +	enum mhi_ee_type ee = MHI_EE_MAX, current_ee = mhi_cntrl->ee;
->  	int i, ret;
->  
->  	dev_dbg(dev, "Processing Mission Mode transition\n");
->  
->  	write_lock_irq(&mhi_cntrl->pm_lock);
->  	if (MHI_REG_ACCESS_VALID(mhi_cntrl->pm_state))
-> -		mhi_cntrl->ee = mhi_get_exec_env(mhi_cntrl);
-> +		ee = mhi_get_exec_env(mhi_cntrl);
->  
-> -	if (!MHI_IN_MISSION_MODE(mhi_cntrl->ee)) {
-> +	if (!MHI_IN_MISSION_MODE(ee)) {
->  		mhi_cntrl->pm_state = MHI_PM_LD_ERR_FATAL_DETECT;
->  		write_unlock_irq(&mhi_cntrl->pm_lock);
->  		wake_up_all(&mhi_cntrl->state_event);
->  		return -EIO;
->  	}
-> +	mhi_cntrl->ee = ee;
->  	write_unlock_irq(&mhi_cntrl->pm_lock);
->  
->  	wake_up_all(&mhi_cntrl->state_event);
+>  drivers/bus/mhi/core/boot.c     | 51 +++++++++++++--------------
+>  drivers/bus/mhi/core/internal.h |  1 +
+>  drivers/bus/mhi/core/main.c     | 76 +++++++++++++++++++++++++++--------------
+>  drivers/bus/mhi/core/pm.c       | 10 ++++--
+>  4 files changed, 83 insertions(+), 55 deletions(-)
+> 
 > -- 
 > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 > a Linux Foundation Collaborative Project
