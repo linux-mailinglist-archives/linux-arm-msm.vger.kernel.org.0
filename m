@@ -2,89 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 13B8133467E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 19:19:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 92B1733469C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 19:23:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232824AbhCJSTJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Mar 2021 13:19:09 -0500
-Received: from m42-2.mailgun.net ([69.72.42.2]:31178 "EHLO m42-2.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233569AbhCJSSg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Mar 2021 13:18:36 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1615400316; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=Oe2A04ooxiUiKh+2PZjPlM+r01T98GTea9DKcUo6+Cs=; b=HOVDFTp6Crl4vsCsSFZWDHpEt6VE7tQCtuWi4KAJKY8e8SZ6bhaWlvPDEpTfNleWgaSuWOrL
- GLq4hLtmahlyO/mJKWKgqMX2/7uvi6YNbqwFJqGhKGMMVSGvKzUGTiAZ9LdnCpqY19dR9cX4
- pKwFdoflisSVyOaynyIGytYbYB0=
-X-Mailgun-Sending-Ip: 69.72.42.2
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 60490d64155a7cd234a868db (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 10 Mar 2021 18:18:12
- GMT
-Sender: tdas=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id DC086C43461; Wed, 10 Mar 2021 18:18:12 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from tdas-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: tdas)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id AB3A0C433ED;
-        Wed, 10 Mar 2021 18:18:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AB3A0C433ED
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=tdas@codeaurora.org
-From:   Taniya Das <tdas@codeaurora.org>
-To:     Stephen Boyd <sboyd@kernel.org>,
-        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Taniya Das <tdas@codeaurora.org>
-Subject: [PATCH v1] clk: qcom: rpmh: Update the XO clock source for SC7280
-Date:   Wed, 10 Mar 2021 23:48:03 +0530
-Message-Id: <1615400283-20100-1-git-send-email-tdas@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S232828AbhCJSWy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Mar 2021 13:22:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54064 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231402AbhCJSWf (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Mar 2021 13:22:35 -0500
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38F11C061762
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 10:22:35 -0800 (PST)
+Received: by mail-oi1-x231.google.com with SMTP id t83so10176267oih.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 10:22:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=dRPa+MKHXJoax045qmF2GLp0jz/mQE6D5ZmN+LMnrsE=;
+        b=jZrmuBed1foFlgTtPJmKyc7a+CFQse/0jl6E9oSCWFO+UfkNKjcHYohUtuM3a+rVFY
+         bjikQkD9fWxl1iTPlaipplcN7xgj7ltC12aKYqPnxzWR5bO2xAp8/DoKpaeL9/Euge/A
+         WUEQddkfjuTnKHDIUa8JB2BMbvsb0/D4IxaSGPluAKy5M3e5AoWOGBY/c7pbPAZA9qR/
+         GtVFZP6sXUEANKKju6bApguIVDFR9wlunhMPwUFAuVZmuNVAhbfis+fL+aLI81lGTUb5
+         9G2GyCmhuiGFHWA6w/3GR5tsRd6YNpFPAiYXJkUMFzj//Wt3qR3E6TtYAv+kR25gxRni
+         fwiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=dRPa+MKHXJoax045qmF2GLp0jz/mQE6D5ZmN+LMnrsE=;
+        b=LP/xVCN02UjGTRmJbkDEsb58UzIpLRpcPuSZ4h7c/NN/19nIkvMvAXqjVm3ZDLkzvj
+         zjBzYSTyVQgZq/L7ooEqlxsndKBfw+eCAKYgOEreha+OZde0oiEIUNUoyGLdZv4PPEzx
+         EJt70wf4fU4QAwVHjsTaRK6ZYntSlFrkP970hpfDjQUe4zASSlIuELoxZcT7G/8Dzdhs
+         8BayAk/oGPhOGDMLBMUKLxUka5KwU/LM47pDzW/059JKu+uKcGxHtwHXAKUExCgX1CUP
+         5BQYXFgXUgYC9Y+3DbRExwcxgLsjddvOgwHKnx4cE/DhwNiHrzWCgESqj8irbNeF9xPF
+         nNzg==
+X-Gm-Message-State: AOAM533MzLcktcEViC9RG0wWHgXiNp35aBUw1gpK5B0NgKnZoUwWWuSW
+        kBQqOZhKV4jVAgMqdQBzbW+pa6AbEPc7OA==
+X-Google-Smtp-Source: ABdhPJzDEwDnms71wcqZ06xpRz9wfUTSjnV7Au3tEFDwobcG35rKOseyZwlWZCyaZqXxlpmCeOq62A==
+X-Received: by 2002:a05:6808:d46:: with SMTP id w6mr3339345oik.47.1615400554532;
+        Wed, 10 Mar 2021 10:22:34 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id n1sm29739oig.47.2021.03.10.10.22.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Mar 2021 10:22:33 -0800 (PST)
+Date:   Wed, 10 Mar 2021 12:22:32 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     devicetree@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Evan Green <evgreen@chromium.org>
+Subject: Re: [PATCH 1/4] arm64: dts: qcom: sdm845: fix number of pins in
+ 'gpio-ranges'
+Message-ID: <YEkOaK+UiLy8kSDu@builder.lan>
+References: <20210303033106.549-1-shawn.guo@linaro.org>
+ <20210303033106.549-2-shawn.guo@linaro.org>
+ <YEKl7GbxBhui4eoT@builder.lan>
+ <20210306012829.GL17424@dragon>
+ <YELhMmDndOTSSJJO@builder.lan>
+ <20210306080049.GM17424@dragon>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210306080049.GM17424@dragon>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The bi_tcxo clock source for SC7280 requires a div 4 to derive 19.2MHz
-from the xo_board. Thus update the same.
+On Sat 06 Mar 02:00 CST 2021, Shawn Guo wrote:
 
-Fixes: fff2b9a65162 ("clk: qcom: rpmh: Add support for RPMH clocks on SC7280")
-Signed-off-by: Taniya Das <tdas@codeaurora.org>
----
- drivers/clk/qcom/clk-rpmh.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+> On Fri, Mar 05, 2021 at 07:56:02PM -0600, Bjorn Andersson wrote:
+> > On Fri 05 Mar 19:28 CST 2021, Shawn Guo wrote:
+> > 
+> > > On Fri, Mar 05, 2021 at 03:43:08PM -0600, Bjorn Andersson wrote:
+> > > > On Tue 02 Mar 21:31 CST 2021, Shawn Guo wrote:
+> > > > 
+> > > > > The last cell of 'gpio-ranges' should be number of GPIO pins, and in
+> > > > > case of qcom platform it should match msm_pinctrl_soc_data.ngpio rather
+> > > > > than msm_pinctrl_soc_data.ngpio - 1.
+> > > > > 
+> > > > 
+> > > > This is a historical artifact, SDM845 has 150 GPIO pins. In addition to
+> > > > this there's an output-only pin for UFS, which I exposed as an GPIO as
+> > > > well - but it's only supposed to be used as a reset-gpio for the UFS
+> > > > device.
+> > > > 
+> > > > Perhaps that still mandates that gpio-ranges should cover it?
+> > > 
+> > > I think the number in DT gpio-ranges should match msm_pinctrl_soc_data.ngpio.
+> > > Otherwise, kernel will be confused and be running into the issue like
+> > > below in some case.
+> > > 
+> > > > 
+> > > > > This fixes the problem that when the last GPIO pin in the range is
+> > > > > configured with the following call sequence, it always fails with
+> > > > > -EPROBE_DEFER.
+> > > > > 
+> > > > >     pinctrl_gpio_set_config()
+> > > > >         pinctrl_get_device_gpio_range()
+> > > > >             pinctrl_match_gpio_range()
+> > > > 
+> > > > When do we hit this sequence? I didn't think operations on the UFS
+> > > > GP(I)O would ever take this code path?
+> > > 
+> > > It will, if we have UFS driver booting from ACPI and requesting reset
+> > > GPIO.
+> > 
+> > But does the UFS driver somehow request GPIO 190 on SC8180x?
+> > 
+> > I made up the idea that this is a GPIO, there really only is 190 (0-189)
+> > GPIOs on thie SoC.
+> > 
+> > Downstream they use a pinconf node with "output-high"/"output-low" to
+> > toggle the reset pin and I don't find any references in the Flex 5G
+> > DSDT.
+> 
+> Right now, I do not have to request and configure this UFS GPIO for
+> getting UFS work with ACPI kernel.  And the immediate problem we have is
+> that with gpio_chip .set_config patch, devm_gpiod_get_optional() call
+> from UFS driver always gets -EPROBE_DEFER.
+> 
 
-diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-index 91dc390..c623ce9 100644
---- a/drivers/clk/qcom/clk-rpmh.c
-+++ b/drivers/clk/qcom/clk-rpmh.c
-@@ -510,9 +510,12 @@ static const struct clk_rpmh_desc clk_rpmh_sm8350 = {
- 	.num_clks = ARRAY_SIZE(sm8350_rpmh_clocks),
- };
+But we don't have a "reset" GPIO specified in the ACPI node, or you mean
+with the introduction of .set_config DT no longer works?
 
-+/* Resource name must match resource id present in cmd-db */
-+DEFINE_CLK_RPMH_ARC(sc7280, bi_tcxo, bi_tcxo_ao, "xo.lvl", 0x3, 4);
-+
- static struct clk_hw *sc7280_rpmh_clocks[] = {
--	[RPMH_CXO_CLK]      = &sdm845_bi_tcxo.hw,
--	[RPMH_CXO_CLK_A]    = &sdm845_bi_tcxo_ao.hw,
-+	[RPMH_CXO_CLK]      = &sc7280_bi_tcxo.hw,
-+	[RPMH_CXO_CLK_A]    = &sc7280_bi_tcxo_ao.hw,
- 	[RPMH_LN_BB_CLK2]   = &sdm845_ln_bb_clk2.hw,
- 	[RPMH_LN_BB_CLK2_A] = &sdm845_ln_bb_clk2_ao.hw,
- 	[RPMH_RF_CLK1]      = &sdm845_rf_clk1.hw,
---
-Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
-of the Code Aurora Forum, hosted by the  Linux Foundation.
+Regards,
+Bjorn
 
+> > 
+> > > And we are hit this sequence with my patch that adds .set_config
+> > > for gpio_chip [1].
+> > > 
+> > 
+> > What's calling pinctrl_gpio_set_config() in this case?
+> 
+>   ufs_qcom_probe
+>     ufshcd_pltfrm_init
+>       ufshcd_init
+>         ufs_qcom_init
+>           devm_gpiod_get_optional
+>             devm_gpiod_get_index
+>               gpiod_get_index
+>                 gpiod_configure_flags
+>                   gpiod_direction_output
+>                     gpiochip_generic_config
+> 
+> Shawn
