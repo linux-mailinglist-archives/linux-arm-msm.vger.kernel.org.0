@@ -2,159 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F612334531
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 18:33:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3AA6133465C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 19:13:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233186AbhCJRc1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Mar 2021 12:32:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43142 "EHLO
+        id S232828AbhCJSNQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Mar 2021 13:13:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232734AbhCJRcU (ORCPT
+        with ESMTP id S232624AbhCJSNH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Mar 2021 12:32:20 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5994FC061760
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 09:32:20 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id d15so24252659wrv.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 09:32:20 -0800 (PST)
+        Wed, 10 Mar 2021 13:13:07 -0500
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E48E9C061761
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 10:13:06 -0800 (PST)
+Received: by mail-ot1-x335.google.com with SMTP id r24so9180967otp.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 10:13:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=DlAZFPFmBhu6prOt5DuDCXZS0io3cSso7QLySifK5A8=;
-        b=SGNwPC4ZqU20llgFsedS5GXQ1OxaIKLj5mH/1/qCeDrB/jT7p+G1f2ysaPPnMkyyDy
-         TspyOvWUytu33ZhujK4OQA0p3l6rey2Mv6yXBdz8Md7GnIfQ2wZqnZ7NdFj07u88i8MK
-         hCmgy3ReKIdO1AqarPaK160HfIyXmRWXRc+sCbGXIWCOx4XhfOIl8BBB0DOdnX+XgZwx
-         xps/3snfsoxEJKqu4dfz1GS2A118c7krND75HF/CMQf2DAr9/HrMyNwmSRtBu8GLhfSu
-         2nNawnNcHqiWWrBhXQ+ti2eER+Xk2VUdZ2bDdVr9YMPU+JYKhL2pX2vrfCPxgvdb8Pmt
-         1Dvw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=pHWXTwbw9p9uf8ft6VKP7REHTpiAGXpesgcV8HDhEdc=;
+        b=rQ4z0maaHQrOGoltyEtGi+HBeho+EyAB0vE97faSaA9m8+shVlUUHmeeozrjMXp9su
+         BuPo2Bh4A/fvXda9mixvifOAV9qCKZs9EsjR1//Nn4sZBA9b8Q8TSMopxHpeCfZqCELn
+         EKab7qBAIFfWf6JkcV+PmvtG4oWmw3FBKijBkqgZd0sqkp3Q1M57pVD/Q1pw7DUTkaCU
+         qzWzWUETOIYecznvO/oN9cobPvIXL4whx1UWIMK2o/OSlyIerx/+lJeUw29yiXiU48X3
+         mwwz9dKYTyQJ6wDFziYUKbZe8qoI8QXnGCHCtJ3erjdmnDcMKn6Ny2+mgQH1vdhiGQx4
+         Ahxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=DlAZFPFmBhu6prOt5DuDCXZS0io3cSso7QLySifK5A8=;
-        b=R9Y0Kbg+7zlmDLCUNH6Ua7fqiy+aaDS1Q3eB44NnE4dJUn60pyaIvhSu5ESBeDyvA+
-         b1bIhkm4nq4ztXQ6Ean6nr4uXvqwPzpmqA2bzZY78WqfZN0u+N1EhjkVa4rnp/iktX7l
-         cotnFzc5a/pBzD0ESrk2in+umA9i4v06nKQ3H16ckZKpGkuV+Cr1To8PHYc0bNDAEVaO
-         kIAIAiNdMJEWsoZDw9PnODaniMJkt6kSrAAq+NDqQNVGjHml6CZZQjRCkiwe6n+4wUMq
-         PYqNaEbsS9AwW3pgFB7cfNkfWAEq3wp22lBfO+zEXwaVHItMPcnBISnLM8BuT05Phgla
-         GPuQ==
-X-Gm-Message-State: AOAM5324Fj/0Eaznkx2u/CIWDN/OdV8RdCe3/ADQZnDKKqk7hkC3Yv69
-        rRsgWWQnZqWuiYXzgITbAGVzlA==
-X-Google-Smtp-Source: ABdhPJx/WiUiO5meLImUgfHp2XodefXH+4QQB7qWGzqihxKbKXhLgk2ZP2ihnmuq6F0qUWQilwflbg==
-X-Received: by 2002:adf:e582:: with SMTP id l2mr4662816wrm.207.1615397539010;
-        Wed, 10 Mar 2021 09:32:19 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id e1sm16464wrd.44.2021.03.10.09.32.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Mar 2021 09:32:18 -0800 (PST)
-Subject: Re: [PATCH 04/25] media: venus: core,pm: Vote for min clk freq during
- venus boot
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        agross@kernel.org, bjorn.andersson@linaro.org, mchehab@kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     dikshita@codeaurora.org, jonathan@marek.ca, vgarodia@codeaurora.org
-References: <20210222160300.1811121-1-bryan.odonoghue@linaro.org>
- <20210222160300.1811121-5-bryan.odonoghue@linaro.org>
- <21b09fd4-0b4c-3acb-ece2-f1a710bbd3fd@linaro.org>
- <94133e43-d250-7359-6cfe-c4956f5185dc@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Message-ID: <c0ef2f92-ef80-adc4-3530-949e0a5b3e4e@linaro.org>
-Date:   Wed, 10 Mar 2021 17:33:47 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.1
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=pHWXTwbw9p9uf8ft6VKP7REHTpiAGXpesgcV8HDhEdc=;
+        b=K2ijFvmVqoingdYyegq3rV2zmmlB6yvg8qYZTRVmND7mlyvphV2ZLjc6xp78gzDKa1
+         AK/iyplOQXFLAQew3TfG5LMit+lIFKlu7Hrefrgi14kseJOyJsdI7vlkgezvQ8zAqZnA
+         m+AjI9HhlIRcZXOQFBKTWa8lJW4n1j1jogRv/uHq4eM3Zu4mWKgTqNRistii2Q5sH3VS
+         PwrdjO4I64u+4e0k9Wg6kOlBY0J2MvPNyhU5AwbpDoVCWfTGwY1chmCZPV0UfyAh8NAc
+         6PlsXVFKx6ZC+bl55kL29klRJjxMeHkqNoZ9554i+lIGjvh2t9fyh8jWJ+B/7G1w6nc6
+         nx1A==
+X-Gm-Message-State: AOAM533kxFipn18v6SId8TURjg2sH/ZY+5GHlILM7AB9lDXeUrTorcb5
+        m9m6EDYKspih2dDJZnljRg6/QA==
+X-Google-Smtp-Source: ABdhPJzdjuvepmnxQb7O5JaPX1+qMlv8VGrocqBj0XnMpha7kZXxtTo+hL1f1I+OtfGYaMriPDcLqQ==
+X-Received: by 2002:a9d:3f6:: with SMTP id f109mr3471150otf.187.1615399986315;
+        Wed, 10 Mar 2021 10:13:06 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id v7sm70768otq.62.2021.03.10.10.13.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Mar 2021 10:13:05 -0800 (PST)
+Date:   Wed, 10 Mar 2021 12:13:04 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Andy Shevchenko <andriy.shevchenko@intel.com>,
+        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2] pinctrl: qcom: support gpio_chip .set_config call
+Message-ID: <YEkMMIkSAe1yA7KN@builder.lan>
+References: <20210303131858.3976-1-shawn.guo@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <94133e43-d250-7359-6cfe-c4956f5185dc@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210303131858.3976-1-shawn.guo@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/03/2021 15:01, Stanimir Varbanov wrote:
+On Wed 03 Mar 07:18 CST 2021, Shawn Guo wrote:
+
+> In case of ACPI boot, GPIO core does the right thing to parse GPIO pin
+> configs from ACPI table, and call into gpio_chip's .set_config hook for
+> setting them up.  It enables such support on qcom platform by using
+> generic config function, which in turn calls into .pin_config_set of
+> pinconf for setting up hardware.  For qcom platform, it's possible to
+> reuse pin group config functions for pin config hooks, because every pin
+> is maintained as a single group.
 > 
-> 
-> On 2/23/21 3:25 PM, Stanimir Varbanov wrote:
->>
->>
->> On 2/22/21 6:02 PM, Bryan O'Donoghue wrote:
->>> From: Dikshita Agarwal <dikshita@codeaurora.org>
->>>
->>> Vote for min clk frequency for core clks during prepare and enable clocks
->>> at boot sequence. Without this the controller clock runs at very low value
->>> (9.6MHz) which is not sufficient to boot venus.
->>>
->>> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
->>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>> ---
->>>   drivers/media/platform/qcom/venus/pm_helpers.c | 14 ++++++++++++++
->>>   1 file changed, 14 insertions(+)
->>>
->>> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
->>> index 4f5d42662963..767cb00d4b46 100644
->>> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
->>> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
->>> @@ -41,10 +41,24 @@ static int core_clks_get(struct venus_core *core)
->>>   static int core_clks_enable(struct venus_core *core)
->>>   {
->>>   	const struct venus_resources *res = core->res;
->>> +	const struct freq_tbl *freq_tbl = NULL;
->>> +	unsigned int freq_tbl_size = 0;
->>> +	unsigned long freq = 0;
->>
->> no need to initialize to zero.
->>
->>>   	unsigned int i;
->>>   	int ret;
->>>   
->>> +	freq_tbl = core->res->freq_tbl;
->>> +	freq_tbl_size = core->res->freq_tbl_size;
->>
->> could you initialize those at the variables declaration?
->>
->>> +	if (!freq_tbl)
->>> +		return -EINVAL;
->>> +
->>> +	freq = freq_tbl[freq_tbl_size - 1].freq;
->>> +
->>>   	for (i = 0; i < res->clks_num; i++) {
->>> +		ret = clk_set_rate(core->clks[i], freq);
->>
->> I'm not sure that we have to set the rate for all core->clks[i] ?
-> 
-> Confirmed. This produces regressions on db410c (I haven't tested on
-> other platforms yet).
-> 
->>
->>> +		if (ret)
->>> +			goto err;
->>> +
->>>   		ret = clk_prepare_enable(core->clks[i]);
->>>   		if (ret)
->>>   			goto err;
->>>
->>
+> This change fixes the problem that Touchpad of Lenovo Flex 5G laptop
+> doesn't work with ACPI boot, because PullUp config of Touchpad GpioInt
+> pin is not set up by the kernel.
 > 
 
-OK, I have this now on db410c
+Per Linus comment that this is how others are doing it, I guess we can
+do it too...
 
-I made a tree out of
+Acked-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-svarbanov-linux-tv/venus-for-next-v5.13
-+
-svarbanov-linux-tv/venus-msm8916-fixes - minor fix here integrating on 
-top of 5.13
+Regards,
+Bjorn
 
-and then put the sm8250 changes on top of that
-
-https://git.linaro.org/people/bryan.odonoghue/kernel.git/log/?h=tracking-qcomlt-sm8250-venus-integrated-sm8250
-
-So confirm db410c works up to tag 
-tracking-qcomlt-sm8250-venus-integrated-sm8250-02+svarbanov-linux-tv/venus-msm8916-fixes
-
-I'll work on fixing your feedback on that putative branch.
-
----
-bod
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> ---
+> Changes for v2:
+> - Add pin config functions that simply call into group config ones.
+> 
+>  drivers/pinctrl/qcom/pinctrl-msm.c | 15 +++++++++++++++
+>  1 file changed, 15 insertions(+)
+> 
+> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+> index af6ed7f43058..a59bb4cbd97e 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+> @@ -489,10 +489,24 @@ static int msm_config_group_set(struct pinctrl_dev *pctldev,
+>  	return 0;
+>  }
+>  
+> +static int msm_config_pin_get(struct pinctrl_dev *pctldev, unsigned int pin,
+> +			      unsigned long *config)
+> +{
+> +	return msm_config_group_get(pctldev, pin, config);
+> +}
+> +
+> +static int msm_config_pin_set(struct pinctrl_dev *pctldev, unsigned pin,
+> +			      unsigned long *configs, unsigned num_configs)
+> +{
+> +	return msm_config_group_set(pctldev, pin, configs, num_configs);
+> +}
+> +
+>  static const struct pinconf_ops msm_pinconf_ops = {
+>  	.is_generic		= true,
+>  	.pin_config_group_get	= msm_config_group_get,
+>  	.pin_config_group_set	= msm_config_group_set,
+> +	.pin_config_get		= msm_config_pin_get,
+> +	.pin_config_set		= msm_config_pin_set,
+>  };
+>  
+>  static int msm_gpio_direction_input(struct gpio_chip *chip, unsigned offset)
+> @@ -717,6 +731,7 @@ static const struct gpio_chip msm_gpio_template = {
+>  	.get_direction    = msm_gpio_get_direction,
+>  	.get              = msm_gpio_get,
+>  	.set              = msm_gpio_set,
+> +	.set_config       = gpiochip_generic_config,
+>  	.request          = gpiochip_generic_request,
+>  	.free             = gpiochip_generic_free,
+>  	.dbg_show         = msm_gpio_dbg_show,
+> -- 
+> 2.17.1
+> 
