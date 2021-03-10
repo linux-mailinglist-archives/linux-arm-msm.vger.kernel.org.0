@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AFC2F33352D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 06:26:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B3EC233352F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 06:26:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232351AbhCJF0S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Mar 2021 00:26:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54888 "EHLO
+        id S232322AbhCJF0T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Mar 2021 00:26:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232328AbhCJF0D (ORCPT
+        with ESMTP id S232340AbhCJF0K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Mar 2021 00:26:03 -0500
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FF2FC061763
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Mar 2021 21:26:03 -0800 (PST)
-Received: by mail-pl1-x62d.google.com with SMTP id 30so3341906ple.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Mar 2021 21:26:03 -0800 (PST)
+        Wed, 10 Mar 2021 00:26:10 -0500
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9053FC061763
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Mar 2021 21:26:10 -0800 (PST)
+Received: by mail-pl1-x631.google.com with SMTP id e2so2640537pld.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Mar 2021 21:26:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=MyRCvPaVcQpraU+Ca0FoAU2tyJOU/YwufLj6r26LxEI=;
-        b=D6lyYhKUOzYxKJP9wW1OlrsACoqZ0od54Zu2hf1RH5ThM8X+8haQ322vVyG0VgGYG8
-         a3OvxE2iPvBMOand9IusfG8625ACzjFrUixK3WHIif4P951pozwIY85ijfSiSPPjkPmq
-         hJqSd/n8HdGW68p3z0QW0LUgDbDlrte3gxd3M/NWvUhDJVQ2KPSaCDFaws6YNWUxg0rY
-         tagg1+7vwkHCLiZ6weBdJhTmhavbvgLhu2TCKMLZeNGHa2o6aXHlczxFoVAjgYoUveKv
-         mkVBqmB+ffwF6l49jMrZmLQbuEP++cdfYQtCBkosOQHoqdGBnNc3uDaqwXOs4z73XnLQ
-         nQ9g==
+        bh=4q+Rnnlb5GLA1MWkdel8vTxzZ4mQRlT1eDV72kpg7eE=;
+        b=tCWJDmMSuygEMZgc6WnxrwMZsV4E4gtraesMWAf1pwWhmu0MgG6W2PXfkChEHHS2Zu
+         d+3dCnZuSrvoYq0MeIBkkLU9y2hLt/r2LZY03c8twD75l1OYHjnavxqtNsD7D6vMYatt
+         /bjYkmBigXxF4bZWddXqvmRHbAICBz6SjQH1jUyH/ej6LHtoHUG43b4kZPDkZ5HmkduJ
+         CeEiRdqMvGqNIC6eDLsGFA/65VrJnlI2oXtLFooL8Ch97NOsuQVgUfkN+YNlkSFZQAWj
+         X7MP+z57BRlIYTtpYiU830Pn7kbAt9fwAYwZoIdqEZ7zZR8fJKh1YuiIUxNyyRHvA8Rx
+         MSdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=MyRCvPaVcQpraU+Ca0FoAU2tyJOU/YwufLj6r26LxEI=;
-        b=uND8GjR7S66SZXhyl7ydkEGL72jf8TD7em/cPwMpY0PADBHkDA39JH4Wa21XTrIXil
-         iBF/xmpvbQ2vT2r0iR9psawfX30t7JsPY9/aKv2phWo/oiXfsX2NcreMVFlLQDnqDZl7
-         vO4kjPjOUBbS5sl8KKjPS1Vm3usNiPaeKiD1yWmv0N21+tq2o8YNTwvM9uBlWISLpr3X
-         zbgQO8ktxnsYalWV1UaTbumA/0PwuTfJrvSjNgKf4XArw3Cb6MfKm8FKhBOS+E6J8oCO
-         I3TCQjyfX9K7EbZc4M46d1ImLGOfO+WRC78kE81RlHmwNzVQtkGj9mqB0XCqKnGMH2B0
-         LfoQ==
-X-Gm-Message-State: AOAM533/Ckhb8czcqSR3LIQQDgh8whsMchjddsFvE+YVDOrphJ7iw9i4
-        AmD/tViAdjPQFe+5dXUIyJrKHsMtyKMtWMG2CCc=
-X-Google-Smtp-Source: ABdhPJz3/IVhZZduaRV272ANjvrN6PpFXwgaoJQOGccIirWhB2t2MT3WW+JVnlbUGlhy+GyZuy3QzA==
-X-Received: by 2002:a17:90a:987:: with SMTP id 7mr1729387pjo.97.1615353962846;
-        Tue, 09 Mar 2021 21:26:02 -0800 (PST)
+        bh=4q+Rnnlb5GLA1MWkdel8vTxzZ4mQRlT1eDV72kpg7eE=;
+        b=iEURWkYs18LffUSanuKekRtOmwB83vpLHIF4RWQphQWYMDJD8aKKI2johepwfvFhaX
+         T78YwEnOr4v1vhOeMxP8hi2HRTp/aVD9fJxNDn9ZvzprLbMF0tg5nplB9oANixvqN7dA
+         pSmJQasL3p0BkH7joI/wb1SC1SfYW6hC+9Zvgrq+52FUx+D0VPocx2mRyMDgsnBJoJTP
+         PXbnKKGkMs4U9qyd5vJSJQlJ5KyUujTGj6iDm4yNahl6hSQE0lCkCB77Mi7JjGKwaM3s
+         uWvAsjrhloT+gVmmqrvgkRqUFF+MfLPwzkVrB54Sq8ybhUrIOuvIgNWlDJmHqv2kxZUJ
+         ntyQ==
+X-Gm-Message-State: AOAM533nkR/YAtHMtaCQrm40A2O8oAsKVF/z+KRn/QIv1y6K3MKtNtxX
+        4RU1h1eXTNvbiU/MySy3M5sS022QBUskIS60D94=
+X-Google-Smtp-Source: ABdhPJxRllS/CDKWEMM7Q94kiCX7FwjfEfKvjyw4OB3UkjY5HLXPSo6QlLeRXRBUxsHinE6+oT2hlg==
+X-Received: by 2002:a17:90a:68cf:: with SMTP id q15mr1730691pjj.231.1615353969992;
+        Tue, 09 Mar 2021 21:26:09 -0800 (PST)
 Received: from localhost.localdomain ([2402:3a80:9f4:a436:21bd:7573:25c0:73a0])
-        by smtp.gmail.com with ESMTPSA id g7sm13915224pgb.10.2021.03.09.21.25.56
+        by smtp.gmail.com with ESMTPSA id g7sm13915224pgb.10.2021.03.09.21.26.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Mar 2021 21:26:02 -0800 (PST)
+        Tue, 09 Mar 2021 21:26:09 -0800 (PST)
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
 To:     linux-arm-msm@vger.kernel.org
-Cc:     bhupesh.sharma@linaro.org, Vinod Koul <vkoul@kernel.org>,
+Cc:     bhupesh.sharma@linaro.org,
         Thara Gopinath <thara.gopinath@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -62,9 +62,9 @@ Cc:     bhupesh.sharma@linaro.org, Vinod Koul <vkoul@kernel.org>,
         linux-clk@vger.kernel.org, linux-crypto@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         bhupesh.linux@gmail.com
-Subject: [PATCH 6/8] clk: qcom: Add gcc clocks for crypto block on sm8250
-Date:   Wed, 10 Mar 2021 10:55:01 +0530
-Message-Id: <20210310052503.3618486-7-bhupesh.sharma@linaro.org>
+Subject: [PATCH 7/8] drivers: crypto: qce: Enable support for crypto engine on sm8250.
+Date:   Wed, 10 Mar 2021 10:55:02 +0530
+Message-Id: <20210310052503.3618486-8-bhupesh.sharma@linaro.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210310052503.3618486-1-bhupesh.sharma@linaro.org>
 References: <20210310052503.3618486-1-bhupesh.sharma@linaro.org>
@@ -74,11 +74,11 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch adds the global clock controller (gcc) clocks required
-by the sm8250 crypto block to function, namely: GCC_CE1_AHB_CLK,
-GCC_CE1_AXI_CLK and GCC_CE1_CLK.
+Add support for Qualcomm Crypto Engine accelerated encryption and
+authentication algorithms available on sm8250 by adding the required
+compatible string check for crypto version "qcom,crypto-v5.5" found
+on the sm8250 SoC.
 
-Cc: Vinod Koul <vkoul@kernel.org>
 Cc: Thara Gopinath <thara.gopinath@linaro.org>
 Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc: Rob Herring <robh+dt@kernel.org>
@@ -94,71 +94,21 @@ Cc: linux-kernel@vger.kernel.org
 Cc: bhupesh.linux@gmail.com
 Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 ---
- drivers/clk/qcom/gcc-sm8250.c | 44 +++++++++++++++++++++++++++++++++++
- 1 file changed, 44 insertions(+)
+ drivers/crypto/qce/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/qcom/gcc-sm8250.c b/drivers/clk/qcom/gcc-sm8250.c
-index ab594a0f0c40..0df5ac346c93 100644
---- a/drivers/clk/qcom/gcc-sm8250.c
-+++ b/drivers/clk/qcom/gcc-sm8250.c
-@@ -1198,6 +1198,47 @@ static struct clk_branch gcc_camera_xo_clk = {
- 	},
+diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
+index 80b75085c265..49c73e3137a8 100644
+--- a/drivers/crypto/qce/core.c
++++ b/drivers/crypto/qce/core.c
+@@ -275,6 +275,7 @@ static int qce_crypto_remove(struct platform_device *pdev)
+ static const struct of_device_id qce_crypto_of_match[] = {
+ 	{ .compatible = "qcom,crypto-v5.1", },
+ 	{ .compatible = "qcom,crypto-v5.4", },
++	{ .compatible = "qcom,crypto-v5.5", },
+ 	{}
  };
- 
-+static struct clk_branch gcc_ce1_ahb_clk = {
-+	.halt_reg = 0x4100c,
-+	.halt_check = BRANCH_HALT_VOTED,
-+	.hwcg_reg = 0x4100c,
-+	.hwcg_bit = 1,
-+	.clkr = {
-+		.enable_reg = 0x52004,
-+		.enable_mask = BIT(3),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_ce1_ahb_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch gcc_ce1_axi_clk = {
-+	.halt_reg = 0x41008,
-+	.halt_check = BRANCH_HALT_VOTED,
-+	.clkr = {
-+		.enable_reg = 0x52004,
-+		.enable_mask = BIT(4),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_ce1_axi_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch gcc_ce1_clk = {
-+	.halt_reg = 0x41004,
-+	.halt_check = BRANCH_HALT_VOTED,
-+	.clkr = {
-+		.enable_reg = 0x52004,
-+		.enable_mask = BIT(5),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_ce1_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
- static struct clk_branch gcc_cfg_noc_usb3_prim_axi_clk = {
- 	.halt_reg = 0xf07c,
- 	.halt_check = BRANCH_HALT_VOTED,
-@@ -3325,6 +3366,9 @@ static struct clk_regmap *gcc_sm8250_clocks[] = {
- 	[GCC_CAMERA_HF_AXI_CLK] = &gcc_camera_hf_axi_clk.clkr,
- 	[GCC_CAMERA_SF_AXI_CLK] = &gcc_camera_sf_axi_clk.clkr,
- 	[GCC_CAMERA_XO_CLK] = &gcc_camera_xo_clk.clkr,
-+	[GCC_CE1_AHB_CLK] = &gcc_ce1_ahb_clk.clkr,
-+	[GCC_CE1_AXI_CLK] = &gcc_ce1_axi_clk.clkr,
-+	[GCC_CE1_CLK] = &gcc_ce1_clk.clkr,
- 	[GCC_CFG_NOC_USB3_PRIM_AXI_CLK] = &gcc_cfg_noc_usb3_prim_axi_clk.clkr,
- 	[GCC_CFG_NOC_USB3_SEC_AXI_CLK] = &gcc_cfg_noc_usb3_sec_axi_clk.clkr,
- 	[GCC_CPUSS_AHB_CLK] = &gcc_cpuss_ahb_clk.clkr,
+ MODULE_DEVICE_TABLE(of, qce_crypto_of_match);
 -- 
 2.29.2
 
