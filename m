@@ -2,106 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 88474333C7D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 13:20:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8552E333D4A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 14:08:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232073AbhCJMTu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Mar 2021 07:19:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59962 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232088AbhCJMTt (ORCPT
+        id S230490AbhCJNH6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Mar 2021 08:07:58 -0500
+Received: from mail-lj1-f180.google.com ([209.85.208.180]:43543 "EHLO
+        mail-lj1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229948AbhCJNHv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Mar 2021 07:19:49 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D42CC061763
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 04:19:49 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id e10so23059221wro.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 04:19:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=+Thwrg3qqoUAhwxM+WcU2u+TiYXJHE8JDjJsGatqd/Y=;
-        b=P9VknKEPcyVqWWZufkGPkL7KVSXa9RkQyQkPYODUoIxqRJr90IqY6fiSolH8U3aiWv
-         93JrhtgP4aRcezHmCi/YEeCpNg/2qq8Htgn72XxVRzoQIuy5JLGiNLEpwbehqN5NtV9x
-         8WEEvuVyRkSrBzZCRjPqwC4cCElK1sEkpwVGSKL6iszB+SvOHyLXRpvlPBg3flwuHEKu
-         +fcDcHvQcHiVoPaQ8L4eQmbQ/XKi1bKnqV3jW/2gv0gXqjfEDOvYsJ55ihjlmIe+NQcF
-         1bpbpL+j+mI1HQ9dQXY1/yUhJgeqaPgqIe+iC0EuBEqZ7SpCj1oFA0iSZQHwYQ/mj8/t
-         4riA==
+        Wed, 10 Mar 2021 08:07:51 -0500
+Received: by mail-lj1-f180.google.com with SMTP id m11so25445541lji.10;
+        Wed, 10 Mar 2021 05:07:50 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=+Thwrg3qqoUAhwxM+WcU2u+TiYXJHE8JDjJsGatqd/Y=;
-        b=BygeDBaEvn1Eme/qTIQpUrk0snnZC2H2g/MpKrjjVzQ+VuyII/V8fIRb02rYAP8HoX
-         tr6lHoxfap5orYxPB8Bl75ebFbCbsYaWMYFZqvxSQm4lXc+BnoAuiyNXQdFzGg8Mtii7
-         y1OEhx66ALOe5P6IVANJ7lhYSbGZQWHKdivOm1FhsSZXvVgewHqI6F7EbcfA7KNpkDgJ
-         Y/vEJU07QwhcfS4iaD8VvSx0SKUJpHKuydEh/AXkywG3tvFkeTxVOpWsb+x7l9x2R0e6
-         OLCGmulgOI5NsStQjNTmmc3effcJWOUxvfIwWCbIKfNC1WJRP0z0YVXXdB7cJ6uHE6s+
-         5VEA==
-X-Gm-Message-State: AOAM532W9BCd6QkQ4pIF7vB0Bq5pstgN5q7hkbNy9fNBbDxuKQVPQ1K0
-        n/4tuL3yaKpTZvFns2GABFHlrgyDIXcrIA==
-X-Google-Smtp-Source: ABdhPJy2wS4+o8phanKVOn3lZq7ICLobsnju1ml3279qVLpDMTBVRF+ouyMr00zPdGc/SISKLUPpYA==
-X-Received: by 2002:a5d:6d06:: with SMTP id e6mr3253733wrq.425.1615378787498;
-        Wed, 10 Mar 2021 04:19:47 -0800 (PST)
-Received: from ?IPv6:2a01:e34:ed2f:f020:8018:efa9:4421:9140? ([2a01:e34:ed2f:f020:8018:efa9:4421:9140])
-        by smtp.googlemail.com with ESMTPSA id r11sm30479183wrm.26.2021.03.10.04.19.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Mar 2021 04:19:47 -0800 (PST)
-Subject: Re: [PATCH v10 0/8] Add support for ipq8064 tsens
-To:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Amit Kucheria <amitk@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition;
+        bh=qflibBTi6EIDGcd6mbBU0np69J0uiNd3JypeskB6oSs=;
+        b=tyB6AF6HvnWDL0nPIoLGYuxH6a6i/QQ6bx4r4KZkz5OhjmzR7SDXM13Lb5ocY3dCQ0
+         8smBVt5j8yr/2OdlL1XLcIlzY74YlW0YKPNqNsKTxUBaG5RguVvhxzIlejLMWEm+C/Xt
+         qyIKp8rovn2eT4LnExUQMuCrdbNT6UOdMTBo2nEixFdGCClG74OXGJ2ck0wh/taw/baN
+         FQZvcQOxMBxvaOsnVTnvSytsxtpW4f2J2FdAYBac1uKe5GmZCPYxF7V90YL8foYz964U
+         CNa+mWbl9p9yIU9pTZVkeRxtTZVojhAOuuGUpnShzl1QRIf40ZiVHG5cA+E4acAGNrX7
+         OiVQ==
+X-Gm-Message-State: AOAM533seBe7KT/g5Pn2kTDbl9wjU5aD6LVYwW0HA5UgFjlemgCHa78o
+        QCz+C2kP2KQa+3ho2R/fUuo=
+X-Google-Smtp-Source: ABdhPJzMAX7XskQDOodmXLnImCEQVBXfmb55Ju5G9DU21QrTjEPZDEI9ELaGdjZWs9uLEjyyE1sykQ==
+X-Received: by 2002:a2e:8002:: with SMTP id j2mr1860199ljg.31.1615381669749;
+        Wed, 10 Mar 2021 05:07:49 -0800 (PST)
+Received: from localhost.localdomain (dc7vkhyyyyyyyyyyyyycy-3.rev.dnainternet.fi. [2001:14ba:16e2:8300::4])
+        by smtp.gmail.com with ESMTPSA id e18sm3151062ljl.92.2021.03.10.05.07.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Mar 2021 05:07:49 -0800 (PST)
+Date:   Wed, 10 Mar 2021 15:07:41 +0200
+From:   Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
+To:     mazziesaccount@gmail.com, matti.vaittinen@fi.rohmeurope.com
+Cc:     Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Thara Gopinath <thara.gopinath@linaro.org>
-References: <20210217194011.22649-1-ansuelsmth@gmail.com>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-Message-ID: <f0ab094e-440d-993c-6618-bf80fd05d484@linaro.org>
-Date:   Wed, 10 Mar 2021 13:19:45 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-power@fi.rohmeurope.com, linux-arm-msm@vger.kernel.org
+Subject: [RFC PATCH v2 0/7] Extend regulator notification support
+Message-ID: <cover.1615367099.git.matti.vaittinen@fi.rohmeurope.com>
 MIME-Version: 1.0
-In-Reply-To: <20210217194011.22649-1-ansuelsmth@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Extend regulator notification support
 
-Hi Ansuel,
+This is an RFC series for getting feedback on extending the regulator
+notification and error flag support.
 
-On 17/02/2021 20:40, Ansuel Smith wrote:
-> This patchset convert msm8960 to reg_filed, use int_common instead 
-> of a custom function and fix wrong tsens get_temp function for msm8960.
-> Ipq8064 SoCs tsens driver is based on 8960 tsens driver. Ipq8064 needs
-> to be registered as a gcc child as the tsens regs on this platform are
-> shared with the controller.
-> This is based on work and code here
-> https://git.linaro.org/people/amit.kucheria/kernel.git/log/?h=wrk3/tsens-8960-breakage
+This series is built on top of the
+The BD9576MUF support patch series v9
+which is not yet in-tree
+Here:
+https://lore.kernel.org/lkml/cover.1615219345.git.matti.vaittinen@fi.rohmeurope.com/
+(The series should apply without those patches but there is compile time
+dependency to definitions brought in at the last patch of the BD9576
+series. This should be Ok though as there is a Kconfig dependency in
+BD9576 regulator driver)
 
-I don't have major concerns with the series except there is no comment
-from the maintainer / reviewer of the sensor.
+In a nutshell - the RFC adds:
 
-Given it is based on Amit's work, I can assume they are correct.
+1. WARNING level events/error flags. (Patch 2)
+  Current regulator 'ERROR' event notifications for over/under
+  voltage, over current and over temperature are used to indicate
+  condition where monitored entity is so badly "off" that it actually
+  indicates a hardware error which can not be recovered. The most
+  typical hanling for that is believed to be a (graceful)
+  system-shutdown. Here we add set of 'WARNING' level flags to allow
+  sending notifications to consumers before things are 'that badly off'
+  so that consumer drivers can implement recovery-actions.
+2. Device-tree properties for specifying limit values. (Patches 1, 4)
+  Add limits for above mentioned 'ERROR' and 'WARNING' levels (which
+  send notifications to consumers) and also for a 'PROTECTION' level
+  (which will be used to immediately shut-down the regulator(s) W/O
+  informing consumer drivers. Typically implemented by hardware).
+  Property parsing is implemented in regulator core which then calls
+  callback operations for limit setting from the IC drivers. A
+  warning is emitted if protection is requested by device tree but the
+  underlying IC does not support configuring requested protection.
+3. Helpers which can be registered by IC. (Patch 3)
+  Target is to avoid implementing IRQ handling and IRQ storm protection
+  in each IC driver. (Many of the ICs implementin these IRQs do not allow
+  masking or acking the IRQ but keep the IRQ asserted for the whole
+  duration of problem keeping the processor in IRQ handling loop).
 
-I added Thara in Cc hoping she has time to review the changes. If nobody
-complains with the series, I'll merge them in the next days
+The helper was attempted to be done so it could be used to implement
+roughly same logic as is used in qcom-labibb regulator. This means
+amongst other things a safety shut-down if IC registers are not readable.
+Using these shut-down retry counters are optional. The idea is that the
+helper could be also used by simpler ICs which do not provide status
+register(s) which can be used to check if error is still active.
 
-Thanks
+ICs which do not have such status register can simply omit the 'renable'
+callback (and retry-counts etc) - and helper assumes the situation is Ok
+and re-enables IRQ after given time period. If problem persists the
+handler is ran again and another notification is sent - but at least the
+delay allows processor to avoid IRQ loop.
 
-  -- Daniel
+Patch 6 takes this notification support in use at BD9576MUF.
+
+
+Changelog RFC v2:
+  Generic:
+  - rebase on v5.12-rc2 (+ BD9576 series)
+  - Split devm variant of delayed wq to own series
+  Regulator framework:
+  - Provide non devm variant of IRQ notification helpers
+  - shorten dt-property names as suggested by Rob
+  - unconditionally call map_event in IRQ handling and require it to be
+    populated
+  BD9576 regulators:
+  - change the FET resistance property to micro-ohms
+  - fix voltage computation in OC limit setting 
+
+RFC v1:
+https://lore.kernel.org/lkml/cover.1613042245.git.matti.vaittinen@fi.rohmeurope.com/
+
+Pre RFC discussion:
+https://lore.kernel.org/lkml/6046836e22b8252983f08d5621c35ececb97820d.camel@fi.rohmeurope.com/
+
+--
+
+Matti Vaittinen (7):
+  dt_bindings: Add protection limit properties
+  regulator: add warning flags
+  regulator: IRQ based event/error notification helpers
+  regulator: add property parsing and callbacks to set protection limits
+  dt-bindings: regulator: bd9576 add FET ON-resistance for OCW
+  regulator: bd9576: Support error reporting
+  regulator: bd9576: Fix the driver name in id table
+
+ .../bindings/regulator/regulator.yaml         |   82 ++
+ .../regulator/rohm,bd9576-regulator.yaml      |    5 +
+ drivers/regulator/Makefile                    |    2 +-
+ drivers/regulator/bd9576-regulator.c          | 1041 +++++++++++++++--
+ drivers/regulator/core.c                      |  146 ++-
+ drivers/regulator/irq_helpers.c               |  428 +++++++
+ drivers/regulator/of_regulator.c              |   58 +
+ drivers/regulator/qcom-labibb-regulator.c     |   10 +-
+ drivers/regulator/qcom_spmi-regulator.c       |    6 +-
+ drivers/regulator/stpmic1_regulator.c         |   17 +-
+ include/linux/regulator/consumer.h            |   14 +
+ include/linux/regulator/driver.h              |  176 ++-
+ include/linux/regulator/machine.h             |   26 +
+ 13 files changed, 1870 insertions(+), 141 deletions(-)
+ create mode 100644 drivers/regulator/irq_helpers.c
+
+
+base-commit: a38fd8748464831584a19438cbb3082b5a2dab15
+-- 
+2.25.4
 
 
 -- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+Matti Vaittinen, Linux device drivers
+ROHM Semiconductors, Finland SWDC
+Kiviharjunlenkki 1E
+90220 OULU
+FINLAND
 
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+~~~ "I don't think so," said Rene Descartes. Just then he vanished ~~~
+Simon says - in Latin please.
+~~~ "non cogito me" dixit Rene Descarte, deinde evanescavit ~~~
+Thanks to Simon Glass for the translation =] 
