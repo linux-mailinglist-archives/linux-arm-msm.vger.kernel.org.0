@@ -2,342 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ADD92333F90
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 14:48:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C45A4333F96
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 14:48:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233065AbhCJNrm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Mar 2021 08:47:42 -0500
-Received: from m42-2.mailgun.net ([69.72.42.2]:16680 "EHLO m42-2.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232659AbhCJNrj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Mar 2021 08:47:39 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1615384059; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=liks1fkqnYoNpFLg4FCQx67MtJNubDOzYaM+uG06ur0=;
- b=mPWiH+jG0oh1uEgJc4Z8yQGH9W7NCL+TM6MFXua0pDUP8MvAs1epy/75FcNZnrSqMb82hgUq
- lhHHUdO2a/yuI1V04Gzq5R9b0QZ0tiMwlqRtNdf2r3mtRZABmr/YombTUJ0m1hJ2QyKaOc9K
- 6SwIdcHOg/YiAEnxDlO91brboSc=
-X-Mailgun-Sending-Ip: 69.72.42.2
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 6048cdf5d3a53bc38f60d95e (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 10 Mar 2021 13:47:33
- GMT
-Sender: sbhanu=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id DD99AC43463; Wed, 10 Mar 2021 13:47:32 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sbhanu)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BF1CBC433CA;
-        Wed, 10 Mar 2021 13:47:30 +0000 (UTC)
+        id S232091AbhCJNsO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Mar 2021 08:48:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51190 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232712AbhCJNsN (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Mar 2021 08:48:13 -0500
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70237C061760
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 05:48:13 -0800 (PST)
+Received: by mail-pf1-x432.google.com with SMTP id y67so12148923pfb.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 05:48:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=PQxFaFRk1j0/L4YFKscUCjlWRlwxndUwdUGemllHofE=;
+        b=hQtqDXVrKV07C6X87O561dR8WVJboJLb4UmMKhDiA1k1ScIUzY+mfen3TfJIgzD/f3
+         3Hj2JEy0tih9YqqwVLbz3MTGnaC0hYmgWf2GO3GQsPN0Xb5kWlM2RIAlMv3Qze5k3hoN
+         BGbjZHSOkuE7VjQkbhoy+m+d/PoFoD4pju09axO/yq+SlGLPZZBAE+H3bTVv1oQ8iq/y
+         f4mkta4JwvBoaFZ84QSgAOi8aHh79gnH9NY7pwG5ExtX/XD5xXnY8CN2qgEKttnt0VDP
+         katsGNky6EZM3cQrL71Z5KaThwDOFnX7uoVz+3BVymlYnCe4vA2lEnVOPQnXavesa5qQ
+         uCHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=PQxFaFRk1j0/L4YFKscUCjlWRlwxndUwdUGemllHofE=;
+        b=qORmlg1oYpjbzpz6/DehAKKf+WwZTxlIqvrKJ0PwyabNcHmBRC7dkKbW1lAPjVUxbN
+         Il7tvkngp6KJ/3pvPf86MYh/8kHJ2l1E2dftBJhZY4tgCAU2vCX+gsY3HgDzDdbgU0lM
+         9oNn9AKSz+K+lQbh7uO/NCbQjaxBzxOo/TTA0EL1UhA/YPzYVNRSnhvxom6MO0cQ0wco
+         Sp8B+wZ95dSt9dDxP6/fVtJCWG0CL0T9wzF/J8drQvnCCy5P0g52bFv2HFEtDL55+BA2
+         eZNK5CUFFJPOoFeGz1zd/iZcdHeQa68IOEXnVblIXD5lTpouP5N+1fJpoEz3UqKJgW9Y
+         z1cw==
+X-Gm-Message-State: AOAM531WKJ03Ys7JtBDlDhLjWXjQnxCTGqqeo6Bk2Bwd1A2ntuAL1DOK
+        RjLhMDBQU58rGjOtvMpdp6OO
+X-Google-Smtp-Source: ABdhPJzv+Dzkej5nxvGdRCMCoC/S3HwWXXruZ7OF0JWyxkXUBcEfjObnQloxWfrdqQskSeqbNEUUxQ==
+X-Received: by 2002:a65:5c8d:: with SMTP id a13mr2840233pgt.63.1615384092876;
+        Wed, 10 Mar 2021 05:48:12 -0800 (PST)
+Received: from thinkpad ([103.66.79.59])
+        by smtp.gmail.com with ESMTPSA id y16sm8696743pgl.58.2021.03.10.05.48.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Mar 2021 05:48:12 -0800 (PST)
+Date:   Wed, 10 Mar 2021 19:18:08 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     hemantk@codeaurora.org, jhugo@codeaurora.org,
+        bbhatt@codeaurora.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2] mhi: Fix invalid error returning in mhi_queue
+Message-ID: <20210310134808.GK30275@thinkpad>
+References: <1614336782-5809-1-git-send-email-loic.poulain@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 10 Mar 2021 19:17:30 +0530
-From:   sbhanu@codeaurora.org
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     adrian.hunter@intel.com, ulf.hansson@linaro.org,
-        robh+dt@kernel.org, sartgarg@codeaurora.org,
-        asutoshd@codeaurora.org, stummala@codeaurora.org,
-        vbadigan@codeaurora.org, rampraka@codeaurora.org,
-        sayalil@codeaurora.org, rnayak@codeaurora.org,
-        saiprakash.ranjan@codeaurora.org, sibis@codeaurora.org,
-        cang@codeaurora.org, pragalla@codeaurora.org,
-        nitirawa@codeaurora.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, agross@kernel.org
-Subject: Re: [PATCH V1] arm64: dts: qcom: sc7280: Add nodes for eMMC and SD
- card
-In-Reply-To: <YEfUOljmaxpkxqZq@builder.lan>
-References: <1615317483-23780-1-git-send-email-sbhanu@codeaurora.org>
- <YEfUOljmaxpkxqZq@builder.lan>
-Message-ID: <b25a0793df3bc6ae841502aca1f9fc3e@codeaurora.org>
-X-Sender: sbhanu@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1614336782-5809-1-git-send-email-loic.poulain@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-03-10 01:32, Bjorn Andersson wrote:
-> On Tue 09 Mar 13:18 CST 2021, Shaik Sajida Bhanu wrote:
+On Fri, Feb 26, 2021 at 11:53:02AM +0100, Loic Poulain wrote:
+> mhi_queue returns an error when the doorbell is not accessible in
+> the current state. This can happen when the device is in non M0
+> state, like M3, and needs to be waken-up prior ringing the DB. This
+> case is managed earlier by triggering an asynchronous M3 exit via
+> controller resume/suspend callbacks, that in turn will cause M0
+> transition and DB update.
 > 
->> Add nodes for eMMC and SD card on sc7280.
->> 
->> Signed-off-by: Shaik Sajida Bhanu <sbhanu@codeaurora.org>
->> 
->> ---
->> This change is depends on the below patch series:
->> https://lore.kernel.org/lkml/1613114930-1661-1-git-send-email-rnayak@codeaurora.org/
->> https://lore.kernel.org/patchwork/project/lkml/list/?series=&submitter=28035&state=&q=&archive=&delegate=
->> ---
->>  arch/arm64/boot/dts/qcom/sc7280-idp.dts |  26 +++++
->>  arch/arm64/boot/dts/qcom/sc7280.dtsi    | 170 
->> ++++++++++++++++++++++++++++++++
->>  2 files changed, 196 insertions(+)
->> 
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts 
->> b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
->> index ac79420..6abb2aa 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
->> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
->> @@ -8,6 +8,7 @@
->>  /dts-v1/;
->> 
->>  #include "sc7280.dtsi"
->> +#include <dt-bindings/gpio/gpio.h>
->> 
->>  / {
->>  	model = "Qualcomm Technologies, Inc. SC7280 IDP platform";
->> @@ -256,3 +257,28 @@
->>  		bias-pull-up;
->>  	};
->>  };
->> +
->> +&sdhc_1 {
->> +	status = "okay";
->> +
->> +	pinctrl-names = "default", "sleep";
->> +	pinctrl-0 = <&sdc1_on>;
->> +	pinctrl-1 = <&sdc1_off>;
->> +
->> +	vmmc-supply = <&vreg_l7b_2p9>;
->> +	vqmmc-supply = <&vreg_l19b_1p8>;
->> +
->> +};
->> +
->> +&sdhc_2 {
->> +	status = "okay";
->> +
->> +	pinctrl-names = "default","sleep";
->> +	pinctrl-0 = <&sdc2_on>;
->> +	pinctrl-1 = <&sdc2_off>;
->> +
->> +	vmmc-supply = <&vreg_l9c_2p9>;
->> +	vqmmc-supply = <&vreg_l6c_2p9>;
->> +
->> +	cd-gpios = <&tlmm 91 GPIO_ACTIVE_LOW>;
+> So, since it's not an error but just delaying of doorbell update, there
+> is no reason to return an error.
 > 
-> Please add these nodes above the comment that says "PINCTRL -
-> additions..." and please include the pinctrl state for gpio 91.
+> This also fixes a use after free error for skb case, indeed a caller
+> queuing skb will try to free the skb if the queueing fails, but in
+> that case queueing has been done.
 > 
-sure
->> +};
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi 
->> b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> index 3b86052..91fb18a 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> @@ -18,6 +18,11 @@
->> 
->>  	chosen { };
->> 
->> +	aliases {
->> +		mmc1 = &sdhc_1;
->> +		mmc2 = &sdhc_2;
->> +	};
->> +
->>  	clocks {
->>  		xo_board: xo-board {
->>  			compatible = "fixed-clock";
->> @@ -315,6 +320,69 @@
->>  			#power-domain-cells = <1>;
->>  		};
->> 
->> +		sdhc_1: sdhci@7c4000 {
->> +			compatible = "qcom,sdhci-msm-v5";
->> +			reg = <0 0x7c4000 0 0x1000>,
->> +					<0 0x7c5000 0 0x1000>;
->> +			reg-names = "hc", "cqhci";
->> +
->> +			iommus = <&apps_smmu 0xC0 0x0>;
->> +			interrupts = <GIC_SPI 652 IRQ_TYPE_LEVEL_HIGH>,
->> +					<GIC_SPI 656 IRQ_TYPE_LEVEL_HIGH>;
->> +			interrupt-names = "hc_irq", "pwr_irq";
->> +
->> +			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
->> +					<&gcc GCC_SDCC1_AHB_CLK>,
->> +					<&rpmhcc RPMH_CXO_CLK>;
->> +			clock-names = "core", "iface", "xo";
->> +
->> +			bus-width = <8>;
->> +			non-removable;
->> +			supports-cqe;
->> +			no-sd;
->> +			no-sdio;
->> +
->> +			max-frequency = <192000000>;
->> +
->> +			qcom,dll-config = <0x0007642c>;
->> +			qcom,ddr-config = <0x80040868>;
->> +
->> +			mmc-ddr-1_8v;
->> +			mmc-hs200-1_8v;
->> +			mmc-hs400-1_8v;
->> +			mmc-hs400-enhanced-strobe;
->> +
->> +			status = "disabled";
->> +
->> +		};
->> +
->> +		sdhc_2: sdhci@8804000 {
->> +			compatible = "qcom,sdhci-msm-v5";
->> +			reg = <0 0x08804000 0 0x1000>;
->> +
->> +			iommus = <&apps_smmu 0x100 0x0>;
->> +			interrupts = <GIC_SPI 207 IRQ_TYPE_LEVEL_HIGH>,
->> +					<GIC_SPI 223 IRQ_TYPE_LEVEL_HIGH>;
->> +			interrupt-names = "hc_irq", "pwr_irq";
->> +
->> +			clocks = <&gcc GCC_SDCC2_APPS_CLK>,
->> +					<&gcc GCC_SDCC2_AHB_CLK>,
->> +					<&rpmhcc RPMH_CXO_CLK>;
->> +			clock-names = "core", "iface", "xo";
->> +
->> +			bus-width = <4>;
->> +
->> +			no-mmc;
->> +			no-sdio;
->> +
->> +			max-frequency = <202000000>;
->> +
->> +			qcom,dll-config = <0x0007642c>;
->> +
->> +			status = "disabled";
->> +
->> +		};
->> +
->>  		qupv3_id_0: geniqup@9c0000 {
->>  			compatible = "qcom,geni-se-qup";
->>  			reg = <0 0x009c0000 0 0x2000>;
->> @@ -385,6 +453,108 @@
->>  				pins = "gpio46", "gpio47";
->>  				function = "qup13";
->>  			};
->> +
->> +			sdc1_on: sdc1-on {
->> +				pinconf-clk {
-> 
-> The "pinconf-" prefix does not provide any value here. Can you please
-> drop it?
-> 
-> Regards,
-> Bjorn
+> Fixes: a8f75cb348fd ("mhi: core: Factorize mhi queuing")
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
+> Reviewed-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 
-sure will drop
+Applied to mhi-next!
+
+Thanks,
+Mani
+
+> ---
+>  v2: - Fix/reword commit message
+>      - Add Fixes tag
 > 
->> +					pins = "sdc1_clk";
->> +					bias-disable;
->> +					drive-strength = <16>;
->> +				};
->> +
->> +				pinconf-cmd {
->> +					pins = "sdc1_cmd";
->> +					bias-pull-up;
->> +					drive-strength = <10>;
->> +				};
->> +
->> +				pinconf-data {
->> +					pins = "sdc1_data";
->> +					bias-pull-up;
->> +					drive-strength = <10>;
->> +				};
->> +
->> +				pinconf-rclk {
->> +					pins = "sdc1_rclk";
->> +					bias-pull-down;
->> +				};
->> +			};
->> +
->> +			sdc1_off: sdc1-off {
->> +				pinconf-clk {
->> +					pins = "sdc1_clk";
->> +					bias-disable;
->> +					drive-strength = <2>;
->> +				};
->> +
->> +				pinconf-cmd {
->> +					pins = "sdc1_cmd";
->> +					bias-pull-up;
->> +					drive-strength = <2>;
->> +				};
->> +
->> +				pinconf-data {
->> +					pins = "sdc1_data";
->> +					bias-pull-up;
->> +					drive-strength = <2>;
->> +				};
->> +
->> +				pinconf-rclk {
->> +					pins = "sdc1_rclk";
->> +					bias-pull-down;
->> +				};
->> +			};
->> +
->> +			sdc2_on: sdc2-on {
->> +				pinconf-clk {
->> +					pins = "sdc2_clk";
->> +					bias-disable;
->> +					drive-strength = <16>;
->> +				};
->> +
->> +				pinconf-cmd {
->> +					pins = "sdc2_cmd";
->> +					bias-pull-up;
->> +					drive-strength = <10>;
->> +				};
->> +
->> +				pinconf-data {
->> +					pins = "sdc2_data";
->> +					bias-pull-up;
->> +					drive-strength = <10>;
->> +				};
->> +
->> +				pinconf-sd-cd {
->> +					pins = "gpio91";
->> +					bias-pull-up;
->> +					drive-strength = <2>;
->> +				};
->> +			};
->> +
->> +			sdc2_off: sdc2-off {
->> +				pinconf-clk {
->> +					pins = "sdc2_clk";
->> +					bias-disable;
->> +					drive-strength = <2>;
->> +				};
->> +
->> +				pinconf-cmd {
->> +					pins = "sdc2_cmd";
->> +					bias-pull-up;
->> +					drive-strength = <2>;
->> +				};
->> +
->> +				pinconf-data {
->> +					pins = "sdc2_data";
->> +					bias-pull-up;
->> +					drive-strength = <2>;
->> +				};
->> +
->> +				pinconf-sd-cd {
->> +					pins = "gpio91";
->> +					bias-disable;
->> +					drive-strength = <2>;
->> +				};
->> +			};
->>  		};
->> 
->>  		apps_smmu: iommu@15000000 {
->> --
->> 2.7.4
->> 
+>  drivers/bus/mhi/core/main.c | 8 ++------
+>  1 file changed, 2 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> index 7fc2482..c780234 100644
+> --- a/drivers/bus/mhi/core/main.c
+> +++ b/drivers/bus/mhi/core/main.c
+> @@ -1031,12 +1031,8 @@ static int mhi_queue(struct mhi_device *mhi_dev, struct mhi_buf_info *buf_info,
+>  	if (mhi_chan->dir == DMA_TO_DEVICE)
+>  		atomic_inc(&mhi_cntrl->pending_pkts);
+>  
+> -	if (unlikely(!MHI_DB_ACCESS_VALID(mhi_cntrl))) {
+> -		ret = -EIO;
+> -		goto exit_unlock;
+> -	}
+> -
+> -	mhi_ring_chan_db(mhi_cntrl, mhi_chan);
+> +	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)))
+> +		mhi_ring_chan_db(mhi_cntrl, mhi_chan);
+>  
+>  exit_unlock:
+>  	read_unlock_irqrestore(&mhi_cntrl->pm_lock, flags);
+> -- 
+> 2.7.4
+> 
