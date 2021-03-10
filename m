@@ -2,132 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C447F334910
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 21:44:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 252C533491F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 21:50:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230173AbhCJUn7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Mar 2021 15:43:59 -0500
-Received: from m42-2.mailgun.net ([69.72.42.2]:37034 "EHLO m42-2.mailgun.net"
+        id S231617AbhCJUt5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Mar 2021 15:49:57 -0500
+Received: from m42-2.mailgun.net ([69.72.42.2]:34493 "EHLO m42-2.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231670AbhCJUni (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Mar 2021 15:43:38 -0500
+        id S231575AbhCJUtx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Mar 2021 15:49:53 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1615409017; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=M79y3CBZviledyDDkXZO8CcvgmfIqJFxp+oIh/1uzyc=; b=av88rA0K09mdCN3GU+XTo43iTkWDqRNuENMiVJ0l6WmQoT3MzRWDX9eu79aQDSaOFrAcbj2K
- 4A24yOFJrKY7+D+AzNmU/tR0I3b3XaP0sBGIFYgczrNdlGAqpHXfpYj+bXL0jCYo6tOobMs/
- 5UvlDzfrRV1hrf1WpC8QUy0odR0=
+ s=smtp; t=1615409393; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=6Dex5qLQKQqs46mtJ5oJBUS+U8y6SzohFsM/HQL/NDs=; b=tsonqj3xPVoARWPuC7GHGTFtG4k8DuxT6+z8DcXRZmzXOkUim9QgAkirFW27ocjl2gD09XqO
+ gz07KF8FN3sIs7DrEPspFdtAZBq/v4hi0d/wtXmX2tFiYWv6YEuONKdP4gtqeH/0JFTespoj
+ DXylITgl0udhoCOq64OFxwySaHo=
 X-Mailgun-Sending-Ip: 69.72.42.2
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 60492f72af1d9a68ad2b5959 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 10 Mar 2021 20:43:30
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 604930e1a6850484a6844cd6 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 10 Mar 2021 20:49:37
  GMT
-Sender: hemantk=codeaurora.org@mg.codeaurora.org
+Sender: jhugo=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 58CE8C43461; Wed, 10 Mar 2021 20:43:29 +0000 (UTC)
+        id 74303C43461; Wed, 10 Mar 2021 20:49:36 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from jhugo-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A730CC43462;
-        Wed, 10 Mar 2021 20:43:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A730CC43462
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 21566C433CA;
+        Wed, 10 Mar 2021 20:49:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 21566C433CA
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
-Subject: Re: [PATCH] bus: mhi: Command completion workaround
-To:     Loic Poulain <loic.poulain@linaro.org>,
-        manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org
-References: <1615376308-1941-1-git-send-email-loic.poulain@linaro.org>
-From:   Hemant Kumar <hemantk@codeaurora.org>
-Message-ID: <a24bb3a0-30f8-a32c-dcde-849725b38ebd@codeaurora.org>
-Date:   Wed, 10 Mar 2021 12:43:28 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
+Cc:     bbhatt@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Jeffrey Hugo <jhugo@codeaurora.org>
+Subject: [PATCH v3] bus: mhi: core: Check state before processing power_down
+Date:   Wed, 10 Mar 2021 13:49:25 -0700
+Message-Id: <1615409365-8165-1-git-send-email-jhugo@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-In-Reply-To: <1615376308-1941-1-git-send-email-loic.poulain@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Loic,
+We cannot process a power_down if the power state is DISABLED.  There is
+no valid mhi_ctxt in that case, so attepting to process the power_down
+will likely result in a null pointer dereference.  If the power state is
+DISABLED, there is nothing to do anyways, so just bail early.
 
-On 3/10/21 3:38 AM, Loic Poulain wrote:
-> Some buggy hardwares (e.g sdx24) may report the current command
-> ring wp pointer instead of the command completion pointer. It's
-> obviously wrong, causing completion timeout. We can however deal
-> with that situation by completing the cmd n-1 element, which is
-> what the device actually completes.
-> 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> ---
->   drivers/bus/mhi/core/main.c | 18 ++++++++++++++++++
->   1 file changed, 18 insertions(+)
-> 
-> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> index 16b9640..3e3c520 100644
-> --- a/drivers/bus/mhi/core/main.c
-> +++ b/drivers/bus/mhi/core/main.c
-> @@ -707,6 +707,7 @@ static void mhi_process_cmd_completion(struct mhi_controller *mhi_cntrl,
->   {
->   	dma_addr_t ptr = MHI_TRE_GET_EV_PTR(tre);
->   	struct mhi_cmd *cmd_ring = &mhi_cntrl->mhi_cmd[PRIMARY_CMD_RING];
-> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
->   	struct mhi_ring *mhi_ring = &cmd_ring->ring;
->   	struct mhi_tre *cmd_pkt;
->   	struct mhi_chan *mhi_chan;
-> @@ -714,6 +715,23 @@ static void mhi_process_cmd_completion(struct mhi_controller *mhi_cntrl,
->   
->   	cmd_pkt = mhi_to_virtual(mhi_ring, ptr);
->   
-> +	if (unlikely(cmd_pkt == mhi_ring->wp)) {
-As per spec : The location of the command ring read pointer is reported 
-to the host on the command completion events in the primary event ring.
+Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+---
 
-If device is buggy and updates with WP instead of Rp, we should not 
-workaround it by processing Wp - 1. We can print a warning if cmd_pkt != 
-mhi_ring->rp and let the command completion timeout. This needs to be 
-fixed by device. We can not accommodate device side bug in host side.
+v3: Move the pm_lock use up
+v2: Fix subject and tweak the locking to avoid needless lock/unlock/relock
 
-> +		/* Some buggy hardwares (e.g sdx24) sometimes report the current
-> +		 * command ring wp pointer instead of the command completion
-> +		 * pointer. It's obviously wrong, causing completion timeout. We
-> +		 * can however deal with that situation by completing the cmd
-> +		 * n-1 element.
-> +		 */
-> +		void *ring_ptr = (void *)cmd_pkt - mhi_ring->el_size;
-> +
-> +		if (ring_ptr < mhi_ring->base)
-> +			ring_ptr += mhi_ring->len;
-> +
-> +		cmd_pkt = ring_ptr;
-> +
-> +		dev_warn(dev, "Bad completion pointer (ptr == ring_wp)\n");
-> +	}
-> +
->   	chan = MHI_TRE_GET_CMD_CHID(cmd_pkt);
->   	mhi_chan = &mhi_cntrl->mhi_chan[chan];
->   	write_lock_bh(&mhi_chan->lock);
-> 
+ drivers/bus/mhi/core/pm.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-Hi Mani,
-
-What do you think about this workaround ?
-
-Thanks,
-Hemant
+diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
+index 414da4f..ea62549 100644
+--- a/drivers/bus/mhi/core/pm.c
++++ b/drivers/bus/mhi/core/pm.c
+@@ -1149,6 +1149,7 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
+ 		mhi_deinit_dev_ctxt(mhi_cntrl);
+ 
+ error_dev_ctxt:
++	mhi_cntrl->pm_state = MHI_PM_DISABLE;
+ 	mutex_unlock(&mhi_cntrl->pm_mutex);
+ 
+ 	return ret;
+@@ -1160,12 +1161,19 @@ void mhi_power_down(struct mhi_controller *mhi_cntrl, bool graceful)
+ 	enum mhi_pm_state cur_state, transition_state;
+ 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+ 
++	mutex_lock(&mhi_cntrl->pm_mutex);
++	write_lock_irq(&mhi_cntrl->pm_lock);
++	cur_state = mhi_cntrl->pm_state;
++	if (cur_state == MHI_PM_DISABLE) {
++		write_unlock_irq(&mhi_cntrl->pm_lock);
++		mutex_unlock(&mhi_cntrl->pm_mutex);
++		return; /* Already powered down */
++	}
++
+ 	/* If it's not a graceful shutdown, force MHI to linkdown state */
+ 	transition_state = (graceful) ? MHI_PM_SHUTDOWN_PROCESS :
+ 			   MHI_PM_LD_ERR_FATAL_DETECT;
+ 
+-	mutex_lock(&mhi_cntrl->pm_mutex);
+-	write_lock_irq(&mhi_cntrl->pm_lock);
+ 	cur_state = mhi_tryset_pm_state(mhi_cntrl, transition_state);
+ 	if (cur_state != transition_state) {
+ 		dev_err(dev, "Failed to move to state: %s from: %s\n",
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
+
