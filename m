@@ -2,136 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F120333D7E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 14:16:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A346C333F1A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 14:37:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231922AbhCJNQD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Mar 2021 08:16:03 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:57227 "EHLO z11.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232710AbhCJNP5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Mar 2021 08:15:57 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1615382157; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=61KOGg5DVCRRDiUIctxhV2DNXZ6vJnFQ+jXLaos6IFQ=;
- b=GTfcG2Izg322XphZm4SlVCHxLCC37qCACzFc0x6z6l+CUIxopZR38/CobOBU9EEt15hAvA1i
- mUdHprEWQHTeIx7TRDSV5dt+/kZkLI2rOlT6gW/arpg0Xv/kUobtQz679k2CuFzVOKZRAKEn
- tO6bJB/+67eNfF4/Y0sjpB1GCgk=
-X-Mailgun-Sending-Ip: 104.130.96.11
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 6048c6880c7cf0f56cc85928 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 10 Mar 2021 13:15:52
- GMT
-Sender: sbhanu=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 66B6AC43467; Wed, 10 Mar 2021 13:15:52 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sbhanu)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C5687C433CA;
-        Wed, 10 Mar 2021 13:15:51 +0000 (UTC)
+        id S234308AbhCJN35 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Mar 2021 08:29:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47136 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234213AbhCJN3i (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Mar 2021 08:29:38 -0500
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9923EC061760
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 05:29:38 -0800 (PST)
+Received: by mail-pf1-x435.google.com with SMTP id 18so12054273pfo.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 05:29:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=XRmDUhp4HTrIlS6k+9mhT1AI9vqeFpX1fwPqd8M1lVQ=;
+        b=seD0W0t7sZx41+bQkMZwFt27wPVyBnsHq1oh1YcXM3oBTqwoIvOysKQiuHhSfikoVw
+         wbmI5p8LHAYrKbRui0Xc5ZMvGA6My1E/xBvh9xw84WbTSFWuC2QCl+aF8f1DuTtDbIys
+         n+3ZH7ONUHECdWwiKRsXN/kfijAwpeJSaRmRhbgNlEENagQsVjgNDvkp+b4j2bDZKCua
+         B+16XnO8Iu4HtdkcILfdFdOoUHZ4DR71dXarpH5jYfQm70obkw+D6sZDBgNeKGwWwuWS
+         r77TkIQROb2C/urS4UxFZUMQr9VlBXVeboFighAE7wmMHthGDr5zeFLfl/bVbcWo1Ak3
+         QxVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=XRmDUhp4HTrIlS6k+9mhT1AI9vqeFpX1fwPqd8M1lVQ=;
+        b=kQjGBSNYu7mqbGyokA85DV2CEcm1xAnOP2CCkgk3XlVOV+KxGAbABYQnCXeHOKTVCc
+         2Z1VF0poyxEh3mqHuQE3cloBZ1DycMffNsFnJ2W7TTaJKERNsJz1kqHecbYskzuPtbvG
+         wNndqxf50aawY4C5tUbHKaLyqwQ3iz0mT9Ji3hLSG/3IK7djDFb6WS2mPEWyNFBSgklf
+         oLAUgz+aNrfjKae87qztbiOW4aQXnkTvi5rmFZjjN1WlsqUHggn5MiRr3qrKOCMet8w8
+         SQ6jXlYb/XjJ3mhwkzEJ1YPGQt2uEcTVwgR4AiF2B+a68LQSPV9O9LRkPH9G+ahJFtE6
+         fv7w==
+X-Gm-Message-State: AOAM531eMuUlsswrWrzm6mRuZojAaAGBc9of9iNUFtAs1q7zmxax7Jh5
+        J8sllkpdzKMUSIDNSvVWGO7q
+X-Google-Smtp-Source: ABdhPJx1Bow11o4JqeSq/0Q280CLsTpk/Vhvv3F7osrYWTURym7B+2HRitS16bOAq/3z1ecCeozRCA==
+X-Received: by 2002:a65:5288:: with SMTP id y8mr2762460pgp.105.1615382977996;
+        Wed, 10 Mar 2021 05:29:37 -0800 (PST)
+Received: from thinkpad ([103.66.79.59])
+        by smtp.gmail.com with ESMTPSA id y19sm17947761pfo.0.2021.03.10.05.29.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Mar 2021 05:29:37 -0800 (PST)
+Date:   Wed, 10 Mar 2021 18:59:33 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3 4/6] mhi: pci_generic: No-Op for device_wake operations
+Message-ID: <20210310132933.GA30275@thinkpad>
+References: <1614971808-22156-1-git-send-email-loic.poulain@linaro.org>
+ <1614971808-22156-4-git-send-email-loic.poulain@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 10 Mar 2021 18:45:51 +0530
-From:   sbhanu@codeaurora.org
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     adrian.hunter@intel.com, ulf.hansson@linaro.org,
-        robh+dt@kernel.org, sartgarg@codeaurora.org,
-        asutoshd@codeaurora.org, stummala@codeaurora.org,
-        vbadigan@codeaurora.org, rampraka@codeaurora.org,
-        sayalil@codeaurora.org, rnayak@codeaurora.org,
-        saiprakash.ranjan@codeaurora.org, sibis@codeaurora.org,
-        cang@codeaurora.org, pragalla@codeaurora.org,
-        nitirawa@codeaurora.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org
-Subject: Re: [PATCH V1] arm64: dts: qcom: sc7280: Add nodes for eMMC and SD
- card
-In-Reply-To: <9346cc73-297a-6bd8-1d0f-c09027ebcced@somainline.org>
-References: <1615317483-23780-1-git-send-email-sbhanu@codeaurora.org>
- <9346cc73-297a-6bd8-1d0f-c09027ebcced@somainline.org>
-Message-ID: <3590f707e807beedfa074477470b5b5c@codeaurora.org>
-X-Sender: sbhanu@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1614971808-22156-4-git-send-email-loic.poulain@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-03-10 02:20, Konrad Dybcio wrote:
-> Hi!
+On Fri, Mar 05, 2021 at 08:16:46PM +0100, Loic Poulain wrote:
+> The wake_db register presence is highly speculative and can fuze MHI
+> devices. Indeed, currently the wake_db register address is defined at
+> entry 127 of the 'Channel doorbell array', thus writing to this address
+> is equivalent to ringing the doorbell for channel 127, causing trouble
+> with some devics (e.g. SDX24 based modems) that get an unexpected
+> channel 127 doorbell interrupt.
 > 
+> This change fixes that issue by setting wake get/put as no-op for
+> pci_generic devices. The wake device sideband mechanism seems really
+> specific to each device, and is AFAIK not defined by the MHI spec.
 > 
->> +
->> +&sdhc_1 {
->> +	status = "okay";
->> +
->> +	pinctrl-names = "default", "sleep";
->> +	pinctrl-0 = <&sdc1_on>;
->> +	pinctrl-1 = <&sdc1_off>;
->> +
->> +	vmmc-supply = <&vreg_l7b_2p9>;
->> +	vqmmc-supply = <&vreg_l19b_1p8>;
->> +
+> It also removes zeroing initialization of wake_db register during MMIO
+> initialization, the register being set via wake_get/put accessors few
+> cycles later during M0 transition.
 > 
-> Redundant newline, please remove
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+Thanks,
+Mani
+
+> ---
+>  v2: reword commit message
+>  v3: no change
 > 
+>  drivers/bus/mhi/core/init.c   |  2 --
+>  drivers/bus/mhi/pci_generic.c | 18 ++++++++++++++++++
+>  2 files changed, 18 insertions(+), 2 deletions(-)
 > 
->> +
->> +			mmc-ddr-1_8v;
->> +			mmc-hs200-1_8v;
->> +			mmc-hs400-1_8v;
->> +			mmc-hs400-enhanced-strobe;
->> +
->> +			status = "disabled";
->> +
+> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+> index 2159dbc..32eb90f 100644
+> --- a/drivers/bus/mhi/core/init.c
+> +++ b/drivers/bus/mhi/core/init.c
+> @@ -510,8 +510,6 @@ int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
+>  
+>  	/* Setup wake db */
+>  	mhi_cntrl->wake_db = base + val + (8 * MHI_DEV_WAKE_DB);
+> -	mhi_write_reg(mhi_cntrl, mhi_cntrl->wake_db, 4, 0);
+> -	mhi_write_reg(mhi_cntrl, mhi_cntrl->wake_db, 0, 0);
+
+I'm okay with the change since this is not documented anywhere. And if this is
+required for any cases, can be done in the controller driver later.
+
+>  	mhi_cntrl->wake_set = false;
+>  
+>  	/* Setup channel db address for each channel in tre_ring */
+> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+> index c274e65..4685a83 100644
+> --- a/drivers/bus/mhi/pci_generic.c
+> +++ b/drivers/bus/mhi/pci_generic.c
+> @@ -312,6 +312,21 @@ static void mhi_pci_status_cb(struct mhi_controller *mhi_cntrl,
+>  	}
+>  }
+>  
+> +static void mhi_pci_wake_get_nop(struct mhi_controller *mhi_cntrl, bool force)
+> +{
+> +	/* no-op */
+> +}
+> +
+> +static void mhi_pci_wake_put_nop(struct mhi_controller *mhi_cntrl, bool override)
+> +{
+> +	/* no-op */
+> +}
+> +
+> +static void mhi_pci_wake_toggle_nop(struct mhi_controller *mhi_cntrl)
+> +{
+> +	/* no-op */
+> +}
+> +
+>  static bool mhi_pci_is_alive(struct mhi_controller *mhi_cntrl)
+>  {
+>  	struct pci_dev *pdev = to_pci_dev(mhi_cntrl->cntrl_dev);
+> @@ -515,6 +530,9 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+>  	mhi_cntrl->status_cb = mhi_pci_status_cb;
+>  	mhi_cntrl->runtime_get = mhi_pci_runtime_get;
+>  	mhi_cntrl->runtime_put = mhi_pci_runtime_put;
+> +	mhi_cntrl->wake_get = mhi_pci_wake_get_nop;
+> +	mhi_cntrl->wake_put = mhi_pci_wake_put_nop;
+> +	mhi_cntrl->wake_toggle = mhi_pci_wake_toggle_nop;
+>  
+>  	err = mhi_pci_claim(mhi_cntrl, info->bar_num, DMA_BIT_MASK(info->dma_data_width));
+>  	if (err)
+> -- 
+> 2.7.4
 > 
-> Redundant newline, please remove
-> 
-sure
-> 
->> +		};
->> +
->> +		sdhc_2: sdhci@8804000 {
->> +			compatible = "qcom,sdhci-msm-v5";
->> +			reg = <0 0x08804000 0 0x1000>;
->> +
->> +			iommus = <&apps_smmu 0x100 0x0>;
->> +			interrupts = <GIC_SPI 207 IRQ_TYPE_LEVEL_HIGH>,
->> +					<GIC_SPI 223 IRQ_TYPE_LEVEL_HIGH>;
->> +			interrupt-names = "hc_irq", "pwr_irq";
->> +
->> +			clocks = <&gcc GCC_SDCC2_APPS_CLK>,
->> +					<&gcc GCC_SDCC2_AHB_CLK>,
->> +					<&rpmhcc RPMH_CXO_CLK>;
->> +			clock-names = "core", "iface", "xo";
->> +
->> +			bus-width = <4>;
->> +
->> +			no-mmc;
->> +			no-sdio;
->> +
->> +			max-frequency = <202000000>;
->> +
->> +			qcom,dll-config = <0x0007642c>;
->> +
->> +			status = "disabled";
->> +
-> 
-> Redundant newline, please remove
-> 
-sure
-> 
-> Konrad
