@@ -2,262 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 794C33349D9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 22:32:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1CD54334AE3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 23:05:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231231AbhCJVb2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Mar 2021 16:31:28 -0500
-Received: from m42-2.mailgun.net ([69.72.42.2]:33847 "EHLO m42-2.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229574AbhCJVbM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Mar 2021 16:31:12 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1615411872; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=Ck7/GXkHmms5j9pb0FrNRlyu0DwdCkV4LmdoKje7Jk0=; b=SHys6u2GvJMVstBPesRiar6ajMXpGKxe898/gPZNvNjSLAjTaL9GcmbgbZN3eHcVYiMXzF/o
- 50SjYpgS91H4HpNQr2C9Rws7MMCcEEphe/ktL9aiulM7vtL7+GfTeZI+jU+6pYu8Nh9a14Sv
- y4InVJsunb8vER9CHslSWXM0DL0=
-X-Mailgun-Sending-Ip: 69.72.42.2
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 60493a9baf1d9a68ad4d656c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 10 Mar 2021 21:31:07
- GMT
-Sender: jhugo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9CF8CC433C6; Wed, 10 Mar 2021 21:31:06 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from jhugo-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D0218C433CA;
-        Wed, 10 Mar 2021 21:31:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D0218C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
-Cc:     bbhatt@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Jeffrey Hugo <jhugo@codeaurora.org>
-Subject: [PATCH v3] bus: mhi: core: Sanity check values from remote device before use
-Date:   Wed, 10 Mar 2021 14:30:55 -0700
-Message-Id: <1615411855-15053-1-git-send-email-jhugo@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S234197AbhCJWDQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Mar 2021 17:03:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45258 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233941AbhCJWDC (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Mar 2021 17:03:02 -0500
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11310C061756
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 14:03:02 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id p7so30506445eju.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 14:03:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=0UmOVRUp+YQT14lDPu2mgV7HIsQABmqO8T8WMEvGZZY=;
+        b=SXJOgBvt/aCNAeZt7wXAmbWTaa2AJtAMY3ye+OaAdX5TfFCopTnYDKDp2UbC7efBh0
+         sP535yQV1R7kGaGpISdxiIhxrNRwk1KszKRXwBJxL1s9R0kKlsUGwFoV8aGtoVN0gNJL
+         D69TTMRwJ7r1yVy4OGtcUpKOdIH7q+DGDLyNZK926BNb1rd4ZP+BujY1wg6mJemhS4iN
+         FXcqMJhJh130p3nAg95pW1EJ1CZkkuQ1hj54k3hIazFcoLipHjfPogNY0vMcw+GfJaZa
+         y/B4kGx6ABWe3AqzS3gxtf6tJFdF7bXtzJWBaMMjqx6RxqW8Q5j4mWrqcqPFTNdDX19u
+         kpcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=0UmOVRUp+YQT14lDPu2mgV7HIsQABmqO8T8WMEvGZZY=;
+        b=DIx6eLXgW/4nhCBUEMCqsz+OgqsRsx3FjeA1OKMeUf8TwrjoztopU9YSO5uxyFZ8vP
+         JQu+yPtp+kiasJr1HHPedYHICj+JPy7bQBI5p3cplShYEPhwekdszsIdoU7DRrXLrx81
+         /DD0DK37ZCmna8436rE2s8C/LQNnZ3P0NtfTMpEU4/xjV2uhHcMMMZ1L35ug3d+a9h3U
+         ckNHoKRoltml6K/BYjBTl3EEBPoqbJjx0yagMuJepu7y1Wrth38Lkg5HsbpxwAqRVICy
+         jcMW0QLTiT5RXA5veLBmzaYzWrLc+f/AUmNKkkldrf9bi8yoHsDsNSQ9J8w3DDOhPgzM
+         L5IA==
+X-Gm-Message-State: AOAM5305K/jmLwbNwEO25QmC4Gu5Wm2TithX3wQ2wFJ+HCD3B1KwexUk
+        dt0BMWdimOkcF9+zlhVBziD7gA==
+X-Google-Smtp-Source: ABdhPJzbAC+cw2k8JRAMHI9yEJQRmoSQ9KxlZCuo5BCOtUFCEKuvNE/9iO/wST4RoqIxdOxh0rlSHQ==
+X-Received: by 2002:a17:906:8043:: with SMTP id x3mr32660ejw.149.1615413780157;
+        Wed, 10 Mar 2021 14:03:00 -0800 (PST)
+Received: from [192.168.0.9] (hst-221-17.medicom.bg. [84.238.221.17])
+        by smtp.googlemail.com with ESMTPSA id z17sm358948eju.27.2021.03.10.14.02.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 Mar 2021 14:02:59 -0800 (PST)
+Subject: Re: [PATCH 04/25] media: venus: core,pm: Vote for min clk freq during
+ venus boot
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        agross@kernel.org, bjorn.andersson@linaro.org, mchehab@kernel.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     dikshita@codeaurora.org, jonathan@marek.ca, vgarodia@codeaurora.org
+References: <20210222160300.1811121-1-bryan.odonoghue@linaro.org>
+ <20210222160300.1811121-5-bryan.odonoghue@linaro.org>
+ <21b09fd4-0b4c-3acb-ece2-f1a710bbd3fd@linaro.org>
+ <94133e43-d250-7359-6cfe-c4956f5185dc@linaro.org>
+ <c0ef2f92-ef80-adc4-3530-949e0a5b3e4e@linaro.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <eaffe256-14b7-1963-0d4e-29f94232e146@linaro.org>
+Date:   Thu, 11 Mar 2021 00:02:58 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <c0ef2f92-ef80-adc4-3530-949e0a5b3e4e@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When parsing the structures in the shared memory, there are values which
-come from the remote device.  For example, a transfer completion event
-will have a pointer to the tre in the relevant channel's transfer ring.
-As another example, event ring elements may specify a channel in which
-the event occurred, however the specified channel value may not be valid
-as no channel is defined at that index even though the index may be less
-than the maximum allowed index.  Such values should be considered to be
-untrusted, and validated before use.  If we blindly use such values, we
-may access invalid data or crash if the values are corrupted.
 
-If validation fails, drop the relevant event.
 
-Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
----
+On 3/10/21 7:33 PM, Bryan O'Donoghue wrote:
+> On 06/03/2021 15:01, Stanimir Varbanov wrote:
+>>
+>>
+>> On 2/23/21 3:25 PM, Stanimir Varbanov wrote:
+>>>
+>>>
+>>> On 2/22/21 6:02 PM, Bryan O'Donoghue wrote:
+>>>> From: Dikshita Agarwal <dikshita@codeaurora.org>
+>>>>
+>>>> Vote for min clk frequency for core clks during prepare and enable
+>>>> clocks
+>>>> at boot sequence. Without this the controller clock runs at very low
+>>>> value
+>>>> (9.6MHz) which is not sufficient to boot venus.
+>>>>
+>>>> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+>>>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>>> ---
+>>>>   drivers/media/platform/qcom/venus/pm_helpers.c | 14 ++++++++++++++
+>>>>   1 file changed, 14 insertions(+)
+>>>>
+>>>> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c
+>>>> b/drivers/media/platform/qcom/venus/pm_helpers.c
+>>>> index 4f5d42662963..767cb00d4b46 100644
+>>>> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
+>>>> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+>>>> @@ -41,10 +41,24 @@ static int core_clks_get(struct venus_core *core)
+>>>>   static int core_clks_enable(struct venus_core *core)
+>>>>   {
+>>>>       const struct venus_resources *res = core->res;
+>>>> +    const struct freq_tbl *freq_tbl = NULL;
+>>>> +    unsigned int freq_tbl_size = 0;
+>>>> +    unsigned long freq = 0;
+>>>
+>>> no need to initialize to zero.
+>>>
+>>>>       unsigned int i;
+>>>>       int ret;
+>>>>   +    freq_tbl = core->res->freq_tbl;
+>>>> +    freq_tbl_size = core->res->freq_tbl_size;
+>>>
+>>> could you initialize those at the variables declaration?
+>>>
+>>>> +    if (!freq_tbl)
+>>>> +        return -EINVAL;
+>>>> +
+>>>> +    freq = freq_tbl[freq_tbl_size - 1].freq;
+>>>> +
+>>>>       for (i = 0; i < res->clks_num; i++) {
+>>>> +        ret = clk_set_rate(core->clks[i], freq);
+>>>
+>>> I'm not sure that we have to set the rate for all core->clks[i] ?
+>>
+>> Confirmed. This produces regressions on db410c (I haven't tested on
+>> other platforms yet).
+>>
+>>>
+>>>> +        if (ret)
+>>>> +            goto err;
+>>>> +
+>>>>           ret = clk_prepare_enable(core->clks[i]);
+>>>>           if (ret)
+>>>>               goto err;
+>>>>
+>>>
+>>
+> 
+> OK, I have this now on db410c
+> 
+> I made a tree out of
+> 
+> svarbanov-linux-tv/venus-for-next-v5.13
+> +
+> svarbanov-linux-tv/venus-msm8916-fixes - minor fix here integrating on
+> top of 5.13
+> 
+> and then put the sm8250 changes on top of that
+> 
+> https://git.linaro.org/people/bryan.odonoghue/kernel.git/log/?h=tracking-qcomlt-sm8250-venus-integrated-sm8250
+> 
+> 
+> So confirm db410c works up to tag
+> tracking-qcomlt-sm8250-venus-integrated-sm8250-02+svarbanov-linux-tv/venus-msm8916-fixes
+> 
+> 
+> I'll work on fixing your feedback on that putative branch.
 
-v3: Add the channel validation example to commit text
-v2: Fix subject
+Thanks!
 
- drivers/bus/mhi/core/main.c | 81 +++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 74 insertions(+), 7 deletions(-)
+I fixed the regression on db410c by set the rate for the core->clks[0]
+only, e.g. the clock at which the remote processor is running.
 
-diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-index a7811fb..6c0e05d 100644
---- a/drivers/bus/mhi/core/main.c
-+++ b/drivers/bus/mhi/core/main.c
-@@ -242,6 +242,11 @@ static void mhi_del_ring_element(struct mhi_controller *mhi_cntrl,
- 	smp_wmb();
- }
- 
-+static bool is_valid_ring_ptr(struct mhi_ring *ring, dma_addr_t addr)
-+{
-+	return addr >= ring->iommu_base && addr < ring->iommu_base + ring->len;
-+}
-+
- int mhi_destroy_device(struct device *dev, void *data)
- {
- 	struct mhi_chan *ul_chan, *dl_chan;
-@@ -404,7 +409,16 @@ irqreturn_t mhi_irq_handler(int irq_number, void *dev)
- 	struct mhi_event_ctxt *er_ctxt =
- 		&mhi_cntrl->mhi_ctxt->er_ctxt[mhi_event->er_index];
- 	struct mhi_ring *ev_ring = &mhi_event->ring;
--	void *dev_rp = mhi_to_virtual(ev_ring, er_ctxt->rp);
-+	dma_addr_t ptr = er_ctxt->rp;
-+	void *dev_rp;
-+
-+	if (!is_valid_ring_ptr(ev_ring, ptr)) {
-+		dev_err(&mhi_cntrl->mhi_dev->dev,
-+			"Event ring rp points outside of the event ring\n");
-+		return IRQ_HANDLED;
-+	}
-+
-+	dev_rp = mhi_to_virtual(ev_ring, ptr);
- 
- 	/* Only proceed if event ring has pending events */
- 	if (ev_ring->rp == dev_rp)
-@@ -560,6 +574,11 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
- 		struct mhi_buf_info *buf_info;
- 		u16 xfer_len;
- 
-+		if (!is_valid_ring_ptr(tre_ring, ptr)) {
-+			dev_err(&mhi_cntrl->mhi_dev->dev,
-+				"Event element points outside of the tre ring\n");
-+			break;
-+		}
- 		/* Get the TRB this event points to */
- 		ev_tre = mhi_to_virtual(tre_ring, ptr);
- 
-@@ -719,6 +738,12 @@ static void mhi_process_cmd_completion(struct mhi_controller *mhi_cntrl,
- 	struct mhi_chan *mhi_chan;
- 	u32 chan;
- 
-+	if (!is_valid_ring_ptr(mhi_ring, ptr)) {
-+		dev_err(&mhi_cntrl->mhi_dev->dev,
-+			"Event element points outside of the cmd ring\n");
-+		return;
-+	}
-+
- 	cmd_pkt = mhi_to_virtual(mhi_ring, ptr);
- 
- 	chan = MHI_TRE_GET_CMD_CHID(cmd_pkt);
-@@ -743,6 +768,7 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
- 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
- 	u32 chan;
- 	int count = 0;
-+	dma_addr_t ptr = er_ctxt->rp;
- 
- 	/*
- 	 * This is a quick check to avoid unnecessary event processing
-@@ -752,7 +778,13 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
- 	if (unlikely(MHI_EVENT_ACCESS_INVALID(mhi_cntrl->pm_state)))
- 		return -EIO;
- 
--	dev_rp = mhi_to_virtual(ev_ring, er_ctxt->rp);
-+	if (!is_valid_ring_ptr(ev_ring, ptr)) {
-+		dev_err(&mhi_cntrl->mhi_dev->dev,
-+			"Event ring rp points outside of the event ring\n");
-+		return -EIO;
-+	}
-+
-+	dev_rp = mhi_to_virtual(ev_ring, ptr);
- 	local_rp = ev_ring->rp;
- 
- 	while (dev_rp != local_rp) {
-@@ -858,6 +890,8 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
- 			 */
- 			if (chan < mhi_cntrl->max_chan) {
- 				mhi_chan = &mhi_cntrl->mhi_chan[chan];
-+				if (!mhi_chan->configured)
-+					break;
- 				parse_xfer_event(mhi_cntrl, local_rp, mhi_chan);
- 				event_quota--;
- 			}
-@@ -869,7 +903,15 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
- 
- 		mhi_recycle_ev_ring_element(mhi_cntrl, ev_ring);
- 		local_rp = ev_ring->rp;
--		dev_rp = mhi_to_virtual(ev_ring, er_ctxt->rp);
-+
-+		ptr = er_ctxt->rp;
-+		if (!is_valid_ring_ptr(ev_ring, ptr)) {
-+			dev_err(&mhi_cntrl->mhi_dev->dev,
-+				"Event ring rp points outside of the event ring\n");
-+			return -EIO;
-+		}
-+
-+		dev_rp = mhi_to_virtual(ev_ring, ptr);
- 		count++;
- 	}
- 
-@@ -892,11 +934,18 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
- 	int count = 0;
- 	u32 chan;
- 	struct mhi_chan *mhi_chan;
-+	dma_addr_t ptr = er_ctxt->rp;
- 
- 	if (unlikely(MHI_EVENT_ACCESS_INVALID(mhi_cntrl->pm_state)))
- 		return -EIO;
- 
--	dev_rp = mhi_to_virtual(ev_ring, er_ctxt->rp);
-+	if (!is_valid_ring_ptr(ev_ring, ptr)) {
-+		dev_err(&mhi_cntrl->mhi_dev->dev,
-+			"Event ring rp points outside of the event ring\n");
-+		return -EIO;
-+	}
-+
-+	dev_rp = mhi_to_virtual(ev_ring, ptr);
- 	local_rp = ev_ring->rp;
- 
- 	while (dev_rp != local_rp && event_quota > 0) {
-@@ -910,7 +959,8 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
- 		 * Only process the event ring elements whose channel
- 		 * ID is within the maximum supported range.
- 		 */
--		if (chan < mhi_cntrl->max_chan) {
-+		if (chan < mhi_cntrl->max_chan &&
-+		    mhi_cntrl->mhi_chan[chan].configured) {
- 			mhi_chan = &mhi_cntrl->mhi_chan[chan];
- 
- 			if (likely(type == MHI_PKT_TYPE_TX_EVENT)) {
-@@ -924,7 +974,15 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
- 
- 		mhi_recycle_ev_ring_element(mhi_cntrl, ev_ring);
- 		local_rp = ev_ring->rp;
--		dev_rp = mhi_to_virtual(ev_ring, er_ctxt->rp);
-+
-+		ptr = er_ctxt->rp;
-+		if (!is_valid_ring_ptr(ev_ring, ptr)) {
-+			dev_err(&mhi_cntrl->mhi_dev->dev,
-+				"Event ring rp points outside of the event ring\n");
-+			return -EIO;
-+		}
-+
-+		dev_rp = mhi_to_virtual(ev_ring, ptr);
- 		count++;
- 	}
- 	read_lock_bh(&mhi_cntrl->pm_lock);
-@@ -1385,6 +1443,7 @@ static void mhi_mark_stale_events(struct mhi_controller *mhi_cntrl,
- 	struct mhi_ring *ev_ring;
- 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
- 	unsigned long flags;
-+	dma_addr_t ptr;
- 
- 	dev_dbg(dev, "Marking all events for chan: %d as stale\n", chan);
- 
-@@ -1392,7 +1451,15 @@ static void mhi_mark_stale_events(struct mhi_controller *mhi_cntrl,
- 
- 	/* mark all stale events related to channel as STALE event */
- 	spin_lock_irqsave(&mhi_event->lock, flags);
--	dev_rp = mhi_to_virtual(ev_ring, er_ctxt->rp);
-+
-+	ptr = er_ctxt->rp;
-+	if (!is_valid_ring_ptr(ev_ring, ptr)) {
-+		dev_err(&mhi_cntrl->mhi_dev->dev,
-+			"Event ring rp points outside of the event ring\n");
-+		dev_rp = ev_ring->rp;
-+	} else {
-+		dev_rp = mhi_to_virtual(ev_ring, ptr);
-+	}
- 
- 	local_rp = ev_ring->rp;
- 	while (dev_rp != local_rp) {
+> 
+> ---
+> bod
+
 -- 
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
-
+regards,
+Stan
