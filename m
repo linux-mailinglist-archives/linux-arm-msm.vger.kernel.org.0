@@ -2,83 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 21622333BA1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 12:42:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 81324333C49
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 13:11:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231858AbhCJLmT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Mar 2021 06:42:19 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:63318 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230214AbhCJLmI (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Mar 2021 06:42:08 -0500
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 10 Mar 2021 03:42:07 -0800
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 10 Mar 2021 03:42:05 -0800
-X-QCInternal: smtphost
-Received: from gubbaven-linux.qualcomm.com ([10.206.64.32])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 10 Mar 2021 17:11:39 +0530
-Received: by gubbaven-linux.qualcomm.com (Postfix, from userid 2365015)
-        id 7098820F0F; Wed, 10 Mar 2021 17:11:38 +0530 (IST)
-From:   Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        rjliao@codeaurora.org, hbandi@codeaurora.org,
-        abhishekpandit@chromium.org,
-        Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-Subject: [RFC PATCH v1] Bluetooth: hci_qca: Add device_may_wakeup support
-Date:   Wed, 10 Mar 2021 17:11:36 +0530
-Message-Id: <1615376496-13577-1-git-send-email-gubbaven@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S233010AbhCJMKK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Mar 2021 07:10:10 -0500
+Received: from mga11.intel.com ([192.55.52.93]:34965 "EHLO mga11.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232758AbhCJMJz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Mar 2021 07:09:55 -0500
+IronPort-SDR: 2CEV/w878rDxhUzRWpJGKOzmVf/F0oeXSD4a6zSmY7V8AlxfvQcceYJ+ur0W5BSOhztXkHQ/j+
+ 4UGIcW6S9mjg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9917"; a="185096046"
+X-IronPort-AV: E=Sophos;i="5.81,237,1610438400"; 
+   d="scan'208";a="185096046"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Mar 2021 04:09:55 -0800
+IronPort-SDR: LO774NGduKoLLyq6YR0XAm1dDQySwDGAzMkWAOyMEGPE3XBT3StFoVBdHJm2Rl4y22AWFVqHjJ
+ Hr8Vtx4Cp1rA==
+X-IronPort-AV: E=Sophos;i="5.81,237,1610438400"; 
+   d="scan'208";a="509644591"
+Received: from smile.fi.intel.com (HELO smile) ([10.237.68.40])
+  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Mar 2021 04:09:53 -0800
+Received: from andy by smile with local (Exim 4.94)
+        (envelope-from <andriy.shevchenko@intel.com>)
+        id 1lJxex-00BJkG-BE; Wed, 10 Mar 2021 14:09:51 +0200
+Date:   Wed, 10 Mar 2021 14:09:51 +0200
+From:   Andy Shevchenko <andriy.shevchenko@intel.com>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v4] pinctrl: qcom: sc8180x: add ACPI probe support
+Message-ID: <YEi3D2fCBh/azOnb@smile.fi.intel.com>
+References: <20210310111210.1232-1-shawn.guo@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210310111210.1232-1-shawn.guo@linaro.org>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Added device_may_wakeup() support.
+On Wed, Mar 10, 2021 at 07:12:10PM +0800, Shawn Guo wrote:
+> It adds ACPI probe support for pinctrl-sc8180x driver.  We have one
+> problem with ACPI table, i.e. GIO0 (TLMM) block has one single memory
+> resource to cover 3 tiles defined by SC8180X.  To follow the hardware
+> layout of 3 tiles which is already supported DT probe, it adds one
+> function to replace the original single memory resource with 3 named
+> ones for tiles.  With that, We can map memory for ACPI in the same way
+> as DT.
 
-Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
----
- drivers/bluetooth/hci_qca.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+You are reinventing a wheel, i.e. MFD framework. Can you simple utilize
+devm_mfd_add_devices()?
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index de36af6..73af901 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1571,6 +1571,20 @@ static void qca_cmd_timeout(struct hci_dev *hdev)
- 	mutex_unlock(&qca->hci_memdump_lock);
- }
- 
-+static bool qca_prevent_wake(struct hci_dev *hdev)
-+{
-+	struct hci_uart *hu = hci_get_drvdata(hdev);
-+	bool wakeup;
-+
-+	/* UART driver handles the interrupt from BT SoC.So we need to use
-+	 * device handle of UART driver to get the status of device may wakeup.
-+	 */
-+	wakeup = device_may_wakeup(hu->serdev->ctrl->dev.parent);
-+	bt_dev_dbg(hu->hdev, "wakeup status : %d", wakeup);
-+
-+	return !wakeup;
-+}
-+
- static int qca_wcn3990_init(struct hci_uart *hu)
- {
- 	struct qca_serdev *qcadev;
-@@ -1721,6 +1735,7 @@ static int qca_setup(struct hci_uart *hu)
- 		qca_debugfs_init(hdev);
- 		hu->hdev->hw_error = qca_hw_error;
- 		hu->hdev->cmd_timeout = qca_cmd_timeout;
-+		hu->hdev->prevent_wake = qca_prevent_wake;
- 	} else if (ret == -ENOENT) {
- 		/* No patch/nvm-config found, run with original fw/config */
- 		set_bit(QCA_ROM_FW, &qca->flags);
+Basically you may write an new pure MFD driver (drivers/mfd) that will
+instantiate properly the pin control driver.
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
+With Best Regards,
+Andy Shevchenko
+
 
