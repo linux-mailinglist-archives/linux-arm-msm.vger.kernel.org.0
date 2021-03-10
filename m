@@ -2,136 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 368B4334707
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 19:45:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EB82C334746
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Mar 2021 19:58:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232934AbhCJSoY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Mar 2021 13:44:24 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:38090 "EHLO z11.mailgun.us"
+        id S232828AbhCJS5u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Mar 2021 13:57:50 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:31495 "EHLO z11.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233182AbhCJSoW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Mar 2021 13:44:22 -0500
+        id S229602AbhCJS5X (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Mar 2021 13:57:23 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1615401862; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=F2JTvsNlkIMMJh2BTm0uaQtaxygT/jOeBnJgSyPDleU=; b=TBciUygVvJpcgAkjWa+2OBuqXs4XGj86S43np4Xf4BXTgVRFuPo25gFL2xWBev1fCaumFNHE
- 6o4rXCSPjq1cePAbH1Ty5+z123x5eOoj0bsB/SGzfkVL+mc2nnbXIYQ9raSfyiV9ua97lh5l
- hfAgPEw81+4rQUF9ZlCq/0F0UMU=
+ s=smtp; t=1615402643; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=17+EoLjmYv9h04ms2UQiOoHgGzuvEfwEX3JtQqJTGro=; b=mMUnSsU82VEy/YYpLLPCqGB7uA5hPzZ6+A/ekckWAafxk2/cwVVLc2yKiO4WuuMyoZMP8rXZ
+ EVvtshD7T2VGwHhFpuG7QbAGySsPpUzSpTkfzF58ISVCciE+5A786QZISz3h9TxgHPQyAiQz
+ PAlcnuIiD2c/DKOwx64Hlr13oWU=
 X-Mailgun-Sending-Ip: 104.130.96.11
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 60491378fa6ebd85e8008ebf (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 10 Mar 2021 18:44:08
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 60491691bb6300df75775107 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 10 Mar 2021 18:57:21
  GMT
-Sender: tdas=codeaurora.org@mg.codeaurora.org
+Sender: jhugo=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8BCA8C433CA; Wed, 10 Mar 2021 18:44:08 +0000 (UTC)
+        id 67C4AC433ED; Wed, 10 Mar 2021 18:57:21 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from tdas-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: tdas)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E526BC433C6;
-        Wed, 10 Mar 2021 18:44:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E526BC433C6
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4C96FC433C6;
+        Wed, 10 Mar 2021 18:57:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4C96FC433C6
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=tdas@codeaurora.org
-From:   Taniya Das <tdas@codeaurora.org>
-To:     Stephen Boyd <sboyd@kernel.org>,
-        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Taniya Das <tdas@codeaurora.org>
-Subject: [PATCH v1] clk: qcom: clk-rcg2: Add support for duty-cycle for RCG
-Date:   Thu, 11 Mar 2021 00:13:48 +0530
-Message-Id: <1615401828-6905-1-git-send-email-tdas@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH v3 1/3] bus: mhi: core: Introduce internal register poll
+ helper function
+To:     Bhaumik Bhatt <bbhatt@codeaurora.org>,
+        manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        linux-kernel@vger.kernel.org, loic.poulain@linaro.org,
+        carl.yin@quectel.com, naveen.kumar@quectel.com
+References: <1614138270-2374-1-git-send-email-bbhatt@codeaurora.org>
+ <1614138270-2374-2-git-send-email-bbhatt@codeaurora.org>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <b53a5cf8-aa25-0e89-b83f-57ec32fa7075@codeaurora.org>
+Date:   Wed, 10 Mar 2021 11:57:19 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
+MIME-Version: 1.0
+In-Reply-To: <1614138270-2374-2-git-send-email-bbhatt@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The root clock generators with MND divider has the capability to support
-change in duty-cycle by updating the 'D'. Add the clock ops which would
-check all the boundary conditions and enable setting the desired duty-cycle
-as per the consumer.
+On 2/23/2021 8:44 PM, Bhaumik Bhatt wrote:
+> Introduce helper function to allow MHI core driver to poll for
+> a value in a register field. This helps reach a common path to
+> read and poll register values along with a retry time interval.
+> 
+> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> ---
+>   drivers/bus/mhi/core/internal.h |  3 +++
+>   drivers/bus/mhi/core/main.c     | 23 +++++++++++++++++++++++
+>   2 files changed, 26 insertions(+)
+> 
+> diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
+> index 6f80ec3..005286b 100644
+> --- a/drivers/bus/mhi/core/internal.h
+> +++ b/drivers/bus/mhi/core/internal.h
+> @@ -643,6 +643,9 @@ int __must_check mhi_read_reg(struct mhi_controller *mhi_cntrl,
+>   int __must_check mhi_read_reg_field(struct mhi_controller *mhi_cntrl,
+>   				    void __iomem *base, u32 offset, u32 mask,
+>   				    u32 shift, u32 *out);
+> +int __must_check mhi_poll_reg_field(struct mhi_controller *mhi_cntrl,
+> +				    void __iomem *base, u32 offset, u32 mask,
+> +				    u32 shift, u32 val, u32 delayus);
+>   void mhi_write_reg(struct mhi_controller *mhi_cntrl, void __iomem *base,
+>   		   u32 offset, u32 val);
+>   void mhi_write_reg_field(struct mhi_controller *mhi_cntrl, void __iomem *base,
+> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> index 4e0131b..249ae26 100644
+> --- a/drivers/bus/mhi/core/main.c
+> +++ b/drivers/bus/mhi/core/main.c
+> @@ -4,6 +4,7 @@
+>    *
+>    */
+>   
+> +#include <linux/delay.h>
+>   #include <linux/device.h>
+>   #include <linux/dma-direction.h>
+>   #include <linux/dma-mapping.h>
+> @@ -37,6 +38,28 @@ int __must_check mhi_read_reg_field(struct mhi_controller *mhi_cntrl,
+>   	return 0;
+>   }
+>   
+> +int __must_check mhi_poll_reg_field(struct mhi_controller *mhi_cntrl,
+> +				    void __iomem *base, u32 offset,
+> +				    u32 mask, u32 shift, u32 val, u32 delayus)
+> +{
+> +	int ret = -ENOENT;
+> +	u32 out, retry = (mhi_cntrl->timeout_ms * 1000) / delayus;
+> +
+> +	while (retry--) {
+> +		ret = mhi_read_reg_field(mhi_cntrl, base, offset, mask, shift,
+> +					 &out);
+> +		if (ret)
+> +			return -EIO;
 
-Signed-off-by: Taniya Das <tdas@codeaurora.org>
----
- drivers/clk/qcom/clk-rcg2.c | 40 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
+I generally dislike recoding return codes.  Do you believe it adds value 
+here?  I'm concerned that if I'm debugging an error, I'll get EIO, which 
+I trace to here, but then I don't know what the actual error from 
+mhi_read_reg_field() was.
 
-diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index 42f13a2..e070f1a 100644
---- a/drivers/clk/qcom/clk-rcg2.c
-+++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -357,6 +357,44 @@ static int clk_rcg2_set_floor_rate_and_parent(struct clk_hw *hw,
- 	return __clk_rcg2_set_rate(hw, rate, FLOOR);
- }
+> +
+> +		if (out == val)
+> +			return 0;
+> +
+> +		udelay(delayus);
+> +	}
+> +
+> +	return ret;
+> +}
+> +
+>   void mhi_write_reg(struct mhi_controller *mhi_cntrl, void __iomem *base,
+>   		   u32 offset, u32 val)
+>   {
+> 
 
-+static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
-+{
-+	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
-+	u32 notn_m_val, n_val, m_val, d_val, not2d_val, mask, duty_per;
-+	int ret;
-+
-+	if (!rcg->mnd_width)
-+		return 0;
-+
-+	mask = BIT(rcg->mnd_width) - 1;
-+
-+	regmap_read(rcg->clkr.regmap, RCG_N_OFFSET(rcg), &notn_m_val);
-+	regmap_read(rcg->clkr.regmap, RCG_M_OFFSET(rcg), &m_val);
-+
-+	n_val = (~(notn_m_val) + m_val) & mask;
-+
-+	/* Calculate 2d value */
-+	d_val = DIV_ROUND_CLOSEST(n_val * duty_per * 2, 100);
-+
-+	 /* Check BIT WIDTHS OF 2d. If D is too big reduce Duty cycle. */
-+	if (d_val > mask)
-+		d_val = mask;
-+
-+	if ((d_val / 2) > (n_val - m_val))
-+		d_val = (n_val - m_val) * 2;
-+	else if ((d_val / 2) < (m_val / 2))
-+		d_val = m_val;
-+
-+	not2d_val = ~d_val & mask;
-+
-+	ret = regmap_update_bits(rcg->clkr.regmap, RCG_D_OFFSET(rcg), mask,
-+				 not2d_val);
-+	if (ret)
-+		return ret;
-+
-+	return update_config(rcg);
-+}
-+
- const struct clk_ops clk_rcg2_ops = {
- 	.is_enabled = clk_rcg2_is_enabled,
- 	.get_parent = clk_rcg2_get_parent,
-@@ -365,6 +403,7 @@ const struct clk_ops clk_rcg2_ops = {
- 	.determine_rate = clk_rcg2_determine_rate,
- 	.set_rate = clk_rcg2_set_rate,
- 	.set_rate_and_parent = clk_rcg2_set_rate_and_parent,
-+	.set_duty_cycle = clk_rcg2_set_duty_cycle,
- };
- EXPORT_SYMBOL_GPL(clk_rcg2_ops);
 
-@@ -376,6 +415,7 @@ const struct clk_ops clk_rcg2_floor_ops = {
- 	.determine_rate = clk_rcg2_determine_floor_rate,
- 	.set_rate = clk_rcg2_set_floor_rate,
- 	.set_rate_and_parent = clk_rcg2_set_floor_rate_and_parent,
-+	.set_duty_cycle = clk_rcg2_set_duty_cycle,
- };
- EXPORT_SYMBOL_GPL(clk_rcg2_floor_ops);
-
---
-Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
-of the Code Aurora Forum, hosted by the  Linux Foundation.
-
+-- 
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
