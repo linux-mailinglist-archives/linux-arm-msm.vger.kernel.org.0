@@ -2,282 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D4A4A336AF4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Mar 2021 05:06:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FA0D336B06
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Mar 2021 05:16:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231176AbhCKEFi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Mar 2021 23:05:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38420 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230215AbhCKEFO (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Mar 2021 23:05:14 -0500
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 734C9C061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 20:04:57 -0800 (PST)
-Received: by mail-oi1-x22c.google.com with SMTP id w195so15097409oif.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 20:04:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=fTotgAEdxhB81eYwLDD368HFheEtwjI4rtuscOqz4yI=;
-        b=JXbD8WucO71RwtOdgmu0sbs177L6N1WM/XSLbHU0BpHUdnSqUYuC4uynLoTugqljeX
-         kcSoVQJElI+zYHEil+9rq9aFAg1QkrBQElrNwsf0/MbP+edJpPaZp9a82AIDbrxmO34f
-         enmHfNPzRLpn2eCkU0/HWRLrDn1hdizJ999J593Ss3fj26kKpP2VlzgN48rjAY7kCVG+
-         tPqGZxNvyaug+Y1GkGh8RVQCjTaOQ2sa6XyYFtp488Lb+W1O/J2JS8+85KNBAucsiFD7
-         djesPFayd0BLaAcSLrhqGwgAVPUCAno50y8OzTA3brFGca9sg6qUHHhDNC3YV5i8Bxfj
-         Qt0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=fTotgAEdxhB81eYwLDD368HFheEtwjI4rtuscOqz4yI=;
-        b=Ps5aQDwc2kydaWOXYue5kiDrnX5C0xFbjn8gVNpu3AxWHEZaljtnofiNCec4+Qkp3p
-         c5g4rvvmdYaKqZwkVhqUiLTl1m1XaS7JHh/SpIvcn2fLDXrSuSZKO/du/ALA242ci7G6
-         MVMinBhianjcx8PqsuYZZccpvFb0wOTfANBr61kYrUM6i+5P9q68I55xd3BN7WBlnRfc
-         6HgaZPqSvboj4vhx3G3YxPsRRowkyR35JFWhlmM4YXnVgZ4T6fBpN1C36ZpQQSwFgkkj
-         8DjQz8e4tapt0HcKxczFCzykgXV+nQkErOysny/tQqBr1ha5JbEjmCnimq2UtuwxLepH
-         hDsQ==
-X-Gm-Message-State: AOAM530hPstBCXqq7khU1Vh/7kbPsfsq0KIUfFBvlz6oeBsY/DCrPt0v
-        wAr7UkBpUBFEsTz3JhBiPmnWPy/D8LzY6A==
-X-Google-Smtp-Source: ABdhPJyAepV+tNLkDbbFZzVANruwZKFbDi1HWIWYK0YurhVdqBnhb5pMUCWGaLKNIENWF5qWPjVbuw==
-X-Received: by 2002:a05:6808:151:: with SMTP id h17mr4037565oie.102.1615435496801;
-        Wed, 10 Mar 2021 20:04:56 -0800 (PST)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id j10sm326805oos.27.2021.03.10.20.04.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Mar 2021 20:04:56 -0800 (PST)
-Date:   Wed, 10 Mar 2021 20:06:02 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Andy Shevchenko <andriy.shevchenko@intel.com>,
-        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v5] pinctrl: qcom: sc8180x: add ACPI probe support
-Message-ID: <YEmXKumE4UJDj2aD@ripper>
-References: <20210311024102.15450-1-shawn.guo@linaro.org>
+        id S231208AbhCKEP7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Mar 2021 23:15:59 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:13710 "EHLO z11.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231216AbhCKEPn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Mar 2021 23:15:43 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1615436143; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=ckToac+nYpU2SRWc/YbILpWrF7hNy2frv5ba7iztXeQ=;
+ b=oJFNQxw3Fuqy8sZC9pNY1l0DCo8wVIHfuFYlRJTLwjKT3ipUK03pdUIEUFRLIMrW1eDco+G/
+ gRnxlup4LVzyPYA4odMGw4MfmMXNu+o8rLVaaLFCfcRgMP18k1NZNw2+TktM5YoBMkF4w0k5
+ tvqwNHyiKWO3sPmCeH2mv9McnI4=
+X-Mailgun-Sending-Ip: 104.130.96.11
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 6049996ea6850484a6700787 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 11 Mar 2021 04:15:42
+ GMT
+Sender: skakit=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 25D48C433C6; Thu, 11 Mar 2021 04:15:42 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: skakit)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 37750C433ED;
+        Thu, 11 Mar 2021 04:15:41 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210311024102.15450-1-shawn.guo@linaro.org>
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Date:   Thu, 11 Mar 2021 09:45:41 +0530
+From:   skakit@codeaurora.org
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, kgunda@codeaurora.org
+Subject: Re: [PATCH 3/7] regulator: qcom-rpmh: Correct the pmic5_hfsmps515
+ buck
+In-Reply-To: <CAA8EJprc24gTfLaffsrKeJ9MOv2m8B1L168VV4uNm=xsjnF5ZQ@mail.gmail.com>
+References: <1614155592-14060-1-git-send-email-skakit@codeaurora.org>
+ <1614155592-14060-4-git-send-email-skakit@codeaurora.org>
+ <50151f4b-298c-f0ee-a88f-7bdd945ad249@linaro.org>
+ <51390b828a5d534e308460098f1b9af0@codeaurora.org>
+ <CAA8EJpqN-jb3b3yHTHwrQQj_h3M-yxAvX7Hz7bNSV3_NBCJEwQ@mail.gmail.com>
+ <da15c05877c345f2aeb51649c075a95c@codeaurora.org>
+ <CAA8EJprc24gTfLaffsrKeJ9MOv2m8B1L168VV4uNm=xsjnF5ZQ@mail.gmail.com>
+Message-ID: <189b9f1cac1b52241c199e541f0d14ba@codeaurora.org>
+X-Sender: skakit@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 10 Mar 18:41 PST 2021, Shawn Guo wrote:
+On 2021-03-02 19:51, Dmitry Baryshkov wrote:
+> Hello,
+> 
+> On Mon, 1 Mar 2021 at 13:37, <skakit@codeaurora.org> wrote:
+>> 
+>> On 2021-02-26 15:57, Dmitry Baryshkov wrote:
+>> > On Fri, 26 Feb 2021 at 09:59, <skakit@codeaurora.org> wrote:
+>> >>
+>> >> Hi,
+>> >>
+>> >> On 2021-02-25 16:39, Dmitry Baryshkov wrote:
+>> >> > On 24/02/2021 11:33, satya priya wrote:
+>> >> >> Correct the REGULATOR_LINEAR_RANGE and n_voltges for
+>> >> >> pmic5_hfsmps515 buck.
+>> >> >>
+>> >> >> Signed-off-by: satya priya <skakit@codeaurora.org>
+>> >> >> ---
+>> >> >>   drivers/regulator/qcom-rpmh-regulator.c | 4 ++--
+>> >> >>   1 file changed, 2 insertions(+), 2 deletions(-)
+>> >> >>
+>> >> >> diff --git a/drivers/regulator/qcom-rpmh-regulator.c
+>> >> >> b/drivers/regulator/qcom-rpmh-regulator.c
+>> >> >> index 79a554f..36542c3 100644
+>> >> >> --- a/drivers/regulator/qcom-rpmh-regulator.c
+>> >> >> +++ b/drivers/regulator/qcom-rpmh-regulator.c
+>> >> >> @@ -726,8 +726,8 @@ static const struct rpmh_vreg_hw_data
+>> >> >> pmic5_ftsmps510 = {
+>> >> >>   static const struct rpmh_vreg_hw_data pmic5_hfsmps515 = {
+>> >> >>      .regulator_type = VRM,
+>> >> >>      .ops = &rpmh_regulator_vrm_ops,
+>> >> >> -    .voltage_range = REGULATOR_LINEAR_RANGE(2800000, 0, 4, 16000),
+>> >> >> -    .n_voltages = 5,
+>> >> >> +    .voltage_range = REGULATOR_LINEAR_RANGE(320000, 0, 235, 16000),
+>> >> >> +    .n_voltages = 236,
+>> >> >
+>> >> > I've checked the docs for pm8009, the chip which also uses hfsmps515
+>> >> > regulators. The pdf clearly states that the 'Output voltage operating
+>> >> > range' is from 2.8 V to 2.85 V.
+>> >> >
+>> >> > So we'd probably need to define different versions of HFS515 regulator
+>> >> > data (like I had to create for pm8009-1).
+>> >> >
+>> >> >
+>> >>
+>> >> The min-max voltages for S1C (PM8350c) regulator are 2190000-2210000uV
+>> >> for sc7280(kodiak), so we had to modify this buck to support this
+>> >> regulator.
+>> >>
+>> >> AFAIK, this struct defines the HW constraints of a regulator, but the
+>> >> platform specific min-max values can be controlled from DT files. So,
+>> >> can't we modify it like above instead of adding a new definition? the
+>> >> new min_uV value (32000) is anyway not exceeding the old value
+>> >> (2800000)
+>> >> right? please correct me if wrong.
+>> >
+>> > As far as I understand for other regulators we put 'output voltage
+>> > limitations' from the docs into the regulator definition and further
+>> > constrain it by the platform device tree. Please correct me if I'm
+>> > wrong.
+>> 
+>> I see that for most of the regulators, these specifications are 
+>> specific
+>> to regulator buck (like HFS515) but not chipset specific, we set the
+>> chipset specific(like pm8009/pm8350c) requirements from DT files.
+>> 
+>> For example:
+>> pmic5_nldo regulator spec mentions LLIMIT= 0.32V and ULIMIT =1.304V 
+>> with
+>> step 8mV
+>> 
+>> .voltage_range = REGULATOR_LINEAR_RANGE(320000, 0, 123, 8000),
+>> max output voltage supported by this regulator is 123*8000 + 320000 =
+>> 1304000mV which is same as mentioned in the regulator spec.
+>> 
+>> > For pm8009 the data from the datasheet matches the regulators defined
+>> > in the source file. Unfortunately I don't have kodiak specs at hand.
+>> 
+>>  From the HFS515 spec I got below info
+>> "HFS510 and lower max output voltage is limited to 2.04V max, and
+>> Yoda(pm8009) requirement was 2.4V for IOT PA and 2.85V for camera
+>> application.  Hence, HFS515 added a new register and corresponding HW
+>> changes to support the higher voltage.  Table 5‑24 shows the new
+>> FB_RANGE bit.  When configured to 0 the buck works as earlier where 
+>> Vout
+>> max = 2.04V in 8mV steps, but when configured to 1 the buck range
+>> doubles and can now support a Vout max = 4.08V in 16mV steps."
+>> 
+>> As per above, the max output voltage supported by HFS515 buck is 4.08V
+>> (which is kodiak pm8350c pmic's requirement).
+>> So, we have modified the buck data to support pm8350c(palani) along 
+>> with
+>> pm8009(yoda).
+> 
+> I'd still prefer to have two different regulator types (as we did for
+> pm8009 P=0 and P=1 variants). However it's probably up to the
+> maintainers to decide.
 
-> It adds ACPI probe support for pinctrl-sc8180x driver.  We have one
-> problem with ACPI table, i.e. GIO0 (TLMM) block has one single memory
-> resource to cover 3 tiles defined by SC8180X.  To follow the hardware
-> layout of 3 tiles which is already supported DT probe, it adds one
-> function to replace the original single memory resource with 3 named
-> ones for tiles.  With that, We can map memory for ACPI in the same way
-> as DT.
-> 
+As Mark already picked this, I think we can leave it this way.
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Regards,
-Bjorn
-
-> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-> ---
-> Changes for v5:
-> - Keep .ngpios number as 190 to match SoC spec.
-> - Add comments for sc8180x_pinctrl_add_tile_resources().
-> - Drop redundant error message.
-> 
-> Changes for v4:
-> - Add sc8180x_pinctrl_add_tile_resources() to massage memory resource
->   for ACPI probe.
-> 
-> Changes for v3:
-> - Remove the use of tiles completely.
-> - Drop unneed include of acpi.h.
-> 
-> Changes for v2:
-> - Pass soc_data pointer via .driver_data.
-> - Drop use of CONFIG_ACPI and ACPI_PTR().
-> - Add comment for sc8180x_acpi_reserved_gpios[] terminator.
-> 
->  drivers/pinctrl/qcom/Kconfig           |   2 +-
->  drivers/pinctrl/qcom/pinctrl-sc8180x.c | 123 ++++++++++++++++++++++++-
->  2 files changed, 122 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
-> index 6853a896c476..9f0218c4f9b3 100644
-> --- a/drivers/pinctrl/qcom/Kconfig
-> +++ b/drivers/pinctrl/qcom/Kconfig
-> @@ -222,7 +222,7 @@ config PINCTRL_SC7280
->  
->  config PINCTRL_SC8180X
->  	tristate "Qualcomm Technologies Inc SC8180x pin controller driver"
-> -	depends on GPIOLIB && OF
-> +	depends on GPIOLIB && (OF || ACPI)
->  	select PINCTRL_MSM
->  	help
->  	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
-> diff --git a/drivers/pinctrl/qcom/pinctrl-sc8180x.c b/drivers/pinctrl/qcom/pinctrl-sc8180x.c
-> index b765bf667574..0d9654b4ab60 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-sc8180x.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-sc8180x.c
-> @@ -23,6 +23,21 @@ enum {
->  	WEST
->  };
->  
-> +/*
-> + * ACPI DSDT has one single memory resource for TLMM.  The offsets below are
-> + * used to locate different tiles for ACPI probe.
-> + */
-> +struct tile_info {
-> +	u32 offset;
-> +	u32 size;
-> +};
-> +
-> +static const struct tile_info sc8180x_tile_info[] = {
-> +	{ 0x00d00000, 0x00300000, },
-> +	{ 0x00500000, 0x00700000, },
-> +	{ 0x00100000, 0x00300000, },
-> +};
-> +
->  #define FUNCTION(fname)					\
->  	[msm_mux_##fname] = {				\
->  		.name = #fname,				\
-> @@ -1557,6 +1572,13 @@ static const struct msm_pingroup sc8180x_groups[] = {
->  	[193] = SDC_QDSD_PINGROUP(sdc2_data, 0x4b2000, 9, 0),
->  };
->  
-> +static const int sc8180x_acpi_reserved_gpios[] = {
-> +	0, 1, 2, 3,
-> +	47, 48, 49, 50,
-> +	126, 127, 128, 129,
-> +	-1 /* terminator */
-> +};
-> +
->  static const struct msm_gpio_wakeirq_map sc8180x_pdc_map[] = {
->  	{ 3, 31 }, { 5, 32 }, { 8, 33 }, { 9, 34 }, { 10, 100 }, { 12, 104 },
->  	{ 24, 37 }, { 26, 38 }, { 27, 41 }, { 28, 42 }, { 30, 39 }, { 36, 43 },
-> @@ -1588,13 +1610,109 @@ static struct msm_pinctrl_soc_data sc8180x_pinctrl = {
->  	.nwakeirq_map = ARRAY_SIZE(sc8180x_pdc_map),
->  };
->  
-> +static const struct msm_pinctrl_soc_data sc8180x_acpi_pinctrl = {
-> +	.tiles = sc8180x_tiles,
-> +	.ntiles = ARRAY_SIZE(sc8180x_tiles),
-> +	.pins = sc8180x_pins,
-> +	.npins = ARRAY_SIZE(sc8180x_pins),
-> +	.groups = sc8180x_groups,
-> +	.ngroups = ARRAY_SIZE(sc8180x_groups),
-> +	.reserved_gpios = sc8180x_acpi_reserved_gpios,
-> +	.ngpios = 190,
-> +};
-> +
-> +/*
-> + * ACPI DSDT has one single memory resource for TLMM, which voilates the
-> + * hardware layout of 3 sepearte tiles.  Let's split the memory resource into
-> + * 3 named ones, so that msm_pinctrl_probe() can map memory for ACPI in the
-> + * same way as for DT probe.
-> + */
-> +static int sc8180x_pinctrl_add_tile_resources(struct platform_device *pdev)
-> +{
-> +	int nres_num = pdev->num_resources + ARRAY_SIZE(sc8180x_tiles) - 1;
-> +	struct resource *mres, *nres, *res;
-> +	int i, ret;
-> +
-> +	/*
-> +	 * DT already has tiles defined properly, so nothing needs to be done
-> +	 * for DT probe.
-> +	 */
-> +	if (pdev->dev.of_node)
-> +		return 0;
-> +
-> +	/* Allocate for new resources */
-> +	nres = devm_kzalloc(&pdev->dev, sizeof(*nres) * nres_num, GFP_KERNEL);
-> +	if (!nres)
-> +		return -ENOMEM;
-> +
-> +	res = nres;
-> +
-> +	for (i = 0; i < pdev->num_resources; i++) {
-> +		struct resource *r = &pdev->resource[i];
-> +
-> +		/* Save memory resource and copy others */
-> +		if (resource_type(r) == IORESOURCE_MEM)
-> +			mres = r;
-> +		else
-> +			*res++ = *r;
-> +	}
-> +
-> +	/* Append tile memory resources */
-> +	for (i = 0; i < ARRAY_SIZE(sc8180x_tiles); i++, res++) {
-> +		const struct tile_info *info = &sc8180x_tile_info[i];
-> +
-> +		res->start = mres->start + info->offset;
-> +		res->end = mres->start + info->offset + info->size - 1;
-> +		res->flags = mres->flags;
-> +		res->name = sc8180x_tiles[i];
-> +
-> +		/* Add new MEM to resource tree */
-> +		insert_resource(mres->parent, res);
-> +	}
-> +
-> +	/* Remove old MEM from resource tree */
-> +	remove_resource(mres);
-> +
-> +	/* Free old resources and install new ones */
-> +	ret = platform_device_add_resources(pdev, nres, nres_num);
-> +	if (ret) {
-> +		dev_err(&pdev->dev, "failed to add new resources: %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
->  static int sc8180x_pinctrl_probe(struct platform_device *pdev)
->  {
-> -	return msm_pinctrl_probe(pdev, &sc8180x_pinctrl);
-> +	const struct msm_pinctrl_soc_data *soc_data;
-> +	int ret;
-> +
-> +	soc_data = device_get_match_data(&pdev->dev);
-> +	if (!soc_data)
-> +		return -EINVAL;
-> +
-> +	ret = sc8180x_pinctrl_add_tile_resources(pdev);
-> +	if (ret)
-> +		return ret;
-> +
-> +	return msm_pinctrl_probe(pdev, soc_data);
->  }
->  
-> +static const struct acpi_device_id sc8180x_pinctrl_acpi_match[] = {
-> +	{
-> +		.id = "QCOM040D",
-> +		.driver_data = (kernel_ulong_t) &sc8180x_acpi_pinctrl,
-> +	},
-> +	{ }
-> +};
-> +MODULE_DEVICE_TABLE(acpi, sc8180x_pinctrl_acpi_match);
-> +
->  static const struct of_device_id sc8180x_pinctrl_of_match[] = {
-> -	{ .compatible = "qcom,sc8180x-tlmm", },
-> +	{
-> +		.compatible = "qcom,sc8180x-tlmm",
-> +		.data = &sc8180x_pinctrl,
-> +	},
->  	{ },
->  };
->  MODULE_DEVICE_TABLE(of, sc8180x_pinctrl_of_match);
-> @@ -1603,6 +1721,7 @@ static struct platform_driver sc8180x_pinctrl_driver = {
->  	.driver = {
->  		.name = "sc8180x-pinctrl",
->  		.of_match_table = sc8180x_pinctrl_of_match,
-> +		.acpi_match_table = sc8180x_pinctrl_acpi_match,
->  	},
->  	.probe = sc8180x_pinctrl_probe,
->  	.remove = msm_pinctrl_remove,
-> -- 
-> 2.17.1
-> 
+Thanks,
+Satya Priya
