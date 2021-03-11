@@ -2,105 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D30923379DB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Mar 2021 17:47:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C06DA3379E2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Mar 2021 17:48:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229735AbhCKQrL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Mar 2021 11:47:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60952 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229684AbhCKQrH (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Mar 2021 11:47:07 -0500
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0C8CC061760
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Mar 2021 08:47:07 -0800 (PST)
-Received: by mail-ot1-x32e.google.com with SMTP id t16so2084906ott.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Mar 2021 08:47:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=mCXfqu3nwx0JUOfdiuLknr7gE8Wy23ffbFfKe/e7b9g=;
-        b=QQl6Wf0j2nI2aaEJCsUu7MgeqqqBT2IK8hSiQUohskpW5UIkSirhY016X6Latn46MQ
-         b00jfpuRNFf4c2nmlrUD7/gDhj8W/5rw1kreN4TAfgWjt5MsiTygqUp8VWP2I7OKy8XL
-         0L1pmSTXQpVuyrPM+nK9DUpD0ZiD1TbTGrPidzbgJZn+lTe62WDbpPS7Vln+fpFjjc2Z
-         3dNnUiL88tjmsHraMQmVyhIZXbne9La9J0z71WGuHSt7Ej7uxOjqmnOSyLL0Qksmow9U
-         Alquskedx35q60qCb3yMKmym5vbI6SUvV0u3/riaS7EvkwwP+I9S5CuFFY1EnD/eOoUS
-         7jfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=mCXfqu3nwx0JUOfdiuLknr7gE8Wy23ffbFfKe/e7b9g=;
-        b=LOKIqfaofqAiiUgZMJU+ew4uQitMgIlMHaAxB8BRGESS2U/6jizMzS8LBnR/mm7jQ5
-         ZzXXtaGyDk+sFIjYMUzNaxspG2IGehBnqhpVYmE9MyFJLOcf2DeyBKOEdBay2eDn62NG
-         8UzJEP5qFG2XwL0jCyVm/QUmVz6IR4k6wjNa+WjGiMlt6XfqBY3Wv1ayiXiLRKK4UMqH
-         0EuwvAij+dyVh3JWMFw9l0ZWo5JDHINPBRSRklD08xUw9NvGCnolK46y412qj0j72SQM
-         gzkK5hVeFYkpFaaJuBnLFVzOeoHrYV0Q7qSMGXr2zJQrqPMynU3PAzJtbFwZz8dIYwVp
-         peXg==
-X-Gm-Message-State: AOAM530/3pHtRQcHTHHh8wwERc617/2SNlp5OjPSMb8Ckn8fo2AQQxX7
-        JiG34Ipny3tQJ7dCKHsnG8DceA==
-X-Google-Smtp-Source: ABdhPJzGZ+Ufp6Gos8RwBHeA5XlXy4tdg+u6QgEbayHvZ7xgtYCZC9AzdeLfZ0DA3QeDVUNONiexHw==
-X-Received: by 2002:a9d:4808:: with SMTP id c8mr5319392otf.181.1615481227083;
-        Thu, 11 Mar 2021 08:47:07 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id g2sm218770otn.32.2021.03.11.08.47.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Mar 2021 08:47:06 -0800 (PST)
-Date:   Thu, 11 Mar 2021 10:47:04 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     agross@kernel.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: Re: [PATCH v3 10/14] dt-bindings: watchdog: Add compatible for
- SC7280 SoC
-Message-ID: <YEpJiADnYXbQB/Ar@builder.lan>
-References: <1615461961-17716-1-git-send-email-rnayak@codeaurora.org>
- <1615461961-17716-11-git-send-email-rnayak@codeaurora.org>
+        id S229520AbhCKQsO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Mar 2021 11:48:14 -0500
+Received: from mail.kernel.org ([198.145.29.99]:59222 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229632AbhCKQsG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 11 Mar 2021 11:48:06 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 9745C64FA7;
+        Thu, 11 Mar 2021 16:48:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1615481286;
+        bh=aH9SzZcaM4wMI4kKn2IyMx+9vy80XXAzpeDOBCPd+VI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=mOMSlG/jZxgBopREPhfXdCMSIfNINhTAnhaScT0pYvozmnjKaApZH5LtNkbRYaui0
+         ARI2bTddoZgr6PwkKH43jVNMSZLoZOdlxHmmZSKzPbGUzhkpJ74hzys47xiCwxql6I
+         4/eD+rDcEfN5yCFOfu5Wd9zKafi9axSnMCm75Y0w=
+Date:   Thu, 11 Mar 2021 17:48:02 +0100
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     kuba@kernel.org, davem@davemloft.net,
+        linux-arm-msm@vger.kernel.org, aleksander@aleksander.es,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+        bjorn.andersson@linaro.org, manivannan.sadhasivam@linaro.org,
+        hemantk@codeaurora.org, jhugo@codeaurora.org
+Subject: Re: [PATCH net-next v4 1/2] net: Add a WWAN subsystem
+Message-ID: <YEpJwsSy52HFB/IY@kroah.com>
+References: <1615480746-28518-1-git-send-email-loic.poulain@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1615461961-17716-11-git-send-email-rnayak@codeaurora.org>
+In-Reply-To: <1615480746-28518-1-git-send-email-loic.poulain@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 11 Mar 05:25 CST 2021, Rajendra Nayak wrote:
-
-> From: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+On Thu, Mar 11, 2021 at 05:39:05PM +0100, Loic Poulain wrote:
+> This change introduces initial support for a WWAN subsystem. Given the
+> complexity and heterogeneity of existing WWAN hardwares and interfaces,
+> there is no strict definition of what a WWAN device is and how it should
+> be represented. It's often a collection of multiple components/devices
+> that perform the global WWAN feature (netdev, tty, chardev, etc).
 > 
-> Add compatible for watchdog timer on SC7280 SoC.
+> One usual way to expose modem controls and configuration is via high
+> level protocols such as the well known AT command protocol, MBIM or
+> QMI. The USB modems started to expose that as character devices, and
+> user daemons such as ModemManager learnt how to deal with that. This
+> initial version adds the concept of WWAN port, which can be registered
+> by any driver to expose one of these protocols. The WWAN core takes
+> care of the generic part, including character device creation and lets
+> the driver implementing access (fops) to the selected protocol.
 > 
-> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> Acked-by: Rob Herring <robh@kernel.org>
+> Since the different components/devices do no necesserarly know about
+> each others, and can be created/removed in different orders, the
+> WWAN core ensures that devices being part of the same hardware are
+> also represented as a unique WWAN device, relying on the provided
+> parent device (e.g. mhi controller, USB device). It's a 'trick' I
+> copied from Johannes's earlier WWAN subsystem proposal.
+> 
+> This initial version is purposely minimalist, it's essentially moving
+> the generic part of the previously proposed mhi_wwan_ctrl driver inside
+> a common WWAN framework, but the implementation is open and flexible
+> enough to allow extension for further drivers.
+> 
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 > ---
+>  drivers/net/Kconfig          |   2 +
+>  drivers/net/Makefile         |   1 +
+>  drivers/net/wwan/Kconfig     |  19 ++++++
+>  drivers/net/wwan/Makefile    |   8 +++
+>  drivers/net/wwan/wwan_core.c | 150 +++++++++++++++++++++++++++++++++++++++++++
+>  drivers/net/wwan/wwan_core.h |  20 ++++++
+>  drivers/net/wwan/wwan_port.c | 136 +++++++++++++++++++++++++++++++++++++++
+>  include/linux/wwan.h         | 121 ++++++++++++++++++++++++++++++++++
+>  8 files changed, 457 insertions(+)
+>  create mode 100644 drivers/net/wwan/Kconfig
+>  create mode 100644 drivers/net/wwan/Makefile
+>  create mode 100644 drivers/net/wwan/wwan_core.c
+>  create mode 100644 drivers/net/wwan/wwan_core.h
+>  create mode 100644 drivers/net/wwan/wwan_port.c
+>  create mode 100644 include/linux/wwan.h
 
-And this should be merged through the watchdog tree.
+What changed from the last version(s)?  That should be below the ---
+somewhere, right?
 
-Thanks,
-Bjorn
+v5?
 
->  Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
-> index b8e4118..ba60bdf 100644
-> --- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
-> +++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
-> @@ -17,6 +17,7 @@ properties:
->      enum:
->        - qcom,apss-wdt-qcs404
->        - qcom,apss-wdt-sc7180
-> +      - qcom,apss-wdt-sc7280
->        - qcom,apss-wdt-sdm845
->        - qcom,apss-wdt-sdx55
->        - qcom,apss-wdt-sm8150
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
-> 
+thanks,
+
+greg k-h
