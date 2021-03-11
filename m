@@ -2,79 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 315823379A6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Mar 2021 17:41:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DD1283379A1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Mar 2021 17:41:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229690AbhCKQlT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Mar 2021 11:41:19 -0500
-Received: from mail-io1-f45.google.com ([209.85.166.45]:36385 "EHLO
-        mail-io1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229639AbhCKQlR (ORCPT
+        id S229652AbhCKQlS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Mar 2021 11:41:18 -0500
+Received: from mail-il1-f178.google.com ([209.85.166.178]:37497 "EHLO
+        mail-il1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229530AbhCKQlL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Mar 2021 11:41:17 -0500
-Received: by mail-io1-f45.google.com with SMTP id n14so22623223iog.3;
-        Thu, 11 Mar 2021 08:41:17 -0800 (PST)
+        Thu, 11 Mar 2021 11:41:11 -0500
+Received: by mail-il1-f178.google.com with SMTP id k2so19492431ili.4;
+        Thu, 11 Mar 2021 08:41:10 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
          :message-id;
-        bh=U7jzm/CFG4Ylm4v8voBfCMU+CxkY3bE8NKg4UeAuxbQ=;
-        b=CJuO0VNQHqSZfWQzgCHyrOHoPkj2utBJ2dA22/3cKyNU866g0/v3PqXAFxG4xH6LTh
-         /am0DTOgkfqpKFC+psKOIwzwp/cJsIIS7/ayJ1wqePdpHlLPQ0GokqFfYnsFafTH9mJn
-         sJ3UvNPpyJRE7oyHkSTgUJE66Fr0QIfiVcdfzUYkn4sb+nbPwCCg8jujOiR3jta2fImh
-         z6rWkmcbSVfoQQtkcpDrv3Jklntqh2L5+FozOIVazMeGV+ACQjS95M7thKkf76yl9K+B
-         i39NqR4OJRT3oUfEH4ptyhpjZRmPk82HdhGGBHb/n/Le+ENnJ7oyY3IHrO5zsUacZcAl
-         GJbA==
-X-Gm-Message-State: AOAM531o4Vseuk+ysRIkW6eLTbCtqYjOc0Di6rUhwkbTGQYVoRk3C51s
-        9/SatcmZZ39eTY8TZn3uPA==
-X-Google-Smtp-Source: ABdhPJxbaDM4XI8ZWhFC1q8ZH6bP9IzTuINR+19AO6I/yVBlCCKLU9oTvGO8Q+5z803ksGP47PsfAQ==
-X-Received: by 2002:a05:6602:228f:: with SMTP id d15mr6509757iod.141.1615480876875;
-        Thu, 11 Mar 2021 08:41:16 -0800 (PST)
+        bh=WJe+Al4qm0TlWJf1+/8W5HUdeHTdNJA3rf8BM2iIptk=;
+        b=AzJcO3wSF//A/H6wlYrvP1gsRK6NLXNJQbpM6PU25xBHeGT+z8VDjSSemb4FRQfVGw
+         0euEULDjyW4RtKpHDbVVCAowCwCPw+D3Pk3FBZa69gdzWILj2lQz4mOob9oZ++z1zgcp
+         fQJzXnQbz02sMZZK9zBQVbnDtJhEWKFC+gOsEcFGEmvKow2pGmo2GXybi5Rr852skOGr
+         LhZSzod/vXWl2r6orGg03QgChgqwVU0Nb9xLblkfmfYN/XjzAS6Hz/FuVC3RGunWqbYW
+         aSUO7z8nOM6qO+nPJl9jlUZIn4J197uzrJq/5LJyzd8uL5p2YiQ01GJPnDS3t66G9H7L
+         9Ohw==
+X-Gm-Message-State: AOAM532IvssVqgFHUi2HzELwlEgl0nWxRqrM0qRoxzF8RBzFAcDQRgFF
+        0X9y6ju8XkCAysDqP/zCwQ==
+X-Google-Smtp-Source: ABdhPJy5JH73VdS/BWpz9w3adZarKXeH/Kn/+riDA2p7RpMCJf639DgSqQxK8bSDmbnL693mxvBLDw==
+X-Received: by 2002:a05:6e02:1154:: with SMTP id o20mr7664202ill.236.1615480870559;
+        Thu, 11 Mar 2021 08:41:10 -0800 (PST)
 Received: from robh.at.kernel.org ([64.188.179.253])
-        by smtp.gmail.com with ESMTPSA id u14sm1471024ilv.0.2021.03.11.08.41.12
+        by smtp.gmail.com with ESMTPSA id y18sm1588767ili.16.2021.03.11.08.41.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Mar 2021 08:41:14 -0800 (PST)
-Received: (nullmailer pid 841933 invoked by uid 1000);
+        Thu, 11 Mar 2021 08:41:08 -0800 (PST)
+Received: (nullmailer pid 841935 invoked by uid 1000);
         Thu, 11 Mar 2021 16:41:02 -0000
 From:   Rob Herring <robh@kernel.org>
-To:     satya priya <skakit@codeaurora.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-rtc@vger.kernel.org, devicetree@vger.kernel.org,
+To:     Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
+Cc:     Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-renesas-soc@vger.kernel.org, mazziesaccount@gmail.com,
+        devicetree@vger.kernel.org, Mark Brown <broonie@kernel.org>,
         Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Lee Jones <lee.jones@linaro.org>, kgunda@codeaurora.org,
-        Alessandro Zummo <a.zummo@towertech.it>
-In-Reply-To: <1615447798-6959-3-git-send-email-skakit@codeaurora.org>
-References: <1615447798-6959-1-git-send-email-skakit@codeaurora.org> <1615447798-6959-3-git-send-email-skakit@codeaurora.org>
-Subject: Re: [PATCH 2/3] dt-bindings: mfd: Convert pm8xxx bindings to yaml
+        linux-power@fi.rohmeurope.com,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+In-Reply-To: <6793280eb1a3376a1aa4d408a8931202050c828d.1615454845.git.matti.vaittinen@fi.rohmeurope.com>
+References: <cover.1615454845.git.matti.vaittinen@fi.rohmeurope.com> <6793280eb1a3376a1aa4d408a8931202050c828d.1615454845.git.matti.vaittinen@fi.rohmeurope.com>
+Subject: Re: [RFC PATCH v3 5/7] dt-bindings: regulator: bd9576 add FET ON-resistance for OCW
 Date:   Thu, 11 Mar 2021 09:41:02 -0700
-Message-Id: <1615480862.528721.841932.nullmailer@robh.at.kernel.org>
+Message-Id: <1615480862.535831.841934.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 11 Mar 2021 12:59:57 +0530, satya priya wrote:
-> Convert pm8xxx rtc bindings from .txt to .yaml format.
+On Thu, 11 Mar 2021 12:23:33 +0200, Matti Vaittinen wrote:
+> BD9576MUF provides over-current protection and detection. Current is
+> measured as voltage loss over external FET. Allow specifying FET's on
+> resistance so current monitoring limits can be converted to voltages.
 > 
-> Signed-off-by: satya priya <skakit@codeaurora.org>
+> Signed-off-by: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
 > ---
->  .../devicetree/bindings/mfd/qcom-pm8xxx.txt        |  99 -------------------
->  .../devicetree/bindings/mfd/qcom-pm8xxx.yaml       | 108 +++++++++++++++++++++
->  2 files changed, 108 insertions(+), 99 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/mfd/qcom-pm8xxx.txt
->  create mode 100644 Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
+> v3:
+>  - no changes
+> v2:
+>  - use standard micro-ohms suffix
+> 
+>  .../devicetree/bindings/regulator/rohm,bd9576-regulator.yaml | 5 +++++
+>  1 file changed, 5 insertions(+)
 > 
 
 My bot found errors running 'make dt_binding_check' on your patch:
 
 yamllint warnings/errors:
-./Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml:27:6: [warning] wrong indentation: expected 4 but found 5 (indentation)
-./Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml:30:6: [warning] wrong indentation: expected 4 but found 5 (indentation)
+./Documentation/devicetree/bindings/regulator/rohm,bd9576-regulator.yaml:31:35: [error] empty value in block mapping (empty-values)
 
 dtschema/dtc warnings/errors:
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/regulator/rohm,bd9576-regulator.yaml: patternProperties:regulator-.+:properties:description: "External FET's ON-resistance. Required if VoutS1 OCP/OCW is to be set." is not of type 'object', 'boolean'
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/regulator/rohm,bd9576-regulator.yaml: patternProperties:regulator-.+:properties:rohm,ocw-fet-ron-micro-ohms: None is not of type 'object', 'boolean'
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/regulator/rohm,bd9576-regulator.yaml: patternProperties:regulator-.+:properties: {'enum': ['$ref', 'additionalItems', 'additionalProperties', 'allOf', 'anyOf', 'const', 'contains', 'default', 'dependencies', 'deprecated', 'description', 'else', 'enum', 'if', 'items', 'maxItems', 'maximum', 'minItems', 'minimum', 'multipleOf', 'not', 'oneOf', 'pattern', 'patternProperties', 'properties', 'propertyNames', 'required', 'then', 'unevaluatedProperties']} is not allowed for 'description'
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/regulator/rohm,bd9576-regulator.yaml: ignoring, error in schema: patternProperties: regulator-.+: properties: rohm,ocw-fet-ron-micro-ohms
+warning: no schema found in file: ./Documentation/devicetree/bindings/regulator/rohm,bd9576-regulator.yaml
 
-See https://patchwork.ozlabs.org/patch/1450975
+See https://patchwork.ozlabs.org/patch/1451051
 
 This check can fail if there are any dependencies. The base for a patch
 series is generally the most recent rc1.
