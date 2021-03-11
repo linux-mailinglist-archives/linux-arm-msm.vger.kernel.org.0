@@ -2,86 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 11FDE336E2A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Mar 2021 09:48:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 47D42336E64
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Mar 2021 10:01:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231648AbhCKIsn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Mar 2021 03:48:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42600 "EHLO
+        id S231735AbhCKJA7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Mar 2021 04:00:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231630AbhCKIsf (ORCPT
+        with ESMTP id S231788AbhCKJA6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Mar 2021 03:48:35 -0500
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F59EC061760
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Mar 2021 00:48:35 -0800 (PST)
-Received: by mail-pj1-x1029.google.com with SMTP id q6-20020a17090a4306b02900c42a012202so8997713pjg.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Mar 2021 00:48:35 -0800 (PST)
+        Thu, 11 Mar 2021 04:00:58 -0500
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B297C061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Mar 2021 01:00:58 -0800 (PST)
+Received: by mail-pj1-x102b.google.com with SMTP id nh23-20020a17090b3657b02900c0d5e235a8so9020946pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Mar 2021 01:00:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=9ipk2X1DXQbAZMqLuc39QzOVpw53dOdrjEf9bVo9r78=;
-        b=ysKzyEa9LkPeHGGfGDHaoKtD/NlsHHOKvYlLFOKUXSvAfQW8DJQ7oRoJ5mHzhiJrPi
-         MaZTx31QzpMbeix9zjzzSzaM5OYtnXvtlGJsF0qsG4NtrdhMwy2yHRB6sCfMBb11/WM8
-         HfLMotmU7nLxgLKBGFNTsDQ6jB8J8xcbgcMN2jxNck9pQIknJ0ToJFOlDVzO0VOyzkSI
-         oUAWEiO5KylOAw538KAF5shZ7yzl3A/nSO9IpLmtQP/RXEvUrlyNmANX+xVJL2QFb2BY
-         PlcKSiiKtOBkxK+Q21EmTKdK2EbNr86XYxaOUIxXYboJlnTjh9Q2QPLA+cI9CLtpCteU
-         bCIQ==
+        h=from:to:cc:subject:date:message-id;
+        bh=qIBHCWzKJJjDmvyCh1b8W/iF9n5EqxTW50Y/4eXZCoU=;
+        b=ZbSVbPeuLFBwUZfqSzmF/03QD0/d22RJ+yYj/brm3j/kFFHLkZ/CCnzc3MC6WYq1f/
+         NYkwbhTvfoObhSyni78APKvrvJYlARDRHcyW3KwDjUeo/ud3T3RbDIME6TkR87+PBT3i
+         dgqf8wB989iQvcfMNwSdH1ALt3Ep884jB7xRdgiY5UTMSbg591D7mxlk+JkS9kJ9HZ+y
+         d7betEZWOvj9xTlugdCULz2b5OGVtA6PDYppAiVNGDlvS1SOPYk4CIpzeB/oe57fiffG
+         5cP/bvt7V9Pu9E6KFOqmroGv431xh1FPFQWKlLg3Hee/Ckxe9hOe+vBAxs2EmCZ0r1P9
+         inug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9ipk2X1DXQbAZMqLuc39QzOVpw53dOdrjEf9bVo9r78=;
-        b=GbUO666J1EFhKcXoEDZ2cP3RNbNzscM6ofXbnTP7scjZWvHH7PZXJ3FgzeI3zU1AY5
-         0r4rVxbwbN4GuekfoXN2MHCq1zx2fe5fDOiLkNL6Sj19qvFaRm7ifoRMa5G4KO4HN9GL
-         hyzHcQJ6ISoNPKJwfJLaGKY9yNHnKUgZHLvDxHV9lz3Wp9LIdQNaQS8dvZBni5iAohNR
-         36WuIobnaJjoLebjf6vd1j3QXXQOv7A+A+xptza6hw8LBFmZWa9VcD+gdJ8KNbmgIiFE
-         opfWS5QrlBfMwnCzJReDlDHNrOjSpYvCuxCP0fFlcZ/NpaQK+0htUu5l75hWf2nq95SK
-         YfrA==
-X-Gm-Message-State: AOAM532SadboFObkvZRfqkbff8zyyxQF2d011mD3zwPbwds7ooByZ4qA
-        to9112B67gvuefisR3JgpjMOSg==
-X-Google-Smtp-Source: ABdhPJyahd78ops5WrqbAEWWT6uaYEfmCV/g97/NAiieFbMByIyXE+cKLHlvjji6+BamNcpHjYFlMw==
-X-Received: by 2002:a17:90a:f28e:: with SMTP id fs14mr7799886pjb.100.1615452514661;
-        Thu, 11 Mar 2021 00:48:34 -0800 (PST)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id na8sm1519663pjb.2.2021.03.11.00.48.33
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 11 Mar 2021 00:48:34 -0800 (PST)
-Date:   Thu, 11 Mar 2021 16:48:29 +0800
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=qIBHCWzKJJjDmvyCh1b8W/iF9n5EqxTW50Y/4eXZCoU=;
+        b=IDcREB4ntN7TqavV3Buf4ZMYvt0ZbhICC3gJWR7/dLN2BQ2xmreew3i0Vl8Bixdrr0
+         ca6sSdBCBhd8eDTf0G0lBGOOp+ZXw9egVg4kRBvY8tE3AAP4jVn9Uq2Mv5q5ma0RuRCQ
+         +cA/y45x2goYtJoQ7fkn7+3QHZpR6wCc5ljSePjpVNiSQlzYnJyOIRnsVT2k9TOs0ibh
+         0nU10mUSx5ixZyOG9kFED5u6Npje3YLSciLicuG39u1r6cBME3u7zNRil7zT8j46MOGL
+         n8yilgeWRMhvJA0/ywfItKVGVU1Gl9IiPJpUnEAFkvSqrR1H3sKRhOOhAyzNJXDHtryO
+         liqA==
+X-Gm-Message-State: AOAM532gn56E6Ct+Y69Kg/ZXL6K7LBe+6BcpAlxV71gikazced7GqqPC
+        pVllGSfzTPtfKW9zt5pI5C3lNZu/zp7naQ==
+X-Google-Smtp-Source: ABdhPJwVcuSAElH3xX3/YOVVOtJfoHDn0KgCadcj09La+NBQVEUFmks+K7WDT164limyQ4L87ied5g==
+X-Received: by 2002:a17:90b:116:: with SMTP id p22mr7771781pjz.161.1615453257771;
+        Thu, 11 Mar 2021 01:00:57 -0800 (PST)
+Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id k27sm1873201pfg.95.2021.03.11.01.00.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Mar 2021 01:00:57 -0800 (PST)
 From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Sergei Shtylyov <sergei.shtylyov@gmail.com>
-Cc:     Felipe Balbi <balbi@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org
-Subject: Re: [PATCH] usb: dwc3: qcom: skip interconnect init for ACPI probe
-Message-ID: <20210311084828.GV17424@dragon>
-References: <20210311060318.25418-1-shawn.guo@linaro.org>
- <94984a60-444f-a2f5-1928-3eeba2342f2e@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <94984a60-444f-a2f5-1928-3eeba2342f2e@gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+To:     Felipe Balbi <balbi@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        Shawn Guo <shawn.guo@linaro.org>
+Subject: [PATCH] Revert "usb: dwc3: qcom: Constify the software node"
+Date:   Thu, 11 Mar 2021 17:00:49 +0800
+Message-Id: <20210311090049.7354-1-shawn.guo@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 11, 2021 at 11:32:01AM +0300, Sergei Shtylyov wrote:
-> Hello!
-> 
-> On 11.03.2021 9:03, Shawn Guo wrote:
-> 
-> > The ACPI probe starts failing since commit bea46b981515 ("usb: dwc3:
-> > qcom: Add interconnect support in dwc3 driver"), because there is no
-> > interconnect support for ACPI, and of_icc_get() call in
-> > dwc3_qcom_interconnect_init() will just return -EINVAL.
-> > 
-> > Fix the problem by skipping interconnect init for ACPI probe, and then
-> > the NULL icc_path_ddr will simply just scheild all ICC calls.
-> 
->    Scheild?
+This reverts commit 8dc6e6dd1bee39cd65a232a17d51240fc65a0f4a.
 
-s/scheild/shield
+The commit causes an regression for ACPI probe on Lenovo Yoga C630
+laptop.  platform_device_add_properties() will fail with -EEXIST for the
+second USB instance, because of the software_node_to_swnode() check in
+function software_node_register().
 
-Shawn
+Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+---
+ drivers/usb/dwc3/dwc3-qcom.c | 12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
+
+diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+index 0c11e45bccaf..7dc74885a635 100644
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -570,10 +570,6 @@ static const struct property_entry dwc3_qcom_acpi_properties[] = {
+ 	{}
+ };
+ 
+-static const struct software_node dwc3_qcom_swnode = {
+-	.properties = dwc3_qcom_acpi_properties,
+-};
+-
+ static int dwc3_qcom_acpi_register_core(struct platform_device *pdev)
+ {
+ 	struct dwc3_qcom	*qcom = platform_get_drvdata(pdev);
+@@ -620,17 +616,16 @@ static int dwc3_qcom_acpi_register_core(struct platform_device *pdev)
+ 		goto out;
+ 	}
+ 
+-	ret = device_add_software_node(&qcom->dwc3->dev, &dwc3_qcom_swnode);
++	ret = platform_device_add_properties(qcom->dwc3,
++					     dwc3_qcom_acpi_properties);
+ 	if (ret < 0) {
+ 		dev_err(&pdev->dev, "failed to add properties\n");
+ 		goto out;
+ 	}
+ 
+ 	ret = platform_device_add(qcom->dwc3);
+-	if (ret) {
++	if (ret)
+ 		dev_err(&pdev->dev, "failed to add device\n");
+-		device_remove_software_node(&qcom->dwc3->dev);
+-	}
+ 
+ out:
+ 	kfree(child_res);
+@@ -845,7 +840,6 @@ static int dwc3_qcom_remove(struct platform_device *pdev)
+ 	struct device *dev = &pdev->dev;
+ 	int i;
+ 
+-	device_remove_software_node(&qcom->dwc3->dev);
+ 	of_platform_depopulate(dev);
+ 
+ 	for (i = qcom->num_clocks - 1; i >= 0; i--) {
+-- 
+2.17.1
+
