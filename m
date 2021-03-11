@@ -2,134 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CD10336D63
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Mar 2021 08:59:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AED67336D9D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Mar 2021 09:19:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229829AbhCKH6a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Mar 2021 02:58:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60008 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229842AbhCKH57 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Mar 2021 02:57:59 -0500
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C88AC061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 23:57:58 -0800 (PST)
-Received: by mail-pg1-x52b.google.com with SMTP id g4so13162352pgj.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 23:57:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Jo2RhC9QxHpswkt+87C4WQNVSS4A9CqqhuHyQ/zJtu8=;
-        b=gngZ54vAr0M2IR2pvoo7e3M/FviJFc/mqnvgU55EfOPmOqJzQQYCnJKdPLMCxwEbqG
-         +9PQMVvnSsCaY/p3T4irfyDVNIqKh0XWcRnMOj+LYuauu60u1DH6Oghf4IEt+DpjEB81
-         Pr6cb1RQyL4daOfQOj6NJ6K/3bBvCXl0qeuVwCuDMLZI93Pxxd6m0VDcdGcHuFur5TqR
-         czryEEVjRNpaXLjDo217cYZ6VW11ziS/e/gFVOzOJLl9R71xE1rrI3hSYiEWRQYIZGwC
-         8JB+Tjm3zSfsf4zMnUB4TqL431opq73NLiLq5UekjIV1/iIpGrXuCOFHzPTe7rVu2PLJ
-         8RrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Jo2RhC9QxHpswkt+87C4WQNVSS4A9CqqhuHyQ/zJtu8=;
-        b=Y9huCcFkc3plUASshgnZBOvW6qesA/0kk4x4tJ5XDGg+iX5dywRv0Za/g6QfF1g2xD
-         qHSMrY0nPTKAeHSw9hHfA0E2hMmYLnLS28Acg/viexU+MRKPUhj+0NpmzbCJY65zRELD
-         pZUOjMqMILisWoyPP96+xrvTF4LOL8aXJV3BXzDXt/hDBIsDQIdVrCHnsVwjJzLnGFo1
-         4R3otjIMzSRxoeknYO8Bw72huFJ/xdlt+d6ppjX3hbYxSBekURUI0eb2t65Rr+W0O9KR
-         HmwnmNddaxhgN4QKZx9TArqfAHitcKZYZxps97h/ifFkp7vgkUkTmnAYmxcOU2j0YWqB
-         QcWw==
-X-Gm-Message-State: AOAM531f+RLdhHWg6sElRwDaydQBOxkdi5/h3hqM6hgtdH99UG02Cib8
-        fR6CoBh5n9iE9f9d1YB4Ux4rqacAh8B7QZ6eLnfsYpw2lJNI1w==
-X-Google-Smtp-Source: ABdhPJzjqphGIUhoKyiQCV4rLsrLVz+GmBuT+zt3KSiiHg1wpSpRkEq05rLntEwGfeRvquvOXgg9Zuz2nROinDvcUcc=
-X-Received: by 2002:a63:2262:: with SMTP id t34mr6357230pgm.303.1615449477807;
- Wed, 10 Mar 2021 23:57:57 -0800 (PST)
+        id S230454AbhCKISr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Mar 2021 03:18:47 -0500
+Received: from m42-2.mailgun.net ([69.72.42.2]:10030 "EHLO m42-2.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231253AbhCKISg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 11 Mar 2021 03:18:36 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1615450716; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=ZBXnKQ2z5F+w5AO3Zn+MXqGx/PcyC6YiGN2avgOMwvk=; b=Jf6UQB4F2HWK76h1OoGARoUQya5xRc/VtnIqX2goxtAeM3KDJYTHP0crEkuZ8q8M738W5XKF
+ oYT9kF49QJNWz2Qf3OpUOpKuCDxOhKnSVpnrjojErMxJs/irIPjLprn3wQvWRJflDaUFltSs
+ rL5DDMC+ezdwMASF0AlOnik3R0A=
+X-Mailgun-Sending-Ip: 69.72.42.2
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 6049d24f0c7cf0f56c6ec0cd (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 11 Mar 2021 08:18:23
+ GMT
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 575B5C43467; Thu, 11 Mar 2021 08:18:23 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6724FC43461;
+        Thu, 11 Mar 2021 08:18:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6724FC43461
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        swboyd@chromium.org, judyhsiao@chromium.org
+Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Subject: [PATCH] ASoC: qcom: lpass-cpu: Fix lpass dai ids parse
+Date:   Thu, 11 Mar 2021 13:48:05 +0530
+Message-Id: <20210311081805.20424-1-srivasam@codeaurora.org>
+X-Mailer: git-send-email 2.29.0
 MIME-Version: 1.0
-References: <1615376308-1941-1-git-send-email-loic.poulain@linaro.org> <781d27cf-f9a6-eecc-8832-341a9a5fbb3a@codeaurora.org>
-In-Reply-To: <781d27cf-f9a6-eecc-8832-341a9a5fbb3a@codeaurora.org>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Thu, 11 Mar 2021 09:05:58 +0100
-Message-ID: <CAMZdPi-krgO4QrEoAzbciB4Ph1TnRqkFC3RQWb8R74ihCAvmPQ@mail.gmail.com>
-Subject: Re: [PATCH] bus: mhi: Command completion workaround
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jeffrey,
+The max boundary check while parsing dai ids makes
+sound card registration fail after common up dai ids.
 
-On Wed, 10 Mar 2021 at 17:19, Jeffrey Hugo <jhugo@codeaurora.org> wrote:
->
-> On 3/10/2021 4:38 AM, Loic Poulain wrote:
-> > Some buggy hardwares (e.g sdx24) may report the current command
-> > ring wp pointer instead of the command completion pointer. It's
-> > obviously wrong, causing completion timeout. We can however deal
-> > with that situation by completing the cmd n-1 element, which is
-> > what the device actually completes.
-> >
-> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> > ---
-> >   drivers/bus/mhi/core/main.c | 18 ++++++++++++++++++
-> >   1 file changed, 18 insertions(+)
-> >
-> > diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> > index 16b9640..3e3c520 100644
-> > --- a/drivers/bus/mhi/core/main.c
-> > +++ b/drivers/bus/mhi/core/main.c
-> > @@ -707,6 +707,7 @@ static void mhi_process_cmd_completion(struct mhi_controller *mhi_cntrl,
-> >   {
-> >       dma_addr_t ptr = MHI_TRE_GET_EV_PTR(tre);
-> >       struct mhi_cmd *cmd_ring = &mhi_cntrl->mhi_cmd[PRIMARY_CMD_RING];
-> > +     struct device *dev = &mhi_cntrl->mhi_dev->dev;
-> >       struct mhi_ring *mhi_ring = &cmd_ring->ring;
-> >       struct mhi_tre *cmd_pkt;
-> >       struct mhi_chan *mhi_chan;
-> > @@ -714,6 +715,23 @@ static void mhi_process_cmd_completion(struct mhi_controller *mhi_cntrl,
-> >
-> >       cmd_pkt = mhi_to_virtual(mhi_ring, ptr);
-> >
-> > +     if (unlikely(cmd_pkt == mhi_ring->wp)) {
-> > +             /* Some buggy hardwares (e.g sdx24) sometimes report the current
-> > +              * command ring wp pointer instead of the command completion
-> > +              * pointer. It's obviously wrong, causing completion timeout. We
-> > +              * can however deal with that situation by completing the cmd
-> > +              * n-1 element.
-> > +              */
-> > +             void *ring_ptr = (void *)cmd_pkt - mhi_ring->el_size;
-> > +
-> > +             if (ring_ptr < mhi_ring->base)
-> > +                     ring_ptr += mhi_ring->len;
-> > +
-> > +             cmd_pkt = ring_ptr;
-> > +
-> > +             dev_warn(dev, "Bad completion pointer (ptr == ring_wp)\n");
->
-> Is there value in having this warning every time?  I wonder if a _once
-> version would be better to not flood the kernel log.  Although this is
-> only for commands, which shouldn't be frequent, so maybe that is the
-> implicit rate limiter.
->
-> What do you think?
+Fixes: cd3484f7f1386 (ASoC: dt-bindings: lpass: Fix and common up lpass dai ids)
 
-As you said it's kind of self rate-limited because of the unfrequent
-command operations, mostly for starting and stopping channels. A _once
-variant would hide the issue a bit, and probably not annoying enough
-to raise curiosity.
+Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+---
+ sound/soc/qcom/lpass-cpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
->
-> > +     }
-> > +
-> >       chan = MHI_TRE_GET_CMD_CHID(cmd_pkt);
-> >       mhi_chan = &mhi_cntrl->mhi_chan[chan];
-> >       write_lock_bh(&mhi_chan->lock);
-> >
->
->
-> --
-> Jeffrey Hugo
-> Qualcomm Technologies, Inc. is a member of the
-> Code Aurora Forum, a Linux Foundation Collaborative Project.
+diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
+index 4762286b33fe..c62d2612e8f5 100644
+--- a/sound/soc/qcom/lpass-cpu.c
++++ b/sound/soc/qcom/lpass-cpu.c
+@@ -739,7 +739,7 @@ static void of_lpass_cpu_parse_dai_data(struct device *dev,
+ 
+ 	for_each_child_of_node(dev->of_node, node) {
+ 		ret = of_property_read_u32(node, "reg", &id);
+-		if (ret || id < 0 || id >= data->variant->num_dai) {
++		if (ret || id < 0) {
+ 			dev_err(dev, "valid dai id not found: %d\n", ret);
+ 			continue;
+ 		}
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+
