@@ -2,92 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A96E337868
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Mar 2021 16:47:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5582E337969
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Mar 2021 17:32:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234237AbhCKPqn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Mar 2021 10:46:43 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:52756 "EHLO z11.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234324AbhCKPqh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Mar 2021 10:46:37 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1615477597; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=1VBjwvHlfoWkZSq2NKmHy22HPNe4Qn92KKp2+bBnXqE=; b=ImtBCIPmddS0EZ6kmFUBdB5UW6kOyaTnc9Gyr8nLvmUdRulXrB9uMhmOY03GnmzA5c+LBThk
- +qhZqv9pWG02ZvlFo4dSksmUap4/23MHTUchB+BAwSmqA/uUnL/kMFKmjmowgCW10OOIXC5E
- C5tZh1Y2b/iesRWVuVtvyfKCL38=
-X-Mailgun-Sending-Ip: 104.130.96.11
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 604a3b46b2591bd5684c7651 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 11 Mar 2021 15:46:14
- GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0AB62C43464; Thu, 11 Mar 2021 15:46:14 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 587C2C433CA;
-        Thu, 11 Mar 2021 15:46:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 587C2C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, judyhsiao@chromium.org
-Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Subject: [PATCH v2] ASoC: qcom: lpass-cpu: Fix lpass dai ids parse
-Date:   Thu, 11 Mar 2021 21:15:57 +0530
-Message-Id: <20210311154557.24978-1-srivasam@codeaurora.org>
-X-Mailer: git-send-email 2.29.0
+        id S229562AbhCKQbm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Mar 2021 11:31:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57526 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229688AbhCKQbT (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 11 Mar 2021 11:31:19 -0500
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99513C061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Mar 2021 08:31:19 -0800 (PST)
+Received: by mail-oi1-x236.google.com with SMTP id w195so17099348oif.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Mar 2021 08:31:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=dxCOzqw4OU5tNnGsb0G/mX+YTbwJwLies3DsLPBifnM=;
+        b=YTc1qrhxjsnX9+9VweICdIymergn23QKmhuRY3DiCjo8y5jB/7SeamD5tYP0HCTAtP
+         VKeFHLfTynEAgFT7EF+MGGhmXdSFJmyAN+ZwfWmdeKKofBwFT7o9duX2Nkt1SRdsS3YV
+         YpSLGHo0DxX6/hRelFakKkU5BLbiBpx+xjiV5Ae634VWo2hVBWYm1WVtSBBa1rzb4cW2
+         Fyylx8ycQyIsCgjCgIE7n5EWdFvV0RzoT07McHPiX9wcV50MxBDyKgmGZd0EXmLkPR/Q
+         8JjTZR0eccWaE3y4aA5ZCoUypcRkHuFplhfZo9TZ3E6xIqczVYyXfGohGbjdUrimmwNh
+         1A9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=dxCOzqw4OU5tNnGsb0G/mX+YTbwJwLies3DsLPBifnM=;
+        b=MF1799XYOb2f5AJAqhoZAkjMOCnUE8+emauorUQFcRDHryWlOKPUqEyFuFSjmuZpqb
+         LjL3SLVh5DChx6b9QzgI+ODH5uetph0BEd9hvAedOmu+e1OyzmF/XvtYqtsMIv8bKUSV
+         tSUH1h9BAQ2X5fYkuC/R4YtbCOfILcnCGzHSOZ9jm3H+ywuGPJKbln39/ScOzu793M1i
+         W/eUtQF3T/gnyQeNBciDxhQEaLFyZ685bxnVLo52Jtox8UrDNEVWz/QqF/Q3rXDpA2mw
+         mQmBUXiu8oyhOIpr8dNpj/3JFsAeG1mY8yQFmWk1mHu9uChEZs0i9wZ1Ne8+kceiTa0D
+         QQYw==
+X-Gm-Message-State: AOAM5327hngQ7In00/Zo+0ujnoVTCNKTOO/qAou2UB9pcRc2nU/jkAmF
+        iNc8MrQurlIaU+/7bUy6bsbPNAS6062Glg==
+X-Google-Smtp-Source: ABdhPJy8g+TsPd2NUk3K/DbblvGVMt7+KSupjIq5Fp3bjoYNBvD/mp6WLJf/7RBLg4CdHqxr5X8eCg==
+X-Received: by 2002:aca:c2d7:: with SMTP id s206mr6544020oif.95.1615480278918;
+        Thu, 11 Mar 2021 08:31:18 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id s193sm625571oih.52.2021.03.11.08.31.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Mar 2021 08:31:18 -0800 (PST)
+Date:   Thu, 11 Mar 2021 10:31:16 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Souradeep Chowdhury <schowdhu@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        sibis@codeaurora.org, Rajendra Nayak <rnayak@codeaurora.org>,
+        vkoul@kernel.org
+Subject: Re: [PATCH V1 2/6] soc: qcom: dcc: Add driver support for Data
+ Capture and Compare unit(DCC)
+Message-ID: <YEpF1JO4CAd2pb0m@builder.lan>
+References: <cover.1615393454.git.schowdhu@codeaurora.org>
+ <48556129a02c9f7cd0b31b2e8ee0f168e6d211b7.1615393454.git.schowdhu@codeaurora.org>
+ <YElUCaBUOx7hEuIh@builder.lan>
+ <ab30490c016f906fd9bc5d789198530b@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ab30490c016f906fd9bc5d789198530b@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The max boundary check while parsing dai ids makes
-sound card registration fail after common up dai ids.
+On Thu 11 Mar 00:19 CST 2021, Sai Prakash Ranjan wrote:
 
-Fixes: cd3484f7f138 ("ASoC: qcom: Fix broken support to MI2S TERTIARY and QUATERNARY")
+> Hi Bjorn,
+> 
+> On 2021-03-11 04:49, Bjorn Andersson wrote:
+> > On Wed 10 Mar 10:46 CST 2021, Souradeep Chowdhury wrote:
+> > 
+> > > The DCC is a DMA Engine designed to capture and store data
+> > > during system crash or software triggers. The DCC operates
+> > > based on link list entries which provides it with data and
+> > > addresses and the function it needs to perform. These
+> > > functions are read, write and loop. Added the basic driver
+> > > in this patch which contains a probe method which instantiates
+> > > the resources needed by the driver. DCC has it's own SRAM which
+> > > needs to be instantiated at probe time as well.
+> > > 
+> > 
+> > So to summarize, the DCC will upon a crash copy the configured region
+> > into the dcc-ram, where it can be retrieved either by dumping the memory
+> > over USB or from sysfs on the next boot?
+> > 
+> 
+> Not just the next boot, but also for the current boot via /dev/dcc_sram,
+> more below.
+> 
 
-Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
----
-Changes since v1:
-  -- Fixes commit message chnaged.
+Interesting!
 
- sound/soc/qcom/lpass-cpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> > > Signed-off-by: Souradeep Chowdhury <schowdhu@codeaurora.org>
+> > > ---
+> > >  drivers/soc/qcom/Kconfig  |   8 +
+> > >  drivers/soc/qcom/Makefile |   1 +
+> > >  drivers/soc/qcom/dcc.c    | 388
+> > > ++++++++++++++++++++++++++++++++++++++++++++++
+> > >  3 files changed, 397 insertions(+)
+> > >  create mode 100644 drivers/soc/qcom/dcc.c
+> > > 
+> 
+> <snip>...
+> 
+> > 
+> > How about implementing this using pstore instead of exposing it through
+> > a custom /dev/dcc_sram (if I read the code correclty)
+> > 
+> 
+> Using pstore is definitely a good suggestion, we have been thinking of
+> adding it as a separate change once the basic support for DCC gets in.
+> But pstore ram backend again depends on warm reboot which is present only
+> in chrome compute platforms but android platforms do not officially support
+> warm reboot. Pstore with block devices as a backend would be ideal but it
+> is still a work in progress to use mmc as the backend [1].
+> 
 
-diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
-index 4762286b33fe..c62d2612e8f5 100644
---- a/sound/soc/qcom/lpass-cpu.c
-+++ b/sound/soc/qcom/lpass-cpu.c
-@@ -739,7 +739,7 @@ static void of_lpass_cpu_parse_dai_data(struct device *dev,
- 
- 	for_each_child_of_node(dev->of_node, node) {
- 		ret = of_property_read_u32(node, "reg", &id);
--		if (ret || id < 0 || id >= data->variant->num_dai) {
-+		if (ret || id < 0) {
- 			dev_err(dev, "valid dai id not found: %d\n", ret);
- 			continue;
- 		}
--- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+I was under the impression that we can have multiple pstore
+implementations active, so we would have ramoops and dcc presented
+side by side after such restart. Perhaps that's a misunderstanding on my
+part?
 
+> Now the other reason as to why we need this dev interface in addition to
+> pstore,
+> 
+>  * Pstore contents are retrieved on the next boot, but DCC SRAM contents
+>    can be collected via dev interface for the current boot via SW trigger.
+>    Lets say we have some non-fatal errors in one of the subsystems and we
+>    want to analyze the register values, it becomes as simple as configuring
+>    that region, trigger dcc and collect the sram contents and parse it.
+> 
+>    echo "addr" > /sys/bus/platform/devices/***.dcc/config
+>    echo  1 > /sys/bus/platform/devices/***.dcc/trigger
+>    cat /dev/dcc_sram > dcc_sram.bin
+>    python dcc_parser.py -s dcc_sram.bin --v2 -o output/
+> 
+> We don't have to reboot at all for SW triggers. This is very useful and
+> widely used internally.
+> 
+> Is the custom /dev/dcc_sram not recommended because of the dependency on
+> the userspace component being not available openly? If so, we already have
+> the dcc parser upstream which we use to extract the sram contents [2].
+> 
+
+My concern is that we come up with a custom chardev implementation for
+something that already exists or should exist in a more generic form.
+
+
+In the runtime sequence above, why don't you have trigger just generate
+a devcoredump? But perhaps the answer is that we want a unified
+interface between the restart and runtime use cases?
+
+
+It would be nice to have some more details of how I can use this and how
+to operate the sysfs interface to achieve that, would you be able to
+elaborate on this?
+
+Regards,
+Bjorn
+
+> [1]
+> https://lore.kernel.org/lkml/20210120121047.2601-1-bbudiredla@marvell.com/
+> [2] https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/tools/tree/dcc_parser
+> 
+> Thanks,
+> Sai
+> 
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
