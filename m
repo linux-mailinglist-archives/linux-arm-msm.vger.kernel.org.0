@@ -2,99 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 57D99337979
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Mar 2021 17:34:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8743233798A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Mar 2021 17:38:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229578AbhCKQeW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Mar 2021 11:34:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58148 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229786AbhCKQeK (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Mar 2021 11:34:10 -0500
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C293C061761
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Mar 2021 08:34:10 -0800 (PST)
-Received: by mail-ot1-x336.google.com with SMTP id m1so1922467ote.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Mar 2021 08:34:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Dyv9rjgRqHM3ISb3nAs9ey94KS30FCHaoxikKXq9PFU=;
-        b=qmxzwoDEdf6SPjz94ihJ58wR3c7SGRVgwQrVYpj/wy2XoRX3njfO6Q6TrlsHp6zmCf
-         bTZF5Odla5eCb5n1YjvyPVpq/kYKHL+l1EVLBLMIbplPhP6XE1QRIdxv0hjS1/s4WP0Z
-         lEjuuTJixvzY5S/YgmZTIhIsaK0ojRujF5ZdTXjL9NhDidP9uC1sbiMoF9y8zLGbOGll
-         4VkMO4elfInBgOT5Z1VqUeoAopDNzVbJ1bCSuqh2Ikc/qcwiROpEUPdOBYwHwgIS4MIJ
-         DnlgSTtcOuF6mYTauHJ+VClcPOi6zz8z89BNDNcCMXbox2NHMSyNffSc8NaY0znCJG/7
-         q6rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Dyv9rjgRqHM3ISb3nAs9ey94KS30FCHaoxikKXq9PFU=;
-        b=pR8JG8/sbG2xUcclXtjf491jRBx9dTGzY6CSivx5LE6I32EPiKGp22xp9Le14N3GGU
-         ULVHMWLxSp+xfW8FXO6fLz9wwYH4wfOFR0IdtzNnBelGEWpV8S/rxUic11QIaB5RJCxH
-         dPASSOHxpFqzw0XgMTu9nY1nVXzcUQAfW0+ghaVpZhitlFwRrnkF1kKQ3UqGuIgvEWJH
-         vVW9Mic461BUbMsEGz6bvksoOAZ3I2dDaZXpSWT0k4whTPex6MOEzw7lSDjA3VTRblOe
-         I26Hn6foVzeGsuoDSDIcBg3g6TRS48SuACRkN6K3ORDyEaEAidLKUkcReci0UsnsAlfr
-         1Vow==
-X-Gm-Message-State: AOAM530bR1ZY96/1EBaoTaIETtPIRMPIoHGZJBfcKTS+MLprdHNlCfhS
-        SqAFEccVAas+haSsm3yksc3MEg==
-X-Google-Smtp-Source: ABdhPJwr4XiNBNu/8aosTUGLxLzFAawZykgwZN4DsnCAeb9XfwjN7rWoissS0her0NE/VkFlXgrgww==
-X-Received: by 2002:a05:6830:1513:: with SMTP id k19mr7299144otp.51.1615480449874;
-        Thu, 11 Mar 2021 08:34:09 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id w7sm726987ote.52.2021.03.11.08.34.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Mar 2021 08:34:09 -0800 (PST)
-Date:   Thu, 11 Mar 2021 10:34:07 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     schowdhu@codeaurora.org
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        sibis@codeaurora.org, saiprakash.ranjan@codeaurora.org,
-        Rajendra Nayak <rnayak@codeaurora.org>, vkoul@kernel.org
-Subject: Re: [PATCH V1 2/6] soc: qcom: dcc: Add driver support for Data
- Capture and Compare unit(DCC)
-Message-ID: <YEpGf7kQS53pByqC@builder.lan>
-References: <cover.1615393454.git.schowdhu@codeaurora.org>
- <48556129a02c9f7cd0b31b2e8ee0f168e6d211b7.1615393454.git.schowdhu@codeaurora.org>
- <YElUCaBUOx7hEuIh@builder.lan>
- <7c189355ca6c472b05151673d27481c3@codeaurora.org>
+        id S229470AbhCKQiG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Mar 2021 11:38:06 -0500
+Received: from mail.kernel.org ([198.145.29.99]:56498 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229552AbhCKQhl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 11 Mar 2021 11:37:41 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 58F4264F9F;
+        Thu, 11 Mar 2021 16:37:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1615480660;
+        bh=dYVRLS5VWyX7gUG8Qu6LM+nvJxKlncbsX9vvCiH5n6c=;
+        h=From:To:In-Reply-To:References:Subject:Date:From;
+        b=TynJDyYJwdun1XTklSWx6zrN0N1SohDKb4A1N1d2Tmln9pdMPFGolSENcL96TgdoZ
+         GUxO14zs+Oi0RXf/9XuTuZUQyHeNuqmnBxwLlozaGyy4x7wp4KDNHXZoOzkuYRK/+R
+         Wg1X0piNwK+YTX3M5PQ13YwIlV4c2NJZp9IcDKXRTGvJlrueTuQyKeVGF4fPHYzxQe
+         jq9Qw9l0VzjWFtQUtU6jzmrAjltr/hi6tGvDPZ6dw0IQwRUa0zfLSz/yA9DB+stik0
+         Ubf8TJwLE+inEMzQph+w7WCrLgc0j6rX9NIrgCUgUR8F7c+zIOgjy9EaMn79nZJv8r
+         r0Lbioz+Ux1hw==
+From:   Mark Brown <broonie@kernel.org>
+To:     tiwai@suse.com, plai@codeaurora.org, linux-kernel@vger.kernel.org,
+        judyhsiao@chromium.org, robh+dt@kernel.org,
+        bgoswami@codeaurora.org, agross@kernel.org,
+        devicetree@vger.kernel.org, lgirdwood@gmail.com,
+        rohitkr@codeaurora.org, srinivas.kandagatla@linaro.org,
+        swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        bjorn.andersson@linaro.org, alsa-devel@alsa-project.org,
+        perex@perex.cz
+In-Reply-To: <20210311081805.20424-1-srivasam@codeaurora.org>
+References: <20210311081805.20424-1-srivasam@codeaurora.org>
+Subject: Re: [PATCH] ASoC: qcom: lpass-cpu: Fix lpass dai ids parse
+Message-Id: <161548058820.3429.7412298596711968916.b4-ty@kernel.org>
+Date:   Thu, 11 Mar 2021 16:36:28 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7c189355ca6c472b05151673d27481c3@codeaurora.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 11 Mar 04:06 CST 2021, schowdhu@codeaurora.org wrote:
-
-> On 2021-03-11 04:49, Bjorn Andersson wrote:
-> > On Wed 10 Mar 10:46 CST 2021, Souradeep Chowdhury wrote:
-> > 
-> > > The DCC is a DMA Engine designed to capture and store data
-> > > during system crash or software triggers. The DCC operates
-> > > based on link list entries which provides it with data and
-> > > addresses and the function it needs to perform. These
-> > > functions are read, write and loop. Added the basic driver
-> > > in this patch which contains a probe method which instantiates
-> > > the resources needed by the driver. DCC has it's own SRAM which
-> > > needs to be instantiated at probe time as well.
-> > > 
-> > 
-> > So to summarize, the DCC will upon a crash copy the configured region
-> > into the dcc-ram, where it can be retrieved either by dumping the memory
-> > over USB or from sysfs on the next boot?
+On Thu, 11 Mar 2021 13:48:05 +0530, Srinivasa Rao Mandadapu wrote:
+> The max boundary check while parsing dai ids makes
+> sound card registration fail after common up dai ids.
 > 
-> Replied by Sai
-> 
+> Fixes: cd3484f7f1386 (ASoC: dt-bindings: lpass: Fix and common up lpass dai ids)
 
-Thanks Souradeep and Sai, I'm definitely interested in learning more
-about what the hardware block can do and how we can use it.
+Applied to
 
-Regards,
-Bjorn
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+
+Thanks!
+
+[1/1] ASoC: qcom: lpass-cpu: Fix lpass dai ids parse
+      commit: 9922f50f7178496e709d3d064920b5031f0d9061
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
