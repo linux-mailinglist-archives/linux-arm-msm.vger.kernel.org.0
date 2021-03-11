@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F176337E52
+	by mail.lfdr.de (Postfix) with ESMTP id C357E337E53
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Mar 2021 20:41:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229821AbhCKTkc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S229774AbhCKTkc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Thu, 11 Mar 2021 14:40:32 -0500
-Received: from mail.kernel.org ([198.145.29.99]:46856 "EHLO mail.kernel.org"
+Received: from mail.kernel.org ([198.145.29.99]:46854 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229900AbhCKTkI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S229821AbhCKTkI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 11 Mar 2021 14:40:08 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id D5B6D64F72;
+Received: by mail.kernel.org (Postfix) with ESMTPS id CE74F64F73;
         Thu, 11 Mar 2021 19:40:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1615491607;
-        bh=oUg8GfKrF0E0ilTypisWAMgzzVcrwCZ5hMnn+asa6Uw=;
+        bh=D5jwaRXuGl5hAd+G0x2ZT8B16WWXlMQcS6HBtdCK9ag=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=hPJyMHU6i/46G0ZSw24scyZJe2EDVdKeZ6aYo30jDGJ9rM0m8ooOuWm/3w5fg7eF0
-         9dqyBlPBzKUVLdTaTyNfiof/5tAH/TueZ7eV9q485ajh5HdspKapTq2bat0o9Hz33b
-         BvP5Co0v7tD27Fb6bP2Ol93sLrVa3cC72urFSnX0lgla3c7DbCt1EKIonmPdXfMz92
-         Ym+p01L30Micx56Y+4qvGa7HCBpfyBHMvq7YL1A0+5hMd86aw/wOYmz9YYTUwEIqQn
-         eINxgKYMqfyicH1MU6skFq0GFIk8d/nkFWbcyHbjfYW99DZxmOUi6KmoopkkBwDHg7
-         6vdeOztpGMlaA==
+        b=GTbTJQg18rWuIxi7MhpGgzOe9bL3i8LHGIvQBUm1OoUth431baxJDJ5ZJx+n9GmsP
+         MNEAQmoNptepdjSh8p0E1ztYQJTWG20vb8/E06aoD3U1laW++RCKCPWINfwUyV0eso
+         DypPNxWnhDLtJIqyiauZWY0XBfuIuxWICjPSpXIWwR1pqfsaDN/9H7SoN4yyTCCPla
+         C4HGxvQgpNaEeB1dHr+Z+krVL7Eb+TVIZN07Iccwl0SUjrNrpm11iZSlOgrmx+ANIL
+         BbDqeYsz5lpDsbmZkI1eok2tCSiJTWIudx154JewxqBvV/7IYl8sWimqHFQyXK7x1+
+         ZYAtFIUE7fPrg==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id C4DAD6096F;
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id BC8D1609E7;
         Thu, 11 Mar 2021 19:40:07 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] bus: qcom: Put child node before return
+Subject: Re: [PATCH] bus: qcom: ebi2: fix device node iterator leak
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <161549160780.31986.9749178173176768005.git-patchwork-notify@kernel.org>
+Message-Id: <161549160776.31986.16106976282461833249.git-patchwork-notify@kernel.org>
 Date:   Thu, 11 Mar 2021 19:40:07 +0000
-References: <20210121114907.109267-1-bianpan2016@163.com>
-In-Reply-To: <20210121114907.109267-1-bianpan2016@163.com>
-To:     Pan Bian <bianpan2016@163.com>
+References: <20200925234504.GA18813@agrajag.zerfleddert.de>
+In-Reply-To: <20200925234504.GA18813@agrajag.zerfleddert.de>
+To:     Tobias Jordan <kernel@cdqe.de>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -45,19 +45,18 @@ Hello:
 
 This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Thu, 21 Jan 2021 03:49:07 -0800 you wrote:
-> Put child node before return to fix potential reference count leak.
-> Generally, the reference count of child is incremented and decremented
-> automatically in the macro for_each_available_child_of_node() and should
-> be decremented manually if the loop is broken in loop body.
+On Sat, 26 Sep 2020 01:45:04 +0200 you wrote:
+> In the for_each_available_child_of_node loop of qcom_ebi2_probe, add a
+> call to of_node_put to avoid leaking the iterator if we bail out.
 > 
 > Fixes: 335a12754808 ("bus: qcom: add EBI2 driver")
-> Signed-off-by: Pan Bian <bianpan2016@163.com>
+> 
+> Signed-off-by: Tobias Jordan <kernel@cdqe.de>
 > 
 > [...]
 
 Here is the summary with links:
-  - bus: qcom: Put child node before return
+  - bus: qcom: ebi2: fix device node iterator leak
     https://git.kernel.org/qcom/c/4f26f0c36fe2
 
 You are awesome, thank you!
