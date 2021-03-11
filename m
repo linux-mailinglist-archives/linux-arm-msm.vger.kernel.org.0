@@ -2,191 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C479337FF3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Mar 2021 22:56:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 410E333801C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Mar 2021 23:20:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229827AbhCKVzV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Mar 2021 16:55:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42710 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229607AbhCKVyv (ORCPT
+        id S229679AbhCKWT5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Mar 2021 17:19:57 -0500
+Received: from labrats.qualcomm.com ([199.106.110.90]:7004 "EHLO
+        labrats.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229470AbhCKWTs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Mar 2021 16:54:51 -0500
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A37B3C061760
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Mar 2021 13:54:51 -0800 (PST)
-Received: by mail-qt1-x832.google.com with SMTP id c6so2342397qtc.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Mar 2021 13:54:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=E3NToVMb7SyOcWd/eqRyCe7U4wiYDLs06rM6zg487v4=;
-        b=Tw9Mm5ufk7p20s+L3uY8+zldTGCWGuQ5SIj+9jnt2SEBW4xfZEXuh0LutMljZFvcFr
-         SWCo+l6lbEvuANlvJebP3XvWPa+bidF0dXQcTWNPmOGWznQBcfcbA7HZk0J7lQHXsKPk
-         drHNU+8qTah0QZPvPkeO6jKoxRr5gougXcu1k=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=E3NToVMb7SyOcWd/eqRyCe7U4wiYDLs06rM6zg487v4=;
-        b=Hag0+gsnPUWb4ZPAuraSU4ZLcfk3J1/dQuuuH4naO64q9c/I9cEctjuqATEw64A5hJ
-         BVxMUbR1OGu/lqHZj5/XZN/2UeyhDDm6IM372OsKhXjmQSTFFfkoCmFyplNdEf+HIlg/
-         q7lH60xXZihaGxFRM3ycRmPRVZw+BZIunTKqkXRcrNCbEn/kIIKRdgTB0xtiXgN8kfoq
-         PDHL9HX+kxQUoQGqyRISYXRaYznan2XN3pZ7qwl7Piuqxjy4xmAUbA3QzWdCIVyiJjgG
-         Vxm9VoV4LDZ3cHXKB08BArdmMcJG1TaXWyjloL8e0Pe83BvdUpsGcxzkQmIywDG+AZJz
-         GNTQ==
-X-Gm-Message-State: AOAM53243/6fBgEk7Fxwri5DuVHYCxvPZEFyy6Q9MVRPwgOfMakeQAYA
-        PFeaXJydnwX1pJvKmXyJ9q6f7h4Vu8RNjQ==
-X-Google-Smtp-Source: ABdhPJxy85v0go1xGD35RKfoRYt1rasAF6SGqhi4bpygZrK0XnGjjMpUolZp9BLTK78nyZRxXpXw5A==
-X-Received: by 2002:a05:622a:2d6:: with SMTP id a22mr9212291qtx.111.1615499690399;
-        Thu, 11 Mar 2021 13:54:50 -0800 (PST)
-Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com. [209.85.219.176])
-        by smtp.gmail.com with ESMTPSA id g11sm2986339qkk.5.2021.03.11.13.54.49
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Mar 2021 13:54:49 -0800 (PST)
-Received: by mail-yb1-f176.google.com with SMTP id d9so23328636ybq.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Mar 2021 13:54:49 -0800 (PST)
-X-Received: by 2002:a25:9348:: with SMTP id g8mr11415895ybo.343.1615499689441;
- Thu, 11 Mar 2021 13:54:49 -0800 (PST)
-MIME-Version: 1.0
-References: <20210311033957.8978-1-rojay@codeaurora.org>
-In-Reply-To: <20210311033957.8978-1-rojay@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 11 Mar 2021 13:54:38 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=VuGPvUY8edN+PEuZS_pO+=3WHeJ-4J5tHDAPRnXJs0QA@mail.gmail.com>
-Message-ID: <CAD=FV=VuGPvUY8edN+PEuZS_pO+=3WHeJ-4J5tHDAPRnXJs0QA@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: sc7280: Add qspi, qupv3_0 and qupv3_1 nodes
-To:     Roja Rani Yarubandi <rojay@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        msavaliy@qti.qualcomm.com
-Content-Type: text/plain; charset="UTF-8"
+        Thu, 11 Mar 2021 17:19:48 -0500
+IronPort-SDR: rN1Ya86j/UYYJUwWh70xqRIMX0Zz4Bwh3CMCKe8q1GxM2BPDHZC5E5hdFzPwPdOeDMxwRl2lC0
+ 5fx2ShQsfKV21E/FNXHgF733Tp3pdl8wYXO5YPDDKzGNFKw9UxtP1luZmJoy9VugotCe325eq7
+ cuIc9mQF5YZs1XbaYgmwQmrhSQ5h/K6HBNRPNMqfzycNeJ3kqn6ISPUl+ldiEAMpbkY5zO4ulh
+ SFbhInJnNAuh2tBEdtVhm/fQ17t2V35IDa1zBT8pk3dOH0hsT1aiEnnlXOksJ3axhsW9wEDjvS
+ nUo=
+X-IronPort-AV: E=Sophos;i="5.81,241,1610438400"; 
+   d="scan'208";a="47810283"
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by labrats.qualcomm.com with ESMTP; 11 Mar 2021 14:19:46 -0800
+X-QCInternal: smtphost
+Received: from stor-presley.qualcomm.com ([192.168.140.85])
+  by ironmsg01-sd.qualcomm.com with ESMTP; 11 Mar 2021 14:19:45 -0800
+Received: by stor-presley.qualcomm.com (Postfix, from userid 92687)
+        id 8955820F71; Thu, 11 Mar 2021 14:19:45 -0800 (PST)
+From:   Asutosh Das <asutoshd@codeaurora.org>
+To:     cang@codeaurora.org, martin.petersen@oracle.com,
+        adrian.hunter@intel.com, linux-scsi@vger.kernel.org
+Cc:     Asutosh Das <asutoshd@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        linux-arm-kernel@lists.infradead.org (moderated list:ARM/Mediatek SoC
+        support),
+        linux-mediatek@lists.infradead.org (moderated list:ARM/Mediatek SoC
+        support)
+Subject: [PATCH v11 0/2] Enable power management for ufs wlun 
+Date:   Thu, 11 Mar 2021 14:19:33 -0800
+Message-Id: <cover.1615500685.git.asutoshd@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+This patch attempts to fix a deadlock in ufs while sending SSU.
+Recently, blk_queue_enter() added a check to not process requests if the
+queue is suspended. That leads to a resume of the associated device which
+is suspended. In ufs, that device is ufs device wlun and it's parent is
+ufs_hba. This resume tries to resume ufs device wlun which in turn tries
+to resume ufs_hba, which is already in the process of suspending, thus
+causing a deadlock.
 
-On Wed, Mar 10, 2021 at 7:41 PM Roja Rani Yarubandi
-<rojay@codeaurora.org> wrote:
->
-> +&qspi_cs0 {
-> +       pinconf {
-> +               pins = "gpio15";
-> +               bias-disable;
-> +       };
+This patch takes care of:
+* Suspending the ufs device lun only after all other luns are suspended
+* Sending SSU during ufs device wlun suspend
+* Clearing uac for rpmb and ufs device wlun
+* Not sending commands to the device during host suspend
 
-The "pinconf" / "pinmux" subnode shouldn't be used for new SoCs. See:
+v10 -> v11:
+- Fixed supplier suspending before consumer race
+- Addressed Adrian's comments
+  * Added proper resume/suspend cb to ufshcd_auto_hibern8_update()
+  * Cosmetic changes to ufshcd-pci.c
+  * Cleaned up ufshcd_system_suspend()
+  * Added ufshcd_debugfs_eh_exit to ufshcd_core_init()
 
-http://lore.kernel.org/r/CAD=FV=UY_AFRrAY0tef5jP698LEng6oN652LcX3B4nG=aWh0gA@mail.gmail.com
+v9 -> v10:
+- Addressed Adrian's comments
+  * Moved suspend/resume vops to __ufshcd_wl_[suspend/resume]()
+  * Added correct resume in ufs_bsg
 
-...same feedback for this whole patch.
+v8 -> v9:
+- Addressed Adrian's comments
+  * Moved link transition to __ufshcd_wl_[suspend/resume]()
+  * Fixed the other minor comments
 
-> +                       qup_spi0_default: qup-spi0-default {
-> +                               pinmux {
-> +                                       pins = "gpio0", "gpio1",
-> +                                              "gpio2", "gpio3";
-> +                                       function = "qup00";
-> +                               };
-> +                       };
+v7 -> v8:
+- Addressed Adrian's comments
+  * Removed separate autosuspend delay for ufs-device lun
+  * Fixed the ee handler getting scheduled during pm
+  * Always runtime resume in suspend_prepare()
+  * Added CONFIG_PM_SLEEP where needed
+  
+v6 -> v7:
+  * Resume the ufs device before shutting it down
 
-Please split these SPI nodes as per the thread above, like:
+v5 -> v6:
+- Addressed Adrian's comments
+  * Added complete() cb
+  * Added suspend_prepare() and complete() to all drivers
+  * Moved suspend_prepare() and complete() to ufshcd
+  * .poweroff() uses ufhcd_wl_poweroff()
+  * Removed several forward declarations
+  * Moved scsi_register_driver() to ufshcd_core_init()
 
-tlmm: pinctrl@... {
-  qup_spi0_data_clk: qup-spi0-data-clk {
-    pins = "gpio0", "gpio1", "gpio2";
-    function = "qup0";
-  };
+v4 -> v5:
+- Addressed Adrian's comments
+  * Used the rpmb driver contributed by Adrian
+  * Runtime-resume the ufs device during suspend to honor spm-lvl
+  * Unregister the scsi_driver in ufshcd_remove()
+  * Currently shutdown() puts the ufs device to power-down mode
+    so, just removed ufshcd_pci_poweroff()
+  * Quiesce the scsi device during shutdown instead of remove
 
-  qup_spi0_cs: qup-spi0-cs {
-    pins = "gpio3";
-    function = "qup0";
-  };
-
-  qup_spi0_cs_gpio: qup-spi0-cs-gpio {
-    pins = "gpio3";
-    function = "gpio";
-  };
-};
-
-
-> +                       qup_uart0_default: qup-uart0-default {
-> +                               pinmux {
-> +                                       pins = "gpio0", "gpio1",
-> +                                              "gpio2", "gpio3";
-> +                                       function = "qup00";
-> +                               };
-> +                       };
-
-I suspect things would actually be cleaner if we broke the uart lines
-up since the boards tend to have to adjust pulls differently for each
-line. With the new "no pinconf / pinmux" world it's pretty clean. It's
-obviously up to Bjorn, but if it were me I'd request this in the SoC
-file:
-
-qup_uart0_cts: qup-uart0-cts {
-  pins = "...";
-  function = "qup00";
-};
-
-qup_uart0_rts: qup-uart0-rts {
-  pins = "...";
-  function = "qup00";
-};
-
-qup_uart0_rx: qup-uart0-rx {
-  pins = "...";
-  function = "qup00";
-};
-
-qup_uart0_tx: qup-uart0-tx {
-  pins = "...";
-  function = "qup00";
-};
-
-...and now when the board file wants to adjust the pulls they can just
-reference each one:
-
-/*
- * Comments about why the UART0 pulls make sense.
- * Blah blah blah.
- */
-
-&qup_uart0_cts {
-  bias-pull-down;
-};
-
-&qup_uart0_rts {
-  drive-strength = <2>;
-  bias-disable;
-};
-
-&qup_uart0_rx {
-  bias-pull-up;
-};
-
-&qup_uart0_tx {
-  drive-strength = <2>;
-  bias-disable;
-};
+v3 RFC -> v4:
+- Addressed Bart's comments
+  * Except that I didn't get any checkpatch failures
+- Addressed Avri's comments
+- Addressed Adrian's comments
+  * Added a check for deepsleep power mode
+  * Removed a couple of forward declarations
+  * Didn't separate the scsi drivers because in rpmb case it just sends uac
+    in resume and it seemed pretty neat to me.
+- Added sysfs changes to resume the devices before accessing
 
 
-> +               qspi: spi@88dc000 {
+Asutosh Das (2):
+  scsi: ufs: Enable power management for wlun
+  ufs: sysfs: Resume the proper scsi device
 
-I believe the qspi node is sorted incorrectly. When I apply this to
-the top of the Qualcomm tree it shows up after the "apps_smmu:
-iommu@15000000" node. However:
+ drivers/scsi/ufs/cdns-pltfrm.c     |   2 +
+ drivers/scsi/ufs/tc-dwc-g210-pci.c |   2 +
+ drivers/scsi/ufs/ufs-debugfs.c     |   5 +
+ drivers/scsi/ufs/ufs-debugfs.h     |   2 +
+ drivers/scsi/ufs/ufs-exynos.c      |   2 +
+ drivers/scsi/ufs/ufs-hisi.c        |   2 +
+ drivers/scsi/ufs/ufs-mediatek.c    |   2 +
+ drivers/scsi/ufs/ufs-qcom.c        |   2 +
+ drivers/scsi/ufs/ufs-sysfs.c       |  30 +-
+ drivers/scsi/ufs/ufs_bsg.c         |   6 +-
+ drivers/scsi/ufs/ufshcd-pci.c      |  36 +--
+ drivers/scsi/ufs/ufshcd.c          | 616 ++++++++++++++++++++++++++-----------
+ drivers/scsi/ufs/ufshcd.h          |   7 +
+ include/trace/events/ufs.h         |  20 ++
+ 14 files changed, 515 insertions(+), 219 deletions(-)
 
-0x088dc000 < 0x15000000
+-- 
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
-...which means it should be _before_.
-
--Doug
