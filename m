@@ -2,183 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 579E4336869
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Mar 2021 01:10:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A7C5D336873
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Mar 2021 01:13:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230052AbhCKAKM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Mar 2021 19:10:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44424 "EHLO
+        id S229546AbhCKANZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Mar 2021 19:13:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230403AbhCKAKG (ORCPT
+        with ESMTP id S229612AbhCKANV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Mar 2021 19:10:06 -0500
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEFE2C061760
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 16:10:06 -0800 (PST)
-Received: by mail-oi1-x231.google.com with SMTP id d20so21194597oiw.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 16:10:06 -0800 (PST)
+        Wed, 10 Mar 2021 19:13:21 -0500
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30445C061760
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 16:13:21 -0800 (PST)
+Received: by mail-ot1-x32b.google.com with SMTP id a17so18318098oto.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Mar 2021 16:13:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=5oYluSsE5PgMAKZ6OcpTYiQImPVjA/JRZBOqfxdZrMk=;
-        b=pqi2kCbDuS85FYifp5gs9DTNbdngCBmFP3e89PGjWiEK7oabYVmuRgqrnN15PPRJ0X
-         zBkRQF0wHqqVGJWrxzdL0FV9TMwzCBe1UHGVPSsPQA0F4/MGQC0ewpiPZcPN0XWVURGT
-         cS00sU/nRfPBUm2uXXzBD53OJwNgSfG7j2SlBgO5/kUYnA1xevXv/SuFhW+AwMNMfhQS
-         AiRkgh9mqD+AGBTuKFCGxMka06k0N3mxlBa+8WeJg5aEHQ2OD7L9RWaZDAWAeuxLpjN8
-         ywq3iDnBuDnjZlmwzN83QPmLAINi1qRJCd/pzPmGnvYd4a0Th+KXf2T/5I91vO1rhWL5
-         XcGg==
+        bh=erXJ8iD4PdZZOPdskeJrDvYPVu+tfBX21Jw1u5qAgH8=;
+        b=Wc0f7wU3TUc2iJPP9/xxnyPXH/7SCWn7oxmpPj8uDJwzLk14cI5bIyd31ldsct6ANX
+         9wf+rXPgsyc80Mqi67Qts7NZVwOyNjXLrmEd3vgKKlwwMx6JqXoietLmEXW5lzGb+ORZ
+         eU3asOu425N0rTD7jkTXAe//M5nPs1Zo1nQOGgHSlhETGkuvMIV4nWeYzfi7pMLg6pRN
+         fLDUAiOg1jiK1BvRlmfyydJKmviK3FdH0ZyjXCdF0gAud1gvVHE35xo7oIwDTnZ3I5xN
+         JXdcveVRhr1jPWVIPsPApvgDZY3HPcdC9xvA+Z6zoo8mUqp08ssvPj9tXMEUDuyLF8H3
+         ACyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=5oYluSsE5PgMAKZ6OcpTYiQImPVjA/JRZBOqfxdZrMk=;
-        b=cdBMMOm0MgRwwdx0zOFgeyCgNJr5Dus/pSBMp7qnxP/xwF0le9UG3XY00u6HiXVvsj
-         inSIrbMkHX/wKTWWGBBOMyYWIEk4MG8L4HPE+cAWhLAk4O9Ji+pKm7lP9ZAAtAufsTUj
-         5nvrmKo7lWQ3C7kOp1CTCaQ2gvLiiCJF5yfLbtPj7tY6mB3/QsxXGo0Zp07st5/j4s9W
-         d63UGrZdWjV6PLftjGrGvI4jOYtfggNxj9J4anY6eWZi1EZiVhoTuYmCBYs+UMGhrZ2X
-         NtTnnVbVTL/oRIr1ykO+1qXJxEWwNH7v1uaOqYrOGx9fSzc4B3e5XegQQ2kErftuZb/6
-         Et7w==
-X-Gm-Message-State: AOAM530YJC1CjJ8hWBr9kKMMs1WFisTwl8hPcd6NKEc91W7NaXNEPQ2M
-        f+vizV4Vhh0nebRdkHA7ElOJiw==
-X-Google-Smtp-Source: ABdhPJzBye2+8MGYrslJiA1IxeynpPjkr+OCDSlyqqFocWcvHwDX9tjEqB1+bEx4u7Fji3vQ3w3cfA==
-X-Received: by 2002:aca:f13:: with SMTP id 19mr4169811oip.56.1615421405962;
-        Wed, 10 Mar 2021 16:10:05 -0800 (PST)
+        bh=erXJ8iD4PdZZOPdskeJrDvYPVu+tfBX21Jw1u5qAgH8=;
+        b=d+pMaNMkWgVftR1bt/z5Jv+A6EEZoIpf4pJmOY7wPORM5r3rHv4Jh6pxPCdmmV+lmf
+         MMRhJN02yveirDl8/hdX76Isjp/XBDkK7Iethr1kncVCIbdllK4pp2Mpps4a6TEJt76d
+         h9xX5G9iQpbkeF4F9l0N039eXZxputvrKemOiRfcTt2zl+iirVMWX8BMysacQsJG0znM
+         rflhyGdoT56LHn9vXgKYBEXYXm1vWNrK4mlgBL6dgmf+IG4Tb9nVydv8hYSUBzMv1gF+
+         gH/AKRcXotSe8u4CXxyUHptamHJqw7mCsF5JNUHH6y36NUxx78/oAjDzhEnWYYwjfeZp
+         /RzQ==
+X-Gm-Message-State: AOAM533NFU+Ta0AIeCYJuAzfCcPxB9QaRDR9ET8TzHElKxNXbEf2W1/n
+        MrvpV9pO+vA84HnRWm/mBeS84w==
+X-Google-Smtp-Source: ABdhPJxH0oevfBS8lHRDO2gQ1d7kzTcsUZamL2RWxdoLbQFa28w6Y6qr9CEiUaTicZKMhSdAjjjjoA==
+X-Received: by 2002:a9d:4816:: with SMTP id c22mr4555658otf.144.1615421600442;
+        Wed, 10 Mar 2021 16:13:20 -0800 (PST)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id n12sm275665otq.42.2021.03.10.16.10.05
+        by smtp.gmail.com with ESMTPSA id p3sm289437otk.9.2021.03.10.16.13.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Mar 2021 16:10:05 -0800 (PST)
-Date:   Wed, 10 Mar 2021 18:10:03 -0600
+        Wed, 10 Mar 2021 16:13:19 -0800 (PST)
+Date:   Wed, 10 Mar 2021 18:13:18 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Jonathan Marek <jonathan@marek.ca>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: sm8250: fix display nodes
-Message-ID: <YElf20GgcdREgvha@builder.lan>
-References: <20210215162607.21360-1-jonathan@marek.ca>
- <20210215162607.21360-3-jonathan@marek.ca>
- <CAA8EJpqaVQ_eLrm2QLPvL+ieMabmKJdy0D9iciuC-G=1aiy1nQ@mail.gmail.com>
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     agross@kernel.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 00/13] Add binding updates and DT files for SC7280 SoC
+Message-ID: <YElgnuH6ZEoMOgdj@builder.lan>
+References: <1613114930-1661-1-git-send-email-rnayak@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAA8EJpqaVQ_eLrm2QLPvL+ieMabmKJdy0D9iciuC-G=1aiy1nQ@mail.gmail.com>
+In-Reply-To: <1613114930-1661-1-git-send-email-rnayak@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 16 Feb 15:14 CST 2021, Dmitry Baryshkov wrote:
+On Fri 12 Feb 01:28 CST 2021, Rajendra Nayak wrote:
 
-> Except for the compatible value changes:
+> This series includes a few minor binding updates and base device tree
+> files (to boot to shell) for SC7280 SoC and the IDP board using this SoC.
 > 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> May I suggest to split the compatibility name changes into a separate
-> series from this patch (without it the patch stands a chance of being
-> accepted into the stable tree, if I'm not mistaken).
+> The series is dependent on a few driver patches to merge first, for
+> gcc, rpmhcc and pinctrl
+> https://lore.kernel.org/patchwork/project/lkml/list/?series=484517
+> https://lore.kernel.org/patchwork/project/lkml/list/?series=484489
+> https://lore.kernel.org/patchwork/patch/1379831/
 > 
 
-Please let me know what I should do with this patch.
+I'm not able to find v2 of this series, but plenty of patches that
+depends on its content. Do I somehow miss it, or is it coming?
 
 Regards,
 Bjorn
 
-> On Mon, 15 Feb 2021 at 19:27, Jonathan Marek <jonathan@marek.ca> wrote:
-> >
-> > Apply these fixes to the newly added sm8250 display ndoes
-> >  - Use sm8250 compatibles instead of sdm845 compatibles
-> >  - Remove "notused" interconnect (which apparently was blindly copied from
-> >    my old patches)
-> >  - Use dispcc node example from dt-bindings, removing clocks which aren't
-> >    documented or used by the driver and fixing the region size.
-> >
-> > Fixes: 7c1dffd471b1 ("arm64: dts: qcom: sm8250.dtsi: add display system nodes")
-> > Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sm8250.dtsi | 31 +++++++---------------------
-> >  1 file changed, 8 insertions(+), 23 deletions(-)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> > index 947e1accae3a..693ac533f9b6 100644
-> > --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> > @@ -2323,14 +2323,13 @@ usb_2_dwc3: dwc3@a800000 {
-> >                 };
-> >
-> >                 mdss: mdss@ae00000 {
-> > -                       compatible = "qcom,sdm845-mdss";
-> > +                       compatible = "qcom,sm8250-mdss";
-> >                         reg = <0 0x0ae00000 0 0x1000>;
-> >                         reg-names = "mdss";
-> >
-> > -                       interconnects = <&gem_noc MASTER_AMPSS_M0 &config_noc SLAVE_DISPLAY_CFG>,
-> > -                                       <&mmss_noc MASTER_MDP_PORT0 &mc_virt SLAVE_EBI_CH0>,
-> > +                       interconnects = <&mmss_noc MASTER_MDP_PORT0 &mc_virt SLAVE_EBI_CH0>,
-> >                                         <&mmss_noc MASTER_MDP_PORT1 &mc_virt SLAVE_EBI_CH0>;
-> > -                       interconnect-names = "notused", "mdp0-mem", "mdp1-mem";
-> > +                       interconnect-names = "mdp0-mem", "mdp1-mem";
-> >
-> >                         power-domains = <&dispcc MDSS_GDSC>;
-> >
-> > @@ -2356,7 +2355,7 @@ mdss: mdss@ae00000 {
-> >                         ranges;
-> >
-> >                         mdss_mdp: mdp@ae01000 {
-> > -                               compatible = "qcom,sdm845-dpu";
-> > +                               compatible = "qcom,sm8250-dpu";
-> >                                 reg = <0 0x0ae01000 0 0x8f000>,
-> >                                       <0 0x0aeb0000 0 0x2008>;
-> >                                 reg-names = "mdp", "vbif";
-> > @@ -2580,7 +2579,7 @@ opp-358000000 {
-> >
-> >                 dispcc: clock-controller@af00000 {
-> >                         compatible = "qcom,sm8250-dispcc";
-> > -                       reg = <0 0x0af00000 0 0x20000>;
-> > +                       reg = <0 0x0af00000 0 0x10000>;
-> >                         mmcx-supply = <&mmcx_reg>;
-> >                         clocks = <&rpmhcc RPMH_CXO_CLK>,
-> >                                  <&dsi0_phy 0>,
-> > @@ -2588,28 +2587,14 @@ dispcc: clock-controller@af00000 {
-> >                                  <&dsi1_phy 0>,
-> >                                  <&dsi1_phy 1>,
-> >                                  <0>,
-> > -                                <0>,
-> > -                                <0>,
-> > -                                <0>,
-> > -                                <0>,
-> > -                                <0>,
-> > -                                <0>,
-> > -                                <0>,
-> > -                                <&sleep_clk>;
-> > +                                <0>;
-> >                         clock-names = "bi_tcxo",
-> >                                       "dsi0_phy_pll_out_byteclk",
-> >                                       "dsi0_phy_pll_out_dsiclk",
-> >                                       "dsi1_phy_pll_out_byteclk",
-> >                                       "dsi1_phy_pll_out_dsiclk",
-> > -                                     "dp_link_clk_divsel_ten",
-> > -                                     "dp_vco_divided_clk_src_mux",
-> > -                                     "dptx1_phy_pll_link_clk",
-> > -                                     "dptx1_phy_pll_vco_div_clk",
-> > -                                     "dptx2_phy_pll_link_clk",
-> > -                                     "dptx2_phy_pll_vco_div_clk",
-> > -                                     "edp_phy_pll_link_clk",
-> > -                                     "edp_phy_pll_vco_div_clk",
-> > -                                     "sleep_clk";
-> > +                                     "dp_phy_pll_link_clk",
-> > +                                     "dp_phy_pll_vco_div_clk";
-> >                         #clock-cells = <1>;
-> >                         #reset-cells = <1>;
-> >                         #power-domain-cells = <1>;
-> > --
-> > 2.26.1
-> >
+> Maulik Shah (3):
+>   arm64: dts: qcom: sc7280: Add RSC and PDC devices
+>   arm64: dts: qcom: Add reserved memory for fw
+>   arm64: dts: qcom: sc7280: Add cpuidle states
 > 
+> Rajendra Nayak (5):
+>   dt-bindings: arm: qcom: Document SC7280 SoC and board
+>   dt-bindings: firmware: scm: Add SC7280 support
+>   arm64: dts: sc7280: Add basic dts/dtsi files for SC7280 soc
+>   dt-bindings: qcom,pdc: Add compatible for sc7280
+>   arm64: dts: qcom: SC7280: Add rpmhcc clock controller node
+> 
+> Sai Prakash Ranjan (4):
+>   dt-bindings: arm-smmu: Add compatible for SC7280 SoC
+>   arm64: dts: qcom: sc7280: Add device node for APPS SMMU
+>   dt-bindings: watchdog: Add compatible for SC7280 SoC
+>   arm64: dts: qcom: sc7280: Add APSS watchdog node
+> 
+> satya priya (1):
+>   arm64: dts: qcom: sc7280: Add SPMI PMIC arbiter device for SC7280
+> 
+>  Documentation/devicetree/bindings/arm/qcom.yaml    |   6 +
+>  .../devicetree/bindings/firmware/qcom,scm.txt      |   1 +
+>  .../bindings/interrupt-controller/qcom,pdc.txt     |   1 +
+>  .../devicetree/bindings/iommu/arm,smmu.yaml        |   1 +
+>  .../devicetree/bindings/watchdog/qcom-wdt.yaml     |   1 +
+>  arch/arm64/boot/dts/qcom/Makefile                  |   1 +
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dts            |  47 ++
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi               | 596 +++++++++++++++++++++
+>  8 files changed, 654 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-idp.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7280.dtsi
 > 
 > -- 
-> With best wishes
-> Dmitry
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
+> 
