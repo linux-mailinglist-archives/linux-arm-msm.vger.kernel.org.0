@@ -2,89 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AED67336D9D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Mar 2021 09:19:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 78B62336DC5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Mar 2021 09:26:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230454AbhCKISr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Mar 2021 03:18:47 -0500
-Received: from m42-2.mailgun.net ([69.72.42.2]:10030 "EHLO m42-2.mailgun.net"
+        id S231273AbhCKI0S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Mar 2021 03:26:18 -0500
+Received: from verein.lst.de ([213.95.11.211]:39850 "EHLO verein.lst.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231253AbhCKISg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Mar 2021 03:18:36 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1615450716; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=ZBXnKQ2z5F+w5AO3Zn+MXqGx/PcyC6YiGN2avgOMwvk=; b=Jf6UQB4F2HWK76h1OoGARoUQya5xRc/VtnIqX2goxtAeM3KDJYTHP0crEkuZ8q8M738W5XKF
- oYT9kF49QJNWz2Qf3OpUOpKuCDxOhKnSVpnrjojErMxJs/irIPjLprn3wQvWRJflDaUFltSs
- rL5DDMC+ezdwMASF0AlOnik3R0A=
-X-Mailgun-Sending-Ip: 69.72.42.2
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 6049d24f0c7cf0f56c6ec0cd (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 11 Mar 2021 08:18:23
- GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 575B5C43467; Thu, 11 Mar 2021 08:18:23 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6724FC43461;
-        Thu, 11 Mar 2021 08:18:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6724FC43461
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, judyhsiao@chromium.org
-Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Subject: [PATCH] ASoC: qcom: lpass-cpu: Fix lpass dai ids parse
-Date:   Thu, 11 Mar 2021 13:48:05 +0530
-Message-Id: <20210311081805.20424-1-srivasam@codeaurora.org>
-X-Mailer: git-send-email 2.29.0
+        id S231351AbhCKI0P (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 11 Mar 2021 03:26:15 -0500
+Received: by verein.lst.de (Postfix, from userid 2407)
+        id F3A2D68BEB; Thu, 11 Mar 2021 09:26:09 +0100 (CET)
+Date:   Thu, 11 Mar 2021 09:26:09 +0100
+From:   Christoph Hellwig <hch@lst.de>
+To:     Robin Murphy <robin.murphy@arm.com>
+Cc:     Christoph Hellwig <hch@lst.de>, Joerg Roedel <joro@8bytes.org>,
+        Will Deacon <will@kernel.org>, Li Yang <leoyang.li@nxp.com>,
+        freedreno@lists.freedesktop.org, kvm@vger.kernel.org,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        linuxppc-dev@lists.ozlabs.org, dri-devel@lists.freedesktop.org,
+        virtualization@lists.linux-foundation.org,
+        iommu@lists.linux-foundation.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        David Woodhouse <dwmw2@infradead.org>,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH 14/17] iommu: remove DOMAIN_ATTR_DMA_USE_FLUSH_QUEUE
+Message-ID: <20210311082609.GA6990@lst.de>
+References: <20210301084257.945454-1-hch@lst.de> <20210301084257.945454-15-hch@lst.de> <1658805c-ed28-b650-7385-a56fab3383e3@arm.com> <20210310091501.GC5928@lst.de> <20210310092533.GA6819@lst.de> <fdacf87a-be14-c92c-4084-1d1dd4fc7766@arm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <fdacf87a-be14-c92c-4084-1d1dd4fc7766@arm.com>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The max boundary check while parsing dai ids makes
-sound card registration fail after common up dai ids.
+On Wed, Mar 10, 2021 at 06:39:57PM +0000, Robin Murphy wrote:
+>> Actually... Just mirroring the iommu_dma_strict value into
+>> struct iommu_domain should solve all of that with very little
+>> boilerplate code.
+>
+> Yes, my initial thought was to directly replace the attribute with a
+> common flag at iommu_domain level, but since in all cases the behaviour
+> is effectively global rather than actually per-domain, it seemed
+> reasonable to take it a step further. This passes compile-testing for
+> arm64 and x86, what do you think?
 
-Fixes: cd3484f7f1386 (ASoC: dt-bindings: lpass: Fix and common up lpass dai ids)
+It seems to miss a few bits, and also generally seems to be not actually
+apply to recent mainline or something like it due to different empty
+lines in a few places.
 
-Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
----
- sound/soc/qcom/lpass-cpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Let me know what you think of the version here:
 
-diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
-index 4762286b33fe..c62d2612e8f5 100644
---- a/sound/soc/qcom/lpass-cpu.c
-+++ b/sound/soc/qcom/lpass-cpu.c
-@@ -739,7 +739,7 @@ static void of_lpass_cpu_parse_dai_data(struct device *dev,
- 
- 	for_each_child_of_node(dev->of_node, node) {
- 		ret = of_property_read_u32(node, "reg", &id);
--		if (ret || id < 0 || id >= data->variant->num_dai) {
-+		if (ret || id < 0) {
- 			dev_err(dev, "valid dai id not found: %d\n", ret);
- 			continue;
- 		}
--- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+http://git.infradead.org/users/hch/misc.git/shortlog/refs/heads/iommu-cleanup
 
+I'll happily switch the patch to you as the author if you're fine with
+that as well.
