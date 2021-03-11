@@ -2,128 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D40F3374AB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Mar 2021 14:52:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6FB5B3374F1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Mar 2021 15:05:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233757AbhCKNwS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Mar 2021 08:52:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51390 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233666AbhCKNwB (ORCPT
+        id S233857AbhCKOEi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Mar 2021 09:04:38 -0500
+Received: from mx07-00178001.pphosted.com ([185.132.182.106]:36286 "EHLO
+        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S233852AbhCKOEa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Mar 2021 08:52:01 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D6C9C061761
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Mar 2021 05:52:01 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id l19so1354993wmh.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Mar 2021 05:52:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=GdXN3z4xkG8mhrjjLyuf+xPSPLFfHaqc7TyE3s6lR5o=;
-        b=mzyHuGYkxuGBqtX56UH+ZqkeHQrY7cxjlNcTXAnF2iB0rcPRz1a0NOXIcbCaQA03iz
-         EDY3iXzg3ylmx6DshXuHd/xYeDBmICAzMcMb1ziWGbtGMp88T3If/JFMeDUTgYLA5FaR
-         lZzyUcqQNlTgrbOWxIiCNNkGXcN+YcAkRa7XtcndRuHIISjtS1bqOozbZsz1nC5hcsDD
-         u26KEay0y9NGORuXLNCFAGzVfuTbflhbbVeY0FwDzd47mAegDitFXQlidZ+r3vc4qp62
-         2wq4Ap9JOFRY2OG3rj7JvheiELYyUdtdiEu9Q/yHgDadrXZxY7kRNmrLS7Phdb9dJhjR
-         /WTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=GdXN3z4xkG8mhrjjLyuf+xPSPLFfHaqc7TyE3s6lR5o=;
-        b=uDC+66Lrpk0XKpROauw/yPX9yWpsmRkPWKzrHaYO5NKn7FVjhoVI5yomWE6RWx1MyM
-         sOIQE6b0AWtUnKdvK83YEdlOpV7RNmud6dVpKGpht1lYaDdboDkZdwR/ouaNdvOOO3NN
-         RwsjqnyyvhB9a3xSzJY6K5NP0warKp/ghZ6gjudQEhlPI2cQnAsBnVz9PW08PEg+3lJB
-         BvtfH2uUGK4/it+1RL14X98HQM5MPj39LlmIgglYMJOgR44i00JSIWk7aXaJ2vgwLEoe
-         KCOi/tCaw/AMm4piFso0VX4cIt9T3a4levOCsjssM7lyNfD7lPLsrzT2iUhuja0yMOpf
-         cbww==
-X-Gm-Message-State: AOAM530tkWQtXZXeewiDAjJlTvw5Tx54OxGNwDbv6d/ya3K8Y9xS9uK4
-        zecgwbp7ehe7m12tkQCNUKCEag==
-X-Google-Smtp-Source: ABdhPJwtZ3Lak0tbe7621fR5C5wI2ILNInbUcMVPIDqge9Cl2Uqimu1nbUPn2VLmqrVsQ9qrcxz2sA==
-X-Received: by 2002:a7b:cd81:: with SMTP id y1mr8400832wmj.51.1615470715019;
-        Thu, 11 Mar 2021 05:51:55 -0800 (PST)
-Received: from dell ([91.110.221.204])
-        by smtp.gmail.com with ESMTPSA id h10sm4119795wrp.22.2021.03.11.05.51.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Mar 2021 05:51:54 -0800 (PST)
-Date:   Thu, 11 Mar 2021 13:51:52 +0000
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Roland Scheidegger <sroland@vmware.com>,
-        linux-kernel@vger.kernel.org,
-        Alex Deucher <alexander.deucher@amd.com>,
-        amd-gfx@lists.freedesktop.org, Anthony Koo <Anthony.Koo@amd.com>,
-        Ben Skeggs <bskeggs@redhat.com>,
-        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Dave Airlie <airlied@redhat.com>,
-        David Airlie <airlied@linux.ie>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Harry Wentland <harry.wentland@amd.com>,
-        Jeremy Kolb <jkolb@brandeis.edu>,
-        Kuogee Hsieh <khsieh@codeaurora.org>,
-        Leo Li <sunpeng.li@amd.com>, linaro-mm-sig@lists.linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        Lyude Paul <lyude@redhat.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        nouveau@lists.freedesktop.org,
-        Qinglang Miao <miaoqinglang@huawei.com>,
-        Rob Clark <rob.clark@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        VMware Graphics <linux-graphics-maintainer@vmware.com>,
-        Zack Rusin <zackr@vmware.com>
-Subject: Re: [RESEND 00/53] Rid GPU from W=1 warnings
-Message-ID: <20210311135152.GT701493@dell>
-References: <20210303134319.3160762-1-lee.jones@linaro.org>
- <16d4300e-bf29-1e85-317b-53d257890cb9@vmware.com>
- <20210308091932.GB4931@dell>
- <YEobySvG0zPs9xhc@phenom.ffwll.local>
+        Thu, 11 Mar 2021 09:04:30 -0500
+Received: from pps.filterd (m0241204.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id 12BE35fq014991;
+        Thu, 11 Mar 2021 15:04:25 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=selector1;
+ bh=v8txream0i2iNYejsg6TwbWegioUuHjMWET/Z9cj2U0=;
+ b=2lrcpMoSt+DsfNpeZAc4o2SnY8THHwIWnQCjCrZv2CjNLaszYqCmWVEUgqKRW7WXvdWS
+ 8zRIhfCDMgeG0NhI0dqawmWUXkVYjcrsHU9W/o8zymqrndUUUsgR088rFpp/LEcUu0KC
+ JdMnexn/Ha3xU9tOWY6i+RGSO7j7eAPp4w+AbXWKuwsMCblYMTHZD0uBsJLLHbYw9Kgs
+ MpbUldZeJBfsMhHlPT7PjQDiBXia+MjO4rKYKbw05Vw335zk9pu2VEJY5SBZcnPhTh2N
+ SgHt5JxRIZQQawQMusNq6GZ1Es0acMMH+oZl94hBJh5ydO09Z7u69EH8mFSEx4teNl21 0A== 
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com with ESMTP id 3741y76hy3-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 11 Mar 2021 15:04:25 +0100
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 8EAF310002A;
+        Thu, 11 Mar 2021 15:04:24 +0100 (CET)
+Received: from Webmail-eu.st.com (sfhdag2node3.st.com [10.75.127.6])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 7D913245D4C;
+        Thu, 11 Mar 2021 15:04:24 +0100 (CET)
+Received: from localhost (10.75.127.48) by SFHDAG2NODE3.st.com (10.75.127.6)
+ with Microsoft SMTP Server (TLS) id 15.0.1473.3; Thu, 11 Mar 2021 15:04:24
+ +0100
+From:   Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Andy Gross <agross@kernel.org>
+CC:     <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-msm@vger.kernel.org>, <arnaud.pouliquen@foss.st.com>
+Subject: [PATCH 0/6] rpmsg: enable the use of the rpmsg_char device for the Virtio backend
+Date:   Thu, 11 Mar 2021 15:04:07 +0100
+Message-ID: <20210311140413.31725-1-arnaud.pouliquen@foss.st.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YEobySvG0zPs9xhc@phenom.ffwll.local>
+Content-Type: text/plain
+X-Originating-IP: [10.75.127.48]
+X-ClientProxiedBy: SFHDAG2NODE3.st.com (10.75.127.6) To SFHDAG2NODE3.st.com
+ (10.75.127.6)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369,18.0.761
+ definitions=2021-03-11_05:2021-03-10,2021-03-11 signatures=0
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 11 Mar 2021, Daniel Vetter wrote:
+This series is the first step in the division of the series: 
+"Introduce a generic IOCTL interface for RPMsg channels management"[1]
 
-> On Mon, Mar 08, 2021 at 09:19:32AM +0000, Lee Jones wrote:
-> > On Fri, 05 Mar 2021, Roland Scheidegger wrote:
-> > 
-> > > The vmwgfx ones look all good to me, so for
-> > > 23-53: Reviewed-by: Roland Scheidegger <sroland@vmware.com>
-> > > That said, they were already signed off by Zack, so not sure what
-> > > happened here.
-> > 
-> > Yes, they were accepted at one point, then dropped without a reason.
-> > 
-> > Since I rebased onto the latest -next, I had to pluck them back out of
-> > a previous one.
-> 
-> They should show up in linux-next again. We merge patches for next merge
-> window even during the current merge window, but need to make sure they
-> don't pollute linux-next. Occasionally the cut off is wrong so patches
-> show up, and then get pulled again.
-> 
-> Unfortunately especially the 5.12 merge cycle was very wobbly due to some
-> confusion here. But your patches should all be in linux-next again (they
-> are queued up for 5.13 in drm-misc-next, I checked that).
-> 
-> Sorry for the confusion here.
+The main goal here is to enable the RPMsg char interface for
+the virtio RPMsg backend. 
 
-Oh, I see.  Well so long as they don't get dropped, I'll be happy.
+In addition some patches have been includes in order to document the
+interface and rename the rpmsg_char_init function.
 
-Thanks for the explanation Daniel
+It also includes Mathieu Poirier's comments made on [1]
+
+Patchsets that should be the next steps:
+ - Extract the control part of the char dev and create the rpmsg_ctrl.c
+   file
+ - Introduce the RPMSG_CREATE_DEV_IOCTL IOCTL to instantiate RPMsg devices
+
+
+[1]: https://patchwork.kernel.org/project/linux-remoteproc/list/?series=435523
+
+Arnaud Pouliquen (6):
+  rpmsg: char: Rename rpmsg_char_init to rpmsg_chrdev_init
+  rpmsg: Move RPMSG_ADDR_ANY in user API
+  rpmsg: Add short description of the IOCTL defined in UAPI.
+  rpmsg: char: Use rpmsg_sendto to specify the message destination
+    address
+  rpmsg: virtio: Register the rpmsg_char device
+  rpmsg: char: Return an error if device already open
+
+ drivers/rpmsg/qcom_glink_native.c | 16 ++++++++
+ drivers/rpmsg/qcom_smd.c          | 16 ++++++++
+ drivers/rpmsg/rpmsg_char.c        | 11 ++++--
+ drivers/rpmsg/virtio_rpmsg_bus.c  | 62 ++++++++++++++++++++++++++++---
+ include/linux/rpmsg.h             |  3 +-
+ include/uapi/linux/rpmsg.h        | 13 ++++++-
+ 6 files changed, 108 insertions(+), 13 deletions(-)
 
 -- 
-Lee Jones [李琼斯]
-Senior Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
+2.17.1
+
