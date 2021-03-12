@@ -2,101 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B0D03394B0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Mar 2021 18:28:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AAF7A3394B9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Mar 2021 18:29:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231601AbhCLR2S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Mar 2021 12:28:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41480 "EHLO
+        id S232223AbhCLR3X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Mar 2021 12:29:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232528AbhCLR2R (ORCPT
+        with ESMTP id S232686AbhCLR3N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Mar 2021 12:28:17 -0500
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B45FC061761
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Mar 2021 09:28:17 -0800 (PST)
-Received: by mail-oi1-x22e.google.com with SMTP id w195so20960894oif.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Mar 2021 09:28:17 -0800 (PST)
+        Fri, 12 Mar 2021 12:29:13 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FBA1C061761
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Mar 2021 09:29:12 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id t9so2203838wrn.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Mar 2021 09:29:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ZTq3YjvMCHu+pe/PF/X4oZj4DMDAfauh/757RvN40NY=;
-        b=B40LAkjI7eK5CUvcFzT9uak0yUmvROiXpFtyIFUItIUKuHvshhHfNTpDz8T5Z+DTww
-         HZypnR7cD7GFqYbkKBw+IxaYXHQqN4fDz8lGa4O+DEswivqAXLmpuk+jCKYxF5v2wKre
-         zZDKo0FRpctJ4Kgi2cXRUSlJbWIyww2NWVoyEHpiflrU8YOhuH1VJjgrtziu7iTFpq+B
-         WSBOG4Qx0bJKtAFiMf3lH76+7XXWZXD4kGhMyGPHRGL36HNZpq6vUZF7weeMpCdBnaKw
-         172PG4zY3aHy3Pvfzll9349+wg2/UHf4qMFWpj7LNBkJXpVMahv9CdYjCHYE+oKTNbMX
-         nn4A==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=rtvU59b5jVXmiYk6dHivdIzIIS4qcgdEH/0+Tg0TZ9k=;
+        b=RrrxWYGcl/sG9VhQ0IF/yuDgR+5EMMEuLiYwSvgLVdA/EXXDHmanAtL18E3CCI6OBz
+         xMSFRQJfhpRTSER8DLjd3EfwlMdtiTAWtAs69h3RhmmHIoMX2naKF5UInjH9VnEqGj4v
+         g5QIoUTWCTQFs6Xr66+uwlDMaihh6W/u0hTbQuNfHntKGWvnrwHJjqDQIYJvHm95krrV
+         yeyuC23l+RTDtVeGRW2MwDEzYbGaOne/3ynKbEFdSpBe7zpkGUgs21F1XJ1Af/y1IrWn
+         RlyDOb7CEnuq9kIv8AH3bNRrglzBRuh9wc/wWPMQDyM8n6WBLWmMz1+14ZNoLi89mzYT
+         T88Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ZTq3YjvMCHu+pe/PF/X4oZj4DMDAfauh/757RvN40NY=;
-        b=opb+1b2OVAl+CEBT8y/0pRZ9vSLJB1+ZpC6k6f7jBk7WM93X6OwHd9T9pgKnRJL9cj
-         dLkWPAn527JzFtBKgflhc+SkMGxOMiMzsWtrgTAmQneOBTf9cOyR3eJA8kO31mInyEV0
-         tG1wKxZ+SIJzEm8ldMOlUCNnb+PO/sBFXmmpacCDU/k0vUQRg0+pDo2roj8CwAXcrhmt
-         n9YMK3SZ+4tyW9SW+/BM7aZzjoiTaNtSaggWHaGNZx6rW6quI43lT6xE+tl6hz6Qm+ya
-         UJiIViOxDb+PhvwEIub6s0fny2XwumRXAkkAkbKyMHdtTrZXMGatJc/b9gBLRc476nUV
-         kJ6A==
-X-Gm-Message-State: AOAM532trlQpUtoKTGW5gaGfy6h4VWm0VFzLeCfZD+xjFZ5y9/hXl4WI
-        w7ih02YzbbuT+lM6NX3m9pcjUw==
-X-Google-Smtp-Source: ABdhPJxag8I5N9nM/nLr36jeB9NWNHxpQ9QklYbeGOmw/Ly85vSsEJ1TGdsa7PJle4NW9h78QqopzQ==
-X-Received: by 2002:a05:6808:216:: with SMTP id l22mr3313269oie.125.1615570096786;
-        Fri, 12 Mar 2021 09:28:16 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id u194sm1452340oia.27.2021.03.12.09.28.16
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=rtvU59b5jVXmiYk6dHivdIzIIS4qcgdEH/0+Tg0TZ9k=;
+        b=UHfd8ydY7GBafR3nhdJ5dVB5VyZavU2+Cfoym7nT1ZlgKfo7gPk2R9/RQ0SIcPxVDm
+         5FEmn3B7VN5HvTg04b5z0spcxowZnCUQb26BkTW5nlCK3KLFjnPgQjI26ctvt0GVmpRA
+         QdHN2650LULhM4yk8NgYbSezGjBvpGwLF5U5JOrFjOK50J0KcTexylcPS1WzRWyl+OwQ
+         /vgK96I0z2hke42ZGc40qRtElw0rUDqkMiWZpST8WC7AcYS5nAFw0rtuQZ4PeA1mtv6O
+         tjQGGVOl8qMbEXlNDU45tlS1ccbryfgnONQzaemn9dyPjMfKsLkF9/YLo15B4LROKTTY
+         G0GA==
+X-Gm-Message-State: AOAM531pgs6qwx36dloeIQD6bTrt1/x9HaKDZURlg9xPJrTfjdPgHSE2
+        6KECR/GKbRmw4+ve20w/XXpFcQ==
+X-Google-Smtp-Source: ABdhPJwIv5n3suGrFzXsEsjQdyEk0FPinT9zF7BGzOQo1EIZZuIb6uvqvdzkoTjmyGCWuMrd3mvcjg==
+X-Received: by 2002:a05:6000:188b:: with SMTP id a11mr14901713wri.151.1615570151295;
+        Fri, 12 Mar 2021 09:29:11 -0800 (PST)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id 18sm2876375wmj.21.2021.03.12.09.29.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Mar 2021 09:28:16 -0800 (PST)
-Date:   Fri, 12 Mar 2021 11:28:14 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: mailbox: Add compatible for SM8350 IPCC
-Message-ID: <YEukrpG06PBdgGAF@builder.lan>
-References: <20210312051203.3555751-1-vkoul@kernel.org>
+        Fri, 12 Mar 2021 09:29:10 -0800 (PST)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     stanimir.varbanov@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, mchehab@kernel.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     bryan.odonoghue@linaro.org, dikshita@codeaurora.org,
+        jonathan@marek.ca, vgarodia@codeaurora.org
+Subject: [PATCH v2 00/25] media: venus: Enable 6xx support
+Date:   Fri, 12 Mar 2021 17:30:14 +0000
+Message-Id: <20210312173039.1387617-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.30.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210312051203.3555751-1-vkoul@kernel.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 11 Mar 23:12 CST 2021, Vinod Koul wrote:
+V2:
+- Adds Acked-by as indicated - Stan
+- Fixes typo in patch #1 22000000 -> 220000000 - Stan
+- Fixes setting of clk_set_rate in core_clks_enable
+  unbreaks regression for 1xx/db410c - Stan
+- "Add 6xx AXI halt logic"
+  * Polled read removed - Stan
+  * Redundant comments removed - Stan
+  * Delay assocaited with LPI write removed entirely
+    experimentation shows a delay is not required - Stan/Bryan
+- Unifies intbuf_types_6xx_enc and intbuf_types_6xx_dec into
+  intbuf_types_6xx
+  Looking at the code the separate arrays was a NOP anyway - Stan/Bryan
+- Ensures venus_helper_set_format_constraints() runs for 6xx only
+- Differentiates stop address between 6xx and >= 4xx
+  0xdeadb000 >= 4xx
+  0x00000000 == 6xx - Stan
 
-Adding Jassi as recipient. Please let Vinod know if you want him to
-resend this patch to you. (I send a patch for MAINTAINERS yesterday)
+With the fixes in place for db410c I've verified this code now on
+sm8250/rb5 sdm845/rb3 and msm8916/db410c
 
-> Add the compatible string for SM8350 IPCC block on this SoC
-> 
+yaml: pending - acked waiting application
+https://www.spinics.net/lists/devicetree/msg406892.html
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+dts: pending - will resend when above is applied
+https://lore.kernel.org/linux-arm-msm/20210222132817.1807788-1-bryan.odonoghue@linaro.org/T/#t
 
-Regards,
-Bjorn
+Reference tree:
 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
-> index 168beeb7e9f7..fe17ba9b84f2 100644
-> --- a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
-> +++ b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
-> @@ -25,6 +25,7 @@ properties:
->      items:
->        - enum:
->            - qcom,sm8250-ipcc
-> +          - qcom,sm8350-ipcc
->        - const: qcom,ipcc
->  
->    reg:
-> -- 
-> 2.26.2
-> 
+ssh://git@git.linaro.org/people/bryan.odonoghue/kernel.git / tracking-qcomlt-sm8250-venus
+
+This tree incorporates two sets of patches from Stan - plus the two
+yaml/dts sets mentioned above.
+
+svarbanov-linux-tv/venus-for-next-v5.13
+svarbanov-linux-tv/venus-msm8916-fixes
+
+There's a small integration error between the 5.13 and msm8916-fixes which
+I resolved in favor of the bugfix in 5.13 pending - other than that this
+tree and these patches apply on tip-of-tree and run as indicated on rb5/rb3
+and db410c.
+
+https://www.spinics.net/lists/linux-arm-msm/msg81291.html
+
+V1:
+This series enables support for 6xx venus encode/decode as found on the
+sm8250.
+
+The new silicon has different base addresses for existing functional blocks
+within the venus address space. We add a base address offset mechanism to
+handle this. The offsetting mechanism has been validated on 6xx and 4xx
+hardware.
+
+The sm8250 supports:
+
+- h264
+- h265
+- vp8
+- vp9
+
+The driver changes are contingent on yaml and dts patches already
+in-flight.
+
+yaml: pending
+https://www.spinics.net/lists/devicetree/msg406892.html
+
+dts: pending
+https://lore.kernel.org/linux-arm-msm/20210222132817.1807788-1-bryan.odonoghue@linaro.org/T/#t
+
+clk: applied
+https://kernel.googlesource.com/pub/scm/linux/kernel/git/clk/linux/+/clk-next
+
+Applies on top of 
+
+https://git.linuxtv.org/svarbanov/media_tree.git / venus-for-next-v5.12-part2
+
+Bryan O'Donoghue (11):
+  media: venus: Update v6 buffer descriptors
+  media: venus: core: add sm8250 DT compatible and resource data
+  media: venus: core: Add io base variables for each block
+  media: venus: hfi,pm,firmware: Convert to block relative addressing
+  media: venus: core: Add differentiator IS_V6(core)
+  media: venus: core: Add an io base for TZ wrapper regs
+  media: venus: core: Add an io base for AON regs
+  media: venus: core: Hook to V6 base registers when appropriate
+  media: venus: hfi: Read WRAPPER_TZ_CPU_STATUS_V6 on 6xx
+  media: venus: hfi, vdec: v6 Add IS_V6() to existing IS_V4() if
+    locations
+  media: venus: pm: Hook 6xx pm ops into 4xx pm ops
+
+Dikshita Agarwal (12):
+  media: venus: hfi: Define block offsets for V6 hardware
+  media: venus: hfi: Define additional 6xx registers
+  media: venus: hfi: Add a 6xx boot logic
+  media: venus: hfi: Add 6xx interrupt support
+  media: venus: core,pm: Vote for min clk freq during venus boot
+  media: venus: hfi: Add 6xx AXI halt logic
+  media: venus: pm: Toggle 6xx wrapper power in vcodec_control
+  media: venus: firmware: Do not toggle WRAPPER_A9SS_SW_RESET on 6xx
+  media: venus: helpers: Add internal buffer list for v6
+  media: venus: helpers, hfi, vdec: Set actual plane constraints to FW
+  media: venus: hfi: Increase plat_buf_v6 o/p buffer count.
+  media: venus: helper: Decide work mode
+
+Stanimir Varbanov (2):
+  media: venus: core,pm: Add handling for resets
+  media: venus: vdec: Fix decoder cmd STOP issue
+
+ drivers/media/platform/qcom/venus/core.c      |  78 +++++++++
+ drivers/media/platform/qcom/venus/core.h      |  19 ++
+ drivers/media/platform/qcom/venus/firmware.c  |  34 ++--
+ drivers/media/platform/qcom/venus/helpers.c   |  73 +++++++-
+ drivers/media/platform/qcom/venus/helpers.h   |   3 +-
+ drivers/media/platform/qcom/venus/hfi_cmds.c  |  15 +-
+ .../media/platform/qcom/venus/hfi_helper.h    |   9 +-
+ .../platform/qcom/venus/hfi_plat_bufs_v6.c    |   2 +-
+ .../platform/qcom/venus/hfi_platform_v6.c     | 138 +++++++--------
+ drivers/media/platform/qcom/venus/hfi_venus.c | 164 +++++++++++++-----
+ .../media/platform/qcom/venus/hfi_venus_io.h  | 118 ++++++++-----
+ .../media/platform/qcom/venus/pm_helpers.c    |  92 +++++++++-
+ drivers/media/platform/qcom/venus/vdec.c      |  17 +-
+ drivers/media/platform/qcom/venus/venc.c      |   2 +-
+ 14 files changed, 567 insertions(+), 197 deletions(-)
+
+-- 
+2.30.1
+
