@@ -2,167 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DA80C338E36
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Mar 2021 14:04:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F2A1F338E95
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Mar 2021 14:18:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231779AbhCLNEL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Mar 2021 08:04:11 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:39370 "EHLO z11.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231789AbhCLNDn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Mar 2021 08:03:43 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1615554223; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=2DQdQ4OuyMLLVtN9I86/vm9sES/GqmJNArWanvnHFiI=; b=pe4Hwe6wfVUQ7tqkOGkSHk/FI+CiLy4LlFFEZSXfZ/KhT56bN+eW/nFwF1dUH/06V5sNy/Vi
- soLuKvMM08mG4/aTh6MC5PBiqSIQTHe/HPK4riyJr0DrOqCOTZY4sORL9MndLwdv0eWkPKIt
- ZtaD3KepuuE4X2nfdUjQRAax4j0=
-X-Mailgun-Sending-Ip: 104.130.96.11
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 604b66646dc1045b7d8aebd5 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 12 Mar 2021 13:02:28
- GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 48B0BC433ED; Fri, 12 Mar 2021 13:02:27 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.29.24] (unknown [49.37.156.9])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BA744C433C6;
-        Fri, 12 Mar 2021 13:02:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BA744C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
-Subject: Re: [PATCH v4 1/2] arm64: dts: qcom: sc7180-trogdor: Add lpass dai
- link for I2S driver
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     gross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Judy Hsiao <judyhsiao@chromium.org>,
-        Ajit Pandey <ajitp@codeaurora.org>,
-        V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-References: <20210311164815.14113-1-srivasam@codeaurora.org>
- <20210311164815.14113-2-srivasam@codeaurora.org>
- <CAD=FV=VSnhOSFtLX==DYF1WFszaJwgnbZY-EycP4=SNs6rqajw@mail.gmail.com>
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Organization: Qualcomm India Private Limited.
-Message-ID: <7825f825-8b84-fda8-5884-e4f0ea4edf12@codeaurora.org>
-Date:   Fri, 12 Mar 2021 18:32:20 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.0
+        id S230072AbhCLNRe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Mar 2021 08:17:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43588 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230302AbhCLNRY (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 12 Mar 2021 08:17:24 -0500
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD956C061574;
+        Fri, 12 Mar 2021 05:17:23 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id u4so45734764lfs.0;
+        Fri, 12 Mar 2021 05:17:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=kKylRMS171DSUAUGLyXWsq2Tz6pdoiZRigFrFZwqxVY=;
+        b=eUHZSSaI5vPFgCHKI71eDK0ms124Rbgs1AggoS8af2xSFxsDK5SvDdHRqKZcudOXj/
+         P7eWD2DuQ5pSSwttIk03LP1GI7IELva1IQj4teSCKjz3NCQwiCFLuZMBEceMFlJ/Q1xY
+         fAI3aAvftZ2OHaAcIFUk7dDlK2lrsGn1EcjsP+1W8S29zE8n11MaBaYGTkBsM9mRoPay
+         RgR6eXgSRUoKyXx8TzB+ivVIhA/LkIC/9w9Y0n02pjNGA5d2nv8si4OmOFrXBQWnb8s0
+         +cr8J/K96dWe6Y8YAwMIUDn+/X+fQ0+L/LRGlc77yg5sWB3K8cC4YDGz6y4OjHy6cSh0
+         Tv6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=kKylRMS171DSUAUGLyXWsq2Tz6pdoiZRigFrFZwqxVY=;
+        b=YHgox1TxUbIyzP/V39oDzT+cU2hLJEQjq4ye5xytBMQE0BLiEw+ySHecF5rHFjQu5v
+         tqLXoX8dTOgRoSixTGDTpEfNX/sByZGotsXT82EYmDj0BwfDisRi1do0ot5N0i3CnCkl
+         IJQSSAhxdqlN4cZoD0oI2jMtpSEokbtR0VlVcf3uyb1wn5nrL7IGYqihOp2qQs0iUjh+
+         S10Sv2ZF2Psx4Yr2aE/BNxk57HHSRPw5AyDk9WWSI/hpRdfhkzmt0EHxCALxXS0Koad1
+         qzxdyBDnZgpisPHTd1+FDYMuSCFgBg1C6R2HOdBZBalm+BGrxXpjxTe3IsITqjoIaVwS
+         mDkQ==
+X-Gm-Message-State: AOAM53178vLO7o/ryNY5SFFGhQux3LIHZIi4rL0LGSsNEP5V9E99uXrr
+        HW39Oruo262L6JdAkHi7IsUzJ7T8qFM=
+X-Google-Smtp-Source: ABdhPJyyXw4QXGPCVy0ERilhNXqz3whUGsc8C9NeIrl8gS+TKEhNS13UCZoBdLhL/YqNG5x1dPt40w==
+X-Received: by 2002:ac2:5603:: with SMTP id v3mr5617629lfd.67.1615555042189;
+        Fri, 12 Mar 2021 05:17:22 -0800 (PST)
+Received: from [192.168.2.145] (109-252-193-52.dynamic.spd-mgts.ru. [109.252.193.52])
+        by smtp.googlemail.com with ESMTPSA id k6sm1959405ljb.110.2021.03.12.05.17.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 12 Mar 2021 05:17:21 -0800 (PST)
+Subject: Re: [PATCH v2 05/14] opp: Add devres wrapper for
+ dev_pm_opp_register_notifier
+To:     Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     Qiang Yu <yuq825@gmail.com>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, Rob Herring <robh@kernel.org>,
+        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
+        Steven Price <steven.price@arm.com>,
+        Alyssa Rosenzweig <alyssa.rosenzweig@collabora.com>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Lukasz Luba <lukasz.luba@arm.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Mark Brown <broonie@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        Yangtao Li <tiny.windzz@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        dri-devel@lists.freedesktop.org, lima@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-media@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-spi@vger.kernel.org,
+        linux-serial@vger.kernel.org, linux-tegra@vger.kernel.org
+References: <20210311192105.14998-1-digetx@gmail.com>
+ <20210311192105.14998-6-digetx@gmail.com>
+ <20210312052659.uih7ikjdnkc5kl4j@vireshk-i7>
+From:   Dmitry Osipenko <digetx@gmail.com>
+Message-ID: <7c288641-99ad-c938-1e5e-8c1ca19c9ea4@gmail.com>
+Date:   Fri, 12 Mar 2021 16:17:20 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.2
 MIME-Version: 1.0
-In-Reply-To: <CAD=FV=VSnhOSFtLX==DYF1WFszaJwgnbZY-EycP4=SNs6rqajw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20210312052659.uih7ikjdnkc5kl4j@vireshk-i7>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Doug,
-
-Thanks for your time!!!
-
-On 3/12/2021 1:26 AM, Doug Anderson wrote:
-> Hi,
->
-> On Thu, Mar 11, 2021 at 8:49 AM Srinivasa Rao Mandadapu
-> <srivasam@codeaurora.org> wrote:
->> From: Ajit Pandey <ajitp@codeaurora.org>
+12.03.2021 08:26, Viresh Kumar пишет:
+> On 11-03-21, 22:20, Dmitry Osipenko wrote:
+>> From: Yangtao Li <tiny.windzz@gmail.com>
 >>
->> Add dai link for supporting lpass I2S driver, which is used
->> for audio capture and playback.
->> Add lpass-cpu node with  pin controls and i2s primary
->> and secondary dai-links
+>> Add devres wrapper for dev_pm_opp_register_notifier() to simplify driver
+>> code.
 >>
->> Signed-off-by: Ajit Pandey <ajitp@codeaurora.org>
->> Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
->> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+>> Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
+>> Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
 >> ---
->>   arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 58 ++++++++++++++++++++
->>   1 file changed, 58 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
->> index 436582279dad..501e3d4c9097 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
->> @@ -9,6 +9,7 @@
->>   #include <dt-bindings/input/gpio-keys.h>
->>   #include <dt-bindings/input/input.h>
->>   #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->> +#include <dt-bindings/sound/qcom,lpass.h>
-> It seems marginally better to include "sc7180-lpass.h" to get this? I
-> don't really know the difference between the two but since unless
-> we're planning to delete the sc7180 version it seems like you might as
-> well include that one?
+>>  drivers/opp/core.c     | 38 ++++++++++++++++++++++++++++++++++++++
+>>  include/linux/pm_opp.h |  6 ++++++
+>>  2 files changed, 44 insertions(+)
+> 
+> As I said in the previous version, I am not sure if we need this patch
+> at all. This has only one user.
+> 
 
-Yes, I agree.
-
-Recently, all Quallcomm variant headers are combined and created 
-"qcom,lpass.h".
-
-"sc7180-lpass.h" still includes "qcom,lpass.h". So I will change and 
-repost the patch.
-
-
-Here is the reference commit:
-
->
->
->>   /* PMICs depend on spmi_bus label and so must come after SoC */
->>   #include "pm6150.dtsi"
->> @@ -283,6 +284,42 @@ keyboard_backlight: keyboard-backlight {
->>                          max-brightness = <1023>;
->>                  };
->>          };
->> +
->> +       sound: sound {
->> +               compatible = "google,sc7180-trogdor";
->> +               model = "sc7180-rt5682-max98357a-1mic";
->> +
->> +               audio-routing =
->> +                       "Headphone Jack", "HPOL",
->> +                       "Headphone Jack", "HPOR";
->> +
->> +               #address-cells = <1>;
->> +               #size-cells = <0>;
->> +
->> +               dai-link@0 {
->> +                       link-name = "MultiMedia0";
->> +                       reg = <MI2S_PRIMARY>;
->> +                       cpu {
->> +                               sound-dai = <&lpass_cpu MI2S_PRIMARY>;
->> +                       };
->> +
->> +                       codec {
->> +                               sound-dai = <&alc5682 MI2S_PRIMARY>;
-> I'm an audio noob but isn't "MI2S_PRIMARY" something to be used with
-> "lpass_cpu", not with "alc5682" ?
->
-> I have no idea what the IDs correspond to on "alc5682". Are you sure
-> we even need an extra ID there? The "alc5682" bindings upstream don't
-> talk anything about dai-cells, but maybe they're just wrong...
-Yes. I will change and re-post.
->
-> -Doug
-
--- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
-
+I'll drop this patch in v3, thanks.
