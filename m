@@ -2,51 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 81D953384DC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Mar 2021 06:07:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7161D3384E7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Mar 2021 06:10:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230062AbhCLFG6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Mar 2021 00:06:58 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60754 "EHLO mail.kernel.org"
+        id S230447AbhCLFKM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Mar 2021 00:10:12 -0500
+Received: from mail.kernel.org ([198.145.29.99]:32878 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230136AbhCLFGb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Mar 2021 00:06:31 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id E21AD64F9A;
-        Fri, 12 Mar 2021 05:06:29 +0000 (UTC)
+        id S229664AbhCLFJm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 12 Mar 2021 00:09:42 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 3CFA964F9F;
+        Fri, 12 Mar 2021 05:09:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1615525590;
-        bh=mTrXYGiCFD/vKnmMgUgXAaLeAhB7KziX/yR7nx6a9aE=;
+        s=k20201202; t=1615525782;
+        bh=Nmh2nu8X9PCC8zcvi1syw6tWZGH29aICzWzUdkCtCFY=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=K9I/1zqSaK1mX50A0jMPVW/Z+hqFmJHZZ483H12vTgrAGbEkWqBV6fz9y+0WZ5sCO
-         V8kxBSs50E/UVS6jsOv3MhcwlcLNrc/FzPvhc4tG5YzVGkVrzpYVGs5h7F8FNXAuR1
-         t+NtailltUQJKWAFtqSS/vScuSdaoaKRMtAs/vu5Dr2ekBqMkhzCJVCgng0yyr1wyC
-         bqqyIVpf/J9qCsO0HfDOMu0u/IpcpAqSP3iLqbIFu7KtHJmD3NtUki6T9lTPhlSDtq
-         Eux/F9IIVpK5WfyxriyUDCRdoA9BjSn+yF4vPqPTuKmxOTG9TUzMuzXdaG45HJ5npy
-         ax8xmQDLcxcyg==
-Date:   Fri, 12 Mar 2021 10:36:26 +0530
+        b=YxmAOPHhnoHv5RP+3CC8JS7U2DkA2Iz5MIGMuU8MOeMfWd3MlMvWXvxWedqJ1WhJK
+         4C9Z4WZYjAxu4n/iwkpdKQWSnapi55uq5GN1JbGtQS/+HHxcdLnYV+kcj740DThGIj
+         5fhj5TiFp3OnYSyklVsngDFQCCwpe2vsLLFULbfqP8/aqzZjH/jGzgyuKooMUI6SsN
+         Qvcgdgfr0vsaPq/ZLDACHW4wZ+ooaWR71Qqa4sYxaf0kFqFKCWcmeZ1F728jd1FUVj
+         4z2MV9fZIwWBqSULTazrYveLdu/1kIXGIQFQ2fhrse90w9aiAZT/Ahfgn45rBvh8gk
+         XvpiXh6IrdkRA==
+Date:   Fri, 12 Mar 2021 10:39:38 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8350: Add wakeup-parent to tlmm
-Message-ID: <YEr20kQzaAHicGSb@vkoul-mobl>
-References: <20210312034218.3324410-1-bjorn.andersson@linaro.org>
- <20210312034218.3324410-2-bjorn.andersson@linaro.org>
+To:     "Martin K . Petersen" <martin.petersen@oracle.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "James E . J . Bottomley" <jejb@linux.ibm.com>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] scsi: dt-bindings: ufs: Add sm8250, sm8350 compatible
+ strings
+Message-ID: <YEr3kg6vPu6Htnpw@vkoul-mobl>
+References: <20210204165234.61939-1-vkoul@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210312034218.3324410-2-bjorn.andersson@linaro.org>
+In-Reply-To: <20210204165234.61939-1-vkoul@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11-03-21, 19:42, Bjorn Andersson wrote:
-> Now that TLMM has the wakeup table, specify the Power Domain Controller
-> to be the wakeup-parent of TLMM.
+On 04-02-21, 22:22, Vinod Koul wrote:
+> Document "qcom,sm8250-ufshc" and "qcom,sm8350-ufshc" compatible string.
+> Use of "qcom,sm8250-ufshc" is already present upstream, so add misiing
+> documentation. "qcom,sm8350-ufshc" is for UFS HC found in SM8350 SoC.
 
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
+Gentle reminder for this patch, Rob has acked this
+
+Thanks
+
+> 
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>  - add Bjorn's ack
+>  - split from phy series
+> 
+>  Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt b/Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt
+> index 415ccdd7442d..d8fd4df81743 100644
+> --- a/Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt
+> +++ b/Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt
+> @@ -14,6 +14,8 @@ Required properties:
+>  			    "qcom,msm8998-ufshc", "qcom,ufshc", "jedec,ufs-2.0"
+>  			    "qcom,sdm845-ufshc", "qcom,ufshc", "jedec,ufs-2.0"
+>  			    "qcom,sm8150-ufshc", "qcom,ufshc", "jedec,ufs-2.0"
+> +			    "qcom,sm8250-ufshc", "qcom,ufshc", "jedec,ufs-2.0"
+> +			    "qcom,sm8350-ufshc", "qcom,ufshc", "jedec,ufs-2.0"
+>  - interrupts        : <interrupt mapping for UFS host controller IRQ>
+>  - reg               : <registers mapping>
+>  
+> -- 
+> 2.26.2
 
 -- 
 ~Vinod
