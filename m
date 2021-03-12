@@ -2,95 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E6163392B3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Mar 2021 17:07:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F8063392EC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Mar 2021 17:19:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231928AbhCLQHO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Mar 2021 11:07:14 -0500
-Received: from z11.mailgun.us ([104.130.96.11]:33255 "EHLO z11.mailgun.us"
+        id S231733AbhCLQSe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Mar 2021 11:18:34 -0500
+Received: from foss.arm.com ([217.140.110.172]:56682 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231778AbhCLQGw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Mar 2021 11:06:52 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1615565211; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=1fa9TcQTQL8TJbWX12zWVHusT+gCDcQWwGmndbfVq3E=; b=gSONDCcp+tGDvUUVOJ1j7yN/m7/U4lzyThYj9PbHI02+ra1Tpum9W7XKOTEYvi42UJD5uOy4
- xzvUqbxUS/23ogPl5yr+zZ5C8J+88fItn59gs1d5QCxUnW5fuO0RiGTcxVW6Az4Kat0TmMdz
- Z1yz1EIXoIZIl1REecHVSBmqro4=
-X-Mailgun-Sending-Ip: 104.130.96.11
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 604b919ae3fca7d0a68758c2 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 12 Mar 2021 16:06:50
- GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 683E4C43463; Fri, 12 Mar 2021 16:06:49 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6EEE8C433C6;
-        Fri, 12 Mar 2021 16:06:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6EEE8C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, rohitkr@codeaurora.org,
-        srinivas.kandagatla@linaro.org, dianders@chromium.org,
-        swboyd@chromium.org, judyhsiao@chromium.org
-Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Subject: [PATCH v5 2/2] arm64: dts: qcom: Add sound node for sc7180-trogdor-coachz
-Date:   Fri, 12 Mar 2021 21:36:22 +0530
-Message-Id: <20210312160622.24165-3-srivasam@codeaurora.org>
-X-Mailer: git-send-email 2.29.0
-In-Reply-To: <20210312160622.24165-1-srivasam@codeaurora.org>
-References: <20210312160622.24165-1-srivasam@codeaurora.org>
+        id S229959AbhCLQSe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 12 Mar 2021 11:18:34 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B392E1FB;
+        Fri, 12 Mar 2021 08:18:33 -0800 (PST)
+Received: from [10.57.52.136] (unknown [10.57.52.136])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A040A3F7D7;
+        Fri, 12 Mar 2021 08:18:30 -0800 (PST)
+Subject: Re: [PATCH 14/17] iommu: remove DOMAIN_ATTR_DMA_USE_FLUSH_QUEUE
+To:     Christoph Hellwig <hch@lst.de>
+Cc:     Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+        Li Yang <leoyang.li@nxp.com>, freedreno@lists.freedesktop.org,
+        kvm@vger.kernel.org, Michael Ellerman <mpe@ellerman.id.au>,
+        linuxppc-dev@lists.ozlabs.org, dri-devel@lists.freedesktop.org,
+        virtualization@lists.linux-foundation.org,
+        iommu@lists.linux-foundation.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        David Woodhouse <dwmw2@infradead.org>,
+        linux-arm-kernel@lists.infradead.org
+References: <20210301084257.945454-1-hch@lst.de>
+ <20210301084257.945454-15-hch@lst.de>
+ <1658805c-ed28-b650-7385-a56fab3383e3@arm.com> <20210310091501.GC5928@lst.de>
+ <20210310092533.GA6819@lst.de> <fdacf87a-be14-c92c-4084-1d1dd4fc7766@arm.com>
+ <20210311082609.GA6990@lst.de>
+From:   Robin Murphy <robin.murphy@arm.com>
+Message-ID: <dff8eb80-8f74-972b-17e9-496c1fc0396f@arm.com>
+Date:   Fri, 12 Mar 2021 16:18:24 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210311082609.GA6990@lst.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is a trgodor variant, required to have sound node variable
-for coachz specific platform.
+On 2021-03-11 08:26, Christoph Hellwig wrote:
+> On Wed, Mar 10, 2021 at 06:39:57PM +0000, Robin Murphy wrote:
+>>> Actually... Just mirroring the iommu_dma_strict value into
+>>> struct iommu_domain should solve all of that with very little
+>>> boilerplate code.
+>>
+>> Yes, my initial thought was to directly replace the attribute with a
+>> common flag at iommu_domain level, but since in all cases the behaviour
+>> is effectively global rather than actually per-domain, it seemed
+>> reasonable to take it a step further. This passes compile-testing for
+>> arm64 and x86, what do you think?
+> 
+> It seems to miss a few bits, and also generally seems to be not actually
+> apply to recent mainline or something like it due to different empty
+> lines in a few places.
 
-Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+Yeah, that was sketched out on top of some other development patches, 
+and in being so focused on not breaking any of the x86 behaviours I did 
+indeed overlook fully converting the SMMU drivers... oops!
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-index 4ad520f00485..7eaad739b6f9 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-@@ -89,6 +89,16 @@ &sn65dsi86_out {
- 	data-lanes = <0 1 2 3>;
- };
- 
-+&sound {
-+	compatible = "google,sc7180-coachz";
-+	model = "sc7180-adau7002-max98357a";
-+	audio-routing = "PDM_DAT", "DMIC";
-+};
-+
-+&multimedia0_codec {
-+	sound-dai = <&adau7002>;
-+};
-+
- /* PINCTRL - modifications to sc7180-trogdor.dtsi */
- 
- &en_pp3300_dx_edp {
--- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+(my thought was to do the conversion for its own sake, then clean up the 
+redundant attribute separately, but I guess it's fine either way)
 
+> Let me know what you think of the version here:
+> 
+> http://git.infradead.org/users/hch/misc.git/shortlog/refs/heads/iommu-cleanup
+> 
+> I'll happily switch the patch to you as the author if you're fine with
+> that as well.
+
+I still have reservations about removing the attribute API entirely and 
+pretending that io_pgtable_cfg is anything other than a SoC-specific 
+private interface, but the reworked patch on its own looks reasonable to 
+me, thanks! (I wasn't too convinced about the iommu_cmd_line wrappers 
+either...) Just iommu_get_dma_strict() needs an export since the SMMU 
+drivers can be modular - I consciously didn't add that myself since I 
+was mistakenly thinking only iommu-dma would call it.
+
+Robin.
