@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B918339278
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Mar 2021 16:54:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 422E8339283
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Mar 2021 16:56:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232363AbhCLPyM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Mar 2021 10:54:12 -0500
-Received: from m42-2.mailgun.net ([69.72.42.2]:48705 "EHLO m42-2.mailgun.net"
+        id S231679AbhCLP4S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Mar 2021 10:56:18 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:33768 "EHLO z11.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232506AbhCLPyG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Mar 2021 10:54:06 -0500
+        id S231889AbhCLP4D (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 12 Mar 2021 10:56:03 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1615564446; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=SR9ztMG5APmU84GNnULI+R1jSiJa1lfXUSNJ0K8XiEc=; b=Z4BXZ5Ae1zWkKAAUldG+gA0L1n77tiM5kik/RUm59BTR5NJSk+Xfk8jUZyQ87Ilr/1H07Z5R
- YyDsP84cTsEG2In8CdFab673+E56dIzXKGUDOfT6XDaW2rtFundkS8z8HRBpbfvQxCVmj77B
- Z3WQLIL5vJUgispDr6qIfuibPXI=
-X-Mailgun-Sending-Ip: 69.72.42.2
+ s=smtp; t=1615564563; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: References: Cc: To: From:
+ Subject: Sender; bh=p1sskyKEE42vrMUWciVQJLhEtL9LmwDBOkKKOVkWZ5g=; b=gfNFkLlna01uWsB5eGZpXPj7XOYGaeU8pVaPXwBXt9PyN+ch+LQ6HrET9dt6pBYlmjN/8Q4Z
+ z01NaWg01ve3ptVfToqNZP6AAQtMbch7gZi0sLdT6VJw1zg25wykF68H2bxwGE7SwtZKVMYs
+ gqoCziXkLDWc2VY7EfdY1Q/+B/E=
+X-Mailgun-Sending-Ip: 104.130.96.11
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 604b8e926dc1045b7d16b25a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 12 Mar 2021 15:53:54
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 604b8f0de2200c0a0d22d559 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 12 Mar 2021 15:55:57
  GMT
 Sender: srivasam=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id DCC36C4346B; Fri, 12 Mar 2021 15:53:53 +0000 (UTC)
+        id 28440C433ED; Fri, 12 Mar 2021 15:55:57 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -38,13 +38,14 @@ Received: from [192.168.29.24] (unknown [49.37.156.9])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0CC35C4346B;
-        Fri, 12 Mar 2021 15:53:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0CC35C4346B
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C91B3C43464;
+        Fri, 12 Mar 2021 15:55:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C91B3C43464
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
-Subject: Re: [PATCH v4 2/2] arm64: dts: qcom: Add sound node for
- sc7180-trogdor-coachz
+Subject: Re: [PATCH v4 1/2] arm64: dts: qcom: sc7180-trogdor: Add lpass dai
+ link for I2S driver
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
 To:     Doug Anderson <dianders@chromium.org>
 Cc:     gross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -54,20 +55,22 @@ Cc:     gross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rohit kumar <rohitkr@codeaurora.org>,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         Stephen Boyd <swboyd@chromium.org>,
-        Judy Hsiao <judyhsiao@chromium.org>
+        Judy Hsiao <judyhsiao@chromium.org>,
+        Ajit Pandey <ajitp@codeaurora.org>,
+        V Sujith Kumar Reddy <vsujithk@codeaurora.org>
 References: <20210311164815.14113-1-srivasam@codeaurora.org>
- <20210311164815.14113-3-srivasam@codeaurora.org>
- <CAD=FV=VZrfgZHXBFKD2f8uygQC32mPt1CQqMpUzio+yq_Era0A@mail.gmail.com>
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+ <20210311164815.14113-2-srivasam@codeaurora.org>
+ <CAD=FV=VSnhOSFtLX==DYF1WFszaJwgnbZY-EycP4=SNs6rqajw@mail.gmail.com>
+ <7825f825-8b84-fda8-5884-e4f0ea4edf12@codeaurora.org>
 Organization: Qualcomm India Private Limited.
-Message-ID: <ac6695e0-0628-4b05-bb55-db5abb577158@codeaurora.org>
-Date:   Fri, 12 Mar 2021 21:23:45 +0530
+Message-ID: <5487aeac-b50c-913b-41d6-bc2aec8f858f@codeaurora.org>
+Date:   Fri, 12 Mar 2021 21:25:45 +0530
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.8.0
 MIME-Version: 1.0
-In-Reply-To: <CAD=FV=VZrfgZHXBFKD2f8uygQC32mPt1CQqMpUzio+yq_Era0A@mail.gmail.com>
+In-Reply-To: <7825f825-8b84-fda8-5884-e4f0ea4edf12@codeaurora.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -75,122 +78,98 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi Doug,
 
-Thanks for time and valuable inputs!!!
-
-On 3/12/2021 1:24 AM, Doug Anderson wrote:
-> Hi,
+On 3/12/2021 6:32 PM, Srinivasa Rao Mandadapu wrote:
+> Hi Doug,
 >
-> On Thu, Mar 11, 2021 at 8:48 AM Srinivasa Rao Mandadapu
-> <srivasam@codeaurora.org> wrote:
->> This is a trgodor variant, required to have sound node variable
->> for coachz specific platform.
+> Thanks for your time!!!
+>
+> On 3/12/2021 1:26 AM, Doug Anderson wrote:
+>> Hi,
 >>
->> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
->> ---
->>   .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi   | 18 ++++++++++++++++++
->>   1 file changed, 18 insertions(+)
+>> On Thu, Mar 11, 2021 at 8:49 AM Srinivasa Rao Mandadapu
+>> <srivasam@codeaurora.org> wrote:
+>>> From: Ajit Pandey <ajitp@codeaurora.org>
+>>>
+>>> Add dai link for supporting lpass I2S driver, which is used
+>>> for audio capture and playback.
+>>> Add lpass-cpu node with  pin controls and i2s primary
+>>> and secondary dai-links
+>>>
+>>> Signed-off-by: Ajit Pandey <ajitp@codeaurora.org>
+>>> Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+>>> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 58 
+>>> ++++++++++++++++++++
+>>>   1 file changed, 58 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi 
+>>> b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+>>> index 436582279dad..501e3d4c9097 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+>>> @@ -9,6 +9,7 @@
+>>>   #include <dt-bindings/input/gpio-keys.h>
+>>>   #include <dt-bindings/input/input.h>
+>>>   #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>>> +#include <dt-bindings/sound/qcom,lpass.h>
+>> It seems marginally better to include "sc7180-lpass.h" to get this? I
+>> don't really know the difference between the two but since unless
+>> we're planning to delete the sc7180 version it seems like you might as
+>> well include that one?
+>
+> Yes, I agree.
+>
+> Recently, all Quallcomm variant headers are combined and created 
+> "qcom,lpass.h".
+>
+> "sc7180-lpass.h" still includes "qcom,lpass.h". So I will change and 
+> repost the patch.
+>
+>
+> Here is the reference commit:
+>
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
->> index 4ad520f00485..7623a30a64c7 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
->> @@ -238,3 +238,21 @@ &tlmm {
->>                            "DP_HOT_PLUG_DET",
->>                            "EC_IN_RW_ODL";
->>   };
->> +
->> +&sound {
->> +       compatible = "google,sc7180-coachz";
-> You're placing this in the wrong place. Pay attention to the section
-> headings. Your patch is putting this in the section "PINCTRL -
-> board-specific pinctrl". That's not right.
+>>
+>>>   /* PMICs depend on spmi_bus label and so must come after SoC */
+>>>   #include "pm6150.dtsi"
+>>> @@ -283,6 +284,42 @@ keyboard_backlight: keyboard-backlight {
+>>>                          max-brightness = <1023>;
+>>>                  };
+>>>          };
+>>> +
+>>> +       sound: sound {
+>>> +               compatible = "google,sc7180-trogdor";
+>>> +               model = "sc7180-rt5682-max98357a-1mic";
+>>> +
+>>> +               audio-routing =
+>>> +                       "Headphone Jack", "HPOL",
+>>> +                       "Headphone Jack", "HPOR";
+>>> +
+>>> +               #address-cells = <1>;
+>>> +               #size-cells = <0>;
+>>> +
+>>> +               dai-link@0 {
+>>> +                       link-name = "MultiMedia0";
+>>> +                       reg = <MI2S_PRIMARY>;
+>>> +                       cpu {
+>>> +                               sound-dai = <&lpass_cpu MI2S_PRIMARY>;
+>>> +                       };
+>>> +
+>>> +                       codec {
+>>> +                               sound-dai = <&alc5682 MI2S_PRIMARY>;
+>> I'm an audio noob but isn't "MI2S_PRIMARY" something to be used with
+>> "lpass_cpu", not with "alc5682" ?
+>>
+>> I have no idea what the IDs correspond to on "alc5682". Are you sure
+>> we even need an extra ID there? The "alc5682" bindings upstream don't
+>> talk anything about dai-cells, but maybe they're just wrong...
+> Yes. I will change and re-post.
+Actually, without dai-cells getting compilation issues. So I think it's 
+necessary here.
+>>
+>> -Doug
 >
->
->> +       model = "sc7180-adau7002-max98357a";
->> +       audio-routing = "PDM_DAT", "DMIC";
->> +
->> +       dai-link@0 {
->> +               link-name = "MultiMedia0";
->> +               reg = <0>;
->> +               cpu {
->> +                       sound-dai = <&lpass_cpu 0>;
-> Shouldn't the 0 above be "MI2S_PRIMARY" ?  ...and the "reg" as well?
-Yes, It's required. Will change, and re-post.
->
->
->> +               };
->> +
->> +               codec {
->> +                       sound-dai = <&adau7002>;
->> +               };
->> +       };
-> Some overall notes, though:
->
-> 1. You don't actually need to duplicate everything that you have
-> above. Whether you realize it or not the way devicetree works is that
-> it _merges_ the node in the "coachz" devicetree with the one from the
-> trogdor one (it doesn't replace it). So in trogdor you have:
->
-> dai-link@0 {
->    link-name = "MultiMedia0";
->    reg = <MI2S_PRIMARY>;
->    cpu {
->      sound-dai = <&lpass_cpu MI2S_PRIMARY>;
->    };
->
->    codec {
->      sound-dai = <&alc5682 MI2S_PRIMARY>;
->    };
-> };
->
-> ...and in coachz you have:
->
-> dai-link@0 {
->    link-name = "MultiMedia0";
->    reg = <MI2S_PRIMARY>;
->    cpu {
->      sound-dai = <&lpass_cpu MI2S_PRIMARY>;
->    };
->
->    codec {
->      sound-dai = <&adau7002>;
->    };
-> };
->
-> Almost all of that is duplication. It's best not to duplicate. Thus,
-> one step better than what you have would be to just have this in
-> coachz to override what you need:
->
-> dai-link@0 {
->    codec {
->      sound-dai = <&adau7002>;
->    };
-> };
->
->
-> 2. In general it's discouraged (and error prone) to try to replicate
-> hierarchies from your parent. So the best would be to change trogdor's
-> device tree to something like this:
->
-> dai-link@0 {
->    link-name = "MultiMedia0";
->    reg = <MI2S_PRIMARY>;
->    cpu {
->      sound-dai = <&lpass_cpu MI2S_PRIMARY>;
->    };
->
->    multimedia0_codec: codec {
->      sound-dai = <&alc5682 MI2S_PRIMARY>;
->    };
-> };
->
-> ...and then in coachz you override like:
->
-> &multimedia0_codec {
->     sound-dai = <&alc5682 MI2S_PRIMARY>;
-> };
-Okay. Will change accordingly and re-post.
-
 -- 
 Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
 is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
