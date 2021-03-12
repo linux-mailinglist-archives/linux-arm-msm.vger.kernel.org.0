@@ -2,153 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B20333947E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Mar 2021 18:16:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B0D03394B0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Mar 2021 18:28:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232520AbhCLRQA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Mar 2021 12:16:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38772 "EHLO
+        id S231601AbhCLR2S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Mar 2021 12:28:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232478AbhCLRPx (ORCPT
+        with ESMTP id S232528AbhCLR2R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Mar 2021 12:15:53 -0500
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AFC2C061574
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Mar 2021 09:15:53 -0800 (PST)
-Received: by mail-oi1-x230.google.com with SMTP id w195so20922297oif.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Mar 2021 09:15:53 -0800 (PST)
+        Fri, 12 Mar 2021 12:28:17 -0500
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B45FC061761
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Mar 2021 09:28:17 -0800 (PST)
+Received: by mail-oi1-x22e.google.com with SMTP id w195so20960894oif.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Mar 2021 09:28:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=pvchLbk+2G4U5j0PwGj7xyuqRcTZH67zQqFO94yNuvU=;
-        b=tKPk2xZTceJXS43oKJamnXnPMIzm8bcpytkotTjSNMyZBeFF3g1e/pIVWTqdmw4pLs
-         GMWIJ6X3ldMYNvr68gKAvHobIGCEENGgWKZStnRA6ZEcQUrWL4nM6PSWVDi2SalIQ1bo
-         suSFYuEyMvA6CBlnC0kYzVCjUu8rvtlaPARl6EHVpfbfsjWVxOt3XQqZuPBO3UXBKc6O
-         wyAAbEekysmXntj9LYfBCyKEh2z/AU4MZsYpCftb3iWdzmrnuHyqtXFnFOFshjCTxLf9
-         HnWfkw5OoVRV0hkzionwmFu7qEHZ1ovnkvB5x2ywiM1pBWg6JJ86DS5nv/PV2bYBQrHW
-         LTFw==
+        bh=ZTq3YjvMCHu+pe/PF/X4oZj4DMDAfauh/757RvN40NY=;
+        b=B40LAkjI7eK5CUvcFzT9uak0yUmvROiXpFtyIFUItIUKuHvshhHfNTpDz8T5Z+DTww
+         HZypnR7cD7GFqYbkKBw+IxaYXHQqN4fDz8lGa4O+DEswivqAXLmpuk+jCKYxF5v2wKre
+         zZDKo0FRpctJ4Kgi2cXRUSlJbWIyww2NWVoyEHpiflrU8YOhuH1VJjgrtziu7iTFpq+B
+         WSBOG4Qx0bJKtAFiMf3lH76+7XXWZXD4kGhMyGPHRGL36HNZpq6vUZF7weeMpCdBnaKw
+         172PG4zY3aHy3Pvfzll9349+wg2/UHf4qMFWpj7LNBkJXpVMahv9CdYjCHYE+oKTNbMX
+         nn4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=pvchLbk+2G4U5j0PwGj7xyuqRcTZH67zQqFO94yNuvU=;
-        b=bBipSV3Y474DN0iLXddyK5Zo9k8CZO998FixqTCG2IH0qjqCF/UcP0Fq5MD6TWXKYM
-         sv7ibCLEfHeV14xwqBqF3DBygJGHWSn0zmLqgWAusdSUz7I5dVsyJQcX8Pt5TltFAh3k
-         QyNmToRvvAVUG5/mdRKqRLGEObvwtgEMOF13BXRM4yGmEDPHdNrFLU451QHZnPrcC2D0
-         3IdT0owDvbCLbl2jcXOdS4ZqtvxliiLd37STa2OZPcJb6skNCTvkzhMd8J7kgMQtxRV5
-         N01tz748zvd020/JrvadvDuOiB9K+4LTWz6rlDvXNaEnV8eiiOVNy834M9wWD5p3S+L3
-         odwg==
-X-Gm-Message-State: AOAM531L+IzChwuchPvFeY9wf6aVEXVPgjw28NPN3QsejmF/Q9Rx0YQh
-        EWmhaATdP0xniAGGReIPKukIGg==
-X-Google-Smtp-Source: ABdhPJxBOPsChzmgafvAwq2jsLAkkq45RsjjQECvcqN/UlDhfQwtBR3gqVC35NBzSFbpxGR2ss4cjw==
-X-Received: by 2002:a05:6808:a90:: with SMTP id q16mr10254447oij.77.1615569353000;
-        Fri, 12 Mar 2021 09:15:53 -0800 (PST)
+        bh=ZTq3YjvMCHu+pe/PF/X4oZj4DMDAfauh/757RvN40NY=;
+        b=opb+1b2OVAl+CEBT8y/0pRZ9vSLJB1+ZpC6k6f7jBk7WM93X6OwHd9T9pgKnRJL9cj
+         dLkWPAn527JzFtBKgflhc+SkMGxOMiMzsWtrgTAmQneOBTf9cOyR3eJA8kO31mInyEV0
+         tG1wKxZ+SIJzEm8ldMOlUCNnb+PO/sBFXmmpacCDU/k0vUQRg0+pDo2roj8CwAXcrhmt
+         n9YMK3SZ+4tyW9SW+/BM7aZzjoiTaNtSaggWHaGNZx6rW6quI43lT6xE+tl6hz6Qm+ya
+         UJiIViOxDb+PhvwEIub6s0fny2XwumRXAkkAkbKyMHdtTrZXMGatJc/b9gBLRc476nUV
+         kJ6A==
+X-Gm-Message-State: AOAM532trlQpUtoKTGW5gaGfy6h4VWm0VFzLeCfZD+xjFZ5y9/hXl4WI
+        w7ih02YzbbuT+lM6NX3m9pcjUw==
+X-Google-Smtp-Source: ABdhPJxag8I5N9nM/nLr36jeB9NWNHxpQ9QklYbeGOmw/Ly85vSsEJ1TGdsa7PJle4NW9h78QqopzQ==
+X-Received: by 2002:a05:6808:216:: with SMTP id l22mr3313269oie.125.1615570096786;
+        Fri, 12 Mar 2021 09:28:16 -0800 (PST)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id g34sm1597034otg.51.2021.03.12.09.15.52
+        by smtp.gmail.com with ESMTPSA id u194sm1452340oia.27.2021.03.12.09.28.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Mar 2021 09:15:52 -0800 (PST)
-Date:   Fri, 12 Mar 2021 11:15:50 -0600
+        Fri, 12 Mar 2021 09:28:16 -0800 (PST)
+Date:   Fri, 12 Mar 2021 11:28:14 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Maulik Shah <mkshah@codeaurora.org>
-Cc:     swboyd@chromium.org, mka@chromium.org, evgreen@chromium.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        agross@kernel.org, dianders@chromium.org, linux@roeck-us.net,
-        rnayak@codeaurora.org, ilina@codeaurora.org, lsrao@codeaurora.org,
-        Mahesh Sivasubramanian <msivasub@codeaurora.org>,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v6 1/4] dt-bindings: Introduce SoC sleep stats bindings
-Message-ID: <YEuhxqDRly658D9S@builder.lan>
-References: <1612448508-9179-1-git-send-email-mkshah@codeaurora.org>
- <1612448508-9179-2-git-send-email-mkshah@codeaurora.org>
+To:     Vinod Koul <vkoul@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: mailbox: Add compatible for SM8350 IPCC
+Message-ID: <YEukrpG06PBdgGAF@builder.lan>
+References: <20210312051203.3555751-1-vkoul@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1612448508-9179-2-git-send-email-mkshah@codeaurora.org>
+In-Reply-To: <20210312051203.3555751-1-vkoul@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 04 Feb 08:21 CST 2021, Maulik Shah wrote:
+On Thu 11 Mar 23:12 CST 2021, Vinod Koul wrote:
 
-> From: Mahesh Sivasubramanian <msivasub@codeaurora.org>
-> 
-> Add device binding documentation for Qualcomm Technologies, Inc. (QTI)
-> SoC sleep stats driver. The driver is used for displaying SoC sleep
-> statistic maintained by Always On Processor or Resource Power Manager.
-> 
-> Cc: devicetree@vger.kernel.org
-> Signed-off-by: Mahesh Sivasubramanian <msivasub@codeaurora.org>
-> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
-> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  .../bindings/soc/qcom/soc-sleep-stats.yaml         | 46 ++++++++++++++++++++++
->  1 file changed, 46 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/soc/qcom/soc-sleep-stats.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/soc-sleep-stats.yaml b/Documentation/devicetree/bindings/soc/qcom/soc-sleep-stats.yaml
-> new file mode 100644
-> index 0000000..1e012ba
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/soc/qcom/soc-sleep-stats.yaml
-> @@ -0,0 +1,46 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/soc/qcom/soc-sleep-stats.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies, Inc. (QTI) SoC sleep stats bindings
-> +
-> +maintainers:
-> +  - Maulik Shah <mkshah@codeaurora.org>
-> +  - Lina Iyer <ilina@codeaurora.org>
-> +
-> +description:
-> +  Always On Processor/Resource Power Manager maintains statistics of the SoC
-> +  sleep modes involving powering down of the rails and oscillator clock.
-> +
-> +  Statistics includes SoC sleep mode type, number of times low power mode were
-> +  entered, time of last entry, time of last exit and accumulated sleep duration.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,rpmh-sleep-stats
-> +      - qcom,rpm-sleep-stats
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +
-> +examples:
-> +  # Example of rpmh sleep stats
-> +  - |
-> +    rpmh-sleep-stats@c3f0000 {
-> +      compatible = "qcom,rpmh-sleep-stats";
-> +      reg = <0 0x0c3f0000 0 0x400>;
+Adding Jassi as recipient. Please let Vinod know if you want him to
+resend this patch to you. (I send a patch for MAINTAINERS yesterday)
 
-The example is built with #address-cells = <1> and #size-cells = <1>, so
-this needs to be reg = <0x0c3f0000 0x400>.
+> Add the compatible string for SM8350 IPCC block on this SoC
+> 
+
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
 Regards,
 Bjorn
 
-> +    };
-> +  # Example of rpm sleep stats
-> +  - |
-> +    rpm-sleep-stats@4690000 {
-> +      compatible = "qcom,rpm-sleep-stats";
-> +      reg = <0 0x04690000 0 0x400>;
-> +    };
-> +...
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>  Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
+> index 168beeb7e9f7..fe17ba9b84f2 100644
+> --- a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
+> +++ b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
+> @@ -25,6 +25,7 @@ properties:
+>      items:
+>        - enum:
+>            - qcom,sm8250-ipcc
+> +          - qcom,sm8350-ipcc
+>        - const: qcom,ipcc
+>  
+>    reg:
 > -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
+> 2.26.2
 > 
