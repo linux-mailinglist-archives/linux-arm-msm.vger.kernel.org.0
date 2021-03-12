@@ -2,82 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7161D3384E7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Mar 2021 06:10:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C03773384EC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Mar 2021 06:12:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230447AbhCLFKM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Mar 2021 00:10:12 -0500
-Received: from mail.kernel.org ([198.145.29.99]:32878 "EHLO mail.kernel.org"
+        id S231361AbhCLFMV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Mar 2021 00:12:21 -0500
+Received: from mail.kernel.org ([198.145.29.99]:33186 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229664AbhCLFJm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Mar 2021 00:09:42 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 3CFA964F9F;
-        Fri, 12 Mar 2021 05:09:40 +0000 (UTC)
+        id S231348AbhCLFMM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 12 Mar 2021 00:12:12 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id DCADB64FA3;
+        Fri, 12 Mar 2021 05:12:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1615525782;
-        bh=Nmh2nu8X9PCC8zcvi1syw6tWZGH29aICzWzUdkCtCFY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=YxmAOPHhnoHv5RP+3CC8JS7U2DkA2Iz5MIGMuU8MOeMfWd3MlMvWXvxWedqJ1WhJK
-         4C9Z4WZYjAxu4n/iwkpdKQWSnapi55uq5GN1JbGtQS/+HHxcdLnYV+kcj740DThGIj
-         5fhj5TiFp3OnYSyklVsngDFQCCwpe2vsLLFULbfqP8/aqzZjH/jGzgyuKooMUI6SsN
-         Qvcgdgfr0vsaPq/ZLDACHW4wZ+ooaWR71Qqa4sYxaf0kFqFKCWcmeZ1F728jd1FUVj
-         4z2MV9fZIwWBqSULTazrYveLdu/1kIXGIQFQ2fhrse90w9aiAZT/Ahfgn45rBvh8gk
-         XvpiXh6IrdkRA==
-Date:   Fri, 12 Mar 2021 10:39:38 +0530
+        s=k20201202; t=1615525931;
+        bh=HQ1tro5PCDW92A/sOIKcBwNFev1y/F2w1RT8q74jPPo=;
+        h=From:To:Cc:Subject:Date:From;
+        b=bILnbjYehMnrHvM3OqUs5+Puei0+o/f054SvoOX/HbnS6pjaoE06eBaoUtKd+ELLJ
+         pGFf1Rn8kK/FplXLAxl3hwR5E9UaciyeyXlnml8KNG8nZAL4e8tzkhPxhJ2NvnIo2g
+         wzrPNNo4mnLNnyVhzzmBd1eLADVSFreQPgJwtM9RWvyqFRCBhgSmDf6P2bAc4MGntU
+         976WzG55MqcKay/V3ENskQFYJh4sEFDsRitv2FeZIg7hhV3t4v4oazw8vVd41JvTIi
+         +qJurRF6mnlkeBdFLEqqDkk9MhB8dC0EsbfYciUsWBXwE3E7WUUoVAVtt95+uVSgj9
+         VMzYbTyAZhixA==
 From:   Vinod Koul <vkoul@kernel.org>
-To:     "Martin K . Petersen" <martin.petersen@oracle.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "James E . J . Bottomley" <jejb@linux.ibm.com>,
-        Asutosh Das <asutoshd@codeaurora.org>,
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
         Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] scsi: dt-bindings: ufs: Add sm8250, sm8350 compatible
- strings
-Message-ID: <YEr3kg6vPu6Htnpw@vkoul-mobl>
-References: <20210204165234.61939-1-vkoul@kernel.org>
+Subject: [PATCH] dt-bindings: mailbox: Add compatible for SM8350 IPCC
+Date:   Fri, 12 Mar 2021 10:42:03 +0530
+Message-Id: <20210312051203.3555751-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210204165234.61939-1-vkoul@kernel.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04-02-21, 22:22, Vinod Koul wrote:
-> Document "qcom,sm8250-ufshc" and "qcom,sm8350-ufshc" compatible string.
-> Use of "qcom,sm8250-ufshc" is already present upstream, so add misiing
-> documentation. "qcom,sm8350-ufshc" is for UFS HC found in SM8350 SoC.
+Add the compatible string for SM8350 IPCC block on this SoC
 
-Gentle reminder for this patch, Rob has acked this
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+---
+ Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thanks
-
-> 
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  - add Bjorn's ack
->  - split from phy series
-> 
->  Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt b/Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt
-> index 415ccdd7442d..d8fd4df81743 100644
-> --- a/Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt
-> +++ b/Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt
-> @@ -14,6 +14,8 @@ Required properties:
->  			    "qcom,msm8998-ufshc", "qcom,ufshc", "jedec,ufs-2.0"
->  			    "qcom,sdm845-ufshc", "qcom,ufshc", "jedec,ufs-2.0"
->  			    "qcom,sm8150-ufshc", "qcom,ufshc", "jedec,ufs-2.0"
-> +			    "qcom,sm8250-ufshc", "qcom,ufshc", "jedec,ufs-2.0"
-> +			    "qcom,sm8350-ufshc", "qcom,ufshc", "jedec,ufs-2.0"
->  - interrupts        : <interrupt mapping for UFS host controller IRQ>
->  - reg               : <registers mapping>
->  
-> -- 
-> 2.26.2
-
+diff --git a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
+index 168beeb7e9f7..fe17ba9b84f2 100644
+--- a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
++++ b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
+@@ -25,6 +25,7 @@ properties:
+     items:
+       - enum:
+           - qcom,sm8250-ipcc
++          - qcom,sm8350-ipcc
+       - const: qcom,ipcc
+ 
+   reg:
 -- 
-~Vinod
+2.26.2
+
