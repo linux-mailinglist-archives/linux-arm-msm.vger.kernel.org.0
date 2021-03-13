@@ -2,130 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B9E633A1D1
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Mar 2021 00:00:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CAED33A1D6
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Mar 2021 00:09:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232431AbhCMXAA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 13 Mar 2021 18:00:00 -0500
-Received: from mail.kernel.org ([198.145.29.99]:57592 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231756AbhCMXAA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 13 Mar 2021 18:00:00 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 2090064E87;
-        Sat, 13 Mar 2021 23:00:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1615676400;
-        bh=JvN2gE2cwHT9RI41PHOKMwum4FYziRMG+R+kWsNa02Q=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=adaM4hqQBNnRAXFMA3Hm8KSklIkDvXedtL+Au187klkwYnhUZiuqCvdE1DHaAhjMx
-         0vn1iOC2Jnfpd0SRTQkE+pm5uywSq4IiJIMJZ8sT6CvRANwav485wnRiUsLAomrS1n
-         ooKAbs9K/MBgGcIHWtqqm4oNYubE98kcX1I06e/9J1GS+lAooGomuphgo7ze8YproS
-         4eefVSwS3oUgXiTSJ8rNUcFO5XXYrvbpsvtrx8nXFhDcNMhs4tCQzu7YXCR1Yg3pdD
-         bapyZVYlkGoBal16GPZww8YyitD94D764PKG37LQc6Sz2PKt+YLRTCPiuZkULNefzJ
-         C6MtWf5i3GYuQ==
+        id S231756AbhCMXI4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 13 Mar 2021 18:08:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55424 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231597AbhCMXIy (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 13 Mar 2021 18:08:54 -0500
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF1BFC061574
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Mar 2021 15:08:53 -0800 (PST)
+Received: by mail-pj1-x102c.google.com with SMTP id a22-20020a17090aa516b02900c1215e9b33so12494436pjq.5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Mar 2021 15:08:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=DJB4nTvqOkD2IKJreZLi0xNx1PDWydQlEGcM1Bz8MlQ=;
+        b=fLqylF++FUl0wTtyGvoGRKsw72Nu7iMwMqD6h+dqBVepPOIdlN1JGDmxihSa/faeR2
+         nhld8PWXQ1YS8Wp1XWNEGUiOJ7KN5xw224IC7GB6g/JtN6vvNoZiUNismPEmAwZFbeMq
+         CCIMCL/zFDFUN9cWAOvZCcQ6+SHDH5cG3Gm68=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=DJB4nTvqOkD2IKJreZLi0xNx1PDWydQlEGcM1Bz8MlQ=;
+        b=DgFRXGe6BmFp23OhGsO6ZQ39fKGYq5E5dQGieZ+phwoWWVAsnQhtkq8XkmOHCjUn4X
+         eaCbONq5Ukoy0nZw1muIEjfVWf4hAC/2zXJhUQeRUDXZ/pSecbeCMBMdC7f8clVCLypB
+         vnGT3pKM1FErD4uBi88H4nqljIkcjj5F6MqJ2WEmrcXmgg/IHYiFfNdr4UMR5yUdgIC6
+         byME/CsULTqgkxrxU1rffZc7Y9U8FAstFDPj4JpiRAOw1yd+W9FaJ/yMZKCcm7RzF26x
+         jqyFpzYDMpUbYVN2RQTieMBPYcsvpvl6wKUrhJ4x7KPAFByRsoc0GOSZZ6f11Xf0bvQx
+         BUGg==
+X-Gm-Message-State: AOAM5309LbgZM7IlCMb8EX3XE454W7/U8/h+TKa9laQqKQVlyYrAldZ5
+        r31J4av5ED8cgI9DEFnlmd46Gg==
+X-Google-Smtp-Source: ABdhPJxYbxFeNmipRG6YABAM/S66f0kEw3ozjMgiUUXpI6JZyIIWg/9Wcmz4CrAnU9bO/ij+Zo+iLw==
+X-Received: by 2002:a17:90b:a04:: with SMTP id gg4mr5635251pjb.51.1615676933283;
+        Sat, 13 Mar 2021 15:08:53 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:201:e859:c7d5:7d7b:5ed8])
+        by smtp.gmail.com with ESMTPSA id g12sm6148613pjd.57.2021.03.13.15.08.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 13 Mar 2021 15:08:52 -0800 (PST)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1615467092-6982-1-git-send-email-tdas@codeaurora.org>
-References: <1615467092-6982-1-git-send-email-tdas@codeaurora.org>
-Subject: Re: [PATCH v2] clk: qcom: clk-rcg2: Add support for duty-cycle for RCG
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Taniya Das <tdas@codeaurora.org>
-To:     Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>
-Date:   Sat, 13 Mar 2021 14:59:58 -0800
-Message-ID: <161567639878.1478170.18101287599042992816@swboyd.mtv.corp.google.com>
+In-Reply-To: <1614950952-13351-3-git-send-email-mkrishn@codeaurora.org>
+References: <1614950952-13351-1-git-send-email-mkrishn@codeaurora.org> <1614950952-13351-3-git-send-email-mkrishn@codeaurora.org>
+Subject: Re: [PATCH v13 3/4] dt-bindings: msm: dsi: add yaml schemas for DSI PHY bindings
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
+        kalyan_t@codeaurora.org, tanmay@codeaurora.org,
+        abhinavk@codeaurora.org, robdclark@gmail.com,
+        bjorn.andersson@linaro.org, vinod.koul@linaro.org,
+        rnayak@codeaurora.org, dianders@chromium.org, sibis@codeaurora.org,
+        khsieh@codeaurora.org
+To:     Krishna Manikandan <mkrishn@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org
+Date:   Sat, 13 Mar 2021 15:08:51 -0800
+Message-ID: <161567693145.1478170.18190682094557030182@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Taniya Das (2021-03-11 04:51:32)
-> The root clock generators with MND divider has the capability to support
-> change in duty-cycle by updating the 'D'. Add the clock ops which would
-> check all the boundary conditions and enable setting the desired duty-cyc=
-le
-> as per the consumer.
->=20
-> Signed-off-by: Taniya Das <tdas@codeaurora.org>
-> ---
->  drivers/clk/qcom/clk-rcg2.c | 42 +++++++++++++++++++++++++++++++++++++++=
-+++
->  1 file changed, 42 insertions(+)
->=20
-> diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-> index 42f13a2..aac6893 100644
-> --- a/drivers/clk/qcom/clk-rcg2.c
-> +++ b/drivers/clk/qcom/clk-rcg2.c
-> @@ -357,6 +357,46 @@ static int clk_rcg2_set_floor_rate_and_parent(struct=
- clk_hw *hw,
->         return __clk_rcg2_set_rate(hw, rate, FLOOR);
->  }
->=20
-> +static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *d=
-uty)
-> +{
-> +       struct clk_rcg2 *rcg =3D to_clk_rcg2(hw);
-> +       u32 notn_m_val, n_val, m_val, d_val, not2d_val, mask, duty_per;
-> +       int ret;
+Quoting Krishna Manikandan (2021-03-05 05:29:11)
+> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.y=
+aml b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+> new file mode 100644
+> index 0000000..33e2a2e
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+> @@ -0,0 +1,71 @@
+> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/display/msm/dsi-phy-10nm.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +       if (!rcg->mnd_width)
-> +               return 0;
+> +title: Description of Qualcomm Display DSI 10nm PHY dt properties
 
-Shouldn't we fail this call if the duty cycle can't be changed? Or have
-another set of clk ops that doesn't support this clk op if the mnd=20
-isn't present.
+"Qualcomm Display DSI 10nm PHY"
 
 > +
-> +       mask =3D BIT(rcg->mnd_width) - 1;
+> +maintainers:
+> +  - Krishna Manikandan <mkrishn@codeaurora.org>
 > +
-> +       regmap_read(rcg->clkr.regmap, RCG_N_OFFSET(rcg), &notn_m_val);
-> +       regmap_read(rcg->clkr.regmap, RCG_M_OFFSET(rcg), &m_val);
-> +
-> +       n_val =3D (~(notn_m_val) + m_val) & mask;
-> +
-> +       duty_per =3D (duty->num * 100) / duty->den;
-> +
-> +       /* Calculate 2d value */
-> +       d_val =3D DIV_ROUND_CLOSEST(n_val * duty_per * 2, 100);
-> +
-> +        /* Check BIT WIDTHS OF 2d. If D is too big reduce Duty cycle. */
+> +description: |
+> +  Common Device tree bindings for DSI 10nm PHY.
 
-Why is BIT WIDTHS capitalized? And Duty?
+Drop description as it doesn't provide anything?
 
-> +       if (d_val > mask)
-> +               d_val =3D mask;
 > +
-> +       if ((d_val / 2) > (n_val - m_val))
-> +               d_val =3D (n_val - m_val) * 2;
-> +       else if ((d_val / 2) < (m_val / 2))
-> +               d_val =3D m_val;
+> +allOf:
+> +  - $ref: dsi-phy-common.yaml#
 > +
-> +       not2d_val =3D ~d_val & mask;
+> +properties:
+> +  compatible:
+> +    oneOf:
+> +      - const: qcom,dsi-phy-10nm
+> +      - const: qcom,dsi-phy-10nm-8998
 > +
-> +       ret =3D regmap_update_bits(rcg->clkr.regmap, RCG_D_OFFSET(rcg), m=
-ask,
-> +                                not2d_val);
-> +       if (ret)
-> +               return ret;
-> +
-> +       return update_config(rcg);
-> +}
-> +
->  const struct clk_ops clk_rcg2_ops =3D {
->         .is_enabled =3D clk_rcg2_is_enabled,
->         .get_parent =3D clk_rcg2_get_parent,
-> @@ -365,6 +405,7 @@ const struct clk_ops clk_rcg2_ops =3D {
->         .determine_rate =3D clk_rcg2_determine_rate,
->         .set_rate =3D clk_rcg2_set_rate,
->         .set_rate_and_parent =3D clk_rcg2_set_rate_and_parent,
-> +       .set_duty_cycle =3D clk_rcg2_set_duty_cycle,
+> +  reg:
+> +    items:
+> +      - description: Address offset and size for dsi phy register set
+> +      - description: Address offset and size for dsi phy lane register s=
+et
+> +      - description: Address offset and size for dsi pll register set
 
-Can you also implement get_duty_cycle?
+Please drop "Address offset and size for" from all of these.
 
->  };
->  EXPORT_SYMBOL_GPL(clk_rcg2_ops);
->
+> +
+> +  reg-names:
+> +    items:
+> +      - const: dsi_phy
+> +      - const: dsi_phy_lane
+> +      - const: dsi_pll
+> +
+> +  vdds-supply:
+> +    description: |
+> +      Connected to DSI0_MIPI_DSI_PLL_VDDA0P9 pin for sc7180 target and
+> +      connected to VDDA_MIPI_DSI_0_PLL_0P9 pin for sdm845 target
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - reg-names
+> +  - vdds-supply
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +     #include <dt-bindings/clock/qcom,dispcc-sdm845.h>
+> +     #include <dt-bindings/clock/qcom,rpmh.h>
+> +
+> +     dsi-phy@ae94400 {
+> +         compatible =3D "qcom,dsi-phy-10nm";
+> +         reg =3D <0x0ae94400 0x200>,
+> +               <0x0ae94600 0x280>,
+> +               <0x0ae94a00 0x1e0>;
+> +         reg-names =3D "dsi_phy",
+> +                     "dsi_phy_lane",
+> +                     "dsi_pll";
+> +
+> +         #clock-cells =3D <1>;
+> +         #phy-cells =3D <0>;
+> +
+> +         vdds-supply =3D <&vdda_mipi_dsi0_pll>;
+> +         clocks =3D <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +                  <&rpmhcc RPMH_CXO_CLK>;
+> +         clock-names =3D "iface", "ref";
+> +     };
+> +...
