@@ -2,22 +2,19 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 61589339B30
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Mar 2021 03:22:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9BEBE339B29
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Mar 2021 03:22:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232840AbhCMCVb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S233087AbhCMCVb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Fri, 12 Mar 2021 21:21:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43226 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232904AbhCMCUy (ORCPT
+Received: from relay03.th.seeweb.it ([5.144.164.164]:33233 "EHLO
+        relay03.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232905AbhCMCUz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Mar 2021 21:20:54 -0500
-Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B592C061762
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Mar 2021 18:20:54 -0800 (PST)
+        Fri, 12 Mar 2021 21:20:55 -0500
 Received: from localhost.localdomain (abac242.neoplus.adsl.tpnet.pl [83.6.166.242])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 1261D1F88F;
-        Sat, 13 Mar 2021 03:20:52 +0100 (CET)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 5CA4C1F8E2;
+        Sat, 13 Mar 2021 03:20:53 +0100 (CET)
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 To:     ~postmarketos/upstreaming@lists.sr.ht
 Cc:     martin.botka@somainline.org,
@@ -32,9 +29,9 @@ Cc:     martin.botka@somainline.org,
         Taniya Das <tdas@codeaurora.org>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 6/9] clk: qcom: gcc-msm8994: Remove the inexistent GDSC_PCIE
-Date:   Sat, 13 Mar 2021 03:19:15 +0100
-Message-Id: <20210313021919.435332-6-konrad.dybcio@somainline.org>
+Subject: [PATCH 7/9] clk: qcom: gcc-msm8994: Add modem reset
+Date:   Sat, 13 Mar 2021 03:19:16 +0100
+Message-Id: <20210313021919.435332-7-konrad.dybcio@somainline.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210313021919.435332-1-konrad.dybcio@somainline.org>
 References: <20210313021919.435332-1-konrad.dybcio@somainline.org>
@@ -44,42 +41,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This GDSC is not present on msm8994.
+This will be required to support the modem.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
- drivers/clk/qcom/gcc-msm8994.c | 11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ drivers/clk/qcom/gcc-msm8994.c               | 1 +
+ include/dt-bindings/clock/qcom,gcc-msm8994.h | 1 +
+ 2 files changed, 2 insertions(+)
 
 diff --git a/drivers/clk/qcom/gcc-msm8994.c b/drivers/clk/qcom/gcc-msm8994.c
-index 962107b5f1af..e1e40982ebee 100644
+index e1e40982ebee..fae784b4242f 100644
 --- a/drivers/clk/qcom/gcc-msm8994.c
 +++ b/drivers/clk/qcom/gcc-msm8994.c
-@@ -2493,14 +2493,6 @@ static struct clk_branch gcc_prng_ahb_clk = {
- 	},
- };
+@@ -2693,6 +2693,7 @@ static struct gdsc *gcc_msm8994_gdscs[] = {
+ static const struct qcom_reset_map gcc_msm8994_resets[] = {
+ 	[USB3_PHY_RESET] = { 0x1400 },
+ 	[USB3PHY_PHY_RESET] = { 0x1404 },
++	[MSS_RESET] = { 0x1680 },
+ 	[PCIE_PHY_0_RESET] = { 0x1b18 },
+ 	[PCIE_PHY_1_RESET] = { 0x1b98 },
+ 	[QUSB2_PHY_RESET] = { 0x04b8 },
+diff --git a/include/dt-bindings/clock/qcom,gcc-msm8994.h b/include/dt-bindings/clock/qcom,gcc-msm8994.h
+index dcb49817dcec..f6836f430bb5 100644
+--- a/include/dt-bindings/clock/qcom,gcc-msm8994.h
++++ b/include/dt-bindings/clock/qcom,gcc-msm8994.h
+@@ -174,5 +174,6 @@
+ #define PCIE_PHY_0_RESET		2
+ #define PCIE_PHY_1_RESET		3
+ #define QUSB2_PHY_RESET			4
++#define MSS_RESET				5
  
--static struct gdsc pcie_gdsc = {
--		.gdscr = 0x1e18,
--		.pd = {
--			.name = "pcie",
--		},
--		.pwrsts = PWRSTS_OFF_ON,
--};
--
- static struct gdsc pcie_0_gdsc = {
- 		.gdscr = 0x1ac4,
- 		.pd = {
-@@ -2690,7 +2682,8 @@ static struct clk_regmap *gcc_msm8994_clocks[] = {
- };
- 
- static struct gdsc *gcc_msm8994_gdscs[] = {
--	[PCIE_GDSC] = &pcie_gdsc,
-+	/* This GDSC does not exist, but ABI has to remain intact */
-+	[PCIE_GDSC] = 0,
- 	[PCIE_0_GDSC] = &pcie_0_gdsc,
- 	[PCIE_1_GDSC] = &pcie_1_gdsc,
- 	[USB30_GDSC] = &usb30_gdsc,
+ #endif
 -- 
 2.30.2
 
