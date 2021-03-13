@@ -2,202 +2,292 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B0F8B33A17E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Mar 2021 22:47:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F55B33A1B9
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Mar 2021 23:41:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234772AbhCMVqi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 13 Mar 2021 16:46:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37850 "EHLO
+        id S234259AbhCMWkZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 13 Mar 2021 17:40:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234754AbhCMVqP (ORCPT
+        with ESMTP id S233220AbhCMWkC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 13 Mar 2021 16:46:15 -0500
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11B95C061763
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Mar 2021 13:46:14 -0800 (PST)
-Received: by mail-pg1-x52b.google.com with SMTP id 16so11707918pgo.13
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Mar 2021 13:46:14 -0800 (PST)
+        Sat, 13 Mar 2021 17:40:02 -0500
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F302EC061574
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Mar 2021 14:40:01 -0800 (PST)
+Received: by mail-pj1-x102e.google.com with SMTP id s21so6912164pjq.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Mar 2021 14:40:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:content-transfer-encoding:in-reply-to:references
          :subject:from:cc:to:date:message-id:user-agent;
-        bh=Cx4a3wzdq9mvZbTnRmeobN3xjQT5VBegMUzWIc1pP08=;
-        b=ZxpJvwkRps0vZWHXIXDzrrCfXV9mY0XYbADplxOAEOcMpL7topb6hvSyMt3KocTXac
-         KBHM6rMMtIqbhc89dYKMhTcEZ7IGcqVNl7FwaZarjT0qdGmHh0OvPVTp5pXsrfpHmAGM
-         mClqxnaCWm8KZjJriSuLfnmeKGa7RieEapq4g=
+        bh=9orrjK+nZo0zoTT5QVGst4fqvaAY3vYH2RjbTE7PZSE=;
+        b=bY4Flt1Vwr0azjmFEIPeX0TGwxynkVJEI0tkEixm6/aBKSkkZGvctIllaQw0/Kj9dM
+         yhIpucLH167N0hqo0iEw0X02crPBhj+pGfIP5l68fuYCRCelT7GrBB8KefoW2f7IUZA7
+         rSGqgot8/sOKTflkuIXU8oDrI5fYA0brYy44I=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:content-transfer-encoding
          :in-reply-to:references:subject:from:cc:to:date:message-id
          :user-agent;
-        bh=Cx4a3wzdq9mvZbTnRmeobN3xjQT5VBegMUzWIc1pP08=;
-        b=SMQM6z28pGlOccKSqnO1tBUTp/CEbORWvX3heet6vSzD3Vgmx1C26Zego2SoG+Q5rp
-         rwpXUeXtcMvtDKT+DFOXUb5jAChbW1Fo3mIDnuAAv6pgTJ+KGoXY486NKuuQbrgmGoD6
-         5CD6JuMqdOvlROKqwhisX3ZdxRKlIWQwoOir0YIo054BiZeB4uCVKYGFEAp4GzVdXjcw
-         2p4RxTl76LQnacAHRMc/K6/OV74w81TPI2Pl2XwIO4vT08T330a3Y8OpP68cDS1xIsu+
-         ETLY7+RfrTi4MHJWQQ2FnPc/eEod7AgYUiuSHMEAmOuy1y7xJc+UFqWA/6BwtJX9DgcA
-         uf/A==
-X-Gm-Message-State: AOAM530C7UHu2C0uBNlzHIYHHG/n+nqJL/w0ZEzCeEgQHm8WWsPDFiHo
-        sXJbV91xCspWIY3D17IE25Vuqg==
-X-Google-Smtp-Source: ABdhPJws5FwB+v+G5AwL2SmI7GrxBXVVuNyAd7F+xhxIRV8vGS4P+sDYmC4+jRhO9E9gKcJflhLXQA==
-X-Received: by 2002:a62:7bc4:0:b029:1f1:58ea:4010 with SMTP id w187-20020a627bc40000b02901f158ea4010mr4290400pfc.70.1615671974162;
-        Sat, 13 Mar 2021 13:46:14 -0800 (PST)
+        bh=9orrjK+nZo0zoTT5QVGst4fqvaAY3vYH2RjbTE7PZSE=;
+        b=R1w0u8DiIOdMCHO48+aBKTxyiIe09uYBHAwCNrqJtjRfEQTD083QtTEe4rRzkQJ43G
+         CleGYSQXKCkqWGN04CahG0q/yqvrAn6sYFHJve4Q4Wq43FRHRWl20qhe/nRQtLSIF4/n
+         tIsae37LgDJ114rem1QVUGgP4m9AVOm6EEvmQZCAatrxc76sOccrSbv0FK4BYVNeSDVo
+         TfZL6IP4+G/bWOjzTjM8yCNG794MZFKdzI/2RNsR0IWfNc1cVTA93eFGXCdL5mPJOhGq
+         phyMFKV3ZBwOR7AJmcDaPRdE1W6nRCm5jn9+LAIil0CfxnyCrPZ1qeOB/OlCBe0zPMus
+         rHcA==
+X-Gm-Message-State: AOAM533Ozxu6s2grXl4fQD7qNQrnWXbU61V7NBgvPIXlmozJOHRwR9bN
+        MQrgUxQhkkr/2lFvToExYAvbHA==
+X-Google-Smtp-Source: ABdhPJwFvxXz3ZFNsO1erzvgfn3XC9rNR+NF9/vcU9eje4G8Z6GI85AXCXAkf801Q+sNGJuEuDiCLA==
+X-Received: by 2002:a17:902:e54c:b029:e5:e7cf:d746 with SMTP id n12-20020a170902e54cb02900e5e7cfd746mr4878515plf.56.1615675201347;
+        Sat, 13 Mar 2021 14:40:01 -0800 (PST)
 Received: from chromium.org ([2620:15c:202:201:e859:c7d5:7d7b:5ed8])
-        by smtp.gmail.com with ESMTPSA id g12sm9448366pfh.153.2021.03.13.13.46.13
+        by smtp.gmail.com with ESMTPSA id j3sm6508512pjf.36.2021.03.13.14.40.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Mar 2021 13:46:13 -0800 (PST)
+        Sat, 13 Mar 2021 14:40:00 -0800 (PST)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1615269111-25559-7-git-send-email-sibis@codeaurora.org>
-References: <1615269111-25559-1-git-send-email-sibis@codeaurora.org> <1615269111-25559-7-git-send-email-sibis@codeaurora.org>
-Subject: Re: [PATCH 6/6] arm64: dts: qcom: sc7280: Add nodes to boot WPSS
+In-Reply-To: <1614950952-13351-2-git-send-email-mkrishn@codeaurora.org>
+References: <1614950952-13351-1-git-send-email-mkrishn@codeaurora.org> <1614950952-13351-2-git-send-email-mkrishn@codeaurora.org>
+Subject: Re: [PATCH v13 2/4] dt-bindings: msm: dsi: add yaml schemas for DSI bindings
 From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     agross@kernel.org, mani@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Sibi Sankar <sibis@codeaurora.org>
-To:     Sibi Sankar <sibis@codeaurora.org>, bjorn.andersson@linaro.org,
-        p.zabel@pengutronix.de, robh+dt@kernel.org
-Date:   Sat, 13 Mar 2021 13:46:12 -0800
-Message-ID: <161567197220.1478170.12600358804299446135@swboyd.mtv.corp.google.com>
+Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
+        kalyan_t@codeaurora.org, tanmay@codeaurora.org,
+        abhinavk@codeaurora.org, robdclark@gmail.com,
+        bjorn.andersson@linaro.org, vinod.koul@linaro.org,
+        rnayak@codeaurora.org, dianders@chromium.org, sibis@codeaurora.org,
+        khsieh@codeaurora.org
+To:     Krishna Manikandan <mkrishn@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org
+Date:   Sat, 13 Mar 2021 14:39:59 -0800
+Message-ID: <161567519933.1478170.8536263180813085792@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sibi Sankar (2021-03-08 21:51:51)
-> Add miscellaneous nodes to boot the Wireless Processor Subsystem on
+Quoting Krishna Manikandan (2021-03-05 05:29:10)
+> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller=
+-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-m=
+ain.yaml
+> new file mode 100644
+> index 0000000..520723a
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.y=
+aml
+> @@ -0,0 +1,191 @@
+> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/display/msm/dsi-controller-main.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Description of Qualcomm Display DSI controller dt properties
 
-Maybe add (WPSS) after the name so we know they're related.
-
-> SC7280 SoCs.
->=20
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-> ---
->=20
-> https://patchwork.kernel.org/project/linux-arm-msm/list/?series=3D438217
-> Depends on ipcc dt node enablement from ^^=20
->=20
->  arch/arm64/boot/dts/qcom/sc7280.dtsi | 143 +++++++++++++++++++++++++++++=
-++++++
->  1 file changed, 143 insertions(+)
->=20
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/q=
-com/sc7280.dtsi
-> index 18637c369c1d..4f03c468df51 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -244,12 +251,131 @@
->                 reg =3D <0 0x80000000 0 0>;
->         };
-> =20
-> +       tcsr_mutex: hwlock {
-> +               compatible =3D "qcom,tcsr-mutex";
-> +               syscon =3D <&tcsr_mutex_regs 0 0x1000>;
-> +               #hwlock-cells =3D <1>;
-> +       };
-
-Is this node in the right place? I think the node above it is 'memory'?
-In which case 'hwlock' comes before 'memory' alphabetically.
+Maybe just 'Qualcomm Display DSI controller"
 
 > +
-> +       smem {
-> +               compatible =3D "qcom,smem";
-> +               memory-region =3D <&smem_mem>;
-> +               hwlocks =3D <&tcsr_mutex 3>;
-> +       };
+> +maintainers:
+> +  - Krishna Manikandan <mkrishn@codeaurora.org>
 > +
->         firmware {
->                 scm {
->                         compatible =3D "qcom,scm-sc7280", "qcom,scm";
->                 };
->         };
-> =20
-> +       smp2p-adsp {
-> +               compatible =3D "qcom,smp2p";
-> +               qcom,smem =3D <443>, <429>;
-> +               interrupts-extended =3D <&ipcc IPCC_CLIENT_LPASS
-> +                                            IPCC_MPROC_SIGNAL_SMP2P
-> +                                            IRQ_TYPE_EDGE_RISING>;
-> +               mboxes =3D <&ipcc IPCC_CLIENT_LPASS
-> +                               IPCC_MPROC_SIGNAL_SMP2P>;
-> +
-> +               qcom,local-pid =3D <0>;
-> +               qcom,remote-pid =3D <2>;
-> +
-> +               adsp_smp2p_out: master-kernel {
-> +                       qcom,entry-name =3D "master-kernel";
-> +                       #qcom,smem-state-cells =3D <1>;
-> +               };
-> +
-> +               adsp_smp2p_in: slave-kernel {
-> +                       qcom,entry-name =3D "slave-kernel";
-> +                       interrupt-controller;
-> +                       #interrupt-cells =3D <2>;
-> +               };
-> +       };
-> +
-> +       smp2p-cdsp {
-> +               compatible =3D "qcom,smp2p";
-> +               qcom,smem =3D <94>, <432>;
-> +               interrupts-extended =3D <&ipcc IPCC_CLIENT_CDSP
-> +                                            IPCC_MPROC_SIGNAL_SMP2P
-> +                                            IRQ_TYPE_EDGE_RISING>;
-> +               mboxes =3D <&ipcc IPCC_CLIENT_CDSP
-> +                               IPCC_MPROC_SIGNAL_SMP2P>;
-> +
-> +               qcom,local-pid =3D <0>;
-> +               qcom,remote-pid =3D <5>;
-> +
-> +               cdsp_smp2p_out: master-kernel {
-> +                       qcom,entry-name =3D "master-kernel";
-> +                       #qcom,smem-state-cells =3D <1>;
-> +               };
-> +
-> +               cdsp_smp2p_in: slave-kernel {
-> +                       qcom,entry-name =3D "slave-kernel";
-> +                       interrupt-controller;
-> +                       #interrupt-cells =3D <2>;
-> +               };
-> +       };
-> +
-> +       smp2p-mpss {
-> +               compatible =3D "qcom,smp2p";
-> +               qcom,smem =3D <435>, <428>;
-> +               interrupts-extended =3D <&ipcc IPCC_CLIENT_MPSS
-> +                                            IPCC_MPROC_SIGNAL_SMP2P
-> +                                            IRQ_TYPE_EDGE_RISING>;
-> +               mboxes =3D <&ipcc IPCC_CLIENT_MPSS
-> +                               IPCC_MPROC_SIGNAL_SMP2P>;
-> +
-> +               qcom,local-pid =3D <0>;
-> +               qcom,remote-pid =3D <1>;
-> +
-> +               modem_smp2p_out: master-kernel {
-> +                       qcom,entry-name =3D "master-kernel";
-> +                       #qcom,smem-state-cells =3D <1>;
-> +               };
-> +
-> +               modem_smp2p_in: slave-kernel {
-> +                       qcom,entry-name =3D "slave-kernel";
+> +description: |
+> +  Common Device tree bindings for DSI controller.
 
-Do these names need to have 'master' and 'slave' in them? We're trying
-to avoid these terms. See Documentation/process/coding-style.rst Section
-4 naming.
+Maybe drop this description as it doesn't provide anything more than the
+title.
 
-> +                       interrupt-controller;
-> +                       #interrupt-cells =3D <2>;
-> +               };
 > +
-> +               ipa_smp2p_out: ipa-ap-to-modem {
-> +                       qcom,entry-name =3D "ipa";
-> +                       #qcom,smem-state-cells =3D <1>;
-> +               };
+> +allOf:
+> +  - $ref: "../dsi-controller.yaml#"
 > +
-> +               ipa_smp2p_in: ipa-modem-to-ap {
-> +                       qcom,entry-name =3D "ipa";
-> +                       interrupt-controller;
-> +                       #interrupt-cells =3D <2>;
-> +               };
-> +       };
+> +properties:
+> +  compatible:
+> +    items:
+> +      - const: qcom,mdss-dsi-ctrl
 > +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  reg-names:
+> +    const: dsi_ctrl
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    items:
+> +      - description: Display byte clock
+> +      - description: Display byte interface clock
+> +      - description: Display pixel clock
+> +      - description: Display escape clock
+> +      - description: Display AHB clock
+> +      - description: Display AXI clock
+> +
+> +  clock-names:
+> +    items:
+> +      - const: byte
+> +      - const: byte_intf
+> +      - const: pixel
+> +      - const: core
+> +      - const: iface
+> +      - const: bus
+> +
+> +  phys:
+> +    maxItems: 1
+> +
+> +  phy-names:
+> +    const: dsi
+> +
+> +  syscon-sfpb:
+> +    description: A phandle to mmss_sfpb syscon node (only for DSIv2).
+> +    $ref: "/schemas/types.yaml#/definitions/phandle"
+> +
+> +  qcom,dual-dsi-mode:
+> +    type: boolean
+> +    description: |
+> +      Indicates if the DSI controller is driving a panel which needs
+> +      2 DSI links.
+> +
+> +  qcom,master-dsi:
+> +    type: boolean
+> +    description: |
+> +      Indicates if the DSI controller is driving the master link of
+> +      the 2-DSI panel.
+
+Can this be inferred from 'clock-master' from the dsi binding?
+
+> +
+> +  ports:
+> +    $ref: "/schemas/graph.yaml#/properties/port"
+> +    type: object
+> +    description: |
+> +      Contains DSI controller input and output ports as children, each
+> +      containing one endpoint subnode.
+> +
+> +    properties:
+> +      port@0:
+> +        type: object
+> +        description: |
+> +          Input endpoints of the controller.
+> +
+> +        properties:
+> +          reg:
+> +            const: 0
+> +
+> +          endpoint:
+> +            type: object
+> +            properties:
+> +              remote-endpoint:
+> +                description: |
+> +                  For port@0, set to phandle of the connected panel/brid=
+ge's
+> +                  input endpoint. For port@1, set to the MDP interface o=
+utput.
+> +
+> +              data-lanes:
+> +                $ref: "/schemas/media/video-interfaces.yaml#"
+> +                description: |
+> +                  This describes how the physical DSI data lanes are map=
+ped
+> +                  to the logical lanes on the given platform. The value =
+contained in
+> +                  index n describes what physical lane is mapped to the =
+logical lane n
+> +                  (DATAn, where n lies between 0 and 3). The clock lane =
+position is fixed
+> +                  and can't be changed. Hence, they aren't a part of the=
+ DT bindings.
+> +
+> +                items:
+> +                  - const: 0
+> +                  - const: 1
+> +                  - const: 2
+> +                  - const: 3
+> +      port@1:
+> +        type: object
+> +        description: |
+> +          Output endpoints of the controller.
+> +        properties:
+> +          reg:
+> +            const: 1
+> +
+> +          endpoint:
+> +            type: object
+> +            properties:
+> +              remote-endpoint: true
+> +              data-lanes:
+> +                items:
+> +                  - const: 0
+> +                  - const: 1
+> +                  - const: 2
+> +                  - const: 3
+
+Can we have data-lanes in the example? I think we need required: for
+these port nodes too so we know which properties are required for the
+ports.
+
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - reg-names
+> +  - interrupts
+> +  - clocks
+> +  - clock-names
+> +  - phys
+> +  - phy-names
+> +  - ports
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +     #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +     #include <dt-bindings/clock/qcom,dispcc-sdm845.h>
+> +     #include <dt-bindings/clock/qcom,gcc-sdm845.h>
+> +
+> +     dsi@ae94000 {
+> +           compatible =3D "qcom,mdss-dsi-ctrl";
+> +           reg =3D <0x0ae94000 0x400>;
+> +           reg-names =3D "dsi_ctrl";
+> +
+> +           interrupt-parent =3D <&mdss>;
+> +           interrupts =3D <4>;
+> +
+> +           clocks =3D <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
+> +                    <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
+> +                    <&dispcc DISP_CC_MDSS_PCLK0_CLK>,
+> +                    <&dispcc DISP_CC_MDSS_ESC0_CLK>,
+> +                    <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +                    <&dispcc DISP_CC_MDSS_AXI_CLK>;
+> +           clock-names =3D "byte",
+> +                         "byte_intf",
+> +                         "pixel",
+> +                         "core",
+> +                         "iface",
+> +                         "bus";
+> +
+> +           phys =3D <&dsi0_phy>;
+> +           phy-names =3D "dsi";
+> +
+> +           ports {
+> +                  #address-cells =3D <1>;
+> +                  #size-cells =3D <0>;
+> +
+> +                  port@0 {
+> +                          reg =3D <0>;
+> +                          dsi0_in: endpoint {
+> +                                   remote-endpoint =3D <&dpu_intf1_out>;
+> +                          };
+> +                  };
+> +
+> +                  port@1 {
+> +                          reg =3D <1>;
+> +                          dsi0_out: endpoint {
+> +                          };
+> +                  };
+> +           };
+> +     };
+> +...
