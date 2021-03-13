@@ -2,71 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6841833A13C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Mar 2021 22:01:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 24EF933A144
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Mar 2021 22:04:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234593AbhCMVAf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 13 Mar 2021 16:00:35 -0500
-Received: from mail.kernel.org ([198.145.29.99]:41726 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234555AbhCMVA3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 13 Mar 2021 16:00:29 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 795FC64ECE;
-        Sat, 13 Mar 2021 21:00:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1615669229;
-        bh=aHBPuI9lHuBKVFS9eVmtjaCk1/L0V9vWiX5uC0uAvmg=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=oFRRHmNztEMlyTqsSixbCiMrdUF/xDjX95Lt14e15nJjkDxcLAsP82z7/S9YHa7vH
-         by0K290+GccYGNEwqgWSOpwp75gzSwZZ1jrvHP3DGrONFZqiTWsPascnVHWXjTUPrI
-         KCLk6lOK+eqnhh5BWTM41qWrWSVDxJI8YIFVfNrBsmnYjHkM5h9P/1yptl2oGE5dz9
-         tCs58GBD8qwCVo8E0NR4kfYi5p5uBsrHILmoRpJMxvbsW1xMB0gAbX6o2RK8ojGPHK
-         7hJFPRzf5ZeqOnPw5QirrpZ86Be1scdTSN1MTv1DsR/BGQpI75/T2Rc16vQiIwmHgT
-         zN0CuA1Q6fsqQ==
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20210224095013.1.I2e2ba4978cfca06520dfb5d757768f9c42140f7c@changeid>
-References: <20210224095013.1.I2e2ba4978cfca06520dfb5d757768f9c42140f7c@changeid>
-Subject: Re: [PATCH] clk: qcom: gcc-sc7180: Use floor ops for the correct sdcc1 clk
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     vbadigan@codeaurora.org, tdas@codeaurora.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+        id S234427AbhCMVDs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 13 Mar 2021 16:03:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56882 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234618AbhCMVDO (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 13 Mar 2021 16:03:14 -0500
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B20BC061574;
+        Sat, 13 Mar 2021 13:03:13 -0800 (PST)
+Received: from pendragon.ideasonboard.com (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 037903F0;
+        Sat, 13 Mar 2021 22:03:08 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1615669389;
+        bh=rV5Y2Z8omEob0Z3FoNOxgrtXllMXoVxG3rQVVRWPfXY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=t3k3pH5uyovsF2U6uNPesJWnbkOocQ4DDTQI4Pt78cfTZAqls5cNw6i2mu7uPD5Qs
+         t10CJS/ZXHiAru/kpjc8i8jeOL9FovcgAmu5gq3UVQ2KDeuGAGx/yBxzwL3HGrI703
+         PEQNd3+bRwonoeWxkFLCwRU4B5LedY4W0Ak0Shgg=
+Date:   Sat, 13 Mar 2021 23:02:34 +0200
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 To:     Douglas Anderson <dianders@chromium.org>
-Date:   Sat, 13 Mar 2021 13:00:28 -0800
-Message-ID: <161566922826.1478170.8804841574246579434@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Cc:     Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, robdclark@chromium.org,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] drm/bridge: ti-sn65dsi86: Simplify refclk handling
+Message-ID: <YE0oakt4h3urAsH1@pendragon.ideasonboard.com>
+References: <20210304155144.1.Ic9c04f960190faad5290738b2a35d73661862735@changeid>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20210304155144.1.Ic9c04f960190faad5290738b2a35d73661862735@changeid>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2021-02-24 09:50:25)
-> While picking commit a8cd989e1a57 ("mmc: sdhci-msm: Warn about
-> overclocking SD/MMC") back to my tree I was surprised that it was
-> reporting warnings.  I thought I fixed those!  Looking closer at the
-> fix, I see that I totally bungled it (or at least I halfway bungled
-> it).  The SD card clock got fixed (and that was the one I was really
-> focused on fixing), but I totally adjusted the wrong clock for eMMC.
-> Sigh.  Let's fix my dumb mistake.
->=20
-> Now both SD and eMMC have floor for the "apps" clock.
->=20
-> This doesn't matter a lot for the final clock rate for HS400 eMMC but
-> could matter if someone happens to put some slower eMMC on a sc7180.
-> We also transition through some of these lower rates sometimes and
-> having them wrong could cause problems during these transitions.
-> These were the messages I was seeing at boot:
->   mmc1: Card appears overclocked; req 52000000 Hz, actual 100000000 Hz
->   mmc1: Card appears overclocked; req 52000000 Hz, actual 100000000 Hz
->   mmc1: Card appears overclocked; req 104000000 Hz, actual 192000000 Hz
->=20
-> Fixes: 6d37a8d19283 ("clk: qcom: gcc-sc7180: Use floor ops for sdcc clks")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
+Hi Douglas,
 
-Applied to clk-fixes
+Thank you for the patch.
+
+On Thu, Mar 04, 2021 at 03:51:59PM -0800, Douglas Anderson wrote:
+> The clock framework makes it simple to deal with an optional clock.
+> You can call clk_get_optional() and if the clock isn't specified it'll
+> just return NULL without complaint. It's valid to pass NULL to
+> enable/disable/prepare/unprepare. Let's make use of this to simplify
+> things a tiny bit.
+> 
+> NOTE: this makes things look a tad bit asymmetric now since we check
+> for NULL before clk_prepare_enable() but not for
+> clk_disable_unprepare(). This seemed OK to me. We already have to
+> check for NULL in the enable case anyway so why not avoid the extra
+> call?
+> 
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+
+> ---
+> 
+>  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 11 +++--------
+>  1 file changed, 3 insertions(+), 8 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> index f27306c51e4d..942019842ff4 100644
+> --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> @@ -1261,14 +1261,9 @@ static int ti_sn_bridge_probe(struct i2c_client *client,
+>  		return ret;
+>  	}
+>  
+> -	pdata->refclk = devm_clk_get(pdata->dev, "refclk");
+> -	if (IS_ERR(pdata->refclk)) {
+> -		ret = PTR_ERR(pdata->refclk);
+> -		if (ret == -EPROBE_DEFER)
+> -			return ret;
+> -		DRM_DEBUG_KMS("refclk not found\n");
+> -		pdata->refclk = NULL;
+> -	}
+> +	pdata->refclk = devm_clk_get_optional(pdata->dev, "refclk");
+> +	if (IS_ERR(pdata->refclk))
+> +		return PTR_ERR(pdata->refclk);
+>  
+>  	ret = ti_sn_bridge_parse_dsi_host(pdata);
+>  	if (ret)
+
+-- 
+Regards,
+
+Laurent Pinchart
