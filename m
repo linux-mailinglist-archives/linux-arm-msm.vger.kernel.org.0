@@ -2,154 +2,253 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C3EE33A674
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Mar 2021 17:36:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C60A33A715
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Mar 2021 18:02:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234605AbhCNQfe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 14 Mar 2021 12:35:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52052 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234256AbhCNQfE (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 14 Mar 2021 12:35:04 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4E9EC061574;
-        Sun, 14 Mar 2021 09:35:02 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id j7so4487624wrd.1;
-        Sun, 14 Mar 2021 09:35:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=wztVjPrbaWUiGypvft6cn5K7xFwngQ+a+vmAeJ+d5sc=;
-        b=gZ63/BBVKEvbFwRt6vnGpOTOZzf+jEJGMgOWLucPD2hCX1Gq7BbSzsBXORqyxGjnz3
-         9+6jfdEpD16ubrdhyv/41cqJIBZIQXyj0undmJjqqr/op2c7I0KZBGpo8tgnVQYAmMpg
-         2lC4Xdse0JHm8+nmIOaNT9ainSSu0CktacH1pEoj259ys4OypRaYkVLzZpWLvrmIaCM+
-         2Gi8bAlMndI3q9qCr74w2A3rTaJkTyb7I2/iLC7HChnGoBz4yoAC1mnYnqD7ceNaACYe
-         EEtviL2vSzgji6mY8X+PXXV9b8xe27kOY2A4qjctp/IRBYSBxcKUfd7nYCywa9A6y0mU
-         +opA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=wztVjPrbaWUiGypvft6cn5K7xFwngQ+a+vmAeJ+d5sc=;
-        b=eigBD5vMcvkx40r4Y2tjhhhU1Sbrk4p0wAAmIy8fD87z1SD1te3U1h0ZySgPvyC7i+
-         z/fZWMiqnHmpv3Tc6xJP/PPiFXbh3IRxrjpjtFgfE8JRPgQZaTUDhE0uNoXUewwB0OJ7
-         NKoaC4z5VoI2uZdqlh1d4K8RA2ZFsP4GBHxOtA8n2FxYYqX6AdQSNa8DwTxRb/jQAPvM
-         Zgnm/uxBzuzRzE+MNrzLl0UtuVYl4LtTYaVdM1A+fzopiq138bFxhmkWolNLi/igbJuJ
-         GAgxEk4pVIbpaOEQaMtL5IR5znX0QCJFe4dmJkgibJMxK+o45H+NafLjSC6ZqHF0qZfD
-         kPhA==
-X-Gm-Message-State: AOAM530p64RuSzxNi0clhDlhjWYQGp4hhxgHq2fHjixe/iow1DtxKdQl
-        vEGr2nxtX63ZRthcBP5Ur9Y=
-X-Google-Smtp-Source: ABdhPJzvr9Lkkt1hNoHreSALn01qCW8D0EVwWu49kIaEFRwZgYUEUti/e7ibV8Z4E4X6E3VPTTQfCw==
-X-Received: by 2002:adf:f743:: with SMTP id z3mr23604775wrp.304.1615739701459;
-        Sun, 14 Mar 2021 09:35:01 -0700 (PDT)
-Received: from localhost.localdomain (109-252-193-52.dynamic.spd-mgts.ru. [109.252.193.52])
-        by smtp.gmail.com with ESMTPSA id o7sm15723239wrs.16.2021.03.14.09.34.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 14 Mar 2021 09:35:01 -0700 (PDT)
-From:   Dmitry Osipenko <digetx@gmail.com>
-To:     Qiang Yu <yuq825@gmail.com>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, Rob Herring <robh@kernel.org>,
-        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
-        Steven Price <steven.price@arm.com>,
-        Alyssa Rosenzweig <alyssa.rosenzweig@collabora.com>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        id S234051AbhCNRCV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 14 Mar 2021 13:02:21 -0400
+Received: from mail-co1nam11olkn2041.outbound.protection.outlook.com ([40.92.18.41]:27355
+        "EHLO NAM11-CO1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S234033AbhCNRCS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 14 Mar 2021 13:02:18 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=G+XJZNVkVXzcV7pgYfvHbn6jIzZ5y4ZMuSNfhd7KlE0Syp4IIX1VHLdsLFN62jmM080kFIWY3kQ9QQra1pCSPQ6Ow0AQsWz2qlnAsUaOuPu6qcqL8xRSIJmZjIOGr6ZYLVnISFKVsAAInpyiYnyWt1h0QudiD4tWRBwiSbYWZmXwHheQqXAI1Kbvq2vJfw2tMwY5y0akOdLfcAOxXx4Z6KaupnOUIlwnrh5J0GXvUfFDYm8TTiE2mmh79b2rYEpkwFcPKicolQ3Hv3G+0dzHfWYtP3KekCPr7U5TFavTnpGeCHqCZ4JyJf24b4ybFil7Lsj3FZDgOpOyImvA20PrvQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=P4pthdkQpZ/uSGbqTMGmmWFkR7MzhTOtHYBKXJNFWAQ=;
+ b=ACxaaKmljry7HVlRpv9fYQA7M/SMcyLGOb310/yU5oy7czaaan/tvj57r9hwcpMuH38G0dCs/Pvd3/wqU9ZDihByiYtjzlP0Yy65agFF7PpFCoy/QlSRJGhFdhQlwAcyDYqc9LLQBmiie5Sh2Lelah/o/vQrd/K12qm7rNnTtVjQhLF3DpRyZKyeoGhppzSRmhGy1kRT8NA/ro+VC5J4DHcghA5zjZgRe++7TCqPIi2Si0K7O79rHry1oFt9U1P1HmiIrVdcawAwCXpMQFLU8WGcPaPvbP+EZJaGFDE/t2JWs7vwh1Tg2ByyUvpXp+bu2G47aDjB7WQgFQTD44YAZA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+Received: from CO1NAM11FT040.eop-nam11.prod.protection.outlook.com
+ (2a01:111:e400:3861::4d) by
+ CO1NAM11HT177.eop-nam11.prod.protection.outlook.com (2a01:111:e400:3861::181)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3933.31; Sun, 14 Mar
+ 2021 17:02:16 +0000
+Received: from BN6PR2001MB1796.namprd20.prod.outlook.com
+ (2a01:111:e400:3861::49) by CO1NAM11FT040.mail.protection.outlook.com
+ (2a01:111:e400:3861::140) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3933.31 via Frontend
+ Transport; Sun, 14 Mar 2021 17:02:16 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:1BE2127EE3DEBCEEDF02EFDCC263B98BE10150F93BFA405B9772878E92E08B5C;UpperCasedChecksum:6A3362D2781093273EEAD4DDD9D9FE03086444106BBB55BFFE5BD3E5A419CC44;SizeAsReceived:7708;Count:45
+Received: from BN6PR2001MB1796.namprd20.prod.outlook.com
+ ([fe80::992a:b854:3df3:3be9]) by BN6PR2001MB1796.namprd20.prod.outlook.com
+ ([fe80::992a:b854:3df3:3be9%3]) with mapi id 15.20.3933.032; Sun, 14 Mar 2021
+ 17:02:16 +0000
+From:   Joel Selvaraj <jo@jsfamily.in>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Lukasz Luba <lukasz.luba@arm.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Yangtao Li <tiny.windzz@gmail.com>
-Cc:     Daniel Vetter <daniel@ffwll.ch>, dri-devel@lists.freedesktop.org,
-        lima@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-media@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-spi@vger.kernel.org, linux-serial@vger.kernel.org,
-        linux-tegra@vger.kernel.org
-Subject: [PATCH v3 15/15] memory: samsung: exynos5422-dmc: Convert to use resource-managed OPP API
-Date:   Sun, 14 Mar 2021 19:34:08 +0300
-Message-Id: <20210314163408.22292-16-digetx@gmail.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210314163408.22292-1-digetx@gmail.com>
-References: <20210314163408.22292-1-digetx@gmail.com>
+        Rob Herring <robh+dt@kernel.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Joel Selvaraj <jo@jsfamily.in>
+Subject: [PATCH] arm64: dts: qcom: sdm845-xiaomi-beryllium: Add audio support
+Date:   Sun, 14 Mar 2021 22:31:42 +0530
+Message-ID: <BN6PR2001MB1796C76ECAD9DE4807A72F43D96D9@BN6PR2001MB1796.namprd20.prod.outlook.com>
+X-Mailer: git-send-email 2.25.1
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-TMN:  [7XEZSfziCdL/2MSAf9b0kriVM6v/REnYBg39+UuzE+u46uiF9d1JCeyO9F28hJBM]
+X-ClientProxiedBy: MA1PR01CA0173.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:d::14) To BN6PR2001MB1796.namprd20.prod.outlook.com
+ (2603:10b6:405:23::18)
+X-Microsoft-Original-Message-ID: <20210314170142.292682-1-jo@jsfamily.in>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from localhost.localdomain (2405:201:e01d:6006:47f4:fcd1:a9e1:4e2f) by MA1PR01CA0173.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:d::14) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3933.31 via Frontend Transport; Sun, 14 Mar 2021 17:02:13 +0000
+X-MS-PublicTrafficType: Email
+X-IncomingHeaderCount: 45
+X-EOPAttributedMessage: 0
+X-MS-Office365-Filtering-Correlation-Id: 8e8dc43c-9396-4174-e761-08d8e70aebba
+X-MS-TrafficTypeDiagnostic: CO1NAM11HT177:
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 8CtSMCByjs18c4p1tY7fzBs722GQ1BtCgdVUxbH3cR+0zesFb7M5OPX6g/czXhc7Q7EYDsONsSw8NxBofbwi++/1JJ9dp07cZSBaRxI1GFuyAjX6KlQj84j6VwygGpz9K1J7OByMrIhAaFrxvnsg5/zPSpVDvVBG9ls3uzWmUOsXAUNn1kD2zW6Zfb4hxxOApb2GwV1Jj8r//ZfSWiYHF82jbmN5DzQRDRJW77eV3poeQjzpznNRhcSSvTn7VWL4Oc0aTKgrg1SUG5Cc0dxx85hqqHE05Izn1nLuyJW+8do7GKrOtesP0qSK/U7vdM5/o69jNFJfBzBU4MlIXEcLI3eblTYTwZjDZoRkW8f8hXUSo3kjXaM4adeZotQ+fMvjFaTD3DMtlHeNpgpRu5yfyw==
+X-MS-Exchange-AntiSpam-MessageData: l7RC3vDjZsAlqZjhapVyG2Q79+kvOpPTkEvkmSq+LNmJDUVBNmJn2Ix8WgXsAz/7oXcJn0W2f4kwutXm/PVmXkyMmP+zR2hB5+IfbdaDYXTml0nuO4MD70A7aB4xF7g8FUF5DDknPvqb77H+65NlKgTxzcGreIe8b10XPFtf0Zus9+5J0EFKEQoJLpWIdIhDBAPEPjVwq8m1VWRkrxCGPA==
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8e8dc43c-9396-4174-e761-08d8e70aebba
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Mar 2021 17:02:16.7527
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource: CO1NAM11FT040.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1NAM11HT177
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Yangtao Li <tiny.windzz@gmail.com>
+This patch adds audio support for Xiaomi Poco F1 phone. Phone's primary
+Mic and 3.5mm Headphone jack are handled through the SDM845 sound card
+and WCD9340 codec.
 
-Use resource-managed OPP API to simplify code.
-
-Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
-Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
-Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
+Signed-off-by: Joel Selvaraj <jo@jsfamily.in>
 ---
- drivers/memory/samsung/exynos5422-dmc.c | 13 +++----------
- 1 file changed, 3 insertions(+), 10 deletions(-)
+ .../boot/dts/qcom/sdm845-xiaomi-beryllium.dts | 117 ++++++++++++++++++
+ 1 file changed, 117 insertions(+)
 
-diff --git a/drivers/memory/samsung/exynos5422-dmc.c b/drivers/memory/samsung/exynos5422-dmc.c
-index 1dabb509dec3..56f6e65d40cd 100644
---- a/drivers/memory/samsung/exynos5422-dmc.c
-+++ b/drivers/memory/samsung/exynos5422-dmc.c
-@@ -343,7 +343,7 @@ static int exynos5_init_freq_table(struct exynos5_dmc *dmc,
- 	int idx;
- 	unsigned long freq;
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+index 86cbae63eaf7..5b5786595cdb 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+@@ -5,6 +5,8 @@
+ #include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+ #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
++#include <dt-bindings/sound/qcom,q6afe.h>
++#include <dt-bindings/sound/qcom,q6asm.h>
+ #include "sdm845.dtsi"
+ #include "pm8998.dtsi"
+ #include "pmi8998.dtsi"
+@@ -240,6 +242,28 @@ resin {
+ 	};
+ };
  
--	ret = dev_pm_opp_of_add_table(dmc->dev);
-+	ret = devm_pm_opp_of_add_table(dmc->dev);
- 	if (ret < 0) {
- 		dev_err(dmc->dev, "Failed to get OPP table\n");
- 		return ret;
-@@ -354,7 +354,7 @@ static int exynos5_init_freq_table(struct exynos5_dmc *dmc,
- 	dmc->opp = devm_kmalloc_array(dmc->dev, dmc->opp_count,
- 				      sizeof(struct dmc_opp_table), GFP_KERNEL);
- 	if (!dmc->opp)
--		goto err_opp;
-+		return -ENOMEM;
++/* QUAT I2S Uses 1 I2S SD Line for audio on TAS2559/60 amplifiers */
++&q6afedai {
++	qi2s@22 {
++		reg = <22>;
++		qcom,sd-lines = <0>;
++	};
++};
++
++&q6asmdai {
++	dai@0 {
++		reg = <0>;
++	};
++
++	dai@1 {
++		reg = <1>;
++	};
++
++	dai@2 {
++		reg = <2>;
++	};
++};
++
+ &qupv3_id_0 {
+ 	status = "okay";
+ };
+@@ -257,6 +281,73 @@ &sdhc_2 {
+ 	cd-gpios = <&tlmm 126 GPIO_ACTIVE_HIGH>;
+ };
  
- 	idx = dmc->opp_count - 1;
- 	for (i = 0, freq = ULONG_MAX; i < dmc->opp_count; i++, freq--) {
-@@ -362,7 +362,7 @@ static int exynos5_init_freq_table(struct exynos5_dmc *dmc,
++&sound {
++	compatible = "qcom,db845c-sndcard";
++	pinctrl-0 = <&quat_mi2s_active
++			&quat_mi2s_sd0_active>;
++	pinctrl-names = "default";
++	model = "Xiaomi Poco F1";
++	audio-routing =
++		"RX_BIAS", "MCLK",
++		"AMIC1", "MIC BIAS1",
++		"AMIC2", "MIC BIAS2",
++		"AMIC3", "MIC BIAS3",
++		"MM_DL1",  "MultiMedia1 Playback",
++		"MM_DL2",  "MultiMedia2 Playback",
++		"MultiMedia3 Capture", "MM_UL3";
++
++	mm1-dai-link {
++		link-name = "MultiMedia1";
++		cpu {
++			sound-dai = <&q6asmdai  MSM_FRONTEND_DAI_MULTIMEDIA1>;
++		};
++	};
++
++	mm2-dai-link {
++		link-name = "MultiMedia2";
++		cpu {
++			sound-dai = <&q6asmdai  MSM_FRONTEND_DAI_MULTIMEDIA2>;
++		};
++	};
++
++	mm3-dai-link {
++		link-name = "MultiMedia3";
++		cpu {
++			sound-dai = <&q6asmdai  MSM_FRONTEND_DAI_MULTIMEDIA3>;
++		};
++	};
++
++	slim-dai-link {
++		link-name = "SLIM Playback";
++		cpu {
++			sound-dai = <&q6afedai SLIMBUS_0_RX>;
++		};
++
++		platform {
++			sound-dai = <&q6routing>;
++		};
++
++		codec {
++			sound-dai =  <&wcd9340 0>;
++		};
++	};
++
++	slimcap-dai-link {
++		link-name = "SLIM Capture";
++		cpu {
++			sound-dai = <&q6afedai SLIMBUS_0_TX>;
++		};
++
++		platform {
++			sound-dai = <&q6routing>;
++		};
++
++		codec {
++			sound-dai = <&wcd9340 1>;
++		};
++	};
++};
++
+ &tlmm {
+ 	gpio-reserved-ranges = <0 4>, <81 4>;
  
- 		opp = dev_pm_opp_find_freq_floor(dmc->dev, &freq);
- 		if (IS_ERR(opp))
--			goto err_opp;
-+			return PTR_ERR(opp);
+@@ -285,6 +376,15 @@ sdc2_card_det_n: sd-card-det-n {
+ 		function = "gpio";
+ 		bias-pull-up;
+ 	};
++
++	wcd_intr_default: wcd_intr_default {
++		pins = <54>;
++		function = "gpio";
++
++		input-enable;
++		bias-pull-down;
++		drive-strength = <2>;
++	};
+ };
  
- 		dmc->opp[idx - i].freq_hz = freq;
- 		dmc->opp[idx - i].volt_uv = dev_pm_opp_get_voltage(opp);
-@@ -371,11 +371,6 @@ static int exynos5_init_freq_table(struct exynos5_dmc *dmc,
- 	}
+ &uart6 {
+@@ -345,6 +445,23 @@ &usb_1_qmpphy {
+ 	vdda-pll-supply = <&vreg_l1a_0p875>;
+ };
  
- 	return 0;
--
--err_opp:
--	dev_pm_opp_of_remove_table(dmc->dev);
--
--	return -EINVAL;
- }
- 
- /**
-@@ -1567,8 +1562,6 @@ static int exynos5_dmc_remove(struct platform_device *pdev)
- 	clk_disable_unprepare(dmc->mout_bpll);
- 	clk_disable_unprepare(dmc->fout_bpll);
- 
--	dev_pm_opp_remove_table(dmc->dev);
--
- 	return 0;
- }
++&wcd9340{
++	pinctrl-0 = <&wcd_intr_default>;
++	pinctrl-names = "default";
++	clock-names = "extclk";
++	clocks = <&rpmhcc RPMH_LN_BB_CLK2>;
++	reset-gpios = <&tlmm 64 0>;
++	vdd-buck-supply = <&vreg_s4a_1p8>;
++	vdd-buck-sido-supply = <&vreg_s4a_1p8>;
++	vdd-tx-supply = <&vreg_s4a_1p8>;
++	vdd-rx-supply = <&vreg_s4a_1p8>;
++	vdd-io-supply = <&vreg_s4a_1p8>;
++	qcom,micbias1-microvolt = <2700000>;
++	qcom,micbias2-microvolt = <1800000>;
++	qcom,micbias3-microvolt = <2700000>;
++	qcom,micbias4-microvolt = <2700000>;
++};
++
+ &wifi {
+ 	status = "okay";
  
 -- 
-2.30.2
+2.25.1
 
