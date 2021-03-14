@@ -2,158 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4CAED33A1D6
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Mar 2021 00:09:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5301E33A20C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Mar 2021 01:29:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231756AbhCMXI4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 13 Mar 2021 18:08:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55424 "EHLO
+        id S233011AbhCNA20 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 13 Mar 2021 19:28:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231597AbhCMXIy (ORCPT
+        with ESMTP id S231205AbhCNA20 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 13 Mar 2021 18:08:54 -0500
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF1BFC061574
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Mar 2021 15:08:53 -0800 (PST)
-Received: by mail-pj1-x102c.google.com with SMTP id a22-20020a17090aa516b02900c1215e9b33so12494436pjq.5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Mar 2021 15:08:53 -0800 (PST)
+        Sat, 13 Mar 2021 19:28:26 -0500
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05A80C061574
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Mar 2021 16:28:25 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id d3so51301835lfg.10
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Mar 2021 16:28:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=DJB4nTvqOkD2IKJreZLi0xNx1PDWydQlEGcM1Bz8MlQ=;
-        b=fLqylF++FUl0wTtyGvoGRKsw72Nu7iMwMqD6h+dqBVepPOIdlN1JGDmxihSa/faeR2
-         nhld8PWXQ1YS8Wp1XWNEGUiOJ7KN5xw224IC7GB6g/JtN6vvNoZiUNismPEmAwZFbeMq
-         CCIMCL/zFDFUN9cWAOvZCcQ6+SHDH5cG3Gm68=
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=RDiaiHNDOowe5jQki643A3xOuMfqopZF6nzHitRidSU=;
+        b=zNin9YFxbn4jP/WSl2Ry7lzo/DqvrI2j61l4QhNtXW7pAzn6XrnsbOhSyjrupqT5HX
+         VTLmkMq92u7x5NXEBPuwLzVaR1m/8dYW77F7XKMAm/FEAafcNjhpiUgt84tup+0UE4Fn
+         mEHODXtIlDElkQMHRFaI5nBklTUc0T5sugx3LaRUDfyKL+izxuRODkY96rfZDxYQBT/U
+         EYguqpw4QMOP6uvqGkbHLBzaumLYwiQudKWS6bkRA9ry6FCV8teiOugwVkXZGzlKxIUx
+         z2Q4Ut69nBvKJutKlY+DdBgE6BjQu1cVzjZxKq4MwaFKcyOTUBqsZb2+QPMJo6ExfZzg
+         KuJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=DJB4nTvqOkD2IKJreZLi0xNx1PDWydQlEGcM1Bz8MlQ=;
-        b=DgFRXGe6BmFp23OhGsO6ZQ39fKGYq5E5dQGieZ+phwoWWVAsnQhtkq8XkmOHCjUn4X
-         eaCbONq5Ukoy0nZw1muIEjfVWf4hAC/2zXJhUQeRUDXZ/pSecbeCMBMdC7f8clVCLypB
-         vnGT3pKM1FErD4uBi88H4nqljIkcjj5F6MqJ2WEmrcXmgg/IHYiFfNdr4UMR5yUdgIC6
-         byME/CsULTqgkxrxU1rffZc7Y9U8FAstFDPj4JpiRAOw1yd+W9FaJ/yMZKCcm7RzF26x
-         jqyFpzYDMpUbYVN2RQTieMBPYcsvpvl6wKUrhJ4x7KPAFByRsoc0GOSZZ6f11Xf0bvQx
-         BUGg==
-X-Gm-Message-State: AOAM5309LbgZM7IlCMb8EX3XE454W7/U8/h+TKa9laQqKQVlyYrAldZ5
-        r31J4av5ED8cgI9DEFnlmd46Gg==
-X-Google-Smtp-Source: ABdhPJxYbxFeNmipRG6YABAM/S66f0kEw3ozjMgiUUXpI6JZyIIWg/9Wcmz4CrAnU9bO/ij+Zo+iLw==
-X-Received: by 2002:a17:90b:a04:: with SMTP id gg4mr5635251pjb.51.1615676933283;
-        Sat, 13 Mar 2021 15:08:53 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:201:e859:c7d5:7d7b:5ed8])
-        by smtp.gmail.com with ESMTPSA id g12sm6148613pjd.57.2021.03.13.15.08.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Mar 2021 15:08:52 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=RDiaiHNDOowe5jQki643A3xOuMfqopZF6nzHitRidSU=;
+        b=ui5G3K90WQxiSdK5sYc03oKLm/SpvWrBr/fixbgNOXzUU4IWQl8JlQRZp63ZOPSAom
+         jO0CZP1sARD+2l6XQVqB66BcoW94txCGZZaYq3XojRxyqTFK3DUxArG9nygFTUWZFqhs
+         Q1enKHtr39eBAEDH4o3hpE0OJAaapp0SNjl+ssNtTYeEdv1N8q2OipkZ+oGKvFtP0QUz
+         hHBqLJVlsPm7u+Kz5XyRsA6JiJScoOrboch1PY2xPzb0ANJqou8a5Izef3pXiAj4cckK
+         Iw2POZuefYt0W/az0zzrtQYGUyET/YG4S+KVTxOf99pFAK7VFCvSWr+aVufRa/JCoaC1
+         /OXA==
+X-Gm-Message-State: AOAM533/oy8BeMEdMFFX1Ws4iiAxpC2boVZfYNm9FhZSl/ZqLbI98xf0
+        HCAtgi1SgwN+HX81jExvARcSHg==
+X-Google-Smtp-Source: ABdhPJz74igCjmIXuAjJjsquRvfYVB+M/ShX6fidGHxJrhjzSZIv/UIxKuRq5YZWx1oA/kdtsSgGUg==
+X-Received: by 2002:a05:6512:ac7:: with SMTP id n7mr3843977lfu.567.1615681704408;
+        Sat, 13 Mar 2021 16:28:24 -0800 (PST)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id e11sm2144840lfc.141.2021.03.13.16.28.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 13 Mar 2021 16:28:24 -0800 (PST)
+Subject: Re: [PATCH 01/13] arm64: dts: qcom: sc7180: Update dts for DP phy
+ inside QMP phy
+To:     Douglas Anderson <dianders@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Alexandru M Stan <amstan@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        Vara Reddy <varar@codeaurora.org>,
+        Tanmay Shah <tanmay@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20210225221310.1939599-1-dianders@chromium.org>
+ <20210225141022.1.Iad06142ceb8426ce5492737bf3d9162ed0dd2b55@changeid>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <ee5695bb-a603-0dd5-7a7f-695e919b1af1@linaro.org>
+Date:   Sun, 14 Mar 2021 03:28:22 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1614950952-13351-3-git-send-email-mkrishn@codeaurora.org>
-References: <1614950952-13351-1-git-send-email-mkrishn@codeaurora.org> <1614950952-13351-3-git-send-email-mkrishn@codeaurora.org>
-Subject: Re: [PATCH v13 3/4] dt-bindings: msm: dsi: add yaml schemas for DSI PHY bindings
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
-        kalyan_t@codeaurora.org, tanmay@codeaurora.org,
-        abhinavk@codeaurora.org, robdclark@gmail.com,
-        bjorn.andersson@linaro.org, vinod.koul@linaro.org,
-        rnayak@codeaurora.org, dianders@chromium.org, sibis@codeaurora.org,
-        khsieh@codeaurora.org
-To:     Krishna Manikandan <mkrishn@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org
-Date:   Sat, 13 Mar 2021 15:08:51 -0800
-Message-ID: <161567693145.1478170.18190682094557030182@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+In-Reply-To: <20210225141022.1.Iad06142ceb8426ce5492737bf3d9162ed0dd2b55@changeid>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Krishna Manikandan (2021-03-05 05:29:11)
-> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.y=
-aml b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
-> new file mode 100644
-> index 0000000..33e2a2e
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
-> @@ -0,0 +1,71 @@
-> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/display/msm/dsi-phy-10nm.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Description of Qualcomm Display DSI 10nm PHY dt properties
+On 26/02/2021 01:12, Douglas Anderson wrote:
+> From: Stephen Boyd <swboyd@chromium.org>
+> 
+> Drop the old node and add the new one in its place.
+> 
+> Cc: Stephen Boyd <swboyd@chromium.org>
+> Cc: Jeykumar Sankaran <jsanka@codeaurora.org>
+> Cc: Chandan Uddaraju <chandanu@codeaurora.org>
+> Cc: Vara Reddy <varar@codeaurora.org>
+> Cc: Tanmay Shah <tanmay@codeaurora.org>
+> Cc: Rob Clark <robdclark@chromium.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> [dianders: Adjusted due to DP not itself not in upstream dts yet]
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+> 
+>   arch/arm64/boot/dts/qcom/sc7180.dtsi | 23 ++++++++++++++++-------
+>   1 file changed, 16 insertions(+), 7 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 1ea3344ab62c..60248a6757d8 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -2770,12 +2770,11 @@ usb_1_hsphy: phy@88e3000 {
+>   		};
+>   
+>   		usb_1_qmpphy: phy-wrapper@88e9000 {
+> -			compatible = "qcom,sc7180-qmp-usb3-phy";
+> +			compatible = "qcom,sc7180-qmp-usb3-dp-phy";
+>   			reg = <0 0x088e9000 0 0x18c>,
+> -			      <0 0x088e8000 0 0x38>;
+> -			reg-names = "reg-base", "dp_com";
+> +			      <0 0x088e8000 0 0x38>,
 
-"Qualcomm Display DSI 10nm PHY"
+Technically this should be 0x3c. Offset 0x38 is USB3_DP_COM_REVISION_ID3 
+(not used by the current driver though).
 
-> +
-> +maintainers:
-> +  - Krishna Manikandan <mkrishn@codeaurora.org>
-> +
-> +description: |
-> +  Common Device tree bindings for DSI 10nm PHY.
+> +			      <0 0x088ea000 0 0x40>;
 
-Drop description as it doesn't provide anything?
+I think 0x40 is not enough here.
+This is a serdes region and qmp_v3_dp_serdes_tbl contains registers 
+0x148 and 0x154.
 
+>   			status = "disabled";
+> -			#clock-cells = <1>;
+>   			#address-cells = <2>;
+>   			#size-cells = <2>;
+>   			ranges;
+> @@ -2790,7 +2789,7 @@ usb_1_qmpphy: phy-wrapper@88e9000 {
+>   				 <&gcc GCC_USB3_DP_PHY_PRIM_BCR>;
+>   			reset-names = "phy", "common";
+>   
+> -			usb_1_ssphy: phy@88e9200 {
+> +			usb_1_ssphy: usb3-phy@88e9200 {
+>   				reg = <0 0x088e9200 0 0x128>,
+>   				      <0 0x088e9400 0 0x200>,
+>   				      <0 0x088e9c00 0 0x218>,
+> @@ -2803,6 +2802,16 @@ usb_1_ssphy: phy@88e9200 {
+>   				clock-names = "pipe0";
+>   				clock-output-names = "usb3_phy_pipe_clk_src";
+>   			};
 > +
-> +allOf:
-> +  - $ref: dsi-phy-common.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    oneOf:
-> +      - const: qcom,dsi-phy-10nm
-> +      - const: qcom,dsi-phy-10nm-8998
-> +
-> +  reg:
-> +    items:
-> +      - description: Address offset and size for dsi phy register set
-> +      - description: Address offset and size for dsi phy lane register s=
-et
-> +      - description: Address offset and size for dsi pll register set
+> +			dp_phy: dp-phy@88ea200 {
+> +				reg = <0 0x088ea200 0 0x200>,
+> +				      <0 0x088ea400 0 0x200>,
+> +				      <0 0x088eaa00 0 0x200>,
+> +				      <0 0x088ea600 0 0x200>,
+> +				      <0 0x088ea800 0 0x200>;
+> +				#clock-cells = <1>;
+> +				#phy-cells = <0>;
+> +			};
+>   		};
+>   
+>   		dc_noc: interconnect@9160000 {
+> @@ -3166,8 +3175,8 @@ dispcc: clock-controller@af00000 {
+>   				 <&gcc GCC_DISP_GPLL0_CLK_SRC>,
+>   				 <&dsi_phy 0>,
+>   				 <&dsi_phy 1>,
+> -				 <0>,
+> -				 <0>;
+> +				 <&dp_phy 0>,
+> +				 <&dp_phy 1>;
+>   			clock-names = "bi_tcxo",
+>   				      "gcc_disp_gpll0_clk_src",
+>   				      "dsi0_phy_pll_out_byteclk",
+> 
 
-Please drop "Address offset and size for" from all of these.
 
-> +
-> +  reg-names:
-> +    items:
-> +      - const: dsi_phy
-> +      - const: dsi_phy_lane
-> +      - const: dsi_pll
-> +
-> +  vdds-supply:
-> +    description: |
-> +      Connected to DSI0_MIPI_DSI_PLL_VDDA0P9 pin for sc7180 target and
-> +      connected to VDDA_MIPI_DSI_0_PLL_0P9 pin for sdm845 target
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - reg-names
-> +  - vdds-supply
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +     #include <dt-bindings/clock/qcom,dispcc-sdm845.h>
-> +     #include <dt-bindings/clock/qcom,rpmh.h>
-> +
-> +     dsi-phy@ae94400 {
-> +         compatible =3D "qcom,dsi-phy-10nm";
-> +         reg =3D <0x0ae94400 0x200>,
-> +               <0x0ae94600 0x280>,
-> +               <0x0ae94a00 0x1e0>;
-> +         reg-names =3D "dsi_phy",
-> +                     "dsi_phy_lane",
-> +                     "dsi_pll";
-> +
-> +         #clock-cells =3D <1>;
-> +         #phy-cells =3D <0>;
-> +
-> +         vdds-supply =3D <&vdda_mipi_dsi0_pll>;
-> +         clocks =3D <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +                  <&rpmhcc RPMH_CXO_CLK>;
-> +         clock-names =3D "iface", "ref";
-> +     };
-> +...
+-- 
+With best wishes
+Dmitry
