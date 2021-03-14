@@ -2,239 +2,302 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DEEE633A753
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Mar 2021 19:12:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D18E33A78F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Mar 2021 20:00:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234085AbhCNSMJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 14 Mar 2021 14:12:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44490 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234082AbhCNSMF (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 14 Mar 2021 14:12:05 -0400
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B548C061764
-        for <linux-arm-msm@vger.kernel.org>; Sun, 14 Mar 2021 11:12:03 -0700 (PDT)
-Received: by mail-yb1-xb30.google.com with SMTP id 133so30944786ybd.5
-        for <linux-arm-msm@vger.kernel.org>; Sun, 14 Mar 2021 11:12:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=JiLjT7F7TLvwfttlWWQnjBXTcWSnJNejV4NEk/U2uNU=;
-        b=Vs3SmhWd41w0G49v8KGBNDlaN1RnC6zNyvAS8my3/4CXGn34b4H6i44jK1dR6/LNCw
-         0hG/4OwXHBerfP3TinAVCyAMcDV/7g3f3IcIhUpgW4Y6hYZ3azWf1ORfl5qKai2RUIIH
-         /HvpBpBh84RsJWtCc1eQIGB3ttf7p2wXenf/MSi5QwyIhBQ9SWODlKO6SXCm0bJDIBE3
-         u7rStFhPidZq8wB8K9PxTN15m+ul+yN+yn4gTtMKAxzk5s9aqtmh1wrTg/6fETuxwHw/
-         Wt5kWqnSB9yvc4l7cCz6gJUkgW0btQu4OkyZxFElKPYNQSj/pdFQ711xc7zeL07nV9S+
-         A80A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=JiLjT7F7TLvwfttlWWQnjBXTcWSnJNejV4NEk/U2uNU=;
-        b=eONDJnCiZnYaKqha5xV+hDQMnMZ0suEqfjlS88TJOOWDru4IhJsWEieOS8+tq/3ref
-         UHmiqMXgn/dzBmZIXp49vKNk6YXpUen8ALNol1dF9WvLEeYcnwa8/c8LSglswjVSDGEH
-         uGPrmdgCdhBJ0z2oOfrNZ9kPadkM1dID1WCTF9Am1RF3AyI74Q8Yd3gA/ywNX+495olR
-         zr5frx/auPkB4/oQF6Uk4TP4pW4eiTegkfXxPmCb5rQMHlZqy4kzgdPlgSRUBZfl9Frm
-         tobBnluWruz+AHhGUF62gJmISIGMSpB3LzI9wghdo03j/fM+nucjJtN73EmjjI9YtmeC
-         n5mg==
-X-Gm-Message-State: AOAM531VugJtBYhvAjhmfpJmXxWE9d7fn4gER7H2Q1X/eYwqyZoPxVwF
-        I0Txis4irHWhH2ZkhBE59B7gTl8rvDCIQJoj+efUaw==
-X-Google-Smtp-Source: ABdhPJyK7TD9OEpDYsns/BB949SqcXV5VtqVsGvY2LYwRN674CC8N0nqN8/Ap1rojQY0Qfa0XAEMFTgNBJ7+6szurDc=
-X-Received: by 2002:a25:ca42:: with SMTP id a63mr32518347ybg.318.1615745522312;
- Sun, 14 Mar 2021 11:12:02 -0700 (PDT)
+        id S233259AbhCNS72 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 14 Mar 2021 14:59:28 -0400
+Received: from m42-2.mailgun.net ([69.72.42.2]:55257 "EHLO m42-2.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233248AbhCNS7U (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 14 Mar 2021 14:59:20 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1615748360; h=Content-Transfer-Encoding: MIME-Version:
+ References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=E/D1ab7qq8kF771WiUwOqh2b/1XgluuhzHizoAkutQU=; b=XZ+qB7ydIHt3iWubDDEkK1iKlCz39jkZ3HpoqYipo8yQKtbikmNbNDPqUu6v1yP3vnob382N
+ JmaUVcTLKI1j9YSrPCZdfdS5up08aWtwGcGIDhQ/ayIYutShA1G8SlNRpG6mid7irZbE4nTb
+ YX0iCY5AKuG2xsouaEJwcQVWNN8=
+X-Mailgun-Sending-Ip: 69.72.42.2
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 604e5d056dc1045b7d86d079 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sun, 14 Mar 2021 18:59:17
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 369B9C43462; Sun, 14 Mar 2021 18:59:15 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3994AC433CA;
+        Sun, 14 Mar 2021 18:59:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3994AC433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     bjorn.andersson@linaro.org
+Cc:     agross@kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        rnayak@codeaurora.org, robh+dt@kernel.org,
+        saiprakash.ranjan@codeaurora.org, schowdhu@codeaurora.org,
+        sibis@codeaurora.org, vkoul@kernel.org
+Subject: Re: [PATCH V1 2/6] soc: qcom: dcc: Add driver support for Data Capture and Compare unit(DCC)
+Date:   Mon, 15 Mar 2021 00:29:01 +0530
+Message-Id: <20210314185901.15151-1-saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.29.0
+In-Reply-To: <YEpF1JO4CAd2pb0m@builder.lan>
+References: <YEpF1JO4CAd2pb0m@builder.lan>
 MIME-Version: 1.0
-References: <BN6PR2001MB1796C76ECAD9DE4807A72F43D96D9@BN6PR2001MB1796.namprd20.prod.outlook.com>
-In-Reply-To: <BN6PR2001MB1796C76ECAD9DE4807A72F43D96D9@BN6PR2001MB1796.namprd20.prod.outlook.com>
-From:   Amit Pundir <amit.pundir@linaro.org>
-Date:   Sun, 14 Mar 2021 23:41:26 +0530
-Message-ID: <CAMi1Hd3pP8BL7T5XHkh5e3a8c9X5aTdY4hES5-Zc9x5Uu7fNqA@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sdm845-xiaomi-beryllium: Add audio support
-To:     Joel Selvaraj <jo@jsfamily.in>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dt <devicetree@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 14 Mar 2021 at 22:32, Joel Selvaraj <jo@jsfamily.in> wrote:
->
-> This patch adds audio support for Xiaomi Poco F1 phone. Phone's primary
-> Mic and 3.5mm Headphone jack are handled through the SDM845 sound card
-> and WCD9340 codec.
+On 2021-03-11 22:01, Bjorn Andersson wrote:
+> On Thu 11 Mar 00:19 CST 2021, Sai Prakash Ranjan wrote:
+> 
+>> Hi Bjorn,
+>>
+>> On 2021-03-11 04:49, Bjorn Andersson wrote:
+>> > On Wed 10 Mar 10:46 CST 2021, Souradeep Chowdhury wrote:
+>> >
+>> > > The DCC is a DMA Engine designed to capture and store data
+>> > > during system crash or software triggers. The DCC operates
+>> > > based on link list entries which provides it with data and
+>> > > addresses and the function it needs to perform. These
+>> > > functions are read, write and loop. Added the basic driver
+>> > > in this patch which contains a probe method which instantiates
+>> > > the resources needed by the driver. DCC has it's own SRAM which
+>> > > needs to be instantiated at probe time as well.
+>> > >
+>> >
+>> > So to summarize, the DCC will upon a crash copy the configured region
+>> > into the dcc-ram, where it can be retrieved either by dumping the memory
+>> > over USB or from sysfs on the next boot?
+>> >
+>>
+>> Not just the next boot, but also for the current boot via /dev/dcc_sram,
+>> more below.
+>>
+> 
+> Interesting!
+> 
+>> > > Signed-off-by: Souradeep Chowdhury <schowdhu@codeaurora.org>
+>> > > ---
+>> > >  drivers/soc/qcom/Kconfig  |   8 +
+>> > >  drivers/soc/qcom/Makefile |   1 +
+>> > >  drivers/soc/qcom/dcc.c    | 388
+>> > > ++++++++++++++++++++++++++++++++++++++++++++++
+>> > >  3 files changed, 397 insertions(+)
+>> > >  create mode 100644 drivers/soc/qcom/dcc.c
+>> > >
+>>
+>> <snip>...
+>>
+>> >
+>> > How about implementing this using pstore instead of exposing it through
+>> > a custom /dev/dcc_sram (if I read the code correclty)
+>> >
+>>
+>> Using pstore is definitely a good suggestion, we have been thinking of
+>> adding it as a separate change once the basic support for DCC gets in.
+>> But pstore ram backend again depends on warm reboot which is present only
+>> in chrome compute platforms but android platforms do not officially support
+>> warm reboot. Pstore with block devices as a backend would be ideal but it
+>> is still a work in progress to use mmc as the backend [1].
+>>
+> 
+> I was under the impression that we can have multiple pstore
+> implementations active, so we would have ramoops and dcc presented
+> side by side after such restart. Perhaps that's a misunderstanding on my
+> part?
+> 
+
+If you mean pstore backends(persistent ram and block device) as the
+implementations, then yes they can separately coexist, but blk device
+as the backend is not fully ready and ramoops only guarantees traces
+if the DDR contents are retained i.e., on warm reboot.
+
+In case of ramoops, we currently have console-ramoops, dmesg-ramoops,
+ftrace-ramoops, pmsg-ramoops. We cannot add dcc-ramoops directly like
+this as DCC is very platform specific(and QTI specific).
+
+I wanted to add something like device-ramoops/misc-ramoops where the
+device drivers could register with pstore and provide some useful debug
+information but the size of ramoops reserved is usually very small and
+is divided among all of these. So even if lets say we add DCC today and
+later on multiple devices which are present in the same SoC, then the
+reserved memory will not be enough and its not easy to properly divide
+the memory regions to these devices within device-ramoops, there needs
+to be some sort of dynamic reservation as the device probes, so its
+currently on hold.
+
+One other reason is the firmware being smart, such as depthcharge [1]
+which deletes the ramoops DT node when it loads Kernel+DTB image and
+adds its own ramoops node with the size it prefers(which is small) and
+so we would need a firmware side change as well to accomodate dcc-ramoops.
+
+Given so many dependencies for pstore ramoops, making it as a primary way
+to get DCC trace logs doesn't seem right, we can add it as an addon feature.
+
+[1] https://chromium.googlesource.com/chromiumos/platform/depthcharge/+/refs/heads/main/src/boot/ramoops.c#41
+
+>> Now the other reason as to why we need this dev interface in addition to
+>> pstore,
+>>
+>>  * Pstore contents are retrieved on the next boot, but DCC SRAM contents
+>>    can be collected via dev interface for the current boot via SW trigger.
+>>    Lets say we have some non-fatal errors in one of the subsystems and we
+>>    want to analyze the register values, it becomes as simple as configuring
+>>    that region, trigger dcc and collect the sram contents and parse it.
+>>
+>>    echo "addr" > /sys/bus/platform/devices/***.dcc/config
+>>    echo  1 > /sys/bus/platform/devices/***.dcc/trigger
+>>    cat /dev/dcc_sram > dcc_sram.bin
+>>    python dcc_parser.py -s dcc_sram.bin --v2 -o output/
+>>
+>> We don't have to reboot at all for SW triggers. This is very useful and
+>> widely used internally.
+>>
+>> Is the custom /dev/dcc_sram not recommended because of the dependency on
+>> the userspace component being not available openly? If so, we already have
+>> the dcc parser upstream which we use to extract the sram contents [2].
+>>
+> 
+> My concern is that we come up with a custom chardev implementation for
+> something that already exists or should exist in a more generic form.
 >
 
-Tested-by: Amit Pundir <amit.pundir@linaro.org>
+Sorry if I misunderstood this comment, but DCC is part of QDSS(Qualcomm Debug
+SubSystem) and is specific to QTI. We have Coresight TMC ETR/ETF exposing
+similar dev interfaces which is somewhat similar to DCC in the sense that ETF
+has its own internal RAM and DCC has the internal SRAM but they are 2 different
+hardware IPs. Even in case of ETF, we can collect the live trace on the target
+via dev interface and then decode it or collect ramdumps in case of fatal crashes
+and then extract trace binary and decode it. So looks like such dev interface
+already exists for other hardwares and works pretty well for the specific usecases.
 
-> Signed-off-by: Joel Selvaraj <jo@jsfamily.in>
-> ---
->  .../boot/dts/qcom/sdm845-xiaomi-beryllium.dts | 117 ++++++++++++++++++
->  1 file changed, 117 insertions(+)
+> 
+> In the runtime sequence above, why don't you have trigger just generate
+> a devcoredump? But perhaps the answer is that we want a unified
+> interface between the restart and runtime use cases?
 >
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-> index 86cbae63eaf7..5b5786595cdb 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-> @@ -5,6 +5,8 @@
->  #include <dt-bindings/gpio/gpio.h>
->  #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
->  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> +#include <dt-bindings/sound/qcom,q6afe.h>
-> +#include <dt-bindings/sound/qcom,q6asm.h>
->  #include "sdm845.dtsi"
->  #include "pm8998.dtsi"
->  #include "pmi8998.dtsi"
-> @@ -240,6 +242,28 @@ resin {
->         };
->  };
->
-> +/* QUAT I2S Uses 1 I2S SD Line for audio on TAS2559/60 amplifiers */
-> +&q6afedai {
-> +       qi2s@22 {
-> +               reg = <22>;
-> +               qcom,sd-lines = <0>;
-> +       };
-> +};
-> +
-> +&q6asmdai {
-> +       dai@0 {
-> +               reg = <0>;
-> +       };
-> +
-> +       dai@1 {
-> +               reg = <1>;
-> +       };
-> +
-> +       dai@2 {
-> +               reg = <2>;
-> +       };
-> +};
-> +
->  &qupv3_id_0 {
->         status = "okay";
->  };
-> @@ -257,6 +281,73 @@ &sdhc_2 {
->         cd-gpios = <&tlmm 126 GPIO_ACTIVE_HIGH>;
->  };
->
-> +&sound {
-> +       compatible = "qcom,db845c-sndcard";
-> +       pinctrl-0 = <&quat_mi2s_active
-> +                       &quat_mi2s_sd0_active>;
-> +       pinctrl-names = "default";
-> +       model = "Xiaomi Poco F1";
-> +       audio-routing =
-> +               "RX_BIAS", "MCLK",
-> +               "AMIC1", "MIC BIAS1",
-> +               "AMIC2", "MIC BIAS2",
-> +               "AMIC3", "MIC BIAS3",
-> +               "MM_DL1",  "MultiMedia1 Playback",
-> +               "MM_DL2",  "MultiMedia2 Playback",
-> +               "MultiMedia3 Capture", "MM_UL3";
-> +
-> +       mm1-dai-link {
-> +               link-name = "MultiMedia1";
-> +               cpu {
-> +                       sound-dai = <&q6asmdai  MSM_FRONTEND_DAI_MULTIMEDIA1>;
-> +               };
-> +       };
-> +
-> +       mm2-dai-link {
-> +               link-name = "MultiMedia2";
-> +               cpu {
-> +                       sound-dai = <&q6asmdai  MSM_FRONTEND_DAI_MULTIMEDIA2>;
-> +               };
-> +       };
-> +
-> +       mm3-dai-link {
-> +               link-name = "MultiMedia3";
-> +               cpu {
-> +                       sound-dai = <&q6asmdai  MSM_FRONTEND_DAI_MULTIMEDIA3>;
-> +               };
-> +       };
-> +
-> +       slim-dai-link {
-> +               link-name = "SLIM Playback";
-> +               cpu {
-> +                       sound-dai = <&q6afedai SLIMBUS_0_RX>;
-> +               };
-> +
-> +               platform {
-> +                       sound-dai = <&q6routing>;
-> +               };
-> +
-> +               codec {
-> +                       sound-dai =  <&wcd9340 0>;
-> +               };
-> +       };
-> +
-> +       slimcap-dai-link {
-> +               link-name = "SLIM Capture";
-> +               cpu {
-> +                       sound-dai = <&q6afedai SLIMBUS_0_TX>;
-> +               };
-> +
-> +               platform {
-> +                       sound-dai = <&q6routing>;
-> +               };
-> +
-> +               codec {
-> +                       sound-dai = <&wcd9340 1>;
-> +               };
-> +       };
-> +};
-> +
->  &tlmm {
->         gpio-reserved-ranges = <0 4>, <81 4>;
->
-> @@ -285,6 +376,15 @@ sdc2_card_det_n: sd-card-det-n {
->                 function = "gpio";
->                 bias-pull-up;
->         };
-> +
-> +       wcd_intr_default: wcd_intr_default {
-> +               pins = <54>;
-> +               function = "gpio";
-> +
-> +               input-enable;
-> +               bias-pull-down;
-> +               drive-strength = <2>;
-> +       };
->  };
->
->  &uart6 {
-> @@ -345,6 +445,23 @@ &usb_1_qmpphy {
->         vdda-pll-supply = <&vreg_l1a_0p875>;
->  };
->
-> +&wcd9340{
-> +       pinctrl-0 = <&wcd_intr_default>;
-> +       pinctrl-names = "default";
-> +       clock-names = "extclk";
-> +       clocks = <&rpmhcc RPMH_LN_BB_CLK2>;
-> +       reset-gpios = <&tlmm 64 0>;
-> +       vdd-buck-supply = <&vreg_s4a_1p8>;
-> +       vdd-buck-sido-supply = <&vreg_s4a_1p8>;
-> +       vdd-tx-supply = <&vreg_s4a_1p8>;
-> +       vdd-rx-supply = <&vreg_s4a_1p8>;
-> +       vdd-io-supply = <&vreg_s4a_1p8>;
-> +       qcom,micbias1-microvolt = <2700000>;
-> +       qcom,micbias2-microvolt = <1800000>;
-> +       qcom,micbias3-microvolt = <2700000>;
-> +       qcom,micbias4-microvolt = <2700000>;
-> +};
-> +
->  &wifi {
->         status = "okay";
->
-> --
-> 2.25.1
->
+
+Yes, in case of restart i.e., warm reboot since DCC SRAM contents are
+retained, we can use the dev interface itself on the next reboot to
+collect dcc logs if the memory is not zeroed out which I think current
+driver code does which needs to be fixed.
+
+> 
+> It would be nice to have some more details of how I can use this and how
+> to operate the sysfs interface to achieve that, would you be able to
+> elaborate on this?
+> 
+
+Agreed, this needs more documentation. I will give one real world example on
+SC7180 SoC based board where this could have been used, Souradeep can add more
+and document it in cover letter for the next version of the patchset.
+
+Example: (Addresses configured here are just examples and not related to actual
+timestamp clks)
+
+On SC7180, there was a coresight timestamp issue where it would occasionally
+be all 0 instead of proper timestamp values.
+
+Proper timestamp:
+Idx:3373; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x13004d8f5b7aa; CC=0x9e
+
+Zero timestamp:
+Idx:3387; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x0; CC=0xa2
+
+Now this is a non-fatal issue and doesn't need a system reset, but still needs
+to be rootcaused and fixed for those who do care about coresight etm traces.
+Since this is a timestamp issue, we would be looking for any timestamp related
+clocks and such.
+
+So we get all the clk register details from IP documentation and configure it
+via DCC config syfs node. Before that we set the current linked list.
+
+/* Set the current linked list */
+echo 3 > /sys/bus/platform/devices/10a2000.dcc/curr_list
+
+/* Program the linked list with the addresses */
+echo 0x10c004 > /sys/bus/platform/devices/10a2000.dcc/config
+echo 0x10c008 > /sys/bus/platform/devices/10a2000.dcc/config
+echo 0x10c00c > /sys/bus/platform/devices/10a2000.dcc/config
+echo 0x10c010 > /sys/bus/platform/devices/10a2000.dcc/config
+..... and so on for other timestamp related clk registers
+
+/* Other way of specifying is in "addr len" pair, in below case it
+specifies to capture 4 words starting 0x10C004 */
+
+echo 0x10C004 4 > /sys/bus/platform/devices/10a2000.dcc/config
+
+/* Enable DCC */
+echo 1 > /sys/bus/platform/devices/10a2000.dcc/enable
+
+/* Run the timestamp test for working case */
+
+/* Send SW trigger */
+echo 1 > /sys/bus/platform/devices/10a2000.dcc/trigger
+
+/* Read SRAM */
+cat /dev/dcc_sram > dcc_sram1.bin
+
+/* Run the timestamp test for non-working case */
+
+/* Send SW trigger */
+echo 1 > /sys/bus/platform/devices/10a2000.dcc/trigger
+
+/* Read SRAM */
+cat /dev/dcc_sram > dcc_sram2.bin
+
+Get the parser from [1] and checkout the latest branch.
+
+/* Parse the SRAM bin */
+python dcc_parser.py -s dcc_sram1.bin --v2 -o output/
+python dcc_parser.py -s dcc_sram2.bin --v2 -o output/
+
+Sample parsed output of dcc_sram1.bin:
+
+localhost ~ # cat dcc_captured_data.xml 
+<?xml version="1.0" encoding="utf-8"?>
+<hwioDump version="1">
+        <timestamp>03/14/21</timestamp>
+        <generator>Linux DCC Parser</generator>
+        <chip name="None" version="None">
+                <register address="0x0010c004" value="0x80000000" />
+                <register address="0x0010c008" value="0x00000008" />
+                <register address="0x0010c00c" value="0x80004220" />
+                <register address="0x0010c010" value="0x80000000" />
+        </chip>
+        <next_ll_offset>next_ll_offset : 0x1c </next_ll_offset>
+</hwioDump>
+
+Now compare the parsed output for dcc_sram1.bin and dcc_sram2.bin, we will
+find that one of these register values in working case and non-working case
+is different which when cross checked with IP doc would give us the idea
+of what is going wrong with the timestamp clks and would help to debug further.
+
+[1] https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/tools/tree/dcc_parser
+
+PS: We didn't use DCC to debug this coresight timestamp issue but could have
+used it and this example demonstrates the capability of DCC and I ran with
+these above with actual timestamp clk registers and it works as demonstrated
+here, so it's a working example.
+
+Thanks,
+Sai
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
