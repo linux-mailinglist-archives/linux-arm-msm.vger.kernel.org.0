@@ -2,109 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DF83733C7B3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 21:25:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C65DA33C7C1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 21:33:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230016AbhCOUY3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Mar 2021 16:24:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43730 "EHLO
+        id S231349AbhCOUdC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Mar 2021 16:33:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230201AbhCOUYM (ORCPT
+        with ESMTP id S232252AbhCOUca (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Mar 2021 16:24:12 -0400
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F5F9C06174A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 13:23:56 -0700 (PDT)
-Received: by mail-pf1-x430.google.com with SMTP id b23so7313672pfo.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 13:23:56 -0700 (PDT)
+        Mon, 15 Mar 2021 16:32:30 -0400
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAB17C06175F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 13:32:29 -0700 (PDT)
+Received: by mail-qk1-x72a.google.com with SMTP id t4so33112875qkp.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 13:32:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=SumgLXEEDiSse0N2r2wNeP3SJpvgrBBQ9pGbicCVAEs=;
-        b=TARURj7INPTeCxkYuNlc1Lt1LfxS4mpXImb01jpqC0RkGoV9RYZhPtDsnVFI/7eTmH
-         GTVMBKlCtuHrSW/ir5AxzAs64HJv6PIa5kw3kAYJPCdpxf+W1+te+o3IwP79unkrBJ9b
-         SFtbI3RWWDym7d+KyWBRa8M77ilbej639GpSQ=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=h2ls2+uQXDv8BpiLhF8FqA6hSrXbISTdm9YVC3CFyBI=;
+        b=NQkFyzbcqkBAqXKfDSY3JuEJR6crZshUOu6rzrEW0jsngl9EWtEH1RBMVVvCwjc6Ok
+         q7rx5p5Av34yZ1bbeLphUDbwXPMMGbqNZ1KuUnWI+G8WdFMZFNJDlIBb8m1NXAXRfL0P
+         hBWjbNt4w0IsbjfgXCV5/qUoBq4haMlKWj8IE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=SumgLXEEDiSse0N2r2wNeP3SJpvgrBBQ9pGbicCVAEs=;
-        b=q6BZcHZOrFqT0FYuAArMLeu8zueIJuOB1bmH9jt7r8r8EmKQMxuREFk6lPOqZ3kU6V
-         CUg0UsW2Mlvamgob+1c5fiDfnIzTVA20fXBc/bijSbvXiy3YWrDUluPnhHzlBZWzK+H6
-         bsLIRGrdYIUA177rdyJxOJmwcRdQdRJaUeeuZXS0wZJrevHKKYgW0JAeAXhDPwvZqP0h
-         iQe20k15mOoYTgDrALZTp2BW1mLS1C8BpsqMWHNYmPjtbCejQf0Dohh2jTriLuQdharr
-         nHB+/rnd8U8dn0uNVXca/KNYSYgSw9CyfcDiD1SmsCVzwxqE5zslefxXGcLz9drkc02v
-         uIaQ==
-X-Gm-Message-State: AOAM531GdpLpR/4Z4N0wiXvoG9uYjD0Tz4QD4TR2LyIqqF/FZUqOgRv7
-        brlbgbhG1EPP1hiyczh4zvB31A==
-X-Google-Smtp-Source: ABdhPJy36KHDbtO5vnkZ/gY0V3nJT3eoSZdw94j+JhPppm60Jbxdyx5Jq9uOCangxZCVttxxGhPROA==
-X-Received: by 2002:a63:f11:: with SMTP id e17mr777453pgl.296.1615839836202;
-        Mon, 15 Mar 2021 13:23:56 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:14ce:2d12:6a1f:f42])
-        by smtp.gmail.com with ESMTPSA id i17sm15614361pfq.135.2021.03.15.13.23.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Mar 2021 13:23:55 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=h2ls2+uQXDv8BpiLhF8FqA6hSrXbISTdm9YVC3CFyBI=;
+        b=uoWW9we71n7bNsZjgEUr6GFqJWWRHmDBsvrDuON9ySNMWfzT4+w0NBQpT8SuTe6xKQ
+         HiZuiVl+lfUTgVUfeRcf6E1XUYfDQ3aZ6hxN7UsRiAXjtqyZltEIk+6DIcD5trfRLL60
+         90AqSLbZTrXZp/XIQkdRhjyFhzCyAQtSzva9Seqt0F33M9z/Z+EqFd29osS2QZLOATv9
+         FoSSSVsCLsXYwdJc6RmBppe1LXUzJdKgcvDX5HJelQScv+hfaInMowXiagfh49AodfU6
+         Qn3o1+daAV0vSNtyjlZ/sFrISJSvE/tdulmeiNAX3LHOb4rVYPV65vMRMnWsJw6d6t+k
+         /lqA==
+X-Gm-Message-State: AOAM533QySEH+diC9dvO6qZZiUxJWfG30mn4on+Qr+3KSBp1TI+albE4
+        43Remw1JgyyOWcXBVPpg/SKX/XpsVv9ClQ==
+X-Google-Smtp-Source: ABdhPJypISS7JMTUcnQPRhhTPKHIgc4XXd29JYPHVsxtfzrR5D90OPZiPkTkxqtCeCM8PrqjqSybUQ==
+X-Received: by 2002:a05:620a:2295:: with SMTP id o21mr27708798qkh.349.1615840348823;
+        Mon, 15 Mar 2021 13:32:28 -0700 (PDT)
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com. [209.85.219.171])
+        by smtp.gmail.com with ESMTPSA id h6sm11513496qtj.75.2021.03.15.13.32.06
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Mar 2021 13:32:06 -0700 (PDT)
+Received: by mail-yb1-f171.google.com with SMTP id m9so34568383ybk.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 13:32:06 -0700 (PDT)
+X-Received: by 2002:a25:dc4d:: with SMTP id y74mr2030271ybe.79.1615840325780;
+ Mon, 15 Mar 2021 13:32:05 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210315132256.1.I601a051cad7cfd0923e55b69ef7e5748910a6096@changeid>
+In-Reply-To: <20210315132256.1.I601a051cad7cfd0923e55b69ef7e5748910a6096@changeid>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 15 Mar 2021 13:31:53 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Uj+uFUrFxi_96KuzeBtFY_dQTLOfr74vzztCHsy_oivg@mail.gmail.com>
+Message-ID: <CAD=FV=Uj+uFUrFxi_96KuzeBtFY_dQTLOfr74vzztCHsy_oivg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: Add "dmic_clk_en" for sc7180-trogdor-coachz
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
         Ajit Pandey <ajitp@codeaurora.org>,
         Judy Hsiao <judyhsiao@chromium.org>,
         Cheng-Yi Chiang <cychiang@chromium.org>,
         Stephen Boyd <swboyd@chromium.org>,
         Matthias Kaehlcke <mka@chromium.org>,
         Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] arm64: dts: qcom: Add "dmic_clk_en" + sound model for sc7180-trogdor-pompom
-Date:   Mon, 15 Mar 2021 13:23:19 -0700
-Message-Id: <20210315132256.2.If218189eff613a6c48ba12d75fad992377d8f181@changeid>
-X-Mailer: git-send-email 2.31.0.rc2.261.g7f71774620-goog
-In-Reply-To: <20210315132256.1.I601a051cad7cfd0923e55b69ef7e5748910a6096@changeid>
-References: <20210315132256.1.I601a051cad7cfd0923e55b69ef7e5748910a6096@changeid>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Match what's downstream for this board.
+Hi,
 
-Cc: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Cc: Ajit Pandey <ajitp@codeaurora.org>
-Cc: Judy Hsiao <judyhsiao@chromium.org>
-Cc: Cheng-Yi Chiang <cychiang@chromium.org>
-Cc: Stephen Boyd <swboyd@chromium.org>
-Cc: Matthias Kaehlcke <mka@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
-This applies atop the patch (arm64: dts: qcom: sc7180-trogdor: Add
-lpass dai link for I2S driver") [1].
+On Mon, Mar 15, 2021 at 1:23 PM Douglas Anderson <dianders@chromium.org> wrote:
+>
+> This was present downstream. Add upstream too.
+>
+> Cc: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+> Cc: Ajit Pandey <ajitp@codeaurora.org>
+> Cc: Judy Hsiao <judyhsiao@chromium.org>
+> Cc: Cheng-Yi Chiang <cychiang@chromium.org>
+> Cc: Stephen Boyd <swboyd@chromium.org>
+> Cc: Matthias Kaehlcke <mka@chromium.org>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+> This applies atop the patch ("arm64: dts: qcom: Add sound node for
+> sc7180-trogdor-coachz") [1].
+>
+> NOTE: downstream this property was present in each of the board
+> revisions. There's actually no longer any reason for this and I'll
+> shortly post a downstream patch to fix this.
+>
+> [1] https://lore.kernel.org/r/20210313054654.11693-3-srivasam@codeaurora.org/
+>
+>  .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi     | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
 
-[1] https://lore.kernel.org/r/20210313054654.11693-2-srivasam@codeaurora.org/
+Argh, I just realized that upstream actually has this in -r1 but not
+in -r2. So confusing! I'll send a quick v2. Sorry for the spam.
 
- arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-index d253a08f6fc8..622b5f1b88a2 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-@@ -139,6 +139,13 @@ &sdhc_2 {
- 	status = "okay";
- };
- 
-+&sound {
-+	model = "sc7180-rt5682-max98357a-2mic";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&dmic_sel>;
-+	dmic-gpios = <&tlmm 86 GPIO_ACTIVE_HIGH>;
-+};
-+
- &usb_c1 {
- 	status = "disabled";
- };
--- 
-2.31.0.rc2.261.g7f71774620-goog
-
+-Doug
