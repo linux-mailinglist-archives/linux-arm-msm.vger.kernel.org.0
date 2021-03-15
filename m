@@ -2,80 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C284033BFA7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 16:23:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F02B933C016
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 16:37:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229883AbhCOPWH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Mar 2021 11:22:07 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55556 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229703AbhCOPVf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Mar 2021 11:21:35 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 8B00664E45;
-        Mon, 15 Mar 2021 15:21:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1615821695;
-        bh=7eA2jOmALQBifeGCCZLfB7f+nnHFLR/kMJZ3ERyDZq0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=qFYFYh++JNd0c1XFJkfHGZvZpBKvSo61n4U0YVKTOfMkPmw75CJyBTO7XwforFA81
-         JBoPAro5qQ5Ge3+kKRz1/pznayHYr/IqW7ePpGnlGWnuHYmUqSj3fbLyORid8LU6bI
-         TkCo+s6JZNE1bFEaijEDhEZJHwaSM98Ifho/hxzGNpIjj2DldDQBDwTrPk7239vsPE
-         3MskxVRJbXrt9+GaKJwT3d3dXYF/QOf3Myab8BkiC48Ic2P5fSYVFTd0wn5BgKJHnU
-         xj5ruO2xcJiCJuySoBXLV4h7mCU5TQPDJziGXXWNQJ0fpBuVrY2PdI9gehO1eOiQQI
-         Wh+g+78H0terA==
-Date:   Mon, 15 Mar 2021 15:20:19 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     satya priya <skakit@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>, mka@chromium.org,
-        rnayak@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        kgunda@codeaurora.org, David Collins <collinsd@codeaurora.org>
-Subject: Re: [PATCH V2 0/5] Add PM7325/PM8350C/PMR735A regulator support
-Message-ID: <20210315152019.GB4595@sirena.org.uk>
-References: <1615816454-1733-1-git-send-email-skakit@codeaurora.org>
+        id S229675AbhCOPgb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Mar 2021 11:36:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37312 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233574AbhCOPgO (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 15 Mar 2021 11:36:14 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B7ADC061765
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 08:36:14 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id a1so16757638ljp.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 08:36:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=eiHizJmFemXxUepeQXNK0dXDWFjN//yCmR/of+Jsshk=;
+        b=f8omFg9i0wexsaLy7aYOboT+afbYPAV1waixWzYUDdDA6B4bMpTvmdkfL66367GCB0
+         hjuf73k5OA79n/v/ZjWIH7De+sPd71zHOTxfVNcZ1LCDl8NJNFra362kltHzvV3z/5q2
+         mUTHsUTyc51F0AnmW/AIKjTganOBZc/zdeqX+0J+XqaaWNOISpuciYUvyj9HzaACQvg1
+         UH+8kNRVXdr6D9rynGIjRaUDxzFlPU6nkT5GDWIBvzjBOUUcD8BAqGSwkYrq5R8alywl
+         3qAJmu9q6qPIwiarileYRr04H8cgsCwhtHh8KdIRcMbgVGY/LhCqsnd0N0gPQYNW6VEp
+         UUWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=eiHizJmFemXxUepeQXNK0dXDWFjN//yCmR/of+Jsshk=;
+        b=fFBhjVfRDzeaDdnDVmUSgwZv6idqv5eMoY0Qwu5XnGIOpt6157LuyHojnjujL26QqI
+         Tl9YkgxJlB8pk8uOqVT3eui6EXpyyBHei6u2MkucEvbUaHTh9R4fDrUuddqwKSEtWrQv
+         ig5w8rzDNcq4w3pW7kXiewA1LvV1CHXRhiDyJDPOyNF6SX5ElfApsS+5B75vo0QR93VY
+         B+/H2z7FtomqSKX4C6m+l5Iz4aVsVNdn6GWrehR40mDlwmLKvtmRxs0FJ5fawJErriD/
+         dWLMHuvWhK92CwNAlmQuqt7WBW+NB7Uk8ENurKMqQ/I5OnGJW2RdWP14+GfEwI2kJ3Hp
+         mRdg==
+X-Gm-Message-State: AOAM5339J8HTb4LrootCulDcM0StnULkDWtZ+04ab/FXJ+CSLavNIydl
+        AMIzqS3n6ohzhEspweo+RVydTAG2TJJXHd8PiHmrLv/QjXM0QSaw
+X-Google-Smtp-Source: ABdhPJw3q5Vb780yHnT1QMqZL4C+po2SDrsvTMchS4fg7vi/xyG3rNqmcetBjsuMnkFv9wMzK0Nb3xlKVOq0+CBOgbs=
+X-Received: by 2002:a2e:864a:: with SMTP id i10mr10475044ljj.467.1615822572593;
+ Mon, 15 Mar 2021 08:36:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="24zk1gE8NUlDmwG9"
-Content-Disposition: inline
-In-Reply-To: <1615816454-1733-1-git-send-email-skakit@codeaurora.org>
-X-Cookie: Close cover before striking.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20210303131858.3976-1-shawn.guo@linaro.org> <CACRpkdZp7m0s+6Fgzq4ScftAr-CtEPtAbz3jGCvKTzdqXJtfAA@mail.gmail.com>
+ <YEqmTUXbn0T2dqla@builder.lan>
+In-Reply-To: <YEqmTUXbn0T2dqla@builder.lan>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Mon, 15 Mar 2021 16:36:01 +0100
+Message-ID: <CACRpkdaQ_p1n6+cu5f2p6gWui-eDMF_MEmC0ZQM50oyb3CcZUg@mail.gmail.com>
+Subject: Re: [PATCH v2] pinctrl: qcom: support gpio_chip .set_config call
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Shawn Guo <shawn.guo@linaro.org>,
+        Andy Shevchenko <andriy.shevchenko@intel.com>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, Mar 12, 2021 at 12:22 AM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
 
---24zk1gE8NUlDmwG9
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> I don't know how to make the transition, but can you please revert this
+> patch, to avoid breaking compatibility with DTBs out there?
 
-On Mon, Mar 15, 2021 at 07:24:09PM +0530, satya priya wrote:
-> Below patches are already picked
-> [3/7] regulator: qcom-rpmh: Correct the pmic5_hfsmps515 buck
-> [6/7] regulator: qcom-rpmh: Use correct buck for S1C regulator
+OK reverted for now. Does this imply I cannot apply Shawn's ACPI
+support patch either? I.e. is this a prerequisite?
 
-Please do not submit new versions of already applied patches, please
-submit incremental updates to the existing code.  Modifying existing
-commits creates problems for other users building on top of those
-commits so it's best practice to only change pubished git commits if
-absolutely essential.
-
---24zk1gE8NUlDmwG9
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmBPezMACgkQJNaLcl1U
-h9BF1Af+KEPuzg138g/HoYKia5LJ6Cdyk4fa3fVVHcVFXlsXmQHM22Mp3Tf28e/X
-lIM9+E/H0bTB24qIAAVKZvGizf34EIjD0ykWcEwQyObDqmuB9u7mtDCKiiy7HaOw
-J/Ia3B7o/QSrHaFQitLPytDIDN2PROBKhpB29QWj1rLSdnllgmjBv+vHLOj5VCC0
-FqZ/YroEo9Ii5GsFVp9lGmlrKjAjyDTVt9aXwMgJH3xrcTUfDgolLcdQPLxc8ssU
-pbwVLlWJ4FWYpqqjaEEFp942ThfCy6V4SPSNBSr6LJHhIYxtNVGEVkk1XT0GyKCZ
-0fiPtsP7Jd2dfi3rWc5kui9dEStp0Q==
-=TFHb
------END PGP SIGNATURE-----
-
---24zk1gE8NUlDmwG9--
+Yours,
+Linus Walleij
