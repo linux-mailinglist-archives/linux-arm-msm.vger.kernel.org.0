@@ -2,123 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B6C733C1ED
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 17:33:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ADC5233C1F6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 17:33:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231406AbhCOQcg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Mar 2021 12:32:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49766 "EHLO
+        id S233160AbhCOQdI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Mar 2021 12:33:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233594AbhCOQcU (ORCPT
+        with ESMTP id S233863AbhCOQck (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Mar 2021 12:32:20 -0400
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68FA7C06174A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 09:32:20 -0700 (PDT)
-Received: by mail-qk1-x732.google.com with SMTP id m186so15619809qke.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 09:32:20 -0700 (PDT)
+        Mon, 15 Mar 2021 12:32:40 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FB2AC06174A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 09:32:40 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id f16so16991615ljm.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 09:32:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=wSDzwZbj+0vxP+554qTTvCPOo7GPQQW7PtVpXOR2Y4U=;
-        b=FetC9ltqIaCLxNdmHDvRxJjzUI0PCf2tEgp5CE05LdSaKPJugguqprjMjPNDorS7Gb
-         SMLZ21YfS9W6mDAWMTTmgSmZ77K3Zye10u9DPDepX8cyaGCvgn6eKh0T/1kTF/hfNKa4
-         Sr91+vICNArqJrjCOFRVjUJYHpV1ZBwUCpmG8=
+        bh=9x36cr7sfYTbtX9K9YpSG1gMw2te24dVSovNQkqAfNY=;
+        b=ypIWuPXz4w1n/1s1mLqibXK95L3fsuPf8Ey3O+EZn37oTglyTgr/ChphFNV/FxNk6+
+         HcZo7wZ51e7zo1wiumftIpbdHEaQHJ7CunqU8jkJLFQZ/lTXrVN117tR10WCGpr3bbd2
+         XXmD2E1pLgGYf9RhtcCtWcJwFHDJR3hJDioMc2FJxe7/uyDJipemOVDifLutmaklZMzm
+         xAWC9CY2zzTnuzVVd3EKkf+JW3Z0u6sazi8xCcZHEAg67Mocp9v8vdx1uzlj34jlUjLE
+         9MFFxflGIr11JgzzpWikNaj6Wl4mQ6JgKCvkwSpOcDyOUvJzU6uanI2mieygBKqlinLo
+         IPlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=wSDzwZbj+0vxP+554qTTvCPOo7GPQQW7PtVpXOR2Y4U=;
-        b=jl6HE4SsKyRNn98lFl2l1dwIt+4q86C//FJ7EA5eMaAIwVkoxsfBwHJjLqA4JHaZkV
-         snHUPMxuXQIoySnYyh8yYRlkmuFcAHYOh4BhqKn4m43NB8vXna0GOD/WwQm0pYtFGQRY
-         dYWlQQ4Z5jzR2fgLpwfL8teisGWN5ZrVAs/B+XZhYvv9NIg5pFkbCgKzYe0dmUlCIdro
-         GIQ0QhhtKaNW13dVnoceyN95en6eRxpZYDg4xz+oj8x+Ixk1iX0k0mBaLpZGu8LuNRNS
-         ERSyzHnI3APjMT9FIS0DxPTc1FljPJ3q0j0LmYRcpq2a26UjnhyWFAN8SAR9w41Mdcz8
-         Sd5A==
-X-Gm-Message-State: AOAM533piz6RINSgx9Xvz0bDXVkF003myjg+eVPVeofqIKZsBOGrNFFz
-        8acyu3TIeFBSGYOEv+XYT8FTpN15+8wkyg==
-X-Google-Smtp-Source: ABdhPJw1kWRxOVDpbzQD6CsUGiEcrcj72sBvUhNM7nCgkbTFJQn27TL9WedawepOR45il3S6uoBInA==
-X-Received: by 2002:ae9:ef89:: with SMTP id d131mr25494339qkg.214.1615825938397;
-        Mon, 15 Mar 2021 09:32:18 -0700 (PDT)
-Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com. [209.85.219.169])
-        by smtp.gmail.com with ESMTPSA id m16sm12717025qkm.100.2021.03.15.09.32.17
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Mar 2021 09:32:17 -0700 (PDT)
-Received: by mail-yb1-f169.google.com with SMTP id l8so33790223ybe.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 09:32:17 -0700 (PDT)
-X-Received: by 2002:a05:6902:70a:: with SMTP id k10mr669116ybt.257.1615825936810;
- Mon, 15 Mar 2021 09:32:16 -0700 (PDT)
+        bh=9x36cr7sfYTbtX9K9YpSG1gMw2te24dVSovNQkqAfNY=;
+        b=bC8NNwhGf8mdSm5qyJiDov7VHB577AbGL77Y2IaYC47wvG3AzbiZBofjrcTPBFgtGr
+         m3tNTR3sIFM/2A7zcw4RpdpMxLyYEVc4laUfDabNjMopzx2dkDe2J7/JJItfEMeN1f1G
+         5uHrlpjHSek7PSLsgDVurTzbUPt3kllDM+V51O7Q1cwlJiWWGja86gfb4P4kDJpMI56K
+         bkisxv5sAPqK898X9QXBIfALy4GpLSo7nY++8R0D6I0hdKhvMnNv21gPYhUDgvRwOHei
+         9AvrjWIuDFeIjnMFLmkl2iPeP8PncTxJZUidhk8IBkFAUvlUB6U7gWZivaoRdB7paB4T
+         bWdA==
+X-Gm-Message-State: AOAM530IemVD/BT8r8Sb0snuVIlLQJfMwdXM0+b8nPjjNspZjn0O3nVk
+        +PFBhMwo2kzVN082hoLCrEnMEKLeK7RZtjvfaV814A==
+X-Google-Smtp-Source: ABdhPJxL6hEsF+7OqsUsZkHySTZyK3uwo5RHhA6dChnV53dav/IKHTYB6GIVaJo9OFJivkN6tv2e3nPh/02h8b22jzg=
+X-Received: by 2002:a2e:700a:: with SMTP id l10mr11130205ljc.368.1615825958642;
+ Mon, 15 Mar 2021 09:32:38 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210304155144.1.Ic9c04f960190faad5290738b2a35d73661862735@changeid>
- <20210304155144.2.Id492ddb6e2cdd05eb94474b93654b04b270c9bbe@changeid> <YE0qyYedS0NilsCy@pendragon.ideasonboard.com>
-In-Reply-To: <YE0qyYedS0NilsCy@pendragon.ideasonboard.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 15 Mar 2021 09:31:41 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=X_HAdNkvZ7NGKDH9KapRRLgOfN23OZyy3VyaX+ywjRkQ@mail.gmail.com>
-Message-ID: <CAD=FV=X_HAdNkvZ7NGKDH9KapRRLgOfN23OZyy3VyaX+ywjRkQ@mail.gmail.com>
-Subject: Re: [PATCH 2/3] drm/bridge: ti-sn65dsi86: Move code in prep for EDID
- read fix
-To:     Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Cc:     Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm@vger.kernel.org, robdclark@chromium.org,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20210311024102.15450-1-shawn.guo@linaro.org>
+In-Reply-To: <20210311024102.15450-1-shawn.guo@linaro.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Mon, 15 Mar 2021 17:32:27 +0100
+Message-ID: <CACRpkdanRjuErV17ZsSTOX8VpKQZuWge9b_vuKtgjyG9h6XV9g@mail.gmail.com>
+Subject: Re: [PATCH v5] pinctrl: qcom: sc8180x: add ACPI probe support
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Shevchenko <andriy.shevchenko@intel.com>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Thu, Mar 11, 2021 at 3:41 AM Shawn Guo <shawn.guo@linaro.org> wrote:
 
-On Sat, Mar 13, 2021 at 1:13 PM Laurent Pinchart
-<laurent.pinchart@ideasonboard.com> wrote:
+> It adds ACPI probe support for pinctrl-sc8180x driver.  We have one
+> problem with ACPI table, i.e. GIO0 (TLMM) block has one single memory
+> resource to cover 3 tiles defined by SC8180X.  To follow the hardware
+> layout of 3 tiles which is already supported DT probe, it adds one
+> function to replace the original single memory resource with 3 named
+> ones for tiles.  With that, We can map memory for ACPI in the same way
+> as DT.
 >
-> Hi Douglas,
->
-> Thank you for the patch.
->
-> On Thu, Mar 04, 2021 at 03:52:00PM -0800, Douglas Anderson wrote:
-> > This patch is _only_ code motion to prepare for the patch
-> > ("drm/bridge: ti-sn65dsi86: Properly get the EDID, but only if
-> > refclk") and make it easier to understand.
->
-> s/make/makes/
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> ---
+> Changes for v5:
+> - Keep .ngpios number as 190 to match SoC spec.
+> - Add comments for sc8180x_pinctrl_add_tile_resources().
+> - Drop redundant error message.
 
-I was never an expert at grammar, but I think either "make" or "makes"
-are fine. Simple version with parenthesis:
+This v5 version applied!
+Thanks for your perseverance and excellent work as always Shawn!
 
-Mine:
+Special thanks to Andy for helping out in getting all ACPI details right!
 
-This patch is <blah> to (prepare for the patch <blah>) and (make it
-easier to understand).
-
-Yours:
-
-This patch is <blah> (to prepare for the patch <blah>) and (makes it
-easier to understand).
-
-I suppose also valid would be:
-
-This patch is <blah> (to prepare for the patch <blah>) and (to make it
-easier to understand).
-
-
-In any case if/when I spin this patch I'm fine changing it to your
-version just because (as I understand) it's equally valid and maybe
-looks slightly better?
-
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
->
-> Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-
-Thanks for the reviews!
-
--Doug
+Yours,
+Linus Walleij
