@@ -2,96 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 726EC33C704
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 20:46:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 329E933C7AD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 21:24:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233705AbhCOTp3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Mar 2021 15:45:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35406 "EHLO
+        id S232518AbhCOUX5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Mar 2021 16:23:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230151AbhCOTpT (ORCPT
+        with ESMTP id S231982AbhCOUXw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Mar 2021 15:45:19 -0400
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31F40C06174A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 12:45:19 -0700 (PDT)
-Received: by mail-ot1-x32e.google.com with SMTP id p24so7530011ota.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 12:45:19 -0700 (PDT)
+        Mon, 15 Mar 2021 16:23:52 -0400
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE919C061762
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 13:23:52 -0700 (PDT)
+Received: by mail-pg1-x536.google.com with SMTP id q5so8487895pgk.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 13:23:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=VY11BYIgAhCdWHUv8waddSOddoxkrAGuQw5MjJrS3vE=;
-        b=GDpRPRI//le1LnCEZjHY3CRsvGZn1WUwU0XqZETVFu0JTsDRUob8NaBFBE/QPkSije
-         lWALMkwyNNGg0/Az5S/GYNsvSdsOM3ItFDLJORMlJZ088/Ja9Zvrbu0IQhhQGbMfAjt2
-         G3C1QHIazpw562mBVqTlCFFPlIarX8xkZfckg=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=yZu7/V3GT6uftxTccqNjz6wfZExwBmSHvrxB/n5WhXQ=;
+        b=V8dYHNBsN+d0zZpENFZm3uDvEFk+rhV1osVp3G/TuHJkYDD9CMwaFIl1wdjmncYMB/
+         fR/LsNlUbvJ07mDm6jlBuUaChGluZA6PUqNoFoCC1yJf7AycH65DAYlZiEXpoVALvyQ5
+         yjJDl/u4Sq5+8nCtBt2WK3C0VBA+YdreRMw2o=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=VY11BYIgAhCdWHUv8waddSOddoxkrAGuQw5MjJrS3vE=;
-        b=M1C2CILUE/FzY/ljoboQzbSWnsD0l113GvTlP/Q0Vx/M9TKO+dQgB5+Tfe59Pa6J82
-         yAaGI2AMu8l+45OLN92YHHjcKSnpSMwFVSeUZVauOLNnYe9eZdtPdtuGj+ZhqNpHDAlB
-         YwK5HjBv/9ibMDQnpM55DaT5dmJAVJ3uDRT5CbD7IDEqytwhiq06qlA9KlIU36eTPAI7
-         h9VJAMRFV7grZk1zkH2dsbXyGkMbzwGv8LReAr1lO2Ql9QYSxqaoA00Gg6zXLnx1dkJO
-         qnogNjFZH55sc+Pknpu7TgsxKmQX5OgGMOOPHjgkjfTjJebiEYPvMoaaxyLifHhuElW8
-         iJnQ==
-X-Gm-Message-State: AOAM530Ej5WnY2iZXBxpfjqFW6lIyN9vMbUgeGmI8MwAYBIFfYh30M6m
-        N/8yUfP4YfQAJ9AGq8bY9WwRrCn9smhJCw==
-X-Google-Smtp-Source: ABdhPJx22aNZCge5n4zljOPBC6R39z1VTRFCQ9911jdcDoQv45p84reLMI6iKI5g4oSw916SUhCCeQ==
-X-Received: by 2002:a9d:80e:: with SMTP id 14mr543302oty.211.1615837518251;
-        Mon, 15 Mar 2021 12:45:18 -0700 (PDT)
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com. [209.85.210.46])
-        by smtp.gmail.com with ESMTPSA id f22sm7252462otl.10.2021.03.15.12.45.17
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Mar 2021 12:45:18 -0700 (PDT)
-Received: by mail-ot1-f46.google.com with SMTP id e45so7532965ote.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 12:45:17 -0700 (PDT)
-X-Received: by 2002:a25:cf88:: with SMTP id f130mr1887543ybg.476.1615837084349;
- Mon, 15 Mar 2021 12:38:04 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210314061054.19451-1-srivasam@codeaurora.org> <20210314061054.19451-3-srivasam@codeaurora.org>
-In-Reply-To: <20210314061054.19451-3-srivasam@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 15 Mar 2021 12:37:53 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VcOsSsn1MGkhd-t0dPv4cTOO2UV6+44oPrZ5iS0-f56w@mail.gmail.com>
-Message-ID: <CAD=FV=VcOsSsn1MGkhd-t0dPv4cTOO2UV6+44oPrZ5iS0-f56w@mail.gmail.com>
-Subject: Re: [PATCH v7 2/2] arm64: dts: qcom: Add sound node for sc7180-trogdor-coachz
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=yZu7/V3GT6uftxTccqNjz6wfZExwBmSHvrxB/n5WhXQ=;
+        b=s/wy8rXzbwJIEkek0lVECBZ4KOqUzyYOdMOnX2mwyNlrfn8l6UGFZ+oKmqu+ZVeNh+
+         KI+YGJxvuMVSRjFWZJlaUx50Leyk8aTDhR8qV9mU/cfC7lum+kstlw73MVBsmtNwZ6vQ
+         OoMl185WcIv09o/Wt0u8aCvhDY8MyVJMT9KP/qjHNs4kx4NgjjhilVli2VoITZJhsomz
+         IeGcKA4dMOr9UE/RS05ApSlQtlIwsdgFlhMHu/G+RpL0iEAONDnK4YctUI1+HddPO5EF
+         STdbuV7WlhcZZo7dq7mngGVLIRWcBg81ZCRKc6vYWeRslvdILGzULdGUlo9JUYLe+5Rw
+         yk4g==
+X-Gm-Message-State: AOAM530Gfny3qmsk8dwd8PGmZH2+PsR+v4Jjc5BOZJGXARCOSgRZPVj8
+        hmuPSsXw9Fto3tEoDAjrfAumIQ==
+X-Google-Smtp-Source: ABdhPJzRt36liQFt91K9dXkzTHyGZDOhxdq/xNtR0/bVbhGob08+MN9jgPm2nQC6huuPHIK3BoOfyQ==
+X-Received: by 2002:a63:5a0c:: with SMTP id o12mr761248pgb.76.1615839832328;
+        Mon, 15 Mar 2021 13:23:52 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:14ce:2d12:6a1f:f42])
+        by smtp.gmail.com with ESMTPSA id i17sm15614361pfq.135.2021.03.15.13.23.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Mar 2021 13:23:51 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        Ajit Pandey <ajitp@codeaurora.org>,
+        Judy Hsiao <judyhsiao@chromium.org>,
+        Cheng-Yi Chiang <cychiang@chromium.org>,
         Stephen Boyd <swboyd@chromium.org>,
-        Judy Hsiao <judyhsiao@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+        Matthias Kaehlcke <mka@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 1/2] arm64: dts: qcom: Add "dmic_clk_en" for sc7180-trogdor-coachz
+Date:   Mon, 15 Mar 2021 13:23:18 -0700
+Message-Id: <20210315132256.1.I601a051cad7cfd0923e55b69ef7e5748910a6096@changeid>
+X-Mailer: git-send-email 2.31.0.rc2.261.g7f71774620-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+This was present downstream. Add upstream too.
 
-On Sat, Mar 13, 2021 at 10:11 PM Srinivasa Rao Mandadapu
-<srivasam@codeaurora.org> wrote:
->
-> This is a trgodor variant, required to have sound node variable
-> for coachz specific platform.
->
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi | 10 ++++++++++
->  1 file changed, 10 insertions(+)
+Cc: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Cc: Ajit Pandey <ajitp@codeaurora.org>
+Cc: Judy Hsiao <judyhsiao@chromium.org>
+Cc: Cheng-Yi Chiang <cychiang@chromium.org>
+Cc: Stephen Boyd <swboyd@chromium.org>
+Cc: Matthias Kaehlcke <mka@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
+This applies atop the patch ("arm64: dts: qcom: Add sound node for
+sc7180-trogdor-coachz") [1].
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+NOTE: downstream this property was present in each of the board
+revisions. There's actually no longer any reason for this and I'll
+shortly post a downstream patch to fix this.
 
-With these two patches plus commit 9922f50f7178 ("ASoC: qcom:
-lpass-cpu: Fix lpass dai ids parse") in the sound tree I get audio on
-sc7180-trogdor-coachz! Thus:
+[1] https://lore.kernel.org/r/20210313054654.11693-3-srivasam@codeaurora.org/
 
-Tested-by: Douglas Anderson <dianders@chromium.org>
+ .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi     | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
+index e2ffe71c2d52..4c6e433c8226 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
+@@ -93,6 +93,9 @@ &sound {
+ 	compatible = "google,sc7180-coachz";
+ 	model = "sc7180-adau7002-max98357a";
+ 	audio-routing = "PDM_DAT", "DMIC";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&dmic_clk_en>;
+ };
+ 
+ &sound_multimedia0_codec {
+@@ -247,4 +250,17 @@ &tlmm {
+ 			  "AP_TS_PEN_I2C_SCL",
+ 			  "DP_HOT_PLUG_DET",
+ 			  "EC_IN_RW_ODL";
++
++	dmic_clk_en: dmic_clk_en {
++		pinmux {
++			pins = "gpio83";
++			function = "gpio";
++		};
++
++		pinconf {
++			pins = "gpio83";
++			drive-strength = <8>;
++			bias-pull-up;
++		};
++	};
+ };
+-- 
+2.31.0.rc2.261.g7f71774620-goog
+
