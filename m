@@ -2,119 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B855633AA38
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 05:04:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 410DD33AA3C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 05:06:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229748AbhCOEEI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Mar 2021 00:04:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57526 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229771AbhCOEDm (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Mar 2021 00:03:42 -0400
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26E1CC0613D9
-        for <linux-arm-msm@vger.kernel.org>; Sun, 14 Mar 2021 21:03:31 -0700 (PDT)
-Received: by mail-pl1-x633.google.com with SMTP id s7so14629248plg.5
-        for <linux-arm-msm@vger.kernel.org>; Sun, 14 Mar 2021 21:03:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=c7OJnHCRmwFk8fofgO7P2TCmA9anENj2NKzvbROCVrw=;
-        b=hqFTPqznnNTRx313WjH/Y3rQxyT1qRk2tsjcNVxk6Hrjol4OfsLVJAACk5S5GCeBIN
-         DUPZ/2/BGxScEjnruZkDvsVu7pnsFXZ7N4zstn9qEl8Fgh/HQaGB5JV/pkl9Br3HoCOi
-         i64U4nBnHPt+1Xi5F2gQwMxITwYJMb1Um+iYOQ6ojSR1WU9DezeWcNfnJiJ8w11ERSEr
-         UChVNzm6vqvXvOO1iZ7xVRBakAg/WIocWyURqM6EHJjAujbHTyE6NgBKuUb+t/F7avLm
-         rWQq2i6tEhG/s1AIiG+/WUpZhYbj36Vuiav5Pq8c+WaDHPXcR8LK3WT+pRJ2r6gMw6bd
-         ep6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=c7OJnHCRmwFk8fofgO7P2TCmA9anENj2NKzvbROCVrw=;
-        b=i+hDANVY50MlUPceQTsPuW0f0wgZK0Vhl42DYv5pf1Yqv5wXUrFNdOImt0M9Iqu79T
-         eS7iF44WcJ6eqhSx3sfLcnbMj3UMzv2XYZphvwXt8+zUcmjAuM3bF/P/3aUeB+pJ9rzv
-         V6EyuIJO3QCU3d3lLIw1GwPX4UBrmbdhJD8hiWEnXc2u9GLJkU/OwcgY/gf3aBB/gIxJ
-         lysyVw6qdtOIpMq7ttIru6mDwfHezfE4K0zK6xbrgbIo+hIOeUkRL5yIAseVKemO8jBw
-         auBuDY7frqnMILzF5C4paXYLNQHH4CNlNLC4dCGMslStpqA9J46Dp5BGInDdUTBXwc1m
-         PFvQ==
-X-Gm-Message-State: AOAM530rUWLzCs3V8daaXH5eBK32AN2PAwdAn0QS3o9QrcK3a6RXP0J2
-        9h90Yu8FPm5H5Peixy2I3f8SBA==
-X-Google-Smtp-Source: ABdhPJxRDau7gIDAmMsnWR7FCOk4vgRj39P8KqGrKbOykRijnyhWvAXlMXcpaXxZjPuzVl/GOTJ9CQ==
-X-Received: by 2002:a17:902:7889:b029:e6:b9c3:bc0d with SMTP id q9-20020a1709027889b02900e6b9c3bc0dmr5992pll.23.1615781010271;
-        Sun, 14 Mar 2021 21:03:30 -0700 (PDT)
-Received: from localhost ([122.171.124.15])
-        by smtp.gmail.com with ESMTPSA id r23sm9182422pje.38.2021.03.14.21.03.28
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 14 Mar 2021 21:03:29 -0700 (PDT)
-Date:   Mon, 15 Mar 2021 09:33:27 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Dmitry Osipenko <digetx@gmail.com>
-Cc:     Qiang Yu <yuq825@gmail.com>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, Rob Herring <robh@kernel.org>,
-        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
-        Steven Price <steven.price@arm.com>,
-        Alyssa Rosenzweig <alyssa.rosenzweig@collabora.com>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Lukasz Luba <lukasz.luba@arm.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Yangtao Li <tiny.windzz@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel@lists.freedesktop.org, lima@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-media@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-spi@vger.kernel.org,
-        linux-serial@vger.kernel.org, linux-tegra@vger.kernel.org
-Subject: Re: [PATCH v3 11/15] drm/msm: Convert to use resource-managed OPP API
-Message-ID: <20210315040327.qwn4rt75yqs5datl@vireshk-i7>
-References: <20210314163408.22292-1-digetx@gmail.com>
- <20210314163408.22292-12-digetx@gmail.com>
+        id S229735AbhCOEFq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Mar 2021 00:05:46 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54138 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229722AbhCOEFl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 15 Mar 2021 00:05:41 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 09D9264E3F;
+        Mon, 15 Mar 2021 04:05:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1615781141;
+        bh=NP4gX/7kY+mDxqIuuLyrMr0pZfLGy0RRE6/sizVfms4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=o3Y7UQUZ/eWfoTaZNvFTr4Xlxn2IuWHlKBoJ62A6m6BljT6aedAKDvA+Pq65IS5+D
+         2L18FsDgWD0RsGXZlxb4QCbVeCs9QnZcbllKinIt0I1Elrt4UYy9BW6xUx+2aThgcU
+         1DbJyVUZUNsql8I3vMt+c7lBD/zuuNTV03HXGe58wjPpwbPXdvIWFOqgZTFwHFsx8f
+         7y9a73WHpFTpEKq4CrfQYH+mytW+J1y5T04PZH68GzXRMUj7cVF474tT1ZrpFbrOKd
+         SXt4dTAbt1fDoRulWckkmRK4espBo2TlvO2momk7bBPv4XBH8bedBViasTVLcCIlCf
+         /0ASQqVea+vOw==
+Date:   Mon, 15 Mar 2021 09:35:34 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Colin King <colin.king@canonical.com>
+Cc:     Jeffrey Hugo <jhugo@codeaurora.org>, linux-arm-msm@vger.kernel.org,
+        kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH][next] bus: mhi: core: remove redundant initialization of
+ variables state and ee
+Message-ID: <20210315040534.GA80095@thinkpad>
+References: <20210311111727.8433-1-colin.king@canonical.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210314163408.22292-12-digetx@gmail.com>
-User-Agent: NeoMutt/20180716-391-311a52
+In-Reply-To: <20210311111727.8433-1-colin.king@canonical.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14-03-21, 19:34, Dmitry Osipenko wrote:
-> From: Yangtao Li <tiny.windzz@gmail.com>
+On Thu, Mar 11, 2021 at 11:17:27AM +0000, Colin King wrote:
+> From: Colin Ian King <colin.king@canonical.com>
 > 
-> Use resource-managed OPP API to simplify code.
+> The variables state and ee are being initialized with values that
+> are never read and are being updated later with a new values. The
+> initializations are redundant and can be removed.
 > 
-> Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
-> Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
+> Addresses-Coverity: ("Unused value")
+> Signed-off-by: Colin Ian King <colin.king@canonical.com>
+
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+
+Thanks,
+Mani
+
 > ---
->  drivers/gpu/drm/msm/adreno/a5xx_gpu.c   |  2 +-
->  drivers/gpu/drm/msm/adreno/a6xx_gmu.c   |  2 +-
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c   | 11 +++------
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.h   |  2 --
->  drivers/gpu/drm/msm/adreno/adreno_gpu.c |  2 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 23 +++++++------------
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h |  2 --
->  drivers/gpu/drm/msm/dp/dp_ctrl.c        | 30 +++++--------------------
->  drivers/gpu/drm/msm/dp/dp_ctrl.h        |  1 -
->  drivers/gpu/drm/msm/dp/dp_display.c     |  5 +----
->  drivers/gpu/drm/msm/dsi/dsi_host.c      | 13 ++++-------
->  11 files changed, 25 insertions(+), 68 deletions(-)
-
-This patch has some updates in linux-next, which I don't have. Please
-get this merged with the drm tree over 5.13-rc1 later.
-
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-
--- 
-viresh
+>  drivers/bus/mhi/core/main.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> index 2c61dfd01353..3faf8bade520 100644
+> --- a/drivers/bus/mhi/core/main.c
+> +++ b/drivers/bus/mhi/core/main.c
+> @@ -428,9 +428,9 @@ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
+>  {
+>  	struct mhi_controller *mhi_cntrl = priv;
+>  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> -	enum mhi_state state = MHI_STATE_MAX;
+> +	enum mhi_state state;
+>  	enum mhi_pm_state pm_state = 0;
+> -	enum mhi_ee_type ee = MHI_EE_MAX;
+> +	enum mhi_ee_type ee;
+>  
+>  	write_lock_irq(&mhi_cntrl->pm_lock);
+>  	if (!MHI_REG_ACCESS_VALID(mhi_cntrl->pm_state)) {
+> -- 
+> 2.30.2
+> 
