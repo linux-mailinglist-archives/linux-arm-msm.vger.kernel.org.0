@@ -2,26 +2,26 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4736533B5DA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 14:56:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4258633B5E5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 14:56:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231770AbhCONzm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Mar 2021 09:55:42 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:58629 "EHLO
+        id S231718AbhCONzp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Mar 2021 09:55:45 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:60392 "EHLO
         alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231701AbhCONzJ (ORCPT
+        with ESMTP id S231501AbhCONzN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Mar 2021 09:55:09 -0400
+        Mon, 15 Mar 2021 09:55:13 -0400
 Received: from ironmsg07-lv.qualcomm.com (HELO ironmsg07-lv.qulacomm.com) ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 15 Mar 2021 06:55:09 -0700
+  by alexa-out.qualcomm.com with ESMTP; 15 Mar 2021 06:55:12 -0700
 X-QCInternal: smtphost
 Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg07-lv.qulacomm.com with ESMTP/TLS/AES256-SHA; 15 Mar 2021 06:55:07 -0700
+  by ironmsg07-lv.qulacomm.com with ESMTP/TLS/AES256-SHA; 15 Mar 2021 06:55:11 -0700
 X-QCInternal: smtphost
 Received: from c-skakit-linux.ap.qualcomm.com (HELO c-skakit-linux.qualcomm.com) ([10.242.51.242])
   by ironmsg01-blr.qualcomm.com with ESMTP; 15 Mar 2021 19:24:34 +0530
 Received: by c-skakit-linux.qualcomm.com (Postfix, from userid 2344709)
-        id 7312149CD; Mon, 15 Mar 2021 19:24:33 +0530 (IST)
+        id 99AAF49D5; Mon, 15 Mar 2021 19:24:33 +0530 (IST)
 From:   satya priya <skakit@codeaurora.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>
@@ -32,9 +32,9 @@ Cc:     Liam Girdwood <lgirdwood@gmail.com>,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
         kgunda@codeaurora.org, David Collins <collinsd@codeaurora.org>,
         satya priya <skakit@codeaurora.org>
-Subject: [PATCH V2 3/5] arm64: dts: qcom: sc7280: Add RPMh regulators for sc7280-idp
-Date:   Mon, 15 Mar 2021 19:24:12 +0530
-Message-Id: <1615816454-1733-4-git-send-email-skakit@codeaurora.org>
+Subject: [PATCH V2 4/5] dt-bindings: regulator: Convert regulator bindings to YAML format
+Date:   Mon, 15 Mar 2021 19:24:13 +0530
+Message-Id: <1615816454-1733-5-git-send-email-skakit@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1615816454-1733-1-git-send-email-skakit@codeaurora.org>
 References: <1615816454-1733-1-git-send-email-skakit@codeaurora.org>
@@ -42,242 +42,371 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add regulator devices for SC7280 as RPMh regulators. This ensures
-that consumers are able to modify the physical state of PMIC
-regulators.
+Convert regulator bindings from .txt to .yaml format.
 
 Signed-off-by: satya priya <skakit@codeaurora.org>
 ---
 Changes in V2:
- - Corrected the indentation for "compatible" and "qcom,pmic-id" under
-   pm8350c-regulators as per Konrad's comment.
+ - As per Mark's comment moved this patch to the end of series.
+ - As per Rob's comments,  added flash and rgb bindings, dropped allOf and
+   unused labels and fixed few other things.
 
- arch/arm64/boot/dts/qcom/sc7280-idp.dts | 212 ++++++++++++++++++++++++++++++++
- 1 file changed, 212 insertions(+)
+ .../bindings/regulator/qcom,rpmh-regulator.txt     | 180 ---------------------
+ .../bindings/regulator/qcom,rpmh-regulator.yaml    | 158 ++++++++++++++++++
+ 2 files changed, 158 insertions(+), 180 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt
+ create mode 100644 Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-index 428f863..78effe5 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-@@ -22,6 +22,218 @@
- 	};
- };
- 
-+&apps_rsc {
-+	pm7325-regulators {
-+		compatible = "qcom,pm7325-rpmh-regulators";
-+		qcom,pmic-id = "b";
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt
+deleted file mode 100644
+index ce1e043..0000000
+--- a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt
++++ /dev/null
+@@ -1,180 +0,0 @@
+-Qualcomm Technologies, Inc. RPMh Regulators
+-
+-rpmh-regulator devices support PMIC regulator management via the Voltage
+-Regulator Manager (VRM) and Oscillator Buffer (XOB) RPMh accelerators.  The APPS
+-processor communicates with these hardware blocks via a Resource State
+-Coordinator (RSC) using command packets.  The VRM allows changing three
+-parameters for a given regulator: enable state, output voltage, and operating
+-mode.  The XOB allows changing only a single parameter for a given regulator:
+-its enable state.  Despite its name, the XOB is capable of controlling the
+-enable state of any PMIC peripheral.  It is used for clock buffers, low-voltage
+-switches, and LDO/SMPS regulators which have a fixed voltage and mode.
+-
+-=======================
+-Required Node Structure
+-=======================
+-
+-RPMh regulators must be described in two levels of device nodes.  The first
+-level describes the PMIC containing the regulators and must reside within an
+-RPMh device node.  The second level describes each regulator within the PMIC
+-which is to be used on the board.  Each of these regulators maps to a single
+-RPMh resource.
+-
+-The names used for regulator nodes must match those supported by a given PMIC.
+-Supported regulator node names:
+-	PM8005:		smps1 - smps4
+-	PM8009:		smps1 - smps2, ldo1 - ldo7
+-	PM8150:		smps1 - smps10, ldo1 - ldo18
+-	PM8150L:	smps1 - smps8, ldo1 - ldo11, bob, flash, rgb
+-	PM8350:		smps1 - smps12, ldo1 - ldo10,
+-	PM8350C:	smps1 - smps10, ldo1 - ldo13, bob
+-	PM8998:		smps1 - smps13, ldo1 - ldo28, lvs1 - lvs2
+-	PMI8998:	bob
+-	PM6150:         smps1 - smps5, ldo1 - ldo19
+-	PM6150L:        smps1 - smps8, ldo1 - ldo11, bob
+-	PMX55:		smps1 - smps7, ldo1 - ldo16
+-
+-========================
+-First Level Nodes - PMIC
+-========================
+-
+-- compatible
+-	Usage:      required
+-	Value type: <string>
+-	Definition: Must be one of below:
+-		    "qcom,pm8005-rpmh-regulators"
+-		    "qcom,pm8009-rpmh-regulators"
+-		    "qcom,pm8009-1-rpmh-regulators"
+-		    "qcom,pm8150-rpmh-regulators"
+-		    "qcom,pm8150l-rpmh-regulators"
+-		    "qcom,pm8350-rpmh-regulators"
+-		    "qcom,pm8350c-rpmh-regulators"
+-		    "qcom,pm8998-rpmh-regulators"
+-		    "qcom,pmc8180-rpmh-regulators"
+-		    "qcom,pmc8180c-rpmh-regulators"
+-		    "qcom,pmi8998-rpmh-regulators"
+-		    "qcom,pm6150-rpmh-regulators"
+-		    "qcom,pm6150l-rpmh-regulators"
+-		    "qcom,pmx55-rpmh-regulators"
+-
+-- qcom,pmic-id
+-	Usage:      required
+-	Value type: <string>
+-	Definition: RPMh resource name suffix used for the regulators found on
+-		    this PMIC.  Typical values: "a", "b", "c", "d", "e", "f".
+-
+-- vdd-s1-supply
+-- vdd-s2-supply
+-- vdd-s3-supply
+-- vdd-s4-supply
+-	Usage:      optional (PM8998 and PM8005 only)
+-	Value type: <phandle>
+-	Definition: phandle of the parent supply regulator of one or more of the
+-		    regulators for this PMIC.
+-
+-- vdd-s5-supply
+-- vdd-s6-supply
+-- vdd-s7-supply
+-- vdd-s8-supply
+-- vdd-s9-supply
+-- vdd-s10-supply
+-- vdd-s11-supply
+-- vdd-s12-supply
+-- vdd-s13-supply
+-- vdd-l1-l27-supply
+-- vdd-l2-l8-l17-supply
+-- vdd-l3-l11-supply
+-- vdd-l4-l5-supply
+-- vdd-l6-supply
+-- vdd-l7-l12-l14-l15-supply
+-- vdd-l9-supply
+-- vdd-l10-l23-l25-supply
+-- vdd-l13-l19-l21-supply
+-- vdd-l16-l28-supply
+-- vdd-l18-l22-supply
+-- vdd-l20-l24-supply
+-- vdd-l26-supply
+-- vin-lvs-1-2-supply
+-	Usage:      optional (PM8998 only)
+-	Value type: <phandle>
+-	Definition: phandle of the parent supply regulator of one or more of the
+-		    regulators for this PMIC.
+-
+-- vdd-bob-supply
+-	Usage:      optional (PMI8998 only)
+-	Value type: <phandle>
+-	Definition: BOB regulator parent supply phandle
+-
+-===============================
+-Second Level Nodes - Regulators
+-===============================
+-
+-- qcom,always-wait-for-ack
+-	Usage:      optional
+-	Value type: <empty>
+-	Definition: Boolean flag which indicates that the application processor
+-		    must wait for an ACK or a NACK from RPMh for every request
+-		    sent for this regulator including those which are for a
+-		    strictly lower power state.
+-
+-Other properties defined in Documentation/devicetree/bindings/regulator/regulator.txt
+-may also be used.  regulator-initial-mode and regulator-allowed-modes may be
+-specified for VRM regulators using mode values from
+-include/dt-bindings/regulator/qcom,rpmh-regulator.h.  regulator-allow-bypass
+-may be specified for BOB type regulators managed via VRM.
+-regulator-allow-set-load may be specified for LDO type regulators managed via
+-VRM.
+-
+-========
+-Examples
+-========
+-
+-#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+-
+-&apps_rsc {
+-	pm8998-rpmh-regulators {
+-		compatible = "qcom,pm8998-rpmh-regulators";
+-		qcom,pmic-id = "a";
+-
+-		vdd-l7-l12-l14-l15-supply = <&pm8998_s5>;
+-
+-		smps2 {
+-			regulator-min-microvolt = <1100000>;
+-			regulator-max-microvolt = <1100000>;
+-		};
+-
+-		pm8998_s5: smps5 {
+-			regulator-min-microvolt = <1904000>;
+-			regulator-max-microvolt = <2040000>;
+-		};
+-
+-		ldo7 {
+-			regulator-min-microvolt = <1800000>;
+-			regulator-max-microvolt = <1800000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-			regulator-allowed-modes =
+-				<RPMH_REGULATOR_MODE_LPM
+-				 RPMH_REGULATOR_MODE_HPM>;
+-			regulator-allow-set-load;
+-		};
+-
+-		lvs1 {
+-			regulator-min-microvolt = <1800000>;
+-			regulator-max-microvolt = <1800000>;
+-		};
+-	};
+-
+-	pmi8998-rpmh-regulators {
+-		compatible = "qcom,pmi8998-rpmh-regulators";
+-		qcom,pmic-id = "b";
+-
+-		bob {
+-			regulator-min-microvolt = <3312000>;
+-			regulator-max-microvolt = <3600000>;
+-			regulator-allowed-modes =
+-				<RPMH_REGULATOR_MODE_AUTO
+-				 RPMH_REGULATOR_MODE_HPM>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_AUTO>;
+-		};
+-	};
+-};
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+new file mode 100644
+index 0000000..f29e3b7
+--- /dev/null
++++ b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+@@ -0,0 +1,158 @@
++# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/regulator/qcom,rpmh-regulator.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+		vreg_s1b_1p8: smps1 {
-+			regulator-min-microvolt = <1856000>;
-+			regulator-max-microvolt = <2040000>;
-+		};
++title: Qualcomm Technologies, Inc. RPMh Regulators
 +
-+		vreg_s7b_0p9: smps7 {
-+			regulator-min-microvolt = <535000>;
-+			regulator-max-microvolt = <1120000>;
-+		};
++maintainers:
++  - David Collins <collinsd@codeaurora.org>
 +
-+		vreg_s8b_1p2: smps8 {
-+			regulator-min-microvolt = <1256000>;
-+			regulator-max-microvolt = <1500000>;
-+		};
++description: |
++    rpmh-regulator devices support PMIC regulator management via the Voltage
++    Regulator Manager (VRM) and Oscillator Buffer (XOB) RPMh accelerators.
++    The APPS processor communicates with these hardware blocks via a
++    Resource State Coordinator (RSC) using command packets.  The VRM allows
++    changing three parameters for a given regulator, enable state, output
++    voltage, and operating mode.  The XOB allows changing only a single
++    parameter for a given regulator, its enable state.  Despite its name,
++    the XOB is capable of controlling the enable state of any PMIC peripheral.
++    It is used for clock buffers, low-voltage switches, and LDO/SMPS regulators
++    which have a fixed voltage and mode.
 +
-+		vreg_l1b_0p8: ldo1 {
-+			regulator-min-microvolt = <825000>;
-+			regulator-max-microvolt = <925000>;
-+		};
++    =======================
++    Required Node Structure
++    =======================
 +
-+		vreg_l2b_3p0: ldo2 {
-+			regulator-min-microvolt = <2700000>;
-+			regulator-max-microvolt = <3544000>;
-+		};
++    RPMh regulators must be described in two levels of device nodes.  The first
++    level describes the PMIC containing the regulators and must reside within an
++    RPMh device node.  The second level describes each regulator within the PMIC
++    which is to be used on the board.  Each of these regulators maps to a single
++    RPMh resource.
 +
-+		vreg_l6b_1p2: ldo6 {
-+			regulator-min-microvolt = <1140000>;
-+			regulator-max-microvolt = <1260000>;
-+		};
++    The names used for regulator nodes must match those supported by a given PMIC.
++    Supported regulator node names are
++      For PM8005, smps1 - smps4
++      For PM8009, smps1 - smps2, ldo1 - ldo7
++      For PM8150, smps1 - smps10, ldo1 - ldo18
++      For PM8150L, smps1 - smps8, ldo1 - ldo11, bob, flash, rgb
++      For PM8350, smps1 - smps12, ldo1 - ldo10
++      For PM8350C, smps1 - smps10, ldo1 - ldo13, bob
++      For PM8998, smps1 - smps13, ldo1 - ldo28, lvs1 - lvs2
++      For PMI8998, bob
++      For PM6150, smps1 - smps5, ldo1 - ldo19
++      For PM6150L, smps1 - smps8, ldo1 - ldo11, bob
++      For PMX55, smps1 - smps7, ldo1 - ldo16
 +
-+		vreg_l7b_2p9: ldo7 {
-+			regulator-min-microvolt = <2960000>;
-+			regulator-max-microvolt = <2960000>;
-+		};
++properties:
++  compatible:
++    enum:
++      - qcom,pm8005-rpmh-regulators
++      - qcom,pm8009-rpmh-regulators
++      - qcom,pm8009-1-rpmh-regulators
++      - qcom,pm8150-rpmh-regulators
++      - qcom,pm8150l-rpmh-regulators
++      - qcom,pm8350-rpmh-regulators
++      - qcom,pm8350c-rpmh-regulators
++      - qcom,pm8998-rpmh-regulators
++      - qcom,pmi8998-rpmh-regulators
++      - qcom,pm6150-rpmh-regulators
++      - qcom,pm6150l-rpmh-regulators
++      - qcom,pmx55-rpmh-regulators
 +
-+		vreg_l8b_0p9: ldo8 {
-+			regulator-min-microvolt = <870000>;
-+			regulator-max-microvolt = <970000>;
-+		};
++  qcom,pmic-id:
++    description: |
++        RPMh resource name suffix used for the regulators found
++        on this PMIC.
++    $ref: /schemas/types.yaml#/definitions/string
++    enum: [ a, b, c, d, e, f ]
 +
-+		vreg_l9b_1p2: ldo9 {
-+			regulator-min-microvolt = <1080000>;
-+			regulator-max-microvolt = <1304000>;
-+		};
++  qcom,always-wait-for-ack:
++    description: |
++        Boolean flag which indicates that the application processor
++        must wait for an ACK or a NACK from RPMh for every request
++        sent for this regulator including those which are for a
++        strictly lower power state.
++    $ref: /schemas/types.yaml#/definitions/flag
 +
-+		vreg_l11b_1p7: ldo11 {
-+			regulator-min-microvolt = <1504000>;
-+			regulator-max-microvolt = <2000000>;
-+		};
++  vdd-flash-supply:
++    description: Input supply phandle of flash.
 +
-+		vreg_l12b_0p8: ldo12 {
-+			regulator-min-microvolt = <751000>;
-+			regulator-max-microvolt = <824000>;
-+		};
++  vdd-rgb-supply:
++    description: Input supply phandle of rgb.
 +
-+		vreg_l13b_0p8: ldo13 {
-+			regulator-min-microvolt = <530000>;
-+			regulator-max-microvolt = <824000>;
-+		};
++  vin-lvs-1-2-supply:
++    description: Input supply phandle of one or more regulators.
 +
-+		vreg_l14b_1p2: ldo14 {
-+			regulator-min-microvolt = <1080000>;
-+			regulator-max-microvolt = <1304000>;
-+		};
++  vdd-bob-supply:
++    description: BOB regulator parent supply phandle.
 +
-+		vreg_l15b_0p8: ldo15 {
-+			regulator-min-microvolt = <765000>;
-+			regulator-max-microvolt = <1020000>;
-+		};
++  bob:
++    type: object
++    $ref: "regulator.yaml#"
++    description: BOB regulator node.
 +
-+		vreg_l16b_1p2: ldo16 {
-+			regulator-min-microvolt = <1100000>;
-+			regulator-max-microvolt = <1300000>;
-+		};
++patternProperties:
++  "^vdd-s([0-9]+)-supply$":
++    description: Input supply phandle(s) of one or more regulators.
 +
-+		vreg_l17b_1p8: ldo17 {
-+			regulator-min-microvolt = <1700000>;
-+			regulator-max-microvolt = <1900000>;
-+		};
++  "^vdd-(l[0-9]+[-]){1,5}supply$":
++    description: Input supply phandle(s) of one or more regulators.
 +
-+		vreg_l18b_1p8: ldo18 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2000000>;
-+		};
++  "^(smps|ldo|lvs)[0-9]+$":
++    type: object
++    $ref: "regulator.yaml#"
++    description: smps/ldo regulator nodes(s).
 +
-+		vreg_l19b_1p8: ldo19 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+	};
++additionalProperties: false
 +
-+	pm8350c-regulators {
-+		compatible = "qcom,pm8350c-rpmh-regulators";
-+		qcom,pmic-id = "c";
++required:
++ - compatible
++ - qcom,pmic-id
 +
-+		vreg_s1c_2p2: smps1 {
-+			regulator-min-microvolt = <2190000>;
-+			regulator-max-microvolt = <2210000>;
-+		};
++examples:
++  - |
++    #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
 +
-+		vreg_s9c_1p0: smps9 {
-+			regulator-min-microvolt = <1010000>;
-+			regulator-max-microvolt = <1170000>;
-+		};
++    pm8998-rpmh-regulators {
++        compatible = "qcom,pm8998-rpmh-regulators";
++        qcom,pmic-id = "a";
 +
-+		vreg_l1c_1p8: ldo1 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1980000>;
-+		};
++        vdd-l7-l12-l14-l15-supply = <&pm8998_s5>;
 +
-+		vreg_l2c_1p8: ldo2 {
-+			regulator-min-microvolt = <1620000>;
-+			regulator-max-microvolt = <1980000>;
-+		};
++        smps2 {
++            regulator-min-microvolt = <1100000>;
++            regulator-max-microvolt = <1100000>;
++        };
 +
-+		vreg_l3c_3p0: ldo3 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <3540000>;
-+		};
++        ldo7 {
++            regulator-min-microvolt = <1800000>;
++            regulator-max-microvolt = <1800000>;
++            regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++            regulator-allowed-modes =
++                <RPMH_REGULATOR_MODE_LPM
++                 RPMH_REGULATOR_MODE_HPM>;
++            regulator-allow-set-load;
++        };
 +
-+		vreg_l4c_1p8: ldo4 {
-+			regulator-min-microvolt = <1620000>;
-+			regulator-max-microvolt = <3300000>;
-+		};
++        lvs1 {
++            regulator-min-microvolt = <1800000>;
++            regulator-max-microvolt = <1800000>;
++        };
++    };
 +
-+		vreg_l5c_1p8: ldo5 {
-+			regulator-min-microvolt = <1620000>;
-+			regulator-max-microvolt = <3300000>;
-+		};
++    pmi8998-rpmh-regulators {
++        compatible = "qcom,pmi8998-rpmh-regulators";
++        qcom,pmic-id = "b";
 +
-+		vreg_l6c_2p9: ldo6 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+
-+		vreg_l7c_3p0: ldo7 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3544000>;
-+		};
-+
-+		vreg_l8c_1p8: ldo8 {
-+			regulator-min-microvolt = <1620000>;
-+			regulator-max-microvolt = <2000000>;
-+		};
-+
-+		vreg_l9c_2p9: ldo9 {
-+			regulator-min-microvolt = <2960000>;
-+			regulator-max-microvolt = <2960000>;
-+		};
-+
-+		vreg_l10c_0p8: ldo10 {
-+			regulator-min-microvolt = <720000>;
-+			regulator-max-microvolt = <1050000>;
-+		};
-+
-+		vreg_l11c_2p8: ldo11 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <3544000>;
-+		};
-+
-+		vreg_l12c_1p8: ldo12 {
-+			regulator-min-microvolt = <1650000>;
-+			regulator-max-microvolt = <2000000>;
-+		};
-+
-+		vreg_l13c_3p0: ldo13 {
-+			regulator-min-microvolt = <2700000>;
-+			regulator-max-microvolt = <3544000>;
-+		};
-+
-+		vreg_bob: bob {
-+			regulator-min-microvolt = <3008000>;
-+			regulator-max-microvolt = <3960000>;
-+		};
-+	};
-+
-+	pmr735a-regulators {
-+		compatible = "qcom,pmr735a-rpmh-regulators";
-+		qcom,pmic-id = "e";
-+
-+		vreg_l2e_1p2: ldo2 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		vreg_l3e_0p9: ldo3 {
-+			regulator-min-microvolt = <912000>;
-+			regulator-max-microvolt = <1020000>;
-+		};
-+
-+		vreg_l4e_1p7: ldo4 {
-+			regulator-min-microvolt = <1776000>;
-+			regulator-max-microvolt = <1890000>;
-+		};
-+
-+		vreg_l5e_0p8: ldo5 {
-+			regulator-min-microvolt = <800000>;
-+			regulator-max-microvolt = <800000>;
-+		};
-+
-+		vreg_l6e_0p8: ldo6 {
-+			regulator-min-microvolt = <480000>;
-+			regulator-max-microvolt = <904000>;
-+		};
-+	};
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
++        bob {
++            regulator-min-microvolt = <3312000>;
++            regulator-max-microvolt = <3600000>;
++            regulator-allowed-modes =
++                <RPMH_REGULATOR_MODE_AUTO
++                 RPMH_REGULATOR_MODE_HPM>;
++            regulator-initial-mode = <RPMH_REGULATOR_MODE_AUTO>;
++        };
++    };
++...
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
 of Code Aurora Forum, hosted by The Linux Foundation
