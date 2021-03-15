@@ -2,96 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 26E1433C5F9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 19:45:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 87B1433C66B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 20:08:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232356AbhCOSol (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Mar 2021 14:44:41 -0400
-Received: from m42-2.mailgun.net ([69.72.42.2]:29109 "EHLO m42-2.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231824AbhCOSoa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Mar 2021 14:44:30 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1615833870; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=Dkqct+nc9FRffVLnbXfX+EGg6h4gk6baKMuUp85NTZ8=; b=Jo/D9BBxecFPM2XOioZGLFrEkxJst9okfLcTPOqxPvxrDYzPK1X44QyvuZSoKbbBqU3nS0Kc
- y9etVTl2rsghuc/PDhZQFKmYEVnKOYxxD0AojJHonpa6XjZ2zmk1OaPnQ8VS5GnSBSVAsISu
- 5g3uwUf36hRZ6faaVa2CBgVUJM8=
-X-Mailgun-Sending-Ip: 69.72.42.2
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 604fab0c4db3bb6801bf1739 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 15 Mar 2021 18:44:28
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BF51AC43464; Mon, 15 Mar 2021 18:44:27 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 91D3FC433ED;
-        Mon, 15 Mar 2021 18:44:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 91D3FC433ED
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Jassi Brar <jaswinder.singh@linaro.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>
+        id S232410AbhCOTIK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Mar 2021 15:08:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55620 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233083AbhCOTIG (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 15 Mar 2021 15:08:06 -0400
+Received: from mail-oo1-xc2f.google.com (mail-oo1-xc2f.google.com [IPv6:2607:f8b0:4864:20::c2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7544C06174A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 12:08:05 -0700 (PDT)
+Received: by mail-oo1-xc2f.google.com with SMTP id p2-20020a4aa8420000b02901bc7a7148c4so312626oom.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 12:08:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ngZJachN56urU9J2HoprS9NstFT2AikTUj407DJYrCY=;
+        b=npAFfzz9TJLpBYK5CrDhSAxue1/IJAjgTUEjuVkizNr7mm/lWYXrZOFHsbl6LoD1XM
+         S4Tjetf929rB+fVIwdJ6IX6h9RzRzdRY4yqzilc2sG1ToIMMuKDV/pp2BFw/no9V75q9
+         igVz5RNNPFLg0gw9x3NKF+T39gwWi/MfXo+kfmm0IYhUqLB25Ufpz/Eqb6luJADRCIY8
+         ESG9Iq2yEHaoCdpNB3b76DwuGMG/qBtIExTNlBM5hHrMzv1itm36QZuLMFg0d0iJOxEm
+         USu4D7peVnf6LU4yk0PzO9FkkrUs1KaNlLqsYUBv31dgqQFzdZN/YdB5ifRt6gr2JMPN
+         uWtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ngZJachN56urU9J2HoprS9NstFT2AikTUj407DJYrCY=;
+        b=QthFVIxj43FyKAjW7lGCSl1PIGBa6LjR3Xz4onXsd0KrgQdj5v1LPUWu/hshJHTnp+
+         pr2A9MwryA1R34sY3mdNTFkZmUFG+pPNopeLR04BeqBBRC34IMEMZkdVNpsUIzEaBw08
+         Y7hjdw3uKusZOBMrKDsNCLxU9rPPEbBVXJm6DalAYr0l+X3UaDqNIWqQIdDUsEZMcAU2
+         P7h3CGOiB3T1j+f4COHCZ9w5T72Eq7xqxFhUpSNOK6v7zpMNX52PmsGZZXWs0h10QgsE
+         Iiuo7tvnRvZEnNRNe46TEqA2hXPh768MFUl0L1Wrl9BDOsjV+l0O/uO2UhU93wtgcf1A
+         8+aw==
+X-Gm-Message-State: AOAM532c9qGnmvCrx9vezAoe/SyAeqbJZxc+ODLEd77gKfXd58NUji+0
+        LbH6GZM1jV//NoFFGvvTXKeHDIYsg7A6DjVniviUmQ==
+X-Google-Smtp-Source: ABdhPJy/f+pt0WWw9QpskOGeSossTUBuih5lw/4CXpn5yxCz2AQTKeYgPQPhMRjL+SgaSTvh8jLqPbWMEzchh/2E6uQ=
+X-Received: by 2002:a05:6820:129:: with SMTP id i9mr400221ood.80.1615835285169;
+ Mon, 15 Mar 2021 12:08:05 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210310163024.393578-1-caleb@connolly.tech> <20210310163024.393578-3-caleb@connolly.tech>
+In-Reply-To: <20210310163024.393578-3-caleb@connolly.tech>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Tue, 16 Mar 2021 00:37:54 +0530
+Message-ID: <CAH=2Ntyd6Ud=2dt_Pa0gNQcCOLaVRp6ZF3yA5O+ZxqV1m64Spw@mail.gmail.com>
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sm8150: add iommus to qups
+To:     Caleb Connolly <caleb@connolly.tech>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        devicetree@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCHv2] dt-bindings: mailbox: qcom-ipcc: Add compatible for SC7280
-Date:   Tue, 16 Mar 2021 00:14:10 +0530
-Message-Id: <20210315184410.21063-1-saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.29.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Rob Herring <robh+dt@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add IPCC compatible for SC7280 SoC.
+Hello Caleb,
 
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Jassi Brar <jaswinder.singh@linaro.org>
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
----
- Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml | 1 +
- 1 file changed, 1 insertion(+)
+Thanks for the patch. Some nitpicks inline:
 
-diff --git a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
-index 168beeb7e9f7..06419543d235 100644
---- a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
-+++ b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
-@@ -24,6 +24,7 @@ properties:
-   compatible:
-     items:
-       - enum:
-+          - qcom,sc7280-ipcc
-           - qcom,sm8250-ipcc
-       - const: qcom,ipcc
- 
+On Wed, 10 Mar 2021 at 22:02, Caleb Connolly <caleb@connolly.tech> wrote:
+>
+> Hook up the SMMU for doing DMA over i2c. Some peripherals like
+> touchscreens easily exceed 32-bytes per transfer, causing errors and
+> lockups without this.
+>
+> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+> ---
+> Fixes i2c on the OnePlus 7, without this touching the screen with more
+> than 4 fingers causes the device to lock up and reboot.
+> ---
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> index 03e05d98daf2..543417d74216 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> @@ -583,6 +583,7 @@ qupv3_id_0: geniqup@8c0000 {
+>                         clock-names = "m-ahb", "s-ahb";
+>                         clocks = <&gcc GCC_QUPV3_WRAP_0_M_AHB_CLK>,
+>                                  <&gcc GCC_QUPV3_WRAP_0_S_AHB_CLK>;
+> +                       iommus = <&apps_smmu 0xc3 0x0>;
 
-base-commit: d168e1ae4f96769140579cea6ad445d16addb8c1
-prerequisite-patch-id: dce6b5acef576029c0b22108fbc3c791cb9f7fe5
-prerequisite-patch-id: 28a7829ee036d2c16f6f37017f83a0f3a835ade1
-prerequisite-patch-id: 022546e1bde2817e85197ec89a6b9dfd17f7ac7d
-prerequisite-patch-id: dc0ce2258b0020e641057f1175f25a4db7b01b0c
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+I think we also need to add the new iommu property to the binding documentation?
+<https://github.com/torvalds/linux/blob/master/Documentation/devicetree/bindings/soc/qcom/qcom%2Cgeni-se.yaml>
 
+Thanks,
+Bhupesh
+
+>                         #address-cells = <2>;
+>                         #size-cells = <2>;
+>                         ranges;
+> @@ -595,6 +596,7 @@ qupv3_id_1: geniqup@ac0000 {
+>                         clock-names = "m-ahb", "s-ahb";
+>                         clocks = <&gcc GCC_QUPV3_WRAP_1_M_AHB_CLK>,
+>                                  <&gcc GCC_QUPV3_WRAP_1_S_AHB_CLK>;
+> +                       iommus = <&apps_smmu 0x603 0x0>;
+>                         #address-cells = <2>;
+>                         #size-cells = <2>;
+>                         ranges;
+> @@ -617,6 +619,7 @@ qupv3_id_2: geniqup@cc0000 {
+>                         clock-names = "m-ahb", "s-ahb";
+>                         clocks = <&gcc GCC_QUPV3_WRAP_2_M_AHB_CLK>,
+>                                  <&gcc GCC_QUPV3_WRAP_2_S_AHB_CLK>;
+> +                       iommus = <&apps_smmu 0x7a3 0x0>;
+>                         #address-cells = <2>;
+>                         #size-cells = <2>;
+>                         ranges;
+> --
+> 2.29.2
+>
+>
