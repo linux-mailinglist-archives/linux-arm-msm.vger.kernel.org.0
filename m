@@ -2,74 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F02B933C016
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 16:37:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D864C33C081
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 16:50:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229675AbhCOPgb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Mar 2021 11:36:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37312 "EHLO
+        id S229696AbhCOPu0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Mar 2021 11:50:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233574AbhCOPgO (ORCPT
+        with ESMTP id S229546AbhCOPt7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Mar 2021 11:36:14 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B7ADC061765
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 08:36:14 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id a1so16757638ljp.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 08:36:14 -0700 (PDT)
+        Mon, 15 Mar 2021 11:49:59 -0400
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54F8CC06175F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 08:49:59 -0700 (PDT)
+Received: by mail-oi1-x232.google.com with SMTP id y131so32064943oia.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 08:49:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=eiHizJmFemXxUepeQXNK0dXDWFjN//yCmR/of+Jsshk=;
-        b=f8omFg9i0wexsaLy7aYOboT+afbYPAV1waixWzYUDdDA6B4bMpTvmdkfL66367GCB0
-         hjuf73k5OA79n/v/ZjWIH7De+sPd71zHOTxfVNcZ1LCDl8NJNFra362kltHzvV3z/5q2
-         mUTHsUTyc51F0AnmW/AIKjTganOBZc/zdeqX+0J+XqaaWNOISpuciYUvyj9HzaACQvg1
-         UH+8kNRVXdr6D9rynGIjRaUDxzFlPU6nkT5GDWIBvzjBOUUcD8BAqGSwkYrq5R8alywl
-         3qAJmu9q6qPIwiarileYRr04H8cgsCwhtHh8KdIRcMbgVGY/LhCqsnd0N0gPQYNW6VEp
-         UUWQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=ctH1m+B27aFfYUzrTEwqyuu/kBv+C5+MsoOTttkG5pY=;
+        b=kjoa8CVftEnpQBfY0r0ElELXcyCG/FUSMEJxwrLkNX8azzW64FUGfc8B9xGgDXB7PI
+         3wJjwD0Cv0GTGkgh8MF0WVZLFwjVG+rIbRVt+tpwygSUNfesixjx6KgJJJ3SnyKjM2RG
+         uHyUnxv9yA9hyUK1+aUeCjsv+ePxt05jHB54x7QhSB8VXUrRY8qhtZJOGwmIE+qhMZmf
+         fXVa4KlK7vJpddIkZFByOdZEhrPBO/y8QE0ddDMj/EJGcT/v+MIme+NnS05zjmE1dmAH
+         MBXRjfJbtU21KUhUVVGc+tC0c7q7FGnw/UUvcRx+AFCq4/WzT/Gj7vN4BUHhPwhCk4b0
+         Lh0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=eiHizJmFemXxUepeQXNK0dXDWFjN//yCmR/of+Jsshk=;
-        b=fFBhjVfRDzeaDdnDVmUSgwZv6idqv5eMoY0Qwu5XnGIOpt6157LuyHojnjujL26QqI
-         Tl9YkgxJlB8pk8uOqVT3eui6EXpyyBHei6u2MkucEvbUaHTh9R4fDrUuddqwKSEtWrQv
-         ig5w8rzDNcq4w3pW7kXiewA1LvV1CHXRhiDyJDPOyNF6SX5ElfApsS+5B75vo0QR93VY
-         B+/H2z7FtomqSKX4C6m+l5Iz4aVsVNdn6GWrehR40mDlwmLKvtmRxs0FJ5fawJErriD/
-         dWLMHuvWhK92CwNAlmQuqt7WBW+NB7Uk8ENurKMqQ/I5OnGJW2RdWP14+GfEwI2kJ3Hp
-         mRdg==
-X-Gm-Message-State: AOAM5339J8HTb4LrootCulDcM0StnULkDWtZ+04ab/FXJ+CSLavNIydl
-        AMIzqS3n6ohzhEspweo+RVydTAG2TJJXHd8PiHmrLv/QjXM0QSaw
-X-Google-Smtp-Source: ABdhPJw3q5Vb780yHnT1QMqZL4C+po2SDrsvTMchS4fg7vi/xyG3rNqmcetBjsuMnkFv9wMzK0Nb3xlKVOq0+CBOgbs=
-X-Received: by 2002:a2e:864a:: with SMTP id i10mr10475044ljj.467.1615822572593;
- Mon, 15 Mar 2021 08:36:12 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210303131858.3976-1-shawn.guo@linaro.org> <CACRpkdZp7m0s+6Fgzq4ScftAr-CtEPtAbz3jGCvKTzdqXJtfAA@mail.gmail.com>
- <YEqmTUXbn0T2dqla@builder.lan>
-In-Reply-To: <YEqmTUXbn0T2dqla@builder.lan>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Mon, 15 Mar 2021 16:36:01 +0100
-Message-ID: <CACRpkdaQ_p1n6+cu5f2p6gWui-eDMF_MEmC0ZQM50oyb3CcZUg@mail.gmail.com>
-Subject: Re: [PATCH v2] pinctrl: qcom: support gpio_chip .set_config call
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ctH1m+B27aFfYUzrTEwqyuu/kBv+C5+MsoOTttkG5pY=;
+        b=f8Xod6affJBy858cj8fGcthJ/g70k4Alu/kDn3eMlWE3QcZLrufTzCL58y47Mt06H+
+         I/x7v7gIiFVc48eFh98QC74qrnPeKs8ZDxWrRQLQNx8bEL1dLlzmf2v/UMjcY8/cPBzD
+         fFNWuoOmKD59tEeXgJ7m0qNE37x8h8s5KuCn4vAG6QmJn45rEZV3M66tG1JA/pR5iKw5
+         pxVyjfy92CkLhTQMWvQoeWXPfybvGpPv8/A9VfbkENzq54IRew5iwYjzLoOqxcOhWE3L
+         TzAQX3UxWEAFMxjgklabI4ZPes8qxlpy28efnmPApqDLMTLYSdTQn9VH6NnfAOY99Qni
+         GfWA==
+X-Gm-Message-State: AOAM530lkRa1WD/JwEmLOfYDSUPHomKN+CIVppEDRZzcupAgsO0WARqY
+        +WBWshe1V21wxk2/guwqeJPNyg==
+X-Google-Smtp-Source: ABdhPJx6QASLPk+TYXWrCWUllPrJPQ7sm6fWkTd4y+xYOPmBT0UCBRntzlhqs2CtwJizFQawAlAcoA==
+X-Received: by 2002:aca:cf10:: with SMTP id f16mr12640016oig.70.1615823398759;
+        Mon, 15 Mar 2021 08:49:58 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id h17sm7071740otj.38.2021.03.15.08.49.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Mar 2021 08:49:58 -0700 (PDT)
+Date:   Mon, 15 Mar 2021 10:49:56 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Linus Walleij <linus.walleij@linaro.org>
 Cc:     Shawn Guo <shawn.guo@linaro.org>,
         Andy Shevchenko <andriy.shevchenko@intel.com>,
         "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
         MSM <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v2] pinctrl: qcom: support gpio_chip .set_config call
+Message-ID: <YE+CJH9Mgar5eE/k@builder.lan>
+References: <20210303131858.3976-1-shawn.guo@linaro.org>
+ <CACRpkdZp7m0s+6Fgzq4ScftAr-CtEPtAbz3jGCvKTzdqXJtfAA@mail.gmail.com>
+ <YEqmTUXbn0T2dqla@builder.lan>
+ <CACRpkdaQ_p1n6+cu5f2p6gWui-eDMF_MEmC0ZQM50oyb3CcZUg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACRpkdaQ_p1n6+cu5f2p6gWui-eDMF_MEmC0ZQM50oyb3CcZUg@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 12, 2021 at 12:22 AM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
+On Mon 15 Mar 10:36 CDT 2021, Linus Walleij wrote:
 
-> I don't know how to make the transition, but can you please revert this
-> patch, to avoid breaking compatibility with DTBs out there?
+> On Fri, Mar 12, 2021 at 12:22 AM Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+> 
+> > I don't know how to make the transition, but can you please revert this
+> > patch, to avoid breaking compatibility with DTBs out there?
+> 
+> OK reverted for now. Does this imply I cannot apply Shawn's ACPI
+> support patch either? I.e. is this a prerequisite?
+> 
 
-OK reverted for now. Does this imply I cannot apply Shawn's ACPI
-support patch either? I.e. is this a prerequisite?
+I presume you're referring to [1], which should be fine to merge.
 
-Yours,
-Linus Walleij
+Iiuc the problem that this (.set_config) patch resolves is that
+definitions of gpios as interrupts will trickle down to a .set_config
+call, which is necessary to get appropriate bias.
+
+[1] https://lore.kernel.org/linux-arm-msm/20210311024102.15450-1-shawn.guo@linaro.org/
+
+Regards,
+Bjorn
