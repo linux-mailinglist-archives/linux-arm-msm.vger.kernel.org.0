@@ -2,108 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1307133C41A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 18:28:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 48C1A33C4A2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 18:40:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231169AbhCOR1a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Mar 2021 13:27:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33818 "EHLO
+        id S232441AbhCORjv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Mar 2021 13:39:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234685AbhCOR13 (ORCPT
+        with ESMTP id S230125AbhCORjY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Mar 2021 13:27:29 -0400
-Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B1B1C06174A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 10:27:29 -0700 (PDT)
-Received: by mail-qv1-xf2e.google.com with SMTP id d10so1783834qve.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 10:27:29 -0700 (PDT)
+        Mon, 15 Mar 2021 13:39:24 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50788C06174A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 10:39:24 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id a188so7051949pfb.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 10:39:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9RWsr2dPzW/uEOT8VZ8iZlXJJghlQaV6e0purSmrMZA=;
-        b=Oh+asBWgl0e+s4jNwID+FX550YAUPxSA3NyjhdQjlXvO16M284r3JkguajAnXlfQ3m
-         IJS2z9GAlA4iJexn6ICVLjwrMTchB71CIyOZiYqSkxaUdU4YNCXT3W8razfrkuozsAHI
-         MmUd7wOLscry0xBFdNpMRE+MLo5VA8sQRlg7E=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=actTwiUWVnuBfKNd4eo6gsL+oSGlooW2XvlXpiME//U=;
+        b=TjU+3b33taeIPvWCr9LrJRwKbASE5h/1/36mQFFG1Qs8q/KUQTkLEDqcc5umt693c7
+         b2E0PUBO/+KGvsfuKr4Zsh+NP8XbpV58I8seCvJ4I62+8bAjVvBg/6uY13HOElmvcAat
+         GmRfGLGvnSyHmOY6C49esiHAN+YHHDDla8G7g=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9RWsr2dPzW/uEOT8VZ8iZlXJJghlQaV6e0purSmrMZA=;
-        b=dlCdytR30QU/+zdWkO/7PIVOjpd64ZVhWlg9KA4XSZ+K77JMOwfJ5bBT113Af8Ukr2
-         z8Q4csFX8kx8VS49I2XifM6GMDizqjkX86JPN5zkB9Mrd4ak62EFSaOSnw+0OlHJJUSU
-         oFb0VsDHmAZN4ioXaiBjqmXpLYRrtHYHxK1CXAEMyiMgDIK8n1vqpu9l+rCJwvHJfDbO
-         9ceGo0WO+bjKhMtmFilQ1ismXzpBXkMwFCh0XT6Bl8v8cMOuRI5X4SHsIHpLl+/XhgBC
-         gyfbvFs8wGoK/uXCX7J4hXlECSSsQuspHWIgpdO3djuUQ2C4VRBbgzFaumVkQ7pINEhM
-         yzug==
-X-Gm-Message-State: AOAM5325l5x6a06UpipXLd7QyYYUXXRRfQiLMguf5tnf9ecGkmUrAaSr
-        eyvaFGZJy8vrzvJTvcctoUOAbAOWAOiZ/w==
-X-Google-Smtp-Source: ABdhPJz9LktIrDWUdNLn4Bkev1PfJoguaqLC0ycXtwjQgTEyOby3wvg/SNdRLcT00s9lTFroaPWjmQ==
-X-Received: by 2002:ad4:5aa3:: with SMTP id u3mr12142701qvg.0.1615829246855;
-        Mon, 15 Mar 2021 10:27:26 -0700 (PDT)
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com. [209.85.219.175])
-        by smtp.gmail.com with ESMTPSA id f12sm10735864qti.63.2021.03.15.10.27.25
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Mar 2021 10:27:25 -0700 (PDT)
-Received: by mail-yb1-f175.google.com with SMTP id p186so34053788ybg.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 10:27:25 -0700 (PDT)
-X-Received: by 2002:a25:2654:: with SMTP id m81mr1035747ybm.405.1615829245523;
- Mon, 15 Mar 2021 10:27:25 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210312234310.3490809-1-bjorn.andersson@linaro.org>
-In-Reply-To: <20210312234310.3490809-1-bjorn.andersson@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 15 Mar 2021 10:27:14 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Uvtdrb7N=UX2+XwNnYJd3_JWjrnjcMVnH=A3xq4oFQQw@mail.gmail.com>
-Message-ID: <CAD=FV=Uvtdrb7N=UX2+XwNnYJd3_JWjrnjcMVnH=A3xq4oFQQw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: sdm845: Move reserved-memory to devices
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=actTwiUWVnuBfKNd4eo6gsL+oSGlooW2XvlXpiME//U=;
+        b=s/U1m37sKGXOY1AEoV/JLg7IGolAm1DG/9uWz7WKEBEboUZQVZ+2bK++jVgdk7vStC
+         fLM8KVf44aSkX6R9cD0ANTitjb9hHNwNGXTRtkRqDlG1uTUIvFGR81yUPqzvThUKl0uc
+         BBUTgChqIFpCGIuhLAozTCEYPB4APxLtXdZRbkA0/QsBu6L9V2MyuNAj9XzDEZWqGXDy
+         qR5wn7gLRr4Q9f5uvWXkPQq2vYEIeixRvVNpIc12nJgKi59Igtv3i7buqDJyNZVhnDU6
+         vnh2z2pV2Ds+mRU6misbXcLSsiXoSQdXtQSiyPmBhVxXzfaw09rSyDRLuIVe6DqmWeQg
+         WcMw==
+X-Gm-Message-State: AOAM5302MVPzKKcNe6KsGRsEXyfaUkhtVmo4pTiJ6BBNqT7IaUQxvGFM
+        M8nAYM3X8RGfCuc1wIUMJzRAycdByNB+qQ==
+X-Google-Smtp-Source: ABdhPJxWHs2gi96AZyoEt/UwvdmHSnaKsqZDHZItliL+Gimic0yreRUGnvwYj1XiQCMcGkN+0GATRA==
+X-Received: by 2002:a05:6a00:1585:b029:203:6bc9:3ca6 with SMTP id u5-20020a056a001585b02902036bc93ca6mr11233370pfk.79.1615829963877;
+        Mon, 15 Mar 2021 10:39:23 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:14ce:2d12:6a1f:f42])
+        by smtp.gmail.com with ESMTPSA id x4sm13638430pfn.134.2021.03.15.10.39.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Mar 2021 10:39:14 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        Vara Reddy <varar@codeaurora.org>,
+        Tanmay Shah <tanmay@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sc7180: Fix sc7180-qmp-usb3-dp-phy reg sizes
+Date:   Mon, 15 Mar 2021 10:38:54 -0700
+Message-Id: <20210315103836.1.I9a97120319d43b42353aeac4d348624d60687df7@changeid>
+X-Mailer: git-send-email 2.31.0.rc2.261.g7f71774620-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+As per Dmitry Baryshkov [1]:
+a) The 2nd "reg" should be 0x3c because "Offset 0x38 is
+   USB3_DP_COM_REVISION_ID3 (not used by the current driver though)."
+b) The 3rd "reg" "is a serdes region and qmp_v3_dp_serdes_tbl contains
+   registers 0x148 and 0x154."
 
-On Fri, Mar 12, 2021 at 3:42 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> The reserved-memory regions used for carrying firmware to be run on the
-> various cores and co-processors in a Qualcomm platform differs in size,
-> placement and presence based on each device's feature set and security
-> configuration.
->
-> Rather than providing some basic set that works on the MTP and then
-> piecemeal patch this up on the various devices, push the configuration
-> of these regions out to the individual device dts files.
->
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->
-> Changes since v1:
-> - Added lost memory-region to the db845c wlan node, as spotted by Doug.
->
->  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi    | 90 +++++++++++++------
->  arch/arm64/boot/dts/qcom/sdm845-db845c.dts    | 87 ++++++++++++++++++
->  arch/arm64/boot/dts/qcom/sdm845-mtp.dts       | 87 ++++++++++++++++++
->  .../boot/dts/qcom/sdm845-oneplus-common.dtsi  | 78 +++++++++++++++-
->  .../boot/dts/qcom/sdm845-xiaomi-beryllium.dts | 45 ++++++----
->  arch/arm64/boot/dts/qcom/sdm845.dtsi          | 83 -----------------
->  .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 86 ++++++++++++++++++
->  7 files changed, 431 insertions(+), 125 deletions(-)
+I think because the 3rd "reg" is a serdes region we should just use
+the same size as the 1st "reg"?
 
-I will leave it up to you to evaluate Konrad's feedback that this will
-cause a bunch of duplication since I don't have enough experience w/
-Android phones to have an informed opinion. In case it matters, this
-addresses the feedback I had on v1 and thus:
+[1] https://lore.kernel.org/r/ee5695bb-a603-0dd5-7a7f-695e919b1af1@linaro.org
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Cc: Stephen Boyd <swboyd@chromium.org>
+Cc: Jeykumar Sankaran <jsanka@codeaurora.org>
+Cc: Chandan Uddaraju <chandanu@codeaurora.org>
+Cc: Vara Reddy <varar@codeaurora.org>
+Cc: Tanmay Shah <tanmay@codeaurora.org>
+Cc: Rob Clark <robdclark@chromium.org>
+Fixes: 58fd7ae621e7 ("arm64: dts: qcom: sc7180: Update dts for DP phy inside QMP phy")
+Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
 
-I'll also repeat the feedback that I had on v1 that I focused much
-more on cheza than on other boards and didn't check every last thing
-on every board to make sure no changes happened.
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 83fbb481cae5..61732e5efe62 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -2754,8 +2754,8 @@ usb_1_hsphy: phy@88e3000 {
+ 		usb_1_qmpphy: phy-wrapper@88e9000 {
+ 			compatible = "qcom,sc7180-qmp-usb3-dp-phy";
+ 			reg = <0 0x088e9000 0 0x18c>,
+-			      <0 0x088e8000 0 0x38>,
+-			      <0 0x088ea000 0 0x40>;
++			      <0 0x088e8000 0 0x3c>,
++			      <0 0x088ea000 0 0x18c>;
+ 			status = "disabled";
+ 			#address-cells = <2>;
+ 			#size-cells = <2>;
+-- 
+2.31.0.rc2.261.g7f71774620-goog
+
