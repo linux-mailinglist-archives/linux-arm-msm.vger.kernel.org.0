@@ -2,109 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 27A0B33C7D2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 21:36:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CD19733C7DF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 21:40:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231629AbhCOUgN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Mar 2021 16:36:13 -0400
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:12593 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231981AbhCOUgJ (ORCPT
+        id S233072AbhCOUj5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Mar 2021 16:39:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47094 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232079AbhCOUji (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Mar 2021 16:36:09 -0400
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 15 Mar 2021 13:36:09 -0700
-X-QCInternal: smtphost
-Received: from gurus-linux.qualcomm.com (HELO gurus-linux.localdomain) ([10.46.162.81])
-  by ironmsg04-sd.qualcomm.com with ESMTP; 15 Mar 2021 13:36:08 -0700
-Received: by gurus-linux.localdomain (Postfix, from userid 383780)
-        id BF4D719B3; Mon, 15 Mar 2021 13:36:08 -0700 (PDT)
-Date:   Mon, 15 Mar 2021 13:36:08 -0700
-From:   Guru Das Srinagesh <gurus@codeaurora.org>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Markus Elfring <Markus.Elfring@web.de>,
-        Lee Jones <lee.jones@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg KH <gregkh@linuxfoundation.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Joe Perches <joe@perches.com>,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
-        David Collins <collinsd@codeaurora.org>,
-        Anirudh Ghayal <aghayal@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [RFC PATCH v3 2/3] regmap-irq: Add support for POLARITY_HI and
- POLARITY_LO config regs
-Message-ID: <20210315203608.GB8977@codeaurora.org>
-References: <cover.1615423027.git.gurus@codeaurora.org>
- <4b77a308ccdabbe96ed68623bd6eead9510e1fc9.1615423027.git.gurus@codeaurora.org>
- <20210312121916.GE5348@sirena.org.uk>
- <20210315203336.GA8977@codeaurora.org>
+        Mon, 15 Mar 2021 16:39:38 -0400
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BF49C06174A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 13:39:38 -0700 (PDT)
+Received: by mail-pg1-x52c.google.com with SMTP id t37so10364147pga.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 13:39:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ZtuGwStEOfXvAgfVL0zHoimqZC57wamAhyfZnTL94Fc=;
+        b=PE6NXZMcKTGVLi5ke8/puqqxCZVv50qW0kFzPJ1iH6iTfX4TXLq5DpJD+D9+tbfYT+
+         GJ3eFb/0VXeZX38s5Z0EmGGA+7owM7663eyRGGBTZ7uKBbrFHgjX1+WgbHlEs86sA9Vj
+         lRtBpe2Uf5LIXdwILbfzYOLyjtxAAWqnSkbL4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ZtuGwStEOfXvAgfVL0zHoimqZC57wamAhyfZnTL94Fc=;
+        b=cXG2/cQgtQjfXLPxNmeSmsh24oxj3E6LSJTwCNspf2uxuVsSCVkX8+94C7j8uE1yxi
+         E3oEtiX7mzyWrYC/Is56R/6z89Zy1LWJmuyey1Sk27o0h4CH3iPdh4kXZ35kBlXT7F0m
+         J9TjyWV35Dy2KF1KuPI5lKaADwzFS3o7fSEjxzBHCqJmRXII6ImxqGhSTqtptXyvrG0k
+         orHDqIupJKItDgW2CFopUX3+e/poezsX6t8XuNh3ldNU7C3wWsPScEQ9odo35sOgXV3O
+         llT/2ZLOTOI7Mwb5Tfl4RyYX/EYBYAiQFCHkwg1mwQHch4VXghBBug9JrhNY0zQrPdc/
+         oaIQ==
+X-Gm-Message-State: AOAM530Zc21LKWZA+n+U54nRsdlcUmWDkL6s9E0IjVCc+xerimFGOzY4
+        u33NT5ucm+9WwgOCntoBNG8kqw==
+X-Google-Smtp-Source: ABdhPJw/eSfGAWemEM9omD6B7IpcXhOOIZi9CtYkk6oEd1PXAInWviC8YHwGdm9aj6tjL3botHBZaQ==
+X-Received: by 2002:a63:4848:: with SMTP id x8mr728983pgk.447.1615840778175;
+        Mon, 15 Mar 2021 13:39:38 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:14ce:2d12:6a1f:f42])
+        by smtp.gmail.com with ESMTPSA id bb24sm510619pjb.5.2021.03.15.13.39.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Mar 2021 13:39:37 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        Ajit Pandey <ajitp@codeaurora.org>,
+        Judy Hsiao <judyhsiao@chromium.org>,
+        Cheng-Yi Chiang <cychiang@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 1/2] arm64: dts: qcom: Add "dmic_clk_en" for sc7180-trogdor-coachz
+Date:   Mon, 15 Mar 2021 13:39:30 -0700
+Message-Id: <20210315133924.v2.1.I601a051cad7cfd0923e55b69ef7e5748910a6096@changeid>
+X-Mailer: git-send-email 2.31.0.rc2.261.g7f71774620-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210315203336.GA8977@codeaurora.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 15, 2021 at 01:33:36PM -0700, Guru Das Srinagesh wrote:
-> On Fri, Mar 12, 2021 at 12:19:16PM +0000, Mark Brown wrote:
-> > On Wed, Mar 10, 2021 at 04:39:53PM -0800, Guru Das Srinagesh wrote:
-> > > If an interrupt is already configured as either edge- or
-> > > level-triggered, setting the corresponding bit for it in the POLARITY_HI
-> > > register further configures it as rising-edge or level-high triggered
-> > > (as the case may be), while setting the same bit in POLARITY_LO further
-> > > configures it as falling-edge or level-low triggered.
-> > 
-> > I think you probably need to bring these three fields together into a
-> > single virtual field and then map the values within that field using
-> > the existing type stuff.
-> 
-> Sure, how about this scheme then, for patches 2 and 3 in this series?
-> (Patch 1 will remain the same, pending your review of it.)
-> 
-> Since I do need to write to two extra registers, I'll need two
-> register_base's and two buffers to hold their data. This can be
-> generalized to "extra config registers" in the framework as follows:
-> 
-> - Add these two fields to `struct regmap_irq_chip`:
-> 
-> 	unsigned int *extra_config_base; /* Points to array of extra regs */
-> 	int num_extra_config_regs;	 /* = ARRAY_SIZE(array above) */
-> 
-> - Add this field to `struct regmap_irq_chip_data`:
-> 
-> 	unsigned int **extra_config_buf;
->   	/* Will be dynamically allocated to size of:
->   	 * [chip->num_extra_config_regs][chip->num_regs]
->   	 */
-> 
-> - Add a new function callback in `struct regmap_irq_chip`:
-> 
-> 	int (*configure_extra_regs)(void *irq_drv_data, unsigned int
-> 	type)
-> 
->   This callback will be called at the end of regmap_irq_set_type():
->   	
->   	if (d->chip->configure_extra_regs)
-> 		d->chip->configure_extra_regs();
-> 
->   The callback, defined in the client driver, will specifically address
->   the changes to regmap_irq_set_type() made in patches 2 and 3 of this
->   series, viz. overriding how type_buf is to be handled, plus the
->   populating of polarity_*_buf's (rechristened as extra_config_bufs in
->   this proposed new scheme).
-> 
-> This new scheme thus makes v2 more generic. I thought I'd discuss this
-> with you before implementing it as v3 RFC. Could you please let me know
-> your thoughts?
+This was present downstream. Add upstream too. NOTE: upstream I
+managed to get some sort of halfway state and got one pinctrl entry in
+the coachz-r1 device tree. Remove that as part of this since it's now
+in the dtsi.
 
-Typo. I meant:
+Cc: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Cc: Ajit Pandey <ajitp@codeaurora.org>
+Cc: Judy Hsiao <judyhsiao@chromium.org>
+Cc: Cheng-Yi Chiang <cychiang@chromium.org>
+Cc: Stephen Boyd <swboyd@chromium.org>
+Cc: Matthias Kaehlcke <mka@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
+This applies atop the patch ("arm64: dts: qcom: Add sound node for
+sc7180-trogdor-coachz") [1].
 
-This new scheme thus makes *v3* more generic. I thought I'd discuss this
-with you before implementing it as *v4* RFC. 
+NOTE: downstream this property was present in each of the board
+revisions. There's actually no longer any reason for this and I'll
+shortly post a downstream patch to fix this.
 
-Guru Das.
+[1] https://lore.kernel.org/r/20210313054654.11693-3-srivasam@codeaurora.org/
+
+Changes in v2:
+- Remove the pinctrl from the -r1
+
+ .../boot/dts/qcom/sc7180-trogdor-coachz-r1.dts   | 13 -------------
+ .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi     | 16 ++++++++++++++++
+ 2 files changed, 16 insertions(+), 13 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts
+index 86619f6c1134..1b1dbdb2a82f 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts
+@@ -138,17 +138,4 @@ &tlmm {
+ 			  "AP_TS_PEN_I2C_SCL",
+ 			  "DP_HOT_PLUG_DET",
+ 			  "EC_IN_RW_ODL";
+-
+-	dmic_clk_en: dmic_clk_en {
+-		pinmux {
+-			pins = "gpio83";
+-			function = "gpio";
+-		};
+-
+-		pinconf {
+-			pins = "gpio83";
+-			drive-strength = <8>;
+-			bias-pull-up;
+-		};
+-	};
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
+index e2ffe71c2d52..4c6e433c8226 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
+@@ -93,6 +93,9 @@ &sound {
+ 	compatible = "google,sc7180-coachz";
+ 	model = "sc7180-adau7002-max98357a";
+ 	audio-routing = "PDM_DAT", "DMIC";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&dmic_clk_en>;
+ };
+ 
+ &sound_multimedia0_codec {
+@@ -247,4 +250,17 @@ &tlmm {
+ 			  "AP_TS_PEN_I2C_SCL",
+ 			  "DP_HOT_PLUG_DET",
+ 			  "EC_IN_RW_ODL";
++
++	dmic_clk_en: dmic_clk_en {
++		pinmux {
++			pins = "gpio83";
++			function = "gpio";
++		};
++
++		pinconf {
++			pins = "gpio83";
++			drive-strength = <8>;
++			bias-pull-up;
++		};
++	};
+ };
+-- 
+2.31.0.rc2.261.g7f71774620-goog
+
