@@ -2,122 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B829A33C6AA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 20:18:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B0F833C6B4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 20:20:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233289AbhCOTSR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Mar 2021 15:18:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57774 "EHLO
+        id S233418AbhCOTTy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Mar 2021 15:19:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233279AbhCOTR6 (ORCPT
+        with ESMTP id S233414AbhCOTTr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Mar 2021 15:17:58 -0400
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC7E5C061762
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 12:17:57 -0700 (PDT)
-Received: by mail-ot1-x329.google.com with SMTP id t16so7529363ott.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 12:17:57 -0700 (PDT)
+        Mon, 15 Mar 2021 15:19:47 -0400
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09723C06175F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 12:19:47 -0700 (PDT)
+Received: by mail-qk1-x730.google.com with SMTP id n24so2672606qkh.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 12:19:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=jaDJIbozHDomrvNHrqpon9HkLzG9r5TbsaSE94cHoXY=;
-        b=n2V75PXggd6ZrjEgxJY17yUaCpyHvKCxlE1N8m6Y1gEka8kJuhPnBs9/VdgWyyet9J
-         1nUuQ2uXPGXBTs+6pxODo5CLF6rmeB/JdE8wq1nxO7onQBFPT1+DZHGSV9AK31OKElMe
-         dN83YB+3uSr3Ii44IQhW+HzStDj8seXFzDcji+rCH1DNsLCxRlmbFmU6ufDcO0yUDKPY
-         R8Fae2qMuu3taYVmcPXfsMkGyoaa12dWDAlFHwzKRWWvoUs8at/9iXdGXJhKV28rNDF2
-         dohtG1PlWiXCNoQ8hPvTNfNGAxy2J86VunLFwdbIAfzzpqhY8vWwHiXKLg8rYHMW0UTB
-         aRKw==
+        bh=KKrjR+1pYrczmPaO9FQh9Zsr6qSwWLm3vUCGHNN49NI=;
+        b=uTOML8o9qaiakVrN3KS50dFQ2ofWZ8ACM4fJbTYPq3KdEgHn6U0NCp1hT1IX5C0C2v
+         /MWH3pi+PF7P1Fgm/8cYo4l+WBqniEQpEDqGBEfqfXYqqm64W4Ykhtp2096wqWtukL1+
+         m3a+A0SeR2oCz21mPtr46oRosWNOL/SUqhc2TsIKU2yt3kcf0V3u7GjECSGN4FA2U7v7
+         A2RP2701s8sSr5q9fVp/HUYeQ8wZWTT1c1Z9GDQW2G7YI+ouoCqP3mtp2BqGhL/OKhXy
+         lxjNk40LIZwbbW2a38efWwPGG3+tq8rk0w+K0U/q3PRBfuEwcy5dE1zsBFesYm6vUpP3
+         ajWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=jaDJIbozHDomrvNHrqpon9HkLzG9r5TbsaSE94cHoXY=;
-        b=F/j+qjztDm+cpdwF6RSzinHxudtsqfB9EJI5U+HBt14vf0pbHXyRBDvidqZlra10ZI
-         F81nc/VFnIF3hkzHhbEO0Z1LzjachkdLUyUuKLLljaHFUUbAp1Q1dBmfn2NeZn1MrkqA
-         xEw/yFVv5lOGPGt6A67rUokFUWdQZdsnWJkhLdCF0+lfG4yr5b2hNgpqXOaIXkVdR9hy
-         IQ3axujAFoawhPU1680gozcdU7F9VrwvSiU7uXPIihLWU9wYGAN1UHZ9fIsVXZwpnHNk
-         S0fcjMIBfvgSJaJ+qv703tfMEuMlX7StnooNmv01+HSyiEj9BBgbIgUkN+FZP0Wzn1RS
-         NMhA==
-X-Gm-Message-State: AOAM531hC+e15gWEV1ZhuJTZKkEDvefBdy6C0lhwymoaMeFWyNgjDezm
-        5vGuczo+nejFH6W3uT1fC7U8ePN1+6l8LzCwmQ83dYpYWzXCIlAY
-X-Google-Smtp-Source: ABdhPJw7m9FtaQnuJGDdSC12kGTvOQr6etwvoPeE1fqnJsiPEMefAdL97cCH5GhLabo/CTgr3Rcss3VDoANIwhdOJbk=
-X-Received: by 2002:a05:6830:1513:: with SMTP id k19mr479331otp.51.1615835877310;
- Mon, 15 Mar 2021 12:17:57 -0700 (PDT)
+        bh=KKrjR+1pYrczmPaO9FQh9Zsr6qSwWLm3vUCGHNN49NI=;
+        b=TjHO/izmdaTkyiv5yZYOkdAAiwkqImEWMtUA3ZcgI/+2nidKcTuZBH2VcsvejlT3ps
+         g8Ytf7z1RhpT+MM0rdaMUwCvB4duq299z7a8GXtNHnFaCMHeC7wIqVQD7BBP84zNUFoX
+         gX6X6HGLVJ3q3JqtVYY6QBNFT8fe5It+5BWtAaLQuwE/xL6sZ1cFp/dPalMsvBMRsx57
+         Yse7lBmUDsB9PbCPedCrQp1KaDfKGlKIh0ROcOH7c1uKPxXUpsAdnZmymwLwBDcsEwSQ
+         MpAeHx7+ek4E8LJ7LNMsTFfj4GROu60i05aSX/myWI1zma34RrgWxvA1kVxr/Vuip2ou
+         DAVA==
+X-Gm-Message-State: AOAM530DKzIN4gIV7En+xpjKpvzx/obPL2mfwzCGHnvYY/OSxF76E3Dh
+        7fIq2AL0IhYbPsdNUmbPfvwpHYYWfMBCK6dQ1aRl0g==
+X-Google-Smtp-Source: ABdhPJwnq1X5LRG08bl6RXWR/OZcwCg/kklS/64tewBuZyv9NrC5inYj1d03jwjrtj1M02hZK6rIuI/1IaZf/72eFWk=
+X-Received: by 2002:a37:b6c4:: with SMTP id g187mr27563612qkf.162.1615835986271;
+ Mon, 15 Mar 2021 12:19:46 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210310163024.393578-1-caleb@connolly.tech> <20210310163024.393578-2-caleb@connolly.tech>
-In-Reply-To: <20210310163024.393578-2-caleb@connolly.tech>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Tue, 16 Mar 2021 00:47:46 +0530
-Message-ID: <CAH=2Ntz71eezQrELqgjZu+mMvS5ANSsupyUYR6QU6-VS99K-Sw@mail.gmail.com>
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: sm8150: add other QUP nodes
-To:     Caleb Connolly <caleb@connolly.tech>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+References: <20210315103836.1.I9a97120319d43b42353aeac4d348624d60687df7@changeid>
+In-Reply-To: <20210315103836.1.I9a97120319d43b42353aeac4d348624d60687df7@changeid>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Mon, 15 Mar 2021 22:19:35 +0300
+Message-ID: <CAA8EJpqsYR+uCmBH8i6H_YyBfcmziiCq9dAZkAqJUEEvHZ3AUg@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Fix sc7180-qmp-usb3-dp-phy reg sizes
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        Vara Reddy <varar@codeaurora.org>,
+        Tanmay Shah <tanmay@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Caleb,
+On Mon, 15 Mar 2021 at 20:39, Douglas Anderson <dianders@chromium.org> wrote:
+>
+> As per Dmitry Baryshkov [1]:
+> a) The 2nd "reg" should be 0x3c because "Offset 0x38 is
+>    USB3_DP_COM_REVISION_ID3 (not used by the current driver though)."
+> b) The 3rd "reg" "is a serdes region and qmp_v3_dp_serdes_tbl contains
+>    registers 0x148 and 0x154."
+>
+> I think because the 3rd "reg" is a serdes region we should just use
+> the same size as the 1st "reg"?
 
-On Wed, 10 Mar 2021 at 22:02, Caleb Connolly <caleb@connolly.tech> wrote:
+Yes, this looks logical to me.
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 >
-> Add the first and third qupv3 nodes used to hook
-> up peripherals on some devices.
+> [1] https://lore.kernel.org/r/ee5695bb-a603-0dd5-7a7f-695e919b1af1@linaro.org
 >
-> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+> Cc: Stephen Boyd <swboyd@chromium.org>
+> Cc: Jeykumar Sankaran <jsanka@codeaurora.org>
+> Cc: Chandan Uddaraju <chandanu@codeaurora.org>
+> Cc: Vara Reddy <varar@codeaurora.org>
+> Cc: Tanmay Shah <tanmay@codeaurora.org>
+> Cc: Rob Clark <robdclark@chromium.org>
+> Fixes: 58fd7ae621e7 ("arm64: dts: qcom: sc7180: Update dts for DP phy inside QMP phy")
+> Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
->  arch/arm64/boot/dts/qcom/sm8150.dtsi | 25 +++++++++++++++++++++++++
->  1 file changed, 25 insertions(+)
 >
-> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> index e5bb17bc2f46..03e05d98daf2 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> @@ -577,6 +577,18 @@ gcc: clock-controller@100000 {
->                                  <&sleep_clk>;
->                 };
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> +               qupv3_id_0: geniqup@8c0000 {
-> +                       compatible = "qcom,geni-se-qup";
-> +                       reg = <0x0 0x008c0000 0x0 0x6000>;
-> +                       clock-names = "m-ahb", "s-ahb";
-> +                       clocks = <&gcc GCC_QUPV3_WRAP_0_M_AHB_CLK>,
-> +                                <&gcc GCC_QUPV3_WRAP_0_S_AHB_CLK>;
-> +                       #address-cells = <2>;
-> +                       #size-cells = <2>;
-> +                       ranges;
-> +                       status = "disabled";
-> +               };
-> +
->                 qupv3_id_1: geniqup@ac0000 {
->                         compatible = "qcom,geni-se-qup";
->                         reg = <0x0 0x00ac0000 0x0 0x6000>;
-> @@ -598,6 +610,19 @@ uart2: serial@a90000 {
->                         };
->                 };
->
-> +               qupv3_id_2: geniqup@cc0000 {
-> +                       compatible = "qcom,geni-se-qup";
-> +                       reg = <0x0 0x00cc0000 0x0 0x6000>;
-> +
-> +                       clock-names = "m-ahb", "s-ahb";
-> +                       clocks = <&gcc GCC_QUPV3_WRAP_2_M_AHB_CLK>,
-> +                                <&gcc GCC_QUPV3_WRAP_2_S_AHB_CLK>;
-> +                       #address-cells = <2>;
-> +                       #size-cells = <2>;
-> +                       ranges;
-> +                       status = "disabled";
-> +               };
-> +
->                 config_noc: interconnect@1500000 {
->                         compatible = "qcom,sm8150-config-noc";
->                         reg = <0 0x01500000 0 0x7400>;
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 83fbb481cae5..61732e5efe62 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -2754,8 +2754,8 @@ usb_1_hsphy: phy@88e3000 {
+>                 usb_1_qmpphy: phy-wrapper@88e9000 {
+>                         compatible = "qcom,sc7180-qmp-usb3-dp-phy";
+>                         reg = <0 0x088e9000 0 0x18c>,
+> -                             <0 0x088e8000 0 0x38>,
+> -                             <0 0x088ea000 0 0x40>;
+> +                             <0 0x088e8000 0 0x3c>,
+> +                             <0 0x088ea000 0 0x18c>;
+>                         status = "disabled";
+>                         #address-cells = <2>;
+>                         #size-cells = <2>;
 
-LGTM, so:
-Reviewed-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+-- 
+With best wishes
+Dmitry
