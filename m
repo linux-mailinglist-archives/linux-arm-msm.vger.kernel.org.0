@@ -2,128 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 18E2733C359
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 18:07:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1307133C41A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 18:28:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234833AbhCORGu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Mar 2021 13:06:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57406 "EHLO
+        id S231169AbhCOR1a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Mar 2021 13:27:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234806AbhCORG0 (ORCPT
+        with ESMTP id S234685AbhCOR13 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Mar 2021 13:06:26 -0400
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0B7CC06174A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 10:06:25 -0700 (PDT)
-Received: by mail-pg1-x535.google.com with SMTP id p21so20822618pgl.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 10:06:25 -0700 (PDT)
+        Mon, 15 Mar 2021 13:27:29 -0400
+Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B1B1C06174A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 10:27:29 -0700 (PDT)
+Received: by mail-qv1-xf2e.google.com with SMTP id d10so1783834qve.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 10:27:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=yY3mhIGzvfIcea0oS5vnOF6ZD7eoZRfXqgRluJD6Ksk=;
-        b=g6cpgZcwUgiy6sRyLSlM8Fgt+n+NM8QrgLWk7DBpT3nUvsZXTKZ92qpHV47YNnDCgO
-         PYHE5t0mhQupKH7qGzopGZ8NKkmyTbwtnqrdM/zrzsnfwfgqaUh1mFjstfeWPvumXAEb
-         tF5axhwM9S32tkzLbbnm2KLR9Y5gJZsPOHAug4T41G3Vc/ByVC/lOqzl0ar+BHQzBClD
-         IRjskivPKqHZWgEEY789XI4McmHMckuhIsQ6EsLKiH9i+ZEYoie7XKZlIHF0L8bNiTQ3
-         mXLtOTGRkIgxF/g4b0TfDZKmIi7rEvY/xsyR59XZVZ7hMUK1LtPJpd1L4m8HNvZKgtqN
-         pX6w==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=9RWsr2dPzW/uEOT8VZ8iZlXJJghlQaV6e0purSmrMZA=;
+        b=Oh+asBWgl0e+s4jNwID+FX550YAUPxSA3NyjhdQjlXvO16M284r3JkguajAnXlfQ3m
+         IJS2z9GAlA4iJexn6ICVLjwrMTchB71CIyOZiYqSkxaUdU4YNCXT3W8razfrkuozsAHI
+         MmUd7wOLscry0xBFdNpMRE+MLo5VA8sQRlg7E=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=yY3mhIGzvfIcea0oS5vnOF6ZD7eoZRfXqgRluJD6Ksk=;
-        b=TofkM63IRrABxEE3AvBBkXqaPU4iyKPgE0uLB7XD+M3cQZXatnn4s8fGfBHUkCXKei
-         2Ezv0W+KMihKGk06rySSh81FSaF9ODPl7DlA77+/fGpwBGoyr7gm6ojQRDlHPe/hfVJH
-         pK3MJWaN4JS8BjWvG6iZ/pun45yacPRqwXIjiGYfcZI3ioWUHpVFILqU4jdTaICO1wOk
-         cDirZ3GUEAWE5DT6lnRKOVErrc+NCItfoJjlQdgFcUf0yn5C7ob86v+E9nyZPiarvClU
-         oseLBRtUc5OpHEwK4AEe0SHS8lBGMMP5DN8su6gzDlTHHhUWMbTPX5wYoP3YvO7k8j57
-         iSQA==
-X-Gm-Message-State: AOAM532pAdydxggHQQPjqSSDk9czB/Vmgyxr95OlBufl8EIydgmeTlU1
-        ISNZ4BkFvii6m8QuyPqWiWK5eA==
-X-Google-Smtp-Source: ABdhPJztwsViJzEquhAP1o+/MucyFw8LNEvEwKu1nZeYWRHgNBTFMt11CRG/3FjDjsm7t3+rIaxGJQ==
-X-Received: by 2002:a62:92cc:0:b029:1fa:515d:808f with SMTP id o195-20020a6292cc0000b02901fa515d808fmr24978009pfd.43.1615827985438;
-        Mon, 15 Mar 2021 10:06:25 -0700 (PDT)
-Received: from xps15 (S0106889e681aac74.cg.shawcable.net. [68.147.0.187])
-        by smtp.gmail.com with ESMTPSA id ge16sm184580pjb.43.2021.03.15.10.06.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Mar 2021 10:06:25 -0700 (PDT)
-Date:   Mon, 15 Mar 2021 11:06:23 -0600
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Siddharth Gupta <sidgup@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] remoteproc: qcom_q6v5_mss: Validate p_filesz in ELF
- loader
-Message-ID: <20210315170623.GD1339147@xps15>
-References: <20210312232002.3466791-1-bjorn.andersson@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=9RWsr2dPzW/uEOT8VZ8iZlXJJghlQaV6e0purSmrMZA=;
+        b=dlCdytR30QU/+zdWkO/7PIVOjpd64ZVhWlg9KA4XSZ+K77JMOwfJ5bBT113Af8Ukr2
+         z8Q4csFX8kx8VS49I2XifM6GMDizqjkX86JPN5zkB9Mrd4ak62EFSaOSnw+0OlHJJUSU
+         oFb0VsDHmAZN4ioXaiBjqmXpLYRrtHYHxK1CXAEMyiMgDIK8n1vqpu9l+rCJwvHJfDbO
+         9ceGo0WO+bjKhMtmFilQ1ismXzpBXkMwFCh0XT6Bl8v8cMOuRI5X4SHsIHpLl+/XhgBC
+         gyfbvFs8wGoK/uXCX7J4hXlECSSsQuspHWIgpdO3djuUQ2C4VRBbgzFaumVkQ7pINEhM
+         yzug==
+X-Gm-Message-State: AOAM5325l5x6a06UpipXLd7QyYYUXXRRfQiLMguf5tnf9ecGkmUrAaSr
+        eyvaFGZJy8vrzvJTvcctoUOAbAOWAOiZ/w==
+X-Google-Smtp-Source: ABdhPJz9LktIrDWUdNLn4Bkev1PfJoguaqLC0ycXtwjQgTEyOby3wvg/SNdRLcT00s9lTFroaPWjmQ==
+X-Received: by 2002:ad4:5aa3:: with SMTP id u3mr12142701qvg.0.1615829246855;
+        Mon, 15 Mar 2021 10:27:26 -0700 (PDT)
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com. [209.85.219.175])
+        by smtp.gmail.com with ESMTPSA id f12sm10735864qti.63.2021.03.15.10.27.25
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Mar 2021 10:27:25 -0700 (PDT)
+Received: by mail-yb1-f175.google.com with SMTP id p186so34053788ybg.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 10:27:25 -0700 (PDT)
+X-Received: by 2002:a25:2654:: with SMTP id m81mr1035747ybm.405.1615829245523;
+ Mon, 15 Mar 2021 10:27:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210312232002.3466791-1-bjorn.andersson@linaro.org>
+References: <20210312234310.3490809-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20210312234310.3490809-1-bjorn.andersson@linaro.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 15 Mar 2021 10:27:14 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Uvtdrb7N=UX2+XwNnYJd3_JWjrnjcMVnH=A3xq4oFQQw@mail.gmail.com>
+Message-ID: <CAD=FV=Uvtdrb7N=UX2+XwNnYJd3_JWjrnjcMVnH=A3xq4oFQQw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: sdm845: Move reserved-memory to devices
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 12, 2021 at 03:20:02PM -0800, Bjorn Andersson wrote:
-> Analog to the issue in the common mdt_loader code the MSS ELF loader
-> does not validate that p_filesz bytes will fit in the memory region and
-> that the loaded segments are not truncated. Fix this in the same way
-> as proposed for the mdt_loader.
-> 
-> Fixes: 135b9e8d1cd8 ("remoteproc: qcom_q6v5_mss: Validate modem blob firmware size before load")
+Hi,
+
+On Fri, Mar 12, 2021 at 3:42 PM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> The reserved-memory regions used for carrying firmware to be run on the
+> various cores and co-processors in a Qualcomm platform differs in size,
+> placement and presence based on each device's feature set and security
+> configuration.
+>
+> Rather than providing some basic set that works on the MTP and then
+> piecemeal patch this up on the various devices, push the configuration
+> of these regions out to the individual device dts files.
+>
 > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
-> 
+>
 > Changes since v1:
-> - Don't just break the loop, goto release_firmware.
-> - Release seg_fw as well.
-> 
->  drivers/remoteproc/qcom_q6v5_mss.c | 18 ++++++++++++++++++
->  1 file changed, 18 insertions(+)
-> 
-> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-> index 66106ba25ba3..14e0ce5f18f5 100644
-> --- a/drivers/remoteproc/qcom_q6v5_mss.c
-> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
-> @@ -1210,6 +1210,14 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
->  			goto release_firmware;
->  		}
->  
-> +		if (phdr->p_filesz > phdr->p_memsz) {
-> +			dev_err(qproc->dev,
-> +				"refusing to load segment %d with p_filesz > p_memsz\n",
-> +				i);
-> +			ret = -EINVAL;
-> +			goto release_firmware;
-> +		}
-> +
->  		ptr = memremap(qproc->mpss_phys + offset, phdr->p_memsz, MEMREMAP_WC);
->  		if (!ptr) {
->  			dev_err(qproc->dev,
-> @@ -1241,6 +1249,16 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
->  				goto release_firmware;
->  			}
->  
-> +			if (seg_fw->size != phdr->p_filesz) {
-> +				dev_err(qproc->dev,
-> +					"failed to load segment %d from truncated file %s\n",
-> +					i, fw_name);
-> +				ret = -EINVAL;
-> +				release_firmware(seg_fw);
-> +				memunmap(ptr);
-> +				goto release_firmware;
-> +			}
-> +
+> - Added lost memory-region to the db845c wlan node, as spotted by Doug.
+>
+>  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi    | 90 +++++++++++++------
+>  arch/arm64/boot/dts/qcom/sdm845-db845c.dts    | 87 ++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sdm845-mtp.dts       | 87 ++++++++++++++++++
+>  .../boot/dts/qcom/sdm845-oneplus-common.dtsi  | 78 +++++++++++++++-
+>  .../boot/dts/qcom/sdm845-xiaomi-beryllium.dts | 45 ++++++----
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi          | 83 -----------------
+>  .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 86 ++++++++++++++++++
+>  7 files changed, 431 insertions(+), 125 deletions(-)
 
-Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+I will leave it up to you to evaluate Konrad's feedback that this will
+cause a bunch of duplication since I don't have enough experience w/
+Android phones to have an informed opinion. In case it matters, this
+addresses the feedback I had on v1 and thus:
 
->  			release_firmware(seg_fw);
->  		}
->  
-> -- 
-> 2.29.2
-> 
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+
+I'll also repeat the feedback that I had on v1 that I focused much
+more on cheza than on other boards and didn't check every last thing
+on every board to make sure no changes happened.
