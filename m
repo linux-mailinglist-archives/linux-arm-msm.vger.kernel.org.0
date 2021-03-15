@@ -2,89 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C2CC833C2C0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 17:58:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 18E2733C359
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 18:07:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234179AbhCOQ5k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Mar 2021 12:57:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55382 "EHLO
+        id S234833AbhCORGu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Mar 2021 13:06:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232548AbhCOQ5c (ORCPT
+        with ESMTP id S234806AbhCORG0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Mar 2021 12:57:32 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2063C06174A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 09:57:31 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id y1so17087093ljm.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 09:57:31 -0700 (PDT)
+        Mon, 15 Mar 2021 13:06:26 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0B7CC06174A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 10:06:25 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id p21so20822618pgl.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 10:06:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=nn1W9Wc+k1CJYE8WxkSJGXK0N+qf/mcCb4Whw81sCBc=;
-        b=BIMjWOao9frgVbcpay5qI62+w1opUeeGkf64/DKbjZX8QSXYJdOYvSodsThbvXicVU
-         FkZ1fJEyH9S2hNUdMhpRCLZ+MrPlOrEUgkjAQKUJhMV9O+G5EnCVQRt/wp0DKeeNItIZ
-         kujZqhKqiPjg49G0SszenGPvTTnvZzbjLT9P1wOFjJN8Hus+y/y3GLyKNRR/Wh8zsXDi
-         ISWIzvQMks4EP21IbiIdEV4iDruz3BO8X9x4+QF8a8J/ZOLlszhhqi+4SU2HoD8lNoG7
-         mIEcIBTvYnpheevrasX934Xelgyy6KDRZ5q+pSioEeFbEmA6XjzuZYLfZr28/TslQIQ0
-         jb0A==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=yY3mhIGzvfIcea0oS5vnOF6ZD7eoZRfXqgRluJD6Ksk=;
+        b=g6cpgZcwUgiy6sRyLSlM8Fgt+n+NM8QrgLWk7DBpT3nUvsZXTKZ92qpHV47YNnDCgO
+         PYHE5t0mhQupKH7qGzopGZ8NKkmyTbwtnqrdM/zrzsnfwfgqaUh1mFjstfeWPvumXAEb
+         tF5axhwM9S32tkzLbbnm2KLR9Y5gJZsPOHAug4T41G3Vc/ByVC/lOqzl0ar+BHQzBClD
+         IRjskivPKqHZWgEEY789XI4McmHMckuhIsQ6EsLKiH9i+ZEYoie7XKZlIHF0L8bNiTQ3
+         mXLtOTGRkIgxF/g4b0TfDZKmIi7rEvY/xsyR59XZVZ7hMUK1LtPJpd1L4m8HNvZKgtqN
+         pX6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=nn1W9Wc+k1CJYE8WxkSJGXK0N+qf/mcCb4Whw81sCBc=;
-        b=DJS5juZhdxETHXG5LegfHvQ2yX3hZLPEg5i7nUzjISP6yCE0cop0hNqtHTij80EVHZ
-         OGr9dEjPVW4J5fGxhLCT0tsfWtdL8pX6mFt8lmGiIu3+JNIah+IVkpf/O3ZlnHgu1J50
-         Y8e72AhgF+CvC4mjiZtHk5Jc8A5fQ0QR9XlWXWJQoKFcBk2myUloR9Q/1tSweRaxdtrA
-         lUGgbQwhD4c0MsZurGkAUAIfLHL585DJ0IGul02dba0gxreOsMavGvGGvm/2e6gHBCqD
-         ukdKen1e69xaWVZ+IexCZDfh7ZB0uXNF90Va2E8ecIFQPCUuN1ULB8Qe37FUNgJ4WPe5
-         thiA==
-X-Gm-Message-State: AOAM530LJxh41dn0jq4z/v9Zodd5Nn/WfeEAesPyhbIgT7CKkQTbvAMv
-        UhTLQfwZk/HEQ/VQSNwsOrpm6vg/Ei9AtYsJ6CM=
-X-Google-Smtp-Source: ABdhPJysA+FxGGdMgHOeOPBrQRxmSb9j1ZTA/VmeMGGO7qzAv38tcv8HPJZL6086Ph7N1QIY7wawemp53bKWDWCkvAA=
-X-Received: by 2002:a2e:96d5:: with SMTP id d21mr16075ljj.148.1615827450526;
- Mon, 15 Mar 2021 09:57:30 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=yY3mhIGzvfIcea0oS5vnOF6ZD7eoZRfXqgRluJD6Ksk=;
+        b=TofkM63IRrABxEE3AvBBkXqaPU4iyKPgE0uLB7XD+M3cQZXatnn4s8fGfBHUkCXKei
+         2Ezv0W+KMihKGk06rySSh81FSaF9ODPl7DlA77+/fGpwBGoyr7gm6ojQRDlHPe/hfVJH
+         pK3MJWaN4JS8BjWvG6iZ/pun45yacPRqwXIjiGYfcZI3ioWUHpVFILqU4jdTaICO1wOk
+         cDirZ3GUEAWE5DT6lnRKOVErrc+NCItfoJjlQdgFcUf0yn5C7ob86v+E9nyZPiarvClU
+         oseLBRtUc5OpHEwK4AEe0SHS8lBGMMP5DN8su6gzDlTHHhUWMbTPX5wYoP3YvO7k8j57
+         iSQA==
+X-Gm-Message-State: AOAM532pAdydxggHQQPjqSSDk9czB/Vmgyxr95OlBufl8EIydgmeTlU1
+        ISNZ4BkFvii6m8QuyPqWiWK5eA==
+X-Google-Smtp-Source: ABdhPJztwsViJzEquhAP1o+/MucyFw8LNEvEwKu1nZeYWRHgNBTFMt11CRG/3FjDjsm7t3+rIaxGJQ==
+X-Received: by 2002:a62:92cc:0:b029:1fa:515d:808f with SMTP id o195-20020a6292cc0000b02901fa515d808fmr24978009pfd.43.1615827985438;
+        Mon, 15 Mar 2021 10:06:25 -0700 (PDT)
+Received: from xps15 (S0106889e681aac74.cg.shawcable.net. [68.147.0.187])
+        by smtp.gmail.com with ESMTPSA id ge16sm184580pjb.43.2021.03.15.10.06.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Mar 2021 10:06:25 -0700 (PDT)
+Date:   Mon, 15 Mar 2021 11:06:23 -0600
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Siddharth Gupta <sidgup@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] remoteproc: qcom_q6v5_mss: Validate p_filesz in ELF
+ loader
+Message-ID: <20210315170623.GD1339147@xps15>
+References: <20210312232002.3466791-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-Received: by 2002:a05:651c:1382:0:0:0:0 with HTTP; Mon, 15 Mar 2021 09:57:30
- -0700 (PDT)
-Reply-To: ezbtg22@gmail.com
-From:   "Mrs.Glenn" <mrganuserge@gmail.com>
-Date:   Mon, 15 Mar 2021 09:57:30 -0700
-Message-ID: <CA+Wfa7bDeotE=-vFErxqg-nrVF4g9r4VgZkh7cEN-5NvoJ7vkw@mail.gmail.com>
-Subject: From Mrs.Glenn
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210312232002.3466791-1-bjorn.andersson@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
--- 
-Dear Beloved,
+On Fri, Mar 12, 2021 at 03:20:02PM -0800, Bjorn Andersson wrote:
+> Analog to the issue in the common mdt_loader code the MSS ELF loader
+> does not validate that p_filesz bytes will fit in the memory region and
+> that the loaded segments are not truncated. Fix this in the same way
+> as proposed for the mdt_loader.
+> 
+> Fixes: 135b9e8d1cd8 ("remoteproc: qcom_q6v5_mss: Validate modem blob firmware size before load")
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+> 
+> Changes since v1:
+> - Don't just break the loop, goto release_firmware.
+> - Release seg_fw as well.
+> 
+>  drivers/remoteproc/qcom_q6v5_mss.c | 18 ++++++++++++++++++
+>  1 file changed, 18 insertions(+)
+> 
+> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+> index 66106ba25ba3..14e0ce5f18f5 100644
+> --- a/drivers/remoteproc/qcom_q6v5_mss.c
+> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
+> @@ -1210,6 +1210,14 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
+>  			goto release_firmware;
+>  		}
+>  
+> +		if (phdr->p_filesz > phdr->p_memsz) {
+> +			dev_err(qproc->dev,
+> +				"refusing to load segment %d with p_filesz > p_memsz\n",
+> +				i);
+> +			ret = -EINVAL;
+> +			goto release_firmware;
+> +		}
+> +
+>  		ptr = memremap(qproc->mpss_phys + offset, phdr->p_memsz, MEMREMAP_WC);
+>  		if (!ptr) {
+>  			dev_err(qproc->dev,
+> @@ -1241,6 +1249,16 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
+>  				goto release_firmware;
+>  			}
+>  
+> +			if (seg_fw->size != phdr->p_filesz) {
+> +				dev_err(qproc->dev,
+> +					"failed to load segment %d from truncated file %s\n",
+> +					i, fw_name);
+> +				ret = -EINVAL;
+> +				release_firmware(seg_fw);
+> +				memunmap(ptr);
+> +				goto release_firmware;
+> +			}
+> +
 
-I am Mrs Elizabet Glenn from Israel. I am a missionary but right now
-in a hospital bed in Israel. I am 59 years and childless; my husband
-is dead. I was diagnosed with terminal cancer. And my doctor just
-predicted that I have but very limited time to live due to damages in
-my system and as a result of that I decided to dispose my 10.5 million
-US dollars to a God-fearing one for the continuation of charitable
-work. This is why I located you.My guess about you may not be accurate
-because I came across your contact at the humanitarian calendar event
-of the year but I believe in God who  divinely directed me to you for
-this solemn proposal of charitable work. I wholeheartedly wish to
-bequeath my fortune to you as a God-fearing person for the
-continuation of charitable work anywhere around the world.
+Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 
-I shall be going in for a surgery operations soonest and desire this
-money to be transferred to you as I do not wish to leave this money in
-the bank because bankers might misuse it for their own interest after
-my death. As soon as I receive your quick reply assuring me that you
-will utilize the money as I instructed you for the benefit of the less
-privilege, I shall give you more details and also instruct my bank to
-release the money to you for the charity project. I hope you receive
-this mail in good health.
-
-Because I don t know what will be my situation in next minute,
-
-I am waiting for your reply.
-
-Yours sincerely,
-Mrs Elizabet Glenn.
+>  			release_firmware(seg_fw);
+>  		}
+>  
+> -- 
+> 2.29.2
+> 
