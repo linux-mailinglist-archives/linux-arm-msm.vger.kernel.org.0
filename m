@@ -2,65 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 58D0733AD8E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 09:34:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5979333AFA0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 11:12:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229574AbhCOIeG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Mar 2021 04:34:06 -0400
-Received: from verein.lst.de ([213.95.11.211]:52825 "EHLO verein.lst.de"
+        id S229548AbhCOKLz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Mar 2021 06:11:55 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35040 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229648AbhCOIdv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Mar 2021 04:33:51 -0400
-Received: by verein.lst.de (Postfix, from userid 2407)
-        id D619068C4E; Mon, 15 Mar 2021 09:33:47 +0100 (CET)
-Date:   Mon, 15 Mar 2021 09:33:47 +0100
-From:   Christoph Hellwig <hch@lst.de>
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     Christoph Hellwig <hch@lst.de>, Joerg Roedel <joro@8bytes.org>,
-        Will Deacon <will@kernel.org>, Li Yang <leoyang.li@nxp.com>,
-        freedreno@lists.freedesktop.org, kvm@vger.kernel.org,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        linuxppc-dev@lists.ozlabs.org, dri-devel@lists.freedesktop.org,
-        virtualization@lists.linux-foundation.org,
-        iommu@lists.linux-foundation.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        David Woodhouse <dwmw2@infradead.org>,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 14/17] iommu: remove DOMAIN_ATTR_DMA_USE_FLUSH_QUEUE
-Message-ID: <20210315083347.GA28445@lst.de>
-References: <20210301084257.945454-1-hch@lst.de> <20210301084257.945454-15-hch@lst.de> <1658805c-ed28-b650-7385-a56fab3383e3@arm.com> <20210310091501.GC5928@lst.de> <20210310092533.GA6819@lst.de> <fdacf87a-be14-c92c-4084-1d1dd4fc7766@arm.com> <20210311082609.GA6990@lst.de> <dff8eb80-8f74-972b-17e9-496c1fc0396f@arm.com>
+        id S229467AbhCOKLZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 15 Mar 2021 06:11:25 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id D959F64E20;
+        Mon, 15 Mar 2021 10:11:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1615803084;
+        bh=TBo4JwGbMiYixxXMujavD0wEMBia0P6yh8TLzXUBZzI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=kOGSfzOzZu3WPcJKhfaB+U8hFVaTdnHRTr1+sIvJEryXLDLuDgt8t/MJfqUQOwjIO
+         cp8Q5ACafH+L8yLTejSJOAzUoEqdocdz1y3G8AGmz6bT3KWYUxUtYjj64ug4CmHJGk
+         zO68is3LBZ7kBPlRG+mvmkHLp6AtlzRrioXl+FsxQ6XfCco/SxusF0kDA3Vaq3TL46
+         EBfzfRGUUZydBWis22hkhpzcoeNffWfmMpnRXkj00+bGIbP7l1FET/BAJPeaq/I5w2
+         hfBbdU6fnRhX1/7qf2IQu8jFPczuOzrxIo5Gcha/OFvrbbLp1qiaDbI2weT1P1jr9i
+         uEsLjhNC9Ah9Q==
+Date:   Mon, 15 Mar 2021 15:41:20 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Kuogee Hsieh <khsieh@codeaurora.org>
+Cc:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        tanmay@codeaurora.org, abhinavk@codeaurora.org,
+        aravindh@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] phy/qualcomm: add hbr3_hbr2 voltage and
+ premphasis swing table
+Message-ID: <YE8yyK7l9qQKuF3V@vkoul-mobl>
+References: <1613667070-27613-1-git-send-email-khsieh@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <dff8eb80-8f74-972b-17e9-496c1fc0396f@arm.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+In-Reply-To: <1613667070-27613-1-git-send-email-khsieh@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 12, 2021 at 04:18:24PM +0000, Robin Murphy wrote:
->> Let me know what you think of the version here:
->>
->> http://git.infradead.org/users/hch/misc.git/shortlog/refs/heads/iommu-cleanup
->>
->> I'll happily switch the patch to you as the author if you're fine with
->> that as well.
->
-> I still have reservations about removing the attribute API entirely and 
-> pretending that io_pgtable_cfg is anything other than a SoC-specific 
-> private interface,
+On 18-02-21, 08:51, Kuogee Hsieh wrote:
+> Add hbr3_hbr2 voltage and premphasis swing table to support
+> HBR3 link rate.
 
-I think a private inteface would make more sense.  For now I've just
-condensed it down to a generic set of quirk bits and dropped the
-attrs structure, which seems like an ok middle ground for now.  That
-being said I wonder why that quirk isn't simply set in the device
-tree?
+Please use phy: qcom-qmp: "...." for the patch title
 
-> but the reworked patch on its own looks reasonable to 
-> me, thanks! (I wasn't too convinced about the iommu_cmd_line wrappers 
-> either...) Just iommu_get_dma_strict() needs an export since the SMMU 
-> drivers can be modular - I consciously didn't add that myself since I was 
-> mistakenly thinking only iommu-dma would call it.
+> 
+> Changes in V2:
+> -- replaced upper case with lower case at hbr3_hbr2 table
+> 
+> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp.c | 23 +++++++++++++++++++++--
+>  1 file changed, 21 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> index 0939a9e..4dcc074 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> @@ -2965,6 +2965,20 @@ static void qcom_qmp_phy_dp_aux_init(struct qmp_phy *qphy)
+>  	       qphy->pcs + QSERDES_V3_DP_PHY_AUX_INTERRUPT_MASK);
+>  }
+>  
+> +static const u8 qmp_dp_v3_pre_emphasis_hbr3_hbr2[4][4] = {
+> +        { 0x00, 0x0c, 0x15, 0x1a },
+> +        { 0x02, 0x0e, 0x16, 0xff },
+> +        { 0x02, 0x11, 0xff, 0xff },
+> +        { 0x04, 0xff, 0xff, 0xff }
 
-Fixed.  Can I get your signoff for the patch?  Then I'll switch it to
-over to being attributed to you.
+This should use tabs and not spaces, please fix this and resend the
+patch after running checkpatch --strict and adding Steve's acks
+
+> +};
+> +
+> +static const u8 qmp_dp_v3_voltage_swing_hbr3_hbr2[4][4] = {
+> +        { 0x02, 0x12, 0x16, 0x1a },
+> +        { 0x09, 0x19, 0x1f, 0xff },
+> +        { 0x10, 0x1f, 0xff, 0xff },
+> +        { 0x1f, 0xff, 0xff, 0xff }
+> +};
+> +
+>  static const u8 qmp_dp_v3_pre_emphasis_hbr_rbr[4][4] = {
+>  	{ 0x00, 0x0c, 0x14, 0x19 },
+>  	{ 0x00, 0x0b, 0x12, 0xff },
+> @@ -3000,8 +3014,13 @@ static void qcom_qmp_phy_configure_dp_tx(struct qmp_phy *qphy)
+>  		drvr_en = 0x10;
+>  	}
+>  
+> -	voltage_swing_cfg = qmp_dp_v3_voltage_swing_hbr_rbr[v_level][p_level];
+> -	pre_emphasis_cfg = qmp_dp_v3_pre_emphasis_hbr_rbr[v_level][p_level];
+> +	if (dp_opts->link_rate <= 2700) {
+> +		voltage_swing_cfg = qmp_dp_v3_voltage_swing_hbr_rbr[v_level][p_level];
+> +		pre_emphasis_cfg = qmp_dp_v3_pre_emphasis_hbr_rbr[v_level][p_level];
+> +	} else {
+> +		voltage_swing_cfg = qmp_dp_v3_voltage_swing_hbr3_hbr2[v_level][p_level];
+> +		pre_emphasis_cfg = qmp_dp_v3_pre_emphasis_hbr3_hbr2[v_level][p_level];
+> +	}
+>  
+>  	/* TODO: Move check to config check */
+>  	if (voltage_swing_cfg == 0xFF && pre_emphasis_cfg == 0xFF)
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+
+-- 
+~Vinod
