@@ -2,26 +2,26 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 43E2933B5B9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 14:56:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4736533B5DA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 14:56:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231349AbhCONzO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Mar 2021 09:55:14 -0400
+        id S231770AbhCONzm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Mar 2021 09:55:42 -0400
 Received: from alexa-out.qualcomm.com ([129.46.98.28]:58629 "EHLO
         alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231682AbhCONzI (ORCPT
+        with ESMTP id S231701AbhCONzJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Mar 2021 09:55:08 -0400
+        Mon, 15 Mar 2021 09:55:09 -0400
 Received: from ironmsg07-lv.qualcomm.com (HELO ironmsg07-lv.qulacomm.com) ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 15 Mar 2021 06:55:07 -0700
+  by alexa-out.qualcomm.com with ESMTP; 15 Mar 2021 06:55:09 -0700
 X-QCInternal: smtphost
 Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg07-lv.qulacomm.com with ESMTP/TLS/AES256-SHA; 15 Mar 2021 06:55:06 -0700
+  by ironmsg07-lv.qulacomm.com with ESMTP/TLS/AES256-SHA; 15 Mar 2021 06:55:07 -0700
 X-QCInternal: smtphost
 Received: from c-skakit-linux.ap.qualcomm.com (HELO c-skakit-linux.qualcomm.com) ([10.242.51.242])
   by ironmsg01-blr.qualcomm.com with ESMTP; 15 Mar 2021 19:24:34 +0530
 Received: by c-skakit-linux.qualcomm.com (Postfix, from userid 2344709)
-        id 5A44C49BC; Mon, 15 Mar 2021 19:24:33 +0530 (IST)
+        id 7312149CD; Mon, 15 Mar 2021 19:24:33 +0530 (IST)
 From:   satya priya <skakit@codeaurora.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>
@@ -32,9 +32,9 @@ Cc:     Liam Girdwood <lgirdwood@gmail.com>,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
         kgunda@codeaurora.org, David Collins <collinsd@codeaurora.org>,
         satya priya <skakit@codeaurora.org>
-Subject: [PATCH V2 2/5] regulator: qcom-rpmh: Add PM7325/PMR735A regulator support
-Date:   Mon, 15 Mar 2021 19:24:11 +0530
-Message-Id: <1615816454-1733-3-git-send-email-skakit@codeaurora.org>
+Subject: [PATCH V2 3/5] arm64: dts: qcom: sc7280: Add RPMh regulators for sc7280-idp
+Date:   Mon, 15 Mar 2021 19:24:12 +0530
+Message-Id: <1615816454-1733-4-git-send-email-skakit@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1615816454-1733-1-git-send-email-skakit@codeaurora.org>
 References: <1615816454-1733-1-git-send-email-skakit@codeaurora.org>
@@ -42,94 +42,242 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for PM7325/PMR735A regulators. This ensures
+Add regulator devices for SC7280 as RPMh regulators. This ensures
 that consumers are able to modify the physical state of PMIC
 regulators.
 
 Signed-off-by: satya priya <skakit@codeaurora.org>
 ---
 Changes in V2:
- - No change.
+ - Corrected the indentation for "compatible" and "qcom,pmic-id" under
+   pm8350c-regulators as per Konrad's comment.
 
- drivers/regulator/qcom-rpmh-regulator.c | 53 ++++++++++++++++++++++++++++++++-
- 1 file changed, 52 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts | 212 ++++++++++++++++++++++++++++++++
+ 1 file changed, 212 insertions(+)
 
-diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
-index 9471890..3509523 100644
---- a/drivers/regulator/qcom-rpmh-regulator.c
-+++ b/drivers/regulator/qcom-rpmh-regulator.c
-@@ -1,5 +1,5 @@
- // SPDX-License-Identifier: GPL-2.0
--// Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
-+// Copyright (c) 2018-2021, The Linux Foundation. All rights reserved.
- 
- #define pr_fmt(fmt) "%s: " fmt, __func__
- 
-@@ -1042,6 +1042,49 @@ static const struct rpmh_vreg_init_data pmx55_vreg_data[] = {
- 	{},
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+index 428f863..78effe5 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
++++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+@@ -22,6 +22,218 @@
+ 	};
  };
  
-+static const struct rpmh_vreg_init_data pm7325_vreg_data[] = {
-+	RPMH_VREG("smps1",  "smp%s1",  &pmic5_hfsmps510, "vdd-s1"),
-+	RPMH_VREG("smps2",  "smp%s2",  &pmic5_ftsmps520, "vdd-s2"),
-+	RPMH_VREG("smps3",  "smp%s3",  &pmic5_ftsmps520, "vdd-s3"),
-+	RPMH_VREG("smps4",  "smp%s4",  &pmic5_ftsmps520, "vdd-s4"),
-+	RPMH_VREG("smps5",  "smp%s5",  &pmic5_ftsmps520, "vdd-s5"),
-+	RPMH_VREG("smps6",  "smp%s6",  &pmic5_ftsmps520, "vdd-s6"),
-+	RPMH_VREG("smps7",  "smp%s7",  &pmic5_ftsmps520, "vdd-s7"),
-+	RPMH_VREG("smps8",  "smp%s8",  &pmic5_hfsmps510, "vdd-s8"),
-+	RPMH_VREG("ldo1",   "ldo%s1",  &pmic5_nldo,      "vdd-l1-l4-l12-l15"),
-+	RPMH_VREG("ldo2",   "ldo%s2",  &pmic5_pldo,      "vdd-l2-l7"),
-+	RPMH_VREG("ldo3",   "ldo%s3",  &pmic5_nldo,      "vdd-l3"),
-+	RPMH_VREG("ldo4",   "ldo%s4",  &pmic5_nldo,      "vdd-l1-l4-l12-l15"),
-+	RPMH_VREG("ldo5",   "ldo%s5",  &pmic5_nldo,      "vdd-l5"),
-+	RPMH_VREG("ldo6",   "ldo%s6",  &pmic5_nldo,      "vdd-l6-l9-l10"),
-+	RPMH_VREG("ldo7",   "ldo%s7",  &pmic5_pldo,      "vdd-l2-l7"),
-+	RPMH_VREG("ldo8",   "ldo%s8",  &pmic5_nldo,      "vdd-l8"),
-+	RPMH_VREG("ldo9",   "ldo%s9",  &pmic5_nldo,      "vdd-l6-l9-l10"),
-+	RPMH_VREG("ldo10",  "ldo%s10", &pmic5_nldo,      "vdd-l6-l9-l10"),
-+	RPMH_VREG("ldo11",  "ldo%s11", &pmic5_pldo_lv,   "vdd-l11-l17-l18-l19"),
-+	RPMH_VREG("ldo12",  "ldo%s12", &pmic5_nldo,      "vdd-l1-l4-l12-l15"),
-+	RPMH_VREG("ldo13",  "ldo%s13", &pmic5_nldo,      "vdd-l13"),
-+	RPMH_VREG("ldo14",  "ldo%s14", &pmic5_nldo,      "vdd-l14-l16"),
-+	RPMH_VREG("ldo15",  "ldo%s15", &pmic5_nldo,      "vdd-l1-l4-l12-l15"),
-+	RPMH_VREG("ldo16",  "ldo%s16", &pmic5_nldo,      "vdd-l14-l16"),
-+	RPMH_VREG("ldo17",  "ldo%s17", &pmic5_pldo_lv,   "vdd-l11-l17-l18-l19"),
-+	RPMH_VREG("ldo18",  "ldo%s18", &pmic5_pldo_lv,   "vdd-l11-l17-l18-l19"),
-+	RPMH_VREG("ldo19",  "ldo%s19", &pmic5_pldo_lv,   "vdd-l11-l17-l18-l19"),
++&apps_rsc {
++	pm7325-regulators {
++		compatible = "qcom,pm7325-rpmh-regulators";
++		qcom,pmic-id = "b";
++
++		vreg_s1b_1p8: smps1 {
++			regulator-min-microvolt = <1856000>;
++			regulator-max-microvolt = <2040000>;
++		};
++
++		vreg_s7b_0p9: smps7 {
++			regulator-min-microvolt = <535000>;
++			regulator-max-microvolt = <1120000>;
++		};
++
++		vreg_s8b_1p2: smps8 {
++			regulator-min-microvolt = <1256000>;
++			regulator-max-microvolt = <1500000>;
++		};
++
++		vreg_l1b_0p8: ldo1 {
++			regulator-min-microvolt = <825000>;
++			regulator-max-microvolt = <925000>;
++		};
++
++		vreg_l2b_3p0: ldo2 {
++			regulator-min-microvolt = <2700000>;
++			regulator-max-microvolt = <3544000>;
++		};
++
++		vreg_l6b_1p2: ldo6 {
++			regulator-min-microvolt = <1140000>;
++			regulator-max-microvolt = <1260000>;
++		};
++
++		vreg_l7b_2p9: ldo7 {
++			regulator-min-microvolt = <2960000>;
++			regulator-max-microvolt = <2960000>;
++		};
++
++		vreg_l8b_0p9: ldo8 {
++			regulator-min-microvolt = <870000>;
++			regulator-max-microvolt = <970000>;
++		};
++
++		vreg_l9b_1p2: ldo9 {
++			regulator-min-microvolt = <1080000>;
++			regulator-max-microvolt = <1304000>;
++		};
++
++		vreg_l11b_1p7: ldo11 {
++			regulator-min-microvolt = <1504000>;
++			regulator-max-microvolt = <2000000>;
++		};
++
++		vreg_l12b_0p8: ldo12 {
++			regulator-min-microvolt = <751000>;
++			regulator-max-microvolt = <824000>;
++		};
++
++		vreg_l13b_0p8: ldo13 {
++			regulator-min-microvolt = <530000>;
++			regulator-max-microvolt = <824000>;
++		};
++
++		vreg_l14b_1p2: ldo14 {
++			regulator-min-microvolt = <1080000>;
++			regulator-max-microvolt = <1304000>;
++		};
++
++		vreg_l15b_0p8: ldo15 {
++			regulator-min-microvolt = <765000>;
++			regulator-max-microvolt = <1020000>;
++		};
++
++		vreg_l16b_1p2: ldo16 {
++			regulator-min-microvolt = <1100000>;
++			regulator-max-microvolt = <1300000>;
++		};
++
++		vreg_l17b_1p8: ldo17 {
++			regulator-min-microvolt = <1700000>;
++			regulator-max-microvolt = <1900000>;
++		};
++
++		vreg_l18b_1p8: ldo18 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <2000000>;
++		};
++
++		vreg_l19b_1p8: ldo19 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++		};
++	};
++
++	pm8350c-regulators {
++		compatible = "qcom,pm8350c-rpmh-regulators";
++		qcom,pmic-id = "c";
++
++		vreg_s1c_2p2: smps1 {
++			regulator-min-microvolt = <2190000>;
++			regulator-max-microvolt = <2210000>;
++		};
++
++		vreg_s9c_1p0: smps9 {
++			regulator-min-microvolt = <1010000>;
++			regulator-max-microvolt = <1170000>;
++		};
++
++		vreg_l1c_1p8: ldo1 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1980000>;
++		};
++
++		vreg_l2c_1p8: ldo2 {
++			regulator-min-microvolt = <1620000>;
++			regulator-max-microvolt = <1980000>;
++		};
++
++		vreg_l3c_3p0: ldo3 {
++			regulator-min-microvolt = <2800000>;
++			regulator-max-microvolt = <3540000>;
++		};
++
++		vreg_l4c_1p8: ldo4 {
++			regulator-min-microvolt = <1620000>;
++			regulator-max-microvolt = <3300000>;
++		};
++
++		vreg_l5c_1p8: ldo5 {
++			regulator-min-microvolt = <1620000>;
++			regulator-max-microvolt = <3300000>;
++		};
++
++		vreg_l6c_2p9: ldo6 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <2950000>;
++		};
++
++		vreg_l7c_3p0: ldo7 {
++			regulator-min-microvolt = <3000000>;
++			regulator-max-microvolt = <3544000>;
++		};
++
++		vreg_l8c_1p8: ldo8 {
++			regulator-min-microvolt = <1620000>;
++			regulator-max-microvolt = <2000000>;
++		};
++
++		vreg_l9c_2p9: ldo9 {
++			regulator-min-microvolt = <2960000>;
++			regulator-max-microvolt = <2960000>;
++		};
++
++		vreg_l10c_0p8: ldo10 {
++			regulator-min-microvolt = <720000>;
++			regulator-max-microvolt = <1050000>;
++		};
++
++		vreg_l11c_2p8: ldo11 {
++			regulator-min-microvolt = <2800000>;
++			regulator-max-microvolt = <3544000>;
++		};
++
++		vreg_l12c_1p8: ldo12 {
++			regulator-min-microvolt = <1650000>;
++			regulator-max-microvolt = <2000000>;
++		};
++
++		vreg_l13c_3p0: ldo13 {
++			regulator-min-microvolt = <2700000>;
++			regulator-max-microvolt = <3544000>;
++		};
++
++		vreg_bob: bob {
++			regulator-min-microvolt = <3008000>;
++			regulator-max-microvolt = <3960000>;
++		};
++	};
++
++	pmr735a-regulators {
++		compatible = "qcom,pmr735a-rpmh-regulators";
++		qcom,pmic-id = "e";
++
++		vreg_l2e_1p2: ldo2 {
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1200000>;
++		};
++
++		vreg_l3e_0p9: ldo3 {
++			regulator-min-microvolt = <912000>;
++			regulator-max-microvolt = <1020000>;
++		};
++
++		vreg_l4e_1p7: ldo4 {
++			regulator-min-microvolt = <1776000>;
++			regulator-max-microvolt = <1890000>;
++		};
++
++		vreg_l5e_0p8: ldo5 {
++			regulator-min-microvolt = <800000>;
++			regulator-max-microvolt = <800000>;
++		};
++
++		vreg_l6e_0p8: ldo6 {
++			regulator-min-microvolt = <480000>;
++			regulator-max-microvolt = <904000>;
++		};
++	};
 +};
 +
-+static const struct rpmh_vreg_init_data pmr735a_vreg_data[] = {
-+	RPMH_VREG("smps1",  "smp%s1",  &pmic5_ftsmps520, "vdd-s1"),
-+	RPMH_VREG("smps2",  "smp%s2",  &pmic5_ftsmps520, "vdd-s2"),
-+	RPMH_VREG("smps3",  "smp%s3",  &pmic5_hfsmps510, "vdd-s3"),
-+	RPMH_VREG("ldo1",   "ldo%s1",  &pmic5_nldo,      "vdd-l1-l2"),
-+	RPMH_VREG("ldo2",   "ldo%s2",  &pmic5_nldo,      "vdd-l1-l2"),
-+	RPMH_VREG("ldo3",   "ldo%s3",  &pmic5_nldo,      "vdd-l3"),
-+	RPMH_VREG("ldo4",   "ldo%s4",  &pmic5_pldo_lv,   "vdd-l4"),
-+	RPMH_VREG("ldo5",   "ldo%s5",  &pmic5_nldo,      "vdd-l5-l6"),
-+	RPMH_VREG("ldo6",   "ldo%s6",  &pmic5_nldo,      "vdd-l5-l6"),
-+	RPMH_VREG("ldo7",   "ldo%s7",  &pmic5_pldo,      "vdd-l7-bob"),
-+};
-+
- static int rpmh_regulator_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
-@@ -1136,6 +1179,14 @@ static const struct of_device_id __maybe_unused rpmh_regulator_match_table[] = {
- 		.compatible = "qcom,pmx55-rpmh-regulators",
- 		.data = pmx55_vreg_data,
- 	},
-+	{
-+		.compatible = "qcom,pm7325-rpmh-regulators",
-+		.data = pm7325_vreg_data,
-+	},
-+	{
-+		.compatible = "qcom,pmr735a-rpmh-regulators",
-+		.data = pmr735a_vreg_data,
-+	},
- 	{}
+ &qupv3_id_0 {
+ 	status = "okay";
  };
- MODULE_DEVICE_TABLE(of, rpmh_regulator_match_table);
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
 of Code Aurora Forum, hosted by The Linux Foundation
