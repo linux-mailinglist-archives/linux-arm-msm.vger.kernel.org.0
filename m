@@ -2,26 +2,26 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B226933B5E1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 14:56:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D3EE133B5E4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 14:56:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231697AbhCONzo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Mar 2021 09:55:44 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:52991 "EHLO
+        id S229803AbhCONzp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Mar 2021 09:55:45 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:30821 "EHLO
         alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231722AbhCONzL (ORCPT
+        with ESMTP id S229675AbhCONzN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Mar 2021 09:55:11 -0400
+        Mon, 15 Mar 2021 09:55:13 -0400
 Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 15 Mar 2021 06:55:11 -0700
+  by alexa-out.qualcomm.com with ESMTP; 15 Mar 2021 06:55:12 -0700
 X-QCInternal: smtphost
 Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 15 Mar 2021 06:55:09 -0700
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 15 Mar 2021 06:55:11 -0700
 X-QCInternal: smtphost
 Received: from c-skakit-linux.ap.qualcomm.com (HELO c-skakit-linux.qualcomm.com) ([10.242.51.242])
   by ironmsg01-blr.qualcomm.com with ESMTP; 15 Mar 2021 19:24:34 +0530
 Received: by c-skakit-linux.qualcomm.com (Postfix, from userid 2344709)
-        id 324FB36CC; Mon, 15 Mar 2021 19:24:33 +0530 (IST)
+        id 478D116AC; Mon, 15 Mar 2021 19:24:33 +0530 (IST)
 From:   satya priya <skakit@codeaurora.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>
@@ -32,38 +32,47 @@ Cc:     Liam Girdwood <lgirdwood@gmail.com>,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
         kgunda@codeaurora.org, David Collins <collinsd@codeaurora.org>,
         satya priya <skakit@codeaurora.org>
-Subject: [PATCH V2 0/5] Add PM7325/PM8350C/PMR735A regulator support
-Date:   Mon, 15 Mar 2021 19:24:09 +0530
-Message-Id: <1615816454-1733-1-git-send-email-skakit@codeaurora.org>
+Subject: [PATCH V2 1/5] regulator: qcom-rpmh: Add pmic5_ftsmps520 buck
+Date:   Mon, 15 Mar 2021 19:24:10 +0530
+Message-Id: <1615816454-1733-2-git-send-email-skakit@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1615816454-1733-1-git-send-email-skakit@codeaurora.org>
+References: <1615816454-1733-1-git-send-email-skakit@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Below patches are already picked
-[3/7] regulator: qcom-rpmh: Correct the pmic5_hfsmps515 buck
-[6/7] regulator: qcom-rpmh: Use correct buck for S1C regulator
+Add pmic5_ftsmps520 buck as this is required for PM7325
+and PMR735A PMICs.
 
-Sending V2 with remaining patches after few corrections/comments answered.
+Signed-off-by: satya priya <skakit@codeaurora.org>
+---
+Changes in V2:
+ - No change.
 
-This series is dependent on below series which adds DT files for SC7280 SoC
-https://lore.kernel.org/patchwork/project/lkml/list/?series=488871
+ drivers/regulator/qcom-rpmh-regulator.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-satya priya (5):
-  regulator: qcom-rpmh: Add pmic5_ftsmps520 buck
-  regulator: qcom-rpmh: Add PM7325/PMR735A regulator support
-  arm64: dts: qcom: sc7280: Add RPMh regulators for sc7280-idp
-  dt-bindings: regulator: Convert regulator bindings to YAML format
-  dt-bindings: regulator: Add compatibles for PM7325/PMR735A
-
- .../bindings/regulator/qcom,rpmh-regulator.txt     | 180 -----------------
- .../bindings/regulator/qcom,rpmh-regulator.yaml    | 162 ++++++++++++++++
- arch/arm64/boot/dts/qcom/sc7280-idp.dts            | 212 +++++++++++++++++++++
- drivers/regulator/qcom-rpmh-regulator.c            |  62 +++++-
- 4 files changed, 435 insertions(+), 181 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt
- create mode 100644 Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
-
+diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
+index 79a554f..9471890 100644
+--- a/drivers/regulator/qcom-rpmh-regulator.c
++++ b/drivers/regulator/qcom-rpmh-regulator.c
+@@ -723,6 +723,15 @@ static const struct rpmh_vreg_hw_data pmic5_ftsmps510 = {
+ 	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
+ };
+ 
++static const struct rpmh_vreg_hw_data pmic5_ftsmps520 = {
++	.regulator_type = VRM,
++	.ops = &rpmh_regulator_vrm_ops,
++	.voltage_range = REGULATOR_LINEAR_RANGE(300000, 0, 263, 4000),
++	.n_voltages = 264,
++	.pmic_mode_map = pmic_mode_map_pmic5_smps,
++	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
++};
++
+ static const struct rpmh_vreg_hw_data pmic5_hfsmps515 = {
+ 	.regulator_type = VRM,
+ 	.ops = &rpmh_regulator_vrm_ops,
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
 of Code Aurora Forum, hosted by The Linux Foundation
