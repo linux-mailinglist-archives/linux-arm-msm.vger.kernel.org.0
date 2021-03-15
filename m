@@ -2,88 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D553133C14C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 17:12:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B761233C16D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 17:16:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230389AbhCOQLr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Mar 2021 12:11:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45272 "EHLO
+        id S229854AbhCOQQD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Mar 2021 12:16:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230476AbhCOQLk (ORCPT
+        with ESMTP id S229784AbhCOQPp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Mar 2021 12:11:40 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F2F8C06174A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 09:11:40 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id k9so57719560lfo.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 09:11:40 -0700 (PDT)
+        Mon, 15 Mar 2021 12:15:45 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D198C06174A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 09:15:45 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id 16so16942199ljc.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 09:15:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=UgG45DnJN104mZ62fCUJfdTRKEZH2usLGZgxXrdhPOk=;
-        b=mUHiqeGQTBG3ZQjO21JCi06F5j/g81EQVWqMr0jkJFUuw2m8VNQYSIRrmXXJtvbL9s
-         ymWakSrLdOt+OEtPOTx8bevz3/9tjkNwkZXJZkyaF5iExDAt3WutqrcPFzmcyDNhUSYu
-         dD4LXIKry78u6jcezBwr+6gI8MHTm8Zvjc3F674jKislE2BFCEiQe6wwceID/aaBQPXA
-         Mb8g2UWfuPFniTI4KR0bq56FbE+hlnRCW7v6WR2YUNBjfEkffWza+dtYk/sKWTiphGvW
-         BaYYQrA0zVQpg8ZwMhzS7ZQ5AgoTmsqyxBMtkCn8ZmahzLXBWcTmkL0Anl69lQDC2uKl
-         pCkQ==
+        bh=whezGPX07b3sUPoOpaXH07SshdzQOy4tuu1n0282U3Y=;
+        b=IkUaPU2LsXGiZ9t3R2YxU0xvXyAIf4MJNET4D3qz0haaeS6DDR8//ZDuN23aw74Tod
+         C6ks7QK1cXE8kzlhgAH6AJ+aYqgUmcMJUmWd4fUA51YFa9gRHB0zGLsY2uPT/A2zmHfv
+         k6nZny1yCduUwtvvu3wpc599sGC7hxaA5Bb8uuU+Q/9PIreBdRhbV7g8kuw3Yf3ohovR
+         4Zm4eOOu6EYB8dIX7nQDzUusdTqIjnHwV3eLYsoBuVbXQC/Dk48rHHrWQivhYhRZfNJa
+         whFia53i3rwrQuP4WP9CdYpW17gmmkxX2TkancRpN1seQQa2X7wX29FoMCk7nqYJ5B/a
+         PFiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=UgG45DnJN104mZ62fCUJfdTRKEZH2usLGZgxXrdhPOk=;
-        b=iRr+QO2vqV92NCjhWdfpjyJ3tAvIkilFYvyuz+XBL0Fdf50iZ+M21+3ttpeGo51Z3q
-         C8UD6uhrkxnktHrI8bfnF8LLGTiY1NhPylCsSuXqURfr0TU109DpLYeA4NjwFWssOjyJ
-         +Cs0rWeQVaytt2tXiLQvMtfk/EQ8c8C5wmhvpAmbOvMSUb1WY7ClKjgHRvm1UW/zGSLf
-         iJb6oZzgedxJwqJizs4suSmATaNZ3DHhWgMxcXU1O9Nkpq1B7exPfUZA8oiAlyTq8YWD
-         F8y8OdCvfLNmtW6tQ3bTZIOIRIl1niCi2DLETdIbHxNn6VIU9H4GqT70y3dvUdGPI+AB
-         GpAQ==
-X-Gm-Message-State: AOAM532gL0phJDKCEXCN3ka6dPcmaKPUTuk0SGWrXnJk5nqIMNav2Dg9
-        6J6DNh6s29QkOzIItUrXL3eJ9N/vCtv+mJtEXywSxxpUSOiOeZuo
-X-Google-Smtp-Source: ABdhPJzSDII6RQrdm7IFyXHzh8DcTyH4MHf9A8Ug/h2fSz4PeMuCazMBlocNWblZcJ7uktAZ1fBY4YSWsRmi0FPulU4=
-X-Received: by 2002:a19:4c08:: with SMTP id z8mr8010084lfa.157.1615824698726;
- Mon, 15 Mar 2021 09:11:38 -0700 (PDT)
+        bh=whezGPX07b3sUPoOpaXH07SshdzQOy4tuu1n0282U3Y=;
+        b=mc33aDZvYtRMhcN4nu/CqzPmjpbe2+N4+FevOEcW4Wb8rMpTPhb//aYCCxxMnpBFsk
+         o1xQbmO41A2B16hwsY5l6czXsO0xRyDGceGtWcaU61ch4oBYDpEixFmaa6f+PONuL9kz
+         JEXNWKfcVznCk63wOB4S8mlS7AAIF74xA1fhLupRY0ip0/OTRPGe7NkGZ4dx35c3fCLe
+         2gYpOxMAaQ+9xvGYtuMFz1vG1yfvJDg7xrtoFnpLvfGgSUfc0ef5Hl8R4V91N1QM+5pp
+         QTVeDU07hQ9m3t7qjwwaQZVTRgVy0Fajz9ehlQl22UqiT0RD4MX9KwueJ437VCHwWe3S
+         sflg==
+X-Gm-Message-State: AOAM533jmgpnur8EdvSMeOyp9Dn0mbpHXEydY56qk3j08ZrpRYZZ5/Ic
+        bUHu7DZ4fgIWw9eM9xfmr+k30qzb1R348EK/6o8k5NUXTs+Ncu6R
+X-Google-Smtp-Source: ABdhPJwlxhBzJkkcvbojy4usCRwaY3bkBsWbXm6KSAwvyMDTAsyGhJSQGbZPJqu/Ax4MeK78p7DDeRHVotyxH9Jwr3k=
+X-Received: by 2002:a2e:9cb:: with SMTP id 194mr10965708ljj.438.1615824943587;
+ Mon, 15 Mar 2021 09:15:43 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210303033106.549-1-shawn.guo@linaro.org> <20210303033106.549-2-shawn.guo@linaro.org>
- <YEKl7GbxBhui4eoT@builder.lan> <20210306012829.GL17424@dragon>
- <YELhMmDndOTSSJJO@builder.lan> <20210306080049.GM17424@dragon>
- <YEkOaK+UiLy8kSDu@builder.lan> <20210311011951.GT17424@dragon> <YEpLHSRKt651B6FP@builder.lan>
-In-Reply-To: <YEpLHSRKt651B6FP@builder.lan>
+References: <20210312034218.3324410-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20210312034218.3324410-1-bjorn.andersson@linaro.org>
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Mon, 15 Mar 2021 17:11:27 +0100
-Message-ID: <CACRpkdYNmT6c+RTLQAO1UEwWWWXHarYqTG4xnq8iR4i=rDfYfQ@mail.gmail.com>
-Subject: Re: [PATCH 1/4] arm64: dts: qcom: sdm845: fix number of pins in 'gpio-ranges'
+Date:   Mon, 15 Mar 2021 17:15:32 +0100
+Message-ID: <CACRpkdZOFGVnOY6wQtncKW8zdxqr1nicB9rRef+QffiFTOCaRQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] pinctrl: qcom: sm8350: add GPIO wakeup interrupt map
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Shawn Guo <shawn.guo@linaro.org>,
+Cc:     Andy Gross <agross@kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
         "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
         <devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
         "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Evan Green <evgreen@chromium.org>
+        Vinod Koul <vinod.koul@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 11, 2021 at 5:53 PM Bjorn Andersson
+On Fri, Mar 12, 2021 at 4:41 AM Bjorn Andersson
 <bjorn.andersson@linaro.org> wrote:
-> On Wed 10 Mar 19:19 CST 2021, Shawn Guo wrote:
 
-> > > But we don't have a "reset" GPIO specified in the ACPI node, or you mean
-> > > with the introduction of .set_config DT no longer works?
-> >
-> > Yes, DT stops working because of the mismatch between
-> > msm_pinctrl_soc_data.ngpio and gpio-ranges.
-> >
+> From: Lina Iyer <ilina@codeaurora.org>
 >
-> So what you're saying is that when Linus merged the .set_config patch
-> yesterday he broke storage on every single Qualcomm device?
+> GPIOs that can be configured as wakeup sources, have their interrupt
+> lines routed to PDC interrupt controller. Provide the interrupt map of
+> the GPIO to its wakeup capable interrupt parent.
+>
+> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-I took out that patch for now.
-
-Maybe we can keep all the stuff in one series if it has strict
-dependencies?
+This patch 1/2 applied to the pin control tree.
+Please take the DTS patch into the qcom SoC tree!
 
 Yours,
 Linus Walleij
