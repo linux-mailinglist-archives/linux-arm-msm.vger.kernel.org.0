@@ -2,138 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C39533DD85
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Mar 2021 20:29:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 43A7433DE40
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Mar 2021 20:53:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236918AbhCPT3M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Mar 2021 15:29:12 -0400
-Received: from m42-2.mailgun.net ([69.72.42.2]:47298 "EHLO m42-2.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S240445AbhCPT2z (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Mar 2021 15:28:55 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1615922932; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=it/42LkBB9Nfwqq5ksT70ob4KuhBVB5LnojuZobYYw8=; b=svgqVfZ3TLftQtwOP6MRKtj/dBj58liQrE0T+JHm/YcolTMZwkdXd9rEwm9fS4lPXWABfFk/
- GePE5TQRTRq4pK8G9RMGSzqVUhTobZLblh2v6hCo9Y5pcSsqPA+jz5ugoCJKHlrTt+EYHxk1
- SFUUvsInpuaSohkb/PUOMB1LSAQ=
-X-Mailgun-Sending-Ip: 69.72.42.2
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 605106ec6dc1045b7ded3138 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 16 Mar 2021 19:28:44
- GMT
-Sender: jhugo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C1A48C433ED; Tue, 16 Mar 2021 19:28:43 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A382CC43461;
-        Tue, 16 Mar 2021 19:28:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A382CC43461
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH v2 RESEND] bus: mhi: core: Wait for ready state after
- reset
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1615408918-7242-1-git-send-email-jhugo@codeaurora.org>
- <20210316061433.GG1798@thinkpad>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <9a1544fd-aa46-0410-41aa-a18d62e2bc1a@codeaurora.org>
-Date:   Tue, 16 Mar 2021 13:28:41 -0600
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.1
+        id S240739AbhCPTxD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Mar 2021 15:53:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37442 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240762AbhCPTwa (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 16 Mar 2021 15:52:30 -0400
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5019BC061756
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 12:52:30 -0700 (PDT)
+Received: by mail-pl1-x630.google.com with SMTP id f8so3950323plg.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 12:52:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=faqEscETZSrulFIYYb0jYXjyqjYLAtUQhOAj+Eq6L58=;
+        b=QROtZwY30S3rnLQyjWUfx7axM5L4YmKHg48BV9XAqfriiSXwNfo8MBUdwI4rc93tls
+         J9uTptxJH41Xo8BWbEa8PBBTibvHLTwCOCG2GR7K6eDIKOx9NAr275DDYVkjLa6epeOQ
+         fcf6aOsuwSky2knXWvm4Dz/1LRFe6QEw2HfGA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=faqEscETZSrulFIYYb0jYXjyqjYLAtUQhOAj+Eq6L58=;
+        b=CFnFsepZb9Ta5vhr4YaWhNLaYXW8HR/FrwKTUU9aL4KWkKypSc3zRSE6FR0towLbKG
+         YbAfu4IZECEWUJ5YsArPj8Fily0xTvo4hQfqEKUZOc/D4QaVlGcY1ZWFoVI2nns541cn
+         ziQF6pgZ7Yc4r+wIEvo5qMmi3jZG1b1W0EUp5A5OOXyqunMzGtsFdmeLtwnRrjX5rreg
+         7H86NzPBvrVzTyPFIzMGdwgK73B8ZU88ZKB+zOJy3UEd3p5KIxMDCxFKoQ0mbjAhV+A+
+         8VZa7LJIGPzb5p1QTm9N6WgmDSy3RwJY3W9iB2kTjKBF0uSJ1xkh9Ch8IIP+61AK5tB4
+         qPtg==
+X-Gm-Message-State: AOAM531WvomsveU6mRF44sSRMtpNwDiaLir6a1Wc+wZ+axSULT0s7OJT
+        7nQjPJh2Jii+0LJd7sWR/sPYeg==
+X-Google-Smtp-Source: ABdhPJxAnOk6JambfDEnqQzor6Xe+Gu7aky1OLCVD+xQPfi53DULiWa/GGdpDVhUE7i9hd0Hnue97A==
+X-Received: by 2002:a17:903:22d0:b029:e6:887d:b702 with SMTP id y16-20020a17090322d0b02900e6887db702mr1120399plg.32.1615924349763;
+        Tue, 16 Mar 2021 12:52:29 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:b471:7d:bf21:d7dd])
+        by smtp.gmail.com with UTF8SMTPSA id p25sm17698016pfe.100.2021.03.16.12.52.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Mar 2021 12:52:29 -0700 (PDT)
+Date:   Tue, 16 Mar 2021 12:52:27 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     satya priya <skakit@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, rnayak@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, kgunda@codeaurora.org,
+        David Collins <collinsd@codeaurora.org>
+Subject: Re: [PATCH V2 2/5] regulator: qcom-rpmh: Add PM7325/PMR735A
+ regulator support
+Message-ID: <YFEMezCRjK2W6THZ@google.com>
+References: <1615816454-1733-1-git-send-email-skakit@codeaurora.org>
+ <1615816454-1733-3-git-send-email-skakit@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20210316061433.GG1798@thinkpad>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1615816454-1733-3-git-send-email-skakit@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/16/2021 12:14 AM, Manivannan Sadhasivam wrote:
-> On Wed, Mar 10, 2021 at 01:41:58PM -0700, Jeffrey Hugo wrote:
->> After the device has signaled the end of reset by clearing the reset bit,
->> it will automatically reinit MHI and the internal device structures.  Once
->> That is done, the device will signal it has entered the ready state.
->>
->> Signaling the ready state involves sending an interrupt (MSI) to the host
->> which might cause IOMMU faults if it occurs at the wrong time.
->>
->> If the controller is being powered down, and possibly removed, then the
->> reset flow would only wait for the end of reset.  At which point, the host
->> and device would start a race.  The host may complete its reset work, and
->> remove the interrupt handler, which would cause the interrupt to be
->> disabled in the IOMMU.  If that occurs before the device signals the ready
->> state, then the IOMMU will fault since it blocked an interrupt.  While
->> harmless, the fault would appear like a serious issue has occurred so let's
->> silence it by making sure the device hits the ready state before the host
->> completes its reset processing.
->>
->> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
->> ---
->>   drivers/bus/mhi/core/pm.c | 17 ++++++++++++++++-
->>   1 file changed, 16 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
->> index adb0e80..414da4f 100644
->> --- a/drivers/bus/mhi/core/pm.c
->> +++ b/drivers/bus/mhi/core/pm.c
->> @@ -467,7 +467,7 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
->>   
->>   	/* Trigger MHI RESET so that the device will not access host memory */
->>   	if (!MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state)) {
->> -		u32 in_reset = -1;
->> +		u32 in_reset = -1, ready = 0;
->>   		unsigned long timeout = msecs_to_jiffies(mhi_cntrl->timeout_ms);
->>   
->>   		dev_dbg(dev, "Triggering MHI Reset in device\n");
->> @@ -490,6 +490,21 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
->>   		 * hence re-program it
->>   		 */
->>   		mhi_write_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_INTVEC, 0);
->> +
->> +		if (!MHI_IN_PBL(mhi_get_exec_env(mhi_cntrl))) {
->> +			/* wait for ready to be set */
->> +			ret = wait_event_timeout(mhi_cntrl->state_event,
->> +						 mhi_read_reg_field(mhi_cntrl,
->> +							mhi_cntrl->regs,
->> +							MHISTATUS,
->> +							MHISTATUS_READY_MASK,
->> +							MHISTATUS_READY_SHIFT,
->> +							&ready)
->> +						 || ready, timeout);
->> +			if (!ret || !ready)
->> +				dev_warn(dev,
->> +					"Device failed to enter READY state\n");
+On Mon, Mar 15, 2021 at 07:24:11PM +0530, satya priya wrote:
+> Add support for PM7325/PMR735A regulators. This ensures
+> that consumers are able to modify the physical state of PMIC
+> regulators.
 > 
-> Wouldn't dev_err be more appropriate here provided that we might get IOMMU fault
-> anytime soon?
+> Signed-off-by: satya priya <skakit@codeaurora.org>
+> ---
+> Changes in V2:
+>  - No change.
+> 
+>  drivers/regulator/qcom-rpmh-regulator.c | 53 ++++++++++++++++++++++++++++++++-
+>  1 file changed, 52 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
+> index 9471890..3509523 100644
+> --- a/drivers/regulator/qcom-rpmh-regulator.c
+> +++ b/drivers/regulator/qcom-rpmh-regulator.c
+> @@ -1,5 +1,5 @@
+>  // SPDX-License-Identifier: GPL-2.0
+> -// Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
+> +// Copyright (c) 2018-2021, The Linux Foundation. All rights reserved.
+>  
+>  #define pr_fmt(fmt) "%s: " fmt, __func__
+>  
+> @@ -1042,6 +1042,49 @@ static const struct rpmh_vreg_init_data pmx55_vreg_data[] = {
+>  	{},
+>  };
+>  
+> +static const struct rpmh_vreg_init_data pm7325_vreg_data[] = {
+> +	RPMH_VREG("smps1",  "smp%s1",  &pmic5_hfsmps510, "vdd-s1"),
+> +	RPMH_VREG("smps2",  "smp%s2",  &pmic5_ftsmps520, "vdd-s2"),
+> +	RPMH_VREG("smps3",  "smp%s3",  &pmic5_ftsmps520, "vdd-s3"),
+> +	RPMH_VREG("smps4",  "smp%s4",  &pmic5_ftsmps520, "vdd-s4"),
+> +	RPMH_VREG("smps5",  "smp%s5",  &pmic5_ftsmps520, "vdd-s5"),
+> +	RPMH_VREG("smps6",  "smp%s6",  &pmic5_ftsmps520, "vdd-s6"),
+> +	RPMH_VREG("smps7",  "smp%s7",  &pmic5_ftsmps520, "vdd-s7"),
+> +	RPMH_VREG("smps8",  "smp%s8",  &pmic5_hfsmps510, "vdd-s8"),
+> +	RPMH_VREG("ldo1",   "ldo%s1",  &pmic5_nldo,      "vdd-l1-l4-l12-l15"),
+> +	RPMH_VREG("ldo2",   "ldo%s2",  &pmic5_pldo,      "vdd-l2-l7"),
+> +	RPMH_VREG("ldo3",   "ldo%s3",  &pmic5_nldo,      "vdd-l3"),
+> +	RPMH_VREG("ldo4",   "ldo%s4",  &pmic5_nldo,      "vdd-l1-l4-l12-l15"),
+> +	RPMH_VREG("ldo5",   "ldo%s5",  &pmic5_nldo,      "vdd-l5"),
+> +	RPMH_VREG("ldo6",   "ldo%s6",  &pmic5_nldo,      "vdd-l6-l9-l10"),
+> +	RPMH_VREG("ldo7",   "ldo%s7",  &pmic5_pldo,      "vdd-l2-l7"),
+> +	RPMH_VREG("ldo8",   "ldo%s8",  &pmic5_nldo,      "vdd-l8"),
+> +	RPMH_VREG("ldo9",   "ldo%s9",  &pmic5_nldo,      "vdd-l6-l9-l10"),
+> +	RPMH_VREG("ldo10",  "ldo%s10", &pmic5_nldo,      "vdd-l6-l9-l10"),
+> +	RPMH_VREG("ldo11",  "ldo%s11", &pmic5_pldo_lv,   "vdd-l11-l17-l18-l19"),
+> +	RPMH_VREG("ldo12",  "ldo%s12", &pmic5_nldo,      "vdd-l1-l4-l12-l15"),
+> +	RPMH_VREG("ldo13",  "ldo%s13", &pmic5_nldo,      "vdd-l13"),
+> +	RPMH_VREG("ldo14",  "ldo%s14", &pmic5_nldo,      "vdd-l14-l16"),
+> +	RPMH_VREG("ldo15",  "ldo%s15", &pmic5_nldo,      "vdd-l1-l4-l12-l15"),
+> +	RPMH_VREG("ldo16",  "ldo%s16", &pmic5_nldo,      "vdd-l14-l16"),
+> +	RPMH_VREG("ldo17",  "ldo%s17", &pmic5_pldo_lv,   "vdd-l11-l17-l18-l19"),
+> +	RPMH_VREG("ldo18",  "ldo%s18", &pmic5_pldo_lv,   "vdd-l11-l17-l18-l19"),
+> +	RPMH_VREG("ldo19",  "ldo%s19", &pmic5_pldo_lv,   "vdd-l11-l17-l18-l19"),
+> +};
 
-I supposed.  Didn't feel like a "true" error because nothing has 
-actually failed, the chance of the IOMMU fault is low, and I couldn't 
-enumerate what would be the expected action for the system user to take 
-if they saw this as an error.
-
-I don't have a particularly strong opinion one way or the other.  I 
-figured warn was the more conservative option here.
-
-Will change.
-
--- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+Could you help me understand these funky supply names? I see other RPMh
+regulators also have them, so they are probably totally fine, but it
+isn't clear to me what exactly the names represent. Apparently the LDO
+itself is in the supply name, but many LDOs also list others.
