@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D0C6133CDE4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Mar 2021 07:17:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2747833CDE7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Mar 2021 07:19:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233182AbhCPGRO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Mar 2021 02:17:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58310 "EHLO
+        id S229867AbhCPGSt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Mar 2021 02:18:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232305AbhCPGQv (ORCPT
+        with ESMTP id S229811AbhCPGSs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Mar 2021 02:16:51 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B654CC06174A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 23:16:51 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id r16so6783864pfh.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 23:16:51 -0700 (PDT)
+        Tue, 16 Mar 2021 02:18:48 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22337C061756
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 23:18:48 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id d23so13239322plq.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 23:18:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=7h2yXhFof54YGjMWDbaJozcTXrsSdqE/dyDBMyKGJ5Y=;
-        b=QbzsDrIYg7eHAgh4pGB4AAmMnT1WVG9zZnAMCz9/f+XPsbeRlJvMiFQl0L3v3X0d+d
-         6DllluutMlvH72r6ur/Wj4Mcl2cusydCWFJzfajjR5MUeK0gAYPoj3dGbCznqXe7potY
-         j9iJhkostX06gSzSk2SvjNVshl8gTDHdVSmmn3i8XZnK3Tf+QlkgwsyInEwIZDDiOw/M
-         IUYaJjw6YC2slzc+QiVQKeyDGlFcPq0eSIrJkQxoaa6bDtOwhbLm43yq+VLOyGItARVG
-         9rn/gf5sZkstLMzwlcUuyFy1agBrcZRRK/RxcpENwQsVhJmMAnZjbGCg8mLp5rxXPKhk
-         k1Wg==
+        bh=TguaXqmd8x2or75hALM9SNABakfsKUxz8lHQoAaEArU=;
+        b=Mj4QyqhV3XdiAqA4SjpUsa5Tq5JsJWiCZkqHI6b+KDlrVz8tR2Nsy1lhorqh9/sxcG
+         BQfxwsPZrge3xBoS6WdenSEkCx4/tQS1+wGVfMzng/SjMAs4C8zvEJJGwtIVXpK5yj7m
+         j69KRo6wN7A7qXntRCEpDF1RhN5cvRe5SwjAazXBw/4O4K6ITDjcfhbpzicbsNCYXQwE
+         EzIo177kEKnibzH2Rxt3YoHtwetg+XjFUnUKW/BYSpCGn22bo8HIKLAlJ+N10Ndh0R4E
+         bAgEsoQYuiye/ih5jS+yz6tzYokPqycjCXOqkolf+o6gKpEvG0Qk9rS6aSVwQ4+zKoCx
+         iYUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=7h2yXhFof54YGjMWDbaJozcTXrsSdqE/dyDBMyKGJ5Y=;
-        b=AW7fe95e+L3uFvHNk6+g7Exi2lnm96IcPIEfx1VzXj94JFsQwSFyH1ImShWo4+lNnE
-         OtryLiyM9CrOQg1JBdSDUczWvDRY1kuvS4EZ6tGHubJSl3EKN0Dv5LKxmBsNQffq8WEB
-         rczawdVtSuc5319gprw+0BG5q+ZkqW/Y7fyY4QbtqygNH9MT1z9c0o8Wjg0E+eLOWFLH
-         IE1h77Dh/tDKKjNNHkPFnETodsC72hV903D4jDuFdfkcs9u0+oQ4NCMWB639rNjb1B3W
-         BT8Gw7cvlmVXybc2ncwSyFXA6rL8k0QPQuZxRij2YpEWmBqDoaNEcHPBsRyxd1YO9lCi
-         7UIg==
-X-Gm-Message-State: AOAM5311RKnAxpQh0WKK9motnJVYdv9VfJLDZcCNPxvcQT6oKbB7uW3m
-        CGkVMO/K7B5g63sQG6ANhpGQ
-X-Google-Smtp-Source: ABdhPJzbu3uIbNoqRjsPpFLMtZloQO2Rh2lDCvmacc2qKHwbpCQkpacd7bG1V4Ba8EAiFg3WpqBMvw==
-X-Received: by 2002:a63:e22:: with SMTP id d34mr2552544pgl.264.1615875411306;
-        Mon, 15 Mar 2021 23:16:51 -0700 (PDT)
+        bh=TguaXqmd8x2or75hALM9SNABakfsKUxz8lHQoAaEArU=;
+        b=EOPMhPgMotnUrxCPS2EbgfZK/IUTTRGzuMldduqRU586A3mOzd7BgnByDp1tRyEssv
+         lgzJGxV00ixSpCGt5UANPXOgsRLI9WSb0G4gcdRXIERMFOTnij8kCdyBX9A8VHKUWWb4
+         gNldv1SL0FPU79Q4nmiYPQkV3PaVAWjFUuzqy6uVhVZ5ytQjArj+PDcr9A/aUU3kx798
+         bgIN1+ZFiDcBUghEdkpJ1xkG626zWL+RYHfMtA4VP/JLWFncidnnM+bzSh4y9YFVNPvC
+         qNFMN1DKosbVMaGMkxTjL+594uT8Fz22ipyGv/dtW4HVHf7FhpyFdaRry1Hp/ETp50wu
+         E3hg==
+X-Gm-Message-State: AOAM5300uW8OZX0CwYfVo4Es2y/UkPoHB86e/koidEntCNnASnBRX7Wc
+        VP5FQlvaurcBy2qSg5DMrud3
+X-Google-Smtp-Source: ABdhPJyPt9iAovD241Wypbx2549tYfVbiI0PbF3mXX5I55qXsahZMaDBSmHXsW27iSbo9uUtYYHiyQ==
+X-Received: by 2002:a17:90a:8a8b:: with SMTP id x11mr3144751pjn.151.1615875527679;
+        Mon, 15 Mar 2021 23:18:47 -0700 (PDT)
 Received: from thinkpad ([103.66.79.72])
-        by smtp.gmail.com with ESMTPSA id gk12sm1545108pjb.44.2021.03.15.23.16.48
+        by smtp.gmail.com with ESMTPSA id v3sm14865198pff.217.2021.03.15.23.18.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Mar 2021 23:16:50 -0700 (PDT)
-Date:   Tue, 16 Mar 2021 11:46:46 +0530
+        Mon, 15 Mar 2021 23:18:47 -0700 (PDT)
+Date:   Tue, 16 Mar 2021 11:48:43 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Jeffrey Hugo <jhugo@codeaurora.org>
 Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
 Subject: Re: [PATCH v3] bus: mhi: core: Check state before processing
  power_down
-Message-ID: <20210316061646.GH1798@thinkpad>
+Message-ID: <20210316061843.GI1798@thinkpad>
 References: <1615409365-8165-1-git-send-email-jhugo@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -73,7 +73,7 @@ On Wed, Mar 10, 2021 at 01:49:25PM -0700, Jeffrey Hugo wrote:
 > 
 > Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Applied to mhi-next!
 
 Thanks,
 Mani
