@@ -2,146 +2,223 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B472D33D0E2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Mar 2021 10:34:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 97BE133D0EE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Mar 2021 10:37:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231719AbhCPJdi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Mar 2021 05:33:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44144 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230469AbhCPJd2 (ORCPT
+        id S233873AbhCPJhW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Mar 2021 05:37:22 -0400
+Received: from lb2-smtp-cloud7.xs4all.net ([194.109.24.28]:58883 "EHLO
+        lb2-smtp-cloud7.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S233767AbhCPJg7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Mar 2021 05:33:28 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98FACC061756
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 02:33:27 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id x13so7052838wrs.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 02:33:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=et+1ZvQ1+gasZwQhD3sG15pwfg1DAlDgsMAObHI9SQI=;
-        b=k99Do/ibQk6c/NeYMaFi2pLZspwXBRoXXnd+ayQ866j02kvxP0Dy61E3vKnhUHIpja
-         H2Cxt1DZF4Isz1Wd5Ks+0N4EbahzVdyAV4nL3LOuxdDzRw/jmeEpKzIUqFllHM4Fwp1q
-         HGbSvdv+hO1csv2Yb8v1m2z/4ipV07iilUv7aCouBpnwqODHCRNXmssR8RkHBDMtnGiG
-         1ksg2nSfKlp40tyklN/Dca+BIwmLb3TBnxvT9h10Q+/FTYSyoUT3sI2U/oXtAfLSsnPW
-         DSNjfejurNhf/X/1V9avo4d5mYsqPBPOqKyP6fGKjpHgx6S+pXfUTrWWXcgQ2BfcLdn4
-         EDHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=et+1ZvQ1+gasZwQhD3sG15pwfg1DAlDgsMAObHI9SQI=;
-        b=EwNjRulKIOzYLs543S+zJxvyMd1jYu4igj2Mx64cT13I6syrp0fL2zWlYSCNRiJimO
-         jYWz5yipSM9LJi3FsBJ7oKStbX1cWvw6AW9KSAueANWkggVusCI8VHEYuDBqdKPRLBLU
-         x21V8bqdtjqnUDmS007DtwKpfUECMQAJ1C26rn4k5MFvtuk5UJcVsCjJg8WUbHPVNMED
-         rAk/EaHZDPEwJo9A3ua7a+vfTPo1oJVPt6sKqRLMuDUtD6sexMaLDxy6ntxn8LrF7jzM
-         +cCmw6idQHOzm8wdlqJw/ssD5ZtoF7luV3fh1n9a/GL+ICF/YzumUYnCtEU8P1AwzDhc
-         TE5A==
-X-Gm-Message-State: AOAM531k+o3CZzkXm/nReRfQHgDHA4Kb9TsewSWZUBcPj8OEAPcsBlJS
-        +HK2hIXgSKCMaXR2upFQK/kt0A==
-X-Google-Smtp-Source: ABdhPJwC7HGrtfYKqXfX6qEl85FnHRO39oFh9Nz9/qnNUfk813kz4MXo5GBFHdlgOiZGGGeuQvqgrA==
-X-Received: by 2002:adf:84e6:: with SMTP id 93mr3678452wrg.376.1615887206246;
-        Tue, 16 Mar 2021 02:33:26 -0700 (PDT)
-Received: from enceladus (ppp-94-64-113-158.home.otenet.gr. [94.64.113.158])
-        by smtp.gmail.com with ESMTPSA id w11sm22899048wrv.88.2021.03.16.02.33.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Mar 2021 02:33:25 -0700 (PDT)
-Date:   Tue, 16 Mar 2021 11:33:23 +0200
-From:   Ilias Apalodimas <ilias.apalodimas@linaro.org>
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Ard Biesheuvel <ardb@kernel.org>,
-        Heinrich Schuchardt <xypron.glpk@gmx.de>,
-        Atish Patra <atish.patra@wdc.com>,
-        Steve McIntyre <steve@einval.com>,
-        Rob Clark <robdclark@gmail.com>,
-        linux-efi <linux-efi@vger.kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Leif Lindholm <leif@nuviainc.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH] efi: stub: override RT_PROP table supported mask based
- on EFI variable
-Message-ID: <YFB7Y0FSSXmPEByF@enceladus>
-References: <20210307110228.GP17424@dragon>
- <CAMj1kXFiqXwCqJE9Wxu-tc3HYSh1qCqPLL_Csc=gW6SOYrweWw@mail.gmail.com>
- <20210309032248.GR17424@dragon>
- <CAF6AEGu6ZpfFK5FnQjtE33kkYL_t63J=yJLeK70_46FaLPq7eQ@mail.gmail.com>
- <CAMj1kXGwhx9Z-JCw2NvWBYtHbzVb=EmJn_Jfd97wGzDYNQG2Lw@mail.gmail.com>
- <20210315031119.GY17424@dragon>
- <CAMj1kXE1mZm2jYwv80FNVh0m6wHEWqq14+jQWnJSUThnX4Eedw@mail.gmail.com>
- <20210316075214.GA32651@dragon>
- <CAMj1kXHfo9AMZEw9btOPCzso85AS+gQdV5ycmyk8wcqfLaRn8Q@mail.gmail.com>
- <20210316090609.GB32651@dragon>
+        Tue, 16 Mar 2021 05:36:59 -0400
+Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
+        by smtp-cloud7.xs4all.net with ESMTPA
+        id M689l0xHB4ywlM68ClAQKM; Tue, 16 Mar 2021 10:36:54 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s2;
+        t=1615887414; bh=tXVjtYh1qnWCnzH2zsvVfBAb1dwXEkt7WykZMDscd0g=;
+        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
+         Subject;
+        b=Vqeg0QMruN2ertgROZvDzgwFCJD5NkqOolPXdB0JzmPlZ1ibLK2RMeDDqgJwQIqCL
+         1kJwtQjb4SrE4PoHdR9YP3X1/LpqopO8Gmuu/N+uH8ody9pu0PG7oKcHgk3O+tT+/O
+         bXAOcFNM8hpwwdHeaQ4L5TsNH/jxd0Evb0Oxu9TxyyShX5L/KZsOy8ci2RmM3RyH5y
+         EfYzUCk/ZhaZtzNYYKhvpO8eIJwuVDRQ+4h7VsEuLvqBHSxkwN/mrgQSEX4jn//U/0
+         iQhPhqwIW3mlevBOOj24nI2KmEDtpu1tYULAQrppIdpYUmLME0ajxGdudkb3tviFPf
+         a5nwNOwincidA==
+Subject: Re: [PATCH v8 09/22] media: camss: Refactor CSID HW version support
+To:     Robert Foss <robert.foss@linaro.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, todor.too@gmail.com,
+        mchehab@kernel.org, robh+dt@kernel.org,
+        angelogioacchino.delregno@somainline.org,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Sakari Ailus <sakari.ailus@iki.fi>,
+        Andrey Konovalov <andrey.konovalov@linaro.org>
+Cc:     Rob Herring <robh@kernel.org>, Tomasz Figa <tfiga@chromium.org>,
+        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
+        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Jonathan Marek <jonathan@marek.ca>
+References: <20210315155942.640889-1-robert.foss@linaro.org>
+ <20210315155942.640889-10-robert.foss@linaro.org>
+From:   Hans Verkuil <hverkuil@xs4all.nl>
+Message-ID: <b06ce7af-4449-fb5c-2920-09ebd5abdf75@xs4all.nl>
+Date:   Tue, 16 Mar 2021 10:36:49 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Firefox/78.0 Thunderbird/78.7.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210316090609.GB32651@dragon>
+In-Reply-To: <20210315155942.640889-10-robert.foss@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfIIjDYU6ZSNsWIq/dGepkDOYuBFz5jmx0QUTXx/K5ZFzVU5BHm97pmEZrW5J2Lmq3pkNDvG+tfqlVC+syz+8IKixMCRzzq2WXE1AZRLoGUZ50gDC5VEs
+ wjPSKVFUX6+LLYCM3ZiGYMuXx6qLh6jlYoJrC/zp9t99DhIX0ASwkVxImXjHfHitmx0qy+ZIm3UGrsjOwsNBmxjL9ChPrjq1t/sK51+npe+2KJ0cnPbmcRn8
+ geO74YRD0VFwP4kji31g8NKkIk+eEU37niqPVa/nObORLOUIs+iTQ9XA2oxyMxN3RVo26MKrshMdnGnV/53tTu4JxHr/NDPi6YgyEhEezFdM1Jm1n19qFM60
+ q4XVdZi4b4QJthx6eIqU4tRsyqPadyedm9VBzRmhoRjT5jOPv9h4QXrPAQbdz8+YP29QXX1fyrkhc8KycY0Em0/s9ys7zBZPlUhmyMi3TWBqvsju2+CTt2N4
+ TIvqkr3hUdTVNVTfZ/pZbtZZuBpkc+WoN+SknyAjXKQpGcCZR62zBUHqG3h8UZMseyI9kp6rPC25dbOZBSzBkrJd4l5FmtH5JvX9N9g1DJ6i3RrS12zZ3x66
+ neaWYFmnZx6et77t75235RM0xaJ86bjM94NESit16QDFDXzrDKsKuIT+AAf01eIKM5x34dmPjDKz9V7H8ZWdz6Ev4lDkQpFwVjbRKemb+1+zVcDi32I3ek1g
+ axnvczdEcAe/yNzpiqa/wLTqOIOfV+i1Zf7LDnsJKvr0PYh0eWZL6pkPSA/nPoy/tpbt0svcFM6J+48qk/QqXNicJGf1hrCd3NEnElmrtpw2SV2eIG5x9Ten
+ O/5fsLH2Oe5zFbXd8VtCtiiRsoVSSTUxE3NkaSDlN37/A6GQftv5sAWxCktjfA==
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Shawn,
-
-> > > > > > So an installer either needs to set the EFI variable, or pass
-> > > > > > efi=novamap on the first boot. Note that there are no arm64 EFI
-> > > > > > systems known where efi=novamap causes problems. In fact, I would
-> > > > > > prefer to stop using SetVirtualAddressMap() altogether, as it does not
-> > > > > > provide any benefit whatsoever. So perhaps we should make efi=novamap
-> > > > > > the default and be done with it.
-> > > > > >
-> > > > > > Broken poweroff is hardly a showstopper for an installer, given that
-> > > > > > we cannot even install GRUB correctly.
-> > > > > >
-> > > > > > In summary, I am more than happy to collaborate constructively on this
-> > > > > > (which is why I wrote the patch), but I don't think we're at a point
-> > > > > > yet where this is the only thing standing in our way when it comes to
-> > > > > > a smooth out-of-the-box Linux installation experience.
-> > > > >
-> > > > > There might be more to be done for getting a smooth Linux installation
-> > > > > experience.  But IMHO, this `OverrideSupported` thing is definitely
-> > > > > a big step to that.
-> > > > >
-> > > >
-> > > > So the problem here seems to be that grub-install (or efibootmgr)
-> > > > tolerates efivarfs being absent entirely, but bails out if it exists
-> > > > but gives an error when trying to access it, right?
-> > >
-> > > Yes, with EFI variables runtime service marked as unsupported,
-> > > efibootmgr will just exit on efi_variables_supported() check [1] in
-> > > a way that its parent process, i.e. grub-install, doesn't take as an
-> > > error.  But otherwise, efibootmgr will go much further and exit with
-> > > a real error when trying to access efivars.
-> > >
-> > 
-> > OK, so I suggest we fix efibootmgr, by extending the
-> > efi_variables_supported() check to perform a GetVariable() call on an
-> > arbitrary variable (e.g., BootOrder),
+On 15/03/2021 16:59, Robert Foss wrote:
+> In order to support Qualcomm ISP hardware architectures that diverge
+> from older architectures, the CSID subdevice drivers needs to be refactored
+> to better abstract the different ISP hardware architectures.
 > 
-> Hmm, I'm not sure we should ask more from user space, as it's already
-> been doing the right thing, and efi_variables_supported() is proved to
-> work properly with any sane low-level software (kernel + firmware),
-> either EFI variables service is supported or not.  That said, IMHO,
-> right now the low-level software on Snapdragon laptops is insane, i.e.
-> the unsupported/broken EFI runtime services are not communicated to
-> user space properly in established way.
-
-But the EFI_UNSUPPORTED is an error that's allowed from the spec. 
-Yes the sane thing to do is not expose it at all, but it's not violating
-any spec by doing so.
-So why shouldn't a userspace application be able to handle all return codes
-explicitly and instead treat them as a single error? And when that happens why
-should the kernel mask that error out for it?
-
-Thanks
-/Ilias
+> Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> Reviewed-by: Andrey Konovalov <andrey.konovalov@linaro.org>
+> ---
 > 
-> Shawn
 > 
-> > and treat EFI_UNSUPPORTED as a
-> > special case that means that carrying on is pointless.
-> > 
-> > (but someone please confirm that the snapdragon efi firmware does
-> > return EFI_UNSUPPORTED and not some other return value when calling
-> > GetVariable() from under the OS)
+> Changes since v1:
+>  - kernel test robot: Add missing include, interrupt.h
+> 
+> Changes since v4:
+>  - Andrey: Removed whitespace from some includes
+>  - Andrey: Removed unused enum
+> 
+> Changes since v5:
+>  - Andrey: Fixed test pattern selection logic
+>  - Andrey: Align test mode enum values with v4l mode selection return values
+>  - Andrey: r-b
+>  - Move Titan 170 test modes to the the Titan 170 commit
+>  - Fixed test pattern boundary check
+> 
+> Changes since v7:
+>  - Hans: Fix checkpatch.pl --strict warnings
+> 
+> 
+> 
+>  drivers/media/platform/qcom/camss/Makefile    |   2 +
+>  .../platform/qcom/camss/camss-csid-4-1.c      | 328 ++++++++++
+>  .../platform/qcom/camss/camss-csid-4-7.c      | 404 ++++++++++++
+>  .../media/platform/qcom/camss/camss-csid.c    | 608 +-----------------
+>  .../media/platform/qcom/camss/camss-csid.h    | 129 +++-
+>  5 files changed, 885 insertions(+), 586 deletions(-)
+>  create mode 100644 drivers/media/platform/qcom/camss/camss-csid-4-1.c
+>  create mode 100644 drivers/media/platform/qcom/camss/camss-csid-4-7.c
+> 
+
+<snip>
+
+> diff --git a/drivers/media/platform/qcom/camss/camss-csid.h b/drivers/media/platform/qcom/camss/camss-csid.h
+> index 479ac1f83836..613ef377b051 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csid.h
+> +++ b/drivers/media/platform/qcom/camss/camss-csid.h
+> @@ -11,6 +11,7 @@
+>  #define QC_MSM_CAMSS_CSID_H
+>  
+>  #include <linux/clk.h>
+> +#include <linux/interrupt.h>
+>  #include <media/media-entity.h>
+>  #include <media/v4l2-ctrls.h>
+>  #include <media/v4l2-device.h>
+> @@ -44,18 +45,42 @@
+>  #define DATA_TYPE_RAW_16BIT		0x2e
+>  #define DATA_TYPE_RAW_20BIT		0x2f
+>  
+> -enum csid_payload_mode {
+> -	CSID_PAYLOAD_MODE_INCREMENTING = 0,
+> -	CSID_PAYLOAD_MODE_ALTERNATING_55_AA = 1,
+> -	CSID_PAYLOAD_MODE_ALL_ZEROES = 2,
+> -	CSID_PAYLOAD_MODE_ALL_ONES = 3,
+> -	CSID_PAYLOAD_MODE_RANDOM = 4,
+> -	CSID_PAYLOAD_MODE_USER_SPECIFIED = 5,
+> +#define CSID_RESET_TIMEOUT_MS 500
+> +
+> +enum csid_testgen_mode {
+> +	CSID_PAYLOAD_MODE_DISABLED = 0,
+> +	CSID_PAYLOAD_MODE_INCREMENTING = 1,
+> +	CSID_PAYLOAD_MODE_ALTERNATING_55_AA = 2,
+> +	CSID_PAYLOAD_MODE_ALL_ZEROES = 3,
+> +	CSID_PAYLOAD_MODE_ALL_ONES = 4,
+> +	CSID_PAYLOAD_MODE_RANDOM = 5,
+> +	CSID_PAYLOAD_MODE_USER_SPECIFIED = 6,
+> +	CSID_PAYLOAD_MODE_NUM_SUPPORTED_GEN1 = 6, /* excluding disabled */
+> +};
+> +
+> +static const char * const csid_testgen_modes[] = {
+> +	"Disabled",
+> +	"Incrementing",
+> +	"Alternating 0x55/0xAA",
+> +	"All Zeros 0x00",
+> +	"All Ones 0xFF",
+> +	"Pseudo-random Data",
+> +	"User Specified",
+> +};
+
+This gives this sparse warning:
+
+'csid_testgen_modes' defined but not used [-Wunused-const-variable=]
+
+This array needs to be moved to camss-csid.c and declared as an extern
+here. Also, this menu array needs to be terminated with a NULL, and the
+right capitalization needs to be used (first character of each word must
+be a capital). This is a suggested patch I made to verify that this solves
+this issue, but really both patch 9 and 10 need to be modified.
+
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+---
+ drivers/media/platform/qcom/camss/camss-csid.c | 14 ++++++++++++++
+ drivers/media/platform/qcom/camss/camss-csid.h | 13 +------------
+ 2 files changed, 15 insertions(+), 12 deletions(-)
+
+diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
+index fb94dc03ccd4..1513b3d47fc2 100644
+--- a/drivers/media/platform/qcom/camss/camss-csid.c
++++ b/drivers/media/platform/qcom/camss/camss-csid.c
+@@ -27,6 +27,20 @@
+
+ #define MSM_CSID_NAME "msm_csid"
+
++const char * const csid_testgen_modes[] = {
++	"Disabled",
++	"Incrementing",
++	"Alternating 0x55/0xAA",
++	"All Zeros 0x00",
++	"All Ones 0xFF",
++	"Pseudo-Random Data",
++	"User Specified",
++	"Complex Pattern",
++	"Color Box",
++	"Color Bars",
++	NULL
++};
++
+ u32 csid_find_code(u32 *codes, unsigned int ncodes,
+ 		   unsigned int match_format_idx, u32 match_code)
+ {
+diff --git a/drivers/media/platform/qcom/camss/camss-csid.h b/drivers/media/platform/qcom/camss/camss-csid.h
+index c2a025f6846b..81a3704ac0e3 100644
+--- a/drivers/media/platform/qcom/camss/camss-csid.h
++++ b/drivers/media/platform/qcom/camss/camss-csid.h
+@@ -62,18 +62,7 @@ enum csid_testgen_mode {
+ 	CSID_PAYLOAD_MODE_NUM_SUPPORTED_GEN2 = 9, /* excluding disabled */
+ };
+
+-static const char * const csid_testgen_modes[] = {
+-	"Disabled",
+-	"Incrementing",
+-	"Alternating 0x55/0xAA",
+-	"All Zeros 0x00",
+-	"All Ones 0xFF",
+-	"Pseudo-random Data",
+-	"User Specified",
+-	"Complex pattern",
+-	"Color box",
+-	"Color bars",
+-};
++extern const char * const csid_testgen_modes[];
+
+ struct csid_format {
+ 	u32 code;
+-- 
+2.30.1
+
+Regards,
+
+	Hans
