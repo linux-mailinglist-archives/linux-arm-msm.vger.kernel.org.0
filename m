@@ -2,172 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EAF0033DA0F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Mar 2021 18:02:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1326E33DA52
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Mar 2021 18:11:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237315AbhCPRCD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Mar 2021 13:02:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56620 "EHLO
+        id S238493AbhCPRKf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Mar 2021 13:10:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237027AbhCPRBe (ORCPT
+        with ESMTP id S235784AbhCPRK3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Mar 2021 13:01:34 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84E34C06174A;
-        Tue, 16 Mar 2021 10:01:33 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id l12so10860806wry.2;
-        Tue, 16 Mar 2021 10:01:33 -0700 (PDT)
+        Tue, 16 Mar 2021 13:10:29 -0400
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EF69C06174A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 10:10:29 -0700 (PDT)
+Received: by mail-qk1-x734.google.com with SMTP id s7so35972951qkg.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 10:10:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=UCIspVprktpvDlW5+fJtgoq6diu33wX+IaMsKllTfxY=;
-        b=sY6DInO+ou9EU6Bj7StG/JtldJg3uJp2jwi+fveYCXCjlW6CGyIhxWQVbX+McMK4qH
-         FcpKhn/hsnBfBbQoIRMalYHLn13DDNzgljJ1tqrtb8YQTRBpE69f62B8HfhwNIapfmxH
-         QFbUXEdJbgP89VEx/vRBjLDUKvt0b1uBcMvHfNq4gnSm5zXuvfOtulLpj7G26Yt4qhg8
-         KiDHZ4H5kQqQlSOHt7Fx52e8X/OPMG9eVIOAz/nJZCmIAca0VCqdZ1k2myB6DkIXXWB3
-         0D+IcW6/5ftScLwFb1OVb2U9QkrCWPbHVORnT88Ag5KEKqb+yW8CnBY1MA0RoDxRrFlV
-         RbEw==
+        bh=p88jzDekSTGYLM6NKUCLc0y3fKPYlDntP6Vq2tG1VtY=;
+        b=L6kcGQMOYDV0GoE1WeGYlx/XvEIji8dIrGM8oI7eCunXASKkCPa6HbYzqYafFka1b7
+         lWDKqTWjJzL47mTKi5L92FRpl8AQd/LRlkIQP6+lO9HUr5Rugk89YufXtTM5x4Rkd8ZD
+         o6TwhdEolHKZYtqhSLuKNYLp+Q51eN14jaVec=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=UCIspVprktpvDlW5+fJtgoq6diu33wX+IaMsKllTfxY=;
-        b=QZ8+5DVgCmiucdvNYEfOM4h03yxX1RZgY8F9vNnDYC98slqPYxWbfBervTZ3J13Pjn
-         /3c+YaZUGDb92KaVNxLHq1xlQqgH9werEddFFiySsBzQgOTF+s//NB2PBBWPOJfhyoXM
-         pVHqfF7+CE/OQrG0O8q97+TjfOxAMaY+B23ros+FmLztTG/Mz87FPoqd0YaCldmMfZDW
-         RDBmTQ1AKdCvSkcow0Ehd4WDH+FSmJWpHWUFI3ehnIttusLSADsUcbgJrWWDxqhgF5Hv
-         hUmOD123VxrsFuzfhOAFLPnRFZ43u372m35CHYcZlF2kK6tcSrz+VKuNxD+d9w8nV1Xl
-         DruA==
-X-Gm-Message-State: AOAM533UqxvX8IINN8y93hxM5Jqnsf3vh3cnygKuAc/TCrDCucB1tAgT
-        HcFfW8zj0pJfupQpcwzxJOofZT8J8Jx9iIeJrkw=
-X-Google-Smtp-Source: ABdhPJwxaly562xGO9/e9dVg9dSISs69Ku2PSlFcGVrT7G5fdJJCPPJorQFVU/+BrptWiffWmgj7D+Nyp2DpI1MhHNY=
-X-Received: by 2002:adf:b30f:: with SMTP id j15mr10173wrd.132.1615914092247;
- Tue, 16 Mar 2021 10:01:32 -0700 (PDT)
+        bh=p88jzDekSTGYLM6NKUCLc0y3fKPYlDntP6Vq2tG1VtY=;
+        b=dD4G9HogF+2PB8WWFJMZlFvwQW5MB3znzalwns3esFkbOcVe2l9bsboRuT+1zKA2Qx
+         NPy5xbatF8kl/unnzqWOHirdi4Ibfd5EG/ckNJuYamvyb2QybvU9lr3QMpisIykeMmJf
+         ccL9kPeoB4n9lWLTTdz1rN/4nTIX8mvTqz80VxDWzCCL8AcYhsgeDlXRPRuQxCvXO9Jq
+         dIyKiOusas8xlAOwEZSelQChKeJW4qsJ8fHdDVa0BX1/SJh/H26UIisIoH2Sc9MUD11N
+         383D5Nblnwua7zpOD/Gqs5M23mlIN3grDt5l5h8fy/FKZ0JiNrPl4cj9d25bYMCxcvhE
+         A9PQ==
+X-Gm-Message-State: AOAM533Y3/ikyIv+cDcWDR1K7fBS1YOEoT8TcTNBI7MapYxTBozr6S+o
+        PFZ2T4GWNhjFYvYaYom2YW5o/gOfXyTsew==
+X-Google-Smtp-Source: ABdhPJxhpJ8nV83s9ZCxVUwn7KHMDIsGAC5Smoed+QovSYnrErsJ8zkkA1+lGi2YRrgSPUwgCqbD0A==
+X-Received: by 2002:a05:620a:1530:: with SMTP id n16mr42689qkk.288.1615914623764;
+        Tue, 16 Mar 2021 10:10:23 -0700 (PDT)
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com. [209.85.219.180])
+        by smtp.gmail.com with ESMTPSA id 8sm6226959qkc.32.2021.03.16.10.10.06
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Mar 2021 10:10:12 -0700 (PDT)
+Received: by mail-yb1-f180.google.com with SMTP id 133so37608400ybd.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 10:10:06 -0700 (PDT)
+X-Received: by 2002:a25:cf88:: with SMTP id f130mr8233555ybg.476.1615914605769;
+ Tue, 16 Mar 2021 10:10:05 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1610372717.git.saiprakash.ranjan@codeaurora.org>
- <3f589e7de3f9fa93e84c83420c5270c546a0c368.1610372717.git.saiprakash.ranjan@codeaurora.org>
- <20210129090516.GB3998@willie-the-truck> <5d23fce629323bcda71594010824aad0@codeaurora.org>
- <20210201111556.GA7172@willie-the-truck> <CAF6AEGsARmkAFsjaQLfa2miMgeijo183MWDKGtW_ti-UCpzBqA@mail.gmail.com>
- <20210201182016.GA21629@jcrouse1-lnx.qualcomm.com> <7e9aade14d0b7f69285852ade4a5a9f4@codeaurora.org>
- <20210203214612.GB19847@willie-the-truck> <CAF6AEGvjzkRqr8-z56tJdMs-LsoLMr1m5cVAq_++xCdHjTPKrQ@mail.gmail.com>
-In-Reply-To: <CAF6AEGvjzkRqr8-z56tJdMs-LsoLMr1m5cVAq_++xCdHjTPKrQ@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 16 Mar 2021 10:04:42 -0700
-Message-ID: <CAF6AEGveB=t0gQ0-WZn_qy=scYR60DEcum53saovg5h31ZMHog@mail.gmail.com>
-Subject: Re: [PATCH 2/3] iommu/io-pgtable-arm: Add IOMMU_LLC page protection flag
-To:     Will Deacon <will@kernel.org>
-Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        "Isaac J. Manjarres" <isaacm@codeaurora.org>,
-        "list@263.net:IOMMU DRIVERS , Joerg Roedel <joro@8bytes.org>," 
-        <iommu@lists.linux-foundation.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+References: <20210316011516.1314686-1-mka@chromium.org> <20210315181509.v3.2.I4138c3edee23d1efa637eef51e841d9d2e266659@changeid>
+In-Reply-To: <20210315181509.v3.2.I4138c3edee23d1efa637eef51e841d9d2e266659@changeid>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 16 Mar 2021 10:09:54 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VmC-y7GX5UTAyv2+MueKtcTkaQnWxLFQNQ+ahO3AiCJA@mail.gmail.com>
+Message-ID: <CAD=FV=VmC-y7GX5UTAyv2+MueKtcTkaQnWxLFQNQ+ahO3AiCJA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: sc7180: Add pompom rev3
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Kristian H Kristensen <hoegsberg@google.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel <dri-devel@lists.freedesktop.org>
+        LKML <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 3, 2021 at 2:14 PM Rob Clark <robdclark@gmail.com> wrote:
->
-> On Wed, Feb 3, 2021 at 1:46 PM Will Deacon <will@kernel.org> wrote:
-> >
-> > On Tue, Feb 02, 2021 at 11:56:27AM +0530, Sai Prakash Ranjan wrote:
-> > > On 2021-02-01 23:50, Jordan Crouse wrote:
-> > > > On Mon, Feb 01, 2021 at 08:20:44AM -0800, Rob Clark wrote:
-> > > > > On Mon, Feb 1, 2021 at 3:16 AM Will Deacon <will@kernel.org> wrote:
-> > > > > > On Fri, Jan 29, 2021 at 03:12:59PM +0530, Sai Prakash Ranjan wrote:
-> > > > > > > On 2021-01-29 14:35, Will Deacon wrote:
-> > > > > > > > On Mon, Jan 11, 2021 at 07:45:04PM +0530, Sai Prakash Ranjan wrote:
-> > > > > > > > > +#define IOMMU_LLC        (1 << 6)
-> > > > > > > >
-> > > > > > > > On reflection, I'm a bit worried about exposing this because I think it
-> > > > > > > > will
-> > > > > > > > introduce a mismatched virtual alias with the CPU (we don't even have a
-> > > > > > > > MAIR
-> > > > > > > > set up for this memory type). Now, we also have that issue for the PTW,
-> > > > > > > > but
-> > > > > > > > since we always use cache maintenance (i.e. the streaming API) for
-> > > > > > > > publishing the page-tables to a non-coheren walker, it works out.
-> > > > > > > > However,
-> > > > > > > > if somebody expects IOMMU_LLC to be coherent with a DMA API coherent
-> > > > > > > > allocation, then they're potentially in for a nasty surprise due to the
-> > > > > > > > mismatched outer-cacheability attributes.
-> > > > > > > >
-> > > > > > >
-> > > > > > > Can't we add the syscached memory type similar to what is done on android?
-> > > > > >
-> > > > > > Maybe. How does the GPU driver map these things on the CPU side?
-> > > > >
-> > > > > Currently we use writecombine mappings for everything, although there
-> > > > > are some cases that we'd like to use cached (but have not merged
-> > > > > patches that would give userspace a way to flush/invalidate)
-> > > > >
-> > > >
-> > > > LLC/system cache doesn't have a relationship with the CPU cache.  Its
-> > > > just a
-> > > > little accelerator that sits on the connection from the GPU to DDR and
-> > > > caches
-> > > > accesses. The hint that Sai is suggesting is used to mark the buffers as
-> > > > 'no-write-allocate' to prevent GPU write operations from being cached in
-> > > > the LLC
-> > > > which a) isn't interesting and b) takes up cache space for read
-> > > > operations.
-> > > >
-> > > > Its easiest to think of the LLC as a bonus accelerator that has no cost
-> > > > for
-> > > > us to use outside of the unfortunate per buffer hint.
-> > > >
-> > > > We do have to worry about the CPU cache w.r.t I/O coherency (which is a
-> > > > different hint) and in that case we have all of concerns that Will
-> > > > identified.
-> > > >
-> > >
-> > > For mismatched outer cacheability attributes which Will mentioned, I was
-> > > referring to [1] in android kernel.
-> >
-> > I've lost track of the conversation here :/
-> >
-> > When the GPU has a buffer mapped with IOMMU_LLC, is the buffer also mapped
-> > into the CPU and with what attributes? Rob said "writecombine for
-> > everything" -- does that mean ioremap_wc() / MEMREMAP_WC?
->
-> Currently userspace asks for everything WC, so pgprot_writecombine()
->
-> The kernel doesn't enforce this, but so far provides no UAPI to do
-> anything useful with non-coherent cached mappings (although there is
-> interest to support this)
->
+Hi,
 
-btw, I'm looking at a benchmark (gl_driver2_off) where (after some
-other in-flight optimizations land) we end up bottlenecked on writing
-to WC cmdstream buffers.  I assume in the current state, WC goes all
-the way to main memory rather than just to system cache?
-
-BR,
--R
-
-> BR,
-> -R
+On Mon, Mar 15, 2021 at 6:15 PM Matthias Kaehlcke <mka@chromium.org> wrote:
 >
-> > Finally, we need to be careful when we use the word "hint" as "allocation
-> > hint" has a specific meaning in the architecture, and if we only mismatch on
-> > those then we're actually ok. But I think IOMMU_LLC is more than just a
-> > hint, since it actually drives eviction policy (i.e. it enables writeback).
-> >
-> > Sorry for the pedantry, but I just want to make sure we're all talking
-> > about the same things!
-> >
-> > Cheers,
-> >
-> > Will
+> The only kernel visible change with respect to rev2 is that pompom
+> rev3 changed the charger thermistor from a 47k to a 100k NTC to use
+> a thermistor which is supported by the PM6150 ADC driver.
+>
+> Disable the charger thermal zone for pompom rev1 and rev2 to avoid
+> the use of bogus temperature values from the unsupported thermistor.
+>
+> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> ---
+>
+> Changes in v3:
+> - don't add LOCK key
+>
+> Changes in v2:
+> - moved keyboard definition to sc7180-trogdor-pompom.dtsi instead
+>   of duplicating it, use cros-ec keyboard for rev1
+> - squashed with 'arm64: dts: qcom: sc7180: pompom: Disable charger
+>   thermal zone for rev1 and rev2'
+>
+>  arch/arm64/boot/dts/qcom/Makefile             |  2 +
+>  .../dts/qcom/sc7180-trogdor-pompom-r1.dts     | 12 ++++++
+>  .../dts/qcom/sc7180-trogdor-pompom-r2-lte.dts |  4 +-
+>  .../dts/qcom/sc7180-trogdor-pompom-r2.dts     | 38 +++++--------------
+>  .../dts/qcom/sc7180-trogdor-pompom-r3-lte.dts | 14 +++++++
+>  .../dts/qcom/sc7180-trogdor-pompom-r3.dts     | 15 ++++++++
+>  .../boot/dts/qcom/sc7180-trogdor-pompom.dtsi  | 29 ++++++++++++++
+>  7 files changed, 83 insertions(+), 31 deletions(-)
+
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
