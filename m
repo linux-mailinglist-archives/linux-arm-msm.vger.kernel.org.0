@@ -2,249 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4374433DAC5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Mar 2021 18:21:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DA3AC33DA83
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Mar 2021 18:20:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239224AbhCPRVW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Mar 2021 13:21:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60814 "EHLO
+        id S238772AbhCPRUA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Mar 2021 13:20:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238834AbhCPRUi (ORCPT
+        with ESMTP id S238667AbhCPRTd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Mar 2021 13:20:38 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07F63C06175F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 10:20:38 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id h10so22451117edt.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 10:20:37 -0700 (PDT)
+        Tue, 16 Mar 2021 13:19:33 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA7C3C06174A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 10:19:32 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id t18so15869808lfl.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 10:19:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=C39vPJaoWCKP7nJ06292XiFkyA03zvPZ8SuH3rYNSWU=;
-        b=AVSaCv+HOgA/VAjo8neqALQZsyUEzHJUhdCfkGIXrUtrYb4MofHqTwi3Fe30aPHz1R
-         xmwFSwW3af2WVvau5UU1HoLrPyiJ8QwGqqeb3VIi9ljSllx7Wk7iz1E0ZbORlW8ih0Z6
-         jqUJ6sT5ezluWrNCp7Y65QZu1BTH46ZoGBqunva9EP0N2qgTpxxeMApK8WofAGjpCV33
-         9Ia0JiutoVVwFAslkh9JR9cDO9YeU3PKYznsLaESIlcSg35z0gTzujeBRZIP9u0vy+3z
-         KvxdwMY323o0UkbRmJoHh1EUvLXMG4IuEeEYgdeKemWbIejnoRsEbKkjHrQlGge+GztX
-         V8dQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=HU7tSHpBcN7HhMkKOa8L+bsgXHmuW2pr4tFJdSL3Ecs=;
+        b=SRYGVyi34X/FTJCszSL15VKnWDu7/g3swczk4mbChaSpJnQl0tQVZCmNbDGtFiiSVZ
+         JqpsZNkRoivn/35kGk/Ba+NX1S17YMt/6pB0QpI/EYCH/2U39W1MISHlGyfcOSljzS+u
+         Kw93/JcbB6TCLDcHgl1kkm2IJws/NnNiXGZLwPmFNX+lS9MXDZscIOT23uGQq98zZHoE
+         yImlhgnl3R3ZgFomN2BCSJWX49jcOYG4jPogx4RmLMgH2qHRg6SUol6zW5ePfAmR9fYJ
+         3vo0VGoKidUjWNmzDYyqSSwMY5KsOEyr10kg8/pX6914O6x7q3Crq9RXyIn6Y5kf32Pb
+         tAVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=C39vPJaoWCKP7nJ06292XiFkyA03zvPZ8SuH3rYNSWU=;
-        b=tTkfybC91DJMNclsXQ1wBCooUaLgRRKNYy/6kwv+hZ2jqsS9LuIiTbSyErvuU9xhhX
-         VRhvEMhN+yqUXEEFxu9tp1ACgJF+7RNAcm28Lmefk8FMI0H7LmpsNSZpSfa54GQcEDv1
-         ZGz63BgjaDph9KNkp/6UkbH9d4x7RN0V+nkUE/k2MC+8z2sHSQq/6RMpiHzOvrHq+x4j
-         0Og2bT+fawITqLlf9vJNTUWP2ZhVuApHaFlQwSmrj6oELRP+Zqy7OauJFszggBErdvdy
-         LhHB1itUVvVsVv62FnG7C68BwgB0TP670bDooy+NUtd67YCoX+lpM3d8VRl9wSj1eZSV
-         9MUQ==
-X-Gm-Message-State: AOAM5305Itk+2ztaGUv7L749s96S7MgMZebSITDefSSpeeYVdnhtbgmQ
-        jiJrJ5IXg88u/qwxzBKxtJns4A==
-X-Google-Smtp-Source: ABdhPJxFkM79x55/x3joIeDBsnWcinKDg/vXHw2QQfuVNoEjSv3+pdvyH2tgAUxlnNZE3LRU+Z3HXA==
-X-Received: by 2002:a05:6402:512:: with SMTP id m18mr37002135edv.372.1615915236821;
-        Tue, 16 Mar 2021 10:20:36 -0700 (PDT)
-Received: from localhost.localdomain ([37.120.1.234])
-        by smtp.gmail.com with ESMTPSA id u1sm10571584edv.90.2021.03.16.10.20.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Mar 2021 10:20:36 -0700 (PDT)
-From:   Robert Foss <robert.foss@linaro.org>
-To:     robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, mchehab@kernel.org, robh+dt@kernel.org,
-        angelogioacchino.delregno@somainline.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Sakari Ailus <sakari.ailus@iki.fi>,
-        Andrey Konovalov <andrey.konovalov@linaro.org>,
-        Hans Verkuil <hverkuil@xs4all.nl>
-Cc:     Rob Herring <robh@kernel.org>, Tomasz Figa <tfiga@chromium.org>,
-        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
-        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Jonathan Marek <jonathan@marek.ca>
-Subject: [PATCH v9 20/22] arm64: dts: sdm845: Add CAMSS ISP node
-Date:   Tue, 16 Mar 2021 18:19:29 +0100
-Message-Id: <20210316171931.812748-21-robert.foss@linaro.org>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20210316171931.812748-1-robert.foss@linaro.org>
-References: <20210316171931.812748-1-robert.foss@linaro.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=HU7tSHpBcN7HhMkKOa8L+bsgXHmuW2pr4tFJdSL3Ecs=;
+        b=QZ0KAgp+mADW5ssbKrVQd3ZweBNGjer09Zb/S04JLhAn7pr0r8LPQNnCjUVokMWkhj
+         wkq29BLF9lhE8M+saVWty1/MAkh3hmqUpIjQtSiv2RymUeDUjOaQCMiKIXYFq4U6WJbf
+         8o7qOTKw06WB/c3TVn7/+XJOdM/dm8pypjyr97mFuVllMVjFxpzIPTUhpwlB4sFyOAP7
+         6w+oiHOxc+lt0lCmIRecBxHQ6VgCrTBAN2dWq8agZ1eAqhJmH3CBHVut9qUTQ65Y3Ru3
+         zmh22jKNF7uv+Qifpf9gYtnsGimb0Id+cdPJT+zTgdgDAL0TK9jFP7o0MmGaFocwgSby
+         XNiA==
+X-Gm-Message-State: AOAM531t+0KJBKlJkkhb0TZ5/51fo387fOZtShu1T9HVgpZrc95yyLB0
+        e3ZLjvfm8l2C2VowvaavxLy7Rg==
+X-Google-Smtp-Source: ABdhPJzvXQEx3IpPZrr03iuOY+bRgbGEagsThCcHJZzftvfJ9GA3xzuRZhU+TzLZlYFiD/C9A52Iaw==
+X-Received: by 2002:a19:f50e:: with SMTP id j14mr11949931lfb.299.1615915171215;
+        Tue, 16 Mar 2021 10:19:31 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id f26sm3118503lfe.118.2021.03.16.10.19.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Mar 2021 10:19:30 -0700 (PDT)
+Subject: Re: [PATCH v13 4/4] dt-bindings: msm/dp: Add bindings of MSM
+ DisplayPort controller
+To:     khsieh@codeaurora.org
+Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, kalyan_t@codeaurora.org,
+        tanmay@codeaurora.org, abhinavk@codeaurora.org,
+        robdclark@gmail.com, swboyd@chromium.org,
+        bjorn.andersson@linaro.org, vinod.koul@linaro.org,
+        rnayak@codeaurora.org, dianders@chromium.org, sibis@codeaurora.org,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        Vara Reddy <varar@codeaurora.org>
+References: <1614950952-13351-1-git-send-email-mkrishn@codeaurora.org>
+ <1614950952-13351-4-git-send-email-mkrishn@codeaurora.org>
+ <000586cb-8364-e4c9-2707-c54f58a0246c@linaro.org>
+ <14139b5aca1f35ecf096d5a096c9dbc8@codeaurora.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <8ab6f5d2-68c3-7d7a-367a-97e9cccde56e@linaro.org>
+Date:   Tue, 16 Mar 2021 20:19:29 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <14139b5aca1f35ecf096d5a096c9dbc8@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the camss dt node for sdm845.
+On 16/03/2021 19:45, khsieh@codeaurora.org wrote:
+> On 2021-03-14 06:28, Dmitry Baryshkov wrote:
+>> On 05/03/2021 16:29, Krishna Manikandan wrote:
+>>> Add bindings for Snapdragon DisplayPort controller driver.
+>>>
+>>> Signed-off-by: Chandan Uddaraju <chandanu@codeaurora.org>
+>>> Signed-off-by: Vara Reddy <varar@codeaurora.org>
+>>> Signed-off-by: Tanmay Shah <tanmay@codeaurora.org>
+>>> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+>>> Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
+>>
+>> Krishna, Stephen, I've a question basing on our experiments with the
+>> DP on sm8250.
+>> Which driver will reparent dispcc's DP clocks to the DP_PHY clocks?
+>>
+>> We can do this using the assigned-clocks-parents either in the dispcc
+>> or in the DP nodes. Which would be preferable?
+> at sc7180.dtsi, it is done at DP node
 
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
-Reviewed-by: Andrey Konovalov <andrey.konovalov@linaro.org>
----
+Could you please add those lines to the dtsi example you are providing?
 
 
-Changes since v1:
- - Laurent: Fix subject
- - Laurent: Remove redundant regulator labels
- - Laurent: Remove empty line
-
-Changes since v3:
- - Fixed ordering of IRQs
- - Add newlines for better readability
-
-Changes since v5:
- - Andrey: Add r-b
-
-
-
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 135 +++++++++++++++++++++++++++
- 1 file changed, 135 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 454f794af547..36cf4503664c 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -3909,6 +3909,141 @@ videocc: clock-controller@ab00000 {
- 			#reset-cells = <1>;
- 		};
- 
-+		camss: camss@a00000 {
-+			compatible = "qcom,sdm845-camss";
-+
-+			reg = <0 0xacb3000 0 0x1000>,
-+				<0 0xacba000 0 0x1000>,
-+				<0 0xacc8000 0 0x1000>,
-+				<0 0xac65000 0 0x1000>,
-+				<0 0xac66000 0 0x1000>,
-+				<0 0xac67000 0 0x1000>,
-+				<0 0xac68000 0 0x1000>,
-+				<0 0xacaf000 0 0x4000>,
-+				<0 0xacb6000 0 0x4000>,
-+				<0 0xacc4000 0 0x4000>;
-+			reg-names = "csid0",
-+				"csid1",
-+				"csid2",
-+				"csiphy0",
-+				"csiphy1",
-+				"csiphy2",
-+				"csiphy3",
-+				"vfe0",
-+				"vfe1",
-+				"vfe_lite";
-+
-+			interrupts = <GIC_SPI 464 IRQ_TYPE_LEVEL_HIGH>,
-+				<GIC_SPI 466 IRQ_TYPE_LEVEL_HIGH>,
-+				<GIC_SPI 468 IRQ_TYPE_LEVEL_HIGH>,
-+				<GIC_SPI 477 IRQ_TYPE_LEVEL_HIGH>,
-+				<GIC_SPI 478 IRQ_TYPE_LEVEL_HIGH>,
-+				<GIC_SPI 479 IRQ_TYPE_LEVEL_HIGH>,
-+				<GIC_SPI 448 IRQ_TYPE_LEVEL_HIGH>,
-+				<GIC_SPI 465 IRQ_TYPE_LEVEL_HIGH>,
-+				<GIC_SPI 467 IRQ_TYPE_LEVEL_HIGH>,
-+				<GIC_SPI 469 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "csid0",
-+				"csid1",
-+				"csid2",
-+				"csiphy0",
-+				"csiphy1",
-+				"csiphy2",
-+				"csiphy3",
-+				"vfe0",
-+				"vfe1",
-+				"vfe_lite";
-+
-+			power-domains = <&clock_camcc IFE_0_GDSC>,
-+				<&clock_camcc IFE_1_GDSC>,
-+				<&clock_camcc TITAN_TOP_GDSC>;
-+
-+			clocks = <&clock_camcc CAM_CC_CAMNOC_AXI_CLK>,
-+				<&clock_camcc CAM_CC_CPAS_AHB_CLK>,
-+				<&clock_camcc CAM_CC_CPHY_RX_CLK_SRC>,
-+				<&clock_camcc CAM_CC_IFE_0_CSID_CLK>,
-+				<&clock_camcc CAM_CC_IFE_0_CSID_CLK_SRC>,
-+				<&clock_camcc CAM_CC_IFE_1_CSID_CLK>,
-+				<&clock_camcc CAM_CC_IFE_1_CSID_CLK_SRC>,
-+				<&clock_camcc CAM_CC_IFE_LITE_CSID_CLK>,
-+				<&clock_camcc CAM_CC_IFE_LITE_CSID_CLK_SRC>,
-+				<&clock_camcc CAM_CC_CSIPHY0_CLK>,
-+				<&clock_camcc CAM_CC_CSI0PHYTIMER_CLK>,
-+				<&clock_camcc CAM_CC_CSI0PHYTIMER_CLK_SRC>,
-+				<&clock_camcc CAM_CC_CSIPHY1_CLK>,
-+				<&clock_camcc CAM_CC_CSI1PHYTIMER_CLK>,
-+				<&clock_camcc CAM_CC_CSI1PHYTIMER_CLK_SRC>,
-+				<&clock_camcc CAM_CC_CSIPHY2_CLK>,
-+				<&clock_camcc CAM_CC_CSI2PHYTIMER_CLK>,
-+				<&clock_camcc CAM_CC_CSI2PHYTIMER_CLK_SRC>,
-+				<&clock_camcc CAM_CC_CSIPHY3_CLK>,
-+				<&clock_camcc CAM_CC_CSI3PHYTIMER_CLK>,
-+				<&clock_camcc CAM_CC_CSI3PHYTIMER_CLK_SRC>,
-+				<&gcc GCC_CAMERA_AHB_CLK>,
-+				<&gcc GCC_CAMERA_AXI_CLK>,
-+				<&clock_camcc CAM_CC_SLOW_AHB_CLK_SRC>,
-+				<&clock_camcc CAM_CC_SOC_AHB_CLK>,
-+				<&clock_camcc CAM_CC_IFE_0_AXI_CLK>,
-+				<&clock_camcc CAM_CC_IFE_0_CLK>,
-+				<&clock_camcc CAM_CC_IFE_0_CPHY_RX_CLK>,
-+				<&clock_camcc CAM_CC_IFE_0_CLK_SRC>,
-+				<&clock_camcc CAM_CC_IFE_1_AXI_CLK>,
-+				<&clock_camcc CAM_CC_IFE_1_CLK>,
-+				<&clock_camcc CAM_CC_IFE_1_CPHY_RX_CLK>,
-+				<&clock_camcc CAM_CC_IFE_1_CLK_SRC>,
-+				<&clock_camcc CAM_CC_IFE_LITE_CLK>,
-+				<&clock_camcc CAM_CC_IFE_LITE_CPHY_RX_CLK>,
-+				<&clock_camcc CAM_CC_IFE_LITE_CLK_SRC>;
-+			clock-names = "camnoc_axi",
-+				"cpas_ahb",
-+				"cphy_rx_src",
-+				"csi0",
-+				"csi0_src",
-+				"csi1",
-+				"csi1_src",
-+				"csi2",
-+				"csi2_src",
-+				"csiphy0",
-+				"csiphy0_timer",
-+				"csiphy0_timer_src",
-+				"csiphy1",
-+				"csiphy1_timer",
-+				"csiphy1_timer_src",
-+				"csiphy2",
-+				"csiphy2_timer",
-+				"csiphy2_timer_src",
-+				"csiphy3",
-+				"csiphy3_timer",
-+				"csiphy3_timer_src",
-+				"gcc_camera_ahb",
-+				"gcc_camera_axi",
-+				"slow_ahb_src",
-+				"soc_ahb",
-+				"vfe0_axi",
-+				"vfe0",
-+				"vfe0_cphy_rx",
-+				"vfe0_src",
-+				"vfe1_axi",
-+				"vfe1",
-+				"vfe1_cphy_rx",
-+				"vfe1_src",
-+				"vfe_lite",
-+				"vfe_lite_cphy_rx",
-+				"vfe_lite_src";
-+
-+			iommus = <&apps_smmu 0x0808 0x0>,
-+				 <&apps_smmu 0x0810 0x8>,
-+				 <&apps_smmu 0x0c08 0x0>,
-+				 <&apps_smmu 0x0c10 0x8>;
-+
-+			status = "disabled";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+			};
-+		};
-+
- 		cci: cci@ac4a000 {
- 			compatible = "qcom,sdm845-cci";
- 			#address-cells = <1>;
 -- 
-2.27.0
-
+With best wishes
+Dmitry
