@@ -2,139 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8026D33DAC9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Mar 2021 18:22:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DDD4F33DB8D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Mar 2021 18:55:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239156AbhCPRVZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Mar 2021 13:21:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60738 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239189AbhCPRUu (ORCPT
+        id S239341AbhCPRys (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Mar 2021 13:54:48 -0400
+Received: from mail-io1-f47.google.com ([209.85.166.47]:45769 "EHLO
+        mail-io1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239364AbhCPRyT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Mar 2021 13:20:50 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98ADEC0613E3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 10:20:41 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id u4so22470042edv.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 10:20:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=/XB5/PYr+gM9dCUnpwZrVC+N0EakV1SQIdmfOjtLP+g=;
-        b=SooMopyFEXzM7T2ZqhupISjYtyPSt8nmqen/c8f7DaKneJF/7CYcS1aa+I/Q7N97QN
-         Xrn3siZIhY2TTSue2YWbTYLjQTwcLs28BaTPfmtt5PHfNc5gq49GNgRDutSvz/DINSP6
-         Ix1znNjI8x0Xgd0VAzXP9/IbjjpSVr9nmOVBMjiZ96Iq3sFrv8/kSB+9mc7X9mg0jSjX
-         AIy8tZbCIL5zpnb8G9+yyzgDSJeoTbYj+UrbTQ5hjR5FQAg00gFXU73jRslpa5mlQYkz
-         zmZeqQ+/e8mASzVQDCc7H35Tqy3WqgR7mnUBacGD2Ozx5wapSWeUnNo/TnPomAVdLQFj
-         I3bw==
+        Tue, 16 Mar 2021 13:54:19 -0400
+Received: by mail-io1-f47.google.com with SMTP id a7so38107702iok.12;
+        Tue, 16 Mar 2021 10:54:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=/XB5/PYr+gM9dCUnpwZrVC+N0EakV1SQIdmfOjtLP+g=;
-        b=Ti3b4PUMdgQNQR/2oVO9nmBkTa5A3f1SrLp1/jSnByJ6Z/S9f4fOiYKC9jbE70/V/a
-         VEYv62FmGqb385t5KhzCr8AOlqGq608TA5HReJFeOZbJ5fPZ/uQ7F2stml5nLSKFKCcN
-         XEWv/TX2n5HMOZsg5Q38iNpEgu34r4S9odJpC0607Lt3rzz3rPnUCVFaVD4FmBVFJhRx
-         LMSS3YcqZuzD7jr4wB0SYERvCbhfnZsfE4CmL8SOhDak1q7uS2hypLtsCWyRjabaEfsC
-         7UKxVeDQE7CkquVIj7udPGPX1huOPGU4bsN8xutmfsOsugZ9XepL8RXilA74FBtI0kbQ
-         PDPA==
-X-Gm-Message-State: AOAM530sFviJQdgtEGnawV6SR7oyBNq21laQMORrKRvxjjRcpI+WSJvU
-        21Um6KNDXonUshDVdl3QToUX9g==
-X-Google-Smtp-Source: ABdhPJwXIVQBnt8J0dl8zckmTs7ih1GrbEuw9Es9sUj/rQKH5skI7toJLHs6lqvscoLiNlMFH1loMg==
-X-Received: by 2002:aa7:da48:: with SMTP id w8mr36508971eds.81.1615915240402;
-        Tue, 16 Mar 2021 10:20:40 -0700 (PDT)
-Received: from localhost.localdomain ([37.120.1.234])
-        by smtp.gmail.com with ESMTPSA id u1sm10571584edv.90.2021.03.16.10.20.38
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=nPCe2pWHJBs2omsExRt0WS0Aom9BtYjVqvEnEmMiJSo=;
+        b=XRzgi924kXQoOgg3WfSSuDu5t3NW/tEZkPW35mSD5yORFeu6p3ShncRrw8BSPWbUiN
+         64JtSXW4McslX+hiZ0abwO1vbNks1r1jvieSn2j0mnW9lh4SG29vhJ79ZsDf0tsjehnc
+         RxRCWzcVMXFwLvyaSB7wr9iedQ78wXEhreVf0GkwNQxK9l6iETSEGfTxNrSL+WzpBRNg
+         ss9rpanFYJ74/NjwfJchjQENzxtO9UW8/OcxwAwqWTn2sANxSxj7Vf1q5ozcC+w1u8py
+         ofXgiiVb2qvJP1CihikjMnGnO/GsKYkCNwqdlW5dT84wOQRLY4PDYHQ0EYaFmRJsM7RG
+         7/Ag==
+X-Gm-Message-State: AOAM532QsrPAEg27gApFbyBd8hxSZnoWuhz9Jrj0OVvMHtgqlMZ5VETr
+        +k2OLccjjEM/XM3MpY9GDA==
+X-Google-Smtp-Source: ABdhPJzl3o8G/UcXREEFWDlU5Y5mDjQ2mG47axCBmFh0qU0v7sR7POdBm08dc/9pW76tGCI3Qv4cFw==
+X-Received: by 2002:a6b:b415:: with SMTP id d21mr4251015iof.149.1615917258833;
+        Tue, 16 Mar 2021 10:54:18 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.253])
+        by smtp.gmail.com with ESMTPSA id u5sm9092435iob.8.2021.03.16.10.54.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Mar 2021 10:20:39 -0700 (PDT)
-From:   Robert Foss <robert.foss@linaro.org>
-To:     robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, mchehab@kernel.org, robh+dt@kernel.org,
-        angelogioacchino.delregno@somainline.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Sakari Ailus <sakari.ailus@iki.fi>,
-        Andrey Konovalov <andrey.konovalov@linaro.org>,
-        Hans Verkuil <hverkuil@xs4all.nl>
-Cc:     Rob Herring <robh@kernel.org>, Tomasz Figa <tfiga@chromium.org>,
-        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
-        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Jonathan Marek <jonathan@marek.ca>
-Subject: [PATCH v9 22/22] arm64: dts: sdm845-db845c: Enable ov8856 sensor and connect to ISP
-Date:   Tue, 16 Mar 2021 18:19:31 +0100
-Message-Id: <20210316171931.812748-23-robert.foss@linaro.org>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20210316171931.812748-1-robert.foss@linaro.org>
-References: <20210316171931.812748-1-robert.foss@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Tue, 16 Mar 2021 10:54:18 -0700 (PDT)
+Received: (nullmailer pid 3326121 invoked by uid 1000);
+        Tue, 16 Mar 2021 17:54:09 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     satya priya <skakit@codeaurora.org>
+Cc:     David Collins <collinsd@codeaurora.org>,
+        devicetree@vger.kernel.org, kgunda@codeaurora.org,
+        rnayak@codeaurora.org, Mark Brown <broonie@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>, mka@chromium.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>
+In-Reply-To: <1615816454-1733-5-git-send-email-skakit@codeaurora.org>
+References: <1615816454-1733-1-git-send-email-skakit@codeaurora.org> <1615816454-1733-5-git-send-email-skakit@codeaurora.org>
+Subject: Re: [PATCH V2 4/5] dt-bindings: regulator: Convert regulator bindings to YAML format
+Date:   Tue, 16 Mar 2021 11:54:09 -0600
+Message-Id: <1615917249.223984.3326120.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable camss & ov8856 DT nodes.
+On Mon, 15 Mar 2021 19:24:13 +0530, satya priya wrote:
+> Convert regulator bindings from .txt to .yaml format.
+> 
+> Signed-off-by: satya priya <skakit@codeaurora.org>
+> ---
+> Changes in V2:
+>  - As per Mark's comment moved this patch to the end of series.
+>  - As per Rob's comments,  added flash and rgb bindings, dropped allOf and
+>    unused labels and fixed few other things.
+> 
+>  .../bindings/regulator/qcom,rpmh-regulator.txt     | 180 ---------------------
+>  .../bindings/regulator/qcom,rpmh-regulator.yaml    | 158 ++++++++++++++++++
+>  2 files changed, 158 insertions(+), 180 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt
+>  create mode 100644 Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+> 
 
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
-Reviewed-by: Andrey Konovalov <andrey.konovalov@linaro.org>
----
+My bot found errors running 'make dt_binding_check' on your patch:
 
+yamllint warnings/errors:
+./Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml:111:2: [warning] wrong indentation: expected 2 but found 1 (indentation)
 
-Changes since v5:
- - Andrey: Add r-b
- - Change CSI clock & data pins
+dtschema/dtc warnings/errors:
 
+See https://patchwork.ozlabs.org/patch/1453283
 
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
 
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index 7e3c9fe4955d..e5a693c8dc42 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -1110,6 +1110,21 @@ &cci {
- 
- &camss {
- 	vdda-supply = <&vreg_l1a_0p875>;
-+
-+	status = "ok";
-+
-+	ports {
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		port@0 {
-+			reg = <0>;
-+			csiphy0_ep: endpoint {
-+				clock-lanes = <7>;
-+				data-lanes = <0 1 2 3>;
-+				remote-endpoint = <&ov8856_ep>;
-+			};
-+		};
-+	};
- };
- 
- &cci_i2c0 {
-@@ -1141,7 +1156,7 @@ camera@10 {
- 		avdd-supply = <&cam0_avdd_2v8>;
- 		dvdd-supply = <&cam0_dvdd_1v2>;
- 
--		status = "disable";
-+		status = "ok";
- 
- 		port {
- 			ov8856_ep: endpoint {
-@@ -1149,7 +1164,7 @@ ov8856_ep: endpoint {
- 				link-frequencies = /bits/ 64
- 					<360000000 180000000>;
- 				data-lanes = <1 2 3 4>;
--//				remote-endpoint = <&csiphy0_ep>;
-+				remote-endpoint = <&csiphy0_ep>;
- 			};
- 		};
- 	};
--- 
-2.27.0
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
 
