@@ -2,135 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A924D33CDD9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Mar 2021 07:15:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BD15B33CDDC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Mar 2021 07:16:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233053AbhCPGPE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Mar 2021 02:15:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57836 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229838AbhCPGOj (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Mar 2021 02:14:39 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C018C06174A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 23:14:39 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id t85so8079925pfc.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 23:14:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=sq0aKBuHdwW/nOfuOJWOVsVvDF01fsFJpD2nAbMcEpc=;
-        b=ipe1xG3iscsMJZsHqMMcXVPiil9KsEDf1dWlWVhKsFYA+fy+4x7j0K1bJEBd9nUzE0
-         PAv5gpEwZdyerwmrPYpX5lTrn10xVRLjq8DPk2zbU3xaJ2AglDi5JJrNioq80lU27oWD
-         ohBTGvxHW10AL3BTbBQccJBhdLD18CyA89pOWpLra2pRZEYVFGJDZBb1ewwbderWwuQN
-         AgEqs180pjV8CxC0/Rj+L6ihz+B0EnDSXg7cI3a6rsubfEgA96lVBTyizq+6MfMQaGDz
-         Hcl6w6w/YVdjr0wikSAR9sRvItI7R6NuPsel4mmLm4CXwszLPRfG909wfqKeSMxhcRO5
-         88hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=sq0aKBuHdwW/nOfuOJWOVsVvDF01fsFJpD2nAbMcEpc=;
-        b=rhrZVhhK+Ibn14fSQGFJIXBl1Y/EndVAz1tk+gF64I+Msm75b7P//RAfItkctDHEME
-         9AdIQlgWLIKrwnktoIFa91oAEzg/0g34qyd+7xPRo43onCAR1PiMsWP0Rfz0GoDGKzXT
-         CLWI1mcz0tFE3jkgBUYhYHuzdOQqjqqzPsHjpJ/9w9eFVco0fhBPao8MWLlNt7nmx3V6
-         v0EvVw+xtz7yGgP5mKq8SQvRjSJOITE7idWGp54avAmX/6aLj6FLnVv7PK0nrfuiTsde
-         e80ShaaU0f1VVVpcnZpVwKxbM9wlW3ABSthkAXB6jMDl0Ri00TgfTHnK3cUQ3UDI/ymf
-         QkUg==
-X-Gm-Message-State: AOAM532tcZbXlUycjjvXL2Z6M/joswb9U52a905iHjxfOLRBbwcoqfmr
-        QkIvs/n8RwVdOvKoLdIuG4CvgVOMYXhq0/A=
-X-Google-Smtp-Source: ABdhPJxZhzDtAm268qxXTCWaVBdt6NMdYcxRAqevo1T7Rlg5vHz84vtMXzy2Y3eK/LFZUIlrxTY4Tg==
-X-Received: by 2002:a63:f558:: with SMTP id e24mr2600370pgk.153.1615875278492;
-        Mon, 15 Mar 2021 23:14:38 -0700 (PDT)
-Received: from thinkpad ([103.66.79.72])
-        by smtp.gmail.com with ESMTPSA id v18sm16039362pfn.117.2021.03.15.23.14.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Mar 2021 23:14:37 -0700 (PDT)
-Date:   Tue, 16 Mar 2021 11:44:33 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 RESEND] bus: mhi: core: Wait for ready state after
- reset
-Message-ID: <20210316061433.GG1798@thinkpad>
-References: <1615408918-7242-1-git-send-email-jhugo@codeaurora.org>
+        id S233286AbhCPGPg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Mar 2021 02:15:36 -0400
+Received: from mail.kernel.org ([198.145.29.99]:46164 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233182AbhCPGPG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 16 Mar 2021 02:15:06 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id C9665650D2;
+        Tue, 16 Mar 2021 06:15:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1615875305;
+        bh=2KvQFSd+A1txflrH0B43mlebUyCPAclI0WHaLnVfA04=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=XqG4NP3vygqVfWQUbA8sXGH+hwVi+OxhUtWJtnDP7qQY0DBC/Sgax6sk8xCQq/DDG
+         TJmgC7gUA1+edz5MsMnYOOJAgv+UGZBr1wN1nqppoisvqe9aEjVgrXYYdJ8n11//bS
+         VpgDDPBBwAaCORanqtfqoQ5CXfZGLvAEMk10OoJkcMo0gsqdJpqpFqgXiUDfGmclFl
+         WXgu5R4e9PTPNaR1naYG8Hjx3wDpfJxddKHdAdydRF4tJlV+C2TndNf6SBhtUUwuLG
+         tQE7eHw/MNSbk7uW7Z4krY0FY9xngDSs+s29oCmmQvunpQ3WsOMWsTW7S3GVKBx4wY
+         fYjyeaonmznxQ==
+Date:   Tue, 16 Mar 2021 11:45:01 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Caleb Connolly <caleb@connolly.tech>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sm8150: add iommus to qups
+Message-ID: <YFBM5Up5caWZCMSx@vkoul-mobl>
+References: <20210310163024.393578-1-caleb@connolly.tech>
+ <20210310163024.393578-3-caleb@connolly.tech>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1615408918-7242-1-git-send-email-jhugo@codeaurora.org>
+In-Reply-To: <20210310163024.393578-3-caleb@connolly.tech>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 10, 2021 at 01:41:58PM -0700, Jeffrey Hugo wrote:
-> After the device has signaled the end of reset by clearing the reset bit,
-> it will automatically reinit MHI and the internal device structures.  Once
-> That is done, the device will signal it has entered the ready state.
+On 10-03-21, 16:31, Caleb Connolly wrote:
+> Hook up the SMMU for doing DMA over i2c. Some peripherals like
+> touchscreens easily exceed 32-bytes per transfer, causing errors and
+> lockups without this.
+
+Why not squash this to patch 1..?
+
 > 
-> Signaling the ready state involves sending an interrupt (MSI) to the host
-> which might cause IOMMU faults if it occurs at the wrong time.
-> 
-> If the controller is being powered down, and possibly removed, then the
-> reset flow would only wait for the end of reset.  At which point, the host
-> and device would start a race.  The host may complete its reset work, and
-> remove the interrupt handler, which would cause the interrupt to be
-> disabled in the IOMMU.  If that occurs before the device signals the ready
-> state, then the IOMMU will fault since it blocked an interrupt.  While
-> harmless, the fault would appear like a serious issue has occurred so let's
-> silence it by making sure the device hits the ready state before the host
-> completes its reset processing.
-> 
-> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
 > ---
->  drivers/bus/mhi/core/pm.c | 17 ++++++++++++++++-
->  1 file changed, 16 insertions(+), 1 deletion(-)
+> Fixes i2c on the OnePlus 7, without this touching the screen with more
+> than 4 fingers causes the device to lock up and reboot.
+> ---
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi | 3 +++
+>  1 file changed, 3 insertions(+)
 > 
-> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-> index adb0e80..414da4f 100644
-> --- a/drivers/bus/mhi/core/pm.c
-> +++ b/drivers/bus/mhi/core/pm.c
-> @@ -467,7 +467,7 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
->  
->  	/* Trigger MHI RESET so that the device will not access host memory */
->  	if (!MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state)) {
-> -		u32 in_reset = -1;
-> +		u32 in_reset = -1, ready = 0;
->  		unsigned long timeout = msecs_to_jiffies(mhi_cntrl->timeout_ms);
->  
->  		dev_dbg(dev, "Triggering MHI Reset in device\n");
-> @@ -490,6 +490,21 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
->  		 * hence re-program it
->  		 */
->  		mhi_write_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_INTVEC, 0);
-> +
-> +		if (!MHI_IN_PBL(mhi_get_exec_env(mhi_cntrl))) {
-> +			/* wait for ready to be set */
-> +			ret = wait_event_timeout(mhi_cntrl->state_event,
-> +						 mhi_read_reg_field(mhi_cntrl,
-> +							mhi_cntrl->regs,
-> +							MHISTATUS,
-> +							MHISTATUS_READY_MASK,
-> +							MHISTATUS_READY_SHIFT,
-> +							&ready)
-> +						 || ready, timeout);
-> +			if (!ret || !ready)
-> +				dev_warn(dev,
-> +					"Device failed to enter READY state\n");
-
-Wouldn't dev_err be more appropriate here provided that we might get IOMMU fault
-anytime soon?
-
-Thanks,
-Mani
-
-> +		}
->  	}
->  
->  	dev_dbg(dev,
+> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> index 03e05d98daf2..543417d74216 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> @@ -583,6 +583,7 @@ qupv3_id_0: geniqup@8c0000 {
+>  			clock-names = "m-ahb", "s-ahb";
+>  			clocks = <&gcc GCC_QUPV3_WRAP_0_M_AHB_CLK>,
+>  				 <&gcc GCC_QUPV3_WRAP_0_S_AHB_CLK>;
+> +			iommus = <&apps_smmu 0xc3 0x0>;
+>  			#address-cells = <2>;
+>  			#size-cells = <2>;
+>  			ranges;
+> @@ -595,6 +596,7 @@ qupv3_id_1: geniqup@ac0000 {
+>  			clock-names = "m-ahb", "s-ahb";
+>  			clocks = <&gcc GCC_QUPV3_WRAP_1_M_AHB_CLK>,
+>  				 <&gcc GCC_QUPV3_WRAP_1_S_AHB_CLK>;
+> +			iommus = <&apps_smmu 0x603 0x0>;
+>  			#address-cells = <2>;
+>  			#size-cells = <2>;
+>  			ranges;
+> @@ -617,6 +619,7 @@ qupv3_id_2: geniqup@cc0000 {
+>  			clock-names = "m-ahb", "s-ahb";
+>  			clocks = <&gcc GCC_QUPV3_WRAP_2_M_AHB_CLK>,
+>  				 <&gcc GCC_QUPV3_WRAP_2_S_AHB_CLK>;
+> +			iommus = <&apps_smmu 0x7a3 0x0>;
+>  			#address-cells = <2>;
+>  			#size-cells = <2>;
+>  			ranges;
 > -- 
-> Qualcomm Technologies, Inc. is a member of the
-> Code Aurora Forum, a Linux Foundation Collaborative Project.
+> 2.29.2
 > 
+
+-- 
+~Vinod
