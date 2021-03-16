@@ -2,116 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F33C433C985
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Mar 2021 23:51:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D77F33CABA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Mar 2021 02:16:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231664AbhCOWum (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Mar 2021 18:50:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47154 "EHLO
+        id S234225AbhCPBPc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Mar 2021 21:15:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231377AbhCOWul (ORCPT
+        with ESMTP id S234176AbhCPBPT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Mar 2021 18:50:41 -0400
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B183C061756
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 15:50:41 -0700 (PDT)
-Received: by mail-pj1-x1036.google.com with SMTP id ha17so8842956pjb.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 15:50:41 -0700 (PDT)
+        Mon, 15 Mar 2021 21:15:19 -0400
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BA5CC06175F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 18:15:19 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id k23-20020a17090a5917b02901043e35ad4aso442556pji.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 18:15:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=R2+ovV6L3in/MumK+lTJGLQ5/2i+MFlHYR2x0Kz43Uk=;
-        b=Kx+vExQNwcrCcz/1VobS6pnZvxjXg3JIuqQQh4w+D0sdgaaWHUWrYxM1EmMqJTZoez
-         I4w8XUY2s/aa6lYc/pfrSzcMBQORMijou/ifDRycyWarXqsLBxFYdHvVeWuvQEo5rrYf
-         g+0gBIibn5kjjFd/0YexcLsUVmF2/Ok0Ab6hQ=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=N8PazbWxeQpma3IK9jRB0TxFsaKkwjN5cuc0b0m+m2M=;
+        b=Yucta2XTHd86ALutAlq9i8vYXxo8CaGrEyvfGJ9dgeAaEvR3W6aRRqPI4kdM8RuUWy
+         1po+j965cuiAM754oSDUDRwpiwHMV1yuRM4BI2k8jhzdlAVDxiN66/hxGyjuFV+DTS+O
+         AfurjumWkxNMUz7cOdZk2jMrmeiESEgJT+S/I=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=R2+ovV6L3in/MumK+lTJGLQ5/2i+MFlHYR2x0Kz43Uk=;
-        b=r/EJCszryEOgLvyyfxBNa4e4Q2dGm97czZWzrxv1YzZ4j+Jad+jXmuX19ZNoWnS0Xg
-         DXpcMbsN8KyR6NePbjoEC32Lx3jo4tkxIxHsCOD1OS0xn/iOBBiM3IiP2VddIQePy/3S
-         s7c8y9CHjT7OFhK/BYIDBZHnz70M+sXYR5fj5/ZV3VzncFPyN+zJbPVrVPm+uBDvFBsQ
-         JAbr1fiblLzKW1yY9a8W1Sdi5i3A6a00GhYvQuBDeM++GKQ/HR7PRo9+mykquDcxv9Iq
-         j1tkPmGQMGEhdMxc+WW3MFuBkcFaoQ+CkT62+u0PEUCvhgMbYQaFqrwbjesg/cQYM9ih
-         Z+zA==
-X-Gm-Message-State: AOAM533HIqKO2Ar06VXjOim+QGOnvfibb5/ox2f/bba8IjQJMFyoY/GZ
-        rBK6KSte7WFVHxK7tPnxt4/zrQ==
-X-Google-Smtp-Source: ABdhPJy+q49KIQaR8QnZDHxJ8pD9j0Svh6so5BA+3ZGasQchet21dplnLkDJwDQU4EEkdHLC4GQfmw==
-X-Received: by 2002:a17:90a:3cc6:: with SMTP id k6mr1447789pjd.212.1615848640724;
-        Mon, 15 Mar 2021 15:50:40 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=N8PazbWxeQpma3IK9jRB0TxFsaKkwjN5cuc0b0m+m2M=;
+        b=nmOjiRblhJSS+xpVfaQ2zq6Cbhln6gpwMvxeQ4y4aN1zaIhAJbwPw/+TvwJYASSbyw
+         Ein7inDkavWy6w+DIKipIbTPd04qQ+bSCMWbCAWsHEL/S0hCNUsFx/hJlb7hkobSnqB7
+         2W9sO42zmbWmLpM0HtPg8NG0HtG/avBcnXfxAa9rUH6yNxOrOSWAIvJN/Om7vQmC1/te
+         PJm+dA/W+juKyCVsFAeSj5/4ylCicW1epqsDBuYeNNlCVTpVviE/rSAsafxpmlI4sHq/
+         Oj2fvmaN5ZFwAyrlCJ5Dje+X7IP8udPTv1bdABT5uBt2pxcX3iY3KZ32l312dtf0onQy
+         /91Q==
+X-Gm-Message-State: AOAM532HQ1jvArOpV2Q7RrrzjvbB/szUxIFhhWL+5W7ntrAgdoBDBdOw
+        8V6geK0AxknFERlz/Ax1r2oxQw==
+X-Google-Smtp-Source: ABdhPJwUXEsQ6bCOeQfni68O7RS1LZO5BRxAyA+VB21PrjYoHi6CoRlKsF2rEpEQRvjV6L/PGeH+HA==
+X-Received: by 2002:a17:902:e309:b029:e6:c17b:895a with SMTP id q9-20020a170902e309b02900e6c17b895amr34441plc.74.1615857319034;
+        Mon, 15 Mar 2021 18:15:19 -0700 (PDT)
 Received: from localhost ([2620:15c:202:1:9867:b969:5d4f:e017])
-        by smtp.gmail.com with UTF8SMTPSA id c24sm13631741pfi.193.2021.03.15.15.50.39
+        by smtp.gmail.com with UTF8SMTPSA id gb1sm811159pjb.21.2021.03.15.18.15.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Mar 2021 15:50:40 -0700 (PDT)
-Date:   Mon, 15 Mar 2021 15:50:39 -0700
+        Mon, 15 Mar 2021 18:15:18 -0700 (PDT)
 From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sc7180: Add CoachZ rev3
-Message-ID: <YE/kv1CwPoEGs9O8@google.com>
-References: <20210312183228.550779-1-mka@chromium.org>
- <20210312103211.v2.3.I95b8a63103b77cab6a7cf9c150f0541db57fda98@changeid>
- <CAD=FV=Xq4bd8j3_to_9rJmyqWTi-78OWVCd0meaJ9e_pmOH+Rg@mail.gmail.com>
+        Rob Herring <robh+dt@kernel.org>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>
+Subject: [PATCH v3 0/3] arm64: dts: qcom: sc7180: Disable the charger thermal zone on more trogdor boards
+Date:   Mon, 15 Mar 2021 18:15:12 -0700
+Message-Id: <20210316011516.1314686-1-mka@chromium.org>
+X-Mailer: git-send-email 2.31.0.rc2.261.g7f71774620-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAD=FV=Xq4bd8j3_to_9rJmyqWTi-78OWVCd0meaJ9e_pmOH+Rg@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 15, 2021 at 02:49:04PM -0700, Doug Anderson wrote:
-> Hi,
-> 
-> On Fri, Mar 12, 2021 at 10:32 AM Matthias Kaehlcke <mka@chromium.org> wrote:
-> >
-> > CoachZ rev3 uses a 100k NTC thermistor for the charger temperatures,
-> > instead of the 47k NTC that is stuffed in earlier revisions. Add .dts
-> > files for rev3.
-> >
-> > The 47k NTC currently isn't supported by the PM6150 ADC driver.
-> > Disable the charger thermal zone for rev1 and rev2 to avoid the use
-> > of bogus temperature values.
-> >
-> > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> > ---
-> >
-> > Changes in v2:
-> > - added CoachZ rev3
-> > - updated subject and commit message
-> >
-> >  arch/arm64/boot/dts/qcom/Makefile              |  2 ++
-> >  .../boot/dts/qcom/sc7180-trogdor-coachz-r1.dts |  9 +++++++++
-> >  .../dts/qcom/sc7180-trogdor-coachz-r2-lte.dts  |  4 ++--
-> >  .../boot/dts/qcom/sc7180-trogdor-coachz-r2.dts | 13 +++++++++++--
-> >  .../dts/qcom/sc7180-trogdor-coachz-r3-lte.dts  | 18 ++++++++++++++++++
-> >  .../boot/dts/qcom/sc7180-trogdor-coachz-r3.dts | 15 +++++++++++++++
-> >  6 files changed, 57 insertions(+), 4 deletions(-)
-> 
-> So what you have here is good and we could land it. Feel free to add
-> my Reviewed-by tag if you want.
-> 
-> ...but I want to propose an alternative. It turns out that these days
-> coachz-r1 and coachz-r2 are actually the same. The only reason both
-> exist is because <https://crrev.com/c/2733863> ("CHROMIUM: arm64: dts:
-> qcom: sc7180: add dmic_clk_en back") wasn't the proper inverse of
-> <https://crrev.com/c/2596726> ("CHROMIUM: arm64: dts: qcom: sc7180:
-> remove dmic_clk_en").
-> 
-> It sorta squashes two changes into one, but if you combined your
-> change with one that folded "-r1" into "-r2" it would actually make a
-> smaller / easier to understand change, essentially, it would be:
-> - just a rename of the "-r2" file to be "-r3"
-> - add "-rev2" into the list of compatibles in "-r1" file.
-> - add the "disable" into the "-r1" file.
+We already disabled the charger thermal zone for lazor to avoid
+bogus temperature readings from an unsupported thermistor. Some
+revisions of other trogdor boards that are added by Doug's
+'arm64: dts: qcom: Update sc7180-trogdor variants from downstream'
+series have the same problem. Disable the charger thermal zone for
+them too.
 
-I agree, if rev1 and rev2 are the same in terms of the DT they
-should use the same file(s).
+This series is based on v2 of the 'arm64: dts: qcom: Update
+sc7180-trogdor variants from downstream' series
+(https://patchwork.kernel.org/project/linux-arm-msm/list/?series=440315)
+
+(no changes since v1)
+
+Matthias Kaehlcke (3):
+  arm64: dts: qcom: sc7180: lazor: Simplify disabling of charger thermal
+    zone
+  arm64: dts: qcom: sc7180: Add pompom rev3
+  arm64: dts: qcom: sc7180: Add CoachZ rev3
+
+ arch/arm64/boot/dts/qcom/Makefile             |  6 ++-
+ .../dts/qcom/sc7180-trogdor-coachz-r1-lte.dts |  4 +-
+ .../dts/qcom/sc7180-trogdor-coachz-r1.dts     | 13 ++++++-
+ ...e.dts => sc7180-trogdor-coachz-r3-lte.dts} |  6 +--
+ ...hz-r2.dts => sc7180-trogdor-coachz-r3.dts} |  4 +-
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r0.dts |  9 -----
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r1.dts |  9 -----
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r3.dts |  9 -----
+ .../boot/dts/qcom/sc7180-trogdor-lazor.dtsi   |  9 +++++
+ .../dts/qcom/sc7180-trogdor-pompom-r1.dts     | 12 ++++++
+ .../dts/qcom/sc7180-trogdor-pompom-r2-lte.dts |  4 +-
+ .../dts/qcom/sc7180-trogdor-pompom-r2.dts     | 38 +++++--------------
+ .../dts/qcom/sc7180-trogdor-pompom-r3-lte.dts | 14 +++++++
+ .../dts/qcom/sc7180-trogdor-pompom-r3.dts     | 15 ++++++++
+ .../boot/dts/qcom/sc7180-trogdor-pompom.dtsi  | 29 ++++++++++++++
+ 15 files changed, 112 insertions(+), 69 deletions(-)
+ rename arch/arm64/boot/dts/qcom/{sc7180-trogdor-coachz-r2-lte.dts => sc7180-trogdor-coachz-r3-lte.dts} (69%)
+ rename arch/arm64/boot/dts/qcom/{sc7180-trogdor-coachz-r2.dts => sc7180-trogdor-coachz-r3.dts} (75%)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3-lte.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3.dts
+
+-- 
+2.31.0.rc2.261.g7f71774620-goog
+
