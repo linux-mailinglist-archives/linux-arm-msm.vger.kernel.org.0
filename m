@@ -2,125 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2747833CDE7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Mar 2021 07:19:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A472033CEC3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Mar 2021 08:43:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229867AbhCPGSt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Mar 2021 02:18:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58722 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229811AbhCPGSs (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Mar 2021 02:18:48 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22337C061756
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 23:18:48 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id d23so13239322plq.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Mar 2021 23:18:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=TguaXqmd8x2or75hALM9SNABakfsKUxz8lHQoAaEArU=;
-        b=Mj4QyqhV3XdiAqA4SjpUsa5Tq5JsJWiCZkqHI6b+KDlrVz8tR2Nsy1lhorqh9/sxcG
-         BQfxwsPZrge3xBoS6WdenSEkCx4/tQS1+wGVfMzng/SjMAs4C8zvEJJGwtIVXpK5yj7m
-         j69KRo6wN7A7qXntRCEpDF1RhN5cvRe5SwjAazXBw/4O4K6ITDjcfhbpzicbsNCYXQwE
-         EzIo177kEKnibzH2Rxt3YoHtwetg+XjFUnUKW/BYSpCGn22bo8HIKLAlJ+N10Ndh0R4E
-         bAgEsoQYuiye/ih5jS+yz6tzYokPqycjCXOqkolf+o6gKpEvG0Qk9rS6aSVwQ4+zKoCx
-         iYUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=TguaXqmd8x2or75hALM9SNABakfsKUxz8lHQoAaEArU=;
-        b=EOPMhPgMotnUrxCPS2EbgfZK/IUTTRGzuMldduqRU586A3mOzd7BgnByDp1tRyEssv
-         lgzJGxV00ixSpCGt5UANPXOgsRLI9WSb0G4gcdRXIERMFOTnij8kCdyBX9A8VHKUWWb4
-         gNldv1SL0FPU79Q4nmiYPQkV3PaVAWjFUuzqy6uVhVZ5ytQjArj+PDcr9A/aUU3kx798
-         bgIN1+ZFiDcBUghEdkpJ1xkG626zWL+RYHfMtA4VP/JLWFncidnnM+bzSh4y9YFVNPvC
-         qNFMN1DKosbVMaGMkxTjL+594uT8Fz22ipyGv/dtW4HVHf7FhpyFdaRry1Hp/ETp50wu
-         E3hg==
-X-Gm-Message-State: AOAM5300uW8OZX0CwYfVo4Es2y/UkPoHB86e/koidEntCNnASnBRX7Wc
-        VP5FQlvaurcBy2qSg5DMrud3
-X-Google-Smtp-Source: ABdhPJyPt9iAovD241Wypbx2549tYfVbiI0PbF3mXX5I55qXsahZMaDBSmHXsW27iSbo9uUtYYHiyQ==
-X-Received: by 2002:a17:90a:8a8b:: with SMTP id x11mr3144751pjn.151.1615875527679;
-        Mon, 15 Mar 2021 23:18:47 -0700 (PDT)
-Received: from thinkpad ([103.66.79.72])
-        by smtp.gmail.com with ESMTPSA id v3sm14865198pff.217.2021.03.15.23.18.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Mar 2021 23:18:47 -0700 (PDT)
-Date:   Tue, 16 Mar 2021 11:48:43 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3] bus: mhi: core: Check state before processing
- power_down
-Message-ID: <20210316061843.GI1798@thinkpad>
-References: <1615409365-8165-1-git-send-email-jhugo@codeaurora.org>
+        id S230407AbhCPHnF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Mar 2021 03:43:05 -0400
+Received: from mout.gmx.net ([212.227.17.20]:42847 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229944AbhCPHmz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 16 Mar 2021 03:42:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1615880564;
+        bh=8yDr8Mi2eVooRRFxco1MT4YMNjK8v9cGV/UYrJ4vWBc=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=fHCdGjHAPcioohfdruk0ChAE4+IbB97JNjD96jPUMFiNzpg2WdcNJAcdksas9fq6I
+         9SgPE86Ge5+L2sLjFj1fd6zqIb8iLJ5KGD0rplqJb/G+CQrDcChsOE8tqIou9VNkyU
+         tWyF7nqXKnnGCANUSBUfE/KUamcc3pf7RhzRyvZI=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.123.51] ([62.143.246.89]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M3DJl-1lPeif1PFF-003beb; Tue, 16
+ Mar 2021 08:42:44 +0100
+Subject: Re: [PATCH] efi: stub: override RT_PROP table supported mask based on
+ EFI variable
+To:     Ard Biesheuvel <ardb@kernel.org>, Shawn Guo <shawn.guo@linaro.org>,
+        Atish Patra <atish.patra@wdc.com>,
+        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+        Steve McIntyre <steve@einval.com>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        linux-efi <linux-efi@vger.kernel.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Leif Lindholm <leif@nuviainc.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+References: <20210306113519.294287-1-ardb@kernel.org>
+ <20210307110228.GP17424@dragon>
+ <CAMj1kXFiqXwCqJE9Wxu-tc3HYSh1qCqPLL_Csc=gW6SOYrweWw@mail.gmail.com>
+ <20210309032248.GR17424@dragon>
+ <CAF6AEGu6ZpfFK5FnQjtE33kkYL_t63J=yJLeK70_46FaLPq7eQ@mail.gmail.com>
+ <CAMj1kXGwhx9Z-JCw2NvWBYtHbzVb=EmJn_Jfd97wGzDYNQG2Lw@mail.gmail.com>
+ <20210315031119.GY17424@dragon>
+ <CAMj1kXE1mZm2jYwv80FNVh0m6wHEWqq14+jQWnJSUThnX4Eedw@mail.gmail.com>
+From:   Heinrich Schuchardt <xypron.glpk@gmx.de>
+Message-ID: <81899e5a-ab6d-69a2-c172-535300b3ce02@gmx.de>
+Date:   Tue, 16 Mar 2021 08:42:38 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1615409365-8165-1-git-send-email-jhugo@codeaurora.org>
+In-Reply-To: <CAMj1kXE1mZm2jYwv80FNVh0m6wHEWqq14+jQWnJSUThnX4Eedw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:E+/W7fDRaQJFtvR+70EuR7xDHtZB39Skz59uxuY8WgHXxHKaLxj
+ ZazplTGb6LpfTcHiJKcnT4IIbu0/1xZNFEkKRv5HWx3dyZG+gKZMc57WSGqWTmMvAdD0f6G
+ 2S0r5aN52hFbnhCVQO+UolNsBP+CiV1875CWmcMZYTiii9RMGcZfuFhYJt4CBILrOOnWEZJ
+ 8yM67Y9ZZ/WSQpD45tnrQ==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:WPLdMnD/lWc=:ECaWxVYGU5ZUvfI6zOkX1s
+ LsGPSt3Vdg+rtKGke21XgjjSkB900uqNi95WFyD5jK56vGTZ9u+VFBifNlrsRugwODOwRV+IP
+ A1jht0i1miLNMYRX1fZMOb+Hy9FWyJjLozA9MeIR0qqVW4/wOJYUd/uSfQLyv7q6d7wVT38Ip
+ 6eZvhALpk8+rn26XXicYi2ITcCHk9fg7xzWdquagDyNca4YolR0kO7HcTU0Y9zZuTyFqGrQTN
+ B9sPsHWBr+sO5Z7smMzA2iBJ+Vo2wc2oCJayJn57Sf06nwrgIg6KL1znsAToptrMHwLiK6gZO
+ 1H+hERuQ/xchI5RBw8VNo/0fsGOO6n59C2Ga6tXuIH8f6kVauBrHwKGv21uUBM4mPzSEHFL1X
+ as7m6MHJjjCpxHLP6TLf023pLRrty88p40EJt5Xasdp3Z30HBxAp+e85xHTRf9GQuOGkm/cPv
+ OuZKMJk/CUObLYZJoh+qgqrDkcbMfNhSS3wrI39yhlUwy43mWuqMwLoYXvxAwYjcrcEIh9i3N
+ ZBUSaZVk3DXbNRSZfCbSC7mWxrFd410cixptjD4Wdxg/hSWDR8vUHT7ulSRSVA7KU5URdL3Qt
+ 22MCSi0BlkarFsDzW+xRwyelYQE1vxm80hr3sZ2S18RZZ9iG5GEg1PiK6uwAGw3OapdRxsz3/
+ 8oQUpvk/rXL07AyIXPyNpFy4cMbrFkF8cTA+H6VlIJLRniabrRn8nyuWmiwJF2076Jp3gf5Zd
+ X8ctMuzSNFow5LrFXpfxh7l0Lmf5wL0k29ZUOw/631ir5nZSDBdMj9wRioXIInb3zPsX/1rGb
+ vpwKYTCeoIqctb07hU+5nBy0iVgp0qNzxjCK64PcVYwEEFO1nA5RflcTxsACLZ5KuMt8qEj2B
+ taITxqmI7XBol259Q6Fg==
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 10, 2021 at 01:49:25PM -0700, Jeffrey Hugo wrote:
-> We cannot process a power_down if the power state is DISABLED.  There is
-> no valid mhi_ctxt in that case, so attepting to process the power_down
-> will likely result in a null pointer dereference.  If the power state is
-> DISABLED, there is nothing to do anyways, so just bail early.
-> 
-> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+On 3/15/21 2:07 PM, Ard Biesheuvel wrote:
+> On Mon, 15 Mar 2021 at 04:11, Shawn Guo <shawn.guo@linaro.org> wrote:
+>>
+>> On Tue, Mar 09, 2021 at 07:47:25PM +0100, Ard Biesheuvel wrote:
+>>> On Tue, 9 Mar 2021 at 19:10, Rob Clark <robdclark@gmail.com> wrote:
+>>>>
+> ...
+>>>> fwiw, the valid use-case for ACPI boot on these things is for distro
+>>>> installer.. it might not be the shiny accelerated experience, but you
+>>>> want to be able to get thru the installer and then install updates to
+>>>> get latest kernel/dtb/etc
+>>>>
+>>>> it is a small use-case, but kinda an important step ;-)
+>>>>
+>>>
+>>> That is a fair point. However, as I understand it, we need this to wor=
+k around
+>>> - the need to pass efi=3Dnovamap
+>>> - broken poweroff on Flex5g
+>>
+>> One more: broken EFI variable runtime services on all Snapdragon laptop=
+s
+>>
+>> It's been another pain of running debian-installer (d-i) on these
+>> laptops, where EFI NV variables are just stored on UFS disk.  So after
+>> Linux takes over the control of UFS, EFI NV variable runtime services
+>> then become out of service.  Currently, we have to apply a hack [1] on
+>> d-i grub-installer to get around the issue,  and it's been the only
+>> remaining out-of-tree patch we have to carry for d-i.  With this nice
+>> `OverrideSupported` support, we will be able to drop that hack
+>> completely.
+>>
+>>>
+>>> So an installer either needs to set the EFI variable, or pass
+>>> efi=3Dnovamap on the first boot. Note that there are no arm64 EFI
+>>> systems known where efi=3Dnovamap causes problems. In fact, I would
+>>> prefer to stop using SetVirtualAddressMap() altogether, as it does not
+>>> provide any benefit whatsoever. So perhaps we should make efi=3Dnovama=
+p
+>>> the default and be done with it.
+>>>
+>>> Broken poweroff is hardly a showstopper for an installer, given that
+>>> we cannot even install GRUB correctly.
+>>>
+>>> In summary, I am more than happy to collaborate constructively on this
+>>> (which is why I wrote the patch), but I don't think we're at a point
+>>> yet where this is the only thing standing in our way when it comes to
+>>> a smooth out-of-the-box Linux installation experience.
+>>
+>> There might be more to be done for getting a smooth Linux installation
+>> experience.  But IMHO, this `OverrideSupported` thing is definitely
+>> a big step to that.
+>>
+>
+> So the problem here seems to be that grub-install (or efibootmgr)
+> tolerates efivarfs being absent entirely, but bails out if it exists
+> but gives an error when trying to access it, right?
+>
+> This is not only a problem on Snapdragon systems afaik - most Uboot
+> based arm64 systems booting via EFI are affected by this as well.
+>
+> So it would be good if we could align with those folks, and maybe the
+> ones working on RISC-V as well, to see if we can get some consensus
+> around taking this approach.
+>
+> For the folks newly cc'ed on this thread: full version here
+> https://lore.kernel.org/linux-arm-msm/20210306113519.294287-1-ardb@kerne=
+l.org/
+>
+> Note that I am both the author of the patch, and the maintainer
+> pushing back on it. Please chime in if you think there are reasons why
+> we want this, something like this or nothing like this.
+>
+Hello Ard,
 
-Applied to mhi-next!
+looking at this thread it is hard to understand why this patch should be
+needed.
 
-Thanks,
-Mani
+If an UEFI application does not want to consume a service, it can do so
+without having to manipulate the RT properties table.
 
-> ---
-> 
-> v3: Move the pm_lock use up
-> v2: Fix subject and tweak the locking to avoid needless lock/unlock/relock
-> 
->  drivers/bus/mhi/core/pm.c | 12 ++++++++++--
->  1 file changed, 10 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-> index 414da4f..ea62549 100644
-> --- a/drivers/bus/mhi/core/pm.c
-> +++ b/drivers/bus/mhi/core/pm.c
-> @@ -1149,6 +1149,7 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
->  		mhi_deinit_dev_ctxt(mhi_cntrl);
->  
->  error_dev_ctxt:
-> +	mhi_cntrl->pm_state = MHI_PM_DISABLE;
->  	mutex_unlock(&mhi_cntrl->pm_mutex);
->  
->  	return ret;
-> @@ -1160,12 +1161,19 @@ void mhi_power_down(struct mhi_controller *mhi_cntrl, bool graceful)
->  	enum mhi_pm_state cur_state, transition_state;
->  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
->  
-> +	mutex_lock(&mhi_cntrl->pm_mutex);
-> +	write_lock_irq(&mhi_cntrl->pm_lock);
-> +	cur_state = mhi_cntrl->pm_state;
-> +	if (cur_state == MHI_PM_DISABLE) {
-> +		write_unlock_irq(&mhi_cntrl->pm_lock);
-> +		mutex_unlock(&mhi_cntrl->pm_mutex);
-> +		return; /* Already powered down */
-> +	}
-> +
->  	/* If it's not a graceful shutdown, force MHI to linkdown state */
->  	transition_state = (graceful) ? MHI_PM_SHUTDOWN_PROCESS :
->  			   MHI_PM_LD_ERR_FATAL_DETECT;
->  
-> -	mutex_lock(&mhi_cntrl->pm_mutex);
-> -	write_lock_irq(&mhi_cntrl->pm_lock);
->  	cur_state = mhi_tryset_pm_state(mhi_cntrl, transition_state);
->  	if (cur_state != transition_state) {
->  		dev_err(dev, "Failed to move to state: %s from: %s\n",
-> -- 
-> Qualcomm Technologies, Inc. is a member of the
-> Code Aurora Forum, a Linux Foundation Collaborative Project.
-> 
+Which UEFI applications are broken? Why can't they be fixed instead of
+patching the kernel?
+
+Can we have complete descriptions of the deficiencies of the involved
+applications. I saw GRUB and the Debian installer mentioned in the
+thread. Are there others?
+
+Best regards
+
+Heinrich
