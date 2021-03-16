@@ -2,246 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DB9B33D27D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Mar 2021 12:13:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1249133D319
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Mar 2021 12:34:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237101AbhCPLMp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Mar 2021 07:12:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37272 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232943AbhCPLMV (ORCPT
+        id S229688AbhCPLeW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Mar 2021 07:34:22 -0400
+Received: from lb2-smtp-cloud7.xs4all.net ([194.109.24.28]:55807 "EHLO
+        lb2-smtp-cloud7.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S237189AbhCPLeN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Mar 2021 07:12:21 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 806DBC06175F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 04:12:20 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id a13so1676962pln.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 04:12:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=co9C6unBdFkpgv7+tGLws46NOGe8/tBYeyT4qQSLwlc=;
-        b=HRiKQVMBFG/A6gPAZpN/MiRsDAwXqD/MYUJKSSh7ybK9TDtdRJgVUyb6DmaBH3WnQz
-         bUs0wPminx/GLoogW8PPeQjVhbHPa352X6JsDfIPqNdBCATDUT3J3rQFcrStCK5u5teb
-         uPL+6lUUTM5+1l0QIFweXzlE8Wu9czn9A/AkON5+Nv1dydAobbQBiG8LCisAx/6LktD0
-         zOvKX19zzAdh0xZ2ghA6NjnjPJL3gi3OLOm118yFanFdHyq97W+0toDndtv/7KPhHdhU
-         I/vo64LXjAEFq++SXAX96lHwWcSD65CTcqqivRLZ9LeEY3d7S8zliAfEvBCWzrlVubZ/
-         lcQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=co9C6unBdFkpgv7+tGLws46NOGe8/tBYeyT4qQSLwlc=;
-        b=Ua0LidU6CHcfgpBcWE+kRBfqHeoVoyDIMPJ4992t9C2nGVBE0GXMjO9Db/33XvvVPk
-         L8DPTw8qgLDM/3LzqfbUIJ7+NRd+sd7W3K3q9vvtANTXC2LBVLSBEPd3NXG+y71VGoWA
-         i8+jFbIfCcMCCyrMPSeFz1unTwNuFB9pLVF711xtGQX/TR0e9FVY2pXrinvctJRS66jR
-         WDRW4DZh16GsBc2dpiZHYnydgPKDMHj6/2zlsy7MtpClsEaNMwGofzK4kvIJbOkJhPVp
-         e2AnE2rlcdKTLqEOBUIDOYPzIIGmc6Uf4mmOOPYnLTvIOASql9EyYaSySEHtJ/c6s1L2
-         UiyA==
-X-Gm-Message-State: AOAM530RzNlXdcIbEmxV5A7wlcXatB3oOASe1sPQML02CoS9ptR9QBoj
-        /I1gXh1quIzYjB63lCZ9lzKwAFWf7iCwQj0dP0f78w==
-X-Google-Smtp-Source: ABdhPJxxy+osmijXyuDaa1mP5+f0EErKvMxpTVF7WymI+74vScoiTtjvsZJ0oOoCIDCp368NI1c6lnxCs1T1BBXgrw0=
-X-Received: by 2002:a17:90a:516:: with SMTP id h22mr4143299pjh.222.1615893139917;
- Tue, 16 Mar 2021 04:12:19 -0700 (PDT)
+        Tue, 16 Mar 2021 07:34:13 -0400
+Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
+        by smtp-cloud7.xs4all.net with ESMTPA
+        id M7xfl1ZAO4ywlM7xjlAlXV; Tue, 16 Mar 2021 12:34:11 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s2;
+        t=1615894451; bh=JkEdXlW1bhCgFYkEP/igDT2s8R0tOEhcNGr/T9WCMLk=;
+        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
+         Subject;
+        b=f0KbRRBk2E6aDJo/dBE3MWpAuoNF9QE2ADbfj4+X8AbSEct/y2SvXmruGMy0U3rOo
+         fJOxXhY+aqXGT1ySV4jFvfRWV92shoeah88O0Wsi3DYmMUuo6ShGo0jB9O+lngoanJ
+         tN+SZ/+16ajJlj9VaCBegkXYOe+QdL20LkSsIL9pXraodchRXa019SQZRbaW3yGf4K
+         IzvxoxRCsRmgnzMDPmdF4xm+NH+Qmzl7BGYnYRTzGRdL65uGSlbwwSFPZ3wRqSPiL8
+         pXdkRueeP/TTIzyxxbxIQN+3k499hpYXFNDtiocnfO7GIiVCKg3Bsg/uROpck/hj2N
+         7S1jFCzGYaEyw==
+Subject: Re: [PATCH v2 1/2] v4l2-ctrl: Add decoder conceal color control
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20210302114430.3594475-1-stanimir.varbanov@linaro.org>
+ <20210302114430.3594475-2-stanimir.varbanov@linaro.org>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Message-ID: <a36a9400-462d-c50e-4b7f-e2e8a181c4e3@xs4all.nl>
+Date:   Tue, 16 Mar 2021 12:34:07 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Firefox/78.0 Thunderbird/78.7.1
 MIME-Version: 1.0
-References: <20210315155942.640889-1-robert.foss@linaro.org>
- <20210315155942.640889-10-robert.foss@linaro.org> <b06ce7af-4449-fb5c-2920-09ebd5abdf75@xs4all.nl>
-In-Reply-To: <b06ce7af-4449-fb5c-2920-09ebd5abdf75@xs4all.nl>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Tue, 16 Mar 2021 12:12:08 +0100
-Message-ID: <CAG3jFytECFBW7mC0=0ZwL2HNof3jOiJ9=KqUhaPb-KvnW5ut2g@mail.gmail.com>
-Subject: Re: [PATCH v8 09/22] media: camss: Refactor CSID HW version support
-To:     Hans Verkuil <hverkuil@xs4all.nl>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        angelogioacchino.delregno@somainline.org,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        linux-media <linux-media@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Sakari Ailus <sakari.ailus@iki.fi>,
-        Andrey Konovalov <andrey.konovalov@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
-        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Jonathan Marek <jonathan@marek.ca>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20210302114430.3594475-2-stanimir.varbanov@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfImq5vL9PsgjEwQz3Dpb/PGz34BpmFR9uEAxCCND4Pv+CZswM6wL8TDzxMhyNP3+gDNrFxp/6OICOH5wqKdVBBN1R55nqsTAax30xg45tm3HvYF5d8fZ
+ VKLSi2UERkoBeEQUTnWldjyLyqkmfdBmm+l9jrapIfQm/0BpwOU9TLKtQsqCyuLA3QJMmtI/kiaY4U1AWaxYI1Q0em0AT5+HhBIQrMpIqUZYqm2xO5TCOCvx
+ FvwStzXDS8NAjnqA6wvXWb/E9qBLtocSdiJuUFhElS9daCQpxD/XVoItwaMucpS7X/IDWQm9tR/dpKlRJx9l8utcXgbcXkaH/LcFAta7o+g=
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Hans,
-
-Thanks for looking into this.
-
-On Tue, 16 Mar 2021 at 10:36, Hans Verkuil <hverkuil@xs4all.nl> wrote:
->
-> On 15/03/2021 16:59, Robert Foss wrote:
-> > In order to support Qualcomm ISP hardware architectures that diverge
-> > from older architectures, the CSID subdevice drivers needs to be refactored
-> > to better abstract the different ISP hardware architectures.
-> >
-> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
-> > Reviewed-by: Andrey Konovalov <andrey.konovalov@linaro.org>
-> > ---
-> >
-> >
-> > Changes since v1:
-> >  - kernel test robot: Add missing include, interrupt.h
-> >
-> > Changes since v4:
-> >  - Andrey: Removed whitespace from some includes
-> >  - Andrey: Removed unused enum
-> >
-> > Changes since v5:
-> >  - Andrey: Fixed test pattern selection logic
-> >  - Andrey: Align test mode enum values with v4l mode selection return values
-> >  - Andrey: r-b
-> >  - Move Titan 170 test modes to the the Titan 170 commit
-> >  - Fixed test pattern boundary check
-> >
-> > Changes since v7:
-> >  - Hans: Fix checkpatch.pl --strict warnings
-> >
-> >
-> >
-> >  drivers/media/platform/qcom/camss/Makefile    |   2 +
-> >  .../platform/qcom/camss/camss-csid-4-1.c      | 328 ++++++++++
-> >  .../platform/qcom/camss/camss-csid-4-7.c      | 404 ++++++++++++
-> >  .../media/platform/qcom/camss/camss-csid.c    | 608 +-----------------
-> >  .../media/platform/qcom/camss/camss-csid.h    | 129 +++-
-> >  5 files changed, 885 insertions(+), 586 deletions(-)
-> >  create mode 100644 drivers/media/platform/qcom/camss/camss-csid-4-1.c
-> >  create mode 100644 drivers/media/platform/qcom/camss/camss-csid-4-7.c
-> >
->
-> <snip>
->
-> > diff --git a/drivers/media/platform/qcom/camss/camss-csid.h b/drivers/media/platform/qcom/camss/camss-csid.h
-> > index 479ac1f83836..613ef377b051 100644
-> > --- a/drivers/media/platform/qcom/camss/camss-csid.h
-> > +++ b/drivers/media/platform/qcom/camss/camss-csid.h
-> > @@ -11,6 +11,7 @@
-> >  #define QC_MSM_CAMSS_CSID_H
-> >
-> >  #include <linux/clk.h>
-> > +#include <linux/interrupt.h>
-> >  #include <media/media-entity.h>
-> >  #include <media/v4l2-ctrls.h>
-> >  #include <media/v4l2-device.h>
-> > @@ -44,18 +45,42 @@
-> >  #define DATA_TYPE_RAW_16BIT          0x2e
-> >  #define DATA_TYPE_RAW_20BIT          0x2f
-> >
-> > -enum csid_payload_mode {
-> > -     CSID_PAYLOAD_MODE_INCREMENTING = 0,
-> > -     CSID_PAYLOAD_MODE_ALTERNATING_55_AA = 1,
-> > -     CSID_PAYLOAD_MODE_ALL_ZEROES = 2,
-> > -     CSID_PAYLOAD_MODE_ALL_ONES = 3,
-> > -     CSID_PAYLOAD_MODE_RANDOM = 4,
-> > -     CSID_PAYLOAD_MODE_USER_SPECIFIED = 5,
-> > +#define CSID_RESET_TIMEOUT_MS 500
-> > +
-> > +enum csid_testgen_mode {
-> > +     CSID_PAYLOAD_MODE_DISABLED = 0,
-> > +     CSID_PAYLOAD_MODE_INCREMENTING = 1,
-> > +     CSID_PAYLOAD_MODE_ALTERNATING_55_AA = 2,
-> > +     CSID_PAYLOAD_MODE_ALL_ZEROES = 3,
-> > +     CSID_PAYLOAD_MODE_ALL_ONES = 4,
-> > +     CSID_PAYLOAD_MODE_RANDOM = 5,
-> > +     CSID_PAYLOAD_MODE_USER_SPECIFIED = 6,
-> > +     CSID_PAYLOAD_MODE_NUM_SUPPORTED_GEN1 = 6, /* excluding disabled */
-> > +};
-> > +
-> > +static const char * const csid_testgen_modes[] = {
-> > +     "Disabled",
-> > +     "Incrementing",
-> > +     "Alternating 0x55/0xAA",
-> > +     "All Zeros 0x00",
-> > +     "All Ones 0xFF",
-> > +     "Pseudo-random Data",
-> > +     "User Specified",
-> > +};
->
-> This gives this sparse warning:
->
-> 'csid_testgen_modes' defined but not used [-Wunused-const-variable=]
-
-Thanks for supplying a patch. I'll merge it into patch 9 & 10.
-
->
-> This array needs to be moved to camss-csid.c and declared as an extern
-> here. Also, this menu array needs to be terminated with a NULL, and the
-> right capitalization needs to be used (first character of each word must
-> be a capital). This is a suggested patch I made to verify that this solves
-> this issue, but really both patch 9 and 10 need to be modified.
->
-> Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+On 02/03/2021 12:44, Stanimir Varbanov wrote:
+> Add decoder v4l2 control to set conceal color.
+> 
+> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 > ---
->  drivers/media/platform/qcom/camss/camss-csid.c | 14 ++++++++++++++
->  drivers/media/platform/qcom/camss/camss-csid.h | 13 +------------
->  2 files changed, 15 insertions(+), 12 deletions(-)
->
-> diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
-> index fb94dc03ccd4..1513b3d47fc2 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csid.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csid.c
-> @@ -27,6 +27,20 @@
->
->  #define MSM_CSID_NAME "msm_csid"
->
-> +const char * const csid_testgen_modes[] = {
-> +       "Disabled",
-> +       "Incrementing",
-> +       "Alternating 0x55/0xAA",
-> +       "All Zeros 0x00",
-> +       "All Ones 0xFF",
-> +       "Pseudo-Random Data",
-> +       "User Specified",
-> +       "Complex Pattern",
-> +       "Color Box",
-> +       "Color Bars",
-> +       NULL
-> +};
+>  .../media/v4l/ext-ctrls-codec.rst             | 33 +++++++++++++++++++
+>  drivers/media/v4l2-core/v4l2-ctrls.c          |  9 +++++
+>  include/uapi/linux/v4l2-controls.h            |  1 +
+>  3 files changed, 43 insertions(+)
+> 
+> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> index 00944e97d638..817da8a14572 100644
+> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> @@ -674,6 +674,39 @@ enum v4l2_mpeg_video_frame_skip_mode -
+>      is currently displayed (decoded). This value is reset to 0 whenever
+>      the decoder is started.
+>  
+> +``V4L2_CID_MPEG_VIDEO_DEC_CONCEAL_COLOR (integer64)``
+> +    This control sets conceal color in YUV color space. It describes the
+
+conceal -> the conceal
+
+> +    client preference of error conceal color in case of error where
+
+client preference of the error conceal color in case of an error where the
+
+> +    reference frame is missing. The decoder should fill the reference
+> +    buffer with preferred color and use it for future decoding. The control
+
+with the
+
+> +    is using 16bits per channel.
+
+16bits -> 16 bits
+
+> +    Applicable to decoders.
 > +
->  u32 csid_find_code(u32 *codes, unsigned int ncodes,
->                    unsigned int match_format_idx, u32 match_code)
->  {
-> diff --git a/drivers/media/platform/qcom/camss/camss-csid.h b/drivers/media/platform/qcom/camss/camss-csid.h
-> index c2a025f6846b..81a3704ac0e3 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csid.h
-> +++ b/drivers/media/platform/qcom/camss/camss-csid.h
-> @@ -62,18 +62,7 @@ enum csid_testgen_mode {
->         CSID_PAYLOAD_MODE_NUM_SUPPORTED_GEN2 = 9, /* excluding disabled */
->  };
->
-> -static const char * const csid_testgen_modes[] = {
-> -       "Disabled",
-> -       "Incrementing",
-> -       "Alternating 0x55/0xAA",
-> -       "All Zeros 0x00",
-> -       "All Ones 0xFF",
-> -       "Pseudo-random Data",
-> -       "User Specified",
-> -       "Complex pattern",
-> -       "Color box",
-> -       "Color bars",
-> -};
-> +extern const char * const csid_testgen_modes[];
->
->  struct csid_format {
->         u32 code;
-> --
-> 2.30.1
->
-> Regards,
->
->         Hans
+> +.. flat-table::
+> +    :header-rows:  0
+> +    :stub-columns: 0
+> +
+> +    * -
+> +      - 8bit  format
+> +      - 10bit format
+> +      - 12bit format
+> +    * - Y luminance
+> +      - Bit 0:7
+> +      - Bit 0:9
+> +      - Bit 0:11
+> +    * - Cb chrominance
+> +      - Bit 16:23
+> +      - Bit 16:25
+> +      - Bit 16:27
+> +    * - Cr chrominance
+> +      - Bit 32:39
+> +      - Bit 32:41
+> +      - Bit 32:43
+> +    * - Must be zero
+> +      - Bit 48:63
+> +      - Bit 48:63
+> +      - Bit 48:63
+> +
+>  ``V4L2_CID_MPEG_VIDEO_DECODER_SLICE_INTERFACE (boolean)``
+>      If enabled the decoder expects to receive a single slice per buffer,
+>      otherwise the decoder expects a single frame in per buffer.
+> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
+> index 016cf6204cbb..a3b9d28a00b7 100644
+> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
+> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
+> @@ -945,6 +945,7 @@ const char *v4l2_ctrl_get_name(u32 id)
+>  	case V4L2_CID_MPEG_VIDEO_VBV_SIZE:			return "VBV Buffer Size";
+>  	case V4L2_CID_MPEG_VIDEO_DEC_PTS:			return "Video Decoder PTS";
+>  	case V4L2_CID_MPEG_VIDEO_DEC_FRAME:			return "Video Decoder Frame Count";
+> +	case V4L2_CID_MPEG_VIDEO_DEC_CONCEAL_COLOR:		return "Video Decoder Conceal Color";
+>  	case V4L2_CID_MPEG_VIDEO_VBV_DELAY:			return "Initial Delay for VBV Control";
+>  	case V4L2_CID_MPEG_VIDEO_MV_H_SEARCH_RANGE:		return "Horizontal MV Search Range";
+>  	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:		return "Vertical MV Search Range";
+> @@ -1430,6 +1431,14 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
+>  		*max = 0x7fffffffffffffffLL;
+>  		*step = 1;
+>  		break;
+> +	case V4L2_CID_MPEG_VIDEO_DEC_CONCEAL_COLOR:
+> +		*type = V4L2_CTRL_TYPE_INTEGER64;
+> +		*min = 0;
+> +		/* default for 8bit black, luma is 16, chroma is 128 */
+
+8bit -> 8 bit
+
+> +		*def = 0x8000800010LL;
+> +		*max = 0xffffffffffffLL;
+> +		*step = 1;
+> +		break;
+>  	case V4L2_CID_PIXEL_RATE:
+>  		*type = V4L2_CTRL_TYPE_INTEGER64;
+>  		*flags |= V4L2_CTRL_FLAG_READ_ONLY;
+> diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
+> index 039c0d7add1b..5e5a3068be2d 100644
+> --- a/include/uapi/linux/v4l2-controls.h
+> +++ b/include/uapi/linux/v4l2-controls.h
+> @@ -428,6 +428,7 @@ enum v4l2_mpeg_video_multi_slice_mode {
+>  #define V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE		(V4L2_CID_CODEC_BASE+228)
+>  #define V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME		(V4L2_CID_CODEC_BASE+229)
+>  #define V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITY_ID	(V4L2_CID_CODEC_BASE+230)
+> +#define V4L2_CID_MPEG_VIDEO_DEC_CONCEAL_COLOR		(V4L2_CID_CODEC_BASE+231)
+>  
+>  /* CIDs for the MPEG-2 Part 2 (H.262) codec */
+>  #define V4L2_CID_MPEG_VIDEO_MPEG2_LEVEL			(V4L2_CID_CODEC_BASE+270)
+> 
+
+After fixing the typos:
+
+Reviewed-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+
+Regards,
+
+	Hans
