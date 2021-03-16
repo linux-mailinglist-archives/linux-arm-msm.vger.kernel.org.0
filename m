@@ -2,58 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CCE433CFD3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Mar 2021 09:27:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5826C33D04E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Mar 2021 10:07:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234794AbhCPI11 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Mar 2021 04:27:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58096 "EHLO
+        id S230517AbhCPJHA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Mar 2021 05:07:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234769AbhCPI1J (ORCPT
+        with ESMTP id S229540AbhCPJGb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Mar 2021 04:27:09 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37749C06174A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 01:27:09 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id w18so20440861edc.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 01:27:09 -0700 (PDT)
+        Tue, 16 Mar 2021 05:06:31 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6629C06174A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 02:06:20 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id s21so10272432pjq.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 02:06:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=3CLf59KGSjWUQb8ryREHzVKvbUGjsmxFO7bkVEZRsGc=;
-        b=VTDQBGqkCkUmUjwq0Mnb618wkTUj6+3rVA/WFIqw+sR0+INRhP0urmFGxfIkcF7hjI
-         8ra7BPp6vxY0FJoy8DP0VNlqhQ3cBkmwk8TG6yw1vvy9HMJbgV8YdrK3DXlFp/mcfv5p
-         jyWLzz0oElNnjut7DcROb/H6bU6lRfjIqlygJI8xoQ3TmopL+ZGriOhSba2GIuMZSvyY
-         6UOmk8MjR4dZ4AnaeGcuCrC8i9kl3FB6Qz1ptJ3T/o+/n8ahYNUwmuj7Q63rgln3eHXg
-         qhWD+6pP09BI5uMP1xatAqCxLkMrlgrCvITE3jKiQubSHfaXlhPw9Vsz2wwX8EXnJhGs
-         xn1A==
+         :content-disposition:in-reply-to:user-agent;
+        bh=0yEEgmRevfgCYpgPJc7GGKptlmU0ANQIaf96uEVK5qM=;
+        b=OSoKMpUFFxvOoMYFPyikPDpPQ8IL9GcsbEPJw4SNyredW/UhHpvlbYqLVDj7fN7NlQ
+         LD6abCe55LW0A4h39kAsKQv78W/k5ybxqioWfdhWQvDeyUfsSbQlVlkO99h76U0sTf5r
+         /D0AKd6zfK5Cp/JweXYi6bSrLWvqknstm/zjeXNKc+OAlVqjXy7a2SSo1FUDXcVrU8d1
+         qxA0Bj6Miq44ViZLYmiF1c+DN4H8R6ZnsoMfguAXGpG6TJ0ucDhYQh9rSMyUhcuGbbk3
+         YXvNcAEt8AH5xYdDz0K5Kcs4V66FXTLlt8dUY0/WkAdjfrK3TVycdFDGJvHoys8ofArX
+         uzOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=3CLf59KGSjWUQb8ryREHzVKvbUGjsmxFO7bkVEZRsGc=;
-        b=cJCnxeIIm+eiw8K1tDr3ig2a4oFHqbAOehWGWWXBy5kvMBUc6PJY8UMlhvmSrtzHkF
-         Qf/WZSwRD0HzuJrHYXnjyESLa+XCevi1wQ2FSdRMUb0rJbyN5reBCz6m0hp81r3wR4i8
-         FoxzHTMUzxF9CENsrwwVK2QbAAzPOjUptn27ixCU+yEAiRkCYSwb2YFMuRuVa7e25bxb
-         kguRfCxdu/NPWOT/rCAGAg5XQYKxyfSW3GZdswSkH4RgTDuKj4DEqt22G143+0kQQsp1
-         /pCDjcyu+p3IoMWUsy8jEC4Vm0+UXOj4WgCDwvSieR8Ae2wq4hJE9FcSqTz5/nXFw5Hg
-         dVhg==
-X-Gm-Message-State: AOAM5313OIvCnoUly9xeaglED57dn0MYG4jUvyyNON7WUqS1sBY43grX
-        qveQ8v86YBBK9fA/wRkuL2CjxA==
-X-Google-Smtp-Source: ABdhPJyCCzgwkT84nB+lCeOlEEZy0yZaq2CFScXPw+tnsBDYmRqOzLG+O1WMLhU+gNZhnU22QmSZAg==
-X-Received: by 2002:a05:6402:1649:: with SMTP id s9mr34635755edx.177.1615883227921;
-        Tue, 16 Mar 2021 01:27:07 -0700 (PDT)
-Received: from enceladus (ppp-94-64-113-158.home.otenet.gr. [94.64.113.158])
-        by smtp.gmail.com with ESMTPSA id t6sm9836888edq.48.2021.03.16.01.27.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Mar 2021 01:27:07 -0700 (PDT)
-Date:   Tue, 16 Mar 2021 10:27:04 +0200
-From:   Ilias Apalodimas <ilias.apalodimas@linaro.org>
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=0yEEgmRevfgCYpgPJc7GGKptlmU0ANQIaf96uEVK5qM=;
+        b=rdRkhx+eTbf1siTnkiht8vS1p81iAJNoZ4PmMnvaRW7hIheqd4jH4tsjS29DaS7rI1
+         H0jV26uwsg+JFBqgPN3yrFu9c5wmTzv1AvHYG7E86M32RwiHs66PPrLca9aCUMRTn3Lo
+         IFh5V7sVn1P56NtsNf/C/E2LDmthdDbelFJBNmDcOpSKcgb7jBFy2HAapAdR78EySFwu
+         Ffbp6us1jU5yIEunMLW9gRY3obc4qCjDBq9rcLzjjynUscHIwZBD8CEJeHx9jOgFNs1c
+         Me9ZYMb9DVD64E+vTiE0PZaKyshOEEdvT+kwtql76TxPsV1jeEfKG+oTUoOd+ZMpgpyr
+         +XdQ==
+X-Gm-Message-State: AOAM5308gOMtD14wlJRwogMmZatwnzpTQfp2LgBccVh+TdcTI7S5Z0eu
+        ZDF+bNk4sBnXPgLw3bYcSbkkWQ==
+X-Google-Smtp-Source: ABdhPJzVx+rFrBXK4uWtnB+iQFThvQ2smZF5aMcI1iMIux+9nyFuAR4nkpzlmrtQ9h7ujeokGBrN0A==
+X-Received: by 2002:a17:902:bb8e:b029:e6:3b2:5834 with SMTP id m14-20020a170902bb8eb02900e603b25834mr16322317pls.38.1615885580268;
+        Tue, 16 Mar 2021 02:06:20 -0700 (PDT)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id l22sm2516265pjl.14.2021.03.16.02.06.17
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 16 Mar 2021 02:06:19 -0700 (PDT)
+Date:   Tue, 16 Mar 2021 17:06:13 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
 To:     Ard Biesheuvel <ardb@kernel.org>
 Cc:     Heinrich Schuchardt <xypron.glpk@gmx.de>,
-        Shawn Guo <shawn.guo@linaro.org>,
         Atish Patra <atish.patra@wdc.com>,
+        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
         Steve McIntyre <steve@einval.com>,
         Rob Clark <robdclark@gmail.com>,
         linux-efi <linux-efi@vger.kernel.org>,
@@ -63,105 +63,108 @@ Cc:     Heinrich Schuchardt <xypron.glpk@gmx.de>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>
 Subject: Re: [PATCH] efi: stub: override RT_PROP table supported mask based
  on EFI variable
-Message-ID: <YFBr2C36ogM25Jjb@enceladus>
-References: <CAMj1kXFiqXwCqJE9Wxu-tc3HYSh1qCqPLL_Csc=gW6SOYrweWw@mail.gmail.com>
+Message-ID: <20210316090609.GB32651@dragon>
+References: <20210306113519.294287-1-ardb@kernel.org>
+ <20210307110228.GP17424@dragon>
+ <CAMj1kXFiqXwCqJE9Wxu-tc3HYSh1qCqPLL_Csc=gW6SOYrweWw@mail.gmail.com>
  <20210309032248.GR17424@dragon>
  <CAF6AEGu6ZpfFK5FnQjtE33kkYL_t63J=yJLeK70_46FaLPq7eQ@mail.gmail.com>
  <CAMj1kXGwhx9Z-JCw2NvWBYtHbzVb=EmJn_Jfd97wGzDYNQG2Lw@mail.gmail.com>
  <20210315031119.GY17424@dragon>
  <CAMj1kXE1mZm2jYwv80FNVh0m6wHEWqq14+jQWnJSUThnX4Eedw@mail.gmail.com>
- <81899e5a-ab6d-69a2-c172-535300b3ce02@gmx.de>
- <CAMj1kXH=BDYXNT36+8tMOrbngKusHn6iiQV5VcC+KEWcoifGxw@mail.gmail.com>
- <YFBmfC6vNE6fXWwN@enceladus>
- <CAMj1kXEz++tPZO5Bzw9f+_PzzRoN7m6fXUi3kKTXvMANpzaKpg@mail.gmail.com>
+ <20210316075214.GA32651@dragon>
+ <CAMj1kXHfo9AMZEw9btOPCzso85AS+gQdV5ycmyk8wcqfLaRn8Q@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAMj1kXEz++tPZO5Bzw9f+_PzzRoN7m6fXUi3kKTXvMANpzaKpg@mail.gmail.com>
+In-Reply-To: <CAMj1kXHfo9AMZEw9btOPCzso85AS+gQdV5ycmyk8wcqfLaRn8Q@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 16, 2021 at 09:14:22AM +0100, Ard Biesheuvel wrote:
-> On Tue, 16 Mar 2021 at 09:04, Ilias Apalodimas
-> <ilias.apalodimas@linaro.org> wrote:
+On Tue, Mar 16, 2021 at 08:57:19AM +0100, Ard Biesheuvel wrote:
+> On Tue, 16 Mar 2021 at 08:52, Shawn Guo <shawn.guo@linaro.org> wrote:
 > >
-> > Hi Ard,
-> >
-> > On Tue, Mar 16, 2021 at 08:52:52AM +0100, Ard Biesheuvel wrote:
-> > > On Tue, 16 Mar 2021 at 08:42, Heinrich Schuchardt <xypron.glpk@gmx.de> wrote:
+> > On Mon, Mar 15, 2021 at 02:07:01PM +0100, Ard Biesheuvel wrote:
+> > > On Mon, 15 Mar 2021 at 04:11, Shawn Guo <shawn.guo@linaro.org> wrote:
 > > > >
-> ...
-> > > > looking at this thread it is hard to understand why this patch should be
-> > > > needed.
+> > > > On Tue, Mar 09, 2021 at 07:47:25PM +0100, Ard Biesheuvel wrote:
+> > > > > On Tue, 9 Mar 2021 at 19:10, Rob Clark <robdclark@gmail.com> wrote:
+> > > > > >
+> > > ...
+> > > > > > fwiw, the valid use-case for ACPI boot on these things is for distro
+> > > > > > installer.. it might not be the shiny accelerated experience, but you
+> > > > > > want to be able to get thru the installer and then install updates to
+> > > > > > get latest kernel/dtb/etc
+> > > > > >
+> > > > > > it is a small use-case, but kinda an important step ;-)
+> > > > > >
+> > > > >
+> > > > > That is a fair point. However, as I understand it, we need this to work around
+> > > > > - the need to pass efi=novamap
+> > > > > - broken poweroff on Flex5g
 > > > >
-> > > > If an UEFI application does not want to consume a service, it can do so
-> > > > without having to manipulate the RT properties table.
+> > > > One more: broken EFI variable runtime services on all Snapdragon laptops
 > > > >
-> > > > Which UEFI applications are broken? Why can't they be fixed instead of
-> > > > patching the kernel?
+> > > > It's been another pain of running debian-installer (d-i) on these
+> > > > laptops, where EFI NV variables are just stored on UFS disk.  So after
+> > > > Linux takes over the control of UFS, EFI NV variable runtime services
+> > > > then become out of service.  Currently, we have to apply a hack [1] on
+> > > > d-i grub-installer to get around the issue,  and it's been the only
+> > > > remaining out-of-tree patch we have to carry for d-i.  With this nice
+> > > > `OverrideSupported` support, we will be able to drop that hack
+> > > > completely.
 > > > >
-> > > > Can we have complete descriptions of the deficiencies of the involved
-> > > > applications. I saw GRUB and the Debian installer mentioned in the
-> > > > thread. Are there others?
+> > > > >
+> > > > > So an installer either needs to set the EFI variable, or pass
+> > > > > efi=novamap on the first boot. Note that there are no arm64 EFI
+> > > > > systems known where efi=novamap causes problems. In fact, I would
+> > > > > prefer to stop using SetVirtualAddressMap() altogether, as it does not
+> > > > > provide any benefit whatsoever. So perhaps we should make efi=novamap
+> > > > > the default and be done with it.
+> > > > >
+> > > > > Broken poweroff is hardly a showstopper for an installer, given that
+> > > > > we cannot even install GRUB correctly.
+> > > > >
+> > > > > In summary, I am more than happy to collaborate constructively on this
+> > > > > (which is why I wrote the patch), but I don't think we're at a point
+> > > > > yet where this is the only thing standing in our way when it comes to
+> > > > > a smooth out-of-the-box Linux installation experience.
+> > > >
+> > > > There might be more to be done for getting a smooth Linux installation
+> > > > experience.  But IMHO, this `OverrideSupported` thing is definitely
+> > > > a big step to that.
 > > > >
 > > >
-> > > The problem is that the proprietary EDK2 / UEFI firmware on Qualcomm
-> > > Snapdragon based laptops that were built to run Windows does not
-> > > implement get/setvariable after ExitBootServices. Instead, every call
-> > > to any of the variable services returns with an EFI_UNSUPPORTED error.
-> > >
-> > > The correct way to address this is a RT_PROP table that encodes this
-> > > behavior, and this is what we added in the special DtbLoader driver
-> > > that is used to boot Linux in DT mode (as the firmware only implements
-> > > ACPI support). So for systems that can/will run DtbLoader, the problem
-> > > is solved.
-> > >
-> > > What remains is ACPI boot, or boot modes where DtbLoader does not
-> > > work. In those cases, it would be useful to have another way to convey
-> > > this information to the OS in a way that does not rely on the kernel
-> > > command line.
-> > >
-> > > But thinking about this, perhaps we should be fixing this in
-> > > efibootmgr instead. EFI_UNSUPPORTED is a valid and documented return
-> > > code that conveys that the operation did not fail with an error, but
-> > > that efibootmgr is not supported to begin with on the platform in
-> > > question.
+> > > So the problem here seems to be that grub-install (or efibootmgr)
+> > > tolerates efivarfs being absent entirely, but bails out if it exists
+> > > but gives an error when trying to access it, right?
 > >
-> > It all depends on how smart we want to make the efi stub. In essence
-> > it's an OS loader, that we have complete control over and we can play tricks
-> > on broken/incompatible firmwares, but is that what we want ? And if yes, were
-> > do we draw the line of what we fix or not?
-> >
-> > I think the current problem doesn't make a strong case to add such
-> > functionality. U-Boot doesn't expose SetVariable at all, but even if it did
-> > and returned EFI_UNSUPPORTED, I'd expect the consuming applications to handle
-> > the error gracefully.  I mean why should we treat EFI_UNSUPPORTED differently
-> > than EFI_DEVICE_ERROR or EFI_INVALID_PARAMETER (or all the allowed return
-> > codes)?
+> > Yes, with EFI variables runtime service marked as unsupported,
+> > efibootmgr will just exit on efi_variables_supported() check [1] in
+> > a way that its parent process, i.e. grub-install, doesn't take as an
+> > error.  But otherwise, efibootmgr will go much further and exit with
+> > a real error when trying to access efivars.
 > >
 > 
-> EFI_DEVICE_ERROR or EFI_INVALID_PARAMETER means that the particular
-> call resulted in an error, which may be related to the values of the
-> arguments, the state of the the flash, etc etc
+> OK, so I suggest we fix efibootmgr, by extending the
+> efi_variables_supported() check to perform a GetVariable() call on an
+> arbitrary variable (e.g., BootOrder),
+
+Hmm, I'm not sure we should ask more from user space, as it's already
+been doing the right thing, and efi_variables_supported() is proved to
+work properly with any sane low-level software (kernel + firmware),
+either EFI variables service is supported or not.  That said, IMHO,
+right now the low-level software on Snapdragon laptops is insane, i.e.
+the unsupported/broken EFI runtime services are not communicated to
+user space properly in established way.
+
+Shawn
+
+> and treat EFI_UNSUPPORTED as a
+> special case that means that carrying on is pointless.
 > 
-> EFI_UNSUPPORTED means that the platform in question does not support
-> the routine at all at runtime, and the arguments or the context is
-> irrelevant.
-
-By differently I implied 'not handle the error correctly'.
-So my point was that an application must handle all errors that are allowed
-from the spec. Not select the ones it prefers in a meaningfull way.
-Which brings us to your next point.
-
-> 
-> Given that GRUB already tolerates the second condition, but only if it
-> is communicated explicitly (via --no-nvram) or implicitly when
-> efivarfs is absent altogether, I am saying that we should classify a
-> EFI_UNSUPPORTED return value in the same way, and tolerate it rather
-> than abort the install.
-
-+1 
-
-Thanks
-/Ilias
+> (but someone please confirm that the snapdragon efi firmware does
+> return EFI_UNSUPPORTED and not some other return value when calling
+> GetVariable() from under the OS)
