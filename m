@@ -2,115 +2,246 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2065F33D271
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Mar 2021 12:08:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DB9B33D27D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Mar 2021 12:13:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237076AbhCPLHx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Mar 2021 07:07:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36192 "EHLO
+        id S237101AbhCPLMp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Mar 2021 07:12:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237061AbhCPLHZ (ORCPT
+        with ESMTP id S232943AbhCPLMV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Mar 2021 07:07:25 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A83DAC06174A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 04:07:24 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id e19so71491558ejt.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 04:07:24 -0700 (PDT)
+        Tue, 16 Mar 2021 07:12:21 -0400
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 806DBC06175F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 04:12:20 -0700 (PDT)
+Received: by mail-pl1-x636.google.com with SMTP id a13so1676962pln.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 04:12:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=w9abddBpqLJVcwq/yZSJOMSeh2fLBW/uaeu5zmX5HK0=;
-        b=d1vPLe6EwY4M1GlCS1kBMqhLkNeuQE3JYieyDurN4YegCZIiEbqLfGLYEGkN9orcyz
-         vyc61V51e+JKnHE/bq8z0+m5d5laIBQD2f+4DEXsR4Dp/mUaU/Rp0cs7tTsrwcRVZTbM
-         D/W/vZgC/hhaLkg4rjuHnnQW+jD5dLlVKbzuaKzDE6I8Fhs+mVnLubq+Di66w2mdj774
-         KuMYxa+0nDF8IIPRwfazvnWtD26BYiFTyetBNR6nXBAIhUa9P/tSLeDpfP6fyARHBiDT
-         WXOVwsD0ASOpj9cmjKa/pKYESwWY+a4/3iV61gzjm4woYAN9wEfi2LtCcKgnteCnVQfk
-         ct7w==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=co9C6unBdFkpgv7+tGLws46NOGe8/tBYeyT4qQSLwlc=;
+        b=HRiKQVMBFG/A6gPAZpN/MiRsDAwXqD/MYUJKSSh7ybK9TDtdRJgVUyb6DmaBH3WnQz
+         bUs0wPminx/GLoogW8PPeQjVhbHPa352X6JsDfIPqNdBCATDUT3J3rQFcrStCK5u5teb
+         uPL+6lUUTM5+1l0QIFweXzlE8Wu9czn9A/AkON5+Nv1dydAobbQBiG8LCisAx/6LktD0
+         zOvKX19zzAdh0xZ2ghA6NjnjPJL3gi3OLOm118yFanFdHyq97W+0toDndtv/7KPhHdhU
+         I/vo64LXjAEFq++SXAX96lHwWcSD65CTcqqivRLZ9LeEY3d7S8zliAfEvBCWzrlVubZ/
+         lcQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=w9abddBpqLJVcwq/yZSJOMSeh2fLBW/uaeu5zmX5HK0=;
-        b=FrD7oGK22iCtJwp38MLLRs+3yZYduE90zftaewOzVP916Uuiyw5x6HS075s7zIBNhw
-         tjpWo14a2H44HBWxS5rcOz0yF/+3hnuhb5jTtE7nSNP0K6j3YAXhfX96fa5AUcZ1Klqr
-         lYvUen4r8WiF3yeaJexS//GVZFJlB/Td6t8SEE6/TdBxbFiNKBg7aXZqGrnN9GkGAFPg
-         zNhhBw9hVDJN4wmg1ejurE/VkmpYOvJvgSOuiuNK5OiAT5m6FcCo7yR9KTThy9Y770gT
-         kb3d4q6s20EivmWTo92kF6shB01TSYKarV/kDa48NW0F+Fb5JgYwwS5AhT14X1UQsgQJ
-         Y1jg==
-X-Gm-Message-State: AOAM530JTkLRd+Exe3enXY8BdK+eL2EEXODB9zthC/2n++mR6927o3SV
-        pi4vK/1HGuOXrXFhAS2iihsRiA==
-X-Google-Smtp-Source: ABdhPJzsQmd2sfqPJ+a1e6IgeGPuDT6UZst1EyY0SqKUnq5oPBpYP6yWkfSkmXLL/4REnuxiVG01zg==
-X-Received: by 2002:a17:906:489:: with SMTP id f9mr28335796eja.428.1615892843410;
-        Tue, 16 Mar 2021 04:07:23 -0700 (PDT)
-Received: from [192.168.1.19] (hst-221-14.medicom.bg. [84.238.221.14])
-        by smtp.googlemail.com with ESMTPSA id n16sm9105447ejy.35.2021.03.16.04.07.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Mar 2021 04:07:23 -0700 (PDT)
-Subject: Re: [PATCH v5 0/5] HDR10 static metadata
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Ezequiel Garcia <ezequiel@collabora.com>,
-        Nicolas Dufresne <nicolas.dufresne@collabora.com>
-References: <20210209162425.3970393-1-stanimir.varbanov@linaro.org>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <24d28844-d7e0-baca-51da-4cd1428bf1da@linaro.org>
-Date:   Tue, 16 Mar 2021 13:07:22 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=co9C6unBdFkpgv7+tGLws46NOGe8/tBYeyT4qQSLwlc=;
+        b=Ua0LidU6CHcfgpBcWE+kRBfqHeoVoyDIMPJ4992t9C2nGVBE0GXMjO9Db/33XvvVPk
+         L8DPTw8qgLDM/3LzqfbUIJ7+NRd+sd7W3K3q9vvtANTXC2LBVLSBEPd3NXG+y71VGoWA
+         i8+jFbIfCcMCCyrMPSeFz1unTwNuFB9pLVF711xtGQX/TR0e9FVY2pXrinvctJRS66jR
+         WDRW4DZh16GsBc2dpiZHYnydgPKDMHj6/2zlsy7MtpClsEaNMwGofzK4kvIJbOkJhPVp
+         e2AnE2rlcdKTLqEOBUIDOYPzIIGmc6Uf4mmOOPYnLTvIOASql9EyYaSySEHtJ/c6s1L2
+         UiyA==
+X-Gm-Message-State: AOAM530RzNlXdcIbEmxV5A7wlcXatB3oOASe1sPQML02CoS9ptR9QBoj
+        /I1gXh1quIzYjB63lCZ9lzKwAFWf7iCwQj0dP0f78w==
+X-Google-Smtp-Source: ABdhPJxxy+osmijXyuDaa1mP5+f0EErKvMxpTVF7WymI+74vScoiTtjvsZJ0oOoCIDCp368NI1c6lnxCs1T1BBXgrw0=
+X-Received: by 2002:a17:90a:516:: with SMTP id h22mr4143299pjh.222.1615893139917;
+ Tue, 16 Mar 2021 04:12:19 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20210209162425.3970393-1-stanimir.varbanov@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20210315155942.640889-1-robert.foss@linaro.org>
+ <20210315155942.640889-10-robert.foss@linaro.org> <b06ce7af-4449-fb5c-2920-09ebd5abdf75@xs4all.nl>
+In-Reply-To: <b06ce7af-4449-fb5c-2920-09ebd5abdf75@xs4all.nl>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Tue, 16 Mar 2021 12:12:08 +0100
+Message-ID: <CAG3jFytECFBW7mC0=0ZwL2HNof3jOiJ9=KqUhaPb-KvnW5ut2g@mail.gmail.com>
+Subject: Re: [PATCH v8 09/22] media: camss: Refactor CSID HW version support
+To:     Hans Verkuil <hverkuil@xs4all.nl>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Todor Tomov <todor.too@gmail.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        angelogioacchino.delregno@somainline.org,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        linux-media <linux-media@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Sakari Ailus <sakari.ailus@iki.fi>,
+        Andrey Konovalov <andrey.konovalov@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
+        Sarvesh Sridutt <Sarvesh.Sridutt@smartwirelesscompute.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Jonathan Marek <jonathan@marek.ca>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hans, any comments?
+Hey Hans,
 
-On 2/9/21 6:24 PM, Stanimir Varbanov wrote:
-> Changes since v4:
->   * 1/5 - fixed a typo (Hans)
->   * 2/5 - add some mode info about new colorimetry class (Hans)
->   * 4/5 - correct cd/m2 -> cd/m\ :sup:`2`
->         - change to US spelling for color word
->         - use correct v4l2_ctrl_type in videodev2.h.rst.exceptions
->         - documented p_hdr10_cll and p_hdr10_mastering in vidioc-g-ext-ctrls.rst
-> 
-> Comments are welcome!        
-> 
-> regards,
-> Stan
->         
-> Stanimir Varbanov (5):
->   v4l: Add new Colorimetry Class
->   docs: Document colorimetry class
->   v4l: Add HDR10 static metadata controls
->   docs: Document CLL and Mastering display colorimetry controls
->   venus: venc: Add support for CLL and Mastering display controls
-> 
->  .../userspace-api/media/v4l/common.rst        |  1 +
->  .../media/v4l/ext-ctrls-colorimetry.rst       | 93 +++++++++++++++++++
->  .../media/v4l/vidioc-g-ext-ctrls.rst          | 12 +++
->  .../media/videodev2.h.rst.exceptions          |  2 +
->  drivers/media/platform/qcom/venus/core.h      |  2 +
->  drivers/media/platform/qcom/venus/hfi_cmds.c  |  8 ++
->  .../media/platform/qcom/venus/hfi_helper.h    | 20 ++++
->  drivers/media/platform/qcom/venus/venc.c      | 29 ++++++
->  .../media/platform/qcom/venus/venc_ctrls.c    | 16 +++-
->  drivers/media/v4l2-core/v4l2-ctrls.c          | 74 ++++++++++++++-
->  include/media/v4l2-ctrls.h                    |  4 +
->  include/uapi/linux/v4l2-controls.h            | 35 +++++++
->  include/uapi/linux/videodev2.h                |  3 +
->  13 files changed, 297 insertions(+), 2 deletions(-)
->  create mode 100644 Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst
-> 
+Thanks for looking into this.
 
--- 
-regards,
-Stan
+On Tue, 16 Mar 2021 at 10:36, Hans Verkuil <hverkuil@xs4all.nl> wrote:
+>
+> On 15/03/2021 16:59, Robert Foss wrote:
+> > In order to support Qualcomm ISP hardware architectures that diverge
+> > from older architectures, the CSID subdevice drivers needs to be refactored
+> > to better abstract the different ISP hardware architectures.
+> >
+> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> > Reviewed-by: Andrey Konovalov <andrey.konovalov@linaro.org>
+> > ---
+> >
+> >
+> > Changes since v1:
+> >  - kernel test robot: Add missing include, interrupt.h
+> >
+> > Changes since v4:
+> >  - Andrey: Removed whitespace from some includes
+> >  - Andrey: Removed unused enum
+> >
+> > Changes since v5:
+> >  - Andrey: Fixed test pattern selection logic
+> >  - Andrey: Align test mode enum values with v4l mode selection return values
+> >  - Andrey: r-b
+> >  - Move Titan 170 test modes to the the Titan 170 commit
+> >  - Fixed test pattern boundary check
+> >
+> > Changes since v7:
+> >  - Hans: Fix checkpatch.pl --strict warnings
+> >
+> >
+> >
+> >  drivers/media/platform/qcom/camss/Makefile    |   2 +
+> >  .../platform/qcom/camss/camss-csid-4-1.c      | 328 ++++++++++
+> >  .../platform/qcom/camss/camss-csid-4-7.c      | 404 ++++++++++++
+> >  .../media/platform/qcom/camss/camss-csid.c    | 608 +-----------------
+> >  .../media/platform/qcom/camss/camss-csid.h    | 129 +++-
+> >  5 files changed, 885 insertions(+), 586 deletions(-)
+> >  create mode 100644 drivers/media/platform/qcom/camss/camss-csid-4-1.c
+> >  create mode 100644 drivers/media/platform/qcom/camss/camss-csid-4-7.c
+> >
+>
+> <snip>
+>
+> > diff --git a/drivers/media/platform/qcom/camss/camss-csid.h b/drivers/media/platform/qcom/camss/camss-csid.h
+> > index 479ac1f83836..613ef377b051 100644
+> > --- a/drivers/media/platform/qcom/camss/camss-csid.h
+> > +++ b/drivers/media/platform/qcom/camss/camss-csid.h
+> > @@ -11,6 +11,7 @@
+> >  #define QC_MSM_CAMSS_CSID_H
+> >
+> >  #include <linux/clk.h>
+> > +#include <linux/interrupt.h>
+> >  #include <media/media-entity.h>
+> >  #include <media/v4l2-ctrls.h>
+> >  #include <media/v4l2-device.h>
+> > @@ -44,18 +45,42 @@
+> >  #define DATA_TYPE_RAW_16BIT          0x2e
+> >  #define DATA_TYPE_RAW_20BIT          0x2f
+> >
+> > -enum csid_payload_mode {
+> > -     CSID_PAYLOAD_MODE_INCREMENTING = 0,
+> > -     CSID_PAYLOAD_MODE_ALTERNATING_55_AA = 1,
+> > -     CSID_PAYLOAD_MODE_ALL_ZEROES = 2,
+> > -     CSID_PAYLOAD_MODE_ALL_ONES = 3,
+> > -     CSID_PAYLOAD_MODE_RANDOM = 4,
+> > -     CSID_PAYLOAD_MODE_USER_SPECIFIED = 5,
+> > +#define CSID_RESET_TIMEOUT_MS 500
+> > +
+> > +enum csid_testgen_mode {
+> > +     CSID_PAYLOAD_MODE_DISABLED = 0,
+> > +     CSID_PAYLOAD_MODE_INCREMENTING = 1,
+> > +     CSID_PAYLOAD_MODE_ALTERNATING_55_AA = 2,
+> > +     CSID_PAYLOAD_MODE_ALL_ZEROES = 3,
+> > +     CSID_PAYLOAD_MODE_ALL_ONES = 4,
+> > +     CSID_PAYLOAD_MODE_RANDOM = 5,
+> > +     CSID_PAYLOAD_MODE_USER_SPECIFIED = 6,
+> > +     CSID_PAYLOAD_MODE_NUM_SUPPORTED_GEN1 = 6, /* excluding disabled */
+> > +};
+> > +
+> > +static const char * const csid_testgen_modes[] = {
+> > +     "Disabled",
+> > +     "Incrementing",
+> > +     "Alternating 0x55/0xAA",
+> > +     "All Zeros 0x00",
+> > +     "All Ones 0xFF",
+> > +     "Pseudo-random Data",
+> > +     "User Specified",
+> > +};
+>
+> This gives this sparse warning:
+>
+> 'csid_testgen_modes' defined but not used [-Wunused-const-variable=]
+
+Thanks for supplying a patch. I'll merge it into patch 9 & 10.
+
+>
+> This array needs to be moved to camss-csid.c and declared as an extern
+> here. Also, this menu array needs to be terminated with a NULL, and the
+> right capitalization needs to be used (first character of each word must
+> be a capital). This is a suggested patch I made to verify that this solves
+> this issue, but really both patch 9 and 10 need to be modified.
+>
+> Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+> ---
+>  drivers/media/platform/qcom/camss/camss-csid.c | 14 ++++++++++++++
+>  drivers/media/platform/qcom/camss/camss-csid.h | 13 +------------
+>  2 files changed, 15 insertions(+), 12 deletions(-)
+>
+> diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
+> index fb94dc03ccd4..1513b3d47fc2 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csid.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csid.c
+> @@ -27,6 +27,20 @@
+>
+>  #define MSM_CSID_NAME "msm_csid"
+>
+> +const char * const csid_testgen_modes[] = {
+> +       "Disabled",
+> +       "Incrementing",
+> +       "Alternating 0x55/0xAA",
+> +       "All Zeros 0x00",
+> +       "All Ones 0xFF",
+> +       "Pseudo-Random Data",
+> +       "User Specified",
+> +       "Complex Pattern",
+> +       "Color Box",
+> +       "Color Bars",
+> +       NULL
+> +};
+> +
+>  u32 csid_find_code(u32 *codes, unsigned int ncodes,
+>                    unsigned int match_format_idx, u32 match_code)
+>  {
+> diff --git a/drivers/media/platform/qcom/camss/camss-csid.h b/drivers/media/platform/qcom/camss/camss-csid.h
+> index c2a025f6846b..81a3704ac0e3 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csid.h
+> +++ b/drivers/media/platform/qcom/camss/camss-csid.h
+> @@ -62,18 +62,7 @@ enum csid_testgen_mode {
+>         CSID_PAYLOAD_MODE_NUM_SUPPORTED_GEN2 = 9, /* excluding disabled */
+>  };
+>
+> -static const char * const csid_testgen_modes[] = {
+> -       "Disabled",
+> -       "Incrementing",
+> -       "Alternating 0x55/0xAA",
+> -       "All Zeros 0x00",
+> -       "All Ones 0xFF",
+> -       "Pseudo-random Data",
+> -       "User Specified",
+> -       "Complex pattern",
+> -       "Color box",
+> -       "Color bars",
+> -};
+> +extern const char * const csid_testgen_modes[];
+>
+>  struct csid_format {
+>         u32 code;
+> --
+> 2.30.1
+>
+> Regards,
+>
+>         Hans
