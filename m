@@ -2,298 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A906C33F38D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Mar 2021 15:42:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BF2B833F55E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Mar 2021 17:23:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232149AbhCQOlm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Mar 2021 10:41:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57804 "EHLO
+        id S232067AbhCQQWj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Mar 2021 12:22:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232328AbhCQOlJ (ORCPT
+        with ESMTP id S232101AbhCQQWR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Mar 2021 10:41:09 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EFB2C06175F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 07:41:08 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id p21so3303039lfu.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 07:41:08 -0700 (PDT)
+        Wed, 17 Mar 2021 12:22:17 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03E7FC06174A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 09:22:17 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id r15-20020a05600c35cfb029010e639ca09eso3731244wmq.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 09:22:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=nQzPfZNgs/RI9SHlybC6kTwo7b0PPDxFfUXKq7+6f+c=;
-        b=fZgT1aoogywIpHIDaBMOkDuOEOTEMKxD0MJF5mUXesN1G0AVlnTvvgMWHPRFO2ABum
-         +rYt9CQF4CKy3mYVUlbQt90PTTbWUwpH+EufviaPJ2a2Kr/76KEo7TM4AWNbYhd9keou
-         BRLbJxDEWpXl6ZpJc3MzsHulSqBLTnWcGZbgB/HCJIm5SqKze3n9dl5i/QluSjeNEZq3
-         q13lFfa2LAqB3bnN4cs3rxU3CRJLjPJ4RZjDvcOBzZSMhmc+yA1mTRmgz+u7Yw+K8OBH
-         kJpYP943AbgyXa9mzoo5XfFwtrfkIqdKThUpIJ3UmEpPZr37Ayz+QgTayr73/UisOw7/
-         UnPQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=LLJ/2r9/jS5wc1sgd4b6Gkg0QJoSZ+U4u6jpN909XPc=;
+        b=ovqkJuuSzOcWDkLIh+KlBGYSM7ewLt5II8h6ULSz70U9z800NT+crym/e2LLAoE290
+         sd1kFdbhWclmmhDSyOxgEcBp9bnjpwLuiB2z8kMy2jfsH5RmR82Z3bUi7c8KbmIRlXPk
+         WekIb++nLe7pB1dV4TcVitPVx/cv3pwQP0roXqP1UoL6c8jfm5toFPs5t9MWzNCUMW0U
+         GRYfZbQD7FngSf+J/dQ+cJrOeVU8hd9l4xjXgrBMAdnYkgT6SxRJQr8bryTH63R28ygV
+         Ug7QxIL3HMnOcAsLQasjjzff0/7mvZ7D+fGfQ/nf1c1k30cZoyTLJhDr5+xP1nhNAmql
+         6wbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=nQzPfZNgs/RI9SHlybC6kTwo7b0PPDxFfUXKq7+6f+c=;
-        b=DB0v+EgYTgn6Fw997vsTA+X1hwArpmHx0S3MheAyjBO6aCVyC2ab9JOSNPeTYMvb/d
-         aRL6IRXySofFXn3/3KYaZStnhNO/cKM53QxT2EFeyoLh0yz7/kHjA6k42kuX0Fq4fMZz
-         ZO3ndktE+d+55VAtgEXIlzeBQdM+y8QehRnUjGPGHxs5wbrhbs6dGtGlaiXRnsIxlqNq
-         R3TEknYO14/aXomWLog+LnO64UxTQitekhLdyqoBTZPY2u0Xf9NZiQcEljKAVCTnwosO
-         2zDVMvm7hxTvqJWaCdrcS2prcI3jhByQwnbsUGYxWR0kFnKArED+JnLx0jIwFZm7nGMc
-         rAJw==
-X-Gm-Message-State: AOAM531E+kmnJQpAPmVOL3VUc3tZVGk//fHeFrGktQoGRFvmxI7ZIt7R
-        8xtcEKV4yu957YJDT4QFGWbM+Q==
-X-Google-Smtp-Source: ABdhPJxEQz+VGMHz89aAzgSoLzHI6Dbz62FrbBH3bJWCmPO+AzmRMSO+JvF7PjBW+kjRRgFYZOh5QA==
-X-Received: by 2002:ac2:43d4:: with SMTP id u20mr2486184lfl.210.1615992067079;
-        Wed, 17 Mar 2021 07:41:07 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id q8sm1484309lfc.223.2021.03.17.07.41.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Mar 2021 07:41:06 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Michael Turquette <mturquette@baylibre.com>
-Cc:     Stephen Boyd <sboyd@kernel.org>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-clk@vger.kernel.org
-Subject: [PATCH v1 26/26] drm/msm/dsi: stop passing src_pll_id to the phy_enable call
-Date:   Wed, 17 Mar 2021 17:40:39 +0300
-Message-Id: <20210317144039.556409-27-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210317144039.556409-1-dmitry.baryshkov@linaro.org>
-References: <20210317144039.556409-1-dmitry.baryshkov@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=LLJ/2r9/jS5wc1sgd4b6Gkg0QJoSZ+U4u6jpN909XPc=;
+        b=QAuOhZdIFZ1D5SJTQyCu4ryEl2zVzuRsy/0zlA+uXhElua08nFTgVZXbRgI0QjD7x7
+         hd4idh6j+zWpTAnP+tjRiZGjFgfJpTNnBEcae4KycxyYJAIxywHHacdPGcEp+mi1S/4r
+         vFAUGvJCDrVfKnQ+0tEpnyYd0pUHpj8Q0YMUzafy2Ghh445pCm4fYrW8fw/NPbH8VKEa
+         tMYWj+3CVzKFjw/5ZeNK+nUKm+8I426ZPzSqW4X3DG3KhS0HuUhZJD2NM1rc+YiZuCf0
+         YXYynfwTyfIQIhtLTjJ0O1FwqonBRzGL3UNePg16YIaEYzVMgMIdM/AxAbdNajuaj39X
+         VpAw==
+X-Gm-Message-State: AOAM532t7seG8IAB69fnfmgJVcXkHnTw50lgqgnCRW4Ncyw5YMpdhhoo
+        8Ihz43we3iLG8i2nAD6BU0qnMCZemLcsE6tYXG8=
+X-Google-Smtp-Source: ABdhPJyBhVoRwKNysP+CSzeDWV9952uUQkx9M63AL8RmXZqs/wyypjylQCTWBgxpaU/hiK2ungS2ngb6sqr++BEJuOA=
+X-Received: by 2002:a1c:4b15:: with SMTP id y21mr4586006wma.94.1615998135757;
+ Wed, 17 Mar 2021 09:22:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20210301214152.1805737-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20210301214152.1805737-1-dmitry.baryshkov@linaro.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 17 Mar 2021 09:25:26 -0700
+Message-ID: <CAF6AEGsN4s_wF0kHx4Y=vMM3AMTCewE4oiBdaxguVAku_nkODw@mail.gmail.com>
+Subject: Re: [PATCH] gpu/drm/msm: fix shutdown hook in case GPU components
+ failed to bind
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Sean Paul <sean@poorly.run>, Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Phy driver already knows the source PLL id basing on the set usecase and
-the current PLL id. Stop passing it to the phy_enable call. As a
-reminder, dsi manager will always use DSI 0 as a clock master in a slave
-mode, so PLL 0 is always a clocksource for DSI 0 and it is always a
-clocksource for DSI 1 too unless DSI 1 is used in the standalone mode.
+On Mon, Mar 1, 2021 at 1:41 PM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> if GPU components have failed to bind, shutdown callback would fail with
+> the following backtrace. Add safeguard check to stop that oops from
+> happening and allow the board to reboot.
+>
+> [   66.617046] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+> [   66.626066] Mem abort info:
+> [   66.628939]   ESR = 0x96000006
+> [   66.632088]   EC = 0x25: DABT (current EL), IL = 32 bits
+> [   66.637542]   SET = 0, FnV = 0
+> [   66.640688]   EA = 0, S1PTW = 0
+> [   66.643924] Data abort info:
+> [   66.646889]   ISV = 0, ISS = 0x00000006
+> [   66.650832]   CM = 0, WnR = 0
+> [   66.653890] user pgtable: 4k pages, 48-bit VAs, pgdp=0000000107f81000
+> [   66.660505] [0000000000000000] pgd=0000000100bb2003, p4d=0000000100bb2003, pud=0000000100897003, pmd=0000000000000000
+> [   66.671398] Internal error: Oops: 96000006 [#1] PREEMPT SMP
+> [   66.677115] Modules linked in:
+> [   66.680261] CPU: 6 PID: 352 Comm: reboot Not tainted 5.11.0-rc2-00309-g79e3faa756b2 #38
+> [   66.688473] Hardware name: Qualcomm Technologies, Inc. Robotics RB5 (DT)
+> [   66.695347] pstate: 60400005 (nZCv daif +PAN -UAO -TCO BTYPE=--)
+> [   66.701507] pc : msm_atomic_commit_tail+0x78/0x4e0
+> [   66.706437] lr : commit_tail+0xa4/0x184
+> [   66.710381] sp : ffff8000108f3af0
+> [   66.713791] x29: ffff8000108f3af0 x28: ffff418c44337000
+> [   66.719242] x27: 0000000000000000 x26: ffff418c40a24490
+> [   66.724693] x25: ffffd3a842a4f1a0 x24: 0000000000000008
+> [   66.730146] x23: ffffd3a84313f030 x22: ffff418c444ce000
+> [   66.735598] x21: ffff418c408a4980 x20: 0000000000000000
+> [   66.741049] x19: 0000000000000000 x18: ffff800010710fbc
+> [   66.746500] x17: 000000000000000c x16: 0000000000000001
+> [   66.751954] x15: 0000000000010008 x14: 0000000000000068
+> [   66.757405] x13: 0000000000000001 x12: 0000000000000000
+> [   66.762855] x11: 0000000000000001 x10: 00000000000009b0
+> [   66.768306] x9 : ffffd3a843192000 x8 : ffff418c44337000
+> [   66.773757] x7 : 0000000000000000 x6 : 00000000a401b34e
+> [   66.779210] x5 : 00ffffffffffffff x4 : 0000000000000000
+> [   66.784660] x3 : 0000000000000000 x2 : ffff418c444ce000
+> [   66.790111] x1 : ffffd3a841dce530 x0 : ffff418c444cf000
+> [   66.795563] Call trace:
+> [   66.798075]  msm_atomic_commit_tail+0x78/0x4e0
+> [   66.802633]  commit_tail+0xa4/0x184
+> [   66.806217]  drm_atomic_helper_commit+0x160/0x390
+> [   66.811051]  drm_atomic_commit+0x4c/0x60
+> [   66.815082]  drm_atomic_helper_disable_all+0x1f4/0x210
+> [   66.820355]  drm_atomic_helper_shutdown+0x80/0x130
+> [   66.825276]  msm_pdev_shutdown+0x14/0x20
+> [   66.829303]  platform_shutdown+0x28/0x40
+> [   66.833330]  device_shutdown+0x158/0x330
+> [   66.837357]  kernel_restart+0x40/0xa0
+> [   66.841122]  __do_sys_reboot+0x228/0x250
+> [   66.845148]  __arm64_sys_reboot+0x28/0x34
+> [   66.849264]  el0_svc_common.constprop.0+0x74/0x190
+> [   66.854187]  do_el0_svc+0x24/0x90
+> [   66.857595]  el0_svc+0x14/0x20
+> [   66.860739]  el0_sync_handler+0x1a4/0x1b0
+> [   66.864858]  el0_sync+0x174/0x180
+> [   66.868269] Code: 1ac020a0 2a000273 eb02007f 54ffff01 (f9400285)
+> [   66.874525] ---[ end trace 20dedb2a3229fec8 ]---
+>
+> Fixes: 9d5cbf5fe46e ("drm/msm: add shutdown support for display platform_driver")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/gpu/drm/msm/msm_atomic.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
+> index 6a326761dc4a..2fd0cf6421ad 100644
+> --- a/drivers/gpu/drm/msm/msm_atomic.c
+> +++ b/drivers/gpu/drm/msm/msm_atomic.c
+> @@ -207,7 +207,12 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
+>         struct msm_kms *kms = priv->kms;
+>         struct drm_crtc *async_crtc = NULL;
+>         unsigned crtc_mask = get_crtc_mask(state);
+> -       bool async = kms->funcs->vsync_time &&
+> +       bool async;
+> +
+> +       if (!kms)
+> +               return;
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/dsi/dsi.h                   |  2 +-
- drivers/gpu/drm/msm/dsi/dsi_manager.c           | 11 +++++------
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c           |  4 ++--
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.h           |  2 +-
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c      |  2 +-
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c      |  4 ++--
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c      |  4 ++--
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c      |  4 ++--
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c |  2 +-
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c       |  2 +-
- 10 files changed, 18 insertions(+), 19 deletions(-)
+I think we could instead just check for null priv->kms in
+msm_pdev_shutdown() and not call drm_atomic_helper_shutdown()?
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
-index 5c32ee2b3605..c422c8690ab3 100644
---- a/drivers/gpu/drm/msm/dsi/dsi.h
-+++ b/drivers/gpu/drm/msm/dsi/dsi.h
-@@ -160,7 +160,7 @@ struct msm_dsi_phy_clk_request {
- 
- void msm_dsi_phy_driver_register(void);
- void msm_dsi_phy_driver_unregister(void);
--int msm_dsi_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
-+int msm_dsi_phy_enable(struct msm_dsi_phy *phy,
- 			struct msm_dsi_phy_clk_request *clk_req);
- void msm_dsi_phy_disable(struct msm_dsi_phy *phy);
- void msm_dsi_phy_get_shared_timings(struct msm_dsi_phy *phy,
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-index 2976b09a881d..20bcb6afb52e 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-@@ -109,7 +109,7 @@ static int dsi_mgr_setup_components(int id)
- 	return ret;
- }
- 
--static int enable_phy(struct msm_dsi *msm_dsi, int src_pll_id,
-+static int enable_phy(struct msm_dsi *msm_dsi,
- 		      struct msm_dsi_phy_shared_timings *shared_timings)
- {
- 	struct msm_dsi_phy_clk_request clk_req;
-@@ -118,7 +118,7 @@ static int enable_phy(struct msm_dsi *msm_dsi, int src_pll_id,
- 
- 	msm_dsi_host_get_phy_clk_req(msm_dsi->host, &clk_req, is_dual_dsi);
- 
--	ret = msm_dsi_phy_enable(msm_dsi->phy, src_pll_id, &clk_req);
-+	ret = msm_dsi_phy_enable(msm_dsi->phy, &clk_req);
- 	msm_dsi_phy_get_shared_timings(msm_dsi->phy, shared_timings);
- 
- 	return ret;
-@@ -131,7 +131,6 @@ dsi_mgr_phy_enable(int id,
- 	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
- 	struct msm_dsi *mdsi = dsi_mgr_get_dsi(DSI_CLOCK_MASTER);
- 	struct msm_dsi *sdsi = dsi_mgr_get_dsi(DSI_CLOCK_SLAVE);
--	int src_pll_id = IS_DUAL_DSI() ? DSI_CLOCK_MASTER : id;
- 	int ret;
- 
- 	/* In case of dual DSI, some registers in PHY1 have been programmed
-@@ -144,11 +143,11 @@ dsi_mgr_phy_enable(int id,
- 			msm_dsi_host_reset_phy(mdsi->host);
- 			msm_dsi_host_reset_phy(sdsi->host);
- 
--			ret = enable_phy(mdsi, src_pll_id,
-+			ret = enable_phy(mdsi,
- 					 &shared_timings[DSI_CLOCK_MASTER]);
- 			if (ret)
- 				return ret;
--			ret = enable_phy(sdsi, src_pll_id,
-+			ret = enable_phy(sdsi,
- 					 &shared_timings[DSI_CLOCK_SLAVE]);
- 			if (ret) {
- 				msm_dsi_phy_disable(mdsi->phy);
-@@ -157,7 +156,7 @@ dsi_mgr_phy_enable(int id,
- 		}
- 	} else {
- 		msm_dsi_host_reset_phy(msm_dsi->host);
--		ret = enable_phy(msm_dsi, src_pll_id, &shared_timings[id]);
-+		ret = enable_phy(msm_dsi, &shared_timings[id]);
- 		if (ret)
- 			return ret;
- 	}
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-index 72c97c7173fe..44db7aba0a5b 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-@@ -753,7 +753,7 @@ void __exit msm_dsi_phy_driver_unregister(void)
- 	platform_driver_unregister(&dsi_phy_platform_driver);
- }
- 
--int msm_dsi_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
-+int msm_dsi_phy_enable(struct msm_dsi_phy *phy,
- 			struct msm_dsi_phy_clk_request *clk_req)
- {
- 	struct device *dev = &phy->pdev->dev;
-@@ -776,7 +776,7 @@ int msm_dsi_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
- 		goto reg_en_fail;
- 	}
- 
--	ret = phy->cfg->ops.enable(phy, src_pll_id, clk_req);
-+	ret = phy->cfg->ops.enable(phy, clk_req);
- 	if (ret) {
- 		DRM_DEV_ERROR(dev, "%s: phy enable failed, %d\n", __func__, ret);
- 		goto phy_en_fail;
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-index 3b207cf9f6b4..74fffcae0f10 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-@@ -19,7 +19,7 @@
- 
- struct msm_dsi_phy_ops {
- 	int (*pll_init)(struct msm_dsi_phy *phy);
--	int (*enable)(struct msm_dsi_phy *phy, int src_pll_id,
-+	int (*enable)(struct msm_dsi_phy *phy,
- 			struct msm_dsi_phy_clk_request *clk_req);
- 	void (*disable)(struct msm_dsi_phy *phy);
- 	void (*save_state)(struct msm_dsi_phy *phy);
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-index c6c41a811780..d6d94dabeec8 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-@@ -786,7 +786,7 @@ static void dsi_phy_hw_v3_0_lane_settings(struct msm_dsi_phy *phy)
- 	}
- }
- 
--static int dsi_10nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
-+static int dsi_10nm_phy_enable(struct msm_dsi_phy *phy,
- 			       struct msm_dsi_phy_clk_request *clk_req)
- {
- 	int ret;
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-index b1f3b411e268..092ff0204cc9 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-@@ -938,7 +938,7 @@ static void dsi_14nm_dphy_set_timing(struct msm_dsi_phy *phy,
- 		      DSI_14nm_PHY_LN_TIMING_CTRL_11_TRIG3_CMD(0xa0));
- }
- 
--static int dsi_14nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
-+static int dsi_14nm_phy_enable(struct msm_dsi_phy *phy,
- 			       struct msm_dsi_phy_clk_request *clk_req)
- {
- 	struct msm_dsi_dphy_timing *timing = &phy->timing;
-@@ -996,7 +996,7 @@ static int dsi_14nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
- 	dsi_phy_write(base + REG_DSI_14nm_PHY_CMN_CTRL_1, 0x00);
- 
- 	glbl_test_ctrl = dsi_phy_read(base + REG_DSI_14nm_PHY_CMN_GLBL_TEST_CTRL);
--	if (phy->id == DSI_1 && src_pll_id == DSI_0)
-+	if (phy->usecase == MSM_DSI_PHY_SLAVE)
- 		glbl_test_ctrl |= DSI_14nm_PHY_CMN_GLBL_TEST_CTRL_BITCLK_HS_SEL;
- 	else
- 		glbl_test_ctrl &= ~DSI_14nm_PHY_CMN_GLBL_TEST_CTRL_BITCLK_HS_SEL;
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c
-index f5b88c85a8fc..e96d789aea18 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c
-@@ -63,7 +63,7 @@ static void dsi_20nm_phy_regulator_ctrl(struct msm_dsi_phy *phy, bool enable)
- 	dsi_phy_write(base + REG_DSI_20nm_PHY_REGULATOR_CTRL_0, 0x03);
- }
- 
--static int dsi_20nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
-+static int dsi_20nm_phy_enable(struct msm_dsi_phy *phy,
- 				struct msm_dsi_phy_clk_request *clk_req)
- {
- 	struct msm_dsi_dphy_timing *timing = &phy->timing;
-@@ -85,7 +85,7 @@ static int dsi_20nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
- 	dsi_phy_write(base + REG_DSI_20nm_PHY_STRENGTH_0, 0xff);
- 
- 	val = dsi_phy_read(base + REG_DSI_20nm_PHY_GLBL_TEST_CTRL);
--	if (src_pll_id == DSI_1)
-+	if (phy->id == DSI_1 && phy->usecase == MSM_DSI_PHY_STANDALONE)
- 		val |= DSI_20nm_PHY_GLBL_TEST_CTRL_BITCLK_HS_SEL;
- 	else
- 		val &= ~DSI_20nm_PHY_GLBL_TEST_CTRL_BITCLK_HS_SEL;
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-index 14432323c28d..93fe58b2c111 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-@@ -721,7 +721,7 @@ static void dsi_28nm_phy_regulator_ctrl(struct msm_dsi_phy *phy, bool enable)
- 		dsi_28nm_phy_regulator_enable_dcdc(phy);
- }
- 
--static int dsi_28nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
-+static int dsi_28nm_phy_enable(struct msm_dsi_phy *phy,
- 				struct msm_dsi_phy_clk_request *clk_req)
- {
- 	struct msm_dsi_dphy_timing *timing = &phy->timing;
-@@ -768,7 +768,7 @@ static int dsi_28nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
- 	dsi_phy_write(base + REG_DSI_28nm_PHY_CTRL_0, 0x5f);
- 
- 	val = dsi_phy_read(base + REG_DSI_28nm_PHY_GLBL_TEST_CTRL);
--	if (phy->id == DSI_1 && src_pll_id == DSI_0)
-+	if (phy->usecase == MSM_DSI_PHY_SLAVE)
- 		val &= ~DSI_28nm_PHY_GLBL_TEST_CTRL_BITCLK_HS_SEL;
- 	else
- 		val |= DSI_28nm_PHY_GLBL_TEST_CTRL_BITCLK_HS_SEL;
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
-index 1e004c330599..8b4335010c57 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
-@@ -585,7 +585,7 @@ static void dsi_28nm_phy_lane_config(struct msm_dsi_phy *phy)
- 	dsi_phy_write(base + REG_DSI_28nm_8960_PHY_LNCK_TEST_STR1, 0x88);
- }
- 
--static int dsi_28nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
-+static int dsi_28nm_phy_enable(struct msm_dsi_phy *phy,
- 				struct msm_dsi_phy_clk_request *clk_req)
- {
- 	struct msm_dsi_dphy_timing *timing = &phy->timing;
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-index d26bf387c0fe..6c75addec6b9 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-@@ -800,7 +800,7 @@ static void dsi_phy_hw_v4_0_lane_settings(struct msm_dsi_phy *phy)
- 	}
- }
- 
--static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
-+static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
- 			      struct msm_dsi_phy_clk_request *clk_req)
- {
- 	int ret;
--- 
-2.30.2
+BR,
+-R
 
+> +
+> +       async = kms->funcs->vsync_time &&
+>                         can_do_async(state, &async_crtc);
+>
+>         trace_msm_atomic_commit_tail_start(async, crtc_mask);
+> --
+> 2.30.1
+>
