@@ -2,77 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 500ED33E226
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Mar 2021 00:33:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DCA633E2F9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Mar 2021 01:46:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229517AbhCPXdK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Mar 2021 19:33:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57300 "EHLO
+        id S229613AbhCQApp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Mar 2021 20:45:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229524AbhCPXci (ORCPT
+        with ESMTP id S229703AbhCQApW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Mar 2021 19:32:38 -0400
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82639C061762
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 16:32:38 -0700 (PDT)
-Received: by mail-pj1-x1034.google.com with SMTP id ga23-20020a17090b0397b02900c0b81bbcd4so2215266pjb.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 16:32:38 -0700 (PDT)
+        Tue, 16 Mar 2021 20:45:22 -0400
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6630BC06174A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 17:45:22 -0700 (PDT)
+Received: by mail-qt1-x830.google.com with SMTP id u7so235597qtq.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 17:45:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=F0cJwUc4KZwB02z+vjgX8W6JxJc4yQb8N1YQ54VyI5s=;
-        b=h4Zbj1WL9fTPEigyzdvR/mEQftAIJwqjmCa48uJXvCJWjmwbY68dVhEg2APA58oPMi
-         UhjQAJydf0fIvhiyIt7Iv4aPpvRaRIKjbHP1SC7W4JSxvsqfhCo78Uob1HWKeO3out89
-         tpiV3xv9VU52GARyNUHEZ1idoT4c708Hw/fPA=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=aO/OZ4zO5c+UReCZXfD9/ue3OlGDOu+K9xY/v16MWOM=;
+        b=Yjxx9s2kQ4DOhIjHj6+/pNSGqV161HlvXedt3ioyBFMJpaown9V/+E6jKZL9S8hlvD
+         /g20NMV4xosL3HCIgWPtGpkvEXYezGYew1XCpu4lMFetz9DROLcwY0BqVdgEc/puWbj2
+         CSWigEl1OnH/gTE+ZVG39hnrhmWVqAbwq5ils=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=F0cJwUc4KZwB02z+vjgX8W6JxJc4yQb8N1YQ54VyI5s=;
-        b=cljPEUJZYfJ8GksKDoOOkPa8SLnDopzliD/xkswXL9K5NLtS/MqDXckemO5n2l6MWX
-         gWahb442OUY7Ug8vbbasiHgLq6qWOfHzJDe1tx7w1eijBZgUf4XQZSI5BKgk9ADCIM0A
-         o7ccwmprjzxLZrAZdJKdRm/7+G25Gf/W/XQ0k4hBkl/eZwZTNBd2VLYJhoCO/1ukcRXF
-         cmUebzycN+IKIHmExby0xtt0FGbP41xuQ1dqjNgckoLAZWGXEmhD7pZZeFXq03D5Lf10
-         bNRVX7GeIUzAk7OL26QKGRtBpCndHMfNAfplsnGhI+LAHRhBUTq/EuWcIZWqzuDAGudF
-         0hfg==
-X-Gm-Message-State: AOAM530DLXXD1lGnp4OMG8oavO8i7T5ibnW+/m5IUNSFDt6pZ7xU0nFA
-        L566RFCXqxDihvbCu2XLfxv0xg==
-X-Google-Smtp-Source: ABdhPJyQIqOBBEVftxZAD2RPXx1eaq4e9nRCZIit1X1ARQ/y6KObiwcr3NNHojcYQzpajN+MxdA27w==
-X-Received: by 2002:a17:90a:2a46:: with SMTP id d6mr1363262pjg.197.1615937558041;
-        Tue, 16 Mar 2021 16:32:38 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:b471:7d:bf21:d7dd])
-        by smtp.gmail.com with UTF8SMTPSA id a204sm17795326pfd.106.2021.03.16.16.32.36
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=aO/OZ4zO5c+UReCZXfD9/ue3OlGDOu+K9xY/v16MWOM=;
+        b=dRjzImDPjXTKjFUhuqaE3R0pDlAa9D5rOlhce87j2o/xvrFtpSIPALvPzVtrXsVrPs
+         crmn0kQHmpFoOIcQ0/2ag1ExtQsXm1PO5Af+1osthkLGDpXynCYB95bcHsVS+iGFdw70
+         S+XS3BNVkkbVnruucEFNgU7AmlmvMGzoD54wkcRvTqqENyJQovlLTo79HlfNvY22adm4
+         E0lK/PsSCxOVqCTsstWDhHz/1DlJyFlLXS9iWMkS/CeFI0xo93kKZ+zWq1Coms1aLjW3
+         d+YyEbh13VuP/g52dkbkaUxvIOTa48ECT8sAY3SySnNiWbt6VZmfAxeMD9M5s9xCtSOX
+         81ew==
+X-Gm-Message-State: AOAM5304zQ3JWcn0JxswD04qelnJ33GstaGPBZV9JYvlwAGshKHpG0ZE
+        7CfsPnhP/48UzKTfDtjeuncKXn4FHH0Mvg==
+X-Google-Smtp-Source: ABdhPJzxEPWUg/oQ821pksOr4iqp97O7NYOdwFwHrO8JLRsGqMgYxNNDpE/LJPswLylX6ZGGofGTOQ==
+X-Received: by 2002:ac8:71d2:: with SMTP id i18mr1490684qtp.371.1615941921425;
+        Tue, 16 Mar 2021 17:45:21 -0700 (PDT)
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com. [209.85.219.176])
+        by smtp.gmail.com with ESMTPSA id n140sm16258878qka.124.2021.03.16.17.45.12
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Mar 2021 16:32:37 -0700 (PDT)
-Date:   Tue, 16 Mar 2021 16:32:35 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     satya priya <skakit@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, rnayak@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, kgunda@codeaurora.org,
-        David Collins <collinsd@codeaurora.org>
-Subject: Re: [PATCH V2 5/5] dt-bindings: regulator: Add compatibles for
- PM7325/PMR735A
-Message-ID: <YFFAE9avDMZS9LIh@google.com>
-References: <1615816454-1733-1-git-send-email-skakit@codeaurora.org>
- <1615816454-1733-6-git-send-email-skakit@codeaurora.org>
+        Tue, 16 Mar 2021 17:45:13 -0700 (PDT)
+Received: by mail-yb1-f176.google.com with SMTP id u3so38782507ybk.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Mar 2021 17:45:12 -0700 (PDT)
+X-Received: by 2002:a25:1883:: with SMTP id 125mr1752626yby.465.1615941912101;
+ Tue, 16 Mar 2021 17:45:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1615816454-1733-6-git-send-email-skakit@codeaurora.org>
+References: <20210304155144.1.Ic9c04f960190faad5290738b2a35d73661862735@changeid>
+ <20210304155144.3.I60a7fb23ce4589006bc95c64ab8d15c74b876e68@changeid>
+ <YE0ru4JpXfX/4Awe@pendragon.ideasonboard.com> <CAD=FV=UY_S8jPkXwK6AGs99XrE=pno2sCgLE7qcPWfmoyYVXiw@mail.gmail.com>
+ <YFEnKgwEOWdeQBK6@pendragon.ideasonboard.com>
+In-Reply-To: <YFEnKgwEOWdeQBK6@pendragon.ideasonboard.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 16 Mar 2021 17:44:59 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=W5fpyEf4AqJ+dZ7i_rD_PE40MyNsYNydhPi4BHkEfQcQ@mail.gmail.com>
+Message-ID: <CAD=FV=W5fpyEf4AqJ+dZ7i_rD_PE40MyNsYNydhPi4BHkEfQcQ@mail.gmail.com>
+Subject: Re: [PATCH 3/3] drm/bridge: ti-sn65dsi86: Properly get the EDID, but
+ only if refclk
+To:     Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Cc:     Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 15, 2021 at 07:24:14PM +0530, satya priya wrote:
-> Add PM7325/PMR735A compatibles for Qualcomm SC7280 platform.
-> 
-> Signed-off-by: satya priya <skakit@codeaurora.org>
-> Acked-by: Rob Herring <robh@kernel.org>
+Hi,
 
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+On Tue, Mar 16, 2021 at 2:46 PM Laurent Pinchart
+<laurent.pinchart@ideasonboard.com> wrote:
+>
+> Hi Doug,
+>
+> On Mon, Mar 15, 2021 at 09:25:37AM -0700, Doug Anderson wrote:
+> > On Sat, Mar 13, 2021 at 1:17 PM Laurent Pinchart wrote:
+> > > On Thu, Mar 04, 2021 at 03:52:01PM -0800, Douglas Anderson wrote:
+> > > > In commit 58074b08c04a ("drm/bridge: ti-sn65dsi86: Read EDID blob over
+> > > > DDC") we attempted to make the ti-sn65dsi86 bridge properly read the
+> > > > EDID from the panel. That commit kinda worked but it had some serious
+> > > > problems.
+> > > >
+> > > > The problems all stem from the fact that userspace wants to be able to
+> > > > read the EDID before it explicitly enables the panel. For eDP panels,
+> > > > though, we don't actually power the panel up until the pre-enable
+> > > > stage and the pre-enable call happens right before the enable call
+> > > > with no way to interject in-between. For eDP panels, you can't read
+> > > > the EDID until you power the panel. The result was that
+> > > > ti_sn_bridge_connector_get_modes() was always failing to read the EDID
+> > > > (falling back to what drm_panel_get_modes() returned) until _after_
+> > > > the EDID was needed.
+> > > >
+> > > > To make it concrete, on my system I saw this happen:
+> > > > 1. We'd attach the bridge.
+> > > > 2. Userspace would ask for the EDID (several times). We'd try but fail
+> > > >    to read the EDID over and over again and fall back to the hardcoded
+> > > >    modes.
+> > > > 3. Userspace would decide on a mode based only on the hardcoded modes.
+> > > > 4. Userspace would ask to turn the panel on.
+> > > > 5. Userspace would (eventually) check the modes again (in Chrome OS
+> > > >    this happens on the handoff from the boot splash screen to the
+> > > >    browser). Now we'd read them properly and, if they were different,
+> > > >    userspace would request to change the mode.
+> > > >
+> > > > The fact that userspace would always end up using the hardcoded modes
+> > > > at first significantly decreases the benefit of the EDID
+> > > > reading. Also: if the modes were even a tiny bit different we'd end up
+> > > > doing a wasteful modeset and at boot.
+> > >
+> > > s/and at/at/ ?
+> >
+> > Sure, I can correct if/when I respin or it can be corrected when landed.
+> >
+> > > > diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> > > > index 491c9c4f32d1..af3fb4657af6 100644
+> > > > --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> > > > +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> > > > @@ -16,6 +16,7 @@
+> > > >  #include <linux/pm_runtime.h>
+> > > >  #include <linux/regmap.h>
+> > > >  #include <linux/regulator/consumer.h>
+> > > > +#include <linux/workqueue.h>
+> > > >
+> > > >  #include <asm/unaligned.h>
+> > > >
+> > > > @@ -130,6 +131,12 @@
+> > > >   * @ln_assign:    Value to program to the LN_ASSIGN register.
+> > > >   * @ln_polrs:     Value for the 4-bit LN_POLRS field of SN_ENH_FRAME_REG.
+> > > >   *
+> > > > + * @pre_enabled_early: If true we did an early pre_enable at attach.
+> > > > + * @pre_enable_timeout_work: Delayed work to undo the pre_enable from attach
+> > > > + *                           if a normal pre_enable never came.
+> > >
+> > > Could we simplify this by using the runtime PM autosuspend feature ? The
+> > > configuration of the bridge would be moved from pre_enable to the PM
+> > > runtime resume handler, the clk_disable_unprepare() call moved from
+> > > post_disable to the runtime suspend handler, and the work queue replaced
+> > > by usage of pm_runtime_put_autosuspend().
+> >
+> > It's an interesting idea but I don't think I can make it work, at
+> > least not in a generic enough way. Specifically we can also use this
+> > bridge chip as a generic GPIO provider in Linux. When someone asks us
+> > to read a GPIO then we have to power the bridge on
+> > (pm_runtime_get_sync()) and when someone asks us to configure a GPIO
+> > as an output then we actually leave the bridge powered until they stop
+> > requesting it as an output. At the moment the only user of this
+> > functionality (that I know of) is for the HPD pin on trogdor boards
+> > (long story about why we don't use the dedicated HPD) but the API
+> > supports using these GPIOs for anything and I've tested that it works.
+> > It wouldn't be great to have to keep the panel on in order to access
+> > the GPIOs.
+>
+> The issue you're trying to fix doesn't seem specific to this bridge, so
+> handling it in the bridge driver bothers me :-S Is there any way we
+> could handle this in the DRM core ? I don't want to see similar
+> implementations duplicated in all HDMI/DP bridges.
+
+Yes, it is true that this problem could affect other drivers.  ...and
+in full disclosure I think there are other similar workarounds already
+present. I haven't personally worked on those chips, but in
+ps8640_bridge_get_edid() there is a somewhat similar workaround to
+chain a pre-enable (though maybe it's not quite as optimized?). I'm
+told that maybe something had to be handled for anx7625 (in
+anx7625_get_edid()?) but that definitely doesn't look at all like it's
+doing a pre-enable, so maybe things for that bridge just work
+differently.
+
+One thing that makes me hesitant about trying to moving this to the
+core is that even in sn65dsi86 there is a case where it won't work. As
+I mentioned in the patch I'm not aware of anyone using it in
+production, but if someone was using the MIPI clock as input to the
+bridge chip instead of a fixed "refclk" then trying to get the EDID
+after just "pre-enable" falls over.  Said another way: I can say that
+with this particular bridge chip, if you're using a fixed refclk, you
+can read the EDID after the pre-enable. I don't know if that's always
+true with all other bridge chips.
+
+So I guess in summary: I think I could put my code in the core, but I
+don't _think_ I can just make it automatically enabled.
+
+* In sn65dsi I'd have to only enable it if we have a fixed refclk.
+
+* Maybe in ps8640 I could just always enable it and replace the
+existing code? I'd have to find someone to test.
+
+* In anx7625 things look totally different.
+
+Can you give me any advice on how you'd like me to proceed?
+
+-Doug
