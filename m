@@ -2,38 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 41A0A33E42C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Mar 2021 02:00:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0182D33E5D9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Mar 2021 02:20:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232120AbhCQA6t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Mar 2021 20:58:49 -0400
-Received: from mail.kernel.org ([198.145.29.99]:36880 "EHLO mail.kernel.org"
+        id S230015AbhCQBUU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Mar 2021 21:20:20 -0400
+Received: from mail.kernel.org ([198.145.29.99]:33480 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230076AbhCQA5p (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Mar 2021 20:57:45 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 0C2BB64FE0;
-        Wed, 17 Mar 2021 00:57:39 +0000 (UTC)
+        id S230414AbhCQA4Y (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 16 Mar 2021 20:56:24 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id D450B64F8F;
+        Wed, 17 Mar 2021 00:56:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1615942660;
-        bh=Usc0eiGhhPiYmNvlsMHzWrjR6Ey/DywCN3lPhaMFtQs=;
+        s=k20201202; t=1615942584;
+        bh=K1j1U7j24OoKSGW34SRxXl9SHbrgiM5w89vvUwSaNl4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=IsPmkaLMauBPMql3wqIWy41iKgaluZT+Y0laBFYR6ozSeyMSsAacH/zM8NkP5NvCc
-         NhHCto4eeZCzg+iJyblI2pqG8m03VeqARTB6W9PXw2GiR/xpMIw9PYZCeBFtW6D6tQ
-         z0SXb3LxsJXkCR0rJzm2rZvP7rYQSezKyQQFoWPT6dKTna58sM2U9btSxL9NeqOicf
-         TVYBVMaZKctKhFZgsPpj3546YE7QyYsMkwMBpr3dRW2HVExBi3QZ0tC8SgArVAnu4J
-         8kcc2IZxhZyYx18bJGrHM82vCab1+re/htgqPoH/bkJCxBz1O1mLXtR9rFXk3FmqJs
-         +cVbeNq3+XNrw==
+        b=WRr6qGZkxakAtEOPs2roMZ3NObWbM6489+7Tz49MEUDruLzZlkX52sL7A56C8Rn1P
+         Y76EE29ppXqdoarrKZmtHWcHavjFbii/vjBvb4HFJfNoBjdZsNb5NwoucIOS12J5ZH
+         jbAgdE/4Lbw4pWVAHergg2B8AkZz7DqbK01vpTnaOLAiT1WYJXiiwp5s/czYzalW3K
+         b02+H7I3U8oTfV11OES37gRo902COEx8UNCviuHi83hg1NTGsIwpFhKY9DwDdFyvMs
+         lp5Zm4olfX2afHFstD2Wkl6Jjmw59InoflP+oZB/h/L3GKsRfEY1qqa9221pc9lnzr
+         K7bQO28E56PEA==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     satya priya <skakit@codeaurora.org>,
         Mark Brown <broonie@kernel.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 38/54] regulator: qcom-rpmh: Correct the pmic5_hfsmps515 buck
-Date:   Tue, 16 Mar 2021 20:56:37 -0400
-Message-Id: <20210317005654.724862-38-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.11 40/61] regulator: qcom-rpmh: Correct the pmic5_hfsmps515 buck
+Date:   Tue, 16 Mar 2021 20:55:14 -0400
+Message-Id: <20210317005536.724046-40-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.1
-In-Reply-To: <20210317005654.724862-1-sashal@kernel.org>
-References: <20210317005654.724862-1-sashal@kernel.org>
+In-Reply-To: <20210317005536.724046-1-sashal@kernel.org>
+References: <20210317005536.724046-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -58,7 +58,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
-index 52e4396d4071..c3036591b259 100644
+index 37a2abbe85c7..2351a232d90e 100644
 --- a/drivers/regulator/qcom-rpmh-regulator.c
 +++ b/drivers/regulator/qcom-rpmh-regulator.c
 @@ -726,8 +726,8 @@ static const struct rpmh_vreg_hw_data pmic5_ftsmps510 = {
