@@ -2,106 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A62E33ECBC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Mar 2021 10:16:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2018033ECD3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Mar 2021 10:18:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229545AbhCQJQH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Mar 2021 05:16:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43414 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229955AbhCQJQE (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Mar 2021 05:16:04 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2CB5C061762
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 02:16:03 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id k8so1014456wrc.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 02:16:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=oTL9AJaFLnaIJwp+xH/32TIHC+0/+FSk9wN00bes39U=;
-        b=uMXE+VtjZWadyYCebKZ3fIggjz4V1ChdYHWACmzHieC+U5oQgoCuWUExVACd5lgsxw
-         w8s4oFwYG2AfLmamwBO9l9q/0TJ0gCkYFIuji6TWH18CtdAPoR6InemljL7TIsIXKRtt
-         4A7O7wFyg52FK5pUVZzz0oLvx9BjVIqhabtjd6KLq01ti84V3Jhp4GcEDmBBZ3vOAH1e
-         fUDXTKuJbq6ffGadIu8bCA9YpaFqktUqK6fzurFSa82mW9TodOD9yp+4OW+3IXowiWBO
-         aa59V0PpQbYGVaH6WRVool0cghcBDK8OnkTMFtqO/nFZAO4i2WcpJTi7t9ouldiPeFE6
-         4N9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=oTL9AJaFLnaIJwp+xH/32TIHC+0/+FSk9wN00bes39U=;
-        b=aSX4tNQt5DAeSM3pMjluE2Saa5At4X3wrrGyOaE3tpEUZgTwzeHcqrPQQYDMQxFsgn
-         dMZN88daMOHKYSxAv00tIJhxOfmfoL/SSaSYfC+tYND9xBaNMQ13Hy08cj+8lPNzGAja
-         Djjfh7nkEgVlrWnGF9RIgy3+sJwpS2MDiioWLWouEudrK4sEVsLNAQ09VqjDyxChF3Hx
-         /5DCBPgMfdqjexqLY+ZrqcuLB1/Whh3ABnFMYLL0qMnx+WoFA1KXB5RK48l1mhGlciVV
-         GJ7WEmIiG3Y2QWkwMOBqiIwpGz7QUnuzqD/l0lS7CP8RvP6fyOOftwEc3+SE4pntCxTv
-         5qkQ==
-X-Gm-Message-State: AOAM532dpegvRfZTXjc1wFfkgqt57u9ucLiYZH9c/kLFmEgEn0e9RFY8
-        OIpx0u/6sSa4p+pAOj7evSpe4Q==
-X-Google-Smtp-Source: ABdhPJzccso7yYfvjZ0BNG+B/bhDroptmdi0xF07T+f0b52aGSdXhB4T8OlAfzgB2MnMHmOq7BNizg==
-X-Received: by 2002:a5d:4587:: with SMTP id p7mr3343208wrq.205.1615972562580;
-        Wed, 17 Mar 2021 02:16:02 -0700 (PDT)
-Received: from dell ([91.110.221.194])
-        by smtp.gmail.com with ESMTPSA id p14sm1765900wmc.30.2021.03.17.02.16.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Mar 2021 02:16:02 -0700 (PDT)
-Date:   Wed, 17 Mar 2021 09:16:00 +0000
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Kiran Gunda <kgunda@codeaurora.org>,
-        Obeida Shamoun <oshmoun100@googlemail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-fbdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] backlight: qcom-wled: Use sink_addr for sync toggle
-Message-ID: <20210317091600.GJ701493@dell>
-References: <20210314101110.48024-1-marijn.suijten@somainline.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210314101110.48024-1-marijn.suijten@somainline.org>
+        id S229505AbhCQJRm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Mar 2021 05:17:42 -0400
+Received: from mail.kernel.org ([198.145.29.99]:51364 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229802AbhCQJRe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 17 Mar 2021 05:17:34 -0400
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org [51.254.78.96])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id C235B64F33;
+        Wed, 17 Mar 2021 09:17:33 +0000 (UTC)
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78] helo=why.misterjones.org)
+        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94)
+        (envelope-from <maz@kernel.org>)
+        id 1lMSJ1-002Ad2-Dh; Wed, 17 Mar 2021 09:17:31 +0000
+Date:   Wed, 17 Mar 2021 09:17:30 +0000
+Message-ID: <87k0q6i1g5.wl-maz@kernel.org>
+From:   Marc Zyngier <maz@kernel.org>
+To:     Maulik Shah <mkshah@codeaurora.org>
+Cc:     swboyd@chromium.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        robh+dt@kernel.org, dianders@chromium.org, rnayak@codeaurora.org,
+        lsrao@codeaurora.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 1/3] arm64: dts: qcom: sm8350: Remove second reg from pdc
+In-Reply-To: <1615958996-31807-1-git-send-email-mkshah@codeaurora.org>
+References: <1615958996-31807-1-git-send-email-mkshah@codeaurora.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: mkshah@codeaurora.org, swboyd@chromium.org, bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, robh+dt@kernel.org, dianders@chromium.org, rnayak@codeaurora.org, lsrao@codeaurora.org, devicetree@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 14 Mar 2021, Marijn Suijten wrote:
+On Wed, 17 Mar 2021 05:29:54 +0000,
+Maulik Shah <mkshah@codeaurora.org> wrote:
+> 
+> PDC interrupt controller driver do not use second reg. Remove it.
 
-> From: Obeida Shamoun <oshmoun100@googlemail.com>
-> 
-> WLED3_SINK_REG_SYNC is, as the name implies, a sink register offset.
-> Therefore, use the sink address as base instead of the ctrl address.
-> 
-> This fixes the sync toggle on wled4, which can be observed by the fact
-> that adjusting brightness now works.
-> 
-> It has no effect on wled3 because sink and ctrl base addresses are the
-> same.  This allows adjusting the brightness without having to disable
-> then reenable the module.
-> 
-> Signed-off-by: Obeida Shamoun <oshmoun100@googlemail.com>
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> ---
->  drivers/video/backlight/qcom-wled.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+This is a DT file, not a driver. What the driver does is irrelevant.
 
-Applied, thanks.
+The real question is: what does this range do?
+
+Thanks,
+
+	M.
 
 -- 
-Lee Jones [李琼斯]
-Senior Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
+Without deviation from the norm, progress is not possible.
