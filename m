@@ -2,96 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AE21A33F5BD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Mar 2021 17:40:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E98433F69A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Mar 2021 18:22:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232328AbhCQQj3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Mar 2021 12:39:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55006 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232257AbhCQQjY (ORCPT
+        id S231584AbhCQRVv convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Mar 2021 13:21:51 -0400
+Received: from mslow2.mail.gandi.net ([217.70.178.242]:33553 "EHLO
+        mslow2.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232412AbhCQRUi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Mar 2021 12:39:24 -0400
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D357C06174A;
-        Wed, 17 Mar 2021 09:39:24 -0700 (PDT)
-Received: by mail-pg1-x52d.google.com with SMTP id 205so8120546pgh.9;
-        Wed, 17 Mar 2021 09:39:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=VJKz2h+X44Nyjc70D1nl6aYjywkrSYx9D4C8krqE5s4=;
-        b=gd+e3pDXZbLRr7OHs+dQNTQNYZjTE9SpwbtkhLTG6XdDc7DyYOSisEkNNqZU6WqmDr
-         SCANy+scFCynXXAgg5ILVsnWZCFS+TzUGbVrzDFuocEIGPojXLI/+AJbZDfbA/es7RnX
-         MT4ina1sLUOIX5Dr+/TS0OgO/vG5131jIPjclMFjTkeuVNcOaRKJ0TUsGWow47WLAkP6
-         Nh42/l2OIO0xjCZfZA40hUJ8uit9u+Kw39vxa1av8U4PvgmUULXF/p8CJEie9aPujZPD
-         5pK+P2kIymqyVSOnP+Qk1Xd+TMP2aDoFPFIUpztfiSbBHevuxPHZGKNLhbYehyF+cU83
-         6mcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=VJKz2h+X44Nyjc70D1nl6aYjywkrSYx9D4C8krqE5s4=;
-        b=Eo8OGfdMNejThjDOgj6NqPQcTqFU/QQhFaDF741DZS5ASJnm5vbXgamPKguSnHZrSG
-         jijysnDexyDLARKcGTE4JpMDqnLRcI6CIb3cRjMAxY2K3+G4poLnoBjcBbh7KSyRTGbE
-         F9RKSjLYZqM64cnXMqavUuQ8slRErUA38jHmvvD3sE6O/6nAGiSCnvQpNkvgL5VtRoI5
-         6reDtAvwiGF2Rrttv8zTxUc530aiK7Wz8+XOPMQae1MoOMFWFf+uQPcmi4ki2OEDg7MF
-         ZZ+fJM5Cv+pN8cH7bQCAyvsQilWzVLuCne7U4zJkdXlGNayZCVLRi6vZ8OL2Aer73qoD
-         g/6A==
-X-Gm-Message-State: AOAM533hJwElqbzRytXXkVDyJ+iWxG0z+pX9UI3vQmieMc0LE8YSD0vs
-        vegSJ7BMXQ3/kOX537eKQMiiszmqhrc=
-X-Google-Smtp-Source: ABdhPJwwOq0vwgcZGgWOETf0gCZOIdapKzgtw7LIGnEIxTYxUm7egBbqaGJZOUQ1e4gvOxBkLPpErw==
-X-Received: by 2002:a63:2345:: with SMTP id u5mr3462213pgm.326.1615999163670;
-        Wed, 17 Mar 2021 09:39:23 -0700 (PDT)
-Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id i17sm22008783pfq.135.2021.03.17.09.39.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Mar 2021 09:39:22 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm: Ratelimit invalid-fence message
-Date:   Wed, 17 Mar 2021 09:42:39 -0700
-Message-Id: <20210317164239.1007776-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.29.2
+        Wed, 17 Mar 2021 13:20:38 -0400
+Received: from relay4-d.mail.gandi.net (unknown [217.70.183.196])
+        by mslow2.mail.gandi.net (Postfix) with ESMTP id 766F13A79FA;
+        Wed, 17 Mar 2021 14:54:45 +0000 (UTC)
+X-Originating-IP: 90.89.138.59
+Received: from xps13 (lfbn-tou-1-1325-59.w90-89.abo.wanadoo.fr [90.89.138.59])
+        (Authenticated sender: miquel.raynal@bootlin.com)
+        by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id C6743E0007;
+        Wed, 17 Mar 2021 14:51:22 +0000 (UTC)
+Date:   Wed, 17 Mar 2021 15:51:21 +0100
+From:   Miquel Raynal <miquel.raynal@bootlin.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     richard@nod.at, vigneshr@ti.com, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
+        boris.brezillon@collabora.com, Daniele.Palmas@telit.com,
+        bjorn.andersson@linaro.org
+Subject: Re: [PATCH v5 0/3] Add support for secure regions in NAND
+Message-ID: <20210317155121.19cbb50c@xps13>
+In-Reply-To: <20210317122513.42369-1-manivannan.sadhasivam@linaro.org>
+References: <20210317122513.42369-1-manivannan.sadhasivam@linaro.org>
+Organization: Bootlin
+X-Mailer: Claws Mail 3.17.7 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+Hi Manivannan,
 
-We have seen a couple cases where low memory situations cause something
-bad to happen, followed by a flood of these messages obscuring the root
-cause.  Lets ratelimit the dmesg spam so that next time it happens we
-don't loose the kernel traces leading up to this.
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote on Wed,
+17 Mar 2021 17:55:10 +0530:
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_fence.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> On a typical end product, a vendor may choose to secure some regions in
+> the NAND memory which are supposed to stay intact between FW upgrades.
+> The access to those regions will be blocked by a secure element like
+> Trustzone. So the normal world software like Linux kernel should not
+> touch these regions (including reading).
+> 
+> So this series adds a property for declaring such secure regions in DT
+> so that the driver can skip touching them. While at it, the Qcom NANDc
+> DT binding is also converted to YAML format.
+> 
+> Thanks,
+> Mani
+> 
+> Changes in v5:
+> 
+> * Switched to "uint64-matrix" as suggested by Rob
+> * Moved the whole logic from qcom driver to nand core as suggested by Boris
 
-diff --git a/drivers/gpu/drm/msm/msm_fence.c b/drivers/gpu/drm/msm/msm_fence.c
-index ad2703698b05..cd59a5918038 100644
---- a/drivers/gpu/drm/msm/msm_fence.c
-+++ b/drivers/gpu/drm/msm/msm_fence.c
-@@ -45,7 +45,7 @@ int msm_wait_fence(struct msm_fence_context *fctx, uint32_t fence,
- 	int ret;
- 
- 	if (fence > fctx->last_fence) {
--		DRM_ERROR("%s: waiting on invalid fence: %u (of %u)\n",
-+		DRM_ERROR_RATELIMITED("%s: waiting on invalid fence: %u (of %u)\n",
- 				fctx->name, fence, fctx->last_fence);
- 		return -EINVAL;
- 	}
--- 
-2.29.2
+I'm really thinking about a nand-wide property now. Do you think it
+makes sense to move the helper to the NAND core (instead of the raw
+NAND core)? I'm fine only using it in the raw NAND core though.
 
+Also, can I request a global s/sec/secure/ update? I find the "sec"
+abbreviation unclear and I think we have more than enough cryptic
+names :-)
+
+Thanks,
+Miquèl
