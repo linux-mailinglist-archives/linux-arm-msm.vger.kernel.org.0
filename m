@@ -2,250 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0461633FB56
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Mar 2021 23:39:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 26AC833FBCE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Mar 2021 00:28:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229578AbhCQWjD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Mar 2021 18:39:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48058 "EHLO
+        id S229745AbhCQX1l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Mar 2021 19:27:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229506AbhCQWiz (ORCPT
+        with ESMTP id S229537AbhCQX1k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Mar 2021 18:38:55 -0400
-Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41157C061760
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 15:38:55 -0700 (PDT)
-Received: by mail-qk1-x72c.google.com with SMTP id s7so169284qkg.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 15:38:55 -0700 (PDT)
+        Wed, 17 Mar 2021 19:27:40 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83198C06174A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 16:27:40 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id x26so2175993pfn.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 16:27:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Y3WIcVanAPbeqAQh7jfg7XBL28xTxUqUbFVcumJpKn8=;
-        b=QV9Mt7ewVJ/fzBR+EAgorYvcGR4Nbr7Un9rQvvJssFBkwCagvdOutFQGKYirEGWRqn
-         kCKu3q4q7OXtD4voFM2br5zSKmwb23ht0FD5ggdkJ2lv4kDexjW+zFKAwg0RdyzhNgHg
-         MgQIhP1Sp5QbmDNaOd+KYpJ48LC6xHh/g4GjBLSg7UZ2Fq7Ri24H7WIPZJ68V3dKLg1f
-         59FFe4abylBnaFaqV2zsLy7iv+mMnxibiXNYUDjDBknmOVHj6fMKFaD5veJqEm/rZlon
-         H9qexoXpHaVTQkD/YJEPZhyfdXg1HaAieo2h3QEMf9W01Z7PKutu+W5uybzWX7oX6Lad
-         NWXA==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=ODgJlo11thr3abRRn5H88pJeZKbcK7WUWOM8GS7dn/E=;
+        b=ka7O4tt5b/1Dj+gDV75rnKYCFDViijs6tPrSecl/kL4FE/l3HAn8wK2w7DCA/GvLMz
+         vzLzimLuFdKdgF8qD04l6Hl6ELjSIJ2DmchyQZq+HAFFv7uXuz0J+WyWzxCsFodfyJMD
+         JqVKZ2cm3qQs9iPt7qK9kDLHA527OLYf70mSw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Y3WIcVanAPbeqAQh7jfg7XBL28xTxUqUbFVcumJpKn8=;
-        b=ZJcCsf7CV+ELpvNLwsdvHkI7a1Ss6POq/tmH2T0WrRp7EpnQ5eVdliLqM4QRUKGnTB
-         DpXs/9SDuISXd2lTR02vFOwRt2Zpjh80RYdIP/EwMJDtyEsjIAS4G/fghtjQsRYoyusL
-         /FyiveRARTaMm2Tznm98jOtHwOS9AqT6nL2bfobOfg26FFlP/QWZVSGhumatKNPc8Q3G
-         fQfGyKCIDXCvcnnxeRjV471lOqfwPnIHX6mbKOIoF2QNyz/1OQ8+tXReSREsJmhCS+F5
-         DtWxnAIRbF2iD5VxEsFocawZ6jHd0a1agPZcTxWb/7NZzzi3z16cWN8/PgtlVZf/u1uF
-         ZQ+g==
-X-Gm-Message-State: AOAM532K/4hMrwp+EsP5HNvRWOWL01T8jX72mSMFdk2bqOktIZM8Eea5
-        H8GIfacpY7afTHusAlJXq8McnA==
-X-Google-Smtp-Source: ABdhPJwwJZpvhcOORgGoJP4ZnOZvFuanieCWGNRtDMMo2gMDCmO5RqAYc2IfRAsc2b9rpnJSuoad4Q==
-X-Received: by 2002:a05:620a:854:: with SMTP id u20mr1627059qku.106.1616020734201;
-        Wed, 17 Mar 2021 15:38:54 -0700 (PDT)
-Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.gmail.com with ESMTPSA id m17sm363140qkh.82.2021.03.17.15.38.52
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ODgJlo11thr3abRRn5H88pJeZKbcK7WUWOM8GS7dn/E=;
+        b=dHB++yOTu/oP+oqrF2HC8je42G4vmJfJWUh1mznwCxcVpzHUeENmeRIfMU1Pyy3kpv
+         tb0+DdEmD4svIJyoNblkneLWOPRtveTdpGIN6doMpycT8aLvyJx4y0924k+NlXsQ0EXr
+         Wnv13V4Df/ScAq8r+7R2Mt6R3SA0vxwRNk4SWFtcYx68VuQqtrx4rgRB2v45/WOTnvF1
+         Vv0UFSejfmu+G9xvassa28iv6phfAPQFVyArt4wV8tx+1Ex/qXchZto8RdwLz7ks2WqF
+         ChpQC6YHTi0LkMzXW8beEbyFxucmPeeiuK62PZsxztvXfXch68zJKGwdPOL/28+fwPZm
+         te9Q==
+X-Gm-Message-State: AOAM531J74QQpullKi/fs1PdaNSXJHFv3s6VPFPnIDKhnTBUYDgp1Ofa
+        mCv3ZdPCD3hkdcm48ccY7d56qw==
+X-Google-Smtp-Source: ABdhPJzeS30ixDkVh9yP6I/NanMrQ/pjkgpILrw4pj9P0Ogh+/lOMqEh56QvyTw5PcFj2orL9mcEJA==
+X-Received: by 2002:aa7:8a58:0:b029:1fb:8ab:866e with SMTP id n24-20020aa78a580000b02901fb08ab866emr1339585pfa.0.1616023660024;
+        Wed, 17 Mar 2021 16:27:40 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:3cf8:6a09:780b:f65d])
+        by smtp.gmail.com with UTF8SMTPSA id x186sm166239pfc.65.2021.03.17.16.27.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Mar 2021 15:38:53 -0700 (PDT)
-Subject: Re: [PATCH v3] thermal: qcom: tsens-v0_1: Add support for MDM9607
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        phone-devel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, Rob Herring <robh@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Wed, 17 Mar 2021 16:27:39 -0700 (PDT)
+Date:   Wed, 17 Mar 2021 16:27:37 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20210209192526.455106-1-konrad.dybcio@somainline.org>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <2cfd496b-dc50-d4d9-92c6-0003f74a6c2a@linaro.org>
-Date:   Wed, 17 Mar 2021 18:38:52 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>, robdclark@chromium.org,
+        Daniel Vetter <daniel@ffwll.ch>,
+        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        linux-arm-msm@vger.kernel.org, Steev Klimaszewski <steev@kali.org>,
+        eballetbo@gmail.com, Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        drinkcat@chromium.org, linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH 1/3] dt-bindings: display: simple: Add the panel on
+ sc7180-trogdor-pompom
+Message-ID: <YFKQaXOmOwYyeqvM@google.com>
+References: <20210316140707.RFC.1.I3a21995726282f1e9fcb70da5eb96f19ed96634f@changeid>
 MIME-Version: 1.0
-In-Reply-To: <20210209192526.455106-1-konrad.dybcio@somainline.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20210316140707.RFC.1.I3a21995726282f1e9fcb70da5eb96f19ed96634f@changeid>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 2/9/21 2:25 PM, Konrad Dybcio wrote:
-> MDM9607 TSENS IP is very similar to the one of MSM8916, with
-> minor adjustments to various tuning values.
+On Tue, Mar 16, 2021 at 02:08:19PM -0700, Douglas Anderson wrote:
+> The sc7180-trogdor-pompom board might be attached to any number of a
+> pile of eDP panels. At the moment I'm told that the list might include:
+> - KD KD116N21-30NV-A010
+> - KD KD116N09-30NH-A016
+> - Starry 2081116HHD028001-51D
+> - Sharp LQ116M1JW10
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> Acked-by: Rob Herring <robh@kernel.org>
+> It should be noted that while the EDID programmed in the first 3
+> panels indicates that they should run with exactly the same timing (to
+> keep things simple), the 4th panel not only needs different timing but
+> has a different resolution.
 > 
+> As is true in general with eDP panels, we can figure out which panel
+> we have and all the info needed to drive its pixel clock by reading
+> the EDID. However, we can do this only after we've powered the panel
+> on. Powering on the panels requires following the timing diagram in
+> each panel's datasheet which specifies delays between certain
+> actions. This means that, while we can be quite dynamic about handling
+> things we can't just totally skip out on describing the panel like we
+> could do if it was connected to an external-facing DP port.
+> 
+> While the different panels have slightly different delays, it's
+> possible to come up with a set of unified delays that will work on all
+> the panels. From reading the datasheets:
+> * KD KD116N21-30NV-A010 and KD KD116N09-30NH-A016
+>   - HPD absent delay: 200 ms
+>   - Unprepare delay: 150 ms (datasheet is confusing, might be 500 ms)
+> * Starry 2081116HHD028001-51D
+>   - HPD absent delay: 100 ms
+>   - Enable delay: (link training done till enable BL): 200 ms
+>   - Unprepare delay: 500 ms
+> * Sharp LQ116M1JW10
+>   - HPD absent delay: 200 ms
+>   - Unprepare delay: 500 ms
+>   - Prepare to enable delay (power on till backlight): 100 ms
+> 
+> Unified:
+> - HPD absent delay: 200 ms
+> - Unprepare delay: 500 ms
+> - Enable delay: 200 ms
+> 
+> NOTE: in theory the only thing that we _really_ need unity on is the
+> "HPD absent delay" since once the panel asserts HPD we can read the
+> EDID and could make per-panel decisions if we wanted.
+> 
+> Let's create a definition of "a panel that can be attached to pompom"
+> as a panel that provides a valid EDID and can work with the standard
+> pompom power sequencing. If more panels are later attached to pompom
+> then it's fine as long as they work in a compatible way.
+> 
+> One might ask why we can't just use a generic string here and provide
+> the timings directly in the device tree file. As I understand it,
+> trying to describe generic power sequencing in the device tree is
+> frowned upon and the one instance (SD/MMC) is regarded as a mistake
+> that shouldn't be repeated. Specifying a power sequence per board (or
+> per board class) feels like a reasonable compromise. We're not trying
+> to define fully generic power sequence bindings but we can also take
+> advantage of the semi-probable properties of the attached device.
+> 
+> NOTE: I believe that past instances of supporting this type of thing
+> have used the "white lie" approach. One representative panel was
+> listed in the device tree. The power sequencings of this
+> representative panel were OK to use across all panels that might be
+> attached and other differences were handled by EDID. This patch
+> attempts to set a new precedent and avoid the need for the white lie.
+> 
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
-> Changes since v2:
-> - Address Bjorn's comments (remove redundant variable and kfree)
->   .../bindings/thermal/qcom-tsens.yaml          |  2 +
->   drivers/thermal/qcom/tsens-v0_1.c             | 99 ++++++++++++++++++-
->   drivers/thermal/qcom/tsens.c                  |  3 +
->   drivers/thermal/qcom/tsens.h                  |  2 +-
->   4 files changed, 104 insertions(+), 2 deletions(-)
+
+Sounds reasonable to me if DT maintainers can live with this abstract
+hardware definition. It's clearer than the 'white lie' approach.
+
+It's then up to the vendor/manufacturer to ensure to only ship devices
+with panels that have compatible timings.
+
+>  .../devicetree/bindings/display/panel/panel-simple.yaml       | 4 ++++
+>  1 file changed, 4 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> index 95462e071ab4..8ad9dc139c23 100644
-> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> @@ -22,6 +22,7 @@ properties:
->         - description: v0.1 of TSENS
->           items:
->             - enum:
-> +              - qcom,mdm9607-tsens
->                 - qcom,msm8916-tsens
->                 - qcom,msm8939-tsens
->                 - qcom,msm8974-tsens
-> @@ -94,6 +95,7 @@ allOf:
->           compatible:
->             contains:
->               enum:
-> +              - qcom,mdm9607-tsens
+> diff --git a/Documentation/devicetree/bindings/display/panel/panel-simple.yaml b/Documentation/devicetree/bindings/display/panel/panel-simple.yaml
+> index 62b0d54d87b7..9807dbc1cceb 100644
+> --- a/Documentation/devicetree/bindings/display/panel/panel-simple.yaml
+> +++ b/Documentation/devicetree/bindings/display/panel/panel-simple.yaml
+> @@ -140,6 +140,10 @@ properties:
+>        - giantplus,gpg48273qs5
+>          # GiantPlus GPM940B0 3.0" QVGA TFT LCD panel
+>        - giantplus,gpm940b0
+> +        # A panel connected to a google,pompom board. Panel is guaranteed to
+> +        # confirm to google,pompom-panel power sequencing requirements and then
 
-This should be split into two different patches. DT binding changes is 
-usually not combined with driver changes because two different 
-maintainers handle them. Also checkpatch.pl throws a warning stating the 
-same.
+s/confirm/conform/ ?
 
->                 - qcom,msm8916-tsens
->                 - qcom,msm8974-tsens
->                 - qcom,msm8976-tsens
-> diff --git a/drivers/thermal/qcom/tsens-v0_1.c b/drivers/thermal/qcom/tsens-v0_1.c
-> index 4ffa2e2c0145..a9fc92a4779b 100644
-> --- a/drivers/thermal/qcom/tsens-v0_1.c
-> +++ b/drivers/thermal/qcom/tsens-v0_1.c
-> @@ -190,6 +190,39 @@
->   
->   #define BIT_APPEND		0x3
->   
-> +/* eeprom layout data for mdm9607 */
-> +#define MDM9607_BASE0_MASK	0x000000ff
-> +#define MDM9607_BASE1_MASK	0x000ff000
-> +#define MDM9607_BASE0_SHIFT	0
-> +#define MDM9607_BASE1_SHIFT	12
-> +
-> +#define MDM9607_S0_P1_MASK	0x00003f00
-> +#define MDM9607_S1_P1_MASK	0x03f00000
-> +#define MDM9607_S2_P1_MASK	0x0000003f
-> +#define MDM9607_S3_P1_MASK	0x0003f000
-> +#define MDM9607_S4_P1_MASK	0x0000003f
-> +
-> +#define MDM9607_S0_P2_MASK	0x000fc000
-> +#define MDM9607_S1_P2_MASK	0xfc000000
-> +#define MDM9607_S2_P2_MASK	0x00000fc0
-> +#define MDM9607_S3_P2_MASK	0x00fc0000
-> +#define MDM9607_S4_P2_MASK	0x00000fc0
-> +
-> +#define MDM9607_S0_P1_SHIFT	8
-> +#define MDM9607_S1_P1_SHIFT	20
-> +#define MDM9607_S2_P1_SHIFT	0
-> +#define MDM9607_S3_P1_SHIFT	12
-> +#define MDM9607_S4_P1_SHIFT	0
-> +
-> +#define MDM9607_S0_P2_SHIFT	14
-> +#define MDM9607_S1_P2_SHIFT	26
-> +#define MDM9607_S2_P2_SHIFT	6
-> +#define MDM9607_S3_P2_SHIFT	18
-> +#define MDM9607_S4_P2_SHIFT	6
-> +
-> +#define MDM9607_CAL_SEL_MASK	0x00700000
-> +#define MDM9607_CAL_SEL_SHIFT	20
-> +
->   static int calibrate_8916(struct tsens_priv *priv)
->   {
->   	int base0 = 0, base1 = 0, i;
-> @@ -452,7 +485,56 @@ static int calibrate_8974(struct tsens_priv *priv)
->   	return 0;
->   }
->   
-> -/* v0.1: 8916, 8939, 8974 */
-> +static int calibrate_9607(struct tsens_priv *priv)
-> +{
-> +	int base, i;
-> +	u32 p1[5], p2[5];
-> +	int mode = 0;
-> +	u32 *qfprom_cdata;
-> +
-> +	qfprom_cdata = (u32 *)qfprom_read(priv->dev, "calib");
-> +	if (IS_ERR(qfprom_cdata))
-> +		return PTR_ERR(qfprom_cdata);
-> +
-> +	mode = (qfprom_cdata[2] & MDM9607_CAL_SEL_MASK) >> MDM9607_CAL_SEL_SHIFT;
-> +	dev_dbg(priv->dev, "calibration mode is %d\n", mode);
-> +
-> +	switch (mode) {
-> +	case TWO_PT_CALIB:
-> +		base = (qfprom_cdata[2] & MDM9607_BASE1_MASK) >> MDM9607_BASE1_SHIFT;
-> +		p2[0] = (qfprom_cdata[0] & MDM9607_S0_P2_MASK) >> MDM9607_S0_P2_SHIFT;
-> +		p2[1] = (qfprom_cdata[0] & MDM9607_S1_P2_MASK) >> MDM9607_S1_P2_SHIFT;
-> +		p2[2] = (qfprom_cdata[1] & MDM9607_S2_P2_MASK) >> MDM9607_S2_P2_SHIFT;
-> +		p2[3] = (qfprom_cdata[1] & MDM9607_S3_P2_MASK) >> MDM9607_S3_P2_SHIFT;
-> +		p2[4] = (qfprom_cdata[2] & MDM9607_S4_P2_MASK) >> MDM9607_S4_P2_SHIFT;
-> +		for (i = 0; i < priv->num_sensors; i++)
-> +			p2[i] = ((base + p2[i]) << 2);
-> +		fallthrough;
-> +	case ONE_PT_CALIB2:
-> +		base = (qfprom_cdata[0] & MDM9607_BASE0_MASK);
-> +		p1[0] = (qfprom_cdata[0] & MDM9607_S0_P1_MASK) >> MDM9607_S0_P1_SHIFT;
-> +		p1[1] = (qfprom_cdata[0] & MDM9607_S1_P1_MASK) >> MDM9607_S1_P1_SHIFT;
-> +		p1[2] = (qfprom_cdata[1] & MDM9607_S2_P1_MASK) >> MDM9607_S2_P1_SHIFT;
-> +		p1[3] = (qfprom_cdata[1] & MDM9607_S3_P1_MASK) >> MDM9607_S3_P1_SHIFT;
-> +		p1[4] = (qfprom_cdata[2] & MDM9607_S4_P1_MASK) >> MDM9607_S4_P1_SHIFT;
-> +		for (i = 0; i < priv->num_sensors; i++)
-> +			p1[i] = (((base) + p1[i]) << 2);
+> +        # the specific panel will be probed via EDID.
+> +      - google,pompom-panel
+>          # HannStar Display Corp. HSD070PWW1 7.0" WXGA TFT LCD panel
+>        - hannstar,hsd070pww1
+>          # HannStar Display Corp. HSD100PXN1 10.1" XGA LVDS panel
 
-minor nit: extra braces around base
+FWIW:
 
-> +		break;
-> +	default:
-> +		for (i = 0; i < priv->num_sensors; i++) {
-> +			p1[i] = 500;
-> +			p2[i] = 780;
-> +		}
-> +		break;
-> +	}
-> +
-> +	compute_intercept_slope(priv, p1, p2, mode);
-> +	kfree(qfprom_cdata);
-> +
-> +	return 0;
-> +}
-> +
-> +/* v0.1: 8916, 8939, 8974, 9607 */
->   
->   static struct tsens_features tsens_v0_1_feat = {
->   	.ver_major	= VER_0_1,
-> @@ -540,3 +622,18 @@ struct tsens_plat_data data_8974 = {
->   	.feat		= &tsens_v0_1_feat,
->   	.fields	= tsens_v0_1_regfields,
->   };
-> +
-> +static const struct tsens_ops ops_9607 = {
-> +	.init		= init_common,
-> +	.calibrate	= calibrate_9607,
-> +	.get_temp	= get_temp_common,
-> +};
-> +
-> +struct tsens_plat_data data_9607 = {
-> +	.num_sensors	= 5,
-> +	.ops		= &ops_9607,
-> +	.hw_ids		= (unsigned int []){ 0, 1, 2, 3, 4 },
-> +
-
-please remove the stray blank line.
-
--- 
-Warm Regards
-Thara
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
