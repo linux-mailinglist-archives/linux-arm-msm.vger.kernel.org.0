@@ -2,90 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 67FC433F038
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Mar 2021 13:23:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6CF6A33F04B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Mar 2021 13:26:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229644AbhCQMWw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Mar 2021 08:22:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55892 "EHLO
+        id S229880AbhCQM0D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Mar 2021 08:26:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229648AbhCQMWa (ORCPT
+        with ESMTP id S229602AbhCQMZl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Mar 2021 08:22:30 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADF42C061760
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 05:22:29 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id z8so2829568ljm.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 05:22:29 -0700 (PDT)
+        Wed, 17 Mar 2021 08:25:41 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F30AC06174A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 05:25:30 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id x126so985909pfc.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 05:25:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=e7cDGwvCK159I/9FSrY1M64d33eVbPn2loBLKSHFDao=;
-        b=b8t+CJm+VxXBLFWofhcsHzdMdRYEBlX47K1nE4h1bshj92j7kgKSQF+3qpXtnU7svM
-         flS3g5WXUN7+1elmAFgT6cQWZWONkJ0b9J+XjDGCaoPeAZyOaijtAwU4y2I+TKsNHqJT
-         0jcFGudzcU39cVJfsOWHWPyR7gRScHFLdj+M5OJpmaDS0rym/A7JXAdfYgyZvbLidEPn
-         5vpJiwPdbrmJMmefQOekhwpgsDjs+9JjDGLOEL2pdyHv0b19lDgajwNmC0xG33oVnGgC
-         pOanbPrbvOfgTuTupnNsTyP1Qu/V5hmJHHqiTw04CKqjhL/DCFbXmn+FmkzY1Z9oWM/g
-         5pPw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dytfyZh+t/6hBvEK1wCLf/jrNd0VZgcEm5bChCDpMzg=;
+        b=T8mMHzfr8C/YC+9JiBfAbhRi52k5vAbU1VVHjqSTp3ajN4ZKLsUYVNhz0EYauoAGnJ
+         Z7UUo63Zr9zkYEyhXZZM8ARh8/UHXXPR+XznYaUit7xmRsRY78J9rUmRtLjynb254c41
+         hiH/Hdonpd46H7Fv3uvZ9bXzU64vn0UZ1InzI/8I2zfNnjcYAf7aeJGmJJZmDqAroUfa
+         RUJwxQQDAbWtj9v/eHgVrtvzdizvw59Ryky9bpdn7XS3QxLI7jGFKMIycbUV+rqLZYQG
+         bJ4KNzUdYCtl/VgFYXbqnGLeyTprjcxQy7inOiff5CFNh17dEGC7A+9cSfSLVRSh8K5+
+         tSEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=e7cDGwvCK159I/9FSrY1M64d33eVbPn2loBLKSHFDao=;
-        b=HauFwmpswUSAjn7GlTF3reoXJbiojx9Rntv+bmYvK2Bave3+TH7dAzllhsfG7tAJiu
-         JZcvS7aJ0WmlKhMRElvvOcMW0kWaYfXXl7l1DPisK2cue+ssaJfPadunSg+0BXXYMGUa
-         w7qx8jd1R/RpsnpzvKxVe4y+Ror4GLZVedX1Rj4BOrLGsm43X1iqV34XDolISb5eftXO
-         xJ7+OqgdA1gqE9fbDkq9OfkiiLVgszvsqdOiU/k5FQW9fVYvprXDU0mPGeMQPTolJo+4
-         d30RFnf9/bzCK85RmuT8i+edKz5mxarqvtw2316Dofx+Qc6PoE1G0kz3TAONb4/OYxYq
-         HETA==
-X-Gm-Message-State: AOAM5325wvSmCx2rLyWEIrqSoaaZUgqXCig+cS3DKUoaoAqQ0Sml9T5/
-        dWYVlXmTDQi/g9U5pylh4G2pUA==
-X-Google-Smtp-Source: ABdhPJyuQQX8r2Y7fDEmKtt9+YEIvsoFzImDHZwlp+DBKTJBqRMYqTSLT9Pnu+tzltj08gAWd15hJQ==
-X-Received: by 2002:a2e:8e87:: with SMTP id z7mr2339856ljk.142.1615983748299;
-        Wed, 17 Mar 2021 05:22:28 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id w1sm3415816lfu.239.2021.03.17.05.22.27
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dytfyZh+t/6hBvEK1wCLf/jrNd0VZgcEm5bChCDpMzg=;
+        b=mgVjnLtq6sS+5GdKiG8/TJUrrKQhQH03s+CzreH+wXJlnNkUuxfky6LvQlioNsVxrj
+         SPDx16BWOFERsB/66gok8g/IXPT7XlglgGRzUEgZ3XB0VUycFpyd8Zf4IhdSCvMNn7Vh
+         swoC26JqhhpnA34C7/P5p2kQaA++ko0gHpvrUaPZ8u/qGCTmxMRp+XSGZRW8d5bYbYKL
+         lJOfP4uTx2oVQaw5nYuzzWvgb5I+m/TY9NgB9zRcAi90fC+EEbZesegszQ740Wwtp8lh
+         tNeeesx8VlmoEwtOG6uR03xcCk2Qf6xeEC22hD/HrpoQSn9pqiWk+gl92gaSgOmi69P7
+         8nfw==
+X-Gm-Message-State: AOAM53068LC5P7mtgsuopd1dHwlpVSBKhj5S4IK9wnJZbd3CPK7AxjoQ
+        sjTRIzMWnrQv7jSxk5v+aHZY
+X-Google-Smtp-Source: ABdhPJxQBvjNynU90CGeAQhvI+CodJMu3cpJ1BPfySYq2j+bTcpYj1MoGwp4aHHogsCKuoK9qkeGuQ==
+X-Received: by 2002:a63:1d0b:: with SMTP id d11mr2426883pgd.190.1615983929440;
+        Wed, 17 Mar 2021 05:25:29 -0700 (PDT)
+Received: from localhost.localdomain ([103.66.79.72])
+        by smtp.gmail.com with ESMTPSA id y23sm19285730pfo.50.2021.03.17.05.25.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Mar 2021 05:22:27 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: [PATCH 8/8] clk: qcom: videocc-sm8250: drop unused enum entries
-Date:   Wed, 17 Mar 2021 15:22:21 +0300
-Message-Id: <20210317122221.439105-8-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210317122221.439105-1-dmitry.baryshkov@linaro.org>
-References: <20210317122221.439105-1-dmitry.baryshkov@linaro.org>
+        Wed, 17 Mar 2021 05:25:29 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
+        robh+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
+        boris.brezillon@collabora.com, Daniele.Palmas@telit.com,
+        bjorn.andersson@linaro.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v5 0/3] Add support for secure regions in NAND
+Date:   Wed, 17 Mar 2021 17:55:10 +0530
+Message-Id: <20210317122513.42369-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Drop unused enum entries from the list of parent enums.
+On a typical end product, a vendor may choose to secure some regions in
+the NAND memory which are supposed to stay intact between FW upgrades.
+The access to those regions will be blocked by a secure element like
+Trustzone. So the normal world software like Linux kernel should not
+touch these regions (including reading).
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/clk/qcom/videocc-sm8250.c | 2 --
- 1 file changed, 2 deletions(-)
+So this series adds a property for declaring such secure regions in DT
+so that the driver can skip touching them. While at it, the Qcom NANDc
+DT binding is also converted to YAML format.
 
-diff --git a/drivers/clk/qcom/videocc-sm8250.c b/drivers/clk/qcom/videocc-sm8250.c
-index b0efadc19634..06a8a2c98deb 100644
---- a/drivers/clk/qcom/videocc-sm8250.c
-+++ b/drivers/clk/qcom/videocc-sm8250.c
-@@ -21,8 +21,6 @@
- 
- enum {
- 	P_BI_TCXO,
--	P_CHIP_SLEEP_CLK,
--	P_CORE_BI_PLL_TEST_SE,
- 	P_VIDEO_PLL0_OUT_MAIN,
- 	P_VIDEO_PLL1_OUT_MAIN,
- };
+Thanks,
+Mani
+
+Changes in v5:
+
+* Switched to "uint64-matrix" as suggested by Rob
+* Moved the whole logic from qcom driver to nand core as suggested by Boris
+
+Changes in v4:
+
+* Used "uint32-matrix" instead of "uint32-array" as per Rob's review.
+* Collected Rob's review tag for binding conversion patch
+
+Changes in v3:
+
+* Removed the nand prefix from DT property and moved the property parsing
+  logic before nand_scan() in driver.
+
+Changes in v2:
+
+* Moved the secure-regions property to generic NAND binding as a NAND
+  chip property and renamed it as "nand-secure-regions".
+
+Manivannan Sadhasivam (3):
+  dt-bindings: mtd: Convert Qcom NANDc binding to YAML
+  dt-bindings: mtd: Add a property to declare secure regions in NAND
+    chips
+  mtd: rawnand: Add support for secure regions in NAND memory
+
+ .../bindings/mtd/nand-controller.yaml         |   7 +
+ .../devicetree/bindings/mtd/qcom,nandc.yaml   | 196 ++++++++++++++++++
+ .../devicetree/bindings/mtd/qcom_nandc.txt    | 142 -------------
+ drivers/mtd/nand/raw/nand_base.c              | 105 ++++++++++
+ include/linux/mtd/rawnand.h                   |   4 +
+ 5 files changed, 312 insertions(+), 142 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+ delete mode 100644 Documentation/devicetree/bindings/mtd/qcom_nandc.txt
+
 -- 
-2.30.2
+2.25.1
 
