@@ -2,113 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C27333F7D5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Mar 2021 19:08:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FC3533F810
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Mar 2021 19:24:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232588AbhCQSII (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Mar 2021 14:08:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46038 "EHLO
+        id S232507AbhCQSYC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Mar 2021 14:24:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232730AbhCQSIF (ORCPT
+        with ESMTP id S233001AbhCQSXa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Mar 2021 14:08:05 -0400
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A1BBC061760
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 11:08:05 -0700 (PDT)
-Received: by mail-oi1-x22d.google.com with SMTP id v192so35148390oia.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 11:08:05 -0700 (PDT)
+        Wed, 17 Mar 2021 14:23:30 -0400
+Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com [IPv6:2607:f8b0:4864:20::f36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 885C1C06175F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 11:23:30 -0700 (PDT)
+Received: by mail-qv1-xf36.google.com with SMTP id d10so1845109qve.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 11:23:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=GcUhCfYNDJJjGJ8ohBHX1C0ch2jy4DUHssr3MoU+AWU=;
-        b=eTIpubIUPvbN1WuH36RG/3paeJR1Sg/C8sf0rcDyhhU/ya9dRgqAhtAyyosAFXdlOl
-         f6APtnanqw6EHUoI6LIOrZ5YIg6G4sUpb8Z5wsFGPdyej2BZxOLQM5WtW7+B/moYFKtN
-         RXBeqzVbetGTq+rwkaXhzgYGHaCwfSi+mjzTIoVucRsE8BcuVRHXSaI1dClwhESxGFZB
-         xY9exQiDak1Af7W9jX8HJ47k6I1+dmvByXGJ7wQbyvNYNIqvExX8OFgjVBNcRFSD7TIp
-         02nc4dZeGWc/hrJrQxgWU9qZ4LWsU2JQdfgQsN9iG69UvfaBexYvrIa+q0CQe01gTNZf
-         NgLQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=tmX1Ahb9V3sePtb5QZrdh2WMnjcseF+r4zrPIY/87P0=;
+        b=JudSIsB3tY1OwDRAn7q8hOBmIE6Hjy1qoNBEGRre/XSwoESij+AS6HcIN/hmkNSNu1
+         ivMM8k3skN+gbY7zrsbj0nnqggtb5NfaUMzuX5jgjpD4v8G8HoDkWmf84ubJdBIVfg/X
+         90NJTN2cL1LDxvUdV+GVil5aWi4rea7wmX28xHNauSOWh69pyoekrFkAyX52D4j+muyL
+         q2bnxygDzS/3jhqUuLREHC786k+nIPCdY4W69MLHMbcJQfG/ihi5CbjAYs6GJOO3W0i9
+         NQhE4zxErzWw0mjt7D9ORf/XeHWrIX6dHqKw5qnrxOgZrcf5c05LKjTlHFIJYN9OzCbq
+         5HLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=GcUhCfYNDJJjGJ8ohBHX1C0ch2jy4DUHssr3MoU+AWU=;
-        b=OKvINIx01DhHKNVNphq98sBgBlotUnPFH+kIuhm9N4yaoRQKZElu/PFB0N8yOZhKwK
-         cwdhAwH4EqZI2cbGPSeVnKXAv3at0fSMG6sHmp4FSWTHLEcqCginjIBib1uSblHDKZaP
-         LNQAbn7D1kJ4gXWhyZHDWTPAgwgWcxl02zlYnZCPtocQJsGQiAnCCj4H5O/hHVzRf3zt
-         2awBTm7yP4ddkQecluel5B0pYbh8gdhNfs+4emxl8ox3bimWJN+VXLXX14+12Zbs7hI6
-         ETWVI272g8WMU9t0DhsXFxfs28w4GUDGK5zKvB0ez75qDb1rGT5ywZRG6BvZHUL1nRqz
-         cC6w==
-X-Gm-Message-State: AOAM530LtEWMFiAgXgvp8yz3Fcfgrm+skNgmv61YDHBBbFuH9OV9EczV
-        ngNMairv0Nii9RXwntkCeEuoFA==
-X-Google-Smtp-Source: ABdhPJylmisE+8bmumR+vj5OdRXxasLNVpv/JgwNeVN6sXzYD7xEr2o0CHdpEfznl7Nv7EqJDJt5LA==
-X-Received: by 2002:aca:5d82:: with SMTP id r124mr28532oib.59.1616004484509;
-        Wed, 17 Mar 2021 11:08:04 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id s193sm7966921oih.52.2021.03.17.11.08.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Mar 2021 11:08:04 -0700 (PDT)
-Date:   Wed, 17 Mar 2021 13:08:02 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Marc Zyngier <maz@kernel.org>, Maulik Shah <mkshah@codeaurora.org>
-Cc:     swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
-        dianders@chromium.org, rnayak@codeaurora.org, lsrao@codeaurora.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: sm8350: Remove second reg from pdc
-Message-ID: <YFJFgvLQfr49EvWE@builder.lan>
-References: <1615958996-31807-1-git-send-email-mkshah@codeaurora.org>
- <87k0q6i1g5.wl-maz@kernel.org>
- <bce03166-e65b-198c-8b93-39e0c218aaed@codeaurora.org>
- <87czvxj2t9.wl-maz@kernel.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=tmX1Ahb9V3sePtb5QZrdh2WMnjcseF+r4zrPIY/87P0=;
+        b=msJwmS6EDkIw2qH3wBADZKxH/f8tQzMW/ATzZMNoti2XFACiP1ufy+UvAO0yer+ZXZ
+         MftX2JiG3gTpLikgT+YX65yTq1sL7GbF3kugDrcGKsM1WG2Sp7iwrMOm4g/uRxwdDJUX
+         ZQnc7wj5ztpt04QfXQKChS7zspS1N3OdX6vqyChkyxBIohXtYY57IS0UGiBrH23Ir7RR
+         Fz2hv5S5Nnhief3tPtkM2hPEsJ3b/aXen9rp2iu1GZhdHgQhPG8jsvqOWhnn/gC+HZE5
+         Ai53H3xhSlt/T6ALgHa5VUShGZDzckmiRO7saEkQ7j6m6ArzlTv8ZV74UAjFIcNad1qI
+         gy3Q==
+X-Gm-Message-State: AOAM533Eb/KKu+pw3tuImdDXB4kEjVfp6YbYywjwyosVt/St1XBTgo+0
+        AOXm9OXnwT52dEiy2I6UN3b1mA==
+X-Google-Smtp-Source: ABdhPJy5oMDnLUedtldYvmssFVi0CydnnEM1GUpYPgOHziN330zps7u7+EgaSkhqS4rUZsk5yvDE/Q==
+X-Received: by 2002:ad4:4421:: with SMTP id e1mr455578qvt.48.1616005409600;
+        Wed, 17 Mar 2021 11:23:29 -0700 (PDT)
+Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.gmail.com with ESMTPSA id z4sm18535935qkb.94.2021.03.17.11.23.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 Mar 2021 11:23:29 -0700 (PDT)
+Subject: Re: [PATCH] thermal: qcom: tsens_v1: Enable sensor 3 on MSM8976
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20210225213119.116550-1-konrad.dybcio@somainline.org>
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+Message-ID: <f36f63c7-4427-58fa-fed4-c97c5ee47159@linaro.org>
+Date:   Wed, 17 Mar 2021 14:23:27 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87czvxj2t9.wl-maz@kernel.org>
+In-Reply-To: <20210225213119.116550-1-konrad.dybcio@somainline.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 17 Mar 09:02 CDT 2021, Marc Zyngier wrote:
 
-> On Wed, 17 Mar 2021 09:48:09 +0000,
-> Maulik Shah <mkshah@codeaurora.org> wrote:
-> > 
-> > Hi Marc,
-> > 
-> > On 3/17/2021 2:47 PM, Marc Zyngier wrote:
-> > > On Wed, 17 Mar 2021 05:29:54 +0000,
-> > > Maulik Shah <mkshah@codeaurora.org> wrote:
-> > >> PDC interrupt controller driver do not use second reg. Remove it.
-> > > This is a DT file, not a driver. What the driver does is irrelevant.
-> > > 
-> > > The real question is: what does this range do?
-> > > 
-> > > Thanks,
-> > > 
-> > > 	M.
-> > 
-> > This is to set interrupt type in SPI config for which there was a
-> > change [1] but has not gone in for upstream PDC driver.
-> > 
-> > The second reg is not used in upstream PDC driver, probably when
-> > posting downstream DT changes for sm8350/sm8250 it was carried in
-> > device node as is.
-> > 
-> > As its not mentioned in bindigs as well, dtbs_check reports it as
-> > additional reg when converted to yaml.
+
+On 2/25/21 4:31 PM, Konrad Dybcio wrote:
+> The sensor *is* in fact used and does report temperature.
+
+I can't find any info that says otherwise. So,
+
+Acked-by: Thara Gopinath <thara.gopinath@linaro.org>
+
+Warm Regards
+Thara
+
 > 
-> Then I'd rather you provide accurate documentation in the binding
-> rather than changing the DT files. Other operating systems may use it,
-> and it isn't unlikely that Linux could use the feature at some point.
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> ---
+>   drivers/thermal/qcom/tsens-v1.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
+> index 3c19a3800c6d..573e261ccca7 100644
+> --- a/drivers/thermal/qcom/tsens-v1.c
+> +++ b/drivers/thermal/qcom/tsens-v1.c
+> @@ -380,11 +380,11 @@ static const struct tsens_ops ops_8976 = {
+>   	.get_temp	= get_temp_tsens_valid,
+>   };
+>   
+> -/* Valid for both MSM8956 and MSM8976. Sensor ID 3 is unused. */
+> +/* Valid for both MSM8956 and MSM8976. */
+>   struct tsens_plat_data data_8976 = {
+>   	.num_sensors	= 11,
+>   	.ops		= &ops_8976,
+> -	.hw_ids		= (unsigned int[]){0, 1, 2, 4, 5, 6, 7, 8, 9, 10},
+> +	.hw_ids		= (unsigned int[]){0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
+>   	.feat		= &tsens_v1_feat,
+>   	.fields		= tsens_v1_regfields,
+>   };
 > 
 
-I agree. Maulik, please update the DT binding to document this region as
-well.
-
-
-It also seems relevant to pursue getting [1] into the upstream Linux
-kernel. Is this something that you use downstream Maulik?
-
-Regards,
-Bjorn
+-- 
+Warm Regards
+Thara
