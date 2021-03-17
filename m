@@ -2,38 +2,35 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8737533E3DF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Mar 2021 01:58:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 41A0A33E42C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Mar 2021 02:00:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231759AbhCQA5u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Mar 2021 20:57:50 -0400
-Received: from mail.kernel.org ([198.145.29.99]:34978 "EHLO mail.kernel.org"
+        id S232120AbhCQA6t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Mar 2021 20:58:49 -0400
+Received: from mail.kernel.org ([198.145.29.99]:36880 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230051AbhCQA5I (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Mar 2021 20:57:08 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 2442A64FA8;
-        Wed, 17 Mar 2021 00:57:07 +0000 (UTC)
+        id S230076AbhCQA5p (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 16 Mar 2021 20:57:45 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 0C2BB64FE0;
+        Wed, 17 Mar 2021 00:57:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1615942628;
-        bh=F2Am5AgcwvHFfovPrzkmneKKrUDiOXkJDhQ6FIxVmD8=;
+        s=k20201202; t=1615942660;
+        bh=Usc0eiGhhPiYmNvlsMHzWrjR6Ey/DywCN3lPhaMFtQs=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=UxhPKLnpIpGo4X6W/13KZ3QL4JX0lkxoqgloMPXoiA0H64Pvr4S1aX82Wr30q2La4
-         O41J1uM3yAe7dE8thfavHUWwhgt8PB7HcYVV/Te/DFpqnrdzT56UFRck92+G4Fh6dS
-         NNjcNW002J/JB+nvulxj7apKgaIhIJ1xKSFUQ8xRH0jHJxMYbz4fZSH4IbNQo25U6q
-         A3RRfamAx0ZnnJEm1Foq6HKHMd61k5Lu/rLYmZsHkgxEGkcTgxfOtQQ4Alrw2efVXq
-         VcsO4tMOr2SoTf60vIPB0X8p7yCrRJRr2nueUTaTu67TIyIEUVG77mZaptVsXa0G7T
-         RtdHXQC0Mef7g==
+        b=IsPmkaLMauBPMql3wqIWy41iKgaluZT+Y0laBFYR6ozSeyMSsAacH/zM8NkP5NvCc
+         NhHCto4eeZCzg+iJyblI2pqG8m03VeqARTB6W9PXw2GiR/xpMIw9PYZCeBFtW6D6tQ
+         z0SXb3LxsJXkCR0rJzm2rZvP7rYQSezKyQQFoWPT6dKTna58sM2U9btSxL9NeqOicf
+         TVYBVMaZKctKhFZgsPpj3546YE7QyYsMkwMBpr3dRW2HVExBi3QZ0tC8SgArVAnu4J
+         8kcc2IZxhZyYx18bJGrHM82vCab1+re/htgqPoH/bkJCxBz1O1mLXtR9rFXk3FmqJs
+         +cVbeNq3+XNrw==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Nitin Rawat <nitirawa@codeaurora.org>,
-        Avri Altman <avri.altman@wdc.com>,
-        Can Guo <cang@codeaurora.org>,
-        "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-scsi@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 10/54] scsi: ufs: ufs-qcom: Disable interrupt in reset path
-Date:   Tue, 16 Mar 2021 20:56:09 -0400
-Message-Id: <20210317005654.724862-10-sashal@kernel.org>
+Cc:     satya priya <skakit@codeaurora.org>,
+        Mark Brown <broonie@kernel.org>,
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.10 38/54] regulator: qcom-rpmh: Correct the pmic5_hfsmps515 buck
+Date:   Tue, 16 Mar 2021 20:56:37 -0400
+Message-Id: <20210317005654.724862-38-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.1
 In-Reply-To: <20210317005654.724862-1-sashal@kernel.org>
 References: <20210317005654.724862-1-sashal@kernel.org>
@@ -45,57 +42,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Nitin Rawat <nitirawa@codeaurora.org>
+From: satya priya <skakit@codeaurora.org>
 
-[ Upstream commit 4a791574a0ccf36eb3a0a46fbd71d2768df3eef9 ]
+[ Upstream commit e610e072c87a30658479a7b4c51e1801cb3f450c ]
 
-Disable interrupt in reset path to flush pending IRQ handler in order to
-avoid possible NoC issues.
+Correct the REGULATOR_LINEAR_RANGE and n_voltges for
+pmic5_hfsmps515 buck.
 
-Link: https://lore.kernel.org/r/1614145010-36079-3-git-send-email-cang@codeaurora.org
-Reviewed-by: Avri Altman <avri.altman@wdc.com>
-Signed-off-by: Nitin Rawat <nitirawa@codeaurora.org>
-Signed-off-by: Can Guo <cang@codeaurora.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: satya priya <skakit@codeaurora.org>
+Link: https://lore.kernel.org/r/1614155592-14060-4-git-send-email-skakit@codeaurora.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ufs/ufs-qcom.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/regulator/qcom-rpmh-regulator.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-index a244c8ae1b4e..20182e39cb28 100644
---- a/drivers/scsi/ufs/ufs-qcom.c
-+++ b/drivers/scsi/ufs/ufs-qcom.c
-@@ -253,12 +253,17 @@ static int ufs_qcom_host_reset(struct ufs_hba *hba)
- {
- 	int ret = 0;
- 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-+	bool reenable_intr = false;
- 
- 	if (!host->core_reset) {
- 		dev_warn(hba->dev, "%s: reset control not set\n", __func__);
- 		goto out;
- 	}
- 
-+	reenable_intr = hba->is_irq_enabled;
-+	disable_irq(hba->irq);
-+	hba->is_irq_enabled = false;
-+
- 	ret = reset_control_assert(host->core_reset);
- 	if (ret) {
- 		dev_err(hba->dev, "%s: core_reset assert failed, err = %d\n",
-@@ -280,6 +285,11 @@ static int ufs_qcom_host_reset(struct ufs_hba *hba)
- 
- 	usleep_range(1000, 1100);
- 
-+	if (reenable_intr) {
-+		enable_irq(hba->irq);
-+		hba->is_irq_enabled = true;
-+	}
-+
- out:
- 	return ret;
- }
+diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
+index 52e4396d4071..c3036591b259 100644
+--- a/drivers/regulator/qcom-rpmh-regulator.c
++++ b/drivers/regulator/qcom-rpmh-regulator.c
+@@ -726,8 +726,8 @@ static const struct rpmh_vreg_hw_data pmic5_ftsmps510 = {
+ static const struct rpmh_vreg_hw_data pmic5_hfsmps515 = {
+ 	.regulator_type = VRM,
+ 	.ops = &rpmh_regulator_vrm_ops,
+-	.voltage_range = REGULATOR_LINEAR_RANGE(2800000, 0, 4, 16000),
+-	.n_voltages = 5,
++	.voltage_range = REGULATOR_LINEAR_RANGE(320000, 0, 235, 16000),
++	.n_voltages = 236,
+ 	.pmic_mode_map = pmic_mode_map_pmic5_smps,
+ 	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
+ };
 -- 
 2.30.1
 
