@@ -2,133 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5126033FA02
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Mar 2021 21:33:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AEEA833FA0E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Mar 2021 21:43:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232499AbhCQUdL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Mar 2021 16:33:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49022 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233450AbhCQUcw (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Mar 2021 16:32:52 -0400
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49099C06175F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 13:32:50 -0700 (PDT)
-Received: by mail-ot1-x32d.google.com with SMTP id f73-20020a9d03cf0000b02901b4d889bce0so3049618otf.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 13:32:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=IHCnunVxEHDcq+HTDx4ulePq7olKHfoa4KrEracuGEE=;
-        b=F3jWDKeZzOEZZV+TtU/QAqYOuYjLzlwHXLJOUphmL/VTnC00lws/xyjCQFL1MFzEIq
-         cOmU8WIgXcWr8H47lTCo4CJ6guTqcA2xR8IVXUiA4RT0KOFJNwKrTI7IziG13bdXuDmh
-         1mV45jQA3sCOkiQ18AaiLVLPMdYLhTJRLR/3I=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=IHCnunVxEHDcq+HTDx4ulePq7olKHfoa4KrEracuGEE=;
-        b=JNAy0VW7gkxg0oj82f84jxnGtIYwX8fr3p+l0jSpA8SlXjm7zhb+60F0mJmkBpSwi0
-         lch00UMkvMSdA6IjVO6IPFJ88AwPAxJLoTN0v59RKIK0umYJS4FgAkFg72Wy+zGNXiOb
-         z6upyhNVcDONHFeLzMxlPDYhmRq8+DKcG2/Nxc+Cv6DSYHNGQ6ny2ksOgoeZFICfTZue
-         gyXf1dYa4pkrugGJmmF5TzGanQpUgEh02xXOjfVvHk1T3zy1OeGEVofV/NTjuOuU8ro6
-         D+wldtflzpAkb5qpP8sChqFpNk0yG2/lWjCiXm55fEN3VZ45/NITm5BXwZD/6A6juX2Q
-         yIkQ==
-X-Gm-Message-State: AOAM532M/jYtnABlbderCLO1w2QRSd+jErhnwKxhaMOmoLQDW4TlyMoQ
-        9gd9TAs9qKRS17sLDOM0PAq4R4wTNiXI+B4d5HFVeA==
-X-Google-Smtp-Source: ABdhPJwpaKtWZD5ndm43ILhNLn5AjG91euFm+8cd3zhFc4Jg9VKRXCNzX5CQhv6Shjqegj6++qTq+qWnq/5dHW2jDuI=
-X-Received: by 2002:a9d:6481:: with SMTP id g1mr4590503otl.303.1616013169521;
- Wed, 17 Mar 2021 13:32:49 -0700 (PDT)
+        id S233466AbhCQUm3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Mar 2021 16:42:29 -0400
+Received: from mail.kernel.org ([198.145.29.99]:41274 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233453AbhCQUmU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 17 Mar 2021 16:42:20 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 9FD6964E74;
+        Wed, 17 Mar 2021 20:42:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1616013736;
+        bh=r0TC3di/TlNjjD3qHhv8fnGNSa6YAjgH+x+eyoNbNFU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=YWqHJ190zlBJ2pZ04hs7NYZvZpxVNza5v0V2Z+gBVGcvgJpFB6+ITef3W6lw+lJJD
+         WMAFrG4JvMsYSJ3yy4BgHgOMs4NzRSYQNFY3Ex0njNhoQ1Bd76BYah5P4fqR3Fsmee
+         S3Io03BwVKqNGOgfvhBddz6kPn4wwoRTCMYtJUYiSIAzIewWSEHV2N57H2akckG2+Y
+         mIMkegernVgQxUWjlg+lwZCKuTpXohc4whd6qbihT8/iUBCxYr8D2VJKHQQU9YNfHP
+         cWcP/XVKqtowIUVuUOQ4bb9RQqvDOtyjeYAHc+to2HwwL+bRV875b981L3aF3bpybA
+         14GJOe9BNpv8w==
+Date:   Wed, 17 Mar 2021 20:42:12 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     Guru Das Srinagesh <gurus@codeaurora.org>
+Cc:     Markus Elfring <Markus.Elfring@web.de>,
+        Lee Jones <lee.jones@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg KH <gregkh@linuxfoundation.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Joe Perches <joe@perches.com>,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
+        David Collins <collinsd@codeaurora.org>,
+        Anirudh Ghayal <aghayal@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [RFC PATCH v3 2/3] regmap-irq: Add support for POLARITY_HI and
+ POLARITY_LO config regs
+Message-ID: <20210317204212.GE5559@sirena.org.uk>
+References: <cover.1615423027.git.gurus@codeaurora.org>
+ <4b77a308ccdabbe96ed68623bd6eead9510e1fc9.1615423027.git.gurus@codeaurora.org>
+ <20210312121916.GE5348@sirena.org.uk>
+ <20210315203336.GA8977@codeaurora.org>
 MIME-Version: 1.0
-References: <20210303134319.3160762-1-lee.jones@linaro.org>
- <16d4300e-bf29-1e85-317b-53d257890cb9@vmware.com> <20210308091932.GB4931@dell>
- <YEobySvG0zPs9xhc@phenom.ffwll.local> <20210311135152.GT701493@dell> <20210317081729.GH701493@dell>
-In-Reply-To: <20210317081729.GH701493@dell>
-From:   Daniel Vetter <daniel@ffwll.ch>
-Date:   Wed, 17 Mar 2021 21:32:38 +0100
-Message-ID: <CAKMK7uEibsgXXTEM1d2CGSswp-koouPSouseP_rwLHTdpxfRpw@mail.gmail.com>
-Subject: Re: [RESEND 00/53] Rid GPU from W=1 warnings
-To:     Lee Jones <lee.jones@linaro.org>
-Cc:     Roland Scheidegger <sroland@vmware.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        amd-gfx list <amd-gfx@lists.freedesktop.org>,
-        Anthony Koo <Anthony.Koo@amd.com>,
-        Ben Skeggs <bskeggs@redhat.com>,
-        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Dave Airlie <airlied@redhat.com>,
-        David Airlie <airlied@linux.ie>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Harry Wentland <harry.wentland@amd.com>,
-        Jeremy Kolb <jkolb@brandeis.edu>,
-        Kuogee Hsieh <khsieh@codeaurora.org>,
-        Leo Li <sunpeng.li@amd.com>,
-        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
-        <linaro-mm-sig@lists.linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:DMA BUFFER SHARING FRAMEWORK" 
-        <linux-media@vger.kernel.org>, Lyude Paul <lyude@redhat.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Nouveau Dev <nouveau@lists.freedesktop.org>,
-        Qinglang Miao <miaoqinglang@huawei.com>,
-        Rob Clark <rob.clark@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        VMware Graphics <linux-graphics-maintainer@vmware.com>,
-        Zack Rusin <zackr@vmware.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="cYtjc4pxslFTELvY"
+Content-Disposition: inline
+In-Reply-To: <20210315203336.GA8977@codeaurora.org>
+X-Cookie: Please ignore previous fortune.
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 17, 2021 at 9:17 AM Lee Jones <lee.jones@linaro.org> wrote:
->
-> On Thu, 11 Mar 2021, Lee Jones wrote:
->
-> > On Thu, 11 Mar 2021, Daniel Vetter wrote:
-> >
-> > > On Mon, Mar 08, 2021 at 09:19:32AM +0000, Lee Jones wrote:
-> > > > On Fri, 05 Mar 2021, Roland Scheidegger wrote:
-> > > >
-> > > > > The vmwgfx ones look all good to me, so for
-> > > > > 23-53: Reviewed-by: Roland Scheidegger <sroland@vmware.com>
-> > > > > That said, they were already signed off by Zack, so not sure what
-> > > > > happened here.
-> > > >
-> > > > Yes, they were accepted at one point, then dropped without a reason.
-> > > >
-> > > > Since I rebased onto the latest -next, I had to pluck them back out of
-> > > > a previous one.
-> > >
-> > > They should show up in linux-next again. We merge patches for next merge
-> > > window even during the current merge window, but need to make sure they
-> > > don't pollute linux-next. Occasionally the cut off is wrong so patches
-> > > show up, and then get pulled again.
-> > >
-> > > Unfortunately especially the 5.12 merge cycle was very wobbly due to some
-> > > confusion here. But your patches should all be in linux-next again (they
-> > > are queued up for 5.13 in drm-misc-next, I checked that).
-> > >
-> > > Sorry for the confusion here.
-> >
-> > Oh, I see.  Well so long as they don't get dropped, I'll be happy.
-> >
-> > Thanks for the explanation Daniel
->
-> After rebasing today, all of my GPU patches have remained.  Would
-> someone be kind enough to check that everything is still in order
-> please?
 
-It's still broken somehow. I've kiced Maxime and Maarten again,
-they're also on this thread.
--Daniel
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+--cYtjc4pxslFTELvY
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Mar 15, 2021 at 01:33:37PM -0700, Guru Das Srinagesh wrote:
+
+> Since I do need to write to two extra registers, I'll need two
+> register_base's and two buffers to hold their data. This can be
+> generalized to "extra config registers" in the framework as follows:
+>=20
+> - Add these two fields to `struct regmap_irq_chip`:
+>=20
+> 	unsigned int *extra_config_base; /* Points to array of extra regs */
+> 	int num_extra_config_regs;	 /* =3D ARRAY_SIZE(array above) */
+
+I'm having a hard time loving this but I'm also not able to think of any
+better ideas so sure.  I'd change the name to virtual (or virt) rather
+than extra since that's what they are so it makes it a bit omre clear.
+
+--cYtjc4pxslFTELvY
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmBSaaMACgkQJNaLcl1U
+h9BFDAf/UYAPrvexl9IIeo4Rn8K0QHNy4V5WXMEh1/H7ifjO709iyNuO8i3U+6iW
+HFTxBw5Dycdzv7nMklFD3eWZCV5Cyt9LfPNgDZlWY0BdYdz7ZvhnFW/UDHT7bIfj
+V5k9ekNtMz0+xi54Ee1K+SouaWkWB2Tte0h4YrX04Ci+DJniPEVT5Fzrq0CVTBWH
+4WCmllhs1GlPuQUJsomJul+9UHcNQaPDRYiPr/e5jioDIe3rAzM5gyfhPGrfHiIR
+hzTh9mzSqCE7iqCNlezRW2mKkbVPwyJVz48llc91V0fW26EKK5Tni/KRP4pw0+hZ
+WIgJgZrnov6X2pcJD8TXs0TNKc7ujQ==
+=u8q4
+-----END PGP SIGNATURE-----
+
+--cYtjc4pxslFTELvY--
