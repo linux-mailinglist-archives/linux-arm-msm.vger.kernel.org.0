@@ -2,142 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C75A33EB99
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Mar 2021 09:36:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A62E33ECBC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Mar 2021 10:16:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229524AbhCQIgK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Mar 2021 04:36:10 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:7638 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229506AbhCQIf5 (ORCPT
+        id S229545AbhCQJQH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Mar 2021 05:16:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43414 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229955AbhCQJQE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Mar 2021 04:35:57 -0400
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 17 Mar 2021 01:35:57 -0700
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 17 Mar 2021 01:35:54 -0700
-X-QCInternal: smtphost
-Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 17 Mar 2021 14:05:39 +0530
-Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
-        id AEA7121663; Wed, 17 Mar 2021 14:05:37 +0530 (IST)
-From:   Dikshita Agarwal <dikshita@codeaurora.org>
-To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, Dikshita Agarwal <dikshita@codeaurora.org>
-Subject: [PATCH] media: venus: Fix internal buffer size calculations for v6.
-Date:   Wed, 17 Mar 2021 14:05:28 +0530
-Message-Id: <1615970128-25668-1-git-send-email-dikshita@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Wed, 17 Mar 2021 05:16:04 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2CB5C061762
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 02:16:03 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id k8so1014456wrc.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 02:16:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=oTL9AJaFLnaIJwp+xH/32TIHC+0/+FSk9wN00bes39U=;
+        b=uMXE+VtjZWadyYCebKZ3fIggjz4V1ChdYHWACmzHieC+U5oQgoCuWUExVACd5lgsxw
+         w8s4oFwYG2AfLmamwBO9l9q/0TJ0gCkYFIuji6TWH18CtdAPoR6InemljL7TIsIXKRtt
+         4A7O7wFyg52FK5pUVZzz0oLvx9BjVIqhabtjd6KLq01ti84V3Jhp4GcEDmBBZ3vOAH1e
+         fUDXTKuJbq6ffGadIu8bCA9YpaFqktUqK6fzurFSa82mW9TodOD9yp+4OW+3IXowiWBO
+         aa59V0PpQbYGVaH6WRVool0cghcBDK8OnkTMFtqO/nFZAO4i2WcpJTi7t9ouldiPeFE6
+         4N9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=oTL9AJaFLnaIJwp+xH/32TIHC+0/+FSk9wN00bes39U=;
+        b=aSX4tNQt5DAeSM3pMjluE2Saa5At4X3wrrGyOaE3tpEUZgTwzeHcqrPQQYDMQxFsgn
+         dMZN88daMOHKYSxAv00tIJhxOfmfoL/SSaSYfC+tYND9xBaNMQ13Hy08cj+8lPNzGAja
+         Djjfh7nkEgVlrWnGF9RIgy3+sJwpS2MDiioWLWouEudrK4sEVsLNAQ09VqjDyxChF3Hx
+         /5DCBPgMfdqjexqLY+ZrqcuLB1/Whh3ABnFMYLL0qMnx+WoFA1KXB5RK48l1mhGlciVV
+         GJ7WEmIiG3Y2QWkwMOBqiIwpGz7QUnuzqD/l0lS7CP8RvP6fyOOftwEc3+SE4pntCxTv
+         5qkQ==
+X-Gm-Message-State: AOAM532dpegvRfZTXjc1wFfkgqt57u9ucLiYZH9c/kLFmEgEn0e9RFY8
+        OIpx0u/6sSa4p+pAOj7evSpe4Q==
+X-Google-Smtp-Source: ABdhPJzccso7yYfvjZ0BNG+B/bhDroptmdi0xF07T+f0b52aGSdXhB4T8OlAfzgB2MnMHmOq7BNizg==
+X-Received: by 2002:a5d:4587:: with SMTP id p7mr3343208wrq.205.1615972562580;
+        Wed, 17 Mar 2021 02:16:02 -0700 (PDT)
+Received: from dell ([91.110.221.194])
+        by smtp.gmail.com with ESMTPSA id p14sm1765900wmc.30.2021.03.17.02.16.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Mar 2021 02:16:02 -0700 (PDT)
+Date:   Wed, 17 Mar 2021 09:16:00 +0000
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Kiran Gunda <kgunda@codeaurora.org>,
+        Obeida Shamoun <oshmoun100@googlemail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-fbdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] backlight: qcom-wled: Use sink_addr for sync toggle
+Message-ID: <20210317091600.GJ701493@dell>
+References: <20210314101110.48024-1-marijn.suijten@somainline.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210314101110.48024-1-marijn.suijten@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-- Update persist buffer size for encoder to 204800.
-- Update persist buffer size calculation for h264 decoder.
-- h264d level 6 support needs update in internal buffer size.
-  update below buffers size
-  - h264 decoder colocated motion vector buffer.
-  - h264 decoder VPP command buffer.
-  - h265 decoder VPP command buffer.
-- Update VP9_NUM_FRAME_INFO_BUF to 32.
+On Sun, 14 Mar 2021, Marijn Suijten wrote:
 
-Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
----
- .../media/platform/qcom/venus/hfi_plat_bufs_v6.c   | 27 ++++++++++++++--------
- 1 file changed, 18 insertions(+), 9 deletions(-)
+> From: Obeida Shamoun <oshmoun100@googlemail.com>
+> 
+> WLED3_SINK_REG_SYNC is, as the name implies, a sink register offset.
+> Therefore, use the sink address as base instead of the ctrl address.
+> 
+> This fixes the sync toggle on wled4, which can be observed by the fact
+> that adjusting brightness now works.
+> 
+> It has no effect on wled3 because sink and ctrl base addresses are the
+> same.  This allows adjusting the brightness without having to disable
+> then reenable the module.
+> 
+> Signed-off-by: Obeida Shamoun <oshmoun100@googlemail.com>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> ---
+>  drivers/video/backlight/qcom-wled.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c b/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
-index d43d1a5..a41ad63 100644
---- a/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
-+++ b/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
-@@ -40,7 +40,8 @@
- 
- #define MAX_TILE_COLUMNS				32 /* 8K/256 */
- 
--#define NUM_HW_PIC_BUF					10
-+#define VPP_CMD_MAX_SIZE				BIT(20)
-+#define NUM_HW_PIC_BUF					32
- #define BIN_BUFFER_THRESHOLD				(1280 * 736)
- #define H264D_MAX_SLICE					1800
- /* sizeof(h264d_buftab_t) aligned to 256 */
-@@ -90,6 +91,7 @@
- #define SIZE_SLIST_BUF_H264		512
- #define LCU_MAX_SIZE_PELS		64
- #define LCU_MIN_SIZE_PELS		16
-+#define SIZE_SEI_USERDATA		4096
- 
- #define H265D_MAX_SLICE			600
- #define SIZE_H265D_HW_PIC_T		SIZE_H264D_HW_PIC_T
-@@ -199,7 +201,7 @@ static inline u32 size_vpxd_lb_se_left_ctrl(u32 width, u32 height)
- #define VPX_DECODER_FRAME_BIN_RES_BUDGET_RATIO_DEN	2
- 
- #define VP8_NUM_FRAME_INFO_BUF			(5 + 1)
--#define VP9_NUM_FRAME_INFO_BUF			(8 + 2 + 1 + 8)
-+#define VP9_NUM_FRAME_INFO_BUF			32
- #define VP8_NUM_PROBABILITY_TABLE_BUF		VP8_NUM_FRAME_INFO_BUF
- #define VP9_NUM_PROBABILITY_TABLE_BUF		(VP9_NUM_FRAME_INFO_BUF + 4)
- #define VP8_PROB_TABLE_SIZE			3840
-@@ -211,7 +213,7 @@ static inline u32 size_vpxd_lb_se_left_ctrl(u32 width, u32 height)
- 
- #define QMATRIX_SIZE				(sizeof(u32) * 128 + 256)
- #define MP2D_QPDUMP_SIZE			115200
--#define HFI_IRIS2_ENC_PERSIST_SIZE		102400
-+#define HFI_IRIS2_ENC_PERSIST_SIZE		204800
- #define HFI_MAX_COL_FRAME			6
- #define HFI_VENUS_VENC_TRE_WB_BUFF_SIZE		(65 << 4) /* in Bytes */
- #define HFI_VENUS_VENC_DB_LINE_BUFF_PER_MB	512
-@@ -467,7 +469,7 @@ static u32 hfi_iris2_h264d_comv_size(u32 width, u32 height,
- {
- 	u32 frame_width_in_mbs = ((width + 15) >> 4);
- 	u32 frame_height_in_mbs = ((height + 15) >> 4);
--	u32 col_mv_aligned_width = (frame_width_in_mbs << 6);
-+	u32 col_mv_aligned_width = (frame_width_in_mbs << 7);
- 	u32 col_zero_aligned_width = (frame_width_in_mbs << 2);
- 	u32 col_zero_size = 0, size_colloc = 0, comv_size = 0;
- 
-@@ -499,10 +501,14 @@ static u32 size_h264d_bse_cmd_buf(u32 height)
- 
- static u32 size_h264d_vpp_cmd_buf(u32 height)
- {
-+	u32 size = 0;
- 	u32 aligned_height = ALIGN(height, 32);
-+	size = min_t(u32, (((aligned_height + 15) >> 4) * 3 * 4), H264D_MAX_SLICE) *
-+		SIZE_H264D_VPP_CMD_PER_BUF;
-+	if (size > VPP_CMD_MAX_SIZE)
-+		size = VPP_CMD_MAX_SIZE;
- 
--	return min_t(u32, (((aligned_height + 15) >> 4) * 3 * 4),
--		     H264D_MAX_SLICE) * SIZE_H264D_VPP_CMD_PER_BUF;
-+	return size;
- }
- 
- static u32 hfi_iris2_h264d_non_comv_size(u32 width, u32 height,
-@@ -559,8 +565,11 @@ static u32 size_h265d_vpp_cmd_buf(u32 width, u32 height)
- 	size = min_t(u32, size, H265D_MAX_SLICE + 1);
- 	size = ALIGN(size, 4);
- 	size = 2 * size * SIZE_H265D_VPP_CMD_PER_BUF;
-+	size = ALIGN(size, HFI_DMA_ALIGNMENT);
-+	if (size > VPP_CMD_MAX_SIZE)
-+		size = VPP_CMD_MAX_SIZE;
- 
--	return ALIGN(size, HFI_DMA_ALIGNMENT);
-+	return size;
- }
- 
- static u32 hfi_iris2_h265d_comv_size(u32 width, u32 height,
-@@ -1004,8 +1013,8 @@ static u32 enc_persist_size(void)
- 
- static u32 h264d_persist1_size(void)
- {
--	return ALIGN((SIZE_SLIST_BUF_H264 * NUM_SLIST_BUF_H264),
--		     HFI_DMA_ALIGNMENT);
-+	return ALIGN((SIZE_SLIST_BUF_H264 * NUM_SLIST_BUF_H264
-+		     + NUM_HW_PIC_BUF * SIZE_SEI_USERDATA), HFI_DMA_ALIGNMENT);
- }
- 
- static u32 h265d_persist1_size(void)
+Applied, thanks.
+
 -- 
-2.7.4
-
+Lee Jones [李琼斯]
+Senior Technical Lead - Developer Services
+Linaro.org │ Open source software for Arm SoCs
+Follow Linaro: Facebook | Twitter | Blog
