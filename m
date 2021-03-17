@@ -2,193 +2,250 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CD7FB33FA77
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Mar 2021 22:27:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0461633FB56
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Mar 2021 23:39:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233567AbhCQV1P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Mar 2021 17:27:15 -0400
-Received: from m42-10.mailgun.net ([69.72.42.10]:50801 "EHLO
-        m42-10.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233494AbhCQV0w (ORCPT
+        id S229578AbhCQWjD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Mar 2021 18:39:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48058 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229506AbhCQWiz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Mar 2021 17:26:52 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1616016412; h=Message-ID: References: In-Reply-To: Reply-To:
- Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=rUdJtBfTFgyjFNtc2CQzmWvggSZM/VQac8mm040LRys=;
- b=SmCDfbjNrfyG8CwtDH1OiH27mAga1TN5TtPvoPWD4Jy+soc5vhSU4NoZvH9HI3a5Y5VJofcg
- h8ZOuzli5Hja8Eyteskl9OLflSO2edpcXBfqDrz0QfRnUf5PvZL2JG4ZnJWJ4iyXnKpTxzjX
- mBUPU1o0495TW+QmszknhA6rmAY=
-X-Mailgun-Sending-Ip: 69.72.42.10
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 6052741a21031618f65946b9 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 17 Mar 2021 21:26:50
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id EEC44C43465; Wed, 17 Mar 2021 21:26:49 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C86C2C433ED;
-        Wed, 17 Mar 2021 21:26:48 +0000 (UTC)
+        Wed, 17 Mar 2021 18:38:55 -0400
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41157C061760
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 15:38:55 -0700 (PDT)
+Received: by mail-qk1-x72c.google.com with SMTP id s7so169284qkg.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 15:38:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Y3WIcVanAPbeqAQh7jfg7XBL28xTxUqUbFVcumJpKn8=;
+        b=QV9Mt7ewVJ/fzBR+EAgorYvcGR4Nbr7Un9rQvvJssFBkwCagvdOutFQGKYirEGWRqn
+         kCKu3q4q7OXtD4voFM2br5zSKmwb23ht0FD5ggdkJ2lv4kDexjW+zFKAwg0RdyzhNgHg
+         MgQIhP1Sp5QbmDNaOd+KYpJ48LC6xHh/g4GjBLSg7UZ2Fq7Ri24H7WIPZJ68V3dKLg1f
+         59FFe4abylBnaFaqV2zsLy7iv+mMnxibiXNYUDjDBknmOVHj6fMKFaD5veJqEm/rZlon
+         H9qexoXpHaVTQkD/YJEPZhyfdXg1HaAieo2h3QEMf9W01Z7PKutu+W5uybzWX7oX6Lad
+         NWXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Y3WIcVanAPbeqAQh7jfg7XBL28xTxUqUbFVcumJpKn8=;
+        b=ZJcCsf7CV+ELpvNLwsdvHkI7a1Ss6POq/tmH2T0WrRp7EpnQ5eVdliLqM4QRUKGnTB
+         DpXs/9SDuISXd2lTR02vFOwRt2Zpjh80RYdIP/EwMJDtyEsjIAS4G/fghtjQsRYoyusL
+         /FyiveRARTaMm2Tznm98jOtHwOS9AqT6nL2bfobOfg26FFlP/QWZVSGhumatKNPc8Q3G
+         fQfGyKCIDXCvcnnxeRjV471lOqfwPnIHX6mbKOIoF2QNyz/1OQ8+tXReSREsJmhCS+F5
+         DtWxnAIRbF2iD5VxEsFocawZ6jHd0a1agPZcTxWb/7NZzzi3z16cWN8/PgtlVZf/u1uF
+         ZQ+g==
+X-Gm-Message-State: AOAM532K/4hMrwp+EsP5HNvRWOWL01T8jX72mSMFdk2bqOktIZM8Eea5
+        H8GIfacpY7afTHusAlJXq8McnA==
+X-Google-Smtp-Source: ABdhPJwwJZpvhcOORgGoJP4ZnOZvFuanieCWGNRtDMMo2gMDCmO5RqAYc2IfRAsc2b9rpnJSuoad4Q==
+X-Received: by 2002:a05:620a:854:: with SMTP id u20mr1627059qku.106.1616020734201;
+        Wed, 17 Mar 2021 15:38:54 -0700 (PDT)
+Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.gmail.com with ESMTPSA id m17sm363140qkh.82.2021.03.17.15.38.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 Mar 2021 15:38:53 -0700 (PDT)
+Subject: Re: [PATCH v3] thermal: qcom: tsens-v0_1: Add support for MDM9607
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, Rob Herring <robh@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20210209192526.455106-1-konrad.dybcio@somainline.org>
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+Message-ID: <2cfd496b-dc50-d4d9-92c6-0003f74a6c2a@linaro.org>
+Date:   Wed, 17 Mar 2021 18:38:52 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <20210209192526.455106-1-konrad.dybcio@somainline.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Date:   Wed, 17 Mar 2021 14:26:48 -0700
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     Loic Poulain <loic.poulain@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        =?UTF-8?Q?Carl_Yin=28=E6=AE=B7?= =?UTF-8?Q?=E5=BC=A0=E6=88=90=29?= 
-        <carl.yin@quectel.com>, Naveen Kumar <naveen.kumar@quectel.com>,
-        jhugo=codeaurora.org@codeaurora.org
-Subject: Re: [PATCH v4 1/3] bus: mhi: core: Introduce internal register poll
- helper function
-Organization: Qualcomm Innovation Center, Inc.
-Reply-To: bbhatt@codeaurora.org
-Mail-Reply-To: bbhatt@codeaurora.org
-In-Reply-To: <e04579bf-6641-0038-1aa8-b46f8ab4b984@codeaurora.org>
-References: <1615419080-26540-1-git-send-email-bbhatt@codeaurora.org>
- <1615419080-26540-2-git-send-email-bbhatt@codeaurora.org>
- <CAMZdPi8CHCVT8G60zOEn0n43vPJW0xx+fufnBFzb7aPXSoMQOw@mail.gmail.com>
- <e04579bf-6641-0038-1aa8-b46f8ab4b984@codeaurora.org>
-Message-ID: <43c83caf8a6b71207b107ac8457f22d6@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-03-11 11:59 AM, Jeffrey Hugo wrote:
-> On 3/11/2021 1:00 AM, Loic Poulain wrote:
->> Hi Bhaumik,
->> 
->> On Thu, 11 Mar 2021 at 00:31, Bhaumik Bhatt <bbhatt@codeaurora.org> 
->> wrote:
->>> 
->>> Introduce helper function to allow MHI core driver to poll for
->>> a value in a register field. This helps reach a common path to
->>> read and poll register values along with a retry time interval.
->>> 
->>> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
->>> ---
->>>   drivers/bus/mhi/core/internal.h |  3 +++
->>>   drivers/bus/mhi/core/main.c     | 23 +++++++++++++++++++++++
->>>   2 files changed, 26 insertions(+)
->>> 
->>> diff --git a/drivers/bus/mhi/core/internal.h 
->>> b/drivers/bus/mhi/core/internal.h
->>> index 6f80ec3..005286b 100644
->>> --- a/drivers/bus/mhi/core/internal.h
->>> +++ b/drivers/bus/mhi/core/internal.h
->>> @@ -643,6 +643,9 @@ int __must_check mhi_read_reg(struct 
->>> mhi_controller *mhi_cntrl,
->>>   int __must_check mhi_read_reg_field(struct mhi_controller 
->>> *mhi_cntrl,
->>>                                      void __iomem *base, u32 offset, 
->>> u32 mask,
->>>                                      u32 shift, u32 *out);
->>> +int __must_check mhi_poll_reg_field(struct mhi_controller 
->>> *mhi_cntrl,
->>> +                                   void __iomem *base, u32 offset, 
->>> u32 mask,
->>> +                                   u32 shift, u32 val, u32 delayus);
->>>   void mhi_write_reg(struct mhi_controller *mhi_cntrl, void __iomem 
->>> *base,
->>>                     u32 offset, u32 val);
->>>   void mhi_write_reg_field(struct mhi_controller *mhi_cntrl, void 
->>> __iomem *base,
->>> diff --git a/drivers/bus/mhi/core/main.c 
->>> b/drivers/bus/mhi/core/main.c
->>> index 4e0131b..7c7f41a 100644
->>> --- a/drivers/bus/mhi/core/main.c
->>> +++ b/drivers/bus/mhi/core/main.c
->>> @@ -4,6 +4,7 @@
->>>    *
->>>    */
->>> 
->>> +#include <linux/delay.h>
->>>   #include <linux/device.h>
->>>   #include <linux/dma-direction.h>
->>>   #include <linux/dma-mapping.h>
->>> @@ -37,6 +38,28 @@ int __must_check mhi_read_reg_field(struct 
->>> mhi_controller *mhi_cntrl,
->>>          return 0;
->>>   }
->>> 
->>> +int __must_check mhi_poll_reg_field(struct mhi_controller 
->>> *mhi_cntrl,
->>> +                                   void __iomem *base, u32 offset,
->>> +                                   u32 mask, u32 shift, u32 val, u32 
->>> delayus)
->>> +{
->>> +       int ret;
->>> +       u32 out, retry = (mhi_cntrl->timeout_ms * 1000) / delayus;
->>> +
->>> +       while (retry--) {
->>> +               ret = mhi_read_reg_field(mhi_cntrl, base, offset, 
->>> mask, shift,
->>> +                                        &out);
->>> +               if (ret)
->>> +                       return ret;
->>> +
->>> +               if (out == val)
->>> +                       return 0;
->>> +
->>> +               udelay(delayus);
->> 
->> Have you read my previous comment?
->> Do you really want to risk hogging the CPU for several seconds? we
->> know that some devices take several seconds to start/boot.
->> Why not using msleep variant here?
-> 
-> usleep_range() if there is a desire to stay in us units?
-> 
-> Given that the use of this function is for 25ms in one case, I wonder
-> if this warning is applicable:
-> https://elixir.bootlin.com/linux/latest/source/include/linux/delay.h#L28
-> 
-> Counter point, 1ms latency over PCIe is not unusual.  I know we've
-> removed the PCIe dependencies from MHI, but PCIe is the real usecase
-> at this time.  Seems like this function could behave a bit weird if
-> the parameter to udelay is something like "100", but the
-> mhi_read_reg_field() call takes significantly longer than that.  Feels
-> like in some scenarios, we could actually exceed the timeout by a
-> non-trivial margin.
-> 
-> I guess I'm going back and forth in determining if us scale timing is
-> a benefit in any way.
-Thanks for all the inputs. I think a good idea here would be to use 
-fsleep()
-API as we need to allow any timeout the caller specifies. Also, plan is 
-to
-drop the patch #3 in this series since that will require a busywait due 
-to
-the code being in panic path.
 
-I don't wish to accommodate another variable here for busywait but that
-would be an option to pick sleep or delay depending on the caller's 
-path.
 
-Please respond if there are any concerns.
+On 2/9/21 2:25 PM, Konrad Dybcio wrote:
+> MDM9607 TSENS IP is very similar to the one of MSM8916, with
+> minor adjustments to various tuning values.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> Acked-by: Rob Herring <robh@kernel.org>
+> 
+> ---
+> Changes since v2:
+> - Address Bjorn's comments (remove redundant variable and kfree)
+>   .../bindings/thermal/qcom-tsens.yaml          |  2 +
+>   drivers/thermal/qcom/tsens-v0_1.c             | 99 ++++++++++++++++++-
+>   drivers/thermal/qcom/tsens.c                  |  3 +
+>   drivers/thermal/qcom/tsens.h                  |  2 +-
+>   4 files changed, 104 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> index 95462e071ab4..8ad9dc139c23 100644
+> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> @@ -22,6 +22,7 @@ properties:
+>         - description: v0.1 of TSENS
+>           items:
+>             - enum:
+> +              - qcom,mdm9607-tsens
+>                 - qcom,msm8916-tsens
+>                 - qcom,msm8939-tsens
+>                 - qcom,msm8974-tsens
+> @@ -94,6 +95,7 @@ allOf:
+>           compatible:
+>             contains:
+>               enum:
+> +              - qcom,mdm9607-tsens
 
-Thanks,
-Bhaumik
----
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
+This should be split into two different patches. DT binding changes is 
+usually not combined with driver changes because two different 
+maintainers handle them. Also checkpatch.pl throws a warning stating the 
+same.
+
+>                 - qcom,msm8916-tsens
+>                 - qcom,msm8974-tsens
+>                 - qcom,msm8976-tsens
+> diff --git a/drivers/thermal/qcom/tsens-v0_1.c b/drivers/thermal/qcom/tsens-v0_1.c
+> index 4ffa2e2c0145..a9fc92a4779b 100644
+> --- a/drivers/thermal/qcom/tsens-v0_1.c
+> +++ b/drivers/thermal/qcom/tsens-v0_1.c
+> @@ -190,6 +190,39 @@
+>   
+>   #define BIT_APPEND		0x3
+>   
+> +/* eeprom layout data for mdm9607 */
+> +#define MDM9607_BASE0_MASK	0x000000ff
+> +#define MDM9607_BASE1_MASK	0x000ff000
+> +#define MDM9607_BASE0_SHIFT	0
+> +#define MDM9607_BASE1_SHIFT	12
+> +
+> +#define MDM9607_S0_P1_MASK	0x00003f00
+> +#define MDM9607_S1_P1_MASK	0x03f00000
+> +#define MDM9607_S2_P1_MASK	0x0000003f
+> +#define MDM9607_S3_P1_MASK	0x0003f000
+> +#define MDM9607_S4_P1_MASK	0x0000003f
+> +
+> +#define MDM9607_S0_P2_MASK	0x000fc000
+> +#define MDM9607_S1_P2_MASK	0xfc000000
+> +#define MDM9607_S2_P2_MASK	0x00000fc0
+> +#define MDM9607_S3_P2_MASK	0x00fc0000
+> +#define MDM9607_S4_P2_MASK	0x00000fc0
+> +
+> +#define MDM9607_S0_P1_SHIFT	8
+> +#define MDM9607_S1_P1_SHIFT	20
+> +#define MDM9607_S2_P1_SHIFT	0
+> +#define MDM9607_S3_P1_SHIFT	12
+> +#define MDM9607_S4_P1_SHIFT	0
+> +
+> +#define MDM9607_S0_P2_SHIFT	14
+> +#define MDM9607_S1_P2_SHIFT	26
+> +#define MDM9607_S2_P2_SHIFT	6
+> +#define MDM9607_S3_P2_SHIFT	18
+> +#define MDM9607_S4_P2_SHIFT	6
+> +
+> +#define MDM9607_CAL_SEL_MASK	0x00700000
+> +#define MDM9607_CAL_SEL_SHIFT	20
+> +
+>   static int calibrate_8916(struct tsens_priv *priv)
+>   {
+>   	int base0 = 0, base1 = 0, i;
+> @@ -452,7 +485,56 @@ static int calibrate_8974(struct tsens_priv *priv)
+>   	return 0;
+>   }
+>   
+> -/* v0.1: 8916, 8939, 8974 */
+> +static int calibrate_9607(struct tsens_priv *priv)
+> +{
+> +	int base, i;
+> +	u32 p1[5], p2[5];
+> +	int mode = 0;
+> +	u32 *qfprom_cdata;
+> +
+> +	qfprom_cdata = (u32 *)qfprom_read(priv->dev, "calib");
+> +	if (IS_ERR(qfprom_cdata))
+> +		return PTR_ERR(qfprom_cdata);
+> +
+> +	mode = (qfprom_cdata[2] & MDM9607_CAL_SEL_MASK) >> MDM9607_CAL_SEL_SHIFT;
+> +	dev_dbg(priv->dev, "calibration mode is %d\n", mode);
+> +
+> +	switch (mode) {
+> +	case TWO_PT_CALIB:
+> +		base = (qfprom_cdata[2] & MDM9607_BASE1_MASK) >> MDM9607_BASE1_SHIFT;
+> +		p2[0] = (qfprom_cdata[0] & MDM9607_S0_P2_MASK) >> MDM9607_S0_P2_SHIFT;
+> +		p2[1] = (qfprom_cdata[0] & MDM9607_S1_P2_MASK) >> MDM9607_S1_P2_SHIFT;
+> +		p2[2] = (qfprom_cdata[1] & MDM9607_S2_P2_MASK) >> MDM9607_S2_P2_SHIFT;
+> +		p2[3] = (qfprom_cdata[1] & MDM9607_S3_P2_MASK) >> MDM9607_S3_P2_SHIFT;
+> +		p2[4] = (qfprom_cdata[2] & MDM9607_S4_P2_MASK) >> MDM9607_S4_P2_SHIFT;
+> +		for (i = 0; i < priv->num_sensors; i++)
+> +			p2[i] = ((base + p2[i]) << 2);
+> +		fallthrough;
+> +	case ONE_PT_CALIB2:
+> +		base = (qfprom_cdata[0] & MDM9607_BASE0_MASK);
+> +		p1[0] = (qfprom_cdata[0] & MDM9607_S0_P1_MASK) >> MDM9607_S0_P1_SHIFT;
+> +		p1[1] = (qfprom_cdata[0] & MDM9607_S1_P1_MASK) >> MDM9607_S1_P1_SHIFT;
+> +		p1[2] = (qfprom_cdata[1] & MDM9607_S2_P1_MASK) >> MDM9607_S2_P1_SHIFT;
+> +		p1[3] = (qfprom_cdata[1] & MDM9607_S3_P1_MASK) >> MDM9607_S3_P1_SHIFT;
+> +		p1[4] = (qfprom_cdata[2] & MDM9607_S4_P1_MASK) >> MDM9607_S4_P1_SHIFT;
+> +		for (i = 0; i < priv->num_sensors; i++)
+> +			p1[i] = (((base) + p1[i]) << 2);
+
+minor nit: extra braces around base
+
+> +		break;
+> +	default:
+> +		for (i = 0; i < priv->num_sensors; i++) {
+> +			p1[i] = 500;
+> +			p2[i] = 780;
+> +		}
+> +		break;
+> +	}
+> +
+> +	compute_intercept_slope(priv, p1, p2, mode);
+> +	kfree(qfprom_cdata);
+> +
+> +	return 0;
+> +}
+> +
+> +/* v0.1: 8916, 8939, 8974, 9607 */
+>   
+>   static struct tsens_features tsens_v0_1_feat = {
+>   	.ver_major	= VER_0_1,
+> @@ -540,3 +622,18 @@ struct tsens_plat_data data_8974 = {
+>   	.feat		= &tsens_v0_1_feat,
+>   	.fields	= tsens_v0_1_regfields,
+>   };
+> +
+> +static const struct tsens_ops ops_9607 = {
+> +	.init		= init_common,
+> +	.calibrate	= calibrate_9607,
+> +	.get_temp	= get_temp_common,
+> +};
+> +
+> +struct tsens_plat_data data_9607 = {
+> +	.num_sensors	= 5,
+> +	.ops		= &ops_9607,
+> +	.hw_ids		= (unsigned int []){ 0, 1, 2, 3, 4 },
+> +
+
+please remove the stray blank line.
+
+-- 
+Warm Regards
+Thara
