@@ -2,318 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 844BF3405CE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Mar 2021 13:44:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 797333406B6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Mar 2021 14:19:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229703AbhCRMoZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Mar 2021 08:44:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59984 "EHLO
+        id S231238AbhCRNTI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Mar 2021 09:19:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230477AbhCRMoL (ORCPT
+        with ESMTP id S230204AbhCRNSh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Mar 2021 08:44:11 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FB8EC061762
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Mar 2021 05:44:11 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id s21so2867459pjq.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Mar 2021 05:44:11 -0700 (PDT)
+        Thu, 18 Mar 2021 09:18:37 -0400
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1515CC06174A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Mar 2021 06:18:37 -0700 (PDT)
+Received: by mail-ot1-x334.google.com with SMTP id g8-20020a9d6c480000b02901b65ca2432cso5145242otq.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Mar 2021 06:18:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=IhGMHYMmcLeKrhiSxz8FXTAntRfx6etYiml4bVTAZK8=;
-        b=LOtn5eEwtiV1zaBqABmHp/3o1br1Eel9swgd8xNI1ysAHBsMY2zvKSF7Hm9l4l/hK7
-         U79gOvfgg6lIk0jRbzuMvnFl8i1Zm42INDUU6FzRdWDbuEO5rBrRyRPV23BH43GaqRb4
-         ZgQ2pGobh7yCHThN0NaRRTL3KmMF3nQbJH3Itd5Q/zLnHlEw0DQzjsGcP/BS1EGV584A
-         B87SptBeZRmqHhWi3zwV/0JAflz8ZATwVw9lYdM7kijZVrqolqlbMSbJ43/Dfxz2k13c
-         ba6f1gNS+na89goRriUQfAyMQEQd5rtlQvvHMFzPl0XnlirVFxvgEcF4jo8cGkC4PrS6
-         RTTg==
+        d=ffwll.ch; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=v0u3U62VgqQ/5cx0dl1OlmbnmTob1+65hnEnMoAP8+g=;
+        b=Wq2xIKdqjdfzxw2Myb5taaYoDXG0Mt5eTvw70t+Qfukgix/l82cWO0JuAAM9pp9Lr8
+         iuztkE2RYqfAeHvp28wsWDJ+QoGaPWC+Rv09fwMM2iRu/K2UOyFvuXajEDVEVPCoATb4
+         oF5XWjbtWmNZTiF6bVmPZ4xhDEvuykvOW88w0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=IhGMHYMmcLeKrhiSxz8FXTAntRfx6etYiml4bVTAZK8=;
-        b=nW7UIUntblgHghjY7mxGc+zqN7X6YMl4mVnQwKHG5GC1rfWEPMkyFT4Il5kjl8oBRJ
-         nwo1hnazVLl/Q8fQHJ5b9yvHEOu0Qf35pgbk3FQQNLlKP6SmAUrvvCczZrodCr6Qa9b3
-         9n5mscnDHzJdE+S9PNF3JfMllHkEXVpNQLaJ3EKNoNtwkWZ3/KeiD7D2bdc4T3lH7TZ3
-         kLdbIClGM712sA7YJ8c1Yh3QSTChOzGMpf+ScxDbILq8fmwWUYydsRv7hsGSuh/nqsDU
-         B0jZwLqf/aczmGAiiXQY39HisWcdq4JFqhqSPOzIMVN6JewmltWs3m92/5+0eNxHjCTl
-         EkZA==
-X-Gm-Message-State: AOAM531PnlXpbIv+328S4+/PH8beNHGDqKFK6DVIjfwSF0cP8mWWFF17
-        xA0+fL/7raC89ZzsYcFxYoxH
-X-Google-Smtp-Source: ABdhPJwWhLMWXwHQwJGmwyBr6XF2pjRjpgL8zsWEsHhNHtdq0K6wt4IxAeCAX7CbjTS9j6lwXuKlPg==
-X-Received: by 2002:a17:90b:344c:: with SMTP id lj12mr4347160pjb.208.1616071450780;
-        Thu, 18 Mar 2021 05:44:10 -0700 (PDT)
-Received: from localhost.localdomain ([2409:4072:6d00:4737:af26:182c:a57e:1d9e])
-        by smtp.gmail.com with ESMTPSA id w84sm2530694pfc.142.2021.03.18.05.44.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Mar 2021 05:44:10 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
-        robh+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
-        boris.brezillon@collabora.com, Daniele.Palmas@telit.com,
-        bjorn.andersson@linaro.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v6 3/3] mtd: rawnand: Add support for secure regions in NAND memory
-Date:   Thu, 18 Mar 2021 18:13:42 +0530
-Message-Id: <20210318124342.32745-4-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210318124342.32745-1-manivannan.sadhasivam@linaro.org>
-References: <20210318124342.32745-1-manivannan.sadhasivam@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=v0u3U62VgqQ/5cx0dl1OlmbnmTob1+65hnEnMoAP8+g=;
+        b=Gi+5bj/8RzFJlV3atPbdjFeSDQEymQBSHaTu3sx7YnUrOqKiSLQBBY7BTnT7hLCgJz
+         t1tnNnPimq3rXl6akDHtNIEDjEy26e61in+PhEJpHSg/ECOICKp+6Up/gaheSEoQDM4p
+         j1YGVS7QjWXIh/67P0jQrTSS//puLZJAQts2peoFb9d6zH+q70SHSuhq4VZkPmkPXGm4
+         eToLVYxoWkJd5kmmOgqGAAyV93DRK1ZXDdAkZgd9I1bp3QxC1S73E3P9XEFdLrc1Z7r/
+         n+OCPcy5Ckwsp0+NfXw9lqmJNa2voUB023bF/bTwl1LlWdjaQhcsVVrBrNKlDLGQDFyj
+         Bswg==
+X-Gm-Message-State: AOAM533QRvRC2Skc6hRaMuqm12H+7f95cqjjHvkXfCHBYZ+V2SQaIfUY
+        n6q5gPx8wzSxTNTIycnmVprie9x3iZ8apDGrfBgH5w==
+X-Google-Smtp-Source: ABdhPJys7CWu1QW7sqaGp8DPpYtt4z4UFBXzAiTSc52E6cJ3FtAgdwRl3llcaxjGyQonUci42YLrVhEplIIDHitKc+k=
+X-Received: by 2002:a9d:63d6:: with SMTP id e22mr7303358otl.188.1616073516410;
+ Thu, 18 Mar 2021 06:18:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20210303134319.3160762-1-lee.jones@linaro.org>
+ <16d4300e-bf29-1e85-317b-53d257890cb9@vmware.com> <20210308091932.GB4931@dell>
+ <YEobySvG0zPs9xhc@phenom.ffwll.local> <20210311135152.GT701493@dell>
+ <20210317081729.GH701493@dell> <CAKMK7uEibsgXXTEM1d2CGSswp-koouPSouseP_rwLHTdpxfRpw@mail.gmail.com>
+In-Reply-To: <CAKMK7uEibsgXXTEM1d2CGSswp-koouPSouseP_rwLHTdpxfRpw@mail.gmail.com>
+From:   Daniel Vetter <daniel@ffwll.ch>
+Date:   Thu, 18 Mar 2021 14:18:25 +0100
+Message-ID: <CAKMK7uHkJGDL8k3FfAqAM78honZR0euMcacW8UpdPZfS1J-7cA@mail.gmail.com>
+Subject: Re: [RESEND 00/53] Rid GPU from W=1 warnings
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     Roland Scheidegger <sroland@vmware.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        amd-gfx list <amd-gfx@lists.freedesktop.org>,
+        Anthony Koo <Anthony.Koo@amd.com>,
+        Ben Skeggs <bskeggs@redhat.com>,
+        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Dave Airlie <airlied@redhat.com>,
+        David Airlie <airlied@linux.ie>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Harry Wentland <harry.wentland@amd.com>,
+        Jeremy Kolb <jkolb@brandeis.edu>,
+        Kuogee Hsieh <khsieh@codeaurora.org>,
+        Leo Li <sunpeng.li@amd.com>,
+        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
+        <linaro-mm-sig@lists.linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:DMA BUFFER SHARING FRAMEWORK" 
+        <linux-media@vger.kernel.org>, Lyude Paul <lyude@redhat.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Nouveau Dev <nouveau@lists.freedesktop.org>,
+        Qinglang Miao <miaoqinglang@huawei.com>,
+        Rob Clark <rob.clark@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        VMware Graphics <linux-graphics-maintainer@vmware.com>,
+        Zack Rusin <zackr@vmware.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On a typical end product, a vendor may choose to secure some regions in
-the NAND memory which are supposed to stay intact between FW upgrades.
-The access to those regions will be blocked by a secure element like
-Trustzone. So the normal world software like Linux kernel should not
-touch these regions (including reading).
+On Wed, Mar 17, 2021 at 9:32 PM Daniel Vetter <daniel@ffwll.ch> wrote:
+>
+> On Wed, Mar 17, 2021 at 9:17 AM Lee Jones <lee.jones@linaro.org> wrote:
+> >
+> > On Thu, 11 Mar 2021, Lee Jones wrote:
+> >
+> > > On Thu, 11 Mar 2021, Daniel Vetter wrote:
+> > >
+> > > > On Mon, Mar 08, 2021 at 09:19:32AM +0000, Lee Jones wrote:
+> > > > > On Fri, 05 Mar 2021, Roland Scheidegger wrote:
+> > > > >
+> > > > > > The vmwgfx ones look all good to me, so for
+> > > > > > 23-53: Reviewed-by: Roland Scheidegger <sroland@vmware.com>
+> > > > > > That said, they were already signed off by Zack, so not sure what
+> > > > > > happened here.
+> > > > >
+> > > > > Yes, they were accepted at one point, then dropped without a reason.
+> > > > >
+> > > > > Since I rebased onto the latest -next, I had to pluck them back out of
+> > > > > a previous one.
+> > > >
+> > > > They should show up in linux-next again. We merge patches for next merge
+> > > > window even during the current merge window, but need to make sure they
+> > > > don't pollute linux-next. Occasionally the cut off is wrong so patches
+> > > > show up, and then get pulled again.
+> > > >
+> > > > Unfortunately especially the 5.12 merge cycle was very wobbly due to some
+> > > > confusion here. But your patches should all be in linux-next again (they
+> > > > are queued up for 5.13 in drm-misc-next, I checked that).
+> > > >
+> > > > Sorry for the confusion here.
+> > >
+> > > Oh, I see.  Well so long as they don't get dropped, I'll be happy.
+> > >
+> > > Thanks for the explanation Daniel
+> >
+> > After rebasing today, all of my GPU patches have remained.  Would
+> > someone be kind enough to check that everything is still in order
+> > please?
+>
+> It's still broken somehow. I've kiced Maxime and Maarten again,
+> they're also on this thread.
 
-The regions are declared using a NAND chip DT property,
-"secure-regions". So let's make use of this property in the raw NAND
-core and skip access to the secure regions present in a system.
-
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/mtd/nand/raw/nand_base.c | 111 +++++++++++++++++++++++++++++++
- include/linux/mtd/rawnand.h      |   4 ++
- 2 files changed, 115 insertions(+)
-
-diff --git a/drivers/mtd/nand/raw/nand_base.c b/drivers/mtd/nand/raw/nand_base.c
-index c33fa1b1847f..d2958549ba46 100644
---- a/drivers/mtd/nand/raw/nand_base.c
-+++ b/drivers/mtd/nand/raw/nand_base.c
-@@ -278,11 +278,47 @@ static int nand_block_bad(struct nand_chip *chip, loff_t ofs)
- 	return 0;
- }
- 
-+/**
-+ * nand_check_secure_region() - Check if the region is secured
-+ * @chip: NAND chip object
-+ * @offset: Offset of the region to check
-+ * @size: Size of the region to check
-+ *
-+ * Checks if the region is secured by comparing the offset and size with the
-+ * list of secure regions obtained from DT. Returns -EIO if the region is
-+ * secured else 0.
-+ */
-+static int nand_check_secure_region(struct nand_chip *chip, loff_t offset, u32 size)
-+{
-+	int i, j;
-+
-+	/* Skip touching the secure regions if present */
-+	for (i = 0, j = 0; i < chip->nr_secure_regions; i++, j += 2) {
-+		/* First compare the start offset */
-+		if (offset >= chip->secure_regions[j] &&
-+		    (offset < chip->secure_regions[j] + chip->secure_regions[j + 1]))
-+			return -EIO;
-+		/* ...then offset + size */
-+		else if (offset < chip->secure_regions[i] &&
-+			 (offset + size) >= chip->secure_regions[i])
-+			return -EIO;
-+	}
-+
-+	return 0;
-+}
-+
- static int nand_isbad_bbm(struct nand_chip *chip, loff_t ofs)
- {
-+	int ret;
-+
- 	if (chip->options & NAND_NO_BBM_QUIRK)
- 		return 0;
- 
-+	/* Check if the region is secured */
-+	ret = nand_check_secure_region(chip, ofs, 0);
-+	if (ret)
-+		return ret;
-+
- 	if (chip->legacy.block_bad)
- 		return chip->legacy.block_bad(chip, ofs);
- 
-@@ -397,6 +433,11 @@ static int nand_do_write_oob(struct nand_chip *chip, loff_t to,
- 		return -EINVAL;
- 	}
- 
-+	/* Check if the region is secured */
-+	ret = nand_check_secure_region(chip, to, ops->ooblen);
-+	if (ret)
-+		return ret;
-+
- 	chipnr = (int)(to >> chip->chip_shift);
- 
- 	/*
-@@ -565,6 +606,11 @@ static int nand_block_isreserved(struct mtd_info *mtd, loff_t ofs)
- 
- 	if (!chip->bbt)
- 		return 0;
-+
-+	/* Check if the region is secured */
-+	if (nand_check_secure_region(chip, ofs, 0))
-+		return -EIO;
-+
- 	/* Return info from the table */
- 	return nand_isreserved_bbt(chip, ofs);
- }
-@@ -2737,6 +2783,11 @@ static int nand_read_page_swecc(struct nand_chip *chip, uint8_t *buf,
- 	uint8_t *ecc_code = chip->ecc.code_buf;
- 	unsigned int max_bitflips = 0;
- 
-+	/* Check if the region is secured */
-+	ret = nand_check_secure_region(chip, ((loff_t)page << chip->page_shift), 0);
-+	if (ret)
-+		return ret;
-+
- 	chip->ecc.read_page_raw(chip, buf, 1, page);
- 
- 	for (i = 0; eccsteps; eccsteps--, i += eccbytes, p += eccsize)
-@@ -3127,6 +3178,11 @@ static int nand_do_read_ops(struct nand_chip *chip, loff_t from,
- 	int retry_mode = 0;
- 	bool ecc_fail = false;
- 
-+	/* Check if the region is secured */
-+	ret = nand_check_secure_region(chip, from, readlen);
-+	if (ret)
-+		return ret;
-+
- 	chipnr = (int)(from >> chip->chip_shift);
- 	nand_select_target(chip, chipnr);
- 
-@@ -3458,6 +3514,11 @@ static int nand_do_read_oob(struct nand_chip *chip, loff_t from,
- 	pr_debug("%s: from = 0x%08Lx, len = %i\n",
- 			__func__, (unsigned long long)from, readlen);
- 
-+	/* Check if the region is secured */
-+	ret = nand_check_secure_region(chip, from, readlen);
-+	if (ret)
-+		return ret;
-+
- 	stats = mtd->ecc_stats;
- 
- 	len = mtd_oobavail(mtd, ops);
-@@ -3709,6 +3770,11 @@ static int nand_write_page_swecc(struct nand_chip *chip, const uint8_t *buf,
- 	uint8_t *ecc_calc = chip->ecc.calc_buf;
- 	const uint8_t *p = buf;
- 
-+	/* Check if the region is secured */
-+	ret = nand_check_secure_region(chip, ((loff_t)page << chip->page_shift), 0);
-+	if (ret)
-+		return ret;
-+
- 	/* Software ECC calculation */
- 	for (i = 0; eccsteps; eccsteps--, i += eccbytes, p += eccsize)
- 		chip->ecc.calculate(chip, p, &ecc_calc[i]);
-@@ -3979,6 +4045,11 @@ static int nand_do_write_ops(struct nand_chip *chip, loff_t to,
- 		return -EINVAL;
- 	}
- 
-+	/* Check if the region is secured */
-+	ret = nand_check_secure_region(chip, to, writelen);
-+	if (ret)
-+		return ret;
-+
- 	column = to & (mtd->writesize - 1);
- 
- 	chipnr = (int)(to >> chip->chip_shift);
-@@ -4180,6 +4251,11 @@ int nand_erase_nand(struct nand_chip *chip, struct erase_info *instr,
- 	if (check_offs_len(chip, instr->addr, instr->len))
- 		return -EINVAL;
- 
-+	/* Check if the region is secured */
-+	ret = nand_check_secure_region(chip, instr->addr, len);
-+	if (ret)
-+		return ret;
-+
- 	/* Grab the lock and see if the device is available */
- 	ret = nand_get_device(chip);
- 	if (ret)
-@@ -4995,10 +5071,32 @@ static bool of_get_nand_on_flash_bbt(struct device_node *np)
- 	return of_property_read_bool(np, "nand-on-flash-bbt");
- }
- 
-+static int of_get_nand_secure_regions(struct nand_chip *chip)
-+{
-+	struct device_node *dn = nand_get_flash_node(chip);
-+	struct property *prop;
-+	int length, nr_elem;
-+
-+	prop = of_find_property(dn, "secure-regions", &length);
-+	if (prop) {
-+		nr_elem = length / sizeof(u64);
-+		chip->nr_secure_regions = nr_elem / 2;
-+
-+		chip->secure_regions = kcalloc(nr_elem, sizeof(*chip->secure_regions), GFP_KERNEL);
-+		if (!chip->secure_regions)
-+			return -ENOMEM;
-+
-+		of_property_read_u64_array(dn, "secure-regions", chip->secure_regions, nr_elem);
-+	}
-+
-+	return 0;
-+}
-+
- static int rawnand_dt_init(struct nand_chip *chip)
- {
- 	struct nand_device *nand = mtd_to_nanddev(nand_to_mtd(chip));
- 	struct device_node *dn = nand_get_flash_node(chip);
-+	int ret;
- 
- 	if (!dn)
- 		return 0;
-@@ -5015,6 +5113,16 @@ static int rawnand_dt_init(struct nand_chip *chip)
- 	of_get_nand_ecc_user_config(nand);
- 	of_get_nand_ecc_legacy_user_config(chip);
- 
-+	/*
-+	 * Look for secure regions in the NAND chip. These regions are supposed
-+	 * to be protected by a secure element like Trustzone. So the read/write
-+	 * accesses to these regions will be blocked in the runtime by this
-+	 * driver.
-+	 */
-+	ret = of_get_nand_secure_regions(chip);
-+	if (!ret)
-+		return ret;
-+
- 	/*
- 	 * If neither the user nor the NAND controller have requested a specific
- 	 * ECC engine type, we will default to NAND_ECC_ENGINE_TYPE_ON_HOST.
-@@ -6068,6 +6176,9 @@ void nand_cleanup(struct nand_chip *chip)
- 	/* Free manufacturer priv data. */
- 	nand_manufacturer_cleanup(chip);
- 
-+	/* Free secure regions data */
-+	kfree(chip->secure_regions);
-+
- 	/* Free controller specific allocations after chip identification */
- 	nand_detach(chip);
- 
-diff --git a/include/linux/mtd/rawnand.h b/include/linux/mtd/rawnand.h
-index 6b3240e44310..d385c4fe8b0f 100644
---- a/include/linux/mtd/rawnand.h
-+++ b/include/linux/mtd/rawnand.h
-@@ -1086,6 +1086,8 @@ struct nand_manufacturer {
-  *          NAND Controller drivers should not modify this value, but they're
-  *          allowed to read it.
-  * @read_retries: The number of read retry modes supported
-+ * @secure_regions: Array representing the secure regions
-+ * @nr_secure_regions: Number of secure regions
-  * @controller: The hardware controller	structure which is shared among multiple
-  *              independent devices
-  * @ecc: The ECC controller structure
-@@ -1135,6 +1137,8 @@ struct nand_chip {
- 	unsigned int suspended : 1;
- 	int cur_cs;
- 	int read_retries;
-+	u64 *secure_regions;
-+	u8 nr_secure_regions;
- 
- 	/* Externals */
- 	struct nand_controller *controller;
+You're patches have made it into drm-next meanwhile, so they should
+show up in linux-next through that tree at least. Except if that one
+also has some trouble.
+-Daniel
 -- 
-2.25.1
-
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
