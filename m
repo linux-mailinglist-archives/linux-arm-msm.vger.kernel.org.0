@@ -2,74 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 175A0340820
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Mar 2021 15:51:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 38200340823
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Mar 2021 15:51:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230416AbhCROu2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Mar 2021 10:50:28 -0400
-Received: from mail.kernel.org ([198.145.29.99]:45154 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230367AbhCROuI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Mar 2021 10:50:08 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id 16FFE64F24;
-        Thu, 18 Mar 2021 14:50:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1616079008;
-        bh=yxClQGI5LEzKBGJpO1jO/8qAi1X/sbiS6hTR/yb3Ti0=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=oYq2WkLNts8tySUsB9sHsdJfTrjTtTfYqvpZHT3ZZI1tQmh6lAc5Jogl1U7B5UfWJ
-         DHTj6H+pSmY4YS0W/ZjpslABfhL9yVb2MT+tTSg6Ftjp1LJp4RfiMcdntGNaSZVSo6
-         p0/e5HPo2eUreho4O9+3FWH1AmP+lx8rxVvQwbTBzMRkUvzRg+bzMtSApucrpTCR+7
-         BPsf8J95tAvth8qYroVfg4kFvFz2Q27PjTdjNSQfh2d8vljpVmW/4NohWAey3JeRaV
-         coyU8Z33GRc9TLdIbtsFAKItqXUuuw4nAR1953QNkgdIIxdXm1FcgIM8gsmuPA9bbs
-         uQY3acdJfcFmA==
-Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 0730C60951;
-        Thu, 18 Mar 2021 14:50:08 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        id S231533AbhCROvE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Mar 2021 10:51:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59194 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231421AbhCROuz (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 18 Mar 2021 10:50:55 -0400
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8779AC06175F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Mar 2021 07:50:55 -0700 (PDT)
+Received: by mail-oi1-x232.google.com with SMTP id k25so1320629oic.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Mar 2021 07:50:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=og89K6jV3HFX8PE96KX/c5Zy0nyRjtFamlhCSJhcZac=;
+        b=BbZoR5bKJdUlBsWePVP9pZFO52LSwx83bqvlA+iFEHEJbXRLCIjazsIWJ7Viy6/Dqg
+         ms11HMn9qzvtUSKYV7kiYroJ8GoudjnuRaAotpDXCJkiH2454Zsrw0r8xOeT1eDT6YxS
+         q+3+MBnu38qnO454OYLGBpBP8Gq2YHx7vcVu1igvYYB7TkhTKWyAqpE95EEQZcA7yNgB
+         R/S0blHSK+wctWLHT5XamyOYHV+RON+tPa7QPNHdEwmYkO7LDY4BJHU3BGXMaxeArqVY
+         EZJyG7pBZFDAX8JWQxpbOFMez+cg1l1eLriE/6/arkjyVorRKAMnxrrUHlTsEIB5mVvO
+         PCAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=og89K6jV3HFX8PE96KX/c5Zy0nyRjtFamlhCSJhcZac=;
+        b=LA3n5GEONLG9MbrkYXwPfSsovh7YaZ/wjITuvyBSipGHq2K9ly1bUqE222/5DjWsQ2
+         la/O68lXPodLpO3JsCSve4s+4NKiIqZXUA31NcZq1VN+BWYM5kPAsOX30ipjqnsX18NG
+         5XtiZbXQWPif3BSpXtfGJuxheTMC4WUuObVnuwvTg7ym/6IMl4G8Zh+Y61RGnzbGvg0F
+         3xRlg0plir9SDCivQZFZE6uemHLUdEMCHo7Yyj/392vBvHjIexagfgmNiFmnIy689c5P
+         7DBgTo2I/TwtY6TrZhhMFg9M9n/RIeikJl0bsS4Uvs5C+NVdwyLFG8IUMLDred6pHAey
+         bUkQ==
+X-Gm-Message-State: AOAM532YzKipBY/AZcMdQIEznJcB7ye5SOcCR2StRRQUfRRLpYAQNbyg
+        XIUbhHP/JU/6GQDH/HLcuArJVg==
+X-Google-Smtp-Source: ABdhPJw88D0okVHzO8aCSbNOnCSK+c61zfhIoBhm9ubX4GrgcqtKVy0DZAl00IvFZIUH6e7eT8sHOA==
+X-Received: by 2002:a05:6808:987:: with SMTP id a7mr3198012oic.162.1616079054839;
+        Thu, 18 Mar 2021 07:50:54 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id r13sm594897oot.41.2021.03.18.07.50.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Mar 2021 07:50:54 -0700 (PDT)
+Date:   Thu, 18 Mar 2021 09:50:52 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, wcn36xx@lists.infradead.org,
+        linux-wireless@vger.kernel.org, netdev@vger.kernel.org
+Subject: Re: [PATCH 5/5] arm64: dts: qcom: msm8916: Enable modem and WiFi
+Message-ID: <YFNozCCa4fdR5kSb@builder.lan>
+References: <20210312003318.3273536-1-bjorn.andersson@linaro.org>
+ <20210312003318.3273536-6-bjorn.andersson@linaro.org>
+ <f03b639f-f95a-a31a-6615-23cd6154182d@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v4 0/4] arm64: dts: qcom: qrb5165-rb5: use GPIO as SPI0 CS
-From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <161607900802.10697.3780903674815456676.git-patchwork-notify@kernel.org>
-Date:   Thu, 18 Mar 2021 14:50:08 +0000
-References: <20210210133458.1201066-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20210210133458.1201066-1-dmitry.baryshkov@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f03b639f-f95a-a31a-6615-23cd6154182d@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
+On Mon 15 Mar 07:01 CDT 2021, Bryan O'Donoghue wrote:
 
-This series was applied to qcom/linux.git (refs/heads/for-next):
-
-On Wed, 10 Feb 2021 16:34:54 +0300 you wrote:
-> GENI SPI controller shows several issues if it manages the CS on its own
-> (see 37dd4b777942 ("arm64: dts: qcom: sc7180: Provide pinconf for SPI to
-> use GPIO for CS") for the details). Configure SPI0 CS pin as a GPIO.
+> On 12/03/2021 00:33, Bjorn Andersson wrote:
+> > Enable the modem and WiFi subsystems and specify msm8916 specific
+> > firmware path for these and the WCNSS control service.
+> > 
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> >   arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi | 12 ++++++++++++
+> >   arch/arm64/boot/dts/qcom/msm8916.dtsi     |  2 +-
+> >   2 files changed, 13 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+> > index 6aef0c2e4f0a..448e3561ef63 100644
+> > --- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+> > @@ -305,6 +305,12 @@ &mdss {
+> >   	status = "okay";
+> >   };
+> > +&mpss {
+> > +	status = "okay";
+> > +
+> > +	firmware-name = "qcom/msm8916/mba.mbn", "qcom/msm8916/modem.mbn";
+> > +};
+> > +
+> >   &pm8916_resin {
+> >   	status = "okay";
+> >   	linux,code = <KEY_VOLUMEDOWN>;
+> > @@ -312,6 +318,8 @@ &pm8916_resin {
+> >   &pronto {
+> >   	status = "okay";
+> > +
+> > +	firmware-name = "qcom/msm8916/wcnss.mbn";
+> >   };
 > 
-> Changes since v3:
->  - Rephrase qrb5165-rb5 commit
->  - Remove leftover  pinctrl-name entries for spi0
->  - Group pinctrl entries at the end of qrb5165-rb5.
+> On Debian I have to do this
 > 
-> [...]
+> 
+> index 2a6a23cb14ca..597cdc8f51cc 100644
+> --- a/drivers/remoteproc/qcom_wcnss.c
+> +++ b/drivers/remoteproc/qcom_wcnss.c
+> @@ -33,7 +33,7 @@
+>  #include "qcom_wcnss.h"
+> 
+>  #define WCNSS_CRASH_REASON_SMEM                422
+> -#define WCNSS_FIRMWARE_NAME            "wcnss.mdt"
+> +#define WCNSS_FIRMWARE_NAME            "qcom/msm8916/wcnss.mdt"
+> 
+> so I guess wcnss_probe() -> rproc_alloc() wants this fix too.
+> 
 
-Here is the summary with links:
-  - [v4,1/4] arm64: dts: qcom: sm8250: split spi pinctrl config
-    https://git.kernel.org/qcom/c/d3769729dbad
-  - [v4,2/4] arm64: dts: qcom: sm8250: further split of spi pinctrl config
-    https://git.kernel.org/qcom/c/c88f9ecc0ef3
-  - [v4,3/4] arm64: dts: qcom: sm8250: add pinctrl for SPI using GPIO as a CS
-    https://git.kernel.org/qcom/c/eb97ccbba0fe
-  - [v4,4/4] arm64: dts: qcom: qrb5165-rb5: switch into using GPIO for SPI0 CS
-    https://git.kernel.org/qcom/c/e9269650db2f
+Can you confirm that you're saying that you want below patch, which I
+just merged?
 
-You are awesome, thank you!
---
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+https://lore.kernel.org/linux-remoteproc/20210312002441.3273183-1-bjorn.andersson@linaro.org/
 
+(Which makes it possible to specify firmware name per platform/board)
 
+Regards,
+Bjorn
