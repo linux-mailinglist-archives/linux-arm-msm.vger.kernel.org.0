@@ -2,132 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 38200340823
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Mar 2021 15:51:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A51683409EB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Mar 2021 17:19:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231533AbhCROvE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Mar 2021 10:51:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59194 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231421AbhCROuz (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Mar 2021 10:50:55 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8779AC06175F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Mar 2021 07:50:55 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id k25so1320629oic.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Mar 2021 07:50:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=og89K6jV3HFX8PE96KX/c5Zy0nyRjtFamlhCSJhcZac=;
-        b=BbZoR5bKJdUlBsWePVP9pZFO52LSwx83bqvlA+iFEHEJbXRLCIjazsIWJ7Viy6/Dqg
-         ms11HMn9qzvtUSKYV7kiYroJ8GoudjnuRaAotpDXCJkiH2454Zsrw0r8xOeT1eDT6YxS
-         q+3+MBnu38qnO454OYLGBpBP8Gq2YHx7vcVu1igvYYB7TkhTKWyAqpE95EEQZcA7yNgB
-         R/S0blHSK+wctWLHT5XamyOYHV+RON+tPa7QPNHdEwmYkO7LDY4BJHU3BGXMaxeArqVY
-         EZJyG7pBZFDAX8JWQxpbOFMez+cg1l1eLriE/6/arkjyVorRKAMnxrrUHlTsEIB5mVvO
-         PCAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=og89K6jV3HFX8PE96KX/c5Zy0nyRjtFamlhCSJhcZac=;
-        b=LA3n5GEONLG9MbrkYXwPfSsovh7YaZ/wjITuvyBSipGHq2K9ly1bUqE222/5DjWsQ2
-         la/O68lXPodLpO3JsCSve4s+4NKiIqZXUA31NcZq1VN+BWYM5kPAsOX30ipjqnsX18NG
-         5XtiZbXQWPif3BSpXtfGJuxheTMC4WUuObVnuwvTg7ym/6IMl4G8Zh+Y61RGnzbGvg0F
-         3xRlg0plir9SDCivQZFZE6uemHLUdEMCHo7Yyj/392vBvHjIexagfgmNiFmnIy689c5P
-         7DBgTo2I/TwtY6TrZhhMFg9M9n/RIeikJl0bsS4Uvs5C+NVdwyLFG8IUMLDred6pHAey
-         bUkQ==
-X-Gm-Message-State: AOAM532YzKipBY/AZcMdQIEznJcB7ye5SOcCR2StRRQUfRRLpYAQNbyg
-        XIUbhHP/JU/6GQDH/HLcuArJVg==
-X-Google-Smtp-Source: ABdhPJw88D0okVHzO8aCSbNOnCSK+c61zfhIoBhm9ubX4GrgcqtKVy0DZAl00IvFZIUH6e7eT8sHOA==
-X-Received: by 2002:a05:6808:987:: with SMTP id a7mr3198012oic.162.1616079054839;
-        Thu, 18 Mar 2021 07:50:54 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id r13sm594897oot.41.2021.03.18.07.50.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Mar 2021 07:50:54 -0700 (PDT)
-Date:   Thu, 18 Mar 2021 09:50:52 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, wcn36xx@lists.infradead.org,
-        linux-wireless@vger.kernel.org, netdev@vger.kernel.org
-Subject: Re: [PATCH 5/5] arm64: dts: qcom: msm8916: Enable modem and WiFi
-Message-ID: <YFNozCCa4fdR5kSb@builder.lan>
-References: <20210312003318.3273536-1-bjorn.andersson@linaro.org>
- <20210312003318.3273536-6-bjorn.andersson@linaro.org>
- <f03b639f-f95a-a31a-6615-23cd6154182d@linaro.org>
+        id S231648AbhCRQSn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Mar 2021 12:18:43 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:25649 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232056AbhCRQSg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 18 Mar 2021 12:18:36 -0400
+X-Greylist: delayed 305 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Mar 2021 12:18:35 EDT
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1616084315; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=DKr+tgYgAkXdPo7uYIhenDviFte57zt7ww4oKvub4jw=; b=XjJ6myj95Vx37DGcdisXNojg66zUhzKVVnmc9JpX9OGLq7EgxJsXnbWrzcv0QDATyzR8E+ar
+ +mSiZAOSMhzRB/fPMhlb9ZJTojZTk6K4ugEZHpuwgQI6Vg8wiqTxBmcOH8XqIiKb3xR500m5
+ ek+vp6inEWpjKFXZnudi2n2+6VU=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 60537c295d70193f885796ed (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 18 Mar 2021 16:13:29
+ GMT
+Sender: jhugo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 92AF0C43464; Thu, 18 Mar 2021 16:13:28 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 44A26C433CA;
+        Thu, 18 Mar 2021 16:13:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 44A26C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH v4 1/3] bus: mhi: core: Introduce internal register poll
+ helper function
+To:     bbhatt@codeaurora.org
+Cc:     Loic Poulain <loic.poulain@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        =?UTF-8?B?Q2FybCBZaW4o5q635byg5oiQKQ==?= <carl.yin@quectel.com>,
+        Naveen Kumar <naveen.kumar@quectel.com>,
+        jhugo=codeaurora.org@codeaurora.org
+References: <1615419080-26540-1-git-send-email-bbhatt@codeaurora.org>
+ <1615419080-26540-2-git-send-email-bbhatt@codeaurora.org>
+ <CAMZdPi8CHCVT8G60zOEn0n43vPJW0xx+fufnBFzb7aPXSoMQOw@mail.gmail.com>
+ <e04579bf-6641-0038-1aa8-b46f8ab4b984@codeaurora.org>
+ <43c83caf8a6b71207b107ac8457f22d6@codeaurora.org>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <8b458436-dad9-8a8b-f997-9810f1be5d91@codeaurora.org>
+Date:   Thu, 18 Mar 2021 10:13:25 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f03b639f-f95a-a31a-6615-23cd6154182d@linaro.org>
+In-Reply-To: <43c83caf8a6b71207b107ac8457f22d6@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 15 Mar 07:01 CDT 2021, Bryan O'Donoghue wrote:
+On 3/17/2021 3:26 PM, Bhaumik Bhatt wrote:
+> On 2021-03-11 11:59 AM, Jeffrey Hugo wrote:
+>> On 3/11/2021 1:00 AM, Loic Poulain wrote:
+>>> Hi Bhaumik,
+>>>
+>>> On Thu, 11 Mar 2021 at 00:31, Bhaumik Bhatt <bbhatt@codeaurora.org> 
+>>> wrote:
+>>>>
+>>>> Introduce helper function to allow MHI core driver to poll for
+>>>> a value in a register field. This helps reach a common path to
+>>>> read and poll register values along with a retry time interval.
+>>>>
+>>>> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+>>>> ---
+>>>>   drivers/bus/mhi/core/internal.h |  3 +++
+>>>>   drivers/bus/mhi/core/main.c     | 23 +++++++++++++++++++++++
+>>>>   2 files changed, 26 insertions(+)
+>>>>
+>>>> diff --git a/drivers/bus/mhi/core/internal.h 
+>>>> b/drivers/bus/mhi/core/internal.h
+>>>> index 6f80ec3..005286b 100644
+>>>> --- a/drivers/bus/mhi/core/internal.h
+>>>> +++ b/drivers/bus/mhi/core/internal.h
+>>>> @@ -643,6 +643,9 @@ int __must_check mhi_read_reg(struct 
+>>>> mhi_controller *mhi_cntrl,
+>>>>   int __must_check mhi_read_reg_field(struct mhi_controller *mhi_cntrl,
+>>>>                                      void __iomem *base, u32 offset, 
+>>>> u32 mask,
+>>>>                                      u32 shift, u32 *out);
+>>>> +int __must_check mhi_poll_reg_field(struct mhi_controller *mhi_cntrl,
+>>>> +                                   void __iomem *base, u32 offset, 
+>>>> u32 mask,
+>>>> +                                   u32 shift, u32 val, u32 delayus);
+>>>>   void mhi_write_reg(struct mhi_controller *mhi_cntrl, void __iomem 
+>>>> *base,
+>>>>                     u32 offset, u32 val);
+>>>>   void mhi_write_reg_field(struct mhi_controller *mhi_cntrl, void 
+>>>> __iomem *base,
+>>>> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+>>>> index 4e0131b..7c7f41a 100644
+>>>> --- a/drivers/bus/mhi/core/main.c
+>>>> +++ b/drivers/bus/mhi/core/main.c
+>>>> @@ -4,6 +4,7 @@
+>>>>    *
+>>>>    */
+>>>>
+>>>> +#include <linux/delay.h>
+>>>>   #include <linux/device.h>
+>>>>   #include <linux/dma-direction.h>
+>>>>   #include <linux/dma-mapping.h>
+>>>> @@ -37,6 +38,28 @@ int __must_check mhi_read_reg_field(struct 
+>>>> mhi_controller *mhi_cntrl,
+>>>>          return 0;
+>>>>   }
+>>>>
+>>>> +int __must_check mhi_poll_reg_field(struct mhi_controller *mhi_cntrl,
+>>>> +                                   void __iomem *base, u32 offset,
+>>>> +                                   u32 mask, u32 shift, u32 val, 
+>>>> u32 delayus)
+>>>> +{
+>>>> +       int ret;
+>>>> +       u32 out, retry = (mhi_cntrl->timeout_ms * 1000) / delayus;
+>>>> +
+>>>> +       while (retry--) {
+>>>> +               ret = mhi_read_reg_field(mhi_cntrl, base, offset, 
+>>>> mask, shift,
+>>>> +                                        &out);
+>>>> +               if (ret)
+>>>> +                       return ret;
+>>>> +
+>>>> +               if (out == val)
+>>>> +                       return 0;
+>>>> +
+>>>> +               udelay(delayus);
+>>>
+>>> Have you read my previous comment?
+>>> Do you really want to risk hogging the CPU for several seconds? we
+>>> know that some devices take several seconds to start/boot.
+>>> Why not using msleep variant here?
+>>
+>> usleep_range() if there is a desire to stay in us units?
+>>
+>> Given that the use of this function is for 25ms in one case, I wonder
+>> if this warning is applicable:
+>> https://elixir.bootlin.com/linux/latest/source/include/linux/delay.h#L28
+>>
+>> Counter point, 1ms latency over PCIe is not unusual.  I know we've
+>> removed the PCIe dependencies from MHI, but PCIe is the real usecase
+>> at this time.  Seems like this function could behave a bit weird if
+>> the parameter to udelay is something like "100", but the
+>> mhi_read_reg_field() call takes significantly longer than that.  Feels
+>> like in some scenarios, we could actually exceed the timeout by a
+>> non-trivial margin.
+>>
+>> I guess I'm going back and forth in determining if us scale timing is
+>> a benefit in any way.
+> Thanks for all the inputs. I think a good idea here would be to use 
+> fsleep()
+> API as we need to allow any timeout the caller specifies. Also, plan is to
+> drop the patch #3 in this series since that will require a busywait due to
+> the code being in panic path.
+> 
+> I don't wish to accommodate another variable here for busywait but that
+> would be an option to pick sleep or delay depending on the caller's path.
+> 
+> Please respond if there are any concerns.
 
-> On 12/03/2021 00:33, Bjorn Andersson wrote:
-> > Enable the modem and WiFi subsystems and specify msm8916 specific
-> > firmware path for these and the WCNSS control service.
-> > 
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> >   arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi | 12 ++++++++++++
-> >   arch/arm64/boot/dts/qcom/msm8916.dtsi     |  2 +-
-> >   2 files changed, 13 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-> > index 6aef0c2e4f0a..448e3561ef63 100644
-> > --- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-> > @@ -305,6 +305,12 @@ &mdss {
-> >   	status = "okay";
-> >   };
-> > +&mpss {
-> > +	status = "okay";
-> > +
-> > +	firmware-name = "qcom/msm8916/mba.mbn", "qcom/msm8916/modem.mbn";
-> > +};
-> > +
-> >   &pm8916_resin {
-> >   	status = "okay";
-> >   	linux,code = <KEY_VOLUMEDOWN>;
-> > @@ -312,6 +318,8 @@ &pm8916_resin {
-> >   &pronto {
-> >   	status = "okay";
-> > +
-> > +	firmware-name = "qcom/msm8916/wcnss.mbn";
-> >   };
-> 
-> On Debian I have to do this
-> 
-> 
-> index 2a6a23cb14ca..597cdc8f51cc 100644
-> --- a/drivers/remoteproc/qcom_wcnss.c
-> +++ b/drivers/remoteproc/qcom_wcnss.c
-> @@ -33,7 +33,7 @@
->  #include "qcom_wcnss.h"
-> 
->  #define WCNSS_CRASH_REASON_SMEM                422
-> -#define WCNSS_FIRMWARE_NAME            "wcnss.mdt"
-> +#define WCNSS_FIRMWARE_NAME            "qcom/msm8916/wcnss.mdt"
-> 
-> so I guess wcnss_probe() -> rproc_alloc() wants this fix too.
-> 
+fsleep() would be some improvement, but I think there is still the issue 
+Loic points out where if delayus is small, but timeout_ms is large (say 
+50us and 25s), this function will end up burning a lot of cpu cycles. 
+However that is likely an edge case, and if your poll cycle is that 
+small, I think it should be assumed that the event is expected to happen 
+quickly, so the full timeout should not be hit.
 
-Can you confirm that you're saying that you want below patch, which I
-just merged?
+fsleep() does nothing to address this function possibly taking quite a 
+bit longer than the timeout in overall wall time.  Perhaps that is not a 
+significant concern though.
 
-https://lore.kernel.org/linux-remoteproc/20210312002441.3273183-1-bjorn.andersson@linaro.org/
-
-(Which makes it possible to specify firmware name per platform/board)
-
-Regards,
-Bjorn
+-- 
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
