@@ -2,118 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AA56D340549
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Mar 2021 13:17:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 587873405B7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Mar 2021 13:41:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230434AbhCRMQa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Mar 2021 08:16:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53840 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230477AbhCRMQK (ORCPT
+        id S231262AbhCRMkh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Mar 2021 08:40:37 -0400
+Received: from m42-10.mailgun.net ([69.72.42.10]:51511 "EHLO
+        m42-10.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231271AbhCRMkX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Mar 2021 08:16:10 -0400
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA9D6C061760
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Mar 2021 05:16:09 -0700 (PDT)
-Received: by mail-pj1-x1036.google.com with SMTP id kr3-20020a17090b4903b02900c096fc01deso3019905pjb.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Mar 2021 05:16:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=mDvN0SgAfdUxvP15FGjlUIyfQkEQU0VmBT3cvhyl4P8=;
-        b=J0SCTpSl66AXYFrVZinWF1tdEH2O6BGxsFyMoRYdtxMpYlP0iLTy+DjI2rPZTfQIcU
-         p5xmOgENJh77+3sPhSiRMqCzHkPZAS8peVP/IbpKySbcykwSepPjABdApEOXSX02Z4S3
-         l4Ixeuc52rWSYU0kUkexKhpyhSRQ+xTSIqM6Gz5ptTsyQno+l9w7qgvgvWQdHQjCk6aD
-         Ao+jEHr44f7LoaOWDh4EfambbLt6ePERFM49V9dWx86fx+DE5ekAjey5sa9rXyMRSDBd
-         N47WBciaLHNJV1jdQ7ybbgXzHMux3nvRGU4MEy4G2kjjMANbg4zN6qVB7y4h5eZhXs1i
-         WUiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=mDvN0SgAfdUxvP15FGjlUIyfQkEQU0VmBT3cvhyl4P8=;
-        b=SzJYWdjyC2cPyaSFHeaCUZWaEiEKrpCNre25dfxxgY1O2F/kMKTcoNpkhVFfQtHtXv
-         BdIhz3sSV5yYF8OmYgVodCQgelL1ZYPJJZT4+MXEGncqTYOc6ncOlT0GAjlm+LP0WPiZ
-         WQabqxe7UHpp/Ira38lnOXqqC9qfuMsx6ZH68pQlXmN6t3SpWbGHMOjhdoLEGAUO8rss
-         WKeDmVd64yU4cNYhJ/IbKptqrLvw8MtmnqEmFmEHJg4xToxUh7N7LMgYooRnbY3d+aoG
-         MT3f85xKjpMSutfblPPYdPryHowhnTOxCy67oga6MPRKUhSuWncfLNu+MfyegTbRxcPb
-         4udQ==
-X-Gm-Message-State: AOAM533jYJ+cMPlMMfkUXiR80awWVYb2Pq8abtOxr1o0GwKqJmts2X//
-        gBNCnSSLJjLPQFtpHc93Yzo+
-X-Google-Smtp-Source: ABdhPJw8gFyVpDkplM9fABTLOzM0jYdB18ReJ2voNFd21l1TQUS6DAIi9n2ngbIujTbCX2OD6xslVQ==
-X-Received: by 2002:a17:90a:5211:: with SMTP id v17mr4141106pjh.53.1616069769155;
-        Thu, 18 Mar 2021 05:16:09 -0700 (PDT)
-Received: from thinkpad ([2409:4072:6d00:4737:af26:182c:a57e:1d9e])
-        by smtp.gmail.com with ESMTPSA id i7sm2473080pfq.184.2021.03.18.05.16.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Mar 2021 05:16:08 -0700 (PDT)
-Date:   Thu, 18 Mar 2021 17:46:01 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Miquel Raynal <miquel.raynal@bootlin.com>
-Cc:     richard@nod.at, vigneshr@ti.com, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
-        boris.brezillon@collabora.com, Daniele.Palmas@telit.com,
-        bjorn.andersson@linaro.org
-Subject: Re: [PATCH v5 0/3] Add support for secure regions in NAND
-Message-ID: <20210318121601.GA21610@thinkpad>
-References: <20210317122513.42369-1-manivannan.sadhasivam@linaro.org>
- <20210317155121.19cbb50c@xps13>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210317155121.19cbb50c@xps13>
+        Thu, 18 Mar 2021 08:40:23 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1616071223; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=s6VV7GTQncp21xvrXYojy8gPu45408PlPCy0aMnUmSc=; b=NGPgl1rhwUno16m00Qo+2A9iNL8v//2zGNs0IekzTc38TuOnS4PVLaW8DnkMeCXUygOPRzt6
+ Cm4TdXuZAnm0AJ/KQ9+GNVt9Xp5QCxNg6odLrz0C4UEH6gqbE1rIU01HNpeNgijtDG4N9hyI
+ dSK4g/QsGdSA4G3jnwU8rQmoFBg=
+X-Mailgun-Sending-Ip: 69.72.42.10
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 60534a2a3f267701a4e26bd1 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 18 Mar 2021 12:40:10
+ GMT
+Sender: kgunda=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 1A5ADC4346E; Thu, 18 Mar 2021 12:40:09 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from kgunda-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: kgunda)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 508BCC433C6;
+        Thu, 18 Mar 2021 12:40:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 508BCC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kgunda@codeaurora.org
+From:   Kiran Gunda <kgunda@codeaurora.org>
+To:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
+        lee.jones@linaro.org, b.zolnierkie@samsung.com,
+        dri-devel@lists.freedesktop.org, daniel.thompson@linaro.org,
+        jacek.anaszewski@gmail.com, pavel@ucw.cz, robh+dt@kernel.org,
+        mark.rutland@arm.com, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        phone-devel@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, Kiran Gunda <kgunda@codeaurora.org>
+Subject: [PATCH V5 0/2] Fix WLED FSC Sync and brightness Sync settings
+Date:   Thu, 18 Mar 2021 18:09:38 +0530
+Message-Id: <1616071180-24493-1-git-send-email-kgunda@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Miquel,
+This patch series has the following two WLED fixes
+ 1. As per the current implementation, for WLED5, after
+    the FSC (Full Scale Current) update the driver is incorrectly
+    toggling the MOD_SYNC register instead of toggling the SYNC register.
+    The patch 1/2 fixes this by toggling the SYNC register after
+    FSC update.
 
-On Wed, Mar 17, 2021 at 03:51:21PM +0100, Miquel Raynal wrote:
-> Hi Manivannan,
-> 
-> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote on Wed,
-> 17 Mar 2021 17:55:10 +0530:
-> 
-> > On a typical end product, a vendor may choose to secure some regions in
-> > the NAND memory which are supposed to stay intact between FW upgrades.
-> > The access to those regions will be blocked by a secure element like
-> > Trustzone. So the normal world software like Linux kernel should not
-> > touch these regions (including reading).
-> > 
-> > So this series adds a property for declaring such secure regions in DT
-> > so that the driver can skip touching them. While at it, the Qcom NANDc
-> > DT binding is also converted to YAML format.
-> > 
-> > Thanks,
-> > Mani
-> > 
-> > Changes in v5:
-> > 
-> > * Switched to "uint64-matrix" as suggested by Rob
-> > * Moved the whole logic from qcom driver to nand core as suggested by Boris
-> 
-> I'm really thinking about a nand-wide property now. Do you think it
-> makes sense to move the helper to the NAND core (instead of the raw
-> NAND core)? I'm fine only using it in the raw NAND core though.
-> 
+ 2. Currently, the sync bits are set-then-cleared after FSC and brightness
+    update. As per hardware team recommendation the FSC and brightness sync
+    takes place from clear-then-set transition of the sync bits.
+    The patch 2/2 fies this issue.
 
-The reason why I didn't move the helper and checks to NAND core is I haven't
-seen any secure implementations in other NAND interfaces except rawnand. This
-change can be done in future if we start seeing implementations.
+changes from V4:
+  1. Rebased this patch series on the below patch.
+     "backlight-qcom-wled-Use-sink_addr-for-sync-toggle.patch".
 
-> Also, can I request a global s/sec/secure/ update? I find the "sec"
-> abbreviation unclear and I think we have more than enough cryptic
-> names :-)
-> 
+Changes from V3:
+  1. Updated the patch description as per Daneil's suggestion.
+  2. Added Daniel's "Reviewed-by" tag for patch 2/2.
+  3. Updated the cover letter to use "set" and "clear" properly.
+ 
+Changes from V2:
+  1. Added Daniel's "Reviewed-by" tag for patch 1/2.
+  2. Updated the patch 2/2 description with "set" and "clear"
+     terminology instead of "1" and "0".
+  3. Updated the cover letter with "set" and "clear" terminology
+     instead of "1" and "0".
 
-Sure.
+Changes from V1:
+  1. Updated the cover letter.
+  2. Updated the description of the patches as per Daniel's suggestion.
 
-Thanks,
-Mani
+Kiran Gunda (2):
+  backlight: qcom-wled: Fix FSC update issue for WLED5
+  backlight: qcom-wled: Correct the sync_toggle sequence
 
-> Thanks,
-> Miquèl
+ drivers/video/backlight/qcom-wled.c | 37 +++++++++++++++++++++++++------------
+ 1 file changed, 25 insertions(+), 12 deletions(-)
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+ a Linux Foundation Collaborative Project
+
