@@ -2,189 +2,243 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4ED3D33FCE3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Mar 2021 02:54:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EF47233FD05
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Mar 2021 03:06:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230227AbhCRBxw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Mar 2021 21:53:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33032 "EHLO
+        id S229880AbhCRCFq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Mar 2021 22:05:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229934AbhCRBxR (ORCPT
+        with ESMTP id S230099AbhCRCFN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Mar 2021 21:53:17 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BB58C06174A;
-        Wed, 17 Mar 2021 18:53:17 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id 61so3766508wrm.12;
-        Wed, 17 Mar 2021 18:53:17 -0700 (PDT)
+        Wed, 17 Mar 2021 22:05:13 -0400
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11398C061762
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 19:05:13 -0700 (PDT)
+Received: by mail-ot1-x332.google.com with SMTP id f73-20020a9d03cf0000b02901b4d889bce0so3744466otf.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 19:05:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=v1i0KsQ3h/jMhWbwFpzMC40inc+yYjGhis5/F6IuRMg=;
-        b=ghXDIHNTetOEFrxwksmP6rkHT/cT6FkMc6GeMKOmmng1mTpWSNSM8idAOizGUMojRL
-         loy+GhV/jAIPCFByU00CR1sg1Dj2go35NWVxYJRpc1kBxdxlgn7BI/t1WJ3YlOr06ORu
-         DJenjLuf0NTv9UheLiyK9ii/nOOFRBEcBJqZq/r5WcKnQymCdx5aetPOv2KLOOQSyoxV
-         R324HpbD472f5qAI74A/frwF84q6MIxjkP6wi/9xcjVU9SQe+YTn/IElPcb3qqdmBZcB
-         lWEqBjukB/q7C7hYH65ryR2D413L9VEj4PIH1Jn3xtRkzJqbleF1GU+Mtc0g/H+LtB+F
-         o1Ew==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=hFIpeKGuX0nycNGYPZhEkMTQ5TBqkNsH4ol9rotosSc=;
+        b=IhgVGMCvFH2iERlU//bxqH9so1HPvDqIVyIrwWE+6bq8TApVEWo3UMUo5FIEUp9/7p
+         SUizN/eu9SknJXLViXcoZX5NUIpl7sB4/tx/cgVd0fDUM9rbGniAvT5h6FnFLq48cAMs
+         ZQYQWjDrYNOlVVegvpVydsF1huTuX890N78nMYdAN3ajl66KQk52r3BGI1HOxt1MxfqH
+         AefYuAJagpM6EiQrKCrhOR50SSON9HG+Ok+/vORiIW5b590kz3hYHUv+Vt9aGaRfwpL8
+         8hg+HI8IXJPsWVxwIRKqLBRbhf3Xj5/43gfh/KGYHBvnyBq154LILExyZkJsroDsF2yt
+         XCjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=v1i0KsQ3h/jMhWbwFpzMC40inc+yYjGhis5/F6IuRMg=;
-        b=qYZv9eHhTmHwWzHhePAtwcscE8UDRNDVw++8SJriRU+5rztCG0hfefgQlZlxJ40EwS
-         E71B7Q0YZgJfC8dWcJmLfc16k5qfnX+S72MUfMdGzGJbbTgBHQmdoiJC90Cx5y371eIv
-         /FZJDh6qJg3T2/p9qNb8iyhYx3tJ57B9rZtgu1ZKmIcE53k1zOg/X3Kw2jwHrJ4p1697
-         mqSZJ2phnoPzUvxjBUvOX/PLTfAjfuSsoJikj4KZ5DQhSMLLU0/ndyCpnXsbK+ZISmT/
-         uJWIfO8lBOH8S8obY3xzj98ORapwjz+cuDtRN0L47qfrnigyhjcHUGsFFlXvNzNchxhJ
-         a8Mg==
-X-Gm-Message-State: AOAM530EuE14IxM01Gr2apvbDlcrYqIyX6QjDd7YlGgHRF+wkmflX63S
-        QYmN2ymVin9tdljWJfWORGU2ktuEvfQplsUY8nI=
-X-Google-Smtp-Source: ABdhPJzp1l2ljBrXjRJyXLSIUcbc7uR3HCZrC/smDRvMByEEPcM6+4fdLIhY0qI8M8J0QaQ7PYdClv8p8v+qQDtKNK0=
-X-Received: by 2002:adf:f587:: with SMTP id f7mr7047833wro.147.1616032396097;
- Wed, 17 Mar 2021 18:53:16 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=hFIpeKGuX0nycNGYPZhEkMTQ5TBqkNsH4ol9rotosSc=;
+        b=SgyM92gLX5Ihxea1JIbp57KKV8SaSilqxPeyLNj8zrVxO4+SsmYlO8fLAUDgShGWLl
+         tiLvH6NvBjAZdHV6VctemH6FVXUjkU9QMgU43qE3GAiAQO+avPEmFmUbmrgXySVf9rre
+         bSEY22A4fHxlClb1U7I+a7PmjyE23ReLVFexqcU4mdE15WAbhbrS1EGyU/haw1q/Keyw
+         g+vT0Va0A0zdAa6Ov2+wTJwoS5X+qUt740rBSQkkgEWpjWGznXzbqZJobo9F6LxoAQfC
+         CU4i9kxpfRVE5wzebFACEujMgp8hM6sC+UKAdIkeWguDyUZo4JmKg4YrSJQhJqH+/7dr
+         wnIg==
+X-Gm-Message-State: AOAM533G4wZ+K4d9zBnvpW6JYRQlXOw9eT22c2bLngV6JWstdhAHzDSp
+        g21siInWdd7NCq05qrULicUIVQ==
+X-Google-Smtp-Source: ABdhPJxFML//B68n13ChjKm4UD7s0AutRzoN7PAzF7QkWiRDrh5kbP77C0us713T0MxQGUia13XF+w==
+X-Received: by 2002:a9d:7293:: with SMTP id t19mr5689012otj.4.1616033112191;
+        Wed, 17 Mar 2021 19:05:12 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id u194sm211331oia.27.2021.03.17.19.05.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Mar 2021 19:05:11 -0700 (PDT)
+Date:   Wed, 17 Mar 2021 21:05:10 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
+Cc:     sboyd@kernel.org, agross@kernel.org, david.brown@linaro.org,
+        devicetree@vger.kernel.org, jassisinghbrar@gmail.com,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        mark.rutland@arm.com, mturquette@baylibre.com, ohad@wizery.com,
+        robh+dt@kernel.org, sricharan@codeaurora.org
+Subject: Re: [PATCH v8 2/9] remoteproc: qcom: Add secure PIL support
+Message-ID: <YFK1VpP74rQH2Z72@builder.lan>
+References: <1611984013-10201-1-git-send-email-gokulsri@codeaurora.org>
+ <1611984013-10201-3-git-send-email-gokulsri@codeaurora.org>
 MIME-Version: 1.0
-References: <20210316140707.RFC.1.I3a21995726282f1e9fcb70da5eb96f19ed96634f@changeid>
- <YFKQaXOmOwYyeqvM@google.com>
-In-Reply-To: <YFKQaXOmOwYyeqvM@google.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 17 Mar 2021 18:53:04 -0700
-Message-ID: <CAF6AEGtu+GBwYfkH3x=UuPs5Ouj0TxqbVjpjFEtMKKWvd1-Gbg@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/3] dt-bindings: display: simple: Add the panel on sc7180-trogdor-pompom
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@chromium.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Nicolas Boichat <drinkcat@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Steev Klimaszewski <steev@kali.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1611984013-10201-3-git-send-email-gokulsri@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 17, 2021 at 4:27 PM Matthias Kaehlcke <mka@chromium.org> wrote:
->
-> On Tue, Mar 16, 2021 at 02:08:19PM -0700, Douglas Anderson wrote:
-> > The sc7180-trogdor-pompom board might be attached to any number of a
-> > pile of eDP panels. At the moment I'm told that the list might include:
-> > - KD KD116N21-30NV-A010
-> > - KD KD116N09-30NH-A016
-> > - Starry 2081116HHD028001-51D
-> > - Sharp LQ116M1JW10
-> >
-> > It should be noted that while the EDID programmed in the first 3
-> > panels indicates that they should run with exactly the same timing (to
-> > keep things simple), the 4th panel not only needs different timing but
-> > has a different resolution.
-> >
-> > As is true in general with eDP panels, we can figure out which panel
-> > we have and all the info needed to drive its pixel clock by reading
-> > the EDID. However, we can do this only after we've powered the panel
-> > on. Powering on the panels requires following the timing diagram in
-> > each panel's datasheet which specifies delays between certain
-> > actions. This means that, while we can be quite dynamic about handling
-> > things we can't just totally skip out on describing the panel like we
-> > could do if it was connected to an external-facing DP port.
-> >
-> > While the different panels have slightly different delays, it's
-> > possible to come up with a set of unified delays that will work on all
-> > the panels. From reading the datasheets:
-> > * KD KD116N21-30NV-A010 and KD KD116N09-30NH-A016
-> >   - HPD absent delay: 200 ms
-> >   - Unprepare delay: 150 ms (datasheet is confusing, might be 500 ms)
-> > * Starry 2081116HHD028001-51D
-> >   - HPD absent delay: 100 ms
-> >   - Enable delay: (link training done till enable BL): 200 ms
-> >   - Unprepare delay: 500 ms
-> > * Sharp LQ116M1JW10
-> >   - HPD absent delay: 200 ms
-> >   - Unprepare delay: 500 ms
-> >   - Prepare to enable delay (power on till backlight): 100 ms
-> >
-> > Unified:
-> > - HPD absent delay: 200 ms
-> > - Unprepare delay: 500 ms
-> > - Enable delay: 200 ms
-> >
-> > NOTE: in theory the only thing that we _really_ need unity on is the
-> > "HPD absent delay" since once the panel asserts HPD we can read the
-> > EDID and could make per-panel decisions if we wanted.
-> >
-> > Let's create a definition of "a panel that can be attached to pompom"
-> > as a panel that provides a valid EDID and can work with the standard
-> > pompom power sequencing. If more panels are later attached to pompom
-> > then it's fine as long as they work in a compatible way.
-> >
-> > One might ask why we can't just use a generic string here and provide
-> > the timings directly in the device tree file. As I understand it,
-> > trying to describe generic power sequencing in the device tree is
-> > frowned upon and the one instance (SD/MMC) is regarded as a mistake
-> > that shouldn't be repeated. Specifying a power sequence per board (or
-> > per board class) feels like a reasonable compromise. We're not trying
-> > to define fully generic power sequence bindings but we can also take
-> > advantage of the semi-probable properties of the attached device.
-> >
-> > NOTE: I believe that past instances of supporting this type of thing
-> > have used the "white lie" approach. One representative panel was
-> > listed in the device tree. The power sequencings of this
-> > representative panel were OK to use across all panels that might be
-> > attached and other differences were handled by EDID. This patch
-> > attempts to set a new precedent and avoid the need for the white lie.
-> >
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > ---
->
-> Sounds reasonable to me if DT maintainers can live with this abstract
-> hardware definition. It's clearer than the 'white lie' approach.
+On Fri 29 Jan 23:20 CST 2021, Gokul Sriram Palanisamy wrote:
 
-Yeah, it is a weird grey area between "discoverable" and "not
-discoverable".. but I favor DT reflecting reality as much as
-possible/feasible, so I think this is definity cleaner than "white
-lies"
+> IPQ8074 uses secure PIL. Hence, adding the support for the same.
+> 
 
-Reviewed-by: Rob Clark <robdclark@gmail.com>
+Sorry for not giving this a proper review before Gokul, I've look at it
+but been uncertain about what feedback to offer.
 
-> It's then up to the vendor/manufacturer to ensure to only ship devices
-> with panels that have compatible timings.
->
-> >  .../devicetree/bindings/display/panel/panel-simple.yaml       | 4 ++++
-> >  1 file changed, 4 insertions(+)
-> >
-> > diff --git a/Documentation/devicetree/bindings/display/panel/panel-simple.yaml b/Documentation/devicetree/bindings/display/panel/panel-simple.yaml
-> > index 62b0d54d87b7..9807dbc1cceb 100644
-> > --- a/Documentation/devicetree/bindings/display/panel/panel-simple.yaml
-> > +++ b/Documentation/devicetree/bindings/display/panel/panel-simple.yaml
-> > @@ -140,6 +140,10 @@ properties:
-> >        - giantplus,gpg48273qs5
-> >          # GiantPlus GPM940B0 3.0" QVGA TFT LCD panel
-> >        - giantplus,gpm940b0
-> > +        # A panel connected to a google,pompom board. Panel is guaranteed to
-> > +        # confirm to google,pompom-panel power sequencing requirements and then
->
-> s/confirm/conform/ ?
->
-> > +        # the specific panel will be probed via EDID.
-> > +      - google,pompom-panel
-> >          # HannStar Display Corp. HSD070PWW1 7.0" WXGA TFT LCD panel
-> >        - hannstar,hsd070pww1
-> >          # HannStar Display Corp. HSD100PXN1 10.1" XGA LVDS panel
->
-> FWIW:
->
-> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
+> Signed-off-by: Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
+> Signed-off-by: Sricharan R <sricharan@codeaurora.org>
+> Signed-off-by: Nikhil Prakash V <nprakash@codeaurora.org>
+
+I suspect that there should have some "Co-developed-by" here (and in the
+other patches)?
+
+> ---
+>  drivers/remoteproc/qcom_q6v5_wcss.c | 43 ++++++++++++++++++++++++++++++++++---
+>  1 file changed, 40 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
+> index c0368bb..4e35e5c 100644
+> --- a/drivers/remoteproc/qcom_q6v5_wcss.c
+> +++ b/drivers/remoteproc/qcom_q6v5_wcss.c
+> @@ -18,6 +18,7 @@
+>  #include <linux/regulator/consumer.h>
+>  #include <linux/reset.h>
+>  #include <linux/soc/qcom/mdt_loader.h>
+> +#include <linux/qcom_scm.h>
+>  #include "qcom_common.h"
+>  #include "qcom_pil_info.h"
+>  #include "qcom_q6v5.h"
+> @@ -86,6 +87,9 @@
+>  #define TCSR_WCSS_CLK_ENABLE	0x14
+>  
+>  #define MAX_HALT_REG		3
+> +
+> +#define WCNSS_PAS_ID		6
+> +
+>  enum {
+>  	WCSS_IPQ8074,
+>  	WCSS_QCS404,
+> @@ -134,6 +138,7 @@ struct q6v5_wcss {
+>  	unsigned int crash_reason_smem;
+>  	u32 version;
+>  	bool requires_force_stop;
+> +	bool need_mem_protection;
+>  
+>  	struct qcom_rproc_glink glink_subdev;
+>  	struct qcom_rproc_ssr ssr_subdev;
+> @@ -152,6 +157,7 @@ struct wcss_data {
+>  	int ssctl_id;
+>  	const struct rproc_ops *ops;
+>  	bool requires_force_stop;
+> +	bool need_mem_protection;
+>  };
+>  
+>  static int q6v5_wcss_reset(struct q6v5_wcss *wcss)
+> @@ -251,6 +257,15 @@ static int q6v5_wcss_start(struct rproc *rproc)
+>  
+>  	qcom_q6v5_prepare(&wcss->q6v5);
+>  
+> +	if (wcss->need_mem_protection) {
+> +		ret = qcom_scm_pas_auth_and_reset(WCNSS_PAS_ID);
+> +		if (ret) {
+> +			dev_err(wcss->dev, "wcss_reset failed\n");
+> +			return ret;
+> +		}
+> +		goto wait_for_reset;
+
+This goto essentially puts the entire old function in an "else" block.
+
+> +	}
+> +
+>  	/* Release Q6 and WCSS reset */
+>  	ret = reset_control_deassert(wcss->wcss_reset);
+>  	if (ret) {
+> @@ -285,6 +300,7 @@ static int q6v5_wcss_start(struct rproc *rproc)
+>  	if (ret)
+>  		goto wcss_q6_reset;
+>  
+> +wait_for_reset:
+>  	ret = qcom_q6v5_wait_for_start(&wcss->q6v5, 5 * HZ);
+>  	if (ret == -ETIMEDOUT)
+>  		dev_err(wcss->dev, "start timed out\n");
+> @@ -717,6 +733,15 @@ static int q6v5_wcss_stop(struct rproc *rproc)
+>  	struct q6v5_wcss *wcss = rproc->priv;
+>  	int ret;
+>  
+> +	if (wcss->need_mem_protection) {
+> +		ret = qcom_scm_pas_shutdown(WCNSS_PAS_ID);
+> +		if (ret) {
+> +			dev_err(wcss->dev, "not able to shutdown\n");
+> +			return ret;
+> +		}
+> +		goto pas_done;
+
+Same here.
+
+> +	}
+> +
+>  	/* WCSS powerdown */
+>  	if (wcss->requires_force_stop) {
+>  		ret = qcom_q6v5_request_stop(&wcss->q6v5, NULL);
+> @@ -741,6 +766,7 @@ static int q6v5_wcss_stop(struct rproc *rproc)
+>  			return ret;
+>  	}
+>  
+> +pas_done:
+>  	clk_disable_unprepare(wcss->prng_clk);
+>  	qcom_q6v5_unprepare(&wcss->q6v5);
+>  
+> @@ -764,9 +790,15 @@ static int q6v5_wcss_load(struct rproc *rproc, const struct firmware *fw)
+>  	struct q6v5_wcss *wcss = rproc->priv;
+>  	int ret;
+>  
+> -	ret = qcom_mdt_load_no_init(wcss->dev, fw, rproc->firmware,
+> -				    0, wcss->mem_region, wcss->mem_phys,
+> -				    wcss->mem_size, &wcss->mem_reloc);
+> +	if (wcss->need_mem_protection)
+> +		ret = qcom_mdt_load(wcss->dev, fw, rproc->firmware,
+> +				    WCNSS_PAS_ID, wcss->mem_region,
+> +				    wcss->mem_phys, wcss->mem_size,
+> +				    &wcss->mem_reloc);
+> +	else
+> +		ret = qcom_mdt_load_no_init(wcss->dev, fw, rproc->firmware,
+> +					    0, wcss->mem_region, wcss->mem_phys,
+> +					    wcss->mem_size, &wcss->mem_reloc);
+
+And same here.
+
+In practice this means that you're essentially overloading new logic to
+all code paths though the driver. Left is some boilerplate code, which I
+wish we could refactor into common helper functions in the framework
+(e.g. we duplicate q6v5_alloc_memory_region() in a lot of drivers).
+
+So with this in mind, instead of overloading new logic to this entire
+driver, could you please submit a new driver for the PAS based IPQ WCSS?
+
+Regards,
+Bjorn
+
+>  	if (ret)
+>  		return ret;
+>  
+> @@ -1032,6 +1064,9 @@ static int q6v5_wcss_probe(struct platform_device *pdev)
+>  	if (!desc)
+>  		return -EINVAL;
+>  
+> +	if (desc->need_mem_protection && !qcom_scm_is_available())
+> +		return -EPROBE_DEFER;
+> +
+>  	rproc = rproc_alloc(&pdev->dev, pdev->name, desc->ops,
+>  			    desc->firmware_name, sizeof(*wcss));
+>  	if (!rproc) {
+> @@ -1045,6 +1080,7 @@ static int q6v5_wcss_probe(struct platform_device *pdev)
+>  
+>  	wcss->version = desc->version;
+>  	wcss->requires_force_stop = desc->requires_force_stop;
+> +	wcss->need_mem_protection = desc->need_mem_protection;
+>  
+>  	ret = q6v5_wcss_init_mmio(wcss, pdev);
+>  	if (ret)
+> @@ -1115,6 +1151,7 @@ static const struct wcss_data wcss_ipq8074_res_init = {
+>  	.wcss_q6_reset_required = true,
+>  	.ops = &q6v5_wcss_ipq8074_ops,
+>  	.requires_force_stop = true,
+> +	.need_mem_protection = true,
+>  };
+>  
+>  static const struct wcss_data wcss_qcs404_res_init = {
+> -- 
+> 2.7.4
+> 
