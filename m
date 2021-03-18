@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FE61340ED1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Mar 2021 21:06:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 72C4D340ED3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Mar 2021 21:06:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230220AbhCRUFs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Mar 2021 16:05:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43528 "EHLO
+        id S230391AbhCRUGU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Mar 2021 16:06:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232955AbhCRUFn (ORCPT
+        with ESMTP id S232674AbhCRUF6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Mar 2021 16:05:43 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 662ECC06174A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Mar 2021 13:05:42 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id s17so9093589ljc.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Mar 2021 13:05:42 -0700 (PDT)
+        Thu, 18 Mar 2021 16:05:58 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0405C06174A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Mar 2021 13:05:46 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id u4so9093921ljo.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Mar 2021 13:05:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
         bh=qTXdrqQiFvhXV8lyxgPO5t48QTulHRLpGAEUMWT2zU4=;
-        b=K35e8Og+puj32ZpEi5HsRYTFOKd3y2Wi5zpPxY3FAv8wKAuE/GbEbI7GlrqS5GKWsl
-         J2i7Y02t8S0vsIDfYmT/jdSDkbWAolnnr9zTq6YtXLDsn6neSf3KVss3nZekJmFIhhfl
-         r8OMUY54NfJo32/2sMLxrYSLKwYtHuHNF+nk9PcuqHo21ToLyKF+OXJLk/twD2bNk/HD
-         soDmiwPH2NeHHCQ3vdqv/Y1i4byN/LBS9PyS2+SWahcRjVwUVWNYQ65O88GsqjFvoh94
-         kpoEzJwy5EBCLrvbFcZwsmvWS99kMBfO/ketmQ69gEd/WuTIT8sb7XCS0M7+UuLpuyXu
-         K51w==
+        b=HWoaahEvCeXbu0+bl01gv6FeUi1se5CvWc9FFOc6UMz1ziLDJNLjL3QU9G7LXyLaoj
+         4a/ASg9Pdlu0q7nA1q/F9T6m1tGJ4E6i2+I9oIejhQXzTKI+Qr8T+IPjJaGBt8NcbWv1
+         5Y39xEiGWg0hMnxNM9YJ7pgz/bf0YJQHFn9SKnP/o6PPvebw/12r39SFUHz83LGHtGUo
+         tUoMqelioSOL96TVIpKx7imN7jPe0tAJpuqqlly1MmK+rURXGL8S79E0YMUHkkFH6YuI
+         msuLF6D3KSlg6dwcfddgyD8Nvbm60TOe4XQb3qu5mSN8D++qP3aWRPpGXwjbNGPt+fhj
+         kCPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
         bh=qTXdrqQiFvhXV8lyxgPO5t48QTulHRLpGAEUMWT2zU4=;
-        b=g20J2lRUNRAET7k3l5HY8TG3wwNOpD/r9WstsA4+2VOOGaa7Im9tYHpebvbKfICcNn
-         aX8Dh4HuJnpxQGZ6pYHQ/nm6r5r86sTICE88UvKyDDM6dkSnk8xW9tvAA3QfbAWiqziK
-         ooHhT+O5T95C5GK4iuqFScgl0cZjSeoGYcWNaSOujC2HOJ2Ral2KAHf752uwTGlNKlbZ
-         tMNQSknv5ERZUC0HHr5ekimO7ed1ZuDtERMVbm+XcuUa6aBUCyZiLxiZM6SFDm3m3UvJ
-         lnhE+mdk9ENl0Gw9Vwq0HFkgSz3QLx7IkI6kQWMOxBTyReimak4I7zkscWUx9fhTZv6i
-         otIA==
-X-Gm-Message-State: AOAM530X3HpvYzfQa4aMqspaVP8vzrzwOPYbplYbX1hfujldbotChKR6
-        leaj+LNvIEeqgJCmT9w/CaCnhw==
-X-Google-Smtp-Source: ABdhPJzlDzlGzdc/pko2iXEN451KHvTJHzvzpyM4dRKRSpnfaBMp191k/w2b1RD5WMNweq49rejWEQ==
-X-Received: by 2002:a2e:6c06:: with SMTP id h6mr6558660ljc.154.1616097940933;
-        Thu, 18 Mar 2021 13:05:40 -0700 (PDT)
+        b=mTH+9VWoW9C0SNAVYyY3kM/3UEF2WJkaJzZDVUofrQaNQ6Az6h2KgCLOMXZwETgYeE
+         sUJBY/gAOmO7ZQOIWIuFAjKrYKUz11pLgbuXKpQyYNkztdAvKLM+9d2F9vYY/4bBg9zD
+         wop/Nhjn5dBDvVLziZquAzaoNbU0pEEetafTJVHQhuLTJxJ+NCEK0sRDk9CxIW73GffB
+         aNsrwn1puH1Uu3EFDP0uy2brQeuzM0sO9Zi1Wy4KL85ndH6iYIEBgYQzcg2LA/UoQ6tb
+         k1bCNUd2sVkuIrkfksri3QJMgzmnSmK7EgHaz0bn9AgQxEUmte3dA9j9IRSFLws22DXl
+         uTwQ==
+X-Gm-Message-State: AOAM530Yqc2JqAOyqj2fdQzhpKOQ+evG+wd7JPJiC5HjFBwXZS+Fnxk1
+        sXBv/pKAfDrvoqNA45j0zpCaoA==
+X-Google-Smtp-Source: ABdhPJzt7XEvaO4FtiUNuRdZBuNaTu7njdvwZX04GZHhtYg/aMEARKEfhmAqpkSb2DSkVNX7HdBt+w==
+X-Received: by 2002:a2e:8ec6:: with SMTP id e6mr6521709ljl.257.1616097945231;
+        Thu, 18 Mar 2021 13:05:45 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id m16sm352223lfu.220.2021.03.18.13.05.40
+        by smtp.gmail.com with ESMTPSA id e20sm354062lfc.20.2021.03.18.13.05.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Mar 2021 13:05:40 -0700 (PDT)
+        Thu, 18 Mar 2021 13:05:44 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Jonathan Marek <jonathan@marek.ca>
 Cc:     Stephen Boyd <sboyd@kernel.org>, David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH] gpu/drm/msm: fix shutdown hook in case GPU components failed to bind
-Date:   Thu, 18 Mar 2021 23:05:39 +0300
-Message-Id: <20210318200539.2243945-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2] gpu/drm/msm: fix shutdown hook in case GPU components failed to bind
+Date:   Thu, 18 Mar 2021 23:05:44 +0300
+Message-Id: <20210318200544.2244007-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
