@@ -2,243 +2,380 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EF47233FD05
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Mar 2021 03:06:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 26C9133FD0F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Mar 2021 03:11:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229880AbhCRCFq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Mar 2021 22:05:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35604 "EHLO
+        id S230085AbhCRCKq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Mar 2021 22:10:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230099AbhCRCFN (ORCPT
+        with ESMTP id S229949AbhCRCKZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Mar 2021 22:05:13 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11398C061762
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 19:05:13 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id f73-20020a9d03cf0000b02901b4d889bce0so3744466otf.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 19:05:13 -0700 (PDT)
+        Wed, 17 Mar 2021 22:10:25 -0400
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52F03C061760
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 19:10:25 -0700 (PDT)
+Received: by mail-ot1-x331.google.com with SMTP id k14-20020a9d7dce0000b02901b866632f29so3797050otn.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Mar 2021 19:10:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=hFIpeKGuX0nycNGYPZhEkMTQ5TBqkNsH4ol9rotosSc=;
-        b=IhgVGMCvFH2iERlU//bxqH9so1HPvDqIVyIrwWE+6bq8TApVEWo3UMUo5FIEUp9/7p
-         SUizN/eu9SknJXLViXcoZX5NUIpl7sB4/tx/cgVd0fDUM9rbGniAvT5h6FnFLq48cAMs
-         ZQYQWjDrYNOlVVegvpVydsF1huTuX890N78nMYdAN3ajl66KQk52r3BGI1HOxt1MxfqH
-         AefYuAJagpM6EiQrKCrhOR50SSON9HG+Ok+/vORiIW5b590kz3hYHUv+Vt9aGaRfwpL8
-         8hg+HI8IXJPsWVxwIRKqLBRbhf3Xj5/43gfh/KGYHBvnyBq154LILExyZkJsroDsF2yt
-         XCjQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=EmLn8rZvApz0CEK+2n4J5E4ndQ/u3PQvps0+HiUUndQ=;
+        b=IYZu/iRExH+qF3oPFMBhjXkesfxGZvxUuCAsL59J7g0Ir/FM9XdTLKhYblHv8dBdoe
+         5a5OVxK6C8kL+ONV5e2Ls3n0AW01o1Lt6zPiGMuxRVaysLJArU1/h9PDrSX8FhH7/3K/
+         Ykdk36RJgeunBwPJqvVkm/k8gzdbRvWSeCT+lUDbpvWjSBY8aV2lDylV82D0ajr9muTc
+         VtIjUAxJXSATYb/Fio9Mi5w9QmpeAPAVtgPijd0pNOE2Oy0qpIX7InsitPKnw9c1yOad
+         KtsJ6Ta0rz3PPXXg7C5yzNl6xjIDbI6Ln3inhqUuS3DSPn27tx51fjRC7RzMhwAosqET
+         HxuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=hFIpeKGuX0nycNGYPZhEkMTQ5TBqkNsH4ol9rotosSc=;
-        b=SgyM92gLX5Ihxea1JIbp57KKV8SaSilqxPeyLNj8zrVxO4+SsmYlO8fLAUDgShGWLl
-         tiLvH6NvBjAZdHV6VctemH6FVXUjkU9QMgU43qE3GAiAQO+avPEmFmUbmrgXySVf9rre
-         bSEY22A4fHxlClb1U7I+a7PmjyE23ReLVFexqcU4mdE15WAbhbrS1EGyU/haw1q/Keyw
-         g+vT0Va0A0zdAa6Ov2+wTJwoS5X+qUt740rBSQkkgEWpjWGznXzbqZJobo9F6LxoAQfC
-         CU4i9kxpfRVE5wzebFACEujMgp8hM6sC+UKAdIkeWguDyUZo4JmKg4YrSJQhJqH+/7dr
-         wnIg==
-X-Gm-Message-State: AOAM533G4wZ+K4d9zBnvpW6JYRQlXOw9eT22c2bLngV6JWstdhAHzDSp
-        g21siInWdd7NCq05qrULicUIVQ==
-X-Google-Smtp-Source: ABdhPJxFML//B68n13ChjKm4UD7s0AutRzoN7PAzF7QkWiRDrh5kbP77C0us713T0MxQGUia13XF+w==
-X-Received: by 2002:a9d:7293:: with SMTP id t19mr5689012otj.4.1616033112191;
-        Wed, 17 Mar 2021 19:05:12 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id u194sm211331oia.27.2021.03.17.19.05.11
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=EmLn8rZvApz0CEK+2n4J5E4ndQ/u3PQvps0+HiUUndQ=;
+        b=lyFVOXkrS8Z+kKeneqtmLtU+DYJdGPy+ddpcbTeamVTXyWO2qO0M4XcnLxQhPfYvrd
+         qgIjowYaFJkAVUgY3GvEMOy1qk8ZM2/QoeEPvHn1Hsyi/liUfQqGW5KzGaMafQC/Vuyl
+         H+M+WqTdvkzvlrXvR5Zi1TYPuScdFx+0tu4TZo9dXOhUhdXjZnvY4nL3rjLN+YspvHKj
+         5h05azPCBA3rVEW+L3CISJlenL3Gj787sEMZykv7fwjVUGnWGmUnUxbr9tBLH5Fz7JSa
+         9ciWGOCYB4Vf8GiIl6u6d35ZC9RZOnozgi2zzgJK3/6/AlR902ezw+6hS0hyA7kl2PU4
+         lC2Q==
+X-Gm-Message-State: AOAM530U6iyy6xtQ7wHQHq7FNdR+ss+ifbb/+WJ5XRcJbCHyhRleFG4r
+        xHHI2itRz8DgHTilSFiVNYyuYw==
+X-Google-Smtp-Source: ABdhPJzkvAJJcqb04nH9kaQaty1xkwr8wUcYvda48HhOce67br9qznOZwO56g6l8fKsOrih1uXtLgg==
+X-Received: by 2002:a9d:2226:: with SMTP id o35mr5533438ota.242.1616033424518;
+        Wed, 17 Mar 2021 19:10:24 -0700 (PDT)
+Received: from blackbox.Home ([2806:10b7:2:e880:2c32:cfff:fe8e:de1f])
+        by smtp.gmail.com with ESMTPSA id p64sm212511oib.57.2021.03.17.19.10.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Mar 2021 19:05:11 -0700 (PDT)
-Date:   Wed, 17 Mar 2021 21:05:10 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
-Cc:     sboyd@kernel.org, agross@kernel.org, david.brown@linaro.org,
-        devicetree@vger.kernel.org, jassisinghbrar@gmail.com,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        mark.rutland@arm.com, mturquette@baylibre.com, ohad@wizery.com,
-        robh+dt@kernel.org, sricharan@codeaurora.org
-Subject: Re: [PATCH v8 2/9] remoteproc: qcom: Add secure PIL support
-Message-ID: <YFK1VpP74rQH2Z72@builder.lan>
-References: <1611984013-10201-1-git-send-email-gokulsri@codeaurora.org>
- <1611984013-10201-3-git-send-email-gokulsri@codeaurora.org>
+        Wed, 17 Mar 2021 19:10:23 -0700 (PDT)
+From:   =?UTF-8?q?An=C3=ADbal=20Lim=C3=B3n?= <anibal.limon@linaro.org>
+To:     bjorn.andersson@linaro.org
+Cc:     agross@kernel.org, anibal.limon@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, loic.poulain@linaro.org,
+        mathieu.poirier@linaro.org, ohad@wizery.com
+Subject: [PATCH] remoteproc: qcom: wcnss: Fix race with iris probe
+Date:   Wed, 17 Mar 2021 20:10:21 -0600
+Message-Id: <20210318021021.1127314-1-anibal.limon@linaro.org>
+X-Mailer: git-send-email 2.30.1
+In-Reply-To: <20210312002251.3273013-1-bjorn.andersson@linaro.org>
+References: <20210312002251.3273013-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1611984013-10201-3-git-send-email-gokulsri@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 29 Jan 23:20 CST 2021, Gokul Sriram Palanisamy wrote:
+From: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-> IPQ8074 uses secure PIL. Hence, adding the support for the same.
-> 
+The remoteproc driver is split between the responsibilities of getting
+the SoC-internal ARM core up and running and the external RF (aka
+"Iris") part configured.
 
-Sorry for not giving this a proper review before Gokul, I've look at it
-but been uncertain about what feedback to offer.
+In order to satisfy the regulator framework's need of a struct device *
+to look up supplies this was implemented as two different drivers, using
+of_platform_populate() in the remoteproc part to probe the iris part.
 
-> Signed-off-by: Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
-> Signed-off-by: Sricharan R <sricharan@codeaurora.org>
-> Signed-off-by: Nikhil Prakash V <nprakash@codeaurora.org>
+Unfortunately it's possible that the iris part probe defers on yet not
+available regulators and an attempt to start the remoteproc will have to
+be rejected, until this has been resolved. But there's no useful
+mechanism of knowing when this would be.
 
-I suspect that there should have some "Co-developed-by" here (and in the
-other patches)?
+Instead replace the of_platform_populate() and the iris probe with a
+function that rolls its own struct device, with the relevant of_node
+associated that is enough to acquire regulators and clocks specified in
+the DT node and that may propagate the EPROBE_DEFER back to the wcnss
+device's probe.
 
-> ---
->  drivers/remoteproc/qcom_q6v5_wcss.c | 43 ++++++++++++++++++++++++++++++++++---
->  1 file changed, 40 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
-> index c0368bb..4e35e5c 100644
-> --- a/drivers/remoteproc/qcom_q6v5_wcss.c
-> +++ b/drivers/remoteproc/qcom_q6v5_wcss.c
-> @@ -18,6 +18,7 @@
->  #include <linux/regulator/consumer.h>
->  #include <linux/reset.h>
->  #include <linux/soc/qcom/mdt_loader.h>
-> +#include <linux/qcom_scm.h>
->  #include "qcom_common.h"
->  #include "qcom_pil_info.h"
->  #include "qcom_q6v5.h"
-> @@ -86,6 +87,9 @@
->  #define TCSR_WCSS_CLK_ENABLE	0x14
->  
->  #define MAX_HALT_REG		3
-> +
-> +#define WCNSS_PAS_ID		6
-> +
->  enum {
->  	WCSS_IPQ8074,
->  	WCSS_QCS404,
-> @@ -134,6 +138,7 @@ struct q6v5_wcss {
->  	unsigned int crash_reason_smem;
->  	u32 version;
->  	bool requires_force_stop;
-> +	bool need_mem_protection;
->  
->  	struct qcom_rproc_glink glink_subdev;
->  	struct qcom_rproc_ssr ssr_subdev;
-> @@ -152,6 +157,7 @@ struct wcss_data {
->  	int ssctl_id;
->  	const struct rproc_ops *ops;
->  	bool requires_force_stop;
-> +	bool need_mem_protection;
->  };
->  
->  static int q6v5_wcss_reset(struct q6v5_wcss *wcss)
-> @@ -251,6 +257,15 @@ static int q6v5_wcss_start(struct rproc *rproc)
->  
->  	qcom_q6v5_prepare(&wcss->q6v5);
->  
-> +	if (wcss->need_mem_protection) {
-> +		ret = qcom_scm_pas_auth_and_reset(WCNSS_PAS_ID);
-> +		if (ret) {
-> +			dev_err(wcss->dev, "wcss_reset failed\n");
-> +			return ret;
-> +		}
-> +		goto wait_for_reset;
+Reported-by: Anibal Limon <anibal.limon@linaro.org>
+Reported-by: Loic Poulain <loic.poulain@linaro.org>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Tested-by: Anibal Limon <anibal.limon@linaro.org>
+---
+ drivers/remoteproc/qcom_wcnss.c      |  52 ++++--------
+ drivers/remoteproc/qcom_wcnss.h      |   4 +-
+ drivers/remoteproc/qcom_wcnss_iris.c | 120 +++++++++++++++++----------
+ 3 files changed, 91 insertions(+), 85 deletions(-)
 
-This goto essentially puts the entire old function in an "else" block.
+diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
+index 2a6a23cb14ca..dcf21f12fe7e 100644
+--- a/drivers/remoteproc/qcom_wcnss.c
++++ b/drivers/remoteproc/qcom_wcnss.c
+@@ -142,18 +142,6 @@ static const struct wcnss_data pronto_v2_data = {
+ 	.num_vregs = 1,
+ };
+ 
+-void qcom_wcnss_assign_iris(struct qcom_wcnss *wcnss,
+-			    struct qcom_iris *iris,
+-			    bool use_48mhz_xo)
+-{
+-	mutex_lock(&wcnss->iris_lock);
+-
+-	wcnss->iris = iris;
+-	wcnss->use_48mhz_xo = use_48mhz_xo;
+-
+-	mutex_unlock(&wcnss->iris_lock);
+-}
+-
+ static int wcnss_load(struct rproc *rproc, const struct firmware *fw)
+ {
+ 	struct qcom_wcnss *wcnss = (struct qcom_wcnss *)rproc->priv;
+@@ -633,12 +621,20 @@ static int wcnss_probe(struct platform_device *pdev)
+ 		goto detach_pds;
+ 	}
+ 
++	wcnss->iris = qcom_iris_probe(&pdev->dev, &wcnss->use_48mhz_xo);
++	if (IS_ERR(wcnss->iris)) {
++		ret = PTR_ERR(wcnss->iris);
++		goto detach_pds;
++	}
++
+ 	ret = rproc_add(rproc);
+ 	if (ret)
+-		goto detach_pds;
++		goto remove_iris;
+ 
+-	return of_platform_populate(pdev->dev.of_node, NULL, NULL, &pdev->dev);
++	return 0;
+ 
++remove_iris:
++	qcom_iris_remove(wcnss->iris);
+ detach_pds:
+ 	wcnss_release_pds(wcnss);
+ free_rproc:
+@@ -651,9 +647,10 @@ static int wcnss_remove(struct platform_device *pdev)
+ {
+ 	struct qcom_wcnss *wcnss = platform_get_drvdata(pdev);
+ 
+-	of_platform_depopulate(&pdev->dev);
++	qcom_iris_remove(wcnss->iris);
+ 
+-	qcom_smem_state_put(wcnss->state);
++	if (wcnss->state)
++		qcom_smem_state_put(wcnss->state);
+ 	rproc_del(wcnss->rproc);
+ 
+ 	qcom_remove_sysmon_subdev(wcnss->sysmon);
+@@ -681,28 +678,7 @@ static struct platform_driver wcnss_driver = {
+ 	},
+ };
+ 
+-static int __init wcnss_init(void)
+-{
+-	int ret;
+-
+-	ret = platform_driver_register(&wcnss_driver);
+-	if (ret)
+-		return ret;
+-
+-	ret = platform_driver_register(&qcom_iris_driver);
+-	if (ret)
+-		platform_driver_unregister(&wcnss_driver);
+-
+-	return ret;
+-}
+-module_init(wcnss_init);
+-
+-static void __exit wcnss_exit(void)
+-{
+-	platform_driver_unregister(&qcom_iris_driver);
+-	platform_driver_unregister(&wcnss_driver);
+-}
+-module_exit(wcnss_exit);
++module_platform_driver(wcnss_driver);
+ 
+ MODULE_DESCRIPTION("Qualcomm Peripheral Image Loader for Wireless Subsystem");
+ MODULE_LICENSE("GPL v2");
+diff --git a/drivers/remoteproc/qcom_wcnss.h b/drivers/remoteproc/qcom_wcnss.h
+index 62c8682d0a92..6d01ee6afa7f 100644
+--- a/drivers/remoteproc/qcom_wcnss.h
++++ b/drivers/remoteproc/qcom_wcnss.h
+@@ -17,9 +17,9 @@ struct wcnss_vreg_info {
+ 	bool super_turbo;
+ };
+ 
++struct qcom_iris *qcom_iris_probe(struct device *parent, bool *use_48mhz_xo);
++void qcom_iris_remove(struct qcom_iris *iris);
+ int qcom_iris_enable(struct qcom_iris *iris);
+ void qcom_iris_disable(struct qcom_iris *iris);
+ 
+-void qcom_wcnss_assign_iris(struct qcom_wcnss *wcnss, struct qcom_iris *iris, bool use_48mhz_xo);
+-
+ #endif
+diff --git a/drivers/remoteproc/qcom_wcnss_iris.c b/drivers/remoteproc/qcom_wcnss_iris.c
+index 169acd305ae3..09720ddddc85 100644
+--- a/drivers/remoteproc/qcom_wcnss_iris.c
++++ b/drivers/remoteproc/qcom_wcnss_iris.c
+@@ -17,7 +17,7 @@
+ #include "qcom_wcnss.h"
+ 
+ struct qcom_iris {
+-	struct device *dev;
++	struct device dev;
+ 
+ 	struct clk *xo_clk;
+ 
+@@ -75,7 +75,7 @@ int qcom_iris_enable(struct qcom_iris *iris)
+ 
+ 	ret = clk_prepare_enable(iris->xo_clk);
+ 	if (ret) {
+-		dev_err(iris->dev, "failed to enable xo clk\n");
++		dev_err(&iris->dev, "failed to enable xo clk\n");
+ 		goto disable_regulators;
+ 	}
+ 
+@@ -93,43 +93,90 @@ void qcom_iris_disable(struct qcom_iris *iris)
+ 	regulator_bulk_disable(iris->num_vregs, iris->vregs);
+ }
+ 
+-static int qcom_iris_probe(struct platform_device *pdev)
++static const struct of_device_id iris_of_match[] = {
++	{ .compatible = "qcom,wcn3620", .data = &wcn3620_data },
++	{ .compatible = "qcom,wcn3660", .data = &wcn3660_data },
++	{ .compatible = "qcom,wcn3660b", .data = &wcn3680_data },
++	{ .compatible = "qcom,wcn3680", .data = &wcn3680_data },
++	{}
++};
++
++static void qcom_iris_release(struct device *dev)
++{
++	struct qcom_iris *iris = container_of(dev, struct qcom_iris, dev);
++
++	of_node_put(iris->dev.of_node);
++	kfree(iris);
++}
++
++struct qcom_iris *qcom_iris_probe(struct device *parent, bool *use_48mhz_xo)
+ {
++	const struct of_device_id *match;
+ 	const struct iris_data *data;
+-	struct qcom_wcnss *wcnss;
++	struct device_node *of_node;
+ 	struct qcom_iris *iris;
+ 	int ret;
+ 	int i;
+ 
+-	iris = devm_kzalloc(&pdev->dev, sizeof(struct qcom_iris), GFP_KERNEL);
+-	if (!iris)
+-		return -ENOMEM;
++	of_node = of_get_child_by_name(parent->of_node, "iris");
++	if (!of_node) {
++		dev_err(parent, "No child node \"iris\" found\n");
++		return ERR_PTR(-EINVAL);
++	}
++
++	iris = kzalloc(sizeof(*iris), GFP_KERNEL);
++	if (!iris) {
++		of_node_put(of_node);
++		return ERR_PTR(-ENOMEM);
++	}
++
++	device_initialize(&iris->dev);
++	iris->dev.parent = parent;
++	iris->dev.release = qcom_iris_release;
++	iris->dev.of_node = of_node;
++
++	dev_set_name(&iris->dev, "%s.iris", dev_name(parent));
++
++	ret = device_add(&iris->dev);
++	if (ret) {
++		put_device(&iris->dev);
++		return ERR_PTR(ret);
++	}
++
++	match = of_match_device(iris_of_match, &iris->dev);
++	if (!match) {
++		dev_err(&iris->dev, "no matching compatible for iris\n");
++		ret = -EINVAL;
++		goto err_device_del;
++	}
+ 
+-	data = of_device_get_match_data(&pdev->dev);
+-	wcnss = dev_get_drvdata(pdev->dev.parent);
++	data = match->data;
+ 
+-	iris->xo_clk = devm_clk_get(&pdev->dev, "xo");
++	iris->xo_clk = devm_clk_get(&iris->dev, "xo");
+ 	if (IS_ERR(iris->xo_clk)) {
+-		if (PTR_ERR(iris->xo_clk) != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "failed to acquire xo clk\n");
+-		return PTR_ERR(iris->xo_clk);
++		ret = PTR_ERR(iris->xo_clk);
++		if (ret != -EPROBE_DEFER)
++			dev_err(&iris->dev, "failed to acquire xo clk\n");
++		goto err_device_del;
+ 	}
+ 
+ 	iris->num_vregs = data->num_vregs;
+-	iris->vregs = devm_kcalloc(&pdev->dev,
++	iris->vregs = devm_kcalloc(&iris->dev,
+ 				   iris->num_vregs,
+ 				   sizeof(struct regulator_bulk_data),
+ 				   GFP_KERNEL);
+-	if (!iris->vregs)
+-		return -ENOMEM;
++	if (!iris->vregs) {
++		ret = -ENOMEM;
++		goto err_device_del;
++	}
+ 
+ 	for (i = 0; i < iris->num_vregs; i++)
+ 		iris->vregs[i].supply = data->vregs[i].name;
+ 
+-	ret = devm_regulator_bulk_get(&pdev->dev, iris->num_vregs, iris->vregs);
++	ret = devm_regulator_bulk_get(&iris->dev, iris->num_vregs, iris->vregs);
+ 	if (ret) {
+-		dev_err(&pdev->dev, "failed to get regulators\n");
+-		return ret;
++		dev_err(&iris->dev, "failed to get regulators\n");
++		goto err_device_del;
+ 	}
+ 
+ 	for (i = 0; i < iris->num_vregs; i++) {
+@@ -143,34 +190,17 @@ static int qcom_iris_probe(struct platform_device *pdev)
+ 					   data->vregs[i].load_uA);
+ 	}
+ 
+-	qcom_wcnss_assign_iris(wcnss, iris, data->use_48mhz_xo);
+-
+-	return 0;
+-}
++	*use_48mhz_xo = data->use_48mhz_xo;
+ 
+-static int qcom_iris_remove(struct platform_device *pdev)
+-{
+-	struct qcom_wcnss *wcnss = dev_get_drvdata(pdev->dev.parent);
++	return iris;
+ 
+-	qcom_wcnss_assign_iris(wcnss, NULL, false);
++err_device_del:
++	device_del(&iris->dev);
+ 
+-	return 0;
++	return ERR_PTR(ret);
+ }
+ 
+-static const struct of_device_id iris_of_match[] = {
+-	{ .compatible = "qcom,wcn3620", .data = &wcn3620_data },
+-	{ .compatible = "qcom,wcn3660", .data = &wcn3660_data },
+-	{ .compatible = "qcom,wcn3660b", .data = &wcn3680_data },
+-	{ .compatible = "qcom,wcn3680", .data = &wcn3680_data },
+-	{}
+-};
+-MODULE_DEVICE_TABLE(of, iris_of_match);
+-
+-struct platform_driver qcom_iris_driver = {
+-	.probe = qcom_iris_probe,
+-	.remove = qcom_iris_remove,
+-	.driver = {
+-		.name = "qcom-iris",
+-		.of_match_table = iris_of_match,
+-	},
+-};
++void qcom_iris_remove(struct qcom_iris *iris)
++{
++	device_del(&iris->dev);
++}
+-- 
+2.30.1
 
-> +	}
-> +
->  	/* Release Q6 and WCSS reset */
->  	ret = reset_control_deassert(wcss->wcss_reset);
->  	if (ret) {
-> @@ -285,6 +300,7 @@ static int q6v5_wcss_start(struct rproc *rproc)
->  	if (ret)
->  		goto wcss_q6_reset;
->  
-> +wait_for_reset:
->  	ret = qcom_q6v5_wait_for_start(&wcss->q6v5, 5 * HZ);
->  	if (ret == -ETIMEDOUT)
->  		dev_err(wcss->dev, "start timed out\n");
-> @@ -717,6 +733,15 @@ static int q6v5_wcss_stop(struct rproc *rproc)
->  	struct q6v5_wcss *wcss = rproc->priv;
->  	int ret;
->  
-> +	if (wcss->need_mem_protection) {
-> +		ret = qcom_scm_pas_shutdown(WCNSS_PAS_ID);
-> +		if (ret) {
-> +			dev_err(wcss->dev, "not able to shutdown\n");
-> +			return ret;
-> +		}
-> +		goto pas_done;
-
-Same here.
-
-> +	}
-> +
->  	/* WCSS powerdown */
->  	if (wcss->requires_force_stop) {
->  		ret = qcom_q6v5_request_stop(&wcss->q6v5, NULL);
-> @@ -741,6 +766,7 @@ static int q6v5_wcss_stop(struct rproc *rproc)
->  			return ret;
->  	}
->  
-> +pas_done:
->  	clk_disable_unprepare(wcss->prng_clk);
->  	qcom_q6v5_unprepare(&wcss->q6v5);
->  
-> @@ -764,9 +790,15 @@ static int q6v5_wcss_load(struct rproc *rproc, const struct firmware *fw)
->  	struct q6v5_wcss *wcss = rproc->priv;
->  	int ret;
->  
-> -	ret = qcom_mdt_load_no_init(wcss->dev, fw, rproc->firmware,
-> -				    0, wcss->mem_region, wcss->mem_phys,
-> -				    wcss->mem_size, &wcss->mem_reloc);
-> +	if (wcss->need_mem_protection)
-> +		ret = qcom_mdt_load(wcss->dev, fw, rproc->firmware,
-> +				    WCNSS_PAS_ID, wcss->mem_region,
-> +				    wcss->mem_phys, wcss->mem_size,
-> +				    &wcss->mem_reloc);
-> +	else
-> +		ret = qcom_mdt_load_no_init(wcss->dev, fw, rproc->firmware,
-> +					    0, wcss->mem_region, wcss->mem_phys,
-> +					    wcss->mem_size, &wcss->mem_reloc);
-
-And same here.
-
-In practice this means that you're essentially overloading new logic to
-all code paths though the driver. Left is some boilerplate code, which I
-wish we could refactor into common helper functions in the framework
-(e.g. we duplicate q6v5_alloc_memory_region() in a lot of drivers).
-
-So with this in mind, instead of overloading new logic to this entire
-driver, could you please submit a new driver for the PAS based IPQ WCSS?
-
-Regards,
-Bjorn
-
->  	if (ret)
->  		return ret;
->  
-> @@ -1032,6 +1064,9 @@ static int q6v5_wcss_probe(struct platform_device *pdev)
->  	if (!desc)
->  		return -EINVAL;
->  
-> +	if (desc->need_mem_protection && !qcom_scm_is_available())
-> +		return -EPROBE_DEFER;
-> +
->  	rproc = rproc_alloc(&pdev->dev, pdev->name, desc->ops,
->  			    desc->firmware_name, sizeof(*wcss));
->  	if (!rproc) {
-> @@ -1045,6 +1080,7 @@ static int q6v5_wcss_probe(struct platform_device *pdev)
->  
->  	wcss->version = desc->version;
->  	wcss->requires_force_stop = desc->requires_force_stop;
-> +	wcss->need_mem_protection = desc->need_mem_protection;
->  
->  	ret = q6v5_wcss_init_mmio(wcss, pdev);
->  	if (ret)
-> @@ -1115,6 +1151,7 @@ static const struct wcss_data wcss_ipq8074_res_init = {
->  	.wcss_q6_reset_required = true,
->  	.ops = &q6v5_wcss_ipq8074_ops,
->  	.requires_force_stop = true,
-> +	.need_mem_protection = true,
->  };
->  
->  static const struct wcss_data wcss_qcs404_res_init = {
-> -- 
-> 2.7.4
-> 
