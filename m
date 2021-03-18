@@ -2,108 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 72B64340EBC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Mar 2021 21:00:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D58F340ED0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Mar 2021 21:06:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233007AbhCRT7x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Mar 2021 15:59:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42238 "EHLO
+        id S232858AbhCRUFs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Mar 2021 16:05:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232990AbhCRT7m (ORCPT
+        with ESMTP id S232950AbhCRUFk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Mar 2021 15:59:42 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 777D6C061760
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Mar 2021 12:59:41 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id x28so6493638lfu.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Mar 2021 12:59:41 -0700 (PDT)
+        Thu, 18 Mar 2021 16:05:40 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4D4CC06174A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Mar 2021 13:05:39 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id u20so9042915lja.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Mar 2021 13:05:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Vt2EBjJBXCElMumS8zwBKc0QOehEP6EtoAAqvcQaqEs=;
-        b=qtwSUItzJSssoI284c3i7fLKfuVbD+hjHU6T9UwlOjhdHbCMgGEyM9HhmHjmIdp0m1
-         iPJ/zu09jM9ErWvmyt/wazaDNjBQry/XR8TK5zgi1haT0ORQ5ApjISdZhToUzh5GWax4
-         IfJ5XF96lX4AEXFW1scJpEJLtvENU54aK02mFApPyrp8CxlLKV2Q7IKSfYnfgFQaiNNI
-         VJe1E63uiJj3sToGbOJiHI359Avv/3E8+FS0KMmRZ1zJN73D9FFhusnV/YDhOWQpBy6l
-         I3Aqcf17N++r08jWWeeNa0oB7iIvZlAKJLFdbZutemak1BvLeJc03btmKFfXs1i8SawZ
-         IQJw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=q6PUygLd2CXnygyW6bbcAwIFdQAJc7wY0uz9i6YRMS0=;
+        b=DtivWm1nvHqukfWwBGl4J3c0hQqnc0JsIjWj5R0TYAwuPrZoYwFZcc2a0V1GLyZI9P
+         Qh5P9znKxGvJTkdApwli9nR+ug98QG8eP/eNKE9TaLYtCAGn79L/alcPpfGcOIAj8Crx
+         79Dcwiu3WFQW5rnu8dx7q744DpDahY0qUXCs7Kcx5HcL/W+ABMMD2i9s3UOB6Xu8jTRA
+         S5Z2u018BC7V6DuT7aeDGIqijVge8vwhtluFerJYq3AKTNA44TR28hkgJc20+R4dwDOK
+         l1lNl+jnxO/Y4pOhBw6vZzHSiUvYyqiG9OAi6YQpw0wPFP0kYQWRSwIrRDGPjSN5O8a5
+         c9pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Vt2EBjJBXCElMumS8zwBKc0QOehEP6EtoAAqvcQaqEs=;
-        b=AOeawdOGGEM5WKYSJhnQy99x8+RUbWroWOg3AtACbvw9hSrdt3x0MEkxN65bHsi3Tz
-         uzL+3E9AmprBK/kuq5HUowX+4T8x1CS1yGpZsWGt194u9XKkpfK3LIl9Yfk15eYc9e2d
-         7iH8s05L8oMV3aoiFYZjaI07MTa55vuneB1bBoLgTOj4uzW5gTqZbFVxrOLW30IGroE3
-         7Y212r6DRinOnOkMNJa42ch+HByJyAfkMB5LiaVb53fsH1ChBlOeVitXuvDkf8rk2yhb
-         V2NmSPxO8OFpBF1ef0hAX+rfmfIV6KwQucFXmz9R9aDKonO6eXlebdhtgjJJqzRYKouW
-         YkRg==
-X-Gm-Message-State: AOAM5300rT2Ds07tGMqsumvoZBQIq4vSThZucf3gbMWYelBBUICQYCzQ
-        P7jcc8T9nrwiQbTUPH/HYYNX+XKStJvyMw==
-X-Google-Smtp-Source: ABdhPJygwQfXIdOEcbcENcm4CVZV+MyH0fbuS7DZN8vyFSKM8zw1ewM49fhXoW0bN/gr8/rWOePLsg==
-X-Received: by 2002:ac2:414c:: with SMTP id c12mr5388746lfi.538.1616097580016;
-        Thu, 18 Mar 2021 12:59:40 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id g6sm344159lfh.232.2021.03.18.12.59.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Mar 2021 12:59:39 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     Manu Gautam <mgautam@codeaurora.org>,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=q6PUygLd2CXnygyW6bbcAwIFdQAJc7wY0uz9i6YRMS0=;
+        b=ce5+Hl6lu8Dm2YPDhuTJjHUMqDmwgGJ8LWoW/6tFCitv12TZhgw/QUF0PnjgWtNUF/
+         QODUjMP4UIrT8ykiha8NYxhxkFi70a3yogq/BurG0GVDpXi3R3uy+T+zkxxFzqBUq7Qa
+         Q63sgUZscgqR+W3x+Z14EbGhT1mMcQt7PgodWiUz2o2aVJQvq5Jb41O7Ha//p5hcWVLl
+         ZInQmS5ZHaDEytFLkL3U8+OBELtPFZpZcMipuyQcwIQOUIwz6mdhpaoqhgo0KQu1kc8y
+         lMKsAQSZj6fea7gZp4Nr1dpnrWTcMQuVP3xbfsOPA7n1nPN5AHJDyCgnVRkgY2krj/VN
+         D24w==
+X-Gm-Message-State: AOAM533QoTQO74ihHwHssVi4CqGfv2rPPUJS3/LDLgg+4ri6KedGB1CG
+        NfyCAcjYI+RCt0Y3MUvkcd+t2w==
+X-Google-Smtp-Source: ABdhPJxcOJr/aMUfBKt/Y/rK28TCbP0BBmj4XsdjXBJTN8Si5Ans5n49zdCt4gfieQeUk+b0F5JSLA==
+X-Received: by 2002:a2e:88d6:: with SMTP id a22mr6523479ljk.289.1616097937524;
+        Thu, 18 Mar 2021 13:05:37 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id q17sm346659lfm.168.2021.03.18.13.05.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 Mar 2021 13:05:37 -0700 (PDT)
+Subject: Re: [PATCH] gpu/drm/msm: fix shutdown hook in case GPU components
+ failed to bind
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Sean Paul <sean@poorly.run>, Jonathan Marek <jonathan@marek.ca>,
         Stephen Boyd <sboyd@kernel.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH v3 6/6] arm64: dts: qcom: use dp_phy to provide clocks to dispcc
-Date:   Thu, 18 Mar 2021 22:59:30 +0300
-Message-Id: <20210318195930.2229546-7-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210318195930.2229546-1-dmitry.baryshkov@linaro.org>
-References: <20210318195930.2229546-1-dmitry.baryshkov@linaro.org>
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+References: <20210301214152.1805737-1-dmitry.baryshkov@linaro.org>
+ <CAF6AEGsN4s_wF0kHx4Y=vMM3AMTCewE4oiBdaxguVAku_nkODw@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <b0f44785-b56b-5451-9e7a-e75821d34563@linaro.org>
+Date:   Thu, 18 Mar 2021 23:05:36 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAF6AEGsN4s_wF0kHx4Y=vMM3AMTCewE4oiBdaxguVAku_nkODw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Plug dp_phy-provided clocks to display clock controller.
+On 17/03/2021 19:25, Rob Clark wrote:
+> On Mon, Mar 1, 2021 at 1:41 PM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+>>
+>> if GPU components have failed to bind, shutdown callback would fail with
+>> the following backtrace. Add safeguard check to stop that oops from
+>> happening and allow the board to reboot.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+[skipped]
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 0f79e6885004..a2478bd3590a 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2600,8 +2600,8 @@ dispcc: clock-controller@af00000 {
- 				 <&dsi0_phy 1>,
- 				 <&dsi1_phy 0>,
- 				 <&dsi1_phy 1>,
--				 <0>,
--				 <0>,
-+				 <&dp_phy 0>,
-+				 <&dp_phy 1>,
- 				 <0>,
- 				 <0>,
- 				 <0>,
-@@ -2614,8 +2614,8 @@ dispcc: clock-controller@af00000 {
- 				      "dsi0_phy_pll_out_dsiclk",
- 				      "dsi1_phy_pll_out_byteclk",
- 				      "dsi1_phy_pll_out_dsiclk",
--				      "dp_link_clk_divsel_ten",
--				      "dp_vco_divided_clk_src_mux",
-+				      "dp_phy_pll_link_clk",
-+				      "dp_phy_pll_vco_div_clk",
- 				      "dptx1_phy_pll_link_clk",
- 				      "dptx1_phy_pll_vco_div_clk",
- 				      "dptx2_phy_pll_link_clk",
+>> diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
+>> index 6a326761dc4a..2fd0cf6421ad 100644
+>> --- a/drivers/gpu/drm/msm/msm_atomic.c
+>> +++ b/drivers/gpu/drm/msm/msm_atomic.c
+>> @@ -207,7 +207,12 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
+>>          struct msm_kms *kms = priv->kms;
+>>          struct drm_crtc *async_crtc = NULL;
+>>          unsigned crtc_mask = get_crtc_mask(state);
+>> -       bool async = kms->funcs->vsync_time &&
+>> +       bool async;
+>> +
+>> +       if (!kms)
+>> +               return;
+> 
+> I think we could instead just check for null priv->kms in
+> msm_pdev_shutdown() and not call drm_atomic_helper_shutdown()?
+
+
+Good idea. Sending v2.
+
+> 
+> BR,
+> -R
+> 
+>> +
+>> +       async = kms->funcs->vsync_time &&
+>>                          can_do_async(state, &async_crtc);
+>>
+>>          trace_msm_atomic_commit_tail_start(async, crtc_mask);
+>> --
+>> 2.30.1
+>>
+
+
 -- 
-2.30.2
-
+With best wishes
+Dmitry
