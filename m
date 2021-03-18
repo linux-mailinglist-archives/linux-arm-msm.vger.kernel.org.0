@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 32C0B340D10
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Mar 2021 19:34:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A8233340D2B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Mar 2021 19:37:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232530AbhCRSeG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Mar 2021 14:34:06 -0400
-Received: from mail.kernel.org ([198.145.29.99]:42182 "EHLO mail.kernel.org"
+        id S232574AbhCRSgr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Mar 2021 14:36:47 -0400
+Received: from mail.kernel.org ([198.145.29.99]:43182 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232578AbhCRSdh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Mar 2021 14:33:37 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id AE83264E31;
-        Thu, 18 Mar 2021 18:33:36 +0000 (UTC)
+        id S232645AbhCRSg3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 18 Mar 2021 14:36:29 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 7166C64F3B;
+        Thu, 18 Mar 2021 18:36:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1616092417;
+        s=k20201202; t=1616092589;
         bh=tcUmX62o1K3vI11xFYaD4YzszYOXdHv/IYyBaJNbW7U=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=E2EzkDusFAqAqjEJ2cWhCZdvzVKTn/mLoF1TlRF0EvofYlp80OxCDAv9Y9JZRsyyU
-         fxRqYYDCPkt399jYAAHZJgnZce5p4bcz8NAD3RTkASnxMYrdzpt4RbV7JXYLyV8QWP
-         nQ1yFZwZtGjtI6Oz21p7EIdLGwmogRZTXvamTZFNUxWN7NSQQeL7ezvj6vCEhIQZuR
-         krGYtvKp/j8Enk1yCjHSlMbEQbKSzcsYicxsvmpzrV/aGWcUFqe3oBj4jCDEp7D7VC
-         dLfYn3nVODfrmLhRHSV8PO8Lrjv2k/10vOY8OfRkCXa7gdHezf033tWKYPrtoK26x0
-         J7225C/NPEg/g==
+        b=b7Bbz5kfzJlUNvIMxkKAsK7XoiljfqK9ZUUDX/U410UPtnN34ZG28QQ34BFFD9Q9J
+         KQXu+EJn7mZ+XZ0fimScwIqZKE9zH+cnKn+JOIgRZTWVoY0PO+JQu3mVSF28Ij4Zie
+         9MEe2IriDa9pUN+xi+yGjWiGGJo+1joPJLVbh/M1WDFaM5grX6SfA79GuWWvzySoba
+         VusT1KOb4dN3iutb8/PYv0FHY3ljVSTN/0UxSXhc3fQMG17HrEyiuLnfaB2RdpUNP1
+         gEtvUm67F0F2HSF7Kwtq8+FX0jhh13Abc0raWQ+e4OJXvLYAf5XZL3+KSpZFYrpspP
+         0moDH/DvMR0Pw==
 From:   Mark Brown <broonie@kernel.org>
 To:     Rob Herring <robh+dt@kernel.org>,
         Guru Das Srinagesh <gurus@codeaurora.org>,
@@ -38,7 +38,7 @@ Cc:     Mark Brown <broonie@kernel.org>, devicetree@vger.kernel.org,
         Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
         Guenter Roeck <linux@roeck-us.net>
 Subject: Re: (subset) [RFC PATCH v3 0/3] Add support for Qualcomm MFD PMIC register layout
-Date:   Thu, 18 Mar 2021 18:33:27 +0000
+Date:   Thu, 18 Mar 2021 18:36:07 +0000
 Message-Id: <161609215625.42159.3219588322808647787.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <cover.1615423027.git.gurus@codeaurora.org>
