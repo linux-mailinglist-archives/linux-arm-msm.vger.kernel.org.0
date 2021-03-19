@@ -2,99 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4057C341BFC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Mar 2021 13:10:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B8FA341D79
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Mar 2021 13:55:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229756AbhCSMJy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Mar 2021 08:09:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53262 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229638AbhCSMJe (ORCPT
+        id S229967AbhCSMzH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Mar 2021 08:55:07 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:62386 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229844AbhCSMye (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Mar 2021 08:09:34 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DE62C06174A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Mar 2021 05:09:34 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id u20so11618625lja.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Mar 2021 05:09:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=18bTTO0LtwICbrkP34GrvIGuHznNwuNg3xqUSgF99tc=;
-        b=krXIlNUaCpuROQ+GF9uP7tqYm/TKa59pFpDaW/tG31pw1/nGkFVZAc3/LYKvmDZ7Co
-         tO8cxGx7i+5PlvhSjOEanYzOwdNjV8xGxat+4GByGCL1EtpbtVtyYTE+BrAcmeoSaOms
-         SAp7cEEmP7VW6/oSZHeEjUScKXb4qoiZmfX2H18JilsWyku5VuNip+Di6vLeveciIoNV
-         jnEGraLrnrJ5GZqlm6HXgXcitKt457x/qxUYPjupiUPUrghRn8UrHkhcMuc8qynYgfoB
-         c/gqZDTzq/QkWdR+nl2BrUNbZ373+xl/em9glkMdb3N92Eh+Bo1C6x7/OQO4QzbnrSWd
-         fBTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=18bTTO0LtwICbrkP34GrvIGuHznNwuNg3xqUSgF99tc=;
-        b=MI1+bRgnCZ0g4+Gyf7h3TDdFRDEP6opqDXf7HutPDZ3ZLNZmNuwUJ2ZYUETSTM5WFg
-         Zgn5nxky0udnX/dYMhmFc3bK6mExKZDkV0i0mgYsTfKOthuZk6LnrlHb72Qc7m+Bt4vW
-         saTYaN0Jc8710ycLYCP7/UCzvRGDvC5U+XtL3yMmnDhlOhoTHbBkIa4qP3A4FK09LnGP
-         IrTeXgX6d8aFEX6qqqqZ34Nbna+JOvYyWZVTGDdCCxoNATHaMu+L5xlO3cawQdoJLuFo
-         kY/QsY2TcBEVanCDjoHWVbEUgfl2OgeJ478QYTAmepbk3pbiQto9JlTnC8LY+7lSDX2D
-         1rIQ==
-X-Gm-Message-State: AOAM5326ykMydYIPRZKwfGcYEcbmrY4KwrhTLQb9PuhRkSAelRboligD
-        zLHIe1KW44s+nqQPqPcMxZWmKM0D6BlxxKF8w7Y=
-X-Google-Smtp-Source: ABdhPJxAMl+1VGuVaz1i/a22x+BQXeUsFJPe7kkmKAow3hjInbsN2y19OX/Bcwo8apqd7Ifvp0zVlbHNol4cukHZnXw=
-X-Received: by 2002:a2e:9a0c:: with SMTP id o12mr701936lji.121.1616155772644;
- Fri, 19 Mar 2021 05:09:32 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210301214152.1805737-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20210301214152.1805737-1-dmitry.baryshkov@linaro.org>
-From:   Fabio Estevam <festevam@gmail.com>
-Date:   Fri, 19 Mar 2021 09:09:21 -0300
-Message-ID: <CAOMZO5Br85sf+ndiOWzeG7DgpqVHpXtnNGZLsVMOpBC5eVE2Aw@mail.gmail.com>
-Subject: Re: [PATCH] gpu/drm/msm: fix shutdown hook in case GPU components
- failed to bind
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Stephen Boyd <sboyd@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DRI mailing list <dri-devel@lists.freedesktop.org>,
-        David Airlie <airlied@linux.ie>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
+        Fri, 19 Mar 2021 08:54:34 -0400
+Received: from ironmsg07-lv.qualcomm.com (HELO ironmsg07-lv.qulacomm.com) ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 19 Mar 2021 05:54:34 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg07-lv.qulacomm.com with ESMTP/TLS/AES256-SHA; 19 Mar 2021 05:54:32 -0700
+X-QCInternal: smtphost
+Received: from kalyant-linux.qualcomm.com ([10.204.66.210])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 19 Mar 2021 18:24:09 +0530
+Received: by kalyant-linux.qualcomm.com (Postfix, from userid 94428)
+        id 879904309; Fri, 19 Mar 2021 05:54:08 -0700 (PDT)
+From:   Kalyan Thota <kalyan_t@codeaurora.org>
+To:     y@qualcomm.com, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org
+Cc:     Kalyan Thota <kalyan_t@codeaurora.org>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        dianders@chromium.org, mkrishn@codeaurora.org
+Subject: [v1] drm/msm/disp/dpu1: fix display underruns during modeset.
+Date:   Fri, 19 Mar 2021 05:54:06 -0700
+Message-Id: <1616158446-19290-1-git-send-email-kalyan_t@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <y>
+References: <y>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
+During crtc disable, display perf structures are reset to 0
+which includes state varibles which are immutable. On crtc
+enable, we use the same structures and they don't refelect
+the actual values
 
-On Mon, Mar 1, 2021 at 6:41 PM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
+1) Fix is to avoid updating the state structures during disable.
+2) Reset the perf structures during atomic check when there is no
+modeset enable.
 
-> diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
-> index 6a326761dc4a..2fd0cf6421ad 100644
-> --- a/drivers/gpu/drm/msm/msm_atomic.c
-> +++ b/drivers/gpu/drm/msm/msm_atomic.c
-> @@ -207,7 +207,12 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
->         struct msm_kms *kms = priv->kms;
->         struct drm_crtc *async_crtc = NULL;
->         unsigned crtc_mask = get_crtc_mask(state);
-> -       bool async = kms->funcs->vsync_time &&
-> +       bool async;
-> +
-> +       if (!kms)
-> +               return;
-> +
-> +       async = kms->funcs->vsync_time &&
->                         can_do_async(state, &async_crtc);
+Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 1 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c      | 1 +
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-I also see the same issue on a i.MX53:
-https://lists.freedesktop.org/archives/freedreno/2021-January/009369.html
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+index 37c8270..b4cd479 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+@@ -382,7 +382,6 @@ int dpu_core_perf_crtc_update(struct drm_crtc *crtc,
+ 	} else {
+ 		DPU_DEBUG("crtc=%d disable\n", crtc->base.id);
+ 		memset(old, 0, sizeof(*old));
+-		memset(new, 0, sizeof(*new));
+ 		update_bus = true;
+ 		update_clk = true;
+ 	}
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+index 9a80981..a821e2c 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+@@ -912,6 +912,7 @@ static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
+ 	if (!state->enable || !state->active) {
+ 		DPU_DEBUG("crtc%d -> enable %d, active %d, skip atomic_check\n",
+ 				crtc->base.id, state->enable, state->active);
++		memset(&cstate->new_perf, 0, sizeof(cstate->new_perf));
+ 		goto end;
+ 	}
+ 
+-- 
+2.7.4
 
-Then I got a different suggestion from Rob. Please check:
-
-https://www.spinics.net/lists/dri-devel/msg286648.html
-and
-https://www.spinics.net/lists/dri-devel/msg286649.html
-
-Does this series fix the issue in your platform too?
