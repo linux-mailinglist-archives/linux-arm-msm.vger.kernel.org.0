@@ -2,74 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 649CB341F0B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Mar 2021 15:12:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 02C59341FC4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Mar 2021 15:40:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229736AbhCSOLw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Mar 2021 10:11:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51264 "EHLO
+        id S230107AbhCSOkN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Mar 2021 10:40:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230060AbhCSOL0 (ORCPT
+        with ESMTP id S230129AbhCSOj4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Mar 2021 10:11:26 -0400
-Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38D88C06175F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Mar 2021 07:11:24 -0700 (PDT)
-Received: by mail-qt1-x82a.google.com with SMTP id a11so6783039qto.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Mar 2021 07:11:24 -0700 (PDT)
+        Fri, 19 Mar 2021 10:39:56 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4ACACC06175F
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Mar 2021 07:39:56 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id o16so9372580wrn.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Mar 2021 07:39:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=n05/sUnctT8JNpCXRuTVFYfsWiFecSrOrifRVD4fRAo=;
-        b=uQjDbyQuWf0O/YJbUTQbMaXA4pFNWX0tz2Myqmvcmf6G9Cd6FKUqO3gptczGs80b7/
-         Yh1P5BwMoIJck3kcZWF5mxExv5Qy+AOmFXD6Q8XkIqzbsrR3JveJEi0dlxcOiQoebzyP
-         04xz+97zEDc4qCB/lYqCVYKU2uUbv0ZXw+Y1EBzHVke3bIUuQjsz/8gcIS5sTb+iSIEZ
-         MGJJGhgUGCOxg85n5n6k7anttmwhcIRcxMsBogTCeZfujc7DzJ/vpwE79a06Mo/RbBiQ
-         u8MC2gI+FJeUzhSr7GLLUpAAQIeKFb0GRRQ3NCGKx75z2LF0Dt1S5tuqmHpmlzuBM3ZX
-         ao4w==
+        bh=ZoqWXP/V3WLtx6b82eSZ18zEGdu+ELeHI92zYjQlVlw=;
+        b=hpoQFBQ/jhs/9wnYQgMd66znVviny9jd/FIw3gd79H2mp5bd77fm50waCtVzeDG7WQ
+         vUxVVWOXLJ0dmww0TAaDOo03QIQKMQs5CuTN0iVrXwrjTStdHJicBwojTt4xbljFIs9M
+         CFeyOy11oom0pOfMHcDGeNpCmgyzgEjYzuoUi/gtHlsb9sYLwG7KbgAQC8luqnnx6oG4
+         kBosQ3NpH2s2BUoVuCiG/FAz/ihpmBfha6bqeZer0RYZoa4pGbylA5LoHtRlz1kw+Yfw
+         XDTd8XhPNtnrIFMeojGFlZxW3AdzTijR3brK4M0gTTJruxSb7Jam0hAb4nuE+W/OWaip
+         /gqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=n05/sUnctT8JNpCXRuTVFYfsWiFecSrOrifRVD4fRAo=;
-        b=Vzo2p1ZR8zgAiq04fNX+/O8HyuB7SbZmOETKbbuZWl4AiCeZDb3KOv7LPoLWBX5799
-         tBd3WCaI9g422poRIXeHYNrA73WJMIgcWg1aP+OnvhkxZ60/PIkim3412vp+Da7F0GYZ
-         S53XINbSOHuQDGcWoBP0L1jifhvTBTFGhaKkNr7clR/Y/0r/jDeEqherYvirezJaU53E
-         U1K/qIegd19KIglsuQ18+i793TPSRQnUCp0qM7s4VNizGMg+9kAW6qq2ZVXPRYiJa2V7
-         3DHbRLL4hhT+2r/co7ovCOGSJN42Gjom0quLao8W3PCxIeeqVfoYaYKdaXLIA/0nzymN
-         J3gQ==
-X-Gm-Message-State: AOAM530W5hSSZumFco5xHlQCQN+IGLReN+T/WO1LBl26QttWLc2j/DaX
-        AlfuL4uF5sCV7OPqaUjCEMzvBA==
-X-Google-Smtp-Source: ABdhPJwVohUpLTVKBQsZX8ZJ3mo/T8pKdNPg5RWYYQxr3M9rJmhdKyY6tuj7lSeJjc2dRHuYtN1goQ==
-X-Received: by 2002:aed:31e2:: with SMTP id 89mr8577216qth.272.1616163083298;
-        Fri, 19 Mar 2021 07:11:23 -0700 (PDT)
-Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.gmail.com with ESMTPSA id g6sm4496940qkd.62.2021.03.19.07.11.22
+        bh=ZoqWXP/V3WLtx6b82eSZ18zEGdu+ELeHI92zYjQlVlw=;
+        b=d8GPAi1duBv45SX40Aw6fbPP5AzKzLJ7i521ie5bbSuX8c070sDt/LwLY5biMuV4y3
+         ztVi7KvKT0fBlJg7j3mV6F0snOBvQoct+AoWF689vLs45Hh0e6k9K5hvtJEjgo4TB0sU
+         GQLk21umNTK0Et7F+mrCDMbbar6fyYzuJxd/Lr6VU4umqvyTot62l+Y1gFIgoqDWqi5X
+         sKVNQoMUoE/ygrL511u3AkkTeQVaTv9ihokvdmkv3gfY0fa1Jw8ULMOUdiyW+Ogj0ZG6
+         wRI1GS+bhJm/gScKQZFhUXbIbE7Lz3mnSpee04sMRF9sCPc+HnVXu4vdJGhwHkWsqUVu
+         1u6Q==
+X-Gm-Message-State: AOAM533l06ngErwq00YvoDAyye6ARZfydKv5rkIZ99PSIp3ZWmuAO75Q
+        gVvPkkbm4+umZBHj+s1ffmUJBg==
+X-Google-Smtp-Source: ABdhPJxHGCGcyu/t3eP25M8WuesResjre6x95sD6wnidHPAvYNpJEoTYYoJAqDtcI8DAOV2z4OtbOg==
+X-Received: by 2002:adf:b609:: with SMTP id f9mr4705658wre.223.1616164794956;
+        Fri, 19 Mar 2021 07:39:54 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id n6sm7700611wmd.27.2021.03.19.07.39.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 Mar 2021 07:11:22 -0700 (PDT)
-Subject: Re: [PATCH v11 1/9] drivers: thermal: tsens: Add VER_0 tsens version
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20210319005228.1250-1-ansuelsmth@gmail.com>
- <20210319005228.1250-2-ansuelsmth@gmail.com>
- <7c38ea02-d957-6f63-ccce-1c35dd5d04de@linaro.org>
- <YFSm5rz3ivnzxoJ4@Ansuel-xps.localdomain>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <8850c559-45cb-45cd-9d39-287b8c041c79@linaro.org>
-Date:   Fri, 19 Mar 2021 10:11:21 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Fri, 19 Mar 2021 07:39:54 -0700 (PDT)
+Subject: Re: [PATCH 5/5] arm64: dts: qcom: msm8916: Enable modem and WiFi
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, wcn36xx@lists.infradead.org,
+        linux-wireless@vger.kernel.org, netdev@vger.kernel.org
+References: <20210312003318.3273536-1-bjorn.andersson@linaro.org>
+ <20210312003318.3273536-6-bjorn.andersson@linaro.org>
+ <f03b639f-f95a-a31a-6615-23cd6154182d@linaro.org>
+ <YFNozCCa4fdR5kSb@builder.lan>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Message-ID: <2da2ee91-f3f9-bab7-1d38-e01300fcdbc5@linaro.org>
+Date:   Fri, 19 Mar 2021 14:41:25 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-In-Reply-To: <YFSm5rz3ivnzxoJ4@Ansuel-xps.localdomain>
+In-Reply-To: <YFNozCCa4fdR5kSb@builder.lan>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -77,35 +76,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 3/19/21 9:28 AM, Ansuel Smith wrote:
-> On Fri, Mar 19, 2021 at 09:11:38AM -0400, Thara Gopinath wrote:
+On 18/03/2021 14:50, Bjorn Andersson wrote:
+> On Mon 15 Mar 07:01 CDT 2021, Bryan O'Donoghue wrote:
+> 
+>> On 12/03/2021 00:33, Bjorn Andersson wrote:
+>>> Enable the modem and WiFi subsystems and specify msm8916 specific
+>>> firmware path for these and the WCNSS control service.
+>>>
+>>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>>> ---
+>>>    arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi | 12 ++++++++++++
+>>>    arch/arm64/boot/dts/qcom/msm8916.dtsi     |  2 +-
+>>>    2 files changed, 13 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+>>> index 6aef0c2e4f0a..448e3561ef63 100644
+>>> --- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+>>> @@ -305,6 +305,12 @@ &mdss {
+>>>    	status = "okay";
+>>>    };
+>>> +&mpss {
+>>> +	status = "okay";
+>>> +
+>>> +	firmware-name = "qcom/msm8916/mba.mbn", "qcom/msm8916/modem.mbn";
+>>> +};
+>>> +
+>>>    &pm8916_resin {
+>>>    	status = "okay";
+>>>    	linux,code = <KEY_VOLUMEDOWN>;
+>>> @@ -312,6 +318,8 @@ &pm8916_resin {
+>>>    &pronto {
+>>>    	status = "okay";
+>>> +
+>>> +	firmware-name = "qcom/msm8916/wcnss.mbn";
+>>>    };
+>>
+>> On Debian I have to do this
 >>
 >>
->> On 3/18/21 8:52 PM, Ansuel Smith wrote:
->>> VER_0 is used to describe device based on tsens version before v0.1.
->>> These device are devices based on msm8960 for example apq8064 or
->>> ipq806x.
+>> index 2a6a23cb14ca..597cdc8f51cc 100644
+>> --- a/drivers/remoteproc/qcom_wcnss.c
+>> +++ b/drivers/remoteproc/qcom_wcnss.c
+>> @@ -33,7 +33,7 @@
+>>   #include "qcom_wcnss.h"
 >>
->> Hi Ansuel,
+>>   #define WCNSS_CRASH_REASON_SMEM                422
+>> -#define WCNSS_FIRMWARE_NAME            "wcnss.mdt"
+>> +#define WCNSS_FIRMWARE_NAME            "qcom/msm8916/wcnss.mdt"
 >>
->> There are still checkpatch check warnings in this patch. Please run
->> checkpatch.pl --strict and fix them. Once that is done, you can add
->>
->> Reviewed-by: Thara Gopinath <thara.gopinath@linaro.org>
->>
->> Warm Regards
->> Thara
+>> so I guess wcnss_probe() -> rproc_alloc() wants this fix too.
 >>
 > 
-> Hi,
-> thanks a lot for the review. The only warning I have is a line ending
-> with ( that i think I can't fix or I will go over the max char for line.
-> Do you have something more?
+> Can you confirm that you're saying that you want below patch, which I
+> just merged?
+> 
+> https://lore.kernel.org/linux-remoteproc/20210312002441.3273183-1-bjorn.andersson@linaro.org/
+> 
+> (Which makes it possible to specify firmware name per platform/board)
+> 
+> Regards,
+> Bjorn
+> 
 
-I see two warning for line ending with (. The max char limit is 100.
+yep
 
--- 
-Warm Regards
-Thara
+Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
