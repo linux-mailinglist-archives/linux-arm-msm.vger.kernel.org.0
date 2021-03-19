@@ -2,134 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 62D513420D4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Mar 2021 16:23:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C404C3420F0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Mar 2021 16:28:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230299AbhCSPWt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Mar 2021 11:22:49 -0400
-Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.50]:11552 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230142AbhCSPWY (ORCPT
+        id S230142AbhCSP1f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Mar 2021 11:27:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39460 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229736AbhCSP1E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Mar 2021 11:22:24 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1616167159; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=aYCO4DQQhlORuE+cq+TGogVzWTWWzsvrR0cRRzU0/hZDSkLmb/obl44X2VdXFgap0a
-    oodLDXffioFYOGG9pvY55bRkWkU8cxTwmFtK16FGLqpD/JEKl0ijbDv/LSCisvott9kk
-    UOzYI5gNxhpFmlqPF2eqkBcAAoks7euVaJZ1tOaeoC7brJfwM+vtp8HmC8qee5LLQvKh
-    46ZU7ND3rGRX86CyKhFNh3IHzUqpEPquNhImTysGW0FXI7q1G/OqWRFmHgotRLECGWRx
-    2z1LXiqABuRlsLcrSRf8gvagx5T3sYfd1MuCyshm4gVfMSjKXIUxhVESrrXbNrBskth1
-    7ZkA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1616167159;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=AKOqFWwkTKX0gmc5FtpmyCaMS1mYuj+WZ1NRA7Dh9/Y=;
-    b=lJU5RPf+vAsBvwqW0yVHEriRcwbNBH7qvjuhe/YUMYpzBAhsI7AiU5vW2KRLH5teLN
-    nSEL1UUhCQIcHdiONwnDbqW5qNH0eIN8VQPM+5et6jGP54p2I/GnytJ5HVUn0HKvdCkK
-    r0awGN2dOePl/CCaUnSZTvbOKF5KBQZmKiiYAoyzTE17oP7u4bNPvyPp8CRxcmnlU1Qg
-    VR9P7q7H6IOoCPMIyB7Dth6ziLRhlDhf49GYckcN7zV6gPjtIvOTbAeh/7hF28IA+Vi5
-    ClIJsDONjeAuSG7fsEpZyR5znBsHfI8ynPm9mnJKwZQaUJN2Y4OYgzfESkmEGDALC2Yg
-    53zQ==
-ARC-Authentication-Results: i=1; strato.com;
-    dkim=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1616167159;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=AKOqFWwkTKX0gmc5FtpmyCaMS1mYuj+WZ1NRA7Dh9/Y=;
-    b=aMWgft27kqzbjQK+j8v+Pk6yeXXJavo9ChQKOcbFWf+MYBGhr4OhHmlh7nbhAKrYHg
-    kpcqKiIkrzX+DxqGXtCwkM+WRZBVQ2ArntyACV5rvIHBs3+1vIXlWSFOx5/lCImcaPvp
-    LY9FGkyj/U/2ihbWaVrqwZaCUza/vSjPG4cZ/OyZtTPRPZqhGUjx0RyzfbgjoMHxW7AY
-    h22+z9Y8q+VHxCFMxiSPG6fEGp81ERxbygmkagZ7Qt2lTVsl/xahYcyegOap5e25jpfz
-    o6kd4RAix7gRDYQr3XzdBBEX9TS3+xw9YxwyP7tqteZwshVbNj9uTvuCAkPQ1yWaHLiw
-    seSA==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j7Icip"
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 47.21.0 DYNA|AUTH)
-    with ESMTPSA id Q03f86x2JFJIGSS
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Fri, 19 Mar 2021 16:19:18 +0100 (CET)
-Date:   Fri, 19 Mar 2021 16:19:14 +0100
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, wcn36xx@lists.infradead.org,
-        linux-wireless@vger.kernel.org, netdev@vger.kernel.org
-Subject: Re: [PATCH 5/5] arm64: dts: qcom: msm8916: Enable modem and WiFi
-Message-ID: <YFTA8gEPp1x6o/9f@gerhold.net>
-References: <20210312003318.3273536-1-bjorn.andersson@linaro.org>
- <20210312003318.3273536-6-bjorn.andersson@linaro.org>
+        Fri, 19 Mar 2021 11:27:04 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 519B9C06174A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Mar 2021 08:27:03 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id v11so9506482wro.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Mar 2021 08:27:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Gvh5IzYHTObqHI3vd7r3li3yWFFbiFLNzISSaMCoxao=;
+        b=qgeeSL4tmHxIIKsIXPSCoDU2YZv1gkDExJKE+OCC0cdBvQRcB5tZypCVIGfnDMF6+w
+         t+gm2pQfScCzkJVlbNC3BLzNFMSjzKh0j2EJnL37uh6tCE0sj6r2kJa9chr9oe/mtjqt
+         pn22G6leatJ1E+XkLkSGuE/r5AdiSHtG1toUUtaAd9MRHbTWDmGbhqfKSiNpvgs6v0/7
+         RXoFG3qM63RF8oL6ImkbprgourT/0zt7HrCwPP9eKmctRVOP+68wtbVjvd9lUDWpdWS2
+         p7O2iObAJ0aiE2KPtK9hu+huhTsFH9fFgfjo//ek2vV9azebyVsoWvgBAA8abSY6+u6M
+         aJOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Gvh5IzYHTObqHI3vd7r3li3yWFFbiFLNzISSaMCoxao=;
+        b=bKiTCRCfY9JyKHdov1WZuQEBotaGOTwfyHfd86xv5eGyUS2DpG6A5mPaJEOuMpLm1s
+         PQDh5WK1kbQwbqTjfAf14Koh0szlMqgRxpbhbyIQ2pMOnOypEKieEwAviuJO9UfMuC1R
+         VNEKGc43QOOpcwp5JPooaPfstZuJBhiDcwY/G5B/YgvO38uYWr+aCp/aUjfZmI9KkImH
+         JZoRxAV2mav9SOnbuplZeGZW2hqxUlOg+Lp1N/PzVZPGDzQP2Z1M6VTezY+Aq15ws+3d
+         QFq6C4q9eTB07z0FXVJxpWLNSiyRALeD27fngFOHXjDnk4dkmMb8mL0HrqlShz3RJYh3
+         D6DA==
+X-Gm-Message-State: AOAM530UogMbJeypvAxj00Daz8rdegZK7hBO7v7mWK3Yfoy7OZOgPJKK
+        +71yyagQAcUPfwYjyhqgycTYWh/OE/2py/3SBlI=
+X-Google-Smtp-Source: ABdhPJzEhz8Z9xqP3e4t7/ZysEmGfcbBrY+UUjoLI5+CPNKPmNo7GHtQxga++FhVy5w6xi2tsM+UoN2ps7L+a49zduQ=
+X-Received: by 2002:adf:fb42:: with SMTP id c2mr5121562wrs.83.1616167622087;
+ Fri, 19 Mar 2021 08:27:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210312003318.3273536-6-bjorn.andersson@linaro.org>
+References: <20210301214152.1805737-1-dmitry.baryshkov@linaro.org>
+ <CAOMZO5Br85sf+ndiOWzeG7DgpqVHpXtnNGZLsVMOpBC5eVE2Aw@mail.gmail.com>
+ <CAF6AEGtYJegOPt4dju5wyzp+WEhXdKyeUbkoO-oDzSC2aR_9ZQ@mail.gmail.com> <CAOMZO5Bd68TtZ=-X_Gg7n9W4BsdAhbQAO2JhjMQvwtjdoWsn2A@mail.gmail.com>
+In-Reply-To: <CAOMZO5Bd68TtZ=-X_Gg7n9W4BsdAhbQAO2JhjMQvwtjdoWsn2A@mail.gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Fri, 19 Mar 2021 08:30:13 -0700
+Message-ID: <CAF6AEGtj22ut=YsL4So6NtoC06swtQcCh24rZs_aryq2SYdQbA@mail.gmail.com>
+Subject: Re: [PATCH] gpu/drm/msm: fix shutdown hook in case GPU components
+ failed to bind
+To:     Fabio Estevam <festevam@gmail.com>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DRI mailing list <dri-devel@lists.freedesktop.org>,
+        David Airlie <airlied@linux.ie>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
-
-On Thu, Mar 11, 2021 at 04:33:18PM -0800, Bjorn Andersson wrote:
-> Enable the modem and WiFi subsystems and specify msm8916 specific
-> firmware path for these and the WCNSS control service.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-The changes itself look good to me, but the commit message is really
-misleading. It does not mention anywhere that the change actually just
-enables "modem" on apq8016-sbc instead of "msm8916". :)
-
-Also, WCNSS was actually enabled before already (with the default
-firmware path). In my opinion, it would be clearer to change the
-firmware-name for it in an extra patch.
-
-> ---
->  arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi | 12 ++++++++++++
->  arch/arm64/boot/dts/qcom/msm8916.dtsi     |  2 +-
->  2 files changed, 13 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-> index 6aef0c2e4f0a..448e3561ef63 100644
-> --- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-> @@ -305,6 +305,12 @@ &mdss {
->  	status = "okay";
->  };
->  
-> +&mpss {
-> +	status = "okay";
-> +
-> +	firmware-name = "qcom/msm8916/mba.mbn", "qcom/msm8916/modem.mbn";
-> +};
-> +
->  &pm8916_resin {
->  	status = "okay";
->  	linux,code = <KEY_VOLUMEDOWN>;
-> @@ -312,6 +318,8 @@ &pm8916_resin {
->  
->  &pronto {
->  	status = "okay";
-> +
-> +	firmware-name = "qcom/msm8916/wcnss.mbn";
->  };
->  
-
-How do I get a .mbn from the wcnss.{mdt,.b??} files provided in the
-DB410c firmware package? I guess I should just run them through
-https://github.com/andersson/pil-squasher?
-
-Also, is the single file format (mbn) preferred now? Not sure if there
-is any significant difference except having less files laying around.
+On Fri, Mar 19, 2021 at 8:13 AM Fabio Estevam <festevam@gmail.com> wrote:
+>
+> Hi Rob,
+>
+> On Fri, Mar 19, 2021 at 11:44 AM Rob Clark <robdclark@gmail.com> wrote:
+>
+> > I think that might not help if something fails to probe due to (for
+> > example) a missing dependency, so !priv->kms is probably a better
+> > check to cover both cases.  But the 2nd patch makes a good point, that
+> > the suspend/resume path probably needs the same treatment
+>
+> Thanks for the feedback.
+> I will follow the same approach for fixing the suspend/resume path then.
+>
+> Let me test it and then I will re-submit Dmitry's patch and the one
+> for suspend/resume as part of a patch series.
 
 Thanks,
-Stephan
+
+BR,
+-R
