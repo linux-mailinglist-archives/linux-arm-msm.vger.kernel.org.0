@@ -2,85 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D7B63420A5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Mar 2021 16:14:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 62D513420D4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Mar 2021 16:23:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230159AbhCSPNg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Mar 2021 11:13:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36514 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230242AbhCSPNe (ORCPT
+        id S230299AbhCSPWt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Mar 2021 11:22:49 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.50]:11552 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230142AbhCSPWY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Mar 2021 11:13:34 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 230B8C06174A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Mar 2021 08:13:34 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id a198so10533305lfd.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Mar 2021 08:13:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ayTZjFxRhnC8VGTqHsHaHigGOs8/jskQ5TUarpfnr58=;
-        b=HqB+ZHZwCbGOtObgPGMI3s8QN70KKaFwnotbPiKFqdwgugyXo8Odhnnc6qKk9kChbD
-         w9lXWIo7ASUpeobdz+HDIJ2PdFmYAVCG8VFrlJGq3X012qiXzu+acWEI4sqLDBtHpyrm
-         CbjymU9vs8WGSkfLB+1PKXdcE0HeJaR0dWz3tQavRNyZuxrcBH0H+2CoR9wxA7zQV7cH
-         qraZKRBjeSgPwBF+DGvh2DLbNMVIkd7dpqAVXvw+ugLo1ga44CrpYOCl0+E1dMsDluH5
-         pZS4r+mJBDmGQgdSxeK2b1axCfOc+EH1+7f7ynyVoPmcMaVljiS2F2xJHwxB5AsYJE5X
-         Jv8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ayTZjFxRhnC8VGTqHsHaHigGOs8/jskQ5TUarpfnr58=;
-        b=n925e4Twj7FtcJbTOt+QciVFRN/bvysKK1tPQS+lIyjyj7+iy0RJcn+Z2HDwMRhiXu
-         6zzO9WHr+IWmJQH+NtmN0ZZhHkFblU7XcLEw8bbmWg0+4KWMLk61qnKULb4QtmbN51Xu
-         kg3ga/THYe7jSvf+lRxPznNCXDK/3dAofnipvdYI21i65PSrV8Nrr5yzbNJX/vgB+eOb
-         kAb5fY9ux3TAiz2G9leg2aeWhSOYKzWcNOB2bwXrOO4Qfl4b/x4lenX8LsfsIPTdMj3h
-         xfB1gUpXU6ek5Vgj4/Ut10mO6GHwki6BNf9oDwDvLljNpSQ/kTPO5/NjKGmTPkheDHe2
-         vBeQ==
-X-Gm-Message-State: AOAM533Z7TxTX4gcDDZCkPD3UB7lkuk00CWR3chJwgsW9EdVMI2xokO1
-        7Bgvgn8GTDEkgIrhZA2M4Im6CfQRzmwNv+cbifU=
-X-Google-Smtp-Source: ABdhPJwNGBC6FdrWz1YtnwSBdmcRHIEvYv1CuN2qrAxfSf7ep3pfkDcpcXIc+9Bu7hMtEsRrnZxSCYGTFWHSGzy0nL8=
-X-Received: by 2002:a05:6512:1031:: with SMTP id r17mr1058146lfr.583.1616166812521;
- Fri, 19 Mar 2021 08:13:32 -0700 (PDT)
+        Fri, 19 Mar 2021 11:22:24 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1616167159; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=aYCO4DQQhlORuE+cq+TGogVzWTWWzsvrR0cRRzU0/hZDSkLmb/obl44X2VdXFgap0a
+    oodLDXffioFYOGG9pvY55bRkWkU8cxTwmFtK16FGLqpD/JEKl0ijbDv/LSCisvott9kk
+    UOzYI5gNxhpFmlqPF2eqkBcAAoks7euVaJZ1tOaeoC7brJfwM+vtp8HmC8qee5LLQvKh
+    46ZU7ND3rGRX86CyKhFNh3IHzUqpEPquNhImTysGW0FXI7q1G/OqWRFmHgotRLECGWRx
+    2z1LXiqABuRlsLcrSRf8gvagx5T3sYfd1MuCyshm4gVfMSjKXIUxhVESrrXbNrBskth1
+    7ZkA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1616167159;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=AKOqFWwkTKX0gmc5FtpmyCaMS1mYuj+WZ1NRA7Dh9/Y=;
+    b=lJU5RPf+vAsBvwqW0yVHEriRcwbNBH7qvjuhe/YUMYpzBAhsI7AiU5vW2KRLH5teLN
+    nSEL1UUhCQIcHdiONwnDbqW5qNH0eIN8VQPM+5et6jGP54p2I/GnytJ5HVUn0HKvdCkK
+    r0awGN2dOePl/CCaUnSZTvbOKF5KBQZmKiiYAoyzTE17oP7u4bNPvyPp8CRxcmnlU1Qg
+    VR9P7q7H6IOoCPMIyB7Dth6ziLRhlDhf49GYckcN7zV6gPjtIvOTbAeh/7hF28IA+Vi5
+    ClIJsDONjeAuSG7fsEpZyR5znBsHfI8ynPm9mnJKwZQaUJN2Y4OYgzfESkmEGDALC2Yg
+    53zQ==
+ARC-Authentication-Results: i=1; strato.com;
+    dkim=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1616167159;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=AKOqFWwkTKX0gmc5FtpmyCaMS1mYuj+WZ1NRA7Dh9/Y=;
+    b=aMWgft27kqzbjQK+j8v+Pk6yeXXJavo9ChQKOcbFWf+MYBGhr4OhHmlh7nbhAKrYHg
+    kpcqKiIkrzX+DxqGXtCwkM+WRZBVQ2ArntyACV5rvIHBs3+1vIXlWSFOx5/lCImcaPvp
+    LY9FGkyj/U/2ihbWaVrqwZaCUza/vSjPG4cZ/OyZtTPRPZqhGUjx0RyzfbgjoMHxW7AY
+    h22+z9Y8q+VHxCFMxiSPG6fEGp81ERxbygmkagZ7Qt2lTVsl/xahYcyegOap5e25jpfz
+    o6kd4RAix7gRDYQr3XzdBBEX9TS3+xw9YxwyP7tqteZwshVbNj9uTvuCAkPQ1yWaHLiw
+    seSA==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j7Icip"
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.21.0 DYNA|AUTH)
+    with ESMTPSA id Q03f86x2JFJIGSS
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Fri, 19 Mar 2021 16:19:18 +0100 (CET)
+Date:   Fri, 19 Mar 2021 16:19:14 +0100
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, wcn36xx@lists.infradead.org,
+        linux-wireless@vger.kernel.org, netdev@vger.kernel.org
+Subject: Re: [PATCH 5/5] arm64: dts: qcom: msm8916: Enable modem and WiFi
+Message-ID: <YFTA8gEPp1x6o/9f@gerhold.net>
+References: <20210312003318.3273536-1-bjorn.andersson@linaro.org>
+ <20210312003318.3273536-6-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-References: <20210301214152.1805737-1-dmitry.baryshkov@linaro.org>
- <CAOMZO5Br85sf+ndiOWzeG7DgpqVHpXtnNGZLsVMOpBC5eVE2Aw@mail.gmail.com> <CAF6AEGtYJegOPt4dju5wyzp+WEhXdKyeUbkoO-oDzSC2aR_9ZQ@mail.gmail.com>
-In-Reply-To: <CAF6AEGtYJegOPt4dju5wyzp+WEhXdKyeUbkoO-oDzSC2aR_9ZQ@mail.gmail.com>
-From:   Fabio Estevam <festevam@gmail.com>
-Date:   Fri, 19 Mar 2021 12:13:20 -0300
-Message-ID: <CAOMZO5Bd68TtZ=-X_Gg7n9W4BsdAhbQAO2JhjMQvwtjdoWsn2A@mail.gmail.com>
-Subject: Re: [PATCH] gpu/drm/msm: fix shutdown hook in case GPU components
- failed to bind
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Stephen Boyd <sboyd@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DRI mailing list <dri-devel@lists.freedesktop.org>,
-        David Airlie <airlied@linux.ie>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210312003318.3273536-6-bjorn.andersson@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+Hi Bjorn,
 
-On Fri, Mar 19, 2021 at 11:44 AM Rob Clark <robdclark@gmail.com> wrote:
+On Thu, Mar 11, 2021 at 04:33:18PM -0800, Bjorn Andersson wrote:
+> Enable the modem and WiFi subsystems and specify msm8916 specific
+> firmware path for these and the WCNSS control service.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-> I think that might not help if something fails to probe due to (for
-> example) a missing dependency, so !priv->kms is probably a better
-> check to cover both cases.  But the 2nd patch makes a good point, that
-> the suspend/resume path probably needs the same treatment
+The changes itself look good to me, but the commit message is really
+misleading. It does not mention anywhere that the change actually just
+enables "modem" on apq8016-sbc instead of "msm8916". :)
 
-Thanks for the feedback.
-I will follow the same approach for fixing the suspend/resume path then.
+Also, WCNSS was actually enabled before already (with the default
+firmware path). In my opinion, it would be clearer to change the
+firmware-name for it in an extra patch.
 
-Let me test it and then I will re-submit Dmitry's patch and the one
-for suspend/resume as part of a patch series.
+> ---
+>  arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi | 12 ++++++++++++
+>  arch/arm64/boot/dts/qcom/msm8916.dtsi     |  2 +-
+>  2 files changed, 13 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+> index 6aef0c2e4f0a..448e3561ef63 100644
+> --- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+> @@ -305,6 +305,12 @@ &mdss {
+>  	status = "okay";
+>  };
+>  
+> +&mpss {
+> +	status = "okay";
+> +
+> +	firmware-name = "qcom/msm8916/mba.mbn", "qcom/msm8916/modem.mbn";
+> +};
+> +
+>  &pm8916_resin {
+>  	status = "okay";
+>  	linux,code = <KEY_VOLUMEDOWN>;
+> @@ -312,6 +318,8 @@ &pm8916_resin {
+>  
+>  &pronto {
+>  	status = "okay";
+> +
+> +	firmware-name = "qcom/msm8916/wcnss.mbn";
+>  };
+>  
 
-Thanks
+How do I get a .mbn from the wcnss.{mdt,.b??} files provided in the
+DB410c firmware package? I guess I should just run them through
+https://github.com/andersson/pil-squasher?
+
+Also, is the single file format (mbn) preferred now? Not sure if there
+is any significant difference except having less files laying around.
+
+Thanks,
+Stephan
