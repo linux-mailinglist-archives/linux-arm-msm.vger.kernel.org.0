@@ -2,96 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3180234211A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Mar 2021 16:42:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BB9A33421BC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Mar 2021 17:22:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230039AbhCSPmJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Mar 2021 11:42:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42696 "EHLO
+        id S229806AbhCSQWW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Mar 2021 12:22:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230228AbhCSPmE (ORCPT
+        with ESMTP id S230028AbhCSQV4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Mar 2021 11:42:04 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE416C06174A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Mar 2021 08:42:03 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id e18so9578203wrt.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Mar 2021 08:42:03 -0700 (PDT)
+        Fri, 19 Mar 2021 12:21:56 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63277C06174A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Mar 2021 09:21:44 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id v11so9686243wro.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Mar 2021 09:21:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=GRAl5Em2B1mCYlVdeSo9RSVSNPlh6dys+c8hwugvgok=;
-        b=O+NloZDENgFf4zVcct1MkM+oY18j8ycOp17VdzjUOhpm6rekijsi/hV9MP5labrKgQ
-         YxuKPR1v6E5CvSxO3RO5fwjnBkw99Gnsu+eBMy36g6fceNUcriJePP4OeHyFf9Iqojki
-         1x/ygrCyqLJC7lpcR3n3LHgAy77kvfCOqe2Suvn8PEYUjx5+N+x6+ZsGtUPhso8oAwRQ
-         40WqvB0jT0W609H0rMcG2BxOG+U2+KWtVeEvIbo4OngTYvmw2R+lcAWSLU/iDk5L9JaH
-         Y2SZuBzVnLGd7z5FV8MpxJi9PxHpaIgLU8TUXrADlE88uSEqSJbA/nTsVjm7BtapG1gW
-         S1CQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Q+7JtPWrzoVq9IfYXX5dUkVFHCMG2f/RW7isFZzxLUA=;
+        b=kCDrU+/pozRLTw7JfiUzllg727f/Dvdtxcp8fBXJF3uJb/k0xBeZnoAfeakD1/zqha
+         ki8k8iPrQ0TsHckjaXnoHA7IEaELvBJqrGMFvvz/bRO911SmVjhw70Zmdp3QJAmYgls9
+         9wCw6Ysb0dcSXlUD0e9FC2LQXRROzc3lHgbjnDvnKBMeC/9IzVNglJaL0nEpQGQyytbC
+         OTkqJni8+tuM+i/0xr9j1Dgl594p8Qqofbhe5eKjUHEJKpnvkRpfJUMAtrzxRxKSQMRj
+         TBcb23H5QehIEdQ/d/ppbt/PZ7ncFbEAMj4JTAnpntFzj9nJC4j2MJwplqRdfx9JwWgQ
+         5r6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=GRAl5Em2B1mCYlVdeSo9RSVSNPlh6dys+c8hwugvgok=;
-        b=nprjbC4/OEiwcH0Y0bdVcYWeX8ksFCPkGNgzJhBYLxKl04N7DDruj62OYVMB6O6PbF
-         WlNHHLqMQ0iH3jgQ1c/qfjwvYATXWM7YUXoeJ5/gROXK/dxwD1VHQeJPTqeDsfQmz3sh
-         DqMfOAdAwop4YgDKP1DhVRnhWyz6d7Af3JcY3Gy7yQFh+SFnquWYAtWAxsoHQl6kQ/qx
-         nropTKJvZzE+UvUerWFG1Z23z5oBXIpp4L/zSuimZ/Kai6zRKUPsZFQ3PCECT/JIFRcw
-         T1fbxmrVjbi7MQvkw5E3SSRaIUa7Aoli1uiY2VQsWaheee3R8g7SS9JD8JvbI/TwVHtD
-         n2Tw==
-X-Gm-Message-State: AOAM533mTi8JeOtv0+p8w7bik4BlAGNYDM1bgvvetiOygs2Yi+DCA0Lv
-        zwAcnALxg4Pzbf7QHfOjmIePJA==
-X-Google-Smtp-Source: ABdhPJwrM17/Gr1VGx9/05r/ZiqNNeuN7IlzVsTbHRUPOBJVv5J/vxV45O4ygsVeo+Bhhrsat/ghkQ==
-X-Received: by 2002:a05:6000:221:: with SMTP id l1mr5189715wrz.370.1616168522460;
-        Fri, 19 Mar 2021 08:42:02 -0700 (PDT)
-Received: from localhost.localdomain ([2a01:e0a:82c:5f0:ae5e:7ec2:5176:d0c0])
-        by smtp.gmail.com with ESMTPSA id i4sm6111346wmq.12.2021.03.19.08.42.01
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 19 Mar 2021 08:42:02 -0700 (PDT)
-From:   Loic Poulain <loic.poulain@linaro.org>
-To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH] bus: mhi: pci_generic: Implement PCI shutdown callback
-Date:   Fri, 19 Mar 2021 16:50:37 +0100
-Message-Id: <1616169037-7969-1-git-send-email-loic.poulain@linaro.org>
-X-Mailer: git-send-email 2.7.4
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Q+7JtPWrzoVq9IfYXX5dUkVFHCMG2f/RW7isFZzxLUA=;
+        b=ndFfTK8Ve2uOjmaN6BGK2f9jxw8tkoZoEI4WK8iyb4NgC/hPOXw2xqRsnk8NdTqs+D
+         K4lhiapAPL50KViF48gjUnSv5Us6hxEEr+YJaLnLGg3CnB0P0g2XhhYEc7BTdtn6XV53
+         3KHAd0vakdrniFetEvUWcV+kDPv63lOb90W6yFLSCH9KO+GJprSSHENg2qJrRmsKNfwN
+         51i/CetANXulKoLpZrWYXB7YMSoik4+Q96s+1iTReCd/8COyKcHvkc3fvtwyQkWf0gpg
+         y/68p4snWLQdbcc3yWWL2vU05JSAMjW72dI1ijdWpELBiQnomx9vJpxb74vDerKpjnB0
+         0Xeg==
+X-Gm-Message-State: AOAM531cD1jJNnxS042DIFx46/9RbTLDW91qnkzA0gBg2+Yf8pGtyT/o
+        owOu7ABxMbcfFNoCG0CAoD6LYw==
+X-Google-Smtp-Source: ABdhPJzwBl5xKMtGiYizYyniDg1e76b+/vRNVyIXX1Ak+IcQQbjKxiJPZGQ3JYHmvmwRqiBJGUrS8g==
+X-Received: by 2002:adf:e5c8:: with SMTP id a8mr5497712wrn.352.1616170903054;
+        Fri, 19 Mar 2021 09:21:43 -0700 (PDT)
+Received: from ?IPv6:2a01:e34:ed2f:f020:ddd7:1eb:a66:7a85? ([2a01:e34:ed2f:f020:ddd7:1eb:a66:7a85])
+        by smtp.googlemail.com with ESMTPSA id w11sm8812705wrv.88.2021.03.19.09.21.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 Mar 2021 09:21:42 -0700 (PDT)
+Subject: Re: [PATCH] MAINTAINERS: Add co-maintainer for Qualcomm tsens thermal
+ drivers
+To:     Thara Gopinath <thara.gopinath@linaro.org>, amitk@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20210319153711.2836652-1-thara.gopinath@linaro.org>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+Message-ID: <0688c116-bcde-7980-6535-80000fac5afb@linaro.org>
+Date:   Fri, 19 Mar 2021 17:21:41 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
+MIME-Version: 1.0
+In-Reply-To: <20210319153711.2836652-1-thara.gopinath@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Deinit the device on shutdown to halt MHI/PCI operation on device
-side. This change fixes floating device state with some hosts that
-do not fully shutdown PCIe device when rebooting.
+On 19/03/2021 16:37, Thara Gopinath wrote:
+> Add myself as the maintainer for Qualcomm tsens drivers so that I
+> can help Daniel by taking care of/reviewing changes to these drivers.
+> 
+> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+> ---
 
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
----
- drivers/bus/mhi/pci_generic.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+Applied, thanks
 
-diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-index cbd2224..b104ab8 100644
---- a/drivers/bus/mhi/pci_generic.c
-+++ b/drivers/bus/mhi/pci_generic.c
-@@ -532,6 +532,12 @@ static void mhi_pci_remove(struct pci_dev *pdev)
- 	mhi_unregister_controller(mhi_cntrl);
- }
- 
-+static void mhi_pci_shutdown(struct pci_dev *pdev)
-+{
-+	mhi_pci_remove(pdev);
-+	pci_set_power_state(pdev, PCI_D3hot);
-+}
-+
- static void mhi_pci_reset_prepare(struct pci_dev *pdev)
- {
- 	struct mhi_pci_device *mhi_pdev = pci_get_drvdata(pdev);
-@@ -704,6 +710,7 @@ static struct pci_driver mhi_pci_driver = {
- 	.id_table	= mhi_pci_id_table,
- 	.probe		= mhi_pci_probe,
- 	.remove		= mhi_pci_remove,
-+	.shutdown	= mhi_pci_shutdown,
- 	.err_handler	= &mhi_pci_err_handler,
- 	.driver.pm	= &mhi_pci_pm_ops
- };
+
 -- 
-2.7.4
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
 
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
