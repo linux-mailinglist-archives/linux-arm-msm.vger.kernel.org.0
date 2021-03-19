@@ -2,91 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C404C3420F0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Mar 2021 16:28:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E192342111
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Mar 2021 16:38:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230142AbhCSP1f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Mar 2021 11:27:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39460 "EHLO
+        id S230009AbhCSPhq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Mar 2021 11:37:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229736AbhCSP1E (ORCPT
+        with ESMTP id S230118AbhCSPhO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Mar 2021 11:27:04 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 519B9C06174A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Mar 2021 08:27:03 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id v11so9506482wro.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Mar 2021 08:27:03 -0700 (PDT)
+        Fri, 19 Mar 2021 11:37:14 -0400
+Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06745C061760
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Mar 2021 08:37:13 -0700 (PDT)
+Received: by mail-qt1-x82c.google.com with SMTP id a11so7019179qto.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Mar 2021 08:37:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Gvh5IzYHTObqHI3vd7r3li3yWFFbiFLNzISSaMCoxao=;
-        b=qgeeSL4tmHxIIKsIXPSCoDU2YZv1gkDExJKE+OCC0cdBvQRcB5tZypCVIGfnDMF6+w
-         t+gm2pQfScCzkJVlbNC3BLzNFMSjzKh0j2EJnL37uh6tCE0sj6r2kJa9chr9oe/mtjqt
-         pn22G6leatJ1E+XkLkSGuE/r5AdiSHtG1toUUtaAd9MRHbTWDmGbhqfKSiNpvgs6v0/7
-         RXoFG3qM63RF8oL6ImkbprgourT/0zt7HrCwPP9eKmctRVOP+68wtbVjvd9lUDWpdWS2
-         p7O2iObAJ0aiE2KPtK9hu+huhTsFH9fFgfjo//ek2vV9azebyVsoWvgBAA8abSY6+u6M
-         aJOg==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dQ1ckpIxzyK43V/bt1ZmIWePw7DKixuOTINODiwH4kw=;
+        b=m14l6wiu+fXwfLllo0iU2RvWRZQ5bXXhrrLKC3wrfszJv/m8GYBpl4TbXgw5UGiKfm
+         /pCr6GKlmulJz5eZGSxMmx5/boZ1ZEsUeXc/bVJ535dXZxjhIAj5zkMPcd2jtrnpf1wb
+         FoN08eT7J5LEyUex9ZOHi4Vp64CpxXpCjCD/iOggZxRvp+bwiOVKdjp1elluZ00jP/rc
+         hJh7n5INvB9+XsGaUDaTluqerL+v0WhWCVZDsJZM8BJskQd297GmQWTUF15wwDPua3LE
+         eW+MfXmDgSYpoVi6XTrStFLFhKby4NCNbH2FvVLluO3mfEorX1jv7/ey0MHRzjOhGKRk
+         mClw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Gvh5IzYHTObqHI3vd7r3li3yWFFbiFLNzISSaMCoxao=;
-        b=bKiTCRCfY9JyKHdov1WZuQEBotaGOTwfyHfd86xv5eGyUS2DpG6A5mPaJEOuMpLm1s
-         PQDh5WK1kbQwbqTjfAf14Koh0szlMqgRxpbhbyIQ2pMOnOypEKieEwAviuJO9UfMuC1R
-         VNEKGc43QOOpcwp5JPooaPfstZuJBhiDcwY/G5B/YgvO38uYWr+aCp/aUjfZmI9KkImH
-         JZoRxAV2mav9SOnbuplZeGZW2hqxUlOg+Lp1N/PzVZPGDzQP2Z1M6VTezY+Aq15ws+3d
-         QFq6C4q9eTB07z0FXVJxpWLNSiyRALeD27fngFOHXjDnk4dkmMb8mL0HrqlShz3RJYh3
-         D6DA==
-X-Gm-Message-State: AOAM530UogMbJeypvAxj00Daz8rdegZK7hBO7v7mWK3Yfoy7OZOgPJKK
-        +71yyagQAcUPfwYjyhqgycTYWh/OE/2py/3SBlI=
-X-Google-Smtp-Source: ABdhPJzEhz8Z9xqP3e4t7/ZysEmGfcbBrY+UUjoLI5+CPNKPmNo7GHtQxga++FhVy5w6xi2tsM+UoN2ps7L+a49zduQ=
-X-Received: by 2002:adf:fb42:: with SMTP id c2mr5121562wrs.83.1616167622087;
- Fri, 19 Mar 2021 08:27:02 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dQ1ckpIxzyK43V/bt1ZmIWePw7DKixuOTINODiwH4kw=;
+        b=owY1+LOjtLyk9ZUncJxxbeGk6ZuI28gz1QMfgatN/UZRys9RYRD6gVX23ZP2guJXW4
+         mfhFGkCvzVaPh3FwDUBHiDVSa9M6t02l6N/dk8aQBtH0uu71tqZXGa1sY1PPK63DXZDp
+         pUO6jgy6/oq/THLv6XTA+aqa+85tyLDIXW0k/E/ydwKJ/wlDOa1nN3hWJU8/z9jXFipD
+         WlF3iIm9Q3SnivG6h1xF8RDWyt7LRKw6XMeGE5TrPXKRWJ4HVdSvjOgRvEDvSCek3tjS
+         oJkEal5x3Zgl3Cs/PpsobdhEYRjV9XMR31bkVi10RITM96mJdp/TEInvY0fZTa5FwonW
+         OxzQ==
+X-Gm-Message-State: AOAM533bR78ot1c8fnUFRIMnN2gjCZqR/684CWdhEvTt44tLlmnXXDCg
+        ugjGUIuFFXlRRlchAGvJlef5ow==
+X-Google-Smtp-Source: ABdhPJzkFeGmfUoPoXTTj2XkmHXy4A0QGvHxvX86PEAudoYeltGWlEI0qTYWYFa+6SGDGdDqh5mIGg==
+X-Received: by 2002:ac8:6e85:: with SMTP id c5mr8485912qtv.299.1616168232867;
+        Fri, 19 Mar 2021 08:37:12 -0700 (PDT)
+Received: from pop-os.fios-router.home (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.googlemail.com with ESMTPSA id m25sm3990790qtq.59.2021.03.19.08.37.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Mar 2021 08:37:12 -0700 (PDT)
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+To:     daniel.lezcano@linaro.org, amitk@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] MAINTAINERS: Add co-maintainer for Qualcomm tsens thermal drivers
+Date:   Fri, 19 Mar 2021 11:37:11 -0400
+Message-Id: <20210319153711.2836652-1-thara.gopinath@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <20210301214152.1805737-1-dmitry.baryshkov@linaro.org>
- <CAOMZO5Br85sf+ndiOWzeG7DgpqVHpXtnNGZLsVMOpBC5eVE2Aw@mail.gmail.com>
- <CAF6AEGtYJegOPt4dju5wyzp+WEhXdKyeUbkoO-oDzSC2aR_9ZQ@mail.gmail.com> <CAOMZO5Bd68TtZ=-X_Gg7n9W4BsdAhbQAO2JhjMQvwtjdoWsn2A@mail.gmail.com>
-In-Reply-To: <CAOMZO5Bd68TtZ=-X_Gg7n9W4BsdAhbQAO2JhjMQvwtjdoWsn2A@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Fri, 19 Mar 2021 08:30:13 -0700
-Message-ID: <CAF6AEGtj22ut=YsL4So6NtoC06swtQcCh24rZs_aryq2SYdQbA@mail.gmail.com>
-Subject: Re: [PATCH] gpu/drm/msm: fix shutdown hook in case GPU components
- failed to bind
-To:     Fabio Estevam <festevam@gmail.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Stephen Boyd <sboyd@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DRI mailing list <dri-devel@lists.freedesktop.org>,
-        David Airlie <airlied@linux.ie>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 19, 2021 at 8:13 AM Fabio Estevam <festevam@gmail.com> wrote:
->
-> Hi Rob,
->
-> On Fri, Mar 19, 2021 at 11:44 AM Rob Clark <robdclark@gmail.com> wrote:
->
-> > I think that might not help if something fails to probe due to (for
-> > example) a missing dependency, so !priv->kms is probably a better
-> > check to cover both cases.  But the 2nd patch makes a good point, that
-> > the suspend/resume path probably needs the same treatment
->
-> Thanks for the feedback.
-> I will follow the same approach for fixing the suspend/resume path then.
->
-> Let me test it and then I will re-submit Dmitry's patch and the one
-> for suspend/resume as part of a patch series.
+Add myself as the maintainer for Qualcomm tsens drivers so that I
+can help Daniel by taking care of/reviewing changes to these drivers.
 
-Thanks,
+Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+---
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-BR,
--R
+diff --git a/MAINTAINERS b/MAINTAINERS
+index aa84121c5611..ab66ab9a628e 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -14892,6 +14892,7 @@ F:	include/linux/if_rmnet.h
+ 
+ QUALCOMM TSENS THERMAL DRIVER
+ M:	Amit Kucheria <amitk@kernel.org>
++M:	Thara Gopinath <thara.gopinath@linaro.org>
+ L:	linux-pm@vger.kernel.org
+ L:	linux-arm-msm@vger.kernel.org
+ S:	Maintained
+-- 
+2.25.1
+
