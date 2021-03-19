@@ -2,193 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 943223423CD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Mar 2021 18:56:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 692EC34244C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Mar 2021 19:16:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230028AbhCSRz2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Mar 2021 13:55:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43360 "EHLO
+        id S230228AbhCSSPz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Mar 2021 14:15:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230186AbhCSRzW (ORCPT
+        with ESMTP id S229926AbhCSSPY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Mar 2021 13:55:22 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D97BC06174A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Mar 2021 10:55:22 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id m20-20020a7bcb940000b029010cab7e5a9fso7746707wmi.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Mar 2021 10:55:22 -0700 (PDT)
+        Fri, 19 Mar 2021 14:15:24 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F087FC06174A;
+        Fri, 19 Mar 2021 11:15:23 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id kt15so1722923ejb.12;
+        Fri, 19 Mar 2021 11:15:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=H4E5zo6M+sGFb9jJfPuBMekAUt72xfRBAZEVdNXvosI=;
-        b=HkWCKtqano6hr83mTvHPNb1mTJD7j++xG4i3V1pZc+fMnH//eWACXOeqWIMYDAyiqD
-         CWBkqUiJ1zmtZ3OlxFIY9DcUS/euNcLz8nxn4AxgvZ1rE5qJAgMaRKnutzlS1iCHVLZf
-         S1ATj65HkMPVN9VP3K+xuo111cO9NYWhg1scM=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=rvQymSNd4Qb5Mspdq6AbsSN2FgRpnhG4suLtnPG+1m4=;
+        b=d4JxVeLrmEBGRFeGyhtAp6uPjMAnSUwpwax/8enyfl3OyGoFWnfJncHnYz3WrIH/fU
+         MHv60DTc/yt5ZAMVy3ykb7XiORYadjPFgx8XFVDuQ30Rg7X1JNc6BzDWZlUcHIFkQidq
+         DYheeQMbnnpPkH9ZaWea2d/ytSiSzBMLwvVEGV4a8dYGJiRNxW5jEg9NHFkQLduMAGGX
+         c6OeIfgSz/uR/rypO0qkHElM05Z25mJ80+N3Gus9e76JH0QCFPYtzOY5/GnkP88hsc29
+         cFPzdiw1RR/RrKmMzGc9Q9r1YwzQlZCKwx7lcG3ddGs/JGco1IbzJ5PtGQYOhHb8Eb1C
+         Nl1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=H4E5zo6M+sGFb9jJfPuBMekAUt72xfRBAZEVdNXvosI=;
-        b=AcmCSgRc7TCdVB0lYZI5N4D8EGRT0H5FWYP8ysa3b19LfA8xWWAmD4tpJQfRw6siHh
-         ZDaiCVUHi+MApDMq0Z+QdCpqTrsTbILfs0lJ+siUpqx/1/5Tfz6SJYOgKXPs3DNo/IvO
-         0c6kESp+cpzj8fP+xP1reiqFBdR6ly6aVuCcNl7ECqas2NVs28NDgWnINHraAs00IXeS
-         pdLa1qMcShyV1IMbk6Z5UZLJBStu8gzN/AHNpSvwiYANMKNrL7bKVKYXa7ok5Pub4hHg
-         sxjoR93d6c7kmSMCbpgByrJ3SZcaQAhMH5mtDKra9RO8OmfS8nywcdkHVS+6QB1C+AxZ
-         GbSg==
-X-Gm-Message-State: AOAM532rnXm2qb/Uw7fnsdrnlIm1sHpIQDLji1b7wtgYsZnbc1TyjLFw
-        yagRZD3ejK0XWWqnwJTr7tjqHA==
-X-Google-Smtp-Source: ABdhPJznH8/2o31By7revAgfT3dpRwhrdpC+rY/yFumwMUBtQGtz1iOu7IVxYDezg1HGlBR9UX23fg==
-X-Received: by 2002:a7b:c0c3:: with SMTP id s3mr4743813wmh.11.1616176521069;
-        Fri, 19 Mar 2021 10:55:21 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id s3sm7109143wmd.21.2021.03.19.10.55.19
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=rvQymSNd4Qb5Mspdq6AbsSN2FgRpnhG4suLtnPG+1m4=;
+        b=V+CmxUe3YvT1Y1Bc8NmabkWOW6O5L1pj4+pc9s731yBwUUpmdhqd2p7KTuyFXXfNni
+         4lsod0vYYGIsaFY1+oar0MtJISHEtiUanlqJRhxfhDTAGzKZxpvJSTNLPgNsFSPUmYw7
+         Xgwyd54KNIbXEgM9yEYHfwEb6LUll1AbNe2PEmyj3qrEtpF3EWa2Vy5+6NKVKA7Qjlji
+         jswBfcZES8r71nXouaGNgWjX1SHech3m3niOVFsb2WXRyFLCJRohDkWdy5mD9Uoq4RcB
+         /3zqoGLvh543Rg9jZBsX0Arwekrh09d69oaGKF+Vws5+4UPWCy0C6CbPBuPpB3I1iPGe
+         IT4w==
+X-Gm-Message-State: AOAM531aOocg+RaOvXj7Z6l5/TjBOtoShKjemKYmE0kYe+lz5v6kRIUU
+        AEJFihWKSBwtqijxnNv1I4s=
+X-Google-Smtp-Source: ABdhPJwJ495ExjLJcBYIIWkyG+zDpXH0U8XmQG+Cvu73mmGzQyhvqvdAV9Kk/p2S7KBDh5mEMTewfA==
+X-Received: by 2002:a17:906:3496:: with SMTP id g22mr6030771ejb.143.1616177722597;
+        Fri, 19 Mar 2021 11:15:22 -0700 (PDT)
+Received: from Ansuel-xps.localdomain (host-79-34-220-97.business.telecomitalia.it. [79.34.220.97])
+        by smtp.googlemail.com with ESMTPSA id u13sm4170288ejn.59.2021.03.19.11.15.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Mar 2021 10:55:20 -0700 (PDT)
-Date:   Fri, 19 Mar 2021 18:55:18 +0100
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Lee Jones <lee.jones@linaro.org>
-Cc:     Daniel Vetter <daniel@ffwll.ch>,
-        Roland Scheidegger <sroland@vmware.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        amd-gfx list <amd-gfx@lists.freedesktop.org>,
-        Anthony Koo <Anthony.Koo@amd.com>,
-        Ben Skeggs <bskeggs@redhat.com>,
-        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Dave Airlie <airlied@redhat.com>,
-        David Airlie <airlied@linux.ie>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Harry Wentland <harry.wentland@amd.com>,
-        Jeremy Kolb <jkolb@brandeis.edu>,
-        Kuogee Hsieh <khsieh@codeaurora.org>,
-        Leo Li <sunpeng.li@amd.com>,
-        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
-        <linaro-mm-sig@lists.linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:DMA BUFFER SHARING FRAMEWORK" 
-        <linux-media@vger.kernel.org>, Lyude Paul <lyude@redhat.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Nouveau Dev <nouveau@lists.freedesktop.org>,
-        Qinglang Miao <miaoqinglang@huawei.com>,
-        Rob Clark <rob.clark@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        VMware Graphics <linux-graphics-maintainer@vmware.com>,
-        Zack Rusin <zackr@vmware.com>
-Subject: Re: [RESEND 00/53] Rid GPU from W=1 warnings
-Message-ID: <YFTlhh1ZSFffO+Nr@phenom.ffwll.local>
-Mail-Followup-To: Lee Jones <lee.jones@linaro.org>,
-        Roland Scheidegger <sroland@vmware.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        amd-gfx list <amd-gfx@lists.freedesktop.org>,
-        Anthony Koo <Anthony.Koo@amd.com>, Ben Skeggs <bskeggs@redhat.com>,
-        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Dave Airlie <airlied@redhat.com>, David Airlie <airlied@linux.ie>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Harry Wentland <harry.wentland@amd.com>,
-        Jeremy Kolb <jkolb@brandeis.edu>,
-        Kuogee Hsieh <khsieh@codeaurora.org>, Leo Li <sunpeng.li@amd.com>,
-        "moderated list:DMA BUFFER SHARING FRAMEWORK" <linaro-mm-sig@lists.linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:DMA BUFFER SHARING FRAMEWORK" <linux-media@vger.kernel.org>,
-        Lyude Paul <lyude@redhat.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Nouveau Dev <nouveau@lists.freedesktop.org>,
-        Qinglang Miao <miaoqinglang@huawei.com>,
-        Rob Clark <rob.clark@linaro.org>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, Sumit Semwal <sumit.semwal@linaro.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        VMware Graphics <linux-graphics-maintainer@vmware.com>,
-        Zack Rusin <zackr@vmware.com>
-References: <20210303134319.3160762-1-lee.jones@linaro.org>
- <16d4300e-bf29-1e85-317b-53d257890cb9@vmware.com>
- <20210308091932.GB4931@dell>
- <YEobySvG0zPs9xhc@phenom.ffwll.local>
- <20210311135152.GT701493@dell>
- <20210317081729.GH701493@dell>
- <CAKMK7uEibsgXXTEM1d2CGSswp-koouPSouseP_rwLHTdpxfRpw@mail.gmail.com>
- <CAKMK7uHkJGDL8k3FfAqAM78honZR0euMcacW8UpdPZfS1J-7cA@mail.gmail.com>
- <20210319082407.GG2916463@dell>
+        Fri, 19 Mar 2021 11:15:21 -0700 (PDT)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v12 0/9] Add support for ipq8064 tsens
+Date:   Fri, 19 Mar 2021 19:15:03 +0100
+Message-Id: <20210319181512.7757-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210319082407.GG2916463@dell>
-X-Operating-System: Linux phenom 5.7.0-1-amd64 
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 19, 2021 at 08:24:07AM +0000, Lee Jones wrote:
-> On Thu, 18 Mar 2021, Daniel Vetter wrote:
-> 
-> > On Wed, Mar 17, 2021 at 9:32 PM Daniel Vetter <daniel@ffwll.ch> wrote:
-> > >
-> > > On Wed, Mar 17, 2021 at 9:17 AM Lee Jones <lee.jones@linaro.org> wrote:
-> > > >
-> > > > On Thu, 11 Mar 2021, Lee Jones wrote:
-> > > >
-> > > > > On Thu, 11 Mar 2021, Daniel Vetter wrote:
-> > > > >
-> > > > > > On Mon, Mar 08, 2021 at 09:19:32AM +0000, Lee Jones wrote:
-> > > > > > > On Fri, 05 Mar 2021, Roland Scheidegger wrote:
-> > > > > > >
-> > > > > > > > The vmwgfx ones look all good to me, so for
-> > > > > > > > 23-53: Reviewed-by: Roland Scheidegger <sroland@vmware.com>
-> > > > > > > > That said, they were already signed off by Zack, so not sure what
-> > > > > > > > happened here.
-> > > > > > >
-> > > > > > > Yes, they were accepted at one point, then dropped without a reason.
-> > > > > > >
-> > > > > > > Since I rebased onto the latest -next, I had to pluck them back out of
-> > > > > > > a previous one.
-> > > > > >
-> > > > > > They should show up in linux-next again. We merge patches for next merge
-> > > > > > window even during the current merge window, but need to make sure they
-> > > > > > don't pollute linux-next. Occasionally the cut off is wrong so patches
-> > > > > > show up, and then get pulled again.
-> > > > > >
-> > > > > > Unfortunately especially the 5.12 merge cycle was very wobbly due to some
-> > > > > > confusion here. But your patches should all be in linux-next again (they
-> > > > > > are queued up for 5.13 in drm-misc-next, I checked that).
-> > > > > >
-> > > > > > Sorry for the confusion here.
-> > > > >
-> > > > > Oh, I see.  Well so long as they don't get dropped, I'll be happy.
-> > > > >
-> > > > > Thanks for the explanation Daniel
-> > > >
-> > > > After rebasing today, all of my GPU patches have remained.  Would
-> > > > someone be kind enough to check that everything is still in order
-> > > > please?
-> > >
-> > > It's still broken somehow. I've kiced Maxime and Maarten again,
-> > > they're also on this thread.
-> > 
-> > You're patches have made it into drm-next meanwhile, so they should
-> > show up in linux-next through that tree at least. Except if that one
-> > also has some trouble.
-> 
-> Thanks for letting me know.
-> 
-> I see some patches made it back in, others didn't.
-> 
-> I'll resend the stragglers - bear with.
+This patchset convert msm8960 to reg_filed, use int_common instead 
+of a custom function and fix wrong tsens get_temp function for msm8960.
+Ipq8064 SoCs tsens driver is based on 8960 tsens driver. Ipq8064 needs
+to be registered as a gcc child as the tsens regs on this platform are
+shared with the controller.
+This is based on work and code here
+https://git.linaro.org/people/amit.kucheria/kernel.git/log/?h=wrk3/tsens-8960-breakage
 
-The vmwgfx ones should all be back, the others I guess just werent ever
-applied. I'll vacuum them all up if you resend. Apologies for the wobbly
-ride.
--Daniel
+v12:
+* Even more fix reported by Thara
+v11:
+* Address comments from Thara (thx)
+v10:
+* Fix wrong tsens init for ver_0 (crit_trips needs to be set in tsens_register)
+v9:
+* Fix warning from Documentation bot
+v8:
+* Drop MIN and MAX THRESH and use CRIT_THRESH instead
+* Fix broken documentation patch
+v7:
+* Rework calibrate function to use get_temp_common
+* Fix wrong required in the Documentation for ipq8064
+* Fix hardware bug in sensor enable function
+v6:
+* Fix spelling error (can't find the problem with variable misallignment)
+* Rework big if-else
+* Remove extra comments
+* Add description about different interrupts
+v5:
+* Conver driver to use reg_fiedl
+* Use init_common 
+* Drop custom set_trip and set_interrupt
+* Use common set_trip and set_interrupt
+* Fix bad get_temp function
+* Add missing hardcoded slope
+v4:
+* Fix compilation error and warning reported by the bot
+v3:
+* Change driver to register as child instead of use phandle
+v2:
+* Fix dt-bindings problems
+
+Ansuel Smith (9):
+  drivers: thermal: tsens: Add VER_0 tsens version
+  drivers: thermal: tsens: Don't hardcode sensor slope
+  drivers: thermal: tsens: Convert msm8960 to reg_field
+  drivers: thermal: tsens: Use init_common for msm8960
+  drivers: thermal: tsens: Fix bug in sensor enable for msm8960
+  drivers: thermal: tsens: Replace custom 8960 apis with generic apis
+  drivers: thermal: tsens: Drop unused define for msm8960
+  drivers: thermal: tsens: Add support for ipq8064-tsens
+  dt-bindings: thermal: tsens: Document ipq8064 bindings
+
+ .../bindings/thermal/qcom-tsens.yaml          |  56 ++++-
+ drivers/thermal/qcom/tsens-8960.c             | 233 +++++++++---------
+ drivers/thermal/qcom/tsens.c                  | 151 +++++++++---
+ drivers/thermal/qcom/tsens.h                  |   4 +-
+ 4 files changed, 288 insertions(+), 156 deletions(-)
+
 -- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+2.30.2
+
