@@ -2,104 +2,356 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 73B38342E93
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Mar 2021 18:17:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E32EA342ECB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Mar 2021 19:18:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229870AbhCTRQ6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 20 Mar 2021 13:16:58 -0400
-Received: from mail-40134.protonmail.ch ([185.70.40.134]:16251 "EHLO
-        mail-40134.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229834AbhCTRQy (ORCPT
+        id S229944AbhCTSSG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 20 Mar 2021 14:18:06 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:32819 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229883AbhCTSSC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 20 Mar 2021 13:16:54 -0400
-Date:   Sat, 20 Mar 2021 17:16:45 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1616260611;
-        bh=XHD5SNh+JKh0y8dumYp4YnG/TSTm/z8ZjC7Ay7aNkvI=;
-        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=Zzcz8jnVlrGykUWjhEwsd3PP2HLzin8LdqVKriRM7EwIUfo5z0kzLyTSHudAeJrwl
-         HRfgu0REkoxNRMdCT1/0JoDJ5Y3ZHVFaluT2bGik2/3b3Z4+06ytW0hLlSt2D41tj+
-         ZxXZddxGiWUNBvl8I9nwWq3WNpdcqsj92l1D3/3U=
-To:     Vinod Koul <vkoul@kernel.org>
-From:   Caleb Connolly <caleb@connolly.tech>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Reply-To: Caleb Connolly <caleb@connolly.tech>
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: sm8150: add iommus to qups
-Message-ID: <5ab5b7df-1624-10bf-f268-c32dc5bf0bb6@connolly.tech>
-In-Reply-To: <YFBM5Up5caWZCMSx@vkoul-mobl>
-References: <20210310163024.393578-1-caleb@connolly.tech> <20210310163024.393578-3-caleb@connolly.tech> <YFBM5Up5caWZCMSx@vkoul-mobl>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+        Sat, 20 Mar 2021 14:18:02 -0400
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 20 Mar 2021 11:18:01 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 20 Mar 2021 11:17:59 -0700
+X-QCInternal: smtphost
+Received: from c-sbhanu-linux.qualcomm.com ([10.242.50.201])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 20 Mar 2021 23:47:08 +0530
+Received: by c-sbhanu-linux.qualcomm.com (Postfix, from userid 2344807)
+        id 793EE4AE7; Sat, 20 Mar 2021 23:47:07 +0530 (IST)
+From:   Shaik Sajida Bhanu <sbhanu@codeaurora.org>
+To:     adrian.hunter@intel.com, ulf.hansson@linaro.org, robh+dt@kernel.org
+Cc:     asutoshd@codeaurora.org, stummala@codeaurora.org,
+        vbadigan@codeaurora.org, rampraka@codeaurora.org,
+        sayalil@codeaurora.org, sartgarg@codeaurora.org,
+        rnayak@codeaurora.org, saiprakash.ranjan@codeaurora.org,
+        sibis@codeaurora.org, cang@codeaurora.org, pragalla@codeaurora.org,
+        nitirawa@codeaurora.org, linux-mmc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org,
+        Shaik Sajida Bhanu <sbhanu@codeaurora.org>
+Subject: [PATCH V2] arm64: dts: qcom: sc7280: Add nodes for eMMC and SD card
+Date:   Sat, 20 Mar 2021 23:47:00 +0530
+Message-Id: <1616264220-25825-1-git-send-email-sbhanu@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Vinod,
+Add nodes for eMMC and SD card on sc7280.
 
-On 16/03/2021 6:15 am, Vinod Koul wrote:
-> On 10-03-21, 16:31, Caleb Connolly wrote:
->> Hook up the SMMU for doing DMA over i2c. Some peripherals like
->> touchscreens easily exceed 32-bytes per transfer, causing errors and
->> lockups without this.
-> Why not squash this to patch 1..?
+Signed-off-by: Shaik Sajida Bhanu <sbhanu@codeaurora.org>
 
-I thought it made more sense to separate these patches to keep the=20
-history a bit cleaner. I can squash them if you'd prefer.
+---
+This change is depends on the below patch series:
+https://lore.kernel.org/patchwork/project/lkml/list/?series=488871
+https://lore.kernel.org/patchwork/project/lkml/list/?series=489530
+https://lore.kernel.org/patchwork/project/lkml/list/?series=488429
 
- =C2=A0=C2=A0=C2=A0 Caleb
+Changes since V1:
+	- Moved SDHC nodes as suggested by Bjorn Andersson.
+	- Dropped "pinconf-" prefix as suggested by Bjorn Andersson.
+	- Removed extra newlines as suggested by Konrad Dybcio.
+	- Changed sd-cd pin to bias-pull-up in sdc2_off as suggested by
+	  Veerabhadrarao Badiganti.
+	- Added bandwidth votes for eMMC and SD card.
+---
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts |  25 ++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi    | 213 ++++++++++++++++++++++++++++++++
+ 2 files changed, 238 insertions(+)
 
->
->> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
->> ---
->> Fixes i2c on the OnePlus 7, without this touching the screen with more
->> than 4 fingers causes the device to lock up and reboot.
->> ---
->>   arch/arm64/boot/dts/qcom/sm8150.dtsi | 3 +++
->>   1 file changed, 3 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/=
-qcom/sm8150.dtsi
->> index 03e05d98daf2..543417d74216 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
->> @@ -583,6 +583,7 @@ qupv3_id_0: geniqup@8c0000 {
->>   =09=09=09clock-names =3D "m-ahb", "s-ahb";
->>   =09=09=09clocks =3D <&gcc GCC_QUPV3_WRAP_0_M_AHB_CLK>,
->>   =09=09=09=09 <&gcc GCC_QUPV3_WRAP_0_S_AHB_CLK>;
->> +=09=09=09iommus =3D <&apps_smmu 0xc3 0x0>;
->>   =09=09=09#address-cells =3D <2>;
->>   =09=09=09#size-cells =3D <2>;
->>   =09=09=09ranges;
->> @@ -595,6 +596,7 @@ qupv3_id_1: geniqup@ac0000 {
->>   =09=09=09clock-names =3D "m-ahb", "s-ahb";
->>   =09=09=09clocks =3D <&gcc GCC_QUPV3_WRAP_1_M_AHB_CLK>,
->>   =09=09=09=09 <&gcc GCC_QUPV3_WRAP_1_S_AHB_CLK>;
->> +=09=09=09iommus =3D <&apps_smmu 0x603 0x0>;
->>   =09=09=09#address-cells =3D <2>;
->>   =09=09=09#size-cells =3D <2>;
->>   =09=09=09ranges;
->> @@ -617,6 +619,7 @@ qupv3_id_2: geniqup@cc0000 {
->>   =09=09=09clock-names =3D "m-ahb", "s-ahb";
->>   =09=09=09clocks =3D <&gcc GCC_QUPV3_WRAP_2_M_AHB_CLK>,
->>   =09=09=09=09 <&gcc GCC_QUPV3_WRAP_2_S_AHB_CLK>;
->> +=09=09=09iommus =3D <&apps_smmu 0x7a3 0x0>;
->>   =09=09=09#address-cells =3D <2>;
->>   =09=09=09#size-cells =3D <2>;
->>   =09=09=09ranges;
->> --
->> 2.29.2
->>
-> --
-> ~Vinod
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+index 54d2cb3..4105263 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
++++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+@@ -8,6 +8,7 @@
+ /dts-v1/;
+ 
+ #include "sc7280.dtsi"
++#include <dt-bindings/gpio/gpio.h>
+ 
+ / {
+ 	model = "Qualcomm Technologies, Inc. sc7280 IDP platform";
+@@ -242,6 +243,30 @@
+ 	status = "okay";
+ };
+ 
++&sdhc_1 {
++	status = "okay";
++
++	pinctrl-names = "default", "sleep";
++	pinctrl-0 = <&sdc1_on>;
++	pinctrl-1 = <&sdc1_off>;
++
++	vmmc-supply = <&vreg_l7b_2p9>;
++	vqmmc-supply = <&vreg_l19b_1p8>;
++};
++
++&sdhc_2 {
++	status = "okay";
++
++	pinctrl-names = "default","sleep";
++	pinctrl-0 = <&sdc2_on>;
++	pinctrl-1 = <&sdc2_off>;
++
++	vmmc-supply = <&vreg_l9c_2p9>;
++	vqmmc-supply = <&vreg_l6c_2p9>;
++
++	cd-gpios = <&tlmm 91 GPIO_ACTIVE_LOW>;
++};
++
+ /* PINCTRL - additions to nodes defined in sc7280.dtsi */
+ 
+ &qup_uart5_default {
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 8f6b569..69eb064 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -20,6 +20,11 @@
+ 
+ 	chosen { };
+ 
++	aliases {
++		mmc1 = &sdhc_1;
++		mmc2 = &sdhc_2;
++	};
++
+ 	clocks {
+ 		xo_board: xo-board {
+ 			compatible = "fixed-clock";
+@@ -305,6 +310,64 @@
+ 			#power-domain-cells = <1>;
+ 		};
+ 
++		sdhc_1: sdhci@7c4000 {
++			compatible = "qcom,sdhci-msm-v5";
++			reg = <0 0x7c4000 0 0x1000>,
++					<0 0x7c5000 0 0x1000>;
++			reg-names = "hc", "cqhci";
++
++			iommus = <&apps_smmu 0xC0 0x0>;
++			interrupts = <GIC_SPI 652 IRQ_TYPE_LEVEL_HIGH>,
++					<GIC_SPI 656 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "hc_irq", "pwr_irq";
++
++			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
++					<&gcc GCC_SDCC1_AHB_CLK>,
++					<&rpmhcc RPMH_CXO_CLK>;
++			clock-names = "core", "iface", "xo";
++			interconnects = <&aggre1_noc MASTER_SDCC_1 0 &mc_virt SLAVE_EBI1 0>,
++					<&gem_noc MASTER_APPSS_PROC 0 &cnoc2 SLAVE_SDCC_1 0>;
++			interconnect-names = "sdhc-ddr","cpu-sdhc";
++			power-domains = <&rpmhpd SC7280_CX>;
++			operating-points-v2 = <&sdhc1_opp_table>;
++
++			bus-width = <8>;
++			non-removable;
++			supports-cqe;
++			no-sd;
++			no-sdio;
++
++			max-frequency = <192000000>;
++
++			qcom,dll-config = <0x0007642c>;
++			qcom,ddr-config = <0x80040868>;
++
++			mmc-ddr-1_8v;
++			mmc-hs200-1_8v;
++			mmc-hs400-1_8v;
++			mmc-hs400-enhanced-strobe;
++
++			status = "disabled";
++
++			sdhc1_opp_table: sdhc1-opp-table {
++				compatible = "operating-points-v2";
++
++				opp-100000000 {
++					opp-hz = /bits/ 64 <100000000>;
++					required-opps = <&rpmhpd_opp_low_svs>;
++					opp-peak-kBps = <1200000 76000>;
++					opp-avg-kBps = <1200000 50000>;
++				};
++
++				opp-384000000 {
++					opp-hz = /bits/ 64 <384000000>;
++					required-opps = <&rpmhpd_opp_nom>;
++					opp-peak-kBps = <5400000 1600000>;
++					opp-avg-kBps = <6000000 300000>;
++				};
++			};
++		};
++
+ 		qupv3_id_0: geniqup@9c0000 {
+ 			compatible = "qcom,geni-se-qup";
+ 			reg = <0 0x009c0000 0 0x2000>;
+@@ -328,6 +391,54 @@
+ 			};
+ 		};
+ 
++		sdhc_2: sdhci@8804000 {
++			compatible = "qcom,sdhci-msm-v5";
++			reg = <0 0x08804000 0 0x1000>;
++
++			iommus = <&apps_smmu 0x100 0x0>;
++			interrupts = <GIC_SPI 207 IRQ_TYPE_LEVEL_HIGH>,
++					<GIC_SPI 223 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "hc_irq", "pwr_irq";
++
++			clocks = <&gcc GCC_SDCC2_APPS_CLK>,
++					<&gcc GCC_SDCC2_AHB_CLK>,
++					<&rpmhcc RPMH_CXO_CLK>;
++			clock-names = "core", "iface", "xo";
++			interconnects = <&aggre1_noc MASTER_SDCC_2 0 &mc_virt SLAVE_EBI1 0>,
++					<&gem_noc MASTER_APPSS_PROC 0 &cnoc2 SLAVE_SDCC_2 0>;
++			interconnect-names = "sdhc-ddr","cpu-sdhc";
++			power-domains = <&rpmhpd SC7280_CX>;
++			operating-points-v2 = <&sdhc2_opp_table>;
++
++			bus-width = <4>;
++
++			no-mmc;
++			no-sdio;
++
++			max-frequency = <202000000>;
++
++			qcom,dll-config = <0x0007642c>;
++
++			status = "disabled";
++
++			sdhc2_opp_table: sdhc2-opp-table {
++					compatible = "operating-points-v2";
++
++					opp-100000000 {
++						opp-hz =/bits/ 64 <100000000>;
++						required-opps = <&rpmhpd_opp_low_svs>;
++						opp-peak-kBps = <1200000 76000>;
++						opp-avg-kBps = <1200000 50000>;
++					};
++					opp-202000000 {
++						opp-hz = /bits/ 64 <202000000>;
++						required-opps = <&rpmhpd_opp_nom>;
++						opp-peak-kBps = <3500000 1200000>;
++						opp-avg-kBps = <5000000 100000>;
++					};
++				};
++		};
++
+ 		pdc: interrupt-controller@b220000 {
+ 			compatible = "qcom,sc7280-pdc", "qcom,pdc";
+ 			reg = <0 0x0b220000 0 0x30000>;
+@@ -374,6 +485,108 @@
+ 				pins = "gpio46", "gpio47";
+ 				function = "qup13";
+ 			};
++
++			sdc1_on: sdc1-on {
++				clk {
++					pins = "sdc1_clk";
++					bias-disable;
++					drive-strength = <16>;
++				};
++
++				cmd {
++					pins = "sdc1_cmd";
++					bias-pull-up;
++					drive-strength = <10>;
++				};
++
++				data {
++					pins = "sdc1_data";
++					bias-pull-up;
++					drive-strength = <10>;
++				};
++
++				rclk {
++					pins = "sdc1_rclk";
++					bias-pull-down;
++				};
++			};
++
++			sdc1_off: sdc1-off {
++				clk {
++					pins = "sdc1_clk";
++					bias-disable;
++					drive-strength = <2>;
++				};
++
++				cmd {
++					pins = "sdc1_cmd";
++					bias-pull-up;
++					drive-strength = <2>;
++				};
++
++				data {
++					pins = "sdc1_data";
++					bias-pull-up;
++					drive-strength = <2>;
++				};
++
++				rclk {
++					pins = "sdc1_rclk";
++					bias-pull-down;
++				};
++			};
++
++			sdc2_on: sdc2-on {
++				clk {
++					pins = "sdc2_clk";
++					bias-disable;
++					drive-strength = <16>;
++				};
++
++				cmd {
++					pins = "sdc2_cmd";
++					bias-pull-up;
++					drive-strength = <10>;
++				};
++
++				data {
++					pins = "sdc2_data";
++					bias-pull-up;
++					drive-strength = <10>;
++				};
++
++				sd-cd {
++					pins = "gpio91";
++					bias-pull-up;
++					drive-strength = <2>;
++				};
++			};
++
++			sdc2_off: sdc2-off {
++				clk {
++					pins = "sdc2_clk";
++					bias-disable;
++					drive-strength = <2>;
++				};
++
++				cmd {
++					pins = "sdc2_cmd";
++					bias-pull-up;
++					drive-strength = <2>;
++				};
++
++				data {
++					pins = "sdc2_data";
++					bias-pull-up;
++					drive-strength = <2>;
++				};
++
++				sd-cd {
++					pins = "gpio91";
++					bias-pull-up;
++					drive-strength = <2>;
++				};
++			};
+ 		};
+ 
+ 		apps_smmu: iommu@15000000 {
+-- 
+2.7.4
 
