@@ -2,132 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 766D0342DDD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Mar 2021 16:42:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 73B38342E93
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Mar 2021 18:17:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229756AbhCTPld (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 20 Mar 2021 11:41:33 -0400
-Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.52]:17149 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229634AbhCTPlY (ORCPT
+        id S229870AbhCTRQ6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 20 Mar 2021 13:16:58 -0400
+Received: from mail-40134.protonmail.ch ([185.70.40.134]:16251 "EHLO
+        mail-40134.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229834AbhCTRQy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 20 Mar 2021 11:41:24 -0400
-X-Greylist: delayed 351 seconds by postgrey-1.27 at vger.kernel.org; Sat, 20 Mar 2021 11:41:24 EDT
-ARC-Seal: i=1; a=rsa-sha256; t=1616254522; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=pdVm1BECG7z5RHhH2fMcISmllJm3H+t3ER07vhwsqiFloELgvJuXLlAe2TjVqi57Um
-    sHdbaJlzZFRIapxs8zLnD8KqsUZ9dPJA1IdTbQxoSUD5hnROxF8Ixndrx5L/kPwfmeUl
-    xWTiJY99J/VJ9ztNDZ/HVciDkowkjyjafyIstQRe472JoiOyliomRRZb75ERpXb6+B+O
-    Qc2tX6Kfy5spC65WVu7EDrnn4t/BiVnZnihTXiezCVhUY0Q2hclXDlB1yoD/uFVkvuYQ
-    +ZbTNW2KvIWeOFU39n4lxGno796D8fAncx/OSGWmNpa/gQjiZ34Q1f7mcatX8x7GGu7B
-    PiCQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1616254522;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=QHWOkffdTi9mH4MY3pJLDkHpM7/c2JtbJdtUlv/keVI=;
-    b=Rr8TPbxH6S6HFr4DRWZCXLPtRxIyrQ79l15cP6Eq4fzrXX5/5R1qBr85TFogDXX+sK
-    il2LDZ1nZIjfW5vaa/LSRhaSn7FhFfpJyGmPA6sk7YBP4E9WtizAzQ2chnBXTfhN6lfk
-    /OPqchcWOWVZ1eh6mf1jjoQmLmzimTjP35+d+JZUd6OSieG66dWMF/RDzEN24sJubVr/
-    0BZO+m0+aMnFKBfCDmctN4fWVzObseyh1eVZITUQ1Y2H7E+nMj5uSoUpMMx/f7OoN06o
-    unaN99Rd8Q4bcsA/geaMvAOL2dV4b5D3DTMjHGyK0Hqhg7lpf0qPXqj9PiMKdaqprq+M
-    P/Dw==
-ARC-Authentication-Results: i=1; strato.com;
-    dkim=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1616254522;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=QHWOkffdTi9mH4MY3pJLDkHpM7/c2JtbJdtUlv/keVI=;
-    b=Czk3uAxGR4I8PZhAeqC+jbUhzlojxc3w/wqIGmkFA63YHFnmLS2gXFOzrkP/ILrZRq
-    r923gdhcfr8j98FHlXq/U4QFZSkPwz5MfCYRoS6OcUAONWiy1P5T+KhfWrqaZdMHuVVQ
-    qYvH1ZuNtTRPZACaSmH8hpj2bKzVZ8V+3V7ZwXX9BTGXoy/njRKqOSH5JnnCc5X1g+KY
-    wJ0OaM2BIIpXcA6d45yqzO/StCaf4t5TwaLaBmkBiz10R1MIdizGQhizqFcH+4Kj+Xnq
-    2YyyYi2WmuuCMFkBg+egr6hO/vZ9VmKXRsp6aGc66sviJChRK/saxZfK0+JX9i1E7Xa0
-    ZIWw==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j7Icip"
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 47.21.0 DYNA|AUTH)
-    with ESMTPSA id Q03f86x2KFZLKwH
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Sat, 20 Mar 2021 16:35:21 +0100 (CET)
-Date:   Sat, 20 Mar 2021 16:35:20 +0100
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Leo Yan <leo.yan@linaro.org>
+        Sat, 20 Mar 2021 13:16:54 -0400
+Date:   Sat, 20 Mar 2021 17:16:45 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
+        s=protonmail; t=1616260611;
+        bh=XHD5SNh+JKh0y8dumYp4YnG/TSTm/z8ZjC7Ay7aNkvI=;
+        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
+        b=Zzcz8jnVlrGykUWjhEwsd3PP2HLzin8LdqVKriRM7EwIUfo5z0kzLyTSHudAeJrwl
+         HRfgu0REkoxNRMdCT1/0JoDJ5Y3ZHVFaluT2bGik2/3b3Z4+06ytW0hLlSt2D41tj+
+         ZxXZddxGiWUNBvl8I9nwWq3WNpdcqsj92l1D3/3U=
+To:     Vinod Koul <vkoul@kernel.org>
+From:   Caleb Connolly <caleb@connolly.tech>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Coresight ML <coresight@lists.linaro.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>
-Subject: Re: [PATCH] arm64: dts: msm8916: Enable CoreSight STM component
-Message-ID: <YFYWOOdHT/qJk4Mr@gerhold.net>
-References: <20210320025942.487916-1-leo.yan@linaro.org>
+        linux-kernel@vger.kernel.org
+Reply-To: Caleb Connolly <caleb@connolly.tech>
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sm8150: add iommus to qups
+Message-ID: <5ab5b7df-1624-10bf-f268-c32dc5bf0bb6@connolly.tech>
+In-Reply-To: <YFBM5Up5caWZCMSx@vkoul-mobl>
+References: <20210310163024.393578-1-caleb@connolly.tech> <20210310163024.393578-3-caleb@connolly.tech> <YFBM5Up5caWZCMSx@vkoul-mobl>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210320025942.487916-1-leo.yan@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF shortcircuit=no
+        autolearn=disabled version=3.4.4
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
+        mailout.protonmail.ch
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Leo,
+Hi Vinod,
 
-On Sat, Mar 20, 2021 at 10:59:42AM +0800, Leo Yan wrote:
-> From: Georgi Djakov <georgi.djakov@linaro.org>
-> 
-> Add DT binding for CoreSight System Trace Macrocell (STM) on msm8916,
-> which can benefit the CoreSight development on DB410c.
-> 
-> Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
-> Signed-off-by: Leo Yan <leo.yan@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi |  1 +
->  arch/arm64/boot/dts/qcom/msm8916.dtsi     | 27 +++++++++++++++++++++++
->  2 files changed, 28 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-> index 3a9538e1ec97..dd87e5d739ab 100644
-> --- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-> @@ -406,6 +406,7 @@ &wcd_codec {
->  &etm1 { status = "okay"; };
->  &etm2 { status = "okay"; };
->  &etm3 { status = "okay"; };
-> +&stm { status = "okay"; };
->  &etr { status = "okay"; };
->  &funnel0 { status = "okay"; };
->  &funnel1 { status = "okay"; };
+On 16/03/2021 6:15 am, Vinod Koul wrote:
+> On 10-03-21, 16:31, Caleb Connolly wrote:
+>> Hook up the SMMU for doing DMA over i2c. Some peripherals like
+>> touchscreens easily exceed 32-bytes per transfer, causing errors and
+>> lockups without this.
+> Why not squash this to patch 1..?
 
-This is alphabetically ordered so &stm should be on the line before &tpiu.
+I thought it made more sense to separate these patches to keep the=20
+history a bit cleaner. I can squash them if you'd prefer.
 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> index 402e891a84ab..892f1772e53c 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> [...]
-> @@ -882,6 +889,26 @@ etm3_out: endpoint {
->  			};
->  		};
->  
-> +		stm: stm@802000 {
+ =C2=A0=C2=A0=C2=A0 Caleb
 
-And these nodes are sorted by their unit address (0x802000),
-so stm@802000 should be the first coresight node, before cti@810000.
+>
+>> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+>> ---
+>> Fixes i2c on the OnePlus 7, without this touching the screen with more
+>> than 4 fingers causes the device to lock up and reboot.
+>> ---
+>>   arch/arm64/boot/dts/qcom/sm8150.dtsi | 3 +++
+>>   1 file changed, 3 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/=
+qcom/sm8150.dtsi
+>> index 03e05d98daf2..543417d74216 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+>> @@ -583,6 +583,7 @@ qupv3_id_0: geniqup@8c0000 {
+>>   =09=09=09clock-names =3D "m-ahb", "s-ahb";
+>>   =09=09=09clocks =3D <&gcc GCC_QUPV3_WRAP_0_M_AHB_CLK>,
+>>   =09=09=09=09 <&gcc GCC_QUPV3_WRAP_0_S_AHB_CLK>;
+>> +=09=09=09iommus =3D <&apps_smmu 0xc3 0x0>;
+>>   =09=09=09#address-cells =3D <2>;
+>>   =09=09=09#size-cells =3D <2>;
+>>   =09=09=09ranges;
+>> @@ -595,6 +596,7 @@ qupv3_id_1: geniqup@ac0000 {
+>>   =09=09=09clock-names =3D "m-ahb", "s-ahb";
+>>   =09=09=09clocks =3D <&gcc GCC_QUPV3_WRAP_1_M_AHB_CLK>,
+>>   =09=09=09=09 <&gcc GCC_QUPV3_WRAP_1_S_AHB_CLK>;
+>> +=09=09=09iommus =3D <&apps_smmu 0x603 0x0>;
+>>   =09=09=09#address-cells =3D <2>;
+>>   =09=09=09#size-cells =3D <2>;
+>>   =09=09=09ranges;
+>> @@ -617,6 +619,7 @@ qupv3_id_2: geniqup@cc0000 {
+>>   =09=09=09clock-names =3D "m-ahb", "s-ahb";
+>>   =09=09=09clocks =3D <&gcc GCC_QUPV3_WRAP_2_M_AHB_CLK>,
+>>   =09=09=09=09 <&gcc GCC_QUPV3_WRAP_2_S_AHB_CLK>;
+>> +=09=09=09iommus =3D <&apps_smmu 0x7a3 0x0>;
+>>   =09=09=09#address-cells =3D <2>;
+>>   =09=09=09#size-cells =3D <2>;
+>>   =09=09=09ranges;
+>> --
+>> 2.29.2
+>>
+> --
+> ~Vinod
 
-> +			compatible = "arm,coresight-stm", "arm,primecell";
-> +			reg = <0x802000 0x1000>,
-> +			      <0x9280000 0x180000>;
-
-And please pad these addresses with zeroes so the order is more easily
-visible, i.e.
-
-+			reg = <0x00802000 0x1000>,
-+			      <0x09280000 0x180000>;
-
-Thanks!
-Stephan
