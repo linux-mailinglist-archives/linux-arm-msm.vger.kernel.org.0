@@ -2,82 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B47F8343297
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Mar 2021 13:44:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FC003433DB
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Mar 2021 18:47:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229901AbhCUMoZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 21 Mar 2021 08:44:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54928 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230035AbhCUMoG (ORCPT
+        id S230160AbhCURq6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 21 Mar 2021 13:46:58 -0400
+Received: from mail-40133.protonmail.ch ([185.70.40.133]:42789 "EHLO
+        mail-40133.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230097AbhCURqZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 21 Mar 2021 08:44:06 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30D71C061762
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Mar 2021 05:44:06 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id v8so5151951plz.10
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Mar 2021 05:44:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=oYh42NVmprfmi6tokkVG4Y+HhObAPKALxbHzNEVJ2Gs=;
-        b=uzjWYn3XdJl5n7W+G1ELkbYiYFavm62OKGn2YfOnhiNaO0dKAN2f6hwe54r0PkXgQP
-         a6qdbt654yG1qoo7FBlFeMTzYBb3c6Htm3u8dOn7SOxC+05utbHN4HMJ1mbL8Pq7OiBy
-         fjA8B+7gmtyMOzr4MjlJP830wZpnwJaNtcRGJsha8TdXYnRN1ylLYtgzHNVNa8fw/P8X
-         h/ja6hqyL5jaN6NPK3t+ssQMoQCg3GMiSzY88KU15c57E2mmwTxyGcLuxQh2ycBCoY/Y
-         cPwF7Q2uqx6LLFnPYUXE62tn2Dudu5FW/ES9tCGw094xB7gtAV/+fQLkFHVSAWeq9Kfv
-         mXfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=oYh42NVmprfmi6tokkVG4Y+HhObAPKALxbHzNEVJ2Gs=;
-        b=d+YCZ9QwZVizOKPTdyAD+oR46WGy7UylfbDKhXcXmraG7Lt82/3S9cJeM/LNXgCXJO
-         74bbwxEoVMzuQsnqvwugPrsuODJ2ftCakgxcoBuzQgDtpXnRBIJOhTmaRiiECU75uNnI
-         RcWrMeCgKegp2Q0z5Ru5vZpTMN6ean+iyG9hEwuZQvgIbnVWDNsFsfv81uWj1xKK0ZBs
-         Wu2oxTHoWS0VLcYU5Sx6MHCOiKtqGkk6fqq5g9TTE15BAYbSwYsoLs69UnZgf3nLxiEk
-         O9lsx4V4GLK6gtjwXtC5Ru6845xWwsjguV/0PEqXK0JimwN9y2LxkI8E3KwcgVr7ekzD
-         8YYg==
-X-Gm-Message-State: AOAM532YDpwVffC3wyieLtRqx37RzKc81rmaNEceS+tzWoVmHyCJihRU
-        nUoCcLNNvPcp139fpF5QMHkIsw==
-X-Google-Smtp-Source: ABdhPJwQ7Iy0N2drugvLFKCBR81+m5DM/sT7wdJv7MyQOMU1WE6jf0iEjozzNqa8jsCBsF79jxv6Xw==
-X-Received: by 2002:a17:90a:5910:: with SMTP id k16mr8413808pji.207.1616330645735;
-        Sun, 21 Mar 2021 05:44:05 -0700 (PDT)
-Received: from leoy-ThinkPad-X240s (144.34.177.189.16clouds.com. [144.34.177.189])
-        by smtp.gmail.com with ESMTPSA id u66sm10349141pfu.186.2021.03.21.05.44.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 21 Mar 2021 05:44:05 -0700 (PDT)
-Date:   Sun, 21 Mar 2021 20:44:00 +0800
-From:   Leo Yan <leo.yan@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Coresight ML <coresight@lists.linaro.org>
-Cc:     Georgi Djakov <georgi.djakov@linaro.org>
-Subject: Re: [PATCH v2] arm64: dts: msm8916: Enable CoreSight STM component
-Message-ID: <20210321124400.GA4329@leoy-ThinkPad-X240s>
-References: <20210321121105.678515-1-leo.yan@linaro.org>
+        Sun, 21 Mar 2021 13:46:25 -0400
+Date:   Sun, 21 Mar 2021 17:46:16 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
+        s=protonmail; t=1616348781;
+        bh=E2SHDelPQ6pNHG25n6OAPnNSHlch3xo/1v7feJPMLSE=;
+        h=Date:To:From:Cc:Reply-To:Subject:From;
+        b=JZKrCf4+1D1c3vrLzbtrmvm9BSNWRS1fpZtUaYHwMosbl+RGW01xml+xhqhfskYdq
+         Fb0XJv/ovIVr64kpzZm+uEvXCm/W4ZmJoozKOFcGBXLzaa1bqM0fY5q0yNXo3AHfJp
+         qS8w5ZHqzOsC9h6dNojFGSL2+KdRrpLrH43V7SXg=
+To:     caleb@connolly.tech
+From:   Caleb Connolly <caleb@connolly.tech>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Reply-To: Caleb Connolly <caleb@connolly.tech>
+Subject: (No Subject)
+Message-ID: <20210321174522.123036-1-caleb@connolly.tech>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210321121105.678515-1-leo.yan@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF shortcircuit=no
+        autolearn=disabled version=3.4.4
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
+        mailout.protonmail.ch
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Mar 21, 2021 at 08:11:05PM +0800, Leo Yan wrote:
-> Add DT binding for CoreSight System Trace Macrocell (STM) on msm8916,
-> which can benefit the CoreSight development on DB410c.
-> 
-> Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
-> Signed-off-by: Leo Yan <leo.yan@linaro.org>
+Subject: v2: arm64: dts: sm8150: start populating qups
 
-When I rebased this patch, I didn't know why the patch auther's name was
-changed unexpectly.  So have sent patch v3 to correct it.
+The QUPs are rather sparse, lets add the zero-th and second qup nodes,
+the iommus properties for all of them and the i2c nodes.
 
-Sorry for spamming.
-Leo
+With this it's now possible to bringup the touchscreen on my
+device, and without crashing!
+
+Derived from OnePlus 7 Pro downstream kernel sources.
+
+=09Caleb
+---
+Of note, I'm only able to properly test i2c17, as that's what my
+touchscreen is attached to. Enabling i2c18 causes my device to lockup
+during probe, I suspect those pins are used for some other purpose on my
+device.
+
+Changes since v1:
+ * Pick up Reviewed-By's from Vinod and Bhupesh
+ * Squash second patch into first
+ * Add iommus property to dt-binding docs for geni
+ * Fix i2c19 being mistakenly enabled by default
+
+Caleb Connolly (3):
+      arm64: dts: qcom: sm8150: add other QUP nodes and iommus
+      arm64: dts: qcom: sm8150: add i2c nodes
+      dt-bindings: qcom: geni-se: document iommus
+
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 549 +++++++++++++++++++++++++++++++=
+++++
+ 1 file changed, 549 insertions(+)
+
+
