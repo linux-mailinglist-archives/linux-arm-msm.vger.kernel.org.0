@@ -2,207 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F4127344C23
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Mar 2021 17:47:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 47A8C344C5F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Mar 2021 17:54:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231719AbhCVQrX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Mar 2021 12:47:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51058 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231148AbhCVQqr (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Mar 2021 12:46:47 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A15BC061762
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Mar 2021 09:46:46 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id kk2-20020a17090b4a02b02900c777aa746fso8830291pjb.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Mar 2021 09:46:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=OIhzGD6weism7EEZJmrFjVrI+R4NmB79ezAybkk6vX8=;
-        b=VGrzFuAtWqr69r687nj09FF8EZQY7OuiTw9ckFwvcIqns4FFze7kCFF8h9dLtp8+FA
-         n+4VbhKsIeepLppDhoUocsU4poxMDzAv7PWOaa/P0cyWiAfRyWRV1JTGgTs5Rj7MGw89
-         MJA0Lg1VzuatgE3wr7nirN5s8xSZRuwMivxHc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=OIhzGD6weism7EEZJmrFjVrI+R4NmB79ezAybkk6vX8=;
-        b=m+sP/ouq09QkwDcY4CAfbTEc7dUkgL9uSqDlIEeVv04hvjMYgdeZdmphItKOfz3SEG
-         lGu2+8P1DxnCo+L6p083JODC3louX7Iyy8Os5RE8IE3f4CaZbPinNo0S8hduvMJH64bS
-         CYCq8rosAVqXjg8BbKQwa1+B6oP1p77J5bPGT6bxoJreDjpRGLc/RpvCOeK78Bgr60fm
-         xSuicNCeVFtzBRbw0QZhXhuTpDbkpDo8+5LaoYDwUu/3oAik4pSA5DDI8W+2zNo6hguX
-         x0gNDEmTyRJV1NuW/9jv6D8PXJpXXTXoVyQ7VK1giE2o6UKLXz3RImJAIBnJfHTyW4cg
-         IHpg==
-X-Gm-Message-State: AOAM53269ezervPExzDSX6UN9oIODG07BWzij8E0qIUT4OIy3bYdk1ic
-        LFKk0atvBD/pUqcLGJvGsnX40g==
-X-Google-Smtp-Source: ABdhPJxHqpyeMWUORP/mRnaO5qLyqlLLPZ2Netpk6XmSZOMFoNF1fZ4prJFCiourxpObJ0nkwWVmbQ==
-X-Received: by 2002:a17:902:c94c:b029:e6:cd16:24ec with SMTP id i12-20020a170902c94cb02900e6cd1624ecmr512095pla.27.1616431605565;
-        Mon, 22 Mar 2021 09:46:45 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:90a9:b908:f93a:2f78])
-        by smtp.gmail.com with UTF8SMTPSA id d124sm14289179pfa.149.2021.03.22.09.46.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Mar 2021 09:46:45 -0700 (PDT)
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>
-Subject: [PATCH v4 3/3] arm64: dts: qcom: sc7180: Add CoachZ rev3
-Date:   Mon, 22 Mar 2021 09:46:35 -0700
-Message-Id: <20210322094628.v4.3.I95b8a63103b77cab6a7cf9c150f0541db57fda98@changeid>
-X-Mailer: git-send-email 2.31.0.rc2.261.g7f71774620-goog
-In-Reply-To: <20210322164635.273729-1-mka@chromium.org>
-References: <20210322164635.273729-1-mka@chromium.org>
+        id S229746AbhCVQyQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Mar 2021 12:54:16 -0400
+Received: from mga07.intel.com ([134.134.136.100]:24136 "EHLO mga07.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230245AbhCVQyF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 22 Mar 2021 12:54:05 -0400
+IronPort-SDR: qUV44WsYqm8m7SEmCh0PqpdUt5gfg2f2BscWPyZxcHKtf/pjV5Cbtq+AfSyQi2qf9WrCaLxBuC
+ MuGwdrdyL4kA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9931"; a="254307240"
+X-IronPort-AV: E=Sophos;i="5.81,269,1610438400"; 
+   d="scan'208";a="254307240"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2021 09:54:04 -0700
+IronPort-SDR: m0hSCsGpgh6MtzsPGDQ2j5rBooSYOC6PQlZV20Im9GI/4gZScYE188dEI/FdaLFqegE9ndQUwm
+ XAtYz3XIXCPg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.81,269,1610438400"; 
+   d="scan'208";a="451802365"
+Received: from black.fi.intel.com ([10.237.72.28])
+  by orsmga001.jf.intel.com with ESMTP; 22 Mar 2021 09:53:58 -0700
+Received: by black.fi.intel.com (Postfix, from userid 1003)
+        id 6019CC5; Mon, 22 Mar 2021 18:54:12 +0200 (EET)
+From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To:     Wolfram Sang <wsa@kernel.org>,
+        Khalil Blaiech <kblaiech@nvidia.com>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     Robert Foss <robert.foss@linaro.org>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Wolfram Sang <wsa@the-dreams.de>
+Subject: [PATCH v1 1/1] i2c: drivers: Use generic definitions for bus frequencies (part 2)
+Date:   Mon, 22 Mar 2021 18:54:05 +0200
+Message-Id: <20210322165405.44980-1-andriy.shevchenko@linux.intel.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-CoachZ rev3 uses a 100k NTC thermistor for the charger temperatures,
-instead of the 47k NTC that is stuffed in earlier revisions. Add .dts
-files for rev3.
+Since we have generic definitions for bus frequencies, let's use them.
 
-The 47k NTC currently isn't supported by the PM6150 ADC driver.
-Disable the charger thermal zone for rev1 and rev2 to avoid the use
-of bogus temperature values.
-
-This also gets rid of the explicit DT files for rev2 and handles
-rev2 in the rev1 .dts instead. There was some back and forth
-downstream involving the 'dmic_clk_en' pin, after that was sorted
-out the DT for rev1 and rev2 is the same.
-
-Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Cc: Wolfram Sang <wsa@the-dreams.de>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 ---
+ drivers/i2c/busses/i2c-mlxbf.c    | 14 ++++----------
+ drivers/i2c/busses/i2c-qcom-cci.c |  4 ++--
+ 2 files changed, 6 insertions(+), 12 deletions(-)
 
-Changes in v4:
-- added Reviewed-by tag from Doug
-
-Changes in v3:
-- get rid of separate .dts for rev2
-
-Changes in v2:
-- added CoachZ rev3
-- updated subject and commit message
-
- arch/arm64/boot/dts/qcom/Makefile                   |  4 ++--
- .../boot/dts/qcom/sc7180-trogdor-coachz-r1-lte.dts  |  4 ++--
- .../boot/dts/qcom/sc7180-trogdor-coachz-r1.dts      | 13 +++++++++++--
- ...-r2-lte.dts => sc7180-trogdor-coachz-r3-lte.dts} |  6 +++---
- ...r-coachz-r2.dts => sc7180-trogdor-coachz-r3.dts} |  4 ++--
- 5 files changed, 20 insertions(+), 11 deletions(-)
- rename arch/arm64/boot/dts/qcom/{sc7180-trogdor-coachz-r2-lte.dts => sc7180-trogdor-coachz-r3-lte.dts} (69%)
- rename arch/arm64/boot/dts/qcom/{sc7180-trogdor-coachz-r2.dts => sc7180-trogdor-coachz-r3.dts} (75%)
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 11aa83ca798f..39db370cf1a4 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -33,8 +33,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1-lte.dtb
--dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r2.dtb
--dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r2-lte.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r3.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r3-lte.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r0.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r1-kb.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1-lte.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1-lte.dts
-index 533c048903ea..82dc00cc7fb9 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1-lte.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1-lte.dts
-@@ -9,8 +9,8 @@
- #include "sc7180-trogdor-lte-sku.dtsi"
+diff --git a/drivers/i2c/busses/i2c-mlxbf.c b/drivers/i2c/busses/i2c-mlxbf.c
+index 2fb0532d8a16..80ab831df349 100644
+--- a/drivers/i2c/busses/i2c-mlxbf.c
++++ b/drivers/i2c/busses/i2c-mlxbf.c
+@@ -172,12 +172,6 @@
+ #define MLXBF_I2C_SMBUS_THIGH_MAX_TBUF            0x14
+ #define MLXBF_I2C_SMBUS_SCL_LOW_TIMEOUT           0x18
  
- / {
--	model = "Google CoachZ (rev1) with LTE";
--	compatible = "google,coachz-rev1-sku0", "qcom,sc7180";
-+	model = "Google CoachZ (rev1 - 2) with LTE";
-+	compatible = "google,coachz-rev1-sku0", "google,coachz-rev2-sku0", "qcom,sc7180";
- };
- 
- &cros_ec_proximity {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts
-index 86619f6c1134..b9c252df9fa1 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts
-@@ -10,8 +10,17 @@
- #include "sc7180-trogdor-coachz.dtsi"
- 
- / {
--	model = "Google CoachZ (rev1)";
--	compatible = "google,coachz-rev1", "qcom,sc7180";
-+	model = "Google CoachZ (rev1 - 2)";
-+	compatible = "google,coachz-rev1", "google,coachz-rev2", "qcom,sc7180";
-+};
-+
-+/*
-+ * CoachZ rev1 is stuffed with a 47k NTC as charger thermistor which currently
-+ * is not supported by the PM6150 ADC driver. Disable the charger thermal zone
-+ * to avoid using bogus temperature values.
-+ */
-+&charger_thermal {
-+	status = "disabled";
- };
- 
- &tlmm {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r2-lte.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3-lte.dts
-similarity index 69%
-rename from arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r2-lte.dts
-rename to arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3-lte.dts
-index 6e7745801fae..d23409034e8c 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r2-lte.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3-lte.dts
-@@ -2,14 +2,14 @@
+-enum {
+-	MLXBF_I2C_TIMING_100KHZ = 100000,
+-	MLXBF_I2C_TIMING_400KHZ = 400000,
+-	MLXBF_I2C_TIMING_1000KHZ = 1000000,
+-};
+-
  /*
-  * Google CoachZ board device tree source
-  *
-- * Copyright 2020 Google LLC.
-+ * Copyright 2021 Google LLC.
-  */
+  * Defines SMBus operating frequency and core clock frequency.
+  * According to ADB files, default values are compliant to 100KHz SMBus
+@@ -1202,7 +1196,7 @@ static int mlxbf_i2c_init_timings(struct platform_device *pdev,
  
--#include "sc7180-trogdor-coachz-r2.dts"
-+#include "sc7180-trogdor-coachz-r3.dts"
- #include "sc7180-trogdor-lte-sku.dtsi"
+ 	ret = device_property_read_u32(dev, "clock-frequency", &config_khz);
+ 	if (ret < 0)
+-		config_khz = MLXBF_I2C_TIMING_100KHZ;
++		config_khz = I2C_MAX_STANDARD_MODE_FREQ;
  
- / {
--	model = "Google CoachZ (rev2+) with LTE";
-+	model = "Google CoachZ (rev3+) with LTE";
- 	compatible = "google,coachz-sku0", "qcom,sc7180";
- };
+ 	switch (config_khz) {
+ 	default:
+@@ -1210,15 +1204,15 @@ static int mlxbf_i2c_init_timings(struct platform_device *pdev,
+ 		pr_warn("Illegal value %d: defaulting to 100 KHz\n",
+ 			config_khz);
+ 		fallthrough;
+-	case MLXBF_I2C_TIMING_100KHZ:
++	case I2C_MAX_STANDARD_MODE_FREQ:
+ 		config_idx = MLXBF_I2C_TIMING_CONFIG_100KHZ;
+ 		break;
  
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r2.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3.dts
-similarity index 75%
-rename from arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r2.dts
-rename to arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3.dts
-index 4f69b6ba299f..a02d2d57c78c 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r2.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3.dts
-@@ -2,7 +2,7 @@
- /*
-  * Google CoachZ board device tree source
-  *
-- * Copyright 2020 Google LLC.
-+ * Copyright 2021 Google LLC.
-  */
+-	case MLXBF_I2C_TIMING_400KHZ:
++	case I2C_MAX_FAST_MODE_FREQ:
+ 		config_idx = MLXBF_I2C_TIMING_CONFIG_400KHZ;
+ 		break;
  
- /dts-v1/;
-@@ -10,6 +10,6 @@
- #include "sc7180-trogdor-coachz.dtsi"
+-	case MLXBF_I2C_TIMING_1000KHZ:
++	case I2C_MAX_FAST_MODE_PLUS_FREQ:
+ 		config_idx = MLXBF_I2C_TIMING_CONFIG_1000KHZ;
+ 		break;
+ 	}
+diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
+index 1c259b5188de..c63d5545fc2a 100644
+--- a/drivers/i2c/busses/i2c-qcom-cci.c
++++ b/drivers/i2c/busses/i2c-qcom-cci.c
+@@ -569,9 +569,9 @@ static int cci_probe(struct platform_device *pdev)
+ 		cci->master[idx].mode = I2C_MODE_STANDARD;
+ 		ret = of_property_read_u32(child, "clock-frequency", &val);
+ 		if (!ret) {
+-			if (val == 400000)
++			if (val == I2C_MAX_FAST_MODE_FREQ)
+ 				cci->master[idx].mode = I2C_MODE_FAST;
+-			else if (val == 1000000)
++			else if (val == I2C_MAX_FAST_MODE_PLUS_FREQ)
+ 				cci->master[idx].mode = I2C_MODE_FAST_PLUS;
+ 		}
  
- / {
--	model = "Google CoachZ (rev2+)";
-+	model = "Google CoachZ (rev3+)";
- 	compatible = "google,coachz", "qcom,sc7180";
- };
 -- 
-2.31.0.rc2.261.g7f71774620-goog
+2.30.2
 
