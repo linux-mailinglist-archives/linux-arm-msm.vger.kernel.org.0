@@ -2,117 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A5C6345156
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Mar 2021 22:03:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 56DBC34515F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Mar 2021 22:04:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229574AbhCVVCh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Mar 2021 17:02:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49530 "EHLO
+        id S229547AbhCVVDk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Mar 2021 17:03:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231426AbhCVVCE (ORCPT
+        with ESMTP id S231148AbhCVVDL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Mar 2021 17:02:04 -0400
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 159F0C061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Mar 2021 14:02:04 -0700 (PDT)
-Received: by mail-ot1-x32d.google.com with SMTP id f73-20020a9d03cf0000b02901b4d889bce0so17352795otf.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Mar 2021 14:02:04 -0700 (PDT)
+        Mon, 22 Mar 2021 17:03:11 -0400
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FED8C061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Mar 2021 14:03:10 -0700 (PDT)
+Received: by mail-oi1-x22b.google.com with SMTP id k25so14570172oic.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Mar 2021 14:03:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:references:from:message-id:date:user-agent:mime-version
          :in-reply-to:content-language:content-transfer-encoding;
-        bh=GVI9PNUVxv58ToCrjDIYqik1KsupIaMOp6JJTQa0SbU=;
-        b=chjtDVgqWXnkvauMyKZxQ17+ehGQUJw8+d3Z9y23ButcVhV+FnT5OmHkyMwAh93rHc
-         37dBCH0xpxcNrxOVkLqX/3SQp9f9oUrKfzoyD4gWmE9ZX1RCjeofx6VVlO1gYB7cuoFu
-         DPK+M1ibAW466mDUv7JbKIojV652wKV9Dppe+9pAGyLw2Ue6oJVyk8CaS4BAEghzb4AN
-         exXJHb5ouyv2dwwvkmLTfDeLrW9gXgCiyX/eGlAjzNTTI0jEZZaB5dfeeFtJptKLTfBV
-         etfLZ5b4kxCQbpJYr+XjCCn4So27OQeYrs9aKv78CTEKLGxMbdFry/QJA3m7CO9NydUY
-         yShQ==
+        bh=J+A9ojsnNjMrHE9ArfI7Q+0i6qI+gIjNjX+u2wcLwkw=;
+        b=ssSV4kY1qipo+HgUrIqJwJZXtjviSAd4xuz5qC4DXpD7dpaY6coOBSf7O/Tv843YSX
+         +L9xzhyfYhwkoPQ4O05Zk6Zh2dfULIYbq+qE8AkAf5JngW/eynu/x677EVSIYDN6gbCn
+         CVkDV+hqkR7a+3PIpiIzzGjS5TmyY8U9Ym1WktgReljX9I+tG4TskdJsd66l1A1T+Nwu
+         44F+SkAQUhirAC1wBxFFlsVAmzxnNFhCw0oCpKAbCpn0Fb/jvdhjGCtuHrNYfSL7t4XK
+         A42uqMrN8uM26Wjpxqb0iMkIgtVMqocW9jz9rmPx0QA5vWCEBD62rA7ntrx4Aw3A5qZZ
+         E73Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=GVI9PNUVxv58ToCrjDIYqik1KsupIaMOp6JJTQa0SbU=;
-        b=V9fZIppkcqRxGIFXrTcCPAYbULhywZlZTsMDc7m2nUs12zr89Cz36/T+0oBy/YigZz
-         D+5DJz77G49JlUy/Pl07F1J1daT5mEJfYbkyXcpfMa2pPq3X3BLlXQqFcQ59jzTs6Hye
-         QrflueB0urXmCtCCZ09QaPh57qAlTC2dwX6a2iLyKahx5CFZr7e8LyTi1WShY2WG+8y9
-         C6JtXFLPRPuejcA/pmFHyZ3A/aHdYkHNrXTOiMRbFcwTaHfIK93h+pZ9hXm4ADumiR6L
-         EJ8vFo83D+7f6XsnjzbfoFG1niwUFKwPi1boejIrVZ+92NHExHcZSzurvUybIl4OrItc
-         zYHg==
-X-Gm-Message-State: AOAM530kWmpkOSWpyAgAvTslaFij4S2iXXniG4BjT02CzFjZzjTWoF7b
-        zJ4cVxt4GTwihuHsUu879C2lr20fkCQebfIc
-X-Google-Smtp-Source: ABdhPJw41orAps9fl8e8XGVDdfiiHRr2NQmqfLR1thPwEqZf7t8mOfzze/plYWoWAiRgG+kjm9K7Cw==
-X-Received: by 2002:a05:6830:1c26:: with SMTP id f6mr1445138ote.53.1616446923464;
-        Mon, 22 Mar 2021 14:02:03 -0700 (PDT)
+        bh=J+A9ojsnNjMrHE9ArfI7Q+0i6qI+gIjNjX+u2wcLwkw=;
+        b=REMNJVJ5pfgIxIXYiNcA69wQZqTsx8wirH3s5GPGyS3Yhdborj7OhkOzB4/TY7/bWO
+         P01XBF+O9djoD2PZ8UDXUPYtm/bTJpkGgz4iENrTBJqqoF5kwCfp3vXqieXs2zQZk6Er
+         XJACqlDIF2do0EgBQrEplDDz+4jDx67MkQmtDGwPWNIpWRNeniq1rSu+hJ6KBm1TvI6J
+         TqgHlqfxPBRemZgxH7NADu3jvB3Fs3VM7KGxBFbZM4BN4BA67L0cR+hdwPhRThCiES84
+         iuiiMdC35iLeWxCLc8PyvwIFdD0gx5kuOsH0L+x4HkauLIS+OmgXDajA36zyIMRjMuQi
+         kIKw==
+X-Gm-Message-State: AOAM531PPXo5R/IDZDF/4QaTP06+0U4td6XhMNTjlMELAF4+awUOjADr
+        PNDnAIR0aOZfPB29K4RbL6PaiIw6EH+Dn8oD
+X-Google-Smtp-Source: ABdhPJzYdFQuIv1tG2Dp7uDERs0a7koUI0SZCtJNWz0ClNr21Dy7PtBQdei5kRSYW2By/9RZpoqzVQ==
+X-Received: by 2002:a05:6808:ab0:: with SMTP id r16mr703284oij.34.1616446987678;
+        Mon, 22 Mar 2021 14:03:07 -0700 (PDT)
 Received: from ?IPv6:2806:10b7:2:e880:2c32:cfff:fe8e:de1f? ([2806:10b7:2:e880:2c32:cfff:fe8e:de1f])
-        by smtp.gmail.com with ESMTPSA id g22sm3245746oop.7.2021.03.22.14.02.02
+        by smtp.gmail.com with ESMTPSA id n17sm3409664oic.8.2021.03.22.14.03.06
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Mar 2021 14:02:02 -0700 (PDT)
-Subject: Re: [PATCH 4/5] soc: qcom: wcnss_ctrl: Allow reading firmware-name
- from DT
+        Mon, 22 Mar 2021 14:03:07 -0700 (PDT)
+Subject: Re: [PATCH 5/5] arm64: dts: qcom: msm8916: Enable modem and WiFi
 To:     linux-arm-msm@vger.kernel.org
 References: <20210312003318.3273536-1-bjorn.andersson@linaro.org>
- <20210312003318.3273536-5-bjorn.andersson@linaro.org>
+ <20210312003318.3273536-6-bjorn.andersson@linaro.org>
+ <YFTA8gEPp1x6o/9f@gerhold.net>
 From:   Anibal Limon <anibal.limon@linaro.org>
-Message-ID: <8adb0a00-7443-a480-30b5-45f9ecce3d35@linaro.org>
-Date:   Mon, 22 Mar 2021 15:02:02 -0600
+Message-ID: <4d0c3a46-5657-4e48-f7c7-1b653978b1af@linaro.org>
+Date:   Mon, 22 Mar 2021 15:03:06 -0600
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.8.0
 MIME-Version: 1.0
-In-Reply-To: <20210312003318.3273536-5-bjorn.andersson@linaro.org>
+In-Reply-To: <YFTA8gEPp1x6o/9f@gerhold.net>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 3/11/21 6:33 PM, Bjorn Andersson wrote:
-> The WLAN NV firmware blob differs between platforms, and possibly
-> devices, so add support in the wcnss_ctrl driver for reading the path of
-> this file from DT in order to allow these files to live in a generic
-> file system (or linux-firmware).
+On 3/19/21 9:19 AM, Stephan Gerhold wrote:
+> Hi Bjorn,
 > 
-> The new property is optional and the code falls back to the old filename
-> if the property isn't specified.
+> On Thu, Mar 11, 2021 at 04:33:18PM -0800, Bjorn Andersson wrote:
+>> Enable the modem and WiFi subsystems and specify msm8916 specific
+>> firmware path for these and the WCNSS control service.
+>>
+>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Tested-by: Aníbal Limón <anibal.limon@linaro.org>
-> ---
->   drivers/soc/qcom/wcnss_ctrl.c | 10 +++++++---
->   1 file changed, 7 insertions(+), 3 deletions(-)
+> The changes itself look good to me, but the commit message is really
+> misleading. It does not mention anywhere that the change actually just
+> enables "modem" on apq8016-sbc instead of "msm8916". :)
 > 
-> diff --git a/drivers/soc/qcom/wcnss_ctrl.c b/drivers/soc/qcom/wcnss_ctrl.c
-> index 358526b9de06..2a06d631e415 100644
-> --- a/drivers/soc/qcom/wcnss_ctrl.c
-> +++ b/drivers/soc/qcom/wcnss_ctrl.c
-> @@ -200,6 +200,7 @@ static int wcnss_download_nv(struct wcnss_ctrl *wcnss, bool *expect_cbc)
->   	struct wcnss_download_nv_req *req;
->   	const struct firmware *fw;
->   	struct device *dev = wcnss->dev;
-> +	const char *nvbin = NVBIN_FILE;
->   	const void *data;
->   	ssize_t left;
->   	int ret;
-> @@ -208,10 +209,13 @@ static int wcnss_download_nv(struct wcnss_ctrl *wcnss, bool *expect_cbc)
->   	if (!req)
->   		return -ENOMEM;
->   
-> -	ret = request_firmware(&fw, NVBIN_FILE, dev);
-> +	ret = of_property_read_string(dev->of_node, "firmware-name", &nvbin);
-> +	if (ret < 0 && ret != -EINVAL)
-> +		goto free_req;
-> +
-> +	ret = request_firmware(&fw, nvbin, dev);
->   	if (ret < 0) {
-> -		dev_err(dev, "Failed to load nv file %s: %d\n",
-> -			NVBIN_FILE, ret);
-> +		dev_err(dev, "Failed to load nv file %s: %d\n", nvbin, ret);
->   		goto free_req;
->   	}
->   
+> Also, WCNSS was actually enabled before already (with the default
+> firmware path). In my opinion, it would be clearer to change the
+> firmware-name for it in an extra patch.
+> 
+>> ---
+>>   arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi | 12 ++++++++++++
+>>   arch/arm64/boot/dts/qcom/msm8916.dtsi     |  2 +-
+>>   2 files changed, 13 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+>> index 6aef0c2e4f0a..448e3561ef63 100644
+>> --- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+>> @@ -305,6 +305,12 @@ &mdss {
+>>   	status = "okay";
+>>   };
+>>   
+>> +&mpss {
+>> +	status = "okay";
+>> +
+>> +	firmware-name = "qcom/msm8916/mba.mbn", "qcom/msm8916/modem.mbn";
+>> +};
+>> +
+>>   &pm8916_resin {
+>>   	status = "okay";
+>>   	linux,code = <KEY_VOLUMEDOWN>;
+>> @@ -312,6 +318,8 @@ &pm8916_resin {
+>>   
+>>   &pronto {
+>>   	status = "okay";
+>> +
+>> +	firmware-name = "qcom/msm8916/wcnss.mbn";
+>>   };
+>>   
+> 
+> How do I get a .mbn from the wcnss.{mdt,.b??} files provided in the
+> DB410c firmware package? I guess I should just run them through
+> https://github.com/andersson/pil-squasher?
+> 
+> Also, is the single file format (mbn) preferred now? Not sure if there
+> is any significant difference except having less files laying around.
+
+Same issue here, where can I get mbn file?,
+
+After change the file to use wcnss.mdt this patch works.
+
+Regards,
+Anibal
+> 
+> Thanks,
+> Stephan
+> 
 > 
