@@ -2,98 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B387343E95
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Mar 2021 11:57:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 95126343EC3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Mar 2021 12:03:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230281AbhCVK5B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Mar 2021 06:57:01 -0400
-Received: from ns.iliad.fr ([212.27.33.1]:36080 "EHLO ns.iliad.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230443AbhCVK4p (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Mar 2021 06:56:45 -0400
-X-Greylist: delayed 554 seconds by postgrey-1.27 at vger.kernel.org; Mon, 22 Mar 2021 06:56:44 EDT
-Received: from ns.iliad.fr (localhost [127.0.0.1])
-        by ns.iliad.fr (Postfix) with ESMTP id 00E542105A;
-        Mon, 22 Mar 2021 11:47:30 +0100 (CET)
-Received: from [192.168.108.81] (freebox.vlq16.iliad.fr [213.36.7.13])
-        by ns.iliad.fr (Postfix) with ESMTP id D7A002105F;
-        Mon, 22 Mar 2021 11:47:29 +0100 (CET)
-Subject: Re: [PATCH v11 5/9] drivers: thermal: tsens: Fix bug in sensor enable
- for msm8960
-To:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20210319005228.1250-1-ansuelsmth@gmail.com>
- <20210319005228.1250-6-ansuelsmth@gmail.com>
-From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
-Message-ID: <a9ddd588-234c-36ac-e2b9-0fab294c3944@free.fr>
-Date:   Mon, 22 Mar 2021 11:47:29 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S230363AbhCVLCv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Mar 2021 07:02:51 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:15371 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230267AbhCVLCb (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 22 Mar 2021 07:02:31 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1616410951; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=c2Ecjr3Iz4qTPc2o7wQVldP6f2u2DSZjHJDvRhCW0ks=;
+ b=tpPhX/dKKh2OTUathbAEB1HaQlWbpb/r/f3SZQxN++bdgq/kFhp3imxbsI9LR5VzIr8cXP6t
+ PpQXuFrN8me55DF7oGSz6hAnPPJm8Tqq2SIKgGhHTOTTqa7hT3CI2kQFvzJ8+fU40feB4Y/N
+ dRUESdOYkKDx5SLHVMkPVkhnxrc=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 60587944e3fca7d0a6ad0fbe (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 22 Mar 2021 11:02:28
+ GMT
+Sender: rojay=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 1F21CC433C6; Mon, 22 Mar 2021 11:02:28 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: rojay)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5CCACC433CA;
+        Mon, 22 Mar 2021 11:02:27 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20210319005228.1250-6-ansuelsmth@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Mon Mar 22 11:47:30 2021 +0100 (CET)
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Date:   Mon, 22 Mar 2021 16:32:27 +0530
+From:   rojay@codeaurora.org
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        gregkh@linuxfoundation.org, robh+dt@kernel.org,
+        linux-serial@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        akashast@codeaurora.org, msavaliy@qti.qualcomm.com
+Subject: Re: [PATCH V2 1/2] soc: qcom-geni-se: Cleanup the code to remove
+ proxy votes
+In-Reply-To: <YFOKQKlI3MjMouEA@google.com>
+References: <20210318111009.30365-1-rojay@codeaurora.org>
+ <20210318111009.30365-2-rojay@codeaurora.org> <YFOKQKlI3MjMouEA@google.com>
+Message-ID: <91db2ee226ceb15a255bf7312a7216c1@codeaurora.org>
+X-Sender: rojay@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/03/2021 01:52, Ansuel Smith wrote:
-
-> Device based on tsens VER_0 contains a hardware bug that results in some
-> problem with sensor enablement. Sensor id 6-11 can't be enabled
-> selectively and all of them must be enabled in one step.
+On 2021-03-18 22:43, Matthias Kaehlcke wrote:
+> On Thu, Mar 18, 2021 at 04:40:08PM +0530, Roja Rani Yarubandi wrote:
+>> ICC core and platforms drivers supports sync_state feature, which
+>> ensures that the default ICC BW votes from the bootloader is not
+>> removed until all it's consumers are probes.
+>> 
+>> The proxy votes were needed in case other QUP child drivers
+>> I2C, SPI probes before UART, they can turn off the QUP-CORE clock
+>> which is shared resources for all QUP driver, this causes unclocked
+>> access to HW from earlycon.
+>> 
+>> Given above support from ICC there is no longer need to maintain
+>> proxy votes on QUP-CORE ICC node from QUP wrapper driver for early
+>> console usecase, the default votes won't be removed until real
+>> console is probed.
+>> 
+>> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
+>> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
 > 
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> ---
->  drivers/thermal/qcom/tsens-8960.c | 24 +++++++++++++++++++++---
->  1 file changed, 21 insertions(+), 3 deletions(-)
+> I suggest to mention that this is essentially a revert of commit
+> 048eb908a1f2 ("soc: qcom-geni-se: Add interconnect support to fix
+> earlycon crash"). This makes the life of reviewers easier and it's
+> also good to have the reference in the git history.
 > 
-> diff --git a/drivers/thermal/qcom/tsens-8960.c b/drivers/thermal/qcom/tsens-8960.c
-> index 86585f439985..bdc64d4188bf 100644
-> --- a/drivers/thermal/qcom/tsens-8960.c
-> +++ b/drivers/thermal/qcom/tsens-8960.c
-> @@ -27,9 +27,9 @@
->  #define EN			BIT(0)
->  #define SW_RST			BIT(1)
->  #define SENSOR0_EN		BIT(3)
-> +#define MEASURE_PERIOD		BIT(18)
->  #define SLP_CLK_ENA		BIT(26)
->  #define SLP_CLK_ENA_8660	BIT(24)
-> -#define MEASURE_PERIOD		1
->  #define SENSOR0_SHIFT		3
->  
->  /* INT_STATUS_ADDR bitmasks */
-> @@ -126,17 +126,35 @@ static int resume_8960(struct tsens_priv *priv)
->  static int enable_8960(struct tsens_priv *priv, int id)
->  {
->  	int ret;
-> -	u32 reg, mask;
-> +	u32 reg, mask = BIT(id);
->  
->  	ret = regmap_read(priv->tm_map, CNTL_ADDR, &reg);
->  	if (ret)
->  		return ret;
->  
-> -	mask = BIT(id + SENSOR0_SHIFT);
-> +	/* HARDWARE BUG:
-> +	 * On platform with more than 6 sensors, all the remaining
-> +	 * sensors needs to be enabled all togheder or underfined
 
-s/On platform/On platforms
-s/sensors needs/sensors need
-s/togheder/together
-s/underfined/undefined
+Ok.
 
-Suggested fix up:
+> You could also mention commit 7d3b0b0d8184 ("interconnect: qcom:
+> Use icc_sync_state") in the intro.
+> 
 
-On platforms with more than 6 sensors, all remaining sensors
-must be enabled together, otherwise undefined results are expected.
+Ok.
 
-Regards.
+> I tried to test by first reproducing the original issue without
+> 'sync_state' in the ICC, but wasn't successful, probably something
+> changed in the boot/ICC timing in the meantime ¯\_(ツ)_/¯.
+> 
+
+Need to remove runtime auto suspend support from SPI/I2C as well, as it 
+was
+masking the issue by delaying to turn off the resources by 250ms.
+
+> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
