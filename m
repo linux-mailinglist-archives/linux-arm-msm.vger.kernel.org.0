@@ -2,70 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 76F2E34444B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Mar 2021 14:00:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EE96A344536
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Mar 2021 14:15:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231487AbhCVM7Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Mar 2021 08:59:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57270 "EHLO
+        id S231833AbhCVNOi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Mar 2021 09:14:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231352AbhCVM40 (ORCPT
+        with ESMTP id S233168AbhCVNM1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Mar 2021 08:56:26 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4365CC061756
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Mar 2021 05:56:25 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id e7so19131689edu.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Mar 2021 05:56:25 -0700 (PDT)
+        Mon, 22 Mar 2021 09:12:27 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 383B3C061764
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Mar 2021 06:12:26 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id ce10so21162398ejb.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Mar 2021 06:12:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=zs+ZH9HXMqh8babYlbIqR838NjF1riAx4sjNseIdfRw=;
-        b=x2vM4o/6Wsn/lSI0D6O95oh5osrTnZAFWch/RKQYjcEcMbGvRb6sl6JzQ+FX6nBR2T
-         pwD1Vq/9wzTxLEa1u03ucukGMKAa1u4VmX9kUkRGL7i5L58Ahq33fR6f5QvAeizXzJgk
-         6avDopOGNoPGpvr51XvV8pkzb383P5BHX/Z7xOUV0JdMMdoTSPGfLBvdIP6GB6j7cw/J
-         q2lduXjS32g9R44Q6LkaXLTJBe0jO0Wegftyi2e+qoaL5/hAkHXtQq9XwE3PYvcYAXX5
-         uIzMZ4+5DKGYEAIWsPUaG3Z7Szq57rq3FnQbkkGlgXaypfRHJWtsFrCprdFNeKIcitMN
-         myjw==
+        bh=vS9XPExwcwpS/sfWZcxqbnP/GhS9Af04Lc9nX5pchRc=;
+        b=Ah2tSfHEKrv8EcV4EKhjJGPJg5sscsAfMx4eU6EuBVJ1X5Jfer6HQlTr4ijU7FLVa+
+         gPMezd2FTStiCUcZ8W7OoaTj/N5qxQ9i7sDaRDfy23T06SHJKsba9IgHodu91uN3tU0z
+         1ONZsfenvywItQkohLnepmH1NFCoFd7HesZuELnMF//+ZDvhPNdBKAo2eaNxEhKmGCLz
+         sPsa0dL/i8ajlQIkCTm8Qop2BoioIhEmRl5fmj9fsBwT3kORbJ/BCt9MNwQmxErNvJRP
+         bzLi7eBx+DA41SdYvSo74CTChicNVIOvFhQ6GCvbgKAD78uPlWFFGeR81sArafVU0sz3
+         +6LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=zs+ZH9HXMqh8babYlbIqR838NjF1riAx4sjNseIdfRw=;
-        b=DiOcP2IgUQxiOaXHJRfaTvJmbJc03m1+tiEjFUcIFocBcb0ttUcChr1ZoEIZT09QuP
-         Gv7G3/Y+nNBH5pJoJM66lYLfmpu7TEDMDj9JS453nlp73xMTGvc05nwbRXE1201EVRQF
-         JFWqIe9wf8Tby+Sgl9xZAiJrEbolqVBLegjE7+Q3AgWW1/YbaBE5CbwkCBEh3NtmWHth
-         jYIhhih9yWSrGAGPLTCOfFBF8K2FgwahG057AvY9PrgocwW9yADuiZLa0jIRrAnpIqp8
-         qQTqDsByFCdpgOWVt/gNrrO+BTb5WAF0fhft1dFzYStA0w/vK5+XpidG5haVnfw8vzkK
-         Yw/w==
-X-Gm-Message-State: AOAM533wU1H8Tp/JhI3N5cKUmgqo9IgVO1dFZJ4kqlwLz2TnCytB7Sn6
-        3SGy5zztAYPRjl+5CdTpnB9IaQMFjSWjJv92
-X-Google-Smtp-Source: ABdhPJx0f4ywhsWqQWmPcKkaeoHZsJanVj6wLKqLHWXx1SQoOjZVxgaafrESVD8ugBzylZ4RVVcgXg==
-X-Received: by 2002:a05:6402:9:: with SMTP id d9mr25375592edu.67.1616417784029;
-        Mon, 22 Mar 2021 05:56:24 -0700 (PDT)
-Received: from [192.168.1.54] (hst-221-58.medicom.bg. [84.238.221.58])
-        by smtp.googlemail.com with ESMTPSA id q19sm1849796ejy.50.2021.03.22.05.56.23
+        bh=vS9XPExwcwpS/sfWZcxqbnP/GhS9Af04Lc9nX5pchRc=;
+        b=UNs1l7xso0ojiDDbM3FxlzqBqYxD/CaBIN0jwdI79IAWvTKCfGRACTznu8TYl6Xmih
+         uTJyvoi6UnIL7YnU3DucpXWHxlBxWZxDoQLxyd9uTKWNwmKcSUyAiWkAoCn8Q5idm8iN
+         YipgORd5CrQpVV4QYuvUmZpIXDftT1SVTxtjQIletcqTZ6RHWU2AdJVrFgIuvcKN1L/N
+         Wj8d4CjiR0ey+fkMrnvfeJkpTszyNyXWTbkfiZ/JFh8yR1Lno8mPo7novbco8dQsuOuZ
+         uZUOQjRMaUDoBeAJqpCBhkEo0OGTNEuxgYntxtRXZHzGudFMww+XIjwpaWkV5/ybQ3J8
+         BCww==
+X-Gm-Message-State: AOAM531FDMGeN9TiBXdDc+YloiJzh4Na3jDcRX06oq9vG/zr35HgjVRE
+        7bdcYC+lbWAVPYgbdba13vqmyg==
+X-Google-Smtp-Source: ABdhPJwoFmAEA7HJ76oqHlCXRvV5UiwUkON4dtBzpRuRPRShjj/Kar+DiesTgPfkvHRNLsk/D/Ex2w==
+X-Received: by 2002:a17:907:7785:: with SMTP id ky5mr18739997ejc.133.1616418744845;
+        Mon, 22 Mar 2021 06:12:24 -0700 (PDT)
+Received: from [192.168.1.54] (hst-221-18.medicom.bg. [84.238.221.18])
+        by smtp.googlemail.com with ESMTPSA id j7sm11233154edv.40.2021.03.22.06.12.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Mar 2021 05:56:23 -0700 (PDT)
-Subject: Re: [PATCH v5 3/5] v4l: Add HDR10 static metadata controls
-To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     Ezequiel Garcia <ezequiel@collabora.com>,
-        Nicolas Dufresne <nicolas.dufresne@collabora.com>
-References: <20210209162425.3970393-1-stanimir.varbanov@linaro.org>
- <20210209162425.3970393-4-stanimir.varbanov@linaro.org>
- <77ac3b63-9995-e08f-9e6e-7a7d75c64ec1@xs4all.nl>
+        Mon, 22 Mar 2021 06:12:24 -0700 (PDT)
+Subject: Re: [PATCH v2 24/25] media: venus: helper: Decide work mode
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        stanimir.varbanov@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, mchehab@kernel.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     dikshita@codeaurora.org, jonathan@marek.ca, vgarodia@codeaurora.org
+References: <20210312173039.1387617-1-bryan.odonoghue@linaro.org>
+ <20210312173039.1387617-25-bryan.odonoghue@linaro.org>
 From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <444bb318-169f-6d30-2b7c-31d19d98a548@linaro.org>
-Date:   Mon, 22 Mar 2021 14:56:22 +0200
+Message-ID: <c38da904-28da-f713-ba92-f6bc42603a3c@linaro.org>
+Date:   Mon, 22 Mar 2021 15:12:23 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.7.1
 MIME-Version: 1.0
-In-Reply-To: <77ac3b63-9995-e08f-9e6e-7a7d75c64ec1@xs4all.nl>
+In-Reply-To: <20210312173039.1387617-25-bryan.odonoghue@linaro.org>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -73,132 +71,123 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Hans,
+Hi,
 
-On 3/16/21 2:16 PM, Hans Verkuil wrote:
-> On 09/02/2021 17:24, Stanimir Varbanov wrote:
->> Introduce Content light level and Mastering display colour
->> volume Colorimetry compound controls with relevant payload
->> structures and validation.
->>
->> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
->> ---
->>  drivers/media/v4l2-core/v4l2-ctrls.c | 67 ++++++++++++++++++++++++++++
->>  include/media/v4l2-ctrls.h           |  4 ++
->>  include/uapi/linux/v4l2-controls.h   | 31 +++++++++++++
->>  include/uapi/linux/videodev2.h       |  3 ++
->>  4 files changed, 105 insertions(+)
->>
->> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
->> index 335cf354f51b..8bd3cf0e1e4f 100644
->> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
->> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
->> @@ -1205,6 +1205,8 @@ const char *v4l2_ctrl_get_name(u32 id)
->>  	/* Colorimetry controls */
->>  	/* Keep the order of the 'case's the same as in v4l2-controls.h! */
->>  	case V4L2_CID_COLORIMETRY_CLASS:	return "Colorimetry Controls";
->> +	case V4L2_CID_COLORIMETRY_HDR10_CLL_INFO:		return "HDR10 Content Light Info";
->> +	case V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY:	return "HDR10 Mastering Display";
->>  	default:
->>  		return NULL;
->>  	}
->> @@ -1491,6 +1493,12 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
->>  		*type = V4L2_CTRL_TYPE_AREA;
->>  		*flags |= V4L2_CTRL_FLAG_READ_ONLY;
->>  		break;
->> +	case V4L2_CID_COLORIMETRY_HDR10_CLL_INFO:
->> +		*type = V4L2_CTRL_TYPE_HDR10_CLL_INFO;
->> +		break;
->> +	case V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY:
->> +		*type = V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY;
->> +		break;
->>  	default:
->>  		*type = V4L2_CTRL_TYPE_INTEGER;
->>  		break;
->> @@ -1786,6 +1794,12 @@ static void std_log(const struct v4l2_ctrl *ctrl)
->>  	case V4L2_CTRL_TYPE_FWHT_PARAMS:
->>  		pr_cont("FWHT_PARAMS");
->>  		break;
->> +	case V4L2_CTRL_TYPE_HDR10_CLL_INFO:
->> +		pr_cont("HDR10_CLL_INFO");
->> +		break;
->> +	case V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY:
->> +		pr_cont("HDR10_MASTERING_DISPLAY");
->> +		break;
->>  	default:
->>  		pr_cont("unknown type %d", ctrl->type);
->>  		break;
->> @@ -1838,6 +1852,7 @@ static int std_validate_compound(const struct v4l2_ctrl *ctrl, u32 idx,
->>  	struct v4l2_ctrl_hevc_sps *p_hevc_sps;
->>  	struct v4l2_ctrl_hevc_pps *p_hevc_pps;
->>  	struct v4l2_ctrl_hevc_slice_params *p_hevc_slice_params;
->> +	struct v4l2_ctrl_hdr10_mastering_display *p_hdr10_mastering;
->>  	struct v4l2_area *area;
->>  	void *p = ptr.p + idx * ctrl->elem_size;
->>  	unsigned int i;
->> @@ -2133,6 +2148,52 @@ static int std_validate_compound(const struct v4l2_ctrl *ctrl, u32 idx,
->>  		zero_padding(*p_hevc_slice_params);
->>  		break;
->>  
->> +	case V4L2_CTRL_TYPE_HDR10_CLL_INFO:
->> +		break;
->> +
->> +	case V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY:
->> +		p_hdr10_mastering = p;
->> +
->> +		for (i = 0; i < 3; ++i) {
->> +			if (p_hdr10_mastering->display_primaries_x[i] <
->> +				V4L2_HDR10_MASTERING_PRIMARIES_X_LOW ||
->> +			    p_hdr10_mastering->display_primaries_x[i] >
->> +				V4L2_HDR10_MASTERING_PRIMARIES_X_HIGH ||
->> +			    p_hdr10_mastering->display_primaries_y[i] <
->> +				V4L2_HDR10_MASTERING_PRIMARIES_Y_LOW ||
->> +			    p_hdr10_mastering->display_primaries_y[i] >
->> +				V4L2_HDR10_MASTERING_PRIMARIES_Y_HIGH)
->> +				return -EINVAL;
->> +		}
->> +
->> +		if (p_hdr10_mastering->white_point_x <
->> +			V4L2_HDR10_MASTERING_WHITE_POINT_X_LOW ||
->> +		    p_hdr10_mastering->white_point_x >
->> +			V4L2_HDR10_MASTERING_WHITE_POINT_X_HIGH ||
->> +		    p_hdr10_mastering->white_point_y <
->> +			V4L2_HDR10_MASTERING_WHITE_POINT_Y_LOW ||
->> +		    p_hdr10_mastering->white_point_y >
->> +			V4L2_HDR10_MASTERING_WHITE_POINT_Y_HIGH)
->> +			return -EINVAL;
->> +
->> +		if (p_hdr10_mastering->max_display_mastering_luminance <
->> +			V4L2_HDR10_MASTERING_MAX_LUMA_LOW ||
->> +		    p_hdr10_mastering->max_display_mastering_luminance >
->> +			V4L2_HDR10_MASTERING_MAX_LUMA_HIGH ||
->> +		    p_hdr10_mastering->min_display_mastering_luminance <
->> +			V4L2_HDR10_MASTERING_MIN_LUMA_LOW ||
->> +		    p_hdr10_mastering->min_display_mastering_luminance >
->> +			V4L2_HDR10_MASTERING_MIN_LUMA_HIGH)
->> +			return -EINVAL;
->> +
->> +		if (p_hdr10_mastering->max_display_mastering_luminance ==
->> +			V4L2_HDR10_MASTERING_MAX_LUMA_LOW &&
->> +		    p_hdr10_mastering->min_display_mastering_luminance ==
->> +			V4L2_HDR10_MASTERING_MIN_LUMA_HIGH)
+On 3/12/21 7:30 PM, Bryan O'Donoghue wrote:
+> From: Dikshita Agarwal <dikshita@codeaurora.org>
 > 
-> I had to think about this one :-)
+> Decide work mode for encoder and decoder based on different
+> use-cases.
 > 
-> Isn't it clearer to write:
+> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  drivers/media/platform/qcom/venus/helpers.c | 31 ++++++++++++++++++++-
+>  drivers/media/platform/qcom/venus/helpers.h |  2 +-
+>  drivers/media/platform/qcom/venus/vdec.c    |  2 +-
+>  drivers/media/platform/qcom/venus/venc.c    |  2 +-
+>  4 files changed, 33 insertions(+), 4 deletions(-)
 > 
-> 		if (p_hdr10_mastering->min_display_mastering_luminance >=
-> 		    p_hdr10_mastering->max_display_mastering_luminance)
-> 
-> (even though it can't be >, but >= is probably more robust and future proof)
-> 
-> And is it indeed invalid if both are the same?
+> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+> index 77ffb8fbb47f..dc8ef13d0c95 100644
+> --- a/drivers/media/platform/qcom/venus/helpers.c
+> +++ b/drivers/media/platform/qcom/venus/helpers.c
+> @@ -18,6 +18,9 @@
+>  #include "hfi_platform.h"
+>  #include "hfi_parser.h"
+>  
+> +#define NUM_MBS_720P	(((1280 + 15) >> 4) * ((720 + 15) >> 4))
+> +#define NUM_MBS_4K	(((4096 + 15) >> 4) * ((2304 + 15) >> 4))
+> +
+>  struct intbuf {
+>  	struct list_head list;
+>  	u32 type;
+> @@ -1090,14 +1093,40 @@ int venus_helper_set_output_resolution(struct venus_inst *inst,
+>  }
+>  EXPORT_SYMBOL_GPL(venus_helper_set_output_resolution);
+>  
+> -int venus_helper_set_work_mode(struct venus_inst *inst, u32 mode)
+> +static u32 venus_helper_get_work_mode(struct venus_inst *inst)
+> +{
+> +	u32 mode;
+> +	u32 num_mbs;
+> +
+> +	mode = VIDC_WORK_MODE_2;
+> +	if (IS_V6(inst->core)) {
 
-This what the ITU-T Rec. H.265 spec says:
+Dikshita, I think the decisions made here are valid for v4 too? If so
+this IS_V6 check is not needed.
 
-"When max_display_mastering_luminance is equal to 50 000,
-min_display_mastering_luminance shall not be equal to 50 000."
-
+> +		if (inst->session_type == VIDC_SESSION_TYPE_DEC) {
+> +			num_mbs = (ALIGN(inst->height, 16) * ALIGN(inst->width, 16)) / 256;
+> +			if (inst->hfi_codec == HFI_VIDEO_CODEC_MPEG2 ||
+> +			    inst->pic_struct != HFI_INTERLACE_FRAME_PROGRESSIVE ||
+> +			    num_mbs <= NUM_MBS_720P)
+> +				mode = VIDC_WORK_MODE_1;
+> +		} else {
+> +			num_mbs = (ALIGN(inst->out_height, 16) * ALIGN(inst->out_width, 16)) / 256;
+> +			if (inst->hfi_codec == HFI_VIDEO_CODEC_VP8 &&
+> +			    num_mbs <= NUM_MBS_4K)
+> +				mode = VIDC_WORK_MODE_1;
+> +		}
+> +	}
+> +
+> +	return mode;
+> +}
+> +
+> +int venus_helper_set_work_mode(struct venus_inst *inst)
+>  {
+>  	const u32 ptype = HFI_PROPERTY_PARAM_WORK_MODE;
+>  	struct hfi_video_work_mode wm;
+> +	u32 mode;
+>  
+>  	if (!IS_V4(inst->core) && !IS_V6(inst->core))
+>  		return 0;
+>  
+> +	mode = venus_helper_get_work_mode(inst);
+>  	wm.video_work_mode = mode;
+>  	return hfi_session_set_property(inst, ptype, &wm);
+>  }
+> diff --git a/drivers/media/platform/qcom/venus/helpers.h b/drivers/media/platform/qcom/venus/helpers.h
+> index 98106e6eee85..e6269b4be3af 100644
+> --- a/drivers/media/platform/qcom/venus/helpers.h
+> +++ b/drivers/media/platform/qcom/venus/helpers.h
+> @@ -32,7 +32,7 @@ int venus_helper_set_input_resolution(struct venus_inst *inst,
+>  int venus_helper_set_output_resolution(struct venus_inst *inst,
+>  				       unsigned int width, unsigned int height,
+>  				       u32 buftype);
+> -int venus_helper_set_work_mode(struct venus_inst *inst, u32 mode);
+> +int venus_helper_set_work_mode(struct venus_inst *inst);
+>  int venus_helper_set_format_constraints(struct venus_inst *inst);
+>  int venus_helper_set_num_bufs(struct venus_inst *inst, unsigned int input_bufs,
+>  			      unsigned int output_bufs,
+> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+> index fdc9984acb70..0fe4863371e2 100644
+> --- a/drivers/media/platform/qcom/venus/vdec.c
+> +++ b/drivers/media/platform/qcom/venus/vdec.c
+> @@ -655,7 +655,7 @@ static int vdec_output_conf(struct venus_inst *inst)
+>  	u32 ptype;
+>  	int ret;
+>  
+> -	ret = venus_helper_set_work_mode(inst, VIDC_WORK_MODE_2);
+> +	ret = venus_helper_set_work_mode(inst);
+>  	if (ret)
+>  		return ret;
+>  
+> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+> index 505d092dc433..83425fa8df2d 100644
+> --- a/drivers/media/platform/qcom/venus/venc.c
+> +++ b/drivers/media/platform/qcom/venus/venc.c
+> @@ -550,7 +550,7 @@ static int venc_set_properties(struct venus_inst *inst)
+>  	u32 profile, level;
+>  	int ret;
+>  
+> -	ret = venus_helper_set_work_mode(inst, VIDC_WORK_MODE_2);
+> +	ret = venus_helper_set_work_mode(inst);
+>  	if (ret)
+>  		return ret;
+>  
+> 
 
 -- 
 regards,
