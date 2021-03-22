@@ -2,105 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F645344AFE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Mar 2021 17:19:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 97A82344B35
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Mar 2021 17:26:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231639AbhCVQSr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Mar 2021 12:18:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44858 "EHLO
+        id S231429AbhCVQ0V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Mar 2021 12:26:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230500AbhCVQSP (ORCPT
+        with ESMTP id S231808AbhCVQ0E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Mar 2021 12:18:15 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 465FBC061764
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Mar 2021 09:18:14 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id b7so22264540ejv.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Mar 2021 09:18:14 -0700 (PDT)
+        Mon, 22 Mar 2021 12:26:04 -0400
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A490C061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Mar 2021 09:26:04 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id t18so8735748pjs.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Mar 2021 09:26:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=5fPU70P+apIZaZ90738281RBQVtiFO6xyPzB24/nFj0=;
-        b=PPVMKoO2LmrxB/EqF6MdsVCuOvCwzdnYIGu2CT53plAQh+yZIwJP+JPbBQG8Mez/X4
-         dL+oIx21/VF4Hq39I/bVUmtrzWJmFH7xgszYCiT6J/He6X7upD15585k4QOPFADu+/eD
-         QGre1T0qcLb0GWCg+tAd2MOaQpSFdYMLRvJ9ocygy2vTtaMWSScKS0tdYl6wOAWqz4wo
-         LuanlAHsC/rGWiQE/jkEUFFhBiiHpYDaYCa8eUN8gX7TC4Pna+GrsqForZ85Nrxp3sbW
-         U9FgvTr2gCIpDVhOQvLw9b1r+gGjYEy2RnlbmW5LH+1/GPpC1dGpGaafVjfP69uGspZ+
-         3Chg==
+        bh=LdoGx5oDl8gk5x9p4tYOogHfvxPqQ4lONZ8abnnWI5s=;
+        b=CXHsrE0Ycxw/IfmXoMWR4BugaH4HPKEnfCCZL0DyKEpKpPERuTUkAaILqb3tg2zqwH
+         xowcxFSgq0w8E9eafAxpCLw+7nS5Ee9fsfQbBub1XF6M6B7juALdmPNis8pmoF1ouoHh
+         nesbXKk1Xtb6BFEf6NOBPjtk04Z5zfDVFEMsc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=5fPU70P+apIZaZ90738281RBQVtiFO6xyPzB24/nFj0=;
-        b=CC4cJwN5GDevHWTM/iaceNadbPLSq2TCjEryRDYpvEvOK0cVyrpeqaRBHTLtYFR1lV
-         BSlTq6UPIX+80wEefbLPy/B4NrwtAAKQ43gGvHl9P4VfTrN2exDYw3vr7pKiamiZ09/x
-         dlmIYUToCHuTfrd+66MZzdibAobXT9N9jG0uDLgUlPNck5gvoaVM+FC8zZGfAnvEcQPw
-         eG8tBid79ysxkRwrhRK/Gg/4REPHaNLqvNitt7Qiss6xH7/QKHWPiwHgmAzudjNpD0fm
-         FH5qv4Nrll08lSVaCHMp0MXbN1zAFsOJycrYcOlnVYhIRVbNyOWUaQ3GoA6nnkZshyy6
-         tMQQ==
-X-Gm-Message-State: AOAM532U+tMCsOGtJAjZSPlf/uBXcwEtRWqNzuGhlQdWPPaF66Kd5Cci
-        lsG7l67ZgdUHoKgut7Et/QBZZg==
-X-Google-Smtp-Source: ABdhPJxWxOTWcNLPwlbFuHUTnCQvbb7chDavRLIX6ffZBF7loKDa89ZLnniTNDnUEtQqJ6ccAuewSw==
-X-Received: by 2002:a17:906:b316:: with SMTP id n22mr539237ejz.249.1616429892990;
-        Mon, 22 Mar 2021 09:18:12 -0700 (PDT)
-Received: from maple.lan (cpc141216-aztw34-2-0-cust174.18-1.cable.virginm.net. [80.7.220.175])
-        by smtp.gmail.com with ESMTPSA id q12sm9950268ejy.91.2021.03.22.09.18.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Mar 2021 09:18:12 -0700 (PDT)
-Date:   Mon, 22 Mar 2021 16:18:10 +0000
-From:   Daniel Thompson <daniel.thompson@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, Lee Jones <lee.jones@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>, Pavel Machek <pavel@ucw.cz>,
-        Dan Murphy <dmurphy@ti.com>, Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        bh=LdoGx5oDl8gk5x9p4tYOogHfvxPqQ4lONZ8abnnWI5s=;
+        b=fvgH2wtlTBYZqk+n65abMLg9sBRjVLOJgvWNTx4MIcVSYcWWtYlOOiGS3eyvT7guRe
+         2ZLprbInITL8tKMAFTK/2kYKxk3VjsJuQh3e46MwbpMuNpM27ztAeHNbk5zcMsvVsW1l
+         EKmSV/MOXJN/RNd4M78Lb1KiiaZD2f08QyEMjedbBpxUZOef1U5Ch1JH25hEp3zZHJyn
+         wrNMtEO8VE7GuLM5WWTjewxqWPe639VRTK/MT+keCbOTmgyNaxmZwLHw95h8hek1F/ua
+         1s2tPlusWhWk7X6ArxDHuF5mRU4kPpfwQsGrCQDuFWGnqgep5GHyq6aqpllAFJwzto7h
+         Cypg==
+X-Gm-Message-State: AOAM532KA8SVjz/oRChBORvfgf+XPisxHNXliEPk06O8Ui8ugJ7lB+IT
+        cVCUxkKECBeJoV+Jie+T3DM38g==
+X-Google-Smtp-Source: ABdhPJy7SFdYJZMBr+cLAhIFydT26KK7t0PO36o7RilHCUXk20IMO6kcI9wziE53YpcwYc5b6MeBKQ==
+X-Received: by 2002:a17:902:be0c:b029:e6:f0b:91ab with SMTP id r12-20020a170902be0cb02900e60f0b91abmr492009pls.2.1616430363930;
+        Mon, 22 Mar 2021 09:26:03 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:90a9:b908:f93a:2f78])
+        by smtp.gmail.com with UTF8SMTPSA id 12sm13106117pgw.18.2021.03.22.09.26.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Mar 2021 09:26:03 -0700 (PDT)
+Date:   Mon, 22 Mar 2021 09:26:01 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kiran Gunda <kgunda@codeaurora.org>,
-        dri-devel@lists.freedesktop.org, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org
-Subject: Re: [PATCH 2/2] video: backlight: qcom-wled: Add PMI8994 compatible
-Message-ID: <20210322161810.biagj2qro66rv4gt@maple.lan>
-References: <20210228124106.135812-1-konrad.dybcio@somainline.org>
- <20210228124106.135812-2-konrad.dybcio@somainline.org>
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: sc7180: Add pompom rev3
+Message-ID: <YFjFGbFdiS5gARhs@google.com>
+References: <20210316011516.1314686-1-mka@chromium.org>
+ <20210315181509.v3.2.I4138c3edee23d1efa637eef51e841d9d2e266659@changeid>
+ <CAD=FV=XxTuFSosYFcpvbTUMfrAkaLbg3QvqBwhrt4niVzDRN9w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20210228124106.135812-2-konrad.dybcio@somainline.org>
+In-Reply-To: <CAD=FV=XxTuFSosYFcpvbTUMfrAkaLbg3QvqBwhrt4niVzDRN9w@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Feb 28, 2021 at 01:41:05PM +0100, Konrad Dybcio wrote:
-> Add a compatible for PMI8994 WLED. It uses the V4 of WLED IP.
+On Fri, Mar 19, 2021 at 08:12:40AM -0700, Doug Anderson wrote:
+> Hi,
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-
-Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
-
-
-Daniel.
-
-
-> ---
->  drivers/video/backlight/qcom-wled.c | 1 +
->  1 file changed, 1 insertion(+)
+> On Mon, Mar 15, 2021 at 6:15 PM Matthias Kaehlcke <mka@chromium.org> wrote:
+> >
+> > The only kernel visible change with respect to rev2 is that pompom
+> > rev3 changed the charger thermistor from a 47k to a 100k NTC to use
+> > a thermistor which is supported by the PM6150 ADC driver.
+> >
+> > Disable the charger thermal zone for pompom rev1 and rev2 to avoid
+> > the use of bogus temperature values from the unsupported thermistor.
+> >
+> > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> > ---
+> >
+> > Changes in v3:
+> > - don't add LOCK key
+> >
+> > Changes in v2:
+> > - moved keyboard definition to sc7180-trogdor-pompom.dtsi instead
+> >   of duplicating it, use cros-ec keyboard for rev1
+> > - squashed with 'arm64: dts: qcom: sc7180: pompom: Disable charger
+> >   thermal zone for rev1 and rev2'
+> >
+> >  arch/arm64/boot/dts/qcom/Makefile             |  2 +
+> >  .../dts/qcom/sc7180-trogdor-pompom-r1.dts     | 12 ++++++
+> >  .../dts/qcom/sc7180-trogdor-pompom-r2-lte.dts |  4 +-
+> >  .../dts/qcom/sc7180-trogdor-pompom-r2.dts     | 38 +++++--------------
+> >  .../dts/qcom/sc7180-trogdor-pompom-r3-lte.dts | 14 +++++++
+> >  .../dts/qcom/sc7180-trogdor-pompom-r3.dts     | 15 ++++++++
+> >  .../boot/dts/qcom/sc7180-trogdor-pompom.dtsi  | 29 ++++++++++++++
+> >  7 files changed, 83 insertions(+), 31 deletions(-)
+> >  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3-lte.dts
+> >  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3.dts
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> > index a81966d59cf7..11aa83ca798f 100644
+> > --- a/arch/arm64/boot/dts/qcom/Makefile
+> > +++ b/arch/arm64/boot/dts/qcom/Makefile
+> > @@ -49,6 +49,8 @@ dtb-$(CONFIG_ARCH_QCOM)       += sc7180-trogdor-pompom-r1.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-pompom-r1-lte.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-pompom-r2.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-pompom-r2-lte.dtb
+> > +dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-pompom-r3.dtb
+> > +dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-pompom-r3-lte.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-r1.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-r1-lte.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)        += sdm630-sony-xperia-ganges-kirin.dtb
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dts
+> > index e720e7bd0d70..7f87877408c5 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dts
+> > @@ -9,11 +9,23 @@
+> >
+> >  #include "sc7180-trogdor-pompom.dtsi"
+> >
+> > +/delete-node/ keyboard_controller;
 > 
-> diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
-> index 3bc7800eb0a9..497b9035a908 100644
-> --- a/drivers/video/backlight/qcom-wled.c
-> +++ b/drivers/video/backlight/qcom-wled.c
-> @@ -1704,6 +1704,7 @@ static int wled_remove(struct platform_device *pdev)
->  
->  static const struct of_device_id wled_match_table[] = {
->  	{ .compatible = "qcom,pm8941-wled", .data = (void *)3 },
-> +	{ .compatible = "qcom,pmi8994-wled", .data = (void *)4 },
->  	{ .compatible = "qcom,pmi8998-wled", .data = (void *)4 },
->  	{ .compatible = "qcom,pm660l-wled", .data = (void *)4 },
->  	{ .compatible = "qcom,pm8150l-wled", .data = (void *)5 },
-> -- 
-> 2.30.1
+> So I just tried to compile your patch and I found that it doesn't
+> compile. :( The above needs to be:
+> 
+> /delete-node/ &keyboard_controller;
+
+I swear I did a test build, it seems I did that build in another
+kernel tree :/
