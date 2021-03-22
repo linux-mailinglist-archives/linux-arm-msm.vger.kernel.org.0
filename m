@@ -2,26 +2,26 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EC89A344D57
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Mar 2021 18:33:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C5DD6344D52
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Mar 2021 18:33:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231484AbhCVRch (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Mar 2021 13:32:37 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:61048 "EHLO
+        id S231379AbhCVRcf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Mar 2021 13:32:35 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:21246 "EHLO
         alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231186AbhCVRcM (ORCPT
+        with ESMTP id S229904AbhCVRcJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Mar 2021 13:32:12 -0400
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 22 Mar 2021 10:32:12 -0700
+        Mon, 22 Mar 2021 13:32:09 -0400
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 22 Mar 2021 10:32:09 -0700
 X-QCInternal: smtphost
 Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 22 Mar 2021 10:32:10 -0700
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 22 Mar 2021 10:32:06 -0700
 X-QCInternal: smtphost
 Received: from c-sanm-linux.qualcomm.com ([10.206.25.31])
   by ironmsg02-blr.qualcomm.com with ESMTP; 22 Mar 2021 23:01:35 +0530
 Received: by c-sanm-linux.qualcomm.com (Postfix, from userid 2343233)
-        id CA99816FE; Mon, 22 Mar 2021 23:01:34 +0530 (IST)
+        id D20943807; Mon, 22 Mar 2021 23:01:34 +0530 (IST)
 From:   Sandeep Maheswaram <sanm@codeaurora.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -35,9 +35,9 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Manu Gautam <mgautam@codeaurora.org>,
         Sandeep Maheswaram <sanm@codeaurora.org>
-Subject: [PATCH v5 1/4] usb: dwc3: core: Host wake up support from system suspend
-Date:   Mon, 22 Mar 2021 23:01:17 +0530
-Message-Id: <1616434280-32635-2-git-send-email-sanm@codeaurora.org>
+Subject: [PATCH v5 2/4] usb: dwc3: host: Add suspend_quirk for dwc3 host
+Date:   Mon, 22 Mar 2021 23:01:18 +0530
+Message-Id: <1616434280-32635-3-git-send-email-sanm@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1616434280-32635-1-git-send-email-sanm@codeaurora.org>
 References: <1616434280-32635-1-git-send-email-sanm@codeaurora.org>
@@ -45,44 +45,114 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Avoiding phy powerdown when wakeup capable devices are connected.
+Adding suspend quirk function for dwc3 host which will be called
+during xhci suspend.
+Setting hs_phy_mode, ss_phy_mode , phy_power_off flags and phy mode
+during host suspend.
 
 Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
 ---
- drivers/usb/dwc3/core.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/usb/dwc3/core.h |  3 +++
+ drivers/usb/dwc3/host.c | 58 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 61 insertions(+)
 
-diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-index 94fdbe5..9ecd7ac 100644
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -1702,7 +1702,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
- 		dwc3_core_exit(dwc);
- 		break;
- 	case DWC3_GCTL_PRTCAP_HOST:
--		if (!PMSG_IS_AUTO(msg)) {
-+		if (!PMSG_IS_AUTO(msg) && dwc->phy_power_off) {
- 			dwc3_core_exit(dwc);
- 			break;
- 		}
-@@ -1763,13 +1763,15 @@ static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
- 		spin_unlock_irqrestore(&dwc->lock, flags);
- 		break;
- 	case DWC3_GCTL_PRTCAP_HOST:
--		if (!PMSG_IS_AUTO(msg)) {
-+		if (!PMSG_IS_AUTO(msg) && dwc->phy_power_off) {
- 			ret = dwc3_core_init_for_resume(dwc);
- 			if (ret)
- 				return ret;
- 			dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_HOST);
- 			break;
--		}
-+		} else
-+			dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_HOST);
+diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
+index ce6bd84..f05546c 100644
+--- a/drivers/usb/dwc3/core.h
++++ b/drivers/usb/dwc3/core.h
+@@ -1113,6 +1113,9 @@ struct dwc3 {
+ 
+ 	bool			phys_ready;
+ 
++	unsigned int            hs_phy_mode;
++	bool			phy_power_off;
 +
- 		/* Restore GUSB2PHYCFG bits that were modified in suspend */
- 		reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
- 		if (dwc->dis_u2_susphy_quirk)
+ 	struct ulpi		*ulpi;
+ 	bool			ulpi_ready;
+ 
+diff --git a/drivers/usb/dwc3/host.c b/drivers/usb/dwc3/host.c
+index f29a264..3db042c 100644
+--- a/drivers/usb/dwc3/host.c
++++ b/drivers/usb/dwc3/host.c
+@@ -11,6 +11,13 @@
+ #include <linux/platform_device.h>
+ 
+ #include "core.h"
++#include "../host/xhci.h"
++#include "../host/xhci-plat.h"
++int xhci_dwc3_suspend_quirk(struct usb_hcd *hcd);
++
++static const struct xhci_plat_priv xhci_plat_dwc3_xhci = {
++	.suspend_quirk = xhci_dwc3_suspend_quirk,
++};
+ 
+ static int dwc3_host_get_irq(struct dwc3 *dwc)
+ {
+@@ -115,6 +122,13 @@ int dwc3_host_init(struct dwc3 *dwc)
+ 		}
+ 	}
+ 
++	ret = platform_device_add_data(xhci, &xhci_plat_dwc3_xhci,
++			sizeof(struct xhci_plat_priv));
++	if (ret) {
++		dev_err(dwc->dev, "failed to add data to xHCI\n");
++		goto err;
++	}
++
+ 	ret = platform_device_add(xhci);
+ 	if (ret) {
+ 		dev_err(dwc->dev, "failed to register xHCI device\n");
+@@ -127,6 +141,50 @@ int dwc3_host_init(struct dwc3 *dwc)
+ 	return ret;
+ }
+ 
++static void dwc3_set_phy_mode(struct usb_hcd *hcd)
++{
++
++	int i, num_ports;
++	u32 reg;
++	unsigned int ss_phy_mode = 0;
++	struct dwc3 *dwc = dev_get_drvdata(hcd->self.controller->parent);
++	struct xhci_hcd	*xhci_hcd = hcd_to_xhci(hcd);
++
++	dwc->hs_phy_mode = 0;
++
++	reg = readl(&xhci_hcd->cap_regs->hcs_params1);
++
++	num_ports = HCS_MAX_PORTS(reg);
++	for (i = 0; i < num_ports; i++) {
++		reg = readl(&xhci_hcd->op_regs->port_status_base + i * 0x04);
++		if (reg & PORT_PE) {
++			if (DEV_HIGHSPEED(reg) || DEV_FULLSPEED(reg))
++				dwc->hs_phy_mode |= PHY_MODE_USB_HOST_HS;
++			else if (DEV_LOWSPEED(reg))
++				dwc->hs_phy_mode |= PHY_MODE_USB_HOST_LS;
++
++			if (DEV_SUPERSPEED(reg))
++				ss_phy_mode |= PHY_MODE_USB_HOST_SS;
++		}
++	}
++	phy_set_mode(dwc->usb2_generic_phy, dwc->hs_phy_mode);
++	phy_set_mode(dwc->usb3_generic_phy, ss_phy_mode);
++}
++
++int xhci_dwc3_suspend_quirk(struct usb_hcd *hcd)
++{
++	struct dwc3 *dwc = dev_get_drvdata(hcd->self.controller->parent);
++
++	dwc3_set_phy_mode(hcd);
++
++	dwc->phy_power_off = true;
++
++	if (usb_wakeup_enabled_descendants(hcd->self.root_hub))
++		dwc->phy_power_off = false;
++
++	return 0;
++}
++
+ void dwc3_host_exit(struct dwc3 *dwc)
+ {
+ 	platform_device_unregister(dwc->xhci);
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
