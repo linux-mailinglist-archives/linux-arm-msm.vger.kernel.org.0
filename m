@@ -2,155 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D4AE5343AD6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Mar 2021 08:42:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A444343BF0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Mar 2021 09:40:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229866AbhCVHlx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Mar 2021 03:41:53 -0400
-Received: from mail-lf1-f41.google.com ([209.85.167.41]:33504 "EHLO
-        mail-lf1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230021AbhCVHlW (ORCPT
+        id S229508AbhCVIkK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Mar 2021 04:40:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58188 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229871AbhCVIjy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Mar 2021 03:41:22 -0400
-Received: by mail-lf1-f41.google.com with SMTP id o126so10183250lfa.0;
-        Mon, 22 Mar 2021 00:41:20 -0700 (PDT)
+        Mon, 22 Mar 2021 04:39:54 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAD9BC061756
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Mar 2021 01:39:51 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id y6so18261743eds.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Mar 2021 01:39:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=WosURJkM/PKSCOw9xPERzj9fjDA03BThhpk0x/4VEXg=;
+        b=Xmw1I0kVglEkkyuysEP1PPTcEa0qNfUT+YiRUf21xzme6vAcGVqGQFhILRd5KF6HQT
+         oAFfhdwqyw/7k+Z2aHghIGttZFXr1qMivDnMOZCpx8s5pSWybC9p5wS1T/12dE6axlRE
+         XAlEAguYbFxtFpFCih0t7ANGSfFkAXJPAyhS+Jg6Q8zR7vgp8MQJsJZwV5QH4Lv271/e
+         lMaD1/D08eqYnnkHs2fb3tKFeeRsUuQqLNmnsRV+6ktK6/aHy3TmEZc2QmGgIgILxbUb
+         0fyOqeOpSaLYJh4YvLz/ximI7JeQMp89Wpc2roOfrbULHCS6TVt3Xn9qBMNloAPNH+ra
+         IZWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition;
-        bh=9OvoXTfYE4NotW19A5lNKAEwdwJKknjVSZLpfYohfiw=;
-        b=VzC4FcgfWmpRvAY1ZjHnkHhhR8pff7riEIOnn1jcmr1/jknLwznzqfD5EvK9rTzPmz
-         r5lRU3/ht0h/yFd/8CklvGrYUFFWmL96EJ06jQEueph3puBRPRI2bKDvIS8l1fDm9ayW
-         FGUDlj+3m8e8Nf4KpR/D363tYrcuJVQJe7DmMJ5hvjB4No4GtqkN/4fQIGnt1nDvT2pd
-         +jtBZy7FEPhbDKiA5J7JpQhJuIgdToSoV5PkUlT9dPzGqwSVfNEtYNFwAWwCGVEBQADa
-         ulCEJXHxauGfA4o8vazsS0J1csuLPfyK68+MVK34LKvGTpOzxfnbQkTl7zM66zhcfhDG
-         g2Iw==
-X-Gm-Message-State: AOAM530jBzBA1RB7NXgnpIxqR2eB6/u71YdWGjDJtjtIHjVEtDyVNFYF
-        eGNrXxJDp2rp1zUIiJ2IOEA=
-X-Google-Smtp-Source: ABdhPJzjl/BCA7ObW6HNjx3diUaqpRbdVbzl+Zwdos1ACNDo5uSXH9iWMVBGSZK7KTlvXmN4GMDRew==
-X-Received: by 2002:ac2:5519:: with SMTP id j25mr8615753lfk.220.1616398879758;
-        Mon, 22 Mar 2021 00:41:19 -0700 (PDT)
-Received: from localhost.localdomain (mobile-access-5673b7-246.dhcp.inet.fi. [86.115.183.246])
-        by smtp.gmail.com with ESMTPSA id y4sm1472866lfj.254.2021.03.22.00.41.18
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=WosURJkM/PKSCOw9xPERzj9fjDA03BThhpk0x/4VEXg=;
+        b=go1ZxvVCgn9bSmWuIUTwmINydLHZMp2TJZiwS8fqJGfNkSbLumDyB/APwukS7r/D0K
+         kd6D2xoeGO66VNAqFbQylro9IN1I7n/HyhminWopm0fnto0SCSXAIsaaSLspGt6FJn49
+         YXWwZxiyTdb0H2oV/GCwnTgqMlchb9Yb/J1DlaFT+Wd3cdZesJzOtliBkorfnKxIdJL5
+         Uees9NdxuGwePO0II5Rt9j3Nu85unTvcjNeMODNeItJVWeEcRB7sahHz9UUkvtH/l/U0
+         bleVD/BDQEh6/VTWGnf7IQDjgYTIBW9qbfnOUWb6jw6QT1l5qjg8AsLSaKlWgshYmPAp
+         h2RA==
+X-Gm-Message-State: AOAM531iBKtzmTvASOLRKQiImoXAbKGS/mGItLrvwBnhgud8gFP9Tklg
+        1x7eQhChE6JzrqaRGh+3BNHgtg==
+X-Google-Smtp-Source: ABdhPJw6q+bFZcIwo/y4uN0oE8skM7XUnmmeJDRr9QTv/JOzMN54LLFvW9KELWO6DcVO4jr2DhMgiA==
+X-Received: by 2002:a05:6402:1713:: with SMTP id y19mr23148734edu.52.1616402390537;
+        Mon, 22 Mar 2021 01:39:50 -0700 (PDT)
+Received: from dell ([91.110.221.180])
+        by smtp.gmail.com with ESMTPSA id ga28sm4809735ejc.82.2021.03.22.01.39.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Mar 2021 00:41:19 -0700 (PDT)
-Date:   Mon, 22 Mar 2021 09:41:13 +0200
-From:   Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-To:     Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
-        Matti Vaittinen <mazziesaccount@gmail.com>
-Cc:     MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jean Delvare <jdelvare@suse.com>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Mark Gross <mgross@linux.intel.com>,
-        Sebastian Reichel <sre@kernel.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
-        gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-hwmon@vger.kernel.org,
-        platform-driver-x86@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-watchdog@vger.kernel.org
-Subject: [RFC RESEND PATCH v2 0/8] Add managed version of delayed work init
-Message-ID: <cover.1616395565.git.matti.vaittinen@fi.rohmeurope.com>
+        Mon, 22 Mar 2021 01:39:50 -0700 (PDT)
+Date:   Mon, 22 Mar 2021 08:39:47 +0000
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Roland Scheidegger <sroland@vmware.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        amd-gfx list <amd-gfx@lists.freedesktop.org>,
+        Anthony Koo <Anthony.Koo@amd.com>,
+        Ben Skeggs <bskeggs@redhat.com>,
+        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Dave Airlie <airlied@redhat.com>,
+        David Airlie <airlied@linux.ie>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Harry Wentland <harry.wentland@amd.com>,
+        Jeremy Kolb <jkolb@brandeis.edu>,
+        Kuogee Hsieh <khsieh@codeaurora.org>,
+        Leo Li <sunpeng.li@amd.com>,
+        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
+        <linaro-mm-sig@lists.linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:DMA BUFFER SHARING FRAMEWORK" 
+        <linux-media@vger.kernel.org>, Lyude Paul <lyude@redhat.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Nouveau Dev <nouveau@lists.freedesktop.org>,
+        Qinglang Miao <miaoqinglang@huawei.com>,
+        Rob Clark <rob.clark@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        VMware Graphics <linux-graphics-maintainer@vmware.com>,
+        Zack Rusin <zackr@vmware.com>
+Subject: Re: [RESEND 00/53] Rid GPU from W=1 warnings
+Message-ID: <20210322083947.GM2916463@dell>
+References: <20210303134319.3160762-1-lee.jones@linaro.org>
+ <16d4300e-bf29-1e85-317b-53d257890cb9@vmware.com>
+ <20210308091932.GB4931@dell>
+ <YEobySvG0zPs9xhc@phenom.ffwll.local>
+ <20210311135152.GT701493@dell>
+ <20210317081729.GH701493@dell>
+ <CAKMK7uEibsgXXTEM1d2CGSswp-koouPSouseP_rwLHTdpxfRpw@mail.gmail.com>
+ <CAKMK7uHkJGDL8k3FfAqAM78honZR0euMcacW8UpdPZfS1J-7cA@mail.gmail.com>
+ <20210319082407.GG2916463@dell>
+ <YFTlhh1ZSFffO+Nr@phenom.ffwll.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <YFTlhh1ZSFffO+Nr@phenom.ffwll.local>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It's not rare that device drivers need delayed work.
-It's not rare that this work needs driver's data.
+On Fri, 19 Mar 2021, Daniel Vetter wrote:
 
-Often this means that driver must ensure the work is not queued when
-driver is detached. Often it is done by ensuring new work is not added and
-then calling cancel_delayed_work_sync() at remove(). In many cases this
-may also require cleanup at probe error path - which is easy to forget.
+> On Fri, Mar 19, 2021 at 08:24:07AM +0000, Lee Jones wrote:
+> > On Thu, 18 Mar 2021, Daniel Vetter wrote:
+> > 
+> > > On Wed, Mar 17, 2021 at 9:32 PM Daniel Vetter <daniel@ffwll.ch> wrote:
+> > > >
+> > > > On Wed, Mar 17, 2021 at 9:17 AM Lee Jones <lee.jones@linaro.org> wrote:
+> > > > >
+> > > > > On Thu, 11 Mar 2021, Lee Jones wrote:
+> > > > >
+> > > > > > On Thu, 11 Mar 2021, Daniel Vetter wrote:
+> > > > > >
+> > > > > > > On Mon, Mar 08, 2021 at 09:19:32AM +0000, Lee Jones wrote:
+> > > > > > > > On Fri, 05 Mar 2021, Roland Scheidegger wrote:
+> > > > > > > >
+> > > > > > > > > The vmwgfx ones look all good to me, so for
+> > > > > > > > > 23-53: Reviewed-by: Roland Scheidegger <sroland@vmware.com>
+> > > > > > > > > That said, they were already signed off by Zack, so not sure what
+> > > > > > > > > happened here.
+> > > > > > > >
+> > > > > > > > Yes, they were accepted at one point, then dropped without a reason.
+> > > > > > > >
+> > > > > > > > Since I rebased onto the latest -next, I had to pluck them back out of
+> > > > > > > > a previous one.
+> > > > > > >
+> > > > > > > They should show up in linux-next again. We merge patches for next merge
+> > > > > > > window even during the current merge window, but need to make sure they
+> > > > > > > don't pollute linux-next. Occasionally the cut off is wrong so patches
+> > > > > > > show up, and then get pulled again.
+> > > > > > >
+> > > > > > > Unfortunately especially the 5.12 merge cycle was very wobbly due to some
+> > > > > > > confusion here. But your patches should all be in linux-next again (they
+> > > > > > > are queued up for 5.13 in drm-misc-next, I checked that).
+> > > > > > >
+> > > > > > > Sorry for the confusion here.
+> > > > > >
+> > > > > > Oh, I see.  Well so long as they don't get dropped, I'll be happy.
+> > > > > >
+> > > > > > Thanks for the explanation Daniel
+> > > > >
+> > > > > After rebasing today, all of my GPU patches have remained.  Would
+> > > > > someone be kind enough to check that everything is still in order
+> > > > > please?
+> > > >
+> > > > It's still broken somehow. I've kiced Maxime and Maarten again,
+> > > > they're also on this thread.
+> > > 
+> > > You're patches have made it into drm-next meanwhile, so they should
+> > > show up in linux-next through that tree at least. Except if that one
+> > > also has some trouble.
+> > 
+> > Thanks for letting me know.
+> > 
+> > I see some patches made it back in, others didn't.
+> > 
+> > I'll resend the stragglers - bear with.
+> 
+> The vmwgfx ones should all be back, the others I guess just werent ever
+> applied. I'll vacuum them all up if you resend. Apologies for the wobbly
+> ride.
 
-Also the "by ensuring new work is not added" has a gotcha.
-
-It is not strange to see devm managed IRQs scheduling (delayed) work.
-Mixing this with manua wq clean-up is hard to do correctly because the
-devm is likely to free the IRQ only after the remove() is ran. So manual
-wq cancellation and devm-based IRQ management do not mix well - there is
-a short(?) time-window after the wq clean-up when IRQs are still not
-freed and may schedule new work.
-
-When both WQs and IRQs are managed by devm things are likely to just
-work. WQs should be initialized before IRQs (when IRQs need to schedule
-work) and devm unwinds things in "FILO" order.
-
-This series implements delayed wq cancellation on top of devm and replaces
-the obvious cases where only thing remove call-back in a driver does is
-cancelling the work. There might be other cases where we could switch
-more than just work cancellation to use managed version and thus get rid
-of remove or mixed (manual and devm) resource management.
-
-This RFC does also introduce include/linux/devm-helpers.h file which
-hopefully works as a place where this kind of helpers can be inlined.
-
-Please see previous discussion here:
-RFC v1:
-https://lore.kernel.org/lkml/cover.1613216412.git.matti.vaittinen@fi.rohmeurope.com/
-
-Changelog v2 resend:
-  - rebased on 5.12-rc4
-
-Changelog v2:
-  - used correct terminology ("driver detach" instead of "exit, ...")
-  - inlined the devm_delayed_work_autocancel() in a header
-  - added Hans as a maintainer for the new header + myself as a reviewer
-  - used devm_add_action() instead of using plain devres_add()
-
----
-
-Matti Vaittinen (8):
-  workqueue: Add resource managed version of delayed work init
-  MAINTAINERS: Add entry for devm helpers
-  extconn: Clean-up few drivers by using managed work init
-  hwmon: raspberry-pi: Clean-up few drivers by using managed work init
-  platform/x86: gpd pocket fan: Clean-up by using managed work init
-  power: supply: Clean-up few drivers by using managed work init
-  regulator: qcom_spmi-regulator: Clean-up by using managed work init
-  watchdog: retu_wdt: Clean-up by using managed work init
-
- MAINTAINERS                                  |  6 +++
- drivers/extcon/extcon-gpio.c                 | 15 ++----
- drivers/extcon/extcon-intel-int3496.c        | 16 ++----
- drivers/extcon/extcon-palmas.c               | 17 +++----
- drivers/extcon/extcon-qcom-spmi-misc.c       | 17 +++----
- drivers/hwmon/raspberrypi-hwmon.c            | 17 +++----
- drivers/platform/x86/gpd-pocket-fan.c        | 17 +++----
- drivers/power/supply/axp20x_usb_power.c      | 15 ++----
- drivers/power/supply/bq24735-charger.c       | 18 +++----
- drivers/power/supply/ltc2941-battery-gauge.c | 20 +++-----
- drivers/power/supply/sbs-battery.c           | 16 ++----
- drivers/regulator/qcom_spmi-regulator.c      | 34 +++----------
- drivers/watchdog/retu_wdt.c                  | 22 +++-----
- include/linux/devm-helpers.h                 | 53 ++++++++++++++++++++
- 14 files changed, 128 insertions(+), 155 deletions(-)
- create mode 100644 include/linux/devm-helpers.h
-
-
-base-commit: 0d02ec6b3136c73c09e7859f0d0e4e2c4c07b49b
--- 
-2.25.4
-
+NP, it happens.
 
 -- 
-Matti Vaittinen, Linux device drivers
-ROHM Semiconductors, Finland SWDC
-Kiviharjunlenkki 1E
-90220 OULU
-FINLAND
-
-~~~ "I don't think so," said Rene Descartes. Just then he vanished ~~~
-Simon says - in Latin please.
-~~~ "non cogito me" dixit Rene Descarte, deinde evanescavit ~~~
-Thanks to Simon Glass for the translation =] 
+Lee Jones [李琼斯]
+Senior Technical Lead - Developer Services
+Linaro.org │ Open source software for Arm SoCs
+Follow Linaro: Facebook | Twitter | Blog
