@@ -2,100 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 64323344D6E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Mar 2021 18:35:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DD0F6344F60
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Mar 2021 19:59:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231609AbhCVReo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Mar 2021 13:34:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33086 "EHLO
+        id S231550AbhCVS6z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Mar 2021 14:58:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230250AbhCVReR (ORCPT
+        with ESMTP id S231724AbhCVS6s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Mar 2021 13:34:17 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8D61C061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Mar 2021 10:34:16 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id u21so4683803ejo.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Mar 2021 10:34:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=itvxu6pseNvAArTXkxBUqpwVqMnWpn85hJGn4Cdpwhg=;
-        b=uNTiuiHb//r+7s512XtcPzPyLF04pqLQ3NrFXgaoxYNR2RU0pDoYy1ZNFTfKaRBx3R
-         qUpdSxsLmTiozn+u05mEF/2mOns8JJqI3whi5eUsFhPYQd4a/eGXutlrOs1KdMC5vKXZ
-         D5NfmKie5T8TXOEpLX3eqXPKF/2ibqi+auQ3HJUAWhdl0PiQcmhIE+gj58H/w7T4dyTb
-         KY/Ex9Y+BtG5FhKLOWVluiKYgNltP/jhOs8Abi1ZipK2VPfsg0P3Rx5+52mA6aIxLF5Q
-         D+A7SD93d2c23HV9ByoiID4u+zWDyy2KubD1XKv/mr87//jjBOOUc3lGWiUyiBSMvn7b
-         dSLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=itvxu6pseNvAArTXkxBUqpwVqMnWpn85hJGn4Cdpwhg=;
-        b=iNq1rFgX4bLcRPzlj3HDoMJzkWJkX283KF7wMrIcg9kJxO6hql1B2d3ixJJADrx8FX
-         BnPPqA8FpdCBi06fB6YPQhSUA9FNlUo/QxJ9gBnk12gwJK0PNVhqFk+SzkuHWlvWLINz
-         FSGxFzj023HIIuaAd62DvDOxOhwFFdihzIDZuFgB+AlJWXnY5lIfoCQBzZTFP7LLLGOR
-         48TxoqMLZu17uRxpEiFHWygFf9nN14J3qCYK6x55kx5vUVsFmf5umQ5dfJqBJI/L2mcq
-         DyMH+CUZwYSm1i2d5u1Stceu1ysKy+qz/7Ei1fai/WsLmwR8bI6isbR76GJSAMhW42xZ
-         pOJg==
-X-Gm-Message-State: AOAM533ABVoFb19wSjlQlGu0H+0o/mep0ePUoEasQKbl5enDjGlruj9i
-        V+3gSOvigzNP/82qmxM7HT/Qwg==
-X-Google-Smtp-Source: ABdhPJw9FtwQ6aO2ECGVnHO58EnkDcEQ+fGQM9CFtqdocU6sXQqPcqwjPD5Dl/pLvT5flLaGRSP8fw==
-X-Received: by 2002:a17:906:340d:: with SMTP id c13mr934869ejb.29.1616434455577;
-        Mon, 22 Mar 2021 10:34:15 -0700 (PDT)
-Received: from dell ([91.110.221.180])
-        by smtp.gmail.com with ESMTPSA id n3sm9867573ejj.113.2021.03.22.10.34.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Mar 2021 10:34:15 -0700 (PDT)
-Date:   Mon, 22 Mar 2021 17:34:13 +0000
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Kiran Gunda <kgunda@codeaurora.org>
-Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
-        b.zolnierkie@samsung.com, dri-devel@lists.freedesktop.org,
-        daniel.thompson@linaro.org, jacek.anaszewski@gmail.com,
-        pavel@ucw.cz, robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-fbdev@vger.kernel.org
-Subject: Re: [PATCH V5 1/2] backlight: qcom-wled: Fix FSC update issue for
- WLED5
-Message-ID: <20210322173413.GC2916463@dell>
-References: <1616071180-24493-1-git-send-email-kgunda@codeaurora.org>
- <1616071180-24493-2-git-send-email-kgunda@codeaurora.org>
+        Mon, 22 Mar 2021 14:58:48 -0400
+Received: from casper.infradead.org (casper.infradead.org [IPv6:2001:8b0:10b:1236::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2279CC061574;
+        Mon, 22 Mar 2021 11:58:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=casper.20170209; h=Content-Transfer-Encoding:Content-Type:
+        In-Reply-To:MIME-Version:Date:Message-ID:From:References:To:Subject:Sender:
+        Reply-To:Cc:Content-ID:Content-Description;
+        bh=EDEFJDZ99EPzhVmwaQu38D2Z521MorJ947ogN0j39Wk=; b=gdovrSPy4OwiUpMluUjNxjPbml
+        puAnHwHKUyMTK10zo7yYhV7r8rh7Q1qdrvMnSjLmOCAisumXT11bfEk/tfTEiOr2IAwiNtUZY47k+
+        oEukIBh7x54y7mZq2aDfZDpvzIRIPrBZhXzoKCu1u/qGv7d6FBdVsFFRda9JwZMr+6UvHFesxeF4a
+        Fv6qgMAV1z9XROC1MVWegIxSIIYxFcUQIkfpAB4JLJ+2UWvJJYZEGFfEZwQMcucWFBmZpINY47QCO
+        duJMS34d3uekar3BHZ0yrpZJQR1+kpqH2URK+ugH/5+B7gw5v8mnTtFDu20Amuwor9pmhsEQlHeZk
+        pNoAO+IQ==;
+Received: from [2601:1c0:6280:3f0::3ba4]
+        by casper.infradead.org with esmtpsa (Exim 4.94 #2 (Red Hat Linux))
+        id 1lOPkY-008whK-S2; Mon, 22 Mar 2021 18:58:15 +0000
+Subject: Re: [PATCH] drm/msm/dpu: Fix a typo
+To:     Bhaskar Chowdhury <unixbhaskar@gmail.com>, robdclark@gmail.com,
+        sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
+        viresh.kumar@linaro.org, dsterba@suse.com, eric@anholt.net,
+        rnayak@codeaurora.org, huawei@kernel.org,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20210322120601.2086438-1-unixbhaskar@gmail.com>
+From:   Randy Dunlap <rdunlap@infradead.org>
+Message-ID: <57ae0aab-1a1a-fada-9aef-42373d0018f1@infradead.org>
+Date:   Mon, 22 Mar 2021 11:57:58 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.0
 MIME-Version: 1.0
+In-Reply-To: <20210322120601.2086438-1-unixbhaskar@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1616071180-24493-2-git-send-email-kgunda@codeaurora.org>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 18 Mar 2021, Kiran Gunda wrote:
+On 3/22/21 5:06 AM, Bhaskar Chowdhury wrote:
+> 
+> s/poiner/pointer/
+> 
+> Signed-off-by: Bhaskar Chowdhury <unixbhaskar@gmail.com>
 
-> Currently, for WLED5, the FSC (Full scale current) setting is not
-> updated properly due to driver toggling the wrong register after
-> an FSC update.
-> 
-> On WLED5 we should only toggle the MOD_SYNC bit after a brightness
-> update. For an FSC update we need to toggle the SYNC bits instead.
-> 
-> Fix it by adopting the common wled3_sync_toggle() for WLED5 and
-> introducing new code to the brightness update path to compensate.
-> 
-> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
-> Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+
 > ---
->  drivers/video/backlight/qcom-wled.c | 25 +++++++++++++++++++------
->  1 file changed, 19 insertions(+), 6 deletions(-)
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> index d6717d6672f7..a448eb039334 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> @@ -258,7 +258,7 @@ void dpu_kms_encoder_enable(struct drm_encoder *encoder);
+> 
+>  /**
+>   * dpu_kms_get_clk_rate() - get the clock rate
+> - * @dpu_kms:  poiner to dpu_kms structure
+> + * @dpu_kms:  pointer to dpu_kms structure
+>   * @clock_name: clock name to get the rate
+>   *
+>   * Return: current clock rate
+> --
 
-Applied, thanks.
 
 -- 
-Lee Jones [李琼斯]
-Senior Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
+~Randy
+
