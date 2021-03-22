@@ -2,100 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 13607344D3D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Mar 2021 18:28:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AA204344D5B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Mar 2021 18:33:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230319AbhCVR1r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Mar 2021 13:27:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59838 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230236AbhCVR1W (ORCPT
+        id S231585AbhCVRci (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Mar 2021 13:32:38 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:21246 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230499AbhCVRcM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Mar 2021 13:27:22 -0400
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9296FC061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Mar 2021 10:27:20 -0700 (PDT)
-Received: from [192.168.1.101] (abac242.neoplus.adsl.tpnet.pl [83.6.166.242])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 02EE31F3D9;
-        Mon, 22 Mar 2021 18:27:14 +0100 (CET)
-Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: sm8350: Add thermal zones and
- throttling support
-To:     Robert Foss <robert.foss@linaro.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, amitk@kernel.org, rui.zhang@intel.com,
-        daniel.lezcano@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        Mon, 22 Mar 2021 13:32:12 -0400
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 22 Mar 2021 10:32:12 -0700
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 22 Mar 2021 10:32:10 -0700
+X-QCInternal: smtphost
+Received: from c-sanm-linux.qualcomm.com ([10.206.25.31])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 22 Mar 2021 23:01:35 +0530
+Received: by c-sanm-linux.qualcomm.com (Postfix, from userid 2343233)
+        id BB67B2F8E; Mon, 22 Mar 2021 23:01:34 +0530 (IST)
+From:   Sandeep Maheswaram <sanm@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Vinod Koul <vinod.koul@linaro.org>
-References: <20210322100420.125616-1-robert.foss@linaro.org>
- <20210322100420.125616-2-robert.foss@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-Message-ID: <b3f17dd3-d4b3-930c-db02-9f67748e4427@somainline.org>
-Date:   Mon, 22 Mar 2021 18:27:13 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
-MIME-Version: 1.0
-In-Reply-To: <20210322100420.125616-2-robert.foss@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+        Manu Gautam <mgautam@codeaurora.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>
+Subject: [PATCH v5 0/4] USB DWC3 host wake up support from system suspend
+Date:   Mon, 22 Mar 2021 23:01:16 +0530
+Message-Id: <1616434280-32635-1-git-send-email-sanm@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi!
+Avoiding phy powerdown in host mode when wakeup capable devices are 
+connected, so that it can be wake up by devices.
+Set GENPD_FLAG_ACTIVE_WAKEUP flag to keep usb30_prim gdsc active
+when wakeup capable devices are connected to the host.
 
+Changes in v5:
+Added phy_power_off flag to check presence of wakeup capable devices.
+Dropped patch[v4,4/5] as it is present linux-next.
+Addressed comments in host.c and dwc3-qcom.c.
 
-> +		tsens0: thermal-sensor@c222000 {
-> +			compatible = "qcom,sm8350-tsens", "qcom,tsens-v2";
-> +			reg = <0 0x0C263000 0 0x1ff>, /* TM */
-> +			      <0 0x0C222000 0 0x8>; /* SROT */
+Changes in v4:
+Addressed Matthias comments raised in v3.
 
-Please use lowercase hex
+Changes in v3:
+Removed need_phy_for_wakeup flag and by default avoiding phy powerdown.
+Addressed Matthias comments and added entry for DEV_SUPERSPEED.
+Added suspend_quirk in dwc3 host and moved the dwc3_set_phy_speed_flags.
+Added wakeup-source dt entry and reading in dwc-qcom.c glue driver.
 
+Changes in v2:
+Dropped the patch in clock to set GENPD_FLAG_ACTIVE_WAKEUP flag and 
+setting in usb dwc3 driver.
+Separated the core patch and glue driver patch.
+Made need_phy_for_wakeup flag part of dwc structure and 
+hs_phy_flags as unsgined int.
+Adrressed the comment on device_init_wakeup call.
+Corrected offset for reading portsc register.
+Added pacth to support wakeup in xo shutdown case.
 
-> +		tsens1: thermal-sensor@c223000 {
-> +			compatible = "qcom,sm8350-tsens", "qcom,tsens-v2";
-> +			reg = <0 0x0C265000 0 0x1ff>, /* TM */
-> +			      <0 0x0c223000 0 0x8>; /* SROT */
+Sandeep Maheswaram (4):
+  usb: dwc3: core: Host wake up support from system suspend
+  usb: dwc3: host: Add suspend_quirk for dwc3 host
+  usb: dwc3: qcom: Configure wakeup interrupts and set genpd active
+    wakeup flag
+  arm64: dts: qcom: sc7180: Add wakeup-source property for USB node in
+    IDP and trogdor
 
-Ditto
+ arch/arm64/boot/dts/qcom/sc7180-idp.dts      |  1 +
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi |  1 +
+ drivers/usb/dwc3/core.c                      |  8 ++-
+ drivers/usb/dwc3/core.h                      |  3 +
+ drivers/usb/dwc3/dwc3-qcom.c                 | 87 ++++++++++++++++++----------
+ drivers/usb/dwc3/host.c                      | 58 +++++++++++++++++++
+ 6 files changed, 124 insertions(+), 34 deletions(-)
 
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
-> +			trips {
-> +				cpu0_alert0: trip-point0 {
-> +					temperature = <90000>;
-> +					hysteresis = <2000>;
-> +					type = "passive";
-> +				};
-> +
-> +				cpu0_alert1: trip-point1 {
-> +					temperature = <95000>;
-> +					hysteresis = <2000>;
-> +					type = "passive";
-
-Shouldn't this be "hot"? Possibly ditto for all cpu*alert1-labeled nodes.
-
-
-> +				};
-> +
-> +				cpu0_crit: cpu_crit {
-> +					temperature = <110000>;
-> +					hysteresis = <1000>;
-> +					type = "critical";
-> +				};
-> +			};
-
-These values seem, err.. scorching hot.. Are they alright?
-
-
-
-> +		// TODO: What is the NSP subsystem?
-Please use C-style comments (/* foo */)
-
-	
-
-
-Konrad
