@@ -2,143 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C6FC3459E4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Mar 2021 09:37:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F2C43459F1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Mar 2021 09:40:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229798AbhCWIhR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Mar 2021 04:37:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57218 "EHLO
+        id S229614AbhCWIj5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Mar 2021 04:39:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229730AbhCWIhK (ORCPT
+        with ESMTP id S229590AbhCWIju (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Mar 2021 04:37:10 -0400
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27D86C061763
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 01:37:10 -0700 (PDT)
-Received: by mail-pf1-x42e.google.com with SMTP id l123so13565168pfl.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 01:37:10 -0700 (PDT)
+        Tue, 23 Mar 2021 04:39:50 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E82BC061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 01:39:39 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id kt15so16203810ejb.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 01:39:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nJ49K0Y3pc/vXvz/MndKHeIP8eApFdm0tvtyJXXJc4M=;
-        b=bDOGPvAeLeCdI4C/k38kkvfbz9fXXt1xc0yrKayV8taQLf93FDl4YJMl+26PM30Q9q
-         yDBnqP7miYpbw+biEcxk+I62t5aib0Vt9+77b7X3516cgQE3obpYN4Zj7GL0tmHvfoVu
-         h47XGGW0XX3At7qAUrSKpYspp+VBelGiSEqN8xHLltcrezDis3ugL9W8aVMAeLO4VwBv
-         6n0wBMEH7sQLYNxTWChdcJ8LKqQy3byhvC5LgsSLcuoWSVYy2MTnhMtcJQSC0o0p8WuH
-         gXuVCIbk4Ug6HaKr3NQ6qkwtWJX/oj4nUAWcHf+GWkrD0y3wY/ewCrETqFO/j1Fwfbn1
-         c4xA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=vOdKWnp3rkpIGMt87ZNlf2cZf53/gDQXm8BtihNuwrY=;
+        b=awC7OJCja/vDjs8UM3Q2cV7cH4nuw99ReUsihpNF+0rbb/GYsXuZl+yoz8gQu8xn4B
+         hTALcZCKLmRhR6rGBx5oe19l9xnWJ31Ch53+rY2CpZSSvH55LYyJp+91113PSVJNIS00
+         yFWPcW99/D9lZFnQZlpOHcfmEI5dxY6BBarjNauuYBRpKnAvbIeobKullrS6/F+GabEX
+         RLIqR2rCthAonYJaBQByTJodXq+ZjqYwTvE5UiCKMUxKQmKPupfoBqFqkV0eDKW7SzPm
+         0+ul8XGZKTS40YtkXqZCXjiN7E6EnNaZwrf+8JXCI2s9pdm7CQckxordKve2k8LhNwLb
+         jcoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nJ49K0Y3pc/vXvz/MndKHeIP8eApFdm0tvtyJXXJc4M=;
-        b=qLwQVnmujAI2jRPDY1a4tlZftravu0svHkmJekLcovoAwWeCQmnT0ESEec2eDK6HhC
-         seI/PGnpVuVBsDjulpNCUmSuNbk5x3Ej5rQElrIkE7FIjEIUnjDoTQA/WNRm5ID6zgOr
-         il+fHYRscweXRWSeJnO5uED2/gN3cC9FJdHK+orGlmzflTrOEM8SYN+o0Asj955fs5HE
-         fDkFuxdoamz8tmxU0awLEBTZ+vD1mQ8WeBN/PIjufxhdZFCyqKq2RA/3VXCikOIy8J0N
-         tJstQ4yj0cson5wH4VSmMYGWa9dsIqG7C8tNMehYITG7Bx9kFivCpndOajhI1QtybDfy
-         OMQw==
-X-Gm-Message-State: AOAM532wz37gUQz3qbWJxNVvO2/v6u3k4rmTBxhS9Xua0xAt9YwgAWu8
-        gJk9WjEUsw6SrrbWtsOH18mIcTYJAUGZtW8TEGRGZg==
-X-Google-Smtp-Source: ABdhPJwTzKZlfXnOfsWp9P6XVptQULaFAqOpbq72bJOqIMs1aR5DlqdyZC28GcSCMl/VJcnM4gObI+jgJVzhfDk9NVo=
-X-Received: by 2002:a17:902:7d8d:b029:e6:4061:b767 with SMTP id
- a13-20020a1709027d8db02900e64061b767mr4342010plm.32.1616488629727; Tue, 23
- Mar 2021 01:37:09 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210322100420.125616-1-robert.foss@linaro.org>
- <20210322100420.125616-2-robert.foss@linaro.org> <b3f17dd3-d4b3-930c-db02-9f67748e4427@somainline.org>
-In-Reply-To: <b3f17dd3-d4b3-930c-db02-9f67748e4427@somainline.org>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Tue, 23 Mar 2021 09:36:58 +0100
-Message-ID: <CAG3jFysRW7ObLONrcydYKk6XLetNkR1vYfqGNXL=gTdL9O4zhQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: sm8350: Add thermal zones and
- throttling support
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>, amitk@kernel.org,
-        rui.zhang@intel.com, Daniel Lezcano <daniel.lezcano@linaro.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=vOdKWnp3rkpIGMt87ZNlf2cZf53/gDQXm8BtihNuwrY=;
+        b=bGhkgYbbQ+fWgb5sVZtwykOpIeUxTiVDvSnRLE1xslAq8UEqJTAUVRl1/9Q74tb9Gn
+         WIDz5PkbizGIQoEzB1sGZHnsHuIucm9IxHzoYuZzt38ZtHQsPBi/iApjlndQVlbLDimK
+         8bdPmL7LTDI/bDBM6C5arKoVV2yZ1meWtFV2yNEaMSDu3DLLmfm4j4fzOcmTe5+pz4ws
+         HVbv/lkpCokG9+lbPz4X6BALa4FQ8wL93OqpxBNIUGDdzOPVWN57TL7xifvSelq+awj1
+         AAsOYngOQu3Cpu9suRXDomILV4obDoi/o2Tml9mk8LGWi+hIiaEAFWFaBV1UTUnMJqEL
+         vlwQ==
+X-Gm-Message-State: AOAM533EDKWFk95rCQhkm0zUzmstJGEbvjhVFvUogQhfrAcpWaFE66rN
+        K3Mssvadgnq+fyTXX7ZPUuUvkQ==
+X-Google-Smtp-Source: ABdhPJztz2rpnHmS0vjtxAqb+sjwT+S9UIOX/8oNcIG+D+p3IjWse50o3nha+gQW7cNBnqWhjOEJGw==
+X-Received: by 2002:a17:906:d153:: with SMTP id br19mr3749846ejb.360.1616488777820;
+        Tue, 23 Mar 2021 01:39:37 -0700 (PDT)
+Received: from dell ([91.110.221.180])
+        by smtp.gmail.com with ESMTPSA id h13sm12649939edz.71.2021.03.23.01.39.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Mar 2021 01:39:37 -0700 (PDT)
+Date:   Tue, 23 Mar 2021 08:39:35 +0000
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Daniel Thompson <daniel.thompson@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, Jingoo Han <jingoohan1@gmail.com>,
+        Pavel Machek <pavel@ucw.cz>, Dan Murphy <dmurphy@ti.com>,
         Rob Herring <robh+dt@kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>, linux-pm@vger.kernel.org,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        Vinod Koul <vinod.koul@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kiran Gunda <kgunda@codeaurora.org>,
+        dri-devel@lists.freedesktop.org, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org
+Subject: Re: [PATCH 2/2] video: backlight: qcom-wled: Add PMI8994 compatible
+Message-ID: <20210323083935.GF2916463@dell>
+References: <20210228124106.135812-1-konrad.dybcio@somainline.org>
+ <20210228124106.135812-2-konrad.dybcio@somainline.org>
+ <20210322161810.biagj2qro66rv4gt@maple.lan>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210322161810.biagj2qro66rv4gt@maple.lan>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Konrad,
+On Mon, 22 Mar 2021, Daniel Thompson wrote:
 
-Thanks for the review!
+> On Sun, Feb 28, 2021 at 01:41:05PM +0100, Konrad Dybcio wrote:
+> > Add a compatible for PMI8994 WLED. It uses the V4 of WLED IP.
+> > 
+> > Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> 
+> Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
 
+Why are you Reviewing/Acking a patch that was applied on the 10th?
 
-On Mon, 22 Mar 2021 at 18:27, Konrad Dybcio
-<konrad.dybcio@somainline.org> wrote:
->
-> Hi!
->
->
-> > +             tsens0: thermal-sensor@c222000 {
-> > +                     compatible = "qcom,sm8350-tsens", "qcom,tsens-v2";
-> > +                     reg = <0 0x0C263000 0 0x1ff>, /* TM */
-> > +                           <0 0x0C222000 0 0x8>; /* SROT */
->
-> Please use lowercase hex
+> > ---
+> >  drivers/video/backlight/qcom-wled.c | 1 +
+> >  1 file changed, 1 insertion(+)
+> > 
+> > diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
+> > index 3bc7800eb0a9..497b9035a908 100644
+> > --- a/drivers/video/backlight/qcom-wled.c
+> > +++ b/drivers/video/backlight/qcom-wled.c
+> > @@ -1704,6 +1704,7 @@ static int wled_remove(struct platform_device *pdev)
+> >  
+> >  static const struct of_device_id wled_match_table[] = {
+> >  	{ .compatible = "qcom,pm8941-wled", .data = (void *)3 },
+> > +	{ .compatible = "qcom,pmi8994-wled", .data = (void *)4 },
+> >  	{ .compatible = "qcom,pmi8998-wled", .data = (void *)4 },
+> >  	{ .compatible = "qcom,pm660l-wled", .data = (void *)4 },
+> >  	{ .compatible = "qcom,pm8150l-wled", .data = (void *)5 },
 
-Ack
-
->
->
-> > +             tsens1: thermal-sensor@c223000 {
-> > +                     compatible = "qcom,sm8350-tsens", "qcom,tsens-v2";
-> > +                     reg = <0 0x0C265000 0 0x1ff>, /* TM */
-> > +                           <0 0x0c223000 0 0x8>; /* SROT */
->
-> Ditto
-
-Ack
-
->
->
-> > +                     trips {
-> > +                             cpu0_alert0: trip-point0 {
-> > +                                     temperature = <90000>;
-> > +                                     hysteresis = <2000>;
-> > +                                     type = "passive";
-> > +                             };
-> > +
-> > +                             cpu0_alert1: trip-point1 {
-> > +                                     temperature = <95000>;
-> > +                                     hysteresis = <2000>;
-> > +                                     type = "passive";
->
-> Shouldn't this be "hot"? Possibly ditto for all cpu*alert1-labeled nodes.
-
-I based this patch on the upstream DTS for sm8250 & sdm845, and this
-is what they use. However, if you think it is incorrect I'm happy to
-do a little digging.
-
->
->
-> > +                             };
-> > +
-> > +                             cpu0_crit: cpu_crit {
-> > +                                     temperature = <110000>;
-> > +                                     hysteresis = <1000>;
-> > +                                     type = "critical";
-> > +                             };
-> > +                     };
->
-> These values seem, err.. scorching hot.. Are they alright?
-
-I agree :) This is what the vendor ships in their downstream DTS.
-
->
->
->
-> > +             // TODO: What is the NSP subsystem?
-> Please use C-style comments (/* foo */)
-
-Removing comment.
+-- 
+Lee Jones [李琼斯]
+Senior Technical Lead - Developer Services
+Linaro.org │ Open source software for Arm SoCs
+Follow Linaro: Facebook | Twitter | Blog
