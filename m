@@ -2,94 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D485345B19
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Mar 2021 10:41:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 819D6345B26
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Mar 2021 10:43:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229986AbhCWJkz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Mar 2021 05:40:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42700 "EHLO
+        id S229746AbhCWJnD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Mar 2021 05:43:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230009AbhCWJkr (ORCPT
+        with ESMTP id S230011AbhCWJmf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Mar 2021 05:40:47 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFE5BC0613D8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 02:40:46 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id l4so25953569ejc.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 02:40:46 -0700 (PDT)
+        Tue, 23 Mar 2021 05:42:35 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB309C061756
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 02:42:34 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id k10so26002222ejg.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 02:42:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=zXs5SbjReTCcPNHIOjgz/S/VxQjjjOm2F5VH26PFX/A=;
-        b=vj5G9pjhGIJnSvkO3MxGjzGfY8QUgcgIr8he+j8CuGbyyEfP5EQNfrmrCqoMO2CZZR
-         bdckdLSvsCoLrRu48EzAHYo4oxQAXRsUdNra/JouZ1qUvhf0uMbOSV9a8F/maOBLtAGe
-         RV8MmfA3GtVVlaVinDJ3S/lzsL0qE8O+YupeIpqcYG0BGXJHE1Cmp6/9QWlQ43zL/NC1
-         yqNdlWiaSh5Wv3ibiPp3WlVe3b07LVjSxW+cyyrOQWmSgGZNcN5r0izAQP2icBVact0v
-         03lDSR3Wp+6bfpj+WhlvsvC7QM5dX/IjE1uKpWf59cRSsmbH828i6f8T/ahuVCQ1UXlk
-         uGJw==
+        bh=RJI1ZulJI/N1c2SHSzXG2bAltLew6mzjF/sjYCXcM5o=;
+        b=JUN66A/8cTYU/eCzY1rGy5pu3Ui6LtQGLfl6KYjMr29YoVG/cdEJDdLL3Rx7rc5i2l
+         QtXpb4pWe9w0bC1DCL7OK/oYYh+mOMk9IAxiy2bA4M8WH+Njssh46rgJrBNVNOhpAKIV
+         VMXATaJV4nZUAxzKlMh2F06xFz+zdQwrb2BJv2VNWWIbB0utRYUhknkLfmbQSr7VGycf
+         1w3WosdRggV3OYeQOERJdI4dNRjvCEwSlEAUsSGgeCWWyRWjEOHRCUDdNu3dO4GPwUGi
+         TIW0ZgHSwC5mRhD3CUAVE533pNm9bdOIDFmJiagr5hE/VViE+ajDPRfkOJZh7hdjpZk/
+         L/Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=zXs5SbjReTCcPNHIOjgz/S/VxQjjjOm2F5VH26PFX/A=;
-        b=afYN/s5Meoq/h6feyMELm+IpDla+/6mtaDrx2ooL5nbHrewnVpnXyar1YWeuajUjIZ
-         fsWa0UlEFRSNNpv5g3+4WKpTzyWx+gYLDYvOQomB9NXAYPYnh/4Epp7FVJ8sm8E48nlv
-         aSTowS5fLCkgTRR5KrGW8zLEomUdZom6ypD/MHh/CS4BSh0RBKrVLSdbJTJFJBmWBiSN
-         lFJnETJsiM2UjOnK7pP8BLarRJY2ZQLaaECZtuDDAgRkkxdKymjhAazhFWLUUTN2uGvw
-         g5bDEZNFaF+16y4iY3WwJ5QxJxEQ1sc/rxGu/B4e6mEV0FJNoNGO7OrwEsuqi9f5PtSZ
-         rhwg==
-X-Gm-Message-State: AOAM532bhSKo4tGUmJ1nmb/6apKCP4AGPJVEry+FhpK+O6q4raDO6Yvv
-        AidqGJUdCqI34zkULV+jFYZkQA==
-X-Google-Smtp-Source: ABdhPJwpBn5eyAJHqJLdU0Wab+Ro1IIWRDZ1hGuA1iPJeA/Fp0ww4Ebsg8Pw9LsY5dn4holDmh/FWw==
-X-Received: by 2002:a17:906:53d7:: with SMTP id p23mr4111539ejo.140.1616492445327;
-        Tue, 23 Mar 2021 02:40:45 -0700 (PDT)
+        bh=RJI1ZulJI/N1c2SHSzXG2bAltLew6mzjF/sjYCXcM5o=;
+        b=MNpsJQWZaqmq46ckxxb4H61ntYZsqQxvQg6MmsDTUHzx9vhrSzhYDT88TBcsmXD2wr
+         3PI8AhswD4gTIH8bX/1oaIuPQr8Bvcd3tngBOuPPQRJv8vWrJduUz1FCQfIBzBx+020+
+         bQizx3XiClteIBluIv+zdZIf2TYo9T+SveVnLhbNFDP5PrEbj71bLXtTjfci7MfZ60I4
+         r9OYtlPPCZEy94+hQZ/5E5t+PI8Wu9I+hqvDUsjzkynBtIYrEJRVzWpxExIkSalzIetf
+         TGgBr2VevmS4lZYMidqvBc4HQf86LqT8HNH7Pwhx9kUQ4awUlCj+pXcg/vMQ8tFX6GF5
+         IaAw==
+X-Gm-Message-State: AOAM530luiFkH27+s/MHXm3MMPgQTwRSqtA+IdkAMUOqmCvshG9K876e
+        qS0D8kzkTk4In38kp5fEcTSKKQ==
+X-Google-Smtp-Source: ABdhPJxpkafTXkKvGJHA7aA0u50WutkG/PVWSHFxm9DTViiMH8PsMPRMvCNLbKu9rHqMZj1o5whwtg==
+X-Received: by 2002:a17:906:ca50:: with SMTP id jx16mr4131927ejb.72.1616492553383;
+        Tue, 23 Mar 2021 02:42:33 -0700 (PDT)
 Received: from dell ([91.110.221.180])
-        by smtp.gmail.com with ESMTPSA id 90sm12948482edf.31.2021.03.23.02.40.43
+        by smtp.gmail.com with ESMTPSA id g11sm12635053edt.35.2021.03.23.02.42.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Mar 2021 02:40:44 -0700 (PDT)
-Date:   Tue, 23 Mar 2021 09:40:41 +0000
+        Tue, 23 Mar 2021 02:42:32 -0700 (PDT)
+Date:   Tue, 23 Mar 2021 09:42:29 +0000
 From:   Lee Jones <lee.jones@linaro.org>
-To:     Kiran Gunda <kgunda@codeaurora.org>
-Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
-        b.zolnierkie@samsung.com, dri-devel@lists.freedesktop.org,
-        daniel.thompson@linaro.org, jacek.anaszewski@gmail.com,
-        pavel@ucw.cz, robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-fbdev@vger.kernel.org
-Subject: Re: [PATCH V5 2/2] backlight: qcom-wled: Correct the sync_toggle
- sequence
-Message-ID: <20210323094041.GT2916463@dell>
-References: <1616071180-24493-1-git-send-email-kgunda@codeaurora.org>
- <1616071180-24493-3-git-send-email-kgunda@codeaurora.org>
+To:     Daniel Thompson <daniel.thompson@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, Jingoo Han <jingoohan1@gmail.com>,
+        Pavel Machek <pavel@ucw.cz>, Dan Murphy <dmurphy@ti.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kiran Gunda <kgunda@codeaurora.org>,
+        dri-devel@lists.freedesktop.org, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org
+Subject: Re: [PATCH 2/2] video: backlight: qcom-wled: Add PMI8994 compatible
+Message-ID: <20210323094229.GU2916463@dell>
+References: <20210228124106.135812-1-konrad.dybcio@somainline.org>
+ <20210228124106.135812-2-konrad.dybcio@somainline.org>
+ <20210322161810.biagj2qro66rv4gt@maple.lan>
+ <20210323083935.GF2916463@dell>
+ <20210323093540.dqrhjlvr6oza3hvt@maple.lan>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1616071180-24493-3-git-send-email-kgunda@codeaurora.org>
+In-Reply-To: <20210323093540.dqrhjlvr6oza3hvt@maple.lan>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 18 Mar 2021, Kiran Gunda wrote:
+On Tue, 23 Mar 2021, Daniel Thompson wrote:
 
-> As per the current implementation, after FSC (Full Scale Current)
-> and brightness update the sync bits are set-then-cleared.
-> But, the FSC and brightness sync takes place when the sync bits are
-> set (e.g. on a rising edge). So the hardware team recommends a
-> clear-then-set approach in order to guarantee such a transition
-> regardless of the previous register state.
+> On Tue, Mar 23, 2021 at 08:39:35AM +0000, Lee Jones wrote:
+> > On Mon, 22 Mar 2021, Daniel Thompson wrote:
+> > 
+> > > On Sun, Feb 28, 2021 at 01:41:05PM +0100, Konrad Dybcio wrote:
+> > > > Add a compatible for PMI8994 WLED. It uses the V4 of WLED IP.
+> > > > 
+> > > > Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> > > 
+> > > Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
+> > 
+> > Why are you Reviewing/Acking a patch that was applied on the 10th?
 > 
-> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
-> Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
-> ---
->  drivers/video/backlight/qcom-wled.c | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
+> Simply an oversight. Looks like I forgot to remove it from my backlog
+> when it was applied.
 
-Applied, thanks.
+I wondered if I'd made a mistake.
+
+No problem.  Thanks for the clarification.
+
+> > > > ---
+> > > >  drivers/video/backlight/qcom-wled.c | 1 +
+> > > >  1 file changed, 1 insertion(+)
+> > > > 
+> > > > diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
+> > > > index 3bc7800eb0a9..497b9035a908 100644
+> > > > --- a/drivers/video/backlight/qcom-wled.c
+> > > > +++ b/drivers/video/backlight/qcom-wled.c
+> > > > @@ -1704,6 +1704,7 @@ static int wled_remove(struct platform_device *pdev)
+> > > >  
+> > > >  static const struct of_device_id wled_match_table[] = {
+> > > >  	{ .compatible = "qcom,pm8941-wled", .data = (void *)3 },
+> > > > +	{ .compatible = "qcom,pmi8994-wled", .data = (void *)4 },
+> > > >  	{ .compatible = "qcom,pmi8998-wled", .data = (void *)4 },
+> > > >  	{ .compatible = "qcom,pm660l-wled", .data = (void *)4 },
+> > > >  	{ .compatible = "qcom,pm8150l-wled", .data = (void *)5 },
+> > 
 
 -- 
 Lee Jones [李琼斯]
