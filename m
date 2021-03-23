@@ -2,75 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CFB7334555E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Mar 2021 03:12:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ADF05345617
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Mar 2021 04:16:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229467AbhCWCLi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Mar 2021 22:11:38 -0400
-Received: from m12-14.163.com ([220.181.12.14]:59161 "EHLO m12-14.163.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230027AbhCWCLK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Mar 2021 22:11:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=From:Subject:Date:Message-Id; bh=+TehKEGSbGfHzsbgX1
-        OF+kBoQt/ziQhZ4S4gO4B/Vw8=; b=g2K6104wYQV7IPIgSL6KOy+aLGX0zz06VJ
-        vpnP3304IQWW88HH30rGREw22rpfX8FZoVJS2YeW7b5xEx36BQu5+YnyF23PJntq
-        sBCRcsuX33y1HGi9eJ6ltrgdQBDohy5h5X1Jiyrx17jfopDe36+eHuOVO+N6ZiKw
-        QxYvC2wVA=
-Received: from bf-rmnj-02.ccdomain.com (unknown [218.94.48.178])
-        by smtp10 (Coremail) with SMTP id DsCowADX3RXxTVlgQZIEqw--.27747S2;
-        Tue, 23 Mar 2021 10:09:59 +0800 (CST)
-From:   Jian Dong <dj0227@163.com>
-To:     amitk@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     rui.zhang@intel.com, daniel.lezcano@linaro.org,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        huyue2@yulong.com, Jian Dong <dongjian@yulong.com>
-Subject: [PATCH]  thermal: qcom: add missing put_device() call in init_common()
-Date:   Tue, 23 Mar 2021 10:09:47 +0800
-Message-Id: <1616465387-2973-1-git-send-email-dj0227@163.com>
-X-Mailer: git-send-email 1.9.1
-X-CM-TRANSID: DsCowADX3RXxTVlgQZIEqw--.27747S2
-X-Coremail-Antispam: 1Uf129KBjvdXoW7XryUXr1xuF4fKF15Wr4UArb_yoWDCrXEkr
-        4kA397Xr4rCr1DtFyDtry3t34qyrs7uryfu3WxK343J3sI9FW0gr4DJr15JrWkZr1DCa4I
-        g3WfAw1I9wn7WjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-        9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IU8i0ePUUUUU==
-X-Originating-IP: [218.94.48.178]
-X-CM-SenderInfo: dgmqjjqx6rljoofrz/xtbB0hde3VUMa8lMKAAAsZ
+        id S229872AbhCWDPt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Mar 2021 23:15:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44988 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229632AbhCWDPj (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 22 Mar 2021 23:15:39 -0400
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C280C061756
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Mar 2021 20:15:39 -0700 (PDT)
+Received: by mail-pg1-x536.google.com with SMTP id l1so10285900pgb.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Mar 2021 20:15:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=jGUaPOQSEmqCBFbxb1GC8sYi3rSqHsQAKV/yKvutXBM=;
+        b=hz2tYU3k4W75mMAU+jqBN9xgqJEwwMyrLdTSVCspMr1KuOY55R/RuigQr9VChS0WZe
+         YYHY36/kV7NjDkslQmspUjH1Sc1D+kZo3N+AyEEmEAEqgnhs2WggMsPwJ+oQn6ClZXJ0
+         8bbeTuAOzVoR0XTONGKiZT3tv1tvZ+oD1H8xM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=jGUaPOQSEmqCBFbxb1GC8sYi3rSqHsQAKV/yKvutXBM=;
+        b=QidO5phJmdacUJcueFQPits6NJZO2ka7T48KhocaPtd4BlmKqV5Yx1Dgu5sb1PbOiP
+         lq+tL8G8FWB7e8HxrhRw4Mjt6ZWESrxY7KnPjcwg3nayVNc/XTBP3+QMDuWDwqidY0f+
+         9r31h348NFTQVn/2/wKw4WkHxnzYvoOwe3DPHlh9w31uYVAeF7fE3tmhthmtbGKEpPnD
+         4bOg3BwcGRYr1PfMTllnn7wQK+TnQYyM2GdnxmdRgyojcnOV7V2FamEEAqVe0uSVg4GF
+         YdCZl1jLVBHRD3f2tcofa2f0cz7qdkjw34K6fY0CPd4dwEFoUuijfe8Wmvof5l+GD1nD
+         TlOQ==
+X-Gm-Message-State: AOAM530+OrMIFbdeketPEXHEGHx2S4pGUGkvgGUNw+R+081qXyZ7As2w
+        OHm6yAZAg/AYRzifnRAwlXkNyw==
+X-Google-Smtp-Source: ABdhPJxarOGT5B7hQXaAuoJ9oYGLFb3jDqyW2N7ukTRwPWfqHsmjpflHqbfk1NG5prtsPOJp+ZsWxw==
+X-Received: by 2002:a63:1a0d:: with SMTP id a13mr2123511pga.167.1616469336672;
+        Mon, 22 Mar 2021 20:15:36 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:201:e90d:d453:87ae:2e10])
+        by smtp.gmail.com with ESMTPSA id 3sm14766038pfh.13.2021.03.22.20.15.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Mar 2021 20:15:36 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20210315103836.1.I9a97120319d43b42353aeac4d348624d60687df7@changeid>
+References: <20210315103836.1.I9a97120319d43b42353aeac4d348624d60687df7@changeid>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Fix sc7180-qmp-usb3-dp-phy reg sizes
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        Vara Reddy <varar@codeaurora.org>,
+        Tanmay Shah <tanmay@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>
+Date:   Mon, 22 Mar 2021 20:15:34 -0700
+Message-ID: <161646933476.2972785.7556083242076314882@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Jian Dong <dongjian@yulong.com>
+Quoting Douglas Anderson (2021-03-15 10:38:54)
+> As per Dmitry Baryshkov [1]:
+> a) The 2nd "reg" should be 0x3c because "Offset 0x38 is
+>    USB3_DP_COM_REVISION_ID3 (not used by the current driver though)."
 
- Fixes coccicheck ERROR:
+I see 0x34 for the offset here instead of 0x38 but I don't think it
+really matters either way.
 
- drivers/thermal/qcom/tsens.c:759:4-10: ERROR: missing put_device;
- call of_find_device_by_node on line 715, but without a corresponding
- object release within this function.
+> b) The 3rd "reg" "is a serdes region and qmp_v3_dp_serdes_tbl contains
+>    registers 0x148 and 0x154."
+>=20
+> I think because the 3rd "reg" is a serdes region we should just use
+> the same size as the 1st "reg"?
+>=20
+> [1] https://lore.kernel.org/r/ee5695bb-a603-0dd5-7a7f-695e919b1af1@linaro=
+.org
+>=20
+> Cc: Stephen Boyd <swboyd@chromium.org>
+> Cc: Jeykumar Sankaran <jsanka@codeaurora.org>
+> Cc: Chandan Uddaraju <chandanu@codeaurora.org>
+> Cc: Vara Reddy <varar@codeaurora.org>
+> Cc: Tanmay Shah <tanmay@codeaurora.org>
+> Cc: Rob Clark <robdclark@chromium.org>
+> Fixes: 58fd7ae621e7 ("arm64: dts: qcom: sc7180: Update dts for DP phy ins=
+ide QMP phy")
+> Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
 
-Signed-off-by: Jian Dong <dongjian@yulong.com>
----
- drivers/thermal/qcom/tsens.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-index d8ce3a6..3c4c051 100644
---- a/drivers/thermal/qcom/tsens.c
-+++ b/drivers/thermal/qcom/tsens.c
-@@ -755,8 +755,10 @@ int __init init_common(struct tsens_priv *priv)
- 		for (i = VER_MAJOR; i <= VER_STEP; i++) {
- 			priv->rf[i] = devm_regmap_field_alloc(dev, priv->srot_map,
- 							      priv->fields[i]);
--			if (IS_ERR(priv->rf[i]))
--				return PTR_ERR(priv->rf[i]);
-+			if (IS_ERR(priv->rf[i])) {
-+				ret = PTR_ERR(priv->rf[i]);
-+				goto err_put_device;
-+			}
- 		}
- 		ret = regmap_field_read(priv->rf[VER_MINOR], &ver_minor);
- 		if (ret)
--- 
-1.9.1
-
-
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
