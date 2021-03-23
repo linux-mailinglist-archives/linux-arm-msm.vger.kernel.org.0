@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 234F0345FEA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Mar 2021 14:41:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CBC4A345FE9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Mar 2021 14:41:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231653AbhCWNlK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S231288AbhCWNlK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Tue, 23 Mar 2021 09:41:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38138 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231634AbhCWNk7 (ORCPT
+        with ESMTP id S231638AbhCWNlA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Mar 2021 09:40:59 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52E19C061764
+        Tue, 23 Mar 2021 09:41:00 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEFC7C0613D8
         for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 06:40:59 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id u21so9193528ejo.13
+Received: by mail-ed1-x52e.google.com with SMTP id y6so23520876eds.1
         for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 06:40:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=VmfOlnNHDrGmLQHATXfl48zw4SyfIPyue1iLUvZyyls=;
-        b=Zb9/PTYVhs5fxyf2gd6VaeTMSPY0eS6j2Gzri/xH+FwcEyvVTS1w3AEVklOwZoUHXR
-         mNU0AQddCuTDzUKVRTp3pH0NxrFzGweO/alaO2gWa+XrzlG+H/YGWxEUUJjT60MJXcWZ
-         HmvxBQQsf9X7sZtTc8xhG1JnOAzrUlzf3bRwQ3NvQG5zwhpR94VOPaAM4+gAHPRqXJP9
-         AhJ1VrgovS0E7yqQPdrdHON6MsCOuBa7Iq431lTkrZqCnzRYlrQliaX3nQVnrUCMVLHn
-         lXzm2wDMkyKEoUCd8MgmrgKv3RsQ64niL4cFq1f7RLPtUEnxr2L263Lr3BScn7zIwhL3
-         dbzw==
+        bh=54fMzulxyHOS7Wa5z7A+h/N7/JoxoBYIy5OqkE1tzqE=;
+        b=NYMIcABAAx9hRWPA5aVHH0/o4nUfU0gfso2WoxLyWfu/VeQfkotYP349F+UvXrfqlz
+         pSfmcd4tpv/93FHMEHPhUp/hpyE4iUE8jSAuGr4D+B566YpMp9U7Yc9oygTTo7fQBq39
+         hQ0Gj/ZALlp310s+9+G0tMApmHSlBEHwibpMZjlLI9oycHMbs+NnlPBzsMNctF4A9lcN
+         PzxYCMEN6OnmHqkdMxE7BZrpfdw5VNnhBJ/mnvb/MeTEJCGHo2y0XLXwn7V6IS7A+pvZ
+         2gAEBBr8dS/b+0qo0isYgM2ccDhYe9CnrxKhTXCAsTNQNOkd5gxNJjayOH2sMIMFXl8f
+         CUTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=VmfOlnNHDrGmLQHATXfl48zw4SyfIPyue1iLUvZyyls=;
-        b=TAmDvs8kz0Nj2tUruwvu1cv7CAfyWlTHOODH9AS/M2RkCzx9A0/3ms/vaCfjLFAZsz
-         qpNVRy7N/X+4zqfy4T3sd78s0RK7VYZQsO6wiztG4ZjIiABLOtf6f3ZbpzWsQryqkRdz
-         AvgWDurS9grLwfn4hOBm3BEDiudEcH6laidkGnb5bpciWWztsWYQvecKQwLVZyGCU89k
-         Gc4voEtQp/ZzrZd9O9kWONYiXkVyB2htFVD09PDoalmslNOxj+2/nKCh0nBVENZ+neQb
-         +a6vJQNFqp7xiU7uMpzAKloHzvVN6IV9nU4Z20BfnPqDg7DrBHFeIieFnq71MwpcTSu/
-         b5wQ==
-X-Gm-Message-State: AOAM533ArFgN02AasG0b5zpIZHrVvcmg3wZ+8MXVCnRF9lC3WHDWEp3a
-        R15XzpdgSC65kL6HGDc0KKGYvA==
-X-Google-Smtp-Source: ABdhPJxbEzSzYVv7LtNTxwLS2S/SXfSwa/RNW/sFA4QOiox8TuvGG1hs+FAK5z9OoJ2BRcjWVSEPeA==
-X-Received: by 2002:a17:906:4bce:: with SMTP id x14mr4854113ejv.383.1616506858010;
+        bh=54fMzulxyHOS7Wa5z7A+h/N7/JoxoBYIy5OqkE1tzqE=;
+        b=mf5CHKy6tlwqjz6Vg9kHPdppP/M2hA83bR/BVT8ThrR5k/glnfsQYffwAVi/ANqqOA
+         2xXwvmSOMBPAvDg/MJIOtzvBvplENPDFkw+P9v0mLE2IBGTFhWQ3XElNkC3y4oDOxvw9
+         QJN7g4xND2TiWstLkxe+w74sdFjzBxfMFQVqMnwQw7BD7kN4ksSK9fXj2M1Cxj1Qgdtm
+         3HWvHHPxagPJTy3LPs9T7+45ZQQ5cI606uEzVohV14+BvCOdiOpd6GO5TdyZhYuXVJmQ
+         19hgaa8vZAF+txX6/QuWkv8CTuE4AycrkRySgy+tyomKB9bIjNrLaCMG8g3aO/JzueJO
+         L0VA==
+X-Gm-Message-State: AOAM531cvovJN0m4pEWU2sXI95wSrvVIfBNwbFc/Tbnw1GiOrzScAPil
+        zApTurA+iE7Nk1RgfCvfHXpe2MzR4wNrlM0k
+X-Google-Smtp-Source: ABdhPJwmrBCy5LjD2ofrZz51sHL9i8AO+gMPXPLF+m4PLspzUBSBFEWsX6OKazsFo2Xut4BQXCHX6w==
+X-Received: by 2002:a05:6402:549:: with SMTP id i9mr4746720edx.379.1616506858726;
         Tue, 23 Mar 2021 06:40:58 -0700 (PDT)
 Received: from localhost.localdomain (hst-221-13.medicom.bg. [84.238.221.13])
-        by smtp.gmail.com with ESMTPSA id r10sm11207317eju.66.2021.03.23.06.40.57
+        by smtp.gmail.com with ESMTPSA id r10sm11207317eju.66.2021.03.23.06.40.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Mar 2021 06:40:57 -0700 (PDT)
+        Tue, 23 Mar 2021 06:40:58 -0700 (PDT)
 From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
 To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
 Cc:     hverkuil-cisco@xs4all.nl, ezequiel@collabora.com,
         nicolas.dufresne@collabora.com,
         Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH v6 4/5] docs: Document CLL and Mastering display colorimetry controls
-Date:   Tue, 23 Mar 2021 15:40:39 +0200
-Message-Id: <20210323134040.943757-5-stanimir.varbanov@linaro.org>
+Subject: [PATCH v6 5/5] venus: venc: Add support for CLL and Mastering display controls
+Date:   Tue, 23 Mar 2021 15:40:40 +0200
+Message-Id: <20210323134040.943757-6-stanimir.varbanov@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20210323134040.943757-1-stanimir.varbanov@linaro.org>
 References: <20210323134040.943757-1-stanimir.varbanov@linaro.org>
@@ -66,128 +66,169 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document Content Light Level and Mastering Display v4l2 colorimetry
-controls.
+Create CLL and Mastering display colour volume v4l2 controls for
+encoder, add handling of HDR10 PQ SEI packet payloads for v4.
 
 Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Reviewed-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 ---
- .../media/v4l/ext-ctrls-colorimetry.rst       | 71 +++++++++++++++++++
- .../media/v4l/vidioc-g-ext-ctrls.rst          |  8 +++
- .../media/videodev2.h.rst.exceptions          |  2 +
- 3 files changed, 81 insertions(+)
+ drivers/media/platform/qcom/venus/core.h      |  2 ++
+ drivers/media/platform/qcom/venus/hfi_cmds.c  |  8 +++++
+ .../media/platform/qcom/venus/hfi_helper.h    | 20 +++++++++++++
+ drivers/media/platform/qcom/venus/venc.c      | 29 +++++++++++++++++++
+ .../media/platform/qcom/venus/venc_ctrls.c    | 16 +++++++++-
+ 5 files changed, 74 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst
-index 862f78b41b32..1e7265155715 100644
---- a/Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst
-+++ b/Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst
-@@ -20,3 +20,74 @@ Colorimetry Control IDs
-     The Colorimetry class descriptor. Calling
-     :ref:`VIDIOC_QUERYCTRL` for this control will
-     return a description of this control class.
-+
-+``V4L2_CID_COLORIMETRY_HDR10_CLL_INFO (struct)``
-+    The Content Light Level defines upper bounds for the nominal target
-+    brightness light level of the pictures.
-+
-+.. c:type:: v4l2_ctrl_hdr10_cll_info
-+
-+.. cssclass:: longtable
-+
-+.. flat-table:: struct v4l2_ctrl_hdr10_cll_info
-+    :header-rows:  0
-+    :stub-columns: 0
-+    :widths:       1 1 2
-+
-+    * - __u16
-+      - ``max_content_light_level``
-+      - The upper bound for the maximum light level among all individual
-+        samples for the pictures of a video sequence, cd/m\ :sup:`2`.
-+        When equal to 0 no such upper bound is present.
-+    * - __u16
-+      - ``max_pic_average_light_level``
-+      - The upper bound for the maximum average light level among the
-+        samples for any individual picture of a video sequence,
-+        cd/m\ :sup:`2`. When equal to 0 no such upper bound is present.
-+
-+``V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY (struct)``
-+    The mastering display defines the color volume (the color primaries,
-+    white point and luminance range) of a display considered to be the
-+    mastering display for the current video content.
-+
-+.. c:type:: v4l2_ctrl_hdr10_mastering_display
-+
-+.. cssclass:: longtable
-+
-+.. flat-table:: struct v4l2_ctrl_hdr10_mastering_display
-+    :header-rows:  0
-+    :stub-columns: 0
-+    :widths:       1 1 2
-+
-+    * - __u16
-+      - ``display_primaries_x[3]``
-+      - Specifies the normalized x chromaticity coordinate of the color
-+        primary component c of the mastering display in increments of 0.00002.
-+        For describing the mastering display that uses Red, Green and Blue
-+        color primaries, index value c equal to 0 corresponds to the Green
-+        primary, c equal to 1 corresponds to Blue primary and c equal to 2
-+        corresponds to the Red color primary.
-+    * - __u16
-+      - ``display_primaries_y[3]``
-+      - Specifies the normalized y chromaticity coordinate of the color
-+        primary component c of the mastering display in increments of 0.00002.
-+        For describing the mastering display that uses Red, Green and Blue
-+        color primaries, index value c equal to 0 corresponds to the Green
-+        primary, c equal to 1 corresponds to Blue primary and c equal to 2
-+        corresponds to Red color primary.
-+    * - __u16
-+      - ``white_point_x``
-+      - Specifies the normalized x chromaticity coordinate of the white
-+        point of the mastering display in increments of 0.00002.
-+    * - __u16
-+      - ``white_point_y``
-+      - Specifies the normalized y chromaticity coordinate of the white
-+        point of the mastering display in increments of 0.00002.
-+    * - __u32
-+      - ``max_luminance``
-+      - Specifies the nominal maximum display luminance of the mastering
-+        display in units of 0.0001 cd/m\ :sup:`2`.
-+    * - __u32
-+      - ``min_luminance``
-+      - specifies the nominal minimum display luminance of the mastering
-+        display in units of 0.0001 cd/m\ :sup:`2`.
-diff --git a/Documentation/userspace-api/media/v4l/vidioc-g-ext-ctrls.rst b/Documentation/userspace-api/media/v4l/vidioc-g-ext-ctrls.rst
-index 15291be55299..f8847abd2766 100644
---- a/Documentation/userspace-api/media/v4l/vidioc-g-ext-ctrls.rst
-+++ b/Documentation/userspace-api/media/v4l/vidioc-g-ext-ctrls.rst
-@@ -216,6 +216,14 @@ still cause this situation.
-       - ``p_fwht_params``
-       - A pointer to a struct :c:type:`v4l2_ctrl_fwht_params`. Valid if this control is
-         of type ``V4L2_CTRL_TYPE_FWHT_PARAMS``.
-+    * - struct :c:type:`v4l2_ctrl_hdr10_cll_info` *
-+      - ``p_hdr10_cll``
-+      - A pointer to a struct :c:type:`v4l2_ctrl_hdr10_cll_info`. Valid if this control is
-+        of type ``V4L2_CTRL_TYPE_HDR10_CLL_INFO``.
-+    * - struct :c:type:`v4l2_ctrl_hdr10_mastering_display` *
-+      - ``p_hdr10_mastering``
-+      - A pointer to a struct :c:type:`v4l2_ctrl_hdr10_mastering_display`. Valid if this control is
-+        of type ``V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY``.
-     * - void *
-       - ``ptr``
-       - A pointer to a compound type which can be an N-dimensional array
-diff --git a/Documentation/userspace-api/media/videodev2.h.rst.exceptions b/Documentation/userspace-api/media/videodev2.h.rst.exceptions
-index 0ed170c6e720..38b31a9b9580 100644
---- a/Documentation/userspace-api/media/videodev2.h.rst.exceptions
-+++ b/Documentation/userspace-api/media/videodev2.h.rst.exceptions
-@@ -147,6 +147,8 @@ replace symbol V4L2_CTRL_TYPE_HEVC_PPS :c:type:`v4l2_ctrl_type`
- replace symbol V4L2_CTRL_TYPE_HEVC_SLICE_PARAMS :c:type:`v4l2_ctrl_type`
- replace symbol V4L2_CTRL_TYPE_AREA :c:type:`v4l2_ctrl_type`
- replace symbol V4L2_CTRL_TYPE_FWHT_PARAMS :c:type:`v4l2_ctrl_type`
-+replace symbol V4L2_CTRL_TYPE_HDR10_CLL_INFO :c:type:`v4l2_ctrl_type`
-+replace symbol V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY :c:type:`v4l2_ctrl_type`
+diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+index 13c18c49714d..029f620a28ff 100644
+--- a/drivers/media/platform/qcom/venus/core.h
++++ b/drivers/media/platform/qcom/venus/core.h
+@@ -241,6 +241,8 @@ struct venc_controls {
+ 	} level;
  
- # V4L2 capability defines
- replace define V4L2_CAP_VIDEO_CAPTURE device-capabilities
+ 	u32 base_priority_id;
++	struct v4l2_ctrl_hdr10_cll_info cll;
++	struct v4l2_ctrl_hdr10_mastering_display mastering;
+ };
+ 
+ struct venus_buffer {
+diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
+index 4f7565834469..d2edf3896cf1 100644
+--- a/drivers/media/platform/qcom/venus/hfi_cmds.c
++++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
+@@ -1217,6 +1217,14 @@ pkt_session_set_property_4xx(struct hfi_session_set_property_pkt *pkt,
+ 		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*info);
+ 		break;
+ 	}
++	case HFI_PROPERTY_PARAM_VENC_HDR10_PQ_SEI: {
++		struct hfi_hdr10_pq_sei *in = pdata, *hdr10 = prop_data;
++
++		memcpy(hdr10, in, sizeof(*hdr10));
++		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*hdr10);
++		break;
++	}
++
+ 	case HFI_PROPERTY_CONFIG_VENC_MAX_BITRATE:
+ 	case HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER:
+ 	case HFI_PROPERTY_PARAM_BUFFER_ALLOC_MODE:
+diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
+index 6b524c7cde5f..d32d926c7b2c 100644
+--- a/drivers/media/platform/qcom/venus/hfi_helper.h
++++ b/drivers/media/platform/qcom/venus/hfi_helper.h
+@@ -513,6 +513,7 @@
+ #define HFI_PROPERTY_PARAM_VENC_VPX_ERROR_RESILIENCE_MODE	0x2005029
+ #define HFI_PROPERTY_PARAM_VENC_HIER_B_MAX_NUM_ENH_LAYER	0x200502c
+ #define HFI_PROPERTY_PARAM_VENC_HIER_P_HYBRID_MODE		0x200502f
++#define HFI_PROPERTY_PARAM_VENC_HDR10_PQ_SEI			0x2005036
+ 
+ /*
+  * HFI_PROPERTY_CONFIG_VENC_COMMON_START
+@@ -809,6 +810,25 @@ struct hfi_ltr_mark {
+ 	u32 mark_frame;
+ };
+ 
++struct hfi_mastering_display_colour_sei_payload {
++	u32 display_primaries_x[3];
++	u32 display_primaries_y[3];
++	u32 white_point_x;
++	u32 white_point_y;
++	u32 max_display_mastering_luminance;
++	u32 min_display_mastering_luminance;
++};
++
++struct hfi_content_light_level_sei_payload {
++	u32 max_content_light;
++	u32 max_pic_average_light;
++};
++
++struct hfi_hdr10_pq_sei {
++	struct hfi_mastering_display_colour_sei_payload mastering;
++	struct hfi_content_light_level_sei_payload cll;
++};
++
+ struct hfi_framesize {
+ 	u32 buffer_type;
+ 	u32 width;
+diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+index 505d092dc433..855761c01276 100644
+--- a/drivers/media/platform/qcom/venus/venc.c
++++ b/drivers/media/platform/qcom/venus/venc.c
+@@ -612,6 +612,35 @@ static int venc_set_properties(struct venus_inst *inst)
+ 			return ret;
+ 	}
+ 
++	if (inst->fmt_cap->pixfmt == V4L2_PIX_FMT_HEVC) {
++		struct hfi_hdr10_pq_sei hdr10;
++		unsigned int c;
++
++		ptype = HFI_PROPERTY_PARAM_VENC_HDR10_PQ_SEI;
++
++		for (c = 0; c < 3; c++) {
++			hdr10.mastering.display_primaries_x[c] =
++				ctr->mastering.display_primaries_x[c];
++			hdr10.mastering.display_primaries_y[c] =
++				ctr->mastering.display_primaries_y[c];
++		}
++
++		hdr10.mastering.white_point_x = ctr->mastering.white_point_x;
++		hdr10.mastering.white_point_y = ctr->mastering.white_point_y;
++		hdr10.mastering.max_display_mastering_luminance =
++			ctr->mastering.max_display_mastering_luminance;
++		hdr10.mastering.min_display_mastering_luminance =
++			ctr->mastering.min_display_mastering_luminance;
++
++		hdr10.cll.max_content_light = ctr->cll.max_content_light_level;
++		hdr10.cll.max_pic_average_light =
++			ctr->cll.max_pic_average_light_level;
++
++		ret = hfi_session_set_property(inst, ptype, &hdr10);
++		if (ret)
++			return ret;
++	}
++
+ 	if (ctr->num_b_frames) {
+ 		u32 max_num_b_frames = NUM_B_FRAMES_MAX;
+ 
+diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
+index 16d6c64d5f64..8a7cf6960811 100644
+--- a/drivers/media/platform/qcom/venus/venc_ctrls.c
++++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
+@@ -279,6 +279,12 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
+ 	case V4L2_CID_MPEG_VIDEO_AU_DELIMITER:
+ 		ctr->aud_enable = ctrl->val;
+ 		break;
++	case V4L2_CID_COLORIMETRY_HDR10_CLL_INFO:
++		ctr->cll = *ctrl->p_new.p_hdr10_cll;
++		break;
++	case V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY:
++		ctr->mastering = *ctrl->p_new.p_hdr10_mastering;
++		break;
+ 	default:
+ 		return -EINVAL;
+ 	}
+@@ -294,7 +300,7 @@ int venc_ctrl_init(struct venus_inst *inst)
+ {
+ 	int ret;
+ 
+-	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 52);
++	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 54);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -504,6 +510,14 @@ int venc_ctrl_init(struct venus_inst *inst)
+ 	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
+ 			  V4L2_CID_MPEG_VIDEO_AU_DELIMITER, 0, 1, 1, 0);
+ 
++	v4l2_ctrl_new_std_compound(&inst->ctrl_handler, &venc_ctrl_ops,
++				   V4L2_CID_COLORIMETRY_HDR10_CLL_INFO,
++				   v4l2_ctrl_ptr_create(NULL));
++
++	v4l2_ctrl_new_std_compound(&inst->ctrl_handler, &venc_ctrl_ops,
++				   V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY,
++				   v4l2_ctrl_ptr_create(NULL));
++
+ 	ret = inst->ctrl_handler.error;
+ 	if (ret)
+ 		goto err;
 -- 
 2.25.1
 
