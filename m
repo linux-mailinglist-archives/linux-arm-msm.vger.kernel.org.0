@@ -2,301 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 56200345818
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Mar 2021 08:02:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5679334584D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Mar 2021 08:08:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229452AbhCWHCD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Mar 2021 03:02:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36732 "EHLO
+        id S230053AbhCWHH3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Mar 2021 03:07:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229548AbhCWHBm (ORCPT
+        with ESMTP id S229504AbhCWHG7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Mar 2021 03:01:42 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8FA7C061574
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 00:01:41 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id n11so10737221pgm.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 00:01:41 -0700 (PDT)
+        Tue, 23 Mar 2021 03:06:59 -0400
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A69C0C061763
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 00:06:59 -0700 (PDT)
+Received: by mail-pj1-x1032.google.com with SMTP id s21so9686281pjq.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 00:06:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:content-transfer-encoding:in-reply-to:references
          :subject:from:cc:to:date:message-id:user-agent;
-        bh=fKnECfkV+SG90cvN0DOvRc0qoLw7OOrrpIiUr3W81zg=;
-        b=SCZVM46+SoWCELmYc4l9vtMe4ZSBI6fIZdXAQfVwM2Le4DLRaw/CbL7jgIv/iV+D96
-         ax1GjjUATepTB/S+NmJTGe9cdKV5i8lNpB+/veymz4oOAPTneQ4Oyrn3ZyScwyiUW64/
-         hFSfHK8s/CU8AtuLgX8RWnpLnWDlaFGkOXAOE=
+        bh=M7BX2s49auLfbH2gyCi6pSTB77prgu67qQJXhpmUA0U=;
+        b=IOUq/keT/pN6NH7JDlFmy0UckH2Ljp+O6AAcAcuFNmV8rABoiI4Ti48EgiYgdkhbbJ
+         gKdFzHzBJKOqT5Ob0YoXEPcJTsWVXunJ9mJUGv0imGnWSD4uMLRZquHIaHXA9VX47NTE
+         grrCMXoa9q6oDxIvscH/zo4S3EHEfPhggIH0Y=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:content-transfer-encoding
          :in-reply-to:references:subject:from:cc:to:date:message-id
          :user-agent;
-        bh=fKnECfkV+SG90cvN0DOvRc0qoLw7OOrrpIiUr3W81zg=;
-        b=ZoIlks46Xigpj1XrwF9H5a8A9RxGvIu3YfyaoaFQ+++lNHsk/xgI9UnsrDvPQ9FDZA
-         x7bV8T9L4qo4657Ru51cIFGEtLN0hm9ni+0UgJZqIq+Bd2mB//9/SaOhdR12280+ZYJ3
-         vOpGOauyh8O3kPMoylFtOujysUOGBPCtg7UuZf3G2LwRGSQ/PUGpdJyZfOJaL9xFluRf
-         cIanEkTzLMPszcdW9uvY1RmWYVNtAH94RY6tXjqjNkaA8bvqyyLTNf9A/pDYN6Q97xHL
-         /uQRf0gTe0O+dWHg78iRqtYIu0J3vtnjABfdKSy6dd+K1h0HPdHClXNoTEtaGWmXoIxa
-         DpbQ==
-X-Gm-Message-State: AOAM530dTB585xi1IeVNwzwJCzmCYbqUJyl3dYcmJsdi8HAtl2HjpsuS
-        /BWZjvI0OU9Zat9kJnFM8UBrqA==
-X-Google-Smtp-Source: ABdhPJy2qDd9Se7BqIP+wL4emg4fHBvfz5kk2mpVmnYx7YsGoVef1eXEKdkl0Xl1rquhxYQYl2oavw==
-X-Received: by 2002:a17:902:ec84:b029:e5:bd05:4a98 with SMTP id x4-20020a170902ec84b02900e5bd054a98mr4020274plg.76.1616482901435;
-        Tue, 23 Mar 2021 00:01:41 -0700 (PDT)
+        bh=M7BX2s49auLfbH2gyCi6pSTB77prgu67qQJXhpmUA0U=;
+        b=idD7yQHbbQxVKpIN2Uh2wt3OYItODCLO6B4jLk30Ixtkqx5pzjthpMdOTLhRMbrj2W
+         Wq1Y/iutS72xgV5sH1nfjloSzs8gMq4z6wMd0bBjTBOxzhCAEpSugme7D6l1klCxPFES
+         ZSC1OkI0BW9ub1DtUj2/856ol2qAhH849FtCZpC5poOTFKP2veu0iEeMcCnLbP5J2ewa
+         NnxOlDUr+1SpfrpPl4A2Lwq2jLej9RN1zgnwo8vjp++mopSLxqe4qskmElMwvpxe754m
+         C+49J341ohbojYzORIF/NT5gNrPwQti/qo4IliSyXE3em/j2AzrLZeql8HB8sR0/gfEQ
+         OzbA==
+X-Gm-Message-State: AOAM530Tw2U+F/sqb3Am+TPLNfEEnDyNMGQDWsYyXsrKoDIWQ6SeUJGN
+        6jiVQRmPI+zTyH4KiY0PRAhqP2xKK2O3eQ==
+X-Google-Smtp-Source: ABdhPJxIdnipkazekqqUnF8aJGK8AFsaN3fIpLQOc7AxrUpquJI41YX9/l3Ud3NjUtFIoSaPs4V7Bw==
+X-Received: by 2002:a17:90a:c207:: with SMTP id e7mr3088269pjt.188.1616483219004;
+        Tue, 23 Mar 2021 00:06:59 -0700 (PDT)
 Received: from chromium.org ([2620:15c:202:201:e90d:d453:87ae:2e10])
-        by smtp.gmail.com with ESMTPSA id l10sm14927941pfc.125.2021.03.23.00.01.40
+        by smtp.gmail.com with ESMTPSA id j10sm1550508pjs.11.2021.03.23.00.06.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Mar 2021 00:01:41 -0700 (PDT)
+        Tue, 23 Mar 2021 00:06:58 -0700 (PDT)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1616264220-25825-1-git-send-email-sbhanu@codeaurora.org>
-References: <1616264220-25825-1-git-send-email-sbhanu@codeaurora.org>
-Subject: Re: [PATCH V2] arm64: dts: qcom: sc7280: Add nodes for eMMC and SD card
+In-Reply-To: <ac4f5cf8-0bf0-b7c3-2d50-ae7d48cbc885@codeaurora.org>
+References: <1614773878-8058-1-git-send-email-rnayak@codeaurora.org> <1614773878-8058-6-git-send-email-rnayak@codeaurora.org> <161481625091.1478170.8810587061043612400@swboyd.mtv.corp.google.com> <31bf64c5-26a4-dc23-3769-df7a7559083b@codeaurora.org> <ac4f5cf8-0bf0-b7c3-2d50-ae7d48cbc885@codeaurora.org>
+Subject: Re: [PATCH v2 05/14] arm64: dts: qcom: sc7280: Add RSC and PDC devices
 From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     asutoshd@codeaurora.org, stummala@codeaurora.org,
-        vbadigan@codeaurora.org, rampraka@codeaurora.org,
-        sayalil@codeaurora.org, sartgarg@codeaurora.org,
-        rnayak@codeaurora.org, saiprakash.ranjan@codeaurora.org,
-        sibis@codeaurora.org, cang@codeaurora.org, pragalla@codeaurora.org,
-        nitirawa@codeaurora.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org,
-        Shaik Sajida Bhanu <sbhanu@codeaurora.org>
-To:     Shaik Sajida Bhanu <sbhanu@codeaurora.org>,
-        adrian.hunter@intel.com, robh+dt@kernel.org, ulf.hansson@linaro.org
-Date:   Tue, 23 Mar 2021 00:01:39 -0700
-Message-ID: <161648289959.3012082.11356063123403968180@swboyd.mtv.corp.google.com>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+To:     Maulik Shah <mkshah@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh+dt@kernel.org
+Date:   Tue, 23 Mar 2021 00:06:56 -0700
+Message-ID: <161648321678.3012082.421067844814536713@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Shaik Sajida Bhanu (2021-03-20 11:17:00)
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dt=
-s/qcom/sc7280-idp.dts
-> index 54d2cb3..4105263 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-> @@ -8,6 +8,7 @@
->  /dts-v1/;
-> =20
->  #include "sc7280.dtsi"
-> +#include <dt-bindings/gpio/gpio.h>
+Quoting Maulik Shah (2021-03-07 21:21:04)
+> Hi,
+>=20
+> On 3/5/2021 11:12 AM, Rajendra Nayak wrote:
+> >
+> > On 3/4/2021 5:34 AM, Stephen Boyd wrote:
+> >> Quoting Rajendra Nayak (2021-03-03 04:17:49)
+> >>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi=20
+> >>> b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> >>> index 4a56d9c..21c2399 100644
+> >>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> >>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> >>> @@ -30,6 +31,18 @@
+> >>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 };
+> >>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 };
+> >>> =C2=A0 +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 reserved_memory: reserve=
+d-memory {
+> >>
+> >> Do we plan to use this label at any point? I'd prefer we remove this
+> >> until it becomes useful.
+> >
+> > sure, i'll drop it
+> >
+> >>
+> >>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 #address-cells =3D <2>;
+> >>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 #size-cells =3D <2>;
+> >>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 ranges;
+> >>> +
+> >>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 aop_cmd_db_mem: memory@80860000 {
+> >>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 reg =3D =
+<0x0 0x80860000 0x0 0x20000>;
+> >>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 compatib=
+le =3D "qcom,cmd-db";
+> >>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 no-map;
+> >>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 };
+> >>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 };
+> >>> +
+> >>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 cpus {
+> >>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 #address-cells =3D <2>;
+> >>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 #size-cells =3D <0>;
+> >>> @@ -203,6 +229,7 @@
+> >>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ interrupt-controller;
+> >>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ #interrupt-cells =3D <2>;
+> >>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ gpio-ranges =3D <&tlmm 0 0 175>;
+> >>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 wakeup-p=
+arent =3D <&pdc>;
+> >>> =C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 qup_uart5_default: qup-uart5-default {
+> >>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pins =3D "gpio46", "gpio47=
+";
+> >>> @@ -287,6 +314,23 @@
+> >>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 status =3D "disabled";
+> >>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ };
+> >>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 };
+> >>> +
+> >>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 apps_rsc: rsc@18200000 {
+> >>
+> >> Any better name than 'rsc'? Maybe 'power-controller'?
+> >
+> > hmm, Maulik, any thoughts? This would perhaps need the bindings docs
+> > to be updated as well (and maybe the existing platform DTs using rsc to=
+o)
+>=20
+> I think we should be good with rsc (resource-state-coordinator). RSC=20
+> itself don't do any resource power management.
+>=20
 
-Please include this before sc7280.dtsi
-
-> =20
->  / {
->         model =3D "Qualcomm Technologies, Inc. sc7280 IDP platform";
-> @@ -242,6 +243,30 @@
->         status =3D "okay";
->  };
-> =20
-> +&sdhc_1 {
-> +       status =3D "okay";
-> +
-> +       pinctrl-names =3D "default", "sleep";
-> +       pinctrl-0 =3D <&sdc1_on>;
-> +       pinctrl-1 =3D <&sdc1_off>;
-> +
-> +       vmmc-supply =3D <&vreg_l7b_2p9>;
-> +       vqmmc-supply =3D <&vreg_l19b_1p8>;
-> +};
-> +
-> +&sdhc_2 {
-> +       status =3D "okay";
-> +
-> +       pinctrl-names =3D "default","sleep";
-
-Please add a space after the comma ^
-
-> +       pinctrl-0 =3D <&sdc2_on>;
-> +       pinctrl-1 =3D <&sdc2_off>;
-> +
-> +       vmmc-supply =3D <&vreg_l9c_2p9>;
-> +       vqmmc-supply =3D <&vreg_l6c_2p9>;
-> +
-> +       cd-gpios =3D <&tlmm 91 GPIO_ACTIVE_LOW>;
-> +};
-> +
->  /* PINCTRL - additions to nodes defined in sc7280.dtsi */
-> =20
->  &qup_uart5_default {
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/q=
-com/sc7280.dtsi
-> index 8f6b569..69eb064 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -20,6 +20,11 @@
-> =20
->         chosen { };
-> =20
-> +       aliases {
-> +               mmc1 =3D &sdhc_1;
-> +               mmc2 =3D &sdhc_2;
-> +       };
-> +
->         clocks {
->                 xo_board: xo-board {
->                         compatible =3D "fixed-clock";
-> @@ -305,6 +310,64 @@
->                         #power-domain-cells =3D <1>;
->                 };
-> =20
-> +               sdhc_1: sdhci@7c4000 {
-> +                       compatible =3D "qcom,sdhci-msm-v5";
-> +                       reg =3D <0 0x7c4000 0 0x1000>,
-
-Please add leading zeroes to the physical address, i.e. 0x007c4000
-
-> +                                       <0 0x7c5000 0 0x1000>;
-> +                       reg-names =3D "hc", "cqhci";
-> +
-> +                       iommus =3D <&apps_smmu 0xC0 0x0>;
-
-Lowercase hex please.
-
-> +                       interrupts =3D <GIC_SPI 652 IRQ_TYPE_LEVEL_HIGH>,
-> +                                       <GIC_SPI 656 IRQ_TYPE_LEVEL_HIGH>;
-> +                       interrupt-names =3D "hc_irq", "pwr_irq";
-> +
-> +                       clocks =3D <&gcc GCC_SDCC1_APPS_CLK>,
-> +                                       <&gcc GCC_SDCC1_AHB_CLK>,
-> +                                       <&rpmhcc RPMH_CXO_CLK>;
-> +                       clock-names =3D "core", "iface", "xo";
-> +                       interconnects =3D <&aggre1_noc MASTER_SDCC_1 0 &m=
-c_virt SLAVE_EBI1 0>,
-> +                                       <&gem_noc MASTER_APPSS_PROC 0 &cn=
-oc2 SLAVE_SDCC_1 0>;
-> +                       interconnect-names =3D "sdhc-ddr","cpu-sdhc";
-> +                       power-domains =3D <&rpmhpd SC7280_CX>;
-> +                       operating-points-v2 =3D <&sdhc1_opp_table>;
-> +
-> +                       bus-width =3D <8>;
-> +                       non-removable;
-> +                       supports-cqe;
-> +                       no-sd;
-> +                       no-sdio;
-> +
-> +                       max-frequency =3D <192000000>;
-
-Is this necessary?
-
-> +
-> +                       qcom,dll-config =3D <0x0007642c>;
-> +                       qcom,ddr-config =3D <0x80040868>;
-> +
-> +                       mmc-ddr-1_8v;
-> +                       mmc-hs200-1_8v;
-> +                       mmc-hs400-1_8v;
-> +                       mmc-hs400-enhanced-strobe;
-> +
-> +                       status =3D "disabled";
-
-Can this be near the compatible string?
-
-> +
-> +                       sdhc1_opp_table: sdhc1-opp-table {
-> +                               compatible =3D "operating-points-v2";
-> +
-> +                               opp-100000000 {
-> +                                       opp-hz =3D /bits/ 64 <100000000>;
-> +                                       required-opps =3D <&rpmhpd_opp_lo=
-w_svs>;
-> +                                       opp-peak-kBps =3D <1200000 76000>;
-> +                                       opp-avg-kBps =3D <1200000 50000>;
-> +                               };
-> +
-> +                               opp-384000000 {
-> +                                       opp-hz =3D /bits/ 64 <384000000>;
-> +                                       required-opps =3D <&rpmhpd_opp_no=
-m>;
-> +                                       opp-peak-kBps =3D <5400000 160000=
-0>;
-> +                                       opp-avg-kBps =3D <6000000 300000>;
-> +                               };
-> +                       };
-> +               };
-> +
->                 qupv3_id_0: geniqup@9c0000 {
->                         compatible =3D "qcom,geni-se-qup";
->                         reg =3D <0 0x009c0000 0 0x2000>;
-> @@ -328,6 +391,54 @@
->                         };
->                 };
-> =20
-> +               sdhc_2: sdhci@8804000 {
-> +                       compatible =3D "qcom,sdhci-msm-v5";
-> +                       reg =3D <0 0x08804000 0 0x1000>;
-
-This has leading zeroes, great!
-
-> +
-> +                       iommus =3D <&apps_smmu 0x100 0x0>;
-> +                       interrupts =3D <GIC_SPI 207 IRQ_TYPE_LEVEL_HIGH>,
-> +                                       <GIC_SPI 223 IRQ_TYPE_LEVEL_HIGH>;
-> +                       interrupt-names =3D "hc_irq", "pwr_irq";
-> +
-> +                       clocks =3D <&gcc GCC_SDCC2_APPS_CLK>,
-> +                                       <&gcc GCC_SDCC2_AHB_CLK>,
-> +                                       <&rpmhcc RPMH_CXO_CLK>;
-
-Is this aligned properly?
-
-> +                       clock-names =3D "core", "iface", "xo";
-> +                       interconnects =3D <&aggre1_noc MASTER_SDCC_2 0 &m=
-c_virt SLAVE_EBI1 0>,
-> +                                       <&gem_noc MASTER_APPSS_PROC 0 &cn=
-oc2 SLAVE_SDCC_2 0>;
-> +                       interconnect-names =3D "sdhc-ddr","cpu-sdhc";
-> +                       power-domains =3D <&rpmhpd SC7280_CX>;
-> +                       operating-points-v2 =3D <&sdhc2_opp_table>;
-> +
-> +                       bus-width =3D <4>;
-> +
-> +                       no-mmc;
-> +                       no-sdio;
-> +
-> +                       max-frequency =3D <202000000>;
-
-Is this necessary?
-
-> +
-> +                       qcom,dll-config =3D <0x0007642c>;
-> +
-> +                       status =3D "disabled";
-
-Move up near compatible?
-
-> +
-> +                       sdhc2_opp_table: sdhc2-opp-table {
-> +                                       compatible =3D "operating-points-=
-v2";
-> +
-> +                                       opp-100000000 {
-> +                                               opp-hz =3D/bits/ 64 <1000=
-00000>;
-> +                                               required-opps =3D <&rpmhp=
-d_opp_low_svs>;
-> +                                               opp-peak-kBps =3D <120000=
-0 76000>;
-> +                                               opp-avg-kBps =3D <1200000=
- 50000>;
-> +                                       };
-> +                                       opp-202000000 {
-> +                                               opp-hz =3D /bits/ 64 <202=
-000000>;
-> +                                               required-opps =3D <&rpmhp=
-d_opp_nom>;
-> +                                               opp-peak-kBps =3D <350000=
-0 1200000>;
-> +                                               opp-avg-kBps =3D <5000000=
- 100000>;
-> +                                       };
-> +                               };
-> +               };
-> +
->                 pdc: interrupt-controller@b220000 {
->                         compatible =3D "qcom,sc7280-pdc", "qcom,pdc";
->                         reg =3D <0 0x0b220000 0 0x30000>;
+Maybe 'mailbox' then? Or 'remoteproc'? I am not "good" with rsc as it
+isn't part of the standardized nodes names per the DT spec.
