@@ -2,233 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CBC4A345FE9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Mar 2021 14:41:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A0FEC34601F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Mar 2021 14:50:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231288AbhCWNlK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Mar 2021 09:41:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38144 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231638AbhCWNlA (ORCPT
+        id S230523AbhCWNtn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Mar 2021 09:49:43 -0400
+Received: from mail-lj1-f175.google.com ([209.85.208.175]:42655 "EHLO
+        mail-lj1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230078AbhCWNtb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Mar 2021 09:41:00 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEFC7C0613D8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 06:40:59 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id y6so23520876eds.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 06:40:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=54fMzulxyHOS7Wa5z7A+h/N7/JoxoBYIy5OqkE1tzqE=;
-        b=NYMIcABAAx9hRWPA5aVHH0/o4nUfU0gfso2WoxLyWfu/VeQfkotYP349F+UvXrfqlz
-         pSfmcd4tpv/93FHMEHPhUp/hpyE4iUE8jSAuGr4D+B566YpMp9U7Yc9oygTTo7fQBq39
-         hQ0Gj/ZALlp310s+9+G0tMApmHSlBEHwibpMZjlLI9oycHMbs+NnlPBzsMNctF4A9lcN
-         PzxYCMEN6OnmHqkdMxE7BZrpfdw5VNnhBJ/mnvb/MeTEJCGHo2y0XLXwn7V6IS7A+pvZ
-         2gAEBBr8dS/b+0qo0isYgM2ccDhYe9CnrxKhTXCAsTNQNOkd5gxNJjayOH2sMIMFXl8f
-         CUTw==
+        Tue, 23 Mar 2021 09:49:31 -0400
+Received: by mail-lj1-f175.google.com with SMTP id 184so25677965ljf.9;
+        Tue, 23 Mar 2021 06:49:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=54fMzulxyHOS7Wa5z7A+h/N7/JoxoBYIy5OqkE1tzqE=;
-        b=mf5CHKy6tlwqjz6Vg9kHPdppP/M2hA83bR/BVT8ThrR5k/glnfsQYffwAVi/ANqqOA
-         2xXwvmSOMBPAvDg/MJIOtzvBvplENPDFkw+P9v0mLE2IBGTFhWQ3XElNkC3y4oDOxvw9
-         QJN7g4xND2TiWstLkxe+w74sdFjzBxfMFQVqMnwQw7BD7kN4ksSK9fXj2M1Cxj1Qgdtm
-         3HWvHHPxagPJTy3LPs9T7+45ZQQ5cI606uEzVohV14+BvCOdiOpd6GO5TdyZhYuXVJmQ
-         19hgaa8vZAF+txX6/QuWkv8CTuE4AycrkRySgy+tyomKB9bIjNrLaCMG8g3aO/JzueJO
-         L0VA==
-X-Gm-Message-State: AOAM531cvovJN0m4pEWU2sXI95wSrvVIfBNwbFc/Tbnw1GiOrzScAPil
-        zApTurA+iE7Nk1RgfCvfHXpe2MzR4wNrlM0k
-X-Google-Smtp-Source: ABdhPJwmrBCy5LjD2ofrZz51sHL9i8AO+gMPXPLF+m4PLspzUBSBFEWsX6OKazsFo2Xut4BQXCHX6w==
-X-Received: by 2002:a05:6402:549:: with SMTP id i9mr4746720edx.379.1616506858726;
-        Tue, 23 Mar 2021 06:40:58 -0700 (PDT)
-Received: from localhost.localdomain (hst-221-13.medicom.bg. [84.238.221.13])
-        by smtp.gmail.com with ESMTPSA id r10sm11207317eju.66.2021.03.23.06.40.58
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition;
+        bh=mFWNgc1FW5QaVvw/wsJgMcMblBrOgtay4PdG9vIWiv0=;
+        b=FvVyVQVsLQoE4k5/J1DM8EN5nXrnEwwGou+LREOttVV++wOuq/w19+yy6kvngoIypl
+         b2hwIJqaId0vkehPrAKTy3mmSYFPjdQsLzTD+O3b8SJOKWhz7/ehXJBAduY63o/xCXKF
+         ctl9Bt7CHW66JZ2Lk/sFc+8M762u/3aFRA0hhhgWKxAw8WF8gAIZBRawgRKvS0LFKuxO
+         jb5oloSGf0EE0N4VpkeO4qYcZEdWrqQQfmN8Kparl2f+w6ZQ6d5xAEBZiwTsTb/onUvW
+         O38yvciw4SEqBawanEGzOCOT5KPhBfubQZukp1IvM3p0Pj+mncdXDMIe3P/XHqzJN3f4
+         /6Ug==
+X-Gm-Message-State: AOAM5321c8uPfPcT0FIM4pKrkY04Hx2jMHvLvmOAjLAm7Dm3ayjPBn+K
+        ykfyp6vFGVJLM2rNWf1jg+E=
+X-Google-Smtp-Source: ABdhPJzCrYWUnFHopBuwoTQCnEVSaGjYd/0HCeCkwyJiUJo8kLjKK212FjDHsyFBrcl4geyYwMfp3w==
+X-Received: by 2002:a2e:9b4a:: with SMTP id o10mr3196706ljj.485.1616507369334;
+        Tue, 23 Mar 2021 06:49:29 -0700 (PDT)
+Received: from localhost.localdomain (dc7vkhyyyyyyyyyyyyyby-3.rev.dnainternet.fi. [2001:14ba:16e2:8300::2])
+        by smtp.gmail.com with ESMTPSA id i30sm1079430lfj.206.2021.03.23.06.49.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Mar 2021 06:40:58 -0700 (PDT)
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     hverkuil-cisco@xs4all.nl, ezequiel@collabora.com,
-        nicolas.dufresne@collabora.com,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH v6 5/5] venus: venc: Add support for CLL and Mastering display controls
-Date:   Tue, 23 Mar 2021 15:40:40 +0200
-Message-Id: <20210323134040.943757-6-stanimir.varbanov@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210323134040.943757-1-stanimir.varbanov@linaro.org>
-References: <20210323134040.943757-1-stanimir.varbanov@linaro.org>
+        Tue, 23 Mar 2021 06:49:28 -0700 (PDT)
+Date:   Tue, 23 Mar 2021 15:49:21 +0200
+From:   Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
+To:     Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
+        Matti Vaittinen <mazziesaccount@gmail.com>
+Cc:     MyungJoo Ham <myungjoo.ham@samsung.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jean Delvare <jdelvare@suse.com>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Mark Gross <mgross@linux.intel.com>,
+        Sebastian Reichel <sre@kernel.org>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
+        gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-hwmon@vger.kernel.org,
+        platform-driver-x86@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-watchdog@vger.kernel.org
+Subject: [PATCH v3 0/8] Add managed version of delayed work init
+Message-ID: <cover.1616506559.git.matti.vaittinen@fi.rohmeurope.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Create CLL and Mastering display colour volume v4l2 controls for
-encoder, add handling of HDR10 PQ SEI packet payloads for v4.
+It's not rare that device drivers need delayed work.
+It's not rare that this work needs driver's data.
 
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Often this means that driver must ensure the work is not queued when
+driver is detached. Often it is done by ensuring new work is not added and
+then calling cancel_delayed_work_sync() at remove(). In many cases this
+may also require cleanup at probe error path - which is easy to forget.
+
+Also the "by ensuring new work is not added" has a gotcha.
+
+It is not strange to see devm managed IRQs scheduling (delayed) work.
+Mixing this with manua wq clean-up is hard to do correctly because the
+devm is likely to free the IRQ only after the remove() is ran. So manual
+wq cancellation and devm-based IRQ management do not mix well - there is
+a short(?) time-window after the wq clean-up when IRQs are still not
+freed and may schedule new work.
+
+When both WQs and IRQs are managed by devm things are likely to just
+work. WQs should be initialized before IRQs (when IRQs need to schedule
+work) and devm unwinds things in "FILO" order.
+
+This series implements delayed wq cancellation on top of devm and replaces
+the obvious cases where only thing remove call-back in a driver does is
+cancelling the work. There might be other cases where we could switch
+more than just work cancellation to use managed version and thus get rid
+of remove or mixed (manual and devm) resource management.
+
+The series introduces include/linux/devm-helpers.h file which
+hopefully works as a place where this kind of helpers can be inlined.
+
+Please see previous discussion here:
+RFC v1:
+https://lore.kernel.org/lkml/cover.1613216412.git.matti.vaittinen@fi.rohmeurope.com/
+
+Changelog v3:
+  - Dropped RFC as advieced by Greg.
+  - No functional changes.
+
+Changelog RFC v2 resend:
+  - rebased on 5.12-rc4
+
+Changelog RFC v2:
+  - used correct terminology ("driver detach" instead of "exit, ...")
+  - inlined the devm_delayed_work_autocancel() in a header
+  - added Hans as a maintainer for the new header + myself as a reviewer
+  - used devm_add_action() instead of using plain devres_add()
+
 ---
- drivers/media/platform/qcom/venus/core.h      |  2 ++
- drivers/media/platform/qcom/venus/hfi_cmds.c  |  8 +++++
- .../media/platform/qcom/venus/hfi_helper.h    | 20 +++++++++++++
- drivers/media/platform/qcom/venus/venc.c      | 29 +++++++++++++++++++
- .../media/platform/qcom/venus/venc_ctrls.c    | 16 +++++++++-
- 5 files changed, 74 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index 13c18c49714d..029f620a28ff 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -241,6 +241,8 @@ struct venc_controls {
- 	} level;
- 
- 	u32 base_priority_id;
-+	struct v4l2_ctrl_hdr10_cll_info cll;
-+	struct v4l2_ctrl_hdr10_mastering_display mastering;
- };
- 
- struct venus_buffer {
-diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
-index 4f7565834469..d2edf3896cf1 100644
---- a/drivers/media/platform/qcom/venus/hfi_cmds.c
-+++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
-@@ -1217,6 +1217,14 @@ pkt_session_set_property_4xx(struct hfi_session_set_property_pkt *pkt,
- 		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*info);
- 		break;
- 	}
-+	case HFI_PROPERTY_PARAM_VENC_HDR10_PQ_SEI: {
-+		struct hfi_hdr10_pq_sei *in = pdata, *hdr10 = prop_data;
-+
-+		memcpy(hdr10, in, sizeof(*hdr10));
-+		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*hdr10);
-+		break;
-+	}
-+
- 	case HFI_PROPERTY_CONFIG_VENC_MAX_BITRATE:
- 	case HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER:
- 	case HFI_PROPERTY_PARAM_BUFFER_ALLOC_MODE:
-diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
-index 6b524c7cde5f..d32d926c7b2c 100644
---- a/drivers/media/platform/qcom/venus/hfi_helper.h
-+++ b/drivers/media/platform/qcom/venus/hfi_helper.h
-@@ -513,6 +513,7 @@
- #define HFI_PROPERTY_PARAM_VENC_VPX_ERROR_RESILIENCE_MODE	0x2005029
- #define HFI_PROPERTY_PARAM_VENC_HIER_B_MAX_NUM_ENH_LAYER	0x200502c
- #define HFI_PROPERTY_PARAM_VENC_HIER_P_HYBRID_MODE		0x200502f
-+#define HFI_PROPERTY_PARAM_VENC_HDR10_PQ_SEI			0x2005036
- 
- /*
-  * HFI_PROPERTY_CONFIG_VENC_COMMON_START
-@@ -809,6 +810,25 @@ struct hfi_ltr_mark {
- 	u32 mark_frame;
- };
- 
-+struct hfi_mastering_display_colour_sei_payload {
-+	u32 display_primaries_x[3];
-+	u32 display_primaries_y[3];
-+	u32 white_point_x;
-+	u32 white_point_y;
-+	u32 max_display_mastering_luminance;
-+	u32 min_display_mastering_luminance;
-+};
-+
-+struct hfi_content_light_level_sei_payload {
-+	u32 max_content_light;
-+	u32 max_pic_average_light;
-+};
-+
-+struct hfi_hdr10_pq_sei {
-+	struct hfi_mastering_display_colour_sei_payload mastering;
-+	struct hfi_content_light_level_sei_payload cll;
-+};
-+
- struct hfi_framesize {
- 	u32 buffer_type;
- 	u32 width;
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index 505d092dc433..855761c01276 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -612,6 +612,35 @@ static int venc_set_properties(struct venus_inst *inst)
- 			return ret;
- 	}
- 
-+	if (inst->fmt_cap->pixfmt == V4L2_PIX_FMT_HEVC) {
-+		struct hfi_hdr10_pq_sei hdr10;
-+		unsigned int c;
-+
-+		ptype = HFI_PROPERTY_PARAM_VENC_HDR10_PQ_SEI;
-+
-+		for (c = 0; c < 3; c++) {
-+			hdr10.mastering.display_primaries_x[c] =
-+				ctr->mastering.display_primaries_x[c];
-+			hdr10.mastering.display_primaries_y[c] =
-+				ctr->mastering.display_primaries_y[c];
-+		}
-+
-+		hdr10.mastering.white_point_x = ctr->mastering.white_point_x;
-+		hdr10.mastering.white_point_y = ctr->mastering.white_point_y;
-+		hdr10.mastering.max_display_mastering_luminance =
-+			ctr->mastering.max_display_mastering_luminance;
-+		hdr10.mastering.min_display_mastering_luminance =
-+			ctr->mastering.min_display_mastering_luminance;
-+
-+		hdr10.cll.max_content_light = ctr->cll.max_content_light_level;
-+		hdr10.cll.max_pic_average_light =
-+			ctr->cll.max_pic_average_light_level;
-+
-+		ret = hfi_session_set_property(inst, ptype, &hdr10);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	if (ctr->num_b_frames) {
- 		u32 max_num_b_frames = NUM_B_FRAMES_MAX;
- 
-diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
-index 16d6c64d5f64..8a7cf6960811 100644
---- a/drivers/media/platform/qcom/venus/venc_ctrls.c
-+++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
-@@ -279,6 +279,12 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
- 	case V4L2_CID_MPEG_VIDEO_AU_DELIMITER:
- 		ctr->aud_enable = ctrl->val;
- 		break;
-+	case V4L2_CID_COLORIMETRY_HDR10_CLL_INFO:
-+		ctr->cll = *ctrl->p_new.p_hdr10_cll;
-+		break;
-+	case V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY:
-+		ctr->mastering = *ctrl->p_new.p_hdr10_mastering;
-+		break;
- 	default:
- 		return -EINVAL;
- 	}
-@@ -294,7 +300,7 @@ int venc_ctrl_init(struct venus_inst *inst)
- {
- 	int ret;
- 
--	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 52);
-+	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 54);
- 	if (ret)
- 		return ret;
- 
-@@ -504,6 +510,14 @@ int venc_ctrl_init(struct venus_inst *inst)
- 	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
- 			  V4L2_CID_MPEG_VIDEO_AU_DELIMITER, 0, 1, 1, 0);
- 
-+	v4l2_ctrl_new_std_compound(&inst->ctrl_handler, &venc_ctrl_ops,
-+				   V4L2_CID_COLORIMETRY_HDR10_CLL_INFO,
-+				   v4l2_ctrl_ptr_create(NULL));
-+
-+	v4l2_ctrl_new_std_compound(&inst->ctrl_handler, &venc_ctrl_ops,
-+				   V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY,
-+				   v4l2_ctrl_ptr_create(NULL));
-+
- 	ret = inst->ctrl_handler.error;
- 	if (ret)
- 		goto err;
+Matti Vaittinen (8):
+  workqueue: Add resource managed version of delayed work init
+  MAINTAINERS: Add entry for devm helpers
+  extconn: Clean-up few drivers by using managed work init
+  hwmon: raspberry-pi: Clean-up few drivers by using managed work init
+  platform/x86: gpd pocket fan: Clean-up by using managed work init
+  power: supply: Clean-up few drivers by using managed work init
+  regulator: qcom_spmi-regulator: Clean-up by using managed work init
+  watchdog: retu_wdt: Clean-up by using managed work init
+
+ MAINTAINERS                                  |  6 +++
+ drivers/extcon/extcon-gpio.c                 | 15 ++----
+ drivers/extcon/extcon-intel-int3496.c        | 16 ++----
+ drivers/extcon/extcon-palmas.c               | 17 +++----
+ drivers/extcon/extcon-qcom-spmi-misc.c       | 17 +++----
+ drivers/hwmon/raspberrypi-hwmon.c            | 17 +++----
+ drivers/platform/x86/gpd-pocket-fan.c        | 17 +++----
+ drivers/power/supply/axp20x_usb_power.c      | 15 ++----
+ drivers/power/supply/bq24735-charger.c       | 18 +++----
+ drivers/power/supply/ltc2941-battery-gauge.c | 20 +++-----
+ drivers/power/supply/sbs-battery.c           | 16 ++----
+ drivers/regulator/qcom_spmi-regulator.c      | 34 +++----------
+ drivers/watchdog/retu_wdt.c                  | 22 +++-----
+ include/linux/devm-helpers.h                 | 53 ++++++++++++++++++++
+ 14 files changed, 128 insertions(+), 155 deletions(-)
+ create mode 100644 include/linux/devm-helpers.h
+
+
+base-commit: 0d02ec6b3136c73c09e7859f0d0e4e2c4c07b49b
 -- 
-2.25.1
+2.25.4
 
+
+-- 
+Matti Vaittinen, Linux device drivers
+ROHM Semiconductors, Finland SWDC
+Kiviharjunlenkki 1E
+90220 OULU
+FINLAND
+
+~~~ "I don't think so," said Rene Descartes. Just then he vanished ~~~
+Simon says - in Latin please.
+~~~ "non cogito me" dixit Rene Descarte, deinde evanescavit ~~~
+Thanks to Simon Glass for the translation =] 
