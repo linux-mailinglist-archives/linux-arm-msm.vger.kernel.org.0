@@ -2,83 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 703C634673E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Mar 2021 19:09:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8568F346798
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Mar 2021 19:28:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231539AbhCWSJD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Mar 2021 14:09:03 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43022 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230370AbhCWSIs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Mar 2021 14:08:48 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id F37676192B;
-        Tue, 23 Mar 2021 18:08:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1616522928;
-        bh=dg/v7I9osNgCOwDkoypjMc9FZHS9w25d2q6433j6+kI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=gIpvHBF3RaO/d533nR7vktfT6Z5dJlqeqaihaU//0GuM9AiyaPuDqLpgPeJUjZq3j
-         TRfAQAjndJ6OiSJfSsBe99nd2ZXVFNbdt/OILxBI+ypUC2dOavE7lBIMggaAQ+ofJl
-         5hILbGAtwz60tnY/U9bL1ZTwFoea0fTFC+qk2PnhsSHFGRgApK1vjMaOK4Y3qxGej2
-         IOQpE79NROFOn0ouMJEpVSYQgN3A3EBcD+dji45jFv24N0uY/l6jif7VdjMApZCj6S
-         P+STiRXe0DlRZROXyJFoLZpOKqylillnLF7ShNNFuuwmR2h1TeJU4bIHV+E+H0zj46
-         bfei4ohK42x5Q==
-Date:   Tue, 23 Mar 2021 11:08:42 -0700
-From:   Nathan Chancellor <nathan@kernel.org>
-To:     Arnd Bergmann <arnd@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Jeevan Shriram <jshriram@codeaurora.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, clang-built-linux@googlegroups.com
-Subject: Re: [PATCH] pinctrl: qcom: fix unintentional string concatenation
-Message-ID: <20210323180842.ecpb5yza6bgjdl5n@archlinux-ax161>
-References: <20210323131728.2702789-1-arnd@kernel.org>
+        id S231380AbhCWS1i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Mar 2021 14:27:38 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:43414 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231964AbhCWS1P (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 23 Mar 2021 14:27:15 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1616524035; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=q7YgbzGHVsIDNKAN+GCf2wvdICqjC3POsNXbJwmjTPA=; b=rxDlMRGU8NIhuof/8XLPi18+G4mZAD7bvhUI56L+RdSBxoXHSSoq0zXbZ+LRInQSv4ZpWP7h
+ EMpFmXM7G4nDNXucwI5LpQ89+ABUj41c+ORjhlAd1kvXFMHqElg8OxWq8Eslo1ZaA3lpgcr5
+ EViP+rkzCLOmRWCkFTrsZ+PQcGc=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 605a32fce2200c0a0d5cd971 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 23 Mar 2021 18:27:08
+ GMT
+Sender: eberman=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B8C49C4346B; Tue, 23 Mar 2021 18:27:07 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [192.168.1.70] (cpe-76-167-231-33.san.res.rr.com [76.167.231.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: eberman)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4DA72C43462;
+        Tue, 23 Mar 2021 18:27:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4DA72C43462
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=eberman@codeaurora.org
+Subject: Re: [PATCH 6/6] firmware: qcom_scm: Only compile legacy calls on ARM
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Brian Masney <masneyb@onstation.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>
+References: <20210223214539.1336155-1-swboyd@chromium.org>
+ <20210223214539.1336155-7-swboyd@chromium.org>
+ <b9174acc-9826-eb82-b399-ed95f7e83085@codeaurora.org>
+ <161483844056.1478170.8701629037531614722@swboyd.mtv.corp.google.com>
+ <5ac262bf-a70a-4ca3-01a8-d1432732d26f@codeaurora.org>
+ <161501150705.1478170.3739297122787060750@swboyd.mtv.corp.google.com>
+ <YEUQlY4X1e2PO8tl@builder.lan>
+ <161647057967.3012082.16471020030801311825@swboyd.mtv.corp.google.com>
+From:   Elliot Berman <eberman@codeaurora.org>
+Message-ID: <c0dbcf6c-9f6f-2103-68bd-3d06420f309a@codeaurora.org>
+Date:   Tue, 23 Mar 2021 11:27:05 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210323131728.2702789-1-arnd@kernel.org>
+In-Reply-To: <161647057967.3012082.16471020030801311825@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 23, 2021 at 02:17:13PM +0100, Arnd Bergmann wrote:
-> From: Arnd Bergmann <arnd@arndb.de>
+On 3/22/2021 8:36 PM, Stephen Boyd wrote:
+> Quoting Bjorn Andersson (2021-03-07 09:42:45)
+>> On Sat 06 Mar 00:18 CST 2021, Stephen Boyd wrote:
+>>
+>>> Quoting Elliot Berman (2021-03-05 10:18:09)
+>>>> On 3/3/2021 10:14 PM, Stephen Boyd wrote:
+>>>>> Quoting Elliot Berman (2021-03-03 19:35:08)
+>>>>
+>>>>   > +    desc.args[0] = flags;
+>>>>   > +    desc.args[1] = virt_to_phys(entry);
+>>>>   > +
+>>>>   > +    return scm_legacy_call_atomic(NULL, &desc, NULL);
+>>>>   > +}
+>>>>   > +EXPORT_SYMBOL(qcom_scm_set_cold_boot_addr);
+>>>>
+>>>> This should still be qcom_scm_call.
+>>>
+>>> You mean s/scm_legacy_call_atomic/qcom_scm_call/ right?
+>>>
+>>> I don't really want to resend the rest of the patches if this last one
+>>> is the only one that needs an update. This was a semi-RFC anyway so
+>>> maybe it's fine if the first 5 patches get merged and then I can resend
+>>> this one? Otherwise I will resend this again next week or so with less
+>>> diff for this patch.
+>>
+>> I'm fine with merging the first 5, but was hoping that Elliot could
+>> provide either a "Reviewed-by" or at least an "Acked-by" on these.
+>>
 > 
-> clang is clearly correct to point out a typo in a silly
-> array of strings:
+> I'll take the silence as I should resend the whole series?
 > 
-> drivers/pinctrl/qcom/pinctrl-sdx55.c:426:61: error: suspicious concatenation of string literals in an array initialization; did you mean to separate the elements with a comma? [-Werror,-Wstring-concatenation]
->         "gpio14", "gpio15", "gpio16", "gpio17", "gpio18", "gpio19" "gpio20", "gpio21", "gpio22",
->                                                                    ^
-> Add the missing comma that must have accidentally been removed.
-> 
-> Fixes: ac43c44a7a37 ("pinctrl: qcom: Add SDX55 pincontrol driver")
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+I thought Bjorn was accepting the first 5 already, my apologies.
 
-> ---
->  drivers/pinctrl/qcom/pinctrl-sdx55.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-sdx55.c b/drivers/pinctrl/qcom/pinctrl-sdx55.c
-> index 2b5b0e2b03ad..5aaf57b40407 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-sdx55.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-sdx55.c
-> @@ -423,7 +423,7 @@ static const char * const gpio_groups[] = {
->  
->  static const char * const qdss_stm_groups[] = {
->  	"gpio0", "gpio1", "gpio2", "gpio3", "gpio4", "gpio5", "gpio6", "gpio7", "gpio12", "gpio13",
-> -	"gpio14", "gpio15", "gpio16", "gpio17", "gpio18", "gpio19" "gpio20", "gpio21", "gpio22",
-> +	"gpio14", "gpio15", "gpio16", "gpio17", "gpio18", "gpio19", "gpio20", "gpio21", "gpio22",
->  	"gpio23", "gpio44", "gpio45", "gpio52", "gpio53", "gpio56", "gpio57", "gpio61", "gpio62",
->  	"gpio63", "gpio64", "gpio65", "gpio66",
->  };
-> -- 
-> 2.29.2
-> 
+Patches 1-5:
+Acked-by: Elliot Berman <eberman@codeaurora.org>
