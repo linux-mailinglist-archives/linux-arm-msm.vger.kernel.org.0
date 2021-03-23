@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 047AC345FC5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Mar 2021 14:36:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CAD7E345FBD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Mar 2021 14:36:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230437AbhCWNgG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S231502AbhCWNgG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Tue, 23 Mar 2021 09:36:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36922 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231386AbhCWNff (ORCPT
+        with ESMTP id S231485AbhCWNfg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Mar 2021 09:35:35 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE3A3C061574
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 06:35:34 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id e14so8920064ejz.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 06:35:34 -0700 (PDT)
+        Tue, 23 Mar 2021 09:35:36 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F209C0613D8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 06:35:35 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id u5so27138732ejn.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 06:35:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ntjagxyS+LYabIumqt5awpwriDBPHPu/LFN1q/dlMqM=;
-        b=TqGjivAJb7F0P/srjBeMCJaPta0vld25XGxynx8tT96VQcBkepFegU4+lpcjSuBBGA
-         AHeIEEOwypx68YJCIlNTKKzCZmsE2monoECPNz5j0xVOdfzEfcKPG2ZNgdf84WiggpF5
-         l3li2arOaAAIj7SUAwr7p9IoSiQV+/vGkcot4rg7YqnKN5+eqgBZ7X3yeKnWfI4n8bQd
-         4Tczl/rQkSNdC3dmzvT4PxL5yBJ4II2KjJ4TtpnpOiFsHWGLeLuvaqYLp3Paya7WxGjj
-         lnjC+RHdcCIMVE9XMeS6vC8UyBOKp6qJiK5izzF5XdX2Mp/cprluWZHSjlmjxiaeIZjT
-         cQSw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=//l1BqtUdSaKhUnb1YjCkD3o+Rvljtn6xVLWzLoWilo=;
+        b=gx7fWGRZU0o+J7Wa5zj8uTxm5c7mUll7wtai6kMQOA3U9bBwtNYFoGnG1npykJyqnf
+         ZcRHUbTRH9zed0EdFLuSUHNyAEkC3ToLFoXp6LTwGqgVAcjjYUdIlMPb7s9xAQMLMyr0
+         HYQWrulmsSaxtrSKJvVdoLQ6x5g4mh+WZq3pGNutJBVch/tH1PcskmMuK9ZImqcQr6Ao
+         Vp7Mi+eWWiOc85nFkNsDR8q/W51jANP9/jyExYRlfunQXRjMolSTqVEDgMm5c5K+WOhf
+         Q4SNc8mvwNgf6CYqDm6YIMNRkPWl25lcu4EAN3UDKT1DwM3dfzoLRP/vu2eDyHz/9Kgo
+         jM7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ntjagxyS+LYabIumqt5awpwriDBPHPu/LFN1q/dlMqM=;
-        b=g07nyZMxdmpzW9P/3gJuVaPbbJG0h7eKDx/CFI0hgLqHTrGlKcDLbasBssm8uEhr74
-         POERV4xTZJ3VhOjORFF6nirjXq5xOdCk4oB0FBztYo9JnV/fpE2sFOAwnxIQcMl3kZB9
-         +uMm44rtgk9Gl6Y5Mfdo2Wg2RV+BpF9pIj3kGqN8mxuq4lTy0VVCS6hV5UaV6aLbc7PB
-         xwyx/HQvz+cpGgl/XW9dUJdZ1hJQG/Dg1yD/GWYsz4U10qCOFMgND/wjRYrIK13vqM5t
-         lTxQR5nQeJhs4mIudbUhEx2ay+V6vZDMbPa+Klcbgm9r1jnNgMFc5ncvNQWCnH8VSS4O
-         WrQA==
-X-Gm-Message-State: AOAM5311vkAXi8K7U/wBri7vWEeiEEx4kwG09ILgmaVDAe8JKGT0MLqs
-        chBGSBCA8gVVD2L5+lKrp7aLCQ==
-X-Google-Smtp-Source: ABdhPJwUJqV6+cN+QRopOAqXtcnPEV0jSss4iauXIjAOmCxfRNpfW/HmkPPkwO01/Xtjo0ifs7vI/w==
-X-Received: by 2002:a17:906:e0d6:: with SMTP id gl22mr4925865ejb.444.1616506533482;
-        Tue, 23 Mar 2021 06:35:33 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=//l1BqtUdSaKhUnb1YjCkD3o+Rvljtn6xVLWzLoWilo=;
+        b=GzjN1dcRf+bhgVgYLGCGQswJZ9xyCydgneVk3Km+1cWXGQFcrOEKsDCdWtSwKQxOW0
+         ErutP3+3zHengGxBVImGgigireInmnRsIDX1M6RH+BzE8pRMKg9L6QP/9WuCU9HP7zgr
+         6vsADvRbZltqTzYiXpejPOcM9y/EKfxOJnmS+YJVhyTNthjTAhujOMQCE82ax9h86XgD
+         iPOtdxbVO4V6InNDVMQ83C/HLuVgXvr2zAdmeRBo3DOmKzgaUXkeupsZKAy9yuJ7rIUW
+         lryvl3EJZBBYxenBT88Gay4Pb+6x0rY0MeTiO4QUwTuWlw0O71if+iQVKf2rpct38cBO
+         mGLQ==
+X-Gm-Message-State: AOAM530OJAxVpQOEs377JKiUiTgQsFEVSGQRRc1aZQl52B/okSdQohdq
+        2StMdxuT2DmSfO6rv1ptO4zAYQ==
+X-Google-Smtp-Source: ABdhPJxc8mpwLvUtl6uHLGi7zphEpHPhnNWeQ8vOin7gpyJOAeVeW/ZXj7TtUbvFvBgX5w4YSUlP0Q==
+X-Received: by 2002:a17:907:75c2:: with SMTP id jl2mr5054063ejc.334.1616506534192;
+        Tue, 23 Mar 2021 06:35:34 -0700 (PDT)
 Received: from localhost.localdomain (hst-221-103.medicom.bg. [84.238.221.103])
-        by smtp.gmail.com with ESMTPSA id m7sm12627104edp.81.2021.03.23.06.35.32
+        by smtp.gmail.com with ESMTPSA id m7sm12627104edp.81.2021.03.23.06.35.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 23 Mar 2021 06:35:33 -0700 (PDT)
 From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
@@ -53,39 +53,111 @@ To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
 Cc:     hverkuil-cisco@xs4all.nl,
         Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH v3 0/2] Add decoder conceal color ctrl
-Date:   Tue, 23 Mar 2021 15:35:18 +0200
-Message-Id: <20210323133520.943317-1-stanimir.varbanov@linaro.org>
+Subject: [PATCH v3 1/2] v4l2-ctrl: Add decoder conceal color control
+Date:   Tue, 23 Mar 2021 15:35:19 +0200
+Message-Id: <20210323133520.943317-2-stanimir.varbanov@linaro.org>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20210323133520.943317-1-stanimir.varbanov@linaro.org>
+References: <20210323133520.943317-1-stanimir.varbanov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Add decoder v4l2 control to set conceal color.
 
-Changes since v2:
-
- * addressed Hans's comments 1/2 in documentation.
-
-regards,
-Stan
-
-Stanimir Varbanov (2):
-  v4l2-ctrl: Add decoder conceal color control
-  venus: vdec: Add support for conceal control
-
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Reviewed-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+---
  .../media/v4l/ext-ctrls-codec.rst             | 33 +++++++++++++++++++
- drivers/media/platform/qcom/venus/core.h      |  1 +
- drivers/media/platform/qcom/venus/hfi_cmds.c  | 18 ++++++++--
- .../media/platform/qcom/venus/hfi_helper.h    | 10 ++++++
- drivers/media/platform/qcom/venus/vdec.c      | 11 ++++++-
- .../media/platform/qcom/venus/vdec_ctrls.c    |  9 ++++-
  drivers/media/v4l2-core/v4l2-ctrls.c          |  9 +++++
  include/uapi/linux/v4l2-controls.h            |  1 +
- 8 files changed, 88 insertions(+), 4 deletions(-)
+ 3 files changed, 43 insertions(+)
 
+diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+index 9963c1c9a4d5..e11a734c43bd 100644
+--- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
++++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+@@ -674,6 +674,39 @@ enum v4l2_mpeg_video_frame_skip_mode -
+     is currently displayed (decoded). This value is reset to 0 whenever
+     the decoder is started.
+ 
++``V4L2_CID_MPEG_VIDEO_DEC_CONCEAL_COLOR (integer64)``
++    This control sets the conceal color in YUV color space. It describes
++    the client preference of the error conceal color in case of an error
++    where the reference frame is missing. The decoder should fill the
++    reference buffer with the preferred color and use it for future
++    decoding. The control is using 16 bits per channel.
++    Applicable to decoders.
++
++.. flat-table::
++    :header-rows:  0
++    :stub-columns: 0
++
++    * -
++      - 8bit  format
++      - 10bit format
++      - 12bit format
++    * - Y luminance
++      - Bit 0:7
++      - Bit 0:9
++      - Bit 0:11
++    * - Cb chrominance
++      - Bit 16:23
++      - Bit 16:25
++      - Bit 16:27
++    * - Cr chrominance
++      - Bit 32:39
++      - Bit 32:41
++      - Bit 32:43
++    * - Must be zero
++      - Bit 48:63
++      - Bit 48:63
++      - Bit 48:63
++
+ ``V4L2_CID_MPEG_VIDEO_DECODER_SLICE_INTERFACE (boolean)``
+     If enabled the decoder expects to receive a single slice per buffer,
+     otherwise the decoder expects a single frame in per buffer.
+diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
+index ca50e21e2838..c35c538c4aa4 100644
+--- a/drivers/media/v4l2-core/v4l2-ctrls.c
++++ b/drivers/media/v4l2-core/v4l2-ctrls.c
+@@ -948,6 +948,7 @@ const char *v4l2_ctrl_get_name(u32 id)
+ 	case V4L2_CID_MPEG_VIDEO_VBV_SIZE:			return "VBV Buffer Size";
+ 	case V4L2_CID_MPEG_VIDEO_DEC_PTS:			return "Video Decoder PTS";
+ 	case V4L2_CID_MPEG_VIDEO_DEC_FRAME:			return "Video Decoder Frame Count";
++	case V4L2_CID_MPEG_VIDEO_DEC_CONCEAL_COLOR:		return "Video Decoder Conceal Color";
+ 	case V4L2_CID_MPEG_VIDEO_VBV_DELAY:			return "Initial Delay for VBV Control";
+ 	case V4L2_CID_MPEG_VIDEO_MV_H_SEARCH_RANGE:		return "Horizontal MV Search Range";
+ 	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:		return "Vertical MV Search Range";
+@@ -1436,6 +1437,14 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
+ 		*max = 0x7fffffffffffffffLL;
+ 		*step = 1;
+ 		break;
++	case V4L2_CID_MPEG_VIDEO_DEC_CONCEAL_COLOR:
++		*type = V4L2_CTRL_TYPE_INTEGER64;
++		*min = 0;
++		/* default for 8 bit black, luma is 16, chroma is 128 */
++		*def = 0x8000800010LL;
++		*max = 0xffffffffffffLL;
++		*step = 1;
++		break;
+ 	case V4L2_CID_PIXEL_RATE:
+ 		*type = V4L2_CTRL_TYPE_INTEGER64;
+ 		*flags |= V4L2_CTRL_FLAG_READ_ONLY;
+diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
+index 6f8c08507bf4..926877c0c653 100644
+--- a/include/uapi/linux/v4l2-controls.h
++++ b/include/uapi/linux/v4l2-controls.h
+@@ -429,6 +429,7 @@ enum v4l2_mpeg_video_multi_slice_mode {
+ #define V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME		(V4L2_CID_CODEC_BASE+229)
+ #define V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITY_ID	(V4L2_CID_CODEC_BASE+230)
+ #define V4L2_CID_MPEG_VIDEO_AU_DELIMITER		(V4L2_CID_CODEC_BASE+231)
++#define V4L2_CID_MPEG_VIDEO_DEC_CONCEAL_COLOR		(V4L2_CID_CODEC_BASE+232)
+ 
+ /* CIDs for the MPEG-2 Part 2 (H.262) codec */
+ #define V4L2_CID_MPEG_VIDEO_MPEG2_LEVEL			(V4L2_CID_CODEC_BASE+270)
 -- 
 2.25.1
 
