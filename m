@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EE141345DC0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Mar 2021 13:10:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C9FC2345DCD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Mar 2021 13:11:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231137AbhCWMJg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Mar 2021 08:09:36 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59246 "EHLO mail.kernel.org"
+        id S230316AbhCWMKJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Mar 2021 08:10:09 -0400
+Received: from mail.kernel.org ([198.145.29.99]:59656 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230158AbhCWMJF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Mar 2021 08:09:05 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id E39C261974;
-        Tue, 23 Mar 2021 12:09:03 +0000 (UTC)
+        id S230447AbhCWMJx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 23 Mar 2021 08:09:53 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 2429E619B8;
+        Tue, 23 Mar 2021 12:09:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1616501344;
-        bh=Z0GUuCwYtJE2IfROw879wG5LQDJyC8bAIhRxjCk4ySE=;
+        s=korg; t=1616501393;
+        bh=NUDtKN67DNS8aVpPFNnBh94JC9s43ocy1tBIXArLiKQ=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=yoZpw+w30p1X4TXfFM8HDAqFwNb92YcB6rOt45QPr70NWjCRkQ5qUahii0W9848Ja
-         wcNqOILUSmiU+F0XDrJOUfNh08d0RMu3O7RDI3m3NM0KwEbX9lD48YOeD7GN1veXZ5
-         p/a7WIhyG2ncQChCfs4D2Zotg6j37VtgaG3fpoUE=
-Date:   Tue, 23 Mar 2021 13:09:02 +0100
+        b=THWrW1FGBf2X1zkHm3qCp15nhLyPGBU0pRlGYPO91Bnc0Ppr9dV9koJO2ALbPu/Uz
+         YowFUj+5zmClVaQ7UG+I3FO7xnp72Argytg5yqlUEM9n+mUZVQXO6PY0CA5WH+jXZE
+         UsFMuf8KCPMRrtRMsYpoBPhSVhaBn/PRmyYvG+XA=
+Date:   Tue, 23 Mar 2021 13:09:50 +0100
 From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To:     Sandeep Maheswaram <sanm@codeaurora.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -34,7 +34,7 @@ Cc:     Andy Gross <agross@kernel.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Manu Gautam <mgautam@codeaurora.org>
 Subject: Re: [PATCH v5 2/4] usb: dwc3: host: Add suspend_quirk for dwc3 host
-Message-ID: <YFnaXj2DAbz4jWbQ@kroah.com>
+Message-ID: <YFnajrkzmAC2a0Dw@kroah.com>
 References: <1616434280-32635-1-git-send-email-sanm@codeaurora.org>
  <1616434280-32635-3-git-send-email-sanm@codeaurora.org>
 MIME-Version: 1.0
@@ -48,11 +48,6 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On Mon, Mar 22, 2021 at 11:01:18PM +0530, Sandeep Maheswaram wrote:
 > Adding suspend quirk function for dwc3 host which will be called
 > during xhci suspend.
-
-What does xhci have to do with this?
-
-And where is the user of this quirk function in this series?
-
 > Setting hs_phy_mode, ss_phy_mode , phy_power_off flags and phy mode
 > during host suspend.
 > 
@@ -86,15 +81,7 @@ And where is the user of this quirk function in this series?
 >  #include "core.h"
 > +#include "../host/xhci.h"
 > +#include "../host/xhci-plat.h"
-
-Hah, really?
-
 > +int xhci_dwc3_suspend_quirk(struct usb_hcd *hcd);
 
-Didn't checkpatch complain about this?
+Wait, this is right below down in this file, shouldn't it be static?
 
-Put function prototypes in .h files please, this isn't the 1980's...
-
-thanks,
-
-greg k-h
