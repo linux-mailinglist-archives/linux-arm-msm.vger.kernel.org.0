@@ -2,78 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 087B5345F7D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Mar 2021 14:19:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 047AC345FC5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Mar 2021 14:36:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231707AbhCWNSv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Mar 2021 09:18:51 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46386 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231678AbhCWNRf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Mar 2021 09:17:35 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id CD58F61878;
-        Tue, 23 Mar 2021 13:17:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1616505453;
-        bh=TocmTDObLsSB+Yh5zIiipz/rUfcK3KL/UJieKC8e3Ow=;
-        h=From:To:Cc:Subject:Date:From;
-        b=SsbsLhMz68mlEer2lsktyESY96JxLwfKkZZ6b0E2e+nUZCQHphTlUzJk2o3L2Pm6a
-         PA0bt2gTn9Z8x36hW1X62PpElRsh5LzIkonM2qx5j4RFhFYDpmXtojADiwlVTri+qO
-         Jsg5TrRMmqD8868jgS+ujK1Ms+de7gohfV1vortEtZVIfGIST8O3AWk0LSfuKBLo01
-         QR3I4gQrA9Bc26MYUpQ/Xwwa4MMbu+5piHOZ9atxGSoAruNzR5e1L14e0dG/kkxM3m
-         EVuf8gt+OZm2R7DYW29O1eFQdCSCeKvfgzDAePGN1XZ0R3S23brQmZQYqjarvO/H+z
-         EBJ0ZgbZU7sTg==
-From:   Arnd Bergmann <arnd@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Jeevan Shriram <jshriram@codeaurora.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        clang-built-linux@googlegroups.com
-Subject: [PATCH] pinctrl: qcom: fix unintentional string concatenation
-Date:   Tue, 23 Mar 2021 14:17:13 +0100
-Message-Id: <20210323131728.2702789-1-arnd@kernel.org>
-X-Mailer: git-send-email 2.29.2
+        id S230437AbhCWNgG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Mar 2021 09:36:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36922 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231386AbhCWNff (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 23 Mar 2021 09:35:35 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE3A3C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 06:35:34 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id e14so8920064ejz.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 06:35:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ntjagxyS+LYabIumqt5awpwriDBPHPu/LFN1q/dlMqM=;
+        b=TqGjivAJb7F0P/srjBeMCJaPta0vld25XGxynx8tT96VQcBkepFegU4+lpcjSuBBGA
+         AHeIEEOwypx68YJCIlNTKKzCZmsE2monoECPNz5j0xVOdfzEfcKPG2ZNgdf84WiggpF5
+         l3li2arOaAAIj7SUAwr7p9IoSiQV+/vGkcot4rg7YqnKN5+eqgBZ7X3yeKnWfI4n8bQd
+         4Tczl/rQkSNdC3dmzvT4PxL5yBJ4II2KjJ4TtpnpOiFsHWGLeLuvaqYLp3Paya7WxGjj
+         lnjC+RHdcCIMVE9XMeS6vC8UyBOKp6qJiK5izzF5XdX2Mp/cprluWZHSjlmjxiaeIZjT
+         cQSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ntjagxyS+LYabIumqt5awpwriDBPHPu/LFN1q/dlMqM=;
+        b=g07nyZMxdmpzW9P/3gJuVaPbbJG0h7eKDx/CFI0hgLqHTrGlKcDLbasBssm8uEhr74
+         POERV4xTZJ3VhOjORFF6nirjXq5xOdCk4oB0FBztYo9JnV/fpE2sFOAwnxIQcMl3kZB9
+         +uMm44rtgk9Gl6Y5Mfdo2Wg2RV+BpF9pIj3kGqN8mxuq4lTy0VVCS6hV5UaV6aLbc7PB
+         xwyx/HQvz+cpGgl/XW9dUJdZ1hJQG/Dg1yD/GWYsz4U10qCOFMgND/wjRYrIK13vqM5t
+         lTxQR5nQeJhs4mIudbUhEx2ay+V6vZDMbPa+Klcbgm9r1jnNgMFc5ncvNQWCnH8VSS4O
+         WrQA==
+X-Gm-Message-State: AOAM5311vkAXi8K7U/wBri7vWEeiEEx4kwG09ILgmaVDAe8JKGT0MLqs
+        chBGSBCA8gVVD2L5+lKrp7aLCQ==
+X-Google-Smtp-Source: ABdhPJwUJqV6+cN+QRopOAqXtcnPEV0jSss4iauXIjAOmCxfRNpfW/HmkPPkwO01/Xtjo0ifs7vI/w==
+X-Received: by 2002:a17:906:e0d6:: with SMTP id gl22mr4925865ejb.444.1616506533482;
+        Tue, 23 Mar 2021 06:35:33 -0700 (PDT)
+Received: from localhost.localdomain (hst-221-103.medicom.bg. [84.238.221.103])
+        by smtp.gmail.com with ESMTPSA id m7sm12627104edp.81.2021.03.23.06.35.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Mar 2021 06:35:33 -0700 (PDT)
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     hverkuil-cisco@xs4all.nl,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Subject: [PATCH v3 0/2] Add decoder conceal color ctrl
+Date:   Tue, 23 Mar 2021 15:35:18 +0200
+Message-Id: <20210323133520.943317-1-stanimir.varbanov@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Arnd Bergmann <arnd@arndb.de>
+Hi,
 
-clang is clearly correct to point out a typo in a silly
-array of strings:
+Changes since v2:
 
-drivers/pinctrl/qcom/pinctrl-sdx55.c:426:61: error: suspicious concatenation of string literals in an array initialization; did you mean to separate the elements with a comma? [-Werror,-Wstring-concatenation]
-        "gpio14", "gpio15", "gpio16", "gpio17", "gpio18", "gpio19" "gpio20", "gpio21", "gpio22",
-                                                                   ^
-Add the missing comma that must have accidentally been removed.
+ * addressed Hans's comments 1/2 in documentation.
 
-Fixes: ac43c44a7a37 ("pinctrl: qcom: Add SDX55 pincontrol driver")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
----
- drivers/pinctrl/qcom/pinctrl-sdx55.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+regards,
+Stan
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-sdx55.c b/drivers/pinctrl/qcom/pinctrl-sdx55.c
-index 2b5b0e2b03ad..5aaf57b40407 100644
---- a/drivers/pinctrl/qcom/pinctrl-sdx55.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sdx55.c
-@@ -423,7 +423,7 @@ static const char * const gpio_groups[] = {
- 
- static const char * const qdss_stm_groups[] = {
- 	"gpio0", "gpio1", "gpio2", "gpio3", "gpio4", "gpio5", "gpio6", "gpio7", "gpio12", "gpio13",
--	"gpio14", "gpio15", "gpio16", "gpio17", "gpio18", "gpio19" "gpio20", "gpio21", "gpio22",
-+	"gpio14", "gpio15", "gpio16", "gpio17", "gpio18", "gpio19", "gpio20", "gpio21", "gpio22",
- 	"gpio23", "gpio44", "gpio45", "gpio52", "gpio53", "gpio56", "gpio57", "gpio61", "gpio62",
- 	"gpio63", "gpio64", "gpio65", "gpio66",
- };
+Stanimir Varbanov (2):
+  v4l2-ctrl: Add decoder conceal color control
+  venus: vdec: Add support for conceal control
+
+ .../media/v4l/ext-ctrls-codec.rst             | 33 +++++++++++++++++++
+ drivers/media/platform/qcom/venus/core.h      |  1 +
+ drivers/media/platform/qcom/venus/hfi_cmds.c  | 18 ++++++++--
+ .../media/platform/qcom/venus/hfi_helper.h    | 10 ++++++
+ drivers/media/platform/qcom/venus/vdec.c      | 11 ++++++-
+ .../media/platform/qcom/venus/vdec_ctrls.c    |  9 ++++-
+ drivers/media/v4l2-core/v4l2-ctrls.c          |  9 +++++
+ include/uapi/linux/v4l2-controls.h            |  1 +
+ 8 files changed, 88 insertions(+), 4 deletions(-)
+
 -- 
-2.29.2
+2.25.1
 
