@@ -2,148 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C9BD83471A6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Mar 2021 07:33:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 400503471DD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Mar 2021 07:50:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229592AbhCXGcv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Mar 2021 02:32:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59146 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229500AbhCXGcl (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Mar 2021 02:32:41 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B446DC061763
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 23:32:40 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id w8so11207624pjf.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 23:32:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=L7in4zMNdZBc1GxLcnECgmkXR6YAII8UXVAv+IYWr9s=;
-        b=nAUos0/1sE5Lk8+Ki56nM1Qm5MHroKWX0tekqp9IenEnrLL1pUDMRtqPL05UGkOQhT
-         BviFz134utRDij4/zmq+KBoveP+J5Azz3OaNBrHQeesm3MUdgq1jF0Ea2uDxdSdOhmAX
-         /Yp3JAp29Xm6tXZFHj6Xucofys2cEVkzKToPI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=L7in4zMNdZBc1GxLcnECgmkXR6YAII8UXVAv+IYWr9s=;
-        b=Jv/UzyDqoUEkNiXD2D6sU4CCg66iyuq8TTVDEl3ibWRKJQ8BWzlbzhsFvTFEsGfZtg
-         2OqluRs56O1WrDMoN9G3E4jws0gJkhEc9XSMj0VZ/HV1OiB6vW+fvauQ5ws3YBSkMdd8
-         TyQPEUc3oYEcogACtw5GMxi0nsi/faEy/0I8mQozuJDCqJ4JaT1nQSkYJpYlDHhog0Mv
-         eW8YvdPE029nXF8LkNYeqmfixGkd/7mK9KfaYa4reBx0rWOl9FtmSKIdwEmDtC2cNiuR
-         xxerOVGI757v4a0aroW/hqC3YsE//mIKsvOwKKXwYnskz4xFiel2OwNhikPhjyJNkQV3
-         fhtw==
-X-Gm-Message-State: AOAM530aUSuSF13ssu8bNHbaeavB3rT1qPJkKjP52HJ4H4N25mjCK8RE
-        QJp4PPWu33vK6+o208GjDaPJlA==
-X-Google-Smtp-Source: ABdhPJzt701pViCL3Ey/mou0tQDFBpd/u1Pc+j5WrvFpZLxETd1pmRXxQtG7il+tiahqieaQ6NzBGA==
-X-Received: by 2002:a17:90a:5b11:: with SMTP id o17mr1992274pji.32.1616567560296;
-        Tue, 23 Mar 2021 23:32:40 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:201:84ac:62f7:16a8:ccc7])
-        by smtp.gmail.com with ESMTPSA id w79sm1210900pfc.87.2021.03.23.23.32.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Mar 2021 23:32:39 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        id S235628AbhCXGtf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Mar 2021 02:49:35 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:10619 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235627AbhCXGtG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 24 Mar 2021 02:49:06 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1616568546; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=oBQV+I9x0ZBz/5epdrA7py274iUh8GHJsi69OW1jM1E=;
+ b=APmVMhw1gFzTEDwFHBkX/Ke8PJ3nUO2VD+hh0QS3AttwWqb2SEV282Ob66LXqb/ZH8qj0wCH
+ f4Srqy+XHncis1uV1MKZThFX/RvH9bLdw8w3WzXsgmcWhyanyVoox+cc3xA/BoU+80WxGpnb
+ 5zNcQTGkBW6w6rlRRpS040g6v8A=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 605ae0df4db3bb680173578d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 24 Mar 2021 06:49:03
+ GMT
+Sender: sibis=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 7F716C43461; Wed, 24 Mar 2021 06:49:02 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AF8D8C433C6;
+        Wed, 24 Mar 2021 06:49:01 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1616564457-25221-1-git-send-email-dikshita@codeaurora.org>
-References: <1616564457-25221-1-git-send-email-dikshita@codeaurora.org>
-Subject: Re: [PATCH] media: venus : hfi: add venus image info into smem
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, Dikshita Agarwal <dikshita@codeaurora.org>
-To:     Dikshita Agarwal <dikshita@codeaurora.org>,
-        linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Date:   Tue, 23 Mar 2021 23:32:38 -0700
-Message-ID: <161656755819.3012082.9032882357160965681@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 24 Mar 2021 12:19:01 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        p.zabel@pengutronix.de, robh+dt@kernel.org, agross@kernel.org,
+        mani@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 6/6] arm64: dts: qcom: sc7280: Add nodes to boot WPSS
+In-Reply-To: <161653719350.3012082.12055201782488576903@swboyd.mtv.corp.google.com>
+References: <1615269111-25559-1-git-send-email-sibis@codeaurora.org>
+ <1615269111-25559-7-git-send-email-sibis@codeaurora.org>
+ <161567197220.1478170.12600358804299446135@swboyd.mtv.corp.google.com>
+ <YE2OJz1pI81Uj8DA@builder.lan>
+ <161653719350.3012082.12055201782488576903@swboyd.mtv.corp.google.com>
+Message-ID: <14476306c74356a747473e820d4067a6@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dikshita Agarwal (2021-03-23 22:40:57)
-> fill fw version info into smem to be printed as part of
+On 2021-03-24 03:36, Stephen Boyd wrote:
+> Quoting Bjorn Andersson (2021-03-13 20:16:39)
+>> On Sat 13 Mar 15:46 CST 2021, Stephen Boyd wrote:
+>> 
+>> > Quoting Sibi Sankar (2021-03-08 21:51:51)
+>> > > Add miscellaneous nodes to boot the Wireless Processor Subsystem on
+>> >
+>> > Maybe add (WPSS) after the name so we know they're related.
+>> >
+>> > > SC7280 SoCs.
+>> > >
+>> > > Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+>> > > ---
+>> > >
+>> > > https://patchwork.kernel.org/project/linux-arm-msm/list/?series=438217
+>> > > Depends on ipcc dt node enablement from ^^
+>> > >
+>> > >  arch/arm64/boot/dts/qcom/sc7280.dtsi | 143 +++++++++++++++++++++++++++++++++++
+>> > >  1 file changed, 143 insertions(+)
+>> > >
+>> > > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> > > index 18637c369c1d..4f03c468df51 100644
+>> > > --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> > > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> > > @@ -244,12 +251,131 @@
+>> > >                 reg = <0 0x80000000 0 0>;
+>> > >         };
+>> > >
+>> > > +       tcsr_mutex: hwlock {
+>> > > +               compatible = "qcom,tcsr-mutex";
+>> > > +               syscon = <&tcsr_mutex_regs 0 0x1000>;
+>> > > +               #hwlock-cells = <1>;
+>> > > +       };
+>> >
+>> > Is this node in the right place? I think the node above it is 'memory'?
+>> > In which case 'hwlock' comes before 'memory' alphabetically.
+>> >
+>> 
+>> Thanks for spotting this, as it's no longer acceptable to have a
+>> standalone "syscon" node I was asked to rewrite the binding for this a
+>> few months ago. So the tcsr_mutex should now be represented with a reg
+>> under /soc.
+> 
+> Oh nice, I wasn't aware.
+> 
+>> > > +                       #interrupt-cells = <2>;
+>> > > +               };
+>> > > +       };
+>> > > +
+>> > > +       smp2p-mpss {
+>> > > +               compatible = "qcom,smp2p";
+>> > > +               qcom,smem = <435>, <428>;
+>> > > +               interrupts-extended = <&ipcc IPCC_CLIENT_MPSS
+>> > > +                                            IPCC_MPROC_SIGNAL_SMP2P
+>> > > +                                            IRQ_TYPE_EDGE_RISING>;
+>> > > +               mboxes = <&ipcc IPCC_CLIENT_MPSS
+>> > > +                               IPCC_MPROC_SIGNAL_SMP2P>;
+>> > > +
+>> > > +               qcom,local-pid = <0>;
+>> > > +               qcom,remote-pid = <1>;
+>> > > +
+>> > > +               modem_smp2p_out: master-kernel {
+>> > > +                       qcom,entry-name = "master-kernel";
+>> > > +                       #qcom,smem-state-cells = <1>;
+>> > > +               };
+>> > > +
+>> > > +               modem_smp2p_in: slave-kernel {
+>> > > +                       qcom,entry-name = "slave-kernel";
+>> >
+>> > Do these names need to have 'master' and 'slave' in them? We're trying
+>> > to avoid these terms. See Documentation/process/coding-style.rst Section
+>> > 4 naming.
+>> >
+>> 
+>> They need to match the naming in the firmware, but I would welcome a
+>> future change to something in line with the coding style and simply 
+>> more
+>> descriptive.
+>> 
+> 
+> Sibi can this be done? I think it's still pretty early days for the
+> firmware so hopefully the terms can be replaced with something
+> different.
 
-s/fill/Fill/
+I'll discuss the ask with the modem fw team and
+get back.
 
-> soc info.
->=20
-> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
-> ---
->  drivers/media/platform/qcom/venus/hfi_msgs.c | 36 ++++++++++++++++++++++=
-++++--
->  1 file changed, 34 insertions(+), 2 deletions(-)
->=20
-> diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media=
-/platform/qcom/venus/hfi_msgs.c
-> index 06a1908..0e94921 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_msgs.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
-> @@ -239,15 +242,44 @@ static void
->  sys_get_prop_image_version(struct device *dev,
->                            struct hfi_msg_sys_property_info_pkt *pkt)
->  {
-> +       u32 i =3D 0;
-> +       size_t smem_block_size =3D 0;
-> +       u8 *smem_table_ptr;
-> +       char version[256];
-> +       const u32 version_string_size =3D 128;
-> +       const u32 smem_image_index_venus =3D 14 * 128;
-
-Can these be #defines instead of local const variables?
-
-> +       u8 *str_image_version;
->         int req_bytes;
-> =20
->         req_bytes =3D pkt->hdr.size - sizeof(*pkt);
-> =20
-> -       if (req_bytes < 128 || !pkt->data[1] || pkt->num_properties > 1)
-> +       if (req_bytes < version_string_size || !pkt->data[1] || pkt->num_=
-properties > 1)
->                 /* bad packet */
->                 return;
-> =20
-> -       dev_dbg(dev, VDBGL "F/W version: %s\n", (u8 *)&pkt->data[1]);
-
-Why is pkt->data not already a u8?
-
-> +       str_image_version =3D (u8 *)&pkt->data[1];
-> +
-> +       /*
-> +        * The version string returned by firmware includes null
-> +        * characters at the start and in between. Replace the null
-> +        * characters with space, to print the version info.
-> +        */
-> +       for (i =3D 0; i < version_string_size; i++) {
-> +               if (str_image_version[i] !=3D '\0')
-> +                       version[i] =3D str_image_version[i];
-> +               else
-> +                       version[i] =3D ' ';
-> +       }
-> +
-> +       version[i] =3D '\0';
-> +       dev_dbg(dev, VDBGL "F/W version: %s\n", version);
-
-Instead of replacing the string with spaces can we find the first
-non-null character up to version_string_size and then stash a pointer to
-that and print it out with dev_dbg()? That would save 256 bytes on the
-stack for something that is presumably a string and will be NUL
-terminated.
-
-> +
-> +       smem_table_ptr =3D qcom_smem_get(QCOM_SMEM_HOST_ANY,
-> +                                      SMEM_IMAGE_VERSION_TABLE, &smem_bl=
-ock_size);
-> +       if ((smem_image_index_venus + version_string_size) <=3D smem_bloc=
-k_size &&
-> +           smem_table_ptr)
-> +               memcpy(smem_table_ptr + smem_image_index_venus,
-> +                      str_image_version, version_string_size);
-
-It would be nice to have shorter variable names so this was an
-
-	if (condition1 && condition2)
-		memcpy();
+-- 
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
