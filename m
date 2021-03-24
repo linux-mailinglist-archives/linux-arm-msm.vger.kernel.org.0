@@ -2,178 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ABF08347636
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Mar 2021 11:36:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 26F213476BA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Mar 2021 12:02:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235611AbhCXKgS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Mar 2021 06:36:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55602 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233029AbhCXKgQ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Mar 2021 06:36:16 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFCA8C0613DE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 03:36:15 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id j7so23912965wrd.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 03:36:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=dEFFBRSXu0odutvmmG/Rwg2Sz2HimxEx+pN3ka/bnVc=;
-        b=DOZKukNzPwBLODbuM7S0fhx3nEbU8wUrLkI+akr9xvK/Gn2cEkrVU5mSaLlohKzWUM
-         IQkfJ4YQkOKMBazPQvbAWzdDFP3Pw6sQVJz5npSdYbHyY5D+97tiYkJ7sHJNebnH5qsm
-         0tl9dSCS/MCcNsWpo95djxWqsO64QF8ensbtsRQ+wiq5hwJ8ZBDySd8GUAFJFBxdGmvR
-         jEKykXmw1j4WN055zMGSRxaoUH0Mk1lSbDSTB67aaiipXHd9Df435ucMGT4YF0wFargI
-         i/kPWeaegH1BvjP03zxQGdMBRdPYrgta44l0928G9W3U65Nais46ChTzh4NwrxzMpihp
-         EVmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=dEFFBRSXu0odutvmmG/Rwg2Sz2HimxEx+pN3ka/bnVc=;
-        b=p+u7zeuVfrLGwmz9cHX5Q3vVIRFlZXbUDQVd3FHlflJRSorM531zVkAcwrbsOI1uhe
-         aLh7bc1vYf/pDU38grShk6/TTlXfH+4WH7e92hsjHz1r0g69jp6eFZUloaBlao+3TNnH
-         omS9kF9K+5twgbh/6pK1V2AH9gulpWxnSJqQ0BBhjyuGgTeOcemJTEay3OBidU5b3hra
-         hfV9cL6fS4PxZSWQc6SNNQBls56fu9vTO+RhNUesZ1HeDmKHqc21tVoHn2j+toJ7lr4H
-         BxcdYIY3wcaBPGspDySlhZFO+L16Koic+Qkkkym2TQb3I6DJVKaThPbWGzQJcvGPOV57
-         gRow==
-X-Gm-Message-State: AOAM530jIyMzVzPdDHQnvIjP/9QWZ4jJaJvjjcKTAB6Kbz57UvuuG8q6
-        vGqWsOa6gjP1LqZDpHFyyz3bDQ==
-X-Google-Smtp-Source: ABdhPJxI3r3iiWfvHOD+ErGz9Iu/oghrzTasZEnAeZqBD2lmagfmv90aTaU0jHjCwgR5t2MyzwXykw==
-X-Received: by 2002:a5d:6a81:: with SMTP id s1mr2725687wru.401.1616582174392;
-        Wed, 24 Mar 2021 03:36:14 -0700 (PDT)
-Received: from dell ([91.110.221.180])
-        by smtp.gmail.com with ESMTPSA id l6sm2070476wrn.3.2021.03.24.03.36.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Mar 2021 03:36:14 -0700 (PDT)
-Date:   Wed, 24 Mar 2021 10:36:11 +0000
-From:   Lee Jones <lee.jones@linaro.org>
-To:     linux-kernel@vger.kernel.org,
-        Alex Deucher <alexander.deucher@amd.com>,
-        amd-gfx@lists.freedesktop.org, Anthony Koo <Anthony.Koo@amd.com>,
-        Ben Skeggs <bskeggs@redhat.com>,
-        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Harry Wentland <harry.wentland@amd.com>,
-        Jeremy Kolb <jkolb@brandeis.edu>,
-        Kuogee Hsieh <khsieh@codeaurora.org>,
-        Leo Li <sunpeng.li@amd.com>, linaro-mm-sig@lists.linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        Lyude Paul <lyude@redhat.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        nouveau@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>
-Subject: Re: [RESEND 00/19] Rid GPU from W=1 warnings
-Message-ID: <20210324103611.GJ2916463@dell>
-References: <20210319082428.3294591-1-lee.jones@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210319082428.3294591-1-lee.jones@linaro.org>
+        id S234606AbhCXLCJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Mar 2021 07:02:09 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:20920 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230334AbhCXLCE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 24 Mar 2021 07:02:04 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1616583724; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=2RVQ/sfwwJRnutauPnT2IsRxUbVjmr4PCprCzzVpFBM=; b=KZGSCa27SUqVKGRaApXWBhTp7aBMqG0ICRGMuLb9RyFqHYLSK/DoFCtHw79uhDiUSvJ3Twsz
+ fLmGmThPHYIUhOXBYIY4QUJ71FHhQJ2pPQJ2jo5rRr4KNDcJtYuIqQxx1ctSqUe9XNDkrWcA
+ JMZudTcpTQRUoLZpDOaN1c+vijs=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 605b1c1ce3fca7d0a616f0f1 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 24 Mar 2021 11:01:48
+ GMT
+Sender: ylal=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2AA70C43461; Wed, 24 Mar 2021 11:01:48 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from hu-ylal-hyd.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: ylal)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CDE84C433C6;
+        Wed, 24 Mar 2021 11:01:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CDE84C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ylal@codeaurora.org
+From:   Yogesh Lal <ylal@codeaurora.org>
+To:     gregkh@linuxfoundation.org, rafael@kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Yogesh Lal <ylal@codeaurora.org>
+Subject: [PATCH V2] driver core: Use unbound workqueue for deferred probes
+Date:   Wed, 24 Mar 2021 16:31:38 +0530
+Message-Id: <1616583698-6398-1-git-send-email-ylal@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Daniel,
+Deferred probe usually runs only on pinned kworkers, which might take
+longer time if a device contains multiple sub-devices. One such case
+is of sound card on mobile devices, where we have good number of
+mixers and controls per mixer.
 
-> MIME-Version: 1.0
-> Content-Type: text/plain; charset=UTF-8
-> Content-Transfer-Encoding: 8bit
-> 
-> This is a resend of the remaining patches.
-> 
-> All of these patches have been sent before.
+We observed boot up improvement - deferred probes take ~600ms when bound
+to little core kworker and ~200ms when deferred probe is queued on
+unbound wq. This is due to scheduler moving the worker running deferred
+probe work to big CPUs. Without this change, we see the worker is running
+on LITTLE CPU due to affinity.
 
-Are you still keen to 'hoover these up'?
+Since kworker runs deferred probe of several devices, the locality may
+not be important. Also, init thread executing driver initcalls, can
+potentially migrate as it has cpu affinity set to all cpus.In addition
+to this, async probes use unbounded workqueue. So, using unbounded wq for
+deferred probes looks to be similar to these w.r.t. scheduling behavior.
 
-Just leave the one that requires work and take the rest perhaps?
+Signed-off-by: Yogesh Lal <ylal@codeaurora.org>
+---
+Changes in v2:
+Updating the Changelog with issue description.
 
-> Lee Jones (19):
->   drm/nouveau/nvkm/subdev/bios/init: Demote obvious abuse of kernel-doc
->   drm/nouveau/dispnv50/disp: Remove unused variable 'ret'
->   drm/msm/dp/dp_display: Remove unused variable 'hpd'
->   include: drm: drm_atomic: Make use of 'new_plane_state'
->   drm/nouveau/nvkm/subdev/volt/gk20a: Demote non-conformant kernel-doc
->     headers
->   drm/amd/display/dc/calcs/dce_calcs: Move some large variables from the
->     stack to the heap
->   drm/amd/display/dc/calcs/dce_calcs: Remove some large variables from
->     the stack
->   drm/amd/display/dc/dce80/dce80_resource: Make local functions static
->   drm/nouveau/nvkm/engine/gr/gf100: Demote non-conformant kernel-doc
->     header
->   drm/nouveau/nouveau_bo: Remove unused variables 'dev'
->   drm/nouveau/nouveau_display: Remove set but unused variable 'width'
->   drm/nouveau/dispnv04/crtc: Demote non-conforming kernel-doc headers
->   drm/nouveau/dispnv50/disp: Remove unused variable 'ret' from function
->     returning void
->   drm/nouveau/dispnv50/headc57d: Make local function 'headc57d_olut'
->     static
->   drm/nouveau/nv50_display: Remove superfluous prototype for local
->     static functions
->   drm/nouveau/dispnv50/disp: Include header containing our prototypes
->   drm/nouveau/nouveau_ioc32: File headers are not good candidates for
->     kernel-doc
->   drm/nouveau/nouveau_svm: Remove unused variable 'ret' from void
->     function
->   drm/nouveau/nouveau_ioc32: Demote kernel-doc abuse to standard comment
->     block
-> 
->  .../gpu/drm/amd/display/dc/calcs/dce_calcs.c  | 1154 +++++++++--------
->  .../drm/amd/display/dc/dce80/dce80_resource.c |   16 +-
->  drivers/gpu/drm/msm/dp/dp_display.c           |    3 -
->  drivers/gpu/drm/nouveau/dispnv04/crtc.c       |    4 +-
->  drivers/gpu/drm/nouveau/dispnv50/disp.c       |   10 +-
->  drivers/gpu/drm/nouveau/dispnv50/headc57d.c   |    2 +-
->  drivers/gpu/drm/nouveau/nouveau_bo.c          |    4 -
->  drivers/gpu/drm/nouveau/nouveau_display.c     |    8 +-
->  drivers/gpu/drm/nouveau/nouveau_ioc32.c       |    4 +-
->  drivers/gpu/drm/nouveau/nouveau_svm.c         |    5 +-
->  drivers/gpu/drm/nouveau/nv50_display.h        |    3 -
->  .../gpu/drm/nouveau/nvkm/engine/gr/gf100.c    |    2 +-
->  .../gpu/drm/nouveau/nvkm/subdev/bios/init.c   |  204 +--
->  .../gpu/drm/nouveau/nvkm/subdev/volt/gk20a.c  |    4 +-
->  include/drm/drm_atomic.h                      |    3 +-
->  15 files changed, 692 insertions(+), 734 deletions(-)
-> 
-> Cc: Alex Deucher <alexander.deucher@amd.com>
-> Cc: amd-gfx@lists.freedesktop.org
-> Cc: Anthony Koo <Anthony.Koo@amd.com>
-> Cc: Ben Skeggs <bskeggs@redhat.com>
-> Cc: "Christian König" <christian.koenig@amd.com>
-> Cc: Colin Ian King <colin.king@canonical.com>
-> Cc: Daniel Vetter <daniel@ffwll.ch>
-> Cc: David Airlie <airlied@linux.ie>
-> Cc: dri-devel@lists.freedesktop.org
-> Cc: freedreno@lists.freedesktop.org
-> Cc: Harry Wentland <harry.wentland@amd.com>
-> Cc: Jeremy Kolb <jkolb@brandeis.edu>
-> Cc: Kuogee Hsieh <khsieh@codeaurora.org>
-> Cc: Leo Li <sunpeng.li@amd.com>
-> Cc: linaro-mm-sig@lists.linaro.org
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: linux-media@vger.kernel.org
-> Cc: Lyude Paul <lyude@redhat.com>
-> Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-> Cc: Maxime Ripard <mripard@kernel.org>
-> Cc: nouveau@lists.freedesktop.org
-> Cc: Rob Clark <robdclark@gmail.com>
-> Cc: Sean Paul <sean@poorly.run>
-> Cc: Sumit Semwal <sumit.semwal@linaro.org>
-> Cc: Thomas Zimmermann <tzimmermann@suse.de>
+ drivers/base/dd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/drivers/base/dd.c b/drivers/base/dd.c
+index 9179825f..c9c174a 100644
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -182,7 +182,7 @@ static void driver_deferred_probe_trigger(void)
+ 	 * Kick the re-probe thread.  It may already be scheduled, but it is
+ 	 * safe to kick it again.
+ 	 */
+-	schedule_work(&deferred_probe_work);
++	queue_work(system_unbound_wq, &deferred_probe_work);
+ }
+ 
+ /**
 -- 
-Lee Jones [李琼斯]
-Senior Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a
+member of the Code Aurora Forum, hosted by The Linux Foundation
+
