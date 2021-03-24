@@ -2,99 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DFB8F346E61
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Mar 2021 01:57:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 04B40346EE3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Mar 2021 02:33:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233744AbhCXA5G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Mar 2021 20:57:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43602 "EHLO
+        id S234711AbhCXBcr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Mar 2021 21:32:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231260AbhCXA4m (ORCPT
+        with ESMTP id S234765AbhCXBcZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Mar 2021 20:56:42 -0400
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41D25C061765
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 17:56:42 -0700 (PDT)
-Received: by mail-pf1-x42a.google.com with SMTP id l123so16132386pfl.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 17:56:42 -0700 (PDT)
+        Tue, 23 Mar 2021 21:32:25 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6298FC0613D8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 18:32:25 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id 91-20020a9d08640000b0290237d9c40382so163465oty.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 18:32:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=h2JtxWq5KlA+aTENrci0BbTIjTR5pL1ehPUfioP17ww=;
-        b=mdylSgtzUAZCVGwTE47jvcDg5m6W4yNItz32xBuv2n0FJcK5bOI46eXiRKAVhmX5gN
-         v69Nc0v05jAQnjH1z50jxw9BfEssWsZemkNU4hdTyWudysyU8wYf6eOMsvynYbEKRHMI
-         OwFtpSlbp1dZzAcCPai22SxLKgViyL6wyOqr4=
+        bh=7VOrgrdN70dWogl0XiinauXPdyVgeQermYRaw/QNqt0=;
+        b=hBbmOY/pOdnBESHPKcSbq4XEfcf4CsTlYKItFZKiwcBB/xJPXZAMsIJyLocveyv5+3
+         6eleH0fWCj4QV8HqXjiTV6g/FGwFucgFReVSVdlYeXSv6fXBAIeJaletdSvoFv77FNdk
+         Lnb+TOGdtSauD7phIq8/dztDG5bp8eEKBav5yL5OuNXbd9R86Y2LJtsrRtJ94P6CpRqS
+         emLV3z9gVoAV5j1TjHV/uatbl1hgonybSIpd6tp/26g74llNmPOjI2OUNTR/OE6lH44A
+         p2zyXZhgYaeUVKqIJuvM0EMdeHfjkQqjpCVjddB95WSDqPaN8hdyXbT0dIPIbkRXmQEn
+         1bCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=h2JtxWq5KlA+aTENrci0BbTIjTR5pL1ehPUfioP17ww=;
-        b=WQEnbPoQAm7/PFsM7ZfG4RYwe4PrxuqNInWEVj0CWynj7b0cq6PG1+yDdsTARLt+eM
-         dUBjqNtpThSPG/aQi0TYu1nB+QuLiV3Gsvh7qgLGg6ONOcpu0swb2Ng/N/RrQ2+SXOoR
-         cfKRk9/EGz0VKZIImlWX1eStTJSoXPTCMMSVD42Dw/Thyshw5fKKqAJSn3/JfQQ0q6oq
-         LZZmrWIQyFYslNx0V8Te7UO/9USV5JMLBq4mLt6y70poI0EnpE8OaYXR78ss3NySnCKX
-         3SgYEm5n8XaPV1esvNuZa4vZztYWDLNN/RNyszJcg1oj1WptYxqF4j7TSspz3aFSS3N5
-         TQkw==
-X-Gm-Message-State: AOAM531GZOHT8L3qR8wMROJElU3bA7R4dCnaqnQvUGiBeysiL8ID4iYG
-        ZmyD6fSkwZQ/nabcuzNJhToRzw==
-X-Google-Smtp-Source: ABdhPJziJ3JXAD6m13EcNQP6pdLqzU32BKmPDBLBzBkozEcZ6Z2/VNUa4r5mBZE4Sm0f/1kY6upfBQ==
-X-Received: by 2002:a62:1997:0:b029:1ed:5de5:5f1c with SMTP id 145-20020a6219970000b02901ed5de55f1cmr527401pfz.14.1616547401706;
-        Tue, 23 Mar 2021 17:56:41 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:40a3:9725:46c3:85f6])
-        by smtp.gmail.com with UTF8SMTPSA id 186sm356171pfb.143.2021.03.23.17.56.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Mar 2021 17:56:41 -0700 (PDT)
-Date:   Tue, 23 Mar 2021 17:56:39 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Sandeep Maheswaram <sanm@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manu Gautam <mgautam@codeaurora.org>
-Subject: Re: [PATCH v5 3/4] usb: dwc3: qcom: Configure wakeup interrupts and
- set genpd active wakeup flag
-Message-ID: <YFqORzIw5WOLyDwm@google.com>
-References: <1616434280-32635-1-git-send-email-sanm@codeaurora.org>
- <1616434280-32635-4-git-send-email-sanm@codeaurora.org>
- <YFna5mxrJAzR2s0g@kroah.com>
- <YFqMivRlDllNuqu/@google.com>
+        bh=7VOrgrdN70dWogl0XiinauXPdyVgeQermYRaw/QNqt0=;
+        b=XbeVoi85YCHx5og554u9ooMvGQg2MhSZKourp49b9UHyyLYwG4GMk3dO6GspHr0dhX
+         1q9hwy33vMiUKHCSUgOzA+fQLe/jSwpFShYtkiveV5iR4xp9jjhQmuypoz0xkfGQ9Uu7
+         0bG+9gdPg032T7C1X3bhlw+7CjRYTqTBx4VUObaJ+PpBhWCJsj5ZDhMmBVs4n4T4a6Up
+         a9yGDTXHWPVedDysehTB9QniXjlZ5fiJgLs/ivbCnami2WIOwGUj16iyGdiTDo201k9+
+         ht1pWHBAL44GGbzaWOwd1Pxjb0dhXnrR09uWSzJmG8kaM2BtSOZr721s57meymyj5eJO
+         Z/yQ==
+X-Gm-Message-State: AOAM533xIykTQQGoe7+atG6zh8wQwymsJCrKFt543MyOYjjv/cvYLDwc
+        H7uQa4L9ZxO1c+KG3797AlBYAA==
+X-Google-Smtp-Source: ABdhPJxtPxePyuusyTCENnwTIquDwdttrXeqzFJKy60J6pV9Tb419yReTF9TRc4WVj94R5POEgncvQ==
+X-Received: by 2002:a05:6830:225b:: with SMTP id t27mr992966otd.73.1616549544644;
+        Tue, 23 Mar 2021 18:32:24 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id g22sm199167oop.7.2021.03.23.18.32.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Mar 2021 18:32:24 -0700 (PDT)
+Date:   Tue, 23 Mar 2021 20:32:22 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Doug Anderson <dianders@chromium.org>
+Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: sdm845: Move reserved-memory to
+ devices
+Message-ID: <20210324013222.GA857060@yoga>
+References: <20210312234310.3490809-1-bjorn.andersson@linaro.org>
+ <13234328-7251-407d-8870-d409708632e3@somainline.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YFqMivRlDllNuqu/@google.com>
+In-Reply-To: <13234328-7251-407d-8870-d409708632e3@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 23, 2021 at 05:49:14PM -0700, Matthias Kaehlcke wrote:
-> On Tue, Mar 23, 2021 at 01:11:18PM +0100, Greg Kroah-Hartman wrote:
-> > On Mon, Mar 22, 2021 at 11:01:19PM +0530, Sandeep Maheswaram wrote:
-> > > Configure interrupts based on hs_phy_mode to avoid triggering of
-> > > interrupts during system suspend and suspends successfully.
-> > > Set genpd active wakeup flag for usb gdsc if wakeup capable devices
-> > > are connected so that wake up happens without reenumeration.
-> > > Add helper functions to enable,disable wake irqs.
-> > 
-> > That feels like a lot of different things all in one patch.
-> 
-> Sandeep: one thing you could do to reduce the churn is to add
-> dwc3_qcom_enable/disable_wakeup_irq() in a separate patch, without
-> any functional changes. Then this patch would only add the different
-> branches based on the PHY mode.
-> 
-> The handling of the power domain could probably also be done in a
-> separate patch, if I recall correctly it is only an optimization.
+On Fri 12 Mar 20:35 CST 2021, Konrad Dybcio wrote:
 
-Actually another thing that could be in a separate patch is enabling
-wakeup support based on 'wakeup-source'. That's not even directly
-related with this series.
+> Hi,
+> 
+> 
+> I'm not sure I can agree. Especially for regions like IPA and
+> TZ-reserved, which seem the same on (almost?) all..
+> 
 
-With all that you'd have fairly atomic patches and it should be easy to
-write meaningful commit messages.
+Thanks Konrad, I appreciate that.
+
+> 
+> Sure, the configuration for various remoteprocs *can* differ based on
+> what the vendor decided to go with, but more often than not
+> (especially with phones) vendors just take a MTP or CDP design, add a
+> screen, couple of cameras and call it their own (you can tell by how
+> similar most of them to the original reference designs in DT). While
+> this is usually the case with lower-end (so not exactly sdm845)
+> devices, it also kinda applies here...
+> 
+
+Unfortunately there's not a single memory map for each reference design,
+the memory map do change during development based on feature set. I
+think we can see this already among the few devices.
+
+> 
+> I guess for this one, we should find the lowest common denominator and
+> keep the nodes that are in the majority of devices in 845 DTSI and
+> only alter them if need be.. For WoA devices that may stray further
+> away, you can just add a label to reserved-memory and /delete-node/
+> it, so that you can rewrite it cleanly. The proposed approach just
+> adds a lot - A LOT - of duplication. It will REALLY bite after more
+> people submit 845-based phones, of which there are plenty (4 Xperias,
+> a whole lot of Xiaomis, a couple of Samsungs, LGs... need I go on?).
+> 
+
+I was hoping to make it easier to reason about the memory map for each
+device, but if your right about these incoming devices then I agree that
+the duplication isn't worth it.
+
+I'll respin patch 2, to get IPA going on the Yoga C630 and put this
+patch on hold until this annoys me again :)
+
+Thank you,
+Bjorn
