@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 60604347C60
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Mar 2021 16:21:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B1468347C67
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Mar 2021 16:21:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236611AbhCXPUY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S236614AbhCXPUY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Wed, 24 Mar 2021 11:20:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60974 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236614AbhCXPTy (ORCPT
+        with ESMTP id S236620AbhCXPT4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Mar 2021 11:19:54 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47704C0613B3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 08:19:43 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id n138so32540094lfa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 08:19:43 -0700 (PDT)
+        Wed, 24 Mar 2021 11:19:56 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 220CFC0613B6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 08:19:45 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id q29so32369148lfb.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 08:19:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=OoyKU1h/oJDC00eudzBASZPAkR4D3lrK9KAbb6lplKk=;
-        b=cHM6frftyuBwYpTJSGuZP7c26UtCzMSfFvwRCp7/SrfuqZmjcggjZ9qJPJuaJA6egA
-         Tp99G38yvdjKsoMKCshAz4dTTOneqrD1durNaD0nswm8SAe0ElSeBDgmVc/3U/kBuUd2
-         Ozd9g2Qu9acq6vF1bUbp93f6ROhj/uRbAQYIu4MqRzzOBCqIYGFO3DUQH0zGEFuxV5kM
-         iXt8qJ19gQg9yuccciYLcR0BU8k7UR0Y8nxB7gGOnSDOSIvI+NeZ+8QhX+Jb0IazVAZb
-         sN8JlpS03/zz9pMw40tflg9Hre49ZafXZRNljB334aoJpLXsof+ZWfUvf25xE2sPNTRG
-         L5cA==
+        bh=l3MWO0BD1Z0aMlUAjIGFvrvtw8qtZfe0+ZohERMoQm8=;
+        b=HjnW7PbpZcp1BtXkXSp1nt1TjmvZ3F4Yv2xlbVmU1BNQllij4BAMb8rq0v0JHPySUM
+         B3XyRHOYXXt+IOiBIH1XoB/qdDoIZNq3A993J5arKHdrLU2UMUnyTtE3ozD4bn0NtRvy
+         v05OPA3fT6dfKbDM5tjGMOv+ISKgFFZZ+7mvJsvPGeHZ4UXenw4O4Psm2OKpiJFlZ3Fo
+         Xa1DdKugRu0kHyJ/SdjgaSHHBtG4QPvcFnb2dqYvebPtBC7MQdtb7pCupY5AovrVfzjV
+         EgeGeB2FeTcaLyyFl8NNJVDt25KMG5cmmvY/U0fJEV2u3EXBDZ8s7GDA4reFxMEZke3i
+         g3fA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=OoyKU1h/oJDC00eudzBASZPAkR4D3lrK9KAbb6lplKk=;
-        b=NE+ulDx+OTPIowpQJw32t6dQmKHW1HsRO2H228tdIiVXSuFU5LSQqzV1T2bSog0Ah+
-         oUPkZrkM8LDDnqBuf3W+L2/cZUTtfaBe7q7YoI4ioUH9R6PGC8xIRnxgn0QswxKOBA+q
-         XTbz+uC+jpJsHdNQ2aJFPLJ4A8d6SCkyqV6a+DhcKqj96LuRKviH2nKttfnILg7hFIHb
-         If83H2hZacvUGrBRW5/w2W7VmYnjPdaD9YLJDWAVZgpUrzULdhushJPYnN6kgnY35yK0
-         Bhh+W8srrJZuHXp8btM9wuf4oZy0HVpBXd0a6GCdncRUmJW+F8yHx4JWLInmzFeDRRWH
-         h5Yw==
-X-Gm-Message-State: AOAM530xPjM4k7ePf2/QpE1114goeqt0O3VnjW+GILjyy3sV7Anz4kSR
-        FYlzDzGm7nu6fdc4QdGt9wnVFg==
-X-Google-Smtp-Source: ABdhPJyEuyQTNfylgOLyg9TWYe1tI8iha+g40dzd2kXPT62uOQTpq1lgsIGN4yg5I1dzOa4gdRvGVg==
-X-Received: by 2002:a05:6512:2097:: with SMTP id t23mr2109899lfr.21.1616599181748;
-        Wed, 24 Mar 2021 08:19:41 -0700 (PDT)
+        bh=l3MWO0BD1Z0aMlUAjIGFvrvtw8qtZfe0+ZohERMoQm8=;
+        b=eWDwWV4ZDSE/UF4K1tqlXZAXKG9x0sGcV7PcsTUUYDMup9oYLuhsTc/t2nbcL4G/zu
+         zr2s1EUUGBk09HmCRd+6UOodHdz2pvJD1wG7lnXsnf17WTjlvGHked7Mm+02zqBh/5Yi
+         Iwn27cD41zmwJ4ponicFJ6NK6Fuw5xXAn49gQ6yxIiEzeDgCuOBAZTmEhyW4fi2Bvy4M
+         OKjCznWNG1bDelabrY7tayA3+yfbslAK63QvOK1fZHes23XSbkbG56KroyFCWkmtgg+M
+         KdMXsWLwhhffzmLMFtSm1YLgkf6RIjRMTngRPJFg5pTdqjx9kmrril3lf7a7LCJBhKF7
+         55XA==
+X-Gm-Message-State: AOAM531y9TbtbWNr8Ac1B/WA+pLMKDzN1UjZKHAh3eorm5V3ilxxymYT
+        qSF+CqplfBH1XyeOD2HBCnL2KA==
+X-Google-Smtp-Source: ABdhPJzFj38GDJEjlZeRwmOjAbpJVPetpwyQBcWxYZYM3B+BasED1zsivdniTatAyAj4FHp2rK07Cg==
+X-Received: by 2002:a05:6512:c1a:: with SMTP id z26mr2108841lfu.360.1616599183540;
+        Wed, 24 Mar 2021 08:19:43 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id d22sm255199lfm.267.2021.03.24.08.19.40
+        by smtp.gmail.com with ESMTPSA id d22sm255199lfm.267.2021.03.24.08.19.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Mar 2021 08:19:41 -0700 (PDT)
+        Wed, 24 Mar 2021 08:19:43 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Jonathan Marek <jonathan@marek.ca>,
@@ -56,9 +56,9 @@ Cc:     Stephen Boyd <sboyd@kernel.org>, David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         linux-clk@vger.kernel.org
-Subject: [PATCH v2 27/28] drm/msm/dsi: inline msm_dsi_phy_set_src_pll
-Date:   Wed, 24 Mar 2021 18:18:45 +0300
-Message-Id: <20210324151846.2774204-28-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 28/28] drm/msm/dsi: stop passing src_pll_id to the phy_enable call
+Date:   Wed, 24 Mar 2021 18:18:46 +0300
+Message-Id: <20210324151846.2774204-29-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210324151846.2774204-1-dmitry.baryshkov@linaro.org>
 References: <20210324151846.2774204-1-dmitry.baryshkov@linaro.org>
@@ -68,260 +68,232 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The src_truthtable config is not used for some of phys, which use other
-means of configuring the master/slave usecases. Inline this function
-with the goal of removing src_pll_id argument in the next commit.
+Phy driver already knows the source PLL id basing on the set usecase and
+the current PLL id. Stop passing it to the phy_enable call. As a
+reminder, dsi manager will always use DSI 0 as a clock master in a slave
+mode, so PLL 0 is always a clocksource for DSI 0 and it is always a
+clocksource for DSI 1 too unless DSI 1 is used in the standalone mode.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c           | 17 -----------------
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.h           |  8 --------
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c      |  2 --
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c      | 13 +++++++------
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c      | 11 +++++++----
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c      | 13 +++++++------
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c |  1 -
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c       |  2 --
- 8 files changed, 21 insertions(+), 46 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi.h                   |  2 +-
+ drivers/gpu/drm/msm/dsi/dsi_manager.c           | 11 +++++------
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c           |  4 ++--
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.h           |  2 +-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c      |  2 +-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c      |  4 ++--
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c      |  4 ++--
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c      |  4 ++--
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c |  2 +-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c       |  2 +-
+ 10 files changed, 18 insertions(+), 19 deletions(-)
 
+diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
+index 5c32ee2b3605..c422c8690ab3 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi.h
++++ b/drivers/gpu/drm/msm/dsi/dsi.h
+@@ -160,7 +160,7 @@ struct msm_dsi_phy_clk_request {
+ 
+ void msm_dsi_phy_driver_register(void);
+ void msm_dsi_phy_driver_unregister(void);
+-int msm_dsi_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
++int msm_dsi_phy_enable(struct msm_dsi_phy *phy,
+ 			struct msm_dsi_phy_clk_request *clk_req);
+ void msm_dsi_phy_disable(struct msm_dsi_phy *phy);
+ void msm_dsi_phy_get_shared_timings(struct msm_dsi_phy *phy,
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+index 2976b09a881d..20bcb6afb52e 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+@@ -109,7 +109,7 @@ static int dsi_mgr_setup_components(int id)
+ 	return ret;
+ }
+ 
+-static int enable_phy(struct msm_dsi *msm_dsi, int src_pll_id,
++static int enable_phy(struct msm_dsi *msm_dsi,
+ 		      struct msm_dsi_phy_shared_timings *shared_timings)
+ {
+ 	struct msm_dsi_phy_clk_request clk_req;
+@@ -118,7 +118,7 @@ static int enable_phy(struct msm_dsi *msm_dsi, int src_pll_id,
+ 
+ 	msm_dsi_host_get_phy_clk_req(msm_dsi->host, &clk_req, is_dual_dsi);
+ 
+-	ret = msm_dsi_phy_enable(msm_dsi->phy, src_pll_id, &clk_req);
++	ret = msm_dsi_phy_enable(msm_dsi->phy, &clk_req);
+ 	msm_dsi_phy_get_shared_timings(msm_dsi->phy, shared_timings);
+ 
+ 	return ret;
+@@ -131,7 +131,6 @@ dsi_mgr_phy_enable(int id,
+ 	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
+ 	struct msm_dsi *mdsi = dsi_mgr_get_dsi(DSI_CLOCK_MASTER);
+ 	struct msm_dsi *sdsi = dsi_mgr_get_dsi(DSI_CLOCK_SLAVE);
+-	int src_pll_id = IS_DUAL_DSI() ? DSI_CLOCK_MASTER : id;
+ 	int ret;
+ 
+ 	/* In case of dual DSI, some registers in PHY1 have been programmed
+@@ -144,11 +143,11 @@ dsi_mgr_phy_enable(int id,
+ 			msm_dsi_host_reset_phy(mdsi->host);
+ 			msm_dsi_host_reset_phy(sdsi->host);
+ 
+-			ret = enable_phy(mdsi, src_pll_id,
++			ret = enable_phy(mdsi,
+ 					 &shared_timings[DSI_CLOCK_MASTER]);
+ 			if (ret)
+ 				return ret;
+-			ret = enable_phy(sdsi, src_pll_id,
++			ret = enable_phy(sdsi,
+ 					 &shared_timings[DSI_CLOCK_SLAVE]);
+ 			if (ret) {
+ 				msm_dsi_phy_disable(mdsi->phy);
+@@ -157,7 +156,7 @@ dsi_mgr_phy_enable(int id,
+ 		}
+ 	} else {
+ 		msm_dsi_host_reset_phy(msm_dsi->host);
+-		ret = enable_phy(msm_dsi, src_pll_id, &shared_timings[id]);
++		ret = enable_phy(msm_dsi, &shared_timings[id]);
+ 		if (ret)
+ 			return ret;
+ 	}
 diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-index 4aeedcbbda32..8f7726bb598c 100644
+index 8f7726bb598c..851842a26872 100644
 --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
 +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-@@ -461,23 +461,6 @@ int msm_dsi_dphy_timing_calc_v4(struct msm_dsi_dphy_timing *timing,
- 	return 0;
+@@ -753,7 +753,7 @@ void __exit msm_dsi_phy_driver_unregister(void)
+ 	platform_driver_unregister(&dsi_phy_platform_driver);
  }
  
--void msm_dsi_phy_set_src_pll(struct msm_dsi_phy *phy, int pll_id, u32 reg,
--				u32 bit_mask)
--{
--	int phy_id = phy->id;
--	u32 val;
--
--	if ((phy_id >= DSI_MAX) || (pll_id >= DSI_MAX))
--		return;
--
--	val = dsi_phy_read(phy->base + reg);
--
--	if (phy->cfg->src_pll_truthtable[phy_id][pll_id])
--		dsi_phy_write(phy->base + reg, val | bit_mask);
--	else
--		dsi_phy_write(phy->base + reg, val & (~bit_mask));
--}
--
- static int dsi_phy_regulator_init(struct msm_dsi_phy *phy)
+-int msm_dsi_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
++int msm_dsi_phy_enable(struct msm_dsi_phy *phy,
+ 			struct msm_dsi_phy_clk_request *clk_req)
  {
- 	struct regulator_bulk_data *s = phy->supplies;
+ 	struct device *dev = &phy->pdev->dev;
+@@ -776,7 +776,7 @@ int msm_dsi_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
+ 		goto reg_en_fail;
+ 	}
+ 
+-	ret = phy->cfg->ops.enable(phy, src_pll_id, clk_req);
++	ret = phy->cfg->ops.enable(phy, clk_req);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(dev, "%s: phy enable failed, %d\n", __func__, ret);
+ 		goto phy_en_fail;
 diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-index 8e828c5ca8f4..3b207cf9f6b4 100644
+index 3b207cf9f6b4..74fffcae0f10 100644
 --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
 +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-@@ -33,12 +33,6 @@ struct msm_dsi_phy_cfg {
- 	unsigned long	min_pll_rate;
- 	unsigned long	max_pll_rate;
+@@ -19,7 +19,7 @@
  
--	/*
--	 * Each cell {phy_id, pll_id} of the truth table indicates
--	 * if the source PLL selection bit should be set for each PHY.
--	 * Fill default H/W values in illegal cells, eg. cell {0, 1}.
--	 */
--	bool src_pll_truthtable[DSI_MAX][DSI_MAX];
- 	const resource_size_t io_start[DSI_MAX];
- 	const int num_dsi_phy;
- 	const int quirks;
-@@ -121,7 +115,5 @@ int msm_dsi_dphy_timing_calc_v3(struct msm_dsi_dphy_timing *timing,
- 				struct msm_dsi_phy_clk_request *clk_req);
- int msm_dsi_dphy_timing_calc_v4(struct msm_dsi_dphy_timing *timing,
- 				struct msm_dsi_phy_clk_request *clk_req);
--void msm_dsi_phy_set_src_pll(struct msm_dsi_phy *phy, int pll_id, u32 reg,
--				u32 bit_mask);
- 
- #endif /* __DSI_PHY_H__ */
+ struct msm_dsi_phy_ops {
+ 	int (*pll_init)(struct msm_dsi_phy *phy);
+-	int (*enable)(struct msm_dsi_phy *phy, int src_pll_id,
++	int (*enable)(struct msm_dsi_phy *phy,
+ 			struct msm_dsi_phy_clk_request *clk_req);
+ 	void (*disable)(struct msm_dsi_phy *phy);
+ 	void (*save_state)(struct msm_dsi_phy *phy);
 diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-index 1fbb54f4df98..04535ccd11ef 100644
+index 04535ccd11ef..bea68154ef87 100644
 --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
 +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-@@ -919,7 +919,6 @@ static void dsi_10nm_phy_disable(struct msm_dsi_phy *phy)
+@@ -786,7 +786,7 @@ static void dsi_phy_hw_v3_0_lane_settings(struct msm_dsi_phy *phy)
+ 	}
  }
  
- const struct msm_dsi_phy_cfg dsi_phy_10nm_cfgs = {
--	.src_pll_truthtable = { {false, false}, {true, false} },
- 	.has_phy_lane = true,
- 	.reg_cfg = {
- 		.num = 1,
-@@ -941,7 +940,6 @@ const struct msm_dsi_phy_cfg dsi_phy_10nm_cfgs = {
- };
- 
- const struct msm_dsi_phy_cfg dsi_phy_10nm_8998_cfgs = {
--	.src_pll_truthtable = { {false, false}, {true, false} },
- 	.has_phy_lane = true,
- 	.reg_cfg = {
- 		.num = 1,
+-static int dsi_10nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
++static int dsi_10nm_phy_enable(struct msm_dsi_phy *phy,
+ 			       struct msm_dsi_phy_clk_request *clk_req)
+ {
+ 	int ret;
 diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-index d08ad0c632b4..7a87bed71e36 100644
+index 7a87bed71e36..c9afa6c461ee 100644
 --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
 +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-@@ -947,6 +947,7 @@ static int dsi_14nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
- 	int ret;
- 	void __iomem *base = phy->base;
- 	void __iomem *lane_base = phy->lane_base;
-+	u32 glbl_test_ctrl;
+@@ -938,7 +938,7 @@ static void dsi_14nm_dphy_set_timing(struct msm_dsi_phy *phy,
+ 		      DSI_14nm_PHY_LN_TIMING_CTRL_11_TRIG3_CMD(0xa0));
+ }
  
- 	if (msm_dsi_dphy_timing_calc_v2(timing, clk_req)) {
- 		DRM_DEV_ERROR(&phy->pdev->dev,
-@@ -994,10 +995,12 @@ static int dsi_14nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
- 	udelay(100);
+-static int dsi_14nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
++static int dsi_14nm_phy_enable(struct msm_dsi_phy *phy,
+ 			       struct msm_dsi_phy_clk_request *clk_req)
+ {
+ 	struct msm_dsi_dphy_timing *timing = &phy->timing;
+@@ -996,7 +996,7 @@ static int dsi_14nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
  	dsi_phy_write(base + REG_DSI_14nm_PHY_CMN_CTRL_1, 0x00);
  
--	msm_dsi_phy_set_src_pll(phy, src_pll_id,
--				REG_DSI_14nm_PHY_CMN_GLBL_TEST_CTRL,
--				DSI_14nm_PHY_CMN_GLBL_TEST_CTRL_BITCLK_HS_SEL);
--
-+	glbl_test_ctrl = dsi_phy_read(base + REG_DSI_14nm_PHY_CMN_GLBL_TEST_CTRL);
-+	if (phy->id == DSI_1 && src_pll_id == DSI_0)
-+		glbl_test_ctrl |= DSI_14nm_PHY_CMN_GLBL_TEST_CTRL_BITCLK_HS_SEL;
-+	else
-+		glbl_test_ctrl &= ~DSI_14nm_PHY_CMN_GLBL_TEST_CTRL_BITCLK_HS_SEL;
-+	dsi_phy_write(base + REG_DSI_14nm_PHY_CMN_GLBL_TEST_CTRL, glbl_test_ctrl);
- 	ret = dsi_14nm_set_usecase(phy);
- 	if (ret) {
- 		DRM_DEV_ERROR(&phy->pdev->dev, "%s: set pll usecase failed, %d\n",
-@@ -1021,7 +1024,6 @@ static void dsi_14nm_phy_disable(struct msm_dsi_phy *phy)
- }
- 
- const struct msm_dsi_phy_cfg dsi_phy_14nm_cfgs = {
--	.src_pll_truthtable = { {false, false}, {true, false} },
- 	.has_phy_lane = true,
- 	.reg_cfg = {
- 		.num = 1,
-@@ -1043,7 +1045,6 @@ const struct msm_dsi_phy_cfg dsi_phy_14nm_cfgs = {
- };
- 
- const struct msm_dsi_phy_cfg dsi_phy_14nm_660_cfgs = {
--	.src_pll_truthtable = { {false, false}, {true, false} },
- 	.has_phy_lane = true,
- 	.reg_cfg = {
- 		.num = 1,
+ 	glbl_test_ctrl = dsi_phy_read(base + REG_DSI_14nm_PHY_CMN_GLBL_TEST_CTRL);
+-	if (phy->id == DSI_1 && src_pll_id == DSI_0)
++	if (phy->usecase == MSM_DSI_PHY_SLAVE)
+ 		glbl_test_ctrl |= DSI_14nm_PHY_CMN_GLBL_TEST_CTRL_BITCLK_HS_SEL;
+ 	else
+ 		glbl_test_ctrl &= ~DSI_14nm_PHY_CMN_GLBL_TEST_CTRL_BITCLK_HS_SEL;
 diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c
-index 5e73f811d645..f5b88c85a8fc 100644
+index f5b88c85a8fc..e96d789aea18 100644
 --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c
 +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c
-@@ -70,6 +70,7 @@ static int dsi_20nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
- 	int i;
- 	void __iomem *base = phy->base;
- 	u32 cfg_4[4] = {0x20, 0x40, 0x20, 0x00};
-+	u32 val;
+@@ -63,7 +63,7 @@ static void dsi_20nm_phy_regulator_ctrl(struct msm_dsi_phy *phy, bool enable)
+ 	dsi_phy_write(base + REG_DSI_20nm_PHY_REGULATOR_CTRL_0, 0x03);
+ }
  
- 	DBG("");
- 
-@@ -83,9 +84,12 @@ static int dsi_20nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
- 
+-static int dsi_20nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
++static int dsi_20nm_phy_enable(struct msm_dsi_phy *phy,
+ 				struct msm_dsi_phy_clk_request *clk_req)
+ {
+ 	struct msm_dsi_dphy_timing *timing = &phy->timing;
+@@ -85,7 +85,7 @@ static int dsi_20nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
  	dsi_phy_write(base + REG_DSI_20nm_PHY_STRENGTH_0, 0xff);
  
--	msm_dsi_phy_set_src_pll(phy, src_pll_id,
--				REG_DSI_20nm_PHY_GLBL_TEST_CTRL,
--				DSI_20nm_PHY_GLBL_TEST_CTRL_BITCLK_HS_SEL);
-+	val = dsi_phy_read(base + REG_DSI_20nm_PHY_GLBL_TEST_CTRL);
-+	if (src_pll_id == DSI_1)
-+		val |= DSI_20nm_PHY_GLBL_TEST_CTRL_BITCLK_HS_SEL;
-+	else
-+		val &= ~DSI_20nm_PHY_GLBL_TEST_CTRL_BITCLK_HS_SEL;
-+	dsi_phy_write(base + REG_DSI_20nm_PHY_GLBL_TEST_CTRL, val);
- 
- 	for (i = 0; i < 4; i++) {
- 		dsi_phy_write(base + REG_DSI_20nm_PHY_LN_CFG_3(i),
-@@ -125,7 +129,6 @@ static void dsi_20nm_phy_disable(struct msm_dsi_phy *phy)
- }
- 
- const struct msm_dsi_phy_cfg dsi_phy_20nm_cfgs = {
--	.src_pll_truthtable = { {false, true}, {false, true} },
- 	.has_phy_regulator = true,
- 	.reg_cfg = {
- 		.num = 2,
+ 	val = dsi_phy_read(base + REG_DSI_20nm_PHY_GLBL_TEST_CTRL);
+-	if (src_pll_id == DSI_1)
++	if (phy->id == DSI_1 && phy->usecase == MSM_DSI_PHY_STANDALONE)
+ 		val |= DSI_20nm_PHY_GLBL_TEST_CTRL_BITCLK_HS_SEL;
+ 	else
+ 		val &= ~DSI_20nm_PHY_GLBL_TEST_CTRL_BITCLK_HS_SEL;
 diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-index 8c973775cfb0..4aa100bb1659 100644
+index 4aa100bb1659..137e7fdfe2ef 100644
 --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
 +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-@@ -704,6 +704,7 @@ static int dsi_28nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
+@@ -698,7 +698,7 @@ static void dsi_28nm_phy_regulator_ctrl(struct msm_dsi_phy *phy, bool enable)
+ 		dsi_28nm_phy_regulator_enable_dcdc(phy);
+ }
+ 
+-static int dsi_28nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
++static int dsi_28nm_phy_enable(struct msm_dsi_phy *phy,
+ 				struct msm_dsi_phy_clk_request *clk_req)
+ {
  	struct msm_dsi_dphy_timing *timing = &phy->timing;
- 	int i;
- 	void __iomem *base = phy->base;
-+	u32 val;
- 
- 	DBG("");
- 
-@@ -743,9 +744,12 @@ static int dsi_28nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
- 
+@@ -745,7 +745,7 @@ static int dsi_28nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
  	dsi_phy_write(base + REG_DSI_28nm_PHY_CTRL_0, 0x5f);
  
--	msm_dsi_phy_set_src_pll(phy, src_pll_id,
--				REG_DSI_28nm_PHY_GLBL_TEST_CTRL,
--				DSI_28nm_PHY_GLBL_TEST_CTRL_BITCLK_HS_SEL);
-+	val = dsi_phy_read(base + REG_DSI_28nm_PHY_GLBL_TEST_CTRL);
-+	if (phy->id == DSI_1 && src_pll_id == DSI_0)
-+		val &= ~DSI_28nm_PHY_GLBL_TEST_CTRL_BITCLK_HS_SEL;
-+	else
-+		val |= DSI_28nm_PHY_GLBL_TEST_CTRL_BITCLK_HS_SEL;
-+	dsi_phy_write(base + REG_DSI_28nm_PHY_GLBL_TEST_CTRL, val);
- 
- 	return 0;
- }
-@@ -763,7 +767,6 @@ static void dsi_28nm_phy_disable(struct msm_dsi_phy *phy)
- }
- 
- const struct msm_dsi_phy_cfg dsi_phy_28nm_hpm_cfgs = {
--	.src_pll_truthtable = { {true, true}, {false, true} },
- 	.has_phy_regulator = true,
- 	.reg_cfg = {
- 		.num = 1,
-@@ -785,7 +788,6 @@ const struct msm_dsi_phy_cfg dsi_phy_28nm_hpm_cfgs = {
- };
- 
- const struct msm_dsi_phy_cfg dsi_phy_28nm_hpm_famb_cfgs = {
--	.src_pll_truthtable = { {true, true}, {false, true} },
- 	.has_phy_regulator = true,
- 	.reg_cfg = {
- 		.num = 1,
-@@ -807,7 +809,6 @@ const struct msm_dsi_phy_cfg dsi_phy_28nm_hpm_famb_cfgs = {
- };
- 
- const struct msm_dsi_phy_cfg dsi_phy_28nm_lp_cfgs = {
--	.src_pll_truthtable = { {true, true}, {true, true} },
- 	.has_phy_regulator = true,
- 	.reg_cfg = {
- 		.num = 1,
+ 	val = dsi_phy_read(base + REG_DSI_28nm_PHY_GLBL_TEST_CTRL);
+-	if (phy->id == DSI_1 && src_pll_id == DSI_0)
++	if (phy->usecase == MSM_DSI_PHY_SLAVE)
+ 		val &= ~DSI_28nm_PHY_GLBL_TEST_CTRL_BITCLK_HS_SEL;
+ 	else
+ 		val |= DSI_28nm_PHY_GLBL_TEST_CTRL_BITCLK_HS_SEL;
 diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
-index 9ddd0adccce3..d2bfe43c9ef1 100644
+index d2bfe43c9ef1..104446450f7c 100644
 --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
 +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
-@@ -642,7 +642,6 @@ static void dsi_28nm_phy_disable(struct msm_dsi_phy *phy)
+@@ -585,7 +585,7 @@ static void dsi_28nm_phy_lane_config(struct msm_dsi_phy *phy)
+ 	dsi_phy_write(base + REG_DSI_28nm_8960_PHY_LNCK_TEST_STR1, 0x88);
  }
  
- const struct msm_dsi_phy_cfg dsi_phy_28nm_8960_cfgs = {
--	.src_pll_truthtable = { {true, true}, {false, true} },
- 	.has_phy_regulator = true,
- 	.reg_cfg = {
- 		.num = 1,
+-static int dsi_28nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
++static int dsi_28nm_phy_enable(struct msm_dsi_phy *phy,
+ 				struct msm_dsi_phy_clk_request *clk_req)
+ {
+ 	struct msm_dsi_dphy_timing *timing = &phy->timing;
 diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-index ce6ae2fba993..619998506b78 100644
+index 619998506b78..badc76a8d425 100644
 --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
 +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-@@ -955,7 +955,6 @@ static void dsi_7nm_phy_disable(struct msm_dsi_phy *phy)
+@@ -799,7 +799,7 @@ static void dsi_phy_hw_v4_0_lane_settings(struct msm_dsi_phy *phy)
+ 	}
  }
  
- const struct msm_dsi_phy_cfg dsi_phy_7nm_cfgs = {
--	.src_pll_truthtable = { {false, false}, {true, false} },
- 	.has_phy_lane = true,
- 	.reg_cfg = {
- 		.num = 1,
-@@ -978,7 +977,6 @@ const struct msm_dsi_phy_cfg dsi_phy_7nm_cfgs = {
- };
- 
- const struct msm_dsi_phy_cfg dsi_phy_7nm_8150_cfgs = {
--	.src_pll_truthtable = { {false, false}, {true, false} },
- 	.has_phy_lane = true,
- 	.reg_cfg = {
- 		.num = 1,
+-static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
++static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
+ 			      struct msm_dsi_phy_clk_request *clk_req)
+ {
+ 	int ret;
 -- 
 2.30.2
 
