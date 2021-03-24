@@ -2,132 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B1408347247
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Mar 2021 08:19:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F155234733C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Mar 2021 09:16:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232588AbhCXHTV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Mar 2021 03:19:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([216.205.24.124]:57690 "EHLO
-        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232827AbhCXHTL (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Mar 2021 03:19:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1616570349;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=LNxz6dk8N6Qim1jk1gv3DRN8orM2zCPzuP4pcushAnw=;
-        b=jMPvQvEUPMzDW4rTi//xjb32aJhjzju/YQBK0RtGA0HaqCuWqiuqX4ysCShH/bIYEuhkwx
-        S4vO7GM0Y7RkkulSzkw0oJV3lAlpQ+2xIrXKH8PtSjK3VqRcYA2OuKeD+gleJYWL9qqMc3
-        2k/7LtCyavvx94+pSXnjH3VSFmvIcTY=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-543-E1SwgSwUPy2awTBqoFY3Bw-1; Wed, 24 Mar 2021 03:19:06 -0400
-X-MC-Unique: E1SwgSwUPy2awTBqoFY3Bw-1
-Received: by mail-ej1-f70.google.com with SMTP id a22so493930ejx.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 00:19:06 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=LNxz6dk8N6Qim1jk1gv3DRN8orM2zCPzuP4pcushAnw=;
-        b=LLWzn7pPVxNnzHflk/Nd3/cwMiAJTXWbJ1aeh+QCPTpPdnyaa6vAsLYkfI0Miya7SH
-         c3IFd09gjMugEtl86jwZjVWBQVlRnzZV6TRnn9s6w6I2euo7FAgz8pmpxmrSA3ZpNZ32
-         1IGLun8AKt+eHvjdRmPCpH1EySBlqks6zDJA3R9DeWQcRQZzAePNzRqjDcNs4j4GosPb
-         kmOT5AZznMr/lNt5H7FqdkozPcqawpPec/YId/UE7S3uZdalHdTXru27ZSrLwq9H1KEm
-         lFdmonU7xBYrDFuxgl7tvEBxHCCY/hi8BP5VGVZAOzhNRa7ggo2tHK1Tl51bN++35ZQT
-         CFLQ==
-X-Gm-Message-State: AOAM531oFORBCsaZHqg5qrp6MukCJyh3PuFQkckngiTAycMYOHxUDGJZ
-        s/qKSTG3EY5aFNNiOG4kk5rRJpQ4nWBIMtBVUrn85Pjlr5IgMvv6iTsyRpIYxZ8WpbTKmRgzlSJ
-        08FezBxnGzv4EKH3V91tPWHBdGw==
-X-Received: by 2002:a05:6402:50c8:: with SMTP id h8mr1863234edb.360.1616570345811;
-        Wed, 24 Mar 2021 00:19:05 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJwlbfdmREJxME+JRNtvUW27K2DsKI6/XR8AbALCh74d7s9kMg/MD7c5V9abhKL5/x66UnXfjg==
-X-Received: by 2002:a05:6402:50c8:: with SMTP id h8mr1863215edb.360.1616570345634;
-        Wed, 24 Mar 2021 00:19:05 -0700 (PDT)
-Received: from x1.localdomain (2001-1c00-0c1e-bf00-1054-9d19-e0f0-8214.cable.dynamic.v6.ziggo.nl. [2001:1c00:c1e:bf00:1054:9d19:e0f0:8214])
-        by smtp.gmail.com with ESMTPSA id i11sm484830ejf.76.2021.03.24.00.19.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Mar 2021 00:19:05 -0700 (PDT)
-Subject: Re: [PATCH v3 3/8] extconn: Clean-up few drivers by using managed
- work init
-To:     matti.vaittinen@fi.rohmeurope.com,
-        Chanwoo Choi <cw00.choi@samsung.com>
-Cc:     MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Andy Gross <agross@kernel.org>,
+        id S233256AbhCXIP6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Mar 2021 04:15:58 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:43559 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232774AbhCXIP2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 24 Mar 2021 04:15:28 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1616573728; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=Y5h9gceNYtNF2VMK8tg+/n2jNlHo9HgwZ5dGzFZ5Hp4=; b=m4SDzPx9NaUknee6AJc/XKfv9sK40BZ/+tpQFmNqpUuQeKCSwJOb38J1Z5RIqL5uqr/aQbx0
+ 50MmH6dkZTAC2K5aAiG0T+AM1JytIM9TymbD17vXw55CZGGKIipHfuPh8jlZ6EAyEgCIcQRF
+ bnID85FW9/C+p15oPlsztAELnr4=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 605af5065d70193f88e29c2f (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 24 Mar 2021 08:15:02
+ GMT
+Sender: jackp=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 4E236C43463; Wed, 24 Mar 2021 08:15:02 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from jackp-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: jackp)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5EBF8C433CA;
+        Wed, 24 Mar 2021 08:15:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5EBF8C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jackp@codeaurora.org
+Date:   Wed, 24 Mar 2021 01:14:57 -0700
+From:   Jack Pham <jackp@codeaurora.org>
+To:     Kathiravan T <kathirav@codeaurora.org>
+Cc:     Baruch Siach <baruch@tkos.co.il>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Mark Gross <mgross@linux.intel.com>,
-        gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org
-References: <cover.1616506559.git.matti.vaittinen@fi.rohmeurope.com>
- <CGME20210323135719epcas1p326dfbf8acd6c95703a30d832fb111879@epcas1p3.samsung.com>
- <b1030eddbf0069f2d39e951be1d8e40d6413aeeb.1616506559.git.matti.vaittinen@fi.rohmeurope.com>
- <14800e19-da8c-81ba-48ee-cc51cc1925c9@samsung.com>
- <1f5247a81077f6cb3c96730b1202bbd61dd1900b.camel@fi.rohmeurope.com>
-From:   Hans de Goede <hdegoede@redhat.com>
-Message-ID: <efc4359d-9c2c-9115-7cee-b9f6eb51539c@redhat.com>
-Date:   Wed, 24 Mar 2021 08:19:04 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.0
+        Felipe Balbi <balbi@kernel.org>, linux-usb@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Balaji Prakash J <bjagadee@codeaurora.org>,
+        kathirav=codeaurora.org@codeaurora.org
+Subject: Re: [PATCH] usb: dwc3: reference clock configuration
+Message-ID: <20210324081457.GB17922@jackp-linux.qualcomm.com>
+References: <8fc38cb73afd31269f1ea0c28e73604c53cebb17.1612764006.git.baruch@tkos.co.il>
+ <YCGCRQpqVNI2KZyi@builder.lan>
+ <87sg64wj01.fsf@tarshish>
+ <e1a05b5c6bf70e62b526a7a7d70b1a12@codeaurora.org>
+ <e460e5afb0661b5867ee089b3efb0bc5@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <1f5247a81077f6cb3c96730b1202bbd61dd1900b.camel@fi.rohmeurope.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e460e5afb0661b5867ee089b3efb0bc5@codeaurora.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Kathiravan, Baruch,
 
-On 3/24/21 6:02 AM, Matti Vaittinen wrote:
-> Hello Chanwoo, Greg,
+On Thu, Feb 25, 2021 at 10:17:49PM +0530, Kathiravan T wrote:
+> On 2021-02-15 22:28, Kathiravan T wrote:
+> > On 2021-02-10 11:40, Baruch Siach wrote:
+> > > Hi Bjorn,
+> > > 
+> > > Thanks for your review comments.
+> > > 
+> > > On Mon, Feb 08 2021, Bjorn Andersson wrote:
+> > > > On Mon 08 Feb 00:00 CST 2021, Baruch Siach wrote:
+> > > > > From: Balaji Prakash J <bjagadee@codeaurora.org>
+> > > > > 
+> > > > > DWC_USB3_GFLADJ and DWC_USB3_GUCTL registers contain options
+> > > > > to control the behavior of controller with respect to SOF and ITP.
+> > > > > The reset values of these registers are aligned for 19.2 MHz
+> > > > > reference clock source. This change will add option to override
+> > > > > these settings for reference clock other than 19.2 MHz
+> > > > > 
+> > > > > Tested on IPQ6018 SoC based CP01 board with 24MHz reference clock.
+> > > > > 
+> > > > > Signed-off-by: Balaji Prakash J <bjagadee@codeaurora.org>
+> > > > > [ baruch: mention tested hardware ]
+> > > > > Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+> > > > > ---
+> > > > >  .../devicetree/bindings/usb/dwc3.txt          |  5 ++
+> > > > >  drivers/usb/dwc3/core.c                       | 52
+> > > > > +++++++++++++++++++
+> > > > >  drivers/usb/dwc3/core.h                       | 12 +++++
+> > > > >  3 files changed, 69 insertions(+)
+> > > > > 
+> > > > > diff --git a/Documentation/devicetree/bindings/usb/dwc3.txt
+> > > > > b/Documentation/devicetree/bindings/usb/dwc3.txt
+> > > > > index 1aae2b6160c1..4ffa87b697dc 100644
+> > > > > --- a/Documentation/devicetree/bindings/usb/dwc3.txt
+> > > > > +++ b/Documentation/devicetree/bindings/usb/dwc3.txt
+> > > > > @@ -89,6 +89,11 @@ Optional properties:
+> > > > >   - snps,quirk-frame-length-adjustment: Value for
+> > > > > GFLADJ_30MHZ field of GFLADJ
+> > > > >  	register for post-silicon frame length adjustment when the
+> > > > >  	fladj_30mhz_sdbnd signal is invalid or incorrect.
+> > > > > + - snps,quirk-ref-clock-adjustment: Value for
+> > > > > GFLADJ_REFCLK_* fields of GFLADJ
+> > > > > +	register for reference clock other than 19.2 MHz is used.
+> > > > 
+> > > > What are typical values for this property? What unit does it
+> > > > have? How
+> > > > does it actually relate to the frequency of the reference clock?
+> > > 
+> > > Downstream codeaurora kernel (fig branch) sets 0xA87F0 for IPQ6018
+> > > (24MHz reference clock), and 0x49459 for IPQ5018 (60MHz). So this
+> > > value
+> > > appears to correlates with clock rate. I have no access to DWC3
+> > > documentation. I only tested IPQ6018 hardware.
+> > > 
+> > 
+> > It will be written as (0xA87F0 << 7) retaining the 0-7 LSB value.
+> > I could see, BIT(23) of GFLADJ register enables the functionality of
+> > running SOF/ITP counters based on the reference clock. Since this bit
+> > is set, we need to
+> > compute the other fields as well i.e., from 8th bit to 31st bit.
+> > Finally it is derived to
+> > 0xA87F0 for IPQ6018.
+> > 
 > 
-> Thanks for the review.
+> Bjorn / All,
 > 
-> On Wed, 2021-03-24 at 11:09 +0900, Chanwoo Choi wrote:
->> Hi,
->>
->> Need to fix the work as following:
->> s/extconn/extcon
->>
->> And I'd like you to use the more correct patch title like the
->> following example:
->> "extcon: Use resource-managed function for delayed work"
+> Any comments on this? Please do suggest if this can be handled in a better
+> way.
 > 
-> I think Greg merged this already. How should we handle this?
 > 
->> @@ -112,7 +113,9 @@ static int gpio_extcon_probe(struct
->>> platform_device *pdev)
->>>  	if (ret < 0)
->>>  		return ret;
->>>  
->>> -	INIT_DELAYED_WORK(&data->work, gpio_extcon_work);
->>> +	ret = devm_delayed_work_autocancel(dev, &data->work,
->>> gpio_extcon_work);
->>> +	if (ret)
->>> +		return ret;
->>
->> Need to add the error log as following:
->> 	if (ret) {
->> 		dev_err(dev, "Failed to initialize delayed_work");
->> 		return ret;
->> 	}	
-> 
-> I could send incremental patch to Greg for this but it does not change
-> the commit message.
+> > 
+> > > > > + - snps,quirk-ref-clock-period: Value for REFCLKPER filed
+> > > > > of GUCTL. This field
+> > > > > +	indicates in terms of nano seconds the period of ref_clk.
+> > > > > To calculate the
+> > > > > +	ideal value, REFCLKPER = (1/ref_clk in Hz)*10^9.
+> > > > 
+> > > > Can't we make the dwc3 reference this clock and use
+> > > > clk_get_rate() and
+> > > > then do this math in the driver?
+> > > 
+> > > This is doable, I believe. Though current code does not identify
+> > > specific clocks, as far as I can see.
 
-We cannot do anything about the commit message anymore, but the ordering
-issue which you introduced really needs to be fixed.
+I agree it should be doable. Looks like prior to 0d3a97083e0c ("usb:
+dwc3: Rework clock initialization to be more flexible") the core did
+support specific clocks ("ref", "bus_early", "suspend"), but was
+changed to use a simpler devm_clk_bulk_get_all() call.
 
-Please send an incremental patch fixing the wrong order and the double
-init of the workqueue.
+> > We can mention one more clock(ref) in the USB device node and do the
+> > math (NSEC_PER_SEC / clk_get_rate()) in dwc3 driver.
 
-Regards,
+Yea, just need to make sure "ref" clk is specified in the DT node. Then
+in the driver you can just iterate through dwc->clks and try to find one
+with .id=="ref". If clk_get_rate() succeeds then you can use the value
+to calculate the GUCTL.REFCLKPER and GFLADJ register fields.
 
-Hans
+Or perhaps even use a lookup table, since according to the DWC3
+programming guide only 6 refclk frequencies (16, 17, 19.2, 20, 24, 39.7
+MHz) are supported so that might be simpler than a few integer divide
+operations that would otherwise be required.
 
+Jack
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
