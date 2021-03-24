@@ -2,104 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F4C534709E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Mar 2021 06:03:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 71BF4347129
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Mar 2021 06:41:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235212AbhCXFDF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Mar 2021 01:03:05 -0400
-Received: from mail-lf1-f48.google.com ([209.85.167.48]:38406 "EHLO
-        mail-lf1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232648AbhCXFDE (ORCPT
+        id S232839AbhCXFl0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Mar 2021 01:41:26 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:53270 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232830AbhCXFlS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Mar 2021 01:03:04 -0400
-Received: by mail-lf1-f48.google.com with SMTP id f3so21707097lfu.5;
-        Tue, 23 Mar 2021 22:03:03 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:reply-to:to:cc
-         :in-reply-to:references:mime-version:date:user-agent
-         :content-transfer-encoding;
-        bh=Yu+c5hKm75xWmBphehGW0wkPgb4hhf6daZ13Tp8/oFw=;
-        b=G4lMJVut5IVzR1UvZhn5dr/KqdQR5EnhK/SZ7+X00hxhpZxfYS04tOnjYCRzCOi24Z
-         7v9+hecM/hKw3scWXN0uxj65ua8sE9l0E2rvDYoG5XiXdkR4rZ+DVB7rvLr0au1HKE5J
-         d8AdrvmBVFShU4S3m3i+4/ekf8WJpLrQP2/BVyWOjD0m7ebZLbanCwf4WYPMY1FZd9ym
-         QWnPryHDQgvZWNeAVnYytqoemoRiQ7qqHm8zvm6hHBxcUtAcUT+jxxCx3nPwioCJIvsg
-         oBcN0Tc6gGipjV7PjgluLDwkWfq++RymKM22Hos6aDR5AijMc6tXpRBqb7ZrdQ91hP34
-         saiA==
-X-Gm-Message-State: AOAM5329dARjr+NkQCZo1BNKonrYzxfn7lG5POdHP/x35gSTRiiZiRND
-        QHECbllop/VFtdRTg3nByE7Wxmmzc5E=
-X-Google-Smtp-Source: ABdhPJz7kd4QmFbOUKs49q6MTXLWXUVwSAj3AuyDgvuKNTbfR5sq8lcR1SgUMe2L+HvUCRrhFS87cw==
-X-Received: by 2002:a05:6512:34c3:: with SMTP id w3mr833800lfr.437.1616562182708;
-        Tue, 23 Mar 2021 22:03:02 -0700 (PDT)
-Received: from dc7vkhyyyyyyyyyyyyyby-3.rev.dnainternet.fi (dc7vkhyyyyyyyyyyyyyby-3.rev.dnainternet.fi. [2001:14ba:16e2:8300::2])
-        by smtp.gmail.com with ESMTPSA id h206sm114917lfd.4.2021.03.23.22.03.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Mar 2021 22:03:01 -0700 (PDT)
-Message-ID: <1f5247a81077f6cb3c96730b1202bbd61dd1900b.camel@fi.rohmeurope.com>
-Subject: Re: [PATCH v3 3/8] extconn: Clean-up few drivers by using managed
- work init
-From:   Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-Reply-To: matti.vaittinen@fi.rohmeurope.com
-To:     Chanwoo Choi <cw00.choi@samsung.com>
-Cc:     MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Mark Gross <mgross@linux.intel.com>,
-        gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org
-In-Reply-To: <14800e19-da8c-81ba-48ee-cc51cc1925c9@samsung.com>
-References: <cover.1616506559.git.matti.vaittinen@fi.rohmeurope.com>
-         <CGME20210323135719epcas1p326dfbf8acd6c95703a30d832fb111879@epcas1p3.samsung.com>
-         <b1030eddbf0069f2d39e951be1d8e40d6413aeeb.1616506559.git.matti.vaittinen@fi.rohmeurope.com>
-         <14800e19-da8c-81ba-48ee-cc51cc1925c9@samsung.com>
-Content-Type: text/plain; charset="UTF-8"
-MIME-Version: 1.0
-Date:   Wed, 24 Mar 2021 07:02:52 +0200
-User-Agent: Evolution 3.34.4 (3.34.4-1.fc31) 
-Content-Transfer-Encoding: 7bit
+        Wed, 24 Mar 2021 01:41:18 -0400
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 23 Mar 2021 22:41:17 -0700
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 23 Mar 2021 22:41:16 -0700
+X-QCInternal: smtphost
+Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 24 Mar 2021 11:10:59 +0530
+Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
+        id BC4E4216A6; Wed, 24 Mar 2021 11:10:58 +0530 (IST)
+From:   Dikshita Agarwal <dikshita@codeaurora.org>
+To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org, Dikshita Agarwal <dikshita@codeaurora.org>
+Subject: [PATCH] media: venus : hfi: add venus image info into smem
+Date:   Wed, 24 Mar 2021 11:10:57 +0530
+Message-Id: <1616564457-25221-1-git-send-email-dikshita@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Chanwoo, Greg,
+fill fw version info into smem to be printed as part of
+soc info.
 
-Thanks for the review.
+Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+---
+ drivers/media/platform/qcom/venus/hfi_msgs.c | 36 ++++++++++++++++++++++++++--
+ 1 file changed, 34 insertions(+), 2 deletions(-)
 
-On Wed, 2021-03-24 at 11:09 +0900, Chanwoo Choi wrote:
-> Hi,
-> 
-> Need to fix the work as following:
-> s/extconn/extcon
-> 
-> And I'd like you to use the more correct patch title like the
-> following example:
-> "extcon: Use resource-managed function for delayed work"
-
-I think Greg merged this already. How should we handle this?
-
-> @@ -112,7 +113,9 @@ static int gpio_extcon_probe(struct
-> > platform_device *pdev)
-> >  	if (ret < 0)
-> >  		return ret;
-> >  
-> > -	INIT_DELAYED_WORK(&data->work, gpio_extcon_work);
-> > +	ret = devm_delayed_work_autocancel(dev, &data->work,
-> > gpio_extcon_work);
-> > +	if (ret)
-> > +		return ret;
-> 
-> Need to add the error log as following:
-> 	if (ret) {
-> 		dev_err(dev, "Failed to initialize delayed_work");
-> 		return ret;
-> 	}	
-
-I could send incremental patch to Greg for this but it does not change
-the commit message.
-
-Best Regards
-	Matti Vaittinen
-
+diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media/platform/qcom/venus/hfi_msgs.c
+index 06a1908..0e94921 100644
+--- a/drivers/media/platform/qcom/venus/hfi_msgs.c
++++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
+@@ -6,6 +6,7 @@
+ #include <linux/hash.h>
+ #include <linux/list.h>
+ #include <linux/slab.h>
++#include <linux/soc/qcom/smem.h>
+ #include <media/videobuf2-v4l2.h>
+ 
+ #include "core.h"
+@@ -14,6 +15,8 @@
+ #include "hfi_msgs.h"
+ #include "hfi_parser.h"
+ 
++#define SMEM_IMAGE_VERSION_TABLE 469
++
+ static void event_seq_changed(struct venus_core *core, struct venus_inst *inst,
+ 			      struct hfi_msg_event_notify_pkt *pkt)
+ {
+@@ -239,15 +242,44 @@ static void
+ sys_get_prop_image_version(struct device *dev,
+ 			   struct hfi_msg_sys_property_info_pkt *pkt)
+ {
++	u32 i = 0;
++	size_t smem_block_size = 0;
++	u8 *smem_table_ptr;
++	char version[256];
++	const u32 version_string_size = 128;
++	const u32 smem_image_index_venus = 14 * 128;
++	u8 *str_image_version;
+ 	int req_bytes;
+ 
+ 	req_bytes = pkt->hdr.size - sizeof(*pkt);
+ 
+-	if (req_bytes < 128 || !pkt->data[1] || pkt->num_properties > 1)
++	if (req_bytes < version_string_size || !pkt->data[1] || pkt->num_properties > 1)
+ 		/* bad packet */
+ 		return;
+ 
+-	dev_dbg(dev, VDBGL "F/W version: %s\n", (u8 *)&pkt->data[1]);
++	str_image_version = (u8 *)&pkt->data[1];
++
++	/*
++	 * The version string returned by firmware includes null
++	 * characters at the start and in between. Replace the null
++	 * characters with space, to print the version info.
++	 */
++	for (i = 0; i < version_string_size; i++) {
++		if (str_image_version[i] != '\0')
++			version[i] = str_image_version[i];
++		else
++			version[i] = ' ';
++	}
++
++	version[i] = '\0';
++	dev_dbg(dev, VDBGL "F/W version: %s\n", version);
++
++	smem_table_ptr = qcom_smem_get(QCOM_SMEM_HOST_ANY,
++				       SMEM_IMAGE_VERSION_TABLE, &smem_block_size);
++	if ((smem_image_index_venus + version_string_size) <= smem_block_size &&
++	    smem_table_ptr)
++		memcpy(smem_table_ptr + smem_image_index_venus,
++		       str_image_version, version_string_size);
+ }
+ 
+ static void hfi_sys_property_info(struct venus_core *core,
+-- 
+2.7.4
 
