@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FE58347B7A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Mar 2021 16:01:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E42E8347B7E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Mar 2021 16:01:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236381AbhCXPA6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Mar 2021 11:00:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56724 "EHLO
+        id S236388AbhCXPA7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Mar 2021 11:00:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236388AbhCXPAq (ORCPT
+        with ESMTP id S236389AbhCXPAr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Mar 2021 11:00:46 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBE5FC061763
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 08:00:45 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 184so30595721ljf.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 08:00:45 -0700 (PDT)
+        Wed, 24 Mar 2021 11:00:47 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6982C061763
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 08:00:46 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 184so30595817ljf.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 08:00:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ymuaM6Pd6xrvcM6FbW+2BkGMeDk6kUhNBZmYCuS0atM=;
-        b=XZS/71IelK6zWNH+FZpYDt0mLjGgnRIKztIMBl4jX14TorIG1BVzITyDd1rCACNEFA
-         fxf8BpmHATvgSQ+43t+wJBWkOos52lECPy0Ey7wu5Um8P7EeWetGbmcKrwLWwU8tgV1d
-         EPlw3cIXhOXG9wxrri+ZWKbdh1tQt+4RvK3WxHCFR6NO43BLegiYcED1/cvvRhITy7Ar
-         FmAuSXhXwOPwFTRJpcldmRepcsKyW7BSNN9jLheR/ZbExwECYIECEC/UWZr8lKYeLcoi
-         EFsRTxL003dytcW9+4m5/u9UhhwuJjem5NqoHvpwGTZp/4y7TmmwU2/Cnr0f94MXEvSL
-         9o4A==
+        bh=InxB8LW00zB5UoFHTCsqm7Ebz3Ngcyc7bbqEDUAHS2E=;
+        b=f5bNMXa/zhnBJ1YDuk4EwV081W0yUX2F6G0S73I3Qj2+wCqTQFjLy3f51+T9eOBxDJ
+         kjmFubN/MpCdTjx21EhK9kQNtrzmLALB+5RrMAWnVhMdYEIuwMsnS17kvfaE7S0aFt7O
+         Vn4xoKbKTRNHUxwRTzzZ31y3+cwDOoyUl+l4ggY4H6QKJBwdtKdJTnr/d7KowTmBbhPm
+         3WQ468Wb7aobtpxGCtm6cMSFhpafOQi5iO0t10IXUKN5l0ksIDnTJXN64T0hF2GOB1qd
+         llkxvZ5sNpscxQo97C+pUN5nEmbGYAcs40tcUUv0OXT9xQiyniYJiKjjEyOg3ocdHuYk
+         OJ4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ymuaM6Pd6xrvcM6FbW+2BkGMeDk6kUhNBZmYCuS0atM=;
-        b=LY+dMk3XttTpkH24OESNp/9FKRFlusES54TCRo9XrU684N7fagI1bo7uzTEfjSLWzD
-         gpAXAmQkCpo5SRu1J+IVKz3r5SGwWIDwXHXu+hg+TZP68Prx5MgMRcPGV2pwZQeL62XA
-         c1nZMBMlgDj7jMyzhxbDz0KFUcbmJnTsSGu7mGocslv2ez2iw89I85JiOinrOfTtGBvv
-         wNqHQFLReEO2tB1xzOZTHyj3y396xc8KSdZek8T+bni6maIcmR3wEhWnDqosFeTdV2D9
-         NkcM8XJ4QyTKhwSv2Bv4oQxgB7VtZSq9HQdJoKxOi7iMth7DWG9NiTv4W1wjAEEDXo0d
-         Ak0Q==
-X-Gm-Message-State: AOAM531ljMay08pSBEZMvXLEftLYadWklrBH2Jl00S7K3ph/dJBMmQqE
-        IGhXUuH/FrtgFW2MGpyalWjWPQ==
-X-Google-Smtp-Source: ABdhPJySUCVwKnhGyJG+czzaQ664CjjfSBftCDz968Vrk2wFwEhmxwKfP11qz6iIc/OqdN+PdMGR8A==
-X-Received: by 2002:a2e:bc25:: with SMTP id b37mr2403770ljf.342.1616598043831;
-        Wed, 24 Mar 2021 08:00:43 -0700 (PDT)
+        bh=InxB8LW00zB5UoFHTCsqm7Ebz3Ngcyc7bbqEDUAHS2E=;
+        b=Oo8jjm8blTz00bJGFyMoFOISzAFa6Vvnyssz5GkZnsrmb/wo4EwQvlD8ctsz34YsYm
+         hrVmV8To9xgcqvBO37i/h50DCairg0A2+Yh8lBEiDzFIv5psDr+Mbww2vcfqYo0EJVvx
+         XJ8ZmFVQXh1JdeiDZeb6E4w2djON04jIB2uHYekEHGkyzOAKt3EdkKd4n2aEPKeTbPru
+         sS55xN+J4t/Fy9yH/iylq27QIVcKbB0wzy8nduLoUKiOLL+NfxRBcoVWE7o57e6W6XZ8
+         3bDNBVc9AVi55nGBbC4FBvNOaEzdxtcCC3Xy9cZcvRpqK3aqMh960DxgOzHL2T4Lnmdw
+         R0Cg==
+X-Gm-Message-State: AOAM531K2S0w0cad/Vtu6Q2JqlP61ryzVRcb6oyI/vKHd4ctnZmbM6zx
+        LvcudkFO8nOzAMwQV1sZ54ZJrw==
+X-Google-Smtp-Source: ABdhPJwmTkykf0MLHiVcPBQgtPtjq0/TeGKif/1s6wyjV7Rl6VlCjHX1VZrdFZvUep3sAUo+JDZIeQ==
+X-Received: by 2002:a2e:b047:: with SMTP id d7mr2305388ljl.348.1616598044960;
+        Wed, 24 Mar 2021 08:00:44 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id p5sm252463lfe.154.2021.03.24.08.00.42
+        by smtp.gmail.com with ESMTPSA id p5sm252463lfe.154.2021.03.24.08.00.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Mar 2021 08:00:43 -0700 (PDT)
+        Wed, 24 Mar 2021 08:00:44 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Jonathan Marek <jonathan@marek.ca>
 Cc:     Stephen Boyd <sboyd@kernel.org>, David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH 11/21] drm/msm/dpu: call hw_lm ops directly
-Date:   Wed, 24 Mar 2021 18:00:14 +0300
-Message-Id: <20210324150024.2768215-12-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 12/21] drm/msm/dpu: call hw_dspp ops directly
+Date:   Wed, 24 Mar 2021 18:00:15 +0300
+Message-Id: <20210324150024.2768215-13-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210324150024.2768215-1-dmitry.baryshkov@linaro.org>
 References: <20210324150024.2768215-1-dmitry.baryshkov@linaro.org>
@@ -66,190 +66,124 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Replace dpu_hw_lm callbacks with direct functions calls.
+Replace dpu_hw_dspp callbacks with direct functions calls.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  6 +--
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c | 19 ++------
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h | 59 ++++++++++-------------
- 3 files changed, 33 insertions(+), 51 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    |  6 +++---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c | 15 ++++++---------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h | 19 ++++++-------------
+ 3 files changed, 15 insertions(+), 25 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index 56eb22554197..5a0a6741a431 100644
+index 5a0a6741a431..bf3048e44001 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -84,7 +84,7 @@ static void _dpu_crtc_setup_blend_cfg(struct dpu_crtc_mixer *mixer,
- 			DPU_BLEND_BG_INV_ALPHA;
- 	}
- 
--	lm->ops.setup_blend_config(lm, pstate->stage,
-+	dpu_hw_lm_setup_blend_config(lm, pstate->stage,
- 				0xFF, 0, blend_op);
- 
- 	DPU_DEBUG("format:%s, alpha_en:%u blend_op:0x%x\n",
-@@ -112,7 +112,7 @@ static void _dpu_crtc_program_lm_output_roi(struct drm_crtc *crtc)
- 		cfg.out_height = drm_rect_height(lm_roi);
- 		cfg.right_mixer = lm_horiz_position++;
- 		cfg.flags = 0;
--		hw_lm->ops.setup_mixer_out(hw_lm, &cfg);
-+		dpu_hw_lm_setup_mixer_out(hw_lm, &cfg);
- 	}
- }
- 
-@@ -217,7 +217,7 @@ static void _dpu_crtc_blend_setup(struct drm_crtc *crtc)
+@@ -462,14 +462,14 @@ static void _dpu_crtc_setup_cp_blocks(struct drm_crtc *crtc)
  		ctl = mixer[i].lm_ctl;
- 		lm = mixer[i].hw_lm;
+ 		dspp = mixer[i].hw_dspp;
  
--		lm->ops.setup_alpha_out(lm, mixer[i].mixer_op_mode);
-+		dpu_hw_lm_setup_alpha_out(lm, mixer[i].mixer_op_mode);
+-		if (!dspp || !dspp->ops.setup_pcc)
++		if (!dspp)
+ 			continue;
  
- 		mixer[i].flush_mask |= ctl->ops.get_bitmask_mixer(ctl,
- 			mixer[i].hw_lm->idx);
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-index 7d5b620f7f42..1e95d52180cd 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-@@ -59,7 +59,7 @@ static inline int _stage_offset(struct dpu_hw_mixer *ctx, enum dpu_stage stage)
- 	return -EINVAL;
- }
+ 		if (!state->ctm) {
+-			dspp->ops.setup_pcc(dspp, NULL);
++			dpu_hw_dspp_setup_pcc(dspp, NULL);
+ 		} else {
+ 			_dpu_crtc_get_pcc_coeff(state, &cfg);
+-			dspp->ops.setup_pcc(dspp, &cfg);
++			dpu_hw_dspp_setup_pcc(dspp, &cfg);
+ 		}
  
--static void dpu_hw_lm_setup_out(struct dpu_hw_mixer *ctx,
-+void dpu_hw_lm_setup_mixer_out(struct dpu_hw_mixer *ctx,
- 		struct dpu_hw_mixer_cfg *mixer)
+ 		mixer[i].flush_mask |= ctl->ops.get_bitmask_dspp(ctl,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
+index 977b25968f34..c17f2bf3324f 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
+@@ -22,7 +22,7 @@
+ #define PCC_BLUE_G_OFF 0x24
+ #define PCC_BLUE_B_OFF 0x30
+ 
+-static void dpu_setup_dspp_pcc(struct dpu_hw_dspp *ctx,
++void dpu_hw_dspp_setup_pcc(struct dpu_hw_dspp *ctx,
+ 		struct dpu_hw_pcc_cfg *cfg)
  {
- 	struct dpu_hw_blk_reg_map *c = &ctx->hw;
-@@ -79,7 +79,7 @@ static void dpu_hw_lm_setup_out(struct dpu_hw_mixer *ctx,
- 	DPU_REG_WRITE(c, LM_OP_MODE, op_mode);
- }
  
--static void dpu_hw_lm_setup_border_color(struct dpu_hw_mixer *ctx,
-+void dpu_hw_lm_setup_border_color(struct dpu_hw_mixer *ctx,
- 		struct dpu_mdss_color *color,
- 		u8 border_en)
- {
-@@ -95,7 +95,7 @@ static void dpu_hw_lm_setup_border_color(struct dpu_hw_mixer *ctx,
+@@ -33,6 +33,11 @@ static void dpu_setup_dspp_pcc(struct dpu_hw_dspp *ctx,
+ 		return;
  	}
+ 
++	if (!test_bit(DPU_DSPP_PCC, &ctx->cap->features)) {
++		DRM_ERROR("called for wrong DSPP block\n");
++		return;
++	}
++
+ 	if (!cfg) {
+ 		DRM_DEBUG_DRIVER("disable pcc feature\n");
+ 		DPU_REG_WRITE(&ctx->hw, base, PCC_DIS);
+@@ -54,13 +59,6 @@ static void dpu_setup_dspp_pcc(struct dpu_hw_dspp *ctx,
+ 	DPU_REG_WRITE(&ctx->hw, base, PCC_EN);
  }
  
--static void dpu_hw_lm_setup_blend_config_sdm845(struct dpu_hw_mixer *ctx,
-+void dpu_hw_lm_setup_blend_config(struct dpu_hw_mixer *ctx,
- 	u32 stage, u32 fg_alpha, u32 bg_alpha, u32 blend_op)
- {
- 	struct dpu_hw_blk_reg_map *c = &ctx->hw;
-@@ -114,7 +114,7 @@ static void dpu_hw_lm_setup_blend_config_sdm845(struct dpu_hw_mixer *ctx,
- 	DPU_REG_WRITE(c, LM_BLEND0_OP + stage_off, blend_op);
- }
- 
--static void dpu_hw_lm_setup_color3(struct dpu_hw_mixer *ctx,
-+void dpu_hw_lm_setup_alpha_out(struct dpu_hw_mixer *ctx,
- 	uint32_t mixer_op_mode)
- {
- 	struct dpu_hw_blk_reg_map *c = &ctx->hw;
-@@ -128,16 +128,6 @@ static void dpu_hw_lm_setup_color3(struct dpu_hw_mixer *ctx,
- 	DPU_REG_WRITE(c, LM_OP_MODE, op_mode);
- }
- 
--static void _setup_mixer_ops(const struct dpu_mdss_cfg *m,
--		struct dpu_hw_lm_ops *ops,
+-static void _setup_dspp_ops(struct dpu_hw_dspp *c,
 -		unsigned long features)
 -{
--	ops->setup_mixer_out = dpu_hw_lm_setup_out;
--	ops->setup_blend_config = dpu_hw_lm_setup_blend_config_sdm845;
--	ops->setup_alpha_out = dpu_hw_lm_setup_color3;
--	ops->setup_border_color = dpu_hw_lm_setup_border_color;
+-	if (test_bit(DPU_DSPP_PCC, &features))
+-		c->ops.setup_pcc = dpu_setup_dspp_pcc;
 -}
 -
- struct dpu_hw_mixer *dpu_hw_lm_init(enum dpu_lm idx,
- 		void __iomem *addr,
+ static const struct dpu_dspp_cfg *_dspp_offset(enum dpu_dspp dspp,
  		const struct dpu_mdss_cfg *m,
-@@ -159,7 +149,6 @@ struct dpu_hw_mixer *dpu_hw_lm_init(enum dpu_lm idx,
+ 		void __iomem *addr,
+@@ -108,7 +106,6 @@ struct dpu_hw_dspp *dpu_hw_dspp_init(enum dpu_dspp idx,
  	/* Assign ops */
  	c->idx = idx;
  	c->cap = cfg;
--	_setup_mixer_ops(m, &c->ops, c->cap->features);
+-	_setup_dspp_ops(c, c->cap->features);
  
- 	if (cfg->dspp && cfg->dspp < DSPP_MAX)
- 		c->dspp = dpu_hw_dspp_init(cfg->dspp, addr, m);
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h
-index 182740f2914b..a43c1931c5e4 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h
-@@ -22,38 +22,34 @@ struct dpu_hw_color3_cfg {
- 	u8 keep_fg[DPU_STAGE_MAX];
+ 	dpu_hw_blk_init(&c->base, DPU_HW_BLK_DSPP, idx);
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h
+index 7fa189cfcb06..e712e3e4c67b 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h
+@@ -36,19 +36,15 @@ struct dpu_hw_pcc_cfg {
  };
  
--/**
-- *
-- * struct dpu_hw_lm_ops : Interface to the mixer Hw driver functions
-+/*
-  *  Assumption is these functions will be called after clocks are enabled
+ /**
+- * struct dpu_hw_dspp_ops - interface to the dspp hardware driver functions
+  * Caller must call the init function to get the dspp context for each dspp
+  * Assumption is these functions will be called after clocks are enabled
   */
--struct dpu_hw_lm_ops {
--	/*
--	 * Sets up mixer output width and height
--	 * and border color if enabled
--	 */
--	void (*setup_mixer_out)(struct dpu_hw_mixer *ctx,
--		struct dpu_hw_mixer_cfg *cfg);
--
--	/*
--	 * Alpha blending configuration
--	 * for the specified stage
--	 */
--	void (*setup_blend_config)(struct dpu_hw_mixer *ctx, uint32_t stage,
--		uint32_t fg_alpha, uint32_t bg_alpha, uint32_t blend_op);
--
--	/*
--	 * Alpha color component selection from either fg or bg
--	 */
--	void (*setup_alpha_out)(struct dpu_hw_mixer *ctx, uint32_t mixer_op);
--
+-struct dpu_hw_dspp_ops {
 -	/**
--	 * setup_border_color : enable/disable border color
+-	 * setup_pcc - setup dspp pcc
+-	 * @ctx: Pointer to dspp context
+-	 * @cfg: Pointer to configuration
 -	 */
--	void (*setup_border_color)(struct dpu_hw_mixer *ctx,
--		struct dpu_mdss_color *color,
--		u8 border_en);
--};
-+/*
-+ * Sets up mixer output width and height
-+ * and border color if enabled
-+ */
-+void dpu_hw_lm_setup_mixer_out(struct dpu_hw_mixer *ctx,
-+	struct dpu_hw_mixer_cfg *cfg);
-+
-+/*
-+ * Alpha blending configuration
-+ * for the specified stage
-+ */
-+void dpu_hw_lm_setup_blend_config(struct dpu_hw_mixer *ctx, uint32_t stage,
-+	uint32_t fg_alpha, uint32_t bg_alpha, uint32_t blend_op);
-+
-+/*
-+ * Alpha color component selection from either fg or bg
-+ */
-+void dpu_hw_lm_setup_alpha_out(struct dpu_hw_mixer *ctx, uint32_t mixer_op);
-+
-+/**
-+ * setup_border_color : enable/disable border color
-+ */
-+void dpu_hw_lm_setup_border_color(struct dpu_hw_mixer *ctx,
-+	struct dpu_mdss_color *color,
-+	u8 border_en);
- 
- struct dpu_hw_mixer {
- 	struct dpu_hw_blk base;
-@@ -67,9 +63,6 @@ struct dpu_hw_mixer {
- 	struct dpu_hw_pingpong *pingpong;
- 	struct dpu_hw_dspp *dspp;
- 
--	/* ops */
--	struct dpu_hw_lm_ops ops;
+-	void (*setup_pcc)(struct dpu_hw_dspp *ctx, struct dpu_hw_pcc_cfg *cfg);
 -
- 	/* store mixer info specific to display */
- 	struct dpu_hw_mixer_cfg cfg;
+-};
++/**
++ * setup_pcc - setup dspp pcc
++ * @ctx: Pointer to dspp context
++ * @cfg: Pointer to configuration
++ */
++void dpu_hw_dspp_setup_pcc(struct dpu_hw_dspp *ctx, struct dpu_hw_pcc_cfg *cfg);
+ 
+ /**
+  * struct dpu_hw_dspp - dspp description
+@@ -65,9 +61,6 @@ struct dpu_hw_dspp {
+ 	/* dspp */
+ 	int idx;
+ 	const struct dpu_dspp_cfg *cap;
+-
+-	/* Ops */
+-	struct dpu_hw_dspp_ops ops;
  };
+ 
+ /**
 -- 
 2.30.2
 
