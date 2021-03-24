@@ -2,180 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B0F53347522
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Mar 2021 10:55:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4874C34758C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Mar 2021 11:13:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235182AbhCXJzL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Mar 2021 05:55:11 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:48975 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235127AbhCXJy6 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Mar 2021 05:54:58 -0400
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 24 Mar 2021 02:54:58 -0700
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 24 Mar 2021 02:54:56 -0700
-X-QCInternal: smtphost
-Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 24 Mar 2021 15:24:39 +0530
-Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
-        id 1582521694; Wed, 24 Mar 2021 15:24:38 +0530 (IST)
-From:   Dikshita Agarwal <dikshita@codeaurora.org>
-To:     linux-media@vger.kernel.org, hverkuil-cisco@xs4all.nl,
-        stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, Dikshita Agarwal <dikshita@codeaurora.org>
-Subject: [PATCH v10 2/2] venus: venc: Add support for Long Term Reference (LTR) controls
-Date:   Wed, 24 Mar 2021 15:24:32 +0530
-Message-Id: <1616579672-13898-3-git-send-email-dikshita@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1616579672-13898-1-git-send-email-dikshita@codeaurora.org>
-References: <1616579672-13898-1-git-send-email-dikshita@codeaurora.org>
+        id S231131AbhCXKNQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Mar 2021 06:13:16 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:36456 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230369AbhCXKNL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 24 Mar 2021 06:13:11 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1616580791; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=RxPQ2SCXm0Yyf3sq158CfktDz0qwmc95Gr0XfsQbDJg=;
+ b=X1Bg3yK37q/35oA/r1A8mRuKcyHHHRkW89+AaeEyHi5gA00cZQrnAMG+fa5rO7nm1M0mF2Dd
+ FoNaJvKzS+MmPJTdxqJxe7dwJQ/OgFosdIehNv7OdyJkhcl8k9u6fOJXIWIQP5IIAG1hQewX
+ VSBl4td8MFfxTjrv30hmSweOQgE=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 605b10a05d70193f882f9a37 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 24 Mar 2021 10:12:48
+ GMT
+Sender: rojay=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B1997C43465; Wed, 24 Mar 2021 10:12:47 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: rojay)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D2D18C433ED;
+        Wed, 24 Mar 2021 10:12:46 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 24 Mar 2021 15:42:46 +0530
+From:   rojay@codeaurora.org
+To:     Greg KH <gregkh@linuxfoundation.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, mka@chromium.org,
+        robh+dt@kernel.org, linux-serial@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        akashast@codeaurora.org, msavaliy@qti.qualcomm.com
+Subject: Re: [PATCH V3 1/2] soc: qcom-geni-se: Cleanup the code to remove
+ proxy votes
+In-Reply-To: <YFm1Qvo3SuwJOino@kroah.com>
+References: <20210322110429.14950-1-rojay@codeaurora.org>
+ <20210322110429.14950-2-rojay@codeaurora.org> <YFm1Qvo3SuwJOino@kroah.com>
+Message-ID: <f61210c135fdaa742cc4abdfcdebd8ab@codeaurora.org>
+X-Sender: rojay@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for below LTR controls in encoder:
-- V4L2_CID_MPEG_VIDEO_LTR_COUNT
-- V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX
-- V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES
+On 2021-03-23 15:00, Greg KH wrote:
+> On Mon, Mar 22, 2021 at 04:34:28PM +0530, Roja Rani Yarubandi wrote:
+>> This reverts commit 048eb908a1f2 ("soc: qcom-geni-se: Add interconnect
+>> support to fix earlycon crash")
+>> 
+>> ICC core and platforms drivers supports sync_state feature with
+>> commit 7d3b0b0d8184 ("interconnect: qcom: Use icc_sync_state") which
+>> ensures that the default ICC BW votes from the bootloader is not
+>> removed until all it's consumers are probes.
+>> 
+>> The proxy votes were needed in case other QUP child drivers
+>> I2C, SPI probes before UART, they can turn off the QUP-CORE clock
+>> which is shared resources for all QUP driver, this causes unclocked
+>> access to HW from earlycon.
+>> 
+>> Given above support from ICC there is no longer need to maintain
+>> proxy votes on QUP-CORE ICC node from QUP wrapper driver for early
+>> console usecase, the default votes won't be removed until real
+>> console is probed.
+>> 
+>> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
+>> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
+>> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> 
+> Should this have a "Fixes:" tag, and also be cc: stable@vger.kernel.org
+> so that it will be properly backported?
+> 
+> If so, please add and resend.
+> 
 
-Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
----
- drivers/media/platform/qcom/venus/core.h       |  2 ++
- drivers/media/platform/qcom/venus/venc.c       |  9 +++++
- drivers/media/platform/qcom/venus/venc_ctrls.c | 48 +++++++++++++++++++++++++-
- 3 files changed, 58 insertions(+), 1 deletion(-)
+Okay, will add and resend.
 
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index a252ed3..9451e54 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -238,6 +238,8 @@ struct venc_controls {
- 	} level;
- 
- 	u32 base_priority_id;
-+
-+	u32 ltr_count;
- };
- 
- struct venus_buffer {
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index 6976ed5..508af44 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -546,6 +546,7 @@ static int venc_set_properties(struct venus_inst *inst)
- 	struct hfi_quantization quant;
- 	struct hfi_quantization_range quant_range;
- 	struct hfi_enable en;
-+	struct hfi_ltr_mode ltr_mode;
- 	u32 ptype, rate_control, bitrate;
- 	u32 profile, level;
- 	int ret;
-@@ -722,6 +723,14 @@ static int venc_set_properties(struct venus_inst *inst)
- 	if (ret)
- 		return ret;
- 
-+	ptype = HFI_PROPERTY_PARAM_VENC_LTRMODE;
-+		ltr_mode.ltr_count = ctr->ltr_count;
-+		ltr_mode.ltr_mode = HFI_LTR_MODE_MANUAL;
-+		ltr_mode.trust_mode = 1;
-+		ret = hfi_session_set_property(inst, ptype, &ltr_mode);
-+		if (ret)
-+			return ret;
-+
- 	switch (inst->hfi_codec) {
- 	case HFI_VIDEO_CODEC_H264:
- 		profile = ctr->profile.h264;
-diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
-index a52b800..1f2d8183 100644
---- a/drivers/media/platform/qcom/venus/venc_ctrls.c
-+++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
-@@ -20,6 +20,7 @@
- #define INTRA_REFRESH_MBS_MAX	300
- #define AT_SLICE_BOUNDARY	\
- 	V4L2_MPEG_VIDEO_H264_LOOP_FILTER_MODE_DISABLED_AT_SLICE_BOUNDARY
-+#define MAX_LTR_FRAME_COUNT 4
- 
- static int venc_calc_bpframes(u32 gop_size, u32 conseq_b, u32 *bf, u32 *pf)
- {
-@@ -72,6 +73,8 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
- 	struct venc_controls *ctr = &inst->controls.enc;
- 	struct hfi_enable en = { .enable = 1 };
- 	struct hfi_bitrate brate;
-+	struct hfi_ltr_use ltr_use;
-+	struct hfi_ltr_mark ltr_mark;
- 	u32 bframes;
- 	u32 ptype;
- 	int ret;
-@@ -276,6 +279,37 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
- 	case V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITY_ID:
- 		ctr->base_priority_id = ctrl->val;
- 		break;
-+	case V4L2_CID_MPEG_VIDEO_LTR_COUNT:
-+		ctr->ltr_count = ctrl->val;
-+		break;
-+	case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:
-+		mutex_lock(&inst->lock);
-+		if (inst->streamon_out && inst->streamon_cap) {
-+			ptype = HFI_PROPERTY_CONFIG_VENC_MARKLTRFRAME;
-+			ltr_mark.mark_frame = ctrl->val;
-+			ret = hfi_session_set_property(inst, ptype, &ltr_mark);
-+			if (ret) {
-+				mutex_unlock(&inst->lock);
-+				return ret;
-+			}
-+		}
-+		mutex_unlock(&inst->lock);
-+		break;
-+	case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES:
-+		mutex_lock(&inst->lock);
-+		if (inst->streamon_out && inst->streamon_cap) {
-+			ptype = HFI_PROPERTY_CONFIG_VENC_USELTRFRAME;
-+			ltr_use.ref_ltr = ctrl->val;
-+			ltr_use.use_constrnt = true;
-+			ltr_use.frames = 0;
-+			ret = hfi_session_set_property(inst, ptype, &ltr_use);
-+			if (ret) {
-+				mutex_unlock(&inst->lock);
-+				return ret;
-+			}
-+		}
-+		mutex_unlock(&inst->lock);
-+		break;
- 	default:
- 		return -EINVAL;
- 	}
-@@ -291,7 +325,7 @@ int venc_ctrl_init(struct venus_inst *inst)
- {
- 	int ret;
- 
--	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 51);
-+	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 54);
- 	if (ret)
- 		return ret;
- 
-@@ -498,6 +532,18 @@ int venc_ctrl_init(struct venus_inst *inst)
- 			  V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITY_ID, 0,
- 			  6, 1, 0);
- 
-+	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
-+			  V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES, 0,
-+			  ((1 << MAX_LTR_FRAME_COUNT) - 1), 1, 0);
-+
-+	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
-+			  V4L2_CID_MPEG_VIDEO_LTR_COUNT, 0,
-+			  MAX_LTR_FRAME_COUNT, 1, 0);
-+
-+	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
-+			  V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX, 0,
-+			  (MAX_LTR_FRAME_COUNT - 1), 1, 0);
-+
- 	ret = inst->ctrl_handler.error;
- 	if (ret)
- 		goto err;
--- 
-2.7.4
-
+> thanks,
+> 
+> greg k-h
