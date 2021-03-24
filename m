@@ -2,33 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 400503471DD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Mar 2021 07:50:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A71E347200
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Mar 2021 08:06:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235628AbhCXGtf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Mar 2021 02:49:35 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:10619 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235627AbhCXGtG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Mar 2021 02:49:06 -0400
+        id S235665AbhCXHFg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Mar 2021 03:05:36 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:47635 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230365AbhCXHFR (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 24 Mar 2021 03:05:17 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1616568546; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1616569516; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=oBQV+I9x0ZBz/5epdrA7py274iUh8GHJsi69OW1jM1E=;
- b=APmVMhw1gFzTEDwFHBkX/Ke8PJ3nUO2VD+hh0QS3AttwWqb2SEV282Ob66LXqb/ZH8qj0wCH
- f4Srqy+XHncis1uV1MKZThFX/RvH9bLdw8w3WzXsgmcWhyanyVoox+cc3xA/BoU+80WxGpnb
- 5zNcQTGkBW6w6rlRRpS040g6v8A=
-X-Mailgun-Sending-Ip: 69.72.43.7
+ MIME-Version: Sender; bh=GSuzv68z73zXdYYHmOBg3yhM/DxDs3uPEYGKUNXQJI8=;
+ b=FAVfnYJjtY5k+J+RfYKMEk69feGVvMBdEoHk2jWVlflQyw0jgXgozhylr5FO0q314DwCFVHv
+ kWft6zpbEWTUoFX8huz3ojNj1+8IG+kgU+CeSCP4fUmEwGTnH99bk7ZT/2h8r/nQl01XKLqp
+ fs7k2JFklet0eE0vf10IHabb7bo=
+X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 605ae0df4db3bb680173578d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 24 Mar 2021 06:49:03
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 605ae4a14db3bb68017c7d08 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 24 Mar 2021 07:05:05
  GMT
 Sender: sibis=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7F716C43461; Wed, 24 Mar 2021 06:49:02 +0000 (UTC)
+        id 1A89AC43464; Wed, 24 Mar 2021 07:05:04 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -38,119 +39,99 @@ Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id AF8D8C433C6;
-        Wed, 24 Mar 2021 06:49:01 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3108EC433CA;
+        Wed, 24 Mar 2021 07:05:04 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Wed, 24 Mar 2021 12:19:01 +0530
+Date:   Wed, 24 Mar 2021 12:35:04 +0530
 From:   Sibi Sankar <sibis@codeaurora.org>
 To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        p.zabel@pengutronix.de, robh+dt@kernel.org, agross@kernel.org,
-        mani@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 6/6] arm64: dts: qcom: sc7280: Add nodes to boot WPSS
-In-Reply-To: <161653719350.3012082.12055201782488576903@swboyd.mtv.corp.google.com>
-References: <1615269111-25559-1-git-send-email-sibis@codeaurora.org>
- <1615269111-25559-7-git-send-email-sibis@codeaurora.org>
- <161567197220.1478170.12600358804299446135@swboyd.mtv.corp.google.com>
- <YE2OJz1pI81Uj8DA@builder.lan>
- <161653719350.3012082.12055201782488576903@swboyd.mtv.corp.google.com>
-Message-ID: <14476306c74356a747473e820d4067a6@codeaurora.org>
+Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        devicetree@vger.kernel.org, Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH 8/9] arm64: dts: qcom: sc7280: Add AOSS QMP node
+In-Reply-To: <161647068330.3012082.2910442813045392403@swboyd.mtv.corp.google.com>
+References: <cover.1614244789.git.saiprakash.ranjan@codeaurora.org>
+ <463a45f2c3e4a91430c006fa1637c7f4f124185e.1614244789.git.saiprakash.ranjan@codeaurora.org>
+ <161428210272.1254594.16034240343090747878@swboyd.mtv.corp.google.com>
+ <dc3be32a3f8197d3138fe1ef6c24316a@codeaurora.org>
+ <161436520297.1254594.4348845199981053890@swboyd.mtv.corp.google.com>
+ <5cf5692ef7d348ec361081d0341f1254@codeaurora.org>
+ <d19fbcc91b4ef045014b225e7fdf9780@codeaurora.org>
+ <161647068330.3012082.2910442813045392403@swboyd.mtv.corp.google.com>
+Message-ID: <0a8540993e6f59c3b03e44e6aee4f81b@codeaurora.org>
 X-Sender: sibis@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-03-24 03:36, Stephen Boyd wrote:
-> Quoting Bjorn Andersson (2021-03-13 20:16:39)
->> On Sat 13 Mar 15:46 CST 2021, Stephen Boyd wrote:
+On 2021-03-23 09:08, Stephen Boyd wrote:
+> Quoting Sibi Sankar (2021-03-08 21:58:21)
+>> On 2021-02-27 19:26, Sai Prakash Ranjan wrote:
+>> > On 2021-02-27 00:16, Stephen Boyd wrote:
+>> >> Quoting Sai Prakash Ranjan (2021-02-25 23:51:00)
+>> >>> On 2021-02-26 01:11, Stephen Boyd wrote:
+>> >>> > Quoting Sai Prakash Ranjan (2021-02-25 01:30:24)
+>> >>> >> Add a DT node for the AOSS QMP on SC7280 SoC.
+>> >>> >>
+>> >>> >> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+>> >>> >> ---
+>> >>> >>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 14 ++++++++++++++
+>> >>> >>  1 file changed, 14 insertions(+)
+>> >>> >>
+>> >>> >> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> >>> >> b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> >>> >> index 65c1e0f2fb56..cbd567ccc04e 100644
+>> >>> >> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> >>> >> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> >>> >> @@ -9,6 +9,7 @@
+>> >>> >>  #include <dt-bindings/clock/qcom,rpmh.h>
+>> >>> >>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+>> >>> >>  #include <dt-bindings/mailbox/qcom-ipcc.h>
+>> >>> >> +#include <dt-bindings/power/qcom-aoss-qmp.h>
+>> >>> >>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+>> >>> >>
+>> >>> >>  / {
+>> >>> >> @@ -368,6 +369,19 @@ pdc: interrupt-controller@b220000 {
+>> >>> >>                         interrupt-controller;
+>> >>> >>                 };
+>> >>> >>
+>> >>> >> +               aoss_qmp: qmp@c300000 {
+>> >>> >
+>> >>> > power-domain-controller@c300000? power-controller@c300000?
+>> >>> >
+>> >>>
+>> >>> Its an AOSS message RAM and all other SM* SoCs have as qmp@
+>> >>> and the dt binding as well, I see only SM8150 with power-controller,
+>> >>> that should probably be fixed?
+>> >>
+>> >> Node name should be generic while still being meaningful. Nobody knows
+>> >> what qmp is, but power-controller makes sense. Can you fix this and
+>> >> the
+>> >> others to be power-controller?
+>> >>
 >> 
->> > Quoting Sibi Sankar (2021-03-08 21:51:51)
->> > > Add miscellaneous nodes to boot the Wireless Processor Subsystem on
->> >
->> > Maybe add (WPSS) after the name so we know they're related.
->> >
->> > > SC7280 SoCs.
->> > >
->> > > Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
->> > > ---
->> > >
->> > > https://patchwork.kernel.org/project/linux-arm-msm/list/?series=438217
->> > > Depends on ipcc dt node enablement from ^^
->> > >
->> > >  arch/arm64/boot/dts/qcom/sc7280.dtsi | 143 +++++++++++++++++++++++++++++++++++
->> > >  1 file changed, 143 insertions(+)
->> > >
->> > > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> > > index 18637c369c1d..4f03c468df51 100644
->> > > --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> > > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> > > @@ -244,12 +251,131 @@
->> > >                 reg = <0 0x80000000 0 0>;
->> > >         };
->> > >
->> > > +       tcsr_mutex: hwlock {
->> > > +               compatible = "qcom,tcsr-mutex";
->> > > +               syscon = <&tcsr_mutex_regs 0 0x1000>;
->> > > +               #hwlock-cells = <1>;
->> > > +       };
->> >
->> > Is this node in the right place? I think the node above it is 'memory'?
->> > In which case 'hwlock' comes before 'memory' alphabetically.
->> >
->> 
->> Thanks for spotting this, as it's no longer acceptable to have a
->> standalone "syscon" node I was asked to rewrite the binding for this a
->> few months ago. So the tcsr_mutex should now be represented with a reg
->> under /soc.
-> 
-> Oh nice, I wasn't aware.
-> 
->> > > +                       #interrupt-cells = <2>;
->> > > +               };
->> > > +       };
->> > > +
->> > > +       smp2p-mpss {
->> > > +               compatible = "qcom,smp2p";
->> > > +               qcom,smem = <435>, <428>;
->> > > +               interrupts-extended = <&ipcc IPCC_CLIENT_MPSS
->> > > +                                            IPCC_MPROC_SIGNAL_SMP2P
->> > > +                                            IRQ_TYPE_EDGE_RISING>;
->> > > +               mboxes = <&ipcc IPCC_CLIENT_MPSS
->> > > +                               IPCC_MPROC_SIGNAL_SMP2P>;
->> > > +
->> > > +               qcom,local-pid = <0>;
->> > > +               qcom,remote-pid = <1>;
->> > > +
->> > > +               modem_smp2p_out: master-kernel {
->> > > +                       qcom,entry-name = "master-kernel";
->> > > +                       #qcom,smem-state-cells = <1>;
->> > > +               };
->> > > +
->> > > +               modem_smp2p_in: slave-kernel {
->> > > +                       qcom,entry-name = "slave-kernel";
->> >
->> > Do these names need to have 'master' and 'slave' in them? We're trying
->> > to avoid these terms. See Documentation/process/coding-style.rst Section
->> > 4 naming.
->> >
->> 
->> They need to match the naming in the firmware, but I would welcome a
->> future change to something in line with the coding style and simply 
->> more
->> descriptive.
+>> we probably would be changing them back
+>> to qmp or something more generic soon
+>> since the consensus was qmp wasn't a
+>> power-controller. So not sure if its
+>> worth the effort here.
 >> 
 > 
-> Sibi can this be done? I think it's still pretty early days for the
-> firmware so hopefully the terms can be replaced with something
-> different.
+> Hmm alright. Maybe mailbox? qmp is not generic. What does it stand for?
+> qualcomm messaging protocol?
 
-I'll discuss the ask with the modem fw team and
-get back.
+It's documented as ^^ in the git log
+but I guess it should be called qualcomm
+mailbox protocol instead. I don't think
+it can be called mailbox since it doesn't
+have mbox cells in its bindings.
 
 -- 
 Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
