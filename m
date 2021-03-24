@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 73A32347B7D
+	by mail.lfdr.de (Postfix) with ESMTP id 28167347B7C
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Mar 2021 16:01:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236389AbhCXPA7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S236391AbhCXPA7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Wed, 24 Mar 2021 11:00:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56736 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236391AbhCXPAs (ORCPT
+        with ESMTP id S236393AbhCXPAu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Mar 2021 11:00:48 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 325D1C061763
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 08:00:48 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id u9so2945004ljd.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 08:00:48 -0700 (PDT)
+        Wed, 24 Mar 2021 11:00:50 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 151F7C061763
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 08:00:49 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id o126so22938938lfa.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 08:00:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=d5O4S87sSonR8b8YReuDQ+tyO7OoPApI6qR6ZtyWtNo=;
-        b=ag41z3TTI+1hBOp+V0y4TJVbNjU4P32YDILwsy7eFogpNU14hviu29k6mpVJXDa0/O
-         ZAKTkSO145kL4WjVZSc3XzIoAaxYiPPZ9SMz/64GtrFp3ovjG38Rg4O8EBNaWk1O+0Kq
-         XnnFzHB3jqgTkfQ2c2HL3O13OmbKf7NUiJ5OD4GXA62V6Dc4NA/ysda9maA2cIXl/Cm2
-         cXXPSs+nzdrt7uH5OcNULCqokEROmZKlR1ekDxYlKzVsPEMJOphetpg0MvnjLar5EJBH
-         3Q6jZjWbGGzkoihRkVXkCAHYbmYer8U2Wb1xszsMI0DsTJ+wCBHQKGudylwMsWa0fvsi
-         9bag==
+        bh=mlS3zRpPMgse9749bPkDUSuQVwNUKb3VFrOOXA8caNA=;
+        b=ESB4Lv6+WQjAXnH86xlpfoIwqu0ElIzVVNbFSHSpdVLICYlRsXtatUJzUK0RyND5J3
+         ASR201De53+zQY8S8HXgmXO8O7mvN940zYlXs4/mHFwqZ3LtWwlQm2lYPMg+ecQXDE7R
+         Uu931MEvrf7CrnRNIV2CsQlm7U6I/+qwXX3qFrq+UAztsL/37I6ULelFFuoi58aaf1p8
+         uu2oLKbB0aRXyo6obcHlwIBOTBa2wWmF78xsvw9Nxn/QMP6sDiB1D/jUfU+g6nE1/2Dp
+         98L7anrEkJaYdq4BqvSH5caVYm7E2PhhpxB2J4Y3Z2xPJ8lulht1TLgth+Q2sbEtEv/z
+         Utcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=d5O4S87sSonR8b8YReuDQ+tyO7OoPApI6qR6ZtyWtNo=;
-        b=CuCyZWWx5rLnt/uacH97ZwFFurdax1coYfuyXsboLtqXDmDwWDRSbd2ms0JQW4Q+xw
-         c5JiliDHvfoEAmXssEJciis3CfdsaFAm5t6q48Gby2D4ziOXqceyEtFH8fmsY+itFTLr
-         JKMsAUzZzvC9Sq/UqESSx12CVDT9PhKjJCln5nU7B0Om+lm3nLOTKLFUqHtp9gJZtPOf
-         rhw7bZqIB8Hwze7cQdn8SrXIPoWZw5Ix7jHPFXO9AJ06vV/diQbmO3F2T0d/63moa8Oa
-         IvuycLmUUWVy0cSUthFel3dOH/mtg9ltXuy8WzHdO5f7D/KsSJDxt2UKR4dQ3Q9tMW4g
-         jrNQ==
-X-Gm-Message-State: AOAM530okRxYWZM3sO7BM1YziRhXEpjiPiXzIft3AAztvHkXmTP/s9Q/
-        BTIkuhLzpF1ZO3PGmDVFUeoMeQ==
-X-Google-Smtp-Source: ABdhPJxKAmSj+KeuEBTRDy807NV2uoHenAL8d/JKDr/XiRp5IT+zSvPM1S4LjmLY5sC2E0blLpRhcw==
-X-Received: by 2002:a2e:6c10:: with SMTP id h16mr2397033ljc.388.1616598045961;
-        Wed, 24 Mar 2021 08:00:45 -0700 (PDT)
+        bh=mlS3zRpPMgse9749bPkDUSuQVwNUKb3VFrOOXA8caNA=;
+        b=JId6qg+3loV9jD+P8+fiulFYwumlym2c9Tayn9VbzkqJxfznNaJj3jAgxsEaimc5al
+         w+EdKdwIbLHIejEYkHa94fPcPJmVntZThqB3q+Ot0xJYV1F+Qdv9cqGy74Lwxk88K5WN
+         zY30jXxPVlPim0g6UsTADuAZ1xq8b+x0YHtoN/AbkWvFKoPf1LuZWI3P1QPkykPbeFsh
+         dVLmfu/D3ibO32+/DTBkqcjXRRXaAldPKwhnxRCumUcsYnj/k3fp/lPM4WzU0tbtGr0Y
+         CeUdnq6P4lumVGItD3Xuo8JZoHWgi67AyZO837Gmf32dsOPceetjvvjaVUq6HJ8eGot3
+         1WfQ==
+X-Gm-Message-State: AOAM531jwQCTaoBUP+WsxImalXahkFfJ8gnSVdN96ykVDLK0iWh+NOKF
+        xEw6mngM5/1P856uPivjl2f0sQ==
+X-Google-Smtp-Source: ABdhPJw6mKlhdlg2Nr7Bbg54lMGjT4FkfnApmL+j/eO1waUSksOMCUAi4Y+z+EqROaj8OsgFT0tIvA==
+X-Received: by 2002:a05:6512:b90:: with SMTP id b16mr2045859lfv.209.1616598047426;
+        Wed, 24 Mar 2021 08:00:47 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id p5sm252463lfe.154.2021.03.24.08.00.45
+        by smtp.gmail.com with ESMTPSA id p5sm252463lfe.154.2021.03.24.08.00.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Mar 2021 08:00:45 -0700 (PDT)
+        Wed, 24 Mar 2021 08:00:46 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Jonathan Marek <jonathan@marek.ca>
 Cc:     Stephen Boyd <sboyd@kernel.org>, David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH 13/21] drm/msm/dpu: hw_pp: make setup_dither mandatory
-Date:   Wed, 24 Mar 2021 18:00:16 +0300
-Message-Id: <20210324150024.2768215-14-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 14/21] drm/msm/dpu: call hw_pingpong ops directly
+Date:   Wed, 24 Mar 2021 18:00:17 +0300
+Message-Id: <20210324150024.2768215-15-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210324150024.2768215-1-dmitry.baryshkov@linaro.org>
 References: <20210324150024.2768215-1-dmitry.baryshkov@linaro.org>
@@ -66,43 +66,398 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-All supported hardware instances feature DPU_PINGPONG_DITHER option, so
-just mark setup_dither as mandatory rather than optional callback.
+Replace dpu_hw_pingpong callbacks with direct functions calls.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c     | 3 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c | 3 +--
- 2 files changed, 1 insertion(+), 5 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   |   4 +-
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  |  31 ++---
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   |  36 ++----
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h   | 111 ++++++++----------
+ 4 files changed, 70 insertions(+), 112 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index f80694456fd6..ac03f329491d 100644
+index ac03f329491d..72a3cd08295e 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -217,9 +217,6 @@ static void _dpu_encoder_setup_dither(struct dpu_hw_pingpong *hw_pp, unsigned bp
- {
- 	struct dpu_hw_dither_cfg dither_cfg = { 0 };
+@@ -226,14 +226,14 @@ static void _dpu_encoder_setup_dither(struct dpu_hw_pingpong *hw_pp, unsigned bp
+ 		dither_cfg.temporal_en = 0;
+ 		break;
+ 	default:
+-		hw_pp->ops.setup_dither(hw_pp, NULL);
++		dpu_hw_pingpong_setup_dither(hw_pp, NULL);
+ 		return;
+ 	}
  
--	if (!hw_pp->ops.setup_dither)
+ 	memcpy(&dither_cfg.matrix, dither_matrix,
+ 			sizeof(u32) * DITHER_MATRIX_SZ);
+ 
+-	hw_pp->ops.setup_dither(hw_pp, &dither_cfg);
++	dpu_hw_pingpong_setup_dither(hw_pp, &dither_cfg);
+ }
+ 
+ void dpu_encoder_helper_report_irq_timeout(struct dpu_encoder_phys *phys_enc,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+index adbd59326b99..0525db90f2c6 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+@@ -345,12 +345,6 @@ static void dpu_encoder_phys_cmd_tearcheck_config(
+ 
+ 	DPU_DEBUG_CMDENC(cmd_enc, "pp %d\n", phys_enc->hw_pp->idx - PINGPONG_0);
+ 
+-	if (!phys_enc->hw_pp->ops.setup_tearcheck ||
+-		!phys_enc->hw_pp->ops.enable_tearcheck) {
+-		DPU_DEBUG_CMDENC(cmd_enc, "tearcheck not supported\n");
 -		return;
+-	}
 -
- 	switch (bpc) {
- 	case 6:
- 		dither_cfg.c0_bitdepth = 6;
+ 	dpu_kms = phys_enc->dpu_kms;
+ 
+ 	/*
+@@ -401,8 +395,8 @@ static void dpu_encoder_phys_cmd_tearcheck_config(
+ 		phys_enc->hw_pp->idx - PINGPONG_0, tc_cfg.sync_cfg_height,
+ 		tc_cfg.sync_threshold_start, tc_cfg.sync_threshold_continue);
+ 
+-	phys_enc->hw_pp->ops.setup_tearcheck(phys_enc->hw_pp, &tc_cfg);
+-	phys_enc->hw_pp->ops.enable_tearcheck(phys_enc->hw_pp, tc_enable);
++	dpu_hw_pingpong_setup_tearcheck(phys_enc->hw_pp, &tc_cfg);
++	dpu_hw_pingpong_enable_tearcheck(phys_enc->hw_pp, tc_enable);
+ }
+ 
+ static void _dpu_encoder_phys_cmd_pingpong_config(
+@@ -479,11 +473,11 @@ static void dpu_encoder_phys_cmd_enable(struct dpu_encoder_phys *phys_enc)
+ static void _dpu_encoder_phys_cmd_connect_te(
+ 		struct dpu_encoder_phys *phys_enc, bool enable)
+ {
+-	if (!phys_enc->hw_pp || !phys_enc->hw_pp->ops.connect_external_te)
++	if (!phys_enc->hw_pp)
+ 		return;
+ 
+ 	trace_dpu_enc_phys_cmd_connect_te(DRMID(phys_enc->parent), enable);
+-	phys_enc->hw_pp->ops.connect_external_te(phys_enc->hw_pp, enable);
++	dpu_hw_pingpong_connect_external_te(phys_enc->hw_pp, enable);
+ }
+ 
+ static void dpu_encoder_phys_cmd_prepare_idle_pc(
+@@ -495,19 +489,13 @@ static void dpu_encoder_phys_cmd_prepare_idle_pc(
+ static int dpu_encoder_phys_cmd_get_line_count(
+ 		struct dpu_encoder_phys *phys_enc)
+ {
+-	struct dpu_hw_pingpong *hw_pp;
+-
+ 	if (!phys_enc->hw_pp)
+ 		return -EINVAL;
+ 
+ 	if (!dpu_encoder_phys_cmd_is_master(phys_enc))
+ 		return -EINVAL;
+ 
+-	hw_pp = phys_enc->hw_pp;
+-	if (!hw_pp->ops.get_line_count)
+-		return -EINVAL;
+-
+-	return hw_pp->ops.get_line_count(hw_pp);
++	return dpu_hw_pingpong_get_line_count(phys_enc->hw_pp);
+ }
+ 
+ static void dpu_encoder_phys_cmd_disable(struct dpu_encoder_phys *phys_enc)
+@@ -528,8 +516,7 @@ static void dpu_encoder_phys_cmd_disable(struct dpu_encoder_phys *phys_enc)
+ 		return;
+ 	}
+ 
+-	if (phys_enc->hw_pp->ops.enable_tearcheck)
+-		phys_enc->hw_pp->ops.enable_tearcheck(phys_enc->hw_pp, false);
++	dpu_hw_pingpong_enable_tearcheck(phys_enc->hw_pp, false);
+ 	phys_enc->enable_state = DPU_ENC_DISABLED;
+ }
+ 
+@@ -582,7 +569,7 @@ static bool dpu_encoder_phys_cmd_is_ongoing_pptx(
+ 	if (!phys_enc)
+ 		return false;
+ 
+-	phys_enc->hw_pp->ops.get_vsync_info(phys_enc->hw_pp, &info);
++	dpu_hw_pingpong_get_vsync_info(phys_enc->hw_pp, &info);
+ 	if (info.wr_ptr_line_count > 0 &&
+ 	    info.wr_ptr_line_count < phys_enc->cached_mode.vdisplay)
+ 		return true;
+@@ -605,7 +592,7 @@ static void dpu_encoder_phys_cmd_prepare_commit(
+ 		return;
+ 
+ 	/* If autorefresh is already disabled, we have nothing to do */
+-	if (!phys_enc->hw_pp->ops.get_autorefresh(phys_enc->hw_pp, NULL))
++	if (!dpu_hw_pingpong_get_autorefresh(phys_enc->hw_pp, NULL))
+ 		return;
+ 
+ 	/*
+@@ -617,7 +604,7 @@ static void dpu_encoder_phys_cmd_prepare_commit(
+ 	 * 5. Enable TE back
+ 	 */
+ 	_dpu_encoder_phys_cmd_connect_te(phys_enc, false);
+-	phys_enc->hw_pp->ops.setup_autorefresh(phys_enc->hw_pp, 0, false);
++	dpu_hw_pingpong_setup_autorefresh(phys_enc->hw_pp, 0, false);
+ 
+ 	do {
+ 		udelay(DPU_ENC_MAX_POLL_TIMEOUT_US);
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-index 89c1123d957f..5c1ce835cf49 100644
+index 5c1ce835cf49..9c78dd06188b 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-@@ -258,8 +258,7 @@ static void _setup_pingpong_ops(struct dpu_hw_pingpong *c,
- 	c->ops.poll_timeout_wr_ptr = dpu_hw_pp_poll_timeout_wr_ptr;
- 	c->ops.get_line_count = dpu_hw_pp_get_line_count;
+@@ -61,7 +61,7 @@ static const struct dpu_pingpong_cfg *_pingpong_offset(enum dpu_pingpong pp,
+ 	return ERR_PTR(-EINVAL);
+ }
  
--	if (test_bit(DPU_PINGPONG_DITHER, &features))
--		c->ops.setup_dither = dpu_hw_pp_setup_dither;
-+	c->ops.setup_dither = dpu_hw_pp_setup_dither;
+-static void dpu_hw_pp_setup_dither(struct dpu_hw_pingpong *pp,
++void dpu_hw_pingpong_setup_dither(struct dpu_hw_pingpong *pp,
+ 				    struct dpu_hw_dither_cfg *cfg)
+ {
+ 	struct dpu_hw_blk_reg_map *c;
+@@ -92,7 +92,7 @@ static void dpu_hw_pp_setup_dither(struct dpu_hw_pingpong *pp,
+ 	DPU_REG_WRITE(c, base + PP_DITHER_EN, 1);
+ }
+ 
+-static int dpu_hw_pp_setup_te_config(struct dpu_hw_pingpong *pp,
++int dpu_hw_pingpong_setup_tearcheck(struct dpu_hw_pingpong *pp,
+ 		struct dpu_hw_tear_check *te)
+ {
+ 	struct dpu_hw_blk_reg_map *c;
+@@ -122,7 +122,7 @@ static int dpu_hw_pp_setup_te_config(struct dpu_hw_pingpong *pp,
+ 	return 0;
+ }
+ 
+-static void dpu_hw_pp_setup_autorefresh_config(struct dpu_hw_pingpong *pp,
++void dpu_hw_pingpong_setup_autorefresh(struct dpu_hw_pingpong *pp,
+ 					       u32 frame_count, bool enable)
+ {
+ 	DPU_REG_WRITE(&pp->hw, PP_AUTOREFRESH_CONFIG,
+@@ -130,13 +130,13 @@ static void dpu_hw_pp_setup_autorefresh_config(struct dpu_hw_pingpong *pp,
+ }
+ 
+ /*
+- * dpu_hw_pp_get_autorefresh_config - Get autorefresh config from HW
++ * dpu_hw_pingpong_get_autorefresh - Get autorefresh config from HW
+  * @pp:          DPU pingpong structure
+  * @frame_count: Used to return the current frame count from hw
+  *
+  * Returns: True if autorefresh enabled, false if disabled.
+  */
+-static bool dpu_hw_pp_get_autorefresh_config(struct dpu_hw_pingpong *pp,
++bool dpu_hw_pingpong_get_autorefresh(struct dpu_hw_pingpong *pp,
+ 					     u32 *frame_count)
+ {
+ 	u32 val = DPU_REG_READ(&pp->hw, PP_AUTOREFRESH_CONFIG);
+@@ -145,7 +145,7 @@ static bool dpu_hw_pp_get_autorefresh_config(struct dpu_hw_pingpong *pp,
+ 	return !!((val & BIT(31)) >> 31);
+ }
+ 
+-static int dpu_hw_pp_poll_timeout_wr_ptr(struct dpu_hw_pingpong *pp,
++int dpu_hw_pingpong_poll_timeout_wr_ptr(struct dpu_hw_pingpong *pp,
+ 		u32 timeout_us)
+ {
+ 	struct dpu_hw_blk_reg_map *c;
+@@ -162,7 +162,7 @@ static int dpu_hw_pp_poll_timeout_wr_ptr(struct dpu_hw_pingpong *pp,
+ 	return rc;
+ }
+ 
+-static int dpu_hw_pp_enable_te(struct dpu_hw_pingpong *pp, bool enable)
++int dpu_hw_pingpong_enable_tearcheck(struct dpu_hw_pingpong *pp, bool enable)
+ {
+ 	struct dpu_hw_blk_reg_map *c;
+ 
+@@ -174,7 +174,7 @@ static int dpu_hw_pp_enable_te(struct dpu_hw_pingpong *pp, bool enable)
+ 	return 0;
+ }
+ 
+-static int dpu_hw_pp_connect_external_te(struct dpu_hw_pingpong *pp,
++int dpu_hw_pingpong_connect_external_te(struct dpu_hw_pingpong *pp,
+ 		bool enable_external_te)
+ {
+ 	struct dpu_hw_blk_reg_map *c = &pp->hw;
+@@ -197,7 +197,7 @@ static int dpu_hw_pp_connect_external_te(struct dpu_hw_pingpong *pp,
+ 	return orig;
+ }
+ 
+-static int dpu_hw_pp_get_vsync_info(struct dpu_hw_pingpong *pp,
++int dpu_hw_pingpong_get_vsync_info(struct dpu_hw_pingpong *pp,
+ 		struct dpu_hw_pp_vsync_info *info)
+ {
+ 	struct dpu_hw_blk_reg_map *c;
+@@ -220,7 +220,7 @@ static int dpu_hw_pp_get_vsync_info(struct dpu_hw_pingpong *pp,
+ 	return 0;
+ }
+ 
+-static u32 dpu_hw_pp_get_line_count(struct dpu_hw_pingpong *pp)
++u32 dpu_hw_pingpong_get_line_count(struct dpu_hw_pingpong *pp)
+ {
+ 	struct dpu_hw_blk_reg_map *c = &pp->hw;
+ 	u32 height, init;
+@@ -246,21 +246,6 @@ static u32 dpu_hw_pp_get_line_count(struct dpu_hw_pingpong *pp)
+ 	return line;
+ }
+ 
+-static void _setup_pingpong_ops(struct dpu_hw_pingpong *c,
+-				unsigned long features)
+-{
+-	c->ops.setup_tearcheck = dpu_hw_pp_setup_te_config;
+-	c->ops.enable_tearcheck = dpu_hw_pp_enable_te;
+-	c->ops.connect_external_te = dpu_hw_pp_connect_external_te;
+-	c->ops.get_vsync_info = dpu_hw_pp_get_vsync_info;
+-	c->ops.setup_autorefresh = dpu_hw_pp_setup_autorefresh_config;
+-	c->ops.get_autorefresh = dpu_hw_pp_get_autorefresh_config;
+-	c->ops.poll_timeout_wr_ptr = dpu_hw_pp_poll_timeout_wr_ptr;
+-	c->ops.get_line_count = dpu_hw_pp_get_line_count;
+-
+-	c->ops.setup_dither = dpu_hw_pp_setup_dither;
+-};
+-
+ struct dpu_hw_pingpong *dpu_hw_pingpong_init(enum dpu_pingpong idx,
+ 		void __iomem *addr,
+ 		const struct dpu_mdss_cfg *m,
+@@ -281,7 +266,6 @@ struct dpu_hw_pingpong *dpu_hw_pingpong_init(enum dpu_pingpong idx,
+ 
+ 	c->idx = idx;
+ 	c->caps = cfg;
+-	_setup_pingpong_ops(c, c->caps->features);
+ 
+ 	if (cfg->merge_3d && cfg->merge_3d < MERGE_3D_MAX)
+ 		c->merge_3d = merge_3d_blks[cfg->merge_3d - MERGE_3D_0];
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
+index a3db536210bf..78d2fed4c6a3 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
+@@ -56,75 +56,65 @@ struct dpu_hw_dither_cfg {
+ 	u32 matrix[DITHER_MATRIX_SZ];
  };
  
- struct dpu_hw_pingpong *dpu_hw_pingpong_init(enum dpu_pingpong idx,
+-/**
+- *
+- * struct dpu_hw_pingpong_ops : Interface to the pingpong Hw driver functions
++/*
+  *  Assumption is these functions will be called after clocks are enabled
+- *  @setup_tearcheck : program tear check values
+- *  @enable_tearcheck : enables tear check
+- *  @get_vsync_info : retries timing info of the panel
+- *  @setup_autorefresh : configure and enable the autorefresh config
+- *  @get_autorefresh : retrieve autorefresh config from hardware
+- *  @setup_dither : function to program the dither hw block
+- *  @get_line_count: obtain current vertical line counter
+  */
+-struct dpu_hw_pingpong_ops {
+-	/**
+-	 * enables vysnc generation and sets up init value of
+-	 * read pointer and programs the tear check cofiguration
+-	 */
+-	int (*setup_tearcheck)(struct dpu_hw_pingpong *pp,
+-			struct dpu_hw_tear_check *cfg);
+ 
+-	/**
+-	 * enables tear check block
+-	 */
+-	int (*enable_tearcheck)(struct dpu_hw_pingpong *pp,
+-			bool enable);
++/**
++ * enables vysnc generation and sets up init value of
++ * read pointer and programs the tear check cofiguration
++ */
++int dpu_hw_pingpong_setup_tearcheck(struct dpu_hw_pingpong *pp,
++		struct dpu_hw_tear_check *cfg);
+ 
+-	/**
+-	 * read, modify, write to either set or clear listening to external TE
+-	 * @Return: 1 if TE was originally connected, 0 if not, or -ERROR
+-	 */
+-	int (*connect_external_te)(struct dpu_hw_pingpong *pp,
+-			bool enable_external_te);
++/**
++ * enables tear check block
++ */
++int dpu_hw_pingpong_enable_tearcheck(struct dpu_hw_pingpong *pp,
++		bool enable);
+ 
+-	/**
+-	 * provides the programmed and current
+-	 * line_count
+-	 */
+-	int (*get_vsync_info)(struct dpu_hw_pingpong *pp,
+-			struct dpu_hw_pp_vsync_info  *info);
++/**
++ * read, modify, write to either set or clear listening to external TE
++ * @Return: 1 if TE was originally connected, 0 if not, or -ERROR
++ */
++int dpu_hw_pingpong_connect_external_te(struct dpu_hw_pingpong *pp,
++		bool enable_external_te);
+ 
+-	/**
+-	 * configure and enable the autorefresh config
+-	 */
+-	void (*setup_autorefresh)(struct dpu_hw_pingpong *pp,
+-				  u32 frame_count, bool enable);
++/**
++ * provides the programmed and current
++ * line_count
++ */
++int dpu_hw_pingpong_get_vsync_info(struct dpu_hw_pingpong *pp,
++		struct dpu_hw_pp_vsync_info  *info);
+ 
+-	/**
+-	 * retrieve autorefresh config from hardware
+-	 */
+-	bool (*get_autorefresh)(struct dpu_hw_pingpong *pp,
+-				u32 *frame_count);
++/**
++ * configure and enable the autorefresh config
++ */
++void dpu_hw_pingpong_setup_autorefresh(struct dpu_hw_pingpong *pp,
++			  u32 frame_count, bool enable);
+ 
+-	/**
+-	 * poll until write pointer transmission starts
+-	 * @Return: 0 on success, -ETIMEDOUT on timeout
+-	 */
+-	int (*poll_timeout_wr_ptr)(struct dpu_hw_pingpong *pp, u32 timeout_us);
++/**
++ * retrieve autorefresh config from hardware
++ */
++bool dpu_hw_pingpong_get_autorefresh(struct dpu_hw_pingpong *pp,
++			u32 *frame_count);
+ 
+-	/**
+-	 * Obtain current vertical line counter
+-	 */
+-	u32 (*get_line_count)(struct dpu_hw_pingpong *pp);
++/**
++ * poll until write pointer transmission starts
++ * @Return: 0 on success, -ETIMEDOUT on timeout
++ */
++int dpu_hw_pingpong_poll_timeout_wr_ptr(struct dpu_hw_pingpong *pp, u32 timeout_us);
+ 
+-	/**
+-	 * Setup dither matix for pingpong block
+-	 */
+-	void (*setup_dither)(struct dpu_hw_pingpong *pp,
+-			struct dpu_hw_dither_cfg *cfg);
+-};
++/**
++ * Obtain current vertical line counter
++ */
++u32 dpu_hw_pingpong_get_line_count(struct dpu_hw_pingpong *pp);
++
++/**
++ * Setup dither matix for pingpong block
++ */
++void dpu_hw_pingpong_setup_dither(struct dpu_hw_pingpong *pp,
++		struct dpu_hw_dither_cfg *cfg);
+ 
+ struct dpu_hw_pingpong {
+ 	struct dpu_hw_blk base;
+@@ -134,9 +124,6 @@ struct dpu_hw_pingpong {
+ 	enum dpu_pingpong idx;
+ 	const struct dpu_pingpong_cfg *caps;
+ 	struct dpu_hw_merge_3d *merge_3d;
+-
+-	/* ops */
+-	struct dpu_hw_pingpong_ops ops;
+ };
+ 
+ /**
 -- 
 2.30.2
 
