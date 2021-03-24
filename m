@@ -2,227 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B5301348327
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Mar 2021 21:52:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 48707348388
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Mar 2021 22:23:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238235AbhCXUvr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Mar 2021 16:51:47 -0400
-Received: from mail.baikalelectronics.com ([87.245.175.226]:37600 "EHLO
-        mail.baikalelectronics.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238188AbhCXUvf (ORCPT
+        id S238256AbhCXVWo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Mar 2021 17:22:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55268 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230048AbhCXVWn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Mar 2021 16:51:35 -0400
-From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Alexey Brodkin <abrodkin@synopsys.com>,
-        Vineet Gupta <vgupta@synopsys.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>
-CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v7 7/7] arm64: dts: qcom: Harmonize DWC USB3 DT nodes name
-Date:   Wed, 24 Mar 2021 23:48:36 +0300
-Message-ID: <20210324204836.29668-8-Sergey.Semin@baikalelectronics.ru>
-In-Reply-To: <20210324204836.29668-1-Sergey.Semin@baikalelectronics.ru>
-References: <20210324204836.29668-1-Sergey.Semin@baikalelectronics.ru>
+        Wed, 24 Mar 2021 17:22:43 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55B78C06174A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 14:22:43 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id g25so74751wmh.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 14:22:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=C2A13Yg3KqhUO629ZIlsQXhW97Y8pkuoM7AYOwJWu18=;
+        b=I6/7LJWivKQMIcW9vQRNi3CAV4OD+hROU7InNOva/3wbmLv69ffp1sTZIsq/YGsPC9
+         R7Z58vBnZfvwxRUsGHyLc8LYOHzgpy/8gAPLhtNztSOqcQm8Xu9Imsqhia2Ie/pTGi4w
+         vGW6R3qj0TvZutk9FCqJ5tUuETdmC/4ZAw/wSBmNEJeuVKArJl9ATgYsdbTKMMemGrKo
+         z9cSXgbYHfwX/COnrK0N8acxa5rDItKnF/+pRO12HC0GWk3LWGwSTJRPSGx8BxL9ZIWH
+         mVGISl68DD9Ig5q8FV8K6F5o78iPefUzMDC8RrdUJD0BWh/NztHLSZhs1uAieQlGebaj
+         mOsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=C2A13Yg3KqhUO629ZIlsQXhW97Y8pkuoM7AYOwJWu18=;
+        b=lboDX0IlhkvM0GC5fPQDiuhLuECxluuayTYaief3YpfGNWMEQBAtETT1bg2qGdpTNN
+         72w8C/552Owt2sWmmgFyMeC4yineZ56nB289ywLc3MhJAWr1l8l2CBCY4/NTvikhtHzS
+         bn7xKih53CMugTCijjLBf0Jt89uZWt895SI1nqcHVeBDDrXWoHQfY5Mq1DGpmZCX9OgR
+         fADu6huclLnDHwc+9NrH/78KjmpOxPbKgB/VNYv/fCxagJdhQ7qa1UMGvhYbeZTfwsFt
+         eJuPNIFA0zFe1yNalWdIwYgHTrzfMH2TofxtwOQ0AznF058+QycATO4jYycFTxM5NPc4
+         5Kmg==
+X-Gm-Message-State: AOAM530k0Hw6BZDehY4YNWusAxQb3FkmLMDMnxmQfjjEG3yTrkhfQg6W
+        QjxIVn67Irw/1x8zmJvRQcvAAn1rIiXq6DX5hUz7Lg==
+X-Google-Smtp-Source: ABdhPJwDXO54Dc9xzJeq4ZgqkUZc/KbaGHmJxWcrPEX1G4P7YrnT+Wz5DQOWT1UsIz+7M1kPAdwasKt/A+Cf0OniWMU=
+X-Received: by 2002:a7b:c209:: with SMTP id x9mr4754197wmi.92.1616620961979;
+ Wed, 24 Mar 2021 14:22:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
+References: <20210320025942.487916-1-leo.yan@linaro.org> <20210320030528.GA488187@leoy-ThinkPad-X240s>
+In-Reply-To: <20210320030528.GA488187@leoy-ThinkPad-X240s>
+From:   Mike Leach <mike.leach@linaro.org>
+Date:   Wed, 24 Mar 2021 21:22:31 +0000
+Message-ID: <CAJ9a7Vgip=qmFE7Wmf64zHZwH=Rc_PB1zpyNGnNE4++Aqc6VQg@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: msm8916: Enable CoreSight STM component
+To:     Leo Yan <leo.yan@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Coresight ML <coresight@lists.linaro.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In accordance with the DWC USB3 bindings the corresponding node
-name is suppose to comply with the Generic USB HCD DT schema, which
-requires the USB nodes to have the name acceptable by the regexp:
-"^usb(@.*)?" . Make sure the "snps,dwc3"-compatible nodes are correctly
-named.
+Hi Leo,
 
-Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi | 4 ++--
- arch/arm64/boot/dts/qcom/ipq8074.dtsi        | 4 ++--
- arch/arm64/boot/dts/qcom/msm8996.dtsi        | 4 ++--
- arch/arm64/boot/dts/qcom/msm8998.dtsi        | 2 +-
- arch/arm64/boot/dts/qcom/qcs404-evb.dtsi     | 2 +-
- arch/arm64/boot/dts/qcom/qcs404.dtsi         | 4 ++--
- arch/arm64/boot/dts/qcom/sc7180.dtsi         | 2 +-
- arch/arm64/boot/dts/qcom/sdm845.dtsi         | 4 ++--
- arch/arm64/boot/dts/qcom/sm8150.dtsi         | 2 +-
- 9 files changed, 14 insertions(+), 14 deletions(-)
+There are additional CTI components on the DB410c - I think there is
+information on base addresses for these - but there is no information
+on connectivity between the CTIs and any components such as STM / ETR
+etc for any of the in / out signal lines.
+Therefore we omitted these from the original DT when adding the other
+CTI devices.
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-index defcbd15edf9..34e97da98270 100644
---- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-+++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-@@ -1064,7 +1064,7 @@ &usb2 {
- 	status = "okay";
- 	extcon = <&usb2_id>;
- 
--	dwc3@7600000 {
-+	usb@7600000 {
- 		extcon = <&usb2_id>;
- 		dr_mode = "otg";
- 		maximum-speed = "high-speed";
-@@ -1075,7 +1075,7 @@ &usb3 {
- 	status = "okay";
- 	extcon = <&usb3_id>;
- 
--	dwc3@6a00000 {
-+	usb@6a00000 {
- 		extcon = <&usb3_id>;
- 		dr_mode = "otg";
- 	};
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index a32e5e79ab0b..7df4eb710aae 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -427,7 +427,7 @@ usb_0: usb@8af8800 {
- 			resets = <&gcc GCC_USB0_BCR>;
- 			status = "disabled";
- 
--			dwc_0: dwc3@8a00000 {
-+			dwc_0: usb@8a00000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x8a00000 0xcd00>;
- 				interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
-@@ -468,7 +468,7 @@ usb_1: usb@8cf8800 {
- 			resets = <&gcc GCC_USB1_BCR>;
- 			status = "disabled";
- 
--			dwc_1: dwc3@8c00000 {
-+			dwc_1: usb@8c00000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x8c00000 0xcd00>;
- 				interrupts = <GIC_SPI 99 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index ce430ba9c118..9eb31b3e6ee7 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -1772,7 +1772,7 @@ usb3: usb@6af8800 {
- 			power-domains = <&gcc USB30_GDSC>;
- 			status = "disabled";
- 
--			dwc3@6a00000 {
-+			usb@6a00000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x06a00000 0xcc00>;
- 				interrupts = <0 131 IRQ_TYPE_LEVEL_HIGH>;
-@@ -1983,7 +1983,7 @@ usb2: usb@76f8800 {
- 			power-domains = <&gcc USB30_GDSC>;
- 			status = "disabled";
- 
--			dwc3@7600000 {
-+			usb@7600000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x07600000 0xcc00>;
- 				interrupts = <0 138 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index 1f2e93aa6553..9141c5d09b59 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -1962,7 +1962,7 @@ usb3: usb@a8f8800 {
- 
- 			resets = <&gcc GCC_USB_30_BCR>;
- 
--			usb3_dwc3: dwc3@a800000 {
-+			usb3_dwc3: usb@a800000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x0a800000 0xcd00>;
- 				interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-index a80c578484ba..f8a55307b855 100644
---- a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-@@ -337,7 +337,7 @@ &usb2_phy_sec {
- &usb3 {
- 	status = "okay";
- 
--	dwc3@7580000 {
-+	usb@7580000 {
- 		dr_mode = "host";
- 	};
- };
-diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-index 339790ba585d..9c4be020d568 100644
---- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-@@ -544,7 +544,7 @@ usb3: usb@7678800 {
- 			assigned-clock-rates = <19200000>, <200000000>;
- 			status = "disabled";
- 
--			dwc3@7580000 {
-+			usb@7580000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x07580000 0xcd00>;
- 				interrupts = <GIC_SPI 26 IRQ_TYPE_LEVEL_HIGH>;
-@@ -573,7 +573,7 @@ usb2: usb@79b8800 {
- 			assigned-clock-rates = <19200000>, <133333333>;
- 			status = "disabled";
- 
--			dwc3@78c0000 {
-+			usb@78c0000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x078c0000 0xcc00>;
- 				interrupts = <GIC_SPI 44 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 1ea3344ab62c..8b83ffbb5b2a 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -2869,7 +2869,7 @@ usb_1: usb@a6f8800 {
- 					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3 0>;
- 			interconnect-names = "usb-ddr", "apps-usb";
- 
--			usb_1_dwc3: dwc3@a600000 {
-+			usb_1_dwc3: usb@a600000 {
- 				compatible = "snps,dwc3";
- 				reg = <0 0x0a600000 0 0xe000>;
- 				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 454f794af547..809be2c67d7a 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -3769,7 +3769,7 @@ usb_1: usb@a6f8800 {
- 					<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3_0 0>;
- 			interconnect-names = "usb-ddr", "apps-usb";
- 
--			usb_1_dwc3: dwc3@a600000 {
-+			usb_1_dwc3: usb@a600000 {
- 				compatible = "snps,dwc3";
- 				reg = <0 0x0a600000 0 0xcd00>;
- 				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
-@@ -3817,7 +3817,7 @@ usb_2: usb@a8f8800 {
- 					<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3_1 0>;
- 			interconnect-names = "usb-ddr", "apps-usb";
- 
--			usb_2_dwc3: dwc3@a800000 {
-+			usb_2_dwc3: usb@a800000 {
- 				compatible = "snps,dwc3";
- 				reg = <0 0x0a800000 0 0xcd00>;
- 				interrupts = <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index e5bb17bc2f46..e4c3edc13676 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -1719,7 +1719,7 @@ usb_1: usb@a6f8800 {
- 
- 			resets = <&gcc GCC_USB30_PRIM_BCR>;
- 
--			usb_1_dwc3: dwc3@a600000 {
-+			usb_1_dwc3: usb@a600000 {
- 				compatible = "snps,dwc3";
- 				reg = <0 0x0a600000 0 0xcd00>;
- 				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
+It could well be that there are signals from the STM to a CTI, and if
+the information could be found then it would be useful to add - but I
+have not seen this information anywhere - and it is the sort of thing
+that is often missed out of hardware manuals.
+It might be possible to deduce some information using the Coresight
+intergration management registers - but this would involve a lot of
+trial and error testing
+
+Regards
+
+Mike
+
+On Sat, 20 Mar 2021 at 03:05, Leo Yan <leo.yan@linaro.org> wrote:
+>
+> Hi Mike,
+>
+> On Sat, Mar 20, 2021 at 10:59:42AM +0800, Leo Yan wrote:
+> > From: Georgi Djakov <georgi.djakov@linaro.org>
+> >
+> > Add DT binding for CoreSight System Trace Macrocell (STM) on msm8916,
+> > which can benefit the CoreSight development on DB410c.
+>
+> For the DT binding for CoreSight STM on DB410c, I have one question:
+>
+> Do you know there have any CTI is conntected to STM so that the DT
+> binding needs to reflect the connection?  If this is the case, we
+> should update the DT binding for CTI node as well.
+>
+> Thanks,
+> Leo
+>
+> >
+> > Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+> > Signed-off-by: Leo Yan <leo.yan@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi |  1 +
+> >  arch/arm64/boot/dts/qcom/msm8916.dtsi     | 27 +++++++++++++++++++++++
+> >  2 files changed, 28 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+> > index 3a9538e1ec97..dd87e5d739ab 100644
+> > --- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+> > @@ -406,6 +406,7 @@ &wcd_codec {
+> >  &etm1 { status = "okay"; };
+> >  &etm2 { status = "okay"; };
+> >  &etm3 { status = "okay"; };
+> > +&stm { status = "okay"; };
+> >  &etr { status = "okay"; };
+> >  &funnel0 { status = "okay"; };
+> >  &funnel1 { status = "okay"; };
+> > diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> > index 402e891a84ab..892f1772e53c 100644
+> > --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> > @@ -562,6 +562,13 @@ funnel0_in4: endpoint {
+> >                                               remote-endpoint = <&funnel1_out>;
+> >                                       };
+> >                               };
+> > +
+> > +                             port@7 {
+> > +                                     reg = <7>;
+> > +                                     funnel0_in7: endpoint {
+> > +                                             remote-endpoint = <&stm_out>;
+> > +                                     };
+> > +                             };
+> >                       };
+> >
+> >                       out-ports {
+> > @@ -882,6 +889,26 @@ etm3_out: endpoint {
+> >                       };
+> >               };
+> >
+> > +             stm: stm@802000 {
+> > +                     compatible = "arm,coresight-stm", "arm,primecell";
+> > +                     reg = <0x802000 0x1000>,
+> > +                           <0x9280000 0x180000>;
+> > +                     reg-names = "stm-base", "stm-stimulus-base";
+> > +
+> > +                     clocks = <&rpmcc RPM_QDSS_CLK>, <&rpmcc RPM_QDSS_A_CLK>;
+> > +                     clock-names = "apb_pclk", "atclk";
+> > +
+> > +                     status = "disabled";
+> > +
+> > +                     out-ports {
+> > +                             port {
+> > +                                     stm_out: endpoint {
+> > +                                             remote-endpoint = <&funnel0_in7>;
+> > +                                     };
+> > +                             };
+> > +                     };
+> > +             };
+> > +
+> >               msmgpio: pinctrl@1000000 {
+> >                       compatible = "qcom,msm8916-pinctrl";
+> >                       reg = <0x01000000 0x300000>;
+> > --
+> > 2.25.1
+> >
+
+
+
 -- 
-2.30.1
-
+Mike Leach
+Principal Engineer, ARM Ltd.
+Manchester Design Centre. UK
