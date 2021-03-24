@@ -2,188 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F0F45346FA4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Mar 2021 03:38:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AE0C4346FBA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Mar 2021 03:56:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234923AbhCXCiA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Mar 2021 22:38:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37158 "EHLO
+        id S234864AbhCXC4N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Mar 2021 22:56:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40912 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234922AbhCXCh6 (ORCPT
+        with ESMTP id S231969AbhCXCzg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Mar 2021 22:37:58 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24821C0613D8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 19:37:58 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id f2-20020a17090a4a82b02900c67bf8dc69so365249pjh.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 19:37:58 -0700 (PDT)
+        Tue, 23 Mar 2021 22:55:36 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83EEDC061765
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 19:55:36 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id q6-20020a17090a4306b02900c42a012202so408664pjg.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Mar 2021 19:55:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=od0BD5phhIgjjdHP+pXkuF/8ytaG+GpUJEyEIVUV7fU=;
-        b=DNny0NmFMN/XKTCWHNlE2Azj31S6ov/KSxCVrZKIPputQXgq1w8Ito0UNkO9JtzRR/
-         Q95hkwirbsGfIfqveuD6BXJyzRl0d4ftjHKXXEkaIduyWocI5G9rRQL4Z6KDX6NPad/F
-         V9hqKIbmwV2xvngJhYKzHD/fp1uNcHvDPhqzs=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=VxX3jCU9gxpYCK5wxlC07dKnMnHlhcGJNIa5hTcYbHE=;
+        b=f40wFQdeT6npH+pw+HAc7cVoVM24lGjxsjvh9ss0IAFkeMdNXo3UsL/t0j43d2olss
+         FfsR86iQ9J9/5W27eztxDunvESkS1E7olyR/007Sm4fP6xQmoAc/IH2jSDK8VRvTZM/a
+         UGupzhmMml/m4ViNMWC1wJMjsbFj9Rq8avW+k=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=od0BD5phhIgjjdHP+pXkuF/8ytaG+GpUJEyEIVUV7fU=;
-        b=HmkmQPneC4yPNtGWIZBJYLXkKSK2YmgiKUfGDtGdQsJCZkqzO6ckYNSvMBsCaXIZGB
-         o9LKhBp95TNFhHR2LgHQGyuqT0S9GSl2+1rRZTYliYLajkyE3jUixBHMsoM5UsJ3XZws
-         gDLZdpm/f/W6yreg3VrQFx1pCQoVCn3C3/aG2+Ant1hbiKCBCtcc6hyTxG9kywGi6cFa
-         Q2038L/cc+qPY1BLapCsa7PK8oUuBy/+XtqYtBvUadAt6EcVfXgFWjNpZMusvFEO7GZ0
-         VPFZdoQZbycdBT4TP8hrVPPNn9kZKL7UlzT5Zn6UnEk4boe9m+cNN0EY2xj6ubLTSjpH
-         +9Wg==
-X-Gm-Message-State: AOAM530FK6f493uNVCmxmS0Xoe8wsJLOwoGuBzNo8DIvojrY4R0ZRm7g
-        6n4k+xgEuXk1B4UYUs0D/WAOXyzeYh8ZGQ==
-X-Google-Smtp-Source: ABdhPJyv9plpOoNB10k0a03KKxljHDIU04Ysw825aEB6SSWOjf5EJNYX70Cm0fswlh+QWFmuTfauXA==
-X-Received: by 2002:a17:90a:a96:: with SMTP id 22mr1086638pjw.200.1616553477366;
-        Tue, 23 Mar 2021 19:37:57 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:201:84ac:62f7:16a8:ccc7])
-        by smtp.gmail.com with ESMTPSA id m7sm422290pjc.54.2021.03.23.19.37.56
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=VxX3jCU9gxpYCK5wxlC07dKnMnHlhcGJNIa5hTcYbHE=;
+        b=qyZgeThtYDHT+P5CyBDP8zGQCnzOfzv7W1mDdQsRN+RG9y0RVPS1TatYMfXdwMmCz3
+         UDH2N4QnfFL2vHru/6JKfViF/ODRpn2I8LzgvmynPyELV1xQdTuzrJmXnYf84ZpQviOX
+         +5dnh0uAKyvrci24XrwSEMVOi5NgBsNxOWlYTw+klEKTfo96dneGsuT7OexWvVzFYRE4
+         FRlbzdl/8ktszbi3An+ZCQ+22eyPnWBA+/0nBVdcoEBSBgKHkP8FQVZZauw+SspETSc2
+         3RsDsDuR4m/DCwUOKLBeVkeXq7/+a2UbDGqrSU3e9xifJgEdd8Tp55fpLTMPknyKdJYk
+         1t7A==
+X-Gm-Message-State: AOAM530j4/70ePEDMp3BahxIEMa/ikSSVGgAa4/lzPMQz7jcJdsStaeV
+        KQ4vefpz6ofmtlUFsZeF02899FaEsyGJGw==
+X-Google-Smtp-Source: ABdhPJynwED2kc7VSNElAA7bTKcRRHocGbOuLARI0DW++dV5v5I4giF/PTHaV0dDpzmJNobxrQDgyA==
+X-Received: by 2002:a17:902:f547:b029:e4:6dbc:6593 with SMTP id h7-20020a170902f547b02900e46dbc6593mr1474686plf.4.1616554535976;
+        Tue, 23 Mar 2021 19:55:35 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:201:84ac:62f7:16a8:ccc7])
+        by smtp.gmail.com with ESMTPSA id t12sm468146pfe.203.2021.03.23.19.55.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Mar 2021 19:37:56 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1616409015-27682-1-git-send-email-mkshah@codeaurora.org>
-References: <1616409015-27682-1-git-send-email-mkshah@codeaurora.org>
-Subject: Re: [PATCH v2] dt-bindings: interrupt-controller: Convert bindings to yaml for qcom,pdc
+        Tue, 23 Mar 2021 19:55:35 -0700 (PDT)
 From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        robh+dt@kernel.org, dianders@chromium.org, rnayak@codeaurora.org,
-        lsrao@codeaurora.org, Maulik Shah <mkshah@codeaurora.org>,
-        devicetree@vger.kernel.org
-To:     Maulik Shah <mkshah@codeaurora.org>, bjorn.andersson@linaro.org,
-        maz@kernel.org
-Date:   Tue, 23 Mar 2021 19:37:53 -0700
-Message-ID: <161655347383.3012082.3209818534281111587@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+        Douglas Anderson <dianders@chromium.org>
+Subject: [PATCH] arm64: dts: qcom: trogdor: Add no-hpd to DSI bridge node
+Date:   Tue, 23 Mar 2021 19:55:34 -0700
+Message-Id: <20210324025534.1837405-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.31.0.291.g576ba9dcdaf-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Maulik Shah (2021-03-22 03:30:15)
-> -- qcom,pdc-ranges:
-> -       Usage: required
-> -       Value type: <u32 array>
-> -       Definition: Specifies the PDC pin offset and the number of PDC po=
-rts.
-> -                   The tuples indicates the valid mapping of valid PDC p=
-orts
-> -                   and their hwirq mapping.
-> -                   The first element of the tuple is the starting PDC po=
-rt.
-> -                   The second element is the GIC hwirq number for the PD=
-C port.
-> -                   The third element is the number of interrupts in sequ=
-ence.
-> -
-> diff --git a/Documentation/devicetree/bindings/interrupt-controller/qcom,=
-pdc.yaml b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.=
-yaml
-> new file mode 100644
-> index 0000000..8b4151c
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
-> @@ -0,0 +1,96 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/interrupt-controller/qcom,pdc.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies, Inc. PDC interrupt controller
-> +
-> +maintainers:
-> +  - Maulik Shah <mkshah@codeaurora.org>
-> +
-> +description: |
-> +  Qualcomm Technologies, Inc. SoCs based on the RPM Hardened architectur=
-e have a
-> +  Power Domain Controller (PDC) that is on always-on domain. In addition=
- to
-> +  providing power control for the power domains, the hardware also has an
-> +  interrupt controller that can be used to help detect edge low interrup=
-ts as
-> +  well detect interrupts when the GIC is non-operational.
-> +
-> +  GIC is parent interrupt controller at the highest level. Platform inte=
-rrupt
-> +  controller PDC is next in hierarchy, followed by others. Drivers requi=
-ring
-> +  wakeup capabilities of their device interrupts routed through the PDC,=
- must
-> +  specify PDC as their interrupt controller and request the PDC port ass=
-ociated
-> +  with the GIC interrupt. See example below.
-> +
-> +properties:
-> + compatible:
-> +   items:
-> +     - enum:
-> +        # Should contain "qcom,<soc>-pdc" and "qcom,pdc"
-> +         - qcom,sc7180-pdc #For SC7180
-> +         - qcom,sc7280-pdc #For SC7280
-> +         - qcom,sdm845-pdc #For SDM845
-> +         - qcom,sm8250-pdc #For SM8250
-> +         - qcom,sm8350-pdc #For SM8350
-> +     - const: qcom,pdc
-> +
-> + reg:
-> +    description: |
-> +      Specifies the base physical address for PDC hardware followed by o=
-ptional
-> +      PDC's GIC interface registers that need to be configured for wakeu=
-p capable
-> +      GPIOs routed to the PDC.
-> +    minItems: 1
-> +    maxItems: 2
+We should indicate that we're not using the HPD pin on this device, per
+the binding document. Otherwise if code in the future wants to enable
+HPD in the bridge when this property is absent we'll be wasting power
+powering hpd when we don't use it on trogdor boards. We didn't notice
+this before because the kernel driver blindly disables hpd, but that
+won't be true for much longer.
 
-Can this be
+Cc: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Cc: Douglas Anderson <dianders@chromium.org>
+Fixes: 7ec3e67307f8 ("arm64: dts: qcom: sc7180-trogdor: add initial trogdor and lazor dt")
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-	items:
-	  - description: base registers
-	  - description: wakeup configuration registers
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index 07c8b2c926c0..298af6d7fb4a 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -595,6 +595,8 @@ sn65dsi86_bridge: bridge@2d {
+ 		clocks = <&rpmhcc RPMH_LN_BB_CLK3>;
+ 		clock-names = "refclk";
+ 
++		no-hpd;
++
+ 		ports {
+ 			#address-cells = <1>;
+ 			#size-cells = <0>;
+-- 
+https://chromeos.dev
 
-and then we should always have both registers?
-
-> +
-> + '#interrupt-cells':
-> +    # Specifies the number of cells needed to encode an interrupt.
-> +    # The first element of the tuple is the PDC pin for the interrupt.
-> +    # The second element is the trigger type.
-> +    const: 2
-> +
-> + interrupt-controller: true
-> +
-> + qcom,pdc-ranges:
-> +   description: |
-> +      Specifies the PDC pin offset and the number of PDC ports.
-> +      The tuples indicates the valid mapping of valid PDC ports
-> +      and their hwirq mapping.
-> +   $ref: /schemas/types.yaml#/definitions/uint32-matrix
-> +   items:
-> +      items:
-> +        - description: |
-> +           "a" The first element of the tuple is the starting PDC port.
-> +        - description: |
-> +           "b" The second element is the GIC SPI number for the PDC port.
-> +        - description: |
-> +           "c" The third element is the number of interrupts in sequence.
-
-Do we need the "a", "b", "c" prefixes? Is there any minItems or maxItems
-that can be placed on this?
-
-> +
-> +required:
-> +    - compatible
-> +    - reg
-> +    - '#interrupt-cells'
-> +    - interrupt-controller
-> +    - qcom,pdc-ranges
-> +
-> +additionalProperties: false
