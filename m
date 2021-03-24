@@ -2,94 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 69F8F3481B7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Mar 2021 20:17:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E7513481E2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Mar 2021 20:29:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238058AbhCXTQU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Mar 2021 15:16:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56036 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238059AbhCXTPv (ORCPT
+        id S237867AbhCXT3W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Mar 2021 15:29:22 -0400
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:55796 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S237661AbhCXT25 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Mar 2021 15:15:51 -0400
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C6A5C0613DE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 12:15:51 -0700 (PDT)
-Received: by mail-pg1-x532.google.com with SMTP id f10so8265420pgl.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 12:15:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ImvU2fZ+ScriPP8OZqBrmmiLJWQ8IFUi+RbbrLbT96Y=;
-        b=e+eg2o9vdPCG+GPSMqoFB0Hih5xw8rh8B6IDIVwSjlYVwWexe+LIOJVWeyyhVz4BLe
-         jnYt0BgVtH69cFsswuOU+Q73RGT5CsLlXtAKYI3qbDENioxBnyoojzhalpaM6ZUgmqHu
-         JVEflbpHkB4yLxy/abPUK0XeM8kkSQuLosxPE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ImvU2fZ+ScriPP8OZqBrmmiLJWQ8IFUi+RbbrLbT96Y=;
-        b=r16UV9DJ9RwbXiBPMUiHx/nDMiZqGDHgIqPOvSu0ZZ6bFpjfRoXGf74ymXtpl+WCp4
-         L9n70b4aNRKMTWdjQvbu6A7FuPpSmSN2nILSprZVUGTjBW6uqI/RmlpiKa7YyGSgPIh9
-         2Rfmwj65/paH8hSXbQUHm/soXdgMaO0gomXBVQlW+5OnP0kBze7TWZDkQ4VLGFWhZ4jo
-         u9Y8aluVASALeI61vv7Yu4viKTbJbiaIkV1+qpnslxsnTEqehqLNfWP7Jy3eBOppYUXJ
-         Tv3k86A47v4l4+1eagZeEvlpSYqmXIusJ/F5WaT6yEbYcpoLeiDg4E9NkZAUJj+hqEoM
-         /XJg==
-X-Gm-Message-State: AOAM530aDAwrefIil336DBOwM58GuZKX18VbU/h/NM4QEbcj2HbZwNox
-        BUC8mdjUUOxW+t8ydxIi44K3/w==
-X-Google-Smtp-Source: ABdhPJyqFgwk3xLUDfFAlb7TeNecxtytJKBprIR+BJv239+QVbYjRS9mmDN5+6LTxeu4RhAv/vvMIw==
-X-Received: by 2002:a17:902:d2c7:b029:e6:34e2:7a83 with SMTP id n7-20020a170902d2c7b02900e634e27a83mr5093376plc.60.1616613350891;
-        Wed, 24 Mar 2021 12:15:50 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:201:84ac:62f7:16a8:ccc7])
-        by smtp.gmail.com with ESMTPSA id y22sm3216495pfn.32.2021.03.24.12.15.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Mar 2021 12:15:50 -0700 (PDT)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-        Douglas Anderson <dianders@chromium.org>
-Subject: [PATCH] arm64: dts: qcom: c630: Add no-hpd to DSI bridge node
-Date:   Wed, 24 Mar 2021 12:15:49 -0700
-Message-Id: <20210324191549.2043808-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.31.0.291.g576ba9dcdaf-goog
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Wed, 24 Mar 2021 15:28:57 -0400
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 24 Mar 2021 12:28:56 -0700
+X-QCInternal: smtphost
+Received: from gurus-linux.qualcomm.com (HELO gurus-linux.localdomain) ([10.46.162.81])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP; 24 Mar 2021 12:28:55 -0700
+Received: by gurus-linux.localdomain (Postfix, from userid 383780)
+        id B7BE61A1A; Wed, 24 Mar 2021 12:28:55 -0700 (PDT)
+From:   Guru Das Srinagesh <gurus@codeaurora.org>
+To:     Mark Brown <broonie@kernel.org>,
+        Markus Elfring <Markus.Elfring@web.de>,
+        Lee Jones <lee.jones@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg KH <gregkh@linuxfoundation.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Joe Perches <joe@perches.com>,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
+        David Collins <collinsd@codeaurora.org>,
+        Anirudh Ghayal <aghayal@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Guru Das Srinagesh <gurus@codeaurora.org>
+Subject: [PATCH v5 0/2] Add support for Qualcomm MFD PMIC register layout
+Date:   Wed, 24 Mar 2021 12:28:52 -0700
+Message-Id: <cover.1616613838.git.gurus@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We should indicate that we're not using the HPD pin on this device, per
-the binding document. Otherwise if code in the future wants to enable
-HPD in the bridge when this property is absent we'll be wasting power
-powering hpd when we don't use it. Presumably this board isn't using hpd
-on the bridge.
+Changes from v4:
+- Only one cosmetic change: Moved the declaration of num_virt_regs under
+  num_type_reg instead of under num_main_regs in `struct regmap_irq_chip` so as
+  to reinforce the idea that it is related to the type setting of IRQs.
+- No other changes.
 
-Cc: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Cc: Douglas Anderson <dianders@chromium.org>
-Fixes: 7ec3e67307f8 ("arm64: dts: qcom: sc7180-trogdor: add initial trogdor and lazor dt")
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 2 ++
- 1 file changed, 2 insertions(+)
+Changes from v3:
+- Implemented the scheme proposed in my response to Mark in [4].
+- Dropped the RFC tag from this patch series as this series has been tested on
+  target with a client driver utilizing these changes.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-index 140db2d5ba31..c2a709a384e9 100644
---- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-@@ -376,6 +376,8 @@ sn65dsi86: bridge@2c {
- 		clocks = <&sn65dsi86_refclk>;
- 		clock-names = "refclk";
- 
-+		no-hpd;
-+
- 		ports {
- 			#address-cells = <1>;
- 			#size-cells = <0>;
+Changes from v2:
+- Split up framework changes patch for better comprehension.
+- Dropped PM8008 driver example and converted it into example code in cover
+  letter and commit text.
+- Added more info in cover letter and commit message as per v2 feedback.
 
-base-commit: a38fd8748464831584a19438cbb3082b5a2dab15
+This is a follow-up as promised [1] to the earlier attempts [2] [3] to upstream
+the driver that has been hitherto used to handle IRQs for Qualcomm's PMICs that
+have multiple on-board peripherals when they are interfaced over the I2C
+interface.
+
+This series is a rewrite of that driver while making use of the regmap-irq
+framework, which needs some modifications to handle the register layout of
+Qualcomm's PMICs. This is an RFC because I would like to get feedback on my
+general approach before submitting as a patch per se.
+
+Qualcomm's MFD chips that are interfaced over I2C have a top level interrupt
+status register and sub-irqs (peripherals).  When a bit in the main status
+register goes high, it means that the peripheral corresponding to that bit has
+an unserviced interrupt. If the bit is not set, this means that the
+corresponding peripheral does not.
+
+The differences between Qualcomm's register layout and what the regmap-irq
+framework assumes are best described with an example:
+
+Suppose that there are three peripherals onboard an MFD chip: MISC, TEMP_ALARM
+and GPIO01. Each of these peripherals has the following IRQ configuration
+registers: mask, type and ack. There is a top level interrupt status register
+and per-peripheral status registers as well (not shown below).
+
+The regmap-irq framework expects all similar registers to be at a fixed stride
+from each other, for each peripheral, as below (with stride = 1). 
+
+	/* All mask registers together */
+	MISC_INT_MASK		0x1011
+	TEMP_ALARM_INT_MASK	0x1012
+	GPIO01_INT_MASK		0x1013
+	
+	/* All type registers together */
+	MISC_INT_TYPE		0x2011
+	TEMP_ALARM_INT_TYPE	0x2012
+	GPIO01_INT_TYPE		0x2013
+	
+	/* All ack registers together */
+	MISC_INT_ACK		0x3011
+	TEMP_ALARM_INT_ACK	0x3012
+	GPIO01_INT_ACK		0x3013
+
+In contrast, QCOM's registers are laid out as follows:
+
+	/* All of MISC peripheral's registers together */
+	MISC_INT_MASK		0x1011
+	MISC_INT_TYPE		0x1012
+	MISC_INT_ACK		0x1013
+
+	/* All of TEMP_ALARM peripheral's registers together */
+	TEMP_ALARM_INT_MASK	0x2011
+	TEMP_ALARM_INT_TYPE	0x2012
+	TEMP_ALARM_INT_ACK	0x2013
+	
+	/* All of GPIO01 peripheral's registers together */
+	GPIO01_INT_MASK		0x3011
+	GPIO01_INT_TYPE		0x3012
+	GPIO01_INT_ACK		0x3013
+
+As is evident, the different IRQ configuration registers are just (0x11, 0x12,
+0x13) with offsets of (0x1000, 0x2000 and 0x3000) respectively in QCOM's case.
+If the *_base registers fed to the struct regmap_irq_chip could be set to the
+first peripheral (MISC in this example), then through the sub_reg_offsets
+mechanism, we could add the offsets _to_ the *_base register values to get at
+the configuration registers for each peripheral.
+
+Hopefully this will help when reviewing the changes in this series.
+
+[1] https://lore.kernel.org/lkml/20200519185757.GA13992@codeaurora.org/
+[2] https://lore.kernel.org/lkml/cover.1588037638.git.gurus@codeaurora.org/
+[3] https://lore.kernel.org/lkml/cover.1588115326.git.gurus@codeaurora.org/
+[4] https://lore.kernel.org/lkml/20210315203336.GA8977@codeaurora.org/
+
+Guru Das Srinagesh (2):
+  regmap-irq: Introduce virtual regs to handle more config regs
+  regmap-irq: Add driver callback to configure virtual regs
+
+ drivers/base/regmap/regmap-irq.c | 43 +++++++++++++++++++++++++++++++++++++++-
+ include/linux/regmap.h           |  9 +++++++++
+ 2 files changed, 51 insertions(+), 1 deletion(-)
+
 -- 
-https://chromeos.dev
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
