@@ -2,137 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A71E347200
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Mar 2021 08:06:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B1408347247
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Mar 2021 08:19:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235665AbhCXHFg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Mar 2021 03:05:36 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:47635 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230365AbhCXHFR (ORCPT
+        id S232588AbhCXHTV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Mar 2021 03:19:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([216.205.24.124]:57690 "EHLO
+        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S232827AbhCXHTL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Mar 2021 03:05:17 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1616569516; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=GSuzv68z73zXdYYHmOBg3yhM/DxDs3uPEYGKUNXQJI8=;
- b=FAVfnYJjtY5k+J+RfYKMEk69feGVvMBdEoHk2jWVlflQyw0jgXgozhylr5FO0q314DwCFVHv
- kWft6zpbEWTUoFX8huz3ojNj1+8IG+kgU+CeSCP4fUmEwGTnH99bk7ZT/2h8r/nQl01XKLqp
- fs7k2JFklet0eE0vf10IHabb7bo=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 605ae4a14db3bb68017c7d08 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 24 Mar 2021 07:05:05
- GMT
-Sender: sibis=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1A89AC43464; Wed, 24 Mar 2021 07:05:04 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3108EC433CA;
-        Wed, 24 Mar 2021 07:05:04 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 24 Mar 2021 12:35:04 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        devicetree@vger.kernel.org, Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Wed, 24 Mar 2021 03:19:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1616570349;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=LNxz6dk8N6Qim1jk1gv3DRN8orM2zCPzuP4pcushAnw=;
+        b=jMPvQvEUPMzDW4rTi//xjb32aJhjzju/YQBK0RtGA0HaqCuWqiuqX4ysCShH/bIYEuhkwx
+        S4vO7GM0Y7RkkulSzkw0oJV3lAlpQ+2xIrXKH8PtSjK3VqRcYA2OuKeD+gleJYWL9qqMc3
+        2k/7LtCyavvx94+pSXnjH3VSFmvIcTY=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-543-E1SwgSwUPy2awTBqoFY3Bw-1; Wed, 24 Mar 2021 03:19:06 -0400
+X-MC-Unique: E1SwgSwUPy2awTBqoFY3Bw-1
+Received: by mail-ej1-f70.google.com with SMTP id a22so493930ejx.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 00:19:06 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=LNxz6dk8N6Qim1jk1gv3DRN8orM2zCPzuP4pcushAnw=;
+        b=LLWzn7pPVxNnzHflk/Nd3/cwMiAJTXWbJ1aeh+QCPTpPdnyaa6vAsLYkfI0Miya7SH
+         c3IFd09gjMugEtl86jwZjVWBQVlRnzZV6TRnn9s6w6I2euo7FAgz8pmpxmrSA3ZpNZ32
+         1IGLun8AKt+eHvjdRmPCpH1EySBlqks6zDJA3R9DeWQcRQZzAePNzRqjDcNs4j4GosPb
+         kmOT5AZznMr/lNt5H7FqdkozPcqawpPec/YId/UE7S3uZdalHdTXru27ZSrLwq9H1KEm
+         lFdmonU7xBYrDFuxgl7tvEBxHCCY/hi8BP5VGVZAOzhNRa7ggo2tHK1Tl51bN++35ZQT
+         CFLQ==
+X-Gm-Message-State: AOAM531oFORBCsaZHqg5qrp6MukCJyh3PuFQkckngiTAycMYOHxUDGJZ
+        s/qKSTG3EY5aFNNiOG4kk5rRJpQ4nWBIMtBVUrn85Pjlr5IgMvv6iTsyRpIYxZ8WpbTKmRgzlSJ
+        08FezBxnGzv4EKH3V91tPWHBdGw==
+X-Received: by 2002:a05:6402:50c8:: with SMTP id h8mr1863234edb.360.1616570345811;
+        Wed, 24 Mar 2021 00:19:05 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJwlbfdmREJxME+JRNtvUW27K2DsKI6/XR8AbALCh74d7s9kMg/MD7c5V9abhKL5/x66UnXfjg==
+X-Received: by 2002:a05:6402:50c8:: with SMTP id h8mr1863215edb.360.1616570345634;
+        Wed, 24 Mar 2021 00:19:05 -0700 (PDT)
+Received: from x1.localdomain (2001-1c00-0c1e-bf00-1054-9d19-e0f0-8214.cable.dynamic.v6.ziggo.nl. [2001:1c00:c1e:bf00:1054:9d19:e0f0:8214])
+        by smtp.gmail.com with ESMTPSA id i11sm484830ejf.76.2021.03.24.00.19.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 Mar 2021 00:19:05 -0700 (PDT)
+Subject: Re: [PATCH v3 3/8] extconn: Clean-up few drivers by using managed
+ work init
+To:     matti.vaittinen@fi.rohmeurope.com,
+        Chanwoo Choi <cw00.choi@samsung.com>
+Cc:     MyungJoo Ham <myungjoo.ham@samsung.com>,
         Andy Gross <agross@kernel.org>,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 8/9] arm64: dts: qcom: sc7280: Add AOSS QMP node
-In-Reply-To: <161647068330.3012082.2910442813045392403@swboyd.mtv.corp.google.com>
-References: <cover.1614244789.git.saiprakash.ranjan@codeaurora.org>
- <463a45f2c3e4a91430c006fa1637c7f4f124185e.1614244789.git.saiprakash.ranjan@codeaurora.org>
- <161428210272.1254594.16034240343090747878@swboyd.mtv.corp.google.com>
- <dc3be32a3f8197d3138fe1ef6c24316a@codeaurora.org>
- <161436520297.1254594.4348845199981053890@swboyd.mtv.corp.google.com>
- <5cf5692ef7d348ec361081d0341f1254@codeaurora.org>
- <d19fbcc91b4ef045014b225e7fdf9780@codeaurora.org>
- <161647068330.3012082.2910442813045392403@swboyd.mtv.corp.google.com>
-Message-ID: <0a8540993e6f59c3b03e44e6aee4f81b@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Mark Gross <mgross@linux.intel.com>,
+        gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org
+References: <cover.1616506559.git.matti.vaittinen@fi.rohmeurope.com>
+ <CGME20210323135719epcas1p326dfbf8acd6c95703a30d832fb111879@epcas1p3.samsung.com>
+ <b1030eddbf0069f2d39e951be1d8e40d6413aeeb.1616506559.git.matti.vaittinen@fi.rohmeurope.com>
+ <14800e19-da8c-81ba-48ee-cc51cc1925c9@samsung.com>
+ <1f5247a81077f6cb3c96730b1202bbd61dd1900b.camel@fi.rohmeurope.com>
+From:   Hans de Goede <hdegoede@redhat.com>
+Message-ID: <efc4359d-9c2c-9115-7cee-b9f6eb51539c@redhat.com>
+Date:   Wed, 24 Mar 2021 08:19:04 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.0
+MIME-Version: 1.0
+In-Reply-To: <1f5247a81077f6cb3c96730b1202bbd61dd1900b.camel@fi.rohmeurope.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-03-23 09:08, Stephen Boyd wrote:
-> Quoting Sibi Sankar (2021-03-08 21:58:21)
->> On 2021-02-27 19:26, Sai Prakash Ranjan wrote:
->> > On 2021-02-27 00:16, Stephen Boyd wrote:
->> >> Quoting Sai Prakash Ranjan (2021-02-25 23:51:00)
->> >>> On 2021-02-26 01:11, Stephen Boyd wrote:
->> >>> > Quoting Sai Prakash Ranjan (2021-02-25 01:30:24)
->> >>> >> Add a DT node for the AOSS QMP on SC7280 SoC.
->> >>> >>
->> >>> >> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
->> >>> >> ---
->> >>> >>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 14 ++++++++++++++
->> >>> >>  1 file changed, 14 insertions(+)
->> >>> >>
->> >>> >> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> >>> >> b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> >>> >> index 65c1e0f2fb56..cbd567ccc04e 100644
->> >>> >> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> >>> >> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> >>> >> @@ -9,6 +9,7 @@
->> >>> >>  #include <dt-bindings/clock/qcom,rpmh.h>
->> >>> >>  #include <dt-bindings/interrupt-controller/arm-gic.h>
->> >>> >>  #include <dt-bindings/mailbox/qcom-ipcc.h>
->> >>> >> +#include <dt-bindings/power/qcom-aoss-qmp.h>
->> >>> >>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->> >>> >>
->> >>> >>  / {
->> >>> >> @@ -368,6 +369,19 @@ pdc: interrupt-controller@b220000 {
->> >>> >>                         interrupt-controller;
->> >>> >>                 };
->> >>> >>
->> >>> >> +               aoss_qmp: qmp@c300000 {
->> >>> >
->> >>> > power-domain-controller@c300000? power-controller@c300000?
->> >>> >
->> >>>
->> >>> Its an AOSS message RAM and all other SM* SoCs have as qmp@
->> >>> and the dt binding as well, I see only SM8150 with power-controller,
->> >>> that should probably be fixed?
->> >>
->> >> Node name should be generic while still being meaningful. Nobody knows
->> >> what qmp is, but power-controller makes sense. Can you fix this and
->> >> the
->> >> others to be power-controller?
->> >>
->> 
->> we probably would be changing them back
->> to qmp or something more generic soon
->> since the consensus was qmp wasn't a
->> power-controller. So not sure if its
->> worth the effort here.
->> 
+Hi,
+
+On 3/24/21 6:02 AM, Matti Vaittinen wrote:
+> Hello Chanwoo, Greg,
 > 
-> Hmm alright. Maybe mailbox? qmp is not generic. What does it stand for?
-> qualcomm messaging protocol?
+> Thanks for the review.
+> 
+> On Wed, 2021-03-24 at 11:09 +0900, Chanwoo Choi wrote:
+>> Hi,
+>>
+>> Need to fix the work as following:
+>> s/extconn/extcon
+>>
+>> And I'd like you to use the more correct patch title like the
+>> following example:
+>> "extcon: Use resource-managed function for delayed work"
+> 
+> I think Greg merged this already. How should we handle this?
+> 
+>> @@ -112,7 +113,9 @@ static int gpio_extcon_probe(struct
+>>> platform_device *pdev)
+>>>  	if (ret < 0)
+>>>  		return ret;
+>>>  
+>>> -	INIT_DELAYED_WORK(&data->work, gpio_extcon_work);
+>>> +	ret = devm_delayed_work_autocancel(dev, &data->work,
+>>> gpio_extcon_work);
+>>> +	if (ret)
+>>> +		return ret;
+>>
+>> Need to add the error log as following:
+>> 	if (ret) {
+>> 		dev_err(dev, "Failed to initialize delayed_work");
+>> 		return ret;
+>> 	}	
+> 
+> I could send incremental patch to Greg for this but it does not change
+> the commit message.
 
-It's documented as ^^ in the git log
-but I guess it should be called qualcomm
-mailbox protocol instead. I don't think
-it can be called mailbox since it doesn't
-have mbox cells in its bindings.
+We cannot do anything about the commit message anymore, but the ordering
+issue which you introduced really needs to be fixed.
 
--- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+Please send an incremental patch fixing the wrong order and the double
+init of the workqueue.
+
+Regards,
+
+Hans
+
