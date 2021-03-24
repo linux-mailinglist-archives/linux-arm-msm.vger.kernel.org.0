@@ -2,107 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E6BB8348515
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 00:12:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 86CC634851E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 00:15:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238969AbhCXXL5 convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Mar 2021 19:11:57 -0400
-Received: from eu-smtp-delivery-151.mimecast.com ([185.58.86.151]:45460 "EHLO
-        eu-smtp-delivery-151.mimecast.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S234723AbhCXXLg (ORCPT
+        id S234215AbhCXXOn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Mar 2021 19:14:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51220 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234077AbhCXXOi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Mar 2021 19:11:36 -0400
-Received: from AcuMS.aculab.com (156.67.243.126 [156.67.243.126]) (Using
- TLS) by relay.mimecast.com with ESMTP id
- uk-mta-57-ByNutTSLPryHL587jqF9Ew-1; Wed, 24 Mar 2021 23:11:31 +0000
-X-MC-Unique: ByNutTSLPryHL587jqF9Ew-1
-Received: from AcuMS.Aculab.com (fd9f:af1c:a25b:0:994c:f5c2:35d6:9b65) by
- AcuMS.aculab.com (fd9f:af1c:a25b:0:994c:f5c2:35d6:9b65) with Microsoft SMTP
- Server (TLS) id 15.0.1497.2; Wed, 24 Mar 2021 23:11:30 +0000
-Received: from AcuMS.Aculab.com ([fe80::994c:f5c2:35d6:9b65]) by
- AcuMS.aculab.com ([fe80::994c:f5c2:35d6:9b65%12]) with mapi id
- 15.00.1497.012; Wed, 24 Mar 2021 23:11:30 +0000
-From:   David Laight <David.Laight@ACULAB.COM>
-To:     'Arnd Bergmann' <arnd@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        "Nick Desaulniers" <ndesaulniers@google.com>,
-        Jeevan Shriram <jshriram@codeaurora.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        "Vinod Koul" <vkoul@kernel.org>
-CC:     Arnd Bergmann <arnd@arndb.de>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "clang-built-linux@googlegroups.com" 
-        <clang-built-linux@googlegroups.com>
-Subject: RE: [PATCH] pinctrl: qcom: fix unintentional string concatenation
-Thread-Topic: [PATCH] pinctrl: qcom: fix unintentional string concatenation
-Thread-Index: AQHXH+cnzD0REIZ51kmEV+qVFS5oLKqTxYmg
-Date:   Wed, 24 Mar 2021 23:11:30 +0000
-Message-ID: <787a3368942c4be98d29d5b00cad6b7d@AcuMS.aculab.com>
-References: <20210323131728.2702789-1-arnd@kernel.org>
-In-Reply-To: <20210323131728.2702789-1-arnd@kernel.org>
-Accept-Language: en-GB, en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.202.205.107]
+        Wed, 24 Mar 2021 19:14:38 -0400
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EED9BC06175F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 16:14:26 -0700 (PDT)
+Received: by mail-pf1-x429.google.com with SMTP id x126so17136pfc.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 16:14:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=YyHzegzCKmX71L4a4ycrls9K9563QpXhhpNkT8KIV5U=;
+        b=WVb6OULb7d2h1TjLeoxHbmk9OorP+RZH5J0DpUfRz+zDpIHYebKd3NZBud+nKEsw+Q
+         MnDqAlA8iLhkwTrElzJJLiBzoqsdoq1Z5VwYhuXZZagGGRGp2ijKYrbGLG2E48h/Augm
+         n0EhXKvlvcOR7ErrCKPeMqEF7hYosr8qYp/Cg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=YyHzegzCKmX71L4a4ycrls9K9563QpXhhpNkT8KIV5U=;
+        b=H0OoG+lUv4hiktRh9YS0CDS/MZl9v+Y2gdUc9CxeGteYnP7f5Dmy5akIif8PlvpBjS
+         VyEf8bi39EG2LpmW9UhWbMgYlTjjCK+vTawonKzwNjriQYV0MX0fhHD4Ow3LmoIM/4VW
+         iCbmeHTBOrJrNA9RnHQ4QceBB+hQsmSf7ZIJ4kyDC0ZGNdiX7hUDh9QIAQJlxiojQ4jw
+         NYR66/Hv1se5pfZT6xMjXPySqfIyuq/BCW6e0ZoJXllBv7VNxGpKQV2M7kyty9VUMg9e
+         RgkWmDWw5jjK0vpgVpYUOalrWr2zdmwLA5ymS0IankviURRgMX4/LQwBaZ9S5XErFDl9
+         DJ8w==
+X-Gm-Message-State: AOAM532vmGIbMM0B+MMg7pWEP9RYmEnHkn6RvNohkifv1SqS8mqBqler
+        Gd0NEeGNkCrbMekqIp5N2BAH3w==
+X-Google-Smtp-Source: ABdhPJwGJw+JcbwiJP4/piQ4MvZoACLFpP8UfoL2bC6oJj//Hmi4KIb3DoVNtZ4z3lGMAiRho979FQ==
+X-Received: by 2002:a63:ee4b:: with SMTP id n11mr4983845pgk.265.1616627666442;
+        Wed, 24 Mar 2021 16:14:26 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:201:84ac:62f7:16a8:ccc7])
+        by smtp.gmail.com with ESMTPSA id y9sm3396207pja.50.2021.03.24.16.14.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Mar 2021 16:14:25 -0700 (PDT)
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Steev Klimaszewski <steev@kali.org>
+Subject: [PATCH v2] arm64: dts: qcom: c630: Add no-hpd to DSI bridge node
+Date:   Wed, 24 Mar 2021 16:14:24 -0700
+Message-Id: <20210324231424.2890039-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.31.0.291.g576ba9dcdaf-goog
 MIME-Version: 1.0
-Authentication-Results: relay.mimecast.com;
-        auth=pass smtp.auth=C51A453 smtp.mailfrom=david.laight@aculab.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: aculab.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Arnd Bergmann
-> Sent: 23 March 2021 13:17
-> clang is clearly correct to point out a typo in a silly
-> array of strings:
-> 
-> drivers/pinctrl/qcom/pinctrl-sdx55.c:426:61: error: suspicious concatenation of string literals in an
-> array initialization; did you mean to separate the elements with a comma? [-Werror,-Wstring-
-> concatenation]
->         "gpio14", "gpio15", "gpio16", "gpio17", "gpio18", "gpio19" "gpio20", "gpio21", "gpio22",
->                                                                    ^
-> Add the missing comma that must have accidentally been removed.
-> 
-> Fixes: ac43c44a7a37 ("pinctrl: qcom: Add SDX55 pincontrol driver")
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-> ---
->  drivers/pinctrl/qcom/pinctrl-sdx55.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-sdx55.c b/drivers/pinctrl/qcom/pinctrl-sdx55.c
-> index 2b5b0e2b03ad..5aaf57b40407 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-sdx55.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-sdx55.c
-> @@ -423,7 +423,7 @@ static const char * const gpio_groups[] = {
-> 
->  static const char * const qdss_stm_groups[] = {
->  	"gpio0", "gpio1", "gpio2", "gpio3", "gpio4", "gpio5", "gpio6", "gpio7", "gpio12", "gpio13",
-> -	"gpio14", "gpio15", "gpio16", "gpio17", "gpio18", "gpio19" "gpio20", "gpio21", "gpio22",
-> +	"gpio14", "gpio15", "gpio16", "gpio17", "gpio18", "gpio19", "gpio20", "gpio21", "gpio22",
->  	"gpio23", "gpio44", "gpio45", "gpio52", "gpio53", "gpio56", "gpio57", "gpio61", "gpio62",
->  	"gpio63", "gpio64", "gpio65", "gpio66",
+We should indicate that we're not using the HPD pin on this device, per
+the binding document. Otherwise if code in the future wants to enable
+HPD in the bridge when this property is absent we'll be enabling HPD
+when it isn't supposed to be used. Presumably this board isn't using hpd
+on the bridge.
 
+Cc: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Cc: Douglas Anderson <dianders@chromium.org>
+Cc: Steev Klimaszewski <steev@kali.org>
+Fixes: 956e9c85f47b ("arm64: dts: qcom: c630: Define eDP bridge and panel")
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 2 ++
+ 1 file changed, 2 insertions(+)
 
-That may be replaceable with:
-static const char qdss_stm_groups[][8] = { .... };
-
-For a code and data size reduction.
-
-	David
-
--
-Registered Address Lakeside, Bramley Road, Mount Farm, Milton Keynes, MK1 1PT, UK
-Registration No: 1397386 (Wales)
+diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+index 140db2d5ba31..c2a709a384e9 100644
+--- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
++++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+@@ -376,6 +376,8 @@ sn65dsi86: bridge@2c {
+ 		clocks = <&sn65dsi86_refclk>;
+ 		clock-names = "refclk";
+ 
++		no-hpd;
++
+ 		ports {
+ 			#address-cells = <1>;
+ 			#size-cells = <0>;
+-- 
+https://chromeos.dev
 
