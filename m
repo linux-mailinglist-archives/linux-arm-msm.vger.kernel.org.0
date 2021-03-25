@@ -2,88 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E93A3493F2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 15:27:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 55874349422
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 15:34:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231313AbhCYO02 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Mar 2021 10:26:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50102 "EHLO
+        id S231236AbhCYOd1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Mar 2021 10:33:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231240AbhCYO0T (ORCPT
+        with ESMTP id S231404AbhCYOcz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Mar 2021 10:26:19 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 351AAC06174A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Mar 2021 07:26:18 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id r20so3386454ljk.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Mar 2021 07:26:18 -0700 (PDT)
+        Thu, 25 Mar 2021 10:32:55 -0400
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3220C06175F;
+        Thu, 25 Mar 2021 07:32:54 -0700 (PDT)
+Received: by mail-pj1-x1032.google.com with SMTP id bt4so1112347pjb.5;
+        Thu, 25 Mar 2021 07:32:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=hwetcsVKboaaGI7NOXNHnyGvYuGd+RB0dddZvR4dJYk=;
-        b=HnLlDdBGzEt/TgWGyKUmPogRtz8oZQVM03CogodEU/UwYa+YsG6vZA7EP9aRbbnP4f
-         E5yi95rKRs907JDF6G/+3OYef1fTAFAP1+qBFhSW7mzeyVUJL237u2l7LBm2jZ3H+/2l
-         d9hQZeA5U3EiqJ6rDsZ9HdQy4Eh1gp92TIuRu+KPXd8ctc0e1g7GvTHGTX5c1pufvpKW
-         u6NNHIZ6ohMKcDirddqaRBk8zLyijioUnrVIobCFccwipmEmlL0rDZeA1PgAiSlA8cGr
-         Y9D1i8QPt2nrKY4y7L1y+ExWE3cSuS2hRVSBmseu/TONVYtDkiMOz9tyz6uNUuWt4yQn
-         iukw==
+        bh=iu6akMggrk3ZrAZb1WHGakoQg8dYDOL7KwYgoXD8LKo=;
+        b=Eq3eckxCzX63Xj8wsmhtYZPgshqe6ldPE7VXJSPCbIzd/86jZL77W6Y7Wym2MHBhks
+         MvCzM/eROhGsEKpUYZIV0thiUkqnaBEy/AWgzdQHbqf9swW2QDjrzkMWLlJoFKMsMrgo
+         ScNl3B5wP94Al5oCgb0bGNe+e+i5uk4cXbtXq3FmVGWYOGg5U9s2nrROl6ZS/QVOOs81
+         8smHnFvodbzoqLNqa5ptdAGzaIKEAZ4FP+RFdI81jyPKJL/t5kuuqlg+47HxDXP3E3nM
+         cZ1EGQFdpB4C0ldYgyLoPdc+G66XTeolaW7FLoFudxttyoG9k1XzSEI1YtoEOKj9L9aA
+         0KkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=hwetcsVKboaaGI7NOXNHnyGvYuGd+RB0dddZvR4dJYk=;
-        b=O9pq5wiRCmov4WNZpohuqPRxwUwOWW1tr0TIkC+Pdm0U6m2JvXziCIkNdhIoOo9YqS
-         eFD3UgkFp5t4T0XnXZ4LWqt4hRnEqSH5swey9WN9GUvvc1yCUi7DYwQ1Ko3XB/oXjjNM
-         yQ0WXvJbA76OAw7bB91jPgGzOXRA6nREdyDrtlTkiD6hWQdANor+z4GcnciqgJfuCHNT
-         bNJBDUOE1u535qvvIn+ngD0KmC/u2I3F4oRtuZLH6Q9sDgL6FeSMLBIZE6N2SjYqf1Mn
-         MsIpHfZFEB1TKcECLMHJAtNDhIs3HWOCUL1AXV1UKXC2QXBeLi5sj1441ozGQLF0acxe
-         qXOQ==
-X-Gm-Message-State: AOAM531ty3FNB+FWylHkCtjH6qLoAKEiNPOqtlcgN/VkYbp/YW97VfEc
-        oBmIJiUd3bbFKw0PptPENOIHrQo7+vyFP4QQLK8xeQ==
-X-Google-Smtp-Source: ABdhPJwXghMxC+jJkN24Dc68V+VPVcQEjT4VLmT55y6SQ+X6rU7+oMMn50hB89bI9yQv19zi6WlDqbz5VNk4XxOb0gA=
-X-Received: by 2002:a05:651c:103a:: with SMTP id w26mr5808808ljm.273.1616682376700;
- Thu, 25 Mar 2021 07:26:16 -0700 (PDT)
+        bh=iu6akMggrk3ZrAZb1WHGakoQg8dYDOL7KwYgoXD8LKo=;
+        b=K2bXI8ZIf47JXvXHUy+Rz0kn8nvOwoPIi+igc6IRueoz1CiJzyJKvTF81U8oNCpav2
+         ay2Kbv30opybAbSmVq4j5+UuOMVfJRLRmH032l0rKsOSOodsR1v0kkGgthfjlSnl30Fa
+         ADye5hCuHlPLmdrd5TDdAPdmh9bpuLjlDE1plezLrM8jwMQ8t6FDOwkfzEr5RCVjzEHQ
+         78+x5KD5FzUPz+qyusJGpnK1j7lF4h17ZEq23EGPJZb4A2fIdD4Yc1FEeZOGU4ChjmHZ
+         CLRq2ru2sC4l26RpJV9w1zfmbQWyxR07y8ZJtzdOeceugtQcNnhBwLV5DTZqxSxLQxbs
+         IC1g==
+X-Gm-Message-State: AOAM5319pHHqzyFNdQdXRlC84HffXCsYotRKIvdpLlKLGey8F1yaTqYC
+        r+z2Kz8gNt0kbA+DmW1g9iEHEH4nr8DpRFPhPoAqUQS0
+X-Google-Smtp-Source: ABdhPJwvBTtoH2he9ApBpc1P2liiGLxNtdlbUqSJXqpU+JgyXAlzDZhIsECbsSFS0L+w60TTuxLAK+ci3HZNO7DVFvc=
+X-Received: by 2002:a17:90a:bd09:: with SMTP id y9mr8969707pjr.179.1616682774540;
+ Thu, 25 Mar 2021 07:32:54 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210323131728.2702789-1-arnd@kernel.org>
-In-Reply-To: <20210323131728.2702789-1-arnd@kernel.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Thu, 25 Mar 2021 15:26:05 +0100
-Message-ID: <CACRpkdYS9JVnbdW_+_Qi9ujA8j9p-1r7c1UeeKToukQffN1u5w@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: qcom: fix unintentional string concatenation
-To:     Arnd Bergmann <arnd@kernel.org>
+References: <20210312051203.3555751-1-vkoul@kernel.org> <YEukrpG06PBdgGAF@builder.lan>
+ <YFwo2FrCMYJ4AhCs@vkoul-mobl.Dlink>
+In-Reply-To: <YFwo2FrCMYJ4AhCs@vkoul-mobl.Dlink>
+From:   Jassi Brar <jassisinghbrar@gmail.com>
+Date:   Thu, 25 Mar 2021 09:32:43 -0500
+Message-ID: <CABb+yY39yq9=JCYJR8EnMqzYX5wpAWX5nd2Yu0uoCXDcA8jDbg@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: mailbox: Add compatible for SM8350 IPCC
+To:     Vinod Koul <vkoul@kernel.org>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Jeevan Shriram <jshriram@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Manivannan Sadhasivam <mani@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        clang-built-linux <clang-built-linux@googlegroups.com>
+        Rob Herring <robh+dt@kernel.org>,
+        Devicetree List <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 23, 2021 at 2:17 PM Arnd Bergmann <arnd@kernel.org> wrote:
-
-> From: Arnd Bergmann <arnd@arndb.de>
+On Thu, Mar 25, 2021 at 1:08 AM Vinod Koul <vkoul@kernel.org> wrote:
 >
-> clang is clearly correct to point out a typo in a silly
-> array of strings:
+> On 12-03-21, 11:28, Bjorn Andersson wrote:
+> > On Thu 11 Mar 23:12 CST 2021, Vinod Koul wrote:
+> >
+> > Adding Jassi as recipient. Please let Vinod know if you want him to
+> > resend this patch to you. (I send a patch for MAINTAINERS yesterday)
 >
-> drivers/pinctrl/qcom/pinctrl-sdx55.c:426:61: error: suspicious concatenation of string literals in an array initialization; did you mean to separate the elements with a comma? [-Werror,-Wstring-concatenation]
->         "gpio14", "gpio15", "gpio16", "gpio17", "gpio18", "gpio19" "gpio20", "gpio21", "gpio22",
->                                                                    ^
-> Add the missing comma that must have accidentally been removed.
+> Jassi, should I resend or you can pick from lore?
 >
-> Fixes: ac43c44a7a37 ("pinctrl: qcom: Add SDX55 pincontrol driver")
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+I will pick.
 
-Patch applied.
-
-Yours,
-Linus Walleij
+thanks
