@@ -2,93 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 388763485FD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 01:44:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D85634865E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 02:22:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239364AbhCYAoC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Mar 2021 20:44:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42254 "EHLO
+        id S233159AbhCYBVt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Mar 2021 21:21:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239362AbhCYAns (ORCPT
+        with ESMTP id S235531AbhCYBVN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Mar 2021 20:43:48 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6CD7C06175F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 17:43:47 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id g25so263150wmh.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 17:43:47 -0700 (PDT)
+        Wed, 24 Mar 2021 21:21:13 -0400
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C761C06174A;
+        Wed, 24 Mar 2021 18:20:40 -0700 (PDT)
+Received: by mail-pg1-x536.google.com with SMTP id m7so163925pgj.8;
+        Wed, 24 Mar 2021 18:20:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=vWBcQk+O5w5ZvgV4pq/waxQRhDedExDmRWXVc+b/IuI=;
-        b=hInPl+yNDf034aNHju9F3YAqrqp1/y0ExTbWexRha829RfFLk2Hy9M4hynnSS2ML8e
-         39TK1DVMHGv8PZXn3z7Z1DDbEIAp+p/7Pqs3tT9v5h610mRCMd6H+D1WskSB2ajVxDDb
-         R7u9C2BJFrmGpFvX0tj4xMeRkXnstdOe5DF8mbBOHPfaFtw+RgTwqRqa/WIwDYE027px
-         xoobTYKvO1W/NwSjz9L1nRWdP3Ph6k2gM0OrGO7PwKiOyMo8iimjEjpP0Q+NPJnbNN1x
-         tXVrV8iWmp45Z7qK8/ZB8XJWi7f5MgcNDaf1a4zNRk/2dJGZ/ZB02y0vyyLSOfjQkf3N
-         6UHg==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=qiLJdMhcciEZgBLfoz2ge4p0MXfhpuLjibL+Tk2uVwM=;
+        b=OGjLQcKreAioM5wf1smvNoJ82BsvMpFZ+ORVLIPjAod0bP8FJpiA8pcj0RXaTxR6RN
+         nXU6jwLTdn1PPpwsdytGy/7piy2pJ+xuCLDlblMyDwhqeRclMLRVoADBUSR+i65FxqpI
+         7nvyG2IO3ErxEI9WYIhnEpTyIgU/Uq+SbkqU4Chn8dNeB94Q4yM4vnKT0E1DFFmglEpF
+         cxAEYBqmA4La+JKLkG/D9O4s5H6Jj0ZhxgL2hQwA2x+yZTUWfBAJZrShwOmRhIVIdMOC
+         ebuFLuC3Ldr2pLXkriYZx14UNAnwWvh+Cpil4nhEEkMJ8Izk0lXRh9Wu16oWlCr/mvwq
+         E/5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=vWBcQk+O5w5ZvgV4pq/waxQRhDedExDmRWXVc+b/IuI=;
-        b=aLtjOh0f3tfxCN+mVZouCsG4B9GpN82xdvIW8SW1sWoU3AA/YIG+Iybi0wf9vId8bf
-         8abBrcRsFJ2jrb51iISUW001A+wMRttAKoYVSgQowc4Eopx9dYW4LXvkHgo5/dLFRfRl
-         a+xHyEYiqQaNmIxo3pi/Pgk30DdWKsRP5RpIm8ieYaFXfsoYFU94Mv2a5tMO8XgA+4Yw
-         srcpmy5bp0/9daXpZEOPL97Hr2BG2nlqBUDkKaB2lEz/K2Qy+kN3AFJyGuEAQurHTe/V
-         GmRmeoKHoVUTvBzED5G2gkN6CaDcvusdY/qmN/h7zfaiSWKwLNCg66+HY0xjXo5oTjHI
-         6iVQ==
-X-Gm-Message-State: AOAM533cuaNU8sqXmOmqC1cS+QZcooFXCa7R8XgSx18e5QxA/KR2s4Rs
-        nq5lLcOlaZ3tWxM+2BRum7bCqSypXxbHHrlczxn4vQ==
-X-Google-Smtp-Source: ABdhPJz/pYFWjyr5mG6tL/R+zz4fNnQgSblxmrz44zvblkCJjVWnJmuDCSRraYJXsBVMIOvnpFo9ZO+bSBYt4N2l8m4=
-X-Received: by 2002:a7b:c8d9:: with SMTP id f25mr2650652wml.157.1616633026427;
- Wed, 24 Mar 2021 17:43:46 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210320025942.487916-1-leo.yan@linaro.org> <20210320030528.GA488187@leoy-ThinkPad-X240s>
- <CAJ9a7Vgip=qmFE7Wmf64zHZwH=Rc_PB1zpyNGnNE4++Aqc6VQg@mail.gmail.com>
-In-Reply-To: <CAJ9a7Vgip=qmFE7Wmf64zHZwH=Rc_PB1zpyNGnNE4++Aqc6VQg@mail.gmail.com>
-From:   Leo Yan <leo.yan@linaro.org>
-Date:   Thu, 25 Mar 2021 08:43:33 +0800
-Message-ID: <CALZQ+UPEOTkkphtbv2aqLK6C=JuEj-TvmYhrBAtCfyJNX9MSgg@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: msm8916: Enable CoreSight STM component
-To:     Mike Leach <mike.leach@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=qiLJdMhcciEZgBLfoz2ge4p0MXfhpuLjibL+Tk2uVwM=;
+        b=ZFCDkv7SqRibhRlFKj2wS+UW4Cgd/GDQzPiHPVWgEBUyBbzjRiYg560jR3zd55o7Gg
+         /4xjpeNkc/BeXt01Boej0pdViwhodnmUJDA6/csefTRdvxWCu0WCc3f92lRC07S/JNZH
+         yNzt8DvTShhtNh1JbjoFtbA3gt1wtygEvTIfBWQ8JwlzZ3xX/tLIkHPF9+YMJmRMS2Lp
+         8UN3uMG42iEiKvsnQs1Ca8gsSmyPy8cNMGhLZuSREGUYqKIZLfumqNvyONom57A9dFt3
+         qKjKRtLogE4exPkkRxbXusODjpOOMEIIXi9dotdTAe6Na/tfkgFj8kkFi7MP0MMDmDY3
+         CJLA==
+X-Gm-Message-State: AOAM5323qes8GeyWUT/+dsMZYaRyD/8kmrJWeVhewlwyGBRt6E2NDI9P
+        HJAfO/yGGaY/nOGYIHwyU+E=
+X-Google-Smtp-Source: ABdhPJz13qOoTUuf5M3bIR5HvIbImmbvAh5xl7ISbW5k+N9dGYB8MAuXYM/ugR5dLmSdYMeM8Fye2Q==
+X-Received: by 2002:aa7:9246:0:b029:1ed:cfa4:f1a8 with SMTP id 6-20020aa792460000b02901edcfa4f1a8mr5643278pfp.73.1616635240134;
+        Wed, 24 Mar 2021 18:20:40 -0700 (PDT)
+Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
+        by smtp.gmail.com with ESMTPSA id e7sm3606796pfc.88.2021.03.24.18.20.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Mar 2021 18:20:38 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Devicetree List <devicetree@vger.kernel.org>,
-        Coresight ML <coresight@lists.linaro.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+        Dave Airlie <airlied@redhat.com>,
+        Emil Velikov <emil.velikov@collabora.com>,
+        Eric Anholt <eric@anholt.net>,
+        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        "Kristian H. Kristensen" <hoegsberg@google.com>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        linux-kernel@vger.kernel.org (open list),
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Sharat Masetty <smasetty@codeaurora.org>
+Subject: [PATCH 0/2] drm/msm: Fixes/updates for perfetto profiling
+Date:   Wed, 24 Mar 2021 18:23:51 -0700
+Message-Id: <20210325012358.1759770-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.29.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mike,
+From: Rob Clark <robdclark@chromium.org>
 
-On Wed, Mar 24, 2021 at 09:22:31PM +0000, Mike Leach wrote:
-> Hi Leo,
->
-> There are additional CTI components on the DB410c - I think there is
-> information on base addresses for these - but there is no information
-> on connectivity between the CTIs and any components such as STM / ETR
-> etc for any of the in / out signal lines.
-> Therefore we omitted these from the original DT when adding the other
-> CTI devices.
->
-> It could well be that there are signals from the STM to a CTI, and if
-> the information could be found then it would be useful to add - but I
-> have not seen this information anywhere - and it is the sort of thing
-> that is often missed out of hardware manuals.
-> It might be possible to deduce some information using the Coresight
-> intergration management registers - but this would involve a lot of
-> trial and error testing
+A couple kernel side things I realized I needed in the process of
+implementing performance-counter and render-stage support for perfetto,
+the first patch fixes the MSM_PARAM_TIMESTAMP query which was just
+wrong on a5xx/a6xx (ALWAYS_COUNT vs ALWAYS_ON).  The second adds a
+way for userspace to determine whether the device has suspended since
+the last sampling period (which means counters have lost their state
+and configuration).
 
-Okay, let's firstly merge the STM binding patch and later can consider
-to enable DT binding between CTI and STM if have sufficient info.
+I am a bit tempted to add a way that a CAP_SYS_ADMIN user could ask
+the GPU to not suspend (until the drm_file is closed), but so far
+I've managed to avoid needing this.
 
-Thanks a lot for confirmation.
+Rob Clark (2):
+  drm/msm: Fix a5xx/a6xx timestamps
+  drm/msm: Add param for userspace to query suspend count
 
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c   | 4 ++--
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c   | 4 ++--
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 3 +++
+ drivers/gpu/drm/msm/msm_drv.c           | 1 +
+ drivers/gpu/drm/msm/msm_gpu.c           | 2 ++
+ drivers/gpu/drm/msm/msm_gpu.h           | 2 ++
+ include/uapi/drm/msm_drm.h              | 1 +
+ 7 files changed, 13 insertions(+), 4 deletions(-)
 
-Leo
+-- 
+2.29.2
+
