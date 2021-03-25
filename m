@@ -2,111 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 91162348A2F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 08:29:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AD1CB348A48
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 08:41:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229581AbhCYH2h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Mar 2021 03:28:37 -0400
-Received: from aserp2130.oracle.com ([141.146.126.79]:57468 "EHLO
-        aserp2130.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229619AbhCYH2T (ORCPT
+        id S229733AbhCYHkf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Mar 2021 03:40:35 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:43560 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229576AbhCYHk0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Mar 2021 03:28:19 -0400
-Received: from pps.filterd (aserp2130.oracle.com [127.0.0.1])
-        by aserp2130.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 12P7KKeT115108;
-        Thu, 25 Mar 2021 07:28:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
- : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=corp-2020-01-29;
- bh=Rrnm/+ueOBs+nnQE3/dtGz842zBrqgxKPHFcSicBbJQ=;
- b=jePjKZt5cKlPO1N7hlNkgF8p+A2FHVZyilJiTphWnNMgJu++ogyVuoZC3TDEAIOvYk6N
- xS4HYNWtDCrDxc8eE9N03LxWThGYqELhQVitHlKLFvsyERz/5xTquq93Gc7yzC4YsvPz
- nOi1JEQQZCJSDD4scp8AOb2lxV+/CPlzcafxFDAp/duD6NHi9itmkttsV6MhhBmhEY54
- Sk/LOhqV0cIHdOcd/EYREAgfV+Z4d/hWr3rww6JLLFo7AytIR2PYAuFY+DEhEMZO3Fxl
- sAjYi2MstJ6nJOq9lSEvsXXGMZ7txVxqJ0g8nnNhPkW81VbojGPGP4SW07P1vcPyyznW Mw== 
-Received: from aserp3020.oracle.com (aserp3020.oracle.com [141.146.126.70])
-        by aserp2130.oracle.com with ESMTP id 37d6jbnbx7-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Thu, 25 Mar 2021 07:28:04 +0000
-Received: from pps.filterd (aserp3020.oracle.com [127.0.0.1])
-        by aserp3020.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 12P7KU02067021;
-        Thu, 25 Mar 2021 07:28:03 GMT
-Received: from aserv0121.oracle.com (aserv0121.oracle.com [141.146.126.235])
-        by aserp3020.oracle.com with ESMTP id 37dty1j91x-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Thu, 25 Mar 2021 07:28:03 +0000
-Received: from abhmp0007.oracle.com (abhmp0007.oracle.com [141.146.116.13])
-        by aserv0121.oracle.com (8.14.4/8.13.8) with ESMTP id 12P7S0HG026974;
-        Thu, 25 Mar 2021 07:28:00 GMT
-Received: from kadam (/102.36.221.92)
-        by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Thu, 25 Mar 2021 00:28:00 -0700
-Date:   Thu, 25 Mar 2021 10:27:51 +0300
-From:   Dan Carpenter <dan.carpenter@oracle.com>
-To:     "'Wei Yongjun" <weiyongjun1@huawei.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Govind Singh <govinds@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        kernel-janitors@vger.kernel.org, Hulk Robot <hulkci@huawei.com>
-Subject: Re: [PATCH -next] remoteproc: qcom: wcss: Fix wrong pointer passed
- to PTR_ERR()
-Message-ID: <20210325072751.GS1717@kadam>
-References: <20210325030857.3978824-1-weiyongjun1@huawei.com>
+        Thu, 25 Mar 2021 03:40:26 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1616658026; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=5V/X73Qvmby+KZEDF3giACHPZGd7oaDcpBQsgLRANQE=;
+ b=d9gwkkbSScKxKxFWwr5UBV3tfzF7aBtAUJVa9IxSE8tyto6e+yDacaeCJAETh20zZ8z+of0o
+ O7CPqu5POxnZHAfERM9IlFVU0I9CnKrl9K67Z4KQhXfj901OnNyVywrE9D83yxS+EaKvgUIy
+ YGzPLHrJqAIRY0kLenzvSwvFVyk=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 605c3e5e1de5dd7b996976bc (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 25 Mar 2021 07:40:14
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E25A6C43462; Thu, 25 Mar 2021 07:40:13 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id DB834C433C6;
+        Thu, 25 Mar 2021 07:40:12 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210325030857.3978824-1-weiyongjun1@huawei.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Proofpoint-IMR: 1
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=9933 signatures=668683
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 mlxlogscore=999
- malwarescore=0 phishscore=0 bulkscore=0 mlxscore=0 suspectscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2009150000 definitions=main-2103250054
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=9933 signatures=668683
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0 phishscore=0
- lowpriorityscore=0 suspectscore=0 clxscore=1011 priorityscore=1501
- spamscore=0 adultscore=0 impostorscore=0 mlxlogscore=999 mlxscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2009150000 definitions=main-2103250054
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 25 Mar 2021 13:10:12 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Will Deacon <will@kernel.org>
+Cc:     akhilpo@codeaurora.org, iommu@lists.linux-foundation.org,
+        jcrouse@codeaurora.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        robdclark@gmail.com, robin.murphy@arm.com,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>
+Subject: Re: [PATCHv2 2/2] iommu/arm-smmu-qcom: Move the adreno smmu specific
+ impl earlier
+In-Reply-To: <8cfaed1915ad6dd0c34ac7eb2391b410@codeaurora.org>
+References: <YDlIrjkfv16o4Nu3@builder.lan>
+ <20210227135321.420-1-saiprakash.ranjan@codeaurora.org>
+ <YEqn1SjsGgK0V8K4@builder.lan>
+ <8cfaed1915ad6dd0c34ac7eb2391b410@codeaurora.org>
+Message-ID: <727fa9fe2e644f88ba35c2877d71788e@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 25, 2021 at 03:08:57AM +0000, 'Wei Yongjun wrote:
-> From: Wei Yongjun <weiyongjun1@huawei.com>
+Hi Will,
+
+On 2021-03-15 00:31, Sai Prakash Ranjan wrote:
+> On 2021-03-12 04:59, Bjorn Andersson wrote:
+>> On Sat 27 Feb 07:53 CST 2021, Sai Prakash Ranjan wrote:
+>> 
+>>> Hi Bjorn,
+>>> 
+>>> On 2021-02-27 00:44, Bjorn Andersson wrote:
+>>> > On Fri 26 Feb 12:23 CST 2021, Rob Clark wrote:
+>>> >
+>>> >
+>>> > The current logic picks one of:
+>>> > 1) is the compatible mentioned in qcom_smmu_impl_of_match[]
+>>> > 2) is the compatible an adreno
+>>> > 3) no quirks needed
+>>> >
+>>> > The change flips the order of these, so the only way I can see this
+>>> > change affecting things is if we expected a match on #2, but we got one
+>>> > on #1.
+>>> >
+>>> > Which implies that the instance that we want to act according to the
+>>> > adreno impl was listed in qcom_smmu_impl_of_match[] - which either is
+>>> > wrong, or there's a single instance that needs both behaviors.
+>>> >
+>>> > (And I believe Jordan's answer confirms the latter - there's a single
+>>> > SMMU instance that needs all them quirks at once)
+>>> >
+>>> 
+>>> Let me go through the problem statement in case my commit message 
+>>> wasn't
+>>> clear. There are two SMMUs (APSS and GPU) on SC7280 and both are 
+>>> SMMU500
+>>> (ARM SMMU IP).
+>>> 
+>>> APSS SMMU compatible - ("qcom,sc7280-smmu-500", "arm,mmu-500")
+>>> GPU SMMU compatible - ("qcom,sc7280-smmu-500", "qcom,adreno-smmu", 
+>>> "arm,mmu-500")
+>>> 
+>>> Now if we take SC7180 as an example, GPU SMMU was QSMMU(QCOM SMMU IP)
+>>> and APSS SMMU was SMMU500(ARM SMMU IP).
+>>> 
+>>> APSS SMMU compatible - ("qcom,sc7180-smmu-500", "arm,mmu-500")
+>>> GPU SMMU compatible - ("qcom,sc7180-smmu-v2", "qcom,adreno-smmu", 
+>>> "qcom,smmu-v2")
+>>> 
+>>> Current code sequence without this patch,
+>>> 
+>>> if (of_match_node(qcom_smmu_impl_of_match, np))
+>>>                  return qcom_smmu_create(smmu, &qcom_smmu_impl);
+>>> 
+>>> if (of_device_is_compatible(np, "qcom,adreno-smmu"))
+>>>         return qcom_smmu_create(smmu, &qcom_adreno_smmu_impl);
+>>> 
+>>> Now if we look at the compatible for SC7180, there is no problem 
+>>> because
+>>> the APSS SMMU will match the one in qcom_smmu_impl_of_match[] and GPU 
+>>> SMMU
+>>> will match "qcom,adreno-smmu" because the compatible strings are 
+>>> different.
+>>> But for SC7280, both the APSS SMMU and GPU SMMU 
+>>> compatible("qcom,sc7280-smmu-500")
+>>> are same. So GPU SMMU will match with the one in 
+>>> qcom_smmu_impl_of_match[]
+>>> i.e.., "qcom,sc7280-smmu-500" which functionally doesn't cause any 
+>>> problem
+>>> but we will miss settings for split pagetables which are part of GPU 
+>>> SMMU
+>>> specific implementation.
+>>> 
+>>> We can avoid this with yet another new compatible for GPU SMMU 
+>>> something like
+>>> "qcom,sc7280-adreno-smmu-500" but since we can handle this easily in 
+>>> the
+>>> driver and since the IPs are same, meaning if there was a hardware 
+>>> quirk
+>>> required, then we would need to apply to both of them and would this 
+>>> additional
+>>> compatible be of any help?
+>>> 
+>> 
+>> No, I think you're doing the right thing of having them both. I just
+>> didn't remember us doing that.
+>> 
+>>> Coming to the part of quirks now, you are right saying both SMMUs 
+>>> will need
+>>> to have the same quirks in SC7280 and similar others where both are 
+>>> based on
+>>> same IPs but those should probably be *hardware quirks* and if they 
+>>> are
+>>> software based like the S2CR quirk depending on the firmware, then it 
+>>> might
+>>> not be applicable to both. In case if it is applicable, then as 
+>>> Jordan mentioned,
+>>> we can add the same quirks in GPU SMMU implementation.
+>>> 
+>> 
+>> I do suspect that at some point (probably sooner than later) we'd have
+>> to support both inheriting of stream from the bootloader and the 
+>> Adreno
+>> "quirks" in the same instance.
+>> 
+>> But for now this is okay to me.
+>> 
 > 
-> PTR_ERR should access the value just tested by IS_ERR, otherwise
-> the wrong error code will be returned.
+> Sure, let me know if you or anyone face any issues without it and I 
+> will
+> add it. I will resend this series with the dt-bindings patch for sc7280 
+> smmu
+> which wasn't cc'd to smmu folks by mistake.
 > 
-> Fixes: 0af65b9b915e ("remoteproc: qcom: wcss: Add non pas wcss Q6 support for QCS404")
-> Reported-by: Hulk Robot <hulkci@huawei.com>
-> Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
-> ---
->  drivers/remoteproc/qcom_q6v5_wcss.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
-> index 71ec1a451e35..eda64f86d7b0 100644
-> --- a/drivers/remoteproc/qcom_q6v5_wcss.c
-> +++ b/drivers/remoteproc/qcom_q6v5_wcss.c
-> @@ -972,7 +972,7 @@ static int q6v5_wcss_init_clock(struct q6v5_wcss *wcss)
->  		ret = PTR_ERR(wcss->qdsp6ss_axim_cbcr);
->  		if (ret != -EPROBE_DEFER)
->  			dev_err(wcss->dev, "failed to get axim cbcr clk\n");
-> -		return PTR_ERR(wcss->qdsp6ss_abhm_cbcr);
-> +		return PTR_ERR(wcss->qdsp6ss_axim_cbcr);
 
-Just return ret;
+I think there is consensus on this series. I can resend if required but 
+it
+still applies cleanly, let me know if you have any comments?
 
-(Don't worry about being consistent when the other returns are doing it
-wrong).
+Thanks,
+Sai
 
-regards,
-dan carpenter
-
-
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
