@@ -2,166 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 06EED34867E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 02:40:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 29DD4348690
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 02:49:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232993AbhCYBkI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Mar 2021 21:40:08 -0400
-Received: from labrats.qualcomm.com ([199.106.110.90]:28545 "EHLO
-        labrats.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232764AbhCYBjq (ORCPT
+        id S235870AbhCYBtY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Mar 2021 21:49:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56324 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235831AbhCYBtK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Mar 2021 21:39:46 -0400
-IronPort-SDR: ws4/udhmVJFWYhxbjtAPg7axrtUTZzsI5bYdkI+YjJk+0oyFg00dMCjDhRkBdhCvAjnkgckqgx
- SjfcmsycouVZIPE48SbGo+z8zD7bjf3+yKocueiO+B74bCHericoNgrA7+Oh37kgCY56t+bdo9
- K2xLEJFdemTJdTHusmDl2yronDDudu8l5tU7T1YhcM3NhwFeyO+se5EBmFpfwEnFBalECL9k4H
- IVwX3QGEzJC3zEu/FZJVFNuoAbH7OTF9LH2QuClrc8pM7RirR9uEdnNbLbmV/Mqy+rHyFA4m6/
- QJo=
-X-IronPort-AV: E=Sophos;i="5.81,276,1610438400"; 
-   d="scan'208";a="47833100"
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by labrats.qualcomm.com with ESMTP; 24 Mar 2021 18:39:45 -0700
-X-QCInternal: smtphost
-Received: from wsp769891wss.qualcomm.com (HELO stor-presley.qualcomm.com) ([192.168.140.85])
-  by ironmsg01-sd.qualcomm.com with ESMTP; 24 Mar 2021 18:39:44 -0700
-Received: by stor-presley.qualcomm.com (Postfix, from userid 92687)
-        id AFE7921038; Wed, 24 Mar 2021 18:39:44 -0700 (PDT)
-From:   Asutosh Das <asutoshd@codeaurora.org>
-To:     cang@codeaurora.org, martin.petersen@oracle.com,
-        adrian.hunter@intel.com, linux-scsi@vger.kernel.org
-Cc:     Asutosh Das <asutoshd@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Bean Huo <beanhuo@micron.com>,
-        Nitin Rawat <nitirawa@codeaurora.org>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v13 2/2] ufs: sysfs: Resume the proper scsi device
-Date:   Wed, 24 Mar 2021 18:39:14 -0700
-Message-Id: <e6a49c62b7d643bd5fbe7e744a9f91d91349ec72.1616633712.git.asutoshd@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1616633712.git.asutoshd@codeaurora.org>
-References: <cover.1616633712.git.asutoshd@codeaurora.org>
-In-Reply-To: <cover.1616633712.git.asutoshd@codeaurora.org>
-References: <cover.1616633712.git.asutoshd@codeaurora.org>
+        Wed, 24 Mar 2021 21:49:10 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F60EC06174A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 18:49:10 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id h3so354047pfr.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 18:49:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=lTT11oRd2IP/7R9HW0QYaEhU1Zlu1DFDIzRADDCnLQQ=;
+        b=Z+z2A1yAfmKe+FCUbdH4KIOqFTHUUfHCkPioKvw+4xukLDm9HfIDtt02qZwkXLM/SK
+         ND1RSq9RFZF3e2qR+20GVfw3hsd6gQ3zn0Q2XZVOLjqr/OmTdYw3vScyzdWZWEhGC9rH
+         TlLUDd8ocYtWZsjnlzybGhQpOat8bCD3oD5gg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=lTT11oRd2IP/7R9HW0QYaEhU1Zlu1DFDIzRADDCnLQQ=;
+        b=M808nG2seQUybyhoeV2pNfUbka5E8wNRyjN53oLsV/CgL2aG4v3iZj5YuOcqL65BgK
+         EAx0n38tGeOwv58Fz49zFwdPY7oTqf44JqLujUW1XGjWUb77sh3s93kipN88pVbYD3Bb
+         2sR9ueDqAS5dHvzD6ZiVXlpCwIfmxNDebesnDzuUPnPyXOjB228AIPNDLCq2JhT1L2bX
+         GtMNXtwyk7Nje/rK+t+5gsneGZg/N0pXAlgdJaboD1KN/GgaqEWMINV3pJW9pEHixW6Z
+         pOr560caUkAZrZI2oaUJmfJUeR90IzDAPkRqGuhIYb2wZ8zRBvvhEduuExiv57ctK7e5
+         hxfg==
+X-Gm-Message-State: AOAM532N7vN8iZFlEeB5EhWGENQMr11ogoK2o+uksQpxKRbGTtRY5HES
+        t1V/y02wCtgMzvGfwzX4qN3DLA==
+X-Google-Smtp-Source: ABdhPJyy21bCd9n+vhHQdGXzdNqyTIFIwyuAXQ2gaSqWta5/XpKxeLBm8XOfJtheWbAiseDrIDousQ==
+X-Received: by 2002:a63:5924:: with SMTP id n36mr5562187pgb.183.1616636947460;
+        Wed, 24 Mar 2021 18:49:07 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:201:84ac:62f7:16a8:ccc7])
+        by smtp.gmail.com with ESMTPSA id s26sm3750220pfd.5.2021.03.24.18.49.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Mar 2021 18:49:06 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20210318200544.2244007-1-dmitry.baryshkov@linaro.org>
+References: <20210318200544.2244007-1-dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v2] gpu/drm/msm: fix shutdown hook in case GPU components failed to bind
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Date:   Wed, 24 Mar 2021 18:49:05 -0700
+Message-ID: <161663694524.3012082.11889553997747135632@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Resumes the actual scsi device the unit descriptor of which
-is being accessed instead of the hba alone.
+Quoting Dmitry Baryshkov (2021-03-18 13:05:44)
+> if GPU components have failed to bind, shutdown callback would fail with
+> the following backtrace. Add safeguard check to stop that oops from
+> happening and allow the board to reboot.
+[...]
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> index 94525ac76d4e..fd2ac54caf9f 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -1311,6 +1311,10 @@ static int msm_pdev_remove(struct platform_device =
+*pdev)
+>  static void msm_pdev_shutdown(struct platform_device *pdev)
+>  {
+>         struct drm_device *drm =3D platform_get_drvdata(pdev);
+> +       struct msm_drm_private *priv =3D drm ? drm->dev_private : NULL;
+> +
+> +       if (!priv || !priv->kms)
+> +               return;
+> =20
 
-Reviewed-by: Can Guo <cang@codeaurora.org>
-Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
----
- drivers/scsi/ufs/ufs-sysfs.c | 30 +++++++++++++++++-------------
- 1 file changed, 17 insertions(+), 13 deletions(-)
+I see a problem where if I don't get a backlight probing then my
+graphics card doesn't appear but this driver is still bound. I was
+hoping this patch would fix it but it doesn't. I have slab poisoning
+enabled so sometimes the 'priv' pointer is 0x6b6b6b6b6b6b6b6b meaning it
+got all freed.
 
-diff --git a/drivers/scsi/ufs/ufs-sysfs.c b/drivers/scsi/ufs/ufs-sysfs.c
-index acc54f5..3fc182b 100644
---- a/drivers/scsi/ufs/ufs-sysfs.c
-+++ b/drivers/scsi/ufs/ufs-sysfs.c
-@@ -245,9 +245,9 @@ static ssize_t wb_on_store(struct device *dev, struct device_attribute *attr,
- 		goto out;
- 	}
- 
--	pm_runtime_get_sync(hba->dev);
-+	scsi_autopm_get_device(hba->sdev_ufs_device);
- 	res = ufshcd_wb_ctrl(hba, wb_enable);
--	pm_runtime_put_sync(hba->dev);
-+	scsi_autopm_put_device(hba->sdev_ufs_device);
- out:
- 	up(&hba->host_sem);
- 	return res < 0 ? res : count;
-@@ -297,10 +297,10 @@ static ssize_t ufs_sysfs_read_desc_param(struct ufs_hba *hba,
- 		goto out;
- 	}
- 
--	pm_runtime_get_sync(hba->dev);
-+	scsi_autopm_get_device(hba->sdev_ufs_device);
- 	ret = ufshcd_read_desc_param(hba, desc_id, desc_index,
- 				param_offset, desc_buf, param_size);
--	pm_runtime_put_sync(hba->dev);
-+	scsi_autopm_put_device(hba->sdev_ufs_device);
- 	if (ret) {
- 		ret = -EINVAL;
- 		goto out;
-@@ -678,7 +678,7 @@ static ssize_t _name##_show(struct device *dev,				\
- 		up(&hba->host_sem);					\
- 		return -ENOMEM;						\
- 	}								\
--	pm_runtime_get_sync(hba->dev);					\
-+	scsi_autopm_get_device(hba->sdev_ufs_device);			\
- 	ret = ufshcd_query_descriptor_retry(hba,			\
- 		UPIU_QUERY_OPCODE_READ_DESC, QUERY_DESC_IDN_DEVICE,	\
- 		0, 0, desc_buf, &desc_len);				\
-@@ -695,7 +695,7 @@ static ssize_t _name##_show(struct device *dev,				\
- 		goto out;						\
- 	ret = sysfs_emit(buf, "%s\n", desc_buf);			\
- out:									\
--	pm_runtime_put_sync(hba->dev);					\
-+	scsi_autopm_put_device(hba->sdev_ufs_device);			\
- 	kfree(desc_buf);						\
- 	up(&hba->host_sem);						\
- 	return ret;							\
-@@ -744,10 +744,10 @@ static ssize_t _name##_show(struct device *dev,				\
- 	}								\
- 	if (ufshcd_is_wb_flags(QUERY_FLAG_IDN##_uname))			\
- 		index = ufshcd_wb_get_query_index(hba);			\
--	pm_runtime_get_sync(hba->dev);					\
-+	scsi_autopm_get_device(hba->sdev_ufs_device);			\
- 	ret = ufshcd_query_flag(hba, UPIU_QUERY_OPCODE_READ_FLAG,	\
- 		QUERY_FLAG_IDN##_uname, index, &flag);			\
--	pm_runtime_put_sync(hba->dev);					\
-+	scsi_autopm_put_device(hba->sdev_ufs_device);			\
- 	if (ret) {							\
- 		ret = -EINVAL;						\
- 		goto out;						\
-@@ -813,10 +813,10 @@ static ssize_t _name##_show(struct device *dev,				\
- 	}								\
- 	if (ufshcd_is_wb_attrs(QUERY_ATTR_IDN##_uname))			\
- 		index = ufshcd_wb_get_query_index(hba);			\
--	pm_runtime_get_sync(hba->dev);					\
-+	scsi_autopm_get_device(hba->sdev_ufs_device);			\
- 	ret = ufshcd_query_attr(hba, UPIU_QUERY_OPCODE_READ_ATTR,	\
- 		QUERY_ATTR_IDN##_uname, index, 0, &value);		\
--	pm_runtime_put_sync(hba->dev);					\
-+	scsi_autopm_put_device(hba->sdev_ufs_device);			\
- 	if (ret) {							\
- 		ret = -EINVAL;						\
- 		goto out;						\
-@@ -899,11 +899,15 @@ static ssize_t _pname##_show(struct device *dev,			\
- 	struct scsi_device *sdev = to_scsi_device(dev);			\
- 	struct ufs_hba *hba = shost_priv(sdev->host);			\
- 	u8 lun = ufshcd_scsi_to_upiu_lun(sdev->lun);			\
-+	int ret;							\
- 	if (!ufs_is_valid_unit_desc_lun(&hba->dev_info, lun,		\
- 				_duname##_DESC_PARAM##_puname))		\
- 		return -EINVAL;						\
--	return ufs_sysfs_read_desc_param(hba, QUERY_DESC_IDN_##_duname,	\
-+	scsi_autopm_get_device(sdev);					\
-+	ret = ufs_sysfs_read_desc_param(hba, QUERY_DESC_IDN_##_duname,	\
- 		lun, _duname##_DESC_PARAM##_puname, buf, _size);	\
-+	scsi_autopm_put_device(sdev);					\
-+	return ret;							\
- }									\
- static DEVICE_ATTR_RO(_pname)
- 
-@@ -964,10 +968,10 @@ static ssize_t dyn_cap_needed_attribute_show(struct device *dev,
- 		goto out;
- 	}
- 
--	pm_runtime_get_sync(hba->dev);
-+	scsi_autopm_get_device(hba->sdev_ufs_device);
- 	ret = ufshcd_query_attr(hba, UPIU_QUERY_OPCODE_READ_ATTR,
- 		QUERY_ATTR_IDN_DYN_CAP_NEEDED, lun, 0, &value);
--	pm_runtime_put_sync(hba->dev);
-+	scsi_autopm_put_device(hba->sdev_ufs_device);
- 	if (ret) {
- 		ret = -EINVAL;
- 		goto out;
--- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+I found that the 'drm' pointer here is pointing at junk. The
+msm_drm_init() function calls drm_dev_put() on the error path and that
+will destroy the drm pointer but it doesn't update this platform drivers
+drvdata. Do we need another patch that sets the drvdata to NULL on
+msm_drm_init() failing? One last note, I'm seeing this on 5.4 so maybe I
+missed something and the drvdata has been set to NULL somewhere else
+upstream. I sort of doubt it though.
 
+---8<----
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index c842a270806d..895d74aa8834 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -577,6 +577,7 @@ static int msm_drm_init(struct device *dev, struct drm_=
+driver *drv)
+ 	kfree(priv);
+ err_put_drm_dev:
+ 	drm_dev_put(ddev);
++	platform_set_drvdata(pdev, NULL);
+ 	return ret;
+ }
