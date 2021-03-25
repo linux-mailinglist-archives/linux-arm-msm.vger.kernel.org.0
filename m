@@ -2,256 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0CFDC3488CA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 07:13:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2CC743488D0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 07:13:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229642AbhCYGMe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Mar 2021 02:12:34 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:30978 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229619AbhCYGMW (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Mar 2021 02:12:22 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1616652741; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=orQ8HjFkFqj/28v7uatxw4nTWkgct2pHiy/e+Kklocg=;
- b=qgNYMshQjOQRA9mFVBHlcgmJ3SPn5hjDd27JUsuxoUyK5MKxMoIxYhGR7Ixx/GpbyqxNHJKT
- qxPD6j1RheudqW9RSP8HKDwUHMvbkZqMoUeKOLXJKkd+g0zCCgjS4dXZTWkcsSUEE5yzNd9O
- 5yzdBNWIUjh7Bf+eT4N2Z9dsHYE=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 605c29c4c32ceb3a9181ebc7 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 25 Mar 2021 06:12:20
- GMT
-Sender: skakit=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7A3DBC43461; Thu, 25 Mar 2021 06:12:20 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: skakit)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 68568C433C6;
-        Thu, 25 Mar 2021 06:12:19 +0000 (UTC)
+        id S229624AbhCYGNV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Mar 2021 02:13:21 -0400
+Received: from mga14.intel.com ([192.55.52.115]:21780 "EHLO mga14.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229519AbhCYGMu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 25 Mar 2021 02:12:50 -0400
+IronPort-SDR: mqMW10rqQxWUcFLBytxS19URgO8/9VIXlcacoBXtn9UzjWHJPXVqixSL9ymK7gh79rsYXJL4G4
+ 9XIoPqESEX+g==
+X-IronPort-AV: E=McAfee;i="6000,8403,9933"; a="190285768"
+X-IronPort-AV: E=Sophos;i="5.81,276,1610438400"; 
+   d="scan'208";a="190285768"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Mar 2021 23:12:50 -0700
+IronPort-SDR: E0vFGGjy+DUsAz+Oujfd4GGRGpvbSkRqnWJ7A1SBBgr2wppmYlZ4JKLP8ePHTcHOT9nm00TUWI
+ 4Ba9ilIF8QTA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.81,276,1610438400"; 
+   d="scan'208";a="442614320"
+Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
+  by fmsmga002.fm.intel.com with ESMTP; 24 Mar 2021 23:12:50 -0700
+Received: from fmsmsx609.amr.corp.intel.com (10.18.126.89) by
+ fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2106.2; Wed, 24 Mar 2021 23:12:49 -0700
+Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
+ fmsmsx609.amr.corp.intel.com (10.18.126.89) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2106.2
+ via Frontend Transport; Wed, 24 Mar 2021 23:12:49 -0700
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.170)
+ by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2106.2; Wed, 24 Mar 2021 23:12:39 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Z0r478CVXw2L+j/aNquHWBZpGwpVcm9/Z1Szdqo0mJRXsOD5hPZBtoT7er0Dim2g+5Z2UhO/3F5czH/pyA5jQd4ZJ7pqZUMy7JKnx0vmXZWB1e+Nw8tDQyhoZCSjzB+1yrRPXTLhz5X1jwCULLpfywoMDdm6MJm0M5aZmROVWht1NjYA66GfPTspKJNQ0o7UwWhd6mfzaoR4Dbtq+bzvLzJQgbF/0cuQt6MBvtKO6mzyCiR8W/dtTx/lygukHPSjAjGDU9jwbrF9MRNM9s/yqORnEhNE173S5jtu2VeshM+fgR0GMbNglUQdaXDtICFet6QyaUh4UUWSLEkKj1XryQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Pi0b3jsOWgjL2XHyeLI3OJwpWRO1HIbOcmD8uZvLYcg=;
+ b=WaG0NTbCgVwl0x1NllYye/zVB0yWWZFM1wA6J/Aa6QcNFmE/KkfGeSIOtluP7KiL5GXZy9zXHb83h+9JVOfeeQKgNLH/Y8xbH2vSF7C8XngkJ0ycw1+eby/+r9z4a4ZCwr3qdYewlTq6XCN7a6kMdYvmYTj63DR1Z3ttD2a7MfhRORvxH2k+hl/U5u58SDS+lQYrIStw4UWapVsN/+eNdUtnwbt7TEK7dvbBe56kRwpI9pTu1sZKa6yLc6JEkdAKWjo+8AEh8MCjwo33dDm/HE5EIdgImC3/ix78hS0VIbTHPPtzJclMqUlJV+aJcjICAyIaQW7GF3nElID61+Cd+Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
+ s=selector2-intel-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Pi0b3jsOWgjL2XHyeLI3OJwpWRO1HIbOcmD8uZvLYcg=;
+ b=pJHe0AzoX+57T1YOOhuoaaJKSnCYfrAQnYlRZa5TEHe4cgWiMXPTBZ8aRTB5pJM5MBzqxriac0jyEhn+aj0VfDGQsjjimAwSQdmkzkr2SMnvkGZRzijEsYLjZ1eI8Hwn2FIkyTSiSOdoL1N0OW1hStnZdvqNTpTylayNuaF82Xo=
+Received: from MWHPR11MB1886.namprd11.prod.outlook.com (2603:10b6:300:110::9)
+ by MWHPR11MB1821.namprd11.prod.outlook.com (2603:10b6:300:10f::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3955.18; Thu, 25 Mar
+ 2021 06:12:38 +0000
+Received: from MWHPR11MB1886.namprd11.prod.outlook.com
+ ([fe80::75b0:a8e9:60cb:7a29]) by MWHPR11MB1886.namprd11.prod.outlook.com
+ ([fe80::75b0:a8e9:60cb:7a29%9]) with mapi id 15.20.3977.026; Thu, 25 Mar 2021
+ 06:12:38 +0000
+From:   "Tian, Kevin" <kevin.tian@intel.com>
+To:     Auger Eric <eric.auger@redhat.com>, Christoph Hellwig <hch@lst.de>
+CC:     "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
+        Will Deacon <will@kernel.org>,
+        "linuxppc-dev@lists.ozlabs.org" <linuxppc-dev@lists.ozlabs.org>,
+        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+        Li Yang <leoyang.li@nxp.com>,
+        "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>,
+        "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        "virtualization@lists.linux-foundation.org" 
+        <virtualization@lists.linux-foundation.org>,
+        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
+        "David Woodhouse" <dwmw2@infradead.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "Liu, Yi L" <yi.l.liu@intel.com>
+Subject: RE: [PATCH 15/17] iommu: remove DOMAIN_ATTR_NESTING
+Thread-Topic: [PATCH 15/17] iommu: remove DOMAIN_ATTR_NESTING
+Thread-Index: AQHXDnfEED2hcP0W6EKGzzYVGS5lRKqDYTAAgABXjYCAAQqdAIAPmsSQ
+Date:   Thu, 25 Mar 2021 06:12:37 +0000
+Message-ID: <MWHPR11MB188688125518D050E384658F8C629@MWHPR11MB1886.namprd11.prod.outlook.com>
+References: <20210301084257.945454-1-hch@lst.de>
+ <20210301084257.945454-16-hch@lst.de>
+ <3e8f1078-9222-0017-3fa8-4d884dbc848e@redhat.com>
+ <20210314155813.GA788@lst.de>
+ <3a1194de-a053-84dd-3d6a-bff8e01ebcd3@redhat.com>
+In-Reply-To: <3a1194de-a053-84dd-3d6a-bff8e01ebcd3@redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+dlp-version: 11.5.1.3
+dlp-product: dlpe-windows
+dlp-reaction: no-action
+authentication-results: redhat.com; dkim=none (message not signed)
+ header.d=none;redhat.com; dmarc=none action=none header.from=intel.com;
+x-originating-ip: [192.198.147.219]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 5bba3d53-44ef-4931-3635-08d8ef54fd63
+x-ms-traffictypediagnostic: MWHPR11MB1821:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <MWHPR11MB18210272479FD443962635D78C629@MWHPR11MB1821.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8882;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: +7WOZPtG/yQR8z0EWCDGhG3FLjpVszRezZqeIoyHmwTXVB8EKKIM8pC8vs8BMN3ggAyikBpi3SYox6/IfpAH+cwkif4oUUkn1DBY6xAcAI0NHREtLwgd975fw1A9F9GpDUIhjqjAT4/SRtI+vHg+H1XMOWEyKY+eYtKFS2g2oVjOBtMdJ32xAozhwiX7ZU035313cYlhuvgcJveOtp6lY+dEb8HumvABoTCkg6iVpiK/wYxBX8r/m59nyrs588FVKe6tqJjCLJZD/AZtmBB5sNeurforivnWTgdjZaNdpujaTXErgHVoGnWiSetpRBulD+evLSDpmVMjmzjQJtWnKPf8uP6TociDRjVvrstwT6Ub4YoOKhHSj65CmwmYg3+KsTn1iQ0fpWIpd0urOcM4NKIrzlyIWSQSf8brMBvnxG5EsH+D6wmjsFKLU5K9IklL+ilF9EdGmpQSVLIMYcLD63XGm57LxpocZo4AZHkW6e8Z270K6aASjtq0zHmL0KSLLRpV9LSChyLHopYq3N4bMWmrqimNZ9Mz1/0pnVSpPzVyT/T8oCfyB8igocQba2QxX6LmTTWhC5hcht6JYyF+qGIQNJx9QPDc4KHSMPk/vfKDH+JhXzhrQ0AqK33oC9OSOUQmodEiLGloeh6WA9Y/E7ygqxtiJK8ejS3LztKtUTo=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MWHPR11MB1886.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(396003)(346002)(136003)(376002)(39860400002)(366004)(478600001)(2906002)(5660300002)(316002)(33656002)(6506007)(7696005)(4326008)(26005)(71200400001)(9686003)(110136005)(54906003)(7416002)(53546011)(86362001)(64756008)(8676002)(52536014)(66556008)(38100700001)(55016002)(76116006)(66946007)(107886003)(66446008)(8936002)(186003)(66476007);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata: =?us-ascii?Q?fI3+iw3lagEA6pai5XRwccmrYzfA59IuBxbaVqcy0CGQh3DP3ixrrFMRWiqg?=
+ =?us-ascii?Q?lgAWEUb4HS6HTNguCq3d8VHcREDTGIFDBsDuuBXo+SqGAWQWAOV1MyQwQGLu?=
+ =?us-ascii?Q?wDJaUGv+L/zsFCUe3F9DwkgZuQH3L+a/YBfmJ/YZlufRKzwYvl5qcqGUMrR0?=
+ =?us-ascii?Q?pYThh3dn8EczfENxen8pGKazZADYAYtNrosbTFQXWJQuHFE4tAqOoVe0PuFz?=
+ =?us-ascii?Q?Y1QXVsk9Zm1o0ZklYxzwiUH5Y5n7EOWVdztSddWTGcOqoj3nG8QKQvismJWX?=
+ =?us-ascii?Q?NnVdZjJ+GhbymuS6u3has78XnNB7QsrFxucPS1NX8fLbmtHCkRjsY7WpSXF+?=
+ =?us-ascii?Q?iqH6sPDGPk1I0MlqAAlEDMZKMnLqsWNbJkcV0MwISmd69gk5cbt5KVGEBMna?=
+ =?us-ascii?Q?vM5nsx+vo1QmMvJBVZ1n5f5aEWoONBJcmTnJo/kZFq9lAKARsMeW707qz1Qj?=
+ =?us-ascii?Q?js8Tg51U5CAtbSq4IKSSkHcame3VEq7iUDIb9U7dvRUqjjGRT9Ef3YEsvP3r?=
+ =?us-ascii?Q?s9SVaxsmjgzoFcqB7N5Xw2iCJFlkMCO91UttRzDQRRzcdNHy8AcxobtPUOnR?=
+ =?us-ascii?Q?W9+XqtTVp7rHuKfZLGygaq7n1+tICjJ23ouZeBt0lN8JHMLr91mf+oo6SlQf?=
+ =?us-ascii?Q?5TqtIFkUwsBPT4kpkIdZ9YRgHCiX5xw/AJTesJW2G0KJmj6EZYYvSjvpMwSG?=
+ =?us-ascii?Q?08Q4MZ+vc2esLVB9lKeuHsUWI6EN/dRfgSSD0TBDHu8MoheBesJOeBHRUW96?=
+ =?us-ascii?Q?R8XtrcpgHvbLEHQUNLmAAzDqDcARWbDraxrkMzZsjGMeLC1n/SfBft090cEZ?=
+ =?us-ascii?Q?PZx8a/WSfNSH9RPv35fmjkXsmlweBbkDSTEEjBN1ih5RkxgHUy7mAIejMzuZ?=
+ =?us-ascii?Q?qkoNM8Gtta+xKmT7rAXu0PuwYMfAFFFTZd27jX7Xvqk84bV49xNj3TI1hecZ?=
+ =?us-ascii?Q?M57Fc227flJz04oxNesvhNf9v2LCGU7MlVVhOeFMmqFpnuEy3fR/ESNpXRWk?=
+ =?us-ascii?Q?w6fAD3jlvnLBz2Jpuv/cPSn1KH/pTgezhWs2kJ7BklTE+4EjPZsUEjpa/arM?=
+ =?us-ascii?Q?8CYM5irwQrY7u0lfUOzFKxUmmtljQqrPeuirrI1yj8cMCZ9YinOBxM2Xi5pv?=
+ =?us-ascii?Q?M/E1bwwwDBc/SgweDf0DC4ETAXgOKTsYIy+3eHE414gbuyOkitz9embLqgv4?=
+ =?us-ascii?Q?bz59GCCIA8MGfPZRpZ2CfTRqKXHRh586iv7T3ALnzB1fDLzF/sucTVegdeWg?=
+ =?us-ascii?Q?pms1vTlhTlfiI0xcwZYBq1qGZxgCeu3kPk7jeUCUv3q7D+566p1N3/EZ3aBL?=
+ =?us-ascii?Q?5ELP8YpBRmwyBgr10ilTAZmg?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 25 Mar 2021 11:42:19 +0530
-From:   skakit@codeaurora.org
-To:     Rob Herring <robh@kernel.org>
-Cc:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Collins <collinsd@codeaurora.org>, kgunda@codeaurora.org,
-        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/3] dt-bindings: input: pm8941-pwrkey: Convert power key
- bindings to yaml
-In-Reply-To: <20210305144027.GA115719@robh.at.kernel.org>
-References: <1614922721-1390-1-git-send-email-skakit@codeaurora.org>
- <1614922721-1390-3-git-send-email-skakit@codeaurora.org>
- <20210305144027.GA115719@robh.at.kernel.org>
-Message-ID: <22580c3c4489506640d2091b94c3b520@codeaurora.org>
-X-Sender: skakit@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: MWHPR11MB1886.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5bba3d53-44ef-4931-3635-08d8ef54fd63
+X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Mar 2021 06:12:37.9104
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: g+9tx8yupAxEaBVTaXN+YMN+Gjh+DKeandfmUv2hiw/T4C1FrVED7BMCGrAdhj15oS8+rSSZsVH3NORAabP2Aw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR11MB1821
+X-OriginatorOrg: intel.com
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+> From: Auger Eric
+> Sent: Monday, March 15, 2021 3:52 PM
+> To: Christoph Hellwig <hch@lst.de>
+> Cc: kvm@vger.kernel.org; Will Deacon <will@kernel.org>; linuxppc-
+> dev@lists.ozlabs.org; dri-devel@lists.freedesktop.org; Li Yang
+> <leoyang.li@nxp.com>; iommu@lists.linux-foundation.org;
+>=20
+> Hi Christoph,
+>=20
+> On 3/14/21 4:58 PM, Christoph Hellwig wrote:
+> > On Sun, Mar 14, 2021 at 11:44:52AM +0100, Auger Eric wrote:
+> >> As mentionned by Robin, there are series planning to use
+> >> DOMAIN_ATTR_NESTING to get info about the nested caps of the iommu
+> (ARM
+> >> and Intel):
+> >>
+> >> [Patch v8 00/10] vfio: expose virtual Shared Virtual Addressing to VMs
+> >> patches 1, 2, 3
+> >>
+> >> Is the plan to introduce a new domain_get_nesting_info ops then?
+> >
+> > The plan as usual would be to add it the series adding that support.
+> > Not sure what the merge plans are - if the series is ready to be
+> > merged I could rebase on top of it, otherwise that series will need
+> > to add the method.
+> OK I think your series may be upstreamed first.
+>=20
 
-On 2021-03-05 20:10, Rob Herring wrote:
-> On Fri, Mar 05, 2021 at 11:08:40AM +0530, satya priya wrote:
->> Convert power key bindings from .txt to .yaml format.
->> 
->> Signed-off-by: satya priya <skakit@codeaurora.org>
->> ---
->>  .../bindings/input/qcom,pm8941-pwrkey.txt          | 53 
->> ---------------
->>  .../bindings/input/qcom,pm8941-pwrkey.yaml         | 76 
->> ++++++++++++++++++++++
->>  2 files changed, 76 insertions(+), 53 deletions(-)
->>  delete mode 100644 
->> Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.txt
->>  create mode 100644 
->> Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.yaml
-> 
-> You need to convert the main pm8941 binding first if not done already
-> and then reference this binding from it.
-> 
+Agree. The vSVA series is still undergoing a refactor according to Jason's
+comment thus won't be ready in short term. It's better to let this one
+go in first.
 
-Okay.
-
-> And let's have 1 complete example instead of fragments.
-> 
-
-Sure.
-
->> 
->> diff --git 
->> a/Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.txt 
->> b/Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.txt
->> deleted file mode 100644
->> index 34ab576..0000000
->> --- a/Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.txt
->> +++ /dev/null
->> @@ -1,53 +0,0 @@
->> -Qualcomm PM8941 PMIC Power Key
->> -
->> -PROPERTIES
->> -
->> -- compatible:
->> -	Usage: required
->> -	Value type: <string>
->> -	Definition: must be one of:
->> -		    "qcom,pm8941-pwrkey"
->> -		    "qcom,pm8941-resin"
->> -
->> -- reg:
->> -	Usage: required
->> -	Value type: <prop-encoded-array>
->> -	Definition: base address of registers for block
->> -
->> -- interrupts:
->> -	Usage: required
->> -	Value type: <prop-encoded-array>
->> -	Definition: key change interrupt; The format of the specifier is
->> -		    defined by the binding document describing the node's
->> -		    interrupt parent.
->> -
->> -- debounce:
->> -	Usage: optional
->> -	Value type: <u32>
->> -	Definition: time in microseconds that key must be pressed or 
->> released
->> -		    for state change interrupt to trigger.
->> -
->> -- bias-pull-up:
->> -	Usage: optional
->> -	Value type: <empty>
->> -	Definition: presence of this property indicates that the KPDPWR_N 
->> pin
->> -		    should be configured for pull up.
->> -
->> -- linux,code:
->> -	Usage: optional
->> -	Value type: <u32>
->> -	Definition: The input key-code associated with the power key.
->> -		    Use the linux event codes defined in
->> -		    include/dt-bindings/input/linux-event-codes.h
->> -		    When property is omitted KEY_POWER is assumed.
->> -
->> -EXAMPLE
->> -
->> -	pwrkey@800 {
->> -		compatible = "qcom,pm8941-pwrkey";
->> -		reg = <0x800>;
->> -		interrupts = <0x0 0x8 0 IRQ_TYPE_EDGE_BOTH>;
->> -		debounce = <15625>;
->> -		bias-pull-up;
->> -		linux,code = <KEY_POWER>;
->> -	};
->> diff --git 
->> a/Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.yaml 
->> b/Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.yaml
->> new file mode 100644
->> index 0000000..302866d
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.yaml
->> @@ -0,0 +1,76 @@
->> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/input/qcom,pm8941-pwrkey.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm PM8941 PMIC Power Key
->> +
->> +maintainers:
->> + - Courtney Cavin <courtney.cavin@sonymobile.com>
->> + - Vinod Koul <vkoul@kernel.org>
->> +
->> +properties:
->> +  compatible:
->> +    enum:
->> +      - qcom,pm8941-pwrkey
->> +      - qcom,pm8941-resin
->> +
->> +  interrupts:
->> +    description: |
->> +          Key change interrupt; The format of the specifier is
->> +          defined by the binding document describing the node's
->> +          interrupt parent.
->> +
->> +  debounce:
->> +    description: |
->> +          Time in microseconds that key must be pressed or
->> +          released for state change interrupt to trigger.
->> +    $ref: /schemas/types.yaml#/definitions/uint32
->> +
->> +  bias-pull-up:
->> +    description: |
->> +           Presence of this property indicates that the KPDPWR_N
->> +           pin should be configured for pull up.
->> +    $ref: /schemas/types.yaml#/definitions/flag
->> +
->> +  linux,code:
->> +    description: |
->> +           The input key-code associated with the power key.
->> +           Use the linux event codes defined in
->> +           include/dt-bindings/input/linux-event-codes.h
->> +           When property is omitted KEY_POWER is assumed.
->> +    $ref: /schemas/types.yaml#/definitions/uint32
-> 
-> Already has a type definition. Need to reference input.yaml.
-> 
-
-Okay.
-
->> +
->> +required:
->> + - compatible
->> + - interrupts
->> +
->> +additionalProperties: false
->> +
->> +examples:
->> + - |
->> +   #include <dt-bindings/interrupt-controller/irq.h>
->> +   #include <dt-bindings/input/linux-event-codes.h>
->> +   #include <dt-bindings/spmi/spmi.h>
->> +   spmi_bus: spmi@c440000 {
->> +     reg = <0x0c440000 0x1100>;
->> +     #address-cells = <2>;
->> +     #size-cells = <0>;
->> +     pmk8350: pmic@0 {
->> +       reg = <0x0 SPMI_USID>;
->> +       #address-cells = <1>;
->> +       #size-cells = <0>;
->> +       pmk8350_pon: pon_hlos@1300 {
->> +         reg = <0x1300>;
->> +         pwrkey {
->> +            compatible = "qcom,pm8941-pwrkey";
->> +            interrupts = < 0x0 0x8 0 IRQ_TYPE_EDGE_BOTH >;
->> +            debounce = <15625>;
->> +            bias-pull-up;
->> +            linux,code = <KEY_POWER>;
->> +         };
->> +       };
->> +     };
->> +   };
->> +...
->> --
->> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
->> member
->> of Code Aurora Forum, hosted by The Linux Foundation
->> 
+Thanks
+Kevin
