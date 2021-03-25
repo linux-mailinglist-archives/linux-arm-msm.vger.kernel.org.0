@@ -2,123 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 69CFA349B48
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 21:53:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CD1F8349BA8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 22:29:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230241AbhCYUwa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Mar 2021 16:52:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49670 "EHLO
+        id S231138AbhCYV2h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Mar 2021 17:28:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230313AbhCYUwG (ORCPT
+        with ESMTP id S231322AbhCYV2Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Mar 2021 16:52:06 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9E8DC06174A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Mar 2021 13:52:05 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id r10-20020a05600c35cab029010c946c95easo1907944wmq.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Mar 2021 13:52:05 -0700 (PDT)
+        Thu, 25 Mar 2021 17:28:25 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67EB3C06174A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Mar 2021 14:28:24 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id q5so3361649pfh.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Mar 2021 14:28:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=bYspDUN33apg0LraByMLCJKAyWJ3G5vDe8LyXsNfZRY=;
-        b=XdqNvHvtj2wwZghDS0ZrF5SEObW3kGDNluXnssbsGIIJbHZpqhyIisxSc1KYVDonmi
-         GLE9j2z+P2P8x89LmxVPdJ2fv/Ypb9NNJHGpwJ/AG3gbr/x7gC6eHxq9U/AZ8Q6dO54z
-         X/1LYwdpp9lCf2m7/z6gp00EyVB1GycjuzcI11nxPAlwlqI2EOPpIV9UfBgD8CewamP3
-         iIkQdr9knbaCgyBVi+stQslK39Jp7Of6q4NWQ4ugZJUdLdyEqHxRzCLrd42UnnXG5CX1
-         Ril/kC2Yxf1gsk6jJjfvJl57/8pSdHNnaVhesSha4FRgaMoBY3dO4Fu3siZIJX7AHkJ4
-         1Qwg==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Ar68jm2yqLLP/HtYyEXI6uh/AJB1y8cS7PMCnpcIT0Y=;
+        b=TEhkRsQE/1x3MCeVcTv1S4X5n9NVnMa/jFa1XAMbvGy39rpRV1ols2bNLEAqx+w+h5
+         g2Q8Cf5S/EzPjEVGrOQzwY+XfoaFuzar68pfaJd/vxur40Pn9WtqXa1pHKYOkFb2L6Ii
+         ZRPcqJ7LOVPXZga+/NH+evnqAMK2sye1eGuMg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=bYspDUN33apg0LraByMLCJKAyWJ3G5vDe8LyXsNfZRY=;
-        b=gM+y7950sVOOxeIWTbFpT2Hjt1SpdsJXSwxZ9TRdwso3qK/NRrJrcN85bNh5KDp1CG
-         aGZBGvamuLuvrrca7V1CXnp1adOEIMOiZpwzeGToDXAFta8eCP+utii+6dT8dFVXkJYE
-         nxe+SLQ+jzaQN3bH8gO7qryJOL9dUmiz6efQHyGXO3jhZFy9UIop28JequMT7DqknxAp
-         mcl2ZsW01k85zDlEQlrr1OXUk/r5HZaWJuuSZRmtQr0eDzGJNe+IhLAMHJt4ycp99NjT
-         H3/KXB6eC858XCy5QSNmxECSq05fCo2xKzOC/qbgb7FtrVgAgdMYUDHiBX634oMyga5Z
-         pvjA==
-X-Gm-Message-State: AOAM531KmEfsJRv3EUsNG4jg8SvHxGJwSxqEOGmbHTJPTc3FCH8rdNzM
-        5epITxKdLftX/h2BB1hDHnM2W9pHr/NiZMuiBc0=
-X-Google-Smtp-Source: ABdhPJwSBd9Il6DJf6VK0zFKB/+y7G1sSZMcI3jwvMolZAQKlXZlx2+PVU1MtRcxj2RheR+K74bk/HYi4yOdHC700eE=
-X-Received: by 2002:a1c:66c4:: with SMTP id a187mr9794034wmc.164.1616705524328;
- Thu, 25 Mar 2021 13:52:04 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Ar68jm2yqLLP/HtYyEXI6uh/AJB1y8cS7PMCnpcIT0Y=;
+        b=TgJabAKcQXnrX7C/IcNGiAjrh0XKZGn1w7KuI736YQrJ0j8nJw/9MoX91D0sy3x739
+         AFScmNoJlHG/azjqyRTbMwsbfq1w6jGalpGblo9uCQQlKQ9PHyWGzMKAtw22pH5mvNKb
+         BhsSh/4liyBMbAPDCveCc1nbR7v9nlCDEaVrDL48q181sRfKB0V8f4aqUIlfrUql7NGT
+         t1dFCr56OzLnxyULk6UsL2H9V5KFyunjngGGTSEhPxcSXeHm7qB14YHofdU7JvK4osHP
+         Hkbwb2S3ck6go0MbXA3nGfYttMTviq/LDjgb7da2NaRwi6QbX9H49ANFKbAQJCx2j5n2
+         PnxQ==
+X-Gm-Message-State: AOAM532Fu3H2ymFDWYJhnLodt4CioLEV5JTXHrVdJa5x49h5p6HoUE+m
+        mRNjXkTKZkwMEIPlY7uDIe0TeA==
+X-Google-Smtp-Source: ABdhPJxb+M1K271yeV8ZJZrouwWTafpUJhJVRUBFQFGmitdZRBmwSGYAIxMD8Z4uVYOLg333mONJ/Q==
+X-Received: by 2002:a17:902:dad2:b029:e5:e7da:cbb0 with SMTP id q18-20020a170902dad2b02900e5e7dacbb0mr11705640plx.66.1616707703977;
+        Thu, 25 Mar 2021 14:28:23 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:201:18a3:238:26c5:1521])
+        by smtp.gmail.com with ESMTPSA id e21sm5880792pgv.74.2021.03.25.14.28.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Mar 2021 14:28:23 -0700 (PDT)
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Fabio Estevam <festevam@gmail.com>,
+        Krishna Manikandan <mkrishn@codeaurora.org>
+Subject: [PATCH] drm/msm: Set drvdata to NULL when msm_drm_init() fails
+Date:   Thu, 25 Mar 2021 14:28:22 -0700
+Message-Id: <20210325212822.3663144-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.31.0.291.g576ba9dcdaf-goog
 MIME-Version: 1.0
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 25 Mar 2021 13:55:18 -0700
-Message-ID: <CAF6AEGuZ1gpy4o-2wsLxhY_nRMEt95GTUPhDeS1ad20X4jasVg@mail.gmail.com>
-Subject: [pull] drm/msm: drm-msm-next-2021-02-07 for v5.12-rc5
-To:     Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sean Paul <sean@poorly.run>, jordan@cosmicpenguin.net,
-        Abhinav Kumar <abhinavk@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dave & Daniel,
+We should set the platform device's driver data to NULL here so that
+code doesn't assume the struct drm_device pointer is valid when it could
+have been destroyed. The lifetime of this pointer is managed by a kref
+but when msm_drm_init() fails we call drm_dev_put() on the pointer which
+will free the pointer's memory. This driver uses the component model, so
+there's sort of two "probes" in this file, one for the platform device
+i.e. msm_pdev_probe() and one for the component i.e. msm_drm_bind(). The
+msm_drm_bind() code is using the platform device's driver data to store
+struct drm_device so the two functions are intertwined.
 
-(resend without missing list cc's)
+This relationship becomes a problem for msm_pdev_shutdown() when it
+tests the NULL-ness of the pointer to see if it should call
+drm_atomic_helper_shutdown(). The NULL test is a proxy check for if the
+pointer has been freed by kref_put(). If the drm_device has been
+destroyed, then we shouldn't call the shutdown helper, and we know that
+is the case if msm_drm_init() failed, therefore set the driver data to
+NULL so that this pointer liveness is tracked properly.
 
-A few fixes for v5.12
+Fixes: 9d5cbf5fe46e ("drm/msm: add shutdown support for display platform_driver")
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Fabio Estevam <festevam@gmail.com>
+Cc: Krishna Manikandan <mkrishn@codeaurora.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ drivers/gpu/drm/msm/msm_drv.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-The following changes since commit 182b4a2d251305201b6f9cae29067f7112f05835:
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index a5c6b8c23336..196907689c82 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -570,6 +570,7 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
+ 	kfree(priv);
+ err_put_drm_dev:
+ 	drm_dev_put(ddev);
++	platform_set_drvdata(pdev, NULL);
+ 	return ret;
+ }
+ 
+-- 
+https://chromeos.dev
 
-  drm/msm/dp: Add a missing semi-colon (2021-02-07 09:57:04 -0800)
-
-are available in the Git repository at:
-
-  https://gitlab.freedesktop.org/drm/msm.git drm-msm-next-2021-02-07
-
-for you to fetch changes up to 627dc55c273dab308303a5217bd3e767d7083ddb:
-
-  drm/msm/disp/dpu1: icc path needs to be set before dpu runtime
-resume (2021-03-22 18:52:34 -0700)
-
-----------------------------------------------------------------
-Dmitry Baryshkov (4):
-      drm/msm/dsi: fix check-before-set in the 7nm dsi_pll code
-      drm/msm/dsi_pll_7nm: Solve TODO for multiplier frac_bits assignment
-      drm/msm/dsi_pll_7nm: Fix variable usage for pll_lockdet_rate
-      drm/msm: fix shutdown hook in case GPU components failed to bind
-
-Douglas Anderson (1):
-      drm/msm: Fix speed-bin support not to access outside valid memory
-
-Fabio Estevam (1):
-      drm/msm: Fix suspend/resume on i.MX5
-
-Jonathan Marek (1):
-      drm/msm: fix a6xx_gmu_clear_oob
-
-Jordan Crouse (1):
-      drm/msm: a6xx: Make sure the SQE microcode is safe
-
-Kalyan Thota (1):
-      drm/msm/disp/dpu1: icc path needs to be set before dpu runtime resume
-
-Konrad Dybcio (1):
-      drm/msm/adreno: a5xx_power: Don't apply A540 lm_setup to other GPUs
-
-Rob Clark (1):
-      drm/msm: Ratelimit invalid-fence message
-
-Stephen Boyd (2):
-      drm/msm/kms: Use nested locking for crtc lock instead of custom classes
-      drm/msm/dp: Restore aux retry tuning logic
-
- drivers/gpu/drm/msm/adreno/a5xx_power.c   |   2 +-
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c     |   2 +-
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 108 ++++++++++++++++++++----------
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c   |  12 ++--
- drivers/gpu/drm/msm/dp/dp_aux.c           |   7 ++
- drivers/gpu/drm/msm/dsi/pll/dsi_pll.c     |   2 +-
- drivers/gpu/drm/msm/dsi/pll/dsi_pll.h     |   6 +-
- drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c |  11 +--
- drivers/gpu/drm/msm/msm_atomic.c          |   7 +-
- drivers/gpu/drm/msm/msm_drv.c             |  12 ++++
- drivers/gpu/drm/msm/msm_fence.c           |   2 +-
- drivers/gpu/drm/msm/msm_kms.h             |   8 +--
- 12 files changed, 119 insertions(+), 60 deletions(-)
