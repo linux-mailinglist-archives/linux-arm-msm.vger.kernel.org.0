@@ -2,91 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EDC9B34852A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 00:19:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 388763485FD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 01:44:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239013AbhCXXTE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Mar 2021 19:19:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52204 "EHLO
+        id S239364AbhCYAoC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Mar 2021 20:44:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239026AbhCXXTB (ORCPT
+        with ESMTP id S239362AbhCYAns (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Mar 2021 19:19:01 -0400
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABA83C06175F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 16:19:00 -0700 (PDT)
-Received: by mail-qt1-x829.google.com with SMTP id x9so382636qto.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 16:19:00 -0700 (PDT)
+        Wed, 24 Mar 2021 20:43:48 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6CD7C06175F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 17:43:47 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id g25so263150wmh.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 17:43:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=KOQ7esl90KWEmnjDE6UGjHvYuLkknu4oxnEsJM3fbxk=;
-        b=I8LLHJTXiSFwWG08KpCjmbhYHB4+bJ5Jr1PMvkhPb9guXt4kPXwXSDBb5w3pW6YKP+
-         Y3MXDdkhlUigcRn9Soo3y9HjPiYeIjslYj/gs3Qu595nmPh/ErNtubV8ayh2yO3Z4/6B
-         tB6bIdWPlgC++IeivTg9oL6lj9EFP1EHRtvFo=
+        bh=vWBcQk+O5w5ZvgV4pq/waxQRhDedExDmRWXVc+b/IuI=;
+        b=hInPl+yNDf034aNHju9F3YAqrqp1/y0ExTbWexRha829RfFLk2Hy9M4hynnSS2ML8e
+         39TK1DVMHGv8PZXn3z7Z1DDbEIAp+p/7Pqs3tT9v5h610mRCMd6H+D1WskSB2ajVxDDb
+         R7u9C2BJFrmGpFvX0tj4xMeRkXnstdOe5DF8mbBOHPfaFtw+RgTwqRqa/WIwDYE027px
+         xoobTYKvO1W/NwSjz9L1nRWdP3Ph6k2gM0OrGO7PwKiOyMo8iimjEjpP0Q+NPJnbNN1x
+         tXVrV8iWmp45Z7qK8/ZB8XJWi7f5MgcNDaf1a4zNRk/2dJGZ/ZB02y0vyyLSOfjQkf3N
+         6UHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=KOQ7esl90KWEmnjDE6UGjHvYuLkknu4oxnEsJM3fbxk=;
-        b=QNZ23jbOHzwuygLHNfPplr03RYEjSmx59j0uXdrAds03XXtVQgj+Mp9YKcZKMCuUpW
-         65jQVZLEKOwOPgwvY51nrKHZFOyStky8whQQ8nrBGRp8Lt53wPKB1Jv7J01ZmTcS+cc8
-         lK8bu6Sm+eZT6xvGMnFlHYDHOXKYIcevwdBN3MjZQH7Ea+8WVxCJus+8ghCNqIUtGxPz
-         QKmaBUSqEhZo02UJMvFLD7eKKI+VaAKHCRBxlZO+dWO0K/3AL80/dQrGbCvhaG9abNvf
-         LBgbbWctr5zH+SZX9o0bqaPv0A5uFU1QBqxWYAcmkE5QcNPCOO5jflT3nUkKSE6Juils
-         yl3w==
-X-Gm-Message-State: AOAM532rh2E3NkZfBXOcfAC4Pg037K4C7r/aZ6CkN6b8jW0WuWSGnv4A
-        AG6W/l6kF/F1Z+ClKtP3jn221nsOO2J+0Q==
-X-Google-Smtp-Source: ABdhPJwNkHi3+Fps8HSqO6KFN+nrhkhYFRC0iTGpiS9NZSI3DBiriGcRX+phPYMfSqmjEHm53xvgCA==
-X-Received: by 2002:ac8:4ccc:: with SMTP id l12mr5198533qtv.137.1616627939505;
-        Wed, 24 Mar 2021 16:18:59 -0700 (PDT)
-Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com. [209.85.219.182])
-        by smtp.gmail.com with ESMTPSA id y8sm2625034qtn.68.2021.03.24.16.18.58
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Mar 2021 16:18:59 -0700 (PDT)
-Received: by mail-yb1-f182.google.com with SMTP id z1so346197ybf.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 16:18:58 -0700 (PDT)
-X-Received: by 2002:a25:ab54:: with SMTP id u78mr8405375ybi.276.1616627938513;
- Wed, 24 Mar 2021 16:18:58 -0700 (PDT)
+        bh=vWBcQk+O5w5ZvgV4pq/waxQRhDedExDmRWXVc+b/IuI=;
+        b=aLtjOh0f3tfxCN+mVZouCsG4B9GpN82xdvIW8SW1sWoU3AA/YIG+Iybi0wf9vId8bf
+         8abBrcRsFJ2jrb51iISUW001A+wMRttAKoYVSgQowc4Eopx9dYW4LXvkHgo5/dLFRfRl
+         a+xHyEYiqQaNmIxo3pi/Pgk30DdWKsRP5RpIm8ieYaFXfsoYFU94Mv2a5tMO8XgA+4Yw
+         srcpmy5bp0/9daXpZEOPL97Hr2BG2nlqBUDkKaB2lEz/K2Qy+kN3AFJyGuEAQurHTe/V
+         GmRmeoKHoVUTvBzED5G2gkN6CaDcvusdY/qmN/h7zfaiSWKwLNCg66+HY0xjXo5oTjHI
+         6iVQ==
+X-Gm-Message-State: AOAM533cuaNU8sqXmOmqC1cS+QZcooFXCa7R8XgSx18e5QxA/KR2s4Rs
+        nq5lLcOlaZ3tWxM+2BRum7bCqSypXxbHHrlczxn4vQ==
+X-Google-Smtp-Source: ABdhPJz/pYFWjyr5mG6tL/R+zz4fNnQgSblxmrz44zvblkCJjVWnJmuDCSRraYJXsBVMIOvnpFo9ZO+bSBYt4N2l8m4=
+X-Received: by 2002:a7b:c8d9:: with SMTP id f25mr2650652wml.157.1616633026427;
+ Wed, 24 Mar 2021 17:43:46 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210324231424.2890039-1-swboyd@chromium.org>
-In-Reply-To: <20210324231424.2890039-1-swboyd@chromium.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 24 Mar 2021 16:18:47 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VQSzanPn03-98L5KT89rkz4D1CcNLrtz2pXOHW8XOORw@mail.gmail.com>
-Message-ID: <CAD=FV=VQSzanPn03-98L5KT89rkz4D1CcNLrtz2pXOHW8XOORw@mail.gmail.com>
-Subject: Re: [PATCH v2] arm64: dts: qcom: c630: Add no-hpd to DSI bridge node
-To:     Stephen Boyd <swboyd@chromium.org>
+References: <20210320025942.487916-1-leo.yan@linaro.org> <20210320030528.GA488187@leoy-ThinkPad-X240s>
+ <CAJ9a7Vgip=qmFE7Wmf64zHZwH=Rc_PB1zpyNGnNE4++Aqc6VQg@mail.gmail.com>
+In-Reply-To: <CAJ9a7Vgip=qmFE7Wmf64zHZwH=Rc_PB1zpyNGnNE4++Aqc6VQg@mail.gmail.com>
+From:   Leo Yan <leo.yan@linaro.org>
+Date:   Thu, 25 Mar 2021 08:43:33 +0800
+Message-ID: <CALZQ+UPEOTkkphtbv2aqLK6C=JuEj-TvmYhrBAtCfyJNX9MSgg@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: msm8916: Enable CoreSight STM component
+To:     Mike Leach <mike.leach@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-        Steev Klimaszewski <steev@kali.org>
+        Rob Herring <robh+dt@kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Devicetree List <devicetree@vger.kernel.org>,
+        Coresight ML <coresight@lists.linaro.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Mike,
 
-On Wed, Mar 24, 2021 at 4:14 PM Stephen Boyd <swboyd@chromium.org> wrote:
+On Wed, Mar 24, 2021 at 09:22:31PM +0000, Mike Leach wrote:
+> Hi Leo,
 >
-> We should indicate that we're not using the HPD pin on this device, per
-> the binding document. Otherwise if code in the future wants to enable
-> HPD in the bridge when this property is absent we'll be enabling HPD
-> when it isn't supposed to be used. Presumably this board isn't using hpd
-> on the bridge.
+> There are additional CTI components on the DB410c - I think there is
+> information on base addresses for these - but there is no information
+> on connectivity between the CTIs and any components such as STM / ETR
+> etc for any of the in / out signal lines.
+> Therefore we omitted these from the original DT when adding the other
+> CTI devices.
 >
-> Cc: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Cc: Steev Klimaszewski <steev@kali.org>
-> Fixes: 956e9c85f47b ("arm64: dts: qcom: c630: Define eDP bridge and panel")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 2 ++
->  1 file changed, 2 insertions(+)
+> It could well be that there are signals from the STM to a CTI, and if
+> the information could be found then it would be useful to add - but I
+> have not seen this information anywhere - and it is the sort of thing
+> that is often missed out of hardware manuals.
+> It might be possible to deduce some information using the Coresight
+> intergration management registers - but this would involve a lot of
+> trial and error testing
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Okay, let's firstly merge the STM binding patch and later can consider
+to enable DT binding between CTI and STM if have sufficient info.
+
+Thanks a lot for confirmation.
+
+
+Leo
