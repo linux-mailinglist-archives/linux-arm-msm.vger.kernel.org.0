@@ -2,52 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C2FCA348963
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 07:52:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C07F0348A0C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 08:23:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229461AbhCYGvn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Mar 2021 02:51:43 -0400
-Received: from verein.lst.de ([213.95.11.211]:39733 "EHLO verein.lst.de"
+        id S229624AbhCYHXP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Mar 2021 03:23:15 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35944 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229448AbhCYGvS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Mar 2021 02:51:18 -0400
-Received: by verein.lst.de (Postfix, from userid 2407)
-        id 7517468B05; Thu, 25 Mar 2021 07:51:15 +0100 (CET)
-Date:   Thu, 25 Mar 2021 07:51:15 +0100
-From:   Christoph Hellwig <hch@lst.de>
-To:     "Tian, Kevin" <kevin.tian@intel.com>
-Cc:     Auger Eric <eric.auger@redhat.com>, Christoph Hellwig <hch@lst.de>,
-        "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
-        Will Deacon <will@kernel.org>,
-        "linuxppc-dev@lists.ozlabs.org" <linuxppc-dev@lists.ozlabs.org>,
-        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        Li Yang <leoyang.li@nxp.com>,
-        "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>,
-        "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        "virtualization@lists.linux-foundation.org" 
-        <virtualization@lists.linux-foundation.org>,
-        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "Liu, Yi L" <yi.l.liu@intel.com>
-Subject: Re: [PATCH 15/17] iommu: remove DOMAIN_ATTR_NESTING
-Message-ID: <20210325065115.GB25678@lst.de>
-References: <20210301084257.945454-1-hch@lst.de> <20210301084257.945454-16-hch@lst.de> <3e8f1078-9222-0017-3fa8-4d884dbc848e@redhat.com> <20210314155813.GA788@lst.de> <3a1194de-a053-84dd-3d6a-bff8e01ebcd3@redhat.com> <MWHPR11MB188688125518D050E384658F8C629@MWHPR11MB1886.namprd11.prod.outlook.com>
+        id S229574AbhCYHW4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 25 Mar 2021 03:22:56 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 0D2FE61A1A;
+        Thu, 25 Mar 2021 07:22:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1616656975;
+        bh=nK8MnAmL5EIPeEqp4C8KpZ4a4cMEn3TYA9VUz9Xei64=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ZsQoWg1WHzr5qSK/PSwwC8eqs3qSIDvZwAqShqcm7ZEtpZh6P+iQ31onAk/FQ2QRi
+         Sb0SFEw/lH4KunxoMFo/bC2z75oAUGcKZO2bRTFk2yT2XAiQ95BAbnvahSF6Zz7mQA
+         CzO/6SjioExJ9799Gdfi4LH/PqsQWx24OAuhZC7NCuST/JAbXsBeCaepE83fh9lNo1
+         ki7cCnMRZ49Q3a4pAjQbHZ5TZFWTOh5eUOzoNKC49GOpHIb2X4Hnb/4hpFL+FrQW5V
+         hvFkdWaxyHeA9MwkXLzD+foOzsdXNTcHA9byd1ICeqrhUfEBPhcv/gxwP8GoE3dODW
+         dLJWZLh4TAR8Q==
+Date:   Thu, 25 Mar 2021 12:52:52 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Sandeep Maheswaram <sanm@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Wesley Cheng <wcheng@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-usb@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>
+Subject: Re: [PATCH 2/3] dt-bindings: phy: qcom,usb-snps-femto-v2: Add
+ bindings for SC7280
+Message-ID: <YFw6TK+o0r3XdNcj@vkoul-mobl.Dlink>
+References: <1615978901-4202-1-git-send-email-sanm@codeaurora.org>
+ <1615978901-4202-3-git-send-email-sanm@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <MWHPR11MB188688125518D050E384658F8C629@MWHPR11MB1886.namprd11.prod.outlook.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+In-Reply-To: <1615978901-4202-3-git-send-email-sanm@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 25, 2021 at 06:12:37AM +0000, Tian, Kevin wrote:
-> Agree. The vSVA series is still undergoing a refactor according to Jason's
-> comment thus won't be ready in short term. It's better to let this one
-> go in first.
+On 17-03-21, 16:31, Sandeep Maheswaram wrote:
+> Add the compatible string for sc7280 SoC from Qualcomm
 
-Would be great to get a few more reviews while we're at it :)
+Applied, thanks
+
+-- 
+~Vinod
