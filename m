@@ -2,87 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C60C34979D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 18:09:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EA869349819
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 18:34:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229944AbhCYRIc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Mar 2021 13:08:32 -0400
-Received: from foss.arm.com ([217.140.110.172]:54280 "EHLO foss.arm.com"
+        id S229866AbhCYRdt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Mar 2021 13:33:49 -0400
+Received: from mail.kernel.org ([198.145.29.99]:44098 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229869AbhCYRH7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Mar 2021 13:07:59 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id AE02F143D;
-        Thu, 25 Mar 2021 10:07:58 -0700 (PDT)
-Received: from [10.57.50.37] (unknown [10.57.50.37])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id AC1BF3F718;
-        Thu, 25 Mar 2021 10:07:57 -0700 (PDT)
-Subject: Re: [PATCH] iommu/arm-smmu-qcom: create qcom_smmu_impl for ACPI boot
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Will Deacon <will@kernel.org>
-Cc:     Shawn Guo <shawn.guo@linaro.org>, lorenzo.pieralisi@arm.com,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-References: <20210301074021.20059-1-shawn.guo@linaro.org>
- <20210325145914.GC15172@willie-the-truck> <20210325170256.GA904837@yoga>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <e7385b23-a91b-dd8d-5e9a-3505a18a2249@arm.com>
-Date:   Thu, 25 Mar 2021 17:07:52 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        id S229581AbhCYRdR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 25 Mar 2021 13:33:17 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 0A18261A28;
+        Thu, 25 Mar 2021 17:33:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1616693597;
+        bh=qGpX3MaAi6iipXhij0xGuclaojia9d6LXGpZk4lS3FA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=OpgdYXmTWs8MRabNzxRiFlKzCDpQS5h96vnrJxN9G4TZvg0WRGitBgXLTk+GnnXil
+         f8b5nAYnfp30PmCcOMovoLPgDhNtradrGc8Y6FhFhQ36jubqzqqO6zBwewg68FYuJf
+         Jv7k7kjnmjdLlFV3ePCk4UFG8Vd9Clf1rwUIugVfKpJsBtO7/w+BaxYqHIGJ7eDHwI
+         mCIthIJWR0FmNz1DYmj+Kqua1EmULEJwj1xk8HRopvlZ1bKjcDSPYNKMZbYPYp8xr5
+         TB9H5N62ZZMc3cBLXsUHr1mLRfZ6+pM2RtMNb99RhaB1IXnJpl6MiGYMIdbKb9KY+r
+         w0OsMID+O3r1w==
+Date:   Thu, 25 Mar 2021 17:33:11 +0000
+From:   Will Deacon <will@kernel.org>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     "Isaac J. Manjarres" <isaacm@codeaurora.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        David Airlie <airlied@linux.ie>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "list@263.net:IOMMU DRIVERS , Joerg Roedel <joro@8bytes.org>, " 
+        <iommu@lists.linux-foundation.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Sean Paul <sean@poorly.run>,
+        Kristian H Kristensen <hoegsberg@google.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH 2/3] iommu/io-pgtable-arm: Add IOMMU_LLC page protection
+ flag
+Message-ID: <20210325173311.GA15504@willie-the-truck>
+References: <3f589e7de3f9fa93e84c83420c5270c546a0c368.1610372717.git.saiprakash.ranjan@codeaurora.org>
+ <20210129090516.GB3998@willie-the-truck>
+ <5d23fce629323bcda71594010824aad0@codeaurora.org>
+ <20210201111556.GA7172@willie-the-truck>
+ <CAF6AEGsARmkAFsjaQLfa2miMgeijo183MWDKGtW_ti-UCpzBqA@mail.gmail.com>
+ <20210201182016.GA21629@jcrouse1-lnx.qualcomm.com>
+ <7e9aade14d0b7f69285852ade4a5a9f4@codeaurora.org>
+ <20210203214612.GB19847@willie-the-truck>
+ <4988e2ef35f76a0c2f1fe3f66f023a3b@codeaurora.org>
+ <9362873a3bcf37cdd073a6128f29c683@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20210325170256.GA904837@yoga>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9362873a3bcf37cdd073a6128f29c683@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-03-25 17:02, Bjorn Andersson wrote:
-> On Thu 25 Mar 09:59 CDT 2021, Will Deacon wrote:
+On Tue, Mar 09, 2021 at 12:10:44PM +0530, Sai Prakash Ranjan wrote:
+> On 2021-02-05 17:38, Sai Prakash Ranjan wrote:
+> > On 2021-02-04 03:16, Will Deacon wrote:
+> > > On Tue, Feb 02, 2021 at 11:56:27AM +0530, Sai Prakash Ranjan wrote:
+> > > > On 2021-02-01 23:50, Jordan Crouse wrote:
+> > > > > On Mon, Feb 01, 2021 at 08:20:44AM -0800, Rob Clark wrote:
+> > > > > > On Mon, Feb 1, 2021 at 3:16 AM Will Deacon <will@kernel.org> wrote:
+> > > > > > > On Fri, Jan 29, 2021 at 03:12:59PM +0530, Sai Prakash Ranjan wrote:
+> > > > > > > > On 2021-01-29 14:35, Will Deacon wrote:
+> > > > > > > > > On Mon, Jan 11, 2021 at 07:45:04PM +0530, Sai Prakash Ranjan wrote:
+> > > > > > > > > > +#define IOMMU_LLC        (1 << 6)
+> > > > > > > > >
+> > > > > > > > > On reflection, I'm a bit worried about exposing this because I think it
+> > > > > > > > > will
+> > > > > > > > > introduce a mismatched virtual alias with the CPU (we don't even have a
+> > > > > > > > > MAIR
+> > > > > > > > > set up for this memory type). Now, we also have that issue for the PTW,
+> > > > > > > > > but
+> > > > > > > > > since we always use cache maintenance (i.e. the streaming API) for
+> > > > > > > > > publishing the page-tables to a non-coheren walker, it works out.
+> > > > > > > > > However,
+> > > > > > > > > if somebody expects IOMMU_LLC to be coherent with a DMA API coherent
+> > > > > > > > > allocation, then they're potentially in for a nasty surprise due to the
+> > > > > > > > > mismatched outer-cacheability attributes.
+> > > > > > > > >
+> > > > > > > >
+> > > > > > > > Can't we add the syscached memory type similar to what is done on android?
+> > > > > > >
+> > > > > > > Maybe. How does the GPU driver map these things on the CPU side?
+> > > > > >
+> > > > > > Currently we use writecombine mappings for everything, although there
+> > > > > > are some cases that we'd like to use cached (but have not merged
+> > > > > > patches that would give userspace a way to flush/invalidate)
+> > > > > >
+> > > > >
+> > > > > LLC/system cache doesn't have a relationship with the CPU cache.  Its
+> > > > > just a
+> > > > > little accelerator that sits on the connection from the GPU to DDR and
+> > > > > caches
+> > > > > accesses. The hint that Sai is suggesting is used to mark the buffers as
+> > > > > 'no-write-allocate' to prevent GPU write operations from being cached in
+> > > > > the LLC
+> > > > > which a) isn't interesting and b) takes up cache space for read
+> > > > > operations.
+> > > > >
+> > > > > Its easiest to think of the LLC as a bonus accelerator that has no cost
+> > > > > for
+> > > > > us to use outside of the unfortunate per buffer hint.
+> > > > >
+> > > > > We do have to worry about the CPU cache w.r.t I/O coherency (which is a
+> > > > > different hint) and in that case we have all of concerns that Will
+> > > > > identified.
+> > > > >
+> > > > 
+> > > > For mismatched outer cacheability attributes which Will
+> > > > mentioned, I was
+> > > > referring to [1] in android kernel.
+> > > 
+> > > I've lost track of the conversation here :/
+> > > 
+> > > When the GPU has a buffer mapped with IOMMU_LLC, is the buffer also
+> > > mapped
+> > > into the CPU and with what attributes? Rob said "writecombine for
+> > > everything" -- does that mean ioremap_wc() / MEMREMAP_WC?
+> > > 
+> > 
+> > Rob answered this.
+> > 
+> > > Finally, we need to be careful when we use the word "hint" as
+> > > "allocation
+> > > hint" has a specific meaning in the architecture, and if we only
+> > > mismatch on
+> > > those then we're actually ok. But I think IOMMU_LLC is more than
+> > > just a
+> > > hint, since it actually drives eviction policy (i.e. it enables
+> > > writeback).
+> > > 
+> > > Sorry for the pedantry, but I just want to make sure we're all talking
+> > > about the same things!
+> > > 
+> > 
+> > Sorry for the confusion which probably was caused by my mentioning of
+> > android, NWA(no write allocate) is an allocation hint which we can
+> > ignore
+> > for now as it is not introduced yet in upstream.
+> > 
 > 
->> [+ Lorenzo]
->>
->> On Mon, Mar 01, 2021 at 03:40:21PM +0800, Shawn Guo wrote:
->>> Though qcom_adreno_smmu_impl is not used by ACPI boot right now,
->>> qcom_smmu_impl is already required at least to boot up Lenovo Flex 5G
->>> laptop.  Let's check asl_compiler_id in IORT header to ensure we are
->>> running a QCOM SMMU and create qcom_smmu_impl for it.
->>>
->>> !np is used to check ACPI boot, because fwnode of SMMU device is
->>> a static allocation and thus has_acpi_companion() doesn't work here.
->>>
->>> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
->>> ---
->>>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 33 ++++++++++++++++++++++
->>>   1 file changed, 33 insertions(+)
->>
->> I don't know what a "asl_compiler_id" is, but it doesn't sound like it
->> has an awful lot to do with the SMMU.
->>
-> 
-> I would prefer that we somehow relate this to the particular board,
-> rather than all Qualcomm-related ACPI tables. E.g. by relying on the
-> SMMU devices having a _HID of QCOM0409.
-> 
-> Shawn, any reason for this wouldn't be possible?
+> Any chance of taking this forward? We do not want to miss out on small fps
+> gain when the product gets released.
 
-To do something broadly similar to identify HiSilicon's SMMU PMCG 
-implementation, we use acpi_match_platform_list() - could we do the same 
-for this?
+Do we have a solution to the mismatched virtual alias?
 
-Robin.
-
->> Lorenzo -- any idea what we should be doing here instead? Probably not
->> using ACPI?
->>
-> 
-> The 8cx (aka sc8180x) platform comes with Qualcomm's usual SMMU
-> stream-mapping quirks and this is one of the patches needed to bring
-> enough ACPI support to run the Debian installer that Shawn has been
-> working on. After the installer we currently only boot this using DT -
-> which already enables the quirk.
-> 
-> Regards,
-> Bjorn
-> 
+Will
