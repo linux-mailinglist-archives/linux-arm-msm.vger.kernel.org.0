@@ -2,68 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 63E3C34873C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 03:59:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 72E3C348751
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 04:07:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230063AbhCYC7Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Mar 2021 22:59:16 -0400
-Received: from szxga05-in.huawei.com ([45.249.212.191]:14465 "EHLO
-        szxga05-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229508AbhCYC7M (ORCPT
+        id S230316AbhCYDGo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Mar 2021 23:06:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44678 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230026AbhCYDG2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Mar 2021 22:59:12 -0400
-Received: from DGGEMS402-HUB.china.huawei.com (unknown [172.30.72.60])
-        by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4F5VBZ57zLzwQll;
-        Thu, 25 Mar 2021 10:57:10 +0800 (CST)
-Received: from localhost.localdomain (10.175.102.38) by
- DGGEMS402-HUB.china.huawei.com (10.3.19.202) with Microsoft SMTP Server id
- 14.3.498.0; Thu, 25 Mar 2021 10:59:04 +0800
-From:   'Wei Yongjun <weiyongjun1@huawei.com>
-To:     <weiyongjun1@huawei.com>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        "Mathieu Poirier" <mathieu.poirier@linaro.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Govind Singh <govinds@codeaurora.org>
-CC:     <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        <kernel-janitors@vger.kernel.org>, Hulk Robot <hulkci@huawei.com>
-Subject: [PATCH -next] remoteproc: qcom: wcss: Fix wrong pointer passed to PTR_ERR()
-Date:   Thu, 25 Mar 2021 03:08:57 +0000
-Message-ID: <20210325030857.3978824-1-weiyongjun1@huawei.com>
-X-Mailer: git-send-email 2.25.1
+        Wed, 24 Mar 2021 23:06:28 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65711C06174A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 20:06:25 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id j4-20020a05600c4104b029010c62bc1e20so338759wmi.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 20:06:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=oySbYmye6jIKUciaeAkZ4sySteO4iHql6A2SWp7T94w=;
+        b=UAkONL7luoby47dM236v3hYfKvsv+lqcrSXu2ByNSljJUiQWf20mb1nS+F09f3R9yo
+         7e9CvJthyMGIyIcp4xi4jGBTeuDvCMQ6dy64FNKcOG3PQx8CIDdusP8mhn90xQhP6uZw
+         w+IR8qx2/TOgtqgYRhSNM7Cx0G7pF6W+yLhv1KCCcxo4V1XD0+mANe7rxHTbo/zezcCP
+         TGABEB4qdm8+HWWXXMT/XwGiBJ4V3ZctubOBnuudowgsfT/YVcu4b8rsfuB6tpZNZORe
+         yAw6CFmq4UIfouXmidCVleScmWX2AdOxCFNcqjkSwYx+ITDYrwxTYZneAuPZDLvIdb84
+         UjQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=oySbYmye6jIKUciaeAkZ4sySteO4iHql6A2SWp7T94w=;
+        b=mQkG8bweOi1IJuStwyW/JMJE6CmPgGHRm1rmFjr84xgOxwNXDoOkN38UJHk6GjdB6P
+         uGUW3FouM/Y+SOq6ZqBiTlwgHrOJ3JGJ6N2/MfytIboM95JQG5UR0UG/mBN2e5Bs9ZPK
+         8OLX7HtUQfdM4LyNO6m49HWLdmUfof9qMnJ1AMI9K2E4P1eh/ToHp0X2R8nOSv76zqZh
+         i9Jni877MxPjs9AcMK62JbMACKaAtDpE7xrhpHojuQO56aR2VMUy/qaTa9/uXhrqHWsa
+         xJS46I1xzzEt0gCPNjxEO0KQbnM/FgMO4TO+cs6KZdkDB7g+sGhyLrRUz5NV47Vgt3T5
+         M0vg==
+X-Gm-Message-State: AOAM530mKKbCosz5mI17dlT3i3M9i1Iznb1y9Np/bO+oMbOqR0SxAKZD
+        ciSTM4pdKyB/djpidJAIzO5j/8MANgmLBbj2m6qCmZAM
+X-Google-Smtp-Source: ABdhPJy/I1DzdvdDKq4xvQMv/1VPFBRSQ2vaL7eK81MXRPVKFT+Y8irZm8XPU0+PpbT+jhp+nISu2lYmKbqJCGMJvuo=
+X-Received: by 2002:a1c:4b15:: with SMTP id y21mr5732029wma.94.1616641583948;
+ Wed, 24 Mar 2021 20:06:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type:   text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-Originating-IP: [10.175.102.38]
-X-CFilter-Loop: Reflected
+References: <20210318200544.2244007-1-dmitry.baryshkov@linaro.org> <161663694524.3012082.11889553997747135632@swboyd.mtv.corp.google.com>
+In-Reply-To: <161663694524.3012082.11889553997747135632@swboyd.mtv.corp.google.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 24 Mar 2021 20:09:37 -0700
+Message-ID: <CAF6AEGsRKPn-pLtP8dmG+_VSH1TbyaW10HHtaOT10Xc3D+DMTg@mail.gmail.com>
+Subject: Re: [PATCH v2] gpu/drm/msm: fix shutdown hook in case GPU components
+ failed to bind
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Wei Yongjun <weiyongjun1@huawei.com>
+On Wed, Mar 24, 2021 at 6:49 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Quoting Dmitry Baryshkov (2021-03-18 13:05:44)
+> > if GPU components have failed to bind, shutdown callback would fail with
+> > the following backtrace. Add safeguard check to stop that oops from
+> > happening and allow the board to reboot.
+> [...]
+> > diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> > index 94525ac76d4e..fd2ac54caf9f 100644
+> > --- a/drivers/gpu/drm/msm/msm_drv.c
+> > +++ b/drivers/gpu/drm/msm/msm_drv.c
+> > @@ -1311,6 +1311,10 @@ static int msm_pdev_remove(struct platform_device *pdev)
+> >  static void msm_pdev_shutdown(struct platform_device *pdev)
+> >  {
+> >         struct drm_device *drm = platform_get_drvdata(pdev);
+> > +       struct msm_drm_private *priv = drm ? drm->dev_private : NULL;
+> > +
+> > +       if (!priv || !priv->kms)
+> > +               return;
+> >
+>
+> I see a problem where if I don't get a backlight probing then my
+> graphics card doesn't appear but this driver is still bound. I was
+> hoping this patch would fix it but it doesn't. I have slab poisoning
+> enabled so sometimes the 'priv' pointer is 0x6b6b6b6b6b6b6b6b meaning it
+> got all freed.
+>
+> I found that the 'drm' pointer here is pointing at junk. The
+> msm_drm_init() function calls drm_dev_put() on the error path and that
+> will destroy the drm pointer but it doesn't update this platform drivers
+> drvdata. Do we need another patch that sets the drvdata to NULL on
+> msm_drm_init() failing? One last note, I'm seeing this on 5.4 so maybe I
+> missed something and the drvdata has been set to NULL somewhere else
+> upstream. I sort of doubt it though.
 
-PTR_ERR should access the value just tested by IS_ERR, otherwise
-the wrong error code will be returned.
+the hw that I guess you are running on should work pretty well w/
+upstream kernel.. but I don't think there is any important delta
+between upstream and the 5.4 based kernel that you are running that
+would fix this..
 
-Fixes: 0af65b9b915e ("remoteproc: qcom: wcss: Add non pas wcss Q6 support for QCS404")
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
----
- drivers/remoteproc/qcom_q6v5_wcss.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+so *probably* you are right..
 
-diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
-index 71ec1a451e35..eda64f86d7b0 100644
---- a/drivers/remoteproc/qcom_q6v5_wcss.c
-+++ b/drivers/remoteproc/qcom_q6v5_wcss.c
-@@ -972,7 +972,7 @@ static int q6v5_wcss_init_clock(struct q6v5_wcss *wcss)
- 		ret = PTR_ERR(wcss->qdsp6ss_axim_cbcr);
- 		if (ret != -EPROBE_DEFER)
- 			dev_err(wcss->dev, "failed to get axim cbcr clk\n");
--		return PTR_ERR(wcss->qdsp6ss_abhm_cbcr);
-+		return PTR_ERR(wcss->qdsp6ss_axim_cbcr);
- 	}
- 
- 	wcss->lcc_bcr_sleep = devm_clk_get(wcss->dev, "lcc_bcr_sleep");
+BR,
+-R
 
+>
+> ---8<----
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> index c842a270806d..895d74aa8834 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -577,6 +577,7 @@ static int msm_drm_init(struct device *dev, struct drm_driver *drv)
+>         kfree(priv);
+>  err_put_drm_dev:
+>         drm_dev_put(ddev);
+> +       platform_set_drvdata(pdev, NULL);
+>         return ret;
+>  }
