@@ -2,528 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0835C3487CA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 05:00:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 895A93487FF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 05:39:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229733AbhCYD7g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Mar 2021 23:59:36 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:33648 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229482AbhCYD7G (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Mar 2021 23:59:06 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1616644746; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=/vLT+qEuEVYRIcISfyC2QVEZ6qbSqSPxE5DOqhzbJ7U=; b=m/hcGXOdAT6VDOjSay4oTA7usbXL31+ENAfntsHxkmQaownvsSfa4NGPDxMeZlKogH2PRSGf
- fgEGVQ68rm6sPOI80GEBv2wvaA+YFa4RwIoajWLSmdmFA7bru7Q0g7IIxc0JGgqAzSPF5pUb
- 51OezgZP91lSAnput5E9CS8Xt/w=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 605c0a8368bf8a00ee0a70d3 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 25 Mar 2021 03:58:59
- GMT
-Sender: vbadigan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5566CC43463; Thu, 25 Mar 2021 03:58:58 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [192.168.0.102] (unknown [49.205.242.72])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: vbadigan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4E638C433CA;
-        Thu, 25 Mar 2021 03:58:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4E638C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=vbadigan@codeaurora.org
-Subject: Re: [PATCH V2] arm64: dts: qcom: sc7280: Add nodes for eMMC and SD
- card
-To:     Doug Anderson <dianders@google.com>,
-        Shaik Sajida Bhanu <sbhanu@codeaurora.org>
-Cc:     Adrian Hunter <adrian.hunter@intel.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        Sahitya Tummala <stummala@codeaurora.org>,
-        Ram Prakash Gupta <rampraka@codeaurora.org>,
-        Sayali Lokhande <sayalil@codeaurora.org>,
-        sartgarg@codeaurora.org, Rajendra Nayak <rnayak@codeaurora.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>, cang@codeaurora.org,
-        pragalla@codeaurora.org, nitirawa@codeaurora.org,
-        Linux MMC List <linux-mmc@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-References: <1616264220-25825-1-git-send-email-sbhanu@codeaurora.org>
- <CAD=FV=WLZCSd6D5VFyD+1KBp5n1qyszER2EVaEMwYjQfPSSDnA@mail.gmail.com>
-From:   Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-Message-ID: <b77f207b-2d90-3c8b-857f-625bd3867ed1@codeaurora.org>
-Date:   Thu, 25 Mar 2021 09:28:44 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        id S229719AbhCYEjS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Mar 2021 00:39:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36170 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229716AbhCYEjQ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 25 Mar 2021 00:39:16 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49F6CC06174A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 21:39:14 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id kr3-20020a17090b4903b02900c096fc01deso397975pjb.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Mar 2021 21:39:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=lqtjDfDMRVrpsCVybPd2ASGnB4nenRyEa0GnMoEEPwY=;
+        b=b5jMeiV+ocRjjNz5omI21Ydi/8N5u+2EQ2NfpVZXwQVBsmXzn1PzgxlQ0hDT7vJbXv
+         G62/4zcvb8CKiJIbAzIppqFu6rSJTbgJXElWUg6fBBjnffhHdqbvqss+t1ToOrZs2cqm
+         v5rmgR0zZNs2/1AUY0zKSfKajVNbnHAshggOI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=lqtjDfDMRVrpsCVybPd2ASGnB4nenRyEa0GnMoEEPwY=;
+        b=KpTiJp32MHhdKb2LhFTYLpA5kHzhpp7yJRVVYX/kROBwzEWkc+sltLuXG6Yw//UjaC
+         6njNs4TAh9E/uhXsnzf7PhZZ2fIdAWu4a2G0AE1Ec7nrYZrREPNxlGEF+NvmOrLXAbUm
+         Dbw2B1LdrzcX58dWvEW3IwPYqGVLEgUWgDk/xTGSEogZBcutZPPazarNKWSxDeenRZjG
+         Y73Qme1za80yLF//i1RetKySk+4Cynn+/2Z+JM9kvOEssl7Tc0WXgF0O/vukIK8rCJrN
+         +XwJEfxsELiNKtlzdrpWfzInIdp/IYbcV4KPpDyhWAdk/WsJefK4SiDCCwrMAYwAovCH
+         jzjA==
+X-Gm-Message-State: AOAM533zWdiOC3t5QqaJUvXizPFFiQo1SKAFZ0tPJJUNte0ty9t/NKOz
+        9pleqY+jVH8hbvHc8gHYVh8Ubg==
+X-Google-Smtp-Source: ABdhPJycAkp6+8nMtAx+aLtk0wJ9huxG4982NBY/lWZC+yW47viKbLHWAYy7tBkt6DpjDE8D1OZXKA==
+X-Received: by 2002:a17:90a:5103:: with SMTP id t3mr7021407pjh.68.1616647153731;
+        Wed, 24 Mar 2021 21:39:13 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:201:84ac:62f7:16a8:ccc7])
+        by smtp.gmail.com with ESMTPSA id h6sm4291699pfb.157.2021.03.24.21.39.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Mar 2021 21:39:12 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <CAD=FV=WLZCSd6D5VFyD+1KBp5n1qyszER2EVaEMwYjQfPSSDnA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAF6AEGsRKPn-pLtP8dmG+_VSH1TbyaW10HHtaOT10Xc3D+DMTg@mail.gmail.com>
+References: <20210318200544.2244007-1-dmitry.baryshkov@linaro.org> <161663694524.3012082.11889553997747135632@swboyd.mtv.corp.google.com> <CAF6AEGsRKPn-pLtP8dmG+_VSH1TbyaW10HHtaOT10Xc3D+DMTg@mail.gmail.com>
+Subject: Re: [PATCH v2] gpu/drm/msm: fix shutdown hook in case GPU components failed to bind
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+To:     Rob Clark <robdclark@gmail.com>
+Date:   Wed, 24 Mar 2021 21:39:11 -0700
+Message-ID: <161664715135.3012082.16581922607390567861@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Quoting Rob Clark (2021-03-24 20:09:37)
+> On Wed, Mar 24, 2021 at 6:49 PM Stephen Boyd <swboyd@chromium.org> wrote:
+> >
+> > Quoting Dmitry Baryshkov (2021-03-18 13:05:44)
+> > > if GPU components have failed to bind, shutdown callback would fail w=
+ith
+> > > the following backtrace. Add safeguard check to stop that oops from
+> > > happening and allow the board to reboot.
+> > [...]
+> > > diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_=
+drv.c
+> > > index 94525ac76d4e..fd2ac54caf9f 100644
+> > > --- a/drivers/gpu/drm/msm/msm_drv.c
+> > > +++ b/drivers/gpu/drm/msm/msm_drv.c
+> > > @@ -1311,6 +1311,10 @@ static int msm_pdev_remove(struct platform_dev=
+ice *pdev)
+> > >  static void msm_pdev_shutdown(struct platform_device *pdev)
+> > >  {
+> > >         struct drm_device *drm =3D platform_get_drvdata(pdev);
+> > > +       struct msm_drm_private *priv =3D drm ? drm->dev_private : NUL=
+L;
+> > > +
+> > > +       if (!priv || !priv->kms)
+> > > +               return;
+> > >
+> >
+> > I see a problem where if I don't get a backlight probing then my
+> > graphics card doesn't appear but this driver is still bound. I was
+> > hoping this patch would fix it but it doesn't. I have slab poisoning
+> > enabled so sometimes the 'priv' pointer is 0x6b6b6b6b6b6b6b6b meaning it
+> > got all freed.
+> >
+> > I found that the 'drm' pointer here is pointing at junk. The
+> > msm_drm_init() function calls drm_dev_put() on the error path and that
+> > will destroy the drm pointer but it doesn't update this platform drivers
+> > drvdata. Do we need another patch that sets the drvdata to NULL on
+> > msm_drm_init() failing? One last note, I'm seeing this on 5.4 so maybe I
+> > missed something and the drvdata has been set to NULL somewhere else
+> > upstream. I sort of doubt it though.
+>=20
+> the hw that I guess you are running on should work pretty well w/
+> upstream kernel.. but I don't think there is any important delta
+> between upstream and the 5.4 based kernel that you are running that
+> would fix this..
+>=20
+> so *probably* you are right..
 
-On 3/23/2021 9:41 PM, Doug Anderson wrote:
-> Hi,
->
-> On Sat, Mar 20, 2021 at 11:18 AM Shaik Sajida Bhanu
-> <sbhanu@codeaurora.org> wrote:
->> Add nodes for eMMC and SD card on sc7280.
->>
->> Signed-off-by: Shaik Sajida Bhanu <sbhanu@codeaurora.org>
->>
->> ---
->> This change is depends on the below patch series:
->> https://lore.kernel.org/patchwork/project/lkml/list/?series=488871
->> https://lore.kernel.org/patchwork/project/lkml/list/?series=489530
->> https://lore.kernel.org/patchwork/project/lkml/list/?series=488429
->>
->> Changes since V1:
->>          - Moved SDHC nodes as suggested by Bjorn Andersson.
->>          - Dropped "pinconf-" prefix as suggested by Bjorn Andersson.
->>          - Removed extra newlines as suggested by Konrad Dybcio.
->>          - Changed sd-cd pin to bias-pull-up in sdc2_off as suggested by
->>            Veerabhadrarao Badiganti.
->>          - Added bandwidth votes for eMMC and SD card.
->> ---
->>   arch/arm64/boot/dts/qcom/sc7280-idp.dts |  25 ++++
->>   arch/arm64/boot/dts/qcom/sc7280.dtsi    | 213 ++++++++++++++++++++++++++++++++
->>   2 files changed, 238 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
->> index 54d2cb3..4105263 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
->> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
->> @@ -8,6 +8,7 @@
->>   /dts-v1/;
->>
->>   #include "sc7280.dtsi"
->> +#include <dt-bindings/gpio/gpio.h>
->>
->>   / {
->>          model = "Qualcomm Technologies, Inc. sc7280 IDP platform";
->> @@ -242,6 +243,30 @@
->>          status = "okay";
->>   };
->>
->> +&sdhc_1 {
->> +       status = "okay";
-> When I apply your patch I find that your sort order is wrong. "s"
-> comes before "u" and after "q" in the alphabet so "sdhc_1" and
-> "sdhc_2" should sort _after "qupv3_id_0" and before "uart5"
->
->
->> +       pinctrl-names = "default", "sleep";
->> +       pinctrl-0 = <&sdc1_on>;
->> +       pinctrl-1 = <&sdc1_off>;
->> +
->> +       vmmc-supply = <&vreg_l7b_2p9>;
->> +       vqmmc-supply = <&vreg_l19b_1p8>;
->> +};
->> +
->> +&sdhc_2 {
->> +       status = "okay";
->> +
->> +       pinctrl-names = "default","sleep";
->> +       pinctrl-0 = <&sdc2_on>;
->> +       pinctrl-1 = <&sdc2_off>;
->> +
->> +       vmmc-supply = <&vreg_l9c_2p9>;
->> +       vqmmc-supply = <&vreg_l6c_2p9>;
->> +
->> +       cd-gpios = <&tlmm 91 GPIO_ACTIVE_LOW>;
-> Where is the pinctrl for the card detect?  Oh, I see it's in
-> "sdc2_on". Probably would be good to break it out since this is
-> board-specific. See below.
->
->
->> +};
->> +
->>   /* PINCTRL - additions to nodes defined in sc7280.dtsi */
->>
->>   &qup_uart5_default {
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> index 8f6b569..69eb064 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> @@ -20,6 +20,11 @@
->>
->>          chosen { };
->>
->> +       aliases {
->> +               mmc1 = &sdhc_1;
->> +               mmc2 = &sdhc_2;
->> +       };
->> +
->>          clocks {
->>                  xo_board: xo-board {
->>                          compatible = "fixed-clock";
->> @@ -305,6 +310,64 @@
->>                          #power-domain-cells = <1>;
->>                  };
->>
->> +               sdhc_1: sdhci@7c4000 {
->> +                       compatible = "qcom,sdhci-msm-v5";
-> Please make the compatible:
->    compatible = "qcom,sc7280-sdhci", "qcom,sdhci-msm-v5";
->
-> ...and add to the bindings. It should be a trivial bindings patch so
-> not too much trouble.
->
-> NOTE: even though the "qcom,sc7280-sdhci" should be in the bindings
-> and here you _shouldn't_ be adding any code for it. Just let the
-> fallback compatible string ("qcom,sdhci-msm-v5") do its magic. Adding
-> the sc7280 specific version is more of a "just in case we need it
-> later" type thing.
->
->
->> +                       reg = <0 0x7c4000 0 0x1000>,
->> +                                       <0 0x7c5000 0 0x1000>;
->> +                       reg-names = "hc", "cqhci";
->> +
->> +                       iommus = <&apps_smmu 0xC0 0x0>;
->> +                       interrupts = <GIC_SPI 652 IRQ_TYPE_LEVEL_HIGH>,
->> +                                       <GIC_SPI 656 IRQ_TYPE_LEVEL_HIGH>;
->> +                       interrupt-names = "hc_irq", "pwr_irq";
->> +
->> +                       clocks = <&gcc GCC_SDCC1_APPS_CLK>,
->> +                                       <&gcc GCC_SDCC1_AHB_CLK>,
->> +                                       <&rpmhcc RPMH_CXO_CLK>;
->> +                       clock-names = "core", "iface", "xo";
-> I'm curious: why is the "xo" clock needed here but not for sc7180?
-Actually its needed even for sc7180. We are making use of this clock in 
-msm_init_cm_dll()
-The default PoR value is also same as calculated value for 
-HS200/HS400/SDR104 modes.
-But just not to rely on default register values we need this entry.
+linux-next is failing like this today for me on Lazor right after the
+screen turns on. I'll have to figure out what's wrong before checking
+upstream.
 
->
->> +                       interconnects = <&aggre1_noc MASTER_SDCC_1 0 &mc_virt SLAVE_EBI1 0>,
->> +                                       <&gem_noc MASTER_APPSS_PROC 0 &cnoc2 SLAVE_SDCC_1 0>;
->> +                       interconnect-names = "sdhc-ddr","cpu-sdhc";
->> +                       power-domains = <&rpmhpd SC7280_CX>;
->> +                       operating-points-v2 = <&sdhc1_opp_table>;
->> +
->> +                       bus-width = <8>;
->> +                       non-removable;
-> This was actually a problem on sc7180 too, but you probably don't want
-> "non-removable" in the SoC file. Board files really should be adding
-> this. Though the SoC might be designed with the idea that this would
-> be used for a non-removable eMMC card I don't know why it wouldn't be
-> possible for someone to hook this up to an external slot and use a
-> GPIO somewhere as a card detect.
->
->
->> +                       supports-cqe;
->> +                       no-sd;
->> +                       no-sdio;
-> Does the port really not support SD / SDIO, or are you adding these
-> two properties just because on your reference board it's not hooked up
-> to SD/SDIO? What exactly makes it impossible to use SD/SDIO on this
-> port?
->
-By having this, we can optimize emmc device scan time.
-Driver wont issue SDIO & SDcards specific commands while
-scanning the device.Its little optimization.
-I think board specific dt is right place.
-
-
->> +                       max-frequency = <192000000>;
-> Why do you need to specify this?
->
->
->> +                       qcom,dll-config = <0x0007642c>;
->> +                       qcom,ddr-config = <0x80040868>;
-> These magic hex values really have no place being in dts which should
-> have things expressed at a higher level. ...but I guess that ship has
-> sailed and this is in the bindings so I guess we're stuck with them,
-> so I guess they're fine.
->
->
->> +                       mmc-ddr-1_8v;
->> +                       mmc-hs200-1_8v;
->> +                       mmc-hs400-1_8v;
->> +                       mmc-hs400-enhanced-strobe;
->> +
->> +                       status = "disabled";
->> +
->> +                       sdhc1_opp_table: sdhc1-opp-table {
->> +                               compatible = "operating-points-v2";
->> +
->> +                               opp-100000000 {
->> +                                       opp-hz = /bits/ 64 <100000000>;
->> +                                       required-opps = <&rpmhpd_opp_low_svs>;
->> +                                       opp-peak-kBps = <1200000 76000>;
->> +                                       opp-avg-kBps = <1200000 50000>;
-> Why are the kBps numbers so vastly different than the ones on sc7180
-> for the same OPP point. That implies:
->
-> a) sc7180 is wrong.
->
-> b) This patch is wrong.
->
-> c) The numbers are essentially random and don't really matter.
->
-> Can you identify which of a), b), or c) is correct, or propose an
-> alternate explanation of the difference?
->
->
->> +                               };
->> +
->> +                               opp-384000000 {
->> +                                       opp-hz = /bits/ 64 <384000000>;
->> +                                       required-opps = <&rpmhpd_opp_nom>;
->> +                                       opp-peak-kBps = <5400000 1600000>;
->> +                                       opp-avg-kBps = <6000000 300000>;
-> These opp numbers are also quite different than sc7180
->
->
->> +                               };
->> +                       };
->> +               };
->> +
->>                  qupv3_id_0: geniqup@9c0000 {
->>                          compatible = "qcom,geni-se-qup";
->>                          reg = <0 0x009c0000 0 0x2000>;
->> @@ -328,6 +391,54 @@
->>                          };
->>                  };
->>
->> +               sdhc_2: sdhci@8804000 {
->> +                       compatible = "qcom,sdhci-msm-v5";
->> +                       reg = <0 0x08804000 0 0x1000>;
->> +
->> +                       iommus = <&apps_smmu 0x100 0x0>;
->> +                       interrupts = <GIC_SPI 207 IRQ_TYPE_LEVEL_HIGH>,
->> +                                       <GIC_SPI 223 IRQ_TYPE_LEVEL_HIGH>;
->> +                       interrupt-names = "hc_irq", "pwr_irq";
->> +
->> +                       clocks = <&gcc GCC_SDCC2_APPS_CLK>,
->> +                                       <&gcc GCC_SDCC2_AHB_CLK>,
->> +                                       <&rpmhcc RPMH_CXO_CLK>;
->> +                       clock-names = "core", "iface", "xo";
->> +                       interconnects = <&aggre1_noc MASTER_SDCC_2 0 &mc_virt SLAVE_EBI1 0>,
->> +                                       <&gem_noc MASTER_APPSS_PROC 0 &cnoc2 SLAVE_SDCC_2 0>;
->> +                       interconnect-names = "sdhc-ddr","cpu-sdhc";
->> +                       power-domains = <&rpmhpd SC7280_CX>;
->> +                       operating-points-v2 = <&sdhc2_opp_table>;
->> +
->> +                       bus-width = <4>;
->> +
->> +                       no-mmc;
->> +                       no-sdio;
-> Similar question to above: why exactly would mmc not work? Are you
-> saying that if someone hooked this up to a full sized SD card slot and
-> placed an MMC card into the slot that it wouldn't work? Similar
-> question about SDIO. If someone placed an external SDIO card into your
-> slot, would it not work?
->
-As mentioned above, its just to optimize SDcard scan time a little.
->> +                       max-frequency = <202000000>;
-> Not needed?
->
->> +
->> +                       qcom,dll-config = <0x0007642c>;
->> +
->> +                       status = "disabled";
->> +
->> +                       sdhc2_opp_table: sdhc2-opp-table {
->> +                                       compatible = "operating-points-v2";
->> +
->> +                                       opp-100000000 {
->> +                                               opp-hz =/bits/ 64 <100000000>;
->> +                                               required-opps = <&rpmhpd_opp_low_svs>;
->> +                                               opp-peak-kBps = <1200000 76000>;
->> +                                               opp-avg-kBps = <1200000 50000>;
->> +                                       };
->> +                                       opp-202000000 {
-> Blank line between the OPPs?
->
->> +                                               opp-hz = /bits/ 64 <202000000>;
->> +                                               required-opps = <&rpmhpd_opp_nom>;
->> +                                               opp-peak-kBps = <3500000 1200000>;
->> +                                               opp-avg-kBps = <5000000 100000>;
->> +                                       };
-> Similar questions about why the OPPs are so vastly different from sc7180.
->
->> +                               };
->> +               };
->> +
->>                  pdc: interrupt-controller@b220000 {
->>                          compatible = "qcom,sc7280-pdc", "qcom,pdc";
->>                          reg = <0 0x0b220000 0 0x30000>;
->> @@ -374,6 +485,108 @@
->>                                  pins = "gpio46", "gpio47";
->>                                  function = "qup13";
->>                          };
->> +
->> +                       sdc1_on: sdc1-on {
->> +                               clk {
->> +                                       pins = "sdc1_clk";
->> +                                       bias-disable;
->> +                                       drive-strength = <16>;
->> +                               };
->> +
->> +                               cmd {
->> +                                       pins = "sdc1_cmd";
->> +                                       bias-pull-up;
->> +                                       drive-strength = <10>;
->> +                               };
->> +
->> +                               data {
->> +                                       pins = "sdc1_data";
->> +                                       bias-pull-up;
->> +                                       drive-strength = <10>;
->> +                               };
->> +
->> +                               rclk {
->> +                                       pins = "sdc1_rclk";
->> +                                       bias-pull-down;
->> +                               };
-> * generally "bias" doesn't belong in the SoC file but instead should
-> be in the board file. Some boards might have external pulls (even if
-> the internal ones would work fine, hardware designers do weird things)
-> and thus might need to disable the internal ones (double pulls are not
-> great).
->
-> * generally drive-strength doesn't belong in the SoC file but should
-> be in the board file. Different boards with different layouts might
-> need different drive strengths, right?
->
-> If you remove those two things, I guess there's not actually much left
-> in the SoC dtsi file so I guess move these all to the board file? That
-> seems to be what we ended up with in "qrb5165-rb5.dts" / "sm8250.dtsi"
-> which is an example of a board using the new style of pinctrl for
-> devicetree.
->
->
->> +                       };
->> +
->> +                       sdc1_off: sdc1-off {
->> +                               clk {
->> +                                       pins = "sdc1_clk";
->> +                                       bias-disable;
->> +                                       drive-strength = <2>;
->> +                               };
->> +
->> +                               cmd {
->> +                                       pins = "sdc1_cmd";
->> +                                       bias-pull-up;
->> +                                       drive-strength = <2>;
->> +                               };
->> +
->> +                               data {
->> +                                       pins = "sdc1_data";
->> +                                       bias-pull-up;
->> +                                       drive-strength = <2>;
->> +                               };
->> +
->> +                               rclk {
->> +                                       pins = "sdc1_rclk";
->> +                                       bias-pull-down;
->> +                               };
->> +                       };
-> No need for a sleep state for the rclk since it's the same as the
-> active state, right? NOTE: one way to handle this would be to define
-> one node per pingroup and thus do something like:
->
-> pinctrl-names = "default", "sleep";
-> pinctrl-0 = <&sdc1_clk>, <&sdc1_cmd>, <&sdc1_data>, <&sdc1_rclk>;
-> pinctrl-1 = <&sdc1_clk_sleep>, <&sdc1_cmd_sleep>, <&sdc1_data_sleep>,
-> <&sdc1_rclk>;
->
-> I do wish we could avoid having to duplicate the "bias" in every board
-> file. Hrm, I wonder if this could be made simpler by actually putting
-> the "sleep" states in the sc7180.dtsi file (not the board file) and
-> using "bias-bus-hold" to avoid it being board specific?
->
-> Thus (assuming it works), the total summary would be:
->
-> 1. Board dts file fully defines "sdc1_clk", "sdc1_cmd", "sdc1_data",
-> "sdc1_rclk", specifying whatever bias and drive strength needed for
-> the board.
->
-> 2. SoC dtsi fully defines "sdc1_clk_sleep", "sdc1_cmd_sleep",
-> "sdc1_data_sleep", "sdc1_rclk_sleep", specifying drive-strength of 2
-> (for outputs) and "bias-bus-hold" which is OK for all board.
->
->
->> +
->> +                       sdc2_on: sdc2-on {
->> +                               clk {
->> +                                       pins = "sdc2_clk";
->> +                                       bias-disable;
->> +                                       drive-strength = <16>;
->> +                               };
->> +
->> +                               cmd {
->> +                                       pins = "sdc2_cmd";
->> +                                       bias-pull-up;
->> +                                       drive-strength = <10>;
->> +                               };
->> +
->> +                               data {
->> +                                       pins = "sdc2_data";
->> +                                       bias-pull-up;
->> +                                       drive-strength = <10>;
->> +                               };
->> +
->> +                               sd-cd {
->> +                                       pins = "gpio91";
-> NOTE: even if we find some reason to keep some of the pinctrl in the
-> SoC dtsi file, the card detect almost certainly needs to move _fully_
-> to the board dts file. Different boards could use a different card
-> detect pin.
->
->> +                                       bias-pull-up;
->> +                                       drive-strength = <2>;
-> Drive strength isn't needed for input pins. Please remove.
->
->> +                               };
->> +                       };
->> +
->> +                       sdc2_off: sdc2-off {
->> +                               clk {
->> +                                       pins = "sdc2_clk";
->> +                                       bias-disable;
->> +                                       drive-strength = <2>;
->> +                               };
->> +
->> +                               cmd {
->> +                                       pins = "sdc2_cmd";
->> +                                       bias-pull-up;
->> +                                       drive-strength = <2>;
->> +                               };
->> +
->> +                               data {
->> +                                       pins = "sdc2_data";
->> +                                       bias-pull-up;
->> +                                       drive-strength = <2>;
->> +                               };
->> +
->> +                               sd-cd {
->> +                                       pins = "gpio91";
->> +                                       bias-pull-up;
->> +                                       drive-strength = <2>;
->> +                               };
-> There's definitely no need for a separate sleep state for the CD line.
->
->
-> -Doug
+[   10.734752] Unable to handle kernel NULL pointer dereference at virtual =
+address 0000000000000080
+[   10.744482] Mem abort info:
+[   10.747462]   ESR =3D 0x96000006
+[   10.750644]   EC =3D 0x25: DABT (current EL), IL =3D 32 bits
+[   10.756125]   SET =3D 0, FnV =3D 0
+[   10.759290]   EA =3D 0, S1PTW =3D 0
+[   10.762543] Data abort info:
+[   10.765519]   ISV =3D 0, ISS =3D 0x00000006
+[   10.769485]   CM =3D 0, WnR =3D 0
+[   10.772553] user pgtable: 4k pages, 39-bit VAs, pgdp=3D0000000123474000
+[   10.779212] [0000000000000080] pgd=3D0800000123475003, p4d=3D08000001234=
+75003, pud=3D0800000123475003, pmd=3D0000000000000000
+[   10.790128] Internal error: Oops: 96000006 [#1] PREEMPT SMP
+[   10.795856] Modules linked in: ath10k_snoc qmi_helpers ath10k_core ath m=
+ac80211 cfg80211 r8152 mii joydev
+[   10.805705] CPU: 5 PID: 1576 Comm: DrmThread Not tainted 5.12.0-rc4-next=
+-20210324+ #13
+[   10.813832] Hardware name: Google Lazor (rev3+) with KB Backlight (DT)
+[   10.820535] pstate: 80400009 (Nzcv daif +PAN -UAO -TCO BTYPE=3D--)
+[   10.826703] pc : dpu_plane_atomic_update+0x80/0xcb8
+[   10.831730] lr : dpu_plane_restore+0x5c/0x88
+[   10.836117] sp : ffffffc012963920
+[   10.839521] x29: ffffffc0129639c0 x28: ffffffed5c9ad000=20
+[   10.844979] x27: ffffffed5c736000 x26: ffffffed5ca3f000=20
+[   10.850443] x25: ffffffed5c736000 x24: 0000000000000000=20
+[   10.855903] x23: 0000000000000000 x22: ffffff80ad007400=20
+[   10.861361] x21: ffffff8085193808 x20: 0000000000000000=20
+[   10.866818] x19: ffffff8085193800 x18: 0000000000000008=20
+[   10.872274] x17: 0000000000800000 x16: 0000000020000000=20
+[   10.877738] x15: 0000000000000001 x14: 0000000000000000=20
+[   10.883201] x13: ffffff80852324a8 x12: 0000000000000008=20
+[   10.888657] x11: ffffffed5c3b7890 x10: 0000000000000000=20
+[   10.894112] x9 : 0000000000000000 x8 : 0000000000000000=20
+[   10.899570] x7 : 0000000000004000 x6 : 0000000000010000=20
+[   10.905026] x5 : 0000000000040000 x4 : 0000000000000800=20
+[   10.910482] x3 : 0000000000000000 x2 : 0000000000020041=20
+[   10.915946] x1 : ffffff80ad2e2600 x0 : ffffff8085193800=20
+[   10.921402] Call trace:
+[   10.923923]  dpu_plane_atomic_update+0x80/0xcb8
+[   10.928585]  dpu_plane_restore+0x5c/0x88
+[   10.932620]  dpu_crtc_atomic_flush+0xd4/0x1a0
+[   10.937105]  drm_atomic_helper_commit_planes+0x1b4/0x1e0
+[   10.942565]  msm_atomic_commit_tail+0x2d4/0x670
+[   10.947223]  commit_tail+0xac/0x148
+[   10.950814]  drm_atomic_helper_commit+0x104/0x10c
+[   10.955653]  drm_atomic_commit+0x58/0x68
+[   10.959686]  drm_mode_atomic_ioctl+0x438/0x51c
+[   10.964261]  drm_ioctl_kernel+0xa8/0x124
+[   10.968295]  drm_ioctl+0x24c/0x3ec
+[   10.971800]  drm_compat_ioctl+0xe0/0xf4
+[   10.975745]  __arm64_compat_sys_ioctl+0xcc/0x104
+[   10.980499]  el0_svc_common+0xa4/0x128
+[   10.984358]  do_el0_svc_compat+0x2c/0x38
+[   10.988395]  el0_svc_compat+0x20/0x30
+[   10.992164]  el0_sync_compat_handler+0xc0/0xf0
+[   10.996734]  el0_sync_compat+0x174/0x180
+[   11.000774] Code: d0003d61 91204821 52800020 97fe8c65 (39420288)
