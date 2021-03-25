@@ -2,83 +2,256 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2215F3488C1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 07:09:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0CFDC3488CA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 07:13:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229508AbhCYGIl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Mar 2021 02:08:41 -0400
-Received: from mail.kernel.org ([198.145.29.99]:52580 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229461AbhCYGI2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Mar 2021 02:08:28 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 0490761A1E;
-        Thu, 25 Mar 2021 06:08:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1616652507;
-        bh=50XHICVED2w0OW9kAp/7/1VgbR+doRNa3zBU6nckmQA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=JV+74+jd5KF87nLnt/1vq9jBMuxGUFf1ykdCuuDkVgN+OMviJaJtgUb/hgk19G3Xw
-         3N8MPm3eBpMGKG+UTTqQWT536Lngxtp4RxRYnvfkRrawuFQhN72/9zzKu7yOzvauJ5
-         SD9NXkvIjQSzGAvnk2Uzv4mB7D11apv0naOB9IYtudXcE5+NHZQJtPs/+/FCVipoZL
-         aTGoqj2XiL0TIg3T1S8Q1N21TsISc5B99zJ2jSRqkL3qJhdJCyVwdS2uIGfa1haqua
-         8HymMgTQbtxo2HlpwCofsFeSRcUKx1xeEcHupwaX8G6aggeURGjcaheVgfpxM5y0g3
-         ioDIGL0fTXr5A==
-Date:   Thu, 25 Mar 2021 11:38:24 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: mailbox: Add compatible for SM8350 IPCC
-Message-ID: <YFwo2FrCMYJ4AhCs@vkoul-mobl.Dlink>
-References: <20210312051203.3555751-1-vkoul@kernel.org>
- <YEukrpG06PBdgGAF@builder.lan>
+        id S229642AbhCYGMe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Mar 2021 02:12:34 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:30978 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229619AbhCYGMW (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 25 Mar 2021 02:12:22 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1616652741; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=orQ8HjFkFqj/28v7uatxw4nTWkgct2pHiy/e+Kklocg=;
+ b=qgNYMshQjOQRA9mFVBHlcgmJ3SPn5hjDd27JUsuxoUyK5MKxMoIxYhGR7Ixx/GpbyqxNHJKT
+ qxPD6j1RheudqW9RSP8HKDwUHMvbkZqMoUeKOLXJKkd+g0zCCgjS4dXZTWkcsSUEE5yzNd9O
+ 5yzdBNWIUjh7Bf+eT4N2Z9dsHYE=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 605c29c4c32ceb3a9181ebc7 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 25 Mar 2021 06:12:20
+ GMT
+Sender: skakit=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 7A3DBC43461; Thu, 25 Mar 2021 06:12:20 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: skakit)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 68568C433C6;
+        Thu, 25 Mar 2021 06:12:19 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YEukrpG06PBdgGAF@builder.lan>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 25 Mar 2021 11:42:19 +0530
+From:   skakit@codeaurora.org
+To:     Rob Herring <robh@kernel.org>
+Cc:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        David Collins <collinsd@codeaurora.org>, kgunda@codeaurora.org,
+        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 2/3] dt-bindings: input: pm8941-pwrkey: Convert power key
+ bindings to yaml
+In-Reply-To: <20210305144027.GA115719@robh.at.kernel.org>
+References: <1614922721-1390-1-git-send-email-skakit@codeaurora.org>
+ <1614922721-1390-3-git-send-email-skakit@codeaurora.org>
+ <20210305144027.GA115719@robh.at.kernel.org>
+Message-ID: <22580c3c4489506640d2091b94c3b520@codeaurora.org>
+X-Sender: skakit@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12-03-21, 11:28, Bjorn Andersson wrote:
-> On Thu 11 Mar 23:12 CST 2021, Vinod Koul wrote:
-> 
-> Adding Jassi as recipient. Please let Vinod know if you want him to
-> resend this patch to you. (I send a patch for MAINTAINERS yesterday)
+Hi Rob,
 
-Jassi, should I resend or you can pick from lore?
+On 2021-03-05 20:10, Rob Herring wrote:
+> On Fri, Mar 05, 2021 at 11:08:40AM +0530, satya priya wrote:
+>> Convert power key bindings from .txt to .yaml format.
+>> 
+>> Signed-off-by: satya priya <skakit@codeaurora.org>
+>> ---
+>>  .../bindings/input/qcom,pm8941-pwrkey.txt          | 53 
+>> ---------------
+>>  .../bindings/input/qcom,pm8941-pwrkey.yaml         | 76 
+>> ++++++++++++++++++++++
+>>  2 files changed, 76 insertions(+), 53 deletions(-)
+>>  delete mode 100644 
+>> Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.txt
+>>  create mode 100644 
+>> Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.yaml
 > 
-> > Add the compatible string for SM8350 IPCC block on this SoC
-> > 
+> You need to convert the main pm8941 binding first if not done already
+> and then reference this binding from it.
 > 
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> 
-> Regards,
-> Bjorn
-> 
-> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > ---
-> >  Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml | 1 +
-> >  1 file changed, 1 insertion(+)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
-> > index 168beeb7e9f7..fe17ba9b84f2 100644
-> > --- a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
-> > +++ b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
-> > @@ -25,6 +25,7 @@ properties:
-> >      items:
-> >        - enum:
-> >            - qcom,sm8250-ipcc
-> > +          - qcom,sm8350-ipcc
-> >        - const: qcom,ipcc
-> >  
-> >    reg:
-> > -- 
-> > 2.26.2
-> > 
 
--- 
-~Vinod
+Okay.
+
+> And let's have 1 complete example instead of fragments.
+> 
+
+Sure.
+
+>> 
+>> diff --git 
+>> a/Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.txt 
+>> b/Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.txt
+>> deleted file mode 100644
+>> index 34ab576..0000000
+>> --- a/Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.txt
+>> +++ /dev/null
+>> @@ -1,53 +0,0 @@
+>> -Qualcomm PM8941 PMIC Power Key
+>> -
+>> -PROPERTIES
+>> -
+>> -- compatible:
+>> -	Usage: required
+>> -	Value type: <string>
+>> -	Definition: must be one of:
+>> -		    "qcom,pm8941-pwrkey"
+>> -		    "qcom,pm8941-resin"
+>> -
+>> -- reg:
+>> -	Usage: required
+>> -	Value type: <prop-encoded-array>
+>> -	Definition: base address of registers for block
+>> -
+>> -- interrupts:
+>> -	Usage: required
+>> -	Value type: <prop-encoded-array>
+>> -	Definition: key change interrupt; The format of the specifier is
+>> -		    defined by the binding document describing the node's
+>> -		    interrupt parent.
+>> -
+>> -- debounce:
+>> -	Usage: optional
+>> -	Value type: <u32>
+>> -	Definition: time in microseconds that key must be pressed or 
+>> released
+>> -		    for state change interrupt to trigger.
+>> -
+>> -- bias-pull-up:
+>> -	Usage: optional
+>> -	Value type: <empty>
+>> -	Definition: presence of this property indicates that the KPDPWR_N 
+>> pin
+>> -		    should be configured for pull up.
+>> -
+>> -- linux,code:
+>> -	Usage: optional
+>> -	Value type: <u32>
+>> -	Definition: The input key-code associated with the power key.
+>> -		    Use the linux event codes defined in
+>> -		    include/dt-bindings/input/linux-event-codes.h
+>> -		    When property is omitted KEY_POWER is assumed.
+>> -
+>> -EXAMPLE
+>> -
+>> -	pwrkey@800 {
+>> -		compatible = "qcom,pm8941-pwrkey";
+>> -		reg = <0x800>;
+>> -		interrupts = <0x0 0x8 0 IRQ_TYPE_EDGE_BOTH>;
+>> -		debounce = <15625>;
+>> -		bias-pull-up;
+>> -		linux,code = <KEY_POWER>;
+>> -	};
+>> diff --git 
+>> a/Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.yaml 
+>> b/Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.yaml
+>> new file mode 100644
+>> index 0000000..302866d
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.yaml
+>> @@ -0,0 +1,76 @@
+>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/input/qcom,pm8941-pwrkey.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm PM8941 PMIC Power Key
+>> +
+>> +maintainers:
+>> + - Courtney Cavin <courtney.cavin@sonymobile.com>
+>> + - Vinod Koul <vkoul@kernel.org>
+>> +
+>> +properties:
+>> +  compatible:
+>> +    enum:
+>> +      - qcom,pm8941-pwrkey
+>> +      - qcom,pm8941-resin
+>> +
+>> +  interrupts:
+>> +    description: |
+>> +          Key change interrupt; The format of the specifier is
+>> +          defined by the binding document describing the node's
+>> +          interrupt parent.
+>> +
+>> +  debounce:
+>> +    description: |
+>> +          Time in microseconds that key must be pressed or
+>> +          released for state change interrupt to trigger.
+>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>> +
+>> +  bias-pull-up:
+>> +    description: |
+>> +           Presence of this property indicates that the KPDPWR_N
+>> +           pin should be configured for pull up.
+>> +    $ref: /schemas/types.yaml#/definitions/flag
+>> +
+>> +  linux,code:
+>> +    description: |
+>> +           The input key-code associated with the power key.
+>> +           Use the linux event codes defined in
+>> +           include/dt-bindings/input/linux-event-codes.h
+>> +           When property is omitted KEY_POWER is assumed.
+>> +    $ref: /schemas/types.yaml#/definitions/uint32
+> 
+> Already has a type definition. Need to reference input.yaml.
+> 
+
+Okay.
+
+>> +
+>> +required:
+>> + - compatible
+>> + - interrupts
+>> +
+>> +additionalProperties: false
+>> +
+>> +examples:
+>> + - |
+>> +   #include <dt-bindings/interrupt-controller/irq.h>
+>> +   #include <dt-bindings/input/linux-event-codes.h>
+>> +   #include <dt-bindings/spmi/spmi.h>
+>> +   spmi_bus: spmi@c440000 {
+>> +     reg = <0x0c440000 0x1100>;
+>> +     #address-cells = <2>;
+>> +     #size-cells = <0>;
+>> +     pmk8350: pmic@0 {
+>> +       reg = <0x0 SPMI_USID>;
+>> +       #address-cells = <1>;
+>> +       #size-cells = <0>;
+>> +       pmk8350_pon: pon_hlos@1300 {
+>> +         reg = <0x1300>;
+>> +         pwrkey {
+>> +            compatible = "qcom,pm8941-pwrkey";
+>> +            interrupts = < 0x0 0x8 0 IRQ_TYPE_EDGE_BOTH >;
+>> +            debounce = <15625>;
+>> +            bias-pull-up;
+>> +            linux,code = <KEY_POWER>;
+>> +         };
+>> +       };
+>> +     };
+>> +   };
+>> +...
+>> --
+>> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+>> member
+>> of Code Aurora Forum, hosted by The Linux Foundation
+>> 
