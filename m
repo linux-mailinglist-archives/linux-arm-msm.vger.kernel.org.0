@@ -2,286 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E213134916A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 13:02:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DB2683491EF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 13:30:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230483AbhCYMCS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Mar 2021 08:02:18 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:52176 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230372AbhCYMBm (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Mar 2021 08:01:42 -0400
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 25 Mar 2021 05:01:37 -0700
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 25 Mar 2021 05:01:36 -0700
-X-QCInternal: smtphost
-Received: from mkrishn-linux.qualcomm.com ([10.204.66.35])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 25 Mar 2021 17:31:07 +0530
-Received: by mkrishn-linux.qualcomm.com (Postfix, from userid 438394)
-        id 402AB21A44; Thu, 25 Mar 2021 17:31:06 +0530 (IST)
-From:   Krishna Manikandan <mkrishn@codeaurora.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
-        kalyan_t@codeaurora.org, tanmay@codeaurora.org,
-        abhinavk@codeaurora.org, robdclark@gmail.com, swboyd@chromium.org,
-        bjorn.andersson@linaro.org, vinod.koul@linaro.org,
-        rnayak@codeaurora.org, dianders@chromium.org, sibis@codeaurora.org,
-        khsieh@codeaurora.org, Chandan Uddaraju <chandanu@codeaurora.org>,
-        Vara Reddy <varar@codeaurora.org>
-Subject: [PATCH v14 4/4] dt-bindings: msm/dp: Add bindings of MSM DisplayPort controller
-Date:   Thu, 25 Mar 2021 17:31:01 +0530
-Message-Id: <1616673661-20038-4-git-send-email-mkrishn@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1616673661-20038-1-git-send-email-mkrishn@codeaurora.org>
-References: <1616673661-20038-1-git-send-email-mkrishn@codeaurora.org>
+        id S230242AbhCYM3e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Mar 2021 08:29:34 -0400
+Received: from mail.kernel.org ([198.145.29.99]:40072 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229788AbhCYM3L (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 25 Mar 2021 08:29:11 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 3CFA261582;
+        Thu, 25 Mar 2021 12:29:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1616675350;
+        bh=nft8tr30HZq9nXI1FChxCciEQBQ02Qli6EbN444l7bk=;
+        h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+        b=Z326JnL1YBI2HTBx9TcJMmhTcleJZWah6y1tlzRvaaEL87deuLUAZBNOzYxpBL1UV
+         4ndKQrMmhZDdvfuA4wm/Bl6+cgJgtdMH9gETuaEZt9pek1K1lFOK7l63C7gxWWp6nS
+         CJ+DBU5/R/AXbsqsTJRloj6ciZ6EWzAVJoB8ryLvxICqMoMOZ5Yo7YeGZ0WCv5MA4Y
+         IExDdODilMdS8+4+qq/qM6Uxi/UgEHazrBP7kZCRFj/JqS7xNFrqd3DxjUdIyINAdQ
+         WacbFlTY23RNXtgly9tZ0MgXz0kZ+Hv8uDh3OSHGAjK9So1foW56VGDG1z3QDlp7oh
+         0WRyiSn88zNbw==
+From:   Felipe Balbi <balbi@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Jian Dong <dj0227@163.com>, matthias.bgg@gmail.com,
+        agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        huyue2@yulong.com, Jian Dong <dongjian@yulong.com>
+Subject: Re: [PATCH] regulator: Use IRQF_ONESHOT
+In-Reply-To: <9428d264-aafa-793f-8c6c-86c55213f5f9@canonical.com>
+References: <1616501538-120724-1-git-send-email-dj0227@163.com>
+ <9428d264-aafa-793f-8c6c-86c55213f5f9@canonical.com>
+Date:   Thu, 25 Mar 2021 14:29:02 +0200
+Message-ID: <87v99fju29.fsf@kernel.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="=-=-=";
+        micalg=pgp-sha256; protocol="application/pgp-signature"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add bindings for Snapdragon DisplayPort controller driver.
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Chandan Uddaraju <chandanu@codeaurora.org>
-Signed-off-by: Vara Reddy <varar@codeaurora.org>
-Signed-off-by: Tanmay Shah <tanmay@codeaurora.org>
-Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
-Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
 
-Changes in V2:
--Provide details about sel-gpio
+Hi,
 
-Changes in V4:
--Provide details about max dp lanes
--Change the commit text
+Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com> writes:
+> On 23/03/2021 13:12, Jian Dong wrote:
+>> From: Jian Dong <dongjian@yulong.com>
+>>=20
+>> Fixes coccicheck error:
+>>=20
+>> drivers/regulator/mt6360-regulator.c:388:8-33: ERROR:
+>> drivers/regulator/pca9450-regulator.c:781:7-32: ERROR:
+>> drivers/regulator/slg51000-regulator.c:480:8-33: ERROR:
+>> drivers/regulator/qcom-labibb-regulator.c:364:8-33: ERROR:
+>> Threaded IRQ with no primary handler requested without IRQF_ONESHOT
+>>=20
+>> Signed-off-by: Jian Dong <dongjian@yulong.com>
+>> ---
+>>  drivers/regulator/mt6360-regulator.c      | 4 ++--
+>>  drivers/regulator/pca9450-regulator.c     | 2 +-
+>>  drivers/regulator/qcom-labibb-regulator.c | 3 ++-
+>>  drivers/regulator/slg51000-regulator.c    | 4 ++--
+>>  4 files changed, 7 insertions(+), 6 deletions(-)
+>>=20
+>> diff --git a/drivers/regulator/mt6360-regulator.c b/drivers/regulator/mt=
+6360-regulator.c
+>> index 15308ee..947350d 100644
+>> --- a/drivers/regulator/mt6360-regulator.c
+>> +++ b/drivers/regulator/mt6360-regulator.c
+>> @@ -385,8 +385,8 @@ static int mt6360_regulator_irq_register(struct plat=
+form_device *pdev,
+>>  			return irq;
+>>  		}
+>>=20=20
+>> -		ret =3D devm_request_threaded_irq(&pdev->dev, irq, NULL, irq_desc->ha=
+ndler, 0,
+>> -						irq_desc->name, rdev);
+>> +		ret =3D devm_request_threaded_irq(&pdev->dev, irq, NULL, irq_desc->ha=
+ndler,
+>> +					IRQF_ONESHOT, irq_desc->name, rdev);
+>
+> This does not look like trivial rename/replace fix. This should be
+> tested but it looks that you just did what coccinelle asked for, without
+> testing.
 
-Changes in V5:
--moved dp.txt to yaml file
+Right, but it must be done. If things work today, they work out of sheer
+luck. Also, which evidence is there that $subject wasn't tested?
 
-Changes in v6:
-- Squash all AUX LUT properties into one pattern Property
-- Make aux-cfg[0-9]-settings properties optional
-- Remove PLL/PHY bindings from DP controller dts
-- Add DP clocks description
-- Remove _clk suffix from clock names
-- Rename pixel clock to stream_pixel
-- Remove redundant bindings (GPIO, PHY, HDCP clock, etc..)
-- Fix indentation
-- Add Display Port as interface of DPU in DPU bindings
-  and add port mapping accordingly.
+>> diff --git a/drivers/regulator/pca9450-regulator.c b/drivers/regulator/p=
+ca9450-regulator.c
+>> index 2f7ee21..d4bc1c3 100644
+>> --- a/drivers/regulator/pca9450-regulator.c
+>> +++ b/drivers/regulator/pca9450-regulator.c
+>> @@ -780,7 +780,7 @@ static int pca9450_i2c_probe(struct i2c_client *i2c,
+>>=20=20
+>>  	ret =3D devm_request_threaded_irq(pca9450->dev, pca9450->irq, NULL,
+>>  					pca9450_irq_handler,
+>> -					(IRQF_TRIGGER_FALLING | IRQF_ONESHOT),
+>> +					IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
+>
+> How this is related to the missing IRQF_ONESHOT?
 
-Chages in v7:
-- Add dp-controller.yaml file common between multiple SOC
-- Rename dp-sc7180.yaml to dp-controller-sc7180.yaml
-- change compatible string and add SOC name to it.
-- Remove Root clock generator for pixel clock
-- Add assigned-clocks and assigned-clock-parents bindings
-- Remove redundant properties, descriptions and blank lines
-- Add DP port in DPU bindings
-- Update depends-on tag in commit message and rebase change accordingly
+agreed.
 
-Changes in v8:
-- Add MDSS AHB clock in bindings
+>> diff --git a/drivers/regulator/slg51000-regulator.c b/drivers/regulator/=
+slg51000-regulator.c
+>> index 75a941f..3f310ab 100644
+>> --- a/drivers/regulator/slg51000-regulator.c
+>> +++ b/drivers/regulator/slg51000-regulator.c
+>> @@ -479,8 +479,8 @@ static int slg51000_i2c_probe(struct i2c_client *cli=
+ent)
+>>  	if (chip->chip_irq) {
+>>  		ret =3D devm_request_threaded_irq(dev, chip->chip_irq, NULL,
+>>  						slg51000_irq_handler,
+>> -						(IRQF_TRIGGER_HIGH |
+>> -						IRQF_ONESHOT),
+>> +						IRQF_TRIGGER_HIGH |
+>> +						IRQF_ONESHOT,
+>>  						"slg51000-irq", chip);
+>
+> How this is related to the missing IRQF_ONESHOT?
 
-Changes in v9:
-- Remove redundant reg-name property
-- Change assigned-clocks and assigned-clocks-parents counts to 2
-- Use IRQ flags in example dts
+agreed.
 
-Changes in v10:
-- Change title of this patch as it does not contain PLL bindings anymore
-- Remove redundant properties
-- Remove use of IRQ flag
-- Fix ports property
+=2D-=20
+balbi
 
-Changes in v11:
-- add ports required of both #address-cells and  #size-cells
-- add required operating-points-v2
-- add required #sound-dai-cells
-- add required power-domains
-- update maintainer list
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Changes in v12:
-- remove soc node from examples (Stephen Boyd)
-- split dpu-sc7180.yaml changes to separate patch (Stephen Boyd)
+-----BEGIN PGP SIGNATURE-----
 
-Changes in v13:
-- add assigned-clocks
-- add assigned-clock-parents
----
- .../bindings/display/msm/dp-controller.yaml        | 162 +++++++++++++++++++++
- 1 file changed, 162 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-
-diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-new file mode 100644
-index 0000000..3a02c6c
---- /dev/null
-+++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-@@ -0,0 +1,162 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: MSM Display Port Controller
-+
-+maintainers:
-+  - Kuogee Hsieh <khsieh@codeaurora.org>
-+
-+description: |
-+  Device tree bindings for DisplayPort host controller for MSM targets
-+  that are compatible with VESA DisplayPort interface specification.
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,sc7180-dp
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  clocks:
-+    items:
-+      - description: AHB clock to enable register access
-+      - description: Display Port AUX clock
-+      - description: Display Port Link clock
-+      - description: Link interface clock between DP and PHY
-+      - description: Display Port Pixel clock
-+
-+  clock-names:
-+    items:
-+      - const: core_iface
-+      - const: core_aux
-+      - const: ctrl_link
-+      - const: ctrl_link_iface
-+      - const: stream_pixel
-+
-+  assigned-clocks:
-+    items:
-+      - description: link clock source
-+      - description: pixel clock source
-+
-+  assigned-clock-parents:
-+    items:
-+      - description: phy 0 parent
-+      - description: phy 1 parent
-+
-+  phys:
-+    maxItems: 1
-+
-+  phy-names:
-+    items:
-+      - const: dp
-+
-+  operating-points-v2:
-+    maxItems: 1
-+
-+  power-domains:
-+    maxItems: 1
-+
-+  "#sound-dai-cells":
-+    const: 0
-+
-+  ports:
-+    type: object
-+    description: |
-+      A ports node with endpoint definitions as defined in
-+      Documentation/devicetree/bindings/media/video-interfaces.txt.
-+    properties:
-+      "#address-cells":
-+        const: 1
-+
-+      "#size-cells":
-+        const: 0
-+
-+      port@0:
-+        type: object
-+        description: Input endpoint of the controller
-+
-+      port@1:
-+        type: object
-+        description: Output endpoint of the controller
-+
-+    required:
-+      - "#address-cells"
-+      - "#size-cells"
-+
-+    additionalProperties: false
-+
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - clocks
-+  - clock-names
-+  - phys
-+  - phy-names
-+  - "#sound-dai-cells"
-+  - power-domains
-+  - ports
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/clock/qcom,dispcc-sc7180.h>
-+    #include <dt-bindings/power/qcom-aoss-qmp.h>
-+    #include <dt-bindings/power/qcom-rpmpd.h>
-+
-+    displayport-controller@ae90000 {
-+        compatible = "qcom,sc7180-dp";
-+        reg = <0xae90000 0x1400>;
-+        interrupt-parent = <&mdss>;
-+        interrupts = <12>;
-+        clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+                 <&dispcc DISP_CC_MDSS_DP_AUX_CLK>,
-+                 <&dispcc DISP_CC_MDSS_DP_LINK_CLK>,
-+                 <&dispcc DISP_CC_MDSS_DP_LINK_INTF_CLK>,
-+                 <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK>;
-+        clock-names = "core_iface", "core_aux",
-+                      "ctrl_link",
-+                      "ctrl_link_iface", "stream_pixel";
-+
-+        assigned-clocks = <&dispcc DISP_CC_MDSS_DP_LINK_CLK_SRC>,
-+                          <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK_SRC>;
-+
-+        assigned-clock-parents = <&dp_phy 0>, <&dp_phy 1>;
-+
-+        phys = <&dp_phy>;
-+        phy-names = "dp";
-+
-+        #sound-dai-cells = <0>;
-+
-+        power-domains = <&rpmhpd SC7180_CX>;
-+
-+        ports {
-+            #address-cells = <1>;
-+            #size-cells = <0>;
-+
-+            port@0 {
-+                reg = <0>;
-+                endpoint {
-+                    remote-endpoint = <&dpu_intf0_out>;
-+                };
-+            };
-+
-+            port@1 {
-+                reg = <1>;
-+                endpoint {
-+                    remote-endpoint = <&typec>;
-+                };
-+            };
-+        };
-+    };
-+...
--- 
-2.7.4
-
+iQJFBAEBCAAvFiEElLzh7wn96CXwjh2IzL64meEamQYFAmBcgg4RHGJhbGJpQGtl
+cm5lbC5vcmcACgkQzL64meEamQY8kA/9HGCbG0EumvL8wuCCIOFu4yF1PMxrdGGR
+lW+2nNwf5fvukqzU8/5t4XC1DQnwxoLntrnB6oXcTc8eBSuqrAX93dlhZmSoBUs4
+g4OE27VGJx0+18pN3JR8eQDjFp/Y84zjPlEiJQ7UjB6SJLAdbzUp4q6w1gvT68fd
+FXWdangAhoV+lSF6idIdZ+4nHLPxu81fKmBJC5hs2XNDydXC8pVq1XrZSc9WbACA
+lcRQ04GJeWk0n/X5zTjabLspc+f5GgtHes1Kmk4p8TfH4pTbrX7J9bvigaCb2ODU
+kE2N+Vqe/owbeLGmEwnS8LYdPSAZzAiMUeb1eRD74/cgYgp+0CSFxiZSG1m3zckC
+hjmTxT79eqTD5nq+n7b7W/lPJVxZ9e/BKqbvoUpmxpnFVj0yZYCSouAUbUK9pHos
+hl3wG+ZbEZtHTwE/F0bfpTbnbp6V8SyyGx1jMATUDzPt+LcjLyDc8Ac8BYfcRdEw
+hXgTf2IAgxc8FICC3lkWZk19yGefs0g+LHkMII5tFEoMtCBGCiYEQt8/r6/MBK5u
+eaEJ3yXfuUCcDZfBAYQXmUwyUT3GYaTr71OsJeDX2rGP9HufFmip71cvAbZ7jZ9S
+czu7YN+oy071bO878qT72bjcYBYXELnBXs5GHyeNZFy0gcAxDV8PFMG1nuSiAMoa
+SallkfPoA0I=
+=R8GZ
+-----END PGP SIGNATURE-----
+--=-=-=--
