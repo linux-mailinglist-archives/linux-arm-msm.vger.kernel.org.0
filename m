@@ -2,153 +2,738 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CC361349153
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 12:59:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DEB10349165
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 13:02:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229981AbhCYL7X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Mar 2021 07:59:23 -0400
-Received: from youngberry.canonical.com ([91.189.89.112]:52955 "EHLO
-        youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229716AbhCYL7R (ORCPT
+        id S230481AbhCYMCK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Mar 2021 08:02:10 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:52176 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230348AbhCYMBk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Mar 2021 07:59:17 -0400
-Received: from mail-wm1-f70.google.com ([209.85.128.70])
-        by youngberry.canonical.com with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        (Exim 4.86_2)
-        (envelope-from <krzysztof.kozlowski@canonical.com>)
-        id 1lPOdw-0007ul-2Q
-        for linux-arm-msm@vger.kernel.org; Thu, 25 Mar 2021 11:59:16 +0000
-Received: by mail-wm1-f70.google.com with SMTP id v5so1591240wml.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Mar 2021 04:59:16 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=DfiLBHztHE4rXP9YTfO8+HSekNR/3pABhRdVX34TR+A=;
-        b=tW+eLg+Sx+Oaqoos/W3d3VueirUsFY3kNXyrFdJIwGCEz4uWNR/H6/LiQSpe1rwFbZ
-         XMmj7QaPf1OI7JXFuowwlDiCUozLFQocIOrSfQJ4M7s9KOyPtMBrFR4UKN46Kt2WbgXU
-         re+QVoxUqFdCTvjQ0pov0U14nZgVViwGaq6geyF9W51edrMasMCNxlSb48O2dyjGVvNd
-         PsYuuTraSFG5qfv3Q4UoJByMc+23aelS8+IUTB6zEi181KaYxIcvNBEskiN4ivKwbSLw
-         Uy2A97be/tnPtcObVmFtd+8QWHsjDboJ3X5x+syN86teztGYnE7Eac7Ku5IYZ3lVF2b8
-         RUPg==
-X-Gm-Message-State: AOAM5321Zu5vwEGaHB5nms3CYkU8vNxkuE1UhT2hoSYNSX4eASzMuZHu
-        vxI9Xj0L0bWs0SPfQZbN8jNTKS2cL47Szgr1lLGsSNWYpVff9wMTXv8Ns5ZaiKuTuYaB6GGl2n9
-        LEKWlT6s5QllgtSq0E9DRW/cNZdd8LVTJ8EdhkisFpWQ=
-X-Received: by 2002:a1c:5f89:: with SMTP id t131mr7340333wmb.173.1616673555714;
-        Thu, 25 Mar 2021 04:59:15 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJyVSjSgCphFJsd4YHNWcAP1j5EjsqiQU9p4nuTKndG2SXF8I2/J+tpPUwLhskg+gbiQC5L4iA==
-X-Received: by 2002:a1c:5f89:: with SMTP id t131mr7340312wmb.173.1616673555490;
-        Thu, 25 Mar 2021 04:59:15 -0700 (PDT)
-Received: from [192.168.1.116] (adsl-84-226-167-205.adslplus.ch. [84.226.167.205])
-        by smtp.gmail.com with ESMTPSA id r1sm7996635wrj.63.2021.03.25.04.59.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Mar 2021 04:59:15 -0700 (PDT)
-Subject: Re: [PATCH] regulator: Use IRQF_ONESHOT
-To:     Jian Dong <dj0227@163.com>, matthias.bgg@gmail.com,
-        agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        huyue2@yulong.com, Jian Dong <dongjian@yulong.com>
-References: <1616501538-120724-1-git-send-email-dj0227@163.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Message-ID: <9428d264-aafa-793f-8c6c-86c55213f5f9@canonical.com>
-Date:   Thu, 25 Mar 2021 12:59:14 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.1
-MIME-Version: 1.0
-In-Reply-To: <1616501538-120724-1-git-send-email-dj0227@163.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        Thu, 25 Mar 2021 08:01:40 -0400
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 25 Mar 2021 05:01:36 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 25 Mar 2021 05:01:35 -0700
+X-QCInternal: smtphost
+Received: from mkrishn-linux.qualcomm.com ([10.204.66.35])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 25 Mar 2021 17:31:03 +0530
+Received: by mkrishn-linux.qualcomm.com (Postfix, from userid 438394)
+        id DE11421A4E; Thu, 25 Mar 2021 17:31:02 +0530 (IST)
+From:   Krishna Manikandan <mkrishn@codeaurora.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
+        kalyan_t@codeaurora.org, tanmay@codeaurora.org,
+        abhinavk@codeaurora.org, robdclark@gmail.com, swboyd@chromium.org,
+        bjorn.andersson@linaro.org, vinod.koul@linaro.org,
+        rnayak@codeaurora.org, dianders@chromium.org, sibis@codeaurora.org,
+        khsieh@codeaurora.org
+Subject: [PATCH v14 1/4] dt-bindings: msm: disp: add yaml schemas for DPU bindings
+Date:   Thu, 25 Mar 2021 17:30:58 +0530
+Message-Id: <1616673661-20038-1-git-send-email-mkrishn@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/03/2021 13:12, Jian Dong wrote:
-> From: Jian Dong <dongjian@yulong.com>
-> 
-> Fixes coccicheck error:
-> 
-> drivers/regulator/mt6360-regulator.c:388:8-33: ERROR:
-> drivers/regulator/pca9450-regulator.c:781:7-32: ERROR:
-> drivers/regulator/slg51000-regulator.c:480:8-33: ERROR:
-> drivers/regulator/qcom-labibb-regulator.c:364:8-33: ERROR:
-> Threaded IRQ with no primary handler requested without IRQF_ONESHOT
-> 
-> Signed-off-by: Jian Dong <dongjian@yulong.com>
-> ---
->  drivers/regulator/mt6360-regulator.c      | 4 ++--
->  drivers/regulator/pca9450-regulator.c     | 2 +-
->  drivers/regulator/qcom-labibb-regulator.c | 3 ++-
->  drivers/regulator/slg51000-regulator.c    | 4 ++--
->  4 files changed, 7 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/regulator/mt6360-regulator.c b/drivers/regulator/mt6360-regulator.c
-> index 15308ee..947350d 100644
-> --- a/drivers/regulator/mt6360-regulator.c
-> +++ b/drivers/regulator/mt6360-regulator.c
-> @@ -385,8 +385,8 @@ static int mt6360_regulator_irq_register(struct platform_device *pdev,
->  			return irq;
->  		}
->  
-> -		ret = devm_request_threaded_irq(&pdev->dev, irq, NULL, irq_desc->handler, 0,
-> -						irq_desc->name, rdev);
-> +		ret = devm_request_threaded_irq(&pdev->dev, irq, NULL, irq_desc->handler,
-> +					IRQF_ONESHOT, irq_desc->name, rdev);
+MSM Mobile Display Subsytem (MDSS) encapsulates sub-blocks
+like DPU display controller, DSI etc. Add YAML schema
+for DPU device tree bindings.
 
-This does not look like trivial rename/replace fix. This should be
-tested but it looks that you just did what coccinelle asked for, without
-testing.
+Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
 
->  		if (ret) {
->  			dev_err(&pdev->dev, "Fail to request %s irq\n", irq_desc->name);
->  			return ret;
-> diff --git a/drivers/regulator/pca9450-regulator.c b/drivers/regulator/pca9450-regulator.c
-> index 2f7ee21..d4bc1c3 100644
-> --- a/drivers/regulator/pca9450-regulator.c
-> +++ b/drivers/regulator/pca9450-regulator.c
-> @@ -780,7 +780,7 @@ static int pca9450_i2c_probe(struct i2c_client *i2c,
->  
->  	ret = devm_request_threaded_irq(pca9450->dev, pca9450->irq, NULL,
->  					pca9450_irq_handler,
-> -					(IRQF_TRIGGER_FALLING | IRQF_ONESHOT),
-> +					IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
+Changes in v2:
+    - Changed dpu to DPU (Sam Ravnborg)
+    - Fixed indentation issues (Sam Ravnborg)
+    - Added empty line between different properties (Sam Ravnborg)
+    - Replaced reference txt files with  their corresponding
+      yaml files (Sam Ravnborg)
+    - Modified the file to use "|" only when it is
+      necessary (Sam Ravnborg)
 
-How this is related to the missing IRQF_ONESHOT?
+Changes in v3:
+    - Corrected the license used (Rob Herring)
+    - Added maxItems for properties (Rob Herring)
+    - Dropped generic descriptions (Rob Herring)
+    - Added ranges property (Rob Herring)
+    - Corrected the indendation (Rob Herring)
+    - Added additionalProperties (Rob Herring)
+    - Split dsi file into two, one for dsi controller
+      and another one for dsi phy per target (Rob Herring)
+    - Corrected description for pinctrl-names (Rob Herring)
+    - Corrected the examples used in yaml file (Rob Herring)
+    - Delete dsi.txt and dpu.txt (Rob Herring)
 
->  					"pca9450-irq", pca9450);
->  	if (ret != 0) {
->  		dev_err(pca9450->dev, "Failed to request IRQ: %d\n",
-> diff --git a/drivers/regulator/qcom-labibb-regulator.c b/drivers/regulator/qcom-labibb-regulator.c
-> index de25e32..cac5fd5 100644
-> --- a/drivers/regulator/qcom-labibb-regulator.c
-> +++ b/drivers/regulator/qcom-labibb-regulator.c
-> @@ -362,7 +362,8 @@ static int qcom_labibb_set_ocp(struct regulator_dev *rdev)
->  		return ret;
->  
->  	return devm_request_threaded_irq(vreg->dev, vreg->ocp_irq, NULL,
-> -					 qcom_labibb_ocp_isr, irq_flags,
-> +					 qcom_labibb_ocp_isr,
-> +					 irq_flags | IRQF_ONESHOT,
->  					 ocp_irq_name, vreg);
->  }
->  
-> diff --git a/drivers/regulator/slg51000-regulator.c b/drivers/regulator/slg51000-regulator.c
-> index 75a941f..3f310ab 100644
-> --- a/drivers/regulator/slg51000-regulator.c
-> +++ b/drivers/regulator/slg51000-regulator.c
-> @@ -479,8 +479,8 @@ static int slg51000_i2c_probe(struct i2c_client *client)
->  	if (chip->chip_irq) {
->  		ret = devm_request_threaded_irq(dev, chip->chip_irq, NULL,
->  						slg51000_irq_handler,
-> -						(IRQF_TRIGGER_HIGH |
-> -						IRQF_ONESHOT),
-> +						IRQF_TRIGGER_HIGH |
-> +						IRQF_ONESHOT,
->  						"slg51000-irq", chip);
+Changes in v4:
+    - Move schema up by one level (Rob Herring)
+    - Add patternProperties for mdp node (Rob Herring)
+    - Corrected description of some properties (Rob Herring)
 
-How this is related to the missing IRQF_ONESHOT?
+Changes in v5:
+    - Correct the indentation (Rob Herring)
+    - Remove unnecessary description from properties (Rob Herring)
+    - Correct the number of interconnect entries (Rob Herring)
+    - Add interconnect names for sc7180 (Rob Herring)
+    - Add description for ports (Rob Herring)
+    - Remove common properties (Rob Herring)
+    - Add unevalutatedProperties (Rob Herring)
+    - Reference existing dsi controller yaml in the common
+      dsi controller file (Rob Herring)
+    - Correct the description of clock names to include only the
+      clocks that are required (Rob Herring)
+    - Remove properties which are already covered under the common
+      binding (Rob Herring)
+    - Add dsi phy supply nodes which are required for sc7180 and
+      sdm845 targets (Rob Herring)
+    - Add type ref for syscon-sfpb (Rob Herring)
 
-Best regards,
-Krzysztof
+Changes in v6:
+    - Fixed errors during dt_binding_check (Rob Herring)
+    - Add maxItems for phys and phys-names (Rob Herring)
+    - Use unevaluatedProperties wherever required (Rob Herring)
+    - Removed interrupt controller from required properties for
+      dsi controller (Rob Herring)
+    - Add constraints for dsi-phy reg-names based on the compatible
+      phy version (Rob Herring)
+    - Add constraints for dsi-phy supply nodes based on the
+      compatible phy version (Rob Herring)
+
+Changes in v7:
+    - Add default value for qcom,mdss-mdp-transfer-time-us (Rob Herring)
+    - Modify the schema for data-lanes (Rob Herring)
+    - Split the phy schema into separate schemas based on
+      the phy version (Rob Herring)
+
+Changes in v8:
+    - Resolve merge conflicts with latest dsi.txt file
+    - Include dp yaml change also in the same series
+
+Changes in v9:
+    - Combine target specific dsi controller yaml files
+      to a single yaml file (Rob Herring)
+    - Combine target specific dsi phy yaml files into a
+      single yaml file (Rob Herring)
+    - Use unevaluatedProperties and additionalProperties
+      wherever required
+    - Remove duplicate properties from common yaml files
+
+Changes in v10:
+    - Split the patch into separate patches for DPU, DSI and
+      PHY (Stephen Boyd)
+    - Drop unnecessary fullstop (Stephen Boyd)
+    - Add newline whereever required (Stephen Boyd)
+    - Add description for clock used (Stephen Boyd)
+    - Modify the description for interconnect entries  (Stephen Boyd)
+    - Drop assigned clock entries as it a generic property (Stephen Boyd)
+    - Correct the definition for interrupts (Stephen Boyd)
+    - Drop clock names from required properties (Stephen Boyd)
+    - Drop labels for display nodes from example (Stephen Boyd)
+    - Drop flags from interrupts entries (Stephen Boyd)
+
+Changes in v11:
+    - Drop maxItems for clocks (Stephen Boyd)
+
+Changes in v12:
+    - Add description for register property (Stephen Boyd)
+    - Add maxItems for interrupts (Stephen Boyd)
+    - Add description for iommus property (Stephen Boyd)
+    - Add description for interconnects (Stephen Boyd)
+    - Change display node name to display_controller (Stephen Boyd)
+
+Changes in v13:
+    - Add maxItems for reg property (Stephen Boyd)
+    - Add ranges property in example (Stephen Boyd)
+    - Modify description for iommus property (Stephen Boyd)
+    - Add Dp bindings for ports in the same patch (Stephen Boyd)
+    - Remove soc from examples and change address and size cells
+      accordingly (Stephen Boyd)
+    - Add reference for ports
+
+Changes in v14:
+    - Modify title for SC7180 and SDM845 yaml files (Stephen Boyd)
+    - Add required list for display-controller node (Stephen Boyd)
+    - Rename mdss node name to display-subsytem (Stephen Boyd)
+---
+ .../bindings/display/msm/dpu-sc7180.yaml           | 215 +++++++++++++++++++++
+ .../bindings/display/msm/dpu-sdm845.yaml           | 196 +++++++++++++++++++
+ .../devicetree/bindings/display/msm/dpu.txt        | 141 --------------
+ 3 files changed, 411 insertions(+), 141 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
+ create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
+ delete mode 100644 Documentation/devicetree/bindings/display/msm/dpu.txt
+
+diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
+new file mode 100644
+index 0000000..36531a5
+--- /dev/null
++++ b/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
+@@ -0,0 +1,215 @@
++# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/display/msm/dpu-sc7180.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Display DPU dt properties for SC7180 target
++
++maintainers:
++  - Krishna Manikandan <mkrishn@codeaurora.org>
++
++description: |
++  Device tree bindings for MSM Mobile Display Subsytem(MDSS) that encapsulates
++  sub-blocks like DPU display controller, DSI and DP interfaces etc. Device tree
++  bindings of MDSS and DPU are mentioned for SC7180 target.
++
++properties:
++  compatible:
++    items:
++      - const: qcom,sc7180-mdss
++
++  reg:
++    maxItems: 1
++
++  reg-names:
++    const: mdss
++
++  power-domains:
++    maxItems: 1
++
++  clocks:
++    items:
++      - description: Display AHB clock from gcc
++      - description: Display AHB clock from dispcc
++      - description: Display core clock
++
++  clock-names:
++    items:
++      - const: iface
++      - const: ahb
++      - const: core
++
++  interrupts:
++    maxItems: 1
++
++  interrupt-controller: true
++
++  "#interrupt-cells":
++    const: 1
++
++  iommus:
++    items:
++      - description: Phandle to apps_smmu node with SID mask for Hard-Fail port0
++
++  ranges: true
++
++  interconnects:
++    items:
++      - description: Interconnect path specifying the port ids for data bus
++
++  interconnect-names:
++    const: mdp0-mem
++
++patternProperties:
++  "^display-controller@[0-9a-f]+$":
++    type: object
++    description: Node containing the properties of DPU.
++
++    properties:
++      compatible:
++        items:
++          - const: qcom,sc7180-dpu
++
++      reg:
++        items:
++          - description: Address offset and size for mdp register set
++          - description: Address offset and size for vbif register set
++
++      reg-names:
++        items:
++          - const: mdp
++          - const: vbif
++
++      clocks:
++        items:
++          - description: Display hf axi clock
++          - description: Display ahb clock
++          - description: Display rotator clock
++          - description: Display lut clock
++          - description: Display core clock
++          - description: Display vsync clock
++
++      clock-names:
++        items:
++          - const: bus
++          - const: iface
++          - const: rot
++          - const: lut
++          - const: core
++          - const: vsync
++
++      interrupts:
++        maxItems: 1
++
++      ports:
++        $ref: /schemas/graph.yaml#/properties/port
++        type: object
++        description: |
++          Contains the list of output ports from DPU device. These ports
++          connect to interfaces that are external to the DPU hardware,
++          such as DSI, DP etc. Each output port contains an endpoint that
++          describes how it is connected to an external interface.
++
++        properties:
++          port@0:
++            type: object
++            description: DPU_INTF1 (DSI1)
++
++          port@1:
++            type: object
++            description: DPU_INTF2 (DSI2)
++          port@2:
++            type: object
++            description: DPU_INTF0 (DP)
++
++    required:
++      - compatible
++      - reg
++      - reg-names
++      - clocks
++      - interrupts
++      - ports
++
++required:
++  - compatible
++  - reg
++  - reg-names
++  - power-domains
++  - clocks
++  - interrupts
++  - interrupt-controller
++  - iommus
++  - ranges
++
++additionalProperties: true
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,dispcc-sc7180.h>
++    #include <dt-bindings/clock/qcom,gcc-sc7180.h>
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    #include <dt-bindings/interconnect/qcom,sdm845.h>
++
++    display-subsystem@ae00000 {
++         #address-cells = <1>;
++         #size-cells = <1>;
++         compatible = "qcom,sc7180-mdss";
++         reg = <0xae00000 0x1000>;
++         reg-names = "mdss";
++         power-domains = <&dispcc MDSS_GDSC>;
++         clocks = <&gcc GCC_DISP_AHB_CLK>,
++                  <&dispcc DISP_CC_MDSS_AHB_CLK>,
++                  <&dispcc DISP_CC_MDSS_MDP_CLK>;
++         clock-names = "iface", "ahb", "core";
++
++         interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
++         interrupt-controller;
++         #interrupt-cells = <1>;
++
++         interconnects = <&mmss_noc MASTER_MDP0 &mc_virt SLAVE_EBI1>;
++         interconnect-names = "mdp0-mem";
++
++         iommus = <&apps_smmu 0x800 0x2>;
++         ranges;
++
++         display-controller@ae01000 {
++                   compatible = "qcom,sc7180-dpu";
++                   reg = <0x0ae01000 0x8f000>,
++                         <0x0aeb0000 0x2008>;
++
++                   reg-names = "mdp", "vbif";
++
++                   clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
++                            <&dispcc DISP_CC_MDSS_AHB_CLK>,
++                            <&dispcc DISP_CC_MDSS_ROT_CLK>,
++                            <&dispcc DISP_CC_MDSS_MDP_LUT_CLK>,
++                            <&dispcc DISP_CC_MDSS_MDP_CLK>,
++                            <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
++                   clock-names = "bus", "iface", "rot", "lut", "core",
++                                 "vsync";
++
++                   interrupt-parent = <&mdss>;
++                   interrupts = <0>;
++
++                   ports {
++                           #address-cells = <1>;
++                           #size-cells = <0>;
++
++                           port@0 {
++                                   reg = <0>;
++                                   dpu_intf1_out: endpoint {
++                                                  remote-endpoint = <&dsi0_in>;
++                                   };
++                           };
++
++                            port@2 {
++                                    reg = <2>;
++                                    dpu_intf0_out: endpoint {
++                                                   remote-endpoint = <&dp_in>;
++                                    };
++                            };
++                   };
++         };
++    };
++...
+diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
+new file mode 100644
+index 0000000..c744559
+--- /dev/null
++++ b/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
+@@ -0,0 +1,196 @@
++# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/display/msm/dpu-sdm845.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Display DPU dt properties for SDM845 target
++
++maintainers:
++  - Krishna Manikandan <mkrishn@codeaurora.org>
++
++description: |
++  Device tree bindings for MSM Mobile Display Subsytem(MDSS) that encapsulates
++  sub-blocks like DPU display controller, DSI and DP interfaces etc. Device tree
++  bindings of MDSS and DPU are mentioned for SDM845 target.
++
++properties:
++  compatible:
++    items:
++      - const: qcom,sdm845-mdss
++
++  reg:
++    maxItems: 1
++
++  reg-names:
++    const: mdss
++
++  power-domains:
++    maxItems: 1
++
++  clocks:
++    items:
++      - description: Display AHB clock from gcc
++      - description: Display AXI clock
++      - description: Display core clock
++
++  clock-names:
++    items:
++      - const: iface
++      - const: bus
++      - const: core
++
++  interrupts:
++    maxItems: 1
++
++  interrupt-controller: true
++
++  "#interrupt-cells":
++    const: 1
++
++  iommus:
++    items:
++      - description: Phandle to apps_smmu node with SID mask for Hard-Fail port0
++      - description: Phandle to apps_smmu node with SID mask for Hard-Fail port1
++
++  ranges: true
++
++patternProperties:
++  "^display-controller@[0-9a-f]+$":
++    type: object
++    description: Node containing the properties of DPU.
++
++    properties:
++      compatible:
++        items:
++          - const: qcom,sdm845-dpu
++
++      reg:
++        items:
++          - description: Address offset and size for mdp register set
++          - description: Address offset and size for vbif register set
++
++      reg-names:
++        items:
++          - const: mdp
++          - const: vbif
++
++      clocks:
++        items:
++          - description: Display ahb clock
++          - description: Display axi clock
++          - description: Display core clock
++          - description: Display vsync clock
++
++      clock-names:
++        items:
++          - const: iface
++          - const: bus
++          - const: core
++          - const: vsync
++
++      interrupts:
++        maxItems: 1
++
++      ports:
++        $ref: /schemas/graph.yaml#/properties/port
++        type: object
++        description: |
++          Contains the list of output ports from DPU device. These ports
++          connect to interfaces that are external to the DPU hardware,
++          such as DSI, DP etc. Each output port contains an endpoint that
++          describes how it is connected to an external interface.
++
++        properties:
++          port@0:
++            type: object
++            description: DPU_INTF1 (DSI1)
++
++          port@1:
++            type: object
++            description: DPU_INTF2 (DSI2)
++
++    required:
++      - compatible
++      - reg
++      - reg-names
++      - clocks
++      - interrupts
++      - ports
++
++required:
++  - compatible
++  - reg
++  - reg-names
++  - power-domains
++  - clocks
++  - interrupts
++  - interrupt-controller
++  - iommus
++  - ranges
++
++additionalProperties: true
++
++examples:
++- |
++    #include <dt-bindings/clock/qcom,dispcc-sdm845.h>
++    #include <dt-bindings/clock/qcom,gcc-sdm845.h>
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++
++    display-subsystem@ae00000 {
++          #address-cells = <1>;
++          #size-cells = <1>;
++          compatible = "qcom,sdm845-mdss";
++          reg = <0x0ae00000 0x1000>;
++          reg-names = "mdss";
++          power-domains = <&dispcc MDSS_GDSC>;
++
++          clocks = <&gcc GCC_DISP_AHB_CLK>,
++                   <&gcc GCC_DISP_AXI_CLK>,
++                   <&dispcc DISP_CC_MDSS_MDP_CLK>;
++          clock-names = "iface", "bus", "core";
++
++          interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
++          interrupt-controller;
++          #interrupt-cells = <1>;
++
++          iommus = <&apps_smmu 0x880 0x8>,
++                   <&apps_smmu 0xc80 0x8>;
++          ranges;
++
++          display-controller@ae01000 {
++                    compatible = "qcom,sdm845-dpu";
++                    reg = <0x0ae01000 0x8f000>,
++                          <0x0aeb0000 0x2008>;
++                    reg-names = "mdp", "vbif";
++
++                    clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
++                             <&dispcc DISP_CC_MDSS_AXI_CLK>,
++                             <&dispcc DISP_CC_MDSS_MDP_CLK>,
++                             <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
++                    clock-names = "iface", "bus", "core", "vsync";
++
++                    interrupt-parent = <&mdss>;
++                    interrupts = <0>;
++
++                    ports {
++                           #address-cells = <1>;
++                           #size-cells = <0>;
++
++                           port@0 {
++                                   reg = <0>;
++                                   dpu_intf1_out: endpoint {
++                                                  remote-endpoint = <&dsi0_in>;
++                                   };
++                           };
++
++                           port@1 {
++                                   reg = <1>;
++                                   dpu_intf2_out: endpoint {
++                                                  remote-endpoint = <&dsi1_in>;
++                                   };
++                           };
++                    };
++          };
++    };
++...
+diff --git a/Documentation/devicetree/bindings/display/msm/dpu.txt b/Documentation/devicetree/bindings/display/msm/dpu.txt
+deleted file mode 100644
+index 551ae26..0000000
+--- a/Documentation/devicetree/bindings/display/msm/dpu.txt
++++ /dev/null
+@@ -1,141 +0,0 @@
+-Qualcomm Technologies, Inc. DPU KMS
+-
+-Description:
+-
+-Device tree bindings for MSM Mobile Display Subsytem(MDSS) that encapsulates
+-sub-blocks like DPU display controller, DSI and DP interfaces etc.
+-The DPU display controller is found in SDM845 SoC.
+-
+-MDSS:
+-Required properties:
+-- compatible:  "qcom,sdm845-mdss", "qcom,sc7180-mdss"
+-- reg: physical base address and length of contoller's registers.
+-- reg-names: register region names. The following region is required:
+-  * "mdss"
+-- power-domains: a power domain consumer specifier according to
+-  Documentation/devicetree/bindings/power/power_domain.txt
+-- clocks: list of clock specifiers for clocks needed by the device.
+-- clock-names: device clock names, must be in same order as clocks property.
+-  The following clocks are required:
+-  * "iface"
+-  * "bus"
+-  * "core"
+-- interrupts: interrupt signal from MDSS.
+-- interrupt-controller: identifies the node as an interrupt controller.
+-- #interrupt-cells: specifies the number of cells needed to encode an interrupt
+-  source, should be 1.
+-- iommus: phandle of iommu device node.
+-- #address-cells: number of address cells for the MDSS children. Should be 1.
+-- #size-cells: Should be 1.
+-- ranges: parent bus address space is the same as the child bus address space.
+-- interconnects : interconnect path specifier for MDSS according to
+-  Documentation/devicetree/bindings/interconnect/interconnect.txt. Should be
+-  2 paths corresponding to 2 AXI ports.
+-- interconnect-names : MDSS will have 2 port names to differentiate between the
+-  2 interconnect paths defined with interconnect specifier.
+-
+-Optional properties:
+-- assigned-clocks: list of clock specifiers for clocks needing rate assignment
+-- assigned-clock-rates: list of clock frequencies sorted in the same order as
+-  the assigned-clocks property.
+-
+-MDP:
+-Required properties:
+-- compatible: "qcom,sdm845-dpu", "qcom,sc7180-dpu"
+-- reg: physical base address and length of controller's registers.
+-- reg-names : register region names. The following region is required:
+-  * "mdp"
+-  * "vbif"
+-- clocks: list of clock specifiers for clocks needed by the device.
+-- clock-names: device clock names, must be in same order as clocks property.
+-  The following clocks are required.
+-  * "bus"
+-  * "iface"
+-  * "core"
+-  * "vsync"
+-- interrupts: interrupt line from DPU to MDSS.
+-- ports: contains the list of output ports from DPU device. These ports connect
+-  to interfaces that are external to the DPU hardware, such as DSI, DP etc.
+-
+-  Each output port contains an endpoint that describes how it is connected to an
+-  external interface. These are described by the standard properties documented
+-  here:
+-	Documentation/devicetree/bindings/graph.txt
+-	Documentation/devicetree/bindings/media/video-interfaces.txt
+-
+-	Port 0 -> DPU_INTF1 (DSI1)
+-	Port 1 -> DPU_INTF2 (DSI2)
+-
+-Optional properties:
+-- assigned-clocks: list of clock specifiers for clocks needing rate assignment
+-- assigned-clock-rates: list of clock frequencies sorted in the same order as
+-  the assigned-clocks property.
+-
+-Example:
+-
+-	mdss: mdss@ae00000 {
+-		compatible = "qcom,sdm845-mdss";
+-		reg = <0xae00000 0x1000>;
+-		reg-names = "mdss";
+-
+-		power-domains = <&clock_dispcc 0>;
+-
+-		clocks = <&gcc GCC_DISP_AHB_CLK>, <&gcc GCC_DISP_AXI_CLK>,
+-			 <&clock_dispcc DISP_CC_MDSS_MDP_CLK>;
+-		clock-names = "iface", "bus", "core";
+-
+-		assigned-clocks = <&clock_dispcc DISP_CC_MDSS_MDP_CLK>;
+-		assigned-clock-rates = <300000000>;
+-
+-		interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
+-		interrupt-controller;
+-		#interrupt-cells = <1>;
+-
+-		interconnects = <&rsc_hlos MASTER_MDP0 &rsc_hlos SLAVE_EBI1>,
+-				<&rsc_hlos MASTER_MDP1 &rsc_hlos SLAVE_EBI1>;
+-
+-		interconnect-names = "mdp0-mem", "mdp1-mem";
+-
+-		iommus = <&apps_iommu 0>;
+-
+-		#address-cells = <2>;
+-		#size-cells = <1>;
+-		ranges = <0 0 0xae00000 0xb2008>;
+-
+-		mdss_mdp: mdp@ae01000 {
+-			compatible = "qcom,sdm845-dpu";
+-			reg = <0 0x1000 0x8f000>, <0 0xb0000 0x2008>;
+-			reg-names = "mdp", "vbif";
+-
+-			clocks = <&clock_dispcc DISP_CC_MDSS_AHB_CLK>,
+-				 <&clock_dispcc DISP_CC_MDSS_AXI_CLK>,
+-				 <&clock_dispcc DISP_CC_MDSS_MDP_CLK>,
+-				 <&clock_dispcc DISP_CC_MDSS_VSYNC_CLK>;
+-			clock-names = "iface", "bus", "core", "vsync";
+-
+-			assigned-clocks = <&clock_dispcc DISP_CC_MDSS_MDP_CLK>,
+-					  <&clock_dispcc DISP_CC_MDSS_VSYNC_CLK>;
+-			assigned-clock-rates = <0 0 300000000 19200000>;
+-
+-			interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
+-
+-			ports {
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				port@0 {
+-					reg = <0>;
+-					dpu_intf1_out: endpoint {
+-						remote-endpoint = <&dsi0_in>;
+-					};
+-				};
+-
+-				port@1 {
+-					reg = <1>;
+-					dpu_intf2_out: endpoint {
+-						remote-endpoint = <&dsi1_in>;
+-					};
+-				};
+-			};
+-		};
+-	};
+-- 
+2.7.4
+
