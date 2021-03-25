@@ -2,129 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E904B3496AD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 17:21:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C056B349789
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Mar 2021 18:04:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229738AbhCYQUt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Mar 2021 12:20:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47472 "EHLO
+        id S229547AbhCYRDc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Mar 2021 13:03:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229670AbhCYQUT (ORCPT
+        with ESMTP id S229533AbhCYRDA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Mar 2021 12:20:19 -0400
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0048EC06174A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Mar 2021 09:20:18 -0700 (PDT)
-Received: by mail-yb1-xb33.google.com with SMTP id g38so2811488ybi.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Mar 2021 09:20:18 -0700 (PDT)
+        Thu, 25 Mar 2021 13:03:00 -0400
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E6E3C06174A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Mar 2021 10:03:00 -0700 (PDT)
+Received: by mail-oi1-x230.google.com with SMTP id x207so2846288oif.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Mar 2021 10:03:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=fOuKmIQ20L11UPWLO5kGS488XZNnGHyBfsTGAiMlJ00=;
-        b=BcAU+OB9uKAgG1mFbnckboc98myqWiCKQAi9N++VHHqxShBZT0Wr29Z2btbS1v+V7W
-         05VgmjXppB2By/tSjPVV8J7TVtN2dzn194gyWjJCRdNLDYz8izU2TSx3zBXDSwve4UvZ
-         aMix5bmuD7bIs/cH/STPd3gQ5FQCctVTMinFSezavQTVORb+Cz5Y6Eaj+SfffM8BY58z
-         4XjIaYy3DoOi4nok6yMdGldn4vpfN2i8SgEg1kRk3IMLSpXFaIAVJpi0yUzROgnTVVWy
-         bfbtVTtkLDI1QqsFvBSrRRS9vm3psHvWqhTF5qC7nfSSYZ7mYLHjvM0WdqYAGZVvROfU
-         DpNA==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=wWPXhqdD+6tI05MivtckeKrepPnDQMjU+zHRBIZrqSA=;
+        b=oJrDWezcCTqUggAw7El3CjJwi79kw9zFvmH8x2oL31DoKNlHN0pF283NKszWNG0L76
+         WdyS3hYlPlmatNw4fhFPVPbpXh3EtPdKPnvTh+giO/vsUJILOQKQOhR+crlh8qhQlSum
+         ElIAzvaGKr6uhaVRMkVDzpsFKez6LfbAvqhA5A3hC4uyD+qUTYaFSbbpLbfrp41FFGKd
+         d9BkngB4hhqh+KGE9DqmssDd7YDudsb7skxDLemFctvlEVRPDwxrKnUJGD1WLsdqSOZQ
+         UCi5cQ3iNxzrryljH19rn6AgYPg+1pWfuBr7NOyAoOpnyTjOQsCftogJ9lDZr6z/ClNQ
+         xIjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=fOuKmIQ20L11UPWLO5kGS488XZNnGHyBfsTGAiMlJ00=;
-        b=qNTjAGy8dplZ+q5jaiemQPN1HCyNclqHlkkC+x/DzBy1R/+BrGTVLMkLYL+CbK7MSu
-         g8olX4zlk6yqjIYGUNvDGr6UCAAM262+NxnIz9E8rOB5rzH6GASc9G/sDdDZrlQTPXzy
-         AAfIsLx8Inmy+Q7Le0HsbTrs4YCDtAf7OTCGitC3Y9/nxO63yaNNI0dNZOEc/T3EKX45
-         e0yJzDzu4mfwnLh/Y31LNH8NYoe1oO4FBJTVjJuidErJpXX0Ps9Tog5SOpLTw6k5xmHg
-         ol3UnVGODnE7PtTUa2U3GGLv0vqfFA1HhZjkHC5yQ+O5sYMloHIojyhJXshnkMq9afm2
-         JyQQ==
-X-Gm-Message-State: AOAM531RRsWDx04k83S2MnA7GwtSe8nyI4sLtS/MOfQAbPaOgnPlyWPc
-        HVAm9jgtIAVrvCa1p3+tihiY0ybTiYvVlyr+EHjnpw==
-X-Google-Smtp-Source: ABdhPJyNkfTlzFw0oaZmJisGggR5uQ4R0412RTuJp2lStNkv6U/jRbMcTGtGz5SquKyOR4UKKYFOAKmGYyNCBJ+rdd4=
-X-Received: by 2002:a25:3741:: with SMTP id e62mr12327870yba.343.1616689218020;
- Thu, 25 Mar 2021 09:20:18 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=wWPXhqdD+6tI05MivtckeKrepPnDQMjU+zHRBIZrqSA=;
+        b=NIRtSlb4A8aQu8bBlPGmrgLIawm4Hacxpm5CI311QiWV74EpIE956B7OxHEcqFTRvy
+         CxMklHnMMeyakE/OTlUgJmuTrqLbp/9LTRyBbfHDhNqDXWcjyHU+b3mkm3SGujkAY7so
+         jNxicrLwuq2qFI/eryUtzjnoJ8rg7GH59dutkxVYIwHNmeDKddVCNYaoPyPMoTo8z9bZ
+         4TQsdJ203y6Uq3YwZv/+n/9lwlo0i3QYSWM1GRDRM9Ji+V5Bx4h+bki4Y+n2eSrqqsaW
+         zLAJgGplwTdFEBKx2RVt2/uEa0knsL0ZfZlhaTjamjyaAqCajQCjVn8WnjY2gPKQVuNE
+         sHnA==
+X-Gm-Message-State: AOAM533E/ojnhw5Ioo4QY6pVSYetOvfGIiDYKbutOZdWuwEKO4U1m5mx
+        HEpxPOlN3yDNHTWqqGHlpznnow==
+X-Google-Smtp-Source: ABdhPJwWxU1ru7SaSik7Cy8ypCPiAxwuwNtXQ1sFRK+6ioXk6PX6XiolViLhiYWs6vXC7RNk5StewA==
+X-Received: by 2002:a54:4494:: with SMTP id v20mr6853153oiv.147.1616691779417;
+        Thu, 25 Mar 2021 10:02:59 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id d26sm1340852oos.32.2021.03.25.10.02.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Mar 2021 10:02:59 -0700 (PDT)
+Date:   Thu, 25 Mar 2021 12:02:56 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Will Deacon <will@kernel.org>
+Cc:     Shawn Guo <shawn.guo@linaro.org>, lorenzo.pieralisi@arm.com,
+        Robin Murphy <robin.murphy@arm.com>,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] iommu/arm-smmu-qcom: create qcom_smmu_impl for ACPI boot
+Message-ID: <20210325170256.GA904837@yoga>
+References: <20210301074021.20059-1-shawn.guo@linaro.org>
+ <20210325145914.GC15172@willie-the-truck>
 MIME-Version: 1.0
-References: <1616264220-25825-1-git-send-email-sbhanu@codeaurora.org>
- <161648289959.3012082.11356063123403968180@swboyd.mtv.corp.google.com>
- <363c5b7d9baca5a010552137f80a1cf4@codeaurora.org> <161660145349.3012082.16210818967187877873@swboyd.mtv.corp.google.com>
- <161660331135.3012082.15196616622122288364@swboyd.mtv.corp.google.com> <781df94a-b916-76eb-10c9-e95ba789f0b7@codeaurora.org>
-In-Reply-To: <781df94a-b916-76eb-10c9-e95ba789f0b7@codeaurora.org>
-From:   Doug Anderson <dianders@google.com>
-Date:   Thu, 25 Mar 2021 09:20:06 -0700
-Message-ID: <CAD=FV=URGPTCgXdj910tbJK-ydnE2eB21DGzhZQRqHKAt9vhSw@mail.gmail.com>
-Subject: Re: [PATCH V2] arm64: dts: qcom: sc7280: Add nodes for eMMC and SD card
-To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Shaik Sajida Bhanu <sbhanu@codeaurora.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        Sahitya Tummala <stummala@codeaurora.org>,
-        Ram Prakash Gupta <rampraka@codeaurora.org>,
-        Sayali Lokhande <sayalil@codeaurora.org>,
-        sartgarg@codeaurora.org, Rajendra Nayak <rnayak@codeaurora.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>, cang@codeaurora.org,
-        pragalla@codeaurora.org, nitirawa@codeaurora.org,
-        Linux MMC List <linux-mmc@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210325145914.GC15172@willie-the-truck>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Thu 25 Mar 09:59 CDT 2021, Will Deacon wrote:
 
-On Wed, Mar 24, 2021 at 8:37 PM Veerabhadrarao Badiganti
-<vbadigan@codeaurora.org> wrote:
->
->
-> On 3/24/2021 9:58 PM, Stephen Boyd wrote:
-> > Quoting Stephen Boyd (2021-03-24 08:57:33)
-> >> Quoting sbhanu@codeaurora.org (2021-03-24 08:23:55)
-> >>> On 2021-03-23 12:31, Stephen Boyd wrote:
-> >>>> Quoting Shaik Sajida Bhanu (2021-03-20 11:17:00)
-> >>>>> +
-> >>>>> +                       bus-width = <8>;
-> >>>>> +                       non-removable;
-> >>>>> +                       supports-cqe;
-> >>>>> +                       no-sd;
-> >>>>> +                       no-sdio;
-> >>>>> +
-> >>>>> +                       max-frequency = <192000000>;
-> >>>> Is this necessary?
-> >>> yes, to avoid lower speed modes running with high clock rates.
-> >> Is it part of the DT binding? I don't see any mention of it.
-> > Nevermind, found it in mmc-controller.yaml. But I think this is to work
-> > around some problem with the clk driver picking lower speeds than
-> > requested? That has been fixed on the clk driver side (see commit like
-> > 148ddaa89d4a "clk: qcom: gcc-sc7180: Use floor ops for the correct sdcc1
-> > clk") so ideally this property can be omitted.
-> This is a good have dt node.
->
-> This will align clock requests between mmc core layer and sdhci-msm
-> platform driver. Say, for HS200/HS400 modes of eMMC, mmc-core layer
-> tries to set clock at 200Mhz, whereas sdhci-msm expects 192Mhz for
-> these modes. So we have to rely on clock driver floor/ceil values.
-> By having this property, mmc-core layer itself request for 192Mhz.
->
-> Same is for SD card SDR104 mode, core layer expects clock at 208Mhz
-> whereas sdhci-msm can max operate only at 202Mhz. By having this
-> property, core layer requests only for 202Mhz for SDR104 mode.
->
-> BTW, this helps only for max possible speed modes.
-> In case of lower-speed modes (for DDR52) we still need to rely on clock
-> floor rounding.
+> [+ Lorenzo]
+> 
+> On Mon, Mar 01, 2021 at 03:40:21PM +0800, Shawn Guo wrote:
+> > Though qcom_adreno_smmu_impl is not used by ACPI boot right now,
+> > qcom_smmu_impl is already required at least to boot up Lenovo Flex 5G
+> > laptop.  Let's check asl_compiler_id in IORT header to ensure we are
+> > running a QCOM SMMU and create qcom_smmu_impl for it.
+> > 
+> > !np is used to check ACPI boot, because fwnode of SMMU device is
+> > a static allocation and thus has_acpi_companion() doesn't work here.
+> > 
+> > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> > ---
+> >  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 33 ++++++++++++++++++++++
+> >  1 file changed, 33 insertions(+)
+> 
+> I don't know what a "asl_compiler_id" is, but it doesn't sound like it
+> has an awful lot to do with the SMMU.
+> 
 
-Just let the clock driver figure it out and remove this from the
-devicetree, please. As you said, the clock driver needs to understand
-how to round rates anyway for the non-maximum requests. Putting the
-information here just duplicates the data.
+I would prefer that we somehow relate this to the particular board,
+rather than all Qualcomm-related ACPI tables. E.g. by relying on the
+SMMU devices having a _HID of QCOM0409.
 
--Doug
+Shawn, any reason for this wouldn't be possible?
+
+> Lorenzo -- any idea what we should be doing here instead? Probably not
+> using ACPI?
+> 
+
+The 8cx (aka sc8180x) platform comes with Qualcomm's usual SMMU
+stream-mapping quirks and this is one of the patches needed to bring
+enough ACPI support to run the Debian installer that Shawn has been
+working on. After the installer we currently only boot this using DT -
+which already enables the quirk.
+
+Regards,
+Bjorn
