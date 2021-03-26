@@ -2,132 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A88C34ADC0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Mar 2021 18:45:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2138934ADC2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Mar 2021 18:45:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230159AbhCZRoc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Mar 2021 13:44:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37532 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230152AbhCZRo0 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Mar 2021 13:44:26 -0400
-Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03430C0613B2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Mar 2021 10:44:25 -0700 (PDT)
-Received: by mail-qk1-x72f.google.com with SMTP id y5so6038353qkl.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Mar 2021 10:44:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=YTiCPMS4dthdULxeLUAd4raLVXYHOILiM1vRqix30Ow=;
-        b=PbK4/qmiwnf4feqIwuNChtdWFYvloADtgfAKq6npa2snWi2rZrZkVtTBVnNtn1eXH7
-         /O9m+XEscpeDlaZ7PTOxVIFH7aWT8w1K8qklnys1Ob8AXEOVcavq5I+xGg5LM6IBlN9c
-         FgHPOIwoCk8iUQtZkvDhodQ/FZ05kPaRoWt16a7UXjPpEoOwWo17qJy13zkX/Ij70Utq
-         VCKh85h45oZ4xkFHs/TqELfixKKQqB03XpyrXzjZ4aGFmGFe2mSPovfDL1ZCj6oJQNyL
-         W4ct/MjShXCOcs2OdPgm0m/RT0XkQzgkBxxMSSr1dKSq36oAF2mJnJKFCAyj27mEKvRn
-         fWWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=YTiCPMS4dthdULxeLUAd4raLVXYHOILiM1vRqix30Ow=;
-        b=DPyE8b6pXcorNeiXjH5tx4r8AkY+zeOFQwM+ZjbyecLipUq1CA3p82xT3ErUOF53+e
-         Qm4UQduASOXQLzPbRb9ZsHHLIladDGpQEelYC8Vph+datamXLfnrXMh1Bc3nYkGl91zu
-         5OqI4vv/q3ZKQ+s1mpD2qyM+GyVfDQIchzsZNLDZsYfhi+zn4cn9jpymCResJKCmK08/
-         Vn5C3bsNI9/0M2ZYFX0cGOaYuMF5o41RLfrt6ejxGMWnaPwMNYOV1RyWjDzbeIHe+IDh
-         0MlEd4WYsa0Is5I+HiVctv2fADPCKWJ1xRN+FJOcURo1EkENTDGU1BpTXTPleZoHJ3im
-         c6fA==
-X-Gm-Message-State: AOAM53236YO7+a5r9IZwZ6oUYD9urgR9S7wFRwUk/atWp7MVreR0VGio
-        LPwOMEaqXJWSs2Xa1foZ74jiKzTc9jprDsl2UVh/Cg==
-X-Google-Smtp-Source: ABdhPJyDfbvLtsTUNR1uDU1zGMnuuEd3/ebE97k9a0Rt0IpEgxJ7+D/HRW49YpHNBZUyH1b8T02Zcdk4eWd6x72fMjY=
-X-Received: by 2002:a37:9e50:: with SMTP id h77mr14193891qke.138.1616780665134;
- Fri, 26 Mar 2021 10:44:25 -0700 (PDT)
+        id S230202AbhCZRpF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Mar 2021 13:45:05 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:42378 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230196AbhCZRpC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 26 Mar 2021 13:45:02 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1616780701; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=fqTXKlxaID5peJONj5y6klwSiiiIBugF/pSXxYmx9GI=;
+ b=XUYvYe6LcQgYZD0DuaHfyEquNt5HFnyOGw0vvru8xowL5ctqT3d0R7F2JgmRmi7LZyiJGLnG
+ ANPdmihMt/lUFfBvpQequzgAJWB7S517NbuNjp544EKC3iKP0AVHRvJFwQe/qml5/QL/7I8H
+ F2bxLH2oJViSbVYml2eLpbWfy88=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 605e1d8f87ce1fbb5609c882 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 26 Mar 2021 17:44:47
+ GMT
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 045CBC43467; Fri, 26 Mar 2021 17:44:46 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D0556C433ED;
+        Fri, 26 Mar 2021 17:44:45 +0000 (UTC)
 MIME-Version: 1.0
-References: <20210318195930.2229546-1-dmitry.baryshkov@linaro.org>
- <20210318195930.2229546-2-dmitry.baryshkov@linaro.org> <20210326012017.GA2110606@robh.at.kernel.org>
-In-Reply-To: <20210326012017.GA2110606@robh.at.kernel.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 26 Mar 2021 20:44:13 +0300
-Message-ID: <CAA8EJprb6Cx=AHMT+4BUpqOVt7nCDUTFHuwPr3p2s8BB4W-g6Q@mail.gmail.com>
-Subject: Re: [PATCH v3 1/6] dt-bindings: phy: qcom,qmp-usb3-dp: Add support
- for SM8250
-To:     Rob Herring <robh@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Stephen Boyd <sboyd@kernel.org>,
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 26 Mar 2021 10:44:45 -0700
+From:   abhinavk@codeaurora.org
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Jonathan Marek <jonathan@marek.ca>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        freedreno@lists.freedesktop.org, linux-clk@vger.kernel.org
+Subject: Re: [Freedreno] [PATCH v2 02/28] clk: mux: provide
+ devm_clk_hw_register_mux()
+In-Reply-To: <20210324151846.2774204-3-dmitry.baryshkov@linaro.org>
+References: <20210324151846.2774204-1-dmitry.baryshkov@linaro.org>
+ <20210324151846.2774204-3-dmitry.baryshkov@linaro.org>
+Message-ID: <d84149929b251ccaa5cacb9efdd52e22@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 26 Mar 2021 at 04:20, Rob Herring <robh@kernel.org> wrote:
->
-> On Thu, Mar 18, 2021 at 10:59:25PM +0300, Dmitry Baryshkov wrote:
-> > Add compatible for SM8250 in QMP USB3 DP PHY bindings.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml         | 1 -
-> >  Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml | 2 ++
-> >  2 files changed, 2 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-> > index 626447fee092..c558aa605b9d 100644
-> > --- a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-> > +++ b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-> > @@ -38,7 +38,6 @@ properties:
-> >        - qcom,sm8250-qmp-gen3x1-pcie-phy
-> >        - qcom,sm8250-qmp-gen3x2-pcie-phy
-> >        - qcom,sm8250-qmp-modem-pcie-phy
-> > -      - qcom,sm8250-qmp-usb3-phy
->
-> Why is this being moved? Not sure what the differences between the 2
-> bindings, but doesn't seem like a backwards compatible change.
-
-Hmm. I followed the existing schemas, but they are incorrect. It looks
-like the commit 724fabf5df13 ("dt-bindings: phy: qcom,qmp-usb3-dp: Add
-DP phy information") has introduced backwards-incompatible change,
-which is not followed by the current kernel device trees. I'd proposed
-to move qcom,sc7180-qmp-usb3-phy and qcom,sdm845-qmp-usb3-phy back to
-bindings/phy/qcom,qmp-phy.yaml (as those device nodes do not use DP
-serdes block, etc).
-
-I'll include the fix into v4 of this series.
-
->
-> >        - qcom,sm8250-qmp-usb3-uni-phy
-> >        - qcom,sm8350-qmp-ufs-phy
-> >        - qcom,sm8350-qmp-usb3-phy
-> > diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
-> > index 33974ad10afe..9792cc567cb5 100644
-> > --- a/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
-> > +++ b/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
-> > @@ -17,6 +17,8 @@ properties:
-> >        - qcom,sc7180-qmp-usb3-phy
-> >        - qcom,sdm845-qmp-usb3-dp-phy
-> >        - qcom,sdm845-qmp-usb3-phy
-> > +      - qcom,sm8250-qmp-usb3-dp-phy
-> > +      - qcom,sm8250-qmp-usb3-phy
-> >    reg:
-> >      items:
-> >        - description: Address and length of PHY's USB serdes block.
-> > --
-> > 2.30.2
-> >
-
-
-
--- 
-With best wishes
-Dmitry
+On 2021-03-24 08:18, Dmitry Baryshkov wrote:
+> Add devm_clk_hw_register_mux() - devres-managed version of
+> clk_hw_register_mux().
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
+> ---
+>  drivers/clk/clk-mux.c        | 35 +++++++++++++++++++++++++++++++++++
+>  include/linux/clk-provider.h | 13 +++++++++++++
+>  2 files changed, 48 insertions(+)
+> 
+> diff --git a/drivers/clk/clk-mux.c b/drivers/clk/clk-mux.c
+> index e54e79714818..20582aae7a35 100644
+> --- a/drivers/clk/clk-mux.c
+> +++ b/drivers/clk/clk-mux.c
+> @@ -8,6 +8,7 @@
+>   */
+> 
+>  #include <linux/clk-provider.h>
+> +#include <linux/device.h>
+>  #include <linux/module.h>
+>  #include <linux/slab.h>
+>  #include <linux/io.h>
+> @@ -206,6 +207,40 @@ struct clk_hw *__clk_hw_register_mux(struct
+> device *dev, struct device_node *np,
+>  }
+>  EXPORT_SYMBOL_GPL(__clk_hw_register_mux);
+> 
+> +static void devm_clk_hw_release_mux(struct device *dev, void *res)
+> +{
+> +	clk_hw_unregister_mux(*(struct clk_hw **)res);
+> +}
+> +
+> +struct clk_hw *__devm_clk_hw_register_mux(struct device *dev, struct
+> device_node *np,
+> +		const char *name, u8 num_parents,
+> +		const char * const *parent_names,
+> +		const struct clk_hw **parent_hws,
+> +		const struct clk_parent_data *parent_data,
+> +		unsigned long flags, void __iomem *reg, u8 shift, u32 mask,
+> +		u8 clk_mux_flags, u32 *table, spinlock_t *lock)
+> +{
+> +	struct clk_hw **ptr, *hw;
+> +
+> +	ptr = devres_alloc(devm_clk_hw_release_mux, sizeof(*ptr), 
+> GFP_KERNEL);
+> +	if (!ptr)
+> +		return ERR_PTR(-ENOMEM);
+> +
+> +	hw = __clk_hw_register_mux(dev, np, name, num_parents, parent_names,
+> parent_hws,
+> +				       parent_data, flags, reg, shift, mask,
+> +				       clk_mux_flags, table, lock);
+> +
+> +	if (!IS_ERR(hw)) {
+> +		*ptr = hw;
+> +		devres_add(dev, ptr);
+> +	} else {
+> +		devres_free(ptr);
+> +	}
+> +
+> +	return hw;
+> +}
+> +EXPORT_SYMBOL_GPL(__devm_clk_hw_register_mux);
+> +
+>  struct clk *clk_register_mux_table(struct device *dev, const char 
+> *name,
+>  		const char * const *parent_names, u8 num_parents,
+>  		unsigned long flags, void __iomem *reg, u8 shift, u32 mask,
+> diff --git a/include/linux/clk-provider.h 
+> b/include/linux/clk-provider.h
+> index 58f6fe866ae9..3eb15e0262f5 100644
+> --- a/include/linux/clk-provider.h
+> +++ b/include/linux/clk-provider.h
+> @@ -868,6 +868,13 @@ struct clk_hw *__clk_hw_register_mux(struct
+> device *dev, struct device_node *np,
+>  		const struct clk_parent_data *parent_data,
+>  		unsigned long flags, void __iomem *reg, u8 shift, u32 mask,
+>  		u8 clk_mux_flags, u32 *table, spinlock_t *lock);
+> +struct clk_hw *__devm_clk_hw_register_mux(struct device *dev, struct
+> device_node *np,
+> +		const char *name, u8 num_parents,
+> +		const char * const *parent_names,
+> +		const struct clk_hw **parent_hws,
+> +		const struct clk_parent_data *parent_data,
+> +		unsigned long flags, void __iomem *reg, u8 shift, u32 mask,
+> +		u8 clk_mux_flags, u32 *table, spinlock_t *lock);
+>  struct clk *clk_register_mux_table(struct device *dev, const char 
+> *name,
+>  		const char * const *parent_names, u8 num_parents,
+>  		unsigned long flags, void __iomem *reg, u8 shift, u32 mask,
+> @@ -902,6 +909,12 @@ struct clk *clk_register_mux_table(struct device
+> *dev, const char *name,
+>  	__clk_hw_register_mux((dev), NULL, (name), (num_parents), NULL, NULL, 
+> \
+>  			      (parent_data), (flags), (reg), (shift),	      \
+>  			      BIT((width)) - 1, (clk_mux_flags), NULL, (lock))
+> +#define devm_clk_hw_register_mux(dev, name, parent_names,
+> num_parents, flags, reg, \
+> +			    shift, width, clk_mux_flags, lock)		      \
+> +	__devm_clk_hw_register_mux((dev), NULL, (name), (num_parents),	      
+> \
+> +			      (parent_names), NULL, NULL, (flags), (reg),     \
+> +			      (shift), BIT((width)) - 1, (clk_mux_flags),     \
+> +			      NULL, (lock))
+> 
+>  int clk_mux_val_to_index(struct clk_hw *hw, u32 *table, unsigned int 
+> flags,
+>  			 unsigned int val);
