@@ -2,72 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 216DB349E54
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Mar 2021 02:01:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DC898349E80
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Mar 2021 02:18:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230084AbhCZBBN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Mar 2021 21:01:13 -0400
-Received: from mail-io1-f54.google.com ([209.85.166.54]:34699 "EHLO
-        mail-io1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230080AbhCZBBK (ORCPT
+        id S230006AbhCZBRe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Mar 2021 21:17:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50024 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229979AbhCZBRa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Mar 2021 21:01:10 -0400
-Received: by mail-io1-f54.google.com with SMTP id x16so3814027iob.1;
-        Thu, 25 Mar 2021 18:01:10 -0700 (PDT)
+        Thu, 25 Mar 2021 21:17:30 -0400
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CAD7C06174A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Mar 2021 18:17:30 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id cl21-20020a17090af695b02900c61ac0f0e9so4807635pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Mar 2021 18:17:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=J8nMLjAEeKpV02aUXHe43+I2wZF8cyZVnRX+KUOYqss=;
+        b=cQhkxLDX3nfXrkWTIxByCJ4xpoDKyM+27Txt7k5RBYAWHPGDhWWVlsBwOwNencRKz/
+         Q2i6Cln6j2qCOHTzvLLP0Kc6mdXJfSQNrNG3hV2Lv69JaILutM8Gp5OboWcWt3j8Yc92
+         ftttjrTuBnhcKtjGGvJeQrGhq8aXAM9g+IWXc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Wi3cdmfz/h5xhXrcAv5eDkvRcmW484cG6XaUkEX+uj8=;
-        b=SVYxizsKLHLF/Um812LZP78nLf4Ni6mxDJKuVt3VpHJ7uiijzL5J3WpTUzbiG+3GhD
-         7s5n2DFc/IxDUevsbTulwk8hNw6VaUAK/fGtTkMILujsfQIlEEzbB2hn2LMyrTHkx3kD
-         Rw497EWmvmip49GUekIn259LGahXBI0e1yMVlABK+5BZjCu+Wtqv/fmKW2TA3MmQcrRC
-         cihGuNvG3qLWjZO+K39uBOj1TFc4a9l4K1bQcXdUGFz5zhhRivemCnA8nqLuEweTEiap
-         WTwHsU2G/7VimJr58kCudmgRaxIPbt4/F4Vcoe84nvG1obDJNplKkE2ryqAIxLRF6UuR
-         UGYw==
-X-Gm-Message-State: AOAM533Z/xDVVhosU/a4w2gdOnEN5qhu11xiraD45DojzPgUC9DA5A5S
-        3iRstJu6vSg9AhlOaM4xnA==
-X-Google-Smtp-Source: ABdhPJxHGgVfg99uoMDNH3k51OEkmQcJ2G8En7C57Uv6OKPcDb/m3feGvZuvfCcpQ0kIo5ldZTB+hQ==
-X-Received: by 2002:a02:cc1a:: with SMTP id n26mr9850175jap.21.1616720470209;
-        Thu, 25 Mar 2021 18:01:10 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.253])
-        by smtp.gmail.com with ESMTPSA id f13sm3428079ila.51.2021.03.25.18.01.08
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=J8nMLjAEeKpV02aUXHe43+I2wZF8cyZVnRX+KUOYqss=;
+        b=P0uTkH0kC4Fjgua8fN7E9DNjV6ZCYtUvJTl6W1ov1ue14YQuYcUom5knQIFaMdf+zK
+         b4TkbrxuAMjgGkkPga2Z9h1d25Umlzof8XY34WbyRadw11gjehBwksWqBChoc0rG4S2A
+         Ny4M/y0gw/LPvoo8IuMHpYtE6A78lEhwOeXDyAIXUGe90knx23invnxY5kN7tGml4bAT
+         pS8a8zmqfWP1231FGtacmwmNxJh31sbumpeBLwlgI5uXTkYOzzCuh0gVOI229c/fxD6V
+         waqA1fzlHa4feUCxpysTRRHv8W72O1/vN+tJhKgHnAfQ+cOzVr7itzOnDEKfcBYIWG0Y
+         QpgQ==
+X-Gm-Message-State: AOAM532RnEPKvRcjYcvk3+3vLxpHa9zlnb4SxI6uoEap/uBx6FxmsB/i
+        Hf0I+Hlhl5JVGzB4zxR+0b9QrA==
+X-Google-Smtp-Source: ABdhPJw7n1WJkB8t3PJN5A8OrPXJszf8d70/YXB8F0M2+OC2bcrP01DdXIMGtmX33dBgo78OsqXA9g==
+X-Received: by 2002:a17:90a:c249:: with SMTP id d9mr11398591pjx.104.1616721450015;
+        Thu, 25 Mar 2021 18:17:30 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:201:18a3:238:26c5:1521])
+        by smtp.gmail.com with ESMTPSA id u17sm6642910pgl.80.2021.03.25.18.17.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Mar 2021 18:01:09 -0700 (PDT)
-Received: (nullmailer pid 2083325 invoked by uid 1000);
-        Fri, 26 Mar 2021 01:01:06 -0000
-Date:   Thu, 25 Mar 2021 19:01:06 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     devicetree@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Odelu Kukatla <okukatla@codeaurora.org>
-Subject: Re: [PATCH v3 1/2] dt-bindings: interconnect: Add Qualcomm SM8350 DT
- bindings
-Message-ID: <20210326010106.GA2083273@robh.at.kernel.org>
-References: <20210318094617.951212-1-vkoul@kernel.org>
- <20210318094617.951212-2-vkoul@kernel.org>
+        Thu, 25 Mar 2021 18:17:29 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210318094617.951212-2-vkoul@kernel.org>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1614971839-2686-1-git-send-email-abhinavk@codeaurora.org>
+References: <1614971839-2686-1-git-send-email-abhinavk@codeaurora.org>
+Subject: Re: [PATCH 1/3] drm/msm/dp: Fix indentation kbot warnings in DP driver
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        robdclark@gmail.com, seanpaul@chromium.org, nganji@codeaurora.org,
+        aravindh@codeaurora.org, tanmay@codeaurora.org,
+        khsieh@codeaurora.org, dan.carpenter@oracle.com
+To:     Abhinav Kumar <abhinavk@codeaurora.org>,
+        dri-devel@lists.freedesktop.org
+Date:   Thu, 25 Mar 2021 18:17:27 -0700
+Message-ID: <161672144775.3012082.15468817158271994036@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 18 Mar 2021 15:16:16 +0530, Vinod Koul wrote:
-> The Qualcomm SM8350 platform has several bus fabrics that could be
-> controlled and tuned dynamically according to the bandwidth demand.
-> 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Quoting Abhinav Kumar (2021-03-05 11:17:17)
+> Fix a couple of indentation warnings reported by
+> kbot across MSM DP driver:
+>=20
+> New smatch warnings:
+> drivers/gpu/drm/msm/dp/dp_debug.c:229 dp_test_data_show()
+> warn: inconsistent indenting
+>=20
+> drivers/gpu/drm/msm/dp/dp_power.c:203 dp_power_clk_enable()
+> warn: inconsistent indenting
+>=20
+> Reported-by: kernel test robot <lkp@intel.com>
+> Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+> Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
 > ---
->  .../bindings/interconnect/qcom,rpmh.yaml      |  10 +
->  .../dt-bindings/interconnect/qcom,sm8350.h    | 172 ++++++++++++++++++
->  2 files changed, 182 insertions(+)
->  create mode 100644 include/dt-bindings/interconnect/qcom,sm8350.h
-> 
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
