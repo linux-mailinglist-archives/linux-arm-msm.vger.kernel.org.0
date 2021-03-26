@@ -2,152 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E36734AE7A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Mar 2021 19:23:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B3D4734AE7F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Mar 2021 19:24:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230107AbhCZSXB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Mar 2021 14:23:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45812 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229933AbhCZSWs (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Mar 2021 14:22:48 -0400
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01DDCC0613AA
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Mar 2021 11:22:48 -0700 (PDT)
-Received: by mail-pg1-x535.google.com with SMTP id h25so5196986pgm.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Mar 2021 11:22:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jTn/uUJ+LFQPTBhHrUYL0kAqEpchxiI/QloMXShvaSg=;
-        b=nn1MjHPYaWoHftAWKn+3FFCIcCa1eRT0uZOUpIjI6j9ZE93LqX2Eak3CIXk5YdtBQL
-         GGDir9kdxKg6NiSr0WbgqwjXmOypBn/eXFhQPhmyypBVAheL+hv3GXh/XPngDcVsvDO4
-         LN7dFGVyS5TBS8fVHd+fO0kw6lD+LXfyb8OoVNkor57JZ9e4XjZRNrGJ36+S7eyQ/lMc
-         V0dMhEbO4lBRJZ+KADbhAO0gemOU3lhHZ90YgBOY9ERfHSqH5lsKvge/lQxkKXFP8hza
-         NhQh5NTxoSSNhkyG02fiUEfZErr8lR4DV0kJ8i6ttc35oQBcolKceTZWsS+SWAiGFAIX
-         HCBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jTn/uUJ+LFQPTBhHrUYL0kAqEpchxiI/QloMXShvaSg=;
-        b=m8QbVg+RJy9f9tUo9SaeRVOaRlt8Tvo9G+dvUu0FSkTCGCBBzYnCPfvoB/rJjpktYz
-         9imKXKuW7RTRNHaQH5FzZscD41gEv0vUwRuVGUnrPUdGVVt0d9NbkOI/59M+tVJIjIZX
-         fjpPIp3FflzSMVpPjEKt9S7ChTvgdB4SqpDVaYHo/oAJ32VS9YCK4fyUikky6OxDLTUc
-         tTbA9tkXoLzdnkPK1FQTUWYPcwQIweIK+1PF97jeYkVEs4llZRmC/8hgiRH6ZF98eR05
-         N6U94NBuR6x1eDwz0kxatvAbgBOe0Is69ZNpoowk+X7JPeA9dDlGpUbIghBLVBmtZWEr
-         KCog==
-X-Gm-Message-State: AOAM530iSfbUB3nwbaCmdT1fuhKttS1ldPc1P4v9oi7E3V9jdeJ34p9f
-        Pn+GjZrHHJHIeW4YN8Hp8P+S
-X-Google-Smtp-Source: ABdhPJyrPVoMQlwEHjwBivlbDbaEwnf1pl7RuLCDnlGwsVTz+RGbEjpi5UGFQQlmPZpjo1Bp0pjYtA==
-X-Received: by 2002:a63:fd50:: with SMTP id m16mr13460841pgj.256.1616782967428;
-        Fri, 26 Mar 2021 11:22:47 -0700 (PDT)
-Received: from localhost.localdomain ([103.77.37.139])
-        by smtp.gmail.com with ESMTPSA id p1sm9573592pfn.22.2021.03.26.11.22.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Mar 2021 11:22:47 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     soc@kernel.org
-Cc:     linux@armlinux.org.uk, will@kernel.org, arnd@arndb.de,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v3] ARM: kernel: Fix interrupted SMC calls
-Date:   Fri, 26 Mar 2021 23:52:37 +0530
-Message-Id: <20210326182237.47048-1-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
+        id S230139AbhCZSYF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Mar 2021 14:24:05 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34412 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229957AbhCZSYA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 26 Mar 2021 14:24:00 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 4E81D619B6;
+        Fri, 26 Mar 2021 18:23:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1616783039;
+        bh=W8+TXVmo3TkbP6PiUlApcKVziKCU56ZFoOlT9n6Zkxw=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=Kios6cSeCsttAHy1KDawrB2JejkY8LwM6e5i7D9zKvCaJIDQYSh924HMf6D9v6ff6
+         R4zAZenWZQAhT42XoXYJUsj5uuuaIEN2RfqwXMaEIrhBMzlv1j4F8Ra32hehJXyyJS
+         m4rS3huyPf7W5Lp+ZA3PLXElDG8p19ojrXsnr8b5743qBfGqUG6VqZ80UfrGtb1yId
+         dMsj4qmJmFPUEzsz81TeKBbrooApWwAt/YTv0guFqDsU04SOFY8igyEW4K+CZ5kVVP
+         mJcsPksAQFTfvNWKfGvD0IzBKji33+c5eA94W1al1tqb48SXC8VSsQ7/C2T2NrmQR2
+         QRxVKXkQer9tQ==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20210326145816.9758-3-bartosz.dudziak@snejp.pl>
+References: <20210326145816.9758-1-bartosz.dudziak@snejp.pl> <20210326145816.9758-3-bartosz.dudziak@snejp.pl>
+Subject: Re: [PATCH 2/5] clk: qcom: gcc: Add support for Global Clock controller found on MSM8226
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Bartosz Dudziak <bartosz.dudziak@snejp.pl>
+To:     Andy Gross <agross@kernel.org>,
+        Bartosz Dudziak <bartosz.dudziak@snejp.pl>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Date:   Fri, 26 Mar 2021 11:23:58 -0700
+Message-ID: <161678303809.3012082.14127191260312393003@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Qualcomm ARM32 platforms, the SMC call can return before it has
-completed. If this occurs, the call can be restarted, but it requires
-using the returned session ID value from the interrupted SMC call.
+Quoting Bartosz Dudziak (2021-03-26 07:58:13)
+> Modify existing MSM8974 driver to support MSM8226 SoC. Override frequenci=
+es
+> which are different in this older chip. Register all the clocks to the
+> framework for the clients to be able to request for them.
 
-The ARM32 SMCC code already has the provision to add platform specific
-quirks for things like this. So let's make use of it and add the
-Qualcomm specific quirk (ARM_SMCCC_QUIRK_QCOM_A6) used by the QCOM_SCM
-driver.
+Alphabet sort includes? Preferably do that in a different patch.
 
-This change is similar to the below one added for ARM64 a while ago:
-commit 82bcd087029f ("firmware: qcom: scm: Fix interrupted SCM calls")
+>=20
+> Signed-off-by: Bartosz Dudziak <bartosz.dudziak@snejp.pl>
+> ---
+>  drivers/clk/qcom/gcc-msm8974.c | 185 ++++++++++++++++++++++++++++++---
+>  1 file changed, 171 insertions(+), 14 deletions(-)
+>=20
+> diff --git a/drivers/clk/qcom/gcc-msm8974.c b/drivers/clk/qcom/gcc-msm897=
+4.c
+> index 740d3c44c0..06cd669e10 100644
+> --- a/drivers/clk/qcom/gcc-msm8974.c
+> +++ b/drivers/clk/qcom/gcc-msm8974.c
+> @@ -3,16 +3,13 @@
+>   * Copyright (c) 2013, The Linux Foundation. All rights reserved.
+>   */
+> =20
+> -#include <linux/kernel.h>
+> -#include <linux/bitops.h>
+> +#include <linux/clk-provider.h>
+>  #include <linux/err.h>
+> -#include <linux/platform_device.h>
+> +#include <linux/kernel.h>
+>  #include <linux/module.h>
+> -#include <linux/of.h>
+>  #include <linux/of_device.h>
+> -#include <linux/clk-provider.h>
+> +#include <linux/of.h>
+>  #include <linux/regmap.h>
+> -#include <linux/reset-controller.h>
+> =20
+>  #include <dt-bindings/clock/qcom,gcc-msm8974.h>
+>  #include <dt-bindings/reset/qcom,gcc-msm8974.h>
+> @@ -2727,7 +2880,11 @@ static int gcc_msm8974_probe(struct platform_devic=
+e *pdev)
+>         if (ret)
+>                 return ret;
+> =20
+> -       return qcom_cc_probe(pdev, &gcc_msm8974_desc);
+> +       regmap =3D qcom_cc_map(pdev, id->data);
+> +       if (IS_ERR(regmap))
+> +               return PTR_ERR(regmap);
+> +
+> +       return qcom_cc_really_probe(pdev, id->data, regmap);
 
-Without this change, the Qualcomm ARM32 platforms like SDX55 will return
--EINVAL for SMC calls used for modem firmware loading and validation.
-
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
-
-Changes in v3:
-
-* Rebased on top of v5.12-rc2
-* Sent to SoC list since there was no review so far apart from initial one
-  by Russel
-
-Changes in v2:
-
-* Preserved callee saved registers and used the registers r4, r5 which
-  are getting pushed onto the stack.
-
- arch/arm/kernel/asm-offsets.c |  3 +++
- arch/arm/kernel/smccc-call.S  | 11 ++++++++++-
- 2 files changed, 13 insertions(+), 1 deletion(-)
-
-diff --git a/arch/arm/kernel/asm-offsets.c b/arch/arm/kernel/asm-offsets.c
-index be8050b0c3df..70993af22d80 100644
---- a/arch/arm/kernel/asm-offsets.c
-+++ b/arch/arm/kernel/asm-offsets.c
-@@ -24,6 +24,7 @@
- #include <asm/vdso_datapage.h>
- #include <asm/hardware/cache-l2x0.h>
- #include <linux/kbuild.h>
-+#include <linux/arm-smccc.h>
- #include "signal.h"
- 
- /*
-@@ -148,6 +149,8 @@ int main(void)
-   DEFINE(SLEEP_SAVE_SP_PHYS,	offsetof(struct sleep_save_sp, save_ptr_stash_phys));
-   DEFINE(SLEEP_SAVE_SP_VIRT,	offsetof(struct sleep_save_sp, save_ptr_stash));
- #endif
-+  DEFINE(ARM_SMCCC_QUIRK_ID_OFFS,	offsetof(struct arm_smccc_quirk, id));
-+  DEFINE(ARM_SMCCC_QUIRK_STATE_OFFS,	offsetof(struct arm_smccc_quirk, state));
-   BLANK();
-   DEFINE(DMA_BIDIRECTIONAL,	DMA_BIDIRECTIONAL);
-   DEFINE(DMA_TO_DEVICE,		DMA_TO_DEVICE);
-diff --git a/arch/arm/kernel/smccc-call.S b/arch/arm/kernel/smccc-call.S
-index 00664c78faca..931df62a7831 100644
---- a/arch/arm/kernel/smccc-call.S
-+++ b/arch/arm/kernel/smccc-call.S
-@@ -3,7 +3,9 @@
-  * Copyright (c) 2015, Linaro Limited
-  */
- #include <linux/linkage.h>
-+#include <linux/arm-smccc.h>
- 
-+#include <asm/asm-offsets.h>
- #include <asm/opcodes-sec.h>
- #include <asm/opcodes-virt.h>
- #include <asm/unwind.h>
-@@ -27,7 +29,14 @@ UNWIND(	.fnstart)
- UNWIND(	.save	{r4-r7})
- 	ldm	r12, {r4-r7}
- 	\instr
--	pop	{r4-r7}
-+	ldr	r4, [sp, #36]
-+	cmp	r4, #0
-+	beq	1f			// No quirk structure
-+	ldr     r5, [r4, #ARM_SMCCC_QUIRK_ID_OFFS]
-+	cmp     r5, #ARM_SMCCC_QUIRK_QCOM_A6
-+	bne	1f			// No quirk present
-+	str	r6, [r4, #ARM_SMCCC_QUIRK_STATE_OFFS]
-+1:	pop	{r4-r7}
- 	ldr	r12, [sp, #(4 * 4)]
- 	stm	r12, {r0-r3}
- 	bx	lr
--- 
-2.25.1
-
+Is this doing anything? I think qcom_cc_probe(pdev, id->data) should
+work?
