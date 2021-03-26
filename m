@@ -2,245 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E45234AE6D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Mar 2021 19:21:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E36734AE7A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Mar 2021 19:23:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230026AbhCZSVQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Mar 2021 14:21:16 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33454 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230076AbhCZSVJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Mar 2021 14:21:09 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 4FF9161A24;
-        Fri, 26 Mar 2021 18:21:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1616782868;
-        bh=45HeEwINR4dgMIAp38qK014aflZeSWa2TR2wX5Ajwqs=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=JD1cq2MjxhYa8TXbe248Ll0t56e8XKEHws1e0SxfKW/APUbgQGfnlIZsNd9YH/KEA
-         J5dHg4yfTaQH7usyK88QVw8ButyaZcJuLS9/YcTBZdgwpahBhE2KahJp3xgjll++qH
-         EbTyOY4HrrSkcEO2wAAWKuUz9OZvbcqF6mFJS0owBSo5u5j4ir2hF++m+Km6PoW2V9
-         DYrgO36fvNNp8OFP+rG8NtkLHeXST4Yi0UEfd17euU0aNlb9aFTtli9vv9uvtwFPh9
-         jAtJiIA+RhFZYxM22BZNus2NCAmTWinZiqEULQbSIUnnU0hZS+6PoYdcI6YX3AWF0m
-         nKaIrezQzD44Q==
-Content-Type: text/plain; charset="utf-8"
+        id S230107AbhCZSXB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Mar 2021 14:23:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45812 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229933AbhCZSWs (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 26 Mar 2021 14:22:48 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01DDCC0613AA
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Mar 2021 11:22:48 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id h25so5196986pgm.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Mar 2021 11:22:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jTn/uUJ+LFQPTBhHrUYL0kAqEpchxiI/QloMXShvaSg=;
+        b=nn1MjHPYaWoHftAWKn+3FFCIcCa1eRT0uZOUpIjI6j9ZE93LqX2Eak3CIXk5YdtBQL
+         GGDir9kdxKg6NiSr0WbgqwjXmOypBn/eXFhQPhmyypBVAheL+hv3GXh/XPngDcVsvDO4
+         LN7dFGVyS5TBS8fVHd+fO0kw6lD+LXfyb8OoVNkor57JZ9e4XjZRNrGJ36+S7eyQ/lMc
+         V0dMhEbO4lBRJZ+KADbhAO0gemOU3lhHZ90YgBOY9ERfHSqH5lsKvge/lQxkKXFP8hza
+         NhQh5NTxoSSNhkyG02fiUEfZErr8lR4DV0kJ8i6ttc35oQBcolKceTZWsS+SWAiGFAIX
+         HCBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jTn/uUJ+LFQPTBhHrUYL0kAqEpchxiI/QloMXShvaSg=;
+        b=m8QbVg+RJy9f9tUo9SaeRVOaRlt8Tvo9G+dvUu0FSkTCGCBBzYnCPfvoB/rJjpktYz
+         9imKXKuW7RTRNHaQH5FzZscD41gEv0vUwRuVGUnrPUdGVVt0d9NbkOI/59M+tVJIjIZX
+         fjpPIp3FflzSMVpPjEKt9S7ChTvgdB4SqpDVaYHo/oAJ32VS9YCK4fyUikky6OxDLTUc
+         tTbA9tkXoLzdnkPK1FQTUWYPcwQIweIK+1PF97jeYkVEs4llZRmC/8hgiRH6ZF98eR05
+         N6U94NBuR6x1eDwz0kxatvAbgBOe0Is69ZNpoowk+X7JPeA9dDlGpUbIghBLVBmtZWEr
+         KCog==
+X-Gm-Message-State: AOAM530iSfbUB3nwbaCmdT1fuhKttS1ldPc1P4v9oi7E3V9jdeJ34p9f
+        Pn+GjZrHHJHIeW4YN8Hp8P+S
+X-Google-Smtp-Source: ABdhPJyrPVoMQlwEHjwBivlbDbaEwnf1pl7RuLCDnlGwsVTz+RGbEjpi5UGFQQlmPZpjo1Bp0pjYtA==
+X-Received: by 2002:a63:fd50:: with SMTP id m16mr13460841pgj.256.1616782967428;
+        Fri, 26 Mar 2021 11:22:47 -0700 (PDT)
+Received: from localhost.localdomain ([103.77.37.139])
+        by smtp.gmail.com with ESMTPSA id p1sm9573592pfn.22.2021.03.26.11.22.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Mar 2021 11:22:47 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     soc@kernel.org
+Cc:     linux@armlinux.org.uk, will@kernel.org, arnd@arndb.de,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v3] ARM: kernel: Fix interrupted SMC calls
+Date:   Fri, 26 Mar 2021 23:52:37 +0530
+Message-Id: <20210326182237.47048-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20210326145816.9758-4-bartosz.dudziak@snejp.pl>
-References: <20210326145816.9758-1-bartosz.dudziak@snejp.pl> <20210326145816.9758-4-bartosz.dudziak@snejp.pl>
-Subject: Re: [PATCH 3/5] arm: dts: qcom: Add support for MSM8226 SoC
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Bartosz Dudziak <bartosz.dudziak@snejp.pl>
-To:     Andy Gross <agross@kernel.org>,
-        Bartosz Dudziak <bartosz.dudziak@snejp.pl>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Date:   Fri, 26 Mar 2021 11:21:06 -0700
-Message-ID: <161678286687.3012082.6223383564849110277@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bartosz Dudziak (2021-03-26 07:58:14)
-> This patch adds basic device tree support for MSM8226 SoC which belongs
+On Qualcomm ARM32 platforms, the SMC call can return before it has
+completed. If this occurs, the call can be restarted, but it requires
+using the returned session ID value from the interrupted SMC call.
 
-git grep "This patch" -- Documentation/process/submitting-patches.rst
+The ARM32 SMCC code already has the provision to add platform specific
+quirks for things like this. So let's make use of it and add the
+Qualcomm specific quirk (ARM_SMCCC_QUIRK_QCOM_A6) used by the QCOM_SCM
+driver.
 
-> to the Snapdragon 400 family. For now, this file adds the basic nodes
-> like gcc, pinctrl and other required configuration for booting up to
-> the serial console.
->=20
-> Signed-off-by: Bartosz Dudziak <bartosz.dudziak@snejp.pl>
-> ---
->  arch/arm/boot/dts/qcom-msm8226.dtsi | 152 ++++++++++++++++++++++++++++
->  1 file changed, 152 insertions(+)
->  create mode 100644 arch/arm/boot/dts/qcom-msm8226.dtsi
->=20
-> diff --git a/arch/arm/boot/dts/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom=
--msm8226.dtsi
-> new file mode 100644
-> index 0000000000..81bb19398e
-> --- /dev/null
-> +++ b/arch/arm/boot/dts/qcom-msm8226.dtsi
-> @@ -0,0 +1,152 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include <dt-bindings/interrupt-controller/arm-gic.h>
-> +#include <dt-bindings/clock/qcom,gcc-msm8974.h>
-> +
-> +/ {
-> +       #address-cells =3D <1>;
-> +       #size-cells =3D <1>;
-> +       model =3D "Qualcomm Technologies, Inc. MSM8226";
-> +       compatible =3D "qcom,msm8226";
-> +       interrupt-parent =3D <&intc>;
-> +
-> +       chosen { };
-> +
-> +       memory {
-> +               device_type =3D "memory";
-> +               /* We expect the bootloader to fill in the size */
-> +               reg =3D <0x0 0x0>;
-> +       };
-> +
-> +       soc: soc {
-> +               #address-cells =3D <1>;
-> +               #size-cells =3D <1>;
-> +               ranges;
-> +               compatible =3D "simple-bus";
-> +
-> +               intc: interrupt-controller@f9000000 {
-> +                       compatible =3D "qcom,msm-qgic2";
-> +                       interrupt-controller;
-> +                       #interrupt-cells =3D <3>;
-> +                       reg =3D <0xF9000000 0x1000>,
+This change is similar to the below one added for ARM64 a while ago:
+commit 82bcd087029f ("firmware: qcom: scm: Fix interrupted SCM calls")
 
-lowercase hex please.
+Without this change, the Qualcomm ARM32 platforms like SDX55 will return
+-EINVAL for SMC calls used for modem firmware loading and validation.
 
-> +                             <0xF9002000 0x1000>;
-> +               };
-> +
-> +               gcc: clock-controller@fc400000 {
-> +                       compatible =3D "qcom,gcc-msm8226";
-> +                       #clock-cells =3D <1>;
-> +                       #reset-cells =3D <1>;
-> +                       #power-domain-cells =3D <1>;
-> +                       reg =3D <0xfc400000 0x4000>;
-> +               };
-> +
-> +               msmgpio: pinctrl@fd510000 {
-> +                       compatible =3D "qcom,msm8226-pinctrl";
-> +                       reg =3D <0xfd510000 0x4000>;
-> +                       gpio-controller;
-> +                       #gpio-cells =3D <2>;
-> +                       gpio-ranges =3D <&msmgpio 0 0 117>;
-> +                       interrupt-controller;
-> +                       #interrupt-cells =3D <2>;
-> +                       interrupts =3D <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
-> +               };
-> +
-> +               blsp1_uart3: serial@f991f000 {
-> +                       compatible =3D "qcom,msm-uartdm-v1.4", "qcom,msm-=
-uartdm";
-> +                       reg =3D <0xf991f000 0x1000>;
-> +                       interrupts =3D <GIC_SPI 109 IRQ_TYPE_LEVEL_HIGH>;
-> +                       clocks =3D <&gcc GCC_BLSP1_UART3_APPS_CLK>, <&gcc=
- GCC_BLSP1_AHB_CLK>;
-> +                       clock-names =3D "core", "iface";
-> +                       status =3D "disabled";
-> +               };
-> +
-> +               restart@fc4ab000 {
-> +                       compatible =3D "qcom,pshold";
-> +                       reg =3D <0xfc4ab000 0x4>;
-> +               };
-> +
-> +               rng@f9bff000 {
-> +                       compatible =3D "qcom,prng";
-> +                       reg =3D <0xf9bff000 0x200>;
-> +                       clocks =3D <&gcc GCC_PRNG_AHB_CLK>;
-> +                       clock-names =3D "core";
-> +               };
-> +
-> +               timer@f9020000 {
-> +                       #address-cells =3D <1>;
-> +                       #size-cells =3D <1>;
-> +                       ranges;
-> +                       compatible =3D "arm,armv7-timer-mem";
-> +                       reg =3D <0xf9020000 0x1000>;
-> +                       clock-frequency =3D <19200000>;
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
 
-Can you remove this clock-frequency property? Hopefully the firmware is
-setting this frequency properly so the driver can read it out of the
-registers instead of DT.
+Changes in v3:
 
-> +
-> +                       frame@f9021000 {
-> +                               frame-number =3D <0>;
-> +                               interrupts =3D <GIC_SPI 8 IRQ_TYPE_LEVEL_=
-HIGH>,
-> +                                            <GIC_SPI 7 IRQ_TYPE_LEVEL_HI=
-GH>;
-> +                               reg =3D <0xf9021000 0x1000>,
-> +                                     <0xf9022000 0x1000>;
-> +                       };
-> +
-> +                       frame@f9023000 {
-> +                               frame-number =3D <1>;
-> +                               interrupts =3D <GIC_SPI 9 IRQ_TYPE_LEVEL_=
-HIGH>;
-> +                               reg =3D <0xf9023000 0x1000>;
-> +                               status =3D "disabled";
-> +                       };
-> +
-> +                       frame@f9024000 {
-> +                               frame-number =3D <2>;
-> +                               interrupts =3D <GIC_SPI 10 IRQ_TYPE_LEVEL=
-_HIGH>;
-> +                               reg =3D <0xf9024000 0x1000>;
-> +                               status =3D "disabled";
-> +                       };
-> +
-> +                       frame@f9025000 {
-> +                               frame-number =3D <3>;
-> +                               interrupts =3D <GIC_SPI 11 IRQ_TYPE_LEVEL=
-_HIGH>;
-> +                               reg =3D <0xf9025000 0x1000>;
-> +                               status =3D "disabled";
-> +                       };
-> +
-> +                       frame@f9026000 {
-> +                               frame-number =3D <4>;
-> +                               interrupts =3D <GIC_SPI 12 IRQ_TYPE_LEVEL=
-_HIGH>;
-> +                               reg =3D <0xf9026000 0x1000>;
-> +                               status =3D "disabled";
-> +                       };
-> +
-> +                       frame@f9027000 {
-> +                               frame-number =3D <5>;
-> +                               interrupts =3D <GIC_SPI 13 IRQ_TYPE_LEVEL=
-_HIGH>;
-> +                               reg =3D <0xf9027000 0x1000>;
-> +                               status =3D "disabled";
-> +                       };
-> +
-> +                       frame@f9028000 {
-> +                               frame-number =3D <6>;
-> +                               interrupts =3D <GIC_SPI 14 IRQ_TYPE_LEVEL=
-_HIGH>;
-> +                               reg =3D <0xf9028000 0x1000>;
-> +                               status =3D "disabled";
-> +                       };
-> +               };
-> +       };
-> +
-> +       timer {
-> +               compatible =3D "arm,armv7-timer";
-> +               interrupts =3D <GIC_PPI 2
-> +                               (GIC_CPU_MASK_RAW(15) | IRQ_TYPE_LEVEL_LO=
-W)>,
-> +                            <GIC_PPI 3
-> +                               (GIC_CPU_MASK_RAW(15) | IRQ_TYPE_LEVEL_LO=
-W)>,
-> +                            <GIC_PPI 4
-> +                               (GIC_CPU_MASK_RAW(15) | IRQ_TYPE_LEVEL_LO=
-W)>,
-> +                            <GIC_PPI 1
-> +                               (GIC_CPU_MASK_RAW(15) | IRQ_TYPE_LEVEL_LO=
-W)>;
-> +               clock-frequency =3D <19200000>;
+* Rebased on top of v5.12-rc2
+* Sent to SoC list since there was no review so far apart from initial one
+  by Russel
 
-Same frequency comment.
+Changes in v2:
 
-> +       };
-> +};
+* Preserved callee saved registers and used the registers r4, r5 which
+  are getting pushed onto the stack.
+
+ arch/arm/kernel/asm-offsets.c |  3 +++
+ arch/arm/kernel/smccc-call.S  | 11 ++++++++++-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm/kernel/asm-offsets.c b/arch/arm/kernel/asm-offsets.c
+index be8050b0c3df..70993af22d80 100644
+--- a/arch/arm/kernel/asm-offsets.c
++++ b/arch/arm/kernel/asm-offsets.c
+@@ -24,6 +24,7 @@
+ #include <asm/vdso_datapage.h>
+ #include <asm/hardware/cache-l2x0.h>
+ #include <linux/kbuild.h>
++#include <linux/arm-smccc.h>
+ #include "signal.h"
+ 
+ /*
+@@ -148,6 +149,8 @@ int main(void)
+   DEFINE(SLEEP_SAVE_SP_PHYS,	offsetof(struct sleep_save_sp, save_ptr_stash_phys));
+   DEFINE(SLEEP_SAVE_SP_VIRT,	offsetof(struct sleep_save_sp, save_ptr_stash));
+ #endif
++  DEFINE(ARM_SMCCC_QUIRK_ID_OFFS,	offsetof(struct arm_smccc_quirk, id));
++  DEFINE(ARM_SMCCC_QUIRK_STATE_OFFS,	offsetof(struct arm_smccc_quirk, state));
+   BLANK();
+   DEFINE(DMA_BIDIRECTIONAL,	DMA_BIDIRECTIONAL);
+   DEFINE(DMA_TO_DEVICE,		DMA_TO_DEVICE);
+diff --git a/arch/arm/kernel/smccc-call.S b/arch/arm/kernel/smccc-call.S
+index 00664c78faca..931df62a7831 100644
+--- a/arch/arm/kernel/smccc-call.S
++++ b/arch/arm/kernel/smccc-call.S
+@@ -3,7 +3,9 @@
+  * Copyright (c) 2015, Linaro Limited
+  */
+ #include <linux/linkage.h>
++#include <linux/arm-smccc.h>
+ 
++#include <asm/asm-offsets.h>
+ #include <asm/opcodes-sec.h>
+ #include <asm/opcodes-virt.h>
+ #include <asm/unwind.h>
+@@ -27,7 +29,14 @@ UNWIND(	.fnstart)
+ UNWIND(	.save	{r4-r7})
+ 	ldm	r12, {r4-r7}
+ 	\instr
+-	pop	{r4-r7}
++	ldr	r4, [sp, #36]
++	cmp	r4, #0
++	beq	1f			// No quirk structure
++	ldr     r5, [r4, #ARM_SMCCC_QUIRK_ID_OFFS]
++	cmp     r5, #ARM_SMCCC_QUIRK_QCOM_A6
++	bne	1f			// No quirk present
++	str	r6, [r4, #ARM_SMCCC_QUIRK_STATE_OFFS]
++1:	pop	{r4-r7}
+ 	ldr	r12, [sp, #(4 * 4)]
+ 	stm	r12, {r0-r3}
+ 	bx	lr
+-- 
+2.25.1
+
