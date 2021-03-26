@@ -2,551 +2,411 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DDCF134B03A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Mar 2021 21:37:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E148934B081
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Mar 2021 21:40:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230003AbhCZUgq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Mar 2021 16:36:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46292 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230209AbhCZUge (ORCPT
+        id S230350AbhCZUja (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Mar 2021 16:39:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([216.205.24.124]:32536 "EHLO
+        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S230323AbhCZUjG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Mar 2021 16:36:34 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20584C0613AA
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Mar 2021 13:36:33 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id u9so8813892ljd.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Mar 2021 13:36:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=bNzBVqL7X3ia1KR3/VB6vKBVsZtOEreK9TZx0RqCOm4=;
-        b=OwDPvNrWFIut8uE5ZVVlommXKpMBHwiY0mLbiWAVxTJ4jIoNa+gBCplGmeVVlq4vfD
-         8TYfbBbXScMzlXGz2cW4lao8m7qB6q+nAz7ZMP4+FVw6Skq4CIxikWPZF53+xA248bwD
-         brmkLjLjcSC2RX4VH8gCFgvEd4ZHtskv6HjWh/nLQAxBTCbE7cVBUAO2xxdK+PYfN9y6
-         CCb/P7Jz7zaAaoppasFeNS5EFTDN1/gkmDNILdMKTqbl7SSuWssy8EMPdDBNpxND8YYj
-         RbRiXFL2u9maSF5R46I6IC4EM60RhjZONkhLkVgSef87BnV3Wj+RQVbtK7IF4axm9Gdp
-         yCvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=bNzBVqL7X3ia1KR3/VB6vKBVsZtOEreK9TZx0RqCOm4=;
-        b=b2w1cz4+mg4PjXzJxjlwLKRlA5XWS4SsMPwkd7m1bGa6Z+FNR44QYcc3AAxX5BseVx
-         hgamiOtjuaeu0Cw8tm6LO7pws9uCy6YVXdU73Cki9ABTiz5BI0CNoUMh9psvrzWhgQcP
-         OHWNvIFtPffffXmtzjTn4y5z+1SczESGxHB8XbAcQ4McwIdUSib6eyGZlhLefYtbQXyt
-         vgCWi9FrrX0HHvlbRk5bTjtIyEnO6GL9dXHypf+cy/CZAQvWL6CFyRa8VwFaYLePGX3c
-         zeIWSbNKeq/jnFi8bdidr6rPbfSpyLVcAIG0vkPmyZRCD7aK8Rvn8L0Vri+lB+sK4px6
-         1AIQ==
-X-Gm-Message-State: AOAM531099euybh7mKYjXLYqE4FdxGyWlpkN2hYwEwolcEsdB90r0TOv
-        qaqTfr3QjIPO/rNP+X3/T0zcniIDkAGTeg==
-X-Google-Smtp-Source: ABdhPJxzWRUyeuxzkTnQ4jUqkJlSALkNORwIM6d1hxF4bMi6WHPkoHFQpA/iTfKaIoBkYBgjkwHFtA==
-X-Received: by 2002:a2e:9198:: with SMTP id f24mr9703435ljg.32.1616790991227;
-        Fri, 26 Mar 2021 13:36:31 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id 201sm964796lfg.211.2021.03.26.13.36.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 Mar 2021 13:36:30 -0700 (PDT)
-Subject: Re: [Freedreno] [PATCH v2 11/28] drm/msm/dsi: stop setting clock
- parents manually
-To:     abhinavk@codeaurora.org
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        Fri, 26 Mar 2021 16:39:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1616791145;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=mRyF/3d0B6DkLPeoF53/2vrBY6ETrLpG7CxS3AogNps=;
+        b=HKMjR9xlH6Chy5O0am06JNGqKKiahwftGCoD95Omb//dPjV8Ey6h4hshIwjbcojgdffqhz
+        rFBqovF/zTPdJQrtNSNiGiDGW2FlnFVWTjUflkS/QbSAd7hRugS3w76BCKcXQiadW94T9s
+        QCwVOQf2fWKdOcOqpJxn50aZc5qN8ow=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-459--5BjhJDHMPCRAZdNC-58yA-1; Fri, 26 Mar 2021 16:39:04 -0400
+X-MC-Unique: -5BjhJDHMPCRAZdNC-58yA-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com [10.5.11.14])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 9F2CE1009E2D;
+        Fri, 26 Mar 2021 20:39:02 +0000 (UTC)
+Received: from Whitewolf.lyude.net (ovpn-114-133.rdu2.redhat.com [10.10.114.133])
+        by smtp.corp.redhat.com (Postfix) with ESMTP id 0EBEC5DDAD;
+        Fri, 26 Mar 2021 20:38:53 +0000 (UTC)
+From:   Lyude Paul <lyude@redhat.com>
+To:     nouveau@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org
+Cc:     Alex Deucher <alexander.deucher@amd.com>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+        David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        freedreno@lists.freedesktop.org, linux-clk@vger.kernel.org
-References: <20210324151846.2774204-1-dmitry.baryshkov@linaro.org>
- <20210324151846.2774204-12-dmitry.baryshkov@linaro.org>
- <70b511f16d9d3edfdcaa27d749933ca7@codeaurora.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <13b7cfd5-bbbe-19d7-e966-cff08169df30@linaro.org>
-Date:   Fri, 26 Mar 2021 23:36:29 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.0
+        Harry Wentland <harry.wentland@amd.com>,
+        Leo Li <sunpeng.li@amd.com>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Ben Skeggs <bskeggs@redhat.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Hyun Kwon <hyun.kwon@xilinx.com>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Luben Tuikov <luben.tuikov@amd.com>,
+        Oleg Vasilev <oleg.vasilev@intel.com>,
+        Mikita Lipski <mikita.lipski@amd.com>,
+        Eryk Brol <eryk.brol@amd.com>,
+        Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+        "Jerry (Fangzhi) Zuo" <Jerry.Zuo@amd.com>,
+        Chris Park <Chris.Park@amd.com>,
+        Sam Ravnborg <sam@ravnborg.org>, Joe Perches <joe@perches.com>,
+        Vasily Khoruzhick <anarsoul@gmail.com>,
+        =?UTF-8?q?Guido=20G=C3=BCnther?= <agx@sigxcpu.org>,
+        Boris Brezillon <boris.brezillon@collabora.com>,
+        Andy Yan <andy.yan@rock-chips.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>,
+        Swapnil Jakhade <sjakhade@cadence.com>,
+        Yuti Amonkar <yamonkar@cadence.com>,
+        Jyri Sarha <jsarha@ti.com>,
+        Julia Lawall <Julia.Lawall@inria.fr>,
+        =?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= 
+        <ville.syrjala@linux.intel.com>, Imre Deak <imre.deak@intel.com>,
+        Matt Roper <matthew.d.roper@intel.com>,
+        Lucas De Marchi <lucas.demarchi@intel.com>,
+        linux-kernel@vger.kernel.org (open list),
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU),
+        linux-tegra@vger.kernel.org (open list:DRM DRIVERS FOR NVIDIA TEGRA),
+        linux-arm-kernel@lists.infradead.org (moderated list:ARM/ZYNQ
+        ARCHITECTURE)
+Subject: [PATCH v2 05/20] drm/dp: Add backpointer to drm_device in drm_dp_aux
+Date:   Fri, 26 Mar 2021 16:37:52 -0400
+Message-Id: <20210326203807.105754-6-lyude@redhat.com>
+In-Reply-To: <20210326203807.105754-1-lyude@redhat.com>
+References: <20210326203807.105754-1-lyude@redhat.com>
 MIME-Version: 1.0
-In-Reply-To: <70b511f16d9d3edfdcaa27d749933ca7@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
 Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/03/2021 21:05, abhinavk@codeaurora.org wrote:
-> Hi Dmitry
-> 
-> On 2021-03-24 08:18, Dmitry Baryshkov wrote:
->> There is no reason to set clock parents manually, use device tree to
->> assign DSI/display clock parents to DSI PHY clocks. Dropping this manual
->> setup allows us to drop repeating code and to move registration of hw
->> clock providers to generic place.
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> With this change, there is a change in behavior for dual DSI using 
-> single PLL.
-> So today, it looks like once we specify qcom,dual-dsi-mode; in the DT,
-> this code was also setting the src pll of the other DSI to be DSI0.
+This is something that we've wanted for a while now: the ability to
+actually look up the respective drm_device for a given drm_dp_aux struct.
+This will also allow us to transition over to using the drm_dbg_*() helpers
+for debug message printing, as we'll finally have a drm_device to reference
+for doing so.
 
-Please note, that current DSI bindings require assigned-clock-parents 
-property. Next patches in this chipset add these properties for sc7180 
-and sdm845 (sm8250 is not a part of this patchset for the reasons 
-mentioned in the cover letter).
+Note that there is one limitation with this - because some DP AUX adapters
+exist as platform devices which are initialized independently of their
+respective DRM devices, one cannot rely on drm_dp_aux->drm_dev to always be
+non-NULL until drm_dp_aux_register() has been called. We make sure to point
+this out in the documentation for struct drm_dp_aux.
 
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+---
+ drivers/gpu/drm/amd/amdgpu/atombios_dp.c                 | 1 +
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c  | 1 +
+ drivers/gpu/drm/bridge/analogix/analogix-anx6345.c       | 1 +
+ drivers/gpu/drm/bridge/analogix/analogix-anx78xx.c       | 1 +
+ drivers/gpu/drm/bridge/analogix/analogix_dp_core.c       | 1 +
+ drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c      | 1 +
+ drivers/gpu/drm/bridge/tc358767.c                        | 1 +
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c                    | 1 +
+ drivers/gpu/drm/drm_dp_aux_dev.c                         | 6 ++++++
+ drivers/gpu/drm/drm_dp_mst_topology.c                    | 1 +
+ drivers/gpu/drm/i915/display/intel_dp_aux.c              | 1 +
+ drivers/gpu/drm/msm/edp/edp.h                            | 3 +--
+ drivers/gpu/drm/msm/edp/edp_aux.c                        | 5 +++--
+ drivers/gpu/drm/msm/edp/edp_ctrl.c                       | 2 +-
+ drivers/gpu/drm/nouveau/nouveau_connector.c              | 1 +
+ drivers/gpu/drm/radeon/atombios_dp.c                     | 1 +
+ drivers/gpu/drm/tegra/dpaux.c                            | 1 +
+ drivers/gpu/drm/xlnx/zynqmp_dp.c                         | 1 +
+ include/drm/drm_dp_helper.h                              | 9 ++++++++-
+ 19 files changed, 33 insertions(+), 6 deletions(-)
 
->> -        src_pll = msm_dsi_phy_get_pll(clk_master_dsi->phy);
->> -        if (IS_ERR(src_pll))
->> -            return PTR_ERR(src_pll);
->> -        ret = msm_dsi_host_set_src_pll(msm_dsi->host, src_pll);
->> -        if (ret)
->> -            return ret;
->> -        ret = msm_dsi_host_set_src_pll(other_dsi->host, src_pll);
-> 
-> With this change, we not only have to do mark qcom,dual-dsi-mode but 
-> also change the
-> parent in the DTSI like below:
-> 
-> assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE1_CLK_SRC>, <&dispcc 
-> DISP_CC_MDSS_PCLK1_CLK_SRC>;
-> assigned-clock-parents = <&dsi0_phy 0>, <&dsi0_phy 1>;
-> 
-> So it seems like we need to do two things for dual DSI panels to work?
-
-Yes, in addition to setting 'qcom,dual-dsi'/'qcom,master-dsi' one'd have 
-to specify assigned-clock-parents for the slave DSI.
-
-> Have you verified it like this on any of your boards?
-
-Earlier version of this patchset was verified on the RB5 (sm8250), in 
-dual DSI mode.
-
-
->> ---
->>  drivers/gpu/drm/msm/dsi/dsi.h                 |  9 ----
->>  drivers/gpu/drm/msm/dsi/dsi_host.c            | 51 -------------------
->>  drivers/gpu/drm/msm/dsi/dsi_manager.c         | 12 -----
->>  drivers/gpu/drm/msm/dsi/phy/dsi_phy.h         |  3 --
->>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c    | 19 -------
->>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c    | 17 -------
->>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c    | 18 -------
->>  .../gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c   | 16 ------
->>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c     | 19 -------
->>  drivers/gpu/drm/msm/dsi/phy/dsi_pll.c         | 11 ----
->>  10 files changed, 175 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/dsi/dsi.h 
->> b/drivers/gpu/drm/msm/dsi/dsi.h
->> index b310cf344ed4..3614af64ff52 100644
->> --- a/drivers/gpu/drm/msm/dsi/dsi.h
->> +++ b/drivers/gpu/drm/msm/dsi/dsi.h
->> @@ -96,19 +96,12 @@ struct drm_encoder *msm_dsi_get_encoder(struct
->> msm_dsi *msm_dsi);
->>  struct msm_dsi_pll;
->>  #ifdef CONFIG_DRM_MSM_DSI_PLL
->>  void msm_dsi_pll_destroy(struct msm_dsi_pll *pll);
->> -int msm_dsi_pll_get_clk_provider(struct msm_dsi_pll *pll,
->> -    struct clk **byte_clk_provider, struct clk **pixel_clk_provider);
->>  void msm_dsi_pll_save_state(struct msm_dsi_pll *pll);
->>  int msm_dsi_pll_restore_state(struct msm_dsi_pll *pll);
->>  #else
->>  static inline void msm_dsi_pll_destroy(struct msm_dsi_pll *pll)
->>  {
->>  }
->> -static inline int msm_dsi_pll_get_clk_provider(struct msm_dsi_pll *pll,
->> -    struct clk **byte_clk_provider, struct clk **pixel_clk_provider)
->> -{
->> -    return -ENODEV;
->> -}
->>  static inline void msm_dsi_pll_save_state(struct msm_dsi_pll *pll)
->>  {
->>  }
->> @@ -143,8 +136,6 @@ unsigned long msm_dsi_host_get_mode_flags(struct
->> mipi_dsi_host *host);
->>  struct drm_bridge *msm_dsi_host_get_bridge(struct mipi_dsi_host *host);
->>  int msm_dsi_host_register(struct mipi_dsi_host *host, bool check_defer);
->>  void msm_dsi_host_unregister(struct mipi_dsi_host *host);
->> -int msm_dsi_host_set_src_pll(struct mipi_dsi_host *host,
->> -            struct msm_dsi_pll *src_pll);
->>  void msm_dsi_host_reset_phy(struct mipi_dsi_host *host);
->>  void msm_dsi_host_get_phy_clk_req(struct mipi_dsi_host *host,
->>      struct msm_dsi_phy_clk_request *clk_req,
->> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c
->> b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> index ab281cba0f08..bf3468ccc965 100644
->> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
->> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> @@ -2225,57 +2225,6 @@ void msm_dsi_host_cmd_xfer_commit(struct
->> mipi_dsi_host *host, u32 dma_base,
->>      wmb();
->>  }
->>
->> -int msm_dsi_host_set_src_pll(struct mipi_dsi_host *host,
->> -    struct msm_dsi_pll *src_pll)
->> -{
->> -    struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
->> -    struct clk *byte_clk_provider, *pixel_clk_provider;
->> -    int ret;
->> -
->> -    ret = msm_dsi_pll_get_clk_provider(src_pll,
->> -                &byte_clk_provider, &pixel_clk_provider);
->> -    if (ret) {
->> -        pr_info("%s: can't get provider from pll, don't set parent\n",
->> -            __func__);
->> -        return 0;
->> -    }
->> -
->> -    ret = clk_set_parent(msm_host->byte_clk_src, byte_clk_provider);
->> -    if (ret) {
->> -        pr_err("%s: can't set parent to byte_clk_src. ret=%d\n",
->> -            __func__, ret);
->> -        goto exit;
->> -    }
->> -
->> -    ret = clk_set_parent(msm_host->pixel_clk_src, pixel_clk_provider);
->> -    if (ret) {
->> -        pr_err("%s: can't set parent to pixel_clk_src. ret=%d\n",
->> -            __func__, ret);
->> -        goto exit;
->> -    }
->> -
->> -    if (msm_host->dsi_clk_src) {
->> -        ret = clk_set_parent(msm_host->dsi_clk_src, pixel_clk_provider);
->> -        if (ret) {
->> -            pr_err("%s: can't set parent to dsi_clk_src. ret=%d\n",
->> -                __func__, ret);
->> -            goto exit;
->> -        }
->> -    }
->> -
->> -    if (msm_host->esc_clk_src) {
->> -        ret = clk_set_parent(msm_host->esc_clk_src, byte_clk_provider);
->> -        if (ret) {
->> -            pr_err("%s: can't set parent to esc_clk_src. ret=%d\n",
->> -                __func__, ret);
->> -            goto exit;
->> -        }
->> -    }
->> -
->> -exit:
->> -    return ret;
->> -}
->> -
->>  void msm_dsi_host_reset_phy(struct mipi_dsi_host *host)
->>  {
->>      struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
->> diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c
->> b/drivers/gpu/drm/msm/dsi/dsi_manager.c
->> index 1d28dfba2c9b..6b65d86d116a 100644
->> --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
->> +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
->> @@ -70,7 +70,6 @@ static int dsi_mgr_setup_components(int id)
->>      struct msm_dsi *other_dsi = dsi_mgr_get_other_dsi(id);
->>      struct msm_dsi *clk_master_dsi = dsi_mgr_get_dsi(DSI_CLOCK_MASTER);
->>      struct msm_dsi *clk_slave_dsi = dsi_mgr_get_dsi(DSI_CLOCK_SLAVE);
->> -    struct msm_dsi_pll *src_pll;
->>      int ret;
->>
->>      if (!IS_DUAL_DSI()) {
->> @@ -79,10 +78,6 @@ static int dsi_mgr_setup_components(int id)
->>              return ret;
->>
->>          msm_dsi_phy_set_usecase(msm_dsi->phy, MSM_DSI_PHY_STANDALONE);
->> -        src_pll = msm_dsi_phy_get_pll(msm_dsi->phy);
->> -        if (IS_ERR(src_pll))
->> -            return PTR_ERR(src_pll);
->> -        ret = msm_dsi_host_set_src_pll(msm_dsi->host, src_pll);
->>      } else if (!other_dsi) {
->>          ret = 0;
->>      } else {
->> @@ -109,13 +104,6 @@ static int dsi_mgr_setup_components(int id)
->>                      MSM_DSI_PHY_MASTER);
->>          msm_dsi_phy_set_usecase(clk_slave_dsi->phy,
->>                      MSM_DSI_PHY_SLAVE);
->> -        src_pll = msm_dsi_phy_get_pll(clk_master_dsi->phy);
->> -        if (IS_ERR(src_pll))
->> -            return PTR_ERR(src_pll);
->> -        ret = msm_dsi_host_set_src_pll(msm_dsi->host, src_pll);
->> -        if (ret)
->> -            return ret;
->> -        ret = msm_dsi_host_set_src_pll(other_dsi->host, src_pll);
->>      }
->>
->>      return ret;
->> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
->> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
->> index f737bef74b91..3e3ed884c3dc 100644
->> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
->> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
->> @@ -23,9 +23,6 @@ struct msm_dsi_phy_ops {
->>  struct msm_dsi_pll_ops {
->>      int (*enable_seq)(struct msm_dsi_pll *pll);
->>      void (*disable_seq)(struct msm_dsi_pll *pll);
->> -    int (*get_provider)(struct msm_dsi_pll *pll,
->> -            struct clk **byte_clk_provider,
->> -            struct clk **pixel_clk_provider);
->>      void (*destroy)(struct msm_dsi_pll *pll);
->>      void (*save_state)(struct msm_dsi_pll *pll);
->>      int (*restore_state)(struct msm_dsi_pll *pll);
->> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
->> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
->> index 7a98e420414f..319d7b26c784 100644
->> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
->> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
->> @@ -621,23 +621,6 @@ static int dsi_pll_10nm_set_usecase(struct
->> msm_dsi_pll *pll,
->>      return 0;
->>  }
->>
->> -static int dsi_pll_10nm_get_provider(struct msm_dsi_pll *pll,
->> -                     struct clk **byte_clk_provider,
->> -                     struct clk **pixel_clk_provider)
->> -{
->> -    struct dsi_pll_10nm *pll_10nm = to_pll_10nm(pll);
->> -    struct clk_hw_onecell_data *hw_data = pll_10nm->hw_data;
->> -
->> -    DBG("DSI PLL%d", pll_10nm->id);
->> -
->> -    if (byte_clk_provider)
->> -        *byte_clk_provider = hw_data->hws[DSI_BYTE_PLL_CLK]->clk;
->> -    if (pixel_clk_provider)
->> -        *pixel_clk_provider = hw_data->hws[DSI_PIXEL_PLL_CLK]->clk;
->> -
->> -    return 0;
->> -}
->> -
->>  static void dsi_pll_10nm_destroy(struct msm_dsi_pll *pll)
->>  {
->>      struct dsi_pll_10nm *pll_10nm = to_pll_10nm(pll);
->> @@ -1105,7 +1088,6 @@ const struct msm_dsi_phy_cfg dsi_phy_10nm_cfgs = {
->>          .pll_init = dsi_pll_10nm_init,
->>      },
->>      .pll_ops = {
->> -        .get_provider = dsi_pll_10nm_get_provider,
->>          .destroy = dsi_pll_10nm_destroy,
->>          .save_state = dsi_pll_10nm_save_state,
->>          .restore_state = dsi_pll_10nm_restore_state,
->> @@ -1131,7 +1113,6 @@ const struct msm_dsi_phy_cfg 
->> dsi_phy_10nm_8998_cfgs = {
->>          .pll_init = dsi_pll_10nm_init,
->>      },
->>      .pll_ops = {
->> -        .get_provider = dsi_pll_10nm_get_provider,
->>          .destroy = dsi_pll_10nm_destroy,
->>          .save_state = dsi_pll_10nm_save_state,
->>          .restore_state = dsi_pll_10nm_restore_state,
->> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
->> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
->> index bab86fa6dc4b..6f3021f66ecc 100644
->> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
->> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
->> @@ -880,21 +880,6 @@ static int dsi_pll_14nm_set_usecase(struct
->> msm_dsi_pll *pll,
->>      return 0;
->>  }
->>
->> -static int dsi_pll_14nm_get_provider(struct msm_dsi_pll *pll,
->> -                     struct clk **byte_clk_provider,
->> -                     struct clk **pixel_clk_provider)
->> -{
->> -    struct dsi_pll_14nm *pll_14nm = to_pll_14nm(pll);
->> -    struct clk_hw_onecell_data *hw_data = pll_14nm->hw_data;
->> -
->> -    if (byte_clk_provider)
->> -        *byte_clk_provider = hw_data->hws[DSI_BYTE_PLL_CLK]->clk;
->> -    if (pixel_clk_provider)
->> -        *pixel_clk_provider = hw_data->hws[DSI_PIXEL_PLL_CLK]->clk;
->> -
->> -    return 0;
->> -}
->> -
->>  static void dsi_pll_14nm_destroy(struct msm_dsi_pll *pll)
->>  {
->>      struct dsi_pll_14nm *pll_14nm = to_pll_14nm(pll);
->> @@ -1227,7 +1212,6 @@ const struct msm_dsi_phy_cfg dsi_phy_14nm_cfgs = {
->>          .pll_init = dsi_pll_14nm_init,
->>      },
->>      .pll_ops = {
->> -        .get_provider = dsi_pll_14nm_get_provider,
->>          .destroy = dsi_pll_14nm_destroy,
->>          .save_state = dsi_pll_14nm_save_state,
->>          .restore_state = dsi_pll_14nm_restore_state,
->> @@ -1255,7 +1239,6 @@ const struct msm_dsi_phy_cfg 
->> dsi_phy_14nm_660_cfgs = {
->>          .pll_init = dsi_pll_14nm_init,
->>      },
->>      .pll_ops = {
->> -        .get_provider = dsi_pll_14nm_get_provider,
->>          .destroy = dsi_pll_14nm_destroy,
->>          .save_state = dsi_pll_14nm_save_state,
->>          .restore_state = dsi_pll_14nm_restore_state,
->> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
->> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
->> index d267b25e5da0..83c73230266d 100644
->> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
->> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
->> @@ -495,21 +495,6 @@ static int dsi_pll_28nm_restore_state(struct
->> msm_dsi_pll *pll)
->>      return 0;
->>  }
->>
->> -static int dsi_pll_28nm_get_provider(struct msm_dsi_pll *pll,
->> -                struct clk **byte_clk_provider,
->> -                struct clk **pixel_clk_provider)
->> -{
->> -    struct dsi_pll_28nm *pll_28nm = to_pll_28nm(pll);
->> -
->> -    if (byte_clk_provider)
->> -        *byte_clk_provider = pll_28nm->provided_clks[DSI_BYTE_PLL_CLK];
->> -    if (pixel_clk_provider)
->> -        *pixel_clk_provider =
->> -                pll_28nm->provided_clks[DSI_PIXEL_PLL_CLK];
->> -
->> -    return 0;
->> -}
->> -
->>  static void dsi_pll_28nm_destroy(struct msm_dsi_pll *pll)
->>  {
->>      struct dsi_pll_28nm *pll_28nm = to_pll_28nm(pll);
->> @@ -802,7 +787,6 @@ const struct msm_dsi_phy_cfg dsi_phy_28nm_hpm_cfgs 
->> = {
->>          .pll_init = dsi_pll_28nm_init,
->>      },
->>      .pll_ops = {
->> -        .get_provider = dsi_pll_28nm_get_provider,
->>          .destroy = dsi_pll_28nm_destroy,
->>          .save_state = dsi_pll_28nm_save_state,
->>          .restore_state = dsi_pll_28nm_restore_state,
->> @@ -830,7 +814,6 @@ const struct msm_dsi_phy_cfg 
->> dsi_phy_28nm_hpm_famb_cfgs = {
->>          .pll_init = dsi_pll_28nm_init,
->>      },
->>      .pll_ops = {
->> -        .get_provider = dsi_pll_28nm_get_provider,
->>          .destroy = dsi_pll_28nm_destroy,
->>          .save_state = dsi_pll_28nm_save_state,
->>          .restore_state = dsi_pll_28nm_restore_state,
->> @@ -858,7 +841,6 @@ const struct msm_dsi_phy_cfg dsi_phy_28nm_lp_cfgs = {
->>          .pll_init = dsi_pll_28nm_init,
->>      },
->>      .pll_ops = {
->> -        .get_provider = dsi_pll_28nm_get_provider,
->>          .destroy = dsi_pll_28nm_destroy,
->>          .save_state = dsi_pll_28nm_save_state,
->>          .restore_state = dsi_pll_28nm_restore_state,
->> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
->> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
->> index 31e7910c6050..0e26780e3eb4 100644
->> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
->> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
->> @@ -377,21 +377,6 @@ static int dsi_pll_28nm_restore_state(struct
->> msm_dsi_pll *pll)
->>      return 0;
->>  }
->>
->> -static int dsi_pll_28nm_get_provider(struct msm_dsi_pll *pll,
->> -                struct clk **byte_clk_provider,
->> -                struct clk **pixel_clk_provider)
->> -{
->> -    struct dsi_pll_28nm *pll_28nm = to_pll_28nm(pll);
->> -
->> -    if (byte_clk_provider)
->> -        *byte_clk_provider = pll_28nm->provided_clks[DSI_BYTE_PLL_CLK];
->> -    if (pixel_clk_provider)
->> -        *pixel_clk_provider =
->> -                pll_28nm->provided_clks[DSI_PIXEL_PLL_CLK];
->> -
->> -    return 0;
->> -}
->> -
->>  static void dsi_pll_28nm_destroy(struct msm_dsi_pll *pll)
->>  {
->>      struct dsi_pll_28nm *pll_28nm = to_pll_28nm(pll);
->> @@ -702,7 +687,6 @@ const struct msm_dsi_phy_cfg 
->> dsi_phy_28nm_8960_cfgs = {
->>          .pll_init = dsi_pll_28nm_8960_init,
->>      },
->>      .pll_ops = {
->> -        .get_provider = dsi_pll_28nm_get_provider,
->>          .destroy = dsi_pll_28nm_destroy,
->>          .save_state = dsi_pll_28nm_save_state,
->>          .restore_state = dsi_pll_28nm_restore_state,
->> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
->> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
->> index 5acdfe1f63be..7618f40ad45d 100644
->> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
->> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
->> @@ -646,23 +646,6 @@ static int dsi_pll_7nm_set_usecase(struct 
->> msm_dsi_pll *pll,
->>      return 0;
->>  }
->>
->> -static int dsi_pll_7nm_get_provider(struct msm_dsi_pll *pll,
->> -                     struct clk **byte_clk_provider,
->> -                     struct clk **pixel_clk_provider)
->> -{
->> -    struct dsi_pll_7nm *pll_7nm = to_pll_7nm(pll);
->> -    struct clk_hw_onecell_data *hw_data = pll_7nm->hw_data;
->> -
->> -    DBG("DSI PLL%d", pll_7nm->id);
->> -
->> -    if (byte_clk_provider)
->> -        *byte_clk_provider = hw_data->hws[DSI_BYTE_PLL_CLK]->clk;
->> -    if (pixel_clk_provider)
->> -        *pixel_clk_provider = hw_data->hws[DSI_PIXEL_PLL_CLK]->clk;
->> -
->> -    return 0;
->> -}
->> -
->>  static void dsi_pll_7nm_destroy(struct msm_dsi_pll *pll)
->>  {
->>      struct dsi_pll_7nm *pll_7nm = to_pll_7nm(pll);
->> @@ -1138,7 +1121,6 @@ const struct msm_dsi_phy_cfg dsi_phy_7nm_cfgs = {
->>          .pll_init = dsi_pll_7nm_init,
->>      },
->>      .pll_ops = {
->> -        .get_provider = dsi_pll_7nm_get_provider,
->>          .destroy = dsi_pll_7nm_destroy,
->>          .save_state = dsi_pll_7nm_save_state,
->>          .restore_state = dsi_pll_7nm_restore_state,
->> @@ -1165,7 +1147,6 @@ const struct msm_dsi_phy_cfg 
->> dsi_phy_7nm_8150_cfgs = {
->>          .pll_init = dsi_pll_7nm_init,
->>      },
->>      .pll_ops = {
->> -        .get_provider = dsi_pll_7nm_get_provider,
->>          .destroy = dsi_pll_7nm_destroy,
->>          .save_state = dsi_pll_7nm_save_state,
->>          .restore_state = dsi_pll_7nm_restore_state,
->> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_pll.c
->> b/drivers/gpu/drm/msm/dsi/phy/dsi_pll.c
->> index 98ee4560581a..5768e8d225fc 100644
->> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_pll.c
->> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_pll.c
->> @@ -74,17 +74,6 @@ void msm_dsi_pll_helper_unregister_clks(struct
->> platform_device *pdev,
->>  /*
->>   * DSI PLL API
->>   */
->> -int msm_dsi_pll_get_clk_provider(struct msm_dsi_pll *pll,
->> -    struct clk **byte_clk_provider, struct clk **pixel_clk_provider)
->> -{
->> -    if (pll->cfg->pll_ops.get_provider)
->> -        return pll->cfg->pll_ops.get_provider(pll,
->> -                    byte_clk_provider,
->> -                    pixel_clk_provider);
->> -
->> -    return -EINVAL;
->> -}
->> -
->>  void msm_dsi_pll_destroy(struct msm_dsi_pll *pll)
->>  {
->>      if (pll->cfg->pll_ops.destroy)
-
-
+diff --git a/drivers/gpu/drm/amd/amdgpu/atombios_dp.c b/drivers/gpu/drm/amd/amdgpu/atombios_dp.c
+index a3ba9ca11e98..6d35da65e09f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/atombios_dp.c
++++ b/drivers/gpu/drm/amd/amdgpu/atombios_dp.c
+@@ -188,6 +188,7 @@ void amdgpu_atombios_dp_aux_init(struct amdgpu_connector *amdgpu_connector)
+ {
+ 	amdgpu_connector->ddc_bus->rec.hpd = amdgpu_connector->hpd.hpd;
+ 	amdgpu_connector->ddc_bus->aux.transfer = amdgpu_atombios_dp_aux_transfer;
++	amdgpu_connector->ddc_bus->aux.drm_dev = amdgpu_connector->base.dev;
+ 	drm_dp_aux_init(&amdgpu_connector->ddc_bus->aux);
+ 	amdgpu_connector->ddc_bus->has_aux = true;
+ }
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+index 73cdb9fe981a..b8b69c33fb2b 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -434,6 +434,7 @@ void amdgpu_dm_initialize_dp_connector(struct amdgpu_display_manager *dm,
+ 			  link_index);
+ 	aconnector->dm_dp_aux.aux.transfer = dm_dp_aux_transfer;
+ 	aconnector->dm_dp_aux.ddc_service = aconnector->dc_link->ddc;
++	aconnector->dm_dp_aux.aux.drm_dev = dm->ddev;
+ 
+ 	drm_dp_aux_init(&aconnector->dm_dp_aux.aux);
+ 	drm_dp_cec_register_connector(&aconnector->dm_dp_aux.aux,
+diff --git a/drivers/gpu/drm/bridge/analogix/analogix-anx6345.c b/drivers/gpu/drm/bridge/analogix/analogix-anx6345.c
+index aa6cda458eb9..e33cd077595a 100644
+--- a/drivers/gpu/drm/bridge/analogix/analogix-anx6345.c
++++ b/drivers/gpu/drm/bridge/analogix/analogix-anx6345.c
+@@ -537,6 +537,7 @@ static int anx6345_bridge_attach(struct drm_bridge *bridge,
+ 	/* Register aux channel */
+ 	anx6345->aux.name = "DP-AUX";
+ 	anx6345->aux.dev = &anx6345->client->dev;
++	anx6345->aux.drm_dev = bridge->dev;
+ 	anx6345->aux.transfer = anx6345_aux_transfer;
+ 
+ 	err = drm_dp_aux_register(&anx6345->aux);
+diff --git a/drivers/gpu/drm/bridge/analogix/analogix-anx78xx.c b/drivers/gpu/drm/bridge/analogix/analogix-anx78xx.c
+index f20558618220..5e6a0ed39199 100644
+--- a/drivers/gpu/drm/bridge/analogix/analogix-anx78xx.c
++++ b/drivers/gpu/drm/bridge/analogix/analogix-anx78xx.c
+@@ -905,6 +905,7 @@ static int anx78xx_bridge_attach(struct drm_bridge *bridge,
+ 	/* Register aux channel */
+ 	anx78xx->aux.name = "DP-AUX";
+ 	anx78xx->aux.dev = &anx78xx->client->dev;
++	anx78xx->aux.drm_dev = bridge->dev;
+ 	anx78xx->aux.transfer = anx78xx_aux_transfer;
+ 
+ 	err = drm_dp_aux_register(&anx78xx->aux);
+diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+index f115233b1cb9..550814ca2139 100644
+--- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
++++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+@@ -1765,6 +1765,7 @@ int analogix_dp_bind(struct analogix_dp_device *dp, struct drm_device *drm_dev)
+ 	dp->aux.name = "DP-AUX";
+ 	dp->aux.transfer = analogix_dpaux_transfer;
+ 	dp->aux.dev = dp->dev;
++	dp->aux.drm_dev = drm_dev;
+ 
+ 	ret = drm_dp_aux_register(&dp->aux);
+ 	if (ret)
+diff --git a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
+index d966a33743b5..fe821ad628ec 100644
+--- a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
++++ b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
+@@ -1674,6 +1674,7 @@ static int cdns_mhdp_attach(struct drm_bridge *bridge,
+ 
+ 	dev_dbg(mhdp->dev, "%s\n", __func__);
+ 
++	mhdp->aux.drm_dev = bridge->dev;
+ 	ret = drm_dp_aux_register(&mhdp->aux);
+ 	if (ret < 0)
+ 		return ret;
+diff --git a/drivers/gpu/drm/bridge/tc358767.c b/drivers/gpu/drm/bridge/tc358767.c
+index da89922721ed..23a6f90b694b 100644
+--- a/drivers/gpu/drm/bridge/tc358767.c
++++ b/drivers/gpu/drm/bridge/tc358767.c
+@@ -1414,6 +1414,7 @@ static int tc_bridge_attach(struct drm_bridge *bridge,
+ 	if (flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR)
+ 		return 0;
+ 
++	tc->aux.drm_dev = drm;
+ 	ret = drm_dp_aux_register(&tc->aux);
+ 	if (ret < 0)
+ 		return ret;
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+index 88df4dd0f39d..8e24272bbf00 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -362,6 +362,7 @@ static int ti_sn_bridge_attach(struct drm_bridge *bridge,
+ 		return -EINVAL;
+ 	}
+ 
++	pdata->aux.drm_dev = bridge->dev;
+ 	ret = drm_dp_aux_register(&pdata->aux);
+ 	if (ret < 0) {
+ 		drm_err(bridge->dev, "Failed to register DP AUX channel: %d\n", ret);
+diff --git a/drivers/gpu/drm/drm_dp_aux_dev.c b/drivers/gpu/drm/drm_dp_aux_dev.c
+index e25181bf2c48..06b374cae956 100644
+--- a/drivers/gpu/drm/drm_dp_aux_dev.c
++++ b/drivers/gpu/drm/drm_dp_aux_dev.c
+@@ -278,6 +278,12 @@ void drm_dp_aux_unregister_devnode(struct drm_dp_aux *aux)
+ 	if (!aux_dev) /* attach must have failed */
+ 		return;
+ 
++	/*
++	 * As some AUX adapters may exist as platform devices which outlive their respective DRM
++	 * devices, we clear drm_dev to ensure that we never accidentally reference a stale pointer
++	 */
++	aux->drm_dev = NULL;
++
+ 	mutex_lock(&aux_idr_mutex);
+ 	idr_remove(&aux_idr, aux_dev->index);
+ 	mutex_unlock(&aux_idr_mutex);
+diff --git a/drivers/gpu/drm/drm_dp_mst_topology.c b/drivers/gpu/drm/drm_dp_mst_topology.c
+index 42a0c6888c33..1a7a8b085de4 100644
+--- a/drivers/gpu/drm/drm_dp_mst_topology.c
++++ b/drivers/gpu/drm/drm_dp_mst_topology.c
+@@ -2350,6 +2350,7 @@ drm_dp_mst_add_port(struct drm_device *dev,
+ 	port->aux.is_remote = true;
+ 
+ 	/* initialize the MST downstream port's AUX crc work queue */
++	port->aux.drm_dev = dev;
+ 	drm_dp_remote_aux_init(&port->aux);
+ 
+ 	/*
+diff --git a/drivers/gpu/drm/i915/display/intel_dp_aux.c b/drivers/gpu/drm/i915/display/intel_dp_aux.c
+index 7e83bc2cc34a..c4b446d6a042 100644
+--- a/drivers/gpu/drm/i915/display/intel_dp_aux.c
++++ b/drivers/gpu/drm/i915/display/intel_dp_aux.c
+@@ -682,6 +682,7 @@ void intel_dp_aux_init(struct intel_dp *intel_dp)
+ 	else
+ 		intel_dp->get_aux_send_ctl = g4x_get_aux_send_ctl;
+ 
++	intel_dp->aux.drm_dev = &dev_priv->drm;
+ 	drm_dp_aux_init(&intel_dp->aux);
+ 
+ 	/* Failure to allocate our preferred name is not critical */
+diff --git a/drivers/gpu/drm/msm/edp/edp.h b/drivers/gpu/drm/msm/edp/edp.h
+index eb34243dad53..8590f2ce274d 100644
+--- a/drivers/gpu/drm/msm/edp/edp.h
++++ b/drivers/gpu/drm/msm/edp/edp.h
+@@ -46,8 +46,7 @@ void edp_bridge_destroy(struct drm_bridge *bridge);
+ struct drm_connector *msm_edp_connector_init(struct msm_edp *edp);
+ 
+ /* AUX */
+-void *msm_edp_aux_init(struct device *dev, void __iomem *regbase,
+-			struct drm_dp_aux **drm_aux);
++void *msm_edp_aux_init(struct msm_edp *edp, void __iomem *regbase, struct drm_dp_aux **drm_aux);
+ void msm_edp_aux_destroy(struct device *dev, struct edp_aux *aux);
+ irqreturn_t msm_edp_aux_irq(struct edp_aux *aux, u32 isr);
+ void msm_edp_aux_ctrl(struct edp_aux *aux, int enable);
+diff --git a/drivers/gpu/drm/msm/edp/edp_aux.c b/drivers/gpu/drm/msm/edp/edp_aux.c
+index df10a0196d94..e3d85c622cfb 100644
+--- a/drivers/gpu/drm/msm/edp/edp_aux.c
++++ b/drivers/gpu/drm/msm/edp/edp_aux.c
+@@ -184,9 +184,9 @@ static ssize_t edp_aux_transfer(struct drm_dp_aux *drm_aux,
+ 	return ret;
+ }
+ 
+-void *msm_edp_aux_init(struct device *dev, void __iomem *regbase,
+-	struct drm_dp_aux **drm_aux)
++void *msm_edp_aux_init(struct msm_edp *edp, void __iomem *regbase, struct drm_dp_aux **drm_aux)
+ {
++	struct device *dev = &edp->pdev->dev;
+ 	struct edp_aux *aux = NULL;
+ 	int ret;
+ 
+@@ -201,6 +201,7 @@ void *msm_edp_aux_init(struct device *dev, void __iomem *regbase,
+ 
+ 	aux->drm_aux.name = "msm_edp_aux";
+ 	aux->drm_aux.dev = dev;
++	aux->drm_aux.drm_dev = edp->dev;
+ 	aux->drm_aux.transfer = edp_aux_transfer;
+ 	ret = drm_dp_aux_register(&aux->drm_aux);
+ 	if (ret) {
+diff --git a/drivers/gpu/drm/msm/edp/edp_ctrl.c b/drivers/gpu/drm/msm/edp/edp_ctrl.c
+index 0d9657cc70db..57af3d8b6699 100644
+--- a/drivers/gpu/drm/msm/edp/edp_ctrl.c
++++ b/drivers/gpu/drm/msm/edp/edp_ctrl.c
+@@ -1153,7 +1153,7 @@ int msm_edp_ctrl_init(struct msm_edp *edp)
+ 	}
+ 
+ 	/* Init aux and phy */
+-	ctrl->aux = msm_edp_aux_init(dev, ctrl->base, &ctrl->drm_aux);
++	ctrl->aux = msm_edp_aux_init(edp, ctrl->base, &ctrl->drm_aux);
+ 	if (!ctrl->aux || !ctrl->drm_aux) {
+ 		pr_err("%s:failed to init aux\n", __func__);
+ 		return -ENOMEM;
+diff --git a/drivers/gpu/drm/nouveau/nouveau_connector.c b/drivers/gpu/drm/nouveau/nouveau_connector.c
+index bfce762adcf0..d1b49508ecb9 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_connector.c
++++ b/drivers/gpu/drm/nouveau/nouveau_connector.c
+@@ -1355,6 +1355,7 @@ nouveau_connector_create(struct drm_device *dev,
+ 	case DRM_MODE_CONNECTOR_DisplayPort:
+ 	case DRM_MODE_CONNECTOR_eDP:
+ 		nv_connector->aux.dev = connector->kdev;
++		nv_connector->aux.drm_dev = dev;
+ 		nv_connector->aux.transfer = nouveau_connector_aux_xfer;
+ 		snprintf(aux_name, sizeof(aux_name), "sor-%04x-%04x",
+ 			 dcbe->hasht, dcbe->hashm);
+diff --git a/drivers/gpu/drm/radeon/atombios_dp.c b/drivers/gpu/drm/radeon/atombios_dp.c
+index 15b00a347560..c50c504bad50 100644
+--- a/drivers/gpu/drm/radeon/atombios_dp.c
++++ b/drivers/gpu/drm/radeon/atombios_dp.c
+@@ -232,6 +232,7 @@ void radeon_dp_aux_init(struct radeon_connector *radeon_connector)
+ 
+ 	radeon_connector->ddc_bus->rec.hpd = radeon_connector->hpd.hpd;
+ 	radeon_connector->ddc_bus->aux.dev = radeon_connector->base.kdev;
++	radeon_connector->ddc_bus->aux.drm_dev = radeon_connector->base.dev;
+ 	if (ASIC_IS_DCE5(rdev)) {
+ 		if (radeon_auxch)
+ 			radeon_connector->ddc_bus->aux.transfer = radeon_dp_aux_transfer_native;
+diff --git a/drivers/gpu/drm/tegra/dpaux.c b/drivers/gpu/drm/tegra/dpaux.c
+index ea56c6ec25e4..7d7cc90b6fc9 100644
+--- a/drivers/gpu/drm/tegra/dpaux.c
++++ b/drivers/gpu/drm/tegra/dpaux.c
+@@ -719,6 +719,7 @@ int drm_dp_aux_attach(struct drm_dp_aux *aux, struct tegra_output *output)
+ 	unsigned long timeout;
+ 	int err;
+ 
++	aux->drm_dev = output->connector.dev;
+ 	err = drm_dp_aux_register(aux);
+ 	if (err < 0)
+ 		return err;
+diff --git a/drivers/gpu/drm/xlnx/zynqmp_dp.c b/drivers/gpu/drm/xlnx/zynqmp_dp.c
+index 99158ee67d02..8272eee03adc 100644
+--- a/drivers/gpu/drm/xlnx/zynqmp_dp.c
++++ b/drivers/gpu/drm/xlnx/zynqmp_dp.c
+@@ -1069,6 +1069,7 @@ static int zynqmp_dp_aux_init(struct zynqmp_dp *dp)
+ 
+ 	dp->aux.name = "ZynqMP DP AUX";
+ 	dp->aux.dev = dp->dev;
++	dp->aux.drm_dev = dp->drm;
+ 	dp->aux.transfer = zynqmp_dp_aux_transfer;
+ 
+ 	return drm_dp_aux_register(&dp->aux);
+diff --git a/include/drm/drm_dp_helper.h b/include/drm/drm_dp_helper.h
+index 5efa0d329b67..4abe0cea1302 100644
+--- a/include/drm/drm_dp_helper.h
++++ b/include/drm/drm_dp_helper.h
+@@ -1838,6 +1838,8 @@ struct drm_dp_aux_cec {
+  * @name: user-visible name of this AUX channel and the I2C-over-AUX adapter
+  * @ddc: I2C adapter that can be used for I2C-over-AUX communication
+  * @dev: pointer to struct device that is the parent for this AUX channel
++ * @drm_dev: pointer to the &drm_device that owns this AUX channel. Beware, this may be %NULL
++ * before drm_dp_aux_register() has been called.
+  * @crtc: backpointer to the crtc that is currently using this AUX channel
+  * @hw_mutex: internal mutex used for locking transfers
+  * @crc_work: worker that captures CRCs for each frame
+@@ -1845,7 +1847,11 @@ struct drm_dp_aux_cec {
+  * @transfer: transfers a message representing a single AUX transaction
+  *
+  * The @dev field should be set to a pointer to the device that implements the
+- * AUX channel.
++ * AUX channel. As well, the @drm_dev field should be set to the &drm_device
++ * that will be using this AUX channel as early as possible. For many graphics
++ * drivers this should happen before drm_dp_aux_init(), however it's perfectly
++ * fine to set this field later so long as it's assigned before calling
++ * drm_dp_aux_register().
+  *
+  * The @name field may be used to specify the name of the I2C adapter. If set to
+  * %NULL, dev_name() of @dev will be used.
+@@ -1877,6 +1883,7 @@ struct drm_dp_aux {
+ 	const char *name;
+ 	struct i2c_adapter ddc;
+ 	struct device *dev;
++	struct drm_device *drm_dev;
+ 	struct drm_crtc *crtc;
+ 	struct mutex hw_mutex;
+ 	struct work_struct crc_work;
 -- 
-With best wishes
-Dmitry
+2.30.2
+
