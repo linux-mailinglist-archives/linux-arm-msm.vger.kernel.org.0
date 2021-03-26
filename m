@@ -2,71 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DF157349FDA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Mar 2021 03:38:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4760134A1DE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Mar 2021 07:34:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230327AbhCZCiI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Mar 2021 22:38:08 -0400
-Received: from szxga06-in.huawei.com ([45.249.212.32]:14907 "EHLO
-        szxga06-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230222AbhCZCiA (ORCPT
+        id S229782AbhCZGeN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Mar 2021 02:34:13 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:32782 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229580AbhCZGdw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Mar 2021 22:38:00 -0400
-Received: from DGGEMS408-HUB.china.huawei.com (unknown [172.30.72.60])
-        by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4F65h31P1qzkgGs;
-        Fri, 26 Mar 2021 10:36:19 +0800 (CST)
-Received: from localhost.localdomain (10.175.102.38) by
- DGGEMS408-HUB.china.huawei.com (10.3.19.208) with Microsoft SMTP Server id
- 14.3.498.0; Fri, 26 Mar 2021 10:37:49 +0800
-From:   Wei Yongjun <weiyongjun1@huawei.com>
-To:     <weiyongjun1@huawei.com>, Govind Singh <govinds@codeaurora.org>,
-        "Andy Gross" <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Ohad Ben-Cohen" <ohad@wizery.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Dan Carpenter <dan.carpenter@oracle.com>
-CC:     <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        <kernel-janitors@vger.kernel.org>, Hulk Robot <hulkci@huawei.com>
-Subject: [PATCH -next v2] remoteproc: qcom: wcss: Fix wrong pointer passed to PTR_ERR()
-Date:   Fri, 26 Mar 2021 02:47:41 +0000
-Message-ID: <20210326024741.841267-1-weiyongjun1@huawei.com>
-X-Mailer: git-send-email 2.25.1
-MIME-Version: 1.0
-Content-Type:   text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-Originating-IP: [10.175.102.38]
-X-CFilter-Loop: Reflected
+        Fri, 26 Mar 2021 02:33:52 -0400
+Received: from ironmsg07-lv.qualcomm.com (HELO ironmsg07-lv.qulacomm.com) ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 25 Mar 2021 23:33:53 -0700
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg07-lv.qulacomm.com with ESMTP/TLS/AES256-SHA; 25 Mar 2021 23:33:50 -0700
+X-QCInternal: smtphost
+Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 26 Mar 2021 12:03:34 +0530
+Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
+        id 78EC3218B5; Fri, 26 Mar 2021 12:03:33 +0530 (IST)
+From:   Dikshita Agarwal <dikshita@codeaurora.org>
+To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org, Dikshita Agarwal <dikshita@codeaurora.org>
+Subject: [PATCH v2] media: venus : hfi: add venus image info into smem
+Date:   Fri, 26 Mar 2021 12:03:25 +0530
+Message-Id: <1616740405-5085-1-git-send-email-dikshita@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-PTR_ERR should access the value just tested by IS_ERR, otherwise
-the wrong error code will be returned.
+Fill fw version info into smem to be printed as part of
+soc info.
 
-This commit fix it by return 'ret' directly.
+Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
 
-Fixes: 0af65b9b915e ("remoteproc: qcom: wcss: Add non pas wcss Q6 support for QCS404")
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
+Changes since v1:
+ adressed comments from stephen.
+ removed unwanted code.
 ---
-v1 -> v2: just return ret as Dan's suggestion.
----
- drivers/remoteproc/qcom_q6v5_wcss.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/qcom/venus/hfi_msgs.c | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
-index 71ec1a451e35..7dea0585bbb6 100644
---- a/drivers/remoteproc/qcom_q6v5_wcss.c
-+++ b/drivers/remoteproc/qcom_q6v5_wcss.c
-@@ -972,7 +972,7 @@ static int q6v5_wcss_init_clock(struct q6v5_wcss *wcss)
- 		ret = PTR_ERR(wcss->qdsp6ss_axim_cbcr);
- 		if (ret != -EPROBE_DEFER)
- 			dev_err(wcss->dev, "failed to get axim cbcr clk\n");
--		return PTR_ERR(wcss->qdsp6ss_abhm_cbcr);
-+		return ret;
- 	}
+diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media/platform/qcom/venus/hfi_msgs.c
+index 06a1908..6b6d33c9 100644
+--- a/drivers/media/platform/qcom/venus/hfi_msgs.c
++++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
+@@ -6,6 +6,7 @@
+ #include <linux/hash.h>
+ #include <linux/list.h>
+ #include <linux/slab.h>
++#include <linux/soc/qcom/smem.h>
+ #include <media/videobuf2-v4l2.h>
  
- 	wcss->lcc_bcr_sleep = devm_clk_get(wcss->dev, "lcc_bcr_sleep");
+ #include "core.h"
+@@ -14,6 +15,10 @@
+ #include "hfi_msgs.h"
+ #include "hfi_parser.h"
+ 
++#define SMEM_IMG_VER_TBL 469
++#define VER_STR_SZ	128
++#define SMEM_IMG_INDEX_VENUS 14 * 128
++
+ static void event_seq_changed(struct venus_core *core, struct venus_inst *inst,
+ 			      struct hfi_msg_event_notify_pkt *pkt)
+ {
+@@ -239,15 +244,27 @@ static void
+ sys_get_prop_image_version(struct device *dev,
+ 			   struct hfi_msg_sys_property_info_pkt *pkt)
+ {
++	size_t smem_blk_sz = 0;
++	u8 *smem_tbl_ptr;
++	u8 *img_ver;
+ 	int req_bytes;
+ 
+ 	req_bytes = pkt->hdr.size - sizeof(*pkt);
+ 
+-	if (req_bytes < 128 || !pkt->data[1] || pkt->num_properties > 1)
++	if (req_bytes < VER_STR_SZ || !pkt->data[1] || pkt->num_properties > 1)
+ 		/* bad packet */
+ 		return;
+ 
+-	dev_dbg(dev, VDBGL "F/W version: %s\n", (u8 *)&pkt->data[1]);
++	img_ver = (u8 *)&pkt->data[1];
++
++	dev_dbg(dev, VDBGL "F/W version: %s\n", img_ver);
++
++	smem_tbl_ptr = qcom_smem_get(QCOM_SMEM_HOST_ANY,
++				       SMEM_IMG_VER_TBL, &smem_blk_sz);
++	if ((SMEM_IMG_INDEX_VENUS + VER_STR_SZ) <= smem_blk_sz &&
++	    smem_tbl_ptr)
++		memcpy(smem_tbl_ptr + SMEM_IMG_INDEX_VENUS,
++		       img_ver, VER_STR_SZ);
+ }
+ 
+ static void hfi_sys_property_info(struct venus_core *core,
+-- 
+2.7.4
 
