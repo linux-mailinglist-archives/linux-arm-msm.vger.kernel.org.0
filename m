@@ -2,81 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DF870349CC0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Mar 2021 00:12:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 884E9349D75
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Mar 2021 01:09:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231272AbhCYXLo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Mar 2021 19:11:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51338 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231382AbhCYXLk (ORCPT
+        id S230221AbhCZAJX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Mar 2021 20:09:23 -0400
+Received: from mail-il1-f174.google.com ([209.85.166.174]:41498 "EHLO
+        mail-il1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229854AbhCZAJM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Mar 2021 19:11:40 -0400
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D332DC06174A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Mar 2021 16:11:40 -0700 (PDT)
-Received: by mail-pg1-x536.google.com with SMTP id u19so3324127pgh.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Mar 2021 16:11:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=7EhGfRcda9+R8F5eyr5st5BeQoQcEZfpRk295f4+oPY=;
-        b=PdjVScbTOPxtkn5pnGM+YV+iInZ5mWtI8Fod+LRhPAO6GU1Nu9kAfHAbNNc6ekNKmX
-         rKXPSQUF6nibC+uuZ/2cecLdHo2a/Wdbfxo/M0+BSO3SIcaD2T1niCQA8ShhVKZQFQxm
-         b2cbAssCnDK1V56/iNMF7fYgpylgLUIt8lpGQ=
+        Thu, 25 Mar 2021 20:09:12 -0400
+Received: by mail-il1-f174.google.com with SMTP id r8so3646357ilo.8;
+        Thu, 25 Mar 2021 17:09:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=7EhGfRcda9+R8F5eyr5st5BeQoQcEZfpRk295f4+oPY=;
-        b=mVI854nKwHNfUFxirm3CYMDsNJ6D4fp60seUBG88pLSEVulEG10O/YSmP8mNF9LOd0
-         DOeSSN8KZwd4+qX1T06oL41KXWvs7Zq9S+Hu0JEwfiEu//W4mAdpuHyENBB0UtHJ0as9
-         cNk358x8FtypZdmwiHyiUXv6qyHE7KU9p+QvljaF4Z5SkkuxFRQG+CqNMha39e7kLsVU
-         ssRhNydFN+za00eSwKhvPpBnZlFYNKpSRSH0MxWvAc4ul6NV4k//oXgeiq5EhQhFAJPM
-         rA2Gtt02VfhkQmsaNC5r9724it182Y+/CWi9OdBKF8e0JW/ch1y3tsveOqJg+vAZE0tE
-         RNnA==
-X-Gm-Message-State: AOAM532ho1WVw0MhLnDt9ecniGwejcqrgeQE0LMa6em8plK+ysxgT5xU
-        tIckl/WRkththpKBDge1re1hrg==
-X-Google-Smtp-Source: ABdhPJwnAa4W2tM1hkxWZ27yI+AFX6HsKIGxTqos175oxD19hZnwRy2JpGjUUegTrTdE/2vBR6+T6A==
-X-Received: by 2002:a17:902:a606:b029:e6:4c7e:1cba with SMTP id u6-20020a170902a606b02900e64c7e1cbamr11926509plq.46.1616713899396;
-        Thu, 25 Mar 2021 16:11:39 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:201:18a3:238:26c5:1521])
-        by smtp.gmail.com with ESMTPSA id u84sm7197451pfc.90.2021.03.25.16.11.38
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=a11hWINvZadDTUc1x1p5mvJKc6CEu6ZdeGypWrdKiFU=;
+        b=tzGOkg2CaGCTcKWWsaoRRj9XUFHwBfgkDL6O51xSFlzcdW9KykGUdslmKGswt+9wxu
+         Q9Kmz5dCug1mW0OjYI6AM1ayJu4ivbjDj+WGyAjR7xPzgwROMxJ182LtotuPfEa+ccn2
+         APJys/lIzUGe49uIZdxV21ard3ZI52icYqK3QyH2JHqsAE0QXO8jFJvDC6ivc0XogYXn
+         omiZxrtri25o/AE/pif+cxnC8G1TEcR2figZsoS5a7WuAxA0uTq6llStnEhOYEeLM5jO
+         7t5Dskzh2owOiz94mtmK0WzH26jQ/qJjgnSAc/fjY1uEtFoQRnxDMA6BhX8blxnVSvja
+         L26w==
+X-Gm-Message-State: AOAM532UYVPSq9n3CRt3n6c9FcL9nI8gcm4rqWf4aYLSDpRMvxifZg8p
+        k5YjJVZtHyWJqV2waRxdbA==
+X-Google-Smtp-Source: ABdhPJzpAml0C5TSFU9R4CKJ+PFO/N5I4vdC0tlV9SBzBs50molUg1khoXURpZiOCFbTEj49M4Tgow==
+X-Received: by 2002:a92:c545:: with SMTP id a5mr7599351ilj.209.1616717351425;
+        Thu, 25 Mar 2021 17:09:11 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.253])
+        by smtp.gmail.com with ESMTPSA id f13sm3377606ila.51.2021.03.25.17.09.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Mar 2021 16:11:38 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        Thu, 25 Mar 2021 17:09:09 -0700 (PDT)
+Received: (nullmailer pid 2001388 invoked by uid 1000);
+        Fri, 26 Mar 2021 00:09:07 -0000
+Date:   Thu, 25 Mar 2021 18:09:07 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>, robdclark@chromium.org,
+        Daniel Vetter <daniel@ffwll.ch>,
+        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        linux-arm-msm@vger.kernel.org, Steev Klimaszewski <steev@kali.org>,
+        eballetbo@gmail.com, Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        drinkcat@chromium.org, linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH 1/3] dt-bindings: display: simple: Add the panel on
+ sc7180-trogdor-pompom
+Message-ID: <20210326000907.GA1965415@robh.at.kernel.org>
+References: <20210316140707.RFC.1.I3a21995726282f1e9fcb70da5eb96f19ed96634f@changeid>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1616673661-20038-4-git-send-email-mkrishn@codeaurora.org>
-References: <1616673661-20038-1-git-send-email-mkrishn@codeaurora.org> <1616673661-20038-4-git-send-email-mkrishn@codeaurora.org>
-Subject: Re: [PATCH v14 4/4] dt-bindings: msm/dp: Add bindings of MSM DisplayPort controller
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
-        kalyan_t@codeaurora.org, tanmay@codeaurora.org,
-        abhinavk@codeaurora.org, robdclark@gmail.com,
-        bjorn.andersson@linaro.org, vinod.koul@linaro.org,
-        rnayak@codeaurora.org, dianders@chromium.org, sibis@codeaurora.org,
-        khsieh@codeaurora.org, Chandan Uddaraju <chandanu@codeaurora.org>,
-        Vara Reddy <varar@codeaurora.org>
-To:     Krishna Manikandan <mkrishn@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org
-Date:   Thu, 25 Mar 2021 16:10:34 -0700
-Message-ID: <161671383428.3012082.66029461211202843@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210316140707.RFC.1.I3a21995726282f1e9fcb70da5eb96f19ed96634f@changeid>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Krishna Manikandan (2021-03-25 05:01:01)
-> Add bindings for Snapdragon DisplayPort controller driver.
->=20
-> Signed-off-by: Chandan Uddaraju <chandanu@codeaurora.org>
-> Signed-off-by: Vara Reddy <varar@codeaurora.org>
-> Signed-off-by: Tanmay Shah <tanmay@codeaurora.org>
-> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
-> Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
-> ---
+On Tue, Mar 16, 2021 at 02:08:19PM -0700, Douglas Anderson wrote:
+> The sc7180-trogdor-pompom board might be attached to any number of a
+> pile of eDP panels. At the moment I'm told that the list might include:
+> - KD KD116N21-30NV-A010
+> - KD KD116N09-30NH-A016
+> - Starry 2081116HHD028001-51D
+> - Sharp LQ116M1JW10
+> 
+> It should be noted that while the EDID programmed in the first 3
+> panels indicates that they should run with exactly the same timing (to
+> keep things simple), the 4th panel not only needs different timing but
+> has a different resolution.
+> 
+> As is true in general with eDP panels, we can figure out which panel
+> we have and all the info needed to drive its pixel clock by reading
+> the EDID. However, we can do this only after we've powered the panel
+> on. Powering on the panels requires following the timing diagram in
+> each panel's datasheet which specifies delays between certain
+> actions. This means that, while we can be quite dynamic about handling
+> things we can't just totally skip out on describing the panel like we
+> could do if it was connected to an external-facing DP port.
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Is this a 'standard' eDP connector? AFAICT, there does seem to be 
+such a thing. I've said in the past I'd be okay with a edp-connector 
+node. If that needs just the "HPD absent delay" property, I think that 
+would be okay. It's just a never ending stream of new properties with 
+each new panel that I don't want to see.
+
+Rob
