@@ -2,91 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 884E9349D75
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Mar 2021 01:09:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2ABE7349D84
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Mar 2021 01:12:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230221AbhCZAJX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Mar 2021 20:09:23 -0400
-Received: from mail-il1-f174.google.com ([209.85.166.174]:41498 "EHLO
-        mail-il1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229854AbhCZAJM (ORCPT
+        id S229889AbhCZAL1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Mar 2021 20:11:27 -0400
+Received: from mail-il1-f172.google.com ([209.85.166.172]:45615 "EHLO
+        mail-il1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229639AbhCZALY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Mar 2021 20:09:12 -0400
-Received: by mail-il1-f174.google.com with SMTP id r8so3646357ilo.8;
-        Thu, 25 Mar 2021 17:09:11 -0700 (PDT)
+        Thu, 25 Mar 2021 20:11:24 -0400
+Received: by mail-il1-f172.google.com with SMTP id w2so3194296ilj.12;
+        Thu, 25 Mar 2021 17:11:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=a11hWINvZadDTUc1x1p5mvJKc6CEu6ZdeGypWrdKiFU=;
-        b=tzGOkg2CaGCTcKWWsaoRRj9XUFHwBfgkDL6O51xSFlzcdW9KykGUdslmKGswt+9wxu
-         Q9Kmz5dCug1mW0OjYI6AM1ayJu4ivbjDj+WGyAjR7xPzgwROMxJ182LtotuPfEa+ccn2
-         APJys/lIzUGe49uIZdxV21ard3ZI52icYqK3QyH2JHqsAE0QXO8jFJvDC6ivc0XogYXn
-         omiZxrtri25o/AE/pif+cxnC8G1TEcR2figZsoS5a7WuAxA0uTq6llStnEhOYEeLM5jO
-         7t5Dskzh2owOiz94mtmK0WzH26jQ/qJjgnSAc/fjY1uEtFoQRnxDMA6BhX8blxnVSvja
-         L26w==
-X-Gm-Message-State: AOAM532UYVPSq9n3CRt3n6c9FcL9nI8gcm4rqWf4aYLSDpRMvxifZg8p
-        k5YjJVZtHyWJqV2waRxdbA==
-X-Google-Smtp-Source: ABdhPJzpAml0C5TSFU9R4CKJ+PFO/N5I4vdC0tlV9SBzBs50molUg1khoXURpZiOCFbTEj49M4Tgow==
-X-Received: by 2002:a92:c545:: with SMTP id a5mr7599351ilj.209.1616717351425;
-        Thu, 25 Mar 2021 17:09:11 -0700 (PDT)
+        bh=P/I+wMdHICPtFWlW8kLfAQ7JiR1EZW/dP2yVRmWYJGU=;
+        b=bh/eufw9UDiJDF6CtK/sZ8HlZK7k2aEO1Ked96aDz/J/Atx6wIVSJ9t3w7IzsYVaS/
+         2pmdl9KGBzMwHqNBKSe5oxSleuQ6PJQLay1K6kNE67knT7c8XCz0Y3tkpTyqRTdlG2sM
+         mLNIRzLENVCWJvkw6jDfiRfr0lacw+L3NpMbs6kZ17BmvsgXXV8utjCs9/LyGiaYpiNG
+         ziOYs5uaez+Qk99hfut8RDBiKu0pOxgN+sQ2/Sm0Zv8JEddarElgzOTKvIsQ42dX3KMP
+         WuWAnnN4ujLfHuhuWBEUA2DO2Kmrp7zCb18VmltRGrvDACGxvzP8yX+acGs5zCmOmNtZ
+         oD+Q==
+X-Gm-Message-State: AOAM530VW9FxsEOReicoC1vfQH7NpYh/7WlZn+NHo91QrB9ERwpK6/27
+        GL3PwHI4PVRDifwFL1aBgg==
+X-Google-Smtp-Source: ABdhPJzWTUM7ViOUd0d1O5WVuFw0EBmZZAJwzZ9S1RfUkdCRF37cp6Wp77JMxNHIeBXaOjKMrxKidg==
+X-Received: by 2002:a05:6e02:1a89:: with SMTP id k9mr8673060ilv.29.1616717483503;
+        Thu, 25 Mar 2021 17:11:23 -0700 (PDT)
 Received: from robh.at.kernel.org ([64.188.179.253])
-        by smtp.gmail.com with ESMTPSA id f13sm3377606ila.51.2021.03.25.17.09.08
+        by smtp.gmail.com with ESMTPSA id 14sm3554588ilt.54.2021.03.25.17.11.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Mar 2021 17:09:09 -0700 (PDT)
-Received: (nullmailer pid 2001388 invoked by uid 1000);
-        Fri, 26 Mar 2021 00:09:07 -0000
-Date:   Thu, 25 Mar 2021 18:09:07 -0600
+        Thu, 25 Mar 2021 17:11:22 -0700 (PDT)
+Received: (nullmailer pid 2004913 invoked by uid 1000);
+        Fri, 26 Mar 2021 00:11:20 -0000
+Date:   Thu, 25 Mar 2021 18:11:20 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>, robdclark@chromium.org,
-        Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        linux-arm-msm@vger.kernel.org, Steev Klimaszewski <steev@kali.org>,
-        eballetbo@gmail.com, Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        drinkcat@chromium.org, linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH 1/3] dt-bindings: display: simple: Add the panel on
- sc7180-trogdor-pompom
-Message-ID: <20210326000907.GA1965415@robh.at.kernel.org>
-References: <20210316140707.RFC.1.I3a21995726282f1e9fcb70da5eb96f19ed96634f@changeid>
+To:     Taniya Das <tdas@codeaurora.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette =?iso-8859-1?Q?=A0?= 
+        <mturquette@baylibre.com>, Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v1 1/6] dt-bindings: clock: Add SC7280 DISPCC clock
+ binding
+Message-ID: <20210326001120.GA2001669@robh.at.kernel.org>
+References: <1615944142-12171-1-git-send-email-tdas@codeaurora.org>
+ <1615944142-12171-2-git-send-email-tdas@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210316140707.RFC.1.I3a21995726282f1e9fcb70da5eb96f19ed96634f@changeid>
+In-Reply-To: <1615944142-12171-2-git-send-email-tdas@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 16, 2021 at 02:08:19PM -0700, Douglas Anderson wrote:
-> The sc7180-trogdor-pompom board might be attached to any number of a
-> pile of eDP panels. At the moment I'm told that the list might include:
-> - KD KD116N21-30NV-A010
-> - KD KD116N09-30NH-A016
-> - Starry 2081116HHD028001-51D
-> - Sharp LQ116M1JW10
+On Wed, Mar 17, 2021 at 06:52:17AM +0530, Taniya Das wrote:
+> Add device tree bindings for display clock controller subsystem for
+> Qualcomm Technology Inc's SC7280 SoCs.
 > 
-> It should be noted that while the EDID programmed in the first 3
-> panels indicates that they should run with exactly the same timing (to
-> keep things simple), the 4th panel not only needs different timing but
-> has a different resolution.
+> Signed-off-by: Taniya Das <tdas@codeaurora.org>
+> ---
+>  .../bindings/clock/qcom,sc7280-dispcc.yaml         | 94 ++++++++++++++++++++++
+>  include/dt-bindings/clock/qcom,dispcc-sc7280.h     | 55 +++++++++++++
+>  2 files changed, 149 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sc7280-dispcc.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,dispcc-sc7280.h
 > 
-> As is true in general with eDP panels, we can figure out which panel
-> we have and all the info needed to drive its pixel clock by reading
-> the EDID. However, we can do this only after we've powered the panel
-> on. Powering on the panels requires following the timing diagram in
-> each panel's datasheet which specifies delays between certain
-> actions. This means that, while we can be quite dynamic about handling
-> things we can't just totally skip out on describing the panel like we
-> could do if it was connected to an external-facing DP port.
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,sc7280-dispcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sc7280-dispcc.yaml
+> new file mode 100644
+> index 0000000..2178666
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,sc7280-dispcc.yaml
+> @@ -0,0 +1,94 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,sc7280-dispcc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Display Clock & Reset Controller Binding for SC7280
+> +
+> +maintainers:
+> +  - Taniya Das <tdas@codeaurora.org>
+> +
+> +description: |
+> +  Qualcomm display clock control module which supports the clocks, resets and
+> +  power domains on SC7280.
+> +
+> +  See also dt-bindings/clock/qcom,dispcc-sc7280.h.
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sc7280-dispcc
+> +
+> +  clocks:
+> +    items:
+> +      - description: Board XO source
+> +      - description: GPLL0 source from GCC
+> +      - description: Byte clock from DSI PHY
+> +      - description: Pixel clock from DSI PHY
+> +      - description: Link clock from DP PHY
+> +      - description: VCO DIV clock from DP PHY
+> +      - description: Link clock from EDP PHY
+> +      - description: VCO DIV clock from EDP PHY
+> +
+> +  clock-names:
+> +    items:
+> +      - const: bi_tcxo
+> +      - const: gcc_disp_gpll0_clk
+> +      - const: dsi0_phy_pll_out_byteclk
+> +      - const: dsi0_phy_pll_out_dsiclk
+> +      - const: dp_phy_pll_link_clk
+> +      - const: dp_phy_pll_vco_div_clk
+> +      - const: edp_phy_pll_link_clk
+> +      - const: edp_phy_pll_vco_div_clk
+> +
+> +  '#clock-cells':
+> +    const: 1
+> +
+> +  '#reset-cells':
+> +    const: 1
+> +
+> +  '#power-domain-cells':
+> +    const: 1
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - clock-names
+> +  - '#clock-cells'
+> +  - '#reset-cells'
+> +  - '#power-domain-cells'
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-sc7280.h>
+> +    #include <dt-bindings/clock/qcom,rpmh.h>
+> +    clock-controller@af00000 {
+> +      compatible = "qcom,sc7280-dispcc";
+> +      reg = <0x0af00000 0x200000>;
+> +      clocks = <&rpmhcc RPMH_CXO_CLK>,
+> +               <&gcc GCC_DISP_GPLL0_CLK_SRC>,
+> +               <&dsi_phy 0>,
+> +               <&dsi_phy 1>,
+> +               <&dp_phy 0>,
+> +               <&dp_phy 1>,
+> +               <&edp_phy 0>,
+> +               <&edp_phy 1>;
+> +      clock-names = "bi_tcxo",
+> +                    "gcc_disp_gpll0_clk",
+> +                    "dsi0_phy_pll_out_byteclk",
+> +                    "dsi0_phy_pll_out_dsiclk",
+> +                    "dp_phy_pll_link_clk",
+> +                    "dp_phy_pll_vco_div_clk",
+> +                    "edp_phy_pll_link_clk",
+> +                    "edp_phy_pll_vco_div_clk";
+> +      #clock-cells = <1>;
+> +      #reset-cells = <1>;
+> +      #power-domain-cells = <1>;
+> +    };
+> +...
+> diff --git a/include/dt-bindings/clock/qcom,dispcc-sc7280.h b/include/dt-bindings/clock/qcom,dispcc-sc7280.h
+> new file mode 100644
+> index 0000000..2074b30
+> --- /dev/null
+> +++ b/include/dt-bindings/clock/qcom,dispcc-sc7280.h
+> @@ -0,0 +1,55 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
 
-Is this a 'standard' eDP connector? AFAICT, there does seem to be 
-such a thing. I've said in the past I'd be okay with a edp-connector 
-node. If that needs just the "HPD absent delay" property, I think that 
-would be okay. It's just a never ending stream of new properties with 
-each new panel that I don't want to see.
+Dual license?
 
 Rob
