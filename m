@@ -2,177 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C216734B4E4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Mar 2021 07:57:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 40E4C34B55B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Mar 2021 09:14:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231351AbhC0G5O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 27 Mar 2021 02:57:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37446 "EHLO
+        id S230299AbhC0IOK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 27 Mar 2021 04:14:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230427AbhC0G5A (ORCPT
+        with ESMTP id S230236AbhC0IOI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 27 Mar 2021 02:57:00 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CC75C0613AA;
-        Fri, 26 Mar 2021 23:56:59 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id hq27so11646530ejc.9;
-        Fri, 26 Mar 2021 23:56:59 -0700 (PDT)
+        Sat, 27 Mar 2021 04:14:08 -0400
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AF3FC0613B1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Mar 2021 01:14:08 -0700 (PDT)
+Received: by mail-qk1-x72c.google.com with SMTP id x14so7664450qki.10
+        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Mar 2021 01:14:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=IZQev9x5PD4Mej3WmPU65tTBRQXE41t3yLBZixZyLgM=;
-        b=hxRGMzUV7bCuKZqqFdbZD5reeRnjYjT93mMoXGLZ1TDsQtemfZA+MOLsBx5BbVw044
-         PMiCbfOxScRy83ZkCxteXUJUoauRNHsYGXr1FC5A+AAH7nnWuEwGzGgwFTpIEVAEFyxC
-         Dj+gNKr5NmoQsx38dluqEZcoW7DEjGqjFSfHCeugQ7+sObpZPJKRD5iFlfqq0nxhCcOv
-         jsJlCsMxXRpUbU2eIniPn517WLToQyh1OyE8mWyPN67KO3/n4VS4mX/vcAAx45SjRMxV
-         iMs2oM3Zlu2mVoTKoNQ9fAAfvVf6RAY41ZjQUBo4Q53b9u+DCXWXCEhV3uDas7+SJRol
-         GDHg==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=GA1NAt/P4hZZ77ii+4lem0NtMczgvNhopIy4dEXQnn4=;
+        b=gWOM71jfvcbF0JmzQu4+alNMYqbWw7LFkVDmzdziMODAxYp0L/e/wyrBN+KWvDuIib
+         BZsR/kBUBiUcRvSi0W7uROyovLXYUFyfJAAUnEEY26oXjUG77x+E+ci4OMv24l2qrwc5
+         Qsdw0H2dGDilhVy4zlx8h+DV5SXeGmqoY6YA7H3M8X/pygadRG0ENXMj1cMNC+BCbwuU
+         1wE9b1APJSzeSYgsYiSbMKFSCsTB3aUKJyvOCNcxvZMHTG2pxqN4d4EEWUyS1rqC+6ee
+         OO9S0qKLcNeW6bKFWfRERAgAwqDKrEkSapyfL+q1aAqZDlRTb5M5Z406yVhMr8ZiMBmW
+         DmUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=IZQev9x5PD4Mej3WmPU65tTBRQXE41t3yLBZixZyLgM=;
-        b=KJZADOlyadKq5vk9fnbRmkSeQ1serNkjEzCG0fw/3pD0IBRnw1OB/90R0P1qiuX04b
-         dHGQt2HbKMQ5Akan74hHkcPVFop8ExtBpT85SqoKYIqex4OTD0m9K6wQRm1JVnPDdDCX
-         znoi9CAHOOsiRdPq5GS4S5Mm8nW+ZSvt8napyRwnuaHqXvetw8AEu1D0J84pMUDFvf+Q
-         cC1qATl60aMX2Rss5zh6XciJ7AvdW/JlDY07Al2Dc4Ilm8TpgjtLUgzMQ9VoAtYoK2ji
-         RzJ5iMOcsdYZ+kJU1/iKOFztWpgjfA+MzrTQ+YCcNDoE4DtwhMYBW2X882M5vH6vxQql
-         ZAyg==
-X-Gm-Message-State: AOAM532ytyJEZ29CmtQl/xplSIBALAdUIRXU+2xkXSmLe87pywu++Gvt
-        Kxcm8wlDD58gsi4H7ZnHONY=
-X-Google-Smtp-Source: ABdhPJwoI6YqdDHESEsf8uUyHEYwPXjp2+DIKPW5XMTzrJM09onMY9dNqDILRbj6f9p3jZ9XfCgfoQ==
-X-Received: by 2002:a17:907:204c:: with SMTP id pg12mr8551581ejb.225.1616828218239;
-        Fri, 26 Mar 2021 23:56:58 -0700 (PDT)
-Received: from felia.fritz.box ([2001:16b8:2de6:9900:7d51:74f6:ebfb:3cdc])
-        by smtp.gmail.com with ESMTPSA id i11sm4774005ejc.101.2021.03.26.23.56.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Mar 2021 23:56:57 -0700 (PDT)
-From:   Lukas Bulwahn <lukas.bulwahn@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>,
-        linux-doc@vger.kernel.org, kernel-janitors@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Lukas Bulwahn <lukas.bulwahn@gmail.com>
-Subject: [PATCH 2/2] soc: qcom: address kernel-doc warnings
-Date:   Sat, 27 Mar 2021 07:56:42 +0100
-Message-Id: <20210327065642.11969-3-lukas.bulwahn@gmail.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20210327065642.11969-1-lukas.bulwahn@gmail.com>
-References: <20210327065642.11969-1-lukas.bulwahn@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=GA1NAt/P4hZZ77ii+4lem0NtMczgvNhopIy4dEXQnn4=;
+        b=Z4Pzet8J5sZEa1BDVGLmi1CfICoPwS3bl1Wlf8Z0OF/wxVH8mjgCnF4oPLJ3byfN3s
+         5JyCMRbz3fExG1eEM3IldsokY4ksDidZlteUTGCHohym3utXXipg/PXc1LAFkL/0bTvV
+         43tSyHVqSPMXLchszJPV0toe+ESfASWZVrQgEDCAS5Uq8JYB9gWDUwibDCSeJBguJ3kE
+         XVAIpjiF8bkskh8umlmV4Up+SzPCMg8Y19eE0BwW6Dbpr4ffBTi6UouUXfQHGDY9Ds7+
+         d97ZhFawUWKnO45ZzntbDlonFOQl1DrqIjJFUefMHUk67KO2fMOPYFX1AllJoTcU6ISc
+         q38A==
+X-Gm-Message-State: AOAM531kMB8mIyXCfVliswxtfWrapv+Putuk/1Z8njKol3MYyDfbmDrE
+        vLV1oaWS+Rlda6p4Y6EZ4M0s2qennqYZFM3S6UZqQv54z18=
+X-Google-Smtp-Source: ABdhPJztjaHLPVnoSuTcEvbZbcNybX85qv9Zaf+aKVXDTvagf+tHDV169uNcVzNrQPppxtfwqJDD81egywmRNcYhUA4=
+X-Received: by 2002:a05:620a:1326:: with SMTP id p6mr17259918qkj.217.1616832847499;
+ Sat, 27 Mar 2021 01:14:07 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210325111144.2852594-1-dmitry.baryshkov@linaro.org>
+ <20210325111144.2852594-7-dmitry.baryshkov@linaro.org> <4217c4a2-cb15-ef08-8c39-9a5f164d2b41@codeaurora.org>
+In-Reply-To: <4217c4a2-cb15-ef08-8c39-9a5f164d2b41@codeaurora.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sat, 27 Mar 2021 11:13:56 +0300
+Message-ID: <CAA8EJpoNThCf-R8+CmjNWC9bGin8x60v-AjZrsm2x=ZE+UDjgw@mail.gmail.com>
+Subject: Re: [PATCH v1 06/15] clk: qcom: videocc-sc7180: drop unused enum entries
+To:     Taniya Das <tdas@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The command:
+Hi Tanya,
 
-  find ./include/linux/soc/qcom/ | xargs ./scripts/kernel-doc -none
+On Sat, 27 Mar 2021 at 04:49, Taniya Das <tdas@codeaurora.org> wrote:
+>
+> Hi Dmitry,
+>
+> Thanks for the patch for cleanup.
+> It is okay to remove TEST source, but you can still keep the sleep clock
+> source as it could be still connected to certain RCGs and could be used
+> to derive low frequencies if required.
+>
+> As these sources are generated from the HW plans it would be good if we
+> keep them as they are except the TEST source.
 
-reports:
+Please note that I've barely removed the unused enum entry, which is
+not used in any of clock parent maps. So I'd suggest to either add it
+to relevant clock parent maps and to the videocc bindings or to drop
+unused enum entry.
 
-  ./include/linux/soc/qcom/qmi.h:26: warning: cannot understand function prototype: 'struct qmi_header '
-  ./include/linux/soc/qcom/qmi.h:101: warning: cannot understand function prototype: 'struct qmi_response_type_v01 '
-  ./include/linux/soc/qcom/irq.h:19: warning: expecting prototype for QCOM specific IRQ domain flags that distinguishes the handling of wakeup(). Prototype was for IRQ_DOMAIN_FLAG_QCOM_PDC_WAKEUP() instead
-  ./include/linux/soc/qcom/apr.h:126: warning: Function parameter or member '__apr_driver' not described in 'module_apr_driver'
-  ./include/linux/soc/qcom/apr.h:126: warning: Excess function parameter '__aprbus_driver' description in 'module_apr_driver'
-  ./include/linux/soc/qcom/llcc-qcom.h:43: warning: cannot understand function prototype: 'struct llcc_slice_desc '
-  ./include/linux/soc/qcom/llcc-qcom.h:60: warning: cannot understand function prototype: 'struct llcc_edac_reg_data '
-  ./include/linux/soc/qcom/llcc-qcom.h:86: warning: cannot understand function prototype: 'struct llcc_drv_data '
+>
+> On 3/25/2021 4:41 PM, Dmitry Baryshkov wrote:
+> > Drop unused enum entries from the list of parent enums.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >   drivers/clk/qcom/videocc-sc7180.c | 2 --
+> >   1 file changed, 2 deletions(-)
+> >
+> > diff --git a/drivers/clk/qcom/videocc-sc7180.c b/drivers/clk/qcom/videocc-sc7180.c
+> > index 276e5ecd4840..f5d04791a3cd 100644
+> > --- a/drivers/clk/qcom/videocc-sc7180.c
+> > +++ b/drivers/clk/qcom/videocc-sc7180.c
+> > @@ -19,8 +19,6 @@
+> >
+> >   enum {
+> >       P_BI_TCXO,
+> > -     P_CHIP_SLEEP_CLK,
+> > -     P_CORE_BI_PLL_TEST_SE,
+> >       P_VIDEO_PLL0_OUT_EVEN,
+> >       P_VIDEO_PLL0_OUT_MAIN,
+> >       P_VIDEO_PLL0_OUT_ODD,
+> >
+>
+> --
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation.
+>
+> --
 
-Address all those warnings by:
-  - prefixing kernel-doc descriptions for structs with the keyword 'struct',
-  - turning a kernel-doc comment that does not follow the kernel-doc syntax
-  into a normal comment, and
-  - correcting a parameter name in a kernel-doc comment.
 
-Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
----
- include/linux/soc/qcom/apr.h       | 2 +-
- include/linux/soc/qcom/irq.h       | 2 +-
- include/linux/soc/qcom/llcc-qcom.h | 6 +++---
- include/linux/soc/qcom/qmi.h       | 4 ++--
- 4 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/include/linux/soc/qcom/apr.h b/include/linux/soc/qcom/apr.h
-index 7f0bc3cf4d61..137f9f2ac4c3 100644
---- a/include/linux/soc/qcom/apr.h
-+++ b/include/linux/soc/qcom/apr.h
-@@ -113,7 +113,7 @@ void apr_driver_unregister(struct apr_driver *drv);
- 
- /**
-  * module_apr_driver() - Helper macro for registering a aprbus driver
-- * @__aprbus_driver: aprbus_driver struct
-+ * @__apr_driver: apr_driver struct
-  *
-  * Helper macro for aprbus drivers which do not do anything special in
-  * module init/exit. This eliminates a lot of boilerplate. Each module
-diff --git a/include/linux/soc/qcom/irq.h b/include/linux/soc/qcom/irq.h
-index 9e1ece58e55b..72b9231e9fdd 100644
---- a/include/linux/soc/qcom/irq.h
-+++ b/include/linux/soc/qcom/irq.h
-@@ -7,7 +7,7 @@
- 
- #define GPIO_NO_WAKE_IRQ	~0U
- 
--/**
-+/*
-  * QCOM specific IRQ domain flags that distinguishes the handling of wakeup
-  * capable interrupts by different interrupt controllers.
-  *
-diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
-index 64fc582ae415..437c9df13229 100644
---- a/include/linux/soc/qcom/llcc-qcom.h
-+++ b/include/linux/soc/qcom/llcc-qcom.h
-@@ -35,7 +35,7 @@
- #define LLCC_WRCACHE     31
- 
- /**
-- * llcc_slice_desc - Cache slice descriptor
-+ * struct llcc_slice_desc - Cache slice descriptor
-  * @slice_id: llcc slice id
-  * @slice_size: Size allocated for the llcc slice
-  */
-@@ -45,7 +45,7 @@ struct llcc_slice_desc {
- };
- 
- /**
-- * llcc_edac_reg_data - llcc edac registers data for each error type
-+ * struct llcc_edac_reg_data - llcc edac registers data for each error type
-  * @name: Name of the error
-  * @synd_reg: Syndrome register address
-  * @count_status_reg: Status register address to read the error count
-@@ -69,7 +69,7 @@ struct llcc_edac_reg_data {
- };
- 
- /**
-- * llcc_drv_data - Data associated with the llcc driver
-+ * struct llcc_drv_data - Data associated with the llcc driver
-  * @regmap: regmap associated with the llcc device
-  * @bcast_regmap: regmap associated with llcc broadcast offset
-  * @cfg: pointer to the data structure for slice configuration
-diff --git a/include/linux/soc/qcom/qmi.h b/include/linux/soc/qcom/qmi.h
-index e712f94b89fc..b1f80e756d2a 100644
---- a/include/linux/soc/qcom/qmi.h
-+++ b/include/linux/soc/qcom/qmi.h
-@@ -16,7 +16,7 @@
- struct socket;
- 
- /**
-- * qmi_header - wireformat header of QMI messages
-+ * struct qmi_header - wireformat header of QMI messages
-  * @type:	type of message
-  * @txn_id:	transaction id
-  * @msg_id:	message id
-@@ -93,7 +93,7 @@ struct qmi_elem_info {
- #define QMI_ERR_NOT_SUPPORTED_V01		94
- 
- /**
-- * qmi_response_type_v01 - common response header (decoded)
-+ * struct qmi_response_type_v01 - common response header (decoded)
-  * @result:	result of the transaction
-  * @error:	error value, when @result is QMI_RESULT_FAILURE_V01
-  */
 -- 
-2.17.1
-
+With best wishes
+Dmitry
