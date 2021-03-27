@@ -2,64 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A6D1C34B5A1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Mar 2021 10:29:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 993F934B657
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Mar 2021 12:03:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230427AbhC0J3W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 27 Mar 2021 05:29:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41582 "EHLO
+        id S230288AbhC0LDN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 27 Mar 2021 07:03:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230329AbhC0J3B (ORCPT
+        with ESMTP id S229883AbhC0LDN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 27 Mar 2021 05:29:01 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D679C0613B1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Mar 2021 02:29:00 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id o10so11263947lfb.9
-        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Mar 2021 02:29:00 -0700 (PDT)
+        Sat, 27 Mar 2021 07:03:13 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 325CCC0613B1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Mar 2021 04:03:12 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id o126so11560664lfa.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Mar 2021 04:03:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=6VxxamNMJtiInR5z2cowqOyCycRO6qgXHgaO1I7LP14=;
-        b=fyJW04GepHbSwmOxZQITgRITOfXCTuEqaYiIO9/R8KgkNnljwXT21fAVroo/q5miLN
-         yyBZooIxnFjdaDVhCcTZQ4NcnqW2Wbp64Igpdpgb9xdzlel55HdQk3PZtaVcjHwR3mWt
-         uUfpDwLYYKbwE/7hKBui1Y1+njTua+GjUfvWyv3rOoifyOkVyGaSKnkenzR+hNYwS32J
-         2ocUjJMy1ROFHq1jSgXAbnCYLyhWsQcP9d2DpWKKw4ifaKsvVKDu6SvwPjftvpYAHoWa
-         XsziDLtMQVTGjX9nAD5g/ViB6XnQm5T9QnVONqrcXAkzq1MrmZA4Q/0V8yCzJQXBM8oi
-         1tiw==
+        bh=KZDpEXPQmSxpWJA5pbH10vAd6wTYvaEgEWkgKJ7hknY=;
+        b=xbeuY4fHeWgajQPrP2wfQ/qKNf1IQvjaHgMipZUKetQ+GwVwfTw4vcPFgntVtYD23+
+         koQfFVqRIKx2AL2+AsQ3FbD2ed71A2hUiPD8JREN9dTO2PIlVAX1eWN15SrnljBucFEv
+         c2oCkOPYGO8VQP8R0ozuxE9b0+BdGsFnNEAOZ9+MyfuLQqmB4+3SFk5cB/g1oanT1+kZ
+         OQa2suhjwGiZEzWuMTfKwBT+1IroRx7pRG3StbS0F+yX+L+A34ToLRZDNlAmOMUsoWoF
+         jFKe71m+AURunrBZibU6aQZxx5/HZrkEjZMtfx0fjv8MRdlFt6I1zjwzHHv2KMyk6DUW
+         kTVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=6VxxamNMJtiInR5z2cowqOyCycRO6qgXHgaO1I7LP14=;
-        b=eQTUyVWTt9h6yG1rzgpHTO0yQoiEBKR56TmLf2m6qdEifD+FKaJZWx4TI91Tw+Wao0
-         ojT245U+hxI6zgfJDlfpXT+njOkHZPlWO/Lh2ES9qEdf7eWXmIt24rIPZWCZ85uAy/RV
-         wTIO0giRZ40zSZ0bJnMs+qW0bayZP/S54BXRDoBbJcEwUFG8Vord7fkq+ctxUbxj/knk
-         3wqAZNmGlNF+nv1Z7O5feLrxL0lio5UbWLm2E3gsVhRi+n2XnwNn3nRjHo3at9L0q5Pv
-         EuSDpsFaPpB43FWP77SdbykOfU/MWO7c9VVPLT+5vN+j54Vi8t2168jLFDJNmTX7EqN8
-         CH7w==
-X-Gm-Message-State: AOAM531IoHL3muZYt9eHrAoFN6AXO9WX8kJ2qy3yv+3I93PSPKS13ATV
-        XttiXY4lE+JOwW2x9yWXnHAoYQ==
-X-Google-Smtp-Source: ABdhPJx+7LWILuBmzDqBHalQa9+1Kt4zJ3oBDEZYnOiqoyMliB+fopKgf+5nx1VEn2GS8pOBk4arLw==
-X-Received: by 2002:a19:ee0d:: with SMTP id g13mr11125539lfb.38.1616837339038;
-        Sat, 27 Mar 2021 02:28:59 -0700 (PDT)
+        bh=KZDpEXPQmSxpWJA5pbH10vAd6wTYvaEgEWkgKJ7hknY=;
+        b=seZEEjpNoGYSO2m9vda9epW7t45sJI06hr6D5K/kzbzgbWcck6BSr33cW8IFDXUf4o
+         qcq9MdcrkvW1thuNO0I0mPTB5Xk+QCzb2Lr+UfibmVv2jTtYbZaga9bwQRevRElVe7HN
+         dE9cmbZnNRwVSZSQpQ90SYoMbJkw5h3CHq3e/MmK5E96wdvwQdKV3z+9yHECZ/miJY9N
+         Cf5JdnLsf1gZFIEGbo/SNg8ELqeHNO9wpeoj6UQforyw+1SZ44quS6uxghHLqIgqPvCI
+         KDS9RWjYexlriRioRATeYNoCelmVSbK6vCdw7n7tnNGu8N+VjBWSx3Ft/mMVu/wIAZkM
+         8aig==
+X-Gm-Message-State: AOAM530KkmfihYlYHLU5WI5H8NllPelH8pm7PSvBHQT4P5W9GmpTymLK
+        5ZRihT2UHo96q9i1RB/L1yJzSg==
+X-Google-Smtp-Source: ABdhPJzKlkUYKA9Z7ZuJKCxOltu1RQmG+F/4OudHEO78+/n3taFdvD3MWfzQYmmMt+9YO4BNe0PW8Q==
+X-Received: by 2002:a19:3804:: with SMTP id f4mr11362701lfa.117.1616842991268;
+        Sat, 27 Mar 2021 04:03:11 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id p5sm1469580ljj.26.2021.03.27.02.28.58
+        by smtp.gmail.com with ESMTPSA id a8sm1513801ljn.96.2021.03.27.04.03.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 27 Mar 2021 02:28:58 -0700 (PDT)
+        Sat, 27 Mar 2021 04:03:10 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org
-Cc:     Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>
-Subject: [PATCH] ASoC: q6afe-clocks: fix reprobing of the driver
-Date:   Sat, 27 Mar 2021 12:28:57 +0300
-Message-Id: <20210327092857.3073879-1-dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Michael Turquette <mturquette@baylibre.com>
+Cc:     Stephen Boyd <sboyd@kernel.org>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-clk@vger.kernel.org
+Subject: [PATCH v3 00/25] drm/msm/dsi: refactor MSM DSI PHY/PLL drivers
+Date:   Sat, 27 Mar 2021 14:02:40 +0300
+Message-Id: <20210327110305.3289784-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -67,320 +67,108 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Q6afe-clocks driver can get reprobed. For example if the APR services
-are restarted after the firmware crash. However currently Q6afe-clocks
-driver will oops because hw.init will get cleared during first _probe
-call. Rewrite the driver to fill the clock data at runtime rather than
-using big static array of clocks.
+Restructure MSM DSI PHY drivers. What started as an attempt to grok the
+overcomplicated PHY drivers, has lead up to the idea of merging PHY and
+PLL code, reducing abstractions, code duplication, dropping dead code,
+etc.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- sound/soc/qcom/qdsp6/q6afe-clocks.c | 209 ++++++++++++++--------------
- sound/soc/qcom/qdsp6/q6afe.c        |   2 +-
- sound/soc/qcom/qdsp6/q6afe.h        |   2 +-
- 3 files changed, 108 insertions(+), 105 deletions(-)
+The patches were mainly tested on RB5 (sm8250, 7nm) and DB410c (apq8016,
+28nm-lp) and lightly tested on RB3 (sdm845, 10nm).
 
-diff --git a/sound/soc/qcom/qdsp6/q6afe-clocks.c b/sound/soc/qcom/qdsp6/q6afe-clocks.c
-index f0362f061652..9431656283cd 100644
---- a/sound/soc/qcom/qdsp6/q6afe-clocks.c
-+++ b/sound/soc/qcom/qdsp6/q6afe-clocks.c
-@@ -11,33 +11,29 @@
- #include <linux/slab.h>
- #include "q6afe.h"
- 
--#define Q6AFE_CLK(id) &(struct q6afe_clk) {		\
-+#define Q6AFE_CLK(id) {					\
- 		.clk_id	= id,				\
- 		.afe_clk_id	= Q6AFE_##id,		\
- 		.name = #id,				\
--		.attributes = LPASS_CLK_ATTRIBUTE_COUPLE_NO, \
- 		.rate = 19200000,			\
--		.hw.init = &(struct clk_init_data) {	\
--			.ops = &clk_q6afe_ops,		\
--			.name = #id,			\
--		},					\
- 	}
- 
--#define Q6AFE_VOTE_CLK(id, blkid, n) &(struct q6afe_clk) { \
-+#define Q6AFE_VOTE_CLK(id, blkid, n) {			\
- 		.clk_id	= id,				\
- 		.afe_clk_id = blkid,			\
--		.name = #n,				\
--		.hw.init = &(struct clk_init_data) {	\
--			.ops = &clk_vote_q6afe_ops,	\
--			.name = #id,			\
--		},					\
-+		.name = n,				\
- 	}
- 
--struct q6afe_clk {
--	struct device *dev;
-+struct q6afe_clk_init {
- 	int clk_id;
- 	int afe_clk_id;
- 	char *name;
-+	int rate;
-+};
-+
-+struct q6afe_clk {
-+	struct device *dev;
-+	int afe_clk_id;
- 	int attributes;
- 	int rate;
- 	uint32_t handle;
-@@ -48,8 +44,7 @@ struct q6afe_clk {
- 
- struct q6afe_cc {
- 	struct device *dev;
--	struct q6afe_clk **clks;
--	int num_clks;
-+	struct q6afe_clk *clks[Q6AFE_MAX_CLK_ID];
- };
- 
- static int clk_q6afe_prepare(struct clk_hw *hw)
-@@ -105,7 +100,7 @@ static int clk_vote_q6afe_block(struct clk_hw *hw)
- 	struct q6afe_clk *clk = to_q6afe_clk(hw);
- 
- 	return q6afe_vote_lpass_core_hw(clk->dev, clk->afe_clk_id,
--					clk->name, &clk->handle);
-+					clk_hw_get_name(&clk->hw), &clk->handle);
- }
- 
- static void clk_unvote_q6afe_block(struct clk_hw *hw)
-@@ -120,84 +115,76 @@ static const struct clk_ops clk_vote_q6afe_ops = {
- 	.unprepare	= clk_unvote_q6afe_block,
- };
- 
--static struct q6afe_clk *q6afe_clks[Q6AFE_MAX_CLK_ID] = {
--	[LPASS_CLK_ID_PRI_MI2S_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_PRI_MI2S_IBIT),
--	[LPASS_CLK_ID_PRI_MI2S_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_PRI_MI2S_EBIT),
--	[LPASS_CLK_ID_SEC_MI2S_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_SEC_MI2S_IBIT),
--	[LPASS_CLK_ID_SEC_MI2S_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_SEC_MI2S_EBIT),
--	[LPASS_CLK_ID_TER_MI2S_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_TER_MI2S_IBIT),
--	[LPASS_CLK_ID_TER_MI2S_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_TER_MI2S_EBIT),
--	[LPASS_CLK_ID_QUAD_MI2S_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_QUAD_MI2S_IBIT),
--	[LPASS_CLK_ID_QUAD_MI2S_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_QUAD_MI2S_EBIT),
--	[LPASS_CLK_ID_SPEAKER_I2S_IBIT] =
--				Q6AFE_CLK(LPASS_CLK_ID_SPEAKER_I2S_IBIT),
--	[LPASS_CLK_ID_SPEAKER_I2S_EBIT] =
--				Q6AFE_CLK(LPASS_CLK_ID_SPEAKER_I2S_EBIT),
--	[LPASS_CLK_ID_SPEAKER_I2S_OSR] =
--				Q6AFE_CLK(LPASS_CLK_ID_SPEAKER_I2S_OSR),
--	[LPASS_CLK_ID_QUI_MI2S_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_QUI_MI2S_IBIT),
--	[LPASS_CLK_ID_QUI_MI2S_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_QUI_MI2S_EBIT),
--	[LPASS_CLK_ID_SEN_MI2S_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_SEN_MI2S_IBIT),
--	[LPASS_CLK_ID_SEN_MI2S_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_SEN_MI2S_EBIT),
--	[LPASS_CLK_ID_INT0_MI2S_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_INT0_MI2S_IBIT),
--	[LPASS_CLK_ID_INT1_MI2S_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_INT1_MI2S_IBIT),
--	[LPASS_CLK_ID_INT2_MI2S_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_INT2_MI2S_IBIT),
--	[LPASS_CLK_ID_INT3_MI2S_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_INT3_MI2S_IBIT),
--	[LPASS_CLK_ID_INT4_MI2S_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_INT4_MI2S_IBIT),
--	[LPASS_CLK_ID_INT5_MI2S_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_INT5_MI2S_IBIT),
--	[LPASS_CLK_ID_INT6_MI2S_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_INT6_MI2S_IBIT),
--	[LPASS_CLK_ID_QUI_MI2S_OSR] = Q6AFE_CLK(LPASS_CLK_ID_QUI_MI2S_OSR),
--	[LPASS_CLK_ID_PRI_PCM_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_PRI_PCM_IBIT),
--	[LPASS_CLK_ID_PRI_PCM_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_PRI_PCM_EBIT),
--	[LPASS_CLK_ID_SEC_PCM_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_SEC_PCM_IBIT),
--	[LPASS_CLK_ID_SEC_PCM_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_SEC_PCM_EBIT),
--	[LPASS_CLK_ID_TER_PCM_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_TER_PCM_IBIT),
--	[LPASS_CLK_ID_TER_PCM_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_TER_PCM_EBIT),
--	[LPASS_CLK_ID_QUAD_PCM_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_QUAD_PCM_IBIT),
--	[LPASS_CLK_ID_QUAD_PCM_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_QUAD_PCM_EBIT),
--	[LPASS_CLK_ID_QUIN_PCM_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_QUIN_PCM_IBIT),
--	[LPASS_CLK_ID_QUIN_PCM_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_QUIN_PCM_EBIT),
--	[LPASS_CLK_ID_QUI_PCM_OSR] = Q6AFE_CLK(LPASS_CLK_ID_QUI_PCM_OSR),
--	[LPASS_CLK_ID_PRI_TDM_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_PRI_TDM_IBIT),
--	[LPASS_CLK_ID_PRI_TDM_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_PRI_TDM_EBIT),
--	[LPASS_CLK_ID_SEC_TDM_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_SEC_TDM_IBIT),
--	[LPASS_CLK_ID_SEC_TDM_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_SEC_TDM_EBIT),
--	[LPASS_CLK_ID_TER_TDM_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_TER_TDM_IBIT),
--	[LPASS_CLK_ID_TER_TDM_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_TER_TDM_EBIT),
--	[LPASS_CLK_ID_QUAD_TDM_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_QUAD_TDM_IBIT),
--	[LPASS_CLK_ID_QUAD_TDM_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_QUAD_TDM_EBIT),
--	[LPASS_CLK_ID_QUIN_TDM_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_QUIN_TDM_IBIT),
--	[LPASS_CLK_ID_QUIN_TDM_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_QUIN_TDM_EBIT),
--	[LPASS_CLK_ID_QUIN_TDM_OSR] = Q6AFE_CLK(LPASS_CLK_ID_QUIN_TDM_OSR),
--	[LPASS_CLK_ID_MCLK_1] = Q6AFE_CLK(LPASS_CLK_ID_MCLK_1),
--	[LPASS_CLK_ID_MCLK_2] = Q6AFE_CLK(LPASS_CLK_ID_MCLK_2),
--	[LPASS_CLK_ID_MCLK_3] = Q6AFE_CLK(LPASS_CLK_ID_MCLK_3),
--	[LPASS_CLK_ID_MCLK_4] = Q6AFE_CLK(LPASS_CLK_ID_MCLK_4),
--	[LPASS_CLK_ID_INTERNAL_DIGITAL_CODEC_CORE] =
--		Q6AFE_CLK(LPASS_CLK_ID_INTERNAL_DIGITAL_CODEC_CORE),
--	[LPASS_CLK_ID_INT_MCLK_0] = Q6AFE_CLK(LPASS_CLK_ID_INT_MCLK_0),
--	[LPASS_CLK_ID_INT_MCLK_1] = Q6AFE_CLK(LPASS_CLK_ID_INT_MCLK_1),
--	[LPASS_CLK_ID_WSA_CORE_MCLK] = Q6AFE_CLK(LPASS_CLK_ID_WSA_CORE_MCLK),
--	[LPASS_CLK_ID_WSA_CORE_NPL_MCLK] =
--				Q6AFE_CLK(LPASS_CLK_ID_WSA_CORE_NPL_MCLK),
--	[LPASS_CLK_ID_VA_CORE_MCLK] = Q6AFE_CLK(LPASS_CLK_ID_VA_CORE_MCLK),
--	[LPASS_CLK_ID_TX_CORE_MCLK] = Q6AFE_CLK(LPASS_CLK_ID_TX_CORE_MCLK),
--	[LPASS_CLK_ID_TX_CORE_NPL_MCLK] =
--			Q6AFE_CLK(LPASS_CLK_ID_TX_CORE_NPL_MCLK),
--	[LPASS_CLK_ID_RX_CORE_MCLK] = Q6AFE_CLK(LPASS_CLK_ID_RX_CORE_MCLK),
--	[LPASS_CLK_ID_RX_CORE_NPL_MCLK] =
--				Q6AFE_CLK(LPASS_CLK_ID_RX_CORE_NPL_MCLK),
--	[LPASS_CLK_ID_VA_CORE_2X_MCLK] =
--				Q6AFE_CLK(LPASS_CLK_ID_VA_CORE_2X_MCLK),
--	[LPASS_HW_AVTIMER_VOTE] = Q6AFE_VOTE_CLK(LPASS_HW_AVTIMER_VOTE,
--						 Q6AFE_LPASS_CORE_AVTIMER_BLOCK,
--						 "LPASS_AVTIMER_MACRO"),
--	[LPASS_HW_MACRO_VOTE] = Q6AFE_VOTE_CLK(LPASS_HW_MACRO_VOTE,
--						Q6AFE_LPASS_CORE_HW_MACRO_BLOCK,
--						"LPASS_HW_MACRO"),
--	[LPASS_HW_DCODEC_VOTE] = Q6AFE_VOTE_CLK(LPASS_HW_DCODEC_VOTE,
--					Q6AFE_LPASS_CORE_HW_DCODEC_BLOCK,
--					"LPASS_HW_DCODEC"),
-+static const struct q6afe_clk_init q6afe_clks[] = {
-+	Q6AFE_CLK(LPASS_CLK_ID_PRI_MI2S_IBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_PRI_MI2S_EBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_SEC_MI2S_IBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_SEC_MI2S_EBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_TER_MI2S_IBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_TER_MI2S_EBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_QUAD_MI2S_IBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_QUAD_MI2S_EBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_SPEAKER_I2S_IBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_SPEAKER_I2S_EBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_SPEAKER_I2S_OSR),
-+	Q6AFE_CLK(LPASS_CLK_ID_QUI_MI2S_IBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_QUI_MI2S_EBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_SEN_MI2S_IBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_SEN_MI2S_EBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_INT0_MI2S_IBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_INT1_MI2S_IBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_INT2_MI2S_IBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_INT3_MI2S_IBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_INT4_MI2S_IBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_INT5_MI2S_IBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_INT6_MI2S_IBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_QUI_MI2S_OSR),
-+	Q6AFE_CLK(LPASS_CLK_ID_PRI_PCM_IBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_PRI_PCM_EBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_SEC_PCM_IBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_SEC_PCM_EBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_TER_PCM_IBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_TER_PCM_EBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_QUAD_PCM_IBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_QUAD_PCM_EBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_QUIN_PCM_IBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_QUIN_PCM_EBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_QUI_PCM_OSR),
-+	Q6AFE_CLK(LPASS_CLK_ID_PRI_TDM_IBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_PRI_TDM_EBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_SEC_TDM_IBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_SEC_TDM_EBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_TER_TDM_IBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_TER_TDM_EBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_QUAD_TDM_IBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_QUAD_TDM_EBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_QUIN_TDM_IBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_QUIN_TDM_EBIT),
-+	Q6AFE_CLK(LPASS_CLK_ID_QUIN_TDM_OSR),
-+	Q6AFE_CLK(LPASS_CLK_ID_MCLK_1),
-+	Q6AFE_CLK(LPASS_CLK_ID_MCLK_2),
-+	Q6AFE_CLK(LPASS_CLK_ID_MCLK_3),
-+	Q6AFE_CLK(LPASS_CLK_ID_MCLK_4),
-+	Q6AFE_CLK(LPASS_CLK_ID_INTERNAL_DIGITAL_CODEC_CORE),
-+	Q6AFE_CLK(LPASS_CLK_ID_INT_MCLK_0),
-+	Q6AFE_CLK(LPASS_CLK_ID_INT_MCLK_1),
-+	Q6AFE_CLK(LPASS_CLK_ID_WSA_CORE_MCLK),
-+	Q6AFE_CLK(LPASS_CLK_ID_WSA_CORE_NPL_MCLK),
-+	Q6AFE_CLK(LPASS_CLK_ID_VA_CORE_MCLK),
-+	Q6AFE_CLK(LPASS_CLK_ID_TX_CORE_MCLK),
-+	Q6AFE_CLK(LPASS_CLK_ID_TX_CORE_NPL_MCLK),
-+	Q6AFE_CLK(LPASS_CLK_ID_RX_CORE_MCLK),
-+	Q6AFE_CLK(LPASS_CLK_ID_RX_CORE_NPL_MCLK),
-+	Q6AFE_CLK(LPASS_CLK_ID_VA_CORE_2X_MCLK),
-+	Q6AFE_VOTE_CLK(LPASS_HW_AVTIMER_VOTE,
-+		       Q6AFE_LPASS_CORE_AVTIMER_BLOCK,
-+		       "LPASS_AVTIMER_MACRO"),
-+	Q6AFE_VOTE_CLK(LPASS_HW_MACRO_VOTE,
-+		       Q6AFE_LPASS_CORE_HW_MACRO_BLOCK,
-+		       "LPASS_HW_MACRO"),
-+	Q6AFE_VOTE_CLK(LPASS_HW_DCODEC_VOTE,
-+		       Q6AFE_LPASS_CORE_HW_DCODEC_BLOCK,
-+		       "LPASS_HW_DCODEC"),
- };
- 
- static struct clk_hw *q6afe_of_clk_hw_get(struct of_phandle_args *clkspec,
-@@ -207,7 +194,7 @@ static struct clk_hw *q6afe_of_clk_hw_get(struct of_phandle_args *clkspec,
- 	unsigned int idx = clkspec->args[0];
- 	unsigned int attr = clkspec->args[1];
- 
--	if (idx >= cc->num_clks || attr > LPASS_CLK_ATTRIBUTE_COUPLE_DIVISOR) {
-+	if (idx >= Q6AFE_MAX_CLK_ID || attr > LPASS_CLK_ATTRIBUTE_COUPLE_DIVISOR) {
- 		dev_err(cc->dev, "Invalid clk specifier (%d, %d)\n", idx, attr);
- 		return ERR_PTR(-EINVAL);
- 	}
-@@ -230,20 +217,36 @@ static int q6afe_clock_dev_probe(struct platform_device *pdev)
- 	if (!cc)
- 		return -ENOMEM;
- 
--	cc->clks = &q6afe_clks[0];
--	cc->num_clks = ARRAY_SIZE(q6afe_clks);
-+	cc->dev = dev;
- 	for (i = 0; i < ARRAY_SIZE(q6afe_clks); i++) {
--		if (!q6afe_clks[i])
--			continue;
-+		unsigned int id = q6afe_clks[i].clk_id;
-+		struct clk_init_data init = {
-+			.name =  q6afe_clks[i].name,
-+		};
-+		struct q6afe_clk *clk;
-+
-+		clk = devm_kzalloc(dev, sizeof(*clk), GFP_KERNEL);
-+		if (!clk)
-+			return -ENOMEM;
-+
-+		clk->dev = dev;
-+		clk->afe_clk_id = q6afe_clks[i].afe_clk_id;
-+		clk->rate = q6afe_clks[i].rate;
-+		clk->hw.init = &init;
-+
-+		if (clk->rate)
-+			init.ops = &clk_q6afe_ops;
-+		else
-+			init.ops = &clk_vote_q6afe_ops;
- 
--		q6afe_clks[i]->dev = dev;
-+		cc->clks[id] = clk;
- 
--		ret = devm_clk_hw_register(dev, &q6afe_clks[i]->hw);
-+		ret = devm_clk_hw_register(dev, &clk->hw);
- 		if (ret)
- 			return ret;
- 	}
- 
--	ret = of_clk_add_hw_provider(dev->of_node, q6afe_of_clk_hw_get, cc);
-+	ret = devm_of_clk_add_hw_provider(dev, q6afe_of_clk_hw_get, cc);
- 	if (ret)
- 		return ret;
- 
-diff --git a/sound/soc/qcom/qdsp6/q6afe.c b/sound/soc/qcom/qdsp6/q6afe.c
-index cad1cd1bfdf0..4327b72162ec 100644
---- a/sound/soc/qcom/qdsp6/q6afe.c
-+++ b/sound/soc/qcom/qdsp6/q6afe.c
-@@ -1681,7 +1681,7 @@ int q6afe_unvote_lpass_core_hw(struct device *dev, uint32_t hw_block_id,
- EXPORT_SYMBOL(q6afe_unvote_lpass_core_hw);
- 
- int q6afe_vote_lpass_core_hw(struct device *dev, uint32_t hw_block_id,
--			     char *client_name, uint32_t *client_handle)
-+			     const char *client_name, uint32_t *client_handle)
- {
- 	struct q6afe *afe = dev_get_drvdata(dev->parent);
- 	struct afe_cmd_remote_lpass_core_hw_vote_request *vote_cfg;
-diff --git a/sound/soc/qcom/qdsp6/q6afe.h b/sound/soc/qcom/qdsp6/q6afe.h
-index 22e10269aa10..3845b56c0ed3 100644
---- a/sound/soc/qcom/qdsp6/q6afe.h
-+++ b/sound/soc/qcom/qdsp6/q6afe.h
-@@ -236,7 +236,7 @@ int q6afe_port_set_sysclk(struct q6afe_port *port, int clk_id,
- int q6afe_set_lpass_clock(struct device *dev, int clk_id, int clk_src,
- 			  int clk_root, unsigned int freq);
- int q6afe_vote_lpass_core_hw(struct device *dev, uint32_t hw_block_id,
--			     char *client_name, uint32_t *client_handle);
-+			     const char *client_name, uint32_t *client_handle);
- int q6afe_unvote_lpass_core_hw(struct device *dev, uint32_t hw_block_id,
- 			       uint32_t client_handle);
- #endif /* __Q6AFE_H__ */
--- 
-2.30.2
+The patch 'clk: fixed: add devm helper for clk_hw_register_fixed_factor()'
+is already a part of mainline as of 5.12-rc1, but is included here for
+completeness to fix compilation issues (as msm-next is based on 5.11-rc5).
+
+Changes since v2:
+ - Drop the 'stop setting clock parents manually' patch for now together
+   with the dtsi changes. Unlike the rest of patchset it provides
+   functional changes and might require additional discussion.
+   The patchset will be resubmitted later.
+
+Changes since v1:
+ - Rebase on top of msm/msm-next
+ - Reorder patches to follow logical sequence
+ - Add sc7180 clocks assignment
+ - Drop sm8250 clocks assignment, as respective file is not updated in
+   msm/msm-next
+
+Changes since RFC:
+ - Reorder patches to move global clock patches in the beginning and
+   dtsi patches where they are required.
+ - remove msm_dsi_phy_set_src_pll() and guess src_pll_id using PHY usecase.
+
+The following changes since commit 627dc55c273dab308303a5217bd3e767d7083ddb:
+
+  drm/msm/disp/dpu1: icc path needs to be set before dpu runtime resume (2021-03-22 18:52:34 -0700)
+
+are available in the Git repository at:
+
+  https://git.linaro.org/people/dmitry.baryshkov/kernel.git dsi-phy-3
+
+for you to fetch changes up to da7ba6797b2899a78774fb89e586e79a1001eff4:
+
+  drm/msm/dsi: stop passing src_pll_id to the phy_enable call (2021-03-27 13:56:26 +0300)
+
+----------------------------------------------------------------
+Daniel Palmer (1):
+      clk: fixed: add devm helper for clk_hw_register_fixed_factor()
+
+Dmitry Baryshkov (24):
+      clk: mux: provide devm_clk_hw_register_mux()
+      clk: divider: add devm_clk_hw_register_divider
+      drm/msm/dsi: replace PHY's init callback with configurable data
+      drm/msm/dsi: fuse dsi_pll_* code into dsi_phy_* code
+      drm/msm/dsi: drop multiple pll enable_seq support
+      drm/msm/dsi: move all PLL callbacks into PHY config struct
+      drm/msm/dsi: drop global msm_dsi_phy_type enumaration
+      drm/msm/dsi: move min/max PLL rate to phy config
+      drm/msm/dsi: remove msm_dsi_pll_set_usecase
+      drm/msm/dsi: push provided clocks handling into a generic code
+      drm/msm/dsi: use devm_clk_*register to registe DSI PHY clocks
+      drm/msm/dsi: use devm_of_clk_add_hw_provider
+      drm/msm/dsi: make save/restore_state phy-level functions
+      drm/msm/dsi: drop vco_delay setting from 7nm, 10nm, 14nm drivers
+      drm/msm/dpu: simplify vco_delay handling in dsi_phy_28nm driver
+      drm/msi/dsi: inline msm_dsi_pll_helper_clk_prepare/unprepare
+      drm/msm/dsi: make save_state/restore_state callbacks accept msm_dsi_phy
+      drm/msm/dsi: drop msm_dsi_pll abstracton
+      drm/msm/dsi: drop PLL accessor functions
+      drm/msm/dsi: move ioremaps to dsi_phy_driver_probe
+      drm/msm/dsi: remove duplicate fields from dsi_pll_Nnm instances
+      drm/msm/dsi: remove temp data from global pll structure
+      drm/msm/dsi: inline msm_dsi_phy_set_src_pll
+      drm/msm/dsi: stop passing src_pll_id to the phy_enable call
+
+ drivers/clk/clk-fixed-factor.c                  |   39 +-
+ drivers/clk/clk-mux.c                           |   35 +
+ drivers/gpu/drm/msm/Kconfig                     |    8 -
+ drivers/gpu/drm/msm/Makefile                    |    9 -
+ drivers/gpu/drm/msm/dsi/dsi.h                   |   60 +-
+ drivers/gpu/drm/msm/dsi/dsi_host.c              |    4 +-
+ drivers/gpu/drm/msm/dsi/dsi_manager.c           |   30 +-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c           |  161 ++--
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.h           |   41 +-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c      |  745 ++++++++++++++-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c      |  939 ++++++++++++++++++-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c      |   16 +-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c      |  654 +++++++++++++-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c |  479 +++++++++-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c       |  772 +++++++++++++++-
+ drivers/gpu/drm/msm/dsi/pll/dsi_pll.c           |  184 ----
+ drivers/gpu/drm/msm/dsi/pll/dsi_pll.h           |  132 ---
+ drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c      |  881 ------------------
+ drivers/gpu/drm/msm/dsi/pll/dsi_pll_14nm.c      | 1096 -----------------------
+ drivers/gpu/drm/msm/dsi/pll/dsi_pll_28nm.c      |  643 -------------
+ drivers/gpu/drm/msm/dsi/pll/dsi_pll_28nm_8960.c |  526 -----------
+ drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c       |  913 -------------------
+ include/linux/clk-provider.h                    |   34 +-
+ 23 files changed, 3732 insertions(+), 4669 deletions(-)
+ delete mode 100644 drivers/gpu/drm/msm/dsi/pll/dsi_pll.c
+ delete mode 100644 drivers/gpu/drm/msm/dsi/pll/dsi_pll.h
+ delete mode 100644 drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c
+ delete mode 100644 drivers/gpu/drm/msm/dsi/pll/dsi_pll_14nm.c
+ delete mode 100644 drivers/gpu/drm/msm/dsi/pll/dsi_pll_28nm.c
+ delete mode 100644 drivers/gpu/drm/msm/dsi/pll/dsi_pll_28nm_8960.c
+ delete mode 100644 drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c
+
 
