@@ -2,92 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 497F834B3A4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Mar 2021 02:53:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4147634B4E0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Mar 2021 07:57:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230299AbhC0BxI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Mar 2021 21:53:08 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:35140 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231172AbhC0Bw4 (ORCPT
+        id S231297AbhC0G5N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 27 Mar 2021 02:57:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37426 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230111AbhC0G4z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Mar 2021 21:52:56 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1616809976; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=w3B05Lcc00i+kMRUOl0eohJ8ozsXKgERZwHmZcxTDzI=; b=MqKwL91jCIjKz1HQTj2jxdSoVJvorc0PuPslwpMmbg2f1O4oF3R5K5gkPbM//3c2n33MAXFU
- EPzRblb8+5Cwj0hh31qZ/1UCnJYS9gROnf+ghfuRC3gjoeZ3TZyqOBjjtyOPpYPjLeZ/ieFb
- g8MXb9lP4YkRjSBz+WlcjCXT3N0=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 605e8ff2c39407c327eae6e1 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 27 Mar 2021 01:52:50
- GMT
-Sender: tdas=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A1CB7C433C6; Sat, 27 Mar 2021 01:52:49 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [192.168.0.101] (unknown [49.204.180.171])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: tdas)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BF7AAC433CA;
-        Sat, 27 Mar 2021 01:52:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BF7AAC433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=tdas@codeaurora.org
-Subject: Re: [PATCH] clk: qcom: camcc: Update the clock ops for the SC7180
-To:     Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1616140054-5141-1-git-send-email-tdas@codeaurora.org>
- <161648457933.3012082.10324281519544090271@swboyd.mtv.corp.google.com>
-From:   Taniya Das <tdas@codeaurora.org>
-Message-ID: <1d1b9ab5-9344-fb33-8edd-bcb2024a7b24@codeaurora.org>
-Date:   Sat, 27 Mar 2021 07:22:44 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
-MIME-Version: 1.0
-In-Reply-To: <161648457933.3012082.10324281519544090271@swboyd.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        Sat, 27 Mar 2021 02:56:55 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E28DDC0613AA;
+        Fri, 26 Mar 2021 23:56:54 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id w18so8798476edc.0;
+        Fri, 26 Mar 2021 23:56:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=/nrHAis2P0dzTZHAmJMrftoMP2h0cNOfMK41ddHP2/g=;
+        b=C5IEoc74WXY/u4vf0C6XQshmwLzJw4CBBfLwWWB6ovJtW/9RSA95bSPB+UE7Hgk4xn
+         MoDB/Tg4B//mB5PWUofFsfly5uWRI6azEaekxsBwhJ9TU/1qwf3WsL98MqOrl6lNayT6
+         ZoX0ztN08FMpQPGG/0EhmXhaIZZV5qMh5BJUxIHaHpJhD7ExaZJ5A9/bO/dpTh4PnIH1
+         FHZZJVcU5PRUfayMgBK3Y9BRT0IS3LsvjPz8X8pmTyJRsujnt9BINr51UpY2LL5pKvLu
+         1FSas9QPZcU1WPKCs6SM7WJSpJOWohQzs0reW+t0hDJCB1frG10T8VwS/FWncNqYqKCr
+         LirA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=/nrHAis2P0dzTZHAmJMrftoMP2h0cNOfMK41ddHP2/g=;
+        b=Jkl/HAiXfbKR3dToUjAt+TOCGOVnIaaiZ7jdyD6ZGXxiqe5ydVTtPSfQYGpjJ4+coj
+         RbEeywKIWUHSq+bInYu+R7h7fBRTHMA4pFuqzHNWuwJAgSQyccRMtOTMK2qEbZ0fP3uD
+         KFWBibYlItOfVZ50uZ4gfZcTI6nfDg12Hy37yiCNcxthuTpCliUe7oP4cYIC46gdPCqD
+         mrSWa5L0uKlwX+Vj+Uy5lhpplW/tkYLaUxdn+u529hRMJ+TjHp01J/hj8SoSGTWQl2QD
+         koaShzZsUR8p1T/UTyndTs+Tvu+5A2RCdf69NPMFXl+UdbAtM5y5SnPL6JCTP8eEYrLs
+         lhRA==
+X-Gm-Message-State: AOAM530/ftUx1YnhJw98JUobEuUl6o7zkeAnDe55TrT4IO61sCuRKS1B
+        YaT3lhdhDo40yOTT2V/kv5k=
+X-Google-Smtp-Source: ABdhPJyWImLozKgeuzDkNlFnXnyHXhJtADkkuGj20j+FlbB4dM/I91CEEbQdxt1v9O5UaC/r7bdErA==
+X-Received: by 2002:a05:6402:254f:: with SMTP id l15mr19045252edb.189.1616828213567;
+        Fri, 26 Mar 2021 23:56:53 -0700 (PDT)
+Received: from felia.fritz.box ([2001:16b8:2de6:9900:7d51:74f6:ebfb:3cdc])
+        by smtp.gmail.com with ESMTPSA id i11sm4774005ejc.101.2021.03.26.23.56.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Mar 2021 23:56:52 -0700 (PDT)
+From:   Lukas Bulwahn <lukas.bulwahn@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>,
+        linux-doc@vger.kernel.org, kernel-janitors@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Lukas Bulwahn <lukas.bulwahn@gmail.com>
+Subject: [PATCH 0/2] kernel-doc and MAINTAINERS clean-up
+Date:   Sat, 27 Mar 2021 07:56:40 +0100
+Message-Id: <20210327065642.11969-1-lukas.bulwahn@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Roughly 900 warnings of about 21.000 kernel-doc warnings in the kernel tree
+warn with 'cannot understand function prototype:', i.e., the kernel-doc parser
+cannot parse the function's signature. The majority, about 600 cases of those,
+are just struct definitions following the kernel-doc description. Further,
+spot-check investigations suggest that the authors of the specific kernel-doc
+descriptions simply were not aware that the general format for a kernel-doc
+description for a structure requires to prefix the struct name with the keyword
+'struct', as in 'struct struct_name - Brief description.'. Details on
+kernel-doc are at the Link below.
 
-Thanks Stephen for the review.
+Without the struct keyword, kernel-doc does not check if the kernel-doc
+description fits to the actual struct definition in the source code.
+Fortunately, in roughly a quarter of these cases, the kernel-doc description is
+actually complete wrt. its corresponding struct definition. So, the trivial
+change adding the struct keyword will allow us to keep the kernel-doc
+descriptions more consistent for future changes, by checking for new kernel-doc
+warnings.
 
-On 3/23/2021 12:59 PM, Stephen Boyd wrote:
-> Quoting Taniya Das (2021-03-19 00:47:34)
->> Update the RCGs to use shared ops to park the RCGs at XO.
-> 
-> s/Update/fix/?
-> 
-> Can you also elaborate more on why we need to park the RCGs here for all
-> these different clks? Is the camera driver supposed to not touch these
-> and let the firmware take over? Is there zero coordination between the
-> kernel and the firmware?
-> 
+Also, some of the files in ./include/ are not assigned to a specific
+MAINTAINERS section and hence have no dedicated maintainer. So, if needed, the
+files in ./include/ are also assigned to the fitting MAINTAINERS section, as I
+need to identify whom to send the clean-up patch anyway.
 
-Updated the patch with details.
+Here is the change from this kernel-doc janitorial work in the ./include/
+directory for ARM/QUALCOMM SUPPORT.
 
->>
->> Fixes: 15d09e830bbc ("clk: qcom: camcc: Add camera clock controller driver for SC7180")
->> Signed-off-by: Taniya Das <tdas@codeaurora.org>
+Andy, Bjorn, please pick this clean-up patch series for your tree.
+
+Link: https://www.kernel.org/doc/html/latest/doc-guide/kernel-doc.html
+
+
+Lukas Bulwahn (2):
+  MAINTAINERS: add another entry for ARM/QUALCOMM SUPPORT
+  soc: qcom: address kernel-doc warnings
+
+ MAINTAINERS                        | 1 +
+ include/linux/soc/qcom/apr.h       | 2 +-
+ include/linux/soc/qcom/irq.h       | 2 +-
+ include/linux/soc/qcom/llcc-qcom.h | 6 +++---
+ include/linux/soc/qcom/qmi.h       | 4 ++--
+ 5 files changed, 8 insertions(+), 7 deletions(-)
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation.
+2.17.1
 
---
