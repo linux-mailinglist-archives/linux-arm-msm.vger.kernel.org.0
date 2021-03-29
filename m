@@ -2,88 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D30A34D987
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Mar 2021 23:27:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 487FE34D9C8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Mar 2021 23:56:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230307AbhC2V11 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Mar 2021 17:27:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50974 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229555AbhC2V07 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Mar 2021 17:26:59 -0400
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D7DBC061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Mar 2021 14:26:59 -0700 (PDT)
-Received: by mail-qk1-x732.google.com with SMTP id q3so13891111qkq.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Mar 2021 14:26:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=eJqU0/cPS+mS77TP8GxPDtDH/VWNgX42EbTcAAsXICw=;
-        b=qP8DOoq1GMeM8kgtESYUEd271+22IEX+ZlHTqMa6oP7VS3bEv9Hgq++3jKqmPPtQJ1
-         Utbw+Q3sjxhjy0GgAsBbi95s92Uhva9Cce+6kB6HyCB8/nbNd2ATQPJZzoYHKHRrda2S
-         ZUjgIh3de4CgHsJdBsnHBr65Fw0AejiCl5opfd9hCUv5oa8wmcJTxtyontq55FU8HA9o
-         /IrgKMQHxwuKZrIMlvkKuTgff6FH2cHnLDbIMCKuhu7M3VKlorb/9VQPQFzM/aL46+nH
-         JmO7YhaGOFWWbpQ6TieLkiG2YBYblRvNZZQ4BHpDLxzTbv9AQLMJlV1V0bX+bRD7Wqjb
-         TC7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=eJqU0/cPS+mS77TP8GxPDtDH/VWNgX42EbTcAAsXICw=;
-        b=fF5UXYTuGI3VVb/WObfpFW9hyaO/vHTW+xwy/zVx2OcgFabKJP3WkcdZ46Vwd4OBB2
-         VyHOgGZwcQAynMrGZw0AXs+kLCK3otrQ9EgFL8/3+Zbr7mmibeLkKTSaV50KqZrSXAhi
-         qB4peyqgtMN0spRfO+07XvHp4dD51jnuKpCnvq8ccN9uMnf/wGtD9kiOVcAjTdTL/Mp9
-         4mjOXuu+ubBktyw7IExuR9349o/YjFc61CmdmaROLZqN7NTPJAlYvUGzb0bxlqboSj7E
-         vg95gDaxfGALSu45AEUGWbxgoVE4kvb5eFhBo12dYarHH2IDssNt81KIzcO/EnymHy6D
-         g2YQ==
-X-Gm-Message-State: AOAM53223IAvHcIMj/LQuhPMJgUrfTc2MlAqKdT97v+pidFnMe7Z1M0B
-        R4Fo9I9CHxWgspK4RRLPf4lhpzIfLYE0Pd2Wq/HI5Q==
-X-Google-Smtp-Source: ABdhPJyL2OR1UUBRUKPHyqDAfcfiobuWTxHYR/Q9O4t9Wp0wgNlNAm89T8wP8qqNa1Qsbg7i6/me9yvGYh2BMm74BZI=
-X-Received: by 2002:a05:620a:1326:: with SMTP id p6mr28094554qkj.217.1617053217507;
- Mon, 29 Mar 2021 14:26:57 -0700 (PDT)
+        id S230362AbhC2Vzw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Mar 2021 17:55:52 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:55451 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231421AbhC2VzY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 29 Mar 2021 17:55:24 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1617054924; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=335V7rJ+Y2NdV4wGUVCcawe7h/FTEkG0olXdzWQzh6s=;
+ b=sljOMxrNR7tuSTYzq6qRLNMeYh/QH2KmhZPdEBXftQQGw33txL0O6yLARrqUtUudruDsPL/W
+ 8myxaqhgJj7oaiIqKq4Pv1dqM6pBWSPCC550Et5zvt2mJi3wHY0XwOlazv08h+xPxuu8tcTQ
+ GTvxTKjJePaboQZgUfGNknvcsWU=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 60624cbd3f0cbfdaf2e71e79 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 29 Mar 2021 21:55:09
+ GMT
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 1E19AC43462; Mon, 29 Mar 2021 21:55:09 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B0545C433CA;
+        Mon, 29 Mar 2021 21:55:07 +0000 (UTC)
 MIME-Version: 1.0
-References: <20210327092857.3073879-1-dmitry.baryshkov@linaro.org> <161704879057.3012082.16461217665128806379@swboyd.mtv.corp.google.com>
-In-Reply-To: <161704879057.3012082.16461217665128806379@swboyd.mtv.corp.google.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 30 Mar 2021 00:26:46 +0300
-Message-ID: <CAA8EJppDP3utsi_cAMPUOZU_Ma4McDVHn6gJZraKzRMGcgcjsw@mail.gmail.com>
-Subject: Re: [PATCH] ASoC: q6afe-clocks: fix reprobing of the driver
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Banajit Goswami <bgoswami@codeaurora.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        alsa-devel@alsa-project.org,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>, Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 29 Mar 2021 14:55:07 -0700
+From:   abhinavk@codeaurora.org
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Daniel Palmer <daniel@0x0f.com>,
+        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        freedreno@lists.freedesktop.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH v3 01/25] clk: fixed: add devm helper for
+ clk_hw_register_fixed_factor()
+In-Reply-To: <20210327110305.3289784-2-dmitry.baryshkov@linaro.org>
+References: <20210327110305.3289784-1-dmitry.baryshkov@linaro.org>
+ <20210327110305.3289784-2-dmitry.baryshkov@linaro.org>
+Message-ID: <1f62eb178bb36111801521de6eeddad1@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 29 Mar 2021 at 23:13, Stephen Boyd <sboyd@kernel.org> wrote:
->
-> Quoting Dmitry Baryshkov (2021-03-27 02:28:57)
-> > Q6afe-clocks driver can get reprobed. For example if the APR services
-> > are restarted after the firmware crash. However currently Q6afe-clocks
-> > driver will oops because hw.init will get cleared during first _probe
-> > call. Rewrite the driver to fill the clock data at runtime rather than
-> > using big static array of clocks.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->
-> Any fixes tag?
-
-Missed that.
-Fixes: 520a1c396d19 ("ASoC: q6afe-clocks: add q6afe clock controller")
-
-
--- 
-With best wishes
-Dmitry
+On 2021-03-27 04:02, Dmitry Baryshkov wrote:
+> From: Daniel Palmer <daniel@0x0f.com>
+> 
+> Add a devm helper for clk_hw_register_fixed_factor() so that drivers
+> that internally
+> register fixed factor clocks for things like dividers don't need to
+> manually unregister
+> them on remove or if probe fails.
+> 
+> Signed-off-by: Daniel Palmer <daniel@0x0f.com>
+> Link: 
+> https://lore.kernel.org/r/20210211052206.2955988-4-daniel@0x0f.com
+> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
+> ---
+>  drivers/clk/clk-fixed-factor.c | 39 ++++++++++++++++++++++++++++------
+>  include/linux/clk-provider.h   |  4 +++-
+>  2 files changed, 36 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/clk/clk-fixed-factor.c 
+> b/drivers/clk/clk-fixed-factor.c
+> index 910e6e74ae90..4f7bf3929d6d 100644
+> --- a/drivers/clk/clk-fixed-factor.c
+> +++ b/drivers/clk/clk-fixed-factor.c
+> @@ -64,10 +64,16 @@ const struct clk_ops clk_fixed_factor_ops = {
+>  };
+>  EXPORT_SYMBOL_GPL(clk_fixed_factor_ops);
+> 
+> +static void devm_clk_hw_register_fixed_factor_release(struct device
+> *dev, void *res)
+> +{
+> +	clk_hw_unregister_fixed_factor(&((struct clk_fixed_factor 
+> *)res)->hw);
+> +}
+> +
+>  static struct clk_hw *
+>  __clk_hw_register_fixed_factor(struct device *dev, struct device_node 
+> *np,
+>  		const char *name, const char *parent_name, int index,
+> -		unsigned long flags, unsigned int mult, unsigned int div)
+> +		unsigned long flags, unsigned int mult, unsigned int div,
+> +		bool devm)
+>  {
+>  	struct clk_fixed_factor *fix;
+>  	struct clk_init_data init = { };
+> @@ -75,7 +81,15 @@ __clk_hw_register_fixed_factor(struct device *dev,
+> struct device_node *np,
+>  	struct clk_hw *hw;
+>  	int ret;
+> 
+> -	fix = kmalloc(sizeof(*fix), GFP_KERNEL);
+> +	/* You can't use devm without a dev */
+> +	if (devm && !dev)
+> +		return ERR_PTR(-EINVAL);
+> +
+> +	if (devm)
+> +		fix = devres_alloc(devm_clk_hw_register_fixed_factor_release,
+> +				sizeof(*fix), GFP_KERNEL);
+> +	else
+> +		fix = kmalloc(sizeof(*fix), GFP_KERNEL);
+>  	if (!fix)
+>  		return ERR_PTR(-ENOMEM);
+> 
+> @@ -99,9 +113,13 @@ __clk_hw_register_fixed_factor(struct device *dev,
+> struct device_node *np,
+>  	else
+>  		ret = of_clk_hw_register(np, hw);
+>  	if (ret) {
+> -		kfree(fix);
+> +		if (devm)
+> +			devres_free(fix);
+> +		else
+> +			kfree(fix);
+>  		hw = ERR_PTR(ret);
+> -	}
+> +	} else if (devm)
+> +		devres_add(dev, fix);
+> 
+>  	return hw;
+>  }
+> @@ -111,7 +129,7 @@ struct clk_hw *clk_hw_register_fixed_factor(struct
+> device *dev,
+>  		unsigned int mult, unsigned int div)
+>  {
+>  	return __clk_hw_register_fixed_factor(dev, NULL, name, parent_name, 
+> -1,
+> -					      flags, mult, div);
+> +					      flags, mult, div, false);
+>  }
+>  EXPORT_SYMBOL_GPL(clk_hw_register_fixed_factor);
+> 
+> @@ -153,6 +171,15 @@ void clk_hw_unregister_fixed_factor(struct clk_hw 
+> *hw)
+>  }
+>  EXPORT_SYMBOL_GPL(clk_hw_unregister_fixed_factor);
+> 
+> +struct clk_hw *devm_clk_hw_register_fixed_factor(struct device *dev,
+> +		const char *name, const char *parent_name, unsigned long flags,
+> +		unsigned int mult, unsigned int div)
+> +{
+> +	return __clk_hw_register_fixed_factor(dev, NULL, name, parent_name, 
+> -1,
+> +			flags, mult, div, true);
+> +}
+> +EXPORT_SYMBOL_GPL(devm_clk_hw_register_fixed_factor);
+> +
+>  #ifdef CONFIG_OF
+>  static const struct of_device_id set_rate_parent_matches[] = {
+>  	{ .compatible = "allwinner,sun4i-a10-pll3-2x-clk" },
+> @@ -185,7 +212,7 @@ static struct clk_hw
+> *_of_fixed_factor_clk_setup(struct device_node *node)
+>  		flags |= CLK_SET_RATE_PARENT;
+> 
+>  	hw = __clk_hw_register_fixed_factor(NULL, node, clk_name, NULL, 0,
+> -					    flags, mult, div);
+> +					    flags, mult, div, false);
+>  	if (IS_ERR(hw)) {
+>  		/*
+>  		 * Clear OF_POPULATED flag so that clock registration can be
+> diff --git a/include/linux/clk-provider.h 
+> b/include/linux/clk-provider.h
+> index e4316890661a..58f6fe866ae9 100644
+> --- a/include/linux/clk-provider.h
+> +++ b/include/linux/clk-provider.h
+> @@ -941,7 +941,9 @@ struct clk_hw *clk_hw_register_fixed_factor(struct
+> device *dev,
+>  		const char *name, const char *parent_name, unsigned long flags,
+>  		unsigned int mult, unsigned int div);
+>  void clk_hw_unregister_fixed_factor(struct clk_hw *hw);
+> -
+> +struct clk_hw *devm_clk_hw_register_fixed_factor(struct device *dev,
+> +		const char *name, const char *parent_name, unsigned long flags,
+> +		unsigned int mult, unsigned int div);
+>  /**
+>   * struct clk_fractional_divider - adjustable fractional divider clock
+>   *
