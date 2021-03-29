@@ -2,61 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5928534D8E6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Mar 2021 22:14:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC7C934D922
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Mar 2021 22:41:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231815AbhC2UNj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Mar 2021 16:13:39 -0400
-Received: from mail.kernel.org ([198.145.29.99]:42210 "EHLO mail.kernel.org"
+        id S230214AbhC2Uke (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Mar 2021 16:40:34 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48274 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231908AbhC2UNM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Mar 2021 16:13:12 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 1B97A6192F;
-        Mon, 29 Mar 2021 20:13:12 +0000 (UTC)
+        id S229873AbhC2UkJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 29 Mar 2021 16:40:09 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPS id 35FAB61982;
+        Mon, 29 Mar 2021 20:40:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1617048792;
-        bh=8DIZ+JWJBIByTZrkqVmW48ZtUZDoGgeYzah/9SenDlU=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=BLH1mnrgqNfLqsJpyV75FjuMDEAemH63WsN9V6sDW5QkGAa9feLy1nw27wmaB5ka2
-         lcLSyU2kGdEi1Mucg6S36NRSVy2Q4PJYLyJzLraeD8dcAGiFz2mJDfVfwOqQiwVRkh
-         arUKknhXiaE/k9A963VgckOXErHAq/ge6Pq0vs9e+BJZIk5sWT8EoIcOwlpqo2Zood
-         8aiPdAapd1/XtnWry3K5M6G+Aarau8fzEP0dwMzbAv8TpXl3IAU4XtUPqfz8BJABOT
-         996xaMUKFt5unuZ4eC7uejFLBUf1rDqx5AJ7/SuZjEJr5AP7BYHu1L3po96y/c7jmF
-         YaqIEaGvuFOvg==
+        s=k20201202; t=1617050409;
+        bh=c5fPop3ab3lhqC5T75SjhxwcTSFaaNAn/fSnWENGyHY=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=K8h+TdzSUIwOGtIOTln/P9JPFG0PBZNthE7Ia5G7skjruC8XuU90OYkNy+lo7N9sn
+         pfjtTECNOpv3oedUheMNR3tNwtuACOCWoftg7dreCpX5lrq83J8jurIeZ31enLy4Nv
+         vnRU+pg3aKyOO0IDdUj9DOny+KzCUEKXZFcJUta7LDMSmPjhhFeXLqmgGni33+qp5k
+         rUGRy2a66KhP8SnlUc6GOmozysj0dUvX15mr4txZno570EuD+4NLd9Wkq5nh/Bxez/
+         +vsLg5pqJwXY+fuVqWPply8H4oovU3sQ3DJn3OQ6CPo44FXO94cBK9fJ+QvVVKEqUj
+         w04JXhLukTYpA==
+Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 2B53A60A49;
+        Mon, 29 Mar 2021 20:40:09 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20210327092857.3073879-1-dmitry.baryshkov@linaro.org>
-References: <20210327092857.3073879-1-dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH] ASoC: q6afe-clocks: fix reprobing of the driver
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>
-To:     Banajit Goswami <bgoswami@codeaurora.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org
-Date:   Mon, 29 Mar 2021 13:13:10 -0700
-Message-ID: <161704879057.3012082.16461217665128806379@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH] MAINTAINERS: Add entry for Qualcomm IPC Router (QRTR) driver
+From:   patchwork-bot+netdevbpf@kernel.org
+Message-Id: <161705040917.15223.16891441257376220492.git-patchwork-notify@kernel.org>
+Date:   Mon, 29 Mar 2021 20:40:09 +0000
+References: <20210329112537.2587-1-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20210329112537.2587-1-manivannan.sadhasivam@linaro.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     davem@davemloft.net, kuba@kernel.org, netdev@vger.kernel.org,
+        gregkh@linuxfoundation.org, willy@infradead.org,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
+        loic.poulain@linaro.org, ducheng2@gmail.com
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2021-03-27 02:28:57)
-> Q6afe-clocks driver can get reprobed. For example if the APR services
-> are restarted after the firmware crash. However currently Q6afe-clocks
-> driver will oops because hw.init will get cleared during first _probe
-> call. Rewrite the driver to fill the clock data at runtime rather than
-> using big static array of clocks.
->=20
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Hello:
 
-Any fixes tag?
+This patch was applied to netdev/net.git (refs/heads/master):
 
+On Mon, 29 Mar 2021 16:55:37 +0530 you wrote:
+> Add MAINTAINERS entry for Qualcomm IPC Router (QRTR) driver.
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
+>  MAINTAINERS | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 
-Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+Here is the summary with links:
+  - MAINTAINERS: Add entry for Qualcomm IPC Router (QRTR) driver
+    https://git.kernel.org/netdev/net/c/5954846d09e4
+
+You are awesome, thank you!
+--
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
