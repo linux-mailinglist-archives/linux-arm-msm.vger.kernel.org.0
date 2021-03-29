@@ -2,175 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E995234C497
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Mar 2021 09:09:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C35A134C539
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Mar 2021 09:50:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230252AbhC2HJI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Mar 2021 03:09:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60766 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbhC2HIh (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Mar 2021 03:08:37 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C0CFC061574;
-        Mon, 29 Mar 2021 00:08:36 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id y6so13055613eds.1;
-        Mon, 29 Mar 2021 00:08:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=nsgDV40GpgMjdMBehMLStcFSCLaYlMp03YLRRXFE+RA=;
-        b=VxMZ7dSGQEdi8XOeWO1BicR5PJXdG9cKLNO6DN3n22tMui9UBI2ot+5PlRjW6qjCKv
-         kkBbSAt5V7Y3j3LRRAHs9H5M1AASRp+Z0Hk5xJi1S4YuPya4yGJbKEyVjLVJwaF7yUSG
-         0dSr68sCJPigikcaTg4rQNISm5kZwfHkO1AA63bJmhSuCZoeaHbDHPH+bG98njKUO51r
-         DWrZ9E5rabkL5rid66HlEq5PRQ6BbxQFNZiGztlvB/wDoo+FZaaKJ62YGqEi6DgrVzKY
-         XHDB4llTrEMZTZoCXYzTSsygURQ0muMvLDFU3XRquFpzxTG+7rsX+wseLGmMjJiteyf9
-         vZhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=nsgDV40GpgMjdMBehMLStcFSCLaYlMp03YLRRXFE+RA=;
-        b=tdip2buGRf29y4+MwXp0v/MwDugYpV+YyVY5sxMD2p2iivXHD3LKoLvbJLOzRdMnRS
-         h0ZSD+A9F9ucwccv5SEn07/lkIxxakcsSI3Y0BXBXV55DUczIjU4MbE1Ff5Z6ziKM5Be
-         Td4e9DyMW2dvuRjKFsRxW3O1Ym91MeYxQm8A7f5Qksr603zvL1/THMyEIAlt2n6w37xc
-         QI7UDIptbGB0uHazMa/sYaYXVdA6BVyUEJ4gzVOY2xATGkn39bkSJqaf/164IYpcEi4R
-         TjCESYDaauw0XUQC/uuDFv6QfOufW9wy/3n7WsICuWDaSQfE3dJV2KH2SfOFJXVq3BGx
-         VEgA==
-X-Gm-Message-State: AOAM533HsrbrTcI+OgU/m/eB8mc21iqHt23oeENO58uzqYYmLBt/bduz
-        xmO8YkB3pxSxKivEVr700ts=
-X-Google-Smtp-Source: ABdhPJwEJT/07GJdbFQtJ2P6vX8qiUN2z0P2wCX/J/CoVqW4cmKzRx2ZrUQ7oHNCPgeOgptcmNi0Rw==
-X-Received: by 2002:a05:6402:31a7:: with SMTP id dj7mr27411505edb.33.1617001715049;
-        Mon, 29 Mar 2021 00:08:35 -0700 (PDT)
-Received: from localhost ([62.96.65.119])
-        by smtp.gmail.com with ESMTPSA id n16sm8443196edr.42.2021.03.29.00.08.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Mar 2021 00:08:34 -0700 (PDT)
-Date:   Mon, 29 Mar 2021 09:08:59 +0200
-From:   Thierry Reding <thierry.reding@gmail.com>
-To:     Lyude Paul <lyude@redhat.com>
-Cc:     nouveau@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Harry Wentland <harry.wentland@amd.com>,
-        Leo Li <sunpeng.li@amd.com>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Ben Skeggs <bskeggs@redhat.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Hyun Kwon <hyun.kwon@xilinx.com>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Luben Tuikov <luben.tuikov@amd.com>,
-        Oleg Vasilev <oleg.vasilev@intel.com>,
-        Mikita Lipski <mikita.lipski@amd.com>,
-        Eryk Brol <eryk.brol@amd.com>,
-        Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-        "Jerry (Fangzhi) Zuo" <Jerry.Zuo@amd.com>,
-        Chris Park <Chris.Park@amd.com>,
-        Sam Ravnborg <sam@ravnborg.org>, Joe Perches <joe@perches.com>,
-        Vasily Khoruzhick <anarsoul@gmail.com>,
-        Guido =?utf-8?Q?G=C3=BCnther?= <agx@sigxcpu.org>,
-        Boris Brezillon <boris.brezillon@collabora.com>,
-        Andy Yan <andy.yan@rock-chips.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Tomi Valkeinen <tomi.valkeinen@ti.com>,
-        Swapnil Jakhade <sjakhade@cadence.com>,
-        Yuti Amonkar <yamonkar@cadence.com>,
-        Jyri Sarha <jsarha@ti.com>,
-        Julia Lawall <Julia.Lawall@inria.fr>,
-        Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        Imre Deak <imre.deak@intel.com>,
-        Matt Roper <matthew.d.roper@intel.com>,
-        Lucas De Marchi <lucas.demarchi@intel.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>,
-        "open list:DRM DRIVERS FOR NVIDIA TEGRA" 
-        <linux-tegra@vger.kernel.org>,
-        "moderated list:ARM/ZYNQ ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCH v2 05/20] drm/dp: Add backpointer to drm_device in
- drm_dp_aux
-Message-ID: <YGF9C284EOaf/WZP@orome.fritz.box>
-References: <20210326203807.105754-1-lyude@redhat.com>
- <20210326203807.105754-6-lyude@redhat.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="S4O2kq+aHqU/5PJ1"
-Content-Disposition: inline
-In-Reply-To: <20210326203807.105754-6-lyude@redhat.com>
-User-Agent: Mutt/2.0.6 (98f8cb83) (2021-03-06)
+        id S229762AbhC2Hu0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Mar 2021 03:50:26 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:60247 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231224AbhC2HuK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 29 Mar 2021 03:50:10 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1617004210; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=cpkO7rqDsm2ojWg0iRVpxJyqomqOJeB3iE7+en0L+/w=; b=PYqyfaroO69IzHNBqFmueLUNofRgic2PyPgtzO1TELys872elgOHaIocKxRTCBnSGtNoayQy
+ zez1vFleoeF4ap9LEwQ/wqWtGxv2X4xclQrldfjSplGRi5PXhzm51MVgqWYzZZDQQX2J9cNH
+ 8beXGXx7vJ2nTDY9VzaXTyWrsmA=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 606186af0a4a07ffda82cac1 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 29 Mar 2021 07:50:07
+ GMT
+Sender: schowdhu=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C8AE1C43462; Mon, 29 Mar 2021 07:50:06 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-525.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: schowdhu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6CA9EC433C6;
+        Mon, 29 Mar 2021 07:50:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6CA9EC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=schowdhu@codeaurora.org
+From:   Souradeep Chowdhury <schowdhu@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>, vkoul@kernel.org,
+        Souradeep Chowdhury <schowdhu@codeaurora.org>
+Subject: [Resend PATCH V3 0/5] Add driver support for Data Capture and Compare Engine(DCC) for SM8150
+Date:   Mon, 29 Mar 2021 13:19:09 +0530
+Message-Id: <cover.1616651305.git.schowdhu@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+DCC(Data Capture and Compare) is a DMA engine designed for debugging purposes.In case of a system
+crash or manual software triggers by the user the DCC hardware stores the value at the register
+addresses which can be used for debugging purposes.The DCC driver provides the user with sysfs
+interface to configure the register addresses.The options that the DCC hardware provides include
+reading from registers,writing to registers,first reading and then writing to registers and looping
+through the values of the same register.
 
---S4O2kq+aHqU/5PJ1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In certain cases a register write needs to be executed for accessing the rest of the registers,
+also the user might want to record the changing values of a register with time for which he has the
+option to use the loop feature.
 
-On Fri, Mar 26, 2021 at 04:37:52PM -0400, Lyude Paul wrote:
-> This is something that we've wanted for a while now: the ability to
-> actually look up the respective drm_device for a given drm_dp_aux struct.
-> This will also allow us to transition over to using the drm_dbg_*() helpe=
-rs
-> for debug message printing, as we'll finally have a drm_device to referen=
-ce
-> for doing so.
->=20
-> Note that there is one limitation with this - because some DP AUX adapters
-> exist as platform devices which are initialized independently of their
-> respective DRM devices, one cannot rely on drm_dp_aux->drm_dev to always =
-be
-> non-NULL until drm_dp_aux_register() has been called. We make sure to poi=
-nt
-> this out in the documentation for struct drm_dp_aux.
->=20
-> Signed-off-by: Lyude Paul <lyude@redhat.com>
-> ---
-[...]
->  drivers/gpu/drm/tegra/dpaux.c                            | 1 +
-[...]
+The options mentioned above are exposed to the user by sysfs files once the driver is probed.The
+details and usage of this sysfs files are documented in Documentation/ABI/testing/sysfs-driver-dcc.
 
-Acked-by: Thierry Reding <treding@nvidia.com>
+As an example let us consider a couple of debug scenarios where DCC has been proved to be effective
+for debugging purposes:-
 
---S4O2kq+aHqU/5PJ1
-Content-Type: application/pgp-signature; name="signature.asc"
+i)TimeStamp Related Issue
 
------BEGIN PGP SIGNATURE-----
+On SC7180, there was a coresight timestamp issue where it would occasionally be all 0 instead of proper
+timestamp values.
 
-iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmBhfQgACgkQ3SOs138+
-s6HzSQ/9Eo9S9xJvfEMo3ZsjRgZiCwhHpK8p3ntNKOfVV0ipfpeo8vw4YguhWC10
-loGRu6CMa+hJqNW3xt/Bhjsj3Wu15gLGcW2igvKlQIr8aNWpssLD3lNELgd2ousG
-82a+SF/3ljYs/060sFVCTK782CM+kNBw0ODjoohQjNoO++D1Rr2T0oq85DR8SKcu
-K+dCQR1V/D7bwL9d2/M9UHM4i9hlOkGUKkFOre0x9FyFeOAAXu4q7dfOg9FCkcU/
-4nIFE8mzWkW4o/fNLiF757dB2llZXxOl+pXNOBye31oslqZxGI6tkJQsvof4sODq
-s9Eo0qjPjR0rIXZDkVJCScM7yOH2PrzCiVQFTLutTBVuJ6vDd3dmnyzOzRMeqU8h
-CRcPTECPt3lP77XvqptSH/qdGiylAy0nnIwbw+9/Q7ZZ4KQM6e9pcj/fiSqOocdv
-bz044P8GPgO18yExiKM4xun4K9t6vJ6MckuHTZEG+16DrRsj6ybdxjBosdBiDN2T
-OyusX77/sl2KXr9fHW+tWwrDavb7GJ8jpJzZqyxUJa5Tb/ZeVzoScwiSfsLV62Nb
-JXM8KHUhdfKqOa9Yefaf2O4yGFwcF6PLpKlTPw73PlNqEyhxEBLDqFgb5q2pEXLF
-uo9LCn/Bju7B/15eqK58g9OAN7no8PxXCmaiO7y6w4fjqsFPTjI=
-=4qxj
------END PGP SIGNATURE-----
+Proper timestamp:
+Idx:3373; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x13004d8f5b7aa; CC=0x9e
 
---S4O2kq+aHqU/5PJ1--
+Zero timestamp:
+Idx:3387; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x0; CC=0xa2
+
+Now this is a non-fatal issue and doesn't need a system reset, but still needs
+to be rootcaused and fixed for those who do care about coresight etm traces.
+Since this is a timestamp issue, we would be looking for any timestamp related
+clocks and such.
+
+o we get all the clk register details from IP documentation and configure it
+via DCC config syfs node. Before that we set the current linked list.
+
+/* Set the current linked list */
+echo 3 > /sys/bus/platform/devices/10a2000.dcc/curr_list
+
+/* Program the linked list with the addresses */
+echo 0x10c004 > /sys/bus/platform/devices/10a2000.dcc/config
+echo 0x10c008 > /sys/bus/platform/devices/10a2000.dcc/config
+echo 0x10c00c > /sys/bus/platform/devices/10a2000.dcc/config
+echo 0x10c010 > /sys/bus/platform/devices/10a2000.dcc/config
+..... and so on for other timestamp related clk registers
+
+/* Other way of specifying is in "addr len" pair, in below case it
+specifies to capture 4 words starting 0x10C004 */
+
+echo 0x10C004 4 > /sys/bus/platform/devices/10a2000.dcc/config
+
+/* Enable DCC */
+echo 1 > /sys/bus/platform/devices/10a2000.dcc/enable
+
+/* Run the timestamp test for working case */
+
+/* Send SW trigger */
+echo 1 > /sys/bus/platform/devices/10a2000.dcc/trigger
+
+/* Read SRAM */
+cat /dev/dcc_sram > dcc_sram1.bin
+
+/* Run the timestamp test for non-working case */
+
+/* Send SW trigger */
+echo 1 > /sys/bus/platform/devices/10a2000.dcc/trigger
+
+/* Read SRAM */
+cat /dev/dcc_sram > dcc_sram2.bin
+
+Get the parser from [1] and checkout the latest branch.
+
+/* Parse the SRAM bin */
+python dcc_parser.py -s dcc_sram1.bin --v2 -o output/
+python dcc_parser.py -s dcc_sram2.bin --v2 -o output/
+
+Sample parsed output of dcc_sram1.bin:
+
+<hwioDump version="1">
+        <timestamp>03/14/21</timestamp>
+	        <generator>Linux DCC Parser</generator>
+		        <chip name="None" version="None">
+				<register address="0x0010c004" value="0x80000000" />
+				<register address="0x0010c008" value="0x00000008" />
+				<register address="0x0010c00c" value="0x80004220" />
+				<register address="0x0010c010" value="0x80000000" />
+			</chip>
+	<next_ll_offset>next_ll_offset : 0x1c </next_ll_offset>
+</hwioDump>
+
+ii)NOC register errors
+
+A particular class of registers called NOC which are functional registers was reporting
+errors while logging the values.To trace these errors the DCC has been used effectively.
+The steps followed were similar to the ones mentioned above.
+In addition to NOC registers a few other dependent registers were configured in DCC to
+monitor it's values during a crash. A look at the dependent register values revealed that
+the crash was happening due to a secured access to one of these dependent registers.
+All these debugging activity and finding the root cause was achieved using DCC.
+
+DCC parser is available at the following open source location
+
+https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/tools/tree/dcc_parser
+
+Changes in v3:
+* Collect the review tag
+* Fix the dtsi issue reported in v2
+
+Souradeep Chowdhury (5):
+  dt-bindings: Added the yaml bindings for DCC
+  soc: qcom: dcc:Add driver support for Data Capture and Compare
+    unit(DCC)
+  DCC: Added the sysfs entries for DCC(Data Capture and Compare) driver
+  MAINTAINERS:Add the entry for DCC(Data Capture and Compare) driver
+    support
+  arm64: dts: qcom: sm8150: Add Data Capture and Compare(DCC) support
+    node
+
+ Documentation/ABI/testing/sysfs-driver-dcc         |  114 ++
+ .../devicetree/bindings/arm/msm/qcom,dcc.yaml      |   49 +
+ MAINTAINERS                                        |    8 +
+ arch/arm64/boot/dts/qcom/sm8150.dtsi               |    7 +
+ drivers/soc/qcom/Kconfig                           |    8 +
+ drivers/soc/qcom/Makefile                          |    1 +
+ drivers/soc/qcom/dcc.c                             | 1549 ++++++++++++++++++++
+ 7 files changed, 1736 insertions(+)
+ create mode 100644 Documentation/ABI/testing/sysfs-driver-dcc
+ create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,dcc.yaml
+ create mode 100644 drivers/soc/qcom/dcc.c
+
+--
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
