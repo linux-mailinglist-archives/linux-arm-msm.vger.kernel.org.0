@@ -2,160 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BD8C534D50F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Mar 2021 18:27:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BC4534D660
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Mar 2021 19:56:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231710AbhC2Q0J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Mar 2021 12:26:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42530 "EHLO
+        id S229468AbhC2R4X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Mar 2021 13:56:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231672AbhC2QZx (ORCPT
+        with ESMTP id S230495AbhC2Rzz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Mar 2021 12:25:53 -0400
-Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B861BC0613D8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Mar 2021 09:25:38 -0700 (PDT)
-Received: by mail-qv1-xf33.google.com with SMTP id by2so6718795qvb.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Mar 2021 09:25:38 -0700 (PDT)
+        Mon, 29 Mar 2021 13:55:55 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC1ABC061756
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Mar 2021 10:55:52 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id y6so15231454eds.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Mar 2021 10:55:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=anholt-net.20150623.gappssmtp.com; s=20150623;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=jztd5AwJm/fvH4fWUcE2uu3MOmcPF16IqdUeZ0+QaXA=;
-        b=KajWM90pu4syudeTTfZfPIslohQWrOxBbIFjv7IgjSIugY8agIwogQVVr+5ynnJDmh
-         W8H74erJgaG1nfF8YWmLAzwAVoIdAOGgPFUmabr1o5Z6g2BzKM7BM3ymZ0JD/QoOgvI8
-         f/6dhynoxw3VHSmbj60YkJB/e3ok7pwDEWJCU=
+        bh=6MnTmV7Ubg2sTi3Xa2Quc7eX0k5n11budl3ddfjJpTQ=;
+        b=gJtMzc9yrdH/AglObhliCl1eLVPtYjBzEmGKhMs9v04xve8sR8xROi3HbQURzWGDBs
+         x8hjM/XW/JAvIauCyjxGZxqaSPBn0pcf+T7fLRHs7eObNBz2kPQmyxHodjG+nu+2gJZy
+         FIVdwhqEuY1c/omIMQ0qtK55Vk+CN/qmkvUprAWKV84JmQMF9rzoH+lH0KmtH7NZN+W6
+         fxLZuGFGvtrYKg/jzLgyYqQQ+6MAMaONyDWHCjxn3cfuCalDKFQDPkJYCBBcW6SuypKs
+         wssZhiDV5SEqInSyh8F8f74PMu8fBNBcKYbISCWdYueBbiapEn7mxGLyhaKBuVsq+1Nt
+         6gpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=jztd5AwJm/fvH4fWUcE2uu3MOmcPF16IqdUeZ0+QaXA=;
-        b=TA3kOK+yCr3lUq0iWX8eu1mD8anKqeHAAQLer1SqTLLIc68bmydlt12ADSLBvL/0/6
-         MTHI1UcescVsftcnfdFALByNH2idhneWOaFWj/njd8KvPwc+2eqMQXbKQSIUpzBKpJjc
-         Re3fSp7N/72nB5EHl1N5GhjQJH0gYtYyVnQPAuEaYp53nOiIm6gdyl6ROzVAc6hPXIma
-         crMLqUI03YPCdqzEPKlgRp7FnWtzi/PwBzFQMIg1TV4FB0thnaI39zDT9Pe39OKgB3YS
-         4F1oYO1Q0YTxKjXnyFfeEtO1B+OkIZbDihZztUHzmX36pPZQaRSNCE4wLV+CNGxHxjfH
-         irUA==
-X-Gm-Message-State: AOAM533vLlqe74aEMw2xpBZXTcnOLRH0vzJsloXR6JnTLTCthQuy1ZiF
-        ZkeeGo5H1KvX2DjehNOlGyG5XxeClaEWvw==
-X-Google-Smtp-Source: ABdhPJx848+bol89eW2PohdZYfHfIyP79fEeHwfgV7dQxcWl79U0nCCzAvP34XefvqHcw/a7HGtEEw==
-X-Received: by 2002:ad4:584d:: with SMTP id de13mr26289275qvb.17.1617035137648;
-        Mon, 29 Mar 2021 09:25:37 -0700 (PDT)
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com. [209.85.219.179])
-        by smtp.gmail.com with ESMTPSA id j30sm13248512qka.57.2021.03.29.09.25.36
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Mar 2021 09:25:37 -0700 (PDT)
-Received: by mail-yb1-f179.google.com with SMTP id x189so14354311ybg.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Mar 2021 09:25:36 -0700 (PDT)
-X-Received: by 2002:a25:3741:: with SMTP id e62mr36095324yba.343.1617035136321;
- Mon, 29 Mar 2021 09:25:36 -0700 (PDT)
+        bh=6MnTmV7Ubg2sTi3Xa2Quc7eX0k5n11budl3ddfjJpTQ=;
+        b=XoM+yU2y2ewz7a3ZUd7CG6cqWTznxqEcEy5K7TURBAgwsBH64yFWaS/YfQmYOJC1Fa
+         ljkyp1fqvqSuUImwMt8Z7lMH+ASct3ZhFHKMh0u8zbSfq/61lNZjY5y8MmUuT2mHyz+K
+         AaM8rgLtcePpMgMMS6AaGGLc8ZHvkwF3yM0viXEqQPO6sUAs8c2M20y6sLbOSfHU//C2
+         /B9HhXEHTkYXyQqdSs1kEf+r9kS/qR6iR+OwoSG7/7GpQcESwQbdKMbkZO/pW+xKWdHi
+         m/Im1CXEZO6phdCn/tZzq6vaqsBOUVus1vaLBwiDFCjFjcOxkjy1KJC7tlWjV8LGsRIb
+         if2w==
+X-Gm-Message-State: AOAM533oyNi3Bow1OCg+eqGdIbGQygwzkgZQI9Jb6Xf+pmMg3dpEjywz
+        AkYWmJ8Waq5LCgCEUiFKxwUPZezdym4i191ZtWF3Dg==
+X-Google-Smtp-Source: ABdhPJyyEm9oNlLOtY/Bv1/0xqF/9Vl1Ci9LBjhH/1QbEkuGJ2ahfATbkAxlMF/PRkZVCCe8dvKLypvNECTtIrpoWYA=
+X-Received: by 2002:aa7:d588:: with SMTP id r8mr29436114edq.88.1617040551435;
+ Mon, 29 Mar 2021 10:55:51 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210316140707.RFC.1.I3a21995726282f1e9fcb70da5eb96f19ed96634f@changeid>
- <20210326000907.GA1965415@robh.at.kernel.org>
-In-Reply-To: <20210326000907.GA1965415@robh.at.kernel.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 29 Mar 2021 09:25:24 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XqG8oH5HCttKSNYJV2eHwLxq-tm1C+UFLn+cAHUrBaHg@mail.gmail.com>
-Message-ID: <CAD=FV=XqG8oH5HCttKSNYJV2eHwLxq-tm1C+UFLn+cAHUrBaHg@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/3] dt-bindings: display: simple: Add the panel on sc7180-trogdor-pompom
-To:     Rob Herring <robh@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        David Airlie <airlied@linux.ie>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Enric Balletbo Serra <eballetbo@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Nicolas Boichat <drinkcat@chromium.org>,
-        LKML <linux-kernel@vger.kernel.org>
+References: <20210326231303.3071950-1-eric@anholt.net> <20210329144729.GB4203@willie-the-truck>
+In-Reply-To: <20210329144729.GB4203@willie-the-truck>
+From:   Eric Anholt <eric@anholt.net>
+Date:   Mon, 29 Mar 2021 10:55:40 -0700
+Message-ID: <CADaigPV0yHFUnGt_ncsS=wBHCMyex_wp=PVAibxSaAMEs8GS=Q@mail.gmail.com>
+Subject: Re: [PATCH 1/2] iommu/arm-smmu-qcom: Skip the TTBR1 quirk for db820c.
+To:     Will Deacon <will@kernel.org>
+Cc:     DRI Development <dri-devel@lists.freedesktop.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>, freedreno@lists.freedesktop.org,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        devicetree@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Thu, Mar 25, 2021 at 5:09 PM Rob Herring <robh@kernel.org> wrote:
+On Mon, Mar 29, 2021 at 7:47 AM Will Deacon <will@kernel.org> wrote:
 >
-> On Tue, Mar 16, 2021 at 02:08:19PM -0700, Douglas Anderson wrote:
-> > The sc7180-trogdor-pompom board might be attached to any number of a
-> > pile of eDP panels. At the moment I'm told that the list might include:
-> > - KD KD116N21-30NV-A010
-> > - KD KD116N09-30NH-A016
-> > - Starry 2081116HHD028001-51D
-> > - Sharp LQ116M1JW10
-> >
-> > It should be noted that while the EDID programmed in the first 3
-> > panels indicates that they should run with exactly the same timing (to
-> > keep things simple), the 4th panel not only needs different timing but
-> > has a different resolution.
-> >
-> > As is true in general with eDP panels, we can figure out which panel
-> > we have and all the info needed to drive its pixel clock by reading
-> > the EDID. However, we can do this only after we've powered the panel
-> > on. Powering on the panels requires following the timing diagram in
-> > each panel's datasheet which specifies delays between certain
-> > actions. This means that, while we can be quite dynamic about handling
-> > things we can't just totally skip out on describing the panel like we
-> > could do if it was connected to an external-facing DP port.
+> On Fri, Mar 26, 2021 at 04:13:02PM -0700, Eric Anholt wrote:
+> > db820c wants to use the qcom smmu path to get HUPCF set (which keeps
+> > the GPU from wedging and then sometimes wedging the kernel after a
+> > page fault), but it doesn't have separate pagetables support yet in
+> > drm/msm so we can't go all the way to the TTBR1 path.
 >
-> Is this a 'standard' eDP connector? AFAICT, there does seem to be
-> such a thing.
+> What do you mean by "doesn't have separate pagetables support yet"? The
+> compatible string doesn't feel like the right way to determine this.
 
-To answer this one: there's not any "standard" physical plug as far as
-I can tell. There's a connector on the board side for the LCD that has
-a whole hodgepodge of signals on it. Maybe USB for a camera. Some
-power signals. Maybe a PWM for a backlight. Maybe some DMIC signals.
-eDP signals which might be anywhere from 1 to 4 lanes. HPD (which is
-really a "panel ready" signal for eDP). The size / style of connector
-and the exact set of signals (and their ordering) is board specific.
-You then get a board-specific cable that splits things out. Some might
-go to a camera/MIC sub board. Some go to the panel and hook onto a
-panel-specific connector which has pin count and orderings defined by
-that panel. :-P
-
-
-> I've said in the past I'd be okay with a edp-connector
-> node. If that needs just the "HPD absent delay" property, I think that
-> would be okay. It's just a never ending stream of new properties with
-> each new panel that I don't want to see.
-
-Thinking about this we'd need at least one other property right now
-which is an enable delay. Specifically at least one panel I've
-supported recently lied about HPD for a short period after bootup.
-Specifically see commit 667d73d72f31 ("drm: panel: simple: Delay HPD
-checking on boe_nv133fhm_n61 for 15 ms"). ...and, of course, the
-existing power supply / enable signals that "simple-panel" already
-has.
-
-Also: if we weren't going to add the other delay properties in the
-device tree, we'd have to add the code right away that used the EDID
-to set other delays. That wouldn't be the end of the world, but it
-would be code to write.
-
-
-One last thought to add: I've looked at ~10 panels specs recently.
-Though they are all a little different from each other, I will say
-that almost every one of them seems to have the exact same timing
-diagram in it just with different numbers filled in. To me that backs
-up the idea that you can/should do the power sequence with a fairly
-standard (parameterized) driver. I can't link the datasheets I have
-but searching for "edp panel datasheet" finds me this random
-datasheet:
-
-https://www.data-modul.com/sites/default/files/products/NV156QUM-N72_specification_12039472.pdf
-
-See "8.0 POWER SEQUENCE" in that document. All the panels have a
-nearly identical diagram with different numbers filled in. You can
-kinda tell it was copied from some other panel since some numbers
-(like T4) aren't even defined.
-
--Doug
+In my past experience with DT, software looking at the (existing)
+board-specific compatibles has been a typical mechanism used to
+resolve something like this "ok, but you need to actually get down to
+what board is involved here to figure out how to play along with the
+rest of Linux that later attaches to other DT nodes".  Do you have a
+preferred mechanism here?
