@@ -2,124 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CD2234C22E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Mar 2021 05:20:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5881034C3D5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Mar 2021 08:33:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230266AbhC2DUG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 28 Mar 2021 23:20:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40090 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230243AbhC2DTs (ORCPT
+        id S229711AbhC2GdK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Mar 2021 02:33:10 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:44349 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229910AbhC2GdE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 28 Mar 2021 23:19:48 -0400
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AD50C061574
-        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Mar 2021 20:19:48 -0700 (PDT)
-Received: by mail-pj1-x1034.google.com with SMTP id q6-20020a17090a4306b02900c42a012202so5247833pjg.5
-        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Mar 2021 20:19:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=DXkHOtJLfYCmuTgoj7INRJY5SBEUmZfBnHFuMbQq6r0=;
-        b=TVaU8xUOhbEad8ZqUhu2j8Dob9O4/2trviw778QSwETfSeMqR1PDvnaGPkBCul3ozC
-         3i0ISY2uaGSGi4BmtD2NYfCrS5N3CqwR5OyhXX6BAO+9nGGkue9beO7DHexeAZeN9fId
-         q0FHVjS9yjjkep7YXjLWbYnTtPz6GjOT8tXt4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=DXkHOtJLfYCmuTgoj7INRJY5SBEUmZfBnHFuMbQq6r0=;
-        b=tnwQdULnKkbeFY4QNKfagwxt6qlLCBKM8uGnSKzx/7e7AkIlSitr5Zm+xLp9yz6i9H
-         hGk84pIP3eSAtK0gQJwwF7tPqI4wyH3nRUNzBqvi0KjWy1AKaa83QPkh9/cTOYHPA9vJ
-         Go3te2ckbokk2wV/doOUiEG05cB50RrjZAVXnbCmh9/e7M0kjMS8+NOkN3qoP6lwt91x
-         +q5JHbZpg8PPfyiUYfZKVdyczAKMkedBAagDOLeA4bkq0kQCW2aaJRh9oIftm3rt6vDW
-         p880qJ37w1hjTNreFN++UT6bCjrF0qfKqMtJxr9JEDiLxLNsS4z7Kw0jXEC8aJU4uQhZ
-         3UAQ==
-X-Gm-Message-State: AOAM5322FIoh4Ek9lDg7xA+U6AVs/a+dzY9AQEIoJrYTe0gafA6HdpqV
-        v/FPfX/p6MWpn0vsLoN84kao+93okAQUEg==
-X-Google-Smtp-Source: ABdhPJzSCG5aGc1GGjy1Vw1GssiouxViSl4f91+YJBZvzRFOkGJE8TpR3YoEi4x71d6hnRDO3cotiQ==
-X-Received: by 2002:a17:902:8bcb:b029:e6:a4a1:9d7e with SMTP id r11-20020a1709028bcbb02900e6a4a19d7emr25983292plo.25.1616987987103;
-        Sun, 28 Mar 2021 20:19:47 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:201:d06e:3541:6cd6:ab0e])
-        by smtp.gmail.com with ESMTPSA id r10sm15192655pfq.216.2021.03.28.20.19.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Mar 2021 20:19:46 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <81ea21602c74d2b18e4b013dda3a3213@codeaurora.org>
-References: <1616673661-20038-1-git-send-email-mkrishn@codeaurora.org> <1616673661-20038-3-git-send-email-mkrishn@codeaurora.org> <161671311714.3012082.4777798674596112311@swboyd.mtv.corp.google.com> <81ea21602c74d2b18e4b013dda3a3213@codeaurora.org>
-Subject: Re: [PATCH v14 3/4] dt-bindings: msm: dsi: add yaml schemas for DSI PHY bindings
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, kalyan_t@codeaurora.org,
-        tanmay@codeaurora.org, abhinavk@codeaurora.org,
-        robdclark@gmail.com, bjorn.andersson@linaro.org,
-        vinod.koul@linaro.org, rnayak@codeaurora.org,
-        dianders@chromium.org, sibis@codeaurora.org, khsieh@codeaurora.org
-To:     mkrishn@codeaurora.org
-Date:   Sun, 28 Mar 2021 20:19:45 -0700
-Message-ID: <161698798504.3012082.2821776620747041419@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+        Mon, 29 Mar 2021 02:33:04 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1616999584; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=oiHaIhlTw6rdY/eG8o6o068eoRZ8/VbUZDj7L5CPEUU=; b=lx7VSBYOdAtvAdc8QL/CM2BhS3Cm1Mk+5fLQoFbIM6fyUfikQSUA/J1ydqutssYbxOBVMg/f
+ 3iH75fZTRYzsBVobGBu1kOq2Pt/GN/3z3WqwBsxk7lokE29zCs1OBPwUyiNl/Kz8I6izzsa/
+ /koXymX2oBdldXi/I4PdFzXAxLg=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 6061748d3f0cbfdaf2090d99 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 29 Mar 2021 06:32:45
+ GMT
+Sender: schowdhu=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id AB945C433C6; Mon, 29 Mar 2021 06:32:42 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-525.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: schowdhu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 51B6BC433CA;
+        Mon, 29 Mar 2021 06:32:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 51B6BC433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=schowdhu@codeaurora.org
+From:   Souradeep Chowdhury <schowdhu@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>, vkoul@kernel.org,
+        Souradeep Chowdhury <schowdhu@codeaurora.org>
+Subject: [PATCH V3 0/5] Add driver support for Data Capture and Compare Engine(DCC) for SM8150
+Date:   Mon, 29 Mar 2021 12:02:21 +0530
+Message-Id: <cover.1616651305.git.schowdhu@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting mkrishn@codeaurora.org (2021-03-26 03:36:30)
-> On 2021-03-26 04:28, Stephen Boyd wrote:
-> > Quoting Krishna Manikandan (2021-03-25 05:01:00)
-> >> diff --git=20
-> >> a/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml=20
-> >> b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
-> >> new file mode 100644
-> >> index 0000000..4a26bef
-> >> --- /dev/null
-> >> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
-> >> @@ -0,0 +1,68 @@
-> >> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-> >> +%YAML 1.2
-> >> +---
-> >> +$id: http://devicetree.org/schemas/display/msm/dsi-phy-10nm.yaml#
-> >> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> >> +
-> >> +title: Qualcomm Display DSI 10nm PHY
-> >> +
-> >> +maintainers:
-> >> +  - Krishna Manikandan <mkrishn@codeaurora.org>
-> >> +
-> >> +allOf:
-> >> +  - $ref: dsi-phy-common.yaml#
-> >> +
-> >> +properties:
-> >> +  compatible:
-> >> +    oneOf:
-[..]
-> >> and
-> >> +      connected to VDDA_MIPI_DSI_0_PLL_0P9 pin for sdm845 target
-> >> +
-> >> +required:
-> >> +  - compatible
-> >> +  - reg
-> >> +  - reg-names
-> >> +  - vdds-supply
-> >> +
-> >> +unevaluatedProperties: false
-> >=20
-> > additionalProperties: false instead? This comment applies to the other
-> > bindings in this patch.
->=20
-> Hi Stephen,
-> We are referencing dsi-phy-common.yaml in this file. Since the=20
-> properties of dsi-phy-common.yaml are applicable to this file also, I=20
-> added unevaluatedProperties: false. If we add additionalProperties:=20
-> false instead, then the properties of dsi-phy-common.yaml will not be=20
-> applicable here and this will throw an error if we add the properties=20
-> from dsi-phy-common.yaml in the example.
->=20
+DCC(Data Capture and Compare) is a DMA engine designed for debugging purposes.In case of a system
+crash or manual software triggers by the user the DCC hardware stores the value at the register
+addresses which can be used for debugging purposes.The DCC driver provides the user with sysfs
+interface to configure the register addresses.The options that the DCC hardware provides include
+reading from registers,writing to registers,first reading and then writing to registers and looping
+through the values of the same register.
 
-Does that matter? I was wondering about that and so I peeked at the
-qcom pinctrl binding and it seems to follow a similar design but doesn't
-have unevaluatedProperties: false. Instead it has additionalProperies:
-false. See qcom,sc8180x-pinctrl.yaml for an example. So did you try it
-or does something say you can't do this?
+In certain cases a register write needs to be executed for accessing the rest of the registers,
+also the user might want to record the changing values of a register with time for which he has the
+option to use the loop feature.
+
+The options mentioned above are exposed to the user by sysfs files once the driver is probed.The
+details and usage of this sysfs files are documented in Documentation/ABI/testing/sysfs-driver-dcc.
+
+As an example let us consider a couple of debug scenarios where DCC has been proved to be effective
+for debugging purposes:-
+
+i)TimeStamp Related Issue
+
+On SC7180, there was a coresight timestamp issue where it would occasionally be all 0 instead of proper
+timestamp values.
+
+Proper timestamp:
+Idx:3373; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x13004d8f5b7aa; CC=0x9e
+
+Zero timestamp:
+Idx:3387; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x0; CC=0xa2
+
+Now this is a non-fatal issue and doesn't need a system reset, but still needs
+to be rootcaused and fixed for those who do care about coresight etm traces.
+Since this is a timestamp issue, we would be looking for any timestamp related
+clocks and such.
+
+o we get all the clk register details from IP documentation and configure it
+via DCC config syfs node. Before that we set the current linked list.
+
+/* Set the current linked list */
+echo 3 > /sys/bus/platform/devices/10a2000.dcc/curr_list
+
+/* Program the linked list with the addresses */
+echo 0x10c004 > /sys/bus/platform/devices/10a2000.dcc/config
+echo 0x10c008 > /sys/bus/platform/devices/10a2000.dcc/config
+echo 0x10c00c > /sys/bus/platform/devices/10a2000.dcc/config
+echo 0x10c010 > /sys/bus/platform/devices/10a2000.dcc/config
+..... and so on for other timestamp related clk registers
+
+/* Other way of specifying is in "addr len" pair, in below case it
+specifies to capture 4 words starting 0x10C004 */
+
+echo 0x10C004 4 > /sys/bus/platform/devices/10a2000.dcc/config
+
+/* Enable DCC */
+echo 1 > /sys/bus/platform/devices/10a2000.dcc/enable
+
+/* Run the timestamp test for working case */
+
+/* Send SW trigger */
+echo 1 > /sys/bus/platform/devices/10a2000.dcc/trigger
+
+/* Read SRAM */
+cat /dev/dcc_sram > dcc_sram1.bin
+
+/* Run the timestamp test for non-working case */
+
+/* Send SW trigger */
+echo 1 > /sys/bus/platform/devices/10a2000.dcc/trigger
+
+/* Read SRAM */
+cat /dev/dcc_sram > dcc_sram2.bin
+
+Get the parser from [1] and checkout the latest branch.
+
+/* Parse the SRAM bin */
+python dcc_parser.py -s dcc_sram1.bin --v2 -o output/
+python dcc_parser.py -s dcc_sram2.bin --v2 -o output/
+
+Sample parsed output of dcc_sram1.bin:
+
+<hwioDump version="1">
+        <timestamp>03/14/21</timestamp>
+	        <generator>Linux DCC Parser</generator>
+		        <chip name="None" version="None">
+				<register address="0x0010c004" value="0x80000000" />
+				<register address="0x0010c008" value="0x00000008" />
+				<register address="0x0010c00c" value="0x80004220" />
+				<register address="0x0010c010" value="0x80000000" />
+			</chip>
+	<next_ll_offset>next_ll_offset : 0x1c </next_ll_offset>
+</hwioDump>
+
+ii)NOC register errors
+
+A particular class of registers called NOC which are functional registers was reporting
+errors while logging the values.To trace these errors the DCC has been used effectively.
+The steps followed were similar to the ones mentioned above.
+In addition to NOC registers a few other dependent registers were configured in DCC to
+monitor it's values during a crash. A look at the dependent register values revealed that
+the crash was happening due to a secured access to one of these dependent registers.
+All these debugging activity and finding the root cause was achieved using DCC.
+
+DCC parser is available at the following open source location
+
+https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/tools/tree/dcc_parser
+
+Souradeep Chowdhury (5):
+  dt-bindings: Added the yaml bindings for DCC
+  soc: qcom: dcc:Add driver support for Data Capture and Compare
+    unit(DCC)
+  DCC: Added the sysfs entries for DCC(Data Capture and Compare) driver
+  MAINTAINERS:Add the entry for DCC(Data Capture and Compare) driver
+    support
+  arm64: dts: qcom: sm8150: Add Data Capture and Compare(DCC) support
+    node
+
+ Documentation/ABI/testing/sysfs-driver-dcc         |  114 ++
+ .../devicetree/bindings/arm/msm/qcom,dcc.yaml      |   49 +
+ MAINTAINERS                                        |    8 +
+ arch/arm64/boot/dts/qcom/sm8150.dtsi               |    7 +
+ drivers/soc/qcom/Kconfig                           |    8 +
+ drivers/soc/qcom/Makefile                          |    1 +
+ drivers/soc/qcom/dcc.c                             | 1549 ++++++++++++++++++++
+ 7 files changed, 1736 insertions(+)
+ create mode 100644 Documentation/ABI/testing/sysfs-driver-dcc
+ create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,dcc.yaml
+ create mode 100644 drivers/soc/qcom/dcc.c
+
+--
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
