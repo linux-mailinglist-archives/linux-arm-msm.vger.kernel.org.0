@@ -2,76 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4110B34C0B1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Mar 2021 02:51:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1CD2234C22E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Mar 2021 05:20:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231653AbhC2AvR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 28 Mar 2021 20:51:17 -0400
-Received: from mga03.intel.com ([134.134.136.65]:4032 "EHLO mga03.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231643AbhC2AvE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 28 Mar 2021 20:51:04 -0400
-IronPort-SDR: 2DHVheUurMvLjwBU8OHPE6coY4UsMT/KTymeQTIZojbJQzUPevBEY5IYtpN0SG1rbswS/ZflJD
- RBRURisp5+Jw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9937"; a="191483948"
-X-IronPort-AV: E=Sophos;i="5.81,285,1610438400"; 
-   d="scan'208";a="191483948"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Mar 2021 17:51:02 -0700
-IronPort-SDR: 40zU5ISxmkGYAJuyQdJsEfIVD3hYBfGegW7OUK5gd9dlmpnibhAoz9jbRNN8qqvXiD1PYxBKOM
- 53qDfXEvBYow==
-X-IronPort-AV: E=Sophos;i="5.81,285,1610438400"; 
-   d="scan'208";a="410824156"
-Received: from shao2-debian.sh.intel.com (HELO localhost) ([10.239.13.11])
-  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Mar 2021 17:50:59 -0700
-Date:   Mon, 29 Mar 2021 08:50:09 +0800
-From:   kernel test robot <rong.a.chen@intel.com>
-To:     Bartosz Dudziak <bartosz.dudziak@snejp.pl>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-clk@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Cc:     kbuild-all@lists.01.org, Bartosz Dudziak <bartosz.dudziak@snejp.pl>
-Subject: Re: [PATCH 5/5] arm: dts: qcom: Add initial DTS file for Samsung
- Galaxy S III Neo phone
-Message-ID: <20210329005009.GI4176174@shao2-debian>
+        id S230266AbhC2DUG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 28 Mar 2021 23:20:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40090 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230243AbhC2DTs (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 28 Mar 2021 23:19:48 -0400
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AD50C061574
+        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Mar 2021 20:19:48 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id q6-20020a17090a4306b02900c42a012202so5247833pjg.5
+        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Mar 2021 20:19:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=DXkHOtJLfYCmuTgoj7INRJY5SBEUmZfBnHFuMbQq6r0=;
+        b=TVaU8xUOhbEad8ZqUhu2j8Dob9O4/2trviw778QSwETfSeMqR1PDvnaGPkBCul3ozC
+         3i0ISY2uaGSGi4BmtD2NYfCrS5N3CqwR5OyhXX6BAO+9nGGkue9beO7DHexeAZeN9fId
+         q0FHVjS9yjjkep7YXjLWbYnTtPz6GjOT8tXt4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=DXkHOtJLfYCmuTgoj7INRJY5SBEUmZfBnHFuMbQq6r0=;
+        b=tnwQdULnKkbeFY4QNKfagwxt6qlLCBKM8uGnSKzx/7e7AkIlSitr5Zm+xLp9yz6i9H
+         hGk84pIP3eSAtK0gQJwwF7tPqI4wyH3nRUNzBqvi0KjWy1AKaa83QPkh9/cTOYHPA9vJ
+         Go3te2ckbokk2wV/doOUiEG05cB50RrjZAVXnbCmh9/e7M0kjMS8+NOkN3qoP6lwt91x
+         +q5JHbZpg8PPfyiUYfZKVdyczAKMkedBAagDOLeA4bkq0kQCW2aaJRh9oIftm3rt6vDW
+         p880qJ37w1hjTNreFN++UT6bCjrF0qfKqMtJxr9JEDiLxLNsS4z7Kw0jXEC8aJU4uQhZ
+         3UAQ==
+X-Gm-Message-State: AOAM5322FIoh4Ek9lDg7xA+U6AVs/a+dzY9AQEIoJrYTe0gafA6HdpqV
+        v/FPfX/p6MWpn0vsLoN84kao+93okAQUEg==
+X-Google-Smtp-Source: ABdhPJzSCG5aGc1GGjy1Vw1GssiouxViSl4f91+YJBZvzRFOkGJE8TpR3YoEi4x71d6hnRDO3cotiQ==
+X-Received: by 2002:a17:902:8bcb:b029:e6:a4a1:9d7e with SMTP id r11-20020a1709028bcbb02900e6a4a19d7emr25983292plo.25.1616987987103;
+        Sun, 28 Mar 2021 20:19:47 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:201:d06e:3541:6cd6:ab0e])
+        by smtp.gmail.com with ESMTPSA id r10sm15192655pfq.216.2021.03.28.20.19.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 28 Mar 2021 20:19:46 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20210326145816.9758-6-bartosz.dudziak@snejp.pl>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <81ea21602c74d2b18e4b013dda3a3213@codeaurora.org>
+References: <1616673661-20038-1-git-send-email-mkrishn@codeaurora.org> <1616673661-20038-3-git-send-email-mkrishn@codeaurora.org> <161671311714.3012082.4777798674596112311@swboyd.mtv.corp.google.com> <81ea21602c74d2b18e4b013dda3a3213@codeaurora.org>
+Subject: Re: [PATCH v14 3/4] dt-bindings: msm: dsi: add yaml schemas for DSI PHY bindings
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, kalyan_t@codeaurora.org,
+        tanmay@codeaurora.org, abhinavk@codeaurora.org,
+        robdclark@gmail.com, bjorn.andersson@linaro.org,
+        vinod.koul@linaro.org, rnayak@codeaurora.org,
+        dianders@chromium.org, sibis@codeaurora.org, khsieh@codeaurora.org
+To:     mkrishn@codeaurora.org
+Date:   Sun, 28 Mar 2021 20:19:45 -0700
+Message-ID: <161698798504.3012082.2821776620747041419@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bartosz,
+Quoting mkrishn@codeaurora.org (2021-03-26 03:36:30)
+> On 2021-03-26 04:28, Stephen Boyd wrote:
+> > Quoting Krishna Manikandan (2021-03-25 05:01:00)
+> >> diff --git=20
+> >> a/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml=20
+> >> b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+> >> new file mode 100644
+> >> index 0000000..4a26bef
+> >> --- /dev/null
+> >> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+> >> @@ -0,0 +1,68 @@
+> >> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
+> >> +%YAML 1.2
+> >> +---
+> >> +$id: http://devicetree.org/schemas/display/msm/dsi-phy-10nm.yaml#
+> >> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> >> +
+> >> +title: Qualcomm Display DSI 10nm PHY
+> >> +
+> >> +maintainers:
+> >> +  - Krishna Manikandan <mkrishn@codeaurora.org>
+> >> +
+> >> +allOf:
+> >> +  - $ref: dsi-phy-common.yaml#
+> >> +
+> >> +properties:
+> >> +  compatible:
+> >> +    oneOf:
+[..]
+> >> and
+> >> +      connected to VDDA_MIPI_DSI_0_PLL_0P9 pin for sdm845 target
+> >> +
+> >> +required:
+> >> +  - compatible
+> >> +  - reg
+> >> +  - reg-names
+> >> +  - vdds-supply
+> >> +
+> >> +unevaluatedProperties: false
+> >=20
+> > additionalProperties: false instead? This comment applies to the other
+> > bindings in this patch.
+>=20
+> Hi Stephen,
+> We are referencing dsi-phy-common.yaml in this file. Since the=20
+> properties of dsi-phy-common.yaml are applicable to this file also, I=20
+> added unevaluatedProperties: false. If we add additionalProperties:=20
+> false instead, then the properties of dsi-phy-common.yaml will not be=20
+> applicable here and this will throw an error if we add the properties=20
+> from dsi-phy-common.yaml in the example.
+>=20
 
-Thank you for the patch! Perhaps something to improve:
-
-[auto build test WARNING on clk/clk-next]
-[also build test WARNING on robh/for-next v5.12-rc4 next-20210326]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
-
-url:    https://github.com/0day-ci/linux/commits/Bartosz-Dudziak/Samsung-Galaxy-S-III-Neo-Initial-DTS/20210326-230134
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git clk-next
-:::::: branch date: 24 hours ago
-:::::: commit date: 24 hours ago
-compiler: arm-linux-gnueabi-gcc (GCC) 9.3.0
-reproduce: make ARCH=arm dtbs_check
-
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
-
-
-dtcheck warnings: (new ones prefixed by >>)
->> arch/arm/boot/dts/qcom-msm8226-samsung-s3ve3g.dt.yaml: /: memory: False schema does not allow {'device_type': ['memory'], 'reg': [[0, 0]]}
-   	From schema: /usr/local/lib/python3.9/dist-packages/dtschema/schemas/root-node.yaml
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+Does that matter? I was wondering about that and so I peeked at the
+qcom pinctrl binding and it seems to follow a similar design but doesn't
+have unevaluatedProperties: false. Instead it has additionalProperies:
+false. See qcom,sc8180x-pinctrl.yaml for an example. So did you try it
+or does something say you can't do this?
