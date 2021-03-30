@@ -2,93 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9573B34E8DD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 15:20:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 62AA434E92B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 15:33:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231853AbhC3NUM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Mar 2021 09:20:12 -0400
-Received: from foss.arm.com ([217.140.110.172]:33462 "EHLO foss.arm.com"
+        id S231803AbhC3NdT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Mar 2021 09:33:19 -0400
+Received: from mail.kernel.org ([198.145.29.99]:57404 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231622AbhC3NTp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Mar 2021 09:19:45 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5560C31B;
-        Tue, 30 Mar 2021 06:19:45 -0700 (PDT)
-Received: from [10.57.27.121] (unknown [10.57.27.121])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id F11D03F694;
-        Tue, 30 Mar 2021 06:19:42 -0700 (PDT)
-Subject: Re: [PATCH 16/18] iommu: remove DOMAIN_ATTR_DMA_USE_FLUSH_QUEUE
-To:     Will Deacon <will@kernel.org>, Christoph Hellwig <hch@lst.de>
-Cc:     Joerg Roedel <joro@8bytes.org>, Li Yang <leoyang.li@nxp.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        linuxppc-dev@lists.ozlabs.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
-        virtualization@lists.linux-foundation.org, netdev@vger.kernel.org
-References: <20210316153825.135976-1-hch@lst.de>
- <20210316153825.135976-17-hch@lst.de>
- <20210330131149.GP5908@willie-the-truck>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <a6952aa7-4d7e-54f0-339e-e15f88596dcc@arm.com>
-Date:   Tue, 30 Mar 2021 14:19:38 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
+        id S230369AbhC3Nc4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 30 Mar 2021 09:32:56 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 88CD9619AA;
+        Tue, 30 Mar 2021 13:32:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1617111176;
+        bh=OSmVIm9h53ibzErSO90gLnQz6mMJrRbgf57AdcadAxQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=GoaQ6tu2QYKqlgiGL2RXYmpqYlqnKbJi9x45swO8sknTBEBDp8abg50enLGve9bA8
+         WAX5kV0i/xHx/2gYEv7MNks0TD5Sg/EYw5ZVIU0F4GmJH5lXs76sF33Na3bKh3sFwU
+         FGA+9pVVFd+S+tj95pQ68a27t6vV2bwQhlBlNmlg=
+Date:   Tue, 30 Mar 2021 15:32:53 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Sandeep Maheswaram <sanm@codeaurora.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>
+Subject: Re: [PATCH v1] usb: dwc3: core: Add shutdown callback for dwc3
+Message-ID: <YGMohXctT9FqiG4N@kroah.com>
+References: <1616527652-7937-1-git-send-email-sanm@codeaurora.org>
+ <YF3jfshT3OSolcws@kroah.com>
+ <e1afc071-57a6-5d7f-b467-92b618419b76@codeaurora.org>
+ <YGLqXI8HOaOrMq1B@kroah.com>
+ <d2348b758fa57acf53885b67f066e0a1@codeaurora.org>
+ <YGMIoM3xIZzRvU3i@kroah.com>
+ <c984ff015109ed606d2933125d385015@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20210330131149.GP5908@willie-the-truck>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c984ff015109ed606d2933125d385015@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-03-30 14:11, Will Deacon wrote:
-> On Tue, Mar 16, 2021 at 04:38:22PM +0100, Christoph Hellwig wrote:
->> From: Robin Murphy <robin.murphy@arm.com>
->>
->> Instead make the global iommu_dma_strict paramete in iommu.c canonical by
->> exporting helpers to get and set it and use those directly in the drivers.
->>
->> This make sure that the iommu.strict parameter also works for the AMD and
->> Intel IOMMU drivers on x86.  As those default to lazy flushing a new
->> IOMMU_CMD_LINE_STRICT is used to turn the value into a tristate to
->> represent the default if not overriden by an explicit parameter.
->>
->> Signed-off-by: Robin Murphy <robin.murphy@arm.com>.
->> [ported on top of the other iommu_attr changes and added a few small
->>   missing bits]
->> Signed-off-by: Christoph Hellwig <hch@lst.de>
->> ---
->>   drivers/iommu/amd/iommu.c                   | 23 +-------
->>   drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 50 +---------------
->>   drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h |  1 -
->>   drivers/iommu/arm/arm-smmu/arm-smmu.c       | 27 +--------
->>   drivers/iommu/dma-iommu.c                   |  9 +--
->>   drivers/iommu/intel/iommu.c                 | 64 ++++-----------------
->>   drivers/iommu/iommu.c                       | 27 ++++++---
->>   include/linux/iommu.h                       |  4 +-
->>   8 files changed, 40 insertions(+), 165 deletions(-)
+On Tue, Mar 30, 2021 at 06:18:43PM +0530, Sai Prakash Ranjan wrote:
+> On 2021-03-30 16:46, Greg Kroah-Hartman wrote:
+> > On Tue, Mar 30, 2021 at 03:25:58PM +0530, Sai Prakash Ranjan wrote:
+> > > On 2021-03-30 14:37, Greg Kroah-Hartman wrote:
+> > > > On Tue, Mar 30, 2021 at 02:12:04PM +0530, Sandeep Maheswaram wrote:
+> > > > >
+> > > > > On 3/26/2021 7:07 PM, Greg Kroah-Hartman wrote:
+> > > > > > On Wed, Mar 24, 2021 at 12:57:32AM +0530, Sandeep Maheswaram wrote:
+> > > > > > > This patch adds a shutdown callback to USB DWC core driver to ensure that
+> > > > > > > it is properly shutdown in reboot/shutdown path. This is required
+> > > > > > > where SMMU address translation is enabled like on SC7180
+> > > > > > > SoC and few others. If the hardware is still accessing memory after
+> > > > > > > SMMU translation is disabled as part of SMMU shutdown callback in
+> > > > > > > system reboot or shutdown path, then IOVAs(I/O virtual address)
+> > > > > > > which it was using will go on the bus as the physical addresses which
+> > > > > > > might result in unknown crashes (NoC/interconnect errors).
+> > > > > > >
+> > > > > > > Previously this was added in dwc3 qcom glue driver.
+> > > > > > > https://patchwork.kernel.org/project/linux-arm-msm/list/?series=382449
+> > > > > > > But observed kernel panic as glue driver shutdown getting called after
+> > > > > > > iommu shutdown. As we are adding iommu nodes in dwc core node
+> > > > > > > in device tree adding shutdown callback in core driver seems correct.
+> > > > > > So shouldn't you also remove this from the qcom glue driver at the same
+> > > > > > time?  Please submit both as a patch series.
+> > > > > >
+> > > > > > thanks,
+> > > > > >
+> > > > > > greg k-h
+> > > > >
+> > > > > Hi Greg,
+> > > > >
+> > > > > The qcom glue driver patch is not merged yet. I have just mentioned
+> > > > > for it for reference.
+> > > >
+> > > > You know that we can not add callbacks for no in-kernel user, so what
+> > > > good is this patch for now?
+> > > >
+> > > 
+> > > What in-kernel user? Since when does shutdown callback need an
+> > > in-kernel
+> > > user? When you reboot or shutdown a system, it gets called. The reason
+> > > why the shutdown callback is needed is provided in the commit text.
+> > 
+> > As I can't see the patch here, I have no idea...
 > 
-> I really like this cleanup, but I can't help wonder if it's going in the
-> wrong direction. With SoCs often having multiple IOMMU instances and a
-> distinction between "trusted" and "untrusted" devices, then having the
-> flush-queue enabled on a per-IOMMU or per-domain basis doesn't sound
-> unreasonable to me, but this change makes it a global property.
-
-The intent here was just to streamline the existing behaviour of 
-stuffing a global property into a domain attribute then pulling it out 
-again in the illusion that it was in any way per-domain. We're still 
-checking dev_is_untrusted() before making an actual decision, and it's 
-not like we can't add more factors at that point if we want to.
-
-> For example, see the recent patch from Lu Baolu:
+> You are replying now to the same patch which adds this shutdown callback :)
+> Anyways the qcom dwc3 driver patch which is abandoned which is also
+> mentioned
+> in the commit text is here [1] and the new shutdown callback patch which we
+> are both replying to is in here [2]
 > 
-> https://lore.kernel.org/r/20210225061454.2864009-1-baolu.lu@linux.intel.com
+> [1] https://lore.kernel.org/lkml/1605162619-10064-1-git-send-email-sanm@codeaurora.org/
+> 
+> [2] https://lore.kernel.org/lkml/1616527652-7937-1-git-send-email-sanm@codeaurora.org/
 
-Erm, this patch is based on that one, it's right there in the context :/
+Thanks, so, what am I supposed to do here?  The patch is long gone from
+my queue...
 
-Thanks,
-Robin.
+greg k-h
