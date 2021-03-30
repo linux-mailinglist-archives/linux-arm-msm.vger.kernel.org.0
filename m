@@ -2,114 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0071F34DD93
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 03:32:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC1AD34DD99
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 03:35:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229483AbhC3BcE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Mar 2021 21:32:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46938 "EHLO
+        id S229763AbhC3Beq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Mar 2021 21:34:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229763AbhC3Bbu (ORCPT
+        with ESMTP id S229628AbhC3BeP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Mar 2021 21:31:50 -0400
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E40FC061764
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Mar 2021 18:31:50 -0700 (PDT)
-Received: by mail-pj1-x1034.google.com with SMTP id a22-20020a17090aa516b02900c1215e9b33so8596395pjq.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Mar 2021 18:31:50 -0700 (PDT)
+        Mon, 29 Mar 2021 21:34:15 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E69E9C061762
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Mar 2021 18:34:14 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id t18so6901835pjs.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Mar 2021 18:34:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=VqsB/KspzBLfleMt3X13JmN72hr7Ivn8/G3NW35scDU=;
-        b=oRBLwNnRiMTNEnj51Rq5J4ROOQVEMOXQc65rWkdsGb61Eb9XiBO4U7R1oLHxuk76VD
-         FyfJin7DBYDeLTSb9LU1SeGd6S74jUTts+u9bUreWZZ35CKoPhBAcb6P0SNGXH3k5YD/
-         bOK85QLLJDWXsqtcSwXKaBRpouNUpmItdFAHg=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8A8If7oybmQFoEyCFbbgw0aizc2xKMTrL9mIp4UPDLA=;
+        b=jitl4f2XQUctjdUPCCbZajr3dY4HcAUyftf12BZnk9gT+ExyOyrfn1aeoQJ97WZv0F
+         OziPeisSf7nfUL7Vir9BOCH2pJ0XxVwB1H8xsIXQFZDnO6OkQaoxXASHwwKGvO2wAjMm
+         FPgUiUBYn8zXhTWWhrZ1y2FlZIk7LUO6kXJ4vzAp+pxcg48qeGgblFHxoorxNK5OTqDa
+         Ar76TxInftkgSBm46CJTsBm13wEPwKxMK42wjPYLc84bsm3TsVTGaSD88tANdPWVNzT/
+         34zNyPZ5NkE8fqvKkZ/LalogOaGJB456iDWehYkIyhzq495DhRaEeJd5KxIRH928s9LT
+         Cyrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=VqsB/KspzBLfleMt3X13JmN72hr7Ivn8/G3NW35scDU=;
-        b=FOaMfOF0l8O5viaymkXzdQZ+eetNGOTwMdd7RT1rLqVl3O0K2pWIeU7sNSedOIbnz8
-         ifTDsj8kA7b2k0oQD+febM7gOEf6UCZtbTRvL2CklbEVX51p160yr5N4U1tVgT6JohQJ
-         DCfhJik6ipLBwzAlNDXsR4U2I7g7HaRRcBTHMQyKY2QDGzji49GEAiEQDZQ1T/LzC67O
-         M+7pjHJdmLKHmUmwM3CmoEjCc/vcEl3yClKboJrPU2I4WeYu0Tcrq6ii4kTkk5K3Rawk
-         H2/L/SfCGprFoTy5UAtoZhgPvr30MhMpLxNFouYcYtbxceFa35ypmxwwxAF9es55aZf8
-         fEVg==
-X-Gm-Message-State: AOAM531M1bOLaDvWrIm5rPpA7PX/FotgcvIHDUDJc8eDjpNNANYM2spB
-        mbm+3fUTbga1MuZUZpKtYWCUig==
-X-Google-Smtp-Source: ABdhPJzTWrDchk39egDoT3Ebv23CG0wZ+YVzjMmD32zht97vToqfNhx8RT3pByjL1TOX4a53kpISlA==
-X-Received: by 2002:a17:903:22c2:b029:e7:1f02:434c with SMTP id y2-20020a17090322c2b02900e71f02434cmr19483596plg.73.1617067909560;
-        Mon, 29 Mar 2021 18:31:49 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:201:4091:2b37:966b:1fca])
-        by smtp.gmail.com with ESMTPSA id k5sm18792164pfg.215.2021.03.29.18.31.48
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8A8If7oybmQFoEyCFbbgw0aizc2xKMTrL9mIp4UPDLA=;
+        b=CF43Ky3aBYj0gUnyx5YgQ55Seo5oGfemLr7rEHilFimgStVu83MX2dM4TEokpuBijT
+         iX0aHZmYFjXajKnT3rB/Vsmb6l4ts6d+wA1d8iCFkVaHGQCZxBr9FrKWdcaMv/XpBMtk
+         T9snHAIa9x+eY9np1gTKCqtC2WmRAUB2yzE+NemODQ9lWB8frqqyWfatCtqArc1IBFrH
+         RcI2sAvquoP0BkM44DyAG+snk1PBO8bdSUZAAqqGjEEgoQ0IHwuGGQges9lA+1/BmmT7
+         I1FC/odZylpVSLS4lQUeI/qEz9MP8qAkS/3CcwLu2JkykdanTLlN4Wv5KqcgKna+03oB
+         KAug==
+X-Gm-Message-State: AOAM530sOm6/PJiNqZxJTpbNlx6Vj2s2yHrLbfDzsbPHTnr7XeFGrFCh
+        1O8dYIVkQZ9fntqzVEGQmZUW0w==
+X-Google-Smtp-Source: ABdhPJzYWn5sEsuZHqydzJcwoR+ebQ0R+EoGQlVFKwWjvoaLyMtIay73TxhsG1977KSK5uO/wF6Mig==
+X-Received: by 2002:a17:90a:a603:: with SMTP id c3mr1821365pjq.107.1617068054533;
+        Mon, 29 Mar 2021 18:34:14 -0700 (PDT)
+Received: from localhost.localdomain ([2601:1c2:680:1319:692:26ff:feda:3a81])
+        by smtp.gmail.com with ESMTPSA id k27sm16752258pfg.95.2021.03.29.18.34.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Mar 2021 18:31:49 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        Mon, 29 Mar 2021 18:34:13 -0700 (PDT)
+From:   John Stultz <john.stultz@linaro.org>
+To:     lkml <linux-kernel@vger.kernel.org>
+Cc:     John Stultz <john.stultz@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Eric Anholt <eric@anholt.net>,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        YongQin Liu <yongqin.liu@linaro.org>
+Subject: [PATCH] drm/msm: Fix removal of valid error case when checking speed_bin
+Date:   Tue, 30 Mar 2021 01:34:08 +0000
+Message-Id: <20210330013408.2532048-1-john.stultz@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20210327110305.3289784-1-dmitry.baryshkov@linaro.org>
-References: <20210327110305.3289784-1-dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH v3 00/25] drm/msm/dsi: refactor MSM DSI PHY/PLL drivers
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-clk@vger.kernel.org
-To:     Abhinav Kumar <abhinavk@codeaurora.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Date:   Mon, 29 Mar 2021 18:31:47 -0700
-Message-ID: <161706790759.3012082.10513147344813330034@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2021-03-27 04:02:40)
-> Restructure MSM DSI PHY drivers. What started as an attempt to grok the
-> overcomplicated PHY drivers, has lead up to the idea of merging PHY and
-> PLL code, reducing abstractions, code duplication, dropping dead code,
-> etc.
->=20
-> The patches were mainly tested on RB5 (sm8250, 7nm) and DB410c (apq8016,
-> 28nm-lp) and lightly tested on RB3 (sdm845, 10nm).
->=20
-> The patch 'clk: fixed: add devm helper for clk_hw_register_fixed_factor()'
-> is already a part of mainline as of 5.12-rc1, but is included here for
-> completeness to fix compilation issues (as msm-next is based on 5.11-rc5).
->=20
-> Changes since v2:
->  - Drop the 'stop setting clock parents manually' patch for now together
->    with the dtsi changes. Unlike the rest of patchset it provides
->    functional changes and might require additional discussion.
->    The patchset will be resubmitted later.
->=20
-> Changes since v1:
->  - Rebase on top of msm/msm-next
->  - Reorder patches to follow logical sequence
->  - Add sc7180 clocks assignment
->  - Drop sm8250 clocks assignment, as respective file is not updated in
->    msm/msm-next
->=20
-> Changes since RFC:
->  - Reorder patches to move global clock patches in the beginning and
->    dtsi patches where they are required.
->  - remove msm_dsi_phy_set_src_pll() and guess src_pll_id using PHY usecas=
-e.
->=20
-> The following changes since commit 627dc55c273dab308303a5217bd3e767d7083d=
-db:
->=20
->   drm/msm/disp/dpu1: icc path needs to be set before dpu runtime resume (=
-2021-03-22 18:52:34 -0700)
->=20
-> are available in the Git repository at:
->=20
->   https://git.linaro.org/people/dmitry.baryshkov/kernel.git dsi-phy-3
+Commit 7bf168c8fe8c  ("drm/msm: Fix speed-bin support not to
+access outside valid memory"), reworked the nvmem reading of
+"speed_bin", but in doing so dropped handling of the -ENOENT
+case which was previously documented as "fine".
 
-I tested this on sc7180 lazor and the display comes up
+That change resulted in the db845c board display to fail to
+start, with the following error:
 
-Tested-by: Stephen Boyd <swboyd@chromium.org>
+adreno 5000000.gpu: [drm:a6xx_gpu_init] *ERROR* failed to read speed-bin (-2). Some OPPs may not be supported by hardware
+
+Thus, this patch simply re-adds the ENOENT handling so the lack
+of the speed_bin entry isn't fatal for display, and gets things
+working on db845c.
+
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Sean Paul <sean@poorly.run>
+Cc: Jordan Crouse <jcrouse@codeaurora.org>
+Cc: Eric Anholt <eric@anholt.net>
+Cc: Douglas Anderson <dianders@chromium.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: freedreno@lists.freedesktop.org
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: YongQin Liu <yongqin.liu@linaro.org>
+Reported-by: YongQin Liu <yongqin.liu@linaro.org>
+Fixes: 7bf168c8fe8c  ("drm/msm: Fix speed-bin support not to access outside valid memory")
+Signed-off-by: John Stultz <john.stultz@linaro.org>
+---
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 690409ca8a186..cb2df8736ca85 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1406,7 +1406,13 @@ static int a6xx_set_supported_hw(struct device *dev, struct a6xx_gpu *a6xx_gpu,
+ 	int ret;
+ 
+ 	ret = nvmem_cell_read_u16(dev, "speed_bin", &speedbin);
+-	if (ret) {
++	/*
++	 * -ENOENT means that the platform doesn't support speedbin which is
++	 * fine
++	 */
++	if (ret == -ENOENT) {
++		return 0;
++	} else if (ret) {
+ 		DRM_DEV_ERROR(dev,
+ 			      "failed to read speed-bin (%d). Some OPPs may not be supported by hardware",
+ 			      ret);
+-- 
+2.25.1
+
