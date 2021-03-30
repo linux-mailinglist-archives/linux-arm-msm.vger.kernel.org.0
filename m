@@ -2,327 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0060E34F19A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 21:30:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE46834F1BA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 21:43:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233142AbhC3TaJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Mar 2021 15:30:09 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:58871 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233128AbhC3T3k (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Mar 2021 15:29:40 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1617132580; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=a95vjplYANEQc1OBiqfteOvGXbi8z1BBsoYoWjdz7lo=;
- b=xKVnxainWoZ3vextRR6UfjeW8f8A5veGRjR/kE34HNMOIiMusi6K4IECWbCk+GV42yWAXoEs
- K6ZMQNXm1JRKgJ6CoeNaju+SApuWwbrB2MgBFgCDYz1mvMkUfDvYaTkhWhQiADEaSqr6u1hj
- qNLk0qs3xKee8rFEg98QRJ41QeY=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 60637c2387ce1fbb56ecaace (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 30 Mar 2021 19:29:39
- GMT
-Sender: abhinavk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D3D26C43465; Tue, 30 Mar 2021 19:29:38 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 65737C433CA;
-        Tue, 30 Mar 2021 19:29:36 +0000 (UTC)
+        id S233159AbhC3Tma (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Mar 2021 15:42:30 -0400
+Received: from mail-ot1-f48.google.com ([209.85.210.48]:38485 "EHLO
+        mail-ot1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233113AbhC3TmY (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 30 Mar 2021 15:42:24 -0400
+Received: by mail-ot1-f48.google.com with SMTP id w21-20020a9d63950000b02901ce7b8c45b4so16685481otk.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 12:42:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=BijUzWJ/Srebt3CiLNB17AGU4V6AniCiS8DnMoS0K0M=;
+        b=CRCLTSY9TepTSnCdgHhedCcrEI/kDqT3IX7RheTtMCS8mpvaPAyUCOXaJdII4QzpSy
+         sjyQbtCxyBdXZHucVjELdHVuCvuF/fqLAOcvYDVckRicKvwXj1lLu9fXpCzN3IlqTLDv
+         hnotV98WJjlVnh84ywATr4Q6xUDaFiMa0Rl5Zr7yRcEAd7/a3nLzf1Pk/3ueF3Ms2HYx
+         7WYjlTmBGR/2fIwPwTvbgklEe4WywwTVBTLvJC8lLqlFmJPT/exe/s9JTDadqZrOp04a
+         gbNNDDxtiWTS9kkRES8LjiaQUqTZGU/qZaNiK/u0Qcw3Lrc5BOzIWvS9j2AB+aB9Blsm
+         +UwA==
+X-Gm-Message-State: AOAM533yh7PDVYlpsEpW9MOT9oLvHYR03cSvx7+nojEK5G0BDcBf8Akt
+        pghGYh18Q5yOgyn66c2FOA==
+X-Google-Smtp-Source: ABdhPJxM7U40R/6Jiowr2Hkx5tvmKFK8MPEWS8LvxCbCsSqtrwQdgexjRR18TXBEbWm3MycI1JeEPA==
+X-Received: by 2002:a05:6830:4121:: with SMTP id w33mr13159955ott.153.1617133343667;
+        Tue, 30 Mar 2021 12:42:23 -0700 (PDT)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id p64sm4274131oib.57.2021.03.30.12.42.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Mar 2021 12:42:22 -0700 (PDT)
+Received: (nullmailer pid 609864 invoked by uid 1000);
+        Tue, 30 Mar 2021 19:42:21 -0000
+Date:   Tue, 30 Mar 2021 14:42:21 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     mkrishn@codeaurora.org
+Cc:     Stephen Boyd <swboyd@chromium.org>, linux-arm-msm@vger.kernel.org,
+        kalyan_t@codeaurora.org, tanmay@codeaurora.org,
+        abhinavk@codeaurora.org, robdclark@gmail.com,
+        bjorn.andersson@linaro.org, vinod.koul@linaro.org,
+        rnayak@codeaurora.org, dianders@chromium.org, sibis@codeaurora.org,
+        khsieh@codeaurora.org
+Subject: Re: [PATCH v14 3/4] dt-bindings: msm: dsi: add yaml schemas for DSI
+ PHY bindings
+Message-ID: <20210330194221.GA588861@robh.at.kernel.org>
+References: <1616673661-20038-1-git-send-email-mkrishn@codeaurora.org>
+ <1616673661-20038-3-git-send-email-mkrishn@codeaurora.org>
+ <161671311714.3012082.4777798674596112311@swboyd.mtv.corp.google.com>
+ <81ea21602c74d2b18e4b013dda3a3213@codeaurora.org>
+ <161698798504.3012082.2821776620747041419@swboyd.mtv.corp.google.com>
+ <b41d57010d51356bdc4af1cd9d9c01ec@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 30 Mar 2021 12:29:36 -0700
-From:   abhinavk@codeaurora.org
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        freedreno@lists.freedesktop.org, linux-clk@vger.kernel.org
-Subject: Re: [Freedreno] [PATCH v3 25/25] drm/msm/dsi: stop passing src_pll_id
- to the phy_enable call
-In-Reply-To: <20210327110305.3289784-26-dmitry.baryshkov@linaro.org>
-References: <20210327110305.3289784-1-dmitry.baryshkov@linaro.org>
- <20210327110305.3289784-26-dmitry.baryshkov@linaro.org>
-Message-ID: <c5d51139810c5c6c941a71675ffc270b@codeaurora.org>
-X-Sender: abhinavk@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b41d57010d51356bdc4af1cd9d9c01ec@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-03-27 04:03, Dmitry Baryshkov wrote:
-> Phy driver already knows the source PLL id basing on the set usecase 
-> and
-> the current PLL id. Stop passing it to the phy_enable call. As a
-> reminder, dsi manager will always use DSI 0 as a clock master in a 
-> slave
-> mode, so PLL 0 is always a clocksource for DSI 0 and it is always a
-> clocksource for DSI 1 too unless DSI 1 is used in the standalone mode.
+On Tue, Mar 30, 2021 at 02:52:29PM +0530, mkrishn@codeaurora.org wrote:
+> On 2021-03-29 08:49, Stephen Boyd wrote:
+> > Quoting mkrishn@codeaurora.org (2021-03-26 03:36:30)
+> > > On 2021-03-26 04:28, Stephen Boyd wrote:
+> > > > Quoting Krishna Manikandan (2021-03-25 05:01:00)
+> > > >> diff --git
+> > > >> a/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+> > > >> b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+> > > >> new file mode 100644
+> > > >> index 0000000..4a26bef
+> > > >> --- /dev/null
+> > > >> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+> > > >> @@ -0,0 +1,68 @@
+> > > >> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
+> > > >> +%YAML 1.2
+> > > >> +---
+> > > >> +$id: http://devicetree.org/schemas/display/msm/dsi-phy-10nm.yaml#
+> > > >> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > > >> +
+> > > >> +title: Qualcomm Display DSI 10nm PHY
+> > > >> +
+> > > >> +maintainers:
+> > > >> +  - Krishna Manikandan <mkrishn@codeaurora.org>
+> > > >> +
+> > > >> +allOf:
+> > > >> +  - $ref: dsi-phy-common.yaml#
+> > > >> +
+> > > >> +properties:
+> > > >> +  compatible:
+> > > >> +    oneOf:
+> > [..]
+> > > >> and
+> > > >> +      connected to VDDA_MIPI_DSI_0_PLL_0P9 pin for sdm845 target
+> > > >> +
+> > > >> +required:
+> > > >> +  - compatible
+> > > >> +  - reg
+> > > >> +  - reg-names
+> > > >> +  - vdds-supply
+> > > >> +
+> > > >> +unevaluatedProperties: false
+> > > >
+> > > > additionalProperties: false instead? This comment applies to the other
+> > > > bindings in this patch.
+> > > 
+> > > Hi Stephen,
+> > > We are referencing dsi-phy-common.yaml in this file. Since the
+> > > properties of dsi-phy-common.yaml are applicable to this file also, I
+> > > added unevaluatedProperties: false. If we add additionalProperties:
+> > > false instead, then the properties of dsi-phy-common.yaml will not be
+> > > applicable here and this will throw an error if we add the properties
+> > > from dsi-phy-common.yaml in the example.
+> > > 
+> > 
+> > Does that matter? I was wondering about that and so I peeked at the
+> > qcom pinctrl binding and it seems to follow a similar design but doesn't
+> > have unevaluatedProperties: false. Instead it has additionalProperies:
+> > false. See qcom,sc8180x-pinctrl.yaml for an example. So did you try it
+> > or does something say you can't do this?
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/gpu/drm/msm/dsi/dsi.h                   |  2 +-
->  drivers/gpu/drm/msm/dsi/dsi_manager.c           | 11 +++++------
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy.c           |  4 ++--
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy.h           |  2 +-
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c      |  2 +-
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c      |  4 ++--
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c      |  4 ++--
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c      |  4 ++--
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c |  2 +-
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c       |  2 +-
->  10 files changed, 18 insertions(+), 19 deletions(-)
+> Hi Stephen,
+> I had tried the same thing in one of my initial patches and I got a comment
+> from Rob that we have to use unevaluatedProperties when we are referring
+> another file(https://patchwork.kernel.org/project/linux-arm-msm/patch/1589868421-30062-1-git-send-email-mkrishn@codeaurora.org/)
+
+Maybe I had a wrong assumption that you needed the child nodes too?
+
+> In latest dt-schema tool, we will get error if we try to change it to
+> additionalProperties: false.
+> For example, in this patch "#clock-cells' and '#phy-cells' are mentioned in
+> dsi-phy-common.yaml and I am referring this file in dsi-phy-10nm.yaml. If I
+> add
+> additionalProperties: false instead of unevaluatedProperties: false, I will
+> get the error mentioned below.
 > 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi.h 
-> b/drivers/gpu/drm/msm/dsi/dsi.h
-> index 53feea9d30c0..c8ef63bdc042 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi.h
-> +++ b/drivers/gpu/drm/msm/dsi/dsi.h
-> @@ -162,7 +162,7 @@ struct msm_dsi_phy_clk_request {
+> I checked qcom,sc8180x-pinctrl.yaml that you had mentioned in the comment
+> and this file is compiling without any issues even though it is using
+> additionalProperties: false. But I see that the properties mentioned in the
+> reference file (in this case, qcom,tlmm-common.yaml) are again declared in
+> the main file qcom,sc8180x-pinctrl.yaml even though these are mentioned as
+> required properties in the common yaml file. If I remove these properties
+> from qcom,sc8180x-pinctrl.yaml, I can see the same error that I am getting
+> for my file also if additionalProperties are used. If I follow the same
+> approach , ie define the properties again in dsi-phy-10nm.yaml and add
+> additionalProperties: false, I dont see any errors during check (working
+> change mentioned below). Should I make this change for all the files?
 > 
->  void msm_dsi_phy_driver_register(void);
->  void msm_dsi_phy_driver_unregister(void);
-> -int msm_dsi_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
-> +int msm_dsi_phy_enable(struct msm_dsi_phy *phy,
->  			struct msm_dsi_phy_clk_request *clk_req);
->  void msm_dsi_phy_disable(struct msm_dsi_phy *phy);
->  void msm_dsi_phy_get_shared_timings(struct msm_dsi_phy *phy,
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> index 0c47c5fb1ab3..76735cde57c6 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> @@ -114,7 +114,7 @@ static int dsi_mgr_setup_components(int id)
->  	return ret;
->  }
+> Error logs:
+> mkrishn@mkrishn-linux:/local/mnt/workspace/linux-next-latest/linux-next$
+> make dt_binding_check DT_SCHEMA_FILES=Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+>   CHKDT   Documentation/devicetree/bindings/processed-schema-examples.json
+>   SCHEMA  Documentation/devicetree/bindings/processed-schema-examples.json
+>   DTEX
+> Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.example.dts
+>   DTC
+> Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.example.dt.yaml
+>   CHECK
+> Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.example.dt.yaml
+> /local/mnt/workspace/linux-next-latest/linux-next/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.example.dt.yaml:
+> dsi-phy@ae94400: '#clock-cells', '#phy-cells', 'clock-names', 'clocks' do
+> not match any of the regexes: 'pinctrl-[0-9]+'
+>         From schema: /local/mnt/workspace/linux-next-latest/linux-next/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
 > 
-> -static int enable_phy(struct msm_dsi *msm_dsi, int src_pll_id,
-> +static int enable_phy(struct msm_dsi *msm_dsi,
->  		      struct msm_dsi_phy_shared_timings *shared_timings)
->  {
->  	struct msm_dsi_phy_clk_request clk_req;
-> @@ -123,7 +123,7 @@ static int enable_phy(struct msm_dsi *msm_dsi, int
-> src_pll_id,
+> Working Change:
+> --- a/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+> @@ -30,6 +30,11 @@ properties:
+>        - const: dsi_phy_lane
+>        - const: dsi_pll
 > 
->  	msm_dsi_host_get_phy_clk_req(msm_dsi->host, &clk_req, is_dual_dsi);
+> +  '#clock-cells': true
+> +  '#phy-cells': true
+> +  clocks: true
+> +  clock-names: true
+> +
+>    vdds-supply:
+>      description: |
+>        Connected to DSI0_MIPI_DSI_PLL_VDDA0P9 pin for sc7180 target and
+> @@ -41,7 +46,7 @@ required:
+>    - reg-names
+>    - vdds-supply
 > 
-> -	ret = msm_dsi_phy_enable(msm_dsi->phy, src_pll_id, &clk_req);
-> +	ret = msm_dsi_phy_enable(msm_dsi->phy, &clk_req);
->  	msm_dsi_phy_get_shared_timings(msm_dsi->phy, shared_timings);
-> 
->  	return ret;
-> @@ -136,7 +136,6 @@ dsi_mgr_phy_enable(int id,
->  	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
->  	struct msm_dsi *mdsi = dsi_mgr_get_dsi(DSI_CLOCK_MASTER);
->  	struct msm_dsi *sdsi = dsi_mgr_get_dsi(DSI_CLOCK_SLAVE);
-> -	int src_pll_id = IS_DUAL_DSI() ? DSI_CLOCK_MASTER : id;
->  	int ret;
-> 
->  	/* In case of dual DSI, some registers in PHY1 have been programmed
-> @@ -149,11 +148,11 @@ dsi_mgr_phy_enable(int id,
->  			msm_dsi_host_reset_phy(mdsi->host);
->  			msm_dsi_host_reset_phy(sdsi->host);
-> 
-> -			ret = enable_phy(mdsi, src_pll_id,
-> +			ret = enable_phy(mdsi,
->  					 &shared_timings[DSI_CLOCK_MASTER]);
->  			if (ret)
->  				return ret;
-> -			ret = enable_phy(sdsi, src_pll_id,
-> +			ret = enable_phy(sdsi,
->  					 &shared_timings[DSI_CLOCK_SLAVE]);
->  			if (ret) {
->  				msm_dsi_phy_disable(mdsi->phy);
-> @@ -162,7 +161,7 @@ dsi_mgr_phy_enable(int id,
->  		}
->  	} else {
->  		msm_dsi_host_reset_phy(msm_dsi->host);
-> -		ret = enable_phy(msm_dsi, src_pll_id, &shared_timings[id]);
-> +		ret = enable_phy(msm_dsi, &shared_timings[id]);
->  		if (ret)
->  			return ret;
->  	}
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> index 56f5134e3933..2a421fd77f2f 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> @@ -753,7 +753,7 @@ void __exit msm_dsi_phy_driver_unregister(void)
->  	platform_driver_unregister(&dsi_phy_platform_driver);
->  }
-> 
-> -int msm_dsi_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
-> +int msm_dsi_phy_enable(struct msm_dsi_phy *phy,
->  			struct msm_dsi_phy_clk_request *clk_req)
->  {
->  	struct device *dev = &phy->pdev->dev;
-> @@ -776,7 +776,7 @@ int msm_dsi_phy_enable(struct msm_dsi_phy *phy,
-> int src_pll_id,
->  		goto reg_en_fail;
->  	}
-> 
-> -	ret = phy->cfg->ops.enable(phy, src_pll_id, clk_req);
-> +	ret = phy->cfg->ops.enable(phy, clk_req);
->  	if (ret) {
->  		DRM_DEV_ERROR(dev, "%s: phy enable failed, %d\n", __func__, ret);
->  		goto phy_en_fail;
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-> index 3b207cf9f6b4..74fffcae0f10 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-> @@ -19,7 +19,7 @@
-> 
->  struct msm_dsi_phy_ops {
->  	int (*pll_init)(struct msm_dsi_phy *phy);
-> -	int (*enable)(struct msm_dsi_phy *phy, int src_pll_id,
-> +	int (*enable)(struct msm_dsi_phy *phy,
->  			struct msm_dsi_phy_clk_request *clk_req);
->  	void (*disable)(struct msm_dsi_phy *phy);
->  	void (*save_state)(struct msm_dsi_phy *phy);
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-> index 04535ccd11ef..bea68154ef87 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-> @@ -786,7 +786,7 @@ static void dsi_phy_hw_v3_0_lane_settings(struct
-> msm_dsi_phy *phy)
->  	}
->  }
-> 
-> -static int dsi_10nm_phy_enable(struct msm_dsi_phy *phy, int 
-> src_pll_id,
-> +static int dsi_10nm_phy_enable(struct msm_dsi_phy *phy,
->  			       struct msm_dsi_phy_clk_request *clk_req)
->  {
->  	int ret;
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-> index 7a87bed71e36..c9afa6c461ee 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-> @@ -938,7 +938,7 @@ static void dsi_14nm_dphy_set_timing(struct
-> msm_dsi_phy *phy,
->  		      DSI_14nm_PHY_LN_TIMING_CTRL_11_TRIG3_CMD(0xa0));
->  }
-> 
-> -static int dsi_14nm_phy_enable(struct msm_dsi_phy *phy, int 
-> src_pll_id,
-> +static int dsi_14nm_phy_enable(struct msm_dsi_phy *phy,
->  			       struct msm_dsi_phy_clk_request *clk_req)
->  {
->  	struct msm_dsi_dphy_timing *timing = &phy->timing;
-> @@ -996,7 +996,7 @@ static int dsi_14nm_phy_enable(struct msm_dsi_phy
-> *phy, int src_pll_id,
->  	dsi_phy_write(base + REG_DSI_14nm_PHY_CMN_CTRL_1, 0x00);
-> 
->  	glbl_test_ctrl = dsi_phy_read(base + 
-> REG_DSI_14nm_PHY_CMN_GLBL_TEST_CTRL);
-> -	if (phy->id == DSI_1 && src_pll_id == DSI_0)
-> +	if (phy->usecase == MSM_DSI_PHY_SLAVE)
-I think it should not make a difference but can we keep the check for 
-DSI_1? So lets modify this to be:
-if (phy->id == DSI_1 && phy->usecase == MSM_DSI_PHY_SLAVE)
->  		glbl_test_ctrl |= DSI_14nm_PHY_CMN_GLBL_TEST_CTRL_BITCLK_HS_SEL;
->  	else
->  		glbl_test_ctrl &= ~DSI_14nm_PHY_CMN_GLBL_TEST_CTRL_BITCLK_HS_SEL;
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c
-> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c
-> index f5b88c85a8fc..e96d789aea18 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c
-> @@ -63,7 +63,7 @@ static void dsi_20nm_phy_regulator_ctrl(struct
-> msm_dsi_phy *phy, bool enable)
->  	dsi_phy_write(base + REG_DSI_20nm_PHY_REGULATOR_CTRL_0, 0x03);
->  }
-> 
-> -static int dsi_20nm_phy_enable(struct msm_dsi_phy *phy, int 
-> src_pll_id,
-> +static int dsi_20nm_phy_enable(struct msm_dsi_phy *phy,
->  				struct msm_dsi_phy_clk_request *clk_req)
->  {
->  	struct msm_dsi_dphy_timing *timing = &phy->timing;
-> @@ -85,7 +85,7 @@ static int dsi_20nm_phy_enable(struct msm_dsi_phy
-> *phy, int src_pll_id,
->  	dsi_phy_write(base + REG_DSI_20nm_PHY_STRENGTH_0, 0xff);
-> 
->  	val = dsi_phy_read(base + REG_DSI_20nm_PHY_GLBL_TEST_CTRL);
-> -	if (src_pll_id == DSI_1)
-> +	if (phy->id == DSI_1 && phy->usecase == MSM_DSI_PHY_STANDALONE)
->  		val |= DSI_20nm_PHY_GLBL_TEST_CTRL_BITCLK_HS_SEL;
->  	else
->  		val &= ~DSI_20nm_PHY_GLBL_TEST_CTRL_BITCLK_HS_SEL;
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-> index 9f83ab90d093..0e8f74ebb895 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-> @@ -698,7 +698,7 @@ static void dsi_28nm_phy_regulator_ctrl(struct
-> msm_dsi_phy *phy, bool enable)
->  		dsi_28nm_phy_regulator_enable_dcdc(phy);
->  }
-> 
-> -static int dsi_28nm_phy_enable(struct msm_dsi_phy *phy, int 
-> src_pll_id,
-> +static int dsi_28nm_phy_enable(struct msm_dsi_phy *phy,
->  				struct msm_dsi_phy_clk_request *clk_req)
->  {
->  	struct msm_dsi_dphy_timing *timing = &phy->timing;
-> @@ -745,7 +745,7 @@ static int dsi_28nm_phy_enable(struct msm_dsi_phy
-> *phy, int src_pll_id,
->  	dsi_phy_write(base + REG_DSI_28nm_PHY_CTRL_0, 0x5f);
-> 
->  	val = dsi_phy_read(base + REG_DSI_28nm_PHY_GLBL_TEST_CTRL);
-> -	if (phy->id == DSI_1 && src_pll_id == DSI_0)
-> +	if (phy->usecase == MSM_DSI_PHY_SLAVE)
-same here
->  		val &= ~DSI_28nm_PHY_GLBL_TEST_CTRL_BITCLK_HS_SEL;
->  	else
->  		val |= DSI_28nm_PHY_GLBL_TEST_CTRL_BITCLK_HS_SEL;
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
-> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
-> index d2bfe43c9ef1..104446450f7c 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
-> @@ -585,7 +585,7 @@ static void dsi_28nm_phy_lane_config(struct
-> msm_dsi_phy *phy)
->  	dsi_phy_write(base + REG_DSI_28nm_8960_PHY_LNCK_TEST_STR1, 0x88);
->  }
-> 
-> -static int dsi_28nm_phy_enable(struct msm_dsi_phy *phy, int 
-> src_pll_id,
-> +static int dsi_28nm_phy_enable(struct msm_dsi_phy *phy,
->  				struct msm_dsi_phy_clk_request *clk_req)
->  {
->  	struct msm_dsi_dphy_timing *timing = &phy->timing;
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> index 619998506b78..badc76a8d425 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> @@ -799,7 +799,7 @@ static void dsi_phy_hw_v4_0_lane_settings(struct
-> msm_dsi_phy *phy)
->  	}
->  }
-> 
-> -static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
-> +static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
->  			      struct msm_dsi_phy_clk_request *clk_req)
->  {
->  	int ret;
+> -unevaluatedProperties: false
+> +additionalProperties: false
+
+This works if you want to use some, but not all properties in a 
+referenced schema. If all apply or listing them all here is too much 
+duplication (such as child nodes, but that's a judgement call), then use 
+'unevaluatedProperties'.
+
+unevaluatedProperties is also currently a nop because the underlying 
+tools don't yet support it. So it won't catch any errors and those 
+errors will all have to be fixed when the tools add support.
+
+Rob
