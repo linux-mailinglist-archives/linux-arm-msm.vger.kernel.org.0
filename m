@@ -2,150 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D9F6734F3A2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 23:40:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C752534F443
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 00:32:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232614AbhC3Vjp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Mar 2021 17:39:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54134 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232307AbhC3Vjk (ORCPT
+        id S232952AbhC3WcI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Mar 2021 18:32:08 -0400
+Received: from labrats.qualcomm.com ([199.106.110.90]:24387 "EHLO
+        labrats.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232802AbhC3Wb7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Mar 2021 17:39:40 -0400
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F2BFC061574
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 14:39:39 -0700 (PDT)
-Received: by mail-ot1-x32f.google.com with SMTP id w21-20020a9d63950000b02901ce7b8c45b4so16977423otk.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 14:39:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=moOHpFp6B1slvDCQ1XJe9I8qoROHz5Fk0JNnYcoNKV4=;
-        b=dsCS6SvyblcG7oQ7ueXLS7xHUVbAxqeIo+mKnPu17yA69BEhq40Vqye7OZla+7EiwM
-         40/SsDnv0dnE91uCuK9quwkHO04o73NQJ4tZCHawa7syJxJrUIdWKfNc513iTL4TAm+k
-         UEXJL+LM1gAuYeQ+RFrgZrmXO7khismTXEDpo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=moOHpFp6B1slvDCQ1XJe9I8qoROHz5Fk0JNnYcoNKV4=;
-        b=PvfHCT83O4OLBbptoYRTrPnE0BbEyF0RMUyRTB5rdwNmqADMiZG0vApTegwV5AJrNV
-         7C4ouivCkmhsdGqRhPnl3Cz2T3VkELDyzYIUFdi6Hy2dBvcAPHlWSRUDiBy4czTiBzWg
-         oq9vUmAp41ed7+9q6RmfzC+5LWgMbGalN1CGZslpQsv4bK/L2Opqk4KNw9zfkK95yWrY
-         j/DrGypCfE2FcPavT+ch4j5Q+F9wGpTuqsxZuttX/UwE8+e8ktWJRC6b3AotDwRoZxvj
-         oJFVaPX4VWvUdyF7Jb1AKJsfsgd0Vn3oU4i5OjtaIUrGKXzuAxiHK1T8zwE/P2vp0xKX
-         TR0A==
-X-Gm-Message-State: AOAM531Y/Fpmg+fqPfXPaKfpjz6l99NQ5FzR0oznVhXmq5sqkvXbOQA3
-        wxbvPiuI5uYsgkVog4d/Q+pwvzP95YSWwg==
-X-Google-Smtp-Source: ABdhPJxoU47RdisYvK9t2TJYubRTIysQlyU56cvG0BGMi80YRv+0SFCqXbyOOraEct+7I3RN8vezkA==
-X-Received: by 2002:a05:6830:10d6:: with SMTP id z22mr1228oto.190.1617140378373;
-        Tue, 30 Mar 2021 14:39:38 -0700 (PDT)
-Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com. [209.85.210.42])
-        by smtp.gmail.com with ESMTPSA id v6sm22873ook.40.2021.03.30.14.39.37
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Mar 2021 14:39:38 -0700 (PDT)
-Received: by mail-ot1-f42.google.com with SMTP id s11-20020a056830124bb029021bb3524ebeso17020552otp.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 14:39:37 -0700 (PDT)
-X-Received: by 2002:a25:3741:: with SMTP id e62mr265234yba.343.1617139913337;
- Tue, 30 Mar 2021 14:31:53 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210330025345.3980086-1-dianders@chromium.org>
- <20210329195255.v2.9.Ia7e9bb7cf6c51d960b9455fb0fa447cc68ece99d@changeid> <YGMvO3PNDCiBmqov@intel.com>
-In-Reply-To: <YGMvO3PNDCiBmqov@intel.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 30 Mar 2021 14:31:41 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UgnPMkJ6moLDvg8FPTKWUcTrp1mYED2i-K1vjJFu4cEA@mail.gmail.com>
-Message-ID: <CAD=FV=UgnPMkJ6moLDvg8FPTKWUcTrp1mYED2i-K1vjJFu4cEA@mail.gmail.com>
-Subject: Re: [PATCH v2 09/14] drm/edid: Use the cached EDID in drm_get_edid()
- if eDP
-To:     =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
-Cc:     Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        David Airlie <airlied@linux.ie>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Tue, 30 Mar 2021 18:31:59 -0400
+IronPort-SDR: HaXk0q2Jjf0OSvz4plH4V2OmnDUUe/QyP0buzD089Yy6jxCADkAliKwPnaWgEajFPYGfmN/AI/
+ jMryj8FSFwNl/afYZsx2qw2b4KXbjpksgmvPqyjW/gciFEXplPyMNRN008lBQ/9FNCy3DiOk9q
+ vmRMABQdWC16NvEMwFIoeVjWUUcnigtfKqVgK+PJW1Y99PyK6uhWmWuPPjWy1/IaIQLlKCklIv
+ f/N/HQSQyPpM51Uk8qCqF8+2a4N1xHREF6S07lY45PcZcgDIlRdvYaSB2ZLPH3SzmZs+ShjpbB
+ +do=
+X-IronPort-AV: E=Sophos;i="5.81,291,1610438400"; 
+   d="scan'208";a="29735342"
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by labrats.qualcomm.com with ESMTP; 30 Mar 2021 15:31:58 -0700
+X-QCInternal: smtphost
+Received: from stor-presley.qualcomm.com ([192.168.140.85])
+  by ironmsg02-sd.qualcomm.com with ESMTP; 30 Mar 2021 15:31:57 -0700
+Received: by stor-presley.qualcomm.com (Postfix, from userid 92687)
+        id 2DEB4210A6; Tue, 30 Mar 2021 15:31:57 -0700 (PDT)
+From:   Asutosh Das <asutoshd@codeaurora.org>
+To:     cang@codeaurora.org, martin.petersen@oracle.com,
+        adrian.hunter@intel.com, linux-scsi@vger.kernel.org
+Cc:     Asutosh Das <asutoshd@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        linux-arm-kernel@lists.infradead.org (moderated list:ARM/Mediatek SoC
+        support),
+        linux-mediatek@lists.infradead.org (moderated list:ARM/Mediatek SoC
+        support)
+Subject: [PATCH v14 0/2] Enable power management for ufs wlun 
+Date:   Tue, 30 Mar 2021 15:31:51 -0700
+Message-Id: <cover.1617143113.git.asutoshd@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+This patch attempts to fix a deadlock in ufs while sending SSU.
+Recently, blk_queue_enter() added a check to not process requests if the
+queue is suspended. That leads to a resume of the associated device which
+is suspended. In ufs, that device is ufs device wlun and it's parent is
+ufs_hba. This resume tries to resume ufs device wlun which in turn tries
+to resume ufs_hba, which is already in the process of suspending, thus
+causing a deadlock.
 
-On Tue, Mar 30, 2021 at 7:01 AM Ville Syrj=C3=A4l=C3=A4
-<ville.syrjala@linux.intel.com> wrote:
->
-> > @@ -2049,15 +2049,39 @@ struct edid *drm_get_edid(struct drm_connector =
-*connector,
-> >                         struct i2c_adapter *adapter)
-> >  {
-> >       struct edid *edid;
-> > +     size_t old_edid_size;
-> > +     const struct edid *old_edid;
-> >
-> >       if (connector->force =3D=3D DRM_FORCE_OFF)
-> >               return NULL;
-> >
-> > -     if (connector->force =3D=3D DRM_FORCE_UNSPECIFIED && !drm_probe_d=
-dc(adapter))
-> > -             return NULL;
-> > +     if (connector->connector_type =3D=3D DRM_MODE_CONNECTOR_eDP &&
-> > +         connector->edid_blob_ptr) {
-> > +             /*
-> > +              * eDP devices are non-removable, or at least not somethi=
-ng
-> > +              * that's expected to be hot-pluggable. We can freely use
-> > +              * the cached EDID.
-> > +              *
-> > +              * NOTE: technically we could probably even use the cache=
-d
-> > +              * EDID even for non-eDP because the cached EDID should b=
-e
-> > +              * cleared if we ever notice a display is not connected, =
-but
-> > +              * we'll use an abundance of caution and only do it for e=
-DP.
-> > +              * It's more important for eDP anyway because the EDID ma=
-y not
-> > +              * always be readable, like when the panel is powered dow=
-n.
-> > +              */
-> > +             old_edid =3D (const struct edid *)connector->edid_blob_pt=
-r->data;
-> > +             old_edid_size =3D ksize(old_edid);
-> > +             edid =3D kmalloc(old_edid_size, GFP_KERNEL);
-> > +             if (edid)
-> > +                     memcpy(edid, old_edid, old_edid_size);
-> > +     } else {
-> > +             if (connector->force =3D=3D DRM_FORCE_UNSPECIFIED && !drm=
-_probe_ddc(adapter))
-> > +                     return NULL;
-> > +
-> > +             edid =3D drm_do_get_edid(connector, drm_do_probe_ddc_edid=
-, adapter);
-> > +             drm_connector_update_edid_property(connector, edid);
-> > +     }
->
-> This is a pretty low level function. Too low level for this caching
-> IMO. So I think better just do it a bit higher up like other drivers.
+This patch takes care of:
+* Suspending the ufs device lun only after all other luns are suspended
+* Sending SSU during ufs device wlun suspend
+* Clearing uac for rpmb and ufs device wlun
+* Not sending commands to the device during host suspend
 
-Fair enough. In the past I'd gotten feedback that I'd been jamming too
-much stuff in my own driver instead of putting it in the core, but I'm
-happy to leave the EDID caching in the driver if that's what people
-prefer. It actually makes a bit of the code in the driver a bit less
-awkward...
+v13 -> v14:
+- Addressed Adrian's comments
+  * Rebased it on top of scsi-next
+  * Added scsi_autopm_[get/put] to ufs_debugfs[get/put]_user_access()
+  * Resume the device in ufshcd_remove()
+  * Unregister ufs_rpmb_wlun before ufs_dev_wlun
+  * hba->shutting_down moved to ufshcd_wl_shutdown()
 
--Doug
+v12 -> v13:
+- Addressed Adrian's comments
+  * Paired pm_runtime_get_noresume() with pm_runtime_put()
+  * no rpm_autosuspend for ufs device wlun
+  * Moved runtime-pm init functionality to ufshcd_wl_probe()
+- Addressed Bart's comments
+  * Expanded abbrevs in commit message
+
+v11 -> v12:
+- Addressed Adrian's comments
+  * Fixed ahit for Mediatek driver
+  * Fixed error handling in ufshcd_core_init()
+  * Tested this patch and the issue is still seen.
+
+v10 -> v11:
+- Fixed supplier suspending before consumer race
+- Addressed Adrian's comments
+  * Added proper resume/suspend cb to ufshcd_auto_hibern8_update()
+  * Cosmetic changes to ufshcd-pci.c
+  * Cleaned up ufshcd_system_suspend()
+  * Added ufshcd_debugfs_eh_exit to ufshcd_core_init()
+
+v9 -> v10:
+- Addressed Adrian's comments
+  * Moved suspend/resume vops to __ufshcd_wl_[suspend/resume]()
+  * Added correct resume in ufs_bsg
+
+v8 -> v9:
+- Addressed Adrian's comments
+  * Moved link transition to __ufshcd_wl_[suspend/resume]()
+  * Fixed the other minor comments
+
+v7 -> v8:
+- Addressed Adrian's comments
+  * Removed separate autosuspend delay for ufs-device lun
+  * Fixed the ee handler getting scheduled during pm
+  * Always runtime resume in suspend_prepare()
+  * Added CONFIG_PM_SLEEP where needed
+  
+v6 -> v7:
+  * Resume the ufs device before shutting it down
+
+v5 -> v6:
+- Addressed Adrian's comments
+  * Added complete() cb
+  * Added suspend_prepare() and complete() to all drivers
+  * Moved suspend_prepare() and complete() to ufshcd
+  * .poweroff() uses ufhcd_wl_poweroff()
+  * Removed several forward declarations
+  * Moved scsi_register_driver() to ufshcd_core_init()
+
+v4 -> v5:
+- Addressed Adrian's comments
+  * Used the rpmb driver contributed by Adrian
+  * Runtime-resume the ufs device during suspend to honor spm-lvl
+  * Unregister the scsi_driver in ufshcd_remove()
+  * Currently shutdown() puts the ufs device to power-down mode
+    so, just removed ufshcd_pci_poweroff()
+  * Quiesce the scsi device during shutdown instead of remove
+
+v3 RFC -> v4:
+- Addressed Bart's comments
+  * Except that I didn't get any checkpatch failures
+- Addressed Avri's comments
+- Addressed Adrian's comments
+  * Added a check for deepsleep power mode
+  * Removed a couple of forward declarations
+  * Didn't separate the scsi drivers because in rpmb case it just sends uac
+    in resume and it seemed pretty neat to me.
+- Added sysfs changes to resume the devices before accessing
+
+Asutosh Das (2):
+  scsi: ufs: Enable power management for wlun
+  ufs: sysfs: Resume the proper scsi device
+
+ drivers/scsi/ufs/cdns-pltfrm.c     |   2 +
+ drivers/scsi/ufs/tc-dwc-g210-pci.c |   2 +
+ drivers/scsi/ufs/ufs-debugfs.c     |   6 +-
+ drivers/scsi/ufs/ufs-debugfs.h     |   2 +-
+ drivers/scsi/ufs/ufs-exynos.c      |   2 +
+ drivers/scsi/ufs/ufs-hisi.c        |   2 +
+ drivers/scsi/ufs/ufs-mediatek.c    |  12 +-
+ drivers/scsi/ufs/ufs-qcom.c        |   2 +
+ drivers/scsi/ufs/ufs-sysfs.c       |  30 +-
+ drivers/scsi/ufs/ufs_bsg.c         |   6 +-
+ drivers/scsi/ufs/ufshcd-pci.c      |  36 +--
+ drivers/scsi/ufs/ufshcd.c          | 636 ++++++++++++++++++++++++++-----------
+ drivers/scsi/ufs/ufshcd.h          |   6 +
+ include/trace/events/ufs.h         |  20 ++
+ 14 files changed, 521 insertions(+), 243 deletions(-)
+
+-- 
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+
