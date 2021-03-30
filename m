@@ -2,55 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E55BC34E29C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 09:56:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 92C4034E29E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 09:56:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231370AbhC3Hze (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Mar 2021 03:55:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44600 "EHLO
+        id S231330AbhC3H4G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Mar 2021 03:56:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229530AbhC3HzY (ORCPT
+        with ESMTP id S231469AbhC3Hzu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Mar 2021 03:55:24 -0400
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75A77C061762
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 00:55:24 -0700 (PDT)
-Received: by mail-pj1-x1034.google.com with SMTP id q6-20020a17090a4306b02900c42a012202so7239802pjg.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 00:55:24 -0700 (PDT)
+        Tue, 30 Mar 2021 03:55:50 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BCB8C061764
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 00:55:50 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id cl21-20020a17090af695b02900c61ac0f0e9so892396pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 00:55:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=JbvBjbJlgSBferfsc3fLK9nLFbUPcwisVgWM/8EwoFQ=;
-        b=scYaCXldbH24Yaj8rf20hooRzaL9q9mYQBox7S1Fzbhj8hDrOaVV4fzaMHOtOEXAaX
-         95RlALWtcFv6kRHOuVWpX5Dhjkd3W9JdIk0G8w7wmNK2Iqo2CV2x0EoeTMDg++hy/Tme
-         Hfaa20LTNCQGObNP0zpY95l7LxdNrnx8FW0dMLXBk/JjVZepwXUQKF06Yj+/85g0KbwG
-         Jej5kGa8F9C+wcgn6wgPmO6wh4fDbjJqWPEwpV9XVwdPbygsvnawGiuyMshaNaZP+231
-         ia2JDfx/oQKyG7rUuXFYCvzWihYT1mhnlG57DNVfmUemSP6a9dZ/9d8QpEOePeze7ET5
-         lo8A==
+        bh=/c3GASuuPMBQglyP8lkfmM8q4ruB4dYk26XBHy6dn94=;
+        b=b/mKdnOi6RfiHabB6Qo0oOdn+udskSQkriHCYcOmDuR0e9x+J+Lkpi95iTeCGeGyZw
+         YErIKP3SVb0AoWKzhk1JQN5MYa5aW9Mn3H1T3ioJLInLSjpT8sjHiob9p7ARpCoHi0g9
+         EMdqELL+d77fv5s2tm2/l8TGsSvS4kDGTQHYi7EWKscq0oV0zCWt+ERW6YjkU7WzWx4J
+         LyigO7vSLWvlarDbXAJUwp4i2ECASIy9ZP+2p90oQ9P8ANwHJKfik1utedQLn5avzzqA
+         Hfnddw+F6zWvL1ZYtEtHHqTelSTtNheGDY188dW7I1FiF6wdd/KGuYHxHbJ8lCnt0gn7
+         iyRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=JbvBjbJlgSBferfsc3fLK9nLFbUPcwisVgWM/8EwoFQ=;
-        b=Z41+TzQ4OfTvX/A0vy6MQG3qsFrQLIRD6AkZb/A7l0ecSVlNJoGlR1kgzlnH4AaSVm
-         0ffqIZECvvY9dHMJW/blEryZLr0k94cdwKNE+1//s275Q1JwdVi9vTMPAFenGA+OrShC
-         XvIto0wiWq+eNv/IDn+NiQK9e4sCsBO+TpkTn3DSTrlEzcXLuAxPNnCgXvCzBUiYfNK4
-         3fc0yL4374bTN1GwPMIeAJqHd2zLtVyPpvJ2bDcEyQsDUAWUavKUqtWIfrQU30vvsqQW
-         /ebKAbKnGr/vevJhOuLX+BnU33MvYuHUThem4/VHyPOqRIzz2Rhcihv5sBhZwBbBWh/i
-         pZww==
-X-Gm-Message-State: AOAM533DeJokWWIbwFLJiiVWOABc0b1k7aDH8Soo6Uc7I61GAlFgANW2
-        JQiL2GuLVgYUI6aNyR+pMiSR0qD464mNCnGON80u4Q==
-X-Google-Smtp-Source: ABdhPJwLEQ7tJ14eRS/yUEDEjYj48E8XhgZEj490onsnM44cWvBVkBRDKO0uYSr2bopLWyuPamm7GuYkbBqnmEuFoAk=
-X-Received: by 2002:a17:90b:4008:: with SMTP id ie8mr3146042pjb.231.1617090924013;
- Tue, 30 Mar 2021 00:55:24 -0700 (PDT)
+        bh=/c3GASuuPMBQglyP8lkfmM8q4ruB4dYk26XBHy6dn94=;
+        b=eOanj5KTnR4i1ZvYk9Xz6amm1BapZAmhoPYjKJfEj89IFuLw8QLFxnD4Tb0mvBPNql
+         EnX1aOrTBl0TBnH0fTUyvyGnMZEQ23vMYxNhJCHVW19jMFHcHHwq5Iv1Y94LICiblRqa
+         NSzAqMhgY+Ya/VZj2hrZ6DSpDKovYlLYDBHAd7b2zBB8IR9Ls9xME0lo7grk4WH1khLR
+         0mPOr5OUOHmP9KlOp7mkgCPcQ7yPPVU/OMXtLM0GhTUcW54PqzLt+L+jhJ6YpjW4psmb
+         HE6slquDriV+ZIXnQz8HTeZ5IlJrN3o5kfoPnccmCAt2+o7QyAsbhDUlbih311RE7lHH
+         lL5Q==
+X-Gm-Message-State: AOAM5337Y7ZWDNUxTBDM/IjOcvU5AgB6603OwihQxifpfBbDbE2UXLOt
+        iitA7vWDsnqSxaO2EP3o8lK/UETR/Xx/iJgvRbAO5g==
+X-Google-Smtp-Source: ABdhPJx+5pezFSSeWqNkADQyGDP8qtmVf0mbPcVYSfpv3XD7QsDX/2Vfnxo/gsmtGXbovQoH5Dkg+KL1Gks5TArbAw0=
+X-Received: by 2002:a17:902:b088:b029:e6:e1d8:20cc with SMTP id
+ p8-20020a170902b088b02900e6e1d820ccmr32129126plr.27.1617090949609; Tue, 30
+ Mar 2021 00:55:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <1617067704-28850-1-git-send-email-bbhatt@codeaurora.org> <1617067704-28850-7-git-send-email-bbhatt@codeaurora.org>
-In-Reply-To: <1617067704-28850-7-git-send-email-bbhatt@codeaurora.org>
+References: <1617067704-28850-1-git-send-email-bbhatt@codeaurora.org> <1617067704-28850-8-git-send-email-bbhatt@codeaurora.org>
+In-Reply-To: <1617067704-28850-8-git-send-email-bbhatt@codeaurora.org>
 From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Tue, 30 Mar 2021 10:03:32 +0200
-Message-ID: <CAMZdPi_SWn9a_KvfpNnKCLcq2gb+A7KmUth7zVTgWs+H-Okv=w@mail.gmail.com>
-Subject: Re: [PATCH v1 6/7] bus: mhi: core: Wait for MHI READY state in most scenarios
+Date:   Tue, 30 Mar 2021 10:03:58 +0200
+Message-ID: <CAMZdPi9PujJ-ZC22TvOdyyG0g9k6G2z+LRx+drvhQn7GG-Fi0w@mail.gmail.com>
+Subject: Re: [PATCH v1 7/7] bus: mhi: core: Improve state strings for debug messages
 To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
 Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
@@ -67,18 +68,11 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Tue, 30 Mar 2021 at 03:28, Bhaumik Bhatt <bbhatt@codeaurora.org> wrote:
 >
-> When moving from SYS_ERROR transition to a different execution
-> environment, MHI host relies on the BHI register read to spawn
-> the next image download or wait for READY -> M0 states. The
-> device can at times move the execution environment to mission
-> mode when a pass through is expected, which can result in a
-> stall. Initiate a wait for MHI READY and write M0 such that the
-> device can proceed with state change event updates for any new
-> execution environment being entered. This allows us to remove
-> conditionals in handling firmware load for PBL modes and keeps
-> the execution environment out of the picture as it can change at
-> any time.
+> As of now abbreviations are being used for many state and
+> execution environment strings. Improve and expand those such that
+> debug messages are clear.
 >
 > Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
