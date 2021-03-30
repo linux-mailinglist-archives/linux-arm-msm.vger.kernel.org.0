@@ -2,108 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BF50734DF8F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 05:49:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1869334DFC9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 05:59:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230052AbhC3DtB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Mar 2021 23:49:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48128 "EHLO
+        id S230323AbhC3D7Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Mar 2021 23:59:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229656AbhC3Dsj (ORCPT
+        with ESMTP id S230297AbhC3D7T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Mar 2021 23:48:39 -0400
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44DFDC061764
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Mar 2021 20:48:39 -0700 (PDT)
-Received: by mail-ot1-x336.google.com with SMTP id y19-20020a0568301d93b02901b9f88a238eso14320816oti.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Mar 2021 20:48:39 -0700 (PDT)
+        Mon, 29 Mar 2021 23:59:19 -0400
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3ED5C061765
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Mar 2021 20:59:18 -0700 (PDT)
+Received: by mail-oi1-x22d.google.com with SMTP id i3so15188559oik.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Mar 2021 20:59:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=ZaWpeqY25MeDhtAts3m3c7ZDqv8GKc5eM14JLBJ3UhM=;
-        b=aria6U2aOK6GNQcIMqfIxcq4rDTxMTjlMu8p5Gj0XcnZDv6UluWjUciozLsMrU6ilw
-         U0HikIaK3NQMBUMW2/fCPa22dSCeaj/KcZcvtJrrzr/wzbj/KLS6Y+EFEXuOgX4YdmRA
-         W/B9dGHzbRfo+bIYqx7XluDewImcQRnP44+uPb/sUcYm1+yhiLzRlS1a/SP/xFzBVgMV
-         OtWLSXViZyg6VOX4f2rxhInfbe8ohYLkH0W2NjJVcveY85UaUbf+Bp7ZaBvFpPRRD6DM
-         JwZFPCWY2XNXrET4EUcAt/5+faX6oJDyHe65d/wNbwkkGLuszr1ZRFVf0McjW3NSQpUu
-         jVdA==
+        bh=WP0mHVRfSgD11CnMchrfyBzI0cUHCyMRSuWMrdjjb3E=;
+        b=oS+vHN3g+qSDLxKdVwIPsILJhfllG3VJX86R9Sw/zDirZhoQXi4dTtiOhPAfLPhLPc
+         ZWfsEMsEt6CN3Vwiwb0LqTm+Bw0LRenUPjoTHGbhGtfUqrrxGIFYfASD3LUGZngrJc2n
+         pd31Dqe5Md/jTWneAL6A55QlN4Z11SdyqA5HyaLNkiNsLGGaK6bXao2TFPh1zjGfQzPF
+         47qP3zpm6AuvjgPqKEMZPaFbxroFe1TUE5YxaRa7NMU4lVIj/Y+5XOWbRdrxo7D2SqJp
+         knYEosz2nG0zpxBvbxWXXSh95gUQjMBpRCjqkFal0mIv1+bcqwKMXymFvhWrliFrBDyE
+         38BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=ZaWpeqY25MeDhtAts3m3c7ZDqv8GKc5eM14JLBJ3UhM=;
-        b=YWxCMuQXbTjjQ2jSBZ/xAUDLyjap1TzzuTAZy6bsPPsmQTbZ9TXBFwmGr6u20pRJdB
-         UNH77lj0BEQINP5hK19eXd1frhskZ97JHXdQvB9tMRzv9uviuvoviKRk0mpZyIeqqIX0
-         aQ8RPMfW0uOtVKoAkg12oMgqYPw9dq+NeCjJSTBvxg73AvIIJg4XNnbpQegp/xyqTnbq
-         aqvLtM4VMJrSww98+n9D4qioeGJOepDMMnnX0t03Zyot41Ah9qPMaKi2BOcofnHKisup
-         zgi4gEiUCAVUtz0Xmh3rkSWixaTu/wZl57ybC9pIUJJwDoQzzqniiaCcjzOCm7dCcUbo
-         SnzA==
-X-Gm-Message-State: AOAM5320TBYaN7eraqn+8rdXAIDh5D9enRtYgGB7ku3IKJHDTAiP4C/j
-        lU/45MnLaUi5Jqhhp6+nJ1OR9g==
-X-Google-Smtp-Source: ABdhPJxSE5litT1P7lJr0s8y9tEBHQh2kQ64l0iMcjvplDaeF9Eb9bMTzeSINA+qu1qZDc4bknkFkg==
-X-Received: by 2002:a9d:6e09:: with SMTP id e9mr25522900otr.195.1617076118577;
-        Mon, 29 Mar 2021 20:48:38 -0700 (PDT)
+        bh=WP0mHVRfSgD11CnMchrfyBzI0cUHCyMRSuWMrdjjb3E=;
+        b=qzTjtq+e7oKVTdqygq/tQQcybryTASxLXCzey7a1w/ZJQIHrS/6IeJ4GxPgCD2exPf
+         s0hoEhZoabzseV8/YWOiNvnRxslw94ZxlKD+z/ux1wJJqVtAkIcQibWcDH9LUEZ4+ewg
+         zsREXbigcrJgN1pyVT+1oGY0N3xiYB7lnxzzc9fybiwPXQJWB/xP7HFxeCLE0cBuOmQU
+         UDTg8+twml7td1v9sLPo1Cxv5cMCbOzuZSMjKdDapA+SZz39rwzvssmYXxhwNIHl4LaF
+         Nx+bP3LeqxdoaJNn2BxI5PKgXIk6zscmImkFh0q1TBaLxEDvTXqbHXdXntZ3HJYzdutB
+         dH9w==
+X-Gm-Message-State: AOAM530yF50EMXIGDKn/1+CVNq1TmeLgEGTy83KU86sa4XSc6TB2+yZe
+        iU+xqWSDUjXg4FDCewQifsHBvA==
+X-Google-Smtp-Source: ABdhPJwysEdD3KX+W2avFCwryY09gyAZPTrl1omxmSBc+ok+dBpO/+tPGrK5oIdfg1sKUv5kP9EbYg==
+X-Received: by 2002:a05:6808:94:: with SMTP id s20mr1745468oic.25.1617076757980;
+        Mon, 29 Mar 2021 20:59:17 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id w10sm4791878oth.7.2021.03.29.20.48.37
+        by smtp.gmail.com with ESMTPSA id a6sm4804176otq.79.2021.03.29.20.59.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Mar 2021 20:48:37 -0700 (PDT)
-Date:   Mon, 29 Mar 2021 22:48:36 -0500
+        Mon, 29 Mar 2021 20:59:17 -0700 (PDT)
+Date:   Mon, 29 Mar 2021 22:59:15 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Robert Foss <robert.foss@linaro.org>, daniel.lezcano@linaro.org
-Cc:     agross@kernel.org, amitk@kernel.org, rui.zhang@intel.com,
-        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Vinod Koul <vinod.koul@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>
-Subject: Re: [PATCH v3 1/2] dt-bindings: thermal: qcom-tsens: Add compatible
- for sm8350
-Message-ID: <YGKflK/Ey16UDYT7@builder.lan>
-References: <20210324124308.1265626-1-robert.foss@linaro.org>
+To:     Dikshita Agarwal <dikshita@codeaurora.org>
+Cc:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org
+Subject: Re: [PATCH v2] media: venus : hfi: add venus image info into smem
+Message-ID: <YGKiExvhfdAhTw9/@builder.lan>
+References: <1616740405-5085-1-git-send-email-dikshita@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210324124308.1265626-1-robert.foss@linaro.org>
+In-Reply-To: <1616740405-5085-1-git-send-email-dikshita@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 24 Mar 07:43 CDT 2021, Robert Foss wrote:
+On Fri 26 Mar 01:33 CDT 2021, Dikshita Agarwal wrote:
 
-> Add tsens bindings for sm8350.
+> Fill fw version info into smem to be printed as part of
+> soc info.
 > 
-> Signed-off-by: Robert Foss <robert.foss@linaro.org>
-> Reviewed-by: Vinod Koul <vkoul@kernel.org>
+> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+> 
+> Changes since v1:
+>  adressed comments from stephen.
+>  removed unwanted code.
+> ---
+>  drivers/media/platform/qcom/venus/hfi_msgs.c | 21 +++++++++++++++++++--
+>  1 file changed, 19 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media/platform/qcom/venus/hfi_msgs.c
+> index 06a1908..6b6d33c9 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_msgs.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
+> @@ -6,6 +6,7 @@
+>  #include <linux/hash.h>
+>  #include <linux/list.h>
+>  #include <linux/slab.h>
+> +#include <linux/soc/qcom/smem.h>
+>  #include <media/videobuf2-v4l2.h>
+>  
+>  #include "core.h"
+> @@ -14,6 +15,10 @@
+>  #include "hfi_msgs.h"
+>  #include "hfi_parser.h"
+>  
+> +#define SMEM_IMG_VER_TBL 469
+> +#define VER_STR_SZ	128
+> +#define SMEM_IMG_INDEX_VENUS 14 * 128
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+14 is the index, 128 is the element size, so this is now an "offset".
 
-@Daniel, I presume it's better that you take this patch (1/2) through
-your tree. I've picked patch 2.
+> +
+>  static void event_seq_changed(struct venus_core *core, struct venus_inst *inst,
+>  			      struct hfi_msg_event_notify_pkt *pkt)
+>  {
+> @@ -239,15 +244,27 @@ static void
+>  sys_get_prop_image_version(struct device *dev,
+>  			   struct hfi_msg_sys_property_info_pkt *pkt)
+>  {
+> +	size_t smem_blk_sz = 0;
+
+You shouldn't need to initialize smem_blk_sz if you check the return
+value of qcom_smem_get() first.
+
+> +	u8 *smem_tbl_ptr;
+> +	u8 *img_ver;
+>  	int req_bytes;
+>  
+>  	req_bytes = pkt->hdr.size - sizeof(*pkt);
+>  
+> -	if (req_bytes < 128 || !pkt->data[1] || pkt->num_properties > 1)
+> +	if (req_bytes < VER_STR_SZ || !pkt->data[1] || pkt->num_properties > 1)
+>  		/* bad packet */
+>  		return;
+>  
+> -	dev_dbg(dev, VDBGL "F/W version: %s\n", (u8 *)&pkt->data[1]);
+> +	img_ver = (u8 *)&pkt->data[1];
+> +
+> +	dev_dbg(dev, VDBGL "F/W version: %s\n", img_ver);
+> +
+> +	smem_tbl_ptr = qcom_smem_get(QCOM_SMEM_HOST_ANY,
+> +				       SMEM_IMG_VER_TBL, &smem_blk_sz);
+
+80 chars is just a guideline and this looks prettier if you avoid the
+line wrap. That said, if you pick shorter names for smem_tbl_ptr and
+smem_blk_sz you probably even have to worry.
+
+> +	if ((SMEM_IMG_INDEX_VENUS + VER_STR_SZ) <= smem_blk_sz &&
+> +	    smem_tbl_ptr)
+
+In English you're trying to determine: "did qcom_smem_get() return a
+valid pointer and is the item's size at least as big as we need".
+
+So just write that in C:
+
+	if (smem_tbl_ptr && smem_blk_sz >= SMEM_IMG_INDEX_VENUS + VER_STR_SZ)
+
+> +		memcpy(smem_tbl_ptr + SMEM_IMG_INDEX_VENUS,
+> +		       img_ver, VER_STR_SZ);
+
+Again, please avoid the line wrap...
 
 Regards,
 Bjorn
 
-> ---
-> 
-> Changes since v1:
->  - Vinod: Remove comment
-> 
->  Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> index 95462e071ab4..e788378eff8d 100644
-> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> @@ -43,6 +43,7 @@ properties:
->                - qcom,sdm845-tsens
->                - qcom,sm8150-tsens
->                - qcom,sm8250-tsens
-> +              - qcom,sm8350-tsens
->            - const: qcom,tsens-v2
+>  }
 >  
->    reg:
+>  static void hfi_sys_property_info(struct venus_core *core,
 > -- 
-> 2.31.0.30.g398dba342d.dirty
+> 2.7.4
 > 
