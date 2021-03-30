@@ -2,55 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E2DCE34E294
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 09:54:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E9EFB34E298
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 09:55:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231318AbhC3Hxz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Mar 2021 03:53:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44232 "EHLO
+        id S231329AbhC3Hy1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Mar 2021 03:54:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231313AbhC3Hxo (ORCPT
+        with ESMTP id S230344AbhC3HyZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Mar 2021 03:53:44 -0400
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3CE5C061764
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 00:53:44 -0700 (PDT)
-Received: by mail-pl1-x62c.google.com with SMTP id o2so5726124plg.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 00:53:44 -0700 (PDT)
+        Tue, 30 Mar 2021 03:54:25 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34962C061762
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 00:54:25 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id q5so11583744pfh.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 00:54:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=sSZY0eJ77vdtYQefXb2yo/92zDLVSNWjzbsQ6OFfRDY=;
-        b=EVbwTv02+x9ZZzeuFpVvG1763ys6pi18GwTHaYzg7QhVSefOeHqlRabQ19roKqUvnc
-         61Ttv9P79rA9wnYQlp+7NssWHpG3zGqm3bb2u0wyzAbIZ/B4QoMMesxBuxvA/U0r1F87
-         KiT0NDeS9VkKWPopX175eLTj8oCEx0uYTU6UK8kX/O1FYbY5MguxiB3orbx0Za8hTVvM
-         1PyB+l+9zJ6IiD0+Q3XyDY7o8m7AYmTlc0m/y7Myjt9CL06a3/DisR48cNlT7B+j8Ukh
-         zap77UZ2CP9YEXnuxgn+FAKzZamGmnYzzHVzeFvWFJxr7RoNZAShd+75W2pMOL5VuQMd
-         T5kg==
+        bh=b6xBOtMDdbxr5HDgap10cXG5BRbETw5pQ3C/OZJonZs=;
+        b=Uci26Z2mtd+jak/mQGH98QD/nBDMgwpBGMutIO6S94hfdIGHR6uklHOJVkDEpDe2/J
+         MaOeQyhL1b8FUnR3zzP2gcTSB8qybI2CKrI7si3nngLQvpk6pfIil23mkMLzVXEfHHOU
+         blEkO9tDRjVln1OhEAGx55/1TA6eq4bcEML8zPhZsYZ5uZcPG8BQkf87klt7Km6n46k7
+         wixUAq7nifFDBfbr1ntx6YaNIjo45W6hxM9BU78keHo+4bxhJlyX+GXfugVS/O2w1gm0
+         RrDbKm31bQjKxWkK47z27qMgji1tYt/noQTaHyEtFpyWvXMCxH7HiGJNK5PbGZiHysNn
+         7zMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=sSZY0eJ77vdtYQefXb2yo/92zDLVSNWjzbsQ6OFfRDY=;
-        b=RN8mvbwe0OPD9zyNyZo012DsirB5p7moRZGaRNXE7G98Je2FDmoIzrIu5hsBvppZOZ
-         ODmKU8JpziItOYdhospGt5rxt46Q7N0XJKrIRFI48IPwPMW2SRBTB/LOfgCGl2jp/NjY
-         zoFwzK8Lb9PE4FfVa16q/PK5Fx42Twsgn5IWC+Id++8r3wRfBg35Lx3EP/hSDA8dBetU
-         JLjkS8LbWqNan4PtbONEU/4hks+8b8d7ltFfJokaXP4rQ4X62zTV4S2j9w58YiCr3WhV
-         Bvtc/oRAvK01ZQZd0QCd5C3kow1uPZw+XCsUK1BgJEnknsa/6X++u2aL+ZOYkLucBUaq
-         lTOA==
-X-Gm-Message-State: AOAM531wbMV9DlY/XQAgXuRLYz94HT9t2LVbwQjwXM5QWr4CdR2pDNbU
-        tYI1oBuLt/Y+wjwhIvPf9DWTwpyKOX4OgJ2WoqnDwQ==
-X-Google-Smtp-Source: ABdhPJzrbhDosdqkF9Wl5ayuaorrj13GIgInJxIUci8Wxhc58N/za6y1BfQDth8/QPB2EY/A+2Eiyf+Cww2UkNfo/g0=
-X-Received: by 2002:a17:90b:4008:: with SMTP id ie8mr3140931pjb.231.1617090824200;
- Tue, 30 Mar 2021 00:53:44 -0700 (PDT)
+        bh=b6xBOtMDdbxr5HDgap10cXG5BRbETw5pQ3C/OZJonZs=;
+        b=lPayOXNRoIUNmNQCHNym2PvS+Ljx5aibFRR5Z6mPUmzWFzyzuyX4t063jVJvwN+Xei
+         CacgiN0wDTqNF6EmV4tVrkn/rsd1MPKVZ6nLhO9FlLFeXK5bZ6WK3IhuAe2qOaNKgcMS
+         AXwU54sTBDHC3bFhs9j9yA6c4/rs7w71UnlBSNp4i1x8v/4x6I4I52T8boWvE8zIhzmj
+         bXCPvhRqdVdHdnij67PMxv395BQ8ItOaxTbVLrTHUnmNWKtQboej5u5EgWnKjMbdA/9e
+         bBdyXgbkLcjyoaXLDiBTl9kjXIwgpEr/ckYF/AXGuSH0y1pxLjz5wuWadXA644P9OrYA
+         FKIg==
+X-Gm-Message-State: AOAM532zIq7RBg/M9Sv6zvOrfUNrOE62NznOq5q4mWa3l1yVUYv1QPpn
+        nLSwvbRi89D6iGQYhbjAo7lun8ry2uf8jl+77e5P2j7tK8Dv6P1i
+X-Google-Smtp-Source: ABdhPJyUl+8OdOBRXTgZxc82QXCZsmFz93V/gzl7p/ikgaqaD1sK13AXPEIQXIH6CVBEKd5l/9q/rbpboyAMIZQlWeE=
+X-Received: by 2002:a63:f903:: with SMTP id h3mr7821483pgi.443.1617090864752;
+ Tue, 30 Mar 2021 00:54:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <1617067704-28850-1-git-send-email-bbhatt@codeaurora.org> <1617067704-28850-4-git-send-email-bbhatt@codeaurora.org>
-In-Reply-To: <1617067704-28850-4-git-send-email-bbhatt@codeaurora.org>
+References: <1617067704-28850-1-git-send-email-bbhatt@codeaurora.org> <1617067704-28850-5-git-send-email-bbhatt@codeaurora.org>
+In-Reply-To: <1617067704-28850-5-git-send-email-bbhatt@codeaurora.org>
 From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Tue, 30 Mar 2021 10:01:53 +0200
-Message-ID: <CAMZdPi_wwBt99yGDw9AkeF0AB11_MyTr3o__srqj7QnpHzTX3w@mail.gmail.com>
-Subject: Re: [PATCH v1 3/7] bus: mhi: core: Handle EDL mode entry appropriately
+Date:   Tue, 30 Mar 2021 10:02:33 +0200
+Message-ID: <CAMZdPi-biACwrE=jeFXqgkCAZ3YpX8+vzqEaB9CuyepbhiKb7A@mail.gmail.com>
+Subject: Re: [PATCH v1 4/7] bus: mhi: core: Add support for Flash Programmer
+ execution environment
 To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
 Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
@@ -67,17 +68,29 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Tue, 30 Mar 2021 at 03:28, Bhaumik Bhatt <bbhatt@codeaurora.org> wrote:
 >
-> Device entering EDL or Emergency Download Mode will be in a
-> SYS_ERROR MHI state. This requires MHI host to proceed with the
-> EDL image download over BHI before device can enter an MHI READY
-> state and proceed with further bootup. Allow this to be handled
-> by relying on the execution environment check after SYS_ERROR
-> processing to determine whether to wait for an MHI READY or
-> download the EDL image over BHI after moving MHI PM state to
-> Power on Reset internally. This way handling is contained well
-> within the MHI core driver and helps pave the way for Flash
-> Programmer execution environment functionality.
+> From: Carl Yin <carl.yin@quectel.com>
 >
+> MHI WWAN modems support downloading firmware to NAND or eMMC
+> using Firehose protocol with process as follows:
+> 1. Modem boots up, enters AMSS execution environment and the
+> device later enters EDL (Emergency Download) mode through any
+> mechanism host can use such as a diag command.
+> 2. Modem enters SYS_ERROR, MHI host handles SYS_ERROR transition.
+> 3. EDL image for device to enter 'Flash Programmer' execution
+> environment is then flashed via BHI interface from host.
+> 4. Modem enters MHI READY -> M0 and sends the Flash Programmer
+> execution environment change to host.
+> 5. Following that, EDL/FIREHOSE channels (34, 35) are made
+> available from the host.
+> 6. User space tool for downloading firmware image to modem over
+> the EDL channels using Firehose protocol. Link to USB flashing
+> tool: https://git.linaro.org/landing-teams/working/qualcomm/qdl.git/
+>
+> Make the necessary changes to allow for this sequence to occur and
+> allow using the Flash Programmer execution environment.
+>
+> Signed-off-by: Carl Yin <carl.yin@quectel.com>
+> Co-developed-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 > Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 
 Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
