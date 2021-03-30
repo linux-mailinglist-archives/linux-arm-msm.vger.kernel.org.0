@@ -2,114 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E6B434ED19
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 18:05:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ECB9A34EDD5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 18:29:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231701AbhC3QE2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Mar 2021 12:04:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37852 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231627AbhC3QD4 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Mar 2021 12:03:56 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2765C061574;
-        Tue, 30 Mar 2021 09:03:55 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id x13so16739439wrs.9;
-        Tue, 30 Mar 2021 09:03:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=6oj2QpU+iRP2QcXpQSoeLL823H9nv69wn1Ubcw3X/Kc=;
-        b=oGf3rAc09tWox8W/AuayHxD57BYJkHett6R/hVoRJQkI/dsuvVQsdL+66QBQPYbZO8
-         7THhwdyV51H945ZoxJJ5jgoQE1adMP2x6g1L6OVgqjahcsNzGiHVTu6IA/7mHr+IJoTe
-         G2IRldQQOICbaa1RBtBbDZfRIbW4FXgw9hnfwAzpMP4E4foZcweEiry54xruXlagP21k
-         XcoOokxVvs+Qse2Rf6Tt4VeNyK1jyyBHKCIvomFRhW/IRq3T5TGpU3ZuLfmOfUUI5hQs
-         P/3sUmpZ5wxSwYnZxo9dJhApM9eLAmfB4ezalW1zrr0WOpAGs8ZoUsMpZDJ6ZjUb1W2R
-         qWCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=6oj2QpU+iRP2QcXpQSoeLL823H9nv69wn1Ubcw3X/Kc=;
-        b=sr1psPkqiWiwXknfTSC8+xBHArtcLVIEfVI1qxA7e1DadFOi2AbHbrIMlnRGU1mPD6
-         lu7VVgyWzs4HhCyiIEgSQxs1CHgcQxbsR6GdFGwjIZ5MNAdFHazxoorRkhcHFxXx3dcw
-         SYvWetRjDtsjh+EPrSdFDkqJ97ZyQKxlPjTZ0T5Mp32LodIMGzwq4WvHw8z3iCebH7YG
-         i14LeUqYMEudHP2zJl6vHpC5bs7ylQWmjy7TsYI/FjXV73LWX6j04jEjYbHDfesD+oY3
-         OBELavMk7yP5ZDdfEwlyopJcFH4nWxcZnkdb3t/FKKGEgWn3ebnFKE3Lur/83N+zrC1h
-         /brg==
-X-Gm-Message-State: AOAM532nVZY1n9m3+jUV4Ma/jBmLgt/9DBKRVY5mKEeKxU42zsE4qQgZ
-        oIK/0IRfROrZEMhtWv6U4Oakl7ZvToI32/fd4V4=
-X-Google-Smtp-Source: ABdhPJyIo4QMtpT4Jjy6Aso1yAaVwCCbPHuaf9YAguVzhh4oj3SzRFzxG8rjYLqc6NicwaW7b/FSImz48Hamu6fJQ0Y=
-X-Received: by 2002:adf:d0c3:: with SMTP id z3mr35756480wrh.28.1617120234562;
- Tue, 30 Mar 2021 09:03:54 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210326231303.3071950-1-eric@anholt.net> <20210329144729.GB4203@willie-the-truck>
- <CAF6AEGugpEk396DVtWX=W+uf3p-wcgBfCSpSLWGQJE1vKpJ4aw@mail.gmail.com>
- <20210330093432.GB5281@willie-the-truck> <CAF6AEGvCCWvmRBhzY4MsdzgwfJ+GF2AUOS-_NTyhM8wtnDzY2Q@mail.gmail.com>
- <20210330153050.GB6567@willie-the-truck>
-In-Reply-To: <20210330153050.GB6567@willie-the-truck>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 30 Mar 2021 09:07:18 -0700
-Message-ID: <CAF6AEGs+gUZ+5kmyA0Xz4jz8QJRgLVfaWmvQzuwXZBBG4xAr5w@mail.gmail.com>
-Subject: Re: [PATCH 1/2] iommu/arm-smmu-qcom: Skip the TTBR1 quirk for db820c.
+        id S232001AbhC3Q2x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Mar 2021 12:28:53 -0400
+Received: from foss.arm.com ([217.140.110.172]:40940 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232250AbhC3Q21 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 30 Mar 2021 12:28:27 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 79B92D6E;
+        Tue, 30 Mar 2021 09:28:26 -0700 (PDT)
+Received: from [10.57.24.208] (unknown [10.57.24.208])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C45EC3F719;
+        Tue, 30 Mar 2021 09:28:22 -0700 (PDT)
+Subject: Re: [PATCH 16/18] iommu: remove DOMAIN_ATTR_DMA_USE_FLUSH_QUEUE
 To:     Will Deacon <will@kernel.org>
-Cc:     Eric Anholt <eric@anholt.net>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Christoph Hellwig <hch@lst.de>, Joerg Roedel <joro@8bytes.org>,
+        Li Yang <leoyang.li@nxp.com>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Lu Baolu <baolu.lu@linux.intel.com>,
+        linuxppc-dev@lists.ozlabs.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
+        virtualization@lists.linux-foundation.org, netdev@vger.kernel.org
+References: <20210316153825.135976-1-hch@lst.de>
+ <20210316153825.135976-17-hch@lst.de>
+ <20210330131149.GP5908@willie-the-truck>
+ <a6952aa7-4d7e-54f0-339e-e15f88596dcc@arm.com>
+ <20210330135801.GA6187@willie-the-truck>
+From:   Robin Murphy <robin.murphy@arm.com>
+Message-ID: <578d6aa5-4239-f5d7-2e9f-686b18e52bba@arm.com>
+Date:   Tue, 30 Mar 2021 17:28:19 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.0
+MIME-Version: 1.0
+In-Reply-To: <20210330135801.GA6187@willie-the-truck>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 30, 2021 at 8:31 AM Will Deacon <will@kernel.org> wrote:
->
-> On Tue, Mar 30, 2021 at 08:03:36AM -0700, Rob Clark wrote:
-> > On Tue, Mar 30, 2021 at 2:34 AM Will Deacon <will@kernel.org> wrote:
-> > >
-> > > On Mon, Mar 29, 2021 at 09:02:50PM -0700, Rob Clark wrote:
-> > > > On Mon, Mar 29, 2021 at 7:47 AM Will Deacon <will@kernel.org> wrote:
-> > > > >
-> > > > > On Fri, Mar 26, 2021 at 04:13:02PM -0700, Eric Anholt wrote:
-> > > > > > db820c wants to use the qcom smmu path to get HUPCF set (which keeps
-> > > > > > the GPU from wedging and then sometimes wedging the kernel after a
-> > > > > > page fault), but it doesn't have separate pagetables support yet in
-> > > > > > drm/msm so we can't go all the way to the TTBR1 path.
-> > > > >
-> > > > > What do you mean by "doesn't have separate pagetables support yet"? The
-> > > > > compatible string doesn't feel like the right way to determine this.
-> > > >
-> > > > the compatible string identifies what it is, not what the sw
-> > > > limitations are, so in that regard it seems right to me..
-> > >
-> > > Well it depends on what "doesn't have separate pagetables support yet"
-> > > means. I can't tell if it's a hardware issue, a firmware issue or a driver
-> > > issue.
-> >
-> > Just a driver issue (and the fact that currently we don't have
-> > physical access to a device... debugging a5xx per-process-pgtables by
-> > pushing untested things to the CI farm is kind of a difficult way to
-> > work)
->
-> But then in that case, this is using the compatible string to identify a
-> driver issue, no?
->
+On 2021-03-30 14:58, Will Deacon wrote:
+> On Tue, Mar 30, 2021 at 02:19:38PM +0100, Robin Murphy wrote:
+>> On 2021-03-30 14:11, Will Deacon wrote:
+>>> On Tue, Mar 16, 2021 at 04:38:22PM +0100, Christoph Hellwig wrote:
+>>>> From: Robin Murphy <robin.murphy@arm.com>
+>>>>
+>>>> Instead make the global iommu_dma_strict paramete in iommu.c canonical by
+>>>> exporting helpers to get and set it and use those directly in the drivers.
+>>>>
+>>>> This make sure that the iommu.strict parameter also works for the AMD and
+>>>> Intel IOMMU drivers on x86.  As those default to lazy flushing a new
+>>>> IOMMU_CMD_LINE_STRICT is used to turn the value into a tristate to
+>>>> represent the default if not overriden by an explicit parameter.
+>>>>
+>>>> Signed-off-by: Robin Murphy <robin.murphy@arm.com>.
+>>>> [ported on top of the other iommu_attr changes and added a few small
+>>>>    missing bits]
+>>>> Signed-off-by: Christoph Hellwig <hch@lst.de>
+>>>> ---
+>>>>    drivers/iommu/amd/iommu.c                   | 23 +-------
+>>>>    drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 50 +---------------
+>>>>    drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h |  1 -
+>>>>    drivers/iommu/arm/arm-smmu/arm-smmu.c       | 27 +--------
+>>>>    drivers/iommu/dma-iommu.c                   |  9 +--
+>>>>    drivers/iommu/intel/iommu.c                 | 64 ++++-----------------
+>>>>    drivers/iommu/iommu.c                       | 27 ++++++---
+>>>>    include/linux/iommu.h                       |  4 +-
+>>>>    8 files changed, 40 insertions(+), 165 deletions(-)
+>>>
+>>> I really like this cleanup, but I can't help wonder if it's going in the
+>>> wrong direction. With SoCs often having multiple IOMMU instances and a
+>>> distinction between "trusted" and "untrusted" devices, then having the
+>>> flush-queue enabled on a per-IOMMU or per-domain basis doesn't sound
+>>> unreasonable to me, but this change makes it a global property.
+>>
+>> The intent here was just to streamline the existing behaviour of stuffing a
+>> global property into a domain attribute then pulling it out again in the
+>> illusion that it was in any way per-domain. We're still checking
+>> dev_is_untrusted() before making an actual decision, and it's not like we
+>> can't add more factors at that point if we want to.
+> 
+> Like I say, the cleanup is great. I'm just wondering whether there's a
+> better way to express the complicated logic to decide whether or not to use
+> the flush queue than what we end up with:
+> 
+> 	if (!cookie->fq_domain && (!dev || !dev_is_untrusted(dev)) &&
+> 	    domain->ops->flush_iotlb_all && !iommu_get_dma_strict())
+> 
+> which is mixing up globals, device properties and domain properties. The
+> result is that the driver code ends up just using the global to determine
+> whether or not to pass IO_PGTABLE_QUIRK_NON_STRICT to the page-table code,
+> which is a departure from the current way of doing things.
 
-Well, I suppose yes.. but OTOH it is keeping the problem out of the
-dtb.  Once per-process pgtables works for a5xx, there would be no dtb
-change, just a change to the quirk behavior in arm-smmu-qcom.
+But previously, SMMU only ever saw the global policy piped through the 
+domain attribute by iommu_group_alloc_default_domain(), so there's no 
+functional change there.
 
-BR,
--R
+Obviously some of the above checks could be factored out into some kind 
+of iommu_use_flush_queue() helper that IOMMU drivers can also call if 
+they need to keep in sync. Or maybe we just allow iommu-dma to set 
+IO_PGTABLE_QUIRK_NON_STRICT directly via iommu_set_pgtable_quirks() if 
+we're treating that as a generic thing now.
+
+>>> For example, see the recent patch from Lu Baolu:
+>>>
+>>> https://lore.kernel.org/r/20210225061454.2864009-1-baolu.lu@linux.intel.com
+>>
+>> Erm, this patch is based on that one, it's right there in the context :/
+> 
+> Ah, sorry, I didn't spot that! I was just trying to illustrate that this
+> is per-device.
+
+Sure, I understand - and I'm just trying to bang home that despite 
+appearances it's never actually been treated as such for SMMU, so 
+anything that's wrong after this change was already wrong before.
+
+Robin.
