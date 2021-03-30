@@ -2,117 +2,368 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B88934DF6A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 05:34:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 574EB34DF6B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 05:35:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231340AbhC3Ddv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Mar 2021 23:33:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44880 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231303AbhC3Dd3 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Mar 2021 23:33:29 -0400
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56454C061762
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Mar 2021 20:33:29 -0700 (PDT)
-Received: by mail-ot1-x334.google.com with SMTP id t23-20020a0568301e37b02901b65ab30024so14334708otr.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Mar 2021 20:33:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Ql+HmMVz0sH5JvqPIDDXRRneez0X7Lfo0B0gyoh7cLM=;
-        b=xNnTtYTScqIxt3EB9zSXP2rDikXQFXlNLrRtRx7KgGzF5eHkcpRCP6js5A8uHFOVar
-         F8sohG2dY7SxS95uWnuxZoDNGafqo+8YFtcf1pqwYrFJvNvIwGiLNGpCAhQ85673CXoW
-         /HsmgZQFB3OGZ3v5IfwiN/36cWxqR8L9cx/RA78hWVY0TWUB99dWREIIJ69t7jlH8A0v
-         f6XaTxIjNAlRTrv0PlKs2uP+jnoUOcAPH5lrH1/oImxRRO2FTMtDEntz9nlJlp56Roq4
-         KUORmj1PI5ZbzAZ8ghkRk7NJZrdPJHKZ2VtWLglYfzlSe+sNwIIHL5rVKsREx3rou4O4
-         Q/8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Ql+HmMVz0sH5JvqPIDDXRRneez0X7Lfo0B0gyoh7cLM=;
-        b=nTxPh4YJZJgqTaHaIFAAh46/jbtHN94/axPj59xfcsUTcuPtnnoTQKnF5B0qPCBQKX
-         3KJZajG+gQj9WlidKC9iUWsSqQQ4EThXmwih6kH1UejSw6FYrRsTb890pJDDXY896L6s
-         WU3aahB6jsWrtJPiM+snOBZkjAh1Iz0Xq9pza/8l4CeywzLjixIXgbnCRw7xkS/wLY57
-         3ELmTEmLKzMZDl68tkTW6MKzx6jLxjic8DJhSncBLk3ZARg3/GQVQSWtdTWeIma/75pG
-         mXEgJSZnJmYFn/rK/vJ12bHGU9kD5/yNZS7fsiiL0/3XSu1Ib8AkwFm2BwdSFzgRD+N/
-         PiXA==
-X-Gm-Message-State: AOAM532DdwBXplCzgniRdQHhU4ffed6bq5eABvxDJDJR9pJfNzIYXNKK
-        AFrfe0W8+sBdL90fzviO8vBNGA==
-X-Google-Smtp-Source: ABdhPJyj67MR0So7sgsQ2b0tv1kudAjEpKQylBYgPjsDUahMPCBwQtkZHMmijKOUyL4r+Xcf2cd+/Q==
-X-Received: by 2002:a9d:6ad9:: with SMTP id m25mr25971757otq.267.1617075208795;
-        Mon, 29 Mar 2021 20:33:28 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id c25sm4991615otk.35.2021.03.29.20.33.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Mar 2021 20:33:28 -0700 (PDT)
-Date:   Mon, 29 Mar 2021 22:33:26 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v5 7/7] arm64: dts: qcom: use dp_phy to provide clocks to
- dispcc
-Message-ID: <YGKcBrWE6VLerK0I@builder.lan>
-References: <20210328205257.3348866-1-dmitry.baryshkov@linaro.org>
- <20210328205257.3348866-8-dmitry.baryshkov@linaro.org>
+        id S231244AbhC3De5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Mar 2021 23:34:57 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:40389 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230358AbhC3De2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 29 Mar 2021 23:34:28 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1617075268; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=GTSXSllrGoiJPypiuCk2kl8rT+J4YHLfZGJgzNYkFeQ=;
+ b=vuMxmRMBylUPQZvTgtumlHgWfP9eFHcEdu8ValEos5Hm7Vv7sRd6ohf71HBzNeC5HlTJCDDq
+ g37Y9Kum2VbfMKgonIr1Bk2HxLzrDStCePVTdDyHjYjhjjPTUYC7dlBfulvBGXP3jjxdkrZb
+ G+QFD1WynfMwgaTEsXFO8BBVWjQ=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 60629c2f04a1954ec3525310 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 30 Mar 2021 03:34:07
+ GMT
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 98865C43463; Tue, 30 Mar 2021 03:34:07 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AAF13C433C6;
+        Tue, 30 Mar 2021 03:34:05 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210328205257.3348866-8-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 29 Mar 2021 20:34:05 -0700
+From:   abhinavk@codeaurora.org
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        freedreno@lists.freedesktop.org, linux-clk@vger.kernel.org
+Subject: Re: [Freedreno] [PATCH v3 24/25] drm/msm/dsi: inline
+ msm_dsi_phy_set_src_pll
+In-Reply-To: <20210327110305.3289784-25-dmitry.baryshkov@linaro.org>
+References: <20210327110305.3289784-1-dmitry.baryshkov@linaro.org>
+ <20210327110305.3289784-25-dmitry.baryshkov@linaro.org>
+Message-ID: <bec91de2af142b171bfcedd33dbf4dcf@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun 28 Mar 15:52 CDT 2021, Dmitry Baryshkov wrote:
-
-> Plug dp_phy-provided clocks to display clock controller.
+On 2021-03-27 04:03, Dmitry Baryshkov wrote:
+> The src_truthtable config is not used for some of phys, which use other
+> means of configuring the master/slave usecases. Inline this function
+> with the goal of removing src_pll_id argument in the next commit.
 > 
-
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Regards,
-Bjorn
-
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/sm8250.dtsi | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy.c           | 17 -----------------
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy.h           |  8 --------
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c      |  2 --
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c      | 13 +++++++------
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c      | 11 +++++++----
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c      | 13 +++++++------
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c |  1 -
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c       |  2 --
+>  8 files changed, 21 insertions(+), 46 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> index 0f79e6885004..a2478bd3590a 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> @@ -2600,8 +2600,8 @@ dispcc: clock-controller@af00000 {
->  				 <&dsi0_phy 1>,
->  				 <&dsi1_phy 0>,
->  				 <&dsi1_phy 1>,
-> -				 <0>,
-> -				 <0>,
-> +				 <&dp_phy 0>,
-> +				 <&dp_phy 1>,
->  				 <0>,
->  				 <0>,
->  				 <0>,
-> @@ -2614,8 +2614,8 @@ dispcc: clock-controller@af00000 {
->  				      "dsi0_phy_pll_out_dsiclk",
->  				      "dsi1_phy_pll_out_byteclk",
->  				      "dsi1_phy_pll_out_dsiclk",
-> -				      "dp_link_clk_divsel_ten",
-> -				      "dp_vco_divided_clk_src_mux",
-> +				      "dp_phy_pll_link_clk",
-> +				      "dp_phy_pll_vco_div_clk",
->  				      "dptx1_phy_pll_link_clk",
->  				      "dptx1_phy_pll_vco_div_clk",
->  				      "dptx2_phy_pll_link_clk",
-> -- 
-> 2.30.2
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> index 74cc11c84d71..56f5134e3933 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> @@ -461,23 +461,6 @@ int msm_dsi_dphy_timing_calc_v4(struct
+> msm_dsi_dphy_timing *timing,
+>  	return 0;
+>  }
 > 
+> -void msm_dsi_phy_set_src_pll(struct msm_dsi_phy *phy, int pll_id, u32 
+> reg,
+> -				u32 bit_mask)
+> -{
+> -	int phy_id = phy->id;
+> -	u32 val;
+> -
+> -	if ((phy_id >= DSI_MAX) || (pll_id >= DSI_MAX))
+> -		return;
+> -
+> -	val = dsi_phy_read(phy->base + reg);
+> -
+> -	if (phy->cfg->src_pll_truthtable[phy_id][pll_id])
+> -		dsi_phy_write(phy->base + reg, val | bit_mask);
+> -	else
+> -		dsi_phy_write(phy->base + reg, val & (~bit_mask));
+> -}
+> -
+>  static int dsi_phy_regulator_init(struct msm_dsi_phy *phy)
+>  {
+>  	struct regulator_bulk_data *s = phy->supplies;
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> index 8e828c5ca8f4..3b207cf9f6b4 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> @@ -33,12 +33,6 @@ struct msm_dsi_phy_cfg {
+>  	unsigned long	min_pll_rate;
+>  	unsigned long	max_pll_rate;
+> 
+> -	/*
+> -	 * Each cell {phy_id, pll_id} of the truth table indicates
+> -	 * if the source PLL selection bit should be set for each PHY.
+> -	 * Fill default H/W values in illegal cells, eg. cell {0, 1}.
+> -	 */
+> -	bool src_pll_truthtable[DSI_MAX][DSI_MAX];
+>  	const resource_size_t io_start[DSI_MAX];
+>  	const int num_dsi_phy;
+>  	const int quirks;
+> @@ -121,7 +115,5 @@ int msm_dsi_dphy_timing_calc_v3(struct
+> msm_dsi_dphy_timing *timing,
+>  				struct msm_dsi_phy_clk_request *clk_req);
+>  int msm_dsi_dphy_timing_calc_v4(struct msm_dsi_dphy_timing *timing,
+>  				struct msm_dsi_phy_clk_request *clk_req);
+> -void msm_dsi_phy_set_src_pll(struct msm_dsi_phy *phy, int pll_id, u32 
+> reg,
+> -				u32 bit_mask);
+> 
+>  #endif /* __DSI_PHY_H__ */
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
+> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
+> index 1fbb54f4df98..04535ccd11ef 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
+> @@ -919,7 +919,6 @@ static void dsi_10nm_phy_disable(struct msm_dsi_phy 
+> *phy)
+>  }
+> 
+>  const struct msm_dsi_phy_cfg dsi_phy_10nm_cfgs = {
+> -	.src_pll_truthtable = { {false, false}, {true, false} },
+>  	.has_phy_lane = true,
+>  	.reg_cfg = {
+>  		.num = 1,
+> @@ -941,7 +940,6 @@ const struct msm_dsi_phy_cfg dsi_phy_10nm_cfgs = {
+>  };
+> 
+>  const struct msm_dsi_phy_cfg dsi_phy_10nm_8998_cfgs = {
+> -	.src_pll_truthtable = { {false, false}, {true, false} },
+>  	.has_phy_lane = true,
+>  	.reg_cfg = {
+>  		.num = 1,
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
+> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
+> index d08ad0c632b4..7a87bed71e36 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
+> @@ -947,6 +947,7 @@ static int dsi_14nm_phy_enable(struct msm_dsi_phy
+> *phy, int src_pll_id,
+>  	int ret;
+>  	void __iomem *base = phy->base;
+>  	void __iomem *lane_base = phy->lane_base;
+> +	u32 glbl_test_ctrl;
+> 
+>  	if (msm_dsi_dphy_timing_calc_v2(timing, clk_req)) {
+>  		DRM_DEV_ERROR(&phy->pdev->dev,
+> @@ -994,10 +995,12 @@ static int dsi_14nm_phy_enable(struct
+> msm_dsi_phy *phy, int src_pll_id,
+>  	udelay(100);
+>  	dsi_phy_write(base + REG_DSI_14nm_PHY_CMN_CTRL_1, 0x00);
+> 
+> -	msm_dsi_phy_set_src_pll(phy, src_pll_id,
+> -				REG_DSI_14nm_PHY_CMN_GLBL_TEST_CTRL,
+> -				DSI_14nm_PHY_CMN_GLBL_TEST_CTRL_BITCLK_HS_SEL);
+> -
+> +	glbl_test_ctrl = dsi_phy_read(base + 
+> REG_DSI_14nm_PHY_CMN_GLBL_TEST_CTRL);
+> +	if (phy->id == DSI_1 && src_pll_id == DSI_0)
+> +		glbl_test_ctrl |= DSI_14nm_PHY_CMN_GLBL_TEST_CTRL_BITCLK_HS_SEL;
+> +	else
+> +		glbl_test_ctrl &= ~DSI_14nm_PHY_CMN_GLBL_TEST_CTRL_BITCLK_HS_SEL;
+> +	dsi_phy_write(base + REG_DSI_14nm_PHY_CMN_GLBL_TEST_CTRL, 
+> glbl_test_ctrl);
+>  	ret = dsi_14nm_set_usecase(phy);
+>  	if (ret) {
+>  		DRM_DEV_ERROR(&phy->pdev->dev, "%s: set pll usecase failed, %d\n",
+> @@ -1021,7 +1024,6 @@ static void dsi_14nm_phy_disable(struct 
+> msm_dsi_phy *phy)
+>  }
+> 
+>  const struct msm_dsi_phy_cfg dsi_phy_14nm_cfgs = {
+> -	.src_pll_truthtable = { {false, false}, {true, false} },
+>  	.has_phy_lane = true,
+>  	.reg_cfg = {
+>  		.num = 1,
+> @@ -1043,7 +1045,6 @@ const struct msm_dsi_phy_cfg dsi_phy_14nm_cfgs = 
+> {
+>  };
+> 
+>  const struct msm_dsi_phy_cfg dsi_phy_14nm_660_cfgs = {
+> -	.src_pll_truthtable = { {false, false}, {true, false} },
+>  	.has_phy_lane = true,
+>  	.reg_cfg = {
+>  		.num = 1,
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c
+> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c
+> index 5e73f811d645..f5b88c85a8fc 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c
+> @@ -70,6 +70,7 @@ static int dsi_20nm_phy_enable(struct msm_dsi_phy
+> *phy, int src_pll_id,
+>  	int i;
+>  	void __iomem *base = phy->base;
+>  	u32 cfg_4[4] = {0x20, 0x40, 0x20, 0x00};
+> +	u32 val;
+> 
+>  	DBG("");
+> 
+> @@ -83,9 +84,12 @@ static int dsi_20nm_phy_enable(struct msm_dsi_phy
+> *phy, int src_pll_id,
+> 
+>  	dsi_phy_write(base + REG_DSI_20nm_PHY_STRENGTH_0, 0xff);
+> 
+> -	msm_dsi_phy_set_src_pll(phy, src_pll_id,
+> -				REG_DSI_20nm_PHY_GLBL_TEST_CTRL,
+> -				DSI_20nm_PHY_GLBL_TEST_CTRL_BITCLK_HS_SEL);
+> +	val = dsi_phy_read(base + REG_DSI_20nm_PHY_GLBL_TEST_CTRL);
+> +	if (src_pll_id == DSI_1)
+> +		val |= DSI_20nm_PHY_GLBL_TEST_CTRL_BITCLK_HS_SEL;
+> +	else
+> +		val &= ~DSI_20nm_PHY_GLBL_TEST_CTRL_BITCLK_HS_SEL;
+> +	dsi_phy_write(base + REG_DSI_20nm_PHY_GLBL_TEST_CTRL, val);
+> 
+>  	for (i = 0; i < 4; i++) {
+>  		dsi_phy_write(base + REG_DSI_20nm_PHY_LN_CFG_3(i),
+> @@ -125,7 +129,6 @@ static void dsi_20nm_phy_disable(struct msm_dsi_phy 
+> *phy)
+>  }
+> 
+>  const struct msm_dsi_phy_cfg dsi_phy_20nm_cfgs = {
+> -	.src_pll_truthtable = { {false, true}, {false, true} },
+>  	.has_phy_regulator = true,
+>  	.reg_cfg = {
+>  		.num = 2,
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
+> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
+> index 0bcea3f3eca3..9f83ab90d093 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
+> @@ -704,6 +704,7 @@ static int dsi_28nm_phy_enable(struct msm_dsi_phy
+> *phy, int src_pll_id,
+>  	struct msm_dsi_dphy_timing *timing = &phy->timing;
+>  	int i;
+>  	void __iomem *base = phy->base;
+> +	u32 val;
+> 
+>  	DBG("");
+> 
+> @@ -743,9 +744,12 @@ static int dsi_28nm_phy_enable(struct msm_dsi_phy
+> *phy, int src_pll_id,
+> 
+>  	dsi_phy_write(base + REG_DSI_28nm_PHY_CTRL_0, 0x5f);
+> 
+> -	msm_dsi_phy_set_src_pll(phy, src_pll_id,
+> -				REG_DSI_28nm_PHY_GLBL_TEST_CTRL,
+> -				DSI_28nm_PHY_GLBL_TEST_CTRL_BITCLK_HS_SEL);
+> +	val = dsi_phy_read(base + REG_DSI_28nm_PHY_GLBL_TEST_CTRL);
+> +	if (phy->id == DSI_1 && src_pll_id == DSI_0)
+> +		val &= ~DSI_28nm_PHY_GLBL_TEST_CTRL_BITCLK_HS_SEL;
+> +	else
+> +		val |= DSI_28nm_PHY_GLBL_TEST_CTRL_BITCLK_HS_SEL;
+> +	dsi_phy_write(base + REG_DSI_28nm_PHY_GLBL_TEST_CTRL, val);
+> 
+>  	return 0;
+>  }
+> @@ -763,7 +767,6 @@ static void dsi_28nm_phy_disable(struct msm_dsi_phy 
+> *phy)
+>  }
+> 
+>  const struct msm_dsi_phy_cfg dsi_phy_28nm_hpm_cfgs = {
+> -	.src_pll_truthtable = { {true, true}, {false, true} },
+>  	.has_phy_regulator = true,
+>  	.reg_cfg = {
+>  		.num = 1,
+> @@ -785,7 +788,6 @@ const struct msm_dsi_phy_cfg dsi_phy_28nm_hpm_cfgs 
+> = {
+>  };
+> 
+>  const struct msm_dsi_phy_cfg dsi_phy_28nm_hpm_famb_cfgs = {
+> -	.src_pll_truthtable = { {true, true}, {false, true} },
+>  	.has_phy_regulator = true,
+>  	.reg_cfg = {
+>  		.num = 1,
+> @@ -807,7 +809,6 @@ const struct msm_dsi_phy_cfg 
+> dsi_phy_28nm_hpm_famb_cfgs = {
+>  };
+> 
+>  const struct msm_dsi_phy_cfg dsi_phy_28nm_lp_cfgs = {
+> -	.src_pll_truthtable = { {true, true}, {true, true} },
+>  	.has_phy_regulator = true,
+>  	.reg_cfg = {
+>  		.num = 1,
+
+The src_pll_truthtable for dsi_phy_28nm_lp_cfgs has all entries as true, 
+while the other
+28nm_***_cfgs dont. So wouldnt this below logic end up breaking 
+dsi_phy_28nm_lp_cfgs?
+
+> +	if (phy->id == DSI_1 && src_pll_id == DSI_0)
+> +		val &= ~DSI_28nm_PHY_GLBL_TEST_CTRL_BITCLK_HS_SEL;
+> +	else
+> +		val |= DSI_28nm_PHY_GLBL_TEST_CTRL_BITCLK_HS_SEL;
+> +	dsi_phy_write(base + REG_DSI_28nm_PHY_GLBL_TEST_CTRL, val);
+
+If so, I think we can leave it in cfg itself since the 28nm phy driver 
+is common and is managed
+using different config to differentiate the hpm, lp and hpn_famb 
+variants.
+
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
+> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
+> index 9ddd0adccce3..d2bfe43c9ef1 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
+> @@ -642,7 +642,6 @@ static void dsi_28nm_phy_disable(struct msm_dsi_phy 
+> *phy)
+>  }
+> 
+>  const struct msm_dsi_phy_cfg dsi_phy_28nm_8960_cfgs = {
+> -	.src_pll_truthtable = { {true, true}, {false, true} },
+>  	.has_phy_regulator = true,
+>  	.reg_cfg = {
+>  		.num = 1,
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> index ce6ae2fba993..619998506b78 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> @@ -955,7 +955,6 @@ static void dsi_7nm_phy_disable(struct msm_dsi_phy 
+> *phy)
+>  }
+> 
+>  const struct msm_dsi_phy_cfg dsi_phy_7nm_cfgs = {
+> -	.src_pll_truthtable = { {false, false}, {true, false} },
+>  	.has_phy_lane = true,
+>  	.reg_cfg = {
+>  		.num = 1,
+> @@ -978,7 +977,6 @@ const struct msm_dsi_phy_cfg dsi_phy_7nm_cfgs = {
+>  };
+> 
+>  const struct msm_dsi_phy_cfg dsi_phy_7nm_8150_cfgs = {
+> -	.src_pll_truthtable = { {false, false}, {true, false} },
+>  	.has_phy_lane = true,
+>  	.reg_cfg = {
+>  		.num = 1,
