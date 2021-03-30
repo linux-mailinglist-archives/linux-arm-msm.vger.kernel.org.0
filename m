@@ -2,57 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CD24A34E290
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 09:53:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B343534E292
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 09:53:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231124AbhC3Hwv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Mar 2021 03:52:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44014 "EHLO
+        id S230243AbhC3HxW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Mar 2021 03:53:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231329AbhC3Hwq (ORCPT
+        with ESMTP id S231340AbhC3HxO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Mar 2021 03:52:46 -0400
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66247C061762
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 00:52:46 -0700 (PDT)
-Received: by mail-pg1-x52f.google.com with SMTP id t140so3791791pgb.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 00:52:46 -0700 (PDT)
+        Tue, 30 Mar 2021 03:53:14 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 183A6C061764
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 00:53:14 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id q5so11581822pfh.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 00:53:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=aBhD5KbdnsFiSt2+MMh+Ftqi0BEhgXYxaIvnUCWCmD4=;
-        b=PCBacanLVKCrazqke39n4aoYhnvmGFaoq5RW/bFCH9SUL4kWDzRwfSdgeMEc07O07I
-         6jGxJKf15L2lOxcRR5+Iy3+9osErSC04xgj/r02WE7bm4ENx4lFutA8/G7dBCnZt++lD
-         jySxil/KOhl0UpUweNEF+3K2nc6p/NFOoUDh/V5eXCQAiHpVHA3KxT1yhKEIo7rNxbpe
-         aHKnmgisQ1NFlTwGEQXb9sGlkdBBMtE5pLMGoCZT1ZNRdK41HCqwcQZd0A1X6YTOYrvA
-         tJeIiJV/KkBd9d5wkGq7BXiw8KV8ZtGIBrue3Ddn1ZIhXbOx/nuIHIjtyA8gzxKyqahc
-         R23w==
+        bh=IoQxL5SNt15tfSmANbIGywwOC//PGu/AdqTu8zsQmZI=;
+        b=BPvvgXpa4E1f6072r4PS8uBp7TxaOtihUqR1PbColsWBDV3p0DJYTF4TMOL2URgasY
+         gX9HC3te4OntjVMMx3/dPQQW5vJbmjB+xyoXHyA8+POrApnNNgdQgvIXQ89Bl6j0boQr
+         SJ5EIcL4YMny4lVnyPcZ6jhIBhRT+snJrfR556H7pF0NaaGrr+tNZ721vrflK2aPSasn
+         o5Jz1rwEWZunPfBa1J7V0rvTWIy+eZTUp/6ZqSfPQPLEM0Vowmdat6/a9z+l/FBfGzvr
+         Q6aZM3UsQzcvgSNrbDk04SPEASrPKZLn7Fs82CPx46pdfwKeraOjJtVAWo+64I2u7Cd9
+         T4AQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=aBhD5KbdnsFiSt2+MMh+Ftqi0BEhgXYxaIvnUCWCmD4=;
-        b=ssmZPINL7fRx3y/G4EBFCmk5vTOct4fQoklJBz5GLZmgfpCoKIk+LTv2mC5zueFKtQ
-         AOHID6H01jRQslse2xRIB25+cbPesfafithk8vjPjwTzOxw+bg1O2Tdoaeaka8iaYJFy
-         5bqfU0Z7tPpBfEvPP1GzNy5/A4mth5gdwKnrU+9bFeSbUI+b+s1UAyDHKl8vLMCfyUZO
-         ZVya7vpFlcpkXd/FTkZMYUoPGCo1FXOSwd3tckIaGeHDYOd1Cf7TzzmOFcfrWgBrPuXf
-         1DW+KYsa0uqA5Os8vRlGLgO/D+fBRBbqUaxEh717+fDbwcb6YR/yWlx7E/JdJKp1WeGJ
-         jAPQ==
-X-Gm-Message-State: AOAM530F2aOYesW0S1k0dMrXeTAwWNPzE0EOrFn1DtFfBLR4HQlWKEm5
-        /3Gtg2XeeGj+hrIdf0YJVCxDXsEMvy6l1wjJjZmRPApTCPFU59FF
-X-Google-Smtp-Source: ABdhPJwqWL4BJmS3PF4jKnecqitr7ajsqqIzNZFQwzff0lTjoexwCN74pHvGWC9DkrzJnrg1q37cfwS6N7tcJwz61qw=
-X-Received: by 2002:a62:1b01:0:b029:1f2:561e:e588 with SMTP id
- b1-20020a621b010000b02901f2561ee588mr28460964pfb.55.1617090765887; Tue, 30
- Mar 2021 00:52:45 -0700 (PDT)
+        bh=IoQxL5SNt15tfSmANbIGywwOC//PGu/AdqTu8zsQmZI=;
+        b=AAMluOpAMKKW1efjGDjzPkXmDzZBLd+E30ssImvsxBlpV+ptQ8N3NCAMqo14klW+tt
+         vqCD7uogChnaAreF/6dNQ1xl+5TrdNiGI6nSHjXBQTXu1Kyh6/b9GIbNAXMjvFomJrSx
+         3wwvjUzSca5rWnetIKa3R0q9ihrkfzGrtxkxmxdBLUGIVqHrif/w13H2Fxw6JQI7ePu5
+         O4gTSq9GO+ABOv5gxTkRzbfmeax/wi+vURunfmsJ95yKj2HdrSUEacxDXn5bXLdNw5Ws
+         3kxMiKeXMz76ECXcAz6IS3OHaRM2sO1Bk+qh9V3Nkwlnjvnk7WmUkTYfn+fAJg2vj8IK
+         sRIg==
+X-Gm-Message-State: AOAM531APM0z33/w9oVQUrmanxE7gTZxDOqUYdpn1Tt8fYZDenZYh52j
+        1NQzpUJgXDL/bEJ1bAJ0vKul8WBCBRVmot2jCdXs4Q==
+X-Google-Smtp-Source: ABdhPJxAlg0Ep3+QS+d9wnuUjE40HL50+UAfhzmnWiEpxoMoBqq/eqhwmcHU85ImtV4/J/p/xvF1M+Xop6uVKYDaAdI=
+X-Received: by 2002:a63:2262:: with SMTP id t34mr27862921pgm.303.1617090793577;
+ Tue, 30 Mar 2021 00:53:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <1617067704-28850-1-git-send-email-bbhatt@codeaurora.org> <1617067704-28850-2-git-send-email-bbhatt@codeaurora.org>
-In-Reply-To: <1617067704-28850-2-git-send-email-bbhatt@codeaurora.org>
+References: <1617067704-28850-1-git-send-email-bbhatt@codeaurora.org> <1617067704-28850-3-git-send-email-bbhatt@codeaurora.org>
+In-Reply-To: <1617067704-28850-3-git-send-email-bbhatt@codeaurora.org>
 From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Tue, 30 Mar 2021 10:00:54 +0200
-Message-ID: <CAMZdPi8Qghm1-GohMq8_d5r3j_+_KLerZ=NM9PAKmB9ksmBEWg@mail.gmail.com>
-Subject: Re: [PATCH v1 1/7] bus: mhi: core: Rely on accurate method to
- determine EDL mode
+Date:   Tue, 30 Mar 2021 10:01:22 +0200
+Message-ID: <CAMZdPi9MQzAKZj2hRMhD6d1vP-EXkfxUdmQuqKCSZQwmexSQ-Q@mail.gmail.com>
+Subject: Re: [PATCH v1 2/7] bus: mhi: core: Wait for ready after an EDL
+ firmware download
 To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
 Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
@@ -69,11 +68,10 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Tue, 30 Mar 2021 at 03:28, Bhaumik Bhatt <bbhatt@codeaurora.org> wrote:
 >
-> Relying on the current execution environment to determine if EDL
-> image was downloaded should not be done as the execution
-> environment can change at this point in error cases and we may
-> misread it. Instead, MHI can rely on the local 'fw_name' variable
-> as a safer alternative.
+> Currently, the firmware load handler returns after the EDL image
+> is downloaded. Wait for an MHI READY transition instead as the
+> specification expects so as to proceed with further bootup such
+> as device entering Flash Programmer execution environment.
 >
 > Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
