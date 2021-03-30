@@ -2,96 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AC32034E5D1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 12:53:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 86FFE34E63C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 13:17:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231742AbhC3KxQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Mar 2021 06:53:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54828 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231749AbhC3Kws (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Mar 2021 06:52:48 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0348CC061764
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 03:52:47 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id hq27so24108592ejc.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 03:52:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=oBnG2TakhmLmvRYGUb/04MxUlScMZhhVFfbZVw+gUk8=;
-        b=QO/iA9QDZIu8GXp0AL3Lvs2JqtFzX0YqsG/jYvAPbv2DLBCb+2nmO1jCXW4SpJK8Xs
-         dru4QYZR55PU74HwrxjxYBr8IQNqeAWKs89bRLOB5o3ein4RnIfG+6bak94mPZoCZPBV
-         /9lzXQxl0teYtKvl94ZtT4dYUEarYNWmXIEaOA6vYc63f0rgSYQG30A6R1alsiFej/Uk
-         RZqQGn+EcuaWdlIhPv1QYwB+dUYOIKhCwFSPjlk8wAhieAXzOzU6bbJuWogsYJs4LIFQ
-         A6kiFP5cy2oLuqbXHrPXDMYVULH/e/Q3d6yIfsYR7e0pD6eGxpS9rnBxnGkOJKCOabzL
-         m4Gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=oBnG2TakhmLmvRYGUb/04MxUlScMZhhVFfbZVw+gUk8=;
-        b=QUKUc1sRRGsTOW3zR2Hr8roG13WcXTJBr1NMXByC+OLpV7YxV/fNwvNZlugT0ms3Ey
-         gz6D//wrB4gJZhtzyfK23U1hv0wv7Scb2xhfjavgZTriivddB9oLveAw+Y4HF+h/gFlv
-         Cg2DIf/iR/sS0h6SMOXZj0db5JoUP3lNp9y/PgxpHfKM17BylJZbQ8vPIma4ZTyXi7c+
-         djeza8QKDVYjnlpQoOKGNXILie/Q/l+tJ3/DiZsJ9epu+cwF8frlRkScmYgTEHFoKM/1
-         7LLKAI7HKIyQ+1ggAOh6Gz7og3x4jkGg+qZ/Y/6VldcNPG1+kPUhWaE5sNpwBYsgICnv
-         O8ZQ==
-X-Gm-Message-State: AOAM532H7D5uW7fe8cAPYOSIYeQbOZQwHkcssXB3v8Ci0WQX6w3f2PGp
-        DvnemI+vGeUcKKJJTDUxJp336IAsKDqqDw==
-X-Google-Smtp-Source: ABdhPJwiSti2LSfBiErK0gC7qLs349y9VjSzb3XhCSCrYwvv2JKnlUDY6yBTiGdZb1mp86wjJtscMA==
-X-Received: by 2002:a17:906:26d4:: with SMTP id u20mr28662103ejc.114.1617101566583;
-        Tue, 30 Mar 2021 03:52:46 -0700 (PDT)
-Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.googlemail.com with ESMTPSA id l1sm10879470edt.59.2021.03.30.03.52.45
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 30 Mar 2021 03:52:46 -0700 (PDT)
-Subject: Re: [PATCH 1/2] dt-bindings: nvmem: Add SoC compatible for sc7280
-To:     Rajendra Nayak <rnayak@codeaurora.org>, robh+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dianders@chromium.org
-References: <1616651056-11844-1-git-send-email-rnayak@codeaurora.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <b8b1c34e-8faa-857d-4508-8a24cc31c3a0@linaro.org>
-Date:   Tue, 30 Mar 2021 11:52:45 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S231852AbhC3LRI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Mar 2021 07:17:08 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54340 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231743AbhC3LQv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 30 Mar 2021 07:16:51 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 760CB61957;
+        Tue, 30 Mar 2021 11:16:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1617103011;
+        bh=9Z6+WxPhgFfwituF0l72OC6jBMFflj1QqruEO4guhuw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=GlTCs/ZNVXQgX/shaZJ4x2DfKm56n+pVp537KzCR1jwJJm2FcluizUavBUpufB3M4
+         ViaM9/SnQxP/bqWKLgoRJLL4Xa7b2UOSEe6PtQnZvh5B1G3joiBhb193st1GcXLR4N
+         /n25LNmCS8nPWjVaF5WPQa7kcdyPKrHCK8w8yJUg=
+Date:   Tue, 30 Mar 2021 13:16:48 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Sandeep Maheswaram <sanm@codeaurora.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>
+Subject: Re: [PATCH v1] usb: dwc3: core: Add shutdown callback for dwc3
+Message-ID: <YGMIoM3xIZzRvU3i@kroah.com>
+References: <1616527652-7937-1-git-send-email-sanm@codeaurora.org>
+ <YF3jfshT3OSolcws@kroah.com>
+ <e1afc071-57a6-5d7f-b467-92b618419b76@codeaurora.org>
+ <YGLqXI8HOaOrMq1B@kroah.com>
+ <d2348b758fa57acf53885b67f066e0a1@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <1616651056-11844-1-git-send-email-rnayak@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d2348b758fa57acf53885b67f066e0a1@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 25/03/2021 05:44, Rajendra Nayak wrote:
-> Document SoC compatible for sc7280
+On Tue, Mar 30, 2021 at 03:25:58PM +0530, Sai Prakash Ranjan wrote:
+> On 2021-03-30 14:37, Greg Kroah-Hartman wrote:
+> > On Tue, Mar 30, 2021 at 02:12:04PM +0530, Sandeep Maheswaram wrote:
+> > > 
+> > > On 3/26/2021 7:07 PM, Greg Kroah-Hartman wrote:
+> > > > On Wed, Mar 24, 2021 at 12:57:32AM +0530, Sandeep Maheswaram wrote:
+> > > > > This patch adds a shutdown callback to USB DWC core driver to ensure that
+> > > > > it is properly shutdown in reboot/shutdown path. This is required
+> > > > > where SMMU address translation is enabled like on SC7180
+> > > > > SoC and few others. If the hardware is still accessing memory after
+> > > > > SMMU translation is disabled as part of SMMU shutdown callback in
+> > > > > system reboot or shutdown path, then IOVAs(I/O virtual address)
+> > > > > which it was using will go on the bus as the physical addresses which
+> > > > > might result in unknown crashes (NoC/interconnect errors).
+> > > > >
+> > > > > Previously this was added in dwc3 qcom glue driver.
+> > > > > https://patchwork.kernel.org/project/linux-arm-msm/list/?series=382449
+> > > > > But observed kernel panic as glue driver shutdown getting called after
+> > > > > iommu shutdown. As we are adding iommu nodes in dwc core node
+> > > > > in device tree adding shutdown callback in core driver seems correct.
+> > > > So shouldn't you also remove this from the qcom glue driver at the same
+> > > > time?  Please submit both as a patch series.
+> > > >
+> > > > thanks,
+> > > >
+> > > > greg k-h
+> > > 
+> > > Hi Greg,
+> > > 
+> > > The qcom glue driver patch is not merged yet. I have just mentioned
+> > > for it for reference.
+> > 
+> > You know that we can not add callbacks for no in-kernel user, so what
+> > good is this patch for now?
+> > 
 > 
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> ---
->   Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
-> index 992777c..861b205 100644
-> --- a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
-> +++ b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
-> @@ -24,6 +24,7 @@ properties:
->             - qcom,msm8998-qfprom
->             - qcom,qcs404-qfprom
->             - qcom,sc7180-qfprom
-> +          - qcom,sc7280-qfprom
->             - qcom,sdm845-qfprom
->         - const: qcom,qfprom
->   
-> 
+> What in-kernel user? Since when does shutdown callback need an in-kernel
+> user? When you reboot or shutdown a system, it gets called. The reason
+> why the shutdown callback is needed is provided in the commit text.
 
-Applied both,
-thanks,
-srini
+As I can't see the patch here, I have no idea...
