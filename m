@@ -2,101 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B5E734EB62
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 17:03:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1215234EBEA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 17:16:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231922AbhC3PA3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Mar 2021 11:00:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52166 "EHLO
+        id S232249AbhC3PPf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Mar 2021 11:15:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231652AbhC3PAP (ORCPT
+        with ESMTP id S232274AbhC3PPF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Mar 2021 11:00:15 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57C98C061574;
-        Tue, 30 Mar 2021 08:00:14 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id k8so16555441wrc.3;
-        Tue, 30 Mar 2021 08:00:14 -0700 (PDT)
+        Tue, 30 Mar 2021 11:15:05 -0400
+Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7E65C061762
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 08:15:05 -0700 (PDT)
+Received: by mail-qk1-x729.google.com with SMTP id x14so16155136qki.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 08:15:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=eyleulbhx+njoqqH6BwP+l7pCWQF8y0aALwi12vfKYM=;
-        b=fCSzzlhwIZRxnh8WlrLMYbm5+Njdfj6dEm0bHf8r+xDzYIMacTSD3i3NQycSovzuSj
-         EVXrsaeA+8Q6clda2Fzt4qondyXdQQukQijU645yfl1pKwDdMg7e0hWT+6yAAVSUFuAI
-         +Wy1BnSqMiT25Xv8Eh/rM+OWoPrHHNKMd1huKxUhZX3A1kI+9r4cSt2vualljOOYrzRq
-         mNNZkNSVQQuKhfEkIKegbY/PcTiIj000vuo7Lx+eJ97k/smtTH32v+AczD0ypz4/NGG5
-         TXj0QNsAfH8tw3UI0GxZAqJ4Z4+5VzZoZJMbwM+UPAScRykVfUXfpx69lKfy1ADRVNE5
-         lX5g==
+        bh=cJ+YJYx4OZR4pIjZNdx26kpeAL+vxeQN6P+Ncit8r0s=;
+        b=GbCYv1WSjk/ew5BC7x/ek5Wk2nKYhMN1fPHHdbT0dXhA8sLDDAsvmkroYbEa1UY8pV
+         t325S1USzc4yVtmH5R+gvgAKF4w2om2JhomKV4Iaf538mB2Gfj/Jm/mw8aG8EVfwF/SD
+         ZZthbDH/iclBvd6Stp0tcsKmZ3GOpPd77CGCc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=eyleulbhx+njoqqH6BwP+l7pCWQF8y0aALwi12vfKYM=;
-        b=HhN9E8BWcwMjgDojQ7xjkbppha6Ys6GadZ7evYve8m69CSiMGNFvEgu8dqESS/xz7X
-         5oeTJHOg2/2+Ry6aHEatHpvuTnLYHvQGSHjCUW8mNYXOWYw1JdWff54pjzI3hEhv+QYZ
-         wr6RF0jEWeN3Lm7zrBCreUtHoveamGPdo1JUuwpXwJlfAWOgD4AObl5vQfpXx+f8G0zj
-         2aOBCMD/xN1xO8FECueTSmooTOrrEjJn5eJy+CrzoZuy0qXhA9VefIkdG4ZBVHvdTwog
-         Q7UvVcjOg3zMzTeuSxvoj2rW8WGuZLtboSujjkQXARFdFIax8llUxB49NhmvWb25bAae
-         I1ZQ==
-X-Gm-Message-State: AOAM5303qZiXvtLVoPkHxB/1e4kwsB63uzeoEUISLP2SuYCDW0zomfsB
-        WiEI//bqk1qPCPCfJyogoeF+dLsio7EdEMpX5YhkWsqxEE8=
-X-Google-Smtp-Source: ABdhPJwtCDJtqvJEY4d1K+b5/Nk9wM8y2m8HXX6bF4f+S6YTvz+OX7rJ6BNzGHpGdn+v7GZmGIK8aRudda7rzHLsgwk=
-X-Received: by 2002:adf:d0c3:: with SMTP id z3mr35449048wrh.28.1617116413088;
- Tue, 30 Mar 2021 08:00:13 -0700 (PDT)
+        bh=cJ+YJYx4OZR4pIjZNdx26kpeAL+vxeQN6P+Ncit8r0s=;
+        b=WTjC4Mqhz8B0mqtIXCvUvnUWUiLGoVubAOOmqj8fYXEG8+cZqovs+Ky9YXRHrD1ICq
+         mdTTsfAEYFLcJ4Yt8NdzRhKgj8h0N1qkkwp+XWV1qHHZcEgSP+75otgn8E5SMy8Y9Qx3
+         CdWIM7DG4WaOgs4k6CsPxrsPL0AXhT0b7wF2jr2Z63eu1Ork0jDCi8nBejh5Hs1S37+c
+         /8pSmJXj/cNGjfoVFujRI3gE1w2T1HNTRthgTIGoMKhbu5+H3V7G801atPSwzoG5rG+k
+         UoavaaJtUEo26TofklewxOsAn3xFNJV2wndxYJuM6Lc/h7XTQo3XzKyssJKkIWGm/66K
+         eO7w==
+X-Gm-Message-State: AOAM53342FlyEzxJLO+fU9Q8fQhP8ilihOgidjUjQtfiaDZxtrNH5Itx
+        p9B45dOL7phZPRUA8SyCtrX8ZbTVkJ5qJA==
+X-Google-Smtp-Source: ABdhPJxVBOUJP6sHygaocB363/B/Ge/1AHwd9XUbPJmIX39LUVtEbRdkyJ7AdQKexatJvsuhB8yR2Q==
+X-Received: by 2002:a37:9bd1:: with SMTP id d200mr30813781qke.328.1617117304791;
+        Tue, 30 Mar 2021 08:15:04 -0700 (PDT)
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com. [209.85.219.171])
+        by smtp.gmail.com with ESMTPSA id c26sm8463440qtj.92.2021.03.30.08.15.03
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Mar 2021 08:15:03 -0700 (PDT)
+Received: by mail-yb1-f171.google.com with SMTP id g38so17747358ybi.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 08:15:03 -0700 (PDT)
+X-Received: by 2002:a25:4092:: with SMTP id n140mr36653500yba.276.1617117302924;
+ Tue, 30 Mar 2021 08:15:02 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210326231303.3071950-1-eric@anholt.net> <20210329144729.GB4203@willie-the-truck>
- <CAF6AEGugpEk396DVtWX=W+uf3p-wcgBfCSpSLWGQJE1vKpJ4aw@mail.gmail.com> <20210330093432.GB5281@willie-the-truck>
-In-Reply-To: <20210330093432.GB5281@willie-the-truck>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 30 Mar 2021 08:03:36 -0700
-Message-ID: <CAF6AEGvCCWvmRBhzY4MsdzgwfJ+GF2AUOS-_NTyhM8wtnDzY2Q@mail.gmail.com>
-Subject: Re: [PATCH 1/2] iommu/arm-smmu-qcom: Skip the TTBR1 quirk for db820c.
-To:     Will Deacon <will@kernel.org>
-Cc:     Eric Anholt <eric@anholt.net>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
+References: <20210330013408.2532048-1-john.stultz@linaro.org>
+In-Reply-To: <20210330013408.2532048-1-john.stultz@linaro.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 30 Mar 2021 08:14:51 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XbwNmmeoZOSso3Kz1mP40ONo0hDvn6KP8zZsdg9uPcNg@mail.gmail.com>
+Message-ID: <CAD=FV=XbwNmmeoZOSso3Kz1mP40ONo0hDvn6KP8zZsdg9uPcNg@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: Fix removal of valid error case when checking speed_bin
+To:     John Stultz <john.stultz@linaro.org>
+Cc:     lkml <linux-kernel@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Eric Anholt <eric@anholt.net>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         freedreno <freedreno@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        YongQin Liu <yongqin.liu@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 30, 2021 at 2:34 AM Will Deacon <will@kernel.org> wrote:
->
-> On Mon, Mar 29, 2021 at 09:02:50PM -0700, Rob Clark wrote:
-> > On Mon, Mar 29, 2021 at 7:47 AM Will Deacon <will@kernel.org> wrote:
-> > >
-> > > On Fri, Mar 26, 2021 at 04:13:02PM -0700, Eric Anholt wrote:
-> > > > db820c wants to use the qcom smmu path to get HUPCF set (which keeps
-> > > > the GPU from wedging and then sometimes wedging the kernel after a
-> > > > page fault), but it doesn't have separate pagetables support yet in
-> > > > drm/msm so we can't go all the way to the TTBR1 path.
-> > >
-> > > What do you mean by "doesn't have separate pagetables support yet"? The
-> > > compatible string doesn't feel like the right way to determine this.
-> >
-> > the compatible string identifies what it is, not what the sw
-> > limitations are, so in that regard it seems right to me..
->
-> Well it depends on what "doesn't have separate pagetables support yet"
-> means. I can't tell if it's a hardware issue, a firmware issue or a driver
-> issue.
+Hi,
 
-Just a driver issue (and the fact that currently we don't have
-physical access to a device... debugging a5xx per-process-pgtables by
-pushing untested things to the CI farm is kind of a difficult way to
-work)
+On Mon, Mar 29, 2021 at 6:34 PM John Stultz <john.stultz@linaro.org> wrote:
+>
+> Commit 7bf168c8fe8c  ("drm/msm: Fix speed-bin support not to
+> access outside valid memory"), reworked the nvmem reading of
+> "speed_bin", but in doing so dropped handling of the -ENOENT
+> case which was previously documented as "fine".
+>
+> That change resulted in the db845c board display to fail to
+> start, with the following error:
+>
+> adreno 5000000.gpu: [drm:a6xx_gpu_init] *ERROR* failed to read speed-bin (-2). Some OPPs may not be supported by hardware
+>
+> Thus, this patch simply re-adds the ENOENT handling so the lack
+> of the speed_bin entry isn't fatal for display, and gets things
+> working on db845c.
+>
+> Cc: Rob Clark <robdclark@gmail.com>
+> Cc: Sean Paul <sean@poorly.run>
+> Cc: Jordan Crouse <jcrouse@codeaurora.org>
+> Cc: Eric Anholt <eric@anholt.net>
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: freedreno@lists.freedesktop.org
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: YongQin Liu <yongqin.liu@linaro.org>
+> Reported-by: YongQin Liu <yongqin.liu@linaro.org>
+> Fixes: 7bf168c8fe8c  ("drm/msm: Fix speed-bin support not to access outside valid memory")
+> Signed-off-by: John Stultz <john.stultz@linaro.org>
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
 
-BR,
--R
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
