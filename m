@@ -2,154 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 85E7934E2AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 10:05:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D2EBC34E365
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 10:43:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230209AbhC3IEy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Mar 2021 04:04:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46538 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231187AbhC3IE1 (ORCPT
+        id S229633AbhC3Imv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Mar 2021 04:42:51 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:29813 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231313AbhC3Ime (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Mar 2021 04:04:27 -0400
-Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA326C061764
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 01:04:26 -0700 (PDT)
-Received: by mail-qv1-xf2b.google.com with SMTP id 30so7710332qva.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 01:04:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=0hXTX8IXseXWS6sQ5v0psd9jBHZ3jQktmk6VWJvrFnY=;
-        b=AvdkhgznJpxH1Y85tc0K2FisAYU02f2ExRqH01ZlXjycjuvlr/ijazyhskTfgxv6z/
-         V2NuyyG79EEi+2rzN+aDLK493ag+xU/jBsSvNsF7rpVlukSgCkraSUKfLiakUcYfPqQb
-         Q+l+vEbwokSA1ovQLLaPmPE2t2VN3QkAIMZjkR/GiNfdn8jez1YBMn9b7LMDxqy9xwoS
-         XitJxW7dohNEtaBno1G7qsnTNuEivNHlDLd7AfnsmUdJXLw7uiO9Rp9KMk7YhaEUJfdP
-         VI0WITXd33/bkpCsR27neG9UVD+HaMNA9376YHZlbnO/M3mHlPd+E+KFzdVQLsinmW7u
-         4tvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=0hXTX8IXseXWS6sQ5v0psd9jBHZ3jQktmk6VWJvrFnY=;
-        b=uYo41D1B7woQaIttFBD5b+gMJfUQEJBH9CMqB3cjXvJ0dyUpHmT6u68FSqQu2EMgUH
-         F1LpAA98O2GM6DJ+0u9Bb0vWs4wEMd6P3ZNAIRoQhAfV9Lcx2G2UwjRzdYZwxtyEHONb
-         eXvcCEW2Gl8MJgZUcZg3wmt8+tPtd/UcGT+tEnZoMfCm9MvrTva7Rx6xHOHNXHU475/l
-         kLsF5vZGfYwMRJASRl64gta5G2CugIfWVutZ4OxTDUXtfmHCMDYiP1YRiZV51pOTUn2z
-         uSCSuOA8EgqPU1SwOk/wcEqNu0EoX6KPR3rFVL/2yMocfhgMiU4U7HYYSZLwl2KAhry0
-         TS+g==
-X-Gm-Message-State: AOAM530fVI3GWD2FOivFJG/ngsFmH206Wod9WgRHnfZgAlSZJCky2URC
-        AJb1GFcADpGK7qyS3FuDGLM7UIjgCyyQjUBOk06xog==
-X-Google-Smtp-Source: ABdhPJzODMwi5bI8/2BWHi0LOLZBUGzb2dOjHsDIuxM7K/fV9heoh5dmZ3joJPfWrl2fM7ixxIx6Ll+z2dooy8ho1Ss=
-X-Received: by 2002:a0c:a425:: with SMTP id w34mr28728433qvw.2.1617091465670;
- Tue, 30 Mar 2021 01:04:25 -0700 (PDT)
+        Tue, 30 Mar 2021 04:42:34 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1617093754; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=6ZBUFntkKzGQ6dG5LrEqdA+1MgShIPk4qTagF0K+hzk=; b=mhYa+o4AEAQI6TpJij4z9jmIp9ImuiuEccrrfe8f/EGVZEoc/eoRJn4bCkCinZxuJMOtHXg9
+ WTCFJTMaG0DbEJaW/IxkTsTRuWUC5V8P5goLn/OCVhGkAlShRjb7H2wgOJsO/UJkM2kJrs/y
+ TnJPUvtjBjc7Tw/nSf+5WLwhJr8=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 6062e465c39407c327260d24 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 30 Mar 2021 08:42:13
+ GMT
+Sender: sanm=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 566FFC433CA; Tue, 30 Mar 2021 08:42:12 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [10.252.226.205] (unknown [202.46.23.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sanm)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id EDD28C433C6;
+        Tue, 30 Mar 2021 08:42:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EDD28C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sanm@codeaurora.org
+Subject: Re: [PATCH v1] usb: dwc3: core: Add shutdown callback for dwc3
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>
+References: <1616527652-7937-1-git-send-email-sanm@codeaurora.org>
+ <YF3jfshT3OSolcws@kroah.com>
+From:   Sandeep Maheswaram <sanm@codeaurora.org>
+Message-ID: <e1afc071-57a6-5d7f-b467-92b618419b76@codeaurora.org>
+Date:   Tue, 30 Mar 2021 14:12:04 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-References: <20210329120051.3401567-1-dmitry.baryshkov@linaro.org>
- <20210329120051.3401567-4-dmitry.baryshkov@linaro.org> <YGKYDzCzwz+1pxOi@builder.lan>
-In-Reply-To: <YGKYDzCzwz+1pxOi@builder.lan>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 30 Mar 2021 11:04:14 +0300
-Message-ID: <CAA8EJppuRyFk5arkjFAuHjeHpVrLiVpXPnXciOxkE1Y0OjKFSQ@mail.gmail.com>
-Subject: Re: [PATCH v4 3/4] drm/msm: add compatibles for sm8150/sm8250 display
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, Rob Herring <robh+dt@kernel.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <YF3jfshT3OSolcws@kroah.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 30 Mar 2021 at 06:16, Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Mon 29 Mar 07:00 CDT 2021, Dmitry Baryshkov wrote:
->
-> > From: Jonathan Marek <jonathan@marek.ca>
-> >
-> > The driver already has support for sm8150/sm8250, but the compatibles were
-> > never added.
-> >
-> > Also inverse the non-mdp4 condition in add_display_components() to avoid
-> > having to check every new compatible in the condition.
-> >
-> > Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 2 ++
-> >  drivers/gpu/drm/msm/msm_drv.c           | 6 +++---
-> >  2 files changed, 5 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> > index 5a8e3e1fc48c..fff12a4c8bfc 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> > @@ -1219,6 +1219,8 @@ static const struct dev_pm_ops dpu_pm_ops = {
-> >  static const struct of_device_id dpu_dt_match[] = {
-> >       { .compatible = "qcom,sdm845-dpu", },
-> >       { .compatible = "qcom,sc7180-dpu", },
-> > +     { .compatible = "qcom,sm8150-dpu", },
-> > +     { .compatible = "qcom,sm8250-dpu", },
-> >       {}
-> >  };
-> >  MODULE_DEVICE_TABLE(of, dpu_dt_match);
-> > diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> > index 94525ac76d4e..928f13d4bfbc 100644
-> > --- a/drivers/gpu/drm/msm/msm_drv.c
-> > +++ b/drivers/gpu/drm/msm/msm_drv.c
-> > @@ -1185,9 +1185,7 @@ static int add_display_components(struct device *dev,
-> >        * Populate the children devices, find the MDP5/DPU node, and then add
-> >        * the interfaces to our components list.
-> >        */
-> > -     if (of_device_is_compatible(dev->of_node, "qcom,mdss") ||
-> > -         of_device_is_compatible(dev->of_node, "qcom,sdm845-mdss") ||
-> > -         of_device_is_compatible(dev->of_node, "qcom,sc7180-mdss")) {
-> > +     if (!of_device_is_compatible(dev->of_node, "qcom,mdp4")) {
->
-> Please consider reviewing my proposed alternative solution for this
-> hunk:
->
-> https://lore.kernel.org/linux-arm-msm/20210317025634.3987908-1-bjorn.andersson@linaro.org/
 
-I'd slightly prefer Jonathan's approach, as it seems simpler, but no
-strong preference towards one or another.
+On 3/26/2021 7:07 PM, Greg Kroah-Hartman wrote:
+> On Wed, Mar 24, 2021 at 12:57:32AM +0530, Sandeep Maheswaram wrote:
+>> This patch adds a shutdown callback to USB DWC core driver to ensure that
+>> it is properly shutdown in reboot/shutdown path. This is required
+>> where SMMU address translation is enabled like on SC7180
+>> SoC and few others. If the hardware is still accessing memory after
+>> SMMU translation is disabled as part of SMMU shutdown callback in
+>> system reboot or shutdown path, then IOVAs(I/O virtual address)
+>> which it was using will go on the bus as the physical addresses which
+>> might result in unknown crashes (NoC/interconnect errors).
+>>
+>> Previously this was added in dwc3 qcom glue driver.
+>> https://patchwork.kernel.org/project/linux-arm-msm/list/?series=382449
+>> But observed kernel panic as glue driver shutdown getting called after
+>> iommu shutdown. As we are adding iommu nodes in dwc core node
+>> in device tree adding shutdown callback in core driver seems correct.
+> So shouldn't you also remove this from the qcom glue driver at the same
+> time?  Please submit both as a patch series.
+>
+> thanks,
+>
+> greg k-h
 
->
-> For the rest
->
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->
-> Regards,
-> Bjorn
->
-> >               ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
-> >               if (ret) {
-> >                       DRM_DEV_ERROR(dev, "failed to populate children devices\n");
-> > @@ -1320,6 +1318,8 @@ static const struct of_device_id dt_match[] = {
-> >       { .compatible = "qcom,mdss", .data = (void *)KMS_MDP5 },
-> >       { .compatible = "qcom,sdm845-mdss", .data = (void *)KMS_DPU },
-> >       { .compatible = "qcom,sc7180-mdss", .data = (void *)KMS_DPU },
-> > +     { .compatible = "qcom,sm8150-mdss", .data = (void *)KMS_DPU },
-> > +     { .compatible = "qcom,sm8250-mdss", .data = (void *)KMS_DPU },
-> >       {}
-> >  };
-> >  MODULE_DEVICE_TABLE(of, dt_match);
-> > --
-> > 2.30.2
-> >
+Hi Greg,
+
+The qcom glue driver patch is not merged yet. I have just mentioned for it for reference.
+
+Regards
+Sandeep
 
 
-
--- 
-With best wishes
-Dmitry
