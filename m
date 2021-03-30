@@ -2,198 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AE46834F1BA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 21:43:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 09F9634F2F7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 23:20:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233159AbhC3Tma (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Mar 2021 15:42:30 -0400
-Received: from mail-ot1-f48.google.com ([209.85.210.48]:38485 "EHLO
-        mail-ot1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233113AbhC3TmY (ORCPT
+        id S232607AbhC3VTl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Mar 2021 17:19:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49836 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232465AbhC3VTb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Mar 2021 15:42:24 -0400
-Received: by mail-ot1-f48.google.com with SMTP id w21-20020a9d63950000b02901ce7b8c45b4so16685481otk.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 12:42:24 -0700 (PDT)
+        Tue, 30 Mar 2021 17:19:31 -0400
+Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADD39C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 14:19:30 -0700 (PDT)
+Received: by mail-qt1-x836.google.com with SMTP id h7so13026190qtx.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 14:19:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=m6rFezdA5OJ9mTG164jTh973n/T9ArBSRkBvKYL1hbU=;
+        b=F7orwkVqtDNCgPCQA7+jYbbqDLvKxYNea+LjGvci1d+v8BM3zK4cp7X7GMk1sm+Sp0
+         zHMF4kvJWCe/Px6LUkBaeWTFEZD5PT5V94tmq58Kdm/Ypqt27jAWFNktBNRGoJlWpdS7
+         /nQlLxzxXtPiz0sAL6LPHeCXWK1eU/D30Sens=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=BijUzWJ/Srebt3CiLNB17AGU4V6AniCiS8DnMoS0K0M=;
-        b=CRCLTSY9TepTSnCdgHhedCcrEI/kDqT3IX7RheTtMCS8mpvaPAyUCOXaJdII4QzpSy
-         sjyQbtCxyBdXZHucVjELdHVuCvuF/fqLAOcvYDVckRicKvwXj1lLu9fXpCzN3IlqTLDv
-         hnotV98WJjlVnh84ywATr4Q6xUDaFiMa0Rl5Zr7yRcEAd7/a3nLzf1Pk/3ueF3Ms2HYx
-         7WYjlTmBGR/2fIwPwTvbgklEe4WywwTVBTLvJC8lLqlFmJPT/exe/s9JTDadqZrOp04a
-         gbNNDDxtiWTS9kkRES8LjiaQUqTZGU/qZaNiK/u0Qcw3Lrc5BOzIWvS9j2AB+aB9Blsm
-         +UwA==
-X-Gm-Message-State: AOAM533yh7PDVYlpsEpW9MOT9oLvHYR03cSvx7+nojEK5G0BDcBf8Akt
-        pghGYh18Q5yOgyn66c2FOA==
-X-Google-Smtp-Source: ABdhPJxM7U40R/6Jiowr2Hkx5tvmKFK8MPEWS8LvxCbCsSqtrwQdgexjRR18TXBEbWm3MycI1JeEPA==
-X-Received: by 2002:a05:6830:4121:: with SMTP id w33mr13159955ott.153.1617133343667;
-        Tue, 30 Mar 2021 12:42:23 -0700 (PDT)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id p64sm4274131oib.57.2021.03.30.12.42.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Mar 2021 12:42:22 -0700 (PDT)
-Received: (nullmailer pid 609864 invoked by uid 1000);
-        Tue, 30 Mar 2021 19:42:21 -0000
-Date:   Tue, 30 Mar 2021 14:42:21 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     mkrishn@codeaurora.org
-Cc:     Stephen Boyd <swboyd@chromium.org>, linux-arm-msm@vger.kernel.org,
-        kalyan_t@codeaurora.org, tanmay@codeaurora.org,
-        abhinavk@codeaurora.org, robdclark@gmail.com,
-        bjorn.andersson@linaro.org, vinod.koul@linaro.org,
-        rnayak@codeaurora.org, dianders@chromium.org, sibis@codeaurora.org,
-        khsieh@codeaurora.org
-Subject: Re: [PATCH v14 3/4] dt-bindings: msm: dsi: add yaml schemas for DSI
- PHY bindings
-Message-ID: <20210330194221.GA588861@robh.at.kernel.org>
-References: <1616673661-20038-1-git-send-email-mkrishn@codeaurora.org>
- <1616673661-20038-3-git-send-email-mkrishn@codeaurora.org>
- <161671311714.3012082.4777798674596112311@swboyd.mtv.corp.google.com>
- <81ea21602c74d2b18e4b013dda3a3213@codeaurora.org>
- <161698798504.3012082.2821776620747041419@swboyd.mtv.corp.google.com>
- <b41d57010d51356bdc4af1cd9d9c01ec@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=m6rFezdA5OJ9mTG164jTh973n/T9ArBSRkBvKYL1hbU=;
+        b=bxYne1HWjocWqNb3y5gOZDJJ6RMMaH1tV2gqjCQYx2AiPj/KrCuUfdjZ9YylbJ5D86
+         iAdNM3IstCzzNdaqJvXf08dNUqAfJX7FEhBtpieU7iCWpAz/QJf93Ql+aU8HvKJys3uY
+         BGka6s7RJ25DJJa1HS6M/XBYQWQS9oVQcYI3Ar7wLJBBJ+URgZbnM7rgVwl+ij+Vvxbv
+         IgZ1x7p27JIiX86nLb0tuFTxo2ipnMlgmF/hiB+NVvnMnv8bBYLBxFubNWzskTXn2CXI
+         GmqkVZ6b0nThgAry7zLsj4ZDWK2bXIJ2X3g4+ckejVjSHjePEl6R2snAdrFxhVY/bjr9
+         H+7A==
+X-Gm-Message-State: AOAM532mFGcIev9QkCSYF//TEY2dmlLIXPXMMENOuJeMCRGEd2F1EVma
+        XfzCsRS0kWuuXjg7RqLPoNENRM6INwxn+g==
+X-Google-Smtp-Source: ABdhPJxpkmy0JuyPB3w08rCkaGY97SUdgAcYf9gh0xkQMIDeClF7+Ol+jwc2S9JJJjCm/xlFK8OIhg==
+X-Received: by 2002:a05:622a:1648:: with SMTP id y8mr21083992qtj.51.1617139169159;
+        Tue, 30 Mar 2021 14:19:29 -0700 (PDT)
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com. [209.85.219.170])
+        by smtp.gmail.com with ESMTPSA id n24sm151004qtr.21.2021.03.30.14.19.27
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Mar 2021 14:19:27 -0700 (PDT)
+Received: by mail-yb1-f170.google.com with SMTP id i144so18902945ybg.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 14:19:27 -0700 (PDT)
+X-Received: by 2002:a25:2f4b:: with SMTP id v72mr238021ybv.79.1617139166929;
+ Tue, 30 Mar 2021 14:19:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b41d57010d51356bdc4af1cd9d9c01ec@codeaurora.org>
+References: <1616651056-11844-1-git-send-email-rnayak@codeaurora.org> <1616651056-11844-2-git-send-email-rnayak@codeaurora.org>
+In-Reply-To: <1616651056-11844-2-git-send-email-rnayak@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 30 Mar 2021 14:19:15 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VT6xUmUK7Kss8cpF1wjw9tLx67wJMtiV6yTDaVYXXrqA@mail.gmail.com>
+Message-ID: <CAD=FV=VT6xUmUK7Kss8cpF1wjw9tLx67wJMtiV6yTDaVYXXrqA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] nvmem: qfprom: Add support for fuse blowing on sc7280
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Ravi Kumar Bokka <rbokka@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 30, 2021 at 02:52:29PM +0530, mkrishn@codeaurora.org wrote:
-> On 2021-03-29 08:49, Stephen Boyd wrote:
-> > Quoting mkrishn@codeaurora.org (2021-03-26 03:36:30)
-> > > On 2021-03-26 04:28, Stephen Boyd wrote:
-> > > > Quoting Krishna Manikandan (2021-03-25 05:01:00)
-> > > >> diff --git
-> > > >> a/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
-> > > >> b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
-> > > >> new file mode 100644
-> > > >> index 0000000..4a26bef
-> > > >> --- /dev/null
-> > > >> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
-> > > >> @@ -0,0 +1,68 @@
-> > > >> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-> > > >> +%YAML 1.2
-> > > >> +---
-> > > >> +$id: http://devicetree.org/schemas/display/msm/dsi-phy-10nm.yaml#
-> > > >> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > > >> +
-> > > >> +title: Qualcomm Display DSI 10nm PHY
-> > > >> +
-> > > >> +maintainers:
-> > > >> +  - Krishna Manikandan <mkrishn@codeaurora.org>
-> > > >> +
-> > > >> +allOf:
-> > > >> +  - $ref: dsi-phy-common.yaml#
-> > > >> +
-> > > >> +properties:
-> > > >> +  compatible:
-> > > >> +    oneOf:
-> > [..]
-> > > >> and
-> > > >> +      connected to VDDA_MIPI_DSI_0_PLL_0P9 pin for sdm845 target
-> > > >> +
-> > > >> +required:
-> > > >> +  - compatible
-> > > >> +  - reg
-> > > >> +  - reg-names
-> > > >> +  - vdds-supply
-> > > >> +
-> > > >> +unevaluatedProperties: false
-> > > >
-> > > > additionalProperties: false instead? This comment applies to the other
-> > > > bindings in this patch.
-> > > 
-> > > Hi Stephen,
-> > > We are referencing dsi-phy-common.yaml in this file. Since the
-> > > properties of dsi-phy-common.yaml are applicable to this file also, I
-> > > added unevaluatedProperties: false. If we add additionalProperties:
-> > > false instead, then the properties of dsi-phy-common.yaml will not be
-> > > applicable here and this will throw an error if we add the properties
-> > > from dsi-phy-common.yaml in the example.
-> > > 
-> > 
-> > Does that matter? I was wondering about that and so I peeked at the
-> > qcom pinctrl binding and it seems to follow a similar design but doesn't
-> > have unevaluatedProperties: false. Instead it has additionalProperies:
-> > false. See qcom,sc8180x-pinctrl.yaml for an example. So did you try it
-> > or does something say you can't do this?
-> 
-> Hi Stephen,
-> I had tried the same thing in one of my initial patches and I got a comment
-> from Rob that we have to use unevaluatedProperties when we are referring
-> another file(https://patchwork.kernel.org/project/linux-arm-msm/patch/1589868421-30062-1-git-send-email-mkrishn@codeaurora.org/)
+Hi,
 
-Maybe I had a wrong assumption that you needed the child nodes too?
-
-> In latest dt-schema tool, we will get error if we try to change it to
-> additionalProperties: false.
-> For example, in this patch "#clock-cells' and '#phy-cells' are mentioned in
-> dsi-phy-common.yaml and I am referring this file in dsi-phy-10nm.yaml. If I
-> add
-> additionalProperties: false instead of unevaluatedProperties: false, I will
-> get the error mentioned below.
-> 
-> I checked qcom,sc8180x-pinctrl.yaml that you had mentioned in the comment
-> and this file is compiling without any issues even though it is using
-> additionalProperties: false. But I see that the properties mentioned in the
-> reference file (in this case, qcom,tlmm-common.yaml) are again declared in
-> the main file qcom,sc8180x-pinctrl.yaml even though these are mentioned as
-> required properties in the common yaml file. If I remove these properties
-> from qcom,sc8180x-pinctrl.yaml, I can see the same error that I am getting
-> for my file also if additionalProperties are used. If I follow the same
-> approach , ie define the properties again in dsi-phy-10nm.yaml and add
-> additionalProperties: false, I dont see any errors during check (working
-> change mentioned below). Should I make this change for all the files?
-> 
-> Error logs:
-> mkrishn@mkrishn-linux:/local/mnt/workspace/linux-next-latest/linux-next$
-> make dt_binding_check DT_SCHEMA_FILES=Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
->   CHKDT   Documentation/devicetree/bindings/processed-schema-examples.json
->   SCHEMA  Documentation/devicetree/bindings/processed-schema-examples.json
->   DTEX
-> Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.example.dts
->   DTC
-> Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.example.dt.yaml
->   CHECK
-> Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.example.dt.yaml
-> /local/mnt/workspace/linux-next-latest/linux-next/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.example.dt.yaml:
-> dsi-phy@ae94400: '#clock-cells', '#phy-cells', 'clock-names', 'clocks' do
-> not match any of the regexes: 'pinctrl-[0-9]+'
->         From schema: /local/mnt/workspace/linux-next-latest/linux-next/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
-> 
-> Working Change:
-> --- a/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
-> @@ -30,6 +30,11 @@ properties:
->        - const: dsi_phy_lane
->        - const: dsi_pll
-> 
-> +  '#clock-cells': true
-> +  '#phy-cells': true
-> +  clocks: true
-> +  clock-names: true
+On Wed, Mar 24, 2021 at 10:45 PM Rajendra Nayak <rnayak@codeaurora.org> wrote:
+>
+> @@ -111,6 +113,15 @@ static const struct qfprom_soc_compatible_data sc7180_qfprom = {
+>         .nkeepout = ARRAY_SIZE(sc7180_qfprom_keepout)
+>  };
+>
+> +static const struct nvmem_keepout sc7280_qfprom_keepout[] = {
+> +       {.start = 0x128, .end = 0x148},
+> +       {.start = 0x238, .end = 0x248}
+> +};
 > +
->    vdds-supply:
->      description: |
->        Connected to DSI0_MIPI_DSI_PLL_VDDA0P9 pin for sc7180 target and
-> @@ -41,7 +46,7 @@ required:
->    - reg-names
->    - vdds-supply
-> 
-> -unevaluatedProperties: false
-> +additionalProperties: false
+> +static const struct qfprom_soc_compatible_data sc7280_qfprom = {
+> +       .keepout = sc7280_qfprom_keepout,
+> +       .nkeepout = ARRAY_SIZE(sc7280_qfprom_keepout)
+> +};
+>  /**
 
-This works if you want to use some, but not all properties in a 
-referenced schema. If all apply or listing them all here is too much 
-duplication (such as child nodes, but that's a judgement call), then use 
-'unevaluatedProperties'.
+nit: blank line between structure and comment?
 
-unevaluatedProperties is also currently a nop because the underlying 
-tools don't yet support it. So it won't catch any errors and those 
-errors will all have to be fixed when the tools add support.
 
-Rob
+> @@ -187,9 +199,9 @@ static int qfprom_enable_fuse_blowing(const struct qfprom_priv *priv,
+>          * a rail shared do don't specify a max--regulator constraints
+>          * will handle.
+>          */
+> -       ret = regulator_set_voltage(priv->vcc, 1800000, INT_MAX);
+> +       ret = regulator_set_voltage(priv->vcc, qfprom_blow_uV, INT_MAX);
+>         if (ret) {
+> -               dev_err(priv->dev, "Failed to set 1.8 voltage\n");
+> +               dev_err(priv->dev, "Failed to set %duV\n", qfprom_blow_uV);
+
+nit: the comment above this block (not in the unified diff)
+specifically calls out 1.8V. It'd be nice if you updated the comment
+since it's no longer fixed at 1.8V.
+
+
+> @@ -379,6 +399,8 @@ static int qfprom_probe(struct platform_device *pdev)
+>
+>                 if (major_version == 7 && minor_version == 8)
+>                         priv->soc_data = &qfprom_7_8_data;
+> +               if (major_version == 7 && minor_version == 15)
+> +                       priv->soc_data = &qfprom_7_15_data;
+
+nit: "else if" instead of "if"?
+
+
+I guess I'm a little late since I think this already got applied, but
+all the above are nits. Maybe you could send a follow-up patch to
+address them?
+
+-Doug
