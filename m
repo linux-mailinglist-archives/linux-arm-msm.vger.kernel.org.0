@@ -2,88 +2,203 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D1B034EC7E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 17:32:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C1AF734ECAB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 17:36:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232402AbhC3Pbn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Mar 2021 11:31:43 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37860 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232224AbhC3PbJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Mar 2021 11:31:09 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 6AB2E619A7;
-        Tue, 30 Mar 2021 15:31:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1617118269;
-        bh=NtE7aeYpAIhUn0tc24UAQobx/yYBi5xZmalsJsMH4Dc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=tTGTaCTHJ0XrdCjLcfU+o9chdyDWqDnmVlnbEuGom32oGmV+JhqPd5dBGP5P9D/xl
-         n6Wq8R7xqtbCBrNMqvPoMo9IG6TEEHqT61YZKzKwF1+6MEyUDdJGNkKS1ftc+nI0pL
-         J4uvSPGmDXKBnoL1g56r/KnrGhpmQ5E7BhjOqoenInO8qoDzOu12ORu8+AKO68bxVm
-         VTJ1LzC7TLZxkGMz8OGkX+61n2sVx2C5+jeUn2y89faPLQbsi0fWIUdkgodRq7uCT7
-         cNK3ZrMZ0GGpDlLTcV291cpIXmdb8SK+AGQnedN5C5QOuJGt1nqC4pxbLkbWXhv6C1
-         iD8kdbSWDthLA==
-Date:   Tue, 30 Mar 2021 16:31:04 +0100
-From:   Will Deacon <will@kernel.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Eric Anholt <eric@anholt.net>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/2] iommu/arm-smmu-qcom: Skip the TTBR1 quirk for db820c.
-Message-ID: <20210330153050.GB6567@willie-the-truck>
-References: <20210326231303.3071950-1-eric@anholt.net>
- <20210329144729.GB4203@willie-the-truck>
- <CAF6AEGugpEk396DVtWX=W+uf3p-wcgBfCSpSLWGQJE1vKpJ4aw@mail.gmail.com>
- <20210330093432.GB5281@willie-the-truck>
- <CAF6AEGvCCWvmRBhzY4MsdzgwfJ+GF2AUOS-_NTyhM8wtnDzY2Q@mail.gmail.com>
+        id S232257AbhC3PgA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Mar 2021 11:36:00 -0400
+Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:41737 "EHLO
+        wout5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S232483AbhC3Pfd (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 30 Mar 2021 11:35:33 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+        by mailout.west.internal (Postfix) with ESMTP id DD75223A6;
+        Tue, 30 Mar 2021 11:35:31 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Tue, 30 Mar 2021 11:35:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=
+        date:from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm2; bh=FtYc42a6moG7QOyHDjvIAF34l5j
+        YgoXhjKeBBMCpSAY=; b=pkLri1415Rs9PAS8cVC5uxc9wKysAoRoiGCxU30K16z
+        KbTcy8MwEaYglaAR9p2G1F5+WkVDhdvnSHQyAJUtrh4I3JGMs5EfYu9tinq3SP0Z
+        iwSMHPPZYwbD83DL63ca605FGHlyJ6fLtgFiHPCK/3sdvVrdE3oY8Hubch4IwRoU
+        qC9ykOslhnA6sDqsHTPNeBPyeo3exCEze56tmYPz0z3SepF9T0+axzoyvlCTU47j
+        qp8WLcTIXrF+dgY3lKR3naQiPfec343KOn5lJmFpsHFGd7h1WVdJb+AkpgMdLez+
+        NMte+nHG9ufc3z5vyfKynqOAOVjEiZ1Rm+Fh+yyrLig==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=FtYc42
+        a6moG7QOyHDjvIAF34l5jYgoXhjKeBBMCpSAY=; b=jW5b26byLCV+AjIt/u+F15
+        ZRpj0bqnKrUjnNGB4MI2KPYNNlngsRHZ/pWfvq/zgcepIQG8w8NCyKi+LpkDkTu6
+        eNrR3quV6sGek9Rq9DR3n/OS9tqVUXlK+o6xAsbshSKXkHCt7tvc3UMDyLvy2l2s
+        +nrYoflD4HJBor+0pbvlLuZykeWwJsXPs/LxCVSeBdw/euHytiDqvlujEJ1Vxm6s
+        8b7BPDL+OfPjFL+07GZR32A8SwUw09jWAb9LHKUNqg5OVLA80jVvDah4QDOxT4Ho
+        JYVLXcrqlgODDnhCu91oiIh6cW+AoaTFNJY3ZZm2Y0huMJt6FG+SFvgyDNlpr0Sg
+        ==
+X-ME-Sender: <xms:QUVjYAd1SfHuwoVOJUc6SubhtvxHUlddWymUgbDwPD8XlERIDespYw>
+    <xme:QUVjYCM61feyDIQU8vnKKeGRUeEgXSUgM3NaAff8FiREQr0GFyTFxJvbOMjdanPTA
+    QUnWvEp-fNlhnwgKT8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudeitddgleduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpeforgigihhm
+    vgcutfhiphgrrhguuceomhgrgihimhgvsegtvghrnhhordhtvggthheqnecuggftrfgrth
+    htvghrnhepleekgeehhfdutdeljefgleejffehfffgieejhffgueefhfdtveetgeehieeh
+    gedunecukfhppeeltddrkeelrdeikedrjeeinecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomhepmhgrgihimhgvsegtvghrnhhordhtvggthh
+X-ME-Proxy: <xmx:QUVjYBiLqQEDRU58uZ8DHqiCT1LmioKoO_by12zvb99ZjKnLtqfnWg>
+    <xmx:QUVjYF81K1fwXSkYuT7zCIgHflJM6YgRoJE2FsiP6Ly6XkPbFPArJA>
+    <xmx:QUVjYMvXMMGAGLGYi7hJGPdaPaVnmvJ6owO8QnnkU3oEFxDkP9YSWg>
+    <xmx:Q0VjYAgqKil7BAqk7OdU4rtMyTzYd2mUQaId-_h1jRM1axCPRhaXaw>
+Received: from localhost (lfbn-tou-1-1502-76.w90-89.abo.wanadoo.fr [90.89.68.76])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 7C1E11080057;
+        Tue, 30 Mar 2021 11:35:29 -0400 (EDT)
+Date:   Tue, 30 Mar 2021 17:35:27 +0200
+From:   Maxime Ripard <maxime@cerno.tech>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     dri-devel@lists.freedesktop.org,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        David Airlie <airlied@linux.ie>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v3 10/11] drm: Use state helper instead of the plane
+ state pointer
+Message-ID: <20210330153527.gw33t4o2b35wwzbg@gilmour>
+References: <20210219120032.260676-1-maxime@cerno.tech>
+ <20210219120032.260676-10-maxime@cerno.tech>
+ <161706912161.3012082.17313817257247946143@swboyd.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="yzekckmcck6rsmon"
 Content-Disposition: inline
-In-Reply-To: <CAF6AEGvCCWvmRBhzY4MsdzgwfJ+GF2AUOS-_NTyhM8wtnDzY2Q@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <161706912161.3012082.17313817257247946143@swboyd.mtv.corp.google.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 30, 2021 at 08:03:36AM -0700, Rob Clark wrote:
-> On Tue, Mar 30, 2021 at 2:34 AM Will Deacon <will@kernel.org> wrote:
-> >
-> > On Mon, Mar 29, 2021 at 09:02:50PM -0700, Rob Clark wrote:
-> > > On Mon, Mar 29, 2021 at 7:47 AM Will Deacon <will@kernel.org> wrote:
-> > > >
-> > > > On Fri, Mar 26, 2021 at 04:13:02PM -0700, Eric Anholt wrote:
-> > > > > db820c wants to use the qcom smmu path to get HUPCF set (which keeps
-> > > > > the GPU from wedging and then sometimes wedging the kernel after a
-> > > > > page fault), but it doesn't have separate pagetables support yet in
-> > > > > drm/msm so we can't go all the way to the TTBR1 path.
-> > > >
-> > > > What do you mean by "doesn't have separate pagetables support yet"? The
-> > > > compatible string doesn't feel like the right way to determine this.
-> > >
-> > > the compatible string identifies what it is, not what the sw
-> > > limitations are, so in that regard it seems right to me..
-> >
-> > Well it depends on what "doesn't have separate pagetables support yet"
-> > means. I can't tell if it's a hardware issue, a firmware issue or a driver
-> > issue.
-> 
-> Just a driver issue (and the fact that currently we don't have
-> physical access to a device... debugging a5xx per-process-pgtables by
-> pushing untested things to the CI farm is kind of a difficult way to
-> work)
 
-But then in that case, this is using the compatible string to identify a
-driver issue, no?
+--yzekckmcck6rsmon
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Will
+Hi Stephen,
+
+On Mon, Mar 29, 2021 at 06:52:01PM -0700, Stephen Boyd wrote:
+> Trimming Cc list way down, sorry if that's too much.
+>=20
+> Quoting Maxime Ripard (2021-02-19 04:00:30)
+> > Many drivers reference the plane->state pointer in order to get the
+> > current plane state in their atomic_update or atomic_disable hooks,
+> > which would be the new plane state in the global atomic state since
+> > _swap_state happened when those hooks are run.
+>=20
+> Does this mean drm_atomic_helper_swap_state()?
+
+Yep. Previous to that call in drm_atomic_helper_commit, plane->state is
+the state currently programmed in the hardware, so the old state (that's
+the case you have with atomic_check for example)
+
+Once drm_atomic_helper_swap_state has run, plane->state is now the state
+that needs to be programmed into the hardware, so the new state.
+
+> > Use the drm_atomic_get_new_plane_state helper to get that state to make=
+ it
+> > more obvious.
+> >=20
+> > This was made using the coccinelle script below:
+> >=20
+> > @ plane_atomic_func @
+> > identifier helpers;
+> > identifier func;
+> > @@
+> >=20
+> > (
+> >  static const struct drm_plane_helper_funcs helpers =3D {
+> >         ...,
+> >         .atomic_disable =3D func,
+> >         ...,
+> >  };
+> > |
+> >  static const struct drm_plane_helper_funcs helpers =3D {
+> >         ...,
+> >         .atomic_update =3D func,
+> >         ...,
+> >  };
+> > )
+> >=20
+> > @ adds_new_state @
+> > identifier plane_atomic_func.func;
+> > identifier plane, state;
+> > identifier new_state;
+> > @@
+> >=20
+> >  func(struct drm_plane *plane, struct drm_atomic_state *state)
+> >  {
+> >         ...
+> > -       struct drm_plane_state *new_state =3D plane->state;
+> > +       struct drm_plane_state *new_state =3D drm_atomic_get_new_plane_=
+state(state, plane);
+> >         ...
+> >  }
+> >=20
+> > @ include depends on adds_new_state @
+> > @@
+> >=20
+> >  #include <drm/drm_atomic.h>
+> >=20
+> > @ no_include depends on !include && adds_new_state @
+> > @@
+> >=20
+> > + #include <drm/drm_atomic.h>
+> >   #include <drm/...>
+> >=20
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c       | 3 ++-
+> >  drivers/gpu/drm/msm/disp/mdp4/mdp4_plane.c      | 4 +++-
+> >  drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c      | 3 ++-
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/dr=
+m/msm/disp/dpu1/dpu_plane.c
+> > index 31071f9e21d7..e8ce72fe54a4 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > @@ -1244,7 +1244,8 @@ static void dpu_plane_atomic_update(struct drm_pl=
+ane *plane,
+> >                                 struct drm_atomic_state *state)
+> >  {
+> >         struct dpu_plane *pdpu =3D to_dpu_plane(plane);
+> > -       struct drm_plane_state *new_state =3D plane->state;
+> > +       struct drm_plane_state *new_state =3D drm_atomic_get_new_plane_=
+state(state,
+> > +                                                                      =
+    plane);
+> > =20
+> >         pdpu->is_error =3D false;
+> > =20
+>=20
+> This is oopsing for me. It turns out that 'new_state' is NULL. According
+> to the comments drm_atomic_get_new_plane_state() can return NULL if the
+> plane isn't part of the global state. I haven't looked much further but
+> wanted to report it here in case that type of return value makes sense.
+
+Yeah, it can return NULL, but in this case I'm not really sure how we
+could end up with a plane_state that isn't in the global state, but
+somehow with the associated plane atomic_update call being run :/
+
+Maxime
+
+--yzekckmcck6rsmon
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCYGNFPwAKCRDj7w1vZxhR
+xT66AQCBwUC3/zX2ho+dPE63dTDnJVeTqhxvdKRAtI6bFvZwdAD5Ad+Acvl+oElk
+wpeNhdIrOTyHieNNht1KzaQ5EkO4fwU=
+=Elec
+-----END PGP SIGNATURE-----
+
+--yzekckmcck6rsmon--
