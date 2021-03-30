@@ -2,85 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 38AB734E51A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 12:08:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC32034E5D1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 12:53:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231154AbhC3KIK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Mar 2021 06:08:10 -0400
-Received: from mga11.intel.com ([192.55.52.93]:1466 "EHLO mga11.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229633AbhC3KHk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Mar 2021 06:07:40 -0400
-IronPort-SDR: oVjyYtCk5hEBv/IypZkFqFkkxV7TObWrkP9Q2yLHpSLLkR5QAIngNoBVRm8GqhUubkI+F69gIk
- 2zSxDpsBu1fw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9938"; a="188469646"
-X-IronPort-AV: E=Sophos;i="5.81,290,1610438400"; 
-   d="scan'208";a="188469646"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Mar 2021 03:07:39 -0700
-IronPort-SDR: 49nci7WYK3KsrT0bQhPoZy9Z7uXBIPW9nzNysWInPEco8HbQavci97XkTKViGofTnQh1D074bt
- Iqo+5e81i6Ig==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.81,290,1610438400"; 
-   d="scan'208";a="378442373"
-Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.174]) ([10.237.72.174])
-  by orsmga006.jf.intel.com with ESMTP; 30 Mar 2021 03:07:36 -0700
-Subject: Re: [PATCH v13 0/2] Enable power management for ufs wlun
-To:     "Asutosh Das (asd)" <asutoshd@codeaurora.org>, cang@codeaurora.org,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-mediatek@lists.infradead.org>
-References: <cover.1616633712.git.asutoshd@codeaurora.org>
- <e2aec2ba-b0ed-a478-7c01-1784f755a805@codeaurora.org>
-From:   Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
- Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-Message-ID: <f9b27a18-777b-10db-71ab-90f29f79bffc@intel.com>
-Date:   Tue, 30 Mar 2021 13:07:47 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        id S231742AbhC3KxQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Mar 2021 06:53:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54828 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231749AbhC3Kws (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 30 Mar 2021 06:52:48 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0348CC061764
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 03:52:47 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id hq27so24108592ejc.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 03:52:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=oBnG2TakhmLmvRYGUb/04MxUlScMZhhVFfbZVw+gUk8=;
+        b=QO/iA9QDZIu8GXp0AL3Lvs2JqtFzX0YqsG/jYvAPbv2DLBCb+2nmO1jCXW4SpJK8Xs
+         dru4QYZR55PU74HwrxjxYBr8IQNqeAWKs89bRLOB5o3ein4RnIfG+6bak94mPZoCZPBV
+         /9lzXQxl0teYtKvl94ZtT4dYUEarYNWmXIEaOA6vYc63f0rgSYQG30A6R1alsiFej/Uk
+         RZqQGn+EcuaWdlIhPv1QYwB+dUYOIKhCwFSPjlk8wAhieAXzOzU6bbJuWogsYJs4LIFQ
+         A6kiFP5cy2oLuqbXHrPXDMYVULH/e/Q3d6yIfsYR7e0pD6eGxpS9rnBxnGkOJKCOabzL
+         m4Gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=oBnG2TakhmLmvRYGUb/04MxUlScMZhhVFfbZVw+gUk8=;
+        b=QUKUc1sRRGsTOW3zR2Hr8roG13WcXTJBr1NMXByC+OLpV7YxV/fNwvNZlugT0ms3Ey
+         gz6D//wrB4gJZhtzyfK23U1hv0wv7Scb2xhfjavgZTriivddB9oLveAw+Y4HF+h/gFlv
+         Cg2DIf/iR/sS0h6SMOXZj0db5JoUP3lNp9y/PgxpHfKM17BylJZbQ8vPIma4ZTyXi7c+
+         djeza8QKDVYjnlpQoOKGNXILie/Q/l+tJ3/DiZsJ9epu+cwF8frlRkScmYgTEHFoKM/1
+         7LLKAI7HKIyQ+1ggAOh6Gz7og3x4jkGg+qZ/Y/6VldcNPG1+kPUhWaE5sNpwBYsgICnv
+         O8ZQ==
+X-Gm-Message-State: AOAM532H7D5uW7fe8cAPYOSIYeQbOZQwHkcssXB3v8Ci0WQX6w3f2PGp
+        DvnemI+vGeUcKKJJTDUxJp336IAsKDqqDw==
+X-Google-Smtp-Source: ABdhPJwiSti2LSfBiErK0gC7qLs349y9VjSzb3XhCSCrYwvv2JKnlUDY6yBTiGdZb1mp86wjJtscMA==
+X-Received: by 2002:a17:906:26d4:: with SMTP id u20mr28662103ejc.114.1617101566583;
+        Tue, 30 Mar 2021 03:52:46 -0700 (PDT)
+Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
+        by smtp.googlemail.com with ESMTPSA id l1sm10879470edt.59.2021.03.30.03.52.45
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 30 Mar 2021 03:52:46 -0700 (PDT)
+Subject: Re: [PATCH 1/2] dt-bindings: nvmem: Add SoC compatible for sc7280
+To:     Rajendra Nayak <rnayak@codeaurora.org>, robh+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dianders@chromium.org
+References: <1616651056-11844-1-git-send-email-rnayak@codeaurora.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <b8b1c34e-8faa-857d-4508-8a24cc31c3a0@linaro.org>
+Date:   Tue, 30 Mar 2021 11:52:45 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <e2aec2ba-b0ed-a478-7c01-1784f755a805@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <1616651056-11844-1-git-send-email-rnayak@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/03/21 1:48 am, Asutosh Das (asd) wrote:
-> On 3/24/2021 6:39 PM, Asutosh Das wrote:
->> This patch attempts to fix a deadlock in ufs while sending SSU.
->> Recently, blk_queue_enter() added a check to not process requests if the
->> queue is suspended. That leads to a resume of the associated device which
->> is suspended. In ufs, that device is ufs device wlun and it's parent is
->> ufs_hba. This resume tries to resume ufs device wlun which in turn tries
->> to resume ufs_hba, which is already in the process of suspending, thus
->> causing a deadlock.
->>
->> This patch takes care of:
->> * Suspending the ufs device lun only after all other luns are suspended
->> * Sending SSU during ufs device wlun suspend
->> * Clearing uac for rpmb and ufs device wlun
->> * Not sending commands to the device during host suspend
->>
->> v12 -> v13:
->> - Addressed Adrian's comments
->>    * Paired pm_runtime_get_noresume() with pm_runtime_put()
->>    * no rpm_autosuspend for ufs device wlun
->>    * Moved runtime-pm init functionality to ufshcd_wl_probe()
->> - Addressed Bart's comments
->>    * Expanded abbrevs in commit message
->>
-> 
-> Hi Adrian
-> I did a limited testing on your fix in the pm framework along with this v13 patchset. I couldn't reproduce the issue.
-> 
-> I'd appreciate if you can please take a look at the v13 changes.
-> If all looks good in that, I'd do an extensive testing.
 
-I made a couple of comments on the patch, but nothing major.
+
+On 25/03/2021 05:44, Rajendra Nayak wrote:
+> Document SoC compatible for sc7280
+> 
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> ---
+>   Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+> index 992777c..861b205 100644
+> --- a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+> @@ -24,6 +24,7 @@ properties:
+>             - qcom,msm8998-qfprom
+>             - qcom,qcs404-qfprom
+>             - qcom,sc7180-qfprom
+> +          - qcom,sc7280-qfprom
+>             - qcom,sdm845-qfprom
+>         - const: qcom,qfprom
+>   
+> 
+
+Applied both,
+thanks,
+srini
