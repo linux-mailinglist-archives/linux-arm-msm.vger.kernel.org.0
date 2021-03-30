@@ -2,203 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C1AF734ECAB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 17:36:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3965934ED2A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 18:07:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232257AbhC3PgA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Mar 2021 11:36:00 -0400
-Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:41737 "EHLO
-        wout5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232483AbhC3Pfd (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Mar 2021 11:35:33 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-        by mailout.west.internal (Postfix) with ESMTP id DD75223A6;
-        Tue, 30 Mar 2021 11:35:31 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Tue, 30 Mar 2021 11:35:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=
-        date:from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm2; bh=FtYc42a6moG7QOyHDjvIAF34l5j
-        YgoXhjKeBBMCpSAY=; b=pkLri1415Rs9PAS8cVC5uxc9wKysAoRoiGCxU30K16z
-        KbTcy8MwEaYglaAR9p2G1F5+WkVDhdvnSHQyAJUtrh4I3JGMs5EfYu9tinq3SP0Z
-        iwSMHPPZYwbD83DL63ca605FGHlyJ6fLtgFiHPCK/3sdvVrdE3oY8Hubch4IwRoU
-        qC9ykOslhnA6sDqsHTPNeBPyeo3exCEze56tmYPz0z3SepF9T0+axzoyvlCTU47j
-        qp8WLcTIXrF+dgY3lKR3naQiPfec343KOn5lJmFpsHFGd7h1WVdJb+AkpgMdLez+
-        NMte+nHG9ufc3z5vyfKynqOAOVjEiZ1Rm+Fh+yyrLig==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=FtYc42
-        a6moG7QOyHDjvIAF34l5jYgoXhjKeBBMCpSAY=; b=jW5b26byLCV+AjIt/u+F15
-        ZRpj0bqnKrUjnNGB4MI2KPYNNlngsRHZ/pWfvq/zgcepIQG8w8NCyKi+LpkDkTu6
-        eNrR3quV6sGek9Rq9DR3n/OS9tqVUXlK+o6xAsbshSKXkHCt7tvc3UMDyLvy2l2s
-        +nrYoflD4HJBor+0pbvlLuZykeWwJsXPs/LxCVSeBdw/euHytiDqvlujEJ1Vxm6s
-        8b7BPDL+OfPjFL+07GZR32A8SwUw09jWAb9LHKUNqg5OVLA80jVvDah4QDOxT4Ho
-        JYVLXcrqlgODDnhCu91oiIh6cW+AoaTFNJY3ZZm2Y0huMJt6FG+SFvgyDNlpr0Sg
-        ==
-X-ME-Sender: <xms:QUVjYAd1SfHuwoVOJUc6SubhtvxHUlddWymUgbDwPD8XlERIDespYw>
-    <xme:QUVjYCM61feyDIQU8vnKKeGRUeEgXSUgM3NaAff8FiREQr0GFyTFxJvbOMjdanPTA
-    QUnWvEp-fNlhnwgKT8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudeitddgleduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpeforgigihhm
-    vgcutfhiphgrrhguuceomhgrgihimhgvsegtvghrnhhordhtvggthheqnecuggftrfgrth
-    htvghrnhepleekgeehhfdutdeljefgleejffehfffgieejhffgueefhfdtveetgeehieeh
-    gedunecukfhppeeltddrkeelrdeikedrjeeinecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepmhgrgihimhgvsegtvghrnhhordhtvggthh
-X-ME-Proxy: <xmx:QUVjYBiLqQEDRU58uZ8DHqiCT1LmioKoO_by12zvb99ZjKnLtqfnWg>
-    <xmx:QUVjYF81K1fwXSkYuT7zCIgHflJM6YgRoJE2FsiP6Ly6XkPbFPArJA>
-    <xmx:QUVjYMvXMMGAGLGYi7hJGPdaPaVnmvJ6owO8QnnkU3oEFxDkP9YSWg>
-    <xmx:Q0VjYAgqKil7BAqk7OdU4rtMyTzYd2mUQaId-_h1jRM1axCPRhaXaw>
-Received: from localhost (lfbn-tou-1-1502-76.w90-89.abo.wanadoo.fr [90.89.68.76])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 7C1E11080057;
-        Tue, 30 Mar 2021 11:35:29 -0400 (EDT)
-Date:   Tue, 30 Mar 2021 17:35:27 +0200
-From:   Maxime Ripard <maxime@cerno.tech>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     dri-devel@lists.freedesktop.org,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        David Airlie <airlied@linux.ie>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v3 10/11] drm: Use state helper instead of the plane
- state pointer
-Message-ID: <20210330153527.gw33t4o2b35wwzbg@gilmour>
-References: <20210219120032.260676-1-maxime@cerno.tech>
- <20210219120032.260676-10-maxime@cerno.tech>
- <161706912161.3012082.17313817257247946143@swboyd.mtv.corp.google.com>
+        id S230243AbhC3QGj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Mar 2021 12:06:39 -0400
+Received: from mail.kernel.org ([198.145.29.99]:50624 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232102AbhC3QGJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 30 Mar 2021 12:06:09 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 10B34619CE;
+        Tue, 30 Mar 2021 16:06:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1617120368;
+        bh=26IHFrffaqAWxvS40u7qOPp8h/qopG6fb7xg9SJkSvo=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=f68in51wQUPiZZAP7ZJeCYsRAwxqRIx1oy6ZxJhSIU5xcYXNquCEjUqbkDtSknVwg
+         vFgWJmG4c+udLX45YaKMegwqplT9AJuYqpxO4KcOi65yMm8fYc9ZtU1smvjgfOt87W
+         grVEX54/Lecz2tlJrBXcXHKKDtKvahQithtPxUnGnayTfdGT2wnW/qfRiui0KKUu4R
+         ieoewUrOycnKARQKM5XZkfKmG9FTbyLddK6MUMKCCVYgP5xhB9Lrs7Um1hlTz4G3eg
+         bL/EBjgXCvdNeAka/2NpVHbznbfGiX68VSZZsvj9RtyMKhYGy8W0MC4vt7eFYnVBYF
+         Ax3HGu9eo+icg==
+From:   Mark Brown <broonie@kernel.org>
+To:     Liam Girdwood <lgirdwood@gmail.com>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org
+Cc:     Mark Brown <broonie@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Takashi Iwai <tiwai@suse.com>, Andy Gross <agross@kernel.org>
+Subject: Re: [PATCH] ASoC: q6afe-clocks: fix reprobing of the driver
+Date:   Tue, 30 Mar 2021 17:05:49 +0100
+Message-Id: <161711993559.12915.3715212253584619506.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20210327092857.3073879-1-dmitry.baryshkov@linaro.org>
+References: <20210327092857.3073879-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="yzekckmcck6rsmon"
-Content-Disposition: inline
-In-Reply-To: <161706912161.3012082.17313817257247946143@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Sat, 27 Mar 2021 12:28:57 +0300, Dmitry Baryshkov wrote:
+> Q6afe-clocks driver can get reprobed. For example if the APR services
+> are restarted after the firmware crash. However currently Q6afe-clocks
+> driver will oops because hw.init will get cleared during first _probe
+> call. Rewrite the driver to fill the clock data at runtime rather than
+> using big static array of clocks.
 
---yzekckmcck6rsmon
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Applied to
 
-Hi Stephen,
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
-On Mon, Mar 29, 2021 at 06:52:01PM -0700, Stephen Boyd wrote:
-> Trimming Cc list way down, sorry if that's too much.
->=20
-> Quoting Maxime Ripard (2021-02-19 04:00:30)
-> > Many drivers reference the plane->state pointer in order to get the
-> > current plane state in their atomic_update or atomic_disable hooks,
-> > which would be the new plane state in the global atomic state since
-> > _swap_state happened when those hooks are run.
->=20
-> Does this mean drm_atomic_helper_swap_state()?
+Thanks!
 
-Yep. Previous to that call in drm_atomic_helper_commit, plane->state is
-the state currently programmed in the hardware, so the old state (that's
-the case you have with atomic_check for example)
+[1/1] ASoC: q6afe-clocks: fix reprobing of the driver
+      commit: 96fadf7e8ff49fdb74754801228942b67c3eeebd
 
-Once drm_atomic_helper_swap_state has run, plane->state is now the state
-that needs to be programmed into the hardware, so the new state.
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
-> > Use the drm_atomic_get_new_plane_state helper to get that state to make=
- it
-> > more obvious.
-> >=20
-> > This was made using the coccinelle script below:
-> >=20
-> > @ plane_atomic_func @
-> > identifier helpers;
-> > identifier func;
-> > @@
-> >=20
-> > (
-> >  static const struct drm_plane_helper_funcs helpers =3D {
-> >         ...,
-> >         .atomic_disable =3D func,
-> >         ...,
-> >  };
-> > |
-> >  static const struct drm_plane_helper_funcs helpers =3D {
-> >         ...,
-> >         .atomic_update =3D func,
-> >         ...,
-> >  };
-> > )
-> >=20
-> > @ adds_new_state @
-> > identifier plane_atomic_func.func;
-> > identifier plane, state;
-> > identifier new_state;
-> > @@
-> >=20
-> >  func(struct drm_plane *plane, struct drm_atomic_state *state)
-> >  {
-> >         ...
-> > -       struct drm_plane_state *new_state =3D plane->state;
-> > +       struct drm_plane_state *new_state =3D drm_atomic_get_new_plane_=
-state(state, plane);
-> >         ...
-> >  }
-> >=20
-> > @ include depends on adds_new_state @
-> > @@
-> >=20
-> >  #include <drm/drm_atomic.h>
-> >=20
-> > @ no_include depends on !include && adds_new_state @
-> > @@
-> >=20
-> > + #include <drm/drm_atomic.h>
-> >   #include <drm/...>
-> >=20
-> >  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c       | 3 ++-
-> >  drivers/gpu/drm/msm/disp/mdp4/mdp4_plane.c      | 4 +++-
-> >  drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c      | 3 ++-
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/dr=
-m/msm/disp/dpu1/dpu_plane.c
-> > index 31071f9e21d7..e8ce72fe54a4 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> > @@ -1244,7 +1244,8 @@ static void dpu_plane_atomic_update(struct drm_pl=
-ane *plane,
-> >                                 struct drm_atomic_state *state)
-> >  {
-> >         struct dpu_plane *pdpu =3D to_dpu_plane(plane);
-> > -       struct drm_plane_state *new_state =3D plane->state;
-> > +       struct drm_plane_state *new_state =3D drm_atomic_get_new_plane_=
-state(state,
-> > +                                                                      =
-    plane);
-> > =20
-> >         pdpu->is_error =3D false;
-> > =20
->=20
-> This is oopsing for me. It turns out that 'new_state' is NULL. According
-> to the comments drm_atomic_get_new_plane_state() can return NULL if the
-> plane isn't part of the global state. I haven't looked much further but
-> wanted to report it here in case that type of return value makes sense.
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
-Yeah, it can return NULL, but in this case I'm not really sure how we
-could end up with a plane_state that isn't in the global state, but
-somehow with the associated plane atomic_update call being run :/
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
 
-Maxime
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
 
---yzekckmcck6rsmon
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCYGNFPwAKCRDj7w1vZxhR
-xT66AQCBwUC3/zX2ho+dPE63dTDnJVeTqhxvdKRAtI6bFvZwdAD5Ad+Acvl+oElk
-wpeNhdIrOTyHieNNht1KzaQ5EkO4fwU=
-=Elec
------END PGP SIGNATURE-----
-
---yzekckmcck6rsmon--
+Thanks,
+Mark
