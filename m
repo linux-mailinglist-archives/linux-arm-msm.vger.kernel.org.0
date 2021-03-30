@@ -2,145 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 21A1234DD80
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 03:29:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0071F34DD93
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 03:32:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229750AbhC3B24 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Mar 2021 21:28:56 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:55928 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230506AbhC3B2u (ORCPT
+        id S229483AbhC3BcE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Mar 2021 21:32:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46938 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229763AbhC3Bbu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Mar 2021 21:28:50 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1617067730; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=omCWUye/+rs9ai9F1A5jcqGVUIxvLNQyUiPqspe2NAI=; b=khD5uwRlqOEIlrZgDhCPRLu+BYHf0EepLTed5ulnR563Pw/4H8DDvmS2UpfDf0cp43Ktur+R
- xVF6ZvyCbPKn19AK3ZMMFO/yfBiTIMDOfLYVl3+3xA4cjYkRIQcD2WuqpRp0P/CAgzG2rsqz
- BZ0RYuNfR8B/V9m7FY0Yf0/Kw6Y=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 60627ec3197975f05e2148f4 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 30 Mar 2021 01:28:35
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6E8A6C43465; Tue, 30 Mar 2021 01:28:35 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        UPPERCASE_50_75,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 38274C433CA;
-        Tue, 30 Mar 2021 01:28:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 38274C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        carl.yin@quectel.com, naveen.kumar@quectel.com,
-        loic.poulain@linaro.org, abickett@codeaurora.org,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: [PATCH v1 7/7] bus: mhi: core: Improve state strings for debug messages
-Date:   Mon, 29 Mar 2021 18:28:24 -0700
-Message-Id: <1617067704-28850-8-git-send-email-bbhatt@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1617067704-28850-1-git-send-email-bbhatt@codeaurora.org>
-References: <1617067704-28850-1-git-send-email-bbhatt@codeaurora.org>
+        Mon, 29 Mar 2021 21:31:50 -0400
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E40FC061764
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Mar 2021 18:31:50 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id a22-20020a17090aa516b02900c1215e9b33so8596395pjq.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Mar 2021 18:31:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=VqsB/KspzBLfleMt3X13JmN72hr7Ivn8/G3NW35scDU=;
+        b=oRBLwNnRiMTNEnj51Rq5J4ROOQVEMOXQc65rWkdsGb61Eb9XiBO4U7R1oLHxuk76VD
+         FyfJin7DBYDeLTSb9LU1SeGd6S74jUTts+u9bUreWZZ35CKoPhBAcb6P0SNGXH3k5YD/
+         bOK85QLLJDWXsqtcSwXKaBRpouNUpmItdFAHg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=VqsB/KspzBLfleMt3X13JmN72hr7Ivn8/G3NW35scDU=;
+        b=FOaMfOF0l8O5viaymkXzdQZ+eetNGOTwMdd7RT1rLqVl3O0K2pWIeU7sNSedOIbnz8
+         ifTDsj8kA7b2k0oQD+febM7gOEf6UCZtbTRvL2CklbEVX51p160yr5N4U1tVgT6JohQJ
+         DCfhJik6ipLBwzAlNDXsR4U2I7g7HaRRcBTHMQyKY2QDGzji49GEAiEQDZQ1T/LzC67O
+         M+7pjHJdmLKHmUmwM3CmoEjCc/vcEl3yClKboJrPU2I4WeYu0Tcrq6ii4kTkk5K3Rawk
+         H2/L/SfCGprFoTy5UAtoZhgPvr30MhMpLxNFouYcYtbxceFa35ypmxwwxAF9es55aZf8
+         fEVg==
+X-Gm-Message-State: AOAM531M1bOLaDvWrIm5rPpA7PX/FotgcvIHDUDJc8eDjpNNANYM2spB
+        mbm+3fUTbga1MuZUZpKtYWCUig==
+X-Google-Smtp-Source: ABdhPJzTWrDchk39egDoT3Ebv23CG0wZ+YVzjMmD32zht97vToqfNhx8RT3pByjL1TOX4a53kpISlA==
+X-Received: by 2002:a17:903:22c2:b029:e7:1f02:434c with SMTP id y2-20020a17090322c2b02900e71f02434cmr19483596plg.73.1617067909560;
+        Mon, 29 Mar 2021 18:31:49 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:201:4091:2b37:966b:1fca])
+        by smtp.gmail.com with ESMTPSA id k5sm18792164pfg.215.2021.03.29.18.31.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Mar 2021 18:31:49 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20210327110305.3289784-1-dmitry.baryshkov@linaro.org>
+References: <20210327110305.3289784-1-dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v3 00/25] drm/msm/dsi: refactor MSM DSI PHY/PLL drivers
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-clk@vger.kernel.org
+To:     Abhinav Kumar <abhinavk@codeaurora.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Date:   Mon, 29 Mar 2021 18:31:47 -0700
+Message-ID: <161706790759.3012082.10513147344813330034@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As of now abbreviations are being used for many state and
-execution environment strings. Improve and expand those such that
-debug messages are clear.
+Quoting Dmitry Baryshkov (2021-03-27 04:02:40)
+> Restructure MSM DSI PHY drivers. What started as an attempt to grok the
+> overcomplicated PHY drivers, has lead up to the idea of merging PHY and
+> PLL code, reducing abstractions, code duplication, dropping dead code,
+> etc.
+>=20
+> The patches were mainly tested on RB5 (sm8250, 7nm) and DB410c (apq8016,
+> 28nm-lp) and lightly tested on RB3 (sdm845, 10nm).
+>=20
+> The patch 'clk: fixed: add devm helper for clk_hw_register_fixed_factor()'
+> is already a part of mainline as of 5.12-rc1, but is included here for
+> completeness to fix compilation issues (as msm-next is based on 5.11-rc5).
+>=20
+> Changes since v2:
+>  - Drop the 'stop setting clock parents manually' patch for now together
+>    with the dtsi changes. Unlike the rest of patchset it provides
+>    functional changes and might require additional discussion.
+>    The patchset will be resubmitted later.
+>=20
+> Changes since v1:
+>  - Rebase on top of msm/msm-next
+>  - Reorder patches to follow logical sequence
+>  - Add sc7180 clocks assignment
+>  - Drop sm8250 clocks assignment, as respective file is not updated in
+>    msm/msm-next
+>=20
+> Changes since RFC:
+>  - Reorder patches to move global clock patches in the beginning and
+>    dtsi patches where they are required.
+>  - remove msm_dsi_phy_set_src_pll() and guess src_pll_id using PHY usecas=
+e.
+>=20
+> The following changes since commit 627dc55c273dab308303a5217bd3e767d7083d=
+db:
+>=20
+>   drm/msm/disp/dpu1: icc path needs to be set before dpu runtime resume (=
+2021-03-22 18:52:34 -0700)
+>=20
+> are available in the Git repository at:
+>=20
+>   https://git.linaro.org/people/dmitry.baryshkov/kernel.git dsi-phy-3
 
-Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/bus/mhi/core/init.c | 34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+I tested this on sc7180 lazor and the display comes up
 
-diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-index ee67712..d1d9b0d 100644
---- a/drivers/bus/mhi/core/init.c
-+++ b/drivers/bus/mhi/core/init.c
-@@ -22,13 +22,13 @@
- static DEFINE_IDA(mhi_controller_ida);
- 
- const char * const mhi_ee_str[MHI_EE_MAX] = {
--	[MHI_EE_PBL] = "PBL",
--	[MHI_EE_SBL] = "SBL",
--	[MHI_EE_AMSS] = "AMSS",
--	[MHI_EE_RDDM] = "RDDM",
--	[MHI_EE_WFW] = "WFW",
--	[MHI_EE_PTHRU] = "PASS THRU",
--	[MHI_EE_EDL] = "EDL",
-+	[MHI_EE_PBL] = "PRIMARY BOOTLOADER",
-+	[MHI_EE_SBL] = "SECONDARY BOOTLOADER",
-+	[MHI_EE_AMSS] = "MISSION MODE",
-+	[MHI_EE_RDDM] = "RAMDUMP DOWNLOAD MODE",
-+	[MHI_EE_WFW] = "WLAN FIRMWARE",
-+	[MHI_EE_PTHRU] = "PASS THROUGH",
-+	[MHI_EE_EDL] = "EMERGENCY DOWNLOAD",
- 	[MHI_EE_FP] = "FLASH PROGRAMMER",
- 	[MHI_EE_DISABLE_TRANSITION] = "DISABLE",
- 	[MHI_EE_NOT_SUPPORTED] = "NOT SUPPORTED",
-@@ -38,9 +38,9 @@ const char * const dev_state_tran_str[DEV_ST_TRANSITION_MAX] = {
- 	[DEV_ST_TRANSITION_PBL] = "PBL",
- 	[DEV_ST_TRANSITION_READY] = "READY",
- 	[DEV_ST_TRANSITION_SBL] = "SBL",
--	[DEV_ST_TRANSITION_MISSION_MODE] = "MISSION_MODE",
--	[DEV_ST_TRANSITION_FP] = "FLASH_PROGRAMMER",
--	[DEV_ST_TRANSITION_SYS_ERR] = "SYS_ERR",
-+	[DEV_ST_TRANSITION_MISSION_MODE] = "MISSION MODE",
-+	[DEV_ST_TRANSITION_FP] = "FLASH PROGRAMMER",
-+	[DEV_ST_TRANSITION_SYS_ERR] = "SYS ERROR",
- 	[DEV_ST_TRANSITION_DISABLE] = "DISABLE",
- };
- 
-@@ -51,24 +51,24 @@ const char * const mhi_state_str[MHI_STATE_MAX] = {
- 	[MHI_STATE_M1] = "M1",
- 	[MHI_STATE_M2] = "M2",
- 	[MHI_STATE_M3] = "M3",
--	[MHI_STATE_M3_FAST] = "M3_FAST",
-+	[MHI_STATE_M3_FAST] = "M3 FAST",
- 	[MHI_STATE_BHI] = "BHI",
--	[MHI_STATE_SYS_ERR] = "SYS_ERR",
-+	[MHI_STATE_SYS_ERR] = "SYS ERROR",
- };
- 
- static const char * const mhi_pm_state_str[] = {
- 	[MHI_PM_STATE_DISABLE] = "DISABLE",
--	[MHI_PM_STATE_POR] = "POR",
-+	[MHI_PM_STATE_POR] = "POWER ON RESET",
- 	[MHI_PM_STATE_M0] = "M0",
- 	[MHI_PM_STATE_M2] = "M2",
- 	[MHI_PM_STATE_M3_ENTER] = "M?->M3",
- 	[MHI_PM_STATE_M3] = "M3",
- 	[MHI_PM_STATE_M3_EXIT] = "M3->M0",
--	[MHI_PM_STATE_FW_DL_ERR] = "FW DL Error",
--	[MHI_PM_STATE_SYS_ERR_DETECT] = "SYS_ERR Detect",
--	[MHI_PM_STATE_SYS_ERR_PROCESS] = "SYS_ERR Process",
-+	[MHI_PM_STATE_FW_DL_ERR] = "Firmware Download Error",
-+	[MHI_PM_STATE_SYS_ERR_DETECT] = "SYS ERROR Detect",
-+	[MHI_PM_STATE_SYS_ERR_PROCESS] = "SYS ERROR Process",
- 	[MHI_PM_STATE_SHUTDOWN_PROCESS] = "SHUTDOWN Process",
--	[MHI_PM_STATE_LD_ERR_FATAL_DETECT] = "LD or Error Fatal Detect",
-+	[MHI_PM_STATE_LD_ERR_FATAL_DETECT] = "Linkdown or Error Fatal Detect",
- };
- 
- const char *to_mhi_pm_state_str(enum mhi_pm_state state)
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+Tested-by: Stephen Boyd <swboyd@chromium.org>
