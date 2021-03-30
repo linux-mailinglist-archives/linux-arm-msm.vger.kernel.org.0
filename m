@@ -2,398 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BA43034E408
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 11:09:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3714634E437
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 11:23:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231687AbhC3JIs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Mar 2021 05:08:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60522 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231593AbhC3JIi (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Mar 2021 05:08:38 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 995CAC061762
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 02:08:34 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id ap14so10560798ejc.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Mar 2021 02:08:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=/eqR/g4dGWafdF3bo4TemakWiaBabfCWwqaWK3tpTqo=;
-        b=wR0tOtbZAeOW2MSbinTo9CpuzhtzAXmX8ZZBPgjlR91ZplMhIzXsACCNLyxMYieomd
-         prJMQNmN1r0Dd+S1o3J9udQW8C7q1ksTs1c8pVtBVnLTSSdTYrLOrP3KEDER8/M6AbwW
-         1iMODhiXBA0GwTF+AoIUsljoCDlFekdZKLNBdhBBTMpaTt/VAuksij/5d8InA88gGoHt
-         qzLd5eO6fQ2Dqhxz4qd36ku0diQ3XMK+jImcdW1e12DKCoAA0VUoJY6BDlm9cOItue+N
-         dkV1PiOvOlXm83KJACv8ORzrxwqu5MF2PDh3cl7E79GS691haPEIlDgpVyoc2GvbjjSz
-         XhDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=/eqR/g4dGWafdF3bo4TemakWiaBabfCWwqaWK3tpTqo=;
-        b=Mt3zTwBDE1q3ABnv55IRy7mTwZyPSu1zImzqmHCs1efQFNrUgbqAGNAFzkqHDwySFe
-         rV3zhOe7rgclapv2igQCS0ee39fm7jl7PlEOETbIQ4FkSC75IZz8uRxtLWKth5NWkyaz
-         VMGmGqalH8dZH6iC+91B3ZzW145YRhU796R0ljNS7qCrejrOHzbkR/u7I5232tN+Lqgh
-         8WDg5/wpXUxr7fcgXlBssaoxXoLDbx6jG2KOhUnUDJq5FVLVTYaqvnz+QDt16UpXttd8
-         GYyPcbfaOfU22XtM9++dn60ETjnwP3J+9RSCCoZjhH+f9SP4u4ttdMlO+QCBcIBchDKF
-         Ihxw==
-X-Gm-Message-State: AOAM531YdyC9kl+ODR2UbiQjawI1F7JXwwDEt5JSayWrm9x62B3KkmOl
-        aIE0h+kaXqX+TceOK3MQlvjnag==
-X-Google-Smtp-Source: ABdhPJz/7asF1GdAVv322WqculaCFkc4tIsDjNj4rHsPiY0qx06pw6nY9zvYgztYrCvtTeVw6SGGOQ==
-X-Received: by 2002:a17:906:f9d8:: with SMTP id lj24mr32579966ejb.200.1617095313267;
-        Tue, 30 Mar 2021 02:08:33 -0700 (PDT)
-Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.googlemail.com with ESMTPSA id i10sm9652676ejv.106.2021.03.30.02.08.31
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 30 Mar 2021 02:08:32 -0700 (PDT)
-Subject: Re: [PATCH] ASoC: q6afe-clocks: fix reprobing of the driver
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org
-Cc:     Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>
-References: <20210327092857.3073879-1-dmitry.baryshkov@linaro.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <0f41669c-c8e5-a2e2-f6ce-cdff066b26f3@linaro.org>
-Date:   Tue, 30 Mar 2021 10:08:31 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S231511AbhC3JXV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Mar 2021 05:23:21 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:29831 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231600AbhC3JXN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 30 Mar 2021 05:23:13 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1617096193; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=/0NkHSEK91jnwUXqBPOOJloIbSiil4C09BHiJ/kvl/w=;
+ b=Hopap4sNSDvMHiPMn6ryqTW9/x6PPQKO4frtX98Ar/x24QLwwQpC/L3Koe/7gKRPX/xqMeUQ
+ gc2CTtK/nTlqKV2IF26i9357p9SzIZabj67ih532izMHf5vvV2q/O6FfjRiK3+KdRYcw3Rgw
+ fEwkseXOYKI/8HSSgTIE59tmjfw=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 6062edd70a4a07ffda522a33 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 30 Mar 2021 09:22:31
+ GMT
+Sender: mkrishn=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2D9ACC43461; Tue, 30 Mar 2021 09:22:31 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkrishn)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1C065C433CA;
+        Tue, 30 Mar 2021 09:22:30 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20210327092857.3073879-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Tue, 30 Mar 2021 14:52:29 +0530
+From:   mkrishn@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, kalyan_t@codeaurora.org,
+        tanmay@codeaurora.org, abhinavk@codeaurora.org,
+        robdclark@gmail.com, bjorn.andersson@linaro.org,
+        vinod.koul@linaro.org, rnayak@codeaurora.org,
+        dianders@chromium.org, sibis@codeaurora.org, khsieh@codeaurora.org
+Subject: Re: [PATCH v14 3/4] dt-bindings: msm: dsi: add yaml schemas for DSI
+ PHY bindings
+In-Reply-To: <161698798504.3012082.2821776620747041419@swboyd.mtv.corp.google.com>
+References: <1616673661-20038-1-git-send-email-mkrishn@codeaurora.org>
+ <1616673661-20038-3-git-send-email-mkrishn@codeaurora.org>
+ <161671311714.3012082.4777798674596112311@swboyd.mtv.corp.google.com>
+ <81ea21602c74d2b18e4b013dda3a3213@codeaurora.org>
+ <161698798504.3012082.2821776620747041419@swboyd.mtv.corp.google.com>
+Message-ID: <b41d57010d51356bdc4af1cd9d9c01ec@codeaurora.org>
+X-Sender: mkrishn@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks Dmitry for looking at this,
-
-On 27/03/2021 09:28, Dmitry Baryshkov wrote:
-> Q6afe-clocks driver can get reprobed. For example if the APR services
-> are restarted after the firmware crash. However currently Q6afe-clocks
-> driver will oops because hw.init will get cleared during first _probe
-> call. Rewrite the driver to fill the clock data at runtime rather than
-> using big static array of clocks.
+On 2021-03-29 08:49, Stephen Boyd wrote:
+> Quoting mkrishn@codeaurora.org (2021-03-26 03:36:30)
+>> On 2021-03-26 04:28, Stephen Boyd wrote:
+>> > Quoting Krishna Manikandan (2021-03-25 05:01:00)
+>> >> diff --git
+>> >> a/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+>> >> b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+>> >> new file mode 100644
+>> >> index 0000000..4a26bef
+>> >> --- /dev/null
+>> >> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+>> >> @@ -0,0 +1,68 @@
+>> >> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
+>> >> +%YAML 1.2
+>> >> +---
+>> >> +$id: http://devicetree.org/schemas/display/msm/dsi-phy-10nm.yaml#
+>> >> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> >> +
+>> >> +title: Qualcomm Display DSI 10nm PHY
+>> >> +
+>> >> +maintainers:
+>> >> +  - Krishna Manikandan <mkrishn@codeaurora.org>
+>> >> +
+>> >> +allOf:
+>> >> +  - $ref: dsi-phy-common.yaml#
+>> >> +
+>> >> +properties:
+>> >> +  compatible:
+>> >> +    oneOf:
+> [..]
+>> >> and
+>> >> +      connected to VDDA_MIPI_DSI_0_PLL_0P9 pin for sdm845 target
+>> >> +
+>> >> +required:
+>> >> +  - compatible
+>> >> +  - reg
+>> >> +  - reg-names
+>> >> +  - vdds-supply
+>> >> +
+>> >> +unevaluatedProperties: false
+>> >
+>> > additionalProperties: false instead? This comment applies to the other
+>> > bindings in this patch.
+>> 
+>> Hi Stephen,
+>> We are referencing dsi-phy-common.yaml in this file. Since the
+>> properties of dsi-phy-common.yaml are applicable to this file also, I
+>> added unevaluatedProperties: false. If we add additionalProperties:
+>> false instead, then the properties of dsi-phy-common.yaml will not be
+>> applicable here and this will throw an error if we add the properties
+>> from dsi-phy-common.yaml in the example.
+>> 
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+> Does that matter? I was wondering about that and so I peeked at the
+> qcom pinctrl binding and it seems to follow a similar design but 
+> doesn't
+> have unevaluatedProperties: false. Instead it has additionalProperies:
+> false. See qcom,sc8180x-pinctrl.yaml for an example. So did you try it
+> or does something say you can't do this?
 
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Hi Stephen,
+I had tried the same thing in one of my initial patches and I got a 
+comment from Rob that we have to use unevaluatedProperties when we are 
+referring another 
+file(https://patchwork.kernel.org/project/linux-arm-msm/patch/1589868421-30062-1-git-send-email-mkrishn@codeaurora.org/)
+In latest dt-schema tool, we will get error if we try to change it to 
+additionalProperties: false.
+For example, in this patch "#clock-cells' and '#phy-cells' are mentioned 
+in dsi-phy-common.yaml and I am referring this file in 
+dsi-phy-10nm.yaml. If I add
+additionalProperties: false instead of unevaluatedProperties: false, I 
+will get the error mentioned below.
 
+I checked qcom,sc8180x-pinctrl.yaml that you had mentioned in the 
+comment and this file is compiling without any issues even though it is 
+using additionalProperties: false. But I see that the properties 
+mentioned in the reference file (in this case, qcom,tlmm-common.yaml) 
+are again declared in the main file qcom,sc8180x-pinctrl.yaml even 
+though these are mentioned as required properties in the common yaml 
+file. If I remove these properties from qcom,sc8180x-pinctrl.yaml, I can 
+see the same error that I am getting for my file also if 
+additionalProperties are used. If I follow the same approach , ie define 
+the properties again in dsi-phy-10nm.yaml and add additionalProperties: 
+false, I dont see any errors during check (working change mentioned 
+below). Should I make this change for all the files?
 
---srini
+Error logs:
+mkrishn@mkrishn-linux:/local/mnt/workspace/linux-next-latest/linux-next$ 
+  make dt_binding_check 
+DT_SCHEMA_FILES=Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+   CHKDT   
+Documentation/devicetree/bindings/processed-schema-examples.json
+   SCHEMA  
+Documentation/devicetree/bindings/processed-schema-examples.json
+   DTEX    
+Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.example.dts
+   DTC     
+Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.example.dt.yaml
+   CHECK   
+Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.example.dt.yaml
+/local/mnt/workspace/linux-next-latest/linux-next/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.example.dt.yaml: 
+dsi-phy@ae94400: '#clock-cells', '#phy-cells', 'clock-names', 'clocks' 
+do not match any of the regexes: 'pinctrl-[0-9]+'
+         From schema: 
+/local/mnt/workspace/linux-next-latest/linux-next/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
 
->   sound/soc/qcom/qdsp6/q6afe-clocks.c | 209 ++++++++++++++--------------
->   sound/soc/qcom/qdsp6/q6afe.c        |   2 +-
->   sound/soc/qcom/qdsp6/q6afe.h        |   2 +-
->   3 files changed, 108 insertions(+), 105 deletions(-)
-> 
-> diff --git a/sound/soc/qcom/qdsp6/q6afe-clocks.c b/sound/soc/qcom/qdsp6/q6afe-clocks.c
-> index f0362f061652..9431656283cd 100644
-> --- a/sound/soc/qcom/qdsp6/q6afe-clocks.c
-> +++ b/sound/soc/qcom/qdsp6/q6afe-clocks.c
-> @@ -11,33 +11,29 @@
->   #include <linux/slab.h>
->   #include "q6afe.h"
->   
-> -#define Q6AFE_CLK(id) &(struct q6afe_clk) {		\
-> +#define Q6AFE_CLK(id) {					\
->   		.clk_id	= id,				\
->   		.afe_clk_id	= Q6AFE_##id,		\
->   		.name = #id,				\
-> -		.attributes = LPASS_CLK_ATTRIBUTE_COUPLE_NO, \
->   		.rate = 19200000,			\
-> -		.hw.init = &(struct clk_init_data) {	\
-> -			.ops = &clk_q6afe_ops,		\
-> -			.name = #id,			\
-> -		},					\
->   	}
->   
-> -#define Q6AFE_VOTE_CLK(id, blkid, n) &(struct q6afe_clk) { \
-> +#define Q6AFE_VOTE_CLK(id, blkid, n) {			\
->   		.clk_id	= id,				\
->   		.afe_clk_id = blkid,			\
-> -		.name = #n,				\
-> -		.hw.init = &(struct clk_init_data) {	\
-> -			.ops = &clk_vote_q6afe_ops,	\
-> -			.name = #id,			\
-> -		},					\
-> +		.name = n,				\
->   	}
->   
-> -struct q6afe_clk {
-> -	struct device *dev;
-> +struct q6afe_clk_init {
->   	int clk_id;
->   	int afe_clk_id;
->   	char *name;
-> +	int rate;
-> +};
-> +
-> +struct q6afe_clk {
-> +	struct device *dev;
-> +	int afe_clk_id;
->   	int attributes;
->   	int rate;
->   	uint32_t handle;
-> @@ -48,8 +44,7 @@ struct q6afe_clk {
->   
->   struct q6afe_cc {
->   	struct device *dev;
-> -	struct q6afe_clk **clks;
-> -	int num_clks;
-> +	struct q6afe_clk *clks[Q6AFE_MAX_CLK_ID];
->   };
->   
->   static int clk_q6afe_prepare(struct clk_hw *hw)
-> @@ -105,7 +100,7 @@ static int clk_vote_q6afe_block(struct clk_hw *hw)
->   	struct q6afe_clk *clk = to_q6afe_clk(hw);
->   
->   	return q6afe_vote_lpass_core_hw(clk->dev, clk->afe_clk_id,
-> -					clk->name, &clk->handle);
-> +					clk_hw_get_name(&clk->hw), &clk->handle);
->   }
->   
->   static void clk_unvote_q6afe_block(struct clk_hw *hw)
-> @@ -120,84 +115,76 @@ static const struct clk_ops clk_vote_q6afe_ops = {
->   	.unprepare	= clk_unvote_q6afe_block,
->   };
->   
-> -static struct q6afe_clk *q6afe_clks[Q6AFE_MAX_CLK_ID] = {
-> -	[LPASS_CLK_ID_PRI_MI2S_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_PRI_MI2S_IBIT),
-> -	[LPASS_CLK_ID_PRI_MI2S_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_PRI_MI2S_EBIT),
-> -	[LPASS_CLK_ID_SEC_MI2S_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_SEC_MI2S_IBIT),
-> -	[LPASS_CLK_ID_SEC_MI2S_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_SEC_MI2S_EBIT),
-> -	[LPASS_CLK_ID_TER_MI2S_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_TER_MI2S_IBIT),
-> -	[LPASS_CLK_ID_TER_MI2S_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_TER_MI2S_EBIT),
-> -	[LPASS_CLK_ID_QUAD_MI2S_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_QUAD_MI2S_IBIT),
-> -	[LPASS_CLK_ID_QUAD_MI2S_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_QUAD_MI2S_EBIT),
-> -	[LPASS_CLK_ID_SPEAKER_I2S_IBIT] =
-> -				Q6AFE_CLK(LPASS_CLK_ID_SPEAKER_I2S_IBIT),
-> -	[LPASS_CLK_ID_SPEAKER_I2S_EBIT] =
-> -				Q6AFE_CLK(LPASS_CLK_ID_SPEAKER_I2S_EBIT),
-> -	[LPASS_CLK_ID_SPEAKER_I2S_OSR] =
-> -				Q6AFE_CLK(LPASS_CLK_ID_SPEAKER_I2S_OSR),
-> -	[LPASS_CLK_ID_QUI_MI2S_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_QUI_MI2S_IBIT),
-> -	[LPASS_CLK_ID_QUI_MI2S_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_QUI_MI2S_EBIT),
-> -	[LPASS_CLK_ID_SEN_MI2S_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_SEN_MI2S_IBIT),
-> -	[LPASS_CLK_ID_SEN_MI2S_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_SEN_MI2S_EBIT),
-> -	[LPASS_CLK_ID_INT0_MI2S_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_INT0_MI2S_IBIT),
-> -	[LPASS_CLK_ID_INT1_MI2S_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_INT1_MI2S_IBIT),
-> -	[LPASS_CLK_ID_INT2_MI2S_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_INT2_MI2S_IBIT),
-> -	[LPASS_CLK_ID_INT3_MI2S_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_INT3_MI2S_IBIT),
-> -	[LPASS_CLK_ID_INT4_MI2S_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_INT4_MI2S_IBIT),
-> -	[LPASS_CLK_ID_INT5_MI2S_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_INT5_MI2S_IBIT),
-> -	[LPASS_CLK_ID_INT6_MI2S_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_INT6_MI2S_IBIT),
-> -	[LPASS_CLK_ID_QUI_MI2S_OSR] = Q6AFE_CLK(LPASS_CLK_ID_QUI_MI2S_OSR),
-> -	[LPASS_CLK_ID_PRI_PCM_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_PRI_PCM_IBIT),
-> -	[LPASS_CLK_ID_PRI_PCM_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_PRI_PCM_EBIT),
-> -	[LPASS_CLK_ID_SEC_PCM_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_SEC_PCM_IBIT),
-> -	[LPASS_CLK_ID_SEC_PCM_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_SEC_PCM_EBIT),
-> -	[LPASS_CLK_ID_TER_PCM_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_TER_PCM_IBIT),
-> -	[LPASS_CLK_ID_TER_PCM_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_TER_PCM_EBIT),
-> -	[LPASS_CLK_ID_QUAD_PCM_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_QUAD_PCM_IBIT),
-> -	[LPASS_CLK_ID_QUAD_PCM_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_QUAD_PCM_EBIT),
-> -	[LPASS_CLK_ID_QUIN_PCM_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_QUIN_PCM_IBIT),
-> -	[LPASS_CLK_ID_QUIN_PCM_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_QUIN_PCM_EBIT),
-> -	[LPASS_CLK_ID_QUI_PCM_OSR] = Q6AFE_CLK(LPASS_CLK_ID_QUI_PCM_OSR),
-> -	[LPASS_CLK_ID_PRI_TDM_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_PRI_TDM_IBIT),
-> -	[LPASS_CLK_ID_PRI_TDM_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_PRI_TDM_EBIT),
-> -	[LPASS_CLK_ID_SEC_TDM_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_SEC_TDM_IBIT),
-> -	[LPASS_CLK_ID_SEC_TDM_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_SEC_TDM_EBIT),
-> -	[LPASS_CLK_ID_TER_TDM_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_TER_TDM_IBIT),
-> -	[LPASS_CLK_ID_TER_TDM_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_TER_TDM_EBIT),
-> -	[LPASS_CLK_ID_QUAD_TDM_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_QUAD_TDM_IBIT),
-> -	[LPASS_CLK_ID_QUAD_TDM_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_QUAD_TDM_EBIT),
-> -	[LPASS_CLK_ID_QUIN_TDM_IBIT] = Q6AFE_CLK(LPASS_CLK_ID_QUIN_TDM_IBIT),
-> -	[LPASS_CLK_ID_QUIN_TDM_EBIT] = Q6AFE_CLK(LPASS_CLK_ID_QUIN_TDM_EBIT),
-> -	[LPASS_CLK_ID_QUIN_TDM_OSR] = Q6AFE_CLK(LPASS_CLK_ID_QUIN_TDM_OSR),
-> -	[LPASS_CLK_ID_MCLK_1] = Q6AFE_CLK(LPASS_CLK_ID_MCLK_1),
-> -	[LPASS_CLK_ID_MCLK_2] = Q6AFE_CLK(LPASS_CLK_ID_MCLK_2),
-> -	[LPASS_CLK_ID_MCLK_3] = Q6AFE_CLK(LPASS_CLK_ID_MCLK_3),
-> -	[LPASS_CLK_ID_MCLK_4] = Q6AFE_CLK(LPASS_CLK_ID_MCLK_4),
-> -	[LPASS_CLK_ID_INTERNAL_DIGITAL_CODEC_CORE] =
-> -		Q6AFE_CLK(LPASS_CLK_ID_INTERNAL_DIGITAL_CODEC_CORE),
-> -	[LPASS_CLK_ID_INT_MCLK_0] = Q6AFE_CLK(LPASS_CLK_ID_INT_MCLK_0),
-> -	[LPASS_CLK_ID_INT_MCLK_1] = Q6AFE_CLK(LPASS_CLK_ID_INT_MCLK_1),
-> -	[LPASS_CLK_ID_WSA_CORE_MCLK] = Q6AFE_CLK(LPASS_CLK_ID_WSA_CORE_MCLK),
-> -	[LPASS_CLK_ID_WSA_CORE_NPL_MCLK] =
-> -				Q6AFE_CLK(LPASS_CLK_ID_WSA_CORE_NPL_MCLK),
-> -	[LPASS_CLK_ID_VA_CORE_MCLK] = Q6AFE_CLK(LPASS_CLK_ID_VA_CORE_MCLK),
-> -	[LPASS_CLK_ID_TX_CORE_MCLK] = Q6AFE_CLK(LPASS_CLK_ID_TX_CORE_MCLK),
-> -	[LPASS_CLK_ID_TX_CORE_NPL_MCLK] =
-> -			Q6AFE_CLK(LPASS_CLK_ID_TX_CORE_NPL_MCLK),
-> -	[LPASS_CLK_ID_RX_CORE_MCLK] = Q6AFE_CLK(LPASS_CLK_ID_RX_CORE_MCLK),
-> -	[LPASS_CLK_ID_RX_CORE_NPL_MCLK] =
-> -				Q6AFE_CLK(LPASS_CLK_ID_RX_CORE_NPL_MCLK),
-> -	[LPASS_CLK_ID_VA_CORE_2X_MCLK] =
-> -				Q6AFE_CLK(LPASS_CLK_ID_VA_CORE_2X_MCLK),
-> -	[LPASS_HW_AVTIMER_VOTE] = Q6AFE_VOTE_CLK(LPASS_HW_AVTIMER_VOTE,
-> -						 Q6AFE_LPASS_CORE_AVTIMER_BLOCK,
-> -						 "LPASS_AVTIMER_MACRO"),
-> -	[LPASS_HW_MACRO_VOTE] = Q6AFE_VOTE_CLK(LPASS_HW_MACRO_VOTE,
-> -						Q6AFE_LPASS_CORE_HW_MACRO_BLOCK,
-> -						"LPASS_HW_MACRO"),
-> -	[LPASS_HW_DCODEC_VOTE] = Q6AFE_VOTE_CLK(LPASS_HW_DCODEC_VOTE,
-> -					Q6AFE_LPASS_CORE_HW_DCODEC_BLOCK,
-> -					"LPASS_HW_DCODEC"),
-> +static const struct q6afe_clk_init q6afe_clks[] = {
-> +	Q6AFE_CLK(LPASS_CLK_ID_PRI_MI2S_IBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_PRI_MI2S_EBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_SEC_MI2S_IBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_SEC_MI2S_EBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_TER_MI2S_IBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_TER_MI2S_EBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_QUAD_MI2S_IBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_QUAD_MI2S_EBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_SPEAKER_I2S_IBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_SPEAKER_I2S_EBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_SPEAKER_I2S_OSR),
-> +	Q6AFE_CLK(LPASS_CLK_ID_QUI_MI2S_IBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_QUI_MI2S_EBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_SEN_MI2S_IBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_SEN_MI2S_EBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_INT0_MI2S_IBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_INT1_MI2S_IBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_INT2_MI2S_IBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_INT3_MI2S_IBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_INT4_MI2S_IBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_INT5_MI2S_IBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_INT6_MI2S_IBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_QUI_MI2S_OSR),
-> +	Q6AFE_CLK(LPASS_CLK_ID_PRI_PCM_IBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_PRI_PCM_EBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_SEC_PCM_IBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_SEC_PCM_EBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_TER_PCM_IBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_TER_PCM_EBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_QUAD_PCM_IBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_QUAD_PCM_EBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_QUIN_PCM_IBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_QUIN_PCM_EBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_QUI_PCM_OSR),
-> +	Q6AFE_CLK(LPASS_CLK_ID_PRI_TDM_IBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_PRI_TDM_EBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_SEC_TDM_IBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_SEC_TDM_EBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_TER_TDM_IBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_TER_TDM_EBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_QUAD_TDM_IBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_QUAD_TDM_EBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_QUIN_TDM_IBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_QUIN_TDM_EBIT),
-> +	Q6AFE_CLK(LPASS_CLK_ID_QUIN_TDM_OSR),
-> +	Q6AFE_CLK(LPASS_CLK_ID_MCLK_1),
-> +	Q6AFE_CLK(LPASS_CLK_ID_MCLK_2),
-> +	Q6AFE_CLK(LPASS_CLK_ID_MCLK_3),
-> +	Q6AFE_CLK(LPASS_CLK_ID_MCLK_4),
-> +	Q6AFE_CLK(LPASS_CLK_ID_INTERNAL_DIGITAL_CODEC_CORE),
-> +	Q6AFE_CLK(LPASS_CLK_ID_INT_MCLK_0),
-> +	Q6AFE_CLK(LPASS_CLK_ID_INT_MCLK_1),
-> +	Q6AFE_CLK(LPASS_CLK_ID_WSA_CORE_MCLK),
-> +	Q6AFE_CLK(LPASS_CLK_ID_WSA_CORE_NPL_MCLK),
-> +	Q6AFE_CLK(LPASS_CLK_ID_VA_CORE_MCLK),
-> +	Q6AFE_CLK(LPASS_CLK_ID_TX_CORE_MCLK),
-> +	Q6AFE_CLK(LPASS_CLK_ID_TX_CORE_NPL_MCLK),
-> +	Q6AFE_CLK(LPASS_CLK_ID_RX_CORE_MCLK),
-> +	Q6AFE_CLK(LPASS_CLK_ID_RX_CORE_NPL_MCLK),
-> +	Q6AFE_CLK(LPASS_CLK_ID_VA_CORE_2X_MCLK),
-> +	Q6AFE_VOTE_CLK(LPASS_HW_AVTIMER_VOTE,
-> +		       Q6AFE_LPASS_CORE_AVTIMER_BLOCK,
-> +		       "LPASS_AVTIMER_MACRO"),
-> +	Q6AFE_VOTE_CLK(LPASS_HW_MACRO_VOTE,
-> +		       Q6AFE_LPASS_CORE_HW_MACRO_BLOCK,
-> +		       "LPASS_HW_MACRO"),
-> +	Q6AFE_VOTE_CLK(LPASS_HW_DCODEC_VOTE,
-> +		       Q6AFE_LPASS_CORE_HW_DCODEC_BLOCK,
-> +		       "LPASS_HW_DCODEC"),
->   };
->   
->   static struct clk_hw *q6afe_of_clk_hw_get(struct of_phandle_args *clkspec,
-> @@ -207,7 +194,7 @@ static struct clk_hw *q6afe_of_clk_hw_get(struct of_phandle_args *clkspec,
->   	unsigned int idx = clkspec->args[0];
->   	unsigned int attr = clkspec->args[1];
->   
-> -	if (idx >= cc->num_clks || attr > LPASS_CLK_ATTRIBUTE_COUPLE_DIVISOR) {
-> +	if (idx >= Q6AFE_MAX_CLK_ID || attr > LPASS_CLK_ATTRIBUTE_COUPLE_DIVISOR) {
->   		dev_err(cc->dev, "Invalid clk specifier (%d, %d)\n", idx, attr);
->   		return ERR_PTR(-EINVAL);
->   	}
-> @@ -230,20 +217,36 @@ static int q6afe_clock_dev_probe(struct platform_device *pdev)
->   	if (!cc)
->   		return -ENOMEM;
->   
-> -	cc->clks = &q6afe_clks[0];
-> -	cc->num_clks = ARRAY_SIZE(q6afe_clks);
-> +	cc->dev = dev;
->   	for (i = 0; i < ARRAY_SIZE(q6afe_clks); i++) {
-> -		if (!q6afe_clks[i])
-> -			continue;
-> +		unsigned int id = q6afe_clks[i].clk_id;
-> +		struct clk_init_data init = {
-> +			.name =  q6afe_clks[i].name,
-> +		};
-> +		struct q6afe_clk *clk;
-> +
-> +		clk = devm_kzalloc(dev, sizeof(*clk), GFP_KERNEL);
-> +		if (!clk)
-> +			return -ENOMEM;
-> +
-> +		clk->dev = dev;
-> +		clk->afe_clk_id = q6afe_clks[i].afe_clk_id;
-> +		clk->rate = q6afe_clks[i].rate;
-> +		clk->hw.init = &init;
-> +
-> +		if (clk->rate)
-> +			init.ops = &clk_q6afe_ops;
-> +		else
-> +			init.ops = &clk_vote_q6afe_ops;
->   
-> -		q6afe_clks[i]->dev = dev;
-> +		cc->clks[id] = clk;
->   
-> -		ret = devm_clk_hw_register(dev, &q6afe_clks[i]->hw);
-> +		ret = devm_clk_hw_register(dev, &clk->hw);
->   		if (ret)
->   			return ret;
->   	}
->   
-> -	ret = of_clk_add_hw_provider(dev->of_node, q6afe_of_clk_hw_get, cc);
-> +	ret = devm_of_clk_add_hw_provider(dev, q6afe_of_clk_hw_get, cc);
->   	if (ret)
->   		return ret;
->   
-> diff --git a/sound/soc/qcom/qdsp6/q6afe.c b/sound/soc/qcom/qdsp6/q6afe.c
-> index cad1cd1bfdf0..4327b72162ec 100644
-> --- a/sound/soc/qcom/qdsp6/q6afe.c
-> +++ b/sound/soc/qcom/qdsp6/q6afe.c
-> @@ -1681,7 +1681,7 @@ int q6afe_unvote_lpass_core_hw(struct device *dev, uint32_t hw_block_id,
->   EXPORT_SYMBOL(q6afe_unvote_lpass_core_hw);
->   
->   int q6afe_vote_lpass_core_hw(struct device *dev, uint32_t hw_block_id,
-> -			     char *client_name, uint32_t *client_handle)
-> +			     const char *client_name, uint32_t *client_handle)
->   {
->   	struct q6afe *afe = dev_get_drvdata(dev->parent);
->   	struct afe_cmd_remote_lpass_core_hw_vote_request *vote_cfg;
-> diff --git a/sound/soc/qcom/qdsp6/q6afe.h b/sound/soc/qcom/qdsp6/q6afe.h
-> index 22e10269aa10..3845b56c0ed3 100644
-> --- a/sound/soc/qcom/qdsp6/q6afe.h
-> +++ b/sound/soc/qcom/qdsp6/q6afe.h
-> @@ -236,7 +236,7 @@ int q6afe_port_set_sysclk(struct q6afe_port *port, int clk_id,
->   int q6afe_set_lpass_clock(struct device *dev, int clk_id, int clk_src,
->   			  int clk_root, unsigned int freq);
->   int q6afe_vote_lpass_core_hw(struct device *dev, uint32_t hw_block_id,
-> -			     char *client_name, uint32_t *client_handle);
-> +			     const char *client_name, uint32_t *client_handle);
->   int q6afe_unvote_lpass_core_hw(struct device *dev, uint32_t hw_block_id,
->   			       uint32_t client_handle);
->   #endif /* __Q6AFE_H__ */
-> 
+Working Change:
+--- a/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
++++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+@@ -30,6 +30,11 @@ properties:
+        - const: dsi_phy_lane
+        - const: dsi_pll
+
++  '#clock-cells': true
++  '#phy-cells': true
++  clocks: true
++  clock-names: true
++
+    vdds-supply:
+      description: |
+        Connected to DSI0_MIPI_DSI_PLL_VDDA0P9 pin for sc7180 target and
+@@ -41,7 +46,7 @@ required:
+    - reg-names
+    - vdds-supply
+
+-unevaluatedProperties: false
++additionalProperties: false
+
+Thanks,
+Krishna
