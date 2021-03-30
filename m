@@ -2,135 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CCE3134E7CA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 14:47:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B662334E7DC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 14:49:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231974AbhC3MrA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Mar 2021 08:47:00 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46278 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231853AbhC3Mq5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Mar 2021 08:46:57 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id C3199619B1;
-        Tue, 30 Mar 2021 12:46:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1617108417;
-        bh=Gp7K5d/9JkaqMV3qnVlhi8uY18tBiGcqTqq9JQwzkk4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=bpwoXfzSTI3OVxxT2qtuhI8DBVsGK1w2yo1XJO96Mcl6Cf7j98u0D7WhigRHOVp76
-         jDVKAszVft1N//apcCn6FfTFty159qo7bzFF1FayYDictlQn2pRCLv717rqFyesXh6
-         g/qwrAId2++/WokGRt8nGZEDGbvdPTeM6c+yqRQokfC3Qr+akdDdbTY7EJdRxABvTD
-         356fURN2pLtcawXNYFkMj/4iVtdUrMed1IC/yAYXh7FliEQtMGcEDxYEIh/YHATK5l
-         0cbhI80eGEGy6vBu0Pz0nymgiC2g+OQuCq7/dYQEV4VJ4nIDFcytvB+5jrYD5CldVL
-         VUbbcLl88d4eQ==
-Date:   Tue, 30 Mar 2021 13:46:51 +0100
-From:   Will Deacon <will@kernel.org>
-To:     Christoph Hellwig <hch@lst.de>
-Cc:     Joerg Roedel <joro@8bytes.org>, Li Yang <leoyang.li@nxp.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        linuxppc-dev@lists.ozlabs.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
-        virtualization@lists.linux-foundation.org, netdev@vger.kernel.org
-Subject: Re: [PATCH 08/18] iommu/fsl_pamu: merge pamu_set_liodn and map_liodn
-Message-ID: <20210330124651.GH5908@willie-the-truck>
-References: <20210316153825.135976-1-hch@lst.de>
- <20210316153825.135976-9-hch@lst.de>
+        id S232086AbhC3MtJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Mar 2021 08:49:09 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:42369 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232005AbhC3MtH (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 30 Mar 2021 08:49:07 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1617108546; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=96qHzHGoEEUmPTxHIx4FwcAj71je9EFrRv4IZ94Y4BU=;
+ b=dRWRUsG1jkFq8rfV0zOrJ+4/jFc3pXQBzT5k2LVdxv8h/roOUDM6R+eoCHAr5xutgb80DOWp
+ l13nkNH0SOUGx5NtThld+cI5Mt2JC2+Kpu5xod/Vri9pW1gwny9U0qdX2sbXpFvyN0gDsXM4
+ M+k8pNI2lJ0hLYw4u8YEy12P7OY=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 60631e2c0a4a07ffdade47fe (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 30 Mar 2021 12:48:44
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 4C1F7C43461; Tue, 30 Mar 2021 12:48:44 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=ham autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E52CDC433C6;
+        Tue, 30 Mar 2021 12:48:43 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210316153825.135976-9-hch@lst.de>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 30 Mar 2021 18:18:43 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Sandeep Maheswaram <sanm@codeaurora.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>
+Subject: Re: [PATCH v1] usb: dwc3: core: Add shutdown callback for dwc3
+In-Reply-To: <YGMIoM3xIZzRvU3i@kroah.com>
+References: <1616527652-7937-1-git-send-email-sanm@codeaurora.org>
+ <YF3jfshT3OSolcws@kroah.com>
+ <e1afc071-57a6-5d7f-b467-92b618419b76@codeaurora.org>
+ <YGLqXI8HOaOrMq1B@kroah.com>
+ <d2348b758fa57acf53885b67f066e0a1@codeaurora.org>
+ <YGMIoM3xIZzRvU3i@kroah.com>
+Message-ID: <c984ff015109ed606d2933125d385015@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 16, 2021 at 04:38:14PM +0100, Christoph Hellwig wrote:
-> Merge the two fuctions that configure the ppaace into a single coherent
-> function.  I somehow doubt we need the two pamu_config_ppaace calls,
-> but keep the existing behavior just to be on the safe side.
+On 2021-03-30 16:46, Greg Kroah-Hartman wrote:
+> On Tue, Mar 30, 2021 at 03:25:58PM +0530, Sai Prakash Ranjan wrote:
+>> On 2021-03-30 14:37, Greg Kroah-Hartman wrote:
+>> > On Tue, Mar 30, 2021 at 02:12:04PM +0530, Sandeep Maheswaram wrote:
+>> > >
+>> > > On 3/26/2021 7:07 PM, Greg Kroah-Hartman wrote:
+>> > > > On Wed, Mar 24, 2021 at 12:57:32AM +0530, Sandeep Maheswaram wrote:
+>> > > > > This patch adds a shutdown callback to USB DWC core driver to ensure that
+>> > > > > it is properly shutdown in reboot/shutdown path. This is required
+>> > > > > where SMMU address translation is enabled like on SC7180
+>> > > > > SoC and few others. If the hardware is still accessing memory after
+>> > > > > SMMU translation is disabled as part of SMMU shutdown callback in
+>> > > > > system reboot or shutdown path, then IOVAs(I/O virtual address)
+>> > > > > which it was using will go on the bus as the physical addresses which
+>> > > > > might result in unknown crashes (NoC/interconnect errors).
+>> > > > >
+>> > > > > Previously this was added in dwc3 qcom glue driver.
+>> > > > > https://patchwork.kernel.org/project/linux-arm-msm/list/?series=382449
+>> > > > > But observed kernel panic as glue driver shutdown getting called after
+>> > > > > iommu shutdown. As we are adding iommu nodes in dwc core node
+>> > > > > in device tree adding shutdown callback in core driver seems correct.
+>> > > > So shouldn't you also remove this from the qcom glue driver at the same
+>> > > > time?  Please submit both as a patch series.
+>> > > >
+>> > > > thanks,
+>> > > >
+>> > > > greg k-h
+>> > >
+>> > > Hi Greg,
+>> > >
+>> > > The qcom glue driver patch is not merged yet. I have just mentioned
+>> > > for it for reference.
+>> >
+>> > You know that we can not add callbacks for no in-kernel user, so what
+>> > good is this patch for now?
+>> >
+>> 
+>> What in-kernel user? Since when does shutdown callback need an 
+>> in-kernel
+>> user? When you reboot or shutdown a system, it gets called. The reason
+>> why the shutdown callback is needed is provided in the commit text.
 > 
-> Signed-off-by: Christoph Hellwig <hch@lst.de>
-> Acked-by: Li Yang <leoyang.li@nxp.com>
-> ---
->  drivers/iommu/fsl_pamu_domain.c | 65 +++++++++------------------------
->  1 file changed, 17 insertions(+), 48 deletions(-)
-> 
-> diff --git a/drivers/iommu/fsl_pamu_domain.c b/drivers/iommu/fsl_pamu_domain.c
-> index 40eff4b7bc5d42..4a4944332674f7 100644
-> --- a/drivers/iommu/fsl_pamu_domain.c
-> +++ b/drivers/iommu/fsl_pamu_domain.c
-> @@ -54,25 +54,6 @@ static int __init iommu_init_mempool(void)
->  	return 0;
->  }
->  
-> -/* Map the DMA window corresponding to the LIODN */
-> -static int map_liodn(int liodn, struct fsl_dma_domain *dma_domain)
-> -{
-> -	int ret;
-> -	struct iommu_domain_geometry *geom = &dma_domain->iommu_domain.geometry;
-> -	unsigned long flags;
-> -
-> -	spin_lock_irqsave(&iommu_lock, flags);
-> -	ret = pamu_config_ppaace(liodn, geom->aperture_start,
-> -				 geom->aperture_end - 1, ~(u32)0,
-> -				 0, dma_domain->snoop_id, dma_domain->stash_id,
-> -				 PAACE_AP_PERMS_QUERY | PAACE_AP_PERMS_UPDATE);
-> -	spin_unlock_irqrestore(&iommu_lock, flags);
-> -	if (ret)
-> -		pr_debug("PAACE configuration failed for liodn %d\n", liodn);
-> -
-> -	return ret;
-> -}
-> -
->  static int update_liodn_stash(int liodn, struct fsl_dma_domain *dma_domain,
->  			      u32 val)
->  {
-> @@ -94,11 +75,11 @@ static int update_liodn_stash(int liodn, struct fsl_dma_domain *dma_domain,
->  }
->  
->  /* Set the geometry parameters for a LIODN */
-> -static int pamu_set_liodn(int liodn, struct device *dev,
-> -			  struct fsl_dma_domain *dma_domain,
-> -			  struct iommu_domain_geometry *geom_attr)
-> +static int pamu_set_liodn(struct fsl_dma_domain *dma_domain, struct device *dev,
-> +			  int liodn)
->  {
-> -	phys_addr_t window_addr, window_size;
-> +	struct iommu_domain *domain = &dma_domain->iommu_domain;
-> +	struct iommu_domain_geometry *geom = &domain->geometry;
->  	u32 omi_index = ~(u32)0;
->  	unsigned long flags;
->  	int ret;
-> @@ -110,22 +91,25 @@ static int pamu_set_liodn(int liodn, struct device *dev,
->  	 */
->  	get_ome_index(&omi_index, dev);
->  
-> -	window_addr = geom_attr->aperture_start;
-> -	window_size = geom_attr->aperture_end + 1;
-> -
->  	spin_lock_irqsave(&iommu_lock, flags);
->  	ret = pamu_disable_liodn(liodn);
-> -	if (!ret)
-> -		ret = pamu_config_ppaace(liodn, window_addr, window_size, omi_index,
-> -					 0, dma_domain->snoop_id,
-> -					 dma_domain->stash_id, 0);
-> +	if (ret)
-> +		goto out_unlock;
-> +	ret = pamu_config_ppaace(liodn, geom->aperture_start,
-> +				 geom->aperture_end - 1, omi_index, 0,
-> +				 dma_domain->snoop_id, dma_domain->stash_id, 0);
-> +	if (ret)
-> +		goto out_unlock;
-> +	ret = pamu_config_ppaace(liodn, geom->aperture_start,
-> +				 geom->aperture_end - 1, ~(u32)0,
-> +				 0, dma_domain->snoop_id, dma_domain->stash_id,
-> +				 PAACE_AP_PERMS_QUERY | PAACE_AP_PERMS_UPDATE);
+> As I can't see the patch here, I have no idea...
 
-There's more '+1' / '-1' confusion here with aperture_end which I'm not
-managing to follow. What am I missing?
+You are replying now to the same patch which adds this shutdown callback 
+:)
+Anyways the qcom dwc3 driver patch which is abandoned which is also 
+mentioned
+in the commit text is here [1] and the new shutdown callback patch which 
+we
+are both replying to is in here [2]
 
-Will
+[1] 
+https://lore.kernel.org/lkml/1605162619-10064-1-git-send-email-sanm@codeaurora.org/
+
+[2] 
+https://lore.kernel.org/lkml/1616527652-7937-1-git-send-email-sanm@codeaurora.org/
+
+Thanks,
+Sai
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
