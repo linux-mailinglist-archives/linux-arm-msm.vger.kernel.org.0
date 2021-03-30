@@ -2,28 +2,28 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 38BCD34E7FD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 14:55:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F9D334E81D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 14:59:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231986AbhC3Mya (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Mar 2021 08:54:30 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47940 "EHLO mail.kernel.org"
+        id S231574AbhC3M6s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Mar 2021 08:58:48 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48802 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230303AbhC3MyE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Mar 2021 08:54:04 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id DBEC161955;
-        Tue, 30 Mar 2021 12:54:01 +0000 (UTC)
+        id S232000AbhC3M6X (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 30 Mar 2021 08:58:23 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 57D72619BC;
+        Tue, 30 Mar 2021 12:58:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1617108844;
-        bh=MUsAReQl36x7SR3EX7iZh5BEyF4eEO7patp68iu3zYw=;
+        s=k20201202; t=1617109102;
+        bh=5U0XNBMr1VJpT/QJQ4fWikCzjX4441gkw/Sdm3D+wWo=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=RvhuDRnnjbhKmZxor1XvWHCMInipWXvRtxAnhtWSHyskQigqXOQJZBpmkmtBZyI42
-         Hzk9YR+zXiAqh+GqCuQsV/e9VwUlbbLL2WBWuGxyEgIjksxNm4QjWpE80+c+eJgjxa
-         CDgfI0Go46YGTQMxgFvBCCBuNUOdQ5A9e4RX4fJZrV2JQkPw15LXMK/zAx+kh0z7vL
-         kyRwRMIu/q/vE1ATdrsCa4384znPHm83guJWxqP2Cv0dXtUc4fw5FRdDw0Q8vG1MD6
-         rhCut5ZrQW9EjJtIgqABXSUdPcCMBGGg98+FfQp3aOd/QWoqSzA6/B7VI2jDOm1MH1
-         7esynnh6eCt1Q==
-Date:   Tue, 30 Mar 2021 13:53:58 +0100
+        b=DWN42kSzKc2/IQeLw9I9cnky9VKE8OZrRaxIp7imnahbv7MAIlCPAQOEf/2y5NMu8
+         vScKgy/fFSn0Fhoux7qMTY9sZe6WF6VjaMVEZkplEDgA2afh3x+8zYKKjzvGPJlt06
+         TgRQsOK9uVedQAZ/Jp8IqZ6ws7Nvou7AeWe16C/mwxZuyO+gjDcTWK3EQ4Q5CObwBj
+         VbEcwCuxV+jbp7XKHFFopVyoBz4U9/TzMTSXuOeSy23hSGo2eadFh3veqGUn4ZV7xt
+         6x9TFJiXvd7XE2fRBfyVs8VtDECvjUN4E+dczmX3kEuavFttoE7YeIPf2oxaLtcDm7
+         ZIQdoQHPZqTlA==
+Date:   Tue, 30 Mar 2021 13:58:17 +0100
 From:   Will Deacon <will@kernel.org>
 To:     Christoph Hellwig <hch@lst.de>
 Cc:     Joerg Roedel <joro@8bytes.org>, Li Yang <leoyang.li@nxp.com>,
@@ -35,37 +35,35 @@ Cc:     Joerg Roedel <joro@8bytes.org>, Li Yang <leoyang.li@nxp.com>,
         iommu@lists.linux-foundation.org,
         linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
         virtualization@lists.linux-foundation.org, netdev@vger.kernel.org
-Subject: Re: [PATCH 10/18] iommu/fsl_pamu: enable the liodn when attaching a
- device
-Message-ID: <20210330125358.GJ5908@willie-the-truck>
+Subject: Re: [PATCH 11/18] iommu/fsl_pamu: remove the snoop_id field
+Message-ID: <20210330125816.GK5908@willie-the-truck>
 References: <20210316153825.135976-1-hch@lst.de>
- <20210316153825.135976-11-hch@lst.de>
+ <20210316153825.135976-12-hch@lst.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210316153825.135976-11-hch@lst.de>
+In-Reply-To: <20210316153825.135976-12-hch@lst.de>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 16, 2021 at 04:38:16PM +0100, Christoph Hellwig wrote:
-> Instead of a separate call to enable all devices from the list, just
-> enablde the liodn one the device is attached to the iommu domain.
-
-(typos: "enablde" and "one" probably needs to be "once"?)
-
-> This also remove the DOMAIN_ATTR_FSL_PAMU_ENABLE iommu_attr.
+On Tue, Mar 16, 2021 at 04:38:17PM +0100, Christoph Hellwig wrote:
+> The snoop_id is always set to ~(u32)0.
 > 
 > Signed-off-by: Christoph Hellwig <hch@lst.de>
 > Acked-by: Li Yang <leoyang.li@nxp.com>
 > ---
->  drivers/iommu/fsl_pamu_domain.c     | 47 ++---------------------------
->  drivers/iommu/fsl_pamu_domain.h     | 10 ------
->  drivers/soc/fsl/qbman/qman_portal.c | 11 -------
->  include/linux/iommu.h               |  1 -
->  4 files changed, 3 insertions(+), 66 deletions(-)
+>  drivers/iommu/fsl_pamu_domain.c | 5 ++---
+>  drivers/iommu/fsl_pamu_domain.h | 1 -
+>  2 files changed, 2 insertions(+), 4 deletions(-)
+
+pamu_config_ppaace() takes quite a few useless parameters at this stage,
+but anyway:
 
 Acked-by: Will Deacon <will@kernel.org>
+
+Do you know if this driver is actually useful? Once the complexity has been
+stripped back, the stubs and default values really stand out.
 
 Will
