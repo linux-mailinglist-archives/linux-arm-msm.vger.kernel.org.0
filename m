@@ -2,260 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A50E334DF7D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 05:42:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BF50734DF8F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 05:49:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230329AbhC3Dl3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Mar 2021 23:41:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46510 "EHLO
+        id S230052AbhC3DtB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Mar 2021 23:49:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229910AbhC3DlG (ORCPT
+        with ESMTP id S229656AbhC3Dsj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Mar 2021 23:41:06 -0400
-Received: from mail-oo1-xc29.google.com (mail-oo1-xc29.google.com [IPv6:2607:f8b0:4864:20::c29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA1F3C061762
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Mar 2021 20:41:05 -0700 (PDT)
-Received: by mail-oo1-xc29.google.com with SMTP id 125-20020a4a1a830000b02901b6a144a417so3451519oof.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Mar 2021 20:41:05 -0700 (PDT)
+        Mon, 29 Mar 2021 23:48:39 -0400
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44DFDC061764
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Mar 2021 20:48:39 -0700 (PDT)
+Received: by mail-ot1-x336.google.com with SMTP id y19-20020a0568301d93b02901b9f88a238eso14320816oti.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Mar 2021 20:48:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=R5DnXj5JMwGYgLeYbNNzgz0sybFWEJe/tT4bzed1uWw=;
-        b=JZQqRbpd4dZ8jRSO7uxccTyXYklG+14Kb4jf+rvC8nOXnSkx1xIw05zeegfmUkbn65
-         vO1v5RKkqzmP4YxNpgGJEltv8FtAArebTr1dTnvpjReugBegj37uZHJlzUdMlAoFezxI
-         RZQGrKZNCaTK+Nwo1+QG3I+WuCn+nGgQ3PPBTp2Pd0d/IENX0qVuRf4kzU+rY6pPpUqG
-         cnJCyGM+rVswIpCEIBsL4l2zb3CX3WeLS3KTxDnd1zdq6ntZhflOzrVoYEobO62yLs0g
-         QkhIFzekjvEKt0sb0zlcCatNk7z4La28eLIw6bES+EDYZsvCpMwcHOMmd7JXQK33vPGD
-         z3eg==
+        bh=ZaWpeqY25MeDhtAts3m3c7ZDqv8GKc5eM14JLBJ3UhM=;
+        b=aria6U2aOK6GNQcIMqfIxcq4rDTxMTjlMu8p5Gj0XcnZDv6UluWjUciozLsMrU6ilw
+         U0HikIaK3NQMBUMW2/fCPa22dSCeaj/KcZcvtJrrzr/wzbj/KLS6Y+EFEXuOgX4YdmRA
+         W/B9dGHzbRfo+bIYqx7XluDewImcQRnP44+uPb/sUcYm1+yhiLzRlS1a/SP/xFzBVgMV
+         OtWLSXViZyg6VOX4f2rxhInfbe8ohYLkH0W2NjJVcveY85UaUbf+Bp7ZaBvFpPRRD6DM
+         JwZFPCWY2XNXrET4EUcAt/5+faX6oJDyHe65d/wNbwkkGLuszr1ZRFVf0McjW3NSQpUu
+         jVdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=R5DnXj5JMwGYgLeYbNNzgz0sybFWEJe/tT4bzed1uWw=;
-        b=P+wcLIrwnm+ChJLwcFTUQtdo0ZMASPnEHpCeFp6UU3rWdv3h10RrWGEC+207gGU0GT
-         OLoM7BnoprQgGui8Y2KMwz24yP8PaqVvYbRiEqxxjEyQI6I3yikPmjzssa+EN6B2tbv/
-         TQjsKubEqLpdoyUX/3MsPrG+DYDudsBoj7dNX/io8PsfaroUhwRxOBNn+K2U+OU5HqDm
-         BNh3gGmg3ALSlpzF5V5Zynrq/EpSooPtGCZkng6eb2V40KdQpCvSosMI8E2MceLpcyW4
-         iBUOOuw7zySH7tRJv/iBked9SIuln70lJPbiI0Xd5Ygv/PKNJFIAJYrg2vjh1n19Yzxx
-         8mIA==
-X-Gm-Message-State: AOAM530GjcFlT5iIXnraLqq4oKoMuz7zC6FD8bCjO5E7g+TVh8ppwqaX
-        a72iDhAjUbCYJ89CdSciV62kww==
-X-Google-Smtp-Source: ABdhPJw2rOmcLo28VVQMtOuGXcfGwY870/kcdcwRU5b0o22efAkukGUJDHRjiiXJgfEK0i35yIKJvg==
-X-Received: by 2002:a4a:45d5:: with SMTP id y204mr23766808ooa.33.1617075664341;
-        Mon, 29 Mar 2021 20:41:04 -0700 (PDT)
+        bh=ZaWpeqY25MeDhtAts3m3c7ZDqv8GKc5eM14JLBJ3UhM=;
+        b=YWxCMuQXbTjjQ2jSBZ/xAUDLyjap1TzzuTAZy6bsPPsmQTbZ9TXBFwmGr6u20pRJdB
+         UNH77lj0BEQINP5hK19eXd1frhskZ97JHXdQvB9tMRzv9uviuvoviKRk0mpZyIeqqIX0
+         aQ8RPMfW0uOtVKoAkg12oMgqYPw9dq+NeCjJSTBvxg73AvIIJg4XNnbpQegp/xyqTnbq
+         aqvLtM4VMJrSww98+n9D4qioeGJOepDMMnnX0t03Zyot41Ah9qPMaKi2BOcofnHKisup
+         zgi4gEiUCAVUtz0Xmh3rkSWixaTu/wZl57ybC9pIUJJwDoQzzqniiaCcjzOCm7dCcUbo
+         SnzA==
+X-Gm-Message-State: AOAM5320TBYaN7eraqn+8rdXAIDh5D9enRtYgGB7ku3IKJHDTAiP4C/j
+        lU/45MnLaUi5Jqhhp6+nJ1OR9g==
+X-Google-Smtp-Source: ABdhPJxSE5litT1P7lJr0s8y9tEBHQh2kQ64l0iMcjvplDaeF9Eb9bMTzeSINA+qu1qZDc4bknkFkg==
+X-Received: by 2002:a9d:6e09:: with SMTP id e9mr25522900otr.195.1617076118577;
+        Mon, 29 Mar 2021 20:48:38 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 62sm3075739oto.60.2021.03.29.20.41.03
+        by smtp.gmail.com with ESMTPSA id w10sm4791878oth.7.2021.03.29.20.48.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Mar 2021 20:41:03 -0700 (PDT)
-Date:   Mon, 29 Mar 2021 22:41:02 -0500
+        Mon, 29 Mar 2021 20:48:37 -0700 (PDT)
+Date:   Mon, 29 Mar 2021 22:48:36 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bartosz Dudziak <bartosz.dudziak@snejp.pl>
-Cc:     Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-clk@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH 3/5] arm: dts: qcom: Add support for MSM8226 SoC
-Message-ID: <YGKdzliUKqd38uLw@builder.lan>
-References: <20210326145816.9758-1-bartosz.dudziak@snejp.pl>
- <20210326145816.9758-4-bartosz.dudziak@snejp.pl>
+To:     Robert Foss <robert.foss@linaro.org>, daniel.lezcano@linaro.org
+Cc:     agross@kernel.org, amitk@kernel.org, rui.zhang@intel.com,
+        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Vinod Koul <vinod.koul@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Vinod Koul <vkoul@kernel.org>
+Subject: Re: [PATCH v3 1/2] dt-bindings: thermal: qcom-tsens: Add compatible
+ for sm8350
+Message-ID: <YGKflK/Ey16UDYT7@builder.lan>
+References: <20210324124308.1265626-1-robert.foss@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210326145816.9758-4-bartosz.dudziak@snejp.pl>
+In-Reply-To: <20210324124308.1265626-1-robert.foss@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 26 Mar 09:58 CDT 2021, Bartosz Dudziak wrote:
+On Wed 24 Mar 07:43 CDT 2021, Robert Foss wrote:
 
-> This patch adds basic device tree support for MSM8226 SoC which belongs
-> to the Snapdragon 400 family. For now, this file adds the basic nodes
-> like gcc, pinctrl and other required configuration for booting up to
-> the serial console.
+> Add tsens bindings for sm8350.
 > 
-> Signed-off-by: Bartosz Dudziak <bartosz.dudziak@snejp.pl>
-> ---
->  arch/arm/boot/dts/qcom-msm8226.dtsi | 152 ++++++++++++++++++++++++++++
->  1 file changed, 152 insertions(+)
->  create mode 100644 arch/arm/boot/dts/qcom-msm8226.dtsi
-> 
-> diff --git a/arch/arm/boot/dts/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom-msm8226.dtsi
-> new file mode 100644
-> index 0000000000..81bb19398e
-> --- /dev/null
-> +++ b/arch/arm/boot/dts/qcom-msm8226.dtsi
-> @@ -0,0 +1,152 @@
-> +// SPDX-License-Identifier: GPL-2.0
+> Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> Reviewed-by: Vinod Koul <vkoul@kernel.org>
 
-Can you please make this BSD license?
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-> +/*
-> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include <dt-bindings/interrupt-controller/arm-gic.h>
-> +#include <dt-bindings/clock/qcom,gcc-msm8974.h>
-> +
-> +/ {
-> +	#address-cells = <1>;
-> +	#size-cells = <1>;
-> +	model = "Qualcomm Technologies, Inc. MSM8226";
-> +	compatible = "qcom,msm8226";
-
-model and compatible should always be specified in the .dts, so the ones
-specified here would be overwritten. So drop them here.
-
-> +	interrupt-parent = <&intc>;
-> +
-> +	chosen { };
-> +
-> +	memory {
-> +		device_type = "memory";
-> +		/* We expect the bootloader to fill in the size */
-> +		reg = <0x0 0x0>;
-> +	};
-> +
-> +	soc: soc {
-> +		#address-cells = <1>;
-> +		#size-cells = <1>;
-> +		ranges;
-> +		compatible = "simple-bus";
-> +
-> +		intc: interrupt-controller@f9000000 {
-> +			compatible = "qcom,msm-qgic2";
-> +			interrupt-controller;
-> +			#interrupt-cells = <3>;
-> +			reg = <0xF9000000 0x1000>,
-> +			      <0xF9002000 0x1000>;
-> +		};
-> +
-> +		gcc: clock-controller@fc400000 {
-> +			compatible = "qcom,gcc-msm8226";
-> +			#clock-cells = <1>;
-> +			#reset-cells = <1>;
-> +			#power-domain-cells = <1>;
-> +			reg = <0xfc400000 0x4000>;
-> +		};
-> +
-> +		msmgpio: pinctrl@fd510000 {
-
-Rename the label "tlmm"
-
-> +			compatible = "qcom,msm8226-pinctrl";
-> +			reg = <0xfd510000 0x4000>;
-> +			gpio-controller;
-> +			#gpio-cells = <2>;
-> +			gpio-ranges = <&msmgpio 0 0 117>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
-> +		};
-> +
-> +		blsp1_uart3: serial@f991f000 {
-> +			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
-> +			reg = <0xf991f000 0x1000>;
-> +			interrupts = <GIC_SPI 109 IRQ_TYPE_LEVEL_HIGH>;
-> +			clocks = <&gcc GCC_BLSP1_UART3_APPS_CLK>, <&gcc GCC_BLSP1_AHB_CLK>;
-> +			clock-names = "core", "iface";
-> +			status = "disabled";
-> +		};
-> +
-> +		restart@fc4ab000 {
-> +			compatible = "qcom,pshold";
-> +			reg = <0xfc4ab000 0x4>;
-> +		};
-> +
-> +		rng@f9bff000 {
-> +			compatible = "qcom,prng";
-> +			reg = <0xf9bff000 0x200>;
-> +			clocks = <&gcc GCC_PRNG_AHB_CLK>;
-> +			clock-names = "core";
-> +		};
-> +
-> +		timer@f9020000 {
-> +			#address-cells = <1>;
-> +			#size-cells = <1>;
-> +			ranges;
-> +			compatible = "arm,armv7-timer-mem";
-
-It's nice to have compatible & reg first in the nodes.
+@Daniel, I presume it's better that you take this patch (1/2) through
+your tree. I've picked patch 2.
 
 Regards,
 Bjorn
 
-> +			reg = <0xf9020000 0x1000>;
-> +			clock-frequency = <19200000>;
-> +
-> +			frame@f9021000 {
-> +				frame-number = <0>;
-> +				interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>,
-> +					     <GIC_SPI 7 IRQ_TYPE_LEVEL_HIGH>;
-> +				reg = <0xf9021000 0x1000>,
-> +				      <0xf9022000 0x1000>;
-> +			};
-> +
-> +			frame@f9023000 {
-> +				frame-number = <1>;
-> +				interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
-> +				reg = <0xf9023000 0x1000>;
-> +				status = "disabled";
-> +			};
-> +
-> +			frame@f9024000 {
-> +				frame-number = <2>;
-> +				interrupts = <GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
-> +				reg = <0xf9024000 0x1000>;
-> +				status = "disabled";
-> +			};
-> +
-> +			frame@f9025000 {
-> +				frame-number = <3>;
-> +				interrupts = <GIC_SPI 11 IRQ_TYPE_LEVEL_HIGH>;
-> +				reg = <0xf9025000 0x1000>;
-> +				status = "disabled";
-> +			};
-> +
-> +			frame@f9026000 {
-> +				frame-number = <4>;
-> +				interrupts = <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>;
-> +				reg = <0xf9026000 0x1000>;
-> +				status = "disabled";
-> +			};
-> +
-> +			frame@f9027000 {
-> +				frame-number = <5>;
-> +				interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>;
-> +				reg = <0xf9027000 0x1000>;
-> +				status = "disabled";
-> +			};
-> +
-> +			frame@f9028000 {
-> +				frame-number = <6>;
-> +				interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL_HIGH>;
-> +				reg = <0xf9028000 0x1000>;
-> +				status = "disabled";
-> +			};
-> +		};
-> +	};
-> +
-> +	timer {
-> +		compatible = "arm,armv7-timer";
-> +		interrupts = <GIC_PPI 2
-> +				(GIC_CPU_MASK_RAW(15) | IRQ_TYPE_LEVEL_LOW)>,
-> +			     <GIC_PPI 3
-> +				(GIC_CPU_MASK_RAW(15) | IRQ_TYPE_LEVEL_LOW)>,
-> +			     <GIC_PPI 4
-> +				(GIC_CPU_MASK_RAW(15) | IRQ_TYPE_LEVEL_LOW)>,
-> +			     <GIC_PPI 1
-> +				(GIC_CPU_MASK_RAW(15) | IRQ_TYPE_LEVEL_LOW)>;
-> +		clock-frequency = <19200000>;
-> +	};
-> +};
+> ---
+> 
+> Changes since v1:
+>  - Vinod: Remove comment
+> 
+>  Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> index 95462e071ab4..e788378eff8d 100644
+> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> @@ -43,6 +43,7 @@ properties:
+>                - qcom,sdm845-tsens
+>                - qcom,sm8150-tsens
+>                - qcom,sm8250-tsens
+> +              - qcom,sm8350-tsens
+>            - const: qcom,tsens-v2
+>  
+>    reg:
 > -- 
-> 2.25.1
+> 2.31.0.30.g398dba342d.dirty
 > 
