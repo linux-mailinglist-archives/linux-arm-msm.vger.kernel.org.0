@@ -2,152 +2,221 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5314134E9CB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 16:02:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA34A34EAAE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Mar 2021 16:42:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232190AbhC3OCA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Mar 2021 10:02:00 -0400
-Received: from mga07.intel.com ([134.134.136.100]:22732 "EHLO mga07.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232126AbhC3OBn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Mar 2021 10:01:43 -0400
-IronPort-SDR: Zy3N3y632acAkcvIej9owgs0FIhABpwrRfGy1/4nDPSE/53KBD7L5svn4M5R1CkStteGXlwvQ5
- bM/SmFLJPo8Q==
-X-IronPort-AV: E=McAfee;i="6000,8403,9939"; a="255761686"
-X-IronPort-AV: E=Sophos;i="5.81,290,1610438400"; 
-   d="scan'208";a="255761686"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Mar 2021 07:01:41 -0700
-IronPort-SDR: 5W+Pm6pxQg6paSSW3ZNE+fcuk5O4p375dGVxqhVSMpGKPVVVIqYWkyXryVZ5nDiysAb0acP8mz
- X3GqIRXqeH+A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.81,291,1610438400"; 
-   d="scan'208";a="393618051"
-Received: from stinkbox.fi.intel.com (HELO stinkbox) ([10.237.72.171])
-  by orsmga002.jf.intel.com with SMTP; 30 Mar 2021 07:01:32 -0700
-Received: by stinkbox (sSMTP sendmail emulation); Tue, 30 Mar 2021 17:01:31 +0300
-Date:   Tue, 30 Mar 2021 17:01:31 +0300
-From:   Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Sam Ravnborg <sam@ravnborg.org>, robdclark@chromium.org,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
-        linux-arm-msm@vger.kernel.org, Steev Klimaszewski <steev@kali.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        id S232257AbhC3Ol1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Mar 2021 10:41:27 -0400
+Received: from mail-oi1-f170.google.com ([209.85.167.170]:37680 "EHLO
+        mail-oi1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231803AbhC3Ok4 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 30 Mar 2021 10:40:56 -0400
+Received: by mail-oi1-f170.google.com with SMTP id k25so16712336oic.4;
+        Tue, 30 Mar 2021 07:40:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Y1Evx61OkBzrHrrfzozkEcf/eWAaX8rU2OAh9rojrnE=;
+        b=gwuMqIA+aHfrGO5HhnVHIKkKxqAs9mYhk2JtjthH5XNbM0hCmt+kW5udna6JrfNY1E
+         HOiNfLw5rkZSuW9FuXcDe+vd7Xo9R3tgW4kxdhokgibqAR2RM/X+X/b9Ny6JK0aoipe9
+         HsLu9BfTjYwSGuXQBwfSfQEbpumoQJZPo2S+Purmaw2fjvO6zPVjM14HsVluqP/WRFeM
+         e5Cx7VflbYTvQYsgeX0pqVrW8pF4lJ28RzGb8j4eN+gr3Ilz4dk6Tay3uoqcYLX4TMGy
+         ZrbfLzcd3ErFVUAAuhXoSsX50vuW1QIiCqdLJwmw1sR3uj5aj6H9vmIKiyONR5Of/2hA
+         PWiw==
+X-Gm-Message-State: AOAM530LEUObxX7birJE0q7i3sJOJvghzD0QTobspH8jCx8NVK9MTov6
+        IXU369d9DJ5H//PcTlPAxQ==
+X-Google-Smtp-Source: ABdhPJxsyDl3OVC+WJBzK4d/PxwDIBHDKlV/PVCFdJDROCZ7IHQuAZpOTAL7bKxNXIeEhe+qHw0mGQ==
+X-Received: by 2002:aca:2104:: with SMTP id 4mr3512045oiz.124.1617115255209;
+        Tue, 30 Mar 2021 07:40:55 -0700 (PDT)
+Received: from robh.at.kernel.org ([172.58.99.136])
+        by smtp.gmail.com with ESMTPSA id c9sm4454800ooq.31.2021.03.30.07.40.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Mar 2021 07:40:53 -0700 (PDT)
+Received: (nullmailer pid 277051 invoked by uid 1000);
+        Tue, 30 Mar 2021 14:40:48 -0000
+Date:   Tue, 30 Mar 2021 09:40:48 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     nikitos.tr@gmail.com
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 09/14] drm/edid: Use the cached EDID in drm_get_edid()
- if eDP
-Message-ID: <YGMvO3PNDCiBmqov@intel.com>
-References: <20210330025345.3980086-1-dianders@chromium.org>
- <20210329195255.v2.9.Ia7e9bb7cf6c51d960b9455fb0fa447cc68ece99d@changeid>
+Subject: Re: [PATCH 1/2] dt-bindings: soc: qcom: Add bindings for Qualcomm
+ Memshare service
+Message-ID: <20210330144048.GA264685@robh.at.kernel.org>
+References: <20210319172321.22248-1-nikitos.tr@gmail.com>
+ <20210319172321.22248-2-nikitos.tr@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210329195255.v2.9.Ia7e9bb7cf6c51d960b9455fb0fa447cc68ece99d@changeid>
-X-Patchwork-Hint: comment
+In-Reply-To: <20210319172321.22248-2-nikitos.tr@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 29, 2021 at 07:53:40PM -0700, Douglas Anderson wrote:
-> Each time we call drm_get_edid() we:
-> 1. Go out to the bus and ask for the EDID.
-> 2. Cache the EDID.
+On Fri, Mar 19, 2021 at 10:23:20PM +0500, nikitos.tr@gmail.com wrote:
+> From: Nikita Travkin <nikitos.tr@gmail.com>
 > 
-> We can improve this to actually use the cached EDID so that if
-> drm_get_edid() is called multiple times then we don't need to go out
-> to the bus over and over again.
+> Add DT bindings for memshare: QMI service that allocates
+> memory per remote processor request.
 > 
-> In normal DP/HDMI cases reading the EDID over and over again isn't
-> _that_ expensive so, presumably, this wasn't that critical in the
-> past. However for eDP going out to the bus can be expensive. This is
-> because eDP panels might be powered off before the EDID was requested
-> so we need to do power sequencing in addition to the transfer.
-> 
-> In theory we should be able to cache the EDID for all types of
-> displays. There is already code throwing the cache away when we detect
-> that a display was unplugged. However, it can be noted that it's
-> _extra_ safe to cache the EDID for eDP since eDP isn't a hot-pluggable
-> interface. If we get the EDID once then we've got the EDID and we
-> should never need to read it again. For now we'll only use the cache
-> for eDP both because it's more important and extra safe.
-> 
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: Nikita Travkin <nikitos.tr@gmail.com>
 > ---
+>  .../bindings/soc/qcom/qcom,memshare.yaml      | 109 ++++++++++++++++++
+>  include/dt-bindings/soc/qcom,memshare.h       |  10 ++
+>  2 files changed, 119 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,memshare.yaml
+>  create mode 100644 include/dt-bindings/soc/qcom,memshare.h
 > 
-> (no changes since v1)
-> 
->  drivers/gpu/drm/drm_edid.c | 32 ++++++++++++++++++++++++++++----
->  1 file changed, 28 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
-> index c2bbe7bee7b6..fcbf468d73c9 100644
-> --- a/drivers/gpu/drm/drm_edid.c
-> +++ b/drivers/gpu/drm/drm_edid.c
-> @@ -2049,15 +2049,39 @@ struct edid *drm_get_edid(struct drm_connector *connector,
->  			  struct i2c_adapter *adapter)
->  {
->  	struct edid *edid;
-> +	size_t old_edid_size;
-> +	const struct edid *old_edid;
->  
->  	if (connector->force == DRM_FORCE_OFF)
->  		return NULL;
->  
-> -	if (connector->force == DRM_FORCE_UNSPECIFIED && !drm_probe_ddc(adapter))
-> -		return NULL;
-> +	if (connector->connector_type == DRM_MODE_CONNECTOR_eDP &&
-> +	    connector->edid_blob_ptr) {
-> +		/*
-> +		 * eDP devices are non-removable, or at least not something
-> +		 * that's expected to be hot-pluggable. We can freely use
-> +		 * the cached EDID.
-> +		 *
-> +		 * NOTE: technically we could probably even use the cached
-> +		 * EDID even for non-eDP because the cached EDID should be
-> +		 * cleared if we ever notice a display is not connected, but
-> +		 * we'll use an abundance of caution and only do it for eDP.
-> +		 * It's more important for eDP anyway because the EDID may not
-> +		 * always be readable, like when the panel is powered down.
-> +		 */
-> +		old_edid = (const struct edid *)connector->edid_blob_ptr->data;
-> +		old_edid_size = ksize(old_edid);
-> +		edid = kmalloc(old_edid_size, GFP_KERNEL);
-> +		if (edid)
-> +			memcpy(edid, old_edid, old_edid_size);
-> +	} else {
-> +		if (connector->force == DRM_FORCE_UNSPECIFIED && !drm_probe_ddc(adapter))
-> +			return NULL;
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,memshare.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,memshare.yaml
+> new file mode 100644
+> index 000000000000..ebdf128b066c
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,memshare.yaml
+> @@ -0,0 +1,109 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: "http://devicetree.org/schemas/soc/qcom/qcom,memshare.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
 > +
-> +		edid = drm_do_get_edid(connector, drm_do_probe_ddc_edid, adapter);
-> +		drm_connector_update_edid_property(connector, edid);
-> +	}
+> +title: Qualcomm QMI Shared Memory Service
 
-This is a pretty low level function. Too low level for this caching
-IMO. So I think better just do it a bit higher up like other drivers.
+How many shared memory interfaces does Qcom have...
 
->  
-> -	edid = drm_do_get_edid(connector, drm_do_probe_ddc_edid, adapter);
-> -	drm_connector_update_edid_property(connector, edid);
->  	return edid;
->  }
->  EXPORT_SYMBOL(drm_get_edid);
+> +
+> +description: |
+> +  This driver provides a QMI service that allows remote processors (like modem)
+> +  to request additional memory. It is used for applications like GPS in modem.
+
+If the memory region is defined in reserved-memory, how are you 
+allocating additional memory? 
+
+> +
+> +maintainers:
+> +  - Nikita Travkin <nikitos.tr@gmail.com>
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,memshare
+> +
+> +  qcom,legacy-client:
+> +    $ref: /schemas/types.yaml#/definitions/phandle
+> +    description: Phandle to a memshare client node used for legacy requests.
+> +
+> +  "#address-cells":
+> +    const: 1
+> +
+> +  "#size-cells":
+> +    const: 0
+> +
+> +patternProperties:
+> +  "^.*@[0-9]+$":
+> +    type: object
+> +
+> +    properties:
+> +      reg:
+> +        description: Proc-ID for clients in this node.
+
+What's Proc-ID?
+
+> +
+> +      qcom,qrtr-node:
+> +        $ref: /schemas/types.yaml#/definitions/uint32
+> +        description: Node from which the requests are expected.
+> +
+> +      "#address-cells":
+> +        const: 1
+> +
+> +      "#size-cells":
+> +        const: 0
+> +
+> +    patternProperties:
+> +      "^.*@[0-9]+$":
+> +        type: object
+> +
+> +        properties:
+> +          reg:
+> +            description: ID of this client.
+
+How does one determine the ID?
+
+> +
+> +          memory-region:
+> +            $ref: /schemas/types.yaml#/definitions/phandle
+> +            description: |
+> +              Reserved memory region that should be used for allocation.
+> +
+> +        required:
+> +          - reg
+> +
+> +    required:
+> +      - reg
+> +      - qcom,qrtr-node
+> +
+> +required:
+> +  - compatible
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/soc/qcom,memshare.h>
+> +
+> +    reserved-memory {
+> +
+> +      #address-cells = <2>;
+> +      #size-cells = <2>;
+> +
+> +      gps_mem: gps@93c00000 {
+> +        reg = <0x0 0x93c00000 0x0 0x200000>;
+> +        no-map;
+
+We support 'compatible' in reserved-memory nodes, can you simplify the 
+binding and put everything in here?
+
+> +      };
+> +    };
+> +
+> +    memshare {
+> +      compatible = "qcom,memshare";
+> +      qcom,legacy-client = <&memshare_gps>;
+> +
+> +      #address-cells = <1>;
+> +      #size-cells = <0>;
+> +
+> +      mpss@0 {
+> +        reg = <MEMSHARE_PROC_MPSS_V01>;
+> +        qcom,qrtr-node = <0>;
+> +
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +
+> +        memshare_gps: gps@0 {
+> +          reg = <0>;
+> +          memory-region = <&gps_mem>;
+> +        };
+> +      };
+> +    };
+> +
+> +...
+> diff --git a/include/dt-bindings/soc/qcom,memshare.h b/include/dt-bindings/soc/qcom,memshare.h
+> new file mode 100644
+> index 000000000000..4cef1ef75d09
+> --- /dev/null
+> +++ b/include/dt-bindings/soc/qcom,memshare.h
+> @@ -0,0 +1,10 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +
+> +#ifndef __DT_QCOM_MEMSHARE_H__
+> +#define __DT_QCOM_MEMSHARE_H__
+> +
+> +#define MEMSHARE_PROC_MPSS_V01 0
+> +#define MEMSHARE_PROC_ADSP_V01 1
+> +#define MEMSHARE_PROC_WCNSS_V01 2
+> +
+> +#endif /* __DT_QCOM_MEMSHARE_H__ */
 > -- 
-> 2.31.0.291.g576ba9dcdaf-goog
+> 2.27.0
 > 
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
-
--- 
-Ville Syrjälä
-Intel
